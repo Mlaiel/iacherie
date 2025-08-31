@@ -12,7 +12,8 @@ This code, concept, and intellectual property are exclusively owned by Fahed Mla
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
 and will result in immediate legal action under German and International copyright laws.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -27,7 +28,8 @@ logger = get_logger(__name__)
 
 
 class MetricType(Enum):
-    """Dashboard metric types"""    ENGAGEMENT = "engagement"
+    """Dashboard metric types"""
+    ENGAGEMENT = "engagement"
     REVENUE = "revenue"
     GROWTH = "growth"
     PERFORMANCE = "performance"
@@ -35,7 +37,8 @@ class MetricType(Enum):
 
 @dataclass
 class DashboardMetric:
-    """Dashboard metric data"""    name: str
+    """Dashboard metric data"""
+    name: str
     value: Union[int, float, str]
     change: Optional[float] = None
     trend: str = "neutral"
@@ -43,13 +46,15 @@ class DashboardMetric:
 
 
 class RealTimeAnalytics:
-    """Real-time analytics processor"""    
+    """Real-time analytics processor"""
+    
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def get_real_time_metrics(self, creator_id: str) -> Dict[str, Any]:
-        """Get real-time metrics for creator"""        return {
+        """Get real-time metrics for creator"""
+        return {
             'views_today': 1250,
             'engagement_rate': 4.2,
             'new_followers': 45,
@@ -59,23 +64,27 @@ class RealTimeAnalytics:
 
 
 class PerformanceMetrics:
-    """Performance metrics calculator"""    
+    """Performance metrics calculator"""
+    
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def calculate_performance_score(self, creator_id: str) -> float:
-        """Calculate overall performance score"""        return 87.5  # Placeholder
+        """Calculate overall performance score"""
+        return 87.5  # Placeholder
 
 
 class InsightEngine:
-    """AI-powered insight generation engine"""    
+    """AI-powered insight generation engine"""
+    
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def generate_insights(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Generate AI insights for creator"""        return [
+        """Generate AI insights for creator"""
+        return [
             {
                 'type': 'growth_opportunity',
                 'title': 'Optimize posting schedule',
@@ -86,11 +95,13 @@ class InsightEngine:
 
 
 class CreatorDashboardController:
-    """    Main creator dashboard controller
+    """
+    Main creator dashboard controller
     
     Orchestrates real-time analytics, performance metrics, and insights
     to provide comprehensive dashboard functionality for creators.
-    """    
+    """
+    
     def __init__(self, profile_manager: CreatorProfileManager, cache_manager: CacheManager):
         self.profile_manager = profile_manager
         self.cache = cache_manager
@@ -102,14 +113,16 @@ class CreatorDashboardController:
         self.insight_engine = InsightEngine(cache_manager)
     
     async def get_dashboard_data(self, creator_id: str) -> Dict[str, Any]:
-        """        Get complete dashboard data for creator
+        """
+        Get complete dashboard data for creator
         
         Args:
             creator_id: Creator identifier
             
         Returns:
             Complete dashboard data
-        """        try:
+        """
+        try:
             # Get creator profile
             profile = await self.profile_manager.get_creator_profile(creator_id)
             if not profile:
@@ -143,7 +156,8 @@ class CreatorDashboardController:
             raise
     
     async def get_analytics_summary(self, creator_id: str, period: str = "30d") -> Dict[str, Any]:
-        """Get analytics summary for specified period"""        return {
+        """Get analytics summary for specified period"""
+        return {
             'period': period,
             'total_views': 45000,
             'total_engagement': 3500,

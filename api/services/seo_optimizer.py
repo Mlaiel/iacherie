@@ -8,7 +8,8 @@ Team: Lead Dev IA + Backend Senior + SEO Expert + Content Strategist + ML Engine
 This code and concept are proprietary to Fahed Mlaiel.
 Unauthorized copying, distribution, or use without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -101,9 +102,11 @@ class KeywordResearch:
 
 
 class EnterpriseSEOOptimizerService:
-    """    Professional SEO optimization service providing AI-powered content optimization,
+    """
+    Professional SEO optimization service providing AI-powered content optimization,
     keyword research, and multi-platform SEO strategies
-    """    
+    """
+    
     # Platform-specific optimization parameters
     PLATFORM_CONFIGS = {
         Platform.YOUTUBE: {
@@ -187,8 +190,10 @@ class EnterpriseSEOOptimizerService:
         tags: List[str] = None,
         content_type: str = "text"
     ) -> SEOAnalysis:
-        """        Comprehensive SEO analysis of content using AI algorithms
-        """        try:
+        """
+        Comprehensive SEO analysis of content using AI algorithms
+        """
+        try:
             tags = tags or []
             
             # Analyze different SEO components
@@ -259,7 +264,8 @@ class EnterpriseSEOOptimizerService:
         tags: List[str],
         content_type: str
     ) -> Dict[str, Any]:
-        """Analyze and extract relevant keywords"""        
+        """Analyze and extract relevant keywords"""
+        
         # Combine all text
         all_text = f"{title} {description} {' '.join(tags)}".lower()
         
@@ -301,7 +307,8 @@ class EnterpriseSEOOptimizerService:
         }
 
     async def _analyze_content_quality(self, title: str, description: str) -> Dict[str, Any]:
-        """Analyze content quality for SEO"""        
+        """Analyze content quality for SEO"""
+        
         quality_factors = []
         
         # Title quality
@@ -343,7 +350,8 @@ class EnterpriseSEOOptimizerService:
         }
 
     async def _analyze_readability(self, title: str, description: str) -> Dict[str, Any]:
-        """Analyze content readability"""        
+        """Analyze content readability"""
+        
         text = f"{title} {description}"
         
         if len(text.strip()) == 0:
@@ -378,7 +386,8 @@ class EnterpriseSEOOptimizerService:
             return {'score': 0.7, 'grade_level': 8, 'ease_score': 65}
 
     async def _analyze_trending_relevance(self, keywords: List[str], content_type: str) -> Dict[str, Any]:
-        """Analyze trending relevance of keywords"""        
+        """Analyze trending relevance of keywords"""
+        
         # Get trending keywords from cache
         trending_keywords = await self._get_trending_keywords(content_type)
         
@@ -400,7 +409,8 @@ class EnterpriseSEOOptimizerService:
         }
 
     async def _get_trending_keywords(self, content_type: str) -> List[str]:
-        """Get trending keywords for content type"""        
+        """Get trending keywords for content type"""
+        
         cache_key = f"trending_keywords:{content_type}"
         cached = self.redis_client.get(cache_key)
         
@@ -423,7 +433,8 @@ class EnterpriseSEOOptimizerService:
         return keywords
 
     async def _optimize_title(self, original_title: str, keywords: List[str], content_type: str) -> str:
-        """Generate SEO-optimized title"""        
+        """Generate SEO-optimized title"""
+        
         if not original_title.strip():
             original_title = f"Amazing {content_type} content"
         
@@ -457,7 +468,8 @@ class EnterpriseSEOOptimizerService:
         keywords: List[str],
         content_type: str
     ) -> str:
-        """Generate SEO-optimized description"""        
+        """Generate SEO-optimized description"""
+        
         if not original_description.strip():
             original_description = f"High-quality {content_type} content created with passion."
         
@@ -498,7 +510,8 @@ class EnterpriseSEOOptimizerService:
         return optimized
 
     async def _generate_hashtags(self, keywords: List[str], trending_keywords: List[str]) -> List[str]:
-        """Generate optimal hashtags from keywords"""        
+        """Generate optimal hashtags from keywords"""
+        
         hashtags = []
         
         # Convert keywords to hashtags
@@ -527,7 +540,8 @@ class EnterpriseSEOOptimizerService:
         return hashtags[:30]  # Limit to 30 hashtags
 
     async def _generate_alt_text(self, title: str, description: str, content_type: str) -> str:
-        """Generate SEO-optimized alt text"""        
+        """Generate SEO-optimized alt text"""
+        
         if content_type != 'image':
             return ""
         
@@ -557,7 +571,8 @@ class EnterpriseSEOOptimizerService:
         readability_score: float,
         trending_score: float
     ) -> List[str]:
-        """Generate personalized SEO recommendations"""        
+        """Generate personalized SEO recommendations"""
+        
         recommendations = []
         
         if keyword_score < 0.7:
@@ -588,8 +603,10 @@ class EnterpriseSEOOptimizerService:
         tags: List[str],
         platform: str
     ) -> PlatformOptimization:
-        """        Optimize content for specific platform requirements
-        """        try:
+        """
+        Optimize content for specific platform requirements
+        """
+        try:
             platform_enum = Platform(platform.lower())
             config = self.PLATFORM_CONFIGS.get(platform_enum, {})
             
@@ -621,7 +638,8 @@ class EnterpriseSEOOptimizerService:
         seo_analysis: SEOAnalysis,
         config: Dict[str, Any]
     ) -> PlatformOptimization:
-        """Optimize content for YouTube"""        
+        """Optimize content for YouTube"""
+        
         # YouTube-specific title optimization
         yt_title = seo_analysis.optimized_title
         if len(yt_title) > config['title_length']:
@@ -663,7 +681,8 @@ class EnterpriseSEOOptimizerService:
         seo_analysis: SEOAnalysis,
         config: Dict[str, Any]
     ) -> PlatformOptimization:
-        """Optimize content for Instagram"""        
+        """Optimize content for Instagram"""
+        
         # Instagram uses description as caption
         ig_caption = f"{seo_analysis.optimized_description}\n\n"
         ig_caption += "✨ Follow for more amazing content!\n"
@@ -698,7 +717,8 @@ class EnterpriseSEOOptimizerService:
         seo_analysis: SEOAnalysis,
         config: Dict[str, Any]
     ) -> PlatformOptimization:
-        """Optimize content for TikTok"""        
+        """Optimize content for TikTok"""
+        
         # TikTok prefers short, punchy descriptions
         tt_description = title[:100] if len(title) <= 100 else f"{title[:97]}..."
         
@@ -734,7 +754,8 @@ class EnterpriseSEOOptimizerService:
         seo_analysis: SEOAnalysis,
         config: Dict[str, Any]
     ) -> PlatformOptimization:
-        """Optimize content for Twitter"""        
+        """Optimize content for Twitter"""
+        
         # Twitter text optimization
         tweet_text = f"{title}\n\n{description[:200]}..."
         tweet_text += f" {' '.join(seo_analysis.hashtags[:config['optimal_hashtags']])}"
@@ -765,7 +786,8 @@ class EnterpriseSEOOptimizerService:
         seo_analysis: SEOAnalysis,
         config: Dict[str, Any]
     ) -> PlatformOptimization:
-        """Generic platform optimization"""        
+        """Generic platform optimization"""
+        
         return PlatformOptimization(
             platform=Platform.FACEBOOK,  # Default
             optimized_title=seo_analysis.optimized_title,
@@ -789,8 +811,10 @@ class EnterpriseSEOOptimizerService:
         seed_keywords: List[str],
         content_type: str = "text"
     ) -> KeywordResearch:
-        """        Perform comprehensive keyword research using AI algorithms
-        """        try:
+        """
+        Perform comprehensive keyword research using AI algorithms
+        """
+        try:
             # Expand seed keywords
             expanded_keywords = []
             for seed in seed_keywords:
@@ -829,7 +853,8 @@ class EnterpriseSEOOptimizerService:
             raise SEOError(f"Keyword research failed: {str(e)}")
 
     async def _generate_keyword_variations(self, seed_keyword: str, content_type: str) -> List[str]:
-        """Generate keyword variations"""        variations = [seed_keyword]
+        """Generate keyword variations"""
+        variations = [seed_keyword]
         
         # Add content type variations
         content_suffixes = {
@@ -853,7 +878,8 @@ class EnterpriseSEOOptimizerService:
         return variations[:20]  # Limit variations
 
     async def _generate_long_tail_keywords(self, primary_keywords: List[str], content_type: str) -> List[str]:
-        """Generate long-tail keyword phrases"""        long_tail = []
+        """Generate long-tail keyword phrases"""
+        long_tail = []
         
         modifiers = [
             "best", "top", "ultimate", "complete", "beginner", "advanced",
@@ -868,7 +894,8 @@ class EnterpriseSEOOptimizerService:
         return long_tail[:15]
 
     async def _generate_content_ideas(self, keywords: List[str], content_type: str) -> List[str]:
-        """Generate content ideas based on keywords"""        ideas = []
+        """Generate content ideas based on keywords"""
+        ideas = []
         
         content_templates = {
             'audio': [
@@ -906,7 +933,8 @@ class EnterpriseSEOOptimizerService:
         return ideas[:10]
 
     async def _cache_seo_analysis(self, title: str, analysis: SEOAnalysis) -> None:
-        """Cache SEO analysis results"""        try:
+        """Cache SEO analysis results"""
+        try:
             cache_key = f"seo_analysis:{hashlib.md5(title.encode()).hexdigest()}"
             self.redis_client.setex(
                 cache_key,
@@ -918,7 +946,8 @@ class EnterpriseSEOOptimizerService:
 
     # Legacy method for backward compatibility
     def optimize(self, asset: ContentAsset) -> dict:
-        """Legacy optimize method - deprecated, use analyze_content_seo instead"""        logger.warning("Using deprecated optimize method. Switch to analyze_content_seo")
+        """Legacy optimize method - deprecated, use analyze_content_seo instead"""
+        logger.warning("Using deprecated optimize method. Switch to analyze_content_seo")
         
         base = f"{asset.title} {asset.media_type} creator{asset.creator_id}"
         keywords: List[str] = list({w.lower() for w in base.split() if len(w) > 2})

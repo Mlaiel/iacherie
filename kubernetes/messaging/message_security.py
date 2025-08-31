@@ -12,7 +12,8 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
-"""import base64
+"""
+import base64
 import hashlib
 import logging
 import os
@@ -34,7 +35,8 @@ settings = get_settings()
 
 
 class SecurityConfig(BaseModel):
-    """Security configuration for messaging"""    encryption_enabled: bool = Field(default=True, description="Enable message encryption")
+    """Security configuration for messaging"""
+    encryption_enabled: bool = Field(default=True, description="Enable message encryption")
     signing_enabled: bool = Field(default=True, description="Enable message signing")
     key_rotation_interval: int = Field(default=86400, description="Key rotation interval in seconds")
     max_message_age: int = Field(default=3600, description="Maximum message age in seconds")
@@ -43,9 +45,11 @@ class SecurityConfig(BaseModel):
 
 
 class MessageSecurityManager:
-    """    Enterprise message security manager
+    """
+    Enterprise message security manager
     Handles encryption, signing, and security validation for messaging
-    """    def __init__(self, config: Optional[SecurityConfig] = None):
+    """
+    def __init__(self, config: Optional[SecurityConfig] = None):
         self.config = config or SecurityConfig()
         self.encryption_key: Optional[bytes] = None
         self.signing_key: Optional[rsa.RSAPrivateKey] = None
@@ -58,7 +62,8 @@ class MessageSecurityManager:
         self._initialize_security()
 
     def _initialize_security(self) -> None:
-        """Initialize security components"""        try:
+        """Initialize security components"""
+        try:
             # Generate or load encryption key
             self._setup_encryption_key()
             
@@ -76,7 +81,8 @@ class MessageSecurityManager:
             raise
 
     def _setup_encryption_key(self) -> None:
-        """Setup symmetric encryption key"""        try:
+        """Setup symmetric encryption key"""
+        try:
             # Try to load existing key
             key_file = "messaging_encryption.key"
             
@@ -100,7 +106,8 @@ class MessageSecurityManager:
             raise
 
     def _setup_signing_keys(self) -> None:
-        """Setup RSA key pair for message signing"""        try:
+        """Setup RSA key pair for message signing"""
+        try:
             private_key_file = "messaging_signing_private.pem"
             public_key_file = "messaging_signing_public.pem"
             
@@ -153,7 +160,8 @@ class MessageSecurityManager:
             raise
 
     def encrypt_message(self, message: Dict[str, Any]) -> Dict[str, Any]:
-        """Encrypt a message"""        try:
+        """Encrypt a message"""
+        try:
             if not self.config.encryption_enabled or not self.fernet:
                 return message
             
@@ -185,7 +193,8 @@ class MessageSecurityManager:
             raise
 
     def decrypt_message(self, encrypted_message: Dict[str, Any]) -> Dict[str, Any]:
-        """Decrypt a message"""        try:
+        """Decrypt a message"""
+        try:
             if not encrypted_message.get("encrypted", False):
                 return encrypted_message
             
@@ -218,7 +227,8 @@ class MessageSecurityManager:
             raise
 
     def sign_message(self, message: Dict[str, Any]) -> Dict[str, Any]:
-        """Sign a message for integrity verification"""        try:
+        """Sign a message for integrity verification"""
+        try:
             if not self.config.signing_enabled or not self.signing_key:
                 return message
             
@@ -256,7 +266,8 @@ class MessageSecurityManager:
             raise
 
     def verify_message_signature(self, signed_message: Dict[str, Any]) -> bool:
-        """Verify message signature"""        try:
+        """Verify message signature"""
+        try:
             if "_signature" not in signed_message:
                 return not self.config.signing_enabled  # Allow unsigned if signing disabled
             
@@ -309,7 +320,8 @@ class MessageSecurityManager:
             return False
 
     def secure_message(self, message: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply full security to message (sign + encrypt)"""        try:
+        """Apply full security to message (sign + encrypt)"""
+        try:
             # First sign the message
             signed_message = self.sign_message(message)
             
@@ -323,7 +335,8 @@ class MessageSecurityManager:
             raise
 
     def unsecure_message(self, secured_message: Dict[str, Any]) -> Dict[str, Any]:
-        """Remove security from message (decrypt + verify)"""        try:
+        """Remove security from message (decrypt + verify)"""
+        try:
             # First decrypt the message
             decrypted_message = self.decrypt_message(secured_message)
             
@@ -343,7 +356,8 @@ class MessageSecurityManager:
             raise
 
     def generate_message_id(self, message: Dict[str, Any]) -> str:
-        """Generate secure message ID"""        try:
+        """Generate secure message ID"""
+        try:
             # Create deterministic hash of message content
             message_str = str(sorted(message.items())).encode()
             message_hash = hashlib.sha256(message_str).digest()
@@ -360,7 +374,8 @@ class MessageSecurityManager:
             return f"msg_{int(time.time())}"
 
     def validate_message_format(self, message: Dict[str, Any]) -> bool:
-        """Validate message format and security"""        try:
+        """Validate message format and security"""
+        try:
             # Basic format validation
             if not isinstance(message, dict):
                 return False
@@ -398,7 +413,8 @@ class MessageSecurityManager:
             return False
 
     def sanitize_message(self, message: Dict[str, Any]) -> Dict[str, Any]:
-        """Sanitize message content"""        try:
+        """Sanitize message content"""
+        try:
             sanitized = {}
             
             for key, value in message.items():
@@ -433,7 +449,8 @@ class MessageSecurityManager:
             return message
 
     def _log_security_event(self, event_type: str, details: Dict[str, Any]) -> None:
-        """Log security event for audit"""        try:
+        """Log security event for audit"""
+        try:
             if not self.config.audit_logging:
                 return
             
@@ -456,7 +473,8 @@ class MessageSecurityManager:
             logger.error(f"Failed to log security event: {e}")
 
     def rotate_keys(self) -> bool:
-        """Rotate encryption and signing keys"""        try:
+        """Rotate encryption and signing keys"""
+        try:
             logger.info("Starting key rotation")
             
             # Backup current keys
@@ -490,7 +508,8 @@ class MessageSecurityManager:
             return False
 
     def _backup_current_keys(self) -> None:
-        """Backup current keys before rotation"""        try:
+        """Backup current keys before rotation"""
+        try:
             import shutil
             timestamp = int(time.time())
             
@@ -509,7 +528,8 @@ class MessageSecurityManager:
             logger.error(f"Failed to backup keys: {e}")
 
     def _save_keys(self) -> None:
-        """Save current keys to files"""        try:
+        """Save current keys to files"""
+        try:
             # Save encryption key
             with open("messaging_encryption.key", 'wb') as f:
                 f.write(self.encryption_key)
@@ -539,7 +559,8 @@ class MessageSecurityManager:
             raise
 
     def get_security_stats(self) -> Dict[str, Any]:
-        """Get security statistics"""        try:
+        """Get security statistics"""
+        try:
             # Count events by type
             event_counts = {}
             for event in self.audit_events:
@@ -561,7 +582,8 @@ class MessageSecurityManager:
             return {"error": str(e)}
 
     def get_audit_events(self, limit: int = 100) -> list:
-        """Get recent audit events"""        try:
+        """Get recent audit events"""
+        try:
             return self.audit_events[-limit:]
             
         except Exception as e:

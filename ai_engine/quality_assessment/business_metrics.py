@@ -12,7 +12,8 @@ intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, re
 distribution, modification, or appropriation of this code, in whole or in part, without 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueStream(Enum):
-    """Revenue stream types"""    SPONSORED_CONTENT = "sponsored_content"
+    """Revenue stream types"""
+    SPONSORED_CONTENT = "sponsored_content"
     AFFILIATE_MARKETING = "affiliate_marketing"
     PRODUCT_SALES = "product_sales"
     COURSE_SALES = "course_sales"
@@ -49,7 +51,8 @@ class RevenueStream(Enum):
 
 
 class BusinessModel(Enum):
-    """Business model types for creators"""    INFLUENCER = "influencer"
+    """Business model types for creators"""
+    INFLUENCER = "influencer"
     EDUCATOR = "educator"
     ENTERTAINER = "entertainer"
     CONSULTANT = "consultant"
@@ -60,14 +63,16 @@ class BusinessModel(Enum):
 
 
 class GrowthStage(Enum):
-    """Business growth stages"""    STARTUP = "startup"  # < 10K followers
+    """Business growth stages"""
+    STARTUP = "startup"  # < 10K followers
     EMERGING = "emerging"  # 10K - 100K followers
     ESTABLISHED = "established"  # 100K - 1M followers
     ENTERPRISE = "enterprise"  # > 1M followers
 
 
 class MonetizationMaturity(Enum):
-    """Monetization maturity levels"""    BEGINNER = "beginner"
+    """Monetization maturity levels"""
+    BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     EXPERT = "expert"
@@ -75,7 +80,8 @@ class MonetizationMaturity(Enum):
 
 @dataclass
 class AudienceMetrics:
-    """Audience-related business metrics"""    total_followers: int = field(default=0)
+    """Audience-related business metrics"""
+    total_followers: int = field(default=0)
     engagement_rate: float = field(default=0.0)
     audience_quality_score: float = field(default=50.0)
     
@@ -97,7 +103,8 @@ class AudienceMetrics:
 
 @dataclass
 class ContentPerformanceMetrics:
-    """Content performance business metrics"""    average_views: float = field(default=0.0)
+    """Content performance business metrics"""
+    average_views: float = field(default=0.0)
     average_engagement: float = field(default=0.0)
     content_consistency_score: float = field(default=50.0)
     
@@ -118,7 +125,8 @@ class ContentPerformanceMetrics:
 
 @dataclass
 class MonetizationMetrics:
-    """Monetization and revenue metrics"""    total_revenue: float = field(default=0.0)
+    """Monetization and revenue metrics"""
+    total_revenue: float = field(default=0.0)
     revenue_per_follower: float = field(default=0.0)
     revenue_per_post: float = field(default=0.0)
     
@@ -140,7 +148,8 @@ class MonetizationMetrics:
 
 @dataclass
 class BrandMetrics:
-    """Brand development and partnership metrics"""    brand_awareness_score: float = field(default=30.0)
+    """Brand development and partnership metrics"""
+    brand_awareness_score: float = field(default=30.0)
     brand_perception_score: float = field(default=50.0)
     brand_consistency_score: float = field(default=50.0)
     
@@ -162,7 +171,8 @@ class BrandMetrics:
 
 @dataclass
 class BusinessGrowthMetrics:
-    """Business growth and development metrics"""    growth_stage: GrowthStage = field(default=GrowthStage.STARTUP)
+    """Business growth and development metrics"""
+    growth_stage: GrowthStage = field(default=GrowthStage.STARTUP)
     growth_velocity: float = field(default=5.0)
     scalability_score: float = field(default=50.0)
     
@@ -184,7 +194,8 @@ class BusinessGrowthMetrics:
 
 @dataclass
 class BusinessHealthMetrics:
-    """Overall business health indicators"""    financial_stability_score: float = field(default=50.0)
+    """Overall business health indicators"""
+    financial_stability_score: float = field(default=50.0)
     operational_efficiency_score: float = field(default=50.0)
     strategic_position_score: float = field(default=50.0)
     
@@ -205,7 +216,8 @@ class BusinessHealthMetrics:
 
 @dataclass
 class BusinessMetricsProfile:
-    """Comprehensive business metrics profile"""    # Business identification
+    """Comprehensive business metrics profile"""
+    # Business identification
     business_model: BusinessModel = field(default=BusinessModel.INFLUENCER)
     monetization_maturity: MonetizationMaturity = field(default=MonetizationMaturity.BEGINNER)
     
@@ -235,7 +247,8 @@ class BusinessMetricsProfile:
 
 @dataclass
 class BusinessMetricsAnalysis:
-    """Business metrics analysis container"""    profile: BusinessMetricsProfile = field(default_factory=BusinessMetricsProfile)
+    """Business metrics analysis container"""
+    profile: BusinessMetricsProfile = field(default_factory=BusinessMetricsProfile)
     
     # Performance indicators
     revenue_efficiency: float = field(default=40.0)
@@ -260,7 +273,8 @@ class BusinessMetricsAnalysis:
 
 
 class BusinessMetricsAnalyzer(BaseAIModel):
-    """    Professional Business Metrics Analyzer
+    """
+    Professional Business Metrics Analyzer
     
     Provides comprehensive business intelligence for:
     - Content creators and influencers
@@ -268,9 +282,11 @@ class BusinessMetricsAnalyzer(BaseAIModel):
     - Digital marketing agencies
     - Brand partnership teams
     - Investment analysts in creator economy
-    """    
+    """
+    
     def __init__(self, config: Optional[ModelConfig] = None):
-        """Initialize business metrics analyzer"""        super().__init__(config or ModelConfig(
+        """Initialize business metrics analyzer"""
+        super().__init__(config or ModelConfig(
             name="business_metrics_analyzer",
             model_type=ModelType.BUSINESS_INTELLIGENCE,
             provider=ModelProvider.LOCAL
@@ -332,7 +348,8 @@ class BusinessMetricsAnalyzer(BaseAIModel):
         business_data: Dict[str, Any],
         analysis_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Comprehensive business metrics analysis
+        """
+        Comprehensive business metrics analysis
         
         Args:
             business_data: Business performance data and metrics
@@ -344,7 +361,8 @@ class BusinessMetricsAnalyzer(BaseAIModel):
         Raises:
             QualityCheckError: If analysis fails
             BusinessMetricsError: If business data is invalid
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             if not business_data:
@@ -494,7 +512,8 @@ class BusinessMetricsAnalyzer(BaseAIModel):
             raise QualityCheckError(f"Business metrics analysis failed: {str(e)}") from e
     
     async def _classify_business_model(self, business_data: Dict[str, Any], profile: BusinessMetricsProfile):
-        """Classify business model and monetization maturity"""        try:
+        """Classify business model and monetization maturity"""
+        try:
             content_type = business_data.get('content_type', 'general').lower()
             revenue_streams = business_data.get('revenue_streams', [])
             follower_count = business_data.get('followers', 0)
@@ -546,7 +565,8 @@ class BusinessMetricsAnalyzer(BaseAIModel):
             logger.warning(f"Business model classification failed: {str(e)}")
     
     async def _analyze_audience_metrics(self, business_data: Dict[str, Any], profile: BusinessMetricsProfile):
-        """Analyze audience-related business metrics"""        try:
+        """Analyze audience-related business metrics"""
+        try:
             audience_data = business_data.get('audience', {})
             engagement_data = business_data.get('engagement', {})
             
@@ -605,7 +625,8 @@ class BusinessMetricsAnalyzer(BaseAIModel):
             logger.warning(f"Audience metrics analysis failed: {str(e)}")
     
     async def _analyze_content_performance(self, business_data: Dict[str, Any], profile: BusinessMetricsProfile):
-        """Analyze content performance metrics"""        try:
+        """Analyze content performance metrics"""
+        try:
             content_data = business_data.get('content_performance', {})
             
             # Basic performance metrics
@@ -662,7 +683,8 @@ class BusinessMetricsAnalyzer(BaseAIModel):
             logger.warning(f"Content performance analysis failed: {str(e)}")
     
     async def _analyze_monetization_metrics(self, business_data: Dict[str, Any], profile: BusinessMetricsProfile):
-        """Analyze monetization and revenue metrics"""        try:
+        """Analyze monetization and revenue metrics"""
+        try:
             revenue_data = business_data.get('revenue', {})
             conversion_data = business_data.get('conversions', {})
             
@@ -727,7 +749,8 @@ class BusinessMetricsAnalyzer(BaseAIModel):
             logger.warning(f"Monetization metrics analysis failed: {str(e)}")
     
     async def _analyze_brand_metrics(self, business_data: Dict[str, Any], profile: BusinessMetricsProfile):
-        """Analyze brand development and partnership metrics"""        try:
+        """Analyze brand development and partnership metrics"""
+        try:
             brand_data = business_data.get('brand', {})
             partnership_data = business_data.get('partnerships', {})
             
@@ -775,7 +798,8 @@ class BusinessMetricsAnalyzer(BaseAIModel):
             logger.warning(f"Brand metrics analysis failed: {str(e)}")
     
     async def _analyze_growth_metrics(self, business_data: Dict[str, Any], profile: BusinessMetricsProfile):
-        """Analyze business growth and development metrics"""        try:
+        """Analyze business growth and development metrics"""
+        try:
             growth_data = business_data.get('growth', {})
             
             # Growth velocity (follower growth rate as proxy)
@@ -827,7 +851,8 @@ class BusinessMetricsAnalyzer(BaseAIModel):
             logger.warning(f"Growth metrics analysis failed: {str(e)}")
     
     async def _analyze_business_health(self, business_data: Dict[str, Any], profile: BusinessMetricsProfile):
-        """Analyze overall business health indicators"""        try:
+        """Analyze overall business health indicators"""
+        try:
             # Financial stability
             financial_factors = [
                 profile.monetization_metrics.profit_margin,
@@ -932,7 +957,8 @@ class BusinessMetricsAnalyzer(BaseAIModel):
             logger.warning(f"Business health analysis failed: {str(e)}")
     
     def _calculate_key_performance_indicators(self, profile: BusinessMetricsProfile):
-        """Calculate key performance indicators"""        try:
+        """Calculate key performance indicators"""
+        try:
             kpis = {}
             
             # Revenue KPIs
@@ -991,7 +1017,8 @@ class BusinessMetricsAnalyzer(BaseAIModel):
             logger.warning(f"KPI calculation failed: {str(e)}")
     
     def _calculate_competitive_benchmarks(self, profile: BusinessMetricsProfile):
-        """Calculate competitive benchmarks"""        try:
+        """Calculate competitive benchmarks"""
+        try:
             benchmarks = {}
             
             # Get industry benchmarks based on business model
@@ -1052,7 +1079,8 @@ class BusinessMetricsAnalyzer(BaseAIModel):
             logger.warning(f"Competitive benchmarks calculation failed: {str(e)}")
     
     def _generate_strategic_recommendations(self, profile: BusinessMetricsProfile):
-        """Generate strategic recommendations"""        recommendations = []
+        """Generate strategic recommendations"""
+        recommendations = []
         monetization_opportunities = []
         growth_strategies = []
         
@@ -1127,7 +1155,8 @@ class BusinessMetricsAnalyzer(BaseAIModel):
         profile.growth_strategies = growth_strategies
     
     def _identify_optimization_priorities(self, profile: BusinessMetricsProfile):
-        """Identify optimization priorities"""        priorities = []
+        """Identify optimization priorities"""
+        priorities = []
         
         # Score all areas and identify lowest-performing
         areas = {
@@ -1150,7 +1179,8 @@ class BusinessMetricsAnalyzer(BaseAIModel):
         profile.optimization_priorities = priorities
     
     async def _calculate_performance_indicators(self, profile: BusinessMetricsProfile, analysis: BusinessMetricsAnalysis):
-        """Calculate performance indicators"""        try:
+        """Calculate performance indicators"""
+        try:
             # Revenue efficiency
             revenue_factors = [
                 profile.monetization_metrics.profit_margin,
@@ -1195,7 +1225,8 @@ class BusinessMetricsAnalyzer(BaseAIModel):
             logger.warning(f"Performance indicators calculation failed: {str(e)}")
     
     async def _analyze_market_position(self, business_data: Dict[str, Any], profile: BusinessMetricsProfile, analysis: BusinessMetricsAnalysis):
-        """Analyze market position and opportunities"""        try:
+        """Analyze market position and opportunities"""
+        try:
             # Competitive position assessment
             performance_score = profile.business_performance_score
             
@@ -1257,7 +1288,8 @@ class BusinessMetricsAnalyzer(BaseAIModel):
             logger.warning(f"Market position analysis failed: {str(e)}")
     
     async def _project_future_performance(self, profile: BusinessMetricsProfile, analysis: BusinessMetricsAnalysis):
-        """Project future performance and risks"""        try:
+        """Project future performance and risks"""
+        try:
             # Growth projections (simplified linear projections)
             current_growth = profile.growth_metrics.growth_velocity
             
@@ -1315,7 +1347,8 @@ class BusinessMetricsAnalyzer(BaseAIModel):
             logger.warning(f"Future performance projection failed: {str(e)}")
     
     def _calculate_confidence(self, profile: BusinessMetricsProfile, business_data: Dict[str, Any]) -> float:
-        """Calculate analysis confidence score"""        confidence = 0.8  # Base confidence
+        """Calculate analysis confidence score"""
+        confidence = 0.8  # Base confidence
         
         # Adjust based on data completeness
         data_completeness_factors = [
@@ -1346,13 +1379,16 @@ class BusinessMetricsAnalyzer(BaseAIModel):
         return max(0.5, min(1.0, confidence))
 
     async def connect(self) -> bool:
-        """Connect to business metrics analysis service"""        return True
+        """Connect to business metrics analysis service"""
+        return True
     
     async def disconnect(self) -> bool:
-        """Disconnect from business metrics analysis service"""        return True
+        """Disconnect from business metrics analysis service"""
+        return True
     
     async def process(self, data: Any) -> Dict[str, Any]:
-        """Process business metrics data"""        return await self.analyze_business_metrics(data)
+        """Process business metrics data"""
+        return await self.analyze_business_metrics(data)
 
 
 # Global business metrics analyzer instance
@@ -1360,14 +1396,16 @@ class BusinessMetricsAnalyzer(BaseAIModel):
 
 
 async def analyze_business_performance(business_data: Dict[str, Any]) -> Dict[str, Any]:
-    """    Convenient function for business metrics analysis
+    """
+    Convenient function for business metrics analysis
     
     Args:
         business_data: Business performance data and metrics
         
     Returns:
         Dict containing business metrics analysis results
-    """    try:
+    """
+    try:
         result = await business_metrics_analyzer.analyze_business_metrics(business_data)
         return result
     except Exception as e:

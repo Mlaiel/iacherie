@@ -8,7 +8,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from dataclasses import dataclass, field
@@ -31,7 +32,8 @@ import re
 logger = logging.getLogger(__name__)
 
 class TrendType(Enum):
-    """Types of trends"""    CONTENT_THEME = "content_theme"
+    """Types of trends"""
+    CONTENT_THEME = "content_theme"
     HASHTAG = "hashtag"
     MUSIC = "music"
     VISUAL_STYLE = "visual_style"
@@ -41,7 +43,8 @@ class TrendType(Enum):
     ENGAGEMENT_PATTERN = "engagement_pattern"
 
 class TrendStatus(Enum):
-    """Trend lifecycle status"""    EMERGING = "emerging"
+    """Trend lifecycle status"""
+    EMERGING = "emerging"
     RISING = "rising"
     PEAK = "peak"
     DECLINING = "declining"
@@ -49,7 +52,8 @@ class TrendStatus(Enum):
     CYCLICAL = "cyclical"
 
 class Platform(Enum):
-    """Supported social media platforms"""    INSTAGRAM = "instagram"
+    """Supported social media platforms"""
+    INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
     TWITTER = "twitter"
@@ -60,7 +64,8 @@ class Platform(Enum):
 
 @dataclass
 class TrendData:
-    """Trend data point"""    trend_id: str
+    """Trend data point"""
+    trend_id: str
     name: str
     trend_type: TrendType
     platforms: List[Platform] = field(default_factory=list)
@@ -82,7 +87,8 @@ class TrendData:
 
 @dataclass
 class TrendPrediction:
-    """Trend prediction result"""    trend_id: str
+    """Trend prediction result"""
+    trend_id: str
     predicted_status: TrendStatus
     confidence: float
     growth_prediction: Dict[str, float] = field(default_factory=dict)
@@ -98,7 +104,8 @@ class TrendPrediction:
 
 @dataclass
 class TrendAlert:
-    """Trend alert notification"""    alert_id: str
+    """Trend alert notification"""
+    alert_id: str
     trend_id: str
     alert_type: str  # emerging, peak, declining, opportunity
     urgency: str  # low, medium, high, critical
@@ -109,7 +116,8 @@ class TrendAlert:
     created_at: datetime = field(default_factory=datetime.utcnow)
 
 class TrendAnalyzer:
-    """    Advanced trend analysis and prediction engine
+    """
+    Advanced trend analysis and prediction engine
     
     Capabilities:
     - Real-time trend detection across platforms
@@ -120,7 +128,8 @@ class TrendAnalyzer:
     - Viral content pattern recognition
     - Collaboration opportunity identification
     - Trend lifecycle management
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or self._get_default_config()
         self.trends: Dict[str, TrendData] = {}
@@ -132,7 +141,8 @@ class TrendAnalyzer:
         self.trend_network = nx.Graph()
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""        return {
+        """Get default configuration"""
+        return {
             'update_interval': timedelta(minutes=15),
             'min_engagement_threshold': 1000,
             'trend_confidence_threshold': 0.6,
@@ -153,7 +163,8 @@ class TrendAnalyzer:
         }
     
     async def initialize(self):
-        """Initialize trend analyzer"""        try:
+        """Initialize trend analyzer"""
+        try:
             logger.info("Initializing trend analyzer...")
             
             # Initialize platform APIs (placeholder - would need real API keys)
@@ -177,7 +188,8 @@ class TrendAnalyzer:
         time_window: timedelta = None,
         content_type: Optional[str] = None
     ) -> List[TrendData]:
-        """Detect emerging trends across platforms"""        try:
+        """Detect emerging trends across platforms"""
+        try:
             platforms = platforms or self.config['platforms_enabled']
             time_window = time_window or timedelta(hours=24)
             
@@ -217,7 +229,8 @@ class TrendAnalyzer:
         trend_id: str,
         prediction_horizon: timedelta = None
     ) -> TrendPrediction:
-        """Predict how a trend will evolve"""        try:
+        """Predict how a trend will evolve"""
+        try:
             if trend_id not in self.trends:
                 raise ValueError(f"Trend {trend_id} not found")
             
@@ -283,7 +296,8 @@ class TrendAnalyzer:
         creator_profile: Dict[str, Any],
         max_recommendations: int = 10
     ) -> List[Dict[str, Any]]:
-        """Get personalized trend recommendations for a creator"""        try:
+        """Get personalized trend recommendations for a creator"""
+        try:
             # Analyze creator profile and past content
             creator_analysis = await self._analyze_creator_profile(creator_id, creator_profile)
             
@@ -322,7 +336,8 @@ class TrendAnalyzer:
             return []
     
     async def analyze_trend_network(self) -> Dict[str, Any]:
-        """Analyze the network of trend relationships"""        try:
+        """Analyze the network of trend relationships"""
+        try:
             # Build trend network graph
             await self._build_trend_network()
             
@@ -363,7 +378,8 @@ class TrendAnalyzer:
         time_window: timedelta,
         content_type: Optional[str] = None
     ) -> List[TrendData]:
-        """Detect trends on a specific platform"""        try:
+        """Detect trends on a specific platform"""
+        try:
             trends = []
             
             # Platform-specific trend detection logic
@@ -388,7 +404,8 @@ class TrendAnalyzer:
         time_window: timedelta,
         content_type: Optional[str] = None
     ) -> List[TrendData]:
-        """Detect Instagram-specific trends"""        try:
+        """Detect Instagram-specific trends"""
+        try:
             trends = []
             
             # Simulate Instagram trend detection (in production, use Instagram API)
@@ -433,7 +450,8 @@ class TrendAnalyzer:
         time_window: timedelta,
         content_type: Optional[str] = None
     ) -> List[TrendData]:
-        """Detect TikTok-specific trends"""        try:
+        """Detect TikTok-specific trends"""
+        try:
             trends = []
             
             # Simulate TikTok trend detection
@@ -475,7 +493,8 @@ class TrendAnalyzer:
         time_window: timedelta,
         content_type: Optional[str] = None
     ) -> List[TrendData]:
-        """Detect YouTube-specific trends"""        try:
+        """Detect YouTube-specific trends"""
+        try:
             trends = []
             
             # Simulate YouTube trend detection
@@ -517,7 +536,8 @@ class TrendAnalyzer:
         time_window: timedelta,
         content_type: Optional[str] = None
     ) -> List[TrendData]:
-        """Detect Twitter-specific trends"""        try:
+        """Detect Twitter-specific trends"""
+        try:
             trends = []
             
             # Simulate Twitter trend detection
@@ -559,7 +579,8 @@ class TrendAnalyzer:
         self,
         platform_trends: List[TrendData]
     ) -> List[TrendData]:
-        """Find trends that span multiple platforms"""        try:
+        """Find trends that span multiple platforms"""
+        try:
             cross_platform_trends = []
             
             # Group trends by keywords and themes
@@ -607,7 +628,8 @@ class TrendAnalyzer:
             return []
     
     async def _generate_trend_alerts(self, trends: List[TrendData]):
-        """Generate alerts for significant trends"""        try:
+        """Generate alerts for significant trends"""
+        try:
             for trend in trends:
                 # Check for alert conditions
                 if trend.confidence_score >= self.config['alert_thresholds']['viral_potential']:
@@ -644,7 +666,8 @@ class TrendAnalyzer:
             logger.error(f"Error generating trend alerts: {e}")
     
     async def _initialize_platform_apis(self):
-        """Initialize platform API connections"""        # Placeholder for platform API initialization
+        """Initialize platform API connections"""
+        # Placeholder for platform API initialization
         # In production, would initialize real API connections
         self.platform_apis = {
             Platform.INSTAGRAM: None,  # Instagram Basic Display API
@@ -655,7 +678,8 @@ class TrendAnalyzer:
         }
     
     async def _initialize_ml_models(self):
-        """Initialize ML models for trend prediction"""        try:
+        """Initialize ML models for trend prediction"""
+        try:
             # Initialize trend classification model
             self.ml_models['trend_classifier'] = None  # Would load trained model
             
@@ -671,7 +695,8 @@ class TrendAnalyzer:
             logger.error(f"Error initializing ML models: {e}")
     
     async def _start_real_time_monitoring(self):
-        """Start real-time trend monitoring"""        try:
+        """Start real-time trend monitoring"""
+        try:
             while True:
                 # Detect new trends
                 new_trends = await self.detect_emerging_trends()
@@ -693,7 +718,8 @@ class TrendAnalyzer:
         time_period: timedelta = None,
         platforms: List[Platform] = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive trending report"""        try:
+        """Generate comprehensive trending report"""
+        try:
             time_period = time_period or timedelta(days=7)
             platforms = platforms or self.config['platforms_enabled']
             cutoff_time = datetime.utcnow() - time_period

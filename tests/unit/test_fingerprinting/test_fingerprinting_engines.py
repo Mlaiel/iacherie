@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -13,7 +14,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 """Comprehensive tests for fingerprinting engines
 Tests all audio, video, image, and text fingerprinting capabilities
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -43,14 +45,16 @@ except ImportError as e:
 
 
 class TestAudioFingerprintEngine:
-    """Test suite for audio fingerprinting functionality"""    
+    """Test suite for audio fingerprinting functionality"""
+    
     @pytest.fixture
     def audio_engine(self):
         return AudioFingerprintEngine()
     
     @pytest.fixture
     def sample_audio_data(self):
-        """Generate sample audio data for testing"""        # Generate 5 seconds of sample audio at 44.1kHz
+        """Generate sample audio data for testing"""
+        # Generate 5 seconds of sample audio at 44.1kHz
         duration = 5.0
         sample_rate = 44100
         t = np.linspace(0, duration, int(sample_rate * duration))
@@ -64,7 +68,8 @@ class TestAudioFingerprintEngine:
     
     @pytest.mark.asyncio
     async def test_generate_audio_fingerprint(self, audio_engine, sample_audio_data):
-        """Test basic audio fingerprint generation"""        audio_data, sample_rate = sample_audio_data
+        """Test basic audio fingerprint generation"""
+        audio_data, sample_rate = sample_audio_data
         
         fingerprint = await audio_engine.generate_fingerprint(
             audio_data, sample_rate
@@ -76,7 +81,8 @@ class TestAudioFingerprintEngine:
     
     @pytest.mark.asyncio
     async def test_chromaprint_algorithm(self, audio_engine, sample_audio_data):
-        """Test Chromaprint-specific fingerprinting"""        audio_data, sample_rate = sample_audio_data
+        """Test Chromaprint-specific fingerprinting"""
+        audio_data, sample_rate = sample_audio_data
         
         fingerprint = await audio_engine.generate_chromaprint_fingerprint(
             audio_data, sample_rate
@@ -87,7 +93,8 @@ class TestAudioFingerprintEngine:
     
     @pytest.mark.asyncio
     async def test_spectral_analysis(self, audio_engine, sample_audio_data):
-        """Test spectral analysis fingerprinting"""        audio_data, sample_rate = sample_audio_data
+        """Test spectral analysis fingerprinting"""
+        audio_data, sample_rate = sample_audio_data
         
         spectral_features = await audio_engine.analyze_spectral_features(
             audio_data, sample_rate
@@ -100,7 +107,8 @@ class TestAudioFingerprintEngine:
     
     @pytest.mark.asyncio
     async def test_melody_fingerprint(self, audio_engine, sample_audio_data):
-        """Test melody-based fingerprinting"""        audio_data, sample_rate = sample_audio_data
+        """Test melody-based fingerprinting"""
+        audio_data, sample_rate = sample_audio_data
         
         melody_fingerprint = await audio_engine.extract_melody_fingerprint(
             audio_data, sample_rate
@@ -111,7 +119,8 @@ class TestAudioFingerprintEngine:
     
     @pytest.mark.asyncio
     async def test_beat_pattern_detection(self, audio_engine, sample_audio_data):
-        """Test rhythm/beat pattern fingerprinting"""        audio_data, sample_rate = sample_audio_data
+        """Test rhythm/beat pattern fingerprinting"""
+        audio_data, sample_rate = sample_audio_data
         
         beat_features = await audio_engine.extract_beat_patterns(
             audio_data, sample_rate
@@ -122,7 +131,8 @@ class TestAudioFingerprintEngine:
         assert beat_features['tempo'] > 0
     
     def test_similarity_calculation(self, audio_engine):
-        """Test fingerprint similarity calculation"""        # Mock fingerprints
+        """Test fingerprint similarity calculation"""
+        # Mock fingerprints
         fp1 = np.random.rand(128)
         fp2 = fp1 + 0.1 * np.random.rand(128)  # Similar fingerprint
         fp3 = np.random.rand(128)  # Different fingerprint
@@ -136,14 +146,16 @@ class TestAudioFingerprintEngine:
 
 
 class TestVideoFingerprintEngine:
-    """Test suite for video fingerprinting functionality"""    
+    """Test suite for video fingerprinting functionality"""
+    
     @pytest.fixture
     def video_engine(self):
         return VideoFingerprintEngine()
     
     @pytest.fixture
     def sample_video_frames(self):
-        """Generate sample video frames for testing"""        frames = []
+        """Generate sample video frames for testing"""
+        frames = []
         for i in range(30):  # 30 frames
             # Create random 480x360 RGB frames
             frame = np.random.randint(0, 256, (360, 480, 3), dtype=np.uint8)
@@ -152,7 +164,8 @@ class TestVideoFingerprintEngine:
     
     @pytest.mark.asyncio
     async def test_frame_analysis(self, video_engine, sample_video_frames):
-        """Test individual frame analysis"""        frame = sample_video_frames[0]
+        """Test individual frame analysis"""
+        frame = sample_video_frames[0]
         
         frame_features = await video_engine.analyze_frame(frame)
         
@@ -162,7 +175,8 @@ class TestVideoFingerprintEngine:
     
     @pytest.mark.asyncio
     async def test_motion_detection(self, video_engine, sample_video_frames):
-        """Test motion detection between frames"""        frame1 = sample_video_frames[0]
+        """Test motion detection between frames"""
+        frame1 = sample_video_frames[0]
         frame2 = sample_video_frames[1]
         
         motion_features = await video_engine.detect_motion(frame1, frame2)
@@ -173,7 +187,8 @@ class TestVideoFingerprintEngine:
     
     @pytest.mark.asyncio
     async def test_object_detection(self, video_engine, sample_video_frames):
-        """Test YOLO object detection"""        frame = sample_video_frames[0]
+        """Test YOLO object detection"""
+        frame = sample_video_frames[0]
         
         with patch.object(video_engine, 'yolo_model') as mock_yolo:
             mock_yolo.detect.return_value = [
@@ -189,7 +204,8 @@ class TestVideoFingerprintEngine:
     
     @pytest.mark.asyncio
     async def test_scene_classification(self, video_engine, sample_video_frames):
-        """Test scene classification"""        frame = sample_video_frames[0]
+        """Test scene classification"""
+        frame = sample_video_frames[0]
         
         scene_class = await video_engine.classify_scene(frame)
         
@@ -198,7 +214,8 @@ class TestVideoFingerprintEngine:
     
     @pytest.mark.asyncio
     async def test_video_fingerprint_generation(self, video_engine, sample_video_frames):
-        """Test complete video fingerprint generation"""        fingerprint = await video_engine.generate_fingerprint(sample_video_frames)
+        """Test complete video fingerprint generation"""
+        fingerprint = await video_engine.generate_fingerprint(sample_video_frames)
         
         assert fingerprint is not None
         assert 'temporal_features' in fingerprint
@@ -207,14 +224,16 @@ class TestVideoFingerprintEngine:
 
 
 class TestImageFingerprintEngine:
-    """Test suite for image fingerprinting functionality"""    
+    """Test suite for image fingerprinting functionality"""
+    
     @pytest.fixture
     def image_engine(self):
         return ImageFingerprintEngine()
     
     @pytest.fixture
     def sample_image(self):
-        """Generate sample image for testing"""        # Create a 256x256 RGB image with some patterns
+        """Generate sample image for testing"""
+        # Create a 256x256 RGB image with some patterns
         image = np.zeros((256, 256, 3), dtype=np.uint8)
         
         # Add some geometric shapes
@@ -229,7 +248,8 @@ class TestImageFingerprintEngine:
     
     @pytest.mark.asyncio
     async def test_perceptual_hash(self, image_engine, sample_image):
-        """Test perceptual hashing (pHash, aHash, dHash)"""        hashes = await image_engine.generate_perceptual_hashes(sample_image)
+        """Test perceptual hashing (pHash, aHash, dHash)"""
+        hashes = await image_engine.generate_perceptual_hashes(sample_image)
         
         assert 'phash' in hashes
         assert 'ahash' in hashes
@@ -238,7 +258,8 @@ class TestImageFingerprintEngine:
     
     @pytest.mark.asyncio
     async def test_clip_embeddings(self, image_engine, sample_image):
-        """Test CLIP-based image embeddings"""        with patch.object(image_engine, 'clip_model') as mock_clip:
+        """Test CLIP-based image embeddings"""
+        with patch.object(image_engine, 'clip_model') as mock_clip:
             mock_clip.encode_image.return_value = np.random.rand(512)
             
             embeddings = await image_engine.generate_clip_embeddings(sample_image)
@@ -249,7 +270,8 @@ class TestImageFingerprintEngine:
     
     @pytest.mark.asyncio
     async def test_sift_features(self, image_engine, sample_image):
-        """Test SIFT feature detection"""        sift_features = await image_engine.extract_sift_features(sample_image)
+        """Test SIFT feature detection"""
+        sift_features = await image_engine.extract_sift_features(sample_image)
         
         assert 'keypoints' in sift_features
         assert 'descriptors' in sift_features
@@ -257,14 +279,16 @@ class TestImageFingerprintEngine:
     
     @pytest.mark.asyncio
     async def test_color_histogram(self, image_engine, sample_image):
-        """Test color histogram analysis"""        histogram = await image_engine.compute_color_histogram(sample_image)
+        """Test color histogram analysis"""
+        histogram = await image_engine.compute_color_histogram(sample_image)
         
         assert histogram is not None
         assert len(histogram) > 0
         assert np.sum(histogram) > 0  # Should have some color distribution
     
     def test_hash_similarity(self, image_engine):
-        """Test hash similarity calculation"""        hash1 = "abcd1234"
+        """Test hash similarity calculation"""
+        hash1 = "abcd1234"
         hash2 = "abcd1235"  # Similar hash (1 bit different)
         hash3 = "efgh5678"  # Different hash
         
@@ -275,14 +299,16 @@ class TestImageFingerprintEngine:
 
 
 class TestTextFingerprintEngine:
-    """Test suite for text fingerprinting functionality"""    
+    """Test suite for text fingerprinting functionality"""
+    
     @pytest.fixture
     def text_engine(self):
         return TextFingerprintEngine()
     
     @pytest.fixture
     def sample_texts(self):
-        """Sample texts for testing"""        return {
+        """Sample texts for testing"""
+        return {
             'original': "This is an original piece of creative writing about artificial intelligence and machine learning.",
             'similar': "This is an original piece of creative content about AI and machine learning.",
             'different': "Completely different content about cooking recipes and food preparation.",
@@ -291,7 +317,8 @@ class TestTextFingerprintEngine:
     
     @pytest.mark.asyncio
     async def test_bert_embeddings(self, text_engine, sample_texts):
-        """Test BERT-based text embeddings"""        text = sample_texts['original']
+        """Test BERT-based text embeddings"""
+        text = sample_texts['original']
         
         with patch.object(text_engine, 'bert_model') as mock_bert:
             mock_bert.encode.return_value = np.random.rand(768)
@@ -304,7 +331,8 @@ class TestTextFingerprintEngine:
     
     @pytest.mark.asyncio
     async def test_semantic_similarity(self, text_engine, sample_texts):
-        """Test semantic similarity calculation"""        original = sample_texts['original']
+        """Test semantic similarity calculation"""
+        original = sample_texts['original']
         similar = sample_texts['similar']
         different = sample_texts['different']
         
@@ -320,7 +348,8 @@ class TestTextFingerprintEngine:
     
     @pytest.mark.asyncio
     async def test_plagiarism_detection(self, text_engine, sample_texts):
-        """Test plagiarism detection"""        original = sample_texts['original']
+        """Test plagiarism detection"""
+        original = sample_texts['original']
         plagiarized = sample_texts['plagiarized']
         
         plagiarism_score = await text_engine.detect_plagiarism(original, plagiarized)
@@ -330,7 +359,8 @@ class TestTextFingerprintEngine:
     
     @pytest.mark.asyncio
     async def test_language_detection(self, text_engine):
-        """Test language detection"""        texts = {
+        """Test language detection"""
+        texts = {
             'en': "This is English text",
             'fr': "Ceci est un texte français",
             'es': "Este es un texto en español",
@@ -343,7 +373,8 @@ class TestTextFingerprintEngine:
             assert detected_lang is not None
     
     def test_text_preprocessing(self, text_engine):
-        """Test text preprocessing"""        raw_text = "  This is a TEXT with MIXED case, punctuation!!! And extra    spaces.  "
+        """Test text preprocessing"""
+        raw_text = "  This is a TEXT with MIXED case, punctuation!!! And extra    spaces.  "
         
         processed = text_engine.preprocess_text(raw_text)
         
@@ -353,14 +384,16 @@ class TestTextFingerprintEngine:
 
 
 class TestVectorMatchingEngine:
-    """Test suite for vector matching and similarity search"""    
+    """Test suite for vector matching and similarity search"""
+    
     @pytest.fixture
     def vector_engine(self):
         return VectorMatchingEngine(dimension=128)
     
     @pytest.fixture
     def sample_vectors(self):
-        """Generate sample vectors for testing"""        vectors = []
+        """Generate sample vectors for testing"""
+        vectors = []
         for i in range(100):
             # Create some structured vectors with slight variations
             base_vector = np.random.rand(128)
@@ -372,14 +405,16 @@ class TestVectorMatchingEngine:
     
     @pytest.mark.asyncio
     async def test_index_creation(self, vector_engine, sample_vectors):
-        """Test FAISS index creation and population"""        await vector_engine.build_index(sample_vectors)
+        """Test FAISS index creation and population"""
+        await vector_engine.build_index(sample_vectors)
         
         assert vector_engine.index is not None
         assert vector_engine.index.ntotal == len(sample_vectors)
     
     @pytest.mark.asyncio
     async def test_similarity_search(self, vector_engine, sample_vectors):
-        """Test similarity search functionality"""        await vector_engine.build_index(sample_vectors)
+        """Test similarity search functionality"""
+        await vector_engine.build_index(sample_vectors)
         
         query_vector = sample_vectors[0]  # Use first vector as query
         
@@ -394,7 +429,8 @@ class TestVectorMatchingEngine:
     
     @pytest.mark.asyncio
     async def test_batch_processing(self, vector_engine, sample_vectors):
-        """Test batch processing capabilities"""        # Split vectors into batches
+        """Test batch processing capabilities"""
+        # Split vectors into batches
         batch_size = 20
         batches = [
             sample_vectors[i:i+batch_size] 
@@ -407,7 +443,8 @@ class TestVectorMatchingEngine:
         assert vector_engine.index.ntotal == len(sample_vectors)
     
     def test_threshold_optimization(self, vector_engine):
-        """Test similarity threshold optimization"""        # Mock some similarity scores
+        """Test similarity threshold optimization"""
+        # Mock some similarity scores
         true_positives = [0.95, 0.87, 0.91, 0.83, 0.89]
         false_positives = [0.72, 0.68, 0.75, 0.71, 0.69]
         
@@ -420,10 +457,12 @@ class TestVectorMatchingEngine:
 
 
 class TestFingerprintingIntegration:
-    """Integration tests for complete fingerprinting workflow"""    
+    """Integration tests for complete fingerprinting workflow"""
+    
     @pytest.mark.asyncio
     async def test_end_to_end_audio_workflow(self):
-        """Test complete audio fingerprinting workflow"""        # This would test the entire pipeline from audio file to searchable fingerprint
+        """Test complete audio fingerprinting workflow"""
+        # This would test the entire pipeline from audio file to searchable fingerprint
         audio_engine = AudioFingerprintEngine()
         vector_engine = VectorMatchingEngine(dimension=128)
         
@@ -445,7 +484,8 @@ class TestFingerprintingIntegration:
     
     @pytest.mark.asyncio
     async def test_performance_benchmarks(self):
-        """Test performance benchmarks for fingerprinting"""        audio_engine = AudioFingerprintEngine()
+        """Test performance benchmarks for fingerprinting"""
+        audio_engine = AudioFingerprintEngine()
         
         # Test processing time for different audio lengths
         test_cases = [

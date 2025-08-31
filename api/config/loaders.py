@@ -4,7 +4,8 @@ Advanced configuration loading system supporting multiple formats and sources
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""import os
+"""
+import os
 import json
 import yaml
 import toml
@@ -24,17 +25,21 @@ logger = logging.getLogger(__name__)
 
 
 class ConfigurationLoader(ABC):
-    """Abstract base class for configuration loaders"""    
+    """Abstract base class for configuration loaders"""
+    
     @abstractmethod
     def load(self, source: str) -> Dict[str, Any]:
-        """Load configuration from source"""        pass
+        """Load configuration from source"""
+        pass
     
     @abstractmethod
     def supports(self, source: str) -> bool:
-        """Check if loader supports the given source"""        pass
+        """Check if loader supports the given source"""
+        pass
     
     def _merge_configs(self, base: Dict[str, Any], override: Dict[str, Any]) -> Dict[str, Any]:
-        """Deep merge two configuration dictionaries"""        result = base.copy()
+        """Deep merge two configuration dictionaries"""
+        result = base.copy()
         
         for key, value in override.items():
             if key in result and isinstance(result[key], dict) and isinstance(value, dict):
@@ -46,12 +51,15 @@ class ConfigurationLoader(ABC):
 
 
 class YAMLConfigLoader(ConfigurationLoader):
-    """YAML configuration file loader"""    
+    """YAML configuration file loader"""
+    
     def supports(self, source: str) -> bool:
-        """Check if source is a YAML file"""        return source.lower().endswith(('.yaml', '.yml'))
+        """Check if source is a YAML file"""
+        return source.lower().endswith(('.yaml', '.yml'))
     
     def load(self, source: str) -> Dict[str, Any]:
-        """Load configuration from YAML file"""        try:
+        """Load configuration from YAML file"""
+        try:
             file_path = Path(source).expanduser()
             if not file_path.exists():
                 raise FileNotFoundError(f"YAML config file not found: {source}")
@@ -70,10 +78,12 @@ class YAMLConfigLoader(ConfigurationLoader):
             raise
     
     def _process_config(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Process loaded configuration for environment variable substitution"""        return self._substitute_env_vars(config)
+        """Process loaded configuration for environment variable substitution"""
+        return self._substitute_env_vars(config)
     
     def _substitute_env_vars(self, obj: Any) -> Any:
-        """Recursively substitute environment variables in configuration"""        if isinstance(obj, dict):
+        """Recursively substitute environment variables in configuration"""
+        if isinstance(obj, dict):
             return {key: self._substitute_env_vars(value) for key, value in obj.items()}
         elif isinstance(obj, list):
             return [self._substitute_env_vars(item) for item in obj]
@@ -91,12 +101,15 @@ class YAMLConfigLoader(ConfigurationLoader):
 
 
 class JSONConfigLoader(ConfigurationLoader):
-    """JSON configuration file loader"""    
+    """JSON configuration file loader"""
+    
     def supports(self, source: str) -> bool:
-        """Check if source is a JSON file"""        return source.lower().endswith('.json')
+        """Check if source is a JSON file"""
+        return source.lower().endswith('.json')
     
     def load(self, source: str) -> Dict[str, Any]:
-        """Load configuration from JSON file"""        try:
+        """Load configuration from JSON file"""
+        try:
             file_path = Path(source).expanduser()
             if not file_path.exists():
                 raise FileNotFoundError(f"JSON config file not found: {source}")
@@ -115,10 +128,12 @@ class JSONConfigLoader(ConfigurationLoader):
             raise
     
     def _process_config(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Process loaded configuration"""        return self._substitute_env_vars(config)
+        """Process loaded configuration"""
+        return self._substitute_env_vars(config)
     
     def _substitute_env_vars(self, obj: Any) -> Any:
-        """Recursively substitute environment variables in configuration"""        if isinstance(obj, dict):
+        """Recursively substitute environment variables in configuration"""
+        if isinstance(obj, dict):
             return {key: self._substitute_env_vars(value) for key, value in obj.items()}
         elif isinstance(obj, list):
             return [self._substitute_env_vars(item) for item in obj]
@@ -134,12 +149,15 @@ class JSONConfigLoader(ConfigurationLoader):
 
 
 class TOMLConfigLoader(ConfigurationLoader):
-    """TOML configuration file loader"""    
+    """TOML configuration file loader"""
+    
     def supports(self, source: str) -> bool:
-        """Check if source is a TOML file"""        return source.lower().endswith('.toml')
+        """Check if source is a TOML file"""
+        return source.lower().endswith('.toml')
     
     def load(self, source: str) -> Dict[str, Any]:
-        """Load configuration from TOML file"""        try:
+        """Load configuration from TOML file"""
+        try:
             file_path = Path(source).expanduser()
             if not file_path.exists():
                 raise FileNotFoundError(f"TOML config file not found: {source}")
@@ -158,16 +176,20 @@ class TOMLConfigLoader(ConfigurationLoader):
             raise
     
     def _process_config(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Process loaded configuration"""        return config  # TOML doesn't support env var substitution by default
+        """Process loaded configuration"""
+        return config  # TOML doesn't support env var substitution by default
 
 
 class INIConfigLoader(ConfigurationLoader):
-    """INI configuration file loader"""    
+    """INI configuration file loader"""
+    
     def supports(self, source: str) -> bool:
-        """Check if source is an INI file"""        return source.lower().endswith(('.ini', '.cfg', '.conf'))
+        """Check if source is an INI file"""
+        return source.lower().endswith(('.ini', '.cfg', '.conf'))
     
     def load(self, source: str) -> Dict[str, Any]:
-        """Load configuration from INI file"""        try:
+        """Load configuration from INI file"""
+        try:
             file_path = Path(source).expanduser()
             if not file_path.exists():
                 raise FileNotFoundError(f"INI config file not found: {source}")
@@ -191,10 +213,12 @@ class INIConfigLoader(ConfigurationLoader):
             raise
     
     def _process_config(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Process loaded configuration with type conversion"""        return self._convert_types(config)
+        """Process loaded configuration with type conversion"""
+        return self._convert_types(config)
     
     def _convert_types(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Convert string values to appropriate types"""        result = {}
+        """Convert string values to appropriate types"""
+        result = {}
         for key, value in config.items():
             if isinstance(value, dict):
                 result[key] = self._convert_types(value)
@@ -205,7 +229,8 @@ class INIConfigLoader(ConfigurationLoader):
         return result
     
     def _convert_string_value(self, value: str) -> Any:
-        """Convert string value to appropriate type"""        # Boolean conversion
+        """Convert string value to appropriate type"""
+        # Boolean conversion
         if value.lower() in ('true', 'yes', '1', 'on'):
             return True
         elif value.lower() in ('false', 'no', '0', 'off'):
@@ -228,21 +253,26 @@ class INIConfigLoader(ConfigurationLoader):
 
 
 class EnvironmentConfigLoader(ConfigurationLoader):
-    """Environment variables configuration loader"""    
+    """Environment variables configuration loader"""
+    
     def __init__(self, prefix: str = "IA_INFLUENCER_", separator: str = "__"):
-        """        Initialize environment loader
+        """
+        Initialize environment loader
         
         Args:
             prefix: Environment variable prefix to filter
             separator: Separator for nested keys (e.g., DB__HOST -> db.host)
-        """        self.prefix = prefix
+        """
+        self.prefix = prefix
         self.separator = separator
     
     def supports(self, source: str) -> bool:
-        """Always supports environment loading"""        return source == "environment" or source.startswith("env:")
+        """Always supports environment loading"""
+        return source == "environment" or source.startswith("env:")
     
     def load(self, source: str) -> Dict[str, Any]:
-        """Load configuration from environment variables"""        config = {}
+        """Load configuration from environment variables"""
+        config = {}
         
         for key, value in os.environ.items():
             if not key.startswith(self.prefix):
@@ -261,7 +291,8 @@ class EnvironmentConfigLoader(ConfigurationLoader):
         return config
     
     def _set_nested_value(self, config: Dict[str, Any], key_path: str, value: str):
-        """Set nested configuration value"""        keys = key_path.split(self.separator)
+        """Set nested configuration value"""
+        keys = key_path.split(self.separator)
         current = config
         
         for key in keys[:-1]:
@@ -272,7 +303,8 @@ class EnvironmentConfigLoader(ConfigurationLoader):
         current[keys[-1]] = self._convert_env_value(value)
     
     def _convert_env_value(self, value: str) -> Any:
-        """Convert environment variable string to appropriate type"""        # Boolean conversion
+        """Convert environment variable string to appropriate type"""
+        # Boolean conversion
         if value.lower() in ('true', 'yes', '1', 'on'):
             return True
         elif value.lower() in ('false', 'no', '0', 'off'):
@@ -303,18 +335,22 @@ class EnvironmentConfigLoader(ConfigurationLoader):
 
 
 class S3ConfigLoader(ConfigurationLoader):
-    """AWS S3 configuration file loader"""    
+    """AWS S3 configuration file loader"""
+    
     def __init__(self, aws_access_key_id: str = None, aws_secret_access_key: str = None, 
                  region_name: str = None):
-        """Initialize S3 loader with credentials"""        self.aws_access_key_id = aws_access_key_id or os.getenv('AWS_ACCESS_KEY_ID')
+        """Initialize S3 loader with credentials"""
+        self.aws_access_key_id = aws_access_key_id or os.getenv('AWS_ACCESS_KEY_ID')
         self.aws_secret_access_key = aws_secret_access_key or os.getenv('AWS_SECRET_ACCESS_KEY')
         self.region_name = region_name or os.getenv('AWS_DEFAULT_REGION', 'us-east-1')
     
     def supports(self, source: str) -> bool:
-        """Check if source is an S3 URL"""        return source.startswith('s3://')
+        """Check if source is an S3 URL"""
+        return source.startswith('s3://')
     
     def load(self, source: str) -> Dict[str, Any]:
-        """Load configuration from S3 object"""        try:
+        """Load configuration from S3 object"""
+        try:
             # Parse S3 URL
             parsed = urlparse(source)
             bucket_name = parsed.netloc
@@ -357,18 +393,22 @@ class S3ConfigLoader(ConfigurationLoader):
 
 
 class HTTPConfigLoader(ConfigurationLoader):
-    """HTTP/HTTPS configuration loader"""    
+    """HTTP/HTTPS configuration loader"""
+    
     def __init__(self, timeout: int = 30, headers: Dict[str, str] = None):
-        """Initialize HTTP loader"""        self.timeout = timeout
+        """Initialize HTTP loader"""
+        self.timeout = timeout
         self.headers = headers or {
             'User-Agent': 'IA-Influencer-Agent-Config-Loader/1.0'
         }
     
     def supports(self, source: str) -> bool:
-        """Check if source is an HTTP URL"""        return source.startswith(('http://', 'https://'))
+        """Check if source is an HTTP URL"""
+        return source.startswith(('http://', 'https://'))
     
     def load(self, source: str) -> Dict[str, Any]:
-        """Load configuration from HTTP endpoint"""        try:
+        """Load configuration from HTTP endpoint"""
+        try:
             response = requests.get(source, headers=self.headers, timeout=self.timeout)
             response.raise_for_status()
             
@@ -403,16 +443,20 @@ class HTTPConfigLoader(ConfigurationLoader):
 
 
 class RedisConfigLoader(ConfigurationLoader):
-    """Redis configuration loader"""    
+    """Redis configuration loader"""
+    
     def __init__(self, redis_url: str = None):
-        """Initialize Redis loader"""        self.redis_url = redis_url or os.getenv('REDIS_CONFIG_URL', 'redis://localhost:6379/10')
+        """Initialize Redis loader"""
+        self.redis_url = redis_url or os.getenv('REDIS_CONFIG_URL', 'redis://localhost:6379/10')
         self.redis_client = None
     
     def supports(self, source: str) -> bool:
-        """Check if source is Redis"""        return source.startswith('redis://') or source == 'redis'
+        """Check if source is Redis"""
+        return source.startswith('redis://') or source == 'redis'
     
     def load(self, source: str) -> Dict[str, Any]:
-        """Load configuration from Redis"""        try:
+        """Load configuration from Redis"""
+        try:
             if not self.redis_client:
                 redis_url = source if source.startswith('redis://') else self.redis_url
                 self.redis_client = redis.from_url(redis_url)
@@ -452,7 +496,8 @@ class RedisConfigLoader(ConfigurationLoader):
             raise
     
     def _set_nested_value(self, config: Dict[str, Any], key_path: str, value: Any):
-        """Set nested configuration value"""        keys = key_path.split('.')
+        """Set nested configuration value"""
+        keys = key_path.split('.')
         current = config
         
         for key in keys[:-1]:
@@ -464,15 +509,19 @@ class RedisConfigLoader(ConfigurationLoader):
 
 
 class DatabaseConfigLoader(ConfigurationLoader):
-    """Database configuration loader"""    
+    """Database configuration loader"""
+    
     def __init__(self, database_url: str):
-        """Initialize database loader"""        self.database_url = database_url
+        """Initialize database loader"""
+        self.database_url = database_url
     
     def supports(self, source: str) -> bool:
-        """Check if source is database"""        return source.startswith(('postgresql://', 'mysql://', 'sqlite://')) or source == 'database'
+        """Check if source is database"""
+        return source.startswith(('postgresql://', 'mysql://', 'sqlite://')) or source == 'database'
     
     def load(self, source: str) -> Dict[str, Any]:
-        """Load configuration from database"""        try:
+        """Load configuration from database"""
+        try:
             from sqlalchemy import create_engine, text
             
             db_url = source if source.startswith(('postgresql://', 'mysql://', 'sqlite://')) else self.database_url
@@ -507,7 +556,8 @@ class DatabaseConfigLoader(ConfigurationLoader):
             raise
     
     def _set_nested_value(self, config: Dict[str, Any], key_path: str, value: Any):
-        """Set nested configuration value"""        keys = key_path.split('.')
+        """Set nested configuration value"""
+        keys = key_path.split('.')
         current = config
         
         for key in keys[:-1]:
@@ -519,13 +569,15 @@ class DatabaseConfigLoader(ConfigurationLoader):
 
 
 class ConfigLoaderRegistry:
-    """Registry for configuration loaders"""    
+    """Registry for configuration loaders"""
+    
     def __init__(self):
         self.loaders: List[ConfigurationLoader] = []
         self._register_default_loaders()
     
     def _register_default_loaders(self):
-        """Register default configuration loaders"""        self.register(YAMLConfigLoader())
+        """Register default configuration loaders"""
+        self.register(YAMLConfigLoader())
         self.register(JSONConfigLoader())
         self.register(TOMLConfigLoader())
         self.register(INIConfigLoader())
@@ -535,16 +587,19 @@ class ConfigLoaderRegistry:
         self.register(RedisConfigLoader())
     
     def register(self, loader: ConfigurationLoader):
-        """Register a configuration loader"""        self.loaders.append(loader)
+        """Register a configuration loader"""
+        self.loaders.append(loader)
     
     def get_loader(self, source: str) -> Optional[ConfigurationLoader]:
-        """Get appropriate loader for source"""        for loader in self.loaders:
+        """Get appropriate loader for source"""
+        for loader in self.loaders:
             if loader.supports(source):
                 return loader
         return None
     
     def load_config(self, sources: List[str]) -> Dict[str, Any]:
-        """Load configuration from multiple sources"""        merged_config = {}
+        """Load configuration from multiple sources"""
+        merged_config = {}
         
         for source in sources:
             try:
@@ -569,18 +624,21 @@ loader_registry = ConfigLoaderRegistry()
 
 
 def load_configuration(sources: Union[str, List[str]]) -> Dict[str, Any]:
-    """Load configuration from one or more sources"""    if isinstance(sources, str):
+    """Load configuration from one or more sources"""
+    if isinstance(sources, str):
         sources = [sources]
     
     return loader_registry.load_config(sources)
 
 
 def register_custom_loader(loader: ConfigurationLoader):
-    """Register a custom configuration loader"""    loader_registry.register(loader)
+    """Register a custom configuration loader"""
+    loader_registry.register(loader)
 
 
 def create_config_from_dict(config_dict: Dict[str, Any], config_class=None):
-    """Create configuration object from dictionary"""    if config_class is None:
+    """Create configuration object from dictionary"""
+    if config_class is None:
         from .app_config import AppConfig
         config_class = AppConfig
     

@@ -19,7 +19,8 @@ Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou tentative de reverse engineering
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
-"""from typing import Dict, List, Optional, Any, Union, Set, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, Set, Tuple
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types de collaboration disponibles"""    MUSIC_COLLAB = "music_collaboration"
+    """Types de collaboration disponibles"""
+    MUSIC_COLLAB = "music_collaboration"
     VIDEO_PRODUCTION = "video_production"
     CONTENT_CREATION = "content_creation"
     REMIX_PROJECT = "remix_project"
@@ -49,7 +51,8 @@ class CollaborationType(Enum):
 
 
 class MatchingEventType(Enum):
-    """Types d'événements de matching"""    NEW_MATCH_FOUND = "new_match_found"
+    """Types d'événements de matching"""
+    NEW_MATCH_FOUND = "new_match_found"
     COLLABORATION_PROPOSED = "collaboration_proposed"
     PROPOSAL_ACCEPTED = "proposal_accepted"
     PROPOSAL_DECLINED = "proposal_declined"
@@ -64,7 +67,8 @@ class MatchingEventType(Enum):
 
 
 class SkillCategory(Enum):
-    """Catégories de compétences pour le matching"""    MUSIC_PRODUCTION = "music_production"
+    """Catégories de compétences pour le matching"""
+    MUSIC_PRODUCTION = "music_production"
     VOCAL_PERFORMANCE = "vocal_performance"
     INSTRUMENTAL = "instrumental"
     VIDEO_EDITING = "video_editing"
@@ -79,7 +83,8 @@ class SkillCategory(Enum):
 
 
 class ProjectStatus(Enum):
-    """Statut des projets collaboratifs"""    PROPOSED = "proposed"
+    """Statut des projets collaboratifs"""
+    PROPOSED = "proposed"
     ACCEPTED = "accepted"
     IN_PROGRESS = "in_progress"
     REVIEW = "review"
@@ -90,7 +95,8 @@ class ProjectStatus(Enum):
 
 @dataclass
 class CollaboratorProfile:
-    """Profil d'un collaborateur potentiel"""    user_id: str
+    """Profil d'un collaborateur potentiel"""
+    user_id: str
     username: str
     display_name: str
     skills: List[SkillCategory]
@@ -107,7 +113,8 @@ class CollaboratorProfile:
 
 @dataclass
 class CollaborationOpportunity:
-    """Opportunité de collaboration"""    opportunity_id: str
+    """Opportunité de collaboration"""
+    opportunity_id: str
     initiator_id: str
     collaboration_type: CollaborationType
     title: str
@@ -126,7 +133,8 @@ class CollaborationOpportunity:
 
 @dataclass
 class CollaborationNotificationData:
-    """Données de notification de collaboration"""    user_id: str
+    """Données de notification de collaboration"""
+    user_id: str
     event_type: MatchingEventType
     collaboration_type: CollaborationType
     opportunity: Optional[CollaborationOpportunity]
@@ -141,19 +149,23 @@ class CollaborationNotificationData:
 
 
 class CollaborationMatchingManager:
-    """    Gestionnaire de notifications pour les opportunités de collaboration.
+    """
+    Gestionnaire de notifications pour les opportunités de collaboration.
     
     Ce gestionnaire orchestre le matching entre créateurs, gère les propositions
     de collaboration et suit l'évolution des projets collaboratifs.
-    """    
+    """
+    
     def __init__(self, db_pool: asyncpg.Pool, redis_client: aioredis.Redis, config: Dict[str, Any]):
-        """        Initialise le gestionnaire de collaboration.
+        """
+        Initialise le gestionnaire de collaboration.
         
         Args:
             db_pool: Pool de connexions PostgreSQL
             redis_client: Client Redis pour cache et matching en temps réel
             config: Configuration du gestionnaire
-        """        self.db_pool = db_pool
+        """
+        self.db_pool = db_pool
         self.redis = redis_client
         self.config = config
         
@@ -195,7 +207,8 @@ class CollaborationMatchingManager:
         notification_data: CollaborationNotificationData,
         notification_channels: List[str] = None
     ) -> Dict[str, Any]:
-        """        Traite une notification de collaboration.
+        """
+        Traite une notification de collaboration.
         
         Args:
             notification_data: Données de la notification
@@ -203,7 +216,8 @@ class CollaborationMatchingManager:
             
         Returns:
             Résultat du traitement
-        """        try:
+        """
+        try:
             event_type = notification_data.event_type
             
             # Channels par défaut si non spécifiés
@@ -253,7 +267,8 @@ class CollaborationMatchingManager:
         self, 
         data: CollaborationNotificationData
     ) -> Dict[str, Any]:
-        """Prépare les données du message selon le type d'événement"""        
+        """Prépare les données du message selon le type d'événement"""
+        
         base_data = {
             "user_id": data.user_id,
             "event_type": data.event_type.value,
@@ -485,15 +500,18 @@ class CollaborationMatchingManager:
         data: CollaborationNotificationData,
         message_data: Dict[str, Any]
     ) -> str:
-        """Stocke la notification de collaboration en base de données"""        
-        query = """        INSERT INTO collaboration_matching_notifications (
+        """Stocke la notification de collaboration en base de données"""
+        
+        query = """
+        INSERT INTO collaboration_matching_notifications (
             user_id, event_type, collaboration_type, opportunity_id, 
             matched_collaborator_id, project_id, proposal_id, match_score,
             compatibility_factors, recommendation_reasons, priority_score,
             metadata, message_data, priority, category, action_required, created_at
         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, NOW())
         RETURNING id
-        """        
+        """
+        
         async with self.db_pool.acquire() as conn:
             notification_id = await conn.fetchval(
                 query,
@@ -521,7 +539,8 @@ class CollaborationMatchingManager:
         self,
         data: CollaborationNotificationData
     ):
-        """Traitement spécialisé selon le type d'événement"""        
+        """Traitement spécialisé selon le type d'événement"""
+        
         try:
             event_type = data.event_type
             
@@ -550,7 +569,8 @@ class CollaborationMatchingManager:
             logger.error(f"Erreur traitement spécialisé collaboration {event_type.value}: {str(e)}")
 
     async def _get_default_channels(self, event_type: MatchingEventType, priority_score: float) -> List[str]:
-        """Retourne les canaux par défaut selon l'événement et la priorité"""        
+        """Retourne les canaux par défaut selon l'événement et la priorité"""
+        
         # Événements haute priorité nécessitant action immédiate
         if event_type in [
             MatchingEventType.COLLABORATION_PROPOSED,
@@ -573,7 +593,8 @@ class CollaborationMatchingManager:
         opportunity: CollaborationOpportunity,
         max_matches: int = 10
     ) -> List[Tuple[CollaboratorProfile, float]]:
-        """        Trouve des matches de collaboration pour une opportunité donnée.
+        """
+        Trouve des matches de collaboration pour une opportunité donnée.
         
         Args:
             user_id: ID de l'utilisateur initiateur
@@ -582,7 +603,8 @@ class CollaborationMatchingManager:
             
         Returns:
             Liste des profils matchés avec leur score
-        """        try:
+        """
+        try:
             # Récupérer le profil de l'initiateur
             initiator_profile = await self._get_user_profile(user_id)
             
@@ -612,10 +634,12 @@ class CollaborationMatchingManager:
             return []
 
     async def get_collaboration_dashboard_data(self, user_id: str) -> Dict[str, Any]:
-        """Récupère les données du tableau de bord de collaboration"""        
+        """Récupère les données du tableau de bord de collaboration"""
+        
         # Statistiques récentes
         async with self.db_pool.acquire() as conn:
-            collab_stats = await conn.fetchrow("""            SELECT 
+            collab_stats = await conn.fetchrow("""
+            SELECT 
                 COUNT(*) as total_events,
                 COUNT(*) FILTER (WHERE event_type = 'new_match_found') as new_matches,
                 COUNT(*) FILTER (WHERE event_type = 'collaboration_proposed') as proposals_received,
@@ -627,7 +651,8 @@ class CollaborationMatchingManager:
             """, user_id)
             
             # Projets actifs
-            active_projects = await conn.fetch("""            SELECT project_id, collaboration_type, created_at,
+            active_projects = await conn.fetch("""
+            SELECT project_id, collaboration_type, created_at,
                    metadata->>'project_title' as title,
                    metadata->>'completion_percentage' as completion
             FROM collaboration_matching_notifications
@@ -653,13 +678,15 @@ class CollaborationMatchingManager:
         }
 
     async def get_collaboration_metrics(self) -> Dict[str, Any]:
-        """Retourne les métriques système de collaboration"""        
+        """Retourne les métriques système de collaboration"""
+        
         # Métriques Redis temps réel
         redis_metrics = await self.redis.hgetall("collaboration:metrics")
         
         # Métriques base de données
         async with self.db_pool.acquire() as conn:
-            db_metrics = await conn.fetchrow("""            SELECT 
+            db_metrics = await conn.fetchrow("""
+            SELECT 
                 COUNT(*) as total_notifications,
                 COUNT(DISTINCT user_id) as active_users,
                 COUNT(DISTINCT project_id) as active_projects,
@@ -689,11 +716,13 @@ class CollaborationMatchingManager:
         collaborator: CollaboratorProfile, 
         opportunity: CollaborationOpportunity
     ) -> float:
-        """Calcule le score de matching entre deux profils"""        # Implémentation de l'algorithme de matching
+        """Calcule le score de matching entre deux profils"""
+        # Implémentation de l'algorithme de matching
         return 0.75  # Score exemple
 
     async def _get_user_profile(self, user_id: str) -> Optional[CollaboratorProfile]:
-        """Récupère le profil d'un utilisateur"""        # Stub - retourner un profil depuis la DB
+        """Récupère le profil d'un utilisateur"""
+        # Stub - retourner un profil depuis la DB
         return None
 
     async def _get_potential_collaborators(
@@ -701,53 +730,69 @@ class CollaborationMatchingManager:
         opportunity: CollaborationOpportunity, 
         exclude_user_id: str
     ) -> List[CollaboratorProfile]:
-        """Récupère les collaborateurs potentiels pour une opportunité"""        return []
+        """Récupère les collaborateurs potentiels pour une opportunité"""
+        return []
 
     async def _calculate_compatibility_score(self, data: CollaborationNotificationData) -> float:
-        """Calcule le score de compatibilité"""        return data.match_score * 0.9
+        """Calcule le score de compatibilité"""
+        return data.match_score * 0.9
 
     async def _find_shared_genres(self, data: CollaborationNotificationData) -> List[str]:
-        """Trouve les genres musicaux partagés"""        return ["Pop", "Electronic"]
+        """Trouve les genres musicaux partagés"""
+        return ["Pop", "Electronic"]
 
     async def _compare_experience_levels(self, data: CollaborationNotificationData) -> str:
-        """Compare les niveaux d'expérience"""        return "compatible"
+        """Compare les niveaux d'expérience"""
+        return "compatible"
 
     async def _get_project_milestones(self, project_id: str) -> List[Dict[str, Any]]:
-        """Récupère les jalons d'un projet"""        return [{"name": "Phase 1", "due_date": "2025-02-01"}]
+        """Récupère les jalons d'un projet"""
+        return [{"name": "Phase 1", "due_date": "2025-02-01"}]
 
     async def _get_alternative_matches(self, user_id: str, collab_type: CollaborationType) -> List[Dict[str, Any]]:
-        """Trouve des matches alternatifs"""        return []
+        """Trouve des matches alternatifs"""
+        return []
 
     async def _get_project_team(self, project_id: str) -> List[Dict[str, str]]:
-        """Récupère l'équipe d'un projet"""        return []
+        """Récupère l'équipe d'un projet"""
+        return []
 
     async def _get_personalized_recommendations(self, user_id: str) -> List[Dict[str, Any]]:
-        """Génère des recommandations personnalisées"""        return []
+        """Génère des recommandations personnalisées"""
+        return []
 
     def _calculate_completion_rate(self) -> float:
-        """Calcule le taux de completion des projets"""        return 0.85
+        """Calcule le taux de completion des projets"""
+        return 0.85
 
     # Méthodes de traitement spécialisé (stubs)
     async def _process_new_match(self, data: CollaborationNotificationData):
-        """Traite un nouveau match"""        pass
+        """Traite un nouveau match"""
+        pass
 
     async def _track_proposal(self, data: CollaborationNotificationData):
-        """Suit une proposition"""        pass
+        """Suit une proposition"""
+        pass
 
     async def _initialize_project(self, data: CollaborationNotificationData):
-        """Initialise un projet"""        pass
+        """Initialise un projet"""
+        pass
 
     async def _setup_collaboration_environment(self, data: CollaborationNotificationData):
-        """Configure l'environnement de collaboration"""        pass
+        """Configure l'environnement de collaboration"""
+        pass
 
     async def _update_project_progress(self, data: CollaborationNotificationData):
-        """Met à jour le progrès du projet"""        pass
+        """Met à jour le progrès du projet"""
+        pass
 
     async def _finalize_project(self, data: CollaborationNotificationData):
-        """Finalise un projet"""        pass
+        """Finalise un projet"""
+        pass
 
     async def _register_skill_opportunity(self, data: CollaborationNotificationData):
-        """Enregistre une opportunité de compétence"""        pass
+        """Enregistre une opportunité de compétence"""
+        pass
 
     # Méthodes de cache et métriques
     async def _cache_collaboration_data(
@@ -756,7 +801,8 @@ class CollaborationMatchingManager:
         message_data: Dict[str, Any],
         notification_data: CollaborationNotificationData
     ):
-        """Met en cache les données de collaboration"""        
+        """Met en cache les données de collaboration"""
+        
         cache_data = {
             "notification_id": notification_id,
             "event_type": notification_data.event_type.value,
@@ -787,7 +833,8 @@ class CollaborationMatchingManager:
         event_type: MatchingEventType, 
         data: CollaborationNotificationData
     ):
-        """Met à jour les métriques de collaboration"""        
+        """Met à jour les métriques de collaboration"""
+        
         # Incrémenter compteurs Redis
         await self.redis.hincrby("collaboration:metrics", f"event:{event_type.value}", 1)
         await self.redis.hincrby("collaboration:metrics", f"type:{data.collaboration_type.value}", 1)
@@ -809,7 +856,8 @@ class CollaborationMatchingManager:
         message_data: Dict[str, Any],
         channels: List[str]
     ) -> Dict[str, Any]:
-        """Envoie les notifications sur les canaux spécifiés"""        
+        """Envoie les notifications sur les canaux spécifiés"""
+        
         delivery_results = {}
         
         for channel in channels:

@@ -14,7 +14,8 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 
 Business Logic: Quality data aggregation → Multi-dimensional scoring → 
 Trend analysis → Performance optimization → Business intelligence insights
-"""import logging
+"""
+import logging
 import numpy as np
 from datetime import datetime, timedelta
 from typing import Dict, Any, List, Optional, Tuple, Union
@@ -32,7 +33,8 @@ from ..models.quality_models import QualityMetrics, QualityTrend, QualityBenchma
 
 
 class MetricType(Enum):
-    """Types of quality metrics"""    TECHNICAL = "technical"
+    """Types of quality metrics"""
+    TECHNICAL = "technical"
     AESTHETIC = "aesthetic"
     BUSINESS = "business"
     PERFORMANCE = "performance"
@@ -41,7 +43,8 @@ class MetricType(Enum):
 
 
 class AggregationMethod(Enum):
-    """Methods for metric aggregation"""    MEAN = "mean"
+    """Methods for metric aggregation"""
+    MEAN = "mean"
     MEDIAN = "median"
     WEIGHTED_AVERAGE = "weighted_average"
     PERCENTILE_90 = "percentile_90"
@@ -52,7 +55,8 @@ class AggregationMethod(Enum):
 
 @dataclass
 class QualityDimension:
-    """Quality dimension with scoring parameters"""    name: str
+    """Quality dimension with scoring parameters"""
+    name: str
     weight: float
     min_score: float = 0.0
     max_score: float = 1.0
@@ -64,7 +68,8 @@ class QualityDimension:
 
 @dataclass
 class MetricCalculationResult:
-    """Result of metric calculation"""    overall_score: float
+    """Result of metric calculation"""
+    overall_score: float
     dimension_scores: Dict[str, float]
     technical_metrics: Dict[str, Any]
     aesthetic_metrics: Dict[str, Any]
@@ -79,11 +84,13 @@ class MetricCalculationResult:
 
 
 class QualityMetricsEngine:
-    """    Advanced quality metrics calculation and analytics engine.
+    """
+    Advanced quality metrics calculation and analytics engine.
     
     Provides multi-dimensional quality scoring, trend analysis, benchmarking,
     and actionable insights for content quality optimization.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -305,7 +312,8 @@ class QualityMetricsEngine:
         compliance_results: Dict[str, Any],
         context: Optional[Dict[str, Any]] = None
     ) -> MetricCalculationResult:
-        """        Calculate comprehensive quality metrics for content.
+        """
+        Calculate comprehensive quality metrics for content.
         
         Args:
             content_data: Content data to analyze
@@ -317,7 +325,8 @@ class QualityMetricsEngine:
             
         Returns:
             MetricCalculationResult: Comprehensive quality metrics
-        """        try:
+        """
+        try:
             self.logger.info(f"Calculating quality metrics for {content_type} content")
             
             # Calculate dimension-specific metrics
@@ -421,7 +430,8 @@ class QualityMetricsEngine:
         content_type: str,
         validation_results: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate technical quality metrics."""        metrics = {}
+        """Calculate technical quality metrics."""
+        metrics = {}
         
         # Extract technical data from validation results
         technical_checks = validation_results.get('technical_checks', {})
@@ -500,7 +510,8 @@ class QualityMetricsEngine:
         content_type: str,
         validation_results: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate aesthetic quality metrics."""        metrics = {}
+        """Calculate aesthetic quality metrics."""
+        metrics = {}
         quality_metrics = validation_results.get('quality_metrics', {})
         
         if content_type in ['image', 'video']:
@@ -558,7 +569,8 @@ class QualityMetricsEngine:
         content_type: str,
         context: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate business value metrics."""        metrics = {}
+        """Calculate business value metrics."""
+        metrics = {}
         
         # SEO potential
         if content_type == 'text':
@@ -627,7 +639,8 @@ class QualityMetricsEngine:
         content_type: str,
         validation_results: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate performance-related metrics."""        metrics = {}
+        """Calculate performance-related metrics."""
+        metrics = {}
         technical_checks = validation_results.get('technical_checks', {})
         
         # File size efficiency
@@ -694,7 +707,8 @@ class QualityMetricsEngine:
         compliance_results: Dict[str, Any],
         content_type: str
     ) -> Dict[str, float]:
-        """Calculate compliance-related metrics."""        metrics = {}
+        """Calculate compliance-related metrics."""
+        metrics = {}
         
         # Compliance score from results
         compliance_score = compliance_results.get('score', 1.0)
@@ -729,7 +743,8 @@ class QualityMetricsEngine:
         content_type: str,
         validation_results: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate user experience metrics."""        metrics = {}
+        """Calculate user experience metrics."""
+        metrics = {}
         quality_metrics = validation_results.get('quality_metrics', {})
         
         # Accessibility
@@ -779,7 +794,8 @@ class QualityMetricsEngine:
         metrics: Dict[str, float],
         dimension: QualityDimension
     ) -> float:
-        """Aggregate metrics into dimension score."""        if not metrics:
+        """Aggregate metrics into dimension score."""
+        if not metrics:
             return 0.5
         
         values = list(metrics.values())
@@ -803,7 +819,8 @@ class QualityMetricsEngine:
             return np.mean(values)
     
     def _calculate_overall_score(self, dimension_scores: Dict[str, float]) -> float:
-        """Calculate overall quality score from dimension scores."""        weighted_sum = 0.0
+        """Calculate overall quality score from dimension scores."""
+        weighted_sum = 0.0
         total_weight = 0.0
         
         for dimension_name, score in dimension_scores.items():
@@ -825,7 +842,8 @@ class QualityMetricsEngine:
         technical_metrics: Dict[str, float],
         aesthetic_metrics: Dict[str, float]
     ) -> Dict[str, Any]:
-        """Generate quality indicators and flags."""        indicators = {}
+        """Generate quality indicators and flags."""
+        indicators = {}
         
         # Overall quality level
         overall_score = self._calculate_overall_score(dimension_scores)
@@ -879,7 +897,8 @@ class QualityMetricsEngine:
         technical_metrics: Dict[str, float],
         aesthetic_metrics: Dict[str, float]
     ) -> Dict[str, float]:
-        """Compare metrics to industry benchmarks."""        benchmark_scores = {}
+        """Compare metrics to industry benchmarks."""
+        benchmark_scores = {}
         
         if content_type in self.benchmarks:
             benchmarks = self.benchmarks[content_type]
@@ -921,7 +940,8 @@ class QualityMetricsEngine:
         quality_indicators: Dict[str, Any],
         benchmarks: Dict[str, float]
     ) -> List[str]:
-        """Generate actionable recommendations based on metrics."""        recommendations = []
+        """Generate actionable recommendations based on metrics."""
+        recommendations = []
         
         # Dimension-based recommendations
         for dimension, score in dimension_scores.items():
@@ -968,7 +988,8 @@ class QualityMetricsEngine:
         validation_results: Dict[str, Any],
         integrity_results: Dict[str, Any]
     ) -> float:
-        """Calculate confidence score in the quality assessment."""        confidence_factors = []
+        """Calculate confidence score in the quality assessment."""
+        confidence_factors = []
         
         # Data completeness
         if technical_metrics:
@@ -995,7 +1016,8 @@ class QualityMetricsEngine:
         overall_score: float,
         dimension_scores: Dict[str, float]
     ):
-        """Store metrics for trend analysis."""        timestamp = datetime.utcnow()
+        """Store metrics for trend analysis."""
+        timestamp = datetime.utcnow()
         
         # Store overall score
         self.metric_history[f'{content_type}_overall'].append({
@@ -1016,7 +1038,8 @@ class QualityMetricsEngine:
         dimension: Optional[str] = None,
         timeframe: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """Get quality trends and analysis."""        trends = {}
+        """Get quality trends and analysis."""
+        trends = {}
         cutoff_time = datetime.utcnow() - timeframe
         
         # Filter relevant metrics
@@ -1041,7 +1064,8 @@ class QualityMetricsEngine:
         return trends
     
     def _analyze_trend(self, data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze trend from historical data."""        if len(data) < 2:
+        """Analyze trend from historical data."""
+        if len(data) < 2:
             return {'trend': 'insufficient_data', 'direction': 'unknown'}
         
         scores = [entry['score'] for entry in data]
@@ -1072,11 +1096,13 @@ class QualityMetricsEngine:
 
 
 class ContentQualityScorer:
-    """    Specialized content quality scoring engine for IA Influencer platform.
+    """
+    Specialized content quality scoring engine for IA Influencer platform.
     
     Provides content-type specific scoring algorithms optimized for creators
     across music, video, image, and text content with platform-specific optimizations.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.ContentQualityScorer")
@@ -1118,7 +1144,8 @@ class ContentQualityScorer:
         quality_metrics: Dict[str, Any],
         platform_target: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Calculate comprehensive content quality score."""        try:
+        """Calculate comprehensive content quality score."""
+        try:
             scorer_method = getattr(self, f'_score_{content_type}', None)
             if not scorer_method:
                 return self._score_generic(quality_metrics)
@@ -1145,7 +1172,8 @@ class ContentQualityScorer:
         metrics: Dict[str, Any],
         platform_target: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Score audio/music content quality."""        scores = {}
+        """Score audio/music content quality."""
+        scores = {}
         weights = self.scoring_weights['audio_music']
         
         # Technical quality scoring
@@ -1227,7 +1255,8 @@ class ContentQualityScorer:
         metrics: Dict[str, Any],
         platform_target: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Score video content quality."""        scores = {}
+        """Score video content quality."""
+        scores = {}
         weights = self.scoring_weights['video_content']
         
         # Video quality scoring
@@ -1330,7 +1359,8 @@ class ContentQualityScorer:
         metrics: Dict[str, Any],
         platform_target: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Score image/photo content quality."""        scores = {}
+        """Score image/photo content quality."""
+        scores = {}
         weights = self.scoring_weights['image_photo']
         
         # Technical quality scoring
@@ -1422,7 +1452,8 @@ class ContentQualityScorer:
         metrics: Dict[str, Any],
         platform_target: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Score text content quality."""        scores = {}
+        """Score text content quality."""
+        scores = {}
         weights = self.scoring_weights['text_content']
         
         # Readability scoring
@@ -1525,7 +1556,8 @@ class ContentQualityScorer:
         }
     
     def _score_generic(self, metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Generic scoring for unknown content types."""        # Simple scoring based on available metrics
+        """Generic scoring for unknown content types."""
+        # Simple scoring based on available metrics
         score = 0.5  # Default neutral score
         
         if 'overall_quality_score' in metrics:
@@ -1546,7 +1578,8 @@ class ContentQualityScorer:
         platform_target: str,
         content_type: str
     ) -> Dict[str, Any]:
-        """Apply platform-specific scoring adjustments."""        # Platform-specific bonuses/penalties
+        """Apply platform-specific scoring adjustments."""
+        # Platform-specific bonuses/penalties
         platform_adjustments = {
             'spotify': {
                 'audio_music': {'technical_quality': 0.1, 'platform_compliance': 0.15}
@@ -1588,7 +1621,8 @@ class ContentQualityScorer:
         return score_result
     
     def _get_quality_level(self, score: float) -> str:
-        """Convert numerical score to quality level."""        if score >= 0.9:
+        """Convert numerical score to quality level."""
+        if score >= 0.9:
             return 'excellent'
         elif score >= 0.8:
             return 'very_good'
@@ -1606,7 +1640,8 @@ class ContentQualityScorer:
         scores: Dict[str, float],
         metrics: Dict[str, Any]
     ) -> List[str]:
-        """Generate audio-specific optimization suggestions."""        suggestions = []
+        """Generate audio-specific optimization suggestions."""
+        suggestions = []
         
         if scores.get('technical_quality', 0) < 0.7:
             suggestions.append("Improve audio technical quality: use higher sample rate (44.1kHz+) and bit depth")
@@ -1628,7 +1663,8 @@ class ContentQualityScorer:
         metrics: Dict[str, Any],
         platform_target: Optional[str] = None
     ) -> List[str]:
-        """Generate video-specific optimization suggestions."""        suggestions = []
+        """Generate video-specific optimization suggestions."""
+        suggestions = []
         
         if scores.get('video_quality', 0) < 0.7:
             suggestions.append("Improve video quality: increase resolution to 1080p+ and enhance sharpness")
@@ -1654,7 +1690,8 @@ class ContentQualityScorer:
         metrics: Dict[str, Any],
         platform_target: Optional[str] = None
     ) -> List[str]:
-        """Generate image-specific optimization suggestions."""        suggestions = []
+        """Generate image-specific optimization suggestions."""
+        suggestions = []
         
         if scores.get('technical_quality', 0) < 0.7:
             suggestions.append("Improve image technical quality: increase resolution and reduce noise")
@@ -1678,7 +1715,8 @@ class ContentQualityScorer:
         metrics: Dict[str, Any],
         platform_target: Optional[str] = None
     ) -> List[str]:
-        """Generate text-specific optimization suggestions."""        suggestions = []
+        """Generate text-specific optimization suggestions."""
+        suggestions = []
         
         if scores.get('readability', 0) < 0.7:
             suggestions.append("Improve readability: use shorter sentences and simpler vocabulary")
@@ -1696,11 +1734,13 @@ class ContentQualityScorer:
 
 
 class PerformanceMetricsCalculator:
-    """    Performance metrics calculator for system and content processing performance.
+    """
+    Performance metrics calculator for system and content processing performance.
     
     Monitors processing speed, resource utilization, throughput, and system efficiency
     for the IA Influencer platform quality management system.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.PerformanceMetricsCalculator")
@@ -1728,7 +1768,8 @@ class PerformanceMetricsCalculator:
         content_size: int,
         resource_usage: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Calculate comprehensive performance metrics."""        try:
+        """Calculate comprehensive performance metrics."""
+        try:
             metrics = {}
             current_time = datetime.now()
             
@@ -1770,7 +1811,8 @@ class PerformanceMetricsCalculator:
         processing_time: float,
         content_size: int
     ) -> float:
-        """Calculate processing efficiency score."""        threshold_key = f'{content_type}_processing_time'
+        """Calculate processing efficiency score."""
+        threshold_key = f'{content_type}_processing_time'
         if threshold_key not in self.performance_thresholds:
             return 0.8  # Default good efficiency
         
@@ -1796,7 +1838,8 @@ class PerformanceMetricsCalculator:
         return efficiency
     
     def _calculate_throughput(self, content_type: str, processing_time: float) -> float:
-        """Calculate processing throughput."""        if processing_time <= 0:
+        """Calculate processing throughput."""
+        if processing_time <= 0:
             return 0.0
         
         # Items per minute
@@ -1815,7 +1858,8 @@ class PerformanceMetricsCalculator:
         return throughput
     
     def _calculate_resource_metrics(self, resource_usage: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate resource utilization metrics."""        metrics = {}
+        """Calculate resource utilization metrics."""
+        metrics = {}
         
         # CPU utilization
         if 'cpu_percent' in resource_usage:
@@ -1842,7 +1886,8 @@ class PerformanceMetricsCalculator:
         return metrics
     
     def _analyze_performance_trends(self, content_type: str) -> Dict[str, Any]:
-        """Analyze performance trends for the content type."""        trends = {}
+        """Analyze performance trends for the content type."""
+        trends = {}
         
         # Recent throughput trend
         if content_type in self.throughput_metrics:
@@ -1867,7 +1912,8 @@ class PerformanceMetricsCalculator:
         return trends
     
     def _calculate_trend_direction(self, values: List[float], reverse: bool = False) -> str:
-        """Calculate trend direction from a series of values."""        if len(values) < 2:
+        """Calculate trend direction from a series of values."""
+        if len(values) < 2:
             return 'stable'
         
         # Simple linear trend
@@ -1885,7 +1931,8 @@ class PerformanceMetricsCalculator:
             return 'stable'
     
     def _calculate_overall_performance_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate overall performance score."""        score_components = []
+        """Calculate overall performance score."""
+        score_components = []
         
         # Processing efficiency (40% weight)
         if 'processing_efficiency' in metrics:
@@ -1928,7 +1975,8 @@ class PerformanceMetricsCalculator:
         metrics: Dict[str, Any],
         timestamp: datetime
     ):
-        """Store performance data for trend analysis."""        if 'processing_efficiency' in metrics:
+        """Store performance data for trend analysis."""
+        if 'processing_efficiency' in metrics:
             self.processing_times[content_type].append({
                 'time': 1.0 / max(metrics['processing_efficiency'], 0.1),  # Inverse of efficiency
                 'timestamp': timestamp

@@ -19,7 +19,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -55,7 +56,8 @@ from sentence_transformers import SentenceTransformer
 
 
 class FingerprintType(Enum):
-    """Types of content fingerprints"""    AUDIO_CHROMAPRINT = "audio_chromaprint"
+    """Types of content fingerprints"""
+    AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_SPECTRAL = "audio_spectral"
     AUDIO_MFCC = "audio_mfcc"
     VIDEO_PERCEPTUAL = "video_perceptual"
@@ -70,7 +72,8 @@ class FingerprintType(Enum):
 
 
 class FingerprintStatus(Enum):
-    """Fingerprint processing status"""    PENDING = "pending"
+    """Fingerprint processing status"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -79,7 +82,8 @@ class FingerprintStatus(Enum):
 
 @dataclass
 class FingerprintRequest:
-    """Fingerprint generation request"""    request_id: str
+    """Fingerprint generation request"""
+    request_id: str
     content_id: str
     content_type: str  # audio, video, image, text
     content_url: Optional[str] = None
@@ -93,7 +97,8 @@ class FingerprintRequest:
 
 @dataclass
 class FingerprintResult:
-    """Fingerprint generation result"""    request_id: str
+    """Fingerprint generation result"""
+    request_id: str
     content_id: str
     fingerprints: Dict[str, Any]  # fingerprint_type -> fingerprint_data
     confidence_scores: Dict[str, float]
@@ -106,7 +111,8 @@ class FingerprintResult:
 
 @dataclass
 class FingerprintMatch:
-    """Fingerprint match result"""    query_id: str
+    """Fingerprint match result"""
+    query_id: str
     matched_content_id: str
     similarity_score: float
     fingerprint_type: FingerprintType
@@ -116,7 +122,8 @@ class FingerprintMatch:
 
 
 class FingerprintingClusterManager:
-    """    Enterprise-grade fingerprinting cluster manager for multi-format content protection
+    """
+    Enterprise-grade fingerprinting cluster manager for multi-format content protection
     
     Features:
     - Distributed fingerprinting server deployment
@@ -126,7 +133,8 @@ class FingerprintingClusterManager:
     - Real-time monitoring and health checks
     - Vector database integration for similarity search
     - Content protection API orchestration
-    """    
+    """
+    
     def __init__(self,
                  redis_host: str = "localhost",
                  redis_port: int = 6379,
@@ -170,7 +178,8 @@ class FingerprintingClusterManager:
         self.logger.info("FingerprintingClusterManager initialized successfully")
     
     def _init_kubernetes_client(self):
-        """Initialize Kubernetes client for cluster management"""        try:
+        """Initialize Kubernetes client for cluster management"""
+        try:
             config.load_incluster_config()
         except:
             config.load_kube_config()
@@ -180,7 +189,8 @@ class FingerprintingClusterManager:
         self.k8s_autoscaling = client.AutoscalingV1Api()
     
     def _init_vector_databases(self):
-        """Initialize vector databases for fingerprint storage and search"""        # FAISS indexes for different content types
+        """Initialize vector databases for fingerprint storage and search"""
+        # FAISS indexes for different content types
         self.faiss_indexes = {
             'audio': faiss.IndexFlatIP(512),  # 512-dimensional audio features
             'video': faiss.IndexFlatIP(1024), # 1024-dimensional video features  
@@ -192,7 +202,8 @@ class FingerprintingClusterManager:
         self._load_existing_indexes()
     
     def _load_existing_indexes(self):
-        """Load existing FAISS indexes from storage"""        for content_type in ['audio', 'video', 'image', 'text']:
+        """Load existing FAISS indexes from storage"""
+        for content_type in ['audio', 'video', 'image', 'text']:
             try:
                 index_path = f"/data/indexes/{content_type}_index.faiss"
                 self.faiss_indexes[content_type] = faiss.read_index(index_path)
@@ -201,14 +212,16 @@ class FingerprintingClusterManager:
                 self.logger.info(f"No existing {content_type} index found, using new index")
     
     async def deploy_fingerprinting_cluster(self, cluster_config: Dict[str, Any]) -> bool:
-        """        Deploy fingerprinting server cluster with Kubernetes
+        """
+        Deploy fingerprinting server cluster with Kubernetes
         
         Args:
             cluster_config: Cluster configuration parameters
             
         Returns:
             bool: True if deployment successful
-        """        try:
+        """
+        try:
             self.logger.info("Deploying fingerprinting cluster")
             
             # Deploy audio fingerprinting servers
@@ -241,14 +254,16 @@ class FingerprintingClusterManager:
             return False
     
     async def process_fingerprint_request(self, request: FingerprintRequest) -> FingerprintResult:
-        """        Process content fingerprinting request
+        """
+        Process content fingerprinting request
         
         Args:
             request: Fingerprinting request with content data
             
         Returns:
             FingerprintResult: Generated fingerprints with metadata
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Validate request
@@ -315,7 +330,8 @@ class FingerprintingClusterManager:
                                    content_type: str,
                                    similarity_threshold: float = 0.8,
                                    max_results: int = 100) -> List[FingerprintMatch]:
-        """        Search for similar content using fingerprint matching
+        """
+        Search for similar content using fingerprint matching
         
         Args:
             fingerprints: Query fingerprints
@@ -325,7 +341,8 @@ class FingerprintingClusterManager:
             
         Returns:
             List[FingerprintMatch]: Similar content matches
-        """        try:
+        """
+        try:
             matches = []
             
             # Search in appropriate FAISS index
@@ -369,7 +386,8 @@ class FingerprintingClusterManager:
             return []
     
     async def _process_audio_fingerprint(self, request: FingerprintRequest) -> FingerprintResult:
-        """Process audio fingerprinting request"""        fingerprints = {}
+        """Process audio fingerprinting request"""
+        fingerprints = {}
         confidence_scores = {}
         
         # Load audio data
@@ -407,7 +425,8 @@ class FingerprintingClusterManager:
         )
     
     async def _process_video_fingerprint(self, request: FingerprintRequest) -> FingerprintResult:
-        """Process video fingerprinting request"""        fingerprints = {}
+        """Process video fingerprinting request"""
+        fingerprints = {}
         confidence_scores = {}
         
         # Load video data
@@ -440,7 +459,8 @@ class FingerprintingClusterManager:
         )
     
     async def _process_image_fingerprint(self, request: FingerprintRequest) -> FingerprintResult:
-        """Process image fingerprinting request"""        fingerprints = {}
+        """Process image fingerprinting request"""
+        fingerprints = {}
         confidence_scores = {}
         
         # Load image data
@@ -478,7 +498,8 @@ class FingerprintingClusterManager:
         )
     
     async def _process_text_fingerprint(self, request: FingerprintRequest) -> FingerprintResult:
-        """Process text fingerprinting request"""        fingerprints = {}
+        """Process text fingerprinting request"""
+        fingerprints = {}
         confidence_scores = {}
         
         # Get text content
@@ -516,7 +537,8 @@ class FingerprintingClusterManager:
         )
     
     async def _generate_chromaprint(self, audio_data: bytes) -> Tuple[str, float]:
-        """Generate Chromaprint fingerprint for audio"""        try:
+        """Generate Chromaprint fingerprint for audio"""
+        try:
             # Save temporary file for processing
             temp_file = f"/tmp/audio_{int(time.time())}.wav"
             with open(temp_file, 'wb') as f:
@@ -543,7 +565,8 @@ class FingerprintingClusterManager:
             return "", 0.0
     
     async def _generate_spectral_fingerprint(self, audio_data: bytes) -> Tuple[np.ndarray, float]:
-        """Generate spectral fingerprint for audio"""        try:
+        """Generate spectral fingerprint for audio"""
+        try:
             # Save temporary file
             temp_file = f"/tmp/audio_{int(time.time())}.wav"
             with open(temp_file, 'wb') as f:
@@ -578,7 +601,8 @@ class FingerprintingClusterManager:
             return np.zeros(512), 0.0
     
     async def _generate_mfcc_fingerprint(self, audio_data: bytes) -> Tuple[np.ndarray, float]:
-        """Generate MFCC fingerprint for audio"""        try:
+        """Generate MFCC fingerprint for audio"""
+        try:
             # Save temporary file
             temp_file = f"/tmp/audio_{int(time.time())}.wav"
             with open(temp_file, 'wb') as f:
@@ -614,7 +638,8 @@ class FingerprintingClusterManager:
     
     # Video fingerprinting methods
     async def _generate_video_perceptual_hash(self, video_data: bytes) -> Tuple[str, float]:
-        """Generate perceptual hash for video"""        try:
+        """Generate perceptual hash for video"""
+        try:
             # Save video file temporarily
             temp_file = f"/tmp/video_{int(time.time())}.mp4"
             with open(temp_file, 'wb') as f:
@@ -655,7 +680,8 @@ class FingerprintingClusterManager:
             return "", 0.0
     
     async def _generate_frame_hash(self, video_data: bytes) -> Tuple[List[str], float]:
-        """Generate hash for individual video frames"""        try:
+        """Generate hash for individual video frames"""
+        try:
             # Save video file temporarily
             temp_file = f"/tmp/video_{int(time.time())}.mp4"
             with open(temp_file, 'wb') as f:
@@ -694,7 +720,8 @@ class FingerprintingClusterManager:
     
     # Image fingerprinting methods
     async def _generate_image_perceptual_hash(self, image_data: bytes) -> Tuple[str, float]:
-        """Generate perceptual hash for image"""        try:
+        """Generate perceptual hash for image"""
+        try:
             # Load image
             image = Image.open(io.BytesIO(image_data))
             
@@ -714,7 +741,8 @@ class FingerprintingClusterManager:
             return "", 0.0
     
     async def _generate_phash(self, image_data: bytes) -> Tuple[str, float]:
-        """Generate pHash for image"""        try:
+        """Generate pHash for image"""
+        try:
             image = Image.open(io.BytesIO(image_data))
             phash = imagehash.phash(image, hash_size=16)  # 16x16 = 256-bit hash
             
@@ -726,7 +754,8 @@ class FingerprintingClusterManager:
             return "", 0.0
     
     async def _generate_clip_embedding(self, image_data: bytes) -> Tuple[np.ndarray, float]:
-        """Generate CLIP embedding for image"""        try:
+        """Generate CLIP embedding for image"""
+        try:
             # Load CLIP model
             model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
             processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -758,7 +787,8 @@ class FingerprintingClusterManager:
     
     # Text fingerprinting methods
     async def _generate_semantic_fingerprint(self, text_content: str) -> Tuple[np.ndarray, float]:
-        """Generate semantic fingerprint for text"""        try:
+        """Generate semantic fingerprint for text"""
+        try:
             # Load sentence transformer model
             model = SentenceTransformer('all-MiniLM-L6-v2')
             
@@ -779,7 +809,8 @@ class FingerprintingClusterManager:
             return np.zeros(768), 0.0
     
     async def _generate_bert_embedding(self, text_content: str) -> Tuple[np.ndarray, float]:
-        """Generate BERT embedding for text"""        try:
+        """Generate BERT embedding for text"""
+        try:
             # Load BERT model
             model = AutoModel.from_pretrained('bert-base-uncased')
             tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
@@ -804,7 +835,8 @@ class FingerprintingClusterManager:
             return np.zeros(768), 0.0
     
     async def _generate_ngram_fingerprint(self, text_content: str) -> Tuple[np.ndarray, float]:
-        """Generate n-gram fingerprint for text"""        try:
+        """Generate n-gram fingerprint for text"""
+        try:
             # Generate character n-grams
             ngrams = []
             text_lower = text_content.lower()
@@ -838,7 +870,8 @@ class FingerprintingClusterManager:
             return np.zeros(768), 0.0
     
     def _validate_request(self, request: FingerprintRequest) -> bool:
-        """Validate fingerprint request"""        if not request.request_id or not request.content_id:
+        """Validate fingerprint request"""
+        if not request.request_id or not request.content_id:
             return False
         
         if not request.content_data and not request.content_url:
@@ -850,7 +883,8 @@ class FingerprintingClusterManager:
         return True
     
     async def _download_content(self, url: str) -> bytes:
-        """Download content from URL"""        async with aiohttp.ClientSession() as session:
+        """Download content from URL"""
+        async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 if response.status == 200:
                     return await response.read()
@@ -858,7 +892,8 @@ class FingerprintingClusterManager:
                     raise Exception(f"Failed to download content: {response.status}")
     
     async def _store_fingerprints(self, result: FingerprintResult):
-        """Store fingerprints in vector database"""        try:
+        """Store fingerprints in vector database"""
+        try:
             # Determine content type from result
             content_type = None
             for fp_type in result.fingerprints.keys():
@@ -913,14 +948,16 @@ class FingerprintingClusterManager:
             self.logger.error(f"Error storing fingerprints: {str(e)}")
     
     async def _save_index(self, content_type: str, index):
-        """Save FAISS index to storage"""        try:
+        """Save FAISS index to storage"""
+        try:
             index_path = f"/data/indexes/{content_type}_index.faiss"
             faiss.write_index(index, index_path)
         except Exception as e:
             self.logger.error(f"Error saving {content_type} index: {str(e)}")
     
     async def _store_metadata(self, result: FingerprintResult):
-        """Store fingerprint metadata in PostgreSQL"""        try:
+        """Store fingerprint metadata in PostgreSQL"""
+        try:
             # This would connect to PostgreSQL and store metadata
             # Implementation depends on your database schema
             pass
@@ -928,7 +965,8 @@ class FingerprintingClusterManager:
             self.logger.error(f"Error storing metadata: {str(e)}")
     
     def _prepare_search_vectors(self, fingerprints: Dict[str, Any], content_type: str) -> Dict[str, np.ndarray]:
-        """Prepare fingerprints for vector search"""        search_vectors = {}
+        """Prepare fingerprints for vector search"""
+        search_vectors = {}
         
         for fp_type, fingerprint in fingerprints.items():
             if isinstance(fingerprint, np.ndarray):
@@ -947,7 +985,8 @@ class FingerprintingClusterManager:
         return search_vectors
     
     async def _get_content_metadata(self, index_position: int) -> Dict[str, Any]:
-        """Get content metadata by index position"""        # This would query the PostgreSQL database for content metadata
+        """Get content metadata by index position"""
+        # This would query the PostgreSQL database for content metadata
         # Return mock data for now
         return {
             'content_id': f"content_{index_position}",
@@ -958,7 +997,8 @@ class FingerprintingClusterManager:
         }
     
     def _calculate_confidence_level(self, score: float) -> str:
-        """Calculate confidence level from similarity score"""        if score >= 0.9:
+        """Calculate confidence level from similarity score"""
+        if score >= 0.9:
             return "high"
         elif score >= 0.7:
             return "medium"
@@ -966,7 +1006,8 @@ class FingerprintingClusterManager:
             return "low"
     
     async def _send_callback(self, callback_url: str, result: FingerprintResult):
-        """Send callback with fingerprint result"""        try:
+        """Send callback with fingerprint result"""
+        try:
             async with aiohttp.ClientSession() as session:
                 payload = {
                     'request_id': result.request_id,
@@ -981,7 +1022,8 @@ class FingerprintingClusterManager:
             self.logger.error(f"Error sending callback: {str(e)}")
     
     def _start_background_workers(self):
-        """Start background worker threads"""        # Queue processor
+        """Start background worker threads"""
+        # Queue processor
         def queue_processor():
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
@@ -1005,19 +1047,24 @@ class FingerprintingClusterManager:
         health_thread.start()
     
     def _check_server_health(self):
-        """Check health of all fingerprinting servers"""        # Implementation for health checking
+        """Check health of all fingerprinting servers"""
+        # Implementation for health checking
         pass
 
 
 # Individual server classes for specific content types
 class AudioFingerprintServer:
-    """Specialized server for audio fingerprinting"""    pass
+    """Specialized server for audio fingerprinting"""
+    pass
 
 class VideoFingerprintServer:
-    """Specialized server for video fingerprinting"""    pass
+    """Specialized server for video fingerprinting"""
+    pass
 
 class ImageFingerprintServer:
-    """Specialized server for image fingerprinting"""    pass
+    """Specialized server for image fingerprinting"""
+    pass
 
 class TextFingerprintServer:
-    """Specialized server for text fingerprinting"""    pass
+    """Specialized server for text fingerprinting"""
+    pass

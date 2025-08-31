@@ -17,7 +17,8 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic Integration:
 Creator Upload → Schema Evolution → Data Migration → Integrity Validation → 
 Protection Setup → Fingerprint Processing → Monetization Configuration → Platform Sync
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timezone
@@ -89,7 +90,8 @@ logger = logging.getLogger(__name__)
 
 
 class MigrationOrchestrator:
-    """    Central orchestrator for all database migration operations
+    """
+    Central orchestrator for all database migration operations
     
     Coordinates:
     - Schema evolution and version management
@@ -98,7 +100,8 @@ class MigrationOrchestrator:
     - Backup and recovery operations
     - Performance optimization
     - Version control and branching
-    """    
+    """
+    
     def __init__(self, database_url: str):
         self.database_url = database_url
         
@@ -111,11 +114,13 @@ class MigrationOrchestrator:
         self.version_controller = VersionController(database_url)
         
     async def execute_full_migration_suite(self) -> Dict[str, Any]:
-        """        Execute complete migration suite for IA Influencer Agent platform
+        """
+        Execute complete migration suite for IA Influencer Agent platform
         
         Returns:
             Comprehensive migration execution report
-        """        logger.info("Starting complete migration suite execution")
+        """
+        logger.info("Starting complete migration suite execution")
         
         results = {
             "started_at": datetime.now(timezone.utc),
@@ -233,11 +238,13 @@ class MigrationOrchestrator:
         return results
         
     async def setup_content_protection_system(self) -> Dict[str, Any]:
-        """        Setup complete content protection database system
+        """
+        Setup complete content protection database system
         
         Returns:
             Content protection setup results
-        """        logger.info("Setting up content protection system")
+        """
+        logger.info("Setting up content protection system")
         
         results = {
             "started_at": datetime.now(timezone.utc),
@@ -282,11 +289,13 @@ class MigrationOrchestrator:
         return results
         
     async def setup_monetization_system(self) -> Dict[str, Any]:
-        """        Setup complete monetization database system
+        """
+        Setup complete monetization database system
         
         Returns:
             Monetization setup results
-        """        logger.info("Setting up monetization system")
+        """
+        logger.info("Setting up monetization system")
         
         results = {
             "started_at": datetime.now(timezone.utc),
@@ -339,7 +348,8 @@ _orchestrator_instance: Optional[MigrationOrchestrator] = None
 
 
 def get_migration_orchestrator(database_url: str) -> MigrationOrchestrator:
-    """Get or create migration orchestrator instance"""    global _orchestrator_instance
+    """Get or create migration orchestrator instance"""
+    global _orchestrator_instance
     
     if _orchestrator_instance is None:
         _orchestrator_instance = MigrationOrchestrator(database_url)
@@ -349,17 +359,20 @@ def get_migration_orchestrator(database_url: str) -> MigrationOrchestrator:
 
 # Convenience functions for common migration operations
 async def execute_complete_migration(database_url: str) -> Dict[str, Any]:
-    """Execute complete migration suite"""    orchestrator = get_migration_orchestrator(database_url)
+    """Execute complete migration suite"""
+    orchestrator = get_migration_orchestrator(database_url)
     return await orchestrator.execute_full_migration_suite()
 
 
 async def setup_content_protection(database_url: str) -> Dict[str, Any]:
-    """Setup content protection system"""    orchestrator = get_migration_orchestrator(database_url)
+    """Setup content protection system"""
+    orchestrator = get_migration_orchestrator(database_url)
     return await orchestrator.setup_content_protection_system()
 
 
 async def setup_monetization(database_url: str) -> Dict[str, Any]:
-    """Setup monetization system"""    orchestrator = get_migration_orchestrator(database_url)
+    """Setup monetization system"""
+    orchestrator = get_migration_orchestrator(database_url)
     return await orchestrator.setup_monetization_system()
 
 

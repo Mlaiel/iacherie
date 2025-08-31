@@ -9,7 +9,8 @@ This module provides comprehensive evidence collection for legal proceedings:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import json
 import hashlib
 import base64
@@ -59,7 +60,8 @@ settings = get_settings()
 
 
 class EvidenceType(Enum):
-    """Types of evidence that can be collected"""    SCREENSHOT = "screenshot"
+    """Types of evidence that can be collected"""
+    SCREENSHOT = "screenshot"
     SCREEN_RECORDING = "screen_recording"
     PAGE_SOURCE = "page_source"
     NETWORK_CAPTURE = "network_capture"
@@ -71,7 +73,8 @@ class EvidenceType(Enum):
 
 
 class EvidenceQuality(Enum):
-    """Quality levels for evidence"""    HIGH = "high"           # Full metadata, timestamps, signatures
+    """Quality levels for evidence"""
+    HIGH = "high"           # Full metadata, timestamps, signatures
     MEDIUM = "medium"       # Basic metadata and screenshots
     LOW = "low"            # Minimal evidence
     INSUFFICIENT = "insufficient"
@@ -79,7 +82,8 @@ class EvidenceQuality(Enum):
 
 @dataclass
 class EvidenceMetadata:
-    """Metadata for evidence items"""    evidence_id: str
+    """Metadata for evidence items"""
+    evidence_id: str
     evidence_type: EvidenceType
     file_path: str
     file_hash: str
@@ -112,7 +116,8 @@ class EvidenceMetadata:
 
 @dataclass
 class EvidencePackage:
-    """Complete evidence package for legal proceedings"""    package_id: str
+    """Complete evidence package for legal proceedings"""
+    package_id: str
     violation_evidence: ViolationEvidence
     
     # Evidence items
@@ -138,7 +143,8 @@ class EvidencePackage:
 
 
 class WebEvidenceCollector:
-    """Collect evidence from web sources"""    
+    """Collect evidence from web sources"""
+    
     def __init__(self):
         self.temp_dir = Path(tempfile.gettempdir()) / "evidence_collection"
         self.temp_dir.mkdir(exist_ok=True)
@@ -158,7 +164,8 @@ class WebEvidenceCollector:
         self.evidence_retention_days = 365 * 7  # 7 years for legal compliance
     
     async def collect_screenshot_evidence(self, url: str, evidence_id: str) -> EvidenceMetadata:
-        """Collect screenshot evidence with legal annotations"""        try:
+        """Collect screenshot evidence with legal annotations"""
+        try:
             driver = webdriver.Chrome(options=self.driver_options)
             
             try:
@@ -230,7 +237,8 @@ class WebEvidenceCollector:
             raise
     
     async def collect_page_source_evidence(self, url: str, evidence_id: str) -> EvidenceMetadata:
-        """Collect page source code evidence"""        try:
+        """Collect page source code evidence"""
+        try:
             driver = webdriver.Chrome(options=self.driver_options)
             
             try:
@@ -277,7 +285,8 @@ class WebEvidenceCollector:
             raise
     
     async def collect_metadata_evidence(self, url: str, evidence_id: str) -> EvidenceMetadata:
-        """Collect comprehensive metadata evidence"""        try:
+        """Collect comprehensive metadata evidence"""
+        try:
             metadata_collection = {}
             
             # HTTP headers
@@ -356,7 +365,8 @@ class WebEvidenceCollector:
             raise
     
     async def collect_whois_evidence(self, url: str, evidence_id: str) -> EvidenceMetadata:
-        """Collect WHOIS domain information"""        try:
+        """Collect WHOIS domain information"""
+        try:
             domain = urlparse(url).netloc
             
             # Get WHOIS information
@@ -405,7 +415,8 @@ class WebEvidenceCollector:
             raise
     
     def _add_legal_annotations(self, screenshot_data: bytes, url: str, page_title: str) -> bytes:
-        """Add legal annotations to screenshot"""        try:
+        """Add legal annotations to screenshot"""
+        try:
             # Open image
             image = Image.open(io.BytesIO(screenshot_data))
             draw = ImageDraw.Draw(image)
@@ -448,7 +459,8 @@ class WebEvidenceCollector:
             return screenshot_data  # Return original if annotation fails
     
     def _add_chain_of_custody_entry(self, metadata: EvidenceMetadata, action: str, details: Dict[str, Any] = None):
-        """Add entry to chain of custody"""        entry = {
+        """Add entry to chain of custody"""
+        entry = {
             'timestamp': datetime.now(timezone.utc).isoformat(),
             'action': action,
             'operator': 'automated_system',
@@ -458,13 +470,15 @@ class WebEvidenceCollector:
 
 
 class CryptographicVerifier:
-    """Handle cryptographic verification of evidence"""    
+    """Handle cryptographic verification of evidence"""
+    
     def __init__(self):
         self.private_key = self._load_or_generate_private_key()
         self.public_key = self.private_key.public_key()
     
     def _load_or_generate_private_key(self):
-        """Load or generate RSA private key for signing"""        key_path = Path("evidence_signing_key.pem")
+        """Load or generate RSA private key for signing"""
+        key_path = Path("evidence_signing_key.pem")
         
         if key_path.exists():
             with open(key_path, 'rb') as f:
@@ -492,7 +506,8 @@ class CryptographicVerifier:
         return private_key
     
     def sign_evidence(self, evidence_metadata: EvidenceMetadata) -> str:
-        """Create digital signature for evidence"""        try:
+        """Create digital signature for evidence"""
+        try:
             # Create message to sign
             message_data = {
                 'evidence_id': evidence_metadata.evidence_id,
@@ -521,7 +536,8 @@ class CryptographicVerifier:
             raise
     
     def verify_signature(self, evidence_metadata: EvidenceMetadata, signature: str) -> bool:
-        """Verify digital signature"""        try:
+        """Verify digital signature"""
+        try:
             # Recreate message
             message_data = {
                 'evidence_id': evidence_metadata.evidence_id,
@@ -552,7 +568,8 @@ class CryptographicVerifier:
 
 
 class EvidenceCollector:
-    """Main evidence collection coordinator"""    
+    """Main evidence collection coordinator"""
+    
     def __init__(self):
         self.web_collector = WebEvidenceCollector()
         self.crypto_verifier = CryptographicVerifier()
@@ -568,7 +585,8 @@ class EvidenceCollector:
         }
     
     async def collect_evidence(self, violation_evidence: ViolationEvidence) -> EvidencePackage:
-        """Collect comprehensive evidence for violation"""        try:
+        """Collect comprehensive evidence for violation"""
+        try:
             package_id = f"evidence_{violation_evidence.violation_id}_{int(datetime.utcnow().timestamp())}"
             
             package = EvidencePackage(
@@ -649,7 +667,8 @@ class EvidenceCollector:
             raise
     
     def _assess_evidence_quality(self, package: EvidencePackage) -> EvidenceQuality:
-        """Assess overall quality of evidence package"""        evidence_types = set(item.evidence_type for item in package.evidence_items)
+        """Assess overall quality of evidence package"""
+        evidence_types = set(item.evidence_type for item in package.evidence_items)
         
         # Required evidence types for high quality
         high_quality_types = {
@@ -680,7 +699,8 @@ class EvidenceCollector:
             return EvidenceQuality.INSUFFICIENT
     
     def _calculate_completeness_score(self, package: EvidencePackage) -> float:
-        """Calculate completeness score (0-1)"""        max_possible_evidence = 6  # screenshot, source, metadata, whois, network, timestamp
+        """Calculate completeness score (0-1)"""
+        max_possible_evidence = 6  # screenshot, source, metadata, whois, network, timestamp
         actual_evidence = len(package.evidence_items)
         
         # Base score from evidence count
@@ -693,7 +713,8 @@ class EvidenceCollector:
         return min(evidence_score + signature_bonus + custody_bonus, 1.0)
     
     def _verify_chain_of_custody(self, package: EvidencePackage) -> bool:
-        """Verify chain of custody for all evidence items"""        try:
+        """Verify chain of custody for all evidence items"""
+        try:
             for item in package.evidence_items:
                 if not item.chain_of_custody:
                     return False
@@ -714,7 +735,8 @@ class EvidenceCollector:
             return False
     
     def _verify_all_signatures(self, package: EvidencePackage) -> bool:
-        """Verify digital signatures for all evidence items"""        try:
+        """Verify digital signatures for all evidence items"""
+        try:
             for item in package.evidence_items:
                 if item.digital_signature:
                     if not self.crypto_verifier.verify_signature(item, item.digital_signature):
@@ -727,7 +749,8 @@ class EvidenceCollector:
             return False
     
     async def _create_evidence_archive(self, package: EvidencePackage) -> Path:
-        """Create compressed archive of all evidence"""        try:
+        """Create compressed archive of all evidence"""
+        try:
             archive_path = self.web_collector.temp_dir / f"evidence_package_{package.package_id}.zip"
             
             with zipfile.ZipFile(archive_path, 'w', zipfile.ZIP_DEFLATED) as archive:
@@ -793,7 +816,8 @@ Generated by IA Influencer Agent Protection System v2.0
             raise
     
     def _calculate_file_hash(self, file_path: Path) -> str:
-        """Calculate SHA-256 hash of file"""        try:
+        """Calculate SHA-256 hash of file"""
+        try:
             hash_sha256 = hashlib.sha256()
             with open(file_path, 'rb') as f:
                 for chunk in iter(lambda: f.read(4096), b""):
@@ -804,10 +828,12 @@ Generated by IA Influencer Agent Protection System v2.0
             return ""
     
     def get_evidence_package(self, package_id: str) -> Optional[EvidencePackage]:
-        """Get evidence package by ID"""        return self.evidence_packages.get(package_id)
+        """Get evidence package by ID"""
+        return self.evidence_packages.get(package_id)
     
     def get_evidence_statistics(self) -> Dict[str, Any]:
-        """Get evidence collection statistics"""        total_packages = len(self.evidence_packages)
+        """Get evidence collection statistics"""
+        total_packages = len(self.evidence_packages)
         
         if total_packages == 0:
             return {'total_packages': 0}
@@ -838,7 +864,8 @@ Generated by IA Influencer Agent Protection System v2.0
 # Data class for external use
 @dataclass
 class EvidenceData:
-    """Simplified evidence data for external APIs"""    package_id: str
+    """Simplified evidence data for external APIs"""
+    package_id: str
     evidence_quality: str
     completeness_score: float
     archive_path: str

@@ -18,7 +18,8 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 This monitoring technology and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, copying, or reproduction without explicit written permission
 will result in immediate legal prosecution under international copyright laws.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import json
@@ -60,7 +61,8 @@ settings = get_settings()
 
 
 class HealthStatus(str, Enum):
-    """Health check status levels"""    HEALTHY = "healthy"
+    """Health check status levels"""
+    HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
     UNKNOWN = "unknown"
@@ -68,7 +70,8 @@ class HealthStatus(str, Enum):
 
 
 class AlertSeverity(str, Enum):
-    """Alert severity levels"""    INFO = "info"
+    """Alert severity levels"""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -76,7 +79,8 @@ class AlertSeverity(str, Enum):
 
 
 class MetricType(str, Enum):
-    """Types of metrics being monitored"""    PERFORMANCE = "performance"
+    """Types of metrics being monitored"""
+    PERFORMANCE = "performance"
     AVAILABILITY = "availability"
     ERROR_RATE = "error_rate"
     THROUGHPUT = "throughput"
@@ -87,7 +91,8 @@ class MetricType(str, Enum):
 
 
 class PipelineComponent(str, Enum):
-    """Pipeline components being monitored"""    ANALYTICS = "analytics"
+    """Pipeline components being monitored"""
+    ANALYTICS = "analytics"
     PROTECTION = "protection"
     MONETIZATION = "monetization"
     COLLABORATION = "collaboration"
@@ -101,7 +106,8 @@ class PipelineComponent(str, Enum):
 
 @dataclass
 class HealthCheck:
-    """Health check result data structure"""    component: str
+    """Health check result data structure"""
+    component: str
     status: HealthStatus
     message: str
     details: Dict[str, Any]
@@ -113,7 +119,8 @@ class HealthCheck:
 
 @dataclass
 class Alert:
-    """Alert data structure"""    id: str
+    """Alert data structure"""
+    id: str
     severity: AlertSeverity
     component: str
     title: str
@@ -126,7 +133,8 @@ class Alert:
 
 @dataclass
 class PerformanceMetrics:
-    """Performance metrics data structure"""    component: str
+    """Performance metrics data structure"""
+    component: str
     timestamp: datetime
     cpu_usage: float
     memory_usage: float
@@ -143,8 +151,10 @@ class PerformanceMetrics:
 
 
 class AnomalyDetector:
-    """    Advanced anomaly detection system using machine learning
-    """    
+    """
+    Advanced anomaly detection system using machine learning
+    """
+    
     def __init__(self, window_size: int = 100):
         self.window_size = window_size
         self.metric_windows = defaultdict(lambda: deque(maxlen=window_size))
@@ -158,8 +168,10 @@ class AnomalyDetector:
         }
 
     async def detect_anomalies(self, metrics: PerformanceMetrics) -> List[Dict[str, Any]]:
-        """        Detect anomalies in performance metrics using ML models
-        """        try:
+        """
+        Detect anomalies in performance metrics using ML models
+        """
+        try:
             anomalies = []
             component = metrics.component
             
@@ -222,8 +234,10 @@ class AnomalyDetector:
             return []
 
     async def _basic_threshold_detection(self, metrics: PerformanceMetrics) -> List[Dict[str, Any]]:
-        """        Basic threshold-based anomaly detection as fallback
-        """        anomalies = []
+        """
+        Basic threshold-based anomaly detection as fallback
+        """
+        anomalies = []
         
         # CPU usage anomaly
         if metrics.cpu_usage > self.anomaly_thresholds["cpu_usage"]:
@@ -272,8 +286,10 @@ class AnomalyDetector:
         return anomalies
 
     def _calculate_anomaly_severity(self, anomaly_score: float, features: List[float]) -> AlertSeverity:
-        """        Calculate severity based on anomaly score and feature values
-        """        # More negative scores indicate stronger anomalies
+        """
+        Calculate severity based on anomaly score and feature values
+        """
+        # More negative scores indicate stronger anomalies
         if anomaly_score < -0.5:
             return AlertSeverity.CRITICAL
         elif anomaly_score < -0.3:
@@ -285,8 +301,10 @@ class AnomalyDetector:
 
 
 class PipelineMonitor:
-    """    Comprehensive pipeline monitoring system with real-time health checking
-    """    
+    """
+    Comprehensive pipeline monitoring system with real-time health checking
+    """
+    
     def __init__(self):
         self.notification_manager = NotificationManager()
         self.cache_manager = CacheManager()
@@ -329,8 +347,10 @@ class PipelineMonitor:
         }
 
     def setup_prometheus_metrics(self):
-        """        Setup Prometheus metrics for monitoring
-        """        self.prometheus_metrics = {
+        """
+        Setup Prometheus metrics for monitoring
+        """
+        self.prometheus_metrics = {
             "health_status": Gauge(
                 'pipeline_health_status', 
                 'Health status of pipeline components', 
@@ -370,8 +390,10 @@ class PipelineMonitor:
         }
 
     async def start_monitoring(self):
-        """        Start comprehensive pipeline monitoring
-        """        try:
+        """
+        Start comprehensive pipeline monitoring
+        """
+        try:
             logger.info("Starting pipeline monitoring system")
             self.monitoring_active = True
             
@@ -404,8 +426,10 @@ class PipelineMonitor:
             raise MonitoringError(f"Monitoring system failed: {str(e)}")
 
     async def _monitor_component_health(self, component: PipelineComponent, interval: int):
-        """        Monitor health of specific pipeline component
-        """        while self.monitoring_active:
+        """
+        Monitor health of specific pipeline component
+        """
+        while self.monitoring_active:
             try:
                 start_time = time.time()
                 
@@ -436,8 +460,10 @@ class PipelineMonitor:
                 await asyncio.sleep(interval)
 
     async def _perform_health_check(self, component: PipelineComponent) -> HealthCheck:
-        """        Perform health check for specific component
-        """        try:
+        """
+        Perform health check for specific component
+        """
+        try:
             if component == PipelineComponent.ANALYTICS:
                 return await self._check_analytics_health()
             elif component == PipelineComponent.PROTECTION:
@@ -484,8 +510,10 @@ class PipelineMonitor:
             )
 
     async def _check_analytics_health(self) -> HealthCheck:
-        """        Check analytics pipeline health
-        """        try:
+        """
+        Check analytics pipeline health
+        """
+        try:
             metrics = {}
             details = {}
             status = HealthStatus.HEALTHY
@@ -555,8 +583,10 @@ class PipelineMonitor:
             )
 
     async def _check_protection_health(self) -> HealthCheck:
-        """        Check content protection pipeline health
-        """        try:
+        """
+        Check content protection pipeline health
+        """
+        try:
             metrics = {}
             details = {}
             status = HealthStatus.HEALTHY
@@ -620,8 +650,10 @@ class PipelineMonitor:
             )
 
     async def _check_database_health(self) -> HealthCheck:
-        """        Check database health and performance
-        """        try:
+        """
+        Check database health and performance
+        """
+        try:
             metrics = {}
             details = {}
             status = HealthStatus.HEALTHY
@@ -691,8 +723,10 @@ class PipelineMonitor:
             )
 
     async def _check_cache_health(self) -> HealthCheck:
-        """        Check Redis cache health
-        """        try:
+        """
+        Check Redis cache health
+        """
+        try:
             metrics = {}
             details = {}
             status = HealthStatus.HEALTHY
@@ -771,32 +805,39 @@ class PipelineMonitor:
 
     # Additional health check methods for other components...
     async def _check_monetization_health(self) -> HealthCheck:
-        """Check monetization pipeline health"""        # Implementation for monetization health check
+        """Check monetization pipeline health"""
+        # Implementation for monetization health check
         pass
 
     async def _check_collaboration_health(self) -> HealthCheck:
-        """Check collaboration pipeline health"""        # Implementation for collaboration health check
+        """Check collaboration pipeline health"""
+        # Implementation for collaboration health check
         pass
 
     async def _check_distribution_health(self) -> HealthCheck:
-        """Check distribution pipeline health"""        # Implementation for distribution health check
+        """Check distribution pipeline health"""
+        # Implementation for distribution health check
         pass
 
     async def _check_storage_health(self) -> HealthCheck:
-        """Check storage system health"""        # Implementation for storage health check
+        """Check storage system health"""
+        # Implementation for storage health check
         pass
 
     async def _check_api_gateway_health(self) -> HealthCheck:
-        """Check API gateway health"""        # Implementation for API gateway health check
+        """Check API gateway health"""
+        # Implementation for API gateway health check
         pass
 
     async def _check_external_apis_health(self) -> HealthCheck:
-        """Check external APIs health"""        # Implementation for external APIs health check
+        """Check external APIs health"""
+        # Implementation for external APIs health check
         pass
 
     # Monitoring utility methods...
     def _update_prometheus_metrics(self, component: PipelineComponent, health_check: HealthCheck):
-        """Update Prometheus metrics with health check data"""        try:
+        """Update Prometheus metrics with health check data"""
+        try:
             # Health status (convert to numeric)
             status_value = {
                 HealthStatus.HEALTHY: 1.0,
@@ -824,7 +865,8 @@ class PipelineMonitor:
             logger.error(f"Failed to update Prometheus metrics: {str(e)}")
 
     async def _get_queue_size(self, queue_name: str) -> int:
-        """Get queue size for monitoring"""        try:
+        """Get queue size for monitoring"""
+        try:
             # Implementation would check actual queue size
             # This is a placeholder
             return 0
@@ -832,8 +874,10 @@ class PipelineMonitor:
             return -1
 
     async def get_monitoring_dashboard(self) -> Dict[str, Any]:
-        """        Generate comprehensive monitoring dashboard data
-        """        try:
+        """
+        Generate comprehensive monitoring dashboard data
+        """
+        try:
             dashboard = {
                 "timestamp": datetime.utcnow().isoformat(),
                 "overall_status": self._calculate_overall_status(),
@@ -856,7 +900,8 @@ class PipelineMonitor:
             return {"error": str(e)}
 
     def _calculate_overall_status(self) -> str:
-        """Calculate overall system health status"""        if not self.health_checks:
+        """Calculate overall system health status"""
+        if not self.health_checks:
             return HealthStatus.UNKNOWN.value
         
         statuses = [hc.status for hc in self.health_checks.values()]
@@ -871,11 +916,13 @@ class PipelineMonitor:
             return HealthStatus.HEALTHY.value
 
     async def _generate_performance_summary(self) -> Dict[str, Any]:
-        """Generate performance summary from collected metrics"""        # Implementation would aggregate performance metrics
+        """Generate performance summary from collected metrics"""
+        # Implementation would aggregate performance metrics
         return {"placeholder": "performance_summary"}
 
     async def _get_system_resources(self) -> Dict[str, Any]:
-        """Get current system resource usage"""        try:
+        """Get current system resource usage"""
+        try:
             cpu_percent = psutil.cpu_percent(interval=1)
             memory = psutil.virtual_memory()
             disk = psutil.disk_usage('/')
@@ -904,7 +951,8 @@ class PipelineMonitor:
 
 
 class MetricType(str, Enum):
-    """Types of metrics collected"""    COUNTER = "counter"
+    """Types of metrics collected"""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     TIMER = "timer"
@@ -912,7 +960,8 @@ class MetricType(str, Enum):
 
 @dataclass
 class HealthCheckResult:
-    """Health check result data structure"""    component: str
+    """Health check result data structure"""
+    component: str
     status: HealthStatus
     message: str
     response_time: float
@@ -920,12 +969,14 @@ class HealthCheckResult:
     metadata: Dict[str, Any] = None
 
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return asdict(self)
+        """Convert to dictionary"""
+        return asdict(self)
 
 
 @dataclass
 class PipelineMetrics:
-    """Pipeline performance metrics"""    pipeline_name: str
+    """Pipeline performance metrics"""
+    pipeline_name: str
     execution_count: int
     success_count: int
     failure_count: int
@@ -936,14 +987,17 @@ class PipelineMetrics:
     active_tasks: int
 
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        data = asdict(self)
+        """Convert to dictionary"""
+        data = asdict(self)
         data["last_execution"] = self.last_execution.isoformat()
         return data
 
 
 class HealthChecker:
-    """    Comprehensive health checking system for all pipeline components
-    """    
+    """
+    Comprehensive health checking system for all pipeline components
+    """
+    
     def __init__(self):
         self.notification_manager = NotificationManager()
         self.storage_manager = StorageManager()
@@ -974,8 +1028,10 @@ class HealthChecker:
         self, 
         components: Optional[List[str]] = None
     ) -> Dict[str, HealthCheckResult]:
-        """        Run health checks for specified components or all components
-        """        try:
+        """
+        Run health checks for specified components or all components
+        """
+        try:
             components_to_check = components or list(self.health_checks.keys())
             results = {}
             
@@ -1012,7 +1068,8 @@ class HealthChecker:
             raise HealthCheckError(f"Health check failed: {str(e)}")
 
     async def _run_single_health_check(self, component: str) -> HealthCheckResult:
-        """Run health check for a single component"""        start_time = time.time()
+        """Run health check for a single component"""
+        start_time = time.time()
         
         try:
             health_check_func = self.health_checks[component]
@@ -1041,7 +1098,8 @@ class HealthChecker:
             )
 
     async def _check_database_health(self) -> Dict[str, Any]:
-        """Check database health and performance"""        try:
+        """Check database health and performance"""
+        try:
             async with AsyncDatabaseSession() as session:
                 # Test basic connectivity
                 result = await session.execute(text("SELECT 1"))
@@ -1057,7 +1115,8 @@ class HealthChecker:
                 }
                 
                 # Check for long-running queries
-                long_queries = await session.execute(text("""                    SELECT COUNT(*) as count 
+                long_queries = await session.execute(text("""
+                    SELECT COUNT(*) as count 
                     FROM pg_stat_activity 
                     WHERE state = 'active' 
                     AND query_start < NOW() - INTERVAL '5 minutes'
@@ -1091,7 +1150,8 @@ class HealthChecker:
             }
 
     async def _check_redis_health(self) -> Dict[str, Any]:
-        """Check Redis health and performance"""        try:
+        """Check Redis health and performance"""
+        try:
             redis = aioredis.from_url(settings.REDIS_URL)
             
             # Test basic connectivity
@@ -1131,7 +1191,8 @@ class HealthChecker:
             }
 
     async def _check_storage_health(self) -> Dict[str, Any]:
-        """Check storage system health"""        try:
+        """Check storage system health"""
+        try:
             # Test storage connectivity
             health_result = await self.storage_manager.health_check()
             
@@ -1155,7 +1216,8 @@ class HealthChecker:
             }
 
     async def _check_system_health(self) -> Dict[str, Any]:
-        """Check system resource health"""        try:
+        """Check system resource health"""
+        try:
             # CPU usage
             cpu_usage = psutil.cpu_percent(interval=1)
             
@@ -1196,7 +1258,8 @@ class HealthChecker:
             }
 
     async def _check_fingerprinting_health(self) -> Dict[str, Any]:
-        """Check fingerprinting engine health"""        try:
+        """Check fingerprinting engine health"""
+        try:
             # Test fingerprinting service availability
             # This would check if the AI models are loaded and responding
             
@@ -1231,7 +1294,8 @@ class HealthChecker:
             }
 
     async def _check_protection_health(self) -> Dict[str, Any]:
-        """Check protection pipeline health"""        try:
+        """Check protection pipeline health"""
+        try:
             # Check protection service components
             # This would verify monitoring, crawlers, etc. are operational
             
@@ -1251,7 +1315,8 @@ class HealthChecker:
             }
 
     async def _check_monetization_health(self) -> Dict[str, Any]:
-        """Check monetization pipeline health"""        try:
+        """Check monetization pipeline health"""
+        try:
             # Check monetization services
             return {
                 "status": HealthStatus.HEALTHY,
@@ -1269,7 +1334,8 @@ class HealthChecker:
             }
 
     async def _check_analytics_health(self) -> Dict[str, Any]:
-        """Check analytics pipeline health"""        try:
+        """Check analytics pipeline health"""
+        try:
             # Check analytics services
             return {
                 "status": HealthStatus.HEALTHY,
@@ -1287,7 +1353,8 @@ class HealthChecker:
             }
 
     async def _process_health_alerts(self, results: Dict[str, HealthCheckResult]):
-        """Process health check results and send alerts if needed"""        critical_issues = []
+        """Process health check results and send alerts if needed"""
+        critical_issues = []
         warning_issues = []
         
         for component, result in results.items():
@@ -1314,8 +1381,10 @@ class HealthChecker:
 
 
 class PipelineMonitor:
-    """    Advanced pipeline monitoring system with metrics collection and analysis
-    """    
+    """
+    Advanced pipeline monitoring system with metrics collection and analysis
+    """
+    
     def __init__(self):
         self.health_checker = HealthChecker()
         
@@ -1348,7 +1417,8 @@ class PipelineMonitor:
         self.metrics_cache = {}
 
     async def start_monitoring(self):
-        """Start continuous monitoring of all pipelines"""        logger.info("Starting pipeline monitoring system")
+        """Start continuous monitoring of all pipelines"""
+        logger.info("Starting pipeline monitoring system")
         
         # Start background monitoring tasks
         asyncio.create_task(self._continuous_health_monitoring())
@@ -1362,7 +1432,8 @@ class PipelineMonitor:
         status: str,
         error_type: Optional[str] = None
     ):
-        """Record pipeline execution metrics"""        # Update Prometheus metrics
+        """Record pipeline execution metrics"""
+        # Update Prometheus metrics
         self.pipeline_executions.labels(
             pipeline_name=pipeline_name,
             status=status
@@ -1410,7 +1481,8 @@ class PipelineMonitor:
         pipeline_name: Optional[str] = None,
         time_range: Optional[timedelta] = None
     ) -> Dict[str, PipelineMetrics]:
-        """Get comprehensive pipeline metrics"""        if time_range is None:
+        """Get comprehensive pipeline metrics"""
+        if time_range is None:
             time_range = timedelta(hours=24)
         
         pipelines_to_include = [pipeline_name] if pipeline_name else list(self.metrics_cache.keys())
@@ -1453,7 +1525,8 @@ class PipelineMonitor:
         return metrics
 
     async def get_system_overview(self) -> Dict[str, Any]:
-        """Get comprehensive system overview"""        # Run health checks
+        """Get comprehensive system overview"""
+        # Run health checks
         health_results = await self.health_checker.run_health_checks()
         
         # Get pipeline metrics
@@ -1499,10 +1572,12 @@ class PipelineMonitor:
         }
 
     async def export_prometheus_metrics(self) -> str:
-        """Export metrics in Prometheus format"""        return generate_latest().decode('utf-8')
+        """Export metrics in Prometheus format"""
+        return generate_latest().decode('utf-8')
 
     async def _continuous_health_monitoring(self):
-        """Continuous health monitoring background task"""        while True:
+        """Continuous health monitoring background task"""
+        while True:
             try:
                 await asyncio.sleep(60)  # Check every minute
                 await self.health_checker.run_health_checks()
@@ -1512,7 +1587,8 @@ class PipelineMonitor:
                 await asyncio.sleep(60)
 
     async def _metrics_collection_loop(self):
-        """Background metrics collection loop"""        while True:
+        """Background metrics collection loop"""
+        while True:
             try:
                 await asyncio.sleep(30)  # Collect every 30 seconds
                 
@@ -1529,7 +1605,8 @@ class PipelineMonitor:
                 await asyncio.sleep(30)
 
     async def _cleanup_old_metrics(self):
-        """Cleanup old metrics data"""        while True:
+        """Cleanup old metrics data"""
+        while True:
             try:
                 await asyncio.sleep(3600)  # Cleanup every hour
                 

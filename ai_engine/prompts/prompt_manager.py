@@ -5,7 +5,8 @@ Handles prompt creation, optimization, versioning, and performance tracking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import json
 import hashlib
 import uuid
@@ -20,7 +21,8 @@ logger = logging.getLogger(__name__)
 
 
 class PromptCategory(Enum):
-    """Categories of prompts"""    CONTENT_CREATION = "content_creation"
+    """Categories of prompts"""
+    CONTENT_CREATION = "content_creation"
     CREATIVE_WRITING = "creative_writing"
     BUSINESS_COMMUNICATION = "business_communication"
     SOCIAL_MEDIA = "social_media"
@@ -33,7 +35,8 @@ class PromptCategory(Enum):
 
 
 class PromptType(Enum):
-    """Types of prompts"""    INSTRUCTION = "instruction"
+    """Types of prompts"""
+    INSTRUCTION = "instruction"
     QUESTION = "question"
     COMPLETION = "completion"
     CONVERSATION = "conversation"
@@ -46,7 +49,8 @@ class PromptType(Enum):
 
 
 class PromptStatus(Enum):
-    """Status of prompts"""    DRAFT = "draft"
+    """Status of prompts"""
+    DRAFT = "draft"
     ACTIVE = "active"
     TESTING = "testing"
     OPTIMIZED = "optimized"
@@ -56,7 +60,8 @@ class PromptStatus(Enum):
 
 @dataclass
 class PromptVariable:
-    """Variable definition in prompt templates"""    name: str
+    """Variable definition in prompt templates"""
+    name: str
     type: str  # string, number, boolean, list, object
     description: str
     required: bool = True
@@ -70,7 +75,8 @@ class PromptVariable:
 
 @dataclass
 class PromptTemplate:
-    """Template definition for prompts"""    template_id: str
+    """Template definition for prompts"""
+    template_id: str
     name: str
     description: str
     category: PromptCategory
@@ -97,7 +103,8 @@ class PromptTemplate:
 
 @dataclass
 class PromptExecution:
-    """Record of prompt execution"""    execution_id: str
+    """Record of prompt execution"""
+    execution_id: str
     template_id: str
     input_variables: Dict[str, Any]
     generated_prompt: str
@@ -115,7 +122,8 @@ class PromptExecution:
 
 
 class PromptManager:
-    """    Central manager for AI prompts and templates
+    """
+    Central manager for AI prompts and templates
     
     Features:
     - Template creation and management
@@ -126,9 +134,11 @@ class PromptManager:
     - Multi-language support
     - Context-aware prompt generation
     - Quality assessment and improvement
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize prompt manager"""        self.config = config or {}
+        """Initialize prompt manager"""
+        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Template storage
@@ -164,7 +174,8 @@ class PromptManager:
         }
     
     async def initialize(self) -> bool:
-        """Initialize the prompt manager"""        try:
+        """Initialize the prompt manager"""
+        try:
             self.logger.info("Initializing Prompt Manager...")
             
             # Create storage directories
@@ -197,7 +208,8 @@ class PromptManager:
         variables: List[PromptVariable],
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Create a new prompt template"""        try:
+        """Create a new prompt template"""
+        try:
             self.logger.info(f"Creating prompt template: {name}")
             
             # Generate template ID
@@ -250,7 +262,8 @@ class PromptManager:
         variables: Dict[str, Any],
         context: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Generate a prompt from a template"""        try:
+        """Generate a prompt from a template"""
+        try:
             # Get active template
             if template_name not in self.active_templates:
                 raise ValueError(f"Template {template_name} not found")
@@ -287,7 +300,8 @@ class PromptManager:
         model_name: str,
         context: Optional[Dict[str, Any]] = None
     ) -> PromptExecution:
-        """Execute a prompt and track performance"""        start_time = datetime.utcnow()
+        """Execute a prompt and track performance"""
+        start_time = datetime.utcnow()
         execution_id = str(uuid.uuid4())
         
         try:
@@ -353,7 +367,8 @@ class PromptManager:
         template_name: str,
         optimization_strategy: str = "performance"
     ) -> Dict[str, Any]:
-        """Optimize a template based on performance data"""        try:
+        """Optimize a template based on performance data"""
+        try:
             self.logger.info(f"Optimizing template: {template_name}")
             
             if template_name not in self.active_templates:
@@ -412,7 +427,8 @@ class PromptManager:
         template_name: str,
         time_range_days: int = 30
     ) -> Dict[str, Any]:
-        """Get analytics for a template"""        try:
+        """Get analytics for a template"""
+        try:
             if template_name not in self.active_templates:
                 raise ValueError(f"Template {template_name} not found")
             
@@ -465,7 +481,8 @@ class PromptManager:
         category: Optional[PromptCategory] = None,
         status: Optional[PromptStatus] = None
     ) -> List[Dict[str, Any]]:
-        """List all templates with optional filtering"""        try:
+        """List all templates with optional filtering"""
+        try:
             templates = []
             
             for template_id, template in self.templates.items():
@@ -498,7 +515,8 @@ class PromptManager:
             return []
     
     async def get_manager_status(self) -> Dict[str, Any]:
-        """Get prompt manager status"""        try:
+        """Get prompt manager status"""
+        try:
             # Calculate category distribution
             category_counts = {}
             for template in self.templates.values():
@@ -529,7 +547,8 @@ class PromptManager:
     # Private helper methods
     
     async def _validate_template(self, template: PromptTemplate) -> Dict[str, Any]:
-        """Validate template configuration"""        errors = []
+        """Validate template configuration"""
+        errors = []
         
         # Check required fields
         if not template.name:
@@ -550,7 +569,8 @@ class PromptManager:
         template: PromptTemplate,
         variables: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate variables against template requirements"""        errors = []
+        """Validate variables against template requirements"""
+        errors = []
         
         # Check required variables
         for var_def in template.variables:
@@ -572,7 +592,8 @@ class PromptManager:
         template: PromptTemplate,
         variables: Dict[str, Any]
     ) -> str:
-        """Interpolate variables into template text"""        result = template.template_text
+        """Interpolate variables into template text"""
+        result = template.template_text
         
         for var_def in template.variables:
             placeholder = f"{{{var_def.name}}}"
@@ -588,7 +609,8 @@ class PromptManager:
         variables: Dict[str, Any],
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply context to variables"""        # Placeholder for context application
+        """Apply context to variables"""
+        # Placeholder for context application
         # Could include user preferences, platform optimization, etc.
         return variables
     
@@ -598,12 +620,14 @@ class PromptManager:
         template: PromptTemplate,
         context: Optional[Dict[str, Any]]
     ) -> str:
-        """Apply performance optimizations to generated prompt"""        # Placeholder for prompt optimization
+        """Apply performance optimizations to generated prompt"""
+        # Placeholder for prompt optimization
         # Could include A/B test results, performance data, etc.
         return prompt
     
     async def _execute_with_model(self, prompt: str, model_name: str) -> str:
-        """Execute prompt with AI model (placeholder)"""        # This would integrate with actual AI service
+        """Execute prompt with AI model (placeholder)"""
+        # This would integrate with actual AI service
         await asyncio.sleep(0.1)  # Simulate API call
         return f"Mock response for prompt of length {len(prompt)}"
     
@@ -613,7 +637,8 @@ class PromptManager:
         response: str,
         context: Optional[Dict[str, Any]]
     ) -> float:
-        """Assess quality of prompt execution"""        # Placeholder quality assessment
+        """Assess quality of prompt execution"""
+        # Placeholder quality assessment
         # Could use various metrics: relevance, coherence, engagement, etc.
         base_score = 0.7
         
@@ -628,7 +653,8 @@ class PromptManager:
         return min(base_score, 1.0)
     
     async def _store_execution(self, execution: PromptExecution):
-        """Store execution record"""        self.execution_history.append(execution)
+        """Store execution record"""
+        self.execution_history.append(execution)
         
         # Maintain history size limit
         if len(self.execution_history) > self.max_history_size:
@@ -648,7 +674,8 @@ class PromptManager:
             self.metrics['success_rate'] = len(successful) / len(self.execution_history)
     
     async def _update_template_metrics(self, template_id: str, execution: PromptExecution):
-        """Update template-specific metrics"""        template = self.templates[template_id]
+        """Update template-specific metrics"""
+        template = self.templates[template_id]
         template.usage_count += 1
         
         # Calculate success rate for this template
@@ -657,14 +684,16 @@ class PromptManager:
         template.success_rate = len(successful) / len(template_executions) if template_executions else 0
     
     async def _get_template_performance(self, template_id: str) -> List[PromptExecution]:
-        """Get performance data for a template"""        return [e for e in self.execution_history if e.template_id == template_id]
+        """Get performance data for a template"""
+        return [e for e in self.execution_history if e.template_id == template_id]
     
     async def _optimize_for_performance(
         self,
         template: PromptTemplate,
         performance_data: List[PromptExecution]
     ) -> Dict[str, Any]:
-        """Optimize template for performance"""        # Placeholder optimization logic
+        """Optimize template for performance"""
+        # Placeholder optimization logic
         avg_time = sum(e.execution_time_ms for e in performance_data) / len(performance_data)
         
         improvements = []
@@ -682,7 +711,8 @@ class PromptManager:
         template: PromptTemplate,
         performance_data: List[PromptExecution]
     ) -> Dict[str, Any]:
-        """Optimize template for quality"""        # Placeholder optimization logic
+        """Optimize template for quality"""
+        # Placeholder optimization logic
         successful = [e for e in performance_data if e.success]
         avg_quality = sum(e.quality_score for e in successful) / len(successful) if successful else 0
         
@@ -701,7 +731,8 @@ class PromptManager:
         template: PromptTemplate,
         performance_data: List[PromptExecution]
     ) -> Dict[str, Any]:
-        """Optimize template for engagement"""        # Placeholder optimization logic
+        """Optimize template for engagement"""
+        # Placeholder optimization logic
         improvements = ["Added engagement-focused keywords", "Improved call-to-action"]
         
         return {
@@ -715,7 +746,8 @@ class PromptManager:
         original_template: PromptTemplate,
         optimizations: Dict[str, Any]
     ) -> PromptTemplate:
-        """Create optimized version of template"""        # Generate new template ID
+        """Create optimized version of template"""
+        # Generate new template ID
         new_template_id = f"{original_template.name.lower().replace(' ', '_')}_{uuid.uuid4().hex[:8]}"
         
         # Create optimized template (placeholder)
@@ -741,7 +773,8 @@ class PromptManager:
         return optimized_template
     
     def _increment_version(self, version: str) -> str:
-        """Increment version number"""        try:
+        """Increment version number"""
+        try:
             parts = version.split('.')
             parts[-1] = str(int(parts[-1]) + 1)
             return '.'.join(parts)
@@ -749,15 +782,18 @@ class PromptManager:
             return "1.0.1"
     
     async def _analyze_variable_usage(self, executions: List[PromptExecution]) -> Dict[str, Any]:
-        """Analyze variable usage patterns"""        # Placeholder analysis
+        """Analyze variable usage patterns"""
+        # Placeholder analysis
         return {'analysis': 'Variable usage analysis would go here'}
     
     async def _analyze_performance_trends(self, executions: List[PromptExecution]) -> Dict[str, Any]:
-        """Analyze performance trends over time"""        # Placeholder analysis
+        """Analyze performance trends over time"""
+        # Placeholder analysis
         return {'trends': 'Performance trend analysis would go here'}
     
     def _get_quality_grade(self, avg_quality: float) -> str:
-        """Get quality grade based on average quality score"""        if avg_quality >= 0.9:
+        """Get quality grade based on average quality score"""
+        if avg_quality >= 0.9:
             return "A"
         elif avg_quality >= 0.8:
             return "B"
@@ -773,7 +809,8 @@ class PromptManager:
         template_id: str,
         executions: List[PromptExecution]
     ) -> List[str]:
-        """Get optimization recommendations for template"""        recommendations = []
+        """Get optimization recommendations for template"""
+        recommendations = []
         
         if len(executions) < 10:
             recommendations.append("Collect more execution data for better insights")
@@ -789,23 +826,28 @@ class PromptManager:
         return recommendations
     
     async def _load_existing_templates(self):
-        """Load templates from storage"""        # Placeholder for loading from persistent storage
+        """Load templates from storage"""
+        # Placeholder for loading from persistent storage
         pass
     
     async def _save_template(self, template: PromptTemplate):
-        """Save template to storage"""        # Placeholder for saving to persistent storage
+        """Save template to storage"""
+        # Placeholder for saving to persistent storage
         pass
     
     async def _setup_monitoring(self):
-        """Setup performance monitoring"""        # Placeholder for monitoring setup
+        """Setup performance monitoring"""
+        # Placeholder for monitoring setup
         pass
     
     async def _start_optimization_tasks(self):
-        """Start background optimization tasks"""        # Placeholder for background task setup
+        """Start background optimization tasks"""
+        # Placeholder for background task setup
         pass
     
     async def _get_performance_summary(self) -> Dict[str, Any]:
-        """Get performance summary"""        return {
+        """Get performance summary"""
+        return {
             'total_executions': len(self.execution_history),
             'recent_performance': 'Good',
             'optimization_opportunities': 3

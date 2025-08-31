@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 import pandas as pd
@@ -52,7 +53,8 @@ from ...utils.ml_models import BrandPredictionModel, TrendAnalyzer
 logger = logging.getLogger(__name__)
 
 class BrandMetricType(Enum):
-    """Types of brand metrics"""    AWARENESS = "awareness"
+    """Types of brand metrics"""
+    AWARENESS = "awareness"
     ENGAGEMENT = "engagement"
     SENTIMENT = "sentiment"
     REACH = "reach"
@@ -62,7 +64,8 @@ class BrandMetricType(Enum):
     VALUE = "value"
 
 class AnalysisTimeframe(Enum):
-    """Analysis timeframe options"""    HOURLY = "1h"
+    """Analysis timeframe options"""
+    HOURLY = "1h"
     DAILY = "1d" 
     WEEKLY = "1w"
     MONTHLY = "1m"
@@ -70,7 +73,8 @@ class AnalysisTimeframe(Enum):
     YEARLY = "1y"
 
 class BrandMaturityLevel(Enum):
-    """Brand maturity classification"""    EMERGING = "emerging"
+    """Brand maturity classification"""
+    EMERGING = "emerging"
     DEVELOPING = "developing"
     ESTABLISHED = "established"
     MATURE = "mature"
@@ -78,7 +82,8 @@ class BrandMaturityLevel(Enum):
 
 @dataclass
 class BrandMetrics:
-    """Comprehensive brand performance metrics"""    brand_id: str
+    """Comprehensive brand performance metrics"""
+    brand_id: str
     timeframe: AnalysisTimeframe
     awareness_score: float = 0.0
     engagement_rate: float = 0.0
@@ -99,7 +104,8 @@ class BrandMetrics:
 
 @dataclass
 class CompetitiveAnalysis:
-    """Competitive landscape analysis"""    brand_id: str
+    """Competitive landscape analysis"""
+    brand_id: str
     competitor_landscape: List[Dict[str, Any]]
     market_position: int
     competitive_advantages: List[str]
@@ -111,7 +117,8 @@ class CompetitiveAnalysis:
 
 @dataclass
 class BrandValueAssessment:
-    """Comprehensive brand value assessment"""    brand_id: str
+    """Comprehensive brand value assessment"""
+    brand_id: str
     estimated_value: float
     value_components: Dict[str, float]
     valuation_method: str
@@ -124,7 +131,8 @@ class BrandValueAssessment:
 
 @dataclass
 class BrandPerformanceReport:
-    """Comprehensive brand performance analysis report"""    report_id: str
+    """Comprehensive brand performance analysis report"""
+    report_id: str
     brand_id: str
     executive_summary: Dict[str, Any]
     key_metrics: BrandMetrics
@@ -136,7 +144,8 @@ class BrandPerformanceReport:
     generated_at: datetime = field(default_factory=datetime.utcnow)
 
 class BrandAnalyzer:
-    """    Advanced Brand Value & Performance Analysis System
+    """
+    Advanced Brand Value & Performance Analysis System
     
     Provides comprehensive brand analysis including:
     - Multi-dimensional brand metrics calculation
@@ -145,7 +154,8 @@ class BrandAnalyzer:
     - Performance trend analysis
     - Market positioning insights
     - Growth opportunity identification
-    """    def __init__(self, brand_id: str):
+    """
+    def __init__(self, brand_id: str):
         self.brand_id = brand_id
         
         # Initialize analysis components
@@ -176,7 +186,8 @@ class BrandAnalyzer:
         logger.info(f"Brand analyzer initialized for brand: {brand_id}")
 
     async def analyze_brand_performance(self, timeframe: AnalysisTimeframe = AnalysisTimeframe.MONTHLY) -> BrandMetrics:
-        """Comprehensive brand performance analysis"""        try:
+        """Comprehensive brand performance analysis"""
+        try:
             logger.info(f"Starting brand performance analysis for timeframe: {timeframe.value}")
             
             # Collect data from all sources
@@ -238,7 +249,8 @@ class BrandAnalyzer:
             raise
 
     async def _collect_brand_data(self, timeframe: AnalysisTimeframe) -> Dict[str, Any]:
-        """Collect comprehensive brand data from all sources"""        try:
+        """Collect comprehensive brand data from all sources"""
+        try:
             data = {}
             
             # Social media data
@@ -274,7 +286,8 @@ class BrandAnalyzer:
             return {}
 
     async def _calculate_awareness_score(self, brand_data: Dict[str, Any]) -> float:
-        """Calculate brand awareness score (0-100)"""        try:
+        """Calculate brand awareness score (0-100)"""
+        try:
             awareness_components = []
             
             # Search volume component
@@ -307,7 +320,8 @@ class BrandAnalyzer:
             return 0.0
 
     async def _calculate_engagement_rate(self, brand_data: Dict[str, Any]) -> float:
-        """Calculate overall brand engagement rate"""        try:
+        """Calculate overall brand engagement rate"""
+        try:
             social_data = brand_data.get("social_media", {})
             
             total_interactions = (
@@ -327,7 +341,8 @@ class BrandAnalyzer:
             return 0.0
 
     async def _calculate_sentiment_score(self, brand_data: Dict[str, Any]) -> float:
-        """Calculate overall brand sentiment score (-1 to 1)"""        try:
+        """Calculate overall brand sentiment score (-1 to 1)"""
+        try:
             social_data = brand_data.get("social_media", {})
             sentiment_data = brand_data.get("consumer_sentiment", {})
             
@@ -352,7 +367,8 @@ class BrandAnalyzer:
             return 0.0
 
     async def _calculate_reach_metrics(self, brand_data: Dict[str, Any]) -> Dict[str, int]:
-        """Calculate reach metrics breakdown"""        try:
+        """Calculate reach metrics breakdown"""
+        try:
             social_data = brand_data.get("social_media", {})
             
             organic_reach = social_data.get("organic_reach", 0)
@@ -370,7 +386,8 @@ class BrandAnalyzer:
             return {"total": 0, "organic": 0, "paid": 0}
 
     async def _calculate_conversion_rate(self, brand_data: Dict[str, Any]) -> float:
-        """Calculate brand conversion rate"""        try:
+        """Calculate brand conversion rate"""
+        try:
             financial_data = brand_data.get("financial_data", {})
             social_data = brand_data.get("social_media", {})
             
@@ -388,7 +405,8 @@ class BrandAnalyzer:
             return 0.0
 
     async def _calculate_loyalty_index(self, brand_data: Dict[str, Any]) -> float:
-        """Calculate customer loyalty index (0-100)"""        try:
+        """Calculate customer loyalty index (0-100)"""
+        try:
             social_data = brand_data.get("social_media", {})
             financial_data = brand_data.get("financial_data", {})
             
@@ -415,7 +433,8 @@ class BrandAnalyzer:
             return 50.0
 
     async def _calculate_advocacy_score(self, brand_data: Dict[str, Any]) -> float:
-        """Calculate brand advocacy score (0-100)"""        try:
+        """Calculate brand advocacy score (0-100)"""
+        try:
             social_data = brand_data.get("social_media", {})
             
             # User-generated content score
@@ -449,7 +468,8 @@ class BrandAnalyzer:
             return 25.0
 
     async def _estimate_brand_value(self, brand_data: Dict[str, Any]) -> float:
-        """Estimate brand value using multiple valuation methods"""        try:
+        """Estimate brand value using multiple valuation methods"""
+        try:
             # Revenue-based approach
             revenue_value = await self._calculate_revenue_based_value(brand_data)
             
@@ -477,7 +497,8 @@ class BrandAnalyzer:
             return 0.0
 
     async def _calculate_revenue_based_value(self, brand_data: Dict[str, Any]) -> float:
-        """Calculate brand value based on revenue metrics"""        try:
+        """Calculate brand value based on revenue metrics"""
+        try:
             financial_data = brand_data.get("financial_data", {})
             
             annual_revenue = financial_data.get("annual_revenue", 0)
@@ -500,7 +521,8 @@ class BrandAnalyzer:
             return 0.0
 
     async def _calculate_market_based_value(self, brand_data: Dict[str, Any]) -> float:
-        """Calculate brand value based on market comparables"""        try:
+        """Calculate brand value based on market comparables"""
+        try:
             competitor_data = brand_data.get("competitor_data", {})
             market_data = brand_data.get("market_data", {})
             
@@ -530,7 +552,8 @@ class BrandAnalyzer:
             return 0.0
 
     async def _calculate_cost_based_value(self, brand_data: Dict[str, Any]) -> float:
-        """Calculate brand value based on development costs"""        try:
+        """Calculate brand value based on development costs"""
+        try:
             financial_data = brand_data.get("financial_data", {})
             
             # Brand development costs
@@ -556,7 +579,8 @@ class BrandAnalyzer:
             return 0.0
 
     async def _calculate_income_based_value(self, brand_data: Dict[str, Any]) -> float:
-        """Calculate brand value based on future income potential"""        try:
+        """Calculate brand value based on future income potential"""
+        try:
             financial_data = brand_data.get("financial_data", {})
             
             # Brand-attributed cash flows
@@ -581,7 +605,8 @@ class BrandAnalyzer:
             return 0.0
 
     async def _calculate_market_share(self, brand_data: Dict[str, Any]) -> float:
-        """Calculate brand market share"""        try:
+        """Calculate brand market share"""
+        try:
             market_data = brand_data.get("market_data", {})
             competitor_data = brand_data.get("competitor_data", {})
             
@@ -616,7 +641,8 @@ class BrandAnalyzer:
             return 0.01  # Default 1%
 
     async def _calculate_competitive_position(self, brand_data: Dict[str, Any]) -> int:
-        """Calculate brand competitive position ranking"""        try:
+        """Calculate brand competitive position ranking"""
+        try:
             competitor_data = brand_data.get("competitor_data", {})
             
             # Get competitor rankings across different metrics
@@ -642,7 +668,8 @@ class BrandAnalyzer:
             return 10  # Default middle ranking
 
     async def _calculate_growth_rate(self, brand_data: Dict[str, Any]) -> float:
-        """Calculate brand growth rate"""        try:
+        """Calculate brand growth rate"""
+        try:
             # Get historical metrics for growth calculation
             if len(self.metrics_history) < 2:
                 return 0.05  # Default 5% growth assumption
@@ -669,7 +696,8 @@ class BrandAnalyzer:
             return 0.05
 
     async def _calculate_risk_score(self, brand_data: Dict[str, Any]) -> float:
-        """Calculate brand risk score (0-1, higher is riskier)"""        try:
+        """Calculate brand risk score (0-1, higher is riskier)"""
+        try:
             risk_factors = []
             
             # Sentiment risk
@@ -705,7 +733,8 @@ class BrandAnalyzer:
             return 0.3  # Default moderate risk
 
     async def perform_competitive_analysis(self) -> CompetitiveAnalysis:
-        """Perform comprehensive competitive landscape analysis"""        try:
+        """Perform comprehensive competitive landscape analysis"""
+        try:
             logger.info("Starting competitive analysis")
             
             # Get competitor data
@@ -749,7 +778,8 @@ class BrandAnalyzer:
             raise
 
     async def assess_brand_value(self) -> BrandValueAssessment:
-        """Perform comprehensive brand value assessment"""        try:
+        """Perform comprehensive brand value assessment"""
+        try:
             logger.info("Starting brand value assessment")
             
             # Get latest brand data
@@ -793,7 +823,8 @@ class BrandAnalyzer:
 
     async def generate_performance_report(self, 
                                          timeframe: AnalysisTimeframe = AnalysisTimeframe.QUARTERLY) -> BrandPerformanceReport:
-        """Generate comprehensive brand performance report"""        try:
+        """Generate comprehensive brand performance report"""
+        try:
             report_id = f"brand_report_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             
             logger.info(f"Generating brand performance report: {report_id}")
@@ -840,7 +871,8 @@ class BrandAnalyzer:
                                           metrics: BrandMetrics,
                                           competitive: CompetitiveAnalysis,
                                           value: BrandValueAssessment) -> Dict[str, Any]:
-        """Generate executive summary of brand performance"""        try:
+        """Generate executive summary of brand performance"""
+        try:
             # Determine brand health status
             health_score = (
                 metrics.awareness_score * 0.2 +
@@ -896,7 +928,8 @@ class BrandAnalyzer:
                                         competitive: CompetitiveAnalysis,
                                         value: BrandValueAssessment,
                                         trends: Dict[str, Any]) -> List[str]:
-        """Generate strategic recommendations"""        recommendations = []
+        """Generate strategic recommendations"""
+        recommendations = []
         
         try:
             # Awareness recommendations
@@ -938,7 +971,8 @@ class BrandAnalyzer:
         return recommendations
 
     async def _generate_action_items(self, recommendations: List[str]) -> List[Dict[str, Any]]:
-        """Generate specific action items from recommendations"""        action_items = []
+        """Generate specific action items from recommendations"""
+        action_items = []
         
         try:
             priority_mapping = {
@@ -989,7 +1023,8 @@ class BrandAnalyzer:
         return action_items
 
     def _categorize_action(self, action_description: str) -> str:
-        """Categorize action item based on description"""        description_lower = action_description.lower()
+        """Categorize action item based on description"""
+        description_lower = action_description.lower()
         
         if any(word in description_lower for word in ["marketing", "campaign", "awareness"]):
             return "Marketing"
@@ -1006,10 +1041,12 @@ class BrandAnalyzer:
 
 
 class ValueCalculator:
-    """    Specialized Brand Value Calculator
+    """
+    Specialized Brand Value Calculator
     
     Advanced financial modeling for brand valuation using multiple methodologies.
-    """    def __init__(self):
+    """
+    def __init__(self):
         self.valuation_models = {
             "relief_from_royalty": self._relief_from_royalty_method,
             "premium_pricing": self._premium_pricing_method,
@@ -1020,7 +1057,8 @@ class ValueCalculator:
         logger.info("Brand value calculator initialized")
 
     async def calculate_comprehensive_value(self, brand_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate brand value using multiple methods"""        try:
+        """Calculate brand value using multiple methods"""
+        try:
             valuations = {}
             
             for method_name, method_func in self.valuation_models.items():
@@ -1055,7 +1093,8 @@ class ValueCalculator:
             return {"comprehensive_value": 0, "method_values": {}, "confidence_score": 0}
 
     async def _relief_from_royalty_method(self, brand_data: Dict[str, Any]) -> float:
-        """Relief from royalty valuation method"""        try:
+        """Relief from royalty valuation method"""
+        try:
             financial_data = brand_data.get("financial_data", {})
             
             branded_revenue = financial_data.get("branded_revenue", 0)
@@ -1080,7 +1119,8 @@ class ValueCalculator:
             return 0
 
     def _calculate_confidence_score(self, valuations: Dict[str, float]) -> float:
-        """Calculate confidence score based on valuation consistency"""        try:
+        """Calculate confidence score based on valuation consistency"""
+        try:
             values = [v for v in valuations.values() if v > 0]
             
             if len(values) < 2:

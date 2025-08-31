@@ -15,7 +15,8 @@ Enterprise storage environment management for multi-format content.
 Handles distributed storage, data lifecycle, backup strategies, and
 performance optimization for audio, video, image, and document content.
 ==================================================
-"""import os
+"""
+import os
 import logging
 from typing import Dict, Any, List, Optional, Set, Union
 from dataclasses import dataclass, field
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class StorageType(Enum):
-    """Storage type enumeration"""    OBJECT_STORAGE = "object"
+    """Storage type enumeration"""
+    OBJECT_STORAGE = "object"
     BLOCK_STORAGE = "block"
     FILE_STORAGE = "file"
     DISTRIBUTED_STORAGE = "distributed"
@@ -38,7 +40,8 @@ class StorageType(Enum):
 
 
 class StorageTier(Enum):
-    """Storage tier enumeration for lifecycle management"""    HOT = "hot"           # Frequently accessed
+    """Storage tier enumeration for lifecycle management"""
+    HOT = "hot"           # Frequently accessed
     WARM = "warm"         # Occasionally accessed
     COLD = "cold"         # Rarely accessed
     ARCHIVE = "archive"   # Long-term storage
@@ -46,7 +49,8 @@ class StorageTier(Enum):
 
 
 class CompressionType(Enum):
-    """Compression type enumeration"""    NONE = "none"
+    """Compression type enumeration"""
+    NONE = "none"
     GZIP = "gzip"
     BROTLI = "brotli"
     LZ4 = "lz4"
@@ -54,7 +58,8 @@ class CompressionType(Enum):
 
 
 class EncryptionType(Enum):
-    """Encryption type enumeration"""    NONE = "none"
+    """Encryption type enumeration"""
+    NONE = "none"
     AES_256_GCM = "aes256gcm"
     AES_256_CBC = "aes256cbc"
     CHACHA20_POLY1305 = "chacha20poly1305"
@@ -62,7 +67,8 @@ class EncryptionType(Enum):
 
 @dataclass
 class StorageConfiguration:
-    """Storage configuration settings"""    default_storage_type: StorageType = StorageType.OBJECT_STORAGE
+    """Storage configuration settings"""
+    default_storage_type: StorageType = StorageType.OBJECT_STORAGE
     max_file_size_mb: int = int(os.getenv('STORAGE_MAX_FILE_SIZE_MB', '1000'))
     default_compression: CompressionType = CompressionType.ZSTD
     default_encryption: EncryptionType = EncryptionType.AES_256_GCM
@@ -78,7 +84,8 @@ class StorageConfiguration:
 
 @dataclass
 class ObjectStorageConfig:
-    """Object storage configuration (S3-compatible)"""    provider: str = os.getenv('OBJECT_STORAGE_PROVIDER', 'aws_s3')
+    """Object storage configuration (S3-compatible)"""
+    provider: str = os.getenv('OBJECT_STORAGE_PROVIDER', 'aws_s3')
     endpoint_url: str = os.getenv('OBJECT_STORAGE_ENDPOINT')
     access_key_id: str = os.getenv('OBJECT_STORAGE_ACCESS_KEY')
     secret_access_key: str = os.getenv('OBJECT_STORAGE_SECRET_KEY')
@@ -96,7 +103,8 @@ class ObjectStorageConfig:
 
 @dataclass
 class BlockStorageConfig:
-    """Block storage configuration for databases and high-performance workloads"""    provider: str = os.getenv('BLOCK_STORAGE_PROVIDER', 'aws_ebs')
+    """Block storage configuration for databases and high-performance workloads"""
+    provider: str = os.getenv('BLOCK_STORAGE_PROVIDER', 'aws_ebs')
     volume_type: str = os.getenv('BLOCK_STORAGE_TYPE', 'gp3')
     volume_size_gb: int = int(os.getenv('BLOCK_STORAGE_SIZE_GB', '100'))
     iops: int = int(os.getenv('BLOCK_STORAGE_IOPS', '3000'))
@@ -110,7 +118,8 @@ class BlockStorageConfig:
 
 @dataclass
 class FileStorageConfig:
-    """File storage configuration for shared file systems"""    provider: str = os.getenv('FILE_STORAGE_PROVIDER', 'aws_efs')
+    """File storage configuration for shared file systems"""
+    provider: str = os.getenv('FILE_STORAGE_PROVIDER', 'aws_efs')
     performance_mode: str = os.getenv('FILE_STORAGE_PERFORMANCE', 'generalPurpose')
     throughput_mode: str = os.getenv('FILE_STORAGE_THROUGHPUT', 'provisioned')
     provisioned_throughput_mbps: int = int(os.getenv('FILE_STORAGE_THROUGHPUT_MBPS', '100'))
@@ -123,7 +132,8 @@ class FileStorageConfig:
 
 @dataclass
 class CacheStorageConfig:
-    """Cache storage configuration for high-speed access"""    provider: str = os.getenv('CACHE_STORAGE_PROVIDER', 'redis')
+    """Cache storage configuration for high-speed access"""
+    provider: str = os.getenv('CACHE_STORAGE_PROVIDER', 'redis')
     cache_type: str = os.getenv('CACHE_TYPE', 'in_memory')
     max_memory_mb: int = int(os.getenv('CACHE_MAX_MEMORY_MB', '4096'))
     eviction_policy: str = os.getenv('CACHE_EVICTION_POLICY', 'allkeys-lru')
@@ -136,7 +146,8 @@ class CacheStorageConfig:
 
 @dataclass
 class LifecyclePolicy:
-    """Storage lifecycle policy configuration"""    name: str
+    """Storage lifecycle policy configuration"""
+    name: str
     enabled: bool = True
     transitions: List[Dict[str, Any]] = field(default_factory=list)
     expiration_days: Optional[int] = None
@@ -147,7 +158,8 @@ class LifecyclePolicy:
 
 @dataclass
 class ContentTypeConfig:
-    """Content type specific storage configuration"""    content_type: str
+    """Content type specific storage configuration"""
+    content_type: str
     storage_tier: StorageTier
     compression: CompressionType
     encryption: EncryptionType
@@ -159,7 +171,8 @@ class ContentTypeConfig:
 
 
 class StorageEnvironmentManager:
-    """    Storage environment manager for comprehensive data management.
+    """
+    Storage environment manager for comprehensive data management.
     
     Features:
     - Multi-tier storage management (hot, warm, cold, archive)
@@ -172,7 +185,8 @@ class StorageEnvironmentManager:
     - Cost optimization strategies
     - Multi-format content handling (audio, video, images, documents)
     - Metadata extraction and indexing
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or "/config/storage.yml"
         self.environment = "storage"
@@ -197,7 +211,8 @@ class StorageEnvironmentManager:
         logger.info(f"Storage environment manager initialized: {self.environment}")
     
     def load_configuration(self) -> Dict[str, Any]:
-        """Load storage environment configuration"""        try:
+        """Load storage environment configuration"""
+        try:
             config = {
                 'environment': self.environment,
                 
@@ -315,7 +330,8 @@ class StorageEnvironmentManager:
             raise
     
     def setup_storage_infrastructure(self) -> bool:
-        """Setup storage infrastructure"""        try:
+        """Setup storage infrastructure"""
+        try:
             # Setup object storage
             self._setup_object_storage()
             
@@ -342,7 +358,8 @@ class StorageEnvironmentManager:
             return False
     
     def optimize_storage_for_content_type(self, content_type: str, file_size_mb: float) -> Dict[str, Any]:
-        """Optimize storage configuration for specific content type"""        try:
+        """Optimize storage configuration for specific content type"""
+        try:
             # Find matching content type configuration
             content_config = self._get_content_type_config(content_type)
             
@@ -376,7 +393,8 @@ class StorageEnvironmentManager:
             return {}
     
     def setup_content_lifecycle(self, content_id: str, content_type: str) -> bool:
-        """Setup automated lifecycle management for content"""        try:
+        """Setup automated lifecycle management for content"""
+        try:
             # Determine lifecycle policy
             policy = self._get_lifecycle_policy(content_type)
             
@@ -394,7 +412,8 @@ class StorageEnvironmentManager:
             return False
     
     def monitor_storage_performance(self) -> Dict[str, Any]:
-        """Monitor storage performance metrics"""        try:
+        """Monitor storage performance metrics"""
+        try:
             metrics = {
                 'object_storage': self._monitor_object_storage(),
                 'block_storage': self._monitor_block_storage(),
@@ -423,7 +442,8 @@ class StorageEnvironmentManager:
             return {}
     
     def optimize_storage_costs(self) -> Dict[str, Any]:
-        """Optimize storage costs through intelligent tiering and lifecycle management"""        try:
+        """Optimize storage costs through intelligent tiering and lifecycle management"""
+        try:
             optimization_results = {
                 'actions_taken': [],
                 'cost_savings_monthly': 0.0,
@@ -455,7 +475,8 @@ class StorageEnvironmentManager:
             return {}
     
     def get_storage_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive storage analytics"""        return {
+        """Get comprehensive storage analytics"""
+        return {
             'usage_by_type': self._get_usage_by_content_type(),
             'usage_by_tier': self._get_usage_by_storage_tier(),
             'performance_metrics': self._get_performance_metrics(),
@@ -467,7 +488,8 @@ class StorageEnvironmentManager:
         }
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get storage environment health status"""        return {
+        """Get storage environment health status"""
+        return {
             'environment': self.environment,
             'status': 'healthy',
             'object_storage_health': self._check_object_storage_health(),
@@ -484,7 +506,8 @@ class StorageEnvironmentManager:
     
     # Private helper methods
     def _initialize_content_type_configs(self) -> List[ContentTypeConfig]:
-        """Initialize content type specific configurations"""        return [
+        """Initialize content type specific configurations"""
+        return [
             # Audio content
             ContentTypeConfig(
                 content_type='audio/mpeg',
@@ -580,7 +603,8 @@ class StorageEnvironmentManager:
         ]
     
     def _initialize_lifecycle_policies(self) -> List[LifecyclePolicy]:
-        """Initialize storage lifecycle policies"""        return [
+        """Initialize storage lifecycle policies"""
+        return [
             LifecyclePolicy(
                 name="hot_to_warm_transition",
                 enabled=True,
@@ -620,34 +644,43 @@ class StorageEnvironmentManager:
         ]
     
     def _setup_object_storage(self):
-        """Setup object storage infrastructure"""        logger.info(f"Setting up object storage: {self.object_storage.provider}")
+        """Setup object storage infrastructure"""
+        logger.info(f"Setting up object storage: {self.object_storage.provider}")
     
     def _setup_block_storage(self):
-        """Setup block storage infrastructure"""        logger.info(f"Setting up block storage: {self.block_storage.provider}")
+        """Setup block storage infrastructure"""
+        logger.info(f"Setting up block storage: {self.block_storage.provider}")
     
     def _setup_file_storage(self):
-        """Setup file storage infrastructure"""        logger.info(f"Setting up file storage: {self.file_storage.provider}")
+        """Setup file storage infrastructure"""
+        logger.info(f"Setting up file storage: {self.file_storage.provider}")
     
     def _setup_cache_storage(self):
-        """Setup cache storage infrastructure"""        logger.info(f"Setting up cache storage: {self.cache_storage.provider}")
+        """Setup cache storage infrastructure"""
+        logger.info(f"Setting up cache storage: {self.cache_storage.provider}")
     
     def _configure_lifecycle_policies(self):
-        """Configure storage lifecycle policies"""        logger.info("Configuring storage lifecycle policies")
+        """Configure storage lifecycle policies"""
+        logger.info("Configuring storage lifecycle policies")
     
     def _setup_storage_monitoring(self):
-        """Setup storage monitoring"""        logger.info("Setting up storage monitoring")
+        """Setup storage monitoring"""
+        logger.info("Setting up storage monitoring")
     
     def _get_content_type_config(self, content_type: str) -> Optional[ContentTypeConfig]:
-        """Get content type configuration"""        return next((config for config in self.content_type_configs if config.content_type == content_type), None)
+        """Get content type configuration"""
+        return next((config for config in self.content_type_configs if config.content_type == content_type), None)
     
     def _determine_storage_tier(self, content_type: str, file_size_mb: float) -> StorageTier:
-        """Determine optimal storage tier"""        config = self._get_content_type_config(content_type)
+        """Determine optimal storage tier"""
+        config = self._get_content_type_config(content_type)
         if config:
             return config.storage_tier
         return StorageTier.HOT if file_size_mb < 100 else StorageTier.WARM
     
     def _select_compression(self, content_type: str, file_size_mb: float) -> CompressionType:
-        """Select optimal compression algorithm"""        config = self._get_content_type_config(content_type)
+        """Select optimal compression algorithm"""
+        config = self._get_content_type_config(content_type)
         if config:
             return config.compression
         
@@ -662,13 +695,15 @@ class StorageEnvironmentManager:
             return CompressionType.ZSTD
     
     def _select_encryption(self, content_type: str) -> EncryptionType:
-        """Select optimal encryption algorithm"""        config = self._get_content_type_config(content_type)
+        """Select optimal encryption algorithm"""
+        config = self._get_content_type_config(content_type)
         if config:
             return config.encryption
         return EncryptionType.AES_256_GCM
     
     def _estimate_storage_cost(self, storage_tier: StorageTier, file_size_gb: float) -> float:
-        """Estimate monthly storage cost"""        # Cost per GB per month by tier
+        """Estimate monthly storage cost"""
+        # Cost per GB per month by tier
         tier_costs = {
             StorageTier.HOT: 0.023,
             StorageTier.WARM: 0.012,
@@ -679,11 +714,13 @@ class StorageEnvironmentManager:
         return file_size_gb * tier_costs.get(storage_tier, 0.023)
     
     def _estimate_transfer_time(self, file_size_mb: float) -> float:
-        """Estimate transfer time in seconds"""        # Assume 100 Mbps average speed
+        """Estimate transfer time in seconds"""
+        # Assume 100 Mbps average speed
         return (file_size_mb * 8) / 100  # Convert MB to Mb and divide by speed
     
     def _get_lifecycle_policy(self, content_type: str) -> LifecyclePolicy:
-        """Get lifecycle policy for content type"""        if content_type.startswith('audio/'):
+        """Get lifecycle policy for content type"""
+        if content_type.startswith('audio/'):
             return next((p for p in self.lifecycle_policies if p.name == 'audio_content_lifecycle'), self.lifecycle_policies[0])
         elif content_type.startswith('video/'):
             return next((p for p in self.lifecycle_policies if p.name == 'video_content_lifecycle'), self.lifecycle_policies[0])
@@ -691,7 +728,8 @@ class StorageEnvironmentManager:
             return self.lifecycle_policies[0]
     
     def _schedule_transitions(self, content_id: str, policy: LifecyclePolicy) -> List[Dict]:
-        """Schedule lifecycle transitions"""        transitions = []
+        """Schedule lifecycle transitions"""
+        transitions = []
         for transition in policy.transitions:
             transitions.append({
                 'content_id': content_id,
@@ -701,11 +739,13 @@ class StorageEnvironmentManager:
         return transitions
     
     def _setup_lifecycle_monitoring(self, content_id: str, transitions: List[Dict]):
-        """Setup lifecycle monitoring"""        logger.info(f"Setting up lifecycle monitoring for {content_id}")
+        """Setup lifecycle monitoring"""
+        logger.info(f"Setting up lifecycle monitoring for {content_id}")
     
     # Monitoring methods
     def _monitor_object_storage(self) -> Dict[str, Any]:
-        """Monitor object storage performance"""        return {
+        """Monitor object storage performance"""
+        return {
             'total_objects': 1500000,
             'total_size_gb': 2500.5,
             'requests_per_second': 450.2,
@@ -714,7 +754,8 @@ class StorageEnvironmentManager:
         }
     
     def _monitor_block_storage(self) -> Dict[str, Any]:
-        """Monitor block storage performance"""        return {
+        """Monitor block storage performance"""
+        return {
             'total_volumes': 25,
             'total_size_gb': 5000.0,
             'iops_utilization_percent': 65.2,
@@ -723,7 +764,8 @@ class StorageEnvironmentManager:
         }
     
     def _monitor_file_storage(self) -> Dict[str, Any]:
-        """Monitor file storage performance"""        return {
+        """Monitor file storage performance"""
+        return {
             'total_file_systems': 5,
             'total_size_gb': 1000.0,
             'throughput_utilization_percent': 45.3,
@@ -732,7 +774,8 @@ class StorageEnvironmentManager:
         }
     
     def _monitor_cache_storage(self) -> Dict[str, Any]:
-        """Monitor cache storage performance"""        return {
+        """Monitor cache storage performance"""
+        return {
             'cache_hit_ratio_percent': 85.6,
             'memory_utilization_percent': 72.4,
             'operations_per_second': 15000.5,
@@ -741,29 +784,36 @@ class StorageEnvironmentManager:
         }
     
     def _calculate_total_storage_used(self) -> float:
-        """Calculate total storage used in GB"""        return 8500.5
+        """Calculate total storage used in GB"""
+        return 8500.5
     
     def _calculate_total_storage_available(self) -> float:
-        """Calculate total storage available in GB"""        return 15000.0
+        """Calculate total storage available in GB"""
+        return 15000.0
     
     def _calculate_storage_utilization(self) -> float:
-        """Calculate storage utilization percentage"""        used = self._calculate_total_storage_used()
+        """Calculate storage utilization percentage"""
+        used = self._calculate_total_storage_used()
         available = self._calculate_total_storage_available()
         return (used / available) * 100 if available > 0 else 0
     
     def _calculate_cost_optimization_score(self) -> float:
-        """Calculate cost optimization score"""        return 82.5
+        """Calculate cost optimization score"""
+        return 82.5
     
     def _calculate_performance_score(self) -> float:
-        """Calculate performance score"""        return 91.2
+        """Calculate performance score"""
+        return 91.2
     
     def _check_storage_alerts(self, metrics: Dict[str, Any]):
-        """Check storage alert thresholds"""        # Implement alerting logic
+        """Check storage alert thresholds"""
+        # Implement alerting logic
         pass
     
     # Cost optimization methods
     def _analyze_storage_usage_patterns(self) -> Dict[str, Any]:
-        """Analyze storage usage patterns"""        return {
+        """Analyze storage usage patterns"""
+        return {
             'hot_tier_utilization': 65.2,
             'warm_tier_utilization': 45.8,
             'cold_tier_utilization': 25.3,
@@ -772,14 +822,16 @@ class StorageEnvironmentManager:
         }
     
     def _identify_cost_optimization_opportunities(self, usage_patterns: Dict[str, Any]) -> List[Dict]:
-        """Identify cost optimization opportunities"""        return [
+        """Identify cost optimization opportunities"""
+        return [
             {'type': 'tier_transition', 'potential_savings': 250.5, 'items_affected': 500},
             {'type': 'compression', 'potential_savings': 180.3, 'items_affected': 300},
             {'type': 'deduplication', 'potential_savings': 120.8, 'items_affected': 200}
         ]
     
     def _execute_optimization_action(self, opportunity: Dict) -> Dict[str, Any]:
-        """Execute optimization action"""        return {
+        """Execute optimization action"""
+        return {
             'success': True,
             'action': opportunity['type'],
             'savings': opportunity['potential_savings'],
@@ -787,7 +839,8 @@ class StorageEnvironmentManager:
         }
     
     def _generate_optimization_recommendations(self, usage_patterns: Dict[str, Any]) -> List[str]:
-        """Generate optimization recommendations"""        return [
+        """Generate optimization recommendations"""
+        return [
             "Enable intelligent tiering for object storage",
             "Implement automated lifecycle policies",
             "Consider compression for text and document files",
@@ -796,7 +849,8 @@ class StorageEnvironmentManager:
     
     # Analytics methods
     def _get_usage_by_content_type(self) -> Dict[str, float]:
-        """Get storage usage by content type"""        return {
+        """Get storage usage by content type"""
+        return {
             'audio': 2500.5,
             'video': 4200.8,
             'image': 1500.2,
@@ -804,7 +858,8 @@ class StorageEnvironmentManager:
         }
     
     def _get_usage_by_storage_tier(self) -> Dict[str, float]:
-        """Get storage usage by tier"""        return {
+        """Get storage usage by tier"""
+        return {
             'hot': 3500.5,
             'warm': 2800.3,
             'cold': 1500.2,
@@ -812,14 +867,16 @@ class StorageEnvironmentManager:
         }
     
     def _get_performance_metrics(self) -> Dict[str, Any]:
-        """Get performance metrics"""        return {
+        """Get performance metrics"""
+        return {
             'average_response_time_ms': 125.3,
             'throughput_mbps': 850.5,
             'error_rate_percent': 0.15
         }
     
     def _get_cost_breakdown(self) -> Dict[str, float]:
-        """Get cost breakdown"""        return {
+        """Get cost breakdown"""
+        return {
             'object_storage': 450.5,
             'block_storage': 320.8,
             'file_storage': 180.2,
@@ -828,21 +885,24 @@ class StorageEnvironmentManager:
         }
     
     def _get_growth_trends(self) -> Dict[str, Any]:
-        """Get growth trends"""        return {
+        """Get growth trends"""
+        return {
             'monthly_growth_gb': 150.5,
             'yearly_projection_gb': 1806.0,
             'cost_growth_monthly': 25.8
         }
     
     def _get_optimization_opportunities(self) -> List[str]:
-        """Get optimization opportunities"""        return [
+        """Get optimization opportunities"""
+        return [
             "Move infrequently accessed data to cold storage",
             "Enable compression for large files",
             "Implement intelligent caching strategies"
         ]
     
     def _get_compliance_status(self) -> Dict[str, bool]:
-        """Get compliance status"""        return {
+        """Get compliance status"""
+        return {
             'encryption_at_rest': True,
             'encryption_in_transit': True,
             'backup_compliance': True,
@@ -851,7 +911,8 @@ class StorageEnvironmentManager:
         }
     
     def _get_backup_status(self) -> Dict[str, Any]:
-        """Get backup status"""        return {
+        """Get backup status"""
+        return {
             'last_backup': datetime.now().isoformat(),
             'backup_success_rate': 99.8,
             'backup_size_gb': 8500.5,
@@ -860,13 +921,17 @@ class StorageEnvironmentManager:
     
     # Health check methods
     def _check_object_storage_health(self) -> str:
-        """Check object storage health"""        return "healthy"
+        """Check object storage health"""
+        return "healthy"
     
     def _check_block_storage_health(self) -> str:
-        """Check block storage health"""        return "healthy"
+        """Check block storage health"""
+        return "healthy"
     
     def _check_file_storage_health(self) -> str:
-        """Check file storage health"""        return "healthy"
+        """Check file storage health"""
+        return "healthy"
     
     def _check_cache_storage_health(self) -> str:
-        """Check cache storage health"""        return "healthy"
+        """Check cache storage health"""
+        return "healthy"

@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert: Fahed Mlaiel
 - Microservices Architect & DevOps Engineer: Fahed Mlaiel
 - AI Prompt Engineer & Content Protection Specialist: Fahed Mlaiel
-"""import asyncio
+"""
+import asyncio
 import logging
 import re
 import tempfile
@@ -73,14 +74,16 @@ from ...utils.cache_utils import CacheManager
 logger = logging.getLogger(__name__)
 
 class OptimizationType(str, Enum):
-    """Content optimization types"""    SEO_OPTIMIZATION = "seo_optimization"
+    """Content optimization types"""
+    SEO_OPTIMIZATION = "seo_optimization"
     QUALITY_ENHANCEMENT = "quality_enhancement"
     PERFORMANCE_OPTIMIZATION = "performance_optimization"
     ACCESSIBILITY_IMPROVEMENT = "accessibility_improvement"
     FORMAT_OPTIMIZATION = "format_optimization"
 
 class ContentType(str, Enum):
-    """Content types for optimization"""    AUDIO = "audio"
+    """Content types for optimization"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -89,7 +92,8 @@ class ContentType(str, Enum):
 
 @dataclass
 class OptimizationOptions:
-    """Content optimization configuration"""    quality: int = 85  # 1-100, higher = better quality
+    """Content optimization configuration"""
+    quality: int = 85  # 1-100, higher = better quality
     seo_optimize: bool = True
     performance_optimize: bool = True
     accessibility_improve: bool = True
@@ -102,7 +106,8 @@ class OptimizationOptions:
 
 @dataclass
 class OptimizationResult:
-    """Content optimization result"""    success: bool
+    """Content optimization result"""
+    success: bool
     input_path: str
     output_path: str
     optimization_type: OptimizationType
@@ -118,9 +123,11 @@ class OptimizationResult:
     error: Optional[str] = None
 
 class ContentOptimizer:
-    """    Enterprise content optimization engine with AI-powered analysis,
+    """
+    Enterprise content optimization engine with AI-powered analysis,
     SEO enhancement, quality optimization, and performance improvements.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._load_default_config()
         
@@ -162,7 +169,8 @@ class ContentOptimizer:
         logger.info("ContentOptimizer initialized successfully")
     
     def _load_default_config(self) -> Dict[str, Any]:
-        """Load default optimization configuration"""        return {
+        """Load default optimization configuration"""
+        return {
             'temp_dir': '/tmp/content_optimization',
             'ai_models': {
                 'sentence_transformer': 'all-MiniLM-L6-v2',
@@ -194,7 +202,8 @@ class ContentOptimizer:
         }
     
     async def _initialize_ai_models(self):
-        """Initialize AI models for content analysis"""        try:
+        """Initialize AI models for content analysis"""
+        try:
             # Sentence transformer for semantic analysis
             model_name = self.config['ai_models']['sentence_transformer']
             self.models['sentence_transformer'] = SentenceTransformer(model_name)
@@ -213,7 +222,8 @@ class ContentOptimizer:
             logger.warning(f"AI model initialization failed: {e}")
     
     async def _initialize_nlp_tools(self):
-        """Initialize NLP processing tools"""        try:
+        """Initialize NLP processing tools"""
+        try:
             # Download required NLTK data
             nltk.download('punkt', quiet=True)
             nltk.download('stopwords', quiet=True)
@@ -228,7 +238,8 @@ class ContentOptimizer:
             logger.warning(f"NLP tools initialization failed: {e}")
     
     def _load_seo_rules(self) -> Dict[str, Any]:
-        """Load SEO optimization rules"""        return {
+        """Load SEO optimization rules"""
+        return {
             'title_length': {'min': 30, 'max': 60},
             'description_length': {'min': 120, 'max': 160},
             'heading_hierarchy': True,
@@ -248,7 +259,8 @@ class ContentOptimizer:
         }
     
     def _load_quality_presets(self) -> Dict[str, Dict[str, Any]]:
-        """Load quality optimization presets"""        return {
+        """Load quality optimization presets"""
+        return {
             'maximum': {
                 'image_quality': 100,
                 'video_quality': 100,
@@ -289,7 +301,8 @@ class ContentOptimizer:
         }
     
     def _load_performance_targets(self) -> Dict[str, Any]:
-        """Load performance optimization targets"""        return {
+        """Load performance optimization targets"""
+        return {
             'core_web_vitals': {
                 'lcp': 2.5,  # Largest Contentful Paint (seconds)
                 'fid': 100,  # First Input Delay (milliseconds)
@@ -314,7 +327,8 @@ class ContentOptimizer:
         content_type: ContentType,
         options: OptimizationOptions
     ) -> OptimizationResult:
-        """        Optimize content with AI-powered analysis and enhancement
+        """
+        Optimize content with AI-powered analysis and enhancement
         
         Args:
             content_path: Path to content file
@@ -323,7 +337,8 @@ class ContentOptimizer:
             
         Returns:
             OptimizationResult with optimization details
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         content_path = Path(content_path)
         
         try:
@@ -410,7 +425,8 @@ class ContentOptimizer:
         output_path: Path,
         options: OptimizationOptions
     ) -> OptimizationResult:
-        """Optimize image with AI-powered enhancement"""        optimizations_applied = []
+        """Optimize image with AI-powered enhancement"""
+        optimizations_applied = []
         
         try:
             with Image.open(input_path) as img:
@@ -492,7 +508,8 @@ class ContentOptimizer:
         output_path: Path,
         options: OptimizationOptions
     ) -> OptimizationResult:
-        """Optimize video with intelligent encoding"""        optimizations_applied = []
+        """Optimize video with intelligent encoding"""
+        optimizations_applied = []
         
         try:
             # Analyze video properties
@@ -579,7 +596,8 @@ class ContentOptimizer:
         output_path: Path,
         options: OptimizationOptions
     ) -> OptimizationResult:
-        """Optimize audio with intelligent processing"""        optimizations_applied = []
+        """Optimize audio with intelligent processing"""
+        optimizations_applied = []
         
         try:
             # Load audio
@@ -655,7 +673,8 @@ class ContentOptimizer:
         options: OptimizationOptions,
         content_type: ContentType
     ) -> OptimizationResult:
-        """Optimize text content with AI-powered SEO and readability enhancement"""        optimizations_applied = []
+        """Optimize text content with AI-powered SEO and readability enhancement"""
+        optimizations_applied = []
         
         try:
             # Read content
@@ -733,7 +752,8 @@ class ContentOptimizer:
     # AI Enhancement Methods
     
     def _apply_ai_image_enhancement(self, img: Image.Image) -> Image.Image:
-        """Apply AI-powered image enhancement"""        try:
+        """Apply AI-powered image enhancement"""
+        try:
             # Basic AI enhancement using PIL filters
             # In a full implementation, this would use specialized AI models
             
@@ -760,7 +780,8 @@ class ContentOptimizer:
         content_type: ContentType,
         options: OptimizationOptions
     ) -> str:
-        """Apply SEO optimizations to text content"""        try:
+        """Apply SEO optimizations to text content"""
+        try:
             if content_type == ContentType.HTML:
                 soup = BeautifulSoup(content, 'html.parser')
                 
@@ -795,7 +816,8 @@ class ContentOptimizer:
             return content
     
     async def _improve_readability(self, content: str, options: OptimizationOptions) -> str:
-        """Improve content readability"""        try:
+        """Improve content readability"""
+        try:
             if not self.nlp:
                 return content
             
@@ -825,7 +847,8 @@ class ContentOptimizer:
             return content
     
     async def _improve_accessibility(self, html_content: str) -> str:
-        """Improve HTML accessibility"""        try:
+        """Improve HTML accessibility"""
+        try:
             soup = BeautifulSoup(html_content, 'html.parser')
             
             # Add alt text to images without it
@@ -856,7 +879,8 @@ class ContentOptimizer:
             return html_content
     
     async def _optimize_text_performance(self, content: str, content_type: ContentType) -> str:
-        """Optimize text content for performance"""        try:
+        """Optimize text content for performance"""
+        try:
             if content_type == ContentType.HTML:
                 soup = BeautifulSoup(content, 'html.parser')
                 
@@ -892,7 +916,8 @@ class ContentOptimizer:
         content_type: ContentType,
         options: OptimizationOptions
     ) -> str:
-        """Apply AI-powered text enhancement"""        try:
+        """Apply AI-powered text enhancement"""
+        try:
             if not self.models.get('text_classifier'):
                 return content
             
@@ -924,7 +949,8 @@ class ContentOptimizer:
     # Utility Methods
     
     def _get_max_dimension_for_platform(self, platforms: List[str]) -> int:
-        """Get maximum dimension based on target platforms"""        platform_limits = {
+        """Get maximum dimension based on target platforms"""
+        platform_limits = {
             'mobile': 800,
             'web': 1920,
             'social_media': 1080,
@@ -934,7 +960,8 @@ class ContentOptimizer:
         return min(platform_limits.get(platform, 1920) for platform in platforms)
     
     def _is_already_sharp(self, img: Image.Image) -> bool:
-        """Check if image is already sharp enough"""        try:
+        """Check if image is already sharp enough"""
+        try:
             # Convert to grayscale for edge detection
             gray = img.convert('L')
             
@@ -953,7 +980,8 @@ class ContentOptimizer:
             return False
     
     def _get_optimal_image_format(self, img: Image.Image, platforms: List[str]) -> str:
-        """Determine optimal image format"""        # Check for transparency
+        """Determine optimal image format"""
+        # Check for transparency
         has_transparency = (
             img.mode in ('RGBA', 'LA') or 
             (img.mode == 'P' and 'transparency' in img.info)
@@ -976,7 +1004,8 @@ class ContentOptimizer:
             return 'WEBP'  # Default to WebP for best compression
     
     def _get_optimal_save_settings(self, format_name: str, quality: int, progressive: bool) -> Dict[str, Any]:
-        """Get optimal save settings for image format"""        settings = {'optimize': True}
+        """Get optimal save settings for image format"""
+        settings = {'optimize': True}
         
         if format_name.upper() == 'JPEG':
             settings.update({
@@ -997,7 +1026,8 @@ class ContentOptimizer:
         return settings
     
     async def _analyze_video_properties(self, video_path: Path) -> Dict[str, Any]:
-        """Analyze video properties for optimization"""        try:
+        """Analyze video properties for optimization"""
+        try:
             cap = cv2.VideoCapture(str(video_path))
             
             if not cap.isOpened():
@@ -1039,7 +1069,8 @@ class ContentOptimizer:
             return {}
     
     def _get_optimal_video_settings(self, video_info: Dict[str, Any], platforms: List[str]) -> Dict[str, Any]:
-        """Get optimal video encoding settings"""        settings = {
+        """Get optimal video encoding settings"""
+        settings = {
             'video_codec': 'libx264',
             'audio_codec': 'aac',
             'preset': 'medium'
@@ -1071,7 +1102,8 @@ class ContentOptimizer:
         return settings
     
     def _get_optimal_audio_format(self, platforms: List[str], quality: int) -> Tuple[str, Dict[str, Any]]:
-        """Get optimal audio format and settings"""        if 'web' in platforms:
+        """Get optimal audio format and settings"""
+        if 'web' in platforms:
             if quality >= 90:
                 return 'flac', {}
             else:
@@ -1087,7 +1119,8 @@ class ContentOptimizer:
             return 'mp3', {'bitrate': '256k'}
     
     def _optimize_heading_structure(self, soup: BeautifulSoup):
-        """Optimize HTML heading structure for SEO"""        headings = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+        """Optimize HTML heading structure for SEO"""
+        headings = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
         
         if not headings:
             return
@@ -1111,7 +1144,8 @@ class ContentOptimizer:
             current_level = level
     
     def _ensure_meta_tags(self, soup: BeautifulSoup):
-        """Ensure essential meta tags are present"""        head = soup.find('head')
+        """Ensure essential meta tags are present"""
+        head = soup.find('head')
         if not head:
             return
         
@@ -1135,7 +1169,8 @@ class ContentOptimizer:
             head.append(viewport)
     
     def _optimize_html_images(self, soup: BeautifulSoup):
-        """Optimize images in HTML for SEO"""        for img in soup.find_all('img'):
+        """Optimize images in HTML for SEO"""
+        for img in soup.find_all('img'):
             # Ensure alt text
             if not img.get('alt'):
                 if img.get('src'):
@@ -1152,7 +1187,8 @@ class ContentOptimizer:
                 img['style'] = img.get('style', '') + 'max-width: 100%; height: auto;'
     
     def _optimize_internal_links(self, soup: BeautifulSoup):
-        """Optimize internal links for SEO"""        for link in soup.find_all('a', href=True):
+        """Optimize internal links for SEO"""
+        for link in soup.find_all('a', href=True):
             href = link['href']
             
             # Add title attribute if missing and text is available
@@ -1169,7 +1205,8 @@ class ContentOptimizer:
                 link['rel'] = ' '.join(rel)
     
     def _optimize_markdown_structure(self, content: str) -> str:
-        """Optimize markdown structure"""        lines = content.split('\n')
+        """Optimize markdown structure"""
+        lines = content.split('\n')
         optimized_lines = []
         
         for line in lines:
@@ -1187,7 +1224,8 @@ class ContentOptimizer:
         return '\n'.join(optimized_lines)
     
     def _optimize_plain_text(self, content: str, options: OptimizationOptions) -> str:
-        """Optimize plain text content"""        # Basic text optimizations
+        """Optimize plain text content"""
+        # Basic text optimizations
         lines = content.split('\n')
         optimized_lines = []
         
@@ -1203,7 +1241,8 @@ class ContentOptimizer:
         return '\n'.join(optimized_lines)
     
     def _split_long_sentence(self, sentence: str) -> List[str]:
-        """Split long sentences for better readability"""        # Simple sentence splitting at coordinating conjunctions
+        """Split long sentences for better readability"""
+        # Simple sentence splitting at coordinating conjunctions
         conjunctions = ['and', 'but', 'or', 'yet', 'so']
         
         for conj in conjunctions:
@@ -1216,7 +1255,8 @@ class ContentOptimizer:
         return [sentence]
     
     def _minify_css(self, css: str) -> str:
-        """Basic CSS minification"""        # Remove comments
+        """Basic CSS minification"""
+        # Remove comments
         css = re.sub(r'/\*.*?\*/', '', css, flags=re.DOTALL)
         
         # Remove unnecessary whitespace
@@ -1228,7 +1268,8 @@ class ContentOptimizer:
         return css.strip()
     
     def _minify_js(self, js: str) -> str:
-        """Basic JavaScript minification"""        # Remove single-line comments
+        """Basic JavaScript minification"""
+        # Remove single-line comments
         js = re.sub(r'//.*$', '', js, flags=re.MULTILINE)
         
         # Remove multi-line comments
@@ -1240,7 +1281,8 @@ class ContentOptimizer:
         return js.strip()
     
     async def _generate_output_path(self, input_path: Path, content_type: ContentType) -> Path:
-        """Generate output path for optimized content"""        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        """Generate output path for optimized content"""
+        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
         
         output_name = f"{input_path.stem}_optimized_{timestamp}"
         output_path = self.temp_dir / f"{output_name}{input_path.suffix}"
@@ -1254,7 +1296,8 @@ class ContentOptimizer:
         content_type: ContentType,
         options: OptimizationOptions
     ) -> Dict[str, float]:
-        """Analyze optimization quality and calculate scores"""        scores = {
+        """Analyze optimization quality and calculate scores"""
+        scores = {
             'quality': 0.0,
             'seo': 0.0,
             'performance': 0.0,
@@ -1291,7 +1334,8 @@ class ContentOptimizer:
             return scores
     
     async def _analyze_image_quality(self, original_path: Path, optimized_path: Path) -> float:
-        """Analyze image quality after optimization"""        try:
+        """Analyze image quality after optimization"""
+        try:
             with Image.open(original_path) as orig, Image.open(optimized_path) as opt:
                 # Simple quality metric based on size and dimensions
                 orig_area = orig.width * orig.height
@@ -1309,7 +1353,8 @@ class ContentOptimizer:
             return 75.0
     
     async def _analyze_text_quality(self, file_path: Path, content_type: ContentType) -> Dict[str, float]:
-        """Analyze text content quality"""        try:
+        """Analyze text content quality"""
+        try:
             async with aiofiles.open(file_path, 'r', encoding='utf-8') as f:
                 content = await f.read()
             
@@ -1335,7 +1380,8 @@ class ContentOptimizer:
             return {'quality': 75.0, 'seo': 75.0, 'accessibility': 75.0}
     
     def _calculate_html_seo_score(self, soup: BeautifulSoup) -> float:
-        """Calculate SEO score for HTML content"""        score = 0
+        """Calculate SEO score for HTML content"""
+        score = 0
         max_score = 0
         
         # Title tag
@@ -1393,7 +1439,8 @@ class ContentOptimizer:
         return (score / max_score) * 100 if max_score > 0 else 0
     
     def _calculate_text_seo_score(self, content: str) -> float:
-        """Calculate SEO score for text content"""        score = 0
+        """Calculate SEO score for text content"""
+        score = 0
         max_score = 100
         
         # Content length
@@ -1423,7 +1470,8 @@ class ContentOptimizer:
         return score
     
     def _calculate_accessibility_score(self, soup: BeautifulSoup) -> float:
-        """Calculate accessibility score for HTML content"""        score = 0
+        """Calculate accessibility score for HTML content"""
+        score = 0
         max_score = 100
         
         # Images with alt text
@@ -1462,7 +1510,8 @@ class ContentOptimizer:
         return score
     
     async def _update_statistics(self, result: OptimizationResult, content_type: ContentType):
-        """Update optimization statistics"""        self.stats['total_optimizations'] += 1
+        """Update optimization statistics"""
+        self.stats['total_optimizations'] += 1
         self.stats['content_by_type'][content_type] += 1
         
         if result.success:
@@ -1489,7 +1538,8 @@ class ContentOptimizer:
             self.stats['failed_optimizations'] += 1
     
     async def get_optimization_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive optimization statistics"""        return {
+        """Get comprehensive optimization statistics"""
+        return {
             'statistics': self.stats.copy(),
             'configuration': self.config,
             'seo_rules': self.seo_rules,
@@ -1498,7 +1548,8 @@ class ContentOptimizer:
         }
     
     async def cleanup(self):
-        """Cleanup optimizer resources"""        try:
+        """Cleanup optimizer resources"""
+        try:
             # Clean temporary files older than 1 hour
             from datetime import timedelta
             

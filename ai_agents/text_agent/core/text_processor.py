@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import re
 import string
 import unicodedata
@@ -42,7 +43,8 @@ import numpy as np
 
 # Create ProcessingError if it doesn't exist
 class ProcessingError(Exception):
-    """Exception raised for text processing errors"""    pass
+    """Exception raised for text processing errors"""
+    pass
 
 # Download required NLTK data
 try:
@@ -73,13 +75,15 @@ except LookupError:
 logger = logging.getLogger(__name__)
 
 class ProcessingLevel(Enum):
-    """Text processing complexity levels"""    MINIMAL = "minimal"
+    """Text processing complexity levels"""
+    MINIMAL = "minimal"
     STANDARD = "standard"
     AGGRESSIVE = "aggressive"
     COMPREHENSIVE = "comprehensive"
 
 class TextFormat(Enum):
-    """Text format types"""    PLAIN_TEXT = "plain_text"
+    """Text format types"""
+    PLAIN_TEXT = "plain_text"
     HTML = "html"
     MARKDOWN = "markdown"
     JSON = "json"
@@ -88,7 +92,8 @@ class TextFormat(Enum):
 
 @dataclass
 class ProcessingOptions:
-    """Text processing configuration options"""    level: ProcessingLevel = ProcessingLevel.STANDARD
+    """Text processing configuration options"""
+    level: ProcessingLevel = ProcessingLevel.STANDARD
     remove_html: bool = True
     remove_urls: bool = True
     remove_emails: bool = True
@@ -107,7 +112,8 @@ class ProcessingOptions:
 
 @dataclass
 class ProcessingResult:
-    """Text processing results and metadata"""    original_text: str
+    """Text processing results and metadata"""
+    original_text: str
     processed_text: str
     original_length: int
     processed_length: int
@@ -117,8 +123,10 @@ class ProcessingResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class TextProcessor:
-    """    Industrial-grade text processing engine with comprehensive cleaning and normalization
-    """    
+    """
+    Industrial-grade text processing engine with comprehensive cleaning and normalization
+    """
+    
     def __init__(self, default_options: Optional[ProcessingOptions] = None):
         self.default_options = default_options or ProcessingOptions()
         
@@ -136,7 +144,8 @@ class TextProcessor:
         logger.info("TextProcessor initialized with advanced processing capabilities")
     
     def _compile_regex_patterns(self):
-        """Pre-compile commonly used regex patterns for performance"""        self.patterns = {
+        """Pre-compile commonly used regex patterns for performance"""
+        self.patterns = {
             'url': re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'),
             'email': re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'),
             'phone': re.compile(r'(\+\d{1,3}[-.\s]?)?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9}'),
@@ -156,7 +165,8 @@ class TextProcessor:
         text: str,
         options: Optional[ProcessingOptions] = None
     ) -> ProcessingResult:
-        """        Process text with comprehensive cleaning and normalization
+        """
+        Process text with comprehensive cleaning and normalization
         
         Args:
             text: Input text to process
@@ -164,7 +174,8 @@ class TextProcessor:
             
         Returns:
             ProcessingResult: Processing results and metadata
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         options = options or self.default_options
         original_text = text
         original_length = len(text)
@@ -271,7 +282,8 @@ class TextProcessor:
             raise ProcessingError(f"Text processing failed: {e}")
     
     async def _fix_encoding(self, text: str) -> str:
-        """Fix common encoding issues"""        try:
+        """Fix common encoding issues"""
+        try:
             # Use ftfy to fix encoding issues
             text = ftfy.fix_text(text)
             
@@ -287,7 +299,8 @@ class TextProcessor:
             return text
     
     async def _remove_html(self, text: str) -> Tuple[str, int]:
-        """Remove HTML tags and decode HTML entities"""        try:
+        """Remove HTML tags and decode HTML entities"""
+        try:
             # Count HTML tags before removal
             html_tags = self.patterns['html_tags'].findall(text)
             tag_count = len(html_tags)
@@ -308,34 +321,40 @@ class TextProcessor:
             return clean_text, 0
     
     async def _remove_urls(self, text: str) -> Tuple[str, int]:
-        """Remove URLs from text"""        urls = self.patterns['url'].findall(text)
+        """Remove URLs from text"""
+        urls = self.patterns['url'].findall(text)
         clean_text = self.patterns['url'].sub('', text)
         return clean_text, len(urls)
     
     async def _remove_emails(self, text: str) -> Tuple[str, int]:
-        """Remove email addresses from text"""        emails = self.patterns['email'].findall(text)
+        """Remove email addresses from text"""
+        emails = self.patterns['email'].findall(text)
         clean_text = self.patterns['email'].sub('', text)
         return clean_text, len(emails)
     
     async def _remove_phone_numbers(self, text: str) -> Tuple[str, int]:
-        """Remove phone numbers from text"""        phones = self.patterns['phone'].findall(text)
+        """Remove phone numbers from text"""
+        phones = self.patterns['phone'].findall(text)
         clean_text = self.patterns['phone'].sub('', text)
         return clean_text, len(phones)
     
     async def _expand_contractions(self, text: str) -> str:
-        """Expand English contractions"""        try:
+        """Expand English contractions"""
+        try:
             return contractions.fix(text)
         except Exception as e:
             logger.warning(f"Contraction expansion failed: {e}")
             return text
     
     async def _remove_special_chars(self, text: str) -> Tuple[str, int]:
-        """Remove special characters while preserving basic punctuation"""        special_chars = self.patterns['special_chars'].findall(text)
+        """Remove special characters while preserving basic punctuation"""
+        special_chars = self.patterns['special_chars'].findall(text)
         clean_text = self.patterns['special_chars'].sub(' ', text)
         return clean_text, len(special_chars)
     
     async def _normalize_whitespace(self, text: str) -> str:
-        """Normalize whitespace characters"""        # Replace multiple spaces with single space
+        """Normalize whitespace characters"""
+        # Replace multiple spaces with single space
         text = self.patterns['multiple_spaces'].sub(' ', text)
         
         # Remove leading/trailing whitespace
@@ -347,7 +366,8 @@ class TextProcessor:
         return text
     
     async def _advanced_processing(self, text: str, options: ProcessingOptions) -> str:
-        """Apply advanced text processing techniques"""        # Remove repeated characters (e.g., "sooooo" -> "so")
+        """Apply advanced text processing techniques"""
+        # Remove repeated characters (e.g., "sooooo" -> "so")
         text = self.patterns['repeated_chars'].sub(r'\1\1', text)
         
         # Remove social media mentions and hashtags for certain contexts
@@ -362,7 +382,8 @@ class TextProcessor:
         return text
     
     async def _remove_stopwords(self, text: str, languages: List[str]) -> Tuple[str, int]:
-        """Remove stopwords for specified languages"""        try:
+        """Remove stopwords for specified languages"""
+        try:
             # Get stopwords for all specified languages
             all_stopwords = set()
             for lang in languages:
@@ -384,7 +405,8 @@ class TextProcessor:
             return text, 0
     
     async def _apply_stemming(self, text: str, language: str) -> str:
-        """Apply stemming to reduce words to their root forms"""        try:
+        """Apply stemming to reduce words to their root forms"""
+        try:
             lang_code = self._get_nltk_language_code(language)
             if lang_code not in self.stemmers:
                 self.stemmers[lang_code] = SnowballStemmer(lang_code)
@@ -400,7 +422,8 @@ class TextProcessor:
             return text
     
     async def _apply_lemmatization(self, text: str) -> str:
-        """Apply lemmatization to reduce words to their base forms"""        try:
+        """Apply lemmatization to reduce words to their base forms"""
+        try:
             words = word_tokenize(text)
             pos_tags = pos_tag(words)
             
@@ -423,7 +446,8 @@ class TextProcessor:
         min_length: int,
         max_length: int
     ) -> Tuple[str, int, int]:
-        """Filter words by length"""        words = text.split()
+        """Filter words by length"""
+        words = text.split()
         short_words_removed = 0
         long_words_removed = 0
         
@@ -439,7 +463,8 @@ class TextProcessor:
         return ' '.join(filtered_words), short_words_removed, long_words_removed
     
     def _get_nltk_language_code(self, language: str) -> Optional[str]:
-        """Convert language code to NLTK format"""        lang_map = {
+        """Convert language code to NLTK format"""
+        lang_map = {
             'en': 'english',
             'fr': 'french',
             'de': 'german',
@@ -456,7 +481,8 @@ class TextProcessor:
         return lang_map.get(language.lower())
     
     def _get_wordnet_pos(self, treebank_tag: str) -> str:
-        """Convert TreeBank POS tag to WordNet POS tag"""        if treebank_tag.startswith('J'):
+        """Convert TreeBank POS tag to WordNet POS tag"""
+        if treebank_tag.startswith('J'):
             return 'a'  # adjective
         elif treebank_tag.startswith('V'):
             return 'v'  # verb
@@ -469,14 +495,17 @@ class TextProcessor:
 
 
 class TextAnalyzer:
-    """    Advanced text analysis engine for extracting insights and statistics
-    """    
+    """
+    Advanced text analysis engine for extracting insights and statistics
+    """
+    
     def __init__(self):
         self.processor = TextProcessor()
         logger.info("TextAnalyzer initialized")
     
     async def analyze_text_complexity(self, text: str) -> Dict[str, Any]:
-        """Analyze text complexity and readability"""        try:
+        """Analyze text complexity and readability"""
+        try:
             # Basic statistics
             words = text.split()
             sentences = sent_tokenize(text)
@@ -513,7 +542,8 @@ class TextAnalyzer:
             return {}
     
     async def extract_linguistic_features(self, text: str) -> Dict[str, Any]:
-        """Extract comprehensive linguistic features"""        try:
+        """Extract comprehensive linguistic features"""
+        try:
             # Tokenize text
             words = word_tokenize(text)
             sentences = sent_tokenize(text)
@@ -560,7 +590,8 @@ class TextAnalyzer:
             return {}
     
     async def _calculate_avg_syllables(self, words: List[str]) -> float:
-        """Calculate average syllables per word"""        if not words:
+        """Calculate average syllables per word"""
+        if not words:
             return 0.0
         
         total_syllables = 0
@@ -578,7 +609,8 @@ class TextAnalyzer:
         avg_syllables_per_word: float,
         lexical_diversity: float
     ) -> float:
-        """Calculate overall text complexity score"""        # Normalize metrics to 0-1 scale and combine
+        """Calculate overall text complexity score"""
+        # Normalize metrics to 0-1 scale and combine
         sentence_complexity = min(1.0, avg_words_per_sentence / 25)  # Assuming 25 words = high complexity
         syllable_complexity = min(1.0, avg_syllables_per_word / 3)   # Assuming 3+ syllables = complex
         diversity_complexity = lexical_diversity  # Already 0-1

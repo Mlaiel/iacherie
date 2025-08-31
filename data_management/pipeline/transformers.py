@@ -12,7 +12,8 @@ Supports complete creator workflow transformations:
 - SEO content transformation
 - Monetization optimization
 - Brand collaboration optimization
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime
@@ -60,7 +61,8 @@ from ..utils.optimization import OptimizationEngine
 
 
 class BaseTransformer(ABC):
-    """Abstract base class for data transformers."""    
+    """Abstract base class for data transformers."""
+    
     def __init__(self, config: TransformationConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -68,26 +70,32 @@ class BaseTransformer(ABC):
     
     @abstractmethod
     async def transform(self, data: Any, options: Dict[str, Any] = None) -> Any:
-        """Transform data according to specified options."""        pass
+        """Transform data according to specified options."""
+        pass
     
     @abstractmethod
     async def optimize_transformation(self, data: Any, target_metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize transformation parameters for target metrics."""        pass
+        """Optimize transformation parameters for target metrics."""
+        pass
 
     @abstractmethod
     async def optimize_for_monetization(self, data: Any, monetization_goals: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize content transformation for monetization goals."""        pass
+        """Optimize content transformation for monetization goals."""
+        pass
 
     @abstractmethod
     async def adapt_for_platform(self, data: Any, platform: str, platform_requirements: Dict[str, Any]) -> Dict[str, Any]:
-        """Adapt content for specific platform requirements."""        pass
+        """Adapt content for specific platform requirements."""
+        pass
 
 
 class CreatorContentTransformer:
-    """    Specialized content transformer for creators (musicians, bloggers, photographers, 
+    """
+    Specialized content transformer for creators (musicians, bloggers, photographers, 
     influencers, comedians) with AI-powered optimization for multi-platform distribution
     and monetization.
-    """    
+    """
+    
     def __init__(self, creator_type: str, config: TransformationConfig = None):
         self.creator_type = creator_type
         self.config = config or TransformationConfig()
@@ -170,7 +178,8 @@ class CreatorContentTransformer:
         content_data: Dict[str, Any],
         transformation_goals: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """        Transform creator content for optimal multi-platform distribution and monetization.
+        """
+        Transform creator content for optimal multi-platform distribution and monetization.
         
         Args:
             content_data: Original content data
@@ -178,7 +187,8 @@ class CreatorContentTransformer:
             
         Returns:
             Transformed content optimized for all target platforms
-        """        if transformation_goals is None:
+        """
+        if transformation_goals is None:
             transformation_goals = {
                 'optimize_for_platforms': True,
                 'enhance_quality': True,
@@ -248,7 +258,8 @@ class CreatorContentTransformer:
             raise TransformationError(f"Creator content transformation failed: {str(e)}")
 
     async def _enhance_content_quality(self, content_data: Dict[str, Any], content_type: str) -> Dict[str, Any]:
-        """Enhance content quality using AI-powered techniques."""        quality_enhancements = {
+        """Enhance content quality using AI-powered techniques."""
+        quality_enhancements = {
             'applied_enhancements': [],
             'quality_metrics': {},
             'enhancement_results': {}
@@ -279,7 +290,8 @@ class CreatorContentTransformer:
         return quality_enhancements
 
     async def _create_platform_adaptations(self, content_data: Dict[str, Any], content_type: str) -> Dict[str, Any]:
-        """Create platform-specific content adaptations."""        creator_settings = self.creator_settings.get(self.creator_type, {})
+        """Create platform-specific content adaptations."""
+        creator_settings = self.creator_settings.get(self.creator_type, {})
         primary_platforms = creator_settings.get('primary_platforms', [])
         
         platform_adaptations = {}
@@ -295,7 +307,8 @@ class CreatorContentTransformer:
         return platform_adaptations
 
     async def _optimize_for_monetization(self, content_data: Dict[str, Any], processing_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize content transformations for monetization goals."""        creator_settings = self.creator_settings.get(self.creator_type, {})
+        """Optimize content transformations for monetization goals."""
+        creator_settings = self.creator_settings.get(self.creator_type, {})
         monetization_priorities = creator_settings.get('monetization_priorities', [])
         
         monetization_optimizations = {
@@ -326,7 +339,8 @@ class CreatorContentTransformer:
         return monetization_optimizations
 
     async def _optimize_for_engagement(self, content_data: Dict[str, Any], processing_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize content for maximum engagement."""        engagement_optimizations = {
+        """Optimize content for maximum engagement."""
+        engagement_optimizations = {
             'hook_optimization': {},
             'timing_optimization': {},
             'hashtag_optimization': {},
@@ -353,7 +367,8 @@ class CreatorContentTransformer:
         return engagement_optimizations
 
     async def _apply_brand_consistency(self, content_data: Dict[str, Any], processing_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply brand consistency across all content versions."""        brand_consistency = {
+        """Apply brand consistency across all content versions."""
+        brand_consistency = {
             'visual_branding': {},
             'tone_consistency': {},
             'messaging_alignment': {},
@@ -375,7 +390,8 @@ class CreatorContentTransformer:
         return brand_consistency
 
     async def _generate_final_versions(self, processing_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate final optimized content versions for each platform."""        transformed_versions = {}
+        """Generate final optimized content versions for each platform."""
+        transformed_versions = {}
         
         platform_adaptations = processing_results.get('platform_adaptations', {})
         quality_enhancements = processing_results.get('quality_enhancements', {})
@@ -394,7 +410,8 @@ class CreatorContentTransformer:
         return transformed_versions
 
     async def _predict_content_performance(self, processing_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict content performance using AI models."""        performance_predictions = {
+        """Predict content performance using AI models."""
+        performance_predictions = {
             'engagement_predictions': {},
             'reach_predictions': {},
             'monetization_predictions': {},
@@ -471,7 +488,8 @@ class CreatorContentTransformer:
             raise TransformationError(f"Data transformation failed: {e}")
     
     async def _detect_data_type(self, data: Any) -> str:
-        """Detect data type automatically."""        
+        """Detect data type automatically."""
+        
         if isinstance(data, dict):
             if 'file_path' in data:
                 file_path = Path(data['file_path'])
@@ -500,9 +518,11 @@ class CreatorContentTransformer:
 
 
 class FormatConverter(BaseTransformer):
-    """    Advanced format converter supporting multiple media types
+    """
+    Advanced format converter supporting multiple media types
     with intelligent optimization and quality preservation.
-    """    
+    """
+    
     def __init__(self, config: TransformationConfig):
         super().__init__(config)
         
@@ -557,7 +577,8 @@ class FormatConverter(BaseTransformer):
         options: Dict[str, Any] = None,
         data_type: str = None
     ) -> Dict[str, Any]:
-        """        Convert data format according to specified options.
+        """
+        Convert data format according to specified options.
         
         Args:
             data: Data to convert
@@ -566,7 +587,8 @@ class FormatConverter(BaseTransformer):
             
         Returns:
             Converted data with metadata
-        """        
+        """
+        
         options = options or {}
         target_format = options.get('target_format')
         
@@ -611,7 +633,8 @@ class FormatConverter(BaseTransformer):
         return result
     
     async def _detect_conversion_type(self, data: Any) -> str:
-        """Detect data type for conversion."""        
+        """Detect data type for conversion."""
+        
         if isinstance(data, dict):
             if 'file_path' in data:
                 file_path = Path(data['file_path'])
@@ -627,7 +650,8 @@ class FormatConverter(BaseTransformer):
         return 'unknown'
     
     async def _detect_source_format(self, data: Any, data_type: str) -> str:
-        """Detect source format of data."""        
+        """Detect source format of data."""
+        
         if isinstance(data, dict) and 'file_path' in data:
             return Path(data['file_path']).suffix.lower().lstrip('.')
         
@@ -645,7 +669,8 @@ class FormatConverter(BaseTransformer):
         return format_defaults.get(data_type, 'unknown')
     
     async def _find_converter(self, source_format: str, target_format: str, data_type: str) -> Optional[callable]:
-        """Find appropriate converter function."""        
+        """Find appropriate converter function."""
+        
         mapping = self.format_mappings.get(data_type, {})
         converters = mapping.get('converters', {})
         
@@ -661,7 +686,8 @@ class FormatConverter(BaseTransformer):
     
     # Image conversion methods
     async def _convert_png_to_jpg(self, data: Any, options: Dict[str, Any]) -> Any:
-        """Convert PNG to JPG format."""        
+        """Convert PNG to JPG format."""
+        
         if isinstance(data, dict) and 'file_path' in data:
             image = Image.open(data['file_path'])
         else:
@@ -684,7 +710,8 @@ class FormatConverter(BaseTransformer):
         return image
     
     async def _convert_jpg_to_png(self, data: Any, options: Dict[str, Any]) -> Any:
-        """Convert JPG to PNG format."""        
+        """Convert JPG to PNG format."""
+        
         if isinstance(data, dict) and 'file_path' in data:
             image = Image.open(data['file_path'])
         else:
@@ -704,7 +731,8 @@ class FormatConverter(BaseTransformer):
         return image
     
     async def _convert_to_webp(self, data: Any, options: Dict[str, Any]) -> Any:
-        """Convert any image format to WebP."""        
+        """Convert any image format to WebP."""
+        
         if isinstance(data, dict) and 'file_path' in data:
             image = Image.open(data['file_path'])
         else:
@@ -728,7 +756,8 @@ class FormatConverter(BaseTransformer):
     
     # Audio conversion methods
     async def _convert_wav_to_mp3(self, data: Any, options: Dict[str, Any]) -> Any:
-        """Convert WAV to MP3 format."""        
+        """Convert WAV to MP3 format."""
+        
         if isinstance(data, dict) and 'file_path' in data:
             audio = AudioSegment.from_wav(data['file_path'])
         else:
@@ -744,7 +773,8 @@ class FormatConverter(BaseTransformer):
         return audio
     
     async def _convert_mp3_to_wav(self, data: Any, options: Dict[str, Any]) -> Any:
-        """Convert MP3 to WAV format."""        
+        """Convert MP3 to WAV format."""
+        
         if isinstance(data, dict) and 'file_path' in data:
             audio = AudioSegment.from_mp3(data['file_path'])
         else:
@@ -762,7 +792,8 @@ class FormatConverter(BaseTransformer):
     
     # Video conversion methods
     async def _convert_to_mp4(self, data: Any, options: Dict[str, Any]) -> Any:
-        """Convert any video format to MP4."""        
+        """Convert any video format to MP4."""
+        
         input_path = data['file_path'] if isinstance(data, dict) else data
         output_path = options.get('output_path', input_path.replace(Path(input_path).suffix, '.mp4'))
         
@@ -802,7 +833,8 @@ class FormatConverter(BaseTransformer):
             raise TransformationError(f"Video conversion failed: {e}")
     
     async def optimize_transformation(self, data: Any, target_metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize format conversion parameters for target metrics."""        
+        """Optimize format conversion parameters for target metrics."""
+        
         optimization_results = {
             'optimal_parameters': {},
             'achieved_metrics': {},
@@ -831,9 +863,11 @@ class FormatConverter(BaseTransformer):
 
 
 class QualityEnhancer(BaseTransformer):
-    """    Advanced quality enhancement system with AI-powered optimization
+    """
+    Advanced quality enhancement system with AI-powered optimization
     and intelligent parameter tuning for multiple content types.
-    """    
+    """
+    
     def __init__(self, config: TransformationConfig):
         super().__init__(config)
         
@@ -873,7 +907,8 @@ class QualityEnhancer(BaseTransformer):
         options: Dict[str, Any] = None,
         data_type: str = None
     ) -> Dict[str, Any]:
-        """        Enhance data quality using AI-powered algorithms.
+        """
+        Enhance data quality using AI-powered algorithms.
         
         Args:
             data: Data to enhance
@@ -882,7 +917,8 @@ class QualityEnhancer(BaseTransformer):
             
         Returns:
             Enhanced data with quality metrics
-        """        
+        """
+        
         options = options or {}
         
         if not data_type:
@@ -945,7 +981,8 @@ class QualityEnhancer(BaseTransformer):
     
     # Image enhancement methods
     async def _enhance_image_noise_reduction(self, data: Any, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply noise reduction to image."""        
+        """Apply noise reduction to image."""
+        
         if isinstance(data, dict) and 'file_path' in data:
             image = Image.open(data['file_path'])
         else:
@@ -979,7 +1016,8 @@ class QualityEnhancer(BaseTransformer):
         }
     
     async def _enhance_image_sharpening(self, data: Any, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply sharpening to image."""        
+        """Apply sharpening to image."""
+        
         if isinstance(data, dict) and 'file_path' in data:
             image = Image.open(data['file_path'])
         else:
@@ -1012,7 +1050,8 @@ class QualityEnhancer(BaseTransformer):
         }
     
     async def _enhance_image_color_correction(self, data: Any, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply color correction to image."""        
+        """Apply color correction to image."""
+        
         if isinstance(data, dict) and 'file_path' in data:
             image = Image.open(data['file_path'])
         else:
@@ -1058,7 +1097,8 @@ class QualityEnhancer(BaseTransformer):
     
     # Audio enhancement methods
     async def _enhance_audio_noise_reduction(self, data: Any, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply noise reduction to audio."""        
+        """Apply noise reduction to audio."""
+        
         # Load audio data
         if isinstance(data, dict) and 'file_path' in data:
             audio_data, sample_rate = librosa.load(data['file_path'], sr=None)
@@ -1098,7 +1138,8 @@ class QualityEnhancer(BaseTransformer):
         }
     
     async def optimize_transformation(self, data: Any, target_metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize enhancement parameters for target quality metrics."""        
+        """Optimize enhancement parameters for target quality metrics."""
+        
         data_type = await self._detect_enhancement_type(data)
         
         optimization_results = {
@@ -1148,7 +1189,8 @@ class QualityEnhancer(BaseTransformer):
         return optimization_results
     
     async def _detect_enhancement_type(self, data: Any) -> str:
-        """Detect data type for enhancement."""        
+        """Detect data type for enhancement."""
+        
         if isinstance(data, dict):
             if 'file_path' in data:
                 file_path = Path(data['file_path'])
@@ -1180,9 +1222,11 @@ class QualityEnhancer(BaseTransformer):
 
 
 class OptimizationEngine(BaseTransformer):
-    """    Intelligent optimization engine with machine learning-powered
+    """
+    Intelligent optimization engine with machine learning-powered
     parameter tuning and multi-objective optimization capabilities.
-    """    
+    """
+    
     def __init__(self, config: TransformationConfig):
         super().__init__(config)
         self.optimization_history = []
@@ -1194,7 +1238,8 @@ class OptimizationEngine(BaseTransformer):
         options: Dict[str, Any] = None,
         data_type: str = None
     ) -> Dict[str, Any]:
-        """        Optimize data processing parameters for target objectives.
+        """
+        Optimize data processing parameters for target objectives.
         
         Args:
             data: Data to optimize processing for
@@ -1203,7 +1248,8 @@ class OptimizationEngine(BaseTransformer):
             
         Returns:
             Optimized parameters and results
-        """        
+        """
+        
         options = options or {}
         objectives = options.get('objectives', {})
         
@@ -1243,7 +1289,8 @@ class OptimizationEngine(BaseTransformer):
         objectives: Dict[str, Any],
         data_type: str
     ) -> Dict[str, Any]:
-        """Run multi-objective optimization."""        
+        """Run multi-objective optimization."""
+        
         # Define optimization problem based on objectives
         if 'quality' in objectives and 'speed' in objectives:
             # Quality vs Speed trade-off
@@ -1267,7 +1314,8 @@ class OptimizationEngine(BaseTransformer):
         objectives: Dict[str, Any],
         data_type: str
     ) -> Dict[str, Any]:
-        """Optimize quality vs speed trade-off."""        
+        """Optimize quality vs speed trade-off."""
+        
         target_quality = objectives.get('quality', 0.8)
         target_speed = objectives.get('speed', 0.7)
         
@@ -1303,5 +1351,6 @@ class OptimizationEngine(BaseTransformer):
         }
     
     async def optimize_transformation(self, data: Any, target_metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Main optimization interface."""        
+        """Main optimization interface."""
+        
         return await self._run_optimization(data, target_metrics, None)

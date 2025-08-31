@@ -22,7 +22,8 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - Audio Engineer: Professional audio processing and analysis
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import psutil
@@ -41,20 +42,23 @@ import traceback
 logger = logging.getLogger(__name__)
 
 class MetricType(str, Enum):
-    """Types of performance metrics."""    COUNTER = "counter"
+    """Types of performance metrics."""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     TIMER = "timer"
     RATE = "rate"
 
 class AlertSeverity(str, Enum):
-    """Alert severity levels."""    LOW = "low"
+    """Alert severity levels."""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 class SystemComponent(str, Enum):
-    """System components being monitored."""    DRM_ENGINE = "drm_engine"
+    """System components being monitored."""
+    DRM_ENGINE = "drm_engine"
     LICENSE_ENGINE = "license_engine"
     ACCESS_CONTROL = "access_control"
     REVENUE_ENGINE = "revenue_engine"
@@ -67,7 +71,8 @@ class SystemComponent(str, Enum):
 
 @dataclass
 class Metric:
-    """Individual performance metric."""    name: str
+    """Individual performance metric."""
+    name: str
     metric_type: MetricType
     value: Union[int, float, Decimal]
     timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -77,7 +82,8 @@ class Metric:
 
 @dataclass
 class Alert:
-    """Performance alert."""    alert_id: str
+    """Performance alert."""
+    alert_id: str
     component: SystemComponent
     metric_name: str
     severity: AlertSeverity
@@ -92,7 +98,8 @@ class Alert:
 
 @dataclass
 class PerformanceThreshold:
-    """Performance monitoring threshold."""    metric_name: str
+    """Performance monitoring threshold."""
+    metric_name: str
     component: SystemComponent
     min_value: Optional[Union[int, float]] = None
     max_value: Optional[Union[int, float]] = None
@@ -103,7 +110,8 @@ class PerformanceThreshold:
 
 @dataclass
 class SystemHealth:
-    """Overall system health status."""    timestamp: datetime
+    """Overall system health status."""
+    timestamp: datetime
     overall_status: str  # healthy, degraded, critical
     component_statuses: Dict[SystemComponent, str]
     active_alerts: int
@@ -115,7 +123,8 @@ class SystemHealth:
     resource_utilization: Dict[str, float]
 
 class PerformanceCollector:
-    """Collects performance metrics from various sources."""    
+    """Collects performance metrics from various sources."""
+    
     def __init__(self):
         self.collection_interval = 30  # seconds
         self.running = False
@@ -123,7 +132,8 @@ class PerformanceCollector:
         self._collector_thread: Optional[threading.Thread] = None
 
     async def start_collection(self, monitor: 'PerformanceMonitor') -> None:
-        """Start background metric collection."""        self.running = True
+        """Start background metric collection."""
+        self.running = True
         self._stop_event.clear()
         self._collector_thread = threading.Thread(
             target=self._collection_loop,
@@ -134,7 +144,8 @@ class PerformanceCollector:
         logger.info("Performance collection started")
 
     def _collection_loop(self, monitor: 'PerformanceMonitor') -> None:
-        """Background collection loop."""        while not self._stop_event.wait(self.collection_interval):
+        """Background collection loop."""
+        while not self._stop_event.wait(self.collection_interval):
             try:
                 # Collect system metrics
                 self._collect_system_metrics(monitor)
@@ -149,7 +160,8 @@ class PerformanceCollector:
                 logger.error(f"Error in metric collection: {e}")
 
     def _collect_system_metrics(self, monitor: 'PerformanceMonitor') -> None:
-        """Collect system-level metrics."""        try:
+        """Collect system-level metrics."""
+        try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent(interval=1)
             monitor.record_metric("cpu_usage_percent", cpu_percent, MetricType.GAUGE)
@@ -173,23 +185,27 @@ class PerformanceCollector:
             logger.error(f"Error collecting system metrics: {e}")
 
     def _collect_application_metrics(self, monitor: 'PerformanceMonitor') -> None:
-        """Collect application-specific metrics."""        # These would be collected from actual application components
+        """Collect application-specific metrics."""
+        # These would be collected from actual application components
         # Placeholder implementation
         pass
 
     def _collect_custom_metrics(self, monitor: 'PerformanceMonitor') -> None:
-        """Collect custom business metrics."""        # Placeholder for custom metric collection
+        """Collect custom business metrics."""
+        # Placeholder for custom metric collection
         pass
 
     def stop(self) -> None:
-        """Stop metric collection."""        self.running = False
+        """Stop metric collection."""
+        self.running = False
         self._stop_event.set()
         if self._collector_thread:
             self._collector_thread.join(timeout=5)
         logger.info("Performance collection stopped")
 
 class AlertManager:
-    """Manages performance alerts and notifications."""    
+    """Manages performance alerts and notifications."""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.active_alerts: Dict[str, Alert] = {}
@@ -201,10 +217,12 @@ class AlertManager:
         self.cooldown_periods: Dict[str, datetime] = {}
 
     def add_notification_handler(self, handler: Callable[[Alert], None]) -> None:
-        """Add alert notification handler."""        self.notification_handlers.append(handler)
+        """Add alert notification handler."""
+        self.notification_handlers.append(handler)
 
     async def process_alert(self, alert: Alert) -> None:
-        """Process and potentially send an alert."""        # Check suppression rules
+        """Process and potentially send an alert."""
+        # Check suppression rules
         if self._is_suppressed(alert):
             logger.debug(f"Alert {alert.alert_id} suppressed")
             return
@@ -234,13 +252,15 @@ class AlertManager:
         logger.warning(f"Alert triggered: {alert.component} - {alert.message}")
 
     async def _call_handler(self, handler: Callable, alert: Alert) -> None:
-        """Call notification handler."""        if asyncio.iscoroutinefunction(handler):
+        """Call notification handler."""
+        if asyncio.iscoroutinefunction(handler):
             await handler(alert)
         else:
             handler(alert)
 
     def _is_suppressed(self, alert: Alert) -> bool:
-        """Check if alert should be suppressed."""        suppression_key = f"{alert.component}_{alert.metric_name}"
+        """Check if alert should be suppressed."""
+        suppression_key = f"{alert.component}_{alert.metric_name}"
         if suppression_key not in self.suppression_rules:
             return False
         
@@ -260,7 +280,8 @@ class AlertManager:
         return False
 
     def _get_cooldown_duration(self, alert: Alert) -> int:
-        """Get cooldown duration for alert type."""        base_duration = self.config.get('default_cooldown_seconds', 300)
+        """Get cooldown duration for alert type."""
+        base_duration = self.config.get('default_cooldown_seconds', 300)
         
         # Adjust based on severity
         if alert.severity == AlertSeverity.LOW:
@@ -273,7 +294,8 @@ class AlertManager:
             return base_duration // 4
 
     async def acknowledge_alert(self, alert_id: str, user: str) -> bool:
-        """Acknowledge an alert."""        if alert_id not in self.active_alerts:
+        """Acknowledge an alert."""
+        if alert_id not in self.active_alerts:
             return False
         
         alert = self.active_alerts[alert_id]
@@ -285,7 +307,8 @@ class AlertManager:
         return True
 
     async def resolve_alert(self, alert_id: str, user: str, resolution_note: str = "") -> bool:
-        """Resolve an alert."""        if alert_id not in self.active_alerts:
+        """Resolve an alert."""
+        if alert_id not in self.active_alerts:
             return False
         
         alert = self.active_alerts[alert_id]
@@ -301,7 +324,8 @@ class AlertManager:
         return True
 
     def get_active_alerts(self, severity: Optional[AlertSeverity] = None) -> List[Alert]:
-        """Get active alerts, optionally filtered by severity."""        alerts = list(self.active_alerts.values())
+        """Get active alerts, optionally filtered by severity."""
+        alerts = list(self.active_alerts.values())
         
         if severity:
             alerts = [a for a in alerts if a.severity == severity]
@@ -309,7 +333,8 @@ class AlertManager:
         return sorted(alerts, key=lambda a: a.timestamp, reverse=True)
 
 class PerformanceMonitor:
-    """    Ultra-Advanced Performance Monitor for DRM System
+    """
+    Ultra-Advanced Performance Monitor for DRM System
     
     Features:
     - Real-time performance metric collection and analysis
@@ -322,9 +347,11 @@ class PerformanceMonitor:
     - Integration with external monitoring systems (Prometheus, Grafana)
     - Performance regression detection and root cause analysis
     - Automated performance tuning and self-healing capabilities
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the Performance Monitor."""        self.config = config
+        """Initialize the Performance Monitor."""
+        self.config = config
         self._initialized = False
         
         # Metric storage
@@ -353,7 +380,8 @@ class PerformanceMonitor:
         logger.info("Performance Monitor initialized")
 
     async def initialize(self) -> bool:
-        """Initialize the Performance Monitor."""        try:
+        """Initialize the Performance Monitor."""
+        try:
             # Load thresholds
             await self._load_thresholds()
             
@@ -378,7 +406,8 @@ class PerformanceMonitor:
             return False
 
     async def _load_thresholds(self) -> None:
-        """Load performance thresholds."""        # Default thresholds
+        """Load performance thresholds."""
+        # Default thresholds
         default_thresholds = [
             PerformanceThreshold(
                 metric_name="cpu_usage_percent",
@@ -417,12 +446,14 @@ class PerformanceMonitor:
             self.thresholds[threshold_key] = threshold
 
     async def _initialize_baselines(self) -> None:
-        """Initialize performance baselines for anomaly detection."""        # Placeholder for baseline initialization
+        """Initialize performance baselines for anomaly detection."""
+        # Placeholder for baseline initialization
         # In production, this would load historical data
         logger.debug("Initialized performance baselines")
 
     async def _setup_notification_handlers(self) -> None:
-        """Setup alert notification handlers."""        # Email notifications
+        """Setup alert notification handlers."""
+        # Email notifications
         if self.config.get('email_notifications', {}).get('enabled', False):
             self.alert_manager.add_notification_handler(self._send_email_notification)
         
@@ -435,7 +466,8 @@ class PerformanceMonitor:
             self.alert_manager.add_notification_handler(self._send_webhook_notification)
 
     async def _start_monitoring_tasks(self) -> None:
-        """Start background monitoring tasks."""        # Threshold evaluation task
+        """Start background monitoring tasks."""
+        # Threshold evaluation task
         asyncio.create_task(self._threshold_evaluation_loop())
         
         # Anomaly detection task
@@ -458,7 +490,8 @@ class PerformanceMonitor:
         labels: Optional[Dict[str, str]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Record a performance metric."""        if not self._initialized:
+        """Record a performance metric."""
+        if not self._initialized:
             return
         
         metric = Metric(
@@ -486,7 +519,8 @@ class PerformanceMonitor:
         asyncio.create_task(self._evaluate_thresholds(metric_key, metric))
 
     async def _evaluate_thresholds(self, metric_key: str, metric: Metric) -> None:
-        """Evaluate thresholds for a metric."""        if metric_key not in self.thresholds:
+        """Evaluate thresholds for a metric."""
+        if metric_key not in self.thresholds:
             return
         
         threshold = self.thresholds[metric_key]
@@ -536,7 +570,8 @@ class PerformanceMonitor:
                     await self.alert_manager.process_alert(alert)
 
     async def _threshold_evaluation_loop(self) -> None:
-        """Background threshold evaluation loop."""        while self._initialized:
+        """Background threshold evaluation loop."""
+        while self._initialized:
             try:
                 # This is handled per-metric in record_metric
                 await asyncio.sleep(60)  # Check every minute for maintenance
@@ -549,7 +584,8 @@ class PerformanceMonitor:
                 await asyncio.sleep(60)
 
     async def _anomaly_detection_loop(self) -> None:
-        """Background anomaly detection loop."""        while self._initialized:
+        """Background anomaly detection loop."""
+        while self._initialized:
             try:
                 await asyncio.sleep(300)  # Run every 5 minutes
                 
@@ -561,7 +597,8 @@ class PerformanceMonitor:
                 await asyncio.sleep(300)
 
     async def _performance_optimization_loop(self) -> None:
-        """Background performance optimization loop."""        while self._initialized:
+        """Background performance optimization loop."""
+        while self._initialized:
             try:
                 await asyncio.sleep(600)  # Run every 10 minutes
                 
@@ -573,7 +610,8 @@ class PerformanceMonitor:
                 await asyncio.sleep(600)
 
     async def _baseline_update_loop(self) -> None:
-        """Background baseline update loop."""        while self._initialized:
+        """Background baseline update loop."""
+        while self._initialized:
             try:
                 await asyncio.sleep(3600)  # Update every hour
                 
@@ -585,7 +623,8 @@ class PerformanceMonitor:
                 await asyncio.sleep(3600)
 
     async def _detect_anomalies(self) -> None:
-        """Detect performance anomalies using statistical analysis."""        for metric_key, metric_data in self.metrics.items():
+        """Detect performance anomalies using statistical analysis."""
+        for metric_key, metric_data in self.metrics.items():
             if len(metric_data) < 50:  # Need sufficient data
                 continue
             
@@ -623,12 +662,14 @@ class PerformanceMonitor:
                 logger.error(f"Error detecting anomalies for {metric_key}: {e}")
 
     async def _analyze_and_optimize(self) -> None:
-        """Analyze performance and trigger optimizations."""        # Placeholder for performance optimization logic
+        """Analyze performance and trigger optimizations."""
+        # Placeholder for performance optimization logic
         # In production, this would implement actual optimization strategies
         logger.debug("Analyzing performance for optimization opportunities")
 
     async def _update_baselines(self) -> None:
-        """Update performance baselines."""        for metric_key, metric_data in self.metrics.items():
+        """Update performance baselines."""
+        for metric_key, metric_data in self.metrics.items():
             if len(metric_data) < 100:  # Need sufficient data
                 continue
             
@@ -651,19 +692,23 @@ class PerformanceMonitor:
                 logger.error(f"Error updating baseline for {metric_key}: {e}")
 
     async def _send_email_notification(self, alert: Alert) -> None:
-        """Send email notification for alert."""        # Placeholder for email notification
+        """Send email notification for alert."""
+        # Placeholder for email notification
         logger.info(f"Email notification would be sent for alert: {alert.alert_id}")
 
     async def _send_slack_notification(self, alert: Alert) -> None:
-        """Send Slack notification for alert."""        # Placeholder for Slack notification
+        """Send Slack notification for alert."""
+        # Placeholder for Slack notification
         logger.info(f"Slack notification would be sent for alert: {alert.alert_id}")
 
     async def _send_webhook_notification(self, alert: Alert) -> None:
-        """Send webhook notification for alert."""        # Placeholder for webhook notification
+        """Send webhook notification for alert."""
+        # Placeholder for webhook notification
         logger.info(f"Webhook notification would be sent for alert: {alert.alert_id}")
 
     async def _cleanup_cached_reports(self) -> None:
-        """Clean up expired cached reports."""        current_time = datetime.utcnow()
+        """Clean up expired cached reports."""
+        current_time = datetime.utcnow()
         expired_keys = []
         
         for cache_key, (data, timestamp) in self.cached_reports.items():
@@ -674,12 +719,14 @@ class PerformanceMonitor:
             del self.cached_reports[key]
 
     def add_threshold(self, threshold: PerformanceThreshold) -> None:
-        """Add a performance threshold."""        threshold_key = f"{threshold.component}_{threshold.metric_name}"
+        """Add a performance threshold."""
+        threshold_key = f"{threshold.component}_{threshold.metric_name}"
         self.thresholds[threshold_key] = threshold
         logger.info(f"Added threshold for {threshold_key}")
 
     def remove_threshold(self, component: SystemComponent, metric_name: str) -> bool:
-        """Remove a performance threshold."""        threshold_key = f"{component}_{metric_name}"
+        """Remove a performance threshold."""
+        threshold_key = f"{component}_{metric_name}"
         if threshold_key in self.thresholds:
             del self.thresholds[threshold_key]
             logger.info(f"Removed threshold for {threshold_key}")
@@ -693,7 +740,8 @@ class PerformanceMonitor:
         time_range: Optional[Tuple[datetime, datetime]] = None,
         limit: Optional[int] = None
     ) -> List[Metric]:
-        """Get metric history."""        metric_key = f"{component}_{metric_name}"
+        """Get metric history."""
+        metric_key = f"{component}_{metric_name}"
         
         if metric_key not in self.metrics:
             return []
@@ -715,7 +763,8 @@ class PerformanceMonitor:
         return metrics
 
     async def get_system_health(self) -> SystemHealth:
-        """Get overall system health status."""        current_time = datetime.utcnow()
+        """Get overall system health status."""
+        current_time = datetime.utcnow()
         
         # Calculate component statuses
         component_statuses = {}
@@ -764,7 +813,8 @@ class PerformanceMonitor:
         )
 
     async def _get_component_status(self, component: SystemComponent) -> str:
-        """Get status for a specific component."""        # Check for critical alerts
+        """Get status for a specific component."""
+        # Check for critical alerts
         critical_alerts = [
             alert for alert in self.alert_manager.get_active_alerts()
             if alert.component == component and alert.severity == AlertSeverity.CRITICAL
@@ -785,7 +835,8 @@ class PerformanceMonitor:
         return "healthy"
 
     async def _calculate_performance_score(self) -> float:
-        """Calculate overall performance score (0-100)."""        scores = []
+        """Calculate overall performance score (0-100)."""
+        scores = []
         
         # CPU score
         cpu_metrics = self.get_metric_history(SystemComponent.DRM_ENGINE, "cpu_usage_percent", limit=10)
@@ -810,7 +861,8 @@ class PerformanceMonitor:
         return statistics.mean(scores) if scores else 50.0
 
     async def _get_response_time_p95(self) -> float:
-        """Get 95th percentile response time."""        response_metrics = self.get_metric_history(SystemComponent.API_GATEWAY, "response_time_ms", limit=1000)
+        """Get 95th percentile response time."""
+        response_metrics = self.get_metric_history(SystemComponent.API_GATEWAY, "response_time_ms", limit=1000)
         
         if not response_metrics:
             return 0.0
@@ -825,17 +877,20 @@ class PerformanceMonitor:
         return values[p95_index] if p95_index < len(values) else values[-1]
 
     async def _calculate_error_rate(self) -> float:
-        """Calculate current error rate percentage."""        # Placeholder calculation
+        """Calculate current error rate percentage."""
+        # Placeholder calculation
         # In production, this would calculate actual error rate from request metrics
         return 0.1  # 0.1% error rate
 
     async def _calculate_throughput(self) -> float:
-        """Calculate current throughput (requests/second)."""        # Placeholder calculation
+        """Calculate current throughput (requests/second)."""
+        # Placeholder calculation
         # In production, this would calculate actual throughput
         return 1000.0  # 1000 requests/second
 
     async def _get_resource_utilization(self) -> Dict[str, float]:
-        """Get current resource utilization."""        utilization = {}
+        """Get current resource utilization."""
+        utilization = {}
         
         # CPU utilization
         cpu_metrics = self.get_metric_history(SystemComponent.DRM_ENGINE, "cpu_usage_percent", limit=1)
@@ -860,7 +915,8 @@ class PerformanceMonitor:
         time_range: Optional[Tuple[datetime, datetime]] = None,
         components: Optional[List[SystemComponent]] = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive performance report."""        cache_key = f"performance_report_{report_type}_{time_range}_{components}"
+        """Generate comprehensive performance report."""
+        cache_key = f"performance_report_{report_type}_{time_range}_{components}"
         
         # Check cache
         if cache_key in self.cached_reports:
@@ -888,7 +944,8 @@ class PerformanceMonitor:
         time_range: Optional[Tuple[datetime, datetime]],
         components: Optional[List[SystemComponent]]
     ) -> Dict[str, Any]:
-        """Generate summary performance report."""        current_time = datetime.utcnow()
+        """Generate summary performance report."""
+        current_time = datetime.utcnow()
         
         # System health
         system_health = await self.get_system_health()
@@ -931,7 +988,8 @@ class PerformanceMonitor:
         time_range: Optional[Tuple[datetime, datetime]],
         components: Optional[List[SystemComponent]]
     ) -> Dict[str, Any]:
-        """Generate detailed performance report."""        summary = await self._generate_summary_report(time_range, components)
+        """Generate detailed performance report."""
+        summary = await self._generate_summary_report(time_range, components)
         
         # Add detailed metrics for each component
         component_details = {}
@@ -967,7 +1025,8 @@ class PerformanceMonitor:
         time_range: Optional[Tuple[datetime, datetime]],
         components: Optional[List[SystemComponent]]
     ) -> Dict[str, Any]:
-        """Generate SLA compliance report."""        # SLA targets (example)
+        """Generate SLA compliance report."""
+        # SLA targets (example)
         sla_targets = {
             "uptime": 99.9,  # 99.9% uptime
             "response_time_p95": 1000,  # 1 second P95 response time
@@ -1023,7 +1082,8 @@ class PerformanceMonitor:
         self,
         time_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, str]:
-        """Calculate performance trends."""        trends = {}
+        """Calculate performance trends."""
+        trends = {}
         
         # CPU trend
         cpu_metrics = self.get_metric_history(
@@ -1062,7 +1122,8 @@ class PerformanceMonitor:
         component: SystemComponent,
         time_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Get detailed metrics for a component."""        # Get all metrics for this component
+        """Get detailed metrics for a component."""
+        # Get all metrics for this component
         component_metrics = {}
         
         for metric_key, metric_data in self.metrics.items():
@@ -1087,7 +1148,8 @@ class PerformanceMonitor:
         return component_metrics
 
     def _calculate_metric_trend(self, values: List[float]) -> str:
-        """Calculate trend for a metric."""        if len(values) < 10:
+        """Calculate trend for a metric."""
+        if len(values) < 10:
             return "insufficient_data"
         
         recent_avg = statistics.mean(values[-5:])
@@ -1101,7 +1163,8 @@ class PerformanceMonitor:
             return "stable"
 
     async def shutdown(self) -> None:
-        """Shutdown the Performance Monitor."""        logger.info("Shutting down Performance Monitor...")
+        """Shutdown the Performance Monitor."""
+        logger.info("Shutting down Performance Monitor...")
         
         self._initialized = False
         
@@ -1114,5 +1177,6 @@ class PerformanceMonitor:
         logger.info("Performance Monitor shutdown complete")
 
     async def _save_state(self) -> None:
-        """Save monitor state to persistent storage."""        # Placeholder for state persistence
+        """Save monitor state to persistent storage."""
+        # Placeholder for state persistence
         logger.debug("Saving Performance Monitor state")

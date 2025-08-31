@@ -14,7 +14,8 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert 
 © 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from datetime import datetime, timedelta
@@ -44,7 +45,8 @@ from ...database.connection import get_async_session
 logger = get_structured_logger(__name__)
 
 class TierStatus(str, Enum):
-    """Tier status enumeration"""    ACTIVE = "active"
+    """Tier status enumeration"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPENDED = "suspended"
     UNDER_REVIEW = "under_review"
@@ -52,13 +54,15 @@ class TierStatus(str, Enum):
     DOWNGRADED = "downgraded"
 
 class TierProgression(str, Enum):
-    """Tier progression type enumeration"""    AUTOMATIC = "automatic"
+    """Tier progression type enumeration"""
+    AUTOMATIC = "automatic"
     MANUAL_REVIEW = "manual_review"
     APPLICATION_BASED = "application_based"
     INVITATION_ONLY = "invitation_only"
 
 class TierBenefit(str, Enum):
-    """Tier benefit type enumeration"""    COMMISSION_DISCOUNT = "commission_discount"
+    """Tier benefit type enumeration"""
+    COMMISSION_DISCOUNT = "commission_discount"
     PRIORITY_SUPPORT = "priority_support"
     ADVANCED_ANALYTICS = "advanced_analytics"
     CUSTOM_BRANDING = "custom_branding"
@@ -69,13 +73,15 @@ class TierBenefit(str, Enum):
 
 @dataclass
 class TierRequirement:
-    """Tier requirement data class"""    type: str
+    """Tier requirement data class"""
+    type: str
     threshold: Union[Decimal, int, str]
     period_days: int
     description: str
 
 class TierConfiguration(BaseModel):
-    """Tier configuration model"""    
+    """Tier configuration model"""
+    
     tier: CommissionTier
     name: str
     description: str
@@ -120,7 +126,8 @@ class TierConfiguration(BaseModel):
         }
 
 class CreatorTierMembership(BaseModel):
-    """Creator tier membership model"""    
+    """Creator tier membership model"""
+    
     membership_id: str = Field(..., min_length=1)
     creator_id: str = Field(..., min_length=1)
     tier: CommissionTier
@@ -157,7 +164,8 @@ class CreatorTierMembership(BaseModel):
         }
 
 class TierEvaluationResult(BaseModel):
-    """Tier evaluation result model"""    
+    """Tier evaluation result model"""
+    
     evaluation_id: str = Field(..., min_length=1)
     creator_id: str = Field(..., min_length=1)
     current_tier: CommissionTier
@@ -186,13 +194,16 @@ class TierEvaluationResult(BaseModel):
         }
 
 class TierManagerEngine:
-    """    Professional Tier Manager Engine
+    """
+    Professional Tier Manager Engine
     
     Manages commission tiers, membership progression, benefits calculation,
     and comprehensive tier-based business logic.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Tier Manager Engine"""        self.config = config or {}
+        """Initialize Tier Manager Engine"""
+        self.config = config or {}
         
         # Components
         self._tier_evaluator: Optional[TierEvaluator] = None
@@ -216,7 +227,8 @@ class TierManagerEngine:
         logger.info("TierManagerEngine initialized")
     
     async def initialize(self) -> None:
-        """Initialize all tier manager components"""        try:
+        """Initialize all tier manager components"""
+        try:
             logger.info("Initializing Tier Manager Engine...")
             
             # Initialize components
@@ -244,14 +256,16 @@ class TierManagerEngine:
     
     @performance_monitor
     async def evaluate_creator_tier(self, creator_id: str) -> TierEvaluationResult:
-        """        Evaluate creator's tier eligibility and recommend actions
+        """
+        Evaluate creator's tier eligibility and recommend actions
         
         Args:
             creator_id: Creator identifier
             
         Returns:
             Tier evaluation result
-        """        evaluation_id = f"tier_eval_{uuid.uuid4().hex}"
+        """
+        evaluation_id = f"tier_eval_{uuid.uuid4().hex}"
         
         try:
             logger.info(f"Evaluating tier for creator: {creator_id}")
@@ -308,7 +322,8 @@ class TierManagerEngine:
             raise CommissionError(f"Tier evaluation error: {e}")
     
     async def _get_creator_membership(self, creator_id: str) -> Optional[CreatorTierMembership]:
-        """Get creator's current tier membership"""        try:
+        """Get creator's current tier membership"""
+        try:
             async with self._session_factory() as session:
                 # Query current membership from database
                 # Implementation depends on your models
@@ -325,7 +340,8 @@ class TierManagerEngine:
             return None
     
     async def _create_default_membership(self, creator_id: str) -> CreatorTierMembership:
-        """Create default tier membership for new creator"""        try:
+        """Create default tier membership for new creator"""
+        try:
             membership = CreatorTierMembership(
                 membership_id=f"membership_{uuid.uuid4().hex}",
                 creator_id=creator_id,
@@ -343,7 +359,8 @@ class TierManagerEngine:
             raise CommissionError(f"Default membership creation failed: {e}")
     
     async def _get_creator_metrics(self, creator_id: str) -> Dict[str, Any]:
-        """Get comprehensive creator metrics for tier evaluation"""        try:
+        """Get comprehensive creator metrics for tier evaluation"""
+        try:
             # This would typically query various databases and services
             # For now, return mock metrics
             metrics = {
@@ -377,7 +394,8 @@ class TierManagerEngine:
         tier: CommissionTier, 
         metrics: Dict[str, Any]
     ) -> Decimal:
-        """Evaluate how well creator meets tier requirements"""        try:
+        """Evaluate how well creator meets tier requirements"""
+        try:
             if tier not in self._tier_configs:
                 return Decimal("0.0")
             
@@ -454,7 +472,8 @@ class TierManagerEngine:
         requirement: Dict[str, Any], 
         metrics: Dict[str, Any]
     ) -> Decimal:
-        """Evaluate custom tier requirement"""        try:
+        """Evaluate custom tier requirement"""
+        try:
             req_type = requirement.get("type")
             threshold = Decimal(str(requirement.get("threshold", 0)))
             metric_key = requirement.get("metric_key")
@@ -485,7 +504,8 @@ class TierManagerEngine:
         tier: CommissionTier, 
         metrics: Dict[str, Any]
     ) -> Tuple[List[str], List[str]]:
-        """Check detailed tier requirements and return met/failed lists"""        try:
+        """Check detailed tier requirements and return met/failed lists"""
+        try:
             if tier not in self._tier_configs:
                 return [], ["Tier configuration not found"]
             
@@ -538,7 +558,8 @@ class TierManagerEngine:
         result: TierEvaluationResult, 
         current_membership: CreatorTierMembership
     ) -> None:
-        """Determine recommended actions based on tier evaluation"""        try:
+        """Determine recommended actions based on tier evaluation"""
+        try:
             # Check if upgrade is needed
             if result.recommended_tier.value > current_membership.tier.value:
                 if result.meets_requirements:
@@ -576,7 +597,8 @@ class TierManagerEngine:
             logger.error(f"Tier action determination failed: {e}")
     
     async def _check_unused_benefits(self, membership: CreatorTierMembership) -> List[str]:
-        """Check for unused tier benefits"""        try:
+        """Check for unused tier benefits"""
+        try:
             if membership.tier not in self._tier_configs:
                 return []
             
@@ -603,7 +625,8 @@ class TierManagerEngine:
             return []
     
     async def _load_tier_configurations(self) -> None:
-        """Load tier configurations from database or config"""        try:
+        """Load tier configurations from database or config"""
+        try:
             # Default tier configurations
             self._tier_configs = {
                 CommissionTier.STARTER: TierConfiguration(
@@ -726,7 +749,8 @@ class TierManagerEngine:
         target_tier: CommissionTier, 
         approver_id: Optional[str] = None
     ) -> bool:
-        """Upgrade creator to target tier"""        try:
+        """Upgrade creator to target tier"""
+        try:
             logger.info(f"Upgrading creator {creator_id} to {target_tier}")
             
             # Get current membership
@@ -771,7 +795,8 @@ class TierManagerEngine:
         target_tier: CommissionTier, 
         reason: str
     ) -> bool:
-        """Downgrade creator to target tier"""        try:
+        """Downgrade creator to target tier"""
+        try:
             logger.info(f"Downgrading creator {creator_id} to {target_tier}: {reason}")
             
             # Get current membership
@@ -800,7 +825,8 @@ class TierManagerEngine:
         creator_id: str, 
         transaction_amount: Decimal
     ) -> Dict[str, Any]:
-        """Calculate tier benefits for a transaction"""        try:
+        """Calculate tier benefits for a transaction"""
+        try:
             if not self._benefits_calculator:
                 return {}
             
@@ -811,7 +837,8 @@ class TierManagerEngine:
             return {}
     
     async def get_tier_progression_path(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Get tier progression path for creator"""        try:
+        """Get tier progression path for creator"""
+        try:
             current_membership = await self._get_creator_membership(creator_id)
             if not current_membership:
                 return []
@@ -849,7 +876,8 @@ class TierManagerEngine:
             return []
     
     async def process_scheduled_evaluations(self) -> int:
-        """Process all scheduled tier evaluations"""        try:
+        """Process all scheduled tier evaluations"""
+        try:
             processed_count = 0
             
             # Get all active memberships due for evaluation
@@ -869,7 +897,8 @@ class TierManagerEngine:
         target_tier: CommissionTier, 
         approver_id: Optional[str]
     ) -> None:
-        """Process tier upgrade"""        try:
+        """Process tier upgrade"""
+        try:
             # Update membership
             old_tier = membership.tier
             membership.tier = target_tier
@@ -898,7 +927,8 @@ class TierManagerEngine:
         target_tier: CommissionTier, 
         reason: str
     ) -> None:
-        """Process tier downgrade"""        try:
+        """Process tier downgrade"""
+        try:
             # Update membership
             old_tier = membership.tier
             membership.tier = target_tier
@@ -922,7 +952,8 @@ class TierManagerEngine:
             raise CommissionError(f"Downgrade processing error: {e}")
     
     async def _store_membership(self, membership: CreatorTierMembership) -> None:
-        """Store membership in database"""        try:
+        """Store membership in database"""
+        try:
             async with self._session_factory() as session:
                 # Store membership in database
                 # Implementation depends on your models
@@ -933,7 +964,8 @@ class TierManagerEngine:
             raise CommissionError(f"Membership storage error: {e}")
     
     async def shutdown(self) -> None:
-        """Shutdown Tier Manager Engine"""        try:
+        """Shutdown Tier Manager Engine"""
+        try:
             logger.info("Shutting down Tier Manager Engine...")
             
             # Shutdown components
@@ -953,26 +985,32 @@ class TierManagerEngine:
 
 # Component classes
 class TierEvaluator:
-    """Tier evaluation component"""    
+    """Tier evaluation component"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize tier evaluator"""        pass
+        """Initialize tier evaluator"""
+        pass
     
     async def shutdown(self) -> None:
-        """Shutdown tier evaluator"""        pass
+        """Shutdown tier evaluator"""
+        pass
 
 class BenefitsCalculator:
-    """Benefits calculation component"""    
+    """Benefits calculation component"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize benefits calculator"""        pass
+        """Initialize benefits calculator"""
+        pass
     
     async def calculate_benefits(self, creator_id: str, transaction_amount: Decimal) -> Dict[str, Any]:
-        """Calculate tier benefits"""        # Implementation for benefits calculation
+        """Calculate tier benefits"""
+        # Implementation for benefits calculation
         return {
             "commission_discount": Decimal("5.00"),
             "processing_fee_discount": Decimal("2.50"),
@@ -980,26 +1018,32 @@ class BenefitsCalculator:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown benefits calculator"""        pass
+        """Shutdown benefits calculator"""
+        pass
 
 class ProgressionManager:
-    """Tier progression management component"""    
+    """Tier progression management component"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize progression manager"""        pass
+        """Initialize progression manager"""
+        pass
     
     async def shutdown(self) -> None:
-        """Shutdown progression manager"""        pass
+        """Shutdown progression manager"""
+        pass
 
 class NotificationManager:
-    """Notification management component"""    
+    """Notification management component"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize notification manager"""        pass
+        """Initialize notification manager"""
+        pass
     
     async def send_tier_upgrade_notification(
         self, 
@@ -1007,7 +1051,8 @@ class NotificationManager:
         old_tier: CommissionTier, 
         new_tier: CommissionTier
     ) -> None:
-        """Send tier upgrade notification"""        # Implementation for upgrade notification
+        """Send tier upgrade notification"""
+        # Implementation for upgrade notification
         pass
     
     async def send_tier_downgrade_notification(
@@ -1017,11 +1062,13 @@ class NotificationManager:
         new_tier: CommissionTier, 
         reason: str
     ) -> None:
-        """Send tier downgrade notification"""        # Implementation for downgrade notification
+        """Send tier downgrade notification"""
+        # Implementation for downgrade notification
         pass
     
     async def shutdown(self) -> None:
-        """Shutdown notification manager"""        pass
+        """Shutdown notification manager"""
+        pass
 
 """Professional Tier Manager Engine
 © 2025 Fahed Mlaiel - Enterprise-Grade Solution

@@ -20,7 +20,8 @@ Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou tentative de reverse engineering
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
-"""from typing import List, Dict, Any, Optional, Union, Callable
+"""
+from typing import List, Dict, Any, Optional, Union, Callable
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -45,7 +46,8 @@ __build__ = "2025.01.26"
 __status__ = "Production Ready"
 
 class NotificationStatus(Enum):
-    """États des notifications pour tracking avancé"""    PENDING = "pending"
+    """États des notifications pour tracking avancé"""
+    PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
     SENT = "sent"
@@ -58,14 +60,16 @@ class NotificationStatus(Enum):
     UNSUBSCRIBED = "unsubscribed"
 
 class NotificationPriority(Enum):
-    """Niveaux de priorité pour la queue de notifications"""    CRITICAL = 1    # Protection violations, security alerts
+    """Niveaux de priorité pour la queue de notifications"""
+    CRITICAL = 1    # Protection violations, security alerts
     HIGH = 2        # Revenue notifications, collaboration requests
     NORMAL = 3      # Standard user notifications
     LOW = 4         # Marketing, non-urgent updates
 
 @dataclass
 class NotificationMetrics:
-    """Métriques avancées de performance des notifications"""    total_sent: int = 0
+    """Métriques avancées de performance des notifications"""
+    total_sent: int = 0
     delivered_count: int = 0
     opened_count: int = 0
     clicked_count: int = 0
@@ -161,7 +165,8 @@ NOTIFICATION_SYSTEM_CONFIG = {
 
 # Factory function pour créer des managers
 def create_notification_manager(manager_type: str, db_pool, redis_client):
-    """    Factory function pour créer des instances de gestionnaires de notifications
+    """
+    Factory function pour créer des instances de gestionnaires de notifications
     
     Args:
         manager_type: Type de gestionnaire (email, push, protection, etc.)
@@ -170,7 +175,8 @@ def create_notification_manager(manager_type: str, db_pool, redis_client):
         
     Returns:
         Instance du gestionnaire approprié
-    """    from . import (
+    """
+    from . import (
         email_manager, push_manager, content_protection_alerts,
         revenue_notifications, collaboration_notifications,
         performance_analytics, distribution_notifications
@@ -193,7 +199,8 @@ def create_notification_manager(manager_type: str, db_pool, redis_client):
 
 # Validation et configuration
 def validate_notification_config(config: Dict[str, Any]) -> bool:
-    """Valide une configuration de notification"""    required_fields = ["type", "channels", "enabled"]
+    """Valide une configuration de notification"""
+    required_fields = ["type", "channels", "enabled"]
     
     for field in required_fields:
         if field not in config:
@@ -211,7 +218,8 @@ async def optimize_notification_delivery(
     notifications: List[Dict[str, Any]], 
     strategy: str = "balanced"
 ) -> List[Dict[str, Any]]:
-    """    Optimise la livraison des notifications selon une stratégie
+    """
+    Optimise la livraison des notifications selon une stratégie
     
     Args:
         notifications: Liste des notifications à optimiser
@@ -219,7 +227,8 @@ async def optimize_notification_delivery(
         
     Returns:
         Liste optimisée des notifications
-    """    if strategy == "speed":
+    """
+    if strategy == "speed":
         # Priorise la vitesse - groupement par canal
         return sorted(notifications, key=lambda x: x.get("channel", ""))
     elif strategy == "reliability":
@@ -235,7 +244,8 @@ async def optimize_notification_delivery(
 
 # Configuration logging avancé spécialisé
 def configure_specialized_logging():
-    """Configure le logging spécialisé pour chaque module"""    loggers_config = {
+    """Configure le logging spécialisé pour chaque module"""
+    loggers_config = {
         "protection": {
             "level": logging.WARNING,
             "format": "%(asctime)s - PROTECTION - %(levelname)s - %(message)s",
@@ -279,7 +289,8 @@ logger.info(f"Modules spécialisés: Protection, Revenue, Collaboration, Analyti
 
 # Health check function
 async def health_check(db_pool, redis_client) -> Dict[str, Any]:
-    """Vérifie la santé du système de notifications"""    health_status = {
+    """Vérifie la santé du système de notifications"""
+    health_status = {
         "status": "healthy",
         "timestamp": datetime.now().isoformat(),
         "components": {}
@@ -320,11 +331,13 @@ async def health_check(db_pool, redis_client) -> Dict[str, Any]:
 ]
 
 def get_module_info() -> Dict[str, Any]:
-    """    Retourne les informations complètes du module Notification Systems.
+    """
+    Retourne les informations complètes du module Notification Systems.
     
     Returns:
         Dict[str, Any]: Informations détaillées du module
-    """    return {
+    """
+    return {
         "name": "Enterprise Notification Systems Database",
         "version": __version__,
         "build": __build__,
@@ -348,11 +361,13 @@ def get_module_info() -> Dict[str, Any]:
     }
 
 async def get_health_status() -> Dict[str, Any]:
-    """    Vérifie l'état de santé du système de notifications.
+    """
+    Vérifie l'état de santé du système de notifications.
     
     Returns:
         Dict[str, Any]: État de santé complet
-    """    try:
+    """
+    try:
         # Import modules pour vérification
         from . import email_manager, push_manager, realtime_manager, alert_manager, queue_manager
         
@@ -386,11 +401,13 @@ async def get_health_status() -> Dict[str, Any]:
         }
 
 async def get_performance_metrics() -> NotificationMetrics:
-    """    Calcule les métriques de performance globales.
+    """
+    Calcule les métriques de performance globales.
     
     Returns:
         NotificationMetrics: Métriques de performance
-    """    try:
+    """
+    try:
         # Import modules pour calcul des métriques
         from . import email_manager, push_manager, realtime_manager
         

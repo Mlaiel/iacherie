@@ -5,7 +5,8 @@ attack signatures, and emerging threats through machine learning and rule-based 
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import numpy as np
@@ -35,7 +36,8 @@ from ...data.models.fraud_patterns import FraudPatternModel, PatternSignature
 logger = logging.getLogger(__name__)
 
 class PatternCategory(Enum):
-    """Fraud pattern categories"""    AUTOMATED_BEHAVIOR = "automated_behavior"
+    """Fraud pattern categories"""
+    AUTOMATED_BEHAVIOR = "automated_behavior"
     CONTENT_SCRAPING = "content_scraping" 
     ACCOUNT_TAKEOVER = "account_takeover"
     FAKE_ENGAGEMENT = "fake_engagement"
@@ -48,7 +50,8 @@ class PatternCategory(Enum):
 
 @dataclass
 class PatternSignature:
-    """Fraud pattern signature definition"""    pattern_id: str
+    """Fraud pattern signature definition"""
+    pattern_id: str
     category: PatternCategory
     name: str
     description: str
@@ -60,7 +63,8 @@ class PatternSignature:
 
 @dataclass 
 class PatternMatch:
-    """Pattern detection match result"""    pattern_id: str
+    """Pattern detection match result"""
+    pattern_id: str
     pattern_name: str
     category: PatternCategory
     confidence: float
@@ -70,7 +74,8 @@ class PatternMatch:
     timestamp: datetime
 
 class PatternDetector:
-    """    Advanced Fraud Pattern Detection Engine
+    """
+    Advanced Fraud Pattern Detection Engine
     
     Detects fraud patterns through:
     - Signature-based pattern matching
@@ -78,7 +83,8 @@ class PatternDetector:
     - Behavioral sequence analysis
     - Temporal pattern analysis
     - Statistical anomaly detection
-    """    
+    """
+    
     def __init__(self, redis_client: Optional[aioredis.Redis] = None):
         self.redis_client = redis_client
         self.pattern_matcher = PatternMatcher()
@@ -112,7 +118,8 @@ class PatternDetector:
         metadata: Dict[str, Any],
         historical_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Detect fraud patterns in user activity
+        """
+        Detect fraud patterns in user activity
         
         Args:
             user_id: User identifier
@@ -122,7 +129,8 @@ class PatternDetector:
             
         Returns:
             Pattern detection results
-        """        try:
+        """
+        try:
             # Extract activity sequence
             activity_sequence = self._extract_activity_sequence(metadata, historical_data)
             
@@ -193,7 +201,8 @@ class PatternDetector:
         metadata: Dict[str, Any], 
         historical_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Extract chronological activity sequence from metadata and history"""        activities = []
+        """Extract chronological activity sequence from metadata and history"""
+        activities = []
         
         # Current session activities
         current_activities = metadata.get('activities', [])
@@ -213,7 +222,8 @@ class PatternDetector:
         activity_sequence: List[Dict[str, Any]],
         metadata: Dict[str, Any]
     ) -> List[PatternMatch]:
-        """Detect known fraud signatures in activity sequence"""        matches = []
+        """Detect known fraud signatures in activity sequence"""
+        matches = []
         
         try:
             for pattern_id, pattern in self.fraud_patterns.items():
@@ -256,7 +266,8 @@ class PatternDetector:
         activity_sequence: List[Dict[str, Any]],
         user_id: str
     ) -> List[PatternMatch]:
-        """Detect automated behavioral sequences"""        matches = []
+        """Detect automated behavioral sequences"""
+        matches = []
         
         try:
             if len(activity_sequence) < 3:
@@ -312,7 +323,8 @@ class PatternDetector:
         activity_sequence: List[Dict[str, Any]],
         metadata: Dict[str, Any]
     ) -> List[PatternMatch]:
-        """Detect suspicious temporal patterns"""        matches = []
+        """Detect suspicious temporal patterns"""
+        matches = []
         
         try:
             if len(activity_sequence) < 5:
@@ -371,7 +383,8 @@ class PatternDetector:
         platform: str,
         metadata: Dict[str, Any]
     ) -> List[PatternMatch]:
-        """Detect coordinated attack patterns across users"""        matches = []
+        """Detect coordinated attack patterns across users"""
+        matches = []
         
         try:
             # Check for coordinated behavior indicators
@@ -426,7 +439,8 @@ class PatternDetector:
         return matches
 
     async def _detect_content_patterns(self, metadata: Dict[str, Any]) -> List[PatternMatch]:
-        """Detect content-based fraud patterns"""        matches = []
+        """Detect content-based fraud patterns"""
+        matches = []
         
         try:
             content_data = metadata.get('content', {})
@@ -475,7 +489,8 @@ class PatternDetector:
         activity_sequence: List[Dict[str, Any]], 
         metadata: Dict[str, Any]
     ) -> bool:
-        """Check if a specific indicator matches the current data"""        try:
+        """Check if a specific indicator matches the current data"""
+        try:
             # User agent pattern matching
             if indicator.startswith("user_agent:"):
                 pattern = indicator.split(":", 1)[1]
@@ -513,7 +528,8 @@ class PatternDetector:
         activity_sequence: List[Dict[str, Any]],
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Get evidence for a matched indicator"""        evidence = {}
+        """Get evidence for a matched indicator"""
+        evidence = {}
         
         try:
             if indicator.startswith("user_agent:"):
@@ -541,7 +557,8 @@ class PatternDetector:
         return evidence
 
     def _find_repetitive_patterns(self, action_sequence: List[str]) -> List[str]:
-        """Find repetitive patterns in action sequence"""        patterns = []
+        """Find repetitive patterns in action sequence"""
+        patterns = []
         
         # Look for repeating subsequences of length 2-5
         for pattern_length in range(2, min(6, len(action_sequence) // 2)):
@@ -562,7 +579,8 @@ class PatternDetector:
         return list(set(patterns))  # Remove duplicates
 
     def _has_scraping_indicators(self, content_data: Dict[str, Any]) -> bool:
-        """Check for content scraping indicators"""        indicators = [
+        """Check for content scraping indicators"""
+        indicators = [
             # Metadata preservation from original source
             'original_url' in content_data,
             'source_platform' in content_data,
@@ -579,7 +597,8 @@ class PatternDetector:
         fingerprint: str, 
         fingerprint_key: str
     ) -> float:
-        """Check fingerprint similarity with existing fingerprints"""        try:
+        """Check fingerprint similarity with existing fingerprints"""
+        try:
             # Get sample of existing fingerprints
             existing_fps = await self.redis_client.srandmember(fingerprint_key, 100)
             
@@ -600,7 +619,8 @@ class PatternDetector:
             return 0.0
 
     def _calculate_string_similarity(self, str1: str, str2: str) -> float:
-        """Calculate similarity between two strings"""        if not str1 or not str2:
+        """Calculate similarity between two strings"""
+        if not str1 or not str2:
             return 0.0
             
         # Use Levenshtein distance ratio
@@ -608,14 +628,16 @@ class PatternDetector:
         return SequenceMatcher(None, str1, str2).ratio()
 
     def _get_activity_timespan(self, activity_sequence: List[Dict[str, Any]]) -> float:
-        """Get timespan of activity sequence in seconds"""        if len(activity_sequence) < 2:
+        """Get timespan of activity sequence in seconds"""
+        if len(activity_sequence) < 2:
             return 1.0
             
         timestamps = [a.get('timestamp', 0) for a in activity_sequence]
         return max(timestamps) - min(timestamps)
 
     def _contains_subsequence(self, sequence: List[str], pattern: List[str]) -> bool:
-        """Check if sequence contains the pattern subsequence"""        if len(pattern) > len(sequence):
+        """Check if sequence contains the pattern subsequence"""
+        if len(pattern) > len(sequence):
             return False
             
         for i in range(len(sequence) - len(pattern) + 1):
@@ -625,7 +647,8 @@ class PatternDetector:
         return False
 
     def _check_timing_pattern(self, timing_type: str, activity_sequence: List[Dict[str, Any]]) -> bool:
-        """Check specific timing patterns"""        if len(activity_sequence) < 2:
+        """Check specific timing patterns"""
+        if len(activity_sequence) < 2:
             return False
             
         timestamps = [a.get('timestamp', 0) for a in activity_sequence]
@@ -644,7 +667,8 @@ class PatternDetector:
         return False
 
     async def _calculate_composite_confidence(self, matches: List[PatternMatch]) -> float:
-        """Calculate composite confidence score from all matches"""        if not matches:
+        """Calculate composite confidence score from all matches"""
+        if not matches:
             return 0.0
             
         # Weight by severity and confidence
@@ -664,7 +688,8 @@ class PatternDetector:
         return min(1.0, composite)
 
     def _filter_and_rank_matches(self, matches: List[PatternMatch]) -> List[PatternMatch]:
-        """Filter and rank pattern matches by relevance"""        # Filter low-confidence matches
+        """Filter and rank pattern matches by relevance"""
+        # Filter low-confidence matches
         filtered = [match for match in matches if match.confidence >= 0.3]
         
         # Sort by composite score (confidence * severity)
@@ -679,7 +704,8 @@ class PatternDetector:
         activity_sequence: List[Dict[str, Any]],
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate comprehensive pattern analysis"""        if not matches:
+        """Generate comprehensive pattern analysis"""
+        if not matches:
             return {
                 'summary': 'No significant fraud patterns detected',
                 'risk_level': 'LOW',
@@ -726,7 +752,8 @@ class PatternDetector:
         }
 
     async def _update_pattern_statistics(self, matches: List[PatternMatch], user_id: str):
-        """Update pattern detection statistics"""        try:
+        """Update pattern detection statistics"""
+        try:
             for match in matches:
                 # Update global pattern statistics
                 stats_key = f"pattern_stats:{match.pattern_id}"
@@ -743,7 +770,8 @@ class PatternDetector:
             logger.error(f"Failed to update pattern statistics: {str(e)}")
 
     async def _initialize_builtin_patterns(self):
-        """Initialize built-in fraud patterns"""        try:
+        """Initialize built-in fraud patterns"""
+        try:
             # Automated behavior patterns
             self.fraud_patterns["bot_behavior_1"] = PatternSignature(
                 pattern_id="bot_behavior_1",
@@ -794,7 +822,8 @@ class PatternDetector:
         evidence: Dict[str, Any], 
         confidence: float
     ):
-        """Learn new fraud pattern from confirmed fraud case"""        try:
+        """Learn new fraud pattern from confirmed fraud case"""
+        try:
             # Extract pattern features from evidence
             pattern_features = self._extract_pattern_features(evidence)
             
@@ -831,7 +860,8 @@ class PatternDetector:
             logger.error(f"Failed to learn pattern: {str(e)}")
 
     def _extract_pattern_features(self, evidence: Dict[str, Any]) -> List[str]:
-        """Extract pattern features from fraud evidence"""        features = []
+        """Extract pattern features from fraud evidence"""
+        features = []
         
         try:
             # Behavioral features
@@ -855,7 +885,8 @@ class PatternDetector:
         return features[:10]  # Limit total features
 
     async def get_learned_patterns(self) -> Dict[str, Any]:
-        """Get all learned patterns for persistence"""        learned_patterns = {}
+        """Get all learned patterns for persistence"""
+        learned_patterns = {}
         
         for pattern_id, pattern in self.fraud_patterns.items():
             if pattern_id.startswith("learned_"):
@@ -873,7 +904,8 @@ class PatternDetector:
         return learned_patterns
 
     async def load_learned_patterns(self, patterns: Dict[str, Any]):
-        """Load previously learned patterns"""        try:
+        """Load previously learned patterns"""
+        try:
             for pattern_id, pattern_data in patterns.items():
                 self.fraud_patterns[pattern_id] = PatternSignature(
                     pattern_id=pattern_id,
@@ -893,7 +925,8 @@ class PatternDetector:
             logger.error(f"Failed to load learned patterns: {str(e)}")
 
     async def get_pattern_statistics(self, days: int = 30) -> Dict[str, Any]:
-        """Get comprehensive pattern detection statistics"""        try:
+        """Get comprehensive pattern detection statistics"""
+        try:
             stats = {
                 'total_patterns': len(self.fraud_patterns),
                 'learned_patterns': len([p for p in self.fraud_patterns if p.startswith('learned_')]),

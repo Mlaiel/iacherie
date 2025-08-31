@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ============================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 SYSTÈME DE GESTION MULTI-TENANT ENTERPRISE
@@ -14,7 +14,9 @@ Isolation complète des données et routage intelligent pour architecture SaaS
 - Routage dynamique et load balancing intelligent
 - Gestion des quotas et limites en temps réel
 - Facturation et analytics par tenant
-"""from .tenant_manager import (
+"""
+
+from .tenant_manager import (
     TenantManager,
     TenantDataIsolator,
     TenantConfig,

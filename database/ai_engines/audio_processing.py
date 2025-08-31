@@ -19,7 +19,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Any, Optional, Union, Tuple, Callable
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple, Callable
 import json
 import logging
 import asyncio
@@ -46,7 +47,8 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 logger = logging.getLogger(__name__)
 
 class AudioModelType(str, Enum):
-    """Audio AI model types for different processing tasks."""    FINGERPRINTING = "fingerprinting"
+    """Audio AI model types for different processing tasks."""
+    FINGERPRINTING = "fingerprinting"
     CLASSIFICATION = "classification"
     FEATURE_EXTRACTION = "feature_extraction"
     CONTENT_DETECTION = "content_detection"
@@ -58,7 +60,8 @@ class AudioModelType(str, Enum):
     GENRE_CLASSIFICATION = "genre_classification"
 
 class AudioFormat(str, Enum):
-    """Supported audio formats for processing."""    WAV = "wav"
+    """Supported audio formats for processing."""
+    WAV = "wav"
     MP3 = "mp3"
     FLAC = "flac"
     AAC = "aac"
@@ -66,7 +69,8 @@ class AudioFormat(str, Enum):
     M4A = "m4a"
 
 class FingerprintAlgorithm(str, Enum):
-    """Audio fingerprinting algorithms."""    CHROMAPRINT = "chromaprint"
+    """Audio fingerprinting algorithms."""
+    CHROMAPRINT = "chromaprint"
     MFCC = "mfcc"
     SPECTRAL = "spectral"
     HARMONIC = "harmonic"
@@ -75,7 +79,8 @@ class FingerprintAlgorithm(str, Enum):
 
 @dataclass
 class AudioFingerprint:
-    """Audio fingerprint data structure."""    fingerprint_id: str
+    """Audio fingerprint data structure."""
+    fingerprint_id: str
     content_id: str
     algorithm: FingerprintAlgorithm
     fingerprint_data: str
@@ -90,7 +95,8 @@ class AudioFingerprint:
 
 @dataclass
 class AudioFeatures:
-    """Audio features extraction result."""    content_id: str
+    """Audio features extraction result."""
+    content_id: str
     mfcc: List[float]
     chroma: List[float]
     spectral_centroid: List[float]
@@ -107,7 +113,8 @@ class AudioFeatures:
 
 @dataclass
 class AudioClassificationResult:
-    """Audio classification analysis result."""    content_id: str
+    """Audio classification analysis result."""
+    content_id: str
     predicted_class: str
     confidence_score: float
     all_predictions: Dict[str, float]
@@ -117,13 +124,16 @@ class AudioClassificationResult:
     metadata: Dict[str, Any]
 
 class AudioAIModelRegistry:
-    """    Audio AI Model Registry for managing audio processing models.
+    """
+    Audio AI Model Registry for managing audio processing models.
     
     Handles model versioning, deployment, and performance tracking
     for audio-specific AI models in the content protection platform.
-    """    
+    """
+    
     def __init__(self, db_connection: Any, config: Dict[str, Any]):
-        """Initialize audio AI model registry."""        self.db = db_connection
+        """Initialize audio AI model registry."""
+        self.db = db_connection
         self.config = config
         self.models: Dict[str, Any] = {}
         self.performance_cache: Dict[str, Dict] = {}
@@ -133,7 +143,8 @@ class AudioAIModelRegistry:
         self._initialize_audio_models()
         
     def _initialize_audio_models(self) -> None:
-        """Initialize audio processing models."""        try:
+        """Initialize audio processing models."""
+        try:
             # Load pre-trained audio models
             self._load_fingerprinting_models()
             self._load_classification_models()
@@ -146,7 +157,8 @@ class AudioAIModelRegistry:
             raise
     
     def _load_fingerprinting_models(self) -> None:
-        """Load audio fingerprinting models."""        # Load MFCC-based fingerprinting model
+        """Load audio fingerprinting models."""
+        # Load MFCC-based fingerprinting model
         self.models['mfcc_fingerprint'] = {
             'type': AudioModelType.FINGERPRINTING,
             'algorithm': FingerprintAlgorithm.MFCC,
@@ -172,7 +184,8 @@ class AudioAIModelRegistry:
         }
     
     def _load_classification_models(self) -> None:
-        """Load audio classification models."""        # Load genre classification model
+        """Load audio classification models."""
+        # Load genre classification model
         self.models['genre_classifier'] = {
             'type': AudioModelType.GENRE_CLASSIFICATION,
             'model': None,
@@ -197,7 +210,8 @@ class AudioAIModelRegistry:
         }
     
     def _load_feature_extraction_models(self) -> None:
-        """Load feature extraction models."""        self.models['feature_extractor'] = {
+        """Load feature extraction models."""
+        self.models['feature_extractor'] = {
             'type': AudioModelType.FEATURE_EXTRACTION,
             'model': None,
             'features': ['mfcc', 'chroma', 'spectral_centroid', 'spectral_rolloff', 'zero_crossing_rate'],
@@ -211,7 +225,8 @@ class AudioAIModelRegistry:
         }
     
     async def register_model(self, model_data: Dict[str, Any]) -> str:
-        """Register a new audio AI model."""        try:
+        """Register a new audio AI model."""
+        try:
             model_id = str(uuid.uuid4())
             
             # Validate model data
@@ -234,11 +249,13 @@ class AudioAIModelRegistry:
             raise
     
     async def _store_model_metadata(self, model_id: str, model_data: Dict[str, Any]) -> None:
-        """Store model metadata in database."""        # Implementation depends on database schema
+        """Store model metadata in database."""
+        # Implementation depends on database schema
         pass
     
     async def get_model_performance(self, model_id: str) -> Dict[str, Any]:
-        """Get model performance metrics."""        if model_id in self.performance_cache:
+        """Get model performance metrics."""
+        if model_id in self.performance_cache:
             return self.performance_cache[model_id]
         
         # Load from database if not cached
@@ -248,7 +265,8 @@ class AudioAIModelRegistry:
         return performance_data
     
     async def _load_performance_data(self, model_id: str) -> Dict[str, Any]:
-        """Load performance data from database."""        # Implementation depends on database schema
+        """Load performance data from database."""
+        # Implementation depends on database schema
         return {
             'accuracy': 0.95,
             'precision': 0.94,
@@ -259,13 +277,16 @@ class AudioAIModelRegistry:
         }
 
 class AudioFingerprintingEngine:
-    """    Audio Fingerprinting Engine for content protection.
+    """
+    Audio Fingerprinting Engine for content protection.
     
     Generates unique fingerprints for audio content to enable
     copyright protection and unauthorized usage detection.
-    """    
+    """
+    
     def __init__(self, model_registry: AudioAIModelRegistry, config: Dict[str, Any]):
-        """Initialize audio fingerprinting engine."""        self.registry = model_registry
+        """Initialize audio fingerprinting engine."""
+        self.registry = model_registry
         self.config = config
         self.fingerprint_cache: Dict[str, AudioFingerprint] = {}
         
@@ -275,7 +296,8 @@ class AudioFingerprintingEngine:
         algorithm: FingerprintAlgorithm = FingerprintAlgorithm.MFCC,
         metadata: Optional[Dict[str, Any]] = None
     ) -> AudioFingerprint:
-        """Generate audio fingerprint for content protection."""        try:
+        """Generate audio fingerprint for content protection."""
+        try:
             # Load audio data if path provided
             if isinstance(audio_data, (str, Path)):
                 audio_array, sample_rate = librosa.load(str(audio_data))
@@ -330,7 +352,8 @@ class AudioFingerprintingEngine:
         sample_rate: int, 
         algorithm: FingerprintAlgorithm
     ) -> str:
-        """Generate fingerprint using specific algorithm."""        if algorithm == FingerprintAlgorithm.MFCC:
+        """Generate fingerprint using specific algorithm."""
+        if algorithm == FingerprintAlgorithm.MFCC:
             return await self._generate_mfcc_fingerprint(audio_array, sample_rate)
         elif algorithm == FingerprintAlgorithm.SPECTRAL:
             return await self._generate_spectral_fingerprint(audio_array, sample_rate)
@@ -346,7 +369,8 @@ class AudioFingerprintingEngine:
             raise ValueError(f"Unsupported algorithm: {algorithm}")
     
     async def _generate_mfcc_fingerprint(self, audio_array: np.ndarray, sample_rate: int) -> str:
-        """Generate MFCC-based fingerprint."""        # Extract MFCC features
+        """Generate MFCC-based fingerprint."""
+        # Extract MFCC features
         mfcc = librosa.feature.mfcc(
             y=audio_array, 
             sr=sample_rate, 
@@ -371,7 +395,8 @@ class AudioFingerprintingEngine:
         return base64.b64encode(fingerprint_bytes).decode('utf-8')
     
     async def _generate_spectral_fingerprint(self, audio_array: np.ndarray, sample_rate: int) -> str:
-        """Generate spectral-based fingerprint."""        # Compute spectral features
+        """Generate spectral-based fingerprint."""
+        # Compute spectral features
         spectral_centroid = librosa.feature.spectral_centroid(y=audio_array, sr=sample_rate)[0]
         spectral_rolloff = librosa.feature.spectral_rolloff(y=audio_array, sr=sample_rate)[0]
         spectral_bandwidth = librosa.feature.spectral_bandwidth(y=audio_array, sr=sample_rate)[0]
@@ -388,7 +413,8 @@ class AudioFingerprintingEngine:
         return base64.b64encode(fingerprint_bytes).decode('utf-8')
     
     async def _generate_chromaprint_fingerprint(self, audio_array: np.ndarray, sample_rate: int) -> str:
-        """Generate Chromaprint-based fingerprint."""        # Extract chroma features
+        """Generate Chromaprint-based fingerprint."""
+        # Extract chroma features
         chroma = librosa.feature.chroma_stft(y=audio_array, sr=sample_rate)
         
         # Calculate chroma statistics
@@ -406,7 +432,8 @@ class AudioFingerprintingEngine:
         return base64.b64encode(fingerprint_bytes).decode('utf-8')
     
     async def _generate_harmonic_fingerprint(self, audio_array: np.ndarray, sample_rate: int) -> str:
-        """Generate harmonic-based fingerprint."""        # Separate harmonic and percussive components
+        """Generate harmonic-based fingerprint."""
+        # Separate harmonic and percussive components
         harmonic, percussive = librosa.effects.hpss(audio_array)
         
         # Extract features from harmonic component
@@ -425,7 +452,8 @@ class AudioFingerprintingEngine:
         return base64.b64encode(fingerprint_bytes).decode('utf-8')
     
     async def _generate_tempo_chroma_fingerprint(self, audio_array: np.ndarray, sample_rate: int) -> str:
-        """Generate tempo and chroma-based fingerprint."""        # Extract tempo
+        """Generate tempo and chroma-based fingerprint."""
+        # Extract tempo
         tempo, beats = librosa.beat.beat_track(y=audio_array, sr=sample_rate)
         
         # Extract chroma features
@@ -440,7 +468,8 @@ class AudioFingerprintingEngine:
         return base64.b64encode(fingerprint_bytes).decode('utf-8')
     
     async def _generate_zero_crossing_fingerprint(self, audio_array: np.ndarray, sample_rate: int) -> str:
-        """Generate zero crossing rate-based fingerprint."""        # Calculate zero crossing rate
+        """Generate zero crossing rate-based fingerprint."""
+        # Calculate zero crossing rate
         zcr = librosa.feature.zero_crossing_rate(audio_array)[0]
         
         # Calculate statistics
@@ -457,7 +486,8 @@ class AudioFingerprintingEngine:
         return base64.b64encode(fingerprint_bytes).decode('utf-8')
     
     def _calculate_confidence_score(self, audio_array: np.ndarray, algorithm: FingerprintAlgorithm) -> float:
-        """Calculate confidence score for fingerprint quality."""        # Basic confidence calculation based on audio quality metrics
+        """Calculate confidence score for fingerprint quality."""
+        # Basic confidence calculation based on audio quality metrics
         energy = np.mean(audio_array ** 2)
         snr_estimate = 10 * np.log10(energy / (np.var(audio_array) + 1e-10))
         
@@ -466,7 +496,8 @@ class AudioFingerprintingEngine:
         return confidence
     
     async def _store_fingerprint(self, fingerprint: AudioFingerprint) -> None:
-        """Store fingerprint in database."""        # Implementation depends on database schema
+        """Store fingerprint in database."""
+        # Implementation depends on database schema
         pass
     
     async def match_fingerprint(
@@ -474,7 +505,8 @@ class AudioFingerprintingEngine:
         query_fingerprint: AudioFingerprint, 
         similarity_threshold: float = 0.8
     ) -> List[Tuple[AudioFingerprint, float]]:
-        """Match fingerprint against database for similarity detection."""        try:
+        """Match fingerprint against database for similarity detection."""
+        try:
             # Load candidate fingerprints from database
             candidates = await self._load_candidate_fingerprints(query_fingerprint.algorithm)
             
@@ -496,7 +528,8 @@ class AudioFingerprintingEngine:
             raise
     
     async def _load_candidate_fingerprints(self, algorithm: FingerprintAlgorithm) -> List[AudioFingerprint]:
-        """Load candidate fingerprints for matching."""        # Implementation depends on database schema
+        """Load candidate fingerprints for matching."""
+        # Implementation depends on database schema
         return list(self.fingerprint_cache.values())
     
     async def _calculate_similarity(
@@ -504,7 +537,8 @@ class AudioFingerprintingEngine:
         fingerprint1: AudioFingerprint, 
         fingerprint2: AudioFingerprint
     ) -> float:
-        """Calculate similarity between two fingerprints."""        if fingerprint1.algorithm != fingerprint2.algorithm:
+        """Calculate similarity between two fingerprints."""
+        if fingerprint1.algorithm != fingerprint2.algorithm:
             return 0.0
         
         # Decode fingerprint data
@@ -523,13 +557,16 @@ class AudioFingerprintingEngine:
         return max(0.0, similarity)
 
 class MusicAnalysisAI:
-    """    Music Analysis AI for comprehensive music content analysis.
+    """
+    Music Analysis AI for comprehensive music content analysis.
     
     Provides advanced music analysis capabilities including tempo detection,
     key estimation, genre classification, and musical structure analysis.
-    """    
+    """
+    
     def __init__(self, model_registry: AudioAIModelRegistry, config: Dict[str, Any]):
-        """Initialize music analysis AI."""        self.registry = model_registry
+        """Initialize music analysis AI."""
+        self.registry = model_registry
         self.config = config
         
     async def analyze_music(
@@ -539,7 +576,8 @@ class MusicAnalysisAI:
         classify_genre: bool = True,
         detect_structure: bool = True
     ) -> Dict[str, Any]:
-        """Comprehensive music analysis."""        try:
+        """Comprehensive music analysis."""
+        try:
             # Load audio data
             if isinstance(audio_data, (str, Path)):
                 audio_array, sample_rate = librosa.load(str(audio_data))
@@ -577,7 +615,8 @@ class MusicAnalysisAI:
             raise
     
     async def _extract_music_features(self, audio_array: np.ndarray, sample_rate: int) -> AudioFeatures:
-        """Extract comprehensive music features."""        # Extract MFCC features
+        """Extract comprehensive music features."""
+        # Extract MFCC features
         mfcc = librosa.feature.mfcc(y=audio_array, sr=sample_rate, n_mfcc=13)
         mfcc_features = [np.mean(mfcc[i]) for i in range(mfcc.shape[0])]
         
@@ -634,7 +673,8 @@ class MusicAnalysisAI:
         )
     
     async def _classify_genre(self, audio_array: np.ndarray, sample_rate: int) -> AudioClassificationResult:
-        """Classify music genre using AI model."""        # Extract features for classification
+        """Classify music genre using AI model."""
+        # Extract features for classification
         features = await self._extract_classification_features(audio_array, sample_rate)
         
         # Simulate genre classification (replace with actual model inference)
@@ -661,7 +701,8 @@ class MusicAnalysisAI:
         )
     
     async def _extract_classification_features(self, audio_array: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract features for genre classification."""        # Extract comprehensive features for classification
+        """Extract features for genre classification."""
+        # Extract comprehensive features for classification
         mfcc = librosa.feature.mfcc(y=audio_array, sr=sample_rate, n_mfcc=13)
         chroma = librosa.feature.chroma_stft(y=audio_array, sr=sample_rate)
         spectral_centroid = librosa.feature.spectral_centroid(y=audio_array, sr=sample_rate)
@@ -689,7 +730,8 @@ class MusicAnalysisAI:
         return np.array(features, dtype=np.float32)
     
     async def _detect_structure(self, audio_array: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Detect musical structure and segments."""        # Detect tempo and beats
+        """Detect musical structure and segments."""
+        # Detect tempo and beats
         tempo, beats = librosa.beat.beat_track(y=audio_array, sr=sample_rate)
         
         # Estimate segments using harmonic-percussive separation
@@ -728,13 +770,16 @@ class MusicAnalysisAI:
         return structure
 
 class AudioClassificationEngine:
-    """    Audio Classification Engine for content recognition and analysis.
+    """
+    Audio Classification Engine for content recognition and analysis.
     
     Provides classification capabilities for different types of audio content
     including music, speech, environmental sounds, and content categorization.
-    """    
+    """
+    
     def __init__(self, model_registry: AudioAIModelRegistry, config: Dict[str, Any]):
-        """Initialize audio classification engine."""        self.registry = model_registry
+        """Initialize audio classification engine."""
+        self.registry = model_registry
         self.config = config
         self.classification_cache: Dict[str, AudioClassificationResult] = {}
         
@@ -743,7 +788,8 @@ class AudioClassificationEngine:
         audio_data: Union[np.ndarray, str, Path],
         classification_types: List[str] = None
     ) -> Dict[str, AudioClassificationResult]:
-        """Classify audio content using multiple classification models."""        try:
+        """Classify audio content using multiple classification models."""
+        try:
             # Load audio data
             if isinstance(audio_data, (str, Path)):
                 audio_array, sample_rate = librosa.load(str(audio_data))
@@ -780,7 +826,8 @@ class AudioClassificationEngine:
             raise
     
     async def _classify_content_type(self, audio_array: np.ndarray, sample_rate: int) -> AudioClassificationResult:
-        """Classify the type of audio content (music, speech, noise, etc.)."""        # Extract features for content type classification
+        """Classify the type of audio content (music, speech, noise, etc.)."""
+        # Extract features for content type classification
         features = await self._extract_content_features(audio_array, sample_rate)
         
         # Simulate content type classification
@@ -833,7 +880,8 @@ class AudioClassificationEngine:
         )
     
     async def _classify_genre(self, audio_array: np.ndarray, sample_rate: int) -> AudioClassificationResult:
-        """Classify music genre."""        # Extract features for genre classification
+        """Classify music genre."""
+        # Extract features for genre classification
         features = await self._extract_genre_features(audio_array, sample_rate)
         
         # Simulate genre classification
@@ -862,7 +910,8 @@ class AudioClassificationEngine:
         )
     
     async def _assess_quality(self, audio_array: np.ndarray, sample_rate: int) -> AudioClassificationResult:
-        """Assess audio quality."""        # Calculate quality metrics
+        """Assess audio quality."""
+        # Calculate quality metrics
         snr = self._calculate_snr(audio_array)
         dynamic_range = self._calculate_dynamic_range(audio_array)
         frequency_response = self._assess_frequency_response(audio_array, sample_rate)
@@ -909,7 +958,8 @@ class AudioClassificationEngine:
         )
     
     async def _extract_content_features(self, audio_array: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract features for content type classification."""        # Energy features
+        """Extract features for content type classification."""
+        # Energy features
         energy = np.mean(audio_array ** 2)
         energy_std = np.std(audio_array ** 2)
         
@@ -932,7 +982,8 @@ class AudioClassificationEngine:
         return features
     
     async def _extract_genre_features(self, audio_array: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract features for genre classification."""        # MFCC features
+        """Extract features for genre classification."""
+        # MFCC features
         mfcc = librosa.feature.mfcc(y=audio_array, sr=sample_rate, n_mfcc=13)
         mfcc_mean = np.mean(mfcc, axis=1)
         mfcc_std = np.std(mfcc, axis=1)
@@ -957,7 +1008,8 @@ class AudioClassificationEngine:
         return features
     
     def _calculate_snr(self, audio_array: np.ndarray) -> float:
-        """Calculate signal-to-noise ratio."""        # Simple SNR estimation
+        """Calculate signal-to-noise ratio."""
+        # Simple SNR estimation
         signal_power = np.mean(audio_array ** 2)
         noise_estimate = np.var(audio_array - np.mean(audio_array))
         
@@ -968,7 +1020,8 @@ class AudioClassificationEngine:
         return max(0.0, min(60.0, snr))
     
     def _calculate_dynamic_range(self, audio_array: np.ndarray) -> float:
-        """Calculate dynamic range of audio signal."""        max_amplitude = np.max(np.abs(audio_array))
+        """Calculate dynamic range of audio signal."""
+        max_amplitude = np.max(np.abs(audio_array))
         min_amplitude = np.mean(np.abs(audio_array[np.abs(audio_array) > 0.01 * max_amplitude]))
         
         if min_amplitude == 0:
@@ -978,7 +1031,8 @@ class AudioClassificationEngine:
         return max(0.0, min(80.0, dynamic_range))
     
     def _assess_frequency_response(self, audio_array: np.ndarray, sample_rate: int) -> float:
-        """Assess frequency response quality."""        # Calculate frequency spectrum
+        """Assess frequency response quality."""
+        # Calculate frequency spectrum
         fft = np.fft.rfft(audio_array)
         magnitude_spectrum = np.abs(fft)
         
@@ -999,13 +1053,16 @@ class AudioClassificationEngine:
         return max(0.0, min(1.0, balance_score))
 
 class SoundProcessingPipeline:
-    """    Sound Processing Pipeline for comprehensive audio processing workflows.
+    """
+    Sound Processing Pipeline for comprehensive audio processing workflows.
     
     Orchestrates multiple audio processing steps including preprocessing,
     feature extraction, analysis, and post-processing for the content platform.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize sound processing pipeline."""        self.config = config
+        """Initialize sound processing pipeline."""
+        self.config = config
         self.processing_cache: Dict[str, Any] = {}
         self.pipeline_steps: List[Callable] = []
         
@@ -1013,7 +1070,8 @@ class SoundProcessingPipeline:
         self._initialize_pipeline_steps()
     
     def _initialize_pipeline_steps(self) -> None:
-        """Initialize default pipeline steps."""        self.pipeline_steps = [
+        """Initialize default pipeline steps."""
+        self.pipeline_steps = [
             self._normalize_audio,
             self._remove_silence,
             self._enhance_quality,
@@ -1027,7 +1085,8 @@ class SoundProcessingPipeline:
         custom_steps: Optional[List[Callable]] = None,
         processing_config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Process audio through the complete pipeline."""        try:
+        """Process audio through the complete pipeline."""
+        try:
             # Load audio data
             if isinstance(audio_data, (str, Path)):
                 audio_array, sample_rate = librosa.load(str(audio_data))
@@ -1110,7 +1169,8 @@ class SoundProcessingPipeline:
         sample_rate: int, 
         config: Dict[str, Any]
     ) -> np.ndarray:
-        """Normalize audio amplitude."""        target_level = config.get('normalize_level', -3.0)  # dB
+        """Normalize audio amplitude."""
+        target_level = config.get('normalize_level', -3.0)  # dB
         
         # Calculate current RMS level
         rms = np.sqrt(np.mean(audio_array ** 2))
@@ -1136,7 +1196,8 @@ class SoundProcessingPipeline:
         sample_rate: int, 
         config: Dict[str, Any]
     ) -> np.ndarray:
-        """Remove silence from beginning and end of audio."""        threshold = config.get('silence_threshold', 0.01)
+        """Remove silence from beginning and end of audio."""
+        threshold = config.get('silence_threshold', 0.01)
         
         # Find non-silent samples
         non_silent = np.abs(audio_array) > threshold
@@ -1161,7 +1222,8 @@ class SoundProcessingPipeline:
         sample_rate: int, 
         config: Dict[str, Any]
     ) -> np.ndarray:
-        """Enhance audio quality."""        enhanced = audio_array.copy()
+        """Enhance audio quality."""
+        enhanced = audio_array.copy()
         
         # Apply high-pass filter to remove low-frequency noise
         if config.get('apply_highpass', True):
@@ -1192,7 +1254,8 @@ class SoundProcessingPipeline:
         sample_rate: int, 
         config: Dict[str, Any]
     ) -> np.ndarray:
-        """Extract audio features (non-destructive step)."""        # This step doesn't modify the audio, just extracts features for metadata
+        """Extract audio features (non-destructive step)."""
+        # This step doesn't modify the audio, just extracts features for metadata
         # Return the audio unchanged
         return audio_array
     
@@ -1202,7 +1265,8 @@ class SoundProcessingPipeline:
         sample_rate: int, 
         config: Dict[str, Any]
     ) -> np.ndarray:
-        """Validate processed audio output."""        # Check for clipping
+        """Validate processed audio output."""
+        # Check for clipping
         clipping_threshold = config.get('clipping_threshold', 0.99)
         if np.any(np.abs(audio_array) >= clipping_threshold):
             logger.warning("Audio clipping detected in processed output")
@@ -1219,7 +1283,8 @@ class SoundProcessingPipeline:
         return audio_array
     
     async def add_custom_step(self, step_function: Callable, position: Optional[int] = None) -> None:
-        """Add a custom processing step to the pipeline."""        if position is None:
+        """Add a custom processing step to the pipeline."""
+        if position is None:
             self.pipeline_steps.append(step_function)
         else:
             self.pipeline_steps.insert(position, step_function)
@@ -1227,7 +1292,8 @@ class SoundProcessingPipeline:
         logger.info(f"Added custom step '{step_function.__name__}' to pipeline")
     
     async def remove_step(self, step_name: str) -> bool:
-        """Remove a processing step from the pipeline."""        for i, step in enumerate(self.pipeline_steps):
+        """Remove a processing step from the pipeline."""
+        for i, step in enumerate(self.pipeline_steps):
             if step.__name__ == step_name:
                 del self.pipeline_steps[i]
                 logger.info(f"Removed step '{step_name}' from pipeline")
@@ -1237,7 +1303,8 @@ class SoundProcessingPipeline:
         return False
     
     def get_pipeline_info(self) -> Dict[str, Any]:
-        """Get information about the current pipeline configuration."""        return {
+        """Get information about the current pipeline configuration."""
+        return {
             'total_steps': len(self.pipeline_steps),
             'steps': [step.__name__ for step in self.pipeline_steps],
             'cache_size': len(self.processing_cache),
@@ -1246,7 +1313,8 @@ class SoundProcessingPipeline:
 
 # Utility functions for module management
 async def initialize_audio_engines(config: Dict[str, Any]) -> Dict[str, Any]:
-    """Initialize all audio engine components."""    try:
+    """Initialize all audio engine components."""
+    try:
         # Create database connection (mock for now)
         db_connection = None
         
@@ -1274,7 +1342,8 @@ async def initialize_audio_engines(config: Dict[str, Any]) -> Dict[str, Any]:
         raise
 
 async def get_audio_engines_health() -> Dict[str, Any]:
-    """Get health status of audio engine components."""    return {
+    """Get health status of audio engine components."""
+    return {
         'status': 'healthy',
         'components': {
             'model_registry': 'operational',
@@ -1287,7 +1356,8 @@ async def get_audio_engines_health() -> Dict[str, Any]:
     }
 
 def get_audio_module_info() -> Dict[str, Any]:
-    """Get audio processing module information."""    return {
+    """Get audio processing module information."""
+    return {
         'module': 'audio_processing',
         'version': '1.0.0',
         'author': 'Fahed Mlaiel',

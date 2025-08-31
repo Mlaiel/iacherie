@@ -19,7 +19,8 @@ Enterprise cluster orchestration supporting:
 - High availability and disaster recovery
 - Security and compliance enforcement
 - Real-time monitoring and alerting
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import yaml
@@ -38,7 +39,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class DeploymentStatus(Enum):
-    """Deployment status enumeration"""    PENDING = "pending"
+    """Deployment status enumeration"""
+    PENDING = "pending"
     RUNNING = "running"
     READY = "ready"
     FAILED = "failed"
@@ -47,13 +49,15 @@ class DeploymentStatus(Enum):
     TERMINATED = "terminated"
 
 class ServiceType(Enum):
-    """Kubernetes service type enumeration"""    CLUSTER_IP = "ClusterIP"
+    """Kubernetes service type enumeration"""
+    CLUSTER_IP = "ClusterIP"
     NODE_PORT = "NodePort"
     LOAD_BALANCER = "LoadBalancer"
     EXTERNAL_NAME = "ExternalName"
 
 class NamespaceType(Enum):
-    """Namespace type enumeration"""    PRODUCTION = "production"
+    """Namespace type enumeration"""
+    PRODUCTION = "production"
     STAGING = "staging"
     DEVELOPMENT = "development"
     MONITORING = "monitoring"
@@ -61,7 +65,8 @@ class NamespaceType(Enum):
 
 @dataclass
 class ClusterConfig:
-    """Kubernetes cluster configuration"""    name: str
+    """Kubernetes cluster configuration"""
+    name: str
     namespace: str
     replicas: int = 3
     image: str = ""
@@ -74,7 +79,8 @@ class ClusterConfig:
 
 @dataclass
 class DeploymentMetrics:
-    """Deployment performance metrics"""    deployment_name: str
+    """Deployment performance metrics"""
+    deployment_name: str
     namespace: str
     replicas_desired: int
     replicas_available: int
@@ -86,7 +92,8 @@ class DeploymentMetrics:
     timestamp: datetime
 
 class KubernetesClusterOrchestrator:
-    """    Enterprise Kubernetes cluster orchestration system
+    """
+    Enterprise Kubernetes cluster orchestration system
     
     Provides comprehensive cluster management with:
     - Multi-namespace deployment orchestration
@@ -94,9 +101,11 @@ class KubernetesClusterOrchestrator:
     - Health monitoring and recovery
     - Security and compliance management
     - Performance metrics and alerting
-    """    
+    """
+    
     def __init__(self, config_path: Optional[Path] = None):
-        """Initialize cluster orchestrator"""        self.logger = logger
+        """Initialize cluster orchestrator"""
+        self.logger = logger
         self.config_path = config_path or Path(__file__).parent / "config"
         self.deployments: Dict[str, ClusterConfig] = {}
         
@@ -118,7 +127,8 @@ class KubernetesClusterOrchestrator:
         self.logger.info("✅ Kubernetes cluster orchestrator initialized")
     
     async def register_deployment(self, config: ClusterConfig) -> str:
-        """Register a new deployment configuration"""        try:
+        """Register a new deployment configuration"""
+        try:
             deployment_key = f"{config.namespace}/{config.name}"
             self.deployments[deployment_key] = config
             self.logger.info(f"📝 Registered deployment: {deployment_key}")
@@ -128,7 +138,8 @@ class KubernetesClusterOrchestrator:
             raise
     
     async def create_namespace(self, namespace: str, namespace_type: NamespaceType) -> bool:
-        """Create a new Kubernetes namespace"""        try:
+        """Create a new Kubernetes namespace"""
+        try:
             namespace_manifest = client.V1Namespace(
                 metadata=client.V1ObjectMeta(
                     name=namespace,
@@ -157,7 +168,8 @@ class KubernetesClusterOrchestrator:
             return False
     
     async def create_deployment(self, deployment_key: str) -> bool:
-        """Create a Kubernetes deployment"""        if deployment_key not in self.deployments:
+        """Create a Kubernetes deployment"""
+        if deployment_key not in self.deployments:
             self.logger.error(f"❌ Deployment configuration not found: {deployment_key}")
             return False
         
@@ -231,7 +243,8 @@ class KubernetesClusterOrchestrator:
             return False
     
     async def create_service(self, deployment_key: str) -> bool:
-        """Create a Kubernetes service for deployment"""        if deployment_key not in self.deployments:
+        """Create a Kubernetes service for deployment"""
+        if deployment_key not in self.deployments:
             self.logger.error(f"❌ Deployment configuration not found: {deployment_key}")
             return False
         
@@ -279,7 +292,8 @@ class KubernetesClusterOrchestrator:
             return False
     
     async def update_deployment(self, deployment_key: str) -> bool:
-        """Update an existing Kubernetes deployment"""        if deployment_key not in self.deployments:
+        """Update an existing Kubernetes deployment"""
+        if deployment_key not in self.deployments:
             self.logger.error(f"❌ Deployment configuration not found: {deployment_key}")
             return False
         
@@ -310,7 +324,8 @@ class KubernetesClusterOrchestrator:
             return False
     
     async def scale_deployment(self, deployment_key: str, replicas: int) -> bool:
-        """Scale a deployment to specified number of replicas"""        if deployment_key not in self.deployments:
+        """Scale a deployment to specified number of replicas"""
+        if deployment_key not in self.deployments:
             self.logger.error(f"❌ Deployment configuration not found: {deployment_key}")
             return False
         
@@ -343,7 +358,8 @@ class KubernetesClusterOrchestrator:
             return False
     
     async def delete_deployment(self, deployment_key: str) -> bool:
-        """Delete a Kubernetes deployment"""        if deployment_key not in self.deployments:
+        """Delete a Kubernetes deployment"""
+        if deployment_key not in self.deployments:
             self.logger.error(f"❌ Deployment configuration not found: {deployment_key}")
             return False
         
@@ -376,7 +392,8 @@ class KubernetesClusterOrchestrator:
             return False
     
     async def get_deployment_status(self, deployment_key: str) -> Optional[DeploymentStatus]:
-        """Get current status of a deployment"""        if deployment_key not in self.deployments:
+        """Get current status of a deployment"""
+        if deployment_key not in self.deployments:
             return None
         
         config = self.deployments[deployment_key]
@@ -403,7 +420,8 @@ class KubernetesClusterOrchestrator:
             return DeploymentStatus.FAILED
     
     async def get_deployment_metrics(self, deployment_key: str) -> Optional[DeploymentMetrics]:
-        """Get performance metrics for a deployment"""        if deployment_key not in self.deployments:
+        """Get performance metrics for a deployment"""
+        if deployment_key not in self.deployments:
             return None
         
         config = self.deployments[deployment_key]
@@ -437,7 +455,8 @@ class KubernetesClusterOrchestrator:
                                              min_replicas: int = 1, 
                                              max_replicas: int = 10,
                                              target_cpu_percent: int = 80) -> bool:
-        """Create horizontal pod autoscaler for deployment"""        if deployment_key not in self.deployments:
+        """Create horizontal pod autoscaler for deployment"""
+        if deployment_key not in self.deployments:
             self.logger.error(f"❌ Deployment configuration not found: {deployment_key}")
             return False
         
@@ -483,7 +502,8 @@ class KubernetesClusterOrchestrator:
             return False
     
     async def deploy_full_stack(self, deployment_key: str) -> bool:
-        """Deploy complete stack (namespace, deployment, service, HPA)"""        if deployment_key not in self.deployments:
+        """Deploy complete stack (namespace, deployment, service, HPA)"""
+        if deployment_key not in self.deployments:
             self.logger.error(f"❌ Deployment configuration not found: {deployment_key}")
             return False
         
@@ -512,7 +532,8 @@ class KubernetesClusterOrchestrator:
             return False
     
     async def monitor_cluster(self) -> Dict[str, DeploymentMetrics]:
-        """Monitor all deployments and return metrics"""        metrics = {}
+        """Monitor all deployments and return metrics"""
+        metrics = {}
         
         for deployment_key in self.deployments:
             deployment_metrics = await self.get_deployment_metrics(deployment_key)
@@ -522,7 +543,8 @@ class KubernetesClusterOrchestrator:
         return metrics
     
     async def health_check_cluster(self) -> Dict[str, bool]:
-        """Perform health check on all deployments"""        health_status = {}
+        """Perform health check on all deployments"""
+        health_status = {}
         
         for deployment_key in self.deployments:
             status = await self.get_deployment_status(deployment_key)
@@ -531,7 +553,8 @@ class KubernetesClusterOrchestrator:
         return health_status
     
     async def backup_cluster_config(self, backup_path: Path) -> bool:
-        """Backup cluster configurations to file"""        try:
+        """Backup cluster configurations to file"""
+        try:
             backup_data = {
                 'deployments': {},
                 'timestamp': datetime.now().isoformat(),
@@ -567,13 +590,15 @@ class KubernetesClusterOrchestrator:
 _cluster_orchestrator: Optional[KubernetesClusterOrchestrator] = None
 
 def get_cluster_orchestrator() -> KubernetesClusterOrchestrator:
-    """Get global cluster orchestrator instance"""    global _cluster_orchestrator
+    """Get global cluster orchestrator instance"""
+    global _cluster_orchestrator
     if _cluster_orchestrator is None:
         _cluster_orchestrator = KubernetesClusterOrchestrator()
     return _cluster_orchestrator
 
 async def initialize_cluster_orchestrator(config_path: Optional[Path] = None) -> KubernetesClusterOrchestrator:
-    """Initialize cluster orchestrator with configuration"""    global _cluster_orchestrator
+    """Initialize cluster orchestrator with configuration"""
+    global _cluster_orchestrator
     _cluster_orchestrator = KubernetesClusterOrchestrator(config_path)
     return _cluster_orchestrator
 

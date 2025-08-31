@@ -7,7 +7,8 @@ encoding, and format conversion workflows for creators.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from pathlib import Path
@@ -32,7 +33,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Supported content types for transformation."""    AUDIO = "audio"
+    """Supported content types for transformation."""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -41,14 +43,16 @@ class ContentType(Enum):
 
 
 class TransformationMode(Enum):
-    """Transformation processing modes."""    SINGLE = "single"
+    """Transformation processing modes."""
+    SINGLE = "single"
     BATCH = "batch"
     REALTIME = "realtime"
     STREAMING = "streaming"
 
 
 class QualityLevel(Enum):
-    """Quality levels for transformation."""    LOW = "low"
+    """Quality levels for transformation."""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     LOSSLESS = "lossless"
@@ -57,7 +61,8 @@ class QualityLevel(Enum):
 
 @dataclass
 class TransformationRequest:
-    """Transformation request configuration."""    input_path: str
+    """Transformation request configuration."""
+    input_path: str
     output_path: Optional[str] = None
     content_type: ContentType = ContentType.AUDIO
     target_format: Optional[str] = None
@@ -72,7 +77,8 @@ class TransformationRequest:
 
 @dataclass
 class TransformationResult:
-    """Transformation result with metrics."""    success: bool
+    """Transformation result with metrics."""
+    success: bool
     output_path: Optional[str] = None
     processing_time: float = 0.0
     input_size: int = 0
@@ -86,11 +92,13 @@ class TransformationResult:
 
 
 class DataTransformer:
-    """    Main data transformation coordinator for the IA Influencer Agent Platform.
+    """
+    Main data transformation coordinator for the IA Influencer Agent Platform.
     
     Handles multi-format content transformation, encoding optimization,
     and quality enhancement for creator content workflows.
-    """    
+    """
+    
     def __init__(
         self,
         max_workers: int = 4,
@@ -99,7 +107,8 @@ class DataTransformer:
         temp_dir: Optional[str] = None,
         config: Optional[Dict[str, Any]] = None
     ):
-        """        Initialize data transformer with configuration.
+        """
+        Initialize data transformer with configuration.
         
         Args:
             max_workers: Maximum concurrent workers
@@ -107,7 +116,8 @@ class DataTransformer:
             cache_enabled: Enable result caching
             temp_dir: Temporary directory for processing
             config: Additional configuration options
-        """        self.max_workers = max_workers
+        """
+        self.max_workers = max_workers
         self.enable_gpu = enable_gpu
         self.cache_enabled = cache_enabled
         self.temp_dir = Path(temp_dir) if temp_dir else Path("/tmp/transformers")
@@ -141,7 +151,8 @@ class DataTransformer:
         logger.info(f"DataTransformer initialized with {max_workers} workers")
     
     def _init_transformers(self):
-        """Initialize specialized transformer instances."""        transformer_config = self.config.get("transformers", {})
+        """Initialize specialized transformer instances."""
+        transformer_config = self.config.get("transformers", {})
         
         self.audio_transformer = AudioTransformer(
             enable_gpu=self.enable_gpu,
@@ -191,14 +202,16 @@ class DataTransformer:
         )
     
     async def transform(self, request: TransformationRequest) -> TransformationResult:
-        """        Transform content based on request configuration.
+        """
+        Transform content based on request configuration.
         
         Args:
             request: Transformation request configuration
             
         Returns:
             TransformationResult with processing metrics
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Validate request
@@ -239,14 +252,16 @@ class DataTransformer:
         self, 
         requests: List[TransformationRequest]
     ) -> List[TransformationResult]:
-        """        Process multiple transformation requests in batch.
+        """
+        Process multiple transformation requests in batch.
         
         Args:
             requests: List of transformation requests
             
         Returns:
             List of transformation results
-        """        return await self.batch_processor.process_batch(requests, self.transform)
+        """
+        return await self.batch_processor.process_batch(requests, self.transform)
     
     async def convert_audio(
         self,
@@ -255,7 +270,8 @@ class DataTransformer:
         quality: Union[str, QualityLevel] = QualityLevel.HIGH,
         **kwargs
     ) -> TransformationResult:
-        """        Convert audio file to specified format.
+        """
+        Convert audio file to specified format.
         
         Args:
             input_file: Input audio file path
@@ -265,7 +281,8 @@ class DataTransformer:
             
         Returns:
             TransformationResult with conversion metrics
-        """        request = TransformationRequest(
+        """
+        request = TransformationRequest(
             input_path=input_file,
             content_type=ContentType.AUDIO,
             target_format=output_format,
@@ -282,7 +299,8 @@ class DataTransformer:
         quality: Union[str, QualityLevel] = QualityLevel.HIGH,
         **kwargs
     ) -> TransformationResult:
-        """        Convert video file to specified format.
+        """
+        Convert video file to specified format.
         
         Args:
             input_file: Input video file path
@@ -292,7 +310,8 @@ class DataTransformer:
             
         Returns:
             TransformationResult with conversion metrics
-        """        request = TransformationRequest(
+        """
+        request = TransformationRequest(
             input_path=input_file,
             content_type=ContentType.VIDEO,
             target_format=output_format,
@@ -309,7 +328,8 @@ class DataTransformer:
         quality: Union[str, QualityLevel] = QualityLevel.HIGH,
         **kwargs
     ) -> TransformationResult:
-        """        Convert image file to specified format.
+        """
+        Convert image file to specified format.
         
         Args:
             input_file: Input image file path
@@ -319,7 +339,8 @@ class DataTransformer:
             
         Returns:
             TransformationResult with conversion metrics
-        """        request = TransformationRequest(
+        """
+        request = TransformationRequest(
             input_path=input_file,
             content_type=ContentType.IMAGE,
             target_format=output_format,
@@ -336,7 +357,8 @@ class DataTransformer:
         enhancement_level: Union[str, QualityLevel] = QualityLevel.HIGH,
         **kwargs
     ) -> TransformationResult:
-        """        Enhance content quality using AI optimization.
+        """
+        Enhance content quality using AI optimization.
         
         Args:
             input_file: Input file path
@@ -346,7 +368,8 @@ class DataTransformer:
             
         Returns:
             TransformationResult with enhancement metrics
-        """        request = TransformationRequest(
+        """
+        request = TransformationRequest(
             input_path=input_file,
             content_type=content_type if isinstance(content_type, ContentType) else ContentType(content_type),
             quality=enhancement_level if isinstance(enhancement_level, QualityLevel) else QualityLevel(enhancement_level),
@@ -357,7 +380,8 @@ class DataTransformer:
         return await self.transform(request)
     
     async def _route_transformation(self, request: TransformationRequest) -> TransformationResult:
-        """Route transformation request to appropriate transformer."""        if request.content_type == ContentType.AUDIO:
+        """Route transformation request to appropriate transformer."""
+        if request.content_type == ContentType.AUDIO:
             return await self.audio_transformer.transform(request)
         elif request.content_type == ContentType.VIDEO:
             return await self.video_transformer.transform(request)
@@ -371,7 +395,8 @@ class DataTransformer:
             raise ValueError(f"Unsupported content type: {request.content_type}")
     
     def _validate_request(self, request: TransformationRequest):
-        """Validate transformation request."""        if not request.input_path:
+        """Validate transformation request."""
+        if not request.input_path:
             raise ValueError("Input path is required")
         
         input_path = Path(request.input_path)
@@ -384,7 +409,8 @@ class DataTransformer:
             raise ValueError(f"Unsupported format {request.target_format} for {request.content_type}")
     
     def _is_format_supported(self, content_type: ContentType, format_name: str) -> bool:
-        """Check if format is supported for content type."""        supported_formats = {
+        """Check if format is supported for content type."""
+        supported_formats = {
             ContentType.AUDIO: ["mp3", "wav", "flac", "aac", "ogg", "m4a"],
             ContentType.VIDEO: ["mp4", "avi", "mov", "mkv", "webm", "wmv"],
             ContentType.IMAGE: ["jpg", "jpeg", "png", "webp", "gif", "bmp", "tiff"],
@@ -395,7 +421,8 @@ class DataTransformer:
         return format_name.lower() in supported_formats.get(content_type, [])
     
     def _generate_cache_key(self, request: TransformationRequest) -> str:
-        """Generate cache key for transformation request."""        import hashlib
+        """Generate cache key for transformation request."""
+        import hashlib
         
         key_data = {
             "input_path": request.input_path,
@@ -409,7 +436,8 @@ class DataTransformer:
         return hashlib.md5(key_string.encode()).hexdigest()
     
     def _update_metrics(self, result: TransformationResult, processing_time: float):
-        """Update transformation metrics."""        self.metrics["total_transformations"] += 1
+        """Update transformation metrics."""
+        self.metrics["total_transformations"] += 1
         self.metrics["total_processing_time"] += processing_time
         
         if result.success:
@@ -433,15 +461,18 @@ class DataTransformer:
             ) * 100
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get transformation metrics."""        return self.metrics.copy()
+        """Get transformation metrics."""
+        return self.metrics.copy()
     
     def clear_cache(self):
-        """Clear transformation cache."""        if self._cache:
+        """Clear transformation cache."""
+        if self._cache:
             self._cache.clear()
             logger.info("Transformation cache cleared")
     
     def get_supported_formats(self, content_type: Union[str, ContentType]) -> List[str]:
-        """Get supported formats for content type."""        if isinstance(content_type, str):
+        """Get supported formats for content type."""
+        if isinstance(content_type, str):
             content_type = ContentType(content_type)
         
         supported_formats = {
@@ -455,7 +486,8 @@ class DataTransformer:
         return supported_formats.get(content_type, [])
     
     async def cleanup(self):
-        """Cleanup resources and temporary files."""        # Close thread pools
+        """Cleanup resources and temporary files."""
+        # Close thread pools
         self.thread_pool.shutdown(wait=True)
         self.process_pool.shutdown(wait=True)
         
@@ -477,7 +509,8 @@ class DataTransformer:
         logger.info("DataTransformer cleanup completed")
     
     def __del__(self):
-        """Destructor to ensure cleanup."""        try:
+        """Destructor to ensure cleanup."""
+        try:
             asyncio.create_task(self.cleanup())
         except:
             pass
@@ -490,7 +523,8 @@ def create_transformer(
     cache_enabled: bool = True,
     **kwargs
 ) -> DataTransformer:
-    """    Factory function to create DataTransformer instance.
+    """
+    Factory function to create DataTransformer instance.
     
     Args:
         max_workers: Maximum concurrent workers
@@ -500,7 +534,8 @@ def create_transformer(
         
     Returns:
         Configured DataTransformer instance
-    """    return DataTransformer(
+    """
+    return DataTransformer(
         max_workers=max_workers,
         enable_gpu=enable_gpu,
         cache_enabled=cache_enabled,

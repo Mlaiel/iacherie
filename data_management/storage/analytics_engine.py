@@ -15,7 +15,8 @@ AVERTISSEMENT LÉGAL:
 Ce code est la propriété exclusive de Fahed Mlaiel. Toute utilisation,
 reproduction, modification ou distribution non autorisée est strictement
 interdite et fera l'objet de poursuites judiciaires.
-"""from typing import Dict, List, Optional, Any, Tuple, Union
+"""
+from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -33,7 +34,8 @@ import time
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types of storage metrics"""    USAGE = "usage"
+    """Types of storage metrics"""
+    USAGE = "usage"
     PERFORMANCE = "performance"
     COST = "cost"
     ACCESS_PATTERN = "access_pattern"
@@ -42,7 +44,8 @@ class MetricType(Enum):
     PREDICTION = "prediction"
 
 class TimeWindow(Enum):
-    """Time windows for analytics"""    HOUR = "hour"
+    """Time windows for analytics"""
+    HOUR = "hour"
     DAY = "day"
     WEEK = "week"
     MONTH = "month"
@@ -51,7 +54,8 @@ class TimeWindow(Enum):
 
 @dataclass
 class StorageMetric:
-    """Storage metric data point"""    metric_id: str
+    """Storage metric data point"""
+    metric_id: str
     metric_type: MetricType
     timestamp: datetime
     value: Union[int, float, Dict[str, Any]]
@@ -60,7 +64,8 @@ class StorageMetric:
 
 @dataclass
 class AnalyticsReport:
-    """Analytics report structure"""    report_id: str
+    """Analytics report structure"""
+    report_id: str
     report_type: str
     generated_at: datetime
     time_window: TimeWindow
@@ -70,7 +75,8 @@ class AnalyticsReport:
     charts: List[Dict[str, Any]] = field(default_factory=list)
 
 class StorageAnalyticsEngine:
-    """    Advanced analytics engine for storage insights and optimization.
+    """
+    Advanced analytics engine for storage insights and optimization.
     
     Features:
     - Real-time storage metrics collection
@@ -80,9 +86,11 @@ class StorageAnalyticsEngine:
     - Content lifecycle insights
     - Creator-specific analytics
     - Automated reporting and alerts
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize analytics engine"""        self.config = config
+        """Initialize analytics engine"""
+        self.config = config
         self.metrics_buffer: List[StorageMetric] = []
         self.reports_cache: Dict[str, AnalyticsReport] = {}
         
@@ -120,7 +128,8 @@ class StorageAnalyticsEngine:
         dimensions: Optional[Dict[str, str]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Collect a storage metric"""        
+        """Collect a storage metric"""
+        
         try:
             metric = StorageMetric(
                 metric_id=f"{metric_type.value}_{int(time.time())}",
@@ -150,7 +159,8 @@ class StorageAnalyticsEngine:
         time_window: TimeWindow = TimeWindow.DAY,
         creator_type: Optional[str] = None
     ) -> AnalyticsReport:
-        """Generate comprehensive usage analytics report"""        
+        """Generate comprehensive usage analytics report"""
+        
         try:
             report_id = f"usage_{time_window.value}_{int(time.time())}"
             
@@ -195,7 +205,8 @@ class StorageAnalyticsEngine:
         self,
         time_window: TimeWindow = TimeWindow.DAY
     ) -> AnalyticsReport:
-        """Generate performance analytics report"""        
+        """Generate performance analytics report"""
+        
         try:
             report_id = f"performance_{time_window.value}_{int(time.time())}"
             
@@ -240,7 +251,8 @@ class StorageAnalyticsEngine:
         self,
         time_window: TimeWindow = TimeWindow.MONTH
     ) -> AnalyticsReport:
-        """Generate cost analytics report"""        
+        """Generate cost analytics report"""
+        
         try:
             report_id = f"cost_{time_window.value}_{int(time.time())}"
             
@@ -285,7 +297,8 @@ class StorageAnalyticsEngine:
         self,
         content_type: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Analyze content lifecycle patterns"""        
+        """Analyze content lifecycle patterns"""
+        
         try:
             if not self.storage_manager:
                 raise Exception("Storage manager not available")
@@ -374,7 +387,8 @@ class StorageAnalyticsEngine:
         self,
         prediction_days: int = 30
     ) -> Dict[str, Any]:
-        """Predict storage growth using trend analysis"""        
+        """Predict storage growth using trend analysis"""
+        
         try:
             # Get historical usage data
             usage_metrics = self.metrics_store.get(MetricType.USAGE.value, [])
@@ -443,7 +457,8 @@ class StorageAnalyticsEngine:
         creator_type: str,
         time_window: TimeWindow = TimeWindow.MONTH
     ) -> Dict[str, Any]:
-        """Analyze storage patterns for specific creator type"""        
+        """Analyze storage patterns for specific creator type"""
+        
         try:
             if not self.storage_manager:
                 raise Exception("Storage manager not available")
@@ -524,7 +539,8 @@ class StorageAnalyticsEngine:
             return {'error': str(e)}
     
     async def generate_optimization_insights(self) -> Dict[str, Any]:
-        """Generate comprehensive optimization insights"""        
+        """Generate comprehensive optimization insights"""
+        
         try:
             insights = {
                 'performance_insights': {},
@@ -594,7 +610,8 @@ class StorageAnalyticsEngine:
             return {'error': str(e)}
     
     async def get_real_time_dashboard(self) -> Dict[str, Any]:
-        """Get real-time dashboard data"""        
+        """Get real-time dashboard data"""
+        
         try:
             dashboard = {
                 'timestamp': datetime.now().isoformat(),
@@ -614,7 +631,8 @@ class StorageAnalyticsEngine:
     # Private implementation methods
     
     async def _update_real_time_stats(self, metric: StorageMetric) -> None:
-        """Update real-time statistics from new metric"""        
+        """Update real-time statistics from new metric"""
+        
         try:
             if metric.metric_type == MetricType.USAGE:
                 if isinstance(metric.value, dict):
@@ -637,7 +655,8 @@ class StorageAnalyticsEngine:
             logger.warning(f"Failed to update real-time stats: {str(e)}")
     
     async def _flush_metrics_buffer(self) -> None:
-        """Flush metrics buffer to persistent storage"""        
+        """Flush metrics buffer to persistent storage"""
+        
         try:
             # In a real implementation, this would write to a database
             logger.info(f"Flushed {len(self.metrics_buffer)} metrics to storage")
@@ -647,7 +666,8 @@ class StorageAnalyticsEngine:
             logger.error(f"Failed to flush metrics buffer: {str(e)}")
     
     def _calculate_start_time(self, end_time: datetime, time_window: TimeWindow) -> datetime:
-        """Calculate start time based on time window"""        
+        """Calculate start time based on time window"""
+        
         if time_window == TimeWindow.HOUR:
             return end_time - timedelta(hours=1)
         elif time_window == TimeWindow.DAY:
@@ -669,7 +689,8 @@ class StorageAnalyticsEngine:
         end_time: datetime,
         creator_type: Optional[str]
     ) -> Dict[str, Any]:
-        """Analyze usage patterns within time window"""        
+        """Analyze usage patterns within time window"""
+        
         usage_data = {
             'time_range': {
                 'start': start_time.isoformat(),
@@ -727,7 +748,8 @@ class StorageAnalyticsEngine:
         start_time: datetime,
         end_time: datetime
     ) -> Dict[str, Any]:
-        """Analyze performance metrics within time window"""        
+        """Analyze performance metrics within time window"""
+        
         performance_data = {
             'time_range': {
                 'start': start_time.isoformat(),
@@ -799,7 +821,8 @@ class StorageAnalyticsEngine:
         start_time: datetime,
         end_time: datetime
     ) -> Dict[str, Any]:
-        """Analyze cost metrics within time window"""        
+        """Analyze cost metrics within time window"""
+        
         cost_data = {
             'time_range': {
                 'start': start_time.isoformat(),
@@ -849,7 +872,8 @@ class StorageAnalyticsEngine:
         usage_data: Dict[str, Any],
         time_window: TimeWindow
     ) -> List[str]:
-        """Generate insights from usage data"""        
+        """Generate insights from usage data"""
+        
         insights = []
         
         try:
@@ -875,7 +899,8 @@ class StorageAnalyticsEngine:
         return insights
     
     async def _generate_performance_insights(self, performance_data: Dict[str, Any]) -> List[str]:
-        """Generate insights from performance data"""        
+        """Generate insights from performance data"""
+        
         insights = []
         
         try:
@@ -907,7 +932,8 @@ class StorageAnalyticsEngine:
         return insights
     
     async def _generate_cost_insights(self, cost_data: Dict[str, Any]) -> List[str]:
-        """Generate insights from cost data"""        
+        """Generate insights from cost data"""
+        
         insights = []
         
         try:
@@ -932,7 +958,8 @@ class StorageAnalyticsEngine:
     # Recommendation generation methods
     
     async def _generate_usage_recommendations(self, usage_data: Dict[str, Any]) -> List[str]:
-        """Generate recommendations from usage analysis"""        
+        """Generate recommendations from usage analysis"""
+        
         recommendations = []
         
         try:
@@ -951,7 +978,8 @@ class StorageAnalyticsEngine:
         return recommendations
     
     async def _generate_performance_recommendations(self, performance_data: Dict[str, Any]) -> List[str]:
-        """Generate recommendations from performance analysis"""        
+        """Generate recommendations from performance analysis"""
+        
         recommendations = []
         
         try:
@@ -973,7 +1001,8 @@ class StorageAnalyticsEngine:
         return recommendations
     
     async def _generate_cost_recommendations(self, cost_data: Dict[str, Any]) -> List[str]:
-        """Generate recommendations from cost analysis"""        
+        """Generate recommendations from cost analysis"""
+        
         recommendations = []
         
         try:
@@ -1001,7 +1030,8 @@ class StorageAnalyticsEngine:
         usage_data: Dict[str, Any],
         time_window: TimeWindow
     ) -> List[Dict[str, Any]]:
-        """Create chart data for usage analytics"""        
+        """Create chart data for usage analytics"""
+        
         charts = []
         
         try:
@@ -1048,7 +1078,8 @@ class StorageAnalyticsEngine:
         performance_data: Dict[str, Any],
         time_window: TimeWindow
     ) -> List[Dict[str, Any]]:
-        """Create chart data for performance analytics"""        
+        """Create chart data for performance analytics"""
+        
         charts = []
         
         try:
@@ -1082,7 +1113,8 @@ class StorageAnalyticsEngine:
         cost_data: Dict[str, Any],
         time_window: TimeWindow
     ) -> List[Dict[str, Any]]:
-        """Create chart data for cost analytics"""        
+        """Create chart data for cost analytics"""
+        
         charts = []
         
         try:
@@ -1108,7 +1140,8 @@ class StorageAnalyticsEngine:
     # Helper calculation methods
     
     def _calculate_growth_rate(self, values: List[float]) -> float:
-        """Calculate daily growth rate from time series"""        
+        """Calculate daily growth rate from time series"""
+        
         if len(values) < 2:
             return 0.0
         
@@ -1124,7 +1157,8 @@ class StorageAnalyticsEngine:
         return growth_rate
     
     def _calculate_prediction_confidence(self, values: List[float]) -> float:
-        """Calculate confidence score for predictions"""        
+        """Calculate confidence score for predictions"""
+        
         if len(values) < 3:
             return 0.0
         
@@ -1141,7 +1175,8 @@ class StorageAnalyticsEngine:
         return min(1.0, confidence)
     
     def _calculate_performance_score(self, avg_response: float, p95_response: float) -> float:
-        """Calculate overall performance score"""        
+        """Calculate overall performance score"""
+        
         # Score based on response time performance
         avg_score = max(0, 1 - (avg_response / 2.0))  # 2s baseline
         p95_score = max(0, 1 - (p95_response / 5.0))   # 5s baseline
@@ -1149,7 +1184,8 @@ class StorageAnalyticsEngine:
         return (avg_score + p95_score) / 2
     
     def _estimate_monthly_cost(self, total_size_bytes: int) -> float:
-        """Estimate monthly storage cost"""        
+        """Estimate monthly storage cost"""
+        
         size_gb = total_size_bytes / (1024**3)
         
         # Simplified cost model (example rates)
@@ -1171,7 +1207,8 @@ class StorageAnalyticsEngine:
         return estimated_cost
     
     def _calculate_tier_costs(self, tier_usage: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate costs by storage tier"""        
+        """Calculate costs by storage tier"""
+        
         tier_costs = {}
         
         for tier, usage_data in tier_usage.items():
@@ -1188,7 +1225,8 @@ class StorageAnalyticsEngine:
         return tier_costs
     
     def _calculate_cost_optimization_potential(self) -> Dict[str, Any]:
-        """Calculate potential cost optimizations"""        
+        """Calculate potential cost optimizations"""
+        
         return {
             'monthly_savings': 15.50,  # Example value
             'optimization_score': 0.75,
@@ -1196,13 +1234,16 @@ class StorageAnalyticsEngine:
         }
     
     def _calculate_storage_utilization(self) -> float:
-        """Calculate storage utilization efficiency"""        return 0.78  # Example value
+        """Calculate storage utilization efficiency"""
+        return 0.78  # Example value
     
     def _calculate_overall_tier_efficiency(self) -> float:
-        """Calculate overall tier distribution efficiency"""        return 0.82  # Example value
+        """Calculate overall tier distribution efficiency"""
+        return 0.82  # Example value
     
     def _calculate_tier_efficiency_score(self, hot: int, warm: int, cold: int) -> float:
-        """Calculate tier efficiency score"""        
+        """Calculate tier efficiency score"""
+        
         total = hot + warm + cold
         if total == 0:
             return 0.0
@@ -1219,7 +1260,8 @@ class StorageAnalyticsEngine:
         return (hot_score + warm_score + cold_score) / 3
     
     async def _analyze_security_metrics(self) -> Dict[str, Any]:
-        """Analyze security-related metrics"""        
+        """Analyze security-related metrics"""
+        
         return {
             'encryption_coverage': 0.95,  # Example value
             'access_control_score': 0.88,
@@ -1227,7 +1269,8 @@ class StorageAnalyticsEngine:
         }
     
     async def _get_recent_activity(self) -> List[Dict[str, Any]]:
-        """Get recent storage activity"""        
+        """Get recent storage activity"""
+        
         # Get last 10 metrics
         recent_metrics = self.metrics_buffer[-10:] if self.metrics_buffer else []
         
@@ -1242,7 +1285,8 @@ class StorageAnalyticsEngine:
         return activity
     
     async def _get_active_alerts(self) -> List[Dict[str, Any]]:
-        """Get active alerts"""        
+        """Get active alerts"""
+        
         alerts = []
         
         # Check performance thresholds
@@ -1263,7 +1307,8 @@ class StorageAnalyticsEngine:
         return alerts
     
     async def _get_performance_indicators(self) -> Dict[str, Any]:
-        """Get key performance indicators"""        
+        """Get key performance indicators"""
+        
         return {
             'response_time_status': 'good' if self.real_time_stats['avg_response_time'] < 1.0 else 'warning',
             'cache_efficiency_status': 'good' if self.real_time_stats['cache_hit_ratio'] > 0.85 else 'warning',
@@ -1272,7 +1317,8 @@ class StorageAnalyticsEngine:
         }
     
     async def _get_trend_indicators(self) -> Dict[str, Any]:
-        """Get trend indicators"""        
+        """Get trend indicators"""
+        
         return {
             'storage_trend': 'increasing',
             'performance_trend': 'stable',
@@ -1281,7 +1327,8 @@ class StorageAnalyticsEngine:
         }
     
     def _summarize_metric(self, metric: StorageMetric) -> str:
-        """Create a summary of a metric"""        
+        """Create a summary of a metric"""
+        
         if metric.metric_type == MetricType.USAGE:
             return f"Storage usage update"
         elif metric.metric_type == MetricType.PERFORMANCE:

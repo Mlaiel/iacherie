@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from sqlalchemy import create_engine, MetaData
+"""
+from sqlalchemy import create_engine, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
 
@@ -780,19 +781,24 @@ MODEL_REGISTRY = {
 }
 
 def get_model_class(model_name: str):
-    """Get model class by name"""    return MODEL_REGISTRY.get(model_name)
+    """Get model class by name"""
+    return MODEL_REGISTRY.get(model_name)
 
 def get_all_models():
-    """Get all model classes"""    return list(MODEL_REGISTRY.values())
+    """Get all model classes"""
+    return list(MODEL_REGISTRY.values())
 
 def create_all_tables(engine):
-    """Create all database tables"""    Base.metadata.create_all(bind=engine)
+    """Create all database tables"""
+    Base.metadata.create_all(bind=engine)
 
 def drop_all_tables(engine):
-    """Drop all database tables"""    Base.metadata.drop_all(bind=engine)
+    """Drop all database tables"""
+    Base.metadata.drop_all(bind=engine)
 
 def create_session_factory(database_url: str):
-    """Create database session factory"""    engine = create_engine(database_url)
+    """Create database session factory"""
+    engine = create_engine(database_url)
     SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     return scoped_session(SessionLocal), engine
 

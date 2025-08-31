@@ -20,7 +20,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -52,13 +53,15 @@ from .scheduling_agent import ScheduledJob, SchedulingPriority, ScheduleStatus
 logger = logging.getLogger(__name__)
 
 class AlertLevel(Enum):
-    """Performance alert levels"""    INFO = "info"
+    """Performance alert levels"""
+    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 class MetricType(Enum):
-    """Performance metric types"""    ENGAGEMENT_RATE = "engagement_rate"
+    """Performance metric types"""
+    ENGAGEMENT_RATE = "engagement_rate"
     REACH_RATE = "reach_rate"
     CLICK_THROUGH_RATE = "ctr"
     CONVERSION_RATE = "conversion_rate"
@@ -71,7 +74,8 @@ class MetricType(Enum):
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert configuration"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Performance alert configuration"""
+    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     metric: MetricType = MetricType.ENGAGEMENT_RATE
     level: AlertLevel = AlertLevel.WARNING
     threshold: float = 0.0
@@ -84,7 +88,8 @@ class PerformanceAlert:
 
 @dataclass
 class OptimizationRecommendation:
-    """Auto-optimization recommendation"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Auto-optimization recommendation"""
+    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     recommendation_type: str = ""
     description: str = ""
@@ -96,7 +101,8 @@ class OptimizationRecommendation:
     timestamp: datetime = field(default_factory=datetime.now)
 
 class RealTimePerformanceMonitor:
-    """    Enterprise real-time performance monitoring and auto-optimization system.
+    """
+    Enterprise real-time performance monitoring and auto-optimization system.
     
     Features:
     - Real-time metric collection and analysis
@@ -106,7 +112,8 @@ class RealTimePerformanceMonitor:
     - Alert system with escalation levels
     - Performance trend analysis
     - A/B testing results tracking
-    """    
+    """
+    
     def __init__(self):
         self.performance_monitor = PerformanceMonitor()
         
@@ -153,7 +160,8 @@ class RealTimePerformanceMonitor:
         platform: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ):
-        """Record a performance metric for real-time monitoring"""        try:
+        """Record a performance metric for real-time monitoring"""
+        try:
             metric_key = f"{metric_type.value}:{creator_id or 'global'}:{platform or 'all'}"
             
             metric_data = {
@@ -190,7 +198,8 @@ class RealTimePerformanceMonitor:
         creator_id: Optional[str],
         platform: Optional[str]
     ):
-        """Check if metric value triggers any alerts"""        if metric_type not in self.thresholds:
+        """Check if metric value triggers any alerts"""
+        if metric_type not in self.thresholds:
             return
         
         thresholds = self.thresholds[metric_type]
@@ -225,7 +234,8 @@ class RealTimePerformanceMonitor:
         creator_id: Optional[str],
         platform: Optional[str]
     ):
-        """Trigger a performance alert"""        alert = PerformanceAlert(
+        """Trigger a performance alert"""
+        alert = PerformanceAlert(
             metric=metric_type,
             level=level,
             threshold=threshold,
@@ -249,7 +259,8 @@ class RealTimePerformanceMonitor:
         metric_type: MetricType,
         level: AlertLevel
     ) -> Optional[str]:
-        """Get automated resolution action for alert"""        resolution_map = {
+        """Get automated resolution action for alert"""
+        resolution_map = {
             MetricType.ENGAGEMENT_RATE: {
                 AlertLevel.WARNING: "adjust_timing_algorithm",
                 AlertLevel.CRITICAL: "trigger_emergency_optimization",
@@ -265,7 +276,8 @@ class RealTimePerformanceMonitor:
         return resolution_map.get(metric_type, {}).get(level)
     
     async def _execute_resolution_action(self, alert: PerformanceAlert):
-        """Execute automated resolution action"""        try:
+        """Execute automated resolution action"""
+        try:
             logger.info(f"Executing resolution action: {alert.resolution_action}")
             
             # Execute specific resolution actions
@@ -283,7 +295,8 @@ class RealTimePerformanceMonitor:
             logger.error(f"Failed to execute resolution action: {str(e)}")
     
     async def _detect_anomalies(self, metric_key: str, value: float):
-        """Detect anomalies in metric values using statistical methods"""        if len(self.metrics_buffer[metric_key]) < self.anomaly_window_size:
+        """Detect anomalies in metric values using statistical methods"""
+        if len(self.metrics_buffer[metric_key]) < self.anomaly_window_size:
             return
         
         # Get recent values
@@ -310,7 +323,8 @@ class RealTimePerformanceMonitor:
         z_score: float,
         expected_value: float
     ):
-        """Handle detected anomaly"""        logger.warning(
+        """Handle detected anomaly"""
+        logger.warning(
             f"Anomaly detected in {metric_key}: "
             f"value={value}, expected≈{expected_value:.3f}, z_score={z_score:.2f}"
         )
@@ -325,7 +339,8 @@ class RealTimePerformanceMonitor:
         creator_id: Optional[str],
         platform: Optional[str]
     ):
-        """Generate automatic optimization recommendations"""        if not creator_id:
+        """Generate automatic optimization recommendations"""
+        if not creator_id:
             return
         
         # Check cooldown period
@@ -397,7 +412,8 @@ class RealTimePerformanceMonitor:
         value: float,
         z_score: float
     ):
-        """Generate recommendations based on anomaly detection"""        parts = metric_key.split(':')
+        """Generate recommendations based on anomaly detection"""
+        parts = metric_key.split(':')
         if len(parts) >= 2:
             creator_id = parts[1] if parts[1] != 'global' else None
         else:
@@ -428,7 +444,8 @@ class RealTimePerformanceMonitor:
         creator_id: Optional[str] = None,
         hours_back: int = 24
     ) -> Dict[str, Any]:
-        """Get comprehensive performance dashboard data"""        try:
+        """Get comprehensive performance dashboard data"""
+        try:
             cutoff_time = datetime.now() - timedelta(hours=hours_back)
             dashboard = {
                 'metrics': {},
@@ -483,7 +500,8 @@ class RealTimePerformanceMonitor:
             raise AgentError(f"Dashboard generation failed: {str(e)}")
     
     def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend direction from values"""        if len(values) < 2:
+        """Calculate trend direction from values"""
+        if len(values) < 2:
             return "stable"
         
         # Simple linear trend calculation
@@ -501,7 +519,8 @@ class RealTimePerformanceMonitor:
         self,
         metrics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate performance summary statistics"""        summary = {
+        """Generate performance summary statistics"""
+        summary = {
             'overall_health': "good",
             'critical_issues': 0,
             'improvement_opportunities': 0,
@@ -530,23 +549,27 @@ class RealTimePerformanceMonitor:
         return summary
     
     async def _adjust_timing_algorithm(self, creator_id: Optional[str]):
-        """Adjust timing algorithm parameters for better performance"""        logger.info(f"Adjusting timing algorithm for creator {creator_id}")
+        """Adjust timing algorithm parameters for better performance"""
+        logger.info(f"Adjusting timing algorithm for creator {creator_id}")
         # Implementation would adjust ML model parameters
         pass
     
     async def _trigger_emergency_optimization(self, creator_id: Optional[str]):
-        """Trigger emergency optimization procedures"""        logger.info(f"Triggering emergency optimization for creator {creator_id}")
+        """Trigger emergency optimization procedures"""
+        logger.info(f"Triggering emergency optimization for creator {creator_id}")
         # Implementation would activate emergency optimization protocols
         pass
     
     async def _activate_backup_strategies(self, creator_id: Optional[str]):
-        """Activate backup scheduling strategies"""        logger.info(f"Activating backup strategies for creator {creator_id}")
+        """Activate backup scheduling strategies"""
+        logger.info(f"Activating backup strategies for creator {creator_id}")
         # Implementation would switch to proven backup scheduling patterns
         pass
 
 # Factory function for easy instantiation
 def create_performance_monitor() -> RealTimePerformanceMonitor:
-    """Create and initialize a real-time performance monitor"""    return RealTimePerformanceMonitor()
+    """Create and initialize a real-time performance monitor"""
+    return RealTimePerformanceMonitor()
 
 # Export main classes
 __all__ = [

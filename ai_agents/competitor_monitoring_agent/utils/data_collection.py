@@ -4,7 +4,8 @@ Manages comprehensive data collection from multiple sources for competitor monit
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel. All rights reserved.
 WARNING: Unauthorized use, copying, or distribution is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import logging
 from datetime import datetime, timedelta
@@ -34,7 +35,8 @@ from ...utils.cache_manager import CacheManager
 
 @dataclass
 class DataSource:
-    """Data source configuration."""    source_id: str
+    """Data source configuration."""
+    source_id: str
     name: str
     source_type: str
     url: str
@@ -49,7 +51,8 @@ class DataSource:
 
 @dataclass
 class CollectedData:
-    """Structure for collected data."""    data_id: str
+    """Structure for collected data."""
+    data_id: str
     source_id: str
     competitor_id: str
     data_type: str
@@ -61,7 +64,8 @@ class CollectedData:
 
 
 class DataCollectionManager:
-    """    Advanced data collection manager for competitor monitoring.
+    """
+    Advanced data collection manager for competitor monitoring.
     
     Supports multiple data sources including:
     - Social media platforms
@@ -69,9 +73,11 @@ class DataCollectionManager:
     - News feeds
     - Financial data
     - Public APIs
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the data collection manager."""        self.config = config
+        """Initialize the data collection manager."""
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Core components
@@ -97,7 +103,8 @@ class DataCollectionManager:
         self.logger.info("DataCollectionManager initialized")
     
     async def collect_competitor_data(self, competitor_id: str, data_types: List[str] = None) -> List[CollectedData]:
-        """Collect data for a specific competitor from all relevant sources."""        try:
+        """Collect data for a specific competitor from all relevant sources."""
+        try:
             self.logger.info(f"Starting data collection for competitor: {competitor_id}")
             
             if not data_types:
@@ -153,7 +160,8 @@ class DataCollectionManager:
             raise CollectionError(f"Failed to collect data for competitor {competitor_id}: {str(e)}")
     
     async def collect_website_data(self, competitor_id: str, website_url: str) -> List[CollectedData]:
-        """Collect data from competitor website."""        try:
+        """Collect data from competitor website."""
+        try:
             collected_data = []
             
             # Collect main website data
@@ -181,7 +189,8 @@ class DataCollectionManager:
             return []
     
     async def collect_social_media_data(self, competitor_id: str, platforms: Dict[str, str]) -> List[CollectedData]:
-        """Collect data from social media platforms."""        try:
+        """Collect data from social media platforms."""
+        try:
             collected_data = []
             
             for platform, profile_url in platforms.items():
@@ -206,7 +215,8 @@ class DataCollectionManager:
             return []
     
     async def collect_news_data(self, competitor_id: str, competitor_name: str) -> List[CollectedData]:
-        """Collect news and media mentions."""        try:
+        """Collect news and media mentions."""
+        try:
             collected_data = []
             
             # Search terms
@@ -261,7 +271,8 @@ class DataCollectionManager:
             return []
     
     async def collect_financial_data(self, competitor_id: str, company_info: Dict[str, Any]) -> List[CollectedData]:
-        """Collect financial and business data."""        try:
+        """Collect financial and business data."""
+        try:
             collected_data = []
             
             # Company identifiers
@@ -325,7 +336,8 @@ class DataCollectionManager:
             return []
     
     async def _collect_from_source(self, source: DataSource, competitor_id: str, data_types: List[str]) -> List[CollectedData]:
-        """Collect data from a specific source."""        try:
+        """Collect data from a specific source."""
+        try:
             # Check rate limits
             if not await self.rate_limiter.can_proceed(source.source_id, source.rate_limit):
                 raise RateLimitError(f"Rate limit exceeded for source {source.name}")
@@ -360,7 +372,8 @@ class DataCollectionManager:
             return []
     
     async def _collect_main_website_data(self, competitor_id: str, website_url: str) -> Optional[CollectedData]:
-        """Collect main website information."""        try:
+        """Collect main website information."""
+        try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(website_url, timeout=self.collection_timeout) as response:
                     if response.status == 200:
@@ -404,7 +417,8 @@ class DataCollectionManager:
             return None
     
     async def _collect_platform_data(self, competitor_id: str, platform: str, profile_url: str) -> List[CollectedData]:
-        """Collect data from a specific social media platform."""        try:
+        """Collect data from a specific social media platform."""
+        try:
             collected_data = []
             
             if platform.lower() == "twitter":
@@ -434,7 +448,8 @@ class DataCollectionManager:
             return []
     
     def _setup_browser_options(self) -> Options:
-        """Setup Chrome browser options for web scraping."""        options = Options()
+        """Setup Chrome browser options for web scraping."""
+        options = Options()
         options.add_argument("--headless")
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
@@ -444,7 +459,8 @@ class DataCollectionManager:
         return options
     
     async def _calculate_quality_score(self, data: Dict[str, Any]) -> float:
-        """Calculate quality score for collected data."""        try:
+        """Calculate quality score for collected data."""
+        try:
             score = 0.5  # Base score
             
             # Check data completeness
@@ -468,7 +484,8 @@ class DataCollectionManager:
             return 0.5
     
     async def get_collection_status(self) -> Dict[str, Any]:
-        """Get current collection status and metrics."""        return {
+        """Get current collection status and metrics."""
+        return {
             "total_sources": len(self.data_sources),
             "active_sources": len([s for s in self.data_sources.values() if s.active]),
             "total_collected": len(self.collected_data),

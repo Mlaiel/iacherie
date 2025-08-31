@@ -16,7 +16,8 @@ Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Revenue Tracking
 ==========================================================================================
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
 from dataclasses import dataclass, field
@@ -39,7 +40,8 @@ logger = logging.getLogger(__name__)
 
 
 class TrackingFrequency(Enum):
-    """Revenue tracking frequency options"""    REAL_TIME = "real_time"
+    """Revenue tracking frequency options"""
+    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -47,7 +49,8 @@ class TrackingFrequency(Enum):
 
 
 class TrackingStatus(Enum):
-    """Revenue tracking status"""    ACTIVE = "active"
+    """Revenue tracking status"""
+    ACTIVE = "active"
     PAUSED = "paused"
     ERROR = "error"
     MAINTENANCE = "maintenance"
@@ -56,7 +59,8 @@ class TrackingStatus(Enum):
 
 @dataclass
 class RevenueSnapshot:
-    """Revenue snapshot data structure"""    snapshot_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Revenue snapshot data structure"""
+    snapshot_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     platform: str = ""
     revenue_streams: Dict[str, Decimal] = field(default_factory=dict)
@@ -69,7 +73,8 @@ class RevenueSnapshot:
 
 @dataclass
 class TrackingAlert:
-    """Revenue tracking alert configuration"""    alert_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Revenue tracking alert configuration"""
+    alert_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     alert_type: str = ""
     threshold_value: Decimal = Decimal('0')
@@ -81,7 +86,8 @@ class TrackingAlert:
 
 
 class RevenueTracker:
-    """    Ultra-advanced revenue tracking system for multi-platform content creators
+    """
+    Ultra-advanced revenue tracking system for multi-platform content creators
     
     Features:
     - Real-time revenue monitoring across all platforms
@@ -92,7 +98,8 @@ class RevenueTracker:
     - Anomaly detection and fraud prevention
     - Multi-currency tracking and conversion
     - Custom dashboard and reporting
-    """    
+    """
+    
     def __init__(self,
                  db_manager: DatabaseManager,
                  security_manager: SecurityManager,
@@ -119,7 +126,8 @@ class RevenueTracker:
         }
         
     async def initialize(self):
-        """Initialize the revenue tracking system"""        try:
+        """Initialize the revenue tracking system"""
+        try:
             # Load tracking configurations
             await self._load_tracking_configurations()
             
@@ -143,7 +151,8 @@ class RevenueTracker:
                            platforms: List[str],
                            frequency: TrackingFrequency = TrackingFrequency.HOURLY,
                            custom_config: Optional[Dict[str, Any]] = None) -> str:
-        """        Start revenue tracking for a creator across specified platforms
+        """
+        Start revenue tracking for a creator across specified platforms
         
         Args:
             creator_id: Unique creator identifier
@@ -153,7 +162,8 @@ class RevenueTracker:
             
         Returns:
             Tracking session ID
-        """        try:
+        """
+        try:
             # Validate creator and platforms
             await self._validate_tracking_request(creator_id, platforms)
             
@@ -191,7 +201,8 @@ class RevenueTracker:
             raise
 
     async def stop_tracking(self, tracking_id: str, creator_id: str) -> bool:
-        """        Stop revenue tracking for a specific session
+        """
+        Stop revenue tracking for a specific session
         
         Args:
             tracking_id: Tracking session ID
@@ -199,7 +210,8 @@ class RevenueTracker:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             # Validate tracking session
             if tracking_id not in self._active_trackers:
                 raise ValueError(f"Tracking session {tracking_id} not found")
@@ -230,7 +242,8 @@ class RevenueTracker:
     async def take_revenue_snapshot(self,
                                   tracking_id: str,
                                   force_snapshot: bool = False) -> RevenueSnapshot:
-        """        Take a revenue snapshot for a tracking session
+        """
+        Take a revenue snapshot for a tracking session
         
         Args:
             tracking_id: Tracking session ID
@@ -238,7 +251,8 @@ class RevenueTracker:
             
         Returns:
             Revenue snapshot data
-        """        try:
+        """
+        try:
             # Get tracking configuration
             if tracking_id not in self._active_trackers:
                 raise ValueError(f"Tracking session {tracking_id} not active")
@@ -300,7 +314,8 @@ class RevenueTracker:
     async def get_tracking_status(self,
                                 creator_id: str,
                                 tracking_id: Optional[str] = None) -> Dict[str, Any]:
-        """        Get tracking status for a creator or specific session
+        """
+        Get tracking status for a creator or specific session
         
         Args:
             creator_id: Creator ID
@@ -308,7 +323,8 @@ class RevenueTracker:
             
         Returns:
             Tracking status information
-        """        try:
+        """
+        try:
             if tracking_id:
                 # Get specific tracking session status
                 if tracking_id in self._active_trackers:
@@ -340,7 +356,8 @@ class RevenueTracker:
                                 date_range: Tuple[datetime, datetime],
                                 platforms: Optional[List[str]] = None,
                                 aggregation: str = "daily") -> Dict[str, Any]:
-        """        Get historical revenue data for a creator
+        """
+        Get historical revenue data for a creator
         
         Args:
             creator_id: Creator ID
@@ -350,7 +367,8 @@ class RevenueTracker:
             
         Returns:
             Historical revenue data
-        """        try:
+        """
+        try:
             # Build query conditions
             conditions = ["creator_id = %s", "created_at BETWEEN %s AND %s"]
             params = [creator_id, date_range[0], date_range[1]]
@@ -376,7 +394,8 @@ class RevenueTracker:
                 date_trunc = "day"
             
             # Execute query
-            query = f"""                SELECT 
+            query = f"""
+                SELECT 
                     DATE_TRUNC('{date_trunc}', created_at) as period,
                     SUM(total_revenue) as total_revenue,
                     AVG(total_revenue) as avg_revenue,
@@ -387,7 +406,8 @@ class RevenueTracker:
                 WHERE {' AND '.join(conditions)}
                 GROUP BY DATE_TRUNC('{date_trunc}', created_at)
                 ORDER BY period ASC
-            """            
+            """
+            
             history_data = await self.db.fetch_all(query, params)
             
             # Calculate additional metrics
@@ -439,7 +459,8 @@ class RevenueTracker:
     async def setup_revenue_alert(self,
                                 creator_id: str,
                                 alert_config: Dict[str, Any]) -> str:
-        """        Setup automated revenue alert
+        """
+        Setup automated revenue alert
         
         Args:
             creator_id: Creator ID
@@ -447,7 +468,8 @@ class RevenueTracker:
             
         Returns:
             Alert ID
-        """        try:
+        """
+        try:
             # Validate alert configuration
             await self._validate_alert_config(alert_config)
             
@@ -475,7 +497,8 @@ class RevenueTracker:
             raise
 
     async def _collect_platform_revenue_data(self, tracking_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Collect revenue data from all tracked platforms"""        start_time = datetime.utcnow()
+        """Collect revenue data from all tracked platforms"""
+        start_time = datetime.utcnow()
         revenue_streams = {}
         total_revenue = Decimal('0')
         quality_scores = []
@@ -524,7 +547,8 @@ class RevenueTracker:
                                            platform: str,
                                            creator_id: str,
                                            platform_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Collect revenue data from a single platform"""        try:
+        """Collect revenue data from a single platform"""
+        try:
             # Get platform integration
             platform_integration = await self.platform_manager.get_platform(platform)
             
@@ -553,7 +577,8 @@ class RevenueTracker:
             }
 
     async def _check_revenue_alerts(self, snapshot: RevenueSnapshot):
-        """Check if any alerts should be triggered based on snapshot"""        try:
+        """Check if any alerts should be triggered based on snapshot"""
+        try:
             # Get active alerts for creator
             creator_alerts = [
                 alert for alert in self._alert_configs.values()
@@ -571,7 +596,8 @@ class RevenueTracker:
             logger.error(f"Failed to check revenue alerts: {e}")
 
     async def _evaluate_alert_condition(self, alert: TrackingAlert, snapshot: RevenueSnapshot) -> bool:
-        """Evaluate if alert condition is met"""        try:
+        """Evaluate if alert condition is met"""
+        try:
             comparison_value = snapshot.total_revenue
             threshold = alert.threshold_value
             operator = alert.comparison_operator
@@ -594,7 +620,8 @@ class RevenueTracker:
             return False
 
     async def _trigger_revenue_alert(self, alert: TrackingAlert, snapshot: RevenueSnapshot):
-        """Trigger revenue alert notification"""        try:
+        """Trigger revenue alert notification"""
+        try:
             # Prepare notification data
             notification_data = {
                 'alert_id': alert.alert_id,
@@ -622,9 +649,11 @@ class RevenueTracker:
             logger.error(f"Failed to trigger revenue alert: {e}")
 
     async def _analyze_revenue_trends(self, snapshot: RevenueSnapshot):
-        """Analyze revenue trends and patterns"""        try:
+        """Analyze revenue trends and patterns"""
+        try:
             # Get historical data for trend analysis
-            historical_snapshots = await self.db.fetch_all("""                SELECT total_revenue, created_at
+            historical_snapshots = await self.db.fetch_all("""
+                SELECT total_revenue, created_at
                 FROM revenue_snapshots 
                 WHERE creator_id = %s 
                 ORDER BY created_at DESC 
@@ -650,7 +679,8 @@ class RevenueTracker:
             logger.error(f"Failed to analyze revenue trends: {e}")
 
     def _calculate_next_snapshot_time(self, frequency: TrackingFrequency) -> datetime:
-        """Calculate next snapshot time based on frequency"""        now = datetime.utcnow()
+        """Calculate next snapshot time based on frequency"""
+        now = datetime.utcnow()
         
         if frequency == TrackingFrequency.REAL_TIME:
             return now + timedelta(minutes=5)
@@ -666,14 +696,16 @@ class RevenueTracker:
             return now + timedelta(hours=1)
 
     def _is_snapshot_due(self, tracking_config: Dict[str, Any]) -> bool:
-        """Check if snapshot is due for a tracking configuration"""        next_snapshot = tracking_config.get('next_snapshot')
+        """Check if snapshot is due for a tracking configuration"""
+        next_snapshot = tracking_config.get('next_snapshot')
         if not next_snapshot:
             return True
         
         return datetime.utcnow() >= next_snapshot
 
     async def _validate_tracking_request(self, creator_id: str, platforms: List[str]):
-        """Validate tracking request parameters"""        if not creator_id:
+        """Validate tracking request parameters"""
+        if not creator_id:
             raise ValueError("Creator ID is required")
         
         if not platforms:
@@ -686,8 +718,10 @@ class RevenueTracker:
                 raise ValueError(f"Platform {platform} is not supported")
 
     async def _load_tracking_configurations(self):
-        """Load existing tracking configurations from database"""        try:
-            configs = await self.db.fetch_all("""                SELECT * FROM revenue_tracking_configs 
+        """Load existing tracking configurations from database"""
+        try:
+            configs = await self.db.fetch_all("""
+                SELECT * FROM revenue_tracking_configs 
                 WHERE status = 'active'
             """)
             
@@ -709,12 +743,15 @@ class RevenueTracker:
             logger.error(f"Failed to load tracking configurations: {e}")
 
     async def _store_tracking_config(self, config: Dict[str, Any]):
-        """Store tracking configuration in database"""        try:
-            query = """                INSERT INTO revenue_tracking_configs 
+        """Store tracking configuration in database"""
+        try:
+            query = """
+                INSERT INTO revenue_tracking_configs 
                 (tracking_id, creator_id, platforms, frequency, status, 
                  started_at, config, snapshots_taken, next_snapshot)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """            
+            """
+            
             await self.db.execute(query, (
                 config['tracking_id'],
                 config['creator_id'],
@@ -732,12 +769,15 @@ class RevenueTracker:
             raise
 
     async def _store_revenue_snapshot(self, snapshot: RevenueSnapshot):
-        """Store revenue snapshot in database"""        try:
-            query = """                INSERT INTO revenue_snapshots 
+        """Store revenue snapshot in database"""
+        try:
+            query = """
+                INSERT INTO revenue_snapshots 
                 (snapshot_id, creator_id, platform, revenue_streams, total_revenue,
                  period_start, period_end, metadata, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """            
+            """
+            
             await self.db.execute(query, (
                 snapshot.snapshot_id,
                 snapshot.creator_id,
@@ -755,12 +795,14 @@ class RevenueTracker:
             raise
 
     async def _start_background_tasks(self):
-        """Start background tracking tasks"""        # This would start asyncio tasks for automated tracking
+        """Start background tracking tasks"""
+        # This would start asyncio tasks for automated tracking
         # Implementation would depend on specific async framework used
         pass
 
     async def cleanup(self):
-        """Cleanup tracking resources"""        try:
+        """Cleanup tracking resources"""
+        try:
             # Stop all active tracking sessions
             for tracking_id in list(self._active_trackers.keys()):
                 await self._update_tracking_status(tracking_id, TrackingStatus.STOPPED)

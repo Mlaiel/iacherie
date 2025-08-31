@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -21,7 +22,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -40,14 +42,17 @@ from ai.content_generation.content_models import ContentType
 
 
 class TestBlogTemplates:
-    """Test suite for BlogTemplates"""    
+    """Test suite for BlogTemplates"""
+    
     @pytest.fixture
     def blog_templates(self):
-        """Create a blog templates instance"""        return BlogTemplates()
+        """Create a blog templates instance"""
+        return BlogTemplates()
     
     @pytest.fixture
     def article_data(self):
-        """Create sample article data"""        return {
+        """Create sample article data"""
+        return {
             "title": "The Complete Guide to AI in Content Creation",
             "subtitle": "How Artificial Intelligence is Revolutionizing Digital Content",
             "author": "Fahed Mlaiel",
@@ -66,7 +71,8 @@ class TestBlogTemplates:
     
     @pytest.fixture
     def tutorial_data(self):
-        """Create sample tutorial data"""        return {
+        """Create sample tutorial data"""
+        return {
             "title": "How to Build an AI-Powered Content Pipeline",
             "difficulty": "Intermediate",
             "time_required": "45 minutes",
@@ -83,7 +89,8 @@ class TestBlogTemplates:
         }
     
     def test_blog_templates_initialization(self, blog_templates):
-        """Test blog templates initialization"""        assert blog_templates is not None
+        """Test blog templates initialization"""
+        assert blog_templates is not None
         assert hasattr(blog_templates, 'tutorial_templates')
         assert hasattr(blog_templates, 'list_templates')
         assert hasattr(blog_templates, 'news_templates')
@@ -94,7 +101,8 @@ class TestBlogTemplates:
     
     @pytest.mark.asyncio
     async def test_generate_article_structure(self, blog_templates, article_data):
-        """Test article structure generation"""        with patch.object(blog_templates, '_generate_structure') as mock_structure:
+        """Test article structure generation"""
+        with patch.object(blog_templates, '_generate_structure') as mock_structure:
             mock_structure.return_value = {
                 "success": True,
                 "structure": {
@@ -168,7 +176,8 @@ class TestBlogTemplates:
     
     @pytest.mark.asyncio
     async def test_tutorial_template_generation(self, blog_templates, tutorial_data):
-        """Test tutorial template generation"""        with patch.object(blog_templates, '_generate_tutorial') as mock_tutorial:
+        """Test tutorial template generation"""
+        with patch.object(blog_templates, '_generate_tutorial') as mock_tutorial:
             mock_tutorial.return_value = {
                 "success": True,
                 "tutorial_content": {
@@ -260,7 +269,8 @@ class TestBlogTemplates:
     
     @pytest.mark.asyncio
     async def test_listicle_template_generation(self, blog_templates, article_data):
-        """Test listicle template generation"""        listicle_data = {
+        """Test listicle template generation"""
+        listicle_data = {
             "title": "10 AI Tools Every Content Creator Should Know",
             "list_items": [
                 "ChatGPT for text generation",
@@ -325,7 +335,8 @@ class TestBlogTemplates:
     
     @pytest.mark.asyncio
     async def test_news_article_template(self, blog_templates):
-        """Test news article template generation"""        news_data = {
+        """Test news article template generation"""
+        news_data = {
             "headline": "OpenAI Releases Revolutionary GPT-5 with Advanced Reasoning",
             "lead": "New model shows 40% improvement in complex problem-solving tasks",
             "who": "OpenAI",
@@ -383,7 +394,8 @@ class TestBlogTemplates:
     
     @pytest.mark.asyncio
     async def test_opinion_piece_template(self, blog_templates):
-        """Test opinion piece template generation"""        opinion_data = {
+        """Test opinion piece template generation"""
+        opinion_data = {
             "thesis": "AI content creation tools are making human creativity more important, not less",
             "arguments": [
                 "AI handles routine tasks, freeing humans for creative strategy",
@@ -445,7 +457,8 @@ class TestBlogTemplates:
     
     @pytest.mark.asyncio
     async def test_seo_optimization(self, blog_templates, article_data):
-        """Test SEO optimization for blog templates"""        with patch.object(blog_templates, '_optimize_for_seo') as mock_seo:
+        """Test SEO optimization for blog templates"""
+        with patch.object(blog_templates, '_optimize_for_seo') as mock_seo:
             mock_seo.return_value = {
                 "success": True,
                 "seo_optimized_content": {
@@ -494,7 +507,8 @@ class TestBlogTemplates:
     
     @pytest.mark.asyncio
     async def test_blog_series_generation(self, blog_templates):
-        """Test blog series generation"""        series_data = {
+        """Test blog series generation"""
+        series_data = {
             "series_title": "Mastering AI Content Creation",
             "series_description": "A comprehensive series on using AI for content marketing",
             "number_of_posts": 5,
@@ -568,7 +582,8 @@ class TestBlogTemplates:
     
     @pytest.mark.asyncio
     async def test_content_repurposing(self, blog_templates, article_data):
-        """Test content repurposing from blog articles"""        with patch.object(blog_templates, '_repurpose_content') as mock_repurpose:
+        """Test content repurposing from blog articles"""
+        with patch.object(blog_templates, '_repurpose_content') as mock_repurpose:
             mock_repurpose.return_value = {
                 "success": True,
                 "repurposed_content": {
@@ -617,9 +632,11 @@ class TestBlogTemplates:
 
 
 class TestArticleTemplate:
-    """Test suite for ArticleTemplate"""    
+    """Test suite for ArticleTemplate"""
+    
     def test_article_template_creation(self):
-        """Test article template creation"""        template = ArticleTemplate(
+        """Test article template creation"""
+        template = ArticleTemplate(
             template_id="article_001",
             name="Standard Article",
             category=BlogCategory.TUTORIAL,

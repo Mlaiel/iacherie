@@ -13,7 +13,8 @@ without written authorization is STRICTLY PROHIBITED and will result in
 immediate legal action under German and International IP law.
 
 For licensing inquiries: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -42,7 +43,8 @@ from ...models.distribution import DistributionResult, PlatformConfig
 
 
 class InstagramContentType(Enum):
-    """Instagram content type enumeration"""    PHOTO = "photo"
+    """Instagram content type enumeration"""
+    PHOTO = "photo"
     VIDEO = "video"
     CAROUSEL = "carousel"
     STORY = "story"
@@ -52,7 +54,8 @@ class InstagramContentType(Enum):
 
 
 class InstagramAspectRatio(Enum):
-    """Instagram aspect ratio enumeration"""    SQUARE = "1:1"
+    """Instagram aspect ratio enumeration"""
+    SQUARE = "1:1"
     PORTRAIT = "4:5"
     LANDSCAPE = "1.91:1"
     STORY = "9:16"
@@ -60,7 +63,8 @@ class InstagramAspectRatio(Enum):
 
 
 class InstagramVisibility(Enum):
-    """Instagram visibility settings enumeration"""    PUBLIC = "public"
+    """Instagram visibility settings enumeration"""
+    PUBLIC = "public"
     FOLLOWERS = "followers"
     CLOSE_FRIENDS = "close_friends"
     PRIVATE = "private"
@@ -68,7 +72,8 @@ class InstagramVisibility(Enum):
 
 @dataclass
 class InstagramMetadata:
-    """Instagram-specific metadata structure"""    caption: str
+    """Instagram-specific metadata structure"""
+    caption: str
     hashtags: List[str]
     content_type: InstagramContentType
     aspect_ratio: InstagramAspectRatio
@@ -96,7 +101,8 @@ class InstagramMetadata:
 
 @dataclass
 class InstagramAnalytics:
-    """Instagram analytics data structure"""    impressions: int = 0
+    """Instagram analytics data structure"""
+    impressions: int = 0
     reach: int = 0
     likes: int = 0
     comments: int = 0
@@ -122,7 +128,8 @@ class InstagramAnalytics:
 
 
 class InstagramAdapter(BaseAgent):
-    """    Professional Instagram distribution adapter with advanced features
+    """
+    Professional Instagram distribution adapter with advanced features
     
     Capabilities:
     - Multi-format content publishing (Posts, Stories, Reels, IGTV)
@@ -135,13 +142,16 @@ class InstagramAdapter(BaseAgent):
     - Comprehensive analytics and insights
     - User engagement automation
     - Brand collaboration tools
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize Instagram adapter with comprehensive configuration
+        """
+        Initialize Instagram adapter with comprehensive configuration
         
         Args:
             config: Instagram API configuration and settings
-        """        super().__init__(config)
+        """
+        super().__init__(config)
         self.access_token = config.get('access_token')
         self.business_account_id = config.get('business_account_id')
         self.app_id = config.get('app_id')
@@ -174,7 +184,8 @@ class InstagramAdapter(BaseAgent):
         self.logger = logging.getLogger(__name__)
     
     async def initialize(self) -> bool:
-        """Initialize Instagram adapter with authentication and validation"""        try:
+        """Initialize Instagram adapter with authentication and validation"""
+        try:
             # Initialize HTTP session
             connector = aiohttp.TCPConnector(limit=self.concurrent_uploads)
             self.session = aiohttp.ClientSession(connector=connector)
@@ -207,7 +218,8 @@ class InstagramAdapter(BaseAgent):
         metadata: InstagramMetadata,
         platform_config: Optional[PlatformConfig] = None
     ) -> DistributionResult:
-        """        Distribute content to Instagram with advanced optimization
+        """
+        Distribute content to Instagram with advanced optimization
         
         Args:
             content: Content item to distribute
@@ -216,7 +228,8 @@ class InstagramAdapter(BaseAgent):
             
         Returns:
             Comprehensive distribution result with analytics
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         
         try:
             # Validate content and metadata
@@ -275,7 +288,8 @@ class InstagramAdapter(BaseAgent):
         platform_id: str,
         updates: Dict[str, Any]
     ) -> bool:
-        """Update existing Instagram post with new metadata"""        try:
+        """Update existing Instagram post with new metadata"""
+        try:
             # Instagram has limited update capabilities
             # Only caption and user tags can be updated
             update_data = {}
@@ -308,7 +322,8 @@ class InstagramAdapter(BaseAgent):
             return False
     
     async def delete_content(self, platform_id: str) -> bool:
-        """Delete Instagram content with proper cleanup"""        try:
+        """Delete Instagram content with proper cleanup"""
+        try:
             # Execute deletion
             response = await self._make_api_request(
                 "DELETE",
@@ -331,7 +346,8 @@ class InstagramAdapter(BaseAgent):
         start_date: datetime,
         end_date: datetime
     ) -> InstagramAnalytics:
-        """Retrieve comprehensive Instagram analytics"""        try:
+        """Retrieve comprehensive Instagram analytics"""
+        try:
             # Get basic insights
             insights = await self._fetch_media_insights(platform_id)
             
@@ -380,7 +396,8 @@ class InstagramAdapter(BaseAgent):
             return InstagramAnalytics()
     
     async def _validate_credentials(self) -> bool:
-        """Validate Instagram API credentials"""        try:
+        """Validate Instagram API credentials"""
+        try:
             response = await self._make_api_request(
                 "GET",
                 f"{self.base_url}/me",
@@ -392,7 +409,8 @@ class InstagramAdapter(BaseAgent):
             return False
     
     async def _verify_business_account(self) -> bool:
-        """Verify access to Instagram business account"""        try:
+        """Verify access to Instagram business account"""
+        try:
             response = await self._make_api_request(
                 "GET",
                 f"{self.base_url}/{self.business_account_id}",
@@ -404,7 +422,8 @@ class InstagramAdapter(BaseAgent):
             return False
     
     async def _initialize_hashtag_database(self) -> None:
-        """Initialize hashtag research database"""        # Load trending hashtags and categories
+        """Initialize hashtag research database"""
+        # Load trending hashtags and categories
         self.hashtag_categories = {
             "photography": ["#photography", "#photooftheday", "#instaphoto"],
             "music": ["#music", "#musician", "#newmusic", "#songwriter"],
@@ -417,7 +436,8 @@ class InstagramAdapter(BaseAgent):
         }
     
     async def _initialize_content_templates(self) -> None:
-        """Initialize content templates for different types"""        self.content_templates = {
+        """Initialize content templates for different types"""
+        self.content_templates = {
             InstagramContentType.PHOTO: {
                 "aspect_ratios": [InstagramAspectRatio.SQUARE, InstagramAspectRatio.PORTRAIT],
                 "max_size": self.max_image_size,
@@ -442,7 +462,8 @@ class InstagramAdapter(BaseAgent):
         }
     
     async def _validate_content(self, content: ContentItem, metadata: InstagramMetadata) -> None:
-        """Validate content and metadata for Instagram distribution"""        # Validate content format
+        """Validate content and metadata for Instagram distribution"""
+        # Validate content format
         if metadata.content_type in [InstagramContentType.PHOTO, InstagramContentType.STORY]:
             if not any(content.file_path.lower().endswith(fmt) for fmt in self.supported_image_formats):
                 if not content.content_type.startswith('image/'):
@@ -462,7 +483,8 @@ class InstagramAdapter(BaseAgent):
             raise ContentError("Instagram posts can have maximum 30 hashtags")
     
     async def _perform_security_checks(self, content: ContentItem) -> None:
-        """Perform security and compliance checks"""        # Content security validation
+        """Perform security and compliance checks"""
+        # Content security validation
         if not await self.security.validate_content(content):
             raise SecurityError("Content failed security validation")
         
@@ -475,7 +497,8 @@ class InstagramAdapter(BaseAgent):
         content: ContentItem,
         metadata: InstagramMetadata
     ) -> ContentItem:
-        """Optimize content for Instagram distribution"""        try:
+        """Optimize content for Instagram distribution"""
+        try:
             if metadata.content_type == InstagramContentType.PHOTO:
                 return await self._optimize_image(content, metadata)
             elif metadata.content_type in [InstagramContentType.VIDEO, InstagramContentType.REEL]:
@@ -490,7 +513,8 @@ class InstagramAdapter(BaseAgent):
             return content
     
     async def _optimize_image(self, content: ContentItem, metadata: InstagramMetadata) -> ContentItem:
-        """Optimize image for Instagram posting"""        # Load and process image
+        """Optimize image for Instagram posting"""
+        # Load and process image
         with Image.open(content.file_path) as img:
             # Convert to RGB if necessary
             if img.mode != 'RGB':
@@ -513,12 +537,14 @@ class InstagramAdapter(BaseAgent):
         return content
     
     async def _optimize_video(self, content: ContentItem, metadata: InstagramMetadata) -> ContentItem:
-        """Optimize video for Instagram posting"""        # Video optimization would be implemented here
+        """Optimize video for Instagram posting"""
+        # Video optimization would be implemented here
         # For now, return original content
         return content
     
     async def _optimize_story(self, content: ContentItem, metadata: InstagramMetadata) -> ContentItem:
-        """Optimize content for Instagram Story"""        # Story optimization would be implemented here
+        """Optimize content for Instagram Story"""
+        # Story optimization would be implemented here
         return content
     
     async def _enhance_metadata(
@@ -526,7 +552,8 @@ class InstagramAdapter(BaseAgent):
         metadata: InstagramMetadata,
         content: ContentItem
     ) -> InstagramMetadata:
-        """Enhance metadata with AI insights"""        # AI-powered hashtag suggestions
+        """Enhance metadata with AI insights"""
+        # AI-powered hashtag suggestions
         if not metadata.hashtags:
             metadata.hashtags = await self._generate_hashtags(content, metadata.caption)
         
@@ -544,7 +571,8 @@ class InstagramAdapter(BaseAgent):
         content: ContentItem,
         metadata: InstagramMetadata
     ) -> str:
-        """Upload media to Instagram"""        try:
+        """Upload media to Instagram"""
+        try:
             upload_data = {
                 "image_url" if metadata.content_type == InstagramContentType.PHOTO else "video_url": content.file_path,
                 "caption": metadata.caption,
@@ -570,7 +598,8 @@ class InstagramAdapter(BaseAgent):
             raise DistributionError(f"Media upload failed: {str(e)}")
     
     async def _publish_media(self, media_id: str, metadata: InstagramMetadata) -> str:
-        """Publish uploaded media"""        try:
+        """Publish uploaded media"""
+        try:
             publish_data = {
                 "creation_id": media_id,
                 "access_token": self.access_token
@@ -592,7 +621,8 @@ class InstagramAdapter(BaseAgent):
         post_id: str,
         metadata: InstagramMetadata
     ) -> None:
-        """Configure additional Instagram features"""        # Add user tags
+        """Configure additional Instagram features"""
+        # Add user tags
         if metadata.user_tags:
             await self._add_user_tags(post_id, metadata.user_tags)
         
@@ -605,11 +635,13 @@ class InstagramAdapter(BaseAgent):
             await self._configure_branded_content(post_id, metadata.branded_content_sponsor)
     
     async def _manage_story_highlights(self, story_id: str, metadata: InstagramMetadata) -> None:
-        """Manage story highlights"""        # Implementation would manage story highlights
+        """Manage story highlights"""
+        # Implementation would manage story highlights
         pass
     
     async def _collect_initial_analytics(self, post_id: str) -> InstagramAnalytics:
-        """Collect initial analytics for posted content"""        # Return basic analytics structure
+        """Collect initial analytics for posted content"""
+        # Return basic analytics structure
         return InstagramAnalytics()
     
     async def _make_api_request(
@@ -618,7 +650,8 @@ class InstagramAdapter(BaseAgent):
         url: str,
         **kwargs
     ) -> Dict[str, Any]:
-        """Make authenticated Instagram API request"""        if not self.session:
+        """Make authenticated Instagram API request"""
+        if not self.session:
             raise PlatformError("HTTP session not initialized")
         
         # Add access token to parameters
@@ -640,7 +673,8 @@ class InstagramAdapter(BaseAgent):
             return await response.json()
     
     def _get_target_size(self, aspect_ratio: InstagramAspectRatio) -> Tuple[int, int]:
-        """Get target size for content optimization"""        size_map = {
+        """Get target size for content optimization"""
+        size_map = {
             InstagramAspectRatio.SQUARE: (1080, 1080),
             InstagramAspectRatio.PORTRAIT: (1080, 1350),
             InstagramAspectRatio.LANDSCAPE: (1080, 566),
@@ -650,27 +684,33 @@ class InstagramAdapter(BaseAgent):
         return size_map.get(aspect_ratio, (1080, 1080))
     
     def _enhance_image_quality(self, img: Image.Image) -> Image.Image:
-        """Enhance image quality for Instagram"""        # Image enhancement implementation
+        """Enhance image quality for Instagram"""
+        # Image enhancement implementation
         return img
     
     async def _generate_hashtags(self, content: ContentItem, caption: str) -> List[str]:
-        """Generate relevant hashtags using AI"""        # AI hashtag generation implementation
+        """Generate relevant hashtags using AI"""
+        # AI hashtag generation implementation
         return ["#ai", "#content", "#instagram"]
     
     async def _optimize_caption(self, caption: str) -> str:
-        """Optimize caption for engagement"""        # Caption optimization implementation
+        """Optimize caption for engagement"""
+        # Caption optimization implementation
         return caption
     
     async def _generate_accessibility_text(self, content: ContentItem) -> str:
-        """Generate accessibility text for content"""        # Accessibility text generation implementation
+        """Generate accessibility text for content"""
+        # Accessibility text generation implementation
         return "AI-generated content"
     
     async def _check_community_guidelines(self, content: ContentItem) -> bool:
-        """Check content against Instagram community guidelines"""        # Community guidelines check implementation
+        """Check content against Instagram community guidelines"""
+        # Community guidelines check implementation
         return True
     
     async def _fetch_media_insights(self, media_id: str) -> Dict[str, Any]:
-        """Fetch media-specific insights"""        # Implementation would fetch insights data
+        """Fetch media-specific insights"""
+        # Implementation would fetch insights data
         return {}
     
     async def _fetch_engagement_metrics(
@@ -679,7 +719,8 @@ class InstagramAdapter(BaseAgent):
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Fetch engagement metrics"""        # Implementation would fetch engagement data
+        """Fetch engagement metrics"""
+        # Implementation would fetch engagement data
         return {}
     
     async def _fetch_audience_insights(
@@ -687,7 +728,8 @@ class InstagramAdapter(BaseAgent):
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Fetch audience insights"""        # Implementation would fetch audience data
+        """Fetch audience insights"""
+        # Implementation would fetch audience data
         return {}
     
     async def _analyze_hashtag_performance(
@@ -696,23 +738,28 @@ class InstagramAdapter(BaseAgent):
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, int]:
-        """Analyze hashtag performance"""        # Implementation would analyze hashtag performance
+        """Analyze hashtag performance"""
+        # Implementation would analyze hashtag performance
         return {}
     
     async def _add_user_tags(self, post_id: str, user_tags: List[Dict[str, Any]]) -> None:
-        """Add user tags to post"""        # Implementation would add user tags
+        """Add user tags to post"""
+        # Implementation would add user tags
         pass
     
     async def _add_shopping_tags(self, post_id: str, shopping_tags: List[Dict[str, Any]]) -> None:
-        """Add shopping tags to post"""        # Implementation would add shopping tags
+        """Add shopping tags to post"""
+        # Implementation would add shopping tags
         pass
     
     async def _configure_branded_content(self, post_id: str, sponsor_id: str) -> None:
-        """Configure branded content settings"""        # Implementation would configure branded content
+        """Configure branded content settings"""
+        # Implementation would configure branded content
         pass
     
     async def cleanup(self) -> None:
-        """Cleanup resources and connections"""        if self.session:
+        """Cleanup resources and connections"""
+        if self.session:
             await self.session.close()
             self.session = None
         

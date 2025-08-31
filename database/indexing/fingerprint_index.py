@@ -22,7 +22,8 @@ This software is proprietary and confidential.
 Unauthorized use, modification, or distribution by any individual or entity 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import json
@@ -39,7 +40,8 @@ from ..security.fingerprint_security import FingerprintSecurityManager
 logger = logging.getLogger(__name__)
 
 class FingerprintType:
-    """Types of content fingerprints"""    AUDIO_CHROMAPRINT = "audio_chromaprint"
+    """Types of content fingerprints"""
+    AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_SPECTRAL = "audio_spectral"
     AUDIO_MFCC = "audio_mfcc"
     VIDEO_PERCEPTUAL = "video_perceptual"
@@ -53,7 +55,8 @@ class FingerprintType:
     COMPOSITE_MIXED = "composite_mixed"
 
 class FingerprintStatus:
-    """Status of fingerprint processing"""    PENDING = "pending"
+    """Status of fingerprint processing"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -61,7 +64,8 @@ class FingerprintStatus:
     VIOLATION_DETECTED = "violation_detected"
 
 class FingerprintIndexManager:
-    """    Ultra-advanced fingerprint index manager for content protection
+    """
+    Ultra-advanced fingerprint index manager for content protection
     
     Provides sophisticated content fingerprinting and protection:
     - Multi-format content fingerprint generation and indexing
@@ -70,9 +74,11 @@ class FingerprintIndexManager:
     - Cross-platform content monitoring and violation detection
     - High-performance fingerprint search and comparison
     - Automated legal compliance and takedown assistance
-    """    
+    """
+    
     def __init__(self):
-        """Initialize fingerprint index manager with enterprise components"""        self.db_manager = PostgreSQLManager()
+        """Initialize fingerprint index manager with enterprise components"""
+        self.db_manager = PostgreSQLManager()
         self.redis_manager = RedisManager()
         self.performance_tracker = PerformanceTracker()
         self.security_manager = FingerprintSecurityManager()
@@ -112,7 +118,8 @@ class FingerprintIndexManager:
         logger.info("FingerprintIndexManager initialized with enterprise configuration")
     
     async def initialize(self) -> bool:
-        """Initialize fingerprint index manager and create necessary schemas"""        try:
+        """Initialize fingerprint index manager and create necessary schemas"""
+        try:
             # Initialize supporting services
             await self.db_manager.initialize()
             await self.redis_manager.initialize()
@@ -139,8 +146,10 @@ class FingerprintIndexManager:
             return False
     
     async def _create_fingerprint_schema(self) -> bool:
-        """Create database schema for fingerprint storage"""        try:
-            schema_sql = """            -- Content fingerprints table
+        """Create database schema for fingerprint storage"""
+        try:
+            schema_sql = """
+            -- Content fingerprints table
             CREATE TABLE IF NOT EXISTS content_fingerprints (
                 id BIGSERIAL PRIMARY KEY,
                 content_id VARCHAR(255) NOT NULL,
@@ -197,7 +206,8 @@ class FingerprintIndexManager:
                 processed_at TIMESTAMP WITH TIME ZONE,
                 error_message TEXT
             );
-            """            
+            """
+            
             async with self.db_manager.get_connection() as conn:
                 await conn.execute(schema_sql)
             
@@ -209,8 +219,10 @@ class FingerprintIndexManager:
             return False
     
     async def _create_fingerprint_indexes(self) -> bool:
-        """Create optimized indexes for fingerprint operations"""        try:
-            index_sql = """            -- Primary fingerprint lookup indexes
+        """Create optimized indexes for fingerprint operations"""
+        try:
+            index_sql = """
+            -- Primary fingerprint lookup indexes
             CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_fingerprints_content_id 
                 ON content_fingerprints(content_id);
             CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_fingerprints_user_id 
@@ -267,7 +279,8 @@ class FingerprintIndexManager:
                 ON fingerprint_queue(priority, created_at);
             CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_queue_scheduled 
                 ON fingerprint_queue(scheduled_at) WHERE scheduled_at IS NOT NULL;
-            """            
+            """
+            
             async with self.db_manager.get_connection() as conn:
                 await conn.execute(index_sql)
             
@@ -279,14 +292,16 @@ class FingerprintIndexManager:
             return False
     
     async def add_content_fingerprint(self, content_data: Dict[str, Any]) -> bool:
-        """        Add content fingerprint to the protection system
+        """
+        Add content fingerprint to the protection system
         
         Args:
             content_data: Complete content fingerprint data
             
         Returns:
             bool: Success status of fingerprint addition
-        """        try:
+        """
+        try:
             # Validate security permissions
             if not await self.security_manager.validate_fingerprint_creation(content_data):
                 logger.warning("Fingerprint creation denied by security manager")
@@ -318,7 +333,8 @@ class FingerprintIndexManager:
             return False
     
     async def _generate_multi_type_fingerprints(self, content_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate multiple fingerprint types for comprehensive protection"""        fingerprints = []
+        """Generate multiple fingerprint types for comprehensive protection"""
+        fingerprints = []
         content_type = content_data.get('content_type', 'unknown')
         
         try:
@@ -477,7 +493,8 @@ class FingerprintIndexManager:
             return []
     
     def _hash_data(self, data: Any) -> str:
-        """Generate cryptographic hash of fingerprint data"""        try:
+        """Generate cryptographic hash of fingerprint data"""
+        try:
             # Convert data to JSON string for consistent hashing
             json_str = json.dumps(data, sort_keys=True, default=str)
             
@@ -490,13 +507,16 @@ class FingerprintIndexManager:
             return ""
     
     async def _store_fingerprint(self, fingerprint: Dict[str, Any]) -> bool:
-        """Store fingerprint in database"""        try:
-            sql = """            INSERT INTO content_fingerprints (
+        """Store fingerprint in database"""
+        try:
+            sql = """
+            INSERT INTO content_fingerprints (
                 content_id, user_id, fingerprint_type, fingerprint_hash,
                 fingerprint_data, similarity_threshold, status, created_at
             ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
             RETURNING id
-            """            
+            """
+            
             async with self.db_manager.get_connection() as conn:
                 result = await conn.fetchrow(
                     sql,
@@ -521,7 +541,8 @@ class FingerprintIndexManager:
             return False
     
     async def _cache_fingerprint(self, fingerprint: Dict[str, Any]) -> bool:
-        """Cache fingerprint for fast lookup"""        try:
+        """Cache fingerprint for fast lookup"""
+        try:
             redis_client = await self.redis_manager.get_client()
             
             cache_key = f"fingerprint:{fingerprint['fingerprint_hash']}"
@@ -545,7 +566,8 @@ class FingerprintIndexManager:
             return False
     
     async def _add_to_bloom_filter(self, fingerprint_hash: str) -> bool:
-        """Add fingerprint hash to bloom filter for duplicate detection"""        try:
+        """Add fingerprint hash to bloom filter for duplicate detection"""
+        try:
             # This would integrate with a proper bloom filter implementation
             # For now, we'll use Redis sets as a simplified approach
             redis_client = await self.redis_manager.get_client()
@@ -560,14 +582,17 @@ class FingerprintIndexManager:
             return False
     
     async def _check_immediate_matches(self, content_id: str) -> List[Dict[str, Any]]:
-        """Check for immediate fingerprint matches"""        try:
+        """Check for immediate fingerprint matches"""
+        try:
             matches = []
             
             # Get all fingerprints for the content
-            sql = """            SELECT id, fingerprint_type, fingerprint_hash, fingerprint_data, similarity_threshold
+            sql = """
+            SELECT id, fingerprint_type, fingerprint_hash, fingerprint_data, similarity_threshold
             FROM content_fingerprints
             WHERE content_id = $1 AND status = 'completed'
-            """            
+            """
+            
             async with self.db_manager.get_connection() as conn:
                 fingerprints = await conn.fetch(sql, content_id)
                 
@@ -601,15 +626,18 @@ class FingerprintIndexManager:
     async def _find_similar_fingerprints(self, fingerprint_hash: str, 
                                        fingerprint_type: str, 
                                        threshold: float) -> List[Dict[str, Any]]:
-        """Find fingerprints similar to the given hash"""        try:
+        """Find fingerprints similar to the given hash"""
+        try:
             # For exact hash matches
-            sql = """            SELECT id, content_id, fingerprint_hash, fingerprint_data,
+            sql = """
+            SELECT id, content_id, fingerprint_hash, fingerprint_data,
                    1.0 as similarity_score
             FROM content_fingerprints
             WHERE fingerprint_type = $1 
             AND fingerprint_hash = $2
             AND status = 'completed'
-            """            
+            """
+            
             async with self.db_manager.get_connection() as conn:
                 exact_matches = await conn.fetch(sql, fingerprint_type, fingerprint_hash)
             
@@ -635,13 +663,16 @@ class FingerprintIndexManager:
     
     async def _create_fingerprint_match(self, source_id: int, target_id: int,
                                       similarity_score: float, match_type: str) -> Optional[Dict[str, Any]]:
-        """Create a fingerprint match record"""        try:
-            sql = """            INSERT INTO fingerprint_matches (
+        """Create a fingerprint match record"""
+        try:
+            sql = """
+            INSERT INTO fingerprint_matches (
                 source_fingerprint_id, target_fingerprint_id, 
                 similarity_score, match_type, detected_at
             ) VALUES ($1, $2, $3, $4, $5)
             RETURNING id
-            """            
+            """
+            
             async with self.db_manager.get_connection() as conn:
                 result = await conn.fetchrow(
                     sql, source_id, target_id, similarity_score, match_type, datetime.utcnow()
@@ -669,14 +700,17 @@ class FingerprintIndexManager:
             return None
     
     async def _create_violation_alert(self, match: Dict[str, Any]) -> bool:
-        """Create a copyright violation alert"""        try:
+        """Create a copyright violation alert"""
+        try:
             # Get content information for both fingerprints
-            sql = """            SELECT cf1.content_id as original_content_id, cf1.user_id as original_user_id,
+            sql = """
+            SELECT cf1.content_id as original_content_id, cf1.user_id as original_user_id,
                    cf2.content_id as violating_content_id, cf2.user_id as violating_user_id
             FROM content_fingerprints cf1
             JOIN content_fingerprints cf2 ON cf2.id = $2
             WHERE cf1.id = $1
-            """            
+            """
+            
             async with self.db_manager.get_connection() as conn:
                 content_info = await conn.fetchrow(
                     sql, match['source_fingerprint_id'], match['target_fingerprint_id']
@@ -684,11 +718,13 @@ class FingerprintIndexManager:
                 
                 if content_info and content_info['original_user_id'] != content_info['violating_user_id']:
                     # Create violation record
-                    violation_sql = """                    INSERT INTO copyright_violations (
+                    violation_sql = """
+                    INSERT INTO copyright_violations (
                         original_content_id, violating_content_id, similarity_score,
                         violation_type, detected_at, evidence_data
                     ) VALUES ($1, $2, $3, $4, $5, $6)
-                    """                    
+                    """
+                    
                     evidence = {
                         'match_id': match['id'],
                         'similarity_score': match['similarity_score'],
@@ -717,7 +753,8 @@ class FingerprintIndexManager:
     async def search_content_matches(self, query_data: Dict[str, Any],
                                    similarity_threshold: float = 0.8,
                                    max_results: int = 100) -> List[Dict[str, Any]]:
-        """        Search for content matches using fingerprint similarity
+        """
+        Search for content matches using fingerprint similarity
         
         Args:
             query_data: Query content fingerprint data
@@ -726,7 +763,8 @@ class FingerprintIndexManager:
             
         Returns:
             List of matching content with similarity scores
-        """        try:
+        """
+        try:
             matches = []
             
             # Generate fingerprints for query
@@ -771,9 +809,11 @@ class FingerprintIndexManager:
             return []
     
     async def _setup_fingerprint_monitoring(self) -> bool:
-        """Setup monitoring for fingerprint operations"""        try:
+        """Setup monitoring for fingerprint operations"""
+        try:
             # Create monitoring functions and views
-            monitoring_sql = """            -- Fingerprint statistics view
+            monitoring_sql = """
+            -- Fingerprint statistics view
             CREATE OR REPLACE VIEW fingerprint_statistics AS
             SELECT 
                 fingerprint_type,
@@ -819,7 +859,8 @@ class FingerprintIndexManager:
                 GROUP BY cf.fingerprint_type;
             END;
             $$ LANGUAGE plpgsql;
-            """            
+            """
+            
             async with self.db_manager.get_connection() as conn:
                 await conn.execute(monitoring_sql)
             
@@ -831,7 +872,8 @@ class FingerprintIndexManager:
             return False
     
     async def _initialize_optimization_structures(self) -> bool:
-        """Initialize bloom filters and LSH structures"""        try:
+        """Initialize bloom filters and LSH structures"""
+        try:
             # Initialize bloom filter in Redis
             redis_client = await self.redis_manager.get_client()
             
@@ -853,7 +895,8 @@ class FingerprintIndexManager:
             return False
     
     async def _initialize_lsh_structures(self) -> bool:
-        """Initialize Locality Sensitive Hashing structures"""        try:
+        """Initialize Locality Sensitive Hashing structures"""
+        try:
             # This would implement proper LSH initialization
             # For now, we'll create the basic structure in Redis
             redis_client = await self.redis_manager.get_client()
@@ -872,7 +915,8 @@ class FingerprintIndexManager:
             return False
     
     async def get_fingerprint_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive fingerprint system statistics"""        try:
+        """Get comprehensive fingerprint system statistics"""
+        try:
             statistics = {
                 'fingerprint_counts': {},
                 'violation_statistics': {},
@@ -920,7 +964,8 @@ class FingerprintIndexManager:
             return {'error': str(e)}
     
     async def cleanup(self):
-        """Cleanup fingerprint manager resources"""        try:
+        """Cleanup fingerprint manager resources"""
+        try:
             await self.db_manager.cleanup()
             await self.redis_manager.cleanup()
             await self.performance_tracker.cleanup()
@@ -938,14 +983,16 @@ class FingerprintIndexManager:
     COMPOSITE_MULTI = "composite_multi"
 
 class FingerprintStatus:
-    """Status of fingerprint processing"""    PENDING = "pending"
+    """Status of fingerprint processing"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
     EXPIRED = "expired"
 
 class FingerprintIndexManager:
-    """    Advanced fingerprint index manager for IA-Influencer platform
+    """
+    Advanced fingerprint index manager for IA-Influencer platform
     
     Provides high-performance indexing and matching for content fingerprints:
     - Multi-modal fingerprint storage and retrieval
@@ -953,9 +1000,11 @@ class FingerprintIndexManager:
     - Duplicate detection and clustering
     - Performance-optimized indexing strategies
     - Real-time fingerprint processing
-    """    
+    """
+    
     def __init__(self):
-        """Initialize fingerprint index manager"""        self.db_manager = PostgreSQLManager()
+        """Initialize fingerprint index manager"""
+        self.db_manager = PostgreSQLManager()
         self.redis_manager = RedisManager()
         self.performance_tracker = PerformanceTracker()
         self.security_manager = FingerprintSecurityManager()
@@ -1059,7 +1108,8 @@ class FingerprintIndexManager:
         logger.info("FingerprintIndexManager initialized")
     
     async def initialize(self) -> bool:
-        """Initialize fingerprint index manager"""        try:
+        """Initialize fingerprint index manager"""
+        try:
             # Initialize database connections
             if not await self.db_manager.initialize():
                 raise Exception("Failed to initialize PostgreSQL manager")
@@ -1091,10 +1141,12 @@ class FingerprintIndexManager:
             return False
     
     async def _setup_fingerprint_schema(self):
-        """Setup database schema for fingerprint storage"""        conn = await self.db_manager.get_connection()
+        """Setup database schema for fingerprint storage"""
+        conn = await self.db_manager.get_connection()
         try:
             # Main fingerprints table
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS content_fingerprints (
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS content_fingerprints (
                     fingerprint_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                     content_id VARCHAR(255) NOT NULL,
                     user_id VARCHAR(255) NOT NULL,
@@ -1114,7 +1166,8 @@ class FingerprintIndexManager:
             """)
             
             # Similarity matches table
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS fingerprint_similarity_matches (
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS fingerprint_similarity_matches (
                     match_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                     query_fingerprint_id UUID REFERENCES content_fingerprints(fingerprint_id),
                     matched_fingerprint_id UUID REFERENCES content_fingerprints(fingerprint_id),
@@ -1128,7 +1181,8 @@ class FingerprintIndexManager:
             """)
             
             # Fingerprint clusters table
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS fingerprint_clusters (
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS fingerprint_clusters (
                     cluster_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                     fingerprint_type VARCHAR(50) NOT NULL,
                     cluster_centroid BYTEA,
@@ -1141,7 +1195,8 @@ class FingerprintIndexManager:
             """)
             
             # Statistics table
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS fingerprint_statistics (
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS fingerprint_statistics (
                     stat_id SERIAL PRIMARY KEY,
                     fingerprint_type VARCHAR(50) NOT NULL,
                     total_count INTEGER DEFAULT 0,
@@ -1163,7 +1218,8 @@ class FingerprintIndexManager:
             await self.db_manager.return_connection(conn)
     
     async def _create_fingerprint_indexes(self):
-        """Create optimized database indexes for fingerprint operations"""        conn = await self.db_manager.get_connection()
+        """Create optimized database indexes for fingerprint operations"""
+        conn = await self.db_manager.get_connection()
         try:
             # Performance indexes for content_fingerprints
             indexes = [
@@ -1216,7 +1272,8 @@ class FingerprintIndexManager:
                             fingerprint_data: Optional[bytes] = None,
                             quality_score: float = 0.0,
                             metadata: Optional[Dict[str, Any]] = None) -> Optional[str]:
-        """Add a new content fingerprint to the index"""        try:
+        """Add a new content fingerprint to the index"""
+        try:
             # Validate fingerprint type
             if fingerprint_type not in self.fingerprint_configs:
                 raise ValueError(f"Unsupported fingerprint type: {fingerprint_type}")
@@ -1237,7 +1294,8 @@ class FingerprintIndexManager:
             
             try:
                 # Insert fingerprint
-                fingerprint_id = await conn.fetchval("""                    INSERT INTO content_fingerprints 
+                fingerprint_id = await conn.fetchval("""
+                    INSERT INTO content_fingerprints 
                     (content_id, user_id, tenant_id, fingerprint_type, fingerprint_hash,
                      fingerprint_data, quality_score, metadata, status, expires_at)
                     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
@@ -1288,7 +1346,8 @@ class FingerprintIndexManager:
     async def find_similar_fingerprints(self, fingerprint_hash: str, fingerprint_type: str,
                                       similarity_threshold: Optional[float] = None,
                                       max_results: int = 100) -> List[Dict[str, Any]]:
-        """Find similar fingerprints using optimized matching algorithms"""        try:
+        """Find similar fingerprints using optimized matching algorithms"""
+        try:
             config = self.fingerprint_configs.get(fingerprint_type)
             if not config:
                 raise ValueError(f"Unsupported fingerprint type: {fingerprint_type}")
@@ -1355,10 +1414,12 @@ class FingerprintIndexManager:
     
     async def _find_similar_audio_fingerprints(self, fingerprint_hash: str, fingerprint_type: str,
                                              threshold: float, max_results: int) -> List[Dict[str, Any]]:
-        """Find similar audio fingerprints using specialized audio matching"""        conn = await self.db_manager.get_connection()
+        """Find similar audio fingerprints using specialized audio matching"""
+        conn = await self.db_manager.get_connection()
         try:
             # Use Hamming distance for audio fingerprints
-            results = await conn.fetch("""                SELECT cf.fingerprint_id, cf.content_id, cf.user_id, cf.fingerprint_hash,
+            results = await conn.fetch("""
+                SELECT cf.fingerprint_id, cf.content_id, cf.user_id, cf.fingerprint_hash,
                        cf.quality_score, cf.metadata, cf.created_at,
                        -- Calculate Hamming distance similarity
                        1.0 - (bit_count(cf.fingerprint_hash::bit(64) # $1::bit(64))::float / 64.0) as similarity_score
@@ -1382,10 +1443,12 @@ class FingerprintIndexManager:
     
     async def _find_similar_image_fingerprints(self, fingerprint_hash: str, fingerprint_type: str,
                                              threshold: float, max_results: int) -> List[Dict[str, Any]]:
-        """Find similar image fingerprints using perceptual hashing"""        conn = await self.db_manager.get_connection()
+        """Find similar image fingerprints using perceptual hashing"""
+        conn = await self.db_manager.get_connection()
         try:
             # Use Hamming distance for perceptual hashes
-            results = await conn.fetch("""                SELECT cf.fingerprint_id, cf.content_id, cf.user_id, cf.fingerprint_hash,
+            results = await conn.fetch("""
+                SELECT cf.fingerprint_id, cf.content_id, cf.user_id, cf.fingerprint_hash,
                        cf.quality_score, cf.metadata, cf.created_at,
                        -- Calculate perceptual hash similarity
                        1.0 - (bit_count(cf.fingerprint_hash::bit(64) # $1::bit(64))::float / 64.0) as similarity_score
@@ -1409,11 +1472,13 @@ class FingerprintIndexManager:
     
     async def _find_similar_text_fingerprints(self, fingerprint_hash: str, fingerprint_type: str,
                                             threshold: float, max_results: int) -> List[Dict[str, Any]]:
-        """Find similar text fingerprints using locality-sensitive hashing"""        conn = await self.db_manager.get_connection()
+        """Find similar text fingerprints using locality-sensitive hashing"""
+        conn = await self.db_manager.get_connection()
         try:
             if fingerprint_type == FingerprintType.TEXT_MINHASH:
                 # Use Jaccard similarity for MinHash
-                results = await conn.fetch("""                    SELECT cf.fingerprint_id, cf.content_id, cf.user_id, cf.fingerprint_hash,
+                results = await conn.fetch("""
+                    SELECT cf.fingerprint_id, cf.content_id, cf.user_id, cf.fingerprint_hash,
                            cf.quality_score, cf.metadata, cf.created_at,
                            -- Calculate MinHash Jaccard similarity (simplified)
                            CASE WHEN length($1) > 0 AND length(cf.fingerprint_hash) > 0
@@ -1430,7 +1495,8 @@ class FingerprintIndexManager:
                 """, fingerprint_hash, fingerprint_type, threshold, max_results)
             else:
                 # Use Hamming distance for SimHash
-                results = await conn.fetch("""                    SELECT cf.fingerprint_id, cf.content_id, cf.user_id, cf.fingerprint_hash,
+                results = await conn.fetch("""
+                    SELECT cf.fingerprint_id, cf.content_id, cf.user_id, cf.fingerprint_hash,
                            cf.quality_score, cf.metadata, cf.created_at,
                            1.0 - (bit_count(cf.fingerprint_hash::bit(64) # $1::bit(64))::float / 64.0) as similarity_score
                     FROM content_fingerprints cf
@@ -1453,9 +1519,11 @@ class FingerprintIndexManager:
     
     async def _find_similar_generic_fingerprints(self, fingerprint_hash: str, fingerprint_type: str,
                                                threshold: float, max_results: int) -> List[Dict[str, Any]]:
-        """Find similar fingerprints using generic string similarity"""        conn = await self.db_manager.get_connection()
+        """Find similar fingerprints using generic string similarity"""
+        conn = await self.db_manager.get_connection()
         try:
-            results = await conn.fetch("""                SELECT cf.fingerprint_id, cf.content_id, cf.user_id, cf.fingerprint_hash,
+            results = await conn.fetch("""
+                SELECT cf.fingerprint_id, cf.content_id, cf.user_id, cf.fingerprint_hash,
                        cf.quality_score, cf.metadata, cf.created_at,
                        similarity(cf.fingerprint_hash, $1) as similarity_score
                 FROM content_fingerprints cf
@@ -1477,7 +1545,8 @@ class FingerprintIndexManager:
             await self.db_manager.return_connection(conn)
     
     async def _cache_fingerprint(self, fingerprint_id: str, fingerprint_data: Dict[str, Any]):
-        """Cache fingerprint data in Redis for fast access"""        try:
+        """Cache fingerprint data in Redis for fast access"""
+        try:
             redis_conn = await self.redis_manager.get_connection()
             cache_key = f"fingerprint:{fingerprint_id}"
             
@@ -1491,7 +1560,8 @@ class FingerprintIndexManager:
             logger.debug(f"Failed to cache fingerprint: {str(e)}")
     
     async def _cache_similarity_results(self, cache_key: str, results: List[Dict[str, Any]]):
-        """Cache similarity search results"""        try:
+        """Cache similarity search results"""
+        try:
             redis_conn = await self.redis_manager.get_connection()
             
             # Convert datetime objects to strings for JSON serialization
@@ -1512,7 +1582,8 @@ class FingerprintIndexManager:
             logger.debug(f"Failed to cache similarity results: {str(e)}")
     
     async def _get_cached_similarity_results(self, cache_key: str) -> Optional[List[Dict[str, Any]]]:
-        """Get cached similarity search results"""        try:
+        """Get cached similarity search results"""
+        try:
             redis_conn = await self.redis_manager.get_connection()
             cached_data = await redis_conn.get(cache_key)
             
@@ -1531,14 +1602,16 @@ class FingerprintIndexManager:
             return None
     
     async def _process_fingerprint_clustering(self, fingerprint_id: str, fingerprint_type: str):
-        """Process fingerprint for clustering analysis"""        try:
+        """Process fingerprint for clustering analysis"""
+        try:
             # This is a simplified clustering implementation
             # In production, you'd use more sophisticated clustering algorithms
             
             conn = await self.db_manager.get_connection()
             
             # Find existing clusters for this fingerprint type
-            similar_clusters = await conn.fetch("""                SELECT fc.cluster_id, fc.cluster_centroid, fc.cluster_size
+            similar_clusters = await conn.fetch("""
+                SELECT fc.cluster_id, fc.cluster_centroid, fc.cluster_size
                 FROM fingerprint_clusters fc
                 WHERE fc.fingerprint_type = $1
                   AND fc.cluster_size < 1000  -- Don't add to overly large clusters
@@ -1551,14 +1624,16 @@ class FingerprintIndexManager:
                 cluster_id = similar_clusters[-1]['cluster_id']
                 
                 # Update cluster
-                await conn.execute("""                    UPDATE fingerprint_clusters 
+                await conn.execute("""
+                    UPDATE fingerprint_clusters 
                     SET cluster_size = cluster_size + 1,
                         updated_at = NOW()
                     WHERE cluster_id = $1
                 """, cluster_id)
                 
                 # Assign fingerprint to cluster
-                await conn.execute("""                    UPDATE content_fingerprints 
+                await conn.execute("""
+                    UPDATE content_fingerprints 
                     SET similarity_cluster_id = $1
                     WHERE fingerprint_id = $2
                 """, cluster_id, fingerprint_id)
@@ -1569,11 +1644,13 @@ class FingerprintIndexManager:
             await self.db_manager.return_connection(conn)
     
     async def _load_fingerprint_statistics(self):
-        """Load existing fingerprint statistics"""        try:
+        """Load existing fingerprint statistics"""
+        try:
             conn = await self.db_manager.get_connection()
             
             # Load latest statistics for each fingerprint type
-            stats = await conn.fetch("""                SELECT fingerprint_type, total_count, matches_count, 
+            stats = await conn.fetch("""
+                SELECT fingerprint_type, total_count, matches_count, 
                        false_positives, average_similarity
                 FROM fingerprint_statistics
                 WHERE date_collected = CURRENT_DATE
@@ -1596,11 +1673,13 @@ class FingerprintIndexManager:
             await self.db_manager.return_connection(conn)
     
     async def _setup_cleanup_schedule(self):
-        """Setup automatic cleanup of expired fingerprints"""        # This would typically run as a background task
+        """Setup automatic cleanup of expired fingerprints"""
+        # This would typically run as a background task
         pass
     
     async def get_fingerprint_statistics(self, fingerprint_type: Optional[str] = None) -> Dict[str, Any]:
-        """Get comprehensive fingerprint statistics"""        try:
+        """Get comprehensive fingerprint statistics"""
+        try:
             if fingerprint_type:
                 if fingerprint_type not in self.index_stats:
                     return {'error': f'No statistics available for {fingerprint_type}'}
@@ -1627,17 +1706,20 @@ class FingerprintIndexManager:
             return {'error': str(e)}
     
     async def cleanup_expired_fingerprints(self) -> Dict[str, Any]:
-        """Clean up expired fingerprints to maintain performance"""        try:
+        """Clean up expired fingerprints to maintain performance"""
+        try:
             conn = await self.db_manager.get_connection()
             start_time = datetime.now()
             
             # Delete expired fingerprints
-            deleted_count = await conn.fetchval("""                DELETE FROM content_fingerprints
+            deleted_count = await conn.fetchval("""
+                DELETE FROM content_fingerprints
                 WHERE expires_at IS NOT NULL AND expires_at < NOW()
             """)
             
             # Clean up orphaned similarity matches
-            orphaned_matches = await conn.fetchval("""                DELETE FROM fingerprint_similarity_matches
+            orphaned_matches = await conn.fetchval("""
+                DELETE FROM fingerprint_similarity_matches
                 WHERE query_fingerprint_id NOT IN (SELECT fingerprint_id FROM content_fingerprints)
                    OR matched_fingerprint_id NOT IN (SELECT fingerprint_id FROM content_fingerprints)
             """)
@@ -1665,7 +1747,8 @@ class FingerprintIndexManager:
             await self.db_manager.return_connection(conn)
     
     async def cleanup(self):
-        """Cleanup resources and connections"""        try:
+        """Cleanup resources and connections"""
+        try:
             # Save final statistics
             await self._save_final_statistics()
             
@@ -1685,11 +1768,13 @@ class FingerprintIndexManager:
             logger.error(f"Error during FingerprintIndexManager cleanup: {str(e)}")
     
     async def _save_final_statistics(self):
-        """Save current statistics to database"""        try:
+        """Save current statistics to database"""
+        try:
             conn = await self.db_manager.get_connection()
             
             for fingerprint_type, stats in self.index_stats.items():
-                await conn.execute("""                    INSERT INTO fingerprint_statistics 
+                await conn.execute("""
+                    INSERT INTO fingerprint_statistics 
                     (fingerprint_type, total_count, matches_count, false_positives, average_similarity)
                     VALUES ($1, $2, $3, $4, $5)
                     ON CONFLICT (fingerprint_type, date_collected)

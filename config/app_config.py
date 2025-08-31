@@ -3,7 +3,8 @@ Main configuration module that consolidates settings from various sources.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import os
+"""
+import os
 from typing import Optional
 from dataclasses import dataclass
 
@@ -24,14 +25,16 @@ except ImportError:
 
 @dataclass
 class AppConfig:
-    """Application configuration settings"""    environment: str = os.getenv("ENVIRONMENT", "development")
+    """Application configuration settings"""
+    environment: str = os.getenv("ENVIRONMENT", "development")
     debug: bool = os.getenv("DEBUG", "false").lower() == "true"
     host: str = os.getenv("HOST", "0.0.0.0")
     port: int = int(os.getenv("PORT", "8000"))
 
 
 class Settings:
-    """Unified settings class that consolidates configuration from multiple sources"""    
+    """Unified settings class that consolidates configuration from multiple sources"""
+    
     def __init__(self):
         # Initialize app settings
         self.app = AppConfig()
@@ -64,7 +67,8 @@ class Settings:
             self._load_fallback_settings()
     
     def _load_fallback_settings(self):
-        """Load minimal fallback settings"""        print("⚠️  Using minimal fallback configuration")
+        """Load minimal fallback settings"""
+        print("⚠️  Using minimal fallback configuration")
         # Keep the app config we already have
         # Add minimal database config
         self.database = type('Database', (), {
@@ -79,7 +83,8 @@ class Settings:
         })()
     
     def _map_core_settings(self, core_settings):
-        """Map core settings to our unified structure"""        # Map core settings to our app structure
+        """Map core settings to our unified structure"""
+        # Map core settings to our app structure
         self.app.host = getattr(core_settings, 'HOST', self.app.host)
         self.app.port = getattr(core_settings, 'PORT', self.app.port)
         self.app.debug = getattr(core_settings, 'DEBUG', self.app.debug)
@@ -103,4 +108,5 @@ settings = Settings()
 
 
 def get_settings():
-    """Get settings instance for dependency injection."""    return settings
+    """Get settings instance for dependency injection."""
+    return settings

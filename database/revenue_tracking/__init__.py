@@ -11,7 +11,8 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
-"""from typing import List, Dict, Any, Optional, Union
+"""
+from typing import List, Dict, Any, Optional, Union
 from datetime import datetime
 from decimal import Decimal
 import logging
@@ -115,11 +116,13 @@ logger = logging.getLogger(__name__)
 
 
 class EnterpriseRevenueTrackingSystem:
-    """    Système principal de suivi des revenus de niveau enterprise
+    """
+    Système principal de suivi des revenus de niveau enterprise
     
     Intègre tous les modules de revenue tracking avec une interface unifiée
     pour la gestion complète des revenus multi-plateformes.
-    """    
+    """
+    
     def __init__(self, db_manager, cache_manager=None):
         self.db_manager = db_manager
         self.cache_manager = cache_manager
@@ -148,8 +151,10 @@ class EnterpriseRevenueTrackingSystem:
         currency: str = "EUR",
         content_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Traite une transaction de revenus complète avec tous les modules
-        """        try:
+        """
+        Traite une transaction de revenus complète avec tous les modules
+        """
+        try:
             # 1. Création de l'enregistrement de revenus
             revenue_record = await self.revenue_manager.create_revenue_record(
                 user_id=user_id,
@@ -229,8 +234,10 @@ class EnterpriseRevenueTrackingSystem:
         report_type: str = "monthly",
         include_forecasts: bool = True
     ) -> Dict[str, Any]:
-        """        Génère un rapport complet multi-modules
-        """        # Rapport financier de base
+        """
+        Génère un rapport complet multi-modules
+        """
+        # Rapport financier de base
         financial_report = await self.reporting_engine.generate_comprehensive_report(
             user_id, report_type
         )
@@ -283,8 +290,10 @@ class EnterpriseRevenueTrackingSystem:
         user_id: str,
         profile_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Configure le profil de revenus complet d'un utilisateur
-        """        results = {}
+        """
+        Configure le profil de revenus complet d'un utilisateur
+        """
+        results = {}
         
         # Configuration du profil de base
         if 'platforms' in profile_config:
@@ -346,8 +355,10 @@ class EnterpriseRevenueTrackingSystem:
         self,
         user_id: str
     ) -> Dict[str, Any]:
-        """        Fournit les données en temps réel pour le dashboard
-        """        # Métriques de revenus en temps réel
+        """
+        Fournit les données en temps réel pour le dashboard
+        """
+        # Métriques de revenus en temps réel
         revenue_metrics = await self.analytics_engine.get_real_time_metrics(user_id)
         
         # Status des fraudes
@@ -472,17 +483,21 @@ __all__ = [
 
 
 class RevenueTrackingManager:
-    """    Enterprise Revenue Tracking Manager
+    """
+    Enterprise Revenue Tracking Manager
     
     Gestionnaire principal pour toutes les opérations de suivi des revenus,
     intégrant analytics IA, distribution automatisée et reporting complet.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialise le gestionnaire de suivi des revenus.
+        """
+        Initialise le gestionnaire de suivi des revenus.
         
         Args:
             config: Configuration du système
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize core components
@@ -496,14 +511,16 @@ class RevenueTrackingManager:
         self,
         transaction_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Traite une transaction de revenus complète.
+        """
+        Traite une transaction de revenus complète.
         
         Args:
             transaction_data: Données de la transaction
             
         Returns:
             Dict résultat du traitement
-        """        try:
+        """
+        try:
             # Record transaction
             transaction = await self.revenue_records.create_transaction(
                 transaction_data
@@ -539,7 +556,8 @@ class RevenueTrackingManager:
         date_range: Tuple[datetime, datetime],
         platforms: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """        Génère un rapport complet des revenus.
+        """
+        Génère un rapport complet des revenus.
         
         Args:
             user_id: ID utilisateur
@@ -548,7 +566,8 @@ class RevenueTrackingManager:
             
         Returns:
             Dict rapport complet
-        """        return await self.reporting_engine.generate_comprehensive_report(
+        """
+        return await self.reporting_engine.generate_comprehensive_report(
             user_id=user_id,
             date_range=date_range,
             platforms=platforms,
@@ -558,11 +577,13 @@ class RevenueTrackingManager:
 
 
 def get_module_info() -> Dict[str, Any]:
-    """    Retourne les informations complètes du module Revenue Tracking.
+    """
+    Retourne les informations complètes du module Revenue Tracking.
     
     Returns:
         Dict[str, Any]: Informations du module
-    """    return {
+    """
+    return {
         "name": "Enterprise Revenue Tracking Database",
         "version": __version__,
         "author": "Fahed Mlaiel",

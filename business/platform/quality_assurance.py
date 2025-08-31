@@ -5,7 +5,8 @@ performance monitoring, and automated testing across all platform operations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -26,7 +27,8 @@ from ...services.monitoring.performance_monitor import PerformanceMonitorService
 logger = get_logger(__name__)
 
 class QualityCheckType(Enum):
-    """Quality check types"""    CONTENT_QUALITY = "content_quality"
+    """Quality check types"""
+    CONTENT_QUALITY = "content_quality"
     TECHNICAL_QUALITY = "technical_quality"
     PERFORMANCE_CHECK = "performance_check"
     SECURITY_AUDIT = "security_audit"
@@ -35,7 +37,8 @@ class QualityCheckType(Enum):
     API_RELIABILITY = "api_reliability"
 
 class QualityLevel(Enum):
-    """Quality levels"""    EXCELLENT = "excellent"  # 90-100
+    """Quality levels"""
+    EXCELLENT = "excellent"  # 90-100
     GOOD = "good"           # 75-89
     FAIR = "fair"           # 60-74
     POOR = "poor"           # 40-59
@@ -43,7 +46,8 @@ class QualityLevel(Enum):
 
 @dataclass
 class QualityMetrics:
-    """Quality metrics structure"""    overall_score: float
+    """Quality metrics structure"""
+    overall_score: float
     content_quality: float
     technical_quality: float
     performance_score: float
@@ -53,7 +57,8 @@ class QualityMetrics:
 
 @dataclass
 class QualityIssue:
-    """Quality issue structure"""    issue_id: str
+    """Quality issue structure"""
+    issue_id: str
     severity: str
     category: str
     description: str
@@ -62,7 +67,8 @@ class QualityIssue:
     detected_at: datetime
 
 class QualityAssurance:
-    """    Advanced quality assurance and monitoring system
+    """
+    Advanced quality assurance and monitoring system
     
     Features:
     - Content quality analysis and scoring
@@ -72,7 +78,8 @@ class QualityAssurance:
     - Compliance validation
     - User experience monitoring
     - Automated testing and validation
-    """    
+    """
+    
     def __init__(self):
         # Core services
         self.quality_analyzer = QualityAnalyzerService()
@@ -93,11 +100,13 @@ class QualityAssurance:
         self.cache_ttl = timedelta(minutes=30)
     
     async def initialize(self) -> bool:
-        """        Initialize quality assurance system
+        """
+        Initialize quality assurance system
         
         Returns:
             bool: Initialization success status
-        """        try:
+        """
+        try:
             logger.info("Initializing Quality Assurance System...")
             
             # Initialize services
@@ -125,7 +134,8 @@ class QualityAssurance:
         user_id: int,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """        Comprehensive content quality assessment
+        """
+        Comprehensive content quality assessment
         
         Args:
             content_id: Content item ID
@@ -136,7 +146,8 @@ class QualityAssurance:
             
         Returns:
             Dict containing quality assessment results
-        """        try:
+        """
+        try:
             logger.info(f"Assessing content quality: {content_id}")
             
             # Perform multi-dimensional quality analysis
@@ -194,7 +205,8 @@ class QualityAssurance:
         component: Optional[str] = None,
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """        Comprehensive platform quality assessment
+        """
+        Comprehensive platform quality assessment
         
         Args:
             component: Specific component to assess (optional)
@@ -202,7 +214,8 @@ class QualityAssurance:
             
         Returns:
             Dict containing platform quality assessment
-        """        try:
+        """
+        try:
             logger.info("Assessing platform quality")
             
             # Performance assessment
@@ -274,7 +287,8 @@ class QualityAssurance:
         test_suite: str = "comprehensive",
         component: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Run automated quality tests
+        """
+        Run automated quality tests
         
         Args:
             test_suite: Test suite to run
@@ -282,7 +296,8 @@ class QualityAssurance:
             
         Returns:
             Dict containing test results
-        """        try:
+        """
+        try:
             logger.info(f"Running quality tests: {test_suite}")
             
             # Run automated test suite
@@ -321,7 +336,8 @@ class QualityAssurance:
         time_period: timedelta = timedelta(days=30),
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """        Monitor quality trends over time
+        """
+        Monitor quality trends over time
         
         Args:
             time_period: Time period for trend analysis
@@ -329,7 +345,8 @@ class QualityAssurance:
             
         Returns:
             Dict containing quality trend analysis
-        """        try:
+        """
+        try:
             start_date = datetime.utcnow() - time_period
             
             # Get quality checks within time period
@@ -377,7 +394,8 @@ class QualityAssurance:
         user_id: Optional[int] = None,
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """        Generate comprehensive quality report
+        """
+        Generate comprehensive quality report
         
         Args:
             report_type: Type of report to generate
@@ -386,7 +404,8 @@ class QualityAssurance:
             
         Returns:
             Dict containing quality report
-        """        try:
+        """
+        try:
             logger.info(f"Generating quality report: {report_type}")
             
             # Collect quality data
@@ -419,7 +438,8 @@ class QualityAssurance:
         content_path: str, 
         content_type: str
     ) -> Dict[str, Any]:
-        """Perform comprehensive quality check"""        quality_results = {}
+        """Perform comprehensive quality check"""
+        quality_results = {}
         
         # Technical quality checks
         if content_type == 'audio':
@@ -449,7 +469,8 @@ class QualityAssurance:
         return quality_results
     
     async def _calculate_overall_quality_score(self, quality_results: Dict[str, Any]) -> float:
-        """Calculate weighted overall quality score"""        weights = {
+        """Calculate weighted overall quality score"""
+        weights = {
             'technical_quality': 0.30,
             'content_quality': 0.25,
             'seo_quality': 0.20,
@@ -468,7 +489,8 @@ class QualityAssurance:
         return total_score / total_weight if total_weight > 0 else 0.0
     
     async def _determine_quality_level(self, score: float) -> QualityLevel:
-        """Determine quality level based on score"""        if score >= 90:
+        """Determine quality level based on score"""
+        if score >= 90:
             return QualityLevel.EXCELLENT
         elif score >= 75:
             return QualityLevel.GOOD
@@ -484,7 +506,8 @@ class QualityAssurance:
         quality_results: Dict[str, Any], 
         content_type: str
     ) -> List[str]:
-        """Generate quality improvement recommendations"""        recommendations = []
+        """Generate quality improvement recommendations"""
+        recommendations = []
         
         # Technical recommendations
         for category, results in quality_results.items():
@@ -503,26 +526,32 @@ class QualityAssurance:
         return recommendations
     
     async def _assess_platform_performance(self) -> Dict[str, Any]:
-        """Assess platform performance metrics"""        return await self.performance_monitor.get_comprehensive_metrics()
+        """Assess platform performance metrics"""
+        return await self.performance_monitor.get_comprehensive_metrics()
     
     async def _assess_platform_security(self) -> Dict[str, Any]:
-        """Assess platform security metrics"""        # Implementation for security assessment
+        """Assess platform security metrics"""
+        # Implementation for security assessment
         return {'score': 95.0, 'issues': [], 'recommendations': []}
     
     async def _assess_platform_reliability(self) -> Dict[str, Any]:
-        """Assess platform reliability metrics"""        # Implementation for reliability assessment
+        """Assess platform reliability metrics"""
+        # Implementation for reliability assessment
         return {'score': 98.5, 'uptime': 99.9, 'error_rate': 0.1}
     
     async def _assess_user_experience(self) -> Dict[str, Any]:
-        """Assess user experience metrics"""        # Implementation for UX assessment
+        """Assess user experience metrics"""
+        # Implementation for UX assessment
         return {'score': 88.0, 'satisfaction_rating': 4.4, 'usability_score': 85}
     
     async def _assess_api_quality(self) -> Dict[str, Any]:
-        """Assess API quality metrics"""        # Implementation for API quality assessment
+        """Assess API quality metrics"""
+        # Implementation for API quality assessment
         return {'score': 92.0, 'response_time': 150, 'success_rate': 99.8}
     
     async def _continuous_quality_monitoring(self):
-        """Continuous background quality monitoring"""        while True:
+        """Continuous background quality monitoring"""
+        while True:
             try:
                 logger.info("Running continuous quality monitoring")
                 # Implementation for continuous monitoring
@@ -533,7 +562,8 @@ class QualityAssurance:
                 await asyncio.sleep(1800)
     
     async def _run_automated_tests(self):
-        """Run automated tests periodically"""        while True:
+        """Run automated tests periodically"""
+        while True:
             try:
                 # Implementation for automated testing
                 await asyncio.sleep(3600)  # Test every hour
@@ -543,7 +573,8 @@ class QualityAssurance:
                 await asyncio.sleep(3600)
     
     async def _performance_health_checks(self):
-        """Run performance health checks"""        while True:
+        """Run performance health checks"""
+        while True:
             try:
                 # Implementation for health checks
                 await asyncio.sleep(300)  # Check every 5 minutes

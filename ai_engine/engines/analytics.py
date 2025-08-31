@@ -30,7 +30,8 @@ IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 🔒 NO UNAUTHORIZED USE, COPYING, MODIFICATION, OR DISTRIBUTION ALLOWED.
 
 Business Logic: User Upload → AI Processing → Protection → SEO → Collaboration → Distribution
-"""import asyncio
+"""
+import asyncio
 import time
 import json
 import statistics
@@ -47,7 +48,8 @@ from pathlib import Path
 
 
 class MetricType(Enum):
-    """Types of metrics collected"""    PERFORMANCE = "performance"
+    """Types of metrics collected"""
+    PERFORMANCE = "performance"
     BUSINESS = "business"
     QUALITY = "quality"
     SECURITY = "security"
@@ -58,7 +60,8 @@ class MetricType(Enum):
 
 
 class AggregationPeriod(Enum):
-    """Metric aggregation time periods"""    REAL_TIME = "real_time"
+    """Metric aggregation time periods"""
+    REAL_TIME = "real_time"
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -69,7 +72,8 @@ class AggregationPeriod(Enum):
 
 @dataclass
 class MetricPoint:
-    """Individual metric data point"""    timestamp: datetime
+    """Individual metric data point"""
+    timestamp: datetime
     value: Union[int, float, str, bool]
     tags: Dict[str, str] = field(default_factory=dict)
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -78,7 +82,8 @@ class MetricPoint:
 @dataclass
 @dataclass
 class PerformanceMetrics:
-    """Performance-related metrics"""    processing_time: float = 0.0
+    """Performance-related metrics"""
+    processing_time: float = 0.0
     throughput: float = 0.0
     memory_usage_mb: float = 0.0
     cpu_usage_percent: float = 0.0
@@ -94,7 +99,8 @@ class PerformanceMetrics:
 
 @dataclass
 class BusinessMetrics:
-    """Business-related metrics"""    total_content_processed: int = 0
+    """Business-related metrics"""
+    total_content_processed: int = 0
     revenue_generated: float = 0.0
     active_users: int = 0
     new_users: int = 0
@@ -110,7 +116,8 @@ class BusinessMetrics:
 
 @dataclass
 class QualityMetrics:
-    """Content quality metrics"""    avg_quality_score: float = 0.0
+    """Content quality metrics"""
+    avg_quality_score: float = 0.0
     content_approval_rate: float = 0.0
     user_satisfaction_score: float = 0.0
     ai_accuracy_score: float = 0.0
@@ -124,7 +131,8 @@ class QualityMetrics:
 
 @dataclass
 class SecurityMetrics:
-    """Security-related metrics"""    security_threats_detected: int = 0
+    """Security-related metrics"""
+    security_threats_detected: int = 0
     security_incidents: int = 0
     failed_auth_attempts: int = 0
     suspicious_activities: int = 0
@@ -138,7 +146,8 @@ class SecurityMetrics:
 
 @dataclass
 class CollaborationMetrics:
-    """Collaboration and networking metrics"""    collaboration_requests: int = 0
+    """Collaboration and networking metrics"""
+    collaboration_requests: int = 0
     successful_collaborations: int = 0
     collaboration_success_rate: float = 0.0
     avg_collaboration_value: float = 0.0
@@ -151,11 +160,13 @@ class CollaborationMetrics:
 
 
 class MetricsCollector:
-    """    Advanced metrics collection and aggregation system.
+    """
+    Advanced metrics collection and aggregation system.
     
     Collects, processes, and analyzes metrics from all AI engines
     with real-time monitoring and historical analysis capabilities.
-    """    
+    """
+    
     def __init__(
         self,
         buffer_size: int = 10000,
@@ -197,7 +208,8 @@ class MetricsCollector:
         tags: Optional[Dict[str, str]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ):
-        """        Record a metric data point.
+        """
+        Record a metric data point.
         
         Args:
             metric_name: Name of the metric
@@ -205,7 +217,8 @@ class MetricsCollector:
             metric_type: Type of metric
             tags: Optional tags for filtering
             metadata: Optional additional metadata
-        """        metric_point = MetricPoint(
+        """
+        metric_point = MetricPoint(
             timestamp=datetime.now(),
             value=value,
             tags=tags or {},
@@ -228,7 +241,8 @@ class MetricsCollector:
         content_type: str,
         success: bool = True
     ):
-        """Record processing time metrics"""        self.record_metric(
+        """Record processing time metrics"""
+        self.record_metric(
             f"{engine_name}.processing_time",
             processing_time,
             MetricType.PERFORMANCE,
@@ -248,7 +262,8 @@ class MetricsCollector:
         user_id: str,
         content_type: str
     ):
-        """Record revenue metrics"""        self.record_metric(
+        """Record revenue metrics"""
+        self.record_metric(
             f"{engine_name}.revenue",
             revenue,
             MetricType.REVENUE,
@@ -265,7 +280,8 @@ class MetricsCollector:
         success: bool,
         value: float = 0.0
     ):
-        """Record collaboration metrics"""        self.record_metric(
+        """Record collaboration metrics"""
+        self.record_metric(
             f"{engine_name}.collaboration",
             1 if success else 0,
             MetricType.COLLABORATION,
@@ -288,7 +304,8 @@ class MetricsCollector:
         quality_score: float,
         content_type: str
     ):
-        """Record content quality metrics"""        self.record_metric(
+        """Record content quality metrics"""
+        self.record_metric(
             f"{engine_name}.quality_score",
             quality_score,
             MetricType.QUALITY,
@@ -307,7 +324,8 @@ class MetricsCollector:
         engine_name: str,
         details: Dict[str, Any]
     ):
-        """Record security events"""        self.record_metric(
+        """Record security events"""
+        self.record_metric(
             f"security.{event_type}",
             1,
             MetricType.SECURITY,
@@ -327,14 +345,16 @@ class MetricsCollector:
         self,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """        Get comprehensive metrics summary.
+        """
+        Get comprehensive metrics summary.
         
         Args:
             time_range: Optional time range filter
             
         Returns:
             Complete metrics summary
-        """        if time_range is None:
+        """
+        if time_range is None:
             end_time = datetime.now()
             start_time = end_time - timedelta(hours=24)
             time_range = (start_time, end_time)
@@ -361,7 +381,8 @@ class MetricsCollector:
         engine_name: str,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """        Get metrics for specific engine.
+        """
+        Get metrics for specific engine.
         
         Args:
             engine_name: Name of the engine
@@ -369,7 +390,8 @@ class MetricsCollector:
             
         Returns:
             Engine-specific metrics
-        """        if time_range is None:
+        """
+        if time_range is None:
             end_time = datetime.now()
             start_time = end_time - timedelta(hours=24)
             time_range = (start_time, end_time)
@@ -400,7 +422,8 @@ class MetricsCollector:
         return engine_metrics
         
     def get_real_time_dashboard(self) -> Dict[str, Any]:
-        """Get real-time dashboard data"""        return {
+        """Get real-time dashboard data"""
+        return {
             "current_time": datetime.now().isoformat(),
             "system_status": self._get_system_status(),
             "performance": {
@@ -421,7 +444,8 @@ class MetricsCollector:
         }
         
     def _update_real_time_metrics(self, metric_name: str, metric_point: MetricPoint):
-        """Update real-time metric aggregations"""        if isinstance(metric_point.value, (int, float)):
+        """Update real-time metric aggregations"""
+        if isinstance(metric_point.value, (int, float)):
             # Update throughput
             if "processing_time" in metric_name:
                 recent_points = list(self.raw_metrics[metric_name])[-100:]
@@ -430,7 +454,8 @@ class MetricsCollector:
                     self.performance_metrics.throughput = len(times) / sum(times) * 60 if sum(times) > 0 else 0
                     
     def _start_background_aggregation(self):
-        """Start background metric aggregation"""        def aggregation_worker():
+        """Start background metric aggregation"""
+        def aggregation_worker():
             while True:
                 try:
                     time.sleep(self.aggregation_interval)
@@ -442,7 +467,8 @@ class MetricsCollector:
         aggregation_thread.start()
         
     def _aggregate_metrics(self):
-        """Aggregate raw metrics into time periods"""        with self.aggregation_lock:
+        """Aggregate raw metrics into time periods"""
+        with self.aggregation_lock:
             current_time = datetime.now()
             
             # Aggregate for different periods
@@ -476,7 +502,8 @@ class MetricsCollector:
             self.last_aggregation = current_time
             
     def _get_period_start(self, timestamp: datetime, period: AggregationPeriod) -> datetime:
-        """Get start of period for timestamp"""        if period == AggregationPeriod.MINUTE:
+        """Get start of period for timestamp"""
+        if period == AggregationPeriod.MINUTE:
             return timestamp.replace(second=0, microsecond=0)
         elif period == AggregationPeriod.HOUR:
             return timestamp.replace(minute=0, second=0, microsecond=0)
@@ -495,7 +522,8 @@ class MetricsCollector:
             return timestamp
             
     def _calculate_aggregated_value(self, points: List[MetricPoint]) -> float:
-        """Calculate aggregated value from points"""        numeric_values = [p.value for p in points if isinstance(p.value, (int, float))]
+        """Calculate aggregated value from points"""
+        numeric_values = [p.value for p in points if isinstance(p.value, (int, float))]
         
         if not numeric_values:
             return 0.0
@@ -504,7 +532,8 @@ class MetricsCollector:
         return statistics.mean(numeric_values)
         
     def _cleanup_old_data(self):
-        """Remove old aggregated data beyond retention period"""        cutoff_date = datetime.now() - timedelta(days=self.retention_days)
+        """Remove old aggregated data beyond retention period"""
+        cutoff_date = datetime.now() - timedelta(days=self.retention_days)
         
         for metric_name in self.aggregated_metrics:
             for period in AggregationPeriod:
@@ -514,7 +543,8 @@ class MetricsCollector:
                 ]
                 
     def _get_system_status(self) -> str:
-        """Get overall system status"""        if self.performance_metrics.error_rate > 10:
+        """Get overall system status"""
+        if self.performance_metrics.error_rate > 10:
             return "critical"
         elif self.performance_metrics.error_rate > 5:
             return "warning"
@@ -524,7 +554,8 @@ class MetricsCollector:
             return "healthy"
             
     def _calculate_daily_revenue(self) -> float:
-        """Calculate revenue for today"""        today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+        """Calculate revenue for today"""
+        today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
         tomorrow = today + timedelta(days=1)
         
         daily_revenue = 0.0
@@ -537,7 +568,8 @@ class MetricsCollector:
         return daily_revenue
         
     def _calculate_daily_content(self) -> int:
-        """Calculate content processed today"""        today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+        """Calculate content processed today"""
+        today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
         tomorrow = today + timedelta(days=1)
         
         content_count = 0
@@ -550,7 +582,8 @@ class MetricsCollector:
         return content_count
         
     def _calculate_daily_collaborations(self) -> int:
-        """Calculate collaborations created today"""        today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+        """Calculate collaborations created today"""
+        today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
         tomorrow = today + timedelta(days=1)
         
         collaboration_count = 0
@@ -564,7 +597,8 @@ class MetricsCollector:
         return collaboration_count
         
     def _get_top_engines(self) -> List[Dict[str, Any]]:
-        """Get top performing engines"""        engine_performance = defaultdict(lambda: {"total_processed": 0, "avg_time": 0, "revenue": 0})
+        """Get top performing engines"""
+        engine_performance = defaultdict(lambda: {"total_processed": 0, "avg_time": 0, "revenue": 0})
         
         for metric_name, points in self.raw_metrics.items():
             if ".processing_time" in metric_name:
@@ -599,7 +633,8 @@ class MetricsCollector:
         return sorted(top_engines, key=lambda x: x["score"], reverse=True)
         
     def _get_trending_metrics(self) -> List[Dict[str, Any]]:
-        """Get trending metrics"""        # Simplified trending calculation
+        """Get trending metrics"""
+        # Simplified trending calculation
         trending = []
         current_time = datetime.now()
         hour_ago = current_time - timedelta(hours=1)
@@ -619,7 +654,8 @@ class MetricsCollector:
         return sorted(trending, key=lambda x: abs(x["trend_percent"]), reverse=True)[:10]
         
     def _get_active_alerts(self) -> List[Dict[str, Any]]:
-        """Get active system alerts"""        alerts = []
+        """Get active system alerts"""
+        alerts = []
         
         # Performance alerts
         if self.performance_metrics.error_rate > 5:
@@ -655,7 +691,8 @@ class MetricsCollector:
         time_range: Optional[Tuple[datetime, datetime]] = None,
         metrics_filter: Optional[List[str]] = None
     ) -> Union[str, bytes]:
-        """        Export metrics data.
+        """
+        Export metrics data.
         
         Args:
             format: Export format (json, csv, parquet)
@@ -664,7 +701,8 @@ class MetricsCollector:
             
         Returns:
             Exported data in requested format
-        """        if time_range is None:
+        """
+        if time_range is None:
             end_time = datetime.now()
             start_time = end_time - timedelta(days=7)
             time_range = (start_time, end_time)
@@ -710,23 +748,28 @@ metrics_collector = MetricsCollector()
 
 # Convenience functions
 def record_metric(metric_name: str, value: Union[int, float, str, bool], **kwargs):
-    """Record a metric"""    metrics_collector.record_metric(metric_name, value, **kwargs)
+    """Record a metric"""
+    metrics_collector.record_metric(metric_name, value, **kwargs)
 
 
 def record_processing_time(engine_name: str, processing_time: float, **kwargs):
-    """Record processing time"""    metrics_collector.record_processing_time(engine_name, processing_time, **kwargs)
+    """Record processing time"""
+    metrics_collector.record_processing_time(engine_name, processing_time, **kwargs)
 
 
 def record_revenue(engine_name: str, revenue: float, **kwargs):
-    """Record revenue"""    metrics_collector.record_revenue(engine_name, revenue, **kwargs)
+    """Record revenue"""
+    metrics_collector.record_revenue(engine_name, revenue, **kwargs)
 
 
 def get_dashboard_data() -> Dict[str, Any]:
-    """Get real-time dashboard data"""    return metrics_collector.get_real_time_dashboard()
+    """Get real-time dashboard data"""
+    return metrics_collector.get_real_time_dashboard()
 
 
 def get_metrics_summary(**kwargs) -> Dict[str, Any]:
-    """Get metrics summary"""    return metrics_collector.get_metrics_summary(**kwargs)
+    """Get metrics summary"""
+    return metrics_collector.get_metrics_summary(**kwargs)
 
 
 # Export all classes and functions

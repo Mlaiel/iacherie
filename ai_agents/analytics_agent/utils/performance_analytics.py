@@ -7,7 +7,8 @@ Project Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sec
 WARNING: This code and concept are protected intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""from dataclasses import dataclass, field
+"""
+from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -18,7 +19,8 @@ import asyncio
 import time
 
 class PerformanceMetricType(Enum):
-    """Performance metric types"""    SYSTEM = "system"
+    """Performance metric types"""
+    SYSTEM = "system"
     APPLICATION = "application"
     DATABASE = "database"
     NETWORK = "network"
@@ -26,7 +28,8 @@ class PerformanceMetricType(Enum):
     BUSINESS = "business"
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    CRITICAL = "critical"
+    """Alert severity levels"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -34,7 +37,8 @@ class AlertSeverity(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric data model"""    metric_id: str
+    """Performance metric data model"""
+    metric_id: str
     metric_type: PerformanceMetricType
     name: str
     value: float
@@ -48,7 +52,8 @@ class PerformanceMetric:
 
 @dataclass
 class SystemPerformanceSnapshot:
-    """Comprehensive system performance snapshot"""    timestamp: datetime = field(default_factory=datetime.now)
+    """Comprehensive system performance snapshot"""
+    timestamp: datetime = field(default_factory=datetime.now)
     
     # CPU Metrics
     cpu_usage_percent: float = 0.0
@@ -88,7 +93,8 @@ class SystemPerformanceSnapshot:
 
 @dataclass
 class ApplicationPerformanceMetrics:
-    """Application-level performance metrics"""    timestamp: datetime = field(default_factory=datetime.now)
+    """Application-level performance metrics"""
+    timestamp: datetime = field(default_factory=datetime.now)
     
     # Request Metrics
     request_rate_per_second: float = 0.0
@@ -125,7 +131,8 @@ class ApplicationPerformanceMetrics:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert data model"""    alert_id: str
+    """Performance alert data model"""
+    alert_id: str
     metric_name: str
     severity: AlertSeverity
     message: str
@@ -139,12 +146,14 @@ class PerformanceAlert:
 
 @dataclass
 class EnterprisePerformanceAnalyticsEngine:
-    """    Enterprise Performance Analytics Engine
+    """
+    Enterprise Performance Analytics Engine
     
     Comprehensive performance monitoring, analysis, and optimization system
     featuring real-time metrics collection, predictive analytics, automated
     optimization recommendations, and intelligent alerting.
-    """    
+    """
+    
     def __init__(self):
         self.system_snapshots: List[SystemPerformanceSnapshot] = []
         self.application_metrics: List[ApplicationPerformanceMetrics] = []
@@ -173,7 +182,8 @@ class EnterprisePerformanceAnalyticsEngine:
         self.metric_collection_interval = 60  # seconds
         
     async def collect_real_time_metrics(self) -> Dict[str, Any]:
-        """Collect comprehensive real-time performance metrics"""        try:
+        """Collect comprehensive real-time performance metrics"""
+        try:
             # System metrics collection
             system_snapshot = await self._collect_system_metrics()
             self.system_snapshots.append(system_snapshot)
@@ -208,7 +218,8 @@ class EnterprisePerformanceAnalyticsEngine:
             return {"error": f"Failed to collect metrics: {str(e)}"}
     
     async def analyze_performance_trends(self, timeframe_hours: int = 24) -> Dict[str, Any]:
-        """Analyze performance trends over specified timeframe"""        try:
+        """Analyze performance trends over specified timeframe"""
+        try:
             cutoff_time = datetime.now() - timedelta(hours=timeframe_hours)
             
             # Filter metrics by timeframe
@@ -251,7 +262,8 @@ class EnterprisePerformanceAnalyticsEngine:
             return {"error": f"Failed to analyze trends: {str(e)}"}
     
     async def generate_performance_optimization_report(self) -> Dict[str, Any]:
-        """Generate comprehensive performance optimization report"""        try:
+        """Generate comprehensive performance optimization report"""
+        try:
             # Current performance state
             current_state = await self._assess_current_performance_state()
             
@@ -295,7 +307,8 @@ class EnterprisePerformanceAnalyticsEngine:
             return {"error": f"Failed to generate optimization report: {str(e)}"}
     
     async def predict_performance_issues(self, prediction_horizon_hours: int = 2) -> Dict[str, Any]:
-        """Predict potential performance issues using ML models"""        try:
+        """Predict potential performance issues using ML models"""
+        try:
             if len(self.system_snapshots) < 10 or len(self.application_metrics) < 10:
                 return {"error": "Insufficient historical data for predictions"}
             
@@ -340,7 +353,8 @@ class EnterprisePerformanceAnalyticsEngine:
             return {"error": f"Failed to predict performance issues: {str(e)}"}
     
     async def optimize_system_performance(self, optimization_targets: List[str] = None) -> Dict[str, Any]:
-        """Execute automated system performance optimizations"""        try:
+        """Execute automated system performance optimizations"""
+        try:
             if not optimization_targets:
                 optimization_targets = ["cpu", "memory", "disk", "network", "database", "cache"]
             
@@ -393,7 +407,8 @@ class EnterprisePerformanceAnalyticsEngine:
     # System Metrics Collection Methods
     
     async def _collect_system_metrics(self) -> SystemPerformanceSnapshot:
-        """Collect comprehensive system performance metrics"""        # In a real implementation, this would use system monitoring libraries
+        """Collect comprehensive system performance metrics"""
+        # In a real implementation, this would use system monitoring libraries
         # like psutil, system APIs, or monitoring agents
         
         snapshot = SystemPerformanceSnapshot(
@@ -436,7 +451,8 @@ class EnterprisePerformanceAnalyticsEngine:
         return snapshot
     
     async def _collect_application_metrics(self) -> ApplicationPerformanceMetrics:
-        """Collect application-specific performance metrics"""        metrics = ApplicationPerformanceMetrics(
+        """Collect application-specific performance metrics"""
+        metrics = ApplicationPerformanceMetrics(
             # Request Metrics
             request_rate_per_second=np.random.uniform(10, 100),
             response_time_avg_ms=np.random.uniform(50, 500),
@@ -473,7 +489,8 @@ class EnterprisePerformanceAnalyticsEngine:
         return metrics
     
     def _cleanup_old_metrics(self):
-        """Clean up old metric data to prevent memory bloat"""        cutoff_time = datetime.now() - timedelta(days=self.performance_history_days)
+        """Clean up old metric data to prevent memory bloat"""
+        cutoff_time = datetime.now() - timedelta(days=self.performance_history_days)
         
         # Clean system snapshots
         self.system_snapshots = [s for s in self.system_snapshots if s.timestamp >= cutoff_time]
@@ -490,7 +507,8 @@ class EnterprisePerformanceAnalyticsEngine:
     
     async def _analyze_current_performance(self, system_snapshot: SystemPerformanceSnapshot, 
                                          app_metrics: ApplicationPerformanceMetrics) -> Dict[str, Any]:
-        """Analyze current performance state"""        analysis = {
+        """Analyze current performance state"""
+        analysis = {
             "system_health_score": self._calculate_system_health_score(system_snapshot),
             "application_health_score": self._calculate_application_health_score(app_metrics),
             "resource_utilization_status": self._assess_resource_utilization(system_snapshot),
@@ -503,7 +521,8 @@ class EnterprisePerformanceAnalyticsEngine:
     
     async def _check_performance_alerts(self, system_snapshot: SystemPerformanceSnapshot,
                                       app_metrics: ApplicationPerformanceMetrics) -> List[PerformanceAlert]:
-        """Check for performance alerts based on current metrics"""        alerts = []
+        """Check for performance alerts based on current metrics"""
+        alerts = []
         
         # System alerts
         if system_snapshot.cpu_usage_percent > 90:
@@ -545,7 +564,8 @@ class EnterprisePerformanceAnalyticsEngine:
     
     async def _generate_optimization_recommendations(self, system_snapshot: SystemPerformanceSnapshot,
                                                    app_metrics: ApplicationPerformanceMetrics) -> List[PerformanceOptimizationRecommendation]:
-        """Generate performance optimization recommendations"""        recommendations = []
+        """Generate performance optimization recommendations"""
+        recommendations = []
         
         # CPU optimization
         if system_snapshot.cpu_usage_percent > 70:
@@ -636,7 +656,8 @@ class EnterprisePerformanceAnalyticsEngine:
     # Helper Methods for Metric Calculation and Analysis
     
     def _calculate_system_health_score(self, snapshot: SystemPerformanceSnapshot) -> float:
-        """Calculate system health score based on resource utilization"""        cpu_score = max(0, 100 - snapshot.cpu_usage_percent)
+        """Calculate system health score based on resource utilization"""
+        cpu_score = max(0, 100 - snapshot.cpu_usage_percent)
         memory_score = max(0, 100 - snapshot.memory_usage_percent)
         disk_score = max(0, 100 - snapshot.disk_usage_percent)
         
@@ -647,7 +668,8 @@ class EnterprisePerformanceAnalyticsEngine:
         return max(0, min(100, health_score))
     
     def _calculate_application_health_score(self, metrics: ApplicationPerformanceMetrics) -> float:
-        """Calculate application health score"""        response_time_score = max(0, 100 - (metrics.response_time_avg_ms / 10))  # 1000ms = 0 score
+        """Calculate application health score"""
+        response_time_score = max(0, 100 - (metrics.response_time_avg_ms / 10))  # 1000ms = 0 score
         error_rate_score = max(0, 100 - (metrics.error_rate_percent * 10))  # 10% error = 0 score
         cache_score = metrics.cache_hit_rate_percent
         
@@ -658,13 +680,15 @@ class EnterprisePerformanceAnalyticsEngine:
     
     def _calculate_overall_health_score(self, system_snapshot: SystemPerformanceSnapshot,
                                       app_metrics: ApplicationPerformanceMetrics) -> float:
-        """Calculate overall system health score"""        system_score = self._calculate_system_health_score(system_snapshot)
+        """Calculate overall system health score"""
+        system_score = self._calculate_system_health_score(system_snapshot)
         app_score = self._calculate_application_health_score(app_metrics)
         
         return (system_score * 0.5 + app_score * 0.5)
     
     def _assess_resource_utilization(self, snapshot: SystemPerformanceSnapshot) -> Dict[str, str]:
-        """Assess resource utilization status"""        def get_status(usage_percent: float) -> str:
+        """Assess resource utilization status"""
+        def get_status(usage_percent: float) -> str:
             if usage_percent > 95:
                 return "critical"
             elif usage_percent > 85:
@@ -683,7 +707,8 @@ class EnterprisePerformanceAnalyticsEngine:
     
     def _identify_current_bottlenecks(self, system_snapshot: SystemPerformanceSnapshot,
                                     app_metrics: ApplicationPerformanceMetrics) -> List[Dict[str, Any]]:
-        """Identify current performance bottlenecks"""        bottlenecks = []
+        """Identify current performance bottlenecks"""
+        bottlenecks = []
         
         if system_snapshot.cpu_usage_percent > 80:
             bottlenecks.append({
@@ -721,7 +746,8 @@ class EnterprisePerformanceAnalyticsEngine:
     
     def _identify_critical_metrics(self, system_snapshot: SystemPerformanceSnapshot,
                                  app_metrics: ApplicationPerformanceMetrics) -> Dict[str, Dict[str, Any]]:
-        """Identify critical performance metrics requiring attention"""        critical_metrics = {}
+        """Identify critical performance metrics requiring attention"""
+        critical_metrics = {}
         
         # System metrics
         if system_snapshot.cpu_usage_percent > 85:
@@ -761,7 +787,8 @@ class EnterprisePerformanceAnalyticsEngine:
     
     def _calculate_performance_grade(self, system_snapshot: SystemPerformanceSnapshot,
                                    app_metrics: ApplicationPerformanceMetrics) -> str:
-        """Calculate overall performance grade"""        overall_score = self._calculate_overall_health_score(system_snapshot, app_metrics)
+        """Calculate overall performance grade"""
+        overall_score = self._calculate_overall_health_score(system_snapshot, app_metrics)
         
         if overall_score >= 90:
             return "A+"
@@ -782,7 +809,8 @@ class EnterprisePerformanceAnalyticsEngine:
     
     def _create_alert(self, metric_name: str, severity: AlertSeverity, message: str,
                      current_value: float, threshold_value: float) -> PerformanceAlert:
-        """Create a performance alert"""        alert_id = f"alert_{metric_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        """Create a performance alert"""
+        alert_id = f"alert_{metric_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         
         return PerformanceAlert(
             alert_id=alert_id,
@@ -800,7 +828,8 @@ class EnterprisePerformanceAnalyticsEngine:
     # Trend Analysis Helper Methods
     
     def _get_cpu_trend(self) -> str:
-        """Get CPU usage trend"""        if len(self.system_snapshots) < 3:
+        """Get CPU usage trend"""
+        if len(self.system_snapshots) < 3:
             return "insufficient_data"
         
         recent_cpu = [s.cpu_usage_percent for s in self.system_snapshots[-5:]]
@@ -818,7 +847,8 @@ class EnterprisePerformanceAnalyticsEngine:
         return "stable"
     
     def _get_memory_trend(self) -> str:
-        """Get memory usage trend"""        if len(self.system_snapshots) < 3:
+        """Get memory usage trend"""
+        if len(self.system_snapshots) < 3:
             return "insufficient_data"
         
         recent_memory = [s.memory_usage_percent for s in self.system_snapshots[-5:]]
@@ -836,7 +866,8 @@ class EnterprisePerformanceAnalyticsEngine:
         return "stable"
     
     def _get_error_rate_trend(self) -> str:
-        """Get error rate trend"""        if len(self.application_metrics) < 3:
+        """Get error rate trend"""
+        if len(self.application_metrics) < 3:
             return "insufficient_data"
         
         recent_errors = [m.error_rate_percent for m in self.application_metrics[-5:]]
@@ -854,7 +885,8 @@ class EnterprisePerformanceAnalyticsEngine:
         return "stable"
     
     def _get_response_time_trend(self) -> str:
-        """Get response time trend"""        if len(self.application_metrics) < 3:
+        """Get response time trend"""
+        if len(self.application_metrics) < 3:
             return "insufficient_data"
         
         recent_response_times = [m.response_time_p95_ms for m in self.application_metrics[-5:]]
@@ -877,7 +909,8 @@ class EnterprisePerformanceAnalyticsEngine:
     resolution_time: Optional[datetime] = None
 
 class PerformanceMonitor:
-    """Enterprise performance monitoring engine"""    
+    """Enterprise performance monitoring engine"""
+    
     def __init__(self):
         self.metrics_history: List[PerformanceMetric] = []
         self.system_metrics: List[SystemPerformance] = []
@@ -887,7 +920,8 @@ class PerformanceMonitor:
         self.baseline_metrics: Dict[str, float] = {}
     
     async def collect_system_metrics(self) -> SystemPerformance:
-        """Collect current system performance metrics"""        # Simulated system metrics collection
+        """Collect current system performance metrics"""
+        # Simulated system metrics collection
         system_perf = SystemPerformance(
             cpu_usage=np.random.uniform(10, 80),
             memory_usage=np.random.uniform(30, 85),
@@ -905,7 +939,8 @@ class PerformanceMonitor:
         return system_perf
     
     async def collect_application_metrics(self) -> ApplicationPerformance:
-        """Collect current application performance metrics"""        # Simulated application metrics collection
+        """Collect current application performance metrics"""
+        # Simulated application metrics collection
         app_perf = ApplicationPerformance(
             request_count=np.random.randint(100, 2000),
             response_time_p50=np.random.uniform(20, 200),
@@ -924,7 +959,8 @@ class PerformanceMonitor:
         return app_perf
     
     def analyze_performance_trends(self, hours_back: int = 24) -> Dict[str, Any]:
-        """Analyze performance trends over specified time period"""        cutoff_time = datetime.now() - timedelta(hours=hours_back)
+        """Analyze performance trends over specified time period"""
+        cutoff_time = datetime.now() - timedelta(hours=hours_back)
         
         # Filter recent metrics
         recent_system = [m for m in self.system_metrics if m.timestamp >= cutoff_time]
@@ -959,7 +995,8 @@ class PerformanceMonitor:
         }
     
     def predict_performance_issues(self, prediction_window_hours: int = 4) -> Dict[str, Any]:
-        """Predict potential performance issues using trend analysis"""        if len(self.system_metrics) < 10 or len(self.app_metrics) < 10:
+        """Predict potential performance issues using trend analysis"""
+        if len(self.system_metrics) < 10 or len(self.app_metrics) < 10:
             return {"prediction": "insufficient_data"}
         
         # Recent metrics for trend analysis
@@ -1018,7 +1055,8 @@ class PerformanceMonitor:
         }
     
     def generate_performance_report(self, report_type: str = "daily") -> Dict[str, Any]:
-        """Generate comprehensive performance report"""        # Determine time period based on report type
+        """Generate comprehensive performance report"""
+        # Determine time period based on report type
         hours_map = {"hourly": 1, "daily": 24, "weekly": 168, "monthly": 720}
         hours_back = hours_map.get(report_type, 24)
         
@@ -1065,7 +1103,8 @@ class PerformanceMonitor:
         }
     
     def optimize_performance(self, optimization_target: str = "response_time") -> Dict[str, Any]:
-        """Generate performance optimization strategies"""        if not self.system_metrics or not self.app_metrics:
+        """Generate performance optimization strategies"""
+        if not self.system_metrics or not self.app_metrics:
             return {"error": "No performance data available"}
         
         latest_system = self.system_metrics[-1]
@@ -1118,7 +1157,8 @@ class PerformanceMonitor:
         }
     
     async def _check_system_thresholds(self, system_perf: SystemPerformance):
-        """Check system performance against thresholds"""        # CPU threshold check
+        """Check system performance against thresholds"""
+        # CPU threshold check
         if system_perf.cpu_usage > 90:
             await self._create_alert("cpu_usage", AlertSeverity.CRITICAL, 
                                    system_perf.cpu_usage, 90, "Critical CPU usage detected")
@@ -1145,7 +1185,8 @@ class PerformanceMonitor:
                                    system_perf.error_rate, 5, "High error rate detected")
     
     async def _check_application_thresholds(self, app_perf: ApplicationPerformance):
-        """Check application performance against thresholds"""        # Response time P95 threshold
+        """Check application performance against thresholds"""
+        # Response time P95 threshold
         if app_perf.response_time_p95 > 1000:
             await self._create_alert("response_time_p95", AlertSeverity.HIGH,
                                    app_perf.response_time_p95, 1000, "High P95 response time detected")
@@ -1162,7 +1203,8 @@ class PerformanceMonitor:
     
     async def _create_alert(self, metric_name: str, severity: AlertSeverity, 
                           current_value: float, threshold_value: float, message: str):
-        """Create performance alert"""        alert = PerformanceAlert(
+        """Create performance alert"""
+        alert = PerformanceAlert(
             alert_id=f"alert_{int(time.time())}_{metric_name}",
             metric_name=metric_name,
             severity=severity,
@@ -1174,7 +1216,8 @@ class PerformanceMonitor:
         self.active_alerts.append(alert)
     
     def _analyze_system_trends(self, system_metrics: List[SystemPerformance]) -> Dict[str, Any]:
-        """Analyze system performance trends"""        if len(system_metrics) < 2:
+        """Analyze system performance trends"""
+        if len(system_metrics) < 2:
             return {}
         
         # Calculate trends for key metrics
@@ -1204,7 +1247,8 @@ class PerformanceMonitor:
         }
     
     def _analyze_application_trends(self, app_metrics: List[ApplicationPerformance]) -> Dict[str, Any]:
-        """Analyze application performance trends"""        if len(app_metrics) < 2:
+        """Analyze application performance trends"""
+        if len(app_metrics) < 2:
             return {}
         
         # Calculate trends for key metrics
@@ -1234,7 +1278,8 @@ class PerformanceMonitor:
         }
     
     def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend direction for a series of values"""        if len(values) < 3:
+        """Calculate trend direction for a series of values"""
+        if len(values) < 3:
             return "stable"
         
         # Use linear regression to determine trend
@@ -1252,7 +1297,8 @@ class PerformanceMonitor:
     
     def _calculate_performance_score(self, system_perf: SystemPerformance, 
                                    app_perf: ApplicationPerformance) -> float:
-        """Calculate overall performance score (0-100)"""        # System performance components (40% weight)
+        """Calculate overall performance score (0-100)"""
+        # System performance components (40% weight)
         cpu_score = max(0, 100 - system_perf.cpu_usage)
         memory_score = max(0, 100 - system_perf.memory_usage)
         response_time_score = max(0, 100 - min(system_perf.response_time_avg / 10, 100))
@@ -1274,7 +1320,8 @@ class PerformanceMonitor:
     
     def _identify_bottlenecks(self, system_metrics: List[SystemPerformance], 
                             app_metrics: List[ApplicationPerformance]) -> List[Dict[str, Any]]:
-        """Identify performance bottlenecks"""        bottlenecks = []
+        """Identify performance bottlenecks"""
+        bottlenecks = []
         
         latest_system = system_metrics[-1]
         latest_app = app_metrics[-1]
@@ -1321,7 +1368,8 @@ class PerformanceMonitor:
     
     def _generate_optimization_recommendations(self, system_metrics: List[SystemPerformance], 
                                              app_metrics: List[ApplicationPerformance]) -> List[str]:
-        """Generate optimization recommendations"""        recommendations = []
+        """Generate optimization recommendations"""
+        recommendations = []
         
         latest_system = system_metrics[-1]
         latest_app = app_metrics[-1]
@@ -1357,7 +1405,8 @@ class PerformanceMonitor:
         return recommendations
     
     def _get_alert_summary(self, hours_back: int) -> Dict[str, Any]:
-        """Get alert summary for specified time period"""        cutoff_time = datetime.now() - timedelta(hours=hours_back)
+        """Get alert summary for specified time period"""
+        cutoff_time = datetime.now() - timedelta(hours=hours_back)
         period_alerts = [a for a in self.active_alerts if a.timestamp >= cutoff_time]
         
         severity_counts = {}
@@ -1373,7 +1422,8 @@ class PerformanceMonitor:
     
     def _predict_system_metrics(self, recent_metrics: List[SystemPerformance], 
                               hours_ahead: int) -> Dict[str, float]:
-        """Predict system metrics using trend analysis"""        if len(recent_metrics) < 5:
+        """Predict system metrics using trend analysis"""
+        if len(recent_metrics) < 5:
             return {}
         
         # Extract time series data
@@ -1401,7 +1451,8 @@ class PerformanceMonitor:
     
     def _predict_application_metrics(self, recent_metrics: List[ApplicationPerformance], 
                                    hours_ahead: int) -> Dict[str, float]:
-        """Predict application metrics using trend analysis"""        if len(recent_metrics) < 5:
+        """Predict application metrics using trend analysis"""
+        if len(recent_metrics) < 5:
             return {}
         
         # Extract time series data
@@ -1430,7 +1481,8 @@ class PerformanceMonitor:
         return predictions
     
     def _suggest_preventive_actions(self, potential_issues: List[Dict[str, Any]]) -> List[str]:
-        """Suggest preventive actions for potential issues"""        actions = []
+        """Suggest preventive actions for potential issues"""
+        actions = []
         
         for issue in potential_issues:
             if "CPU usage" in issue["issue"]:
@@ -1452,7 +1504,8 @@ class PerformanceMonitor:
         return actions
     
     def _calculate_system_summary(self, system_metrics: List[SystemPerformance]) -> Dict[str, Any]:
-        """Calculate system performance summary statistics"""        cpu_values = [m.cpu_usage for m in system_metrics]
+        """Calculate system performance summary statistics"""
+        cpu_values = [m.cpu_usage for m in system_metrics]
         memory_values = [m.memory_usage for m in system_metrics]
         response_times = [m.response_time_avg for m in system_metrics]
         
@@ -1478,7 +1531,8 @@ class PerformanceMonitor:
         }
     
     def _calculate_application_summary(self, app_metrics: List[ApplicationPerformance]) -> Dict[str, Any]:
-        """Calculate application performance summary statistics"""        request_counts = [m.request_count for m in app_metrics]
+        """Calculate application performance summary statistics"""
+        request_counts = [m.request_count for m in app_metrics]
         p95_response_times = [m.response_time_p95 for m in app_metrics]
         success_rates = [m.success_rate for m in app_metrics]
         
@@ -1502,7 +1556,8 @@ class PerformanceMonitor:
     
     def _generate_performance_highlights(self, system_metrics: List[SystemPerformance], 
                                        app_metrics: List[ApplicationPerformance]) -> List[str]:
-        """Generate performance highlights"""        highlights = []
+        """Generate performance highlights"""
+        highlights = []
         
         # System highlights
         avg_cpu = np.mean([m.cpu_usage for m in system_metrics])
@@ -1523,7 +1578,8 @@ class PerformanceMonitor:
     
     def _calculate_sla_compliance(self, system_metrics: List[SystemPerformance], 
                                 app_metrics: List[ApplicationPerformance]) -> Dict[str, Any]:
-        """Calculate SLA compliance metrics"""        # Define SLA thresholds
+        """Calculate SLA compliance metrics"""
+        # Define SLA thresholds
         sla_thresholds = {
             "availability": 99.5,
             "response_time_p95": 500,
@@ -1547,7 +1603,8 @@ class PerformanceMonitor:
     
     def _analyze_performance_costs(self, system_metrics: List[SystemPerformance], 
                                  app_metrics: List[ApplicationPerformance]) -> Dict[str, Any]:
-        """Analyze performance-related costs"""        # Simulated cost analysis based on resource usage
+        """Analyze performance-related costs"""
+        # Simulated cost analysis based on resource usage
         avg_cpu = np.mean([m.cpu_usage for m in system_metrics])
         avg_memory = np.mean([m.memory_usage for m in system_metrics])
         total_requests = sum([m.request_count for m in app_metrics])
@@ -1572,7 +1629,8 @@ class PerformanceMonitor:
     
     def _assess_overall_health(self, system_perf: SystemPerformance, 
                              app_perf: ApplicationPerformance) -> str:
-        """Assess overall system health"""        performance_score = self._calculate_performance_score(system_perf, app_perf)
+        """Assess overall system health"""
+        performance_score = self._calculate_performance_score(system_perf, app_perf)
         
         if performance_score >= 85:
             return "excellent"
@@ -1587,7 +1645,8 @@ class PerformanceMonitor:
     
     def _extract_key_metrics(self, system_perf: SystemPerformance, 
                            app_perf: ApplicationPerformance) -> Dict[str, float]:
-        """Extract key performance metrics"""        return {
+        """Extract key performance metrics"""
+        return {
             "cpu_usage": system_perf.cpu_usage,
             "memory_usage": system_perf.memory_usage,
             "response_time_avg": system_perf.response_time_avg,
@@ -1599,7 +1658,8 @@ class PerformanceMonitor:
     
     def _determine_performance_trend(self, system_metrics: List[SystemPerformance], 
                                    app_metrics: List[ApplicationPerformance]) -> str:
-        """Determine overall performance trend"""        if len(system_metrics) < 3 or len(app_metrics) < 3:
+        """Determine overall performance trend"""
+        if len(system_metrics) < 3 or len(app_metrics) < 3:
             return "stable"
         
         # Calculate performance scores for trend analysis
@@ -1612,7 +1672,8 @@ class PerformanceMonitor:
         return trend
     
     def _analyze_alerts(self, alerts: List[PerformanceAlert]) -> Dict[str, Any]:
-        """Analyze alert patterns and statistics"""        if not alerts:
+        """Analyze alert patterns and statistics"""
+        if not alerts:
             return {"total": 0}
         
         severity_distribution = {}
@@ -1640,7 +1701,8 @@ class PerformanceMonitor:
     
     def _generate_comprehensive_recommendations(self, system_metrics: List[SystemPerformance], 
                                               app_metrics: List[ApplicationPerformance]) -> List[Dict[str, Any]]:
-        """Generate comprehensive performance recommendations"""        recommendations = []
+        """Generate comprehensive performance recommendations"""
+        recommendations = []
         
         latest_system = system_metrics[-1]
         latest_app = app_metrics[-1]
@@ -1687,7 +1749,8 @@ class PerformanceMonitor:
     
     def _optimize_response_time(self, system_perf: SystemPerformance, 
                                app_perf: ApplicationPerformance) -> List[Dict[str, Any]]:
-        """Generate response time optimization strategies"""        strategies = []
+        """Generate response time optimization strategies"""
+        strategies = []
         
         if app_perf.cache_hit_rate < 80:
             strategies.append({
@@ -1716,7 +1779,8 @@ class PerformanceMonitor:
     
     def _optimize_throughput(self, system_perf: SystemPerformance, 
                            app_perf: ApplicationPerformance) -> List[Dict[str, Any]]:
-        """Generate throughput optimization strategies"""        strategies = []
+        """Generate throughput optimization strategies"""
+        strategies = []
         
         if system_perf.cpu_usage > 70:
             strategies.append({
@@ -1738,7 +1802,8 @@ class PerformanceMonitor:
     
     def _optimize_resources(self, system_perf: SystemPerformance, 
                           app_perf: ApplicationPerformance) -> List[Dict[str, Any]]:
-        """Generate resource optimization strategies"""        strategies = []
+        """Generate resource optimization strategies"""
+        strategies = []
         
         if system_perf.memory_usage > 80:
             strategies.append({
@@ -1760,7 +1825,8 @@ class PerformanceMonitor:
     
     def _optimize_costs(self, system_perf: SystemPerformance, 
                        app_perf: ApplicationPerformance) -> List[Dict[str, Any]]:
-        """Generate cost optimization strategies"""        strategies = []
+        """Generate cost optimization strategies"""
+        strategies = []
         
         strategies.append({
             "strategy": "Implement intelligent auto-scaling based on workload patterns",
@@ -1781,7 +1847,8 @@ class PerformanceMonitor:
     
     def _general_optimization(self, system_perf: SystemPerformance, 
                             app_perf: ApplicationPerformance) -> List[Dict[str, Any]]:
-        """Generate general optimization strategies"""        strategies = []
+        """Generate general optimization strategies"""
+        strategies = []
         
         strategies.extend([
             {
@@ -1807,7 +1874,8 @@ class PerformanceMonitor:
         return strategies
     
     def _generate_tuning_recommendations(self) -> List[str]:
-        """Generate performance tuning recommendations"""        return [
+        """Generate performance tuning recommendations"""
+        return [
             "Fine-tune JVM garbage collection parameters for better memory management",
             "Optimize database connection pool settings for peak load handling",
             "Configure CDN caching rules for optimal content delivery performance",
@@ -1817,7 +1885,8 @@ class PerformanceMonitor:
     
     def _generate_scaling_suggestions(self, system_perf: SystemPerformance, 
                                     app_perf: ApplicationPerformance) -> Dict[str, Any]:
-        """Generate infrastructure scaling suggestions"""        suggestions = {
+        """Generate infrastructure scaling suggestions"""
+        suggestions = {
             "immediate_scaling": [],
             "planned_scaling": [],
             "scaling_triggers": []
@@ -1845,7 +1914,8 @@ class PerformanceMonitor:
         return suggestions
     
     def _estimate_optimization_impact(self, strategies: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Estimate the impact of optimization strategies"""        return {
+        """Estimate the impact of optimization strategies"""
+        return {
             "performance_improvement": "25-45% overall performance gain expected",
             "cost_reduction": "15-30% infrastructure cost savings",
             "reliability_improvement": "99.9% to 99.95% availability improvement",
@@ -1853,7 +1923,8 @@ class PerformanceMonitor:
         }
     
     def _prioritize_optimizations(self, strategies: List[Dict[str, Any]]) -> List[str]:
-        """Prioritize optimization strategies"""        return [
+        """Prioritize optimization strategies"""
+        return [
             "Critical performance bottlenecks (immediate impact)",
             "Resource optimization (cost savings)",
             "Scalability improvements (future growth)",
@@ -1861,7 +1932,8 @@ class PerformanceMonitor:
         ]
     
     def _serialize_system_performance(self, system_perf: SystemPerformance) -> Dict[str, float]:
-        """Serialize system performance for output"""        return {
+        """Serialize system performance for output"""
+        return {
             "cpu_usage": system_perf.cpu_usage,
             "memory_usage": system_perf.memory_usage,
             "disk_usage": system_perf.disk_usage,
@@ -1871,7 +1943,8 @@ class PerformanceMonitor:
         }
     
     def _serialize_application_performance(self, app_perf: ApplicationPerformance) -> Dict[str, Any]:
-        """Serialize application performance for output"""        return {
+        """Serialize application performance for output"""
+        return {
             "request_count": app_perf.request_count,
             "response_time_p95": app_perf.response_time_p95,
             "success_rate": app_perf.success_rate,
@@ -1880,7 +1953,8 @@ class PerformanceMonitor:
         }
     
     def _calculate_avg_resolution_time(self, alerts: List[PerformanceAlert]) -> float:
-        """Calculate average alert resolution time in minutes"""        resolved_alerts = [a for a in alerts if a.resolved and a.resolution_time]
+        """Calculate average alert resolution time in minutes"""
+        resolved_alerts = [a for a in alerts if a.resolved and a.resolution_time]
         if not resolved_alerts:
             return 0.0
         
@@ -1894,7 +1968,8 @@ class PerformanceMonitor:
     def _identify_sla_breaches(self, system_metrics: List[SystemPerformance], 
                              app_metrics: List[ApplicationPerformance], 
                              sla_thresholds: Dict[str, float]) -> List[Dict[str, Any]]:
-        """Identify SLA breaches"""        breaches = []
+        """Identify SLA breaches"""
+        breaches = []
         
         for system_metric in system_metrics:
             if system_metric.availability < sla_thresholds["availability"]:
@@ -1917,7 +1992,8 @@ class PerformanceMonitor:
         return breaches
     
     def _calculate_cost_optimization_potential(self, avg_cpu: float, avg_memory: float) -> Dict[str, Any]:
-        """Calculate cost optimization potential"""        cpu_optimization = max(0, (70 - avg_cpu) / 70 * 100) if avg_cpu < 70 else 0
+        """Calculate cost optimization potential"""
+        cpu_optimization = max(0, (70 - avg_cpu) / 70 * 100) if avg_cpu < 70 else 0
         memory_optimization = max(0, (80 - avg_memory) / 80 * 100) if avg_memory < 80 else 0
         
         return {

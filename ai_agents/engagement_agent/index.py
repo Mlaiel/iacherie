@@ -12,7 +12,8 @@ Any unauthorized use, copying, distribution, or commercialization is STRICTLY PR
 Violations will result in immediate legal action under German and International IP law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime
 from typing import Dict, List, Any, Optional
@@ -27,11 +28,13 @@ from .sentiment_tracker import SentimentTracker, MoodAnalyzer
 logger = logging.getLogger(__name__)
 
 class EngagementAgentSystem:
-    """    Complete Engagement Agent System Orchestrator
+    """
+    Complete Engagement Agent System Orchestrator
     
     Master system that coordinates all engagement agent components
     for comprehensive audience interaction and optimization.
-    """    
+    """
+    
     def __init__(self):
         self.system_name = "IA-Influencer-Agent Engagement System"
         self.version = "2.0.0"
@@ -62,11 +65,13 @@ class EngagementAgentSystem:
         logger.info(f"Engagement Agent System v{self.version} initialized by {self.author}")
 
     async def initialize_system(self) -> Dict[str, Any]:
-        """        Initialize complete engagement agent system
+        """
+        Initialize complete engagement agent system
         
         Returns:
             Dict: System initialization status and configuration
-        """        try:
+        """
+        try:
             logger.info("Initializing Engagement Agent System...")
             
             # Initialize core components
@@ -147,7 +152,8 @@ class EngagementAgentSystem:
                                     creator_id: str,
                                     request_type: str,
                                     request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """        Process comprehensive creator engagement request
+        """
+        Process comprehensive creator engagement request
         
         Args:
             creator_id: Creator identifier
@@ -156,7 +162,8 @@ class EngagementAgentSystem:
             
         Returns:
             Dict: Comprehensive processing results
-        """        try:
+        """
+        try:
             if not self.initialized:
                 raise SystemError("System not initialized")
             
@@ -211,7 +218,8 @@ class EngagementAgentSystem:
     async def _process_engagement_analysis(self,
                                          creator_id: str,
                                          request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process comprehensive engagement analysis request"""        try:
+        """Process comprehensive engagement analysis request"""
+        try:
             # Get or create engagement agent
             agent = await self.agent_manager.get_agent(creator_id)
             if not agent:
@@ -264,7 +272,8 @@ class EngagementAgentSystem:
     async def _process_strategy_optimization(self,
                                            creator_id: str,
                                            request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process strategy optimization request"""        try:
+        """Process strategy optimization request"""
+        try:
             # Get optimization parameters
             target_platforms = request_data.get('platforms', [])
             goals = request_data.get('goals', {})
@@ -310,7 +319,8 @@ class EngagementAgentSystem:
     async def _process_comprehensive_analysis(self,
                                             creator_id: str,
                                             request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process comprehensive creator analysis request"""        try:
+        """Process comprehensive creator analysis request"""
+        try:
             platforms = request_data.get('platforms', ['spotify', 'instagram'])
             analysis_depth = request_data.get('depth', 'deep')
             
@@ -355,7 +365,8 @@ class EngagementAgentSystem:
             raise ProcessingError(f"Comprehensive analysis failed: {str(e)}")
 
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get complete system status and health metrics"""        try:
+        """Get complete system status and health metrics"""
+        try:
             uptime = (datetime.utcnow() - self.start_time).total_seconds()
             
             # Component status
@@ -412,7 +423,8 @@ class EngagementAgentSystem:
             }
 
     async def shutdown_system(self) -> Dict[str, Any]:
-        """Graceful system shutdown"""        try:
+        """Graceful system shutdown"""
+        try:
             logger.info("Initiating Engagement Agent System shutdown...")
             
             shutdown_results = {}
@@ -460,12 +472,14 @@ class EngagementAgentSystem:
 
 # System initialization and management functions
 async def initialize_engagement_system() -> EngagementAgentSystem:
-    """Initialize complete engagement agent system"""    system = EngagementAgentSystem()
+    """Initialize complete engagement agent system"""
+    system = EngagementAgentSystem()
     await system.initialize_system()
     return system
 
 async def create_engagement_agent(creator_id: str) -> EngagementAgent:
-    """Create standalone engagement agent"""    agent = EngagementAgent()
+    """Create standalone engagement agent"""
+    agent = EngagementAgent()
     await agent.initialize()
     return agent
 
@@ -495,7 +509,8 @@ __all__ = [
         logger.warning("⚠️  PROPRIETARY SYSTEM - UNAUTHORIZED USE PROHIBITED")
 
     async def initialize_system(self) -> bool:
-        """Initialize complete engagement agent system"""        try:
+        """Initialize complete engagement agent system"""
+        try:
             logger.info("Initializing Engagement Agent System components...")
             
             # Initialize all components
@@ -535,14 +550,16 @@ __all__ = [
             return False
 
     async def create_creator_profile(self, creator_config: Dict[str, Any]) -> Dict[str, Any]:
-        """        Create comprehensive creator profile with all engagement systems
+        """
+        Create comprehensive creator profile with all engagement systems
         
         Args:
             creator_config: Creator configuration and preferences
             
         Returns:
             Dict: Complete creator profile with system integration
-        """        try:
+        """
+        try:
             creator_id = creator_config.get('creator_id')
             if not creator_id:
                 raise ValueError("Creator ID is required")
@@ -602,7 +619,8 @@ __all__ = [
             raise
 
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status and health metrics"""        try:
+        """Get comprehensive system status and health metrics"""
+        try:
             # Get global engagement insights
             global_insights = await self.agent_manager.get_global_engagement_insights()
             

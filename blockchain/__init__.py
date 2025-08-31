@@ -14,7 +14,9 @@ Key Features:
 - Cross-platform content distribution with blockchain verification
 - NFT minting for premium content protection
 - Real-time transaction monitoring and analytics
-"""from .copyright_registry import (
+"""
+
+from .copyright_registry import (
     CopyrightRegistryManager,
     CopyrightAsset,
     CopyrightProof,

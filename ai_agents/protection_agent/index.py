@@ -33,7 +33,8 @@ is strictly prohibited and will result in legal action.
 
 This is proprietary software developed by Fahed Mlaiel. Commercial use requires
 explicit written permission. For licensing inquiries, contact: mlaiel@live.de
-"""from typing import Dict, List, Any, Optional, Union, Tuple
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple
 from datetime import datetime
 import logging
 import asyncio
@@ -75,15 +76,19 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionAgentIndex:
-    """    Main orchestrator for the Advanced Protection Agent
+    """
+    Main orchestrator for the Advanced Protection Agent
     Provides unified access to all protection services and capabilities
-    """    
+    """
+    
     def __init__(self, config: Dict = None):
-        """        Initialize the Protection Agent Index
+        """
+        Initialize the Protection Agent Index
         
         Args:
             config (Dict): Configuration parameters for all protection services
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         
         # Initialize core components
         self.protection_manager = ProtectionManager(config)
@@ -118,7 +123,8 @@ class ProtectionAgentIndex:
         owner_info: Dict,
         protection_config: Dict = None
     ) -> Dict:
-        """        Main entry point for multi-format content protection
+        """
+        Main entry point for multi-format content protection
         
         Args:
             content_data: Single or multiple content files as bytes
@@ -128,7 +134,8 @@ class ProtectionAgentIndex:
             
         Returns:
             Dict: Complete protection results with all service outputs
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         request_id = str(uuid.uuid4())
         
         try:
@@ -197,7 +204,8 @@ class ProtectionAgentIndex:
         protection_config: Dict,
         file_id: str
     ) -> Dict:
-        """        Protect a single content file through complete workflow
+        """
+        Protect a single content file through complete workflow
         
         Args:
             content_data: Content file as bytes
@@ -208,7 +216,8 @@ class ProtectionAgentIndex:
             
         Returns:
             Dict: Protection results for single file
-        """        try:
+        """
+        try:
             # Step 1: Content Analysis and Fingerprinting
             fingerprint_result = await self.protection_agent.content_analyzer.create_comprehensive_fingerprint(
                 content_data, content_metadata.get('content_type', 'unknown')
@@ -281,14 +290,16 @@ class ProtectionAgentIndex:
             }
     
     async def get_protection_status(self, content_id: str) -> Dict:
-        """        Get comprehensive protection status for content
+        """
+        Get comprehensive protection status for content
         
         Args:
             content_id: Unique content identifier
             
         Returns:
             Dict: Complete protection status
-        """        try:
+        """
+        try:
             # Get status from all services
             copyright_status = await self.protection_agent.copyright_manager.get_protection_status(content_id)
             rights_status = await self.protection_agent.rights_manager.get_rights_status(content_id)
@@ -315,7 +326,8 @@ class ProtectionAgentIndex:
         rights_status: Dict,
         monitoring_status: Dict
     ) -> Dict:
-        """Calculate overall protection health status"""        
+        """Calculate overall protection health status"""
+        
         issues = []
         warnings = []
         
@@ -350,7 +362,8 @@ class ProtectionAgentIndex:
         }
     
     def _generate_recommendations(self, issues: List[str], warnings: List[str]) -> List[str]:
-        """Generate actionable recommendations based on status"""        
+        """Generate actionable recommendations based on status"""
+        
         recommendations = []
         
         if "Copyright protection not active" in issues:
@@ -368,7 +381,8 @@ class ProtectionAgentIndex:
         return recommendations
     
     def _update_metrics(self, processing_time: float, content_count: int):
-        """Update internal performance metrics"""        
+        """Update internal performance metrics"""
+        
         # Update average processing time
         total_requests = self.metrics['total_requests']
         current_avg = self.metrics['average_processing_time']
@@ -380,7 +394,8 @@ class ProtectionAgentIndex:
         self.metrics['total_content_protected'] += content_count
     
     def get_performance_metrics(self) -> Dict:
-        """Get current performance and usage metrics"""        
+        """Get current performance and usage metrics"""
+        
         return {
             'timestamp': datetime.utcnow().isoformat(),
             'metrics': self.metrics.copy(),
@@ -399,7 +414,8 @@ class ProtectionAgentIndex:
         owner_info: Dict,
         batch_config: Dict = None
     ) -> Dict:
-        """        Process multiple content files in optimized batch mode
+        """
+        Process multiple content files in optimized batch mode
         
         Args:
             content_batch: List of content items with data and metadata
@@ -408,7 +424,8 @@ class ProtectionAgentIndex:
             
         Returns:
             Dict: Batch processing results
-        """        batch_id = str(uuid.uuid4())
+        """
+        batch_id = str(uuid.uuid4())
         start_time = datetime.utcnow()
         
         logger.info(f"Starting bulk protection for {len(content_batch)} items: {batch_id}")
@@ -471,14 +488,16 @@ class ProtectionAgentIndex:
 protection_index = None
 
 def get_protection_index(config: Dict = None) -> ProtectionAgentIndex:
-    """    Get or create the global protection index instance
+    """
+    Get or create the global protection index instance
     
     Args:
         config (Dict): Configuration for protection services
         
     Returns:
         ProtectionAgentIndex: The global protection index instance
-    """    global protection_index
+    """
+    global protection_index
     
     if protection_index is None:
         protection_index = ProtectionAgentIndex(config)
@@ -493,7 +512,8 @@ async def protect_content(
     owner_info: Dict,
     protection_config: Dict = None
 ) -> Dict:
-    """    Quick access function for content protection
+    """
+    Quick access function for content protection
     
     Args:
         content_data: Content file(s) as bytes
@@ -503,28 +523,33 @@ async def protect_content(
         
     Returns:
         Dict: Protection results
-    """    index = get_protection_index()
+    """
+    index = get_protection_index()
     return await index.protect_multi_format_content(
         content_data, content_metadata, owner_info, protection_config
     )
 
 
 async def get_status(content_id: str) -> Dict:
-    """    Quick access function for protection status
+    """
+    Quick access function for protection status
     
     Args:
         content_id: Content identifier
         
     Returns:
         Dict: Protection status
-    """    index = get_protection_index()
+    """
+    index = get_protection_index()
     return await index.get_protection_status(content_id)
 
 
 def get_metrics() -> Dict:
-    """    Quick access function for performance metrics
+    """
+    Quick access function for performance metrics
     
     Returns:
         Dict: Current metrics
-    """    index = get_protection_index()
+    """
+    index = get_protection_index()
     return index.get_performance_metrics()

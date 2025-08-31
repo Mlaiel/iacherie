@@ -4,7 +4,8 @@ Manages configuration settings for the competitor monitoring agent.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel. All rights reserved.
 WARNING: Unauthorized use, copying, or distribution is strictly prohibited.
-"""import os
+"""
+import os
 import json
 import logging
 from typing import Dict, Any, Optional
@@ -24,7 +25,8 @@ from ...security.encryption import SecureDataHandler
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring configuration settings."""    update_interval: int = 300  # seconds
+    """Monitoring configuration settings."""
+    update_interval: int = 300  # seconds
     max_concurrent_collections: int = 10
     collection_timeout: int = 30
     retry_attempts: int = 3
@@ -35,7 +37,8 @@ class MonitoringConfig:
 
 @dataclass
 class AlertConfig:
-    """Alert system configuration."""    enable_alerts: bool = True
+    """Alert system configuration."""
+    enable_alerts: bool = True
     max_alerts_per_hour: int = 100
     alert_channels: list = None
     notification_delay: int = 0
@@ -45,7 +48,8 @@ class AlertConfig:
 
 @dataclass
 class DataSourceConfig:
-    """Data source configuration."""    enable_website_scraping: bool = True
+    """Data source configuration."""
+    enable_website_scraping: bool = True
     enable_social_media: bool = True
     enable_news_monitoring: bool = True
     enable_financial_data: bool = True
@@ -55,7 +59,8 @@ class DataSourceConfig:
 
 @dataclass
 class AnalysisConfig:
-    """Analysis engine configuration."""    enable_sentiment_analysis: bool = True
+    """Analysis engine configuration."""
+    enable_sentiment_analysis: bool = True
     enable_trend_analysis: bool = True
     enable_swot_analysis: bool = True
     confidence_threshold: float = 0.7
@@ -64,13 +69,16 @@ class AnalysisConfig:
 
 
 class ConfigurationManager:
-    """    Advanced configuration management for competitor monitoring agent.
+    """
+    Advanced configuration management for competitor monitoring agent.
     
     Provides centralized configuration management with environment variable
     support, validation, and secure credential handling.
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize configuration manager."""        self.logger = logging.getLogger(__name__)
+        """Initialize configuration manager."""
+        self.logger = logging.getLogger(__name__)
         self.secure_handler = SecureDataHandler()
         
         # Configuration file paths
@@ -92,7 +100,8 @@ class ConfigurationManager:
         self.logger.info("ConfigurationManager initialized")
     
     def _load_configurations(self):
-        """Load configurations from file and environment variables."""        try:
+        """Load configurations from file and environment variables."""
+        try:
             # Load from file if exists
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r') as f:
@@ -112,7 +121,8 @@ class ConfigurationManager:
             raise ConfigurationError(f"Failed to load configurations: {str(e)}")
     
     def _apply_config_data(self, config_data: Dict[str, Any]):
-        """Apply configuration data from loaded config."""        try:
+        """Apply configuration data from loaded config."""
+        try:
             # Monitoring config
             if "monitoring" in config_data:
                 monitoring_data = config_data["monitoring"]
@@ -167,7 +177,8 @@ class ConfigurationManager:
             raise ConfigurationError(f"Invalid configuration data: {str(e)}")
     
     def _load_from_environment(self):
-        """Load configuration values from environment variables."""        try:
+        """Load configuration values from environment variables."""
+        try:
             # Monitoring environment variables
             if os.getenv("COMPETITOR_UPDATE_INTERVAL"):
                 self.monitoring_config.update_interval = int(os.getenv("COMPETITOR_UPDATE_INTERVAL"))
@@ -207,7 +218,8 @@ class ConfigurationManager:
             raise ConfigurationError(f"Invalid environment variable: {str(e)}")
     
     def _validate_configurations(self):
-        """Validate configuration values."""        try:
+        """Validate configuration values."""
+        try:
             # Validate monitoring config
             if self.monitoring_config.update_interval < 60:
                 raise ConfigurationError("Update interval must be at least 60 seconds")
@@ -237,7 +249,8 @@ class ConfigurationManager:
             raise ConfigurationError(f"Configuration validation failed: {str(e)}")
     
     def get_full_config(self) -> Dict[str, Any]:
-        """Get complete configuration as dictionary."""        return {
+        """Get complete configuration as dictionary."""
+        return {
             "monitoring": asdict(self.monitoring_config),
             "alerts": asdict(self.alert_config),
             "data_sources": asdict(self.data_source_config),
@@ -245,19 +258,24 @@ class ConfigurationManager:
         }
     
     def get_monitoring_config(self) -> MonitoringConfig:
-        """Get monitoring configuration."""        return self.monitoring_config
+        """Get monitoring configuration."""
+        return self.monitoring_config
     
     def get_alert_config(self) -> AlertConfig:
-        """Get alert configuration."""        return self.alert_config
+        """Get alert configuration."""
+        return self.alert_config
     
     def get_data_source_config(self) -> DataSourceConfig:
-        """Get data source configuration."""        return self.data_source_config
+        """Get data source configuration."""
+        return self.data_source_config
     
     def get_analysis_config(self) -> AnalysisConfig:
-        """Get analysis configuration."""        return self.analysis_config
+        """Get analysis configuration."""
+        return self.analysis_config
     
     def update_config(self, config_type: str, updates: Dict[str, Any]):
-        """Update specific configuration section."""        try:
+        """Update specific configuration section."""
+        try:
             if config_type == "monitoring":
                 for key, value in updates.items():
                     if hasattr(self.monitoring_config, key):
@@ -293,7 +311,8 @@ class ConfigurationManager:
             raise ConfigurationError(f"Failed to update configuration: {str(e)}")
     
     def save_config(self):
-        """Save current configuration to file."""        try:
+        """Save current configuration to file."""
+        try:
             # Ensure config directory exists
             config_dir = os.path.dirname(self.config_path)
             if config_dir:
@@ -311,7 +330,8 @@ class ConfigurationManager:
             raise ConfigurationError(f"Failed to save configuration: {str(e)}")
     
     def load_credentials(self) -> Dict[str, Any]:
-        """Load encrypted credentials."""        try:
+        """Load encrypted credentials."""
+        try:
             if os.path.exists(self.credentials_path):
                 return self.secure_handler.decrypt_file(self.credentials_path)
             return {}
@@ -321,7 +341,8 @@ class ConfigurationManager:
             return {}
     
     def save_credentials(self, credentials: Dict[str, Any]):
-        """Save encrypted credentials."""        try:
+        """Save encrypted credentials."""
+        try:
             # Ensure credentials directory exists
             creds_dir = os.path.dirname(self.credentials_path)
             if creds_dir:
@@ -335,7 +356,8 @@ class ConfigurationManager:
             raise ConfigurationError(f"Failed to save credentials: {str(e)}")
     
     def get_api_credentials(self, service: str) -> Dict[str, str]:
-        """Get API credentials for a specific service."""        try:
+        """Get API credentials for a specific service."""
+        try:
             credentials = self.load_credentials()
             return credentials.get(service, {})
             
@@ -344,7 +366,8 @@ class ConfigurationManager:
             return {}
     
     def validate_api_credentials(self, service: str) -> bool:
-        """Validate API credentials for a service."""        try:
+        """Validate API credentials for a service."""
+        try:
             credentials = self.get_api_credentials(service)
             
             # Basic validation - check if required fields exist
@@ -370,7 +393,8 @@ class ConfigurationManager:
             return False
     
     def get_config_status(self) -> Dict[str, Any]:
-        """Get configuration status and health."""        return {
+        """Get configuration status and health."""
+        return {
             "config_loaded": True,
             "config_file_exists": os.path.exists(self.config_path),
             "credentials_file_exists": os.path.exists(self.credentials_path),

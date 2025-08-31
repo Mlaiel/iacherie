@@ -28,7 +28,8 @@ Usage:
 
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
-"""import sys
+"""
+import sys
 import os
 import asyncio
 from pathlib import Path
@@ -52,7 +53,8 @@ except ImportError as e:
     sys.exit(1)
 
 def display_banner():
-    """Display the IA Influencer Agent banner"""    banner = """╔══════════════════════════════════════════════════════════════════════════════╗
+    """Display the IA Influencer Agent banner"""
+    banner = """╔══════════════════════════════════════════════════════════════════════════════╗
 ║                                                                              ║
 ║    ██╗ █████╗     ██╗███╗   ██╗███████╗██╗     ██╗   ██╗███████╗███╗   ██╗ ║
 ║    ██║██╔══██╗    ██║████╗  ██║██╔════╝██║     ██║   ██║██╔════╝████╗  ██║ ║
@@ -100,10 +102,12 @@ def display_banner():
         http://localhost:8080/docs               # Swagger UI
         http://localhost:8080/redoc              # ReDoc
     
-"""    print(banner)
+"""
+    print(banner)
 
 def check_dependencies():
-    """Check if required dependencies are available"""    required_packages = [
+    """Check if required dependencies are available"""
+    required_packages = [
         'fastapi', 'uvicorn', 'prometheus_client', 'aiohttp', 
         'pydantic', 'yaml', 'jinja2'
     ]
@@ -124,9 +128,11 @@ def check_dependencies():
     return True
 
 def show_system_info():
-    """Display system information"""    python_version = f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
+    """Display system information"""
+    python_version = f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
     
-    print(f"""    📊 System Information:
+    print(f"""
+    📊 System Information:
        • Python Version: {python_version}
        • Platform: {sys.platform}
        • Working Directory: {os.getcwd()}
@@ -134,7 +140,8 @@ def show_system_info():
     """)
 
 def main_entry():
-    """Main entry point with enhanced error handling and information"""    
+    """Main entry point with enhanced error handling and information"""
+    
     # Check if running with --version or --info flags
     if '--version' in sys.argv:
         print("IA Influencer Agent Pipeline System v1.0.0")

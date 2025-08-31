@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -152,4 +152,4 @@ __all__ = [
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel - All Rights Reserved"
+__copyright__ = "(c) 2025 Fahed Mlaiel - All Rights Reserved"

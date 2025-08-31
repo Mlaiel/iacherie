@@ -14,7 +14,8 @@ Features:
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: Proprietary - All rights reserved
-"""import asyncio
+"""
+import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Union
 from dataclasses import dataclass, field
@@ -35,14 +36,16 @@ from ...core.config import get_settings
 
 
 class StorageTier(Enum):
-    """Storage tier classification."""    HOT = "hot"          # Real-time access, high performance
+    """Storage tier classification."""
+    HOT = "hot"          # Real-time access, high performance
     WARM = "warm"        # Frequent access, good performance  
     COLD = "cold"        # Infrequent access, cost optimized
     ARCHIVE = "archive"  # Long-term storage, minimal access
 
 
 class DataFormat(Enum):
-    """Data storage formats."""    JSON = "json"
+    """Data storage formats."""
+    JSON = "json"
     PARQUET = "parquet"
     CSV = "csv"
     BINARY = "binary"
@@ -51,7 +54,8 @@ class DataFormat(Enum):
 
 @dataclass
 class StorageConfig:
-    """Storage configuration settings."""    tier: StorageTier
+    """Storage configuration settings."""
+    tier: StorageTier
     retention_days: int
     compression_enabled: bool = True
     encryption_enabled: bool = True
@@ -61,7 +65,8 @@ class StorageConfig:
 
 @dataclass
 class StorageMetadata:
-    """Metadata for stored analytics data."""    data_id: str
+    """Metadata for stored analytics data."""
+    data_id: str
     data_type: str
     storage_tier: StorageTier
     format: DataFormat
@@ -74,11 +79,13 @@ class StorageMetadata:
 
 
 class AnalyticsStorage:
-    """    Advanced analytics data storage system.
+    """
+    Advanced analytics data storage system.
     
     Provides multi-tier storage with automatic data lifecycle
     management, compression, and high-performance querying.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.settings = get_settings()
@@ -86,7 +93,8 @@ class AnalyticsStorage:
         self._storage_configs = self._initialize_storage_configs()
         
     def _initialize_storage_configs(self) -> Dict[StorageTier, StorageConfig]:
-        """Initialize storage tier configurations."""        
+        """Initialize storage tier configurations."""
+        
         return {
             StorageTier.HOT: StorageConfig(
                 tier=StorageTier.HOT,
@@ -131,7 +139,8 @@ class AnalyticsStorage:
         tags: Optional[List[str]] = None,
         expiry_hours: Optional[int] = None
     ) -> str:
-        """        Store analytics data with automatic tier management.
+        """
+        Store analytics data with automatic tier management.
         
         Args:
             data: Data to store
@@ -143,7 +152,8 @@ class AnalyticsStorage:
             
         Returns:
             Data identifier for retrieval
-        """        try:
+        """
+        try:
             if not data_id:
                 data_id = f"{data_type}_{datetime.now().strftime('%Y%m%d_%H%M%S_%f')}"
                 
@@ -193,7 +203,8 @@ class AnalyticsStorage:
             raise
             
     def _determine_storage_format(self, data: Any, tier: StorageTier) -> DataFormat:
-        """Determine optimal storage format based on data type and tier."""        
+        """Determine optimal storage format based on data type and tier."""
+        
         if isinstance(data, (dict, list)):
             if tier in [StorageTier.COLD, StorageTier.ARCHIVE]:
                 return DataFormat.COMPRESSED
@@ -211,7 +222,8 @@ class AnalyticsStorage:
         format: DataFormat,
         tier: StorageTier
     ) -> Union[str, bytes]:
-        """Serialize data according to format and tier requirements."""        
+        """Serialize data according to format and tier requirements."""
+        
         config = self._storage_configs[tier]
         
         if format == DataFormat.JSON:
@@ -249,7 +261,8 @@ class AnalyticsStorage:
         data: Union[str, bytes],
         metadata: StorageMetadata
     ) -> None:
-        """Store data in hot tier (Redis for fast access)."""        
+        """Store data in hot tier (Redis for fast access)."""
+        
         redis_client = await self._get_redis_client()
         
         # Store in Redis with TTL
@@ -273,7 +286,8 @@ class AnalyticsStorage:
         data: Union[str, bytes],
         metadata: StorageMetadata
     ) -> None:
-        """Store data in warm tier (Database with indexing)."""        
+        """Store data in warm tier (Database with indexing)."""
+        
         async with get_database_session() as session:
             # Store in analytics_data table
             query = pg_insert(AnalyticsData).values(
@@ -306,7 +320,8 @@ class AnalyticsStorage:
         data: Union[str, bytes],
         metadata: StorageMetadata
     ) -> None:
-        """Store data in cold tier (File system with compression)."""        
+        """Store data in cold tier (File system with compression)."""
+        
         # Create cold storage directory
         cold_storage_path = Path("storage/cold")
         cold_storage_path.mkdir(parents=True, exist_ok=True)
@@ -335,7 +350,8 @@ class AnalyticsStorage:
         data: Union[str, bytes],
         metadata: StorageMetadata
     ) -> None:
-        """Store data in archive tier (Long-term storage)."""        
+        """Store data in archive tier (Long-term storage)."""
+        
         # Create archive storage directory
         archive_path = Path("storage/archive")
         archive_path.mkdir(parents=True, exist_ok=True)
@@ -358,7 +374,8 @@ class AnalyticsStorage:
         metadata.tags.append(f"archive_path:{str(file_path)}")
         
     async def _store_metadata(self, metadata: StorageMetadata) -> None:
-        """Store metadata in database for efficient querying."""        
+        """Store metadata in database for efficient querying."""
+        
         async with get_database_session() as session:
             query = pg_insert(AnalyticsMetadata).values(
                 data_id=metadata.data_id,
@@ -390,7 +407,8 @@ class AnalyticsStorage:
         data_id: str,
         update_access_stats: bool = True
     ) -> Optional[Any]:
-        """        Retrieve analytics data by ID with automatic tier management.
+        """
+        Retrieve analytics data by ID with automatic tier management.
         
         Args:
             data_id: Data identifier
@@ -398,7 +416,8 @@ class AnalyticsStorage:
             
         Returns:
             Retrieved data or None if not found
-        """        try:
+        """
+        try:
             # Get metadata first
             metadata = await self._get_metadata(data_id)
             if not metadata:
@@ -443,7 +462,8 @@ class AnalyticsStorage:
             raise
             
     async def _get_metadata(self, data_id: str) -> Optional[StorageMetadata]:
-        """Retrieve metadata for data ID."""        
+        """Retrieve metadata for data ID."""
+        
         async with get_database_session() as session:
             query = select(AnalyticsMetadata).where(
                 AnalyticsMetadata.data_id == data_id
@@ -468,13 +488,15 @@ class AnalyticsStorage:
             return None
             
     async def _retrieve_hot_data(self, data_id: str) -> Optional[Union[str, bytes]]:
-        """Retrieve data from hot tier (Redis)."""        
+        """Retrieve data from hot tier (Redis)."""
+        
         redis_client = await self._get_redis_client()
         data = await redis_client.get(f"analytics:hot:{data_id}")
         return data
         
     async def _retrieve_warm_data(self, data_id: str) -> Optional[Union[str, bytes]]:
-        """Retrieve data from warm tier (Database)."""        
+        """Retrieve data from warm tier (Database)."""
+        
         async with get_database_session() as session:
             query = select(AnalyticsData.data_content).where(
                 AnalyticsData.data_id == data_id
@@ -489,7 +511,8 @@ class AnalyticsStorage:
         data_id: str,
         metadata: StorageMetadata
     ) -> Optional[Union[str, bytes]]:
-        """Retrieve data from cold tier (File system)."""        
+        """Retrieve data from cold tier (File system)."""
+        
         # Find file path from metadata tags
         file_path = None
         for tag in metadata.tags:
@@ -513,7 +536,8 @@ class AnalyticsStorage:
         data_id: str,
         metadata: StorageMetadata
     ) -> Optional[Union[str, bytes]]:
-        """Retrieve data from archive tier."""        
+        """Retrieve data from archive tier."""
+        
         # Find archive path from metadata tags
         archive_path = None
         for tag in metadata.tags:
@@ -534,7 +558,8 @@ class AnalyticsStorage:
         format: DataFormat,
         tier: StorageTier
     ) -> Any:
-        """Deserialize data according to format and tier."""        
+        """Deserialize data according to format and tier."""
+        
         config = self._storage_configs[tier]
         
         try:
@@ -575,7 +600,8 @@ class AnalyticsStorage:
             return data  # Return raw data if deserialization fails
             
     async def _update_access_stats(self, data_id: str) -> None:
-        """Update access statistics for data."""        
+        """Update access statistics for data."""
+        
         async with get_database_session() as session:
             query = update(AnalyticsMetadata).where(
                 AnalyticsMetadata.data_id == data_id
@@ -592,7 +618,8 @@ class AnalyticsStorage:
         data_id: str,
         metadata: StorageMetadata
     ) -> None:
-        """Consider promoting data to higher tier based on access patterns."""        
+        """Consider promoting data to higher tier based on access patterns."""
+        
         # Simple promotion logic based on access frequency
         access_frequency = metadata.access_count / max(
             (datetime.now() - metadata.created_at).days, 1
@@ -609,7 +636,8 @@ class AnalyticsStorage:
             await self._promote_data_tier(data_id, promote_to_tier)
             
     async def _promote_data_tier(self, data_id: str, new_tier: StorageTier) -> None:
-        """Promote data to higher performance tier."""        
+        """Promote data to higher performance tier."""
+        
         try:
             # Retrieve current data
             data = await self.retrieve_analytics_data(data_id, update_access_stats=False)
@@ -629,7 +657,8 @@ class AnalyticsStorage:
             self.logger.error(f"Error promoting data tier: {e}")
             
     async def _delete_expired_data(self, data_id: str) -> None:
-        """Delete expired data from all storage tiers."""        
+        """Delete expired data from all storage tiers."""
+        
         try:
             # Get metadata to determine storage locations
             metadata = await self._get_metadata(data_id)
@@ -670,7 +699,8 @@ class AnalyticsStorage:
             self.logger.error(f"Error deleting expired data: {e}")
             
     async def _get_redis_client(self):
-        """Get Redis client for hot tier storage."""        
+        """Get Redis client for hot tier storage."""
+        
         if not self._redis_client:
             import redis.asyncio as redis
             self._redis_client = redis.Redis(
@@ -690,7 +720,8 @@ class AnalyticsStorage:
         end_date: Optional[datetime] = None,
         limit: int = 100
     ) -> List[Dict[str, Any]]:
-        """        Query analytics data with flexible filtering.
+        """
+        Query analytics data with flexible filtering.
         
         Args:
             data_type: Filter by data type
@@ -702,7 +733,8 @@ class AnalyticsStorage:
             
         Returns:
             List of matching data metadata
-        """        try:
+        """
+        try:
             async with get_database_session() as session:
                 query = select(AnalyticsMetadata)
                 
@@ -756,7 +788,8 @@ class AnalyticsStorage:
             raise
             
     async def cleanup_expired_data(self) -> int:
-        """Clean up all expired data across tiers."""        
+        """Clean up all expired data across tiers."""
+        
         try:
             cleanup_count = 0
             
@@ -786,9 +819,11 @@ class AnalyticsStorage:
 
 
 class MetricsWarehouse:
-    """    Data warehouse optimized for analytics metrics with
+    """
+    Data warehouse optimized for analytics metrics with
     advanced aggregation and analytical query capabilities.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -797,7 +832,8 @@ class MetricsWarehouse:
         metrics: List[Dict[str, Any]],
         aggregation_level: str = "daily"
     ) -> None:
-        """Store pre-aggregated metrics for fast querying."""        
+        """Store pre-aggregated metrics for fast querying."""
+        
         try:
             async with get_database_session() as session:
                 for metric in metrics:
@@ -832,9 +868,11 @@ class MetricsWarehouse:
 
 
 class TimeSeriesStore:
-    """    Specialized time-series storage for high-frequency analytics data
+    """
+    Specialized time-series storage for high-frequency analytics data
     with efficient compression and querying capabilities.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -845,7 +883,8 @@ class TimeSeriesStore:
         value: float,
         tags: Optional[Dict[str, str]] = None
     ) -> None:
-        """Store time-series data point."""        
+        """Store time-series data point."""
+        
         try:
             async with get_database_session() as session:
                 query = insert(TimeSeriesData).values(
@@ -871,7 +910,8 @@ class TimeSeriesStore:
         aggregation: Optional[str] = None,
         interval: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """Query time-series data with optional aggregation."""        
+        """Query time-series data with optional aggregation."""
+        
         try:
             async with get_database_session() as session:
                 if aggregation and interval:
@@ -941,9 +981,11 @@ class TimeSeriesStore:
 
 
 class CacheManager:
-    """    Advanced caching system for frequently accessed analytics data
+    """
+    Advanced caching system for frequently accessed analytics data
     with intelligent cache warming and eviction policies.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self._cache_stats = {
@@ -953,7 +995,8 @@ class CacheManager:
         }
         
     async def get_cached_data(self, cache_key: str) -> Optional[Any]:
-        """Retrieve data from cache."""        
+        """Retrieve data from cache."""
+        
         try:
             redis_client = redis.Redis()  # Use sync Redis for caching
             
@@ -976,7 +1019,8 @@ class CacheManager:
         data: Any,
         ttl_seconds: int = 3600
     ) -> None:
-        """Store data in cache with TTL."""        
+        """Store data in cache with TTL."""
+        
         try:
             redis_client = redis.Redis()
             
@@ -987,7 +1031,8 @@ class CacheManager:
             self.logger.error(f"Error setting cached data: {e}")
             
     async def invalidate_cache(self, pattern: str) -> int:
-        """Invalidate cache entries matching pattern."""        
+        """Invalidate cache entries matching pattern."""
+        
         try:
             redis_client = redis.Redis()
             
@@ -1004,7 +1049,8 @@ class CacheManager:
             return 0
             
     def get_cache_stats(self) -> Dict[str, Any]:
-        """Get cache performance statistics."""        
+        """Get cache performance statistics."""
+        
         total_requests = self._cache_stats['hits'] + self._cache_stats['misses']
         hit_rate = (self._cache_stats['hits'] / total_requests * 100) if total_requests > 0 else 0
         

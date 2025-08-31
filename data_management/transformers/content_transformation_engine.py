@@ -23,7 +23,8 @@ SUPPORTS TRANSFORMATIONS:
 🎬 Vidéo: MP4↔AVI↔MOV, Compression, Resolution, Frame Rate
 📸 Images: JPG↔PNG↔WEBP, Optimization, HDR, Super Resolution
 📝 Texte: Format Conversion, SEO Enhancement, Translation
-"""from typing import Dict, List, Any, Optional, Union, Tuple, BinaryIO
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple, BinaryIO
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime
@@ -63,7 +64,8 @@ __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 logger = logging.getLogger(__name__)
 
 class TransformationType(Enum):
-    """Types de transformation disponibles"""    # Audio
+    """Types de transformation disponibles"""
+    # Audio
     AUDIO_NORMALIZE = "audio_normalize"
     AUDIO_DENOISE = "audio_denoise"
     AUDIO_COMPRESS = "audio_compress"
@@ -97,7 +99,8 @@ class TransformationType(Enum):
     PREVIEW_GENERATE = "preview_generate"
 
 class QualityLevel(Enum):
-    """Niveaux de qualité pour les transformations"""    DRAFT = "draft"          # Rapide, qualité basique
+    """Niveaux de qualité pour les transformations"""
+    DRAFT = "draft"          # Rapide, qualité basique
     STANDARD = "standard"    # Équilibre qualité/vitesse
     HIGH = "high"           # Haute qualité
     PROFESSIONAL = "professional"  # Qualité professionnelle
@@ -105,7 +108,8 @@ class QualityLevel(Enum):
 
 @dataclass
 class TransformationConfig:
-    """Configuration d'une transformation"""    transformation_type: TransformationType
+    """Configuration d'une transformation"""
+    transformation_type: TransformationType
     quality_level: QualityLevel
     target_format: Optional[str] = None
     target_resolution: Optional[Tuple[int, int]] = None
@@ -117,7 +121,8 @@ class TransformationConfig:
 
 @dataclass
 class TransformationResult:
-    """Résultat d'une transformation"""    job_id: str
+    """Résultat d'une transformation"""
+    job_id: str
     original_path: str
     transformed_path: str
     transformation_type: TransformationType
@@ -131,7 +136,8 @@ class TransformationResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class ContentTransformationEngine:
-    """    Moteur avancé de transformation de contenu multi-format
+    """
+    Moteur avancé de transformation de contenu multi-format
     
     Capacités:
     - Transformation intelligente avec IA
@@ -140,7 +146,8 @@ class ContentTransformationEngine:
     - Enhancement IA pour audio/vidéo/image
     - SEO et optimisation web
     - Traitement batch et temps réel
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.content_repository = ContentRepository()
@@ -157,7 +164,8 @@ class ContentTransformationEngine:
         self.transformation_cache = {}
         
     def _initialize_ai_models(self) -> Dict[str, Any]:
-        """Initialise les modèles IA pour l'enhancement"""        models = {}
+        """Initialise les modèles IA pour l'enhancement"""
+        models = {}
         
         try:
             # Modèle pour super-résolution d'images
@@ -187,7 +195,8 @@ class ContentTransformationEngine:
         return models
         
     def _load_supported_formats(self) -> Dict[str, List[str]]:
-        """Charge la configuration des formats supportés"""        return {
+        """Charge la configuration des formats supportés"""
+        return {
             "audio": {
                 "input": [".mp3", ".wav", ".flac", ".ogg", ".m4a", ".aiff", ".wma"],
                 "output": [".mp3", ".wav", ".flac", ".ogg", ".m4a"],
@@ -212,7 +221,8 @@ class ContentTransformationEngine:
     
     async def transform_content(self, content_path: str, transformations: List[TransformationConfig],
                               creator_id: str, target_platforms: Optional[List[str]] = None) -> List[TransformationResult]:
-        """        Transforme le contenu selon les configurations spécifiées
+        """
+        Transforme le contenu selon les configurations spécifiées
         
         Args:
             content_path: Chemin vers le fichier source
@@ -222,7 +232,8 @@ class ContentTransformationEngine:
             
         Returns:
             List[TransformationResult]: Résultats des transformations
-        """        try:
+        """
+        try:
             results = []
             
             # Analyse du contenu source
@@ -266,7 +277,8 @@ class ContentTransformationEngine:
             raise
     
     async def _analyze_source_content(self, content_path: str) -> Dict[str, Any]:
-        """Analyse le contenu source pour optimiser les transformations"""        try:
+        """Analyse le contenu source pour optimiser les transformations"""
+        try:
             file_path = Path(content_path)
             file_extension = file_path.suffix.lower()
             file_size = file_path.stat().st_size
@@ -306,7 +318,8 @@ class ContentTransformationEngine:
             raise
     
     def _determine_content_type(self, file_extension: str) -> str:
-        """Détermine le type de contenu basé sur l'extension"""        audio_extensions = [".mp3", ".wav", ".flac", ".ogg", ".m4a", ".aiff"]
+        """Détermine le type de contenu basé sur l'extension"""
+        audio_extensions = [".mp3", ".wav", ".flac", ".ogg", ".m4a", ".aiff"]
         video_extensions = [".mp4", ".avi", ".mov", ".mkv", ".webm", ".flv"]
         image_extensions = [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tiff", ".webp"]
         text_extensions = [".txt", ".md", ".html", ".pdf", ".docx"]
@@ -323,7 +336,8 @@ class ContentTransformationEngine:
             return "unknown"
     
     async def _analyze_audio_content(self, audio_path: str) -> Dict[str, Any]:
-        """Analyse spécifique pour le contenu audio"""        try:
+        """Analyse spécifique pour le contenu audio"""
+        try:
             # Chargement de l'audio
             y, sr = librosa.load(audio_path, sr=None)
             duration = len(y) / sr
@@ -353,7 +367,8 @@ class ContentTransformationEngine:
             return {"duration_seconds": 0, "sample_rate": 44100, "channels": 2}
     
     async def _analyze_video_content(self, video_path: str) -> Dict[str, Any]:
-        """Analyse spécifique pour le contenu vidéo"""        try:
+        """Analyse spécifique pour le contenu vidéo"""
+        try:
             # Utilisation de OpenCV pour l'analyse
             cap = cv2.VideoCapture(video_path)
             
@@ -409,7 +424,8 @@ class ContentTransformationEngine:
             return {"duration_seconds": 0, "fps": 30, "resolution": {"width": 1920, "height": 1080}}
     
     async def _analyze_image_content(self, image_path: str) -> Dict[str, Any]:
-        """Analyse spécifique pour le contenu image"""        try:
+        """Analyse spécifique pour le contenu image"""
+        try:
             # Chargement de l'image
             image = Image.open(image_path)
             
@@ -462,7 +478,8 @@ class ContentTransformationEngine:
             return {"resolution": {"width": 1920, "height": 1080}, "format": "JPEG"}
     
     async def _analyze_text_content(self, text_path: str) -> Dict[str, Any]:
-        """Analyse spécifique pour le contenu texte"""        try:
+        """Analyse spécifique pour le contenu texte"""
+        try:
             # Lecture du contenu
             with open(text_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -501,7 +518,8 @@ class ContentTransformationEngine:
     async def _optimize_for_platforms(self, transformations: List[TransformationConfig],
                                     content_info: Dict[str, Any],
                                     target_platforms: List[str]) -> List[TransformationConfig]:
-        """Optimise les transformations pour les plateformes cibles"""        optimized = transformations.copy()
+        """Optimise les transformations pour les plateformes cibles"""
+        optimized = transformations.copy()
         
         # Recommandations par plateforme
         platform_specs = {
@@ -552,7 +570,8 @@ class ContentTransformationEngine:
     
     async def _execute_transformation(self, content_path: str, config: TransformationConfig,
                                     job_id: str, content_info: Dict[str, Any]) -> TransformationResult:
-        """Exécute une transformation spécifique"""        start_time = time.time()
+        """Exécute une transformation spécifique"""
+        start_time = time.time()
         
         try:
             # Génération du nom de fichier de sortie
@@ -633,7 +652,8 @@ class ContentTransformationEngine:
             )
     
     def _generate_output_path(self, input_path: str, config: TransformationConfig) -> str:
-        """Génère le chemin de sortie pour la transformation"""        input_path_obj = Path(input_path)
+        """Génère le chemin de sortie pour la transformation"""
+        input_path_obj = Path(input_path)
         base_name = input_path_obj.stem
         
         # Suffixe basé sur la transformation
@@ -657,7 +677,8 @@ class ContentTransformationEngine:
     
     async def _transform_audio(self, input_path: str, output_path: str,
                              config: TransformationConfig, content_info: Dict[str, Any]) -> bool:
-        """Transformations audio spécialisées"""        try:
+        """Transformations audio spécialisées"""
+        try:
             if config.transformation_type == TransformationType.AUDIO_NORMALIZE:
                 # Normalisation audio
                 y, sr = librosa.load(input_path, sr=None)
@@ -702,7 +723,8 @@ class ContentTransformationEngine:
     
     async def _transform_video(self, input_path: str, output_path: str,
                              config: TransformationConfig, content_info: Dict[str, Any]) -> bool:
-        """Transformations vidéo spécialisées"""        try:
+        """Transformations vidéo spécialisées"""
+        try:
             if config.transformation_type == TransformationType.VIDEO_RESIZE:
                 # Redimensionnement vidéo
                 clip = VideoFileClip(input_path)
@@ -753,7 +775,8 @@ class ContentTransformationEngine:
     
     async def _transform_image(self, input_path: str, output_path: str,
                              config: TransformationConfig, content_info: Dict[str, Any]) -> bool:
-        """Transformations image spécialisées"""        try:
+        """Transformations image spécialisées"""
+        try:
             image = Image.open(input_path)
             
             if config.transformation_type == TransformationType.IMAGE_RESIZE:
@@ -817,7 +840,8 @@ class ContentTransformationEngine:
     
     async def _transform_text(self, input_path: str, output_path: str,
                             config: TransformationConfig, content_info: Dict[str, Any]) -> bool:
-        """Transformations texte spécialisées"""        try:
+        """Transformations texte spécialisées"""
+        try:
             with open(input_path, 'r', encoding='utf-8') as f:
                 content = f.read()
             
@@ -873,7 +897,8 @@ class ContentTransformationEngine:
     
     async def _transform_generic(self, input_path: str, output_path: str,
                                config: TransformationConfig, content_info: Dict[str, Any]) -> bool:
-        """Transformations génériques"""        try:
+        """Transformations génériques"""
+        try:
             # Copie simple pour les transformations non spécialisées
             import shutil
             shutil.copy2(input_path, output_path)
@@ -883,7 +908,8 @@ class ContentTransformationEngine:
             return False
     
     async def _optimize_text_for_seo(self, content: str, config: TransformationConfig) -> str:
-        """Optimise le texte pour le SEO"""        # Implémentation basique d'optimisation SEO
+        """Optimise le texte pour le SEO"""
+        # Implémentation basique d'optimisation SEO
         lines = content.split('\n')
         optimized_lines = []
         
@@ -902,7 +928,8 @@ class ContentTransformationEngine:
     
     async def _analyze_transformation_quality(self, original_path: str, transformed_path: str,
                                             config: TransformationConfig) -> Dict[str, float]:
-        """Analyse la qualité post-transformation"""        try:
+        """Analyse la qualité post-transformation"""
+        try:
             metrics = {}
             
             # Métriques générales
@@ -930,7 +957,8 @@ class ContentTransformationEngine:
             return {"quality_score": 0.8}  # Score par défaut
     
     async def _compare_image_quality(self, original_path: str, transformed_path: str) -> Dict[str, float]:
-        """Compare la qualité entre deux images"""        try:
+        """Compare la qualité entre deux images"""
+        try:
             original = cv2.imread(original_path)
             transformed = cv2.imread(transformed_path)
             
@@ -959,7 +987,8 @@ class ContentTransformationEngine:
             return {"image_quality_score": 0.8}
     
     async def _compare_audio_quality(self, original_path: str, transformed_path: str) -> Dict[str, float]:
-        """Compare la qualité entre deux fichiers audio"""        try:
+        """Compare la qualité entre deux fichiers audio"""
+        try:
             y1, sr1 = librosa.load(original_path, sr=None)
             y2, sr2 = librosa.load(transformed_path, sr=None)
             
@@ -990,7 +1019,8 @@ class ContentTransformationEngine:
             return {"audio_quality_score": 0.8}
     
     async def _compare_video_quality(self, original_path: str, transformed_path: str) -> Dict[str, float]:
-        """Compare la qualité entre deux vidéos"""        try:
+        """Compare la qualité entre deux vidéos"""
+        try:
             cap1 = cv2.VideoCapture(original_path)
             cap2 = cv2.VideoCapture(transformed_path)
             
@@ -1033,7 +1063,8 @@ class ContentTransformationEngine:
     
     def _is_transformation_chainable(self, config1: TransformationConfig, 
                                    config2: TransformationConfig) -> bool:
-        """Vérifie si deux transformations peuvent être chaînées"""        # Vérification de compatibilité basique
+        """Vérifie si deux transformations peuvent être chaînées"""
+        # Vérification de compatibilité basique
         type1 = config1.transformation_type.value.split('_')[0]
         type2 = config2.transformation_type.value.split('_')[0]
         
@@ -1050,7 +1081,8 @@ class ContentTransformationEngine:
         return type2 in compatible_chains.get(type1, [])
     
     async def _cleanup_temporary_files(self, results: List[TransformationResult]):
-        """Nettoie les fichiers temporaires après transformation"""        for result in results:
+        """Nettoie les fichiers temporaires après transformation"""
+        for result in results:
             if not result.success and result.transformed_path:
                 try:
                     Path(result.transformed_path).unlink(missing_ok=True)

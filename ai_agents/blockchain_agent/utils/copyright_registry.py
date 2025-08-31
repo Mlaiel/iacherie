@@ -15,7 +15,8 @@ Copyright: 2025 - All Rights Reserved
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -44,7 +45,8 @@ from .blockchain_agent import BlockchainNetwork
 
 
 class CopyrightType(Enum):
-    """Types of copyrightable content."""    MUSICAL_COMPOSITION = "musical_composition"
+    """Types of copyrightable content."""
+    MUSICAL_COMPOSITION = "musical_composition"
     SOUND_RECORDING = "sound_recording"
     AUDIOVISUAL_WORK = "audiovisual_work"
     LITERARY_WORK = "literary_work"
@@ -56,7 +58,8 @@ class CopyrightType(Enum):
 
 
 class RegistrationStatus(Enum):
-    """Copyright registration statuses."""    PENDING = "pending"
+    """Copyright registration statuses."""
+    PENDING = "pending"
     REGISTERED = "registered"
     VERIFIED = "verified"
     CHALLENGED = "challenged"
@@ -65,7 +68,8 @@ class RegistrationStatus(Enum):
 
 
 class LegalJurisdiction(Enum):
-    """International legal jurisdictions."""    INTERNATIONAL = "international"
+    """International legal jurisdictions."""
+    INTERNATIONAL = "international"
     US = "united_states"
     EU = "european_union"
     UK = "united_kingdom"
@@ -78,7 +82,8 @@ class LegalJurisdiction(Enum):
 
 @dataclass
 class CopyrightClaim:
-    """Comprehensive copyright claim record."""    id: str
+    """Comprehensive copyright claim record."""
+    id: str
     content_hash: str
     copyright_type: CopyrightType
     title: str
@@ -100,7 +105,8 @@ class CopyrightClaim:
     
 @dataclass
 class CopyrightEvidence:
-    """Evidence supporting copyright claim."""    evidence_type: str
+    """Evidence supporting copyright claim."""
+    evidence_type: str
     description: str
     timestamp: datetime
     file_hash: str
@@ -110,7 +116,8 @@ class CopyrightEvidence:
 
 @dataclass
 class OwnershipTransfer:
-    """Copyright ownership transfer record."""    transfer_id: str
+    """Copyright ownership transfer record."""
+    transfer_id: str
     copyright_id: str
     from_owner: str
     to_owner: str
@@ -122,7 +129,8 @@ class OwnershipTransfer:
 
 
 class CopyrightRegistry:
-    """    Advanced Blockchain Copyright Registry System.
+    """
+    Advanced Blockchain Copyright Registry System.
     
     Provides comprehensive copyright management services:
     - Immutable blockchain-based copyright registration
@@ -131,9 +139,11 @@ class CopyrightRegistry:
     - DMCA and copyright infringement protection
     - Ownership transfer and licensing management
     - Legal evidence generation for disputes
-    """    
+    """
+    
     def __init__(self, blockchain_agent, config: Optional[Dict] = None):
-        """Initialize the Copyright Registry system."""        self.blockchain_agent = blockchain_agent
+        """Initialize the Copyright Registry system."""
+        self.blockchain_agent = blockchain_agent
         self.config = config or {}
         
         # Logging setup
@@ -170,7 +180,8 @@ class CopyrightRegistry:
         self.logger.info("Copyright Registry system initialized")
     
     def _initialize_cryptographic_keys(self):
-        """Initialize cryptographic keys for document signing."""        try:
+        """Initialize cryptographic keys for document signing."""
+        try:
             if rsa and serialization:
                 # Generate RSA key pair for document signing
                 self.signature_private_key = rsa.generate_private_key(
@@ -197,7 +208,8 @@ class CopyrightRegistry:
         jurisdiction: Optional[LegalJurisdiction] = None,
         evidence_files: Optional[List[str]] = None
     ) -> str:
-        """        Register copyright claim on blockchain with legal documentation.
+        """
+        Register copyright claim on blockchain with legal documentation.
         
         Args:
             content_hash: SHA-256 hash of the copyrighted content
@@ -212,7 +224,8 @@ class CopyrightRegistry:
             
         Returns:
             str: Copyright claim ID
-        """        try:
+        """
+        try:
             claim_id = str(uuid.uuid4())
             
             # Use current date if creation date not provided
@@ -300,7 +313,8 @@ class CopyrightRegistry:
         content_hash: str,
         claimant_address: str
     ) -> Dict[str, Any]:
-        """        Verify copyright ownership for given content and claimant.
+        """
+        Verify copyright ownership for given content and claimant.
         
         Args:
             content_hash: Hash of the content to verify
@@ -308,7 +322,8 @@ class CopyrightRegistry:
             
         Returns:
             Dict containing verification results
-        """        try:
+        """
+        try:
             # Find copyright claims for this content
             matching_claims = [
                 claim for claim in self.copyright_claims.values()
@@ -374,7 +389,8 @@ class CopyrightRegistry:
         transfer_terms: Dict[str, Any],
         legal_document_hash: Optional[str] = None
     ) -> str:
-        """        Transfer copyright ownership with legal documentation.
+        """
+        Transfer copyright ownership with legal documentation.
         
         Args:
             claim_id: Copyright claim identifier
@@ -386,7 +402,8 @@ class CopyrightRegistry:
             
         Returns:
             str: Transfer transaction ID
-        """        try:
+        """
+        try:
             if claim_id not in self.copyright_claims:
                 raise ValueError(f"Copyright claim not found: {claim_id}")
             
@@ -462,7 +479,8 @@ class CopyrightRegistry:
         file_path: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """        Add additional evidence to support a copyright claim.
+        """
+        Add additional evidence to support a copyright claim.
         
         Args:
             claim_id: Copyright claim identifier
@@ -473,7 +491,8 @@ class CopyrightRegistry:
             
         Returns:
             str: Evidence ID
-        """        try:
+        """
+        try:
             if claim_id not in self.copyright_claims:
                 raise ValueError(f"Copyright claim not found: {claim_id}")
             
@@ -519,7 +538,8 @@ class CopyrightRegistry:
         infringer_contact: str,
         platform_contact: str
     ) -> Dict[str, Any]:
-        """        Generate DMCA takedown notice for copyright infringement.
+        """
+        Generate DMCA takedown notice for copyright infringement.
         
         Args:
             claim_id: Copyright claim identifier
@@ -529,7 +549,8 @@ class CopyrightRegistry:
             
         Returns:
             Dict containing DMCA notice details
-        """        try:
+        """
+        try:
             if claim_id not in self.copyright_claims:
                 raise ValueError(f"Copyright claim not found: {claim_id}")
             
@@ -590,7 +611,8 @@ class CopyrightRegistry:
         creator_address: str,
         creation_date: datetime
     ) -> Dict[str, Any]:
-        """Generate cryptographic proof of creation."""        timestamp_hash = hashlib.sha256(
+        """Generate cryptographic proof of creation."""
+        timestamp_hash = hashlib.sha256(
             f"{content_hash}{creator_address}{creation_date.isoformat()}".encode()
         ).hexdigest()
         
@@ -608,7 +630,8 @@ class CopyrightRegistry:
         creation_date: datetime,
         jurisdiction: LegalJurisdiction
     ) -> datetime:
-        """Calculate copyright renewal date based on jurisdiction."""        # Different jurisdictions have different copyright durations
+        """Calculate copyright renewal date based on jurisdiction."""
+        # Different jurisdictions have different copyright durations
         duration_years = {
             LegalJurisdiction.US: 95,  # For works made for hire
             LegalJurisdiction.EU: 70,
@@ -619,7 +642,8 @@ class CopyrightRegistry:
         return creation_date + timedelta(days=duration_years * 365)
     
     async def _process_evidence_files(self, claim_id: str, evidence_files: List[str]):
-        """Process and store evidence files for copyright claim."""        for file_path in evidence_files:
+        """Process and store evidence files for copyright claim."""
+        for file_path in evidence_files:
             try:
                 file_hash = await self._calculate_file_hash(file_path)
                 
@@ -639,7 +663,8 @@ class CopyrightRegistry:
                 self.logger.warning(f"Failed to process evidence file {file_path}: {str(e)}")
     
     async def _generate_legal_document(self, claim: CopyrightClaim) -> Dict[str, Any]:
-        """Generate formal legal copyright registration document."""        return {
+        """Generate formal legal copyright registration document."""
+        return {
             'document_type': 'copyright_registration',
             'claim_id': claim.id,
             'title': 'Copyright Registration Certificate',
@@ -666,7 +691,8 @@ class CopyrightRegistry:
         transfer: OwnershipTransfer,
         new_owner_name: str
     ) -> Dict[str, Any]:
-        """Generate legal document for copyright ownership transfer."""        return {
+        """Generate legal document for copyright ownership transfer."""
+        return {
             'document_type': 'copyright_transfer',
             'transfer_id': transfer.transfer_id,
             'title': 'Copyright Ownership Transfer Agreement',
@@ -691,7 +717,8 @@ class CopyrightRegistry:
         }
     
     async def _generate_dmca_document(self, dmca_notice: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate formal DMCA takedown notice document."""        return {
+        """Generate formal DMCA takedown notice document."""
+        return {
             'document_type': 'dmca_takedown_notice',
             'title': 'Digital Millennium Copyright Act Takedown Notice',
             'notice_id': dmca_notice['notice_id'],
@@ -729,16 +756,19 @@ Signed: {dmca_notice['copyright_owner']['name']}
         }
     
     async def _upload_to_ipfs(self, data: Dict[str, Any]) -> str:
-        """Upload document to IPFS and return URI."""        # This would integrate with actual IPFS service
+        """Upload document to IPFS and return URI."""
+        # This would integrate with actual IPFS service
         content_str = json.dumps(data, sort_keys=True)
         mock_hash = hashlib.sha256(content_str.encode()).hexdigest()[:46]
         return f"ipfs://Qm{mock_hash}"
     
     async def _calculate_hash(self, content: str) -> str:
-        """Calculate SHA-256 hash of content."""        return hashlib.sha256(content.encode()).hexdigest()
+        """Calculate SHA-256 hash of content."""
+        return hashlib.sha256(content.encode()).hexdigest()
     
     async def _calculate_file_hash(self, file_path: str) -> str:
-        """Calculate SHA-256 hash of file content."""        sha256_hash = hashlib.sha256()
+        """Calculate SHA-256 hash of file content."""
+        sha256_hash = hashlib.sha256()
         try:
             with open(file_path, "rb") as f:
                 for byte_block in iter(lambda: f.read(4096), b""):
@@ -749,7 +779,8 @@ Signed: {dmca_notice['copyright_owner']['name']}
         return sha256_hash.hexdigest()
     
     async def _sign_evidence(self, evidence: CopyrightEvidence) -> str:
-        """Digitally sign evidence record."""        if not self.signature_private_key or not padding or not hashes:
+        """Digitally sign evidence record."""
+        if not self.signature_private_key or not padding or not hashes:
             return "signature_unavailable"
         
         try:
@@ -767,7 +798,8 @@ Signed: {dmca_notice['copyright_owner']['name']}
             return "signature_failed"
     
     async def _sign_document(self, document_content: str) -> str:
-        """Digitally sign document content."""        if not self.signature_private_key or not padding or not hashes:
+        """Digitally sign document content."""
+        if not self.signature_private_key or not padding or not hashes:
             return "signature_unavailable"
         
         try:
@@ -784,7 +816,8 @@ Signed: {dmca_notice['copyright_owner']['name']}
             return "signature_failed"
     
     def _serialize_claim(self, claim: CopyrightClaim) -> Dict[str, Any]:
-        """Serialize copyright claim for API responses."""        return {
+        """Serialize copyright claim for API responses."""
+        return {
             'id': claim.id,
             'title': claim.title,
             'copyright_type': claim.copyright_type.value,
@@ -799,7 +832,8 @@ Signed: {dmca_notice['copyright_owner']['name']}
         }
     
     async def get_copyright_info(self, claim_id: str) -> Dict[str, Any]:
-        """Get comprehensive information about a copyright claim."""        if claim_id not in self.copyright_claims:
+        """Get comprehensive information about a copyright claim."""
+        if claim_id not in self.copyright_claims:
             raise ValueError(f"Copyright claim not found: {claim_id}")
         
         claim = self.copyright_claims[claim_id]
@@ -826,7 +860,8 @@ Signed: {dmca_notice['copyright_owner']['name']}
         search_type: str = "title",
         jurisdiction: Optional[LegalJurisdiction] = None
     ) -> List[Dict[str, Any]]:
-        """Search copyright claims by various criteria."""        results = []
+        """Search copyright claims by various criteria."""
+        results = []
         
         for claim in self.copyright_claims.values():
             match = False
@@ -846,7 +881,8 @@ Signed: {dmca_notice['copyright_owner']['name']}
         return results
     
     async def get_registry_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive copyright registry analytics."""        total_claims = len(self.copyright_claims)
+        """Get comprehensive copyright registry analytics."""
+        total_claims = len(self.copyright_claims)
         
         # Statistics by copyright type
         type_stats = {}

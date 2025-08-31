@@ -94,7 +94,8 @@ FONCTIONNALITÉS ENTERPRISE:
 - Role-based access control
 - Audit logging complet
 - Secure API integrations
-"""import asyncio
+"""
+import asyncio
 from typing import Dict, Any, Optional, List, Union, Tuple, Set
 from datetime import datetime, timedelta, date
 from enum import Enum
@@ -117,7 +118,8 @@ from backend.deployment.database.postgresql_manager import get_postgresql_manage
 
 
 class Platform(Enum):
-    """Revenue platforms"""    YOUTUBE = "youtube"
+    """Revenue platforms"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     SPOTIFY = "spotify"
@@ -135,7 +137,8 @@ class Platform(Enum):
 
 
 class RevenueType(Enum):
-    """Types of revenue"""    AD_REVENUE = "ad_revenue"
+    """Types of revenue"""
+    AD_REVENUE = "ad_revenue"
     SUBSCRIPTION = "subscription"
     TIPS_DONATIONS = "tips_donations"
     MERCHANDISE = "merchandise"
@@ -151,7 +154,8 @@ class RevenueType(Enum):
 
 
 class Currency(Enum):
-    """Supported currencies"""    USD = "USD"
+    """Supported currencies"""
+    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     JPY = "JPY"
@@ -174,7 +178,8 @@ class Currency(Enum):
 
 
 class PayoutStatus(Enum):
-    """Payout status"""    PENDING = "pending"
+    """Payout status"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -184,7 +189,8 @@ class PayoutStatus(Enum):
 
 
 class PaymentMethod(Enum):
-    """Payment methods"""    STRIPE = "stripe"
+    """Payment methods"""
+    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     BANK_TRANSFER = "bank_transfer"
@@ -196,7 +202,8 @@ class PaymentMethod(Enum):
 
 @dataclass
 class RevenueData:
-    """Revenue data structure"""    user_id: str
+    """Revenue data structure"""
+    user_id: str
     platform: Platform
     revenue_type: RevenueType
     amount: Decimal
@@ -211,7 +218,8 @@ class RevenueData:
 
 @dataclass
 class PayoutRequest:
-    """Payout request structure"""    user_id: str
+    """Payout request structure"""
+    user_id: str
     amount: Decimal
     currency: Currency
     payment_method: PaymentMethod
@@ -221,11 +229,13 @@ class PayoutRequest:
 
 
 class RevenueTrackingManager:
-    """    Enterprise Revenue Tracking Database Manager
+    """
+    Enterprise Revenue Tracking Database Manager
     
     Manages all revenue tracking, analytics, and payout operations
     with enterprise-grade performance, security, and compliance.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = get_logger(f"{__name__}.RevenueTrackingManager")
@@ -249,7 +259,8 @@ class RevenueTrackingManager:
         self._cache_ttl = timedelta(minutes=15)
     
     async def initialize(self) -> bool:
-        """Initialize the revenue tracking manager"""        try:
+        """Initialize the revenue tracking manager"""
+        try:
             self.logger.info("🚀 Initializing Revenue Tracking Manager...")
             
             # Get database manager
@@ -269,9 +280,11 @@ class RevenueTrackingManager:
             return False
     
     async def _create_revenue_schema(self):
-        """Create revenue tracking database schema"""        self.logger.debug("Creating revenue tracking database schema...")
+        """Create revenue tracking database schema"""
+        self.logger.debug("Creating revenue tracking database schema...")
         
-        schema_sql = """        -- Platform API Configurations
+        schema_sql = """
+        -- Platform API Configurations
         CREATE TABLE IF NOT EXISTS platform_api_configs (
             config_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -614,7 +627,8 @@ class RevenueTrackingManager:
         CREATE TRIGGER update_tax_information_updated_at
             BEFORE UPDATE ON tax_information
             FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-        """        
+        """
+        
         async with self._db_manager.get_session() as session:
             await session.execute(text(schema_sql))
             await session.commit()
@@ -622,7 +636,8 @@ class RevenueTrackingManager:
         self.logger.debug("✅ Revenue tracking schema created successfully")
     
     async def _update_exchange_rates(self):
-        """Update exchange rates from external API"""        try:
+        """Update exchange rates from external API"""
+        try:
             # This would normally call a real exchange rate API
             # For now, we'll use mock data
             mock_rates = {
@@ -649,7 +664,8 @@ class RevenueTrackingManager:
             if rate_data:
                 async with self._db_manager.get_session() as session:
                     await session.execute(
-                        text("""                            INSERT INTO exchange_rates (from_currency, to_currency, rate, rate_date, source)
+                        text("""
+                            INSERT INTO exchange_rates (from_currency, to_currency, rate, rate_date, source)
                             VALUES (:from_currency, :to_currency, :rate, :rate_date, :source)
                             ON CONFLICT (from_currency, to_currency, rate_date) DO UPDATE SET
                                 rate = EXCLUDED.rate,
@@ -665,7 +681,8 @@ class RevenueTrackingManager:
             self.logger.error(f"❌ Failed to update exchange rates: {e}")
     
     async def convert_currency(self, amount: Decimal, from_currency: str, to_currency: str) -> Decimal:
-        """Convert amount between currencies"""        try:
+        """Convert amount between currencies"""
+        try:
             if from_currency == to_currency:
                 return amount
             
@@ -682,7 +699,8 @@ class RevenueTrackingManager:
                 # Query database
                 async with self._db_manager.get_session() as session:
                     result = await session.execute(
-                        text("""                            SELECT rate FROM exchange_rates 
+                        text("""
+                            SELECT rate FROM exchange_rates 
                             WHERE from_currency = :from_curr AND to_currency = :to_curr 
                             ORDER BY rate_date DESC LIMIT 1
                         """),
@@ -705,7 +723,8 @@ class RevenueTrackingManager:
             return amount
     
     async def record_revenue(self, revenue_data: RevenueData) -> str:
-        """Record revenue data"""        try:
+        """Record revenue data"""
+        try:
             self.logger.debug(f"Recording revenue for user {revenue_data.user_id}")
             
             # Convert to USD and EUR for normalization
@@ -748,7 +767,8 @@ class RevenueTrackingManager:
             # Insert into database
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
-                    text("""                        INSERT INTO revenue_records 
+                    text("""
+                        INSERT INTO revenue_records 
                         (user_id, platform, content_id, revenue_type, amount, currency,
                          amount_usd, amount_eur, period_start, period_end, exchange_rate,
                          platform_data, metadata, collected_at, processed_at)
@@ -774,7 +794,8 @@ class RevenueTrackingManager:
             raise
     
     async def _update_revenue_aggregations(self, user_id: str, period_date: date):
-        """Update revenue aggregations"""        try:
+        """Update revenue aggregations"""
+        try:
             aggregation_types = {
                 'daily': period_date,
                 'weekly': period_date - timedelta(days=period_date.weekday()),
@@ -789,7 +810,8 @@ class RevenueTrackingManager:
             self.logger.error(f"Failed to update aggregations: {e}")
     
     async def _calculate_aggregation(self, user_id: str, agg_type: str, agg_date: date):
-        """Calculate revenue aggregation for a specific period"""        try:
+        """Calculate revenue aggregation for a specific period"""
+        try:
             # Define date range based on aggregation type
             if agg_type == 'daily':
                 start_date = agg_date
@@ -810,7 +832,8 @@ class RevenueTrackingManager:
             # Calculate aggregations
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
-                    text("""                        SELECT 
+                    text("""
+                        SELECT 
                             platform,
                             revenue_type,
                             SUM(amount) as total_amount,
@@ -842,7 +865,8 @@ class RevenueTrackingManager:
                 # Insert or update aggregations
                 for agg in aggregations:
                     await session.execute(
-                        text("""                            INSERT INTO revenue_aggregations
+                        text("""
+                            INSERT INTO revenue_aggregations
                             (user_id, aggregation_type, aggregation_date, platform, revenue_type,
                              total_amount, total_amount_usd, total_amount_eur, currency,
                              total_views, total_clicks, total_impressions, avg_engagement_rate,
@@ -899,14 +923,16 @@ class RevenueTrackingManager:
         end_date: Optional[date] = None,
         platform: Optional[Platform] = None
     ) -> Dict[str, Any]:
-        """Get revenue summary for a user"""        try:
+        """Get revenue summary for a user"""
+        try:
             # Default to last 30 days if no dates provided
             if not end_date:
                 end_date = date.today()
             if not start_date:
                 start_date = end_date - timedelta(days=30)
             
-            query = """                SELECT 
+            query = """
+                SELECT 
                     platform,
                     revenue_type,
                     currency,
@@ -922,7 +948,8 @@ class RevenueTrackingManager:
                 WHERE user_id = :user_id 
                 AND period_start >= :start_date 
                 AND period_end <= :end_date
-            """            
+            """
+            
             params = {
                 'user_id': user_id,
                 'start_date': start_date,
@@ -941,7 +968,8 @@ class RevenueTrackingManager:
                 
                 # Get totals
                 total_result = await session.execute(
-                    text("""                        SELECT 
+                    text("""
+                        SELECT 
                             SUM(amount_eur) as total_eur,
                             SUM(amount_usd) as total_usd,
                             COUNT(*) as total_records,
@@ -959,7 +987,8 @@ class RevenueTrackingManager:
                 
                 # Get top performing content
                 top_content_result = await session.execute(
-                    text("""                        SELECT 
+                    text("""
+                        SELECT 
                             content_id,
                             platform,
                             SUM(amount_eur) as total_revenue,
@@ -1000,7 +1029,8 @@ class RevenueTrackingManager:
             return {'error': str(e)}
     
     async def create_payout_request(self, payout_request: PayoutRequest) -> str:
-        """Create a payout request"""        try:
+        """Create a payout request"""
+        try:
             self.logger.debug(f"Creating payout request for user {payout_request.user_id}")
             
             # Validate minimum payout amount
@@ -1032,7 +1062,8 @@ class RevenueTrackingManager:
             # Insert into database
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
-                    text("""                        INSERT INTO payout_requests 
+                    text("""
+                        INSERT INTO payout_requests 
                         (user_id, amount, currency, payment_method, destination_account,
                          destination_metadata, processing_fee, net_amount, scheduled_date)
                         VALUES (:user_id, :amount, :currency, :payment_method, :destination_account,
@@ -1053,11 +1084,13 @@ class RevenueTrackingManager:
             raise
     
     async def _get_available_balance(self, user_id: str, currency: Currency) -> Decimal:
-        """Get available balance for user"""        try:
+        """Get available balance for user"""
+        try:
             async with self._db_manager.get_session() as session:
                 # Get total revenue
                 result = await session.execute(
-                    text("""                        SELECT COALESCE(SUM(amount_eur), 0) as total_revenue
+                    text("""
+                        SELECT COALESCE(SUM(amount_eur), 0) as total_revenue
                         FROM revenue_records 
                         WHERE user_id = :user_id AND is_verified = true
                     """),
@@ -1068,7 +1101,8 @@ class RevenueTrackingManager:
                 
                 # Get total payouts
                 result = await session.execute(
-                    text("""                        SELECT COALESCE(SUM(amount), 0) as total_payouts
+                    text("""
+                        SELECT COALESCE(SUM(amount), 0) as total_payouts
                         FROM payout_requests 
                         WHERE user_id = :user_id 
                         AND status IN ('completed', 'processing', 'pending')
@@ -1100,13 +1134,16 @@ class RevenueTrackingManager:
         status: Optional[PayoutStatus] = None,
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """Get payout requests for a user"""        try:
-            query = """                SELECT payout_id, amount, currency, payment_method, status,
+        """Get payout requests for a user"""
+        try:
+            query = """
+                SELECT payout_id, amount, currency, payment_method, status,
                        processing_fee, net_amount, requested_at, scheduled_date,
                        processed_at, completed_at, failure_reason, notes
                 FROM payout_requests 
                 WHERE user_id = :user_id
-            """            
+            """
+            
             params = {'user_id': user_id}
             
             if status:
@@ -1133,7 +1170,8 @@ class RevenueTrackingManager:
         external_transaction_id: Optional[str] = None,
         failure_reason: Optional[str] = None
     ) -> bool:
-        """Update payout status"""        try:
+        """Update payout status"""
+        try:
             update_data = {
                 'payout_id': payout_id,
                 'status': status.value
@@ -1154,10 +1192,12 @@ class RevenueTrackingManager:
             elif status == PayoutStatus.COMPLETED:
                 update_fields.append('completed_at = NOW()')
             
-            query = f"""                UPDATE payout_requests 
+            query = f"""
+                UPDATE payout_requests 
                 SET {', '.join(update_fields)}, updated_at = NOW()
                 WHERE payout_id = :payout_id
-            """            
+            """
+            
             async with self._db_manager.get_session() as session:
                 result = await session.execute(text(query), update_data)
                 await session.commit()
@@ -1174,11 +1214,13 @@ class RevenueTrackingManager:
         forecast_type: str = 'monthly',
         periods: int = 6
     ) -> List[Dict[str, Any]]:
-        """Generate revenue forecast using simple trend analysis"""        try:
+        """Generate revenue forecast using simple trend analysis"""
+        try:
             # Get historical data
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
-                    text("""                        SELECT aggregation_date, total_amount_eur
+                    text("""
+                        SELECT aggregation_date, total_amount_eur
                         FROM revenue_aggregations 
                         WHERE user_id = :user_id 
                         AND aggregation_type = :forecast_type
@@ -1241,7 +1283,8 @@ class RevenueTrackingManager:
                 
                 # Store forecast in database
                 await session.execute(
-                    text("""                        INSERT INTO revenue_forecasts 
+                    text("""
+                        INSERT INTO revenue_forecasts 
                         (user_id, forecast_type, forecast_date, predicted_amount, 
                          confidence_score, model_name, model_version)
                         VALUES (:user_id, :forecast_type, :forecast_date, :predicted_amount,
@@ -1271,7 +1314,8 @@ class RevenueTrackingManager:
             return []
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""        try:
+        """Perform health check"""
+        try:
             health = {
                 'status': 'healthy',
                 'timestamp': datetime.utcnow().isoformat(),
@@ -1315,7 +1359,8 @@ class RevenueTrackingManager:
             }
     
     async def shutdown(self):
-        """Shutdown the revenue tracking manager"""        try:
+        """Shutdown the revenue tracking manager"""
+        try:
             self.logger.info("🚨 Shutting down Revenue Tracking Manager...")
             
             # Clear caches
@@ -1333,7 +1378,8 @@ _revenue_tracking_manager: Optional[RevenueTrackingManager] = None
 
 
 def get_revenue_tracking_manager(config: Optional[Dict[str, Any]] = None) -> RevenueTrackingManager:
-    """Get or create revenue tracking manager instance"""    global _revenue_tracking_manager
+    """Get or create revenue tracking manager instance"""
+    global _revenue_tracking_manager
     
     if _revenue_tracking_manager is None:
         _revenue_tracking_manager = RevenueTrackingManager(config)

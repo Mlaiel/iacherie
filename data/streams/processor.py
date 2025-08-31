@@ -13,7 +13,8 @@ without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Violations will be prosecuted under German and international copyright law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Callable, Tuple
 from datetime import datetime, timezone, timedelta
@@ -52,14 +53,16 @@ settings = get_settings()
 
 
 class ProcessingPriority(str, Enum):
-    """Content processing priority levels"""    LOW = "low"
+    """Content processing priority levels"""
+    LOW = "low"
     NORMAL = "normal" 
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class ProcessingStage(str, Enum):
-    """Content processing pipeline stages"""    UPLOAD = "upload"
+    """Content processing pipeline stages"""
+    UPLOAD = "upload"
     VALIDATION = "validation"
     FINGERPRINTING = "fingerprinting"
     AI_ANALYSIS = "ai_analysis"
@@ -72,7 +75,8 @@ class ProcessingStage(str, Enum):
 
 
 class ContentFormat(str, Enum):
-    """Supported content formats"""    # Audio formats
+    """Supported content formats"""
+    # Audio formats
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -106,7 +110,8 @@ class ContentFormat(str, Enum):
 
 @dataclass
 class ProcessingJob:
-    """Content processing job definition"""    id: str
+    """Content processing job definition"""
+    id: str
     content_id: str
     user_id: str
     content_type: str
@@ -126,7 +131,8 @@ class ProcessingJob:
 
 
 class ProcessingMetrics(BaseModel):
-    """Real-time processing performance metrics"""    jobs_processed: int = Field(default=0, description="Total jobs processed")
+    """Real-time processing performance metrics"""
+    jobs_processed: int = Field(default=0, description="Total jobs processed")
     jobs_failed: int = Field(default=0, description="Total jobs failed")
     avg_processing_time: float = Field(default=0.0, description="Average processing time in seconds")
     throughput_per_minute: float = Field(default=0.0, description="Jobs per minute")
@@ -140,7 +146,8 @@ class ProcessingMetrics(BaseModel):
 
 
 class ProcessingResult(BaseModel):
-    """Content processing result structure"""    job_id: str
+    """Content processing result structure"""
+    job_id: str
     content_id: str
     success: bool
     processing_time: float
@@ -153,7 +160,8 @@ class ProcessingResult(BaseModel):
 
 
 class RealTimeProcessor:
-    """    Enterprise-grade real-time content processor for multi-format streams
+    """
+    Enterprise-grade real-time content processor for multi-format streams
     
     Features:
     - Parallel processing with worker pools
@@ -162,7 +170,8 @@ class RealTimeProcessor:
     - Adaptive queue management
     - Performance metrics and monitoring
     - Failure recovery and retry mechanisms
-    """    
+    """
+    
     def __init__(self, max_workers: int = None):
         self.max_workers = max_workers or min(32, mp.cpu_count() * 2)
         self.thread_executor = ThreadPoolExecutor(max_workers=self.max_workers)
@@ -198,7 +207,8 @@ class RealTimeProcessor:
         }
         
     async def initialize(self) -> None:
-        """Initialize processor with dependencies and AI engines"""        try:
+        """Initialize processor with dependencies and AI engines"""
+        try:
             self.redis = await get_redis_client()
             
             # Initialize AI processing engines
@@ -236,7 +246,8 @@ class RealTimeProcessor:
         priority: ProcessingPriority = ProcessingPriority.NORMAL,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """        Submit content processing job to queue
+        """
+        Submit content processing job to queue
         
         Args:
             content_id: Unique content identifier
@@ -250,7 +261,8 @@ class RealTimeProcessor:
             
         Returns:
             Job identifier
-        """        try:
+        """
+        try:
             job_id = str(uuid4())
             
             job = ProcessingJob(
@@ -308,7 +320,8 @@ class RealTimeProcessor:
             raise
             
     async def get_job_status(self, job_id: str) -> Optional[Dict[str, Any]]:
-        """Get current status of processing job"""        try:
+        """Get current status of processing job"""
+        try:
             job = self.active_jobs.get(job_id)
             if not job:
                 # Try to load from Redis
@@ -342,7 +355,8 @@ class RealTimeProcessor:
             return None
             
     async def cancel_job(self, job_id: str) -> bool:
-        """Cancel processing job"""        try:
+        """Cancel processing job"""
+        try:
             if job_id in self.active_jobs:
                 job = self.active_jobs[job_id]
                 job.current_stage = ProcessingStage.COMPLETED
@@ -365,7 +379,8 @@ class RealTimeProcessor:
             return False
             
     async def get_metrics(self) -> ProcessingMetrics:
-        """Get current processing metrics"""        self.metrics.current_queue_size = sum(
+        """Get current processing metrics"""
+        self.metrics.current_queue_size = sum(
             queue.qsize() for queue in self.priority_queues.values()
         )
         self.metrics.active_workers = len([t for t in self.worker_tasks if not t.done()])
@@ -374,7 +389,8 @@ class RealTimeProcessor:
         return self.metrics
         
     async def _start_workers(self) -> None:
-        """Start worker tasks for processing jobs"""        if self.workers_running:
+        """Start worker tasks for processing jobs"""
+        if self.workers_running:
             return
             
         self.workers_running = True
@@ -393,7 +409,8 @@ class RealTimeProcessor:
         logger.info(f"Started {len(self.worker_tasks)} worker tasks")
         
     def _get_worker_count_for_priority(self, priority: ProcessingPriority) -> int:
-        """Determine worker count based on priority level"""        worker_distribution = {
+        """Determine worker count based on priority level"""
+        worker_distribution = {
             ProcessingPriority.CRITICAL: max(2, self.max_workers // 8),
             ProcessingPriority.HIGH: max(4, self.max_workers // 4),
             ProcessingPriority.NORMAL: max(8, self.max_workers // 2),
@@ -402,7 +419,8 @@ class RealTimeProcessor:
         return worker_distribution[priority]
         
     async def _process_queue_worker(self, priority: ProcessingPriority, worker_name: str) -> None:
-        """Worker task for processing jobs from priority queue"""        logger.info(f"Started worker {worker_name} for {priority.value} priority")
+        """Worker task for processing jobs from priority queue"""
+        logger.info(f"Started worker {worker_name} for {priority.value} priority")
         
         while self.workers_running:
             try:
@@ -454,7 +472,8 @@ class RealTimeProcessor:
         logger.info(f"Worker {worker_name} stopped")
         
     async def _process_job(self, job: ProcessingJob) -> ProcessingResult:
-        """Process individual content job through pipeline stages"""        job.started_at = datetime.now(timezone.utc)
+        """Process individual content job through pipeline stages"""
+        job.started_at = datetime.now(timezone.utc)
         
         try:
             # Process through each stage
@@ -532,7 +551,8 @@ class RealTimeProcessor:
             
     # Stage handlers
     async def _validate_content(self, job: ProcessingJob) -> Dict[str, Any]:
-        """Validate content file and format"""        try:
+        """Validate content file and format"""
+        try:
             file_path = Path(job.file_path)
             
             if not file_path.exists():
@@ -556,7 +576,8 @@ class RealTimeProcessor:
             raise
             
     async def _generate_fingerprint(self, job: ProcessingJob) -> Dict[str, Any]:
-        """Generate AI fingerprint for content"""        try:
+        """Generate AI fingerprint for content"""
+        try:
             if not self.fingerprint_engine:
                 raise ValueError("Fingerprint engine not initialized")
                 
@@ -578,7 +599,8 @@ class RealTimeProcessor:
             raise
             
     async def _analyze_with_ai(self, job: ProcessingJob) -> Dict[str, Any]:
-        """Analyze content with AI intelligence engines"""        try:
+        """Analyze content with AI intelligence engines"""
+        try:
             processor = self.ai_processors.get(job.content_type)
             if not processor:
                 raise ValueError(f"No AI processor for content type: {job.content_type}")
@@ -600,7 +622,8 @@ class RealTimeProcessor:
             raise
             
     async def _enable_protection(self, job: ProcessingJob) -> Dict[str, Any]:
-        """Enable content protection monitoring"""        try:
+        """Enable content protection monitoring"""
+        try:
             # Enable protection monitoring for content
             protection_config = {
                 "content_id": job.content_id,
@@ -627,7 +650,8 @@ class RealTimeProcessor:
             raise
             
     async def _extract_metadata(self, job: ProcessingJob) -> Dict[str, Any]:
-        """Extract comprehensive metadata from content"""        try:
+        """Extract comprehensive metadata from content"""
+        try:
             metadata = {
                 "file_info": {
                     "name": Path(job.file_path).name,
@@ -654,7 +678,8 @@ class RealTimeProcessor:
             raise
             
     async def _optimize_content(self, job: ProcessingJob) -> Dict[str, Any]:
-        """Optimize content for distribution"""        try:
+        """Optimize content for distribution"""
+        try:
             optimization_result = {
                 "optimized": True,
                 "original_size": job.file_size,
@@ -682,7 +707,8 @@ class RealTimeProcessor:
             raise
             
     async def _prepare_distribution(self, job: ProcessingJob) -> Dict[str, Any]:
-        """Prepare content for multi-platform distribution"""        try:
+        """Prepare content for multi-platform distribution"""
+        try:
             distribution_config = {
                 "content_id": job.content_id,
                 "distribution_ready": True,
@@ -703,7 +729,8 @@ class RealTimeProcessor:
             raise
             
     async def _setup_monitoring(self, job: ProcessingJob) -> Dict[str, Any]:
-        """Setup real-time monitoring for content"""        try:
+        """Setup real-time monitoring for content"""
+        try:
             monitoring_config = {
                 "content_id": job.content_id,
                 "monitoring_active": True,
@@ -727,11 +754,13 @@ class RealTimeProcessor:
             
     # Helper methods
     def _validate_file_format(self, file_path: Path, format: ContentFormat) -> bool:
-        """Validate file format matches expected format"""        file_extension = file_path.suffix.lower().lstrip('.')
+        """Validate file format matches expected format"""
+        file_extension = file_path.suffix.lower().lstrip('.')
         return file_extension == format.value.lower()
         
     async def _extract_audio_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract audio-specific metadata"""        # Placeholder for audio metadata extraction
+        """Extract audio-specific metadata"""
+        # Placeholder for audio metadata extraction
         return {
             "audio_metadata": {
                 "duration": 0.0,
@@ -742,7 +771,8 @@ class RealTimeProcessor:
         }
         
     async def _extract_video_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract video-specific metadata"""        # Placeholder for video metadata extraction
+        """Extract video-specific metadata"""
+        # Placeholder for video metadata extraction
         return {
             "video_metadata": {
                 "duration": 0.0,
@@ -753,7 +783,8 @@ class RealTimeProcessor:
         }
         
     async def _extract_image_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract image-specific metadata"""        # Placeholder for image metadata extraction
+        """Extract image-specific metadata"""
+        # Placeholder for image metadata extraction
         return {
             "image_metadata": {
                 "dimensions": "0x0",
@@ -763,7 +794,8 @@ class RealTimeProcessor:
         }
         
     async def _update_job_in_redis(self, job: ProcessingJob) -> None:
-        """Update job status in Redis"""        try:
+        """Update job status in Redis"""
+        try:
             job_data = {
                 "id": job.id,
                 "content_id": job.content_id,
@@ -794,7 +826,8 @@ class RealTimeProcessor:
             logger.error(f"Failed to update job in Redis: {e}")
             
     async def _handle_job_failure(self, job: ProcessingJob, error_message: str) -> None:
-        """Handle job processing failure with retry logic"""        try:
+        """Handle job processing failure with retry logic"""
+        try:
             job.retries += 1
             job.error_message = error_message
             
@@ -823,7 +856,8 @@ class RealTimeProcessor:
             logger.error(f"Failed to handle job failure: {e}")
             
     async def _store_processing_result(self, result: ProcessingResult) -> None:
-        """Store processing result in database"""        try:
+        """Store processing result in database"""
+        try:
             # Store result in Redis for quick access
             await self.redis.hset(
                 f"processing_result:{result.job_id}",
@@ -837,7 +871,8 @@ class RealTimeProcessor:
             logger.error(f"Failed to store processing result: {e}")
             
     def _update_processing_metrics(self, processing_time: float) -> None:
-        """Update processing performance metrics"""        try:
+        """Update processing performance metrics"""
+        try:
             # Update average processing time
             total_jobs = self.metrics.jobs_processed + self.metrics.jobs_failed
             if total_jobs > 0:
@@ -860,7 +895,8 @@ class RealTimeProcessor:
             logger.error(f"Failed to update metrics: {e}")
             
     async def shutdown(self) -> None:
-        """Gracefully shutdown processor"""        try:
+        """Gracefully shutdown processor"""
+        try:
             logger.info("Shutting down RealTimeProcessor...")
             
             # Stop workers

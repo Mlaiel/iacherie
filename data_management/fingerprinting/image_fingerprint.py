@@ -27,7 +27,8 @@ IMAGE FINGERPRINTING TECHNOLOGIES:
 ├── 🧠 Deep Features (ResNet + EfficientNet + Vision Transformer)
 ├── 📊 Statistical Analysis (Moments + Entropy + Energy)
 └── 🛡️ Protection System (Monitoring + Similarity Detection)
-"""from typing import Dict, List, Optional, Any, Union, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
 import numpy as np
@@ -73,7 +74,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ImageFingerprintConfig:
-    """Configuration avancée pour le fingerprinting d'images"""    
+    """Configuration avancée pour le fingerprinting d'images"""
+    
     # Paramètres image de base
     max_width: int = 2048
     max_height: int = 2048
@@ -128,10 +130,12 @@ class ImageFingerprintConfig:
     max_workers: int = 4
 
 class ImageProcessor(ABC):
-    """Classe abstraite pour les processeurs d'images"""    
+    """Classe abstraite pour les processeurs d'images"""
+    
     @abstractmethod
     async def process(self, image_path: str, config: ImageFingerprintConfig) -> Dict[str, Any]:
-        """Process image file and generate fingerprint"""        logger.warning(f"process method not implemented in {self.__class__.__name__}")
+        """Process image file and generate fingerprint"""
+        logger.warning(f"process method not implemented in {self.__class__.__name__}")
         
         # Return basic fingerprint data structure
         return {
@@ -149,10 +153,12 @@ class ImageProcessor(ABC):
     
     @abstractmethod
     def get_name(self) -> str:
-        """Get processor name"""        return f"default_{self.__class__.__name__.lower()}"
+        """Get processor name"""
+        return f"default_{self.__class__.__name__.lower()}"
 
 class CLIPProcessor(ImageProcessor):
-    """Processeur CLIP pour l'analyse sémantique des images"""    
+    """Processeur CLIP pour l'analyse sémantique des images"""
+    
     def __init__(self):
         self.model = None
         self.preprocess = None
@@ -168,7 +174,8 @@ class CLIPProcessor(ImageProcessor):
                 self.model = None
     
     async def process(self, image_path: str, config: ImageFingerprintConfig) -> Dict[str, Any]:
-        """Analyse l'image avec CLIP"""        try:
+        """Analyse l'image avec CLIP"""
+        try:
             start_time = time.time()
             
             if not self.model:
@@ -209,7 +216,8 @@ class CLIPProcessor(ImageProcessor):
         return "clip"
     
     async def _simulate_clip_processing(self, image_path: str, config: ImageFingerprintConfig) -> Dict[str, Any]:
-        """Simulation du traitement CLIP pour la démo"""        try:
+        """Simulation du traitement CLIP pour la démo"""
+        try:
             # Simulation d'embeddings CLIP
             embedding_dim = 512  # ViT-B/32 dimension
             embeddings = np.random.randn(embedding_dim).astype(np.float32)
@@ -243,7 +251,8 @@ class CLIPProcessor(ImageProcessor):
             raise
     
     async def _analyze_semantic_content(self, image_tensor: torch.Tensor) -> Dict[str, float]:
-        """Analyse le contenu sémantique avec des prompts"""        try:
+        """Analyse le contenu sémantique avec des prompts"""
+        try:
             # Prompts pour différentes catégories
             prompts = [
                 "a photo of a person",
@@ -297,13 +306,15 @@ class CLIPProcessor(ImageProcessor):
             return {}
 
 class ImageHashProcessor(ImageProcessor):
-    """Processeur pour les hash perceptuels d'images"""    
+    """Processeur pour les hash perceptuels d'images"""
+    
     def __init__(self):
         if not PIL_AVAILABLE:
             raise ImportError("PIL library not available")
     
     async def process(self, image_path: str, config: ImageFingerprintConfig) -> Dict[str, Any]:
-        """Génère des hash perceptuels pour l'image"""        try:
+        """Génère des hash perceptuels pour l'image"""
+        try:
             start_time = time.time()
             
             # Chargement de l'image
@@ -349,7 +360,8 @@ class ImageHashProcessor(ImageProcessor):
         return "image_hash"
     
     def _generate_combined_hash(self, hashes: Dict[str, str]) -> str:
-        """Génère un hash combiné à partir de tous les hash"""        try:
+        """Génère un hash combiné à partir de tous les hash"""
+        try:
             # Concaténation de tous les hash
             combined = "".join(hashes.values())
             
@@ -360,7 +372,8 @@ class ImageHashProcessor(ImageProcessor):
             return "error_combined_hash"
     
     def _analyze_image_properties(self, image: Image.Image) -> Dict[str, Any]:
-        """Analyse les propriétés de base de l'image"""        try:
+        """Analyse les propriétés de base de l'image"""
+        try:
             properties = {
                 "width": image.width,
                 "height": image.height,
@@ -391,7 +404,8 @@ class ImageHashProcessor(ImageProcessor):
             return {}
     
     def _calculate_image_complexity(self, gray_image: Image.Image) -> Dict[str, float]:
-        """Calcule la complexité de l'image"""        try:
+        """Calcule la complexité de l'image"""
+        try:
             # Conversion en array numpy
             img_array = np.array(gray_image)
             
@@ -420,14 +434,17 @@ class ImageHashProcessor(ImageProcessor):
             return {}
 
 class PerceptualImageProcessor(ImageProcessor):
-    """Processeur pour l'analyse perceptuelle avancée"""    
+    """Processeur pour l'analyse perceptuelle avancée"""
+    
     def __init__(self):
-        """Initialise le processeur d'analyse perceptuelle"""        if not CV2_AVAILABLE:
+        """Initialise le processeur d'analyse perceptuelle"""
+        if not CV2_AVAILABLE:
             raise ImportError("OpenCV library not available for perceptual image processing")
         self.name = "perceptual_analysis"
     
     async def process(self, image_path: str, config: ImageFingerprintConfig) -> Dict[str, Any]:
-        """Analyse perceptuelle avancée de l'image"""        try:
+        """Analyse perceptuelle avancée de l'image"""
+        try:
             start_time = time.time()
             
             # Chargement de l'image
@@ -477,7 +494,8 @@ class PerceptualImageProcessor(ImageProcessor):
         return "perceptual_analysis"
     
     def _analyze_colors(self, rgb_image: np.ndarray, hsv_image: np.ndarray, lab_image: np.ndarray, config: ImageFingerprintConfig) -> Dict[str, Any]:
-        """Analyse des couleurs de l'image"""        try:
+        """Analyse des couleurs de l'image"""
+        try:
             analysis = {}
             
             # Histogrammes de couleurs
@@ -535,7 +553,8 @@ class PerceptualImageProcessor(ImageProcessor):
             return {}
     
     def _analyze_texture(self, gray_image: np.ndarray, config: ImageFingerprintConfig) -> Dict[str, Any]:
-        """Analyse de la texture de l'image"""        try:
+        """Analyse de la texture de l'image"""
+        try:
             analysis = {}
             
             if SKIMAGE_AVAILABLE:
@@ -582,7 +601,8 @@ class PerceptualImageProcessor(ImageProcessor):
             return {}
     
     def _analyze_geometry(self, gray_image: np.ndarray, config: ImageFingerprintConfig) -> Dict[str, Any]:
-        """Analyse géométrique de l'image"""        try:
+        """Analyse géométrique de l'image"""
+        try:
             analysis = {}
             
             # Détection de contours
@@ -645,7 +665,8 @@ class PerceptualImageProcessor(ImageProcessor):
             return {}
     
     def _analyze_statistics(self, rgb_image: np.ndarray, gray_image: np.ndarray) -> Dict[str, Any]:
-        """Analyse statistique de l'image"""        try:
+        """Analyse statistique de l'image"""
+        try:
             analysis = {}
             
             # Moments statistiques pour chaque canal RGB
@@ -679,7 +700,8 @@ class PerceptualImageProcessor(ImageProcessor):
             return {}
     
     def _calculate_skewness(self, data: np.ndarray) -> float:
-        """Calcule l'asymétrie"""        try:
+        """Calcule l'asymétrie"""
+        try:
             mean = np.mean(data)
             std = np.std(data)
             if std == 0:
@@ -689,7 +711,8 @@ class PerceptualImageProcessor(ImageProcessor):
             return 0.0
     
     def _calculate_kurtosis(self, data: np.ndarray) -> float:
-        """Calcule l'aplatissement"""        try:
+        """Calcule l'aplatissement"""
+        try:
             mean = np.mean(data)
             std = np.std(data)
             if std == 0:
@@ -699,13 +722,15 @@ class PerceptualImageProcessor(ImageProcessor):
             return 0.0
 
 class WHASHProcessor(ImageProcessor):
-    """Processeur pour Wavelet Hash avancé"""    
+    """Processeur pour Wavelet Hash avancé"""
+    
     def __init__(self):
         if not PIL_AVAILABLE:
             raise ImportError("PIL library not available")
     
     async def process(self, image_path: str, config: ImageFingerprintConfig) -> Dict[str, Any]:
-        """Génère des hash basés sur les ondelettes"""        try:
+        """Génère des hash basés sur les ondelettes"""
+        try:
             start_time = time.time()
             
             # Chargement de l'image
@@ -746,7 +771,8 @@ class WHASHProcessor(ImageProcessor):
         return "whash"
     
     def _simple_wavelet_transform(self, image: np.ndarray, hash_size: int) -> np.ndarray:
-        """Transformation en ondelettes simplifiée"""        try:
+        """Transformation en ondelettes simplifiée"""
+        try:
             # Simulation d'une transformation en ondelettes par moyennage pyramidal
             current = image.copy()
             
@@ -771,7 +797,8 @@ class WHASHProcessor(ImageProcessor):
             return cv2.resize(image, (hash_size, hash_size))
     
     def _generate_whash(self, coeffs: np.ndarray) -> str:
-        """Génère le hash à partir des coefficients d'ondelettes"""        try:
+        """Génère le hash à partir des coefficients d'ondelettes"""
+        try:
             # Calcul de la médiane
             median = np.median(coeffs)
             
@@ -794,7 +821,8 @@ class WHASHProcessor(ImageProcessor):
             return "error_hash"
     
     def _analyze_wavelet_coefficients(self, coeffs: np.ndarray) -> Dict[str, float]:
-        """Analyse les coefficients d'ondelettes"""        try:
+        """Analyse les coefficients d'ondelettes"""
+        try:
             analysis = {
                 "mean": float(np.mean(coeffs)),
                 "std": float(np.std(coeffs)),
@@ -811,11 +839,13 @@ class WHASHProcessor(ImageProcessor):
             return {}
 
 class ImageFingerprintEngine:
-    """    Moteur principal de fingerprinting d'images entreprise
+    """
+    Moteur principal de fingerprinting d'images entreprise
     
     Combine CLIP, hash perceptuels, analyse de couleurs et textures
     pour créer des empreintes d'images robustes et précises
-    """    
+    """
+    
     def __init__(self, config: Optional[ImageFingerprintConfig] = None):
         self.config = config or ImageFingerprintConfig()
         
@@ -835,14 +865,16 @@ class ImageFingerprintEngine:
         logger.info(f"ImageFingerprintEngine initialized with {len(self.processors)} processors")
     
     async def generate_fingerprint(self, image_path: str) -> Dict[str, Any]:
-        """        Génère une empreinte d'image complète
+        """
+        Génère une empreinte d'image complète
         
         Args:
             image_path: Chemin vers le fichier image
             
         Returns:
             Dictionnaire contenant toutes les empreintes générées
-        """        try:
+        """
+        try:
             start_time = datetime.now()
             
             # Validation du fichier
@@ -899,7 +931,8 @@ class ImageFingerprintEngine:
             raise
     
     def _validate_image_file(self, image_path: str) -> None:
-        """Valide le fichier image"""        path = Path(image_path)
+        """Valide le fichier image"""
+        path = Path(image_path)
         
         if not path.exists():
             raise FileNotFoundError(f"Image file not found: {image_path}")
@@ -912,7 +945,8 @@ class ImageFingerprintEngine:
             raise ValueError(f"Unsupported image format: {path.suffix}")
     
     def _combine_features(self, processors_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Combine les caractéristiques de tous les processeurs"""        try:
+        """Combine les caractéristiques de tous les processeurs"""
+        try:
             combined = {
                 "primary_hashes": {},
                 "semantic_features": {},
@@ -962,10 +996,12 @@ class ImageFingerprintEngine:
             return {}
     
     def get_supported_formats(self) -> List[str]:
-        """Retourne les formats d'images supportés"""        return self.config.supported_formats
+        """Retourne les formats d'images supportés"""
+        return self.config.supported_formats
     
     def get_processor_status(self) -> Dict[str, bool]:
-        """Retourne le statut des processeurs"""        return {
+        """Retourne le statut des processeurs"""
+        return {
             "clip": "clip" in self.processors,
             "image_hash": "image_hash" in self.processors,
             "whash": "whash" in self.processors,

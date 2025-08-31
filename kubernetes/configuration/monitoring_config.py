@@ -13,7 +13,8 @@ Contact: mlaiel@live.de
 
 Enterprise-grade monitoring and observability configuration.
 ==================================================================
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union
 from dataclasses import dataclass, field
@@ -22,13 +23,15 @@ from datetime import datetime, timedelta
 import json
 
 class ObservabilityLevel(Enum):
-    """Observability configuration levels"""    BASIC = "basic"
+    """Observability configuration levels"""
+    BASIC = "basic"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
     FULL = "full"
 
 class MetricType(Enum):
-    """Types of metrics to collect"""    SYSTEM = "system"
+    """Types of metrics to collect"""
+    SYSTEM = "system"
     APPLICATION = "application"
     BUSINESS = "business"
     SECURITY = "security"
@@ -38,14 +41,16 @@ class MetricType(Enum):
     NETWORK = "network"
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    INFO = "info"
+    """Alert severity levels"""
+    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 @dataclass
 class PrometheusConfig:
-    """Prometheus configuration"""    enabled: bool = True
+    """Prometheus configuration"""
+    enabled: bool = True
     port: int = 9090
     scrape_interval: str = "15s"
     evaluation_interval: str = "15s"
@@ -57,7 +62,8 @@ class PrometheusConfig:
 
 @dataclass
 class GrafanaConfig:
-    """Grafana configuration"""    enabled: bool = True
+    """Grafana configuration"""
+    enabled: bool = True
     port: int = 3000
     admin_user: str = "admin"
     admin_password: str = "admin123"
@@ -68,7 +74,8 @@ class GrafanaConfig:
 
 @dataclass
 class JaegerConfig:
-    """Jaeger tracing configuration"""    enabled: bool = True
+    """Jaeger tracing configuration"""
+    enabled: bool = True
     collector_port: int = 14268
     query_port: int = 16686
     sampling_rate: float = 0.1
@@ -78,7 +85,8 @@ class JaegerConfig:
 
 @dataclass
 class LoggingConfig:
-    """Logging configuration"""    level: str = "INFO"
+    """Logging configuration"""
+    level: str = "INFO"
     format: str = "json"
     output: str = "stdout"
     rotation_size: str = "100MB"
@@ -90,7 +98,8 @@ class LoggingConfig:
 
 @dataclass
 class AlertManagerConfig:
-    """AlertManager configuration"""    enabled: bool = True
+    """AlertManager configuration"""
+    enabled: bool = True
     port: int = 9093
     smtp_smarthost: str = ""
     smtp_from: str = ""
@@ -103,7 +112,8 @@ class AlertManagerConfig:
 
 @dataclass
 class MetricsConfig:
-    """Metrics collection configuration"""    enabled_types: List[MetricType] = field(default_factory=list)
+    """Metrics collection configuration"""
+    enabled_types: List[MetricType] = field(default_factory=list)
     collection_interval: int = 30
     retention_days: int = 30
     cardinality_limit: int = 1000000
@@ -112,7 +122,8 @@ class MetricsConfig:
 
 @dataclass
 class HealthCheckConfig:
-    """Health check configuration"""    enabled: bool = True
+    """Health check configuration"""
+    enabled: bool = True
     interval: int = 30
     timeout: int = 10
     retries: int = 3
@@ -121,7 +132,8 @@ class HealthCheckConfig:
 
 @dataclass
 class MonitoringConfiguration:
-    """Complete monitoring configuration"""    level: ObservabilityLevel
+    """Complete monitoring configuration"""
+    level: ObservabilityLevel
     prometheus: PrometheusConfig
     grafana: GrafanaConfig
     jaeger: JaegerConfig
@@ -133,7 +145,8 @@ class MonitoringConfiguration:
     custom_config: Dict[str, Any] = field(default_factory=dict)
 
 class MonitoringConfigManager:
-    """    Enterprise monitoring and observability configuration manager.
+    """
+    Enterprise monitoring and observability configuration manager.
     
     Provides comprehensive monitoring setup:
     - Prometheus metrics collection
@@ -145,9 +158,11 @@ class MonitoringConfigManager:
     - Custom metrics and dashboards
     - Real-time monitoring and alerting
     - Performance and business metrics
-    """    
+    """
+    
     def __init__(self):
-        """Initialize monitoring configuration manager"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize monitoring configuration manager"""
+        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Monitoring configurations
         self.monitoring_configs = {}
@@ -167,11 +182,13 @@ class MonitoringConfigManager:
         self.logger.info("Monitoring configuration manager initialized")
     
     async def initialize(self) -> bool:
-        """        Initialize monitoring configuration manager.
+        """
+        Initialize monitoring configuration manager.
         
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             # Load monitoring configurations
             await self._load_monitoring_configurations()
             
@@ -195,7 +212,8 @@ class MonitoringConfigManager:
             return False
     
     async def _load_monitoring_configurations(self) -> None:
-        """Load monitoring configurations for all levels"""        
+        """Load monitoring configurations for all levels"""
+        
         # Basic monitoring configuration
         basic_config = MonitoringConfiguration(
             level=ObservabilityLevel.BASIC,
@@ -477,7 +495,8 @@ class MonitoringConfigManager:
         self.logger.info(f"Loaded {len(self.monitoring_configs)} monitoring configurations")
     
     async def _load_default_alert_rules(self) -> None:
-        """Load default alert rules"""        self.alert_rules = [
+        """Load default alert rules"""
+        self.alert_rules = [
             {
                 "name": "HighCPUUsage",
                 "condition": "cpu_usage > 90",
@@ -532,7 +551,8 @@ class MonitoringConfigManager:
         self.logger.info(f"Loaded {len(self.alert_rules)} default alert rules")
     
     async def _setup_default_dashboards(self) -> None:
-        """Setup default Grafana dashboards"""        self.dashboards = {
+        """Setup default Grafana dashboards"""
+        self.dashboards = {
             "system_overview": {
                 "title": "System Overview",
                 "panels": [
@@ -583,12 +603,14 @@ class MonitoringConfigManager:
         self.logger.info(f"Setup {len(self.dashboards)} default dashboards")
     
     async def _initialize_health_checks(self) -> None:
-        """Initialize health check monitoring"""        # Start health check monitoring task
+        """Initialize health check monitoring"""
+        # Start health check monitoring task
         asyncio.create_task(self._monitor_health_checks())
         self.logger.info("Health check monitoring initialized")
     
     async def _monitor_health_checks(self) -> None:
-        """Monitor health checks continuously"""        while True:
+        """Monitor health checks continuously"""
+        while True:
             try:
                 if self.active_config:
                     await self._perform_health_checks()
@@ -602,7 +624,8 @@ class MonitoringConfigManager:
                 await asyncio.sleep(60)
     
     async def _perform_health_checks(self) -> None:
-        """Perform all configured health checks"""        health_config = self.active_config.health_checks
+        """Perform all configured health checks"""
+        health_config = self.active_config.health_checks
         
         for endpoint in health_config.endpoints:
             try:
@@ -637,14 +660,16 @@ class MonitoringConfigManager:
                 }
     
     async def set_monitoring_level(self, level: ObservabilityLevel) -> bool:
-        """        Set monitoring level.
+        """
+        Set monitoring level.
         
         Args:
             level: Observability level to activate
             
         Returns:
             bool: True if successful
-        """        try:
+        """
+        try:
             if level not in self.monitoring_configs:
                 raise ValueError(f"Monitoring level not configured: {level.value}")
             
@@ -662,7 +687,8 @@ class MonitoringConfigManager:
             return False
     
     async def _apply_monitoring_configuration(self, config: MonitoringConfiguration) -> None:
-        """Apply monitoring configuration"""        # Configure Prometheus
+        """Apply monitoring configuration"""
+        # Configure Prometheus
         if config.prometheus.enabled:
             await self._configure_prometheus(config.prometheus)
         
@@ -684,27 +710,33 @@ class MonitoringConfigManager:
         self.logger.info(f"Applied monitoring configuration for level: {config.level.value}")
     
     async def _configure_prometheus(self, prometheus_config: PrometheusConfig) -> None:
-        """Configure Prometheus"""        # Implementation would generate Prometheus configuration
+        """Configure Prometheus"""
+        # Implementation would generate Prometheus configuration
         self.logger.info("Prometheus configured")
     
     async def _configure_grafana(self, grafana_config: GrafanaConfig) -> None:
-        """Configure Grafana"""        # Implementation would setup Grafana dashboards and datasources
+        """Configure Grafana"""
+        # Implementation would setup Grafana dashboards and datasources
         self.logger.info("Grafana configured")
     
     async def _configure_jaeger(self, jaeger_config: JaegerConfig) -> None:
-        """Configure Jaeger"""        # Implementation would setup Jaeger tracing
+        """Configure Jaeger"""
+        # Implementation would setup Jaeger tracing
         self.logger.info("Jaeger configured")
     
     async def _configure_alertmanager(self, alertmanager_config: AlertManagerConfig) -> None:
-        """Configure AlertManager"""        # Implementation would setup AlertManager rules
+        """Configure AlertManager"""
+        # Implementation would setup AlertManager rules
         self.logger.info("AlertManager configured")
     
     async def _configure_logging(self, logging_config: LoggingConfig) -> None:
-        """Configure logging"""        # Implementation would setup logging configuration
+        """Configure logging"""
+        # Implementation would setup logging configuration
         self.logger.info("Logging configured")
     
     async def enable_full_monitoring(self) -> bool:
-        """Enable full monitoring capabilities"""        return await self.set_monitoring_level(ObservabilityLevel.FULL)
+        """Enable full monitoring capabilities"""
+        return await self.set_monitoring_level(ObservabilityLevel.FULL)
     
     async def add_custom_alert(
         self,
@@ -714,7 +746,8 @@ class MonitoringConfigManager:
         duration: str = "1m",
         description: str = ""
     ) -> bool:
-        """        Add custom alert rule.
+        """
+        Add custom alert rule.
         
         Args:
             name: Alert name
@@ -725,7 +758,8 @@ class MonitoringConfigManager:
             
         Returns:
             bool: True if successful
-        """        try:
+        """
+        try:
             alert_rule = {
                 "name": name,
                 "condition": condition,
@@ -748,7 +782,8 @@ class MonitoringConfigManager:
             return False
     
     async def _apply_alert_rule(self, alert_rule: Dict[str, Any]) -> None:
-        """Apply alert rule to monitoring system"""        # Implementation would update Prometheus alert rules
+        """Apply alert rule to monitoring system"""
+        # Implementation would update Prometheus alert rules
         pass
     
     async def create_dashboard(
@@ -757,7 +792,8 @@ class MonitoringConfigManager:
         title: str,
         panels: List[Dict[str, Any]]
     ) -> bool:
-        """        Create custom dashboard.
+        """
+        Create custom dashboard.
         
         Args:
             name: Dashboard name
@@ -766,7 +802,8 @@ class MonitoringConfigManager:
             
         Returns:
             bool: True if successful
-        """        try:
+        """
+        try:
             dashboard = {
                 "name": name,
                 "title": title,
@@ -787,11 +824,13 @@ class MonitoringConfigManager:
             return False
     
     async def _deploy_dashboard(self, dashboard: Dict[str, Any]) -> None:
-        """Deploy dashboard to Grafana"""        # Implementation would create Grafana dashboard
+        """Deploy dashboard to Grafana"""
+        # Implementation would create Grafana dashboard
         pass
     
     async def get_monitoring_status(self) -> Dict[str, Any]:
-        """Get comprehensive monitoring status"""        return {
+        """Get comprehensive monitoring status"""
+        return {
             "level": self.current_level.value,
             "prometheus_enabled": self.active_config.prometheus.enabled if self.active_config else False,
             "grafana_enabled": self.active_config.grafana.enabled if self.active_config else False,
@@ -805,7 +844,8 @@ class MonitoringConfigManager:
         }
     
     async def get_sla_report(self) -> Dict[str, Any]:
-        """Get SLA compliance report"""        if not self.active_config:
+        """Get SLA compliance report"""
+        if not self.active_config:
             return {"error": "No active monitoring configuration"}
         
         # Simulate SLA metrics calculation
@@ -843,4 +883,5 @@ class MonitoringConfigManager:
         }
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get monitoring manager status"""        return await self.get_monitoring_status()
+        """Get monitoring manager status"""
+        return await self.get_monitoring_status()

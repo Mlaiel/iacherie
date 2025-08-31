@@ -21,7 +21,8 @@ Features:
 - Sentiment analysis and emotion detection
 - SEO optimization and keyword extraction
 - Batch processing for large text collections
-"""import asyncio
+"""
+import asyncio
 import logging
 import re
 import hashlib
@@ -89,7 +90,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TextMetadata:
-    """Text metadata container"""    char_count: int
+    """Text metadata container"""
+    char_count: int
     word_count: int
     sentence_count: int
     paragraph_count: int
@@ -100,7 +102,8 @@ class TextMetadata:
 
 @dataclass
 class SentimentAnalysis:
-    """Sentiment analysis results"""    compound_score: float
+    """Sentiment analysis results"""
+    compound_score: float
     positive_score: float
     negative_score: float
     neutral_score: float
@@ -110,7 +113,8 @@ class SentimentAnalysis:
 
 @dataclass
 class TextFeatures:
-    """Text feature extraction results"""    keywords: List[Tuple[str, float]]
+    """Text feature extraction results"""
+    keywords: List[Tuple[str, float]]
     entities: List[Tuple[str, str]]  # (entity, type)
     topics: List[Tuple[str, float]]
     pos_tags: List[Tuple[str, str]]
@@ -120,7 +124,8 @@ class TextFeatures:
 
 @dataclass
 class SEOAnalysis:
-    """SEO optimization analysis"""    keyword_density: Dict[str, float]
+    """SEO optimization analysis"""
+    keyword_density: Dict[str, float]
     title_suggestions: List[str]
     meta_description: str
     readability_improvements: List[str]
@@ -130,7 +135,8 @@ class SEOAnalysis:
 
 @dataclass
 class TextFingerprint:
-    """Text fingerprint for plagiarism detection"""    content_hash: str
+    """Text fingerprint for plagiarism detection"""
+    content_hash: str
     semantic_hash: str
     structural_hash: str
     ngram_hashes: Dict[str, str]
@@ -138,7 +144,8 @@ class TextFingerprint:
     combined_hash: str
 
 class TextProcessor:
-    """Professional text processing and NLP engine"""    
+    """Professional text processing and NLP engine"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -147,7 +154,8 @@ class TextProcessor:
         self._initialize_engines()
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default text processing configuration"""        return {
+        """Get default text processing configuration"""
+        return {
             'language': 'auto',
             'sentiment_analysis': True,
             'entity_recognition': True,
@@ -168,7 +176,8 @@ class TextProcessor:
         }
     
     def _initialize_engines(self):
-        """Initialize text processing engines"""        try:
+        """Initialize text processing engines"""
+        try:
             # Initialize NLTK tools
             if NLTK_AVAILABLE:
                 self.sentiment_analyzer = SentimentIntensityAnalyzer()
@@ -235,7 +244,8 @@ class TextProcessor:
         format_hint: Optional[str] = None,
         config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Main text processing pipeline
+        """
+        Main text processing pipeline
         
         Args:
             text_data: Text data as string or bytes
@@ -244,7 +254,8 @@ class TextProcessor:
         
         Returns:
             Dict containing processed text data and analysis results
-        """        try:
+        """
+        try:
             # Merge configuration
             processing_config = self.config.copy()
             if config:
@@ -309,7 +320,8 @@ class TextProcessor:
         text_data: Union[str, bytes],
         format_hint: Optional[str] = None
     ) -> str:
-        """Prepare text data for processing"""        try:
+        """Prepare text data for processing"""
+        try:
             if isinstance(text_data, bytes):
                 # Decode bytes to string
                 text_content = text_data.decode('utf-8', errors='ignore')
@@ -333,7 +345,8 @@ class TextProcessor:
             raise
     
     def _clean_text(self, text: str) -> str:
-        """Clean and normalize text"""        try:
+        """Clean and normalize text"""
+        try:
             # Normalize unicode characters
             text = unicodedata.normalize('NFKD', text)
             
@@ -441,7 +454,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TextMetadata:
-    """Text metadata container"""    char_count: int
+    """Text metadata container"""
+    char_count: int
     word_count: int
     sentence_count: int
     paragraph_count: int
@@ -452,7 +466,8 @@ class TextMetadata:
 
 @dataclass
 class TextFeatures:
-    """Text feature extraction results"""    tfidf_vector: Optional[np.ndarray] = None
+    """Text feature extraction results"""
+    tfidf_vector: Optional[np.ndarray] = None
     word_frequencies: Dict[str, int] = None
     pos_tags: List[Tuple[str, str]] = None
     named_entities: List[Tuple[str, str]] = None
@@ -465,7 +480,8 @@ class TextFeatures:
 
 @dataclass
 class TextFingerprint:
-    """Text fingerprint data"""    content_hash: Optional[str] = None
+    """Text fingerprint data"""
+    content_hash: Optional[str] = None
     semantic_hash: Optional[str] = None
     structure_hash: Optional[str] = None
     n_gram_hash: Optional[str] = None
@@ -473,7 +489,8 @@ class TextFingerprint:
     combined_hash: Optional[str] = None
 
 class TextProcessor:
-    """Professional text processing engine"""    
+    """Professional text processing engine"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -482,7 +499,8 @@ class TextProcessor:
         self._initialize_engines()
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default text processing configuration"""        return {
+        """Get default text processing configuration"""
+        return {
             'language': 'auto',
             'max_length': 100000,
             'enhancement': True,
@@ -505,7 +523,8 @@ class TextProcessor:
         }
     
     def _initialize_engines(self):
-        """Initialize text processing engines"""        try:
+        """Initialize text processing engines"""
+        try:
             # Initialize NLTK components
             if NLTK_AVAILABLE:
                 self.lemmatizer = WordNetLemmatizer()
@@ -566,7 +585,8 @@ class TextProcessor:
         format_hint: Optional[str] = None,
         config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Main text processing pipeline
+        """
+        Main text processing pipeline
         
         Args:
             text_data: Text data as string or bytes
@@ -575,7 +595,8 @@ class TextProcessor:
         
         Returns:
             Dict containing processed text data and analysis results
-        """        try:
+        """
+        try:
             # Merge configuration
             processing_config = self.config.copy()
             if config:
@@ -647,7 +668,8 @@ class TextProcessor:
         text_data: Union[str, bytes],
         format_hint: Optional[str] = None
     ) -> str:
-        """Prepare text data for processing"""        try:
+        """Prepare text data for processing"""
+        try:
             if isinstance(text_data, bytes):
                 # Decode bytes to string
                 try:
@@ -678,7 +700,8 @@ class TextProcessor:
             raise
     
     def _clean_text(self, text: str) -> str:
-        """Clean and normalize text"""        try:
+        """Clean and normalize text"""
+        try:
             # Remove extra whitespace
             text = re.sub(r'\s+', ' ', text)
             
@@ -701,7 +724,8 @@ class TextProcessor:
             return text
     
     async def _extract_metadata(self, text: str) -> TextMetadata:
-        """Extract comprehensive text metadata"""        try:
+        """Extract comprehensive text metadata"""
+        try:
             # Standard counts
             char_count = len(text)
             word_count = len(text.split())
@@ -748,7 +772,8 @@ class TextProcessor:
             raise
     
     async def _extract_features(self, text: str) -> Dict[str, Any]:
-        """Extract comprehensive text features"""        try:
+        """Extract comprehensive text features"""
+        try:
             features_data = {}
             
             # Word frequency analysis
@@ -863,7 +888,8 @@ class TextProcessor:
             }
     
     async def _generate_fingerprint(self, text: str) -> Dict[str, Any]:
-        """Generate comprehensive text fingerprint"""        try:
+        """Generate comprehensive text fingerprint"""
+        try:
             fingerprint = TextFingerprint()
             
             # Content hash (optimized MD5 of cleaned text)
@@ -960,7 +986,8 @@ class TextProcessor:
             }
     
     async def _analyze_sentiment(self, text: str) -> Dict[str, Any]:
-        """Analyze text sentiment"""        try:
+        """Analyze text sentiment"""
+        try:
             sentiment_data = {}
             
             if self.sentiment_analyzer:
@@ -1053,7 +1080,8 @@ class TextProcessor:
             }
     
     async def _extract_named_entities(self, text: str) -> Dict[str, Any]:
-        """Extract named entities from text"""        try:
+        """Extract named entities from text"""
+        try:
             named_entities = []
             
             if NLTK_AVAILABLE:
@@ -1120,7 +1148,8 @@ class TextProcessor:
             }
     
     async def _extract_keywords(self, text: str) -> Dict[str, Any]:
-        """Extract keywords from text"""        try:
+        """Extract keywords from text"""
+        try:
             keywords_data = {}
             
             # Professional TF-IDF based keyword extraction
@@ -1209,7 +1238,8 @@ class TextProcessor:
             }
     
     async def _analyze_readability(self, text: str) -> Dict[str, Any]:
-        """Analyze text readability"""        try:
+        """Analyze text readability"""
+        try:
             readability_data = {}
             
             if TEXTSTAT_AVAILABLE:
@@ -1270,7 +1300,8 @@ class TextProcessor:
             }
     
     async def _enhance_text(self, text: str) -> Dict[str, Any]:
-        """Enhance text quality"""        try:
+        """Enhance text quality"""
+        try:
             enhanced_text = text
             enhancements_applied = []
             
@@ -1322,7 +1353,8 @@ class TextProcessor:
             }
     
     def _calculate_text_quality(self, text: str) -> float:
-        """Calculate a professional text quality score"""        try:
+        """Calculate a professional text quality score"""
+        try:
             score = 0.0
             
             # Check for proper capitalization
@@ -1360,7 +1392,8 @@ class TextProcessor:
             return 50.0  # Default score
     
     def _split_text_chunks(self, text: str, max_length: int = 512) -> List[str]:
-        """Split text into chunks for processing"""        if len(text) <= max_length:
+        """Split text into chunks for processing"""
+        if len(text) <= max_length:
             return [text]
         
         chunks = []
@@ -1385,7 +1418,8 @@ class TextProcessor:
         text_files: List[str],
         config: Optional[Dict[str, Any]] = None
     ) -> List[Dict[str, Any]]:
-        """Process multiple text files in batch"""        tasks = []
+        """Process multiple text files in batch"""
+        tasks = []
         for file_path in text_files:
             with open(file_path, 'r', encoding='utf-8') as f:
                 text_content = f.read()

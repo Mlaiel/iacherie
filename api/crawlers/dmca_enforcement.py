@@ -22,7 +22,8 @@ LEGAL WARNING: This software and all associated intellectual property
 belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
-"""from typing import Dict, Any, List, Optional, Union, Set, Tuple, AsyncIterator
+"""
+from typing import Dict, Any, List, Optional, Union, Set, Tuple, AsyncIterator
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
@@ -72,7 +73,8 @@ from ..utils.rate_limiter import RateLimiter
 
 
 class DMCARequestType(Enum):
-    """Types of DMCA requests."""    TAKEDOWN_NOTICE = "takedown_notice"
+    """Types of DMCA requests."""
+    TAKEDOWN_NOTICE = "takedown_notice"
     COUNTER_NOTIFICATION = "counter_notification"
     REPEAT_INFRINGER = "repeat_infringer"
     GOOD_FAITH_BELIEF = "good_faith_belief"
@@ -81,7 +83,8 @@ class DMCARequestType(Enum):
 
 
 class InfringementSeverity(Enum):
-    """Severity levels for copyright infringement."""    LOW = "low"
+    """Severity levels for copyright infringement."""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -90,7 +93,8 @@ class InfringementSeverity(Enum):
 
 
 class EnforcementStatus(Enum):
-    """Status of enforcement actions."""    PENDING = "pending"
+    """Status of enforcement actions."""
+    PENDING = "pending"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
     CONTENT_REMOVED = "content_removed"
@@ -101,7 +105,8 @@ class EnforcementStatus(Enum):
 
 
 class PlatformDMCAPolicy(Enum):
-    """Platform-specific DMCA policies."""    YOUTUBE_COPYRIGHT = "youtube_copyright"
+    """Platform-specific DMCA policies."""
+    YOUTUBE_COPYRIGHT = "youtube_copyright"
     INSTAGRAM_IP = "instagram_ip"
     TIKTOK_COPYRIGHT = "tiktok_copyright"
     TWITTER_COPYRIGHT = "twitter_copyright"
@@ -111,7 +116,8 @@ class PlatformDMCAPolicy(Enum):
 
 @dataclass
 class CopyrightOwner:
-    """Copyright owner information."""    owner_id: str
+    """Copyright owner information."""
+    owner_id: str
     full_name: str
     organization: Optional[str] = None
     email: str = ""
@@ -132,7 +138,8 @@ class CopyrightOwner:
 
 @dataclass
 class CopyrightWork:
-    """Copyrighted work information."""    work_id: str
+    """Copyrighted work information."""
+    work_id: str
     title: str
     work_type: str  # music, video, image, text, etc.
     description: str = ""
@@ -151,7 +158,8 @@ class CopyrightWork:
 
 @dataclass
 class InfringementEvidence:
-    """Evidence of copyright infringement."""    evidence_id: str
+    """Evidence of copyright infringement."""
+    evidence_id: str
     infringement_url: str
     platform: str
     infringing_content_id: str = ""
@@ -172,7 +180,8 @@ class InfringementEvidence:
 
 @dataclass
 class DMCANotice:
-    """DMCA takedown notice."""    notice_id: str
+    """DMCA takedown notice."""
+    notice_id: str
     notice_type: DMCARequestType
     copyright_owner: CopyrightOwner
     copyright_work: CopyrightWork
@@ -196,7 +205,8 @@ class DMCANotice:
 
 @dataclass
 class EnforcementCase:
-    """Complete enforcement case tracking."""    case_id: str
+    """Complete enforcement case tracking."""
+    case_id: str
     copyright_owner: CopyrightOwner
     copyright_works: List[CopyrightWork]
     infringement_instances: List[InfringementEvidence]
@@ -215,7 +225,8 @@ class EnforcementCase:
 
 
 class DMCAEnforcementEngine:
-    """    Professional DMCA enforcement engine for copyright protection.
+    """
+    Professional DMCA enforcement engine for copyright protection.
     
     Features:
     - Automated DMCA notice generation
@@ -224,7 +235,8 @@ class DMCAEnforcementEngine:
     - Evidence collection and preservation
     - Case management and tracking
     - Platform-specific policy compliance
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger("dmca.enforcement")
@@ -272,7 +284,8 @@ class DMCAEnforcementEngine:
         }
     
     def _load_dmca_templates(self):
-        """Load DMCA notice templates."""        try:
+        """Load DMCA notice templates."""
+        try:
             # Load default templates if custom ones not provided
             self.notice_templates = {
                 "takedown_notice": self._get_default_takedown_template(),
@@ -286,7 +299,8 @@ class DMCAEnforcementEngine:
             self.logger.error(f"Failed to load DMCA templates: {e}")
     
     def _get_default_takedown_template(self) -> str:
-        """Default DMCA takedown notice template."""        return """DMCA COPYRIGHT INFRINGEMENT TAKEDOWN NOTICE
+        """Default DMCA takedown notice template."""
+        return """DMCA COPYRIGHT INFRINGEMENT TAKEDOWN NOTICE
 
 To: {{ platform_name }} Copyright Agent
 From: {{ copyright_owner.full_name }}
@@ -334,9 +348,11 @@ ELECTRONIC SIGNATURE:
 Date: {{ notice_date }}
 
 This notice is sent in good faith compliance with the Digital Millennium Copyright Act.
-"""    
+"""
+    
     def _get_default_counter_template(self) -> str:
-        """Default DMCA counter-notification template."""        return """DMCA COUNTER-NOTIFICATION
+        """Default DMCA counter-notification template."""
+        return """DMCA COUNTER-NOTIFICATION
 
 To: {{ platform_name }} Copyright Agent
 From: {{ user_name }}
@@ -369,9 +385,11 @@ I swear, under penalty of perjury, that I have a good faith belief that the mate
 
 Electronic Signature: {{ user_name }}
 Date: {{ notice_date }}
-"""    
+"""
+    
     def _get_repeat_infringer_template(self) -> str:
-        """Repeat infringer notification template."""        return """REPEAT INFRINGER NOTIFICATION
+        """Repeat infringer notification template."""
+        return """REPEAT INFRINGER NOTIFICATION
 
 To: {{ platform_name }} Copyright Agent
 From: {{ copyright_owner.full_name }}
@@ -400,14 +418,16 @@ Sincerely,
 {{ copyright_owner.full_name }}
 {{ copyright_owner.email }}
 {{ notice_date }}
-"""    
+"""
+    
     async def create_enforcement_case(
         self,
         copyright_owner: CopyrightOwner,
         copyright_works: List[CopyrightWork],
         infringement_instances: List[InfringementEvidence]
     ) -> EnforcementCase:
-        """Create a new copyright enforcement case."""        try:
+        """Create a new copyright enforcement case."""
+        try:
             case_id = str(uuid.uuid4())
             
             # Validate inputs
@@ -441,7 +461,8 @@ Sincerely,
             raise DMCAException(f"Case creation failed: {e}")
     
     def _validate_copyright_owner(self, owner: CopyrightOwner):
-        """Validate copyright owner information."""        if not owner.full_name:
+        """Validate copyright owner information."""
+        if not owner.full_name:
             raise ValidationException("Copyright owner full name required")
         if not owner.email:
             raise ValidationException("Copyright owner email required")
@@ -449,19 +470,22 @@ Sincerely,
             raise ValidationException("Copyright owner address required")
     
     def _validate_copyright_work(self, work: CopyrightWork):
-        """Validate copyright work information."""        if not work.title:
+        """Validate copyright work information."""
+        if not work.title:
             raise ValidationException("Copyright work title required")
         if not work.work_type:
             raise ValidationException("Copyright work type required")
     
     def _validate_infringement_evidence(self, evidence: InfringementEvidence):
-        """Validate infringement evidence."""        if not evidence.infringement_url:
+        """Validate infringement evidence."""
+        if not evidence.infringement_url:
             raise ValidationException("Infringement URL required")
         if not evidence.platform:
             raise ValidationException("Platform identification required")
     
     def _calculate_damages(self, infringement_instances: List[InfringementEvidence]) -> float:
-        """Calculate estimated damages from infringement instances."""        total_damages = 0.0
+        """Calculate estimated damages from infringement instances."""
+        total_damages = 0.0
         
         for evidence in infringement_instances:
             # Base damage calculation
@@ -490,7 +514,8 @@ Sincerely,
         evidence_id: str,
         notice_type: DMCARequestType = DMCARequestType.TAKEDOWN_NOTICE
     ) -> DMCANotice:
-        """Generate a DMCA notice for specific infringement."""        try:
+        """Generate a DMCA notice for specific infringement."""
+        try:
             case = self.active_cases.get(case_id)
             if not case:
                 raise DMCAException(f"Case not found: {case_id}")
@@ -538,7 +563,8 @@ Sincerely,
             raise DMCAException(f"Notice generation failed: {e}")
     
     def _get_platform_policy(self, platform: str) -> PlatformDMCAPolicy:
-        """Get platform-specific DMCA policy."""        policy_mapping = {
+        """Get platform-specific DMCA policy."""
+        policy_mapping = {
             "youtube": PlatformDMCAPolicy.YOUTUBE_COPYRIGHT,
             "instagram": PlatformDMCAPolicy.INSTAGRAM_IP,
             "tiktok": PlatformDMCAPolicy.TIKTOK_COPYRIGHT,
@@ -549,7 +575,8 @@ Sincerely,
         return policy_mapping.get(platform.lower(), PlatformDMCAPolicy.GENERIC_DMCA)
     
     def _assess_infringement_severity(self, evidence: InfringementEvidence) -> InfringementSeverity:
-        """Assess the severity of copyright infringement."""        if evidence.similarity_score >= 0.95:
+        """Assess the severity of copyright infringement."""
+        if evidence.similarity_score >= 0.95:
             return InfringementSeverity.EXACT_COPY
         elif evidence.is_commercial_use:
             return InfringementSeverity.COMMERCIAL_USE
@@ -561,7 +588,8 @@ Sincerely,
             return InfringementSeverity.LOW
     
     async def _generate_notice_content(self, notice: DMCANotice):
-        """Generate the content of a DMCA notice."""        try:
+        """Generate the content of a DMCA notice."""
+        try:
             template_key = notice.notice_type.value
             template_str = self.notice_templates.get(template_key)
             
@@ -598,21 +626,24 @@ Sincerely,
             raise DMCAException(f"Notice content generation failed: {e}")
     
     def _generate_good_faith_statement(self, notice: DMCANotice) -> str:
-        """Generate good faith belief statement."""        return (
+        """Generate good faith belief statement."""
+        return (
             f"I have a good faith belief that use of the copyrighted materials described above "
             f"on the allegedly infringing web pages is not authorized by the copyright owner, "
             f"its agent, or the law. I have taken fair use into consideration."
         )
     
     def _generate_penalty_statement(self, notice: DMCANotice) -> str:
-        """Generate penalty of perjury statement."""        return (
+        """Generate penalty of perjury statement."""
+        return (
             f"I swear, under penalty of perjury, that the information in this notification is "
             f"accurate and that I am the copyright owner, or am authorized to act on behalf of "
             f"the owner, of an exclusive right that is allegedly infringed."
         )
     
     def _generate_legal_basis(self, notice: DMCANotice) -> str:
-        """Generate legal basis for the claim."""        return (
+        """Generate legal basis for the claim."""
+        return (
             f"This notice is given under the Digital Millennium Copyright Act (DMCA), "
             f"17 U.S.C. § 512, and applicable copyright laws. The allegedly infringing "
             f"material should be removed or disabled immediately."
@@ -623,7 +654,8 @@ Sincerely,
         notice_id: str,
         auto_submit: bool = False
     ) -> bool:
-        """Submit DMCA notice to the platform."""        try:
+        """Submit DMCA notice to the platform."""
+        try:
             # Find notice across all cases
             notice = None
             case = None
@@ -666,7 +698,8 @@ Sincerely,
             return False
     
     async def _auto_submit_notice(self, notice: DMCANotice) -> bool:
-        """Automatically submit DMCA notice to platform."""        try:
+        """Automatically submit DMCA notice to platform."""
+        try:
             platform = notice.infringement_evidence.platform.lower()
             endpoint = self.platform_endpoints.get(platform)
             
@@ -688,7 +721,8 @@ Sincerely,
             return False
     
     async def _submit_youtube_dmca(self, notice: DMCANotice, endpoint: str) -> bool:
-        """Submit DMCA notice to YouTube."""        try:
+        """Submit DMCA notice to YouTube."""
+        try:
             # YouTube requires web form submission
             # This would typically involve Selenium or similar automation
             self.logger.info(f"YouTube DMCA submission prepared for manual processing")
@@ -699,7 +733,8 @@ Sincerely,
             return False
     
     async def _submit_instagram_dmca(self, notice: DMCANotice, endpoint: str) -> bool:
-        """Submit DMCA notice to Instagram."""        try:
+        """Submit DMCA notice to Instagram."""
+        try:
             # Instagram/Facebook IP reporting
             self.logger.info(f"Instagram DMCA submission prepared for manual processing")
             return True
@@ -709,7 +744,8 @@ Sincerely,
             return False
     
     async def _prepare_manual_submission(self, notice: DMCANotice) -> bool:
-        """Prepare documents for manual DMCA submission."""        try:
+        """Prepare documents for manual DMCA submission."""
+        try:
             # Generate PDF document
             pdf_path = await self._generate_dmca_pdf(notice)
             notice.attachments.append(pdf_path)
@@ -730,7 +766,8 @@ Sincerely,
             return False
     
     async def _generate_dmca_pdf(self, notice: DMCANotice) -> str:
-        """Generate PDF DMCA notice."""        try:
+        """Generate PDF DMCA notice."""
+        try:
             # Create temporary file
             temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.pdf')
             pdf_path = temp_file.name
@@ -773,7 +810,8 @@ Sincerely,
             raise DMCAException(f"PDF generation failed: {e}")
     
     async def _generate_dmca_docx(self, notice: DMCANotice) -> str:
-        """Generate Word document DMCA notice."""        try:
+        """Generate Word document DMCA notice."""
+        try:
             # Create temporary file
             temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.docx')
             docx_path = temp_file.name
@@ -803,7 +841,8 @@ Sincerely,
             raise DMCAException(f"DOCX generation failed: {e}")
     
     async def _send_dmca_email(self, notice: DMCANotice):
-        """Send DMCA notice via email."""        try:
+        """Send DMCA notice via email."""
+        try:
             # Email configuration
             smtp_server = self.email_config.get("smtp_server")
             smtp_port = self.email_config.get("smtp_port", 587)
@@ -835,7 +874,8 @@ Sincerely,
             msg['Subject'] = f"DMCA Takedown Notice - {notice.copyright_work.title}"
             
             # Email body
-            body = f"""            This is a formal DMCA takedown notice for copyright infringement.
+            body = f"""
+            This is a formal DMCA takedown notice for copyright infringement.
             
             Notice ID: {notice.notice_id}
             Generated: {notice.generated_at.strftime('%Y-%m-%d %H:%M:%S')}
@@ -845,7 +885,8 @@ Sincerely,
             Sincerely,
             {notice.copyright_owner.full_name}
             {notice.copyright_owner.email}
-            """            
+            """
+            
             msg.attach(MIMEText(body, 'plain'))
             
             # Attach documents
@@ -872,7 +913,8 @@ Sincerely,
             self.logger.error(f"Email sending failed: {e}")
     
     async def track_enforcement_status(self, case_id: str) -> EnforcementCase:
-        """Track the status of an enforcement case."""        try:
+        """Track the status of an enforcement case."""
+        try:
             case = self.active_cases.get(case_id)
             if not case:
                 raise DMCAException(f"Case not found: {case_id}")
@@ -896,7 +938,8 @@ Sincerely,
             raise DMCAException(f"Status tracking failed: {e}")
     
     async def _check_platform_response(self, notice: DMCANotice):
-        """Check platform response to DMCA notice."""        try:
+        """Check platform response to DMCA notice."""
+        try:
             # This would typically involve checking the original URL
             # to see if content was removed
             original_url = notice.infringement_evidence.infringement_url
@@ -926,7 +969,8 @@ Sincerely,
             self.logger.error(f"Platform response check failed: {e}")
     
     def _determine_case_status(self, case: EnforcementCase) -> EnforcementStatus:
-        """Determine overall case status based on individual notices."""        if not case.dmca_notices:
+        """Determine overall case status based on individual notices."""
+        if not case.dmca_notices:
             return EnforcementStatus.PENDING
         
         statuses = [notice.status for notice in case.dmca_notices]
@@ -943,7 +987,8 @@ Sincerely,
             return EnforcementStatus.PENDING
     
     async def generate_enforcement_report(self, case_id: str) -> Dict[str, Any]:
-        """Generate comprehensive enforcement report."""        try:
+        """Generate comprehensive enforcement report."""
+        try:
             case = self.active_cases.get(case_id)
             if not case:
                 raise DMCAException(f"Case not found: {case_id}")
@@ -1042,7 +1087,8 @@ Sincerely,
             raise DMCAException(f"Report generation failed: {e}")
     
     def _generate_case_recommendations(self, case: EnforcementCase) -> List[str]:
-        """Generate recommendations for enforcement case."""        recommendations = []
+        """Generate recommendations for enforcement case."""
+        recommendations = []
         
         try:
             # Success rate analysis
@@ -1113,7 +1159,8 @@ Sincerely,
         return recommendations
     
     def get_enforcement_metrics(self) -> Dict[str, Any]:
-        """Get enforcement performance metrics."""        active_cases = len(self.active_cases)
+        """Get enforcement performance metrics."""
+        active_cases = len(self.active_cases)
         total_infringements = sum(
             case.total_infringements for case in self.active_cases.values()
         )
@@ -1129,10 +1176,12 @@ Sincerely,
 
 
 class DMCAComplianceValidator:
-    """Validate DMCA notice compliance."""    
+    """Validate DMCA notice compliance."""
+    
     @staticmethod
     def validate_notice_completeness(notice: DMCANotice) -> Tuple[bool, List[str]]:
-        """Validate DMCA notice for completeness and compliance."""        errors = []
+        """Validate DMCA notice for completeness and compliance."""
+        errors = []
         
         # Required elements check
         if not notice.copyright_owner.full_name:
@@ -1164,7 +1213,8 @@ class DMCAComplianceValidator:
     
     @staticmethod
     def check_fair_use_considerations(notice: DMCANotice) -> List[str]:
-        """Check for potential fair use considerations."""        considerations = []
+        """Check for potential fair use considerations."""
+        considerations = []
         
         # Educational use indicators
         if "educational" in notice.infringement_evidence.extracted_content.lower():

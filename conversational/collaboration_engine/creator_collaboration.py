@@ -34,7 +34,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This revolutionary collaboration platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import numpy as np
@@ -61,7 +62,8 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Creator specialization types"""    MUSICIAN = "musician"
+    """Creator specialization types"""
+    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -79,7 +81,8 @@ class CreatorType(Enum):
 
 
 class CollaborationType(Enum):
-    """Types of collaboration"""    CONTENT_CREATION = "content_creation"
+    """Types of collaboration"""
+    CONTENT_CREATION = "content_creation"
     CROSS_PROMOTION = "cross_promotion"
     JOINT_PERFORMANCE = "joint_performance"
     SKILL_EXCHANGE = "skill_exchange"
@@ -94,7 +97,8 @@ class CollaborationType(Enum):
 
 
 class CompatibilityDimension(Enum):
-    """Dimensions for compatibility assessment"""    CONTENT_STYLE = "content_style"
+    """Dimensions for compatibility assessment"""
+    CONTENT_STYLE = "content_style"
     AUDIENCE_OVERLAP = "audience_overlap"
     BRAND_ALIGNMENT = "brand_alignment"
     ENGAGEMENT_PATTERN = "engagement_pattern"
@@ -110,7 +114,8 @@ class CompatibilityDimension(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile"""    creator_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive creator profile"""
+    creator_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: int = None
     creator_type: CreatorType = None
     display_name: str = None
@@ -157,7 +162,8 @@ class CreatorProfile:
 
 @dataclass
 class CollaborationMatch:
-    """Creator collaboration match result"""    match_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Creator collaboration match result"""
+    match_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_1_id: str = None
     creator_2_id: str = None
     compatibility_score: float = 0.0
@@ -185,7 +191,8 @@ class CollaborationMatch:
 
 @dataclass
 class CollaborationProposal:
-    """Collaboration proposal"""    proposal_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Collaboration proposal"""
+    proposal_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     match_id: str = None
     initiator_id: str = None
     target_id: str = None
@@ -218,7 +225,8 @@ class CollaborationProposal:
 
 @dataclass
 class CollaborationProject:
-    """Active collaboration project"""    project_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Active collaboration project"""
+    project_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     proposal_id: str = None
     collaborators: List[str] = field(default_factory=list)
     
@@ -248,11 +256,13 @@ class CollaborationProject:
 
 
 class CreatorCollaborationEngine:
-    """    Ultra-Advanced Creator Collaboration Engine
+    """
+    Ultra-Advanced Creator Collaboration Engine
     
     Revolutionary AI-powered platform for intelligent creator matching, partnership
     facilitation, and collaboration orchestration across the global creator economy.
-    """    
+    """
+    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.event_emitter = EventEmitter()
@@ -281,7 +291,8 @@ class CreatorCollaborationEngine:
         logger.info("CreatorCollaborationEngine initialized successfully")
     
     async def _initialize_engine(self):
-        """Initialize collaboration engine"""        try:
+        """Initialize collaboration engine"""
+        try:
             # Load creator network
             await self._load_creator_network()
             
@@ -297,7 +308,8 @@ class CreatorCollaborationEngine:
             raise BusinessLogicError("Collaboration engine initialization failed")
     
     async def create_creator_profile(self, user_id: int, creator_data: Dict[str, Any]) -> CreatorProfile:
-        """        Create comprehensive creator profile
+        """
+        Create comprehensive creator profile
         
         Args:
             user_id: User identifier
@@ -305,7 +317,8 @@ class CreatorCollaborationEngine:
             
         Returns:
             CreatorProfile: Created profile
-        """        try:
+        """
+        try:
             # Create profile
             profile = CreatorProfile(
                 user_id=user_id,
@@ -349,7 +362,8 @@ class CreatorCollaborationEngine:
     async def find_collaboration_matches(self, creator_id: str, 
                                        collaboration_type: Optional[CollaborationType] = None,
                                        max_matches: int = 20) -> List[CollaborationMatch]:
-        """        Find potential collaboration matches for a creator
+        """
+        Find potential collaboration matches for a creator
         
         Args:
             creator_id: Creator identifier
@@ -358,7 +372,8 @@ class CreatorCollaborationEngine:
             
         Returns:
             List[CollaborationMatch]: Potential collaboration matches
-        """        try:
+        """
+        try:
             # Get creator profile
             creator_profile = await self._get_creator_profile(creator_id)
             if not creator_profile:
@@ -406,7 +421,8 @@ class CreatorCollaborationEngine:
             raise BusinessLogicError(f"Match finding failed: {str(e)}")
     
     async def create_collaboration_proposal(self, match_id: str, proposal_data: Dict[str, Any]) -> CollaborationProposal:
-        """        Create collaboration proposal
+        """
+        Create collaboration proposal
         
         Args:
             match_id: Collaboration match identifier
@@ -414,7 +430,8 @@ class CreatorCollaborationEngine:
             
         Returns:
             CollaborationProposal: Created proposal
-        """        try:
+        """
+        try:
             # Get match details
             match = await self._get_collaboration_match(match_id)
             if not match:
@@ -464,7 +481,8 @@ class CreatorCollaborationEngine:
             raise BusinessLogicError(f"Proposal creation failed: {str(e)}")
     
     async def _analyze_creator_content(self, profile: CreatorProfile):
-        """Analyze creator's content and audience"""        try:
+        """Analyze creator's content and audience"""
+        try:
             # Fetch data from platforms
             content_data = {}
             audience_data = {}
@@ -499,7 +517,8 @@ class CreatorCollaborationEngine:
             logger.warning(f"Creator content analysis failed: {e}")
     
     async def _generate_creator_vectors(self, profile: CreatorProfile):
-        """Generate AI vector representations for creator"""        try:
+        """Generate AI vector representations for creator"""
+        try:
             # Personality vector based on content style and communication
             personality_features = []
             
@@ -560,7 +579,8 @@ class CreatorCollaborationEngine:
     
     async def _calculate_compatibility(self, creator1: CreatorProfile, creator2: CreatorProfile,
                                      collaboration_type: Optional[CollaborationType] = None) -> CollaborationMatch:
-        """Calculate compatibility between two creators"""        try:
+        """Calculate compatibility between two creators"""
+        try:
             match = CollaborationMatch(
                 creator_1_id=creator1.creator_id,
                 creator_2_id=creator2.creator_id
@@ -653,7 +673,8 @@ class CreatorCollaborationEngine:
             )
     
     async def _calculate_audience_overlap(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate audience overlap between creators"""        try:
+        """Calculate audience overlap between creators"""
+        try:
             # Simple heuristic based on follower counts and categories
             overlap_score = 0.0
             
@@ -685,7 +706,8 @@ class CreatorCollaborationEngine:
             return 0.5  # Default moderate overlap
     
     async def _calculate_brand_alignment(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate brand alignment between creators"""        try:
+        """Calculate brand alignment between creators"""
+        try:
             alignment_score = 0.0
             
             # Professional level alignment
@@ -720,7 +742,8 @@ class CreatorCollaborationEngine:
             return 0.7  # Default good alignment
     
     async def _calculate_engagement_compatibility(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate engagement pattern compatibility"""        try:
+        """Calculate engagement pattern compatibility"""
+        try:
             if not creator1.engagement_rates or not creator2.engagement_rates:
                 return 0.5
             
@@ -743,7 +766,8 @@ class CreatorCollaborationEngine:
             return 0.5
     
     async def get_collaboration_analytics(self, creator_id: str) -> Dict[str, Any]:
-        """Get collaboration analytics for creator"""        try:
+        """Get collaboration analytics for creator"""
+        try:
             # Get creator's collaboration history
             collaborations = await self._get_creator_collaborations(creator_id)
             

@@ -16,7 +16,8 @@ Copyright: IA Influencer Agent Platform - All Rights Reserved
 WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
-"""import asyncio
+"""
+import asyncio
 import time
 import json
 import hashlib
@@ -38,7 +39,8 @@ from .core_health import HealthStatus, HealthCheckResult
 
 @dataclass
 class FingerprintEngineMetrics:
-    """Fingerprinting engine performance metrics"""    engine_type: str
+    """Fingerprinting engine performance metrics"""
+    engine_type: str
     processing_speed_fps: float
     accuracy_score: float
     memory_usage_mb: float
@@ -50,7 +52,8 @@ class FingerprintEngineMetrics:
 
 @dataclass
 class CrawlerMetrics:
-    """Content crawler performance metrics"""    crawler_name: str
+    """Content crawler performance metrics"""
+    crawler_name: str
     target_platform: str
     pages_crawled_24h: int
     content_detected: int
@@ -61,16 +64,20 @@ class CrawlerMetrics:
 
 
 class ProtectionServiceHealthChecker:
-    """    Content protection services health monitoring system
+    """
+    Content protection services health monitoring system
     
     Monitors all content protection components including fingerprinting
     engines, crawlers, detection systems, and enforcement automation.
-    """    def __init__(self, config: Dict[str, Any]):
-        """        Initialize protection service health checker
+    """
+    def __init__(self, config: Dict[str, Any]):
+        """
+        Initialize protection service health checker
         
         Args:
             config: Protection configuration dictionary
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Protection configurations
@@ -90,11 +97,13 @@ class ProtectionServiceHealthChecker:
         self._crawler_sessions = {}
 
     async def check_audio_fingerprinting(self) -> HealthCheckResult:
-        """        Check audio fingerprinting engine health and performance
+        """
+        Check audio fingerprinting engine health and performance
         
         Returns:
             HealthCheckResult: Audio fingerprinting health status
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             details = {
@@ -207,11 +216,13 @@ class ProtectionServiceHealthChecker:
             )
 
     async def check_video_fingerprinting(self) -> HealthCheckResult:
-        """        Check video fingerprinting engine health and performance
+        """
+        Check video fingerprinting engine health and performance
         
         Returns:
             HealthCheckResult: Video fingerprinting health status
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             details = {
@@ -335,11 +346,13 @@ class ProtectionServiceHealthChecker:
             )
 
     async def check_text_fingerprinting(self) -> HealthCheckResult:
-        """        Check text fingerprinting engine health and performance
+        """
+        Check text fingerprinting engine health and performance
         
         Returns:
             HealthCheckResult: Text fingerprinting health status
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             details = {
@@ -463,11 +476,13 @@ class ProtectionServiceHealthChecker:
             )
 
     async def check_web_crawlers(self) -> HealthCheckResult:
-        """        Check web crawling services health and performance
+        """
+        Check web crawling services health and performance
         
         Returns:
             HealthCheckResult: Web crawlers health status
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             details = {
@@ -599,11 +614,13 @@ class ProtectionServiceHealthChecker:
             )
 
     async def check_monitoring_system(self) -> HealthCheckResult:
-        """        Check content monitoring and alerting system health
+        """
+        Check content monitoring and alerting system health
         
         Returns:
             HealthCheckResult: Monitoring system health status
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             details = {
@@ -728,11 +745,13 @@ class ProtectionServiceHealthChecker:
             )
 
     async def perform_comprehensive_check(self) -> List[HealthCheckResult]:
-        """        Perform all protection service health checks concurrently
+        """
+        Perform all protection service health checks concurrently
         
         Returns:
             List[HealthCheckResult]: All protection service health check results
-        """        checks = await asyncio.gather(
+        """
+        checks = await asyncio.gather(
             self.check_audio_fingerprinting(),
             self.check_video_fingerprinting(),
             self.check_text_fingerprinting(),
@@ -759,11 +778,13 @@ class ProtectionServiceHealthChecker:
         return results
 
     async def get_protection_health_summary(self) -> Dict[str, Any]:
-        """        Get comprehensive protection services health summary
+        """
+        Get comprehensive protection services health summary
         
         Returns:
             Dict[str, Any]: Protection services health summary with overall status
-        """        results = await self.perform_comprehensive_check()
+        """
+        results = await self.perform_comprehensive_check()
         
         # Calculate overall protection services health
         status_weights = {

@@ -14,7 +14,8 @@ without explicit written permission is STRICTLY PROHIBITED and will be
 prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Optional, Union, Any, Tuple
+"""
+from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
 from dataclasses import dataclass
@@ -22,7 +23,8 @@ import os
 
 
 class FingerprintType(str, Enum):
-    """Supported fingerprint types for content protection."""    
+    """Supported fingerprint types for content protection."""
+    
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_SPECTRAL = "audio_spectral"
     AUDIO_MFCC = "audio_mfcc"
@@ -38,7 +40,8 @@ class FingerprintType(str, Enum):
 
 
 class SimilarityMetric(str, Enum):
-    """Similarity metrics for fingerprint matching."""    
+    """Similarity metrics for fingerprint matching."""
+    
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
@@ -50,7 +53,8 @@ class SimilarityMetric(str, Enum):
 
 @dataclass
 class FingerprintSpec:
-    """Specification for fingerprint algorithm configuration."""    
+    """Specification for fingerprint algorithm configuration."""
+    
     fingerprint_type: FingerprintType
     algorithm: str
     model_path: Optional[str] = None
@@ -67,11 +71,13 @@ class FingerprintSpec:
 
 
 class FingerprintAIConfig(BaseSettings):
-    """    Professional AI Fingerprinting Configuration for Content Protection.
+    """
+    Professional AI Fingerprinting Configuration for Content Protection.
     
     Manages all fingerprinting algorithms and similarity matching for audio,
     video, image, and text content protection across the platform.
-    """    
+    """
+    
     # Core Fingerprinting Configuration
     FINGERPRINT_STORAGE_PATH: str = "/data/fingerprints"
     FINGERPRINT_INDEX_TYPE: str = "faiss"  # faiss, annoy, hnswlib
@@ -140,7 +146,8 @@ class FingerprintAIConfig(BaseSettings):
     
     @validator("FINGERPRINT_STORAGE_PATH")
     def create_storage_path(cls, v):
-        """Ensure fingerprint storage directory exists."""        os.makedirs(v, exist_ok=True)
+        """Ensure fingerprint storage directory exists."""
+        os.makedirs(v, exist_ok=True)
         os.makedirs(f"{v}/audio", exist_ok=True)
         os.makedirs(f"{v}/video", exist_ok=True)
         os.makedirs(f"{v}/image", exist_ok=True)
@@ -149,7 +156,8 @@ class FingerprintAIConfig(BaseSettings):
         return v
     
     def get_fingerprint_spec(self, fingerprint_type: FingerprintType) -> FingerprintSpec:
-        """Get fingerprint specification by type."""        specs = {
+        """Get fingerprint specification by type."""
+        specs = {
             FingerprintType.AUDIO_CHROMAPRINT: FingerprintSpec(
                 fingerprint_type=FingerprintType.AUDIO_CHROMAPRINT,
                 algorithm="chromaprint",
@@ -287,7 +295,8 @@ class FingerprintAIConfig(BaseSettings):
         return specs.get(fingerprint_type, self._get_default_spec(fingerprint_type))
     
     def _get_default_spec(self, fingerprint_type: FingerprintType) -> FingerprintSpec:
-        """Get default specification for unknown fingerprint types."""        return FingerprintSpec(
+        """Get default specification for unknown fingerprint types."""
+        return FingerprintSpec(
             fingerprint_type=fingerprint_type,
             algorithm="default",
             vector_dimension=self.VECTOR_DIMENSION,
@@ -296,7 +305,8 @@ class FingerprintAIConfig(BaseSettings):
         )
     
     def get_specs_by_content_type(self, content_type: str) -> List[FingerprintSpec]:
-        """Get all fingerprint specs for a content type."""        content_specs = {
+        """Get all fingerprint specs for a content type."""
+        content_specs = {
             "audio": [
                 FingerprintType.AUDIO_CHROMAPRINT,
                 FingerprintType.AUDIO_SPECTRAL,
@@ -326,7 +336,8 @@ class FingerprintAIConfig(BaseSettings):
         return [self.get_fingerprint_spec(fp_type) for fp_type in types]
     
     def get_optimal_algorithm(self, content_type: str, file_size_mb: float) -> FingerprintSpec:
-        """Get optimal fingerprint algorithm based on content type and file size."""        specs = self.get_specs_by_content_type(content_type)
+        """Get optimal fingerprint algorithm based on content type and file size."""
+        specs = self.get_specs_by_content_type(content_type)
         
         # For large files, prefer faster algorithms
         if file_size_mb > 100:
@@ -344,7 +355,8 @@ class FingerprintAIConfig(BaseSettings):
         return specs[0] if specs else self._get_default_spec(FingerprintType.AUDIO_CHROMAPRINT)
     
     def get_similarity_config(self) -> Dict[str, Any]:
-        """Get similarity matching configuration."""        return {
+        """Get similarity matching configuration."""
+        return {
             "thresholds": self.MATCH_CONFIDENCE_LEVELS,
             "global_threshold": self.SIMILARITY_THRESHOLD_GLOBAL,
             "vector_dimension": self.VECTOR_DIMENSION,
@@ -362,7 +374,8 @@ class FingerprintAIConfig(BaseSettings):
         }
     
     def get_content_type_config(self, content_type: str) -> Dict[str, Any]:
-        """Get configuration specific to content type."""        configs = {
+        """Get configuration specific to content type."""
+        configs = {
             "audio": {
                 "sample_rate": self.AUDIO_SAMPLE_RATE,
                 "chunk_size": self.AUDIO_CHUNK_SIZE,

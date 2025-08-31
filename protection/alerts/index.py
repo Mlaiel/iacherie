@@ -7,7 +7,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Main API endpoint aggregator for the alert system.
 Provides centralized access to all alert-related services and operations.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta, timezone
@@ -51,7 +52,8 @@ security = HTTPBearer()
 
 # API Models for requests/responses
 class CreateAlertRequest(BaseModel):
-    """Request model for creating new alerts."""    title: str = Field(..., min_length=1, max_length=200)
+    """Request model for creating new alerts."""
+    title: str = Field(..., min_length=1, max_length=200)
     description: str = Field(..., min_length=1, max_length=2000)
     severity: AlertSeverity
     category: AlertCategory
@@ -70,7 +72,8 @@ class CreateAlertRequest(BaseModel):
 
 
 class UpdateAlertRequest(BaseModel):
-    """Request model for updating alerts."""    status: Optional[AlertStatus] = None
+    """Request model for updating alerts."""
+    status: Optional[AlertStatus] = None
     assigned_to: Optional[str] = None
     resolution: Optional[str] = None
     notes: Optional[str] = None
@@ -78,7 +81,8 @@ class UpdateAlertRequest(BaseModel):
 
 
 class AlertSearchRequest(BaseModel):
-    """Request model for searching alerts."""    severity: Optional[List[AlertSeverity]] = None
+    """Request model for searching alerts."""
+    severity: Optional[List[AlertSeverity]] = None
     status: Optional[List[AlertStatus]] = None
     category: Optional[List[AlertCategory]] = None
     date_from: Optional[datetime] = None
@@ -94,7 +98,8 @@ class AlertSearchRequest(BaseModel):
 
 
 class BulkAlertActionRequest(BaseModel):
-    """Request model for bulk alert actions."""    alert_ids: List[str] = Field(..., min_items=1, max_items=100)
+    """Request model for bulk alert actions."""
+    alert_ids: List[str] = Field(..., min_items=1, max_items=100)
     action: str = Field(..., regex="^(acknowledge|resolve|escalate|assign)$")
     actor: str = Field(..., min_length=1)
     resolution: Optional[str] = None
@@ -104,7 +109,8 @@ class BulkAlertActionRequest(BaseModel):
 
 
 class AlertResponse(BaseModel):
-    """Response model for alert operations."""    success: bool
+    """Response model for alert operations."""
+    success: bool
     alert: Optional[ContentProtectionAlert] = None
     message: str
     processing_time_ms: float
@@ -113,7 +119,8 @@ class AlertResponse(BaseModel):
 
 
 class AlertListResponse(BaseModel):
-    """Response model for alert list operations."""    alerts: List[ContentProtectionAlert]
+    """Response model for alert list operations."""
+    alerts: List[ContentProtectionAlert]
     total_count: int
     page_count: int
     current_page: int
@@ -122,7 +129,8 @@ class AlertListResponse(BaseModel):
 
 
 class AlertStatisticsResponse(BaseModel):
-    """Response model for alert statistics."""    statistics: AlertDashboardMetrics
+    """Response model for alert statistics."""
+    statistics: AlertDashboardMetrics
     trends: Dict[str, Any]
     performance_metrics: Dict[str, Any]
     last_updated: datetime
@@ -130,9 +138,11 @@ class AlertStatisticsResponse(BaseModel):
 
 # Alert System API Class
 class AlertSystemAPI:
-    """    Comprehensive API interface for the Content Protection Alert System.
+    """
+    Comprehensive API interface for the Content Protection Alert System.
     Provides enterprise-grade endpoints for alert management, monitoring, and analytics.
-    """    
+    """
+    
     def __init__(
         self,
         alert_manager: AlertManager,
@@ -164,7 +174,8 @@ class AlertSystemAPI:
         background_tasks: BackgroundTasks,
         current_user: str = Depends(get_current_user)
     ) -> AlertResponse:
-        """Create a new content protection alert."""        start_time = datetime.now(timezone.utc)
+        """Create a new content protection alert."""
+        start_time = datetime.now(timezone.utc)
         
         try:
             # Create alert from request
@@ -225,7 +236,8 @@ class AlertSystemAPI:
         alert_id: str,
         current_user: str = Depends(get_current_user)
     ) -> AlertResponse:
-        """Get a specific alert by ID."""        start_time = datetime.now(timezone.utc)
+        """Get a specific alert by ID."""
+        start_time = datetime.now(timezone.utc)
         
         try:
             alert = await self.alert_manager.get_alert(alert_id)
@@ -262,7 +274,8 @@ class AlertSystemAPI:
         background_tasks: BackgroundTasks,
         current_user: str = Depends(get_current_user)
     ) -> AlertResponse:
-        """Update an existing alert."""        start_time = datetime.now(timezone.utc)
+        """Update an existing alert."""
+        start_time = datetime.now(timezone.utc)
         
         try:
             # Get existing alert
@@ -347,7 +360,8 @@ class AlertSystemAPI:
         request: AlertSearchRequest,
         current_user: str = Depends(get_current_user)
     ) -> AlertListResponse:
-        """Search alerts with filters and pagination."""        start_time = datetime.now(timezone.utc)
+        """Search alerts with filters and pagination."""
+        start_time = datetime.now(timezone.utc)
         
         try:
             # Build search filters
@@ -406,7 +420,8 @@ class AlertSystemAPI:
         background_tasks: BackgroundTasks,
         current_user: str = Depends(get_current_user)
     ) -> BulkOperationResult:
-        """Perform bulk actions on multiple alerts."""        try:
+        """Perform bulk actions on multiple alerts."""
+        try:
             if request.action == "acknowledge":
                 result = await self.alert_manager.bulk_acknowledge_alerts(
                     request.alert_ids, request.actor
@@ -455,7 +470,8 @@ class AlertSystemAPI:
         date_to: Optional[datetime] = None,
         current_user: str = Depends(get_current_user)
     ) -> AlertStatisticsResponse:
-        """Get comprehensive alert statistics and metrics."""        try:
+        """Get comprehensive alert statistics and metrics."""
+        try:
             # Get basic statistics
             stats = await self.alert_manager.get_alert_statistics()
             
@@ -480,7 +496,8 @@ class AlertSystemAPI:
             raise HTTPException(status_code=500, detail="Statistics retrieval failed")
 
     async def websocket_endpoint(self, websocket: WebSocket, user_id: str):
-        """WebSocket endpoint for real-time alert updates."""        await websocket.accept()
+        """WebSocket endpoint for real-time alert updates."""
+        await websocket.accept()
         self.active_connections[user_id] = websocket
         
         try:
@@ -505,7 +522,8 @@ class AlertSystemAPI:
 
     # Background task handlers
     async def _handle_new_alert_background(self, alert_id: str):
-        """Handle background tasks for new alerts."""        try:
+        """Handle background tasks for new alerts."""
+        try:
             # Trigger ML classification
             alert = await self.alert_manager.get_alert(alert_id)
             if alert:
@@ -528,7 +546,8 @@ class AlertSystemAPI:
             logger.error(f"Background task failed for alert {alert_id}: {e}")
 
     async def _handle_alert_update_background(self, alert_id: str):
-        """Handle background tasks for alert updates."""        try:
+        """Handle background tasks for alert updates."""
+        try:
             # Update metrics
             await self.metrics_collector.record_alert_update(alert_id)
             
@@ -541,7 +560,8 @@ class AlertSystemAPI:
             logger.error(f"Background update task failed for alert {alert_id}: {e}")
 
     async def _handle_bulk_action_background(self, action: str, alert_ids: List[str]):
-        """Handle background tasks for bulk actions."""        try:
+        """Handle background tasks for bulk actions."""
+        try:
             # Update metrics for bulk operations
             await self.metrics_collector.record_bulk_operation(action, len(alert_ids))
             
@@ -553,7 +573,8 @@ class AlertSystemAPI:
             logger.error(f"Background bulk action task failed: {e}")
 
     async def _broadcast_alert_event(self, event_type: str, alert_data: Dict[str, Any]):
-        """Broadcast alert events to connected WebSocket clients."""        if not self.active_connections:
+        """Broadcast alert events to connected WebSocket clients."""
+        if not self.active_connections:
             return
         
         message = {
@@ -576,16 +597,19 @@ class AlertSystemAPI:
             del self.active_connections[user_id]
 
     async def _handle_websocket_subscription(self, user_id: str, message: Dict[str, Any]):
-        """Handle WebSocket subscription management."""        # Implementation for subscription management
+        """Handle WebSocket subscription management."""
+        # Implementation for subscription management
         # Users can subscribe to specific alert types, categories, or severity levels
         pass
 
     async def _suggest_reclassification(self, alert: ContentProtectionAlert, classification: MLClassificationResult):
-        """Suggest alert reclassification based on ML analysis."""        # Implementation for ML-based reclassification suggestions
+        """Suggest alert reclassification based on ML analysis."""
+        # Implementation for ML-based reclassification suggestions
         pass
 
     async def _bulk_escalate_alerts(self, alert_ids: List[str], level: EscalationLevel, reason: str, actor: str) -> BulkOperationResult:
-        """Perform bulk escalation of alerts."""        successful = []
+        """Perform bulk escalation of alerts."""
+        successful = []
         failed = []
         
         for alert_id in alert_ids:
@@ -607,7 +631,8 @@ class AlertSystemAPI:
         )
 
     async def _bulk_assign_alerts(self, alert_ids: List[str], assigned_to: str, actor: str) -> BulkOperationResult:
-        """Perform bulk assignment of alerts."""        successful = []
+        """Perform bulk assignment of alerts."""
+        successful = []
         failed = []
         
         for alert_id in alert_ids:
@@ -635,13 +660,15 @@ class AlertSystemAPI:
         )
 
     async def _send_bulk_action_notifications(self, action: str, alert_ids: List[str]):
-        """Send notifications for bulk actions."""        # Implementation for bulk action notifications
+        """Send notifications for bulk actions."""
+        # Implementation for bulk action notifications
         pass
 
 
 # FastAPI app instance and route registration
 def create_alert_api_app(alert_system: AlertSystemAPI) -> FastAPI:
-    """Create and configure the FastAPI application for the alert system."""    
+    """Create and configure the FastAPI application for the alert system."""
+    
     app = FastAPI(
         title="Content Protection Alert System API",
         description="Enterprise-grade alert management for content protection",

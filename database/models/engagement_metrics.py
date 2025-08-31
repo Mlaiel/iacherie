@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
+"""
+from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, JSONB
@@ -35,7 +36,8 @@ Base = declarative_base()
 
 
 class MetricType(Enum):
-    """Engagement metric type enumeration"""    VIEWS = "views"
+    """Engagement metric type enumeration"""
+    VIEWS = "views"
     LIKES = "likes"
     SHARES = "shares"
     COMMENTS = "comments"
@@ -58,7 +60,8 @@ class MetricType(Enum):
 
 
 class Platform(Enum):
-    """Platform enumeration"""    SPOTIFY = "spotify"
+    """Platform enumeration"""
+    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -86,7 +89,8 @@ class Platform(Enum):
 
 
 class TimeFrame(Enum):
-    """Time frame for metrics aggregation"""    HOURLY = "hourly"
+    """Time frame for metrics aggregation"""
+    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -97,7 +101,8 @@ class TimeFrame(Enum):
 
 
 class AudienceSegment(Enum):
-    """Audience segment enumeration"""    ALL = "all"
+    """Audience segment enumeration"""
+    ALL = "all"
     AGE_13_17 = "age_13_17"
     AGE_18_24 = "age_18_24"
     AGE_25_34 = "age_25_34"
@@ -116,7 +121,8 @@ class AudienceSegment(Enum):
 
 
 class EngagementQuality(Enum):
-    """Engagement quality enumeration"""    EXCELLENT = "excellent"
+    """Engagement quality enumeration"""
+    EXCELLENT = "excellent"
     GOOD = "good"
     AVERAGE = "average"
     BELOW_AVERAGE = "below_average"
@@ -129,7 +135,8 @@ class EngagementQuality(Enum):
 
 
 class TrendDirection(Enum):
-    """Trend direction enumeration"""    RISING = "rising"
+    """Trend direction enumeration"""
+    RISING = "rising"
     FALLING = "falling"
     STABLE = "stable"
     VOLATILE = "volatile"
@@ -140,11 +147,13 @@ class TrendDirection(Enum):
 
 
 class EngagementMetrics(Base):
-    """    Enterprise Engagement Metrics Model
+    """
+    Enterprise Engagement Metrics Model
     
     Comprehensive engagement tracking with real-time analytics,
     trend analysis, audience segmentation, and performance insights.
-    """    __tablename__ = 'engagement_metrics'
+    """
+    __tablename__ = 'engagement_metrics'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -328,7 +337,8 @@ class EngagementMetrics(Base):
         period_end: datetime,
         **kwargs
     ) -> 'EngagementMetrics':
-        """Record a new engagement metric"""        return cls(
+        """Record a new engagement metric"""
+        return cls(
             user_id=user_id,
             metric_type=metric_type,
             platform=platform,
@@ -341,7 +351,8 @@ class EngagementMetrics(Base):
         )
     
     def calculate_percentage_change(self) -> float:
-        """Calculate percentage change from previous value"""        if self.previous_value and self.previous_value > 0:
+        """Calculate percentage change from previous value"""
+        if self.previous_value and self.previous_value > 0:
             self.percentage_change = ((self.value - self.previous_value) / self.previous_value) * 100
             self.absolute_change = self.value - self.previous_value
         else:
@@ -351,7 +362,8 @@ class EngagementMetrics(Base):
         return self.percentage_change
     
     def calculate_engagement_rate(self, total_followers: int) -> float:
-        """Calculate engagement rate based on followers"""        if total_followers > 0:
+        """Calculate engagement rate based on followers"""
+        if total_followers > 0:
             self.rate = (self.value / total_followers) * 100
         else:
             self.rate = 0.0
@@ -359,7 +371,8 @@ class EngagementMetrics(Base):
         return self.rate
     
     def detect_anomaly(self, threshold: float = 2.0) -> bool:
-        """Detect if metric value is anomalous using z-score"""        if self.z_score and abs(self.z_score) > threshold:
+        """Detect if metric value is anomalous using z-score"""
+        if self.z_score and abs(self.z_score) > threshold:
             self.is_anomaly = True
             self.anomaly_score = abs(self.z_score)
             self.anomaly_detected = True
@@ -370,7 +383,8 @@ class EngagementMetrics(Base):
         return self.is_anomaly
     
     def update_trend_analysis(self, historical_values: List[int]) -> None:
-        """Update trend analysis based on historical data"""        if len(historical_values) < 2:
+        """Update trend analysis based on historical data"""
+        if len(historical_values) < 2:
             return
         
         # Calculate trend direction
@@ -394,7 +408,8 @@ class EngagementMetrics(Base):
             self.trend_velocity = (historical_values[-1] - historical_values[-2]) / max(1, historical_values[-2])
     
     def calculate_performance_score(self) -> float:
-        """Calculate overall performance score (0-100)"""        scores = []
+        """Calculate overall performance score (0-100)"""
+        scores = []
         
         # Percentile rank contribution
         if self.percentile_rank is not None:
@@ -429,7 +444,8 @@ class EngagementMetrics(Base):
         return sum(scores) / len(scores) if scores else 0.0
     
     def get_audience_insights(self) -> Dict[str, Any]:
-        """Get comprehensive audience insights"""        return {
+        """Get comprehensive audience insights"""
+        return {
             'demographics': {
                 'unique_users': self.unique_users,
                 'returning_users': self.returning_users,
@@ -455,7 +471,8 @@ class EngagementMetrics(Base):
         }
     
     def predict_future_engagement(self, days_ahead: int = 7) -> Dict[str, Any]:
-        """Predict future engagement based on trends"""        base_value = self.value
+        """Predict future engagement based on trends"""
+        base_value = self.value
         
         # Simple trend-based prediction
         if self.trend_velocity and self.trend_direction:
@@ -482,7 +499,8 @@ class EngagementMetrics(Base):
         }
     
     def compare_with_benchmark(self, benchmark_value: int) -> Dict[str, Any]:
-        """Compare performance with benchmark"""        self.benchmark_value = benchmark_value
+        """Compare performance with benchmark"""
+        self.benchmark_value = benchmark_value
         
         if benchmark_value > 0:
             self.performance_vs_benchmark = ((self.value - benchmark_value) / benchmark_value) * 100

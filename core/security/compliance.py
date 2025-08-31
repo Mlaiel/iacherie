@@ -18,7 +18,8 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
-"""import json
+"""
+import json
 import hashlib
 import asyncio
 from typing import Dict, List, Optional, Any, Tuple, Set, Union
@@ -35,7 +36,8 @@ from backend.core.logging import SecurityLogger
 
 
 class PrivacyRight(Enum):
-    """Privacy rights under various regulations"""    ACCESS = "access"                    # Right to access personal data
+    """Privacy rights under various regulations"""
+    ACCESS = "access"                    # Right to access personal data
     RECTIFICATION = "rectification"      # Right to correct data
     ERASURE = "erasure"                  # Right to be forgotten
     PORTABILITY = "portability"          # Right to data portability
@@ -48,7 +50,8 @@ class PrivacyRight(Enum):
 
 
 class DataCategory(Enum):
-    """Categories of personal data with sensitivity levels"""    IDENTITY = "identity"                # Name, email, ID numbers
+    """Categories of personal data with sensitivity levels"""
+    IDENTITY = "identity"                # Name, email, ID numbers
     CONTACT = "contact"                  # Address, phone, email
     DEMOGRAPHIC = "demographic"          # Age, gender, location
     FINANCIAL = "financial"              # Payment info, bank details
@@ -63,7 +66,8 @@ class DataCategory(Enum):
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""    GDPR = "gdpr"                        # General Data Protection Regulation
+    """Supported compliance frameworks"""
+    GDPR = "gdpr"                        # General Data Protection Regulation
     CCPA = "ccpa"                        # California Consumer Privacy Act
     CPRA = "cpra"                        # California Privacy Rights Act
     DMCA = "dmca"                        # Digital Millennium Copyright Act
@@ -76,7 +80,8 @@ class ComplianceFramework(Enum):
 
 
 class LegalBasis(Enum):
-    """Legal basis for data processing (GDPR)"""    CONSENT = "consent"
+    """Legal basis for data processing (GDPR)"""
+    CONSENT = "consent"
     CONTRACT = "contract"
     LEGAL_OBLIGATION = "legal_obligation"
     VITAL_INTERESTS = "vital_interests"
@@ -85,7 +90,8 @@ class LegalBasis(Enum):
 
 
 class ComplianceStatus(Enum):
-    """Compliance status"""    COMPLIANT = "compliant"
+    """Compliance status"""
+    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING = "pending"
     UNKNOWN = "unknown"
@@ -93,7 +99,8 @@ class ComplianceStatus(Enum):
 
 @dataclass
 class DataProcessingRecord:
-    """Record of data processing activity"""    record_id: str
+    """Record of data processing activity"""
+    record_id: str
     user_id: str
     data_categories: List[DataCategory]
     processing_purpose: str
@@ -108,7 +115,8 @@ class DataProcessingRecord:
 
 @dataclass
 class PrivacyRequest:
-    """Privacy rights request"""    request_id: str
+    """Privacy rights request"""
+    request_id: str
     user_id: str
     request_type: PrivacyRight
     description: str
@@ -121,7 +129,8 @@ class PrivacyRequest:
 
 @dataclass
 class ConsentRecord:
-    """Consent management record"""    consent_id: str
+    """Consent management record"""
+    consent_id: str
     user_id: str
     consent_type: str
     purpose: str
@@ -135,7 +144,8 @@ class ConsentRecord:
 
 @dataclass
 class AuditLogEntry:
-    """Audit log entry for compliance tracking"""    entry_id: str
+    """Audit log entry for compliance tracking"""
+    entry_id: str
     user_id: Optional[str]
     action: str
     resource_type: str
@@ -147,7 +157,8 @@ class AuditLogEntry:
 
 
 class GDPRCompliance:
-    """GDPR compliance implementation"""    
+    """GDPR compliance implementation"""
+    
     def __init__(self):
         self.logger = SecurityLogger("GDPRCompliance")
         self.cache = CacheManager()
@@ -171,7 +182,8 @@ class GDPRCompliance:
         request_type: PrivacyRight,
         description: str = ""
     ) -> PrivacyRequest:
-        """Process privacy rights request"""        try:
+        """Process privacy rights request"""
+        try:
             request_id = str(uuid.uuid4())
             
             # Create privacy request
@@ -220,7 +232,8 @@ class GDPRCompliance:
             raise
     
     async def _handle_access_request(self, user_id: str) -> Dict[str, Any]:
-        """Handle data access request (Article 15)"""        try:
+        """Handle data access request (Article 15)"""
+        try:
             user_data = {
                 "user_id": user_id,
                 "request_type": "data_access",
@@ -261,7 +274,8 @@ class GDPRCompliance:
             return {"error": str(e)}
     
     async def _handle_erasure_request(self, user_id: str) -> Dict[str, Any]:
-        """Handle right to be forgotten request (Article 17)"""        try:
+        """Handle right to be forgotten request (Article 17)"""
+        try:
             deletion_summary = {
                 "user_id": user_id,
                 "request_type": "data_erasure",
@@ -293,7 +307,8 @@ class GDPRCompliance:
             return {"error": str(e)}
     
     async def _handle_portability_request(self, user_id: str) -> Dict[str, Any]:
-        """Handle data portability request (Article 20)"""        try:
+        """Handle data portability request (Article 20)"""
+        try:
             portable_data = {
                 "user_id": user_id,
                 "request_type": "data_portability",
@@ -317,7 +332,8 @@ class GDPRCompliance:
             return {"error": str(e)}
     
     async def _handle_rectification_request(self, user_id: str, description: str) -> Dict[str, Any]:
-        """Handle data rectification request (Article 16)"""        try:
+        """Handle data rectification request (Article 16)"""
+        try:
             rectification_result = {
                 "user_id": user_id,
                 "request_type": "data_rectification",
@@ -337,7 +353,8 @@ class GDPRCompliance:
             return {"error": str(e)}
     
     async def _handle_restriction_request(self, user_id: str) -> Dict[str, Any]:
-        """Handle processing restriction request (Article 18)"""        try:
+        """Handle processing restriction request (Article 18)"""
+        try:
             # Mark user data for processing restriction
             await self._restrict_user_data_processing(user_id)
             
@@ -353,7 +370,8 @@ class GDPRCompliance:
             return {"error": str(e)}
     
     async def _handle_objection_request(self, user_id: str) -> Dict[str, Any]:
-        """Handle objection to processing request (Article 21)"""        try:
+        """Handle objection to processing request (Article 21)"""
+        try:
             # Stop processing based on legitimate interests
             await self._stop_legitimate_interest_processing(user_id)
             
@@ -375,7 +393,8 @@ class GDPRCompliance:
         purpose: str,
         consent_given: bool
     ) -> ConsentRecord:
-        """Manage user consent"""        try:
+        """Manage user consent"""
+        try:
             consent_id = str(uuid.uuid4())
             
             if consent_given:
@@ -423,7 +442,8 @@ class GDPRCompliance:
             raise
     
     async def check_data_retention(self) -> Dict[str, Any]:
-        """Check and enforce data retention policies"""        try:
+        """Check and enforce data retention policies"""
+        try:
             retention_report = {
                 "check_date": datetime.utcnow().isoformat(),
                 "categories_checked": [],
@@ -456,22 +476,27 @@ class GDPRCompliance:
             return {"error": str(e)}
     
     def _generate_verification_token(self) -> str:
-        """Generate verification token for privacy requests"""        return hashlib.sha256(f"{datetime.utcnow().isoformat()}{uuid.uuid4()}".encode()).hexdigest()[:16]
+        """Generate verification token for privacy requests"""
+        return hashlib.sha256(f"{datetime.utcnow().isoformat()}{uuid.uuid4()}".encode()).hexdigest()[:16]
     
     async def _get_user_profile_data(self, user_id: str) -> Optional[Dict[str, Any]]:
-        """Get user profile data"""        # Implementation depends on your user model
+        """Get user profile data"""
+        # Implementation depends on your user model
         pass
     
     async def _get_user_content_data(self, user_id: str) -> Optional[Dict[str, Any]]:
-        """Get user content data"""        # Implementation depends on your content model
+        """Get user content data"""
+        # Implementation depends on your content model
         pass
     
     async def _get_user_usage_data(self, user_id: str) -> Optional[Dict[str, Any]]:
-        """Get user usage/analytics data"""        # Implementation depends on your analytics model
+        """Get user usage/analytics data"""
+        # Implementation depends on your analytics model
         pass
     
     async def _can_delete_data_category(self, user_id: str, category: DataCategory) -> Tuple[bool, str]:
-        """Check if data category can be deleted"""        # Check legal obligations, contracts, etc.
+        """Check if data category can be deleted"""
+        # Check legal obligations, contracts, etc.
         if category == DataCategory.FINANCIAL:
             return False, "Financial data must be retained for tax purposes"
         
@@ -484,20 +509,24 @@ class GDPRCompliance:
         return True, ""
     
     async def _store_privacy_request(self, request: PrivacyRequest):
-        """Store privacy request"""        # Implementation depends on your request storage model
+        """Store privacy request"""
+        # Implementation depends on your request storage model
         pass
     
     async def _store_consent_record(self, consent: ConsentRecord):
-        """Store consent record"""        # Implementation depends on your consent storage model
+        """Store consent record"""
+        # Implementation depends on your consent storage model
         pass
     
     async def _log_compliance_action(self, user_id: str, action: str, details: Dict[str, Any]):
-        """Log compliance action for audit trail"""        # Implementation depends on your audit logging model
+        """Log compliance action for audit trail"""
+        # Implementation depends on your audit logging model
         pass
 
 
 class CCPACompliance:
-    """CCPA compliance for California residents"""    
+    """CCPA compliance for California residents"""
+    
     def __init__(self):
         self.logger = SecurityLogger("CCPACompliance")
         self.cache = CacheManager()
@@ -521,7 +550,8 @@ class CCPACompliance:
         request_type: str,
         california_resident: bool = True
     ) -> Dict[str, Any]:
-        """Process CCPA privacy request"""        try:
+        """Process CCPA privacy request"""
+        try:
             if not california_resident:
                 return {"error": "CCPA rights apply only to California residents"}
             
@@ -541,7 +571,8 @@ class CCPACompliance:
             return {"error": str(e)}
     
     async def _handle_ccpa_know_request(self, user_id: str, request_id: str) -> Dict[str, Any]:
-        """Handle CCPA right to know request"""        try:
+        """Handle CCPA right to know request"""
+        try:
             ccpa_data = {
                 "request_id": request_id,
                 "user_id": user_id,
@@ -573,7 +604,8 @@ class CCPACompliance:
             return {"error": str(e)}
     
     async def _handle_ccpa_delete_request(self, user_id: str, request_id: str) -> Dict[str, Any]:
-        """Handle CCPA right to delete request"""        try:
+        """Handle CCPA right to delete request"""
+        try:
             # Similar to GDPR erasure but with CCPA-specific rules
             deletion_result = {
                 "request_id": request_id,
@@ -601,7 +633,8 @@ class CCPACompliance:
             return {"error": str(e)}
     
     async def _handle_ccpa_opt_out_request(self, user_id: str, request_id: str) -> Dict[str, Any]:
-        """Handle CCPA opt-out of sale request"""        try:
+        """Handle CCPA opt-out of sale request"""
+        try:
             # Mark user as opted out of data sales
             await self._set_ccpa_opt_out_status(user_id, True)
             
@@ -618,23 +651,27 @@ class CCPACompliance:
             return {"error": str(e)}
     
     async def _get_ccpa_category_data(self, user_id: str, fields: List[str]) -> Optional[Dict[str, Any]]:
-        """Get data for CCPA category"""        # Implementation depends on your data models
+        """Get data for CCPA category"""
+        # Implementation depends on your data models
         pass
     
     async def _can_delete_ccpa_category(self, user_id: str, category: str) -> Tuple[bool, str]:
-        """Check if CCPA category can be deleted"""        # CCPA allows more exceptions than GDPR
+        """Check if CCPA category can be deleted"""
+        # CCPA allows more exceptions than GDPR
         if category == "commercial":
             return False, "Commercial information retained for business records"
         
         return True, ""
     
     async def _set_ccpa_opt_out_status(self, user_id: str, opted_out: bool):
-        """Set CCPA opt-out status"""        # Implementation depends on your user preference model
+        """Set CCPA opt-out status"""
+        # Implementation depends on your user preference model
         pass
 
 
 class DMCACompliance:
-    """DMCA takedown and copyright compliance"""    
+    """DMCA takedown and copyright compliance"""
+    
     def __init__(self):
         self.logger = SecurityLogger("DMCACompliance")
         self.cache = CacheManager()
@@ -645,7 +682,8 @@ class DMCACompliance:
         complainant_info: Dict[str, str],
         infringement_details: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Process DMCA takedown notice"""        try:
+        """Process DMCA takedown notice"""
+        try:
             takedown_id = str(uuid.uuid4())
             
             # Validate takedown notice
@@ -694,7 +732,8 @@ class DMCACompliance:
         takedown_id: str,
         counter_notice_info: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Process DMCA counter-notice"""        try:
+        """Process DMCA counter-notice"""
+        try:
             counter_id = str(uuid.uuid4())
             
             # Validate counter-notice
@@ -734,7 +773,8 @@ class DMCACompliance:
         complainant_info: Dict[str, str], 
         infringement_details: Dict[str, str]
     ) -> Tuple[bool, List[str]]:
-        """Validate DMCA takedown notice"""        errors = []
+        """Validate DMCA takedown notice"""
+        errors = []
         
         # Required complainant information
         required_complainant_fields = ["name", "address", "phone", "email"]
@@ -755,7 +795,8 @@ class DMCACompliance:
         return len(errors) == 0, errors
     
     def _validate_counter_notice(self, counter_notice_info: Dict[str, str]) -> Tuple[bool, List[str]]:
-        """Validate DMCA counter-notice"""        errors = []
+        """Validate DMCA counter-notice"""
+        errors = []
         
         required_fields = [
             "name", "address", "phone", "identification_of_material",
@@ -769,7 +810,8 @@ class DMCACompliance:
         return len(errors) == 0, errors
     
     async def _remove_infringing_content(self, content_id: str):
-        """Remove infringing content"""        # Implementation depends on your content model
+        """Remove infringing content"""
+        # Implementation depends on your content model
         pass
     
     async def _store_dmca_takedown(
@@ -779,12 +821,14 @@ class DMCACompliance:
         complainant_info: Dict[str, str], 
         infringement_details: Dict[str, str]
     ):
-        """Store DMCA takedown record"""        # Implementation depends on your DMCA storage model
+        """Store DMCA takedown record"""
+        # Implementation depends on your DMCA storage model
         pass
 
 
 class AuditCompliance:
-    """Audit trail and compliance reporting"""    
+    """Audit trail and compliance reporting"""
+    
     def __init__(self):
         self.logger = SecurityLogger("AuditCompliance")
         self.cache = CacheManager()
@@ -799,7 +843,8 @@ class AuditCompliance:
         ip_address: str = "unknown",
         user_agent: str = "unknown"
     ) -> AuditLogEntry:
-        """Log audit event"""        try:
+        """Log audit event"""
+        try:
             entry_id = str(uuid.uuid4())
             
             audit_entry = AuditLogEntry(
@@ -831,7 +876,8 @@ class AuditCompliance:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Generate compliance report"""        try:
+        """Generate compliance report"""
+        try:
             report = {
                 "report_id": str(uuid.uuid4()),
                 "report_type": report_type,
@@ -861,15 +907,18 @@ class AuditCompliance:
             return {"error": str(e)}
     
     async def _store_audit_entry(self, entry: AuditLogEntry):
-        """Store audit entry"""        # Implementation depends on your audit storage model
+        """Store audit entry"""
+        # Implementation depends on your audit storage model
         pass
     
     async def _update_audit_metrics(self, action: str, resource_type: str):
-        """Update audit metrics"""        # Implementation depends on your metrics system
+        """Update audit metrics"""
+        # Implementation depends on your metrics system
         pass
     
     async def _generate_gdpr_report(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Generate GDPR compliance report"""        # Implementation depends on your data models
+        """Generate GDPR compliance report"""
+        # Implementation depends on your data models
         return {
             "privacy_requests": {},
             "consent_records": {},
@@ -879,7 +928,8 @@ class AuditCompliance:
 
 
 class ComplianceManager:
-    """Main compliance manager orchestrating all compliance modules"""    
+    """Main compliance manager orchestrating all compliance modules"""
+    
     def __init__(self):
         self.gdpr_compliance = GDPRCompliance()
         self.ccpa_compliance = CCPACompliance()
@@ -888,7 +938,8 @@ class ComplianceManager:
         self.logger = SecurityLogger("ComplianceManager")
     
     async def get_compliance_status(self) -> Dict[str, Any]:
-        """Get overall compliance status"""        try:
+        """Get overall compliance status"""
+        try:
             status = {
                 "gdpr": {"status": ComplianceStatus.COMPLIANT.value, "last_check": datetime.utcnow().isoformat()},
                 "ccpa": {"status": ComplianceStatus.COMPLIANT.value, "last_check": datetime.utcnow().isoformat()},

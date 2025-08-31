@@ -14,7 +14,8 @@ Features:
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: Proprietary - All rights reserved
-"""import asyncio
+"""
+import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
@@ -31,7 +32,8 @@ from ..core.database import get_database_session
 
 
 class ProcessingType(Enum):
-    """Data processing types."""    AGGREGATION = "aggregation"
+    """Data processing types."""
+    AGGREGATION = "aggregation"
     TREND_ANALYSIS = "trend_analysis"
     ANOMALY_DETECTION = "anomaly_detection"
     PREDICTION = "prediction"
@@ -39,7 +41,8 @@ class ProcessingType(Enum):
 
 
 class TimeGranularity(Enum):
-    """Time aggregation granularity."""    HOUR = "hour"
+    """Time aggregation granularity."""
+    HOUR = "hour"
     DAY = "day"
     WEEK = "week"
     MONTH = "month"
@@ -49,7 +52,8 @@ class TimeGranularity(Enum):
 
 @dataclass
 class ProcessedMetric:
-    """Processed analytics metric data."""    metric_name: str
+    """Processed analytics metric data."""
+    metric_name: str
     original_value: float
     processed_value: float
     processing_type: ProcessingType
@@ -60,7 +64,8 @@ class ProcessedMetric:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis results."""    metric_name: str
+    """Trend analysis results."""
+    metric_name: str
     trend_direction: str  # 'increasing', 'decreasing', 'stable'
     trend_strength: float  # 0-100
     correlation_coefficient: float
@@ -71,11 +76,13 @@ class TrendAnalysis:
 
 
 class MetricsProcessor:
-    """    Advanced metrics processing and transformation engine.
+    """
+    Advanced metrics processing and transformation engine.
     
     Handles real-time aggregation, cleaning, and preparation
     of analytics data for analysis and reporting.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self._processing_cache = {}
@@ -85,7 +92,8 @@ class MetricsProcessor:
         metrics: List[Dict[str, Any]],
         processing_types: List[ProcessingType]
     ) -> List[ProcessedMetric]:
-        """        Process batch of metrics with specified processing types.
+        """
+        Process batch of metrics with specified processing types.
         
         Args:
             metrics: Raw metrics data
@@ -93,7 +101,8 @@ class MetricsProcessor:
             
         Returns:
             List of processed metrics
-        """        try:
+        """
+        try:
             processed_metrics = []
             
             # Convert to DataFrame for efficient processing
@@ -132,7 +141,8 @@ class MetricsProcessor:
             raise
             
     async def _aggregate_metrics(self, df: pd.DataFrame) -> List[ProcessedMetric]:
-        """Aggregate metrics by time granularity."""        
+        """Aggregate metrics by time granularity."""
+        
         processed = []
         
         if 'timestamp' not in df.columns or 'value' not in df.columns:
@@ -190,7 +200,8 @@ class MetricsProcessor:
         return processed
         
     async def _analyze_trends(self, df: pd.DataFrame) -> List[ProcessedMetric]:
-        """Analyze trends in metrics data."""        
+        """Analyze trends in metrics data."""
+        
         processed = []
         
         if 'timestamp' not in df.columns or 'value' not in df.columns:
@@ -260,7 +271,8 @@ class MetricsProcessor:
         return processed
         
     def _detect_seasonality(self, data: pd.DataFrame) -> Optional[str]:
-        """Detect seasonal patterns in time series data."""        
+        """Detect seasonal patterns in time series data."""
+        
         if len(data) < 24:  # Need at least 24 points for daily seasonality
             return None
             
@@ -286,7 +298,8 @@ class MetricsProcessor:
             return None
             
     async def _detect_anomalies(self, df: pd.DataFrame) -> List[ProcessedMetric]:
-        """Detect anomalies in metrics data using ML."""        
+        """Detect anomalies in metrics data using ML."""
+        
         processed = []
         
         if 'value' not in df.columns:
@@ -354,7 +367,8 @@ class MetricsProcessor:
         return processed
         
     async def _generate_predictions(self, df: pd.DataFrame) -> List[ProcessedMetric]:
-        """Generate predictions for metrics using ML models."""        
+        """Generate predictions for metrics using ML models."""
+        
         processed = []
         
         if 'timestamp' not in df.columns or 'value' not in df.columns:
@@ -429,7 +443,8 @@ class MetricsProcessor:
         return processed
         
     async def _optimize_metrics(self, df: pd.DataFrame) -> List[ProcessedMetric]:
-        """Generate optimization recommendations for metrics."""        
+        """Generate optimization recommendations for metrics."""
+        
         processed = []
         
         if 'value' not in df.columns:
@@ -506,9 +521,11 @@ class MetricsProcessor:
 
 
 class TrendAnalyzer:
-    """    Advanced trend analysis system for identifying patterns
+    """
+    Advanced trend analysis system for identifying patterns
     and predicting future metric behavior.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -517,7 +534,8 @@ class TrendAnalyzer:
         metrics_data: List[Dict[str, Any]],
         time_window: timedelta = timedelta(days=30)
     ) -> List[TrendAnalysis]:
-        """        Analyze trends in metrics data over specified time window.
+        """
+        Analyze trends in metrics data over specified time window.
         
         Args:
             metrics_data: Historical metrics data
@@ -525,7 +543,8 @@ class TrendAnalyzer:
             
         Returns:
             List of trend analysis results
-        """        try:
+        """
+        try:
             df = pd.DataFrame(metrics_data)
             
             if df.empty:
@@ -557,7 +576,8 @@ class TrendAnalyzer:
         df: pd.DataFrame,
         metric_name: str
     ) -> Optional[TrendAnalysis]:
-        """Analyze trend for a single metric."""        
+        """Analyze trend for a single metric."""
+        
         try:
             metric_data = df[df['metric_name'] == metric_name].copy()
             metric_data = metric_data.sort_values('timestamp')
@@ -633,7 +653,8 @@ class TrendAnalyzer:
             return None
             
     def _detect_advanced_seasonality(self, data: pd.DataFrame) -> Optional[str]:
-        """Detect seasonal patterns using advanced methods."""        
+        """Detect seasonal patterns using advanced methods."""
+        
         if len(data) < 14:
             return None
             
@@ -668,7 +689,8 @@ class TrendAnalyzer:
             return None
             
     def _detect_trend_anomalies(self, data: pd.DataFrame) -> List[datetime]:
-        """Detect anomalies in trend data."""        
+        """Detect anomalies in trend data."""
+        
         anomalies = []
         
         try:
@@ -701,7 +723,8 @@ class TrendAnalyzer:
         correlation: float,
         seasonality: Optional[str]
     ) -> List[str]:
-        """Generate actionable recommendations based on trend analysis."""        
+        """Generate actionable recommendations based on trend analysis."""
+        
         recommendations = []
         
         if direction == "decreasing" and strength > 30:
@@ -723,9 +746,11 @@ class TrendAnalyzer:
 
 
 class AnomalyDetector:
-    """    Advanced anomaly detection system using multiple ML algorithms
+    """
+    Advanced anomaly detection system using multiple ML algorithms
     for comprehensive outlier identification.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self._models = {}
@@ -735,7 +760,8 @@ class AnomalyDetector:
         metrics_data: List[Dict[str, Any]],
         sensitivity: float = 0.1
     ) -> Dict[str, List[Dict[str, Any]]]:
-        """        Detect anomalies in metrics data using ensemble methods.
+        """
+        Detect anomalies in metrics data using ensemble methods.
         
         Args:
             metrics_data: Metrics data to analyze
@@ -743,7 +769,8 @@ class AnomalyDetector:
             
         Returns:
             Dictionary of anomalies by metric name
-        """        try:
+        """
+        try:
             df = pd.DataFrame(metrics_data)
             
             if df.empty:
@@ -772,7 +799,8 @@ class AnomalyDetector:
         metric_name: str,
         sensitivity: float
     ) -> List[Dict[str, Any]]:
-        """Detect anomalies for a specific metric."""        
+        """Detect anomalies for a specific metric."""
+        
         try:
             metric_data = df[df['metric_name'] == metric_name].copy()
             
@@ -816,7 +844,8 @@ class AnomalyDetector:
         values: np.ndarray,
         sensitivity: float
     ) -> List[bool]:
-        """Detect anomalies using Isolation Forest."""        
+        """Detect anomalies using Isolation Forest."""
+        
         try:
             iso_forest = IsolationForest(
                 contamination=sensitivity,
@@ -834,7 +863,8 @@ class AnomalyDetector:
         values: np.ndarray,
         sensitivity: float
     ) -> List[bool]:
-        """Detect anomalies using statistical methods."""        
+        """Detect anomalies using statistical methods."""
+        
         try:
             # Use modified Z-score method
             median = np.median(values)
@@ -858,7 +888,8 @@ class AnomalyDetector:
         iso_result: bool,
         stat_result: bool
     ) -> float:
-        """Calculate confidence score for anomaly detection."""        
+        """Calculate confidence score for anomaly detection."""
+        
         confidence = 0.0
         
         if iso_result:

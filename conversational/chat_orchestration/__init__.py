@@ -6,7 +6,7 @@ with integrated content protection, monetization intelligence, real-time
 analytics, fingerprinting, and enterprise monitoring.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are proprietary intellectual property of Fahed Mlaiel.
 Unauthorized copying, modification, distribution, or use without explicit written

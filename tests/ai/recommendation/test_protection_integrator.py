@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -32,7 +33,8 @@ Team Specialties:
 ✅ Développeur Audio
 ✅ DevOps Engineer
 ✅ IA Prompt Engineer
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -55,10 +57,12 @@ from ai.recommendation.exceptions import ProtectionError, ValidationError
 
 
 class TestProtectionIntegrator:
-    """Comprehensive tests for the main protection integrator"""    
+    """Comprehensive tests for the main protection integrator"""
+    
     @pytest.mark.asyncio
     async def test_integrator_initialization(self):
-        """Test protection integrator initialization"""        integrator = ProtectionIntegrator()
+        """Test protection integrator initialization"""
+        integrator = ProtectionIntegrator()
         
         # Test initial state
         assert integrator.status.name == "INITIALIZING"
@@ -76,7 +80,8 @@ class TestProtectionIntegrator:
     
     @pytest.mark.asyncio
     async def test_analyze_content_protection(self, protection_integrator, sample_video_content):
-        """Test comprehensive content protection analysis"""        video_data = sample_video_content
+        """Test comprehensive content protection analysis"""
+        video_data = sample_video_content
         
         protection_report = await protection_integrator.analyze_content_protection(
             content_data=video_data,
@@ -95,7 +100,8 @@ class TestProtectionIntegrator:
     
     @pytest.mark.asyncio
     async def test_check_copyright_violations(self, protection_integrator, sample_audio_content):
-        """Test copyright violation detection"""        audio_data = sample_audio_content
+        """Test copyright violation detection"""
+        audio_data = sample_audio_content
         
         copyright_check = await protection_integrator.check_copyright_violations(
             content_data=audio_data,
@@ -118,7 +124,8 @@ class TestProtectionIntegrator:
     
     @pytest.mark.asyncio
     async def test_generate_content_fingerprint(self, protection_integrator, sample_video_content):
-        """Test content fingerprint generation"""        video_data = sample_video_content
+        """Test content fingerprint generation"""
+        video_data = sample_video_content
         
         fingerprint = await protection_integrator.generate_content_fingerprint(
             content_data=video_data,
@@ -140,7 +147,8 @@ class TestProtectionIntegrator:
     
     @pytest.mark.asyncio
     async def test_monitor_brand_safety(self, protection_integrator, sample_text_content):
-        """Test brand safety monitoring"""        text_data = sample_text_content
+        """Test brand safety monitoring"""
+        text_data = sample_text_content
         
         brand_safety = await protection_integrator.monitor_brand_safety(
             content_data=text_data,
@@ -161,7 +169,8 @@ class TestProtectionIntegrator:
     
     @pytest.mark.asyncio
     async def test_legal_compliance_check(self, protection_integrator, sample_video_content):
-        """Test legal compliance verification"""        video_data = sample_video_content
+        """Test legal compliance verification"""
+        video_data = sample_video_content
         
         compliance_check = await protection_integrator.check_legal_compliance(
             content_data=video_data,
@@ -185,7 +194,8 @@ class TestProtectionIntegrator:
     
     @pytest.mark.asyncio
     async def test_dmca_takedown_protection(self, protection_integrator, sample_audio_content):
-        """Test DMCA takedown protection analysis"""        audio_data = sample_audio_content
+        """Test DMCA takedown protection analysis"""
+        audio_data = sample_audio_content
         
         dmca_protection = await protection_integrator.analyze_dmca_protection(
             content_data=audio_data,
@@ -208,7 +218,8 @@ class TestProtectionIntegrator:
     
     @pytest.mark.asyncio
     async def test_content_originality_verification(self, protection_integrator, sample_text_content):
-        """Test content originality verification"""        text_data = sample_text_content
+        """Test content originality verification"""
+        text_data = sample_text_content
         
         originality_check = await protection_integrator.verify_content_originality(
             content_data=text_data,
@@ -236,10 +247,12 @@ class TestProtectionIntegrator:
 
 
 class TestCopyrightAnalyzer:
-    """Tests for copyright analysis algorithms"""    
+    """Tests for copyright analysis algorithms"""
+    
     @pytest.mark.asyncio
     async def test_audio_copyright_detection(self, copyright_analyzer, sample_audio_content):
-        """Test audio copyright detection"""        audio_data = sample_audio_content
+        """Test audio copyright detection"""
+        audio_data = sample_audio_content
         
         detection_result = await copyright_analyzer.detect_audio_copyright(
             audio_data=audio_data,
@@ -263,7 +276,8 @@ class TestCopyrightAnalyzer:
     
     @pytest.mark.asyncio
     async def test_visual_copyright_detection(self, copyright_analyzer, sample_video_content):
-        """Test visual copyright detection"""        video_data = sample_video_content
+        """Test visual copyright detection"""
+        video_data = sample_video_content
         
         visual_detection = await copyright_analyzer.detect_visual_copyright(
             video_data=video_data,
@@ -286,7 +300,8 @@ class TestCopyrightAnalyzer:
     
     @pytest.mark.asyncio
     async def test_text_copyright_analysis(self, copyright_analyzer, sample_text_content):
-        """Test text copyright analysis"""        text_data = sample_text_content
+        """Test text copyright analysis"""
+        text_data = sample_text_content
         
         text_analysis = await copyright_analyzer.analyze_text_copyright(
             text_data=text_data,
@@ -311,7 +326,8 @@ class TestCopyrightAnalyzer:
     
     @pytest.mark.asyncio
     async def test_copyright_clearance_verification(self, copyright_analyzer, sample_audio_content):
-        """Test copyright clearance verification"""        audio_data = sample_audio_content
+        """Test copyright clearance verification"""
+        audio_data = sample_audio_content
         
         clearance_verification = await copyright_analyzer.verify_copyright_clearance(
             content_data=audio_data,
@@ -335,10 +351,12 @@ class TestCopyrightAnalyzer:
 
 
 class TestContentFingerprinter:
-    """Tests for content fingerprinting algorithms"""    
+    """Tests for content fingerprinting algorithms"""
+    
     @pytest.mark.asyncio
     async def test_generate_audio_fingerprint(self, content_fingerprinter, sample_audio_content):
-        """Test audio fingerprint generation"""        audio_data = sample_audio_content
+        """Test audio fingerprint generation"""
+        audio_data = sample_audio_content
         
         fingerprint = await content_fingerprinter.generate_audio_fingerprint(
             audio_data=audio_data,
@@ -361,7 +379,8 @@ class TestContentFingerprinter:
     
     @pytest.mark.asyncio
     async def test_generate_visual_fingerprint(self, content_fingerprinter, sample_video_content):
-        """Test visual fingerprint generation"""        video_data = sample_video_content
+        """Test visual fingerprint generation"""
+        video_data = sample_video_content
         
         visual_fingerprint = await content_fingerprinter.generate_visual_fingerprint(
             video_data=video_data,
@@ -385,7 +404,8 @@ class TestContentFingerprinter:
     
     @pytest.mark.asyncio
     async def test_generate_metadata_fingerprint(self, content_fingerprinter, sample_video_content):
-        """Test metadata fingerprint generation"""        video_data = sample_video_content
+        """Test metadata fingerprint generation"""
+        video_data = sample_video_content
         
         metadata_fingerprint = await content_fingerprinter.generate_metadata_fingerprint(
             content_data=video_data,
@@ -404,7 +424,8 @@ class TestContentFingerprinter:
     
     @pytest.mark.asyncio
     async def test_compare_fingerprints(self, content_fingerprinter, sample_audio_content):
-        """Test fingerprint comparison"""        audio_data = sample_audio_content
+        """Test fingerprint comparison"""
+        audio_data = sample_audio_content
         
         # Generate two fingerprints
         fingerprint1 = await content_fingerprinter.generate_audio_fingerprint(
@@ -439,10 +460,12 @@ class TestContentFingerprinter:
 
 
 class TestLegalComplianceChecker:
-    """Tests for legal compliance checking"""    
+    """Tests for legal compliance checking"""
+    
     @pytest.mark.asyncio
     async def test_check_platform_compliance(self, legal_compliance_checker, sample_video_content):
-        """Test platform-specific compliance checking"""        video_data = sample_video_content
+        """Test platform-specific compliance checking"""
+        video_data = sample_video_content
         
         compliance_results = await legal_compliance_checker.check_platform_compliance(
             content_data=video_data,
@@ -466,7 +489,8 @@ class TestLegalComplianceChecker:
     
     @pytest.mark.asyncio
     async def test_check_gdpr_compliance(self, legal_compliance_checker, sample_text_content):
-        """Test GDPR compliance checking"""        text_data = sample_text_content
+        """Test GDPR compliance checking"""
+        text_data = sample_text_content
         
         gdpr_compliance = await legal_compliance_checker.check_gdpr_compliance(
             content_data=text_data,
@@ -486,7 +510,8 @@ class TestLegalComplianceChecker:
     
     @pytest.mark.asyncio
     async def test_check_accessibility_compliance(self, legal_compliance_checker, sample_video_content):
-        """Test accessibility compliance checking"""        video_data = sample_video_content
+        """Test accessibility compliance checking"""
+        video_data = sample_video_content
         
         accessibility_check = await legal_compliance_checker.check_accessibility_compliance(
             content_data=video_data,
@@ -509,7 +534,8 @@ class TestLegalComplianceChecker:
     
     @pytest.mark.asyncio
     async def test_check_age_restriction_compliance(self, legal_compliance_checker, sample_video_content):
-        """Test age restriction compliance"""        video_data = sample_video_content
+        """Test age restriction compliance"""
+        video_data = sample_video_content
         
         age_compliance = await legal_compliance_checker.check_age_restriction_compliance(
             content_data=video_data,
@@ -532,10 +558,12 @@ class TestLegalComplianceChecker:
 
 
 class TestBrandSafetyMonitor:
-    """Tests for brand safety monitoring"""    
+    """Tests for brand safety monitoring"""
+    
     @pytest.mark.asyncio
     async def test_analyze_content_safety(self, brand_safety_monitor, sample_text_content):
-        """Test content safety analysis"""        text_data = sample_text_content
+        """Test content safety analysis"""
+        text_data = sample_text_content
         
         safety_analysis = await brand_safety_monitor.analyze_content_safety(
             content_data=text_data,
@@ -560,7 +588,8 @@ class TestBrandSafetyMonitor:
     
     @pytest.mark.asyncio
     async def test_monitor_toxic_content(self, brand_safety_monitor, sample_text_content):
-        """Test toxic content monitoring"""        # Create potentially toxic content
+        """Test toxic content monitoring"""
+        # Create potentially toxic content
         toxic_content = sample_text_content.copy()
         toxic_content['content'] = "This is a test for potentially harmful language detection."
         
@@ -581,7 +610,8 @@ class TestBrandSafetyMonitor:
     
     @pytest.mark.asyncio
     async def test_check_advertiser_friendliness(self, brand_safety_monitor, sample_video_content):
-        """Test advertiser-friendliness checking"""        video_data = sample_video_content
+        """Test advertiser-friendliness checking"""
+        video_data = sample_video_content
         
         advertiser_check = await brand_safety_monitor.check_advertiser_friendliness(
             content_data=video_data,
@@ -604,7 +634,8 @@ class TestBrandSafetyMonitor:
     
     @pytest.mark.asyncio
     async def test_analyze_controversy_risk(self, brand_safety_monitor, sample_text_content):
-        """Test controversy risk analysis"""        text_data = sample_text_content
+        """Test controversy risk analysis"""
+        text_data = sample_text_content
         
         controversy_analysis = await brand_safety_monitor.analyze_controversy_risk(
             content_data=text_data,
@@ -624,11 +655,13 @@ class TestBrandSafetyMonitor:
 
 
 class TestProtectionIntegrationPerformance:
-    """Performance tests for protection integration"""    
+    """Performance tests for protection integration"""
+    
     @pytest.mark.asyncio
     @pytest.mark.benchmark
     async def test_protection_analysis_performance(self, benchmark, protection_integrator, sample_video_content):
-        """Benchmark protection analysis performance"""        video_data = sample_video_content
+        """Benchmark protection analysis performance"""
+        video_data = sample_video_content
         
         async def analyze_protection():
             return await protection_integrator.analyze_content_protection(
@@ -643,7 +676,8 @@ class TestProtectionIntegrationPerformance:
     
     @pytest.mark.asyncio
     async def test_batch_copyright_analysis(self, copyright_analyzer, sample_audio_content, sample_video_content):
-        """Test batch copyright analysis performance"""        content_batch = [
+        """Test batch copyright analysis performance"""
+        content_batch = [
             (sample_audio_content, ContentType.AUDIO),
             (sample_video_content, ContentType.VIDEO),
             (sample_audio_content, ContentType.AUDIO)  # Duplicate for testing
@@ -663,7 +697,8 @@ class TestProtectionIntegrationPerformance:
     
     @pytest.mark.asyncio
     async def test_concurrent_protection_checks(self, protection_integrator, sample_text_content):
-        """Test concurrent protection checks"""        text_data = sample_text_content
+        """Test concurrent protection checks"""
+        text_data = sample_text_content
         
         # Create multiple concurrent requests
         tasks = []
@@ -690,10 +725,12 @@ class TestProtectionIntegrationPerformance:
 
 
 class TestProtectionIntegrationEdgeCases:
-    """Tests for edge cases and error scenarios"""    
+    """Tests for edge cases and error scenarios"""
+    
     @pytest.mark.asyncio
     async def test_protection_analysis_empty_content(self, protection_integrator):
-        """Test protection analysis with empty content"""        empty_content = {"content": "", "title": "", "description": ""}
+        """Test protection analysis with empty content"""
+        empty_content = {"content": "", "title": "", "description": ""}
         
         with pytest.raises(ValidationError):
             await protection_integrator.analyze_content_protection(
@@ -705,7 +742,8 @@ class TestProtectionIntegrationEdgeCases:
     
     @pytest.mark.asyncio
     async def test_copyright_analysis_corrupted_content(self, copyright_analyzer):
-        """Test copyright analysis with corrupted content"""        corrupted_content = {
+        """Test copyright analysis with corrupted content"""
+        corrupted_content = {
             "title": "Test Content",
             "audio_data": "corrupted_binary_data",
             "format": "mp3"
@@ -719,7 +757,8 @@ class TestProtectionIntegrationEdgeCases:
     
     @pytest.mark.asyncio
     async def test_fingerprint_generation_unsupported_format(self, content_fingerprinter):
-        """Test fingerprint generation with unsupported format"""        unsupported_content = {
+        """Test fingerprint generation with unsupported format"""
+        unsupported_content = {
             "title": "Test Content",
             "data": "some_data",
             "format": "unsupported_format"
@@ -733,7 +772,8 @@ class TestProtectionIntegrationEdgeCases:
     
     @pytest.mark.asyncio
     async def test_brand_safety_analysis_timeout(self, brand_safety_monitor, sample_text_content):
-        """Test brand safety analysis timeout handling"""        text_data = sample_text_content
+        """Test brand safety analysis timeout handling"""
+        text_data = sample_text_content
         
         try:
             # Set timeout to test timeout handling
@@ -755,10 +795,12 @@ class TestProtectionIntegrationEdgeCases:
 
 
 class TestProtectionDataValidation:
-    """Tests for protection data validation and accuracy"""    
+    """Tests for protection data validation and accuracy"""
+    
     @pytest.mark.asyncio
     async def test_protection_score_consistency(self, protection_integrator, sample_video_content):
-        """Test consistency of protection scores"""        video_data = sample_video_content
+        """Test consistency of protection scores"""
+        video_data = sample_video_content
         
         # Analyze same content multiple times
         report1 = await protection_integrator.analyze_content_protection(
@@ -781,7 +823,8 @@ class TestProtectionDataValidation:
     
     @pytest.mark.asyncio
     async def test_fingerprint_uniqueness(self, content_fingerprinter, sample_audio_content):
-        """Test uniqueness of content fingerprints"""        audio_data = sample_audio_content
+        """Test uniqueness of content fingerprints"""
+        audio_data = sample_audio_content
         
         # Generate fingerprints for same content
         fingerprint1 = await content_fingerprinter.generate_audio_fingerprint(
@@ -799,7 +842,8 @@ class TestProtectionDataValidation:
     
     @pytest.mark.asyncio
     async def test_compliance_score_validation(self, legal_compliance_checker, sample_text_content):
-        """Test validation of compliance scores"""        text_data = sample_text_content
+        """Test validation of compliance scores"""
+        text_data = sample_text_content
         
         compliance_results = await legal_compliance_checker.check_platform_compliance(
             content_data=text_data,

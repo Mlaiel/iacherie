@@ -14,7 +14,8 @@ Gestion des connexions WebSocket pour communication temps réel
 - Broadcasting intelligent multi-client
 - Reconnexion automatique et heartbeat
 - Gestion d'état avancée par session
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import time
@@ -35,7 +36,8 @@ from pydantic import BaseModel, Field
 logger = logging.getLogger(__name__)
 
 class ConnectionState(Enum):
-    """États des connexions WebSocket"""    CONNECTING = "connecting"
+    """États des connexions WebSocket"""
+    CONNECTING = "connecting"
     CONNECTED = "connected"
     DISCONNECTING = "disconnecting"
     DISCONNECTED = "disconnected"
@@ -43,7 +45,8 @@ class ConnectionState(Enum):
     ERROR = "error"
 
 class MessageType(Enum):
-    """Types de messages WebSocket"""    HEARTBEAT = "heartbeat"
+    """Types de messages WebSocket"""
+    HEARTBEAT = "heartbeat"
     AUTH = "auth"
     SUBSCRIBE = "subscribe"
     UNSUBSCRIBE = "unsubscribe"
@@ -55,7 +58,8 @@ class MessageType(Enum):
 
 @dataclass
 class WebSocketMessage:
-    """Structure des messages WebSocket"""    message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Structure des messages WebSocket"""
+    message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     type: MessageType = MessageType.DIRECT
     sender_id: Optional[str] = None
     recipient_id: Optional[str] = None
@@ -66,7 +70,8 @@ class WebSocketMessage:
     expires_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit le message en dictionnaire"""        return {
+        """Convertit le message en dictionnaire"""
+        return {
             "message_id": self.message_id,
             "type": self.type.value,
             "sender_id": self.sender_id,
@@ -80,7 +85,8 @@ class WebSocketMessage:
 
 @dataclass
 class ConnectionInfo:
-    """Informations de connexion WebSocket"""    connection_id: str
+    """Informations de connexion WebSocket"""
+    connection_id: str
     user_id: Optional[str]
     websocket: WebSocket
     state: ConnectionState
@@ -91,7 +97,8 @@ class ConnectionInfo:
     message_queue: List[WebSocketMessage] = field(default_factory=list)
     
 class ConnectionManager:
-    """Gestionnaire de connexions WebSocket"""    
+    """Gestionnaire de connexions WebSocket"""
+    
     def __init__(self, redis_client: Optional[redis.Redis] = None):
         self.connections: Dict[str, ConnectionInfo] = {}
         self.user_connections: Dict[str, Set[str]] = {}  # user_id -> connection_ids
@@ -102,11 +109,13 @@ class ConnectionManager:
         self._cleanup_task: Optional[asyncio.Task] = None
         
     async def start(self):
-        """Démarre le gestionnaire de connexions"""        logger.info("Démarrage du gestionnaire de connexions WebSocket")
+        """Démarre le gestionnaire de connexions"""
+        logger.info("Démarrage du gestionnaire de connexions WebSocket")
         self._cleanup_task = asyncio.create_task(self._cleanup_loop())
         
     async def stop(self):
-        """Arrête le gestionnaire de connexions"""        logger.info("Arrêt du gestionnaire de connexions WebSocket")
+        """Arrête le gestionnaire de connexions"""
+        logger.info("Arrêt du gestionnaire de connexions WebSocket")
         if self._cleanup_task:
             self._cleanup_task.cancel()
             
@@ -116,7 +125,8 @@ class ConnectionManager:
             
     async def connect(self, websocket: WebSocket, user_id: Optional[str] = None, 
                      metadata: Optional[Dict[str, Any]] = None) -> str:
-        """Accepte une nouvelle connexion WebSocket"""        try:
+        """Accepte une nouvelle connexion WebSocket"""
+        try:
             await websocket.accept()
             
             connection_id = str(uuid.uuid4())
@@ -159,7 +169,8 @@ class ConnectionManager:
             raise
             
     async def disconnect(self, connection_id: str):
-        """Ferme une connexion WebSocket"""        if connection_id not in self.connections:
+        """Ferme une connexion WebSocket"""
+        if connection_id not in self.connections:
             return
             
         connection_info = self.connections[connection_id]
@@ -190,7 +201,8 @@ class ConnectionManager:
             logger.info(f"Connexion WebSocket fermée: {connection_id}")
             
     async def subscribe(self, connection_id: str, channel: str) -> bool:
-        """Abonne une connexion à un canal"""        if connection_id not in self.connections:
+        """Abonne une connexion à un canal"""
+        if connection_id not in self.connections:
             return False
             
         connection_info = self.connections[connection_id]
@@ -215,7 +227,8 @@ class ConnectionManager:
         return True
         
     async def unsubscribe(self, connection_id: str, channel: str) -> bool:
-        """Désabonne une connexion d'un canal"""        if connection_id not in self.connections:
+        """Désabonne une connexion d'un canal"""
+        if connection_id not in self.connections:
             return False
             
         connection_info = self.connections[connection_id]
@@ -230,7 +243,8 @@ class ConnectionManager:
         return True
         
     async def send_to_user(self, user_id: str, message: WebSocketMessage) -> int:
-        """Envoie un message à toutes les connexions d'un utilisateur"""        sent_count = 0
+        """Envoie un message à toutes les connexions d'un utilisateur"""
+        sent_count = 0
         user_connections = self.user_connections.get(user_id, set())
         
         for connection_id in list(user_connections):
@@ -241,7 +255,8 @@ class ConnectionManager:
         
     async def send_to_channel(self, channel: str, message: WebSocketMessage, 
                             exclude_connection: Optional[str] = None) -> int:
-        """Diffuse un message sur un canal"""        sent_count = 0
+        """Diffuse un message sur un canal"""
+        sent_count = 0
         subscribers = self.channel_subscribers.get(channel, set())
         
         for connection_id in list(subscribers):
@@ -253,7 +268,8 @@ class ConnectionManager:
         
     async def broadcast(self, message: WebSocketMessage, 
                        exclude_connection: Optional[str] = None) -> int:
-        """Diffuse un message à toutes les connexions"""        sent_count = 0
+        """Diffuse un message à toutes les connexions"""
+        sent_count = 0
         
         for connection_id in list(self.connections.keys()):
             if connection_id != exclude_connection:
@@ -263,10 +279,12 @@ class ConnectionManager:
         return sent_count
         
     async def send_direct(self, connection_id: str, message: WebSocketMessage) -> bool:
-        """Envoie un message direct à une connexion spécifique"""        return await self._send_to_connection(connection_id, message)
+        """Envoie un message direct à une connexion spécifique"""
+        return await self._send_to_connection(connection_id, message)
         
     async def _send_to_connection(self, connection_id: str, message: WebSocketMessage) -> bool:
-        """Envoie un message à une connexion spécifique"""        if connection_id not in self.connections:
+        """Envoie un message à une connexion spécifique"""
+        if connection_id not in self.connections:
             logger.warning(f"Tentative d'envoi vers connexion inexistante: {connection_id}")
             return False
             
@@ -299,7 +317,8 @@ class ConnectionManager:
             return False
             
     async def handle_heartbeat(self, connection_id: str):
-        """Traite un heartbeat d'une connexion"""        if connection_id in self.connections:
+        """Traite un heartbeat d'une connexion"""
+        if connection_id in self.connections:
             self.connections[connection_id].last_heartbeat = datetime.utcnow()
             
             # Répondre au heartbeat
@@ -310,7 +329,8 @@ class ConnectionManager:
             await self._send_to_connection(connection_id, pong_msg)
             
     async def _cleanup_loop(self):
-        """Boucle de nettoyage des connexions inactives"""        while True:
+        """Boucle de nettoyage des connexions inactives"""
+        while True:
             try:
                 await asyncio.sleep(self.heartbeat_interval)
                 await self._cleanup_stale_connections()
@@ -320,7 +340,8 @@ class ConnectionManager:
                 logger.error(f"Erreur dans la boucle de nettoyage: {e}")
                 
     async def _cleanup_stale_connections(self):
-        """Nettoie les connexions inactives"""        now = datetime.utcnow()
+        """Nettoie les connexions inactives"""
+        now = datetime.utcnow()
         stale_threshold = now - timedelta(seconds=self.heartbeat_interval * 2)
         
         stale_connections = []
@@ -333,7 +354,8 @@ class ConnectionManager:
             await self.disconnect(connection_id)
             
     def get_connection_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques des connexions"""        return {
+        """Retourne les statistiques des connexions"""
+        return {
             "total_connections": len(self.connections),
             "connected_users": len(self.user_connections),
             "active_channels": len(self.channel_subscribers),
@@ -345,7 +367,8 @@ class ConnectionManager:
         }
 
 class WebSocketManager:
-    """Gestionnaire principal WebSocket avec haute disponibilité"""    
+    """Gestionnaire principal WebSocket avec haute disponibilité"""
+    
     def __init__(self, redis_url: Optional[str] = None):
         self.connection_manager = ConnectionManager()
         self.message_handlers: Dict[MessageType, List[Callable]] = {}
@@ -357,17 +380,20 @@ class WebSocketManager:
             self.connection_manager.redis_client = self.redis_client
             
     async def start(self):
-        """Démarre le gestionnaire WebSocket"""        await self.connection_manager.start()
+        """Démarre le gestionnaire WebSocket"""
+        await self.connection_manager.start()
         logger.info("WebSocketManager démarré")
         
     async def stop(self):
-        """Arrête le gestionnaire WebSocket"""        await self.connection_manager.stop()
+        """Arrête le gestionnaire WebSocket"""
+        await self.connection_manager.stop()
         if self.redis_client:
             await self.redis_client.close()
         logger.info("WebSocketManager arrêté")
         
     async def handle_connection(self, websocket: WebSocket, user_id: Optional[str] = None):
-        """Gère une nouvelle connexion WebSocket"""        connection_id = await self.connection_manager.connect(websocket, user_id)
+        """Gère une nouvelle connexion WebSocket"""
+        connection_id = await self.connection_manager.connect(websocket, user_id)
         
         try:
             while True:
@@ -397,7 +423,8 @@ class WebSocketManager:
             await self.connection_manager.disconnect(connection_id)
             
     async def _process_message(self, connection_id: str, message: WebSocketMessage):
-        """Traite un message reçu"""        try:
+        """Traite un message reçu"""
+        try:
             # Appliquer le middleware
             for middleware in self.middleware:
                 message = await middleware(connection_id, message)
@@ -448,15 +475,18 @@ class WebSocketManager:
             await self.connection_manager.send_direct(connection_id, error_msg)
             
     def add_message_handler(self, message_type: MessageType, handler: Callable):
-        """Ajoute un gestionnaire pour un type de message"""        if message_type not in self.message_handlers:
+        """Ajoute un gestionnaire pour un type de message"""
+        if message_type not in self.message_handlers:
             self.message_handlers[message_type] = []
         self.message_handlers[message_type].append(handler)
         
     def add_middleware(self, middleware: Callable):
-        """Ajoute un middleware de traitement des messages"""        self.middleware.append(middleware)
+        """Ajoute un middleware de traitement des messages"""
+        self.middleware.append(middleware)
         
     async def notify_user(self, user_id: str, notification_type: str, data: Dict[str, Any]):
-        """Envoie une notification à un utilisateur"""        message = WebSocketMessage(
+        """Envoie une notification à un utilisateur"""
+        message = WebSocketMessage(
             type=MessageType.NOTIFICATION,
             data={
                 "notification_type": notification_type,
@@ -467,7 +497,8 @@ class WebSocketManager:
         return await self.connection_manager.send_to_user(user_id, message)
         
     async def broadcast_notification(self, notification_type: str, data: Dict[str, Any]):
-        """Diffuse une notification à tous les clients connectés"""        message = WebSocketMessage(
+        """Diffuse une notification à tous les clients connectés"""
+        message = WebSocketMessage(
             type=MessageType.NOTIFICATION,
             data={
                 "notification_type": notification_type,
@@ -478,7 +509,8 @@ class WebSocketManager:
         return await self.connection_manager.broadcast(message)
         
     def get_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques du gestionnaire"""        return {
+        """Retourne les statistiques du gestionnaire"""
+        return {
             "websocket_manager": {
                 "handlers_count": {
                     msg_type.value: len(handlers) 

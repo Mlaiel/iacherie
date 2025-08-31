@@ -3,7 +3,8 @@ Handles revenue sharing, affiliate programs, and commission calculations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from typing import Dict, List, Optional, Any, Union
+"""
+from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from decimal import Decimal, ROUND_HALF_UP
 from datetime import datetime, timedelta
@@ -17,7 +18,8 @@ logger = logging.getLogger(__name__)
 
 
 class CommissionType(Enum):
-    """Types of commission structures."""    PERCENTAGE = "percentage"
+    """Types of commission structures."""
+    PERCENTAGE = "percentage"
     FIXED_AMOUNT = "fixed_amount"
     TIERED = "tiered"
     PERFORMANCE_BASED = "performance_based"
@@ -25,7 +27,8 @@ class CommissionType(Enum):
 
 
 class CommissionStatus(Enum):
-    """Commission payment status."""    PENDING = "pending"
+    """Commission payment status."""
+    PENDING = "pending"
     APPROVED = "approved"
     PAID = "paid"
     CANCELLED = "cancelled"
@@ -34,7 +37,8 @@ class CommissionStatus(Enum):
 
 
 class AffiliateStatus(Enum):
-    """Affiliate account status."""    ACTIVE = "active"
+    """Affiliate account status."""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPENDED = "suspended"
     PENDING_APPROVAL = "pending_approval"
@@ -42,7 +46,8 @@ class AffiliateStatus(Enum):
 
 
 class PayoutMethod(Enum):
-    """Available payout methods."""    BANK_TRANSFER = "bank_transfer"
+    """Available payout methods."""
+    BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
     CHECK = "check"
@@ -51,7 +56,8 @@ class PayoutMethod(Enum):
 
 @dataclass
 class CommissionRule:
-    """Commission calculation rule."""    rule_id: str
+    """Commission calculation rule."""
+    rule_id: str
     name: str
     commission_type: CommissionType
     rate: Decimal  # Percentage (0-100) or fixed amount
@@ -63,7 +69,8 @@ class CommissionRule:
     created_at: datetime = field(default_factory=datetime.utcnow)
     
     def calculate_commission(self, amount: Decimal, metadata: Dict[str, Any] = None) -> Decimal:
-        """Calculate commission based on rule."""        if amount < self.min_amount:
+        """Calculate commission based on rule."""
+        if amount < self.min_amount:
             return Decimal("0")
         
         commission = Decimal("0")
@@ -86,7 +93,8 @@ class CommissionRule:
         return commission
     
     def _calculate_tiered_commission(self, amount: Decimal) -> Decimal:
-        """Calculate tiered commission."""        if not self.tier_rates:
+        """Calculate tiered commission."""
+        if not self.tier_rates:
             return Decimal("0")
         
         # Sort tiers by threshold
@@ -118,7 +126,8 @@ class CommissionRule:
         return commission
     
     def _calculate_performance_commission(self, amount: Decimal, metadata: Dict[str, Any]) -> Decimal:
-        """Calculate performance-based commission."""        base_commission = (amount * self.rate / Decimal("100")).quantize(
+        """Calculate performance-based commission."""
+        base_commission = (amount * self.rate / Decimal("100")).quantize(
             Decimal("0.01"), rounding=ROUND_HALF_UP
         )
         
@@ -132,7 +141,8 @@ class CommissionRule:
 
 @dataclass
 class Affiliate:
-    """Affiliate partner information."""    affiliate_id: str
+    """Affiliate partner information."""
+    affiliate_id: str
     user_id: str
     name: str
     email: str
@@ -149,7 +159,8 @@ class Affiliate:
     updated_at: datetime = field(default_factory=datetime.utcnow)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert affiliate to dictionary."""        return {
+        """Convert affiliate to dictionary."""
+        return {
             "affiliate_id": self.affiliate_id,
             "user_id": self.user_id,
             "name": self.name,
@@ -170,7 +181,8 @@ class Affiliate:
 
 @dataclass
 class Commission:
-    """Individual commission record."""    commission_id: str
+    """Individual commission record."""
+    commission_id: str
     affiliate_id: str
     transaction_id: str
     amount: Decimal
@@ -185,7 +197,8 @@ class Commission:
     created_at: datetime = field(default_factory=datetime.utcnow)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert commission to dictionary."""        return {
+        """Convert commission to dictionary."""
+        return {
             "commission_id": self.commission_id,
             "affiliate_id": self.affiliate_id,
             "transaction_id": self.transaction_id,
@@ -204,7 +217,8 @@ class Commission:
 
 @dataclass
 class PayoutBatch:
-    """Batch payout processing."""    batch_id: str
+    """Batch payout processing."""
+    batch_id: str
     total_amount: Decimal
     commission_count: int
     status: str = "pending"
@@ -215,7 +229,8 @@ class PayoutBatch:
 
 
 class CommissionCalculator(ABC):
-    """Abstract base class for commission calculators."""    
+    """Abstract base class for commission calculators."""
+    
     @abstractmethod
     def calculate(
         self, 
@@ -223,24 +238,29 @@ class CommissionCalculator(ABC):
         rule: CommissionRule, 
         metadata: Dict[str, Any] = None
     ) -> Decimal:
-        """Calculate commission amount."""        pass
+        """Calculate commission amount."""
+        pass
 
 
 class StandardCommissionCalculator(CommissionCalculator):
-    """Standard commission calculation implementation."""    
+    """Standard commission calculation implementation."""
+    
     def calculate(
         self, 
         amount: Decimal, 
         rule: CommissionRule, 
         metadata: Dict[str, Any] = None
     ) -> Decimal:
-        """Calculate commission using standard rules."""        return rule.calculate_commission(amount, metadata)
+        """Calculate commission using standard rules."""
+        return rule.calculate_commission(amount, metadata)
 
 
 class CommissionManager:
-    """    Professional commission and affiliate management system.
+    """
+    Professional commission and affiliate management system.
     Handles all aspects of commission tracking, calculation, and payouts.
-    """    
+    """
+    
     def __init__(self):
         self.commission_rules: Dict[str, CommissionRule] = {}
         self.affiliates: Dict[str, Affiliate] = {}
@@ -253,7 +273,8 @@ class CommissionManager:
         self.is_initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize commission manager."""        try:
+        """Initialize commission manager."""
+        try:
             # Create default commission rules
             for rule in self.default_rules:
                 self.commission_rules[rule.rule_id] = rule
@@ -267,7 +288,8 @@ class CommissionManager:
             return False
     
     def _create_default_rules(self) -> List[CommissionRule]:
-        """Create default commission rules."""        rules = []
+        """Create default commission rules."""
+        rules = []
         
         # Basic affiliate rule
         basic_rule = CommissionRule(
@@ -323,7 +345,8 @@ class CommissionManager:
         email: str,
         commission_rule_id: str = "basic_affiliate"
     ) -> Optional[Affiliate]:
-        """Register a new affiliate."""        if not self.is_initialized:
+        """Register a new affiliate."""
+        if not self.is_initialized:
             await self.initialize()
         
         try:
@@ -350,7 +373,8 @@ class CommissionManager:
             return None
     
     async def approve_affiliate(self, affiliate_id: str) -> bool:
-        """Approve an affiliate application."""        affiliate = self.affiliates.get(affiliate_id)
+        """Approve an affiliate application."""
+        affiliate = self.affiliates.get(affiliate_id)
         if not affiliate:
             return False
         
@@ -374,7 +398,8 @@ class CommissionManager:
         reference_id: str = "",
         metadata: Dict[str, Any] = None
     ) -> Optional[Commission]:
-        """Create a new commission record."""        affiliate = self.affiliates.get(affiliate_id)
+        """Create a new commission record."""
+        affiliate = self.affiliates.get(affiliate_id)
         if not affiliate or affiliate.status != AffiliateStatus.ACTIVE:
             logger.warning(f"Invalid or inactive affiliate: {affiliate_id}")
             return None
@@ -419,7 +444,8 @@ class CommissionManager:
             return None
     
     async def approve_commission(self, commission_id: str) -> bool:
-        """Approve a pending commission."""        commission = self.commissions.get(commission_id)
+        """Approve a pending commission."""
+        commission = self.commissions.get(commission_id)
         if not commission:
             return False
         
@@ -438,7 +464,8 @@ class CommissionManager:
         self, 
         payout_method: PayoutMethod = PayoutMethod.BANK_TRANSFER
     ) -> PayoutBatch:
-        """Process commission payouts."""        try:
+        """Process commission payouts."""
+        try:
             # Find approved commissions ready for payout
             eligible_commissions = []
             affiliate_totals = {}
@@ -505,7 +532,8 @@ class CommissionManager:
             )
     
     async def get_affiliate_performance(self, affiliate_id: str, days: int = 30) -> Dict[str, Any]:
-        """Get affiliate performance metrics."""        affiliate = self.affiliates.get(affiliate_id)
+        """Get affiliate performance metrics."""
+        affiliate = self.affiliates.get(affiliate_id)
         if not affiliate:
             return {}
         
@@ -533,7 +561,8 @@ class CommissionManager:
         }
     
     async def get_commission_analytics(self, days: int = 30) -> Dict[str, Any]:
-        """Get commission system analytics."""        cutoff_date = datetime.utcnow() - timedelta(days=days)
+        """Get commission system analytics."""
+        cutoff_date = datetime.utcnow() - timedelta(days=days)
         
         period_commissions = [
             c for c in self.commissions.values()
@@ -585,23 +614,27 @@ class CommissionManager:
         }
     
     def get_affiliate(self, affiliate_id: str) -> Optional[Affiliate]:
-        """Get affiliate by ID."""        return self.affiliates.get(affiliate_id)
+        """Get affiliate by ID."""
+        return self.affiliates.get(affiliate_id)
     
     def get_affiliate_by_code(self, referral_code: str) -> Optional[Affiliate]:
-        """Get affiliate by referral code."""        for affiliate in self.affiliates.values():
+        """Get affiliate by referral code."""
+        for affiliate in self.affiliates.values():
             if affiliate.referral_code == referral_code:
                 return affiliate
         return None
     
     def get_commission(self, commission_id: str) -> Optional[Commission]:
-        """Get commission by ID."""        return self.commissions.get(commission_id)
+        """Get commission by ID."""
+        return self.commissions.get(commission_id)
     
     def list_affiliate_commissions(
         self, 
         affiliate_id: str, 
         status: Optional[CommissionStatus] = None
     ) -> List[Commission]:
-        """List all commissions for an affiliate."""        commissions = [
+        """List all commissions for an affiliate."""
+        commissions = [
             c for c in self.commissions.values()
             if c.affiliate_id == affiliate_id
         ]
@@ -612,6 +645,7 @@ class CommissionManager:
         return sorted(commissions, key=lambda x: x.created_at, reverse=True)
     
     def _generate_referral_code(self, name: str) -> str:
-        """Generate unique referral code."""        base_code = name.upper().replace(" ", "")[:6]
+        """Generate unique referral code."""
+        base_code = name.upper().replace(" ", "")[:6]
         timestamp = str(int(datetime.utcnow().timestamp()))[-4:]
         return f"{base_code}{timestamp}"

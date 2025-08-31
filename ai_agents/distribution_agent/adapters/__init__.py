@@ -5,7 +5,9 @@ content distribution platforms including social media, streaming, and monetizati
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from .base_adapter import (
+"""
+
+from .base_adapter import (
     BasePlatformAdapter,
     PlatformCredentials,
     PublishRequest,

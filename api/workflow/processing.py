@@ -3,7 +3,8 @@
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
-"""import asyncio
+"""
+import asyncio
 from typing import Dict, List, Optional, Callable, Any, Set
 from enum import Enum
 from datetime import datetime, timedelta
@@ -20,7 +21,8 @@ from ..utils.caching import CacheManager
 
 
 class PipelineStage(Enum):
-    """Enhanced pipeline stages for content processing."""    VALIDATION = "validation"
+    """Enhanced pipeline stages for content processing."""
+    VALIDATION = "validation"
     PREPROCESSING = "preprocessing"
     FEATURE_EXTRACTION = "feature_extraction"
     AI_ANALYSIS = "ai_analysis"
@@ -36,7 +38,8 @@ class PipelineStage(Enum):
 
 
 class PipelineStatus(Enum):
-    """Pipeline execution status."""    INITIALIZED = "initialized"
+    """Pipeline execution status."""
+    INITIALIZED = "initialized"
     QUEUED = "queued"
     RUNNING = "running"
     PAUSED = "paused"
@@ -47,7 +50,8 @@ class PipelineStatus(Enum):
 
 
 class PipelinePriority(Enum):
-    """Pipeline execution priority levels."""    LOW = 1
+    """Pipeline execution priority levels."""
+    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
@@ -55,7 +59,8 @@ class PipelinePriority(Enum):
 
 
 class StageResult:
-    """Result object for pipeline stage execution."""    
+    """Result object for pipeline stage execution."""
+    
     def __init__(self, stage: PipelineStage, success: bool, data: Dict = None, 
                  errors: List[str] = None, duration: float = 0.0):
         self.stage = stage
@@ -67,7 +72,8 @@ class StageResult:
         self.retry_count = 0
     
     def to_dict(self) -> Dict:
-        """Convert stage result to dictionary."""        return {
+        """Convert stage result to dictionary."""
+        return {
             "stage": self.stage.value,
             "success": self.success,
             "data": self.data,
@@ -79,7 +85,8 @@ class StageResult:
 
 
 class PipelineStageProcessor:
-    """Base class for pipeline stage processors."""    
+    """Base class for pipeline stage processors."""
+    
     def __init__(self, stage: PipelineStage):
         self.stage = stage
         self.logger = logging.getLogger(f"pipeline.{stage.value}")
@@ -87,7 +94,8 @@ class PipelineStageProcessor:
         self.cache = CacheManager()
     
     async def execute(self, content_item: ContentItem, context: Dict) -> StageResult:
-        """Execute the pipeline stage."""        start_time = datetime.utcnow()
+        """Execute the pipeline stage."""
+        start_time = datetime.utcnow()
         
         try:
             self.logger.info(f"Starting stage {self.stage.value}")
@@ -151,7 +159,8 @@ class PipelineStageProcessor:
             )
     
     async def process(self, content_item: ContentItem, context: Dict) -> Dict:
-        """        Process the stage with comprehensive error handling and validation.
+        """
+        Process the stage with comprehensive error handling and validation.
         
         Args:
             content_item: Content item to process
@@ -159,7 +168,8 @@ class PipelineStageProcessor:
             
         Returns:
             Dict: Processing results with stage-specific data
-        """        # Default implementation for stage processors that don't override this method
+        """
+        # Default implementation for stage processors that don't override this method
         stage_name = self.stage.value
         self.logger.info(f"Processing stage {stage_name} for content {content_item.id if hasattr(content_item, 'id') else 'unknown'}")
         
@@ -245,7 +255,8 @@ class PipelineStageProcessor:
             }
     
     async def _process_validation(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Process validation stage"""        return {
+        """Process validation stage"""
+        return {
             "validation_passed": True,
             "validation_checks": ["format_check", "size_check", "metadata_check"],
             "issues_found": [],
@@ -253,14 +264,16 @@ class PipelineStageProcessor:
         }
     
     async def _process_preprocessing(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Process preprocessing stage"""        return {
+        """Process preprocessing stage"""
+        return {
             "preprocessing_completed": True,
             "operations_performed": ["normalization", "cleanup", "format_standardization"],
             "quality_improvements": ["noise_reduction", "metadata_enhancement"]
         }
     
     async def _process_feature_extraction(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Process feature extraction stage"""        return {
+        """Process feature extraction stage"""
+        return {
             "features_extracted": True,
             "feature_count": 50,
             "feature_types": ["visual", "audio", "textual", "metadata"],
@@ -268,7 +281,8 @@ class PipelineStageProcessor:
         }
     
     async def _process_ai_analysis(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Process AI analysis stage"""        return {
+        """Process AI analysis stage"""
+        return {
             "ai_analysis_completed": True,
             "sentiment_score": 0.75,
             "content_category": "entertainment",
@@ -277,7 +291,8 @@ class PipelineStageProcessor:
         }
     
     async def _process_quality_assessment(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Process quality assessment stage"""        return {
+        """Process quality assessment stage"""
+        return {
             "quality_score": 0.85,
             "quality_metrics": {
                 "technical_quality": 0.9,
@@ -288,7 +303,8 @@ class PipelineStageProcessor:
         }
     
     async def _process_fingerprint_generation(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Process fingerprint generation stage"""        return {
+        """Process fingerprint generation stage"""
+        return {
             "fingerprint_generated": True,
             "fingerprint_id": f"fp_{uuid.uuid4().hex[:12]}",
             "fingerprint_type": "perceptual_hash",
@@ -296,7 +312,8 @@ class PipelineStageProcessor:
         }
     
     async def _process_seo_optimization(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Process SEO optimization stage"""        return {
+        """Process SEO optimization stage"""
+        return {
             "seo_optimized": True,
             "keywords_added": ["content_creation", "digital_media", "optimization"],
             "seo_score": 0.78,
@@ -304,7 +321,8 @@ class PipelineStageProcessor:
         }
     
     async def _process_monetization_analysis(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Process monetization analysis stage"""        return {
+        """Process monetization analysis stage"""
+        return {
             "monetization_potential": 0.72,
             "revenue_streams": ["advertising", "licensing", "subscriptions"],
             "pricing_recommendations": {
@@ -314,7 +332,8 @@ class PipelineStageProcessor:
         }
     
     async def _process_collaboration_matching(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Process collaboration matching stage"""        return {
+        """Process collaboration matching stage"""
+        return {
             "collaboration_matches": 3,
             "potential_collaborators": ["creator_001", "creator_002", "creator_003"],
             "match_confidence": 0.82,
@@ -322,7 +341,8 @@ class PipelineStageProcessor:
         }
     
     async def _process_platform_optimization(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Process platform optimization stage"""        return {
+        """Process platform optimization stage"""
+        return {
             "platforms_optimized": ["youtube", "instagram", "tiktok"],
             "optimization_applied": {
                 "youtube": ["thumbnail_optimization", "title_tuning"],
@@ -332,7 +352,8 @@ class PipelineStageProcessor:
         }
     
     async def _process_distribution_preparation(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Process distribution preparation stage"""        return {
+        """Process distribution preparation stage"""
+        return {
             "distribution_ready": True,
             "target_platforms": ["youtube", "instagram", "tiktok"],
             "scheduled_releases": {
@@ -343,7 +364,8 @@ class PipelineStageProcessor:
         }
     
     async def _process_monitoring_setup(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Process monitoring setup stage"""        return {
+        """Process monitoring setup stage"""
+        return {
             "monitoring_configured": True,
             "monitoring_types": ["performance", "protection", "engagement"],
             "alert_thresholds": {
@@ -353,7 +375,8 @@ class PipelineStageProcessor:
         }
     
     async def _process_completion(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Process completion stage"""        return {
+        """Process completion stage"""
+        return {
             "pipeline_completed": True,
             "total_stages": len(PipelineStage),
             "processing_summary": "All stages completed successfully",
@@ -361,7 +384,8 @@ class PipelineStageProcessor:
         }
     
     async def _process_generic(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Process generic stage when no specific handler exists"""        return {
+        """Process generic stage when no specific handler exists"""
+        return {
             "generic_processing": True,
             "stage": self.stage.value,
             "message": f"Generic processing completed for stage {self.stage.value}",
@@ -370,24 +394,29 @@ class PipelineStageProcessor:
         }
     
     def _get_cache_key(self, content_item: ContentItem, context: Dict) -> str:
-        """Generate cache key for the stage result."""        content_hash = content_item.get_hash()
+        """Generate cache key for the stage result."""
+        content_hash = content_item.get_hash()
         context_hash = hash(json.dumps(context, sort_keys=True, default=str))
         return f"{self.stage.value}:{content_hash}:{context_hash}"
     
     def _should_use_cache(self, content_item: ContentItem, context: Dict) -> bool:
-        """Determine if cached result should be used."""        return context.get("use_cache", True)
+        """Determine if cached result should be used."""
+        return context.get("use_cache", True)
     
     def _should_cache_result(self, result_data: Dict) -> bool:
-        """Determine if result should be cached."""        return len(json.dumps(result_data, default=str)) < 10000  # Cache if < 10KB
+        """Determine if result should be cached."""
+        return len(json.dumps(result_data, default=str)) < 10000  # Cache if < 10KB
 
 
 class ContentValidationProcessor(PipelineStageProcessor):
-    """Validate content format, size, and basic requirements."""    
+    """Validate content format, size, and basic requirements."""
+    
     def __init__(self):
         super().__init__(PipelineStage.VALIDATION)
     
     async def process(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Validate content item."""        validation_results = {
+        """Validate content item."""
+        validation_results = {
             "format_valid": False,
             "size_valid": False,
             "quality_sufficient": False,
@@ -434,7 +463,8 @@ class ContentValidationProcessor(PipelineStageProcessor):
         return validation_results
     
     async def _assess_basic_quality(self, content_item: ContentItem) -> float:
-        """Perform basic quality assessment."""        score = 0.5  # Base score
+        """Perform basic quality assessment."""
+        score = 0.5  # Base score
         
         # Check resolution for images/videos
         if hasattr(content_item, 'resolution'):
@@ -454,12 +484,14 @@ class ContentValidationProcessor(PipelineStageProcessor):
 
 
 class ContentPreprocessingProcessor(PipelineStageProcessor):
-    """Preprocess content for analysis and optimization."""    
+    """Preprocess content for analysis and optimization."""
+    
     def __init__(self):
         super().__init__(PipelineStage.PREPROCESSING)
     
     async def process(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Preprocess content item."""        preprocessing_results = {
+        """Preprocess content item."""
+        preprocessing_results = {
             "normalized": False,
             "optimized": False,
             "thumbnails_generated": False,
@@ -489,11 +521,13 @@ class ContentPreprocessingProcessor(PipelineStageProcessor):
         return preprocessing_results
     
     async def _normalize_content(self, content_item: ContentItem) -> Optional[ContentItem]:
-        """Normalize content format and encoding."""        # Placeholder for content normalization
+        """Normalize content format and encoding."""
+        # Placeholder for content normalization
         return content_item
     
     async def _generate_thumbnails(self, content_item: ContentItem) -> List[Dict]:
-        """Generate thumbnails or preview images."""        thumbnails = []
+        """Generate thumbnails or preview images."""
+        thumbnails = []
         
         if content_item.content_type in ["video", "image"]:
             # Generate different sized thumbnails
@@ -507,7 +541,8 @@ class ContentPreprocessingProcessor(PipelineStageProcessor):
         return thumbnails
     
     def _get_thumbnail_dimensions(self, size: str) -> tuple:
-        """Get thumbnail dimensions for size."""        dimensions = {
+        """Get thumbnail dimensions for size."""
+        dimensions = {
             "small": (150, 150),
             "medium": (300, 300),
             "large": (600, 600)
@@ -515,7 +550,8 @@ class ContentPreprocessingProcessor(PipelineStageProcessor):
         return dimensions.get(size, (300, 300))
     
     async def _extract_technical_metadata(self, content_item: ContentItem) -> Dict:
-        """Extract technical metadata from content."""        metadata = {
+        """Extract technical metadata from content."""
+        metadata = {
             "format": content_item.format,
             "size": content_item.file_size,
             "created_at": datetime.utcnow().isoformat(),
@@ -539,7 +575,8 @@ class ContentPreprocessingProcessor(PipelineStageProcessor):
         return metadata
     
     async def _optimize_for_processing(self, content_item: ContentItem) -> Dict:
-        """Optimize content for downstream processing."""        return {
+        """Optimize content for downstream processing."""
+        return {
             "success": True,
             "optimizations_applied": ["format_standardization", "quality_enhancement"],
             "performance_gain": 0.15
@@ -547,13 +584,15 @@ class ContentPreprocessingProcessor(PipelineStageProcessor):
 
 
 class FeatureExtractionProcessor(PipelineStageProcessor):
-    """Extract features for AI analysis and matching."""    
+    """Extract features for AI analysis and matching."""
+    
     def __init__(self):
         super().__init__(PipelineStage.FEATURE_EXTRACTION)
         self.content_analyzer = ContentAnalyzer()
     
     async def process(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Extract features from content."""        feature_results = {
+        """Extract features from content."""
+        feature_results = {
             "visual_features": {},
             "audio_features": {},
             "text_features": {},
@@ -587,7 +626,8 @@ class FeatureExtractionProcessor(PipelineStageProcessor):
         return feature_results
     
     async def _extract_visual_features(self, content_item: ContentItem) -> Dict:
-        """Extract visual features from image/video content."""        return {
+        """Extract visual features from image/video content."""
+        return {
             "color_histogram": [],  # Placeholder
             "edge_features": [],
             "texture_features": [],
@@ -596,7 +636,8 @@ class FeatureExtractionProcessor(PipelineStageProcessor):
         }
     
     async def _extract_audio_features(self, content_item: ContentItem) -> Dict:
-        """Extract audio features from audio/video content."""        return {
+        """Extract audio features from audio/video content."""
+        return {
             "spectral_features": [],  # Placeholder
             "tempo": 0.0,
             "key": "",
@@ -605,7 +646,8 @@ class FeatureExtractionProcessor(PipelineStageProcessor):
         }
     
     async def _extract_text_features(self, content_item: ContentItem) -> Dict:
-        """Extract text features from text content."""        return {
+        """Extract text features from text content."""
+        return {
             "word_count": 0,  # Placeholder
             "sentiment_score": 0.0,
             "readability_score": 0.0,
@@ -614,7 +656,8 @@ class FeatureExtractionProcessor(PipelineStageProcessor):
         }
     
     async def _extract_semantic_features(self, content_item: ContentItem) -> Dict:
-        """Extract semantic features across all content types."""        return {
+        """Extract semantic features across all content types."""
+        return {
             "category": "",  # Placeholder
             "tags": [],
             "themes": [],
@@ -623,7 +666,8 @@ class FeatureExtractionProcessor(PipelineStageProcessor):
         }
     
     async def _generate_embedding_vectors(self, content_item: ContentItem, features: Dict) -> Dict:
-        """Generate embedding vectors for similarity matching."""        return {
+        """Generate embedding vectors for similarity matching."""
+        return {
             "content_embedding": [],  # Placeholder for vector
             "semantic_embedding": [],
             "style_embedding": [],
@@ -631,7 +675,8 @@ class FeatureExtractionProcessor(PipelineStageProcessor):
         }
     
     async def _calculate_feature_quality(self, features: Dict) -> float:
-        """Calculate overall feature quality score."""        quality_score = 0.0
+        """Calculate overall feature quality score."""
+        quality_score = 0.0
         feature_count = 0
         
         for feature_type, feature_data in features.items():
@@ -646,13 +691,15 @@ class FeatureExtractionProcessor(PipelineStageProcessor):
 
 
 class AIAnalysisProcessor(PipelineStageProcessor):
-    """Advanced AI analysis of content."""    
+    """Advanced AI analysis of content."""
+    
     def __init__(self):
         super().__init__(PipelineStage.AI_ANALYSIS)
         self.content_analyzer = ContentAnalyzer()
     
     async def process(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Perform comprehensive AI analysis."""        analysis_results = {
+        """Perform comprehensive AI analysis."""
+        analysis_results = {
             "content_understanding": {},
             "audience_analysis": {},
             "trend_analysis": {},
@@ -698,7 +745,8 @@ class AIAnalysisProcessor(PipelineStageProcessor):
         return analysis_results
     
     async def _analyze_content_understanding(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Analyze and understand content semantics."""        return {
+        """Analyze and understand content semantics."""
+        return {
             "primary_topic": "entertainment",  # Placeholder
             "secondary_topics": ["music", "creativity"],
             "content_style": "professional",
@@ -708,7 +756,8 @@ class AIAnalysisProcessor(PipelineStageProcessor):
         }
     
     async def _analyze_target_audience(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Analyze potential target audience."""        return {
+        """Analyze potential target audience."""
+        return {
             "age_groups": ["18-24", "25-34"],  # Placeholder
             "interests": ["music", "entertainment", "technology"],
             "demographics": ["urban", "educated", "tech-savvy"],
@@ -717,7 +766,8 @@ class AIAnalysisProcessor(PipelineStageProcessor):
         }
     
     async def _analyze_trends(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Analyze trend alignment and viral potential."""        return {
+        """Analyze trend alignment and viral potential."""
+        return {
             "trend_alignment": 0.7,  # Placeholder
             "viral_potential": 0.6,
             "trending_keywords": ["ai", "content", "creator"],
@@ -730,7 +780,8 @@ class AIAnalysisProcessor(PipelineStageProcessor):
         }
     
     async def _analyze_commercial_potential(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Analyze commercial and monetization potential."""        return {
+        """Analyze commercial and monetization potential."""
+        return {
             "monetization_score": 0.75,  # Placeholder
             "brand_safety": 0.9,
             "advertising_potential": 0.7,
@@ -740,7 +791,8 @@ class AIAnalysisProcessor(PipelineStageProcessor):
         }
     
     async def _calculate_quality_metrics(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Calculate comprehensive quality metrics."""        return {
+        """Calculate comprehensive quality metrics."""
+        return {
             "overall_quality": 0.8,  # Placeholder
             "technical_quality": 0.85,
             "creative_quality": 0.75,
@@ -749,7 +801,8 @@ class AIAnalysisProcessor(PipelineStageProcessor):
         }
     
     async def _generate_ai_recommendations(self, content_item: ContentItem, analysis: Dict) -> List[Dict]:
-        """Generate AI-powered recommendations."""        recommendations = []
+        """Generate AI-powered recommendations."""
+        recommendations = []
         
         # Quality improvements
         if analysis["quality_metrics"]["overall_quality"] < 0.8:
@@ -772,7 +825,8 @@ class AIAnalysisProcessor(PipelineStageProcessor):
         return recommendations
     
     async def _calculate_confidence_scores(self, analysis: Dict) -> Dict:
-        """Calculate confidence scores for analysis results."""        return {
+        """Calculate confidence scores for analysis results."""
+        return {
             "content_understanding": 0.85,  # Placeholder
             "audience_analysis": 0.78,
             "trend_analysis": 0.72,
@@ -782,7 +836,8 @@ class AIAnalysisProcessor(PipelineStageProcessor):
 
 
 class ContentPipelineManager:
-    """Advanced pipeline manager with dynamic stage orchestration."""    
+    """Advanced pipeline manager with dynamic stage orchestration."""
+    
     def __init__(self):
         self.logger = logging.getLogger("pipeline.manager")
         self.metrics = MetricsCollector()
@@ -810,7 +865,8 @@ class ContentPipelineManager:
         priority: PipelinePriority = PipelinePriority.NORMAL,
         config: Optional[Dict] = None
     ) -> str:
-        """Create a new content processing pipeline."""        pipeline_id = f"pipeline_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
+        """Create a new content processing pipeline."""
+        pipeline_id = f"pipeline_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
         
         # Use default stages if not specified
         if stages is None:
@@ -845,14 +901,16 @@ class ContentPipelineManager:
         return pipeline_id
     
     async def _queue_pipeline(self, pipeline_id: str, priority: PipelinePriority):
-        """Queue pipeline for execution."""        self.pipeline_queue.append((priority.value, pipeline_id))
+        """Queue pipeline for execution."""
+        self.pipeline_queue.append((priority.value, pipeline_id))
         # Sort queue by priority (higher values first)
         self.pipeline_queue = deque(sorted(self.pipeline_queue, key=lambda x: x[0], reverse=True))
         
         self.active_pipelines[pipeline_id]["status"] = PipelineStatus.QUEUED
     
     async def execute_pipelines(self):
-        """Execute queued pipelines."""        while True:
+        """Execute queued pipelines."""
+        while True:
             # Check for available pipeline slots
             running_count = sum(
                 1 for p in self.active_pipelines.values() 
@@ -872,7 +930,8 @@ class ContentPipelineManager:
             await asyncio.sleep(0.1)  # Prevent tight loop
     
     async def _execute_pipeline(self, pipeline_id: str):
-        """Execute a complete pipeline."""        pipeline_info = self.active_pipelines[pipeline_id]
+        """Execute a complete pipeline."""
+        pipeline_info = self.active_pipelines[pipeline_id]
         pipeline_info["status"] = PipelineStatus.RUNNING
         pipeline_info["started_at"] = datetime.utcnow()
         
@@ -951,7 +1010,8 @@ class ContentPipelineManager:
             )
     
     def get_pipeline_status(self, pipeline_id: str) -> Optional[Dict]:
-        """Get current pipeline status."""        pipeline_info = self.active_pipelines.get(pipeline_id)
+        """Get current pipeline status."""
+        pipeline_info = self.active_pipelines.get(pipeline_id)
         if not pipeline_info:
             return None
         
@@ -975,14 +1035,16 @@ class ContentPipelineManager:
         }
     
     def get_pipeline_results(self, pipeline_id: str) -> Optional[Dict]:
-        """Get pipeline execution results."""        pipeline_info = self.active_pipelines.get(pipeline_id)
+        """Get pipeline execution results."""
+        pipeline_info = self.active_pipelines.get(pipeline_id)
         if not pipeline_info:
             return None
         
         return pipeline_info["results"]
     
     def cancel_pipeline(self, pipeline_id: str) -> bool:
-        """Cancel a pipeline."""        pipeline_info = self.active_pipelines.get(pipeline_id)
+        """Cancel a pipeline."""
+        pipeline_info = self.active_pipelines.get(pipeline_id)
         if not pipeline_info:
             return False
         
@@ -991,7 +1053,8 @@ class ContentPipelineManager:
         return True
     
     def get_queue_status(self) -> Dict:
-        """Get current queue status."""        queued_count = sum(
+        """Get current queue status."""
+        queued_count = sum(
             1 for p in self.active_pipelines.values()
             if p["status"] == PipelineStatus.QUEUED
         )

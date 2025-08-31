@@ -11,7 +11,8 @@ Business Logic Flow:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""from typing import Dict, List, Any, Optional, Union, Tuple
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 import asyncio
 import logging
@@ -48,7 +49,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentProcessingRequest:
-    """Comprehensive content processing request for the IA Influencer ecosystem."""    request_id: str
+    """Comprehensive content processing request for the IA Influencer ecosystem."""
+    request_id: str
     user_id: str
     creator_type: CreatorType
     content_type: ContentType
@@ -65,7 +67,8 @@ class ContentProcessingRequest:
 
 @dataclass
 class ContentProcessingResult:
-    """Comprehensive processing result with all compliance information."""    request_id: str
+    """Comprehensive processing result with all compliance information."""
+    request_id: str
     content_id: str
     processing_status: str
     compliance_score: float
@@ -84,13 +87,16 @@ class ContentProcessingResult:
 
 
 class LegalComplianceOrchestrator:
-    """    Central orchestrator for all legal compliance operations.
+    """
+    Central orchestrator for all legal compliance operations.
     
     Manages the complete workflow from content upload to multi-platform
     distribution with full legal protection and compliance validation.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the Legal Compliance Orchestrator."""        self.config = config
+        """Initialize the Legal Compliance Orchestrator."""
+        self.config = config
         
         # Initialize all compliance managers
         self.compliance_manager = ComplianceManager(config)
@@ -117,7 +123,8 @@ class LegalComplianceOrchestrator:
         logger.info("Legal Compliance Orchestrator initialized successfully")
     
     async def initialize_all_systems(self) -> None:
-        """Initialize all compliance systems and policies."""        try:
+        """Initialize all compliance systems and policies."""
+        try:
             initialization_tasks = [
                 self.compliance_manager.initialize_compliance_policies(),
                 self.regulatory_monitor.initialize_regulatory_frameworks(),
@@ -146,12 +153,14 @@ class LegalComplianceOrchestrator:
         ai_analysis: Dict[str, Any],
         processing_preferences: Dict[str, Any] = None
     ) -> ContentProcessingResult:
-        """        Comprehensive content processing through the entire compliance workflow.
+        """
+        Comprehensive content processing through the entire compliance workflow.
         
         This is the main entry point for the IA Influencer Agent business logic:
         User Upload → AI Protection → Compliance → Copyright → Surveillance → 
         Collaboration → Monetization → Distribution
-        """        processing_start = datetime.utcnow()
+        """
+        processing_start = datetime.utcnow()
         content_id = str(uuid.uuid4())
         request_id = str(uuid.uuid4())
         
@@ -325,7 +334,8 @@ class LegalComplianceOrchestrator:
         request: ContentProcessingRequest,
         compliance_result: Dict[str, Any]
     ) -> ContentProcessingResult:
-        """Create result for rejected content."""        return ContentProcessingResult(
+        """Create result for rejected content."""
+        return ContentProcessingResult(
             request_id=request.request_id,
             content_id=request.content_id,
             processing_status="rejected",
@@ -351,7 +361,8 @@ class LegalComplianceOrchestrator:
         content_id: str,
         content_metadata: Dict[str, Any]
     ) -> bool:
-        """Setup collaboration licensing for content."""        try:
+        """Setup collaboration licensing for content."""
+        try:
             # Update creator profile for collaboration matching
             # This would integrate with the collaboration system
             logger.info(f"Collaboration licensing setup for content {content_id}")
@@ -367,7 +378,8 @@ class LegalComplianceOrchestrator:
         creator_type: CreatorType,
         copyright_record: CopyrightRecord
     ) -> bool:
-        """Setup monetization and revenue tracking."""        try:
+        """Setup monetization and revenue tracking."""
+        try:
             if copyright_record.status == CopyrightStatus.VERIFIED:
                 # Setup royalty distribution
                 await self.copyright_manager.setup_royalty_distribution(
@@ -392,7 +404,8 @@ class LegalComplianceOrchestrator:
         compliance_result: Dict[str, Any],
         copyright_record: CopyrightRecord
     ) -> Dict[str, str]:
-        """Prepare content for multi-platform distribution."""        platform_status = {}
+        """Prepare content for multi-platform distribution."""
+        platform_status = {}
         
         for platform in target_platforms:
             if compliance_result["compliance_status"] == "approved":
@@ -411,7 +424,8 @@ class LegalComplianceOrchestrator:
         copyright_record: CopyrightRecord,
         surveillance_target: Optional[SurveillanceTarget]
     ) -> float:
-        """Calculate final comprehensive compliance score."""        base_score = compliance_result.get("compliance_score", 0.0)
+        """Calculate final comprehensive compliance score."""
+        base_score = compliance_result.get("compliance_score", 0.0)
         
         # Copyright verification bonus
         if copyright_record.status == CopyrightStatus.VERIFIED:
@@ -430,7 +444,8 @@ class LegalComplianceOrchestrator:
         copyright_record: CopyrightRecord,
         surveillance_target: Optional[SurveillanceTarget]
     ) -> List[str]:
-        """Generate comprehensive recommendations for the creator."""        recommendations = []
+        """Generate comprehensive recommendations for the creator."""
+        recommendations = []
         
         # Add compliance recommendations
         recommendations.extend(compliance_result.get("protection_recommendations", []))
@@ -483,7 +498,8 @@ class LegalComplianceOrchestrator:
         collaboration_ready: bool,
         monetization_approved: bool
     ) -> List[str]:
-        """Determine next steps for the creator."""        next_steps = []
+        """Determine next steps for the creator."""
+        next_steps = []
         
         if compliance_result["compliance_status"] == "approved":
             next_steps.append("Content ready for SEO optimization")
@@ -508,7 +524,8 @@ class LegalComplianceOrchestrator:
         copyright_record: CopyrightRecord,
         surveillance_target: Optional[SurveillanceTarget]
     ) -> str:
-        """Calculate overall protection level."""        protection_score = 0.0
+        """Calculate overall protection level."""
+        protection_score = 0.0
         
         if copyright_record.status == CopyrightStatus.VERIFIED:
             protection_score += 0.4
@@ -542,7 +559,8 @@ class LegalComplianceOrchestrator:
         monetization_approved: bool,
         platform_status: Dict[str, str]
     ) -> float:
-        """Estimate potential revenue based on content and distribution."""        if not monetization_approved:
+        """Estimate potential revenue based on content and distribution."""
+        if not monetization_approved:
             return 0.0
         
         base_potential = 100.0  # Base €100 potential
@@ -583,7 +601,8 @@ class LegalComplianceOrchestrator:
         creator_id: str,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """Get comprehensive dashboard for a creator with all compliance metrics."""        try:
+        """Get comprehensive dashboard for a creator with all compliance metrics."""
+        try:
             # Gather reports from all managers
             compliance_report = await self.compliance_manager.generate_compliance_report_for_creator(
                 creator_id, CreatorType.MUSICIAN, period_days  # Default creator type, would be dynamic
@@ -656,7 +675,8 @@ class LegalComplianceOrchestrator:
         self,
         recommendation_lists: List[List[str]]
     ) -> List[str]:
-        """Compile and prioritize recommendations from multiple sources."""        all_recommendations = []
+        """Compile and prioritize recommendations from multiple sources."""
+        all_recommendations = []
         for rec_list in recommendation_lists:
             all_recommendations.extend(rec_list)
         
@@ -671,7 +691,8 @@ class LegalComplianceOrchestrator:
         return priority_recommendations[:8]  # Top 8 priority recommendations
     
     def _compile_next_actions(self, creator_id: str) -> List[str]:
-        """Compile next actions for the creator."""        return [
+        """Compile next actions for the creator."""
+        return [
             "Review compliance recommendations",
             "Upload new content for protection",
             "Explore collaboration opportunities",
@@ -712,7 +733,8 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceStatus(Enum):
-    """Legal compliance status enumeration."""    COMPLIANT = "compliant"
+    """Legal compliance status enumeration."""
+    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING_REVIEW = "pending_review"
     UNDER_INVESTIGATION = "under_investigation"
@@ -720,18 +742,22 @@ class ComplianceStatus(Enum):
 
 
 class LegalComplianceIndex:
-    """    Central index for all legal compliance operations.
+    """
+    Central index for all legal compliance operations.
     
     Provides unified access to copyright management, GDPR compliance,
     DMCA processing, licensing, and regulatory monitoring.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize the Legal Compliance Index.
+        """
+        Initialize the Legal Compliance Index.
         
         Args:
             config: Configuration dictionary containing database connections
                    and compliance settings
-        """        self.config = config
+        """
+        self.config = config
         self.compliance_manager = ComplianceManager(config)
         self.copyright_manager = CopyrightManager(config)
         self.gdpr_handler = GDPRHandler(config)
@@ -749,7 +775,8 @@ class LegalComplianceIndex:
         user_id: str,
         jurisdiction: str = "EU"
     ) -> Dict[str, Any]:
-        """        Comprehensive compliance verification for uploaded content.
+        """
+        Comprehensive compliance verification for uploaded content.
         
         Args:
             content_id: Unique identifier for the content
@@ -759,7 +786,8 @@ class LegalComplianceIndex:
             
         Returns:
             Dict containing compliance status and any required actions
-        """        try:
+        """
+        try:
             # Start audit logging
             audit_session = await self.audit_logger.start_audit_session(
                 action="content_compliance_check",
@@ -822,7 +850,8 @@ class LegalComplianceIndex:
         infringing_content: Dict[str, Any],
         platform_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Process DMCA takedown request with full compliance tracking.
+        """
+        Process DMCA takedown request with full compliance tracking.
         
         Args:
             complainant_info: Information about the complainant
@@ -831,7 +860,8 @@ class LegalComplianceIndex:
             
         Returns:
             Dict containing DMCA processing results and next steps
-        """        try:
+        """
+        try:
             # Start DMCA processing audit
             audit_session = await self.audit_logger.start_audit_session(
                 action="dmca_processing",
@@ -869,7 +899,8 @@ class LegalComplianceIndex:
         end_date: Optional[datetime] = None,
         jurisdiction: str = "EU"
     ) -> Dict[str, Any]:
-        """        Generate comprehensive compliance report.
+        """
+        Generate comprehensive compliance report.
         
         Args:
             user_id: Optional user ID to filter report
@@ -879,7 +910,8 @@ class LegalComplianceIndex:
             
         Returns:
             Dict containing detailed compliance report
-        """        try:
+        """
+        try:
             if not start_date:
                 start_date = datetime.utcnow() - timedelta(days=30)
             if not end_date:
@@ -941,7 +973,8 @@ class LegalComplianceIndex:
         data_categories: List[str],
         jurisdiction: str = "EU"
     ) -> Dict[str, Any]:
-        """        Handle GDPR data subject requests (access, portability, deletion).
+        """
+        Handle GDPR data subject requests (access, portability, deletion).
         
         Args:
             request_type: Type of request (access, portability, deletion)
@@ -951,7 +984,8 @@ class LegalComplianceIndex:
             
         Returns:
             Dict containing request processing results
-        """        try:
+        """
+        try:
             # Start audit session for data subject request
             audit_session = await self.audit_logger.start_audit_session(
                 action=f"data_subject_request_{request_type}",
@@ -984,14 +1018,16 @@ class LegalComplianceIndex:
             raise
     
     def _determine_overall_status(self, checks: Dict[str, Any]) -> str:
-        """        Determine overall compliance status based on individual checks.
+        """
+        Determine overall compliance status based on individual checks.
         
         Args:
             checks: Dictionary of individual compliance check results
             
         Returns:
             Overall compliance status
-        """        statuses = [check.get("status", "unknown") for check in checks.values()]
+        """
+        statuses = [check.get("status", "unknown") for check in checks.values()]
         
         if "violation_detected" in statuses:
             return ComplianceStatus.VIOLATION_DETECTED.value
@@ -1005,14 +1041,16 @@ class LegalComplianceIndex:
             return ComplianceStatus.UNDER_INVESTIGATION.value
     
     def _generate_compliance_summary(self, details: Dict[str, Any]) -> Dict[str, Any]:
-        """        Generate summary statistics from detailed compliance data.
+        """
+        Generate summary statistics from detailed compliance data.
         
         Args:
             details: Detailed compliance data
             
         Returns:
             Summary statistics
-        """        summary = {
+        """
+        summary = {
             "total_compliance_checks": 0,
             "compliant_items": 0,
             "non_compliant_items": 0,
@@ -1045,14 +1083,16 @@ class LegalComplianceIndex:
 _compliance_index: Optional[LegalComplianceIndex] = None
 
 def get_compliance_index(config: Optional[Dict[str, Any]] = None) -> LegalComplianceIndex:
-    """    Get or create the global Legal Compliance Index instance.
+    """
+    Get or create the global Legal Compliance Index instance.
     
     Args:
         config: Configuration dictionary (required for first initialization)
         
     Returns:
         LegalComplianceIndex instance
-    """    global _compliance_index
+    """
+    global _compliance_index
     
     if _compliance_index is None:
         if config is None:
@@ -1070,7 +1110,8 @@ async def verify_content_compliance(
     jurisdiction: str = "EU",
     config: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """Convenience function for content compliance verification."""    index = get_compliance_index(config)
+    """Convenience function for content compliance verification."""
+    index = get_compliance_index(config)
     return await index.verify_content_compliance(
         content_id, content_type, user_id, jurisdiction
     )
@@ -1082,7 +1123,8 @@ async def process_dmca_request(
     platform_data: Dict[str, Any],
     config: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """Convenience function for DMCA request processing."""    index = get_compliance_index(config)
+    """Convenience function for DMCA request processing."""
+    index = get_compliance_index(config)
     return await index.process_dmca_request(
         complainant_info, infringing_content, platform_data
     )
@@ -1095,7 +1137,8 @@ async def handle_data_subject_request(
     jurisdiction: str = "EU",
     config: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """Convenience function for data subject request handling."""    index = get_compliance_index(config)
+    """Convenience function for data subject request handling."""
+    index = get_compliance_index(config)
     return await index.handle_data_subject_request(
         request_type, user_id, data_categories, jurisdiction
     )

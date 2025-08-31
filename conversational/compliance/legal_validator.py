@@ -6,7 +6,8 @@ including risk assessment, regulatory compliance, and legal disclaimer managemen
 Author: Fahed Mlaiel
 Contact: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import re
+"""
+import re
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple, Any, Set
@@ -20,7 +21,8 @@ from ..security.encryption import EncryptionService
 
 
 class LegalRiskLevel(Enum):
-    """Legal risk severity levels"""    CRITICAL = "critical"
+    """Legal risk severity levels"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -28,7 +30,8 @@ class LegalRiskLevel(Enum):
 
 
 class LegalDomain(Enum):
-    """Legal domain categories"""    INTELLECTUAL_PROPERTY = "intellectual_property"
+    """Legal domain categories"""
+    INTELLECTUAL_PROPERTY = "intellectual_property"
     PRIVACY_DATA = "privacy_data"
     DEFAMATION = "defamation"
     HARASSMENT = "harassment"
@@ -42,7 +45,8 @@ class LegalDomain(Enum):
 
 @dataclass
 class LegalRisk:
-    """Legal risk assessment structure"""    domain: LegalDomain
+    """Legal risk assessment structure"""
+    domain: LegalDomain
     risk_level: LegalRiskLevel
     description: str
     evidence: List[str]
@@ -55,7 +59,8 @@ class LegalRisk:
 
 @dataclass
 class LegalValidationResult:
-    """Legal validation result structure"""    is_compliant: bool
+    """Legal validation result structure"""
+    is_compliant: bool
     overall_risk_level: LegalRiskLevel
     risks: List[LegalRisk]
     violations: List[Dict[str, Any]]
@@ -68,11 +73,13 @@ class LegalValidationResult:
 
 
 class LegalValidator:
-    """    Advanced legal compliance validation system.
+    """
+    Advanced legal compliance validation system.
     
     Provides comprehensive legal risk assessment for conversational AI content
     including regulatory compliance, risk categorization, and mitigation strategies.
-    """    
+    """
+    
     def __init__(
         self,
         db_manager: DatabaseManager,
@@ -100,7 +107,8 @@ class LegalValidator:
         self.logger.info("LegalValidator initialized with legal pattern database")
     
     def _load_legal_patterns(self) -> Dict[LegalDomain, List[Dict[str, Any]]]:
-        """Load legal risk patterns from database or configuration"""        patterns = {
+        """Load legal risk patterns from database or configuration"""
+        patterns = {
             LegalDomain.FINANCIAL_ADVICE: [
                 {
                     "pattern": r"\b(investment|stock|trading|financial|portfolio|profit|guaranteed return)\b",
@@ -180,7 +188,8 @@ class LegalValidator:
         return patterns
     
     def _load_jurisdiction_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Load jurisdiction-specific legal rules"""        return {
+        """Load jurisdiction-specific legal rules"""
+        return {
             "US": {
                 "financial_licensing_required": True,
                 "medical_licensing_required": True,
@@ -229,7 +238,8 @@ class LegalValidator:
         }
     
     def _load_disclaimer_templates(self) -> Dict[LegalDomain, List[str]]:
-        """Load legal disclaimer templates"""        return {
+        """Load legal disclaimer templates"""
+        return {
             LegalDomain.FINANCIAL_ADVICE: [
                 "This information is for educational purposes only and does not constitute financial advice.",
                 "Please consult with a qualified financial advisor before making investment decisions.",
@@ -253,7 +263,8 @@ class LegalValidator:
         ai_response: str,
         context: Optional[Dict[str, Any]] = None
     ) -> LegalValidationResult:
-        """        Comprehensive legal validation of conversational content.
+        """
+        Comprehensive legal validation of conversational content.
         
         Args:
             user_input: User's input text
@@ -262,7 +273,8 @@ class LegalValidator:
             
         Returns:
             LegalValidationResult: Comprehensive legal assessment
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             self.logger.debug("Starting legal content validation")
@@ -356,7 +368,8 @@ class LegalValidator:
         content: str,
         context: Optional[Dict[str, Any]]
     ) -> List[LegalRisk]:
-        """Detect legal risks using pattern matching"""        detected_risks = []
+        """Detect legal risks using pattern matching"""
+        detected_risks = []
         
         for domain, patterns in self.legal_patterns.items():
             for pattern_config in patterns:
@@ -388,7 +401,8 @@ class LegalValidator:
         ai_response: str,
         context: Optional[Dict[str, Any]]
     ) -> List[LegalRisk]:
-        """Analyze legal risks using NLP processing"""        nlp_risks = []
+        """Analyze legal risks using NLP processing"""
+        nlp_risks = []
         
         try:
             # Sentiment analysis for defamation risk
@@ -454,7 +468,8 @@ class LegalValidator:
         risks: List[LegalRisk],
         context: Optional[Dict[str, Any]]
     ) -> Dict[str, bool]:
-        """Check compliance with jurisdiction-specific rules"""        compliance = {}
+        """Check compliance with jurisdiction-specific rules"""
+        compliance = {}
         
         # Get user jurisdiction from context
         user_jurisdiction = context.get("user_jurisdiction", "US") if context else "US"
@@ -491,7 +506,8 @@ class LegalValidator:
         return compliance
     
     def _calculate_overall_risk(self, risks: List[LegalRisk]) -> LegalRiskLevel:
-        """Calculate overall risk level from individual risks"""        if not risks:
+        """Calculate overall risk level from individual risks"""
+        if not risks:
             return LegalRiskLevel.NONE
         
         risk_scores = {
@@ -511,7 +527,8 @@ class LegalValidator:
         return LegalRiskLevel.NONE
     
     def _generate_violations(self, risks: List[LegalRisk]) -> List[Dict[str, Any]]:
-        """Generate violation records for high-risk content"""        violations = []
+        """Generate violation records for high-risk content"""
+        violations = []
         
         for risk in risks:
             if risk.risk_level in [LegalRiskLevel.HIGH, LegalRiskLevel.CRITICAL]:
@@ -528,7 +545,8 @@ class LegalValidator:
         return violations
     
     def _generate_recommendations(self, risks: List[LegalRisk]) -> List[str]:
-        """Generate recommendations based on detected risks"""        recommendations = set()
+        """Generate recommendations based on detected risks"""
+        recommendations = set()
         
         for risk in risks:
             recommendations.update(risk.recommendations)
@@ -537,7 +555,8 @@ class LegalValidator:
         return list(recommendations)
     
     def _generate_disclaimers(self, risks: List[LegalRisk]) -> List[str]:
-        """Generate appropriate legal disclaimers"""        disclaimers = set()
+        """Generate appropriate legal disclaimers"""
+        disclaimers = set()
         
         for risk in risks:
             domain_disclaimers = self.disclaimer_templates.get(risk.domain, [])
@@ -546,14 +565,16 @@ class LegalValidator:
         return list(disclaimers)
     
     def _calculate_confidence_score(self, risks: List[LegalRisk]) -> float:
-        """Calculate confidence score for legal validation"""        if not risks:
+        """Calculate confidence score for legal validation"""
+        if not risks:
             return 1.0
         
         total_confidence = sum(risk.confidence_score for risk in risks)
         return total_confidence / len(risks)
     
     def _get_domain_recommendations(self, domain: LegalDomain) -> List[str]:
-        """Get domain-specific recommendations"""        recommendations = {
+        """Get domain-specific recommendations"""
+        recommendations = {
             LegalDomain.FINANCIAL_ADVICE: [
                 "Add financial advice disclaimers",
                 "Suggest consulting licensed financial advisors",
@@ -584,7 +605,8 @@ class LegalValidator:
         return recommendations.get(domain, [])
     
     def _get_legal_precedents(self, domain: LegalDomain) -> List[str]:
-        """Get relevant legal precedents for domain"""        precedents = {
+        """Get relevant legal precedents for domain"""
+        precedents = {
             LegalDomain.FINANCIAL_ADVICE: [
                 "SEC v. Howey Co. (1946)",
                 "Investment Advisers Act of 1940"
@@ -602,7 +624,8 @@ class LegalValidator:
         return precedents.get(domain, [])
     
     def _get_mitigation_strategies(self, domain: LegalDomain) -> List[str]:
-        """Get risk mitigation strategies for domain"""        strategies = {
+        """Get risk mitigation strategies for domain"""
+        strategies = {
             LegalDomain.FINANCIAL_ADVICE: [
                 "Use educational framing",
                 "Add 'not personalized advice' disclaimers",
@@ -627,7 +650,8 @@ class LegalValidator:
         days: int = 30,
         domain: Optional[LegalDomain] = None
     ) -> List[Dict[str, Any]]:
-        """Get historical risk assessment data"""        try:
+        """Get historical risk assessment data"""
+        try:
             where_clauses = ["created_at >= $1"]
             params = [datetime.now() - timedelta(days=days)]
             
@@ -637,11 +661,13 @@ class LegalValidator:
             
             where_clause = " AND ".join(where_clauses)
             
-            query = f"""                SELECT * FROM legal_risk_assessments 
+            query = f"""
+                SELECT * FROM legal_risk_assessments 
                 WHERE {where_clause}
                 ORDER BY created_at DESC
                 LIMIT 1000
-            """            
+            """
+            
             return await self.db_manager.fetch_all(query, *params)
             
         except Exception as e:
@@ -649,17 +675,21 @@ class LegalValidator:
             return []
     
     async def update_legal_patterns(self, new_patterns: Dict[LegalDomain, List[Dict[str, Any]]]) -> None:
-        """Update legal risk patterns"""        self.legal_patterns.update(new_patterns)
+        """Update legal risk patterns"""
+        self.legal_patterns.update(new_patterns)
         await self.cache_manager.clear_pattern("legal_validation_*")
         self.logger.info("Legal patterns updated and cache cleared")
     
     async def add_jurisdiction_rules(self, jurisdiction: str, rules: Dict[str, Any]) -> None:
-        """Add or update jurisdiction-specific rules"""        self.jurisdiction_rules[jurisdiction] = rules
+        """Add or update jurisdiction-specific rules"""
+        self.jurisdiction_rules[jurisdiction] = rules
         await self.cache_manager.clear_pattern("legal_validation_*")
         self.logger.info(f"Jurisdiction rules updated for {jurisdiction}")
     
     def get_supported_jurisdictions(self) -> List[str]:
-        """Get list of supported jurisdictions"""        return list(self.jurisdiction_rules.keys())
+        """Get list of supported jurisdictions"""
+        return list(self.jurisdiction_rules.keys())
     
     def get_risk_patterns_by_domain(self, domain: LegalDomain) -> List[Dict[str, Any]]:
-        """Get risk patterns for specific legal domain"""        return self.legal_patterns.get(domain, [])
+        """Get risk patterns for specific legal domain"""
+        return self.legal_patterns.get(domain, [])

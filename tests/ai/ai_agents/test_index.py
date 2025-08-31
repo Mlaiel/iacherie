@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -24,7 +25,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -54,9 +56,11 @@ from ai.ai_agents.index import (
 
 
 class TestIndexModuleStructure:
-    """Test the structure and organization of the index module"""    
+    """Test the structure and organization of the index module"""
+    
     def test_module_has_all_expected_agents(self):
-        """Test that index module exposes all expected agent classes"""        expected_agents = [
+        """Test that index module exposes all expected agent classes"""
+        expected_agents = [
             "AudienceDevelopmentAgent",
             "CommunityBuildingAgent", 
             "EngagementOptimizationAgent",
@@ -97,7 +101,8 @@ class TestIndexModuleStructure:
             assert inspect.isclass(agent_class), f"{agent_name} is not a class"
     
     def test_module_version_and_metadata(self):
-        """Test module version and metadata information"""        assert hasattr(index, '__version__')
+        """Test module version and metadata information"""
+        assert hasattr(index, '__version__')
         assert hasattr(index, '__author__')
         assert hasattr(index, '__description__')
         
@@ -106,7 +111,8 @@ class TestIndexModuleStructure:
         assert len(index.__description__) > 0
     
     def test_module_exports_list(self):
-        """Test that __all__ list is properly defined"""        assert hasattr(index, '__all__')
+        """Test that __all__ list is properly defined"""
+        assert hasattr(index, '__all__')
         assert isinstance(index.__all__, list)
         assert len(index.__all__) > 0
         
@@ -116,63 +122,76 @@ class TestIndexModuleStructure:
 
 
 class TestAgentFactory:
-    """Test the AgentFactory class functionality"""    
+    """Test the AgentFactory class functionality"""
+    
     @pytest.fixture
     def factory(self):
-        """Create AgentFactory instance"""        return AgentFactory()
+        """Create AgentFactory instance"""
+        return AgentFactory()
     
     def test_factory_initialization(self, factory):
-        """Test AgentFactory initialization"""        assert factory is not None
+        """Test AgentFactory initialization"""
+        assert factory is not None
         assert hasattr(factory, 'create_agent')
         assert hasattr(factory, 'get_available_agents')
         assert hasattr(factory, 'register_agent')
     
     def test_create_audience_development_agent(self, factory):
-        """Test creating audience development agent via factory"""        agent = factory.create_agent('audience_development')
+        """Test creating audience development agent via factory"""
+        agent = factory.create_agent('audience_development')
         assert agent is not None
         assert isinstance(agent, AudienceDevelopmentAgent)
     
     def test_create_brand_consultant_agent(self, factory):
-        """Test creating brand consultant agent via factory"""        agent = factory.create_agent('brand_consultant')
+        """Test creating brand consultant agent via factory"""
+        agent = factory.create_agent('brand_consultant')
         assert agent is not None
         assert isinstance(agent, BrandConsultantAgent)
     
     def test_create_collaboration_agent(self, factory):
-        """Test creating collaboration agent via factory"""        agent = factory.create_agent('collaboration_matcher')
+        """Test creating collaboration agent via factory"""
+        agent = factory.create_agent('collaboration_matcher')
         assert agent is not None
         assert isinstance(agent, CollaborationMatcherAgent)
     
     def test_create_content_protection_agent(self, factory):
-        """Test creating content protection agent via factory"""        agent = factory.create_agent('content_protection')
+        """Test creating content protection agent via factory"""
+        agent = factory.create_agent('content_protection')
         assert agent is not None
         assert isinstance(agent, ContentProtectionAgent)
     
     def test_create_content_strategist_agent(self, factory):
-        """Test creating content strategist agent via factory"""        agent = factory.create_agent('content_strategist')
+        """Test creating content strategist agent via factory"""
+        agent = factory.create_agent('content_strategist')
         assert agent is not None
         assert isinstance(agent, ContentStrategistAgent)
     
     def test_create_monetization_agent(self, factory):
-        """Test creating monetization agent via factory"""        agent = factory.create_agent('monetization')
+        """Test creating monetization agent via factory"""
+        agent = factory.create_agent('monetization')
         assert agent is not None
         assert isinstance(agent, MonetizationAgent)
     
     def test_create_seo_optimization_agent(self, factory):
-        """Test creating SEO optimization agent via factory"""        agent = factory.create_agent('seo_optimization')
+        """Test creating SEO optimization agent via factory"""
+        agent = factory.create_agent('seo_optimization')
         assert agent is not None
         assert isinstance(agent, SEOOptimizationAgent)
     
     def test_create_trend_analysis_agent(self, factory):
-        """Test creating trend analysis agent via factory"""        agent = factory.create_agent('trend_analysis')
+        """Test creating trend analysis agent via factory"""
+        agent = factory.create_agent('trend_analysis')
         assert agent is not None
         assert isinstance(agent, TrendAnalysisAgent)
     
     def test_create_invalid_agent_type(self, factory):
-        """Test creating agent with invalid type"""        with pytest.raises(ValueError):
+        """Test creating agent with invalid type"""
+        with pytest.raises(ValueError):
             factory.create_agent('invalid_agent_type')
     
     def test_get_available_agents(self, factory):
-        """Test getting list of available agents"""        available_agents = factory.get_available_agents()
+        """Test getting list of available agents"""
+        available_agents = factory.get_available_agents()
         assert isinstance(available_agents, list)
         assert len(available_agents) > 0
         
@@ -191,7 +210,8 @@ class TestAgentFactory:
             assert agent_type in available_agents
     
     def test_register_custom_agent(self, factory):
-        """Test registering a custom agent type"""        class CustomTestAgent:
+        """Test registering a custom agent type"""
+        class CustomTestAgent:
             def __init__(self):
                 self.agent_type = "custom_test"
         
@@ -205,13 +225,16 @@ class TestAgentFactory:
 
 
 class TestAgentManager:
-    """Test the AgentManager class functionality"""    
+    """Test the AgentManager class functionality"""
+    
     @pytest.fixture
     def manager(self):
-        """Create AgentManager instance"""        return AgentManager()
+        """Create AgentManager instance"""
+        return AgentManager()
     
     def test_manager_initialization(self, manager):
-        """Test AgentManager initialization"""        assert manager is not None
+        """Test AgentManager initialization"""
+        assert manager is not None
         assert hasattr(manager, 'agents')
         assert hasattr(manager, 'add_agent')
         assert hasattr(manager, 'get_agent')
@@ -219,7 +242,8 @@ class TestAgentManager:
         assert hasattr(manager, 'list_agents')
     
     def test_add_and_get_agent(self, manager):
-        """Test adding and retrieving agents"""        # Create and add an agent
+        """Test adding and retrieving agents"""
+        # Create and add an agent
         agent = AudienceDevelopmentAgent()
         manager.add_agent('audience_dev_1', agent)
         
@@ -229,7 +253,8 @@ class TestAgentManager:
         assert isinstance(retrieved_agent, AudienceDevelopmentAgent)
     
     def test_list_agents(self, manager):
-        """Test listing all managed agents"""        # Add multiple agents
+        """Test listing all managed agents"""
+        # Add multiple agents
         agents_to_add = [
             ('brand_1', BrandConsultantAgent()),
             ('content_1', ContentStrategistAgent()),
@@ -247,7 +272,8 @@ class TestAgentManager:
             assert agent_id in agent_list
     
     def test_remove_agent(self, manager):
-        """Test removing an agent"""        # Add an agent
+        """Test removing an agent"""
+        # Add an agent
         agent = MonetizationAgent()
         manager.add_agent('monetization_1', agent)
         
@@ -263,16 +289,19 @@ class TestAgentManager:
             manager.get_agent('monetization_1')
     
     def test_get_nonexistent_agent(self, manager):
-        """Test getting an agent that doesn't exist"""        with pytest.raises(KeyError):
+        """Test getting an agent that doesn't exist"""
+        with pytest.raises(KeyError):
             manager.get_agent('nonexistent_agent')
     
     def test_remove_nonexistent_agent(self, manager):
-        """Test removing an agent that doesn't exist"""        with pytest.raises(KeyError):
+        """Test removing an agent that doesn't exist"""
+        with pytest.raises(KeyError):
             manager.remove_agent('nonexistent_agent')
     
     @pytest.mark.asyncio
     async def test_agent_coordination(self, manager):
-        """Test coordination between multiple agents"""        # Add multiple agents that might work together
+        """Test coordination between multiple agents"""
+        # Add multiple agents that might work together
         manager.add_agent('content_strategist', ContentStrategistAgent())
         manager.add_agent('seo_optimizer', SEOOptimizationAgent())
         manager.add_agent('trend_analyzer', TrendAnalysisAgent())
@@ -293,9 +322,11 @@ class TestAgentManager:
 
 
 class TestUtilityFunctions:
-    """Test utility functions in the index module"""    
+    """Test utility functions in the index module"""
+    
     def test_get_all_agents_function(self):
-        """Test get_all_agents utility function"""        all_agents = get_all_agents()
+        """Test get_all_agents utility function"""
+        all_agents = get_all_agents()
         
         assert isinstance(all_agents, dict)
         assert len(all_agents) > 0
@@ -319,7 +350,8 @@ class TestUtilityFunctions:
     
     @pytest.mark.asyncio
     async def test_initialize_agent_system(self):
-        """Test initialize_agent_system function"""        config = {
+        """Test initialize_agent_system function"""
+        config = {
             'enabled_agents': [
                 'audience_development',
                 'content_strategist',
@@ -349,10 +381,12 @@ class TestUtilityFunctions:
 
 
 class TestModuleIntegration:
-    """Test integration between different components of the index module"""    
+    """Test integration between different components of the index module"""
+    
     @pytest.mark.asyncio
     async def test_factory_manager_integration(self):
-        """Test integration between AgentFactory and AgentManager"""        factory = AgentFactory()
+        """Test integration between AgentFactory and AgentManager"""
+        factory = AgentFactory()
         manager = AgentManager()
         
         # Create agents via factory and manage them via manager
@@ -377,7 +411,8 @@ class TestModuleIntegration:
     
     @pytest.mark.asyncio
     async def test_comprehensive_agent_workflow(self):
-        """Test a comprehensive workflow using multiple agents"""        # Initialize the complete system
+        """Test a comprehensive workflow using multiple agents"""
+        # Initialize the complete system
         system_config = {
             'enabled_agents': [
                 'audience_development',
@@ -435,9 +470,11 @@ class TestModuleIntegration:
 
 
 class TestErrorHandling:
-    """Test error handling in index module components"""    
+    """Test error handling in index module components"""
+    
     def test_factory_error_handling(self):
-        """Test error handling in AgentFactory"""        factory = AgentFactory()
+        """Test error handling in AgentFactory"""
+        factory = AgentFactory()
         
         # Test invalid agent type
         with pytest.raises(ValueError):
@@ -452,7 +489,8 @@ class TestErrorHandling:
             factory.create_agent('')
     
     def test_manager_error_handling(self):
-        """Test error handling in AgentManager"""        manager = AgentManager()
+        """Test error handling in AgentManager"""
+        manager = AgentManager()
         
         # Test getting non-existent agent
         with pytest.raises(KeyError):
@@ -473,7 +511,8 @@ class TestErrorHandling:
     
     @pytest.mark.asyncio
     async def test_initialization_error_handling(self):
-        """Test error handling in system initialization"""        # Test with invalid config
+        """Test error handling in system initialization"""
+        # Test with invalid config
         invalid_configs = [
             None,
             {},
@@ -493,9 +532,11 @@ class TestErrorHandling:
 
 
 class TestPerformanceAndScaling:
-    """Test performance and scaling aspects of the index module"""    
+    """Test performance and scaling aspects of the index module"""
+    
     def test_factory_performance(self):
-        """Test AgentFactory performance with multiple agents"""        factory = AgentFactory()
+        """Test AgentFactory performance with multiple agents"""
+        factory = AgentFactory()
         
         # Create multiple agents rapidly
         agent_types = [
@@ -519,7 +560,8 @@ class TestPerformanceAndScaling:
         assert creation_time < 5.0  # Should complete within reasonable time
     
     def test_manager_scalability(self):
-        """Test AgentManager scalability with many agents"""        manager = AgentManager()
+        """Test AgentManager scalability with many agents"""
+        manager = AgentManager()
         factory = AgentFactory()
         
         # Add many agents
@@ -547,7 +589,8 @@ class TestPerformanceAndScaling:
     
     @pytest.mark.asyncio
     async def test_system_initialization_performance(self):
-        """Test system initialization performance"""        large_config = {
+        """Test system initialization performance"""
+        large_config = {
             'enabled_agents': [
                 'audience_development', 'brand_consultant',
                 'collaboration_matcher', 'content_protection',
@@ -577,9 +620,11 @@ class TestPerformanceAndScaling:
 
 
 class TestModuleDocumentation:
-    """Test module documentation and metadata"""    
+    """Test module documentation and metadata"""
+    
     def test_agent_class_documentation(self):
-        """Test that all agent classes have proper documentation"""        agent_classes = [
+        """Test that all agent classes have proper documentation"""
+        agent_classes = [
             AudienceDevelopmentAgent, BrandConsultantAgent, CollaborationMatcherAgent,
             ContentProtectionAgent, ContentStrategistAgent, MonetizationAgent,
             SEOOptimizationAgent, TrendAnalysisAgent
@@ -594,7 +639,8 @@ class TestModuleDocumentation:
             assert any(keyword in doc for keyword in ['agent', 'ai', 'intelligence'])
     
     def test_factory_documentation(self):
-        """Test AgentFactory documentation"""        assert AgentFactory.__doc__ is not None
+        """Test AgentFactory documentation"""
+        assert AgentFactory.__doc__ is not None
         assert len(AgentFactory.__doc__.strip()) > 0
         
         # Test method documentation
@@ -602,7 +648,8 @@ class TestModuleDocumentation:
         assert AgentFactory.get_available_agents.__doc__ is not None
     
     def test_manager_documentation(self):
-        """Test AgentManager documentation"""        assert AgentManager.__doc__ is not None
+        """Test AgentManager documentation"""
+        assert AgentManager.__doc__ is not None
         assert len(AgentManager.__doc__.strip()) > 0
         
         # Test method documentation

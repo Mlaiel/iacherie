@@ -10,7 +10,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import json
 import torch
 import torch.nn as nn
@@ -73,7 +74,8 @@ logger = logging.getLogger(__name__)
 
 
 class TrainingMode(Enum):
-    """Training mode types"""    SUPERVISED = "supervised"
+    """Training mode types"""
+    SUPERVISED = "supervised"
     UNSUPERVISED = "unsupervised"
     SEMI_SUPERVISED = "semi_supervised"
     REINFORCEMENT = "reinforcement"
@@ -86,7 +88,8 @@ class TrainingMode(Enum):
 
 
 class OptimizationAlgorithm(Enum):
-    """Optimization algorithms"""    SGD = "sgd"
+    """Optimization algorithms"""
+    SGD = "sgd"
     ADAM = "adam"
     ADAMW = "adamw"
     RMSPROP = "rmsprop"
@@ -97,7 +100,8 @@ class OptimizationAlgorithm(Enum):
 
 
 class LearningRateScheduler(Enum):
-    """Learning rate schedulers"""    CONSTANT = "constant"
+    """Learning rate schedulers"""
+    CONSTANT = "constant"
     LINEAR = "linear"
     COSINE = "cosine"
     EXPONENTIAL = "exponential"
@@ -109,7 +113,8 @@ class LearningRateScheduler(Enum):
 
 @dataclass
 class TrainingConfig:
-    """Configuration for model training"""    # Basic training parameters
+    """Configuration for model training"""
+    # Basic training parameters
     model_name: str
     dataset_path: str
     output_dir: str
@@ -172,7 +177,8 @@ class TrainingConfig:
 
 @dataclass
 class TrainingResult:
-    """Results from model training"""    model_path: str
+    """Results from model training"""
+    model_path: str
     training_history: Dict[str, List[float]]
     best_metrics: Dict[str, float]
     final_metrics: Dict[str, float]
@@ -191,7 +197,8 @@ class TrainingResult:
 
 
 class ModelTrainer:
-    """Advanced ML model trainer with enterprise features"""    
+    """Advanced ML model trainer with enterprise features"""
+    
     def __init__(self, config: TrainingConfig):
         self.config = config
         self.device = torch.device(f"cuda:{config.gpu_id}" if torch.cuda.is_available() else "cpu")
@@ -225,7 +232,8 @@ class ModelTrainer:
         self.best_model_state = None
         
     def _setup_experiment_tracking(self):
-        """Initialize experiment tracking systems"""        try:
+        """Initialize experiment tracking systems"""
+        try:
             if MLFLOW_AVAILABLE and self.config.use_mlflow:
                 mlflow.set_tracking_uri("./mlruns")
                 mlflow.set_experiment(self.config.experiment_name)
@@ -241,7 +249,8 @@ class ModelTrainer:
             self.logger.warning(f"Failed to setup experiment tracking: {e}")
     
     def _setup_distributed_training(self):
-        """Setup distributed training environment"""        if self.config.distributed:
+        """Setup distributed training environment"""
+        if self.config.distributed:
             dist.init_process_group(
                 backend='nccl',
                 init_method=f'tcp://{self.config.master_addr}:{self.config.master_port}',
@@ -251,7 +260,8 @@ class ModelTrainer:
             torch.cuda.set_device(self.config.gpu_id)
     
     def _create_optimizer(self, model: nn.Module) -> optim.Optimizer:
-        """Create optimizer based on configuration"""        optimizer_map = {
+        """Create optimizer based on configuration"""
+        optimizer_map = {
             OptimizationAlgorithm.SGD: optim.SGD,
             OptimizationAlgorithm.ADAM: optim.Adam,
             OptimizationAlgorithm.ADAMW: optim.AdamW,
@@ -269,7 +279,8 @@ class ModelTrainer:
         )
     
     def _create_scheduler(self, optimizer: optim.Optimizer, num_training_steps: int):
-        """Create learning rate scheduler"""        if self.config.lr_scheduler == LearningRateScheduler.WARMUP_COSINE:
+        """Create learning rate scheduler"""
+        if self.config.lr_scheduler == LearningRateScheduler.WARMUP_COSINE:
             return get_scheduler(
                 "cosine",
                 optimizer=optimizer,
@@ -286,7 +297,8 @@ class ModelTrainer:
             return None
     
     def _prepare_model_for_training(self, model: nn.Module) -> nn.Module:
-        """Prepare model for training with optimizations"""        model = model.to(self.device)
+        """Prepare model for training with optimizations"""
+        model = model.to(self.device)
         
         # Enable gradient checkpointing if configured
         if self.config.gradient_checkpointing and hasattr(model, 'gradient_checkpointing_enable'):
@@ -303,7 +315,8 @@ class ModelTrainer:
         return model
     
     def _train_epoch(self, epoch: int) -> Dict[str, float]:
-        """Train for one epoch"""        self.model.train()
+        """Train for one epoch"""
+        self.model.train()
         total_loss = 0.0
         total_samples = 0
         all_predictions = []
@@ -404,7 +417,8 @@ class ModelTrainer:
         return metrics
     
     def _validate_epoch(self, epoch: int) -> Dict[str, float]:
-        """Validate for one epoch"""        self.model.eval()
+        """Validate for one epoch"""
+        self.model.eval()
         total_loss = 0.0
         total_samples = 0
         all_predictions = []
@@ -458,7 +472,8 @@ class ModelTrainer:
         return metrics
     
     def _should_early_stop(self, val_metrics: Dict[str, float]) -> bool:
-        """Check if training should stop early"""        if not self.training_history['val_loss']:
+        """Check if training should stop early"""
+        if not self.training_history['val_loss']:
             return False
         
         current_val_loss = val_metrics.get('val_loss', float('inf'))
@@ -472,7 +487,8 @@ class ModelTrainer:
         return self.early_stopping_counter >= self.config.early_stopping_patience
     
     def _save_checkpoint(self, epoch: int, metrics: Dict[str, float], is_best: bool = False):
-        """Save model checkpoint"""        checkpoint_dir = Path(self.config.output_dir) / "checkpoints"
+        """Save model checkpoint"""
+        checkpoint_dir = Path(self.config.output_dir) / "checkpoints"
         checkpoint_dir.mkdir(parents=True, exist_ok=True)
         
         checkpoint = {
@@ -499,7 +515,8 @@ class ModelTrainer:
             torch.save(checkpoint, checkpoint_dir / f"epoch_{epoch}.pt")
     
     def _log_metrics(self, epoch: int, train_metrics: Dict[str, float], val_metrics: Dict[str, float]):
-        """Log metrics to tracking systems"""        all_metrics = {**train_metrics, **val_metrics, 'epoch': epoch}
+        """Log metrics to tracking systems"""
+        all_metrics = {**train_metrics, **val_metrics, 'epoch': epoch}
         
         # Log to console
         self.logger.info(
@@ -530,7 +547,8 @@ class ModelTrainer:
         val_loader: Optional[DataLoader] = None,
         test_loader: Optional[DataLoader] = None
     ) -> TrainingResult:
-        """Asynchronous training with full enterprise features"""        training_start_time = datetime.now()
+        """Asynchronous training with full enterprise features"""
+        training_start_time = datetime.now()
         
         try:
             # Setup distributed training
@@ -686,18 +704,21 @@ class ModelTrainer:
         val_loader: Optional[DataLoader] = None,
         test_loader: Optional[DataLoader] = None
     ) -> TrainingResult:
-        """Synchronous training wrapper"""        return asyncio.run(self.train_async(model, train_loader, val_loader, test_loader))
+        """Synchronous training wrapper"""
+        return asyncio.run(self.train_async(model, train_loader, val_loader, test_loader))
 
 
 class HyperparameterOptimizer:
-    """Hyperparameter optimization using Optuna"""    
+    """Hyperparameter optimization using Optuna"""
+    
     def __init__(self, base_config: TrainingConfig):
         self.base_config = base_config
         self.study = None
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     def objective(self, trial: optuna.Trial) -> float:
-        """Objective function for hyperparameter optimization"""        # Suggest hyperparameters
+        """Objective function for hyperparameter optimization"""
+        # Suggest hyperparameters
         config = TrainingConfig(**self.base_config.__dict__)
         config.learning_rate = trial.suggest_float('learning_rate', 1e-5, 1e-2, log=True)
         config.batch_size = trial.suggest_categorical('batch_size', [16, 32, 64, 128])
@@ -720,7 +741,8 @@ class HyperparameterOptimizer:
             raise optuna.exceptions.TrialPruned()
     
     def optimize(self, n_trials: int = 100) -> Dict[str, Any]:
-        """Run hyperparameter optimization"""        study = optuna.create_study(
+        """Run hyperparameter optimization"""
+        study = optuna.create_study(
             direction='minimize',
             pruner=optuna.pruners.MedianPruner() if self.base_config.pruning_enabled else None
         )
@@ -736,7 +758,8 @@ class HyperparameterOptimizer:
 
 
 class DistributedTrainingManager:
-    """Manager for distributed training across multiple GPUs/nodes"""    
+    """Manager for distributed training across multiple GPUs/nodes"""
+    
     def __init__(self, config: TrainingConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -747,7 +770,8 @@ class DistributedTrainingManager:
         train_loader: DataLoader,
         val_loader: Optional[DataLoader] = None
     ) -> List[TrainingResult]:
-        """Launch distributed training across multiple processes"""        import torch.multiprocessing as mp
+        """Launch distributed training across multiple processes"""
+        import torch.multiprocessing as mp
         
         # Setup distributed configuration
         world_size = torch.cuda.device_count() if torch.cuda.is_available() else 1
@@ -791,7 +815,8 @@ class DistributedTrainingManager:
         val_loader: Optional[DataLoader],
         config: TrainingConfig
     ):
-        """Worker function for distributed training"""        try:
+        """Worker function for distributed training"""
+        try:
             # Setup distributed sampler
             if hasattr(train_loader.dataset, '__len__'):
                 train_sampler = DistributedSampler(

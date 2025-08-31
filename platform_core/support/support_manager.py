@@ -14,7 +14,8 @@ Support intelligent avec IA et automatisation avancée
 - Live chat avec agents IA et humains
 - Knowledge base avec recherche sémantique
 - Analytics et KPIs de satisfaction client
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import uuid
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 
 class TicketStatus(Enum):
-    """Statuts des tickets"""    OPEN = "open"
+    """Statuts des tickets"""
+    OPEN = "open"
     IN_PROGRESS = "in_progress"
     PENDING_CUSTOMER = "pending_customer"
     PENDING_INTERNAL = "pending_internal"
@@ -37,7 +39,8 @@ class TicketStatus(Enum):
 
 
 class TicketPriority(Enum):
-    """Priorités des tickets"""    LOW = "low"
+    """Priorités des tickets"""
+    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     CRITICAL = "critical"
@@ -45,7 +48,8 @@ class TicketPriority(Enum):
 
 
 class TicketCategory(Enum):
-    """Catégories de tickets"""    TECHNICAL = "technical"
+    """Catégories de tickets"""
+    TECHNICAL = "technical"
     BILLING = "billing"
     ACCOUNT = "account"
     FEATURE_REQUEST = "feature_request"
@@ -56,7 +60,8 @@ class TicketCategory(Enum):
 
 
 class AgentType(Enum):
-    """Types d'agents de support"""    AI_BOT = "ai_bot"
+    """Types d'agents de support"""
+    AI_BOT = "ai_bot"
     HUMAN_AGENT = "human_agent"
     SPECIALIST = "specialist"
     MANAGER = "manager"
@@ -64,7 +69,8 @@ class AgentType(Enum):
 
 @dataclass
 class SupportTicket:
-    """Ticket de support"""    ticket_id: str
+    """Ticket de support"""
+    ticket_id: str
     user_id: str
     subject: str
     description: str
@@ -82,7 +88,8 @@ class SupportTicket:
 
 @dataclass
 class TicketMessage:
-    """Message dans un ticket"""    message_id: str
+    """Message dans un ticket"""
+    message_id: str
     ticket_id: str
     sender_id: str
     sender_type: AgentType
@@ -95,7 +102,8 @@ class TicketMessage:
 
 @dataclass
 class KnowledgeBaseArticle:
-    """Article de la base de connaissances"""    article_id: str
+    """Article de la base de connaissances"""
+    article_id: str
     title: str
     content: str
     category: TicketCategory
@@ -111,7 +119,8 @@ class KnowledgeBaseArticle:
 
 @dataclass
 class ChatSession:
-    """Session de chat live"""    session_id: str
+    """Session de chat live"""
+    session_id: str
     user_id: str
     agent_id: Optional[str]
     agent_type: AgentType
@@ -123,7 +132,8 @@ class ChatSession:
 
 
 class SupportManager:
-    """Gestionnaire principal du support"""    
+    """Gestionnaire principal du support"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.tickets: Dict[str, SupportTicket] = {}
@@ -138,7 +148,8 @@ class SupportManager:
         logger.info("✅ SupportManager initialized")
     
     def _setup_ai_agents(self) -> None:
-        """Configurer les agents IA"""        self.ai_agents = {
+        """Configurer les agents IA"""
+        self.ai_agents = {
             "general_bot": {
                 "name": "Assistant IA Général",
                 "specialties": ["general", "account", "billing"],
@@ -160,7 +171,8 @@ class SupportManager:
         }
     
     def _setup_routing_rules(self) -> None:
-        """Configurer les règles de routage"""        self.routing_rules = {
+        """Configurer les règles de routage"""
+        self.routing_rules = {
             TicketCategory.TECHNICAL: {
                 "default_priority": TicketPriority.NORMAL,
                 "auto_assign": "technical_team",
@@ -191,7 +203,8 @@ class SupportManager:
         category: TicketCategory,
         priority: Optional[TicketPriority] = None
     ) -> SupportTicket:
-        """Créer un nouveau ticket"""        try:
+        """Créer un nouveau ticket"""
+        try:
             ticket_id = f"TK_{uuid.uuid4().hex[:12].upper()}"
             
             # Déterminer la priorité automatiquement si non spécifiée
@@ -237,7 +250,8 @@ class SupportManager:
             raise
     
     async def _auto_assign_ticket(self, ticket: SupportTicket) -> Optional[str]:
-        """Assigner automatiquement un ticket"""        try:
+        """Assigner automatiquement un ticket"""
+        try:
             # Logique d'assignment basée sur la catégorie et la charge
             routing_rule = self.routing_rules.get(ticket.category)
             if routing_rule:
@@ -269,7 +283,8 @@ class SupportManager:
         sender_type: AgentType = AgentType.HUMAN_AGENT,
         is_internal: bool = False
     ) -> TicketMessage:
-        """Ajouter un message à un ticket"""        try:
+        """Ajouter un message à un ticket"""
+        try:
             if ticket_id not in self.tickets:
                 raise ValueError(f"Ticket not found: {ticket_id}")
             
@@ -300,7 +315,8 @@ class SupportManager:
             raise
     
     async def _trigger_ai_response(self, ticket_id: str, user_message: TicketMessage) -> None:
-        """Déclencher une réponse IA si approprié"""        try:
+        """Déclencher une réponse IA si approprié"""
+        try:
             ticket = self.tickets[ticket_id]
             
             # Vérifier si le ticket nécessite une réponse IA
@@ -327,13 +343,15 @@ class SupportManager:
             logger.error(f"❌ Failed to trigger AI response: {e}")
     
     def _find_suitable_ai_bot(self, category: TicketCategory) -> Optional[str]:
-        """Trouver le bot IA approprié pour une catégorie"""        for bot_id, bot_info in self.ai_agents.items():
+        """Trouver le bot IA approprié pour une catégorie"""
+        for bot_id, bot_info in self.ai_agents.items():
             if category.value in bot_info["specialties"]:
                 return bot_id
         return "general_bot"  # Bot par défaut
     
     async def _generate_ai_response(self, ticket: SupportTicket, user_message: str) -> Optional[str]:
-        """Générer une réponse IA (placeholder)"""        try:
+        """Générer une réponse IA (placeholder)"""
+        try:
             # Placeholder pour intégration IA réelle
             responses = {
                 TicketCategory.TECHNICAL: "Je comprends votre problème technique. Pouvez-vous me donner plus de détails sur votre configuration?",
@@ -349,7 +367,8 @@ class SupportManager:
             return None
     
     async def start_chat_session(self, user_id: str) -> ChatSession:
-        """Démarrer une session de chat live"""        try:
+        """Démarrer une session de chat live"""
+        try:
             session_id = f"CHAT_{uuid.uuid4().hex[:12]}"
             
             # Assigner un agent IA disponible
@@ -383,7 +402,8 @@ class SupportManager:
             raise
     
     def _find_available_ai_agent(self) -> str:
-        """Trouver un agent IA disponible"""        # Compter les sessions actives par bot
+        """Trouver un agent IA disponible"""
+        # Compter les sessions actives par bot
         active_sessions = {}
         for session in self.chat_sessions.values():
             if session.status == "active" and session.agent_id:
@@ -398,7 +418,8 @@ class SupportManager:
         return "general_bot"  # Bot par défaut
     
     async def search_knowledge_base(self, query: str, category: Optional[TicketCategory] = None) -> List[KnowledgeBaseArticle]:
-        """Rechercher dans la base de connaissances"""        try:
+        """Rechercher dans la base de connaissances"""
+        try:
             results = []
             query_lower = query.lower()
             
@@ -426,7 +447,8 @@ class SupportManager:
             return []
     
     async def get_support_analytics(self, days: int = 30) -> Dict[str, Any]:
-        """Obtenir les analytics du support"""        try:
+        """Obtenir les analytics du support"""
+        try:
             cutoff_date = datetime.utcnow() - timedelta(days=days)
             
             # Filtrer les tickets récents
@@ -473,13 +495,15 @@ class SupportManager:
 
 
 class KnowledgeBaseManager:
-    """Gestionnaire de la base de connaissances"""    
+    """Gestionnaire de la base de connaissances"""
+    
     def __init__(self):
         self.articles: Dict[str, KnowledgeBaseArticle] = {}
         self._create_default_articles()
     
     def _create_default_articles(self) -> None:
-        """Créer les articles par défaut"""        default_articles = [
+        """Créer les articles par défaut"""
+        default_articles = [
             KnowledgeBaseArticle(
                 article_id="getting_started",
                 title="Guide de démarrage rapide",

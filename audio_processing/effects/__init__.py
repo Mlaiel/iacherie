@@ -4,7 +4,7 @@ Complete audio effects suite with professional-grade processors for music produc
 audio post-production, and content creation workflows.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 =============================================================================
 CONFIDENTIAL - IA INFLUENCER AGENT PLATFORM
@@ -29,12 +29,15 @@ Unauthorized reproduction, distribution, or reverse engineering is strictly
 prohibited and may result in severe legal penalties under international
 copyright law.
 =============================================================================
-"""from .equalizer_processor import EqualizerProcessor, EQType, FilterType
+"""
+
+from .equalizer_processor import EqualizerProcessor, EQType, FilterType
 from .compressor_processor import (
     CompressorProcessor, CompressorType, DetectionMode, KneeType,
     CompressorPreset, MultibandCrossover, SideChainProcessor
 )
 from .envelope_follower import EnvelopeFollower
+
 from .reverb_processor import (
     ReverbProcessor, ReverbType, RoomSize, EarlyReflectionPattern,
     ReverbParameters, EarlyReflection, ConvolutionReverb

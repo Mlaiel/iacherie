@@ -33,7 +33,8 @@ Unauthorized use, copying, reverse engineering, or commercial exploitation
 is strictly prohibited under international copyright law.
 
 Contact: mlaiel@live.de
-"""import numpy as np
+"""
+import numpy as np
 import logging
 import asyncio
 from typing import Dict, List, Optional, Tuple, Any, Union, Callable
@@ -56,7 +57,8 @@ import pickle
 
 
 class SimilarityMetric(Enum):
-    """Audio similarity metrics"""    SPECTRAL_SIMILARITY = "spectral_similarity"
+    """Audio similarity metrics"""
+    SPECTRAL_SIMILARITY = "spectral_similarity"
     TIMBRAL_SIMILARITY = "timbral_similarity"  
     RHYTHMIC_SIMILARITY = "rhythmic_similarity"
     HARMONIC_SIMILARITY = "harmonic_similarity"
@@ -69,7 +71,8 @@ class SimilarityMetric(Enum):
 
 
 class SimilarityType(Enum):
-    """Types of similarity analysis"""    IDENTICAL = "identical"               # Nearly identical content
+    """Types of similarity analysis"""
+    IDENTICAL = "identical"               # Nearly identical content
     COVER_VERSION = "cover_version"       # Different performance, same song
     REMIX = "remix"                       # Remixed/modified version
     SIMILAR_STYLE = "similar_style"       # Similar musical style
@@ -82,7 +85,8 @@ class SimilarityType(Enum):
 
 
 class MatchConfidence(Enum):
-    """Confidence levels for similarity matches"""    VERY_HIGH = "very_high"    # 95-100% confidence
+    """Confidence levels for similarity matches"""
+    VERY_HIGH = "very_high"    # 95-100% confidence
     HIGH = "high"              # 85-95% confidence  
     MEDIUM = "medium"          # 70-85% confidence
     LOW = "low"               # 50-70% confidence
@@ -91,7 +95,8 @@ class MatchConfidence(Enum):
 
 @dataclass
 class AudioFeatureVector:
-    """Comprehensive audio feature representation"""    # Core identifiers
+    """Comprehensive audio feature representation"""
+    # Core identifiers
     audio_id: str
     content_hash: str
     
@@ -129,7 +134,8 @@ class AudioFeatureVector:
 
 @dataclass
 class SimilarityMatch:
-    """Audio similarity match result"""    query_id: str
+    """Audio similarity match result"""
+    query_id: str
     match_id: str
     overall_similarity: float
     similarity_type: SimilarityType
@@ -155,7 +161,8 @@ class SimilarityMatch:
 
 @dataclass 
 class SimilaritySearchResult:
-    """Comprehensive similarity search result"""    query_audio_id: str
+    """Comprehensive similarity search result"""
+    query_audio_id: str
     total_matches: int
     search_time: float
     
@@ -177,7 +184,8 @@ class SimilaritySearchResult:
 
 @dataclass
 class SimilarityAnalysisReport:
-    """Detailed similarity analysis report"""    primary_audio_id: str
+    """Detailed similarity analysis report"""
+    primary_audio_id: str
     comparison_audio_id: str
     
     # Core similarity metrics
@@ -204,18 +212,22 @@ class SimilarityAnalysisReport:
 
 
 class SimilarityEngine:
-    """    🔍 Ultra-Advanced Audio Similarity & Matching Engine
+    """
+    🔍 Ultra-Advanced Audio Similarity & Matching Engine
     
     Professional AI-powered similarity engine providing comprehensive audio
     matching, content discovery, and similarity analysis capabilities for
     music professionals, content creators, and platform operators.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize advanced similarity engine
+        """
+        Initialize advanced similarity engine
         
         Args:
             config: Configuration parameters for similarity analysis
-        """        self.logger = logging.getLogger(self.__class__.__name__)
+        """
+        self.logger = logging.getLogger(self.__class__.__name__)
         self.config = config or {}
         
         # Processing parameters
@@ -278,7 +290,8 @@ class SimilarityEngine:
                                    audio_data: np.ndarray,
                                    sample_rate: int = 44100,
                                    audio_id: Optional[str] = None) -> AudioFeatureVector:
-        """        Extract comprehensive audio features for similarity analysis
+        """
+        Extract comprehensive audio features for similarity analysis
         
         Args:
             audio_data: Input audio signal
@@ -287,7 +300,8 @@ class SimilarityEngine:
             
         Returns:
             Comprehensive audio feature vector
-        """        try:
+        """
+        try:
             # Generate audio ID if not provided
             if audio_id is None:
                 audio_id = self._generate_audio_id(audio_data)
@@ -367,7 +381,8 @@ class SimilarityEngine:
                                  audio1_id: str,
                                  audio2_id: str,
                                  metrics: Optional[List[SimilarityMetric]] = None) -> SimilarityMatch:
-        """        Calculate detailed similarity between two audio files
+        """
+        Calculate detailed similarity between two audio files
         
         Args:
             audio1_id: First audio identifier
@@ -376,7 +391,8 @@ class SimilarityEngine:
             
         Returns:
             Detailed similarity match result
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             # Check cache first
@@ -460,7 +476,8 @@ class SimilarityEngine:
                                  max_results: int = 20,
                                  similarity_threshold: float = 0.5,
                                  search_types: Optional[List[SimilarityType]] = None) -> SimilaritySearchResult:
-        """        Search for similar audio in the database
+        """
+        Search for similar audio in the database
         
         Args:
             query_audio_id: Audio to search for
@@ -470,7 +487,8 @@ class SimilarityEngine:
             
         Returns:
             Comprehensive search results
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             query_features = self._get_features(query_audio_id)
@@ -552,7 +570,8 @@ class SimilarityEngine:
     
     # Feature extraction methods
     async def _extract_spectral_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, np.ndarray]:
-        """Extract spectral features for similarity analysis"""        def extract():
+        """Extract spectral features for similarity analysis"""
+        def extract():
             try:
                 features = {}
                 
@@ -595,7 +614,8 @@ class SimilarityEngine:
         return await asyncio.get_event_loop().run_in_executor(self.thread_executor, extract)
     
     async def _extract_rhythmic_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, np.ndarray]:
-        """Extract rhythmic features for similarity analysis"""        def extract():
+        """Extract rhythmic features for similarity analysis"""
+        def extract():
             try:
                 features = {}
                 
@@ -644,7 +664,8 @@ class SimilarityEngine:
         return await asyncio.get_event_loop().run_in_executor(self.thread_executor, extract)
     
     async def _extract_harmonic_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, np.ndarray]:
-        """Extract harmonic features for similarity analysis"""        def extract():
+        """Extract harmonic features for similarity analysis"""
+        def extract():
             try:
                 features = {}
                 
@@ -691,7 +712,8 @@ class SimilarityEngine:
         return await asyncio.get_event_loop().run_in_executor(self.thread_executor, extract)
     
     async def _extract_high_level_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, np.ndarray]:
-        """Extract high-level semantic features"""        def extract():
+        """Extract high-level semantic features"""
+        def extract():
             try:
                 features = {}
                 
@@ -752,7 +774,8 @@ class SimilarityEngine:
                                          features1: AudioFeatureVector,
                                          features2: AudioFeatureVector,
                                          metric: SimilarityMetric) -> float:
-        """Calculate similarity for a specific metric"""        try:
+        """Calculate similarity for a specific metric"""
+        try:
             if metric == SimilarityMetric.SPECTRAL_SIMILARITY:
                 return self._calculate_spectral_similarity(features1, features2)
             elif metric == SimilarityMetric.TIMBRAL_SIMILARITY:
@@ -781,7 +804,8 @@ class SimilarityEngine:
             return 0.0
     
     def _calculate_spectral_similarity(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> float:
-        """Calculate spectral similarity"""        try:
+        """Calculate spectral similarity"""
+        try:
             # Compare spectral features
             spec_sim = cosine_similarity(
                 features1.spectral_features.reshape(1, -1),
@@ -812,7 +836,8 @@ class SimilarityEngine:
             return 0.0
     
     def _calculate_timbral_similarity(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> float:
-        """Calculate timbral similarity"""        try:
+        """Calculate timbral similarity"""
+        try:
             # MFCC similarity (primary timbral descriptor)
             mfcc_sim = cosine_similarity(
                 features1.mfcc_features.reshape(1, -1),
@@ -825,7 +850,8 @@ class SimilarityEngine:
             return 0.0
     
     def _calculate_rhythmic_similarity(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> float:
-        """Calculate rhythmic similarity"""        try:
+        """Calculate rhythmic similarity"""
+        try:
             # Tempo similarity
             tempo_diff = abs(features1.tempo - features2.tempo)
             tempo_sim = max(0, 1.0 - tempo_diff / 100.0)  # Normalize by 100 BPM
@@ -856,7 +882,8 @@ class SimilarityEngine:
             return 0.0
     
     def _calculate_harmonic_similarity(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> float:
-        """Calculate harmonic similarity"""        try:
+        """Calculate harmonic similarity"""
+        try:
             # Chroma similarity
             chroma_sim = cosine_similarity(
                 features1.chroma_features.reshape(1, -1),
@@ -889,7 +916,8 @@ class SimilarityEngine:
             return 0.0
     
     def _calculate_mood_similarity(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> float:
-        """Calculate mood similarity"""        try:
+        """Calculate mood similarity"""
+        try:
             if features1.mood_features.size > 0 and features2.mood_features.size > 0:
                 mood_sim = cosine_similarity(
                     features1.mood_features.reshape(1, -1),
@@ -901,7 +929,8 @@ class SimilarityEngine:
             return 0.0
     
     def _calculate_style_similarity(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> float:
-        """Calculate style similarity"""        try:
+        """Calculate style similarity"""
+        try:
             if features1.style_features.size > 0 and features2.style_features.size > 0:
                 style_sim = cosine_similarity(
                     features1.style_features.reshape(1, -1),
@@ -914,16 +943,20 @@ class SimilarityEngine:
     
     # Placeholder implementations for remaining similarity methods
     def _calculate_structural_similarity(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> float:
-        """Calculate structural similarity (placeholder)"""        return 0.7
+        """Calculate structural similarity (placeholder)"""
+        return 0.7
     
     def _calculate_perceptual_similarity(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> float:
-        """Calculate perceptual similarity (placeholder)"""        return 0.6
+        """Calculate perceptual similarity (placeholder)"""
+        return 0.6
     
     def _calculate_semantic_similarity(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> float:
-        """Calculate semantic similarity (placeholder)"""        return 0.5
+        """Calculate semantic similarity (placeholder)"""
+        return 0.5
     
     def _calculate_temporal_similarity(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> float:
-        """Calculate temporal similarity"""        try:
+        """Calculate temporal similarity"""
+        try:
             # Duration similarity
             duration_ratio = min(features1.duration, features2.duration) / max(features1.duration, features2.duration)
             return float(duration_ratio)
@@ -932,7 +965,8 @@ class SimilarityEngine:
     
     # Helper methods
     def _calculate_weighted_similarity(self, metric_scores: Dict[SimilarityMetric, float]) -> float:
-        """Calculate weighted overall similarity"""        total_weight = 0.0
+        """Calculate weighted overall similarity"""
+        total_weight = 0.0
         weighted_sum = 0.0
         
         for metric, score in metric_scores.items():
@@ -946,7 +980,8 @@ class SimilarityEngine:
     
     def _determine_similarity_type(self, overall_similarity: float, 
                                  metric_scores: Dict[SimilarityMetric, float]) -> SimilarityType:
-        """Determine the type of similarity"""        # Check thresholds in order of specificity
+        """Determine the type of similarity"""
+        # Check thresholds in order of specificity
         for sim_type, threshold in sorted(self.similarity_thresholds.items(), 
                                         key=lambda x: x[1], reverse=True):
             if overall_similarity >= threshold:
@@ -956,7 +991,8 @@ class SimilarityEngine:
     
     def _determine_confidence(self, overall_similarity: float,
                             metric_scores: Dict[SimilarityMetric, float]) -> MatchConfidence:
-        """Determine confidence in the match"""        if overall_similarity >= 0.95:
+        """Determine confidence in the match"""
+        if overall_similarity >= 0.95:
             return MatchConfidence.VERY_HIGH
         elif overall_similarity >= 0.85:
             return MatchConfidence.HIGH
@@ -969,7 +1005,8 @@ class SimilarityEngine:
     
     async def _calculate_temporal_alignment(self, features1: AudioFeatureVector, 
                                           features2: AudioFeatureVector) -> Optional[Dict[str, float]]:
-        """Calculate temporal alignment between audio files"""        # Placeholder for temporal alignment analysis
+        """Calculate temporal alignment between audio files"""
+        # Placeholder for temporal alignment analysis
         return {
             'time_offset': 0.0,
             'alignment_confidence': 0.8,
@@ -977,7 +1014,8 @@ class SimilarityEngine:
         }
     
     def _detect_key_transposition(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> Optional[int]:
-        """Detect key transposition between audio files"""        try:
+        """Detect key transposition between audio files"""
+        try:
             if features1.chroma_features.size > 0 and features2.chroma_features.size > 0:
                 # Find the shift that maximizes correlation
                 max_correlation = 0
@@ -996,7 +1034,8 @@ class SimilarityEngine:
             return None
     
     def _calculate_tempo_ratio(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> Optional[float]:
-        """Calculate tempo ratio between audio files"""        try:
+        """Calculate tempo ratio between audio files"""
+        try:
             if features1.tempo > 0 and features2.tempo > 0:
                 return float(features2.tempo / features1.tempo)
             return None
@@ -1006,7 +1045,8 @@ class SimilarityEngine:
     def _generate_similarity_explanation(self, overall_similarity: float,
                                        similarity_type: SimilarityType,
                                        metric_scores: Dict[SimilarityMetric, float]) -> str:
-        """Generate human-readable explanation of similarity"""        explanations = []
+        """Generate human-readable explanation of similarity"""
+        explanations = []
         
         # Overall assessment
         if overall_similarity >= 0.9:
@@ -1041,7 +1081,8 @@ class SimilarityEngine:
     def _calculate_match_quality_indicators(self, features1: AudioFeatureVector,
                                           features2: AudioFeatureVector,
                                           metric_scores: Dict[SimilarityMetric, float]) -> Dict[str, float]:
-        """Calculate match quality indicators"""        return {
+        """Calculate match quality indicators"""
+        return {
             'feature_quality': (features1.feature_quality_score + features2.feature_quality_score) / 2,
             'score_consistency': 1.0 - np.std(list(metric_scores.values())),
             'temporal_consistency': 0.8,  # Placeholder
@@ -1049,26 +1090,31 @@ class SimilarityEngine:
         }
     
     def _group_matches_by_type(self, matches: List[SimilarityMatch]) -> Dict[SimilarityType, List[SimilarityMatch]]:
-        """Group matches by similarity type"""        grouped = defaultdict(list)
+        """Group matches by similarity type"""
+        grouped = defaultdict(list)
         for match in matches:
             grouped[match.similarity_type].append(match)
         return dict(grouped)
     
     # Database and caching methods
     def _get_features(self, audio_id: str) -> Optional[AudioFeatureVector]:
-        """Get features from database"""        with self.database_lock:
+        """Get features from database"""
+        with self.database_lock:
             return self.feature_database.get(audio_id)
     
     def _update_database_index(self):
-        """Update database search index"""        # Placeholder for database indexing
+        """Update database search index"""
+        # Placeholder for database indexing
         self.database_index = True
     
     def _get_cached_similarity(self, cache_key: str) -> Optional[SimilarityMatch]:
-        """Get cached similarity result"""        with self.cache_lock:
+        """Get cached similarity result"""
+        with self.cache_lock:
             return self.similarity_cache.get(cache_key)
     
     def _cache_similarity(self, cache_key: str, result: SimilarityMatch):
-        """Cache similarity result"""        with self.cache_lock:
+        """Cache similarity result"""
+        with self.cache_lock:
             if len(self.similarity_cache) >= self.max_cache_size:
                 # Remove oldest entries (simplified LRU)
                 oldest_key = next(iter(self.similarity_cache))
@@ -1076,7 +1122,8 @@ class SimilarityEngine:
             self.similarity_cache[cache_key] = result
     
     def _calculate_feature_quality(self, *feature_dicts) -> float:
-        """Calculate overall feature quality score"""        try:
+        """Calculate overall feature quality score"""
+        try:
             quality_factors = []
             
             for features in feature_dicts:
@@ -1095,13 +1142,15 @@ class SimilarityEngine:
             return 0.5
     
     def _generate_audio_id(self, audio_data: np.ndarray) -> str:
-        """Generate unique audio ID"""        content_hash = hashlib.sha256(audio_data.tobytes()).hexdigest()
+        """Generate unique audio ID"""
+        content_hash = hashlib.sha256(audio_data.tobytes()).hexdigest()
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         return f"audio_{timestamp}_{content_hash[:16]}"
     
     # Public utility methods
     def get_database_stats(self) -> Dict[str, Any]:
-        """Get database statistics"""        with self.database_lock:
+        """Get database statistics"""
+        with self.database_lock:
             total_features = len(self.feature_database)
             
             if total_features > 0:
@@ -1124,18 +1173,21 @@ class SimilarityEngine:
         }
     
     def clear_database(self):
-        """Clear feature database"""        with self.database_lock:
+        """Clear feature database"""
+        with self.database_lock:
             self.feature_database.clear()
             self.database_index = None
         self.logger.info("Feature database cleared")
     
     def clear_cache(self):
-        """Clear similarity cache"""        with self.cache_lock:
+        """Clear similarity cache"""
+        with self.cache_lock:
             self.similarity_cache.clear()
         self.logger.info("Similarity cache cleared")
     
     def save_database(self, filepath: str):
-        """Save feature database to file"""        try:
+        """Save feature database to file"""
+        try:
             with self.database_lock:
                 with open(filepath, 'wb') as f:
                     pickle.dump(self.feature_database, f)
@@ -1145,7 +1197,8 @@ class SimilarityEngine:
             raise
     
     def load_database(self, filepath: str):
-        """Load feature database from file"""        try:
+        """Load feature database from file"""
+        try:
             with open(filepath, 'rb') as f:
                 loaded_db = pickle.load(f)
             
@@ -1159,7 +1212,8 @@ class SimilarityEngine:
             raise
     
     def __del__(self):
-        """Cleanup resources"""        try:
+        """Cleanup resources"""
+        try:
             if hasattr(self, 'thread_executor'):
                 self.thread_executor.shutdown(wait=False)
             if hasattr(self, 'process_executor'):

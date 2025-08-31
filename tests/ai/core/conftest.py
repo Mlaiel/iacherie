@@ -5,7 +5,8 @@ Provides enterprise-grade testing infrastructure.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import pytest
+"""
+import pytest
 import tempfile
 import shutil
 import os
@@ -29,29 +30,34 @@ FIXTURES_DIR.mkdir(exist_ok=True)
 
 @pytest.fixture(scope="session")
 def test_config():
-    """Global test configuration fixture"""    return TEST_CONFIG.copy()
+    """Global test configuration fixture"""
+    return TEST_CONFIG.copy()
 
 
 @pytest.fixture(scope="session") 
 def test_data_config():
-    """Test data configuration fixture"""    return TEST_DATA_CONFIG.copy()
+    """Test data configuration fixture"""
+    return TEST_DATA_CONFIG.copy()
 
 
 @pytest.fixture(scope="session")
 def mock_creators():
-    """Mock creator data fixture"""    return MOCK_CREATORS.copy()
+    """Mock creator data fixture"""
+    return MOCK_CREATORS.copy()
 
 
 @pytest.fixture
 def temp_dir():
-    """Temporary directory fixture"""    temp_path = tempfile.mkdtemp()
+    """Temporary directory fixture"""
+    temp_path = tempfile.mkdtemp()
     yield temp_path
     shutil.rmtree(temp_path, ignore_errors=True)
 
 
 @pytest.fixture
 def temp_file():
-    """Temporary file fixture"""    fd, temp_path = tempfile.mkstemp()
+    """Temporary file fixture"""
+    fd, temp_path = tempfile.mkstemp()
     os.close(fd)
     yield temp_path
     try:
@@ -62,7 +68,8 @@ def temp_file():
 
 @pytest.fixture
 def temp_config_file():
-    """Temporary configuration file fixture"""    config_data = {
+    """Temporary configuration file fixture"""
+    config_data = {
         "environment": "test",
         "debug_mode": True,
         "ai_engine": {
@@ -92,7 +99,8 @@ def temp_config_file():
 
 @pytest.fixture
 def mock_audio_file(temp_dir):
-    """Mock audio file fixture"""    audio_path = Path(temp_dir) / "test_audio.mp3"
+    """Mock audio file fixture"""
+    audio_path = Path(temp_dir) / "test_audio.mp3"
     # Create a mock audio file (just bytes for testing)
     with open(audio_path, 'wb') as f:
         f.write(b"MOCK_AUDIO_DATA" * 1000)  # ~14KB mock file
@@ -101,7 +109,8 @@ def mock_audio_file(temp_dir):
 
 @pytest.fixture
 def mock_image_file(temp_dir):
-    """Mock image file fixture"""    image_path = Path(temp_dir) / "test_image.jpg"
+    """Mock image file fixture"""
+    image_path = Path(temp_dir) / "test_image.jpg"
     # Create a mock image file
     with open(image_path, 'wb') as f:
         f.write(b"MOCK_IMAGE_DATA" * 1000)  # ~14KB mock file
@@ -110,7 +119,8 @@ def mock_image_file(temp_dir):
 
 @pytest.fixture
 def mock_text_file(temp_dir):
-    """Mock text file fixture"""    text_path = Path(temp_dir) / "test_text.txt"
+    """Mock text file fixture"""
+    text_path = Path(temp_dir) / "test_text.txt"
     with open(text_path, 'w') as f:
         f.write("This is a test text file for content validation testing.")
     return str(text_path)
@@ -118,7 +128,8 @@ def mock_text_file(temp_dir):
 
 @pytest.fixture
 def sample_content_data():
-    """Sample content data for testing"""    return {
+    """Sample content data for testing"""
+    return {
         "audio": {
             "type": "audio",
             "format": "mp3",
@@ -168,7 +179,8 @@ def sample_content_data():
 
 @pytest.fixture
 def mock_ai_model():
-    """Mock AI model fixture"""    model = MagicMock()
+    """Mock AI model fixture"""
+    model = MagicMock()
     model.name = "test_model"
     model.size_mb = 100
     model.predict.return_value = {"prediction": "test_result", "confidence": 0.95}
@@ -178,7 +190,8 @@ def mock_ai_model():
 
 @pytest.fixture
 def mock_performance_data():
-    """Mock performance data fixture"""    return {
+    """Mock performance data fixture"""
+    return {
         "cpu_percent": 45.5,
         "memory_percent": 65.2,
         "disk_usage": 78.9,
@@ -190,7 +203,8 @@ def mock_performance_data():
 
 @pytest.fixture
 def mock_metrics_data():
-    """Mock metrics data fixture"""    from datetime import datetime
+    """Mock metrics data fixture"""
+    from datetime import datetime
     return {
         "timestamp": datetime.now(),
         "metrics": [
@@ -204,7 +218,8 @@ def mock_metrics_data():
 
 @pytest.fixture
 def mock_validation_result():
-    """Mock validation result fixture"""    class MockValidationResult:
+    """Mock validation result fixture"""
+    class MockValidationResult:
         def __init__(self, is_valid=True, score=85.0, issues=None):
             self.is_valid = is_valid
             self.score = score
@@ -216,7 +231,8 @@ def mock_validation_result():
 
 @pytest.fixture
 def mock_processing_context():
-    """Mock processing context fixture"""    class MockProcessingContext:
+    """Mock processing context fixture"""
+    class MockProcessingContext:
         def __init__(self):
             self.content = {
                 "type": "audio",
@@ -233,7 +249,8 @@ def mock_processing_context():
 
 @pytest.fixture
 def mock_database_connection():
-    """Mock database connection fixture"""    db_mock = MagicMock()
+    """Mock database connection fixture"""
+    db_mock = MagicMock()
     db_mock.connect.return_value = True
     db_mock.execute.return_value = {"rows_affected": 1}
     db_mock.fetch.return_value = [{"id": 1, "name": "test"}]
@@ -243,7 +260,8 @@ def mock_database_connection():
 
 @pytest.fixture
 def mock_redis_cache():
-    """Mock Redis cache fixture"""    cache_mock = MagicMock()
+    """Mock Redis cache fixture"""
+    cache_mock = MagicMock()
     cache_mock.get.return_value = None
     cache_mock.set.return_value = True
     cache_mock.delete.return_value = True
@@ -253,7 +271,8 @@ def mock_redis_cache():
 
 @pytest.fixture
 def mock_external_api():
-    """Mock external API fixture"""    api_mock = MagicMock()
+    """Mock external API fixture"""
+    api_mock = MagicMock()
     api_mock.get.return_value = {"status": "success", "data": {"result": "test"}}
     api_mock.post.return_value = {"status": "success", "id": "123"}
     api_mock.put.return_value = {"status": "success"}
@@ -263,21 +282,24 @@ def mock_external_api():
 
 @pytest.fixture
 def event_loop():
-    """Event loop fixture for async tests"""    loop = asyncio.new_event_loop()
+    """Event loop fixture for async tests"""
+    loop = asyncio.new_event_loop()
     yield loop
     loop.close()
 
 
 @pytest.fixture
 async def async_test_client():
-    """Async test client fixture"""    from aiohttp import ClientSession
+    """Async test client fixture"""
+    from aiohttp import ClientSession
     async with ClientSession() as session:
         yield session
 
 
 @pytest.fixture(scope="session")
 def performance_benchmarks():
-    """Performance benchmark thresholds"""    return {
+    """Performance benchmark thresholds"""
+    return {
         "validation_max_time": 0.1,  # 100ms
         "ai_inference_max_time": 1.0,  # 1 second
         "pipeline_max_time": 5.0,  # 5 seconds
@@ -288,7 +310,8 @@ def performance_benchmarks():
 
 # Pytest configuration
 def pytest_configure(config):
-    """Pytest configuration hook"""    # Add custom markers
+    """Pytest configuration hook"""
+    # Add custom markers
     config.addinivalue_line(
         "markers", "slow: marks tests as slow (deselect with '-m \"not slow\"')"
     )
@@ -307,7 +330,8 @@ def pytest_configure(config):
 
 
 def pytest_collection_modifyitems(config, items):
-    """Modify test collection"""    # Auto-mark slow tests
+    """Modify test collection"""
+    # Auto-mark slow tests
     for item in items:
         if "slow" in item.name or "integration" in item.name:
             item.add_marker(pytest.mark.slow)
@@ -315,7 +339,8 @@ def pytest_collection_modifyitems(config, items):
 
 @pytest.fixture(autouse=True)
 def setup_test_environment():
-    """Auto-setup test environment for each test"""    # Setup
+    """Auto-setup test environment for each test"""
+    # Setup
     os.environ["AI_ENVIRONMENT"] = "test"
     os.environ["AI_DEBUG"] = "true"
     
@@ -332,7 +357,8 @@ def setup_test_environment():
 
 @pytest.fixture
 def capture_logs():
-    """Capture logs during test execution"""    import logging
+    """Capture logs during test execution"""
+    import logging
     from io import StringIO
     
     log_capture = StringIO()
@@ -355,7 +381,8 @@ def capture_logs():
 # Error handling for tests
 @pytest.fixture
 def error_handler():
-    """Error handling fixture for tests"""    errors = []
+    """Error handling fixture for tests"""
+    errors = []
     
     def handle_error(error):
         errors.append(str(error))
@@ -366,7 +393,8 @@ def error_handler():
 # Mock patches for external dependencies
 @pytest.fixture
 def mock_torch():
-    """Mock PyTorch for tests"""    with patch('torch.cuda.is_available', return_value=True), \
+    """Mock PyTorch for tests"""
+    with patch('torch.cuda.is_available', return_value=True), \
          patch('torch.cuda.device_count', return_value=1), \
          patch('torch.cuda.get_device_name', return_value="Mock GPU"):
         yield
@@ -374,7 +402,8 @@ def mock_torch():
 
 @pytest.fixture  
 def mock_transformers():
-    """Mock Transformers library for tests"""    with patch('transformers.AutoModel.from_pretrained') as mock_model, \
+    """Mock Transformers library for tests"""
+    with patch('transformers.AutoModel.from_pretrained') as mock_model, \
          patch('transformers.AutoTokenizer.from_pretrained') as mock_tokenizer:
         
         mock_model.return_value = MagicMock()
@@ -384,7 +413,8 @@ def mock_transformers():
 
 @pytest.fixture
 def mock_psutil():
-    """Mock psutil for system monitoring tests"""    with patch('psutil.cpu_percent', return_value=45.5), \
+    """Mock psutil for system monitoring tests"""
+    with patch('psutil.cpu_percent', return_value=45.5), \
          patch('psutil.virtual_memory') as mock_memory, \
          patch('psutil.disk_usage') as mock_disk:
         
@@ -408,7 +438,8 @@ def mock_psutil():
 # Test data generators
 @pytest.fixture
 def generate_test_audio_content():
-    """Generate test audio content"""    def _generate(duration=180, format="mp3", quality="high"):
+    """Generate test audio content"""
+    def _generate(duration=180, format="mp3", quality="high"):
         return {
             "type": "audio",
             "format": format,
@@ -426,7 +457,8 @@ def generate_test_audio_content():
 
 @pytest.fixture
 def generate_test_image_content():
-    """Generate test image content"""    def _generate(width=1920, height=1080, format="jpg"):
+    """Generate test image content"""
+    def _generate(width=1920, height=1080, format="jpg"):
         return {
             "type": "image",
             "format": format,
@@ -444,7 +476,8 @@ def generate_test_image_content():
 # Performance testing utilities
 @pytest.fixture
 def performance_tracker():
-    """Performance tracking fixture"""    import time
+    """Performance tracking fixture"""
+    import time
     import psutil
     
     class PerformanceTracker:

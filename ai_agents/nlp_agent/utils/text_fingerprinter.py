@@ -6,7 +6,8 @@ and similarity analysis with high precision and robust matching capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import logging
+"""
+import logging
 import asyncio
 import hashlib
 import numpy as np
@@ -60,7 +61,8 @@ from .config import NLPAgentConfig, default_config
 logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
-    """Types of text fingerprints"""    HASH = "hash"  # Simple hash-based
+    """Types of text fingerprints"""
+    HASH = "hash"  # Simple hash-based
     SHINGLE = "shingle"  # N-gram shingles
     SEMANTIC = "semantic"  # Semantic embeddings
     STRUCTURAL = "structural"  # Text structure
@@ -68,7 +70,8 @@ class FingerprintType(Enum):
     HYBRID = "hybrid"  # Combined approach
 
 class SimilarityMethod(Enum):
-    """Similarity calculation methods"""    COSINE = "cosine"
+    """Similarity calculation methods"""
+    COSINE = "cosine"
     JACCARD = "jaccard"
     HAMMING = "hamming"
     EUCLIDEAN = "euclidean"
@@ -76,7 +79,8 @@ class SimilarityMethod(Enum):
 
 @dataclass
 class TextFingerprint:
-    """Text fingerprint with multiple representations"""    text_id: str
+    """Text fingerprint with multiple representations"""
+    text_id: str
     original_text: str
     hash_fingerprint: str
     shingle_fingerprint: List[str] = field(default_factory=list)
@@ -88,7 +92,8 @@ class TextFingerprint:
 
 @dataclass
 class SimilarityResult:
-    """Result of similarity comparison between texts"""    text1_id: str
+    """Result of similarity comparison between texts"""
+    text1_id: str
     text2_id: str
     overall_similarity: float
     hash_similarity: float
@@ -104,7 +109,8 @@ class SimilarityResult:
 
 @dataclass
 class FingerprintingResult:
-    """Complete fingerprinting analysis result"""    fingerprints: List[TextFingerprint] = field(default_factory=list)
+    """Complete fingerprinting analysis result"""
+    fingerprints: List[TextFingerprint] = field(default_factory=list)
     similarity_matrix: Optional[np.ndarray] = None
     duplicate_pairs: List[Tuple[str, str, float]] = field(default_factory=list)
     near_duplicate_pairs: List[Tuple[str, str, float]] = field(default_factory=list)
@@ -114,11 +120,14 @@ class FingerprintingResult:
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
 
 class TextFingerprinter:
-    """    Advanced text fingerprinting system for content protection, plagiarism detection,
+    """
+    Advanced text fingerprinting system for content protection, plagiarism detection,
     and similarity analysis with multiple fingerprinting techniques.
-    """    
+    """
+    
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize Text Fingerprinter"""        self.config = config or default_config
+        """Initialize Text Fingerprinter"""
+        self.config = config or default_config
         self.fingerprint_cache = {}
         self.similarity_cache = {}
         self.vectorizers = {}
@@ -128,7 +137,8 @@ class TextFingerprinter:
         self._initialize_components()
     
     def _load_stop_words(self) -> set:
-        """Load stop words for text processing"""        stop_words = set()
+        """Load stop words for text processing"""
+        stop_words = set()
         
         try:
             if NLTK_AVAILABLE:
@@ -148,7 +158,8 @@ class TextFingerprinter:
         return stop_words
     
     def _initialize_components(self):
-        """Initialize fingerprinting components"""        try:
+        """Initialize fingerprinting components"""
+        try:
             # Initialize scikit-learn vectorizers
             if SKLEARN_AVAILABLE:
                 self.vectorizers["tfidf"] = TfidfVectorizer(
@@ -185,7 +196,8 @@ class TextFingerprinter:
             logger.error(f"Failed to initialize fingerprinting components: {e}")
     
     def _get_device(self) -> int:
-        """Get optimal device for model execution"""        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
+        """Get optimal device for model execution"""
+        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
             try:
                 if torch.cuda.is_available():
                     return 0  # Use first GPU
@@ -194,7 +206,8 @@ class TextFingerprinter:
         return -1  # Use CPU
     
     def _generate_text_id(self, text: str, custom_id: Optional[str] = None) -> str:
-        """Generate unique ID for text"""        if custom_id:
+        """Generate unique ID for text"""
+        if custom_id:
             return custom_id
         
         # Generate ID based on text hash and timestamp
@@ -208,7 +221,8 @@ class TextFingerprinter:
         text_id: Optional[str] = None,
         fingerprint_types: Optional[List[FingerprintType]] = None
     ) -> TextFingerprint:
-        """        Create comprehensive fingerprint for text
+        """
+        Create comprehensive fingerprint for text
         
         Args:
             text: Text to fingerprint
@@ -217,7 +231,8 @@ class TextFingerprinter:
         
         Returns:
             TextFingerprint with all requested fingerprint types
-        """        if not text or not isinstance(text, str):
+        """
+        if not text or not isinstance(text, str):
             raise ValueError("Input text must be a non-empty string")
         
         if fingerprint_types is None:
@@ -280,7 +295,8 @@ class TextFingerprinter:
             raise
     
     async def _create_hash_fingerprint(self, text: str) -> str:
-        """Create hash-based fingerprint"""        # Normalize text
+        """Create hash-based fingerprint"""
+        # Normalize text
         normalized = re.sub(r'\s+', ' ', text.lower().strip())
         
         # Create multiple hashes for robustness
@@ -294,7 +310,8 @@ class TextFingerprinter:
         return combined_hash
     
     async def _create_shingle_fingerprint(self, text: str, k: int = 5) -> List[str]:
-        """Create shingle-based fingerprint using k-grams"""        # Normalize text
+        """Create shingle-based fingerprint using k-grams"""
+        # Normalize text
         normalized = re.sub(r'[^a-zA-Z0-9\s]', '', text.lower())
         words = normalized.split()
         
@@ -328,7 +345,8 @@ class TextFingerprinter:
         return list(set(shingles))  # Remove duplicates
     
     async def _create_semantic_fingerprint(self, text: str) -> Optional[np.ndarray]:
-        """Create semantic fingerprint using embeddings"""        try:
+        """Create semantic fingerprint using embeddings"""
+        try:
             if TRANSFORMERS_AVAILABLE and "embeddings" in self.pipelines:
                 # Generate embeddings
                 embeddings = await asyncio.get_event_loop().run_in_executor(
@@ -352,7 +370,8 @@ class TextFingerprinter:
         return None
     
     async def _create_structural_fingerprint(self, text: str) -> Dict[str, float]:
-        """Create structural fingerprint based on text structure"""        structural_features = {}
+        """Create structural fingerprint based on text structure"""
+        structural_features = {}
         
         try:
             # Basic text statistics
@@ -411,7 +430,8 @@ class TextFingerprinter:
         return structural_features
     
     async def _create_stylometric_fingerprint(self, text: str) -> Dict[str, float]:
-        """Create stylometric fingerprint based on writing style"""        stylometric_features = {}
+        """Create stylometric fingerprint based on writing style"""
+        stylometric_features = {}
         
         try:
             words = text.split()
@@ -459,7 +479,8 @@ class TextFingerprinter:
         return stylometric_features
     
     def _estimate_syllables(self, word: str) -> int:
-        """Estimate number of syllables in a word (simple heuristic)"""        word = word.lower().strip()
+        """Estimate number of syllables in a word (simple heuristic)"""
+        word = word.lower().strip()
         if len(word) <= 3:
             return 1
         
@@ -487,7 +508,8 @@ class TextFingerprinter:
         fingerprint2: TextFingerprint,
         similarity_method: SimilarityMethod = SimilarityMethod.COSINE
     ) -> SimilarityResult:
-        """        Compare two fingerprints and calculate similarity
+        """
+        Compare two fingerprints and calculate similarity
         
         Args:
             fingerprint1: First fingerprint
@@ -496,7 +518,8 @@ class TextFingerprinter:
         
         Returns:
             SimilarityResult with detailed comparison
-        """        result = SimilarityResult(
+        """
+        result = SimilarityResult(
             text1_id=fingerprint1.text_id,
             text2_id=fingerprint2.text_id,
             overall_similarity=0.0,
@@ -592,7 +615,8 @@ class TextFingerprinter:
             return result
     
     def _calculate_hash_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate similarity between hash fingerprints"""        if hash1 == hash2:
+        """Calculate similarity between hash fingerprints"""
+        if hash1 == hash2:
             return 1.0
         
         # Calculate Hamming distance for similar-length hashes
@@ -603,7 +627,8 @@ class TextFingerprinter:
         return 0.0
     
     def _calculate_shingle_similarity(self, shingles1: List[str], shingles2: List[str]) -> float:
-        """Calculate Jaccard similarity between shingle sets"""        set1 = set(shingles1)
+        """Calculate Jaccard similarity between shingle sets"""
+        set1 = set(shingles1)
         set2 = set(shingles2)
         
         intersection = len(set1 & set2)
@@ -617,7 +642,8 @@ class TextFingerprinter:
         vector2: np.ndarray,
         similarity_method: SimilarityMethod
     ) -> float:
-        """Calculate semantic similarity between vectors"""        try:
+        """Calculate semantic similarity between vectors"""
+        try:
             if similarity_method == SimilarityMethod.COSINE:
                 # Cosine similarity
                 dot_product = np.dot(vector1, vector2)
@@ -639,7 +665,8 @@ class TextFingerprinter:
             return 0.0
     
     def _calculate_structural_similarity(self, struct1: Dict[str, float], struct2: Dict[str, float]) -> float:
-        """Calculate similarity between structural fingerprints"""        try:
+        """Calculate similarity between structural fingerprints"""
+        try:
             common_keys = set(struct1.keys()) & set(struct2.keys())
             if not common_keys:
                 return 0.0
@@ -659,7 +686,8 @@ class TextFingerprinter:
             return 0.0
     
     def _calculate_stylometric_similarity(self, style1: Dict[str, float], style2: Dict[str, float]) -> float:
-        """Calculate similarity between stylometric fingerprints"""        return self._calculate_structural_similarity(style1, style2)  # Same method
+        """Calculate similarity between stylometric fingerprints"""
+        return self._calculate_structural_similarity(style1, style2)  # Same method
     
     async def batch_fingerprint(
         self,
@@ -667,7 +695,8 @@ class TextFingerprinter:
         text_ids: Optional[List[str]] = None,
         fingerprint_types: Optional[List[FingerprintType]] = None
     ) -> List[TextFingerprint]:
-        """Create fingerprints for multiple texts"""        if text_ids and len(text_ids) != len(texts):
+        """Create fingerprints for multiple texts"""
+        if text_ids and len(text_ids) != len(texts):
             raise ValueError("Number of text_ids must match number of texts")
         
         fingerprints = []
@@ -685,7 +714,8 @@ class TextFingerprinter:
         similarity_threshold: float = 0.8,
         text_ids: Optional[List[str]] = None
     ) -> FingerprintingResult:
-        """Find duplicate and near-duplicate texts"""        start_time = asyncio.get_event_loop().time()
+        """Find duplicate and near-duplicate texts"""
+        start_time = asyncio.get_event_loop().time()
         
         # Create fingerprints
         fingerprints = await self.batch_fingerprint(texts, text_ids)
@@ -752,7 +782,8 @@ class TextFingerprinter:
         similarity_matrix: np.ndarray,
         threshold: float
     ) -> List[List[str]]:
-        """Create clusters of similar texts"""        clusters = []
+        """Create clusters of similar texts"""
+        clusters = []
         visited = set()
         
         try:
@@ -780,7 +811,8 @@ class TextFingerprinter:
         return clusters
     
     def _get_processing_method(self) -> str:
-        """Get the processing method being used"""        methods = []
+        """Get the processing method being used"""
+        methods = []
         
         if SKLEARN_AVAILABLE:
             methods.append("sklearn")
@@ -794,12 +826,14 @@ class TextFingerprinter:
         return "+".join(methods) if methods else "basic"
     
     def clear_cache(self):
-        """Clear fingerprint and similarity caches"""        self.fingerprint_cache.clear()
+        """Clear fingerprint and similarity caches"""
+        self.fingerprint_cache.clear()
         self.similarity_cache.clear()
         logger.info("Fingerprint caches cleared")
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""        status = {
+        """Perform health check"""
+        status = {
             "status": "healthy",
             "sklearn_available": SKLEARN_AVAILABLE,
             "transformers_available": TRANSFORMERS_AVAILABLE,
@@ -822,7 +856,8 @@ class TextFingerprinter:
         return status
     
     def shutdown(self):
-        """Shutdown the text fingerprinter"""        logger.info("Shutting down Text Fingerprinter")
+        """Shutdown the text fingerprinter"""
+        logger.info("Shutting down Text Fingerprinter")
         
         # Clear caches
         self.clear_cache()
@@ -837,12 +872,14 @@ class TextFingerprinter:
 
 # Utility functions
 def calculate_jaccard_similarity(set1: Set, set2: Set) -> float:
-    """Calculate Jaccard similarity between two sets"""    intersection = len(set1 & set2)
+    """Calculate Jaccard similarity between two sets"""
+    intersection = len(set1 & set2)
     union = len(set1 | set2)
     return intersection / union if union > 0 else 0.0
 
 def normalize_text_for_comparison(text: str) -> str:
-    """Normalize text for comparison purposes"""    # Convert to lowercase
+    """Normalize text for comparison purposes"""
+    # Convert to lowercase
     normalized = text.lower()
     
     # Remove extra whitespace
@@ -854,7 +891,8 @@ def normalize_text_for_comparison(text: str) -> str:
     return normalized.strip()
 
 def estimate_similarity_threshold(similarity_scores: List[float]) -> float:
-    """Estimate appropriate similarity threshold based on score distribution"""    if not similarity_scores:
+    """Estimate appropriate similarity threshold based on score distribution"""
+    if not similarity_scores:
         return 0.8
     
     scores = np.array(similarity_scores)

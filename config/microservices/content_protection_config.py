@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from dataclasses import dataclass, field
+"""
+from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union
 from enum import Enum
 import asyncio
@@ -25,14 +26,16 @@ logger = logging.getLogger(__name__)
 
 
 class ContentProtectionMode(Enum):
-    """Content protection operation modes"""    PASSIVE = "passive"              # Monitor only
+    """Content protection operation modes"""
+    PASSIVE = "passive"              # Monitor only
     ACTIVE = "active"                # Monitor + automated actions
     AGGRESSIVE = "aggressive"        # Active + legal enforcement
     FORENSIC = "forensic"           # Deep forensic analysis
 
 
 class FingerprintAlgorithm(Enum):
-    """Supported fingerprinting algorithms"""    CHROMAPRINT = "chromaprint"      # Audio fingerprinting
+    """Supported fingerprinting algorithms"""
+    CHROMAPRINT = "chromaprint"      # Audio fingerprinting
     PHASH = "phash"                  # Image perceptual hashing
     DHASH = "dhash"                  # Image difference hashing
     MINHASH = "minhash"              # Document fingerprinting
@@ -44,7 +47,8 @@ class FingerprintAlgorithm(Enum):
 
 @dataclass
 class ContentProtectionConfig:
-    """Content protection service configuration"""    
+    """Content protection service configuration"""
+    
     # Service identification
     service_name: str = "content-protection"
     service_version: str = "2.0.0"
@@ -103,7 +107,8 @@ class ContentProtectionConfig:
 
 @dataclass
 class FingerprintingEngineConfig:
-    """AI Fingerprinting engine configuration"""    
+    """AI Fingerprinting engine configuration"""
+    
     # Service identification
     service_name: str = "fingerprinting-engine"
     service_version: str = "2.1.0"
@@ -151,7 +156,8 @@ class FingerprintingEngineConfig:
 
 @dataclass
 class WebCrawlerConfig:
-    """Web crawler service configuration"""    
+    """Web crawler service configuration"""
+    
     # Service identification
     service_name: str = "web-crawler"
     service_version: str = "1.8.0"
@@ -209,7 +215,8 @@ class WebCrawlerConfig:
 
 @dataclass
 class MonetizationEngineConfig:
-    """Monetization engine service configuration"""    
+    """Monetization engine service configuration"""
+    
     # Service identification
     service_name: str = "monetization-engine"
     service_version: str = "1.5.0"
@@ -285,7 +292,8 @@ class MonetizationEngineConfig:
 
 @dataclass
 class LicensingEngineConfig:
-    """Content licensing engine configuration"""    
+    """Content licensing engine configuration"""
+    
     # Service identification
     service_name: str = "licensing-engine"
     service_version: str = "1.3.0"
@@ -347,14 +355,17 @@ CONTENT_PROTECTION_CONFIGS = {
 
 
 class ContentProtectionOrchestrator:
-    """Content protection microservices orchestrator"""    
+    """Content protection microservices orchestrator"""
+    
     def __init__(self, configs: Dict[str, Any] = None):
-        """Initialize orchestrator with configurations"""        self.configs = configs or CONTENT_PROTECTION_CONFIGS
+        """Initialize orchestrator with configurations"""
+        self.configs = configs or CONTENT_PROTECTION_CONFIGS
         self.services_status = {}
         self.logger = logging.getLogger(__name__)
     
     async def initialize_services(self) -> Dict[str, bool]:
-        """Initialize all content protection services"""        results = {}
+        """Initialize all content protection services"""
+        results = {}
         
         for service_name, config in self.configs.items():
             try:
@@ -373,7 +384,8 @@ class ContentProtectionOrchestrator:
         return results
     
     async def _initialize_service(self, service_name: str, config: Any) -> bool:
-        """Initialize individual service"""        # Service-specific initialization logic
+        """Initialize individual service"""
+        # Service-specific initialization logic
         if service_name == "fingerprinting-engine":
             return await self._init_fingerprinting_engine(config)
         elif service_name == "web-crawler":
@@ -386,7 +398,8 @@ class ContentProtectionOrchestrator:
             return await self._init_content_protection(config)
     
     async def _init_fingerprinting_engine(self, config: FingerprintingEngineConfig) -> bool:
-        """Initialize fingerprinting engine with AI models"""        try:
+        """Initialize fingerprinting engine with AI models"""
+        try:
             # Model loading simulation
             self.logger.info("Loading AI fingerprinting models...")
             
@@ -410,7 +423,8 @@ class ContentProtectionOrchestrator:
             return False
     
     async def _init_web_crawler(self, config: WebCrawlerConfig) -> bool:
-        """Initialize web crawler with browser pool"""        try:
+        """Initialize web crawler with browser pool"""
+        try:
             # Browser pool initialization
             self.logger.info(f"Initializing browser pool (size: {config.browser_pool_size})")
             
@@ -429,7 +443,8 @@ class ContentProtectionOrchestrator:
             return False
     
     async def _init_monetization_engine(self, config: MonetizationEngineConfig) -> bool:
-        """Initialize monetization engine with payment processors"""        try:
+        """Initialize monetization engine with payment processors"""
+        try:
             # Payment processor validation
             enabled_processors = [
                 name for name, settings in config.payment_processors.items()
@@ -448,7 +463,8 @@ class ContentProtectionOrchestrator:
             return False
     
     async def _init_licensing_engine(self, config: LicensingEngineConfig) -> bool:
-        """Initialize licensing engine with smart contracts"""        try:
+        """Initialize licensing engine with smart contracts"""
+        try:
             # Blockchain connection
             self.logger.info(f"Connecting to {config.blockchain_network} network")
             
@@ -466,7 +482,8 @@ class ContentProtectionOrchestrator:
             return False
     
     async def _init_content_protection(self, config: ContentProtectionConfig) -> bool:
-        """Initialize content protection service"""        try:
+        """Initialize content protection service"""
+        try:
             # Protection mode setup
             self.logger.info(f"Protection mode: {config.protection_mode.value}")
             
@@ -484,7 +501,8 @@ class ContentProtectionOrchestrator:
             return False
     
     async def get_system_health(self) -> Dict[str, Any]:
-        """Get comprehensive system health status"""        health_status = {
+        """Get comprehensive system health status"""
+        health_status = {
             "overall_status": "healthy",
             "services": {},
             "metrics": {
@@ -516,7 +534,8 @@ class ContentProtectionOrchestrator:
         return health_status
     
     def get_configuration_summary(self) -> Dict[str, Any]:
-        """Get configuration summary for all services"""        return {
+        """Get configuration summary for all services"""
+        return {
             "content_protection": {
                 "service_count": len(self.configs),
                 "protection_modes": list(ContentProtectionMode),
@@ -540,15 +559,18 @@ content_protection_orchestrator = ContentProtectionOrchestrator()
 
 # Convenience functions
 async def initialize_content_protection_services() -> Dict[str, bool]:
-    """Initialize all content protection services"""    return await content_protection_orchestrator.initialize_services()
+    """Initialize all content protection services"""
+    return await content_protection_orchestrator.initialize_services()
 
 
 async def get_content_protection_health() -> Dict[str, Any]:
-    """Get content protection system health"""    return await content_protection_orchestrator.get_system_health()
+    """Get content protection system health"""
+    return await content_protection_orchestrator.get_system_health()
 
 
 def get_content_protection_summary() -> Dict[str, Any]:
-    """Get content protection configuration summary"""    return content_protection_orchestrator.get_configuration_summary()
+    """Get content protection configuration summary"""
+    return content_protection_orchestrator.get_configuration_summary()
 
 
 # Export main configuration instance

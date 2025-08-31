@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Optional, Dict, Any
 from contextlib import asynccontextmanager
@@ -29,11 +30,13 @@ logger = logging.getLogger(__name__)
 
 
 class PaymentProcessingService:
-    """    Main payment processing service orchestrator.
+    """
+    Main payment processing service orchestrator.
     
     Manages initialization, lifecycle, and coordination of all payment
     processing components with proper error handling and monitoring.
-    """    
+    """
+    
     def __init__(
         self,
         config: Optional[PaymentConfig] = None,
@@ -43,7 +46,8 @@ class PaymentProcessingService:
         enable_compliance: bool = True,
         enable_scheduling: bool = True
     ):
-        """        Initialize payment processing service.
+        """
+        Initialize payment processing service.
         
         Args:
             config: Payment configuration
@@ -52,7 +56,8 @@ class PaymentProcessingService:
             enable_analytics: Enable payment analytics
             enable_compliance: Enable compliance management
             enable_scheduling: Enable payout scheduling
-        """        self.config = config or PaymentConfig()
+        """
+        self.config = config or PaymentConfig()
         
         # Component enablement flags
         self.enable_cache = enable_cache
@@ -77,7 +82,8 @@ class PaymentProcessingService:
         logger.info("Payment processing service created")
     
     async def initialize(self) -> None:
-        """Initialize all service components"""        if self.initialized:
+        """Initialize all service components"""
+        if self.initialized:
             logger.warning("Service already initialized")
             return
         
@@ -154,7 +160,8 @@ class PaymentProcessingService:
             raise PaymentProcessingError(f"Service initialization failed: {str(e)}")
     
     async def start(self) -> None:
-        """Start all service components"""        if not self.initialized:
+        """Start all service components"""
+        if not self.initialized:
             await self.initialize()
         
         if self.running:
@@ -182,7 +189,8 @@ class PaymentProcessingService:
             raise PaymentProcessingError(f"Service start failed: {str(e)}")
     
     async def stop(self) -> None:
-        """Stop all service components gracefully"""        if not self.running:
+        """Stop all service components gracefully"""
+        if not self.running:
             logger.warning("Service not running")
             return
         
@@ -202,7 +210,8 @@ class PaymentProcessingService:
         logger.info("⏹️ Payment processing service stopped")
     
     async def shutdown(self) -> None:
-        """Shutdown all service components"""        if self.running:
+        """Shutdown all service components"""
+        if self.running:
             await self.stop()
         
         if not self.initialized:
@@ -239,7 +248,8 @@ class PaymentProcessingService:
         logger.info("🔌 Payment processing service fully shutdown")
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check of all components"""        health_status = {
+        """Perform comprehensive health check of all components"""
+        health_status = {
             "service": {
                 "initialized": self.initialized,
                 "running": self.running,
@@ -304,13 +314,15 @@ class PaymentProcessingService:
         return health_status
     
     def get_agent(self) -> PaymentProcessingAgent:
-        """Get the main payment processing agent"""        if not self.payment_agent:
+        """Get the main payment processing agent"""
+        if not self.payment_agent:
             raise PaymentProcessingError("Payment agent not initialized")
         return self.payment_agent
     
     @asynccontextmanager
     async def lifespan(self):
-        """Context manager for service lifecycle"""        try:
+        """Context manager for service lifecycle"""
+        try:
             await self.start()
             yield self
         finally:
@@ -322,14 +334,16 @@ _service_instance: Optional[PaymentProcessingService] = None
 
 
 async def get_service(config: Optional[PaymentConfig] = None) -> PaymentProcessingService:
-    """    Get or create the global payment processing service instance.
+    """
+    Get or create the global payment processing service instance.
     
     Args:
         config: Optional configuration override
         
     Returns:
         PaymentProcessingService instance
-    """    global _service_instance
+    """
+    global _service_instance
     
     if _service_instance is None:
         _service_instance = PaymentProcessingService(config)
@@ -339,19 +353,22 @@ async def get_service(config: Optional[PaymentConfig] = None) -> PaymentProcessi
 
 
 async def get_payment_agent(config: Optional[PaymentConfig] = None) -> PaymentProcessingAgent:
-    """    Get the payment processing agent instance.
+    """
+    Get the payment processing agent instance.
     
     Args:
         config: Optional configuration override
         
     Returns:
         PaymentProcessingAgent instance
-    """    service = await get_service(config)
+    """
+    service = await get_service(config)
     return service.get_agent()
 
 
 async def shutdown_service():
-    """Shutdown the global service instance"""    global _service_instance
+    """Shutdown the global service instance"""
+    global _service_instance
     
     if _service_instance:
         await _service_instance.shutdown()
@@ -360,12 +377,14 @@ async def shutdown_service():
 
 # Factory functions for individual components
 async def create_fraud_engine(config: Optional[PaymentConfig] = None) -> FraudDetectionEngine:
-    """Create fraud detection engine"""    config = config or PaymentConfig()
+    """Create fraud detection engine"""
+    config = config or PaymentConfig()
     return FraudDetectionEngine(config=config)
 
 
 async def create_compliance_manager(config: Optional[PaymentConfig] = None) -> ComplianceManager:
-    """Create compliance manager"""    config = config or PaymentConfig()
+    """Create compliance manager"""
+    config = config or PaymentConfig()
     manager = ComplianceManager(config=config)
     await manager.initialize()
     return manager
@@ -375,7 +394,8 @@ async def create_analytics_engine(
     config: Optional[PaymentConfig] = None,
     cache: Optional[PerformanceCache] = None
 ) -> PaymentAnalytics:
-    """Create analytics engine"""    config = config or PaymentConfig()
+    """Create analytics engine"""
+    config = config or PaymentConfig()
     engine = PaymentAnalytics(config=config, cache=cache)
     await engine.initialize()
     return engine
@@ -385,7 +405,8 @@ async def create_currency_converter(
     config: Optional[PaymentConfig] = None,
     cache: Optional[PerformanceCache] = None
 ) -> CurrencyConverter:
-    """Create currency converter"""    config = config or PaymentConfig()
+    """Create currency converter"""
+    config = config or PaymentConfig()
     converter = CurrencyConverter(config=config, cache=cache)
     await converter.initialize()
     return converter
@@ -393,7 +414,8 @@ async def create_currency_converter(
 
 # CLI and testing utilities
 async def run_health_check():
-    """Run a comprehensive health check"""    try:
+    """Run a comprehensive health check"""
+    try:
         service = await get_service()
         health = await service.health_check()
         
@@ -416,7 +438,8 @@ async def run_health_check():
 
 
 async def run_performance_test():
-    """Run basic performance tests"""    try:
+    """Run basic performance tests"""
+    try:
         service = await get_service()
         agent = service.get_agent()
         
@@ -463,7 +486,8 @@ if __name__ == "__main__":
     import sys
     
     async def main():
-        """Main entry point for CLI usage"""        if len(sys.argv) > 1:
+        """Main entry point for CLI usage"""
+        if len(sys.argv) > 1:
             command = sys.argv[1]
             
             if command == "health":

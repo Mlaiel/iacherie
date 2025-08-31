@@ -5,7 +5,7 @@ Multi-modal content fingerprinting system supporting audio, video, image, and te
 Provides advanced fingerprinting algorithms for content protection and similarity detection.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written 
@@ -149,7 +149,7 @@ __package_info__ = {
     "author": __author__,
     "author_email": __email__,
     "license": "Proprietary",
-    "copyright": "© 2025 Fahed Mlaiel. All rights reserved.",
+    "copyright": "(c) 2025 Fahed Mlaiel. All rights reserved.",
     "documentation": "See README files for comprehensive documentation",
     "supported_content_types": ["audio", "video", "image", "text"],
     "algorithms": [

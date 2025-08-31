@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Ultra-advanced enterprise-grade alert system models for AI-powered content protection,
 multi-format fingerprinting, automated DMCA enforcement, and revenue protection.
 Business Logic: Content creators → AI protection → threat detection → automated response → monetization
-"""from datetime import datetime, timezone
+"""
+from datetime import datetime, timezone
 from enum import Enum
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
@@ -18,7 +19,8 @@ import uuid
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels for content protection incidents."""    
+    """Alert severity levels for content protection incidents."""
+    
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -27,7 +29,8 @@ class AlertSeverity(Enum):
 
 
 class AlertStatus(Enum):
-    """Alert status tracking states."""    
+    """Alert status tracking states."""
+    
     ACTIVE = "active"
     ACKNOWLEDGED = "acknowledged"
     INVESTIGATING = "investigating"
@@ -37,7 +40,8 @@ class AlertStatus(Enum):
 
 
 class AlertCategory(Enum):
-    """Content protection alert categories."""    
+    """Content protection alert categories."""
+    
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
     CONTENT_THEFT = "content_theft"
@@ -51,7 +55,8 @@ class AlertCategory(Enum):
 
 
 class EscalationLevel(Enum):
-    """Alert escalation levels."""    
+    """Alert escalation levels."""
+    
     LEVEL_0 = "automated_response"
     LEVEL_1 = "support_team"
     LEVEL_2 = "senior_support"
@@ -61,7 +66,8 @@ class EscalationLevel(Enum):
 
 @dataclass
 class AlertMetadata:
-    """Metadata container for alert additional information."""    
+    """Metadata container for alert additional information."""
+    
     source_ip: Optional[str] = None
     user_agent: Optional[str] = None
     geolocation: Optional[Dict[str, Any]] = None
@@ -75,7 +81,8 @@ class AlertMetadata:
 
 
 class AlertEvidenceModel(BaseModel):
-    """Evidence model for content protection alerts."""    
+    """Evidence model for content protection alerts."""
+    
     evidence_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     evidence_type: str = Field(..., description="Type of evidence collected")
     content_hash: str = Field(..., description="Content hash for verification")
@@ -98,7 +105,8 @@ class AlertEvidenceModel(BaseModel):
 
 
 class AlertActionModel(BaseModel):
-    """Action model for alert responses and escalations."""    
+    """Action model for alert responses and escalations."""
+    
     action_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     action_type: str = Field(..., description="Type of action taken")
     actor: str = Field(..., description="Who performed the action")
@@ -110,7 +118,8 @@ class AlertActionModel(BaseModel):
 
 
 class ContentProtectionAlert(BaseModel):
-    """Main alert model for content protection incidents."""    
+    """Main alert model for content protection incidents."""
+    
     alert_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: str = Field(..., description="Alert title")
     description: str = Field(..., description="Detailed alert description")
@@ -159,15 +168,18 @@ class ContentProtectionAlert(BaseModel):
         return v
     
     def add_evidence(self, evidence: AlertEvidenceModel) -> None:
-        """Add evidence to the alert."""        self.evidence.append(evidence)
+        """Add evidence to the alert."""
+        self.evidence.append(evidence)
         self.updated_at = datetime.now(timezone.utc)
     
     def add_action(self, action: AlertActionModel) -> None:
-        """Add action to the alert."""        self.actions_taken.append(action)
+        """Add action to the alert."""
+        self.actions_taken.append(action)
         self.updated_at = datetime.now(timezone.utc)
     
     def escalate(self, new_level: EscalationLevel, reason: str, actor: str) -> None:
-        """Escalate alert to higher level."""        self.escalation_level = new_level
+        """Escalate alert to higher level."""
+        self.escalation_level = new_level
         escalation_action = AlertActionModel(
             action_type="escalation",
             actor=actor,
@@ -177,7 +189,8 @@ class ContentProtectionAlert(BaseModel):
         self.status = AlertStatus.ESCALATED
     
     def resolve(self, resolution: str, actor: str) -> None:
-        """Mark alert as resolved."""        self.status = AlertStatus.RESOLVED
+        """Mark alert as resolved."""
+        self.status = AlertStatus.RESOLVED
         self.resolved_at = datetime.now(timezone.utc)
         resolution_action = AlertActionModel(
             action_type="resolution",
@@ -188,7 +201,8 @@ class ContentProtectionAlert(BaseModel):
 
 
 class NotificationPreferences(BaseModel):
-    """User notification preferences for alerts."""    
+    """User notification preferences for alerts."""
+    
     user_id: str = Field(..., description="User identifier")
     email_enabled: bool = Field(default=True)
     sms_enabled: bool = Field(default=False)
@@ -211,7 +225,8 @@ class NotificationPreferences(BaseModel):
 
 
 class AlertDashboardMetrics(BaseModel):
-    """Dashboard metrics for alert monitoring."""    
+    """Dashboard metrics for alert monitoring."""
+    
     total_alerts: int = Field(default=0)
     active_alerts: int = Field(default=0)
     critical_alerts: int = Field(default=0)
@@ -237,7 +252,8 @@ class AlertDashboardMetrics(BaseModel):
 
 
 class MLClassificationResult(BaseModel):
-    """ML classification result for content analysis."""    
+    """ML classification result for content analysis."""
+    
     classification_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     content_hash: str = Field(..., description="Content identifier hash")
     model_name: str = Field(..., description="ML model used")
@@ -265,7 +281,8 @@ class MLClassificationResult(BaseModel):
 
 # Alert rule models for dynamic alert configuration
 class AlertRuleCondition(BaseModel):
-    """Individual condition for alert rules."""    
+    """Individual condition for alert rules."""
+    
     field: str = Field(..., description="Field to evaluate")
     operator: str = Field(..., description="Comparison operator")
     value: Any = Field(..., description="Value to compare against")
@@ -273,7 +290,8 @@ class AlertRuleCondition(BaseModel):
 
 
 class AlertRule(BaseModel):
-    """Dynamic alert rule configuration."""    
+    """Dynamic alert rule configuration."""
+    
     rule_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str = Field(..., description="Rule name")
     description: str = Field(..., description="Rule description")
@@ -297,7 +315,8 @@ class AlertRule(BaseModel):
 # Advanced Enterprise Alert Models
 
 class ThreatIntelligenceAlert(BaseModel):
-    """Advanced threat intelligence alert for content protection"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Advanced threat intelligence alert for content protection"""
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     alert_id: str = Field(..., description="Associated alert ID")
     threat_type: str = Field(..., description="Type of threat detected")
     threat_source: str = Field(..., description="Source of threat intelligence")
@@ -309,7 +328,8 @@ class ThreatIntelligenceAlert(BaseModel):
 
 
 class AlertWorkflow(BaseModel):
-    """Enterprise alert workflow management"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Enterprise alert workflow management"""
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str = Field(..., description="Workflow name")
     description: Optional[str] = Field(None, description="Workflow description")
     trigger_conditions: List[Dict[str, Any]] = Field(..., description="Conditions to trigger workflow")
@@ -323,7 +343,8 @@ class AlertWorkflow(BaseModel):
 
 
 class AlertCorrelation(BaseModel):
-    """Advanced alert correlation for enterprise threat detection"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Advanced alert correlation for enterprise threat detection"""
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     primary_alert_id: str = Field(..., description="Primary alert ID")
     correlated_alert_ids: List[str] = Field(..., description="Correlated alert IDs")
     correlation_type: str = Field(..., description="Type of correlation")
@@ -336,7 +357,8 @@ class AlertCorrelation(BaseModel):
 
 
 class AlertEnrichment(BaseModel):
-    """Alert enrichment with external data sources"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Alert enrichment with external data sources"""
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     alert_id: str = Field(..., description="Associated alert ID")
     enrichment_source: str = Field(..., description="Source of enrichment data")
     enrichment_data: Dict[str, Any] = Field(..., description="Enriched data")
@@ -349,7 +371,8 @@ class AlertEnrichment(BaseModel):
 
 
 class AlertSuppression(BaseModel):
-    """Advanced alert suppression for noise reduction"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Advanced alert suppression for noise reduction"""
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str = Field(..., description="Suppression rule name")
     description: Optional[str] = Field(None)
     suppression_type: str = Field(..., description="Type of suppression")
@@ -364,7 +387,8 @@ class AlertSuppression(BaseModel):
 
 
 class AlertTemplate(BaseModel):
-    """Enterprise alert template for standardized responses"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Enterprise alert template for standardized responses"""
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str = Field(..., description="Template name")
     category: AlertCategory = Field(..., description="Alert category")
     severity: AlertSeverity = Field(..., description="Default severity")
@@ -380,7 +404,8 @@ class AlertTemplate(BaseModel):
 
 
 class AlertBatch(BaseModel):
-    """Batch processing for high-volume alert scenarios"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Batch processing for high-volume alert scenarios"""
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     batch_name: str = Field(..., description="Batch processing name")
     alert_ids: List[str] = Field(..., description="List of alert IDs in batch")
     batch_type: str = Field(..., description="Type of batch operation")
@@ -396,7 +421,8 @@ class AlertBatch(BaseModel):
 
 
 class AlertForensics(BaseModel):
-    """Advanced forensic data for enterprise investigations"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Advanced forensic data for enterprise investigations"""
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     alert_id: str = Field(..., description="Associated alert ID")
     evidence_chain: List[Dict[str, Any]] = Field(..., description="Chain of evidence")
     digital_fingerprints: List[str] = Field(default_factory=list)
@@ -412,7 +438,8 @@ class AlertForensics(BaseModel):
 
 
 class AlertCompliance(BaseModel):
-    """Compliance and regulatory tracking for alerts"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Compliance and regulatory tracking for alerts"""
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     alert_id: str = Field(..., description="Associated alert ID")
     compliance_frameworks: List[str] = Field(..., description="Applicable compliance frameworks")
     regulatory_requirements: List[str] = Field(default_factory=list)

@@ -15,7 +15,8 @@ Features:
 - Copyright registration and management
 - Real-time content violation detection
 - Legal compliance and documentation
-"""import asyncio
+"""
+import asyncio
 import logging
 from abc import abstractmethod
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -37,7 +38,8 @@ from .base_adapter import (
 logger = logging.getLogger(__name__)
 
 class ProtectionPlatform(Enum):
-    """Supported content protection platforms."""    YOUTUBE_CONTENT_ID = "youtube_content_id"
+    """Supported content protection platforms."""
+    YOUTUBE_CONTENT_ID = "youtube_content_id"
     FACEBOOK_RIGHTS_MANAGER = "facebook_rights_manager"
     INSTAGRAM_CREATOR_STUDIO = "instagram_creator_studio"
     TIKTOK_COPYRIGHT_TOOL = "tiktok_copyright_tool"
@@ -49,7 +51,8 @@ class ProtectionPlatform(Enum):
     CUSTOM_FINGERPRINT = "custom_fingerprint"
 
 class ContentType(Enum):
-    """Types of content that can be protected."""    AUDIO = "audio"
+    """Types of content that can be protected."""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -61,7 +64,8 @@ class ContentType(Enum):
     BRAND_CONTENT = "brand_content"
 
 class ViolationType(Enum):
-    """Types of copyright violations."""    EXACT_COPY = "exact_copy"
+    """Types of copyright violations."""
+    EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     REMIX_UNAUTHORIZED = "remix_unauthorized"
     COVER_UNAUTHORIZED = "cover_unauthorized"
@@ -73,7 +77,8 @@ class ViolationType(Enum):
     FAIR_USE_VIOLATION = "fair_use_violation"
 
 class ActionType(Enum):
-    """Actions that can be taken on violations."""    DMCA_TAKEDOWN = "dmca_takedown"
+    """Actions that can be taken on violations."""
+    DMCA_TAKEDOWN = "dmca_takedown"
     COPYRIGHT_CLAIM = "copyright_claim"
     MONETIZATION_CLAIM = "monetization_claim"
     CONTENT_BLOCK = "content_block"
@@ -85,7 +90,8 @@ class ActionType(Enum):
 
 @dataclass
 class ProtectedContent:
-    """Represents content that is being protected."""    content_id: str
+    """Represents content that is being protected."""
+    content_id: str
     title: str
     content_type: ContentType
     owner_id: str
@@ -97,7 +103,8 @@ class ProtectedContent:
     copyright_info: Optional[Dict[str, Any]] = None
     
 class ContentViolation:
-    """Represents a detected content violation."""    
+    """Represents a detected content violation."""
+    
     def __init__(
         self,
         violation_id: str,
@@ -126,7 +133,8 @@ class ContentViolation:
 
 @dataclass
 class TakedownRequest:
-    """Represents a DMCA takedown request."""    request_id: str
+    """Represents a DMCA takedown request."""
+    request_id: str
     violation_id: str
     platform: ProtectionPlatform
     infringing_url: str
@@ -140,7 +148,8 @@ class TakedownRequest:
     platform_response: Optional[Dict[str, Any]] = None
 
 class BaseProtectionAdapter(BasePlatformAdapter):
-    """Base class for content protection platform adapters."""    
+    """Base class for content protection platform adapters."""
+    
     def __init__(
         self, 
         platform_name: str,
@@ -166,22 +175,27 @@ class BaseProtectionAdapter(BasePlatformAdapter):
     
     @abstractmethod
     async def register_content(self, content: ProtectedContent) -> bool:
-        """Register content for protection monitoring."""        pass
+        """Register content for protection monitoring."""
+        pass
     
     @abstractmethod
     async def scan_for_violations(self, content_id: str) -> List[ContentViolation]:
-        """Scan for violations of protected content."""        pass
+        """Scan for violations of protected content."""
+        pass
     
     @abstractmethod
     async def submit_takedown_request(self, request: TakedownRequest) -> bool:
-        """Submit a DMCA takedown request."""        pass
+        """Submit a DMCA takedown request."""
+        pass
     
     @abstractmethod
     async def check_takedown_status(self, request_id: str) -> Dict[str, Any]:
-        """Check the status of a takedown request."""        pass
+        """Check the status of a takedown request."""
+        pass
     
     async def generate_content_fingerprint(self, content_data: bytes, content_type: ContentType) -> str:
-        """Generate a fingerprint for content identification."""        # Basic hash-based fingerprint (should be replaced with advanced algorithms)
+        """Generate a fingerprint for content identification."""
+        # Basic hash-based fingerprint (should be replaced with advanced algorithms)
         fingerprint_data = hashlib.sha256(content_data).hexdigest()
         
         # Add content type specific processing
@@ -198,7 +212,8 @@ class BaseProtectionAdapter(BasePlatformAdapter):
         return fingerprint_data
     
     async def calculate_similarity(self, fingerprint1: str, fingerprint2: str) -> float:
-        """Calculate similarity between two fingerprints."""        # Basic implementation - should be replaced with advanced similarity algorithms
+        """Calculate similarity between two fingerprints."""
+        # Basic implementation - should be replaced with advanced similarity algorithms
         if fingerprint1 == fingerprint2:
             return 1.0
         
@@ -212,7 +227,8 @@ class BaseProtectionAdapter(BasePlatformAdapter):
         return similarity
     
     async def analyze_violation_severity(self, violation: ContentViolation) -> Dict[str, Any]:
-        """Analyze the severity and recommended actions for a violation."""        severity_score = 0.0
+        """Analyze the severity and recommended actions for a violation."""
+        severity_score = 0.0
         recommended_actions = []
         
         # Factor in confidence score
@@ -253,7 +269,8 @@ class BaseProtectionAdapter(BasePlatformAdapter):
         }
 
 class YouTubeContentIDAdapter(BaseProtectionAdapter):
-    """YouTube Content ID system adapter."""    
+    """YouTube Content ID system adapter."""
+    
     def __init__(self, credentials: AdapterCredentials, config: Dict[str, Any]):
         super().__init__(
             platform_name="youtube_content_id",
@@ -264,7 +281,8 @@ class YouTubeContentIDAdapter(BaseProtectionAdapter):
         self.api_base_url = "https://www.googleapis.com/youtube/v3"
     
     async def register_content(self, content: ProtectedContent) -> bool:
-        """Register content with YouTube Content ID."""        try:
+        """Register content with YouTube Content ID."""
+        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.access_token}",
                 "Content-Type": "application/json"
@@ -299,7 +317,8 @@ class YouTubeContentIDAdapter(BaseProtectionAdapter):
             return False
     
     async def scan_for_violations(self, content_id: str) -> List[ContentViolation]:
-        """Scan YouTube for violations using Content ID."""        violations = []
+        """Scan YouTube for violations using Content ID."""
+        violations = []
         
         try:
             headers = {
@@ -347,7 +366,8 @@ class YouTubeContentIDAdapter(BaseProtectionAdapter):
         return violations
     
     async def submit_takedown_request(self, request: TakedownRequest) -> bool:
-        """Submit a copyright claim through YouTube Content ID."""        try:
+        """Submit a copyright claim through YouTube Content ID."""
+        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.access_token}",
                 "Content-Type": "application/json"
@@ -382,7 +402,8 @@ class YouTubeContentIDAdapter(BaseProtectionAdapter):
             return False
     
     async def check_takedown_status(self, request_id: str) -> Dict[str, Any]:
-        """Check YouTube copyright claim status."""        try:
+        """Check YouTube copyright claim status."""
+        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.access_token}"
             }
@@ -402,7 +423,8 @@ class YouTubeContentIDAdapter(BaseProtectionAdapter):
             return {"status": "error", "message": str(e)}
 
 class FacebookRightsManagerAdapter(BaseProtectionAdapter):
-    """Facebook Rights Manager adapter."""    
+    """Facebook Rights Manager adapter."""
+    
     def __init__(self, credentials: AdapterCredentials, config: Dict[str, Any]):
         super().__init__(
             platform_name="facebook_rights_manager",
@@ -413,7 +435,8 @@ class FacebookRightsManagerAdapter(BaseProtectionAdapter):
         self.api_base_url = "https://graph.facebook.com/v18.0"
     
     async def register_content(self, content: ProtectedContent) -> bool:
-        """Register content with Facebook Rights Manager."""        try:
+        """Register content with Facebook Rights Manager."""
+        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.access_token}",
                 "Content-Type": "application/json"
@@ -447,7 +470,8 @@ class FacebookRightsManagerAdapter(BaseProtectionAdapter):
             return False
     
     async def scan_for_violations(self, content_id: str) -> List[ContentViolation]:
-        """Scan Facebook/Instagram for rights violations."""        violations = []
+        """Scan Facebook/Instagram for rights violations."""
+        violations = []
         
         try:
             headers = {
@@ -494,7 +518,8 @@ class FacebookRightsManagerAdapter(BaseProtectionAdapter):
         return violations
     
     async def submit_takedown_request(self, request: TakedownRequest) -> bool:
-        """Submit a rights claim through Facebook Rights Manager."""        try:
+        """Submit a rights claim through Facebook Rights Manager."""
+        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.access_token}",
                 "Content-Type": "application/json"
@@ -528,7 +553,8 @@ class FacebookRightsManagerAdapter(BaseProtectionAdapter):
             return False
     
     async def check_takedown_status(self, request_id: str) -> Dict[str, Any]:
-        """Check Facebook rights action status."""        try:
+        """Check Facebook rights action status."""
+        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.access_token}"
             }
@@ -548,7 +574,8 @@ class FacebookRightsManagerAdapter(BaseProtectionAdapter):
             return {"status": "error", "message": str(e)}
 
 class DMCATakedownAdapter(BaseProtectionAdapter):
-    """Generic DMCA takedown service adapter."""    
+    """Generic DMCA takedown service adapter."""
+    
     def __init__(self, credentials: AdapterCredentials, config: Dict[str, Any]):
         super().__init__(
             platform_name="dmca_takedown",
@@ -559,7 +586,8 @@ class DMCATakedownAdapter(BaseProtectionAdapter):
         self.service_url = config.get('service_url', 'https://api.dmcatakedown.com/v1')
     
     async def register_content(self, content: ProtectedContent) -> bool:
-        """Register content for DMCA protection monitoring."""        try:
+        """Register content for DMCA protection monitoring."""
+        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
                 "Content-Type": "application/json"
@@ -596,7 +624,8 @@ class DMCATakedownAdapter(BaseProtectionAdapter):
             return False
     
     async def scan_for_violations(self, content_id: str) -> List[ContentViolation]:
-        """Scan web for DMCA violations."""        violations = []
+        """Scan web for DMCA violations."""
+        violations = []
         
         try:
             headers = {
@@ -631,7 +660,8 @@ class DMCATakedownAdapter(BaseProtectionAdapter):
         return violations
     
     async def submit_takedown_request(self, request: TakedownRequest) -> bool:
-        """Submit DMCA takedown notice."""        try:
+        """Submit DMCA takedown notice."""
+        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
                 "Content-Type": "application/json"
@@ -669,7 +699,8 @@ class DMCATakedownAdapter(BaseProtectionAdapter):
             return False
     
     async def check_takedown_status(self, request_id: str) -> Dict[str, Any]:
-        """Check DMCA takedown status."""        try:
+        """Check DMCA takedown status."""
+        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}"
             }
@@ -689,7 +720,8 @@ class DMCATakedownAdapter(BaseProtectionAdapter):
             return {"status": "error", "message": str(e)}
 
 class ProtectionAdapterFactory:
-    """Factory for creating content protection adapters."""    
+    """Factory for creating content protection adapters."""
+    
     _adapters = {
         ProtectionPlatform.YOUTUBE_CONTENT_ID: YouTubeContentIDAdapter,
         ProtectionPlatform.FACEBOOK_RIGHTS_MANAGER: FacebookRightsManagerAdapter,
@@ -703,7 +735,8 @@ class ProtectionAdapterFactory:
         credentials: AdapterCredentials, 
         config: Dict[str, Any]
     ) -> BaseProtectionAdapter:
-        """Create a protection adapter instance."""        adapter_class = cls._adapters.get(platform)
+        """Create a protection adapter instance."""
+        adapter_class = cls._adapters.get(platform)
         if not adapter_class:
             raise ValueError(f"Unsupported protection platform: {platform}")
         
@@ -711,10 +744,12 @@ class ProtectionAdapterFactory:
     
     @classmethod
     def get_supported_platforms(cls) -> List[ProtectionPlatform]:
-        """Get list of supported protection platforms."""        return list(cls._adapters.keys())
+        """Get list of supported protection platforms."""
+        return list(cls._adapters.keys())
 
 class ProtectionAdapterManager:
-    """Manager for content protection adapter instances and orchestration."""    
+    """Manager for content protection adapter instances and orchestration."""
+    
     def __init__(self):
         self.adapters: Dict[ProtectionPlatform, BaseProtectionAdapter] = {}
         self.protected_content: Dict[str, ProtectedContent] = {}
@@ -722,11 +757,13 @@ class ProtectionAdapterManager:
         self.takedown_requests: Dict[str, TakedownRequest] = {}
     
     def register_adapter(self, platform: ProtectionPlatform, adapter: BaseProtectionAdapter):
-        """Register a protection adapter."""        self.adapters[platform] = adapter
+        """Register a protection adapter."""
+        self.adapters[platform] = adapter
         logger.info(f"Registered protection adapter for platform: {platform.value}")
     
     async def protect_content(self, content: ProtectedContent) -> bool:
-        """Register content for protection across all enabled platforms."""        self.protected_content[content.content_id] = content
+        """Register content for protection across all enabled platforms."""
+        self.protected_content[content.content_id] = content
         
         success_count = 0
         for platform in content.monitoring_platforms:
@@ -744,7 +781,8 @@ class ProtectionAdapterManager:
         return success_count > 0
     
     async def scan_all_violations(self, content_id: str) -> List[ContentViolation]:
-        """Scan for violations across all monitoring platforms."""        all_violations = []
+        """Scan for violations across all monitoring platforms."""
+        all_violations = []
         
         content = self.protected_content.get(content_id)
         if not content:
@@ -767,7 +805,8 @@ class ProtectionAdapterManager:
         return all_violations
     
     async def auto_respond_violations(self, violations: List[ContentViolation]) -> Dict[str, Any]:
-        """Automatically respond to violations based on severity analysis."""        responses = {
+        """Automatically respond to violations based on severity analysis."""
+        responses = {
             'processed': 0,
             'actions_taken': 0,
             'failed': 0,
@@ -828,7 +867,8 @@ class ProtectionAdapterManager:
         return responses
     
     async def get_protection_status(self, content_id: str) -> Dict[str, Any]:
-        """Get comprehensive protection status for content."""        content = self.protected_content.get(content_id)
+        """Get comprehensive protection status for content."""
+        content = self.protected_content.get(content_id)
         if not content:
             return {"error": "Content not found"}
         
@@ -857,7 +897,8 @@ class ProtectionAdapterManager:
         }
     
     def _calculate_protection_score(self, content_id: str) -> float:
-        """Calculate protection effectiveness score."""        content_violations = [v for v in self.violation_history if v.protected_content_id == content_id]
+        """Calculate protection effectiveness score."""
+        content_violations = [v for v in self.violation_history if v.protected_content_id == content_id]
         
         if not content_violations:
             return 1.0  # Perfect score if no violations

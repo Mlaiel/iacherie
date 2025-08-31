@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -46,7 +47,8 @@ from ...utils.statistical_analyzer import StatisticalAnalyzer
 logger = logging.getLogger(__name__)
 
 class EmotionType(Enum):
-    """Primary emotion classifications"""    JOY = "joy"
+    """Primary emotion classifications"""
+    JOY = "joy"
     SADNESS = "sadness"
     ANGER = "anger"
     FEAR = "fear"
@@ -60,7 +62,8 @@ class EmotionType(Enum):
     CONTENTMENT = "contentment"
 
 class SentimentPolarity(Enum):
-    """Sentiment polarity levels"""    VERY_POSITIVE = "very_positive"
+    """Sentiment polarity levels"""
+    VERY_POSITIVE = "very_positive"
     POSITIVE = "positive"
     SLIGHTLY_POSITIVE = "slightly_positive"
     NEUTRAL = "neutral"
@@ -69,7 +72,8 @@ class SentimentPolarity(Enum):
     VERY_NEGATIVE = "very_negative"
 
 class MoodTrend(Enum):
-    """Mood trend directions"""    STRONGLY_IMPROVING = "strongly_improving"
+    """Mood trend directions"""
+    STRONGLY_IMPROVING = "strongly_improving"
     IMPROVING = "improving"
     STABLE = "stable"
     DECLINING = "declining"
@@ -78,7 +82,8 @@ class MoodTrend(Enum):
 
 @dataclass
 class SentimentMetrics:
-    """Comprehensive sentiment analysis metrics"""    text_id: str
+    """Comprehensive sentiment analysis metrics"""
+    text_id: str
     platform: str
     timestamp: datetime
     
@@ -109,7 +114,8 @@ class SentimentMetrics:
 
 @dataclass
 class MoodAnalysis:
-    """Mood analysis and trends"""    subject_id: str  # user_id or content_id
+    """Mood analysis and trends"""
+    subject_id: str  # user_id or content_id
     analysis_period: str
     start_date: datetime
     end_date: datetime
@@ -131,11 +137,13 @@ class MoodAnalysis:
     recommendations: List[str]
 
 class SentimentTracker:
-    """    Advanced Sentiment Analysis & Tracking System
+    """
+    Advanced Sentiment Analysis & Tracking System
     
     Industrial-grade sentiment monitoring with multi-model analysis,
     real-time tracking, and predictive mood analytics.
-    """    
+    """
+    
     def __init__(self):
         self.cache_manager = CacheManager(namespace="sentiment_tracker")
         self.emotion_detector = EmotionDetectionModel()
@@ -157,7 +165,8 @@ class SentimentTracker:
         logger.info("Sentiment Tracker initialized")
 
     async def initialize(self) -> bool:
-        """Initialize sentiment tracker with AI models"""        try:
+        """Initialize sentiment tracker with AI models"""
+        try:
             # Load sentiment analysis models
             self.sentiment_pipeline = pipeline(
                 "sentiment-analysis",
@@ -199,7 +208,8 @@ class SentimentTracker:
     async def analyze_sentiment(self,
                               text: str,
                               context: Optional[Dict[str, Any]] = None) -> SentimentMetrics:
-        """        Comprehensive sentiment analysis of text
+        """
+        Comprehensive sentiment analysis of text
         
         Args:
             text: Text to analyze
@@ -207,7 +217,8 @@ class SentimentTracker:
             
         Returns:
             SentimentMetrics: Comprehensive sentiment analysis
-        """        try:
+        """
+        try:
             # Basic preprocessing
             clean_text = await self._preprocess_text(text)
             
@@ -282,7 +293,8 @@ class SentimentTracker:
     async def track_mood_over_time(self,
                                  subject_id: str,
                                  timeframe_days: int = 30) -> MoodAnalysis:
-        """        Track mood changes and trends over time
+        """
+        Track mood changes and trends over time
         
         Args:
             subject_id: Subject identifier (user, content, etc.)
@@ -290,7 +302,8 @@ class SentimentTracker:
             
         Returns:
             MoodAnalysis: Comprehensive mood analysis
-        """        try:
+        """
+        try:
             # Get sentiment history for subject
             sentiment_data = self.sentiment_history.get(subject_id, [])
             
@@ -377,7 +390,8 @@ class SentimentTracker:
     async def analyze_audience_sentiment_trends(self,
                                               audience_data: List[Dict[str, Any]],
                                               grouping: str = "daily") -> Dict[str, Any]:
-        """        Analyze sentiment trends across audience interactions
+        """
+        Analyze sentiment trends across audience interactions
         
         Args:
             audience_data: List of audience interactions with text content
@@ -385,7 +399,8 @@ class SentimentTracker:
             
         Returns:
             Dict: Comprehensive audience sentiment analysis
-        """        try:
+        """
+        try:
             # Analyze sentiment for each interaction
             sentiment_analyses = []
             
@@ -454,7 +469,8 @@ class SentimentTracker:
     # Private helper methods
     
     async def _analyze_with_textblob(self, text: str) -> Dict[str, float]:
-        """Analyze sentiment using TextBlob"""        try:
+        """Analyze sentiment using TextBlob"""
+        try:
             blob = TextBlob(text)
             return {
                 'polarity': blob.sentiment.polarity,
@@ -465,7 +481,8 @@ class SentimentTracker:
             return {'polarity': 0.0, 'subjectivity': 0.0}
 
     async def _analyze_with_roberta(self, text: str) -> Dict[str, float]:
-        """Analyze sentiment using RoBERTa model"""        try:
+        """Analyze sentiment using RoBERTa model"""
+        try:
             results = self.sentiment_pipeline(text)
             
             # Convert to polarity score
@@ -488,7 +505,8 @@ class SentimentTracker:
             return {'polarity': 0.0, 'confidence': 0.0, 'detailed_scores': {}}
 
     async def _analyze_with_bert(self, text: str) -> Dict[str, float]:
-        """Analyze sentiment using BERT model"""        try:
+        """Analyze sentiment using BERT model"""
+        try:
             results = self.bert_sentiment_model(text)
             
             # Extract polarity from BERT results
@@ -514,7 +532,8 @@ class SentimentTracker:
             return {'polarity': 0.0, 'confidence': 0.0, 'detailed_scores': {}}
 
     async def _detect_emotions(self, text: str) -> Dict[str, float]:
-        """Detect emotions in text using emotion classification model"""        try:
+        """Detect emotions in text using emotion classification model"""
+        try:
             results = self.emotion_pipeline(text)
             
             emotion_scores = {}
@@ -544,7 +563,8 @@ class SentimentTracker:
             return {}
 
     async def _calculate_ensemble_scores(self, *analyses) -> Dict[str, float]:
-        """Calculate ensemble sentiment scores from multiple models"""        try:
+        """Calculate ensemble sentiment scores from multiple models"""
+        try:
             polarities = []
             confidences = []
             
@@ -577,7 +597,8 @@ class SentimentTracker:
             return {'polarity': 0.0, 'compound': 0.0, 'confidence': 0.0}
 
     def _classify_sentiment_polarity(self, polarity_score: float) -> SentimentPolarity:
-        """Classify sentiment polarity based on score"""        if polarity_score >= 0.6:
+        """Classify sentiment polarity based on score"""
+        if polarity_score >= 0.6:
             return SentimentPolarity.VERY_POSITIVE
         elif polarity_score >= 0.3:
             return SentimentPolarity.POSITIVE
@@ -594,7 +615,8 @@ class SentimentTracker:
 
     async def _determine_primary_emotion(self, 
                                        emotion_scores: Dict[str, float]) -> Tuple[EmotionType, float]:
-        """Determine primary emotion and confidence"""        try:
+        """Determine primary emotion and confidence"""
+        try:
             if not emotion_scores:
                 return EmotionType.TRUST, 0.0
             
@@ -615,7 +637,8 @@ class SentimentTracker:
             return EmotionType.TRUST, 0.0
 
     async def _calculate_mood_trend(self, sentiment_scores: List[float]) -> MoodTrend:
-        """Calculate mood trend from sentiment score sequence"""        try:
+        """Calculate mood trend from sentiment score sequence"""
+        try:
             if len(sentiment_scores) < 2:
                 return MoodTrend.STABLE
             
@@ -646,7 +669,8 @@ class SentimentTracker:
     def _create_neutral_sentiment_metrics(self, 
                                         text: str, 
                                         context: Optional[Dict[str, Any]]) -> SentimentMetrics:
-        """Create neutral sentiment metrics as fallback"""        return SentimentMetrics(
+        """Create neutral sentiment metrics as fallback"""
+        return SentimentMetrics(
             text_id=context.get('text_id', f"text_{datetime.utcnow().timestamp()}") if context else f"text_{datetime.utcnow().timestamp()}",
             platform=context.get('platform', 'unknown') if context else 'unknown',
             timestamp=datetime.utcnow(),
@@ -666,11 +690,13 @@ class SentimentTracker:
 
 
 class MoodAnalyzer:
-    """    Advanced Mood Analysis & Psychological Insights System
+    """
+    Advanced Mood Analysis & Psychological Insights System
     
     Specialized system for deep mood analysis, psychological pattern recognition,
     and emotional intelligence insights for content creators and their audiences.
-    """    
+    """
+    
     def __init__(self):
         self.sentiment_tracker = SentimentTracker()
         self.cache_manager = CacheManager(namespace="mood_analyzer")
@@ -688,7 +714,8 @@ class MoodAnalyzer:
     async def analyze_psychological_profile(self,
                                           subject_id: str,
                                           interaction_history: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """        Analyze psychological profile based on interaction patterns
+        """
+        Analyze psychological profile based on interaction patterns
         
         Args:
             subject_id: Subject identifier
@@ -696,7 +723,8 @@ class MoodAnalyzer:
             
         Returns:
             Dict: Comprehensive psychological profile analysis
-        """        try:
+        """
+        try:
             # Analyze sentiment patterns
             sentiment_patterns = await self._analyze_sentiment_patterns(interaction_history)
             
@@ -760,7 +788,8 @@ class MoodAnalyzer:
     async def predict_mood_changes(self,
                                  subject_id: str,
                                  prediction_horizon_hours: int = 24) -> Dict[str, Any]:
-        """        Predict mood changes and emotional states
+        """
+        Predict mood changes and emotional states
         
         Args:
             subject_id: Subject identifier
@@ -768,7 +797,8 @@ class MoodAnalyzer:
             
         Returns:
             Dict: Mood prediction analysis
-        """        try:
+        """
+        try:
             # Get recent mood history
             recent_mood_data = await self._get_recent_mood_data(subject_id, hours=168)  # 1 week
             
@@ -836,7 +866,8 @@ class MoodAnalyzer:
     
     async def _analyze_sentiment_patterns(self, 
                                         interaction_history: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze sentiment patterns from interaction history"""        try:
+        """Analyze sentiment patterns from interaction history"""
+        try:
             sentiments = []
             
             for interaction in interaction_history:
@@ -870,7 +901,8 @@ class MoodAnalyzer:
             return {}
 
     async def _calculate_recent_sentiment_trend(self, recent_scores: List[float]) -> str:
-        """Calculate recent sentiment trend direction"""        if len(recent_scores) < 2:
+        """Calculate recent sentiment trend direction"""
+        if len(recent_scores) < 2:
             return "stable"
         
         # Calculate trend using simple linear regression

@@ -10,7 +10,8 @@ permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will re
 in legal action.
 
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import json
 from typing import Dict, Any, List, Optional
 from datetime import datetime
@@ -28,7 +29,8 @@ except ImportError as e:
     _modules_available = False
 
 class AIIntegrationWorkflow:
-    """Complete AI processing workflow for content."""    
+    """Complete AI processing workflow for content."""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.workflow_id = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -46,10 +48,12 @@ class AIIntegrationWorkflow:
                                      content_type: str,
                                      creator_profile: Dict[str, Any],
                                      target_platforms: List[str]) -> Dict[str, Any]:
-        """        Complete content processing workflow.
+        """
+        Complete content processing workflow.
         
         Flow: Analysis → Protection → SEO → Matching → Distribution
-        """        if not _modules_available:
+        """
+        if not _modules_available:
             return self._mock_processing_result()
         
         workflow_result = {
@@ -179,7 +183,8 @@ class AIIntegrationWorkflow:
         return workflow_result
     
     def _mock_processing_result(self) -> Dict[str, Any]:
-        """Mock result when modules are not available."""        return {
+        """Mock result when modules are not available."""
+        return {
             "workflow_id": self.workflow_id,
             "timestamp": datetime.now().isoformat(),
             "status": "demo_mode",
@@ -194,14 +199,16 @@ class AIIntegrationWorkflow:
         }
     
     def generate_workflow_report(self, workflow_result: Dict[str, Any]) -> str:
-        """Generate human-readable workflow report."""        report = f"""🚀 IA INFLUENCER AGENT - WORKFLOW REPORT
+        """Generate human-readable workflow report."""
+        report = f"""🚀 IA INFLUENCER AGENT - WORKFLOW REPORT
 {'=' * 60}
 
 📋 Workflow ID: {workflow_result['workflow_id']}
 📅 Processed: {workflow_result['timestamp']}
 🎯 Status: {workflow_result['status'].upper()}
 
-"""        
+"""
+        
         if workflow_result["status"] == "completed":
             report += """🔍 CONTENT ANALYSIS
 ✅ Multi-format analysis completed
@@ -228,13 +235,15 @@ class AIIntegrationWorkflow:
 ✅ Optimal timing calculated
 ✅ Distribution plan finalized
 
-"""        elif workflow_result["status"] == "demo_mode":
+"""
+        elif workflow_result["status"] == "demo_mode":
             report += """🔧 DEMO MODE ACTIVE
 ℹ️ All AI modules simulated successfully
 ℹ️ Full functionality available in production
 ℹ️ Contact: mlaiel@live.de for deployment
 
-"""        
+"""
+        
         report += f"""⚠️ LEGAL NOTICE
 This AI system is proprietary to Fahed Mlaiel (mlaiel@live.de)
 Unauthorized use, copying, or distribution is strictly prohibited
@@ -243,11 +252,13 @@ Unauthorized use, copying, or distribution is strictly prohibited
 🏆 DEVELOPED BY: Fahed Mlaiel & Expert Team
 📧 Contact: mlaiel@live.de
 🌟 Professional AI Solutions for Content Creators
-"""        
+"""
+        
         return report
 
 async def demo_complete_workflow():
-    """Demonstrate complete AI workflow."""    print("🚀 Initializing IA Influencer Agent AI Workflow...")
+    """Demonstrate complete AI workflow."""
+    print("🚀 Initializing IA Influencer Agent AI Workflow...")
     
     workflow = AIIntegrationWorkflow()
     

@@ -24,7 +24,8 @@ This predictive analytics system contains proprietary ML algorithms,
 statistical models, and forecasting methodologies developed by Fahed Mlaiel.
 Unauthorized use, reproduction, or distribution is strictly prohibited.
 All predictive models and analytical frameworks are protected intellectual property.
-"""import asyncio
+"""
+import asyncio
 import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
@@ -59,7 +60,8 @@ from .storage import TimeSeriesStore
 
 
 class PredictionType(Enum):
-    """Types of predictions available in the system."""    CONTENT_PERFORMANCE = "content_performance"
+    """Types of predictions available in the system."""
+    CONTENT_PERFORMANCE = "content_performance"
     USER_BEHAVIOR = "user_behavior"
     REVENUE_FORECAST = "revenue_forecast"
     CHURN_PREDICTION = "churn_prediction"
@@ -70,7 +72,8 @@ class PredictionType(Enum):
 
 
 class ModelType(Enum):
-    """Machine learning model types for different predictions."""    RANDOM_FOREST = "random_forest"
+    """Machine learning model types for different predictions."""
+    RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
     XGBOOST = "xgboost"
     LINEAR_REGRESSION = "linear_regression"
@@ -81,7 +84,8 @@ class ModelType(Enum):
 
 @dataclass
 class PredictionResult:
-    """Structured prediction result with confidence metrics."""    prediction_type: PredictionType
+    """Structured prediction result with confidence metrics."""
+    prediction_type: PredictionType
     predicted_value: Any
     confidence_score: float
     model_accuracy: float
@@ -94,7 +98,8 @@ class PredictionResult:
 
 @dataclass
 class ModelPerformance:
-    """Model performance metrics and validation results."""    model_type: ModelType
+    """Model performance metrics and validation results."""
+    model_type: ModelType
     accuracy_score: float
     mae: float
     mse: float
@@ -106,11 +111,13 @@ class ModelPerformance:
 
 
 class PredictiveAnalyticsEngine:
-    """    Advanced machine learning-powered predictive analytics system.
+    """
+    Advanced machine learning-powered predictive analytics system.
     
     Provides sophisticated forecasting, trend analysis, and business
     intelligence through state-of-the-art ML models and statistical methods.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.models = {}
@@ -125,7 +132,8 @@ class PredictiveAnalyticsEngine:
         content_features: Dict[str, Any],
         prediction_horizon: timedelta = timedelta(days=30)
     ) -> PredictionResult:
-        """        Predict content performance using advanced ML models.
+        """
+        Predict content performance using advanced ML models.
         
         Args:
             content_features: Content characteristics and metadata
@@ -133,7 +141,8 @@ class PredictiveAnalyticsEngine:
             
         Returns:
             Detailed prediction result with confidence metrics
-        """        try:
+        """
+        try:
             # Prepare feature vector
             feature_vector = await self._prepare_content_features(content_features)
             
@@ -181,7 +190,8 @@ class PredictiveAnalyticsEngine:
         behavior_history: Dict[str, Any],
         prediction_type: str = "engagement"
     ) -> PredictionResult:
-        """        Predict user behavior patterns and engagement likelihood.
+        """
+        Predict user behavior patterns and engagement likelihood.
         
         Args:
             user_id: User identifier
@@ -190,7 +200,8 @@ class PredictiveAnalyticsEngine:
             
         Returns:
             User behavior prediction with confidence metrics
-        """        try:
+        """
+        try:
             # Prepare behavioral features
             behavioral_features = await self._prepare_behavioral_features(
                 user_id, behavior_history
@@ -246,7 +257,8 @@ class PredictiveAnalyticsEngine:
         historical_data: pd.DataFrame,
         forecast_horizon: timedelta = timedelta(days=90)
     ) -> PredictionResult:
-        """        Forecast revenue using time series analysis and ML models.
+        """
+        Forecast revenue using time series analysis and ML models.
         
         Args:
             historical_data: Historical revenue data
@@ -254,7 +266,8 @@ class PredictiveAnalyticsEngine:
             
         Returns:
             Revenue forecast with confidence intervals
-        """        try:
+        """
+        try:
             # Prepare time series data
             ts_data = self._prepare_timeseries_data(historical_data)
             
@@ -308,7 +321,8 @@ class PredictiveAnalyticsEngine:
         data: pd.DataFrame,
         sensitivity: float = 0.1
     ) -> List[Dict[str, Any]]:
-        """        Detect anomalies in business metrics using statistical methods.
+        """
+        Detect anomalies in business metrics using statistical methods.
         
         Args:
             data: Time series data for anomaly detection
@@ -316,7 +330,8 @@ class PredictiveAnalyticsEngine:
             
         Returns:
             List of detected anomalies with details
-        """        try:
+        """
+        try:
             anomalies = []
             
             for column in data.select_dtypes(include=[np.number]).columns:
@@ -360,7 +375,8 @@ class PredictiveAnalyticsEngine:
         data: pd.DataFrame,
         trend_window: int = 30
     ) -> Dict[str, Any]:
-        """        Analyze trends and patterns in business metrics.
+        """
+        Analyze trends and patterns in business metrics.
         
         Args:
             data: Historical data for trend analysis
@@ -368,7 +384,8 @@ class PredictiveAnalyticsEngine:
             
         Returns:
             Comprehensive trend analysis results
-        """        try:
+        """
+        try:
             trends = {}
             
             for column in data.select_dtypes(include=[np.number]).columns:
@@ -418,7 +435,8 @@ class PredictiveAnalyticsEngine:
     # Private helper methods
     
     async def _prepare_content_features(self, content_features: Dict[str, Any]) -> np.ndarray:
-        """Prepare content features for ML model input."""        # Extract and normalize content features
+        """Prepare content features for ML model input."""
+        # Extract and normalize content features
         features = []
         
         # Content type encoding
@@ -446,7 +464,8 @@ class PredictiveAnalyticsEngine:
         user_id: str,
         behavior_history: Dict[str, Any]
     ) -> np.ndarray:
-        """Prepare user behavioral features for ML model input."""        features = []
+        """Prepare user behavioral features for ML model input."""
+        features = []
         
         # Activity metrics
         features.extend([
@@ -462,7 +481,8 @@ class PredictiveAnalyticsEngine:
         return np.array(features)
     
     def _prepare_timeseries_data(self, data: pd.DataFrame) -> pd.Series:
-        """Prepare time series data for ARIMA modeling."""        if 'date' in data.columns:
+        """Prepare time series data for ARIMA modeling."""
+        if 'date' in data.columns:
             data['date'] = pd.to_datetime(data['date'])
             data.set_index('date', inplace=True)
         
@@ -477,7 +497,8 @@ class PredictiveAnalyticsEngine:
         prediction_type: PredictionType,
         model_type: ModelType
     ):
-        """Get existing model or train new one if needed."""        model_key = f"{prediction_type.value}_{model_type.value}"
+        """Get existing model or train new one if needed."""
+        model_key = f"{prediction_type.value}_{model_type.value}"
         
         if model_key not in self.models:
             await self._train_model(prediction_type, model_type)
@@ -489,7 +510,8 @@ class PredictiveAnalyticsEngine:
         prediction_type: PredictionType,
         model_type: ModelType
     ):
-        """Train ML model for specific prediction type."""        # This would typically load training data from database
+        """Train ML model for specific prediction type."""
+        # This would typically load training data from database
         # For now, we'll create a placeholder model
         
         model_key = f"{prediction_type.value}_{model_type.value}"
@@ -530,7 +552,8 @@ class PredictiveAnalyticsEngine:
         feature_vector: np.ndarray,
         prediction_type: PredictionType
     ) -> float:
-        """Calculate confidence score for prediction."""        # Use model's uncertainty estimation if available
+        """Calculate confidence score for prediction."""
+        # Use model's uncertainty estimation if available
         if hasattr(model, 'predict_proba'):
             proba = model.predict_proba([feature_vector])[0]
             return float(np.max(proba))
@@ -543,12 +566,14 @@ class PredictiveAnalyticsEngine:
         return 0.7  # Default confidence
     
     def _calculate_viral_probability(self, prediction_score: float) -> float:
-        """Calculate probability of content going viral."""        # Sigmoid function to map prediction to viral probability
+        """Calculate probability of content going viral."""
+        # Sigmoid function to map prediction to viral probability
         viral_threshold = 50  # Adjust based on platform metrics
         return 1 / (1 + np.exp(-(prediction_score - viral_threshold) / 10))
     
     def _categorize_churn_risk(self, churn_probability: float) -> str:
-        """Categorize churn risk level."""        if churn_probability < 0.2:
+        """Categorize churn risk level."""
+        if churn_probability < 0.2:
             return "low"
         elif churn_probability < 0.5:
             return "medium"
@@ -558,7 +583,8 @@ class PredictiveAnalyticsEngine:
             return "critical"
     
     def _categorize_activity_level(self, prediction: np.ndarray) -> str:
-        """Categorize user activity level."""        score = np.mean(prediction)
+        """Categorize user activity level."""
+        score = np.mean(prediction)
         if score < 0.3:
             return "low"
         elif score < 0.7:
@@ -567,7 +593,8 @@ class PredictiveAnalyticsEngine:
             return "high"
     
     def _calculate_anomaly_severity(self, z_score: float) -> str:
-        """Calculate anomaly severity based on z-score."""        abs_z = abs(z_score)
+        """Calculate anomaly severity based on z-score."""
+        abs_z = abs(z_score)
         if abs_z < 2:
             return "low"
         elif abs_z < 3:
@@ -578,7 +605,8 @@ class PredictiveAnalyticsEngine:
             return "critical"
     
     def _classify_trend(self, slope: float, correlation: float, p_value: float) -> str:
-        """Classify trend based on statistical measures."""        if p_value > 0.05:
+        """Classify trend based on statistical measures."""
+        if p_value > 0.05:
             return "no_trend"
         elif abs(correlation) < 0.3:
             return "weak_trend"
@@ -589,18 +617,21 @@ class PredictiveAnalyticsEngine:
 
 
 class PredictionScheduler:
-    """    Automated prediction scheduling and model management system.
+    """
+    Automated prediction scheduling and model management system.
     
     Handles periodic model retraining, prediction updates,
     and performance monitoring for all predictive analytics models.
-    """    
+    """
+    
     def __init__(self, analytics_engine: PredictiveAnalyticsEngine):
         self.analytics_engine = analytics_engine
         self.logger = logging.getLogger(__name__)
         self.scheduled_tasks = {}
         
     async def schedule_prediction_updates(self):
-        """Schedule regular prediction updates for all models."""        # Content performance predictions - every 6 hours
+        """Schedule regular prediction updates for all models."""
+        # Content performance predictions - every 6 hours
         await self._schedule_task(
             "content_performance_update",
             self._update_content_predictions,
@@ -634,7 +665,8 @@ class PredictionScheduler:
         task_func,
         interval_hours: int
     ):
-        """Schedule a recurring task."""        self.scheduled_tasks[task_name] = {
+        """Schedule a recurring task."""
+        self.scheduled_tasks[task_name] = {
             'function': task_func,
             'interval': timedelta(hours=interval_hours),
             'last_run': datetime.now(),
@@ -642,17 +674,21 @@ class PredictionScheduler:
         }
     
     async def _update_content_predictions(self):
-        """Update predictions for all active content."""        self.logger.info("Updating content performance predictions")
+        """Update predictions for all active content."""
+        self.logger.info("Updating content performance predictions")
         # Implementation would fetch active content and update predictions
         
     async def _update_user_predictions(self):
-        """Update user behavior predictions."""        self.logger.info("Updating user behavior predictions")
+        """Update user behavior predictions."""
+        self.logger.info("Updating user behavior predictions")
         # Implementation would fetch active users and update predictions
         
     async def _update_revenue_forecasts(self):
-        """Update revenue forecasts."""        self.logger.info("Updating revenue forecasts")
+        """Update revenue forecasts."""
+        self.logger.info("Updating revenue forecasts")
         # Implementation would fetch recent revenue data and update forecasts
         
     async def _retrain_models(self):
-        """Retrain all ML models with latest data."""        self.logger.info("Retraining predictive models")
+        """Retrain all ML models with latest data."""
+        self.logger.info("Retraining predictive models")
         # Implementation would retrain models with latest data

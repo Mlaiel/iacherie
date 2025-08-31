@@ -49,7 +49,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class EmbeddingType(Enum):
-    """Types of visual embeddings"""    DEEP_FEATURES = "deep_features"
+    """Types of visual embeddings"""
+    DEEP_FEATURES = "deep_features"
     PERCEPTUAL_HASH = "perceptual_hash"
     COLOR_HISTOGRAM = "color_histogram"
     TEXTURE_FEATURES = "texture_features"
@@ -59,7 +60,8 @@ class EmbeddingType(Enum):
     CONTENT_FEATURES = "content_features"
 
 class SimilarityMetric(Enum):
-    """Similarity metrics"""    COSINE = "cosine"
+    """Similarity metrics"""
+    COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
     HAMMING = "hamming"
@@ -70,7 +72,8 @@ class SimilarityMetric(Enum):
 
 @dataclass
 class MatchingThreshold:
-    """Threshold configuration for matching"""    similarity_threshold: float = 0.8
+    """Threshold configuration for matching"""
+    similarity_threshold: float = 0.8
     confidence_threshold: float = 0.7
     distance_threshold: float = 0.3
     quality_threshold: float = 0.6
@@ -80,7 +83,8 @@ class MatchingThreshold:
 
 @dataclass
 class SimilarityResult:
-    """Result structure for similarity comparison"""    similarity_score: float
+    """Result structure for similarity comparison"""
+    similarity_score: float
     confidence: float
     distance: float
     metric_used: SimilarityMetric
@@ -92,7 +96,8 @@ class SimilarityResult:
 
 @dataclass
 class EmbeddingMetadata:
-    """Metadata for embeddings"""    embedding_id: str
+    """Metadata for embeddings"""
+    embedding_id: str
     source_path: str
     creation_timestamp: float
     embedding_type: EmbeddingType
@@ -103,7 +108,8 @@ class EmbeddingMetadata:
     author_info: Optional[str] = None
 
 class VisualEmbeddingModel:
-    """Advanced visual embedding generation and management system"""    
+    """Advanced visual embedding generation and management system"""
+    
     def __init__(self, device: str = "auto", cache_dir: str = "./embeddings_cache"):
         self.device = self._setup_device(device)
         self.cache_dir = Path(cache_dir)
@@ -123,7 +129,8 @@ class VisualEmbeddingModel:
         self._load_pretrained_models()
         
     def _setup_device(self, device: str) -> torch.device:
-        """Setup optimal device for processing"""        if device == "auto":
+        """Setup optimal device for processing"""
+        if device == "auto":
             if torch.cuda.is_available():
                 return torch.device("cuda")
             elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
@@ -133,7 +140,8 @@ class VisualEmbeddingModel:
         return torch.device(device)
     
     def _init_extractors(self) -> Dict[str, Any]:
-        """Initialize embedding extractors"""        return {
+        """Initialize embedding extractors"""
+        return {
             'deep_features': DeepFeatureExtractor(self.device),
             'perceptual_hash': PerceptualHashExtractor(),
             'color_histogram': ColorHistogramExtractor(),
@@ -145,7 +153,8 @@ class VisualEmbeddingModel:
         }
     
     def _load_pretrained_models(self):
-        """Load pre-trained models for feature extraction"""        logger.info("Loading pre-trained models for feature extraction...")
+        """Load pre-trained models for feature extraction"""
+        logger.info("Loading pre-trained models for feature extraction...")
         
         # Load models in background
         for extractor_name, extractor in self.extractors.items():
@@ -158,7 +167,8 @@ class VisualEmbeddingModel:
     
     def generate_embedding(self, image: np.ndarray, embedding_types: List[EmbeddingType], 
                           metadata: Optional[EmbeddingMetadata] = None) -> Dict[EmbeddingType, np.ndarray]:
-        """Generate embeddings for an image"""        embeddings = {}
+        """Generate embeddings for an image"""
+        embeddings = {}
         
         for embedding_type in embedding_types:
             try:
@@ -199,7 +209,8 @@ class VisualEmbeddingModel:
         return embeddings
     
     def _store_embeddings(self, embeddings: Dict[EmbeddingType, np.ndarray], metadata: EmbeddingMetadata):
-        """Store embeddings with metadata"""        embedding_id = metadata.embedding_id
+        """Store embeddings with metadata"""
+        embedding_id = metadata.embedding_id
         
         # Store embeddings
         self.embedding_store[embedding_id] = embeddings
@@ -213,7 +224,8 @@ class VisualEmbeddingModel:
         self._save_to_cache(embedding_id, embeddings, metadata)
     
     def _update_faiss_index(self, embedding_type: EmbeddingType, embedding_id: str, embedding: np.ndarray):
-        """Update FAISS index with new embedding"""        if embedding_type not in self.faiss_indices:
+        """Update FAISS index with new embedding"""
+        if embedding_type not in self.faiss_indices:
             # Initialize FAISS index
             dimension = embedding.shape[0] if embedding.ndim == 1 else embedding.size
             index = faiss.IndexFlatIP(dimension)  # Inner product for cosine similarity
@@ -230,7 +242,8 @@ class VisualEmbeddingModel:
         self.faiss_indices[embedding_type]['id_map'].append(embedding_id)
     
     def _save_to_cache(self, embedding_id: str, embeddings: Dict[EmbeddingType, np.ndarray], metadata: EmbeddingMetadata):
-        """Save embeddings to disk cache"""        cache_file = self.cache_dir / f"{embedding_id}.pkl"
+        """Save embeddings to disk cache"""
+        cache_file = self.cache_dir / f"{embedding_id}.pkl"
         
         cache_data = {
             'embeddings': embeddings,
@@ -244,7 +257,8 @@ class VisualEmbeddingModel:
             logger.warning(f"Failed to save embedding cache: {e}")
     
     def load_from_cache(self, embedding_id: str) -> Optional[Tuple[Dict[EmbeddingType, np.ndarray], EmbeddingMetadata]]:
-        """Load embeddings from cache"""        cache_file = self.cache_dir / f"{embedding_id}.pkl"
+        """Load embeddings from cache"""
+        cache_file = self.cache_dir / f"{embedding_id}.pkl"
         
         if not cache_file.exists():
             return None
@@ -258,14 +272,16 @@ class VisualEmbeddingModel:
             return None
 
 class SimilarityMatcher:
-    """Advanced similarity matching engine"""    
+    """Advanced similarity matching engine"""
+    
     def __init__(self, embedding_model: VisualEmbeddingModel):
         self.embedding_model = embedding_model
         self.similarity_functions = self._init_similarity_functions()
         self.adaptive_thresholds = {}
         
     def _init_similarity_functions(self) -> Dict[SimilarityMetric, callable]:
-        """Initialize similarity computation functions"""        return {
+        """Initialize similarity computation functions"""
+        return {
             SimilarityMetric.COSINE: self._cosine_similarity,
             SimilarityMetric.EUCLIDEAN: self._euclidean_distance,
             SimilarityMetric.MANHATTAN: self._manhattan_distance,
@@ -278,7 +294,8 @@ class SimilarityMatcher:
     
     def compute_similarity(self, embedding1: np.ndarray, embedding2: np.ndarray, 
                           metric: SimilarityMetric, embedding_type: EmbeddingType) -> SimilarityResult:
-        """Compute similarity between two embeddings"""        start_time = time.time()
+        """Compute similarity between two embeddings"""
+        start_time = time.time()
         
         try:
             # Get similarity function
@@ -335,7 +352,8 @@ class SimilarityMatcher:
             )
     
     def _cosine_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Compute cosine similarity"""        # Flatten vectors if needed
+        """Compute cosine similarity"""
+        # Flatten vectors if needed
         vec1_flat = vec1.flatten()
         vec2_flat = vec2.flatten()
         
@@ -350,20 +368,24 @@ class SimilarityMatcher:
         return dot_product / (norm1 * norm2)
     
     def _euclidean_distance(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Compute Euclidean distance"""        return np.linalg.norm(vec1.flatten() - vec2.flatten())
+        """Compute Euclidean distance"""
+        return np.linalg.norm(vec1.flatten() - vec2.flatten())
     
     def _manhattan_distance(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Compute Manhattan distance"""        return np.sum(np.abs(vec1.flatten() - vec2.flatten()))
+        """Compute Manhattan distance"""
+        return np.sum(np.abs(vec1.flatten() - vec2.flatten()))
     
     def _hamming_distance(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Compute Hamming distance for binary vectors"""        # Convert to binary if needed
+        """Compute Hamming distance for binary vectors"""
+        # Convert to binary if needed
         bin1 = (vec1 > 0.5).astype(int)
         bin2 = (vec2 > 0.5).astype(int)
         
         return np.sum(bin1.flatten() != bin2.flatten()) / len(bin1.flatten())
     
     def _jaccard_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Compute Jaccard similarity"""        # Convert to binary
+        """Compute Jaccard similarity"""
+        # Convert to binary
         bin1 = (vec1 > 0.5).astype(int)
         bin2 = (vec2 > 0.5).astype(int)
         
@@ -376,7 +398,8 @@ class SimilarityMatcher:
         return intersection / union
     
     def _pearson_correlation(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Compute Pearson correlation coefficient"""        correlation_matrix = np.corrcoef(vec1.flatten(), vec2.flatten())
+        """Compute Pearson correlation coefficient"""
+        correlation_matrix = np.corrcoef(vec1.flatten(), vec2.flatten())
         correlation = correlation_matrix[0, 1]
         
         # Handle NaN case
@@ -386,7 +409,8 @@ class SimilarityMatcher:
         return abs(correlation)  # Return absolute value
     
     def _ssim_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Compute SSIM-inspired similarity for image embeddings"""        try:
+        """Compute SSIM-inspired similarity for image embeddings"""
+        try:
             # Normalize vectors
             vec1_norm = (vec1 - np.mean(vec1)) / (np.std(vec1) + 1e-8)
             vec2_norm = (vec2 - np.mean(vec2)) / (np.std(vec2) + 1e-8)
@@ -415,7 +439,8 @@ class SimilarityMatcher:
             return self._cosine_similarity(vec1, vec2)
     
     def _lpips_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Compute LPIPS-inspired perceptual similarity for embeddings"""        try:
+        """Compute LPIPS-inspired perceptual similarity for embeddings"""
+        try:
             # LPIPS-inspired multi-scale feature comparison
             # Split vectors into different "scale" segments for comparison
             
@@ -458,7 +483,8 @@ class SimilarityMatcher:
             return self._cosine_similarity(vec1, vec2)
     
     def _calculate_confidence(self, similarity_score: float, embedding_type: EmbeddingType, metric: SimilarityMetric) -> float:
-        """Calculate confidence score based on various factors"""        base_confidence = similarity_score
+        """Calculate confidence score based on various factors"""
+        base_confidence = similarity_score
         
         # Adjust confidence based on embedding type reliability
         type_multipliers = {
@@ -492,7 +518,8 @@ class SimilarityMatcher:
         return min(1.0, max(0.0, adjusted_confidence))
     
     def _assess_match_quality(self, similarity_score: float, confidence: float, embedding_type: EmbeddingType) -> float:
-        """Assess overall match quality"""        # Weighted combination of similarity and confidence
+        """Assess overall match quality"""
+        # Weighted combination of similarity and confidence
         quality = (similarity_score * 0.7) + (confidence * 0.3)
         
         # Bonus for high-quality embedding types
@@ -502,7 +529,8 @@ class SimilarityMatcher:
         return min(1.0, quality)
     
     def _get_adaptive_threshold(self, embedding_type: EmbeddingType, metric: SimilarityMetric) -> float:
-        """Get adaptive threshold for matching"""        # Default thresholds
+        """Get adaptive threshold for matching"""
+        # Default thresholds
         default_thresholds = {
             (EmbeddingType.DEEP_FEATURES, SimilarityMetric.COSINE): 0.85,
             (EmbeddingType.SEMANTIC_FEATURES, SimilarityMetric.COSINE): 0.8,
@@ -515,7 +543,8 @@ class SimilarityMatcher:
         return default_thresholds.get(key, 0.75)  # Default threshold
 
 class ContentMatcher:
-    """High-level content matching system"""    
+    """High-level content matching system"""
+    
     def __init__(self, embedding_model: VisualEmbeddingModel, similarity_matcher: SimilarityMatcher):
         self.embedding_model = embedding_model
         self.similarity_matcher = similarity_matcher
@@ -523,7 +552,8 @@ class ContentMatcher:
         self.match_history = []
         
     def add_content(self, content_id: str, image: np.ndarray, metadata: Optional[Dict[str, Any]] = None):
-        """Add content to the matching database"""        # Generate embeddings
+        """Add content to the matching database"""
+        # Generate embeddings
         embedding_types = [
             EmbeddingType.DEEP_FEATURES,
             EmbeddingType.PERCEPTUAL_HASH,
@@ -556,7 +586,8 @@ class ContentMatcher:
     
     def find_matches(self, query_image: np.ndarray, threshold: MatchingThreshold, 
                     max_results: int = 10) -> List[Dict[str, Any]]:
-        """Find matching content in the database"""        # Generate query embeddings
+        """Find matching content in the database"""
+        # Generate query embeddings
         query_embedding_types = [
             EmbeddingType.DEEP_FEATURES,
             EmbeddingType.PERCEPTUAL_HASH,
@@ -628,7 +659,8 @@ class ContentMatcher:
         return matches
     
     def _aggregate_similarities(self, similarity_results: List[SimilarityResult]) -> Dict[str, float]:
-        """Aggregate multiple similarity results"""        if not similarity_results:
+        """Aggregate multiple similarity results"""
+        if not similarity_results:
             return {
                 'overall_similarity': 0.0,
                 'overall_confidence': 0.0,
@@ -673,7 +705,8 @@ class ContentMatcher:
     
     def batch_search(self, query_images: List[np.ndarray], threshold: MatchingThreshold, 
                     max_results_per_query: int = 10) -> List[List[Dict[str, Any]]]:
-        """Perform batch search for multiple query images"""        results = []
+        """Perform batch search for multiple query images"""
+        results = []
         
         with ThreadPoolExecutor(max_workers=4) as executor:
             future_to_index = {
@@ -695,13 +728,15 @@ class ContentMatcher:
         return results
 
 class EmbeddingGenerator:
-    """Utility class for generating various types of embeddings"""    
+    """Utility class for generating various types of embeddings"""
+    
     def __init__(self, device: str = "auto"):
         self.device = self._setup_device(device)
         self.generators = self._init_generators()
     
     def _setup_device(self, device: str) -> torch.device:
-        """Setup device"""        if device == "auto":
+        """Setup device"""
+        if device == "auto":
             if torch.cuda.is_available():
                 return torch.device("cuda")
             elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
@@ -711,7 +746,8 @@ class EmbeddingGenerator:
         return torch.device(device)
     
     def _init_generators(self) -> Dict[str, Any]:
-        """Initialize embedding generators"""        return {
+        """Initialize embedding generators"""
+        return {
             'deep': DeepFeatureExtractor(self.device),
             'perceptual': PerceptualHashExtractor(),
             'color': ColorHistogramExtractor(),
@@ -720,7 +756,8 @@ class EmbeddingGenerator:
         }
     
     def generate_all_embeddings(self, image: np.ndarray) -> Dict[str, np.ndarray]:
-        """Generate all available embeddings for an image"""        embeddings = {}
+        """Generate all available embeddings for an image"""
+        embeddings = {}
         
         for name, generator in self.generators.items():
             try:
@@ -733,13 +770,16 @@ class EmbeddingGenerator:
 
 # Feature Extractor Classes
 class BaseFeatureExtractor(ABC):
-    """Abstract base class for feature extractors"""    
+    """Abstract base class for feature extractors"""
+    
     @abstractmethod
     def extract(self, image: np.ndarray) -> np.ndarray:
-        """Extract features from image"""        pass
+        """Extract features from image"""
+        pass
 
 class DeepFeatureExtractor(BaseFeatureExtractor):
-    """Deep learning-based feature extractor"""    
+    """Deep learning-based feature extractor"""
+    
     def __init__(self, device: torch.device):
         self.device = device
         self.model = None
@@ -750,7 +790,8 @@ class DeepFeatureExtractor(BaseFeatureExtractor):
         ])
     
     def load_model(self):
-        """Load pre-trained model"""        try:
+        """Load pre-trained model"""
+        try:
             import torchvision.models as models
             self.model = models.resnet50(pretrained=True)
             self.model.fc = nn.Identity()  # Remove final classification layer
@@ -761,7 +802,8 @@ class DeepFeatureExtractor(BaseFeatureExtractor):
             logger.error(f"Failed to load deep feature model: {e}")
     
     def extract(self, image: np.ndarray) -> np.ndarray:
-        """Extract deep features"""        if self.model is None:
+        """Extract deep features"""
+        if self.model is None:
             self.load_model()
         
         if self.model is None:
@@ -786,7 +828,8 @@ class DeepFeatureExtractor(BaseFeatureExtractor):
             return self._extract_basic_features(image)
     
     def _extract_basic_features(self, image: np.ndarray) -> np.ndarray:
-        """Fallback basic feature extraction"""        # Simple color and edge features
+        """Fallback basic feature extraction"""
+        # Simple color and edge features
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         hist = cv2.calcHist([gray], [0], None, [256], [0, 256])
         edges = cv2.Canny(gray, 50, 150)
@@ -796,9 +839,11 @@ class DeepFeatureExtractor(BaseFeatureExtractor):
         return features / np.linalg.norm(features)  # Normalize
 
 class PerceptualHashExtractor(BaseFeatureExtractor):
-    """Perceptual hash extractor"""    
+    """Perceptual hash extractor"""
+    
     def extract(self, image: np.ndarray) -> np.ndarray:
-        """Extract perceptual hash"""        pil_image = Image.fromarray(image)
+        """Extract perceptual hash"""
+        pil_image = Image.fromarray(image)
         
         # Multiple hash types for robustness
         phash = imagehash.phash(pil_image, hash_size=16)
@@ -815,9 +860,11 @@ class PerceptualHashExtractor(BaseFeatureExtractor):
         return binary_array
 
 class ColorHistogramExtractor(BaseFeatureExtractor):
-    """Color histogram feature extractor"""    
+    """Color histogram feature extractor"""
+    
     def extract(self, image: np.ndarray) -> np.ndarray:
-        """Extract color histogram features"""        # RGB histograms
+        """Extract color histogram features"""
+        # RGB histograms
         hist_r = cv2.calcHist([image], [0], None, [32], [0, 256])
         hist_g = cv2.calcHist([image], [1], None, [32], [0, 256])
         hist_b = cv2.calcHist([image], [2], None, [32], [0, 256])
@@ -838,9 +885,11 @@ class ColorHistogramExtractor(BaseFeatureExtractor):
         return combined_hist / np.sum(combined_hist)
 
 class TextureFeatureExtractor(BaseFeatureExtractor):
-    """Texture feature extractor using LBP and GLCM"""    
+    """Texture feature extractor using LBP and GLCM"""
+    
     def extract(self, image: np.ndarray) -> np.ndarray:
-        """Extract texture features"""        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+        """Extract texture features"""
+        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         
         # Local Binary Pattern
         lbp_features = self._compute_lbp(gray)
@@ -857,7 +906,8 @@ class TextureFeatureExtractor(BaseFeatureExtractor):
         return texture_features
     
     def _compute_lbp(self, gray: np.ndarray) -> np.ndarray:
-        """Compute Local Binary Pattern features"""        # Simplified LBP implementation
+        """Compute Local Binary Pattern features"""
+        # Simplified LBP implementation
         h, w = gray.shape
         lbp = np.zeros_like(gray)
         
@@ -880,7 +930,8 @@ class TextureFeatureExtractor(BaseFeatureExtractor):
         return hist.flatten() / np.sum(hist)
     
     def _compute_glcm_features(self, gray: np.ndarray) -> np.ndarray:
-        """Compute GLCM-based texture features"""        # Simplified GLCM implementation
+        """Compute GLCM-based texture features"""
+        # Simplified GLCM implementation
         # Quantize to reduce computation
         quantized = (gray // 32).astype(np.uint8)
         
@@ -904,7 +955,8 @@ class TextureFeatureExtractor(BaseFeatureExtractor):
         return np.array([contrast, correlation, energy, homogeneity])
     
     def _compute_gabor_features(self, gray: np.ndarray) -> np.ndarray:
-        """Compute Gabor filter features"""        features = []
+        """Compute Gabor filter features"""
+        features = []
         
         # Different orientations and frequencies
         for theta in [0, 45, 90, 135]:
@@ -917,9 +969,11 @@ class TextureFeatureExtractor(BaseFeatureExtractor):
         return np.array(features)
 
 class EdgeFeatureExtractor(BaseFeatureExtractor):
-    """Edge-based feature extractor"""    
+    """Edge-based feature extractor"""
+    
     def extract(self, image: np.ndarray) -> np.ndarray:
-        """Extract edge features"""        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+        """Extract edge features"""
+        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         
         # Canny edges
         edges_canny = cv2.Canny(gray, 50, 150)
@@ -948,13 +1002,15 @@ class EdgeFeatureExtractor(BaseFeatureExtractor):
         return edge_features / np.sum(edge_features)
 
 class SemanticFeatureExtractor(BaseFeatureExtractor):
-    """Semantic feature extractor using pre-trained models"""    
+    """Semantic feature extractor using pre-trained models"""
+    
     def __init__(self, device: torch.device):
         self.device = device
         self.model = None
     
     def load_model(self):
-        """Load semantic model"""        try:
+        """Load semantic model"""
+        try:
             # Would load a semantic segmentation or object detection model
             # For now, use ResNet features as semantic features
             import torchvision.models as models
@@ -966,7 +1022,8 @@ class SemanticFeatureExtractor(BaseFeatureExtractor):
             logger.error(f"Failed to load semantic model: {e}")
     
     def extract(self, image: np.ndarray) -> np.ndarray:
-        """Extract semantic features"""        if self.model is None:
+        """Extract semantic features"""
+        if self.model is None:
             self.load_model()
         
         # Use deep features as semantic features for now
@@ -974,13 +1031,15 @@ class SemanticFeatureExtractor(BaseFeatureExtractor):
         return deep_extractor.extract(image)
 
 class StyleFeatureExtractor(BaseFeatureExtractor):
-    """Style feature extractor for artistic style analysis"""    
+    """Style feature extractor for artistic style analysis"""
+    
     def __init__(self, device: torch.device):
         self.device = device
         self.model = None
     
     def load_model(self):
-        """Load style analysis model"""        # Would load a VGG model for style features
+        """Load style analysis model"""
+        # Would load a VGG model for style features
         try:
             import torchvision.models as models
             vgg = models.vgg19(pretrained=True).features
@@ -992,7 +1051,8 @@ class StyleFeatureExtractor(BaseFeatureExtractor):
             logger.error(f"Failed to load style model: {e}")
     
     def extract(self, image: np.ndarray) -> np.ndarray:
-        """Extract style features"""        if self.model is None:
+        """Extract style features"""
+        if self.model is None:
             self.load_model()
         
         if self.model is None:
@@ -1026,13 +1086,15 @@ class StyleFeatureExtractor(BaseFeatureExtractor):
             return ColorHistogramExtractor().extract(image)
 
 class ContentFeatureExtractor(BaseFeatureExtractor):
-    """Content feature extractor for content-based analysis"""    
+    """Content feature extractor for content-based analysis"""
+    
     def __init__(self, device: torch.device):
         self.device = device
         self.model = None
     
     def load_model(self):
-        """Load content analysis model"""        # Similar to deep features but with different layer selection
+        """Load content analysis model"""
+        # Similar to deep features but with different layer selection
         try:
             import torchvision.models as models
             self.model = models.resnet50(pretrained=True)
@@ -1045,7 +1107,8 @@ class ContentFeatureExtractor(BaseFeatureExtractor):
             logger.error(f"Failed to load content model: {e}")
     
     def extract(self, image: np.ndarray) -> np.ndarray:
-        """Extract content features"""        if self.model is None:
+        """Extract content features"""
+        if self.model is None:
             self.load_model()
         
         if self.model is None:

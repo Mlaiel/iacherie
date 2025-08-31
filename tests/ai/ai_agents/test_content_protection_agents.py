@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -24,7 +25,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -48,14 +50,17 @@ from ai.ai_agents.content_protection_agents import (
 
 
 class TestContentProtectionAgent:
-    """Test ContentProtectionAgent functionality"""    
+    """Test ContentProtectionAgent functionality"""
+    
     @pytest.fixture
     def agent(self):
-        """Create ContentProtectionAgent instance"""        return ContentProtectionAgent()
+        """Create ContentProtectionAgent instance"""
+        return ContentProtectionAgent()
     
     @pytest.fixture
     def sample_content(self):
-        """Sample content for protection testing"""        return {
+        """Sample content for protection testing"""
+        return {
             "content_id": "content_001",
             "creator_id": "creator_001", 
             "content_type": "video",
@@ -76,7 +81,8 @@ class TestContentProtectionAgent:
     
     @pytest.mark.asyncio
     async def test_create_content_fingerprint(self, agent, sample_content):
-        """Test content fingerprint creation"""        fingerprint = await agent.create_content_fingerprint(sample_content)
+        """Test content fingerprint creation"""
+        fingerprint = await agent.create_content_fingerprint(sample_content)
         
         assert isinstance(fingerprint, ContentFingerprint)
         assert fingerprint.content_id == sample_content["content_id"]
@@ -88,7 +94,8 @@ class TestContentProtectionAgent:
     
     @pytest.mark.asyncio
     async def test_monitor_content_usage(self, agent, sample_content):
-        """Test content usage monitoring"""        monitoring_setup = {
+        """Test content usage monitoring"""
+        monitoring_setup = {
             "content_fingerprint": "a1b2c3d4e5f6g7h8i9j0",
             "monitoring_platforms": ["youtube", "tiktok", "instagram", "twitter"],
             "monitoring_frequency": "daily",
@@ -108,7 +115,8 @@ class TestContentProtectionAgent:
     
     @pytest.mark.asyncio
     async def test_detect_unauthorized_usage(self, agent, sample_content):
-        """Test unauthorized usage detection"""        suspected_usage = [
+        """Test unauthorized usage detection"""
+        suspected_usage = [
             {
                 "platform": "youtube",
                 "url": "https://youtube.com/watch?v=suspicious1",
@@ -143,7 +151,8 @@ class TestContentProtectionAgent:
     
     @pytest.mark.asyncio
     async def test_generate_protection_alerts(self, agent, sample_content):
-        """Test protection alert generation"""        violation_data = {
+        """Test protection alert generation"""
+        violation_data = {
             "violation_type": "unauthorized_repost",
             "platform": "instagram",
             "violator": "content_thief_account",
@@ -163,7 +172,8 @@ class TestContentProtectionAgent:
     
     @pytest.mark.asyncio
     async def test_initiate_takedown_request(self, agent, sample_content):
-        """Test takedown request initiation"""        violation_details = {
+        """Test takedown request initiation"""
+        violation_details = {
             "platform": "youtube",
             "infringing_url": "https://youtube.com/watch?v=stolen_content",
             "violation_type": "copyright_infringement",
@@ -185,7 +195,8 @@ class TestContentProtectionAgent:
     
     @pytest.mark.asyncio
     async def test_track_protection_metrics(self, agent, sample_content):
-        """Test protection metrics tracking"""        metrics = await agent.track_protection_metrics(sample_content["creator_id"])
+        """Test protection metrics tracking"""
+        metrics = await agent.track_protection_metrics(sample_content["creator_id"])
         
         assert "total_content_protected" in metrics
         assert "violations_detected" in metrics
@@ -196,14 +207,17 @@ class TestContentProtectionAgent:
 
 
 class TestCopyrightDetectionAgent:
-    """Test CopyrightDetectionAgent functionality"""    
+    """Test CopyrightDetectionAgent functionality"""
+    
     @pytest.fixture
     def agent(self):
-        """Create CopyrightDetectionAgent instance"""        return CopyrightDetectionAgent()
+        """Create CopyrightDetectionAgent instance"""
+        return CopyrightDetectionAgent()
     
     @pytest.fixture
     def sample_copyrighted_content(self):
-        """Sample copyrighted content"""        return {
+        """Sample copyrighted content"""
+        return {
             "content_id": "copyright_001",
             "title": "Original Music Track - Copyrighted",
             "creator": "Professional Artist",
@@ -222,7 +236,8 @@ class TestCopyrightDetectionAgent:
     
     @pytest.mark.asyncio
     async def test_scan_for_copyright_violations(self, agent, sample_copyrighted_content):
-        """Test copyright violation scanning"""        scan_results = await agent.scan_for_copyright_violations(sample_copyrighted_content)
+        """Test copyright violation scanning"""
+        scan_results = await agent.scan_for_copyright_violations(sample_copyrighted_content)
         
         assert "scan_id" in scan_results
         assert "matches_found" in scan_results
@@ -239,7 +254,8 @@ class TestCopyrightDetectionAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_fair_use_claims(self, agent, sample_copyrighted_content):
-        """Test fair use claim analysis"""        fair_use_claim = {
+        """Test fair use claim analysis"""
+        fair_use_claim = {
             "claimant": "Educational Channel",
             "usage_context": "educational_commentary",
             "content_portion_used": 0.15,  # 15% of original
@@ -266,7 +282,8 @@ class TestCopyrightDetectionAgent:
     
     @pytest.mark.asyncio
     async def test_process_dmca_claims(self, agent, sample_copyrighted_content):
-        """Test DMCA claim processing"""        dmca_claim = {
+        """Test DMCA claim processing"""
+        dmca_claim = {
             "claimant_name": "Record Label Inc.",
             "claimant_contact": "legal@recordlabel.com",
             "copyrighted_work": "Original Music Track",
@@ -290,7 +307,8 @@ class TestCopyrightDetectionAgent:
     
     @pytest.mark.asyncio
     async def test_generate_copyright_reports(self, agent, sample_copyrighted_content):
-        """Test copyright report generation"""        report_config = {
+        """Test copyright report generation"""
+        report_config = {
             "report_type": "comprehensive",
             "time_period": "30_days",
             "include_resolved": True,
@@ -317,17 +335,21 @@ class TestCopyrightDetectionAgent:
 
 
 class TestPlagiarismDetectionAgent:
-    """Test PlagiarismDetectionAgent functionality"""    
+    """Test PlagiarismDetectionAgent functionality"""
+    
     @pytest.fixture
     def agent(self):
-        """Create PlagiarismDetectionAgent instance"""        return PlagiarismDetectionAgent()
+        """Create PlagiarismDetectionAgent instance"""
+        return PlagiarismDetectionAgent()
     
     @pytest.fixture
     def sample_text_content(self):
-        """Sample text content for plagiarism detection"""        return {
+        """Sample text content for plagiarism detection"""
+        return {
             "content_id": "text_001",
             "title": "The Future of Artificial Intelligence",
-            "content": """            Artificial intelligence represents one of the most transformative technologies
+            "content": """
+            Artificial intelligence represents one of the most transformative technologies
             of our time. Machine learning algorithms are revolutionizing how we process
             information, make decisions, and interact with digital systems. The implications
             for society are profound, touching everything from healthcare to transportation,
@@ -347,7 +369,8 @@ class TestPlagiarismDetectionAgent:
     
     @pytest.mark.asyncio
     async def test_detect_text_plagiarism(self, agent, sample_text_content):
-        """Test text plagiarism detection"""        detection_result = await agent.detect_text_plagiarism(sample_text_content)
+        """Test text plagiarism detection"""
+        detection_result = await agent.detect_text_plagiarism(sample_text_content)
         
         assert "plagiarism_score" in detection_result
         assert "suspicious_passages" in detection_result
@@ -364,7 +387,8 @@ class TestPlagiarismDetectionAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_content_originality(self, agent, sample_text_content):
-        """Test content originality analysis"""        originality_analysis = await agent.analyze_content_originality(sample_text_content)
+        """Test content originality analysis"""
+        originality_analysis = await agent.analyze_content_originality(sample_text_content)
         
         assert "originality_score" in originality_analysis
         assert "unique_elements" in originality_analysis
@@ -377,10 +401,12 @@ class TestPlagiarismDetectionAgent:
     
     @pytest.mark.asyncio
     async def test_compare_content_similarity(self, agent, sample_text_content):
-        """Test content similarity comparison"""        comparison_content = {
+        """Test content similarity comparison"""
+        comparison_content = {
             "content_id": "text_002",
             "title": "AI and the Future of Technology",
-            "content": """            Artificial intelligence is one of the most transformative technologies
+            "content": """
+            Artificial intelligence is one of the most transformative technologies
             today. Machine learning is changing how we process data and make
             decisions in digital environments. The societal implications are
             significant, affecting healthcare, transportation, and education.
@@ -405,7 +431,8 @@ class TestPlagiarismDetectionAgent:
     
     @pytest.mark.asyncio
     async def test_generate_plagiarism_report(self, agent, sample_text_content):
-        """Test plagiarism report generation"""        plagiarism_findings = {
+        """Test plagiarism report generation"""
+        plagiarism_findings = {
             "plagiarism_score": 0.25,
             "suspicious_passages": [
                 {"text": "sample suspicious text", "similarity": 0.8, "source": "source1.com"},
@@ -433,14 +460,17 @@ class TestPlagiarismDetectionAgent:
 
 
 class TestDigitalRightsAgent:
-    """Test DigitalRightsAgent functionality"""    
+    """Test DigitalRightsAgent functionality"""
+    
     @pytest.fixture
     def agent(self):
-        """Create DigitalRightsAgent instance"""        return DigitalRightsAgent()
+        """Create DigitalRightsAgent instance"""
+        return DigitalRightsAgent()
     
     @pytest.fixture
     def sample_digital_asset(self):
-        """Sample digital asset for rights management"""        return {
+        """Sample digital asset for rights management"""
+        return {
             "asset_id": "digital_asset_001",
             "asset_type": "video_course",
             "title": "Complete Python Programming Course",
@@ -461,7 +491,8 @@ class TestDigitalRightsAgent:
     
     @pytest.mark.asyncio
     async def test_manage_digital_rights(self, agent, sample_digital_asset):
-        """Test digital rights management"""        rights_management = await agent.manage_digital_rights(sample_digital_asset)
+        """Test digital rights management"""
+        rights_management = await agent.manage_digital_rights(sample_digital_asset)
         
         assert "rights_status" in rights_management
         assert "protection_level" in rights_management
@@ -474,7 +505,8 @@ class TestDigitalRightsAgent:
     
     @pytest.mark.asyncio
     async def test_enforce_usage_restrictions(self, agent, sample_digital_asset):
-        """Test usage restriction enforcement"""        violation_attempt = {
+        """Test usage restriction enforcement"""
+        violation_attempt = {
             "user_id": "unauthorized_user_123",
             "attempted_action": "commercial_redistribution",
             "access_method": "api_download",
@@ -497,7 +529,8 @@ class TestDigitalRightsAgent:
     
     @pytest.mark.asyncio
     async def test_track_licensing_compliance(self, agent, sample_digital_asset):
-        """Test licensing compliance tracking"""        usage_data = {
+        """Test licensing compliance tracking"""
+        usage_data = {
             "licensees": [
                 {"id": "licensee_1", "usage_type": "educational", "compliance_status": "compliant"},
                 {"id": "licensee_2", "usage_type": "commercial", "compliance_status": "violation_detected"},
@@ -522,7 +555,8 @@ class TestDigitalRightsAgent:
     
     @pytest.mark.asyncio
     async def test_generate_rights_certificates(self, agent, sample_digital_asset):
-        """Test rights certificate generation"""        certificate_request = {
+        """Test rights certificate generation"""
+        certificate_request = {
             "certificate_type": "ownership_proof",
             "requesting_party": "Python Expert LLC",
             "intended_use": "legal_proceedings",
@@ -546,10 +580,12 @@ class TestDigitalRightsAgent:
 
 
 class TestIntegrationScenarios:
-    """Test integration between different content protection agents"""    
+    """Test integration between different content protection agents"""
+    
     @pytest.fixture
     def agents(self):
-        """Create all content protection agents for integration testing"""        return {
+        """Create all content protection agents for integration testing"""
+        return {
             "protection": ContentProtectionAgent(),
             "copyright": CopyrightDetectionAgent(),
             "plagiarism": PlagiarismDetectionAgent(),
@@ -558,7 +594,8 @@ class TestIntegrationScenarios:
     
     @pytest.mark.asyncio
     async def test_comprehensive_content_protection_workflow(self, agents):
-        """Test comprehensive content protection workflow"""        # Sample content requiring full protection
+        """Test comprehensive content protection workflow"""
+        # Sample content requiring full protection
         content_data = {
             "content_id": "protected_content_001",
             "creator_id": "creator_001",
@@ -603,7 +640,8 @@ class TestIntegrationScenarios:
     
     @pytest.mark.asyncio
     async def test_violation_response_workflow(self, agents):
-        """Test violation detection and response workflow"""        # Detected violation scenario
+        """Test violation detection and response workflow"""
+        # Detected violation scenario
         violation_data = {
             "original_content": {
                 "content_id": "original_001",
@@ -648,21 +686,25 @@ class TestIntegrationScenarios:
 
 
 class TestErrorHandling:
-    """Test error handling scenarios"""    
+    """Test error handling scenarios"""
+    
     @pytest.fixture
     def agent(self):
-        """Create ContentProtectionAgent for error testing"""        return ContentProtectionAgent()
+        """Create ContentProtectionAgent for error testing"""
+        return ContentProtectionAgent()
     
     @pytest.mark.asyncio
     async def test_invalid_content_data(self, agent):
-        """Test handling of invalid content data"""        invalid_content = {"invalid": "data", "missing": "required_fields"}
+        """Test handling of invalid content data"""
+        invalid_content = {"invalid": "data", "missing": "required_fields"}
         
         with pytest.raises((ValueError, KeyError)):
             await agent.create_content_fingerprint(invalid_content)
     
     @pytest.mark.asyncio
     async def test_external_api_failures(self, agent):
-        """Test handling of external API failures"""        with patch('aiohttp.ClientSession.post') as mock_post:
+        """Test handling of external API failures"""
+        with patch('aiohttp.ClientSession.post') as mock_post:
             mock_post.side_effect = Exception("External API error")
             
             content = {"content_id": "test", "content_type": "video"}
@@ -677,7 +719,8 @@ class TestErrorHandling:
     
     @pytest.mark.asyncio
     async def test_blockchain_connectivity_issues(self, agent):
-        """Test handling of blockchain connectivity issues"""        content = {
+        """Test handling of blockchain connectivity issues"""
+        content = {
             "content_id": "test_blockchain",
             "blockchain_enabled": True,
             "content_type": "video"
@@ -696,14 +739,17 @@ class TestErrorHandling:
 
 
 class TestPerformanceAndScaling:
-    """Test performance and scaling scenarios"""    
+    """Test performance and scaling scenarios"""
+    
     @pytest.fixture
     def agent(self):
-        """Create ContentProtectionAgent for performance testing"""        return ContentProtectionAgent()
+        """Create ContentProtectionAgent for performance testing"""
+        return ContentProtectionAgent()
     
     @pytest.mark.asyncio
     async def test_large_scale_content_monitoring(self, agent):
-        """Test large-scale content monitoring performance"""        # Simulate monitoring many pieces of content
+        """Test large-scale content monitoring performance"""
+        # Simulate monitoring many pieces of content
         content_list = [
             {
                 "content_id": f"content_{i}",
@@ -734,7 +780,8 @@ class TestPerformanceAndScaling:
     
     @pytest.mark.asyncio
     async def test_concurrent_violation_detection(self, agent):
-        """Test concurrent violation detection capabilities"""        violation_scenarios = [
+        """Test concurrent violation detection capabilities"""
+        violation_scenarios = [
             {
                 "content": {"content_id": f"original_{i}", "fingerprint": f"fp_{i}"},
                 "suspected": [{"url": f"https://platform.com/suspected_{i}", "similarity": 0.9}]

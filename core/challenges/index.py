@@ -19,7 +19,8 @@ Configuration Management → Performance Monitoring → Health Checks
 CHALLENGE SYSTEM INDEX ARCHITECTURE:
 Service Locator → Factory Registry → Configuration Manager → 
 Health Monitor → Performance Tracker → Resource Manager
-"""from typing import Dict, List, Optional, Any, Type, TypeVar, Callable
+"""
+from typing import Dict, List, Optional, Any, Type, TypeVar, Callable
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime, timezone
@@ -35,7 +36,8 @@ from .challenge_validator import ChallengeValidator, ValidationResult
 T = TypeVar('T')
 
 class ServiceType(Enum):
-    """Available service types in challenge system"""    CHALLENGE_ENGINE = "challenge_engine"
+    """Available service types in challenge system"""
+    CHALLENGE_ENGINE = "challenge_engine"
     COMPETITION_MANAGER = "competition_manager"
     SCORING_SYSTEM = "scoring_system"
     CHALLENGE_VALIDATOR = "challenge_validator"
@@ -44,7 +46,8 @@ class ServiceType(Enum):
     LEADERBOARD_MANAGER = "leaderboard_manager"
 
 class ServiceStatus(Enum):
-    """Service status levels"""    INITIALIZING = "initializing"
+    """Service status levels"""
+    INITIALIZING = "initializing"
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -53,7 +56,8 @@ class ServiceStatus(Enum):
 
 @dataclass
 class ServiceConfiguration:
-    """Service configuration specification"""    service_type: ServiceType
+    """Service configuration specification"""
+    service_type: ServiceType
     enabled: bool = True
     auto_start: bool = True
     health_check_interval: int = 60
@@ -67,7 +71,8 @@ class ServiceConfiguration:
 
 @dataclass  
 class ServiceMetrics:
-    """Service performance metrics"""    service_type: ServiceType
+    """Service performance metrics"""
+    service_type: ServiceType
     status: ServiceStatus
     uptime_seconds: float
     requests_total: int
@@ -81,7 +86,8 @@ class ServiceMetrics:
     throughput_per_minute: float = 0.0
 
 class ChallengeSystemRegistry:
-    """Centralized registry and orchestrator for challenge system services"""    
+    """Centralized registry and orchestrator for challenge system services"""
+    
     def __init__(self,
                  challenge_repository=None,
                  competition_repository=None,
@@ -97,7 +103,8 @@ class ChallengeSystemRegistry:
                  payment_service=None,
                  virtual_economy_service=None,
                  gamification_service=None):
-        """Initialize challenge system registry with all dependencies"""        # External dependencies
+        """Initialize challenge system registry with all dependencies"""
+        # External dependencies
         self.challenge_repository = challenge_repository
         self.competition_repository = competition_repository
         self.user_service = user_service
@@ -143,7 +150,8 @@ class ChallengeSystemRegistry:
         self._startup_time = None
     
     def _initialize_default_configs(self):
-        """Initialize default service configurations"""        # Challenge Engine Configuration
+        """Initialize default service configurations"""
+        # Challenge Engine Configuration
         self._service_configs[ServiceType.CHALLENGE_ENGINE] = ServiceConfiguration(
             service_type=ServiceType.CHALLENGE_ENGINE,
             enabled=True,
@@ -213,7 +221,8 @@ class ChallengeSystemRegistry:
         )
     
     async def start_system(self) -> Dict[str, Any]:
-        """Start the complete challenge system"""        try:
+        """Start the complete challenge system"""
+        try:
             self.logger.info("Starting Challenge System...")
             start_time = datetime.now()
             
@@ -306,7 +315,8 @@ class ChallengeSystemRegistry:
             }
     
     async def _start_service(self, service_type: ServiceType, config: ServiceConfiguration) -> Optional[Any]:
-        """Start individual service"""        try:
+        """Start individual service"""
+        try:
             if service_type == ServiceType.CHALLENGE_ENGINE:
                 return ChallengeEngine(
                     challenge_repository=self.challenge_repository,
@@ -366,7 +376,8 @@ class ChallengeSystemRegistry:
             return None
     
     async def _check_dependencies_ready(self, service_type: ServiceType) -> bool:
-        """Check if service dependencies are ready"""        config = self._service_configs.get(service_type)
+        """Check if service dependencies are ready"""
+        config = self._service_configs.get(service_type)
         if not config:
             return True
         
@@ -382,22 +393,28 @@ class ChallengeSystemRegistry:
         return True
     
     def get_service(self, service_type: ServiceType) -> Optional[Any]:
-        """Get service instance"""        return self._services.get(service_type)
+        """Get service instance"""
+        return self._services.get(service_type)
     
     def get_challenge_engine(self) -> Optional[ChallengeEngine]:
-        """Get challenge engine instance"""        return self.get_service(ServiceType.CHALLENGE_ENGINE)
+        """Get challenge engine instance"""
+        return self.get_service(ServiceType.CHALLENGE_ENGINE)
     
     def get_competition_manager(self) -> Optional[CompetitionManager]:
-        """Get competition manager instance"""        return self.get_service(ServiceType.COMPETITION_MANAGER)
+        """Get competition manager instance"""
+        return self.get_service(ServiceType.COMPETITION_MANAGER)
     
     def get_scoring_system(self) -> Optional[ScoringSystem]:
-        """Get scoring system instance"""        return self.get_service(ServiceType.SCORING_SYSTEM)
+        """Get scoring system instance"""
+        return self.get_service(ServiceType.SCORING_SYSTEM)
     
     def get_challenge_validator(self) -> Optional[ChallengeValidator]:
-        """Get challenge validator instance"""        return self.get_service(ServiceType.CHALLENGE_VALIDATOR)
+        """Get challenge validator instance"""
+        return self.get_service(ServiceType.CHALLENGE_VALIDATOR)
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive system health check"""        try:
+        """Perform comprehensive system health check"""
+        try:
             health_status = {
                 "system_healthy": True,
                 "services": {},
@@ -450,7 +467,8 @@ class ChallengeSystemRegistry:
             }
     
     async def _check_service_health(self, service_type: ServiceType, service: Any) -> Dict[str, Any]:
-        """Check individual service health"""        try:
+        """Check individual service health"""
+        try:
             # Basic availability check
             if not service:
                 return {"status": "unhealthy", "reason": "Service not available"}
@@ -477,7 +495,8 @@ class ChallengeSystemRegistry:
             return {"status": "unhealthy", "error": str(e)}
     
     async def get_system_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive system metrics"""        try:
+        """Get comprehensive system metrics"""
+        try:
             metrics = {
                 "system_uptime_seconds": 0.0,
                 "total_services": len(self._services),
@@ -565,7 +584,8 @@ class ChallengeSystemRegistry:
             return {"error": str(e)}
     
     async def _start_monitoring(self):
-        """Start background monitoring tasks"""        try:
+        """Start background monitoring tasks"""
+        try:
             while self._system_started:
                 # Update service metrics
                 await self._update_service_metrics()
@@ -580,7 +600,8 @@ class ChallengeSystemRegistry:
             self.logger.error(f"Monitoring task error: {str(e)}")
     
     async def _update_service_metrics(self):
-        """Update service metrics"""        try:
+        """Update service metrics"""
+        try:
             for service_type, service in self._services.items():
                 metrics = self._service_metrics.get(service_type)
                 if metrics:
@@ -603,7 +624,8 @@ class ChallengeSystemRegistry:
             self.logger.error(f"Failed to update service metrics: {str(e)}")
     
     async def _periodic_health_checks(self):
-        """Perform periodic health checks"""        try:
+        """Perform periodic health checks"""
+        try:
             for service_type, service in self._services.items():
                 config = self._service_configs.get(service_type)
                 if not config:
@@ -629,7 +651,8 @@ class ChallengeSystemRegistry:
             self.logger.error(f"Periodic health check error: {str(e)}")
     
     async def shutdown_system(self) -> Dict[str, Any]:
-        """Gracefully shutdown the challenge system"""        try:
+        """Gracefully shutdown the challenge system"""
+        try:
             self.logger.info("Shutting down Challenge System...")
             
             shutdown_results = {
@@ -688,7 +711,8 @@ class ChallengeSystemRegistry:
     
     @asynccontextmanager
     async def system_context(self):
-        """Context manager for system lifecycle"""        try:
+        """Context manager for system lifecycle"""
+        try:
             # Start system
             startup_result = await self.start_system()
             if not startup_result["success"]:
@@ -701,56 +725,70 @@ class ChallengeSystemRegistry:
             await self.shutdown_system()
 
 class ChallengeServiceFactory:
-    """Factory for creating challenge system services with proper configuration"""    
+    """Factory for creating challenge system services with proper configuration"""
+    
     @staticmethod
     def create_challenge_engine(**dependencies) -> ChallengeEngine:
-        """Create configured challenge engine"""        return ChallengeEngine(**dependencies)
+        """Create configured challenge engine"""
+        return ChallengeEngine(**dependencies)
     
     @staticmethod
     def create_competition_manager(**dependencies) -> CompetitionManager:
-        """Create configured competition manager"""        return CompetitionManager(**dependencies)
+        """Create configured competition manager"""
+        return CompetitionManager(**dependencies)
     
     @staticmethod
     def create_scoring_system(**dependencies) -> ScoringSystem:
-        """Create configured scoring system"""        return ScoringSystem(**dependencies)
+        """Create configured scoring system"""
+        return ScoringSystem(**dependencies)
     
     @staticmethod
     def create_challenge_validator(**dependencies) -> ChallengeValidator:
-        """Create configured challenge validator"""        return ChallengeValidator(**dependencies)
+        """Create configured challenge validator"""
+        return ChallengeValidator(**dependencies)
     
     @staticmethod
     def create_complete_system(**dependencies) -> ChallengeSystemRegistry:
-        """Create complete challenge system registry"""        return ChallengeSystemRegistry(**dependencies)
+        """Create complete challenge system registry"""
+        return ChallengeSystemRegistry(**dependencies)
 
 # Factory functions for easy service creation
 
 def create_challenge_system(**dependencies) -> ChallengeSystemRegistry:
-    """Factory function to create configured challenge system"""    return ChallengeSystemRegistry(**dependencies)
+    """Factory function to create configured challenge system"""
+    return ChallengeSystemRegistry(**dependencies)
 
 def create_challenge_engine(**dependencies) -> ChallengeEngine:
-    """Factory function to create challenge engine"""    return ChallengeServiceFactory.create_challenge_engine(**dependencies)
+    """Factory function to create challenge engine"""
+    return ChallengeServiceFactory.create_challenge_engine(**dependencies)
 
 def create_competition_manager(**dependencies) -> CompetitionManager:
-    """Factory function to create competition manager"""    return ChallengeServiceFactory.create_competition_manager(**dependencies)
+    """Factory function to create competition manager"""
+    return ChallengeServiceFactory.create_competition_manager(**dependencies)
 
 def create_scoring_system(**dependencies) -> ScoringSystem:
-    """Factory function to create scoring system"""    return ChallengeServiceFactory.create_scoring_system(**dependencies)
+    """Factory function to create scoring system"""
+    return ChallengeServiceFactory.create_scoring_system(**dependencies)
 
 def create_challenge_validator(**dependencies) -> ChallengeValidator:
-    """Factory function to create challenge validator"""    return ChallengeServiceFactory.create_challenge_validator(**dependencies)
+    """Factory function to create challenge validator"""
+    return ChallengeServiceFactory.create_challenge_validator(**dependencies)
 
 # Default system instance (singleton pattern)
 _default_system: Optional[ChallengeSystemRegistry] = None
 
 def get_default_challenge_system() -> Optional[ChallengeSystemRegistry]:
-    """Get default challenge system instance"""    return _default_system
+    """Get default challenge system instance"""
+    return _default_system
 
 def set_default_challenge_system(system: ChallengeSystemRegistry):
-    """Set default challenge system instance"""    global _default_system
+    """Set default challenge system instance"""
+    global _default_system
     _default_system = system
 
 async def initialize_default_system(**dependencies) -> ChallengeSystemRegistry:
-    """Initialize default challenge system with dependencies"""    global _default_system
+    """Initialize default challenge system with dependencies"""
+    global _default_system
     
     if _default_system is None:
         _default_system = create_challenge_system(**dependencies)
@@ -764,31 +802,37 @@ async def initialize_default_system(**dependencies) -> ChallengeSystemRegistry:
 # Convenience functions using default system
 
 async def get_challenge_engine() -> Optional[ChallengeEngine]:
-    """Get challenge engine from default system"""    system = get_default_challenge_system()
+    """Get challenge engine from default system"""
+    system = get_default_challenge_system()
     return system.get_challenge_engine() if system else None
 
 async def get_competition_manager() -> Optional[CompetitionManager]:
-    """Get competition manager from default system"""    system = get_default_challenge_system()
+    """Get competition manager from default system"""
+    system = get_default_challenge_system()
     return system.get_competition_manager() if system else None
 
 async def get_scoring_system() -> Optional[ScoringSystem]:
-    """Get scoring system from default system"""    system = get_default_challenge_system()
+    """Get scoring system from default system"""
+    system = get_default_challenge_system()
     return system.get_scoring_system() if system else None
 
 async def get_challenge_validator() -> Optional[ChallengeValidator]:
-    """Get challenge validator from default system"""    system = get_default_challenge_system()
+    """Get challenge validator from default system"""
+    system = get_default_challenge_system()
     return system.get_challenge_validator() if system else None
 
 # Health and monitoring convenience functions
 
 async def system_health_check() -> Dict[str, Any]:
-    """Perform system health check using default system"""    system = get_default_challenge_system()
+    """Perform system health check using default system"""
+    system = get_default_challenge_system()
     if system:
         return await system.health_check()
     return {"system_healthy": False, "error": "No default system available"}
 
 async def system_metrics() -> Dict[str, Any]:
-    """Get system metrics using default system"""    system = get_default_challenge_system()
+    """Get system metrics using default system"""
+    system = get_default_challenge_system()
     if system:
         return await system.get_system_metrics()
     return {"error": "No default system available"}
@@ -796,7 +840,8 @@ async def system_metrics() -> Dict[str, Any]:
 # Example usage and configuration helpers
 
 def get_production_config() -> Dict[str, Any]:
-    """Get production-ready configuration"""    return {
+    """Get production-ready configuration"""
+    return {
         "health_check_intervals": {
             "challenge_engine": 60,
             "competition_manager": 30,
@@ -814,7 +859,8 @@ def get_production_config() -> Dict[str, Any]:
     }
 
 def get_development_config() -> Dict[str, Any]:
-    """Get development configuration"""    return {
+    """Get development configuration"""
+    return {
         "health_check_intervals": {
             "challenge_engine": 300,
             "competition_manager": 300,

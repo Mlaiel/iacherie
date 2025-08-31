@@ -12,7 +12,8 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 
 Intelligent TikTok crawler for surveillance and content monitoring.
 Provides advanced scraping, content analysis, and violation detection for TikTok platform.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Union
 from datetime import datetime, timedelta
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TikTokUser:
-    """TikTok user profile data."""    user_id: str
+    """TikTok user profile data."""
+    user_id: str
     username: str
     display_name: str
     follower_count: int
@@ -44,7 +46,8 @@ class TikTokUser:
 
 @dataclass
 class TikTokVideo:
-    """TikTok video data."""    video_id: str
+    """TikTok video data."""
+    video_id: str
     user_id: str
     username: str
     description: str
@@ -68,7 +71,8 @@ class TikTokVideo:
 
 @dataclass
 class TikTokComment:
-    """TikTok comment data."""    comment_id: str
+    """TikTok comment data."""
+    comment_id: str
     video_id: str
     user_id: str
     username: str
@@ -81,7 +85,8 @@ class TikTokComment:
 
 @dataclass
 class TikTokHashtag:
-    """TikTok hashtag data."""    hashtag: str
+    """TikTok hashtag data."""
+    hashtag: str
     view_count: int
     video_count: int
     trending_score: float
@@ -90,7 +95,8 @@ class TikTokHashtag:
 
 @dataclass
 class TikTokCrawlResult:
-    """TikTok crawl operation result."""    crawl_id: str
+    """TikTok crawl operation result."""
+    crawl_id: str
     crawl_type: str  # user, hashtag, video, search, trending
     target: str
     success: bool
@@ -105,7 +111,8 @@ class TikTokCrawlResult:
 
 
 class TikTokCrawler:
-    """    Intelligent TikTok crawler for surveillance and monitoring.
+    """
+    Intelligent TikTok crawler for surveillance and monitoring.
     
     Features:
     - User profile crawling and analysis
@@ -116,9 +123,11 @@ class TikTokCrawler:
     - Advanced anti-detection mechanisms
     - Rate limiting and proxy rotation
     - Content violation detection
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize TikTok crawler."""        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize TikTok crawler."""
+        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
         self.config = config or {}
@@ -158,7 +167,8 @@ class TikTokCrawler:
         self._logger.info("TikTok Crawler initialized")
     
     async def initialize(self) -> None:
-        """Initialize the TikTok crawler."""        try:
+        """Initialize the TikTok crawler."""
+        try:
             self._logger.info("Initializing TikTok crawler...")
             
             # Initialize HTTP session
@@ -175,7 +185,8 @@ class TikTokCrawler:
             raise
     
     async def _initialize_session(self) -> None:
-        """Initialize HTTP session."""        try:
+        """Initialize HTTP session."""
+        try:
             # This would initialize aiohttp session with proper headers
             # For now, implement placeholder
             self._session = "placeholder_session"
@@ -186,7 +197,8 @@ class TikTokCrawler:
             raise
     
     async def _initialize_browser(self) -> None:
-        """Initialize Selenium browser."""        try:
+        """Initialize Selenium browser."""
+        try:
             # This would initialize Selenium WebDriver
             # For now, implement placeholder
             self._logger.debug("Browser initialized")
@@ -201,7 +213,8 @@ class TikTokCrawler:
         include_videos: bool = True,
         max_videos: int = 100
     ) -> Optional[TikTokUser]:
-        """Crawl TikTok user profile."""        try:
+        """Crawl TikTok user profile."""
+        try:
             self._logger.info(f"Crawling user profile: {username}")
             
             crawl_result = TikTokCrawlResult(
@@ -269,7 +282,8 @@ class TikTokCrawler:
         hashtag: str,
         max_videos: int = 100
     ) -> List[TikTokVideo]:
-        """Crawl videos by hashtag."""        try:
+        """Crawl videos by hashtag."""
+        try:
             self._logger.info(f"Crawling hashtag: #{hashtag}")
             
             crawl_result = TikTokCrawlResult(
@@ -325,7 +339,8 @@ class TikTokCrawler:
         max_videos: int = 100,
         region: str = "US"
     ) -> List[TikTokVideo]:
-        """Crawl trending videos."""        try:
+        """Crawl trending videos."""
+        try:
             self._logger.info(f"Crawling trending videos (region: {region})")
             
             crawl_result = TikTokCrawlResult(
@@ -367,7 +382,8 @@ class TikTokCrawler:
         query: str,
         max_videos: int = 100
     ) -> List[TikTokVideo]:
-        """Search videos by query."""        try:
+        """Search videos by query."""
+        try:
             self._logger.info(f"Searching videos: {query}")
             
             crawl_result = TikTokCrawlResult(
@@ -409,7 +425,8 @@ class TikTokCrawler:
         video_id: str,
         max_comments: int = 100
     ) -> List[TikTokComment]:
-        """Crawl comments for a video."""        try:
+        """Crawl comments for a video."""
+        try:
             self._logger.info(f"Crawling comments for video: {video_id}")
             
             # Rate limiting
@@ -432,7 +449,8 @@ class TikTokCrawler:
         self,
         content: Union[TikTokVideo, TikTokUser, TikTokComment]
     ) -> List[Dict[str, Any]]:
-        """Analyze content for potential violations."""        violations = []
+        """Analyze content for potential violations."""
+        violations = []
         
         try:
             if isinstance(content, TikTokVideo):
@@ -476,7 +494,8 @@ class TikTokCrawler:
         return violations
     
     async def _fetch_user_profile(self, username: str) -> Optional[Dict[str, Any]]:
-        """Fetch user profile data."""        try:
+        """Fetch user profile data."""
+        try:
             # Simulate API call
             await asyncio.sleep(0.2)
             
@@ -507,7 +526,8 @@ class TikTokCrawler:
         username: str,
         max_videos: int
     ) -> List[TikTokVideo]:
-        """Fetch user videos."""        try:
+        """Fetch user videos."""
+        try:
             # Simulate API call
             await asyncio.sleep(0.3)
             
@@ -546,7 +566,8 @@ class TikTokCrawler:
             return []
     
     async def _fetch_hashtag_data(self, hashtag: str) -> Optional[Dict[str, Any]]:
-        """Fetch hashtag data."""        try:
+        """Fetch hashtag data."""
+        try:
             # Simulate API call
             await asyncio.sleep(0.2)
             
@@ -568,7 +589,8 @@ class TikTokCrawler:
         hashtag: str,
         max_videos: int
     ) -> List[TikTokVideo]:
-        """Fetch videos for hashtag."""        try:
+        """Fetch videos for hashtag."""
+        try:
             # Simulate API call
             await asyncio.sleep(0.4)
             
@@ -611,7 +633,8 @@ class TikTokCrawler:
         max_videos: int,
         region: str
     ) -> List[TikTokVideo]:
-        """Fetch trending videos."""        try:
+        """Fetch trending videos."""
+        try:
             # Simulate API call
             await asyncio.sleep(0.5)
             
@@ -654,7 +677,8 @@ class TikTokCrawler:
         query: str,
         max_videos: int
     ) -> List[TikTokVideo]:
-        """Search videos by query."""        try:
+        """Search videos by query."""
+        try:
             # Simulate API call
             await asyncio.sleep(0.4)
             
@@ -697,7 +721,8 @@ class TikTokCrawler:
         video_id: str,
         max_comments: int
     ) -> List[TikTokComment]:
-        """Fetch comments for video."""        try:
+        """Fetch comments for video."""
+        try:
             # Simulate API call
             await asyncio.sleep(0.3)
             
@@ -726,7 +751,8 @@ class TikTokCrawler:
             return []
     
     async def _enforce_rate_limit(self) -> None:
-        """Enforce rate limiting."""        current_time = asyncio.get_event_loop().time()
+        """Enforce rate limiting."""
+        current_time = asyncio.get_event_loop().time()
         time_since_last_request = current_time - self._last_request_time
         
         if time_since_last_request < self.request_delay_seconds:
@@ -736,7 +762,8 @@ class TikTokCrawler:
         self._last_request_time = asyncio.get_event_loop().time()
     
     def get_crawler_stats(self) -> Dict[str, Any]:
-        """Get crawler statistics."""        return {
+        """Get crawler statistics."""
+        return {
             'users_collected': len(self.users),
             'videos_collected': len(self.videos),
             'comments_collected': sum(len(comments) for comments in self.comments.values()),
@@ -747,7 +774,8 @@ class TikTokCrawler:
         }
     
     def get_recent_crawl_results(self, limit: int = 10) -> List[Dict[str, Any]]:
-        """Get recent crawl results."""        recent_results = sorted(
+        """Get recent crawl results."""
+        recent_results = sorted(
             self._crawl_results,
             key=lambda r: r.started_at,
             reverse=True
@@ -772,7 +800,8 @@ class TikTokCrawler:
         ]
     
     async def shutdown(self) -> None:
-        """Shutdown the TikTok crawler."""        try:
+        """Shutdown the TikTok crawler."""
+        try:
             self._logger.info("Shutting down TikTok crawler...")
             
             # Close session

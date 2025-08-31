@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import json
@@ -70,7 +71,8 @@ from ...utils.preprocessing import TextPreprocessor
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Supported content types for detection"""    TEXT = "text"
+    """Supported content types for detection"""
+    TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
     VIDEO = "video"
@@ -79,7 +81,8 @@ class ContentType(Enum):
     MIXED = "mixed"
 
 class SimilarityMethod(Enum):
-    """Similarity calculation methods"""    COSINE = "cosine"
+    """Similarity calculation methods"""
+    COSINE = "cosine"
     JACCARD = "jaccard"
     EUCLIDEAN = "euclidean"
     HAMMING = "hamming"
@@ -88,14 +91,16 @@ class SimilarityMethod(Enum):
     PERCEPTUAL = "perceptual"
 
 class DetectionLevel(Enum):
-    """Detection sensitivity levels"""    LOW = "low"
+    """Detection sensitivity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     ULTRA = "ultra"
 
 @dataclass
 class ContentSignature:
-    """Comprehensive content signature for matching"""    content_id: str
+    """Comprehensive content signature for matching"""
+    content_id: str
     content_type: ContentType
     
     # Text signatures
@@ -122,7 +127,8 @@ class ContentSignature:
 
 @dataclass
 class SimilarityResult:
-    """Similarity detection result"""    content_id_1: str
+    """Similarity detection result"""
+    content_id_1: str
     content_id_2: str
     similarity_score: float
     similarity_method: SimilarityMethod
@@ -146,7 +152,8 @@ class SimilarityResult:
 
 @dataclass
 class DetectionConfig:
-    """Content detection configuration"""    detection_level: DetectionLevel = DetectionLevel.HIGH
+    """Content detection configuration"""
+    detection_level: DetectionLevel = DetectionLevel.HIGH
     similarity_threshold: float = 0.7
     enable_semantic_analysis: bool = True
     enable_structural_analysis: bool = True
@@ -172,11 +179,13 @@ class DetectionConfig:
     max_concurrent_operations: int = 4
 
 class ContentDetector:
-    """    Advanced Content Detector for Multi-Modal Similarity Analysis
+    """
+    Advanced Content Detector for Multi-Modal Similarity Analysis
     
     Provides comprehensive content detection capabilities including text, image,
     and audio similarity detection with AI-powered analysis and fingerprinting.
-    """    
+    """
+    
     def __init__(self, config: Optional[DetectionConfig] = None):
         self.config = config or DetectionConfig()
         
@@ -214,7 +223,8 @@ class ContentDetector:
         logger.info("Content Detector initialized")
 
     async def initialize(self) -> None:
-        """Initialize content detection models and indices"""        try:
+        """Initialize content detection models and indices"""
+        try:
             # Download required NLTK data
             try:
                 nltk.download('punkt', quiet=True)
@@ -246,7 +256,8 @@ class ContentDetector:
             raise ContentDetectionError(f"Initialization failed: {str(e)}")
 
     def _initialize_faiss_indices(self) -> None:
-        """Initialize FAISS indices for fast similarity search"""        # Text embeddings index (assuming 384-dimensional embeddings)
+        """Initialize FAISS indices for fast similarity search"""
+        # Text embeddings index (assuming 384-dimensional embeddings)
         embedding_dim = 384
         self.text_index = faiss.IndexFlatIP(embedding_dim)  # Inner product for cosine similarity
         
@@ -256,7 +267,8 @@ class ContentDetector:
 
     async def create_content_signature(self, content: Union[str, bytes], content_type: ContentType,
                                      content_id: Optional[str] = None, metadata: Dict = None) -> ContentSignature:
-        """Create comprehensive content signature"""        start_time = time.time()
+        """Create comprehensive content signature"""
+        start_time = time.time()
         
         try:
             # Generate content ID if not provided
@@ -299,7 +311,8 @@ class ContentDetector:
             raise ContentDetectionError(f"Signature creation failed: {str(e)}")
 
     async def _create_text_signature(self, text: str, signature: ContentSignature) -> None:
-        """Create text-specific signature components"""        # Basic text hash
+        """Create text-specific signature components"""
+        # Basic text hash
         signature.text_hash = hashlib.sha256(text.encode()).hexdigest()
         
         # Preprocess text
@@ -333,7 +346,8 @@ class ContentDetector:
         signature.quality_score = self._calculate_text_quality(text)
 
     def _extract_text_structural_features(self, text: str) -> Dict[str, float]:
-        """Extract structural features from text"""        features = {}
+        """Extract structural features from text"""
+        features = {}
         
         # Basic metrics
         features['length'] = len(text)
@@ -365,7 +379,8 @@ class ContentDetector:
         return features
 
     def _calculate_text_quality(self, text: str) -> float:
-        """Calculate text quality score"""        if not text:
+        """Calculate text quality score"""
+        if not text:
             return 0.0
         
         score = 0.0
@@ -404,7 +419,8 @@ class ContentDetector:
         return min(score, 1.0)
 
     async def _create_image_signature(self, image_data: bytes, signature: ContentSignature) -> None:
-        """Create image-specific signature components"""        try:
+        """Create image-specific signature components"""
+        try:
             # Load image
             image = Image.open(io.BytesIO(image_data))
             
@@ -428,7 +444,8 @@ class ContentDetector:
             logger.error(f"Failed to create image signature: {str(e)}")
 
     async def _extract_deep_image_features(self, image: Image.Image) -> np.ndarray:
-        """Extract deep features from image using pre-trained model"""        try:
+        """Extract deep features from image using pre-trained model"""
+        try:
             # Convert PIL image to numpy array
             img_array = np.array(image.resize((224, 224)))
             
@@ -445,7 +462,8 @@ class ContentDetector:
             return np.zeros(2048, dtype=np.float32)
 
     async def _create_audio_signature(self, audio_data: bytes, signature: ContentSignature) -> None:
-        """Create audio-specific signature components"""        try:
+        """Create audio-specific signature components"""
+        try:
             # Load audio data
             # This is a placeholder - implement actual audio loading
             # audio, sr = librosa.load(io.BytesIO(audio_data), sr=self.config.sample_rate)
@@ -468,7 +486,8 @@ class ContentDetector:
             logger.error(f"Failed to create audio signature: {str(e)}")
 
     async def _create_mixed_signature(self, content: Dict, signature: ContentSignature) -> None:
-        """Create signature for mixed content types"""        # Handle mixed content by processing each component
+        """Create signature for mixed content types"""
+        # Handle mixed content by processing each component
         if 'text' in content:
             await self._create_text_signature(content['text'], signature)
         
@@ -479,7 +498,8 @@ class ContentDetector:
             await self._create_audio_signature(content['audio'], signature)
 
     async def _add_to_indices(self, signature: ContentSignature) -> None:
-        """Add signature to FAISS indices for fast retrieval"""        try:
+        """Add signature to FAISS indices for fast retrieval"""
+        try:
             # Add text embeddings to index
             if signature.semantic_embedding is not None and self.text_index is not None:
                 # Normalize for cosine similarity
@@ -497,7 +517,8 @@ class ContentDetector:
 
     async def calculate_similarity(self, content_id_1: str, content_id_2: str,
                                  method: SimilarityMethod = SimilarityMethod.SEMANTIC) -> Optional[SimilarityResult]:
-        """Calculate similarity between two content items"""        start_time = time.time()
+        """Calculate similarity between two content items"""
+        start_time = time.time()
         
         try:
             # Get signatures
@@ -547,7 +568,8 @@ class ContentDetector:
 
     async def _calculate_text_similarity(self, sig1: ContentSignature, sig2: ContentSignature,
                                        method: SimilarityMethod, result: SimilarityResult) -> SimilarityResult:
-        """Calculate text similarity using various methods"""        
+        """Calculate text similarity using various methods"""
+        
         # Semantic similarity using embeddings
         if method == SimilarityMethod.SEMANTIC and sig1.semantic_embedding is not None and sig2.semantic_embedding is not None:
             semantic_sim = cosine_similarity([sig1.semantic_embedding], [sig2.semantic_embedding])[0][0]
@@ -602,7 +624,8 @@ class ContentDetector:
         return result
 
     def _calculate_structural_similarity(self, features1: Dict[str, float], features2: Dict[str, float]) -> float:
-        """Calculate structural similarity between text features"""        if not features1 or not features2:
+        """Calculate structural similarity between text features"""
+        if not features1 or not features2:
             return 0.0
         
         # Get common features
@@ -629,7 +652,8 @@ class ContentDetector:
 
     async def _calculate_image_similarity(self, sig1: ContentSignature, sig2: ContentSignature,
                                         method: SimilarityMethod, result: SimilarityResult) -> SimilarityResult:
-        """Calculate image similarity"""        
+        """Calculate image similarity"""
+        
         # Perceptual hash similarity
         if sig1.image_hash and sig2.image_hash:
             try:
@@ -673,7 +697,8 @@ class ContentDetector:
 
     async def _calculate_audio_similarity(self, sig1: ContentSignature, sig2: ContentSignature,
                                         method: SimilarityMethod, result: SimilarityResult) -> SimilarityResult:
-        """Calculate audio similarity"""        
+        """Calculate audio similarity"""
+        
         # Fingerprint similarity (exact match)
         if sig1.audio_fingerprint and sig2.audio_fingerprint:
             if sig1.audio_fingerprint == sig2.audio_fingerprint:
@@ -692,7 +717,8 @@ class ContentDetector:
         return result
 
     def _calculate_confidence_score(self, result: SimilarityResult) -> float:
-        """Calculate confidence score for similarity result"""        confidence = 0.0
+        """Calculate confidence score for similarity result"""
+        confidence = 0.0
         
         # Higher confidence for multiple similarity measures
         active_measures = sum(1 for score in [
@@ -720,7 +746,8 @@ class ContentDetector:
 
     async def find_similar_content(self, query_content_id: str, max_results: int = 10,
                                  similarity_threshold: float = None) -> List[SimilarityResult]:
-        """Find similar content using FAISS indices for fast search"""        threshold = similarity_threshold or self.config.similarity_threshold
+        """Find similar content using FAISS indices for fast search"""
+        threshold = similarity_threshold or self.config.similarity_threshold
         
         query_signature = self.content_signatures.get(query_content_id)
         if not query_signature:
@@ -745,7 +772,8 @@ class ContentDetector:
         return sorted(similar_results, key=lambda x: x.similarity_score, reverse=True)
 
     async def _search_text_index(self, query_signature: ContentSignature, max_results: int, threshold: float) -> List[SimilarityResult]:
-        """Search text index for similar embeddings"""        results = []
+        """Search text index for similar embeddings"""
+        results = []
         
         if self.text_index is None or query_signature.semantic_embedding is None:
             return results
@@ -780,7 +808,8 @@ class ContentDetector:
         return results
 
     async def _search_image_index(self, query_signature: ContentSignature, max_results: int, threshold: float) -> List[SimilarityResult]:
-        """Search image index for similar features"""        results = []
+        """Search image index for similar features"""
+        results = []
         
         if self.image_index is None or query_signature.image_features is None:
             return results
@@ -817,7 +846,8 @@ class ContentDetector:
         return results
 
     async def _brute_force_similarity_search(self, query_content_id: str, max_results: int, threshold: float) -> List[SimilarityResult]:
-        """Brute force similarity search as fallback"""        results = []
+        """Brute force similarity search as fallback"""
+        results = []
         
         for content_id, signature in self.content_signatures.items():
             if content_id != query_content_id:
@@ -834,7 +864,8 @@ class ContentDetector:
         return results
 
     def _update_average_processing_time(self, processing_time: float) -> None:
-        """Update average processing time statistics"""        total_operations = self.detection_stats['signatures_created'] + self.detection_stats['comparisons_performed']
+        """Update average processing time statistics"""
+        total_operations = self.detection_stats['signatures_created'] + self.detection_stats['comparisons_performed']
         if total_operations > 0:
             self.detection_stats['average_processing_time'] = (
                 (self.detection_stats['average_processing_time'] * (total_operations - 1) + processing_time) /
@@ -842,17 +873,20 @@ class ContentDetector:
             )
 
     def get_content_signature(self, content_id: str) -> Optional[ContentSignature]:
-        """Get content signature by ID"""        return self.content_signatures.get(content_id)
+        """Get content signature by ID"""
+        return self.content_signatures.get(content_id)
 
     def remove_content_signature(self, content_id: str) -> bool:
-        """Remove content signature from storage"""        if content_id in self.content_signatures:
+        """Remove content signature from storage"""
+        if content_id in self.content_signatures:
             del self.content_signatures[content_id]
             # Note: FAISS indices would need to be rebuilt to remove entries
             return True
         return False
 
     def get_detection_statistics(self) -> Dict[str, Any]:
-        """Get detection system statistics"""        return {
+        """Get detection system statistics"""
+        return {
             **self.detection_stats,
             'total_signatures': len(self.content_signatures),
             'text_index_size': self.text_index.ntotal if self.text_index else 0,
@@ -863,7 +897,8 @@ class ContentDetector:
         }
 
     async def batch_similarity_detection(self, content_ids: List[str]) -> List[SimilarityResult]:
-        """Perform batch similarity detection across multiple content items"""        results = []
+        """Perform batch similarity detection across multiple content items"""
+        results = []
         
         # Create all pairwise combinations
         for i in range(len(content_ids)):
@@ -877,16 +912,19 @@ class ContentDetector:
         return results
 
     async def cleanup(self) -> None:
-        """Clean up resources and save state"""        # Save signatures to persistent storage if needed
+        """Clean up resources and save state"""
+        # Save signatures to persistent storage if needed
         logger.info("Content Detector cleanup complete")
 
 
 class SimilarityScanner:
-    """    High-Level Similarity Scanner for Content Protection
+    """
+    High-Level Similarity Scanner for Content Protection
     
     Provides easy-to-use interface for content similarity scanning
     with automated threat detection and reporting.
-    """    
+    """
+    
     def __init__(self, detector: ContentDetector):
         self.detector = detector
         self.scan_history: List[Dict] = []
@@ -894,7 +932,8 @@ class SimilarityScanner:
         
     async def scan_for_violations(self, protected_content_id: str,
                                 search_content_ids: List[str]) -> Dict[str, Any]:
-        """Scan for potential content violations"""        violations = []
+        """Scan for potential content violations"""
+        violations = []
         suspicious_matches = []
         
         for content_id in search_content_ids:
@@ -935,7 +974,8 @@ class SimilarityScanner:
         return scan_report
     
     def _generate_threat_summary(self, violations: List, suspicious: List) -> Dict:
-        """Generate threat level summary"""        total_threats = len(violations) + len(suspicious)
+        """Generate threat level summary"""
+        total_threats = len(violations) + len(suspicious)
         
         if len(violations) >= 5:
             threat_level = "CRITICAL"
@@ -957,7 +997,8 @@ class SimilarityScanner:
         }
     
     def _get_threat_recommendation(self, threat_level: str) -> str:
-        """Get recommendation based on threat level"""        recommendations = {
+        """Get recommendation based on threat level"""
+        recommendations = {
             'CRITICAL': 'Immediate legal action recommended. Multiple high-similarity matches detected.',
             'HIGH': 'Investigation required. Potential content theft detected.',
             'MEDIUM': 'Monitor closely. Some suspicious similarities found.',
@@ -967,4 +1008,5 @@ class SimilarityScanner:
         return recommendations.get(threat_level, 'Unknown threat level')
     
     def get_scan_history(self) -> List[Dict]:
-        """Get historical scan results"""        return self.scan_history
+        """Get historical scan results"""
+        return self.scan_history

@@ -14,7 +14,8 @@ Déploiement automatisé et monitoring des modèles ML
 - A/B testing et canary deployments
 - Auto-scaling et load balancing
 - Health checks et rollback automatique
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import uuid
@@ -33,19 +34,22 @@ import tempfile
 logger = logging.getLogger(__name__)
 
 class DeploymentType(Enum):
-    """Types de déploiement"""    DOCKER = "docker"
+    """Types de déploiement"""
+    DOCKER = "docker"
     KUBERNETES = "kubernetes"
     SERVERLESS = "serverless"
     EDGE = "edge"
 
 class DeploymentStrategy(Enum):
-    """Stratégies de déploiement"""    BLUE_GREEN = "blue_green"
+    """Stratégies de déploiement"""
+    BLUE_GREEN = "blue_green"
     CANARY = "canary"
     ROLLING_UPDATE = "rolling_update"
     RECREATE = "recreate"
 
 class DeploymentStatus(Enum):
-    """Statuts de déploiement"""    PENDING = "pending"
+    """Statuts de déploiement"""
+    PENDING = "pending"
     BUILDING = "building"
     DEPLOYING = "deploying"
     RUNNING = "running"
@@ -55,7 +59,8 @@ class DeploymentStatus(Enum):
 
 @dataclass
 class DeploymentConfig:
-    """Configuration de déploiement"""    model_name: str
+    """Configuration de déploiement"""
+    model_name: str
     model_version: str
     deployment_type: DeploymentType
     strategy: DeploymentStrategy
@@ -72,7 +77,8 @@ class DeploymentConfig:
 
 @dataclass
 class DeploymentInfo:
-    """Informations de déploiement"""    deployment_id: str
+    """Informations de déploiement"""
+    deployment_id: str
     model_name: str
     model_version: str
     status: DeploymentStatus
@@ -86,7 +92,8 @@ class DeploymentInfo:
 
 @dataclass
 class PerformanceMetrics:
-    """Métriques de performance"""    latency_p50: float
+    """Métriques de performance"""
+    latency_p50: float
     latency_p95: float
     latency_p99: float
     throughput: float
@@ -96,7 +103,8 @@ class PerformanceMetrics:
     timestamp: datetime
 
 class ModelDeploymentManager:
-    """Gestionnaire de déploiement de modèles"""    
+    """Gestionnaire de déploiement de modèles"""
+    
     def __init__(self, k8s_namespace: str = "ml-models"):
         self.k8s_namespace = k8s_namespace
         self.deployments: Dict[str, DeploymentInfo] = {}
@@ -123,7 +131,8 @@ class ModelDeploymentManager:
                          model_name: str,
                          model_version: str,
                          config: DeploymentConfig) -> str:
-        """Déploie un modèle selon la configuration"""        
+        """Déploie un modèle selon la configuration"""
+        
         try:
             deployment_id = f"{model_name}-{model_version}-{uuid.uuid4().hex[:8]}"
             
@@ -153,7 +162,8 @@ class ModelDeploymentManager:
             raise
     
     async def _simulate_deployment(self, deployment_info: DeploymentInfo):
-        """Simule un déploiement pour l'exemple"""        
+        """Simule un déploiement pour l'exemple"""
+        
         try:
             # Simulation des phases
             deployment_info.status = DeploymentStatus.BUILDING
@@ -176,7 +186,8 @@ class ModelDeploymentManager:
             raise
     
     def _generate_dockerfile(self, deployment_info: DeploymentInfo) -> str:
-        """Génère un Dockerfile pour le modèle"""        
+        """Génère un Dockerfile pour le modèle"""
+        
         dockerfile = f"""FROM python:3.9-slim
 
 # Installation des dépendances système
@@ -215,11 +226,14 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \\
 
 # Commande de démarrage
 CMD ["python", "server.py"]
-"""        return dockerfile.strip()
+"""
+        return dockerfile.strip()
     
     def _generate_model_server(self, deployment_info: DeploymentInfo) -> str:
-        """Génère le code du serveur pour le modèle"""        
-        server_code = f"""import asyncio
+        """Génère le code du serveur pour le modèle"""
+        
+        server_code = f"""
+import asyncio
 import logging
 import time
 from typing import Dict, List, Any, Optional
@@ -278,10 +292,12 @@ if __name__ == "__main__":
     with socketserver.TCPServer(("", PORT), ModelHandler) as httpd:
         print(f"Serveur démarré sur le port {{PORT}}")
         httpd.serve_forever()
-"""        return server_code.strip()
+"""
+        return server_code.strip()
     
     def _generate_k8s_deployment(self, deployment_info: DeploymentInfo) -> Dict[str, Any]:
-        """Génère le manifest de déploiement Kubernetes"""        
+        """Génère le manifest de déploiement Kubernetes"""
+        
         return {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
@@ -356,10 +372,12 @@ if __name__ == "__main__":
         }
     
     async def get_deployment_info(self, deployment_id: str) -> Optional[DeploymentInfo]:
-        """Récupère les informations d'un déploiement"""        return self.deployments.get(deployment_id)
+        """Récupère les informations d'un déploiement"""
+        return self.deployments.get(deployment_id)
     
     async def list_deployments(self, model_name: Optional[str] = None) -> List[DeploymentInfo]:
-        """Liste les déploiements"""        deployments = list(self.deployments.values())
+        """Liste les déploiements"""
+        deployments = list(self.deployments.values())
         
         if model_name:
             deployments = [d for d in deployments if d.model_name == model_name]
@@ -367,7 +385,8 @@ if __name__ == "__main__":
         return deployments
     
     async def stop_deployment(self, deployment_id: str) -> bool:
-        """Arrête un déploiement"""        
+        """Arrête un déploiement"""
+        
         deployment_info = self.deployments.get(deployment_id)
         if not deployment_info:
             return False
@@ -384,7 +403,8 @@ if __name__ == "__main__":
             return False
     
     async def rollback_deployment(self, deployment_id: str) -> bool:
-        """Rollback vers la version précédente"""        
+        """Rollback vers la version précédente"""
+        
         deployment_info = self.deployments.get(deployment_id)
         if not deployment_info:
             return False
@@ -403,7 +423,8 @@ if __name__ == "__main__":
             return False
     
     async def collect_metrics(self, deployment_id: str) -> Optional[PerformanceMetrics]:
-        """Collecte les métriques de performance"""        
+        """Collecte les métriques de performance"""
+        
         deployment_info = self.deployments.get(deployment_id)
         if not deployment_info:
             return None
@@ -441,7 +462,8 @@ if __name__ == "__main__":
         return None
     
     async def auto_scale(self, deployment_id: str, target_cpu: float = 70.0) -> bool:
-        """Auto-scaling basé sur CPU"""        
+        """Auto-scaling basé sur CPU"""
+        
         deployment_info = self.deployments.get(deployment_id)
         if not deployment_info:
             return False
@@ -478,7 +500,8 @@ if __name__ == "__main__":
                                model_name: str,
                                new_version: str,
                                traffic_percentage: float = 10.0) -> str:
-        """Déploiement canary avec répartition du trafic"""        
+        """Déploiement canary avec répartition du trafic"""
+        
         try:
             # Créer un déploiement canary
             canary_config = DeploymentConfig(
@@ -501,7 +524,8 @@ if __name__ == "__main__":
             raise
     
     async def promote_canary(self, canary_deployment_id: str) -> bool:
-        """Promotion d'un déploiement canary vers production"""        
+        """Promotion d'un déploiement canary vers production"""
+        
         deployment_info = self.deployments.get(canary_deployment_id)
         if not deployment_info:
             return False
@@ -527,7 +551,8 @@ if __name__ == "__main__":
     async def blue_green_deployment(self, 
                                    model_name: str,
                                    new_version: str) -> Tuple[str, str]:
-        """Déploiement blue-green"""        
+        """Déploiement blue-green"""
+        
         try:
             # Identifier le déploiement actuel (blue)
             current_deployments = await self.list_deployments(model_name)
@@ -563,7 +588,8 @@ if __name__ == "__main__":
             raise
     
     async def switch_traffic(self, from_deployment: str, to_deployment: str) -> bool:
-        """Bascule le trafic d'un déploiement à un autre"""        
+        """Bascule le trafic d'un déploiement à un autre"""
+        
         try:
             from_info = self.deployments.get(from_deployment)
             to_info = self.deployments.get(to_deployment)
@@ -583,19 +609,23 @@ if __name__ == "__main__":
 
 # Factory pour créer des gestionnaires spécialisés
 class DeploymentManagerFactory:
-    """Factory pour créer des gestionnaires de déploiement"""    
+    """Factory pour créer des gestionnaires de déploiement"""
+    
     @staticmethod
     def create_local_manager() -> ModelDeploymentManager:
-        """Gestionnaire pour développement local"""        return ModelDeploymentManager()
+        """Gestionnaire pour développement local"""
+        return ModelDeploymentManager()
     
     @staticmethod
     def create_production_manager(k8s_namespace: str = "ml-production") -> ModelDeploymentManager:
-        """Gestionnaire pour production"""        return ModelDeploymentManager(k8s_namespace=k8s_namespace)
+        """Gestionnaire pour production"""
+        return ModelDeploymentManager(k8s_namespace=k8s_namespace)
 
 
 # Exemple d'utilisation
 async def example_usage():
-    """Exemple d'utilisation du gestionnaire de déploiement"""    
+    """Exemple d'utilisation du gestionnaire de déploiement"""
+    
     # Créer le gestionnaire
     manager = DeploymentManagerFactory.create_local_manager()
     

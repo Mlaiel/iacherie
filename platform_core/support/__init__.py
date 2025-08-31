@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 =========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 SYSTÈME DE SUPPORT CLIENT ENTERPRISE
@@ -14,7 +14,9 @@ Support intelligent avec IA et automatisation avancée
 - Live chat avec agents IA et humains
 - Knowledge base avec recherche sémantique
 - Analytics et KPIs de satisfaction client
-"""from .support_manager import (
+"""
+
+from .support_manager import (
     SupportManager,
     KnowledgeBaseManager,
     SupportTicket,

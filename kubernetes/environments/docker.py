@@ -14,7 +14,8 @@ Contact: mlaiel@live.de
 Docker environment configuration for containerized deployment.
 Handles multi-stage builds, security hardening, and orchestration.
 ================================================
-"""import os
+"""
+import os
 import logging
 import yaml
 from typing import Dict, Any, List, Optional, Set, Union
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class DockerImageConfig:
-    """Docker image configuration"""    base_image: str = "python:3.11-slim"
+    """Docker image configuration"""
+    base_image: str = "python:3.11-slim"
     registry: str = os.getenv('DOCKER_REGISTRY', 'ghcr.io')
     namespace: str = os.getenv('DOCKER_NAMESPACE', 'ia-influencer')
     tag: str = os.getenv('DOCKER_TAG', 'latest')
@@ -43,7 +45,8 @@ class DockerImageConfig:
 
 @dataclass
 class DockerSecurityConfig:
-    """Docker security configuration"""    non_root_user: str = "appuser"
+    """Docker security configuration"""
+    non_root_user: str = "appuser"
     user_id: int = 1000
     group_id: int = 1000
     read_only_root: bool = True
@@ -61,7 +64,8 @@ class DockerSecurityConfig:
 
 @dataclass
 class DockerNetworkConfig:
-    """Docker network configuration"""    network_mode: str = "bridge"
+    """Docker network configuration"""
+    network_mode: str = "bridge"
     custom_networks: List[str] = field(default_factory=lambda: [
         'ia-influencer-network'
     ])
@@ -78,7 +82,8 @@ class DockerNetworkConfig:
 
 @dataclass
 class DockerResourceConfig:
-    """Docker resource limits configuration"""    memory_limit: str = os.getenv('DOCKER_MEMORY_LIMIT', '2g')
+    """Docker resource limits configuration"""
+    memory_limit: str = os.getenv('DOCKER_MEMORY_LIMIT', '2g')
     memory_reservation: str = os.getenv('DOCKER_MEMORY_RESERVATION', '1g')
     cpu_limit: str = os.getenv('DOCKER_CPU_LIMIT', '2.0')
     cpu_reservation: str = os.getenv('DOCKER_CPU_RESERVATION', '1.0')
@@ -92,7 +97,8 @@ class DockerResourceConfig:
 
 @dataclass
 class DockerVolumeConfig:
-    """Docker volume configuration"""    data_volumes: List[str] = field(default_factory=lambda: [
+    """Docker volume configuration"""
+    data_volumes: List[str] = field(default_factory=lambda: [
         '/app/data',
         '/app/logs',
         '/app/models',
@@ -110,7 +116,8 @@ class DockerVolumeConfig:
 
 @dataclass
 class DockerHealthCheckConfig:
-    """Docker health check configuration"""    enabled: bool = True
+    """Docker health check configuration"""
+    enabled: bool = True
     test_command: str = "curl -f http://localhost:8000/health || exit 1"
     interval: str = "30s"
     timeout: str = "10s"
@@ -120,7 +127,8 @@ class DockerHealthCheckConfig:
 
 
 class DockerEnvironmentManager:
-    """    Docker environment manager for containerized deployment.
+    """
+    Docker environment manager for containerized deployment.
     
     Features:
     - Multi-stage Docker builds for optimization
@@ -131,7 +139,8 @@ class DockerEnvironmentManager:
     - Network isolation and security
     - Image scanning and vulnerability assessment
     - Multi-architecture support
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or "./docker/config.yml"
         self.environment = "docker"
@@ -153,7 +162,8 @@ class DockerEnvironmentManager:
         logger.info(f"Docker environment manager initialized: {self.environment}")
     
     def load_configuration(self) -> Dict[str, Any]:
-        """Load Docker environment configuration"""        try:
+        """Load Docker environment configuration"""
+        try:
             config = {
                 'environment': self.environment,
                 'container_runtime': 'docker',
@@ -232,7 +242,8 @@ class DockerEnvironmentManager:
             raise
     
     def generate_dockerfile(self, stage: str = "production") -> str:
-        """Generate optimized Dockerfile for different stages"""        try:
+        """Generate optimized Dockerfile for different stages"""
+        try:
             dockerfile_content = self._generate_dockerfile_content(stage)
             
             # Write Dockerfile
@@ -250,7 +261,8 @@ class DockerEnvironmentManager:
             raise
     
     def generate_docker_compose(self, environment: str = "development") -> str:
-        """Generate Docker Compose configuration"""        try:
+        """Generate Docker Compose configuration"""
+        try:
             compose_config = self._generate_compose_config(environment)
             
             # Write docker-compose.yml
@@ -268,7 +280,8 @@ class DockerEnvironmentManager:
             raise
     
     def build_image(self, stage: str = "production", no_cache: bool = False) -> bool:
-        """Build Docker image with optimization"""        try:
+        """Build Docker image with optimization"""
+        try:
             # Generate Dockerfile
             dockerfile_path = self.generate_dockerfile(stage)
             
@@ -288,7 +301,8 @@ class DockerEnvironmentManager:
             return False
     
     def scan_image_vulnerabilities(self, image_tag: str) -> Dict[str, Any]:
-        """Scan Docker image for vulnerabilities"""        try:
+        """Scan Docker image for vulnerabilities"""
+        try:
             scan_results = {
                 'image': image_tag,
                 'vulnerabilities': [],
@@ -312,7 +326,8 @@ class DockerEnvironmentManager:
             return {'scan_status': 'failed', 'error': str(e)}
     
     def optimize_image_layers(self, dockerfile_path: str) -> bool:
-        """Optimize Docker image layers for size and caching"""        try:
+        """Optimize Docker image layers for size and caching"""
+        try:
             # Analyze current layers
             layer_analysis = self._analyze_image_layers(dockerfile_path)
             
@@ -332,7 +347,8 @@ class DockerEnvironmentManager:
             return False
     
     def setup_container_security(self) -> bool:
-        """Setup container security hardening"""        try:
+        """Setup container security hardening"""
+        try:
             # Create non-root user script
             self._create_user_setup_script()
             
@@ -356,7 +372,8 @@ class DockerEnvironmentManager:
             return False
     
     def setup_container_monitoring(self) -> bool:
-        """Setup container monitoring and observability"""        try:
+        """Setup container monitoring and observability"""
+        try:
             # Configure metrics collection
             self._configure_metrics_collection()
             
@@ -380,7 +397,8 @@ class DockerEnvironmentManager:
             return False
     
     def validate_docker_environment(self) -> Dict[str, bool]:
-        """Validate Docker environment setup"""        validation_results = {
+        """Validate Docker environment setup"""
+        validation_results = {
             'docker_daemon': False,
             'image_build': False,
             'security_config': False,
@@ -410,7 +428,8 @@ class DockerEnvironmentManager:
             return validation_results
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get Docker environment health status"""        return {
+        """Get Docker environment health status"""
+        return {
             'environment': self.environment,
             'status': 'healthy',
             'docker_version': self._get_docker_version(),
@@ -425,7 +444,8 @@ class DockerEnvironmentManager:
     
     # Private helper methods
     def _generate_dockerfile_content(self, stage: str) -> str:
-        """Generate Dockerfile content for specified stage"""        if stage == "production":
+        """Generate Dockerfile content for specified stage"""
+        if stage == "production":
             return self._generate_production_dockerfile()
         elif stage == "development":
             return self._generate_development_dockerfile()
@@ -435,7 +455,8 @@ class DockerEnvironmentManager:
             return self._generate_base_dockerfile()
     
     def _generate_production_dockerfile(self) -> str:
-        """Generate production Dockerfile"""        return f"""# Multi-stage production Dockerfile for IA Influencer Agent
+        """Generate production Dockerfile"""
+        return f"""# Multi-stage production Dockerfile for IA Influencer Agent
 # Author: Fahed Mlaiel <mlaiel@live.de>
 # Security hardened with non-root user and minimal attack surface
 
@@ -501,9 +522,11 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # Production command
 CMD ["python", "-m", "gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", \\
      "-b", "0.0.0.0:8000", "app.main:app"]
-"""    
+"""
+    
     def _generate_development_dockerfile(self) -> str:
-        """Generate development Dockerfile with debugging tools"""        return f"""# Development Dockerfile for IA Influencer Agent
+        """Generate development Dockerfile with debugging tools"""
+        return f"""# Development Dockerfile for IA Influencer Agent
 FROM {self.image.base_image} as development
 
 # Install system dependencies + dev tools
@@ -530,9 +553,11 @@ COPY . .
 
 # Development command with hot reload
 CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
-"""    
+"""
+    
     def _generate_testing_dockerfile(self) -> str:
-        """Generate testing Dockerfile for CI/CD"""        return f"""# Testing Dockerfile for IA Influencer Agent
+        """Generate testing Dockerfile for CI/CD"""
+        return f"""# Testing Dockerfile for IA Influencer Agent
 FROM {self.image.base_image} as testing
 
 # Install system dependencies
@@ -554,18 +579,22 @@ COPY . .
 
 # Run tests
 CMD ["python", "-m", "pytest", "-v", "--cov=app", "--cov-report=html"]
-"""    
+"""
+    
     def _generate_base_dockerfile(self) -> str:
-        """Generate base Dockerfile"""        return f"""# Base Dockerfile for IA Influencer Agent
+        """Generate base Dockerfile"""
+        return f"""# Base Dockerfile for IA Influencer Agent
 FROM {self.image.base_image}
 
 WORKDIR /app
 COPY . .
 
 CMD ["python", "app/main.py"]
-"""    
+"""
+    
     def _generate_compose_config(self, environment: str) -> Dict[str, Any]:
-        """Generate Docker Compose configuration"""        services = {
+        """Generate Docker Compose configuration"""
+        services = {
             'ia-influencer-app': {
                 'build': {
                     'context': '.',
@@ -636,10 +665,12 @@ CMD ["python", "app/main.py"]
         return compose_config
     
     def _generate_expose_commands(self) -> str:
-        """Generate EXPOSE commands for Dockerfile"""        return '\\n'.join([f"EXPOSE {port}" for port in self.network.expose_ports])
+        """Generate EXPOSE commands for Dockerfile"""
+        return '\\n'.join([f"EXPOSE {port}" for port in self.network.expose_ports])
     
     def _get_environment_variables(self, environment: str) -> Dict[str, str]:
-        """Get environment variables for Docker Compose"""        base_env = {
+        """Get environment variables for Docker Compose"""
+        base_env = {
             'ENVIRONMENT': environment,
             'PYTHONPATH': '/app',
             'LOG_LEVEL': 'INFO' if environment == 'production' else 'DEBUG'
@@ -655,7 +686,8 @@ CMD ["python", "app/main.py"]
         return base_env
     
     def _get_volume_mappings(self) -> List[str]:
-        """Get volume mappings for Docker Compose"""        mappings = []
+        """Get volume mappings for Docker Compose"""
+        mappings = []
         
         # Data volumes
         for volume in self.volumes.data_volumes:
@@ -668,7 +700,8 @@ CMD ["python", "app/main.py"]
         return mappings
     
     def _generate_build_command(self, dockerfile_path: str, stage: str, no_cache: bool) -> str:
-        """Generate Docker build command"""        image_name = f"{self.image.registry}/{self.image.namespace}:{self.image.tag}-{stage}"
+        """Generate Docker build command"""
+        image_name = f"{self.image.registry}/{self.image.namespace}:{self.image.tag}-{stage}"
         
         command = f"docker build -f {dockerfile_path} -t {image_name}"
         
@@ -684,7 +717,8 @@ CMD ["python", "app/main.py"]
         return command
     
     def _execute_docker_command(self, command: str, capture_output: bool = False) -> Union[bool, str]:
-        """Execute Docker command"""        try:
+        """Execute Docker command"""
+        try:
             import subprocess
             
             if capture_output:
@@ -699,7 +733,8 @@ CMD ["python", "app/main.py"]
             return False if not capture_output else None
     
     def _parse_vulnerability_scan(self, scan_output: str) -> Dict[str, Any]:
-        """Parse vulnerability scan output"""        # Implementation would parse actual scan output
+        """Parse vulnerability scan output"""
+        # Implementation would parse actual scan output
         return {
             'vulnerabilities': [],
             'severity_counts': {'critical': 0, 'high': 0, 'medium': 0, 'low': 0},
@@ -708,43 +743,55 @@ CMD ["python", "app/main.py"]
         }
     
     def _analyze_image_layers(self, dockerfile_path: str) -> Dict[str, Any]:
-        """Analyze Docker image layers"""        # Implementation would analyze layers
+        """Analyze Docker image layers"""
+        # Implementation would analyze layers
         return {'layers': [], 'optimization_suggestions': []}
     
     def _optimize_dockerfile_layers(self, dockerfile_path: str, analysis: Dict[str, Any]) -> str:
-        """Optimize Dockerfile layers"""        # Implementation would optimize layers
+        """Optimize Dockerfile layers"""
+        # Implementation would optimize layers
         with open(dockerfile_path, 'r') as f:
             return f.read()
     
     def _create_user_setup_script(self):
-        """Create user setup script"""        pass
+        """Create user setup script"""
+        pass
     
     def _generate_security_policies(self):
-        """Generate security policies"""        pass
+        """Generate security policies"""
+        pass
     
     def _setup_capability_restrictions(self):
-        """Setup capability restrictions"""        pass
+        """Setup capability restrictions"""
+        pass
     
     def _configure_seccomp_profile(self):
-        """Configure seccomp profile"""        pass
+        """Configure seccomp profile"""
+        pass
     
     def _setup_apparmor_profile(self):
-        """Setup AppArmor profile"""        pass
+        """Setup AppArmor profile"""
+        pass
     
     def _configure_metrics_collection(self):
-        """Configure metrics collection"""        pass
+        """Configure metrics collection"""
+        pass
     
     def _setup_log_aggregation(self):
-        """Setup log aggregation"""        pass
+        """Setup log aggregation"""
+        pass
     
     def _configure_tracing(self):
-        """Configure tracing"""        pass
+        """Configure tracing"""
+        pass
     
     def _setup_health_checks(self):
-        """Setup health checks"""        pass
+        """Setup health checks"""
+        pass
     
     def _configure_alerting(self):
-        """Configure alerting"""        pass
+        """Configure alerting"""
+        pass
     
     # Validation methods
     def _validate_docker_daemon(self) -> bool:

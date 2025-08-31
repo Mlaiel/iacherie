@@ -20,7 +20,8 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
-"""import asyncio
+"""
+import asyncio
 import time
 import logging
 import statistics
@@ -42,7 +43,8 @@ logger = logging.getLogger(__name__)
 
 
 class CheckType(Enum):
-    """Enhanced check types for comprehensive monitoring"""    HTTP = "http"
+    """Enhanced check types for comprehensive monitoring"""
+    HTTP = "http"
     HTTPS = "https"
     TCP = "tcp"
     PING = "ping"
@@ -60,7 +62,8 @@ class CheckType(Enum):
 
 
 class CheckStatus(Enum):
-    """Enhanced status levels"""    UP = "up"
+    """Enhanced status levels"""
+    UP = "up"
     DOWN = "down"
     DEGRADED = "degraded"
     WARNING = "warning"
@@ -70,7 +73,8 @@ class CheckStatus(Enum):
 
 
 class BusinessImpact(Enum):
-    """Business impact levels"""    NONE = "none"
+    """Business impact levels"""
+    NONE = "none"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -79,7 +83,8 @@ class BusinessImpact(Enum):
 
 
 class PerformanceThreshold(Enum):
-    """Performance threshold levels"""    EXCELLENT = "excellent"  # < 100ms
+    """Performance threshold levels"""
+    EXCELLENT = "excellent"  # < 100ms
     GOOD = "good"           # 100-500ms
     ACCEPTABLE = "acceptable"  # 500ms-2s
     SLOW = "slow"           # 2s-5s
@@ -88,7 +93,8 @@ class PerformanceThreshold(Enum):
 
 @dataclass
 class UptimeCheck:
-    """Enhanced uptime check configuration with business context"""    id: str
+    """Enhanced uptime check configuration with business context"""
+    id: str
     name: str
     check_type: CheckType
     target: str
@@ -127,7 +133,8 @@ class UptimeCheck:
 
 @dataclass
 class CheckResult:
-    """Enhanced result with performance analytics"""    check_id: str
+    """Enhanced result with performance analytics"""
+    check_id: str
     timestamp: datetime
     status: CheckStatus
     response_time: float  # milliseconds
@@ -147,7 +154,8 @@ class CheckResult:
 
 @dataclass
 class UptimeStats:
-    """Enhanced statistics with business intelligence"""    check_id: str
+    """Enhanced statistics with business intelligence"""
+    check_id: str
     total_checks: int = 0
     successful_checks: int = 0
     failed_checks: int = 0
@@ -186,7 +194,8 @@ class UptimeStats:
 
 @dataclass
 class DowntimeIncident:
-    """Enhanced incident with root cause analysis"""    id: str
+    """Enhanced incident with root cause analysis"""
+    id: str
     check_id: str
     start_time: datetime
     end_time: Optional[datetime] = None
@@ -217,14 +226,16 @@ class DowntimeIncident:
 
 
 class AIAnomalyDetector:
-    """AI-powered anomaly detection for performance metrics"""    
+    """AI-powered anomaly detection for performance metrics"""
+    
     def __init__(self, window_size: int = 50, sensitivity: float = 2.0):
         self.window_size = window_size
         self.sensitivity = sensitivity
         self.baseline_data: Dict[str, List[float]] = {}
         
     def add_measurement(self, check_id: str, response_time: float):
-        """Add a new measurement for trend analysis"""        if check_id not in self.baseline_data:
+        """Add a new measurement for trend analysis"""
+        if check_id not in self.baseline_data:
             self.baseline_data[check_id] = []
             
         baseline = self.baseline_data[check_id]
@@ -235,7 +246,8 @@ class AIAnomalyDetector:
             baseline.pop(0)
     
     def detect_anomaly(self, check_id: str, current_value: float) -> Tuple[bool, float]:
-        """Detect if current value is anomalous"""        if check_id not in self.baseline_data or len(self.baseline_data[check_id]) < 10:
+        """Detect if current value is anomalous"""
+        if check_id not in self.baseline_data or len(self.baseline_data[check_id]) < 10:
             return False, 0.0
             
         baseline = self.baseline_data[check_id]
@@ -255,7 +267,8 @@ class AIAnomalyDetector:
         return is_anomaly, anomaly_score
     
     def get_trend(self, check_id: str) -> str:
-        """Get performance trend for a check"""        if check_id not in self.baseline_data or len(self.baseline_data[check_id]) < 10:
+        """Get performance trend for a check"""
+        if check_id not in self.baseline_data or len(self.baseline_data[check_id]) < 10:
             return "stable"
             
         baseline = self.baseline_data[check_id]
@@ -282,14 +295,16 @@ class AIAnomalyDetector:
 
 
 class BusinessImpactCalculator:
-    """Calculate business impact of downtime and performance degradation"""    
+    """Calculate business impact of downtime and performance degradation"""
+    
     @staticmethod
     def calculate_revenue_impact(
         check: UptimeCheck,
         downtime_minutes: float,
         performance_degradation: float = 0.0
     ) -> Dict[str, Any]:
-        """Calculate revenue impact of downtime/degradation"""        
+        """Calculate revenue impact of downtime/degradation"""
+        
         # Base revenue impact per hour
         hourly_impact = check.revenue_impact_per_hour
         
@@ -319,7 +334,8 @@ class BusinessImpactCalculator:
         sla_target: float,
         penalty_rate: float = 1000.0
     ) -> float:
-        """Calculate SLA breach penalty"""        if current_uptime >= sla_target:
+        """Calculate SLA breach penalty"""
+        if current_uptime >= sla_target:
             return 0.0
             
         breach_percentage = sla_target - current_uptime
@@ -327,7 +343,8 @@ class BusinessImpactCalculator:
     
     @staticmethod
     def get_business_priority(check: UptimeCheck) -> int:
-        """Get business priority score (1-10, 10 = highest)"""        impact_scores = {
+        """Get business priority score (1-10, 10 = highest)"""
+        impact_scores = {
             BusinessImpact.CRITICAL: 10,
             BusinessImpact.REVENUE_AFFECTING: 9,
             BusinessImpact.HIGH: 7,
@@ -352,10 +369,12 @@ class BusinessImpactCalculator:
 
 
 class UptimeMonitor:
-    """    Industrial-grade uptime monitoring system with AI-powered analytics,
+    """
+    Industrial-grade uptime monitoring system with AI-powered analytics,
     business impact assessment, and comprehensive incident management
     for content protection, revenue tracking, and multi-platform integration.
-    """    
+    """
+    
     def __init__(
         self,
         redis_client: Optional[aioredis.Redis] = None,
@@ -403,7 +422,8 @@ class UptimeMonitor:
         self._register_enhanced_default_checks()
         
     def _register_enhanced_default_checks(self):
-        """Register enhanced default uptime checks with business context"""        
+        """Register enhanced default uptime checks with business context"""
+        
         # Core API Infrastructure
         self.register_check(UptimeCheck(
             id="api_health_primary",
@@ -702,7 +722,8 @@ class UptimeMonitor:
         ))
         
     async def start_monitoring(self):
-        """Start uptime monitoring"""        if self._monitoring:
+        """Start uptime monitoring"""
+        if self._monitoring:
             logger.warning("Uptime monitoring already running")
             return
             
@@ -726,7 +747,8 @@ class UptimeMonitor:
         logger.info(f"Uptime monitoring started for {len(self.checks)} checks")
         
     async def stop_monitoring(self):
-        """Stop uptime monitoring"""        self._monitoring = False
+        """Stop uptime monitoring"""
+        self._monitoring = False
         
         # Cancel check tasks
         for task in self._check_schedules.values():
@@ -754,7 +776,8 @@ class UptimeMonitor:
         logger.info("Uptime monitoring stopped")
         
     async def _monitor_check(self, check: UptimeCheck):
-        """Monitor a specific check"""        while self._monitoring and check.enabled:
+        """Monitor a specific check"""
+        while self._monitoring and check.enabled:
             try:
                 # Run the check
                 result = await self._execute_check(check)
@@ -772,7 +795,8 @@ class UptimeMonitor:
                 await asyncio.sleep(60)  # Backoff on error
                 
     async def _execute_check(self, check: UptimeCheck) -> CheckResult:
-        """Execute a specific uptime check"""        start_time = time.time()
+        """Execute a specific uptime check"""
+        start_time = time.time()
         
         try:
             if check.check_type in [CheckType.HTTP, CheckType.HTTPS]:
@@ -799,7 +823,8 @@ class UptimeMonitor:
             )
             
     async def _execute_http_check(self, check: UptimeCheck, start_time: float) -> CheckResult:
-        """Execute HTTP/HTTPS check"""        for attempt in range(check.retry_count):
+        """Execute HTTP/HTTPS check"""
+        for attempt in range(check.retry_count):
             try:
                 async with self._http_session.get(
                     check.target,
@@ -856,7 +881,8 @@ class UptimeMonitor:
                     )
                     
     async def _execute_tcp_check(self, check: UptimeCheck, start_time: float) -> CheckResult:
-        """Execute TCP port check"""        try:
+        """Execute TCP port check"""
+        try:
             # Parse target (host:port)
             if ':' in check.target:
                 host, port = check.target.split(':')
@@ -893,7 +919,8 @@ class UptimeMonitor:
             )
             
     async def _execute_database_check(self, check: UptimeCheck, start_time: float) -> CheckResult:
-        """Execute database connectivity check"""        try:
+        """Execute database connectivity check"""
+        try:
             # This is a simplified implementation
             # In production, use proper database drivers
             
@@ -926,7 +953,8 @@ class UptimeMonitor:
             )
             
     async def _execute_redis_check(self, check: UptimeCheck, start_time: float) -> CheckResult:
-        """Execute Redis connectivity check"""        try:
+        """Execute Redis connectivity check"""
+        try:
             # Parse Redis URL
             parsed = urlparse(check.target)
             
@@ -960,7 +988,8 @@ class UptimeMonitor:
             )
             
     async def _execute_custom_check(self, check: UptimeCheck, start_time: float) -> CheckResult:
-        """Execute custom check (placeholder for extensibility)"""        # Custom checks would be implemented here
+        """Execute custom check (placeholder for extensibility)"""
+        # Custom checks would be implemented here
         # For now, return a placeholder result
         response_time = (time.time() - start_time) * 1000
         
@@ -972,7 +1001,8 @@ class UptimeMonitor:
         )
         
     async def _process_check_result(self, check: UptimeCheck, result: CheckResult):
-        """Process check result and update statistics"""        # Update statistics
+        """Process check result and update statistics"""
+        # Update statistics
         await self._update_stats(check.id, result)
         
         # Store result
@@ -985,7 +1015,8 @@ class UptimeMonitor:
         self._update_performance_history(check.id, result.response_time)
         
     async def _update_stats(self, check_id: str, result: CheckResult):
-        """Update uptime statistics"""        if check_id not in self.stats:
+        """Update uptime statistics"""
+        if check_id not in self.stats:
             self.stats[check_id] = UptimeStats(
                 check_id=check_id,
                 sla_target=self.sla_target
@@ -1028,7 +1059,8 @@ class UptimeMonitor:
                 stats.max_response_time = max(stats.max_response_time, result.response_time)
                 
     async def _store_result(self, result: CheckResult):
-        """Store check result"""        if self.redis_client:
+        """Store check result"""
+        if self.redis_client:
             try:
                 key = f"uptime_results:{result.check_id}"
                 value = {
@@ -1055,7 +1087,8 @@ class UptimeMonitor:
                 logger.error(f"Error storing uptime result: {e}")
                 
     async def _handle_status_change(self, check: UptimeCheck, result: CheckResult):
-        """Handle status changes and incidents"""        # Check if status changed from previous check
+        """Handle status changes and incidents"""
+        # Check if status changed from previous check
         previous_status = await self._get_previous_status(check.id)
         
         if previous_status != result.status:
@@ -1078,7 +1111,8 @@ class UptimeMonitor:
                 logger.error(f"Error storing status: {e}")
                 
     async def _get_previous_status(self, check_id: str) -> Optional[CheckStatus]:
-        """Get previous status for a check"""        if self.redis_client:
+        """Get previous status for a check"""
+        if self.redis_client:
             try:
                 status_str = await self.redis_client.get(f"uptime_status:{check_id}")
                 if status_str:
@@ -1089,7 +1123,8 @@ class UptimeMonitor:
         return None
         
     async def _start_downtime_incident(self, check: UptimeCheck, result: CheckResult):
-        """Start a downtime incident"""        incident_id = f"downtime_{check.id}_{int(result.timestamp.timestamp())}"
+        """Start a downtime incident"""
+        incident_id = f"downtime_{check.id}_{int(result.timestamp.timestamp())}"
         
         incident = DowntimeIncident(
             id=incident_id,
@@ -1118,7 +1153,8 @@ class UptimeMonitor:
         logger.warning(f"Downtime incident started for {check.name}: {incident_id}")
         
     async def _end_downtime_incident(self, check: UptimeCheck, result: CheckResult):
-        """End a downtime incident"""        if check.id in self.active_incidents:
+        """End a downtime incident"""
+        if check.id in self.active_incidents:
             incident = self.active_incidents[check.id]
             incident.end_time = result.timestamp
             incident.duration = (result.timestamp - incident.start_time).total_seconds()
@@ -1152,7 +1188,8 @@ class UptimeMonitor:
             logger.info(f"Downtime incident resolved for {check.name}: {incident.id} (duration: {incident.duration:.1f}s)")
             
     def _determine_impact(self, check: UptimeCheck) -> str:
-        """Determine impact level of downtime"""        # This could be more sophisticated based on check importance
+        """Determine impact level of downtime"""
+        # This could be more sophisticated based on check importance
         if "api" in check.name.lower() or "database" in check.name.lower():
             return "critical"
         elif "external" in check.metadata.get("category", "").lower():
@@ -1161,7 +1198,8 @@ class UptimeMonitor:
             return "low"
             
     def _update_performance_history(self, check_id: str, response_time: float):
-        """Update performance history for trend analysis"""        if check_id not in self._performance_history:
+        """Update performance history for trend analysis"""
+        if check_id not in self._performance_history:
             self._performance_history[check_id] = []
             
         history = self._performance_history[check_id]
@@ -1172,7 +1210,8 @@ class UptimeMonitor:
             history.pop(0)
             
     async def _maintenance_loop(self):
-        """Maintenance loop for cleanup and SLA calculations"""        while self._monitoring:
+        """Maintenance loop for cleanup and SLA calculations"""
+        while self._monitoring:
             try:
                 await self._calculate_sla_compliance()
                 await self._cleanup_old_data()
@@ -1186,14 +1225,16 @@ class UptimeMonitor:
                 await asyncio.sleep(300)
                 
     async def _calculate_sla_compliance(self):
-        """Calculate SLA compliance for all checks"""        for check_id, stats in self.stats.items():
+        """Calculate SLA compliance for all checks"""
+        for check_id, stats in self.stats.items():
             # Calculate SLA compliance for different periods
             await self._calculate_period_sla(check_id, "24h", 24 * 3600)
             await self._calculate_period_sla(check_id, "7d", 7 * 24 * 3600)
             await self._calculate_period_sla(check_id, "30d", 30 * 24 * 3600)
             
     async def _calculate_period_sla(self, check_id: str, period: str, seconds: int):
-        """Calculate SLA for a specific period"""        if not self.redis_client:
+        """Calculate SLA for a specific period"""
+        if not self.redis_client:
             return
             
         try:
@@ -1236,7 +1277,8 @@ class UptimeMonitor:
             logger.error(f"Error calculating SLA for {check_id}/{period}: {e}")
             
     async def _cleanup_old_data(self):
-        """Clean up old monitoring data"""        if not self.redis_client:
+        """Clean up old monitoring data"""
+        if not self.redis_client:
             return
             
         try:
@@ -1260,7 +1302,8 @@ class UptimeMonitor:
             logger.error(f"Error in uptime data cleanup: {e}")
             
     async def _save_state(self):
-        """Save current monitoring state"""        if self.redis_client:
+        """Save current monitoring state"""
+        if self.redis_client:
             try:
                 # Save stats
                 stats_data = {}
@@ -1290,11 +1333,13 @@ class UptimeMonitor:
                 
     # Public interface methods
     def register_check(self, check: UptimeCheck):
-        """Register an uptime check"""        self.checks[check.id] = check
+        """Register an uptime check"""
+        self.checks[check.id] = check
         logger.info(f"Registered uptime check: {check.name}")
         
     def unregister_check(self, check_id: str):
-        """Unregister an uptime check"""        if check_id in self.checks:
+        """Unregister an uptime check"""
+        if check_id in self.checks:
             del self.checks[check_id]
             
             # Stop monitoring task
@@ -1305,7 +1350,8 @@ class UptimeMonitor:
             logger.info(f"Unregistered uptime check: {check_id}")
             
     def get_check_status(self, check_id: str) -> Optional[Dict[str, Any]]:
-        """Get current status of a check"""        if check_id not in self.checks or check_id not in self.stats:
+        """Get current status of a check"""
+        if check_id not in self.checks or check_id not in self.stats:
             return None
             
         check = self.checks[check_id]
@@ -1326,13 +1372,15 @@ class UptimeMonitor:
         }
         
     def get_all_checks_status(self) -> Dict[str, Dict[str, Any]]:
-        """Get status of all checks"""        return {
+        """Get status of all checks"""
+        return {
             check_id: self.get_check_status(check_id)
             for check_id in self.checks.keys()
         }
         
     def get_active_incidents(self) -> List[Dict[str, Any]]:
-        """Get active downtime incidents"""        return [
+        """Get active downtime incidents"""
+        return [
             {
                 "id": incident.id,
                 "check_id": incident.check_id,
@@ -1346,7 +1394,8 @@ class UptimeMonitor:
         ]
         
     def get_incident_history(self, limit: int = 50) -> List[Dict[str, Any]]:
-        """Get incident history"""        # Sort by start time (newest first)
+        """Get incident history"""
+        # Sort by start time (newest first)
         sorted_incidents = sorted(
             self.incident_history,
             key=lambda x: x.start_time,
@@ -1369,7 +1418,8 @@ class UptimeMonitor:
         ]
         
     async def get_performance_trends(self, check_id: str) -> Dict[str, Any]:
-        """Get performance trends for a check"""        if check_id not in self._performance_history:
+        """Get performance trends for a check"""
+        if check_id not in self._performance_history:
             return {}
             
         history = self._performance_history[check_id]
@@ -1388,7 +1438,8 @@ class UptimeMonitor:
         }
         
     async def get_sla_report(self, check_id: str) -> Dict[str, Any]:
-        """Get SLA report for a check"""        if not self.redis_client or check_id not in self.checks:
+        """Get SLA report for a check"""
+        if not self.redis_client or check_id not in self.checks:
             return {}
             
         try:
@@ -1413,7 +1464,8 @@ class UptimeMonitor:
             return {}
             
     def get_monitoring_summary(self) -> Dict[str, Any]:
-        """Get overall monitoring summary"""        total_checks = len(self.checks)
+        """Get overall monitoring summary"""
+        total_checks = len(self.checks)
         enabled_checks = len([c for c in self.checks.values() if c.enabled])
         active_incidents = len(self.active_incidents)
         

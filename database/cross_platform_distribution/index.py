@@ -11,7 +11,8 @@ Architecture: Enterprise-grade, microservices-ready, production-optimized
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
-"""from typing import Dict, List, Optional, Any, Union
+"""
+from typing import Dict, List, Optional, Any, Union
 import logging
 from datetime import datetime
 
@@ -78,7 +79,8 @@ from .analytics_collector import (
 logger = logging.getLogger(__name__)
 
 class CrossPlatformDistributionSystem:
-    """    Comprehensive cross-platform distribution system
+    """
+    Comprehensive cross-platform distribution system
     
     Main entry point for all distribution operations including:
     - Content distribution management
@@ -86,14 +88,17 @@ class CrossPlatformDistributionSystem:
     - AI-powered content optimization
     - Intelligent scheduling
     - Performance analytics
-    """    
+    """
+    
     def __init__(self, db_session=None, config: Optional[Dict[str, Any]] = None):
-        """        Initialize the distribution system
+        """
+        Initialize the distribution system
         
         Args:
             db_session: Database session for data persistence
             config: System configuration parameters
-        """        self.db_session = db_session
+        """
+        self.db_session = db_session
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -114,7 +119,8 @@ class CrossPlatformDistributionSystem:
         content_id: int,
         campaign_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Create comprehensive distribution campaign
+        """
+        Create comprehensive distribution campaign
         
         Args:
             user_id: User identifier
@@ -123,7 +129,8 @@ class CrossPlatformDistributionSystem:
             
         Returns:
             Campaign creation result with job details
-        """        try:
+        """
+        try:
             self.logger.info(f"Creating distribution campaign for user {user_id}")
             
             # Extract campaign parameters
@@ -218,14 +225,16 @@ class CrossPlatformDistributionSystem:
             }
     
     async def get_campaign_status(self, campaign_id: str) -> Dict[str, Any]:
-        """        Get comprehensive campaign status and analytics
+        """
+        Get comprehensive campaign status and analytics
         
         Args:
             campaign_id: Campaign/job UUID
             
         Returns:
             Campaign status with analytics
-        """        try:
+        """
+        try:
             # Get distribution job details
             job = await self.distribution_manager.get_distribution_job(campaign_id)
             if not job:
@@ -275,7 +284,8 @@ class CrossPlatformDistributionSystem:
         platforms: List[str],
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.WEEKLY
     ) -> AnalyticsReport:
-        """        Generate comprehensive performance report
+        """
+        Generate comprehensive performance report
         
         Args:
             content_id: Content identifier
@@ -284,7 +294,8 @@ class CrossPlatformDistributionSystem:
             
         Returns:
             Comprehensive analytics report
-        """        try:
+        """
+        try:
             end_date = datetime.utcnow()
             
             # Calculate start date based on timeframe
@@ -323,7 +334,8 @@ class CrossPlatformDistributionSystem:
         content_data: Dict[str, Any],
         target_platforms: List[str]
     ) -> OptimizationResult:
-        """        Optimize content for specific platforms
+        """
+        Optimize content for specific platforms
         
         Args:
             content_data: Content details
@@ -331,7 +343,8 @@ class CrossPlatformDistributionSystem:
             
         Returns:
             Optimization results
-        """        try:
+        """
+        try:
             optimization_request = OptimizationRequest(
                 content_id=content_data.get("id", ""),
                 content_type=ContentType(content_data.get("type", "music_track")),
@@ -364,7 +377,8 @@ class CrossPlatformDistributionSystem:
         platform_name: str,
         credentials: PlatformCredentials
     ) -> Optional[BasePlatformAdapter]:
-        """        Get platform adapter instance
+        """
+        Get platform adapter instance
         
         Args:
             platform_name: Platform name
@@ -372,21 +386,24 @@ class CrossPlatformDistributionSystem:
             
         Returns:
             Platform adapter instance
-        """        try:
+        """
+        try:
             return self.adapter_factory.create_adapter(platform_name, credentials)
         except Exception as e:
             self.logger.error(f"Failed to create platform adapter: {str(e)}")
             return None
     
     async def get_supported_platforms(self) -> List[str]:
-        """Get list of supported platforms"""        return self.adapter_factory.get_supported_platforms()
+        """Get list of supported platforms"""
+        return self.adapter_factory.get_supported_platforms()
     
     async def validate_platform_credentials(
         self,
         platform_name: str,
         credentials: PlatformCredentials
     ) -> bool:
-        """        Validate platform credentials
+        """
+        Validate platform credentials
         
         Args:
             platform_name: Platform name
@@ -394,7 +411,8 @@ class CrossPlatformDistributionSystem:
             
         Returns:
             True if credentials are valid
-        """        try:
+        """
+        try:
             adapter = await self.get_platform_adapter(platform_name, credentials)
             if not adapter:
                 return False
@@ -407,7 +425,8 @@ class CrossPlatformDistributionSystem:
             return False
     
     def get_system_health(self) -> Dict[str, Any]:
-        """Get system health status"""        return {
+        """Get system health status"""
+        return {
             "status": "healthy",
             "components": {
                 "distribution_manager": "operational",
@@ -426,7 +445,8 @@ def create_distribution_system(
     db_session=None,
     config: Optional[Dict[str, Any]] = None
 ) -> CrossPlatformDistributionSystem:
-    """    Create and initialize cross-platform distribution system
+    """
+    Create and initialize cross-platform distribution system
     
     Args:
         db_session: Database session
@@ -434,7 +454,8 @@ def create_distribution_system(
         
     Returns:
         Initialized distribution system
-    """    return CrossPlatformDistributionSystem(db_session, config)
+    """
+    return CrossPlatformDistributionSystem(db_session, config)
 
 # Export all public classes and functions
 __all__ = [

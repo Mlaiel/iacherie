@@ -20,7 +20,8 @@ Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Any, Callable, Union, Tuple, Set
@@ -43,7 +44,8 @@ from ..base import BaseAgent
 
 
 class AlertSeverity(Enum):
-    """Alert severity enumeration."""    CRITICAL = "critical"
+    """Alert severity enumeration."""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -51,7 +53,8 @@ class AlertSeverity(Enum):
 
 
 class MetricType(Enum):
-    """Metric type enumeration."""    COUNTER = "counter"
+    """Metric type enumeration."""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     TIMER = "timer"
@@ -59,7 +62,8 @@ class MetricType(Enum):
 
 
 class HealthStatus(Enum):
-    """Health status enumeration."""    HEALTHY = "healthy"
+    """Health status enumeration."""
+    HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
     UNKNOWN = "unknown"
@@ -67,7 +71,8 @@ class HealthStatus(Enum):
 
 @dataclass
 class WorkflowMetric:
-    """Workflow metric data point."""    name: str
+    """Workflow metric data point."""
+    name: str
     value: float
     metric_type: MetricType
     timestamp: datetime
@@ -78,7 +83,8 @@ class WorkflowMetric:
 
 @dataclass
 class Alert:
-    """Workflow alert."""    id: str
+    """Workflow alert."""
+    id: str
     workflow_id: str
     title: str
     description: str
@@ -93,7 +99,8 @@ class Alert:
 
 @dataclass
 class HealthCheck:
-    """Workflow health check result."""    workflow_id: str
+    """Workflow health check result."""
+    workflow_id: str
     component: str
     status: HealthStatus
     message: str
@@ -104,7 +111,8 @@ class HealthCheck:
 
 @dataclass
 class PerformanceReport:
-    """Workflow performance report."""    workflow_id: str
+    """Workflow performance report."""
+    workflow_id: str
     period_start: datetime
     period_end: datetime
     total_executions: int
@@ -121,12 +129,15 @@ class PerformanceReport:
 
 
 class WorkflowMonitor(BaseAgent):
-    """    Advanced workflow monitoring system for content creator workflows.
+    """
+    Advanced workflow monitoring system for content creator workflows.
     
     This monitor provides comprehensive observability with real-time metrics,
     alerting, health checks, and performance analytics.
-    """    def __init__(self, retention_days: int = 30):
-        """Initialize the workflow monitor."""        super().__init__()
+    """
+    def __init__(self, retention_days: int = 30):
+        """Initialize the workflow monitor."""
+        super().__init__()
         self.logger = logging.getLogger(__name__)
         
         # Core monitoring components
@@ -161,7 +172,8 @@ class WorkflowMonitor(BaseAgent):
         self.monitoring_active = False
 
     async def start_monitoring(self):
-        """Start the workflow monitoring system."""        try:
+        """Start the workflow monitoring system."""
+        try:
             if self.monitoring_active:
                 self.logger.warning("Monitoring is already active")
                 return
@@ -183,7 +195,8 @@ class WorkflowMonitor(BaseAgent):
             raise
 
     async def stop_monitoring(self):
-        """Stop the workflow monitoring system."""        try:
+        """Stop the workflow monitoring system."""
+        try:
             self.monitoring_active = False
             
             # Cancel monitoring tasks
@@ -205,7 +218,8 @@ class WorkflowMonitor(BaseAgent):
         workflow_id: str,
         alert_rules: Optional[Dict[str, Any]] = None
     ):
-        """Register a workflow for monitoring."""        try:
+        """Register a workflow for monitoring."""
+        try:
             self.monitored_workflows.add(workflow_id)
             
             # Set default alert rules if not provided
@@ -236,7 +250,8 @@ class WorkflowMonitor(BaseAgent):
         tags: Optional[Dict[str, str]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ):
-        """Record a workflow metric."""        try:
+        """Record a workflow metric."""
+        try:
             metric = WorkflowMetric(
                 name=metric_name,
                 value=value,
@@ -262,7 +277,8 @@ class WorkflowMonitor(BaseAgent):
         workflow_id: str,
         execution_data: Dict[str, Any]
     ):
-        """Record workflow execution data."""        try:
+        """Record workflow execution data."""
+        try:
             # Store execution data
             self.execution_history[workflow_id].append({
                 **execution_data,
@@ -310,7 +326,8 @@ class WorkflowMonitor(BaseAgent):
         severity: AlertSeverity,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Create a new alert."""        try:
+        """Create a new alert."""
+        try:
             alert_id = str(uuid.uuid4())
             
             alert = Alert(
@@ -336,7 +353,8 @@ class WorkflowMonitor(BaseAgent):
             return ""
 
     async def get_workflow_health(self, workflow_id: str) -> Dict[str, Any]:
-        """Get comprehensive health status for a workflow."""        try:
+        """Get comprehensive health status for a workflow."""
+        try:
             # Get recent metrics
             recent_metrics = await self._get_recent_metrics(workflow_id, minutes=15)
             
@@ -381,7 +399,8 @@ class WorkflowMonitor(BaseAgent):
         workflow_id: str,
         period_hours: int = 24
     ) -> PerformanceReport:
-        """Generate performance report for a workflow."""        try:
+        """Generate performance report for a workflow."""
+        try:
             period_end = datetime.now(timezone.utc)
             period_start = period_end - timedelta(hours=period_hours)
             
@@ -447,7 +466,8 @@ class WorkflowMonitor(BaseAgent):
             raise
 
     async def _metrics_collection_loop(self):
-        """Background task for metrics collection."""        try:
+        """Background task for metrics collection."""
+        try:
             while self.monitoring_active:
                 try:
                     # Collect system metrics for each workflow
@@ -466,7 +486,8 @@ class WorkflowMonitor(BaseAgent):
             self.logger.error(f"Fatal metrics collection error: {str(e)}")
 
     async def _health_check_loop(self):
-        """Background task for health checks."""        try:
+        """Background task for health checks."""
+        try:
             while self.monitoring_active:
                 try:
                     # Perform health checks for each workflow
@@ -485,7 +506,8 @@ class WorkflowMonitor(BaseAgent):
             self.logger.error(f"Fatal health check error: {str(e)}")
 
     async def _alert_evaluation_loop(self):
-        """Background task for alert evaluation."""        try:
+        """Background task for alert evaluation."""
+        try:
             while self.monitoring_active:
                 try:
                     # Evaluate alert rules for each workflow
@@ -504,7 +526,8 @@ class WorkflowMonitor(BaseAgent):
             self.logger.error(f"Fatal alert evaluation error: {str(e)}")
 
     async def _cleanup_loop(self):
-        """Background task for data cleanup."""        try:
+        """Background task for data cleanup."""
+        try:
             while self.monitoring_active:
                 try:
                     await self._cleanup_old_data()
@@ -520,7 +543,8 @@ class WorkflowMonitor(BaseAgent):
             self.logger.error(f"Fatal cleanup error: {str(e)}")
 
     async def _collect_workflow_metrics(self, workflow_id: str):
-        """Collect metrics for a specific workflow."""        try:
+        """Collect metrics for a specific workflow."""
+        try:
             # Placeholder for system metrics collection
             # In a real implementation, this would collect various system metrics
             
@@ -543,7 +567,8 @@ class WorkflowMonitor(BaseAgent):
             self.logger.error(f"Error collecting metrics for {workflow_id}: {str(e)}")
 
     async def _perform_health_check(self, workflow_id: str):
-        """Perform health check for a workflow."""        try:
+        """Perform health check for a workflow."""
+        try:
             start_time = time.time()
             
             # Placeholder health check - would perform actual checks
@@ -582,7 +607,8 @@ class WorkflowMonitor(BaseAgent):
             self.logger.error(f"Health check failed for {workflow_id}: {str(e)}")
 
     async def _evaluate_alert_rules(self, workflow_id: str):
-        """Evaluate alert rules for a workflow."""        try:
+        """Evaluate alert rules for a workflow."""
+        try:
             alert_rules = self.alert_rules.get(workflow_id, {})
             
             for rule_name, rule_config in alert_rules.items():
@@ -597,7 +623,8 @@ class WorkflowMonitor(BaseAgent):
         rule_name: str,
         rule_config: Dict[str, Any]
     ):
-        """Evaluate a single alert rule."""        try:
+        """Evaluate a single alert rule."""
+        try:
             metric_name = rule_config.get('metric')
             threshold = rule_config.get('threshold')
             condition = rule_config.get('condition', 'greater_than')  # greater_than, less_than, equals
@@ -645,7 +672,8 @@ class WorkflowMonitor(BaseAgent):
             self.logger.error(f"Error evaluating alert rule {rule_name}: {str(e)}")
 
     def _get_default_alert_rules(self) -> Dict[str, Any]:
-        """Get default alert rules for a workflow."""        return {
+        """Get default alert rules for a workflow."""
+        return {
             'high_error_rate': {
                 'metric': 'execution_success',
                 'threshold': 0.8,
@@ -671,7 +699,8 @@ class WorkflowMonitor(BaseAgent):
         workflow_id: str,
         minutes: int = 15
     ) -> Dict[str, List[WorkflowMetric]]:
-        """Get recent metrics for a workflow."""        try:
+        """Get recent metrics for a workflow."""
+        try:
             cutoff_time = datetime.now(timezone.utc) - timedelta(minutes=minutes)
             recent_metrics = {}
             
@@ -695,7 +724,8 @@ class WorkflowMonitor(BaseAgent):
         recent_metrics: Dict[str, List[WorkflowMetric]],
         recent_executions: List[Dict[str, Any]]
     ) -> Dict[str, float]:
-        """Calculate health metrics for a workflow."""        try:
+        """Calculate health metrics for a workflow."""
+        try:
             health_metrics = {}
             
             # Success rate
@@ -741,7 +771,8 @@ class WorkflowMonitor(BaseAgent):
             return {'performance_score': 0.0}
 
     async def _determine_health_status(self, health_metrics: Dict[str, float]) -> HealthStatus:
-        """Determine overall health status based on metrics."""        try:
+        """Determine overall health status based on metrics."""
+        try:
             performance_score = health_metrics.get('performance_score', 0.0)
             success_rate = health_metrics.get('success_rate', 0.0)
             
@@ -761,7 +792,8 @@ class WorkflowMonitor(BaseAgent):
         workflow_id: str,
         health_metrics: Dict[str, float]
     ) -> List[str]:
-        """Generate health recommendations based on metrics."""        try:
+        """Generate health recommendations based on metrics."""
+        try:
             recommendations = []
             
             # Success rate recommendations
@@ -795,7 +827,8 @@ class WorkflowMonitor(BaseAgent):
             return []
 
     async def _send_alert_notifications(self, alert: Alert):
-        """Send alert notifications through configured channels."""        try:
+        """Send alert notifications through configured channels."""
+        try:
             for channel_name, notification_func in self.notification_channels.items():
                 try:
                     await notification_func(alert)
@@ -806,7 +839,8 @@ class WorkflowMonitor(BaseAgent):
             self.logger.error(f"Error sending alert notifications: {str(e)}")
 
     async def _update_anomaly_detection(self, metric_key: str, value: float):
-        """Update anomaly detection models with new metric value."""        try:
+        """Update anomaly detection models with new metric value."""
+        try:
             # Simple anomaly detection using moving average and standard deviation
             if metric_key not in self.anomaly_detectors:
                 self.anomaly_detectors[metric_key] = {
@@ -846,7 +880,8 @@ class WorkflowMonitor(BaseAgent):
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, float]:
-        """Calculate resource utilization for a period."""        try:
+        """Calculate resource utilization for a period."""
+        try:
             resource_utilization = {}
             
             # Get CPU utilization
@@ -878,7 +913,8 @@ class WorkflowMonitor(BaseAgent):
         workflow_id: str,
         period_executions: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate performance trends."""        try:
+        """Calculate performance trends."""
+        try:
             trends = {}
             
             if len(period_executions) < 2:
@@ -930,7 +966,8 @@ class WorkflowMonitor(BaseAgent):
         workflow_id: str,
         performance_data: Dict[str, Any]
     ) -> List[str]:
-        """Generate performance recommendations."""        try:
+        """Generate performance recommendations."""
+        try:
             recommendations = []
             
             # Error rate recommendations
@@ -969,7 +1006,8 @@ class WorkflowMonitor(BaseAgent):
             return []
 
     async def _cleanup_old_data(self):
-        """Clean up old monitoring data."""        try:
+        """Clean up old monitoring data."""
+        try:
             cutoff_time = datetime.now(timezone.utc) - timedelta(days=self.retention_days)
             
             # Clean up old metrics
@@ -1010,7 +1048,8 @@ class WorkflowMonitor(BaseAgent):
             self.logger.error(f"Error cleaning up old data: {str(e)}")
 
     async def get_monitoring_stats(self) -> Dict[str, Any]:
-        """Get monitoring system statistics."""        try:
+        """Get monitoring system statistics."""
+        try:
             # Calculate metrics statistics
             total_metrics = sum(len(metrics) for metrics in self.metrics_buffer.values())
             
@@ -1035,10 +1074,12 @@ class WorkflowMonitor(BaseAgent):
     # Additional utility methods for external integration
     
     def add_notification_channel(self, name: str, notification_func: Callable):
-        """Add a notification channel for alerts."""        self.notification_channels[name] = notification_func
+        """Add a notification channel for alerts."""
+        self.notification_channels[name] = notification_func
 
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
-        """Acknowledge an alert."""        try:
+        """Acknowledge an alert."""
+        try:
             if alert_id in self.alerts:
                 alert = self.alerts[alert_id]
                 alert.status = 'acknowledged'
@@ -1051,7 +1092,8 @@ class WorkflowMonitor(BaseAgent):
             return False
 
     async def resolve_alert(self, alert_id: str) -> bool:
-        """Resolve an alert."""        try:
+        """Resolve an alert."""
+        try:
             if alert_id in self.alerts:
                 alert = self.alerts[alert_id]
                 alert.status = 'resolved'

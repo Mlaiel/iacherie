@@ -94,7 +94,8 @@ FONCTIONNALITÉS ENTERPRISE:
 - Audit logging complet
 - Backup et recovery automation
 - Monitoring et alerting 24/7
-"""import asyncio
+"""
+import asyncio
 from typing import Dict, Any, Optional, List, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
@@ -119,7 +120,8 @@ from backend.deployment.database.postgresql_manager import get_postgresql_manage
 
 
 class CrawlerType(Enum):
-    """Types of crawlers"""    YOUTUBE = "youtube"
+    """Types of crawlers"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -134,7 +136,8 @@ class CrawlerType(Enum):
 
 
 class CrawlStatus(Enum):
-    """Crawl job status"""    PENDING = "pending"
+    """Crawl job status"""
+    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -144,7 +147,8 @@ class CrawlStatus(Enum):
 
 
 class ContentStatus(Enum):
-    """Detected content status"""    NEW = "new"
+    """Detected content status"""
+    NEW = "new"
     UPDATED = "updated"
     REMOVED = "removed"
     MONITORED = "monitored"
@@ -153,7 +157,8 @@ class ContentStatus(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    LOW = "low"
+    """Alert severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -161,7 +166,8 @@ class AlertSeverity(Enum):
 
 
 class AlertType(Enum):
-    """Types of alerts"""    COPYRIGHT_VIOLATION = "copyright_violation"
+    """Types of alerts"""
+    COPYRIGHT_VIOLATION = "copyright_violation"
     UNAUTHORIZED_USE = "unauthorized_use"
     BRAND_MENTION = "brand_mention"
     COMPETITOR_ACTIVITY = "competitor_activity"
@@ -173,7 +179,8 @@ class AlertType(Enum):
 
 @dataclass
 class CrawlJob:
-    """Crawl job configuration"""    job_id: str
+    """Crawl job configuration"""
+    job_id: str
     user_id: str
     crawler_type: CrawlerType
     target_urls: List[str]
@@ -189,7 +196,8 @@ class CrawlJob:
 
 @dataclass
 class DetectedContent:
-    """Detected content structure"""    content_id: str
+    """Detected content structure"""
+    content_id: str
     url: str
     title: str
     description: Optional[str] = None
@@ -201,11 +209,13 @@ class DetectedContent:
 
 
 class WebSurveillanceManager:
-    """    Enterprise Web Surveillance Database Manager
+    """
+    Enterprise Web Surveillance Database Manager
     
     Manages web crawling operations, content detection, and surveillance
     alerts with enterprise-grade performance and reliability.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = get_logger(f"{__name__}.WebSurveillanceManager")
@@ -225,7 +235,8 @@ class WebSurveillanceManager:
         self._url_fingerprints: Set[str] = set()
     
     async def initialize(self) -> bool:
-        """Initialize the web surveillance manager"""        try:
+        """Initialize the web surveillance manager"""
+        try:
             self.logger.info("🚀 Initializing Web Surveillance Manager...")
             
             # Get database manager
@@ -245,9 +256,11 @@ class WebSurveillanceManager:
             return False
     
     async def _create_surveillance_schema(self):
-        """Create web surveillance database schema"""        self.logger.debug("Creating web surveillance database schema...")
+        """Create web surveillance database schema"""
+        self.logger.debug("Creating web surveillance database schema...")
         
-        schema_sql = """        -- Crawler Configurations
+        schema_sql = """
+        -- Crawler Configurations
         CREATE TABLE IF NOT EXISTS crawler_configs (
             config_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -591,7 +604,8 @@ class WebSurveillanceManager:
         CREATE TRIGGER update_platform_api_limits_updated_at
             BEFORE UPDATE ON platform_api_limits
             FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-        """        
+        """
+        
         async with self._db_manager.get_session() as session:
             await session.execute(text(schema_sql))
             await session.commit()
@@ -599,10 +613,12 @@ class WebSurveillanceManager:
         self.logger.debug("✅ Web surveillance schema created successfully")
     
     async def _load_active_crawls(self):
-        """Load active crawl jobs from database"""        try:
+        """Load active crawl jobs from database"""
+        try:
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
-                    text("""                        SELECT job_id, config_id, user_id, crawler_type, status, 
+                    text("""
+                        SELECT job_id, config_id, user_id, crawler_type, status, 
                                pages_crawled, pages_found, started_at
                         FROM crawl_jobs 
                         WHERE status IN ('running', 'pending', 'scheduled')
@@ -637,7 +653,8 @@ class WebSurveillanceManager:
         search_terms: List[str] = None,
         config: Dict[str, Any] = None
     ) -> str:
-        """Create a new crawler configuration"""        try:
+        """Create a new crawler configuration"""
+        try:
             self.logger.debug(f"Creating crawler config for user {user_id}")
             
             config_data = {
@@ -656,7 +673,8 @@ class WebSurveillanceManager:
             
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
-                    text("""                        INSERT INTO crawler_configs 
+                    text("""
+                        INSERT INTO crawler_configs 
                         (user_id, name, crawler_type, target_urls, search_terms, 
                          crawler_config, max_depth, max_pages, delay_seconds, 
                          respect_robots_txt, priority)
@@ -679,13 +697,15 @@ class WebSurveillanceManager:
             raise
     
     async def start_crawl_job(self, config_id: str, job_name: Optional[str] = None) -> str:
-        """Start a new crawl job"""        try:
+        """Start a new crawl job"""
+        try:
             self.logger.debug(f"Starting crawl job for config {config_id}")
             
             # Get crawler configuration
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
-                    text("""                        SELECT user_id, crawler_type, name, target_urls, search_terms, crawler_config
+                    text("""
+                        SELECT user_id, crawler_type, name, target_urls, search_terms, crawler_config
                         FROM crawler_configs 
                         WHERE config_id = :config_id AND is_active = true
                     """),
@@ -707,7 +727,8 @@ class WebSurveillanceManager:
                 }
                 
                 result = await session.execute(
-                    text("""                        INSERT INTO crawl_jobs 
+                    text("""
+                        INSERT INTO crawl_jobs 
                         (config_id, user_id, job_name, crawler_type, status, started_at)
                         VALUES (:config_id, :user_id, :job_name, :crawler_type, :status, :started_at)
                         RETURNING job_id
@@ -744,10 +765,12 @@ class WebSurveillanceManager:
         content_detected: int,
         errors_count: int = 0
     ) -> bool:
-        """Update crawl job progress"""        try:
+        """Update crawl job progress"""
+        try:
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
-                    text("""                        UPDATE crawl_jobs 
+                    text("""
+                        UPDATE crawl_jobs 
                         SET pages_crawled = :pages_crawled,
                             pages_found = :pages_found,
                             content_detected = :content_detected,
@@ -782,7 +805,8 @@ class WebSurveillanceManager:
             return False
     
     async def store_detected_content(self, job_id: str, content: DetectedContent) -> str:
-        """Store detected content"""        try:
+        """Store detected content"""
+        try:
             # Generate URL hash for deduplication
             url_hash = hashlib.sha256(content.url.encode()).hexdigest()
             
@@ -823,7 +847,8 @@ class WebSurveillanceManager:
                 }
                 
                 result = await session.execute(
-                    text("""                        INSERT INTO detected_content 
+                    text("""
+                        INSERT INTO detected_content 
                         (job_id, user_id, url, url_hash, title, description, author, 
                          platform, content_type, raw_metadata, detected_at)
                         VALUES (:job_id, :user_id, :url, :url_hash, :title, :description, :author,
@@ -847,7 +872,8 @@ class WebSurveillanceManager:
             raise
     
     async def _check_alert_triggers(self, content_id: str, content: DetectedContent):
-        """Check if content triggers any alerts"""        try:
+        """Check if content triggers any alerts"""
+        try:
             # This is a simplified alert trigger system
             # In a real implementation, this would be more sophisticated
             
@@ -898,7 +924,8 @@ class WebSurveillanceManager:
                             })
                             
                             await session.execute(
-                                text("""                                    INSERT INTO surveillance_alerts 
+                                text("""
+                                    INSERT INTO surveillance_alerts 
                                     (content_id, user_id, alert_type, severity, title, description,
                                      trigger_conditions, risk_score, confidence_score, priority_score)
                                     VALUES (:content_id, :user_id, :alert_type, :severity, :title, :description,
@@ -920,10 +947,12 @@ class WebSurveillanceManager:
         results_summary: Optional[Dict[str, Any]] = None,
         error_log: Optional[List[str]] = None
     ) -> bool:
-        """Complete a crawl job"""        try:
+        """Complete a crawl job"""
+        try:
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
-                    text("""                        UPDATE crawl_jobs 
+                    text("""
+                        UPDATE crawl_jobs 
                         SET status = :status,
                             completed_at = NOW(),
                             duration = NOW() - started_at,
@@ -956,11 +985,13 @@ class WebSurveillanceManager:
             return False
     
     async def _update_crawl_statistics(self, job_id: str):
-        """Update crawl statistics"""        try:
+        """Update crawl statistics"""
+        try:
             async with self._db_manager.get_session() as session:
                 # Get job details
                 result = await session.execute(
-                    text("""                        SELECT user_id, crawler_type, status, pages_crawled, 
+                    text("""
+                        SELECT user_id, crawler_type, status, pages_crawled, 
                                content_detected, errors_count, started_at
                         FROM crawl_jobs 
                         WHERE job_id = :job_id
@@ -977,7 +1008,8 @@ class WebSurveillanceManager:
                 stat_hour = job.started_at.hour
                 
                 await session.execute(
-                    text("""                        INSERT INTO crawl_statistics 
+                    text("""
+                        INSERT INTO crawl_statistics 
                         (user_id, crawler_type, stat_date, stat_hour, jobs_completed,
                          pages_crawled, content_detected, error_rate)
                         VALUES (:user_id, :crawler_type, :stat_date, :stat_hour, 1,
@@ -1013,14 +1045,17 @@ class WebSurveillanceManager:
         status: str = 'open',
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """Get surveillance alerts for a user"""        try:
-            query = """                SELECT sa.alert_id, sa.alert_type, sa.severity, sa.title, sa.description,
+        """Get surveillance alerts for a user"""
+        try:
+            query = """
+                SELECT sa.alert_id, sa.alert_type, sa.severity, sa.title, sa.description,
                        sa.risk_score, sa.confidence_score, sa.status, sa.created_at,
                        dc.url, dc.platform, dc.author, dc.title as content_title
                 FROM surveillance_alerts sa
                 LEFT JOIN detected_content dc ON sa.content_id = dc.content_id
                 WHERE sa.user_id = :user_id
-            """            
+            """
+            
             params = {'user_id': user_id}
             
             if alert_type:
@@ -1049,10 +1084,12 @@ class WebSurveillanceManager:
             return []
     
     async def get_crawl_jobs_status(self, user_id: str, limit: int = 20) -> List[Dict[str, Any]]:
-        """Get crawl jobs status for a user"""        try:
+        """Get crawl jobs status for a user"""
+        try:
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
-                    text("""                        SELECT cj.job_id, cj.job_name, cj.crawler_type, cj.status,
+                    text("""
+                        SELECT cj.job_id, cj.job_name, cj.crawler_type, cj.status,
                                cj.pages_crawled, cj.pages_found, cj.content_detected,
                                cj.errors_count, cj.started_at, cj.completed_at,
                                cc.name as config_name
@@ -1079,13 +1116,16 @@ class WebSurveillanceManager:
         content_type: Optional[str] = None,
         limit: int = 100
     ) -> List[Dict[str, Any]]:
-        """Get detected content for a user"""        try:
-            query = """                SELECT content_id, url, title, description, author, platform,
+        """Get detected content for a user"""
+        try:
+            query = """
+                SELECT content_id, url, title, description, author, platform,
                        content_type, confidence_score, similarity_score, 
                        sentiment_score, status, detected_at
                 FROM detected_content 
                 WHERE user_id = :user_id
-            """            
+            """
+            
             params = {'user_id': user_id}
             
             if platform:
@@ -1110,7 +1150,8 @@ class WebSurveillanceManager:
             return []
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""        try:
+        """Perform health check"""
+        try:
             health = {
                 'status': 'healthy',
                 'timestamp': datetime.utcnow().isoformat(),
@@ -1170,7 +1211,8 @@ class WebSurveillanceManager:
             }
     
     async def shutdown(self):
-        """Shutdown the web surveillance manager"""        try:
+        """Shutdown the web surveillance manager"""
+        try:
             self.logger.info("🚨 Shutting down Web Surveillance Manager...")
             
             # Mark active crawls as paused
@@ -1197,7 +1239,8 @@ _web_surveillance_manager: Optional[WebSurveillanceManager] = None
 
 
 def get_web_surveillance_manager(config: Optional[Dict[str, Any]] = None) -> WebSurveillanceManager:
-    """Get or create web surveillance manager instance"""    global _web_surveillance_manager
+    """Get or create web surveillance manager instance"""
+    global _web_surveillance_manager
     
     if _web_surveillance_manager is None:
         _web_surveillance_manager = WebSurveillanceManager(config)

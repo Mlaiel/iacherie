@@ -8,7 +8,8 @@ according to the unified business requirements.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""from fastapi import APIRouter
+"""
+from fastapi import APIRouter
 from .auth_endpoints import router as auth_router
 from .content_endpoints import router as content_router  
 from .collaboration_endpoints import router as collaboration_router
@@ -44,7 +45,8 @@ v1_router.include_router(documentation_router)
 @v1_router.get(
     "/health",
     summary="Comprehensive Platform Health Check",
-    description="""    **Comprehensive health check endpoint for monitoring and load balancing.**
+    description="""
+    **Comprehensive health check endpoint for monitoring and load balancing.**
     
     Returns detailed system status including all integrated services:
     - AI Fingerprinting Engine status
@@ -114,7 +116,8 @@ v1_router.include_router(documentation_router)
     tags=["System Health"]
 )
 async def comprehensive_health_check():
-    """    Comprehensive health check endpoint for monitoring and load balancing.
+    """
+    Comprehensive health check endpoint for monitoring and load balancing.
     
     Returns system status including all integrated services:
     - AI Fingerprinting Engine status
@@ -125,7 +128,8 @@ async def comprehensive_health_check():
     - Security systems
     - Cache performance
     - External APIs
-    """    from datetime import datetime
+    """
+    from datetime import datetime
     
     # Simulate comprehensive health check
     # In production, this would check actual service health

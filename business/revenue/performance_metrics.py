@@ -16,7 +16,8 @@ Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Performance Analytics
 ===============================================================================================
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -33,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetricCategory(Enum):
-    """Performance metric categories"""    REVENUE = "revenue"
+    """Performance metric categories"""
+    REVENUE = "revenue"
     GROWTH = "growth"
     EFFICIENCY = "efficiency"
     DIVERSIFICATION = "diversification"
@@ -42,7 +44,8 @@ class MetricCategory(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric data"""    metric_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Performance metric data"""
+    metric_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     metric_name: str = ""
     metric_category: MetricCategory = MetricCategory.REVENUE
@@ -55,7 +58,8 @@ class PerformanceMetric:
 
 
 class PerformanceMetrics:
-    """    Ultra-advanced performance metrics system
+    """
+    Ultra-advanced performance metrics system
     
     Features:
     - Comprehensive KPI tracking
@@ -66,7 +70,8 @@ class PerformanceMetrics:
     - Automated alerts and notifications
     - Custom metric definitions
     - Real-time performance monitoring
-    """    
+    """
+    
     def __init__(self,
                  db_manager: DatabaseManager,
                  security_manager: SecurityManager,
@@ -76,7 +81,8 @@ class PerformanceMetrics:
         self.metrics = metrics_collector
         
     async def initialize(self):
-        """Initialize performance metrics system"""        try:
+        """Initialize performance metrics system"""
+        try:
             logger.info("Performance metrics system initialized successfully")
             
         except Exception as e:
@@ -86,7 +92,8 @@ class PerformanceMetrics:
     async def calculate_performance_metrics(self,
                                           creator_id: str,
                                           date_range: Tuple[datetime, datetime]) -> List[PerformanceMetric]:
-        """Calculate comprehensive performance metrics"""        try:
+        """Calculate comprehensive performance metrics"""
+        try:
             metrics = []
             
             # Implementation would calculate various performance metrics
@@ -99,7 +106,8 @@ class PerformanceMetrics:
             return []
 
     async def cleanup(self):
-        """Cleanup performance metrics resources"""        try:
+        """Cleanup performance metrics resources"""
+        try:
             logger.info("Performance metrics cleanup completed")
             
         except Exception as e:

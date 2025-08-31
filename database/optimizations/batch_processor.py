@@ -5,7 +5,8 @@ chunking, parallel processing, and comprehensive error handling.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""import asyncio
+"""
+import asyncio
 import time
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional, Union, Callable, Awaitable, TypeVar, Generic
@@ -27,7 +28,8 @@ T = TypeVar('T')
 
 
 class BatchStrategy(Enum):
-    """Batch processing strategies"""    SEQUENTIAL = "sequential"
+    """Batch processing strategies"""
+    SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     ADAPTIVE = "adaptive"
     BULK_INSERT = "bulk_insert"
@@ -36,7 +38,8 @@ class BatchStrategy(Enum):
 
 
 class BatchStatus(Enum):
-    """Batch processing status"""    PENDING = "pending"
+    """Batch processing status"""
+    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -45,7 +48,8 @@ class BatchStatus(Enum):
 
 
 class ErrorHandling(Enum):
-    """Error handling strategies"""    FAIL_FAST = "fail_fast"
+    """Error handling strategies"""
+    FAIL_FAST = "fail_fast"
     CONTINUE_ON_ERROR = "continue_on_error"
     RETRY_FAILED = "retry_failed"
     SKIP_FAILED = "skip_failed"
@@ -53,7 +57,8 @@ class ErrorHandling(Enum):
 
 @dataclass
 class BatchConfig:
-    """Batch processing configuration"""    batch_size: int = 1000
+    """Batch processing configuration"""
+    batch_size: int = 1000
     max_workers: int = 4
     strategy: BatchStrategy = BatchStrategy.ADAPTIVE
     error_handling: ErrorHandling = ErrorHandling.CONTINUE_ON_ERROR
@@ -84,7 +89,8 @@ class BatchConfig:
 
 @dataclass
 class BatchMetrics:
-    """Batch processing metrics"""    batch_id: str
+    """Batch processing metrics"""
+    batch_id: str
     total_items: int = 0
     processed_items: int = 0
     successful_items: int = 0
@@ -109,19 +115,22 @@ class BatchMetrics:
     
     @property
     def progress_percentage(self) -> float:
-        """Calculate progress percentage"""        if self.total_items == 0:
+        """Calculate progress percentage"""
+        if self.total_items == 0:
             return 0.0
         return (self.processed_items / self.total_items) * 100
     
     @property
     def success_rate(self) -> float:
-        """Calculate success rate"""        if self.processed_items == 0:
+        """Calculate success rate"""
+        if self.processed_items == 0:
             return 0.0
         return (self.successful_items / self.processed_items) * 100
     
     @property
     def estimated_completion_time(self) -> Optional[datetime]:
-        """Estimate completion time based on current progress"""        if self.processed_items == 0 or self.throughput_items_per_sec == 0:
+        """Estimate completion time based on current progress"""
+        if self.processed_items == 0 or self.throughput_items_per_sec == 0:
             return None
         
         remaining_items = self.total_items - self.processed_items
@@ -131,7 +140,8 @@ class BatchMetrics:
 
 @dataclass
 class BatchResult:
-    """Batch processing result"""    batch_id: str
+    """Batch processing result"""
+    batch_id: str
     status: BatchStatus
     metrics: BatchMetrics
     successful_items: List[Any] = field(default_factory=list)
@@ -140,23 +150,27 @@ class BatchResult:
     
     @property
     def is_successful(self) -> bool:
-        """Check if batch was successful"""        return self.status == BatchStatus.COMPLETED and self.metrics.failed_items == 0
+        """Check if batch was successful"""
+        return self.status == BatchStatus.COMPLETED and self.metrics.failed_items == 0
     
     @property
     def has_partial_success(self) -> bool:
-        """Check if batch had partial success"""        return (self.status == BatchStatus.PARTIALLY_COMPLETED or 
+        """Check if batch had partial success"""
+        return (self.status == BatchStatus.PARTIALLY_COMPLETED or 
                 (self.status == BatchStatus.COMPLETED and self.metrics.failed_items > 0))
 
 
 class BatchChunkCalculator:
-    """Adaptive batch chunk size calculator"""    
+    """Adaptive batch chunk size calculator"""
+    
     def __init__(self, config: BatchConfig):
         self.config = config
         self._performance_history: List[Dict[str, float]] = []
         self._current_chunk_size = config.batch_size
     
     def calculate_optimal_chunk_size(self, total_items: int, available_memory_mb: float) -> int:
-        """Calculate optimal chunk size based on data and system state"""        if not self.config.chunk_size_adaptive:
+        """Calculate optimal chunk size based on data and system state"""
+        if not self.config.chunk_size_adaptive:
             return self.config.batch_size
         
         # Memory-based calculation
@@ -179,7 +193,8 @@ class BatchChunkCalculator:
         return optimal_size
     
     def _calculate_memory_based_size(self, available_memory_mb: float) -> int:
-        """Calculate chunk size based on available memory"""        # Conservative estimate: use 50% of available memory
+        """Calculate chunk size based on available memory"""
+        # Conservative estimate: use 50% of available memory
         usable_memory_mb = available_memory_mb * 0.5
         
         # Estimate 1KB per item (very rough estimate)
@@ -188,7 +203,8 @@ class BatchChunkCalculator:
         return max(self.config.min_chunk_size, estimated_items)
     
     def _calculate_performance_based_size(self) -> int:
-        """Calculate chunk size based on performance history"""        if len(self._performance_history) < 3:
+        """Calculate chunk size based on performance history"""
+        if len(self._performance_history) < 3:
             return self.config.batch_size
         
         # Find the chunk size with best throughput
@@ -203,7 +219,8 @@ class BatchChunkCalculator:
         return best_chunk_size
     
     def _calculate_data_based_size(self, total_items: int) -> int:
-        """Calculate chunk size based on total data volume"""        if total_items < 1000:
+        """Calculate chunk size based on total data volume"""
+        if total_items < 1000:
             return min(total_items, self.config.batch_size)
         elif total_items < 10000:
             return self.config.batch_size
@@ -212,7 +229,8 @@ class BatchChunkCalculator:
             return min(total_items // 100, self.config.max_chunk_size)
     
     def record_performance(self, chunk_size: int, processing_time: float, items_processed: int) -> None:
-        """Record performance metrics for adaptive sizing"""        if processing_time > 0:
+        """Record performance metrics for adaptive sizing"""
+        if processing_time > 0:
             throughput = items_processed / processing_time
             
             self._performance_history.append({
@@ -229,7 +247,8 @@ class BatchChunkCalculator:
 
 
 class BatchProcessor(Generic[T]):
-    """High-performance batch processor for database operations"""    
+    """High-performance batch processor for database operations"""
+    
     def __init__(self, config: BatchConfig):
         self.config = config
         self.metrics_collector = MetricsCollector()
@@ -252,7 +271,8 @@ class BatchProcessor(Generic[T]):
         batch_id: Optional[str] = None,
         progress_callback: Optional[Callable[[BatchMetrics], Awaitable[None]]] = None
     ) -> BatchResult:
-        """Process a batch of items with the specified processor function"""        
+        """Process a batch of items with the specified processor function"""
+        
         batch_id = batch_id or f"batch_{int(time.time() * 1000)}"
         
         # Initialize metrics
@@ -336,7 +356,8 @@ class BatchProcessor(Generic[T]):
         metrics: BatchMetrics,
         progress_callback: Optional[Callable[[BatchMetrics], Awaitable[None]]]
     ) -> BatchResult:
-        """Process chunks sequentially"""        
+        """Process chunks sequentially"""
+        
         result = BatchResult(
             batch_id=metrics.batch_id,
             status=BatchStatus.RUNNING,
@@ -396,7 +417,8 @@ class BatchProcessor(Generic[T]):
         metrics: BatchMetrics,
         progress_callback: Optional[Callable[[BatchMetrics], Awaitable[None]]]
     ) -> BatchResult:
-        """Process chunks in parallel"""        
+        """Process chunks in parallel"""
+        
         result = BatchResult(
             batch_id=metrics.batch_id,
             status=BatchStatus.RUNNING,
@@ -490,7 +512,8 @@ class BatchProcessor(Generic[T]):
         metrics: BatchMetrics,
         progress_callback: Optional[Callable[[BatchMetrics], Awaitable[None]]]
     ) -> BatchResult:
-        """Process chunks with adaptive strategy (parallel with fallback to sequential)"""        
+        """Process chunks with adaptive strategy (parallel with fallback to sequential)"""
+        
         # Start with parallel processing
         try:
             # Monitor system resources
@@ -513,7 +536,8 @@ class BatchProcessor(Generic[T]):
         chunk: List[T],
         processor_func: Callable[[List[T]], Awaitable[List[Any]]]
     ) -> Dict[str, List[Any]]:
-        """Process a single chunk with retry logic"""        
+        """Process a single chunk with retry logic"""
+        
         last_exception = None
         
         for attempt in range(self.config.max_retries + 1):
@@ -565,7 +589,8 @@ class BatchProcessor(Generic[T]):
             raise last_exception
     
     def _calculate_retry_delay(self, attempt: int) -> float:
-        """Calculate retry delay with optional exponential backoff"""        base_delay = self.config.retry_delay_seconds
+        """Calculate retry delay with optional exponential backoff"""
+        base_delay = self.config.retry_delay_seconds
         
         if self.config.exponential_backoff:
             return base_delay * (2 ** attempt)
@@ -573,7 +598,8 @@ class BatchProcessor(Generic[T]):
             return base_delay
     
     def _create_chunks(self, items: List[T], chunk_size: int) -> List[List[T]]:
-        """Split items into chunks of specified size"""        chunks = []
+        """Split items into chunks of specified size"""
+        chunks = []
         for i in range(0, len(items), chunk_size):
             chunks.append(items[i:i + chunk_size])
         return chunks
@@ -585,7 +611,8 @@ class BatchProcessor(Generic[T]):
         chunk_results: Dict[str, List[Any]],
         processing_time: float
     ) -> None:
-        """Update batch metrics with chunk results"""        
+        """Update batch metrics with chunk results"""
+        
         successful_count = len(chunk_results['successful'])
         failed_count = len(chunk_results['failed'])
         
@@ -614,7 +641,8 @@ class BatchProcessor(Generic[T]):
         metrics.peak_memory_mb = max(metrics.peak_memory_mb, current_memory)
     
     def _get_available_memory_mb(self) -> float:
-        """Get available system memory in MB"""        try:
+        """Get available system memory in MB"""
+        try:
             import psutil
             memory = psutil.virtual_memory()
             return memory.available / (1024 ** 2)
@@ -622,7 +650,8 @@ class BatchProcessor(Generic[T]):
             return 1024.0  # Default fallback
     
     def _get_memory_usage_mb(self) -> float:
-        """Get current memory usage in MB"""        try:
+        """Get current memory usage in MB"""
+        try:
             import psutil
             process = psutil.Process()
             return process.memory_info().rss / (1024 ** 2)
@@ -630,14 +659,16 @@ class BatchProcessor(Generic[T]):
             return 0.0
     
     def _get_cpu_usage(self) -> float:
-        """Get current CPU usage percentage"""        try:
+        """Get current CPU usage percentage"""
+        try:
             import psutil
             return psutil.cpu_percent(interval=0.1)
         except ImportError:
             return 0.0
     
     async def _send_batch_metrics(self, metrics: BatchMetrics, status: BatchStatus) -> None:
-        """Send batch metrics to monitoring system"""        try:
+        """Send batch metrics to monitoring system"""
+        try:
             self.metrics_collector.counter(
                 "batch_processing_total",
                 1,
@@ -663,27 +694,32 @@ class BatchProcessor(Generic[T]):
             logger.warning(f"Failed to send batch metrics: {e}")
     
     def cancel_batch(self, batch_id: str) -> bool:
-        """Cancel a running batch"""        if batch_id in self._active_batches:
+        """Cancel a running batch"""
+        if batch_id in self._active_batches:
             self._cancelled_batches.add(batch_id)
             logger.info(f"Batch cancellation requested: {batch_id}")
             return True
         return False
     
     def get_batch_status(self, batch_id: str) -> Optional[BatchMetrics]:
-        """Get current status of a batch"""        return self._active_batches.get(batch_id)
+        """Get current status of a batch"""
+        return self._active_batches.get(batch_id)
     
     def add_progress_callback(self, callback: Callable[[BatchMetrics], Awaitable[None]]) -> None:
-        """Add a progress callback function"""        self._progress_callbacks.append(callback)
+        """Add a progress callback function"""
+        self._progress_callbacks.append(callback)
     
     async def cleanup(self) -> None:
-        """Cleanup resources"""        if self._thread_pool:
+        """Cleanup resources"""
+        if self._thread_pool:
             self._thread_pool.shutdown(wait=True)
             self._thread_pool = None
 
 
 # Specialized batch processors for common database operations
 class DatabaseBatchProcessor:
-    """Specialized batch processor for database operations"""    
+    """Specialized batch processor for database operations"""
+    
     def __init__(self, engine: AsyncEngine, config: BatchConfig):
         self.engine = engine
         self.config = config
@@ -695,7 +731,8 @@ class DatabaseBatchProcessor:
         records: List[Dict[str, Any]],
         batch_id: Optional[str] = None
     ) -> BatchResult:
-        """Perform bulk insert operation"""        
+        """Perform bulk insert operation"""
+        
         async def insert_processor(chunk: List[Dict[str, Any]]) -> List[Any]:
             async with self.engine.begin() as conn:
                 # Generate INSERT statement
@@ -722,7 +759,8 @@ class DatabaseBatchProcessor:
         key_columns: List[str],
         batch_id: Optional[str] = None
     ) -> BatchResult:
-        """Perform bulk update operation"""        
+        """Perform bulk update operation"""
+        
         async def update_processor(chunk: List[Dict[str, Any]]) -> List[Any]:
             async with self.engine.begin() as conn:
                 updated_records = []
@@ -757,7 +795,8 @@ class DatabaseBatchProcessor:
         conditions: List[Dict[str, Any]],
         batch_id: Optional[str] = None
     ) -> BatchResult:
-        """Perform bulk delete operation"""        
+        """Perform bulk delete operation"""
+        
         async def delete_processor(chunk: List[Dict[str, Any]]) -> List[Any]:
             async with self.engine.begin() as conn:
                 deleted_records = []
@@ -787,7 +826,8 @@ class DatabaseBatchProcessor:
         content_items: List[Dict[str, Any]], 
         batch_id: Optional[str] = None
     ) -> BatchResult:
-        """Process content fingerprints in optimized batches for protection system"""        
+        """Process content fingerprints in optimized batches for protection system"""
+        
         async def fingerprint_processor(chunk: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
             async with self.engine.begin() as conn:
                 processed_items = []
@@ -795,13 +835,15 @@ class DatabaseBatchProcessor:
                 for item in chunk:
                     try:
                         # Insert content fingerprint with vector data
-                        insert_sql = """                        INSERT INTO content_fingerprints 
+                        insert_sql = """
+                        INSERT INTO content_fingerprints 
                         (user_id, content_type, original_filename, fingerprint_hash, 
                          vector_embedding, metadata, created_at)
                         VALUES (:user_id, :content_type, :original_filename, :fingerprint_hash,
                                 :vector_embedding, :metadata, :created_at)
                         RETURNING id, fingerprint_hash
-                        """                        
+                        """
+                        
                         result = await conn.execute(text(insert_sql), {
                             'user_id': item['user_id'],
                             'content_type': item['content_type'],
@@ -836,7 +878,8 @@ class DatabaseBatchProcessor:
         alerts: List[Dict[str, Any]],
         batch_id: Optional[str] = None
     ) -> BatchResult:
-        """Process protection alerts in optimized batches"""        
+        """Process protection alerts in optimized batches"""
+        
         async def alerts_processor(chunk: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
             async with self.engine.begin() as conn:
                 processed_alerts = []
@@ -844,13 +887,15 @@ class DatabaseBatchProcessor:
                 for alert in chunk:
                     try:
                         # Insert protection alert
-                        insert_sql = """                        INSERT INTO protection_alerts 
+                        insert_sql = """
+                        INSERT INTO protection_alerts 
                         (fingerprint_id, detected_url, platform, similarity_score, 
                          status, evidence_screenshot, created_at)
                         VALUES (:fingerprint_id, :detected_url, :platform, :similarity_score,
                                 :status, :evidence_screenshot, :created_at)
                         RETURNING id, status
-                        """                        
+                        """
+                        
                         result = await conn.execute(text(insert_sql), {
                             'fingerprint_id': alert['fingerprint_id'],
                             'detected_url': alert['detected_url'],
@@ -885,7 +930,8 @@ class DatabaseBatchProcessor:
         revenue_data: List[Dict[str, Any]],
         batch_id: Optional[str] = None
     ) -> BatchResult:
-        """Process revenue tracking data in optimized batches for monetization system"""        
+        """Process revenue tracking data in optimized batches for monetization system"""
+        
         async def revenue_processor(chunk: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
             async with self.engine.begin() as conn:
                 processed_revenue = []
@@ -893,7 +939,8 @@ class DatabaseBatchProcessor:
                 for revenue in chunk:
                     try:
                         # Insert or update revenue tracking
-                        upsert_sql = """                        INSERT INTO revenue_tracking 
+                        upsert_sql = """
+                        INSERT INTO revenue_tracking 
                         (user_id, content_id, platform, revenue_amount, currency, 
                          period_start, period_end, created_at)
                         VALUES (:user_id, :content_id, :platform, :revenue_amount, :currency,
@@ -903,7 +950,8 @@ class DatabaseBatchProcessor:
                             revenue_amount = EXCLUDED.revenue_amount,
                             updated_at = NOW()
                         RETURNING id, revenue_amount
-                        """                        
+                        """
+                        
                         result = await conn.execute(text(upsert_sql), {
                             'user_id': revenue['user_id'],
                             'content_id': revenue['content_id'],
@@ -939,7 +987,8 @@ class DatabaseBatchProcessor:
         content_items: List[Dict[str, Any]],
         batch_id: Optional[str] = None
     ) -> BatchResult:
-        """Process multimedia content uploads with optimized chunking for large files"""        
+        """Process multimedia content uploads with optimized chunking for large files"""
+        
         async def multimedia_processor(chunk: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
             async with self.engine.begin() as conn:
                 processed_content = []
@@ -957,13 +1006,15 @@ class DatabaseBatchProcessor:
                             self.config.chunk_size = min(self.config.chunk_size * 1.5, 75)
                         
                         # Insert content metadata
-                        insert_sql = """                        INSERT INTO content_metadata 
+                        insert_sql = """
+                        INSERT INTO content_metadata 
                         (user_id, content_type, file_path, file_size, duration, 
                          format, quality, metadata, created_at)
                         VALUES (:user_id, :content_type, :file_path, :file_size, :duration,
                                 :format, :quality, :metadata, :created_at)
                         RETURNING id, file_path
-                        """                        
+                        """
+                        
                         result = await conn.execute(text(insert_sql), {
                             'user_id': item['user_id'],
                             'content_type': content_type,
@@ -1000,7 +1051,8 @@ class DatabaseBatchProcessor:
         embeddings: List[Dict[str, Any]],
         batch_id: Optional[str] = None
     ) -> BatchResult:
-        """Process vector embeddings for AI similarity matching with FAISS optimization"""        
+        """Process vector embeddings for AI similarity matching with FAISS optimization"""
+        
         async def embedding_processor(chunk: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
             async with self.engine.begin() as conn:
                 processed_embeddings = []
@@ -1011,13 +1063,15 @@ class DatabaseBatchProcessor:
                 for embedding in chunk:
                     try:
                         # Insert vector embedding with FAISS indexing preparation
-                        insert_sql = """                        INSERT INTO vector_embeddings 
+                        insert_sql = """
+                        INSERT INTO vector_embeddings 
                         (content_id, embedding_type, vector_data, dimension, 
                          model_version, created_at)
                         VALUES (:content_id, :embedding_type, :vector_data, :dimension,
                                 :model_version, :created_at)
                         RETURNING id, content_id
-                        """                        
+                        """
+                        
                         result = await conn.execute(text(insert_sql), {
                             'content_id': embedding['content_id'],
                             'embedding_type': embedding['embedding_type'],
@@ -1051,7 +1105,8 @@ class DatabaseBatchProcessor:
         analytics_data: List[Dict[str, Any]],
         batch_id: Optional[str] = None
     ) -> BatchResult:
-        """Process creator analytics data for performance insights"""        
+        """Process creator analytics data for performance insights"""
+        
         async def analytics_processor(chunk: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
             async with self.engine.begin() as conn:
                 processed_analytics = []
@@ -1059,7 +1114,8 @@ class DatabaseBatchProcessor:
                 for analytics in chunk:
                     try:
                         # Insert analytics with aggregation optimization
-                        upsert_sql = """                        INSERT INTO creator_analytics 
+                        upsert_sql = """
+                        INSERT INTO creator_analytics 
                         (user_id, platform, metric_type, metric_value, timestamp, 
                          aggregation_period, metadata)
                         VALUES (:user_id, :platform, :metric_type, :metric_value, :timestamp,
@@ -1069,7 +1125,8 @@ class DatabaseBatchProcessor:
                             metric_value = creator_analytics.metric_value + EXCLUDED.metric_value,
                             updated_at = NOW()
                         RETURNING id, metric_value
-                        """                        
+                        """
+                        
                         result = await conn.execute(text(upsert_sql), {
                             'user_id': analytics['user_id'],
                             'platform': analytics['platform'],

@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from enum import Enum
@@ -28,14 +29,16 @@ logger = logging.getLogger(__name__)
 
 
 class PostgreSQLEnvironment(Enum):
-    """PostgreSQL environment configurations"""    DEVELOPMENT = "development"
+    """PostgreSQL environment configurations"""
+    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 
 class ConnectionPoolStrategy(Enum):
-    """Connection pool strategies for different workloads"""    HIGH_PERFORMANCE = "high_performance"
+    """Connection pool strategies for different workloads"""
+    HIGH_PERFORMANCE = "high_performance"
     BALANCED = "balanced"
     MEMORY_OPTIMIZED = "memory_optimized"
     ANALYTICS_HEAVY = "analytics_heavy"
@@ -43,7 +46,8 @@ class ConnectionPoolStrategy(Enum):
 
 @dataclass
 class PostgreSQLCredentials:
-    """Encrypted PostgreSQL credentials management"""    host: str
+    """Encrypted PostgreSQL credentials management"""
+    host: str
     port: int
     database: str
     username: str
@@ -55,7 +59,8 @@ class PostgreSQLCredentials:
     ssl_ca_path: Optional[str] = None
 
     def get_decrypted_password(self) -> str:
-        """Decrypt password using encryption key"""        try:
+        """Decrypt password using encryption key"""
+        try:
             fernet = Fernet(self.encryption_key.encode())
             return fernet.decrypt(self.password_encrypted.encode()).decode()
         except Exception as e:
@@ -65,7 +70,8 @@ class PostgreSQLCredentials:
 
 @dataclass
 class PostgreSQLPoolConfig:
-    """PostgreSQL connection pool configuration"""    pool_size: int = 20
+    """PostgreSQL connection pool configuration"""
+    pool_size: int = 20
     max_overflow: int = 30
     pool_timeout: int = 30
     pool_recycle: int = 3600
@@ -77,7 +83,8 @@ class PostgreSQLPoolConfig:
 
 @dataclass
 class PostgreSQLPerformanceConfig:
-    """PostgreSQL performance optimization settings"""    work_mem: str = "4MB"
+    """PostgreSQL performance optimization settings"""
+    work_mem: str = "4MB"
     maintenance_work_mem: str = "64MB"
     shared_buffers: str = "256MB"
     effective_cache_size: str = "1GB"
@@ -95,7 +102,8 @@ class PostgreSQLPerformanceConfig:
 
 @dataclass
 class PostgreSQLSecurityConfig:
-    """PostgreSQL security configuration"""    row_security: bool = True
+    """PostgreSQL security configuration"""
+    row_security: bool = True
     force_ssl: bool = True
     audit_logging: bool = True
     log_connections: bool = True
@@ -109,11 +117,13 @@ class PostgreSQLSecurityConfig:
 
 
 class PostgreSQLConfig:
-    """    Professional PostgreSQL configuration manager for IA-Influencer Agent Platform
+    """
+    Professional PostgreSQL configuration manager for IA-Influencer Agent Platform
     
     Handles multi-tenant database configuration, connection pooling, security,
     and performance optimization for content protection and monetization workflows.
-    """    def __init__(self, environment: PostgreSQLEnvironment = PostgreSQLEnvironment.DEVELOPMENT):
+    """
+    def __init__(self, environment: PostgreSQLEnvironment = PostgreSQLEnvironment.DEVELOPMENT):
         self.environment = environment
         self.credentials = self._load_credentials()
         self.pool_config = self._get_pool_config()
@@ -123,7 +133,8 @@ class PostgreSQLConfig:
         self._setup_logging()
 
     def _setup_logging(self) -> None:
-        """Setup PostgreSQL-specific logging"""        self.logger = logging.getLogger(f"postgresql.{self.environment.value}")
+        """Setup PostgreSQL-specific logging"""
+        self.logger = logging.getLogger(f"postgresql.{self.environment.value}")
         if not self.logger.handlers:
             handler = logging.StreamHandler()
             formatter = logging.Formatter(
@@ -134,7 +145,8 @@ class PostgreSQLConfig:
             self.logger.setLevel(logging.INFO)
 
     def _load_credentials(self) -> PostgreSQLCredentials:
-        """Load PostgreSQL credentials from environment"""        return PostgreSQLCredentials(
+        """Load PostgreSQL credentials from environment"""
+        return PostgreSQLCredentials(
             host=os.getenv(f"POSTGRES_HOST_{self.environment.value.upper()}", "localhost"),
             port=int(os.getenv(f"POSTGRES_PORT_{self.environment.value.upper()}", "5432")),
             database=os.getenv(f"POSTGRES_DB_{self.environment.value.upper()}", "ia_influencer_agent"),
@@ -148,7 +160,8 @@ class PostgreSQLConfig:
         )
 
     def _get_pool_config(self) -> PostgreSQLPoolConfig:
-        """Get connection pool configuration based on environment"""        pool_configs = {
+        """Get connection pool configuration based on environment"""
+        pool_configs = {
             PostgreSQLEnvironment.DEVELOPMENT: PostgreSQLPoolConfig(
                 pool_size=5, max_overflow=10, echo=True
             ),
@@ -165,7 +178,8 @@ class PostgreSQLConfig:
         return pool_configs.get(self.environment, PostgreSQLPoolConfig())
 
     def _get_performance_config(self) -> PostgreSQLPerformanceConfig:
-        """Get performance configuration based on environment"""        if self.environment == PostgreSQLEnvironment.PRODUCTION:
+        """Get performance configuration based on environment"""
+        if self.environment == PostgreSQLEnvironment.PRODUCTION:
             return PostgreSQLPerformanceConfig(
                 work_mem="8MB",
                 maintenance_work_mem="128MB",
@@ -185,7 +199,8 @@ class PostgreSQLConfig:
             return PostgreSQLPerformanceConfig()
 
     def _get_security_config(self) -> PostgreSQLSecurityConfig:
-        """Get security configuration based on environment"""        if self.environment == PostgreSQLEnvironment.PRODUCTION:
+        """Get security configuration based on environment"""
+        if self.environment == PostgreSQLEnvironment.PRODUCTION:
             return PostgreSQLSecurityConfig(
                 row_security=True,
                 force_ssl=True,
@@ -203,14 +218,16 @@ class PostgreSQLConfig:
             return PostgreSQLSecurityConfig()
 
     def get_connection_url(self, database_name: Optional[str] = None) -> str:
-        """        Generate PostgreSQL connection URL with security parameters
+        """
+        Generate PostgreSQL connection URL with security parameters
         
         Args:
             database_name: Optional specific database name
             
         Returns:
             Secure PostgreSQL connection URL
-        """        try:
+        """
+        try:
             password = self.credentials.get_decrypted_password()
             db_name = database_name or self.credentials.database
             
@@ -239,7 +256,8 @@ class PostgreSQLConfig:
             raise
 
     def create_engine(self, database_name: Optional[str] = None, **kwargs) -> Engine:
-        """        Create SQLAlchemy engine with optimized configuration
+        """
+        Create SQLAlchemy engine with optimized configuration
         
         Args:
             database_name: Optional specific database name
@@ -247,7 +265,8 @@ class PostgreSQLConfig:
             
         Returns:
             Configured SQLAlchemy engine
-        """        engine_key = database_name or "default"
+        """
+        engine_key = database_name or "default"
         
         if engine_key in self._engines:
             return self._engines[engine_key]
@@ -282,18 +301,21 @@ class PostgreSQLConfig:
             raise
 
     def get_tenant_engine(self, tenant_id: str) -> Engine:
-        """        Get or create tenant-specific database engine
+        """
+        Get or create tenant-specific database engine
         
         Args:
             tenant_id: Unique tenant identifier
             
         Returns:
             Tenant-specific SQLAlchemy engine
-        """        tenant_db_name = f"{self.credentials.database}_tenant_{tenant_id}"
+        """
+        tenant_db_name = f"{self.credentials.database}_tenant_{tenant_id}"
         return self.create_engine(tenant_db_name)
 
     def get_analytics_engine(self) -> Engine:
-        """Get analytics-optimized database engine"""        analytics_db_name = f"{self.credentials.database}_analytics"
+        """Get analytics-optimized database engine"""
+        analytics_db_name = f"{self.credentials.database}_analytics"
         
         # Analytics-specific configuration
         analytics_config = {
@@ -307,7 +329,8 @@ class PostgreSQLConfig:
         return self.create_engine(analytics_db_name, **analytics_config)
 
     def get_content_protection_engine(self) -> Engine:
-        """Get content protection database engine with security focus"""        protection_db_name = f"{self.credentials.database}_content_protection"
+        """Get content protection database engine with security focus"""
+        protection_db_name = f"{self.credentials.database}_content_protection"
         
         # Security-focused configuration
         protection_config = {
@@ -320,15 +343,18 @@ class PostgreSQLConfig:
         return self.create_engine(protection_db_name, **protection_config)
 
     def get_monetization_engine(self) -> Engine:
-        """Get monetization tracking database engine"""        monetization_db_name = f"{self.credentials.database}_monetization"
+        """Get monetization tracking database engine"""
+        monetization_db_name = f"{self.credentials.database}_monetization"
         return self.create_engine(monetization_db_name)
 
     def health_check(self) -> Dict[str, Any]:
-        """        Perform comprehensive health check on PostgreSQL connections
+        """
+        Perform comprehensive health check on PostgreSQL connections
         
         Returns:
             Health check results dictionary
-        """        health_status = {
+        """
+        health_status = {
             "status": "healthy",
             "environment": self.environment.value,
             "engines": {},
@@ -364,7 +390,8 @@ class PostgreSQLConfig:
         return health_status
 
     def close_all_connections(self) -> None:
-        """Close all database connections and cleanup resources"""        for engine_name, engine in self._engines.items():
+        """Close all database connections and cleanup resources"""
+        for engine_name, engine in self._engines.items():
             try:
                 engine.dispose()
                 self.logger.info(f"Closed PostgreSQL engine: {engine_name}")
@@ -374,4 +401,5 @@ class PostgreSQLConfig:
         self._engines.clear()
 
     def __del__(self):
-        """Cleanup on object destruction"""        self.close_all_connections()
+        """Cleanup on object destruction"""
+        self.close_all_connections()

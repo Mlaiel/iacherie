@@ -5,7 +5,8 @@ for creators on the IA Influencer platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Advanced Content Protection
-"""from datetime import datetime, timedelta
+"""
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from uuid import UUID
 import logging
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class ActivityCategory(str, Enum):
-    """Activity categories for classification."""    AUTHENTICATION = "authentication"
+    """Activity categories for classification."""
+    AUTHENTICATION = "authentication"
     CONTENT_MANAGEMENT = "content_management"
     PROFILE_MANAGEMENT = "profile_management"
     COLLABORATION = "collaboration"
@@ -45,7 +47,8 @@ class ActivityCategory(str, Enum):
 
 
 class InteractionType(str, Enum):
-    """Content interaction types."""    VIEW = "view"
+    """Content interaction types."""
+    VIEW = "view"
     LIKE = "like"
     SHARE = "share"
     COMMENT = "comment"
@@ -55,7 +58,8 @@ class InteractionType(str, Enum):
 
 
 class SessionData(BaseModel):
-    """Session data for activity tracking."""    ip_address: str
+    """Session data for activity tracking."""
+    ip_address: str
     user_agent: str
     device_type: Optional[str] = None
     browser: Optional[str] = None
@@ -64,7 +68,8 @@ class SessionData(BaseModel):
 
 
 class ActivityFilter(BaseModel):
-    """Activity filtering options."""    start_date: Optional[datetime] = None
+    """Activity filtering options."""
+    start_date: Optional[datetime] = None
     end_date: Optional[datetime] = None
     activity_types: Optional[List[ActivityType]] = None
     categories: Optional[List[ActivityCategory]] = None
@@ -80,7 +85,8 @@ class ActivityFilter(BaseModel):
 
 
 class ActivityManager:
-    """    Comprehensive activity tracking and analytics system.
+    """
+    Comprehensive activity tracking and analytics system.
     
     Features:
     - Real-time activity logging
@@ -91,7 +97,8 @@ class ActivityManager:
     - Engagement metrics calculation
     - Activity reporting and insights
     - Performance optimization with caching
-    """    
+    """
+    
     def __init__(
         self,
         db: Session,
@@ -128,7 +135,8 @@ class ActivityManager:
         content_id: Optional[UUID] = None,
         target_user_id: Optional[UUID] = None
     ) -> Dict[str, Any]:
-        """        Log client activity with comprehensive tracking.
+        """
+        Log client activity with comprehensive tracking.
         
         Args:
             client_id: Client performing the activity
@@ -141,7 +149,8 @@ class ActivityManager:
             
         Returns:
             Logged activity information
-        """        try:
+        """
+        try:
             # Determine activity category
             category = self._categorize_activity(activity_type)
             
@@ -206,7 +215,8 @@ class ActivityManager:
         client_id: UUID,
         session_data: SessionData
     ) -> Dict[str, Any]:
-        """        Start new client session with tracking.
+        """
+        Start new client session with tracking.
         
         Args:
             client_id: Client identifier
@@ -214,7 +224,8 @@ class ActivityManager:
             
         Returns:
             Session information
-        """        try:
+        """
+        try:
             # Check for existing active session
             existing_session = self.db.query(SessionLog).filter(
                 SessionLog.client_id == client_id,
@@ -288,14 +299,16 @@ class ActivityManager:
             raise ActivityServiceError("Failed to start session") from e
             
     async def end_session(self, session_id: UUID) -> Dict[str, Any]:
-        """        End client session with duration tracking.
+        """
+        End client session with duration tracking.
         
         Args:
             session_id: Session identifier
             
         Returns:
             Session summary
-        """        try:
+        """
+        try:
             session = self.db.query(SessionLog).filter(
                 SessionLog.session_id == session_id
             ).first()
@@ -358,7 +371,8 @@ class ActivityManager:
         session_data: Optional[SessionData] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Track content interaction with detailed analytics.
+        """
+        Track content interaction with detailed analytics.
         
         Args:
             client_id: Client performing interaction
@@ -369,7 +383,8 @@ class ActivityManager:
             
         Returns:
             Interaction tracking result
-        """        try:
+        """
+        try:
             # Create interaction record
             interaction = ContentInteraction(
                 client_id=client_id,
@@ -430,7 +445,8 @@ class ActivityManager:
         page: int = 1,
         limit: int = 50
     ) -> Dict[str, Any]:
-        """        Get paginated activity timeline for client.
+        """
+        Get paginated activity timeline for client.
         
         Args:
             client_id: Client identifier
@@ -440,7 +456,8 @@ class ActivityManager:
             
         Returns:
             Paginated activity timeline
-        """        try:
+        """
+        try:
             query = self.db.query(ClientActivity).filter(
                 ClientActivity.client_id == client_id
             )
@@ -517,7 +534,8 @@ class ActivityManager:
         client_id: UUID,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """        Get activity statistics and insights for client.
+        """
+        Get activity statistics and insights for client.
         
         Args:
             client_id: Client identifier
@@ -525,7 +543,8 @@ class ActivityManager:
             
         Returns:
             Activity statistics and insights
-        """        try:
+        """
+        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
             
@@ -625,7 +644,8 @@ class ActivityManager:
             raise ActivityServiceError("Failed to generate activity statistics") from e
             
     def _categorize_activity(self, activity_type: ActivityType) -> ActivityCategory:
-        """Categorize activity type."""        category_mapping = {
+        """Categorize activity type."""
+        category_mapping = {
             ActivityType.LOGIN: ActivityCategory.AUTHENTICATION,
             ActivityType.LOGOUT: ActivityCategory.AUTHENTICATION,
             ActivityType.CONTENT_UPLOAD: ActivityCategory.CONTENT_MANAGEMENT,
@@ -642,7 +662,8 @@ class ActivityManager:
         return category_mapping.get(activity_type, ActivityCategory.CONTENT_MANAGEMENT)
         
     async def _update_activity_cache(self, client_id: UUID, activity: ClientActivity) -> None:
-        """Update real-time activity cache."""        cache_key = f"recent_activity:{client_id}"
+        """Update real-time activity cache."""
+        cache_key = f"recent_activity:{client_id}"
         recent_activities = await self.redis_cache.get(cache_key) or []
         
         # Add new activity to front of list
@@ -663,11 +684,13 @@ class ActivityManager:
         )
         
     async def _process_security_activity(self, activity: ClientActivity) -> None:
-        """Process security-relevant activities."""        # Implementation would check for suspicious patterns
+        """Process security-relevant activities."""
+        # Implementation would check for suspicious patterns
         pass
         
     async def _update_engagement_metrics(self, activity: ClientActivity) -> None:
-        """Update engagement metrics for activity."""        if activity.content_id:
+        """Update engagement metrics for activity."""
+        if activity.content_id:
             await self.engagement_analytics.record_activity(
                 content_id=activity.content_id,
                 activity_type=activity.activity_type.value
@@ -678,7 +701,8 @@ class ActivityManager:
         content_id: UUID,
         interaction_type: InteractionType
     ) -> None:
-        """Update real-time engagement metrics."""        cache_key = f"engagement:{content_id}"
+        """Update real-time engagement metrics."""
+        cache_key = f"engagement:{content_id}"
         engagement_data = await self.redis_cache.get(cache_key) or {}
         
         # Increment interaction counter
@@ -691,7 +715,8 @@ class ActivityManager:
         )
         
     async def _parse_user_agent(self, user_agent: str) -> Dict[str, str]:
-        """Parse user agent string for device and browser info."""        # Implementation would parse user agent
+        """Parse user agent string for device and browser info."""
+        # Implementation would parse user agent
         return {
             "device_type": "desktop",
             "browser": "unknown",

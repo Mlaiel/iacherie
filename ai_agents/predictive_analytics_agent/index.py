@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This module index and integration framework are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional
@@ -39,7 +40,8 @@ from .realtime_monitoring import MonitoringAlert, RealTimeMetrics
 logger = logging.getLogger(__name__)
 
 class PredictiveAnalyticsModule:
-    """    Enterprise Predictive Analytics Module - Central Integration Hub
+    """
+    Enterprise Predictive Analytics Module - Central Integration Hub
     
     Complete predictive analytics ecosystem for IA Influencer Platform providing:
     
@@ -66,9 +68,11 @@ class PredictiveAnalyticsModule:
     - Advanced security with role-based access control
     - Multi-tenant architecture with resource isolation
     - Professional reporting and dashboard integration
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize the complete predictive analytics module"""        
+        """Initialize the complete predictive analytics module"""
+        
         self.config = config or {}
         self.module_info = MODULE_METADATA
         
@@ -109,7 +113,8 @@ class PredictiveAnalyticsModule:
         logger.info(f"Components loaded: {list(self.components.keys())}")
     
     def _setup_logging(self):
-        """Setup enterprise-grade logging configuration"""        logging.basicConfig(
+        """Setup enterprise-grade logging configuration"""
+        logging.basicConfig(
             level=logging.INFO,
             format='%(asctime)s - %(name)s - %(levelname)s - [PredictiveAnalytics] %(message)s',
             handlers=[
@@ -122,7 +127,8 @@ class PredictiveAnalyticsModule:
                                       creator_id: str, 
                                       creator_data: Dict[str, Any],
                                       analysis_type: str = "comprehensive") -> Dict[str, Any]:
-        """        Perform complete predictive analytics analysis for a creator
+        """
+        Perform complete predictive analytics analysis for a creator
         
         Args:
             creator_id: Unique identifier for the creator
@@ -131,7 +137,8 @@ class PredictiveAnalyticsModule:
             
         Returns:
             Dict[str, Any]: Complete analysis results from all components
-        """        try:
+        """
+        try:
             logger.info(f"Starting {analysis_type} analysis for creator {creator_id}")
             
             analysis_results = {
@@ -262,7 +269,8 @@ class PredictiveAnalyticsModule:
     async def quick_insights(self, 
                            creator_id: str, 
                            creator_data: Dict[str, Any]) -> Dict[str, Any]:
-        """        Generate quick insights for immediate decision making
+        """
+        Generate quick insights for immediate decision making
         
         Args:
             creator_id: Unique identifier for the creator
@@ -270,7 +278,8 @@ class PredictiveAnalyticsModule:
             
         Returns:
             Dict[str, Any]: Quick insights and recommendations
-        """        try:
+        """
+        try:
             logger.info(f"Generating quick insights for creator {creator_id}")
             
             insights = {
@@ -339,7 +348,8 @@ class PredictiveAnalyticsModule:
             }
     
     def get_module_status(self) -> Dict[str, Any]:
-        """Get comprehensive module status and health information"""        
+        """Get comprehensive module status and health information"""
+        
         component_status = {}
         for name, component in self.components.items():
             try:
@@ -370,7 +380,8 @@ class PredictiveAnalyticsModule:
         }
     
     def get_supported_features(self) -> Dict[str, List[str]]:
-        """Get list of all supported features by component"""        
+        """Get list of all supported features by component"""
+        
         return {
             'predictive_forecasting': [
                 'Ensemble ML forecasting',
@@ -419,7 +430,8 @@ class PredictiveAnalyticsModule:
     async def _generate_executive_summary(self, 
                                         creator_id: str, 
                                         analysis_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate executive summary of analysis results"""        
+        """Generate executive summary of analysis results"""
+        
         try:
             # Extract key metrics
             overall_scores = analysis_results.get('overall_scores', {})
@@ -468,7 +480,8 @@ class PredictiveAnalyticsModule:
             }
     
     def _calculate_growth_potential(self, analysis_results: Dict[str, Any]) -> float:
-        """Calculate overall growth potential score"""        
+        """Calculate overall growth potential score"""
+        
         try:
             # Weight different factors
             performance_score = analysis_results.get('overall_scores', {}).get('performance_score', 0.0)
@@ -488,7 +501,8 @@ class PredictiveAnalyticsModule:
             return 0.5  # Default neutral score
     
     async def _get_current_performance_status(self, creator_data: Dict[str, Any]) -> Dict[str, str]:
-        """Get current performance status indicators"""        
+        """Get current performance status indicators"""
+        
         engagement_rate = creator_data.get('engagement_rate', 0.0)
         growth_rate = creator_data.get('follower_growth_rate', 0.0)
         
@@ -507,23 +521,27 @@ predictive_analytics_module = PredictiveAnalyticsModule()
 
 # Convenience functions for direct access
 async def analyze_creator(creator_id: str, creator_data: Dict[str, Any], analysis_type: str = "comprehensive"):
-    """Direct access function for creator analysis"""    return await predictive_analytics_module.complete_creator_analysis(
+    """Direct access function for creator analysis"""
+    return await predictive_analytics_module.complete_creator_analysis(
         creator_id=creator_id,
         creator_data=creator_data,
         analysis_type=analysis_type
     )
 
 async def get_quick_insights(creator_id: str, creator_data: Dict[str, Any]):
-    """Direct access function for quick insights"""    return await predictive_analytics_module.quick_insights(
+    """Direct access function for quick insights"""
+    return await predictive_analytics_module.quick_insights(
         creator_id=creator_id,
         creator_data=creator_data
     )
 
 def get_module_info():
-    """Get module information and status"""    return predictive_analytics_module.get_module_status()
+    """Get module information and status"""
+    return predictive_analytics_module.get_module_status()
 
 def get_features():
-    """Get supported features list"""    return predictive_analytics_module.get_supported_features()
+    """Get supported features list"""
+    return predictive_analytics_module.get_supported_features()
 
 # Export everything for external usage
 __all__ = [
@@ -553,7 +571,8 @@ __all__ = [
 
 # Module initialization message
 if __name__ == "__main__":
-    print(f"""    🚀 Predictive Analytics Module v{MODULE_METADATA['version']}
+    print(f"""
+    🚀 Predictive Analytics Module v{MODULE_METADATA['version']}
     📧 Contact: {MODULE_METADATA['contact']}
     🔒 {MODULE_METADATA['license']}
     

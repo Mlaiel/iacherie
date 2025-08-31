@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""import logging
+"""
+import logging
 from typing import List, Dict, Any, Optional, Tuple, Set
 from datetime import datetime, timezone, timedelta
 from decimal import Decimal
@@ -48,11 +49,13 @@ logger = logging.getLogger(__name__)
 
 
 class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
-    """    Enterprise Advanced Team Collaboration Repository
+    """
+    Enterprise Advanced Team Collaboration Repository
     
     Manages creator collaborations, intelligent team matching, and
     comprehensive project coordination for content creators.
-    """    
+    """
+    
     def __init__(self, db_session: Session):
         super().__init__(CreatorCollaboration, db_session)
         self.model = CreatorCollaboration
@@ -66,7 +69,8 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
         required_skills: List[str],
         **kwargs
     ) -> CreatorCollaboration:
-        """        Create new creator collaboration project
+        """
+        Create new creator collaboration project
         
         Args:
             initiator_user_id: User UUID of collaboration initiator
@@ -78,7 +82,8 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
             
         Returns:
             Created CreatorCollaboration instance
-        """        try:
+        """
+        try:
             collaboration_data = {
                 "initiator_user_id": initiator_user_id,
                 "collaboration_title": collaboration_title,
@@ -125,7 +130,8 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
         skills_offered: Optional[List[str]] = None,
         auto_approved: bool = False
     ) -> CollaborationTeamMember:
-        """        Add team member to collaboration
+        """
+        Add team member to collaboration
         
         Args:
             collaboration_id: CreatorCollaboration UUID
@@ -136,7 +142,8 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
             
         Returns:
             Created CollaborationTeamMember instance
-        """        try:
+        """
+        try:
             # Check if collaboration exists and has space
             collaboration = await self.get_by_id(collaboration_id)
             if not collaboration:
@@ -196,7 +203,8 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
         approved_by_user_id: str,
         contribution_percentage: float = 0.0
     ) -> CollaborationTeamMember:
-        """        Approve team member for collaboration
+        """
+        Approve team member for collaboration
         
         Args:
             member_id: CollaborationTeamMember UUID
@@ -205,7 +213,8 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
             
         Returns:
             Updated CollaborationTeamMember instance
-        """        try:
+        """
+        try:
             team_member = self.db_session.query(CollaborationTeamMember).filter(
                 CollaborationTeamMember.id == member_id
             ).first()
@@ -238,7 +247,8 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
             raise
     
     def _is_team_leader(self, collaboration_id: str, user_id: str) -> bool:
-        """Check if user is a team leader in the collaboration"""        leader = self.db_session.query(CollaborationTeamMember).filter(
+        """Check if user is a team leader in the collaboration"""
+        leader = self.db_session.query(CollaborationTeamMember).filter(
             and_(
                 CollaborationTeamMember.collaboration_id == collaboration_id,
                 CollaborationTeamMember.user_id == user_id,
@@ -258,7 +268,8 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
         collaboration_history_score: float,
         **kwargs
     ) -> AICollaborationMatch:
-        """        Create AI-powered collaboration match
+        """
+        Create AI-powered collaboration match
         
         Args:
             user_id: User UUID
@@ -271,7 +282,8 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
             
         Returns:
             Created AICollaborationMatch instance
-        """        try:
+        """
+        try:
             # Calculate overall match score
             weights = kwargs.get('score_weights', {
                 'compatibility': 0.4,
@@ -320,7 +332,8 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
         collaboration_types: Optional[List[CollaborationType]] = None,
         limit: int = 20
     ) -> List[Dict[str, Any]]:
-        """        Get AI-powered collaboration matches for a user
+        """
+        Get AI-powered collaboration matches for a user
         
         Args:
             user_id: User UUID
@@ -330,7 +343,8 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
             
         Returns:
             List of collaboration matches with details
-        """        try:
+        """
+        try:
             query = self.db_session.query(
                 AICollaborationMatch,
                 CreatorCollaboration
@@ -408,7 +422,8 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
         updated_by_user_id: str,
         status_reason: Optional[str] = None
     ) -> CreatorCollaboration:
-        """        Update collaboration status
+        """
+        Update collaboration status
         
         Args:
             collaboration_id: CreatorCollaboration UUID
@@ -418,7 +433,8 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
             
         Returns:
             Updated CreatorCollaboration instance
-        """        try:
+        """
+        try:
             collaboration = await self.get_by_id(collaboration_id)
             if not collaboration:
                 raise ValueError(f"Collaboration not found: {collaboration_id}")
@@ -465,7 +481,8 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
         collaboration_id: str,
         total_revenue: Decimal
     ) -> Dict[str, Dict[str, Any]]:
-        """        Calculate revenue distribution among team members
+        """
+        Calculate revenue distribution among team members
         
         Args:
             collaboration_id: CreatorCollaboration UUID
@@ -473,7 +490,8 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
             
         Returns:
             Dictionary containing revenue distribution details
-        """        try:
+        """
+        try:
             collaboration = await self.get_by_id(collaboration_id)
             if not collaboration:
                 raise ValueError(f"Collaboration not found: {collaboration_id}")
@@ -582,7 +600,8 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
         limit: int = 50,
         include_current: bool = True
     ) -> Dict[str, Any]:
-        """        Get comprehensive collaboration history for a user
+        """
+        Get comprehensive collaboration history for a user
         
         Args:
             user_id: User UUID
@@ -591,7 +610,8 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
             
         Returns:
             Dictionary containing collaboration history and statistics
-        """        try:
+        """
+        try:
             # Get user's team memberships
             query = self.db_session.query(
                 CollaborationTeamMember,
@@ -702,7 +722,8 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
         limit: int = 20,
         collaboration_types: Optional[List[CollaborationType]] = None
     ) -> List[Dict[str, Any]]:
-        """        Get trending collaboration opportunities based on activity and success metrics
+        """
+        Get trending collaboration opportunities based on activity and success metrics
         
         Args:
             limit: Maximum number of opportunities to return
@@ -710,7 +731,8 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
             
         Returns:
             List of trending collaboration opportunities
-        """        try:
+        """
+        try:
             # Get recent open collaborations with activity metrics
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=30)
             

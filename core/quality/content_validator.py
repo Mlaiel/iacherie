@@ -10,7 +10,8 @@ Protection readiness → SEO optimization → Monetization scoring
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 from datetime import datetime, timezone
@@ -44,7 +45,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Supported content types for validation"""    AUDIO = "audio"
+    """Supported content types for validation"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -54,7 +56,8 @@ class ContentType(Enum):
 
 
 class QualityLevel(Enum):
-    """Content quality assessment levels"""    EXCELLENT = "excellent"
+    """Content quality assessment levels"""
+    EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
     POOR = "poor"
@@ -62,7 +65,8 @@ class QualityLevel(Enum):
 
 
 class ValidationSeverity(Enum):
-    """Validation issue severity levels"""    INFO = "info"
+    """Validation issue severity levels"""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -70,7 +74,8 @@ class ValidationSeverity(Enum):
 
 @dataclass
 class QualityIssue:
-    """Individual quality issue with detailed information"""    severity: ValidationSeverity
+    """Individual quality issue with detailed information"""
+    severity: ValidationSeverity
     category: str
     message: str
     code: str
@@ -81,7 +86,8 @@ class QualityIssue:
 
 @dataclass
 class QualityScore:
-    """Comprehensive quality scoring"""    overall: float  # 0-100
+    """Comprehensive quality scoring"""
+    overall: float  # 0-100
     technical: float  # Technical quality metrics
     content: float  # Content quality metrics
     seo: float  # SEO readiness score
@@ -103,7 +109,8 @@ class QualityScore:
 
 @dataclass
 class ValidationResult:
-    """Comprehensive content validation result"""    content_id: str
+    """Comprehensive content validation result"""
+    content_id: str
     content_type: ContentType
     quality_score: QualityScore
     issues: List[QualityIssue] = field(default_factory=list)
@@ -114,7 +121,8 @@ class ValidationResult:
     
     def add_issue(self, severity: ValidationSeverity, category: str, 
                   message: str, code: str, suggestions: List[str] = None):
-        """Add a quality issue to the result"""        issue = QualityIssue(
+        """Add a quality issue to the result"""
+        issue = QualityIssue(
             severity=severity,
             category=category,
             message=message,
@@ -124,15 +132,18 @@ class ValidationResult:
         self.issues.append(issue)
     
     def get_critical_issues(self) -> List[QualityIssue]:
-        """Get all critical issues"""        return [issue for issue in self.issues if issue.severity == ValidationSeverity.CRITICAL]
+        """Get all critical issues"""
+        return [issue for issue in self.issues if issue.severity == ValidationSeverity.CRITICAL]
     
     def has_blocking_issues(self) -> bool:
-        """Check if there are any blocking issues"""        return any(issue.severity in [ValidationSeverity.CRITICAL, ValidationSeverity.ERROR] 
+        """Check if there are any blocking issues"""
+        return any(issue.severity in [ValidationSeverity.CRITICAL, ValidationSeverity.ERROR] 
                   for issue in self.issues)
 
 
 class AudioQualityAnalyzer:
-    """Advanced audio content quality analysis"""    
+    """Advanced audio content quality analysis"""
+    
     def __init__(self):
         self.min_duration = 10.0  # seconds
         self.max_duration = 3600.0  # 1 hour
@@ -140,7 +151,8 @@ class AudioQualityAnalyzer:
         self.preferred_sample_rate = 44100
         
     def analyze_audio_quality(self, file_path: Path, result: ValidationResult):
-        """Analyze audio quality metrics"""        if not MULTIMEDIA_AVAILABLE:
+        """Analyze audio quality metrics"""
+        if not MULTIMEDIA_AVAILABLE:
             result.add_issue(
                 ValidationSeverity.WARNING,
                 "dependencies",
@@ -234,14 +246,16 @@ class AudioQualityAnalyzer:
 
 
 class ImageQualityAnalyzer:
-    """Advanced image content quality analysis"""    
+    """Advanced image content quality analysis"""
+    
     def __init__(self):
         self.min_resolution = (720, 480)  # 720p minimum
         self.preferred_resolution = (1920, 1080)  # 1080p preferred
         self.max_file_size = 10 * 1024 * 1024  # 10MB
         
     def analyze_image_quality(self, file_path: Path, result: ValidationResult):
-        """Analyze image quality metrics"""        try:
+        """Analyze image quality metrics"""
+        try:
             with Image.open(file_path) as img:
                 width, height = img.size
                 file_size = file_path.stat().st_size
@@ -327,14 +341,16 @@ class ImageQualityAnalyzer:
 
 
 class TextQualityAnalyzer:
-    """Advanced text content quality analysis"""    
+    """Advanced text content quality analysis"""
+    
     def __init__(self):
         self.min_length = 50  # characters
         self.max_length = 10000  # characters for social posts
         self.min_words = 10
         
     def analyze_text_quality(self, content: str, result: ValidationResult):
-        """Analyze text quality metrics"""        try:
+        """Analyze text quality metrics"""
+        try:
             # Basic length validation
             content_length = len(content.strip())
             word_count = len(content.split())
@@ -415,7 +431,8 @@ class TextQualityAnalyzer:
 
 
 class ContentQualityValidator:
-    """Enterprise content quality validation system"""    
+    """Enterprise content quality validation system"""
+    
     def __init__(self):
         self.audio_analyzer = AudioQualityAnalyzer()
         self.image_analyzer = ImageQualityAnalyzer()
@@ -427,7 +444,8 @@ class ContentQualityValidator:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ValidationResult:
-        """Validate content quality comprehensively"""        start_time = time.time()
+        """Validate content quality comprehensively"""
+        start_time = time.time()
         
         # Generate content ID
         if isinstance(content, Path):
@@ -481,7 +499,8 @@ class ContentQualityValidator:
         return result
     
     def _calculate_quality_scores(self, result: ValidationResult):
-        """Calculate comprehensive quality scores"""        # Base scores
+        """Calculate comprehensive quality scores"""
+        # Base scores
         base_technical = 100.0
         base_content = 100.0
         base_seo = 80.0
@@ -542,7 +561,8 @@ class ContentQualityValidator:
         )
     
     def _generate_recommendations(self, result: ValidationResult):
-        """Generate quality improvement recommendations"""        recommendations = []
+        """Generate quality improvement recommendations"""
+        recommendations = []
         
         # Score-based recommendations
         if result.quality_score.technical < 70:
@@ -573,7 +593,8 @@ class ContentQualityValidator:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ValidationResult:
-        """Asynchronous content validation"""        loop = asyncio.get_event_loop()
+        """Asynchronous content validation"""
+        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             None, self.validate_content, content, content_type, metadata
         )
@@ -583,7 +604,8 @@ class ContentQualityValidator:
         contents: List[Tuple[Union[str, Path], ContentType]],
         metadata_list: Optional[List[Dict[str, Any]]] = None
     ) -> List[ValidationResult]:
-        """Validate multiple contents in batch"""        results = []
+        """Validate multiple contents in batch"""
+        results = []
         metadata_list = metadata_list or [None] * len(contents)
         
         for i, (content, content_type) in enumerate(contents):

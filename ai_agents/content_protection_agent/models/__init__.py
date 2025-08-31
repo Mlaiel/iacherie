@@ -1,4 +1,6 @@
-"""Protection Models Package - Common data structures for protection agents"""from .protection_models import (
+"""Protection Models Package - Common data structures for protection agents"""
+
+from .protection_models import (
     ContentType,
     ViolationSeverity,
     ProtectionStatus,

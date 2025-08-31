@@ -3,7 +3,8 @@
 
 Auteur: Fahed Mlaiel (mlaiel@live.de)
 Copyright © 2025 Fahed Mlaiel - Tous droits réservés
-"""import sys
+"""
+import sys
 import warnings
 import importlib
 
@@ -11,7 +12,8 @@ import importlib
 warnings.filterwarnings('ignore')
 
 def test_direct_config_imports():
-    """Test direct des classes de configuration sans passer par les modules problématiques"""    print("🔍 Test direct des configurations principales...")
+    """Test direct des classes de configuration sans passer par les modules problématiques"""
+    print("🔍 Test direct des configurations principales...")
     
     try:
         # Test des imports directs
@@ -36,7 +38,8 @@ def test_direct_config_imports():
         return False
 
 def test_core_dependencies():
-    """Test des dépendances core essentielles"""    print("\n🔍 Test des dépendances essentielles...")
+    """Test des dépendances core essentielles"""
+    print("\n🔍 Test des dépendances essentielles...")
     
     essential_deps = [
         'azure.cognitiveservices.speech',
@@ -67,7 +70,8 @@ def test_core_dependencies():
     return success_count == len(essential_deps)
 
 def main():
-    """Fonction principale de vérification"""    print("=" * 70)
+    """Fonction principale de vérification"""
+    print("=" * 70)
     print("🚀 VÉRIFICATION DU MODULE IA-INFLUENCER-AGENT CONFIG")
     print("=" * 70)
     print("Auteur: Fahed Mlaiel (mlaiel@live.de)")

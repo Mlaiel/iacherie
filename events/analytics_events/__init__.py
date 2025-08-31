@@ -11,7 +11,9 @@ Copyright: Fahed Mlaiel - All rights reserved
 
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
-"""from .audience_engagement_events import (
+"""
+
+from .audience_engagement_events import (
     AudienceEngagementEventHandler,
     AudienceEngagementTracker,
     AudienceInteractionAnalyzer,

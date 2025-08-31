@@ -11,7 +11,8 @@ Copyright: Fahed Mlaiel - All rights reserved
 
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import time
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class EngagementAnalyticsEventHandler(BaseAnalyticsEventHandler):
-    """Ultra-advanced engagement analytics event handler"""    
+    """Ultra-advanced engagement analytics event handler"""
+    
     def __init__(self, **kwargs):
         super().__init__(name="engagement_analytics", **kwargs)
         self.engagement_tracker = EngagementTracker()
@@ -43,7 +45,8 @@ class EngagementAnalyticsEventHandler(BaseAnalyticsEventHandler):
         self.trend_detector = TrendDetector()
     
     async def process_event(self, event: AnalyticsEvent) -> Dict[str, Any]:
-        """Process engagement analytics event"""        try:
+        """Process engagement analytics event"""
+        try:
             # Extract engagement data
             engagement_data = event.data
             
@@ -72,7 +75,8 @@ class EngagementAnalyticsEventHandler(BaseAnalyticsEventHandler):
             raise
     
     async def validate_event(self, event: AnalyticsEvent) -> bool:
-        """Validate engagement event"""        required_fields = ['user_id', 'content_id', 'engagement_type', 'platform']
+        """Validate engagement event"""
+        required_fields = ['user_id', 'content_id', 'engagement_type', 'platform']
         
         for field in required_fields:
             if field not in event.data:
@@ -89,7 +93,8 @@ class EngagementAnalyticsEventHandler(BaseAnalyticsEventHandler):
 
 
 class EngagementTracker:
-    """Advanced engagement tracking with real-time metrics"""    
+    """Advanced engagement tracking with real-time metrics"""
+    
     def __init__(self):
         self.metrics_cache = {}
         self.engagement_history = []
@@ -103,7 +108,8 @@ class EngagementTracker:
         }
     
     async def track_engagement(self, engagement_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Track engagement metrics with advanced analytics"""        try:
+        """Track engagement metrics with advanced analytics"""
+        try:
             user_id = engagement_data['user_id']
             content_id = engagement_data['content_id']
             engagement_type = engagement_data['engagement_type']
@@ -160,7 +166,8 @@ class EngagementTracker:
             return {'error': str(e)}
     
     async def _calculate_engagement_score(self, data: Dict[str, Any]) -> float:
-        """Calculate weighted engagement score"""        engagement_type = data['engagement_type']
+        """Calculate weighted engagement score"""
+        engagement_type = data['engagement_type']
         platform = data['platform']
         
         # Base scores for different engagement types
@@ -187,7 +194,8 @@ class EngagementTracker:
         return round(engagement_score, 2)
     
     async def _calculate_engagement_velocity(self, content_id: str, timestamp: str) -> float:
-        """Calculate engagement velocity (engagements per minute)"""        current_time = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
+        """Calculate engagement velocity (engagements per minute)"""
+        current_time = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
         
         # Get recent engagements for this content
         recent_engagements = [
@@ -206,7 +214,8 @@ class EngagementTracker:
         return round(velocity, 2)
     
     async def _calculate_reach_metrics(self, data: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate reach and impression metrics"""        # Mock calculation - in real implementation would use platform APIs
+        """Calculate reach and impression metrics"""
+        # Mock calculation - in real implementation would use platform APIs
         base_reach = 1000  # Base reach estimate
         
         # Apply platform multipliers
@@ -232,7 +241,8 @@ class EngagementTracker:
         }
     
     async def _analyze_sentiment(self, data: Dict[str, Any]) -> float:
-        """Analyze sentiment of engagement (if comment/text available)"""        comment_text = data.get('comment_text', '')
+        """Analyze sentiment of engagement (if comment/text available)"""
+        comment_text = data.get('comment_text', '')
         
         if not comment_text:
             return 0.5  # Neutral sentiment for non-text engagements
@@ -252,7 +262,8 @@ class EngagementTracker:
         return round(sentiment_score, 2)
     
     async def _calculate_virality_score(self, data: Dict[str, Any]) -> float:
-        """Calculate virality potential score"""        engagement_type = data['engagement_type']
+        """Calculate virality potential score"""
+        engagement_type = data['engagement_type']
         platform = data['platform']
         
         # Virality weights
@@ -283,7 +294,8 @@ class EngagementTracker:
         return round(min(virality_score, 100.0), 2)  # Cap at 100
     
     async def _calculate_time_decay_factor(self, timestamp: str) -> float:
-        """Calculate time decay factor for engagement scoring"""        if not timestamp:
+        """Calculate time decay factor for engagement scoring"""
+        if not timestamp:
             return 1.0
         
         current_time = datetime.now(timezone.utc)
@@ -296,7 +308,8 @@ class EngagementTracker:
         return max(decay_factor, 0.1)  # Minimum factor of 0.1
     
     async def _calculate_content_quality_factor(self, data: Dict[str, Any]) -> float:
-        """Calculate content quality factor based on available data"""        quality_factors = []
+        """Calculate content quality factor based on available data"""
+        quality_factors = []
         
         # Check for metadata indicators of quality
         if 'content_duration' in data:
@@ -329,7 +342,8 @@ class EngagementTracker:
         return 1.0
     
     async def _calculate_time_boost(self, timestamp: str) -> float:
-        """Calculate time-based boost for recent content"""        if not timestamp:
+        """Calculate time-based boost for recent content"""
+        if not timestamp:
             return 1.0
         
         current_time = datetime.now(timezone.utc)
@@ -346,7 +360,8 @@ class EngagementTracker:
             return 1.0
     
     async def _calculate_engagement_rate(self, content_id: str) -> float:
-        """Calculate overall engagement rate for content"""        content_engagements = [e for e in self.engagement_history if e['content_id'] == content_id]
+        """Calculate overall engagement rate for content"""
+        content_engagements = [e for e in self.engagement_history if e['content_id'] == content_id]
         
         if not content_engagements:
             return 0.0
@@ -361,7 +376,8 @@ class EngagementTracker:
         return round(engagement_rate, 2)
     
     async def _get_top_performing_content(self, user_id: str, limit: int = 5) -> List[Dict[str, Any]]:
-        """Get top performing content for user"""        user_engagements = [e for e in self.engagement_history if e['user_id'] == user_id]
+        """Get top performing content for user"""
+        user_engagements = [e for e in self.engagement_history if e['user_id'] == user_id]
         
         # Group by content_id and calculate total engagement scores
         content_scores = {}
@@ -394,7 +410,8 @@ class EngagementTracker:
         ]
     
     async def _get_engagement_trends(self, user_id: str) -> Dict[str, Any]:
-        """Get engagement trends for user"""        user_engagements = [e for e in self.engagement_history if e['user_id'] == user_id]
+        """Get engagement trends for user"""
+        user_engagements = [e for e in self.engagement_history if e['user_id'] == user_id]
         
         if len(user_engagements) < 2:
             return {'trend': 'insufficient_data'}
@@ -434,7 +451,8 @@ class EngagementTracker:
         }
     
     async def _update_metrics_cache(self, user_id: str, content_id: str, engagement_record: Dict[str, Any]) -> None:
-        """Update metrics cache for faster retrieval"""        cache_key = f"{user_id}:{content_id}"
+        """Update metrics cache for faster retrieval"""
+        cache_key = f"{user_id}:{content_id}"
         
         if cache_key not in self.metrics_cache:
             self.metrics_cache[cache_key] = {
@@ -456,7 +474,8 @@ class EngagementTracker:
 
 
 class EngagementPredictor:
-    """ML-powered engagement prediction engine"""    
+    """ML-powered engagement prediction engine"""
+    
     def __init__(self):
         self.model = None
         self.scaler = StandardScaler()
@@ -467,7 +486,8 @@ class EngagementPredictor:
         ]
     
     async def predict_engagement(self, engagement_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict engagement metrics"""        try:
+        """Predict engagement metrics"""
+        try:
             if not self.is_trained:
                 await self._train_model()
             
@@ -495,7 +515,8 @@ class EngagementPredictor:
             return {'error': str(e)}
     
     async def _train_model(self) -> None:
-        """Train engagement prediction model"""        # Mock training data (in production, use real historical data)
+        """Train engagement prediction model"""
+        # Mock training data (in production, use real historical data)
         training_data = await self._generate_training_data()
         
         if len(training_data) < 100:
@@ -534,7 +555,8 @@ class EngagementPredictor:
         self.is_trained = True
     
     async def _extract_features(self, data: Dict[str, Any]) -> Dict[str, float]:
-        """Extract features for prediction"""        timestamp = data.get('timestamp', datetime.now(timezone.utc).isoformat())
+        """Extract features for prediction"""
+        timestamp = data.get('timestamp', datetime.now(timezone.utc).isoformat())
         dt = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
         
         # Platform encoding
@@ -563,7 +585,8 @@ class EngagementPredictor:
         return features
     
     async def _predict_score(self, features: Dict[str, float]) -> float:
-        """Predict engagement score"""        if not self.is_trained or self.model is None:
+        """Predict engagement score"""
+        if not self.is_trained or self.model is None:
             return 5.0  # Default prediction
         
         feature_array = np.array([[features[col] for col in self.feature_columns]])
@@ -573,7 +596,8 @@ class EngagementPredictor:
         return max(0.0, prediction)  # Ensure non-negative
     
     async def _predict_reach(self, features: Dict[str, float]) -> float:
-        """Predict potential reach"""        base_reach = features['follower_count'] * 0.1  # 10% of followers as base
+        """Predict potential reach"""
+        base_reach = features['follower_count'] * 0.1  # 10% of followers as base
         
         # Apply multipliers based on features
         platform_multiplier = {
@@ -591,7 +615,8 @@ class EngagementPredictor:
         return predicted_reach
     
     async def _predict_virality(self, features: Dict[str, float]) -> float:
-        """Predict virality potential"""        base_virality = 10.0
+        """Predict virality potential"""
+        base_virality = 10.0
         
         # Platform virality potential
         platform_virality = {
@@ -615,7 +640,8 @@ class EngagementPredictor:
         return min(virality_score, 100.0)  # Cap at 100
     
     async def _calculate_confidence_intervals(self, features: Dict[str, float]) -> Dict[str, List[float]]:
-        """Calculate prediction confidence intervals"""        # Mock confidence intervals (in production, use model uncertainty)
+        """Calculate prediction confidence intervals"""
+        # Mock confidence intervals (in production, use model uncertainty)
         base_prediction = await self._predict_score(features)
         uncertainty = base_prediction * 0.2  # 20% uncertainty
         
@@ -628,7 +654,8 @@ class EngagementPredictor:
         }
     
     async def _generate_recommendations(self, features: Dict[str, float], predicted_score: float) -> List[str]:
-        """Generate optimization recommendations"""        recommendations = []
+        """Generate optimization recommendations"""
+        recommendations = []
         
         # Time-based recommendations
         current_hour = features['hour_of_day']
@@ -658,7 +685,8 @@ class EngagementPredictor:
         return recommendations
     
     async def _generate_training_data(self) -> List[Dict[str, Any]]:
-        """Generate mock training data for model training"""        training_data = []
+        """Generate mock training data for model training"""
+        training_data = []
         
         for i in range(1000):
             # Generate realistic training samples
@@ -704,13 +732,15 @@ class EngagementPredictor:
 
 
 class SocialMediaAnalyzer:
-    """Advanced social media pattern analysis"""    
+    """Advanced social media pattern analysis"""
+    
     def __init__(self):
         self.platform_patterns = {}
         self.trend_cache = {}
     
     async def analyze_engagement_patterns(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze social media engagement patterns"""        try:
+        """Analyze social media engagement patterns"""
+        try:
             platform = data.get('platform', 'unknown')
             
             # Platform-specific analysis
@@ -737,7 +767,8 @@ class SocialMediaAnalyzer:
             return {'error': str(e)}
     
     async def _analyze_platform_patterns(self, platform: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze platform-specific engagement patterns"""        platform_insights = {
+        """Analyze platform-specific engagement patterns"""
+        platform_insights = {
             'youtube': {
                 'optimal_length': '8-12 minutes',
                 'best_thumbnails': 'bright, high-contrast',
@@ -776,7 +807,8 @@ class SocialMediaAnalyzer:
         })
     
     async def _analyze_temporal_patterns(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze temporal engagement patterns"""        timestamp = data.get('timestamp', datetime.now(timezone.utc).isoformat())
+        """Analyze temporal engagement patterns"""
+        timestamp = data.get('timestamp', datetime.now(timezone.utc).isoformat())
         dt = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
         
         # Time-based insights
@@ -813,7 +845,8 @@ class SocialMediaAnalyzer:
         }
     
     async def _analyze_content_patterns(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content-specific patterns"""        content_type = data.get('content_type', 'unknown')
+        """Analyze content-specific patterns"""
+        content_type = data.get('content_type', 'unknown')
         content_length = data.get('content_length', 0)
         
         # Content type analysis
@@ -842,7 +875,8 @@ class SocialMediaAnalyzer:
         })
     
     async def _analyze_audience_patterns(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze audience engagement patterns"""        # Mock audience analysis (in production, use real audience data)
+        """Analyze audience engagement patterns"""
+        # Mock audience analysis (in production, use real audience data)
         user_id = data.get('user_id')
         platform = data.get('platform')
         
@@ -854,7 +888,8 @@ class SocialMediaAnalyzer:
         }
     
     async def _get_optimal_posting_time(self, platform: str) -> Dict[str, str]:
-        """Get optimal posting times for platform"""        optimal_times = {
+        """Get optimal posting times for platform"""
+        optimal_times = {
             'youtube': {'weekday': '2-4 PM', 'weekend': '9-11 AM'},
             'instagram': {'weekday': '6-8 PM', 'weekend': '10 AM-1 PM'},
             'tiktok': {'weekday': '6-10 PM', 'weekend': '9 AM-12 PM'},
@@ -865,7 +900,8 @@ class SocialMediaAnalyzer:
         return optimal_times.get(platform, {'weekday': 'Peak hours vary', 'weekend': 'Test different times'})
     
     async def _predict_time_based_engagement(self, hour: int, day_of_week: int) -> str:
-        """Predict engagement level based on time"""        # Peak engagement hours: 6-10 PM
+        """Predict engagement level based on time"""
+        # Peak engagement hours: 6-10 PM
         if 18 <= hour <= 22:
             return 'high'
         # Moderate hours: 11 AM - 2 PM, 3-6 PM
@@ -876,7 +912,8 @@ class SocialMediaAnalyzer:
             return 'low'
     
     async def _estimate_audience_size(self, user_id: str, platform: str) -> int:
-        """Estimate audience size for user"""        # Mock estimation (in production, use real follower data)
+        """Estimate audience size for user"""
+        # Mock estimation (in production, use real follower data)
         base_followers = {
             'youtube': 1000,
             'instagram': 800,
@@ -888,7 +925,8 @@ class SocialMediaAnalyzer:
         return base_followers.get(platform, 500)
     
     async def _analyze_engagement_demographics(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze engagement demographics"""        # Mock demographics analysis
+        """Analyze engagement demographics"""
+        # Mock demographics analysis
         return {
             'age_groups': {'18-24': 30, '25-34': 40, '35-44': 20, '45+': 10},
             'geographic_distribution': {'US': 40, 'Europe': 30, 'Asia': 20, 'Other': 10},
@@ -896,14 +934,16 @@ class SocialMediaAnalyzer:
         }
     
     async def _analyze_audience_activity(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze when audience is most active"""        return {
+        """Analyze when audience is most active"""
+        return {
             'peak_activity_hours': ['7-9 AM', '12-1 PM', '6-10 PM'],
             'most_active_days': ['Tuesday', 'Wednesday', 'Thursday'],
             'engagement_patterns': 'Higher engagement on weekday evenings'
         }
     
     async def _analyze_content_preferences(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze audience content preferences"""        return {
+        """Analyze audience content preferences"""
+        return {
             'preferred_content_types': ['video', 'image', 'audio'],
             'preferred_topics': ['entertainment', 'education', 'lifestyle'],
             'engagement_drivers': ['authenticity', 'entertainment_value', 'educational_content']
@@ -911,13 +951,15 @@ class SocialMediaAnalyzer:
 
 
 class TrendDetector:
-    """Advanced trend detection for engagement analytics"""    
+    """Advanced trend detection for engagement analytics"""
+    
     def __init__(self):
         self.trend_history = []
         self.pattern_cache = {}
     
     async def detect_engagement_trends(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Detect engagement trends and patterns"""        try:
+        """Detect engagement trends and patterns"""
+        try:
             # Trending hashtags/topics
             trending_analysis = await self._analyze_trending_topics(data)
             
@@ -943,7 +985,8 @@ class TrendDetector:
             return {'error': str(e)}
     
     async def _analyze_trending_topics(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze currently trending topics"""        # Mock trending topics (in production, integrate with platform APIs)
+        """Analyze currently trending topics"""
+        # Mock trending topics (in production, integrate with platform APIs)
         mock_trends = {
             'youtube': ['#Shorts', '#Tutorial', '#Gaming', '#Music', '#Vlog'],
             'instagram': ['#Reels', '#OOTD', '#Food', '#Travel', '#Fitness'],
@@ -962,7 +1005,8 @@ class TrendDetector:
         }
     
     async def _detect_viral_patterns(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Detect patterns that indicate viral potential"""        viral_indicators = {
+        """Detect patterns that indicate viral potential"""
+        viral_indicators = {
             'rapid_engagement_growth': False,
             'cross_platform_sharing': False,
             'influencer_engagement': False,
@@ -989,7 +1033,8 @@ class TrendDetector:
         }
     
     async def _analyze_platform_trends(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze platform-specific trends"""        platform = data.get('platform', 'unknown')
+        """Analyze platform-specific trends"""
+        platform = data.get('platform', 'unknown')
         
         platform_trend_data = {
             'youtube': {
@@ -1015,7 +1060,8 @@ class TrendDetector:
         })
     
     async def _analyze_seasonal_trends(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze seasonal engagement trends"""        timestamp = data.get('timestamp', datetime.now(timezone.utc).isoformat())
+        """Analyze seasonal engagement trends"""
+        timestamp = data.get('timestamp', datetime.now(timezone.utc).isoformat())
         dt = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
         
         month = dt.month
@@ -1047,7 +1093,8 @@ class TrendDetector:
         return seasonal_patterns.get(season, {})
     
     async def _calculate_trend_score(self, data: Dict[str, Any]) -> float:
-        """Calculate overall trend alignment score"""        factors = []
+        """Calculate overall trend alignment score"""
+        factors = []
         
         # Time relevance
         timestamp = data.get('timestamp', datetime.now(timezone.utc).isoformat())
@@ -1080,7 +1127,8 @@ class TrendDetector:
         return round(min(trend_score, 100.0), 2)
     
     async def _calculate_relevance_score(self, data: Dict[str, Any], trending_topics: List[str]) -> float:
-        """Calculate how relevant content is to current trends"""        # Check if content mentions trending topics
+        """Calculate how relevant content is to current trends"""
+        # Check if content mentions trending topics
         content_text = data.get('content_description', '') + ' ' + data.get('hashtags', '')
         content_text = content_text.lower()
         
@@ -1093,7 +1141,8 @@ class TrendDetector:
         return round(relevance_score, 2)
     
     async def _generate_trend_recommendations(self, trending_topics: List[str]) -> List[str]:
-        """Generate recommendations based on trends"""        recommendations = []
+        """Generate recommendations based on trends"""
+        recommendations = []
         
         if trending_topics:
             recommendations.append(f"Consider incorporating trending topics: {', '.join(trending_topics[:3])}")
@@ -1106,7 +1155,8 @@ class TrendDetector:
         return recommendations
     
     def _get_season(self, month: int) -> str:
-        """Get season based on month"""        if month in [3, 4, 5]:
+        """Get season based on month"""
+        if month in [3, 4, 5]:
             return 'spring'
         elif month in [6, 7, 8]:
             return 'summer'

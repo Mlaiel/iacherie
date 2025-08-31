@@ -8,7 +8,8 @@ Business Logic: User Upload → AI Protection → SEO → Collaboration → Dist
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""from typing import Dict, List, Any, Optional, Union, Tuple, Set
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
 import asyncio
@@ -22,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks."""    GDPR = "gdpr"
+    """Supported compliance frameworks."""
+    GDPR = "gdpr"
     CCPA = "ccpa" 
     PIPEDA = "pipeda"
     LGPD = "lgpd"
@@ -37,14 +39,16 @@ class ComplianceFramework(Enum):
 
 
 class CompliancePriority(Enum):
-    """Compliance priority levels."""    CRITICAL = "critical"
+    """Compliance priority levels."""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
 
 
 class ContentType(Enum):
-    """Content types for multi-format support."""    AUDIO = "audio"
+    """Content types for multi-format support."""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -52,7 +56,8 @@ class ContentType(Enum):
 
 
 class CreatorType(Enum):
-    """Creator types in the IA Influencer ecosystem."""    MUSICIAN = "musician"
+    """Creator types in the IA Influencer ecosystem."""
+    MUSICIAN = "musician"
     PRODUCER = "producer"
     BLOGGER = "blogger"
     WRITER = "writer"
@@ -66,7 +71,8 @@ class CreatorType(Enum):
 
 @dataclass
 class CompliancePolicy:
-    """Data class for compliance policy definition."""    policy_id: str
+    """Data class for compliance policy definition."""
+    policy_id: str
     framework: ComplianceFramework
     jurisdiction: str
     priority: CompliancePriority
@@ -81,7 +87,8 @@ class CompliancePolicy:
 
 @dataclass
 class ComplianceViolation:
-    """Data class for compliance violation tracking."""    violation_id: str
+    """Data class for compliance violation tracking."""
+    violation_id: str
     policy_id: str
     content_id: str
     user_id: str
@@ -101,7 +108,8 @@ class ComplianceViolation:
 
 @dataclass
 class ComplianceReport:
-    """Compliance report for creators."""    report_id: str
+    """Compliance report for creators."""
+    report_id: str
     user_id: str
     creator_type: CreatorType
     period_start: datetime
@@ -116,7 +124,8 @@ class ComplianceReport:
 
 
 class ComplianceManager:
-    """    Central manager for all legal compliance operations.
+    """
+    Central manager for all legal compliance operations.
     
     Coordinates compliance policy enforcement, violation detection,
     and regulatory adherence across the platform for multi-format creators.
@@ -125,13 +134,16 @@ class ComplianceManager:
     1. User (creator) uploads content → 2. AI protection analysis → 
     3. Compliance validation → 4. SEO optimization → 5. Collaboration matching → 
     6. Multi-platform distribution
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize the Compliance Manager.
+        """
+        Initialize the Compliance Manager.
         
         Args:
             config: Configuration dictionary with database connections
-        """        self.config = config
+        """
+        self.config = config
         self.db_config = config.get("database", {})
         self.compliance_config = config.get("compliance", {})
         
@@ -158,7 +170,8 @@ class ComplianceManager:
         logger.info(f"Compliance Manager initialized for {len(self.supported_creator_types)} creator types")
     
     async def initialize_compliance_policies(self) -> None:
-        """Initialize compliance policies for all supported frameworks and creator types."""        try:
+        """Initialize compliance policies for all supported frameworks and creator types."""
+        try:
             # Initialize GDPR policies for all creator types
             await self._create_gdpr_policies()
             
@@ -178,7 +191,8 @@ class ComplianceManager:
             raise
     
     async def _create_gdpr_policies(self) -> None:
-        """Create GDPR compliance policies for all creator types."""        for creator_type in CreatorType:
+        """Create GDPR compliance policies for all creator types."""
+        for creator_type in CreatorType:
             policy = CompliancePolicy(
                 policy_id=f"gdpr_{creator_type.value}",
                 framework=ComplianceFramework.GDPR,
@@ -210,7 +224,8 @@ class ComplianceManager:
             self.policies[policy.policy_id] = policy
     
     async def _create_copyright_policies(self) -> None:
-        """Create copyright policies for different content types."""        content_frameworks = {
+        """Create copyright policies for different content types."""
+        content_frameworks = {
             ContentType.AUDIO: [ComplianceFramework.MUSIC_LICENSING, ComplianceFramework.PERFORMANCE_RIGHTS],
             ContentType.VIDEO: [ComplianceFramework.COPYRIGHT_EU, ComplianceFramework.COPYRIGHT_US],
             ContentType.IMAGE: [ComplianceFramework.IMAGE_RIGHTS, ComplianceFramework.CREATIVE_COMMONS],
@@ -251,7 +266,8 @@ class ComplianceManager:
                 self.policies[policy.policy_id] = policy
     
     async def _create_dmca_policies(self) -> None:
-        """Create DMCA policies for content protection."""        policy = CompliancePolicy(
+        """Create DMCA policies for content protection."""
+        policy = CompliancePolicy(
             policy_id="dmca_protection_global",
             framework=ComplianceFramework.DMCA,
             jurisdiction="US",
@@ -282,7 +298,8 @@ class ComplianceManager:
         self.policies[policy.policy_id] = policy
     
     async def _create_creator_specific_policies(self) -> None:
-        """Create creator-specific compliance policies."""        creator_policies = {
+        """Create creator-specific compliance policies."""
+        creator_policies = {
             CreatorType.MUSICIAN: {
                 "framework": ComplianceFramework.MUSIC_LICENSING,
                 "specific_rules": ["royalty_distribution", "performance_tracking", "streaming_compliance"]
@@ -325,7 +342,8 @@ class ComplianceManager:
                 updated_at=datetime.utcnow()
             )
             self.policies[policy.policy_id] = policy
-        """Initialize default compliance policies for all supported frameworks."""        try:
+        """Initialize default compliance policies for all supported frameworks."""
+        try:
             # GDPR policies
             await self._create_gdpr_policies()
             
@@ -352,7 +370,8 @@ class ComplianceManager:
         metadata: Dict[str, Any],
         jurisdiction: str = "EU"
     ) -> Dict[str, Any]:
-        """        Evaluate content against all applicable compliance policies.
+        """
+        Evaluate content against all applicable compliance policies.
         
         Args:
             content_id: Unique identifier for content
@@ -363,7 +382,8 @@ class ComplianceManager:
             
         Returns:
             Comprehensive compliance evaluation results
-        """        try:
+        """
+        try:
             evaluation_result = {
                 "content_id": content_id,
                 "user_id": user_id,
@@ -418,7 +438,8 @@ class ComplianceManager:
         performed_by: str,
         notes: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Enforce compliance action for a detected violation.
+        """
+        Enforce compliance action for a detected violation.
         
         Args:
             violation_id: ID of the violation to address
@@ -428,7 +449,8 @@ class ComplianceManager:
             
         Returns:
             Enforcement action results
-        """        try:
+        """
+        try:
             if violation_id not in self.active_violations:
                 raise ValueError(f"Violation {violation_id} not found")
             
@@ -492,7 +514,8 @@ class ComplianceManager:
         jurisdiction: str = "EU",
         time_range: int = 30
     ) -> Dict[str, Any]:
-        """        Generate compliance dashboard with key metrics and status.
+        """
+        Generate compliance dashboard with key metrics and status.
         
         Args:
             jurisdiction: Jurisdiction to filter data
@@ -500,7 +523,8 @@ class ComplianceManager:
             
         Returns:
             Compliance dashboard data
-        """        try:
+        """
+        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=time_range)
             
@@ -552,7 +576,8 @@ class ComplianceManager:
         updates: Dict[str, Any],
         updated_by: str
     ) -> Dict[str, Any]:
-        """        Update an existing compliance policy.
+        """
+        Update an existing compliance policy.
         
         Args:
             policy_id: ID of the policy to update
@@ -561,7 +586,8 @@ class ComplianceManager:
             
         Returns:
             Updated policy information
-        """        try:
+        """
+        try:
             if policy_id not in self.policies:
                 raise ValueError(f"Policy {policy_id} not found")
             
@@ -591,7 +617,8 @@ class ComplianceManager:
     
     # Private helper methods
     async def _create_gdpr_policies(self) -> None:
-        """Create GDPR compliance policies."""        gdpr_policy = CompliancePolicy(
+        """Create GDPR compliance policies."""
+        gdpr_policy = CompliancePolicy(
             policy_id="gdpr_data_protection",
             framework=ComplianceFramework.GDPR,
             jurisdiction="EU",
@@ -616,7 +643,8 @@ class ComplianceManager:
         self.policies[gdpr_policy.policy_id] = gdpr_policy
     
     async def _create_dmca_policies(self) -> None:
-        """Create DMCA compliance policies."""        dmca_policy = CompliancePolicy(
+        """Create DMCA compliance policies."""
+        dmca_policy = CompliancePolicy(
             policy_id="dmca_copyright_protection",
             framework=ComplianceFramework.DMCA,
             jurisdiction="US",
@@ -641,7 +669,8 @@ class ComplianceManager:
         self.policies[dmca_policy.policy_id] = dmca_policy
     
     async def _create_copyright_policies(self) -> None:
-        """Create copyright protection policies."""        copyright_policy = CompliancePolicy(
+        """Create copyright protection policies."""
+        copyright_policy = CompliancePolicy(
             policy_id="copyright_verification",
             framework=ComplianceFramework.COPYRIGHT_EU,
             jurisdiction="EU",
@@ -666,7 +695,8 @@ class ComplianceManager:
         self.policies[copyright_policy.policy_id] = copyright_policy
     
     async def _create_platform_policies(self) -> None:
-        """Create platform-specific compliance policies."""        platform_policy = CompliancePolicy(
+        """Create platform-specific compliance policies."""
+        platform_policy = CompliancePolicy(
             policy_id="platform_content_standards",
             framework=ComplianceFramework.GDPR,  # Platform follows GDPR as baseline
             jurisdiction="GLOBAL",
@@ -695,7 +725,8 @@ class ComplianceManager:
         jurisdiction: str, 
         content_type: str
     ) -> List[CompliancePolicy]:
-        """Get policies applicable to the given jurisdiction and content type."""        applicable = []
+        """Get policies applicable to the given jurisdiction and content type."""
+        applicable = []
         
         for policy in self.policies.values():
             if not policy.active:
@@ -715,7 +746,8 @@ class ComplianceManager:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Evaluate content against a specific compliance policy."""        policy_result = {
+        """Evaluate content against a specific compliance policy."""
+        policy_result = {
             "policy_id": policy.policy_id,
             "framework": policy.framework.value,
             "compliant": True,
@@ -747,7 +779,8 @@ class ComplianceManager:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Evaluate a specific compliance rule."""        # This would contain the actual rule evaluation logic
+        """Evaluate a specific compliance rule."""
+        # This would contain the actual rule evaluation logic
         # For now, return a placeholder implementation
         return {
             "rule_id": rule["rule_id"],
@@ -764,7 +797,8 @@ class ComplianceManager:
         user_id: str,
         policy_result: Dict[str, Any]
     ) -> ComplianceViolation:
-        """Create a violation record for failed compliance evaluation."""        violation_id = f"viol_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{content_id[:8]}"
+        """Create a violation record for failed compliance evaluation."""
+        violation_id = f"viol_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{content_id[:8]}"
         
         violation = ComplianceViolation(
             violation_id=violation_id,
@@ -785,7 +819,8 @@ class ComplianceManager:
         self, 
         policy_evaluations: Dict[str, Any]
     ) -> List[str]:
-        """Generate compliance recommendations based on evaluation results."""        recommendations = []
+        """Generate compliance recommendations based on evaluation results."""
+        recommendations = []
         
         for policy_id, result in policy_evaluations.items():
             if not result["compliant"]:
@@ -798,26 +833,33 @@ class ComplianceManager:
     
     # Placeholder methods for enforcement actions
     async def _remove_content(self, content_id: str) -> Dict[str, Any]:
-        """Remove content from platform."""        return {"success": True, "action": "content_removed", "content_id": content_id}
+        """Remove content from platform."""
+        return {"success": True, "action": "content_removed", "content_id": content_id}
     
     async def _notify_user(self, user_id: str, violation: ComplianceViolation) -> Dict[str, Any]:
-        """Send notification to user about violation."""        return {"success": True, "action": "user_notified", "user_id": user_id}
+        """Send notification to user about violation."""
+        return {"success": True, "action": "user_notified", "user_id": user_id}
     
     async def _suspend_account(self, user_id: str, violation: ComplianceViolation) -> Dict[str, Any]:
-        """Suspend user account."""        return {"success": True, "action": "account_suspended", "user_id": user_id}
+        """Suspend user account."""
+        return {"success": True, "action": "account_suspended", "user_id": user_id}
     
     async def _revoke_license(self, content_id: str) -> Dict[str, Any]:
-        """Revoke content license."""        return {"success": True, "action": "license_revoked", "content_id": content_id}
+        """Revoke content license."""
+        return {"success": True, "action": "license_revoked", "content_id": content_id}
     
     async def _process_dmca_takedown(self, content_id: str) -> Dict[str, Any]:
-        """Process DMCA takedown for content."""        return {"success": True, "action": "dmca_takedown", "content_id": content_id}
+        """Process DMCA takedown for content."""
+        return {"success": True, "action": "dmca_takedown", "content_id": content_id}
     
     # Placeholder methods for logging and metrics
     async def _log_compliance_evaluation(self, evaluation_result: Dict[str, Any]) -> None:
-        """Log compliance evaluation to audit trail."""        logger.info(f"Compliance evaluation completed for content {evaluation_result['content_id']}")
+        """Log compliance evaluation to audit trail."""
+        logger.info(f"Compliance evaluation completed for content {evaluation_result['content_id']}")
     
     async def _log_enforcement_action(self, enforcement_result: Dict[str, Any]) -> None:
-        """Log enforcement action to audit trail."""        logger.info(f"Enforcement action {enforcement_result['action']} completed")
+        """Log enforcement action to audit trail."""
+        logger.info(f"Enforcement action {enforcement_result['action']} completed")
     
     async def _log_policy_update(
         self, 
@@ -826,7 +868,8 @@ class ComplianceManager:
         new_policy: Dict[str, Any], 
         updated_by: str
     ) -> None:
-        """Log policy update to audit trail."""        logger.info(f"Policy {policy_id} updated by {updated_by}")
+        """Log policy update to audit trail."""
+        logger.info(f"Policy {policy_id} updated by {updated_by}")
     
     async def _get_overview_metrics(
         self, 
@@ -834,7 +877,8 @@ class ComplianceManager:
         end_date: datetime, 
         jurisdiction: str
     ) -> Dict[str, Any]:
-        """Get overview compliance metrics."""        return {
+        """Get overview compliance metrics."""
+        return {
             "total_evaluations": 100,
             "compliant_items": 85,
             "violations_detected": 15,
@@ -848,7 +892,8 @@ class ComplianceManager:
         end_date: datetime, 
         jurisdiction: str
     ) -> Dict[str, Any]:
-        """Get policy compliance status."""        return {
+        """Get policy compliance status."""
+        return {
             "active_policies": len(self.policies),
             "policy_violations": len(self.active_violations),
             "enforcement_rate": 80.0
@@ -860,7 +905,8 @@ class ComplianceManager:
         end_date: datetime, 
         jurisdiction: str
     ) -> Dict[str, Any]:
-        """Get violation trend analysis."""        return {
+        """Get violation trend analysis."""
+        return {
             "trend": "decreasing",
             "weekly_violations": [10, 8, 6, 4],
             "most_common_violation": "gdpr_consent_missing"
@@ -872,7 +918,8 @@ class ComplianceManager:
         end_date: datetime, 
         jurisdiction: str
     ) -> Dict[str, Any]:
-        """Get enforcement action summary."""        return {
+        """Get enforcement action summary."""
+        return {
             "total_actions": 12,
             "successful_actions": 10,
             "pending_actions": 2,
@@ -888,7 +935,8 @@ class ComplianceManager:
         self, 
         dashboard: Dict[str, Any]
     ) -> List[str]:
-        """Generate dashboard recommendations."""        return [
+        """Generate dashboard recommendations."""
+        return [
             "Review GDPR consent collection process",
             "Implement automated DMCA response system",
             "Enhance copyright verification workflows"
@@ -905,9 +953,11 @@ class ComplianceManager:
         content_metadata: Dict[str, Any],
         ai_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Validate content upload according to business logic flow:
+        """
+        Validate content upload according to business logic flow:
         User Upload → AI Protection → Compliance Validation
-        """        try:
+        """
+        try:
             validation_result = {
                 "content_id": content_id,
                 "user_id": user_id,
@@ -975,7 +1025,8 @@ class ComplianceManager:
         ai_analysis: Dict[str, Any],
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Analyze AI protection requirements for content."""        protection_score = 0.0
+        """Analyze AI protection requirements for content."""
+        protection_score = 0.0
         recommendations = []
         
         # Content type specific protection analysis
@@ -1056,7 +1107,8 @@ class ComplianceManager:
         content_type: ContentType,
         content_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate content against applicable compliance policies."""        compliance_score = 1.0
+        """Validate content against applicable compliance policies."""
+        compliance_score = 1.0
         violations = []
         
         # Get applicable policies
@@ -1093,7 +1145,8 @@ class ComplianceManager:
         content_type: ContentType,
         content_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate creator-specific rules and requirements."""        score = 1.0
+        """Validate creator-specific rules and requirements."""
+        score = 1.0
         
         # Creator-specific validation rules
         if creator_type == CreatorType.MUSICIAN:
@@ -1136,7 +1189,8 @@ class ComplianceManager:
         creator_type: CreatorType,
         period_days: int = 30
     ) -> ComplianceReport:
-        """Generate comprehensive compliance report for a creator."""        try:
+        """Generate comprehensive compliance report for a creator."""
+        try:
             period_start = datetime.utcnow() - timedelta(days=period_days)
             period_end = datetime.utcnow()
             
@@ -1200,7 +1254,8 @@ class ComplianceManager:
         user_content: List[Dict[str, Any]],
         user_violations: List[ComplianceViolation]
     ) -> List[str]:
-        """Generate personalized recommendations for creators."""        recommendations = []
+        """Generate personalized recommendations for creators."""
+        recommendations = []
         
         # Analyze content protection scores
         if user_content:

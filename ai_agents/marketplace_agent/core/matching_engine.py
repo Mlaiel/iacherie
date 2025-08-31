@@ -5,7 +5,8 @@ using machine learning algorithms and semantic analysis.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -19,7 +20,8 @@ from .marketplace_agent import MarketplaceConfig, ContentType
 
 
 class MatchingType(Enum):
-    """Types of matching operations."""    CREATOR_COLLABORATION = "creator_collaboration"
+    """Types of matching operations."""
+    CREATOR_COLLABORATION = "creator_collaboration"
     CONTENT_RECOMMENDATION = "content_recommendation"
     AUDIENCE_TARGETING = "audience_targeting"
     OPPORTUNITY_MATCHING = "opportunity_matching"
@@ -27,7 +29,8 @@ class MatchingType(Enum):
 
 
 class SimilarityMetric(Enum):
-    """Similarity calculation methods."""    COSINE_SIMILARITY = "cosine_similarity"
+    """Similarity calculation methods."""
+    COSINE_SIMILARITY = "cosine_similarity"
     EUCLIDEAN_DISTANCE = "euclidean_distance"
     JACCARD_SIMILARITY = "jaccard_similarity"
     SEMANTIC_SIMILARITY = "semantic_similarity"
@@ -36,7 +39,8 @@ class SimilarityMetric(Enum):
 
 @dataclass
 class MatchingProfile:
-    """Profile data for matching algorithms."""    user_id: int = 0
+    """Profile data for matching algorithms."""
+    user_id: int = 0
     profile_type: str = "creator"  # creator, buyer, content
     features: Dict[str, float] = field(default_factory=dict)
     categorical_features: Dict[str, List[str]] = field(default_factory=dict)
@@ -49,7 +53,8 @@ class MatchingProfile:
 
 @dataclass
 class MatchingResult:
-    """Result of a matching operation."""    target_id: int = 0
+    """Result of a matching operation."""
+    target_id: int = 0
     similarity_score: float = 0.0
     confidence_level: float = 0.0
     matching_factors: Dict[str, float] = field(default_factory=dict)
@@ -59,7 +64,8 @@ class MatchingResult:
 
 @dataclass
 class RecommendationSet:
-    """Set of recommendations with metadata."""    user_id: int = 0
+    """Set of recommendations with metadata."""
+    user_id: int = 0
     recommendation_type: str = ""
     items: List[MatchingResult] = field(default_factory=list)
     generation_strategy: str = ""
@@ -70,7 +76,8 @@ class RecommendationSet:
 
 
 class MatchingEngine:
-    """    Advanced AI-powered matching engine for marketplace intelligence.
+    """
+    Advanced AI-powered matching engine for marketplace intelligence.
     
     Provides comprehensive matching capabilities including:
     - Creator collaboration matching with compatibility scoring
@@ -79,12 +86,15 @@ class MatchingEngine:
     - Opportunity matching based on skills and preferences
     - Semantic similarity analysis for content discovery
     - Multi-factor matching with explainable AI
-    """    def __init__(self, config: MarketplaceConfig):
-        """        Initialize matching engine.
+    """
+    def __init__(self, config: MarketplaceConfig):
+        """
+        Initialize matching engine.
         
         Args:
             config: Marketplace configuration
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize AI models and components
@@ -99,7 +109,8 @@ class MatchingEngine:
         self.logger.info("Matching engine initialized")
 
     def _initialize_matching_models(self) -> None:
-        """Initialize machine learning models for matching."""        try:
+        """Initialize machine learning models for matching."""
+        try:
             # Initialize neural embedding models
             # Initialize collaborative filtering models
             # Initialize content-based filtering models
@@ -110,7 +121,8 @@ class MatchingEngine:
             raise
 
     def _initialize_feature_extractors(self) -> None:
-        """Initialize feature extraction components."""        try:
+        """Initialize feature extraction components."""
+        try:
             # Initialize NLP feature extractors
             # Initialize audio feature extractors
             # Initialize visual feature extractors
@@ -125,7 +137,8 @@ class MatchingEngine:
         requester_id: int,
         target_creator_id: int
     ) -> float:
-        """        Calculate compatibility score between two creators.
+        """
+        Calculate compatibility score between two creators.
         
         Args:
             requester_id: ID of the requesting creator
@@ -133,7 +146,8 @@ class MatchingEngine:
             
         Returns:
             Compatibility score between 0.0 and 1.0
-        """        try:
+        """
+        try:
             # Get creator profiles
             requester_profile = await self._get_creator_matching_profile(requester_id)
             target_profile = await self._get_creator_matching_profile(target_creator_id)
@@ -195,7 +209,8 @@ class MatchingEngine:
         content_type: Optional[ContentType] = None,
         limit: int = 10
     ) -> List[Dict[str, Any]]:
-        """        Generate personalized content recommendations for a user.
+        """
+        Generate personalized content recommendations for a user.
         
         Args:
             user_id: ID of the user
@@ -204,7 +219,8 @@ class MatchingEngine:
             
         Returns:
             List of personalized recommendations
-        """        try:
+        """
+        try:
             # Get user profile and preferences
             user_profile = await self._get_user_matching_profile(user_id)
             if not user_profile:
@@ -256,7 +272,8 @@ class MatchingEngine:
         search_results: Dict[str, Any],
         query: str
     ) -> Dict[str, Any]:
-        """        Enhance search results with AI-powered recommendations and re-ranking.
+        """
+        Enhance search results with AI-powered recommendations and re-ranking.
         
         Args:
             search_results: Original search results
@@ -264,7 +281,8 @@ class MatchingEngine:
             
         Returns:
             Enhanced search results with AI improvements
-        """        try:
+        """
+        try:
             enhancements = {}
             
             # Semantic query analysis
@@ -305,7 +323,8 @@ class MatchingEngine:
         opportunity_type: str = "collaboration",
         limit: int = 10
     ) -> List[Dict[str, Any]]:
-        """        Find matching opportunities for a creator.
+        """
+        Find matching opportunities for a creator.
         
         Args:
             creator_id: ID of the creator
@@ -314,7 +333,8 @@ class MatchingEngine:
             
         Returns:
             List of matching opportunities
-        """        try:
+        """
+        try:
             # Get creator profile
             creator_profile = await self._get_creator_matching_profile(creator_id)
             if not creator_profile:
@@ -366,7 +386,8 @@ class MatchingEngine:
         content_id_2: int,
         similarity_type: SimilarityMetric = SimilarityMetric.HYBRID_SIMILARITY
     ) -> float:
-        """        Calculate similarity between two pieces of content.
+        """
+        Calculate similarity between two pieces of content.
         
         Args:
             content_id_1: ID of first content item
@@ -375,7 +396,8 @@ class MatchingEngine:
             
         Returns:
             Similarity score between 0.0 and 1.0
-        """        try:
+        """
+        try:
             # Check cache first
             cache_key = f"{content_id_1}_{content_id_2}_{similarity_type.value}"
             if cache_key in self.similarity_cache:
@@ -413,14 +435,16 @@ class MatchingEngine:
         self,
         segmentation_criteria: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """        Generate audience segments using clustering algorithms.
+        """
+        Generate audience segments using clustering algorithms.
         
         Args:
             segmentation_criteria: Criteria for segmentation
             
         Returns:
             List of identified audience segments
-        """        try:
+        """
+        try:
             # Get user behavior data
             user_data = await self._get_user_behavior_data(segmentation_criteria)
             
@@ -448,7 +472,8 @@ class MatchingEngine:
             return []
 
     async def _get_creator_matching_profile(self, creator_id: int) -> Optional[MatchingProfile]:
-        """Get or create creator matching profile."""        try:
+        """Get or create creator matching profile."""
+        try:
             # Check cache
             if creator_id in self.profiles_cache:
                 return self.profiles_cache[creator_id]
@@ -466,7 +491,8 @@ class MatchingEngine:
             return None
 
     async def _build_creator_profile(self, creator_id: int) -> Optional[MatchingProfile]:
-        """Build comprehensive creator profile for matching."""        try:
+        """Build comprehensive creator profile for matching."""
+        try:
             # Mock implementation - would gather real user data
             profile = MatchingProfile(
                 user_id=creator_id,
@@ -505,7 +531,8 @@ class MatchingEngine:
         profile1: MatchingProfile,
         profile2: MatchingProfile
     ) -> float:
-        """Calculate skill-based compatibility score."""        try:
+        """Calculate skill-based compatibility score."""
+        try:
             # Get skill sets
             skills1 = set(profile1.categorical_features.get("specialties", []))
             skills2 = set(profile2.categorical_features.get("specialties", []))
@@ -536,7 +563,8 @@ class MatchingEngine:
         profile1: MatchingProfile,
         profile2: MatchingProfile
     ) -> float:
-        """Calculate style-based compatibility score."""        try:
+        """Calculate style-based compatibility score."""
+        try:
             # Get genre/style preferences
             styles1 = set(profile1.categorical_features.get("genres", []))
             styles2 = set(profile2.categorical_features.get("genres", []))
@@ -562,7 +590,8 @@ class MatchingEngine:
         features1: Dict[str, float],
         features2: Dict[str, float]
     ) -> float:
-        """Calculate cosine similarity between feature vectors."""        try:
+        """Calculate cosine similarity between feature vectors."""
+        try:
             # Get common features
             common_features = set(features1.keys()).intersection(set(features2.keys()))
             
@@ -589,7 +618,8 @@ class MatchingEngine:
         content_type: Optional[ContentType],
         limit: int
     ) -> List[MatchingResult]:
-        """Generate collaborative filtering recommendations."""        try:
+        """Generate collaborative filtering recommendations."""
+        try:
             # Mock implementation - would use real collaborative filtering
             recommendations = []
             
@@ -615,7 +645,8 @@ class MatchingEngine:
         trending: List[MatchingResult],
         limit: int
     ) -> List[MatchingResult]:
-        """Combine multiple recommendation strategies."""        try:
+        """Combine multiple recommendation strategies."""
+        try:
             # Assign weights to different strategies
             weights = {"collaborative": 0.5, "content_based": 0.3, "trending": 0.2}
             

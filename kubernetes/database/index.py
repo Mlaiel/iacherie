@@ -234,7 +234,8 @@ if health['overall_status'] == 'unhealthy':
     # Déclencher protocoles d'urgence
     await emergency_protocols.activate()
 ```
-"""import asyncio
+"""
+import asyncio
 import sys
 from pathlib import Path
 from typing import Dict, Any, Optional
@@ -262,9 +263,11 @@ __copyright__ = "All rights reserved - Unauthorized use prohibited"
 
 
 async def main():
-    """    Main entry point for database system management
+    """
+    Main entry point for database system management
     Demonstrates enterprise-grade database operations
-    """    try:
+    """
+    try:
         logger.info("🚀 Starting IA Influencer Agent Database System...")
         logger.info(f"📚 Version: {__version__}")
         logger.info(f"👨‍💻 Author: {__author__}")
@@ -327,7 +330,8 @@ async def main():
 
 
 async def demonstrate_enterprise_features():
-    """Demonstrate enterprise database features"""    try:
+    """Demonstrate enterprise database features"""
+    try:
         logger.info("🎯 Demonstrating Enterprise Features...")
         
         # Get database manager instance
@@ -381,7 +385,8 @@ async def demonstrate_enterprise_features():
 
 
 async def emergency_procedures():
-    """Emergency procedures for critical situations"""    try:
+    """Emergency procedures for critical situations"""
+    try:
         logger.warning("🚨 Executing Emergency Procedures...")
         
         # Emergency backup
@@ -406,7 +411,8 @@ async def emergency_procedures():
 
 
 def run_database_management():
-    """Run database management system"""    try:
+    """Run database management system"""
+    try:
         # Run main database system
         result = asyncio.run(main())
         

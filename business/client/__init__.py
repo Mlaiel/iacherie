@@ -19,12 +19,20 @@ Export modules:
 - VerificationManager: Identity and creator verification
 - ActivityManager: Client activity tracking and analytics
 - PreferenceManager: User preferences and settings
-"""from .manager import ClientManager
+"""
+
+from .manager import ClientManager
+
 from .content import ContentManager
+
 from .profile import ProfileManager
+
 from .subscription import SubscriptionManager
+
 from .verification import VerificationManager
+
 from .activity import ActivityManager
+
 from .preference import PreferenceManager
 
 __all__ = [

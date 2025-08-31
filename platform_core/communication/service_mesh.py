@@ -14,7 +14,8 @@ Infrastructure de communication microservices avancée
 - Traffic management et circuit breakers
 - Security policies et mTLS automatique
 - Observability complète et tracing distribué
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import time
@@ -37,7 +38,8 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 logger = logging.getLogger(__name__)
 
 class ServiceType(Enum):
-    """Types de services"""    API_GATEWAY = "api_gateway"
+    """Types de services"""
+    API_GATEWAY = "api_gateway"
     MICROSERVICE = "microservice" 
     DATABASE = "database"
     CACHE = "cache"
@@ -47,7 +49,8 @@ class ServiceType(Enum):
     AI_AGENT = "ai_agent"
 
 class ServiceHealth(Enum):
-    """État de santé des services"""    HEALTHY = "healthy"
+    """État de santé des services"""
+    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     STARTING = "starting"
@@ -55,7 +58,8 @@ class ServiceHealth(Enum):
     UNKNOWN = "unknown"
 
 class TrafficPolicy(Enum):
-    """Politiques de trafic"""    ROUND_ROBIN = "round_robin"
+    """Politiques de trafic"""
+    ROUND_ROBIN = "round_robin"
     WEIGHTED = "weighted"
     LEAST_CONN = "least_conn"
     STICKY_SESSION = "sticky_session"
@@ -64,7 +68,8 @@ class TrafficPolicy(Enum):
 
 @dataclass
 class ServiceInstance:
-    """Instance de service dans le mesh"""    service_id: str
+    """Instance de service dans le mesh"""
+    service_id: str
     service_name: str
     service_type: ServiceType
     host: str
@@ -112,7 +117,8 @@ class ServiceInstance:
 
 @dataclass
 class ServicePolicy:
-    """Politique de service"""    service_name: str
+    """Politique de service"""
+    service_name: str
     traffic_policy: TrafficPolicy = TrafficPolicy.ROUND_ROBIN
     rate_limit: Optional[int] = None  # Requêtes par seconde
     timeout_seconds: int = 30
@@ -133,7 +139,8 @@ class ServicePolicy:
     canary_percentage: float = 0.0
 
 class ServiceDiscovery:
-    """Service de découverte automatique"""    
+    """Service de découverte automatique"""
+    
     def __init__(self, 
                  redis_client: aioredis.Redis,
                  namespace: str = "service_mesh"):
@@ -153,7 +160,8 @@ class ServiceDiscovery:
         self._running = False
         
     async def start(self):
-        """Démarre le service discovery"""        self._running = True
+        """Démarre le service discovery"""
+        self._running = True
         
         # Charger les données depuis Redis
         await self._load_from_redis()
@@ -165,7 +173,8 @@ class ServiceDiscovery:
         logger.info("ServiceDiscovery démarré")
         
     async def stop(self):
-        """Arrête le service discovery"""        self._running = False
+        """Arrête le service discovery"""
+        self._running = False
         
         if self._cleanup_task:
             self._cleanup_task.cancel()
@@ -182,7 +191,8 @@ class ServiceDiscovery:
         logger.info("ServiceDiscovery arrêté")
         
     async def register_service(self, service: ServiceInstance) -> str:
-        """Enregistre un service dans le mesh"""        service_name = service.service_name
+        """Enregistre un service dans le mesh"""
+        service_name = service.service_name
         instance_id = service.service_id
         
         if service_name not in self.services:
@@ -197,7 +207,8 @@ class ServiceDiscovery:
         return instance_id
         
     async def unregister_service(self, service_name: str, instance_id: str):
-        """Désenregistre un service"""        if service_name in self.services and instance_id in self.services[service_name]:
+        """Désenregistre un service"""
+        if service_name in self.services and instance_id in self.services[service_name]:
             del self.services[service_name][instance_id]
             
             if not self.services[service_name]:
@@ -212,7 +223,8 @@ class ServiceDiscovery:
                                service_name: str,
                                tags: Optional[Dict[str, str]] = None,
                                healthy_only: bool = True) -> List[ServiceInstance]:
-        """Découvre les instances d'un service"""        if service_name not in self.services:
+        """Découvre les instances d'un service"""
+        if service_name not in self.services:
             return []
             
         instances = []
@@ -231,7 +243,8 @@ class ServiceDiscovery:
         return instances
         
     async def update_health(self, service_name: str, instance_id: str, health: ServiceHealth):
-        """Met à jour l'état de santé d'un service"""        if (service_name in self.services and 
+        """Met à jour l'état de santé d'un service"""
+        if (service_name in self.services and 
             instance_id in self.services[service_name]):
             
             instance = self.services[service_name][instance_id]
@@ -243,7 +256,8 @@ class ServiceDiscovery:
             await self._record_heartbeat(service_name, instance_id)
             
     async def set_service_policy(self, policy: ServicePolicy):
-        """Définit une politique pour un service"""        self.policies[policy.service_name] = policy
+        """Définit une politique pour un service"""
+        self.policies[policy.service_name] = policy
         
         # Persister dans Redis
         await self._persist_policy(policy)
@@ -251,28 +265,33 @@ class ServiceDiscovery:
         logger.info(f"Politique définie pour {policy.service_name}: {policy.traffic_policy.value}")
         
     async def get_service_policy(self, service_name: str) -> Optional[ServicePolicy]:
-        """Récupère la politique d'un service"""        return self.policies.get(service_name)
+        """Récupère la politique d'un service"""
+        return self.policies.get(service_name)
         
     async def _persist_service(self, service: ServiceInstance):
-        """Persiste un service dans Redis"""        key = f"{self.registry_key}:{service.service_name}:{service.service_id}"
+        """Persiste un service dans Redis"""
+        key = f"{self.registry_key}:{service.service_name}:{service.service_id}"
         data = self._serialize_service(service)
         
         await self.redis_client.set(key, json.dumps(data), ex=300)  # TTL 5 minutes
         
     async def _persist_policy(self, policy: ServicePolicy):
-        """Persiste une politique dans Redis"""        key = f"{self.policies_key}:{policy.service_name}"
+        """Persiste une politique dans Redis"""
+        key = f"{self.policies_key}:{policy.service_name}"
         data = self._serialize_policy(policy)
         
         await self.redis_client.set(key, json.dumps(data))
         
     async def _record_heartbeat(self, service_name: str, instance_id: str):
-        """Enregistre un heartbeat"""        key = f"{self.heartbeat_key}:{service_name}:{instance_id}"
+        """Enregistre un heartbeat"""
+        key = f"{self.heartbeat_key}:{service_name}:{instance_id}"
         timestamp = datetime.utcnow().isoformat()
         
         await self.redis_client.set(key, timestamp, ex=120)  # TTL 2 minutes
         
     async def _load_from_redis(self):
-        """Charge les services et politiques depuis Redis"""        try:
+        """Charge les services et politiques depuis Redis"""
+        try:
             # Charger les services
             pattern = f"{self.registry_key}:*"
             keys = await self.redis_client.keys(pattern)
@@ -303,7 +322,8 @@ class ServiceDiscovery:
             logger.error(f"Erreur lors du chargement depuis Redis: {e}")
             
     async def _cleanup_stale_services(self):
-        """Nettoie les services obsolètes"""        while self._running:
+        """Nettoie les services obsolètes"""
+        while self._running:
             try:
                 await asyncio.sleep(30)  # Vérifier toutes les 30 secondes
                 
@@ -323,7 +343,8 @@ class ServiceDiscovery:
                 logger.error(f"Erreur dans le nettoyage: {e}")
                 
     async def _sync_with_redis(self):
-        """Synchronise périodiquement avec Redis"""        while self._running:
+        """Synchronise périodiquement avec Redis"""
+        while self._running:
             try:
                 await asyncio.sleep(60)  # Sync toutes les minutes
                 await self._load_from_redis()
@@ -333,14 +354,16 @@ class ServiceDiscovery:
                 logger.error(f"Erreur dans la synchronisation: {e}")
                 
     async def _remove_service_from_redis(self, service_name: str, instance_id: str):
-        """Supprime un service de Redis"""        key = f"{self.registry_key}:{service_name}:{instance_id}"
+        """Supprime un service de Redis"""
+        key = f"{self.registry_key}:{service_name}:{instance_id}"
         await self.redis_client.delete(key)
         
         heartbeat_key = f"{self.heartbeat_key}:{service_name}:{instance_id}"
         await self.redis_client.delete(heartbeat_key)
         
     def _serialize_service(self, service: ServiceInstance) -> Dict[str, Any]:
-        """Sérialise un service"""        data = asdict(service)
+        """Sérialise un service"""
+        data = asdict(service)
         # Convertir les enums et sets
         data['service_type'] = service.service_type.value
         data['health'] = service.health.value
@@ -352,7 +375,8 @@ class ServiceDiscovery:
         return data
         
     def _deserialize_service(self, data: Dict[str, Any]) -> ServiceInstance:
-        """Désérialise un service"""        # Convertir les enums et sets
+        """Désérialise un service"""
+        # Convertir les enums et sets
         data['service_type'] = ServiceType(data['service_type'])
         data['health'] = ServiceHealth(data['health'])
         data['allowed_clients'] = set(data['allowed_clients'])
@@ -363,18 +387,21 @@ class ServiceDiscovery:
         return ServiceInstance(**data)
         
     def _serialize_policy(self, policy: ServicePolicy) -> Dict[str, Any]:
-        """Sérialise une politique"""        data = asdict(policy)
+        """Sérialise une politique"""
+        data = asdict(policy)
         data['traffic_policy'] = policy.traffic_policy.value
         data['allowed_services'] = list(policy.allowed_services)
         return data
         
     def _deserialize_policy(self, data: Dict[str, Any]) -> ServicePolicy:
-        """Désérialise une politique"""        data['traffic_policy'] = TrafficPolicy(data['traffic_policy'])
+        """Désérialise une politique"""
+        data['traffic_policy'] = TrafficPolicy(data['traffic_policy'])
         data['allowed_services'] = set(data['allowed_services'])
         return ServicePolicy(**data)
         
     def get_discovery_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques de découverte"""        return {
+        """Retourne les statistiques de découverte"""
+        return {
             "total_services": len(self.services),
             "total_instances": sum(len(instances) for instances in self.services.values()),
             "healthy_instances": sum(
@@ -402,7 +429,8 @@ class ServiceDiscovery:
         }
 
 class ServiceMesh:
-    """Service Mesh principal avec fonctionnalités complètes"""    
+    """Service Mesh principal avec fonctionnalités complètes"""
+    
     def __init__(self, 
                  redis_client: aioredis.Redis,
                  namespace: str = "service_mesh"):
@@ -419,11 +447,13 @@ class ServiceMesh:
         self.middleware: List[Callable] = []
         
     async def start(self):
-        """Démarre le service mesh"""        await self.discovery.start()
+        """Démarre le service mesh"""
+        await self.discovery.start()
         logger.info("ServiceMesh démarré")
         
     async def stop(self):
-        """Arrête le service mesh"""        await self.discovery.stop()
+        """Arrête le service mesh"""
+        await self.discovery.stop()
         logger.info("ServiceMesh arrêté")
         
     async def register_service(self, 
@@ -432,7 +462,8 @@ class ServiceMesh:
                               port: int,
                               service_type: ServiceType = ServiceType.MICROSERVICE,
                               **kwargs) -> str:
-        """Enregistre un service dans le mesh"""        service = ServiceInstance(
+        """Enregistre un service dans le mesh"""
+        service = ServiceInstance(
             service_id=str(uuid.uuid4()),
             service_name=service_name,
             service_type=service_type,
@@ -451,7 +482,8 @@ class ServiceMesh:
                           headers: Optional[Dict] = None,
                           timeout: Optional[int] = None,
                           caller_service: Optional[str] = None) -> Tuple[int, Dict]:
-        """Appelle un service via le mesh"""        
+        """Appelle un service via le mesh"""
+        
         # Découvrir les instances
         instances = await self.discovery.discover_services(service_name)
         if not instances:
@@ -512,7 +544,8 @@ class ServiceMesh:
             raise e
             
     def _select_instance(self, instances: List[ServiceInstance], policy: ServicePolicy) -> Optional[ServiceInstance]:
-        """Sélectionne une instance selon la politique"""        if not instances:
+        """Sélectionne une instance selon la politique"""
+        if not instances:
             return None
             
         if policy.traffic_policy == TrafficPolicy.ROUND_ROBIN:
@@ -541,7 +574,8 @@ class ServiceMesh:
             return instances[0]
             
     def _is_circuit_breaker_open(self, service_name: str, instance_id: str) -> bool:
-        """Vérifie si le circuit breaker est ouvert"""        key = f"{service_name}:{instance_id}"
+        """Vérifie si le circuit breaker est ouvert"""
+        key = f"{service_name}:{instance_id}"
         if key not in self.circuit_breakers:
             return False
             
@@ -557,7 +591,8 @@ class ServiceMesh:
         return False
         
     def _handle_circuit_breaker(self, service_name: str, instance_id: str, success: bool):
-        """Gère le circuit breaker"""        key = f"{service_name}:{instance_id}"
+        """Gère le circuit breaker"""
+        key = f"{service_name}:{instance_id}"
         if key not in self.circuit_breakers:
             self.circuit_breakers[key] = {
                 "failures": 0,
@@ -583,7 +618,8 @@ class ServiceMesh:
                 cb["reset_time"] = time.time() + timeout
                 
     def _check_rate_limit(self, service_name: str, caller_service: Optional[str]) -> bool:
-        """Vérifie le rate limiting"""        policy = self.discovery.policies.get(service_name)
+        """Vérifie le rate limiting"""
+        policy = self.discovery.policies.get(service_name)
         if not policy or not policy.rate_limit:
             return True
             
@@ -607,7 +643,8 @@ class ServiceMesh:
         return rl["count"] <= policy.rate_limit
         
     def _record_call_metrics(self, service_name: str, instance_id: str, success: bool, status_code: int):
-        """Enregistre les métriques d'appel"""        key = f"{service_name}:{instance_id}"
+        """Enregistre les métriques d'appel"""
+        key = f"{service_name}:{instance_id}"
         if key not in self.metrics:
             self.metrics[key] = {
                 "total_calls": 0,
@@ -626,11 +663,13 @@ class ServiceMesh:
             metrics["failed_calls"] += 1
             
     def _get_active_connections(self, instance_id: str) -> int:
-        """Retourne le nombre de connexions actives pour une instance"""        # Implémentation simplifiée - devrait être intégrée avec des métriques réelles
+        """Retourne le nombre de connexions actives pour une instance"""
+        # Implémentation simplifiée - devrait être intégrée avec des métriques réelles
         return self.metrics.get(instance_id, {}).get("active_connections", 0)
         
     def get_mesh_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques du mesh"""        return {
+        """Retourne les statistiques du mesh"""
+        return {
             "discovery": self.discovery.get_discovery_stats(),
             "circuit_breakers": {
                 key: {

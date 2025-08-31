@@ -21,7 +21,8 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -43,7 +44,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class LinkedInProfile:
-    """LinkedIn profile information"""    profile_id: str
+    """LinkedIn profile information"""
+    profile_id: str
     username: str
     display_name: str
     headline: str
@@ -72,7 +74,8 @@ class LinkedInProfile:
 
 @dataclass
 class LinkedInPost:
-    """LinkedIn post information"""    post_id: str
+    """LinkedIn post information"""
+    post_id: str
     author_profile: LinkedInProfile
     content: str
     post_type: str  # article, image, video, document, poll, carousel
@@ -100,7 +103,8 @@ class LinkedInPost:
 
 @dataclass
 class LinkedInCompany:
-    """LinkedIn company page information"""    company_id: str
+    """LinkedIn company page information"""
+    company_id: str
     name: str
     tagline: str
     description: str
@@ -125,7 +129,8 @@ class LinkedInCompany:
 
 
 class LinkedInCrawler(PlatformCrawler):
-    """    Professional LinkedIn crawler for content monitoring and discovery.
+    """
+    Professional LinkedIn crawler for content monitoring and discovery.
     
     Features:
     - Profile monitoring and analysis
@@ -136,7 +141,8 @@ class LinkedInCrawler(PlatformCrawler):
     - Influencer identification
     - Content performance analytics
     - Professional network mapping
-    """    
+    """
+    
     def __init__(self, config: CrawlerConfig, vector_matcher=None):
         super().__init__(config, vector_matcher)
         self.platform_name = "linkedin"
@@ -172,7 +178,8 @@ class LinkedInCrawler(PlatformCrawler):
         asyncio.create_task(self._initialize_session())
     
     async def _initialize_session(self):
-        """Initialize LinkedIn session with proper authentication"""        try:
+        """Initialize LinkedIn session with proper authentication"""
+        try:
             # Set up session with realistic headers
             self.session_headers.update({
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
@@ -206,7 +213,8 @@ class LinkedInCrawler(PlatformCrawler):
             self.logger.error(f"Error initializing LinkedIn session: {str(e)}")
     
     def _extract_session_tokens(self, content: str):
-        """Extract necessary session tokens from LinkedIn page"""        try:
+        """Extract necessary session tokens from LinkedIn page"""
+        try:
             # Extract CSRF token
             csrf_match = re.search(r'"csrfToken":"([^"]+)"', content)
             if csrf_match:
@@ -222,7 +230,8 @@ class LinkedInCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: str = "posts", 
                            max_results: int = 50) -> List[CrawlerResult]:
-        """        Search for content on LinkedIn.
+        """
+        Search for content on LinkedIn.
         
         Args:
             query: Search query
@@ -231,7 +240,8 @@ class LinkedInCrawler(PlatformCrawler):
             
         Returns:
             List of crawler results
-        """        try:
+        """
+        try:
             await self._check_rate_limit()
             
             if content_type not in self.content_types:
@@ -249,7 +259,8 @@ class LinkedInCrawler(PlatformCrawler):
             return []
     
     async def _crawl_profile(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl LinkedIn profiles"""        try:
+        """Crawl LinkedIn profiles"""
+        try:
             results = []
             
             # Search for profiles
@@ -299,7 +310,8 @@ class LinkedInCrawler(PlatformCrawler):
             return []
     
     async def _crawl_posts(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl LinkedIn posts"""        try:
+        """Crawl LinkedIn posts"""
+        try:
             results = []
             
             # Search for posts
@@ -352,7 +364,8 @@ class LinkedInCrawler(PlatformCrawler):
             return []
     
     async def _crawl_company(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl LinkedIn company pages"""        try:
+        """Crawl LinkedIn company pages"""
+        try:
             results = []
             
             # Search for companies
@@ -403,7 +416,8 @@ class LinkedInCrawler(PlatformCrawler):
             return []
     
     async def _crawl_jobs(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl LinkedIn job postings"""        try:
+        """Crawl LinkedIn job postings"""
+        try:
             results = []
             
             # Search for jobs
@@ -453,7 +467,8 @@ class LinkedInCrawler(PlatformCrawler):
             return []
     
     async def _crawl_articles(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl LinkedIn articles"""        try:
+        """Crawl LinkedIn articles"""
+        try:
             results = []
             
             # Search for articles (LinkedIn Pulse)
@@ -506,7 +521,8 @@ class LinkedInCrawler(PlatformCrawler):
             return []
     
     async def _crawl_search(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """General LinkedIn search"""        try:
+        """General LinkedIn search"""
+        try:
             results = []
             
             # General search
@@ -554,7 +570,8 @@ class LinkedInCrawler(PlatformCrawler):
     # Helper methods for data extraction
     
     def _extract_profile_urls(self, content: str) -> List[str]:
-        """Extract profile URLs from search results"""        try:
+        """Extract profile URLs from search results"""
+        try:
             profile_urls = []
             
             # Pattern for LinkedIn profile URLs
@@ -573,7 +590,8 @@ class LinkedInCrawler(PlatformCrawler):
             return []
     
     def _extract_company_urls(self, content: str) -> List[str]:
-        """Extract company URLs from search results"""        try:
+        """Extract company URLs from search results"""
+        try:
             company_urls = []
             
             # Pattern for LinkedIn company URLs
@@ -592,7 +610,8 @@ class LinkedInCrawler(PlatformCrawler):
             return []
     
     def _extract_posts_from_search(self, content: str) -> List[Dict[str, Any]]:
-        """Extract post data from search results"""        try:
+        """Extract post data from search results"""
+        try:
             posts = []
             
             # Extract post data using regex patterns
@@ -613,7 +632,8 @@ class LinkedInCrawler(PlatformCrawler):
             return []
     
     def _extract_jobs_from_search(self, content: str) -> List[Dict[str, Any]]:
-        """Extract job data from search results"""        try:
+        """Extract job data from search results"""
+        try:
             jobs = []
             
             # Extract job data using regex patterns
@@ -644,7 +664,8 @@ class LinkedInCrawler(PlatformCrawler):
             return []
     
     def _extract_articles_from_search(self, content: str) -> List[Dict[str, Any]]:
-        """Extract article data from search results"""        try:
+        """Extract article data from search results"""
+        try:
             articles = []
             
             # Extract article data
@@ -667,7 +688,8 @@ class LinkedInCrawler(PlatformCrawler):
             return []
     
     async def _get_profile_details(self, profile_url: str) -> Optional[LinkedInProfile]:
-        """Get detailed profile information"""        try:
+        """Get detailed profile information"""
+        try:
             async with self.session.get(
                 profile_url,
                 headers=self.session_headers
@@ -681,7 +703,8 @@ class LinkedInCrawler(PlatformCrawler):
             return None
     
     async def _get_post_details(self, post_id: str) -> Optional[LinkedInPost]:
-        """Get detailed post information"""        try:
+        """Get detailed post information"""
+        try:
             post_url = f"{self.base_url}/feed/update/urn:li:activity:{post_id}"
             
             async with self.session.get(
@@ -697,7 +720,8 @@ class LinkedInCrawler(PlatformCrawler):
             return None
     
     async def _get_company_details(self, company_url: str) -> Optional[LinkedInCompany]:
-        """Get detailed company information"""        try:
+        """Get detailed company information"""
+        try:
             async with self.session.get(
                 company_url,
                 headers=self.session_headers
@@ -711,7 +735,8 @@ class LinkedInCrawler(PlatformCrawler):
             return None
     
     async def _get_article_content(self, article_url: str) -> Optional[Dict[str, Any]]:
-        """Get full article content"""        try:
+        """Get full article content"""
+        try:
             async with self.session.get(
                 article_url,
                 headers=self.session_headers
@@ -725,7 +750,8 @@ class LinkedInCrawler(PlatformCrawler):
             return None
     
     def _parse_profile_data(self, content: str, profile_url: str) -> LinkedInProfile:
-        """Parse profile data from HTML content"""        try:
+        """Parse profile data from HTML content"""
+        try:
             # Extract profile information using regex and parsing
             # This is a simplified implementation
             
@@ -770,7 +796,8 @@ class LinkedInCrawler(PlatformCrawler):
             return None
     
     def _parse_post_data(self, content: str, post_id: str) -> LinkedInPost:
-        """Parse post data from HTML content"""        try:
+        """Parse post data from HTML content"""
+        try:
             # Simplified post parsing
             # Real implementation would be much more sophisticated
             
@@ -808,7 +835,8 @@ class LinkedInCrawler(PlatformCrawler):
             return None
     
     def _parse_company_data(self, content: str, company_url: str) -> LinkedInCompany:
-        """Parse company data from HTML content"""        try:
+        """Parse company data from HTML content"""
+        try:
             # Simplified company parsing
             
             company = LinkedInCompany(
@@ -843,7 +871,8 @@ class LinkedInCrawler(PlatformCrawler):
             return None
     
     def _parse_article_data(self, content: str, article_url: str) -> Dict[str, Any]:
-        """Parse article data from HTML content"""        try:
+        """Parse article data from HTML content"""
+        try:
             # Simplified article parsing
             return {
                 'content': '',
@@ -857,7 +886,8 @@ class LinkedInCrawler(PlatformCrawler):
             return {}
     
     def _extract_profile_id(self, profile_url: str) -> str:
-        """Extract profile ID from URL"""        try:
+        """Extract profile ID from URL"""
+        try:
             # Extract from URL pattern
             match = re.search(r'/in/([^/?]+)', profile_url)
             return match.group(1) if match else ""
@@ -865,21 +895,24 @@ class LinkedInCrawler(PlatformCrawler):
             return ""
     
     def _extract_company_id(self, company_url: str) -> str:
-        """Extract company ID from URL"""        try:
+        """Extract company ID from URL"""
+        try:
             match = re.search(r'/company/([^/?]+)', company_url)
             return match.group(1) if match else ""
         except:
             return ""
     
     def _extract_username_from_url(self, profile_url: str) -> str:
-        """Extract username from profile URL"""        try:
+        """Extract username from profile URL"""
+        try:
             match = re.search(r'/in/([^/?]+)', profile_url)
             return match.group(1) if match else ""
         except:
             return ""
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""        try:
+        """Check and enforce rate limiting"""
+        try:
             current_time = time.time()
             
             # Check daily limit
@@ -902,7 +935,8 @@ class LinkedInCrawler(PlatformCrawler):
             raise
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from LinkedIn content"""        try:
+        """Extract metadata from LinkedIn content"""
+        try:
             # Determine content type from URL
             if '/in/' in url:
                 content_type = 'profile'
@@ -940,7 +974,8 @@ class LinkedInCrawler(PlatformCrawler):
             return {'error': str(e)}
     
     def get_platform_info(self) -> Dict[str, Any]:
-        """Get LinkedIn platform information"""        return {
+        """Get LinkedIn platform information"""
+        return {
             'platform_name': 'LinkedIn',
             'base_url': self.base_url,
             'supported_content_types': list(self.content_types.keys()),

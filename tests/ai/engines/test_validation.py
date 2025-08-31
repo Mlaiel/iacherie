@@ -17,7 +17,8 @@ Tous droits réservés. Usage non autorisé strictement interdit.
 - Développeur Audio
 - DevOps Engineer
 - IA Prompt Engineer
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -51,9 +52,11 @@ from ai.engines.validation import (
 
 
 class TestValidationRule:
-    """Tests pour les règles de validation."""    
+    """Tests pour les règles de validation."""
+    
     def test_rule_creation(self):
-        """Test la création d'une règle de validation."""        rule = ValidationRule(
+        """Test la création d'une règle de validation."""
+        rule = ValidationRule(
             name="test_rule",
             description="Règle de test",
             category=ValidationCategory.CONTENT_QUALITY,
@@ -70,7 +73,8 @@ class TestValidationRule:
         assert rule.enabled is True
     
     def test_rule_evaluation(self):
-        """Test l'évaluation d'une règle."""        rule = ValidationRule(
+        """Test l'évaluation d'une règle."""
+        rule = ValidationRule(
             name="min_length",
             condition=lambda x: len(str(x)) >= 5,
             message="Longueur minimale requise: 5 caractères"
@@ -83,7 +87,8 @@ class TestValidationRule:
         assert rule.evaluate("Hi") is False
     
     def test_rule_parameters(self):
-        """Test les règles avec paramètres."""        def check_length(content, min_length=10):
+        """Test les règles avec paramètres."""
+        def check_length(content, min_length=10):
             return len(str(content)) >= min_length
         
         rule = ValidationRule(
@@ -98,9 +103,11 @@ class TestValidationRule:
 
 
 class TestValidationResult:
-    """Tests pour les résultats de validation."""    
+    """Tests pour les résultats de validation."""
+    
     def test_result_creation(self):
-        """Test la création d'un résultat de validation."""        result = ValidationResult(
+        """Test la création d'un résultat de validation."""
+        result = ValidationResult(
             rule_name="test_rule",
             passed=False,
             message="Validation échouée",
@@ -118,7 +125,8 @@ class TestValidationResult:
         assert isinstance(result.timestamp, datetime)
     
     def test_result_serialization(self):
-        """Test la sérialisation des résultats."""        result = ValidationResult(
+        """Test la sérialisation des résultats."""
+        result = ValidationResult(
             rule_name="test_rule",
             passed=True,
             message="Validation réussie",
@@ -138,17 +146,21 @@ class TestValidationResult:
 
 
 class TestRuleEngine:
-    """Tests pour le moteur de règles."""    
+    """Tests pour le moteur de règles."""
+    
     @pytest.fixture
     def rule_engine(self):
-        """Fixture pour créer un moteur de règles."""        return RuleEngine()
+        """Fixture pour créer un moteur de règles."""
+        return RuleEngine()
     
     def test_engine_initialization(self, rule_engine):
-        """Test l'initialisation du moteur."""        assert len(rule_engine.rules) == 0
+        """Test l'initialisation du moteur."""
+        assert len(rule_engine.rules) == 0
         assert rule_engine.enabled is True
     
     def test_add_rule(self, rule_engine):
-        """Test l'ajout de règles."""        rule = ValidationRule(
+        """Test l'ajout de règles."""
+        rule = ValidationRule(
             name="test_rule",
             condition=lambda x: x > 0,
             message="Valeur doit être positive"
@@ -161,7 +173,8 @@ class TestRuleEngine:
         assert rule_engine.rules["test_rule"] == rule
     
     def test_remove_rule(self, rule_engine):
-        """Test la suppression de règles."""        rule = ValidationRule(name="temp_rule", condition=lambda x: True)
+        """Test la suppression de règles."""
+        rule = ValidationRule(name="temp_rule", condition=lambda x: True)
         rule_engine.add_rule(rule)
         
         assert "temp_rule" in rule_engine.rules
@@ -171,7 +184,8 @@ class TestRuleEngine:
         assert "temp_rule" not in rule_engine.rules
     
     def test_validate_single_rule(self, rule_engine):
-        """Test la validation avec une seule règle."""        rule = ValidationRule(
+        """Test la validation avec une seule règle."""
+        rule = ValidationRule(
             name="positive_number",
             condition=lambda x: x > 0,
             message="Le nombre doit être positif",
@@ -191,7 +205,8 @@ class TestRuleEngine:
         assert results[0].severity == ValidationSeverity.ERROR
     
     def test_validate_multiple_rules(self, rule_engine):
-        """Test la validation avec plusieurs règles."""        rules = [
+        """Test la validation avec plusieurs règles."""
+        rules = [
             ValidationRule(
                 name="positive",
                 condition=lambda x: x > 0,
@@ -219,7 +234,8 @@ class TestRuleEngine:
         assert results[1].passed is False  # not_too_large
     
     def test_conditional_rules(self, rule_engine):
-        """Test les règles conditionnelles."""        def conditional_rule(data):
+        """Test les règles conditionnelles."""
+        def conditional_rule(data):
             if isinstance(data, dict) and "type" in data:
                 if data["type"] == "email":
                     return "@" in str(data.get("value", ""))
@@ -246,19 +262,23 @@ class TestRuleEngine:
 
 
 class TestContentValidator:
-    """Tests pour le validateur de contenu principal."""    
+    """Tests pour le validateur de contenu principal."""
+    
     @pytest.fixture
     def validator(self):
-        """Fixture pour créer un validateur de contenu."""        return ContentValidator()
+        """Fixture pour créer un validateur de contenu."""
+        return ContentValidator()
     
     def test_validator_initialization(self, validator):
-        """Test l'initialisation du validateur."""        assert validator.rule_engine is not None
+        """Test l'initialisation du validateur."""
+        assert validator.rule_engine is not None
         assert validator.enabled is True
         assert len(validator.validation_history) == 0
     
     @pytest.mark.asyncio
     async def test_validate_content(self, validator):
-        """Test la validation de contenu."""        # Ajouter une règle simple
+        """Test la validation de contenu."""
+        # Ajouter une règle simple
         rule = ValidationRule(
             name="content_not_empty",
             condition=lambda x: len(str(x).strip()) > 0,
@@ -277,7 +297,8 @@ class TestContentValidator:
         assert results[0].passed is False
     
     def test_validation_history(self, validator):
-        """Test l'historique de validation."""        rule = ValidationRule(
+        """Test l'historique de validation."""
+        rule = ValidationRule(
             name="test_rule",
             condition=lambda x: True,
             message="Test"
@@ -298,7 +319,8 @@ class TestContentValidator:
         assert len(validator.validation_history) == 2  # Limite respectée
     
     def test_validation_metrics(self, validator):
-        """Test les métriques de validation."""        # Ajouter des règles de test
+        """Test les métriques de validation."""
+        # Ajouter des règles de test
         rules = [
             ValidationRule(
                 name="always_pass",
@@ -330,13 +352,16 @@ class TestContentValidator:
 
 
 class TestAudioValidator:
-    """Tests pour le validateur audio."""    
+    """Tests pour le validateur audio."""
+    
     @pytest.fixture
     def audio_validator(self):
-        """Fixture pour créer un validateur audio."""        return AudioValidator()
+        """Fixture pour créer un validateur audio."""
+        return AudioValidator()
     
     def test_audio_format_validation(self, audio_validator):
-        """Test la validation du format audio."""        # Formats valides
+        """Test la validation du format audio."""
+        # Formats valides
         valid_formats = ["audio.mp3", "music.wav", "voice.flac", "sound.aac"]
         
         for filename in valid_formats:
@@ -351,7 +376,8 @@ class TestAudioValidator:
             assert result.passed is False
     
     def test_audio_duration_validation(self, audio_validator):
-        """Test la validation de la durée audio."""        # Configuration des limites
+        """Test la validation de la durée audio."""
+        # Configuration des limites
         audio_validator.min_duration = 1.0  # 1 seconde
         audio_validator.max_duration = 300.0  # 5 minutes
         
@@ -368,7 +394,8 @@ class TestAudioValidator:
         assert result.passed is False
     
     def test_audio_quality_validation(self, audio_validator):
-        """Test la validation de la qualité audio."""        # Paramètres de qualité
+        """Test la validation de la qualité audio."""
+        # Paramètres de qualité
         quality_params = {
             "sample_rate": 44100,
             "bit_depth": 16,
@@ -393,7 +420,8 @@ class TestAudioValidator:
     
     @pytest.mark.asyncio
     async def test_audio_content_analysis(self, audio_validator):
-        """Test l'analyse du contenu audio."""        # Mock des données audio
+        """Test l'analyse du contenu audio."""
+        # Mock des données audio
         mock_audio_data = {
             "duration": 30.0,
             "sample_rate": 44100,
@@ -411,13 +439,16 @@ class TestAudioValidator:
 
 
 class TestVideoValidator:
-    """Tests pour le validateur vidéo."""    
+    """Tests pour le validateur vidéo."""
+    
     @pytest.fixture
     def video_validator(self):
-        """Fixture pour créer un validateur vidéo."""        return VideoValidator()
+        """Fixture pour créer un validateur vidéo."""
+        return VideoValidator()
     
     def test_video_format_validation(self, video_validator):
-        """Test la validation du format vidéo."""        # Formats valides
+        """Test la validation du format vidéo."""
+        # Formats valides
         valid_formats = ["video.mp4", "movie.avi", "clip.mov", "stream.webm"]
         
         for filename in valid_formats:
@@ -432,7 +463,8 @@ class TestVideoValidator:
             assert result.passed is False
     
     def test_video_resolution_validation(self, video_validator):
-        """Test la validation de la résolution vidéo."""        # Résolutions valides
+        """Test la validation de la résolution vidéo."""
+        # Résolutions valides
         valid_resolutions = ["1920x1080", "1280x720", "640x480"]
         
         for resolution in valid_resolutions:
@@ -447,7 +479,8 @@ class TestVideoValidator:
             assert result.passed is False
     
     def test_video_codec_validation(self, video_validator):
-        """Test la validation du codec vidéo."""        # Codecs valides
+        """Test la validation du codec vidéo."""
+        # Codecs valides
         valid_codecs = ["h264", "h265", "vp9", "av1"]
         
         for codec in valid_codecs:
@@ -463,7 +496,8 @@ class TestVideoValidator:
     
     @pytest.mark.asyncio
     async def test_video_scene_analysis(self, video_validator):
-        """Test l'analyse des scènes vidéo."""        # Mock des données d'analyse
+        """Test l'analyse des scènes vidéo."""
+        # Mock des données d'analyse
         mock_analysis = {
             "scene_changes": [5.0, 15.0, 25.0],
             "average_brightness": 0.6,
@@ -480,13 +514,16 @@ class TestVideoValidator:
 
 
 class TestImageValidator:
-    """Tests pour le validateur d'images."""    
+    """Tests pour le validateur d'images."""
+    
     @pytest.fixture
     def image_validator(self):
-        """Fixture pour créer un validateur d'images."""        return ImageValidator()
+        """Fixture pour créer un validateur d'images."""
+        return ImageValidator()
     
     def test_image_format_validation(self, image_validator):
-        """Test la validation du format d'image."""        # Formats valides
+        """Test la validation du format d'image."""
+        # Formats valides
         valid_formats = ["photo.jpg", "image.png", "graphic.webp", "vector.svg"]
         
         for filename in valid_formats:
@@ -501,7 +538,8 @@ class TestImageValidator:
             assert result.passed is False
     
     def test_image_dimensions_validation(self, image_validator):
-        """Test la validation des dimensions d'image."""        # Dimensions valides
+        """Test la validation des dimensions d'image."""
+        # Dimensions valides
         valid_dimensions = [(1920, 1080), (800, 600), (300, 200)]
         
         for width, height in valid_dimensions:
@@ -516,7 +554,8 @@ class TestImageValidator:
             assert result.passed is False
     
     def test_image_quality_analysis(self, image_validator):
-        """Test l'analyse de qualité d'image."""        # Créer une image de test
+        """Test l'analyse de qualité d'image."""
+        # Créer une image de test
         test_image = Image.new('RGB', (100, 100), color='red')
         
         # Convertir en bytes
@@ -533,7 +572,8 @@ class TestImageValidator:
     
     @pytest.mark.asyncio
     async def test_image_content_detection(self, image_validator):
-        """Test la détection de contenu d'image."""        # Mock de l'analyse de contenu
+        """Test la détection de contenu d'image."""
+        # Mock de l'analyse de contenu
         mock_content = {
             "objects": ["person", "car", "building"],
             "faces": 2,
@@ -550,13 +590,16 @@ class TestImageValidator:
 
 
 class TestTextValidator:
-    """Tests pour le validateur de texte."""    
+    """Tests pour le validateur de texte."""
+    
     @pytest.fixture
     def text_validator(self):
-        """Fixture pour créer un validateur de texte."""        return TextValidator()
+        """Fixture pour créer un validateur de texte."""
+        return TextValidator()
     
     def test_text_length_validation(self, text_validator):
-        """Test la validation de la longueur du texte."""        # Configuration des limites
+        """Test la validation de la longueur du texte."""
+        # Configuration des limites
         text_validator.min_length = 10
         text_validator.max_length = 1000
         
@@ -576,7 +619,8 @@ class TestTextValidator:
         assert result.passed is False
     
     def test_text_language_detection(self, text_validator):
-        """Test la détection de langue."""        # Textes dans différentes langues
+        """Test la détection de langue."""
+        # Textes dans différentes langues
         test_texts = [
             ("Hello, this is English text.", "en"),
             ("Bonjour, ceci est du français.", "fr"),
@@ -591,7 +635,8 @@ class TestTextValidator:
             assert "detected_language" in result.details
     
     def test_text_sentiment_analysis(self, text_validator):
-        """Test l'analyse de sentiment."""        # Textes avec différents sentiments
+        """Test l'analyse de sentiment."""
+        # Textes avec différents sentiments
         test_cases = [
             ("Je suis très heureux aujourd'hui!", "positive"),
             ("C'est une journée normale.", "neutral"),
@@ -605,7 +650,8 @@ class TestTextValidator:
             assert "confidence" in result.details
     
     def test_text_profanity_detection(self, text_validator):
-        """Test la détection de contenu inapproprié."""        # Texte approprié
+        """Test la détection de contenu inapproprié."""
+        # Texte approprié
         clean_text = "Ceci est un texte parfaitement approprié."
         result = text_validator.detect_profanity(clean_text)
         assert result.passed is True
@@ -618,13 +664,16 @@ class TestTextValidator:
     
     @pytest.mark.asyncio
     async def test_text_readability_analysis(self, text_validator):
-        """Test l'analyse de lisibilité."""        # Texte de test
-        test_text = """        Ceci est un texte de test pour analyser la lisibilité.
+        """Test l'analyse de lisibilité."""
+        # Texte de test
+        test_text = """
+        Ceci est un texte de test pour analyser la lisibilité.
         Il contient plusieurs phrases de longueurs différentes.
         Certaines phrases sont courtes. D'autres sont beaucoup plus longues 
         et contiennent des mots complexes et des structures grammaticales 
         plus sophistiquées qui peuvent affecter la lisibilité globale.
-        """        
+        """
+        
         result = await text_validator.analyze_readability(test_text)
         
         assert result.passed is True
@@ -634,13 +683,16 @@ class TestTextValidator:
 
 
 class TestSecurityValidator:
-    """Tests pour le validateur de sécurité."""    
+    """Tests pour le validateur de sécurité."""
+    
     @pytest.fixture
     def security_validator(self):
-        """Fixture pour créer un validateur de sécurité."""        return SecurityValidator()
+        """Fixture pour créer un validateur de sécurité."""
+        return SecurityValidator()
     
     def test_sql_injection_detection(self, security_validator):
-        """Test la détection d'injection SQL."""        # Texte sûr
+        """Test la détection d'injection SQL."""
+        # Texte sûr
         safe_text = "Rechercher des informations sur les produits"
         result = security_validator.detect_sql_injection(safe_text)
         assert result.passed is True
@@ -657,7 +709,8 @@ class TestSecurityValidator:
             assert result.passed is False
     
     def test_xss_detection(self, security_validator):
-        """Test la détection de XSS."""        # Contenu sûr
+        """Test la détection de XSS."""
+        # Contenu sûr
         safe_content = "Contenu normal sans scripts"
         result = security_validator.detect_xss(safe_content)
         assert result.passed is True
@@ -674,7 +727,8 @@ class TestSecurityValidator:
             assert result.passed is False
     
     def test_file_upload_validation(self, security_validator):
-        """Test la validation des uploads de fichiers."""        # Fichier sûr
+        """Test la validation des uploads de fichiers."""
+        # Fichier sûr
         safe_file = {
             "filename": "document.pdf",
             "content_type": "application/pdf",
@@ -693,7 +747,8 @@ class TestSecurityValidator:
         assert result.passed is False
     
     def test_password_strength_validation(self, security_validator):
-        """Test la validation de la force des mots de passe."""        # Mot de passe fort
+        """Test la validation de la force des mots de passe."""
+        # Mot de passe fort
         strong_password = "MyStr0ng!P@ssw0rd123"
         result = security_validator.validate_password_strength(strong_password)
         assert result.passed is True
@@ -713,13 +768,16 @@ class TestSecurityValidator:
 
 
 class TestQualityValidator:
-    """Tests pour le validateur de qualité."""    
+    """Tests pour le validateur de qualité."""
+    
     @pytest.fixture
     def quality_validator(self):
-        """Fixture pour créer un validateur de qualité."""        return QualityValidator()
+        """Fixture pour créer un validateur de qualité."""
+        return QualityValidator()
     
     def test_content_originality_check(self, quality_validator):
-        """Test la vérification d'originalité du contenu."""        # Contenu original
+        """Test la vérification d'originalité du contenu."""
+        # Contenu original
         original_content = "Ceci est un contenu totalement original et unique."
         result = quality_validator.check_originality(original_content)
         assert result.passed is True
@@ -731,7 +789,8 @@ class TestQualityValidator:
             assert result.passed is False
     
     def test_content_completeness_validation(self, quality_validator):
-        """Test la validation de la complétude du contenu."""        # Contenu complet
+        """Test la validation de la complétude du contenu."""
+        # Contenu complet
         complete_content = {
             "title": "Titre complet",
             "description": "Description détaillée du contenu",
@@ -752,7 +811,8 @@ class TestQualityValidator:
         assert result.passed is False
     
     def test_content_relevance_scoring(self, quality_validator):
-        """Test le scoring de pertinence du contenu."""        # Contenu pertinent
+        """Test le scoring de pertinence du contenu."""
+        # Contenu pertinent
         relevant_content = {
             "title": "Guide complet sur l'IA",
             "content": "Ce guide détaille les aspects techniques de l'intelligence artificielle",
@@ -775,13 +835,16 @@ class TestQualityValidator:
 
 
 class TestEngineTestSuite:
-    """Tests pour la suite de tests des moteurs."""    
+    """Tests pour la suite de tests des moteurs."""
+    
     @pytest.fixture
     def test_suite(self):
-        """Fixture pour créer une suite de tests."""        return EngineTestSuite()
+        """Fixture pour créer une suite de tests."""
+        return EngineTestSuite()
     
     def test_test_case_creation(self, test_suite):
-        """Test la création de cas de test."""        test_case = TestCase(
+        """Test la création de cas de test."""
+        test_case = TestCase(
             name="test_basic_functionality",
             description="Test de la fonctionnalité de base",
             input_data={"text": "Hello World"},
@@ -795,7 +858,8 @@ class TestEngineTestSuite:
         assert test_case.expected_output["processed"] is True
     
     def test_add_test_case(self, test_suite):
-        """Test l'ajout de cas de test."""        test_case = TestCase(
+        """Test l'ajout de cas de test."""
+        test_case = TestCase(
             name="sample_test",
             test_function=lambda x: x
         )
@@ -807,7 +871,8 @@ class TestEngineTestSuite:
     
     @pytest.mark.asyncio
     async def test_run_single_test(self, test_suite):
-        """Test l'exécution d'un test unique."""        def test_function(input_data):
+        """Test l'exécution d'un test unique."""
+        def test_function(input_data):
             return input_data["value"] * 2
         
         test_case = TestCase(
@@ -828,7 +893,8 @@ class TestEngineTestSuite:
     
     @pytest.mark.asyncio
     async def test_run_all_tests(self, test_suite):
-        """Test l'exécution de tous les tests."""        # Ajouter plusieurs tests
+        """Test l'exécution de tous les tests."""
+        # Ajouter plusieurs tests
         tests = [
             TestCase(
                 name="test_1",
@@ -863,14 +929,17 @@ class TestEngineTestSuite:
 
 
 class TestPerformanceTester:
-    """Tests pour le testeur de performance."""    
+    """Tests pour le testeur de performance."""
+    
     @pytest.fixture
     def performance_tester(self):
-        """Fixture pour créer un testeur de performance."""        return PerformanceTester()
+        """Fixture pour créer un testeur de performance."""
+        return PerformanceTester()
     
     @pytest.mark.asyncio
     async def test_response_time_measurement(self, performance_tester):
-        """Test la mesure du temps de réponse."""        async def test_function():
+        """Test la mesure du temps de réponse."""
+        async def test_function():
             await asyncio.sleep(0.1)  # Simulation de traitement
             return "result"
         
@@ -883,7 +952,8 @@ class TestPerformanceTester:
     
     @pytest.mark.asyncio
     async def test_throughput_measurement(self, performance_tester):
-        """Test la mesure du débit."""        def process_item(item):
+        """Test la mesure du débit."""
+        def process_item(item):
             return item * 2
         
         items = list(range(100))
@@ -897,7 +967,8 @@ class TestPerformanceTester:
         assert len(result["processed_items"]) == 100
     
     def test_memory_usage_measurement(self, performance_tester):
-        """Test la mesure de l'utilisation mémoire."""        def memory_intensive_function():
+        """Test la mesure de l'utilisation mémoire."""
+        def memory_intensive_function():
             # Allouer de la mémoire
             large_list = [i for i in range(10000)]
             return len(large_list)
@@ -913,7 +984,8 @@ class TestPerformanceTester:
     
     @pytest.mark.asyncio
     async def test_load_testing(self, performance_tester):
-        """Test des tests de charge."""        async def simple_service(request):
+        """Test des tests de charge."""
+        async def simple_service(request):
             await asyncio.sleep(0.01)  # Simulation de traitement
             return f"processed_{request}"
         
@@ -935,14 +1007,17 @@ class TestPerformanceTester:
 
 
 class TestIntegrationTester:
-    """Tests pour le testeur d'intégration."""    
+    """Tests pour le testeur d'intégration."""
+    
     @pytest.fixture
     def integration_tester(self):
-        """Fixture pour créer un testeur d'intégration."""        return IntegrationTester()
+        """Fixture pour créer un testeur d'intégration."""
+        return IntegrationTester()
     
     @pytest.mark.asyncio
     async def test_api_integration(self, integration_tester):
-        """Test d'intégration API."""        # Mock d'une API
+        """Test d'intégration API."""
+        # Mock d'une API
         async def mock_api_call(endpoint, data):
             if endpoint == "/process" and "text" in data:
                 return {"status": "success", "result": f"processed_{data['text']}"}
@@ -964,7 +1039,8 @@ class TestIntegrationTester:
     
     @pytest.mark.asyncio
     async def test_database_integration(self, integration_tester):
-        """Test d'intégration base de données."""        # Mock de la base de données
+        """Test d'intégration base de données."""
+        # Mock de la base de données
         mock_db = {
             "users": [
                 {"id": 1, "name": "John Doe"},
@@ -991,7 +1067,8 @@ class TestIntegrationTester:
     
     @pytest.mark.asyncio
     async def test_service_communication(self, integration_tester):
-        """Test de la communication entre services."""        # Mock des services
+        """Test de la communication entre services."""
+        # Mock des services
         services = {
             "service_a": lambda data: {"from_a": data, "processed": True},
             "service_b": lambda data: {"from_b": data, "enhanced": True}
@@ -1013,18 +1090,22 @@ class TestIntegrationTester:
 
 
 class TestValidationPipeline:
-    """Tests pour le pipeline de validation."""    
+    """Tests pour le pipeline de validation."""
+    
     @pytest.fixture
     def validation_pipeline(self):
-        """Fixture pour créer un pipeline de validation."""        return ValidationPipeline()
+        """Fixture pour créer un pipeline de validation."""
+        return ValidationPipeline()
     
     def test_pipeline_initialization(self, validation_pipeline):
-        """Test l'initialisation du pipeline."""        assert len(validation_pipeline.validators) == 0
+        """Test l'initialisation du pipeline."""
+        assert len(validation_pipeline.validators) == 0
         assert validation_pipeline.enabled is True
         assert validation_pipeline.stop_on_error is False
     
     def test_add_validator(self, validation_pipeline):
-        """Test l'ajout de validateurs."""        content_validator = ContentValidator()
+        """Test l'ajout de validateurs."""
+        content_validator = ContentValidator()
         security_validator = SecurityValidator()
         
         validation_pipeline.add_validator("content", content_validator)
@@ -1036,7 +1117,8 @@ class TestValidationPipeline:
     
     @pytest.mark.asyncio
     async def test_run_pipeline(self, validation_pipeline):
-        """Test l'exécution du pipeline."""        # Créer des validateurs mock
+        """Test l'exécution du pipeline."""
+        # Créer des validateurs mock
         mock_validator_1 = Mock()
         mock_validator_1.validate_content = AsyncMock(return_value=[
             ValidationResult("rule1", True, "OK", ValidationSeverity.INFO)
@@ -1059,7 +1141,8 @@ class TestValidationPipeline:
     
     @pytest.mark.asyncio
     async def test_pipeline_early_termination(self, validation_pipeline):
-        """Test l'arrêt précoce du pipeline en cas d'erreur."""        validation_pipeline.stop_on_error = True
+        """Test l'arrêt précoce du pipeline en cas d'erreur."""
+        validation_pipeline.stop_on_error = True
         
         # Validateur qui échoue
         failing_validator = Mock()
@@ -1086,19 +1169,23 @@ class TestValidationPipeline:
 
 
 class TestValidationMetrics:
-    """Tests pour les métriques de validation."""    
+    """Tests pour les métriques de validation."""
+    
     @pytest.fixture
     def validation_metrics(self):
-        """Fixture pour créer des métriques de validation."""        return ValidationMetrics()
+        """Fixture pour créer des métriques de validation."""
+        return ValidationMetrics()
     
     def test_metrics_initialization(self, validation_metrics):
-        """Test l'initialisation des métriques."""        assert validation_metrics.total_validations == 0
+        """Test l'initialisation des métriques."""
+        assert validation_metrics.total_validations == 0
         assert validation_metrics.successful_validations == 0
         assert validation_metrics.failed_validations == 0
         assert len(validation_metrics.validation_history) == 0
     
     def test_record_validation_result(self, validation_metrics):
-        """Test l'enregistrement des résultats de validation."""        # Enregistrer un succès
+        """Test l'enregistrement des résultats de validation."""
+        # Enregistrer un succès
         success_results = [
             ValidationResult("rule1", True, "OK", ValidationSeverity.INFO)
         ]
@@ -1119,7 +1206,8 @@ class TestValidationMetrics:
         assert validation_metrics.failed_validations == 1
     
     def test_calculate_success_rate(self, validation_metrics):
-        """Test le calcul du taux de réussite."""        # Enregistrer plusieurs résultats
+        """Test le calcul du taux de réussite."""
+        # Enregistrer plusieurs résultats
         for i in range(10):
             results = [
                 ValidationResult(f"rule_{i}", i < 7, "message", ValidationSeverity.INFO)
@@ -1130,7 +1218,8 @@ class TestValidationMetrics:
         assert success_rate == 0.7  # 7 succès sur 10
     
     def test_get_metrics_by_severity(self, validation_metrics):
-        """Test la récupération des métriques par sévérité."""        # Enregistrer des résultats avec différentes sévérités
+        """Test la récupération des métriques par sévérité."""
+        # Enregistrer des résultats avec différentes sévérités
         results = [
             ValidationResult("info_rule", True, "Info", ValidationSeverity.INFO),
             ValidationResult("warning_rule", False, "Warning", ValidationSeverity.WARNING),
@@ -1147,7 +1236,8 @@ class TestValidationMetrics:
         assert severity_metrics[ValidationSeverity.CRITICAL] == 1
     
     def test_get_trends(self, validation_metrics):
-        """Test la récupération des tendances."""        # Simuler des validations sur plusieurs jours
+        """Test la récupération des tendances."""
+        # Simuler des validations sur plusieurs jours
         for day in range(7):
             # Jour 0-2: 80% de réussite, Jour 3-6: 90% de réussite
             success_rate = 0.8 if day < 3 else 0.9
@@ -1167,10 +1257,12 @@ class TestValidationMetrics:
 
 
 class TestIntegration:
-    """Tests d'intégration pour le système de validation complet."""    
+    """Tests d'intégration pour le système de validation complet."""
+    
     @pytest.fixture
     def validation_system(self):
-        """Fixture pour créer un système de validation complet."""        return {
+        """Fixture pour créer un système de validation complet."""
+        return {
             'pipeline': ValidationPipeline(),
             'content_validator': ContentValidator(),
             'audio_validator': AudioValidator(),
@@ -1181,7 +1273,8 @@ class TestIntegration:
     
     @pytest.mark.asyncio
     async def test_complete_validation_workflow(self, validation_system):
-        """Test du workflow complet de validation."""        pipeline = validation_system['pipeline']
+        """Test du workflow complet de validation."""
+        pipeline = validation_system['pipeline']
         content_validator = validation_system['content_validator']
         security_validator = validation_system['security_validator']
         metrics = validation_system['metrics']
@@ -1212,7 +1305,8 @@ class TestIntegration:
     
     @pytest.mark.asyncio
     async def test_multi_format_validation(self, validation_system):
-        """Test la validation multi-format."""        pipeline = validation_system['pipeline']
+        """Test la validation multi-format."""
+        pipeline = validation_system['pipeline']
         audio_validator = validation_system['audio_validator']
         
         # Ajouter le validateur audio
@@ -1238,7 +1332,8 @@ class TestIntegration:
     
     @pytest.mark.asyncio
     async def test_validation_with_testing(self, validation_system):
-        """Test l'intégration validation et tests."""        test_suite = validation_system['test_suite']
+        """Test l'intégration validation et tests."""
+        test_suite = validation_system['test_suite']
         content_validator = validation_system['content_validator']
         
         # Créer un test pour le validateur
@@ -1268,7 +1363,8 @@ class TestIntegration:
         assert test_result.actual_output is True
     
     def test_performance_and_quality_integration(self, validation_system):
-        """Test l'intégration performance et qualité."""        # Simuler des validations avec mesure de performance
+        """Test l'intégration performance et qualité."""
+        # Simuler des validations avec mesure de performance
         metrics = validation_system['metrics']
         
         import time

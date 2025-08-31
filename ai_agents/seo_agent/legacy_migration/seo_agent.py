@@ -19,7 +19,8 @@ Project Team Specializations:
 Any attempt to steal, copy, reverse-engineer, or commercialize this code without explicit written authorization 
 will result in immediate legal action under German and international intellectual property law.
 Contact mlaiel@live.de for licensing inquiries only.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import hashlib
@@ -61,7 +62,8 @@ from .config import SEOAgentConfig
 logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
-    """Advanced SEO optimization strategy types"""    KEYWORD_OPTIMIZATION = "keyword_optimization"
+    """Advanced SEO optimization strategy types"""
+    KEYWORD_OPTIMIZATION = "keyword_optimization"
     METADATA_OPTIMIZATION = "metadata_optimization"
     CONTENT_STRUCTURE = "content_structure"
     TECHNICAL_SEO = "technical_seo"
@@ -81,7 +83,8 @@ class OptimizationType(Enum):
     AI_CONTENT_OPTIMIZATION = "ai_content_optimization"
 
 class ContentType(Enum):
-    """Multi-format content types for specialized SEO optimization"""    MUSIC_TRACK = "music_track"
+    """Multi-format content types for specialized SEO optimization"""
+    MUSIC_TRACK = "music_track"
     MUSIC_ALBUM = "music_album"
     MUSIC_PLAYLIST = "music_playlist"
     VIDEO_CONTENT = "video_content"
@@ -104,14 +107,16 @@ class ContentType(Enum):
     SHORT_FORM_VIDEO = "short_form_video"
 
 class SEOPriority(IntEnum):
-    """SEO optimization priority levels"""    CRITICAL = 1
+    """SEO optimization priority levels"""
+    CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
     LOW = 4
     MAINTENANCE = 5
 
 class SearchEngineType(Enum):
-    """Supported search engines for optimization"""    GOOGLE = "google"
+    """Supported search engines for optimization"""
+    GOOGLE = "google"
     BING = "bing"
     YANDEX = "yandex"
     BAIDU = "baidu"
@@ -120,7 +125,8 @@ class SearchEngineType(Enum):
     ASK = "ask"
 
 class KeywordIntent(Enum):
-    """Search intent classification for keyword targeting"""    INFORMATIONAL = "informational"
+    """Search intent classification for keyword targeting"""
+    INFORMATIONAL = "informational"
     NAVIGATIONAL = "navigational"
     TRANSACTIONAL = "transactional"
     COMMERCIAL = "commercial"
@@ -129,7 +135,8 @@ class KeywordIntent(Enum):
     TRENDING = "trending"
 
 class CompetitorTier(Enum):
-    """Competitor classification levels"""    DIRECT_COMPETITOR = "direct_competitor"
+    """Competitor classification levels"""
+    DIRECT_COMPETITOR = "direct_competitor"
     INDIRECT_COMPETITOR = "indirect_competitor"
     MARKET_LEADER = "market_leader"
     EMERGING_COMPETITOR = "emerging_competitor"
@@ -137,7 +144,8 @@ class CompetitorTier(Enum):
 
 @dataclass
 class SEOMetrics:
-    """Comprehensive SEO performance metrics"""    organic_traffic: int = 0
+    """Comprehensive SEO performance metrics"""
+    organic_traffic: int = 0
     keyword_rankings: Dict[str, int] = field(default_factory=dict)
     click_through_rate: float = 0.0
     bounce_rate: float = 0.0
@@ -156,7 +164,8 @@ class SEOMetrics:
 
 @dataclass
 class SEOAnalysis:
-    """Comprehensive SEO analysis results with actionable insights"""    content_id: str
+    """Comprehensive SEO analysis results with actionable insights"""
+    content_id: str
     content_type: ContentType
     url: Optional[str]
     current_score: float
@@ -184,7 +193,8 @@ class SEOAnalysis:
 
 @dataclass
 class KeywordData:
-    """Advanced keyword research and intelligence data"""    keyword: str
+    """Advanced keyword research and intelligence data"""
+    keyword: str
     search_volume: int
     competition_level: float
     cost_per_click: float
@@ -208,7 +218,8 @@ class KeywordData:
 
 @dataclass
 class CompetitorInsight:
-    """Detailed competitor SEO intelligence"""    domain: str
+    """Detailed competitor SEO intelligence"""
+    domain: str
     competitor_tier: CompetitorTier
     domain_authority: float
     organic_traffic: int
@@ -226,7 +237,8 @@ class CompetitorInsight:
 
 @dataclass
 class OptimizationRecommendation:
-    """Actionable SEO optimization recommendation"""    recommendation_id: str
+    """Actionable SEO optimization recommendation"""
+    recommendation_id: str
     optimization_type: OptimizationType
     priority: SEOPriority
     title: str
@@ -247,7 +259,8 @@ class OptimizationRecommendation:
     results: Optional[Dict[str, Any]] = None
 
 class SEOAgent(BaseAgent):
-    """    Industrial-grade SEO optimization agent with comprehensive AI-powered capabilities.
+    """
+    Industrial-grade SEO optimization agent with comprehensive AI-powered capabilities.
     
     Advanced Features:
     - Multi-engine keyword research and competitive analysis
@@ -261,7 +274,8 @@ class SEOAgent(BaseAgent):
     - ROI-focused optimization recommendations with impact projections
     - Multi-format content optimization for creators and influencers
     - Enterprise-level reporting and analytics dashboard
-    """    
+    """
+    
     def __init__(self, agent_id: str = "seo_agent_industrial", config: Optional[Dict[str, Any]] = None):
         super().__init__(agent_id, config)
         
@@ -302,7 +316,8 @@ class SEOAgent(BaseAgent):
         logger.info(f"SEO Agent initialized with ID: {agent_id}")
 
     async def initialize(self) -> bool:
-        """Initialize all SEO agent components and dependencies"""        try:
+        """Initialize all SEO agent components and dependencies"""
+        try:
             # Initialize AI models
             await self._initialize_ai_models()
             
@@ -332,7 +347,8 @@ class SEOAgent(BaseAgent):
         target_keywords: Optional[List[str]] = None,
         competitor_urls: Optional[List[str]] = None
     ) -> SEOAnalysis:
-        """        Perform comprehensive SEO analysis of content with AI-powered insights
+        """
+        Perform comprehensive SEO analysis of content with AI-powered insights
         
         Args:
             content: Content data to analyze
@@ -342,7 +358,8 @@ class SEOAgent(BaseAgent):
             
         Returns:
             Detailed SEO analysis with actionable recommendations
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Validate input
@@ -432,7 +449,8 @@ class SEOAgent(BaseAgent):
         language: str = "en",
         depth: str = "comprehensive"
     ) -> Dict[str, KeywordData]:
-        """        Perform advanced keyword research with AI-powered insights and competitive analysis
+        """
+        Perform advanced keyword research with AI-powered insights and competitive analysis
         
         Args:
             seed_keywords: Initial keywords to expand from
@@ -444,7 +462,8 @@ class SEOAgent(BaseAgent):
             
         Returns:
             Dictionary of keyword data with comprehensive metrics
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Validate and prepare inputs
@@ -507,7 +526,8 @@ class SEOAgent(BaseAgent):
         target_keywords: List[str],
         optimization_goals: List[OptimizationType]
     ) -> Dict[str, Any]:
-        """        AI-powered content structure optimization for maximum SEO impact
+        """
+        AI-powered content structure optimization for maximum SEO impact
         
         Args:
             content: Content to optimize
@@ -516,7 +536,8 @@ class SEOAgent(BaseAgent):
             
         Returns:
             Optimized content with SEO enhancements
-        """        try:
+        """
+        try:
             # Analyze current content structure
             structure_analysis = await self._analyze_content_structure_detailed(content)
             
@@ -555,7 +576,8 @@ class SEOAgent(BaseAgent):
         metrics_to_track: List[str] = None,
         reporting_frequency: str = "daily"
     ) -> Dict[str, Any]:
-        """        Continuous SEO performance monitoring with automated alerts
+        """
+        Continuous SEO performance monitoring with automated alerts
         
         Args:
             content_ids: List of content IDs to monitor
@@ -564,7 +586,8 @@ class SEOAgent(BaseAgent):
             
         Returns:
             Performance monitoring dashboard data
-        """        try:
+        """
+        try:
             # Initialize monitoring for content pieces
             monitoring_config = await self._setup_performance_monitoring(
                 content_ids, metrics_to_track, reporting_frequency
@@ -631,7 +654,8 @@ class SEOAgent(BaseAgent):
         }
     
     async def initialize(self):
-        """Initialize SEO models and components"""        try:
+        """Initialize SEO models and components"""
+        try:
             # Initialize AI models
             self.keyword_ranking_model = KeywordRankingModel()
             await self.keyword_ranking_model.load_model()
@@ -663,7 +687,8 @@ class SEOAgent(BaseAgent):
             raise SEOError(f"Initialization failed: {e}")
     
     async def process(self, request: Dict[str, Any]) -> AgentResponse:
-        """        Process SEO optimization requests.
+        """
+        Process SEO optimization requests.
         
         Args:
             request: Dictionary containing:
@@ -675,7 +700,8 @@ class SEOAgent(BaseAgent):
         
         Returns:
             AgentResponse with SEO results
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             action = request.get('action', 'analyze_content')
@@ -723,7 +749,8 @@ class SEOAgent(BaseAgent):
             )
     
     async def _analyze_content_seo(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content for SEO opportunities"""        
+        """Analyze content for SEO opportunities"""
+        
         content_id = request.get('content_id')
         content_data = request.get('content_data', {})
         target_keywords = request.get('target_keywords', [])
@@ -773,7 +800,8 @@ class SEOAgent(BaseAgent):
         }
     
     async def _research_keywords(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Research keywords for content optimization"""        
+        """Research keywords for content optimization"""
+        
         seed_keywords = request.get('seed_keywords', [])
         content_topic = request.get('content_topic', '')
         target_audience = request.get('target_audience', {})
@@ -820,7 +848,8 @@ class SEOAgent(BaseAgent):
         }
     
     async def _optimize_content_seo(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize content for better SEO performance"""        
+        """Optimize content for better SEO performance"""
+        
         content_id = request.get('content_id')
         content_data = request.get('content_data', {})
         target_keywords = request.get('target_keywords', [])
@@ -882,7 +911,8 @@ class SEOAgent(BaseAgent):
         }
     
     async def _audit_technical_seo(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform technical SEO audit"""        
+        """Perform technical SEO audit"""
+        
         url = request.get('url', '')
         content_id = request.get('content_id')
         
@@ -936,7 +966,8 @@ class SEOAgent(BaseAgent):
         return audit_results
     
     async def _analyze_competitors(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze SEO competitor performance"""        
+        """Analyze SEO competitor performance"""
+        
         target_keywords = request.get('target_keywords', [])
         competitor_urls = request.get('competitor_urls', [])
         industry = request.get('industry', '')
@@ -988,7 +1019,8 @@ class SEOAgent(BaseAgent):
         return competitor_analysis
     
     async def _monitor_search_rankings(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Monitor search engine rankings for keywords"""        
+        """Monitor search engine rankings for keywords"""
+        
         keywords = request.get('keywords', [])
         url = request.get('url', '')
         search_engines = request.get('search_engines', ['google', 'bing'])
@@ -1040,7 +1072,8 @@ class SEOAgent(BaseAgent):
         return ranking_results
     
     async def _generate_schema_markup(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate structured data schema markup"""        
+        """Generate structured data schema markup"""
+        
         content_data = request.get('content_data', {})
         content_type = request.get('content_type')
         schema_types = request.get('schema_types', [])
@@ -1076,7 +1109,8 @@ class SEOAgent(BaseAgent):
     # ================== ADVANCED INTERNAL METHODS ==================
 
     async def _initialize_ai_models(self) -> None:
-        """Initialize and load all AI models for SEO analysis"""        try:
+        """Initialize and load all AI models for SEO analysis"""
+        try:
             await self.keyword_ranking_model.load_model()
             await self.content_optimization_model.load_model()
             await self.trend_prediction_model.load_model()
@@ -1086,7 +1120,8 @@ class SEOAgent(BaseAgent):
             raise
 
     async def _initialize_api_connections(self) -> None:
-        """Initialize all external API connections"""        try:
+        """Initialize all external API connections"""
+        try:
             await self.search_api_manager.initialize()
             await self.web_scraper.initialize()
             logger.info("All API connections established")
@@ -1095,7 +1130,8 @@ class SEOAgent(BaseAgent):
             raise
 
     async def _load_historical_data(self) -> None:
-        """Load historical SEO data and analysis results"""        try:
+        """Load historical SEO data and analysis results"""
+        try:
             # Load cached keyword data
             cached_keywords = await self._load_cached_keywords()
             self.keyword_cache.update(cached_keywords)
@@ -1109,7 +1145,8 @@ class SEOAgent(BaseAgent):
             logger.warning(f"Historical data loading failed: {str(e)}")
 
     async def _perform_health_check(self) -> bool:
-        """Comprehensive system health check"""        try:
+        """Comprehensive system health check"""
+        try:
             # Check AI models
             model_status = await self._check_ai_model_health()
             
@@ -1134,7 +1171,8 @@ class SEOAgent(BaseAgent):
             return False
 
     async def _validate_content_input(self, content: Dict[str, Any]) -> None:
-        """Validate content input for SEO analysis"""        required_fields = ['type', 'title', 'content']
+        """Validate content input for SEO analysis"""
+        required_fields = ['type', 'title', 'content']
         
         for field in required_fields:
             if field not in content:
@@ -1151,7 +1189,8 @@ class SEOAgent(BaseAgent):
             logger.warning("Content is very short, analysis may be limited")
 
     async def _extract_content_metadata(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract comprehensive content metadata"""        return {
+        """Extract comprehensive content metadata"""
+        return {
             'content_id': content.get('id', f"content_{int(time.time())}"),
             'title': content.get('title', ''),
             'description': content.get('description', ''),
@@ -1174,7 +1213,8 @@ class SEOAgent(BaseAgent):
         content: Dict[str, Any], 
         target_keywords: Optional[List[str]]
     ) -> Dict[str, Any]:
-        """Analyze keyword optimization with AI-powered insights"""        try:
+        """Analyze keyword optimization with AI-powered insights"""
+        try:
             content_text = content.get('content', '')
             title = content.get('title', '')
             
@@ -1209,7 +1249,8 @@ class SEOAgent(BaseAgent):
             return {'error': str(e), 'optimization_score': 0.0}
 
     async def _analyze_content_structure(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Advanced content structure analysis"""        try:
+        """Advanced content structure analysis"""
+        try:
             content_text = content.get('content', '')
             title = content.get('title', '')
             headings = content.get('headings', [])
@@ -1240,7 +1281,8 @@ class SEOAgent(BaseAgent):
             return {'error': str(e), 'overall_score': 0.0}
 
     async def _analyze_technical_seo(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Comprehensive technical SEO analysis"""        try:
+        """Comprehensive technical SEO analysis"""
+        try:
             url = content.get('url', '')
             
             technical_analysis = {
@@ -1279,7 +1321,8 @@ class SEOAgent(BaseAgent):
         content: Dict[str, Any], 
         competitor_urls: Optional[List[str]]
     ) -> Dict[str, Any]:
-        """Advanced competitor analysis with AI-powered insights"""        try:
+        """Advanced competitor analysis with AI-powered insights"""
+        try:
             if not competitor_urls:
                 # Discover competitors using AI
                 competitor_urls = await self._discover_competitors(content)
@@ -1325,7 +1368,8 @@ class SEOAgent(BaseAgent):
             return {'error': str(e), 'competitors_analyzed': 0}
 
     async def _analyze_user_experience(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """User experience analysis for SEO impact"""        try:
+        """User experience analysis for SEO impact"""
+        try:
             url = content.get('url', '')
             
             ux_analysis = {
@@ -1356,7 +1400,8 @@ class SEOAgent(BaseAgent):
         seed_keywords: List[str], 
         content_type: ContentType
     ) -> Dict[str, KeywordData]:
-        """Research primary keywords using multiple sources"""        primary_keywords = {}
+        """Research primary keywords using multiple sources"""
+        primary_keywords = {}
         
         for keyword in seed_keywords:
             try:
@@ -1386,7 +1431,8 @@ class SEOAgent(BaseAgent):
         target_audience: Optional[Dict[str, Any]],
         language: str
     ) -> KeywordData:
-        """Enhance keyword data with additional intelligence"""        try:
+        """Enhance keyword data with additional intelligence"""
+        try:
             # Get seasonal trends
             seasonality = await self._analyze_keyword_seasonality(keyword)
             
@@ -1445,7 +1491,8 @@ class SEOAgent(BaseAgent):
         results: List[Any], 
         depth: str
     ) -> Dict[str, Any]:
-        """Combine all analysis results into comprehensive report"""        # Process each analysis result and combine intelligently
+        """Combine all analysis results into comprehensive report"""
+        # Process each analysis result and combine intelligently
         combined = {
             'metadata': metadata,
             'keyword_analysis': results[0] if not isinstance(results[0], Exception) else {},
@@ -1467,7 +1514,8 @@ class SEOAgent(BaseAgent):
         return combined
 
     async def shutdown(self) -> None:
-        """Gracefully shutdown the SEO agent"""        try:
+        """Gracefully shutdown the SEO agent"""
+        try:
             # Save current state
             await self._save_agent_state()
             
@@ -1505,7 +1553,8 @@ __all__ = ['SEOAgent', 'SEOAnalysis', 'KeywordData', 'OptimizationType', 'Conten
         }
     
     def _check_heading_hierarchy(self, heading_levels: Dict[str, int]) -> bool:
-        """Check if heading hierarchy is proper"""        # Simple check: should have H1, and no gaps in hierarchy
+        """Check if heading hierarchy is proper"""
+        # Simple check: should have H1, and no gaps in hierarchy
         has_h1 = 'H1' in heading_levels
         
         # Check for gaps (e.g., H1 -> H3 without H2)
@@ -1515,7 +1564,8 @@ __all__ = ['SEOAgent', 'SEOAnalysis', 'KeywordData', 'OptimizationType', 'Conten
         return has_h1 and not has_gaps
     
     async def _calculate_keyword_density(self, text_content: str) -> Dict[str, float]:
-        """Calculate keyword density for content"""        if not text_content:
+        """Calculate keyword density for content"""
+        if not text_content:
             return {}
         
         # Simple keyword density calculation
@@ -1537,7 +1587,8 @@ __all__ = ['SEOAgent', 'SEOAnalysis', 'KeywordData', 'OptimizationType', 'Conten
         return keyword_density
     
     async def _assess_content_quality(self, content_data: Dict[str, Any]) -> float:
-        """Assess overall content quality"""        score = 0.0
+        """Assess overall content quality"""
+        score = 0.0
         factors = 0
         
         # Title quality
@@ -1576,7 +1627,8 @@ __all__ = ['SEOAgent', 'SEOAnalysis', 'KeywordData', 'OptimizationType', 'Conten
         content_data: Dict[str, Any], 
         target_keywords: List[str]
     ) -> Dict[str, Any]:
-        """Analyze keyword usage in content"""        content_text = content_data.get('text_content', '')
+        """Analyze keyword usage in content"""
+        content_text = content_data.get('text_content', '')
         title = content_data.get('title', '')
         
         analysis = {
@@ -1629,7 +1681,8 @@ __all__ = ['SEOAgent', 'SEOAnalysis', 'KeywordData', 'OptimizationType', 'Conten
         return analysis
     
     async def _analyze_metadata(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze metadata quality"""        analysis = {
+        """Analyze metadata quality"""
+        analysis = {
             'has_title': bool(content_data.get('title')),
             'title_length': len(content_data.get('title', '')),
             'has_description': bool(content_data.get('description')),
@@ -1675,7 +1728,8 @@ __all__ = ['SEOAgent', 'SEOAnalysis', 'KeywordData', 'OptimizationType', 'Conten
         return analysis
     
     async def _analyze_technical_factors(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze technical SEO factors"""        analysis = {
+        """Analyze technical SEO factors"""
+        analysis = {
             'has_images': bool(content_data.get('images')),
             'images_with_alt': 0,
             'total_images': 0,
@@ -1725,7 +1779,8 @@ __all__ = ['SEOAgent', 'SEOAnalysis', 'KeywordData', 'OptimizationType', 'Conten
         metadata_analysis: Dict[str, Any],
         technical_analysis: Dict[str, Any]
     ) -> float:
-        """Calculate overall SEO score"""        scores = [
+        """Calculate overall SEO score"""
+        scores = [
             content_analysis.get('content_quality_score', 0) * self.optimization_weights.get('content_quality', 0.2),
             keyword_analysis.get('total_keyword_score', 0) * self.optimization_weights.get('keyword_relevance', 0.25),
             metadata_analysis.get('metadata_score', 0) * self.optimization_weights.get('technical_seo', 0.2),
@@ -1744,7 +1799,8 @@ __all__ = ['SEOAgent', 'SEOAnalysis', 'KeywordData', 'OptimizationType', 'Conten
         metadata_analysis: Dict[str, Any],
         technical_analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate SEO improvement recommendations"""        recommendations = []
+        """Generate SEO improvement recommendations"""
+        recommendations = []
         
         # Content recommendations
         if content_analysis.get('word_count', 0) < 300:
@@ -1801,7 +1857,8 @@ __all__ = ['SEOAgent', 'SEOAnalysis', 'KeywordData', 'OptimizationType', 'Conten
         seo_score: float,
         recommendations: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Identify specific optimization opportunities"""        opportunities = []
+        """Identify specific optimization opportunities"""
+        opportunities = []
         
         # High-impact opportunities based on score
         if seo_score < 0.3:
@@ -1843,7 +1900,8 @@ __all__ = ['SEOAgent', 'SEOAnalysis', 'KeywordData', 'OptimizationType', 'Conten
     
     # Continue with additional helper methods...
     async def _generate_topic_keywords(self, topic: str, language: str) -> List[str]:
-        """Generate keywords related to a topic"""        # Simple topic keyword generation - in production, use ML models
+        """Generate keywords related to a topic"""
+        # Simple topic keyword generation - in production, use ML models
         base_keywords = [topic.lower()]
         
         # Add common variations
@@ -1860,7 +1918,8 @@ __all__ = ['SEOAgent', 'SEOAnalysis', 'KeywordData', 'OptimizationType', 'Conten
         return base_keywords + variations
     
     async def _research_single_keyword(self, keyword: str, language: str) -> Dict[str, Any]:
-        """Research a single keyword"""        # Mock research data - integrate with real APIs in production
+        """Research a single keyword"""
+        # Mock research data - integrate with real APIs in production
         return {
             'keyword': keyword,
             'search_volume': np.random.randint(100, 10000),
@@ -1871,7 +1930,8 @@ __all__ = ['SEOAgent', 'SEOAnalysis', 'KeywordData', 'OptimizationType', 'Conten
         }
     
     async def _find_related_keywords(self, keywords: List[str], language: str) -> List[Dict[str, Any]]:
-        """Find related keywords"""        related = []
+        """Find related keywords"""
+        related = []
         
         for keyword in keywords[:5]:  # Limit to avoid too many API calls
             # Generate related keywords based on base keyword
@@ -1898,7 +1958,8 @@ __all__ = ['SEOAgent', 'SEOAnalysis', 'KeywordData', 'OptimizationType', 'Conten
         keyword_data: List[Dict[str, Any]], 
         target_audience: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Analyze keyword opportunities"""        opportunities = []
+        """Analyze keyword opportunities"""
+        opportunities = []
         
         for kw_data in keyword_data:
             opportunity_score = self._calculate_opportunity_score(kw_data)
@@ -1912,7 +1973,8 @@ __all__ = ['SEOAgent', 'SEOAnalysis', 'KeywordData', 'OptimizationType', 'Conten
         return sorted(opportunities, key=lambda x: x['opportunity_score'], reverse=True)
     
     def _calculate_opportunity_score(self, keyword_data: Dict[str, Any]) -> float:
-        """Calculate opportunity score for a keyword"""        # Simple scoring - in production use more sophisticated models
+        """Calculate opportunity score for a keyword"""
+        # Simple scoring - in production use more sophisticated models
         volume_score = min(keyword_data.get('search_volume', 0) / 10000, 1.0)
         competition_score = 1.0 - keyword_data.get('competition', 1.0)
         trend_score = 1.0 if keyword_data.get('trend') == 'rising' else 0.5
@@ -1920,7 +1982,8 @@ __all__ = ['SEOAgent', 'SEOAnalysis', 'KeywordData', 'OptimizationType', 'Conten
         return (volume_score * 0.4) + (competition_score * 0.4) + (trend_score * 0.2)
     
     def _get_opportunity_reason(self, keyword_data: Dict[str, Any]) -> str:
-        """Get human-readable reason for opportunity"""        reasons = []
+        """Get human-readable reason for opportunity"""
+        reasons = []
         
         if keyword_data.get('search_volume', 0) > 1000:
             reasons.append("high search volume")
@@ -1938,7 +2001,8 @@ __all__ = ['SEOAgent', 'SEOAnalysis', 'KeywordData', 'OptimizationType', 'Conten
         opportunities: List[Dict[str, Any]], 
         target_audience: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate keyword strategy"""        return {
+        """Generate keyword strategy"""
+        return {
             'primary_keywords': [op['keyword'] for op in opportunities[:3]],
             'secondary_keywords': [op['keyword'] for op in opportunities[3:10]],
             'long_tail_keywords': [op['keyword'] for op in opportunities[10:20] if len(op['keyword'].split()) > 3],
@@ -1956,7 +2020,8 @@ __all__ = ['SEOAgent', 'SEOAnalysis', 'KeywordData', 'OptimizationType', 'Conten
         current_analysis: Dict[str, Any],
         optimizations: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate the impact of optimizations"""        current_score = current_analysis.get('seo_score', 0)
+        """Calculate the impact of optimizations"""
+        current_score = current_analysis.get('seo_score', 0)
         
         # Estimate improvement based on optimization types
         improvement_factors = {

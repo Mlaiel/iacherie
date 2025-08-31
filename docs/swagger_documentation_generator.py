@@ -3,7 +3,8 @@ Creates complete Swagger/OpenAPI documentation for all API endpoints.
 
 Author: AI Assistant
 Purpose: Generate complete Swagger API documentation
-"""import json
+"""
+import json
 from typing import Dict, Any, List, Optional
 from dataclasses import dataclass, asdict
 from enum import Enum
@@ -15,7 +16,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 
 class APIMethod(Enum):
-    """HTTP methods"""    GET = "get"
+    """HTTP methods"""
+    GET = "get"
     POST = "post"
     PUT = "put"
     DELETE = "delete"
@@ -26,7 +28,8 @@ class APIMethod(Enum):
 
 @dataclass
 class APIParameter:
-    """API parameter definition"""    name: str
+    """API parameter definition"""
+    name: str
     param_type: str  # "query", "path", "header", "body"
     data_type: str
     description: str
@@ -37,7 +40,8 @@ class APIParameter:
 
 @dataclass
 class APIResponse:
-    """API response definition"""    status_code: int
+    """API response definition"""
+    status_code: int
     description: str
     schema: Dict[str, Any]
     examples: Optional[Dict[str, Any]] = None
@@ -45,7 +49,8 @@ class APIResponse:
 
 @dataclass
 class APIEndpoint:
-    """API endpoint definition"""    path: str
+    """API endpoint definition"""
+    path: str
     method: APIMethod
     summary: str
     description: str
@@ -57,7 +62,8 @@ class APIEndpoint:
 
 
 class SwaggerDocumentationGenerator:
-    """Generates comprehensive Swagger/OpenAPI documentation"""    
+    """Generates comprehensive Swagger/OpenAPI documentation"""
+    
     def __init__(self, title: str = "Ainflue AI Platform API", version: str = "1.0.0"):
         self.title = title
         self.version = version
@@ -71,16 +77,20 @@ class SwaggerDocumentationGenerator:
         }
     
     def add_endpoint(self, endpoint: APIEndpoint):
-        """Add an endpoint to the documentation"""        self.endpoints.append(endpoint)
+        """Add an endpoint to the documentation"""
+        self.endpoints.append(endpoint)
     
     def add_schema(self, name: str, schema: Dict[str, Any]):
-        """Add a schema definition"""        self.components["schemas"][name] = schema
+        """Add a schema definition"""
+        self.components["schemas"][name] = schema
     
     def add_security_scheme(self, name: str, scheme: Dict[str, Any]):
-        """Add a security scheme"""        self.components["securitySchemes"][name] = scheme
+        """Add a security scheme"""
+        self.components["securitySchemes"][name] = scheme
     
     def generate_openapi_spec(self) -> Dict[str, Any]:
-        """Generate complete OpenAPI 3.0 specification"""        
+        """Generate complete OpenAPI 3.0 specification"""
+        
         spec = {
             "openapi": "3.0.3",
             "info": {
@@ -140,7 +150,8 @@ All API endpoints require authentication using API keys or JWT tokens.
         return spec
     
     def _generate_paths(self) -> Dict[str, Any]:
-        """Generate paths section from endpoints"""        paths = {}
+        """Generate paths section from endpoints"""
+        paths = {}
         
         for endpoint in self.endpoints:
             if endpoint.path not in paths:
@@ -171,7 +182,8 @@ All API endpoints require authentication using API keys or JWT tokens.
         return paths
     
     def _convert_parameters(self, parameters: List[APIParameter]) -> List[Dict[str, Any]]:
-        """Convert parameter objects to OpenAPI format"""        result = []
+        """Convert parameter objects to OpenAPI format"""
+        result = []
         
         for param in parameters:
             if param.param_type != "body":  # Body parameters handled separately
@@ -196,7 +208,8 @@ All API endpoints require authentication using API keys or JWT tokens.
         return result
     
     def _convert_responses(self, responses: List[APIResponse]) -> Dict[str, Any]:
-        """Convert response objects to OpenAPI format"""        result = {}
+        """Convert response objects to OpenAPI format"""
+        result = {}
         
         for response in responses:
             response_spec = {
@@ -216,7 +229,8 @@ All API endpoints require authentication using API keys or JWT tokens.
         return result
     
     def _generate_request_body(self, body_param: APIParameter) -> Dict[str, Any]:
-        """Generate request body specification"""        return {
+        """Generate request body specification"""
+        return {
             "description": body_param.description,
             "required": body_param.required,
             "content": {
@@ -230,7 +244,8 @@ All API endpoints require authentication using API keys or JWT tokens.
         }
     
     def _generate_tags(self) -> List[Dict[str, Any]]:
-        """Generate tag definitions"""        return [
+        """Generate tag definitions"""
+        return [
             {
                 "name": "Health",
                 "description": "API health check and system status endpoints"
@@ -267,7 +282,8 @@ All API endpoints require authentication using API keys or JWT tokens.
 
 
 def create_comprehensive_api_documentation() -> SwaggerDocumentationGenerator:
-    """Create comprehensive API documentation for Ainflue platform"""    
+    """Create comprehensive API documentation for Ainflue platform"""
+    
     doc_generator = SwaggerDocumentationGenerator()
     
     # Add security schemes
@@ -302,7 +318,8 @@ def create_comprehensive_api_documentation() -> SwaggerDocumentationGenerator:
 
 
 def _add_common_schemas(doc_generator: SwaggerDocumentationGenerator):
-    """Add common schema definitions"""    
+    """Add common schema definitions"""
+    
     # Error response schema
     doc_generator.add_schema("ErrorResponse", {
         "type": "object",
@@ -472,7 +489,8 @@ def _add_common_schemas(doc_generator: SwaggerDocumentationGenerator):
 
 
 def _add_health_endpoints(doc_generator: SwaggerDocumentationGenerator):
-    """Add health check endpoints"""    
+    """Add health check endpoints"""
+    
     # Health check endpoint
     doc_generator.add_endpoint(APIEndpoint(
         path="/health",
@@ -556,7 +574,8 @@ def _add_health_endpoints(doc_generator: SwaggerDocumentationGenerator):
 
 
 def _add_creator_endpoints(doc_generator: SwaggerDocumentationGenerator):
-    """Add creator management endpoints"""    
+    """Add creator management endpoints"""
+    
     # List creators
     doc_generator.add_endpoint(APIEndpoint(
         path="/creators",
@@ -658,7 +677,8 @@ def _add_creator_endpoints(doc_generator: SwaggerDocumentationGenerator):
 
 
 def _add_content_endpoints(doc_generator: SwaggerDocumentationGenerator):
-    """Add content management endpoints"""    
+    """Add content management endpoints"""
+    
     # Upload content
     doc_generator.add_endpoint(APIEndpoint(
         path="/content/upload",
@@ -770,7 +790,8 @@ def _add_content_endpoints(doc_generator: SwaggerDocumentationGenerator):
 
 
 def _add_protection_endpoints(doc_generator: SwaggerDocumentationGenerator):
-    """Add content protection endpoints"""    
+    """Add content protection endpoints"""
+    
     # Check for infringement
     doc_generator.add_endpoint(APIEndpoint(
         path="/protection/check",
@@ -815,7 +836,8 @@ def _add_protection_endpoints(doc_generator: SwaggerDocumentationGenerator):
 
 
 def _add_monetization_endpoints(doc_generator: SwaggerDocumentationGenerator):
-    """Add monetization endpoints"""    
+    """Add monetization endpoints"""
+    
     # Get revenue reports
     doc_generator.add_endpoint(APIEndpoint(
         path="/monetization/revenue",
@@ -860,7 +882,8 @@ def _add_monetization_endpoints(doc_generator: SwaggerDocumentationGenerator):
 
 
 def _add_analytics_endpoints(doc_generator: SwaggerDocumentationGenerator):
-    """Add analytics endpoints"""    
+    """Add analytics endpoints"""
+    
     # Dashboard analytics
     doc_generator.add_endpoint(APIEndpoint(
         path="/analytics/dashboard",
@@ -881,7 +904,8 @@ def _add_analytics_endpoints(doc_generator: SwaggerDocumentationGenerator):
 
 
 def _add_security_endpoints(doc_generator: SwaggerDocumentationGenerator):
-    """Add security and audit endpoints"""    
+    """Add security and audit endpoints"""
+    
     # Security audit
     doc_generator.add_endpoint(APIEndpoint(
         path="/security/audit",
@@ -928,7 +952,8 @@ def _add_security_endpoints(doc_generator: SwaggerDocumentationGenerator):
 
 
 def _add_admin_endpoints(doc_generator: SwaggerDocumentationGenerator):
-    """Add admin endpoints"""    
+    """Add admin endpoints"""
+    
     # System configuration
     doc_generator.add_endpoint(APIEndpoint(
         path="/admin/config",
@@ -963,7 +988,8 @@ def _add_admin_endpoints(doc_generator: SwaggerDocumentationGenerator):
 
 
 def generate_swagger_json_file(output_path: str = "swagger.json"):
-    """Generate and save Swagger JSON documentation to file"""    doc_generator = create_comprehensive_api_documentation()
+    """Generate and save Swagger JSON documentation to file"""
+    doc_generator = create_comprehensive_api_documentation()
     swagger_spec = doc_generator.generate_openapi_spec()
     
     with open(output_path, 'w', encoding='utf-8') as f:
@@ -973,7 +999,8 @@ def generate_swagger_json_file(output_path: str = "swagger.json"):
 
 
 def generate_swagger_yaml_file(output_path: str = "swagger.yaml"):
-    """Generate and save Swagger YAML documentation to file"""    try:
+    """Generate and save Swagger YAML documentation to file"""
+    try:
         import yaml
         
         doc_generator = create_comprehensive_api_documentation()

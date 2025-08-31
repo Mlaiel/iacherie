@@ -19,7 +19,8 @@ Copyright (c) 2024 IA Influencer Agent Team. All rights reserved.
 
 Unauthorized copying, modification, distribution, or use of this software
 is strictly prohibited and may be subject to legal action.
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import time
@@ -36,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics collected"""    COUNTER = "counter"
+    """Types of metrics collected"""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
@@ -44,7 +46,8 @@ class MetricType(Enum):
 
 
 class MetricSeverity(Enum):
-    """Severity levels for metric alerts"""    INFO = "info"
+    """Severity levels for metric alerts"""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -52,7 +55,8 @@ class MetricSeverity(Enum):
 
 @dataclass
 class MetricPoint:
-    """Single metric data point"""    timestamp: datetime
+    """Single metric data point"""
+    timestamp: datetime
     value: Union[int, float]
     tags: Dict[str, str] = field(default_factory=dict)
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -60,14 +64,16 @@ class MetricPoint:
 
 @dataclass
 class MetricSeries:
-    """Time series of metric data points"""    name: str
+    """Time series of metric data points"""
+    name: str
     metric_type: MetricType
     points: List[MetricPoint] = field(default_factory=list)
     unit: str = ""
     description: str = ""
     
     def add_point(self, value: Union[int, float], tags: Optional[Dict[str, str]] = None):
-        """Add a new data point"""        point = MetricPoint(
+        """Add a new data point"""
+        point = MetricPoint(
             timestamp=datetime.utcnow(),
             value=value,
             tags=tags or {}
@@ -79,10 +85,12 @@ class MetricSeries:
             self.points = self.points[-1000:]
     
     def get_latest_value(self) -> Optional[Union[int, float]]:
-        """Get the most recent value"""        return self.points[-1].value if self.points else None
+        """Get the most recent value"""
+        return self.points[-1].value if self.points else None
     
     def get_average(self, duration_minutes: int = 60) -> Optional[float]:
-        """Get average value over specified duration"""        cutoff_time = datetime.utcnow() - timedelta(minutes=duration_minutes)
+        """Get average value over specified duration"""
+        cutoff_time = datetime.utcnow() - timedelta(minutes=duration_minutes)
         recent_points = [
             p.value for p in self.points 
             if p.timestamp >= cutoff_time
@@ -90,7 +98,8 @@ class MetricSeries:
         return statistics.mean(recent_points) if recent_points else None
     
     def get_percentile(self, percentile: float, duration_minutes: int = 60) -> Optional[float]:
-        """Get percentile value over specified duration"""        cutoff_time = datetime.utcnow() - timedelta(minutes=duration_minutes)
+        """Get percentile value over specified duration"""
+        cutoff_time = datetime.utcnow() - timedelta(minutes=duration_minutes)
         recent_points = [
             p.value for p in self.points 
             if p.timestamp >= cutoff_time
@@ -105,7 +114,8 @@ class MetricSeries:
 
 @dataclass
 class MetricAlert:
-    """Metric-based alert configuration"""    name: str
+    """Metric-based alert configuration"""
+    name: str
     metric_name: str
     condition: Callable[[float], bool]
     severity: MetricSeverity
@@ -114,7 +124,8 @@ class MetricAlert:
     last_triggered: Optional[datetime] = None
     
     def should_trigger(self, value: float) -> bool:
-        """Check if alert should be triggered"""        if not self.condition(value):
+        """Check if alert should be triggered"""
+        if not self.condition(value):
             return False
         
         if self.last_triggered is None:
@@ -124,15 +135,18 @@ class MetricAlert:
         return datetime.utcnow() > cooldown_expires
     
     def trigger(self):
-        """Mark alert as triggered"""        self.last_triggered = datetime.utcnow()
+        """Mark alert as triggered"""
+        self.last_triggered = datetime.utcnow()
 
 
 class ReplicationMetricsCollector:
-    """    Comprehensive metrics collection for database replication
+    """
+    Comprehensive metrics collection for database replication
     
     Collects and analyzes metrics from all replication components
     with focus on content creator platform requirements
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.metrics: Dict[str, MetricSeries] = {}
@@ -149,7 +163,8 @@ class ReplicationMetricsCollector:
         self._initialize_alerts()
     
     def _initialize_standard_metrics(self):
-        """Initialize standard replication metrics"""        standard_metrics = [
+        """Initialize standard replication metrics"""
+        standard_metrics = [
             # Replication lag metrics
             ("replication_lag_ms", MetricType.GAUGE, "milliseconds", "Replication lag in milliseconds"),
             ("replication_lag_bytes", MetricType.GAUGE, "bytes", "Replication lag in bytes"),
@@ -192,7 +207,8 @@ class ReplicationMetricsCollector:
             )
     
     def _initialize_alerts(self):
-        """Initialize metric-based alerts"""        self.alerts = [
+        """Initialize metric-based alerts"""
+        self.alerts = [
             # High replication lag alerts
             MetricAlert(
                 name="high_replication_lag",
@@ -259,14 +275,17 @@ class ReplicationMetricsCollector:
         ]
     
     def register_handler(self, name: str, handler: Any):
-        """Register a replication handler for monitoring"""        self.handlers[name] = handler
+        """Register a replication handler for monitoring"""
+        self.handlers[name] = handler
         logger.info(f"Registered handler for metrics collection: {name}")
     
     def add_export_callback(self, callback: Callable):
-        """Add callback for metric export"""        self.export_callbacks.append(callback)
+        """Add callback for metric export"""
+        self.export_callbacks.append(callback)
     
     def record_metric(self, name: str, value: Union[int, float], tags: Optional[Dict[str, str]] = None):
-        """Record a metric value"""        if name not in self.metrics:
+        """Record a metric value"""
+        if name not in self.metrics:
             logger.warning(f"Unknown metric: {name}")
             return
         
@@ -276,13 +295,15 @@ class ReplicationMetricsCollector:
         self._check_alerts(name, value)
     
     def _check_alerts(self, metric_name: str, value: float):
-        """Check if any alerts should be triggered"""        for alert in self.alerts:
+        """Check if any alerts should be triggered"""
+        for alert in self.alerts:
             if alert.metric_name == metric_name and alert.should_trigger(value):
                 alert.trigger()
                 self._handle_alert(alert, value)
     
     def _handle_alert(self, alert: MetricAlert, value: float):
-        """Handle triggered alert"""        message = alert.message.format(value=value)
+        """Handle triggered alert"""
+        message = alert.message.format(value=value)
         logger.log(
             level=getattr(logging, alert.severity.value.upper()),
             msg=f"ALERT [{alert.severity.value.upper()}] {alert.name}: {message}"
@@ -292,7 +313,8 @@ class ReplicationMetricsCollector:
         # (e.g., send to external monitoring systems)
     
     async def start_collection(self):
-        """Start metrics collection"""        self.running = True
+        """Start metrics collection"""
+        self.running = True
         logger.info("Starting metrics collection")
         
         # Start collection tasks
@@ -306,11 +328,13 @@ class ReplicationMetricsCollector:
         await asyncio.gather(*tasks, return_exceptions=True)
     
     async def stop_collection(self):
-        """Stop metrics collection"""        self.running = False
+        """Stop metrics collection"""
+        self.running = False
         logger.info("Stopping metrics collection")
     
     async def _collect_replication_metrics(self):
-        """Collect replication-specific metrics"""        while self.running:
+        """Collect replication-specific metrics"""
+        while self.running:
             try:
                 for handler_name, handler in self.handlers.items():
                     # Collect lag metrics
@@ -365,7 +389,8 @@ class ReplicationMetricsCollector:
                 await asyncio.sleep(self.collection_interval)
     
     async def _collect_system_metrics(self):
-        """Collect system resource metrics"""        while self.running:
+        """Collect system resource metrics"""
+        while self.running:
             try:
                 # CPU usage
                 cpu_percent = psutil.cpu_percent(interval=1)
@@ -391,7 +416,8 @@ class ReplicationMetricsCollector:
                 await asyncio.sleep(self.collection_interval)
     
     async def _collect_content_creator_metrics(self):
-        """Collect content creator platform specific metrics"""        while self.running:
+        """Collect content creator platform specific metrics"""
+        while self.running:
             try:
                 # These would typically be collected from application handlers
                 # For now, we'll simulate some basic metrics
@@ -412,7 +438,8 @@ class ReplicationMetricsCollector:
                 await asyncio.sleep(self.collection_interval * 2)
     
     async def _export_metrics_periodically(self):
-        """Export metrics to external systems periodically"""        while self.running:
+        """Export metrics to external systems periodically"""
+        while self.running:
             try:
                 await asyncio.sleep(self.export_interval)
                 await self.export_metrics()
@@ -422,7 +449,8 @@ class ReplicationMetricsCollector:
                 await asyncio.sleep(self.export_interval)
     
     async def export_metrics(self):
-        """Export metrics to configured systems"""        try:
+        """Export metrics to configured systems"""
+        try:
             # Export to files
             await self._export_to_json()
             
@@ -439,7 +467,8 @@ class ReplicationMetricsCollector:
             logger.error(f"Error exporting metrics: {e}")
     
     async def _export_to_json(self):
-        """Export metrics to JSON files"""        try:
+        """Export metrics to JSON files"""
+        try:
             export_dir = Path(self.config.get('export_directory', '/tmp/replication_metrics'))
             export_dir.mkdir(parents=True, exist_ok=True)
             
@@ -470,7 +499,8 @@ class ReplicationMetricsCollector:
             logger.error(f"Error exporting to JSON: {e}")
     
     def get_metrics_summary(self) -> Dict[str, Any]:
-        """Get summary of all metrics"""        summary = {
+        """Get summary of all metrics"""
+        summary = {
             'collection_started': self.running,
             'total_metrics': len(self.metrics),
             'active_alerts': len([a for a in self.alerts if a.last_triggered]),
@@ -488,7 +518,8 @@ class ReplicationMetricsCollector:
         return summary
     
     def get_health_dashboard(self) -> Dict[str, Any]:
-        """Get health dashboard data"""        dashboard = {
+        """Get health dashboard data"""
+        dashboard = {
             'overall_health': 'unknown',
             'replication_status': {},
             'system_resources': {},

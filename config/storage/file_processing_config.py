@@ -13,13 +13,15 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass
 from enum import Enum
 
 class ProcessingType(Enum):
-    """Types of file processing operations."""    TRANSCODING = "transcoding"
+    """Types of file processing operations."""
+    TRANSCODING = "transcoding"
     COMPRESSION = "compression"
     THUMBNAIL = "thumbnail"
     WATERMARKING = "watermarking"
@@ -30,7 +32,8 @@ class ProcessingType(Enum):
 
 @dataclass
 class AudioProcessingConfig:
-    """Audio file processing configuration."""    
+    """Audio file processing configuration."""
+    
     # Supported input formats
     supported_input_formats: List[str] = None
     
@@ -91,7 +94,8 @@ class AudioProcessingConfig:
 
 @dataclass
 class VideoProcessingConfig:
-    """Video file processing configuration."""    
+    """Video file processing configuration."""
+    
     # Supported input formats
     supported_input_formats: List[str] = None
     
@@ -172,7 +176,8 @@ class VideoProcessingConfig:
 
 @dataclass
 class ImageProcessingConfig:
-    """Image file processing configuration."""    
+    """Image file processing configuration."""
+    
     # Supported input formats
     supported_input_formats: List[str] = None
     
@@ -236,7 +241,8 @@ class ImageProcessingConfig:
 
 @dataclass
 class DocumentProcessingConfig:
-    """Document file processing configuration."""    
+    """Document file processing configuration."""
+    
     # Supported input formats
     supported_input_formats: List[str] = None
     
@@ -271,9 +277,11 @@ class DocumentProcessingConfig:
 
 @dataclass
 class FileProcessingConfig:
-    """    Comprehensive file processing configuration for IA-Influencer Agent platform.
+    """
+    Comprehensive file processing configuration for IA-Influencer Agent platform.
     Handles multi-format content processing with enterprise-grade optimization.
-    """    
+    """
+    
     # Processing configurations by type
     audio_config: AudioProcessingConfig = None
     video_config: VideoProcessingConfig = None
@@ -312,7 +320,8 @@ class FileProcessingConfig:
     enable_quality_enhancement: bool = True
     
     def __post_init__(self):
-        """Initialize processing configurations if not provided."""        if self.audio_config is None:
+        """Initialize processing configurations if not provided."""
+        if self.audio_config is None:
             self.audio_config = AudioProcessingConfig()
         
         if self.video_config is None:
@@ -333,7 +342,8 @@ class FileProcessingConfig:
             }
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
-        """Get all supported input formats by content type."""        return {
+        """Get all supported input formats by content type."""
+        return {
             'audio': self.audio_config.supported_input_formats,
             'video': self.video_config.supported_input_formats,
             'image': self.image_config.supported_input_formats,
@@ -341,7 +351,8 @@ class FileProcessingConfig:
         }
     
     def is_format_supported(self, content_type: str, file_extension: str) -> bool:
-        """Check if file format is supported for processing."""        supported_formats = self.get_supported_formats()
+        """Check if file format is supported for processing."""
+        supported_formats = self.get_supported_formats()
         
         if content_type not in supported_formats:
             return False
@@ -349,7 +360,8 @@ class FileProcessingConfig:
         return file_extension.lower().lstrip('.') in supported_formats[content_type]
     
     def get_output_formats(self, content_type: str) -> List[str]:
-        """Get available output formats for content type."""        if content_type == 'audio':
+        """Get available output formats for content type."""
+        if content_type == 'audio':
             return list(self.audio_config.output_formats.keys())
         elif content_type == 'video':
             return list(self.video_config.output_formats.keys())
@@ -361,10 +373,12 @@ class FileProcessingConfig:
         return []
     
     def get_processing_priority(self, content_type: str) -> int:
-        """Get processing priority for content type."""        return self.priority_levels.get(content_type, 5)  # Default priority
+        """Get processing priority for content type."""
+        return self.priority_levels.get(content_type, 5)  # Default priority
     
     def get_max_processing_time(self, content_type: str, file_size_mb: float) -> int:
-        """Get estimated max processing time based on content type and file size."""        base_time = self.processing_timeout_seconds
+        """Get estimated max processing time based on content type and file size."""
+        base_time = self.processing_timeout_seconds
         
         # Adjust based on content type
         multipliers = {
@@ -383,7 +397,8 @@ class FileProcessingConfig:
     
     def validate_file_for_processing(self, content_type: str, file_path: str, 
                                    file_size_mb: float) -> Tuple[bool, str]:
-        """Validate file for processing."""        # Check file size
+        """Validate file for processing."""
+        # Check file size
         if file_size_mb > self.max_file_size_mb:
             return False, f"File size ({file_size_mb}MB) exceeds limit ({self.max_file_size_mb}MB)"
         
@@ -400,7 +415,8 @@ class FileProcessingConfig:
     
     def get_processing_workflow(self, content_type: str, 
                               operations: List[ProcessingType]) -> Dict[str, Any]:
-        """Get processing workflow configuration for specific operations."""        workflow = {
+        """Get processing workflow configuration for specific operations."""
+        workflow = {
             'content_type': content_type,
             'operations': [],
             'estimated_time': 0,
@@ -421,7 +437,8 @@ class FileProcessingConfig:
     
     def _get_operation_config(self, content_type: str, 
                             operation: ProcessingType) -> Dict[str, Any]:
-        """Get configuration for specific processing operation."""        if content_type == 'audio':
+        """Get configuration for specific processing operation."""
+        if content_type == 'audio':
             config = self.audio_config
         elif content_type == 'video':
             config = self.video_config
@@ -447,7 +464,8 @@ class FileProcessingConfig:
         return operation_configs.get(operation, {})
     
     def export_configuration(self) -> Dict[str, Any]:
-        """Export processing configuration to JSON-serializable format."""        return {
+        """Export processing configuration to JSON-serializable format."""
+        return {
             'max_file_size_mb': self.max_file_size_mb,
             'processing_timeout_seconds': self.processing_timeout_seconds,
             'concurrent_processing_limit': self.concurrent_processing_limit,

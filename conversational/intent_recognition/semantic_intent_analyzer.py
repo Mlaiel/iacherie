@@ -11,7 +11,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
-"""from typing import Dict, List, Optional, Any, Union, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class SemanticDimension(Enum):
-    """Semantic analysis dimensions"""    EMOTIONAL_TONE = "emotional_tone"
+    """Semantic analysis dimensions"""
+    EMOTIONAL_TONE = "emotional_tone"
     TECHNICAL_COMPLEXITY = "technical_complexity"
     URGENCY_LEVEL = "urgency_level"
     CREATIVITY_ASPECT = "creativity_aspect"
@@ -40,7 +42,8 @@ class SemanticDimension(Enum):
 
 
 class IntentCluster(Enum):
-    """High-level intent clusters"""    CONTENT_CREATION = "content_creation"
+    """High-level intent clusters"""
+    CONTENT_CREATION = "content_creation"
     BUSINESS_OPERATIONS = "business_operations"
     TECHNICAL_SUPPORT = "technical_support"
     CREATIVE_COLLABORATION = "creative_collaboration"
@@ -52,7 +55,8 @@ class IntentCluster(Enum):
 
 @dataclass
 class SemanticFeatures:
-    """Extracted semantic features from text"""    
+    """Extracted semantic features from text"""
+    
     # Embedding vectors
     sentence_embedding: np.ndarray = field(default_factory=lambda: np.array([]))
     token_embeddings: List[np.ndarray] = field(default_factory=list)
@@ -81,7 +85,8 @@ class SemanticFeatures:
 
 @dataclass
 class SemanticIntentResult:
-    """Result of semantic intent analysis"""    
+    """Result of semantic intent analysis"""
+    
     # Primary intent cluster
     intent_cluster: IntentCluster
     cluster_confidence: float
@@ -107,7 +112,8 @@ class SemanticIntentResult:
 
 
 class SemanticIntentAnalyzer:
-    """    Advanced semantic analysis system for intent understanding
+    """
+    Advanced semantic analysis system for intent understanding
     
     Provides deep semantic analysis including:
     - Sentence embedding generation
@@ -115,7 +121,8 @@ class SemanticIntentAnalyzer:
     - Intent clustering and classification
     - Context and nuance extraction
     - Multi-dimensional semantic analysis
-    """    
+    """
+    
     def __init__(self, config: IntentRecognitionConfig):
         self.config = config
         self.sentence_transformer = None
@@ -128,7 +135,8 @@ class SemanticIntentAnalyzer:
         self._load_domain_knowledge()
     
     def _initialize_models(self):
-        """Initialize semantic analysis models"""        try:
+        """Initialize semantic analysis models"""
+        try:
             # Load sentence transformer for embeddings
             model_name = self.config.model.transformer_model_name
             self.sentence_transformer = SentenceTransformer(model_name)
@@ -151,7 +159,8 @@ class SemanticIntentAnalyzer:
             raise SemanticAnalysisError(f"Model initialization failed: {e}")
     
     def _load_domain_knowledge(self):
-        """Load domain-specific knowledge and vocabularies"""        try:
+        """Load domain-specific knowledge and vocabularies"""
+        try:
             # Creative industry domain vocabulary
             self.domain_vocabulary = {
                 "music_production": [
@@ -203,7 +212,8 @@ class SemanticIntentAnalyzer:
         context: Optional[Dict[str, Any]] = None,
         user_profile: Optional[Dict[str, Any]] = None
     ) -> SemanticIntentResult:
-        """        Perform comprehensive semantic intent analysis
+        """
+        Perform comprehensive semantic intent analysis
         
         Args:
             text: Input text to analyze
@@ -212,7 +222,8 @@ class SemanticIntentAnalyzer:
             
         Returns:
             SemanticIntentResult: Comprehensive semantic analysis
-        """        import time
+        """
+        import time
         start_time = time.time()
         
         try:
@@ -278,7 +289,8 @@ class SemanticIntentAnalyzer:
             raise SemanticAnalysisError(f"Analysis failed: {e}")
     
     def _extract_semantic_features(self, text: str) -> SemanticFeatures:
-        """Extract comprehensive semantic features from text"""        
+        """Extract comprehensive semantic features from text"""
+        
         # Generate sentence embedding
         sentence_embedding = self.sentence_transformer.encode(text)
         
@@ -348,7 +360,8 @@ class SemanticIntentAnalyzer:
         )
     
     def _identify_domain_terms(self, text: str) -> List[str]:
-        """Identify domain-specific terms in text"""        identified_terms = []
+        """Identify domain-specific terms in text"""
+        identified_terms = []
         
         for domain, terms in self.domain_vocabulary.items():
             for term in terms:
@@ -358,7 +371,8 @@ class SemanticIntentAnalyzer:
         return identified_terms
     
     def _calculate_emotional_valence(self, text: str) -> float:
-        """Calculate emotional valence (-1 to 1)"""        try:
+        """Calculate emotional valence (-1 to 1)"""
+        try:
             sentiment_results = self.sentiment_analyzer(text)
             
             # Convert to valence score
@@ -378,7 +392,8 @@ class SemanticIntentAnalyzer:
             return 0.0
     
     def _calculate_technical_complexity(self, text: str, domain_terms: List[str]) -> float:
-        """Calculate technical complexity (0 to 1)"""        
+        """Calculate technical complexity (0 to 1)"""
+        
         # Technical indicators
         technical_indicators = [
             "api", "integration", "configuration", "setup", "technical",
@@ -395,7 +410,8 @@ class SemanticIntentAnalyzer:
         return min(1.0, complexity_score * 10)  # Scale and cap at 1.0
     
     def _calculate_urgency_score(self, text: str) -> float:
-        """Calculate urgency score (0 to 1)"""        
+        """Calculate urgency score (0 to 1)"""
+        
         urgency_indicators = [
             "urgent", "asap", "immediately", "quickly", "rush", "emergency",
             "deadline", "critical", "priority", "now", "soon"
@@ -413,7 +429,8 @@ class SemanticIntentAnalyzer:
         return min(1.0, urgency_score)
     
     def _calculate_creativity_level(self, text: str, domain_terms: List[str]) -> float:
-        """Calculate creativity level (0 to 1)"""        
+        """Calculate creativity level (0 to 1)"""
+        
         creative_indicators = [
             "creative", "artistic", "design", "aesthetic", "beautiful",
             "inspiring", "original", "unique", "innovative", "experimental"
@@ -434,7 +451,8 @@ class SemanticIntentAnalyzer:
         return min(1.0, creativity_score)
     
     def _calculate_sentence_complexity(self, doc) -> float:
-        """Calculate sentence complexity"""        
+        """Calculate sentence complexity"""
+        
         total_tokens = len(doc)
         sentences = list(doc.sents)
         
@@ -455,7 +473,8 @@ class SemanticIntentAnalyzer:
         return min(1.0, complexity)
     
     def _get_dependency_depth(self, token) -> int:
-        """Calculate dependency tree depth for a token"""        depth = 0
+        """Calculate dependency tree depth for a token"""
+        depth = 0
         current = token
         
         while current.head != current:
@@ -467,7 +486,8 @@ class SemanticIntentAnalyzer:
         return depth
     
     def _calculate_formality_level(self, text: str) -> float:
-        """Calculate formality level (0 to 1)"""        
+        """Calculate formality level (0 to 1)"""
+        
         formal_indicators = [
             "please", "thank you", "would", "could", "may", "might",
             "therefore", "furthermore", "however", "consequently"
@@ -490,7 +510,8 @@ class SemanticIntentAnalyzer:
         return formality_score
     
     def _identify_question_type(self, text: str) -> Optional[str]:
-        """Identify type of question if text is a question"""        
+        """Identify type of question if text is a question"""
+        
         if not text.strip().endswith('?'):
             return None
         
@@ -516,7 +537,8 @@ class SemanticIntentAnalyzer:
         return "general"
     
     def _extract_temporal_references(self, doc) -> List[str]:
-        """Extract temporal references from text"""        
+        """Extract temporal references from text"""
+        
         temporal_entities = []
         
         for ent in doc.ents:
@@ -537,7 +559,8 @@ class SemanticIntentAnalyzer:
         return list(set(temporal_entities))
     
     def _extract_platform_mentions(self, text: str) -> List[str]:
-        """Extract platform mentions from text"""        
+        """Extract platform mentions from text"""
+        
         platforms = [
             "spotify", "instagram", "youtube", "tiktok", "twitter",
             "facebook", "soundcloud", "bandcamp", "twitch", "patreon"
@@ -553,7 +576,8 @@ class SemanticIntentAnalyzer:
         return mentioned_platforms
     
     def _extract_action_words(self, doc) -> List[str]:
-        """Extract action words (verbs) from text"""        
+        """Extract action words (verbs) from text"""
+        
         action_words = []
         
         for token in doc:
@@ -567,7 +591,8 @@ class SemanticIntentAnalyzer:
         text: str, 
         features: SemanticFeatures
     ) -> Tuple[IntentCluster, float]:
-        """Classify intent into high-level clusters"""        
+        """Classify intent into high-level clusters"""
+        
         # Calculate similarity with each intent cluster
         similarities = {}
         
@@ -598,7 +623,8 @@ class SemanticIntentAnalyzer:
         return best_cluster, min(1.0, confidence)
     
     def _calculate_similarity_scores(self, embedding: np.ndarray) -> Dict[str, float]:
-        """Calculate similarity scores with various intent categories"""        
+        """Calculate similarity scores with various intent categories"""
+        
         similarity_scores = {}
         
         for cluster, cluster_embedding in self.intent_embeddings.items():
@@ -611,7 +637,8 @@ class SemanticIntentAnalyzer:
         return similarity_scores
     
     def _extract_intent_nuances(self, text: str, features: SemanticFeatures) -> List[str]:
-        """Extract nuanced aspects of the intent"""        
+        """Extract nuanced aspects of the intent"""
+        
         nuances = []
         
         # Emotional nuances
@@ -655,7 +682,8 @@ class SemanticIntentAnalyzer:
         context: Optional[Dict[str, Any]],
         user_profile: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze implied context from the text and features"""        
+        """Analyze implied context from the text and features"""
+        
         implied_context = {}
         
         # Implied timeline
@@ -691,7 +719,8 @@ class SemanticIntentAnalyzer:
         intent_cluster: IntentCluster,
         features: SemanticFeatures
     ) -> List[str]:
-        """Identify what information might be missing for complete understanding"""        
+        """Identify what information might be missing for complete understanding"""
+        
         missing_info = []
         
         # Cluster-specific missing information
@@ -727,7 +756,8 @@ class SemanticIntentAnalyzer:
         intent_cluster: IntentCluster,
         missing_information: List[str]
     ) -> List[str]:
-        """Generate clarification questions based on missing information"""        
+        """Generate clarification questions based on missing information"""
+        
         questions = []
         
         # Map missing information to questions
@@ -760,7 +790,8 @@ class SemanticIntentAnalyzer:
         features: SemanticFeatures,
         context: Optional[Dict[str, Any]]
     ) -> List[str]:
-        """Suggest relevant actions based on intent analysis"""        
+        """Suggest relevant actions based on intent analysis"""
+        
         actions = []
         
         # Cluster-specific actions
@@ -806,7 +837,8 @@ class SemanticIntentAnalyzer:
         cluster_confidence: float,
         features: SemanticFeatures
     ) -> float:
-        """Calculate overall confidence in the analysis"""        
+        """Calculate overall confidence in the analysis"""
+        
         # Base confidence from cluster classification
         confidence = cluster_confidence
         
@@ -826,10 +858,12 @@ class SemanticIntentAnalyzer:
         return min(1.0, max(0.0, confidence))
     
     def get_intent_embedding(self, text: str) -> np.ndarray:
-        """Get embedding vector for given text"""        return self.sentence_transformer.encode(text)
+        """Get embedding vector for given text"""
+        return self.sentence_transformer.encode(text)
     
     def compare_intents(self, text1: str, text2: str) -> float:
-        """Compare semantic similarity between two texts"""        embedding1 = self.get_intent_embedding(text1)
+        """Compare semantic similarity between two texts"""
+        embedding1 = self.get_intent_embedding(text1)
         embedding2 = self.get_intent_embedding(text2)
         
         similarity = cosine_similarity(

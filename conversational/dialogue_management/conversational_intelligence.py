@@ -11,7 +11,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from datetime import datetime, timezone
@@ -37,7 +38,8 @@ from .business_context_orchestrator import BusinessContextOrchestrator
 logger = logging.getLogger(__name__)
 
 class ConversationMode(Enum):
-    """Conversation interaction modes"""    ONBOARDING = "onboarding"
+    """Conversation interaction modes"""
+    ONBOARDING = "onboarding"
     CONSULTATION = "consultation"
     PROBLEM_SOLVING = "problem_solving"
     EDUCATIONAL = "educational"
@@ -47,7 +49,8 @@ class ConversationMode(Enum):
     TECHNICAL_SUPPORT = "technical_support"
 
 class PersonalityType(Enum):
-    """User personality types for adaptation"""    ANALYTICAL = "analytical"
+    """User personality types for adaptation"""
+    ANALYTICAL = "analytical"
     CREATIVE = "creative"
     PRAGMATIC = "pragmatic"
     COLLABORATIVE = "collaborative"
@@ -57,7 +60,8 @@ class PersonalityType(Enum):
     RISK_TAKING = "risk_taking"
 
 class CommunicationStyle(Enum):
-    """Communication style preferences"""    FORMAL = "formal"
+    """Communication style preferences"""
+    FORMAL = "formal"
     CASUAL = "casual"
     TECHNICAL = "technical"
     SIMPLIFIED = "simplified"
@@ -67,7 +71,8 @@ class CommunicationStyle(Enum):
     DIRECT = "direct"
 
 class EmotionalState(Enum):
-    """User emotional states"""    CONFIDENT = "confident"
+    """User emotional states"""
+    CONFIDENT = "confident"
     ANXIOUS = "anxious"
     EXCITED = "excited"
     FRUSTRATED = "frustrated"
@@ -78,7 +83,8 @@ class EmotionalState(Enum):
 
 @dataclass
 class ConversationAnalytics:
-    """Comprehensive conversation analytics"""    # Engagement metrics
+    """Comprehensive conversation analytics"""
+    # Engagement metrics
     message_count: int = 0
     session_duration: float = 0.0
     response_time_avg: float = 0.0
@@ -110,7 +116,8 @@ class ConversationAnalytics:
 
 @dataclass
 class ConversationalContext:
-    """Rich conversational context with AI insights"""    session_id: str
+    """Rich conversational context with AI insights"""
+    session_id: str
     creator_id: str
     conversation_mode: ConversationMode
     
@@ -138,7 +145,8 @@ class ConversationalContext:
     last_interaction: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 class ConversationalIntelligenceEngine:
-    """Advanced conversational intelligence with real-time adaptation"""    
+    """Advanced conversational intelligence with real-time adaptation"""
+    
     def __init__(
         self,
         nlp_processor: NLPProcessor,
@@ -168,7 +176,8 @@ class ConversationalIntelligenceEngine:
         self.analytics_buffer: Dict[str, deque] = defaultdict(lambda: deque(maxlen=100))
 
     def _load_personality_classifier(self) -> AutoModelForSequenceClassification:
-        """Load personality classification model"""        try:
+        """Load personality classification model"""
+        try:
             model = AutoModelForSequenceClassification.from_pretrained(
                 "microsoft/DialoGPT-medium",
                 num_labels=len(PersonalityType)
@@ -179,7 +188,8 @@ class ConversationalIntelligenceEngine:
             return None
 
     def _initialize_intelligence_rules(self) -> Dict[str, Any]:
-        """Initialize conversational intelligence rules"""        return {
+        """Initialize conversational intelligence rules"""
+        return {
             "personality_adaptation": {
                 "analytical": {
                     "response_style": "data_driven",
@@ -271,7 +281,8 @@ class ConversationalIntelligenceEngine:
         creator_id: str,
         previous_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Analyze a conversation turn with advanced AI insights"""        try:
+        """Analyze a conversation turn with advanced AI insights"""
+        try:
             # Get or create conversational context
             context = await self._get_or_create_context(session_id, creator_id, previous_context)
             
@@ -317,7 +328,8 @@ class ConversationalIntelligenceEngine:
         creator_id: str,
         previous_context: Optional[Dict[str, Any]]
     ) -> ConversationalContext:
-        """Get existing or create new conversational context"""        if session_id in self.active_contexts:
+        """Get existing or create new conversational context"""
+        if session_id in self.active_contexts:
             context = self.active_contexts[session_id]
             context.last_interaction = datetime.now(timezone.utc)
             return context
@@ -345,7 +357,8 @@ class ConversationalIntelligenceEngine:
         user_message: str,
         context: ConversationalContext
     ) -> Dict[str, Any]:
-        """Perform comprehensive multi-dimensional analysis"""        # Intent analysis
+        """Perform comprehensive multi-dimensional analysis"""
+        # Intent analysis
         intent_analysis = await self.intent_classifier.classify_intent(
             user_message, context.context_history
         )
@@ -398,7 +411,8 @@ class ConversationalIntelligenceEngine:
         message: str,
         sentiment_analysis: Dict[str, Any]
     ) -> EmotionalState:
-        """Detect user's emotional state from message and sentiment"""        # Analyze emotional indicators
+        """Detect user's emotional state from message and sentiment"""
+        # Analyze emotional indicators
         emotional_keywords = {
             "anxious": ["worried", "nervous", "uncertain", "afraid", "concerned"],
             "excited": ["excited", "thrilled", "eager", "enthusiastic", "pumped"],
@@ -435,7 +449,8 @@ class ConversationalIntelligenceEngine:
         message: str,
         context: ConversationalContext
     ) -> Dict[str, Any]:
-        """Analyze topics and their relevance"""        # Extract topics using NLP
+        """Analyze topics and their relevance"""
+        # Extract topics using NLP
         topics = await self.nlp_processor.extract_topics(message)
         
         # Analyze topic transitions
@@ -466,7 +481,8 @@ class ConversationalIntelligenceEngine:
         message: str,
         context: ConversationalContext
     ) -> Dict[str, Any]:
-        """Analyze personality indicators from conversation patterns"""        if len(context.context_history) < 3:
+        """Analyze personality indicators from conversation patterns"""
+        if len(context.context_history) < 3:
             return {"insufficient_data": True}
         
         # Analyze communication patterns
@@ -512,7 +528,8 @@ class ConversationalIntelligenceEngine:
         message: str,
         context: ConversationalContext
     ) -> Dict[str, Any]:
-        """Analyze business context indicators"""        # Extract business-related entities and concepts
+        """Analyze business context indicators"""
+        # Extract business-related entities and concepts
         business_entities = await self.nlp_processor.extract_business_entities(message)
         
         # Analyze business maturity indicators
@@ -536,7 +553,8 @@ class ConversationalIntelligenceEngine:
         context: ConversationalContext,
         intent_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Predict conversation trajectory and next likely turns"""        # Analyze conversation patterns
+        """Predict conversation trajectory and next likely turns"""
+        # Analyze conversation patterns
         conversation_patterns = await self._analyze_conversation_patterns(context)
         
         # Predict next likely intents
@@ -567,7 +585,8 @@ class ConversationalIntelligenceEngine:
         context: ConversationalContext,
         analysis_results: Dict[str, Any]
     ) -> None:
-        """Update conversational context with new analysis results"""        # Update conversation analytics
+        """Update conversational context with new analysis results"""
+        # Update conversation analytics
         analytics = context.conversation_analytics
         
         # Intent tracking
@@ -620,7 +639,8 @@ class ConversationalIntelligenceEngine:
         context: ConversationalContext,
         analysis_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate intelligent response recommendations"""        # Adaptive tone based on emotional state
+        """Generate intelligent response recommendations"""
+        # Adaptive tone based on emotional state
         emotional_state = analysis_results["emotional_state"]
         emotional_rules = self.intelligence_rules["emotional_adaptation"]
         
@@ -673,7 +693,8 @@ class ConversationalIntelligenceEngine:
         self,
         session_id: str
     ) -> Dict[str, Any]:
-        """Get comprehensive conversation insights"""        if session_id not in self.active_contexts:
+        """Get comprehensive conversation insights"""
+        if session_id not in self.active_contexts:
             return {"error": "Session not found"}
         
         context = self.active_contexts[session_id]
@@ -709,17 +730,21 @@ class ConversationalIntelligenceEngine:
 
     # Helper methods (abbreviated for space)
     async def _calculate_message_complexity(self, message: str) -> float:
-        """Calculate message complexity score"""        # Implementation for complexity calculation
+        """Calculate message complexity score"""
+        # Implementation for complexity calculation
         return 0.5
 
     async def _detect_urgency_indicators(self, message: str) -> str:
-        """Detect urgency indicators in message"""        # Implementation for urgency detection
+        """Detect urgency indicators in message"""
+        # Implementation for urgency detection
         return "medium"
 
     async def _classify_topic_transition(self, old_topic: str, new_topic: str) -> str:
-        """Classify type of topic transition"""        # Implementation for topic transition classification
+        """Classify type of topic transition"""
+        # Implementation for topic transition classification
         return "natural"
 
     async def _calculate_business_relevance(self, topics: List[Dict], context: ConversationalContext) -> float:
-        """Calculate business relevance of topics"""        # Implementation for business relevance calculation
+        """Calculate business relevance of topics"""
+        # Implementation for business relevance calculation
         return 0.8

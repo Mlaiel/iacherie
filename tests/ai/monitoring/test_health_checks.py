@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -23,7 +24,8 @@ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use of this code without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full
 extent of the law.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -65,10 +67,12 @@ from .fixtures import (
 
 
 class TestHealthChecksCore:
-    """Core functionality tests for health checking system."""    
+    """Core functionality tests for health checking system."""
+    
     @pytest.fixture
     async def health_checker(self):
-        """Create and initialize health checking system."""        checker = HealthChecks(
+        """Create and initialize health checking system."""
+        checker = HealthChecks(
             config={
                 "check_interval_seconds": 30,
                 "timeout_seconds": 10,
@@ -86,7 +90,8 @@ class TestHealthChecksCore:
     
     @pytest.fixture
     def service_configs(self, service_configurations):
-        """Get service configuration for testing."""        return service_configurations["production_services"]
+        """Get service configuration for testing."""
+        return service_configurations["production_services"]
                 "max_connections": 100
             },
             "cache": {
@@ -116,14 +121,16 @@ class TestHealthChecksCore:
         }
     
     async def test_health_checker_initialization(self, health_checker):
-        """Test proper initialization of health checker."""        assert health_checker is not None
+        """Test proper initialization of health checker."""
+        assert health_checker is not None
         assert health_checker.is_initialized
         assert health_checker.resource_monitor is not None
         assert health_checker.service_monitor is not None
         assert health_checker.component_checkers is not None
     
     async def test_database_health_check(self, health_checker, health_check_config):
-        """Test database connectivity and health verification."""        db_config = health_check_config["database"]
+        """Test database connectivity and health verification."""
+        db_config = health_check_config["database"]
         
         # Test successful database connection
         with patch('asyncpg.connect') as mock_connect:
@@ -185,7 +192,8 @@ class TestHealthChecksCore:
                 assert result.status in [HealthStatus.WARNING, HealthStatus.DEGRADED]
     
     async def test_cache_health_check(self, health_checker, health_check_config):
-        """Test cache (Redis) connectivity and performance."""        cache_config = health_check_config["cache"]
+        """Test cache (Redis) connectivity and performance."""
+        cache_config = health_check_config["cache"]
         
         # Test successful cache connection
         with patch('aioredis.Redis') as mock_redis:
@@ -257,7 +265,8 @@ class TestHealthChecksCore:
                 assert result.status in [HealthStatus.WARNING, HealthStatus.DEGRADED]
     
     async def test_api_endpoint_health_check(self, health_checker, health_check_config):
-        """Test API endpoint health and availability."""        api_endpoints = health_check_config["api_endpoints"]
+        """Test API endpoint health and availability."""
+        api_endpoints = health_check_config["api_endpoints"]
         
         # Test successful API endpoint check
         with patch('aiohttp.ClientSession.get') as mock_get:
@@ -311,7 +320,8 @@ class TestHealthChecksCore:
             assert result.details["status_code"] == 500
     
     async def test_ai_model_health_check(self, health_checker, health_check_config):
-        """Test AI model health and inference capability."""        ai_models = health_check_config["ai_models"]
+        """Test AI model health and inference capability."""
+        ai_models = health_check_config["ai_models"]
         
         # Test successful AI model health check
         with patch('aiohttp.ClientSession.post') as mock_post:
@@ -392,7 +402,8 @@ class TestHealthChecksCore:
                 assert result.status in [HealthStatus.WARNING, HealthStatus.DEGRADED]
     
     async def test_system_resource_monitoring(self, health_checker, health_check_config):
-        """Test system resource health monitoring."""        infrastructure_config = health_check_config["infrastructure"]
+        """Test system resource health monitoring."""
+        infrastructure_config = health_check_config["infrastructure"]
         
         # Test CPU monitoring
         with patch('psutil.cpu_percent') as mock_cpu:
@@ -471,7 +482,8 @@ class TestHealthChecksCore:
             assert result.details["disk_percent"] == 50.0
     
     async def test_comprehensive_health_check(self, health_checker, health_check_config):
-        """Test comprehensive system health check."""        # Mock all component health checks
+        """Test comprehensive system health check."""
+        # Mock all component health checks
         with patch.multiple(
             health_checker,
             check_database_health=AsyncMock(return_value=HealthCheckResult(
@@ -554,7 +566,8 @@ class TestHealthChecksCore:
             assert health_summary.avg_response_time > 0
     
     async def test_health_alerting_system(self, health_checker):
-        """Test health check alerting and notification system."""        # Set up health alert callbacks
+        """Test health check alerting and notification system."""
+        # Set up health alert callbacks
         alerts_triggered = []
         
         async def alert_callback(alert):
@@ -627,7 +640,8 @@ class TestHealthChecksCore:
         assert len(critical_alerts) >= 1
     
     async def test_health_trend_analysis(self, health_checker):
-        """Test health trend analysis and prediction."""        # Generate historical health data
+        """Test health trend analysis and prediction."""
+        # Generate historical health data
         historical_data = []
         base_time = datetime.utcnow() - timedelta(hours=24)
         
@@ -711,7 +725,8 @@ class TestHealthChecksCore:
             assert "expected_impact" in recommendation
     
     async def test_automated_health_recovery(self, health_checker):
-        """Test automated health recovery procedures."""        # Configure automated recovery actions
+        """Test automated health recovery procedures."""
+        # Configure automated recovery actions
         recovery_config = {
             "enable_auto_recovery": True,
             "recovery_actions": {
@@ -787,7 +802,8 @@ class TestHealthChecksCore:
         assert "trigger_garbage_collection" in action_types
     
     async def test_health_monitoring_performance(self, health_checker):
-        """Test health monitoring system performance and scalability."""        # Performance test with multiple concurrent health checks
+        """Test health monitoring system performance and scalability."""
+        # Performance test with multiple concurrent health checks
         start_time = datetime.utcnow()
         
         # Define multiple health check tasks

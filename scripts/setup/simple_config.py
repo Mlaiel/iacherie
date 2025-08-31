@@ -3,14 +3,16 @@ Core configuration management for the AI-powered content protection platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import os
+"""
+import os
 from typing import Optional, List
 from pydantic_settings import BaseSettings
 from pydantic import Field, PostgresDsn, RedisDsn
 
 
 class APISettings(BaseSettings):
-    """API and web server configuration"""    
+    """API and web server configuration"""
+    
     # Server Configuration
     host: str = Field(default="0.0.0.0", env="API_HOST")
     port: int = Field(default=8000, env="API_PORT")
@@ -49,7 +51,8 @@ class APISettings(BaseSettings):
 
 
 class SecuritySettings(BaseSettings):
-    """Enhanced security configuration settings"""    
+    """Enhanced security configuration settings"""
+    
     # JWT Configuration  
     jwt_secret_key: str = Field(default="dev-secret-key-change-in-production", env="JWT_SECRET_KEY")
     jwt_algorithm: str = Field(default="HS256", env="JWT_ALGORITHM")
@@ -111,7 +114,8 @@ class SecuritySettings(BaseSettings):
 
 
 class DatabaseSettings(BaseSettings):
-    """Database configuration settings"""    
+    """Database configuration settings"""
+    
     # PostgreSQL Primary Database
     postgres_host: str = Field(default="localhost", env="POSTGRES_HOST")
     postgres_port: int = Field(default=5432, env="POSTGRES_PORT") 
@@ -159,7 +163,8 @@ class DatabaseSettings(BaseSettings):
 
 
 class AISettings(BaseSettings):
-    """AI and Machine Learning configuration"""    
+    """AI and Machine Learning configuration"""
+    
     # Model Configuration
     huggingface_token: Optional[str] = Field(default=None, env="HUGGINGFACE_TOKEN")
     openai_api_key: Optional[str] = Field(default=None, env="OPENAI_API_KEY")
@@ -178,7 +183,8 @@ class AISettings(BaseSettings):
 
 
 class PlatformSettings(BaseSettings):
-    """Platform integrations configuration"""    
+    """Platform integrations configuration"""
+    
     # YouTube Integration
     youtube_api_key: Optional[str] = Field(default=None, env="YOUTUBE_API_KEY")
     youtube_client_id: Optional[str] = Field(default=None, env="YOUTUBE_CLIENT_ID")
@@ -206,7 +212,8 @@ class PlatformSettings(BaseSettings):
 
 
 class PaymentSettings(BaseSettings):
-    """Payment processing configuration"""    
+    """Payment processing configuration"""
+    
     # Stripe Configuration
     stripe_public_key: Optional[str] = Field(default=None, env="STRIPE_PUBLIC_KEY")
     stripe_secret_key: Optional[str] = Field(default=None, env="STRIPE_SECRET_KEY")
@@ -223,7 +230,8 @@ class PaymentSettings(BaseSettings):
 
 
 class StorageSettings(BaseSettings):
-    """File storage configuration"""    
+    """File storage configuration"""
+    
     # AWS S3 Configuration
     aws_access_key_id: Optional[str] = Field(default=None, env="AWS_ACCESS_KEY_ID")
     aws_secret_access_key: Optional[str] = Field(default=None, env="AWS_SECRET_ACCESS_KEY")
@@ -238,7 +246,8 @@ class StorageSettings(BaseSettings):
 
 
 class MonitoringSettings(BaseSettings):
-    """Monitoring and observability configuration"""    
+    """Monitoring and observability configuration"""
+    
     # Prometheus Configuration
     prometheus_enabled: bool = Field(default=True, env="PROMETHEUS_ENABLED")
     prometheus_port: int = Field(default=9090, env="PROMETHEUS_PORT")
@@ -253,7 +262,8 @@ class MonitoringSettings(BaseSettings):
 
 
 class ApplicationSettings(BaseSettings):
-    """Main application configuration"""    
+    """Main application configuration"""
+    
     # Application Info
     app_name: str = Field(default="Ainflue", env="APP_NAME")
     app_version: str = Field(default="1.0.0", env="APP_VERSION")
@@ -282,7 +292,8 @@ class ApplicationSettings(BaseSettings):
 
 
 class Settings:
-    """Main settings aggregator"""    
+    """Main settings aggregator"""
+    
     def __init__(self):
         self.app = APISettings()  # Renamed from ApplicationSettings to APISettings
         self.database = DatabaseSettings()
@@ -324,4 +335,5 @@ settings = Settings()
 
 # Compatibility aliases for existing code
 def get_settings():
-    """Get settings instance for dependency injection."""    return settings
+    """Get settings instance for dependency injection."""
+    return settings

@@ -12,7 +12,8 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 
 Advanced Twitter/X monitoring system for real-time surveillance and content analysis.
 Provides comprehensive monitoring of tweets, users, trends, and engagement patterns.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Union
 from datetime import datetime, timedelta
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class Tweet:
-    """Twitter/X tweet data."""    tweet_id: str
+    """Twitter/X tweet data."""
+    tweet_id: str
     user_id: str
     username: str
     display_name: str
@@ -55,7 +57,8 @@ class Tweet:
 
 @dataclass
 class TwitterUser:
-    """Twitter/X user data."""    user_id: str
+    """Twitter/X user data."""
+    user_id: str
     username: str
     display_name: str
     bio: str = ""
@@ -76,7 +79,8 @@ class TwitterUser:
 
 @dataclass
 class TwitterTrend:
-    """Twitter/X trending topic data."""    trend_name: str
+    """Twitter/X trending topic data."""
+    trend_name: str
     trend_rank: int
     tweet_volume: Optional[int] = None
     location: str = "worldwide"
@@ -87,7 +91,8 @@ class TwitterTrend:
 
 @dataclass
 class TwitterSpace:
-    """Twitter/X Spaces data."""    space_id: str
+    """Twitter/X Spaces data."""
+    space_id: str
     title: str
     description: str = ""
     host_id: str = ""
@@ -106,7 +111,8 @@ class TwitterSpace:
 
 @dataclass
 class TwitterViolation:
-    """Twitter/X content violation detection result."""    violation_id: str
+    """Twitter/X content violation detection result."""
+    violation_id: str
     content_type: str  # tweet, user, space, trend
     content_id: str
     user_id: str
@@ -122,7 +128,8 @@ class TwitterViolation:
 
 @dataclass
 class TwitterMonitoringMetrics:
-    """Twitter monitoring system metrics."""    tweets_monitored: int = 0
+    """Twitter monitoring system metrics."""
+    tweets_monitored: int = 0
     users_monitored: int = 0
     trends_monitored: int = 0
     spaces_monitored: int = 0
@@ -134,7 +141,8 @@ class TwitterMonitoringMetrics:
 
 
 class TwitterMonitor:
-    """    Advanced Twitter/X monitoring and surveillance system.
+    """
+    Advanced Twitter/X monitoring and surveillance system.
     
     Features:
     - Real-time tweet monitoring and analysis
@@ -145,9 +153,11 @@ class TwitterMonitor:
     - Sentiment analysis integration
     - Network analysis capabilities
     - Rate limit management
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Twitter monitor."""        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize Twitter monitor."""
+        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
         self.config = config or {}
@@ -220,7 +230,8 @@ class TwitterMonitor:
         self._logger.info("Twitter Monitor initialized")
     
     async def initialize(self) -> None:
-        """Initialize the Twitter monitor."""        try:
+        """Initialize the Twitter monitor."""
+        try:
             self._logger.info("Initializing Twitter monitor...")
             
             # Validate configuration
@@ -240,7 +251,8 @@ class TwitterMonitor:
             raise
     
     async def _initialize_twitter_client(self) -> None:
-        """Initialize Twitter API client."""        try:
+        """Initialize Twitter API client."""
+        try:
             # This would initialize the actual Twitter API client
             # For now, implement placeholder
             self._logger.debug("Twitter API client initialized")
@@ -250,7 +262,8 @@ class TwitterMonitor:
             raise
     
     async def _setup_violation_detection(self) -> None:
-        """Setup violation detection systems."""        try:
+        """Setup violation detection systems."""
+        try:
             # This would setup actual ML models for violation detection
             # For now, implement placeholder
             self._logger.debug("Violation detection setup complete")
@@ -260,7 +273,8 @@ class TwitterMonitor:
             raise
     
     async def start_monitoring(self) -> None:
-        """Start Twitter monitoring operations."""        try:
+        """Start Twitter monitoring operations."""
+        try:
             if self._monitoring_active:
                 self._logger.warning("Twitter monitoring is already active")
                 return
@@ -278,7 +292,8 @@ class TwitterMonitor:
             raise
     
     async def stop_monitoring(self) -> None:
-        """Stop Twitter monitoring operations."""        try:
+        """Stop Twitter monitoring operations."""
+        try:
             if not self._monitoring_active:
                 self._logger.warning("Twitter monitoring is not active")
                 return
@@ -301,7 +316,8 @@ class TwitterMonitor:
             raise
     
     async def add_keyword_monitoring(self, keyword: str) -> bool:
-        """Add keyword to monitoring."""        try:
+        """Add keyword to monitoring."""
+        try:
             self.monitored_keywords.add(keyword)
             self._logger.info(f"Added keyword monitoring: {keyword}")
             return True
@@ -311,7 +327,8 @@ class TwitterMonitor:
             return False
     
     async def add_hashtag_monitoring(self, hashtag: str) -> bool:
-        """Add hashtag to monitoring."""        try:
+        """Add hashtag to monitoring."""
+        try:
             # Remove # if present
             hashtag = hashtag.lstrip('#')
             self.monitored_hashtags.add(hashtag)
@@ -323,7 +340,8 @@ class TwitterMonitor:
             return False
     
     async def add_user_monitoring(self, username: str) -> bool:
-        """Add user to monitoring."""        try:
+        """Add user to monitoring."""
+        try:
             # Remove @ if present
             username = username.lstrip('@')
             self.monitored_users.add(username)
@@ -335,7 +353,8 @@ class TwitterMonitor:
             return False
     
     async def monitor_trending_topics(self, location: str = "1") -> List[TwitterTrend]:
-        """Monitor trending topics for a location."""        try:
+        """Monitor trending topics for a location."""
+        try:
             self._logger.debug(f"Monitoring trending topics for location: {location}")
             
             # Rate limiting
@@ -365,7 +384,8 @@ class TwitterMonitor:
             return []
     
     async def monitor_user_timeline(self, username: str, max_tweets: int = 100) -> List[Tweet]:
-        """Monitor user timeline."""        try:
+        """Monitor user timeline."""
+        try:
             self._logger.debug(f"Monitoring timeline for user: @{username}")
             
             # Rate limiting
@@ -399,7 +419,8 @@ class TwitterMonitor:
         max_tweets: int = 100,
         result_type: str = "recent"
     ) -> List[Tweet]:
-        """Search for tweets."""        try:
+        """Search for tweets."""
+        try:
             self._logger.debug(f"Searching tweets: {query}")
             
             # Rate limiting
@@ -428,7 +449,8 @@ class TwitterMonitor:
             return []
     
     async def monitor_spaces(self) -> List[TwitterSpace]:
-        """Monitor active Twitter Spaces."""        try:
+        """Monitor active Twitter Spaces."""
+        try:
             self._logger.debug("Monitoring Twitter Spaces")
             
             # Rate limiting
@@ -457,7 +479,8 @@ class TwitterMonitor:
             return []
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop."""        self._logger.info("Twitter monitoring loop started")
+        """Main monitoring loop."""
+        self._logger.info("Twitter monitoring loop started")
         
         try:
             while self._monitoring_active:
@@ -508,7 +531,8 @@ class TwitterMonitor:
         self._logger.info("Twitter monitoring loop stopped")
     
     async def _fetch_trending_topics(self, location: str) -> List[TwitterTrend]:
-        """Fetch trending topics."""        try:
+        """Fetch trending topics."""
+        try:
             # Simulate Twitter API call
             await asyncio.sleep(0.3)
             
@@ -533,7 +557,8 @@ class TwitterMonitor:
             return []
     
     async def _fetch_user_timeline(self, username: str, max_tweets: int) -> List[Tweet]:
-        """Fetch user timeline."""        try:
+        """Fetch user timeline."""
+        try:
             # Simulate Twitter API call
             await asyncio.sleep(0.4)
             
@@ -571,7 +596,8 @@ class TwitterMonitor:
         max_tweets: int,
         result_type: str
     ) -> List[Tweet]:
-        """Search for tweets."""        try:
+        """Search for tweets."""
+        try:
             # Simulate Twitter API call
             await asyncio.sleep(0.5)
             
@@ -603,7 +629,8 @@ class TwitterMonitor:
             return []
     
     async def _fetch_active_spaces(self) -> List[TwitterSpace]:
-        """Fetch active Twitter Spaces."""        try:
+        """Fetch active Twitter Spaces."""
+        try:
             # Simulate Twitter API call
             await asyncio.sleep(0.3)
             
@@ -634,7 +661,8 @@ class TwitterMonitor:
             return []
     
     async def _analyze_tweet_for_violations(self, tweet: Tweet) -> List[TwitterViolation]:
-        """Analyze tweet for violations."""        violations = []
+        """Analyze tweet for violations."""
+        violations = []
         
         try:
             # Analyze tweet text
@@ -675,7 +703,8 @@ class TwitterMonitor:
         return violations
     
     async def _analyze_trend_for_violations(self, trend: TwitterTrend) -> List[TwitterViolation]:
-        """Analyze trending topic for violations."""        violations = []
+        """Analyze trending topic for violations."""
+        violations = []
         
         try:
             # Analyze trend name
@@ -716,7 +745,8 @@ class TwitterMonitor:
         return violations
     
     async def _analyze_space_for_violations(self, space: TwitterSpace) -> List[TwitterViolation]:
-        """Analyze Twitter Space for violations."""        violations = []
+        """Analyze Twitter Space for violations."""
+        violations = []
         
         try:
             # Analyze space content
@@ -757,7 +787,8 @@ class TwitterMonitor:
         return violations
     
     def _calculate_severity(self, violation_type: str, confidence: float) -> str:
-        """Calculate violation severity."""        high_risk_types = ['violence', 'harassment', 'misinformation']
+        """Calculate violation severity."""
+        high_risk_types = ['violence', 'harassment', 'misinformation']
         
         if violation_type in high_risk_types:
             if confidence >= 0.8:
@@ -775,7 +806,8 @@ class TwitterMonitor:
                 return "low"
     
     async def _enforce_rate_limit(self) -> None:
-        """Enforce Twitter API rate limiting."""        current_time = asyncio.get_event_loop().time()
+        """Enforce Twitter API rate limiting."""
+        current_time = asyncio.get_event_loop().time()
         time_since_last_request = current_time - self._last_request_time
         
         # Check if we need to wait for rate limit reset
@@ -796,7 +828,8 @@ class TwitterMonitor:
         self._rate_limit_remaining = max(0, self._rate_limit_remaining - 1)
     
     def get_monitoring_status(self) -> Dict[str, Any]:
-        """Get current monitoring status."""        return {
+        """Get current monitoring status."""
+        return {
             'monitoring_active': self._monitoring_active,
             'monitored_targets': {
                 'keywords': len(self.monitored_keywords),
@@ -829,7 +862,8 @@ class TwitterMonitor:
         }
     
     def get_recent_violations(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get recent violations."""        recent_violations = sorted(
+        """Get recent violations."""
+        recent_violations = sorted(
             self.violations,
             key=lambda v: v.detected_at,
             reverse=True
@@ -854,7 +888,8 @@ class TwitterMonitor:
         ]
     
     async def shutdown(self) -> None:
-        """Shutdown the Twitter monitor."""        try:
+        """Shutdown the Twitter monitor."""
+        try:
             self._logger.info("Shutting down Twitter monitor...")
             
             await self.stop_monitoring()

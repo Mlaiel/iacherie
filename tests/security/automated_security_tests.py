@@ -18,7 +18,8 @@ Tests de sécurité enterprise-grade pour toutes les couches:
 - Tests de chiffrement et cryptographie
 - Tests de sécurité API et microservices
 - Tests de sécurité infrastructure et conteneurs
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import time
@@ -70,7 +71,8 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityTestType(Enum):
-    """Types de tests de sécurité"""    AUTHENTICATION = "authentication"
+    """Types de tests de sécurité"""
+    AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     INPUT_VALIDATION = "input_validation"
     SQL_INJECTION = "sql_injection"
@@ -88,7 +90,8 @@ class SecurityTestType(Enum):
 
 
 class SecurityTestSeverity(Enum):
-    """Niveaux de sévérité des tests"""    INFO = "info"
+    """Niveaux de sévérité des tests"""
+    INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -96,7 +99,8 @@ class SecurityTestSeverity(Enum):
 
 
 class SecurityTestStatus(Enum):
-    """Statuts des tests de sécurité"""    PENDING = "pending"
+    """Statuts des tests de sécurité"""
+    PENDING = "pending"
     RUNNING = "running"
     PASSED = "passed"
     FAILED = "failed"
@@ -106,7 +110,8 @@ class SecurityTestStatus(Enum):
 
 @dataclass
 class SecurityTestResult:
-    """Résultat d'un test de sécurité"""    test_id: str
+    """Résultat d'un test de sécurité"""
+    test_id: str
     test_name: str
     test_type: SecurityTestType
     status: SecurityTestStatus
@@ -124,7 +129,8 @@ class SecurityTestResult:
     compliance_impact: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertir en dictionnaire"""        return {
+        """Convertir en dictionnaire"""
+        return {
             "test_id": self.test_id,
             "test_name": self.test_name,
             "test_type": self.test_type.value,
@@ -145,7 +151,8 @@ class SecurityTestResult:
 
 
 class SecurityTestSuite:
-    """Suite de tests de sécurité automatisés"""    
+    """Suite de tests de sécurité automatisés"""
+    
     def __init__(self, target_host: str = "localhost", target_port: int = 8000):
         self.target_host = target_host
         self.target_port = target_port
@@ -188,7 +195,8 @@ class SecurityTestSuite:
         }
     
     async def initialize(self) -> None:
-        """Initialiser la suite de tests"""        if SECURITY_LIBS_AVAILABLE:
+        """Initialiser la suite de tests"""
+        if SECURITY_LIBS_AVAILABLE:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.test_config["timeout"])
             )
@@ -196,13 +204,15 @@ class SecurityTestSuite:
         self.logger.info(f"Security test suite initialized for {self.base_url}")
     
     async def shutdown(self) -> None:
-        """Fermer la suite de tests"""        if self.session:
+        """Fermer la suite de tests"""
+        if self.session:
             await self.session.close()
         
         self.logger.info("Security test suite shutdown complete")
     
     async def run_all_tests(self) -> Dict[str, Any]:
-        """Exécuter tous les tests de sécurité"""        self.logger.info("Starting comprehensive security test suite")
+        """Exécuter tous les tests de sécurité"""
+        self.logger.info("Starting comprehensive security test suite")
         
         start_time = datetime.now()
         
@@ -249,7 +259,8 @@ class SecurityTestSuite:
         return self._generate_summary_report(start_time, end_time, duration)
     
     async def _test_authentication_security(self) -> None:
-        """Tests de sécurité d'authentification"""        self.logger.info("Running authentication security tests")
+        """Tests de sécurité d'authentification"""
+        self.logger.info("Running authentication security tests")
         
         # Test 1: Brute force protection
         await self._test_brute_force_protection()
@@ -267,7 +278,8 @@ class SecurityTestSuite:
         await self._test_session_fixation()
     
     async def _test_brute_force_protection(self) -> None:
-        """Test de protection contre les attaques par force brute"""        test_result = SecurityTestResult(
+        """Test de protection contre les attaques par force brute"""
+        test_result = SecurityTestResult(
             test_id=str(uuid.uuid4()),
             test_name="Brute Force Protection Test",
             test_type=SecurityTestType.AUTHENTICATION,
@@ -327,7 +339,8 @@ class SecurityTestSuite:
             self.results.append(test_result)
     
     async def _test_weak_password_policy(self) -> None:
-        """Test de politique de mots de passe faibles"""        test_result = SecurityTestResult(
+        """Test de politique de mots de passe faibles"""
+        test_result = SecurityTestResult(
             test_id=str(uuid.uuid4()),
             test_name="Weak Password Policy Test",
             test_type=SecurityTestType.AUTHENTICATION,
@@ -389,7 +402,8 @@ class SecurityTestSuite:
             self.results.append(test_result)
     
     async def _test_sql_injection(self) -> None:
-        """Tests d'injection SQL"""        self.logger.info("Running SQL injection tests")
+        """Tests d'injection SQL"""
+        self.logger.info("Running SQL injection tests")
         
         test_result = SecurityTestResult(
             test_id=str(uuid.uuid4()),
@@ -472,7 +486,8 @@ class SecurityTestSuite:
             self.results.append(test_result)
     
     async def _detect_sql_injection_response(self, response, payload: str) -> bool:
-        """Détecter une réponse indiquant une injection SQL"""        try:
+        """Détecter une réponse indiquant une injection SQL"""
+        try:
             text = await response.text()
             
             # Indicateurs d'erreurs SQL
@@ -500,7 +515,8 @@ class SecurityTestSuite:
             return False
     
     async def _test_xss_vulnerabilities(self) -> None:
-        """Tests de vulnérabilités XSS"""        test_result = SecurityTestResult(
+        """Tests de vulnérabilités XSS"""
+        test_result = SecurityTestResult(
             test_id=str(uuid.uuid4()),
             test_name="Cross-Site Scripting (XSS) Test",
             test_type=SecurityTestType.XSS,
@@ -579,43 +595,56 @@ class SecurityTestSuite:
     
     # Placeholder methods for other test types
     async def _test_authorization_security(self) -> None:
-        """Tests d'autorisation"""        await self._create_test_placeholder("Authorization Security Test", SecurityTestType.AUTHORIZATION)
+        """Tests d'autorisation"""
+        await self._create_test_placeholder("Authorization Security Test", SecurityTestType.AUTHORIZATION)
     
     async def _test_input_validation(self) -> None:
-        """Tests de validation des entrées"""        await self._create_test_placeholder("Input Validation Test", SecurityTestType.INPUT_VALIDATION)
+        """Tests de validation des entrées"""
+        await self._create_test_placeholder("Input Validation Test", SecurityTestType.INPUT_VALIDATION)
     
     async def _test_csrf_protection(self) -> None:
-        """Tests de protection CSRF"""        await self._create_test_placeholder("CSRF Protection Test", SecurityTestType.CSRF)
+        """Tests de protection CSRF"""
+        await self._create_test_placeholder("CSRF Protection Test", SecurityTestType.CSRF)
     
     async def _test_encryption_security(self) -> None:
-        """Tests de sécurité du chiffrement"""        await self._create_test_placeholder("Encryption Security Test", SecurityTestType.ENCRYPTION)
+        """Tests de sécurité du chiffrement"""
+        await self._create_test_placeholder("Encryption Security Test", SecurityTestType.ENCRYPTION)
     
     async def _test_session_management(self) -> None:
-        """Tests de gestion des sessions"""        await self._create_test_placeholder("Session Management Test", SecurityTestType.SESSION_MANAGEMENT)
+        """Tests de gestion des sessions"""
+        await self._create_test_placeholder("Session Management Test", SecurityTestType.SESSION_MANAGEMENT)
     
     async def _test_account_lockout(self) -> None:
-        """Tests de verrouillage de compte"""        await self._create_test_placeholder("Account Lockout Test", SecurityTestType.AUTHENTICATION)
+        """Tests de verrouillage de compte"""
+        await self._create_test_placeholder("Account Lockout Test", SecurityTestType.AUTHENTICATION)
     
     async def _test_mfa_bypass(self) -> None:
-        """Tests de contournement MFA"""        await self._create_test_placeholder("MFA Bypass Test", SecurityTestType.AUTHENTICATION)
+        """Tests de contournement MFA"""
+        await self._create_test_placeholder("MFA Bypass Test", SecurityTestType.AUTHENTICATION)
     
     async def _test_session_fixation(self) -> None:
-        """Tests de fixation de session"""        await self._create_test_placeholder("Session Fixation Test", SecurityTestType.SESSION_MANAGEMENT)
+        """Tests de fixation de session"""
+        await self._create_test_placeholder("Session Fixation Test", SecurityTestType.SESSION_MANAGEMENT)
     
     async def _test_api_security(self) -> None:
-        """Tests de sécurité API"""        await self._create_test_placeholder("API Security Test", SecurityTestType.API_SECURITY)
+        """Tests de sécurité API"""
+        await self._create_test_placeholder("API Security Test", SecurityTestType.API_SECURITY)
     
     async def _test_network_security(self) -> None:
-        """Tests de sécurité réseau"""        await self._create_test_placeholder("Network Security Test", SecurityTestType.NETWORK_SECURITY)
+        """Tests de sécurité réseau"""
+        await self._create_test_placeholder("Network Security Test", SecurityTestType.NETWORK_SECURITY)
     
     async def _test_ddos_resistance(self) -> None:
-        """Tests de résistance DDoS"""        await self._create_test_placeholder("DDoS Resistance Test", SecurityTestType.DDOS_RESISTANCE)
+        """Tests de résistance DDoS"""
+        await self._create_test_placeholder("DDoS Resistance Test", SecurityTestType.DDOS_RESISTANCE)
     
     async def _test_compliance(self) -> None:
-        """Tests de conformité"""        await self._create_test_placeholder("Compliance Test", SecurityTestType.COMPLIANCE)
+        """Tests de conformité"""
+        await self._create_test_placeholder("Compliance Test", SecurityTestType.COMPLIANCE)
     
     async def _create_test_placeholder(self, test_name: str, test_type: SecurityTestType) -> None:
-        """Créer un placeholder de test"""        test_result = SecurityTestResult(
+        """Créer un placeholder de test"""
+        test_result = SecurityTestResult(
             test_id=str(uuid.uuid4()),
             test_name=test_name,
             test_type=test_type,
@@ -629,7 +658,8 @@ class SecurityTestSuite:
         self.results.append(test_result)
     
     def _generate_summary_report(self, start_time: datetime, end_time: datetime, duration: timedelta) -> Dict[str, Any]:
-        """Générer un rapport de synthèse"""        total_tests = len(self.results)
+        """Générer un rapport de synthèse"""
+        total_tests = len(self.results)
         passed_tests = len([r for r in self.results if r.status == SecurityTestStatus.PASSED])
         failed_tests = len([r for r in self.results if r.status == SecurityTestStatus.FAILED])
         error_tests = len([r for r in self.results if r.status == SecurityTestStatus.ERROR])
@@ -682,7 +712,8 @@ class SecurityTestSuite:
         }
     
     def _calculate_risk_level(self, vulnerabilities: int, failed_tests: int) -> str:
-        """Calculer le niveau de risque"""        if vulnerabilities >= 5 or failed_tests >= 10:
+        """Calculer le niveau de risque"""
+        if vulnerabilities >= 5 or failed_tests >= 10:
             return "HIGH"
         elif vulnerabilities >= 2 or failed_tests >= 5:
             return "MEDIUM"
@@ -692,7 +723,8 @@ class SecurityTestSuite:
             return "MINIMAL"
     
     def _get_top_recommendations(self) -> List[str]:
-        """Obtenir les principales recommandations"""        all_recommendations = []
+        """Obtenir les principales recommandations"""
+        all_recommendations = []
         for result in self.results:
             all_recommendations.extend(result.recommendations)
         
@@ -712,13 +744,15 @@ class SecurityTestSuite:
 
 
 class SecurityTestRunner:
-    """Lanceur de tests de sécurité"""    
+    """Lanceur de tests de sécurité"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.SecurityTestRunner")
     
     async def run_security_tests(self, target_host: str = "localhost", target_port: int = 8000) -> Dict[str, Any]:
-        """Lancer tous les tests de sécurité"""        self.logger.info(f"Starting security test run against {target_host}:{target_port}")
+        """Lancer tous les tests de sécurité"""
+        self.logger.info(f"Starting security test run against {target_host}:{target_port}")
         
         test_suite = SecurityTestSuite(target_host, target_port)
         
@@ -734,7 +768,8 @@ class SecurityTestRunner:
             await test_suite.shutdown()
     
     async def run_continuous_security_monitoring(self, interval_hours: int = 24) -> None:
-        """Surveillance de sécurité continue"""        self.logger.info(f"Starting continuous security monitoring (every {interval_hours} hours)")
+        """Surveillance de sécurité continue"""
+        self.logger.info(f"Starting continuous security monitoring (every {interval_hours} hours)")
         
         while True:
             try:
@@ -759,14 +794,16 @@ class SecurityTestRunner:
 
 # Factory function
 async def create_security_test_suite(target_host: str = "localhost", target_port: int = 8000) -> SecurityTestSuite:
-    """Factory pour créer une suite de tests de sécurité"""    suite = SecurityTestSuite(target_host, target_port)
+    """Factory pour créer une suite de tests de sécurité"""
+    suite = SecurityTestSuite(target_host, target_port)
     await suite.initialize()
     return suite
 
 
 # CLI interface pour les tests de sécurité
 async def main():
-    """Interface CLI pour les tests de sécurité"""    import argparse
+    """Interface CLI pour les tests de sécurité"""
+    import argparse
     
     parser = argparse.ArgumentParser(description="Automated Security Testing Suite")
     parser.add_argument("--host", default="localhost", help="Target host")

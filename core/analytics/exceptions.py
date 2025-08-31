@@ -22,20 +22,23 @@ Team Specialists:
 - Audio Processing Specialist: Advanced audio AI algorithms
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
-"""from typing import Dict, Any, Optional, List
+"""
+from typing import Dict, Any, Optional, List
 from datetime import datetime
 from enum import Enum
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels"""    LOW = "low"
+    """Error severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class ErrorCategory(Enum):
-    """Error category classification"""    VALIDATION = "validation"
+    """Error category classification"""
+    VALIDATION = "validation"
     PROCESSING = "processing"
     STORAGE = "storage"
     NETWORK = "network"
@@ -48,7 +51,8 @@ class ErrorCategory(Enum):
 
 
 class AnalyticsBaseError(Exception):
-    """Base exception class for all analytics errors"""    
+    """Base exception class for all analytics errors"""
+    
     def __init__(
         self,
         message: str,
@@ -72,7 +76,8 @@ class AnalyticsBaseError(Exception):
         self.context['exception_class'] = self.__class__.__name__
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for logging/serialization"""        return {
+        """Convert exception to dictionary for logging/serialization"""
+        return {
             'error_code': self.error_code,
             'message': self.message,
             'severity': self.severity.value,
@@ -83,12 +88,14 @@ class AnalyticsBaseError(Exception):
         }
     
     def _generate_error_code(self) -> str:
-        """Generate unique error code"""        import uuid
+        """Generate unique error code"""
+        import uuid
         return f"{self.__class__.__name__.upper()}_{uuid.uuid4().hex[:8]}"
 
 
 class AnalyticsError(AnalyticsBaseError):
-    """General analytics operation error"""    
+    """General analytics operation error"""
+    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -98,7 +105,8 @@ class AnalyticsError(AnalyticsBaseError):
 
 
 class MetricsError(AnalyticsBaseError):
-    """Metrics collection and processing error"""    
+    """Metrics collection and processing error"""
+    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -108,7 +116,8 @@ class MetricsError(AnalyticsBaseError):
 
 
 class ReportingError(AnalyticsBaseError):
-    """Report generation and delivery error"""    
+    """Report generation and delivery error"""
+    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -118,7 +127,8 @@ class ReportingError(AnalyticsBaseError):
 
 
 class DataValidationError(AnalyticsBaseError):
-    """Data validation error"""    
+    """Data validation error"""
+    
     def __init__(
         self,
         message: str,
@@ -144,7 +154,8 @@ class DataValidationError(AnalyticsBaseError):
 
 
 class DataProcessingError(AnalyticsBaseError):
-    """Data processing error"""    
+    """Data processing error"""
+    
     def __init__(
         self,
         message: str,
@@ -167,7 +178,8 @@ class DataProcessingError(AnalyticsBaseError):
 
 
 class StorageError(AnalyticsBaseError):
-    """Storage operation error"""    
+    """Storage operation error"""
+    
     def __init__(
         self,
         message: str,
@@ -190,7 +202,8 @@ class StorageError(AnalyticsBaseError):
 
 
 class AggregationError(AnalyticsBaseError):
-    """Data aggregation error"""    
+    """Data aggregation error"""
+    
     def __init__(
         self,
         message: str,
@@ -213,7 +226,8 @@ class AggregationError(AnalyticsBaseError):
 
 
 class DashboardError(AnalyticsBaseError):
-    """Dashboard generation error"""    
+    """Dashboard generation error"""
+    
     def __init__(
         self,
         message: str,
@@ -236,7 +250,8 @@ class DashboardError(AnalyticsBaseError):
 
 
 class PredictionError(AnalyticsBaseError):
-    """Predictive analytics error"""    
+    """Predictive analytics error"""
+    
     def __init__(
         self,
         message: str,
@@ -260,7 +275,8 @@ class PredictionError(AnalyticsBaseError):
 
 
 class BusinessIntelligenceError(AnalyticsBaseError):
-    """Business intelligence processing error"""    
+    """Business intelligence processing error"""
+    
     def __init__(
         self,
         message: str,
@@ -283,7 +299,8 @@ class BusinessIntelligenceError(AnalyticsBaseError):
 
 
 class TrackingError(AnalyticsBaseError):
-    """User/content tracking error"""    
+    """User/content tracking error"""
+    
     def __init__(
         self,
         message: str,
@@ -306,7 +323,8 @@ class TrackingError(AnalyticsBaseError):
 
 
 class ConfigurationError(AnalyticsBaseError):
-    """Configuration error"""    
+    """Configuration error"""
+    
     def __init__(
         self,
         message: str,
@@ -330,7 +348,8 @@ class ConfigurationError(AnalyticsBaseError):
 
 
 class ResourceError(AnalyticsBaseError):
-    """Resource limitation error"""    
+    """Resource limitation error"""
+    
     def __init__(
         self,
         message: str,
@@ -357,7 +376,8 @@ class ResourceError(AnalyticsBaseError):
 
 
 class ExternalServiceError(AnalyticsBaseError):
-    """External service integration error"""    
+    """External service integration error"""
+    
     def __init__(
         self,
         message: str,
@@ -382,7 +402,8 @@ class ExternalServiceError(AnalyticsBaseError):
 
 
 class AuthenticationError(AnalyticsBaseError):
-    """Authentication error"""    
+    """Authentication error"""
+    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -393,7 +414,8 @@ class AuthenticationError(AnalyticsBaseError):
 
 
 class AuthorizationError(AnalyticsBaseError):
-    """Authorization error"""    
+    """Authorization error"""
+    
     def __init__(
         self,
         message: str,
@@ -417,7 +439,8 @@ class AuthorizationError(AnalyticsBaseError):
 
 
 class CriticalSystemError(AnalyticsBaseError):
-    """Critical system error that requires immediate attention"""    
+    """Critical system error that requires immediate attention"""
+    
     def __init__(
         self,
         message: str,
@@ -446,7 +469,8 @@ def handle_analytics_exception(
     error_context: Optional[Dict[str, Any]] = None,
     **kwargs
 ) -> Any:
-    """    Decorator function for handling analytics exceptions with context
+    """
+    Decorator function for handling analytics exceptions with context
     
     Args:
         func: Function to execute
@@ -455,7 +479,8 @@ def handle_analytics_exception(
     
     Returns:
         Function result or raises appropriate exception
-    """    try:
+    """
+    try:
         return func(*args, **kwargs)
     except AnalyticsBaseError:
         # Re-raise analytics errors as-is
@@ -480,7 +505,8 @@ def create_error_response(
     error: AnalyticsBaseError,
     include_details: bool = False
 ) -> Dict[str, Any]:
-    """    Create standardized error response for API endpoints
+    """
+    Create standardized error response for API endpoints
     
     Args:
         error: Analytics exception
@@ -488,7 +514,8 @@ def create_error_response(
     
     Returns:
         Standardized error response dictionary
-    """    response = {
+    """
+    response = {
         'success': False,
         'error': {
             'code': error.error_code,

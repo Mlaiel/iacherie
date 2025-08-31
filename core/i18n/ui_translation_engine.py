@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 UI content → Language detection → Multi-provider translation → Quality assessment → 
 Context preservation → Batch optimization → Cache management → Real-time delivery
-"""import logging
+"""
+import logging
 import asyncio
 import hashlib
 from typing import Dict, List, Any, Optional, Tuple, Union
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class TranslationProvider(Enum):
-    """Supported translation providers"""    GOOGLE_TRANSLATE = "google_translate"
+    """Supported translation providers"""
+    GOOGLE_TRANSLATE = "google_translate"
     DEEPL = "deepl"
     MICROSOFT_TRANSLATOR = "microsoft_translator"
     AMAZON_TRANSLATE = "amazon_translate"
@@ -39,7 +41,8 @@ class TranslationProvider(Enum):
 
 
 class TranslationQuality(Enum):
-    """Translation quality levels"""    DRAFT = "draft"
+    """Translation quality levels"""
+    DRAFT = "draft"
     STANDARD = "standard"
     PROFESSIONAL = "professional"
     NATIVE = "native"
@@ -47,7 +50,8 @@ class TranslationQuality(Enum):
 
 
 class ContentType(Enum):
-    """Types of content for translation"""    TEXT = "text"
+    """Types of content for translation"""
+    TEXT = "text"
     UI_ELEMENT = "ui_element"
     BUTTON = "button"
     LABEL = "label"
@@ -61,7 +65,8 @@ class ContentType(Enum):
 
 
 class TranslationStatus(Enum):
-    """Translation job status"""    PENDING = "pending"
+    """Translation job status"""
+    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -71,7 +76,8 @@ class TranslationStatus(Enum):
 
 @dataclass
 class TranslationContext:
-    """Context information for translation"""    content_type: ContentType
+    """Context information for translation"""
+    content_type: ContentType
     ui_component: str
     screen_location: str
     max_length: Optional[int] = None
@@ -83,7 +89,8 @@ class TranslationContext:
 
 @dataclass
 class TranslationResult:
-    """Translation result with quality metrics"""    original_text: str
+    """Translation result with quality metrics"""
+    original_text: str
     translated_text: str
     source_language: str
     target_language: str
@@ -100,7 +107,8 @@ class TranslationResult:
 
 @dataclass
 class BatchTranslationJob:
-    """Batch translation job"""    job_id: str
+    """Batch translation job"""
+    job_id: str
     items: List[Dict[str, Any]]
     source_language: str
     target_languages: List[str]
@@ -114,7 +122,8 @@ class BatchTranslationJob:
 
 
 class UITranslationEngine:
-    """Advanced UI translation engine with multi-provider support"""    
+    """Advanced UI translation engine with multi-provider support"""
+    
     def __init__(self):
         self.providers: Dict[TranslationProvider, Any] = {}
         self.translation_cache: Dict[str, TranslationResult] = {}
@@ -130,7 +139,8 @@ class UITranslationEngine:
         logger.info("UI Translation Engine initialized")
     
     def _initialize_quality_thresholds(self):
-        """Initialize quality score thresholds"""        self.quality_thresholds = {
+        """Initialize quality score thresholds"""
+        self.quality_thresholds = {
             TranslationQuality.DRAFT: 0.5,
             TranslationQuality.STANDARD: 0.7,
             TranslationQuality.PROFESSIONAL: 0.85,
@@ -139,7 +149,8 @@ class UITranslationEngine:
         }
     
     def _initialize_provider_preferences(self):
-        """Initialize provider preferences by language pair"""        self.provider_preferences = {
+        """Initialize provider preferences by language pair"""
+        self.provider_preferences = {
             # European languages - DeepL preferred
             "en_de": [TranslationProvider.DEEPL, TranslationProvider.GOOGLE_TRANSLATE],
             "en_fr": [TranslationProvider.DEEPL, TranslationProvider.GOOGLE_TRANSLATE],
@@ -160,7 +171,8 @@ class UITranslationEngine:
         }
     
     def _setup_translation_providers(self):
-        """Setup translation provider interfaces"""        # Note: In production, these would be actual API clients
+        """Setup translation provider interfaces"""
+        # Note: In production, these would be actual API clients
         self.providers = {
             TranslationProvider.GOOGLE_TRANSLATE: self._create_mock_provider("Google"),
             TranslationProvider.DEEPL: self._create_mock_provider("DeepL"),
@@ -172,7 +184,8 @@ class UITranslationEngine:
         logger.info(f"Setup {len(self.providers)} translation providers")
     
     def _create_mock_provider(self, provider_name: str) -> Dict[str, Any]:
-        """Create mock provider for development/testing"""        return {
+        """Create mock provider for development/testing"""
+        return {
             "name": provider_name,
             "available": True,
             "api_key": f"mock_key_{provider_name.lower()}",
@@ -189,7 +202,8 @@ class UITranslationEngine:
         context: Optional[TranslationContext] = None,
         provider: Optional[TranslationProvider] = None
     ) -> TranslationResult:
-        """Translate single text with quality assessment"""        try:
+        """Translate single text with quality assessment"""
+        try:
             start_time = datetime.now()
             
             # Check cache first
@@ -270,7 +284,8 @@ class UITranslationEngine:
         provider: TranslationProvider,
         context: Optional[TranslationContext]
     ) -> str:
-        """Perform translation with specific provider"""        # Mock translation - in production, this would call actual APIs
+        """Perform translation with specific provider"""
+        # Mock translation - in production, this would call actual APIs
         provider_info = self.providers[provider]
         
         # Simple mock translation with provider-specific characteristics
@@ -305,7 +320,8 @@ class UITranslationEngine:
         target_lang: str,
         context: Optional[TranslationContext]
     ) -> float:
-        """Assess translation quality with multiple metrics"""        quality_score = 0.8  # Base score for mock
+        """Assess translation quality with multiple metrics"""
+        quality_score = 0.8  # Base score for mock
         
         # Length ratio check
         length_ratio = len(translated) / len(original) if original else 0
@@ -339,7 +355,8 @@ class UITranslationEngine:
         context: Optional[TranslationContext],
         exclude_provider: TranslationProvider
     ) -> List[str]:
-        """Generate alternative translations"""        alternatives = []
+        """Generate alternative translations"""
+        alternatives = []
         
         # Get provider preferences
         lang_pair = f"{source_lang}_{target_lang}"
@@ -364,7 +381,8 @@ class UITranslationEngine:
         translated: str,
         context: Optional[TranslationContext]
     ) -> List[str]:
-        """Identify potential quality issues"""        issues = []
+        """Identify potential quality issues"""
+        issues = []
         
         # Length issues
         if len(translated) > len(original) * 3:
@@ -390,7 +408,8 @@ class UITranslationEngine:
         return issues
     
     def _select_best_provider(self, source_lang: str, target_lang: str) -> TranslationProvider:
-        """Select best provider for language pair"""        lang_pair = f"{source_lang}_{target_lang}"
+        """Select best provider for language pair"""
+        lang_pair = f"{source_lang}_{target_lang}"
         providers = self.provider_preferences.get(lang_pair, self.provider_preferences["default"])
         
         # Return first available provider
@@ -408,7 +427,8 @@ class UITranslationEngine:
         target_lang: str,
         context: Optional[TranslationContext]
     ) -> str:
-        """Generate cache key for translation"""        context_str = ""
+        """Generate cache key for translation"""
+        context_str = ""
         if context:
             context_str = f"{context.content_type.value}_{context.ui_component}_{context.max_length}"
         
@@ -422,7 +442,8 @@ class UITranslationEngine:
         target_languages: List[str],
         quality_level: TranslationQuality = TranslationQuality.STANDARD
     ) -> BatchTranslationJob:
-        """Translate multiple items in batch"""        try:
+        """Translate multiple items in batch"""
+        try:
             job_id = f"batch_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{hash(str(items)) % 10000}"
             
             job = BatchTranslationJob(
@@ -447,7 +468,8 @@ class UITranslationEngine:
             raise
     
     async def _process_batch_job(self, job_id: str):
-        """Process batch translation job"""        try:
+        """Process batch translation job"""
+        try:
             job = self.batch_jobs[job_id]
             job.status = TranslationStatus.IN_PROGRESS
             
@@ -498,7 +520,8 @@ class UITranslationEngine:
             logger.error(f"Batch job {job_id} failed: {e}")
     
     async def get_batch_job_status(self, job_id: str) -> Optional[BatchTranslationJob]:
-        """Get status of batch translation job"""        return self.batch_jobs.get(job_id)
+        """Get status of batch translation job"""
+        return self.batch_jobs.get(job_id)
     
     async def translate_ui_components(
         self,
@@ -507,7 +530,8 @@ class UITranslationEngine:
         target_language: str,
         component_contexts: Optional[Dict[str, Dict[str, Any]]] = None
     ) -> Dict[str, TranslationResult]:
-        """Translate UI components with specific contexts"""        results = {}
+        """Translate UI components with specific contexts"""
+        results = {}
         
         for component_id, text in components.items():
             context = None
@@ -532,7 +556,8 @@ class UITranslationEngine:
         return results
     
     async def get_translation_statistics(self) -> Dict[str, Any]:
-        """Get translation engine statistics"""        total_translations = len(self.translation_cache)
+        """Get translation engine statistics"""
+        total_translations = len(self.translation_cache)
         batch_jobs_count = len(self.batch_jobs)
         
         # Quality distribution
@@ -558,7 +583,8 @@ class UITranslationEngine:
         }
     
     def _get_quality_range(self, score: float) -> str:
-        """Get quality range for score"""        if score >= 0.9:
+        """Get quality range for score"""
+        if score >= 0.9:
             return "excellent"
         elif score >= 0.8:
             return "good"
@@ -568,14 +594,16 @@ class UITranslationEngine:
             return "poor"
     
     def _calculate_average_processing_time(self) -> float:
-        """Calculate average processing time"""        if not self.translation_cache:
+        """Calculate average processing time"""
+        if not self.translation_cache:
             return 0.0
         
         total_time = sum(result.processing_time for result in self.translation_cache.values())
         return total_time / len(self.translation_cache)
     
     async def clear_cache(self, max_age_hours: int = 24):
-        """Clear old cache entries"""        cutoff_time = datetime.now() - timedelta(hours=max_age_hours)
+        """Clear old cache entries"""
+        cutoff_time = datetime.now() - timedelta(hours=max_age_hours)
         
         keys_to_remove = [
             key for key, result in self.translation_cache.items()
@@ -588,7 +616,8 @@ class UITranslationEngine:
         logger.info(f"Cleared {len(keys_to_remove)} cache entries older than {max_age_hours} hours")
     
     async def health_check(self) -> bool:
-        """Health check for UI translation engine"""        try:
+        """Health check for UI translation engine"""
+        try:
             # Check if providers are available
             available_providers = sum(1 for p in self.providers.values() if p["available"])
             if available_providers == 0:

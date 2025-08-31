@@ -11,7 +11,8 @@ droit d'auteur. Contact: mlaiel@live.de
 Exemple complet d'utilisation de la pipeline de monétisation créateur :
 User (musicien/blogueur/photographe/influencer/comédien) → Upload multi-format → 
 AI protection droits → SEO pro → Matching collaboration → Distribution multi-plateformes → Tracking revenus
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Any, List
 from datetime import datetime
@@ -28,20 +29,25 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class CompleteCreatorWorkflowExample:
-    """    Exemple complet d'implémentation de la pipeline créateur
+    """
+    Exemple complet d'implémentation de la pipeline créateur
     supportant le workflow complet de monétisation
-    """    
+    """
+    
     def __init__(self):
-        """Initialise tous les composants de la pipeline"""        self.workflow_orchestrator = CreatorWorkflowOrchestrator()
+        """Initialise tous les composants de la pipeline"""
+        self.workflow_orchestrator = CreatorWorkflowOrchestrator()
         self.platform_manager = CreatorPlatformManager()
         self.monetization_analyzer = CreatorMonetizationAnalyzer()
         self.content_processor = CreatorContentProcessor()
         self.content_transformer = CreatorContentTransformer()
         
     async def run_musician_workflow_example(self):
-        """        Exemple complet pour un musicien :
+        """
+        Exemple complet pour un musicien :
         Upload chanson → Protection droits → SEO → Distribution → Monétisation
-        """        logger.info("🎵 Démarrage du workflow musicien complet")
+        """
+        logger.info("🎵 Démarrage du workflow musicien complet")
         
         # 1. Données du créateur musicien
         creator_data = {
@@ -143,9 +149,11 @@ class CompleteCreatorWorkflowExample:
             raise
     
     async def run_blogger_workflow_example(self):
-        """        Exemple complet pour un blogueur :
+        """
+        Exemple complet pour un blogueur :
         Article → SEO → Distribution → Monétisation affiliate
-        """        logger.info("📝 Démarrage du workflow blogueur complet")
+        """
+        logger.info("📝 Démarrage du workflow blogueur complet")
         
         creator_data = {
             'creator_id': 'blogger_001',
@@ -201,9 +209,11 @@ class CompleteCreatorWorkflowExample:
             raise
     
     async def run_photographer_workflow_example(self):
-        """        Exemple complet pour un photographe :
+        """
+        Exemple complet pour un photographe :
         Photo → Protection → Portfolio → Vente stock
-        """        logger.info("📸 Démarrage du workflow photographe complet")
+        """
+        logger.info("📸 Démarrage du workflow photographe complet")
         
         creator_data = {
             'creator_id': 'photographer_001',
@@ -260,8 +270,10 @@ class CompleteCreatorWorkflowExample:
             raise
 
 async def run_complete_examples():
-    """    Lance tous les exemples de workflows créateurs
-    """    example = CompleteCreatorWorkflowExample()
+    """
+    Lance tous les exemples de workflows créateurs
+    """
+    example = CompleteCreatorWorkflowExample()
     
     print("🚀 Démarrage des exemples de workflows créateurs complets")
     print("=" * 60)

@@ -127,7 +127,8 @@ __all__ = [
 
 # Module initialization
 def get_pricing_engine():
-    """Factory function to create pricing engine instance"""    from ...core.database import DatabaseManager
+    """Factory function to create pricing engine instance"""
+    from ...core.database import DatabaseManager
     from ...core.cache import CacheManager
     from ...ml.models import PricingMLModel
     
@@ -143,7 +144,8 @@ def get_pricing_engine():
     )
 
 def get_tier_manager():
-    """Factory function to create tier manager instance"""    from ...core.database import DatabaseManager
+    """Factory function to create tier manager instance"""
+    from ...core.database import DatabaseManager
     from ...core.cache import CacheManager
     
     db_manager = DatabaseManager()
@@ -155,7 +157,8 @@ def get_tier_manager():
     )
 
 def get_pricing_service():
-    """Factory function to create pricing service instance"""    from ...core.database import DatabaseManager
+    """Factory function to create pricing service instance"""
+    from ...core.database import DatabaseManager
     from ...core.cache import CacheManager
     from ...ml.models import PricingMLModel
     from ...security.auth import AuthManager
@@ -185,7 +188,8 @@ def get_pricing_service():
     )
 
 def get_pricing_analytics():
-    """Factory function to create pricing analytics instance"""    from ...core.database import DatabaseManager
+    """Factory function to create pricing analytics instance"""
+    from ...core.database import DatabaseManager
     from ...core.cache import CacheManager
     from ...utils.metrics import MetricsCollector
     
@@ -200,7 +204,8 @@ def get_pricing_analytics():
     )
 
 def get_recommendation_engine():
-    """Factory function to create recommendation engine instance"""    from ...core.database import DatabaseManager
+    """Factory function to create recommendation engine instance"""
+    from ...core.database import DatabaseManager
     from ...core.cache import CacheManager
     from ...ml.models import PricingMLModel
     
@@ -221,7 +226,8 @@ def get_recommendation_engine():
     )
 
 def get_pricing_validator():
-    """Factory function to create pricing validator instance"""    from ...core.database import DatabaseManager
+    """Factory function to create pricing validator instance"""
+    from ...core.database import DatabaseManager
     from ...core.cache import CacheManager
     
     db_manager = DatabaseManager()
@@ -233,7 +239,8 @@ def get_pricing_validator():
     )
 
 def get_complete_pricing_system():
-    """Factory function to create complete integrated pricing system"""    
+    """Factory function to create complete integrated pricing system"""
+    
     # Create all components
     pricing_engine = get_pricing_engine()
     tier_manager = get_tier_manager()

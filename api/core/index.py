@@ -3,13 +3,15 @@ Professional module navigation and system overview.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
-"""from typing import Dict, List, Any
+"""
+from typing import Dict, List, Any
 from dataclasses import dataclass
 
 
 @dataclass
 class ModuleInfo:
-    """Information about a core module."""    name: str
+    """Information about a core module."""
+    name: str
     description: str
     file_path: str
     key_classes: List[str]
@@ -18,7 +20,8 @@ class ModuleInfo:
 
 
 class CoreModuleIndex:
-    """Professional index of all core infrastructure modules."""    
+    """Professional index of all core infrastructure modules."""
+    
     def __init__(self):
         self.modules = {
             "config": ModuleInfo(
@@ -140,13 +143,16 @@ class CoreModuleIndex:
         }
     
     def get_module_info(self, module_name: str) -> ModuleInfo:
-        """Get information about a specific module."""        return self.modules.get(module_name)
+        """Get information about a specific module."""
+        return self.modules.get(module_name)
     
     def get_all_modules(self) -> Dict[str, ModuleInfo]:
-        """Get information about all core modules."""        return self.modules.copy()
+        """Get information about all core modules."""
+        return self.modules.copy()
     
     def get_modules_by_purpose(self, purpose_keyword: str) -> List[ModuleInfo]:
-        """Find modules by business purpose keyword."""        matching_modules = []
+        """Find modules by business purpose keyword."""
+        matching_modules = []
         keyword_lower = purpose_keyword.lower()
         
         for module in self.modules.values():
@@ -156,7 +162,8 @@ class CoreModuleIndex:
         return matching_modules
     
     def get_system_overview(self) -> Dict[str, Any]:
-        """Get comprehensive system overview."""        return {
+        """Get comprehensive system overview."""
+        return {
             "total_modules": len(self.modules),
             "modules": {
                 name: {
@@ -198,7 +205,8 @@ class CoreModuleIndex:
         }
     
     def generate_module_documentation(self, module_name: str) -> str:
-        """Generate documentation for a specific module."""        info = self.get_module_info(module_name)
+        """Generate documentation for a specific module."""
+        info = self.get_module_info(module_name)
         if not info:
             return f"Module '{module_name}' not found."
         
@@ -228,7 +236,8 @@ from {info.file_path} import ...
 # Example usage will depend on the specific module
 # Refer to module-specific documentation for details
 ```
-        """        
+        """
+        
         return doc.strip()
 
 
@@ -237,19 +246,23 @@ _module_index = CoreModuleIndex()
 
 
 def get_module_index() -> CoreModuleIndex:
-    """Get the global core module index."""    return _module_index
+    """Get the global core module index."""
+    return _module_index
 
 
 def get_system_overview() -> Dict[str, Any]:
-    """Get comprehensive overview of the core infrastructure."""    return _module_index.get_system_overview()
+    """Get comprehensive overview of the core infrastructure."""
+    return _module_index.get_system_overview()
 
 
 def find_modules_for_purpose(purpose: str) -> List[ModuleInfo]:
-    """Find core modules that serve a specific business purpose."""    return _module_index.get_modules_by_purpose(purpose)
+    """Find core modules that serve a specific business purpose."""
+    return _module_index.get_modules_by_purpose(purpose)
 
 
 def get_quick_start_guide() -> str:
-    """Get quick start guide for core infrastructure."""    return """# Core Infrastructure Quick Start
+    """Get quick start guide for core infrastructure."""
+    return """# Core Infrastructure Quick Start
 
 ## 1. Basic Setup
 ```python
@@ -328,9 +341,11 @@ health_status = await check_system_health()
 # Use timing decorator
 @timing_decorator("content.processing.duration")
 async def process_content():
-    """    Process content through the AI Influencer pipeline.
+    """
+    Process content through the AI Influencer pipeline.
     Ultra-advanced content processing with full business logic implementation.
-    """    try:
+    """
+    try:
         import logging
         logger = logging.getLogger(__name__)
         
@@ -476,7 +491,8 @@ from .utils import (
 
 
 def initialize_core_services():
-    """Initialize all core platform services"""    setup_logging()
+    """Initialize all core platform services"""
+    setup_logging()
     settings = get_settings()
     return {
         'settings': settings,
@@ -487,7 +503,8 @@ def initialize_core_services():
 
 
 def get_core_dependencies():
-    """Get core dependency injection container"""    return initialize_core_services()
+    """Get core dependency injection container"""
+    return initialize_core_services()
 
 
 __all__ = [

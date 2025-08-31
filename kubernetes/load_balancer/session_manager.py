@@ -11,7 +11,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import time
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 
 class SessionAffinityType(Enum):
-    """Session affinity types for different services"""    NONE = "none"
+    """Session affinity types for different services"""
+    NONE = "none"
     IP_HASH = "ip_hash"
     COOKIE_BASED = "cookie"
     HEADER_BASED = "header"
@@ -42,7 +44,8 @@ class SessionAffinityType(Enum):
 
 @dataclass
 class SessionConfiguration:
-    """Session configuration for a service"""    service_name: str
+    """Session configuration for a service"""
+    service_name: str
     affinity_type: SessionAffinityType
     cookie_name: str = "ia_session"
     header_name: str = "X-Session-ID"
@@ -56,7 +59,8 @@ class SessionConfiguration:
 
 @dataclass
 class ServerNode:
-    """Server node information"""    id: str
+    """Server node information"""
+    id: str
     host: str
     port: int
     weight: int = 1
@@ -71,7 +75,8 @@ class ServerNode:
 
 @dataclass
 class UserSession:
-    """User session information"""    session_id: str
+    """User session information"""
+    session_id: str
     user_id: Optional[str]
     server_node_id: str
     created_at: datetime
@@ -83,11 +88,13 @@ class UserSession:
 
 
 class SessionManager:
-    """    Enterprise Session Manager for Load Balancer
+    """
+    Enterprise Session Manager for Load Balancer
     
     Manages session affinity, sticky sessions, and intelligent traffic
     distribution for the IA Influencer Agent platform's microservices.
-    """    
+    """
+    
     def __init__(self, redis_client: Optional[redis.Redis] = None, secret_key: str = None):
         self.redis_client = redis_client or redis.Redis(host='localhost', port=6379, db=0)
         self.secret_key = secret_key or self._generate_secret_key()
@@ -112,10 +119,12 @@ class SessionManager:
         logger.info("Session Manager initialized")
     
     def _generate_secret_key(self) -> str:
-        """Generate a secure secret key"""        return base64.b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes).decode('utf-8')
+        """Generate a secure secret key"""
+        return base64.b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes).decode('utf-8')
     
     async def initialize(self) -> None:
-        """Initialize session manager"""        try:
+        """Initialize session manager"""
+        try:
             logger.info("Initializing Session Manager...")
             
             # Configure platform services
@@ -135,7 +144,8 @@ class SessionManager:
             raise
     
     async def _configure_platform_services(self) -> None:
-        """Configure session settings for platform services"""        # Fingerprinting service - high CPU, needs sticky sessions
+        """Configure session settings for platform services"""
+        # Fingerprinting service - high CPU, needs sticky sessions
         self.service_configs["fingerprinting"] = SessionConfiguration(
             service_name="fingerprinting",
             affinity_type=SessionAffinityType.USER_ID_BASED,
@@ -183,7 +193,8 @@ class SessionManager:
         logger.info("Platform services configured for session management")
     
     async def _initialize_server_nodes(self) -> None:
-        """Initialize server nodes for each service"""        # Fingerprinting service nodes
+        """Initialize server nodes for each service"""
+        # Fingerprinting service nodes
         for i in range(3):
             node_id = f"fingerprinting_{i+1}"
             self.server_nodes[node_id] = ServerNode(
@@ -241,14 +252,16 @@ class SessionManager:
         logger.info(f"Initialized {len(self.server_nodes)} server nodes")
     
     async def _start_background_tasks(self) -> None:
-        """Start background maintenance tasks"""        self.cleanup_task = asyncio.create_task(self._session_cleanup_loop())
+        """Start background maintenance tasks"""
+        self.cleanup_task = asyncio.create_task(self._session_cleanup_loop())
         self.health_check_task = asyncio.create_task(self._health_check_loop())
         logger.info("Background tasks started")
     
     async def create_session(self, user_id: Optional[str], ip_address: str, 
                            user_agent: str, service_name: str,
                            metadata: Optional[Dict[str, Any]] = None) -> str:
-        """Create a new user session"""        try:
+        """Create a new user session"""
+        try:
             session_id = self._generate_session_id(user_id, ip_address)
             
             # Get service configuration
@@ -293,7 +306,8 @@ class SessionManager:
     
     async def get_server_for_session(self, session_id: str, 
                                    service_name: str) -> Optional[ServerNode]:
-        """Get the server node for a session"""        try:
+        """Get the server node for a session"""
+        try:
             # Check local cache first
             session = self.active_sessions.get(session_id)
             
@@ -331,7 +345,8 @@ class SessionManager:
     
     async def _select_server_node(self, service_name: str, user_id: Optional[str],
                                 ip_address: str, user_agent: str) -> str:
-        """Select the best server node based on affinity type"""        config = self.service_configs[service_name]
+        """Select the best server node based on affinity type"""
+        config = self.service_configs[service_name]
         
         # Get available nodes for the service
         available_nodes = [
@@ -377,7 +392,8 @@ class SessionManager:
     
     async def _failover_session(self, session: UserSession, 
                               service_name: str) -> Optional[str]:
-        """Failover session to a healthy node"""        try:
+        """Failover session to a healthy node"""
+        try:
             # Get new server node
             new_node_id = await self._select_server_node(
                 service_name, session.user_id, session.ip_address, session.user_agent
@@ -400,7 +416,8 @@ class SessionManager:
             return None
     
     def _generate_session_id(self, user_id: Optional[str], ip_address: str) -> str:
-        """Generate a unique session ID"""        timestamp = str(int(time.time() * 1000))
+        """Generate a unique session ID"""
+        timestamp = str(int(time.time() * 1000))
         data = f"{user_id or 'anonymous'}:{ip_address}:{timestamp}"
         signature = hmac.new(
             self.secret_key.encode(),
@@ -411,7 +428,8 @@ class SessionManager:
         return f"ia_session_{timestamp}_{signature[:16]}"
     
     async def _store_session_in_redis(self, session: UserSession) -> None:
-        """Store session data in Redis"""        try:
+        """Store session data in Redis"""
+        try:
             key = f"session:{session.session_id}"
             data = {
                 "session_id": session.session_id,
@@ -433,7 +451,8 @@ class SessionManager:
             logger.error(f"Failed to store session in Redis: {e}")
     
     async def _load_session_from_redis(self, session_id: str) -> Optional[UserSession]:
-        """Load session data from Redis"""        try:
+        """Load session data from Redis"""
+        try:
             key = f"session:{session_id}"
             data = self.redis_client.get(key)
             
@@ -458,7 +477,8 @@ class SessionManager:
             return None
     
     async def _session_cleanup_loop(self) -> None:
-        """Background task to cleanup expired sessions"""        while self.is_running:
+        """Background task to cleanup expired sessions"""
+        while self.is_running:
             try:
                 now = datetime.now()
                 expired_sessions = []
@@ -492,7 +512,8 @@ class SessionManager:
                 await asyncio.sleep(60)
     
     async def _health_check_loop(self) -> None:
-        """Background task to monitor server node health"""        while self.is_running:
+        """Background task to monitor server node health"""
+        while self.is_running:
             try:
                 for node in self.server_nodes.values():
                     try:
@@ -522,7 +543,8 @@ class SessionManager:
                 await asyncio.sleep(30)
     
     async def get_session_statistics(self) -> Dict[str, Any]:
-        """Get session management statistics"""        healthy_nodes = sum(1 for node in self.server_nodes.values() 
+        """Get session management statistics"""
+        healthy_nodes = sum(1 for node in self.server_nodes.values() 
                           if node.health_status == "healthy")
         
         hit_ratio = 0.0
@@ -543,7 +565,8 @@ class SessionManager:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown session manager"""        try:
+        """Shutdown session manager"""
+        try:
             logger.info("Shutting down Session Manager...")
             
             self.is_running = False

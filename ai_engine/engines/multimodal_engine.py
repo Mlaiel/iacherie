@@ -13,7 +13,8 @@ without explicit written consent from Fahed Mlaiel (mlaiel@live.de) is strictly 
 Violators will face legal action under international copyright law.
 
 Business Logic: Multi-format Input → Cross-modal Analysis → Unified Processing → Enhanced Output
-"""import asyncio
+"""
+import asyncio
 import numpy as np
 import logging
 import json
@@ -30,14 +31,16 @@ from pathlib import Path
 from .base_engine import BaseContentEngine, ProcessingResult, EngineMetrics, EngineStatus, ContentType, ProcessingPriority
 
 class MediaType(Enum):
-    """Supported media types for multimodal processing"""    TEXT = "text"
+    """Supported media types for multimodal processing"""
+    TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
     VIDEO = "video"
     COMBINED = "combined"
 
 class FusionStrategy(Enum):
-    """Fusion strategies for multimodal content"""    EARLY_FUSION = "early_fusion"
+    """Fusion strategies for multimodal content"""
+    EARLY_FUSION = "early_fusion"
     LATE_FUSION = "late_fusion"
     ATTENTION_FUSION = "attention_fusion"
     HIERARCHICAL_FUSION = "hierarchical_fusion"
@@ -45,7 +48,8 @@ class FusionStrategy(Enum):
 
 @dataclass
 class MultimodalMetadata:
-    """Comprehensive multimodal content metadata"""    input_modalities: List[MediaType]
+    """Comprehensive multimodal content metadata"""
+    input_modalities: List[MediaType]
     output_modalities: List[MediaType]
     fusion_strategy: FusionStrategy
     processing_complexity: str
@@ -59,9 +63,11 @@ class MultimodalMetadata:
     fingerprint: Optional[str] = None
 
 class MultimodalFusionEngine(BaseContentEngine):
-    """    Advanced multimodal fusion engine for content creators
+    """
+    Advanced multimodal fusion engine for content creators
     Handles fusion of different media types into coherent unified content
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__("multimodal_fusion", config)
         self.supported_combinations = [
@@ -73,7 +79,8 @@ class MultimodalFusionEngine(BaseContentEngine):
         ]
         
     async def initialize(self) -> bool:
-        """Initialize multimodal fusion engine"""        try:
+        """Initialize multimodal fusion engine"""
+        try:
             self.logger.info("Initializing Multimodal Fusion Engine...")
             
             # Load multimodal models
@@ -99,7 +106,8 @@ class MultimodalFusionEngine(BaseContentEngine):
             return False
     
     async def process_content(self, content: Any, options: Optional[Dict] = None) -> ProcessingResult:
-        """Process and fuse multimodal content"""        start_time = time.time()
+        """Process and fuse multimodal content"""
+        start_time = time.time()
         options = options or {}
         content_id = options.get('content_id', f"multimodal_{int(time.time())}")
         
@@ -189,7 +197,8 @@ class MultimodalFusionEngine(BaseContentEngine):
             )
     
     async def optimize_for_seo(self, content: Any, target_keywords: List[str]) -> Dict[str, Any]:
-        """Optimize multimodal content for search engines"""        features = await self._extract_multimodal_seo_features(content)
+        """Optimize multimodal content for search engines"""
+        features = await self._extract_multimodal_seo_features(content)
         
         return {
             'multimodal_seo_optimized': True,
@@ -204,7 +213,8 @@ class MultimodalFusionEngine(BaseContentEngine):
         }
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Apply comprehensive multimodal content protection"""        # Generate multimodal fingerprint
+        """Apply comprehensive multimodal content protection"""
+        # Generate multimodal fingerprint
         fingerprint = await self._generate_multimodal_fingerprint(content)
         
         # Apply cross-modal watermarking
@@ -220,7 +230,8 @@ class MultimodalFusionEngine(BaseContentEngine):
         }
     
     async def _load_multimodal_models(self):
-        """Load multimodal processing models"""        self.logger.info("Loading multimodal models...")
+        """Load multimodal processing models"""
+        self.logger.info("Loading multimodal models...")
         await asyncio.sleep(0.4)
         
         self.multimodal_models = {
@@ -234,7 +245,8 @@ class MultimodalFusionEngine(BaseContentEngine):
         }
     
     async def _init_fusion_algorithms(self):
-        """Initialize fusion algorithms"""        self.logger.info("Initializing fusion algorithms...")
+        """Initialize fusion algorithms"""
+        self.logger.info("Initializing fusion algorithms...")
         await asyncio.sleep(0.2)
         
         self.fusion_algorithms = {
@@ -246,7 +258,8 @@ class MultimodalFusionEngine(BaseContentEngine):
         }
     
     async def _load_attention_mechanisms(self):
-        """Load cross-modal attention mechanisms"""        self.logger.info("Loading attention mechanisms...")
+        """Load cross-modal attention mechanisms"""
+        self.logger.info("Loading attention mechanisms...")
         await asyncio.sleep(0.15)
         
         self.attention_mechanisms = {
@@ -257,7 +270,8 @@ class MultimodalFusionEngine(BaseContentEngine):
         }
     
     async def _init_synchronization_tools(self):
-        """Initialize synchronization tools"""        self.logger.info("Initializing synchronization tools...")
+        """Initialize synchronization tools"""
+        self.logger.info("Initializing synchronization tools...")
         await asyncio.sleep(0.1)
         
         self.sync_tools = {
@@ -267,7 +281,8 @@ class MultimodalFusionEngine(BaseContentEngine):
         }
     
     async def _analyze_input_modalities(self, content: Any) -> Dict[str, Any]:
-        """Analyze input content modalities"""        self.logger.info("Analyzing input modalities...")
+        """Analyze input content modalities"""
+        self.logger.info("Analyzing input modalities...")
         await asyncio.sleep(0.3)
         
         # Simulate modality detection
@@ -289,7 +304,8 @@ class MultimodalFusionEngine(BaseContentEngine):
         }
     
     async def _extract_modal_features(self, content: Any, analysis: Dict) -> Dict[str, Any]:
-        """Extract features from each modality"""        self.logger.info("Extracting modal features...")
+        """Extract features from each modality"""
+        self.logger.info("Extracting modal features...")
         await asyncio.sleep(0.4)
         
         features = {}
@@ -329,7 +345,8 @@ class MultimodalFusionEngine(BaseContentEngine):
         return features
     
     async def _determine_fusion_strategy(self, features: Dict, options: Dict) -> FusionStrategy:
-        """Determine optimal fusion strategy"""        self.logger.info("Determining fusion strategy...")
+        """Determine optimal fusion strategy"""
+        self.logger.info("Determining fusion strategy...")
         await asyncio.sleep(0.1)
         
         # Analyze feature complexity and choose strategy
@@ -345,7 +362,8 @@ class MultimodalFusionEngine(BaseContentEngine):
             return FusionStrategy.ATTENTION_FUSION
     
     async def _apply_cross_modal_alignment(self, features: Dict) -> Dict[str, Any]:
-        """Apply cross-modal alignment"""        self.logger.info("Applying cross-modal alignment...")
+        """Apply cross-modal alignment"""
+        self.logger.info("Applying cross-modal alignment...")
         await asyncio.sleep(0.3)
         
         aligned_features = {}
@@ -362,7 +380,8 @@ class MultimodalFusionEngine(BaseContentEngine):
         return aligned_features
     
     async def _perform_fusion(self, aligned_features: Dict, strategy: FusionStrategy) -> Dict[str, Any]:
-        """Perform multimodal fusion"""        self.logger.info(f"Performing fusion with strategy: {strategy.value}")
+        """Perform multimodal fusion"""
+        self.logger.info(f"Performing fusion with strategy: {strategy.value}")
         await asyncio.sleep(0.4)
         
         return {
@@ -379,7 +398,8 @@ class MultimodalFusionEngine(BaseContentEngine):
         }
     
     async def _generate_unified_output(self, fused_representation: Dict, options: Dict) -> Any:
-        """Generate unified multimodal output"""        self.logger.info("Generating unified output...")
+        """Generate unified multimodal output"""
+        self.logger.info("Generating unified output...")
         await asyncio.sleep(0.3)
         
         output_format = options.get('output_format', 'enhanced_multimodal')
@@ -396,13 +416,15 @@ class MultimodalFusionEngine(BaseContentEngine):
         }
     
     async def _ensure_coherence(self, content: Any, features: Dict) -> Any:
-        """Ensure cross-modal coherence"""        self.logger.info("Ensuring cross-modal coherence...")
+        """Ensure cross-modal coherence"""
+        self.logger.info("Ensuring cross-modal coherence...")
         await asyncio.sleep(0.2)
         
         return f"coherent_{content}"
     
     async def _generate_multimodal_metadata(self, content: Any, analysis: Dict, strategy: FusionStrategy) -> MultimodalMetadata:
-        """Generate comprehensive multimodal metadata"""        
+        """Generate comprehensive multimodal metadata"""
+        
         input_modalities = [MediaType(m) for m in analysis['detected_modalities']]
         
         return MultimodalMetadata(
@@ -428,7 +450,8 @@ class MultimodalFusionEngine(BaseContentEngine):
         )
     
     async def _calculate_multimodal_quality_score(self, content: Any, metadata: MultimodalMetadata, features: Dict) -> float:
-        """Calculate comprehensive multimodal quality score"""        base_score = 0.8
+        """Calculate comprehensive multimodal quality score"""
+        base_score = 0.8
         
         # Fusion quality factor
         base_score += metadata.cross_modal_coherence * 0.1
@@ -444,7 +467,8 @@ class MultimodalFusionEngine(BaseContentEngine):
         return min(base_score, 1.0)
     
     async def _extract_multimodal_seo_features(self, content: Any) -> Dict[str, Any]:
-        """Extract SEO features from multimodal content"""        return {
+        """Extract SEO features from multimodal content"""
+        return {
             'has_images': True,
             'has_audio': True,
             'has_video': False,
@@ -458,7 +482,8 @@ class MultimodalFusionEngine(BaseContentEngine):
         }
     
     async def _generate_cross_modal_keywords(self, content: Any, keywords: List[str]) -> Dict[str, List[str]]:
-        """Generate keywords optimized for each modality"""        return {
+        """Generate keywords optimized for each modality"""
+        return {
             'text_keywords': keywords + ['multimodal', 'interactive', 'professional'],
             'image_keywords': ['visual', 'professional', 'high-quality'] + keywords[:3],
             'audio_keywords': ['clear', 'professional', 'engaging'] + keywords[:3],
@@ -466,21 +491,25 @@ class MultimodalFusionEngine(BaseContentEngine):
         }
     
     async def _generate_multimodal_fingerprint(self, content: Any) -> str:
-        """Generate multimodal fingerprint"""        content_str = str(content)
+        """Generate multimodal fingerprint"""
+        content_str = str(content)
         timestamp = str(time.time())
         combined = f"{content_str}_{timestamp}_multimodal"
         return hashlib.sha256(combined.encode()).hexdigest()
     
     async def _apply_cross_modal_watermark(self, content: Any) -> Any:
-        """Apply cross-modal watermarking"""        self.logger.info("Applying cross-modal watermark...")
+        """Apply cross-modal watermarking"""
+        self.logger.info("Applying cross-modal watermark...")
         await asyncio.sleep(0.1)
         
         return f"cross_modal_watermarked_{content}"
 
 class CrossMediaEngine(BaseContentEngine):
-    """    Advanced cross-media processing engine for content creators
+    """
+    Advanced cross-media processing engine for content creators
     Handles content transformation between different media types
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__("cross_media", config)
         self.transformation_pairs = [
@@ -491,7 +520,8 @@ class CrossMediaEngine(BaseContentEngine):
         ]
         
     async def initialize(self) -> bool:
-        """Initialize cross-media engine"""        try:
+        """Initialize cross-media engine"""
+        try:
             self.logger.info("Initializing Cross-Media Engine...")
             
             # Load transformation models
@@ -514,7 +544,8 @@ class CrossMediaEngine(BaseContentEngine):
             return False
     
     async def process_content(self, content: Any, options: Optional[Dict] = None) -> ProcessingResult:
-        """Transform content between different media types"""        start_time = time.time()
+        """Transform content between different media types"""
+        start_time = time.time()
         options = options or {}
         content_id = options.get('content_id', f"cross_media_{int(time.time())}")
         
@@ -593,13 +624,16 @@ class CrossMediaEngine(BaseContentEngine):
             )
     
     async def optimize_for_seo(self, content: Any, target_keywords: List[str]) -> Dict[str, Any]:
-        """Cross-media SEO optimization"""        return {'cross_media_seo_ready': True, 'format_optimized': True}
+        """Cross-media SEO optimization"""
+        return {'cross_media_seo_ready': True, 'format_optimized': True}
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Cross-media content protection"""        return {'cross_media_protected': True, 'transformation_tracked': True}
+        """Cross-media content protection"""
+        return {'cross_media_protected': True, 'transformation_tracked': True}
     
     async def _load_transformation_models(self):
-        """Load media transformation models"""        self.logger.info("Loading transformation models...")
+        """Load media transformation models"""
+        self.logger.info("Loading transformation models...")
         await asyncio.sleep(0.3)
         
         self.transformation_models = {
@@ -614,7 +648,8 @@ class CrossMediaEngine(BaseContentEngine):
         }
     
     async def _init_media_converters(self):
-        """Initialize media format converters"""        self.logger.info("Initializing media converters...")
+        """Initialize media format converters"""
+        self.logger.info("Initializing media converters...")
         await asyncio.sleep(0.15)
         
         self.converters = {
@@ -624,7 +659,8 @@ class CrossMediaEngine(BaseContentEngine):
         }
     
     async def _load_style_transfer_models(self):
-        """Load style transfer models"""        self.logger.info("Loading style transfer models...")
+        """Load style transfer models"""
+        self.logger.info("Loading style transfer models...")
         await asyncio.sleep(0.1)
         
         self.style_models = {
@@ -634,7 +670,8 @@ class CrossMediaEngine(BaseContentEngine):
         }
     
     async def _analyze_source_media(self, content: Any) -> Dict[str, Any]:
-        """Analyze source media characteristics"""        self.logger.info("Analyzing source media...")
+        """Analyze source media characteristics"""
+        self.logger.info("Analyzing source media...")
         await asyncio.sleep(0.2)
         
         return {
@@ -649,7 +686,8 @@ class CrossMediaEngine(BaseContentEngine):
         }
     
     async def _plan_transformation(self, source_analysis: Dict, target_media: str) -> Dict[str, Any]:
-        """Plan transformation strategy"""        self.logger.info("Planning transformation strategy...")
+        """Plan transformation strategy"""
+        self.logger.info("Planning transformation strategy...")
         await asyncio.sleep(0.15)
         
         return {
@@ -666,7 +704,8 @@ class CrossMediaEngine(BaseContentEngine):
         }
     
     async def _extract_semantic_content(self, content: Any, analysis: Dict) -> Dict[str, Any]:
-        """Extract semantic content for transformation"""        self.logger.info("Extracting semantic content...")
+        """Extract semantic content for transformation"""
+        self.logger.info("Extracting semantic content...")
         await asyncio.sleep(0.3)
         
         return {
@@ -679,34 +718,40 @@ class CrossMediaEngine(BaseContentEngine):
         }
     
     async def _perform_transformation(self, semantic_content: Dict, plan: Dict) -> Any:
-        """Perform cross-media transformation"""        self.logger.info(f"Performing transformation: {plan['transformation_method']}")
+        """Perform cross-media transformation"""
+        self.logger.info(f"Performing transformation: {plan['transformation_method']}")
         await asyncio.sleep(0.4)
         
         transformation_method = plan['transformation_method']
         return f"transformed_{transformation_method}_{semantic_content['semantic_embedding']}"
     
     async def _apply_style_consistency(self, content: Any, options: Dict) -> Any:
-        """Apply style consistency across media transformation"""        self.logger.info("Applying style consistency...")
+        """Apply style consistency across media transformation"""
+        self.logger.info("Applying style consistency...")
         await asyncio.sleep(0.2)
         
         style = options.get('style', 'professional')
         return f"style_consistent_{style}_{content}"
     
     async def _optimize_for_target_medium(self, content: Any, plan: Dict) -> Any:
-        """Optimize content for target medium"""        self.logger.info("Optimizing for target medium...")
+        """Optimize content for target medium"""
+        self.logger.info("Optimizing for target medium...")
         await asyncio.sleep(0.15)
         
         target_type = plan['target_type']
         return f"optimized_{target_type}_{content}"
     
     async def _evaluate_transformation_quality(self, original: Any, transformed: Any, plan: Dict) -> float:
-        """Evaluate transformation quality"""        # Simulate quality evaluation
+        """Evaluate transformation quality"""
+        # Simulate quality evaluation
         return 0.87
 
 class UnifiedContentEngine(BaseContentEngine):
-    """    Unified content processing engine that orchestrates all content types
+    """
+    Unified content processing engine that orchestrates all content types
     Provides a single interface for comprehensive content processing
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__("unified_content", config)
         self.processing_workflows = [
@@ -715,7 +760,8 @@ class UnifiedContentEngine(BaseContentEngine):
         ]
         
     async def initialize(self) -> bool:
-        """Initialize unified content engine"""        try:
+        """Initialize unified content engine"""
+        try:
             self.logger.info("Initializing Unified Content Engine...")
             
             # Load orchestration models
@@ -738,7 +784,8 @@ class UnifiedContentEngine(BaseContentEngine):
             return False
     
     async def process_content(self, content: Any, options: Optional[Dict] = None) -> ProcessingResult:
-        """Unified content processing orchestration"""        start_time = time.time()
+        """Unified content processing orchestration"""
+        start_time = time.time()
         options = options or {}
         content_id = options.get('content_id', f"unified_{int(time.time())}")
         
@@ -810,13 +857,16 @@ class UnifiedContentEngine(BaseContentEngine):
             )
     
     async def optimize_for_seo(self, content: Any, target_keywords: List[str]) -> Dict[str, Any]:
-        """Unified SEO optimization"""        return {'unified_seo_optimized': True, 'comprehensive_optimization': True}
+        """Unified SEO optimization"""
+        return {'unified_seo_optimized': True, 'comprehensive_optimization': True}
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Unified content protection"""        return {'unified_protection': True, 'comprehensive_security': True}
+        """Unified content protection"""
+        return {'unified_protection': True, 'comprehensive_security': True}
     
     async def _load_orchestration_models(self):
-        """Load content orchestration models"""        self.logger.info("Loading orchestration models...")
+        """Load content orchestration models"""
+        self.logger.info("Loading orchestration models...")
         await asyncio.sleep(0.2)
         
         self.orchestration_models = {
@@ -827,7 +877,8 @@ class UnifiedContentEngine(BaseContentEngine):
         }
     
     async def _init_workflow_manager(self):
-        """Initialize workflow management system"""        self.logger.info("Initializing workflow manager...")
+        """Initialize workflow management system"""
+        self.logger.info("Initializing workflow manager...")
         await asyncio.sleep(0.1)
         
         self.workflow_manager = {
@@ -837,7 +888,8 @@ class UnifiedContentEngine(BaseContentEngine):
         }
     
     async def _load_decision_trees(self):
-        """Load decision trees for content routing"""        self.logger.info("Loading decision trees...")
+        """Load decision trees for content routing"""
+        self.logger.info("Loading decision trees...")
         await asyncio.sleep(0.05)
         
         self.decision_trees = {
@@ -847,7 +899,8 @@ class UnifiedContentEngine(BaseContentEngine):
         }
     
     async def _comprehensive_content_analysis(self, content: Any) -> Dict[str, Any]:
-        """Perform comprehensive content analysis"""        self.logger.info("Performing comprehensive content analysis...")
+        """Perform comprehensive content analysis"""
+        self.logger.info("Performing comprehensive content analysis...")
         await asyncio.sleep(0.4)
         
         return {
@@ -873,7 +926,8 @@ class UnifiedContentEngine(BaseContentEngine):
         }
     
     async def _determine_processing_workflow(self, analysis: Dict, options: Dict) -> List[str]:
-        """Determine optimal processing workflow"""        self.logger.info("Determining processing workflow...")
+        """Determine optimal processing workflow"""
+        self.logger.info("Determining processing workflow...")
         await asyncio.sleep(0.1)
         
         workflow = ['analyze', 'enhance', 'optimize', 'protect']
@@ -889,7 +943,8 @@ class UnifiedContentEngine(BaseContentEngine):
         return workflow
     
     async def _execute_unified_pipeline(self, content: Any, workflow: List[str], options: Dict) -> Any:
-        """Execute unified processing pipeline"""        self.logger.info(f"Executing unified pipeline: {workflow}")
+        """Execute unified processing pipeline"""
+        self.logger.info(f"Executing unified pipeline: {workflow}")
         await asyncio.sleep(0.5)
         
         processed_content = content
@@ -902,13 +957,15 @@ class UnifiedContentEngine(BaseContentEngine):
         return processed_content
     
     async def _apply_cross_cutting_concerns(self, content: Any, options: Dict) -> Any:
-        """Apply cross-cutting concerns like security, monitoring, etc."""        self.logger.info("Applying cross-cutting concerns...")
+        """Apply cross-cutting concerns like security, monitoring, etc."""
+        self.logger.info("Applying cross-cutting concerns...")
         await asyncio.sleep(0.2)
         
         return f"cross_cutting_applied_{content}"
     
     async def _generate_comprehensive_report(self, original: Any, processed: Any, workflow: List[str], analysis: Dict) -> Dict[str, Any]:
-        """Generate comprehensive processing report"""        self.logger.info("Generating comprehensive report...")
+        """Generate comprehensive processing report"""
+        self.logger.info("Generating comprehensive report...")
         await asyncio.sleep(0.2)
         
         return {

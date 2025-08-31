@@ -9,7 +9,8 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
 ATTENTION: Ce code est protégé par les droits d'auteur.
 Toute reproduction, distribution ou modification non autorisée est strictement interdite.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from pathlib import Path
@@ -33,18 +34,22 @@ logger = logging.getLogger(__name__)
 
 
 class VectorDatabaseManager:
-    """    Unified vector database manager providing high-level interface for all
+    """
+    Unified vector database manager providing high-level interface for all
     vector database operations including content indexing, similarity search,
     duplicate detection, collaboration matching, and system management.
     
     This is the main entry point for the vector database system.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
-        """        Initialize the vector database manager.
+        """
+        Initialize the vector database manager.
         
         Args:
             config: Configuration dictionary for the system
-        """        self.config = config or self._get_default_config()
+        """
+        self.config = config or self._get_default_config()
         
         # Initialize the operations manager
         self.operations = VectorDBOperations(self.config)
@@ -57,7 +62,8 @@ class VectorDatabaseManager:
         logger.info("Vector Database Manager initialized")
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration for the vector database system."""        return {
+        """Get default configuration for the vector database system."""
+        return {
             'backend': 'faiss',
             'storage_path': './data/vector_db',
             'embedding': {
@@ -98,11 +104,13 @@ class VectorDatabaseManager:
         }
     
     async def initialize(self) -> bool:
-        """        Initialize the complete vector database system.
+        """
+        Initialize the complete vector database system.
         
         Returns:
             Success status
-        """        try:
+        """
+        try:
             success = await self.operations.initialize_system()
             
             if success:
@@ -120,7 +128,8 @@ class VectorDatabaseManager:
     
     async def add_text_content(self, text: str, content_id: str,
                              metadata: Dict[str, Any] = None) -> bool:
-        """        Add text content to the vector database.
+        """
+        Add text content to the vector database.
         
         Args:
             text: Text content to add
@@ -129,12 +138,14 @@ class VectorDatabaseManager:
             
         Returns:
             Success status
-        """        metadata = metadata or {}
+        """
+        metadata = metadata or {}
         return await self.operations.add_content(text, 'text', content_id, metadata)
     
     async def add_audio_content(self, audio_data: Any, content_id: str,
                               metadata: Dict[str, Any] = None) -> bool:
-        """        Add audio content to the vector database.
+        """
+        Add audio content to the vector database.
         
         Args:
             audio_data: Audio data (numpy array)
@@ -143,12 +154,14 @@ class VectorDatabaseManager:
             
         Returns:
             Success status
-        """        metadata = metadata or {}
+        """
+        metadata = metadata or {}
         return await self.operations.add_content(audio_data, 'audio', content_id, metadata)
     
     async def add_image_content(self, image: Any, content_id: str,
                               metadata: Dict[str, Any] = None) -> bool:
-        """        Add image content to the vector database.
+        """
+        Add image content to the vector database.
         
         Args:
             image: Image data (PIL Image)
@@ -157,12 +170,14 @@ class VectorDatabaseManager:
             
         Returns:
             Success status
-        """        metadata = metadata or {}
+        """
+        metadata = metadata or {}
         return await self.operations.add_content(image, 'image', content_id, metadata)
     
     async def add_video_content(self, video_path: str, content_id: str,
                               metadata: Dict[str, Any] = None) -> bool:
-        """        Add video content to the vector database.
+        """
+        Add video content to the vector database.
         
         Args:
             video_path: Path to video file
@@ -171,11 +186,13 @@ class VectorDatabaseManager:
             
         Returns:
             Success status
-        """        metadata = metadata or {}
+        """
+        metadata = metadata or {}
         return await self.operations.add_content(video_path, 'video', content_id, metadata)
     
     async def remove_content(self, content_id: str, content_type: str) -> bool:
-        """        Remove content from the vector database.
+        """
+        Remove content from the vector database.
         
         Args:
             content_id: ID of content to remove
@@ -183,14 +200,16 @@ class VectorDatabaseManager:
             
         Returns:
             Success status
-        """        return await self.operations.remove_content(content_id, content_type)
+        """
+        return await self.operations.remove_content(content_id, content_type)
     
     # Search Methods
     
     async def search_similar_text(self, query_text: str, max_results: int = 20,
                                 threshold: float = None,
                                 metadata_filters: Dict[str, Any] = None) -> List[VectorSearchResult]:
-        """        Search for similar text content.
+        """
+        Search for similar text content.
         
         Args:
             query_text: Text to search for
@@ -200,7 +219,8 @@ class VectorDatabaseManager:
             
         Returns:
             List of similar content results
-        """        threshold = threshold or self.config['similarity_thresholds']['text']
+        """
+        threshold = threshold or self.config['similarity_thresholds']['text']
         
         search_config = SearchConfig(
             search_type=SearchType.SIMILAR_CONTENT,
@@ -215,7 +235,8 @@ class VectorDatabaseManager:
     async def search_similar_audio(self, audio_data: Any, max_results: int = 20,
                                  threshold: float = None,
                                  metadata_filters: Dict[str, Any] = None) -> List[VectorSearchResult]:
-        """        Search for similar audio content.
+        """
+        Search for similar audio content.
         
         Args:
             audio_data: Audio data to search for
@@ -225,7 +246,8 @@ class VectorDatabaseManager:
             
         Returns:
             List of similar content results
-        """        threshold = threshold or self.config['similarity_thresholds']['audio']
+        """
+        threshold = threshold or self.config['similarity_thresholds']['audio']
         
         search_config = SearchConfig(
             search_type=SearchType.SIMILAR_CONTENT,
@@ -240,7 +262,8 @@ class VectorDatabaseManager:
     async def search_similar_image(self, image: Any, max_results: int = 20,
                                  threshold: float = None,
                                  metadata_filters: Dict[str, Any] = None) -> List[VectorSearchResult]:
-        """        Search for similar image content.
+        """
+        Search for similar image content.
         
         Args:
             image: Image data to search for
@@ -250,7 +273,8 @@ class VectorDatabaseManager:
             
         Returns:
             List of similar content results
-        """        threshold = threshold or self.config['similarity_thresholds']['image']
+        """
+        threshold = threshold or self.config['similarity_thresholds']['image']
         
         search_config = SearchConfig(
             search_type=SearchType.SIMILAR_CONTENT,
@@ -265,7 +289,8 @@ class VectorDatabaseManager:
     async def search_similar_video(self, video_path: str, max_results: int = 20,
                                  threshold: float = None,
                                  metadata_filters: Dict[str, Any] = None) -> List[VectorSearchResult]:
-        """        Search for similar video content.
+        """
+        Search for similar video content.
         
         Args:
             video_path: Video file path to search for
@@ -275,7 +300,8 @@ class VectorDatabaseManager:
             
         Returns:
             List of similar content results
-        """        threshold = threshold or self.config['similarity_thresholds']['video']
+        """
+        threshold = threshold or self.config['similarity_thresholds']['video']
         
         search_config = SearchConfig(
             search_type=SearchType.SIMILAR_CONTENT,
@@ -291,7 +317,8 @@ class VectorDatabaseManager:
     
     async def detect_text_duplicates(self, text: str,
                                    metadata: Dict[str, Any] = None) -> List[Tuple[VectorSearchResult, DuplicateAnalysis]]:
-        """        Detect duplicate text content.
+        """
+        Detect duplicate text content.
         
         Args:
             text: Text to check for duplicates
@@ -299,11 +326,13 @@ class VectorDatabaseManager:
             
         Returns:
             List of (result, analysis) tuples for potential duplicates
-        """        return await self.operations.detect_duplicates(text, 'text', metadata)
+        """
+        return await self.operations.detect_duplicates(text, 'text', metadata)
     
     async def detect_audio_duplicates(self, audio_data: Any,
                                     metadata: Dict[str, Any] = None) -> List[Tuple[VectorSearchResult, DuplicateAnalysis]]:
-        """        Detect duplicate audio content.
+        """
+        Detect duplicate audio content.
         
         Args:
             audio_data: Audio data to check for duplicates
@@ -311,11 +340,13 @@ class VectorDatabaseManager:
             
         Returns:
             List of (result, analysis) tuples for potential duplicates
-        """        return await self.operations.detect_duplicates(audio_data, 'audio', metadata)
+        """
+        return await self.operations.detect_duplicates(audio_data, 'audio', metadata)
     
     async def detect_image_duplicates(self, image: Any,
                                     metadata: Dict[str, Any] = None) -> List[Tuple[VectorSearchResult, DuplicateAnalysis]]:
-        """        Detect duplicate image content.
+        """
+        Detect duplicate image content.
         
         Args:
             image: Image to check for duplicates
@@ -323,11 +354,13 @@ class VectorDatabaseManager:
             
         Returns:
             List of (result, analysis) tuples for potential duplicates
-        """        return await self.operations.detect_duplicates(image, 'image', metadata)
+        """
+        return await self.operations.detect_duplicates(image, 'image', metadata)
     
     async def detect_video_duplicates(self, video_path: str,
                                     metadata: Dict[str, Any] = None) -> List[Tuple[VectorSearchResult, DuplicateAnalysis]]:
-        """        Detect duplicate video content.
+        """
+        Detect duplicate video content.
         
         Args:
             video_path: Video file path to check for duplicates
@@ -335,14 +368,16 @@ class VectorDatabaseManager:
             
         Returns:
             List of (result, analysis) tuples for potential duplicates
-        """        return await self.operations.detect_duplicates(video_path, 'video', metadata)
+        """
+        return await self.operations.detect_duplicates(video_path, 'video', metadata)
     
     # Collaboration and Recommendation Methods
     
     async def find_collaboration_opportunities(self, creator_profile: Dict[str, Any],
                                              content_example: Any,
                                              content_type: str) -> List[CollaborationMatch]:
-        """        Find collaboration opportunities with other creators.
+        """
+        Find collaboration opportunities with other creators.
         
         Args:
             creator_profile: Profile of the creator seeking collaborations
@@ -351,12 +386,14 @@ class VectorDatabaseManager:
             
         Returns:
             List of collaboration matches
-        """        return await self.operations.find_collaborations(creator_profile, content_example, content_type)
+        """
+        return await self.operations.find_collaborations(creator_profile, content_example, content_type)
     
     async def get_content_recommendations(self, user_profile: Dict[str, Any],
                                         content_example: Any,
                                         content_type: str) -> List[ContentRecommendation]:
-        """        Get content recommendations for inspiration and strategy.
+        """
+        Get content recommendations for inspiration and strategy.
         
         Args:
             user_profile: User's profile and preferences
@@ -365,16 +402,19 @@ class VectorDatabaseManager:
             
         Returns:
             List of content recommendations
-        """        return await self.operations.get_recommendations(user_profile, content_example, content_type)
+        """
+        return await self.operations.get_recommendations(user_profile, content_example, content_type)
     
     # System Management Methods
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """        Get comprehensive system status including all indices and performance.
+        """
+        Get comprehensive system status including all indices and performance.
         
         Returns:
             System status information
-        """        try:
+        """
+        try:
             # Get performance stats
             performance = await self.operations.get_performance_stats()
             
@@ -402,36 +442,43 @@ class VectorDatabaseManager:
             }
     
     async def get_index_statistics(self, content_type: str = None) -> Union[IndexMetrics, Dict[str, IndexMetrics]]:
-        """        Get statistics for vector indices.
+        """
+        Get statistics for vector indices.
         
         Args:
             content_type: Specific content type, or None for all indices
             
         Returns:
             Index metrics
-        """        return await self.operations.get_index_metrics(content_type)
+        """
+        return await self.operations.get_index_metrics(content_type)
     
     async def get_performance_metrics(self) -> PerformanceStats:
-        """        Get performance metrics for the system.
+        """
+        Get performance metrics for the system.
         
         Returns:
             Performance statistics
-        """        return await self.operations.get_performance_stats()
+        """
+        return await self.operations.get_performance_stats()
     
     # Backup and Maintenance Methods
     
     async def create_system_backup(self, backup_name: str = None) -> BackupInfo:
-        """        Create a complete system backup.
+        """
+        Create a complete system backup.
         
         Args:
             backup_name: Custom name for the backup
             
         Returns:
             Backup information
-        """        return await self.operations.create_backup(backup_name=backup_name)
+        """
+        return await self.operations.create_backup(backup_name=backup_name)
     
     async def create_content_backup(self, content_type: str, backup_name: str = None) -> BackupInfo:
-        """        Create a backup for specific content type.
+        """
+        Create a backup for specific content type.
         
         Args:
             content_type: Content type to backup
@@ -439,67 +486,82 @@ class VectorDatabaseManager:
             
         Returns:
             Backup information
-        """        return await self.operations.create_backup(content_type, backup_name)
+        """
+        return await self.operations.create_backup(content_type, backup_name)
     
     async def list_available_backups(self) -> List[BackupInfo]:
-        """        List all available backups.
+        """
+        List all available backups.
         
         Returns:
             List of backup information
-        """        return await self.operations.list_backups()
+        """
+        return await self.operations.list_backups()
     
     async def restore_from_backup(self, backup_id: str) -> bool:
-        """        Restore system from a backup.
+        """
+        Restore system from a backup.
         
         Args:
             backup_id: ID of the backup to restore
             
         Returns:
             Success status
-        """        return await self.operations.restore_backup(backup_id)
+        """
+        return await self.operations.restore_backup(backup_id)
     
     async def optimize_system(self, content_type: str = None) -> bool:
-        """        Optimize the vector database system for better performance.
+        """
+        Optimize the vector database system for better performance.
         
         Args:
             content_type: Specific content type to optimize, or None for all
             
         Returns:
             Success status
-        """        return await self.operations.optimize_indices(content_type)
+        """
+        return await self.operations.optimize_indices(content_type)
     
     # Utility Methods
     
     def get_supported_content_types(self) -> List[str]:
-        """        Get list of supported content types.
+        """
+        Get list of supported content types.
         
         Returns:
             List of supported content types
-        """        return ['text', 'audio', 'image', 'video']
+        """
+        return ['text', 'audio', 'image', 'video']
     
     def get_embedding_dimensions(self) -> Dict[str, int]:
-        """        Get embedding dimensions for each content type.
+        """
+        Get embedding dimensions for each content type.
         
         Returns:
             Dictionary mapping content types to their embedding dimensions
-        """        return self.embedding_engine.get_embedding_dimensions()
+        """
+        return self.embedding_engine.get_embedding_dimensions()
     
     def export_configuration(self) -> Dict[str, Any]:
-        """        Export current system configuration.
+        """
+        Export current system configuration.
         
         Returns:
             Configuration dictionary
-        """        return self.config.copy()
+        """
+        return self.config.copy()
     
     async def update_configuration(self, new_config: Dict[str, Any]) -> bool:
-        """        Update system configuration.
+        """
+        Update system configuration.
         
         Args:
             new_config: New configuration to apply
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             # Validate configuration
             required_keys = ['backend', 'storage_path', 'embedding', 'similarity_thresholds']
             for key in required_keys:
@@ -518,11 +580,13 @@ class VectorDatabaseManager:
             return False
     
     async def health_check(self) -> Dict[str, Any]:
-        """        Perform a comprehensive health check of the system.
+        """
+        Perform a comprehensive health check of the system.
         
         Returns:
             Health check results
-        """        try:
+        """
+        try:
             health_results = {
                 'overall_status': 'healthy',
                 'components': {},
@@ -612,14 +676,16 @@ class VectorDatabaseManager:
 
 # Convenience function for quick initialization
 async def create_vector_database(config: Dict[str, Any] = None) -> VectorDatabaseManager:
-    """    Create and initialize a vector database manager.
+    """
+    Create and initialize a vector database manager.
     
     Args:
         config: Optional configuration dictionary
         
     Returns:
         Initialized VectorDatabaseManager instance
-    """    manager = VectorDatabaseManager(config)
+    """
+    manager = VectorDatabaseManager(config)
     await manager.initialize()
     return manager
 

@@ -8,7 +8,8 @@ Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Micros
 
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use is strictly prohibited.
-"""from typing import List, Dict, Any, Optional, Union, Tuple
+"""
+from typing import List, Dict, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
 import json
@@ -32,7 +33,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class WorkflowStatus(Enum):
-    """Content workflow status enumeration"""    DRAFT = "draft"
+    """Content workflow status enumeration"""
+    DRAFT = "draft"
     IN_PROGRESS = "in_progress"
     REVIEW_PENDING = "review_pending"
     APPROVED = "approved"
@@ -42,7 +44,8 @@ class WorkflowStatus(Enum):
     ARCHIVED = "archived"
 
 class ContentFormat(Enum):
-    """Supported content formats for multi-format workflows"""    AUDIO = "audio"
+    """Supported content formats for multi-format workflows"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -54,7 +57,8 @@ class ContentFormat(Enum):
     COURSE_MATERIAL = "course_material"
 
 class WorkflowStepType(Enum):
-    """Types of workflow steps"""    CONTENT_CREATION = "content_creation"
+    """Types of workflow steps"""
+    CONTENT_CREATION = "content_creation"
     REVIEW_APPROVAL = "review_approval"
     EDITING = "editing"
     QUALITY_CHECK = "quality_check"
@@ -68,7 +72,8 @@ class WorkflowStepType(Enum):
     ANALYTICS_SETUP = "analytics_setup"
 
 class AutomationTrigger(Enum):
-    """Workflow automation trigger types"""    TIME_BASED = "time_based"
+    """Workflow automation trigger types"""
+    TIME_BASED = "time_based"
     EVENT_BASED = "event_based"
     CONDITION_BASED = "condition_based"
     MANUAL = "manual"
@@ -76,9 +81,11 @@ class AutomationTrigger(Enum):
     EXTERNAL_API = "external_api"
 
 class ContentWorkflow(Base):
-    """    Core content workflow model for managing multi-format content creation processes.
+    """
+    Core content workflow model for managing multi-format content creation processes.
     Supports automated workflows, approval processes, and cross-platform distribution.
-    """    __tablename__ = 'content_workflows'
+    """
+    __tablename__ = 'content_workflows'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -136,8 +143,10 @@ class ContentWorkflow(Base):
     )
 
 class WorkflowStep(Base):
-    """    Individual workflow step definition with automation capabilities.
-    """    __tablename__ = 'workflow_steps'
+    """
+    Individual workflow step definition with automation capabilities.
+    """
+    __tablename__ = 'workflow_steps'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     workflow_id = Column(UUID(as_uuid=True), ForeignKey('content_workflows.id'), nullable=False)
@@ -194,8 +203,10 @@ class WorkflowStep(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class WorkflowExecution(Base):
-    """    Workflow execution instance tracking actual workflow runs.
-    """    __tablename__ = 'workflow_executions'
+    """
+    Workflow execution instance tracking actual workflow runs.
+    """
+    __tablename__ = 'workflow_executions'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     workflow_id = Column(UUID(as_uuid=True), ForeignKey('content_workflows.id'), nullable=False)
@@ -237,8 +248,10 @@ class WorkflowExecution(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class ContentVersion(Base):
-    """    Content version tracking throughout the workflow process.
-    """    __tablename__ = 'content_versions'
+    """
+    Content version tracking throughout the workflow process.
+    """
+    __tablename__ = 'content_versions'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -282,7 +295,8 @@ class ContentVersion(Base):
 
 @dataclass
 class WorkflowTemplate:
-    """Workflow template configuration for reusable workflows"""    name: str
+    """Workflow template configuration for reusable workflows"""
+    name: str
     description: str
     content_formats: List[ContentFormat]
     steps: List[Dict[str, Any]]
@@ -290,9 +304,11 @@ class WorkflowTemplate:
     default_assignments: Dict[str, str]
 
 class ContentWorkflowEngine:
-    """    Advanced content workflow orchestration engine.
+    """
+    Advanced content workflow orchestration engine.
     Manages automated workflows, approval processes, and content distribution.
-    """    
+    """
+    
     def __init__(self, db_session, redis_client=None, storage_client=None):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -300,14 +316,16 @@ class ContentWorkflowEngine:
         self.logger = logging.getLogger(__name__)
     
     async def create_workflow(self, workflow_data: Dict[str, Any]) -> ContentWorkflow:
-        """        Create a new content workflow with steps and automation rules.
+        """
+        Create a new content workflow with steps and automation rules.
         
         Args:
             workflow_data: Workflow configuration data
             
         Returns:
             Created workflow instance
-        """        try:
+        """
+        try:
             # Create workflow
             workflow = ContentWorkflow(
                 workflow_name=workflow_data["name"],
@@ -348,7 +366,8 @@ class ContentWorkflowEngine:
             raise
     
     async def execute_workflow(self, workflow_id: str, content_id: str, triggered_by: str, trigger_type: AutomationTrigger = AutomationTrigger.MANUAL) -> WorkflowExecution:
-        """        Execute a workflow for specific content.
+        """
+        Execute a workflow for specific content.
         
         Args:
             workflow_id: Workflow to execute
@@ -358,7 +377,8 @@ class ContentWorkflowEngine:
             
         Returns:
             Workflow execution instance
-        """        try:
+        """
+        try:
             # Get workflow
             workflow = self.db_session.query(ContentWorkflow).filter(
                 ContentWorkflow.id == workflow_id
@@ -394,7 +414,8 @@ class ContentWorkflowEngine:
             raise
     
     async def advance_workflow_step(self, execution_id: str, step_id: str, step_output: Dict[str, Any], completed_by: str) -> bool:
-        """        Advance workflow to next step after current step completion.
+        """
+        Advance workflow to next step after current step completion.
         
         Args:
             execution_id: Workflow execution ID
@@ -404,7 +425,8 @@ class ContentWorkflowEngine:
             
         Returns:
             True if workflow advanced successfully
-        """        try:
+        """
+        try:
             # Get execution
             execution = self.db_session.query(WorkflowExecution).filter(
                 WorkflowExecution.id == execution_id
@@ -456,7 +478,8 @@ class ContentWorkflowEngine:
             raise
     
     async def create_content_version(self, execution_id: str, content_data: Dict[str, Any]) -> ContentVersion:
-        """        Create a new content version during workflow execution.
+        """
+        Create a new content version during workflow execution.
         
         Args:
             execution_id: Workflow execution ID
@@ -464,7 +487,8 @@ class ContentWorkflowEngine:
             
         Returns:
             Created content version
-        """        try:
+        """
+        try:
             # Get execution context
             execution = self.db_session.query(WorkflowExecution).filter(
                 WorkflowExecution.id == execution_id
@@ -518,14 +542,16 @@ class ContentWorkflowEngine:
             raise
     
     async def get_workflow_templates(self, content_format: Optional[ContentFormat] = None) -> List[WorkflowTemplate]:
-        """        Get available workflow templates, optionally filtered by content format.
+        """
+        Get available workflow templates, optionally filtered by content format.
         
         Args:
             content_format: Optional filter by content format
             
         Returns:
             List of workflow templates
-        """        try:
+        """
+        try:
             query = self.db_session.query(ContentWorkflow).filter(
                 ContentWorkflow.is_template == True
             )
@@ -572,7 +598,8 @@ class ContentWorkflowEngine:
             raise
     
     async def _create_workflow_steps(self, workflow_id: str, steps_data: List[Dict[str, Any]]):
-        """Create workflow steps from configuration data"""        try:
+        """Create workflow steps from configuration data"""
+        try:
             for i, step_data in enumerate(steps_data):
                 step = WorkflowStep(
                     workflow_id=workflow_id,
@@ -604,7 +631,8 @@ class ContentWorkflowEngine:
             raise
     
     async def _start_workflow_execution(self, execution_id: str):
-        """Start workflow execution by finding and executing first step"""        try:
+        """Start workflow execution by finding and executing first step"""
+        try:
             execution = self.db_session.query(WorkflowExecution).filter(
                 WorkflowExecution.id == execution_id
             ).first()
@@ -627,7 +655,8 @@ class ContentWorkflowEngine:
             raise
     
     async def _get_next_workflow_step(self, execution_id: str, completed_step_id: str) -> Optional[WorkflowStep]:
-        """Determine the next step in workflow execution"""        try:
+        """Determine the next step in workflow execution"""
+        try:
             execution = self.db_session.query(WorkflowExecution).filter(
                 WorkflowExecution.id == execution_id
             ).first()
@@ -657,7 +686,8 @@ class ContentWorkflowEngine:
             raise
     
     async def _auto_execute_step(self, execution_id: str, step_id: str):
-        """Automatically execute a workflow step based on automation rules"""        try:
+        """Automatically execute a workflow step based on automation rules"""
+        try:
             step = self.db_session.query(WorkflowStep).filter(
                 WorkflowStep.id == step_id
             ).first()

@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Environment detection → Resource analysis → Performance profiling → Configuration generation →
 Security assessment → Optimization tuning → Monitoring setup → Dynamic adaptation
-"""import os
+"""
+import os
 import psutil
 import json
 import yaml
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class EnvironmentType(Enum):
-    """Types of deployment environments"""    DEVELOPMENT = "development"
+    """Types of deployment environments"""
+    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -37,14 +39,16 @@ class EnvironmentType(Enum):
 
 
 class ResourceTier(Enum):
-    """Resource availability tiers"""    MINIMAL = "minimal"      # < 4GB RAM, < 2 CPU cores
+    """Resource availability tiers"""
+    MINIMAL = "minimal"      # < 4GB RAM, < 2 CPU cores
     STANDARD = "standard"    # 4-16GB RAM, 2-8 CPU cores
     HIGH = "high"           # 16-64GB RAM, 8-32 CPU cores
     EXTREME = "extreme"      # > 64GB RAM, > 32 CPU cores
 
 
 class SecurityProfile(Enum):
-    """Security configuration profiles"""    BASIC = "basic"
+    """Security configuration profiles"""
+    BASIC = "basic"
     STANDARD = "standard"
     ENHANCED = "enhanced"
     MAXIMUM = "maximum"
@@ -52,7 +56,8 @@ class SecurityProfile(Enum):
 
 @dataclass
 class SystemResources:
-    """System resource information"""    total_memory_gb: float
+    """System resource information"""
+    total_memory_gb: float
     available_memory_gb: float
     cpu_cores: int
     cpu_threads: int
@@ -65,7 +70,8 @@ class SystemResources:
 
 @dataclass
 class QueueConfiguration:
-    """Complete queue system configuration"""    
+    """Complete queue system configuration"""
+    
     # Basic settings
     max_workers: int
     max_queue_size: int
@@ -109,7 +115,8 @@ class QueueConfiguration:
 
 
 class QueueConfigurationManager:
-    """Advanced configuration manager for queue systems"""    
+    """Advanced configuration manager for queue systems"""
+    
     def __init__(self, config_dir: Optional[str] = None):
         self.config_dir = Path(config_dir) if config_dir else Path.cwd() / "config"
         self.config_dir.mkdir(parents=True, exist_ok=True)
@@ -128,7 +135,8 @@ class QueueConfigurationManager:
         performance_priority: str = "balanced",  # "speed", "memory", "balanced"
         custom_overrides: Optional[Dict[str, Any]] = None
     ) -> QueueConfiguration:
-        """Generate optimal configuration based on system resources and requirements"""        
+        """Generate optimal configuration based on system resources and requirements"""
+        
         logger.info("🎯 Generating optimal queue configuration")
         logger.info(f"Environment: {self.environment_type.value}")
         logger.info(f"Resource Tier: {self.resource_tier.value}")
@@ -163,7 +171,8 @@ class QueueConfigurationManager:
         return config
     
     def load_configuration(self) -> Optional[QueueConfiguration]:
-        """Load existing configuration from file"""        
+        """Load existing configuration from file"""
+        
         try:
             if self.generated_config_file.exists():
                 config_data = self._load_yaml_file(self.generated_config_file)
@@ -177,7 +186,8 @@ class QueueConfigurationManager:
             return None
     
     def validate_configuration(self, config: QueueConfiguration) -> Dict[str, Any]:
-        """Validate configuration against system capabilities"""        
+        """Validate configuration against system capabilities"""
+        
         validation_results = {
             'valid': True,
             'warnings': [],
@@ -236,7 +246,8 @@ class QueueConfigurationManager:
         self, 
         current_metrics: Optional[Dict[str, Any]] = None
     ) -> List[str]:
-        """Get performance tuning recommendations based on current metrics"""        
+        """Get performance tuning recommendations based on current metrics"""
+        
         recommendations = []
         
         if current_metrics:
@@ -288,7 +299,8 @@ class QueueConfigurationManager:
         self, 
         output_file: Optional[str] = None
     ) -> str:
-        """Export configuration template with comments"""        
+        """Export configuration template with comments"""
+        
         template = {
             'queue_configuration': {
                 'description': 'Complete queue system configuration template',
@@ -372,7 +384,8 @@ class QueueConfigurationManager:
     # Private methods
     
     def _detect_system_resources(self) -> SystemResources:
-        """Detect available system resources"""        
+        """Detect available system resources"""
+        
         memory = psutil.virtual_memory()
         cpu_freq = psutil.cpu_freq()
         disk = psutil.disk_usage('/')
@@ -402,7 +415,8 @@ class QueueConfigurationManager:
         )
     
     def _detect_environment_type(self) -> EnvironmentType:
-        """Detect deployment environment type"""        
+        """Detect deployment environment type"""
+        
         # Check environment variables
         env_type = os.getenv('ENVIRONMENT', '').lower()
         app_env = os.getenv('APP_ENV', '').lower()
@@ -419,7 +433,8 @@ class QueueConfigurationManager:
             return EnvironmentType.DEVELOPMENT
     
     def _determine_resource_tier(self) -> ResourceTier:
-        """Determine resource availability tier"""        
+        """Determine resource availability tier"""
+        
         memory_gb = self.system_resources.total_memory_gb
         cpu_cores = self.system_resources.cpu_cores
         
@@ -433,7 +448,8 @@ class QueueConfigurationManager:
             return ResourceTier.MINIMAL
     
     def _get_base_configuration(self) -> Dict[str, Any]:
-        """Get base configuration template"""        
+        """Get base configuration template"""
+        
         return {
             'max_workers': 10,
             'max_queue_size': 1000,
@@ -465,7 +481,8 @@ class QueueConfigurationManager:
         }
     
     def _apply_resource_tier_optimizations(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply optimizations based on resource tier"""        
+        """Apply optimizations based on resource tier"""
+        
         if self.resource_tier == ResourceTier.EXTREME:
             config.update({
                 'max_workers': min(200, self.system_resources.cpu_threads * 4),
@@ -518,7 +535,8 @@ class QueueConfigurationManager:
         return config
     
     def _apply_environment_settings(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply environment-specific settings"""        
+        """Apply environment-specific settings"""
+        
         if self.environment_type in [EnvironmentType.PRODUCTION, EnvironmentType.ENTERPRISE]:
             config.update({
                 'encryption_enabled': True,
@@ -569,7 +587,8 @@ class QueueConfigurationManager:
         config: Dict[str, Any], 
         security_profile: SecurityProfile
     ) -> Dict[str, Any]:
-        """Apply security profile settings"""        
+        """Apply security profile settings"""
+        
         if security_profile == SecurityProfile.MAXIMUM:
             config.update({
                 'encryption_enabled': True,
@@ -602,7 +621,8 @@ class QueueConfigurationManager:
         config: Dict[str, Any], 
         performance_priority: str
     ) -> Dict[str, Any]:
-        """Apply performance-focused optimizations"""        
+        """Apply performance-focused optimizations"""
+        
         if performance_priority == "speed":
             # Optimize for maximum throughput
             config.update({
@@ -633,12 +653,14 @@ class QueueConfigurationManager:
         config: Dict[str, Any], 
         overrides: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply custom configuration overrides"""        
+        """Apply custom configuration overrides"""
+        
         config.update(overrides)
         return config
     
     def _save_configuration(self, config_dict: Dict[str, Any]):
-        """Save configuration to file"""        
+        """Save configuration to file"""
+        
         config_with_metadata = {
             'metadata': {
                 'generated_by': 'QueueConfigurationManager',
@@ -655,7 +677,8 @@ class QueueConfigurationManager:
             yaml.dump(config_with_metadata, f, default_flow_style=False, sort_keys=False)
     
     def _load_yaml_file(self, file_path: Path) -> Dict[str, Any]:
-        """Load configuration from YAML file"""        
+        """Load configuration from YAML file"""
+        
         with open(file_path, 'r', encoding='utf-8') as f:
             data = yaml.safe_load(f)
             
@@ -666,7 +689,8 @@ class QueueConfigurationManager:
         return data
     
     def _log_configuration_summary(self, config: QueueConfiguration):
-        """Log configuration summary"""        
+        """Log configuration summary"""
+        
         logger.info("📋 Generated Configuration Summary:")
         logger.info(f"  Workers: {config.max_workers}")
         logger.info(f"  Queue Size: {config.max_queue_size}")
@@ -680,7 +704,8 @@ class QueueConfigurationManager:
 
 # Factory function
 def create_queue_configuration_manager(config_dir: Optional[str] = None) -> QueueConfigurationManager:
-    """Create queue configuration manager instance"""    return QueueConfigurationManager(config_dir)
+    """Create queue configuration manager instance"""
+    return QueueConfigurationManager(config_dir)
 
 
 # Export classes and functions

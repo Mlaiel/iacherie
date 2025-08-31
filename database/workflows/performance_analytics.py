@@ -23,7 +23,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""import uuid
+"""
+import uuid
 import json
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -44,7 +45,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of performance metrics"""    ENGAGEMENT = "engagement"
+    """Types of performance metrics"""
+    ENGAGEMENT = "engagement"
     REACH = "reach"
     CONVERSION = "conversion"
     REVENUE = "revenue"
@@ -59,7 +61,8 @@ class MetricType(Enum):
 
 
 class MetricCategory(Enum):
-    """Metric categories for organization"""    WORKFLOW_PERFORMANCE = "workflow_performance"
+    """Metric categories for organization"""
+    WORKFLOW_PERFORMANCE = "workflow_performance"
     CONTENT_PERFORMANCE = "content_performance"
     COLLABORATION_PERFORMANCE = "collaboration_performance"
     PLATFORM_PERFORMANCE = "platform_performance"
@@ -70,7 +73,8 @@ class MetricCategory(Enum):
 
 
 class AggregationPeriod(Enum):
-    """Time periods for metric aggregation"""    REAL_TIME = "real_time"
+    """Time periods for metric aggregation"""
+    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -81,14 +85,16 @@ class AggregationPeriod(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    INFO = "info"
+    """Alert severity levels"""
+    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 
 class TrendDirection(Enum):
-    """Trend direction indicators"""    INCREASING = "increasing"
+    """Trend direction indicators"""
+    INCREASING = "increasing"
     DECREASING = "decreasing"
     STABLE = "stable"
     VOLATILE = "volatile"
@@ -96,8 +102,10 @@ class TrendDirection(Enum):
 
 
 class WorkflowPerformanceMetric(Base):
-    """    Database model for workflow performance metrics
-    """    __tablename__ = "workflow_performance_metrics"
+    """
+    Database model for workflow performance metrics
+    """
+    __tablename__ = "workflow_performance_metrics"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     workflow_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -167,8 +175,10 @@ class WorkflowPerformanceMetric(Base):
 
 
 class ContentPerformanceMetric(Base):
-    """    Database model for content performance metrics
-    """    __tablename__ = "content_performance_metrics"
+    """
+    Database model for content performance metrics
+    """
+    __tablename__ = "content_performance_metrics"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -254,8 +264,10 @@ class ContentPerformanceMetric(Base):
 
 
 class PerformanceDashboard(Base):
-    """    Database model for customizable performance dashboards
-    """    __tablename__ = "performance_dashboards"
+    """
+    Database model for customizable performance dashboards
+    """
+    __tablename__ = "performance_dashboards"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     dashboard_name = Column(String(200), nullable=False)
@@ -310,8 +322,10 @@ class PerformanceDashboard(Base):
 
 
 class PerformanceAlert(Base):
-    """    Database model for performance alerts and notifications
-    """    __tablename__ = "performance_alerts"
+    """
+    Database model for performance alerts and notifications
+    """
+    __tablename__ = "performance_alerts"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     alert_name = Column(String(200), nullable=False)
@@ -374,8 +388,10 @@ class PerformanceAlert(Base):
 
 
 class PerformanceBenchmark(Base):
-    """    Database model for performance benchmarks and industry standards
-    """    __tablename__ = "performance_benchmarks"
+    """
+    Database model for performance benchmarks and industry standards
+    """
+    __tablename__ = "performance_benchmarks"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     benchmark_name = Column(String(200), nullable=False)
@@ -440,8 +456,10 @@ class PerformanceBenchmark(Base):
 
 
 class PerformanceAnalyticsEngine:
-    """    Enterprise performance analytics engine with AI-powered insights
-    """    
+    """
+    Enterprise performance analytics engine with AI-powered insights
+    """
+    
     def __init__(self, db_session: Session):
         self.db_session = db_session
         self.metric_calculators = self._initialize_metric_calculators()
@@ -450,7 +468,8 @@ class PerformanceAnalyticsEngine:
         self.benchmark_analyzer = BenchmarkAnalyzer(db_session)
     
     def _initialize_metric_calculators(self) -> Dict[str, callable]:
-        """Initialize metric calculation functions"""        return {
+        """Initialize metric calculation functions"""
+        return {
             'engagement_rate': self._calculate_engagement_rate,
             'conversion_rate': self._calculate_conversion_rate,
             'efficiency_score': self._calculate_efficiency_score,
@@ -469,7 +488,8 @@ class PerformanceAnalyticsEngine:
         metric_types: List[str] = None,
         time_period: timedelta = timedelta(days=1)
     ) -> Dict[str, Any]:
-        """        Collect comprehensive workflow performance metrics
+        """
+        Collect comprehensive workflow performance metrics
         
         Args:
             workflow_id: Workflow to analyze
@@ -478,7 +498,8 @@ class PerformanceAnalyticsEngine:
             
         Returns:
             Dictionary of calculated metrics
-        """        if metric_types is None:
+        """
+        if metric_types is None:
             metric_types = list(self.metric_calculators.keys())
         
         metrics = {}
@@ -527,7 +548,8 @@ class PerformanceAnalyticsEngine:
         platform: str,
         detailed_analysis: bool = True
     ) -> Dict[str, Any]:
-        """        Collect comprehensive content performance metrics
+        """
+        Collect comprehensive content performance metrics
         
         Args:
             content_id: Content to analyze
@@ -536,7 +558,8 @@ class PerformanceAnalyticsEngine:
             
         Returns:
             Dictionary of content metrics
-        """        # Get existing metrics from database
+        """
+        # Get existing metrics from database
         existing_metric = self.db_session.query(ContentPerformanceMetric).filter(
             ContentPerformanceMetric.content_id == content_id,
             ContentPerformanceMetric.platform == platform
@@ -588,7 +611,8 @@ class PerformanceAnalyticsEngine:
         user_id: str,
         dashboard_config: Dict[str, Any]
     ) -> str:
-        """        Create customizable performance dashboard
+        """
+        Create customizable performance dashboard
         
         Args:
             user_id: User creating the dashboard
@@ -596,7 +620,8 @@ class PerformanceAnalyticsEngine:
             
         Returns:
             Dashboard ID
-        """        dashboard = PerformanceDashboard(
+        """
+        dashboard = PerformanceDashboard(
             dashboard_name=dashboard_config['dashboard_name'],
             dashboard_description=dashboard_config.get('dashboard_description', ''),
             user_id=user_id,
@@ -625,7 +650,8 @@ class PerformanceAnalyticsEngine:
         user_id: str,
         alert_config: Dict[str, Any]
     ) -> str:
-        """        Setup performance monitoring alert
+        """
+        Setup performance monitoring alert
         
         Args:
             user_id: User creating the alert
@@ -633,7 +659,8 @@ class PerformanceAnalyticsEngine:
             
         Returns:
             Alert ID
-        """        alert = PerformanceAlert(
+        """
+        alert = PerformanceAlert(
             alert_name=alert_config['alert_name'],
             alert_description=alert_config.get('alert_description', ''),
             user_id=user_id,
@@ -665,7 +692,8 @@ class PerformanceAnalyticsEngine:
         start_time: datetime,
         end_time: datetime
     ) -> float:
-        """Calculate engagement rate for workflow"""        # Implementation would aggregate content engagement data
+        """Calculate engagement rate for workflow"""
+        # Implementation would aggregate content engagement data
         return 0.0  # Mock implementation
     
     async def _calculate_conversion_rate(
@@ -674,7 +702,8 @@ class PerformanceAnalyticsEngine:
         start_time: datetime,
         end_time: datetime
     ) -> float:
-        """Calculate conversion rate for workflow"""        # Implementation would analyze conversion funnel
+        """Calculate conversion rate for workflow"""
+        # Implementation would analyze conversion funnel
         return 0.0  # Mock implementation
     
     async def _calculate_efficiency_score(
@@ -683,7 +712,8 @@ class PerformanceAnalyticsEngine:
         start_time: datetime,
         end_time: datetime
     ) -> float:
-        """Calculate workflow efficiency score"""        # Implementation would analyze time, resources, outcomes
+        """Calculate workflow efficiency score"""
+        # Implementation would analyze time, resources, outcomes
         return 0.0  # Mock implementation
     
     async def _calculate_quality_score(
@@ -692,7 +722,8 @@ class PerformanceAnalyticsEngine:
         start_time: datetime,
         end_time: datetime
     ) -> float:
-        """Calculate content quality score"""        # Implementation would analyze content quality metrics
+        """Calculate content quality score"""
+        # Implementation would analyze content quality metrics
         return 0.0  # Mock implementation
     
     async def _calculate_growth_rate(
@@ -701,7 +732,8 @@ class PerformanceAnalyticsEngine:
         start_time: datetime,
         end_time: datetime
     ) -> float:
-        """Calculate growth rate for metrics"""        # Implementation would compare periods
+        """Calculate growth rate for metrics"""
+        # Implementation would compare periods
         return 0.0  # Mock implementation
     
     async def _calculate_retention_rate(
@@ -710,7 +742,8 @@ class PerformanceAnalyticsEngine:
         start_time: datetime,
         end_time: datetime
     ) -> float:
-        """Calculate audience retention rate"""        # Implementation would analyze audience retention
+        """Calculate audience retention rate"""
+        # Implementation would analyze audience retention
         return 0.0  # Mock implementation
     
     async def _calculate_roi(
@@ -719,7 +752,8 @@ class PerformanceAnalyticsEngine:
         start_time: datetime,
         end_time: datetime
     ) -> float:
-        """Calculate return on investment"""        # Implementation would analyze costs vs revenue
+        """Calculate return on investment"""
+        # Implementation would analyze costs vs revenue
         return 0.0  # Mock implementation
     
     async def _calculate_reach_efficiency(
@@ -728,7 +762,8 @@ class PerformanceAnalyticsEngine:
         start_time: datetime,
         end_time: datetime
     ) -> float:
-        """Calculate reach efficiency score"""        # Implementation would analyze reach vs effort
+        """Calculate reach efficiency score"""
+        # Implementation would analyze reach vs effort
         return 0.0  # Mock implementation
     
     async def _calculate_content_velocity(
@@ -737,7 +772,8 @@ class PerformanceAnalyticsEngine:
         start_time: datetime,
         end_time: datetime
     ) -> float:
-        """Calculate content production velocity"""        # Implementation would analyze content output rate
+        """Calculate content production velocity"""
+        # Implementation would analyze content output rate
         return 0.0  # Mock implementation
     
     async def _calculate_collaboration_success(
@@ -746,7 +782,8 @@ class PerformanceAnalyticsEngine:
         start_time: datetime,
         end_time: datetime
     ) -> float:
-        """Calculate collaboration success rate"""        # Implementation would analyze collaboration outcomes
+        """Calculate collaboration success rate"""
+        # Implementation would analyze collaboration outcomes
         return 0.0  # Mock implementation
     
     async def _store_workflow_metric(
@@ -757,7 +794,8 @@ class PerformanceAnalyticsEngine:
         start_time: datetime,
         end_time: datetime
     ):
-        """Store calculated metric in database"""        # Get user_id from workflow
+        """Store calculated metric in database"""
+        # Get user_id from workflow
         # Implementation would get user from workflow table
         user_id = "00000000-0000-0000-0000-000000000000"  # Mock
         
@@ -782,7 +820,8 @@ class PerformanceAnalyticsEngine:
         content_id: str,
         platform: str
     ) -> Dict[str, Any]:
-        """Collect metrics from platform APIs"""        # Implementation would call platform APIs
+        """Collect metrics from platform APIs"""
+        # Implementation would call platform APIs
         return {
             'views_count': 1000,
             'likes_count': 50,
@@ -794,7 +833,8 @@ class PerformanceAnalyticsEngine:
         self,
         base_metrics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate derived metrics from base metrics"""        derived = {}
+        """Calculate derived metrics from base metrics"""
+        derived = {}
         
         # Calculate engagement rate
         total_engagements = (
@@ -816,7 +856,8 @@ class PerformanceAnalyticsEngine:
 
 
 class AIInsightsEngine:
-    """AI-powered insights generation for performance analytics"""    
+    """AI-powered insights generation for performance analytics"""
+    
     def __init__(self, db_session: Session):
         self.db_session = db_session
     
@@ -826,7 +867,8 @@ class AIInsightsEngine:
         metrics: Dict[str, Any],
         time_period: timedelta
     ) -> Dict[str, Any]:
-        """Generate AI insights for workflow performance"""        insights = {
+        """Generate AI insights for workflow performance"""
+        insights = {
             'performance_summary': self._analyze_overall_performance(metrics),
             'trend_analysis': self._analyze_trends(workflow_id, metrics),
             'optimization_recommendations': self._generate_optimizations(metrics),
@@ -843,7 +885,8 @@ class AIInsightsEngine:
         metrics: Dict[str, Any],
         benchmark_comparison: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate AI insights for content performance"""        insights = {
+        """Generate AI insights for content performance"""
+        insights = {
             'performance_grade': self._calculate_performance_grade(metrics, benchmark_comparison),
             'audience_analysis': self._analyze_audience_behavior(metrics),
             'optimization_suggestions': self._suggest_content_optimizations(metrics),
@@ -854,15 +897,18 @@ class AIInsightsEngine:
         return insights
     
     def _analyze_overall_performance(self, metrics: Dict[str, Any]) -> str:
-        """Analyze overall performance summary"""        # Implementation would use ML models for analysis
+        """Analyze overall performance summary"""
+        # Implementation would use ML models for analysis
         return "Performance is above average with strong engagement metrics"
     
     def _analyze_trends(self, workflow_id: str, metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze performance trends"""        # Implementation would analyze historical data
+        """Analyze performance trends"""
+        # Implementation would analyze historical data
         return {"trend": "increasing", "confidence": 0.85}
     
     def _generate_optimizations(self, metrics: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate optimization recommendations"""        # Implementation would use AI to suggest improvements
+        """Generate optimization recommendations"""
+        # Implementation would use AI to suggest improvements
         return [
             {
                 "recommendation": "Increase posting frequency during peak hours",
@@ -872,11 +918,13 @@ class AIInsightsEngine:
         ]
     
     def _identify_risk_factors(self, metrics: Dict[str, Any]) -> List[str]:
-        """Identify potential risk factors"""        # Implementation would identify risks
+        """Identify potential risk factors"""
+        # Implementation would identify risks
         return ["Declining engagement rate", "High bounce rate"]
     
     def _identify_opportunities(self, metrics: Dict[str, Any]) -> List[str]:
-        """Identify growth opportunities"""        # Implementation would identify opportunities
+        """Identify growth opportunities"""
+        # Implementation would identify opportunities
         return ["Strong performance in video content", "Growing audience in target demographic"]
     
     def _calculate_performance_grade(
@@ -884,28 +932,34 @@ class AIInsightsEngine:
         metrics: Dict[str, Any],
         benchmark_comparison: Dict[str, Any]
     ) -> str:
-        """Calculate letter grade for performance"""        # Implementation would compare to benchmarks
+        """Calculate letter grade for performance"""
+        # Implementation would compare to benchmarks
         return "B+"
     
     def _analyze_audience_behavior(self, metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze audience behavior patterns"""        # Implementation would analyze audience data
+        """Analyze audience behavior patterns"""
+        # Implementation would analyze audience data
         return {"primary_demographic": "18-34", "peak_activity": "evening"}
     
     def _suggest_content_optimizations(self, metrics: Dict[str, Any]) -> List[str]:
-        """Suggest content optimization strategies"""        # Implementation would suggest optimizations
+        """Suggest content optimization strategies"""
+        # Implementation would suggest optimizations
         return ["Optimize thumbnail design", "Improve title SEO"]
     
     def _assess_viral_potential(self, metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess viral potential of content"""        # Implementation would assess viral characteristics
+        """Assess viral potential of content"""
+        # Implementation would assess viral characteristics
         return {"potential": "medium", "factors": ["high share rate", "trending hashtags"]}
     
     def _identify_monetization_opportunities(self, metrics: Dict[str, Any]) -> List[str]:
-        """Identify monetization opportunities"""        # Implementation would identify revenue opportunities
+        """Identify monetization opportunities"""
+        # Implementation would identify revenue opportunities
         return ["Sponsor placement opportunities", "Merchandise potential"]
 
 
 class AlertManager:
-    """Performance alert management system"""    
+    """Performance alert management system"""
+    
     def __init__(self, db_session: Session):
         self.db_session = db_session
     
@@ -914,7 +968,8 @@ class AlertManager:
         workflow_id: str,
         metrics: Dict[str, Any]
     ):
-        """Check if any alerts should be triggered for workflow metrics"""        # Get active alerts for this workflow
+        """Check if any alerts should be triggered for workflow metrics"""
+        # Get active alerts for this workflow
         alerts = self.db_session.query(PerformanceAlert).filter(
             PerformanceAlert.is_active == True,
             PerformanceAlert.target_workflows.contains([workflow_id])
@@ -931,7 +986,8 @@ class AlertManager:
         alert: PerformanceAlert,
         metrics: Dict[str, Any]
     ) -> bool:
-        """Evaluate if alert conditions are met"""        conditions = alert.threshold_conditions
+        """Evaluate if alert conditions are met"""
+        conditions = alert.threshold_conditions
         metric_value = metrics.get(alert.metric_type)
         
         if metric_value is None:
@@ -957,7 +1013,8 @@ class AlertManager:
         workflow_id: str,
         metrics: Dict[str, Any]
     ):
-        """Trigger alert and send notifications"""        alert.last_triggered_at = datetime.now(timezone.utc)
+        """Trigger alert and send notifications"""
+        alert.last_triggered_at = datetime.now(timezone.utc)
         alert.trigger_count += 1
         
         # Send notifications
@@ -972,12 +1029,14 @@ class AlertManager:
         workflow_id: str,
         metrics: Dict[str, Any]
     ):
-        """Send alert notifications via configured channels"""        # Implementation would send notifications
+        """Send alert notifications via configured channels"""
+        # Implementation would send notifications
         logger.info(f"Sending alert notifications for {alert.alert_name}")
 
 
 class BenchmarkAnalyzer:
-    """Performance benchmark analysis system"""    
+    """Performance benchmark analysis system"""
+    
     def __init__(self, db_session: Session):
         self.db_session = db_session
     
@@ -987,7 +1046,8 @@ class BenchmarkAnalyzer:
         platform: str,
         metrics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Compare content performance against industry benchmarks"""        # Get relevant benchmarks
+        """Compare content performance against industry benchmarks"""
+        # Get relevant benchmarks
         benchmarks = self.db_session.query(PerformanceBenchmark).filter(
             PerformanceBenchmark.platform == platform,
             PerformanceBenchmark.is_active == True
@@ -1016,7 +1076,8 @@ class BenchmarkAnalyzer:
         value: float,
         benchmark: PerformanceBenchmark
     ) -> float:
-        """Calculate percentile rank against benchmark"""        # Simplified percentile calculation
+        """Calculate percentile rank against benchmark"""
+        # Simplified percentile calculation
         if benchmark.median_value:
             if value >= float(benchmark.percentile_95 or 0):
                 return 95.0
@@ -1034,7 +1095,8 @@ class BenchmarkAnalyzer:
         return 50.0  # Default to median if no benchmark data
     
     def _grade_performance(self, percentile: float) -> str:
-        """Convert percentile to letter grade"""        if percentile >= 90:
+        """Convert percentile to letter grade"""
+        if percentile >= 90:
             return "A"
         elif percentile >= 80:
             return "B"

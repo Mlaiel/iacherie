@@ -12,7 +12,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""from typing import Dict, List, Any, Optional, Union, Tuple, Set
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class CollaborationType(Enum):
-    """Types of collaboration between creators"""    REMIX = "remix"
+    """Types of collaboration between creators"""
+    REMIX = "remix"
     FEATURE = "feature"
     DUET = "duet"
     COVER = "cover"
@@ -48,7 +50,8 @@ class CollaborationType(Enum):
     REMIX_COMPETITION = "remix_competition"
 
 class CollaborationStatus(Enum):
-    """Status of collaboration projects"""    PROPOSED = "proposed"
+    """Status of collaboration projects"""
+    PROPOSED = "proposed"
     PENDING_APPROVAL = "pending_approval"
     APPROVED = "approved"
     IN_PROGRESS = "in_progress"
@@ -60,7 +63,8 @@ class CollaborationStatus(Enum):
     DISPUTE = "dispute"
 
 class RoleType(Enum):
-    """Roles in collaborative projects"""    INITIATOR = "initiator"
+    """Roles in collaborative projects"""
+    INITIATOR = "initiator"
     COLLABORATOR = "collaborator"
     PRODUCER = "producer"
     ARTIST = "artist"
@@ -74,7 +78,8 @@ class RoleType(Enum):
     REVIEWER = "reviewer"
 
 class RevenueShareType(Enum):
-    """Types of revenue sharing models"""    EQUAL_SPLIT = "equal_split"
+    """Types of revenue sharing models"""
+    EQUAL_SPLIT = "equal_split"
     PERCENTAGE_BASED = "percentage_based"
     PERFORMANCE_BASED = "performance_based"
     CONTRIBUTION_WEIGHTED = "contribution_weighted"
@@ -83,7 +88,8 @@ class RevenueShareType(Enum):
     ROYALTY_FREE = "royalty_free"
 
 class ContributionType(Enum):
-    """Types of contributions to collaborative content"""    COMPOSITION = "composition"
+    """Types of contributions to collaborative content"""
+    COMPOSITION = "composition"
     LYRICS = "lyrics"
     VOCAL_PERFORMANCE = "vocal_performance"
     INSTRUMENTAL = "instrumental"
@@ -109,7 +115,8 @@ collaboration_participants = Table(
 )
 
 class Collaboration(Base):
-    """Collaboration project database model"""    __tablename__ = "collaborations"
+    """Collaboration project database model"""
+    __tablename__ = "collaborations"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     
@@ -170,7 +177,8 @@ class Collaboration(Base):
     files = relationship("CollaborationFile", back_populates="collaboration")
 
 class CollaborationVersion(Base):
-    """Versioning system for collaborative content"""    __tablename__ = "collaboration_versions"
+    """Versioning system for collaborative content"""
+    __tablename__ = "collaboration_versions"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     collaboration_id = Column(UUID(as_uuid=True), ForeignKey('collaborations.id'), nullable=False)
@@ -204,7 +212,8 @@ class CollaborationVersion(Base):
     approvals = relationship("VersionApproval", back_populates="version")
 
 class VersionApproval(Base):
-    """Approval tracking for collaboration versions"""    __tablename__ = "version_approvals"
+    """Approval tracking for collaboration versions"""
+    __tablename__ = "version_approvals"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     version_id = Column(UUID(as_uuid=True), ForeignKey('collaboration_versions.id'), nullable=False)
@@ -219,7 +228,8 @@ class VersionApproval(Base):
     version = relationship("CollaborationVersion", back_populates="approvals")
 
 class CollaborationComment(Base):
-    """Comments and feedback system for collaborations"""    __tablename__ = "collaboration_comments"
+    """Comments and feedback system for collaborations"""
+    __tablename__ = "collaboration_comments"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     collaboration_id = Column(UUID(as_uuid=True), ForeignKey('collaborations.id'), nullable=False)
@@ -250,7 +260,8 @@ class CollaborationComment(Base):
     replies = relationship("CollaborationComment", backref=backref('parent', remote_side=[id]))
 
 class CollaborationFile(Base):
-    """File management for collaborative projects"""    __tablename__ = "collaboration_files"
+    """File management for collaborative projects"""
+    __tablename__ = "collaboration_files"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     collaboration_id = Column(UUID(as_uuid=True), ForeignKey('collaborations.id'), nullable=False)
@@ -289,7 +300,8 @@ class CollaborationFile(Base):
 
 @dataclass 
 class ContributionRecord:
-    """Record of individual contributor contributions"""    contributor_id: str
+    """Record of individual contributor contributions"""
+    contributor_id: str
     contribution_type: ContributionType
     contribution_weight: float
     timestamp: datetime
@@ -299,7 +311,8 @@ class ContributionRecord:
     peer_ratings: List[float] = field(default_factory=list)
 
 class CollaborationManager:
-    """Manager class for collaboration operations"""    
+    """Manager class for collaboration operations"""
+    
     def __init__(self):
         self.active_collaborations = {}
         self.pending_invitations = {}
@@ -309,7 +322,8 @@ class CollaborationManager:
         initiator_id: str,
         collaboration_data: Dict[str, Any]
     ) -> str:
-        """Create a new collaboration project"""        try:
+        """Create a new collaboration project"""
+        try:
             collaboration_id = str(uuid.uuid4())
             
             # Validate collaboration data
@@ -345,7 +359,8 @@ class CollaborationManager:
         role: RoleType,
         message: Optional[str] = None
     ) -> bool:
-        """Invite a user to join a collaboration"""        try:
+        """Invite a user to join a collaboration"""
+        try:
             invitation_data = {
                 'collaboration_id': collaboration_id,
                 'inviter_id': inviter_id,
@@ -375,7 +390,8 @@ class CollaborationManager:
         invitee_id: str,
         acceptance_terms: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Accept a collaboration invitation"""        try:
+        """Accept a collaboration invitation"""
+        try:
             invitation_key = f"{collaboration_id}_{invitee_id}"
             
             if invitation_key not in self.pending_invitations:
@@ -411,7 +427,8 @@ class CollaborationManager:
         contributor_id: str,
         contribution: ContributionRecord
     ) -> str:
-        """Submit a contribution to a collaboration"""        try:
+        """Submit a contribution to a collaboration"""
+        try:
             contribution_id = str(uuid.uuid4())
             
             # Validate contribution
@@ -450,7 +467,8 @@ class CollaborationManager:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Decimal]:
-        """Calculate revenue distribution among collaborators"""        try:
+        """Calculate revenue distribution among collaborators"""
+        try:
             # Get collaboration details
             collaboration = await self._get_collaboration(collaboration_id)
             
@@ -495,7 +513,8 @@ class CollaborationManager:
             raise
     
     def _validate_collaboration_data(self, data: Dict[str, Any]):
-        """Validate collaboration creation data"""        required_fields = ['title', 'collaboration_type']
+        """Validate collaboration creation data"""
+        required_fields = ['title', 'collaboration_type']
         for field in required_fields:
             if field not in data:
                 raise ValueError(f"Missing required field: {field}")
@@ -504,7 +523,8 @@ class CollaborationManager:
             raise ValueError("Invalid collaboration type")
     
     def _validate_contribution(self, contribution: ContributionRecord):
-        """Validate contribution data"""        if not contribution.contributor_id:
+        """Validate contribution data"""
+        if not contribution.contributor_id:
             raise ValueError("Contributor ID is required")
         
         if contribution.contribution_weight < 0 or contribution.contribution_weight > 1:
@@ -515,7 +535,8 @@ class CollaborationManager:
         participants: List[Dict[str, Any]],
         share_model: RevenueShareType
     ) -> Dict[str, float]:
-        """Calculate initial revenue sharing percentages"""        if share_model == RevenueShareType.EQUAL_SPLIT:
+        """Calculate initial revenue sharing percentages"""
+        if share_model == RevenueShareType.EQUAL_SPLIT:
             share_per_participant = 100.0 / len(participants)
             return {
                 participant['user_id']: share_per_participant
@@ -532,7 +553,8 @@ class CollaborationManager:
         self,
         contribution: ContributionRecord
     ) -> float:
-        """Calculate weighted contribution value"""        base_weights = {
+        """Calculate weighted contribution value"""
+        base_weights = {
             ContributionType.COMPOSITION: 0.3,
             ContributionType.LYRICS: 0.2,
             ContributionType.VOCAL_PERFORMANCE: 0.25,
@@ -561,7 +583,8 @@ class CollaborationManager:
         return base_weight * quality_multiplier * peer_multiplier
     
     async def _send_invitation_notification(self, invitation_data: Dict[str, Any]):
-        """Send invitation notification to invitee"""        # Implementation would integrate with notification system
+        """Send invitation notification to invitee"""
+        # Implementation would integrate with notification system
         pass
     
     async def _add_participant_to_collaboration(
@@ -571,7 +594,8 @@ class CollaborationManager:
         role: str,
         terms: Optional[Dict[str, Any]]
     ):
-        """Add participant to collaboration"""        # Implementation would update database
+        """Add participant to collaboration"""
+        # Implementation would update database
         pass
     
     async def _process_contribution_files(
@@ -579,15 +603,18 @@ class CollaborationManager:
         collaboration_id: str,
         file_references: List[str]
     ) -> List[str]:
-        """Process and validate contribution files"""        # Implementation would handle file processing
+        """Process and validate contribution files"""
+        # Implementation would handle file processing
         return file_references
     
     async def _update_collaboration_progress(self, collaboration_id: str):
-        """Update collaboration progress based on contributions"""        # Implementation would update collaboration status
+        """Update collaboration progress based on contributions"""
+        # Implementation would update collaboration status
         pass
     
     async def _get_collaboration(self, collaboration_id: str):
-        """Get collaboration details from database"""        # Implementation would query database
+        """Get collaboration details from database"""
+        # Implementation would query database
         pass
     
     async def _get_contributions_for_period(
@@ -596,7 +623,8 @@ class CollaborationManager:
         start: datetime,
         end: datetime
     ) -> List[ContributionRecord]:
-        """Get contributions for a specific period"""        # Implementation would query contribution records
+        """Get contributions for a specific period"""
+        # Implementation would query contribution records
         return []
 
 # Export classes and functions

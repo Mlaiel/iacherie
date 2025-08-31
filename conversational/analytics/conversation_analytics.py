@@ -9,7 +9,8 @@ copying, distribution, or reproduction is strictly prohibited and will be
 prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -27,7 +28,8 @@ import json
 
 
 class ConversationMetricType(Enum):
-    """Types of conversation metrics to analyze."""    RESPONSE_QUALITY = "response_quality"
+    """Types of conversation metrics to analyze."""
+    RESPONSE_QUALITY = "response_quality"
     USER_SATISFACTION = "user_satisfaction"
     CONVERSATION_FLOW = "conversation_flow"
     TOPIC_COHERENCE = "topic_coherence"
@@ -40,7 +42,8 @@ class ConversationMetricType(Enum):
 
 
 class ConversationStage(Enum):
-    """Stages of conversation flow."""    INITIATION = "initiation"
+    """Stages of conversation flow."""
+    INITIATION = "initiation"
     EXPLORATION = "exploration"
     CLARIFICATION = "clarification"
     SOLUTION_PROVIDING = "solution_providing"
@@ -51,7 +54,8 @@ class ConversationStage(Enum):
 
 @dataclass
 class ConversationTurn:
-    """Individual conversation turn data structure."""    turn_id: str
+    """Individual conversation turn data structure."""
+    turn_id: str
     conversation_id: str
     speaker: str  # 'user' or 'ai'
     message: str
@@ -67,7 +71,8 @@ class ConversationTurn:
 
 @dataclass
 class ConversationSession:
-    """Complete conversation session data structure."""    session_id: str
+    """Complete conversation session data structure."""
+    session_id: str
     user_id: str
     start_time: datetime
     end_time: Optional[datetime]
@@ -85,9 +90,11 @@ class ConversationSession:
 
 
 class ConversationAnalytics:
-    """    Enterprise-grade conversation analytics engine for analyzing
+    """
+    Enterprise-grade conversation analytics engine for analyzing
     conversational AI performance and user interaction patterns.
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, model_cache_dir: str = "./models"):
         self.db_session = db_session
         self.model_cache_dir = model_cache_dir
@@ -113,7 +120,8 @@ class ConversationAnalytics:
         }
     
     async def initialize_analytics_models(self):
-        """Initialize NLP and analytics models."""        try:
+        """Initialize NLP and analytics models."""
+        try:
             self.logger.info("Initializing conversation analytics models")
             
             # Load spaCy model for NLP processing
@@ -138,7 +146,8 @@ class ConversationAnalytics:
             raise
     
     async def analyze_conversation_session(self, session_id: str) -> Dict[str, Any]:
-        """Analyze a complete conversation session."""        try:
+        """Analyze a complete conversation session."""
+        try:
             # Get conversation data
             conversation_turns = await self._get_conversation_turns(session_id)
             
@@ -192,7 +201,8 @@ class ConversationAnalytics:
             return {}
     
     async def analyze_conversation_patterns(self, time_period: int = 30) -> Dict[str, Any]:
-        """Analyze conversation patterns across multiple sessions."""        try:
+        """Analyze conversation patterns across multiple sessions."""
+        try:
             # Get conversation data for the time period
             conversations = await self._get_conversations_by_period(time_period)
             
@@ -234,7 +244,8 @@ class ConversationAnalytics:
             return {}
     
     async def generate_conversation_quality_report(self) -> Dict[str, Any]:
-        """Generate comprehensive conversation quality report."""        try:
+        """Generate comprehensive conversation quality report."""
+        try:
             # Get recent conversations for analysis
             recent_conversations = await self._get_recent_conversations(days=7)
             
@@ -274,7 +285,8 @@ class ConversationAnalytics:
             return {}
     
     async def analyze_user_journey_analytics(self, user_id: str) -> Dict[str, Any]:
-        """Analyze user's conversational journey and preferences."""        try:
+        """Analyze user's conversational journey and preferences."""
+        try:
             # Get user's conversation history
             user_conversations = await self._get_user_conversation_history(user_id)
             
@@ -313,7 +325,8 @@ class ConversationAnalytics:
             return {}
     
     async def optimize_conversation_flows(self) -> Dict[str, Any]:
-        """Optimize conversation flows based on analytics insights."""        try:
+        """Optimize conversation flows based on analytics insights."""
+        try:
             # Analyze current conversation flows
             current_flows = await self._analyze_current_flows()
             
@@ -347,7 +360,8 @@ class ConversationAnalytics:
     # Private helper methods
     
     async def _analyze_conversation_flow(self, conversation_turns: List[ConversationTurn]) -> Dict[str, Any]:
-        """Analyze the flow and progression of a conversation."""        try:
+        """Analyze the flow and progression of a conversation."""
+        try:
             stages = [turn.stage for turn in conversation_turns]
             stage_transitions = []
             
@@ -384,7 +398,8 @@ class ConversationAnalytics:
             return {}
     
     async def _analyze_sentiment_progression(self, conversation_turns: List[ConversationTurn]) -> Dict[str, Any]:
-        """Analyze how sentiment changes throughout the conversation."""        try:
+        """Analyze how sentiment changes throughout the conversation."""
+        try:
             user_sentiments = []
             ai_response_sentiments = []
             
@@ -420,7 +435,8 @@ class ConversationAnalytics:
             return {}
     
     async def _analyze_intent_accuracy(self, conversation_turns: List[ConversationTurn]) -> Dict[str, Any]:
-        """Analyze accuracy of intent recognition and handling."""        try:
+        """Analyze accuracy of intent recognition and handling."""
+        try:
             intents_identified = []
             confidence_scores = []
             
@@ -456,7 +472,8 @@ class ConversationAnalytics:
             return {}
     
     def _calculate_overall_quality_score(self, quality_dimensions: Dict[str, float]) -> float:
-        """Calculate overall quality score from individual dimensions."""        weights = {
+        """Calculate overall quality score from individual dimensions."""
+        weights = {
             'response_relevance': 0.25,
             'factual_accuracy': 0.20,
             'helpfulness': 0.20,
@@ -473,7 +490,8 @@ class ConversationAnalytics:
         return weighted_score
     
     def _rate_quality(self, quality_score: float) -> str:
-        """Rate conversation quality based on score."""        if quality_score >= self.quality_thresholds['excellent']:
+        """Rate conversation quality based on score."""
+        if quality_score >= self.quality_thresholds['excellent']:
             return "excellent"
         elif quality_score >= self.quality_thresholds['good']:
             return "good"
@@ -483,7 +501,8 @@ class ConversationAnalytics:
             return "poor"
     
     def _count_smooth_transitions(self, transitions: List[str]) -> int:
-        """Count smooth stage transitions in conversation flow."""        smooth_patterns = [
+        """Count smooth stage transitions in conversation flow."""
+        smooth_patterns = [
             "initiation -> exploration",
             "exploration -> clarification",
             "clarification -> solution_providing",
@@ -494,7 +513,8 @@ class ConversationAnalytics:
         return sum(1 for transition in transitions if transition in smooth_patterns)
     
     def _calculate_sentiment_trend(self, sentiments: List[float]) -> str:
-        """Calculate overall sentiment trend direction."""        if len(sentiments) < 2:
+        """Calculate overall sentiment trend direction."""
+        if len(sentiments) < 2:
             return "stable"
         
         trend_score = sentiments[-1] - sentiments[0]

@@ -8,7 +8,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass, asdict
@@ -31,7 +32,8 @@ settings = get_settings()
 
 
 class InvestmentType(Enum):
-    """Types of investments for ROI calculation."""    CONTENT_CREATION = "content_creation"
+    """Types of investments for ROI calculation."""
+    CONTENT_CREATION = "content_creation"
     MARKETING_CAMPAIGN = "marketing_campaign"
     PLATFORM_EXPANSION = "platform_expansion"
     EQUIPMENT_PURCHASE = "equipment_purchase"
@@ -43,7 +45,8 @@ class InvestmentType(Enum):
 
 
 class ROIMetric(Enum):
-    """ROI calculation metrics."""    SIMPLE_ROI = "simple_roi"
+    """ROI calculation metrics."""
+    SIMPLE_ROI = "simple_roi"
     ANNUALIZED_ROI = "annualized_roi"
     IRR = "irr"  # Internal Rate of Return
     NPV = "npv"  # Net Present Value
@@ -54,7 +57,8 @@ class ROIMetric(Enum):
 
 @dataclass
 class Investment:
-    """Investment record for ROI calculation."""    investment_id: str
+    """Investment record for ROI calculation."""
+    investment_id: str
     investment_type: InvestmentType
     initial_cost: Decimal
     ongoing_costs: List[Tuple[datetime, Decimal]]
@@ -67,7 +71,8 @@ class Investment:
 
 @dataclass
 class CashFlow:
-    """Cash flow entry for investment."""    date: datetime
+    """Cash flow entry for investment."""
+    date: datetime
     amount: Decimal
     description: str
     category: str
@@ -76,7 +81,8 @@ class CashFlow:
 
 @dataclass
 class ROIAnalysis:
-    """Comprehensive ROI analysis result."""    analysis_id: str
+    """Comprehensive ROI analysis result."""
+    analysis_id: str
     investment_id: str
     analysis_period: Tuple[datetime, datetime]
     simple_roi: float
@@ -94,18 +100,22 @@ class ROIAnalysis:
 
 
 class ROICalculator:
-    """    Advanced ROI calculator for monetization investments and strategies.
+    """
+    Advanced ROI calculator for monetization investments and strategies.
     
     Provides comprehensive financial analysis including multiple ROI metrics,
     risk adjustments, and scenario modeling for investment decisions.
-    """    
+    """
+    
     def __init__(self, config: Optional[MonetizationConfig] = None):
-        """Initialize the ROI calculator."""        self.config = config or MonetizationConfig()
+        """Initialize the ROI calculator."""
+        self.config = config or MonetizationConfig()
         self._financial_modeling = FinancialModelingService()
         self._discount_rate = 0.10  # 10% default discount rate
         
     async def initialize(self) -> None:
-        """Initialize the ROI calculator."""        try:
+        """Initialize the ROI calculator."""
+        try:
             await self._financial_modeling.initialize()
             logger.info("ROI calculator initialized successfully")
         except Exception as e:
@@ -118,7 +128,8 @@ class ROICalculator:
         cash_flows: List[CashFlow],
         discount_rate: Optional[float] = None
     ) -> ROIAnalysis:
-        """        Calculate comprehensive ROI analysis for investment.
+        """
+        Calculate comprehensive ROI analysis for investment.
         
         Args:
             investment: Investment details
@@ -127,7 +138,8 @@ class ROICalculator:
             
         Returns:
             Comprehensive ROI analysis
-        """        try:
+        """
+        try:
             discount_rate = discount_rate or self._discount_rate
             
             # Prepare cash flow data
@@ -203,14 +215,16 @@ class ROICalculator:
         self,
         scenarios: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """        Compare multiple investment scenarios.
+        """
+        Compare multiple investment scenarios.
         
         Args:
             scenarios: Dictionary of scenario name to investment data
             
         Returns:
             Scenario comparison analysis
-        """        try:
+        """
+        try:
             scenario_analyses = {}
             
             # Calculate ROI for each scenario
@@ -254,7 +268,8 @@ class ROICalculator:
         campaign_data: Dict[str, Any],
         attribution_window: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """        Calculate Return on Ad Spend (ROAS) for marketing campaigns.
+        """
+        Calculate Return on Ad Spend (ROAS) for marketing campaigns.
         
         Args:
             campaign_data: Marketing campaign data
@@ -262,7 +277,8 @@ class ROICalculator:
             
         Returns:
             ROAS analysis
-        """        try:
+        """
+        try:
             # Calculate campaign costs
             total_spend = await self._calculate_campaign_spend(campaign_data)
             
@@ -310,7 +326,8 @@ class ROICalculator:
         growth_scenarios: Dict[str, float],
         time_horizon: int = 12  # months
     ) -> Dict[str, Any]:
-        """        Model revenue scenarios with different growth rates.
+        """
+        Model revenue scenarios with different growth rates.
         
         Args:
             base_revenue: Current monthly revenue
@@ -319,7 +336,8 @@ class ROICalculator:
             
         Returns:
             Revenue scenario modeling results
-        """        try:
+        """
+        try:
             scenario_projections = {}
             
             # Model each growth scenario
@@ -364,7 +382,8 @@ class ROICalculator:
         budget_constraint: Decimal,
         risk_tolerance: float
     ) -> Dict[str, Any]:
-        """        Optimize investment portfolio allocation.
+        """
+        Optimize investment portfolio allocation.
         
         Args:
             available_investments: List of investment opportunities
@@ -373,7 +392,8 @@ class ROICalculator:
             
         Returns:
             Optimized portfolio allocation
-        """        try:
+        """
+        try:
             # Calculate expected returns and risks
             investment_metrics = []
             for investment in available_investments:
@@ -416,7 +436,8 @@ class ROICalculator:
         creator_id: str,
         tracking_period: timedelta = timedelta(days=90)
     ) -> Dict[str, Any]:
-        """        Track ROI performance across all investments.
+        """
+        Track ROI performance across all investments.
         
         Args:
             creator_id: Creator identifier
@@ -424,7 +445,8 @@ class ROICalculator:
             
         Returns:
             ROI performance tracking report
-        """        try:
+        """
+        try:
             end_date = datetime.now(timezone.utc)
             start_date = end_date - tracking_period
             
@@ -467,22 +489,27 @@ class ROICalculator:
     async def _prepare_cash_flow_data(
         self, investment: Investment, cash_flows: List[CashFlow]
     ) -> pd.DataFrame:
-        """Prepare cash flow data for analysis."""        # Implementation for cash flow preparation
+        """Prepare cash flow data for analysis."""
+        # Implementation for cash flow preparation
         pass
     
     async def _calculate_simple_roi(self, cash_flow_data: pd.DataFrame) -> float:
-        """Calculate simple ROI."""        # Implementation for simple ROI calculation
+        """Calculate simple ROI."""
+        # Implementation for simple ROI calculation
         pass
     
     async def _calculate_irr(self, cash_flow_data: pd.DataFrame) -> Optional[float]:
-        """Calculate Internal Rate of Return."""        # Implementation for IRR calculation
+        """Calculate Internal Rate of Return."""
+        # Implementation for IRR calculation
         pass
     
     async def _calculate_npv(
         self, cash_flow_data: pd.DataFrame, discount_rate: float
     ) -> Decimal:
-        """Calculate Net Present Value."""        # Implementation for NPV calculation
+        """Calculate Net Present Value."""
+        # Implementation for NPV calculation
         pass
     
     def _generate_analysis_id(self) -> str:
-        """Generate unique analysis ID."""        return f"ROI_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{hash(datetime.now().isoformat())}"
+        """Generate unique analysis ID."""
+        return f"ROI_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{hash(datetime.now().isoformat())}"

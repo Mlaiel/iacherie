@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -15,7 +16,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -38,13 +40,16 @@ from data_management.governance.classification import (
 
 
 class TestPatternClassifier:
-    """Test cases for PatternClassifier"""    
+    """Test cases for PatternClassifier"""
+    
     @pytest.fixture
     def classifier(self):
-        """Create a PatternClassifier instance for testing"""        return PatternClassifier()
+        """Create a PatternClassifier instance for testing"""
+        return PatternClassifier()
     
     def test_get_supported_types(self, classifier):
-        """Test that classifier returns supported content types"""        supported_types = classifier.get_supported_types()
+        """Test that classifier returns supported content types"""
+        supported_types = classifier.get_supported_types()
         
         assert isinstance(supported_types, list)
         assert len(supported_types) > 0
@@ -55,7 +60,8 @@ class TestPatternClassifier:
     
     @pytest.mark.asyncio
     async def test_classify_text_content(self, classifier):
-        """Test classification of text content"""        test_content = "This document contains confidential business information and trade secrets."
+        """Test classification of text content"""
+        test_content = "This document contains confidential business information and trade secrets."
         
         result = await classifier.classify(
             content=test_content,
@@ -73,7 +79,8 @@ class TestPatternClassifier:
     
     @pytest.mark.asyncio
     async def test_classify_sensitive_content(self, classifier):
-        """Test classification of content containing sensitive patterns"""        sensitive_content = "User password: secret123, Social Security Number: 123-45-6789"
+        """Test classification of content containing sensitive patterns"""
+        sensitive_content = "User password: secret123, Social Security Number: 123-45-6789"
         
         result = await classifier.classify(
             content=sensitive_content,
@@ -93,7 +100,8 @@ class TestPatternClassifier:
     
     @pytest.mark.asyncio
     async def test_classify_json_content(self, classifier):
-        """Test classification of JSON content"""        json_content = {
+        """Test classification of JSON content"""
+        json_content = {
             "user_data": {
                 "email": "user@example.com",
                 "phone": "555-1234",
@@ -120,7 +128,8 @@ class TestPatternClassifier:
     
     @pytest.mark.asyncio
     async def test_classify_with_metadata(self, classifier):
-        """Test classification with additional metadata"""        content = "Regular operational data"
+        """Test classification with additional metadata"""
+        content = "Regular operational data"
         metadata = {
             "source": "internal_system",
             "contains_pii": True,
@@ -139,14 +148,16 @@ class TestPatternClassifier:
     
     @pytest.mark.asyncio
     async def test_unsupported_content_type(self, classifier):
-        """Test handling of unsupported content type"""        with pytest.raises(Exception):  # Should raise ValidationError but we'll catch any exception
+        """Test handling of unsupported content type"""
+        with pytest.raises(Exception):  # Should raise ValidationError but we'll catch any exception
             await classifier.classify(
                 content="test content",
                 content_type="unsupported_type"
             )
     
     def test_extract_text_content(self, classifier):
-        """Test text extraction from different content types"""        # Test string content
+        """Test text extraction from different content types"""
+        # Test string content
         text_result = classifier._extract_text_content("Hello world", "text", None)
         assert text_result == "Hello world"
         
@@ -163,7 +174,8 @@ class TestPatternClassifier:
         assert "meta_key" in result_with_meta
     
     def test_calculate_pattern_confidence(self, classifier):
-        """Test pattern confidence calculation"""        import re
+        """Test pattern confidence calculation"""
+        import re
         
         # Test with regex patterns
         patterns = [
@@ -187,7 +199,8 @@ class TestPatternClassifier:
         assert confidence_string > 0
     
     def test_empty_content_handling(self, classifier):
-        """Test handling of empty or None content"""        # Test empty string
+        """Test handling of empty or None content"""
+        # Test empty string
         empty_result = classifier._extract_text_content("", "text", None)
         assert empty_result == ""
         
@@ -197,7 +210,8 @@ class TestPatternClassifier:
     
     @pytest.mark.asyncio
     async def test_default_categories_assigned(self, classifier):
-        """Test that default categories are assigned when no patterns match"""        neutral_content = "The quick brown fox jumps over the lazy dog."
+        """Test that default categories are assigned when no patterns match"""
+        neutral_content = "The quick brown fox jumps over the lazy dog."
         
         result = await classifier.classify(
             content=neutral_content,

@@ -256,7 +256,8 @@ SECURITY_FEATURES = {
 
 # Module Health Check
 def get_security_status():
-    """Get security module status and feature availability"""    return {
+    """Get security module status and feature availability"""
+    return {
         "module": "backend.core.security",
         "version": __version__,
         "author": __author__,
@@ -267,7 +268,8 @@ def get_security_status():
 
 # Security Configuration Validation
 def validate_security_config():
-    """Validate security configuration"""    from backend.core.config import get_settings
+    """Validate security configuration"""
+    from backend.core.config import get_settings
     
     settings = get_settings()
     required_settings = [
@@ -288,7 +290,8 @@ def validate_security_config():
 
 # Module Initialization Hook
 async def initialize_security():
-    """Initialize the security module"""    try:
+    """Initialize the security module"""
+    try:
         # Validate configuration
         validate_security_config()
         

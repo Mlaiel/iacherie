@@ -16,7 +16,8 @@ Système de validation enterprise multi-format et multi-créateur
 - Métriques et monitoring avancés
 - IA fingerprinting et qualité avancée
 - Workflow orchestration complète
-"""from typing import Dict, List, Optional, Any, Union, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple
 import logging
 from pathlib import Path
 from dataclasses import dataclass
@@ -93,21 +94,24 @@ from .workflow_validator import (
 )
 
 class ValidationLevel(Enum):
-    """Niveaux de validation"""    BASIC = "basic"
+    """Niveaux de validation"""
+    BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
     ENTERPRISE = "enterprise"
 
 @dataclass
 class ValidationResult:
-    """Résultat de validation"""    is_valid: bool
+    """Résultat de validation"""
+    is_valid: bool
     score: float  # 0.0 - 1.0
     errors: List[str]
     warnings: List[str]
     metadata: Dict[str, Any]
     
 class ValidationConfig:
-    """Configuration du système de validation"""    
+    """Configuration du système de validation"""
+    
     # Tailles maximales par type de créateur (en MB)
     MAX_FILE_SIZES = {
         'musician': {
@@ -201,7 +205,8 @@ class ValidationConfig:
     }
 
 class ValidationManager:
-    """Gestionnaire principal du système de validation"""    
+    """Gestionnaire principal du système de validation"""
+    
     def __init__(self, config: Optional[ValidationConfig] = None):
         self.config = config or ValidationConfig()
         self.logger = logging.getLogger(__name__)
@@ -222,7 +227,8 @@ class ValidationManager:
         content_type: str,
         level: ValidationLevel = ValidationLevel.STANDARD
     ) -> ValidationResult:
-        """Valide un fichier selon le type de créateur et niveau requis"""        
+        """Valide un fichier selon le type de créateur et niveau requis"""
+        
         # Vérification du cache
         cache_key = self._generate_cache_key(file_path, creator_type, content_type, level)
         if cache_key in self._validation_cache:
@@ -299,7 +305,8 @@ class ValidationManager:
         content_types: List[str],
         level: ValidationLevel = ValidationLevel.STANDARD
     ) -> Dict[str, ValidationResult]:
-        """Valide un lot de fichiers"""        results = {}
+        """Valide un lot de fichiers"""
+        results = {}
         
         for i, file_path in enumerate(file_paths):
             content_type = content_types[i] if i < len(content_types) else 'unknown'
@@ -308,7 +315,8 @@ class ValidationManager:
         return results
     
     def get_validation_summary(self, results: Dict[str, ValidationResult]) -> Dict[str, Any]:
-        """Génère un résumé des validations"""        total_files = len(results)
+        """Génère un résumé des validations"""
+        total_files = len(results)
         valid_files = sum(1 for r in results.values() if r.is_valid)
         total_errors = sum(len(r.errors) for r in results.values())
         total_warnings = sum(len(r.warnings) for r in results.values())
@@ -326,7 +334,8 @@ class ValidationManager:
         }
     
     def _generate_cache_key(self, file_path: str, creator_type: str, content_type: str, level: ValidationLevel) -> str:
-        """Génère une clé de cache pour les résultats de validation"""        # Inclure le hash du fichier pour détecter les modifications
+        """Génère une clé de cache pour les résultats de validation"""
+        # Inclure le hash du fichier pour détecter les modifications
         try:
             with open(file_path, 'rb') as f:
                 file_hash = hashlib.md5(f.read(1024)).hexdigest()  # Hash des premiers 1KB
@@ -336,7 +345,8 @@ class ValidationManager:
         return f"{file_path}:{creator_type}:{content_type}:{level.value}:{file_hash}"
     
     def _calculate_validation_score(self, errors: List[str], warnings: List[str], level: ValidationLevel) -> float:
-        """Calcule le score de validation basé sur les erreurs et avertissements"""        if errors:
+        """Calcule le score de validation basé sur les erreurs et avertissements"""
+        if errors:
             return 0.0  # Score 0 si des erreurs critiques
         
         # Score basé sur les avertissements et niveau de validation

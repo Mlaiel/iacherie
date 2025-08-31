@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -23,7 +24,8 @@ Comprehensive testing for audio format conversion and optimization including:
 
 Created by Expert Team: Audio Developer + Backend Senior + DevOps Engineer
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -55,7 +57,8 @@ from . import TEST_CONFIG, setup_test_environment
 
 
 class TestFormatConverter:
-    """    Industrial-grade testing for FormatConverter class
+    """
+    Industrial-grade testing for FormatConverter class
     
     Test Coverage:
     - Multi-format conversion validation
@@ -64,24 +67,28 @@ class TestFormatConverter:
     - Conversion settings validation
     - Error handling
     - Performance optimization
-    """    
+    """
+    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""        setup_test_environment()
+        """Setup test environment before each test"""
+        setup_test_environment()
         self.converter = FormatConverter()
         self.processor = AudioProcessor()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
         self.temp_output_dir = TEST_CONFIG["temp_output_dir"]
     
     def test_initialization(self):
-        """Test FormatConverter initialization"""        converter = FormatConverter()
+        """Test FormatConverter initialization"""
+        converter = FormatConverter()
         assert converter is not None
         assert hasattr(converter, 'ffmpeg_path')
         assert hasattr(converter, 'temp_dir')
         assert hasattr(converter, 'supported_formats')
     
     def test_supported_formats(self):
-        """Test supported format enumeration"""        # Check AudioFormat enum
+        """Test supported format enumeration"""
+        # Check AudioFormat enum
         assert hasattr(AudioFormat, 'WAV')
         assert hasattr(AudioFormat, 'MP3')
         assert hasattr(AudioFormat, 'FLAC')
@@ -96,7 +103,8 @@ class TestFormatConverter:
         assert hasattr(QualityLevel, 'LOSSLESS')
     
     def test_convert_wav_to_mp3(self):
-        """Test WAV to MP3 conversion"""        input_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test WAV to MP3 conversion"""
+        input_file = self.test_data_dir / "pure_tone_440hz.wav"
         output_file = self.temp_output_dir / "test_output.mp3"
         
         result = self.converter.convert_audio(
@@ -121,7 +129,8 @@ class TestFormatConverter:
         assert len(converted_audio) > 0
     
     def test_convert_wav_to_flac(self):
-        """Test WAV to FLAC conversion (lossless)"""        input_file = self.test_data_dir / "chirp_sweep.wav"
+        """Test WAV to FLAC conversion (lossless)"""
+        input_file = self.test_data_dir / "chirp_sweep.wav"
         output_file = self.temp_output_dir / "test_output.flac"
         
         result = self.converter.convert_audio(
@@ -143,7 +152,8 @@ class TestFormatConverter:
         assert abs(len(converted_audio) - len(original_audio)) < 1000  # Small tolerance
     
     def test_convert_with_custom_settings(self):
-        """Test conversion with custom settings"""        input_file = self.test_data_dir / "white_noise.wav"
+        """Test conversion with custom settings"""
+        input_file = self.test_data_dir / "white_noise.wav"
         output_file = self.temp_output_dir / "test_custom.mp3"
         
         settings = ConversionSettings(
@@ -167,7 +177,8 @@ class TestFormatConverter:
         assert output_file.exists()
     
     def test_convert_different_quality_levels(self):
-        """Test conversion with different quality levels"""        input_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test conversion with different quality levels"""
+        input_file = self.test_data_dir / "pure_tone_440hz.wav"
         
         quality_levels = [QualityLevel.LOW, QualityLevel.MEDIUM, QualityLevel.HIGH]
         results = {}
@@ -190,7 +201,8 @@ class TestFormatConverter:
         assert results[QualityLevel.MEDIUM].file_size >= results[QualityLevel.LOW].file_size
     
     def test_convert_ogg_format(self):
-        """Test OGG Vorbis conversion"""        input_file = self.test_data_dir / "white_noise.wav"
+        """Test OGG Vorbis conversion"""
+        input_file = self.test_data_dir / "white_noise.wav"
         output_file = self.temp_output_dir / "test_output.ogg"
         
         result = self.converter.convert_audio(
@@ -209,7 +221,8 @@ class TestFormatConverter:
         assert converted_audio is not None
     
     def test_convert_aac_format(self):
-        """Test AAC conversion"""        input_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test AAC conversion"""
+        input_file = self.test_data_dir / "pure_tone_440hz.wav"
         output_file = self.temp_output_dir / "test_output.aac"
         
         result = self.converter.convert_audio(
@@ -224,7 +237,8 @@ class TestFormatConverter:
         assert output_file.exists()
     
     def test_convert_nonexistent_file(self):
-        """Test error handling for non-existent input file"""        output_file = self.temp_output_dir / "test_output.mp3"
+        """Test error handling for non-existent input file"""
+        output_file = self.temp_output_dir / "test_output.mp3"
         
         result = self.converter.convert_audio(
             input_path="nonexistent_file.wav",
@@ -238,7 +252,8 @@ class TestFormatConverter:
         assert "not found" in result.error_message.lower() or "no such file" in result.error_message.lower()
     
     def test_convert_invalid_output_format(self):
-        """Test error handling for invalid output format"""        input_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test error handling for invalid output format"""
+        input_file = self.test_data_dir / "pure_tone_440hz.wav"
         output_file = self.temp_output_dir / "test_output.xyz"  # Invalid extension
         
         with pytest.raises((ValueError, TypeError)):
@@ -250,7 +265,8 @@ class TestFormatConverter:
             )
     
     def test_batch_conversion(self):
-        """Test batch file conversion"""        input_files = [
+        """Test batch file conversion"""
+        input_files = [
             self.test_data_dir / "pure_tone_440hz.wav",
             self.test_data_dir / "white_noise.wav",
             self.test_data_dir / "chirp_sweep.wav"
@@ -275,7 +291,8 @@ class TestFormatConverter:
             assert Path(result.output_path).exists()
     
     def test_format_detection(self):
-        """Test automatic format detection"""        test_files = {
+        """Test automatic format detection"""
+        test_files = {
             "pure_tone_440hz.wav": AudioFormat.WAV
         }
         
@@ -285,7 +302,8 @@ class TestFormatConverter:
             assert detected_format == expected_format
     
     def test_conversion_metadata_preservation(self):
-        """Test metadata preservation during conversion"""        input_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test metadata preservation during conversion"""
+        input_file = self.test_data_dir / "pure_tone_440hz.wav"
         output_file = self.temp_output_dir / "test_metadata.mp3"
         
         # Add metadata to conversion
@@ -310,7 +328,8 @@ class TestFormatConverter:
             assert result.metadata.get(key) == value
     
     def test_performance_benchmarking(self):
-        """Test conversion performance"""        input_file = self.test_data_dir / "chirp_sweep.wav"
+        """Test conversion performance"""
+        input_file = self.test_data_dir / "chirp_sweep.wav"
         output_file = self.temp_output_dir / "test_performance.mp3"
         
         start_time = time.time()
@@ -330,7 +349,8 @@ class TestFormatConverter:
 
 
 class TestQualityOptimizer:
-    """    Industrial-grade testing for QualityOptimizer class
+    """
+    Industrial-grade testing for QualityOptimizer class
     
     Test Coverage:
     - Quality assessment algorithms
@@ -338,10 +358,12 @@ class TestQualityOptimizer:
     - Format-specific optimizations
     - Quality metric validation
     - Perceptual quality testing
-    """    
+    """
+    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""        setup_test_environment()
+        """Setup test environment before each test"""
+        setup_test_environment()
         self.optimizer = QualityOptimizer()
         self.processor = AudioProcessor()
         self.converter = FormatConverter()
@@ -349,13 +371,15 @@ class TestQualityOptimizer:
         self.temp_output_dir = TEST_CONFIG["temp_output_dir"]
     
     def test_initialization(self):
-        """Test QualityOptimizer initialization"""        optimizer = QualityOptimizer()
+        """Test QualityOptimizer initialization"""
+        optimizer = QualityOptimizer()
         assert optimizer is not None
         assert hasattr(optimizer, 'quality_metrics')
         assert hasattr(optimizer, 'optimization_rules')
     
     def test_analyze_audio_quality(self):
-        """Test audio quality analysis"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test audio quality analysis"""
+        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         quality_analysis = self.optimizer.analyze_quality(audio_data, sample_rate)
@@ -375,7 +399,8 @@ class TestQualityOptimizer:
             assert not np.isnan(quality_analysis[metric])
     
     def test_recommend_conversion_settings(self):
-        """Test conversion settings recommendation"""        audio_file = self.test_data_dir / "white_noise.wav"
+        """Test conversion settings recommendation"""
+        audio_file = self.test_data_dir / "white_noise.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         recommendations = self.optimizer.recommend_settings(
@@ -393,7 +418,8 @@ class TestQualityOptimizer:
         assert 0.0 <= recommendations.quality_factor <= 1.0
     
     def test_optimize_for_streaming(self):
-        """Test optimization for streaming scenarios"""        audio_file = self.test_data_dir / "chirp_sweep.wav"
+        """Test optimization for streaming scenarios"""
+        audio_file = self.test_data_dir / "chirp_sweep.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         streaming_settings = self.optimizer.optimize_for_streaming(
@@ -408,7 +434,8 @@ class TestQualityOptimizer:
         assert streaming_settings.quality_factor >= 0.6  # Reasonable quality
     
     def test_optimize_for_archival(self):
-        """Test optimization for archival/preservation"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test optimization for archival/preservation"""
+        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         archival_settings = self.optimizer.optimize_for_archival(
@@ -422,7 +449,8 @@ class TestQualityOptimizer:
         assert archival_settings.bitrate >= 256 or archival_settings.lossless is True
     
     def test_optimize_for_mobile(self):
-        """Test optimization for mobile devices"""        audio_file = self.test_data_dir / "white_noise.wav"
+        """Test optimization for mobile devices"""
+        audio_file = self.test_data_dir / "white_noise.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         mobile_settings = self.optimizer.optimize_for_mobile(
@@ -436,7 +464,8 @@ class TestQualityOptimizer:
         assert mobile_settings.channels <= 2  # Stereo or mono
     
     def test_quality_comparison(self):
-        """Test quality comparison between formats"""        input_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test quality comparison between formats"""
+        input_file = self.test_data_dir / "pure_tone_440hz.wav"
         
         # Convert to different formats
         mp3_file = self.temp_output_dir / "comparison_test.mp3"
@@ -472,7 +501,8 @@ class TestQualityOptimizer:
         assert flac_quality['dynamic_range'] >= mp3_quality['dynamic_range']
     
     def test_perceptual_quality_assessment(self):
-        """Test perceptual quality assessment"""        # Load reference audio
+        """Test perceptual quality assessment"""
+        # Load reference audio
         reference_file = self.test_data_dir / "pure_tone_440hz.wav"
         reference_audio, sample_rate = self.processor.load_audio(str(reference_file))
         
@@ -498,7 +528,8 @@ class TestQualityOptimizer:
         assert perceptual_score < 0.9  # Should detect degradation
     
     def test_dynamic_range_optimization(self):
-        """Test dynamic range optimization"""        # Create audio with poor dynamic range
+        """Test dynamic range optimization"""
+        # Create audio with poor dynamic range
         compressed_audio = np.tanh(np.random.randn(44100) * 5) * 0.3
         
         optimized_settings = self.optimizer.optimize_dynamic_range(
@@ -513,7 +544,8 @@ class TestQualityOptimizer:
         assert 'gain_adjustment' in optimized_settings
     
     def test_frequency_response_optimization(self):
-        """Test frequency response optimization"""        audio_file = self.test_data_dir / "white_noise.wav"
+        """Test frequency response optimization"""
+        audio_file = self.test_data_dir / "white_noise.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         fr_optimization = self.optimizer.optimize_frequency_response(
@@ -528,7 +560,8 @@ class TestQualityOptimizer:
         assert 'filter_settings' in fr_optimization
     
     def test_bitrate_optimization(self):
-        """Test optimal bitrate calculation"""        audio_file = self.test_data_dir / "chirp_sweep.wav"
+        """Test optimal bitrate calculation"""
+        audio_file = self.test_data_dir / "chirp_sweep.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         optimal_bitrate = self.optimizer.calculate_optimal_bitrate(
@@ -543,7 +576,8 @@ class TestQualityOptimizer:
         assert 64 <= optimal_bitrate <= 320  # Reasonable range for MP3
     
     def test_format_recommendation(self):
-        """Test format recommendation based on content"""        # Test different audio types
+        """Test format recommendation based on content"""
+        # Test different audio types
         test_cases = [
             ("pure_tone_440hz.wav", "music"),
             ("white_noise.wav", "noise"),
@@ -568,9 +602,11 @@ class TestQualityOptimizer:
 
 
 class TestConversionSettings:
-    """Test ConversionSettings data structure"""    
+    """Test ConversionSettings data structure"""
+    
     def test_settings_creation(self):
-        """Test ConversionSettings creation"""        settings = ConversionSettings(
+        """Test ConversionSettings creation"""
+        settings = ConversionSettings(
             bitrate=192,
             sample_rate=44100,
             channels=2,
@@ -585,7 +621,8 @@ class TestConversionSettings:
         assert settings.enable_vbr is True
     
     def test_settings_validation(self):
-        """Test settings validation"""        # Valid settings
+        """Test settings validation"""
+        # Valid settings
         valid_settings = ConversionSettings(
             bitrate=128,
             sample_rate=44100,
@@ -605,9 +642,11 @@ class TestConversionSettings:
 
 
 class TestConversionResult:
-    """Test ConversionResult data structure"""    
+    """Test ConversionResult data structure"""
+    
     def test_result_creation(self):
-        """Test ConversionResult creation"""        result = ConversionResult(
+        """Test ConversionResult creation"""
+        result = ConversionResult(
             success=True,
             output_path="/path/to/output.mp3",
             output_format=AudioFormat.MP3,
@@ -625,16 +664,20 @@ class TestConversionResult:
 
 
 class TestFormatsIntegration:
-    """    Integration tests for format conversion workflow
-    """    
+    """
+    Integration tests for format conversion workflow
+    """
+    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""        setup_test_environment()
+        """Setup test environment"""
+        setup_test_environment()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
         self.temp_output_dir = TEST_CONFIG["temp_output_dir"]
     
     def test_complete_conversion_workflow(self):
-        """Test complete conversion workflow with optimization"""        processor = AudioProcessor()
+        """Test complete conversion workflow with optimization"""
+        processor = AudioProcessor()
         optimizer = QualityOptimizer()
         converter = FormatConverter()
         
@@ -671,7 +714,8 @@ class TestFormatsIntegration:
         assert converted_quality['quality_score'] >= TEST_CONFIG["quality_threshold"]
     
     def test_cross_format_compatibility(self):
-        """Test conversion between multiple formats"""        converter = FormatConverter()
+        """Test conversion between multiple formats"""
+        converter = FormatConverter()
         
         input_file = self.test_data_dir / "pure_tone_440hz.wav"
         

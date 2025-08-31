@@ -2,7 +2,8 @@
 Copyright (C) 2025 Fahed Mlaiel <mlaiel@live.de>
 
 Main entry point for the optimization module with unified API interface.
-"""from typing import Dict, Any, List, Optional
+"""
+from typing import Dict, Any, List, Optional
 import asyncio
 import logging
 
@@ -19,16 +20,19 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationOrchestrator:
-    """    Unified orchestrator for all optimization engines.
+    """
+    Unified orchestrator for all optimization engines.
     Provides a single entry point for comprehensive optimization capabilities.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.optimizers = {}
         self._initialize_optimizers()
         
     def _initialize_optimizers(self):
-        """Initialize all optimization engines"""        
+        """Initialize all optimization engines"""
+        
         # Performance optimizers
         self.optimizers["model"] = ModelOptimizer(self.config.get("performance", {}))
         self.optimizers["fingerprinting"] = FingerprintingOptimizer(self.config.get("fingerprinting", {}))
@@ -73,7 +77,8 @@ class OptimizationOrchestrator:
         input_data: Dict[str, Any],
         optimization_level: str = "balanced"
     ) -> Dict[str, Any]:
-        """        Perform comprehensive optimization across multiple domains
+        """
+        Perform comprehensive optimization across multiple domains
         
         Args:
             optimization_targets: List of optimization categories to apply
@@ -82,7 +87,8 @@ class OptimizationOrchestrator:
             
         Returns:
             Comprehensive optimization results
-        """        
+        """
+        
         results = {
             "optimization_level": optimization_level,
             "targets": optimization_targets,
@@ -133,7 +139,8 @@ class OptimizationOrchestrator:
         input_data: Dict[str, Any],
         level: str
     ) -> Dict[str, Any]:
-        """Run specific optimization"""        
+        """Run specific optimization"""
+        
         optimizer = self.optimizers[target]
         target_data = input_data.get(target, {})
         
@@ -180,7 +187,8 @@ class OptimizationOrchestrator:
         data: Dict[str, Any],
         level: str
     ) -> Dict[str, Any]:
-        """Generic optimization for engines without specific methods"""        
+        """Generic optimization for engines without specific methods"""
+        
         # Try to find an optimize method
         if hasattr(optimizer, 'optimize'):
             return await optimizer.optimize(data, level)
@@ -194,7 +202,8 @@ class OptimizationOrchestrator:
         self,
         optimization_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate comprehensive metrics from optimization results"""        
+        """Generate comprehensive metrics from optimization results"""
+        
         metrics = {
             "overall_performance_improvement": 0.0,
             "resource_efficiency_gain": 0.0,
@@ -242,7 +251,8 @@ class OptimizationOrchestrator:
         return metrics
     
     def _extract_category_metrics(self, category: str, result: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract metrics from category-specific results"""        
+        """Extract metrics from category-specific results"""
+        
         # Default metrics
         metrics = {
             "status": "completed",
@@ -289,7 +299,8 @@ class OptimizationOrchestrator:
         optimization_results: Dict[str, Any],
         level: str
     ) -> Dict[str, Any]:
-        """Generate comprehensive optimization recommendations"""        
+        """Generate comprehensive optimization recommendations"""
+        
         recommendations = {
             "immediate_actions": [],
             "short_term_optimizations": [],
@@ -318,7 +329,8 @@ class OptimizationOrchestrator:
         return recommendations
     
     def _extract_category_recommendations(self, category: str, result: Dict[str, Any]) -> Dict[str, List[str]]:
-        """Extract recommendations from category-specific results"""        
+        """Extract recommendations from category-specific results"""
+        
         recommendations = {
             "immediate": [],
             "short_term": [],
@@ -349,7 +361,8 @@ class OptimizationOrchestrator:
         recommendations: Dict[str, Any],
         level: str
     ) -> Dict[str, Any]:
-        """Prioritize recommendations based on optimization level"""        
+        """Prioritize recommendations based on optimization level"""
+        
         # Priority weights based on optimization level
         priority_weights = {
             "speed": {"immediate": 0.8, "short_term": 0.2, "long_term": 0.0},
@@ -373,7 +386,8 @@ class OptimizationOrchestrator:
         recommendations: Dict[str, Any],
         level: str
     ) -> Dict[str, Any]:
-        """Create detailed implementation plan"""        
+        """Create detailed implementation plan"""
+        
         plan = {
             "phases": [],
             "timeline": {},
@@ -422,13 +436,16 @@ class OptimizationOrchestrator:
         return plan
     
     def get_optimizer(self, optimizer_type: str) -> Optional[Any]:
-        """Get specific optimizer instance"""        return self.optimizers.get(optimizer_type)
+        """Get specific optimizer instance"""
+        return self.optimizers.get(optimizer_type)
     
     def list_available_optimizers(self) -> List[str]:
-        """List all available optimizer types"""        return list(self.optimizers.keys())
+        """List all available optimizer types"""
+        return list(self.optimizers.keys())
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on all optimizers"""        health_status = {
+        """Perform health check on all optimizers"""
+        health_status = {
             "overall_status": "healthy",
             "optimizer_status": {},
             "initialization_time": None,

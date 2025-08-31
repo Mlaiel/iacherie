@@ -13,7 +13,8 @@ Contact: mlaiel@live.de for authorization.
 
 🎯 BUSINESS LOGIC:
 State Definition → Transition Rules → State Changes → Validation → Persistence → Notification
-"""import asyncio
+"""
+import asyncio
 import uuid
 import threading
 from datetime import datetime, timezone, timedelta
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class StateType(Enum):
-    """Types of states managed by the system"""    WORKFLOW_STATE = "workflow_state"
+    """Types of states managed by the system"""
+    WORKFLOW_STATE = "workflow_state"
     PROCESS_STATE = "process_state"
     TASK_STATE = "task_state"
     RESOURCE_STATE = "resource_state"
@@ -41,7 +43,8 @@ class StateType(Enum):
 
 
 class TransitionType(Enum):
-    """Types of state transitions"""    AUTOMATIC = "automatic"
+    """Types of state transitions"""
+    AUTOMATIC = "automatic"
     MANUAL = "manual"
     CONDITIONAL = "conditional"
     TIMED = "timed"
@@ -50,14 +53,16 @@ class TransitionType(Enum):
 
 
 class TransitionRule(Enum):
-    """State transition validation rules"""    STRICT = "strict"
+    """State transition validation rules"""
+    STRICT = "strict"
     LENIENT = "lenient"
     CONDITIONAL = "conditional"
     CUSTOM = "custom"
 
 
 class StateStatus(Enum):
-    """State status indicators"""    ACTIVE = "active"
+    """State status indicators"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     TRANSITIONING = "transitioning"
     LOCKED = "locked"
@@ -67,7 +72,8 @@ class StateStatus(Enum):
 
 @dataclass
 class StateTransition:
-    """State transition definition"""    from_state: str
+    """State transition definition"""
+    from_state: str
     to_state: str
     transition_type: TransitionType
     conditions: Dict[str, Any] = field(default_factory=dict)
@@ -79,7 +85,8 @@ class StateTransition:
 
 @dataclass
 class StateDefinition:
-    """Complete state definition"""    state_id: str
+    """Complete state definition"""
+    state_id: str
     name: str
     state_type: StateType
     properties: Dict[str, Any] = field(default_factory=dict)
@@ -92,7 +99,8 @@ class StateDefinition:
 
 @dataclass
 class StateInstance:
-    """Active state instance"""    instance_id: str
+    """Active state instance"""
+    instance_id: str
     state_id: str
     entity_id: str
     current_data: Dict[str, Any]
@@ -107,7 +115,8 @@ class StateInstance:
 
 @dataclass
 class TransitionRequest:
-    """State transition request"""    request_id: str
+    """State transition request"""
+    request_id: str
     instance_id: str
     target_state: str
     initiator: str
@@ -117,7 +126,8 @@ class TransitionRequest:
 
 
 class StateManager:
-    """Enterprise state management and transition control system"""    
+    """Enterprise state management and transition control system"""
+    
     def __init__(self, persistence_enabled: bool = True):
         self.persistence_enabled = persistence_enabled
         
@@ -150,7 +160,8 @@ class StateManager:
         logger.info("StateManager initialized successfully")
     
     def _initialize_standard_states(self):
-        """Initialize standard business state definitions"""        # Content Processing States
+        """Initialize standard business state definitions"""
+        # Content Processing States
         content_states = [
             StateDefinition(
                 state_id="content_uploaded",
@@ -290,7 +301,8 @@ class StateManager:
             self.register_state(state_def)
     
     def register_state(self, state_definition: StateDefinition) -> bool:
-        """Register a new state definition"""        try:
+        """Register a new state definition"""
+        try:
             # Validate state definition
             if not self._validate_state_definition(state_definition):
                 return False
@@ -304,7 +316,8 @@ class StateManager:
             return False
     
     def _validate_state_definition(self, state_def: StateDefinition) -> bool:
-        """Validate state definition integrity"""        try:
+        """Validate state definition integrity"""
+        try:
             # Required fields validation
             if not all([state_def.state_id, state_def.name, state_def.state_type]):
                 logger.error("Missing required state definition fields")
@@ -333,7 +346,8 @@ class StateManager:
         entity_id: str,
         initial_data: Dict[str, Any] = None
     ) -> str:
-        """Create a new state instance for an entity"""        try:
+        """Create a new state instance for an entity"""
+        try:
             if state_id not in self.state_definitions:
                 raise ValueError(f"State definition '{state_id}' not found")
             
@@ -378,7 +392,8 @@ class StateManager:
         parameters: Dict[str, Any] = None,
         force: bool = False
     ) -> bool:
-        """Transition state instance to target state"""        try:
+        """Transition state instance to target state"""
+        try:
             if instance_id not in self.state_instances:
                 raise ValueError(f"State instance '{instance_id}' not found")
             
@@ -432,7 +447,8 @@ class StateManager:
         target_state: str,
         parameters: Dict[str, Any]
     ) -> bool:
-        """Validate if transition is allowed"""        try:
+        """Validate if transition is allowed"""
+        try:
             state_def = self.state_definitions.get(instance.state_id)
             if not state_def:
                 return False
@@ -475,7 +491,8 @@ class StateManager:
         instance: StateInstance,
         parameters: Dict[str, Any]
     ) -> bool:
-        """Check if transition conditions are satisfied"""        try:
+        """Check if transition conditions are satisfied"""
+        try:
             for condition_key, condition_value in conditions.items():
                 # Check in instance data
                 if condition_key in instance.current_data:
@@ -513,7 +530,8 @@ class StateManager:
         instance: StateInstance,
         parameters: Dict[str, Any]
     ) -> bool:
-        """Run transition validator function"""        try:
+        """Run transition validator function"""
+        try:
             if asyncio.iscoroutinefunction(validator_func):
                 return await validator_func(instance, parameters)
             else:
@@ -523,7 +541,8 @@ class StateManager:
             return False
     
     async def _execute_transition(self, request: TransitionRequest) -> bool:
-        """Execute state transition"""        try:
+        """Execute state transition"""
+        try:
             instance = self.state_instances[request.instance_id]
             old_state_id = instance.state_id
             
@@ -587,7 +606,8 @@ class StateManager:
             return False
     
     async def _execute_actions(self, actions: List[str], instance: StateInstance):
-        """Execute state entry/exit actions"""        try:
+        """Execute state entry/exit actions"""
+        try:
             for action_name in actions:
                 if action_name in self.transition_actions:
                     action_func = self.transition_actions[action_name]
@@ -605,7 +625,8 @@ class StateManager:
             logger.error(f"Actions execution failed: {e}")
     
     def _is_instance_locked(self, instance: StateInstance) -> bool:
-        """Check if state instance is locked"""        if not instance.locked_by:
+        """Check if state instance is locked"""
+        if not instance.locked_by:
             return False
         
         if instance.lock_expires_at and instance.lock_expires_at <= datetime.now(timezone.utc):
@@ -617,19 +638,22 @@ class StateManager:
         return True
     
     async def _lock_instance(self, instance_id: str, locker: str, timeout_seconds: int = 300):
-        """Lock state instance for transition"""        instance = self.state_instances[instance_id]
+        """Lock state instance for transition"""
+        instance = self.state_instances[instance_id]
         instance.locked_by = locker
         instance.lock_expires_at = datetime.now(timezone.utc) + timedelta(seconds=timeout_seconds)
         logger.debug(f"State instance locked: {instance_id} by {locker}")
     
     async def _unlock_instance(self, instance_id: str):
-        """Unlock state instance"""        instance = self.state_instances[instance_id]
+        """Unlock state instance"""
+        instance = self.state_instances[instance_id]
         instance.locked_by = None
         instance.lock_expires_at = None
         logger.debug(f"State instance unlocked: {instance_id}")
     
     async def _create_state_snapshot(self, instance: StateInstance):
-        """Create state snapshot for recovery"""        try:
+        """Create state snapshot for recovery"""
+        try:
             snapshot = {
                 "instance_id": instance.instance_id,
                 "state_id": instance.state_id,
@@ -650,7 +674,8 @@ class StateManager:
             logger.error(f"Snapshot creation failed: {e}")
     
     async def _create_recovery_point(self, instance_id: str):
-        """Create recovery point for state instance"""        try:
+        """Create recovery point for state instance"""
+        try:
             instance = self.state_instances[instance_id]
             
             recovery_point = {
@@ -668,7 +693,8 @@ class StateManager:
             logger.error(f"Recovery point creation failed: {e}")
     
     async def rollback_state(self, instance_id: str, target_version: Optional[int] = None) -> bool:
-        """Rollback state to previous version or snapshot"""        try:
+        """Rollback state to previous version or snapshot"""
+        try:
             if instance_id not in self.state_instances:
                 logger.error(f"State instance not found: {instance_id}")
                 return False
@@ -728,7 +754,8 @@ class StateManager:
         instance: StateInstance,
         additional_data: Dict[str, Any] = None
     ):
-        """Emit state events to registered handlers"""        try:
+        """Emit state events to registered handlers"""
+        try:
             event_data = {
                 "event_type": event_type,
                 "instance_id": instance.instance_id,
@@ -765,7 +792,8 @@ class StateManager:
             logger.error(f"Event emission failed: {e}")
     
     def get_state_instance(self, instance_id: str) -> Optional[Dict[str, Any]]:
-        """Get state instance information"""        instance = self.state_instances.get(instance_id)
+        """Get state instance information"""
+        instance = self.state_instances.get(instance_id)
         if not instance:
             return None
         
@@ -784,7 +812,8 @@ class StateManager:
         }
     
     def get_entity_states(self, entity_id: str) -> List[Dict[str, Any]]:
-        """Get all state instances for an entity"""        entity_instances = []
+        """Get all state instances for an entity"""
+        entity_instances = []
         
         for instance in self.state_instances.values():
             if instance.entity_id == entity_id:
@@ -793,7 +822,8 @@ class StateManager:
         return entity_instances
     
     def get_state_metrics(self) -> Dict[str, Any]:
-        """Get state management metrics"""        total_instances = len(self.state_instances)
+        """Get state management metrics"""
+        total_instances = len(self.state_instances)
         active_instances = len([i for i in self.state_instances.values() if i.status == StateStatus.ACTIVE])
         locked_instances = len([i for i in self.state_instances.values() if self._is_instance_locked(i)])
         
@@ -819,24 +849,30 @@ class StateManager:
         }
     
     def register_validator(self, name: str, validator_func: Callable):
-        """Register state transition validator"""        self.transition_validators[name] = validator_func
+        """Register state transition validator"""
+        self.transition_validators[name] = validator_func
         logger.info(f"Validator registered: {name}")
     
     def register_action(self, name: str, action_func: Callable):
-        """Register state entry/exit action"""        self.transition_actions[name] = action_func
+        """Register state entry/exit action"""
+        self.transition_actions[name] = action_func
         logger.info(f"Action registered: {name}")
     
     def register_event_handler(self, event_type: str, handler: Callable):
-        """Register event handler for state events"""        self.event_handlers[event_type].append(handler)
+        """Register event handler for state events"""
+        self.event_handlers[event_type].append(handler)
     
     def register_state_listener(self, state_id: str, listener: Callable):
-        """Register listener for specific state"""        self.state_listeners[state_id].append(listener)
+        """Register listener for specific state"""
+        self.state_listeners[state_id].append(listener)
     
     def register_entity_listener(self, entity_id: str, listener: Callable):
-        """Register listener for specific entity"""        self.entity_listeners[entity_id].append(listener)
+        """Register listener for specific entity"""
+        self.entity_listeners[entity_id].append(listener)
     
     async def cleanup_expired_instances(self) -> int:
-        """Cleanup expired and inactive state instances"""        try:
+        """Cleanup expired and inactive state instances"""
+        try:
             cleanup_count = 0
             current_time = datetime.now(timezone.utc)
             expired_instances = []
@@ -872,7 +908,8 @@ class StateManager:
             return 0
     
     def shutdown(self):
-        """Shutdown state manager and cleanup"""        try:
+        """Shutdown state manager and cleanup"""
+        try:
             # Unlock all locked instances
             for instance in self.state_instances.values():
                 instance.locked_by = None

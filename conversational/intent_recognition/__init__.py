@@ -11,7 +11,9 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
-"""from .intent_classifier import (
+"""
+
+from .intent_classifier import (
     IntentClassifier,
     IntentCategory,
     IntentConfidence,
@@ -161,6 +163,7 @@ __all__ = [
 
 # Module initialization logging
 import logging
+
 logger = logging.getLogger(__name__)
 logger.info(f"Intent Recognition Module v{__version__} initialized")
 logger.info(f"Author: {__author__} ({__email__})")

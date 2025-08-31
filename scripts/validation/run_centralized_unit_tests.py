@@ -8,7 +8,8 @@ the platform's quality. It addresses the critical issue:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Provide centralized unit test execution and quality validation
-"""import subprocess
+"""
+import subprocess
 import sys
 import os
 from pathlib import Path
@@ -16,7 +17,8 @@ import time
 
 
 class TestRunner:
-    """Centralized test runner for all unit tests"""    
+    """Centralized test runner for all unit tests"""
+    
     def __init__(self):
         self.project_root = Path(__file__).parent
         self.tests_passed = 0
@@ -24,10 +26,12 @@ class TestRunner:
         self.test_suites = []
         
     def add_test_suite(self, name, test_file):
-        """Add a test suite to be executed"""        self.test_suites.append({"name": name, "file": test_file})
+        """Add a test suite to be executed"""
+        self.test_suites.append({"name": name, "file": test_file})
     
     def run_test_suite(self, test_suite):
-        """Run a single test suite"""        print(f"\n🧪 Running {test_suite['name']}...")
+        """Run a single test suite"""
+        print(f"\n🧪 Running {test_suite['name']}...")
         print("=" * 60)
         
         test_file = self.project_root / test_suite['file']
@@ -77,7 +81,8 @@ class TestRunner:
             return False
     
     def run_all_tests(self):
-        """Run all registered test suites"""        print("🚀 Starting Centralized Unit Test Execution")
+        """Run all registered test suites"""
+        print("🚀 Starting Centralized Unit Test Execution")
         print("=" * 60)
         print(f"Project Root: {self.project_root}")
         print(f"Total Test Suites: {len(self.test_suites)}")
@@ -118,7 +123,8 @@ class TestRunner:
 
 
 def main():
-    """Main execution function"""    runner = TestRunner()
+    """Main execution function"""
+    runner = TestRunner()
     
     # Register core test suites
     runner.add_test_suite(

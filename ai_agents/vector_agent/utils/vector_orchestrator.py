@@ -11,7 +11,8 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Any attempt to steal the concept, idea, or code without explicit written authorization
 from Fahed Mlaiel will result in immediate legal prosecution under German and international law.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -39,7 +40,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class VectorProcessingTask:
-    """Task for vector processing operations"""    task_id: str
+    """Task for vector processing operations"""
+    task_id: str
     content_id: str
     content_type: str
     vector_data: np.ndarray
@@ -53,7 +55,8 @@ class VectorProcessingTask:
 
 
 class VectorOrchestrator(BaseAgent):
-    """    Ultra-Advanced Vector Database Management Orchestrator
+    """
+    Ultra-Advanced Vector Database Management Orchestrator
     
     Provides comprehensive vector storage, indexing, and similarity search capabilities
     for content fingerprinting and AI-powered matching operations.
@@ -65,9 +68,11 @@ class VectorOrchestrator(BaseAgent):
     - Batch processing optimization
     - Advanced caching strategies
     - Cross-content-type matching
-    """    
+    """
+    
     def __init__(self, config: Optional[VectorConfig] = None):
-        """Initialize Vector Orchestrator with enterprise configuration"""        super().__init__(
+        """Initialize Vector Orchestrator with enterprise configuration"""
+        super().__init__(
             agent_id="vector_orchestrator",
             agent_type="vector_management",
             version="1.0.0",
@@ -97,7 +102,8 @@ class VectorOrchestrator(BaseAgent):
         logger.info(f"Vector Orchestrator initialized - {self.agent_id}")
     
     async def initialize(self) -> None:
-        """Initialize vector orchestrator and all components"""        try:
+        """Initialize vector orchestrator and all components"""
+        try:
             await super().initialize()
             
             # Initialize all vector components
@@ -120,7 +126,8 @@ class VectorOrchestrator(BaseAgent):
             raise VectorProcessingError(f"Initialization failed: {str(e)}")
     
     async def process_request(self, request: AgentRequest) -> AgentResponse:
-        """Process vector operation requests"""        start_time = time.time()
+        """Process vector operation requests"""
+        start_time = time.time()
         
         try:
             action = request.action.lower()
@@ -164,7 +171,8 @@ class VectorOrchestrator(BaseAgent):
             )
     
     async def _handle_store_vector(self, request: AgentRequest) -> Dict[str, Any]:
-        """Handle vector storage requests"""        content_id = request.data.get("content_id")
+        """Handle vector storage requests"""
+        content_id = request.data.get("content_id")
         content_type = request.data.get("content_type")
         vector_data = request.data.get("vector_data")
         metadata = request.data.get("metadata", {})
@@ -205,7 +213,8 @@ class VectorOrchestrator(BaseAgent):
         }
     
     async def _handle_similarity_search(self, request: AgentRequest) -> Dict[str, Any]:
-        """Handle similarity search requests"""        search_request = VectorSearchRequest(**request.data)
+        """Handle similarity search requests"""
+        search_request = VectorSearchRequest(**request.data)
         
         # Perform similarity search
         start_time = time.time()
@@ -233,7 +242,8 @@ class VectorOrchestrator(BaseAgent):
         }
     
     async def _handle_batch_indexing(self, request: AgentRequest) -> Dict[str, Any]:
-        """Handle batch vector indexing operations"""        batch_data = request.data.get("batch_data", [])
+        """Handle batch vector indexing operations"""
+        batch_data = request.data.get("batch_data", [])
         batch_size = request.data.get("batch_size", self.config.batch_size)
         
         if not batch_data:
@@ -261,7 +271,8 @@ class VectorOrchestrator(BaseAgent):
         }
     
     async def _handle_cross_modal_search(self, request: AgentRequest) -> Dict[str, Any]:
-        """Handle cross-modal similarity search"""        query_vector = request.data.get("query_vector")
+        """Handle cross-modal similarity search"""
+        query_vector = request.data.get("query_vector")
         content_types = request.data.get("content_types", ["audio", "video", "image", "text"])
         similarity_threshold = request.data.get("similarity_threshold", 0.75)
         max_results = request.data.get("max_results", 10)
@@ -299,7 +310,8 @@ class VectorOrchestrator(BaseAgent):
         }
     
     async def _handle_index_optimization(self, request: AgentRequest) -> Dict[str, Any]:
-        """Handle index optimization requests"""        optimization_type = request.data.get("type", "full")
+        """Handle index optimization requests"""
+        optimization_type = request.data.get("type", "full")
         content_types = request.data.get("content_types", [])
         
         start_time = time.time()
@@ -324,7 +336,8 @@ class VectorOrchestrator(BaseAgent):
         }
     
     async def _handle_get_statistics(self, request: AgentRequest) -> Dict[str, Any]:
-        """Handle statistics retrieval requests"""        include_detailed = request.data.get("include_detailed", False)
+        """Handle statistics retrieval requests"""
+        include_detailed = request.data.get("include_detailed", False)
         
         stats = asdict(self.processing_stats)
         
@@ -343,7 +356,8 @@ class VectorOrchestrator(BaseAgent):
         return stats
     
     async def _process_vector_queue(self):
-        """Process vector operations from priority queue"""        while not self.shutdown_requested:
+        """Process vector operations from priority queue"""
+        while not self.shutdown_requested:
             try:
                 # Get task from priority queue (timeout to prevent blocking)
                 try:
@@ -364,7 +378,8 @@ class VectorOrchestrator(BaseAgent):
                 await asyncio.sleep(0.1)
     
     async def _process_batch_operations(self):
-        """Process batch operations periodically"""        while not self.shutdown_requested:
+        """Process batch operations periodically"""
+        while not self.shutdown_requested:
             try:
                 if len(self.batch_queue) >= self.config.batch_size:
                     # Process accumulated batch
@@ -380,7 +395,8 @@ class VectorOrchestrator(BaseAgent):
                 await asyncio.sleep(1.0)
     
     async def _optimize_indices_periodically(self):
-        """Periodically optimize vector indices"""        while not self.shutdown_requested:
+        """Periodically optimize vector indices"""
+        while not self.shutdown_requested:
             try:
                 # Wait for optimization interval
                 await asyncio.sleep(self.config.optimization_interval)
@@ -394,7 +410,8 @@ class VectorOrchestrator(BaseAgent):
                 logger.error(f"Error in periodic optimization: {e}")
     
     async def _collect_metrics(self):
-        """Collect and update performance metrics"""        while not self.shutdown_requested:
+        """Collect and update performance metrics"""
+        while not self.shutdown_requested:
             try:
                 # Update metrics from all components
                 faiss_metrics = await self.faiss_manager.get_metrics()
@@ -413,7 +430,8 @@ class VectorOrchestrator(BaseAgent):
                 await asyncio.sleep(5.0)
     
     async def _execute_vector_task(self, task: VectorProcessingTask):
-        """Execute individual vector processing task"""        try:
+        """Execute individual vector processing task"""
+        try:
             self.active_tasks[task.task_id] = task
             
             # Process based on task type
@@ -438,7 +456,8 @@ class VectorOrchestrator(BaseAgent):
             self.active_tasks.pop(task.task_id, None)
     
     async def _process_vector_batch(self, batch: List[VectorProcessingTask]) -> List[Dict[str, Any]]:
-        """Process a batch of vector operations"""        results = []
+        """Process a batch of vector operations"""
+        results = []
         
         try:
             # Group by content type for efficient processing
@@ -462,7 +481,8 @@ class VectorOrchestrator(BaseAgent):
         return results
     
     async def _process_type_batch(self, content_type: str, tasks: List[VectorProcessingTask]) -> List[Dict[str, Any]]:
-        """Process batch of tasks for specific content type"""        results = []
+        """Process batch of tasks for specific content type"""
+        results = []
         
         try:
             # Extract vectors and metadata
@@ -491,37 +511,43 @@ class VectorOrchestrator(BaseAgent):
         return results
     
     async def _process_audio_vector(self, task: VectorProcessingTask) -> Dict[str, Any]:
-        """Process audio-specific vector operations"""        # Audio-specific processing logic
+        """Process audio-specific vector operations"""
+        # Audio-specific processing logic
         return await self.similarity_engine.process_audio_similarity(
             task.vector_data, task.metadata
         )
     
     async def _process_video_vector(self, task: VectorProcessingTask) -> Dict[str, Any]:
-        """Process video-specific vector operations"""        # Video-specific processing logic
+        """Process video-specific vector operations"""
+        # Video-specific processing logic
         return await self.similarity_engine.process_video_similarity(
             task.vector_data, task.metadata
         )
     
     async def _process_image_vector(self, task: VectorProcessingTask) -> Dict[str, Any]:
-        """Process image-specific vector operations"""        # Image-specific processing logic
+        """Process image-specific vector operations"""
+        # Image-specific processing logic
         return await self.similarity_engine.process_image_similarity(
             task.vector_data, task.metadata
         )
     
     async def _process_text_vector(self, task: VectorProcessingTask) -> Dict[str, Any]:
-        """Process text-specific vector operations"""        # Text-specific processing logic
+        """Process text-specific vector operations"""
+        # Text-specific processing logic
         return await self.similarity_engine.process_text_similarity(
             task.vector_data, task.metadata
         )
     
     async def _process_generic_vector(self, task: VectorProcessingTask) -> Dict[str, Any]:
-        """Process generic vector operations"""        # Generic processing logic
+        """Process generic vector operations"""
+        # Generic processing logic
         return await self.similarity_engine.process_generic_similarity(
             task.vector_data, task.metadata
         )
     
     async def _get_detailed_metrics(self) -> Dict[str, Any]:
-        """Get detailed performance metrics"""        return {
+        """Get detailed performance metrics"""
+        return {
             "active_tasks_count": len(self.active_tasks),
             "queue_size": self.priority_queue.qsize(),
             "batch_queue_size": len(self.batch_queue),
@@ -531,7 +557,8 @@ class VectorOrchestrator(BaseAgent):
         }
     
     async def _get_memory_usage(self) -> Dict[str, Any]:
-        """Get memory usage statistics"""        import psutil
+        """Get memory usage statistics"""
+        import psutil
         import os
         
         process = psutil.Process(os.getpid())
@@ -544,7 +571,8 @@ class VectorOrchestrator(BaseAgent):
         }
     
     async def shutdown(self):
-        """Graceful shutdown of vector orchestrator"""        try:
+        """Graceful shutdown of vector orchestrator"""
+        try:
             self.shutdown_requested = True
             
             # Wait for active tasks to complete

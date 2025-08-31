@@ -56,7 +56,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written
 permission from the author is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing and usage rights.
-"""from typing import Dict, List, Optional, Any, Union
+"""
+from typing import Dict, List, Optional, Any, Union
 import logging
 from datetime import datetime, timezone
 
@@ -214,7 +215,8 @@ def create_notification_service(
     enable_analytics: bool = True,
     enable_workflows: bool = True
 ) -> NotificationService:
-    """    Create and configure a NotificationService instance with business logic integration.
+    """
+    Create and configure a NotificationService instance with business logic integration.
     
     Args:
         config: Optional configuration dictionary
@@ -224,7 +226,8 @@ def create_notification_service(
     
     Returns:
         Configured NotificationService instance
-    """    try:
+    """
+    try:
         # Load configuration
         notification_config = NotificationConfig(config or {})
         
@@ -277,11 +280,13 @@ def create_notification_service(
 
 
 def get_default_config() -> Dict[str, Any]:
-    """    Get default notification configuration for IA Influencer Agent platform.
+    """
+    Get default notification configuration for IA Influencer Agent platform.
     
     Returns:
         Default configuration dictionary
-    """    return {
+    """
+    return {
         "ai_features": {
             "priority_classification": True,
             "personalization": True,
@@ -354,14 +359,16 @@ def get_default_config() -> Dict[str, Any]:
 
 
 def validate_notification_request(request: Dict[str, Any]) -> bool:
-    """    Validate notification request against business rules and schema.
+    """
+    Validate notification request against business rules and schema.
     
     Args:
         request: Notification request dictionary
     
     Returns:
         True if valid, False otherwise
-    """    try:
+    """
+    try:
         required_fields = ["recipient", "notification_type", "content"]
         
         # Check required fields
@@ -398,7 +405,8 @@ def format_notification_response(
     data: Optional[Dict[str, Any]] = None,
     metadata: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """    Format standardized notification response.
+    """
+    Format standardized notification response.
     
     Args:
         status: Response status (success, error, pending)
@@ -408,7 +416,8 @@ def format_notification_response(
     
     Returns:
         Formatted response dictionary
-    """    response = {
+    """
+    response = {
         "status": status,
         "message": message,
         "timestamp": datetime.now(timezone.utc).isoformat(),

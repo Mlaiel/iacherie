@@ -14,15 +14,21 @@ without explicit written permission is STRICTLY PROHIBITED and will be
 prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Optional, Union, Any, Tuple
+"""
+
+from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
+
 from dataclasses import dataclass
+
 import os
 
 
 class PlatformType(str, Enum):
-    """Supported social media and content platforms."""    
+    """
+Supported social media and content platforms."""
+    
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -41,7 +47,8 @@ class PlatformType(str, Enum):
 
 
 class IntegrationType(str, Enum):
-    """Types of platform integrations."""    
+    """Types of platform integrations."""
+    
     CONTENT_UPLOAD = "content_upload"
     ANALYTICS_API = "analytics_api"
     MONETIZATION_API = "monetization_api"
@@ -53,7 +60,8 @@ class IntegrationType(str, Enum):
 
 
 class APIVersion(str, Enum):
-    """API versions for different platforms."""    
+    """API versions for different platforms."""
+    
     V1 = "v1"
     V2 = "v2"
     V3 = "v3"
@@ -64,7 +72,8 @@ class APIVersion(str, Enum):
 
 @dataclass
 class PlatformIntegration:
-    """Platform integration configuration."""    
+    """Platform integration configuration."""
+    
     platform: PlatformType
     integration_types: List[IntegrationType]
     api_version: APIVersion
@@ -80,11 +89,13 @@ class PlatformIntegration:
 
 
 class PlatformIntegrationConfig(BaseSettings):
-    """    Professional Platform Integration Configuration.
+    """
+    Professional Platform Integration Configuration.
     
     Manages comprehensive integration with social media platforms,
     content platforms, and third-party services for the influencer ecosystem.
-    """    
+    """
+    
     # Core Integration Configuration
     INTEGRATION_STORAGE_PATH: str = "/data/integrations"
     DEFAULT_TIMEOUT_SECONDS: int = 30
@@ -266,7 +277,8 @@ class PlatformIntegrationConfig(BaseSettings):
         return v
     
     def get_platform_integration(self, platform: PlatformType) -> PlatformIntegration:
-        """Get integration configuration for specific platform."""        
+        """Get integration configuration for specific platform."""
+        
         integrations = {
             PlatformType.YOUTUBE: PlatformIntegration(
                 platform=platform,
@@ -376,7 +388,8 @@ class PlatformIntegrationConfig(BaseSettings):
         ))
     
     def get_platform_credentials(self, platform: PlatformType) -> Dict[str, Any]:
-        """Get credentials for specific platform."""        
+        """Get credentials for specific platform."""
+        
         credentials = {
             PlatformType.YOUTUBE: {
                 "client_id": self.YOUTUBE_CLIENT_ID,
@@ -404,7 +417,8 @@ class PlatformIntegrationConfig(BaseSettings):
         return credentials.get(platform, {})
     
     def get_active_platforms(self) -> List[PlatformType]:
-        """Get list of active platform integrations."""        
+        """Get list of active platform integrations."""
+        
         active_platforms = []
         
         platform_status = {
@@ -426,7 +440,9 @@ class PlatformIntegrationConfig(BaseSettings):
         return [platform for platform, enabled in platform_status.items() if enabled]
     
     def get_webhook_config(self, platform: PlatformType) -> Dict[str, Any]:
-        """Get webhook configuration for platform."""        
+        """
+Get webhook configuration for platform."""
+        
         return {
             "base_url": self.WEBHOOK_BASE_URL,
             "endpoint": f"{self.WEBHOOK_BASE_URL}/{platform.value}/events",
@@ -437,7 +453,8 @@ class PlatformIntegrationConfig(BaseSettings):
         }
     
     def get_upload_config(self, platform: PlatformType) -> Dict[str, Any]:
-        """Get upload configuration for platform."""        
+        """Get upload configuration for platform."""
+        
         integration = self.get_platform_integration(platform)
         
         return {

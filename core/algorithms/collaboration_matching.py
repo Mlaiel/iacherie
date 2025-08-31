@@ -13,7 +13,8 @@ Advanced algorithm engine for intelligent creator collaboration matching providi
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
-"""import numpy as np
+"""
+import numpy as np
 import pandas as pd
 from typing import Dict, List, Any, Optional, Tuple, Union
 import logging
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile for matching"""    creator_id: str
+    """Comprehensive creator profile for matching"""
+    creator_id: str
     content_type: List[str]  # ['music', 'video', 'photography', 'blog', 'comedy']
     genre_tags: List[str]
     audience_demographics: Dict[str, Any]
@@ -45,7 +47,8 @@ class CreatorProfile:
 
 @dataclass
 class CollaborationMatch:
-    """Collaboration match result"""    creator_a_id: str
+    """Collaboration match result"""
+    creator_a_id: str
     creator_b_id: str
     compatibility_score: float
     synergy_potential: float
@@ -57,8 +60,10 @@ class CollaborationMatch:
     success_probability: float
 
 class CollaborationMatchingEngine:
-    """    Industrial-grade collaboration matching engine for creators
-    """    
+    """
+    Industrial-grade collaboration matching engine for creators
+    """
+    
     def __init__(self):
         self.scaler = StandardScaler()
         self.clustering_model = None
@@ -69,7 +74,8 @@ class CollaborationMatchingEngine:
         logger.info("CollaborationMatchingEngine initialized successfully")
     
     def _initialize_weights(self) -> Dict[str, float]:
-        """Initialize matching algorithm weights"""        return {
+        """Initialize matching algorithm weights"""
+        return {
             'content_synergy': 0.25,
             'audience_overlap': 0.20,
             'engagement_compatibility': 0.15,
@@ -80,7 +86,8 @@ class CollaborationMatchingEngine:
         }
     
     def _update_collaboration_graph(self, profile: CreatorProfile) -> None:
-        """Update the collaboration network graph"""        try:
+        """Update the collaboration network graph"""
+        try:
             # Add creator node to graph
             self.collaboration_graph.add_node(
                 profile.creator_id,
@@ -105,8 +112,10 @@ class CollaborationMatchingEngine:
     
     def find_matches(self, creator_id: str, max_matches: int = 10, 
                     min_compatibility: float = 0.6) -> List[CollaborationMatch]:
-        """        Find potential collaboration matches for a creator
-        """        try:
+        """
+        Find potential collaboration matches for a creator
+        """
+        try:
             if creator_id not in self.creator_profiles:
                 raise ValueError(f"Creator {creator_id} not found")
             
@@ -133,7 +142,8 @@ class CollaborationMatchingEngine:
     
     def _calculate_compatibility(self, profile_a: CreatorProfile, 
                                 profile_b: CreatorProfile) -> CollaborationMatch:
-        """Calculate comprehensive compatibility between two creators"""        try:
+        """Calculate comprehensive compatibility between two creators"""
+        try:
             # Content synergy analysis
             content_synergy = self._analyze_content_synergy(profile_a, profile_b)
             
@@ -210,7 +220,8 @@ class CollaborationMatchingEngine:
     
     def _analyze_content_synergy(self, profile_a: CreatorProfile, 
                                 profile_b: CreatorProfile) -> float:
-        """Analyze potential content synergy between creators"""        try:
+        """Analyze potential content synergy between creators"""
+        try:
             # Content type compatibility matrix
             synergy_matrix = {
                 ('music', 'video'): 0.9,
@@ -244,7 +255,8 @@ class CollaborationMatchingEngine:
     
     def _calculate_audience_overlap(self, profile_a: CreatorProfile, 
                                    profile_b: CreatorProfile) -> float:
-        """Calculate audience demographic overlap"""        try:
+        """Calculate audience demographic overlap"""
+        try:
             demographics_a = profile_a.audience_demographics
             demographics_b = profile_b.audience_demographics
             
@@ -294,7 +306,8 @@ class CollaborationMatchingEngine:
     
     def _calculate_distribution_overlap(self, dist_a: Dict[str, float], 
                                        dist_b: Dict[str, float]) -> float:
-        """Calculate overlap between two probability distributions"""        try:
+        """Calculate overlap between two probability distributions"""
+        try:
             all_keys = set(dist_a.keys()) | set(dist_b.keys())
             overlap = 0.0
             
@@ -311,7 +324,8 @@ class CollaborationMatchingEngine:
     
     def _assess_engagement_compatibility(self, profile_a: CreatorProfile, 
                                         profile_b: CreatorProfile) -> float:
-        """Assess engagement rate compatibility"""        try:
+        """Assess engagement rate compatibility"""
+        try:
             metrics_a = profile_a.engagement_metrics
             metrics_b = profile_b.engagement_metrics
             
@@ -339,7 +353,8 @@ class CollaborationMatchingEngine:
     
     def _assess_quality_alignment(self, profile_a: CreatorProfile, 
                                  profile_b: CreatorProfile) -> float:
-        """Assess content quality alignment"""        try:
+        """Assess content quality alignment"""
+        try:
             quality_a = profile_a.content_quality_score
             quality_b = profile_b.content_quality_score
             
@@ -357,7 +372,8 @@ class CollaborationMatchingEngine:
     
     def _calculate_geographic_proximity(self, profile_a: CreatorProfile, 
                                        profile_b: CreatorProfile) -> float:
-        """Calculate geographic proximity score"""        try:
+        """Calculate geographic proximity score"""
+        try:
             location_a = profile_a.geographic_location
             location_b = profile_b.geographic_location
             
@@ -375,7 +391,8 @@ class CollaborationMatchingEngine:
     
     def _assess_availability_compatibility(self, profile_a: CreatorProfile, 
                                           profile_b: CreatorProfile) -> float:
-        """Assess schedule compatibility"""        try:
+        """Assess schedule compatibility"""
+        try:
             calendar_a = profile_a.availability_calendar
             calendar_b = profile_b.availability_calendar
             
@@ -398,7 +415,8 @@ class CollaborationMatchingEngine:
     
     def _estimate_collaboration_revenue(self, profile_a: CreatorProfile, 
                                        profile_b: CreatorProfile) -> float:
-        """Estimate potential revenue from collaboration"""        try:
+        """Estimate potential revenue from collaboration"""
+        try:
             # Simple revenue potential calculation
             revenue_a = profile_a.revenue_potential
             revenue_b = profile_b.revenue_potential
@@ -419,7 +437,8 @@ class CollaborationMatchingEngine:
     
     def _determine_collaboration_type(self, profile_a: CreatorProfile, 
                                      profile_b: CreatorProfile) -> str:
-        """Determine the best collaboration type"""        try:
+        """Determine the best collaboration type"""
+        try:
             content_types_a = set(profile_a.content_type)
             content_types_b = set(profile_b.content_type)
             
@@ -443,7 +462,8 @@ class CollaborationMatchingEngine:
     
     def _generate_project_recommendations(self, profile_a: CreatorProfile, 
                                          profile_b: CreatorProfile) -> List[str]:
-        """Generate specific project recommendations"""        try:
+        """Generate specific project recommendations"""
+        try:
             recommendations = []
             
             content_types_a = set(profile_a.content_type)
@@ -491,7 +511,8 @@ class CollaborationMatchingEngine:
     
     def _assess_risk_factors(self, profile_a: CreatorProfile, 
                             profile_b: CreatorProfile) -> List[str]:
-        """Assess potential collaboration risks"""        try:
+        """Assess potential collaboration risks"""
+        try:
             risk_factors = []
             
             # Quality mismatch risk
@@ -529,7 +550,8 @@ class CollaborationMatchingEngine:
     def _calculate_success_probability(self, compatibility_score: float, 
                                       profile_a: CreatorProfile, 
                                       profile_b: CreatorProfile) -> float:
-        """Calculate collaboration success probability"""        try:
+        """Calculate collaboration success probability"""
+        try:
             base_probability = compatibility_score
             
             # Adjust based on collaboration history
@@ -552,7 +574,8 @@ class CollaborationMatchingEngine:
             return 0.5
     
     def get_collaboration_insights(self, creator_id: str) -> Dict[str, Any]:
-        """Get comprehensive collaboration insights for a creator"""        try:
+        """Get comprehensive collaboration insights for a creator"""
+        try:
             if creator_id not in self.creator_profiles:
                 raise ValueError(f"Creator {creator_id} not found")
             
@@ -581,7 +604,8 @@ class CollaborationMatchingEngine:
             return {}
     
     def _analyze_collaboration_patterns(self, profile: CreatorProfile) -> Dict[str, Any]:
-        """Analyze historical collaboration patterns"""        try:
+        """Analyze historical collaboration patterns"""
+        try:
             history = profile.collaboration_history
             
             if not history:
@@ -608,7 +632,8 @@ class CollaborationMatchingEngine:
     
     def _generate_optimization_recommendations(self, profile: CreatorProfile, 
                                               matches: List[CollaborationMatch]) -> List[str]:
-        """Generate recommendations to improve collaboration potential"""        try:
+        """Generate recommendations to improve collaboration potential"""
+        try:
             recommendations = []
             
             if not matches:
@@ -639,7 +664,8 @@ class CollaborationMatchingEngine:
             return []
     
     def _calculate_network_centrality(self, creator_id: str) -> float:
-        """Calculate creator's centrality in the collaboration network"""        try:
+        """Calculate creator's centrality in the collaboration network"""
+        try:
             if creator_id not in self.collaboration_graph:
                 return 0.0
             
@@ -652,7 +678,8 @@ class CollaborationMatchingEngine:
             return 0.0
     
     def _update_collaboration_graph(self, profile: CreatorProfile) -> None:
-        """Update the collaboration network graph"""        self.collaboration_graph.add_node(
+        """Update the collaboration network graph"""
+        self.collaboration_graph.add_node(
             profile.creator_id,
             content_type=profile.content_type,
             quality_score=profile.content_quality_score,
@@ -661,7 +688,8 @@ class CollaborationMatchingEngine:
     
     def find_collaboration_matches(self, creator_id: str, 
                                  top_k: int = 10) -> List[CollaborationMatch]:
-        """Find top collaboration matches for a creator"""        try:
+        """Find top collaboration matches for a creator"""
+        try:
             if creator_id not in self.creator_profiles:
                 raise ValueError(f"Creator {creator_id} not found")
             
@@ -686,7 +714,8 @@ class CollaborationMatchingEngine:
     
     def _calculate_match_score(self, profile_a: CreatorProfile, 
                               profile_b: CreatorProfile) -> CollaborationMatch:
-        """Calculate comprehensive match score between two creators"""        
+        """Calculate comprehensive match score between two creators"""
+        
         # Content synergy calculation
         content_synergy = self._calculate_content_synergy(profile_a, profile_b)
         
@@ -748,7 +777,8 @@ class CollaborationMatchingEngine:
     
     def _calculate_content_synergy(self, profile_a: CreatorProfile, 
                                   profile_b: CreatorProfile) -> float:
-        """Calculate content type synergy score"""        try:
+        """Calculate content type synergy score"""
+        try:
             # Content type compatibility matrix
             synergy_matrix = {
                 ('music', 'video'): 0.9,
@@ -779,7 +809,8 @@ class CollaborationMatchingEngine:
     
     def _calculate_audience_overlap(self, profile_a: CreatorProfile, 
                                    profile_b: CreatorProfile) -> float:
-        """Calculate audience demographic overlap"""        try:
+        """Calculate audience demographic overlap"""
+        try:
             demo_a = profile_a.audience_demographics
             demo_b = profile_b.audience_demographics
             
@@ -810,7 +841,8 @@ class CollaborationMatchingEngine:
     
     def _calculate_demographic_overlap(self, dist_a: Dict[str, float], 
                                      dist_b: Dict[str, float]) -> float:
-        """Calculate overlap between two demographic distributions"""        if not dist_a or not dist_b:
+        """Calculate overlap between two demographic distributions"""
+        if not dist_a or not dist_b:
             return 0.0
         
         overlap = 0.0
@@ -825,7 +857,8 @@ class CollaborationMatchingEngine:
     
     def _calculate_engagement_compatibility(self, profile_a: CreatorProfile, 
                                           profile_b: CreatorProfile) -> float:
-        """Calculate engagement metrics compatibility"""        try:
+        """Calculate engagement metrics compatibility"""
+        try:
             metrics_a = profile_a.engagement_metrics
             metrics_b = profile_b.engagement_metrics
             
@@ -849,12 +882,14 @@ class CollaborationMatchingEngine:
     
     def _calculate_quality_alignment(self, profile_a: CreatorProfile, 
                                    profile_b: CreatorProfile) -> float:
-        """Calculate content quality alignment"""        quality_diff = abs(profile_a.content_quality_score - profile_b.content_quality_score)
+        """Calculate content quality alignment"""
+        quality_diff = abs(profile_a.content_quality_score - profile_b.content_quality_score)
         return max(0.0, 1.0 - quality_diff)
     
     def _calculate_geographic_proximity(self, profile_a: CreatorProfile, 
                                       profile_b: CreatorProfile) -> float:
-        """Calculate geographic proximity score"""        if profile_a.geographic_location == profile_b.geographic_location:
+        """Calculate geographic proximity score"""
+        if profile_a.geographic_location == profile_b.geographic_location:
             return 1.0
         
         # Implement geographic distance calculation
@@ -863,19 +898,22 @@ class CollaborationMatchingEngine:
     
     def _calculate_availability_match(self, profile_a: CreatorProfile, 
                                     profile_b: CreatorProfile) -> float:
-        """Calculate availability calendar overlap"""        # Simplified availability matching
+        """Calculate availability calendar overlap"""
+        # Simplified availability matching
         # In production, implement detailed calendar analysis
         return 0.7
     
     def _calculate_joint_revenue_potential(self, profile_a: CreatorProfile, 
                                          profile_b: CreatorProfile) -> float:
-        """Calculate joint revenue potential"""        individual_avg = (profile_a.revenue_potential + profile_b.revenue_potential) / 2
+        """Calculate joint revenue potential"""
+        individual_avg = (profile_a.revenue_potential + profile_b.revenue_potential) / 2
         synergy_multiplier = 1.3  # Collaboration typically increases revenue
         return min(individual_avg * synergy_multiplier / 100, 1.0)
     
     def _determine_collaboration_type(self, profile_a: CreatorProfile, 
                                     profile_b: CreatorProfile) -> str:
-        """Determine the type of collaboration"""        content_types = set(profile_a.content_type + profile_b.content_type)
+        """Determine the type of collaboration"""
+        content_types = set(profile_a.content_type + profile_b.content_type)
         
         if 'music' in content_types and 'video' in content_types:
             return 'music_video_production'
@@ -888,7 +926,8 @@ class CollaborationMatchingEngine:
     
     def _generate_project_recommendations(self, profile_a: CreatorProfile, 
                                         profile_b: CreatorProfile) -> List[str]:
-        """Generate collaboration project recommendations"""        projects = []
+        """Generate collaboration project recommendations"""
+        projects = []
         content_types = set(profile_a.content_type + profile_b.content_type)
         
         if 'music' in content_types and 'video' in content_types:
@@ -904,7 +943,8 @@ class CollaborationMatchingEngine:
     
     def _assess_risk_factors(self, profile_a: CreatorProfile, 
                            profile_b: CreatorProfile) -> List[str]:
-        """Assess potential collaboration risks"""        risks = []
+        """Assess potential collaboration risks"""
+        risks = []
         
         # Quality mismatch risk
         quality_diff = abs(profile_a.content_quality_score - profile_b.content_quality_score)
@@ -928,7 +968,8 @@ class CollaborationMatchingEngine:
     def _calculate_success_probability(self, compatibility_score: float, 
                                      profile_a: CreatorProfile, 
                                      profile_b: CreatorProfile) -> float:
-        """Calculate collaboration success probability"""        base_probability = compatibility_score
+        """Calculate collaboration success probability"""
+        base_probability = compatibility_score
         
         # Boost for previous collaboration success
         collab_history_a = len([c for c in profile_a.collaboration_history 
@@ -941,7 +982,8 @@ class CollaborationMatchingEngine:
         return min(base_probability + history_boost, 1.0)
     
     def get_collaboration_analytics(self, creator_id: str) -> Dict[str, Any]:
-        """Get collaboration analytics for a creator"""        try:
+        """Get collaboration analytics for a creator"""
+        try:
             if creator_id not in self.creator_profiles:
                 raise ValueError(f"Creator {creator_id} not found")
             
@@ -965,7 +1007,8 @@ class CollaborationMatchingEngine:
     
     def update_collaboration_result(self, creator_a_id: str, creator_b_id: str, 
                                   success_rating: float, feedback: Dict[str, Any]) -> None:
-        """Update collaboration history with results"""        try:
+        """Update collaboration history with results"""
+        try:
             collaboration_record = {
                 'partner_id': creator_b_id,
                 'success_rating': success_rating,

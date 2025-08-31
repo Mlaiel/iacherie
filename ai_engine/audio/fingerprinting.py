@@ -3,7 +3,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive audio fingerprinting capabilities for audio identification and matching.
-"""import logging
+"""
+import logging
 import numpy as np
 import time
 import hashlib
@@ -16,7 +17,8 @@ import json
 logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
-    """Types of audio fingerprints"""    SPECTRAL_HASH = "spectral_hash"
+    """Types of audio fingerprints"""
+    SPECTRAL_HASH = "spectral_hash"
     CHROMA_VECTOR = "chroma_vector"
     MFCC_FEATURES = "mfcc_features"
     PEAK_LANDMARKS = "peak_landmarks"
@@ -24,7 +26,8 @@ class FingerprintType(Enum):
     HARMONIC_CONTENT = "harmonic_content"
 
 class MatchQuality(Enum):
-    """Quality levels for fingerprint matching"""    EXACT = "exact"
+    """Quality levels for fingerprint matching"""
+    EXACT = "exact"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -32,7 +35,8 @@ class MatchQuality(Enum):
 
 @dataclass
 class AudioFingerprint:
-    """Audio fingerprint representation"""    fingerprint_id: str
+    """Audio fingerprint representation"""
+    fingerprint_id: str
     fingerprint_type: FingerprintType
     fingerprint_data: Union[str, np.ndarray, Dict[str, Any]]
     duration_seconds: float
@@ -43,7 +47,8 @@ class AudioFingerprint:
 
 @dataclass
 class FingerprintMatch:
-    """Fingerprint match result"""    query_fingerprint: AudioFingerprint
+    """Fingerprint match result"""
+    query_fingerprint: AudioFingerprint
     matched_fingerprint: AudioFingerprint
     similarity_score: float  # 0.0 to 1.0
     match_quality: MatchQuality
@@ -53,12 +58,14 @@ class FingerprintMatch:
 
 @dataclass
 class FingerprintDatabase:
-    """Simple fingerprint database"""    fingerprints: Dict[str, AudioFingerprint] = field(default_factory=dict)
+    """Simple fingerprint database"""
+    fingerprints: Dict[str, AudioFingerprint] = field(default_factory=dict)
     index_by_type: Dict[FingerprintType, List[str]] = field(default_factory=dict)
     total_fingerprints: int = 0
 
 class AudioFingerprinter:
-    """Advanced audio fingerprinting engine"""    
+    """Advanced audio fingerprinting engine"""
+    
     def __init__(self, sample_rate: int = 44100):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -85,7 +92,8 @@ class AudioFingerprinter:
     def generate_fingerprint(self, audio_data: np.ndarray, 
                            fingerprint_type: FingerprintType,
                            metadata: Optional[Dict[str, Any]] = None) -> AudioFingerprint:
-        """Generate audio fingerprint"""        try:
+        """Generate audio fingerprint"""
+        try:
             duration = len(audio_data) / self.sample_rate
             fingerprint_id = self._generate_fingerprint_id(audio_data, fingerprint_type)
             
@@ -126,13 +134,15 @@ class AudioFingerprinter:
             raise
     
     def _generate_fingerprint_id(self, audio_data: np.ndarray, fingerprint_type: FingerprintType) -> str:
-        """Generate unique fingerprint ID"""        # Create ID from audio hash and type
+        """Generate unique fingerprint ID"""
+        # Create ID from audio hash and type
         audio_hash = hashlib.md5(audio_data.tobytes()).hexdigest()[:8]
         timestamp = int(time.time())
         return f"{fingerprint_type.value}_{audio_hash}_{timestamp}"
     
     def _generate_spectral_hash(self, audio_data: np.ndarray) -> str:
-        """Generate spectral hash fingerprint"""        try:
+        """Generate spectral hash fingerprint"""
+        try:
             # Compute FFT
             fft_data = np.fft.fft(audio_data[:self.frame_size * 8])  # Use multiple frames
             magnitude = np.abs(fft_data[:len(fft_data)//2])  # Positive frequencies only
@@ -154,7 +164,8 @@ class AudioFingerprinter:
             return "error_hash"
     
     def _generate_chroma_vector(self, audio_data: np.ndarray) -> np.ndarray:
-        """Generate chroma vector fingerprint"""        try:
+        """Generate chroma vector fingerprint"""
+        try:
             # Simple chroma feature extraction
             # In real implementation, would use librosa or similar
             
@@ -209,7 +220,8 @@ class AudioFingerprinter:
             return np.zeros(self.n_chroma)
     
     def _generate_mfcc_features(self, audio_data: np.ndarray) -> np.ndarray:
-        """Generate MFCC features fingerprint"""        try:
+        """Generate MFCC features fingerprint"""
+        try:
             # Simplified MFCC computation
             # In real implementation, would use librosa or similar
             
@@ -265,7 +277,8 @@ class AudioFingerprinter:
             return np.zeros(self.n_mfcc)
     
     def _create_mel_filters(self, nfft: int, n_filters: int = 26) -> np.ndarray:
-        """Create mel filter bank"""        # Simplified mel filter bank
+        """Create mel filter bank"""
+        # Simplified mel filter bank
         low_freq = 0
         high_freq = self.sample_rate / 2
         
@@ -303,7 +316,8 @@ class AudioFingerprinter:
         return filters
     
     def _generate_peak_landmarks(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Generate peak landmark fingerprint"""        try:
+        """Generate peak landmark fingerprint"""
+        try:
             # Spectral peak detection
             fft_data = np.fft.fft(audio_data[:self.frame_size * 4])
             magnitude = np.abs(fft_data[:len(fft_data)//2])
@@ -354,7 +368,8 @@ class AudioFingerprinter:
             return {'peaks': [], 'landmarks': [], 'peak_count': 0}
     
     def _generate_tempo_rhythm(self, audio_data: np.ndarray) -> Dict[str, float]:
-        """Generate tempo and rhythm fingerprint"""        try:
+        """Generate tempo and rhythm fingerprint"""
+        try:
             # Simple tempo detection using energy
             frame_length = int(self.sample_rate * 0.1)  # 100ms frames
             num_frames = len(audio_data) // frame_length
@@ -412,7 +427,8 @@ class AudioFingerprinter:
             return {'tempo': 120.0, 'rhythm_regularity': 0.5}
     
     def _generate_harmonic_content(self, audio_data: np.ndarray) -> Dict[str, float]:
-        """Generate harmonic content fingerprint"""        try:
+        """Generate harmonic content fingerprint"""
+        try:
             # FFT analysis
             fft_data = np.fft.fft(audio_data[:self.frame_size * 4])
             magnitude = np.abs(fft_data[:len(fft_data)//2])
@@ -469,7 +485,8 @@ class AudioFingerprinter:
             }
     
     def _generate_hash(self, fingerprint_data: Any) -> str:
-        """Generate hash from fingerprint data"""        try:
+        """Generate hash from fingerprint data"""
+        try:
             if isinstance(fingerprint_data, str):
                 return hashlib.md5(fingerprint_data.encode()).hexdigest()
             elif isinstance(fingerprint_data, np.ndarray):
@@ -483,7 +500,8 @@ class AudioFingerprinter:
             return hashlib.md5(b"error").hexdigest()
     
     def add_to_database(self, fingerprint: AudioFingerprint) -> bool:
-        """Add fingerprint to database"""        try:
+        """Add fingerprint to database"""
+        try:
             # Store fingerprint
             self.database.fingerprints[fingerprint.fingerprint_id] = fingerprint
             
@@ -503,7 +521,8 @@ class AudioFingerprinter:
     
     def match_fingerprint(self, query_fingerprint: AudioFingerprint, 
                          max_results: int = 10) -> List[FingerprintMatch]:
-        """Match fingerprint against database"""        try:
+        """Match fingerprint against database"""
+        try:
             matches = []
             
             # Get candidates of same type
@@ -545,7 +564,8 @@ class AudioFingerprinter:
             return []
     
     def _calculate_similarity(self, fp1: AudioFingerprint, fp2: AudioFingerprint) -> float:
-        """Calculate similarity between two fingerprints"""        try:
+        """Calculate similarity between two fingerprints"""
+        try:
             if fp1.fingerprint_type != fp2.fingerprint_type:
                 return 0.0
             
@@ -580,7 +600,8 @@ class AudioFingerprinter:
             return 0.0
     
     def _calculate_hash_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate similarity between hash fingerprints"""        if hash1 == hash2:
+        """Calculate similarity between hash fingerprints"""
+        if hash1 == hash2:
             return 1.0
         
         # Calculate Hamming distance for similar hashes
@@ -591,7 +612,8 @@ class AudioFingerprinter:
         return 0.0
     
     def _calculate_vector_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate similarity between vector fingerprints"""        try:
+        """Calculate similarity between vector fingerprints"""
+        try:
             if len(vec1) != len(vec2):
                 return 0.0
             
@@ -610,7 +632,8 @@ class AudioFingerprinter:
             return 0.0
     
     def _calculate_landmark_similarity(self, landmarks1: Dict, landmarks2: Dict) -> float:
-        """Calculate similarity between landmark fingerprints"""        try:
+        """Calculate similarity between landmark fingerprints"""
+        try:
             peaks1 = landmarks1.get('landmarks', [])
             peaks2 = landmarks2.get('landmarks', [])
             
@@ -637,7 +660,8 @@ class AudioFingerprinter:
             return 0.0
     
     def _calculate_tempo_similarity(self, tempo1: Dict, tempo2: Dict) -> float:
-        """Calculate similarity between tempo fingerprints"""        try:
+        """Calculate similarity between tempo fingerprints"""
+        try:
             t1 = tempo1.get('tempo', 120)
             t2 = tempo2.get('tempo', 120)
             
@@ -658,7 +682,8 @@ class AudioFingerprinter:
             return 0.0
     
     def _calculate_harmonic_similarity(self, harmonic1: Dict, harmonic2: Dict) -> float:
-        """Calculate similarity between harmonic fingerprints"""        try:
+        """Calculate similarity between harmonic fingerprints"""
+        try:
             # Fundamental frequency similarity
             f1 = harmonic1.get('fundamental_frequency', 440)
             f2 = harmonic2.get('fundamental_frequency', 440)
@@ -688,7 +713,8 @@ class AudioFingerprinter:
             return 0.0
     
     def _determine_match_quality(self, similarity_score: float) -> MatchQuality:
-        """Determine match quality from similarity score"""        if similarity_score >= self.match_thresholds[MatchQuality.EXACT]:
+        """Determine match quality from similarity score"""
+        if similarity_score >= self.match_thresholds[MatchQuality.EXACT]:
             return MatchQuality.EXACT
         elif similarity_score >= self.match_thresholds[MatchQuality.HIGH]:
             return MatchQuality.HIGH
@@ -700,7 +726,8 @@ class AudioFingerprinter:
             return MatchQuality.NO_MATCH
     
     def get_database_stats(self) -> Dict[str, Any]:
-        """Get database statistics"""        return {
+        """Get database statistics"""
+        return {
             'total_fingerprints': self.database.total_fingerprints,
             'fingerprints_by_type': {
                 fp_type.value: len(ids) 
@@ -710,7 +737,8 @@ class AudioFingerprinter:
         }
     
     def clear_database(self) -> bool:
-        """Clear fingerprint database"""        try:
+        """Clear fingerprint database"""
+        try:
             self.database = FingerprintDatabase()
             self.logger.info("Fingerprint database cleared")
             return True

@@ -13,7 +13,8 @@ Advanced feature extraction engine for comprehensive content analysis providing:
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
-"""import numpy as np
+"""
+import numpy as np
 import cv2
 import librosa
 import torch
@@ -37,7 +38,8 @@ import io
 logger = logging.getLogger(__name__)
 
 class FeatureType(Enum):
-    """Types of features that can be extracted"""    AUDIO_SPECTRAL = "audio_spectral"
+    """Types of features that can be extracted"""
+    AUDIO_SPECTRAL = "audio_spectral"
     AUDIO_TEMPORAL = "audio_temporal"
     AUDIO_SEMANTIC = "audio_semantic"
     VIDEO_VISUAL = "video_visual"
@@ -50,14 +52,16 @@ class FeatureType(Enum):
     CROSS_MODAL = "cross_modal"
 
 class ExtractionMode(Enum):
-    """Feature extraction modes"""    FAST = "fast"           # Basic features, optimized for speed
+    """Feature extraction modes"""
+    FAST = "fast"           # Basic features, optimized for speed
     BALANCED = "balanced"   # Good balance of features and performance
     COMPREHENSIVE = "comprehensive"  # All available features
     CUSTOM = "custom"       # User-defined feature set
 
 @dataclass
 class FeatureConfig:
-    """Configuration for feature extraction"""    extraction_mode: ExtractionMode
+    """Configuration for feature extraction"""
+    extraction_mode: ExtractionMode
     feature_types: List[FeatureType]
     output_dimensions: Optional[int] = None
     normalize_features: bool = True
@@ -66,7 +70,8 @@ class FeatureConfig:
 
 @dataclass
 class ExtractedFeatures:
-    """Container for extracted features"""    content_id: str
+    """Container for extracted features"""
+    content_id: str
     feature_vectors: Dict[str, np.ndarray]
     feature_metadata: Dict[str, Any]
     extraction_config: FeatureConfig
@@ -74,8 +79,10 @@ class ExtractedFeatures:
     processing_time: float
 
 class FeatureExtractionEngine:
-    """    Industrial-grade universal feature extraction engine
-    """    
+    """
+    Industrial-grade universal feature extraction engine
+    """
+    
     def __init__(self):
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.scalers: Dict[str, StandardScaler] = {}
@@ -90,7 +97,8 @@ class FeatureExtractionEngine:
         logger.info("FeatureExtractionEngine initialized successfully")
     
     def _initialize_models(self) -> None:
-        """Initialize AI models for feature extraction"""        try:
+        """Initialize AI models for feature extraction"""
+        try:
             # Text models
             self.text_tokenizer = AutoTokenizer.from_pretrained('sentence-transformers/all-MiniLM-L6-v2')
             self.text_model = AutoModel.from_pretrained('sentence-transformers/all-MiniLM-L6-v2')
@@ -115,7 +123,8 @@ class FeatureExtractionEngine:
             raise
     
     def _initialize_pipelines(self) -> None:
-        """Initialize feature extraction pipelines"""        self.extraction_pipelines = {
+        """Initialize feature extraction pipelines"""
+        self.extraction_pipelines = {
             FeatureType.AUDIO_SPECTRAL: self._extract_audio_spectral_features,
             FeatureType.AUDIO_TEMPORAL: self._extract_audio_temporal_features,
             FeatureType.AUDIO_SEMANTIC: self._extract_audio_semantic_features,
@@ -131,7 +140,8 @@ class FeatureExtractionEngine:
     
     def extract_features(self, content_data: Any, content_type: str, 
                         config: FeatureConfig, content_id: str = None) -> ExtractedFeatures:
-        """Extract features from content using specified configuration"""        import time
+        """Extract features from content using specified configuration"""
+        import time
         start_time = time.time()
         
         try:
@@ -192,7 +202,8 @@ class FeatureExtractionEngine:
             raise
     
     def _extract_audio_spectral_features(self, audio_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
-        """Extract spectral features from audio"""        try:
+        """Extract spectral features from audio"""
+        try:
             if isinstance(audio_data, str):
                 # Audio file path
                 y, sr = librosa.load(audio_data, sr=22050)
@@ -237,7 +248,8 @@ class FeatureExtractionEngine:
             return np.array([]), {}, 0.0
     
     def _extract_audio_temporal_features(self, audio_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
-        """Extract temporal features from audio"""        try:
+        """Extract temporal features from audio"""
+        try:
             if isinstance(audio_data, str):
                 y, sr = librosa.load(audio_data, sr=22050)
             else:
@@ -273,7 +285,8 @@ class FeatureExtractionEngine:
             return np.array([]), {}, 0.0
     
     def _extract_audio_semantic_features(self, audio_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
-        """Extract semantic features from audio using Wav2Vec2"""        try:
+        """Extract semantic features from audio using Wav2Vec2"""
+        try:
             if isinstance(audio_data, str):
                 y, sr = librosa.load(audio_data, sr=16000)  # Wav2Vec2 expects 16kHz
             else:
@@ -303,7 +316,8 @@ class FeatureExtractionEngine:
             return np.array([]), {}, 0.0
     
     def _extract_video_visual_features(self, video_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
-        """Extract visual features from video"""        try:
+        """Extract visual features from video"""
+        try:
             if isinstance(video_data, str):
                 cap = cv2.VideoCapture(video_data)
             else:
@@ -366,7 +380,8 @@ class FeatureExtractionEngine:
             return np.array([]), {}, 0.0
     
     def _extract_video_temporal_features(self, video_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
-        """Extract temporal features from video"""        try:
+        """Extract temporal features from video"""
+        try:
             if isinstance(video_data, str):
                 cap = cv2.VideoCapture(video_data)
                 fps = cap.get(cv2.CAP_PROP_FPS)
@@ -404,7 +419,8 @@ class FeatureExtractionEngine:
             return np.array([]), {}, 0.0
     
     def _extract_video_semantic_features(self, video_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
-        """Extract semantic features from video using CLIP"""        try:
+        """Extract semantic features from video using CLIP"""
+        try:
             # Sample key frames for semantic analysis
             frames = self._sample_video_frames(video_data, num_frames=5)
             
@@ -443,7 +459,8 @@ class FeatureExtractionEngine:
             return np.array([]), {}, 0.0
     
     def _extract_image_visual_features(self, image_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
-        """Extract visual features from image"""        try:
+        """Extract visual features from image"""
+        try:
             if isinstance(image_data, str):
                 image = cv2.imread(image_data)
             else:
@@ -476,7 +493,8 @@ class FeatureExtractionEngine:
             return np.array([]), {}, 0.0
     
     def _extract_image_semantic_features(self, image_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
-        """Extract semantic features from image using CLIP"""        try:
+        """Extract semantic features from image using CLIP"""
+        try:
             if isinstance(image_data, str):
                 pil_image = Image.open(image_data)
             else:
@@ -509,7 +527,8 @@ class FeatureExtractionEngine:
             return np.array([]), {}, 0.0
     
     def _extract_text_linguistic_features(self, text_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
-        """Extract linguistic features from text"""        try:
+        """Extract linguistic features from text"""
+        try:
             if isinstance(text_data, str):
                 if text_data.endswith('.txt'):
                     with open(text_data, 'r', encoding='utf-8') as f:
@@ -553,7 +572,8 @@ class FeatureExtractionEngine:
             return np.array([]), {}, 0.0
     
     def _extract_text_semantic_features(self, text_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
-        """Extract semantic features from text"""        try:
+        """Extract semantic features from text"""
+        try:
             if isinstance(text_data, str):
                 if text_data.endswith('.txt'):
                     with open(text_data, 'r', encoding='utf-8') as f:
@@ -593,7 +613,8 @@ class FeatureExtractionEngine:
             return np.array([]), {}, 0.0
     
     def _extract_cross_modal_features(self, content_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
-        """Extract cross-modal features"""        try:
+        """Extract cross-modal features"""
+        try:
             # This would involve combining features from multiple modalities
             # For now, return placeholder
             features = np.array([])
@@ -608,7 +629,8 @@ class FeatureExtractionEngine:
     
     # Helper methods
     def _extract_hog_features(self, gray_image: np.ndarray) -> np.ndarray:
-        """Extract HOG features from grayscale image"""        from skimage.feature import hog
+        """Extract HOG features from grayscale image"""
+        from skimage.feature import hog
         
         # Resize image for consistent feature size
         resized_image = cv2.resize(gray_image, (64, 64))
@@ -625,7 +647,8 @@ class FeatureExtractionEngine:
         return features
     
     def _extract_color_histogram(self, image: np.ndarray) -> np.ndarray:
-        """Extract color histogram features"""        # Calculate histogram for each channel
+        """Extract color histogram features"""
+        # Calculate histogram for each channel
         hist_b = cv2.calcHist([image], [0], None, [32], [0, 256])
         hist_g = cv2.calcHist([image], [1], None, [32], [0, 256])
         hist_r = cv2.calcHist([image], [2], None, [32], [0, 256])
@@ -637,7 +660,8 @@ class FeatureExtractionEngine:
         return hist
     
     def _extract_texture_features(self, gray_image: np.ndarray) -> np.ndarray:
-        """Extract texture features using Local Binary Patterns"""        from skimage.feature import local_binary_pattern
+        """Extract texture features using Local Binary Patterns"""
+        from skimage.feature import local_binary_pattern
         
         # Resize for consistency
         resized_image = cv2.resize(gray_image, (64, 64))
@@ -653,7 +677,8 @@ class FeatureExtractionEngine:
         return hist
     
     def _extract_shape_features(self, gray_image: np.ndarray) -> np.ndarray:
-        """Extract shape features from image"""        # Find contours
+        """Extract shape features from image"""
+        # Find contours
         contours, _ = cv2.findContours(gray_image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         
         if not contours:
@@ -685,12 +710,14 @@ class FeatureExtractionEngine:
         return features
     
     def _extract_motion_features(self, video_data: Any) -> np.ndarray:
-        """Extract motion features from video"""        # Simplified motion feature extraction
+        """Extract motion features from video"""
+        # Simplified motion feature extraction
         # In production, implement optical flow analysis
         return np.array([0.5, 0.3, 0.7])  # Placeholder motion features
     
     def _sample_video_frames(self, video_data: Any, num_frames: int = 5) -> List[np.ndarray]:
-        """Sample frames from video for analysis"""        frames = []
+        """Sample frames from video for analysis"""
+        frames = []
         
         try:
             if isinstance(video_data, str):
@@ -714,7 +741,8 @@ class FeatureExtractionEngine:
         return frames
     
     def _normalize_features(self, feature_vectors: Dict[str, np.ndarray]) -> Dict[str, np.ndarray]:
-        """Normalize feature vectors"""        normalized_features = {}
+        """Normalize feature vectors"""
+        normalized_features = {}
         
         for feature_type, features in feature_vectors.items():
             if len(features) == 0:
@@ -735,7 +763,8 @@ class FeatureExtractionEngine:
     
     def _reduce_dimensions(self, feature_vectors: Dict[str, np.ndarray], 
                           target_dims: int) -> Dict[str, np.ndarray]:
-        """Reduce feature dimensions using PCA"""        reduced_features = {}
+        """Reduce feature dimensions using PCA"""
+        reduced_features = {}
         
         for feature_type, features in feature_vectors.items():
             if len(features) == 0 or len(features) <= target_dims:
@@ -750,7 +779,8 @@ class FeatureExtractionEngine:
         return reduced_features
     
     def get_feature_statistics(self) -> Dict[str, Any]:
-        """Get statistics about extracted features"""        stats = {
+        """Get statistics about extracted features"""
+        stats = {
             'total_extractions': len(self.feature_cache),
             'feature_types_used': set(),
             'average_processing_time': 0.0,

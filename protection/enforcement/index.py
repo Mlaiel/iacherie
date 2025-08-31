@@ -1,6 +1,7 @@
 """Index file for Content Protection Enforcement Module
 Main entry point and orchestration for comprehensive copyright enforcement system
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -29,9 +30,11 @@ logger = logging.getLogger(__name__)
 
 
 class EnforcementOrchestrator:
-    """    Main orchestrator for the complete enforcement workflow
+    """
+    Main orchestrator for the complete enforcement workflow
     Coordinates all enforcement components for comprehensive copyright protection
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         
@@ -52,7 +55,8 @@ class EnforcementOrchestrator:
         logger.info("Enforcement orchestrator initialized")
     
     async def initialize(self):
-        """Initialize all enforcement components"""        try:
+        """Initialize all enforcement components"""
+        try:
             logger.info("Initializing enforcement components...")
             
             # Initialize core enforcement service
@@ -92,7 +96,8 @@ class EnforcementOrchestrator:
         content_type: str = "audio",
         priority: str = "medium"
     ) -> Dict[str, Any]:
-        """        Complete workflow for processing a content violation
+        """
+        Complete workflow for processing a content violation
         
         Args:
             original_content_id: ID of the original protected content
@@ -102,7 +107,8 @@ class EnforcementOrchestrator:
             
         Returns:
             Dict containing processing results and case information
-        """        try:
+        """
+        try:
             logger.info(f"Processing content violation: {suspected_violation_url}")
             
             # Step 1: Content Analysis and Matching
@@ -221,7 +227,8 @@ class EnforcementOrchestrator:
         violations: List[Dict[str, Any]],
         batch_size: int = 10
     ) -> List[Dict[str, Any]]:
-        """        Process multiple violations in batches
+        """
+        Process multiple violations in batches
         
         Args:
             violations: List of violation data dictionaries
@@ -229,7 +236,8 @@ class EnforcementOrchestrator:
             
         Returns:
             List of processing results
-        """        try:
+        """
+        try:
             logger.info(f"Processing {len(violations)} violations in batches of {batch_size}")
             
             results = []
@@ -294,7 +302,8 @@ class EnforcementOrchestrator:
         report_type: str = "comprehensive",
         time_period_days: int = 30
     ) -> Dict[str, Any]:
-        """        Generate comprehensive enforcement report
+        """
+        Generate comprehensive enforcement report
         
         Args:
             report_type: Type of report (summary, comprehensive, detailed)
@@ -302,7 +311,8 @@ class EnforcementOrchestrator:
             
         Returns:
             Complete enforcement report
-        """        try:
+        """
+        try:
             logger.info(f"Generating {report_type} enforcement report for {time_period_days} days")
             
             end_date = datetime.utcnow()
@@ -356,11 +366,13 @@ class EnforcementOrchestrator:
             raise
     
     async def health_check(self) -> Dict[str, Any]:
-        """        Perform comprehensive health check of all enforcement components
+        """
+        Perform comprehensive health check of all enforcement components
         
         Returns:
             Health status of all components
-        """        try:
+        """
+        try:
             health_status = {
                 'overall_status': 'healthy',
                 'timestamp': datetime.utcnow().isoformat(),
@@ -452,7 +464,8 @@ class EnforcementOrchestrator:
             }
     
     async def shutdown(self):
-        """Shutdown all enforcement components gracefully"""        try:
+        """Shutdown all enforcement components gracefully"""
+        try:
             logger.info("Shutting down enforcement orchestrator...")
             
             # Shutdown components in reverse order
@@ -482,7 +495,8 @@ _orchestrator_instance = None
 
 
 async def get_enforcement_orchestrator(config: Optional[Dict[str, Any]] = None) -> EnforcementOrchestrator:
-    """Get or create the global enforcement orchestrator instance"""    global _orchestrator_instance
+    """Get or create the global enforcement orchestrator instance"""
+    global _orchestrator_instance
     
     if _orchestrator_instance is None:
         _orchestrator_instance = EnforcementOrchestrator(config)
@@ -498,7 +512,8 @@ async def process_violation(
     content_type: str = "audio",
     priority: str = "medium"
 ) -> Dict[str, Any]:
-    """Quick function to process a single violation"""    orchestrator = await get_enforcement_orchestrator()
+    """Quick function to process a single violation"""
+    orchestrator = await get_enforcement_orchestrator()
     return await orchestrator.process_content_violation(
         original_content_id=original_content_id,
         suspected_violation_url=violation_url,
@@ -508,17 +523,20 @@ async def process_violation(
 
 
 async def bulk_process_violations(violations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """Quick function to process multiple violations"""    orchestrator = await get_enforcement_orchestrator()
+    """Quick function to process multiple violations"""
+    orchestrator = await get_enforcement_orchestrator()
     return await orchestrator.bulk_process_violations(violations)
 
 
 async def generate_report(report_type: str = "comprehensive", days: int = 30) -> Dict[str, Any]:
-    """Quick function to generate enforcement report"""    orchestrator = await get_enforcement_orchestrator()
+    """Quick function to generate enforcement report"""
+    orchestrator = await get_enforcement_orchestrator()
     return await orchestrator.generate_enforcement_report(report_type, days)
 
 
 async def health_check() -> Dict[str, Any]:
-    """Quick function to check system health"""    orchestrator = await get_enforcement_orchestrator()
+    """Quick function to check system health"""
+    orchestrator = await get_enforcement_orchestrator()
     return await orchestrator.health_check()
 
 

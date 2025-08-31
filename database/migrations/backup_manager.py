@@ -22,7 +22,8 @@ Advanced backup management for:
 BACKUP STRATEGY:
 Pre-Migration Backup → Incremental Snapshots → Recovery Point Management → 
 Point-in-Time Recovery → Disaster Recovery → Automated Verification
-"""import asyncio
+"""
+import asyncio
 import logging
 import os
 import shutil
@@ -47,7 +48,8 @@ logger = logging.getLogger(__name__)
 
 
 class BackupType(Enum):
-    """Types of backup operations"""    FULL_BACKUP = "full_backup"                  # Complete database backup
+    """Types of backup operations"""
+    FULL_BACKUP = "full_backup"                  # Complete database backup
     INCREMENTAL_BACKUP = "incremental_backup"   # Changes since last backup
     DIFFERENTIAL_BACKUP = "differential_backup" # Changes since last full backup
     SCHEMA_BACKUP = "schema_backup"             # Schema structure only
@@ -58,7 +60,8 @@ class BackupType(Enum):
 
 
 class BackupStrategy(Enum):
-    """Backup strategies for different scenarios"""    CONSERVATIVE = "conservative"    # Maximum safety, multiple backups
+    """Backup strategies for different scenarios"""
+    CONSERVATIVE = "conservative"    # Maximum safety, multiple backups
     BALANCED = "balanced"           # Balance safety and performance
     PERFORMANCE = "performance"     # Minimize backup overhead
     COMPLIANCE = "compliance"       # Meet regulatory requirements
@@ -66,7 +69,8 @@ class BackupStrategy(Enum):
 
 
 class CompressionType(Enum):
-    """Compression algorithms for backups"""    NONE = "none"
+    """Compression algorithms for backups"""
+    NONE = "none"
     GZIP = "gzip"
     BZIP2 = "bzip2"
     LZMA = "lzma"
@@ -75,7 +79,8 @@ class CompressionType(Enum):
 
 @dataclass
 class BackupConfiguration:
-    """Configuration for backup operations"""    backup_id: str
+    """Configuration for backup operations"""
+    backup_id: str
     backup_type: BackupType
     strategy: BackupStrategy
     compression: CompressionType = CompressionType.GZIP
@@ -91,7 +96,8 @@ class BackupConfiguration:
 
 @dataclass
 class BackupOperation:
-    """Individual backup operation details"""    operation_id: str
+    """Individual backup operation details"""
+    operation_id: str
     backup_config: BackupConfiguration
     start_time: datetime
     end_time: Optional[datetime] = None
@@ -105,7 +111,8 @@ class BackupOperation:
 
 
 class EnterpriseBackupManager:
-    """    Ultra-advanced backup manager for enterprise migration management
+    """
+    Ultra-advanced backup manager for enterprise migration management
     
     Provides comprehensive backup and recovery for:
     - Content protection database backups
@@ -113,7 +120,8 @@ class EnterpriseBackupManager:
     - AI processing state snapshots
     - Platform integration configurations
     - Multi-system recovery coordination
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.backup_operations: Dict[str, BackupOperation] = {}
@@ -130,7 +138,8 @@ class EnterpriseBackupManager:
         logger.info("✅ Enterprise Backup Manager initialized")
     
     async def initialize(self) -> bool:
-        """Initialize backup manager with storage and verification"""        try:
+        """Initialize backup manager with storage and verification"""
+        try:
             # Create backup directories
             await self._ensure_backup_directories()
             
@@ -156,7 +165,8 @@ class EnterpriseBackupManager:
         database_config: Dict[str, Any],
         backup_strategy: BackupStrategy = BackupStrategy.BALANCED
     ) -> Dict[str, Any]:
-        """Create comprehensive backup before migration execution"""        
+        """Create comprehensive backup before migration execution"""
+        
         backup_id = f"pre_migration_{migration_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
         logger.info(f"🔄 Creating pre-migration backup: {backup_id}")
@@ -213,7 +223,8 @@ class EnterpriseBackupManager:
         base_backup_id: str,
         database_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create incremental backup since last full backup"""        
+        """Create incremental backup since last full backup"""
+        
         backup_id = f"incremental_{base_backup_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
         logger.info(f"📈 Creating incremental backup: {backup_id}")
@@ -258,7 +269,8 @@ class EnterpriseBackupManager:
             }
     
     async def verify_backup_integrity(self, backup_id: str) -> Dict[str, Any]:
-        """Verify backup file integrity and restorability"""        
+        """Verify backup file integrity and restorability"""
+        
         logger.info(f"🔍 Verifying backup integrity: {backup_id}")
         
         try:
@@ -329,7 +341,8 @@ class EnterpriseBackupManager:
         target_database_config: Dict[str, Any],
         restore_options: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Restore database from backup"""        
+        """Restore database from backup"""
+        
         restore_id = f"restore_{backup_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
         logger.info(f"🔄 Starting database restore: {restore_id}")
@@ -394,7 +407,8 @@ class EnterpriseBackupManager:
         target_timestamp: datetime,
         database_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create point-in-time backup for specific timestamp"""        
+        """Create point-in-time backup for specific timestamp"""
+        
         backup_id = f"pit_{target_timestamp.strftime('%Y%m%d_%H%M%S')}"
         
         logger.info(f"⏰ Creating point-in-time backup: {backup_id}")
@@ -435,7 +449,8 @@ class EnterpriseBackupManager:
         self,
         retention_policy: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Clean up old backups according to retention policy"""        
+        """Clean up old backups according to retention policy"""
+        
         logger.info("🧹 Starting backup cleanup")
         
         try:
@@ -482,7 +497,8 @@ class EnterpriseBackupManager:
             }
     
     async def get_backup_status(self, backup_id: str = None) -> Dict[str, Any]:
-        """Get status of specific backup or all backups"""        
+        """Get status of specific backup or all backups"""
+        
         try:
             if backup_id:
                 # Get specific backup status
@@ -530,7 +546,8 @@ class EnterpriseBackupManager:
     # Private implementation methods
     
     async def _ensure_backup_directories(self):
-        """Ensure backup directories exist"""        directories = [
+        """Ensure backup directories exist"""
+        directories = [
             self.base_backup_path,
             self.temp_path,
             os.path.join(self.base_backup_path, "full"),
@@ -545,14 +562,17 @@ class EnterpriseBackupManager:
         logger.info(f"📁 Backup directories ensured: {len(directories)} paths")
     
     async def _initialize_encryption(self):
-        """Initialize encryption for backups"""        # Implementation would setup encryption keys and configuration
+        """Initialize encryption for backups"""
+        # Implementation would setup encryption keys and configuration
         logger.info("🔐 Backup encryption initialized")
     
     async def _setup_backup_monitoring(self):
-        """Setup monitoring for backup operations"""        logger.info("📊 Backup monitoring configured")
+        """Setup monitoring for backup operations"""
+        logger.info("📊 Backup monitoring configured")
     
     async def _load_recovery_points(self):
-        """Load existing recovery points from storage"""        # Implementation would load from database or file system
+        """Load existing recovery points from storage"""
+        # Implementation would load from database or file system
         logger.info("📋 Recovery points loaded")
     
     async def _execute_backup_operation(
@@ -560,7 +580,8 @@ class EnterpriseBackupManager:
         backup_config: BackupConfiguration,
         database_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute the actual backup operation"""        
+        """Execute the actual backup operation"""
+        
         start_time = datetime.utcnow()
         
         try:
@@ -621,7 +642,8 @@ class EnterpriseBackupManager:
         backup_file: str,
         database_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute full database backup"""        
+        """Execute full database backup"""
+        
         try:
             # Build pg_dump command
             cmd = [
@@ -676,7 +698,8 @@ class EnterpriseBackupManager:
         backup_file: str,
         database_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute schema-only backup"""        
+        """Execute schema-only backup"""
+        
         try:
             # Build pg_dump command for schema only
             cmd = [
@@ -732,7 +755,8 @@ class EnterpriseBackupManager:
         backup_file: str,
         database_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute data-only backup"""        
+        """Execute data-only backup"""
+        
         try:
             # Build pg_dump command for data only
             cmd = [
@@ -786,7 +810,8 @@ class EnterpriseBackupManager:
     # Additional helper methods (implementation details)
     
     async def _find_backup_record(self, backup_id: str) -> Optional[Dict[str, Any]]:
-        """Find backup record by ID"""        # Implementation would query backup database or file system
+        """Find backup record by ID"""
+        # Implementation would query backup database or file system
         return None
     
     async def _create_recovery_point(
@@ -795,7 +820,8 @@ class EnterpriseBackupManager:
         backup_result: Dict[str, Any],
         description: str
     ) -> Dict[str, Any]:
-        """Create recovery point for backup"""        # Implementation would create recovery point record
+        """Create recovery point for backup"""
+        # Implementation would create recovery point record
         return {"recovery_point_id": f"rp_{backup_id}"}
     
     async def _execute_incremental_backup(
@@ -804,7 +830,8 @@ class EnterpriseBackupManager:
         database_config: Dict[str, Any],
         base_backup: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute incremental backup operation"""        # Implementation would perform incremental backup
+        """Execute incremental backup operation"""
+        # Implementation would perform incremental backup
         return {"success": True}
     
     async def _verify_file_integrity(
@@ -812,15 +839,18 @@ class EnterpriseBackupManager:
         backup_file: str,
         backup_record: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Verify backup file integrity"""        # Implementation would verify file checksums, etc.
+        """Verify backup file integrity"""
+        # Implementation would verify file checksums, etc.
         return {"passed": True}
     
     async def _verify_compression_integrity(self, backup_file: str) -> Dict[str, Any]:
-        """Verify compression integrity"""        # Implementation would test compression/decompression
+        """Verify compression integrity"""
+        # Implementation would test compression/decompression
         return {"passed": True}
     
     async def _verify_encryption_integrity(self, backup_file: str) -> Dict[str, Any]:
-        """Verify encryption integrity"""        # Implementation would test encryption/decryption
+        """Verify encryption integrity"""
+        # Implementation would test encryption/decryption
         return {"passed": True}
     
     async def _validate_backup_content(
@@ -828,7 +858,8 @@ class EnterpriseBackupManager:
         backup_file: str,
         backup_record: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate backup content structure"""        # Implementation would validate SQL structure
+        """Validate backup content structure"""
+        # Implementation would validate SQL structure
         return {"passed": True}
     
     async def _test_backup_restorability(
@@ -836,7 +867,8 @@ class EnterpriseBackupManager:
         backup_file: str,
         backup_record: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Test if backup can be restored"""        # Implementation would perform test restore
+        """Test if backup can be restored"""
+        # Implementation would perform test restore
         return {"passed": True}
     
     async def _execute_restore_operation(
@@ -845,7 +877,8 @@ class EnterpriseBackupManager:
         target_database_config: Dict[str, Any],
         restore_options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute database restore operation"""        # Implementation would perform restore
+        """Execute database restore operation"""
+        # Implementation would perform restore
         return {"success": True}
     
     async def _verify_restored_database(
@@ -853,7 +886,8 @@ class EnterpriseBackupManager:
         database_config: Dict[str, Any],
         backup_record: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Verify restored database integrity"""        # Implementation would verify restored data
+        """Verify restored database integrity"""
+        # Implementation would verify restored data
         return {"passed": True}
     
     async def _execute_point_in_time_backup(
@@ -862,23 +896,28 @@ class EnterpriseBackupManager:
         database_config: Dict[str, Any],
         target_timestamp: datetime
     ) -> Dict[str, Any]:
-        """Execute point-in-time backup"""        # Implementation would perform point-in-time backup
+        """Execute point-in-time backup"""
+        # Implementation would perform point-in-time backup
         return {"success": True}
     
     async def _find_expired_backups(self, policy: Dict[str, Any]) -> List[str]:
-        """Find backups that have expired according to policy"""        # Implementation would find expired backups
+        """Find backups that have expired according to policy"""
+        # Implementation would find expired backups
         return []
     
     async def _remove_backup(self, backup_id: str) -> Dict[str, Any]:
-        """Remove backup and associated files"""        # Implementation would remove backup files
+        """Remove backup and associated files"""
+        # Implementation would remove backup files
         return {"success": True, "space_freed": 0}
     
     async def _cleanup_temporary_files(self) -> Dict[str, Any]:
-        """Clean up temporary backup files"""        # Implementation would clean temporary files
+        """Clean up temporary backup files"""
+        # Implementation would clean temporary files
         return {"files_removed": 0}
     
     async def _get_all_backup_records(self) -> List[Dict[str, Any]]:
-        """Get all backup records"""        # Implementation would return all backup records
+        """Get all backup records"""
+        # Implementation would return all backup records
         return []
 
 

@@ -5,12 +5,14 @@ Tests core functionality without complex imports to verify the module works.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import sys
+"""
+import sys
 import asyncio
 from datetime import datetime, timezone
 
 def test_business_monitoring():
-    """Test business process monitoring components"""    print("🧪 Testing Business Process Monitoring...")
+    """Test business process monitoring components"""
+    print("🧪 Testing Business Process Monitoring...")
     
     try:
         from business_process_monitoring import (
@@ -40,7 +42,8 @@ def test_business_monitoring():
         return False
 
 def test_analytics():
-    """Test analytics components"""    print("🧪 Testing Analytics...")
+    """Test analytics components"""
+    print("🧪 Testing Analytics...")
     
     try:
         from analytics import (
@@ -63,7 +66,8 @@ def test_analytics():
         return False
 
 def test_intelligent_monitoring():
-    """Test intelligent monitoring"""    print("🧪 Testing Intelligent Monitoring...")
+    """Test intelligent monitoring"""
+    print("🧪 Testing Intelligent Monitoring...")
     
     try:
         from intelligent_monitoring import (
@@ -86,7 +90,8 @@ def test_intelligent_monitoring():
         return False
 
 def test_configuration():
-    """Test configuration"""    print("🧪 Testing Configuration...")
+    """Test configuration"""
+    print("🧪 Testing Configuration...")
     
     try:
         from config import (
@@ -106,7 +111,8 @@ def test_configuration():
         return False
 
 async def test_business_workflow():
-    """Test a complete business workflow"""    print("🧪 Testing Complete Business Workflow...")
+    """Test a complete business workflow"""
+    print("🧪 Testing Complete Business Workflow...")
     
     try:
         from business_process_monitoring import (
@@ -170,7 +176,8 @@ async def test_business_workflow():
         return False
 
 async def main():
-    """Main test runner"""    print("🎯 IA INFLUENCER AGENT - OBSERVABILITY MODULE QUICK TEST")
+    """Main test runner"""
+    print("🎯 IA INFLUENCER AGENT - OBSERVABILITY MODULE QUICK TEST")
     print("=" * 70)
     print("👨‍💼 Author: Fahed Mlaiel <mlaiel@live.de>")
     print("🔍 Testing Core Functionality")

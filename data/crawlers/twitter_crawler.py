@@ -21,7 +21,8 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import re
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -42,7 +43,8 @@ from ..fingerprinting.vector_matcher import VectorMatcher
 
 
 class TwitterCrawler(PlatformCrawler):
-    """    Professional Twitter/X crawler for content monitoring and copyright protection.
+    """
+    Professional Twitter/X crawler for content monitoring and copyright protection.
     
     Features:
     - Twitter API v2 integration
@@ -52,12 +54,14 @@ class TwitterCrawler(PlatformCrawler):
     - Thread and reply analysis
     - Real-time streaming capabilities
     - Anti-detection measures
-    """    
+    """
+    
     def __init__(self, config: CrawlerConfig, vector_matcher: VectorMatcher, 
                  bearer_token: str, consumer_key: str = None, 
                  consumer_secret: str = None, access_token: str = None, 
                  access_token_secret: str = None):
-        """        Initialize Twitter crawler.
+        """
+        Initialize Twitter crawler.
         
         Args:
             config: Crawler configuration
@@ -67,7 +71,8 @@ class TwitterCrawler(PlatformCrawler):
             consumer_secret: Optional Twitter API consumer secret
             access_token: Optional Twitter API access token
             access_token_secret: Optional Twitter API access token secret
-        """        super().__init__(config, vector_matcher)
+        """
+        super().__init__(config, vector_matcher)
         
         # API credentials
         self.bearer_token = bearer_token
@@ -95,7 +100,8 @@ class TwitterCrawler(PlatformCrawler):
         asyncio.create_task(self._initialize_api_client())
     
     async def _initialize_api_client(self):
-        """Initialize Twitter API client"""        try:
+        """Initialize Twitter API client"""
+        try:
             # Initialize Tweepy client with API v2
             self.twitter_api = tweepy.Client(
                 bearer_token=self.bearer_token,
@@ -114,7 +120,8 @@ class TwitterCrawler(PlatformCrawler):
     
     async def search_content(self, search_terms: List[str], 
                            max_results: int = 100) -> List[Dict[str, Any]]:
-        """        Search for content on Twitter using API v2.
+        """
+        Search for content on Twitter using API v2.
         
         Args:
             search_terms: Terms to search for
@@ -122,7 +129,8 @@ class TwitterCrawler(PlatformCrawler):
             
         Returns:
             List of found tweet items
-        """        try:
+        """
+        try:
             await self._check_rate_limit()
             
             all_results = []
@@ -166,14 +174,16 @@ class TwitterCrawler(PlatformCrawler):
             return []
     
     async def extract_content_metadata(self, content_url: str) -> Dict[str, Any]:
-        """        Extract metadata from Twitter content URL.
+        """
+        Extract metadata from Twitter content URL.
         
         Args:
             content_url: URL of the tweet
             
         Returns:
             Content metadata dictionary
-        """        try:
+        """
+        try:
             # Extract tweet ID from URL
             tweet_id = self._extract_tweet_id_from_url(content_url)
             if not tweet_id:
@@ -202,14 +212,16 @@ class TwitterCrawler(PlatformCrawler):
             return {}
     
     async def download_content_sample(self, content_url: str) -> Optional[bytes]:
-        """        Download content sample for fingerprinting.
+        """
+        Download content sample for fingerprinting.
         
         Args:
             content_url: URL of the content
             
         Returns:
             Content data bytes or None if failed
-        """        try:
+        """
+        try:
             # For Twitter, we primarily download media attachments
             tweet_id = self._extract_tweet_id_from_url(content_url)
             if not tweet_id:
@@ -242,7 +254,8 @@ class TwitterCrawler(PlatformCrawler):
     
     async def search_by_hashtag(self, hashtags: List[str], 
                               max_results: int = 50) -> List[Dict[str, Any]]:
-        """        Search tweets by hashtags.
+        """
+        Search tweets by hashtags.
         
         Args:
             hashtags: List of hashtags to search
@@ -250,7 +263,8 @@ class TwitterCrawler(PlatformCrawler):
             
         Returns:
             List of tweets containing the hashtags
-        """        try:
+        """
+        try:
             all_results = []
             
             for hashtag in hashtags[:5]:  # Limit for rate limiting
@@ -280,7 +294,8 @@ class TwitterCrawler(PlatformCrawler):
     
     async def search_by_user(self, username: str, 
                            max_results: int = 50) -> List[Dict[str, Any]]:
-        """        Search tweets from specific user.
+        """
+        Search tweets from specific user.
         
         Args:
             username: Twitter username (without @)
@@ -288,7 +303,8 @@ class TwitterCrawler(PlatformCrawler):
             
         Returns:
             List of user's tweets
-        """        try:
+        """
+        try:
             # Get user ID
             user = self.twitter_api.get_user(username=username)
             if not user.data:
@@ -314,7 +330,8 @@ class TwitterCrawler(PlatformCrawler):
     
     async def monitor_real_time_tweets(self, keywords: List[str], 
                                      callback_url: str = None) -> str:
-        """        Start real-time monitoring of tweets.
+        """
+        Start real-time monitoring of tweets.
         
         Args:
             keywords: Keywords to monitor
@@ -322,7 +339,8 @@ class TwitterCrawler(PlatformCrawler):
             
         Returns:
             Monitoring session ID
-        """        try:
+        """
+        try:
             monitoring_id = f"twitter_monitor_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             
             # Build rules for streaming
@@ -349,14 +367,16 @@ class TwitterCrawler(PlatformCrawler):
             raise
     
     async def analyze_tweet_thread(self, tweet_id: str) -> List[Dict[str, Any]]:
-        """        Analyze complete tweet thread.
+        """
+        Analyze complete tweet thread.
         
         Args:
             tweet_id: ID of the root tweet
             
         Returns:
             List of all tweets in the thread
-        """        try:
+        """
+        try:
             thread_tweets = []
             
             # Get initial tweet
@@ -381,7 +401,8 @@ class TwitterCrawler(PlatformCrawler):
     # Private helper methods
     
     async def _build_search_query(self, search_term: str) -> str:
-        """Build optimized search query"""        # Clean and optimize search term
+        """Build optimized search query"""
+        # Clean and optimize search term
         cleaned_term = re.sub(r'[^\w\s#@]', '', search_term)
         
         # Build query with filters
@@ -395,7 +416,8 @@ class TwitterCrawler(PlatformCrawler):
         return ' '.join(query_parts)
     
     async def _process_tweet_results(self, tweets_response) -> List[Dict[str, Any]]:
-        """Process Twitter API response into standardized format"""        processed_tweets = []
+        """Process Twitter API response into standardized format"""
+        processed_tweets = []
         
         # Get includes data
         users_map = {}
@@ -455,7 +477,8 @@ class TwitterCrawler(PlatformCrawler):
         return processed_tweets
     
     async def _extract_tweet_metadata(self, tweet_response) -> Dict[str, Any]:
-        """Extract comprehensive metadata from tweet response"""        tweet = tweet_response.data
+        """Extract comprehensive metadata from tweet response"""
+        tweet = tweet_response.data
         
         metadata = {
             'tweet_id': tweet.id,
@@ -501,7 +524,8 @@ class TwitterCrawler(PlatformCrawler):
         return metadata
     
     def _extract_tweet_id_from_url(self, url: str) -> Optional[str]:
-        """Extract tweet ID from Twitter URL"""        try:
+        """Extract tweet ID from Twitter URL"""
+        try:
             # Pattern for Twitter URLs
             pattern = r'(?:twitter\.com|x\.com)/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)'
             match = re.search(pattern, url)
@@ -516,7 +540,8 @@ class TwitterCrawler(PlatformCrawler):
             return None
     
     async def _check_rate_limit(self):
-        """Check and manage API rate limits"""        current_time = datetime.utcnow()
+        """Check and manage API rate limits"""
+        current_time = datetime.utcnow()
         
         # Reset window if needed
         if (current_time - self.window_start).total_seconds() >= self.rate_limit_window:
@@ -533,7 +558,8 @@ class TwitterCrawler(PlatformCrawler):
                 self.window_start = datetime.utcnow()
     
     async def _deduplicate_results(self, results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Remove duplicate tweets from results"""        seen_ids = set()
+        """Remove duplicate tweets from results"""
+        seen_ids = set()
         unique_results = []
         
         for result in results:
@@ -546,8 +572,10 @@ class TwitterCrawler(PlatformCrawler):
 
 
 class TwitterStreamListener(tweepy.asynchronous.AsyncStreamingClient):
-    """    Twitter streaming client for real-time monitoring
-    """    
+    """
+    Twitter streaming client for real-time monitoring
+    """
+    
     def __init__(self, bearer_token: str, monitoring_id: str, 
                  callback_url: str = None, logger=None):
         super().__init__(bearer_token)
@@ -558,7 +586,8 @@ class TwitterStreamListener(tweepy.asynchronous.AsyncStreamingClient):
         self.start_time = datetime.utcnow()
     
     async def on_tweet(self, tweet):
-        """Handle incoming tweets"""        try:
+        """Handle incoming tweets"""
+        try:
             self.tweet_count += 1
             
             # Process tweet
@@ -581,11 +610,13 @@ class TwitterStreamListener(tweepy.asynchronous.AsyncStreamingClient):
             self.logger.error(f"Error processing streaming tweet: {str(e)}")
     
     async def on_error(self, status_code):
-        """Handle streaming errors"""        self.logger.error(f"Twitter streaming error: {status_code}")
+        """Handle streaming errors"""
+        self.logger.error(f"Twitter streaming error: {status_code}")
         return True  # Continue streaming
     
     async def start_monitoring(self, rules: List[tweepy.StreamRule]):
-        """Start monitoring with rules"""        try:
+        """Start monitoring with rules"""
+        try:
             # Add rules
             if rules:
                 await self.add_rules(rules)
@@ -601,7 +632,8 @@ class TwitterStreamListener(tweepy.asynchronous.AsyncStreamingClient):
             raise
     
     async def _send_notification(self, tweet_data: Dict[str, Any]):
-        """Send webhook notification for detected tweet"""        try:
+        """Send webhook notification for detected tweet"""
+        try:
             async with aiohttp.ClientSession() as session:
                 await session.post(self.callback_url, json=tweet_data)
         except Exception as e:

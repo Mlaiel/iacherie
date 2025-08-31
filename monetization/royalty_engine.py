@@ -6,7 +6,8 @@ Handles complex royalty calculations, multi-tier distributions, and automated pa
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -18,7 +19,8 @@ logger = logging.getLogger(__name__)
 
 
 class RoyaltyType(Enum):
-    """Types of royalty calculations"""    FLAT_RATE = "flat_rate"
+    """Types of royalty calculations"""
+    FLAT_RATE = "flat_rate"
     PERCENTAGE = "percentage"
     TIERED = "tiered"
     USAGE_BASED = "usage_based"
@@ -26,7 +28,8 @@ class RoyaltyType(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment status for royalties"""    PENDING = "pending"
+    """Payment status for royalties"""
+    PENDING = "pending"
     PROCESSING = "processing"
     PAID = "paid"
     FAILED = "failed"
@@ -35,7 +38,8 @@ class PaymentStatus(Enum):
 
 @dataclass
 class RoyaltyCalculation:
-    """Royalty calculation result"""    calculation_id: str
+    """Royalty calculation result"""
+    calculation_id: str
     license_id: int
     period_start: datetime
     period_end: datetime
@@ -52,7 +56,8 @@ class RoyaltyCalculation:
 
 @dataclass
 class RoyaltyPayment:
-    """Royalty payment record"""    payment_id: str
+    """Royalty payment record"""
+    payment_id: str
     calculation_id: str
     payee_id: int
     amount: Decimal
@@ -67,7 +72,8 @@ class RoyaltyPayment:
 
 
 class RoyaltyEngine:
-    """    Advanced royalty calculation and distribution engine
+    """
+    Advanced royalty calculation and distribution engine
     
     Features:
     - Multiple royalty calculation methods
@@ -77,9 +83,11 @@ class RoyaltyEngine:
     - Payment scheduling and processing
     - Detailed reporting and analytics
     - Compliance tracking
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize royalty engine"""        self.config = config or {}
+        """Initialize royalty engine"""
+        self.config = config or {}
         
         # Default royalty rates by usage type
         self.default_rates = {
@@ -133,7 +141,8 @@ class RoyaltyEngine:
         usage_type: str,
         usage_data: Dict[str, Any]
     ) -> Decimal:
-        """        Calculate royalty for a single usage event
+        """
+        Calculate royalty for a single usage event
         
         Args:
             license_data: License information
@@ -142,7 +151,8 @@ class RoyaltyEngine:
             
         Returns:
             Decimal: Calculated royalty amount
-        """        try:
+        """
+        try:
             # Get usage count
             usage_count = usage_data.get("count", 1)
             
@@ -182,7 +192,8 @@ class RoyaltyEngine:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """        Calculate royalties for a specific period
+        """
+        Calculate royalties for a specific period
         
         Args:
             license_data: License information
@@ -192,7 +203,8 @@ class RoyaltyEngine:
             
         Returns:
             Dict: Comprehensive royalty calculation summary
-        """        try:
+        """
+        try:
             calculation_id = f"calc_{license_data['id']}_{period_start.strftime('%Y%m%d')}_{period_end.strftime('%Y%m%d')}"
             
             # Group usage by type
@@ -281,7 +293,8 @@ class RoyaltyEngine:
         payment_method: str,
         scheduled_date: Optional[datetime] = None
     ) -> Optional[RoyaltyPayment]:
-        """        Schedule a royalty payment
+        """
+        Schedule a royalty payment
         
         Args:
             calculation_id: ID of royalty calculation
@@ -291,7 +304,8 @@ class RoyaltyEngine:
             
         Returns:
             RoyaltyPayment: Payment record or None if failed
-        """        try:
+        """
+        try:
             if calculation_id not in self.calculation_cache:
                 logger.error(f"Calculation not found: {calculation_id}")
                 return None
@@ -345,14 +359,16 @@ class RoyaltyEngine:
             return None
     
     async def process_payment(self, payment_id: str) -> bool:
-        """        Process a scheduled payment
+        """
+        Process a scheduled payment
         
         Args:
             payment_id: ID of payment to process
             
         Returns:
             bool: True if payment processed successfully
-        """        try:
+        """
+        try:
             # Find payment
             payment = None
             for p in self.payment_history:
@@ -394,7 +410,8 @@ class RoyaltyEngine:
             return False
     
     async def get_license_royalty_history(self, license_id: int) -> List[Dict[str, Any]]:
-        """Get royalty history for a license"""        try:
+        """Get royalty history for a license"""
+        try:
             history = []
             
             # Get calculations for this license
@@ -448,7 +465,8 @@ class RoyaltyEngine:
         usage_type: str,
         usage_data: Dict[str, Any]
     ) -> Decimal:
-        """Get royalty rate for usage type"""        try:
+        """Get royalty rate for usage type"""
+        try:
             # Check license-specific rates
             license_rates = license_data.get("royalty_rates", {})
             if usage_type in license_rates:
@@ -476,7 +494,8 @@ class RoyaltyEngine:
         license_data: Dict[str, Any],
         usage_data: Dict[str, Any]
     ) -> Decimal:
-        """Calculate quality-based multiplier"""        try:
+        """Calculate quality-based multiplier"""
+        try:
             quality_score = usage_data.get("quality_score", 1.0)
             
             if quality_score >= 0.9:
@@ -494,7 +513,8 @@ class RoyaltyEngine:
         license_data: Dict[str, Any],
         usage_data: Dict[str, Any]
     ) -> Decimal:
-        """Calculate territory-based multiplier"""        try:
+        """Calculate territory-based multiplier"""
+        try:
             territory = usage_data.get("territory", "unknown")
             license_territory = license_data.get("territory", "worldwide")
             
@@ -517,7 +537,8 @@ class RoyaltyEngine:
         gross_revenue: Decimal,
         usage_breakdown: Dict[str, Any]
     ) -> Dict[str, Decimal]:
-        """Calculate all deductions"""        try:
+        """Calculate all deductions"""
+        try:
             deductions = {}
             
             # Platform fee
@@ -556,7 +577,8 @@ class RoyaltyEngine:
         amount: Decimal,
         payment_method: str
     ) -> Decimal:
-        """Calculate payment processing fees"""        try:
+        """Calculate payment processing fees"""
+        try:
             method_config = self.payment_methods.get(payment_method, {})
             
             if "fee" in method_config:
@@ -572,10 +594,12 @@ class RoyaltyEngine:
             return Decimal("0.00")
     
     def _get_minimum_payment_threshold(self, license_data: Dict[str, Any]) -> Decimal:
-        """Get minimum payment threshold"""        return Decimal(str(license_data.get("min_payment_threshold", "10.00")))
+        """Get minimum payment threshold"""
+        return Decimal(str(license_data.get("min_payment_threshold", "10.00")))
     
     def get_engine_stats(self) -> Dict[str, Any]:
-        """Get royalty engine statistics"""        try:
+        """Get royalty engine statistics"""
+        try:
             total_calculations = len(self.calculation_cache)
             total_payments = len(self.payment_history)
             

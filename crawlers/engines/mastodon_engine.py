@@ -11,7 +11,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
 from dataclasses import dataclass, asdict
@@ -47,7 +48,8 @@ settings = get_settings()
 
 @dataclass
 class MastodonToot:
-    """Mastodon toot data structure"""    id: str
+    """Mastodon toot data structure"""
+    id: str
     uri: str
     url: str
     account_id: str
@@ -75,7 +77,8 @@ class MastodonToot:
 
 @dataclass
 class MastodonAccount:
-    """Mastodon account data structure"""    id: str
+    """Mastodon account data structure"""
+    id: str
     username: str
     acct: str
     display_name: str
@@ -101,7 +104,8 @@ class MastodonAccount:
 
 @dataclass
 class MastodonInstance:
-    """Mastodon instance data structure"""    uri: str
+    """Mastodon instance data structure"""
+    uri: str
     title: str
     short_description: str
     description: str
@@ -118,7 +122,8 @@ class MastodonInstance:
 
 
 class MastodonCrawlerEngine(BaseCrawlerEngine):
-    """    Professional Mastodon crawler engine for decentralized social content analysis.
+    """
+    Professional Mastodon crawler engine for decentralized social content analysis.
     
     Features:
     - Multi-instance federation support
@@ -127,9 +132,11 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
     - Instance health monitoring
     - Content moderation tracking
     - Cross-instance trend analysis
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Mastodon crawler engine"""        super().__init__(platform="mastodon", config=config)
+        """Initialize Mastodon crawler engine"""
+        super().__init__(platform="mastodon", config=config)
         
         # Rate limiting (varies by instance)
         self.rate_limiter = RateLimiter(
@@ -162,7 +169,8 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
         logger.info(f"Mastodon crawler engine initialized for {len(self.instances)} instances")
     
     async def initialize(self) -> None:
-        """Initialize the crawler engine"""        try:
+        """Initialize the crawler engine"""
+        try:
             await self._create_sessions()
             logger.info("Mastodon engine initialized successfully")
         except Exception as e:
@@ -170,7 +178,8 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Initialization failed: {e}")
     
     async def _create_sessions(self) -> None:
-        """Create HTTP sessions for each instance"""        for instance in self.instances:
+        """Create HTTP sessions for each instance"""
+        for instance in self.instances:
             headers = {
                 'User-Agent': 'IA-Influencer-Agent/1.0 (Mastodon Bot)',
                 'Accept': 'application/json',
@@ -189,14 +198,16 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
             )
     
     async def get_instance_info(self, instance_url: str) -> Optional[MastodonInstance]:
-        """        Get information about a Mastodon instance
+        """
+        Get information about a Mastodon instance
         
         Args:
             instance_url: Instance URL (e.g., "mastodon.social")
             
         Returns:
             Instance information or None if not accessible
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -232,7 +243,8 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
             return None
     
     async def _create_session_for_instance(self, instance_url: str) -> None:
-        """Create session for a specific instance"""        headers = {
+        """Create session for a specific instance"""
+        headers = {
             'User-Agent': 'IA-Influencer-Agent/1.0 (Mastodon Bot)',
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -252,7 +264,8 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
         only_media: bool = False,
         limit: int = 40
     ) -> List[MastodonToot]:
-        """        Get public timeline from an instance
+        """
+        Get public timeline from an instance
         
         Args:
             instance_url: Instance to query
@@ -262,7 +275,8 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of public toots
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -314,7 +328,8 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
         local: bool = False,
         limit: int = 40
     ) -> List[MastodonToot]:
-        """        Get timeline for a specific hashtag
+        """
+        Get timeline for a specific hashtag
         
         Args:
             instance_url: Instance to query
@@ -324,7 +339,8 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of toots with the hashtag
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -373,7 +389,8 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
         instance_url: str,
         account_id: str
     ) -> Optional[MastodonAccount]:
-        """        Get account information
+        """
+        Get account information
         
         Args:
             instance_url: Instance where account exists
@@ -381,7 +398,8 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             Account information or None if not found
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -424,7 +442,8 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
         type_filter: str = "statuses",
         limit: int = 20
     ) -> List[Dict[str, Any]]:
-        """        Search for content across Mastodon
+        """
+        Search for content across Mastodon
         
         Args:
             instance_url: Instance to search on
@@ -434,7 +453,8 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of search results
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -492,7 +512,8 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Content search failed: {e}")
     
     def _parse_toot_data(self, toot_data: Dict[str, Any], instance_url: str) -> MastodonToot:
-        """Parse toot data from API response"""        try:
+        """Parse toot data from API response"""
+        try:
             # Parse media attachments
             media_attachments = []
             for media in toot_data.get("media_attachments", []):
@@ -548,7 +569,8 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Toot data parsing failed: {e}")
     
     def _parse_account_data(self, account_data: Dict[str, Any], instance_url: str) -> MastodonAccount:
-        """Parse account data from API response"""        try:
+        """Parse account data from API response"""
+        try:
             # Parse custom fields
             fields = []
             for field in account_data.get("fields", []):
@@ -587,7 +609,8 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Account data parsing failed: {e}")
     
     def _parse_instance_data(self, instance_data: Dict[str, Any], instance_url: str) -> MastodonInstance:
-        """Parse instance data from API response"""        try:
+        """Parse instance data from API response"""
+        try:
             return MastodonInstance(
                 uri=instance_data.get("uri", instance_url),
                 title=instance_data.get("title", ""),
@@ -609,11 +632,13 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Instance data parsing failed: {e}")
     
     async def analyze_federation_network(self) -> Dict[str, Any]:
-        """        Analyze the federation network and instance relationships
+        """
+        Analyze the federation network and instance relationships
         
         Returns:
             Federation network analysis
-        """        try:
+        """
+        try:
             network_analysis = {
                 'instances_analyzed': len(self.instances),
                 'total_users': 0,
@@ -648,11 +673,13 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Federation network analysis failed: {e}")
     
     async def monitor_trending_hashtags(self) -> Dict[str, List[str]]:
-        """        Monitor trending hashtags across instances
+        """
+        Monitor trending hashtags across instances
         
         Returns:
             Trending hashtags by instance
-        """        try:
+        """
+        try:
             trending_data = {}
             
             for instance_url in self.instances:
@@ -684,7 +711,8 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Trending hashtags monitoring failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up resources"""        try:
+        """Clean up resources"""
+        try:
             for session in self.sessions.values():
                 await session.close()
             await super().cleanup()

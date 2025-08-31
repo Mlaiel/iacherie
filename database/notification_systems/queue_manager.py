@@ -12,7 +12,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et constitue une violation des droits d'auteur.
 Les contrevenants s'exposent à des poursuites judiciaires.
-"""from typing import Dict, List, Optional, Any, Union, Callable
+"""
+from typing import Dict, List, Optional, Any, Union, Callable
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timedelta
 from enum import Enum
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class QueuePriority(Enum):
-    """Priorités des queues"""    VERY_LOW = 1
+    """Priorités des queues"""
+    VERY_LOW = 1
     LOW = 2
     NORMAL = 3
     HIGH = 4
@@ -44,7 +46,8 @@ class QueuePriority(Enum):
 
 
 class ProcessingStatus(Enum):
-    """Statuts de traitement"""    PENDING = "pending"
+    """Statuts de traitement"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -54,7 +57,8 @@ class ProcessingStatus(Enum):
 
 
 class QueueType(Enum):
-    """Types de queues"""    EMAIL = "email"
+    """Types de queues"""
+    EMAIL = "email"
     PUSH = "push"
     SMS = "sms"
     WEBHOOK = "webhook"
@@ -66,7 +70,8 @@ class QueueType(Enum):
 
 @dataclass
 class QueueMessage:
-    """Message de queue"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Message de queue"""
+    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     queue_type: QueueType = QueueType.EMAIL
     priority: QueuePriority = QueuePriority.NORMAL
     payload: Dict[str, Any] = field(default_factory=dict)
@@ -86,7 +91,8 @@ class QueueMessage:
 
 @dataclass
 class QueueStats:
-    """Statistiques de queue"""    queue_name: str = ""
+    """Statistiques de queue"""
+    queue_name: str = ""
     total_messages: int = 0
     pending_messages: int = 0
     processing_messages: int = 0
@@ -101,7 +107,8 @@ class QueueStats:
 
 @dataclass
 class ProcessingResult:
-    """Résultat de traitement"""    message_id: str = ""
+    """Résultat de traitement"""
+    message_id: str = ""
     status: ProcessingStatus = ProcessingStatus.COMPLETED
     success: bool = True
     error_message: Optional[str] = None
@@ -113,23 +120,28 @@ class ProcessingResult:
 
 
 class MessageProcessor(ABC):
-    """Processeur de messages abstrait"""    
+    """Processeur de messages abstrait"""
+    
     @abstractmethod
     async def process(self, message: QueueMessage) -> ProcessingResult:
-        """Traiter un message"""        pass
+        """Traiter un message"""
+        pass
     
     @abstractmethod
     def get_queue_type(self) -> QueueType:
-        """Retourner le type de queue supporté"""        pass
+        """Retourner le type de queue supporté"""
+        pass
 
 
 class EmailProcessor(MessageProcessor):
-    """Processeur de messages email"""    
+    """Processeur de messages email"""
+    
     def __init__(self, email_manager):
         self.email_manager = email_manager
     
     async def process(self, message: QueueMessage) -> ProcessingResult:
-        """Traiter un message email"""        try:
+        """Traiter un message email"""
+        try:
             start_time = datetime.utcnow()
             
             # Extraire les données email du payload
@@ -182,12 +194,14 @@ class EmailProcessor(MessageProcessor):
 
 
 class PushProcessor(MessageProcessor):
-    """Processeur de notifications push"""    
+    """Processeur de notifications push"""
+    
     def __init__(self, push_manager):
         self.push_manager = push_manager
     
     async def process(self, message: QueueMessage) -> ProcessingResult:
-        """Traiter une notification push"""        try:
+        """Traiter une notification push"""
+        try:
             start_time = datetime.utcnow()
             
             # Extraire les données push du payload
@@ -239,12 +253,14 @@ class PushProcessor(MessageProcessor):
 
 
 class WebhookProcessor(MessageProcessor):
-    """Processeur de webhooks"""    
+    """Processeur de webhooks"""
+    
     def __init__(self, http_client):
         self.http_client = http_client
     
     async def process(self, message: QueueMessage) -> ProcessingResult:
-        """Traiter un webhook"""        try:
+        """Traiter un webhook"""
+        try:
             start_time = datetime.utcnow()
             
             # Extraire les données webhook du payload
@@ -310,12 +326,14 @@ class WebhookProcessor(MessageProcessor):
 
 
 class RedisQueueBackend:
-    """Backend Redis pour les queues"""    
+    """Backend Redis pour les queues"""
+    
     def __init__(self, redis_client: aioredis.Redis):
         self.redis = redis_client
         
     async def enqueue(self, queue_name: str, message: QueueMessage, delay: Optional[int] = None):
-        """Ajouter un message à la queue"""        try:
+        """Ajouter un message à la queue"""
+        try:
             # Sérialiser le message
             serialized_message = self._serialize_message(message)
             
@@ -336,7 +354,8 @@ class RedisQueueBackend:
             raise
     
     async def dequeue(self, queue_name: str, timeout: int = 10) -> Optional[QueueMessage]:
-        """Récupérer un message de la queue"""        try:
+        """Récupérer un message de la queue"""
+        try:
             # Vérifier d'abord les messages délayés
             await self._process_delayed_messages(queue_name)
             
@@ -360,7 +379,8 @@ class RedisQueueBackend:
             return None
     
     async def ack(self, queue_name: str, message: QueueMessage, result: ProcessingResult):
-        """Acquitter un message traité"""        try:
+        """Acquitter un message traité"""
+        try:
             # Supprimer de la liste de traitement
             await self.redis.zrem(f"queue:processing:{queue_name}", self._serialize_message(message))
             
@@ -375,7 +395,8 @@ class RedisQueueBackend:
             logger.error(f"Erreur ack Redis {queue_name}: {e}")
     
     async def nack(self, queue_name: str, message: QueueMessage, retry_delay: Optional[int] = None):
-        """Rejeter un message et le remettre en queue"""        try:
+        """Rejeter un message et le remettre en queue"""
+        try:
             # Supprimer de la liste de traitement
             await self.redis.zrem(f"queue:processing:{queue_name}", self._serialize_message(message))
             
@@ -398,7 +419,8 @@ class RedisQueueBackend:
             logger.error(f"Erreur nack Redis {queue_name}: {e}")
     
     async def _process_delayed_messages(self, queue_name: str):
-        """Traiter les messages délayés"""        try:
+        """Traiter les messages délayés"""
+        try:
             now = datetime.utcnow().timestamp()
             
             # Récupérer les messages dont le délai est expiré
@@ -421,7 +443,8 @@ class RedisQueueBackend:
             logger.error(f"Erreur traitement messages délayés: {e}")
     
     async def _mark_processing(self, queue_name: str, message: QueueMessage):
-        """Marquer un message comme en cours de traitement"""        try:
+        """Marquer un message comme en cours de traitement"""
+        try:
             score = datetime.utcnow().timestamp()
             await self.redis.zadd(
                 f"queue:processing:{queue_name}",
@@ -431,7 +454,8 @@ class RedisQueueBackend:
             logger.error(f"Erreur mark processing: {e}")
     
     async def _send_to_dead_letter_queue(self, queue_name: str, message: QueueMessage):
-        """Envoyer vers la dead letter queue"""        try:
+        """Envoyer vers la dead letter queue"""
+        try:
             await self.redis.lpush(
                 f"queue:dead:{queue_name}",
                 self._serialize_message(message)
@@ -443,7 +467,8 @@ class RedisQueueBackend:
             logger.error(f"Erreur dead letter queue: {e}")
     
     async def _save_processing_result(self, queue_name: str, result: ProcessingResult):
-        """Sauvegarder le résultat de traitement"""        try:
+        """Sauvegarder le résultat de traitement"""
+        try:
             key = f"queue:results:{queue_name}:{result.message_id}"
             await self.redis.setex(
                 key,
@@ -454,7 +479,8 @@ class RedisQueueBackend:
             logger.error(f"Erreur sauvegarde résultat: {e}")
     
     async def _update_queue_stats(self, queue_name: str, event: str, processing_time: Optional[float] = None):
-        """Mettre à jour les statistiques de queue"""        try:
+        """Mettre à jour les statistiques de queue"""
+        try:
             key = f"queue:stats:{queue_name}"
             
             # Incrémenter les compteurs
@@ -481,7 +507,8 @@ class RedisQueueBackend:
             logger.error(f"Erreur mise à jour stats: {e}")
     
     def _serialize_message(self, message: QueueMessage) -> str:
-        """Sérialiser un message"""        try:
+        """Sérialiser un message"""
+        try:
             # Convertir en dict
             message_dict = asdict(message)
             
@@ -498,7 +525,8 @@ class RedisQueueBackend:
             raise
     
     def _deserialize_message(self, serialized_data: str) -> QueueMessage:
-        """Désérialiser un message"""        try:
+        """Désérialiser un message"""
+        try:
             import base64
             
             # Décoder depuis base64
@@ -525,7 +553,8 @@ class RedisQueueBackend:
             raise
     
     async def get_queue_stats(self, queue_name: str) -> QueueStats:
-        """Récupérer les statistiques d'une queue"""        try:
+        """Récupérer les statistiques d'une queue"""
+        try:
             key = f"queue:stats:{queue_name}"
             stats_data = await self.redis.hgetall(key)
             
@@ -552,7 +581,8 @@ class RedisQueueBackend:
 
 
 class NotificationQueueManager:
-    """Gestionnaire principal des queues de notifications"""    
+    """Gestionnaire principal des queues de notifications"""
+    
     def __init__(self, db_pool: asyncpg.Pool, redis_client: aioredis.Redis, config: Dict[str, Any]):
         self.db_pool = db_pool
         self.redis = redis_client
@@ -572,12 +602,14 @@ class NotificationQueueManager:
         self.is_running = False
         
     def register_processor(self, processor: MessageProcessor):
-        """Enregistrer un processeur"""        queue_type = processor.get_queue_type()
+        """Enregistrer un processeur"""
+        queue_type = processor.get_queue_type()
         self.processors[queue_type] = processor
         logger.info(f"Processeur enregistré pour {queue_type.value}")
     
     async def start(self):
-        """Démarrer le gestionnaire de queues"""        try:
+        """Démarrer le gestionnaire de queues"""
+        try:
             self.is_running = True
             
             # Démarrer les workers pour chaque type de queue
@@ -603,7 +635,8 @@ class NotificationQueueManager:
             raise
     
     async def stop(self):
-        """Arrêter le gestionnaire de queues"""        try:
+        """Arrêter le gestionnaire de queues"""
+        try:
             self.is_running = False
             
             # Arrêter tous les workers
@@ -621,7 +654,8 @@ class NotificationQueueManager:
             logger.error(f"Erreur arrêt gestionnaire queues: {e}")
     
     async def enqueue_message(self, message: QueueMessage) -> str:
-        """Ajouter un message à la queue"""        try:
+        """Ajouter un message à la queue"""
+        try:
             queue_name = message.queue_type.value
             
             # Calculer le délai si programmé
@@ -643,7 +677,8 @@ class NotificationQueueManager:
             raise
     
     async def _worker_loop(self, worker_name: str, queue_type: QueueType):
-        """Boucle de traitement d'un worker"""        queue_name = queue_type.value
+        """Boucle de traitement d'un worker"""
+        queue_name = queue_type.value
         processor = self.processors[queue_type]
         
         logger.info(f"Worker {worker_name} démarré pour queue {queue_name}")
@@ -712,7 +747,8 @@ class NotificationQueueManager:
         logger.info(f"Worker {worker_name} arrêté")
     
     async def _maintenance_loop(self):
-        """Boucle de maintenance"""        logger.info("Tâche de maintenance démarrée")
+        """Boucle de maintenance"""
+        logger.info("Tâche de maintenance démarrée")
         
         while self.is_running:
             try:
@@ -735,7 +771,8 @@ class NotificationQueueManager:
         logger.info("Tâche de maintenance arrêtée")
     
     async def _monitoring_loop(self):
-        """Boucle de monitoring"""        logger.info("Tâche de monitoring démarrée")
+        """Boucle de monitoring"""
+        logger.info("Tâche de monitoring démarrée")
         
         while self.is_running:
             try:
@@ -755,7 +792,8 @@ class NotificationQueueManager:
         logger.info("Tâche de monitoring arrêtée")
     
     async def _cleanup_stale_processing_messages(self):
-        """Nettoyer les messages en cours de traitement depuis trop longtemps"""        try:
+        """Nettoyer les messages en cours de traitement depuis trop longtemps"""
+        try:
             stale_timeout = self.config.get("stale_processing_timeout", 3600)  # 1 heure
             cutoff_time = (datetime.utcnow() - timedelta(seconds=stale_timeout)).timestamp()
             
@@ -782,7 +820,8 @@ class NotificationQueueManager:
             logger.error(f"Erreur nettoyage messages stale: {e}")
     
     async def _cleanup_old_results(self):
-        """Nettoyer les anciens résultats"""        try:
+        """Nettoyer les anciens résultats"""
+        try:
             # Les résultats sont automatiquement expirés par Redis (24h)
             # Cette fonction peut être étendue pour d'autres nettoyages
             pass
@@ -790,7 +829,8 @@ class NotificationQueueManager:
             logger.error(f"Erreur nettoyage résultats: {e}")
     
     async def _compact_stats(self):
-        """Compacter les statistiques"""        try:
+        """Compacter les statistiques"""
+        try:
             # Archiver les stats anciennes vers la base de données
             for queue_type in QueueType:
                 queue_name = queue_type.value
@@ -803,7 +843,8 @@ class NotificationQueueManager:
             logger.error(f"Erreur compactage stats: {e}")
     
     async def _collect_metrics(self):
-        """Collecter les métriques"""        try:
+        """Collecter les métriques"""
+        try:
             metrics = {}
             
             for queue_type in QueueType:
@@ -830,7 +871,8 @@ class NotificationQueueManager:
             logger.error(f"Erreur collecte métriques: {e}")
     
     async def _check_queue_alerts(self):
-        """Vérifier les alertes de queue"""        try:
+        """Vérifier les alertes de queue"""
+        try:
             alert_thresholds = self.config.get("alert_thresholds", {})
             
             for queue_type in QueueType:
@@ -851,13 +893,16 @@ class NotificationQueueManager:
             logger.error(f"Erreur vérification alertes: {e}")
     
     async def _save_message_audit(self, message: QueueMessage):
-        """Sauvegarder un audit de message"""        async with self.db_pool.acquire() as conn:
-            query = """                INSERT INTO notification_queue_audit (
+        """Sauvegarder un audit de message"""
+        async with self.db_pool.acquire() as conn:
+            query = """
+                INSERT INTO notification_queue_audit (
                     message_id, queue_type, priority, payload, headers,
                     routing_key, exchange, scheduled_at, expires_at,
                     max_retries, metadata, created_at
                 ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
-            """            
+            """
+            
             await conn.execute(
                 query,
                 message.id, message.queue_type.value, message.priority.value,
@@ -868,14 +913,17 @@ class NotificationQueueManager:
             )
     
     async def _save_stats_snapshot(self, stats: QueueStats):
-        """Sauvegarder un snapshot de statistiques"""        async with self.db_pool.acquire() as conn:
-            query = """                INSERT INTO notification_queue_stats (
+        """Sauvegarder un snapshot de statistiques"""
+        async with self.db_pool.acquire() as conn:
+            query = """
+                INSERT INTO notification_queue_stats (
                     queue_name, total_messages, pending_messages,
                     processing_messages, completed_messages, failed_messages,
                     dead_messages, avg_processing_time, throughput_per_minute,
                     last_processed_at, snapshot_at
                 ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
-            """            
+            """
+            
             await conn.execute(
                 query,
                 stats.queue_name, stats.total_messages, stats.pending_messages,
@@ -885,7 +933,8 @@ class NotificationQueueManager:
             )
     
     async def get_queue_status(self, queue_type: Optional[QueueType] = None) -> Dict[str, QueueStats]:
-        """Récupérer le statut des queues"""        try:
+        """Récupérer le statut des queues"""
+        try:
             status = {}
             
             queue_types = [queue_type] if queue_type else list(QueueType)
@@ -902,7 +951,8 @@ class NotificationQueueManager:
             return {}
     
     async def purge_queue(self, queue_type: QueueType, confirm: bool = False) -> int:
-        """Purger une queue (attention: action destructive)"""        if not confirm:
+        """Purger une queue (attention: action destructive)"""
+        if not confirm:
             raise ValueError("Purge must be confirmed with confirm=True")
         
         try:
@@ -928,7 +978,8 @@ class NotificationQueueManager:
             raise
     
     async def get_dead_letter_messages(self, queue_type: QueueType, limit: int = 100) -> List[QueueMessage]:
-        """Récupérer les messages de la dead letter queue"""        try:
+        """Récupérer les messages de la dead letter queue"""
+        try:
             queue_name = queue_type.value
             
             # Récupérer les messages morts
@@ -949,7 +1000,8 @@ class NotificationQueueManager:
             return []
     
     async def requeue_dead_message(self, queue_type: QueueType, message_id: str) -> bool:
-        """Remettre un message mort en queue"""        try:
+        """Remettre un message mort en queue"""
+        try:
             queue_name = queue_type.value
             dead_queue_key = f"queue:dead:{queue_name}"
             

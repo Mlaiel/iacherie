@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Target monitoring → Intelligent crawling → Content detection → 
 Similarity analysis → Piracy confirmation → Automated takedown → Revenue protection
-"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, AsyncGenerator
+"""
+from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, AsyncGenerator
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -57,7 +58,8 @@ logger = logging.getLogger(__name__)
 
 
 class SurveillanceScope(Enum):
-    """Surveillance scope types"""    GLOBAL_WEB = "global_web"
+    """Surveillance scope types"""
+    GLOBAL_WEB = "global_web"
     SOCIAL_MEDIA = "social_media"
     VIDEO_PLATFORMS = "video_platforms"
     MUSIC_PLATFORMS = "music_platforms"
@@ -67,7 +69,8 @@ class SurveillanceScope(Enum):
 
 
 class MonitoringFrequency(Enum):
-    """Monitoring frequency"""    REALTIME = "realtime"
+    """Monitoring frequency"""
+    REALTIME = "realtime"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -76,7 +79,8 @@ class MonitoringFrequency(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    LOW = "low"
+    """Alert severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -85,7 +89,8 @@ class AlertSeverity(Enum):
 
 @dataclass
 class SurveillanceTarget:
-    """Surveillance target configuration"""    target_id: str
+    """Surveillance target configuration"""
+    target_id: str
     content_id: str
     user_id: str
     content_type: ContentType
@@ -102,7 +107,8 @@ class SurveillanceTarget:
 
 @dataclass
 class SurveillanceResult:
-    """Surveillance detection result"""    detection_id: str
+    """Surveillance detection result"""
+    detection_id: str
     target_id: str
     detected_url: str
     platform: str
@@ -120,7 +126,8 @@ class SurveillanceResult:
 
 @dataclass
 class SurveillanceTask:
-    """Surveillance task definition"""    task_id: str
+    """Surveillance task definition"""
+    task_id: str
     target: SurveillanceTarget
     search_queries: List[str]
     platforms_to_scan: List[str]
@@ -132,7 +139,8 @@ class SurveillanceTask:
 
 
 class WebSurveillanceWorker:
-    """    Advanced web surveillance worker for intelligent content monitoring
+    """
+    Advanced web surveillance worker for intelligent content monitoring
     
     Features:
     - Real-time web monitoring across multiple platforms
@@ -142,7 +150,8 @@ class WebSurveillanceWorker:
     - Multi-modal content analysis (audio, video, image, text)
     - Automated DMCA takedown initiation
     - Revenue protection and loss calculation
-    """    def __init__(self, worker_id: str = None):
+    """
+    def __init__(self, worker_id: str = None):
         self.worker_id = worker_id or f"web_surveillance_{uuid.uuid4().hex[:8]}"
         
         # Core components
@@ -200,7 +209,8 @@ class WebSurveillanceWorker:
         self.initialized = False
 
     async def initialize(self) -> bool:
-        """Initialize the web surveillance worker"""        try:
+        """Initialize the web surveillance worker"""
+        try:
             logger.info(f"🚀 Initializing Web Surveillance Worker {self.worker_id}")
             
             # Initialize content protection worker
@@ -236,7 +246,8 @@ class WebSurveillanceWorker:
             return False
 
     async def add_surveillance_target(self, target: SurveillanceTarget) -> bool:
-        """Add a new surveillance target"""        try:
+        """Add a new surveillance target"""
+        try:
             logger.info(f"📡 Adding surveillance target: {target.target_id}")
             
             # Validate target
@@ -262,7 +273,8 @@ class WebSurveillanceWorker:
             return False
 
     async def remove_surveillance_target(self, target_id: str) -> bool:
-        """Remove a surveillance target"""        try:
+        """Remove a surveillance target"""
+        try:
             if target_id in self.active_targets:
                 del self.active_targets[target_id]
                 if target_id in self.detection_cache:
@@ -276,7 +288,8 @@ class WebSurveillanceWorker:
             return False
 
     async def scan_target(self, target_id: str) -> List[SurveillanceResult]:
-        """Manually trigger a scan for a specific target"""        try:
+        """Manually trigger a scan for a specific target"""
+        try:
             if target_id not in self.active_targets:
                 logger.error(f"❌ Target not found: {target_id}")
                 return []
@@ -294,7 +307,8 @@ class WebSurveillanceWorker:
         severity: AlertSeverity = None,
         limit: int = 100
     ) -> List[SurveillanceResult]:
-        """Get surveillance results with optional filtering"""        try:
+        """Get surveillance results with optional filtering"""
+        try:
             results = []
             
             if target_id:
@@ -316,7 +330,8 @@ class WebSurveillanceWorker:
             return []
 
     async def _surveillance_loop(self) -> None:
-        """Main surveillance monitoring loop"""        try:
+        """Main surveillance monitoring loop"""
+        try:
             while True:
                 try:
                     current_time = datetime.utcnow()
@@ -344,7 +359,8 @@ class WebSurveillanceWorker:
             logger.error(f"❌ Surveillance loop failed: {e}")
 
     async def _scan_target(self, target: SurveillanceTarget) -> List[SurveillanceResult]:
-        """Perform comprehensive scan for a surveillance target"""        try:
+        """Perform comprehensive scan for a surveillance target"""
+        try:
             logger.info(f"🔍 Scanning target: {target.target_id}")
             scan_start = time.time()
             
@@ -413,7 +429,8 @@ class WebSurveillanceWorker:
         query: str, 
         target: SurveillanceTarget
     ) -> List[SurveillanceResult]:
-        """Scan a specific platform with a search query"""        try:
+        """Scan a specific platform with a search query"""
+        try:
             logger.debug(f"🔍 Scanning {platform} for: {query}")
             
             detections = []
@@ -444,7 +461,8 @@ class WebSurveillanceWorker:
             return []
 
     async def _scan_youtube(self, query: str, target: SurveillanceTarget) -> List[SurveillanceResult]:
-        """Scan YouTube for content matches"""        try:
+        """Scan YouTube for content matches"""
+        try:
             detections = []
             
             # Use YouTube API or web scraping
@@ -485,7 +503,8 @@ class WebSurveillanceWorker:
             return []
 
     async def _scan_instagram(self, query: str, target: SurveillanceTarget) -> List[SurveillanceResult]:
-        """Scan Instagram for content matches"""        try:
+        """Scan Instagram for content matches"""
+        try:
             detections = []
             
             # Use Instagram API or web scraping with stealth measures
@@ -520,7 +539,8 @@ class WebSurveillanceWorker:
             return []
 
     async def _scan_tiktok(self, query: str, target: SurveillanceTarget) -> List[SurveillanceResult]:
-        """Scan TikTok for content matches"""        try:
+        """Scan TikTok for content matches"""
+        try:
             detections = []
             
             # Use TikTok web scraping with anti-detection
@@ -555,7 +575,8 @@ class WebSurveillanceWorker:
             return []
 
     async def _scan_twitter(self, query: str, target: SurveillanceTarget) -> List[SurveillanceResult]:
-        """Scan Twitter/X for content matches"""        try:
+        """Scan Twitter/X for content matches"""
+        try:
             detections = []
             
             # Use Twitter API or web scraping
@@ -590,7 +611,8 @@ class WebSurveillanceWorker:
             return []
 
     async def _scan_generic_web(self, query: str, target: SurveillanceTarget) -> List[SurveillanceResult]:
-        """Scan generic web using search engines and crawling"""        try:
+        """Scan generic web using search engines and crawling"""
+        try:
             detections = []
             
             # Use multiple search engines
@@ -632,7 +654,8 @@ class WebSurveillanceWorker:
             return []
 
     async def _analyze_content_similarity(self, url: str, target: SurveillanceTarget) -> float:
-        """Analyze content similarity between found content and target"""        try:
+        """Analyze content similarity between found content and target"""
+        try:
             # Download and analyze content
             content_data = await self._download_content(url)
             if not content_data:
@@ -666,7 +689,8 @@ class WebSurveillanceWorker:
             return 0.0
 
     async def _download_content(self, url: str) -> Optional[bytes]:
-        """Download content from URL for analysis"""        try:
+        """Download content from URL for analysis"""
+        try:
             async with aiohttp.ClientSession(
                 headers={'User-Agent': self.user_agent.random},
                 timeout=aiohttp.ClientTimeout(total=30)
@@ -682,7 +706,8 @@ class WebSurveillanceWorker:
             return None
 
     async def _generate_search_queries(self, target: SurveillanceTarget) -> List[str]:
-        """Generate intelligent search queries for target"""        try:
+        """Generate intelligent search queries for target"""
+        try:
             queries = []
             
             # Add provided keywords
@@ -722,7 +747,8 @@ class WebSurveillanceWorker:
             return target.keywords or []
 
     async def _get_default_platforms(self, scope: SurveillanceScope) -> List[str]:
-        """Get default platforms for surveillance scope"""        platform_map = {
+        """Get default platforms for surveillance scope"""
+        platform_map = {
             SurveillanceScope.GLOBAL_WEB: ['google', 'bing', 'duckduckgo'],
             SurveillanceScope.SOCIAL_MEDIA: ['instagram', 'twitter', 'facebook', 'linkedin'],
             SurveillanceScope.VIDEO_PLATFORMS: ['youtube', 'vimeo', 'dailymotion', 'twitch'],
@@ -735,7 +761,8 @@ class WebSurveillanceWorker:
         return platform_map.get(scope, ['google', 'youtube', 'instagram'])
 
     async def _should_scan_target(self, target: SurveillanceTarget, current_time: datetime) -> bool:
-        """Determine if target should be scanned based on frequency"""        if not target.last_scan:
+        """Determine if target should be scanned based on frequency"""
+        if not target.last_scan:
             return True
         
         time_since_last_scan = current_time - target.last_scan
@@ -756,7 +783,8 @@ class WebSurveillanceWorker:
         detections: List[SurveillanceResult], 
         target: SurveillanceTarget
     ) -> List[SurveillanceResult]:
-        """Filter detections to remove duplicates and false positives"""        try:
+        """Filter detections to remove duplicates and false positives"""
+        try:
             # Remove duplicates by URL
             seen_urls = set()
             unique_detections = []
@@ -784,7 +812,8 @@ class WebSurveillanceWorker:
             return detections
 
     async def _is_false_positive(self, detection: SurveillanceResult, target: SurveillanceTarget) -> bool:
-        """Determine if detection is likely a false positive"""        try:
+        """Determine if detection is likely a false positive"""
+        try:
             # Check if URL is from authorized sources
             authorized_domains = [
                 'spotify.com', 'apple.com', 'amazon.com', 
@@ -808,7 +837,8 @@ class WebSurveillanceWorker:
             return False
 
     async def _calculate_severity(self, similarity_score: float) -> AlertSeverity:
-        """Calculate alert severity based on similarity score"""        if similarity_score >= 0.98:
+        """Calculate alert severity based on similarity score"""
+        if similarity_score >= 0.98:
             return AlertSeverity.EMERGENCY
         elif similarity_score >= 0.95:
             return AlertSeverity.CRITICAL
@@ -820,7 +850,8 @@ class WebSurveillanceWorker:
             return AlertSeverity.LOW
 
     async def _collect_evidence(self, url: str) -> List[str]:
-        """Collect evidence URLs for detected content"""        try:
+        """Collect evidence URLs for detected content"""
+        try:
             evidence_urls = []
             
             # Capture screenshot
@@ -845,7 +876,8 @@ class WebSurveillanceWorker:
             return []
 
     async def _send_alert(self, detection: SurveillanceResult) -> None:
-        """Send alert for high-severity detection"""        try:
+        """Send alert for high-severity detection"""
+        try:
             await self.surveillance_monitor.send_alert(
                 alert_type='piracy_detection',
                 severity=detection.severity.value,
@@ -863,7 +895,8 @@ class WebSurveillanceWorker:
             logger.error(f"❌ Failed to send alert: {e}")
 
     async def _validate_target(self, target: SurveillanceTarget) -> bool:
-        """Validate surveillance target configuration"""        try:
+        """Validate surveillance target configuration"""
+        try:
             # Check required fields
             if not all([target.target_id, target.content_id, target.user_id]):
                 return False
@@ -883,7 +916,8 @@ class WebSurveillanceWorker:
             return False
 
     async def _load_surveillance_targets(self) -> None:
-        """Load surveillance targets from storage"""        try:
+        """Load surveillance targets from storage"""
+        try:
             # This would load from database in production
             # For now, we'll start with empty targets
             self.active_targets = {}
@@ -893,7 +927,8 @@ class WebSurveillanceWorker:
             logger.error(f"❌ Failed to load surveillance targets: {e}")
 
     async def _health_monitor_loop(self) -> None:
-        """Health monitoring loop"""        try:
+        """Health monitoring loop"""
+        try:
             while True:
                 try:
                     # Update health metrics
@@ -915,7 +950,8 @@ class WebSurveillanceWorker:
             logger.info("🛑 Health monitor loop cancelled")
 
     async def get_worker_stats(self) -> Dict[str, Any]:
-        """Get comprehensive worker statistics"""        try:
+        """Get comprehensive worker statistics"""
+        try:
             return {
                 'worker_id': self.worker_id,
                 'status': 'active' if self.initialized else 'inactive',
@@ -930,7 +966,8 @@ class WebSurveillanceWorker:
             return {}
 
     async def shutdown(self) -> bool:
-        """Gracefully shutdown the worker"""        try:
+        """Gracefully shutdown the worker"""
+        try:
             logger.info(f"🛑 Shutting down Web Surveillance Worker {self.worker_id}")
             
             # Cancel running tasks
@@ -952,12 +989,14 @@ _web_surveillance_worker: Optional[WebSurveillanceWorker] = None
 
 
 async def get_web_surveillance_worker() -> Optional[WebSurveillanceWorker]:
-    """Get global web surveillance worker instance"""    global _web_surveillance_worker
+    """Get global web surveillance worker instance"""
+    global _web_surveillance_worker
     return _web_surveillance_worker
 
 
 async def initialize_web_surveillance_worker(worker_id: str = None) -> bool:
-    """Initialize global web surveillance worker"""    global _web_surveillance_worker
+    """Initialize global web surveillance worker"""
+    global _web_surveillance_worker
     try:
         if _web_surveillance_worker is None:
             _web_surveillance_worker = WebSurveillanceWorker(worker_id)
@@ -969,7 +1008,8 @@ async def initialize_web_surveillance_worker(worker_id: str = None) -> bool:
 
 
 async def shutdown_web_surveillance_worker() -> bool:
-    """Shutdown global web surveillance worker"""    global _web_surveillance_worker
+    """Shutdown global web surveillance worker"""
+    global _web_surveillance_worker
     try:
         if _web_surveillance_worker:
             result = await _web_surveillance_worker.shutdown()

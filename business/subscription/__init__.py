@@ -16,21 +16,32 @@ User (creator) → Subscribe to plan → Access tier-specific features → Usage
 Billing cycle → Payment processing → Feature access control → Analytics & insights
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized copying, modification, or distribution strictly prohibited.
 
 WARNING: This code is proprietary and confidential. Any unauthorized use, reproduction,
 or distribution of this code or any portion of it may result in severe civil and
 criminal penalties, and will be prosecuted to the maximum extent possible under law.
-"""from .subscription_service import SubscriptionService
+"""
+
+from .subscription_service import SubscriptionService
+
 from .subscription_manager import SubscriptionManager
+
 from .billing_engine import BillingEngine
+
 from .payment_processor import PaymentProcessor
+
 from .subscription_analytics import SubscriptionAnalytics
+
 from .tier_controller import TierController
+
 from .lifecycle_manager import LifecycleManager
+
 from .usage_tracker import UsageTracker
+
 from .subscription_validators import SubscriptionValidators
+
 from .models import (
     SubscriptionPlan,
     UserSubscription,

@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
-"""import asyncio
+"""
+import asyncio
 import logging
 import re
 from typing import Dict, List, Optional, Any, Union
@@ -33,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class YouTubeVideoInfo:
-    """YouTube video information structure."""    video_id: str
+    """YouTube video information structure."""
+    video_id: str
     title: str
     description: str
     channel_id: str
@@ -52,7 +54,8 @@ class YouTubeVideoInfo:
 
 @dataclass
 class YouTubeChannelInfo:
-    """YouTube channel information structure."""    channel_id: str
+    """YouTube channel information structure."""
+    channel_id: str
     title: str
     description: str
     subscriber_count: int
@@ -64,9 +67,11 @@ class YouTubeChannelInfo:
     custom_url: Optional[str] = None
 
 class YouTubeAPIClient:
-    """YouTube Data API v3 client with advanced features."""    
+    """YouTube Data API v3 client with advanced features."""
+    
     def __init__(self, api_key: str, quota_limit: int = 10000):
-        """Initialize YouTube API client."""        self.api_key = api_key
+        """Initialize YouTube API client."""
+        self.api_key = api_key
         self.quota_limit = quota_limit
         self.quota_used = 0
         self.service = None
@@ -81,7 +86,8 @@ class YouTubeAPIClient:
             raise
     
     def _check_quota(self, cost: int = 1) -> bool:
-        """Check if API quota allows operation."""        # Reset quota daily
+        """Check if API quota allows operation."""
+        # Reset quota daily
         if datetime.utcnow() - self.last_reset > timedelta(days=1):
             self.quota_used = 0
             self.last_reset = datetime.utcnow()
@@ -100,7 +106,8 @@ class YouTubeAPIClient:
         published_after: Optional[datetime] = None,
         video_duration: Optional[str] = None
     ) -> List[YouTubeVideoInfo]:
-        """Search for videos using YouTube API."""        if not self._check_quota(100):  # Search costs 100 quota units
+        """Search for videos using YouTube API."""
+        if not self._check_quota(100):  # Search costs 100 quota units
             raise Exception("YouTube API quota exceeded")
         
         try:
@@ -138,7 +145,8 @@ class YouTubeAPIClient:
             raise
     
     async def get_videos_details(self, video_ids: List[str]) -> List[YouTubeVideoInfo]:
-        """Get detailed information for videos."""        if not video_ids:
+        """Get detailed information for videos."""
+        if not video_ids:
             return []
         
         if not self._check_quota(1):  # Videos.list costs 1 quota unit per request
@@ -175,7 +183,8 @@ class YouTubeAPIClient:
             raise
     
     def _parse_video_details(self, item: Dict) -> YouTubeVideoInfo:
-        """Parse video details from API response."""        snippet = item['snippet']
+        """Parse video details from API response."""
+        snippet = item['snippet']
         statistics = item.get('statistics', {})
         content_details = item.get('contentDetails', {})
         
@@ -203,7 +212,8 @@ class YouTubeAPIClient:
         )
     
     async def get_channel_info(self, channel_id: str) -> Optional[YouTubeChannelInfo]:
-        """Get channel information."""        if not self._check_quota(1):
+        """Get channel information."""
+        if not self._check_quota(1):
             raise Exception("YouTube API quota exceeded")
         
         try:
@@ -242,15 +252,18 @@ class YouTubeAPIClient:
             return None
 
 class YouTubeSeleniumCrawler:
-    """Selenium-based YouTube crawler for advanced scraping."""    
+    """Selenium-based YouTube crawler for advanced scraping."""
+    
     def __init__(self, headless: bool = True, proxy: Optional[str] = None):
-        """Initialize Selenium crawler."""        self.headless = headless
+        """Initialize Selenium crawler."""
+        self.headless = headless
         self.proxy = proxy
         self.driver = None
         self.wait = None
         
     def _setup_driver(self) -> webdriver.Chrome:
-        """Setup Chrome WebDriver with optimal configuration."""        options = Options()
+        """Setup Chrome WebDriver with optimal configuration."""
+        options = Options()
         
         if self.headless:
             options.add_argument('--headless')
@@ -282,7 +295,8 @@ class YouTubeSeleniumCrawler:
             raise
     
     async def scrape_video_page(self, video_url: str) -> Dict[str, Any]:
-        """Scrape detailed information from YouTube video page."""        if not self.driver:
+        """Scrape detailed information from YouTube video page."""
+        if not self.driver:
             self.driver = self._setup_driver()
             self.wait = WebDriverWait(self.driver, 10)
         
@@ -367,7 +381,8 @@ class YouTubeSeleniumCrawler:
             return {}
     
     def _parse_view_count(self, text: str) -> int:
-        """Parse view count from text."""        if not text:
+        """Parse view count from text."""
+        if not text:
             return 0
         
         # Remove non-numeric characters except K, M, B
@@ -386,7 +401,8 @@ class YouTubeSeleniumCrawler:
             return 0
     
     def _parse_like_count(self, text: str) -> int:
-        """Parse like count from aria-label."""        if not text:
+        """Parse like count from aria-label."""
+        if not text:
             return 0
         
         # Extract number from aria-label like "123 likes"
@@ -396,12 +412,14 @@ class YouTubeSeleniumCrawler:
         return 0
     
     def close(self):
-        """Close Selenium driver."""        if self.driver:
+        """Close Selenium driver."""
+        if self.driver:
             self.driver.quit()
             self.driver = None
 
 class YouTubeCrawler(BasePlatformCrawler):
-    """    Professional YouTube Content Crawler
+    """
+    Professional YouTube Content Crawler
     ====================================
     
     Advanced YouTube content discovery and monitoring system combining:
@@ -410,9 +428,11 @@ class YouTubeCrawler(BasePlatformCrawler):
     - Intelligent rate limiting and quota management
     - Real-time content monitoring
     - Multi-format content detection
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize YouTube crawler."""        super().__init__("youtube", config)
+        """Initialize YouTube crawler."""
+        super().__init__("youtube", config)
         
         # API configuration
         self.api_key = config.get('api_key')
@@ -452,7 +472,8 @@ class YouTubeCrawler(BasePlatformCrawler):
         max_results: int = None,
         filters: Optional[Dict[str, Any]] = None
     ) -> List[CrawlResult]:
-        """Search for content on YouTube."""        if not self.api_client and not self.selenium_crawler:
+        """Search for content on YouTube."""
+        if not self.api_client and not self.selenium_crawler:
             raise Exception("No YouTube crawling methods available")
         
         max_results = max_results or self.max_results_per_search
@@ -486,7 +507,8 @@ class YouTubeCrawler(BasePlatformCrawler):
         max_results: int,
         filters: Optional[Dict[str, Any]] = None
     ) -> List[CrawlResult]:
-        """Search using YouTube API."""        try:
+        """Search using YouTube API."""
+        try:
             # Apply filters
             search_params = {}
             if filters:
@@ -545,7 +567,8 @@ class YouTubeCrawler(BasePlatformCrawler):
         max_results: int,
         filters: Optional[Dict[str, Any]] = None
     ) -> List[CrawlResult]:
-        """Search using Selenium scraping."""        if not self.selenium_crawler:
+        """Search using Selenium scraping."""
+        if not self.selenium_crawler:
             return []
         
         try:
@@ -559,7 +582,8 @@ class YouTubeCrawler(BasePlatformCrawler):
             return []
     
     async def _post_process_results(self, results: List[CrawlResult]) -> List[CrawlResult]:
-        """Post-process crawl results with additional information."""        processed_results = []
+        """Post-process crawl results with additional information."""
+        processed_results = []
         
         for result in results:
             try:
@@ -589,7 +613,8 @@ class YouTubeCrawler(BasePlatformCrawler):
         channel_id: str,
         callback_func: callable = None
     ) -> bool:
-        """Monitor a YouTube channel for new content."""        if not self.api_client:
+        """Monitor a YouTube channel for new content."""
+        if not self.api_client:
             logger.error("YouTube API not available for channel monitoring")
             return False
         
@@ -616,12 +641,14 @@ class YouTubeCrawler(BasePlatformCrawler):
             return False
     
     async def check_rate_limits(self) -> bool:
-        """Check if crawler is within rate limits."""        if self.api_client:
+        """Check if crawler is within rate limits."""
+        if self.api_client:
             return self.api_client._check_quota(1)
         return True
     
     async def get_quota_status(self) -> Dict[str, Any]:
-        """Get current API quota status."""        if not self.api_client:
+        """Get current API quota status."""
+        if not self.api_client:
             return {"error": "API client not available"}
         
         return {
@@ -633,7 +660,8 @@ class YouTubeCrawler(BasePlatformCrawler):
         }
     
     def cleanup(self):
-        """Cleanup crawler resources."""        if self.selenium_crawler:
+        """Cleanup crawler resources."""
+        if self.selenium_crawler:
             self.selenium_crawler.close()
         
         logger.info("YouTube crawler cleanup completed")

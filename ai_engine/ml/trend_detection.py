@@ -10,7 +10,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import numpy as np
 import pandas as pd
 from abc import ABC, abstractmethod
@@ -76,7 +77,8 @@ except:
 
 
 class TrendStatus(Enum):
-    """Trend status indicators"""    EMERGING = "emerging"
+    """Trend status indicators"""
+    EMERGING = "emerging"
     GROWING = "growing"
     PEAKED = "peaked"
     DECLINING = "declining"
@@ -86,7 +88,8 @@ class TrendStatus(Enum):
 
 
 class TrendType(Enum):
-    """Types of trends"""    HASHTAG = "hashtag"
+    """Types of trends"""
+    HASHTAG = "hashtag"
     KEYWORD = "keyword"
     TOPIC = "topic"
     MEME = "meme"
@@ -99,7 +102,8 @@ class TrendType(Enum):
 
 
 class TrendScope(Enum):
-    """Geographical or demographic scope of trends"""    GLOBAL = "global"
+    """Geographical or demographic scope of trends"""
+    GLOBAL = "global"
     REGIONAL = "regional"
     LOCAL = "local"
     NICHE = "niche"
@@ -107,7 +111,8 @@ class TrendScope(Enum):
 
 
 class TrendSource(Enum):
-    """Sources of trend data"""    SOCIAL_MEDIA = "social_media"
+    """Sources of trend data"""
+    SOCIAL_MEDIA = "social_media"
     NEWS = "news"
     SEARCH_ENGINE = "search_engine"
     PLATFORM_ANALYTICS = "platform_analytics"
@@ -117,7 +122,8 @@ class TrendSource(Enum):
 
 @dataclass
 class TrendMetrics:
-    """Metrics for trend analysis"""    volume: float  # Total volume/frequency
+    """Metrics for trend analysis"""
+    volume: float  # Total volume/frequency
     velocity: float  # Rate of change
     acceleration: float  # Rate of velocity change
     reach: float  # Unique users/sources
@@ -145,14 +151,16 @@ class TrendMetrics:
 
 @dataclass
 class TrendDataPoint:
-    """Single trend data point"""    timestamp: datetime
+    """Single trend data point"""
+    timestamp: datetime
     value: float
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
 class Trend:
-    """Trend object with all associated data"""    trend_id: str
+    """Trend object with all associated data"""
+    trend_id: str
     content: str  # Main trend content (hashtag, keyword, etc.)
     trend_type: TrendType
     status: TrendStatus
@@ -195,7 +203,8 @@ class Trend:
 
 @dataclass
 class TrendPrediction:
-    """Prediction about future trend behavior"""    trend_id: str
+    """Prediction about future trend behavior"""
+    trend_id: str
     predicted_status: TrendStatus
     predicted_peak: Optional[datetime]
     predicted_end: Optional[datetime]
@@ -220,22 +229,26 @@ class TrendPrediction:
 
 
 class TrendDetector(ABC):
-    """Abstract base class for trend detectors"""    
+    """Abstract base class for trend detectors"""
+    
     def __init__(self, detector_name: str):
         self.detector_name = detector_name
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     @abstractmethod
     async def detect_trends(self, data: Any, timeframe: timedelta = None) -> List[Trend]:
-        """Detect trends in data"""        pass
+        """Detect trends in data"""
+        pass
     
     @abstractmethod
     async def update_trend(self, trend: Trend, new_data: Any) -> Trend:
-        """Update existing trend with new data"""        pass
+        """Update existing trend with new data"""
+        pass
 
 
 class StatisticalTrendDetector(TrendDetector):
-    """Statistical trend detector using various algorithms"""    
+    """Statistical trend detector using various algorithms"""
+    
     def __init__(self, 
                  min_volume_threshold: float = 10.0,
                  min_velocity_threshold: float = 0.1,
@@ -248,7 +261,8 @@ class StatisticalTrendDetector(TrendDetector):
     async def detect_trends(self, 
                           data: pd.DataFrame, 
                           timeframe: timedelta = None) -> List[Trend]:
-        """Detect trends using statistical methods"""        trends = []
+        """Detect trends using statistical methods"""
+        trends = []
         
         # Ensure data has required columns
         if not all(col in data.columns for col in ['timestamp', 'content', 'value']):
@@ -268,7 +282,8 @@ class StatisticalTrendDetector(TrendDetector):
         return trends
     
     async def _analyze_content_trend(self, content: str, data: pd.DataFrame) -> Optional[Trend]:
-        """Analyze trend for specific content"""        if len(data) < 3:  # Need minimum data points
+        """Analyze trend for specific content"""
+        if len(data) < 3:  # Need minimum data points
             return None
         
         # Sort by timestamp
@@ -371,7 +386,8 @@ class StatisticalTrendDetector(TrendDetector):
                                  acceleration: float, 
                                  reach: float, 
                                  engagement: float) -> float:
-        """Calculate virality score using multiple factors"""        # Normalize factors
+        """Calculate virality score using multiple factors"""
+        # Normalize factors
         norm_volume = min(volume / 1000, 1.0)  # Normalize to 0-1
         norm_velocity = min(max(velocity, 0) / 100, 1.0)  # Positive velocity only
         norm_acceleration = min(max(acceleration, 0) / 10, 1.0)  # Positive acceleration
@@ -398,7 +414,8 @@ class StatisticalTrendDetector(TrendDetector):
         return float(virality_score)
     
     async def _calculate_authenticity_score(self, data: pd.DataFrame) -> float:
-        """Calculate authenticity score to detect artificial trends"""        # Check for suspicious patterns
+        """Calculate authenticity score to detect artificial trends"""
+        # Check for suspicious patterns
         authenticity_factors = []
         
         # Time pattern analysis
@@ -430,7 +447,8 @@ class StatisticalTrendDetector(TrendDetector):
         return float(np.mean(authenticity_factors))
     
     def _determine_trend_status(self, values: np.ndarray, velocity: float, acceleration: float) -> TrendStatus:
-        """Determine current trend status"""        if len(values) < 2:
+        """Determine current trend status"""
+        if len(values) < 2:
             return TrendStatus.EMERGING
         
         recent_trend = np.mean(values[-3:]) if len(values) >= 3 else values[-1]
@@ -455,7 +473,8 @@ class StatisticalTrendDetector(TrendDetector):
                 return TrendStatus.DEAD
     
     def _classify_trend_type(self, content: str) -> TrendType:
-        """Classify the type of trend based on content"""        content_lower = content.lower()
+        """Classify the type of trend based on content"""
+        content_lower = content.lower()
         
         # Simple pattern matching (could be enhanced with ML)
         if content.startswith('#'):
@@ -474,11 +493,13 @@ class StatisticalTrendDetector(TrendDetector):
             return TrendType.TOPIC
     
     def _passes_threshold_filters(self, trend: Trend) -> bool:
-        """Check if trend passes minimum thresholds"""        return (trend.metrics.volume >= self.min_volume_threshold and 
+        """Check if trend passes minimum thresholds"""
+        return (trend.metrics.volume >= self.min_volume_threshold and 
                 abs(trend.metrics.velocity) >= self.min_velocity_threshold)
     
     async def update_trend(self, trend: Trend, new_data: pd.DataFrame) -> Trend:
-        """Update existing trend with new data"""        # Combine old and new data
+        """Update existing trend with new data"""
+        # Combine old and new data
         old_data = pd.DataFrame([
             {
                 'timestamp': dp.timestamp,
@@ -508,7 +529,8 @@ class StatisticalTrendDetector(TrendDetector):
 
 
 class MachineLearningTrendDetector(TrendDetector):
-    """ML-based trend detector using clustering and NLP"""    
+    """ML-based trend detector using clustering and NLP"""
+    
     def __init__(self, device: str = "auto"):
         super().__init__("ml_detector")
         self.device = device
@@ -520,7 +542,8 @@ class MachineLearningTrendDetector(TrendDetector):
         self.is_loaded = False
     
     async def load_models(self):
-        """Load ML models"""        try:
+        """Load ML models"""
+        try:
             # Load sentence transformer for semantic similarity
             self.nlp_pipeline = pipeline(
                 "feature-extraction",
@@ -538,7 +561,8 @@ class MachineLearningTrendDetector(TrendDetector):
     async def detect_trends(self, 
                           data: List[Dict[str, Any]], 
                           timeframe: timedelta = None) -> List[Trend]:
-        """Detect trends using ML clustering and topic modeling"""        if not self.is_loaded:
+        """Detect trends using ML clustering and topic modeling"""
+        if not self.is_loaded:
             await self.load_models()
         
         if not data:
@@ -566,7 +590,8 @@ class MachineLearningTrendDetector(TrendDetector):
         return unique_trends[:50]  # Return top 50 trends
     
     async def _cluster_content(self, df: pd.DataFrame) -> List[Trend]:
-        """Cluster similar content to identify trends"""        if 'content' not in df.columns:
+        """Cluster similar content to identify trends"""
+        if 'content' not in df.columns:
             return []
         
         # Vectorize content
@@ -606,7 +631,8 @@ class MachineLearningTrendDetector(TrendDetector):
             return []
     
     async def _extract_topic_trends(self, df: pd.DataFrame) -> List[Trend]:
-        """Extract trends using topic modeling"""        if 'content' not in df.columns or len(df) < 10:
+        """Extract trends using topic modeling"""
+        if 'content' not in df.columns or len(df) < 10:
             return []
         
         try:
@@ -649,7 +675,8 @@ class MachineLearningTrendDetector(TrendDetector):
             return []
     
     async def _group_by_semantic_similarity(self, df: pd.DataFrame) -> List[Trend]:
-        """Group content by semantic similarity"""        if not self.nlp_pipeline or len(df) < 5:
+        """Group content by semantic similarity"""
+        if not self.nlp_pipeline or len(df) < 5:
             return []
         
         try:
@@ -698,7 +725,8 @@ class MachineLearningTrendDetector(TrendDetector):
             return []
     
     def _get_cluster_representative(self, contents: List[str]) -> str:
-        """Get representative content for a cluster"""        # Simple approach: return most frequent content or longest
+        """Get representative content for a cluster"""
+        # Simple approach: return most frequent content or longest
         counter = Counter(contents)
         most_common = counter.most_common(1)
         
@@ -709,7 +737,8 @@ class MachineLearningTrendDetector(TrendDetector):
         return max(contents, key=len)
     
     async def _create_trend_from_cluster(self, content: str, data: pd.DataFrame) -> Optional[Trend]:
-        """Create trend object from cluster data"""        if len(data) < 2:
+        """Create trend object from cluster data"""
+        if len(data) < 2:
             return None
         
         # Calculate basic metrics
@@ -772,7 +801,8 @@ class MachineLearningTrendDetector(TrendDetector):
         return trend
     
     def _deduplicate_trends(self, trends: List[Trend]) -> List[Trend]:
-        """Remove duplicate or very similar trends"""        if not trends:
+        """Remove duplicate or very similar trends"""
+        if not trends:
             return []
         
         unique_trends = []
@@ -796,7 +826,8 @@ class MachineLearningTrendDetector(TrendDetector):
         return unique_trends
     
     def _calculate_content_similarity(self, content1: str, content2: str) -> float:
-        """Calculate similarity between two content strings"""        # Simple Jaccard similarity
+        """Calculate similarity between two content strings"""
+        # Simple Jaccard similarity
         words1 = set(content1.lower().split())
         words2 = set(content2.lower().split())
         
@@ -809,7 +840,8 @@ class MachineLearningTrendDetector(TrendDetector):
         return len(intersection) / len(union) if union else 0.0
     
     async def update_trend(self, trend: Trend, new_data: Any) -> Trend:
-        """Update trend with new data"""        # For ML trends, we'd need to re-run the clustering
+        """Update trend with new data"""
+        # For ML trends, we'd need to re-run the clustering
         # This is a simplified update
         if hasattr(new_data, '__iter__') and not isinstance(new_data, str):
             trend.metrics.volume += len(new_data)
@@ -819,13 +851,15 @@ class MachineLearningTrendDetector(TrendDetector):
 
 
 class TrendPredictor:
-    """Predict future trend behavior using various models"""    
+    """Predict future trend behavior using various models"""
+    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.models = {}
     
     async def predict_trend_future(self, trend: Trend, horizon: timedelta = None) -> TrendPrediction:
-        """Predict future behavior of a trend"""        if not horizon:
+        """Predict future behavior of a trend"""
+        if not horizon:
             horizon = timedelta(days=7)  # Default 1 week prediction
         
         # Extract time series data
@@ -862,7 +896,8 @@ class TrendPredictor:
         )
     
     def _create_low_confidence_prediction(self, trend: Trend, horizon: timedelta) -> TrendPrediction:
-        """Create low confidence prediction for trends with insufficient data"""        return TrendPrediction(
+        """Create low confidence prediction for trends with insufficient data"""
+        return TrendPrediction(
             trend_id=trend.trend_id,
             predicted_status=TrendStatus.STABLE,
             predicted_peak=None,
@@ -875,7 +910,8 @@ class TrendPredictor:
         )
     
     async def _predict_status(self, trend: Trend, values: List[float]) -> TrendStatus:
-        """Predict future trend status"""        recent_values = values[-3:] if len(values) >= 3 else values
+        """Predict future trend status"""
+        recent_values = values[-3:] if len(values) >= 3 else values
         trend_direction = np.mean(np.diff(recent_values)) if len(recent_values) > 1 else 0
         
         current_status = trend.status
@@ -902,7 +938,8 @@ class TrendPredictor:
                                timestamps: List[datetime], 
                                values: List[float],
                                horizon: timedelta) -> Tuple[Optional[datetime], Optional[datetime]]:
-        """Predict peak and end times"""        if len(values) < 3:
+        """Predict peak and end times"""
+        if len(values) < 3:
             return None, None
         
         # Find current peak
@@ -935,7 +972,8 @@ class TrendPredictor:
         return predicted_peak, predicted_end
     
     def _calculate_prediction_confidence(self, trend: Trend, values: List[float]) -> float:
-        """Calculate confidence in predictions"""        confidence_factors = []
+        """Calculate confidence in predictions"""
+        confidence_factors = []
         
         # Data quantity factor
         data_quantity = min(len(values) / 20, 1.0)
@@ -954,7 +992,8 @@ class TrendPredictor:
         return float(np.mean(confidence_factors)) if confidence_factors else 0.3
     
     async def _analyze_trend_factors(self, trend: Trend) -> Tuple[List[str], List[str]]:
-        """Analyze supporting and risk factors for trend"""        supporting_factors = []
+        """Analyze supporting and risk factors for trend"""
+        supporting_factors = []
         risk_factors = []
         
         # Supporting factors
@@ -987,7 +1026,8 @@ class TrendPredictor:
 
 
 class TrendAnalyticsEngine:
-    """Main engine orchestrating trend detection and analysis"""    
+    """Main engine orchestrating trend detection and analysis"""
+    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.statistical_detector = StatisticalTrendDetector()
@@ -998,7 +1038,8 @@ class TrendAnalyticsEngine:
         self.is_initialized = False
     
     async def initialize(self):
-        """Initialize the analytics engine"""        try:
+        """Initialize the analytics engine"""
+        try:
             await self.ml_detector.load_models()
             self.is_initialized = True
             self.logger.info("Trend analytics engine initialized successfully")
@@ -1007,7 +1048,8 @@ class TrendAnalyticsEngine:
             raise
     
     async def analyze_trends(self, data: Any, method: str = "combined") -> Dict[str, Any]:
-        """Analyze trends using specified method"""        if not self.is_initialized:
+        """Analyze trends using specified method"""
+        if not self.is_initialized:
             await self.initialize()
         
         results = {
@@ -1067,7 +1109,8 @@ class TrendAnalyticsEngine:
         return results
     
     def _create_analysis_summary(self, trends: List[Trend], predictions: List[TrendPrediction]) -> Dict[str, Any]:
-        """Create summary of trend analysis"""        if not trends:
+        """Create summary of trend analysis"""
+        if not trends:
             return {'total_trends': 0, 'message': 'No trends detected'}
         
         # Status distribution
@@ -1105,10 +1148,12 @@ class TrendAnalyticsEngine:
         }
     
     async def get_trend_by_id(self, trend_id: str) -> Optional[Trend]:
-        """Get specific trend by ID"""        return self.active_trends.get(trend_id)
+        """Get specific trend by ID"""
+        return self.active_trends.get(trend_id)
     
     async def get_trending_now(self, limit: int = 20) -> List[Trend]:
-        """Get currently trending items"""        # Filter for active, high-scoring trends
+        """Get currently trending items"""
+        # Filter for active, high-scoring trends
         current_trends = [
             trend for trend in self.active_trends.values()
             if trend.status in [TrendStatus.VIRAL, TrendStatus.GROWING, TrendStatus.EMERGING]
@@ -1120,7 +1165,8 @@ class TrendAnalyticsEngine:
         return current_trends[:limit]
     
     async def export_trends(self, filepath: str, format: str = "json"):
-        """Export trends to file"""        try:
+        """Export trends to file"""
+        try:
             trends_data = {
                 'active_trends': {tid: trend.to_dict() for tid, trend in self.active_trends.items()},
                 'export_timestamp': datetime.now().isoformat(),

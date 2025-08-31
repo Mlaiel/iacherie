@@ -11,7 +11,8 @@ Copyright: 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Unauthorized use, reproduction, 
 or distribution without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will be prosecuted to the full extent of the law.
-"""import numpy as np
+"""
+import numpy as np
 import librosa
 import scipy.signal as signal
 from scipy.stats import entropy, kurtosis, skew
@@ -30,7 +31,8 @@ from ..core.validators import AudioValidator
 
 
 class QualityLevel(Enum):
-    """Audio quality assessment levels"""    EXCELLENT = "excellent"    # 90-100%
+    """Audio quality assessment levels"""
+    EXCELLENT = "excellent"    # 90-100%
     GOOD = "good"             # 75-89%
     FAIR = "fair"             # 60-74%
     POOR = "poor"             # 40-59%
@@ -38,7 +40,8 @@ class QualityLevel(Enum):
 
 
 class MetricCategory(Enum):
-    """Audio quality metric categories"""    TEMPORAL = "temporal"          # Time-domain metrics
+    """Audio quality metric categories"""
+    TEMPORAL = "temporal"          # Time-domain metrics
     SPECTRAL = "spectral"          # Frequency-domain metrics
     PSYCHOACOUSTIC = "psychoacoustic"  # Perceptual metrics
     DISTORTION = "distortion"      # Distortion measurements
@@ -48,7 +51,8 @@ class MetricCategory(Enum):
 
 @dataclass
 class QualityMetrics:
-    """Comprehensive audio quality metrics"""    # Basic metrics
+    """Comprehensive audio quality metrics"""
+    # Basic metrics
     peak_amplitude: float = 0.0
     rms_level: float = 0.0
     rms_db: float = -np.inf
@@ -106,7 +110,8 @@ class QualityMetrics:
 
 @dataclass
 class ComparisonResult:
-    """Audio quality comparison results"""    reference_metrics: QualityMetrics
+    """Audio quality comparison results"""
+    reference_metrics: QualityMetrics
     test_metrics: QualityMetrics
     improvement_scores: Dict[str, float] = field(default_factory=dict)
     degradation_scores: Dict[str, float] = field(default_factory=dict)
@@ -116,13 +121,15 @@ class ComparisonResult:
 
 
 class PsychoacousticAnalyzer:
-    """Advanced psychoacoustic analysis based on human auditory perception"""    
+    """Advanced psychoacoustic analysis based on human auditory perception"""
+    
     def __init__(self):
         self.bark_scale_boundaries = self._create_bark_scale()
         self.a_weighting_filter = self._create_a_weighting_filter()
     
     def _create_bark_scale(self) -> np.ndarray:
-        """Create Bark scale frequency boundaries"""        # Bark scale critical bands (Hz)
+        """Create Bark scale frequency boundaries"""
+        # Bark scale critical bands (Hz)
         return np.array([
             20, 100, 200, 300, 400, 510, 630, 770, 920, 1080,
             1270, 1480, 1720, 2000, 2320, 2700, 3150, 3700, 4400,
@@ -130,7 +137,8 @@ class PsychoacousticAnalyzer:
         ])
     
     def _create_a_weighting_filter(self) -> Dict[str, np.ndarray]:
-        """Create A-weighting filter coefficients"""        # Simplified A-weighting approximation
+        """Create A-weighting filter coefficients"""
+        # Simplified A-weighting approximation
         freqs = np.logspace(np.log10(20), np.log10(20000), 1000)
         
         # A-weighting formula
@@ -157,7 +165,8 @@ class PsychoacousticAnalyzer:
         }
     
     def analyze_loudness(self, audio: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Analyze perceptual loudness using ITU-R BS.1770 standard"""        # Pre-filter (high-pass)
+        """Analyze perceptual loudness using ITU-R BS.1770 standard"""
+        # Pre-filter (high-pass)
         sos = signal.butter(2, 48, btype='high', fs=sample_rate, output='sos')
         filtered_audio = signal.sosfilt(sos, audio, axis=0)
         
@@ -224,7 +233,8 @@ class PsychoacousticAnalyzer:
         }
     
     def calculate_sharpness(self, audio: np.ndarray, sample_rate: int) -> float:
-        """Calculate perceptual sharpness (Zwicker and Fastl)"""        # FFT analysis
+        """Calculate perceptual sharpness (Zwicker and Fastl)"""
+        # FFT analysis
         n_fft = 2048
         hop_length = n_fft // 4
         
@@ -256,7 +266,8 @@ class PsychoacousticAnalyzer:
         return np.mean(sharpness_values)
     
     def calculate_roughness(self, audio: np.ndarray, sample_rate: int) -> float:
-        """Calculate perceptual roughness"""        # Analyze modulation in critical bands
+        """Calculate perceptual roughness"""
+        # Analyze modulation in critical bands
         n_fft = 2048
         hop_length = n_fft // 8  # High temporal resolution
         
@@ -299,13 +310,16 @@ class PsychoacousticAnalyzer:
 
 
 class AudioQualityAnalyzer:
-    """    Professional Audio Quality Analyzer & Metrics Engine
+    """
+    Professional Audio Quality Analyzer & Metrics Engine
     
     Comprehensive audio quality analysis system providing detailed metrics,
     quality assessment, and enhancement validation capabilities.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the audio quality analyzer"""        self.logger = logging.getLogger(__name__)
+        """Initialize the audio quality analyzer"""
+        self.logger = logging.getLogger(__name__)
         self.validator = AudioValidator()
         self.psychoacoustic_analyzer = PsychoacousticAnalyzer()
         
@@ -316,7 +330,8 @@ class AudioQualityAnalyzer:
         self._analysis_cache = {}
         
     def _init_quality_thresholds(self) -> Dict[str, Dict[str, float]]:
-        """Initialize quality assessment thresholds"""        return {
+        """Initialize quality assessment thresholds"""
+        return {
             'snr_db': {
                 'excellent': 50.0,
                 'good': 35.0,
@@ -347,7 +362,8 @@ class AudioQualityAnalyzer:
                        audio: np.ndarray, 
                        sample_rate: int,
                        detailed: bool = True) -> QualityMetrics:
-        """        Perform comprehensive audio quality analysis
+        """
+        Perform comprehensive audio quality analysis
         
         Args:
             audio: Input audio signal
@@ -356,7 +372,8 @@ class AudioQualityAnalyzer:
             
         Returns:
             QualityMetrics object with comprehensive analysis results
-        """        try:
+        """
+        try:
             # Validate input
             self.validator.validate_audio_array(audio, sample_rate)
             
@@ -413,7 +430,8 @@ class AudioQualityAnalyzer:
     
     def _analyze_temporal_metrics(self, audio: np.ndarray, sample_rate: int, 
                                  metrics: QualityMetrics):
-        """Analyze time-domain characteristics"""        # Basic amplitude metrics
+        """Analyze time-domain characteristics"""
+        # Basic amplitude metrics
         metrics.peak_amplitude = np.max(np.abs(audio))
         metrics.rms_level = np.sqrt(np.mean(audio ** 2))
         metrics.rms_db = 20 * np.log10(metrics.rms_level + 1e-10)
@@ -449,7 +467,8 @@ class AudioQualityAnalyzer:
     
     def _analyze_spectral_metrics(self, audio: np.ndarray, sample_rate: int,
                                  metrics: QualityMetrics):
-        """Analyze frequency-domain characteristics"""        try:
+        """Analyze frequency-domain characteristics"""
+        try:
             # Spectral features using librosa
             spectral_centroids = librosa.feature.spectral_centroid(y=audio, sr=sample_rate)[0]
             metrics.spectral_centroid = np.mean(spectral_centroids)
@@ -481,7 +500,8 @@ class AudioQualityAnalyzer:
     
     def _analyze_dynamic_metrics(self, audio: np.ndarray, sample_rate: int,
                                 metrics: QualityMetrics):
-        """Analyze dynamic range characteristics"""        # Basic dynamic range
+        """Analyze dynamic range characteristics"""
+        # Basic dynamic range
         peak_db = 20 * np.log10(metrics.peak_amplitude + 1e-10)
         metrics.dynamic_range_db = peak_db - metrics.rms_db
         
@@ -493,7 +513,8 @@ class AudioQualityAnalyzer:
     
     def _analyze_harmonic_metrics(self, audio: np.ndarray, sample_rate: int,
                                  metrics: QualityMetrics):
-        """Analyze harmonic content"""        try:
+        """Analyze harmonic content"""
+        try:
             # Fundamental frequency detection
             f0, voiced_flag, voiced_probs = librosa.pyin(audio, 
                                                         fmin=librosa.note_to_hz('C2'), 
@@ -536,7 +557,8 @@ class AudioQualityAnalyzer:
     
     def _analyze_distortion_metrics(self, audio: np.ndarray, sample_rate: int,
                                    metrics: QualityMetrics):
-        """Analyze distortion characteristics"""        # Total Harmonic Distortion (THD) estimation
+        """Analyze distortion characteristics"""
+        # Total Harmonic Distortion (THD) estimation
         try:
             # FFT-based THD calculation
             n_fft = min(8192, len(audio))
@@ -587,7 +609,8 @@ class AudioQualityAnalyzer:
     
     def _analyze_noise_metrics(self, audio: np.ndarray, sample_rate: int,
                               metrics: QualityMetrics):
-        """Analyze noise characteristics"""        # Signal-to-noise ratio estimation
+        """Analyze noise characteristics"""
+        # Signal-to-noise ratio estimation
         try:
             # Simple energy-based SNR estimation
             # Find signal and noise portions based on amplitude
@@ -612,7 +635,8 @@ class AudioQualityAnalyzer:
     
     def _analyze_spatial_metrics(self, audio: np.ndarray, sample_rate: int,
                                 metrics: QualityMetrics):
-        """Analyze stereo/spatial characteristics"""        if audio.shape[1] < 2:
+        """Analyze stereo/spatial characteristics"""
+        if audio.shape[1] < 2:
             return
         
         # Inter-channel correlation
@@ -624,7 +648,8 @@ class AudioQualityAnalyzer:
     
     def _analyze_psychoacoustic_metrics(self, audio: np.ndarray, sample_rate: int,
                                        metrics: QualityMetrics):
-        """Analyze psychoacoustic characteristics"""        try:
+        """Analyze psychoacoustic characteristics"""
+        try:
             # Perceptual sharpness
             metrics.sharpness = self.psychoacoustic_analyzer.calculate_sharpness(audio, sample_rate)
             
@@ -641,7 +666,8 @@ class AudioQualityAnalyzer:
             metrics.perceived_loudness = 0.0
     
     def _calculate_overall_quality(self, metrics: QualityMetrics) -> float:
-        """Calculate overall quality score (0-100)"""        score_components = []
+        """Calculate overall quality score (0-100)"""
+        score_components = []
         weights = []
         
         # SNR component (25% weight)
@@ -692,7 +718,8 @@ class AudioQualityAnalyzer:
         return max(0.0, min(100.0, overall_score))
     
     def _determine_quality_level(self, score: float) -> QualityLevel:
-        """Determine quality level based on overall score"""        if score >= 90:
+        """Determine quality level based on overall score"""
+        if score >= 90:
             return QualityLevel.EXCELLENT
         elif score >= 75:
             return QualityLevel.GOOD
@@ -707,7 +734,8 @@ class AudioQualityAnalyzer:
                        reference_audio: np.ndarray,
                        test_audio: np.ndarray,
                        sample_rate: int) -> ComparisonResult:
-        """        Compare quality between reference and test audio
+        """
+        Compare quality between reference and test audio
         
         Args:
             reference_audio: Reference audio signal
@@ -716,7 +744,8 @@ class AudioQualityAnalyzer:
             
         Returns:
             ComparisonResult with detailed comparison analysis
-        """        try:
+        """
+        try:
             # Analyze both audio signals
             ref_metrics = self.analyze_quality(reference_audio, sample_rate)
             test_metrics = self.analyze_quality(test_audio, sample_rate)
@@ -785,7 +814,8 @@ class AudioQualityAnalyzer:
                                           improvements: Dict[str, float],
                                           degradations: Dict[str, float],
                                           overall_improvement: float) -> str:
-        """Generate quality comparison recommendation"""        if overall_improvement > 10:
+        """Generate quality comparison recommendation"""
+        if overall_improvement > 10:
             return "Excellent improvement achieved. The enhanced audio shows significant quality gains."
         elif overall_improvement > 5:
             return "Good improvement. The enhanced audio quality is noticeably better."
@@ -801,7 +831,8 @@ class AudioQualityAnalyzer:
     def _generate_comparison_warnings(self, 
                                     ref_metrics: QualityMetrics,
                                     test_metrics: QualityMetrics) -> List[str]:
-        """Generate warnings for quality comparison"""        warnings = []
+        """Generate warnings for quality comparison"""
+        warnings = []
         
         # Clipping warning
         if test_metrics.clipping_factor > ref_metrics.clipping_factor * 2:
@@ -823,7 +854,8 @@ class AudioQualityAnalyzer:
         return warnings
     
     def export_metrics(self, metrics: QualityMetrics, file_path: Union[str, Path]):
-        """Export quality metrics to JSON file"""        metrics_dict = {
+        """Export quality metrics to JSON file"""
+        metrics_dict = {
             'analysis_info': {
                 'timestamp': metrics.analysis_timestamp,
                 'sample_rate': metrics.sample_rate,
@@ -885,7 +917,8 @@ class AudioQualityAnalyzer:
             json.dump(metrics_dict, f, indent=2, default=str)
     
     def get_quality_report(self, metrics: QualityMetrics) -> str:
-        """Generate human-readable quality report"""        report = []
+        """Generate human-readable quality report"""
+        report = []
         report.append("=== AUDIO QUALITY ANALYSIS REPORT ===\n")
         
         # Basic info

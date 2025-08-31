@@ -28,7 +28,8 @@ Team Specialties & Expertise:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Callable
@@ -49,7 +50,8 @@ from ...business.monetization_business import MonetizationBusinessLogic
 
 
 class WorkflowType(Enum):
-    """Comprehensive workflow types for IA Influencer business logic"""    CONTENT_ONBOARDING = "content_onboarding"
+    """Comprehensive workflow types for IA Influencer business logic"""
+    CONTENT_ONBOARDING = "content_onboarding"
     CONTENT_PROTECTION = "content_protection"
     COLLABORATION_MATCHING = "collaboration_matching"
     MONETIZATION_ACTIVATION = "monetization_activation"
@@ -62,7 +64,8 @@ class WorkflowType(Enum):
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status tracking"""    PENDING = "pending"
+    """Workflow execution status tracking"""
+    PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -72,7 +75,8 @@ class WorkflowStatus(Enum):
 
 
 class StepType(Enum):
-    """Types of workflow steps"""    NOTIFICATION = "notification"
+    """Types of workflow steps"""
+    NOTIFICATION = "notification"
     DELAY = "delay"
     CONDITION = "condition"
     ACTION = "action"
@@ -84,7 +88,8 @@ class StepType(Enum):
 
 
 class TriggerType(Enum):
-    """Workflow trigger types"""    EVENT_BASED = "event_based"
+    """Workflow trigger types"""
+    EVENT_BASED = "event_based"
     TIME_BASED = "time_based"
     USER_ACTION = "user_action"
     BUSINESS_CONDITION = "business_condition"
@@ -94,7 +99,8 @@ class TriggerType(Enum):
 
 @dataclass
 class WorkflowCondition:
-    """Workflow condition for branching and decision making"""    condition_id: str
+    """Workflow condition for branching and decision making"""
+    condition_id: str
     condition_type: str
     parameters: Dict[str, Any]
     evaluation_function: Callable[[Dict[str, Any]], bool]
@@ -102,7 +108,8 @@ class WorkflowCondition:
 
 @dataclass
 class WorkflowAction:
-    """Workflow action configuration"""    action_id: str
+    """Workflow action configuration"""
+    action_id: str
     action_type: str
     parameters: Dict[str, Any]
     retry_attempts: int = 3
@@ -111,7 +118,8 @@ class WorkflowAction:
 
 @dataclass
 class WorkflowStepDefinition:
-    """Comprehensive workflow step definition"""    step_id: str
+    """Comprehensive workflow step definition"""
+    step_id: str
     step_type: StepType
     name: str
     description: str
@@ -125,7 +133,8 @@ class WorkflowStepDefinition:
 
 @dataclass
 class WorkflowDefinition:
-    """Complete workflow definition with business logic"""    workflow_id: str
+    """Complete workflow definition with business logic"""
+    workflow_id: str
     workflow_type: WorkflowType
     name: str
     description: str
@@ -139,7 +148,8 @@ class WorkflowDefinition:
 
 @dataclass
 class WorkflowExecutionContext:
-    """Rich context for workflow execution"""    execution_id: str
+    """Rich context for workflow execution"""
+    execution_id: str
     user_id: str
     workflow_definition: WorkflowDefinition
     trigger_data: Dict[str, Any]
@@ -150,7 +160,8 @@ class WorkflowExecutionContext:
 
 
 class NotificationWorkflowOrchestrator:
-    """    Advanced workflow orchestration engine with intelligent business logic integration
+    """
+    Advanced workflow orchestration engine with intelligent business logic integration
     
     Key Features:
     - Complex multi-step notification workflows for content creator journeys
@@ -161,7 +172,8 @@ class NotificationWorkflowOrchestrator:
     - Dynamic workflow adaptation based on business outcomes
     - Intelligent retry mechanisms with exponential backoff
     - Comprehensive audit trail and compliance tracking
-    """    
+    """
+    
     def __init__(
         self,
         notification_dispatcher: NotificationDispatcher,
@@ -203,14 +215,16 @@ class NotificationWorkflowOrchestrator:
         asyncio.create_task(self._initialize_builtin_workflows())
     
     async def register_workflow(self, workflow: WorkflowDefinition) -> bool:
-        """        Register a new workflow definition with validation
+        """
+        Register a new workflow definition with validation
         
         Args:
             workflow: Complete workflow definition
             
         Returns:
             True if successfully registered
-        """        try:
+        """
+        try:
             # Validate workflow definition
             if not await self._validate_workflow_definition(workflow):
                 return False
@@ -235,7 +249,8 @@ class NotificationWorkflowOrchestrator:
         user_id: str,
         trigger_data: Dict[str, Any]
     ) -> str:
-        """        Trigger workflow execution for specific user
+        """
+        Trigger workflow execution for specific user
         
         Args:
             workflow_id: Workflow identifier
@@ -244,7 +259,8 @@ class NotificationWorkflowOrchestrator:
             
         Returns:
             Execution ID for tracking
-        """        try:
+        """
+        try:
             if workflow_id not in self._workflow_definitions:
                 raise ValueError(f"Workflow not found: {workflow_id}")
             
@@ -280,14 +296,16 @@ class NotificationWorkflowOrchestrator:
             return ""
     
     async def get_execution_status(self, execution_id: str) -> Dict[str, Any]:
-        """        Get current status of workflow execution
+        """
+        Get current status of workflow execution
         
         Args:
             execution_id: Execution identifier
             
         Returns:
             Execution status and progress information
-        """        if execution_id not in self._active_executions:
+        """
+        if execution_id not in self._active_executions:
             return {'status': 'not_found'}
         
         context = self._active_executions[execution_id]
@@ -306,14 +324,16 @@ class NotificationWorkflowOrchestrator:
         }
     
     async def pause_execution(self, execution_id: str) -> bool:
-        """Pause workflow execution"""        if execution_id in self._active_executions:
+        """Pause workflow execution"""
+        if execution_id in self._active_executions:
             context = self._active_executions[execution_id]
             context.execution_state['status'] = WorkflowStatus.PAUSED.value
             return True
         return False
     
     async def resume_execution(self, execution_id: str) -> bool:
-        """Resume paused workflow execution"""        if execution_id in self._active_executions:
+        """Resume paused workflow execution"""
+        if execution_id in self._active_executions:
             context = self._active_executions[execution_id]
             if context.execution_state.get('status') == WorkflowStatus.PAUSED.value:
                 context.execution_state['status'] = WorkflowStatus.RUNNING.value
@@ -322,7 +342,8 @@ class NotificationWorkflowOrchestrator:
         return False
     
     async def cancel_execution(self, execution_id: str) -> bool:
-        """Cancel workflow execution"""        if execution_id in self._active_executions:
+        """Cancel workflow execution"""
+        if execution_id in self._active_executions:
             context = self._active_executions[execution_id]
             context.execution_state['status'] = WorkflowStatus.CANCELLED.value
             del self._active_executions[execution_id]
@@ -330,7 +351,8 @@ class NotificationWorkflowOrchestrator:
         return False
     
     async def _process_workflow_executions(self):
-        """Background task for processing workflow executions"""        while True:
+        """Background task for processing workflow executions"""
+        while True:
             try:
                 # Get next execution from queue
                 context = await asyncio.wait_for(
@@ -347,7 +369,8 @@ class NotificationWorkflowOrchestrator:
                 self.logger.error(f"Execution processor error: {str(e)}")
     
     async def _execute_workflow(self, context: WorkflowExecutionContext):
-        """Execute a complete workflow"""        try:
+        """Execute a complete workflow"""
+        try:
             context.execution_state['status'] = WorkflowStatus.RUNNING.value
             context.execution_state['steps_completed'] = 0
             
@@ -411,7 +434,8 @@ class NotificationWorkflowOrchestrator:
         context: WorkflowExecutionContext,
         step_def: WorkflowStepDefinition
     ) -> Dict[str, Any]:
-        """Execute individual workflow step"""        try:
+        """Execute individual workflow step"""
+        try:
             # Check step conditions
             if not await self._check_step_conditions(context, step_def):
                 return {'success': False, 'reason': 'conditions_not_met'}
@@ -441,7 +465,8 @@ class NotificationWorkflowOrchestrator:
         context: WorkflowExecutionContext,
         step_def: WorkflowStepDefinition
     ) -> Dict[str, Any]:
-        """Execute notification step"""        try:
+        """Execute notification step"""
+        try:
             # Extract notification parameters
             notification_action = next(
                 (action for action in step_def.actions if action.action_type == 'send_notification'),
@@ -484,7 +509,8 @@ class NotificationWorkflowOrchestrator:
         context: WorkflowExecutionContext,
         step_def: WorkflowStepDefinition
     ) -> Dict[str, Any]:
-        """Execute delay step"""        try:
+        """Execute delay step"""
+        try:
             delay_action = next(
                 (action for action in step_def.actions if action.action_type == 'delay'),
                 None
@@ -504,7 +530,8 @@ class NotificationWorkflowOrchestrator:
             return {'success': False, 'reason': str(e)}
     
     async def _initialize_builtin_workflows(self):
-        """Initialize built-in workflows for IA Influencer platform"""        
+        """Initialize built-in workflows for IA Influencer platform"""
+        
         # Content Onboarding Workflow
         content_onboarding = WorkflowDefinition(
             workflow_id="content_onboarding_v1",
@@ -697,7 +724,8 @@ class NotificationWorkflowOrchestrator:
     # including validation, optimization, business context loading, condition checking, etc.
     
     async def _validate_workflow_definition(self, workflow: WorkflowDefinition) -> bool:
-        """Validate workflow definition for correctness"""        if not workflow.workflow_id or not workflow.name:
+        """Validate workflow definition for correctness"""
+        if not workflow.workflow_id or not workflow.name:
             return False
         
         if not workflow.steps:
@@ -715,14 +743,16 @@ class NotificationWorkflowOrchestrator:
     async def _optimize_workflow_definition(
         self, workflow: WorkflowDefinition
     ) -> WorkflowDefinition:
-        """Apply AI optimization to workflow definition"""        # Implementation would use ML models to optimize workflow
+        """Apply AI optimization to workflow definition"""
+        # Implementation would use ML models to optimize workflow
         # For now, return unchanged
         return workflow
     
     async def _load_business_context(
         self, user_id: str, trigger_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Load relevant business context for workflow execution"""        business_context = {}
+        """Load relevant business context for workflow execution"""
+        business_context = {}
         
         # Load content context if relevant
         if 'content_id' in trigger_data:
@@ -743,7 +773,8 @@ class NotificationWorkflowOrchestrator:
     async def _check_execution_limits(
         self, workflow_def: WorkflowDefinition, user_id: str
     ) -> bool:
-        """Check if user hasn't exceeded workflow execution limits"""        # Count active executions for this user and workflow
+        """Check if user hasn't exceeded workflow execution limits"""
+        # Count active executions for this user and workflow
         active_count = sum(
             1 for context in self._active_executions.values()
             if context.user_id == user_id and 
@@ -753,7 +784,8 @@ class NotificationWorkflowOrchestrator:
         return active_count < workflow_def.max_executions_per_user
     
     async def _monitor_workflow_health(self):
-        """Background task for monitoring workflow system health"""        while True:
+        """Background task for monitoring workflow system health"""
+        while True:
             try:
                 await asyncio.sleep(300)  # Monitor every 5 minutes
                 
@@ -775,4 +807,5 @@ class NotificationWorkflowOrchestrator:
                 self.logger.error(f"Workflow health monitoring error: {str(e)}")
     
     async def get_workflow_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive workflow performance metrics"""        return self._workflow_metrics.copy()
+        """Get comprehensive workflow performance metrics"""
+        return self._workflow_metrics.copy()

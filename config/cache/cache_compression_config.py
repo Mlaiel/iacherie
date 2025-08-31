@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Optional, Any, Union, Callable
+"""
+from typing import Dict, List, Optional, Any, Union, Callable
 from dataclasses import dataclass, field
 from enum import Enum
 import asyncio
@@ -28,7 +29,8 @@ from pydantic import BaseModel, validator
 
 
 class CompressionAlgorithm(str, Enum):
-    """Supported compression algorithms"""    GZIP = "gzip"
+    """Supported compression algorithms"""
+    GZIP = "gzip"
     ZLIB = "zlib"
     BZIP2 = "bzip2"
     LZMA = "lzma"
@@ -39,14 +41,16 @@ class CompressionAlgorithm(str, Enum):
 
 
 class CompressionLevel(int, Enum):
-    """Compression levels (1-9, where 9 is highest compression)"""    FASTEST = 1
+    """Compression levels (1-9, where 9 is highest compression)"""
+    FASTEST = 1
     FAST = 3
     DEFAULT = 6
     BEST = 9
 
 
 class ContentType(str, Enum):
-    """Content types for compression optimization"""    JSON = "json"
+    """Content types for compression optimization"""
+    JSON = "json"
     XML = "xml"
     TEXT = "text"
     BINARY = "binary"
@@ -62,7 +66,8 @@ class ContentType(str, Enum):
 
 @dataclass
 class CompressionProfile:
-    """Compression profile for specific content types"""    name: str
+    """Compression profile for specific content types"""
+    name: str
     algorithm: CompressionAlgorithm
     level: CompressionLevel
     min_size_bytes: int = 1024
@@ -82,7 +87,8 @@ class CompressionProfile:
     
     def should_compress(self, data_size: int, content_type: ContentType = None, 
                        key: str = None) -> bool:
-        """Check if data should be compressed with this profile"""        if not self.enabled:
+        """Check if data should be compressed with this profile"""
+        if not self.enabled:
             return False
         
         # Size check
@@ -103,7 +109,8 @@ class CompressionProfile:
 
 @dataclass
 class CompressionMetrics:
-    """Compression performance metrics"""    total_compressions: int = 0
+    """Compression performance metrics"""
+    total_compressions: int = 0
     total_decompressions: int = 0
     bytes_before_compression: int = 0
     bytes_after_compression: int = 0
@@ -114,36 +121,43 @@ class CompressionMetrics:
     
     @property
     def compression_ratio(self) -> float:
-        """Average compression ratio"""        if self.bytes_before_compression == 0:
+        """Average compression ratio"""
+        if self.bytes_before_compression == 0:
             return 0.0
         return self.bytes_after_compression / self.bytes_before_compression
     
     @property
     def space_saved_bytes(self) -> int:
-        """Total bytes saved through compression"""        return self.bytes_before_compression - self.bytes_after_compression
+        """Total bytes saved through compression"""
+        return self.bytes_before_compression - self.bytes_after_compression
     
     @property
     def space_saved_percentage(self) -> float:
-        """Percentage of space saved"""        if self.bytes_before_compression == 0:
+        """Percentage of space saved"""
+        if self.bytes_before_compression == 0:
             return 0.0
         return (1.0 - self.compression_ratio) * 100.0
     
     @property
     def avg_compression_time(self) -> float:
-        """Average compression time per operation"""        if self.total_compressions == 0:
+        """Average compression time per operation"""
+        if self.total_compressions == 0:
             return 0.0
         return self.total_compression_time / self.total_compressions
     
     @property
     def avg_decompression_time(self) -> float:
-        """Average decompression time per operation"""        if self.total_decompressions == 0:
+        """Average decompression time per operation"""
+        if self.total_decompressions == 0:
             return 0.0
         return self.total_decompression_time / self.total_decompressions
 
 
 class CacheCompressionConfig(BaseModel):
-    """    Comprehensive cache compression configuration
-    """    
+    """
+    Comprehensive cache compression configuration
+    """
+    
     # General settings
     enabled: bool = True
     default_algorithm: CompressionAlgorithm = CompressionAlgorithm.ZLIB
@@ -217,13 +231,15 @@ class CacheCompressionConfig(BaseModel):
         return v
     
     def add_profile(self, profile: CompressionProfile):
-        """Add compression profile"""        if any(p.name == profile.name for p in self.profiles):
+        """Add compression profile"""
+        if any(p.name == profile.name for p in self.profiles):
             raise ValueError(f"Profile with name '{profile.name}' already exists")
         
         self.profiles.append(profile)
     
     def remove_profile(self, profile_name: str) -> bool:
-        """Remove compression profile"""        for i, profile in enumerate(self.profiles):
+        """Remove compression profile"""
+        for i, profile in enumerate(self.profiles):
             if profile.name == profile_name:
                 del self.profiles[i]
                 return True
@@ -231,7 +247,8 @@ class CacheCompressionConfig(BaseModel):
     
     def get_profile_for_data(self, data_size: int, content_type: ContentType = None, 
                            key: str = None, tenant_id: str = None) -> Optional[CompressionProfile]:
-        """Get best compression profile for given data"""        if not self.enabled:
+        """Get best compression profile for given data"""
+        if not self.enabled:
             return None
         
         # Check global size limits
@@ -264,7 +281,8 @@ class CacheCompressionConfig(BaseModel):
         return matching_profiles[0]
     
     def detect_content_type(self, data: bytes, key: str = None) -> ContentType:
-        """Detect content type from data or key"""        if not self.auto_detect_content_type:
+        """Detect content type from data or key"""
+        if not self.auto_detect_content_type:
             return self.fallback_content_type
         
         # Try to detect from key extension
@@ -320,7 +338,8 @@ class CacheCompressionConfig(BaseModel):
         return self.fallback_content_type
     
     def should_use_async_compression(self, data_size: int, algorithm: CompressionAlgorithm) -> bool:
-        """Determine if async compression should be used"""        if not self.async_compression:
+        """Determine if async compression should be used"""
+        if not self.async_compression:
             return False
         
         # Use async for larger data or slower algorithms
@@ -330,7 +349,8 @@ class CacheCompressionConfig(BaseModel):
         return data_size >= large_data_threshold or algorithm in slow_algorithms
     
     def get_configuration_summary(self) -> Dict[str, Any]:
-        """Get configuration summary"""        return {
+        """Get configuration summary"""
+        return {
             "enabled": self.enabled,
             "default_algorithm": self.default_algorithm,
             "total_profiles": len(self.profiles),
@@ -345,8 +365,10 @@ class CacheCompressionConfig(BaseModel):
 
 
 class CompressionEngine:
-    """    Cache compression engine with async support
-    """    
+    """
+    Cache compression engine with async support
+    """
+    
     def __init__(self, config: CacheCompressionConfig):
         self.config = config
         self.metrics = CompressionMetrics()
@@ -360,14 +382,17 @@ class CompressionEngine:
             self.executor = ThreadPoolExecutor(max_workers=config.compression_workers)
     
     def __del__(self):
-        """Cleanup resources"""        if self.executor:
+        """Cleanup resources"""
+        if self.executor:
             self.executor.shutdown(wait=False)
     
     async def compress(self, data: Union[str, bytes], key: str = None, 
                      tenant_id: str = None, force_sync: bool = False) -> tuple:
-        """        Compress data with optimal algorithm
+        """
+        Compress data with optimal algorithm
         Returns: (compressed_data, compression_metadata)
-        """        if not self.config.enabled or not data:
+        """
+        if not self.config.enabled or not data:
             return data, None
         
         # Check circuit breaker
@@ -454,8 +479,10 @@ class CompressionEngine:
                 raise e
     
     async def decompress(self, compressed_data: bytes, metadata: Dict[str, Any]) -> bytes:
-        """        Decompress data using stored metadata
-        """        if not metadata or not compressed_data:
+        """
+        Decompress data using stored metadata
+        """
+        if not metadata or not compressed_data:
             return compressed_data
         
         algorithm = CompressionAlgorithm(metadata.get("algorithm", CompressionAlgorithm.ZLIB))
@@ -485,7 +512,8 @@ class CompressionEngine:
             raise e
     
     async def _compress_async(self, data: bytes, profile: CompressionProfile) -> bytes:
-        """Asynchronous compression"""        loop = asyncio.get_event_loop()
+        """Asynchronous compression"""
+        loop = asyncio.get_event_loop()
         
         # For large data, use chunked compression
         if len(data) > profile.chunk_size and profile.parallel_compression:
@@ -496,7 +524,8 @@ class CompressionEngine:
             )
     
     def _compress_sync(self, data: bytes, profile: CompressionProfile) -> bytes:
-        """Synchronous compression"""        algorithm = profile.algorithm
+        """Synchronous compression"""
+        algorithm = profile.algorithm
         level = profile.level.value
         
         if algorithm == CompressionAlgorithm.GZIP:
@@ -533,7 +562,8 @@ class CompressionEngine:
             return zlib.compress(data, level=level)
     
     async def _compress_chunked(self, data: bytes, profile: CompressionProfile) -> bytes:
-        """Compress data in parallel chunks"""        chunk_size = profile.chunk_size
+        """Compress data in parallel chunks"""
+        chunk_size = profile.chunk_size
         chunks = [data[i:i+chunk_size] for i in range(0, len(data), chunk_size)]
         
         # Compress chunks in parallel
@@ -555,13 +585,15 @@ class CompressionEngine:
         return result
     
     async def _decompress_async(self, compressed_data: bytes, algorithm: CompressionAlgorithm) -> bytes:
-        """Asynchronous decompression"""        loop = asyncio.get_event_loop()
+        """Asynchronous decompression"""
+        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, self._decompress_sync, compressed_data, algorithm
         )
     
     def _decompress_sync(self, compressed_data: bytes, algorithm: CompressionAlgorithm) -> bytes:
-        """Synchronous decompression"""        if algorithm == CompressionAlgorithm.GZIP:
+        """Synchronous decompression"""
+        if algorithm == CompressionAlgorithm.GZIP:
             return gzip.decompress(compressed_data)
         elif algorithm == CompressionAlgorithm.ZLIB:
             return zlib.decompress(compressed_data)
@@ -591,13 +623,15 @@ class CompressionEngine:
             return zlib.decompress(compressed_data)
     
     def _generate_cache_key(self, data: bytes, profile: CompressionProfile) -> str:
-        """Generate cache key for compressed data"""        import hashlib
+        """Generate cache key for compressed data"""
+        import hashlib
         data_hash = hashlib.md5(data).hexdigest()
         return f"{profile.name}:{profile.algorithm}:{profile.level}:{data_hash}"
     
     def _update_compression_metrics(self, original_size: int, compressed_size: int, 
                                   compression_time: float, success: bool):
-        """Update compression metrics"""        if success:
+        """Update compression metrics"""
+        if success:
             self.metrics.total_compressions += 1
             self.metrics.bytes_before_compression += original_size
             self.metrics.bytes_after_compression += compressed_size
@@ -607,7 +641,8 @@ class CompressionEngine:
         self.metrics.total_compression_time += compression_time
     
     def _handle_compression_failure(self):
-        """Handle compression failure for circuit breaker"""        self.consecutive_failures += 1
+        """Handle compression failure for circuit breaker"""
+        self.consecutive_failures += 1
         self.last_failure_time = time.time()
         
         if (self.config.failure_circuit_breaker and 
@@ -615,7 +650,8 @@ class CompressionEngine:
             self.circuit_breaker_state = "open"
     
     def _check_circuit_breaker(self) -> bool:
-        """Check circuit breaker state"""        if not self.config.failure_circuit_breaker:
+        """Check circuit breaker state"""
+        if not self.config.failure_circuit_breaker:
             return True
         
         if self.circuit_breaker_state == "closed":
@@ -630,7 +666,8 @@ class CompressionEngine:
             return True
     
     def get_metrics_summary(self) -> Dict[str, Any]:
-        """Get compression metrics summary"""        return {
+        """Get compression metrics summary"""
+        return {
             "total_compressions": self.metrics.total_compressions,
             "total_decompressions": self.metrics.total_decompressions,
             "compression_ratio": self.metrics.compression_ratio,

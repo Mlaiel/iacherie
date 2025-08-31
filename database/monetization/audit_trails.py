@@ -24,7 +24,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
-"""from sqlalchemy import (
+"""
+from sqlalchemy import (
     Column, Integer, String, DateTime, Float, Boolean, ForeignKey,
     Text, DECIMAL, JSON, BigInteger, Index, UniqueConstraint
 )
@@ -41,7 +42,8 @@ from dataclasses import dataclass
 Base = declarative_base()
 
 class AuditEventType(Enum):
-    """Audit event type classifications"""    AUTHENTICATION = "authentication"
+    """Audit event type classifications"""
+    AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     DATA_ACCESS = "data_access"
     DATA_MODIFICATION = "data_modification"
@@ -57,21 +59,24 @@ class AuditEventType(Enum):
     INTEGRATION = "integration"
 
 class AuditEventSeverity(Enum):
-    """Audit event severity levels"""    INFO = "info"
+    """Audit event severity levels"""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
     SECURITY = "security"
 
 class AuditStatus(Enum):
-    """Audit record status"""    ACTIVE = "active"
+    """Audit record status"""
+    ACTIVE = "active"
     ARCHIVED = "archived"
     UNDER_INVESTIGATION = "under_investigation"
     FLAGGED = "flagged"
     RESOLVED = "resolved"
 
 class AuditEventSource(Enum):
-    """Source of audit events"""    WEB_APPLICATION = "web_application"
+    """Source of audit events"""
+    WEB_APPLICATION = "web_application"
     MOBILE_APPLICATION = "mobile_application"
     API_GATEWAY = "api_gateway"
     BACKGROUND_SERVICE = "background_service"
@@ -81,7 +86,8 @@ class AuditEventSource(Enum):
     ADMIN_INTERFACE = "admin_interface"
 
 class AuditEvent(Base):
-    """Comprehensive audit event logging"""    __tablename__ = 'audit_events'
+    """Comprehensive audit event logging"""
+    __tablename__ = 'audit_events'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -194,7 +200,8 @@ class AuditEvent(Base):
     )
 
 class AuditSummary(Base):
-    """Daily audit event summaries for reporting"""    __tablename__ = 'audit_summaries'
+    """Daily audit event summaries for reporting"""
+    __tablename__ = 'audit_summaries'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -270,7 +277,8 @@ class AuditSummary(Base):
     )
 
 class DataRetentionPolicy(Base):
-    """Data retention policies for audit logs"""    __tablename__ = 'data_retention_policies'
+    """Data retention policies for audit logs"""
+    __tablename__ = 'data_retention_policies'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -340,7 +348,8 @@ class DataRetentionPolicy(Base):
     )
 
 class AuditQuery(Base):
-    """Audit query history and compliance requests"""    __tablename__ = 'audit_queries'
+    """Audit query history and compliance requests"""
+    __tablename__ = 'audit_queries'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -429,7 +438,8 @@ class AuditQuery(Base):
 
 @dataclass
 class AuditMetrics:
-    """Audit metrics data structure"""    total_events: int
+    """Audit metrics data structure"""
+    total_events: int
     events_by_type: Dict[str, int]
     events_by_severity: Dict[str, int]
     success_rate: float
@@ -440,7 +450,8 @@ class AuditMetrics:
     retention_compliance: float
 
 class ForensicInvestigation(Base):
-    """Forensic investigation case management"""    __tablename__ = 'forensic_investigations'
+    """Forensic investigation case management"""
+    __tablename__ = 'forensic_investigations'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -535,7 +546,8 @@ class ForensicInvestigation(Base):
     )
 
 class AuditAlert(Base):
-    """Audit-based alerts and notifications"""    __tablename__ = 'audit_alerts'
+    """Audit-based alerts and notifications"""
+    __tablename__ = 'audit_alerts'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

@@ -4,7 +4,8 @@ Provides comprehensive security monitoring, incident response tracking, and comp
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use prohibited
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from datetime import datetime, timezone, timedelta
@@ -22,14 +23,16 @@ logger = logging.getLogger(__name__)
 
 
 class IncidentSeverity(Enum):
-    """Security incident severity levels"""    LOW = "low"
+    """Security incident severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class IncidentStatus(Enum):
-    """Security incident status"""    DETECTED = "detected"
+    """Security incident status"""
+    DETECTED = "detected"
     INVESTIGATING = "investigating"
     CONTAINED = "contained"
     RESOLVED = "resolved"
@@ -38,7 +41,8 @@ class IncidentStatus(Enum):
 
 @dataclass
 class SecurityIncident:
-    """Security incident record"""    incident_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Security incident record"""
+    incident_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     title: str = ""
     description: str = ""
     severity: IncidentSeverity = IncidentSeverity.LOW
@@ -52,7 +56,8 @@ class SecurityIncident:
     closed_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             "incident_id": self.incident_id,
             "title": self.title,
             "description": self.description,
@@ -69,7 +74,8 @@ class SecurityIncident:
 
 
 class SecurityMonitoringDashboard:
-    """Comprehensive security monitoring and compliance dashboard"""    
+    """Comprehensive security monitoring and compliance dashboard"""
+    
     def __init__(self):
         self.audit_trail = security_audit_trail
         self.vulnerability_scanner = security_scanner
@@ -85,7 +91,8 @@ class SecurityMonitoringDashboard:
         self.cache_expiry = {}
         
     async def get_security_dashboard(self) -> Dict[str, Any]:
-        """Get comprehensive security dashboard data"""        
+        """Get comprehensive security dashboard data"""
+        
         dashboard_data = {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "security_overview": await self._get_security_overview(),
@@ -100,7 +107,8 @@ class SecurityMonitoringDashboard:
         return dashboard_data
     
     async def _get_security_overview(self) -> Dict[str, Any]:
-        """Get security overview metrics"""        
+        """Get security overview metrics"""
+        
         # Calculate security metrics from last 24 hours
         end_time = datetime.now(timezone.utc)
         start_time = end_time - timedelta(hours=24)
@@ -127,10 +135,12 @@ class SecurityMonitoringDashboard:
         }
     
     async def _get_vulnerability_status(self) -> Dict[str, Any]:
-        """Get vulnerability scanner status"""        return await self.vulnerability_scanner.get_compliance_status()
+        """Get vulnerability scanner status"""
+        return await self.vulnerability_scanner.get_compliance_status()
     
     async def _get_audit_summary(self) -> Dict[str, Any]:
-        """Get audit trail summary"""        
+        """Get audit trail summary"""
+        
         # Get events from last 7 days
         end_time = datetime.now(timezone.utc)
         start_time = end_time - timedelta(days=7)
@@ -165,7 +175,8 @@ class SecurityMonitoringDashboard:
         }
     
     async def _get_incident_status(self) -> Dict[str, Any]:
-        """Get security incident status"""        
+        """Get security incident status"""
+        
         status_counts = {}
         severity_counts = {}
         
@@ -197,7 +208,8 @@ class SecurityMonitoringDashboard:
         }
     
     async def _get_compliance_status(self) -> Dict[str, Any]:
-        """Get compliance status across different standards"""        
+        """Get compliance status across different standards"""
+        
         standards = ["GDPR", "SOX", "HIPAA", "PCI_DSS", "ISO27001"]
         compliance_status = {}
         
@@ -233,7 +245,8 @@ class SecurityMonitoringDashboard:
         return compliance_status
     
     async def _get_threat_intelligence(self) -> Dict[str, Any]:
-        """Get threat intelligence summary"""        
+        """Get threat intelligence summary"""
+        
         # Get recent security events
         end_time = datetime.now(timezone.utc)
         start_time = end_time - timedelta(hours=24)
@@ -284,7 +297,8 @@ class SecurityMonitoringDashboard:
         }
     
     async def _get_system_health(self) -> Dict[str, Any]:
-        """Get system health metrics"""        
+        """Get system health metrics"""
+        
         # Check various system components
         health_checks = {
             "audit_trail": await self._check_audit_health(),
@@ -306,7 +320,8 @@ class SecurityMonitoringDashboard:
         }
     
     async def _calculate_security_score(self) -> float:
-        """Calculate overall security score"""        
+        """Calculate overall security score"""
+        
         # Get vulnerability status
         vuln_status = await self.vulnerability_scanner.get_compliance_status()
         
@@ -327,7 +342,8 @@ class SecurityMonitoringDashboard:
         return round(overall_score, 2)
     
     async def _get_last_scan_info(self) -> Dict[str, Any]:
-        """Get last vulnerability scan information"""        
+        """Get last vulnerability scan information"""
+        
         try:
             if hasattr(self.vulnerability_scanner, 'scan_history') and self.vulnerability_scanner.scan_history:
                 last_scan = self.vulnerability_scanner.scan_history[-1]
@@ -346,7 +362,8 @@ class SecurityMonitoringDashboard:
         }
     
     async def _calculate_avg_resolution_time(self) -> float:
-        """Calculate average incident resolution time"""        
+        """Calculate average incident resolution time"""
+        
         resolved_incidents = [
             i for i in self.incident_history 
             if i.resolved_at is not None
@@ -363,7 +380,8 @@ class SecurityMonitoringDashboard:
         return round(total_time / len(resolved_incidents), 2)
     
     async def _assess_threat_level(self, threat_count: int, threat_types: Dict[str, int]) -> str:
-        """Assess current threat level"""        
+        """Assess current threat level"""
+        
         if threat_count == 0:
             return "LOW"
         elif threat_count < 5:
@@ -374,7 +392,8 @@ class SecurityMonitoringDashboard:
             return "CRITICAL"
     
     async def _check_audit_health(self) -> Dict[str, Any]:
-        """Check audit trail health"""        try:
+        """Check audit trail health"""
+        try:
             integrity = await self.audit_trail.verify_audit_integrity()
             return {
                 "status": "healthy" if integrity["status"] == "verified" else "unhealthy",
@@ -387,7 +406,8 @@ class SecurityMonitoringDashboard:
             }
     
     async def _check_scanner_health(self) -> Dict[str, Any]:
-        """Check vulnerability scanner health"""        try:
+        """Check vulnerability scanner health"""
+        try:
             status = await self.vulnerability_scanner.get_compliance_status()
             return {
                 "status": "healthy" if status["status"] != "UNKNOWN" else "warning",
@@ -400,7 +420,8 @@ class SecurityMonitoringDashboard:
             }
     
     async def _check_monitoring_health(self) -> Dict[str, Any]:
-        """Check security monitoring health"""        return {
+        """Check security monitoring health"""
+        return {
             "status": "healthy",
             "details": {
                 "active_incidents": len(self.active_incidents),
@@ -409,7 +430,8 @@ class SecurityMonitoringDashboard:
         }
     
     async def _check_compliance_health(self) -> Dict[str, Any]:
-        """Check compliance tracking health"""        return {
+        """Check compliance tracking health"""
+        return {
             "status": "healthy",
             "details": {
                 "standards_tracked": ["GDPR", "SOX", "HIPAA", "PCI_DSS", "ISO27001"],
@@ -418,7 +440,8 @@ class SecurityMonitoringDashboard:
         }
     
     async def _get_health_alerts(self) -> List[Dict[str, Any]]:
-        """Get system health alerts"""        alerts = []
+        """Get system health alerts"""
+        alerts = []
         
         # Check for critical incidents
         critical_incidents = [
@@ -454,7 +477,8 @@ class SecurityMonitoringDashboard:
         affected_systems: Optional[List[str]] = None,
         indicators: Optional[List[str]] = None
     ) -> str:
-        """Create a new security incident"""        
+        """Create a new security incident"""
+        
         incident = SecurityIncident(
             title=title,
             description=description,
@@ -488,7 +512,8 @@ class SecurityMonitoringDashboard:
         assigned_to: Optional[str] = None,
         response_action: Optional[str] = None
     ) -> bool:
-        """Update incident status"""        
+        """Update incident status"""
+        
         incident = None
         for i in self.active_incidents:
             if i.incident_id == incident_id:
@@ -529,7 +554,8 @@ class SecurityMonitoringDashboard:
         return True
     
     async def generate_incident_report(self, incident_id: str) -> Optional[Dict[str, Any]]:
-        """Generate incident report"""        
+        """Generate incident report"""
+        
         # Find incident in active or history
         incident = None
         for i in self.active_incidents + self.incident_history:
@@ -572,7 +598,8 @@ class SecurityMonitoringDashboard:
         return report
     
     async def _generate_prevention_recommendations(self, incident: SecurityIncident) -> List[str]:
-        """Generate prevention recommendations based on incident"""        
+        """Generate prevention recommendations based on incident"""
+        
         recommendations = []
         
         # Generic recommendations based on severity
@@ -601,7 +628,8 @@ security_dashboard = SecurityMonitoringDashboard()
 
 # Helper functions for easy integration
 async def get_security_status() -> Dict[str, Any]:
-    """Get current security status"""    return await security_dashboard.get_security_dashboard()
+    """Get current security status"""
+    return await security_dashboard.get_security_dashboard()
 
 
 async def create_security_incident(
@@ -610,7 +638,8 @@ async def create_security_incident(
     severity: str,
     affected_systems: Optional[List[str]] = None
 ) -> str:
-    """Create a security incident"""    severity_enum = IncidentSeverity(severity.lower())
+    """Create a security incident"""
+    severity_enum = IncidentSeverity(severity.lower())
     return await security_dashboard.create_incident(
         title=title,
         description=description,

@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""import uuid
+"""
+import uuid
 import json
 import hashlib
 from datetime import datetime, timedelta, timezone
@@ -40,7 +41,8 @@ logger = logging.getLogger(__name__)
 
 
 class AuthEventType(Enum):
-    """Authentication event types"""    LOGIN_ATTEMPT = "login_attempt"
+    """Authentication event types"""
+    LOGIN_ATTEMPT = "login_attempt"
     LOGIN_SUCCESS = "login_success"
     LOGIN_FAILURE = "login_failure"
     LOGOUT = "logout"
@@ -68,7 +70,8 @@ class AuthEventType(Enum):
 
 
 class AuthResult(Enum):
-    """Authentication result types"""    SUCCESS = "success"
+    """Authentication result types"""
+    SUCCESS = "success"
     FAILURE = "failure"
     BLOCKED = "blocked"
     PENDING = "pending"
@@ -79,7 +82,8 @@ class AuthResult(Enum):
 
 
 class RiskLevel(Enum):
-    """Risk level classifications"""    LOW = "low"
+    """Risk level classifications"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -87,7 +91,8 @@ class RiskLevel(Enum):
 
 @dataclass
 class AuthContext:
-    """Authentication context structure"""    user_agent: str
+    """Authentication context structure"""
+    user_agent: str
     ip_address: str
     device_fingerprint: Optional[str] = None
     session_id: Optional[str] = None
@@ -100,7 +105,8 @@ class AuthContext:
 
 
 class AuthenticationLog(Base):
-    """Comprehensive authentication logging"""    __tablename__ = "authentication_logs"
+    """Comprehensive authentication logging"""
+    __tablename__ = "authentication_logs"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=True, index=True)  # Can be null for failed attempts
@@ -133,7 +139,8 @@ class AuthenticationLog(Base):
 
 
 class SecurityAudit(Base):
-    """Security audit events"""    __tablename__ = "security_audit"
+    """Security audit events"""
+    __tablename__ = "security_audit"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=True, index=True)
@@ -165,7 +172,8 @@ class SecurityAudit(Base):
 
 
 class ActivityTracker(Base):
-    """User activity tracking"""    __tablename__ = "user_activity_tracker"
+    """User activity tracking"""
+    __tablename__ = "user_activity_tracker"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -193,7 +201,8 @@ class ActivityTracker(Base):
 
 
 class AnomalyDetection(Base):
-    """Authentication anomaly detection"""    __tablename__ = "authentication_anomalies"
+    """Authentication anomaly detection"""
+    __tablename__ = "authentication_anomalies"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -220,7 +229,8 @@ class AnomalyDetection(Base):
 
 
 class ComplianceLog(Base):
-    """Compliance and regulatory logging"""    __tablename__ = "compliance_logs"
+    """Compliance and regulatory logging"""
+    __tablename__ = "compliance_logs"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=True, index=True)
@@ -251,7 +261,8 @@ class ComplianceLog(Base):
 
 
 class AuthenticationLogger:
-    """Enterprise authentication logging manager"""    
+    """Enterprise authentication logging manager"""
+    
     def __init__(self, db_session: Session):
         self.db = db_session
     
@@ -267,7 +278,8 @@ class AuthenticationLogger:
         failure_reason: Optional[str] = None,
         duration_ms: Optional[int] = None
     ) -> str:
-        """Log authentication event"""        try:
+        """Log authentication event"""
+        try:
             # Calculate risk score
             risk_score = self._calculate_risk_score(auth_context, event_type, auth_result)
             risk_level = self._determine_risk_level(risk_score)
@@ -317,7 +329,8 @@ class AuthenticationLogger:
         event_type: AuthEventType,
         auth_result: AuthResult
     ) -> int:
-        """Calculate risk score for authentication event"""        risk_score = 0
+        """Calculate risk score for authentication event"""
+        risk_score = 0
         
         # Base risk by event type
         event_risk = {
@@ -352,7 +365,8 @@ class AuthenticationLogger:
         return min(100, max(0, risk_score))
     
     def _determine_risk_level(self, risk_score: int) -> Optional[RiskLevel]:
-        """Determine risk level from score"""        if risk_score >= 80:
+        """Determine risk level from score"""
+        if risk_score >= 80:
             return RiskLevel.CRITICAL
         elif risk_score >= 60:
             return RiskLevel.HIGH
@@ -367,7 +381,8 @@ class AuthenticationLogger:
         auth_context: AuthContext,
         event_type: AuthEventType
     ) -> Dict[str, Any]:
-        """Detect authentication anomalies"""        anomalies = {}
+        """Detect authentication anomalies"""
+        anomalies = {}
         
         if not user_id:
             return anomalies
@@ -417,7 +432,8 @@ class AuthenticationLogger:
         return anomalies
     
     async def _trigger_security_alert(self, auth_log: AuthenticationLog):
-        """Trigger security alert for high-risk events"""        try:
+        """Trigger security alert for high-risk events"""
+        try:
             # Create security audit entry
             audit_entry = SecurityAudit(
                 user_id=auth_log.user_id,
@@ -462,7 +478,8 @@ class AuthenticationLogger:
         severity_level: str = "info",
         compliance_tags: Optional[List[str]] = None
     ) -> str:
-        """Log security audit event"""        try:
+        """Log security audit event"""
+        try:
             audit_entry = SecurityAudit(
                 user_id=uuid.UUID(user_id) if user_id else None,
                 audit_category=audit_category,
@@ -508,7 +525,8 @@ class AuthenticationLogger:
         data_accessed: Optional[Dict[str, Any]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Track user activity"""        try:
+        """Track user activity"""
+        try:
             activity = ActivityTracker(
                 user_id=uuid.UUID(user_id),
                 activity_type=activity_type,
@@ -547,7 +565,8 @@ class AuthenticationLogger:
         encryption_status: str = "encrypted",
         compliance_status: str = "compliant"
     ) -> str:
-        """Log compliance event"""        try:
+        """Log compliance event"""
+        try:
             compliance_log = ComplianceLog(
                 user_id=uuid.UUID(user_id) if user_id else None,
                 compliance_framework=compliance_framework,
@@ -576,7 +595,8 @@ class AuthenticationLogger:
         limit: int = 100,
         event_type: Optional[AuthEventType] = None
     ) -> List[Dict[str, Any]]:
-        """Get user authentication history"""        try:
+        """Get user authentication history"""
+        try:
             query = self.db.query(AuthenticationLog).filter(
                 AuthenticationLog.user_id == uuid.UUID(user_id)
             )
@@ -613,7 +633,8 @@ class AuthenticationLogger:
         severity_level: Optional[str] = None,
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """Get security alerts"""        try:
+        """Get security alerts"""
+        try:
             query = self.db.query(SecurityAudit).filter(
                 SecurityAudit.audit_category == "authentication"
             )

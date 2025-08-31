@@ -13,7 +13,8 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics tracked"""    TRANSLATION_COUNT = "translation_count"
+    """Types of metrics tracked"""
+    TRANSLATION_COUNT = "translation_count"
     TRANSLATION_LATENCY = "translation_latency"
     TRANSLATION_QUALITY = "translation_quality"
     LANGUAGE_DETECTION_ACCURACY = "language_detection_accuracy"
@@ -50,7 +52,8 @@ class MetricType(Enum):
 
 
 class QualityThreshold(Enum):
-    """Quality thresholds for different use cases"""    CRITICAL = 0.95  # Rights protection, legal content
+    """Quality thresholds for different use cases"""
+    CRITICAL = 0.95  # Rights protection, legal content
     HIGH = 0.90      # Brand collaboration, monetization
     STANDARD = 0.85  # General communication
     BASIC = 0.75     # Informal content
@@ -58,7 +61,8 @@ class QualityThreshold(Enum):
 
 @dataclass
 class TranslationMetrics:
-    """Comprehensive translation performance metrics"""    translation_id: str
+    """Comprehensive translation performance metrics"""
+    translation_id: str
     timestamp: datetime
     source_language: SupportedLanguage
     target_language: SupportedLanguage
@@ -94,7 +98,8 @@ class TranslationMetrics:
 
 @dataclass
 class LanguagePerformanceReport:
-    """Performance report for specific language pairs"""    source_language: SupportedLanguage
+    """Performance report for specific language pairs"""
+    source_language: SupportedLanguage
     target_language: SupportedLanguage
     period_start: datetime
     period_end: datetime
@@ -126,7 +131,8 @@ class LanguagePerformanceReport:
 
 @dataclass
 class CreatorTypeReport:
-    """Performance report for specific creator types"""    creator_type: CreatorType
+    """Performance report for specific creator types"""
+    creator_type: CreatorType
     period_start: datetime
     period_end: datetime
     
@@ -150,9 +156,11 @@ class CreatorTypeReport:
 
 
 class MultilingualMetricsCollector:
-    """    Enterprise-grade metrics collection and analysis system for multilingual
+    """
+    Enterprise-grade metrics collection and analysis system for multilingual
     communication in content creator environments.
-    """    
+    """
+    
     def __init__(self, redis_client: aioredis.Redis):
         self.redis_client = redis_client
         
@@ -173,7 +181,8 @@ class MultilingualMetricsCollector:
         self.error_alerts: List[Dict[str, Any]] = []
     
     def _setup_prometheus_metrics(self):
-        """Setup Prometheus metrics for monitoring"""        
+        """Setup Prometheus metrics for monitoring"""
+        
         self.translation_counter = PrometheusCounter(
             'multilingual_translations_total',
             'Total number of translations performed',
@@ -219,7 +228,8 @@ class MultilingualMetricsCollector:
         )
     
     async def record_translation_metrics(self, metrics: TranslationMetrics):
-        """Record comprehensive translation metrics"""        
+        """Record comprehensive translation metrics"""
+        
         # Update Prometheus metrics
         self.translation_counter.labels(
             source_lang=metrics.source_language.value,
@@ -269,7 +279,8 @@ class MultilingualMetricsCollector:
         await self._update_real_time_stats(metrics)
     
     async def _persist_metrics_to_redis(self, metrics: TranslationMetrics):
-        """Persist metrics to Redis for historical analysis"""        
+        """Persist metrics to Redis for historical analysis"""
+        
         # Store individual metric
         metric_key = f"translation_metric:{metrics.translation_id}"
         metric_data = {
@@ -310,7 +321,8 @@ class MultilingualMetricsCollector:
         await self.redis_client.expire(hourly_key, 86400 * 7)
     
     async def _update_real_time_stats(self, metrics: TranslationMetrics):
-        """Update real-time statistics"""        
+        """Update real-time statistics"""
+        
         # Language pair statistics
         lang_pair = f"{metrics.source_language.value}_{metrics.target_language.value}"
         
@@ -362,7 +374,8 @@ class MultilingualMetricsCollector:
         target_language: SupportedLanguage,
         period_days: int = 7
     ) -> LanguagePerformanceReport:
-        """Generate comprehensive performance report for language pair"""        
+        """Generate comprehensive performance report for language pair"""
+        
         end_time = datetime.now(timezone.utc)
         start_time = end_time - timedelta(days=period_days)
         
@@ -447,7 +460,8 @@ class MultilingualMetricsCollector:
         creator_type: CreatorType,
         period_days: int = 30
     ) -> CreatorTypeReport:
-        """Generate comprehensive report for specific creator type"""        
+        """Generate comprehensive report for specific creator type"""
+        
         end_time = datetime.now(timezone.utc)
         start_time = end_time - timedelta(days=period_days)
         
@@ -510,7 +524,8 @@ class MultilingualMetricsCollector:
         )
     
     async def detect_quality_anomalies(self) -> List[Dict[str, Any]]:
-        """Detect quality anomalies and potential issues"""        
+        """Detect quality anomalies and potential issues"""
+        
         anomalies = []
         recent_metrics = [
             m for m in self.translation_metrics
@@ -576,7 +591,8 @@ class MultilingualMetricsCollector:
         return anomalies
     
     async def get_real_time_dashboard_data(self) -> Dict[str, Any]:
-        """Get real-time dashboard data for monitoring"""        
+        """Get real-time dashboard data for monitoring"""
+        
         now = datetime.now(timezone.utc)
         last_hour = now - timedelta(hours=1)
         last_24h = now - timedelta(hours=24)
@@ -635,8 +651,10 @@ class MultilingualMetricsCollector:
         return dashboard_data
     
     def update_session_activity(self, session_id: str):
-        """Update session activity timestamp"""        self.active_sessions[session_id] = datetime.now(timezone.utc)
+        """Update session activity timestamp"""
+        self.active_sessions[session_id] = datetime.now(timezone.utc)
     
     def end_session(self, session_id: str):
-        """End a multilingual session"""        if session_id in self.active_sessions:
+        """End a multilingual session"""
+        if session_id in self.active_sessions:
             del self.active_sessions[session_id]

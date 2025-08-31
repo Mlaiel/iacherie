@@ -23,7 +23,8 @@ ENTERPRISE FEATURES:
 - Automated decision making with human override
 - Integration with external fraud databases
 - Compliance with industry standards (PCI DSS, GDPR)
-"""from typing import Dict, Any, Optional, List, Union, Tuple
+"""
+from typing import Dict, Any, Optional, List, Union, Tuple
 from decimal import Decimal
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
@@ -57,7 +58,8 @@ settings = get_settings()
 
 
 class FraudAction(Enum):
-    """Fraud detection actions"""    ALLOW = "allow"
+    """Fraud detection actions"""
+    ALLOW = "allow"
     REVIEW = "review"
     CHALLENGE = "challenge"
     BLOCK = "block"
@@ -65,7 +67,8 @@ class FraudAction(Enum):
 
 
 class FraudReason(Enum):
-    """Fraud detection reasons"""    HIGH_VELOCITY = "high_velocity"
+    """Fraud detection reasons"""
+    HIGH_VELOCITY = "high_velocity"
     UNUSUAL_LOCATION = "unusual_location"
     SUSPICIOUS_DEVICE = "suspicious_device"
     BLACKLISTED_CARD = "blacklisted_card"
@@ -81,7 +84,8 @@ class FraudReason(Enum):
 
 @dataclass
 class FraudAssessmentRequest:
-    """Fraud assessment request data"""    user_id: str
+    """Fraud assessment request data"""
+    user_id: str
     amount: Decimal
     currency: CurrencyCode
     payment_method: PaymentMethodType
@@ -98,7 +102,8 @@ class FraudAssessmentRequest:
 
 @dataclass
 class FraudAssessmentResult:
-    """Fraud assessment result"""    risk_score: float  # 0.0 to 1.0
+    """Fraud assessment result"""
+    risk_score: float  # 0.0 to 1.0
     risk_level: FraudRisk
     action: FraudAction
     reasons: List[FraudReason]
@@ -112,7 +117,8 @@ class FraudAssessmentResult:
 
 @dataclass
 class UserBehaviorProfile:
-    """User behavior profile for fraud detection"""    user_id: str
+    """User behavior profile for fraud detection"""
+    user_id: str
     typical_transaction_amount: Decimal
     typical_transaction_frequency: float
     common_locations: List[str]
@@ -125,7 +131,8 @@ class UserBehaviorProfile:
 
 @dataclass
 class DeviceFingerprint:
-    """Device fingerprint information"""    fingerprint_id: str
+    """Device fingerprint information"""
+    fingerprint_id: str
     ip_address: str
     user_agent: str
     screen_resolution: Optional[str] = None
@@ -139,8 +146,10 @@ class DeviceFingerprint:
 
 
 class AdvancedFraudDetectionEngine:
-    """    Enterprise-grade fraud detection engine with AI/ML capabilities
-    """    
+    """
+    Enterprise-grade fraud detection engine with AI/ML capabilities
+    """
+    
     def __init__(self):
         # Repository dependencies
         self.fraud_repo = FraudDetectionRepository()
@@ -180,8 +189,10 @@ class AdvancedFraudDetectionEngine:
         self, 
         request: FraudAssessmentRequest
     ) -> FraudAssessmentResult:
-        """        Comprehensive fraud risk assessment
-        """        start_time = datetime.utcnow()
+        """
+        Comprehensive fraud risk assessment
+        """
+        start_time = datetime.utcnow()
         
         try:
             # Parallel risk assessments
@@ -299,7 +310,8 @@ class AdvancedFraudDetectionEngine:
             )
     
     async def _assess_velocity_risk(self, request: FraudAssessmentRequest) -> Dict[str, Any]:
-        """Assess transaction velocity risk"""        try:
+        """Assess transaction velocity risk"""
+        try:
             # Get recent transactions for user
             recent_transactions = await self.transaction_repo.get_recent_transactions(
                 user_id=request.user_id,
@@ -353,7 +365,8 @@ class AdvancedFraudDetectionEngine:
             return {'score': 0.0, 'reasons': [], 'analysis': {'error': str(e)}}
     
     async def _assess_geographic_risk(self, request: FraudAssessmentRequest) -> Dict[str, Any]:
-        """Assess geographic risk based on location patterns"""        try:
+        """Assess geographic risk based on location patterns"""
+        try:
             # Get user's typical locations
             user_profile = await self._get_user_profile(request.user_id)
             
@@ -395,7 +408,8 @@ class AdvancedFraudDetectionEngine:
             return {'score': 0.0, 'reasons': [], 'analysis': {'error': str(e)}}
     
     async def _assess_device_risk(self, request: FraudAssessmentRequest) -> Dict[str, Any]:
-        """Assess device-based risk"""        try:
+        """Assess device-based risk"""
+        try:
             device_score = 0.0
             reasons = []
             
@@ -436,7 +450,8 @@ class AdvancedFraudDetectionEngine:
             return {'score': 0.0, 'reasons': [], 'analysis': {'error': str(e)}}
     
     async def _assess_behavioral_risk(self, request: FraudAssessmentRequest) -> Dict[str, Any]:
-        """Assess behavioral anomalies"""        try:
+        """Assess behavioral anomalies"""
+        try:
             user_profile = await self._get_user_profile(request.user_id)
             
             if not user_profile:
@@ -489,7 +504,8 @@ class AdvancedFraudDetectionEngine:
             return {'score': 0.0, 'reasons': [], 'analysis': {'error': str(e)}}
     
     async def _assess_amount_risk(self, request: FraudAssessmentRequest) -> Dict[str, Any]:
-        """Assess amount-based risk"""        try:
+        """Assess amount-based risk"""
+        try:
             amount_score = 0.0
             reasons = []
             
@@ -523,7 +539,8 @@ class AdvancedFraudDetectionEngine:
             return {'score': 0.0, 'reasons': [], 'analysis': {'error': str(e)}}
     
     async def _assess_temporal_risk(self, request: FraudAssessmentRequest) -> Dict[str, Any]:
-        """Assess temporal patterns"""        try:
+        """Assess temporal patterns"""
+        try:
             temporal_score = 0.0
             reasons = []
             
@@ -554,7 +571,8 @@ class AdvancedFraudDetectionEngine:
             return {'score': 0.0, 'reasons': [], 'analysis': {'error': str(e)}}
     
     async def _check_blacklists(self, request: FraudAssessmentRequest) -> Dict[str, Any]:
-        """Check various blacklists"""        try:
+        """Check various blacklists"""
+        try:
             blacklist_score = 0.0
             reasons = []
             
@@ -588,7 +606,8 @@ class AdvancedFraudDetectionEngine:
             return {'score': 0.0, 'reasons': [], 'analysis': {'error': str(e)}}
     
     async def _run_ml_predictions(self, request: FraudAssessmentRequest) -> Dict[str, Any]:
-        """Run machine learning predictions"""        try:
+        """Run machine learning predictions"""
+        try:
             if not self.classification_model:
                 return {'score': 0.0, 'reasons': [], 'analysis': {'ml_model': 'not_available'}}
             
@@ -632,7 +651,8 @@ class AdvancedFraudDetectionEngine:
             return {'score': 0.0, 'reasons': [], 'analysis': {'error': str(e)}}
     
     def _determine_risk_level(self, risk_score: float) -> FraudRisk:
-        """Determine risk level from score"""        if risk_score >= self.risk_thresholds[FraudRisk.CRITICAL]:
+        """Determine risk level from score"""
+        if risk_score >= self.risk_thresholds[FraudRisk.CRITICAL]:
             return FraudRisk.CRITICAL
         elif risk_score >= self.risk_thresholds[FraudRisk.VERY_HIGH]:
             return FraudRisk.VERY_HIGH
@@ -646,7 +666,8 @@ class AdvancedFraudDetectionEngine:
             return FraudRisk.VERY_LOW
     
     def _determine_action(self, risk_level: FraudRisk, reasons: List[FraudReason]) -> FraudAction:
-        """Determine action based on risk level and reasons"""        if risk_level == FraudRisk.CRITICAL:
+        """Determine action based on risk level and reasons"""
+        if risk_level == FraudRisk.CRITICAL:
             return FraudAction.BLOCK
         elif risk_level == FraudRisk.VERY_HIGH:
             return FraudAction.ESCALATE
@@ -658,7 +679,8 @@ class AdvancedFraudDetectionEngine:
             return FraudAction.ALLOW
     
     async def _initialize_models(self):
-        """Initialize ML models"""        try:
+        """Initialize ML models"""
+        try:
             # Load pre-trained models or train new ones
             await self._load_or_train_models()
             logger.info("ML models initialized successfully")
@@ -666,32 +688,39 @@ class AdvancedFraudDetectionEngine:
             logger.error(f"Model initialization failed: {str(e)}")
     
     async def _load_or_train_models(self):
-        """Load existing models or train new ones"""        # This would typically load from saved model files
+        """Load existing models or train new ones"""
+        # This would typically load from saved model files
         # For now, we'll use default models
         pass
     
     # Helper methods (simplified implementations)
     async def _get_user_profile(self, user_id: str) -> Optional[UserBehaviorProfile]:
-        """Get user behavior profile"""        return self.user_profiles.get(user_id)
+        """Get user behavior profile"""
+        return self.user_profiles.get(user_id)
     
     async def _get_location_from_ip(self, ip_address: str) -> Optional[Dict[str, str]]:
-        """Get location from IP address"""        # Implementation would use GeoIP database
+        """Get location from IP address"""
+        # Implementation would use GeoIP database
         return {'country': 'US', 'city': 'New York', 'region': 'NY'}
     
     async def _detect_vpn_proxy(self, ip_address: str) -> bool:
-        """Detect VPN/Proxy usage"""        # Implementation would check against VPN/Proxy databases
+        """Detect VPN/Proxy usage"""
+        # Implementation would check against VPN/Proxy databases
         return False
     
     def _is_suspicious_user_agent(self, user_agent: str) -> bool:
-        """Check for suspicious user agent strings"""        suspicious_patterns = ['bot', 'crawler', 'scraper', 'automation']
+        """Check for suspicious user agent strings"""
+        suspicious_patterns = ['bot', 'crawler', 'scraper', 'automation']
         return any(pattern in user_agent.lower() for pattern in suspicious_patterns)
     
     def _detect_automated_behavior(self, user_agent: str, metadata: Dict[str, Any]) -> bool:
-        """Detect automated/bot behavior"""        # Check for automation indicators
+        """Detect automated/bot behavior"""
+        # Check for automation indicators
         return False
     
     async def _extract_features(self, request: FraudAssessmentRequest) -> List[float]:
-        """Extract features for ML models"""        features = [
+        """Extract features for ML models"""
+        features = [
             float(request.amount),
             request.transaction_time.hour,
             request.transaction_time.weekday(),
@@ -701,26 +730,32 @@ class AdvancedFraudDetectionEngine:
         return features
     
     async def _perform_external_checks(self, request: FraudAssessmentRequest) -> Dict[str, Any]:
-        """Perform external fraud checks"""        return await self.external_fraud_checker.check_multiple_sources(request)
+        """Perform external fraud checks"""
+        return await self.external_fraud_checker.check_multiple_sources(request)
     
     # Additional helper methods would be implemented here...
 
 
 class FraudPatternAnalyzer:
-    """    Advanced fraud pattern analysis and detection
-    """    
+    """
+    Advanced fraud pattern analysis and detection
+    """
+    
     def __init__(self):
         self.pattern_detector = DBSCAN(eps=0.5, min_samples=5)
         
     async def detect_fraud_rings(self, transactions: List[Dict]) -> List[Dict]:
-        """Detect fraud rings using clustering"""        # Implementation for fraud ring detection
+        """Detect fraud rings using clustering"""
+        # Implementation for fraud ring detection
         pass
     
     async def analyze_seasonal_patterns(self, fraud_data: List[Dict]) -> Dict[str, Any]:
-        """Analyze seasonal fraud patterns"""        # Implementation for seasonal analysis
+        """Analyze seasonal fraud patterns"""
+        # Implementation for seasonal analysis
         pass
 
 
 # Custom exceptions
 class FraudDetectionError(Exception):
-    """Fraud detection error"""    pass
+    """Fraud detection error"""
+    pass

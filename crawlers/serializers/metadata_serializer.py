@@ -10,7 +10,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""import logging
+"""
+import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ from pydantic import BaseModel, Field, validator
 logger = logging.getLogger(__name__)
 
 class MetadataType(Enum):
-    """Types of metadata."""    EXIF = "exif"
+    """Types of metadata."""
+    EXIF = "exif"
     TECHNICAL = "technical"
     DESCRIPTIVE = "descriptive"
     STRUCTURAL = "structural"
@@ -33,7 +35,8 @@ class MetadataType(Enum):
     CUSTOM = "custom"
 
 class DataFormat(Enum):
-    """Data format types."""    AUDIO = "audio"
+    """Data format types."""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -43,7 +46,8 @@ class DataFormat(Enum):
 
 @dataclass
 class TechnicalMetadata:
-    """Technical metadata for digital content."""    file_size: int = 0
+    """Technical metadata for digital content."""
+    file_size: int = 0
     file_format: str = ""
     mime_type: str = ""
     codec: Optional[str] = None
@@ -57,7 +61,8 @@ class TechnicalMetadata:
 
 @dataclass
 class ExifMetadata:
-    """EXIF metadata for images and videos."""    camera_make: Optional[str] = None
+    """EXIF metadata for images and videos."""
+    camera_make: Optional[str] = None
     camera_model: Optional[str] = None
     lens_model: Optional[str] = None
     focal_length: Optional[float] = None
@@ -75,7 +80,8 @@ class ExifMetadata:
 
 @dataclass
 class AudioMetadata:
-    """Audio-specific metadata."""    duration: float = 0.0
+    """Audio-specific metadata."""
+    duration: float = 0.0
     channels: int = 2
     sample_rate: int = 44100
     bit_depth: int = 16
@@ -101,7 +107,8 @@ class AudioMetadata:
 
 @dataclass
 class VideoMetadata:
-    """Video-specific metadata."""    duration: float = 0.0
+    """Video-specific metadata."""
+    duration: float = 0.0
     width: int = 1920
     height: int = 1080
     fps: float = 30.0
@@ -119,7 +126,8 @@ class VideoMetadata:
 
 @dataclass
 class ImageMetadata:
-    """Image-specific metadata."""    width: int = 0
+    """Image-specific metadata."""
+    width: int = 0
     height: int = 0
     color_depth: int = 24
     color_space: str = "RGB"
@@ -134,7 +142,8 @@ class ImageMetadata:
 
 @dataclass
 class RightsMetadata:
-    """Rights and ownership metadata."""    copyright: Optional[str] = None
+    """Rights and ownership metadata."""
+    copyright: Optional[str] = None
     license: Optional[str] = None
     rights_holder: Optional[str] = None
     usage_terms: Optional[str] = None
@@ -146,11 +155,13 @@ class RightsMetadata:
     rights_statement: Optional[str] = None
 
 class MetadataData(BaseModel):
-    """    Comprehensive metadata model.
+    """
+    Comprehensive metadata model.
     
     Represents extracted metadata from multimedia content
     for the IA-Influencer-Agent content protection platform.
-    """    
+    """
+    
     # Basic information
     metadata_id: str = Field(..., description="Unique metadata identifier")
     content_id: str = Field(..., description="Associated content identifier")
@@ -211,13 +222,16 @@ class MetadataData(BaseModel):
         return v
 
 class MetadataSerializer:
-    """    Advanced metadata serialization system.
+    """
+    Advanced metadata serialization system.
     
     Handles efficient serialization and deserialization of metadata
     with support for various formats and extraction methods.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize metadata serializer."""        self.supported_formats = {
+        """Initialize metadata serializer."""
+        self.supported_formats = {
             DataFormat.AUDIO: ['mp3', 'wav', 'flac', 'aac', 'ogg', 'm4a'],
             DataFormat.VIDEO: ['mp4', 'avi', 'mov', 'wmv', 'flv', 'webm', 'mkv'],
             DataFormat.IMAGE: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'tiff'],
@@ -233,7 +247,8 @@ class MetadataSerializer:
         include_binary: bool = False,
         compress_large_fields: bool = True
     ) -> Dict[str, Any]:
-        """        Serialize metadata to dictionary format.
+        """
+        Serialize metadata to dictionary format.
         
         Args:
             metadata: Metadata to serialize
@@ -242,7 +257,8 @@ class MetadataSerializer:
             
         Returns:
             Serialized metadata dictionary
-        """        try:
+        """
+        try:
             # Convert to dictionary
             data = metadata.dict()
             
@@ -299,14 +315,16 @@ class MetadataSerializer:
         self,
         data: Dict[str, Any]
     ) -> MetadataData:
-        """        Deserialize metadata from dictionary format.
+        """
+        Deserialize metadata from dictionary format.
         
         Args:
             data: Serialized metadata dictionary
             
         Returns:
             Deserialized MetadataData object
-        """        try:
+        """
+        try:
             # Handle datetime conversions
             if isinstance(data.get('extracted_at'), str):
                 data['extracted_at'] = datetime.fromisoformat(data['extracted_at'])
@@ -358,7 +376,8 @@ class MetadataSerializer:
         metadata_list: List[MetadataData],
         compact_mode: bool = True
     ) -> List[Dict[str, Any]]:
-        """Serialize multiple metadata objects efficiently."""        try:
+        """Serialize multiple metadata objects efficiently."""
+        try:
             serialized_list = []
             
             for metadata in metadata_list:
@@ -380,7 +399,8 @@ class MetadataSerializer:
         self,
         data_list: List[Dict[str, Any]]
     ) -> List[MetadataData]:
-        """Deserialize multiple metadata objects efficiently."""        try:
+        """Deserialize multiple metadata objects efficiently."""
+        try:
             metadata_list = []
             
             for data in data_list:
@@ -395,7 +415,8 @@ class MetadataSerializer:
             raise
     
     def _serialize_technical_metadata(self, tech: TechnicalMetadata) -> Dict[str, Any]:
-        """Serialize technical metadata."""        return {
+        """Serialize technical metadata."""
+        return {
             'file_size': tech.file_size,
             'file_format': tech.file_format,
             'mime_type': tech.mime_type,
@@ -410,10 +431,12 @@ class MetadataSerializer:
         }
     
     def _deserialize_technical_metadata(self, data: Dict[str, Any]) -> TechnicalMetadata:
-        """Deserialize technical metadata."""        return TechnicalMetadata(**data)
+        """Deserialize technical metadata."""
+        return TechnicalMetadata(**data)
     
     def _serialize_exif_metadata(self, exif: ExifMetadata) -> Dict[str, Any]:
-        """Serialize EXIF metadata."""        data = {
+        """Serialize EXIF metadata."""
+        data = {
             'camera_make': exif.camera_make,
             'camera_model': exif.camera_model,
             'lens_model': exif.lens_model,
@@ -436,13 +459,15 @@ class MetadataSerializer:
         return data
     
     def _deserialize_exif_metadata(self, data: Dict[str, Any]) -> ExifMetadata:
-        """Deserialize EXIF metadata."""        if 'datetime_original' in data and isinstance(data['datetime_original'], str):
+        """Deserialize EXIF metadata."""
+        if 'datetime_original' in data and isinstance(data['datetime_original'], str):
             data['datetime_original'] = datetime.fromisoformat(data['datetime_original'])
         
         return ExifMetadata(**data)
     
     def _serialize_audio_metadata(self, audio: AudioMetadata) -> Dict[str, Any]:
-        """Serialize audio metadata."""        return {
+        """Serialize audio metadata."""
+        return {
             'duration': audio.duration,
             'channels': audio.channels,
             'sample_rate': audio.sample_rate,
@@ -469,10 +494,12 @@ class MetadataSerializer:
         }
     
     def _deserialize_audio_metadata(self, data: Dict[str, Any]) -> AudioMetadata:
-        """Deserialize audio metadata."""        return AudioMetadata(**data)
+        """Deserialize audio metadata."""
+        return AudioMetadata(**data)
     
     def _serialize_video_metadata(self, video: VideoMetadata) -> Dict[str, Any]:
-        """Serialize video metadata."""        return {
+        """Serialize video metadata."""
+        return {
             'duration': video.duration,
             'width': video.width,
             'height': video.height,
@@ -491,10 +518,12 @@ class MetadataSerializer:
         }
     
     def _deserialize_video_metadata(self, data: Dict[str, Any]) -> VideoMetadata:
-        """Deserialize video metadata."""        return VideoMetadata(**data)
+        """Deserialize video metadata."""
+        return VideoMetadata(**data)
     
     def _serialize_image_metadata(self, image: ImageMetadata) -> Dict[str, Any]:
-        """Serialize image metadata."""        return {
+        """Serialize image metadata."""
+        return {
             'width': image.width,
             'height': image.height,
             'color_depth': image.color_depth,
@@ -510,10 +539,12 @@ class MetadataSerializer:
         }
     
     def _deserialize_image_metadata(self, data: Dict[str, Any]) -> ImageMetadata:
-        """Deserialize image metadata."""        return ImageMetadata(**data)
+        """Deserialize image metadata."""
+        return ImageMetadata(**data)
     
     def _serialize_rights_metadata(self, rights: RightsMetadata) -> Dict[str, Any]:
-        """Serialize rights metadata."""        return {
+        """Serialize rights metadata."""
+        return {
             'copyright': rights.copyright,
             'license': rights.license,
             'rights_holder': rights.rights_holder,
@@ -527,10 +558,12 @@ class MetadataSerializer:
         }
     
     def _deserialize_rights_metadata(self, data: Dict[str, Any]) -> RightsMetadata:
-        """Deserialize rights metadata."""        return RightsMetadata(**data)
+        """Deserialize rights metadata."""
+        return RightsMetadata(**data)
     
     def _compress_text_field(self, text: str) -> str:
-        """Compress large text field."""        try:
+        """Compress large text field."""
+        try:
             import gzip
             import base64
             
@@ -541,7 +574,8 @@ class MetadataSerializer:
             return text  # Return original if compression fails
     
     def _decompress_text_field(self, compressed_text: str) -> str:
-        """Decompress compressed text field."""        try:
+        """Decompress compressed text field."""
+        try:
             import gzip
             import base64
             
@@ -555,7 +589,8 @@ class MetadataSerializer:
             return compressed_text  # Return as-is if decompression fails
     
     def calculate_metadata_quality_score(self, metadata: MetadataData) -> float:
-        """Calculate quality score for metadata completeness."""        try:
+        """Calculate quality score for metadata completeness."""
+        try:
             total_fields = 0
             filled_fields = 0
             
@@ -603,7 +638,8 @@ class MetadataSerializer:
             return 0.0
     
     def extract_metadata_summary(self, metadata: MetadataData) -> Dict[str, Any]:
-        """Extract summary information from metadata."""        try:
+        """Extract summary information from metadata."""
+        try:
             summary = {
                 'metadata_id': metadata.metadata_id,
                 'content_id': metadata.content_id,

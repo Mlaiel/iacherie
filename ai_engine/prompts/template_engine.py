@@ -11,7 +11,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""import re
+"""
+import re
 import json
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Callable
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 
 class TemplateType(Enum):
-    """Types of templates"""    STATIC = "static"
+    """Types of templates"""
+    STATIC = "static"
     DYNAMIC = "dynamic"
     CONDITIONAL = "conditional"
     LOOP = "loop"
@@ -33,7 +35,8 @@ class TemplateType(Enum):
 
 
 class VariableType(Enum):
-    """Variable types for validation"""    STRING = "string"
+    """Variable types for validation"""
+    STRING = "string"
     INTEGER = "integer"
     FLOAT = "float"
     BOOLEAN = "boolean"
@@ -46,7 +49,8 @@ class VariableType(Enum):
 
 @dataclass
 class TemplateVariable:
-    """Variable definition with validation rules"""    name: str
+    """Variable definition with validation rules"""
+    name: str
     var_type: VariableType
     required: bool = True
     default_value: Any = None
@@ -57,7 +61,8 @@ class TemplateVariable:
     description: str = ""
     
     def validate(self, value: Any) -> bool:
-        """Validate variable value against rules"""        if value is None and self.required:
+        """Validate variable value against rules"""
+        if value is None and self.required:
             return False
         if value is None and not self.required:
             return True
@@ -91,7 +96,8 @@ class TemplateVariable:
 
 
 class TemplateProcessor:
-    """Professional template processing with conditional logic"""    
+    """Professional template processing with conditional logic"""
+    
     def __init__(self):
         self.variable_pattern = re.compile(r'\{\{(\w+)\}\}')
         self.conditional_pattern = re.compile(r'\{\% if (\w+) \%\}(.*?)\{\% endif \%\}', re.DOTALL)
@@ -100,7 +106,8 @@ class TemplateProcessor:
         
     def process_template(self, template: str, variables: Dict[str, Any], 
                         functions: Optional[Dict[str, Callable]] = None) -> str:
-        """Process template with variables, conditionals, and functions"""        try:
+        """Process template with variables, conditionals, and functions"""
+        try:
             result = template
             
             # Process functions first
@@ -123,7 +130,8 @@ class TemplateProcessor:
             raise TemplateProcessingError(f"Failed to process template: {str(e)}")
     
     def _process_variables(self, template: str, variables: Dict[str, Any]) -> str:
-        """Replace variable placeholders with actual values"""        def replacer(match):
+        """Replace variable placeholders with actual values"""
+        def replacer(match):
             var_name = match.group(1)
             value = variables.get(var_name, f"{{{{MISSING:{var_name}}}}}")
             return str(value) if value is not None else ""
@@ -131,7 +139,8 @@ class TemplateProcessor:
         return self.variable_pattern.sub(replacer, template)
     
     def _process_conditionals(self, template: str, variables: Dict[str, Any]) -> str:
-        """Process conditional blocks"""        def replacer(match):
+        """Process conditional blocks"""
+        def replacer(match):
             condition_var = match.group(1)
             content = match.group(2)
             
@@ -142,7 +151,8 @@ class TemplateProcessor:
         return self.conditional_pattern.sub(replacer, template)
     
     def _process_loops(self, template: str, variables: Dict[str, Any]) -> str:
-        """Process loop blocks"""        def replacer(match):
+        """Process loop blocks"""
+        def replacer(match):
             loop_var = match.group(1)
             iterable_var = match.group(2)
             content = match.group(3)
@@ -164,7 +174,8 @@ class TemplateProcessor:
     
     def _process_functions(self, template: str, functions: Dict[str, Callable], 
                           variables: Dict[str, Any]) -> str:
-        """Process function calls in templates"""        def replacer(match):
+        """Process function calls in templates"""
+        def replacer(match):
             func_name = match.group(1)
             args_str = match.group(2)
             
@@ -193,21 +204,25 @@ class TemplateProcessor:
 
 
 class VariableResolver:
-    """Professional variable resolution with context awareness"""    
+    """Professional variable resolution with context awareness"""
+    
     def __init__(self):
         self.context_stack = []
         self.global_variables = {}
         
     def push_context(self, context: Dict[str, Any]):
-        """Push new variable context"""        self.context_stack.append(context)
+        """Push new variable context"""
+        self.context_stack.append(context)
         
     def pop_context(self) -> Optional[Dict[str, Any]]:
-        """Pop variable context"""        if self.context_stack:
+        """Pop variable context"""
+        if self.context_stack:
             return self.context_stack.pop()
         return None
     
     def resolve_variable(self, name: str, default: Any = None) -> Any:
-        """Resolve variable from context stack"""        # Check context stack (most recent first)
+        """Resolve variable from context stack"""
+        # Check context stack (most recent first)
         for context in reversed(self.context_stack):
             if name in context:
                 return context[name]
@@ -219,10 +234,12 @@ class VariableResolver:
         return default
     
     def set_global_variable(self, name: str, value: Any):
-        """Set global variable"""        self.global_variables[name] = value
+        """Set global variable"""
+        self.global_variables[name] = value
     
     def get_all_variables(self) -> Dict[str, Any]:
-        """Get all available variables"""        result = self.global_variables.copy()
+        """Get all available variables"""
+        result = self.global_variables.copy()
         
         # Merge context stack
         for context in self.context_stack:
@@ -232,7 +249,8 @@ class VariableResolver:
 
 
 class TemplateEngine:
-    """Main template engine with caching and optimization"""    
+    """Main template engine with caching and optimization"""
+    
     def __init__(self):
         self.processor = TemplateProcessor()
         self.resolver = VariableResolver()
@@ -245,7 +263,8 @@ class TemplateEngine:
                             template_variables: List[TemplateVariable] = None,
                             functions: Optional[Dict[str, Callable]] = None,
                             use_cache: bool = True) -> str:
-        """Render template with full feature support"""        start_time = datetime.now()
+        """Render template with full feature support"""
+        start_time = datetime.now()
         
         try:
             # Validate variables
@@ -281,7 +300,8 @@ class TemplateEngine:
     
     def _validate_variables(self, variables: Dict[str, Any], 
                           template_variables: List[TemplateVariable]) -> List[str]:
-        """Validate template variables"""        errors = []
+        """Validate template variables"""
+        errors = []
         
         for var_def in template_variables:
             value = variables.get(var_def.name)
@@ -292,11 +312,13 @@ class TemplateEngine:
         return errors
     
     def _generate_cache_key(self, template_id: str, variables: Dict[str, Any]) -> str:
-        """Generate cache key for template and variables"""        var_hash = hash(json.dumps(variables, sort_keys=True, default=str))
+        """Generate cache key for template and variables"""
+        var_hash = hash(json.dumps(variables, sort_keys=True, default=str))
         return f"{template_id}:{var_hash}"
     
     def _update_performance_stats(self, template_id: str, processing_time: float, success: bool):
-        """Update performance statistics"""        if template_id not in self.performance_stats:
+        """Update performance statistics"""
+        if template_id not in self.performance_stats:
             self.performance_stats[template_id] = {
                 'total_calls': 0,
                 'successful_calls': 0,
@@ -316,10 +338,12 @@ class TemplateEngine:
         stats['success_rate'] = stats['successful_calls'] / stats['total_calls']
     
     def get_performance_stats(self, template_id: str) -> Optional[Dict[str, Any]]:
-        """Get performance statistics for template"""        return self.performance_stats.get(template_id)
+        """Get performance statistics for template"""
+        return self.performance_stats.get(template_id)
     
     def clear_cache(self, template_id: str = None):
-        """Clear template cache"""        if template_id:
+        """Clear template cache"""
+        if template_id:
             # Clear specific template cache
             keys_to_remove = [key for key in self.template_cache.keys() 
                             if key.startswith(f"{template_id}:")]
@@ -331,8 +355,10 @@ class TemplateEngine:
 
 
 class TemplateProcessingError(Exception):
-    """Template processing error"""    pass
+    """Template processing error"""
+    pass
 
 
 class TemplateValidationError(Exception):
-    """Template validation error"""    pass
+    """Template validation error"""
+    pass

@@ -15,7 +15,8 @@ explicit written permission from Fahed Mlaiel is strictly prohibited and will be
 to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from .audio_processing_config import AudioProcessingConfig
+"""
+from .audio_processing_config import AudioProcessingConfig
 from .codec_config import CodecConfig
 from .audio_fingerprint_config import AudioFingerprintConfig
 from .spectral_analysis_config import SpectralAnalysisConfig

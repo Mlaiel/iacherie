@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -22,7 +23,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -41,10 +43,12 @@ logger = logging.getLogger(__name__)
 
 
 class TestEngagementSpecialistAgent:
-    """Comprehensive test suite for EngagementSpecialistAgent"""    
+    """Comprehensive test suite for EngagementSpecialistAgent"""
+    
     @pytest.fixture
     def engagement_config(self) -> AgentConfiguration:
-        """Engagement specialist agent configuration"""        return AgentConfiguration(
+        """Engagement specialist agent configuration"""
+        return AgentConfiguration(
             agent_id="engagement_specialist_test",
             agent_name="Test Engagement Specialist Agent",
             capabilities={
@@ -74,7 +78,8 @@ class TestEngagementSpecialistAgent:
     
     @pytest.fixture
     async def engagement_agent(self, engagement_config) -> EngagementSpecialistAgent:
-        """Initialized engagement specialist agent"""        agent = EngagementSpecialistAgent(engagement_config)
+        """Initialized engagement specialist agent"""
+        agent = EngagementSpecialistAgent(engagement_config)
         await agent.initialize()
         
         yield agent
@@ -82,7 +87,8 @@ class TestEngagementSpecialistAgent:
         await agent.shutdown()
     
     async def test_agent_initialization(self, engagement_config):
-        """Test engagement specialist agent initialization"""        agent = EngagementSpecialistAgent(engagement_config)
+        """Test engagement specialist agent initialization"""
+        agent = EngagementSpecialistAgent(engagement_config)
         
         # Before initialization
         assert not agent.initialized
@@ -110,7 +116,8 @@ class TestEngagementSpecialistAgent:
         await agent.shutdown()
     
     async def test_engagement_optimization(self, engagement_agent, test_engagement_data):
-        """Test engagement optimization strategies"""        optimization_request = {
+        """Test engagement optimization strategies"""
+        optimization_request = {
             "task_type": "engagement_optimization",
             "content_data": {
                 "post_id": "test_post_123",
@@ -182,7 +189,8 @@ class TestEngagementSpecialistAgent:
         assert predictions["expected_engagement_rate"] > 0.055
     
     async def test_community_management(self, engagement_agent):
-        """Test community management capabilities"""        community_request = {
+        """Test community management capabilities"""
+        community_request = {
             "task_type": "community_management",
             "platform": "instagram",
             "management_scope": {
@@ -253,7 +261,8 @@ class TestEngagementSpecialistAgent:
         assert "engagement_alerts" in monitoring
     
     async def test_audience_interaction_analysis(self, engagement_agent):
-        """Test audience interaction analysis"""        interaction_request = {
+        """Test audience interaction analysis"""
+        interaction_request = {
             "task_type": "interaction_analysis",
             "analysis_period": "last_30_days",
             "platforms": ["instagram", "tiktok", "youtube"],
@@ -315,7 +324,8 @@ class TestEngagementSpecialistAgent:
         assert "trending_sentiments" in sentiment
     
     async def test_content_engagement_strategy(self, engagement_agent):
-        """Test content engagement strategy development"""        strategy_request = {
+        """Test content engagement strategy development"""
+        strategy_request = {
             "task_type": "content_engagement_strategy",
             "content_categories": [
                 "educational", "entertainment", "behind_scenes", "user_generated"
@@ -380,7 +390,8 @@ class TestEngagementSpecialistAgent:
         assert "differentiation_strategies" in competitive
     
     async def test_social_listening(self, engagement_agent):
-        """Test social listening and monitoring"""        listening_request = {
+        """Test social listening and monitoring"""
+        listening_request = {
             "task_type": "social_listening",
             "monitoring_keywords": [
                 "AI influencer", "content creation", "social media AI"
@@ -446,7 +457,8 @@ class TestEngagementSpecialistAgent:
         assert "recommended_actions" in alerts
     
     async def test_influencer_outreach(self, engagement_agent):
-        """Test influencer outreach and collaboration"""        outreach_request = {
+        """Test influencer outreach and collaboration"""
+        outreach_request = {
             "task_type": "influencer_outreach",
             "campaign_objective": "brand_awareness",
             "target_criteria": {
@@ -507,7 +519,8 @@ class TestEngagementSpecialistAgent:
             assert "timeline" in proposal
     
     async def test_crisis_management(self, engagement_agent):
-        """Test crisis management and reputation protection"""        crisis_request = {
+        """Test crisis management and reputation protection"""
+        crisis_request = {
             "task_type": "crisis_management",
             "crisis_type": "negative_sentiment_spike",
             "severity_level": "medium",
@@ -563,7 +576,8 @@ class TestEngagementSpecialistAgent:
         assert "long_term_strategy" in recovery
     
     async def test_engagement_scoring(self, engagement_agent):
-        """Test engagement scoring and quality assessment"""        scoring_request = {
+        """Test engagement scoring and quality assessment"""
+        scoring_request = {
             "task_type": "engagement_scoring",
             "content_items": [
                 {
@@ -637,7 +651,8 @@ class TestEngagementSpecialistAgent:
             assert "expected_impact" in rec
     
     async def test_audience_retention_analysis(self, engagement_agent):
-        """Test audience retention and loyalty analysis"""        retention_request = {
+        """Test audience retention and loyalty analysis"""
+        retention_request = {
             "task_type": "audience_retention_analysis",
             "analysis_period": "last_6_months",
             "platforms": ["instagram", "youtube"],
@@ -693,7 +708,8 @@ class TestEngagementSpecialistAgent:
         assert "advocacy_potential" in loyalty
     
     async def test_concurrent_engagement_tasks(self, engagement_agent):
-        """Test concurrent engagement processing"""        tasks = [
+        """Test concurrent engagement processing"""
+        tasks = [
             {
                 "task_type": "engagement_optimization",
                 "content_data": {"post_id": "test_1"},
@@ -723,7 +739,8 @@ class TestEngagementSpecialistAgent:
     
     @pytest.mark.performance
     async def test_engagement_performance(self, engagement_agent, assert_performance):
-        """Test engagement processing performance"""        # Test optimization speed
+        """Test engagement processing performance"""
+        # Test optimization speed
         optimization_task = {
             "task_type": "engagement_optimization",
             "content_data": {"post_id": "perf_test"},
@@ -746,7 +763,8 @@ class TestEngagementSpecialistAgent:
         assert result["success"] is True
     
     async def test_error_handling(self, engagement_agent):
-        """Test error handling in engagement processing"""        # Test invalid platform
+        """Test error handling in engagement processing"""
+        # Test invalid platform
         invalid_platform_task = {
             "task_type": "engagement_optimization",
             "content_data": {"platform": "invalid_platform"}

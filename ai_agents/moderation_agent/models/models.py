@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""import torch
+"""
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
@@ -26,7 +27,8 @@ import logging
 logger = logging.getLogger(__name__)
 
 class ToxicityClassifier(nn.Module):
-    """    Advanced multi-label toxicity classifier for text content
+    """
+    Advanced multi-label toxicity classifier for text content
     
     Detects multiple types of toxic content:
     - General toxicity
@@ -35,7 +37,8 @@ class ToxicityClassifier(nn.Module):
     - Threats
     - Insults
     - Identity attacks
-    """    
+    """
+    
     def __init__(self, model_name: str = "bert-base-multilingual-cased", num_classes: int = 6):
         super().__init__()
         
@@ -65,7 +68,8 @@ class ToxicityClassifier(nn.Module):
         self.sigmoid = nn.Sigmoid()
         
     def forward(self, input_ids: torch.Tensor, attention_mask: torch.Tensor) -> Dict[str, torch.Tensor]:
-        """        Forward pass through the model
+        """
+        Forward pass through the model
         
         Args:
             input_ids: Tokenized input text
@@ -73,7 +77,8 @@ class ToxicityClassifier(nn.Module):
             
         Returns:
             Dictionary of toxicity predictions
-        """        # Get transformer outputs
+        """
+        # Get transformer outputs
         outputs = self.transformer(input_ids=input_ids, attention_mask=attention_mask)
         
         # Apply attention mechanism
@@ -102,7 +107,8 @@ class ToxicityClassifier(nn.Module):
         return predictions
     
     def predict(self, texts: List[str], device: str = "cpu") -> Dict[str, List[float]]:
-        """        Predict toxicity for a batch of texts
+        """
+        Predict toxicity for a batch of texts
         
         Args:
             texts: List of input texts
@@ -110,7 +116,8 @@ class ToxicityClassifier(nn.Module):
             
         Returns:
             Dictionary of toxicity scores
-        """        self.eval()
+        """
+        self.eval()
         
         # Tokenize inputs
         encoded = self.tokenizer(
@@ -135,14 +142,16 @@ class ToxicityClassifier(nn.Module):
         return results
 
 class NSFWImageClassifier(nn.Module):
-    """    Advanced NSFW (Not Safe For Work) image classifier
+    """
+    Advanced NSFW (Not Safe For Work) image classifier
     
     Detects various types of explicit content:
     - Nudity
     - Sexual content
     - Suggestive content
     - Safe content
-    """    
+    """
+    
     def __init__(self, backbone: str = "resnet50", num_classes: int = 4):
         super().__init__()
         
@@ -177,14 +186,16 @@ class NSFWImageClassifier(nn.Module):
         )
     
     def forward(self, x: torch.Tensor) -> Dict[str, torch.Tensor]:
-        """        Forward pass through the NSFW classifier
+        """
+        Forward pass through the NSFW classifier
         
         Args:
             x: Input image tensor
             
         Returns:
             Dictionary of NSFW predictions
-        """        # Extract features
+        """
+        # Extract features
         features = self.backbone(x)
         
         # Apply spatial attention
@@ -204,14 +215,16 @@ class NSFWImageClassifier(nn.Module):
         }
 
 class ViolenceDetector(nn.Module):
-    """    Advanced violence detection model for images and video frames
+    """
+    Advanced violence detection model for images and video frames
     
     Detects various forms of violent content:
     - Physical violence
     - Weapons
     - Blood/gore
     - Fighting
-    """    
+    """
+    
     def __init__(self, backbone: str = "efficientnet-b0"):
         super().__init__()
         
@@ -248,14 +261,16 @@ class ViolenceDetector(nn.Module):
         )
     
     def forward(self, x: torch.Tensor) -> Dict[str, torch.Tensor]:
-        """        Forward pass through the violence detector
+        """
+        Forward pass through the violence detector
         
         Args:
             x: Input image tensor
             
         Returns:
             Dictionary of violence predictions
-        """        # Extract backbone features
+        """
+        # Extract backbone features
         features = self.backbone(x)
         
         if len(features.shape) == 4:  # Spatial dimensions present
@@ -285,14 +300,16 @@ class ViolenceDetector(nn.Module):
         }
 
 class AudioContentClassifier(nn.Module):
-    """    Advanced audio content classifier for detecting harmful audio content
+    """
+    Advanced audio content classifier for detecting harmful audio content
     
     Detects:
     - Offensive speech
     - Screaming/distress
     - Violence sounds
     - Music content appropriateness
-    """    
+    """
+    
     def __init__(self, input_dim: int = 128, hidden_dim: int = 256):
         super().__init__()
         
@@ -323,14 +340,16 @@ class AudioContentClassifier(nn.Module):
         self.appropriateness_classifier = nn.Linear(hidden_dim * 2, 3)  # Appropriate, Questionable, Inappropriate
         
     def forward(self, x: torch.Tensor) -> Dict[str, torch.Tensor]:
-        """        Forward pass through audio classifier
+        """
+        Forward pass through audio classifier
         
         Args:
             x: Input audio features [batch_size, seq_len, feature_dim]
             
         Returns:
             Dictionary of audio content predictions
-        """        # LSTM processing
+        """
+        # LSTM processing
         lstm_out, _ = self.lstm(x)  # [batch_size, seq_len, hidden_dim * 2]
         
         # Apply attention
@@ -351,14 +370,16 @@ class AudioContentClassifier(nn.Module):
         }
 
 class DeepfakeDetector(nn.Module):
-    """    Advanced deepfake and synthetic media detection model
+    """
+    Advanced deepfake and synthetic media detection model
     
     Detects:
     - Face swaps
     - Expression manipulation
     - AI-generated faces
     - Video manipulation
-    """    
+    """
+    
     def __init__(self, backbone: str = "xception"):
         super().__init__()
         
@@ -394,14 +415,16 @@ class DeepfakeDetector(nn.Module):
         )
         
     def forward(self, x: torch.Tensor) -> Dict[str, torch.Tensor]:
-        """        Forward pass through deepfake detector
+        """
+        Forward pass through deepfake detector
         
         Args:
             x: Input image tensor
             
         Returns:
             Dictionary of deepfake detection results
-        """        # Extract features
+        """
+        # Extract features
         features = self.backbone(x)
         
         # Analyze frequency and spatial domains
@@ -422,11 +445,13 @@ class DeepfakeDetector(nn.Module):
         }
 
 class MultiModalContentAnalyzer:
-    """    Multi-modal content analyzer combining all specialized models
+    """
+    Multi-modal content analyzer combining all specialized models
     
     Provides comprehensive analysis across text, image, audio, and video content
     with unified scoring and decision making.
-    """    
+    """
+    
     def __init__(self, device: str = "cpu"):
         self.device = device
         
@@ -440,7 +465,8 @@ class MultiModalContentAnalyzer:
         logger.info("Multi-modal content analyzer initialized")
     
     def analyze_text(self, texts: List[str]) -> Dict[str, Any]:
-        """Analyze text content for toxicity and harmful content"""        try:
+        """Analyze text content for toxicity and harmful content"""
+        try:
             results = self.toxicity_model.predict(texts, self.device)
             return {
                 'success': True,
@@ -452,7 +478,8 @@ class MultiModalContentAnalyzer:
             return {'success': False, 'error': str(e)}
     
     def analyze_image(self, image: torch.Tensor) -> Dict[str, Any]:
-        """Analyze image for NSFW content, violence, and authenticity"""        try:
+        """Analyze image for NSFW content, violence, and authenticity"""
+        try:
             results = {}
             
             # NSFW detection
@@ -487,7 +514,8 @@ class MultiModalContentAnalyzer:
             return {'success': False, 'error': str(e)}
     
     def analyze_audio(self, audio_features: torch.Tensor) -> Dict[str, Any]:
-        """Analyze audio content for harmful patterns"""        try:
+        """Analyze audio content for harmful patterns"""
+        try:
             results = self.audio_model(audio_features.to(self.device))
             
             return {
@@ -506,7 +534,8 @@ class MultiModalContentAnalyzer:
             return {'success': False, 'error': str(e)}
     
     def extract_audio_features(self, audio_path: str) -> torch.Tensor:
-        """Extract features from audio file for analysis"""        try:
+        """Extract features from audio file for analysis"""
+        try:
             # Load audio
             y, sr = librosa.load(audio_path, sr=16000)
             
@@ -523,14 +552,16 @@ class MultiModalContentAnalyzer:
             return torch.empty(0)
     
     def get_unified_risk_score(self, analysis_results: Dict[str, Any]) -> float:
-        """        Calculate unified risk score from multi-modal analysis results
+        """
+        Calculate unified risk score from multi-modal analysis results
         
         Args:
             analysis_results: Combined results from all modality analyses
             
         Returns:
             Unified risk score between 0.0 and 1.0
-        """        risk_scores = []
+        """
+        risk_scores = []
         
         # Text risks
         if 'text' in analysis_results:

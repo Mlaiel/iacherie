@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is protected by copyright law. Unauthorized use, reproduction,
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
-"""from datetime import datetime, timedelta
+"""
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from enum import Enum
 from dataclasses import dataclass
@@ -29,7 +30,8 @@ from backend.utils.data_aggregator import DataAggregator
 
 
 class MetricType(str, Enum):
-    """Performance metric types"""    REACH = "reach"
+    """Performance metric types"""
+    REACH = "reach"
     IMPRESSIONS = "impressions"
     ENGAGEMENT = "engagement"
     CLICKS = "clicks"
@@ -43,7 +45,8 @@ class MetricType(str, Enum):
 
 
 class TrackingFrequency(str, Enum):
-    """Performance tracking frequencies"""    REAL_TIME = "real_time"
+    """Performance tracking frequencies"""
+    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -51,7 +54,8 @@ class TrackingFrequency(str, Enum):
 
 
 class AlertLevel(str, Enum):
-    """Performance alert levels"""    INFO = "info"
+    """Performance alert levels"""
+    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
@@ -59,7 +63,8 @@ class AlertLevel(str, Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Individual performance metric data"""    metric_type: MetricType
+    """Individual performance metric data"""
+    metric_type: MetricType
     value: float
     previous_value: Optional[float]
     change_percentage: float
@@ -71,7 +76,8 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert information"""    alert_id: str
+    """Performance alert information"""
+    alert_id: str
     campaign_id: str
     metric_type: MetricType
     alert_level: AlertLevel
@@ -85,7 +91,8 @@ class PerformanceAlert:
 
 @dataclass
 class PerformanceBenchmark:
-    """Performance benchmark data"""    campaign_type: str
+    """Performance benchmark data"""
+    campaign_type: str
     industry: str
     benchmarks: Dict[MetricType, Dict[str, float]]
     sample_size: int
@@ -95,7 +102,8 @@ class PerformanceBenchmark:
 
 @dataclass
 class PerformanceInsight:
-    """AI-generated performance insight"""    insight_id: str
+    """AI-generated performance insight"""
+    insight_id: str
     campaign_id: str
     insight_type: str
     title: str
@@ -107,12 +115,14 @@ class PerformanceInsight:
 
 
 class PerformanceTracker:
-    """    Advanced Campaign Performance Monitoring and Analytics System
+    """
+    Advanced Campaign Performance Monitoring and Analytics System
     
     Provides comprehensive performance tracking including real-time monitoring,
     predictive analytics, benchmark comparison, anomaly detection,
     and actionable insights for campaign optimization.
-    """    
+    """
+    
     def __init__(self):
         self.logger = get_logger(__name__)
         self.performance_predictor = PerformancePredictor()
@@ -139,7 +149,8 @@ class PerformanceTracker:
         campaign_id: str,
         tracking_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Setup comprehensive performance tracking for a campaign
+        """
+        Setup comprehensive performance tracking for a campaign
         
         Args:
             campaign_id: Campaign unique identifier
@@ -147,7 +158,8 @@ class PerformanceTracker:
             
         Returns:
             Tracking setup result
-        """        try:
+        """
+        try:
             tracking_id = f"track_{campaign_id}_{int(datetime.utcnow().timestamp())}"
             
             # Parse tracking configuration
@@ -239,7 +251,8 @@ class PerformanceTracker:
         campaign_id: str,
         force_collection: bool = False
     ) -> Dict[str, Any]:
-        """        Collect current performance data for campaign
+        """
+        Collect current performance data for campaign
         
         Args:
             campaign_id: Campaign unique identifier
@@ -247,7 +260,8 @@ class PerformanceTracker:
             
         Returns:
             Collected performance data
-        """        try:
+        """
+        try:
             if campaign_id not in self._tracking_configs:
                 raise ValueError(f"Campaign tracking not configured: {campaign_id}")
             
@@ -340,7 +354,8 @@ class PerformanceTracker:
         analysis_period: Optional[Tuple[datetime, datetime]] = None,
         include_predictions: bool = True
     ) -> Dict[str, Any]:
-        """        Perform comprehensive campaign performance analysis
+        """
+        Perform comprehensive campaign performance analysis
         
         Args:
             campaign_id: Campaign unique identifier
@@ -349,7 +364,8 @@ class PerformanceTracker:
             
         Returns:
             Comprehensive performance analysis
-        """        try:
+        """
+        try:
             if campaign_id not in self._tracking_configs:
                 raise ValueError(f"Campaign tracking not configured: {campaign_id}")
             
@@ -436,7 +452,8 @@ class PerformanceTracker:
         campaign_id: str,
         metrics: Optional[List[MetricType]] = None
     ) -> Dict[str, Any]:
-        """        Get real-time performance data for campaign
+        """
+        Get real-time performance data for campaign
         
         Args:
             campaign_id: Campaign unique identifier
@@ -444,7 +461,8 @@ class PerformanceTracker:
             
         Returns:
             Real-time performance data
-        """        try:
+        """
+        try:
             if campaign_id not in self._tracking_configs:
                 raise ValueError(f"Campaign tracking not configured: {campaign_id}")
             
@@ -508,7 +526,8 @@ class PerformanceTracker:
         format_type: str = "json",
         include_visualizations: bool = False
     ) -> Dict[str, Any]:
-        """        Generate comprehensive performance report
+        """
+        Generate comprehensive performance report
         
         Args:
             campaign_id: Campaign unique identifier
@@ -518,7 +537,8 @@ class PerformanceTracker:
             
         Returns:
             Generated performance report
-        """        try:
+        """
+        try:
             if campaign_id not in self._tracking_configs:
                 raise ValueError(f"Campaign tracking not configured: {campaign_id}")
             
@@ -565,7 +585,8 @@ class PerformanceTracker:
         action: str,
         alert_config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Manage performance alerts for campaign
+        """
+        Manage performance alerts for campaign
         
         Args:
             campaign_id: Campaign unique identifier
@@ -574,7 +595,8 @@ class PerformanceTracker:
             
         Returns:
             Alert management result
-        """        try:
+        """
+        try:
             if campaign_id not in self._tracking_configs:
                 raise ValueError(f"Campaign tracking not configured: {campaign_id}")
             
@@ -630,7 +652,8 @@ class PerformanceTracker:
     # Private helper methods
     
     async def _performance_monitoring_loop(self) -> None:
-        """Background performance monitoring loop"""        while True:
+        """Background performance monitoring loop"""
+        while True:
             try:
                 for campaign_id, config in self._tracking_configs.items():
                     if config["status"] == "active":
@@ -643,7 +666,8 @@ class PerformanceTracker:
                 await asyncio.sleep(600)
     
     async def _alert_processing_loop(self) -> None:
-        """Background alert processing loop"""        while True:
+        """Background alert processing loop"""
+        while True:
             try:
                 await self._process_pending_alerts()
                 await asyncio.sleep(60)  # Process every minute
@@ -653,7 +677,8 @@ class PerformanceTracker:
                 await asyncio.sleep(120)
     
     async def _insight_generation_loop(self) -> None:
-        """Background insight generation loop"""        while True:
+        """Background insight generation loop"""
+        while True:
             try:
                 await self._generate_scheduled_insights()
                 await asyncio.sleep(3600)  # Generate every hour
@@ -668,7 +693,8 @@ class PerformanceTracker:
         platforms: List[str],
         metrics: List[MetricType]
     ) -> Dict[str, Any]:
-        """Setup data collection from analytics platforms"""        collection_setup = {}
+        """Setup data collection from analytics platforms"""
+        collection_setup = {}
         
         for platform in platforms:
             setup_result = await self.analytics_platform_manager.setup_data_collection(
@@ -683,7 +709,8 @@ class PerformanceTracker:
         campaign_id: str,
         metric_type: MetricType
     ) -> Optional[float]:
-        """Get previous value for a metric"""        if campaign_id not in self._performance_data:
+        """Get previous value for a metric"""
+        if campaign_id not in self._performance_data:
             return None
         
         data_points = self._performance_data[campaign_id]

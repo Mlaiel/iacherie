@@ -22,9 +22,14 @@ Key Features:
 - GPU acceleration support (CUDA)
 - Vector-based similarity search (sub-second matching)
 - Enterprise-level security implementations
-"""from .audio_fingerprint import AudioFingerprintEngine
+"""
+
+from .audio_fingerprint import AudioFingerprintEngine
+
 from .video_fingerprint import VideoFingerprintEngine
+
 from .image_fingerprint import ImageFingerprintEngine
+
 from .fingerprint_manager import FingerprintManager, FingerprintResult, ContentType
 from .fingerprint_analyzer import FingerprintAnalyzer, AnalysisReport, SimilarityCluster
 from .similarity_engine import SimilarityEngine, SimilarityMatch
@@ -33,7 +38,7 @@ from .hash_generator import HashGenerator, HashResult
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "Copyright © 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "Copyright (c) 2025 Fahed Mlaiel. All rights reserved."
 
 # Import index and examples
 from .index import (

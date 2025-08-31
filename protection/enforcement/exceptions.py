@@ -1,6 +1,7 @@
 """Exception Handling and Error Management for Copyright Enforcement
 Professional error handling, custom exceptions, and error recovery
-"""import logging
+"""
+import logging
 import traceback
 from typing import Dict, List, Optional, Any, Union, Type, Set, Callable
 from dataclasses import dataclass, field
@@ -16,14 +17,16 @@ logger = logging.getLogger(__name__)
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels"""    LOW = "low"
+    """Error severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class ErrorCategory(Enum):
-    """Error categories"""    AUTHENTICATION = "authentication"
+    """Error categories"""
+    AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     VALIDATION = "validation"
     NETWORK = "network"
@@ -44,7 +47,8 @@ class ErrorCategory(Enum):
 
 
 class RecoveryStrategy(Enum):
-    """Error recovery strategies"""    RETRY = "retry"
+    """Error recovery strategies"""
+    RETRY = "retry"
     FALLBACK = "fallback"
     ESCALATE = "escalate"
     IGNORE = "ignore"
@@ -54,7 +58,8 @@ class RecoveryStrategy(Enum):
 
 @dataclass
 class ErrorContext:
-    """Context information for errors"""    operation: str
+    """Context information for errors"""
+    operation: str
     user_id: Optional[str] = None
     case_id: Optional[str] = None
     platform: Optional[str] = None
@@ -64,7 +69,8 @@ class ErrorContext:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'operation': self.operation,
             'user_id': self.user_id,
             'case_id': self.case_id,
@@ -77,7 +83,8 @@ class ErrorContext:
 
 
 class BaseEnforcementException(Exception, ABC):
-    """Base exception for all enforcement-related errors"""    
+    """Base exception for all enforcement-related errors"""
+    
     def __init__(
         self,
         message: str,
@@ -100,10 +107,12 @@ class BaseEnforcementException(Exception, ABC):
         self.traceback_info = traceback.format_exc() if sys.exc_info()[0] else None
     
     def _generate_error_code(self) -> str:
-        """Generate unique error code"""        return f"{self.category.value.upper()}_{self.__class__.__name__.upper()}_{int(self.timestamp.timestamp())}"
+        """Generate unique error code"""
+        return f"{self.category.value.upper()}_{self.__class__.__name__.upper()}_{int(self.timestamp.timestamp())}"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary"""        return {
+        """Convert exception to dictionary"""
+        return {
             'error_code': self.error_code,
             'message': self.message,
             'category': self.category.value,
@@ -116,15 +125,18 @@ class BaseEnforcementException(Exception, ABC):
         }
     
     def to_json(self) -> str:
-        """Convert exception to JSON"""        return json.dumps(self.to_dict(), indent=2)
+        """Convert exception to JSON"""
+        return json.dumps(self.to_dict(), indent=2)
     
     @abstractmethod
     def get_user_message(self) -> str:
-        """Get user-friendly error message"""        pass
+        """Get user-friendly error message"""
+        pass
 
 
 class AuthenticationError(BaseEnforcementException):
-    """Authentication-related errors"""    
+    """Authentication-related errors"""
+    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -139,7 +151,8 @@ class AuthenticationError(BaseEnforcementException):
 
 
 class AuthorizationError(BaseEnforcementException):
-    """Authorization-related errors"""    
+    """Authorization-related errors"""
+    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -154,7 +167,8 @@ class AuthorizationError(BaseEnforcementException):
 
 
 class ValidationError(BaseEnforcementException):
-    """Data validation errors"""    
+    """Data validation errors"""
+    
     def __init__(self, message: str, field: Optional[str] = None, **kwargs):
         super().__init__(
             message,
@@ -172,7 +186,8 @@ class ValidationError(BaseEnforcementException):
 
 
 class NetworkError(BaseEnforcementException):
-    """Network-related errors"""    
+    """Network-related errors"""
+    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -187,7 +202,8 @@ class NetworkError(BaseEnforcementException):
 
 
 class PlatformAPIError(BaseEnforcementException):
-    """Platform API-related errors"""    
+    """Platform API-related errors"""
+    
     def __init__(
         self,
         message: str,
@@ -212,7 +228,8 @@ class PlatformAPIError(BaseEnforcementException):
 
 
 class DatabaseError(BaseEnforcementException):
-    """Database-related errors"""    
+    """Database-related errors"""
+    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -227,7 +244,8 @@ class DatabaseError(BaseEnforcementException):
 
 
 class ContentAnalysisError(BaseEnforcementException):
-    """Content analysis errors"""    
+    """Content analysis errors"""
+    
     def __init__(self, message: str, content_type: Optional[str] = None, **kwargs):
         super().__init__(
             message,
@@ -243,7 +261,8 @@ class ContentAnalysisError(BaseEnforcementException):
 
 
 class LegalDocumentError(BaseEnforcementException):
-    """Legal document generation errors"""    
+    """Legal document generation errors"""
+    
     def __init__(self, message: str, document_type: Optional[str] = None, **kwargs):
         super().__init__(
             message,
@@ -259,7 +278,8 @@ class LegalDocumentError(BaseEnforcementException):
 
 
 class NotificationError(BaseEnforcementException):
-    """Notification delivery errors"""    
+    """Notification delivery errors"""
+    
     def __init__(self, message: str, channel: Optional[str] = None, **kwargs):
         super().__init__(
             message,
@@ -275,7 +295,8 @@ class NotificationError(BaseEnforcementException):
 
 
 class IntegrationError(BaseEnforcementException):
-    """External integration errors"""    
+    """External integration errors"""
+    
     def __init__(
         self,
         message: str,
@@ -298,7 +319,8 @@ class IntegrationError(BaseEnforcementException):
 
 
 class ConfigurationError(BaseEnforcementException):
-    """Configuration-related errors"""    
+    """Configuration-related errors"""
+    
     def __init__(self, message: str, config_key: Optional[str] = None, **kwargs):
         super().__init__(
             message,
@@ -314,7 +336,8 @@ class ConfigurationError(BaseEnforcementException):
 
 
 class RateLimitError(BaseEnforcementException):
-    """Rate limiting errors"""    
+    """Rate limiting errors"""
+    
     def __init__(
         self,
         message: str,
@@ -337,7 +360,8 @@ class RateLimitError(BaseEnforcementException):
 
 
 class TimeoutError(BaseEnforcementException):
-    """Timeout errors"""    
+    """Timeout errors"""
+    
     def __init__(self, message: str, timeout_duration: Optional[float] = None, **kwargs):
         super().__init__(
             message,
@@ -353,7 +377,8 @@ class TimeoutError(BaseEnforcementException):
 
 
 class ResourceExhaustionError(BaseEnforcementException):
-    """Resource exhaustion errors"""    
+    """Resource exhaustion errors"""
+    
     def __init__(self, message: str, resource_type: Optional[str] = None, **kwargs):
         super().__init__(
             message,
@@ -369,7 +394,8 @@ class ResourceExhaustionError(BaseEnforcementException):
 
 
 class DataCorruptionError(BaseEnforcementException):
-    """Data corruption errors"""    
+    """Data corruption errors"""
+    
     def __init__(self, message: str, data_type: Optional[str] = None, **kwargs):
         super().__init__(
             message,
@@ -385,7 +411,8 @@ class DataCorruptionError(BaseEnforcementException):
 
 
 class BusinessLogicError(BaseEnforcementException):
-    """Business logic errors"""    
+    """Business logic errors"""
+    
     def __init__(self, message: str, rule_name: Optional[str] = None, **kwargs):
         super().__init__(
             message,
@@ -401,7 +428,8 @@ class BusinessLogicError(BaseEnforcementException):
 
 
 class ExternalServiceError(BaseEnforcementException):
-    """External service errors"""    
+    """External service errors"""
+    
     def __init__(
         self,
         message: str,
@@ -425,7 +453,8 @@ class ExternalServiceError(BaseEnforcementException):
 
 @dataclass
 class ErrorSummary:
-    """Summary of error occurrence"""    error_code: str
+    """Summary of error occurrence"""
+    error_code: str
     message: str
     category: ErrorCategory
     severity: ErrorSeverity
@@ -438,14 +467,16 @@ class ErrorSummary:
 
 
 class ErrorTracker:
-    """Track and analyze error patterns"""    
+    """Track and analyze error patterns"""
+    
     def __init__(self):
         self.error_summaries: Dict[str, ErrorSummary] = {}
         self.error_history: List[BaseEnforcementException] = []
         self.max_history_size = 1000
         
     def track_error(self, error: BaseEnforcementException):
-        """Track an error occurrence"""        try:
+        """Track an error occurrence"""
+        try:
             # Add to history
             self.error_history.append(error)
             
@@ -481,7 +512,8 @@ class ErrorTracker:
             logger.error(f"Error tracking failed: {e}")
     
     def get_error_stats(self, category: Optional[ErrorCategory] = None) -> Dict[str, Any]:
-        """Get error statistics"""        try:
+        """Get error statistics"""
+        try:
             filtered_summaries = self.error_summaries.values()
             
             if category:
@@ -533,7 +565,8 @@ class ErrorTracker:
             return {}
     
     def get_error_trends(self, hours: int = 24) -> Dict[str, Any]:
-        """Get error trends over time"""        try:
+        """Get error trends over time"""
+        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             recent_errors = [e for e in self.error_history if e.timestamp >= cutoff_time]
             
@@ -561,7 +594,8 @@ class ErrorTracker:
             return {}
     
     def clear_resolved_errors(self):
-        """Clear resolved errors from tracking"""        try:
+        """Clear resolved errors from tracking"""
+        try:
             resolved_codes = [code for code, summary in self.error_summaries.items() if summary.resolved]
             
             for code in resolved_codes:
@@ -574,18 +608,21 @@ class ErrorTracker:
 
 
 class ErrorHandler:
-    """Centralized error handling and recovery"""    
+    """Centralized error handling and recovery"""
+    
     def __init__(self, error_tracker: Optional[ErrorTracker] = None):
         self.error_tracker = error_tracker or ErrorTracker()
         self.recovery_handlers: Dict[ErrorCategory, Callable] = {}
         self.notification_handlers: List[Callable] = []
         
     def register_recovery_handler(self, category: ErrorCategory, handler: Callable):
-        """Register error recovery handler"""        self.recovery_handlers[category] = handler
+        """Register error recovery handler"""
+        self.recovery_handlers[category] = handler
         logger.info(f"Registered recovery handler for category {category.value}")
     
     def register_notification_handler(self, handler: Callable):
-        """Register error notification handler"""        self.notification_handlers.append(handler)
+        """Register error notification handler"""
+        self.notification_handlers.append(handler)
         logger.info("Registered error notification handler")
     
     async def handle_error(
@@ -593,7 +630,8 @@ class ErrorHandler:
         error: BaseEnforcementException,
         context: Optional[ErrorContext] = None
     ) -> Optional[Any]:
-        """Handle error with recovery and notification"""        try:
+        """Handle error with recovery and notification"""
+        try:
             # Update context if provided
             if context and not error.context:
                 error.context = context
@@ -628,7 +666,8 @@ class ErrorHandler:
             return None
     
     async def _attempt_recovery(self, error: BaseEnforcementException) -> Optional[Any]:
-        """Attempt error recovery based on strategy"""        try:
+        """Attempt error recovery based on strategy"""
+        try:
             if error.recovery_strategy == RecoveryStrategy.RETRY:
                 return await self._retry_operation(error)
             
@@ -653,24 +692,29 @@ class ErrorHandler:
             return None
     
     async def _retry_operation(self, error: BaseEnforcementException) -> Optional[Any]:
-        """Implement retry logic"""        # This would be implemented based on specific operation context
+        """Implement retry logic"""
+        # This would be implemented based on specific operation context
         logger.info(f"Retry recovery attempted for error {error.error_code}")
         return None
     
     async def _fallback_operation(self, error: BaseEnforcementException) -> Optional[Any]:
-        """Implement fallback logic"""        logger.info(f"Fallback recovery attempted for error {error.error_code}")
+        """Implement fallback logic"""
+        logger.info(f"Fallback recovery attempted for error {error.error_code}")
         return None
     
     async def _escalate_error(self, error: BaseEnforcementException) -> Optional[Any]:
-        """Escalate error to higher level"""        logger.warning(f"Error escalated: {error.error_code}")
+        """Escalate error to higher level"""
+        logger.warning(f"Error escalated: {error.error_code}")
         return None
     
     async def _request_manual_intervention(self, error: BaseEnforcementException) -> Optional[Any]:
-        """Request manual intervention"""        logger.critical(f"Manual intervention required for error {error.error_code}")
+        """Request manual intervention"""
+        logger.critical(f"Manual intervention required for error {error.error_code}")
         return None
     
     async def _send_notifications(self, error: BaseEnforcementException):
-        """Send error notifications"""        try:
+        """Send error notifications"""
+        try:
             for handler in self.notification_handlers:
                 await handler(error)
                 
@@ -684,11 +728,13 @@ error_handler = ErrorHandler(error_tracker)
 
 
 def get_error_tracker() -> ErrorTracker:
-    """Get global error tracker instance"""    return error_tracker
+    """Get global error tracker instance"""
+    return error_tracker
 
 
 def get_error_handler() -> ErrorHandler:
-    """Get global error handler instance"""    return error_handler
+    """Get global error handler instance"""
+    return error_handler
 
 
 __all__ = [

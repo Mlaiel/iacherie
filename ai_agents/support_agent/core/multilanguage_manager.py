@@ -11,7 +11,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timezone
@@ -44,7 +45,8 @@ import redis.asyncio as aioredis
 logger = logging.getLogger(__name__)
 
 class SupportedLanguage(Enum):
-    """Supported languages with ISO codes"""    ENGLISH = "en"
+    """Supported languages with ISO codes"""
+    ENGLISH = "en"
     GERMAN = "de" 
     FRENCH = "fr"
     SPANISH = "es"
@@ -64,7 +66,8 @@ class SupportedLanguage(Enum):
     NORWEGIAN = "no"
 
 class TranslationProvider(Enum):
-    """Translation service providers"""    GOOGLE_TRANSLATE = "google"
+    """Translation service providers"""
+    GOOGLE_TRANSLATE = "google"
     AZURE_TRANSLATOR = "azure"
     AWS_TRANSLATE = "aws"
     DEEPL = "deepl"
@@ -72,7 +75,8 @@ class TranslationProvider(Enum):
 
 @dataclass
 class LanguageProfile:
-    """User language profile and preferences"""    user_id: str
+    """User language profile and preferences"""
+    user_id: str
     primary_language: SupportedLanguage
     
     # Language preferences
@@ -102,7 +106,8 @@ class LanguageProfile:
 
 @dataclass
 class TranslationRequest:
-    """Translation request structure"""    text: str
+    """Translation request structure"""
+    text: str
     source_language: SupportedLanguage
     target_language: SupportedLanguage
     
@@ -122,7 +127,8 @@ class TranslationRequest:
 
 @dataclass
 class TranslationResult:
-    """Translation result with quality metrics"""    original_text: str
+    """Translation result with quality metrics"""
+    original_text: str
     translated_text: str
     source_language: SupportedLanguage
     target_language: SupportedLanguage
@@ -144,7 +150,8 @@ class TranslationResult:
 
 @dataclass
 class CulturalContext:
-    """Cultural context information"""    language: SupportedLanguage
+    """Cultural context information"""
+    language: SupportedLanguage
     country_code: str
     
     # Communication patterns
@@ -168,7 +175,8 @@ class CulturalContext:
     number_thousand_separator: str = ","
 
 class MultiLanguageManager:
-    """Ultra-advanced multi-language support management system"""    
+    """Ultra-advanced multi-language support management system"""
+    
     def __init__(self, redis_client: aioredis.Redis):
         self.redis_client = redis_client
         
@@ -203,7 +211,8 @@ class MultiLanguageManager:
         text: str,
         user_id: Optional[str] = None
     ) -> Tuple[SupportedLanguage, float]:
-        """Detect language of input text with confidence score"""        try:
+        """Detect language of input text with confidence score"""
+        try:
             # Check user's language profile first
             if user_id and user_id in self.language_profiles:
                 profile = self.language_profiles[user_id]
@@ -277,7 +286,8 @@ class MultiLanguageManager:
         request: TranslationRequest,
         use_cache: bool = True
     ) -> TranslationResult:
-        """Translate text with cultural adaptation"""        try:
+        """Translate text with cultural adaptation"""
+        try:
             start_time = datetime.now()
             
             # Check cache first
@@ -354,7 +364,8 @@ class MultiLanguageManager:
         user_id: Optional[str] = None,
         variables: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Get culturally adapted response template"""        try:
+        """Get culturally adapted response template"""
+        try:
             # Get user's cultural context
             cultural_context = await self._get_cultural_context(language, user_id)
             
@@ -397,7 +408,8 @@ class MultiLanguageManager:
         country_code: Optional[str] = None,
         preferences: Optional[Dict[str, Any]] = None
     ) -> LanguageProfile:
-        """Create or update user language profile"""        try:
+        """Create or update user language profile"""
+        try:
             # Create profile
             profile = LanguageProfile(
                 user_id=user_id,
@@ -429,7 +441,8 @@ class MultiLanguageManager:
             raise
     
     async def get_language_profile(self, user_id: str) -> Optional[LanguageProfile]:
-        """Get user's language profile"""        if user_id in self.language_profiles:
+        """Get user's language profile"""
+        if user_id in self.language_profiles:
             return self.language_profiles[user_id]
         
         # Try to load from cache
@@ -447,7 +460,8 @@ class MultiLanguageManager:
         language: SupportedLanguage,
         user_id: Optional[str] = None
     ) -> str:
-        """Format content according to locale (dates, numbers, currency)"""        try:
+        """Format content according to locale (dates, numbers, currency)"""
+        try:
             cultural_context = await self._get_cultural_context(language, user_id)
             locale_code = f"{language.value}_{cultural_context.country_code}" if cultural_context.country_code else language.value
             
@@ -472,7 +486,8 @@ class MultiLanguageManager:
             return str(value)
     
     async def get_language_analytics(self) -> Dict[str, Any]:
-        """Get language usage analytics"""        try:
+        """Get language usage analytics"""
+        try:
             analytics = {
                 "total_translations": self.translation_stats["total_translations"],
                 "language_pairs": {},
@@ -505,7 +520,8 @@ class MultiLanguageManager:
             return {}
     
     async def _initialize_cultural_contexts(self):
-        """Initialize cultural context data for supported languages"""        try:
+        """Initialize cultural context data for supported languages"""
+        try:
             # Define cultural contexts for major languages
             contexts = [
                 CulturalContext(
@@ -571,7 +587,8 @@ class MultiLanguageManager:
             logger.error(f"Failed to initialize cultural contexts: {str(e)}")
     
     async def _load_language_models(self):
-        """Load additional language processing models"""        try:
+        """Load additional language processing models"""
+        try:
             # Load spaCy models for supported languages
             supported_spacy_models = {
                 "en": "en_core_web_sm",
@@ -603,7 +620,8 @@ class MultiLanguageManager:
         result: TranslationResult,
         request: TranslationRequest
     ) -> TranslationResult:
-        """Apply cultural adaptations to translation"""        try:
+        """Apply cultural adaptations to translation"""
+        try:
             cultural_context = self.cultural_contexts.get(
                 f"{request.target_language.value}_{request.target_language.value.upper()}"
             )
@@ -646,7 +664,8 @@ class MultiLanguageManager:
         result: TranslationResult,
         request: TranslationRequest
     ) -> TranslationResult:
-        """Post-process translation for quality and formatting"""        try:
+        """Post-process translation for quality and formatting"""
+        try:
             processed_text = result.translated_text
             
             # Preserve original formatting if requested
@@ -672,7 +691,8 @@ class MultiLanguageManager:
         text: str,
         target_language: SupportedLanguage
     ) -> str:
-        """Fix common translation issues"""        try:
+        """Fix common translation issues"""
+        try:
             # Language-specific fixes
             if target_language == SupportedLanguage.GERMAN:
                 # Fix German capitalization
@@ -698,7 +718,8 @@ class MultiLanguageManager:
         language: SupportedLanguage,
         user_id: Optional[str] = None
     ) -> CulturalContext:
-        """Get cultural context for language and user"""        # Check user profile first
+        """Get cultural context for language and user"""
+        # Check user profile first
         if user_id:
             profile = await self.get_language_profile(user_id)
             if profile and profile.country_code:
@@ -722,7 +743,8 @@ class MultiLanguageManager:
         text: str,
         cultural_context: CulturalContext
     ) -> str:
-        """Adapt response style to cultural context"""        try:
+        """Adapt response style to cultural context"""
+        try:
             adapted_text = text
             
             # Adjust based on formality preference
@@ -757,7 +779,8 @@ class MultiLanguageManager:
         variables: Dict[str, Any],
         cultural_context: CulturalContext
     ) -> str:
-        """Substitute variables with localized formatting"""        try:
+        """Substitute variables with localized formatting"""
+        try:
             localized_text = template
             
             for var_name, value in variables.items():
@@ -785,7 +808,8 @@ class MultiLanguageManager:
         detected_language: SupportedLanguage,
         confidence: float
     ):
-        """Update user language profile with detection results"""        try:
+        """Update user language profile with detection results"""
+        try:
             profile = await self.get_language_profile(user_id)
             
             if not profile:
@@ -807,7 +831,8 @@ class MultiLanguageManager:
             logger.error(f"Failed to update user language profile: {str(e)}")
     
     async def _infer_cultural_settings(self, country_code: str) -> Dict[str, str]:
-        """Infer cultural settings from country code"""        try:
+        """Infer cultural settings from country code"""
+        try:
             country = pycountry.countries.get(alpha_2=country_code.upper())
             if not country:
                 return {}
@@ -829,13 +854,15 @@ class MultiLanguageManager:
             return {}
     
     def _generate_cache_key(self, request: TranslationRequest) -> str:
-        """Generate cache key for translation request"""        import hashlib
+        """Generate cache key for translation request"""
+        import hashlib
         
         key_data = f"{request.text}|{request.source_language.value}|{request.target_language.value}|{request.formality}|{request.domain}"
         return hashlib.md5(key_data.encode()).hexdigest()
     
     async def _get_cached_translation(self, cache_key: str) -> Optional[TranslationResult]:
-        """Get cached translation result"""        try:
+        """Get cached translation result"""
+        try:
             cached_data = await self.redis_client.get(f"translation_cache:{cache_key}")
             if cached_data:
                 data = json.loads(cached_data)
@@ -857,7 +884,8 @@ class MultiLanguageManager:
         return None
     
     async def _cache_translation(self, cache_key: str, result: TranslationResult):
-        """Cache translation result"""        try:
+        """Cache translation result"""
+        try:
             data = {
                 "original_text": result.original_text,
                 "translated_text": result.translated_text,
@@ -881,7 +909,8 @@ class MultiLanguageManager:
             logger.error(f"Failed to cache translation: {str(e)}")
     
     async def _cache_language_profile(self, profile: LanguageProfile):
-        """Cache user language profile"""        try:
+        """Cache user language profile"""
+        try:
             data = {
                 "user_id": profile.user_id,
                 "primary_language": profile.primary_language.value,
@@ -912,7 +941,8 @@ class MultiLanguageManager:
             logger.error(f"Failed to cache language profile: {str(e)}")
     
     async def _load_cached_language_profile(self, user_id: str) -> Optional[LanguageProfile]:
-        """Load cached language profile"""        try:
+        """Load cached language profile"""
+        try:
             data = await self.redis_client.get(f"language_profile:{user_id}")
             if data:
                 profile_data = json.loads(data)

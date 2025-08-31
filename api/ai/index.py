@@ -60,7 +60,8 @@ except ImportError as e:
     _imports_successful = False
 
 def get_ai_system_info():
-    """Get comprehensive information about the AI system."""    return {
+    """Get comprehensive information about the AI system."""
+    return {
         "system_name": "IA Influencer Agent AI Module",
         "version": "1.0.0",
         "author": "Fahed Mlaiel",
@@ -87,7 +88,8 @@ def get_ai_system_info():
     }
 
 def demo_ai_processing():
-    """Demonstrate AI processing capabilities."""    info = get_ai_system_info()
+    """Demonstrate AI processing capabilities."""
+    info = get_ai_system_info()
     
     print("🚀 IA Influencer Agent AI System")
     print("=" * 50)

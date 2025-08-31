@@ -9,7 +9,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -51,14 +52,18 @@ logger = logging.getLogger(__name__)
 
 
 class AIAgentsExamples:
-    """    Comprehensive examples for using the AI Agents system
-    """    
+    """
+    Comprehensive examples for using the AI Agents system
+    """
+    
     def __init__(self):
         self.system: AIAgentsSystem = None
     
     async def example_1_basic_initialization(self):
-        """        Example 1: Basic system initialization and health check
-        """        print("\n=== Example 1: Basic System Initialization ===")
+        """
+        Example 1: Basic system initialization and health check
+        """
+        print("\n=== Example 1: Basic System Initialization ===")
         
         try:
             # Load configuration
@@ -88,8 +93,10 @@ class AIAgentsExamples:
             logger.error(f"Initialization error: {str(e)}")
     
     async def example_2_content_creation_workflow(self):
-        """        Example 2: Content creation workflow
-        """        print("\n=== Example 2: Content Creation Workflow ===")
+        """
+        Example 2: Content creation workflow
+        """
+        print("\n=== Example 2: Content Creation Workflow ===")
         
         if not self.system or not self.system.initialized:
             print("⚠️  System not initialized. Run example_1 first.")
@@ -136,8 +143,10 @@ class AIAgentsExamples:
             logger.error(f"Content creation error: {str(e)}")
     
     async def example_3_multi_agent_collaboration(self):
-        """        Example 3: Multi-agent collaboration for campaign creation
-        """        print("\n=== Example 3: Multi-Agent Campaign Collaboration ===")
+        """
+        Example 3: Multi-agent collaboration for campaign creation
+        """
+        print("\n=== Example 3: Multi-Agent Campaign Collaboration ===")
         
         if not self.system or not self.system.initialized:
             print("⚠️  System not initialized. Run example_1 first.")
@@ -210,8 +219,10 @@ class AIAgentsExamples:
             logger.error(f"Multi-agent collaboration error: {str(e)}")
     
     async def example_4_audio_music_production(self):
-        """        Example 4: Audio and music production workflow
-        """        print("\n=== Example 4: Audio and Music Production ===")
+        """
+        Example 4: Audio and music production workflow
+        """
+        print("\n=== Example 4: Audio and Music Production ===")
         
         if not self.system or not self.system.initialized:
             print("⚠️  System not initialized. Run example_1 first.")
@@ -268,8 +279,10 @@ class AIAgentsExamples:
             logger.error(f"Audio production error: {str(e)}")
     
     async def example_5_engagement_optimization(self):
-        """        Example 5: Engagement optimization and community management
-        """        print("\n=== Example 5: Engagement Optimization ===")
+        """
+        Example 5: Engagement optimization and community management
+        """
+        print("\n=== Example 5: Engagement Optimization ===")
         
         if not self.system or not self.system.initialized:
             print("⚠️  System not initialized. Run example_1 first.")
@@ -323,8 +336,10 @@ class AIAgentsExamples:
             logger.error(f"Engagement optimization error: {str(e)}")
     
     async def example_6_system_monitoring_and_analytics(self):
-        """        Example 6: System monitoring and performance analytics
-        """        print("\n=== Example 6: System Monitoring and Analytics ===")
+        """
+        Example 6: System monitoring and performance analytics
+        """
+        print("\n=== Example 6: System Monitoring and Analytics ===")
         
         if not self.system or not self.system.initialized:
             print("⚠️  System not initialized. Run example_1 first.")
@@ -371,8 +386,10 @@ class AIAgentsExamples:
             logger.error(f"System monitoring error: {str(e)}")
     
     async def run_all_examples(self):
-        """        Run all examples in sequence
-        """        print("🚀 Starting AI Agents System Examples")
+        """
+        Run all examples in sequence
+        """
+        print("🚀 Starting AI Agents System Examples")
         print("=" * 50)
         
         try:
@@ -409,8 +426,10 @@ class AIAgentsExamples:
 
 
 async def quick_demo():
-    """    Quick demonstration of the AI Agents system
-    """    print("🚀 Quick AI Agents Demo")
+    """
+    Quick demonstration of the AI Agents system
+    """
+    print("🚀 Quick AI Agents Demo")
     print("-" * 30)
     
     try:

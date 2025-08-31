@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ from datetime import timedelta
 
 
 class AnalyticsMetric(str, Enum):
-    """Revenue analytics metrics."""    TOTAL_REVENUE = "total_revenue"
+    """Revenue analytics metrics."""
+    TOTAL_REVENUE = "total_revenue"
     REVENUE_GROWTH = "revenue_growth"
     PLATFORM_DISTRIBUTION = "platform_distribution"
     GEOGRAPHIC_DISTRIBUTION = "geographic_distribution"
@@ -38,7 +40,8 @@ class AnalyticsMetric(str, Enum):
 
 
 class TimeGranularity(str, Enum):
-    """Time granularity for analytics."""    MINUTE = "minute"
+    """Time granularity for analytics."""
+    MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -48,7 +51,8 @@ class TimeGranularity(str, Enum):
 
 
 class PredictionModel(str, Enum):
-    """ML prediction model types."""    LINEAR_REGRESSION = "linear_regression"
+    """ML prediction model types."""
+    LINEAR_REGRESSION = "linear_regression"
     RANDOM_FOREST = "random_forest"
     ARIMA = "arima"
     LSTM = "lstm"
@@ -58,7 +62,8 @@ class PredictionModel(str, Enum):
 
 
 class AlertCondition(str, Enum):
-    """Alert condition types."""    THRESHOLD_ABOVE = "threshold_above"
+    """Alert condition types."""
+    THRESHOLD_ABOVE = "threshold_above"
     THRESHOLD_BELOW = "threshold_below"
     PERCENTAGE_CHANGE = "percentage_change"
     ANOMALY_DETECTION = "anomaly_detection"
@@ -68,7 +73,8 @@ class AlertCondition(str, Enum):
 
 @dataclass
 class MetricConfiguration:
-    """Configuration for individual analytics metrics."""    metric: AnalyticsMetric
+    """Configuration for individual analytics metrics."""
+    metric: AnalyticsMetric
     enabled: bool = True
     real_time_enabled: bool = False
     aggregation_methods: List[str] = field(default_factory=lambda: ["sum", "avg", "count"])
@@ -81,7 +87,8 @@ class MetricConfiguration:
 
 @dataclass
 class PredictionConfiguration:
-    """Configuration for revenue prediction models."""    model_type: PredictionModel
+    """Configuration for revenue prediction models."""
+    model_type: PredictionModel
     enabled: bool = True
     training_data_days: int = 365
     prediction_horizon_days: int = 90
@@ -95,7 +102,8 @@ class PredictionConfiguration:
 
 @dataclass
 class AlertConfiguration:
-    """Configuration for analytics alerts."""    alert_name: str
+    """Configuration for analytics alerts."""
+    alert_name: str
     metric: AnalyticsMetric
     condition: AlertCondition
     threshold_value: Union[float, int, Decimal]
@@ -107,7 +115,8 @@ class AlertConfiguration:
 
 @dataclass
 class DashboardConfiguration:
-    """Dashboard visualization configuration."""    dashboard_name: str
+    """Dashboard visualization configuration."""
+    dashboard_name: str
     enabled: bool = True
     refresh_interval_seconds: int = 300  # 5 minutes
     metrics: List[AnalyticsMetric] = field(default_factory=list)
@@ -123,7 +132,8 @@ class DashboardConfiguration:
 
 @dataclass
 class ReportConfiguration:
-    """Automated report configuration."""    report_name: str
+    """Automated report configuration."""
+    report_name: str
     enabled: bool = True
     schedule_cron: str = "0 9 * * 1"  # Every Monday at 9 AM
     recipients: List[str] = field(default_factory=list)
@@ -135,11 +145,14 @@ class ReportConfiguration:
 
 
 class RevenueAnalyticsAdvancedConfig:
-    """    Advanced revenue analytics configuration class.
+    """
+    Advanced revenue analytics configuration class.
     Handles all analytics, ML predictions, alerts, and reporting configurations.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize advanced analytics configuration."""        
+        """Initialize advanced analytics configuration."""
+        
         # Database Configuration
         self.ANALYTICS_DB_URL = os.getenv(
             "ANALYTICS_DB_URL", 
@@ -223,7 +236,8 @@ class RevenueAnalyticsAdvancedConfig:
         }
     
     def _initialize_metrics_config(self) -> Dict[AnalyticsMetric, MetricConfiguration]:
-        """Initialize metrics configuration."""        return {
+        """Initialize metrics configuration."""
+        return {
             AnalyticsMetric.TOTAL_REVENUE: MetricConfiguration(
                 metric=AnalyticsMetric.TOTAL_REVENUE,
                 real_time_enabled=True,
@@ -270,7 +284,8 @@ class RevenueAnalyticsAdvancedConfig:
         }
     
     def _initialize_prediction_models(self) -> Dict[str, PredictionConfiguration]:
-        """Initialize prediction models configuration."""        return {
+        """Initialize prediction models configuration."""
+        return {
             "revenue_forecast": PredictionConfiguration(
                 model_type=PredictionModel.PROPHET,
                 training_data_days=730,  # 2 years
@@ -310,7 +325,8 @@ class RevenueAnalyticsAdvancedConfig:
         }
     
     def _initialize_alerts_config(self) -> List[AlertConfiguration]:
-        """Initialize alerts configuration."""        return [
+        """Initialize alerts configuration."""
+        return [
             AlertConfiguration(
                 alert_name="Revenue Drop Alert",
                 metric=AnalyticsMetric.TOTAL_REVENUE,
@@ -355,7 +371,8 @@ class RevenueAnalyticsAdvancedConfig:
         ]
     
     def _initialize_dashboards_config(self) -> Dict[str, DashboardConfiguration]:
-        """Initialize dashboards configuration."""        return {
+        """Initialize dashboards configuration."""
+        return {
             "executive_dashboard": DashboardConfiguration(
                 dashboard_name="Executive Revenue Dashboard",
                 refresh_interval_seconds=300,  # 5 minutes
@@ -399,7 +416,8 @@ class RevenueAnalyticsAdvancedConfig:
         }
     
     def _initialize_reports_config(self) -> Dict[str, ReportConfiguration]:
-        """Initialize reports configuration."""        return {
+        """Initialize reports configuration."""
+        return {
             "weekly_revenue_report": ReportConfiguration(
                 report_name="Weekly Revenue Summary",
                 schedule_cron="0 9 * * 1",  # Every Monday at 9 AM
@@ -438,43 +456,54 @@ class RevenueAnalyticsAdvancedConfig:
         }
     
     def get_metric_config(self, metric: AnalyticsMetric) -> Optional[MetricConfiguration]:
-        """Get configuration for a specific metric."""        return self.METRICS_CONFIG.get(metric)
+        """Get configuration for a specific metric."""
+        return self.METRICS_CONFIG.get(metric)
     
     def get_enabled_metrics(self) -> List[AnalyticsMetric]:
-        """Get all enabled metrics."""        return [
+        """Get all enabled metrics."""
+        return [
             metric for metric, config in self.METRICS_CONFIG.items() 
             if config.enabled
         ]
     
     def get_real_time_metrics(self) -> List[AnalyticsMetric]:
-        """Get metrics enabled for real-time processing."""        return [
+        """Get metrics enabled for real-time processing."""
+        return [
             metric for metric, config in self.METRICS_CONFIG.items()
             if config.enabled and config.real_time_enabled
         ]
     
     def get_prediction_model(self, model_name: str) -> Optional[PredictionConfiguration]:
-        """Get configuration for a specific prediction model."""        return self.PREDICTION_MODELS.get(model_name)
+        """Get configuration for a specific prediction model."""
+        return self.PREDICTION_MODELS.get(model_name)
     
     def get_active_alerts(self) -> List[AlertConfiguration]:
-        """Get all active alert configurations."""        return [alert for alert in self.ALERTS_CONFIG if alert.enabled]
+        """Get all active alert configurations."""
+        return [alert for alert in self.ALERTS_CONFIG if alert.enabled]
     
     def get_dashboard_config(self, dashboard_name: str) -> Optional[DashboardConfiguration]:
-        """Get configuration for a specific dashboard."""        return self.DASHBOARDS_CONFIG.get(dashboard_name)
+        """Get configuration for a specific dashboard."""
+        return self.DASHBOARDS_CONFIG.get(dashboard_name)
     
     def get_report_config(self, report_name: str) -> Optional[ReportConfiguration]:
-        """Get configuration for a specific report."""        return self.REPORTS_CONFIG.get(report_name)
+        """Get configuration for a specific report."""
+        return self.REPORTS_CONFIG.get(report_name)
     
     def add_custom_metric(self, metric_config: MetricConfiguration):
-        """Add a custom metric configuration."""        self.METRICS_CONFIG[metric_config.metric] = metric_config
+        """Add a custom metric configuration."""
+        self.METRICS_CONFIG[metric_config.metric] = metric_config
     
     def add_custom_alert(self, alert_config: AlertConfiguration):
-        """Add a custom alert configuration."""        self.ALERTS_CONFIG.append(alert_config)
+        """Add a custom alert configuration."""
+        self.ALERTS_CONFIG.append(alert_config)
     
     def update_dashboard(self, dashboard_name: str, dashboard_config: DashboardConfiguration):
-        """Update dashboard configuration."""        self.DASHBOARDS_CONFIG[dashboard_name] = dashboard_config
+        """Update dashboard configuration."""
+        self.DASHBOARDS_CONFIG[dashboard_name] = dashboard_config
     
     def get_system_health_config(self) -> Dict[str, Any]:
-        """Get system health monitoring configuration."""        return {
+        """Get system health monitoring configuration."""
+        return {
             "health_check_enabled": True,
             "health_check_interval_seconds": 30,
             "critical_metrics": [

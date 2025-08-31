@@ -9,7 +9,8 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Description:
     Système de middleware pour le traitement d'événements avec chaîne de traitement,
     authentification, validation, logging et métriques.
-"""from typing import Any, Dict, List, Optional, Union, Callable, Awaitable
+"""
+from typing import Any, Dict, List, Optional, Union, Callable, Awaitable
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class MiddlewareType(Enum):
-    """Types de middleware"""    AUTHENTICATION = "authentication"
+    """Types de middleware"""
+    AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     VALIDATION = "validation"
     TRANSFORMATION = "transformation"
@@ -41,7 +43,8 @@ class MiddlewareType(Enum):
 
 
 class MiddlewareAction(Enum):
-    """Actions possibles du middleware"""    CONTINUE = "continue"    # Continuer le traitement
+    """Actions possibles du middleware"""
+    CONTINUE = "continue"    # Continuer le traitement
     STOP = "stop"           # Arrêter le traitement
     REJECT = "reject"       # Rejeter l'événement
     TRANSFORM = "transform"  # Transformer l'événement
@@ -49,7 +52,8 @@ class MiddlewareAction(Enum):
 
 @dataclass
 class MiddlewareResult:
-    """Résultat du traitement d'un middleware"""    action: MiddlewareAction
+    """Résultat du traitement d'un middleware"""
+    action: MiddlewareAction
     event: Optional[Event] = None  # Événement transformé
     error: Optional[str] = None
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -57,8 +61,10 @@ class MiddlewareResult:
 
 
 class EventMiddleware(ABC):
-    """    Classe de base pour les middlewares d'événements
-    """    
+    """
+    Classe de base pour les middlewares d'événements
+    """
+    
     def __init__(
         self,
         middleware_id: str,
@@ -79,10 +85,12 @@ class EventMiddleware(ABC):
     
     @abstractmethod
     async def process(self, event: Event, context: Dict[str, Any]) -> MiddlewareResult:
-        """Traite un événement"""        pass
+        """Traite un événement"""
+        pass
     
     async def execute(self, event: Event, context: Dict[str, Any]) -> MiddlewareResult:
-        """Exécute le middleware avec métriques"""        if not self.enabled:
+        """Exécute le middleware avec métriques"""
+        if not self.enabled:
             return MiddlewareResult(action=MiddlewareAction.CONTINUE, event=event)
         
         start_time = time.time()
@@ -110,7 +118,8 @@ class EventMiddleware(ABC):
 
 
 class AuthenticationMiddleware(EventMiddleware):
-    """Middleware d'authentification des événements"""    
+    """Middleware d'authentification des événements"""
+    
     def __init__(
         self,
         middleware_id: str = "auth_middleware",
@@ -122,7 +131,8 @@ class AuthenticationMiddleware(EventMiddleware):
         self.required_claims = required_claims or ["user_id", "tenant_id"]
     
     async def process(self, event: Event, context: Dict[str, Any]) -> MiddlewareResult:
-        """Authentifie l'événement"""        try:
+        """Authentifie l'événement"""
+        try:
             # Vérification token JWT dans metadata
             token = event.metadata.get("auth_token")
             if not token:
@@ -173,7 +183,8 @@ class AuthenticationMiddleware(EventMiddleware):
 
 
 class ValidationMiddleware(EventMiddleware):
-    """Middleware de validation des événements"""    
+    """Middleware de validation des événements"""
+    
     def __init__(
         self,
         middleware_id: str = "validation_middleware",
@@ -183,7 +194,8 @@ class ValidationMiddleware(EventMiddleware):
         self.validation_rules = validation_rules or {}
     
     async def process(self, event: Event, context: Dict[str, Any]) -> MiddlewareResult:
-        """Valide l'événement"""        try:
+        """Valide l'événement"""
+        try:
             # Validation de base
             validation_errors = []
             
@@ -250,7 +262,8 @@ class ValidationMiddleware(EventMiddleware):
 
 
 class LoggingMiddleware(EventMiddleware):
-    """Middleware de logging des événements"""    
+    """Middleware de logging des événements"""
+    
     def __init__(
         self,
         middleware_id: str = "logging_middleware",
@@ -264,7 +277,8 @@ class LoggingMiddleware(EventMiddleware):
         self.include_metadata = include_metadata
     
     async def process(self, event: Event, context: Dict[str, Any]) -> MiddlewareResult:
-        """Logge l'événement"""        try:
+        """Logge l'événement"""
+        try:
             # Construction du message de log
             log_data = {
                 "event_id": event.id,
@@ -299,7 +313,8 @@ class LoggingMiddleware(EventMiddleware):
 
 
 class MetricsMiddleware(EventMiddleware):
-    """Middleware de collecte de métriques"""    
+    """Middleware de collecte de métriques"""
+    
     def __init__(
         self,
         middleware_id: str = "metrics_middleware",
@@ -317,7 +332,8 @@ class MetricsMiddleware(EventMiddleware):
         self.last_reset = datetime.now(timezone.utc)
     
     async def process(self, event: Event, context: Dict[str, Any]) -> MiddlewareResult:
-        """Collecte les métriques"""        try:
+        """Collecte les métriques"""
+        try:
             # Compteurs globaux
             self.counters["total_events"] += 1
             
@@ -355,14 +371,16 @@ class MetricsMiddleware(EventMiddleware):
             return MiddlewareResult(action=MiddlewareAction.CONTINUE, event=event)
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Retourne les métriques collectées"""        return {
+        """Retourne les métriques collectées"""
+        return {
             "counters": self.counters.copy(),
             "last_reset": self.last_reset.isoformat(),
             "collection_period": (datetime.now(timezone.utc) - self.last_reset).total_seconds()
         }
     
     def reset_metrics(self):
-        """Remet à zéro les métriques"""        self.counters = {
+        """Remet à zéro les métriques"""
+        self.counters = {
             "total_events": 0,
             "events_by_type": {},
             "events_by_user": {},
@@ -373,7 +391,8 @@ class MetricsMiddleware(EventMiddleware):
 
 
 class RateLimitingMiddleware(EventMiddleware):
-    """Middleware de limitation de débit"""    
+    """Middleware de limitation de débit"""
+    
     def __init__(
         self,
         middleware_id: str = "rate_limiting_middleware",
@@ -393,7 +412,8 @@ class RateLimitingMiddleware(EventMiddleware):
         self.last_reset = datetime.now(timezone.utc)
     
     async def process(self, event: Event, context: Dict[str, Any]) -> MiddlewareResult:
-        """Vérifie les limites de débit"""        try:
+        """Vérifie les limites de débit"""
+        try:
             current_time = datetime.now(timezone.utc)
             
             # Reset des compteurs chaque minute
@@ -442,13 +462,15 @@ class RateLimitingMiddleware(EventMiddleware):
             return MiddlewareResult(action=MiddlewareAction.CONTINUE, event=event)
     
     def _reset_counters(self):
-        """Remet à zéro les compteurs"""        self.global_counter = 0
+        """Remet à zéro les compteurs"""
+        self.global_counter = 0
         self.user_counters.clear()
         self.tenant_counters.clear()
 
 
 class TransformationMiddleware(EventMiddleware):
-    """Middleware de transformation d'événements"""    
+    """Middleware de transformation d'événements"""
+    
     def __init__(
         self,
         middleware_id: str = "transformation_middleware",
@@ -458,7 +480,8 @@ class TransformationMiddleware(EventMiddleware):
         self.transformations = transformations or {}
     
     async def process(self, event: Event, context: Dict[str, Any]) -> MiddlewareResult:
-        """Transforme l'événement"""        try:
+        """Transforme l'événement"""
+        try:
             # Transformations standard
             transformed_event = await self._apply_standard_transforms(event)
             
@@ -480,7 +503,8 @@ class TransformationMiddleware(EventMiddleware):
             return MiddlewareResult(action=MiddlewareAction.CONTINUE, event=event)
     
     async def _apply_standard_transforms(self, event: Event) -> Event:
-        """Applique les transformations standard"""        # Enrichissement automatique
+        """Applique les transformations standard"""
+        # Enrichissement automatique
         if not event.metadata.get("processed_at"):
             event.metadata["processed_at"] = datetime.now(timezone.utc).isoformat()
         
@@ -495,7 +519,8 @@ class TransformationMiddleware(EventMiddleware):
         return event
     
     def _normalize_content_event(self, event: Event):
-        """Normalise les événements de contenu"""        # Standardisation des champs
+        """Normalise les événements de contenu"""
+        # Standardisation des champs
         if "fileSize" in event.data and "file_size" not in event.data:
             event.data["file_size"] = event.data.pop("fileSize")
         
@@ -503,24 +528,29 @@ class TransformationMiddleware(EventMiddleware):
             event.data["content_type"] = event.data.pop("contentType")
     
     def _normalize_protection_event(self, event: Event):
-        """Normalise les événements de protection"""        # Standardisation score de similarité
+        """Normalise les événements de protection"""
+        # Standardisation score de similarité
         if "similarity" in event.data and "similarity_score" not in event.data:
             event.data["similarity_score"] = event.data.pop("similarity")
     
     def _normalize_monetization_event(self, event: Event):
-        """Normalise les événements de monétisation"""        # Standardisation montant
+        """Normalise les événements de monétisation"""
+        # Standardisation montant
         if "amount" in event.data and "revenue_amount" not in event.data:
             event.data["revenue_amount"] = event.data.pop("amount")
 
 
 class MiddlewareChain:
-    """    Chaîne de traitement des middlewares
-    """    
+    """
+    Chaîne de traitement des middlewares
+    """
+    
     def __init__(self):
         self._middlewares: List[EventMiddleware] = []
     
     def add_middleware(self, middleware: EventMiddleware):
-        """Ajoute un middleware à la chaîne"""        self._middlewares.append(middleware)
+        """Ajoute un middleware à la chaîne"""
+        self._middlewares.append(middleware)
         # Tri par priorité (plus petit = plus prioritaire)
         self._middlewares.sort(key=lambda m: m.priority)
         
@@ -528,7 +558,8 @@ class MiddlewareChain:
                     middleware.middleware_id, middleware.priority)
     
     def remove_middleware(self, middleware_id: str) -> bool:
-        """Supprime un middleware de la chaîne"""        for i, middleware in enumerate(self._middlewares):
+        """Supprime un middleware de la chaîne"""
+        for i, middleware in enumerate(self._middlewares):
             if middleware.middleware_id == middleware_id:
                 del self._middlewares[i]
                 logger.debug("Middleware removed: %s", middleware_id)
@@ -540,7 +571,8 @@ class MiddlewareChain:
         event: Event, 
         context: Optional[Dict[str, Any]] = None
     ) -> MiddlewareResult:
-        """Traite un événement à travers la chaîne de middlewares"""        if context is None:
+        """Traite un événement à travers la chaîne de middlewares"""
+        if context is None:
             context = {}
         
         current_event = event
@@ -581,7 +613,8 @@ class MiddlewareChain:
         )
     
     def get_middlewares(self) -> List[Dict[str, Any]]:
-        """Retourne la liste des middlewares"""        return [
+        """Retourne la liste des middlewares"""
+        return [
             {
                 "middleware_id": m.middleware_id,
                 "type": m.middleware_type.value,
@@ -593,7 +626,8 @@ class MiddlewareChain:
         ]
     
     def get_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques de la chaîne"""        total_processed = sum(m.stats["processed"] for m in self._middlewares)
+        """Retourne les statistiques de la chaîne"""
+        total_processed = sum(m.stats["processed"] for m in self._middlewares)
         total_rejected = sum(m.stats["rejected"] for m in self._middlewares)
         total_errors = sum(m.stats["errors"] for m in self._middlewares)
         
@@ -611,7 +645,8 @@ default_middleware_chain = MiddlewareChain()
 
 # Configuration par défaut
 def setup_default_middlewares():
-    """Configure les middlewares par défaut"""    # Authentification (priorité 10)
+    """Configure les middlewares par défaut"""
+    # Authentification (priorité 10)
     auth_middleware = AuthenticationMiddleware(priority=10)
     default_middleware_chain.add_middleware(auth_middleware)
     
@@ -640,7 +675,8 @@ def setup_default_middlewares():
 
 # Décorateur pour appliquer automatiquement les middlewares
 def with_middleware(chain: MiddlewareChain = default_middleware_chain):
-    """Décorateur pour appliquer les middlewares à une fonction"""    def decorator(func: Callable[[Event], Awaitable[Any]]):
+    """Décorateur pour appliquer les middlewares à une fonction"""
+    def decorator(func: Callable[[Event], Awaitable[Any]]):
         @wraps(func)
         async def wrapper(event: Event, context: Optional[Dict[str, Any]] = None):
             # Traitement par les middlewares

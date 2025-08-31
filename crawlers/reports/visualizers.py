@@ -48,7 +48,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
-"""import logging
+"""
+import logging
 import warnings
 import numpy as np
 import pandas as pd
@@ -149,7 +150,8 @@ logger = logging.getLogger(__name__)
 
 
 class ChartType(Enum):
-    """Comprehensive chart type enumeration."""    # Basic Charts
+    """Comprehensive chart type enumeration."""
+    # Basic Charts
     LINE = "line"
     BAR = "bar"
     PIE = "pie"
@@ -220,7 +222,8 @@ class ChartType(Enum):
 
 
 class OutputFormat(Enum):
-    """Output format enumeration."""    PNG = "png"
+    """Output format enumeration."""
+    PNG = "png"
     SVG = "svg"
     PDF = "pdf"
     HTML = "html"
@@ -229,7 +232,8 @@ class OutputFormat(Enum):
 
 
 class VisualizationStyle(Enum):
-    """Visualization style themes."""    PROFESSIONAL = "professional"
+    """Visualization style themes."""
+    PROFESSIONAL = "professional"
     MODERN = "modern"
     DARK = "dark"
     LIGHT = "light"
@@ -240,7 +244,8 @@ class VisualizationStyle(Enum):
 
 @dataclass
 class VisualizationConfiguration:
-    """Visualization configuration dataclass."""    visualization_id: str = field(default_factory=lambda: str(__import__('uuid').uuid4()))
+    """Visualization configuration dataclass."""
+    visualization_id: str = field(default_factory=lambda: str(__import__('uuid').uuid4()))
     title: str = ""
     subtitle: str = ""
     chart_type: ChartType = ChartType.LINE
@@ -296,7 +301,8 @@ class VisualizationConfiguration:
 
 
 class VisualizationResult:
-    """Visualization result container."""    
+    """Visualization result container."""
+    
     def __init__(self, visualization_id: str):
         self.visualization_id = visualization_id
         self.chart_data: Optional[bytes] = None
@@ -312,7 +318,8 @@ class VisualizationResult:
 
 
 class ChartVisualizer(ABC):
-    """    Abstract base class for chart visualizers.
+    """
+    Abstract base class for chart visualizers.
     
     Provides common functionality for all visualizers including:
     - Data preprocessing
@@ -320,14 +327,16 @@ class ChartVisualizer(ABC):
     - Output formatting
     - Annotation management
     - Professional styling
-    """    
+    """
+    
     def __init__(self, config: VisualizationConfiguration):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._setup_styling()
     
     def _setup_styling(self):
-        """Setup visualization styling based on configuration."""        try:
+        """Setup visualization styling based on configuration."""
+        try:
             # Configure matplotlib style
             plt.style.use('default')
             
@@ -354,10 +363,12 @@ class ChartVisualizer(ABC):
     
     @abstractmethod
     async def create_visualization(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create visualization from data."""        pass
+        """Create visualization from data."""
+        pass
     
     async def preprocess_data(self, data: pd.DataFrame) -> pd.DataFrame:
-        """Preprocess data for visualization."""        try:
+        """Preprocess data for visualization."""
+        try:
             if data.empty:
                 return data
             
@@ -384,7 +395,8 @@ class ChartVisualizer(ABC):
             return data
     
     def _create_plotly_figure(self, data: pd.DataFrame) -> go.Figure:
-        """Create base Plotly figure with styling."""        try:
+        """Create base Plotly figure with styling."""
+        try:
             fig = go.Figure()
             
             # Apply theme-based styling
@@ -445,7 +457,8 @@ class ChartVisualizer(ABC):
             return go.Figure()
     
     def _add_trend_line(self, fig: go.Figure, data: pd.DataFrame):
-        """Add trend line to the figure."""        try:
+        """Add trend line to the figure."""
+        try:
             if not self.config.show_trend_line:
                 return
             
@@ -473,7 +486,8 @@ class ChartVisualizer(ABC):
             self.logger.error(f"Trend line addition failed: {e}")
     
     def _add_annotations(self, fig: go.Figure, data: pd.DataFrame):
-        """Add annotations to the figure."""        try:
+        """Add annotations to the figure."""
+        try:
             if not self.config.show_annotations:
                 return
             
@@ -512,7 +526,8 @@ class ChartVisualizer(ABC):
             self.logger.error(f"Annotations addition failed: {e}")
     
     def _add_watermark(self, fig: go.Figure):
-        """Add watermark to the figure."""        try:
+        """Add watermark to the figure."""
+        try:
             if self.config.watermark:
                 fig.add_annotation(
                     text=self.config.watermark,
@@ -532,7 +547,8 @@ class ChartVisualizer(ABC):
             self.logger.error(f"Watermark addition failed: {e}")
     
     async def _export_figure(self, fig: go.Figure) -> VisualizationResult:
-        """Export figure to specified format."""        try:
+        """Export figure to specified format."""
+        try:
             result = VisualizationResult(self.config.visualization_id)
             
             if self.config.output_format == OutputFormat.HTML:
@@ -594,7 +610,8 @@ class ChartVisualizer(ABC):
             return VisualizationResult(self.config.visualization_id)
     
     def _calculate_summary_statistics(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """Calculate summary statistics for the data."""        try:
+        """Calculate summary statistics for the data."""
+        try:
             if data.empty:
                 return {}
             
@@ -624,7 +641,8 @@ class ChartVisualizer(ABC):
 
 
 class PerformanceVisualizer(ChartVisualizer):
-    """    Performance metrics visualizer for system and crawler performance data.
+    """
+    Performance metrics visualizer for system and crawler performance data.
     
     Specializes in:
     - Response time trend charts
@@ -632,9 +650,11 @@ class PerformanceVisualizer(ChartVisualizer):
     - Performance comparison charts
     - System resource utilization graphs
     - Performance distribution analysis
-    """    
+    """
+    
     async def create_visualization(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create performance visualization."""        try:
+        """Create performance visualization."""
+        try:
             data = await self.preprocess_data(data)
             
             if data.empty:
@@ -669,7 +689,8 @@ class PerformanceVisualizer(ChartVisualizer):
             return VisualizationResult(self.config.visualization_id)
     
     async def _create_performance_trend_chart(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create performance trend line chart."""        try:
+        """Create performance trend line chart."""
+        try:
             fig = self._create_plotly_figure(data)
             
             # Group by platform if available
@@ -709,7 +730,8 @@ class PerformanceVisualizer(ChartVisualizer):
             return VisualizationResult(self.config.visualization_id)
     
     async def _create_performance_comparison_chart(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create performance comparison bar chart."""        try:
+        """Create performance comparison bar chart."""
+        try:
             fig = self._create_plotly_figure(data)
             
             # Aggregate data if needed
@@ -739,7 +761,8 @@ class PerformanceVisualizer(ChartVisualizer):
             return VisualizationResult(self.config.visualization_id)
     
     async def _create_success_rate_pie_chart(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create success rate pie chart."""        try:
+        """Create success rate pie chart."""
+        try:
             fig = self._create_plotly_figure(data)
             
             # Calculate success rates
@@ -769,7 +792,8 @@ class PerformanceVisualizer(ChartVisualizer):
             return VisualizationResult(self.config.visualization_id)
     
     async def _create_performance_heatmap(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create performance heatmap."""        try:
+        """Create performance heatmap."""
+        try:
             fig = self._create_plotly_figure(data)
             
             # Create pivot table for heatmap
@@ -801,7 +825,8 @@ class PerformanceVisualizer(ChartVisualizer):
             return VisualizationResult(self.config.visualization_id)
     
     async def _create_response_time_distribution(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create response time distribution box plot."""        try:
+        """Create response time distribution box plot."""
+        try:
             fig = self._create_plotly_figure(data)
             
             if self.config.group_by_field and self.config.group_by_field in data.columns:
@@ -833,7 +858,8 @@ class PerformanceVisualizer(ChartVisualizer):
 
 
 class ContentVisualizer(ChartVisualizer):
-    """    Content discovery and distribution visualizer.
+    """
+    Content discovery and distribution visualizer.
     
     Specializes in:
     - Content type distribution charts
@@ -841,9 +867,11 @@ class ContentVisualizer(ChartVisualizer):
     - Platform comparison charts
     - Content growth trend analysis
     - Engagement metrics visualization
-    """    
+    """
+    
     async def create_visualization(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create content visualization."""        try:
+        """Create content visualization."""
+        try:
             data = await self.preprocess_data(data)
             
             if data.empty:
@@ -878,7 +906,8 @@ class ContentVisualizer(ChartVisualizer):
             return VisualizationResult(self.config.visualization_id)
     
     async def _create_content_distribution_pie(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create content type distribution pie chart."""        try:
+        """Create content type distribution pie chart."""
+        try:
             fig = self._create_plotly_figure(data)
             
             if 'content_type' in data.columns and 'content_count' in data.columns:
@@ -902,7 +931,8 @@ class ContentVisualizer(ChartVisualizer):
             return VisualizationResult(self.config.visualization_id)
     
     async def _create_platform_comparison_bar(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create platform comparison bar chart."""        try:
+        """Create platform comparison bar chart."""
+        try:
             fig = self._create_plotly_figure(data)
             
             if 'platform' in data.columns:
@@ -946,7 +976,8 @@ class ContentVisualizer(ChartVisualizer):
             return VisualizationResult(self.config.visualization_id)
     
     async def _create_content_growth_trend(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create content growth trend line chart."""        try:
+        """Create content growth trend line chart."""
+        try:
             fig = self._create_plotly_figure(data)
             
             if self.config.x_axis_field in data.columns and 'content_count' in data.columns:
@@ -995,7 +1026,8 @@ class ContentVisualizer(ChartVisualizer):
             return VisualizationResult(self.config.visualization_id)
     
     async def _create_content_treemap(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create content treemap visualization."""        try:
+        """Create content treemap visualization."""
+        try:
             fig = self._create_plotly_figure(data)
             
             if 'platform' in data.columns and 'content_type' in data.columns and 'content_count' in data.columns:
@@ -1019,7 +1051,8 @@ class ContentVisualizer(ChartVisualizer):
             return VisualizationResult(self.config.visualization_id)
     
     async def _create_content_sunburst(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create content sunburst visualization."""        try:
+        """Create content sunburst visualization."""
+        try:
             fig = self._create_plotly_figure(data)
             
             if 'platform' in data.columns and 'content_type' in data.columns and 'content_count' in data.columns:
@@ -1048,7 +1081,8 @@ class ContentVisualizer(ChartVisualizer):
 
 
 class RevenueVisualizer(ChartVisualizer):
-    """    Revenue and monetization visualizer.
+    """
+    Revenue and monetization visualizer.
     
     Specializes in:
     - Revenue trend analysis
@@ -1056,9 +1090,11 @@ class RevenueVisualizer(ChartVisualizer):
     - Platform revenue comparison
     - Financial performance metrics
     - Monetization effectiveness visualization
-    """    
+    """
+    
     async def create_visualization(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create revenue visualization."""        try:
+        """Create revenue visualization."""
+        try:
             data = await self.preprocess_data(data)
             
             if data.empty:
@@ -1093,7 +1129,8 @@ class RevenueVisualizer(ChartVisualizer):
             return VisualizationResult(self.config.visualization_id)
     
     async def _create_revenue_trend_chart(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create revenue trend line chart."""        try:
+        """Create revenue trend line chart."""
+        try:
             fig = self._create_plotly_figure(data)
             
             if self.config.x_axis_field in data.columns and 'total_revenue' in data.columns:
@@ -1135,7 +1172,8 @@ class RevenueVisualizer(ChartVisualizer):
             return VisualizationResult(self.config.visualization_id)
     
     async def _create_platform_revenue_comparison(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create platform revenue comparison bar chart."""        try:
+        """Create platform revenue comparison bar chart."""
+        try:
             fig = self._create_plotly_figure(data)
             
             if 'platform' in data.columns and 'total_revenue' in data.columns:
@@ -1176,7 +1214,8 @@ class RevenueVisualizer(ChartVisualizer):
             return VisualizationResult(self.config.visualization_id)
     
     async def _create_revenue_distribution_pie(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create revenue distribution pie chart."""        try:
+        """Create revenue distribution pie chart."""
+        try:
             fig = self._create_plotly_figure(data)
             
             if 'platform' in data.columns and 'total_revenue' in data.columns:
@@ -1210,7 +1249,8 @@ class RevenueVisualizer(ChartVisualizer):
             return VisualizationResult(self.config.visualization_id)
     
     async def _create_revenue_waterfall_chart(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create revenue waterfall chart."""        try:
+        """Create revenue waterfall chart."""
+        try:
             fig = self._create_plotly_figure(data)
             
             if 'platform' in data.columns and 'total_revenue' in data.columns:
@@ -1247,7 +1287,8 @@ class RevenueVisualizer(ChartVisualizer):
             return VisualizationResult(self.config.visualization_id)
     
     async def _create_earnings_distribution_box(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create earnings distribution box plot."""        try:
+        """Create earnings distribution box plot."""
+        try:
             fig = self._create_plotly_figure(data)
             
             if 'platform' in data.columns and 'total_earnings' in data.columns:
@@ -1277,7 +1318,8 @@ class RevenueVisualizer(ChartVisualizer):
 
 
 class DashboardVisualizer(ChartVisualizer):
-    """    Interactive dashboard generator for comprehensive data visualization.
+    """
+    Interactive dashboard generator for comprehensive data visualization.
     
     Specializes in:
     - Multi-chart dashboard layouts
@@ -1285,9 +1327,11 @@ class DashboardVisualizer(ChartVisualizer):
     - Real-time data visualization
     - Executive summary dashboards
     - Operational monitoring dashboards
-    """    
+    """
+    
     async def create_visualization(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create dashboard visualization."""        try:
+        """Create dashboard visualization."""
+        try:
             data = await self.preprocess_data(data)
             
             if data.empty:
@@ -1311,7 +1355,8 @@ class DashboardVisualizer(ChartVisualizer):
             return VisualizationResult(self.config.visualization_id)
     
     async def _create_comprehensive_dashboard(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create comprehensive multi-chart dashboard."""        try:
+        """Create comprehensive multi-chart dashboard."""
+        try:
             # Create subplot layout
             fig = make_subplots(
                 rows=3, cols=2,
@@ -1468,7 +1513,8 @@ class DashboardVisualizer(ChartVisualizer):
 
 
 class TrendVisualizer(ChartVisualizer):
-    """    Trend analysis visualizer for time-series data and statistical trends.
+    """
+    Trend analysis visualizer for time-series data and statistical trends.
     
     Specializes in:
     - Time-series trend analysis
@@ -1476,9 +1522,11 @@ class TrendVisualizer(ChartVisualizer):
     - Forecast visualization
     - Anomaly detection visualization
     - Statistical trend indicators
-    """    
+    """
+    
     async def create_visualization(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create trend visualization."""        try:
+        """Create trend visualization."""
+        try:
             data = await self.preprocess_data(data)
             
             if data.empty:
@@ -1509,7 +1557,8 @@ class TrendVisualizer(ChartVisualizer):
             return VisualizationResult(self.config.visualization_id)
     
     async def _create_trend_analysis_chart(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create advanced trend analysis chart."""        try:
+        """Create advanced trend analysis chart."""
+        try:
             fig = self._create_plotly_figure(data)
             
             if self.config.x_axis_field in data.columns and self.config.y_axis_field in data.columns:
@@ -1617,7 +1666,8 @@ class TrendVisualizer(ChartVisualizer):
             return VisualizationResult(self.config.visualization_id)
     
     async def _create_candlestick_chart(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create candlestick chart for OHLC data."""        try:
+        """Create candlestick chart for OHLC data."""
+        try:
             fig = self._create_plotly_figure(data)
             
             # Check for OHLC columns
@@ -1661,7 +1711,8 @@ class TrendVisualizer(ChartVisualizer):
             return VisualizationResult(self.config.visualization_id)
     
     async def _create_correlation_heatmap(self, data: pd.DataFrame) -> VisualizationResult:
-        """Create correlation heatmap for numeric columns."""        try:
+        """Create correlation heatmap for numeric columns."""
+        try:
             fig = self._create_plotly_figure(data)
             
             # Get numeric columns
@@ -1701,7 +1752,8 @@ class TrendVisualizer(ChartVisualizer):
 
 
 class VisualizationManager:
-    """    Manager class for coordinating visualization creation and management.
+    """
+    Manager class for coordinating visualization creation and management.
     
     Provides:
     - Visualizer orchestration
@@ -1709,28 +1761,32 @@ class VisualizationManager:
     - Result consolidation
     - Template management
     - Export coordination
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._visualizers = {}
         self._templates = {}
     
     def register_visualizer(self, name: str, visualizer: ChartVisualizer):
-        """Register a visualizer."""        try:
+        """Register a visualizer."""
+        try:
             self._visualizers[name] = visualizer
             self.logger.info(f"Registered visualizer: {name}")
         except Exception as e:
             self.logger.error(f"Failed to register visualizer {name}: {e}")
     
     def register_template(self, name: str, config: VisualizationConfiguration):
-        """Register a visualization template."""        try:
+        """Register a visualization template."""
+        try:
             self._templates[name] = config
             self.logger.info(f"Registered template: {name}")
         except Exception as e:
             self.logger.error(f"Failed to register template {name}: {e}")
     
     async def create_visualization(self, visualizer_name: str, data: pd.DataFrame) -> VisualizationResult:
-        """Create a single visualization."""        try:
+        """Create a single visualization."""
+        try:
             if visualizer_name not in self._visualizers:
                 raise ValueError(f"Visualizer {visualizer_name} not found")
             
@@ -1745,7 +1801,8 @@ class VisualizationManager:
             return VisualizationResult(str(__import__('uuid').uuid4()))
     
     async def create_multiple_visualizations(self, visualizer_configs: List[Tuple[str, pd.DataFrame]]) -> Dict[str, VisualizationResult]:
-        """Create multiple visualizations in parallel."""        try:
+        """Create multiple visualizations in parallel."""
+        try:
             tasks = []
             
             for visualizer_name, data in visualizer_configs:
@@ -1772,15 +1829,18 @@ class VisualizationManager:
             return {}
     
     def get_available_visualizers(self) -> List[str]:
-        """Get list of available visualizers."""        return list(self._visualizers.keys())
+        """Get list of available visualizers."""
+        return list(self._visualizers.keys())
     
     def get_available_templates(self) -> List[str]:
-        """Get list of available templates."""        return list(self._templates.keys())
+        """Get list of available templates."""
+        return list(self._templates.keys())
 
 
 # Factory function for creating visualizers
 def create_visualizer(visualizer_type: str, config: VisualizationConfiguration) -> ChartVisualizer:
-    """    Factory function to create visualizers based on type.
+    """
+    Factory function to create visualizers based on type.
     
     Args:
         visualizer_type: Type of visualizer to create
@@ -1788,7 +1848,8 @@ def create_visualizer(visualizer_type: str, config: VisualizationConfiguration) 
         
     Returns:
         ChartVisualizer: The created visualizer instance
-    """    try:
+    """
+    try:
         visualizer_classes = {
             'performance': PerformanceVisualizer,
             'content': ContentVisualizer,
@@ -1810,7 +1871,8 @@ def create_visualizer(visualizer_type: str, config: VisualizationConfiguration) 
 
 # Usage example and initialization
 async def initialize_visualization_system() -> VisualizationManager:
-    """Initialize the visualization system with default visualizers."""    try:
+    """Initialize the visualization system with default visualizers."""
+    try:
         manager = VisualizationManager()
         
         # Performance visualizer configuration
@@ -1906,7 +1968,8 @@ if __name__ == "__main__":
     import asyncio
     
     async def main():
-        """Example usage of the visualization system."""        try:
+        """Example usage of the visualization system."""
+        try:
             # Initialize system
             manager = await initialize_visualization_system()
             

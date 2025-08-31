@@ -1,7 +1,8 @@
 """Security Seeds Manager - Security Configuration and Protocols
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: All rights reserved - Unauthorized use strictly prohibited
-"""from typing import Dict, List, Any, Optional, Union, Set, Tuple
+"""
+from typing import Dict, List, Any, Optional, Union, Set, Tuple
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(str, Enum):
-    """Security levels for different system components."""    PUBLIC = "public"
+    """Security levels for different system components."""
+    PUBLIC = "public"
     BASIC = "basic"
     STANDARD = "standard"
     HIGH = "high"
@@ -25,7 +27,8 @@ class SecurityLevel(str, Enum):
 
 
 class ThreatLevel(str, Enum):
-    """Threat assessment levels."""    LOW = "low"
+    """Threat assessment levels."""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -33,7 +36,8 @@ class ThreatLevel(str, Enum):
 
 
 class EncryptionType(str, Enum):
-    """Types of encryption methods used."""    AES_128 = "aes_128"
+    """Types of encryption methods used."""
+    AES_128 = "aes_128"
     AES_256 = "aes_256"
     RSA_2048 = "rsa_2048"
     RSA_4096 = "rsa_4096"
@@ -42,7 +46,8 @@ class EncryptionType(str, Enum):
 
 
 class AuthenticationMethod(str, Enum):
-    """Authentication methods."""    PASSWORD = "password"
+    """Authentication methods."""
+    PASSWORD = "password"
     TWO_FACTOR = "two_factor"
     MULTI_FACTOR = "multi_factor"
     BIOMETRIC = "biometric"
@@ -52,7 +57,8 @@ class AuthenticationMethod(str, Enum):
 
 
 class ComplianceFramework(str, Enum):
-    """Compliance frameworks."""    GDPR = "gdpr"
+    """Compliance frameworks."""
+    GDPR = "gdpr"
     CCPA = "ccpa"
     SOX = "sox"
     HIPAA = "hipaa"
@@ -63,7 +69,8 @@ class ComplianceFramework(str, Enum):
 
 @dataclass
 class SecurityPolicy:
-    """Security policy configuration."""    policy_id: str
+    """Security policy configuration."""
+    policy_id: str
     policy_name: str
     security_level: SecurityLevel
     description: str
@@ -76,7 +83,8 @@ class SecurityPolicy:
 
 @dataclass
 class ThreatDetectionRule:
-    """Threat detection rule configuration."""    rule_id: str
+    """Threat detection rule configuration."""
+    rule_id: str
     rule_name: str
     threat_type: str
     severity_level: ThreatLevel
@@ -87,7 +95,8 @@ class ThreatDetectionRule:
 
 
 class SecuritySeedsManager:
-    """    Enterprise-grade security seeds manager for comprehensive security configuration and protocols.
+    """
+    Enterprise-grade security seeds manager for comprehensive security configuration and protocols.
     
     Handles:
     - Advanced encryption and cryptographic protocols
@@ -100,9 +109,11 @@ class SecuritySeedsManager:
     - Security audit and vulnerability management
     - Data privacy and anonymization
     - Blockchain security and smart contract auditing
-    """    
+    """
+    
     def __init__(self):
-        """Initialize security seeds manager with enterprise configurations."""        self.security_policies = {}
+        """Initialize security seeds manager with enterprise configurations."""
+        self.security_policies = {}
         self.encryption_configurations = {}
         self.access_control_rules = {}
         self.threat_detection_settings = {}
@@ -114,7 +125,8 @@ class SecuritySeedsManager:
         self.privacy_settings = {}
     
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize all security-related seed data with full enterprise support."""        logger.info("Initializing comprehensive security seeds data...")
+        """Initialize all security-related seed data with full enterprise support."""
+        logger.info("Initializing comprehensive security seeds data...")
         start_time = datetime.now(timezone.utc)
         
         results = {}
@@ -189,7 +201,8 @@ class SecuritySeedsManager:
             raise
     
     async def _initialize_security_policies(self) -> Dict[str, Any]:
-        """Initialize comprehensive security policies and procedures."""        security_policies = {
+        """Initialize comprehensive security policies and procedures."""
+        security_policies = {
             'data_protection_policies': {
                 'data_classification': {
                     'public_data': {
@@ -341,7 +354,8 @@ class SecuritySeedsManager:
         }
     
     async def _initialize_encryption_configurations(self) -> Dict[str, Any]:
-        """Initialize encryption configurations for different data types and scenarios."""        encryption_configs = {
+        """Initialize encryption configurations for different data types and scenarios."""
+        encryption_configs = {
             'data_at_rest_encryption': {
                 'database_encryption': {
                     'encryption_method': EncryptionType.AES_256,
@@ -456,7 +470,8 @@ class SecuritySeedsManager:
         }
     
     async def _initialize_access_control_rules(self) -> Dict[str, Any]:
-        """Initialize access control rules and mechanisms."""        access_control_rules = {
+        """Initialize access control rules and mechanisms."""
+        access_control_rules = {
             'role_based_access_control': {
                 'admin_roles': {
                     'super_admin': {
@@ -617,7 +632,8 @@ class SecuritySeedsManager:
         }
     
     async def _initialize_threat_detection(self) -> Dict[str, Any]:
-        """Initialize threat detection and prevention systems."""        threat_detection = {
+        """Initialize threat detection and prevention systems."""
+        threat_detection = {
             'intrusion_detection_systems': {
                 'network_intrusion_detection': {
                     'signature_based_detection': True,
@@ -742,7 +758,8 @@ class SecuritySeedsManager:
         }
     
     async def _initialize_security_monitoring(self) -> Dict[str, Any]:
-        """Initialize security monitoring and logging configurations."""        security_monitoring = {
+        """Initialize security monitoring and logging configurations."""
+        security_monitoring = {
             'security_information_event_management': {
                 'log_collection': {
                     'centralized_logging': True,
@@ -852,7 +869,8 @@ class SecuritySeedsManager:
         }
     
     async def _initialize_compliance_frameworks(self) -> Dict[str, Any]:
-        """Initialize compliance frameworks and regulatory requirements."""        compliance_frameworks = {
+        """Initialize compliance frameworks and regulatory requirements."""
+        compliance_frameworks = {
             'data_protection_regulations': {
                 'gdpr_compliance': {
                     'regulation_name': 'General Data Protection Regulation',
@@ -992,7 +1010,8 @@ class SecuritySeedsManager:
         }
     
     async def _initialize_incident_response(self) -> Dict[str, Any]:
-        """Initialize incident response procedures and workflows."""        incident_response = {
+        """Initialize incident response procedures and workflows."""
+        incident_response = {
             'incident_classification': {
                 'severity_levels': {
                     'critical': {
@@ -1135,7 +1154,8 @@ class SecuritySeedsManager:
         }
     
     async def _initialize_security_audit(self) -> Dict[str, Any]:
-        """Initialize security audit configurations and procedures."""        security_audit = {
+        """Initialize security audit configurations and procedures."""
+        security_audit = {
             'audit_types': {
                 'internal_audits': {
                     'security_policy_compliance_audit': {
@@ -1257,7 +1277,8 @@ class SecuritySeedsManager:
         }
     
     async def reset(self) -> Dict[str, Any]:
-        """Reset all security seed data (use with caution)."""        logger.warning("Resetting security seeds data...")
+        """Reset all security seed data (use with caution)."""
+        logger.warning("Resetting security seeds data...")
         
         self.security_policies.clear()
         self.encryption_configurations.clear()

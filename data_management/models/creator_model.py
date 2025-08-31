@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC CREATOR PIPELINE:
 Registration → Profile Setup → Verification → Content Creation → AI Analytics → 
 Protection Management → Collaboration → Monetization → Growth Analytics
-"""from typing import Dict, List, Optional, Any, Union, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timezone, timedelta
 from enum import Enum, IntEnum
 from dataclasses import dataclass, field
@@ -24,7 +25,8 @@ import uuid
 import hashlib
 
 class CreatorType(Enum):
-    """Advanced creator types supported by the platform"""    MUSICIAN = "musician"
+    """Advanced creator types supported by the platform"""
+    MUSICIAN = "musician"
     MUSIC_PRODUCER = "music_producer"
     SINGER_SONGWRITER = "singer_songwriter"
     DJ = "dj"
@@ -48,7 +50,8 @@ class CreatorType(Enum):
     AGENCY = "agency"
 
 class CreatorStatus(Enum):
-    """Creator account status lifecycle"""    PENDING = "pending"
+    """Creator account status lifecycle"""
+    PENDING = "pending"
     ACTIVE = "active"
     VERIFIED = "verified"
     PREMIUM = "premium"
@@ -60,14 +63,16 @@ class CreatorStatus(Enum):
     ARCHIVED = "archived"
 
 class SubscriptionTier(Enum):
-    """Subscription tiers with advanced features"""    FREE = "free"
+    """Subscription tiers with advanced features"""
+    FREE = "free"
     BASIC = "basic"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
     CUSTOM = "custom"
 
 class VerificationLevel(IntEnum):
-    """Verification levels for credibility"""    UNVERIFIED = 0
+    """Verification levels for credibility"""
+    UNVERIFIED = 0
     EMAIL_VERIFIED = 1
     PHONE_VERIFIED = 2
     IDENTITY_VERIFIED = 3
@@ -75,7 +80,8 @@ class VerificationLevel(IntEnum):
     PLATFORM_VERIFIED = 5
 
 class CreatorTier(Enum):
-    """Creator tier based on performance and engagement"""    STARTER = "starter"
+    """Creator tier based on performance and engagement"""
+    STARTER = "starter"
     RISING = "rising"
     ESTABLISHED = "established"
     PREMIUM = "premium"
@@ -84,7 +90,8 @@ class CreatorTier(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Advanced public creator profile with comprehensive information and AI analytics"""    
+    """Advanced public creator profile with comprehensive information and AI analytics"""
+    
     # Core identity information
     display_name: str = ""
     bio: str = ""
@@ -166,7 +173,8 @@ class CreatorProfile:
     ai_growth_recommendations: List[str] = field(default_factory=list)
     
     def calculate_engagement_rate(self) -> float:
-        """Calculate overall engagement rate across platforms"""        if self.total_followers == 0:
+        """Calculate overall engagement rate across platforms"""
+        if self.total_followers == 0:
             return 0.0
         
         total_engagement = self.total_likes + self.total_shares + (self.total_collaborations * 10)
@@ -174,7 +182,8 @@ class CreatorProfile:
         return self.engagement_rate
     
     def calculate_credibility_score(self) -> float:
-        """Calculate credibility score based on various factors"""        score = 0.0
+        """Calculate credibility score based on various factors"""
+        score = 0.0
         
         # Verification level weight
         score += self.verification_level.value * 15
@@ -203,7 +212,8 @@ class CreatorProfile:
         return self.credibility_score
     
     def get_profile_completeness(self) -> float:
-        """Calculate profile completeness percentage"""        required_fields = [
+        """Calculate profile completeness percentage"""
+        required_fields = [
             self.display_name, self.bio, self.country, 
             len(self.genres) > 0, len(self.skills) > 0
         ]
@@ -224,7 +234,8 @@ class CreatorProfile:
         return completeness
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for API responses"""        return {
+        """Convert to dictionary for API responses"""
+        return {
             "display_name": self.display_name,
             "bio": self.bio,
             "professional_tagline": self.professional_tagline,
@@ -288,7 +299,8 @@ class CreatorProfile:
 
 @dataclass
 class CreatorSettings:
-    """Advanced creator settings and preferences for platform customization"""    
+    """Advanced creator settings and preferences for platform customization"""
+    
     # Content management preferences
     default_content_visibility: str = "public"  # public, private, unlisted, followers_only
     auto_fingerprinting: bool = True
@@ -363,18 +375,22 @@ class CreatorSettings:
     collaboration_rate_ranges: Dict[str, str] = field(default_factory=dict)
     
     def update_notification_setting(self, notification_type: str, enabled: bool) -> None:
-        """Update specific notification setting"""        self.notification_types[notification_type] = enabled
+        """Update specific notification setting"""
+        self.notification_types[notification_type] = enabled
     
     def add_payment_method(self, method: str) -> None:
-        """Add payment method if not already present"""        if method not in self.payment_methods:
+        """Add payment method if not already present"""
+        if method not in self.payment_methods:
             self.payment_methods.append(method)
     
     def remove_payment_method(self, method: str) -> None:
-        """Remove payment method"""        if method in self.payment_methods:
+        """Remove payment method"""
+        if method in self.payment_methods:
             self.payment_methods.remove(method)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""        return {
+        """Convert to dictionary for storage"""
+        return {
             "default_content_visibility": self.default_content_visibility,
             "auto_fingerprinting": self.auto_fingerprinting,
             "auto_protection": self.auto_protection,
@@ -422,9 +438,11 @@ class CreatorSettings:
 
 @dataclass
 class CreatorModel:
-    """    Ultra-advanced creator model for multi-format content creators with AI-powered analytics and monetization
+    """
+    Ultra-advanced creator model for multi-format content creators with AI-powered analytics and monetization
     Supports comprehensive creator lifecycle from registration to enterprise collaboration
-    """    
+    """
+    
     # Core identifiers
     creator_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""  # Reference to auth user
@@ -553,7 +571,8 @@ class CreatorModel:
     tags: List[str] = field(default_factory=list)
     
     def update_status(self, new_status: CreatorStatus, reason: str = "") -> None:
-        """Update creator status with audit trail"""        old_status = self.creator_status
+        """Update creator status with audit trail"""
+        old_status = self.creator_status
         self.creator_status = new_status
         self.updated_at = datetime.now(timezone.utc)
         
@@ -583,7 +602,8 @@ class CreatorModel:
             self.suspended_at = None
     
     def calculate_creator_tier(self) -> CreatorTier:
-        """Calculate creator tier based on performance metrics"""        score = 0
+        """Calculate creator tier based on performance metrics"""
+        score = 0
         
         # Content volume scoring
         if self.total_content_count >= 100:
@@ -650,7 +670,8 @@ class CreatorModel:
         return self.creator_tier
     
     def to_dict(self, include_sensitive: bool = False) -> Dict[str, Any]:
-        """Convert to dictionary with optional sensitive data inclusion"""        base_data = {
+        """Convert to dictionary with optional sensitive data inclusion"""
+        base_data = {
             "creator_id": self.creator_id,
             "user_id": self.user_id,
             "tenant_id": self.tenant_id,
@@ -706,7 +727,8 @@ class CreatorModel:
 
 # Creator utility functions
 def generate_username(display_name: str, creator_type: CreatorType) -> str:
-    """Generate unique username suggestion"""    base = display_name.lower().replace(' ', '_')
+    """Generate unique username suggestion"""
+    base = display_name.lower().replace(' ', '_')
     type_suffix = creator_type.value[:3]
     random_suffix = hashlib.md5(f"{base}{datetime.now().timestamp()}".encode()).hexdigest()[:4]
     
@@ -714,13 +736,15 @@ def generate_username(display_name: str, creator_type: CreatorType) -> str:
 
 
 def validate_creator_email(email: str) -> bool:
-    """Validate creator email format"""    import re
+    """Validate creator email format"""
+    import re
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     return bool(re.match(pattern, email))
 
 
 def calculate_creator_score(creator: CreatorModel) -> float:
-    """Calculate overall creator score for ranking"""    score = 0.0
+    """Calculate overall creator score for ranking"""
+    score = 0.0
     
     # Content contribution (30%)
     content_score = min(creator.total_content_count / 100, 1.0) * 30

@@ -16,7 +16,8 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICT
 and will result in immediate legal action under German and International copyright laws.
 
 Contact: mlaiel@live.de for licensing inquiries only.
-"""import logging
+"""
+import logging
 import json
 from datetime import datetime
 from typing import Dict, Any, Optional, List
@@ -28,7 +29,8 @@ from pythonjsonlogger import jsonlogger
 
 
 class ProtectionEventType(str, Enum):
-    """Content protection event types for specialized logging"""    FINGERPRINT_GENERATION = "fingerprint_generation"
+    """Content protection event types for specialized logging"""
+    FINGERPRINT_GENERATION = "fingerprint_generation"
     FINGERPRINT_MATCHING = "fingerprint_matching" 
     PIRACY_DETECTION = "piracy_detection"
     COPYRIGHT_VIOLATION = "copyright_violation"
@@ -46,7 +48,8 @@ class ProtectionEventType(str, Enum):
 
 
 class ContentType(str, Enum):
-    """Multi-format content types for protection logging"""    AUDIO = "audio"
+    """Multi-format content types for protection logging"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -62,7 +65,8 @@ class ContentType(str, Enum):
 
 @dataclass
 class ContentProtectionLogConfig:
-    """Configuration for content protection logging"""    enable_fingerprint_logging: bool = True
+    """Configuration for content protection logging"""
+    enable_fingerprint_logging: bool = True
     enable_piracy_detection_logging: bool = True
     enable_dmca_logging: bool = True
     enable_blockchain_logging: bool = True
@@ -94,13 +98,15 @@ class ContentProtectionLogConfig:
 
 
 class ContentProtectionLogger:
-    """Specialized logger for content protection operations"""    
+    """Specialized logger for content protection operations"""
+    
     def __init__(self, config: ContentProtectionLogConfig):
         self.config = config
         self.logger = self._setup_logger()
         
     def _setup_logger(self) -> structlog.BoundLogger:
-        """Setup structured logger for content protection"""        structlog.configure(
+        """Setup structured logger for content protection"""
+        structlog.configure(
             processors=[
                 structlog.threadlocal.merge_threadlocal_context,
                 structlog.processors.TimeStamper(fmt="iso"),
@@ -126,7 +132,8 @@ class ContentProtectionLogger:
         success: bool,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Log content fingerprint generation"""        if not self.config.enable_fingerprint_logging:
+        """Log content fingerprint generation"""
+        if not self.config.enable_fingerprint_logging:
             return
             
         log_data = {
@@ -158,7 +165,8 @@ class ContentProtectionLogger:
         confidence_level: float,
         automated_action: Optional[str] = None
     ) -> None:
-        """Log piracy detection events"""        if not self.config.enable_piracy_detection_logging:
+        """Log piracy detection events"""
+        if not self.config.enable_piracy_detection_logging:
             return
             
         log_data = {
@@ -188,7 +196,8 @@ class ContentProtectionLogger:
         status: str,
         legal_metadata: Dict[str, Any]
     ) -> None:
-        """Log DMCA takedown actions"""        if not self.config.enable_dmca_logging:
+        """Log DMCA takedown actions"""
+        if not self.config.enable_dmca_logging:
             return
             
         log_data = {
@@ -214,7 +223,8 @@ class ContentProtectionLogger:
         registration_cost: float,
         success: bool
     ) -> None:
-        """Log blockchain content registration"""        if not self.config.enable_blockchain_logging:
+        """Log blockchain content registration"""
+        if not self.config.enable_blockchain_logging:
             return
             
         log_data = {
@@ -239,7 +249,8 @@ class ContentProtectionLogger:
         success: bool,
         detection_confidence: Optional[float] = None
     ) -> None:
-        """Log watermarking operations"""        if not self.config.enable_watermark_logging:
+        """Log watermarking operations"""
+        if not self.config.enable_watermark_logging:
             return
             
         log_data = {
@@ -265,7 +276,8 @@ class ContentProtectionLogger:
         ownership_confidence: float,
         legal_documents: List[str]
     ) -> None:
-        """Log rights verification processes"""        if not self.config.enable_rights_logging:
+        """Log rights verification processes"""
+        if not self.config.enable_rights_logging:
             return
             
         log_data = {
@@ -293,7 +305,8 @@ class ContentProtectionLogger:
         response_time: float,
         error_message: Optional[str] = None
     ) -> None:
-        """Log automated enforcement actions"""        if not self.config.enable_enforcement_logging:
+        """Log automated enforcement actions"""
+        if not self.config.enable_enforcement_logging:
             return
             
         log_data = {
@@ -320,7 +333,8 @@ class ContentProtectionLogger:
         threat_indicators: Dict[str, Any],
         mitigation_actions: List[str]
     ) -> None:
-        """Log threat intelligence and security events"""        log_data = {
+        """Log threat intelligence and security events"""
+        log_data = {
             "event_type": ProtectionEventType.THREAT_DETECTION,
             "threat_type": threat_type,
             "severity_level": severity_level,
@@ -337,7 +351,8 @@ class ContentProtectionLogger:
         self.logger.warning("Threat intelligence event", **log_data)
     
     def get_protection_metrics(self) -> Dict[str, Any]:
-        """Get content protection performance metrics"""        return {
+        """Get content protection performance metrics"""
+        return {
             "fingerprint_generation_enabled": self.config.enable_fingerprint_logging,
             "piracy_detection_enabled": self.config.enable_piracy_detection_logging,
             "dmca_logging_enabled": self.config.enable_dmca_logging,
@@ -353,14 +368,17 @@ class ContentProtectionLogger:
 
 
 class ContentProtectionLoggingConfig:
-    """Main configuration class for content protection logging"""    
+    """Main configuration class for content protection logging"""
+    
     @staticmethod
     def create_default_config() -> ContentProtectionLogConfig:
-        """Create default content protection logging configuration"""        return ContentProtectionLogConfig()
+        """Create default content protection logging configuration"""
+        return ContentProtectionLogConfig()
     
     @staticmethod
     def create_high_security_config() -> ContentProtectionLogConfig:
-        """Create high-security content protection logging configuration"""        return ContentProtectionLogConfig(
+        """Create high-security content protection logging configuration"""
+        return ContentProtectionLogConfig(
             enable_fingerprint_logging=True,
             enable_piracy_detection_logging=True,
             enable_dmca_logging=True,
@@ -386,7 +404,8 @@ class ContentProtectionLoggingConfig:
     
     @staticmethod
     def create_performance_focused_config() -> ContentProtectionLogConfig:
-        """Create performance-focused content protection logging configuration"""        return ContentProtectionLogConfig(
+        """Create performance-focused content protection logging configuration"""
+        return ContentProtectionLogConfig(
             enable_fingerprint_logging=True,
             enable_piracy_detection_logging=True,
             enable_dmca_logging=False,

@@ -39,7 +39,8 @@ ABSOLUTELY PROHIBITED WITHOUT EXPLICIT WRITTEN AUTHORIZATION FROM FAHED MLAIEL:
 - Unauthorized access to proprietary methods
 
 For official licensing inquiries ONLY: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import uuid
@@ -81,7 +82,8 @@ from .models import (
 logger = logging.getLogger(__name__)
 
 class ConversionMethod(Enum):
-    """Voice conversion method types."""    NEURAL_VOCODER = "neural_vocoder"
+    """Voice conversion method types."""
+    NEURAL_VOCODER = "neural_vocoder"
     SPECTRAL_MAPPING = "spectral_mapping"
     STATISTICAL_PARAMETRIC = "statistical_parametric"
     DEEP_LEARNING = "deep_learning"
@@ -89,14 +91,16 @@ class ConversionMethod(Enum):
     GAN_BASED = "gan_based"
 
 class ConversionQuality(Enum):
-    """Voice conversion quality levels."""    DRAFT = "draft"
+    """Voice conversion quality levels."""
+    DRAFT = "draft"
     STANDARD = "standard"
     PROFESSIONAL = "professional"
     STUDIO = "studio"
     BROADCAST = "broadcast"
 
 class VoiceIdentity(Enum):
-    """Predefined voice identity categories."""    MALE_YOUNG = "male_young"
+    """Predefined voice identity categories."""
+    MALE_YOUNG = "male_young"
     MALE_ADULT = "male_adult" 
     MALE_ELDERLY = "male_elderly"
     FEMALE_YOUNG = "female_young"
@@ -109,7 +113,8 @@ class VoiceIdentity(Enum):
 
 @dataclass
 class VoiceConversionMetrics:
-    """Voice conversion performance metrics."""    conversion_accuracy: float = 0.0
+    """Voice conversion performance metrics."""
+    conversion_accuracy: float = 0.0
     emotion_preservation: float = 0.0
     naturalness_score: float = 0.0
     similarity_score: float = 0.0
@@ -118,7 +123,8 @@ class VoiceConversionMetrics:
 
 @dataclass
 class ConversionParameters:
-    """Voice conversion parameter configuration."""    pitch_shift_semitones: float = 0.0
+    """Voice conversion parameter configuration."""
+    pitch_shift_semitones: float = 0.0
     formant_shift_ratio: float = 1.0
     speaking_rate_ratio: float = 1.0
     voice_intensity_ratio: float = 1.0
@@ -128,14 +134,17 @@ class ConversionParameters:
     prosody_preservation: float = 1.0
 
 class IntelligentVoiceConverter:
-    """    Ultra-advanced voice conversion system with neural intelligence.
+    """
+    Ultra-advanced voice conversion system with neural intelligence.
     
     Provides comprehensive voice transformation, cloning, and style transfer
     capabilities with emotion preservation and biometric security for content
     creators and conversational AI applications.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the intelligent voice converter."""        self.config = config or get_voice_conversion_config()
+        """Initialize the intelligent voice converter."""
+        self.config = config or get_voice_conversion_config()
         self.is_initialized = False
         self.conversion_models = {}
         self.voice_profiles = {}
@@ -175,7 +184,8 @@ class IntelligentVoiceConverter:
         }
         
     async def initialize(self) -> bool:
-        """Initialize all voice conversion components."""        try:
+        """Initialize all voice conversion components."""
+        try:
             start_time = time.time()
             logger.info("Initializing Intelligent Voice Converter...")
             
@@ -214,7 +224,8 @@ class IntelligentVoiceConverter:
                           preserve_emotion: bool = True,
                           preserve_prosody: bool = True,
                           custom_parameters: Optional[ConversionParameters] = None) -> VoiceConversionResult:
-        """        Convert voice to target identity with advanced neural processing.
+        """
+        Convert voice to target identity with advanced neural processing.
         
         Args:
             source_audio: Source audio signal
@@ -227,7 +238,8 @@ class IntelligentVoiceConverter:
             
         Returns:
             VoiceConversionResult with converted audio and metrics
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             if not self.is_initialized:
@@ -314,7 +326,8 @@ class IntelligentVoiceConverter:
                         voice_name: str,
                         minimum_quality: float = 0.8,
                         speaker_adaptation_steps: int = 100) -> VoiceConversionResult:
-        """        Clone voice from reference audio and synthesize target text.
+        """
+        Clone voice from reference audio and synthesize target text.
         
         Args:
             reference_audio: Reference audio for voice cloning
@@ -325,7 +338,8 @@ class IntelligentVoiceConverter:
             
         Returns:
             VoiceConversionResult with synthesized speech in cloned voice
-        """        try:
+        """
+        try:
             # Extract comprehensive voice profile from reference
             voice_profile = await self._create_voice_profile_from_reference(
                 reference_audio, voice_name, speaker_adaptation_steps
@@ -371,7 +385,8 @@ class IntelligentVoiceConverter:
                                   style_reference: np.ndarray,
                                   transformation_strength: float = 1.0,
                                   preserve_identity: bool = True) -> VoiceConversionResult:
-        """        Transform voice style while preserving or changing speaker identity.
+        """
+        Transform voice style while preserving or changing speaker identity.
         
         Args:
             source_audio: Source audio to transform
@@ -381,7 +396,8 @@ class IntelligentVoiceConverter:
             
         Returns:
             VoiceConversionResult with style-transformed audio
-        """        try:
+        """
+        try:
             # Extract style features from reference
             style_features = await self._extract_style_features(style_reference)
             
@@ -422,7 +438,8 @@ class IntelligentVoiceConverter:
             raise
     
     async def get_conversion_stats(self) -> Dict[str, Any]:
-        """Get comprehensive conversion statistics."""        return {
+        """Get comprehensive conversion statistics."""
+        return {
             "performance_metrics": {
                 "conversion_accuracy": self.performance_metrics.conversion_accuracy,
                 "emotion_preservation": self.performance_metrics.emotion_preservation,
@@ -440,7 +457,8 @@ class IntelligentVoiceConverter:
     
     # Private helper methods
     async def _initialize_neural_models(self):
-        """Initialize neural voice conversion models."""        try:
+        """Initialize neural voice conversion models."""
+        try:
             # Voice encoder/decoder models
             self.voice_encoder = {
                 "model_type": "transformer_encoder",
@@ -467,7 +485,8 @@ class IntelligentVoiceConverter:
             raise
     
     async def _initialize_audio_processors(self):
-        """Initialize audio processing engines."""        try:
+        """Initialize audio processing engines."""
+        try:
             self.pitch_tracker = {
                 "method": "crepe",
                 "confidence_threshold": 0.85,
@@ -493,7 +512,8 @@ class IntelligentVoiceConverter:
             raise
     
     async def _initialize_quality_assessors(self):
-        """Initialize quality assessment systems."""        try:
+        """Initialize quality assessment systems."""
+        try:
             self.naturalness_predictor = {
                 "model_type": "deep_learning",
                 "accuracy": 0.92,
@@ -513,7 +533,8 @@ class IntelligentVoiceConverter:
             raise
     
     async def _initialize_security_systems(self):
-        """Initialize security and anti-spoofing systems."""        try:
+        """Initialize security and anti-spoofing systems."""
+        try:
             self.biometric_verifier = {
                 "method": "deep_speaker_verification",
                 "threshold": 0.95,
@@ -533,7 +554,8 @@ class IntelligentVoiceConverter:
             raise
     
     async def _load_voice_profiles(self):
-        """Load predefined voice profiles."""        self.voice_profiles = {
+        """Load predefined voice profiles."""
+        self.voice_profiles = {
             "male_young": {
                 "fundamental_frequency_mean": 120.0,
                 "fundamental_frequency_std": 25.0,
@@ -564,7 +586,8 @@ class IntelligentVoiceConverter:
         }
     
     async def _initialize_watermarking(self):
-        """Initialize audio watermarking engine."""        try:
+        """Initialize audio watermarking engine."""
+        try:
             self.watermarking_engine = {
                 "method": "spectral_watermarking",
                 "robustness_level": "high",
@@ -596,7 +619,8 @@ class IntelligentVoiceConverter:
         return converted.astype(np.float32)
     
     def _calculate_conversion_quality(self, original: np.ndarray, converted: np.ndarray) -> float:
-        """Calculate conversion quality score"""        # Mock quality calculation
+        """Calculate conversion quality score"""
+        # Mock quality calculation
         return 0.85
     
     async def shutdown(self) -> None:

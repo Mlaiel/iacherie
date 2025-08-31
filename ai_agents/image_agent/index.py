@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import logging
+"""
+import logging
 from typing import Dict, Any, Optional
 
 # Core image agent imports
@@ -145,11 +146,13 @@ __all__ = [
 
 
 def get_supported_formats() -> Dict[str, list]:
-    """    Get list of supported image formats for different operations.
+    """
+    Get list of supported image formats for different operations.
     
     Returns:
         Dict containing supported formats for input, output, and processing
-    """    return {
+    """
+    return {
         "input_formats": [
             "jpeg", "jpg", "png", "webp", "avif", "heic", "heif",
             "tiff", "tif", "bmp", "gif", "svg", "raw", "ico", "pdf"
@@ -167,7 +170,8 @@ def get_supported_formats() -> Dict[str, list]:
 
 
 def validate_image_file(file_path: str, operation: str = "general") -> Dict[str, Any]:
-    """    Validate image file for processing operations.
+    """
+    Validate image file for processing operations.
     
     Args:
         file_path: Path to image file
@@ -175,7 +179,8 @@ def validate_image_file(file_path: str, operation: str = "general") -> Dict[str,
         
     Returns:
         Validation result with status and details
-    """    try:
+    """
+    try:
         from pathlib import Path
         from PIL import Image
         
@@ -237,11 +242,13 @@ def validate_image_file(file_path: str, operation: str = "general") -> Dict[str,
 
 
 def get_module_info() -> Dict[str, Any]:
-    """    Get comprehensive module information.
+    """
+    Get comprehensive module information.
     
     Returns:
         Dictionary with module metadata and capabilities
-    """    return {
+    """
+    return {
         "module": "image_agent",
         "version": __version__,
         "author": __author__,
@@ -269,14 +276,16 @@ def get_module_info() -> Dict[str, Any]:
 
 
 async def initialize_image_agent(config: Optional[Dict[str, Any]] = None) -> ImageAgent:
-    """    Initialize and configure Image Agent with optimal settings.
+    """
+    Initialize and configure Image Agent with optimal settings.
     
     Args:
         config: Optional configuration dictionary
         
     Returns:
         Configured ImageAgent instance
-    """    try:
+    """
+    try:
         logger.info("Initializing Image Agent module...")
         
         # Default configuration

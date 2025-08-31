@@ -6,7 +6,8 @@ and professional networking in the IA Influencer Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""from datetime import datetime, date
+"""
+from datetime import datetime, date
 from decimal import Decimal
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any
@@ -17,7 +18,8 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class CollaborationTypeEnum(str, Enum):
-    """Types of collaborations"""    MUSICAL_COLLABORATION = "musical_collaboration"
+    """Types of collaborations"""
+    MUSICAL_COLLABORATION = "musical_collaboration"
     REMIX_PROJECT = "remix_project"
     FEATURED_ARTIST = "featured_artist"
     PRODUCER_COLLABORATION = "producer_collaboration"
@@ -36,7 +38,8 @@ class CollaborationTypeEnum(str, Enum):
 
 
 class CollaborationStatusEnum(str, Enum):
-    """Collaboration request status"""    DRAFT = "draft"
+    """Collaboration request status"""
+    DRAFT = "draft"
     PENDING = "pending"
     UNDER_REVIEW = "under_review"
     ACCEPTED = "accepted"
@@ -50,7 +53,8 @@ class CollaborationStatusEnum(str, Enum):
 
 
 class SkillLevelEnum(str, Enum):
-    """Skill level classifications"""    BEGINNER = "beginner"
+    """Skill level classifications"""
+    BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     PROFESSIONAL = "professional"
@@ -59,7 +63,8 @@ class SkillLevelEnum(str, Enum):
 
 
 class AvailabilityEnum(str, Enum):
-    """Availability status"""    IMMEDIATELY = "immediately"
+    """Availability status"""
+    IMMEDIATELY = "immediately"
     WITHIN_WEEK = "within_week"
     WITHIN_MONTH = "within_month"
     FLEXIBLE = "flexible"
@@ -68,7 +73,8 @@ class AvailabilityEnum(str, Enum):
 
 
 class CommunicationMethodEnum(str, Enum):
-    """Preferred communication methods"""    EMAIL = "email"
+    """Preferred communication methods"""
+    EMAIL = "email"
     PHONE = "phone"
     VIDEO_CALL = "video_call"
     INSTANT_MESSAGE = "instant_message"
@@ -81,7 +87,8 @@ class CommunicationMethodEnum(str, Enum):
 
 
 class RevenueShareTypeEnum(str, Enum):
-    """Revenue sharing types"""    EQUAL_SPLIT = "equal_split"
+    """Revenue sharing types"""
+    EQUAL_SPLIT = "equal_split"
     PERCENTAGE_BASED = "percentage_based"
     CREDIT_BASED = "credit_based"
     FIXED_PAYMENT = "fixed_payment"
@@ -91,7 +98,8 @@ class RevenueShareTypeEnum(str, Enum):
 
 
 class CollaboratorProfileSchema(BaseModel):
-    """Schema for collaborator profile information"""    user_id: PositiveInt = Field(..., description="User ID")
+    """Schema for collaborator profile information"""
+    user_id: PositiveInt = Field(..., description="User ID")
     display_name: str = Field(..., description="Display name")
     professional_name: Optional[str] = Field(None, description="Professional/stage name")
     bio: Optional[str] = Field(None, max_length=1000, description="Biography")
@@ -162,7 +170,8 @@ class CollaboratorProfileSchema(BaseModel):
 
 
 class CollaborationProjectSchema(BaseModel):
-    """Schema for collaboration project details"""    project_title: str = Field(..., description="Project title")
+    """Schema for collaboration project details"""
+    project_title: str = Field(..., description="Project title")
     project_description: str = Field(..., max_length=2000, description="Detailed project description")
     collaboration_type: CollaborationTypeEnum = Field(..., description="Type of collaboration")
     
@@ -209,7 +218,8 @@ class CollaborationProjectSchema(BaseModel):
 
 
 class RevenueShareAgreementSchema(BaseModel):
-    """Schema for revenue sharing agreements"""    revenue_share_type: RevenueShareTypeEnum = Field(..., description="Type of revenue sharing")
+    """Schema for revenue sharing agreements"""
+    revenue_share_type: RevenueShareTypeEnum = Field(..., description="Type of revenue sharing")
     
     # Percentage-based sharing
     requester_percentage: Optional[Decimal] = Field(None, ge=0, le=100, description="Requester's percentage")
@@ -243,7 +253,8 @@ class RevenueShareAgreementSchema(BaseModel):
     @field_validator('collaborator_percentage')
     @classmethod
     def validate_percentage_total(cls, v, values):
-        """Validate that percentages add up to 100"""        requester_pct = values.get('requester_percentage', 0)
+        """Validate that percentages add up to 100"""
+        requester_pct = values.get('requester_percentage', 0)
         if v and requester_pct and (v + requester_pct) != 100:
             raise ValueError("Percentages must add up to 100")
         return v
@@ -263,7 +274,8 @@ class RevenueShareAgreementSchema(BaseModel):
 
 
 class CollaborationRequestBaseSchema(BaseModel):
-    """Base schema for collaboration requests"""    requester_id: PositiveInt = Field(..., description="User ID of requester")
+    """Base schema for collaboration requests"""
+    requester_id: PositiveInt = Field(..., description="User ID of requester")
     collaboration_project: CollaborationProjectSchema = Field(..., description="Project details")
     
     # Target collaborator criteria
@@ -294,7 +306,8 @@ class CollaborationRequestBaseSchema(BaseModel):
 
 
 class CollaborationRequestCreateSchema(CollaborationRequestBaseSchema):
-    """Schema for creating collaboration requests"""    # Visibility and promotion
+    """Schema for creating collaboration requests"""
+    # Visibility and promotion
     public_listing: bool = Field(True, description="Make request publicly visible")
     featured_request: bool = Field(False, description="Request featured placement")
     auto_matching: bool = Field(True, description="Enable automatic matching")
@@ -322,7 +335,8 @@ class CollaborationRequestCreateSchema(CollaborationRequestBaseSchema):
 
 
 class CollaborationRequestUpdateSchema(BaseModel):
-    """Schema for updating collaboration requests"""    collaboration_project: Optional[CollaborationProjectSchema] = Field(None, description="Updated project details")
+    """Schema for updating collaboration requests"""
+    collaboration_project: Optional[CollaborationProjectSchema] = Field(None, description="Updated project details")
     required_skills: Optional[List[str]] = Field(None, description="Updated required skills")
     budget_range: Optional[str] = Field(None, description="Updated budget range")
     revenue_agreement: Optional[RevenueShareAgreementSchema] = Field(None, description="Updated revenue agreement")
@@ -341,7 +355,8 @@ class CollaborationRequestUpdateSchema(BaseModel):
 
 
 class CollaborationResponseSchema(BaseModel):
-    """Schema for collaboration responses"""    response_id: str = Field(..., description="Unique response identifier")
+    """Schema for collaboration responses"""
+    response_id: str = Field(..., description="Unique response identifier")
     request_id: PositiveInt = Field(..., description="Collaboration request ID")
     responder_id: PositiveInt = Field(..., description="Responder user ID")
     
@@ -384,7 +399,8 @@ class CollaborationResponseSchema(BaseModel):
 
 
 class CollaborationRequestResponseSchema(CollaborationRequestBaseSchema):
-    """Schema for collaboration request responses"""    id: PositiveInt = Field(..., description="Unique request ID")
+    """Schema for collaboration request responses"""
+    id: PositiveInt = Field(..., description="Unique request ID")
     request_reference: str = Field(..., description="Human-readable request reference")
     
     # Status and tracking
@@ -432,7 +448,8 @@ class CollaborationRequestResponseSchema(CollaborationRequestBaseSchema):
 
 
 class CollaborationMatchingSchema(BaseModel):
-    """Schema for collaboration matching algorithm"""    request_id: PositiveInt = Field(..., description="Collaboration request ID")
+    """Schema for collaboration matching algorithm"""
+    request_id: PositiveInt = Field(..., description="Collaboration request ID")
     potential_matches: List[Dict[str, Any]] = Field(..., description="Potential matches with scores")
     matching_criteria: Dict[str, float] = Field(..., description="Matching criteria weights")
     algorithm_version: str = Field(..., description="Matching algorithm version")
@@ -462,7 +479,8 @@ class CollaborationMatchingSchema(BaseModel):
 
 
 class CommunityEventSchema(BaseModel):
-    """Schema for community events and activities"""    event_id: str = Field(..., description="Unique event identifier")
+    """Schema for community events and activities"""
+    event_id: str = Field(..., description="Unique event identifier")
     event_title: str = Field(..., description="Event title")
     event_type: str = Field(..., description="Type of event")
     description: str = Field(..., description="Event description")

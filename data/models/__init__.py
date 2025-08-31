@@ -113,10 +113,13 @@ RELATIONSHIP_MAPPINGS = {
 }
 
 def get_model_by_table_name(table_name: str):
-    """Get model class by table name"""    return MODEL_REGISTRY.get(table_name)
+    """Get model class by table name"""
+    return MODEL_REGISTRY.get(table_name)
 
 def get_all_models():
-    """Get all registered models"""    return list(MODEL_REGISTRY.values())
+    """Get all registered models"""
+    return list(MODEL_REGISTRY.values())
 
 def get_model_relationships():
-    """Get model relationship information"""    return RELATIONSHIP_MAPPINGS
+    """Get model relationship information"""
+    return RELATIONSHIP_MAPPINGS

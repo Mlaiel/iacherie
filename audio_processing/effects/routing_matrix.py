@@ -5,7 +5,8 @@ bus management, and professional console routing capabilities.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import numpy as np
+"""
+import numpy as np
 import logging
 from typing import Dict, List, Optional, Set, Any, Tuple
 from enum import Enum
@@ -14,7 +15,8 @@ from abc import ABC, abstractmethod
 
 
 class BusType(Enum):
-    """Audio bus types"""    MAIN_MIX = "main_mix"           # Main stereo mix
+    """Audio bus types"""
+    MAIN_MIX = "main_mix"           # Main stereo mix
     GROUP = "group"                 # Group/subgroup bus
     AUX_SEND = "aux_send"          # Auxiliary send bus
     AUX_RETURN = "aux_return"      # Auxiliary return bus
@@ -24,7 +26,8 @@ class BusType(Enum):
 
 
 class RoutingMode(Enum):
-    """Routing operation modes"""    NORMAL = "normal"              # Normal operation
+    """Routing operation modes"""
+    NORMAL = "normal"              # Normal operation
     PFL = "pfl"                    # Pre-fader listen
     AFL = "afl"                    # After-fader listen
     SOLO_IN_PLACE = "solo_in_place"  # Solo-in-place
@@ -32,7 +35,8 @@ class RoutingMode(Enum):
 
 @dataclass
 class BusConfiguration:
-    """Bus configuration settings"""    bus_id: str
+    """Bus configuration settings"""
+    bus_id: str
     bus_type: BusType
     channel_count: int = 2         # Mono=1, Stereo=2, etc.
     master_level: float = 0.0      # Master level in dB
@@ -44,7 +48,8 @@ class BusConfiguration:
 
 
 class AudioRoutingMatrix:
-    """Professional audio routing matrix"""    
+    """Professional audio routing matrix"""
+    
     def __init__(self, sample_rate: int):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -81,7 +86,8 @@ class AudioRoutingMatrix:
         self.logger.info("Audio routing matrix initialized")
     
     def _create_standard_buses(self):
-        """Create standard audio buses"""        # Main mix bus
+        """Create standard audio buses"""
+        # Main mix bus
         self.create_bus("main_mix", BusType.MAIN_MIX, channel_count=2)
         
         # Monitor bus
@@ -101,7 +107,8 @@ class AudioRoutingMatrix:
             self.create_bus(f"aux_return_{i}", BusType.AUX_RETURN, channel_count=2)
     
     def create_bus(self, bus_id: str, bus_type: BusType, channel_count: int = 2) -> bool:
-        """Create new audio bus"""        try:
+        """Create new audio bus"""
+        try:
             if bus_id in self.buses:
                 self.logger.warning(f"Bus '{bus_id}' already exists")
                 return False
@@ -123,7 +130,8 @@ class AudioRoutingMatrix:
             return False
     
     def delete_bus(self, bus_id: str) -> bool:
-        """Delete audio bus"""        try:
+        """Delete audio bus"""
+        try:
             if bus_id not in self.buses:
                 self.logger.warning(f"Bus '{bus_id}' does not exist")
                 return False
@@ -146,7 +154,8 @@ class AudioRoutingMatrix:
             return False
     
     def connect(self, source_id: str, destination_id: str, gain_db: float = 0.0) -> bool:
-        """Connect source to destination with optional gain"""        try:
+        """Connect source to destination with optional gain"""
+        try:
             if source_id not in self.routing_matrix:
                 self.routing_matrix[source_id] = set()
             
@@ -165,7 +174,8 @@ class AudioRoutingMatrix:
             return False
     
     def disconnect(self, source_id: str, destination_id: str) -> bool:
-        """Disconnect source from destination"""        try:
+        """Disconnect source from destination"""
+        try:
             if source_id in self.routing_matrix:
                 self.routing_matrix[source_id].discard(destination_id)
             
@@ -180,17 +190,20 @@ class AudioRoutingMatrix:
             return False
     
     def _disconnect_all_from_bus(self, bus_id: str):
-        """Disconnect all sources from a bus"""        for source_id in list(self.routing_matrix.keys()):
+        """Disconnect all sources from a bus"""
+        for source_id in list(self.routing_matrix.keys()):
             if bus_id in self.routing_matrix[source_id]:
                 self.disconnect(source_id, bus_id)
     
     def set_routing_gain(self, source_id: str, destination_id: str, gain_db: float):
-        """Set routing gain for connection"""        if (source_id, destination_id) in self.routing_gains:
+        """Set routing gain for connection"""
+        if (source_id, destination_id) in self.routing_gains:
             self.routing_gains[(source_id, destination_id)] = gain_db
             self.logger.debug(f"Set routing gain '{source_id}' -> '{destination_id}': {gain_db}dB")
     
     def route_audio(self, source_id: str, audio_data: np.ndarray) -> Dict[str, np.ndarray]:
-        """Route audio from source to connected destinations"""        routed_audio = {}
+        """Route audio from source to connected destinations"""
+        routed_audio = {}
         
         if source_id not in self.routing_matrix:
             return routed_audio
@@ -238,7 +251,8 @@ class AudioRoutingMatrix:
             return {}
     
     def _format_audio_for_bus(self, audio_data: np.ndarray, bus_config: BusConfiguration) -> np.ndarray:
-        """Format audio data for destination bus channel configuration"""        try:
+        """Format audio data for destination bus channel configuration"""
+        try:
             if bus_config.channel_count == 1:
                 # Convert to mono
                 if len(audio_data.shape) == 2:
@@ -262,7 +276,8 @@ class AudioRoutingMatrix:
             return audio_data
     
     def mix_bus_inputs(self, bus_id: str, input_audio_dict: Dict[str, np.ndarray]) -> np.ndarray:
-        """Mix multiple audio inputs for a bus"""        if not input_audio_dict:
+        """Mix multiple audio inputs for a bus"""
+        if not input_audio_dict:
             return np.array([])
         
         try:
@@ -294,7 +309,8 @@ class AudioRoutingMatrix:
             return np.array([])
     
     def set_solo(self, source_id: str, solo_state: bool):
-        """Set solo state for source"""        if solo_state:
+        """Set solo state for source"""
+        if solo_state:
             self.solo_channels.add(source_id)
         else:
             self.solo_channels.discard(source_id)
@@ -302,7 +318,8 @@ class AudioRoutingMatrix:
         self.logger.debug(f"Set solo for '{source_id}': {solo_state}")
     
     def set_mute(self, source_id: str, mute_state: bool):
-        """Set mute state for source"""        if mute_state:
+        """Set mute state for source"""
+        if mute_state:
             self.mute_channels.add(source_id)
         else:
             self.mute_channels.discard(source_id)
@@ -310,30 +327,36 @@ class AudioRoutingMatrix:
         self.logger.debug(f"Set mute for '{source_id}': {mute_state}")
     
     def clear_all_solos(self):
-        """Clear all solo states"""        self.solo_channels.clear()
+        """Clear all solo states"""
+        self.solo_channels.clear()
         self.logger.info("Cleared all solos")
     
     def clear_all_mutes(self):
-        """Clear all mute states"""        self.mute_channels.clear()
+        """Clear all mute states"""
+        self.mute_channels.clear()
         self.logger.info("Cleared all mutes")
     
     def set_monitor_source(self, source_id: str):
-        """Set monitor source"""        if source_id in self.buses:
+        """Set monitor source"""
+        if source_id in self.buses:
             self.monitor_source = source_id
             self.logger.info(f"Set monitor source to '{source_id}'")
         else:
             self.logger.warning(f"Monitor source '{source_id}' does not exist")
     
     def set_monitor_level(self, level_db: float):
-        """Set monitor level"""        self.monitor_level = level_db
+        """Set monitor level"""
+        self.monitor_level = level_db
         self.logger.debug(f"Set monitor level to {level_db}dB")
     
     def set_dim(self, dim_active: bool):
-        """Set monitor dim state"""        self.dim_active = dim_active
+        """Set monitor dim state"""
+        self.dim_active = dim_active
         self.logger.debug(f"Set dim: {dim_active}")
     
     def get_monitor_audio(self) -> Optional[np.ndarray]:
-        """Get current monitor audio"""        if self.monitor_source not in self.bus_audio:
+        """Get current monitor audio"""
+        if self.monitor_source not in self.bus_audio:
             return None
         
         monitor_audio = self.bus_audio[self.monitor_source].copy()
@@ -351,15 +374,18 @@ class AudioRoutingMatrix:
         return monitor_audio
     
     def activate_talkback(self, active: bool):
-        """Activate/deactivate talkback"""        self.talkback_active = active
+        """Activate/deactivate talkback"""
+        self.talkback_active = active
         self.logger.info(f"Talkback {'activated' if active else 'deactivated'}")
     
     def set_talkback_destinations(self, destinations: Set[str]):
-        """Set talkback destination buses"""        self.talkback_destinations = destinations
+        """Set talkback destination buses"""
+        self.talkback_destinations = destinations
         self.logger.info(f"Set talkback destinations: {destinations}")
     
     def route_talkback(self, talkback_audio: np.ndarray) -> Dict[str, np.ndarray]:
-        """Route talkback audio to destinations"""        if not self.talkback_active or not self.talkback_destinations:
+        """Route talkback audio to destinations"""
+        if not self.talkback_active or not self.talkback_destinations:
             return {}
         
         talkback_gain = 10 ** (self.talkback_level / 20.0)
@@ -372,7 +398,8 @@ class AudioRoutingMatrix:
         return routed_talkback
     
     def get_routing_info(self) -> Dict[str, Any]:
-        """Get complete routing information"""        return {
+        """Get complete routing information"""
+        return {
             'buses': {bus_id: {
                 'type': bus_config.bus_type.value,
                 'channels': bus_config.channel_count,
@@ -400,7 +427,8 @@ class AudioRoutingMatrix:
         }
     
     def get_bus_levels(self) -> Dict[str, float]:
-        """Get current levels for all buses"""        levels = {}
+        """Get current levels for all buses"""
+        levels = {}
         
         for bus_id, audio_data in self.bus_audio.items():
             if audio_data.size > 0:

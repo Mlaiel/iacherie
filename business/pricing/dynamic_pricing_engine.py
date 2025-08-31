@@ -37,7 +37,8 @@ Business Logic Flow:
 Market Analysis → Competitor Pricing Intelligence → Creator Performance Metrics → 
 Demand Forecasting → Dynamic Price Calculation → A/B Testing → Revenue Optimization → 
 Price Elasticity Analysis → Real-time Adjustments → Performance Monitoring
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import numpy as np
@@ -80,7 +81,8 @@ settings = get_settings()
 
 
 class PricingStrategy(Enum):
-    """Available pricing strategies"""    PENETRATION = "penetration"          # Low price to gain market share
+    """Available pricing strategies"""
+    PENETRATION = "penetration"          # Low price to gain market share
     SKIMMING = "skimming"               # High price for premium positioning  
     COMPETITIVE = "competitive"         # Match competitor pricing
     VALUE_BASED = "value_based"         # Price based on perceived value
@@ -93,7 +95,8 @@ class PricingStrategy(Enum):
 
 
 class PricingTier(Enum):
-    """Pricing tier levels"""    BASIC = "basic"
+    """Pricing tier levels"""
+    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
@@ -101,7 +104,8 @@ class PricingTier(Enum):
 
 
 class CreatorSegment(Enum):
-    """Creator market segments for pricing"""    EMERGING = "emerging"               # New creators (0-1k followers)
+    """Creator market segments for pricing"""
+    EMERGING = "emerging"               # New creators (0-1k followers)
     GROWING = "growing"                 # Growing creators (1k-10k followers)
     ESTABLISHED = "established"         # Established creators (10k-100k followers)
     INFLUENCER = "influencer"          # Influencers (100k-1M followers)
@@ -110,7 +114,8 @@ class CreatorSegment(Enum):
 
 @dataclass
 class PricingModel:
-    """Comprehensive pricing model definition"""    model_id: str
+    """Comprehensive pricing model definition"""
+    model_id: str
     creator_id: str
     creator_type: str
     creator_segment: CreatorSegment
@@ -131,7 +136,8 @@ class PricingModel:
 
 @dataclass
 class PriceRecommendation:
-    """AI-generated price recommendation"""    recommendation_id: str
+    """AI-generated price recommendation"""
+    recommendation_id: str
     creator_id: str
     service_type: str
     recommended_price: Decimal
@@ -150,7 +156,8 @@ class PriceRecommendation:
 
 @dataclass
 class MarketInsight:
-    """Market intelligence for pricing decisions"""    insight_id: str
+    """Market intelligence for pricing decisions"""
+    insight_id: str
     market_segment: str
     average_price: Decimal
     price_variance: float
@@ -167,9 +174,11 @@ class MarketInsight:
 
 
 class DynamicPricingEngine:
-    """    Ultra-advanced dynamic pricing engine with AI-powered market intelligence,
+    """
+    Ultra-advanced dynamic pricing engine with AI-powered market intelligence,
     competitor analysis, and revenue optimization capabilities.
-    """    
+    """
+    
     def __init__(self, 
                  redis_client: redis.Redis,
                  db_session: AsyncSession):
@@ -206,7 +215,8 @@ class DynamicPricingEngine:
         }
 
     async def initialize_ml_models(self):
-        """Initialize and train ML models for pricing optimization"""        
+        """Initialize and train ML models for pricing optimization"""
+        
         try:
             logger.info("Initializing ML models for dynamic pricing")
             
@@ -269,7 +279,8 @@ class DynamicPricingEngine:
                                           creator_id: str,
                                           service_type: str,
                                           context: Dict[str, Any] = None) -> PriceRecommendation:
-        """        Generate AI-powered price recommendation for a creator's service
+        """
+        Generate AI-powered price recommendation for a creator's service
         
         Args:
             creator_id: Creator identifier
@@ -278,7 +289,8 @@ class DynamicPricingEngine:
             
         Returns:
             PriceRecommendation: Comprehensive price recommendation
-        """        try:
+        """
+        try:
             logger.info(f"Generating price recommendation for creator {creator_id}, service {service_type}")
             
             # Gather comprehensive market intelligence
@@ -368,7 +380,8 @@ class DynamicPricingEngine:
                                         creator_id: str,
                                         service_type: str,
                                         context: Dict[str, Any]) -> Dict[str, Any]:
-        """Gather comprehensive market intelligence for pricing decision"""        
+        """Gather comprehensive market intelligence for pricing decision"""
+        
         # Get creator profile and determine segment
         creator_profile = await self._get_creator_profile(creator_id)
         creator_segment = self._determine_creator_segment(creator_profile)
@@ -400,7 +413,8 @@ class DynamicPricingEngine:
                                    creator_id: str,
                                    service_type: str,
                                    market_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict demand curves for different price points"""        
+        """Predict demand curves for different price points"""
+        
         # Define price range for demand curve analysis
         base_price = Decimal('100.00')  # Default base price
         price_points = [
@@ -448,7 +462,8 @@ class DynamicPricingEngine:
                                         market_data: Dict[str, Any],
                                         competitor_data: Dict[str, Any],
                                         demand_analysis: Dict[str, Any]) -> Decimal:
-        """Calculate optimal price using ML models"""        
+        """Calculate optimal price using ML models"""
+        
         try:
             # Prepare features for ML model
             features = self._prepare_pricing_features(
@@ -478,7 +493,8 @@ class DynamicPricingEngine:
                                         creator_metrics: Dict[str, Any],
                                         market_data: Dict[str, Any],
                                         competitor_data: Dict[str, Any]) -> Decimal:
-        """Calculate price using rule-based approach as fallback"""        
+        """Calculate price using rule-based approach as fallback"""
+        
         # Base price calculation
         base_price = Decimal('100.00')
         
@@ -522,7 +538,8 @@ class DynamicPricingEngine:
         return self._round_to_pricing_increment(price)
 
     def _round_to_pricing_increment(self, price: Decimal) -> Decimal:
-        """Round price to appropriate increment based on price level"""        
+        """Round price to appropriate increment based on price level"""
+        
         if price < Decimal('10'):
             increment = Decimal('0.99')  # $x.99 pricing
         elif price < Decimal('100'):
@@ -539,7 +556,8 @@ class DynamicPricingEngine:
                                        service_type: str,
                                        price: Decimal,
                                        demand_analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze price elasticity for the given pricing scenario"""        
+        """Analyze price elasticity for the given pricing scenario"""
+        
         # Get historical pricing data for elasticity calculation
         historical_data = await self._get_historical_pricing_data(creator_id, service_type)
         
@@ -596,7 +614,8 @@ class DynamicPricingEngine:
                                     market_data: Dict[str, Any],
                                     competitor_data: Dict[str, Any],
                                     elasticity_analysis: Dict[str, Any]) -> List[str]:
-        """Generate human-readable justification for the recommended price"""        
+        """Generate human-readable justification for the recommended price"""
+        
         justifications = []
         
         # Market-based justification
@@ -637,7 +656,8 @@ class DynamicPricingEngine:
                              price: Decimal,
                              demand_analysis: Dict[str, Any],
                              creator_metrics: Dict[str, Any]) -> Decimal:
-        """Project potential revenue based on pricing and demand"""        
+        """Project potential revenue based on pricing and demand"""
+        
         expected_demand = demand_analysis.get('predicted_demand', 10)  # Default 10 units
         conversion_rate = demand_analysis.get('conversion_probability', 0.1)  # Default 10%
         
@@ -660,7 +680,8 @@ class DynamicPricingEngine:
                             market_data: Dict[str, Any],
                             competitor_data: Dict[str, Any],
                             elasticity_analysis: Dict[str, Any]) -> Dict[str, float]:
-        """Assess potential risks associated with the recommended pricing"""        
+        """Assess potential risks associated with the recommended pricing"""
+        
         risks = {}
         
         # Price sensitivity risk
@@ -684,7 +705,8 @@ class DynamicPricingEngine:
         return risks
 
     def _design_ab_test(self, optimal_price: Decimal, market_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Design A/B testing strategy for price optimization"""        
+        """Design A/B testing strategy for price optimization"""
+        
         # Create price variants
         price_a = optimal_price * Decimal('0.95')  # 5% lower
         price_b = optimal_price * Decimal('1.05')  # 5% higher
@@ -720,25 +742,30 @@ class DynamicPricingEngine:
     # Helper methods for data processing and analysis
     
     async def _load_training_data(self) -> List[Dict[str, Any]]:
-        """Load historical data for ML model training"""        # Implementation to load from database
+        """Load historical data for ML model training"""
+        # Implementation to load from database
         return []
 
     def _prepare_training_features(self, data: List[Dict[str, Any]]) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """Prepare features for ML model training"""        # Implementation for feature engineering
+        """Prepare features for ML model training"""
+        # Implementation for feature engineering
         return np.array([]), np.array([]), np.array([])
 
     def _prepare_demand_features(self, price: Decimal, market_data: Dict[str, Any]) -> List[float]:
-        """Prepare features for demand prediction"""        return [float(price), 1.0, 0.5]  # Simplified features
+        """Prepare features for demand prediction"""
+        return [float(price), 1.0, 0.5]  # Simplified features
 
     def _prepare_pricing_features(self, 
                                 creator_metrics: Dict[str, Any],
                                 market_data: Dict[str, Any],
                                 competitor_data: Dict[str, Any],
                                 demand_analysis: Dict[str, Any]) -> List[float]:
-        """Prepare features for ML pricing model"""        return [1.0, 0.5, 0.8, 100.0]  # Simplified features
+        """Prepare features for ML pricing model"""
+        return [1.0, 0.5, 0.8, 100.0]  # Simplified features
 
     async def _get_creator_profile(self, creator_id: str) -> Dict[str, Any]:
-        """Get creator profile data"""        # Implementation to fetch from database
+        """Get creator profile data"""
+        # Implementation to fetch from database
         return {
             'type': 'musician',
             'location': 'global',
@@ -747,7 +774,8 @@ class DynamicPricingEngine:
         }
 
     def _determine_creator_segment(self, creator_profile: Dict[str, Any]) -> CreatorSegment:
-        """Determine creator segment based on profile metrics"""        followers = creator_profile.get('followers', 0)
+        """Determine creator segment based on profile metrics"""
+        followers = creator_profile.get('followers', 0)
         
         if followers < 1000:
             return CreatorSegment.EMERGING
@@ -761,7 +789,8 @@ class DynamicPricingEngine:
             return CreatorSegment.CELEBRITY
 
     def _estimate_demand_rule_based(self, price: Decimal, market_data: Dict[str, Any]) -> float:
-        """Estimate demand using rule-based approach"""        base_demand = 100.0
+        """Estimate demand using rule-based approach"""
+        base_demand = 100.0
         price_sensitivity = -0.5  # Elastic demand
         
         # Simple price elasticity formula
@@ -771,7 +800,8 @@ class DynamicPricingEngine:
         return max(0, demand)
 
     def _estimate_conversion_rate(self, price: Decimal, demand: float, market_data: Dict[str, Any]) -> float:
-        """Estimate conversion rate based on price and demand"""        base_conversion = 0.1  # 10% base conversion rate
+        """Estimate conversion rate based on price and demand"""
+        base_conversion = 0.1  # 10% base conversion rate
         
         # Price impact on conversion
         price_factor = max(0.1, 200.0 / float(price))  # Higher prices reduce conversion
@@ -785,7 +815,8 @@ class DynamicPricingEngine:
         return min(1.0, max(0.01, conversion_rate))
 
     def _get_industry_elasticity(self, service_type: str) -> float:
-        """Get industry-average price elasticity for service type"""        elasticity_mapping = {
+        """Get industry-average price elasticity for service type"""
+        elasticity_mapping = {
             'music_production': -1.2,
             'content_creation': -1.5,
             'photography': -0.8,
@@ -797,11 +828,13 @@ class DynamicPricingEngine:
         return elasticity_mapping.get(service_type, elasticity_mapping['default'])
 
     async def _get_historical_pricing_data(self, creator_id: str, service_type: str) -> List[Dict[str, Any]]:
-        """Get historical pricing and performance data"""        # Implementation to fetch from database
+        """Get historical pricing and performance data"""
+        # Implementation to fetch from database
         return []
 
     async def _analyze_seasonal_patterns(self, service_type: str, creator_type: str) -> Dict[str, float]:
-        """Analyze seasonal patterns for pricing optimization"""        current_month = datetime.now().month
+        """Analyze seasonal patterns for pricing optimization"""
+        current_month = datetime.now().month
         
         # Simplified seasonal factors (would be based on historical data)
         seasonal_factors = {
@@ -825,7 +858,8 @@ class DynamicPricingEngine:
         }
 
     async def _get_economic_indicators(self) -> Dict[str, float]:
-        """Get relevant economic indicators for pricing"""        # In production, this would fetch real economic data
+        """Get relevant economic indicators for pricing"""
+        # In production, this would fetch real economic data
         return {
             'inflation_rate': 0.03,
             'unemployment_rate': 0.05,
@@ -834,7 +868,8 @@ class DynamicPricingEngine:
         }
 
     async def _cache_recommendation(self, recommendation: PriceRecommendation):
-        """Cache price recommendation"""        cache_key = f"price_recommendation:{recommendation.creator_id}:{recommendation.service_type}"
+        """Cache price recommendation"""
+        cache_key = f"price_recommendation:{recommendation.creator_id}:{recommendation.service_type}"
         cache_data = asdict(recommendation)
         
         await self.cache_manager.set(
@@ -844,12 +879,14 @@ class DynamicPricingEngine:
         )
 
     async def _initialize_fallback_models(self):
-        """Initialize fallback rule-based models"""        logger.info("Initializing fallback rule-based pricing models")
+        """Initialize fallback rule-based models"""
+        logger.info("Initializing fallback rule-based pricing models")
         # Implementation for rule-based fallback models
         pass
 
     async def get_price_history(self, creator_id: str, service_type: str) -> List[Dict[str, Any]]:
-        """Get pricing history for a creator's service"""        cache_key = f"price_history:{creator_id}:{service_type}"
+        """Get pricing history for a creator's service"""
+        cache_key = f"price_history:{creator_id}:{service_type}"
         cached_history = await self.cache_manager.get(cache_key)
         
         if cached_history:
@@ -864,7 +901,8 @@ class DynamicPricingEngine:
                                      service_type: str,
                                      price: Decimal,
                                      performance_metrics: Dict[str, Any]):
-        """Update price performance data for model improvement"""        
+        """Update price performance data for model improvement"""
+        
         # Store performance data
         performance_record = {
             'creator_id': creator_id,
@@ -882,11 +920,13 @@ class DynamicPricingEngine:
             self.engine_stats['successful_predictions'] += 1
 
     async def _store_performance_data(self, data: Dict[str, Any]):
-        """Store performance data for model retraining"""        # Implementation for database storage
+        """Store performance data for model retraining"""
+        # Implementation for database storage
         pass
 
     async def get_engine_statistics(self) -> Dict[str, Any]:
-        """Get dynamic pricing engine statistics"""        stats = self.engine_stats.copy()
+        """Get dynamic pricing engine statistics"""
+        stats = self.engine_stats.copy()
         
         # Calculate success rate
         if stats['total_recommendations'] > 0:

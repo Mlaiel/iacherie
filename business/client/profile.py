@@ -5,7 +5,8 @@ including portfolio showcase, social links, and creator verification.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Advanced Content Protection
-"""from datetime import datetime, timedelta
+"""
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
 from uuid import UUID
 import logging
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorTier(str, Enum):
-    """Creator tier levels based on followers and engagement."""    EMERGING = "emerging"  # < 1K followers
+    """Creator tier levels based on followers and engagement."""
+    EMERGING = "emerging"  # < 1K followers
     RISING = "rising"  # 1K - 10K followers
     ESTABLISHED = "established"  # 10K - 100K followers
     INFLUENCER = "influencer"  # 100K - 1M followers
@@ -42,13 +44,15 @@ class CreatorTier(str, Enum):
 
 
 class ProfileVisibility(str, Enum):
-    """Profile visibility settings."""    PUBLIC = "public"
+    """Profile visibility settings."""
+    PUBLIC = "public"
     FOLLOWERS_ONLY = "followers_only"
     PRIVATE = "private"
 
 
 class ProfileUpdateData(BaseModel):
-    """Profile update validation model."""    display_name: Optional[str] = None
+    """Profile update validation model."""
+    display_name: Optional[str] = None
     bio: Optional[str] = None
     location: Optional[str] = None
     website_url: Optional[HttpUrl] = None
@@ -90,7 +94,8 @@ class ProfileUpdateData(BaseModel):
 
 
 class PortfolioItemData(BaseModel):
-    """Portfolio item creation/update data."""    title: str
+    """Portfolio item creation/update data."""
+    title: str
     description: Optional[str] = None
     content_type: str  # audio, video, image, text
     media_url: Optional[str] = None
@@ -108,7 +113,8 @@ class PortfolioItemData(BaseModel):
 
 
 class ProfileManager:
-    """    Comprehensive profile management system for content creators.
+    """
+    Comprehensive profile management system for content creators.
     
     Features:
     - Multi-format creator profiles
@@ -118,7 +124,8 @@ class ProfileManager:
     - Engagement analytics integration
     - Profile verification support
     - Collaboration rate management
-    """    
+    """
+    
     def __init__(
         self,
         db: Session,
@@ -138,7 +145,8 @@ class ProfileManager:
         client_id: UUID,
         profile_data: ProfileUpdateData
     ) -> Dict[str, Any]:
-        """        Create initial creator profile.
+        """
+        Create initial creator profile.
         
         Args:
             client_id: Client identifier
@@ -149,7 +157,8 @@ class ProfileManager:
             
         Raises:
             InvalidProfileDataError: If profile data is invalid
-        """        try:
+        """
+        try:
             # Check if profile already exists
             existing_profile = self.db.query(CreatorProfile).filter(
                 CreatorProfile.client_id == client_id
@@ -199,7 +208,8 @@ class ProfileManager:
         client_id: UUID,
         viewer_id: Optional[UUID] = None
     ) -> Optional[Dict[str, Any]]:
-        """        Retrieve creator profile with visibility checks.
+        """
+        Retrieve creator profile with visibility checks.
         
         Args:
             client_id: Profile owner's client ID
@@ -207,7 +217,8 @@ class ProfileManager:
             
         Returns:
             Profile data or None if not found/accessible
-        """        try:
+        """
+        try:
             profile = self.db.query(CreatorProfile).filter(
                 CreatorProfile.client_id == client_id
             ).first()
@@ -230,7 +241,8 @@ class ProfileManager:
         client_id: UUID,
         update_data: ProfileUpdateData
     ) -> Dict[str, Any]:
-        """        Update creator profile information.
+        """
+        Update creator profile information.
         
         Args:
             client_id: Client identifier
@@ -241,7 +253,8 @@ class ProfileManager:
             
         Raises:
             ProfileNotFoundError: If profile doesn't exist
-        """        try:
+        """
+        try:
             profile = self.db.query(CreatorProfile).filter(
                 CreatorProfile.client_id == client_id
             ).first()
@@ -279,7 +292,8 @@ class ProfileManager:
         image_data: bytes,
         image_type: str
     ) -> Dict[str, str]:
-        """        Upload and process profile image.
+        """
+        Upload and process profile image.
         
         Args:
             client_id: Client identifier
@@ -288,7 +302,8 @@ class ProfileManager:
             
         Returns:
             Upload result with image URLs
-        """        try:
+        """
+        try:
             profile = self.db.query(CreatorProfile).filter(
                 CreatorProfile.client_id == client_id
             ).first()
@@ -342,7 +357,8 @@ class ProfileManager:
         client_id: UUID,
         item_data: PortfolioItemData
     ) -> Dict[str, Any]:
-        """        Add item to creator's portfolio.
+        """
+        Add item to creator's portfolio.
         
         Args:
             client_id: Client identifier
@@ -350,7 +366,8 @@ class ProfileManager:
             
         Returns:
             Created portfolio item information
-        """        try:
+        """
+        try:
             profile = self.db.query(CreatorProfile).filter(
                 CreatorProfile.client_id == client_id
             ).first()
@@ -386,14 +403,16 @@ class ProfileManager:
             raise ProfileServiceError("Failed to add portfolio item") from e
             
     async def update_creator_tier(self, client_id: UUID) -> CreatorTier:
-        """        Calculate and update creator tier based on analytics.
+        """
+        Calculate and update creator tier based on analytics.
         
         Args:
             client_id: Client identifier
             
         Returns:
             Updated creator tier
-        """        try:
+        """
+        try:
             profile = self.db.query(CreatorProfile).filter(
                 CreatorProfile.client_id == client_id
             ).first()
@@ -446,7 +465,8 @@ class ProfileManager:
         page: int = 1,
         limit: int = 20
     ) -> Dict[str, Any]:
-        """        Search creator profiles with filters.
+        """
+        Search creator profiles with filters.
         
         Args:
             query: Search query string
@@ -460,7 +480,8 @@ class ProfileManager:
             
         Returns:
             Search results with pagination
-        """        try:
+        """
+        try:
             query_builder = self.db.query(CreatorProfile).filter(
                 CreatorProfile.visibility == ProfileVisibility.PUBLIC
             )
@@ -526,7 +547,8 @@ class ProfileManager:
         profile: CreatorProfile,
         viewer_id: Optional[UUID]
     ) -> bool:
-        """Check if viewer can access profile based on visibility settings."""        if profile.visibility == ProfileVisibility.PUBLIC:
+        """Check if viewer can access profile based on visibility settings."""
+        if profile.visibility == ProfileVisibility.PUBLIC:
             return True
         elif profile.visibility == ProfileVisibility.PRIVATE:
             return viewer_id == profile.client_id
@@ -536,7 +558,8 @@ class ProfileManager:
         return False
         
     async def _update_profile_completion(self, profile: CreatorProfile) -> None:
-        """Calculate and update profile completion percentage."""        completion_fields = [
+        """Calculate and update profile completion percentage."""
+        completion_fields = [
             profile.display_name,
             profile.bio,
             profile.location,
@@ -558,7 +581,8 @@ class ProfileManager:
         include_private: bool = False,
         summary: bool = False
     ) -> Dict[str, Any]:
-        """Format profile data for API response."""        data = {
+        """Format profile data for API response."""
+        data = {
             "id": str(profile.id),
             "client_id": str(profile.client_id),
             "display_name": profile.display_name,
@@ -602,7 +626,8 @@ class ProfileManager:
         return data
         
     def _format_portfolio_item(self, item: PortfolioItem) -> Dict[str, Any]:
-        """Format portfolio item data."""        return {
+        """Format portfolio item data."""
+        return {
             "id": str(item.id),
             "title": item.title,
             "description": item.description,

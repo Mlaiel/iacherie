@@ -15,7 +15,8 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""from datetime import datetime, timedelta
+"""
+from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, List
 import logging
 from enum import Enum
@@ -107,7 +108,8 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 
 # Enums for better API documentation
 class UserRole(str, Enum):
-    """User roles in the system"""    GUEST = "guest"
+    """User roles in the system"""
+    GUEST = "guest"
     CREATOR = "creator"
     BRAND = "brand"
     AGENCY = "agency"
@@ -115,27 +117,31 @@ class UserRole(str, Enum):
     ADMIN = "admin"
 
 class SubscriptionTier(str, Enum):
-    """Available subscription tiers"""    FREE = "free"
+    """Available subscription tiers"""
+    FREE = "free"
     BASIC = "basic"
     PRO = "pro"
     ENTERPRISE = "enterprise"
 
 class ContentFormat(str, Enum):
-    """Supported content formats"""    AUDIO = "audio"
+    """Supported content formats"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
     DOCUMENT = "document"
 
 class TwoFactorMethod(str, Enum):
-    """Two-factor authentication methods"""    TOTP = "totp"
+    """Two-factor authentication methods"""
+    TOTP = "totp"
     SMS = "sms"
     EMAIL = "email"
     BACKUP_CODE = "backup_code"
 
 # Enhanced Request Models
 class UserRegistrationRequest(BaseModel):
-    """User registration request with comprehensive validation"""    email: EmailStr = Field(
+    """User registration request with comprehensive validation"""
+    email: EmailStr = Field(
         ..., 
         description="Valid email address for account creation",
         example="creator@example.com"
@@ -221,7 +227,8 @@ class UserRegistrationRequest(BaseModel):
         return v
 
 class LoginRequest(BaseModel):
-    """Enhanced login request"""    username: str = Field(
+    """Enhanced login request"""
+    username: str = Field(
         ...,
         description="Username or email address",
         example="creator@example.com"
@@ -242,7 +249,8 @@ class LoginRequest(BaseModel):
 
 # Enhanced Response Models
 class UserProfile(BaseModel):
-    """User profile information"""    user_id: str = Field(..., description="Unique user identifier")
+    """User profile information"""
+    user_id: str = Field(..., description="Unique user identifier")
     email: EmailStr = Field(..., description="User email address")
     username: str = Field(..., description="Username")
     full_name: str = Field(..., description="User's full name")
@@ -257,7 +265,8 @@ class UserProfile(BaseModel):
     company_name: Optional[str] = Field(None, description="Company name for business accounts")
 
 class LoginResponse(BaseModel):
-    """Response model for successful login"""    success: bool = Field(True, description="Login success status")
+    """Response model for successful login"""
+    success: bool = Field(True, description="Login success status")
     access_token: str = Field(..., description="JWT access token")
     refresh_token: str = Field(..., description="JWT refresh token")
     token_type: str = Field("bearer", description="Token type")
@@ -267,7 +276,8 @@ class LoginResponse(BaseModel):
     session_id: str = Field(..., description="Session identifier")
 
 class RegistrationResponse(BaseModel):
-    """Response model for successful registration"""    success: bool = Field(True, description="Registration success status")
+    """Response model for successful registration"""
+    success: bool = Field(True, description="Registration success status")
     user_id: str = Field(..., description="Newly created user ID")
     message: str = Field(..., description="Success message")
     verification_required: bool = Field(True, description="Whether email verification is required")
@@ -275,26 +285,30 @@ class RegistrationResponse(BaseModel):
     next_steps: List[str] = Field(..., description="Next steps for the user")
 
 class RefreshTokenRequest(BaseModel):
-    """Request model for token refresh"""    refresh_token: str = Field(
+    """Request model for token refresh"""
+    refresh_token: str = Field(
         ...,
         description="Valid refresh token",
         example="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
     )
 
 class RefreshTokenResponse(BaseModel):
-    """Response model for token refresh"""    access_token: str = Field(..., description="New access token")
+    """Response model for token refresh"""
+    access_token: str = Field(..., description="New access token")
     token_type: str = Field("bearer", description="Token type")
     expires_in: int = Field(..., description="Token expiration time in seconds")
 
 class PasswordResetRequest(BaseModel):
-    """Request model for password reset"""    email: EmailStr = Field(
+    """Request model for password reset"""
+    email: EmailStr = Field(
         ...,
         description="Email address for password reset",
         example="user@example.com"
     )
 
 class PasswordResetConfirm(BaseModel):
-    """Request model for password reset confirmation"""    token: str = Field(..., description="Password reset token")
+    """Request model for password reset confirmation"""
+    token: str = Field(..., description="Password reset token")
     new_password: str = Field(
         ...,
         min_length=12,
@@ -309,7 +323,8 @@ class PasswordResetConfirm(BaseModel):
         return v
 
 class ChangePasswordRequest(BaseModel):
-    """Request model for password change"""    current_password: str = Field(..., description="Current password")
+    """Request model for password change"""
+    current_password: str = Field(..., description="Current password")
     new_password: str = Field(
         ...,
         min_length=12,
@@ -324,11 +339,13 @@ class ChangePasswordRequest(BaseModel):
         return v
 
 class TwoFactorSetupRequest(BaseModel):
-    """Request model for 2FA setup"""    method: TwoFactorMethod = Field(..., description="2FA method to set up")
+    """Request model for 2FA setup"""
+    method: TwoFactorMethod = Field(..., description="2FA method to set up")
     phone_number: Optional[str] = Field(None, description="Phone number for SMS 2FA")
 
 class TwoFactorVerifyRequest(BaseModel):
-    """Request model for 2FA verification"""    code: str = Field(
+    """Request model for 2FA verification"""
+    code: str = Field(
         ...,
         min_length=6,
         max_length=8,
@@ -339,7 +356,8 @@ class TwoFactorVerifyRequest(BaseModel):
     remember_device: bool = Field(default=False, description="Remember this device for 30 days")
 
 class ApiErrorResponse(BaseModel):
-    """Standard error response format"""    error: Dict[str, Any] = Field(
+    """Standard error response format"""
+    error: Dict[str, Any] = Field(
         ...,
         description="Error details",
         example={
@@ -359,7 +377,8 @@ class ApiErrorResponse(BaseModel):
     response_model=RegistrationResponse,
     status_code=status.HTTP_201_CREATED,
     summary="Register New User Account",
-    description="""    **Register a new user account with comprehensive validation.**
+    description="""
+    **Register a new user account with comprehensive validation.**
     
     Features:
     - Email and username uniqueness validation
@@ -425,7 +444,8 @@ async def register_user(
     db=Depends(get_db),
     user_service: UserService = Depends()
 ):
-    """Register a new user account with comprehensive validation and setup."""    try:
+    """Register a new user account with comprehensive validation and setup."""
+    try:
         # Simulate user creation (replace with actual implementation)
         user_id = "user_" + str(hash(request.email))[:10]
         
@@ -460,7 +480,8 @@ async def register_user(
     "/login",
     response_model=LoginResponse,
     summary="User Authentication",
-    description="""    **Authenticate user and obtain access tokens.**
+    description="""
+    **Authenticate user and obtain access tokens.**
     
     Features:
     - JWT-based authentication
@@ -525,7 +546,8 @@ async def login_user(
     user_service: UserService = Depends(),
     auth_manager: AuthManager = Depends()
 ):
-    """Authenticate user and return access tokens with comprehensive security."""    try:
+    """Authenticate user and return access tokens with comprehensive security."""
+    try:
         # Simulate authentication (replace with actual implementation)
         access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.example.token"
         refresh_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.example.refresh"
@@ -572,7 +594,8 @@ async def login_user(
     "/refresh",
     response_model=RefreshTokenResponse,
     summary="Refresh Access Token",
-    description="""    **Refresh access token using a valid refresh token.**
+    description="""
+    **Refresh access token using a valid refresh token.**
     
     Use this endpoint to obtain a new access token without requiring
     the user to log in again. Refresh tokens have a longer lifespan
@@ -607,7 +630,8 @@ async def refresh_access_token(
     request: RefreshTokenRequest,
     auth_manager: AuthManager = Depends()
 ):
-    """Refresh access token using valid refresh token."""    try:
+    """Refresh access token using valid refresh token."""
+    try:
         # Simulate token refresh (replace with actual implementation)
         new_access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.new.token"
         
@@ -633,7 +657,8 @@ async def refresh_access_token(
 @router.post(
     "/logout",
     summary="User Logout",
-    description="""    **Logout user and invalidate all tokens.**
+    description="""
+    **Logout user and invalidate all tokens.**
     
     This endpoint will:
     - Invalidate the current access token
@@ -663,7 +688,8 @@ async def logout_user(
     current_user: str = Depends(oauth2_scheme),
     auth_manager: AuthManager = Depends()
 ):
-    """Logout user and invalidate session."""    try:
+    """Logout user and invalidate session."""
+    try:
         # Simulate logout (replace with actual implementation)
         logger.info("User logged out successfully")
         
@@ -688,8 +714,10 @@ async def verify_email(
     user_service: UserService = Depends(),
     auth_manager: AuthManager = Depends()
 ):
-    """    Verify user email using verification token.
-    """    try:
+    """
+    Verify user email using verification token.
+    """
+    try:
         payload = auth_manager.verify_verification_token(token)
         email = payload.get("email")
         
@@ -728,8 +756,10 @@ async def request_password_reset(
     request: PasswordResetRequest,
     user_service: UserService = Depends()
 ):
-    """    Request password reset link via email.
-    """    try:
+    """
+    Request password reset link via email.
+    """
+    try:
         user = await user_service.get_user_by_email(request.email)
         if user:
             reset_token = AuthManager.generate_password_reset_token(request.email)
@@ -753,8 +783,10 @@ async def confirm_password_reset(
     user_service: UserService = Depends(),
     auth_manager: AuthManager = Depends()
 ):
-    """    Confirm password reset with token and new password.
-    """    try:
+    """
+    Confirm password reset with token and new password.
+    """
+    try:
         payload = auth_manager.verify_password_reset_token(request.token)
         email = payload.get("email")
         
@@ -793,8 +825,10 @@ async def confirm_password_reset(
 async def get_current_user_info(
     current_user: User = Depends(auth_manager.get_current_user)
 ):
-    """    Get current authenticated user information.
-    """    try:
+    """
+    Get current authenticated user information.
+    """
+    try:
         return {
             "user_id": str(current_user.id),
             "email": current_user.email,
@@ -824,8 +858,10 @@ async def change_password(
     current_user: User = Depends(auth_manager.get_current_user),
     user_service: UserService = Depends()
 ):
-    """    Change user password (requires current password).
-    """    try:
+    """
+    Change user password (requires current password).
+    """
+    try:
         # Verify current password
         if not await user_service.verify_password(current_password, current_user.hashed_password):
             raise HTTPException(
@@ -858,8 +894,10 @@ async def list_users(
     limit: int = 100,
     user_service: UserService = Depends()
 ):
-    """    List all users (admin only).
-    """    try:
+    """
+    List all users (admin only).
+    """
+    try:
         users = await user_service.get_users(skip=skip, limit=limit)
         return {
             "users": [

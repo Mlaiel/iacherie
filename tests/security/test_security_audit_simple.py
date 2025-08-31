@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -18,7 +19,8 @@ Lightweight security audit tests that work without heavy dependencies.
 These tests focus on real security validation without complex mocking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -35,8 +37,10 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestSecurityAuditFundamentals:
-    """Test fundamental security audit capabilities"""    def test_password_security_requirements(self):
-        """Test password security validation"""        # Test weak passwords
+    """Test fundamental security audit capabilities"""
+    def test_password_security_requirements(self):
+        """Test password security validation"""
+        # Test weak passwords
         weak_passwords = ["123456", "password", "admin", "qwerty", "abc123"]
         strong_passwords = ["MyStr0ng!P@ssw0rd2024", "C0mpl3x#P@ssw0rd!", "Secur3&C0mpl1cat3d!"]
         
@@ -51,14 +55,16 @@ class TestSecurityAuditFundamentals:
             assert self._has_complexity(strong_pass), f"Strong password {strong_pass} should have complexity"
     
     def _has_complexity(self, password):
-        """Check password complexity"""        has_upper = any(c.isupper() for c in password)
+        """Check password complexity"""
+        has_upper = any(c.isupper() for c in password)
         has_lower = any(c.islower() for c in password)
         has_digit = any(c.isdigit() for c in password)
         has_special = any(c in "!@#$%^&*()_+-=[]{}|;:,.<>?" for c in password)
         return has_upper and has_lower and has_digit and has_special
 
     def test_hash_security(self):
-        """Test cryptographic hash security"""        test_data = "sensitive_data_to_hash"
+        """Test cryptographic hash security"""
+        test_data = "sensitive_data_to_hash"
         
         # Test SHA-256
         sha256_hash = hashlib.sha256(test_data.encode()).hexdigest()
@@ -74,7 +80,8 @@ class TestSecurityAuditFundamentals:
         assert sha256_hash != different_hash, "Different input should produce different hash"
 
     def test_file_permissions_audit(self):
-        """Test file permission security"""        # Create a temporary test file
+        """Test file permission security"""
+        # Create a temporary test file
         test_file = "/tmp/security_test_file.txt"
         
         with open(test_file, 'w') as f:
@@ -94,7 +101,8 @@ class TestSecurityAuditFundamentals:
         os.remove(test_file)
 
     def test_security_logging_format(self):
-        """Test security event logging format"""        # Simulate a security event
+        """Test security event logging format"""
+        # Simulate a security event
         security_event = {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "event_type": "authentication_attempt",
@@ -123,8 +131,10 @@ class TestSecurityAuditFundamentals:
 
 
 class TestSecurityConfigAudit:
-    """Test security configuration audit"""    def test_debug_mode_disabled(self):
-        """Test that debug mode is disabled in production"""        # Check common debug environment variables
+    """Test security configuration audit"""
+    def test_debug_mode_disabled(self):
+        """Test that debug mode is disabled in production"""
+        # Check common debug environment variables
         debug_vars = ["DEBUG", "FLASK_DEBUG", "DJANGO_DEBUG", "NODE_ENV"]
         
         issues_found = []
@@ -141,7 +151,8 @@ class TestSecurityConfigAudit:
         assert True, "Debug mode audit completed"
 
     def test_default_credentials_audit(self):
-        """Test for default/weak credentials"""        # Common default credentials to check against
+        """Test for default/weak credentials"""
+        # Common default credentials to check against
         default_credentials = [
             ("admin", "admin"),
             ("admin", "password"),
@@ -170,7 +181,8 @@ class TestSecurityConfigAudit:
         assert strong_creds > 3, "Should recognize strong credentials"
 
     def _check_credential_strength(self, username, password):
-        """Simple credential strength checker"""        score = 0
+        """Simple credential strength checker"""
+        score = 0
         if username != password:
             score += 1
         if len(password) >= 8:
@@ -184,7 +196,8 @@ class TestSecurityConfigAudit:
         return score
 
     def test_ssl_tls_configuration(self):
-        """Test SSL/TLS configuration security"""        # Simulate SSL/TLS configuration check
+        """Test SSL/TLS configuration security"""
+        # Simulate SSL/TLS configuration check
         ssl_config = {
             "ssl_enabled": True,
             "min_tls_version": "1.2",
@@ -207,8 +220,10 @@ class TestSecurityConfigAudit:
 
 
 class TestSecurityVulnerabilityBasics:
-    """Test basic vulnerability detection"""    def test_sql_injection_patterns(self):
-        """Test SQL injection pattern detection"""        # Common SQL injection patterns
+    """Test basic vulnerability detection"""
+    def test_sql_injection_patterns(self):
+        """Test SQL injection pattern detection"""
+        # Common SQL injection patterns
         injection_patterns = [
             "'; DROP TABLE users; --",
             "' OR '1'='1",
@@ -238,7 +253,8 @@ class TestSecurityVulnerabilityBasics:
         print(f"🚨 Security audit detected SQL injection patterns: {detected_patterns}")
 
     def test_xss_pattern_detection(self):
-        """Test XSS pattern detection"""        xss_patterns = [
+        """Test XSS pattern detection"""
+        xss_patterns = [
             "<script>alert('xss')</script>",
             "javascript:alert('xss')",
             "<img src=x onerror=alert('xss')>",
@@ -254,7 +270,8 @@ class TestSecurityVulnerabilityBasics:
             assert is_dangerous, f"XSS pattern should be detected: {pattern}"
 
     def test_path_traversal_detection(self):
-        """Test path traversal vulnerability detection"""        traversal_patterns = [
+        """Test path traversal vulnerability detection"""
+        traversal_patterns = [
             "../../../etc/passwd",
             "..\\..\\..\\windows\\system32\\config\\sam",
             "....//....//....//etc/passwd",
@@ -271,8 +288,10 @@ class TestSecurityVulnerabilityBasics:
 
 
 class TestComplianceBasics:
-    """Test basic compliance requirements"""    def test_data_retention_policies(self):
-        """Test data retention policy compliance"""        # Simulate data retention check
+    """Test basic compliance requirements"""
+    def test_data_retention_policies(self):
+        """Test data retention policy compliance"""
+        # Simulate data retention check
         data_types = {
             "user_logs": {"retention_days": 365, "required_max": 1095},  # 3 years max
             "access_logs": {"retention_days": 730, "required_max": 2555},  # 7 years max  
@@ -288,7 +307,8 @@ class TestComplianceBasics:
                 f"{data_type} retention period {retention_days} exceeds maximum {max_allowed}"
 
     def test_encryption_compliance(self):
-        """Test encryption compliance requirements"""        # Simulate encryption configuration audit
+        """Test encryption compliance requirements"""
+        # Simulate encryption configuration audit
         encryption_config = {
             "data_at_rest": {
                 "enabled": True,
@@ -321,7 +341,8 @@ class TestComplianceBasics:
         assert encryption_config["personal_data"]["key_rotation"], "Key rotation should be enabled"
 
     def test_access_control_compliance(self):
-        """Test access control compliance"""        # Simulate access control audit
+        """Test access control compliance"""
+        # Simulate access control audit
         access_controls = {
             "multi_factor_auth": True,
             "password_policy": {

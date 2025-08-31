@@ -12,7 +12,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -74,7 +75,8 @@ from . import (
 
 
 class ObservabilityIndex:
-    """Central index and factory for all observability components"""    
+    """Central index and factory for all observability components"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.config = config or self._get_default_config()
@@ -82,7 +84,8 @@ class ObservabilityIndex:
         self._initialized = False
         
     async def initialize(self) -> bool:
-        """Initialize all observability components"""        try:
+        """Initialize all observability components"""
+        try:
             self.logger.info("Initializing Observability Suite...")
             
             # Initialize core monitoring
@@ -109,7 +112,8 @@ class ObservabilityIndex:
             return False
     
     async def _initialize_monitoring(self):
-        """Initialize monitoring components"""        try:
+        """Initialize monitoring components"""
+        try:
             # Core monitoring system
             self.components['monitoring_system'] = IntelligentMonitoringSystem()
             
@@ -132,7 +136,8 @@ class ObservabilityIndex:
             raise
     
     async def _initialize_analytics(self):
-        """Initialize analytics components"""        try:
+        """Initialize analytics components"""
+        try:
             # Advanced analytics manager
             self.components['analytics_manager'] = AdvancedAnalyticsManager()
             
@@ -154,7 +159,8 @@ class ObservabilityIndex:
             raise
     
     async def _initialize_business_monitoring(self):
-        """Initialize business process monitoring components"""        try:
+        """Initialize business process monitoring components"""
+        try:
             # Business process orchestrator
             business_config = self.config.get('business_monitoring', {})
             self.components['business_orchestrator'] = BusinessProcessOrchestrator(business_config)
@@ -174,7 +180,8 @@ class ObservabilityIndex:
             raise
     
     async def _initialize_reporting(self):
-        """Initialize reporting components"""        try:
+        """Initialize reporting components"""
+        try:
             # Report generator
             self.components['report_generator'] = ReportGenerator()
             
@@ -191,7 +198,8 @@ class ObservabilityIndex:
             raise
     
     async def _initialize_ai_observability(self):
-        """Initialize AI observability components"""        try:
+        """Initialize AI observability components"""
+        try:
             # AI observability manager
             self.components['ai_observability'] = AIObservabilityManager()
             
@@ -205,66 +213,82 @@ class ObservabilityIndex:
     
     # Business Process Monitoring Access Methods
     def get_business_orchestrator(self) -> Optional[BusinessProcessOrchestrator]:
-        """Get business process orchestrator"""        return self.get_component('business_orchestrator')
+        """Get business process orchestrator"""
+        return self.get_component('business_orchestrator')
     
     def get_content_monitor(self) -> Optional[ContentProcessingMonitor]:
-        """Get content processing monitor"""        return self.get_component('content_monitor')
+        """Get content processing monitor"""
+        return self.get_component('content_monitor')
     
     def get_collaboration_monitor(self) -> Optional[CollaborationMonitor]:
-        """Get collaboration monitor"""        return self.get_component('collaboration_monitor')
+        """Get collaboration monitor"""
+        return self.get_component('collaboration_monitor')
     
     def get_monetization_monitor(self) -> Optional[MonetizationMonitor]:
-        """Get monetization monitor"""        return self.get_component('monetization_monitor')
+        """Get monetization monitor"""
+        return self.get_component('monetization_monitor')
     
     async def track_content_processing(self, **kwargs) -> None:
-        """Track content processing through the pipeline"""        content_monitor = self.get_content_monitor()
+        """Track content processing through the pipeline"""
+        content_monitor = self.get_content_monitor()
         if content_monitor:
             await content_monitor.track_content_processing(**kwargs)
     
     async def track_collaboration_match(self, **kwargs) -> None:
-        """Track collaboration matching"""        collaboration_monitor = self.get_collaboration_monitor()
+        """Track collaboration matching"""
+        collaboration_monitor = self.get_collaboration_monitor()
         if collaboration_monitor:
             await collaboration_monitor.track_collaboration_match(**kwargs)
     
     async def track_revenue_event(self, **kwargs) -> None:
-        """Track revenue generation event"""        monetization_monitor = self.get_monetization_monitor()
+        """Track revenue generation event"""
+        monetization_monitor = self.get_monetization_monitor()
         if monetization_monitor:
             await monetization_monitor.track_revenue_event(**kwargs)
     
     async def get_business_intelligence_report(self) -> Dict[str, Any]:
-        """Get comprehensive business intelligence report"""        business_orchestrator = self.get_business_orchestrator()
+        """Get comprehensive business intelligence report"""
+        business_orchestrator = self.get_business_orchestrator()
         if business_orchestrator:
             return await business_orchestrator.get_comprehensive_business_report()
         return {}
     
     # Existing component access methods
     def get_component(self, component_name: str) -> Optional[Any]:
-        """Get a specific component by name"""        if not self._initialized:
+        """Get a specific component by name"""
+        if not self._initialized:
             self.logger.warning("Observability suite not initialized")
             return None
         
         return self.components.get(component_name)
     
     def get_monitoring_system(self) -> Optional[IntelligentMonitoringSystem]:
-        """Get the intelligent monitoring system"""        return self.get_component('monitoring_system')
+        """Get the intelligent monitoring system"""
+        return self.get_component('monitoring_system')
     
     def get_analytics_manager(self) -> Optional[AdvancedAnalyticsManager]:
-        """Get the advanced analytics manager"""        return self.get_component('analytics_manager')
+        """Get the advanced analytics manager"""
+        return self.get_component('analytics_manager')
     
     def get_report_generator(self) -> Optional[ReportGenerator]:
-        """Get the report generator"""        return self.get_component('report_generator')
+        """Get the report generator"""
+        return self.get_component('report_generator')
     
     def get_content_analyzer(self) -> Optional[ContentPerformanceAnalyzer]:
-        """Get the content performance analyzer"""        return self.get_component('content_analyzer')
+        """Get the content performance analyzer"""
+        return self.get_component('content_analyzer')
     
     def get_user_analytics(self) -> Optional[UserBehaviorAnalytics]:
-        """Get the user behavior analytics"""        return self.get_component('user_analytics')
+        """Get the user behavior analytics"""
+        return self.get_component('user_analytics')
     
     def get_roi_optimizer(self) -> Optional[ROIOptimizer]:
-        """Get the ROI optimizer"""        return self.get_component('roi_optimizer')
+        """Get the ROI optimizer"""
+        return self.get_component('roi_optimizer')
     
     async def generate_executive_dashboard(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate executive dashboard with all key metrics"""        try:
+        """Generate executive dashboard with all key metrics"""
+        try:
             if not self._initialized:
                 await self.initialize()
             
@@ -298,7 +322,8 @@ class ObservabilityIndex:
             return {"error": str(e)}
     
     async def run_comprehensive_analysis(self, analysis_request: Dict[str, Any]) -> Dict[str, Any]:
-        """Run comprehensive analysis across all components"""        try:
+        """Run comprehensive analysis across all components"""
+        try:
             if not self._initialized:
                 await self.initialize()
             
@@ -348,7 +373,8 @@ class ObservabilityIndex:
             return {"error": str(e)}
     
     async def generate_automated_report(self, report_config: Dict[str, Any]) -> str:
-        """Generate and schedule an automated report"""        try:
+        """Generate and schedule an automated report"""
+        try:
             if not self._initialized:
                 await self.initialize()
             
@@ -366,10 +392,12 @@ class ObservabilityIndex:
             return ""
     
     def get_available_components(self) -> List[str]:
-        """Get list of available component names"""        return list(self.components.keys())
+        """Get list of available component names"""
+        return list(self.components.keys())
     
     def get_system_capabilities(self) -> Dict[str, Any]:
-        """Get comprehensive system capabilities"""        return {
+        """Get comprehensive system capabilities"""
+        return {
             "observability_suite_version": "3.0.0",
             "initialized": self._initialized,
             "available_components": self.get_available_components(),
@@ -414,7 +442,8 @@ class ObservabilityIndex:
         }
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""        return {
+        """Get default configuration"""
+        return {
             "monitoring": {
                 "enable_real_time": True,
                 "enable_predictive": True,
@@ -454,7 +483,8 @@ class ObservabilityIndex:
         }
     
     async def shutdown(self):
-        """Gracefully shutdown all components"""        try:
+        """Gracefully shutdown all components"""
+        try:
             self.logger.info("Shutting down Observability Suite...")
             
             # Stop monitoring system
@@ -485,7 +515,8 @@ class ObservabilityIndex:
 _observability_index = None
 
 def get_observability_index(config: Optional[Dict[str, Any]] = None) -> ObservabilityIndex:
-    """Get global observability index instance"""    global _observability_index
+    """Get global observability index instance"""
+    global _observability_index
     
     if _observability_index is None:
         _observability_index = ObservabilityIndex(config)
@@ -493,19 +524,23 @@ def get_observability_index(config: Optional[Dict[str, Any]] = None) -> Observab
     return _observability_index
 
 async def initialize_observability(config: Optional[Dict[str, Any]] = None) -> bool:
-    """Initialize the global observability suite"""    index = get_observability_index(config)
+    """Initialize the global observability suite"""
+    index = get_observability_index(config)
     return await index.initialize()
 
 async def generate_executive_summary(data: Dict[str, Any]) -> Dict[str, Any]:
-    """Generate executive summary using the observability suite"""    index = get_observability_index()
+    """Generate executive summary using the observability suite"""
+    index = get_observability_index()
     return await index.generate_executive_dashboard(data)
 
 async def run_system_analysis(analysis_request: Dict[str, Any]) -> Dict[str, Any]:
-    """Run system-wide analysis"""    index = get_observability_index()
+    """Run system-wide analysis"""
+    index = get_observability_index()
     return await index.run_comprehensive_analysis(analysis_request)
 
 def get_system_capabilities() -> Dict[str, Any]:
-    """Get system capabilities"""    index = get_observability_index()
+    """Get system capabilities"""
+    index = get_observability_index()
     return index.get_system_capabilities()
 
 # Export key functions and classes
@@ -590,7 +625,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ObservabilityConfiguration:
-    """Configuration for observability system"""    environment: str = "production"
+    """Configuration for observability system"""
+    environment: str = "production"
     monitoring_level: str = "detailed"
     business_context: str = "ia_influencer_platform"
     enable_real_time: bool = True
@@ -601,9 +637,11 @@ class ObservabilityConfiguration:
 
 
 class ObservabilityIndex:
-    """    Central index for all observability components providing unified access
+    """
+    Central index for all observability components providing unified access
     to monitoring, logging, tracing, analytics, and visualization services.
-    """    
+    """
+    
     def __init__(self, config: Optional[ObservabilityConfiguration] = None):
         self.config = config or ObservabilityConfiguration()
         self._components = {}
@@ -612,7 +650,8 @@ class ObservabilityIndex:
         logger.info(f"Initializing ObservabilityIndex with config: {self.config}")
     
     async def initialize(self) -> None:
-        """Initialize all observability components"""        if self._initialized:
+        """Initialize all observability components"""
+        if self._initialized:
             return
             
         try:
@@ -752,7 +791,8 @@ class ObservabilityIndex:
             raise
     
     async def _start_components(self) -> None:
-        """Start all initialized components"""        for category, components in self._components.items():
+        """Start all initialized components"""
+        for category, components in self._components.items():
             logger.debug(f"Starting {category} components")
             
             for name, component in components.items():
@@ -768,25 +808,29 @@ class ObservabilityIndex:
                     logger.warning(f"Failed to start {category}.{name}: {e}")
     
     def get_component(self, category: str, name: str) -> Any:
-        """Get a specific component by category and name"""        if not self._initialized:
+        """Get a specific component by category and name"""
+        if not self._initialized:
             raise RuntimeError("ObservabilityIndex not initialized")
         
         return self._components.get(category, {}).get(name)
     
     def get_category(self, category: str) -> Dict[str, Any]:
-        """Get all components in a category"""        if not self._initialized:
+        """Get all components in a category"""
+        if not self._initialized:
             raise RuntimeError("ObservabilityIndex not initialized")
         
         return self._components.get(category, {})
     
     def list_components(self) -> Dict[str, List[str]]:
-        """List all available components by category"""        return {
+        """List all available components by category"""
+        return {
             category: list(components.keys())
             for category, components in self._components.items()
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on all components"""        if not self._initialized:
+        """Perform health check on all components"""
+        if not self._initialized:
             return {"status": "not_initialized", "components": {}}
         
         health_results = {}
@@ -828,7 +872,8 @@ class ObservabilityIndex:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown all observability components"""        if not self._initialized:
+        """Shutdown all observability components"""
+        if not self._initialized:
             return
         
         logger.info("Shutting down ObservabilityIndex")
@@ -856,21 +901,25 @@ observability_index = ObservabilityIndex()
 
 # Convenience functions for quick access
 async def get_monitoring_component(name: str) -> Any:
-    """Get a monitoring component by name"""    return observability_index.get_component('monitoring', name)
+    """Get a monitoring component by name"""
+    return observability_index.get_component('monitoring', name)
 
 
 async def get_analytics_component(name: str) -> Any:
-    """Get an analytics component by name"""    return observability_index.get_component('analytics', name)
+    """Get an analytics component by name"""
+    return observability_index.get_component('analytics', name)
 
 
 async def get_dashboard_component(name: str) -> Any:
-    """Get a dashboard component by name"""    return observability_index.get_component('dashboards', name)
+    """Get a dashboard component by name"""
+    return observability_index.get_component('dashboards', name)
 
 
 async def initialize_observability(
     config: Optional[ObservabilityConfiguration] = None
 ) -> ObservabilityIndex:
-    """Initialize the global observability system"""    global observability_index
+    """Initialize the global observability system"""
+    global observability_index
     
     if config:
         observability_index = ObservabilityIndex(config)
@@ -880,7 +929,8 @@ async def initialize_observability(
 
 
 async def shutdown_observability() -> None:
-    """Shutdown the global observability system"""    await observability_index.shutdown()
+    """Shutdown the global observability system"""
+    await observability_index.shutdown()
 
 
 # Export main components for easy access

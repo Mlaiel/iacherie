@@ -9,7 +9,8 @@ Unauthorized use, reproduction, modification, or distribution without explicit
 written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -36,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 
 class AnalysisType(Enum):
-    """Revenue analysis types"""    TREND_ANALYSIS = "trend_analysis"
+    """Revenue analysis types"""
+    TREND_ANALYSIS = "trend_analysis"
     COMPARATIVE_ANALYSIS = "comparative_analysis"
     SEASONALITY_ANALYSIS = "seasonality_analysis"
     CORRELATION_ANALYSIS = "correlation_analysis"
@@ -47,7 +49,8 @@ class AnalysisType(Enum):
 
 
 class TrendDirection(Enum):
-    """Trend direction classifications"""    STRONG_UPWARD = "strong_upward"
+    """Trend direction classifications"""
+    STRONG_UPWARD = "strong_upward"
     MODERATE_UPWARD = "moderate_upward"
     SLIGHT_UPWARD = "slight_upward"
     STABLE = "stable"
@@ -58,7 +61,8 @@ class TrendDirection(Enum):
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis results"""    direction: TrendDirection
+    """Trend analysis results"""
+    direction: TrendDirection
     slope: float
     r_squared: float
     confidence_level: float
@@ -69,12 +73,14 @@ class TrendAnalysis:
     
     @property
     def is_significant(self) -> bool:
-        """Check if trend is statistically significant"""        return self.confidence_level >= 0.95 and abs(self.slope) > 0.1
+        """Check if trend is statistically significant"""
+        return self.confidence_level >= 0.95 and abs(self.slope) > 0.1
 
 
 @dataclass
 class AnalysisReport:
-    """Comprehensive analysis report"""    report_id: str
+    """Comprehensive analysis report"""
+    report_id: str
     analysis_type: AnalysisType
     period_start: datetime
     period_end: datetime
@@ -90,7 +96,8 @@ class AnalysisReport:
 
 @dataclass
 class SeasonalityPattern:
-    """Seasonality pattern analysis"""    pattern_type: str  # daily, weekly, monthly, yearly
+    """Seasonality pattern analysis"""
+    pattern_type: str  # daily, weekly, monthly, yearly
     strength: float
     peak_periods: List[str]
     low_periods: List[str]
@@ -100,7 +107,8 @@ class SeasonalityPattern:
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric analysis"""    metric_name: str
+    """Performance metric analysis"""
+    metric_name: str
     current_value: float
     baseline_value: float
     change_percentage: float
@@ -109,14 +117,16 @@ class PerformanceMetric:
 
 
 class RevenueAnalyzer:
-    """Advanced revenue analysis engine"""    
+    """Advanced revenue analysis engine"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.analysis_history = []
         self.cached_reports = {}
         
     async def initialize(self) -> None:
-        """Initialize revenue analyzer"""        try:
+        """Initialize revenue analyzer"""
+        try:
             # Setup analysis configuration
             self.analysis_config = self.config.get('analysis', {
                 'confidence_threshold': 0.95,
@@ -133,7 +143,8 @@ class RevenueAnalyzer:
     
     @cache_revenue_analysis
     async def analyze_revenue_trends(self, data: pd.DataFrame, period: str = 'daily') -> TrendAnalysis:
-        """Analyze revenue trends"""        try:
+        """Analyze revenue trends"""
+        try:
             validate_analysis_data(data)
             
             # Ensure data is sorted by date
@@ -211,7 +222,8 @@ class RevenueAnalyzer:
             raise RevenueAnalysisError(f"Trend analysis failed: {e}")
     
     async def _find_inflection_points(self, time_series: pd.Series) -> List[datetime]:
-        """Find inflection points in time series"""        try:
+        """Find inflection points in time series"""
+        try:
             # Calculate second derivative
             values = time_series.values
             first_diff = np.diff(values)
@@ -236,7 +248,8 @@ class RevenueAnalyzer:
             return []
     
     async def analyze_seasonality(self, data: pd.DataFrame) -> List[SeasonalityPattern]:
-        """Analyze seasonality patterns"""        try:
+        """Analyze seasonality patterns"""
+        try:
             patterns = []
             
             # Ensure datetime index
@@ -266,7 +279,8 @@ class RevenueAnalyzer:
             raise RevenueAnalysisError(f"Seasonality analysis failed: {e}")
     
     async def _analyze_weekly_seasonality(self, data: pd.DataFrame) -> Optional[SeasonalityPattern]:
-        """Analyze weekly seasonality pattern"""        try:
+        """Analyze weekly seasonality pattern"""
+        try:
             data['weekday'] = data['date'].dt.day_name()
             weekly_avg = data.groupby('weekday')['revenue'].mean()
             
@@ -296,7 +310,8 @@ class RevenueAnalyzer:
             return None
     
     async def _analyze_monthly_seasonality(self, data: pd.DataFrame) -> Optional[SeasonalityPattern]:
-        """Analyze monthly seasonality pattern"""        try:
+        """Analyze monthly seasonality pattern"""
+        try:
             data['month'] = data['date'].dt.month_name()
             monthly_avg = data.groupby('month')['revenue'].mean()
             
@@ -326,7 +341,8 @@ class RevenueAnalyzer:
             return None
     
     async def _analyze_yearly_seasonality(self, data: pd.DataFrame) -> Optional[SeasonalityPattern]:
-        """Analyze yearly seasonality pattern"""        try:
+        """Analyze yearly seasonality pattern"""
+        try:
             data['quarter'] = data['date'].dt.quarter
             quarterly_avg = data.groupby('quarter')['revenue'].mean()
             
@@ -356,7 +372,8 @@ class RevenueAnalyzer:
             return None
     
     async def detect_revenue_anomalies(self, data: pd.DataFrame, method: str = 'iqr') -> List[Dict[str, Any]]:
-        """Detect revenue anomalies"""        try:
+        """Detect revenue anomalies"""
+        try:
             anomalies = []
             
             if method == 'iqr':
@@ -386,7 +403,8 @@ class RevenueAnalyzer:
             raise RevenueAnalysisError(f"Anomaly detection failed: {e}")
     
     async def _detect_iqr_anomalies(self, data: pd.DataFrame) -> List[Dict[str, Any]]:
-        """Detect anomalies using IQR method"""        try:
+        """Detect anomalies using IQR method"""
+        try:
             Q1 = data['revenue'].quantile(0.25)
             Q3 = data['revenue'].quantile(0.75)
             IQR = Q3 - Q1
@@ -429,7 +447,8 @@ class RevenueAnalyzer:
             return []
     
     async def _detect_zscore_anomalies(self, data: pd.DataFrame) -> List[Dict[str, Any]]:
-        """Detect anomalies using Z-score method"""        try:
+        """Detect anomalies using Z-score method"""
+        try:
             mean_revenue = data['revenue'].mean()
             std_revenue = data['revenue'].std()
             
@@ -470,7 +489,8 @@ class RevenueAnalyzer:
             return []
     
     async def _detect_isolation_forest_anomalies(self, data: pd.DataFrame) -> List[Dict[str, Any]]:
-        """Detect anomalies using Isolation Forest"""        try:
+        """Detect anomalies using Isolation Forest"""
+        try:
             from sklearn.ensemble import IsolationForest
             
             # Prepare features
@@ -521,7 +541,8 @@ class RevenueAnalyzer:
         data: pd.DataFrame,
         external_factors: Optional[pd.DataFrame] = None
     ) -> Dict[str, float]:
-        """Analyze correlations between revenue and other factors"""        try:
+        """Analyze correlations between revenue and other factors"""
+        try:
             correlations = {}
             
             # Internal correlations (if multiple revenue sources)
@@ -567,7 +588,8 @@ class RevenueAnalyzer:
         data: pd.DataFrame,
         analysis_types: Optional[List[AnalysisType]] = None
     ) -> AnalysisReport:
-        """Generate comprehensive revenue analysis report"""        try:
+        """Generate comprehensive revenue analysis report"""
+        try:
             validate_analysis_data(data)
             
             if analysis_types is None:
@@ -684,7 +706,8 @@ class RevenueAnalyzer:
         current_data: pd.DataFrame,
         previous_data: pd.DataFrame
     ) -> Dict[str, Any]:
-        """Compare revenue between two periods"""        try:
+        """Compare revenue between two periods"""
+        try:
             # Calculate basic metrics
             current_total = current_data['revenue'].sum()
             previous_total = previous_data['revenue'].sum()
@@ -757,7 +780,8 @@ class RevenueAnalyzer:
         previous_trend: TrendAnalysis,
         is_significant: bool
     ) -> List[str]:
-        """Generate insights from period comparison"""        insights = []
+        """Generate insights from period comparison"""
+        insights = []
         
         # Revenue change insights
         if abs(change_percentage) > 20:
@@ -794,7 +818,8 @@ class RevenueAnalyzer:
         return insights
     
     async def export_analysis_report(self, report_id: str, format: str = 'json') -> Dict[str, Any]:
-        """Export analysis report in specified format"""        try:
+        """Export analysis report in specified format"""
+        try:
             if report_id not in self.cached_reports:
                 raise RevenueAnalysisError(f"Report not found: {report_id}")
             

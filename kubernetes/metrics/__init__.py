@@ -20,17 +20,25 @@ Contact autorisé: mlaiel@live.de
 - DevOps Engineer: Fahed Mlaiel
 - Security Specialist: Fahed Mlaiel
 - Audio Processing Expert: Fahed Mlaiel
-"""__version__ = "1.0.0"
+"""
+__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
 from .prometheus_manager import PrometheusManager
+
 from .grafana_manager import GrafanaManager
+
 from .metrics_collector import MetricsCollector
+
 from .alert_manager import AlertManager
+
 from .performance_analytics import PerformanceAnalytics
+
 from .dashboard import MetricsDashboard
+
 from .business_intelligence import BusinessIntelligence
+
 from .config import get_metrics_config, MetricsConfiguration, MetricsEnvironment
 from .business_events_collector import BusinessEventsCollector, BusinessEvent, BusinessEventType
 from .content_protection_metrics import ContentProtectionMetricsCollector, ContentType, FingerprintAlgorithm

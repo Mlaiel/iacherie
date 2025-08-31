@@ -20,7 +20,8 @@ Multi-platform → Distribution analytics → Engagement tracking → Success me
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 import pandas as pd
@@ -38,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 
 class IntelligenceCategory(Enum):
-    """Business intelligence categories"""    CONTENT_PROTECTION = "content_protection"
+    """Business intelligence categories"""
+    CONTENT_PROTECTION = "content_protection"
     AI_PERFORMANCE = "ai_performance"
     REVENUE_OPTIMIZATION = "revenue_optimization"
     CREATOR_SUCCESS = "creator_success"
@@ -49,7 +51,8 @@ class IntelligenceCategory(Enum):
 
 
 class InsightPriority(Enum):
-    """Priority levels for business insights"""    LOW = "low"
+    """Priority levels for business insights"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -57,7 +60,8 @@ class InsightPriority(Enum):
 
 
 class ActionType(Enum):
-    """Types of recommended actions"""    OPTIMIZE = "optimize"
+    """Types of recommended actions"""
+    OPTIMIZE = "optimize"
     INVESTIGATE = "investigate"
     ALERT = "alert"
     SCALE = "scale"
@@ -69,7 +73,8 @@ class ActionType(Enum):
 
 @dataclass
 class BusinessInsight:
-    """Business intelligence insight with actionable recommendations"""    id: str
+    """Business intelligence insight with actionable recommendations"""
+    id: str
     category: IntelligenceCategory
     priority: InsightPriority
     title: str
@@ -89,7 +94,8 @@ class BusinessInsight:
 
 @dataclass
 class PerformanceAnalytics:
-    """Comprehensive performance analytics"""    category: str
+    """Comprehensive performance analytics"""
+    category: str
     metrics: Dict[str, float]
     trends: Dict[str, Dict[str, float]]  # metric_name -> {daily, weekly, monthly}
     comparisons: Dict[str, float]  # vs previous period
@@ -101,7 +107,8 @@ class PerformanceAnalytics:
 
 @dataclass
 class RevenueIntelligence:
-    """Revenue intelligence and optimization insights"""    total_revenue: float
+    """Revenue intelligence and optimization insights"""
+    total_revenue: float
     revenue_streams: Dict[str, float]
     growth_rates: Dict[str, float]
     conversion_funnels: Dict[str, Dict[str, float]]
@@ -115,7 +122,8 @@ class RevenueIntelligence:
 
 @dataclass
 class ContentProtectionIntelligence:
-    """Content protection intelligence analytics"""    protection_rate: float
+    """Content protection intelligence analytics"""
+    protection_rate: float
     fingerprint_accuracy: float
     detection_speed: float
     false_positive_rate: float
@@ -128,12 +136,14 @@ class ContentProtectionIntelligence:
 
 
 class PlatformIntelligenceEngine:
-    """    Advanced business intelligence engine for IA Influencer Agent Platform.
+    """
+    Advanced business intelligence engine for IA Influencer Agent Platform.
     
     Provides deep analytics, insights, and optimization recommendations
     for content protection, AI performance, revenue optimization, and
     creator collaboration success.
-    """    
+    """
+    
     def __init__(
         self,
         redis_client: Optional[aioredis.Redis] = None,
@@ -165,7 +175,8 @@ class PlatformIntelligenceEngine:
         logger.info("Platform Intelligence Engine initialized")
     
     async def start_intelligence_processing(self):
-        """Start continuous intelligence processing"""        if self._running:
+        """Start continuous intelligence processing"""
+        if self._running:
             logger.warning("Intelligence processing already running")
             return
         
@@ -174,7 +185,8 @@ class PlatformIntelligenceEngine:
         logger.info("Intelligence processing started")
     
     async def stop_intelligence_processing(self):
-        """Stop intelligence processing"""        self._running = False
+        """Stop intelligence processing"""
+        self._running = False
         if self._analysis_task:
             self._analysis_task.cancel()
             try:
@@ -184,7 +196,8 @@ class PlatformIntelligenceEngine:
         logger.info("Intelligence processing stopped")
     
     async def _intelligence_loop(self):
-        """Main intelligence processing loop"""        while self._running:
+        """Main intelligence processing loop"""
+        while self._running:
             try:
                 # Collect and analyze data
                 await self._collect_platform_data()
@@ -207,7 +220,8 @@ class PlatformIntelligenceEngine:
                 await asyncio.sleep(60)  # Backoff on error
     
     async def _collect_platform_data(self):
-        """Collect data from all platform sources"""        try:
+        """Collect data from all platform sources"""
+        try:
             # Collect metrics from Redis
             if self.redis_client:
                 await self._collect_redis_metrics()
@@ -220,7 +234,8 @@ class PlatformIntelligenceEngine:
             logger.error(f"Error collecting platform data: {e}")
     
     async def _collect_redis_metrics(self):
-        """Collect metrics from Redis"""        try:
+        """Collect metrics from Redis"""
+        try:
             # Content protection metrics
             protection_data = await self.redis_client.hgetall("metrics:content_protection")
             if protection_data:
@@ -249,10 +264,12 @@ class PlatformIntelligenceEngine:
             logger.error(f"Error collecting Redis metrics: {e}")
     
     async def _collect_database_metrics(self):
-        """Collect metrics from database"""        try:
+        """Collect metrics from database"""
+        try:
             async with self.db_engine.begin() as conn:
                 # User engagement metrics
-                result = await conn.execute(text("""                    SELECT 
+                result = await conn.execute(text("""
+                    SELECT 
                         COUNT(*) as active_users,
                         AVG(session_duration) as avg_session,
                         COUNT(DISTINCT platform) as platforms_used
@@ -267,7 +284,8 @@ class PlatformIntelligenceEngine:
                 })
                 
                 # Content creation metrics
-                result = await conn.execute(text("""                    SELECT 
+                result = await conn.execute(text("""
+                    SELECT 
                         COUNT(*) as content_uploads,
                         AVG(file_size) as avg_file_size,
                         COUNT(DISTINCT user_id) as active_creators
@@ -285,7 +303,8 @@ class PlatformIntelligenceEngine:
             logger.error(f"Error collecting database metrics: {e}")
     
     async def _generate_business_insights(self):
-        """Generate business insights from collected data"""        try:
+        """Generate business insights from collected data"""
+        try:
             # Content protection insights
             protection_insights = await self._content_analyzer.analyze(
                 self._analytics_history.get("content_protection", deque())
@@ -332,7 +351,8 @@ class PlatformIntelligenceEngine:
             logger.error(f"Error generating business insights: {e}")
     
     async def _update_trend_analysis(self):
-        """Update trend analysis for key metrics"""        try:
+        """Update trend analysis for key metrics"""
+        try:
             current_time = datetime.utcnow()
             
             # Calculate trends for each metric category
@@ -351,7 +371,8 @@ class PlatformIntelligenceEngine:
             logger.error(f"Error updating trend analysis: {e}")
     
     def _calculate_trend(self, data_points: List[Dict]) -> Dict[str, float]:
-        """Calculate trend coefficients for data points"""        if len(data_points) < 2:
+        """Calculate trend coefficients for data points"""
+        if len(data_points) < 2:
             return {}
         
         trends = {}
@@ -379,7 +400,8 @@ class PlatformIntelligenceEngine:
         return trends
     
     async def _cleanup_expired_insights(self):
-        """Clean up expired insights"""        try:
+        """Clean up expired insights"""
+        try:
             current_time = datetime.utcnow()
             expired_insights = []
             
@@ -402,7 +424,8 @@ class PlatformIntelligenceEngine:
             logger.error(f"Error cleaning up expired insights: {e}")
     
     async def get_platform_intelligence_overview(self) -> Dict[str, Any]:
-        """Get comprehensive platform intelligence overview"""        try:
+        """Get comprehensive platform intelligence overview"""
+        try:
             current_time = datetime.utcnow()
             
             # Get content protection intelligence
@@ -457,7 +480,8 @@ class PlatformIntelligenceEngine:
             return {"error": str(e)}
     
     def _classify_trend_direction(self, trends: Dict[str, float]) -> str:
-        """Classify overall trend direction"""        if not trends:
+        """Classify overall trend direction"""
+        if not trends:
             return "stable"
         
         positive_trends = sum(1 for t in trends.values() if t > 5)
@@ -471,7 +495,8 @@ class PlatformIntelligenceEngine:
             return "stable"
     
     async def _get_content_protection_intelligence(self) -> ContentProtectionIntelligence:
-        """Get content protection intelligence"""        protection_data = self._analytics_history.get("content_protection", deque())
+        """Get content protection intelligence"""
+        protection_data = self._analytics_history.get("content_protection", deque())
         
         if not protection_data:
             return ContentProtectionIntelligence(
@@ -547,7 +572,8 @@ class PlatformIntelligenceEngine:
         )
     
     async def _get_revenue_intelligence(self) -> RevenueIntelligence:
-        """Get revenue intelligence"""        revenue_data = self._analytics_history.get("revenue", deque())
+        """Get revenue intelligence"""
+        revenue_data = self._analytics_history.get("revenue", deque())
         
         if not revenue_data:
             return RevenueIntelligence(
@@ -612,7 +638,8 @@ class PlatformIntelligenceEngine:
         )
     
     async def _get_ai_performance_intelligence(self) -> PerformanceAnalytics:
-        """Get AI performance intelligence"""        ai_data = self._analytics_history.get("ai_performance", deque())
+        """Get AI performance intelligence"""
+        ai_data = self._analytics_history.get("ai_performance", deque())
         
         if not ai_data:
             return PerformanceAnalytics(
@@ -667,7 +694,8 @@ class PlatformIntelligenceEngine:
         )
     
     async def _calculate_platform_health_score(self) -> Dict[str, float]:
-        """Calculate overall platform health score"""        scores = {}
+        """Calculate overall platform health score"""
+        scores = {}
         
         # Content protection health
         protection_data = self._analytics_history.get("content_protection", deque())
@@ -711,19 +739,22 @@ class PlatformIntelligenceEngine:
         return scores
     
     async def get_insights_by_category(self, category: IntelligenceCategory) -> List[BusinessInsight]:
-        """Get insights filtered by category"""        return [
+        """Get insights filtered by category"""
+        return [
             insight for insight in self._insights_cache.values() 
             if insight.category == category
         ]
     
     async def get_high_priority_insights(self) -> List[BusinessInsight]:
-        """Get high priority insights requiring attention"""        return [
+        """Get high priority insights requiring attention"""
+        return [
             insight for insight in self._insights_cache.values()
             if insight.priority in [InsightPriority.HIGH, InsightPriority.CRITICAL, InsightPriority.URGENT]
         ]
     
     async def mark_insight_acted_upon(self, insight_id: str):
-        """Mark insight as acted upon"""        if insight_id in self._insights_cache:
+        """Mark insight as acted upon"""
+        if insight_id in self._insights_cache:
             self._insights_cache[insight_id].acted_upon = True
             
             # Update in Redis
@@ -737,9 +768,11 @@ class PlatformIntelligenceEngine:
 
 # Specialized analyzers for different domains
 class ContentProtectionAnalyzer:
-    """Analyzer for content protection intelligence"""    
+    """Analyzer for content protection intelligence"""
+    
     async def analyze(self, data: deque) -> List[BusinessInsight]:
-        """Analyze content protection data and generate insights"""        insights = []
+        """Analyze content protection data and generate insights"""
+        insights = []
         
         if len(data) < 2:
             return insights
@@ -778,9 +811,11 @@ class ContentProtectionAnalyzer:
 
 
 class RevenueAnalyzer:
-    """Analyzer for revenue intelligence"""    
+    """Analyzer for revenue intelligence"""
+    
     async def analyze(self, data: deque) -> List[BusinessInsight]:
-        """Analyze revenue data and generate insights"""        insights = []
+        """Analyze revenue data and generate insights"""
+        insights = []
         
         if len(data) < 5:
             return insights
@@ -820,9 +855,11 @@ class RevenueAnalyzer:
 
 
 class AIPerformanceAnalyzer:
-    """Analyzer for AI performance intelligence"""    
+    """Analyzer for AI performance intelligence"""
+    
     async def analyze(self, data: deque) -> List[BusinessInsight]:
-        """Analyze AI performance data and generate insights"""        insights = []
+        """Analyze AI performance data and generate insights"""
+        insights = []
         
         if len(data) < 3:
             return insights
@@ -861,9 +898,11 @@ class AIPerformanceAnalyzer:
 
 
 class CreatorSuccessAnalyzer:
-    """Analyzer for creator success metrics"""    
+    """Analyzer for creator success metrics"""
+    
     async def analyze(self, data: deque) -> List[BusinessInsight]:
-        """Analyze creator success data and generate insights"""        insights = []
+        """Analyze creator success data and generate insights"""
+        insights = []
         
         if len(data) < 2:
             return insights
@@ -902,9 +941,11 @@ class CreatorSuccessAnalyzer:
 
 
 class EngagementAnalyzer:
-    """Analyzer for user engagement intelligence"""    
+    """Analyzer for user engagement intelligence"""
+    
     async def analyze(self, data: deque) -> List[BusinessInsight]:
-        """Analyze user engagement data and generate insights"""        insights = []
+        """Analyze user engagement data and generate insights"""
+        insights = []
         
         if len(data) < 3:
             return insights

@@ -7,7 +7,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
-"""from datetime import datetime, timedelta
+"""
+from datetime import datetime, timedelta
 from decimal import Decimal
 from typing import Optional, Dict, Any, List, Tuple
 import logging
@@ -30,7 +31,8 @@ logger = get_logger(__name__)
 
 
 class SubscriptionAnalytics:
-    """    Advanced subscription analytics and business intelligence engine.
+    """
+    Advanced subscription analytics and business intelligence engine.
     
     Provides comprehensive insights including:
     - Subscriber acquisition and growth metrics
@@ -41,9 +43,11 @@ class SubscriptionAnalytics:
     - Usage pattern analysis
     - Cohort analysis and behavior tracking
     - Financial reporting and KPI dashboards
-    """    
+    """
+    
     def __init__(self):
-        """Initialize subscription analytics engine."""        self.logger = get_logger(__name__)
+        """Initialize subscription analytics engine."""
+        self.logger = get_logger(__name__)
         self.cache = CacheManager()
     
     async def generate_analytics_report(
@@ -54,7 +58,8 @@ class SubscriptionAnalytics:
         filters: Optional[Dict[str, Any]] = None,
         db: Session = None
     ) -> Dict[str, Any]:
-        """        Generate comprehensive analytics report.
+        """
+        Generate comprehensive analytics report.
         
         Args:
             start_date: Report start date
@@ -65,7 +70,8 @@ class SubscriptionAnalytics:
             
         Returns:
             Analytics report data
-        """        if not db:
+        """
+        if not db:
             db = get_db_session()
         
         try:
@@ -133,7 +139,8 @@ class SubscriptionAnalytics:
         date_range_days: int = 30,
         db: Session = None
     ) -> Dict[str, Any]:
-        """        Get key subscriber KPIs.
+        """
+        Get key subscriber KPIs.
         
         Args:
             date_range_days: Number of days for analysis
@@ -141,7 +148,8 @@ class SubscriptionAnalytics:
             
         Returns:
             Subscriber KPI metrics
-        """        if not db:
+        """
+        if not db:
             db = get_db_session()
         
         try:
@@ -209,7 +217,8 @@ class SubscriptionAnalytics:
         confidence_level: float = 0.95,
         db: Session = None
     ) -> Dict[str, Any]:
-        """        Generate revenue forecast based on historical data.
+        """
+        Generate revenue forecast based on historical data.
         
         Args:
             forecast_months: Number of months to forecast
@@ -218,7 +227,8 @@ class SubscriptionAnalytics:
             
         Returns:
             Revenue forecast data
-        """        if not db:
+        """
+        if not db:
             db = get_db_session()
         
         try:
@@ -281,7 +291,8 @@ class SubscriptionAnalytics:
         segmentation_type: str = "behavior",
         db: Session = None
     ) -> Dict[str, Any]:
-        """        Analyze customer segments based on various criteria.
+        """
+        Analyze customer segments based on various criteria.
         
         Args:
             segmentation_type: Type of segmentation (behavior, value, plan, usage)
@@ -289,7 +300,8 @@ class SubscriptionAnalytics:
             
         Returns:
             Customer segmentation analysis
-        """        if not db:
+        """
+        if not db:
             db = get_db_session()
         
         try:
@@ -317,7 +329,8 @@ class SubscriptionAnalytics:
         filters: Optional[Dict[str, Any]], 
         db: Session
     ) -> Dict[str, Any]:
-        """Get subscriber metrics for period."""        base_query = db.query(UserSubscription)
+        """Get subscriber metrics for period."""
+        base_query = db.query(UserSubscription)
         
         # Apply filters if provided
         if filters:
@@ -361,7 +374,8 @@ class SubscriptionAnalytics:
         filters: Optional[Dict[str, Any]], 
         db: Session
     ) -> Dict[str, Any]:
-        """Get growth metrics for period."""        # Calculate monthly growth
+        """Get growth metrics for period."""
+        # Calculate monthly growth
         monthly_growth = []
         current_date = start_date.replace(day=1)  # Start of month
         
@@ -402,7 +416,8 @@ class SubscriptionAnalytics:
         filters: Optional[Dict[str, Any]], 
         db: Session
     ) -> Dict[str, Any]:
-        """Get revenue metrics for period."""        # Total revenue from completed payments
+        """Get revenue metrics for period."""
+        # Total revenue from completed payments
         total_revenue = db.query(func.sum(Invoice.total_amount)).filter(
             Invoice.status == PaymentStatus.COMPLETED.value,
             Invoice.payment_date >= start_date,
@@ -454,7 +469,8 @@ class SubscriptionAnalytics:
         filters: Optional[Dict[str, Any]], 
         db: Session
     ) -> Dict[str, Any]:
-        """Get plan performance metrics."""        plan_stats = db.query(
+        """Get plan performance metrics."""
+        plan_stats = db.query(
             SubscriptionPlan.name,
             SubscriptionPlan.display_name,
             SubscriptionPlan.tier_level,
@@ -500,7 +516,8 @@ class SubscriptionAnalytics:
         filters: Optional[Dict[str, Any]], 
         db: Session
     ) -> Dict[str, Any]:
-        """Get churn analysis for period."""        # Subscribers who churned in period
+        """Get churn analysis for period."""
+        # Subscribers who churned in period
         churned_subs = db.query(UserSubscription).filter(
             UserSubscription.cancelled_at >= start_date,
             UserSubscription.cancelled_at <= end_date
@@ -553,7 +570,8 @@ class SubscriptionAnalytics:
         filters: Optional[Dict[str, Any]], 
         db: Session
     ) -> Dict[str, Any]:
-        """Get retention metrics."""        # Calculate retention rates by cohort
+        """Get retention metrics."""
+        # Calculate retention rates by cohort
         cohort_retention = {}
         
         # Get subscribers by monthly cohorts
@@ -599,7 +617,8 @@ class SubscriptionAnalytics:
         filters: Optional[Dict[str, Any]], 
         db: Session
     ) -> Dict[str, Any]:
-        """Get usage analytics."""        # Feature usage statistics
+        """Get usage analytics."""
+        # Feature usage statistics
         feature_usage = db.query(
             UsageMetrics.feature_name,
             func.avg(UsageMetrics.usage_count).label('avg_usage'),
@@ -628,7 +647,8 @@ class SubscriptionAnalytics:
         filters: Optional[Dict[str, Any]], 
         db: Session
     ) -> Dict[str, Any]:
-        """Get cohort analysis."""        # This would provide detailed cohort behavior analysis
+        """Get cohort analysis."""
+        # This would provide detailed cohort behavior analysis
         return {"cohort_analysis": "Advanced cohort analysis would be implemented here"}
     
     async def _get_financial_summary(
@@ -638,7 +658,8 @@ class SubscriptionAnalytics:
         filters: Optional[Dict[str, Any]], 
         db: Session
     ) -> Dict[str, Any]:
-        """Get financial summary."""        # Revenue, refunds, taxes, etc.
+        """Get financial summary."""
+        # Revenue, refunds, taxes, etc.
         total_revenue = db.query(func.sum(Invoice.total_amount)).filter(
             Invoice.status == PaymentStatus.COMPLETED.value,
             Invoice.payment_date >= start_date,
@@ -663,7 +684,8 @@ class SubscriptionAnalytics:
         end_date: datetime, 
         db: Session
     ) -> List[Dict[str, Any]]:
-        """Get monthly revenue data for forecasting."""        monthly_data = db.query(
+        """Get monthly revenue data for forecasting."""
+        monthly_data = db.query(
             func.date_trunc('month', Invoice.payment_date).label('month'),
             func.sum(Invoice.total_amount).label('revenue')
         ).filter(
@@ -680,19 +702,23 @@ class SubscriptionAnalytics:
         } for month, revenue in monthly_data]
     
     async def _analyze_behavior_segments(self, db: Session) -> Dict[str, Any]:
-        """Analyze customer segments by behavior."""        # Implementation for behavior-based segmentation
+        """Analyze customer segments by behavior."""
+        # Implementation for behavior-based segmentation
         return {"behavior_segments": "Behavior segmentation analysis"}
     
     async def _analyze_value_segments(self, db: Session) -> Dict[str, Any]:
-        """Analyze customer segments by value."""        # Implementation for value-based segmentation
+        """Analyze customer segments by value."""
+        # Implementation for value-based segmentation
         return {"value_segments": "Value segmentation analysis"}
     
     async def _analyze_plan_segments(self, db: Session) -> Dict[str, Any]:
-        """Analyze customer segments by plan."""        # Implementation for plan-based segmentation
+        """Analyze customer segments by plan."""
+        # Implementation for plan-based segmentation
         return {"plan_segments": "Plan segmentation analysis"}
     
     async def _analyze_usage_segments(self, db: Session) -> Dict[str, Any]:
-        """Analyze customer segments by usage."""        # Implementation for usage-based segmentation
+        """Analyze customer segments by usage."""
+        # Implementation for usage-based segmentation
         return {"usage_segments": "Usage segmentation analysis"}
 
 

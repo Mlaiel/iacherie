@@ -7,7 +7,8 @@ pour qu'ils fonctionnent avec la structure actuelle du projet.
 
 Author: GitHub Copilot
 Date: 2025-08-31
-"""import os
+"""
+import os
 import re
 from pathlib import Path
 from typing import Dict, List
@@ -16,13 +17,15 @@ PROJECT_ROOT = Path("/workspaces/Ainflue")
 TESTS_DIR = PROJECT_ROOT / "tests"
 
 class TestFixer:
-    """Correcteur de tests importés"""    
+    """Correcteur de tests importés"""
+    
     def __init__(self):
         self.fixed_files = []
         self.errors = []
     
     def find_missing_imports(self, file_path: Path) -> List[str]:
-        """Trouve les imports manquants dans un fichier"""        missing = []
+        """Trouve les imports manquants dans un fichier"""
+        missing = []
         
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
@@ -44,7 +47,8 @@ class TestFixer:
         return missing
     
     def check_module_exists(self, module_name: str) -> bool:
-        """Vérifie si un module existe dans le projet"""        module_path = module_name.replace('.', '/')
+        """Vérifie si un module existe dans le projet"""
+        module_path = module_name.replace('.', '/')
         
         # Vérifier dans le répertoire racine
         full_path = PROJECT_ROOT / module_path
@@ -64,7 +68,8 @@ class TestFixer:
         return False
     
     def create_minimal_module(self, module_name: str):
-        """Crée un module minimal pour satisfaire les imports"""        module_path = module_name.replace('.', '/')
+        """Crée un module minimal pour satisfaire les imports"""
+        module_path = module_name.replace('.', '/')
         full_path = PROJECT_ROOT / module_path
         
         # Créer le répertoire
@@ -83,18 +88,22 @@ Author: GitHub Copilot (auto-généré)
 Date: 2025-08-31
 """# Classes et fonctions de base pour les tests
 class BaseClass:
-    """Classe de base minimale"""    pass
+    """Classe de base minimale"""
+    pass
 
 class TestConfig:
-    """Configuration de test minimale"""    def __init__(self):
+    """Configuration de test minimale"""
+    def __init__(self):
         self.test_mode = True
 
 # Fonctions utilitaires de base
 def get_default_config():
-    """Retourne une configuration par défaut"""    return TestConfig()
+    """Retourne une configuration par défaut"""
+    return TestConfig()
 
 def initialize():
-    """Initialise le module"""    pass
+    """Initialise le module"""
+    pass
 
 # Exports minimaux
 __all__ = [
@@ -110,7 +119,8 @@ __all__ = [
             print(f"✅ Module minimal créé : {module_name}")
     
     def fix_test_file(self, file_path: Path) -> bool:
-        """Corrige un fichier de test"""        try:
+        """Corrige un fichier de test"""
+        try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
             
@@ -143,7 +153,8 @@ __all__ = [
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -168,7 +179,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
             return False
     
     def create_test_requirements(self):
-        """Crée un fichier requirements-test.txt"""        requirements_content = '''# Dépendances pour les tests - Projet Ainflue
+        """Crée un fichier requirements-test.txt"""
+        requirements_content = '''# Dépendances pour les tests - Projet Ainflue
 # Généré automatiquement lors de l'import des tests
 
 # Framework de test principal
@@ -211,7 +223,8 @@ pyyaml>=6.0.0
         print(f"✅ Fichier requirements-test.txt créé")
     
     def run_fixes(self):
-        """Exécute toutes les corrections"""        print("🔧 Démarrage des corrections des tests importés...")
+        """Exécute toutes les corrections"""
+        print("🔧 Démarrage des corrections des tests importés...")
         
         # Créer les modules manquants de base
         basic_modules = [
@@ -257,7 +270,8 @@ pyyaml>=6.0.0
         print(f"3. Compléter les modules minimaux créés")
 
 def main():
-    """Fonction principale"""    print("🔧 Script de Correction des Tests Importés - Ainflue")
+    """Fonction principale"""
+    print("🔧 Script de Correction des Tests Importés - Ainflue")
     print("=" * 55)
     
     fixer = TestFixer()

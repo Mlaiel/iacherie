@@ -24,7 +24,8 @@ UNAUTHORIZED USE IS STRICTLY PROHIBITED:
 
 Legal violations will result in immediate prosecution under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
-"""import logging
+"""
+import logging
 import asyncio
 import torch
 import torch.nn as nn
@@ -103,21 +104,24 @@ PROCESSOR_LATENCY = Histogram('multimodal_processor_latency_seconds', 'Processin
 PROCESSOR_MEMORY_USAGE = Gauge('multimodal_processor_memory_mb', 'Memory usage in MB')
 
 class ContentType(Enum):
-    """Supported content types for multi-modal processing"""    AUDIO = "audio"
+    """Supported content types for multi-modal processing"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
     MULTIMODAL = "multimodal"
 
 class ProcessingMode(Enum):
-    """Processing mode configurations"""    FAST = "fast"          # Quick analysis
+    """Processing mode configurations"""
+    FAST = "fast"          # Quick analysis
     STANDARD = "standard"   # Balanced speed/accuracy
     COMPREHENSIVE = "comprehensive"  # Full analysis
     FORENSIC = "forensic"   # Maximum detail
 
 @dataclass
 class ProcessingConfig:
-    """Advanced configuration for multi-modal processing"""    # Performance settings
+    """Advanced configuration for multi-modal processing"""
+    # Performance settings
     max_concurrent_tasks: int = 10
     gpu_memory_fraction: float = 0.8
     enable_model_caching: bool = True
@@ -152,7 +156,8 @@ class ProcessingConfig:
 
 class EnterpriseMultiModalProcessor:
 class EnterpriseMultiModalProcessor:
-    """    Ultra-Advanced Enterprise Multi-Modal Content Processor
+    """
+    Ultra-Advanced Enterprise Multi-Modal Content Processor
     
     Capabilities:
     - Universal content analysis across all media formats
@@ -161,7 +166,8 @@ class EnterpriseMultiModalProcessor:
     - Real-time processing with enterprise-grade performance
     - Intelligent caching and memory optimization
     - Comprehensive semantic understanding and relationship detection
-    """    
+    """
+    
     def __init__(self, config: ProcessingConfig):
         self.config = config
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -192,7 +198,8 @@ class EnterpriseMultiModalProcessor:
         logger.info(f"GPU Memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB" if torch.cuda.is_available() else "CPU Mode")
     
     def _initialize_models(self):
-        """Initialize state-of-the-art AI models for multi-modal processing"""        try:
+        """Initialize state-of-the-art AI models for multi-modal processing"""
+        try:
             # CLIP Vision-Language Model (Latest)
             self.models['clip'] = CLIPModel.from_pretrained("openai/clip-vit-large-patch14-336").to(self.device)
             self.processors['clip'] = CLIPProcessor.from_pretrained("openai/clip-vit-large-patch14-336")
@@ -232,7 +239,8 @@ class EnterpriseMultiModalProcessor:
             raise
     
     def _initialize_feature_extractors(self):
-        """Initialize specialized feature extraction algorithms"""        try:
+        """Initialize specialized feature extraction algorithms"""
+        try:
             # Audio feature extractors
             self.feature_extractors['audio'] = {
                 'chromaprint': chromaprint,
@@ -281,7 +289,8 @@ class EnterpriseMultiModalProcessor:
     
     @asynccontextmanager
     async def processing_context(self, content_type: ContentType, operation: str):
-        """Context manager for processing monitoring and resource management"""        start_time = time.time()
+        """Context manager for processing monitoring and resource management"""
+        start_time = time.time()
         start_memory = psutil.Process().memory_info().rss / 1024 / 1024  # MB
         
         try:
@@ -305,7 +314,8 @@ class EnterpriseMultiModalProcessor:
             self.processing_stats['memory_peak'] = max(self.processing_stats['memory_peak'], end_memory)
     
     async def process_content_comprehensive(self, content_data: Dict[str, Any], mode: ProcessingMode = ProcessingMode.STANDARD) -> Dict[str, Any]:
-        """        Comprehensive multi-modal content processing orchestrating all analysis capabilities
+        """
+        Comprehensive multi-modal content processing orchestrating all analysis capabilities
         
         Args:
             content_data: Content data with file path, metadata, and type information
@@ -313,7 +323,8 @@ class EnterpriseMultiModalProcessor:
             
         Returns:
             Complete multi-modal analysis results
-        """        content_type = ContentType(content_data.get('type', 'multimodal'))
+        """
+        content_type = ContentType(content_data.get('type', 'multimodal'))
         
         async with self.processing_context(content_type, 'comprehensive_analysis'):
             try:
@@ -369,7 +380,8 @@ class EnterpriseMultiModalProcessor:
                 raise
     
     async def _detect_content_type(self, content_data: Dict[str, Any]) -> ContentType:
-        """Intelligent content type detection using file analysis"""        try:
+        """Intelligent content type detection using file analysis"""
+        try:
             file_path = content_data.get('file_path', '')
             file_extension = file_path.split('.')[-1].lower()
             
@@ -398,7 +410,8 @@ class EnterpriseMultiModalProcessor:
             return ContentType.MULTIMODAL
     
     async def _process_audio_comprehensive(self, content_data: Dict[str, Any], mode: ProcessingMode) -> Dict[str, Any]:
-        """Comprehensive audio processing with advanced feature extraction"""        try:
+        """Comprehensive audio processing with advanced feature extraction"""
+        try:
             file_path = content_data['file_path']
             
             # Load audio with librosa
@@ -451,7 +464,8 @@ class EnterpriseMultiModalProcessor:
             raise
     
     async def _extract_audio_spectral_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract comprehensive spectral features from audio"""        try:
+        """Extract comprehensive spectral features from audio"""
+        try:
             # MFCC features
             mfccs = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=13)
             
@@ -510,7 +524,8 @@ class EnterpriseMultiModalProcessor:
             return {}
     
     async def _extract_audio_rhythm_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract rhythm and tempo features from audio"""        try:
+        """Extract rhythm and tempo features from audio"""
+        try:
             # Tempo and beat tracking
             tempo, beats = librosa.beat.beat_track(y=audio, sr=sr)
             
@@ -547,7 +562,8 @@ class EnterpriseMultiModalProcessor:
             return {}
     
     async def _extract_audio_harmonic_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract harmonic and tonal features from audio"""        try:
+        """Extract harmonic and tonal features from audio"""
+        try:
             # Harmonic-percussive separation
             harmonic, percussive = librosa.effects.hpss(audio)
             
@@ -583,7 +599,8 @@ class EnterpriseMultiModalProcessor:
             return {}
     
     async def _extract_audio_semantic_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract semantic features using AI models"""        try:
+        """Extract semantic features using AI models"""
+        try:
             # Prepare audio for Whisper
             audio_whisper = librosa.resample(audio, orig_sr=sr, target_sr=16000)
             
@@ -626,7 +643,8 @@ class EnterpriseMultiModalProcessor:
             return {'transcription': {'text': '', 'confidence': 0.0}, 'semantic_embedding': None}
     
     async def _extract_audio_fingerprints(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Generate comprehensive audio fingerprints for similarity matching"""        try:
+        """Generate comprehensive audio fingerprints for similarity matching"""
+        try:
             # Chromaprint fingerprint
             audio_int16 = (audio * 32767).astype(np.int16)
             chromaprint_fp = chromaprint.encode(audio_int16, sr)
@@ -664,7 +682,8 @@ class EnterpriseMultiModalProcessor:
             return {}
     
     async def _analyze_audio_quality(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Comprehensive audio quality analysis"""        try:
+        """Comprehensive audio quality analysis"""
+        try:
             # Signal-to-noise ratio estimation
             audio_energy = np.mean(audio**2)
             noise_floor = np.percentile(np.abs(audio), 10)
@@ -732,7 +751,8 @@ class EnterpriseMultiModalProcessor:
             raise
     
     def _initialize_audio_models(self):
-        """Initialize specialized audio processing models"""        try:
+        """Initialize specialized audio processing models"""
+        try:
             # Essentia for advanced audio analysis
             self.audio_algorithms = {
                 'mfcc': es.MFCC(),
@@ -767,7 +787,8 @@ class EnterpriseMultiModalProcessor:
             raise
     
     def _initialize_video_models(self):
-        """Initialize video processing capabilities"""        try:
+        """Initialize video processing capabilities"""
+        try:
             # OpenCV cascade classifiers
             self.video_detectors = {
                 'face': cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'),
@@ -788,8 +809,10 @@ class EnterpriseMultiModalProcessor:
             raise
     
     async def process_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """        Main entry point for multi-modal content processing
-        """        try:
+        """
+        Main entry point for multi-modal content processing
+        """
+        try:
             content_type = content_data.get('type', 'unknown')
             file_path = content_data.get('file_path')
             metadata = content_data.get('metadata', {})
@@ -835,7 +858,8 @@ class EnterpriseMultiModalProcessor:
             raise
     
     async def _process_audio(self, file_path: str) -> Dict[str, Any]:
-        """Process audio content with advanced fingerprinting and analysis"""        try:
+        """Process audio content with advanced fingerprinting and analysis"""
+        try:
             # Load audio
             audio, sr = librosa.load(file_path, sr=self.audio_sample_rate)
             audio_tensor = torch.from_numpy(audio).unsqueeze(0).to(self.device)
@@ -879,7 +903,8 @@ class EnterpriseMultiModalProcessor:
             raise
     
     async def _process_video(self, file_path: str) -> Dict[str, Any]:
-        """Process video content with comprehensive analysis"""        try:
+        """Process video content with comprehensive analysis"""
+        try:
             result = {
                 'fingerprints': {},
                 'features': {},
@@ -947,7 +972,8 @@ class EnterpriseMultiModalProcessor:
             raise
     
     async def _process_image(self, file_path: str) -> Dict[str, Any]:
-        """Process image content with advanced visual analysis"""        try:
+        """Process image content with advanced visual analysis"""
+        try:
             result = {
                 'fingerprints': {},
                 'features': {},
@@ -1009,7 +1035,8 @@ class EnterpriseMultiModalProcessor:
             raise
     
     async def _process_text(self, text: str) -> Dict[str, Any]:
-        """Process text content with advanced NLP analysis"""        try:
+        """Process text content with advanced NLP analysis"""
+        try:
             result = {
                 'fingerprints': {},
                 'features': {},
@@ -1061,7 +1088,8 @@ class EnterpriseMultiModalProcessor:
             raise
     
     def _generate_chromaprint(self, file_path: str) -> str:
-        """Generate Chromaprint fingerprint for audio"""        try:
+        """Generate Chromaprint fingerprint for audio"""
+        try:
             import subprocess
             result = subprocess.run([
                 'fpcalc', '-raw', file_path
@@ -1080,7 +1108,8 @@ class EnterpriseMultiModalProcessor:
             return None
     
     def _extract_spectral_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract spectral features from audio"""        try:
+        """Extract spectral features from audio"""
+        try:
             features = {}
             
             # Spectral centroid
@@ -1106,7 +1135,8 @@ class EnterpriseMultiModalProcessor:
             return {}
     
     def _analyze_audio_essentia(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Advanced audio analysis using Essentia"""        try:
+        """Advanced audio analysis using Essentia"""
+        try:
             analysis = {}
             
             # Convert to Essentia format
@@ -1134,7 +1164,8 @@ class EnterpriseMultiModalProcessor:
             return {}
     
     async def _extract_whisper_features(self, audio: np.ndarray) -> Dict[str, Any]:
-        """Extract features using Whisper model"""        try:
+        """Extract features using Whisper model"""
+        try:
             # Prepare audio for Whisper
             audio_input = self.processors['whisper'](
                 audio,
@@ -1170,7 +1201,8 @@ class EnterpriseMultiModalProcessor:
             return {}
     
     def _generate_audio_perceptual_hash(self, audio: np.ndarray, sr: int) -> str:
-        """Generate perceptual hash for audio"""        try:
+        """Generate perceptual hash for audio"""
+        try:
             # Create a simplified perceptual hash based on spectral features
             mel_spec = librosa.feature.melspectrogram(y=audio, sr=sr, n_mels=32)
             mel_spec_db = librosa.power_to_db(mel_spec, ref=np.max)
@@ -1193,7 +1225,8 @@ class EnterpriseMultiModalProcessor:
             return ''
     
     def _generate_frame_hash(self, frame: np.ndarray) -> str:
-        """Generate hash for video frame"""        try:
+        """Generate hash for video frame"""
+        try:
             # Convert to PIL Image
             frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             pil_image = Image.fromarray(frame_rgb)
@@ -1209,7 +1242,8 @@ class EnterpriseMultiModalProcessor:
             return ''
     
     def _extract_frame_features(self, frame: np.ndarray) -> Dict[str, Any]:
-        """Extract features from video frame"""        try:
+        """Extract features from video frame"""
+        try:
             features = {}
             
             # Color histogram
@@ -1239,7 +1273,8 @@ class EnterpriseMultiModalProcessor:
             return {}
     
     def _detect_scenes(self, frame_features: List[Dict[str, Any]]) -> List[int]:
-        """Detect scene changes in video"""        try:
+        """Detect scene changes in video"""
+        try:
             scene_boundaries = []
             
             if len(frame_features) < 2:
@@ -1269,7 +1304,8 @@ class EnterpriseMultiModalProcessor:
             return []
     
     def _analyze_motion(self, frame_features: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze motion in video"""        try:
+        """Analyze motion in video"""
+        try:
             motion_analysis = {
                 'motion_intensity': [],
                 'average_motion': 0,
@@ -1302,7 +1338,8 @@ class EnterpriseMultiModalProcessor:
             return {}
     
     async def _extract_audio_from_video(self, file_path: str) -> Dict[str, Any]:
-        """Extract and analyze audio from video file"""        try:
+        """Extract and analyze audio from video file"""
+        try:
             # Extract audio using moviepy
             with VideoFileClip(file_path) as video:
                 if video.audio is not None:
@@ -1324,7 +1361,8 @@ class EnterpriseMultiModalProcessor:
             return {'status': 'extraction_failed', 'error': str(e)}
     
     async def _process_audio_array(self, audio_array: np.ndarray) -> Dict[str, Any]:
-        """Process audio from numpy array"""        try:
+        """Process audio from numpy array"""
+        try:
             sr = self.audio_sample_rate
             
             result = {
@@ -1350,7 +1388,8 @@ class EnterpriseMultiModalProcessor:
             return {}
     
     def _analyze_image_colors(self, image_cv: np.ndarray) -> Dict[str, Any]:
-        """Analyze color properties of image"""        try:
+        """Analyze color properties of image"""
+        try:
             analysis = {}
             
             # Color histograms
@@ -1386,7 +1425,8 @@ class EnterpriseMultiModalProcessor:
             return {}
     
     def _extract_sift_features(self, image_cv: np.ndarray) -> Dict[str, Any]:
-        """Extract SIFT features from image"""        try:
+        """Extract SIFT features from image"""
+        try:
             gray = cv2.cvtColor(image_cv, cv2.COLOR_BGR2GRAY)
             sift = cv2.SIFT_create()
             keypoints, descriptors = sift.detectAndCompute(gray, None)
@@ -1411,7 +1451,8 @@ class EnterpriseMultiModalProcessor:
             return {}
     
     def _extract_orb_features(self, image_cv: np.ndarray) -> Dict[str, Any]:
-        """Extract ORB features from image"""        try:
+        """Extract ORB features from image"""
+        try:
             gray = cv2.cvtColor(image_cv, cv2.COLOR_BGR2GRAY)
             orb = cv2.ORB_create()
             keypoints, descriptors = orb.detectAndCompute(gray, None)
@@ -1436,14 +1477,16 @@ class EnterpriseMultiModalProcessor:
             return {}
     
     def _detect_language(self, text: str) -> str:
-        """Detect language of text"""        try:
+        """Detect language of text"""
+        try:
             from langdetect import detect
             return detect(text)
         except:
             return 'unknown'
     
     def _analyze_sentiment(self, text: str) -> Dict[str, Any]:
-        """Analyze sentiment of text"""        try:
+        """Analyze sentiment of text"""
+        try:
             # Simple sentiment analysis using pre-trained model
             # This could be enhanced with more sophisticated models
             sentiment = {
@@ -1462,7 +1505,8 @@ class EnterpriseMultiModalProcessor:
             return {'classification': 'unknown'}
     
     async def _analyze_text_safety(self, text: str) -> Dict[str, Any]:
-        """Analyze text for safety and content policy violations"""        try:
+        """Analyze text for safety and content policy violations"""
+        try:
             safety_inputs = self.processors['safety'](
                 text,
                 truncation=True,
@@ -1488,7 +1532,8 @@ class EnterpriseMultiModalProcessor:
             return {'classification': 'unknown'}
     
     def _extract_topics(self, text: str) -> List[str]:
-        """Extract topics from text"""        try:
+        """Extract topics from text"""
+        try:
             # Simple topic extraction using keywords
             # In production, use more sophisticated topic modeling
             words = text.lower().split()
@@ -1507,7 +1552,8 @@ class EnterpriseMultiModalProcessor:
             return []
     
     async def _detect_content_type(self, file_path: str) -> str:
-        """Auto-detect content type from file"""        try:
+        """Auto-detect content type from file"""
+        try:
             import mimetypes
             mime_type, _ = mimetypes.guess_type(file_path)
             
@@ -1545,7 +1591,8 @@ class EnterpriseMultiModalProcessor:
             return 'unknown'
     
     def _generate_universal_signature(self, processing_result: Dict[str, Any]) -> str:
-        """Generate universal content signature combining all features"""        try:
+        """Generate universal content signature combining all features"""
+        try:
             # Combine key features into universal signature
             signature_components = []
             

@@ -7,7 +7,8 @@ depuis diverses sources web et plateformes digitales.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. Tous droits réservés.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
@@ -46,7 +47,8 @@ except ImportError:
 
 
 class SourceType(Enum):
-    """Types de sources de données"""    WEB_PAGE = "web_page"
+    """Types de sources de données"""
+    WEB_PAGE = "web_page"
     API = "api"
     RSS_FEED = "rss_feed"
     SOCIAL_MEDIA = "social_media"
@@ -59,7 +61,8 @@ class SourceType(Enum):
 
 
 class DataFormat(Enum):
-    """Formats de données"""    HTML = "html"
+    """Formats de données"""
+    HTML = "html"
     JSON = "json"
     XML = "xml"
     CSV = "csv"
@@ -72,7 +75,8 @@ class DataFormat(Enum):
 
 
 class HarvestingStatus(Enum):
-    """Statuts de collecte"""    PENDING = "pending"
+    """Statuts de collecte"""
+    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -82,7 +86,8 @@ class HarvestingStatus(Enum):
 
 @dataclass
 class HarvestingTarget:
-    """Cible de collecte de données"""    target_id: str
+    """Cible de collecte de données"""
+    target_id: str
     source_url: str
     source_type: SourceType
     data_format: DataFormat
@@ -99,7 +104,8 @@ class HarvestingTarget:
 
 @dataclass
 class HarvestResult:
-    """Résultat de collecte"""    target_id: str
+    """Résultat de collecte"""
+    target_id: str
     harvest_id: str
     status: HarvestingStatus
     data_collected: Dict[str, Any]
@@ -112,7 +118,8 @@ class HarvestResult:
 
 @dataclass
 class ExtractionRule:
-    """Règle d'extraction de données"""    field_name: str
+    """Règle d'extraction de données"""
+    field_name: str
     selector_type: str  # css, xpath, regex, json_path
     selector: str
     data_type: str  # text, number, date, url, image
@@ -123,14 +130,18 @@ class ExtractionRule:
 
 
 class DataHarvester:
-    """    Collecteur de données multi-sources avancé
-    """    
+    """
+    Collecteur de données multi-sources avancé
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialise le collecteur de données
+        """
+        Initialise le collecteur de données
         
         Args:
             config: Configuration du harvester
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Gestionnaires
@@ -177,7 +188,8 @@ class DataHarvester:
         self._initialize_extraction_templates()
 
     def _initialize_extraction_templates(self) -> None:
-        """Initialise les templates d'extraction prédéfinis"""        
+        """Initialise les templates d'extraction prédéfinis"""
+        
         # Template pour articles de blog
         self.extraction_templates['blog_article'] = [
             ExtractionRule('title', 'css', 'h1, .title, .post-title', 'text', True),
@@ -234,7 +246,8 @@ class DataHarvester:
         scheduling: Dict[str, Any] = None,
         output_config: Dict[str, Any] = None
     ) -> str:
-        """        Ajoute une nouvelle cible de collecte
+        """
+        Ajoute une nouvelle cible de collecte
         
         Args:
             source_url: URL source
@@ -246,7 +259,8 @@ class DataHarvester:
             
         Returns:
             str: ID de la cible créée
-        """        try:
+        """
+        try:
             target_id = self._generate_target_id(source_url)
             
             target = HarvestingTarget(
@@ -274,12 +288,14 @@ class DataHarvester:
             raise
 
     def _generate_target_id(self, source_url: str) -> str:
-        """Génère un ID unique pour la cible"""        url_hash = hashlib.md5(source_url.encode()).hexdigest()[:8]
+        """Génère un ID unique pour la cible"""
+        url_hash = hashlib.md5(source_url.encode()).hexdigest()[:8]
         timestamp = int(datetime.now().timestamp())
         return f"TGT_{url_hash}_{timestamp}".upper()
 
     async def _validate_harvesting_target(self, target: HarvestingTarget) -> None:
-        """Valide une cible de collecte"""        # Validation URL
+        """Valide une cible de collecte"""
+        # Validation URL
         parsed_url = urlparse(target.source_url)
         if not parsed_url.scheme or not parsed_url.netloc:
             raise ValueError(f"URL invalide: {target.source_url}")
@@ -291,7 +307,8 @@ class DataHarvester:
             self.logger.warning(f"Problème d'accessibilité URL {target.source_url}: {e}")
 
     async def _test_url_accessibility(self, url: str) -> bool:
-        """Test l'accessibilité d'une URL"""        try:
+        """Test l'accessibilité d'une URL"""
+        try:
             if not self.session:
                 self.session = aiohttp.ClientSession()
             
@@ -303,11 +320,13 @@ class DataHarvester:
             return False
 
     async def start_harvesting(self, target_id: str = None) -> None:
-        """        Démarre la collecte de données
+        """
+        Démarre la collecte de données
         
         Args:
             target_id: ID de cible spécifique (optionnel)
-        """        try:
+        """
+        try:
             if not self.session:
                 self.session = aiohttp.ClientSession()
             
@@ -332,14 +351,16 @@ class DataHarvester:
             raise
 
     async def _harvest_target(self, target: HarvestingTarget) -> HarvestResult:
-        """        Collecte les données d'une cible spécifique
+        """
+        Collecte les données d'une cible spécifique
         
         Args:
             target: Cible de collecte
             
         Returns:
             HarvestResult: Résultat de la collecte
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         harvest_id = self._generate_harvest_id(target.target_id)
         
         try:
@@ -421,11 +442,13 @@ class DataHarvester:
             return result
 
     def _generate_harvest_id(self, target_id: str) -> str:
-        """Génère un ID unique pour la collecte"""        timestamp = int(datetime.now().timestamp())
+        """Génère un ID unique pour la collecte"""
+        timestamp = int(datetime.now().timestamp())
         return f"HRV_{target_id}_{timestamp}".upper()
 
     async def _harvest_web_page(self, target: HarvestingTarget) -> Dict[str, Any]:
-        """Collecte une page web"""        try:
+        """Collecte une page web"""
+        try:
             # Récupération du contenu HTML
             html_content = await self._fetch_html_content(target.source_url)
             
@@ -464,7 +487,8 @@ class DataHarvester:
             raise
 
     async def _fetch_html_content(self, url: str) -> str:
-        """Récupère le contenu HTML d'une URL"""        try:
+        """Récupère le contenu HTML d'une URL"""
+        try:
             # Tentative avec requête HTTP simple
             try:
                 async with self.session.get(
@@ -491,7 +515,8 @@ class DataHarvester:
             raise
 
     async def _fetch_with_selenium(self, url: str) -> str:
-        """Récupère le contenu avec Selenium (pour JavaScript)"""        try:
+        """Récupère le contenu avec Selenium (pour JavaScript)"""
+        try:
             # Exécution dans le pool de threads
             loop = asyncio.get_event_loop()
             html_content = await loop.run_in_executor(
@@ -506,7 +531,8 @@ class DataHarvester:
             raise
 
     def _selenium_fetch(self, url: str) -> str:
-        """Récupération Selenium synchrone"""        driver = None
+        """Récupération Selenium synchrone"""
+        driver = None
         try:
             driver = webdriver.Chrome(options=self.chrome_options)
             driver.get(url)
@@ -530,7 +556,8 @@ class DataHarvester:
         html_content: str,
         extraction_rules: List[ExtractionRule]
     ) -> Dict[str, Any]:
-        """Extrait les données avec un template"""        soup = BeautifulSoup(html_content, 'html.parser')
+        """Extrait les données avec un template"""
+        soup = BeautifulSoup(html_content, 'html.parser')
         extracted_data = {}
         
         for rule in extraction_rules:
@@ -561,7 +588,8 @@ class DataHarvester:
         return extracted_data
 
     def _apply_extraction_rule(self, soup: BeautifulSoup, rule: ExtractionRule) -> List[Any]:
-        """Applique une règle d'extraction"""        values = []
+        """Applique une règle d'extraction"""
+        values = []
         
         try:
             if rule.selector_type == 'css':
@@ -604,7 +632,8 @@ class DataHarvester:
             return []
 
     def _extract_number(self, text: str) -> Optional[float]:
-        """Extrait un nombre d'un texte"""        try:
+        """Extrait un nombre d'un texte"""
+        try:
             # Nettoyage du texte
             clean_text = re.sub(r'[^\d.,]', '', text)
             clean_text = clean_text.replace(',', '.')
@@ -616,7 +645,8 @@ class DataHarvester:
         return None
 
     def _parse_date(self, text: str) -> Optional[str]:
-        """Parse une date depuis un texte"""        try:
+        """Parse une date depuis un texte"""
+        try:
             from dateutil import parser
             parsed_date = parser.parse(text)
             return parsed_date.isoformat()
@@ -624,7 +654,8 @@ class DataHarvester:
             return None
 
     def _apply_transformations(self, values: List[Any], transformations: List[str]) -> List[Any]:
-        """Applique des transformations aux valeurs"""        for transformation in transformations:
+        """Applique des transformations aux valeurs"""
+        for transformation in transformations:
             if transformation == 'lowercase':
                 values = [str(v).lower() if v else v for v in values]
             elif transformation == 'uppercase':
@@ -637,7 +668,8 @@ class DataHarvester:
         return values
 
     def _apply_validations(self, values: List[Any], validations: List[str]) -> List[Any]:
-        """Applique des validations aux valeurs"""        validated_values = []
+        """Applique des validations aux valeurs"""
+        validated_values = []
         
         for value in values:
             valid = True
@@ -659,18 +691,21 @@ class DataHarvester:
         return validated_values
 
     def _is_valid_url(self, url: str) -> bool:
-        """Valide une URL"""        try:
+        """Valide une URL"""
+        try:
             result = urlparse(url)
             return all([result.scheme, result.netloc])
         except:
             return False
 
     def _is_valid_email(self, email: str) -> bool:
-        """Valide un email"""        pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        """Valide un email"""
+        pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         return re.match(pattern, email) is not None
 
     async def _extract_generic_web_data(self, html_content: str) -> Dict[str, Any]:
-        """Extraction générique de données web"""        soup = BeautifulSoup(html_content, 'html.parser')
+        """Extraction générique de données web"""
+        soup = BeautifulSoup(html_content, 'html.parser')
         
         data = {
             'title': '',
@@ -732,7 +767,8 @@ class DataHarvester:
         return data
 
     async def _harvest_api(self, target: HarvestingTarget) -> Dict[str, Any]:
-        """Collecte depuis une API"""        try:
+        """Collecte depuis une API"""
+        try:
             # Configuration de la requête
             method = target.extraction_rules.get('method', 'GET')
             headers = target.extraction_rules.get('headers', {})
@@ -774,7 +810,8 @@ class DataHarvester:
             raise
 
     def _apply_api_filters(self, data: Dict[str, Any], filters: Dict[str, Any]) -> Dict[str, Any]:
-        """Applique des filtres aux données API"""        filtered_data = data
+        """Applique des filtres aux données API"""
+        filtered_data = data
         
         # Filtres de champs
         if 'fields' in filters:
@@ -799,7 +836,8 @@ class DataHarvester:
         return filtered_data
 
     async def _harvest_rss_feed(self, target: HarvestingTarget) -> Dict[str, Any]:
-        """Collecte depuis un flux RSS"""        try:
+        """Collecte depuis un flux RSS"""
+        try:
             import feedparser
             
             # Récupération du flux RSS
@@ -842,7 +880,8 @@ class DataHarvester:
             raise
 
     async def _harvest_social_media(self, target: HarvestingTarget) -> Dict[str, Any]:
-        """Collecte depuis les réseaux sociaux"""        # Délégation aux APIs spécialisées ou scraping
+        """Collecte depuis les réseaux sociaux"""
+        # Délégation aux APIs spécialisées ou scraping
         platform = target.extraction_rules.get('platform', '')
         
         if platform == 'youtube':
@@ -856,7 +895,8 @@ class DataHarvester:
             return await self._harvest_web_page(target)
 
     async def _harvest_youtube(self, target: HarvestingTarget) -> Dict[str, Any]:
-        """Collecte YouTube spécialisée"""        try:
+        """Collecte YouTube spécialisée"""
+        try:
             # Extraction de l'ID de la vidéo ou chaîne depuis l'URL
             url = target.source_url
             data = {
@@ -887,7 +927,8 @@ class DataHarvester:
             return await self._harvest_web_page(target)
 
     async def _harvest_twitter(self, target: HarvestingTarget) -> Dict[str, Any]:
-        """Collecte Twitter spécialisée"""        try:
+        """Collecte Twitter spécialisée"""
+        try:
             url = target.source_url
             data = {
                 'platform': 'twitter',
@@ -917,7 +958,8 @@ class DataHarvester:
             return await self._harvest_web_page(target)
 
     async def _harvest_instagram(self, target: HarvestingTarget) -> Dict[str, Any]:
-        """Collecte Instagram spécialisée"""        try:
+        """Collecte Instagram spécialisée"""
+        try:
             url = target.source_url
             data = {
                 'platform': 'instagram',
@@ -947,7 +989,8 @@ class DataHarvester:
             return await self._harvest_web_page(target)
 
     async def _harvest_generic(self, target: HarvestingTarget) -> Dict[str, Any]:
-        """Collecte générique"""        # Tentative de collecte générique basée sur le format
+        """Collecte générique"""
+        # Tentative de collecte générique basée sur le format
         if target.data_format == DataFormat.JSON:
             return await self._harvest_api(target)
         elif target.data_format == DataFormat.XML:
@@ -960,7 +1003,8 @@ class DataHarvester:
         target: HarvestingTarget,
         raw_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Traite et valide les données collectées"""        try:
+        """Traite et valide les données collectées"""
+        try:
             # Nettoyage des données
             cleaned_data = self._clean_data(raw_data)
             
@@ -983,7 +1027,8 @@ class DataHarvester:
             return raw_data
 
     def _clean_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Nettoie les données"""        cleaned = {}
+        """Nettoie les données"""
+        cleaned = {}
         
         for key, value in data.items():
             if isinstance(value, str):
@@ -1003,7 +1048,8 @@ class DataHarvester:
         return cleaned
 
     async def _enrich_with_content_analysis(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Enrichit avec analyse de contenu IA"""        enriched = data.copy()
+        """Enrichit avec analyse de contenu IA"""
+        enriched = data.copy()
         
         # Analyse des textes
         text_fields = ['content', 'description', 'title', 'summary']
@@ -1033,7 +1079,8 @@ class DataHarvester:
         data: Dict[str, Any],
         harvest_id: str
     ) -> List[str]:
-        """Sauvegarde les données collectées"""        file_paths = []
+        """Sauvegarde les données collectées"""
+        file_paths = []
         
         try:
             # Création des répertoires
@@ -1067,15 +1114,18 @@ class DataHarvester:
             return []
 
     async def _ensure_directory_exists(self, directory: str) -> None:
-        """Assure l'existence d'un répertoire"""        import os
+        """Assure l'existence d'un répertoire"""
+        import os
         os.makedirs(directory, exist_ok=True)
 
     async def _save_json_file(self, file_path: str, data: Dict[str, Any]) -> None:
-        """Sauvegarde un fichier JSON"""        async with aiofiles.open(file_path, 'w', encoding='utf-8') as f:
+        """Sauvegarde un fichier JSON"""
+        async with aiofiles.open(file_path, 'w', encoding='utf-8') as f:
             await f.write(json.dumps(data, indent=2, ensure_ascii=False, default=str))
 
     def _is_tabular_data(self, data: Dict[str, Any]) -> bool:
-        """Vérifie si les données sont tabulaires"""        # Vérification simple : présence d'une liste d'objets similaires
+        """Vérifie si les données sont tabulaires"""
+        # Vérification simple : présence d'une liste d'objets similaires
         for key, value in data.items():
             if isinstance(value, list) and len(value) > 0:
                 if all(isinstance(item, dict) for item in value):
@@ -1083,7 +1133,8 @@ class DataHarvester:
         return False
 
     async def _save_csv_file(self, file_path: str, data: Dict[str, Any]) -> None:
-        """Sauvegarde un fichier CSV"""        try:
+        """Sauvegarde un fichier CSV"""
+        try:
             # Recherche de données tabulaires
             tabular_data = None
             for key, value in data.items():
@@ -1105,7 +1156,8 @@ class DataHarvester:
         data: Dict[str, Any],
         harvest_id: str
     ) -> List[str]:
-        """Sauvegarde les fichiers média"""        media_paths = []
+        """Sauvegarde les fichiers média"""
+        media_paths = []
         
         try:
             # Extraction des URLs de médias
@@ -1128,7 +1180,8 @@ class DataHarvester:
             return []
 
     def _extract_media_urls(self, data: Dict[str, Any]) -> List[str]:
-        """Extrait les URLs de médias des données"""        urls = []
+        """Extrait les URLs de médias des données"""
+        urls = []
         
         def extract_recursive(obj):
             if isinstance(obj, dict):
@@ -1146,11 +1199,13 @@ class DataHarvester:
         return list(set(urls))
 
     def _is_media_url(self, url: str) -> bool:
-        """Vérifie si une URL pointe vers un média"""        media_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.mp4', '.avi', '.mov', '.mp3', '.wav']
+        """Vérifie si une URL pointe vers un média"""
+        media_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.mp4', '.avi', '.mov', '.mp3', '.wav']
         return any(url.lower().endswith(ext) for ext in media_extensions)
 
     async def _download_media_file(self, url: str, harvest_id: str, index: int) -> Optional[str]:
-        """Télécharge un fichier média"""        try:
+        """Télécharge un fichier média"""
+        try:
             async with self.session.get(url) as response:
                 if response.status == 200:
                     # Détermination de l'extension
@@ -1179,7 +1234,8 @@ class DataHarvester:
         data: Dict[str, Any],
         harvest_id: str
     ) -> str:
-        """Sauvegarde avec export personnalisé"""        export_format = target.output_config.get('export_format', 'json')
+        """Sauvegarde avec export personnalisé"""
+        export_format = target.output_config.get('export_format', 'json')
         filename = f"{harvest_id}_export.{export_format}"
         file_path = f"{self.output_dirs['exports']}/{filename}"
         
@@ -1193,7 +1249,8 @@ class DataHarvester:
         return file_path
 
     async def _save_xml_file(self, file_path: str, data: Dict[str, Any]) -> None:
-        """Sauvegarde XML"""        try:
+        """Sauvegarde XML"""
+        try:
             import xml.etree.ElementTree as ET
             
             def dict_to_xml(obj, parent=None):
@@ -1224,7 +1281,8 @@ class DataHarvester:
             self.logger.error(f"Erreur sauvegarde XML: {e}")
 
     async def _save_excel_file(self, file_path: str, data: Dict[str, Any]) -> None:
-        """Sauvegarde Excel"""        try:
+        """Sauvegarde Excel"""
+        try:
             with pd.ExcelWriter(file_path, engine='openpyxl') as writer:
                 # Chaque liste d'objets devient une feuille
                 for key, value in data.items():
@@ -1247,7 +1305,8 @@ class DataHarvester:
         target: HarvestingTarget,
         data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Génère les métadonnées de collecte"""        return {
+        """Génère les métadonnées de collecte"""
+        return {
             'target_id': target.target_id,
             'source_url': target.source_url,
             'source_type': target.source_type.value,
@@ -1260,11 +1319,13 @@ class DataHarvester:
         }
 
     def get_harvesting_status(self) -> Dict[str, Any]:
-        """        Retourne le statut de collecte
+        """
+        Retourne le statut de collecte
         
         Returns:
             Dict[str, Any]: Statut global
-        """        total_targets = len(self.harvesting_targets)
+        """
+        total_targets = len(self.harvesting_targets)
         completed_harvests = len([r for r in self.harvest_results.values() if r.status == HarvestingStatus.COMPLETED])
         failed_harvests = len([r for r in self.harvest_results.values() if r.status == HarvestingStatus.FAILED])
         
@@ -1290,7 +1351,8 @@ class DataHarvester:
         }
 
     async def stop_harvesting(self) -> None:
-        """Arrête toutes les collectes"""        for target in self.harvesting_targets.values():
+        """Arrête toutes les collectes"""
+        for target in self.harvesting_targets.values():
             if target.status == HarvestingStatus.RUNNING:
                 target.status = HarvestingStatus.CANCELLED
         
@@ -1301,7 +1363,8 @@ class DataHarvester:
 
     # Helper methods for social media data extraction
     def _extract_youtube_title(self, soup: BeautifulSoup) -> str:
-        """Extrait le titre d'une vidéo YouTube"""        try:
+        """Extrait le titre d'une vidéo YouTube"""
+        try:
             # Recherche dans les métadonnées
             title_tag = soup.find('meta', property='og:title')
             if title_tag:
@@ -1317,7 +1380,8 @@ class DataHarvester:
             return ""
     
     def _extract_youtube_description(self, soup: BeautifulSoup) -> str:
-        """Extrait la description d'une vidéo YouTube"""        try:
+        """Extrait la description d'une vidéo YouTube"""
+        try:
             desc_tag = soup.find('meta', property='og:description')
             if desc_tag:
                 return desc_tag.get('content', '')
@@ -1326,7 +1390,8 @@ class DataHarvester:
             return ""
     
     def _extract_youtube_channel(self, soup: BeautifulSoup) -> str:
-        """Extrait le nom de la chaîne YouTube"""        try:
+        """Extrait le nom de la chaîne YouTube"""
+        try:
             channel_tag = soup.find('meta', {'name': 'author'})
             if channel_tag:
                 return channel_tag.get('content', '')
@@ -1335,7 +1400,8 @@ class DataHarvester:
             return ""
     
     def _extract_youtube_views(self, soup: BeautifulSoup) -> str:
-        """Extrait le nombre de vues YouTube"""        try:
+        """Extrait le nombre de vues YouTube"""
+        try:
             # Recherche de patterns de vues dans le HTML
             for script in soup.find_all('script'):
                 if script.string and 'viewCount' in script.string:
@@ -1346,7 +1412,8 @@ class DataHarvester:
             return "N/A"
     
     def _extract_youtube_date(self, soup: BeautifulSoup) -> str:
-        """Extrait la date de publication YouTube"""        try:
+        """Extrait la date de publication YouTube"""
+        try:
             date_tag = soup.find('meta', {'itemprop': 'datePublished'})
             if date_tag:
                 return date_tag.get('content', '')
@@ -1355,7 +1422,8 @@ class DataHarvester:
             return ""
     
     def _extract_youtube_thumbnails(self, soup: BeautifulSoup) -> List[str]:
-        """Extrait les URLs des miniatures YouTube"""        try:
+        """Extrait les URLs des miniatures YouTube"""
+        try:
             thumbnails = []
             thumb_tag = soup.find('meta', property='og:image')
             if thumb_tag:
@@ -1365,7 +1433,8 @@ class DataHarvester:
             return []
     
     def _extract_twitter_username(self, soup: BeautifulSoup) -> str:
-        """Extrait le nom d'utilisateur Twitter"""        try:
+        """Extrait le nom d'utilisateur Twitter"""
+        try:
             # Recherche dans les métadonnées Twitter
             username_tag = soup.find('meta', {'name': 'twitter:creator'})
             if username_tag:
@@ -1375,7 +1444,8 @@ class DataHarvester:
             return ""
     
     def _extract_twitter_text(self, soup: BeautifulSoup) -> str:
-        """Extrait le texte du tweet"""        try:
+        """Extrait le texte du tweet"""
+        try:
             desc_tag = soup.find('meta', property='og:description')
             if desc_tag:
                 return desc_tag.get('content', '')
@@ -1384,7 +1454,8 @@ class DataHarvester:
             return ""
     
     def _extract_twitter_date(self, soup: BeautifulSoup) -> str:
-        """Extrait la date du tweet"""        try:
+        """Extrait la date du tweet"""
+        try:
             # Recherche dans les métadonnées structurées
             date_tag = soup.find('meta', {'name': 'twitter:label1'})
             if date_tag and 'time' in date_tag.get('content', '').lower():
@@ -1396,20 +1467,23 @@ class DataHarvester:
             return ""
     
     def _extract_twitter_retweets(self, soup: BeautifulSoup) -> str:
-        """Extrait le nombre de retweets"""        try:
+        """Extrait le nombre de retweets"""
+        try:
             # Pattern générique pour les métriques Twitter
             return "N/A"
         except Exception:
             return "N/A"
     
     def _extract_twitter_likes(self, soup: BeautifulSoup) -> str:
-        """Extrait le nombre de likes"""        try:
+        """Extrait le nombre de likes"""
+        try:
             return "N/A"
         except Exception:
             return "N/A"
     
     def _extract_twitter_media(self, soup: BeautifulSoup) -> List[str]:
-        """Extrait les URLs des médias Twitter"""        try:
+        """Extrait les URLs des médias Twitter"""
+        try:
             media = []
             img_tag = soup.find('meta', property='og:image')
             if img_tag:
@@ -1419,7 +1493,8 @@ class DataHarvester:
             return []
     
     def _extract_instagram_username(self, soup: BeautifulSoup) -> str:
-        """Extrait le nom d'utilisateur Instagram"""        try:
+        """Extrait le nom d'utilisateur Instagram"""
+        try:
             # Recherche dans les métadonnées
             title_tag = soup.find('title')
             if title_tag:
@@ -1431,7 +1506,8 @@ class DataHarvester:
             return ""
     
     def _extract_instagram_caption(self, soup: BeautifulSoup) -> str:
-        """Extrait la légende Instagram"""        try:
+        """Extrait la légende Instagram"""
+        try:
             desc_tag = soup.find('meta', property='og:description')
             if desc_tag:
                 return desc_tag.get('content', '')
@@ -1440,26 +1516,30 @@ class DataHarvester:
             return ""
     
     def _extract_instagram_date(self, soup: BeautifulSoup) -> str:
-        """Extrait la date de publication Instagram"""        try:
+        """Extrait la date de publication Instagram"""
+        try:
             # Instagram utilise des structures complexes, extraction basique
             return ""
         except Exception:
             return ""
     
     def _extract_instagram_likes(self, soup: BeautifulSoup) -> str:
-        """Extrait le nombre de likes Instagram"""        try:
+        """Extrait le nombre de likes Instagram"""
+        try:
             return "N/A"
         except Exception:
             return "N/A"
     
     def _extract_instagram_comments(self, soup: BeautifulSoup) -> str:
-        """Extrait le nombre de commentaires Instagram"""        try:
+        """Extrait le nombre de commentaires Instagram"""
+        try:
             return "N/A"
         except Exception:
             return "N/A"
     
     def _extract_instagram_media(self, soup: BeautifulSoup) -> List[str]:
-        """Extrait les URLs des médias Instagram"""        try:
+        """Extrait les URLs des médias Instagram"""
+        try:
             media = []
             img_tag = soup.find('meta', property='og:image')
             if img_tag:
@@ -1469,11 +1549,13 @@ class DataHarvester:
             return []
 
     async def __aenter__(self):
-        """Gestionnaire de contexte async"""        if not self.session:
+        """Gestionnaire de contexte async"""
+        if not self.session:
             self.session = aiohttp.ClientSession()
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Nettoyage async"""        if self.session:
+        """Nettoyage async"""
+        if self.session:
             await self.session.close()
         self.executor.shutdown(wait=True)

@@ -22,7 +22,8 @@ LOGIQUE MÉTIER INTÉGRÉE:
 Key Generation → Encryption Processing → Secure Storage → 
 Key Rotation → Access Control → Decryption → Audit Logging → 
 Compliance Validation → Multi-tier Security → Recovery Management
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import base64
@@ -50,7 +51,8 @@ logger = logging.getLogger(__name__)
 
 
 class EncryptionAlgorithm(Enum):
-    """Encryption algorithms supported"""    AES_256_GCM = "aes_256_gcm"
+    """Encryption algorithms supported"""
+    AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     CHACHA20_POLY1305 = "chacha20_poly1305"
     FERNET = "fernet"
@@ -58,7 +60,8 @@ class EncryptionAlgorithm(Enum):
 
 
 class KeyType(Enum):
-    """Key types for different purposes"""    SYMMETRIC = "symmetric"
+    """Key types for different purposes"""
+    SYMMETRIC = "symmetric"
     ASYMMETRIC_PUBLIC = "asymmetric_public"
     ASYMMETRIC_PRIVATE = "asymmetric_private"
     DERIVED = "derived"
@@ -66,7 +69,8 @@ class KeyType(Enum):
 
 
 class SecurityLevel(Enum):
-    """Security levels for different content types"""    STANDARD = "standard"
+    """Security levels for different content types"""
+    STANDARD = "standard"
     HIGH = "high"
     MAXIMUM = "maximum"
     MILITARY = "military"
@@ -74,7 +78,8 @@ class SecurityLevel(Enum):
 
 @dataclass
 class EncryptionKey:
-    """Encryption key information"""    key_id: str
+    """Encryption key information"""
+    key_id: str
     key_type: KeyType
     algorithm: EncryptionAlgorithm
     key_data: bytes
@@ -89,7 +94,8 @@ class EncryptionKey:
 
 @dataclass
 class EncryptionConfig:
-    """Encryption configuration"""    default_algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM
+    """Encryption configuration"""
+    default_algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM
     key_rotation_days: int = 90
     master_key_rotation_days: int = 365
     security_level: SecurityLevel = SecurityLevel.HIGH
@@ -101,7 +107,8 @@ class EncryptionConfig:
 
 @dataclass
 class EncryptionResult:
-    """Encryption operation result"""    success: bool
+    """Encryption operation result"""
+    success: bool
     encrypted_data: Optional[bytes] = None
     key_id: str = ""
     algorithm: str = ""
@@ -111,7 +118,8 @@ class EncryptionResult:
 
 @dataclass
 class DecryptionResult:
-    """Decryption operation result"""    success: bool
+    """Decryption operation result"""
+    success: bool
     decrypted_data: Optional[bytes] = None
     key_id: str = ""
     algorithm: str = ""
@@ -120,18 +128,22 @@ class DecryptionResult:
 
 
 class EncryptionManager:
-    """    Professional encryption manager for IA Influencer Agent platform.
+    """
+    Professional encryption manager for IA Influencer Agent platform.
     
     Provides enterprise-grade encryption with key management, rotation,
     and compliance features for content protection.
-    """    
+    """
+    
     def __init__(self, config: EncryptionConfig, master_key: bytes = None):
-        """        Initialize EncryptionManager.
+        """
+        Initialize EncryptionManager.
         
         Args:
             config: Encryption configuration
             master_key: Master key for key encryption (auto-generated if None)
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Key storage
@@ -168,7 +180,8 @@ class EncryptionManager:
             asyncio.create_task(self._key_rotation_scheduler())
     
     def _initialize_default_keys(self):
-        """Initialize default encryption keys"""        try:
+        """Initialize default encryption keys"""
+        try:
             # Generate default symmetric key
             default_key = self.generate_key(
                 algorithm=self.config.default_algorithm,
@@ -189,7 +202,8 @@ class EncryptionManager:
     
     def generate_key(self, algorithm: EncryptionAlgorithm = None,
                     metadata: Dict[str, Any] = None) -> str:
-        """        Generate a new encryption key.
+        """
+        Generate a new encryption key.
         
         Args:
             algorithm: Encryption algorithm
@@ -197,7 +211,8 @@ class EncryptionManager:
             
         Returns:
             Key ID for the generated key
-        """        try:
+        """
+        try:
             algorithm = algorithm or self.config.default_algorithm
             
             # Generate key data based on algorithm
@@ -247,7 +262,8 @@ class EncryptionManager:
     
     def generate_keypair(self, algorithm: EncryptionAlgorithm = EncryptionAlgorithm.RSA_4096,
                         metadata: Dict[str, Any] = None) -> Tuple[str, str]:
-        """        Generate an asymmetric key pair.
+        """
+        Generate an asymmetric key pair.
         
         Args:
             algorithm: Asymmetric algorithm
@@ -255,7 +271,8 @@ class EncryptionManager:
             
         Returns:
             Tuple of (public_key_id, private_key_id)
-        """        try:
+        """
+        try:
             if algorithm == EncryptionAlgorithm.RSA_4096:
                 # Generate RSA key pair
                 private_key = rsa.generate_private_key(
@@ -327,7 +344,8 @@ class EncryptionManager:
     def encrypt_data(self, data: bytes, key_id: str = None,
                     algorithm: EncryptionAlgorithm = None,
                     metadata: Dict[str, Any] = None) -> EncryptionResult:
-        """        Encrypt data using specified or default key.
+        """
+        Encrypt data using specified or default key.
         
         Args:
             data: Data to encrypt
@@ -337,7 +355,8 @@ class EncryptionManager:
             
         Returns:
             Encryption result
-        """        try:
+        """
+        try:
             # Get or generate key
             if key_id is None:
                 key_id = self.generate_key(algorithm, metadata)
@@ -406,7 +425,8 @@ class EncryptionManager:
     
     def decrypt_data(self, encrypted_data: bytes, key_id: str,
                     metadata: Dict[str, Any] = None) -> DecryptionResult:
-        """        Decrypt data using specified key.
+        """
+        Decrypt data using specified key.
         
         Args:
             encrypted_data: Encrypted data
@@ -415,7 +435,8 @@ class EncryptionManager:
             
         Returns:
             Decryption result
-        """        try:
+        """
+        try:
             if key_id not in self.keys:
                 return DecryptionResult(
                     success=False,
@@ -496,14 +517,16 @@ class EncryptionManager:
             )
     
     def rotate_key(self, key_id: str) -> str:
-        """        Rotate an encryption key.
+        """
+        Rotate an encryption key.
         
         Args:
             key_id: Key ID to rotate
             
         Returns:
             New key ID
-        """        try:
+        """
+        try:
             if key_id not in self.keys:
                 raise ValueError(f"Key not found: {key_id}")
             
@@ -535,7 +558,8 @@ class EncryptionManager:
     def derive_key(self, password: str, salt: bytes = None,
                   algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM,
                   metadata: Dict[str, Any] = None) -> str:
-        """        Derive a key from password using PBKDF2.
+        """
+        Derive a key from password using PBKDF2.
         
         Args:
             password: Password for key derivation
@@ -545,7 +569,8 @@ class EncryptionManager:
             
         Returns:
             Key ID for derived key
-        """        try:
+        """
+        try:
             if salt is None:
                 salt = secrets.token_bytes(32)
             
@@ -589,14 +614,16 @@ class EncryptionManager:
             raise
     
     def get_key_info(self, key_id: str) -> Optional[Dict[str, Any]]:
-        """        Get information about a key (without sensitive data).
+        """
+        Get information about a key (without sensitive data).
         
         Args:
             key_id: Key ID
             
         Returns:
             Key information dictionary
-        """        try:
+        """
+        try:
             if key_id not in self.keys:
                 return None
             
@@ -620,14 +647,16 @@ class EncryptionManager:
             return None
     
     def list_keys(self, include_inactive: bool = False) -> List[Dict[str, Any]]:
-        """        List all keys with their information.
+        """
+        List all keys with their information.
         
         Args:
             include_inactive: Include inactive keys
             
         Returns:
             List of key information dictionaries
-        """        try:
+        """
+        try:
             keys_info = []
             
             for key in self.keys.values():
@@ -645,7 +674,8 @@ class EncryptionManager:
             return []
     
     def export_key(self, key_id: str, password: str) -> Optional[str]:
-        """        Export a key in encrypted format.
+        """
+        Export a key in encrypted format.
         
         Args:
             key_id: Key ID to export
@@ -653,7 +683,8 @@ class EncryptionManager:
             
         Returns:
             Exported key data (base64 encoded)
-        """        try:
+        """
+        try:
             if key_id not in self.keys:
                 return None
             
@@ -684,7 +715,8 @@ class EncryptionManager:
             return None
     
     def import_key(self, exported_data: str, password: str) -> Optional[str]:
-        """        Import a key from exported format.
+        """
+        Import a key from exported format.
         
         Args:
             exported_data: Exported key data (base64 encoded)
@@ -692,7 +724,8 @@ class EncryptionManager:
             
         Returns:
             Imported key ID
-        """        try:
+        """
+        try:
             # Decrypt export data
             encrypted_data = base64.b64decode(exported_data)
             decrypted_json = self._decrypt_with_password(encrypted_data, password)
@@ -725,7 +758,8 @@ class EncryptionManager:
             return None
     
     async def _key_rotation_scheduler(self):
-        """Background task for automatic key rotation"""        while self.rotation_enabled:
+        """Background task for automatic key rotation"""
+        while self.rotation_enabled:
             try:
                 current_time = datetime.utcnow()
                 
@@ -754,16 +788,19 @@ class EncryptionManager:
     # Private helper methods
     
     def _generate_master_key(self) -> bytes:
-        """Generate a new master key"""        return secrets.token_bytes(32)
+        """Generate a new master key"""
+        return secrets.token_bytes(32)
     
     def _generate_key_id(self, algorithm: EncryptionAlgorithm, metadata: Dict[str, Any]) -> str:
-        """Generate unique key ID"""        timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
+        """Generate unique key ID"""
+        timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
         random_suffix = secrets.token_hex(8)
         algorithm_prefix = algorithm.value[:8]
         return f"{algorithm_prefix}_{timestamp}_{random_suffix}"
     
     def _encrypt_key_data(self, key_data: bytes) -> bytes:
-        """Encrypt key data with master key"""        try:
+        """Encrypt key data with master key"""
+        try:
             # Use Fernet for key encryption (key wrapping)
             fernet = Fernet(base64.urlsafe_b64encode(self.master_key))
             return fernet.encrypt(key_data)
@@ -772,7 +809,8 @@ class EncryptionManager:
             raise
     
     def _decrypt_key_data(self, encrypted_key_data: bytes) -> bytes:
-        """Decrypt key data with master key"""        try:
+        """Decrypt key data with master key"""
+        try:
             fernet = Fernet(base64.urlsafe_b64encode(self.master_key))
             return fernet.decrypt(encrypted_key_data)
         except Exception as e:
@@ -780,13 +818,15 @@ class EncryptionManager:
             raise
     
     def _schedule_key_rotation(self, key_id: str):
-        """Schedule key for rotation"""        if key_id in self.keys:
+        """Schedule key for rotation"""
+        if key_id in self.keys:
             key = self.keys[key_id]
             if key.expires_at:
                 self.rotation_schedule[key_id] = key.expires_at
     
     def _log_key_operation(self, operation: str, key_id: str, metadata: Dict[str, Any]):
-        """Log key operation for audit"""        log_entry = {
+        """Log key operation for audit"""
+        log_entry = {
             'timestamp': datetime.utcnow().isoformat(),
             'operation': operation,
             'key_id': key_id,
@@ -802,14 +842,16 @@ class EncryptionManager:
     # Algorithm-specific encryption methods
     
     def _encrypt_aes_gcm(self, data: bytes, key: bytes) -> bytes:
-        """Encrypt using AES-256-GCM"""        iv = secrets.token_bytes(12)  # 96-bit IV for GCM
+        """Encrypt using AES-256-GCM"""
+        iv = secrets.token_bytes(12)  # 96-bit IV for GCM
         cipher = Cipher(algorithms.AES(key), modes.GCM(iv), backend=self.backend)
         encryptor = cipher.encryptor()
         ciphertext = encryptor.update(data) + encryptor.finalize()
         return iv + encryptor.tag + ciphertext
     
     def _decrypt_aes_gcm(self, encrypted_data: bytes, key: bytes) -> bytes:
-        """Decrypt using AES-256-GCM"""        iv = encrypted_data[:12]
+        """Decrypt using AES-256-GCM"""
+        iv = encrypted_data[:12]
         tag = encrypted_data[12:28]
         ciphertext = encrypted_data[28:]
         cipher = Cipher(algorithms.AES(key), modes.GCM(iv, tag), backend=self.backend)
@@ -817,7 +859,8 @@ class EncryptionManager:
         return decryptor.update(ciphertext) + decryptor.finalize()
     
     def _encrypt_aes_cbc(self, data: bytes, key: bytes) -> bytes:
-        """Encrypt using AES-256-CBC"""        iv = secrets.token_bytes(16)  # 128-bit IV for CBC
+        """Encrypt using AES-256-CBC"""
+        iv = secrets.token_bytes(16)  # 128-bit IV for CBC
         
         # Pad data to block size
         padder = padding.PKCS7(128).padder()
@@ -829,7 +872,8 @@ class EncryptionManager:
         return iv + ciphertext
     
     def _decrypt_aes_cbc(self, encrypted_data: bytes, key: bytes) -> bytes:
-        """Decrypt using AES-256-CBC"""        iv = encrypted_data[:16]
+        """Decrypt using AES-256-CBC"""
+        iv = encrypted_data[:16]
         ciphertext = encrypted_data[16:]
         
         cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=self.backend)
@@ -841,29 +885,34 @@ class EncryptionManager:
         return unpadder.update(padded_data) + unpadder.finalize()
     
     def _encrypt_chacha20(self, data: bytes, key: bytes) -> bytes:
-        """Encrypt using ChaCha20-Poly1305"""        nonce = secrets.token_bytes(12)  # 96-bit nonce
+        """Encrypt using ChaCha20-Poly1305"""
+        nonce = secrets.token_bytes(12)  # 96-bit nonce
         cipher = Cipher(algorithms.ChaCha20(key, nonce), None, backend=self.backend)
         encryptor = cipher.encryptor()
         ciphertext = encryptor.update(data) + encryptor.finalize()
         return nonce + ciphertext
     
     def _decrypt_chacha20(self, encrypted_data: bytes, key: bytes) -> bytes:
-        """Decrypt using ChaCha20-Poly1305"""        nonce = encrypted_data[:12]
+        """Decrypt using ChaCha20-Poly1305"""
+        nonce = encrypted_data[:12]
         ciphertext = encrypted_data[12:]
         cipher = Cipher(algorithms.ChaCha20(key, nonce), None, backend=self.backend)
         decryptor = cipher.decryptor()
         return decryptor.update(ciphertext) + decryptor.finalize()
     
     def _encrypt_fernet(self, data: bytes, key: bytes) -> bytes:
-        """Encrypt using Fernet"""        fernet = Fernet(key)
+        """Encrypt using Fernet"""
+        fernet = Fernet(key)
         return fernet.encrypt(data)
     
     def _decrypt_fernet(self, encrypted_data: bytes, key: bytes) -> bytes:
-        """Decrypt using Fernet"""        fernet = Fernet(key)
+        """Decrypt using Fernet"""
+        fernet = Fernet(key)
         return fernet.decrypt(encrypted_data)
     
     def _encrypt_with_password(self, data: bytes, password: str) -> bytes:
-        """Encrypt data with password (for export/import)"""        salt = secrets.token_bytes(32)
+        """Encrypt data with password (for export/import)"""
+        salt = secrets.token_bytes(32)
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,
@@ -878,7 +927,8 @@ class EncryptionManager:
         return salt + encrypted_data
     
     def _decrypt_with_password(self, encrypted_data: bytes, password: str) -> bytes:
-        """Decrypt data with password (for export/import)"""        salt = encrypted_data[:32]
+        """Decrypt data with password (for export/import)"""
+        salt = encrypted_data[:32]
         ciphertext = encrypted_data[32:]
         
         kdf = PBKDF2HMAC(
@@ -894,13 +944,15 @@ class EncryptionManager:
         return fernet.decrypt(ciphertext)
     
     def _compress_data(self, data: bytes) -> bytes:
-        """Compress data if beneficial"""        import gzip
+        """Compress data if beneficial"""
+        import gzip
         compressed = gzip.compress(data)
         # Only use compressed version if it's smaller
         return compressed if len(compressed) < len(data) else data
     
     def _decompress_data(self, data: bytes) -> bytes:
-        """Decompress data"""        import gzip
+        """Decompress data"""
+        import gzip
         try:
             return gzip.decompress(data)
         except:

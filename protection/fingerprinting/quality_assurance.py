@@ -11,7 +11,8 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import hashlib
@@ -36,20 +37,23 @@ from .utils import SimilarityCalculator
 logger = logging.getLogger(__name__)
 
 class QualityLevel(str, Enum):
-    """Quality assessment levels."""    EXCELLENT = "excellent"
+    """Quality assessment levels."""
+    EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
     POOR = "poor"
     UNACCEPTABLE = "unacceptable"
 
 class ValidationStatus(str, Enum):
-    """Validation status codes."""    PASSED = "passed"
+    """Validation status codes."""
+    PASSED = "passed"
     FAILED = "failed"
     WARNING = "warning"
     SKIPPED = "skipped"
 
 class TestType(str, Enum):
-    """Types of quality tests."""    ACCURACY = "accuracy"
+    """Types of quality tests."""
+    ACCURACY = "accuracy"
     CONSISTENCY = "consistency"
     PERFORMANCE = "performance"
     ROBUSTNESS = "robustness"
@@ -57,7 +61,8 @@ class TestType(str, Enum):
 
 @dataclass
 class ValidationRule:
-    """Quality validation rule definition."""    rule_id: str
+    """Quality validation rule definition."""
+    rule_id: str
     name: str
     description: str
     test_type: TestType
@@ -69,7 +74,8 @@ class ValidationRule:
 
 @dataclass
 class ValidationResult:
-    """Result of quality validation."""    rule_id: str
+    """Result of quality validation."""
+    rule_id: str
     status: ValidationStatus
     score: float
     threshold: float
@@ -79,7 +85,8 @@ class ValidationResult:
 
 @dataclass
 class QualityReport:
-    """Comprehensive quality assessment report."""    report_id: str
+    """Comprehensive quality assessment report."""
+    report_id: str
     content_type: ContentType
     fingerprint_id: str
     overall_quality: QualityLevel
@@ -92,7 +99,8 @@ class QualityReport:
 
 @dataclass
 class BenchmarkSuite:
-    """Test suite for benchmarking fingerprinting quality."""    suite_id: str
+    """Test suite for benchmarking fingerprinting quality."""
+    suite_id: str
     name: str
     description: str
     content_type: ContentType
@@ -102,7 +110,8 @@ class BenchmarkSuite:
     similarity_pairs: List[Tuple[str, str, float]]  # file1, file2, expected_similarity
 
 class FingerprintValidator:
-    """Comprehensive fingerprint validation system."""    
+    """Comprehensive fingerprint validation system."""
+    
     def __init__(self):
         self.validation_rules = {}
         self.quality_thresholds = {
@@ -117,7 +126,8 @@ class FingerprintValidator:
         self._initialize_default_rules()
         
     def _initialize_default_rules(self):
-        """Initialize default validation rules."""        self.validation_rules = {
+        """Initialize default validation rules."""
+        self.validation_rules = {
             'completeness_check': ValidationRule(
                 rule_id='completeness_check',
                 name='Fingerprint Completeness',
@@ -172,7 +182,8 @@ class FingerprintValidator:
     async def validate_fingerprint(self, 
                                  fingerprint: FingerprintResult,
                                  processing_metrics: Optional[ProcessingMetrics] = None) -> QualityReport:
-        """Validate fingerprint quality and generate report."""        
+        """Validate fingerprint quality and generate report."""
+        
         validation_results = []
         
         # Run all applicable validation rules
@@ -226,7 +237,8 @@ class FingerprintValidator:
                                  rule: ValidationRule,
                                  fingerprint: FingerprintResult,
                                  processing_metrics: Optional[ProcessingMetrics]) -> ValidationResult:
-        """Run individual validation rule."""        
+        """Run individual validation rule."""
+        
         if rule.validator_func:
             score, details = await rule.validator_func(fingerprint, processing_metrics, rule.threshold)
         else:
@@ -261,7 +273,8 @@ class FingerprintValidator:
                                    fingerprint: FingerprintResult,
                                    processing_metrics: Optional[ProcessingMetrics],
                                    threshold: float) -> Tuple[float, Dict[str, Any]]:
-        """Validate fingerprint completeness."""        
+        """Validate fingerprint completeness."""
+        
         required_fields = {
             ContentType.AUDIO: ['chromaprint', 'essentia', 'spectral'],
             ContentType.VIDEO: ['perceptual_frames', 'motion_analysis', 'object_detection'],
@@ -300,7 +313,8 @@ class FingerprintValidator:
                                   fingerprint: FingerprintResult,
                                   processing_metrics: Optional[ProcessingMetrics],
                                   threshold: float) -> Tuple[float, Dict[str, Any]]:
-        """Validate consistency across algorithms."""        
+        """Validate consistency across algorithms."""
+        
         # This would implement cross-algorithm consistency checks
         # For now, return a placeholder implementation
         
@@ -318,7 +332,8 @@ class FingerprintValidator:
                                     fingerprint: FingerprintResult,
                                     processing_metrics: Optional[ProcessingMetrics],
                                     threshold: float) -> Tuple[float, Dict[str, Any]]:
-        """Validate quality score meets threshold."""        
+        """Validate quality score meets threshold."""
+        
         quality_metrics = fingerprint.quality_metrics
         if not quality_metrics:
             return 0.0, {"message": "No quality metrics available"}
@@ -339,7 +354,8 @@ class FingerprintValidator:
                                  fingerprint: FingerprintResult,
                                  processing_metrics: Optional[ProcessingMetrics],
                                  threshold: float) -> Tuple[float, Dict[str, Any]]:
-        """Validate fingerprint uniqueness."""        
+        """Validate fingerprint uniqueness."""
+        
         quality_metrics = fingerprint.quality_metrics
         if not quality_metrics:
             return 0.0, {"message": "No quality metrics available"}
@@ -358,7 +374,8 @@ class FingerprintValidator:
                                       fingerprint: FingerprintResult,
                                       processing_metrics: Optional[ProcessingMetrics],
                                       threshold: float) -> Tuple[float, Dict[str, Any]]:
-        """Validate processing time is within limits."""        
+        """Validate processing time is within limits."""
+        
         if not processing_metrics:
             return 0.5, {"message": "No processing metrics available"}
         
@@ -384,7 +401,8 @@ class FingerprintValidator:
         return score, details
     
     def _calculate_overall_score(self, validation_results: List[ValidationResult]) -> float:
-        """Calculate overall quality score from validation results."""        if not validation_results:
+        """Calculate overall quality score from validation results."""
+        if not validation_results:
             return 0.0
         
         # Weight scores by test type importance
@@ -409,7 +427,8 @@ class FingerprintValidator:
         return weighted_sum / total_weight if total_weight > 0 else 0.0
     
     def _determine_quality_level(self, score: float) -> QualityLevel:
-        """Determine quality level from score."""        for level, threshold in sorted(self.quality_thresholds.items(), 
+        """Determine quality level from score."""
+        for level, threshold in sorted(self.quality_thresholds.items(), 
                                      key=lambda x: x[1], reverse=True):
             if score >= threshold:
                 return level
@@ -418,7 +437,8 @@ class FingerprintValidator:
     def _generate_recommendations(self, 
                                 validation_results: List[ValidationResult],
                                 fingerprint: FingerprintResult) -> List[str]:
-        """Generate optimization recommendations."""        recommendations = []
+        """Generate optimization recommendations."""
+        recommendations = []
         
         failed_rules = [r for r in validation_results if r.status == ValidationStatus.FAILED]
         warning_rules = [r for r in validation_results if r.status == ValidationStatus.WARNING]
@@ -451,19 +471,22 @@ class FingerprintValidator:
         return recommendations
 
 class BenchmarkingSystem:
-    """Comprehensive benchmarking system for quality assessment."""    
+    """Comprehensive benchmarking system for quality assessment."""
+    
     def __init__(self):
         self.benchmark_suites = {}
         self.benchmark_results = {}
         
     def add_benchmark_suite(self, suite: BenchmarkSuite):
-        """Add benchmark suite for testing."""        self.benchmark_suites[suite.suite_id] = suite
+        """Add benchmark suite for testing."""
+        self.benchmark_suites[suite.suite_id] = suite
         logger.info(f"Added benchmark suite: {suite.name}")
     
     async def run_benchmark(self, 
                           suite_id: str,
                           fingerprinting_service) -> Dict[str, Any]:
-        """Run benchmark suite and generate performance report."""        
+        """Run benchmark suite and generate performance report."""
+        
         suite = self.benchmark_suites.get(suite_id)
         if not suite:
             raise ValueError(f"Benchmark suite {suite_id} not found")
@@ -598,7 +621,8 @@ class BenchmarkingSystem:
     def _calculate_fingerprint_similarity(self, 
                                         fp1: FingerprintResult,
                                         fp2: FingerprintResult) -> float:
-        """Calculate similarity between two fingerprints."""        
+        """Calculate similarity between two fingerprints."""
+        
         # Simple hash-based similarity for demonstration
         if fp1.hash_value and fp2.hash_value:
             return SimilarityCalculator.hamming_similarity(fp1.hash_value, fp2.hash_value)
@@ -606,7 +630,8 @@ class BenchmarkingSystem:
         return 0.0
     
     def generate_benchmark_report(self, suite_id: str) -> str:
-        """Generate detailed benchmark report."""        
+        """Generate detailed benchmark report."""
+        
         results = self.benchmark_results.get(suite_id)
         if not results:
             return f"No benchmark results found for suite {suite_id}"
@@ -622,13 +647,15 @@ class BenchmarkingSystem:
 - **Duration**: {results['total_duration']:.2f} seconds
 
 ## Performance Metrics
-"""        
+"""
+        
         if 'performance_metrics' in results:
             perf = results['performance_metrics']
             report += f"""- **Average Processing Time**: {perf['avg_processing_time']:.3f}s
 - **Throughput**: {perf['throughput_files_per_second']:.2f} files/second
 - **Processing Time Range**: {perf['min_processing_time']:.3f}s - {perf['max_processing_time']:.3f}s
-"""        
+"""
+        
         if 'quality_summary' in results:
             quality = results['quality_summary']
             report += f"""## Quality Metrics
@@ -636,13 +663,15 @@ class BenchmarkingSystem:
 - **Average Reliability**: {quality['avg_reliability']:.3f}
 - **Average Completeness**: {quality['avg_completeness']:.3f}
 - **Average Uniqueness**: {quality['avg_uniqueness']:.3f}
-"""        
+"""
+        
         if 'similarity_accuracy' in results:
             sim = results['similarity_accuracy']
             report += f"""## Similarity Accuracy
 - **Average Accuracy**: {sim['avg_accuracy']:.3f}
 - **Accuracy Range**: {sim['min_accuracy']:.3f} - {sim['max_accuracy']:.3f}
-"""        
+"""
+        
         # Add detailed results
         successful_tests = [r for r in results['test_results'] if r['status'] == 'success']
         failed_tests = [r for r in results['test_results'] if r['status'] == 'failed']
@@ -651,11 +680,13 @@ class BenchmarkingSystem:
 - **Successful Tests**: {len(successful_tests)}
 - **Failed Tests**: {len(failed_tests)}
 - **Success Rate**: {len(successful_tests) / len(results['test_results']) * 100:.1f}%
-"""        
+"""
+        
         return report
 
 class QualityAssuranceSystem:
-    """    Comprehensive Quality Assurance System for Content Fingerprinting.
+    """
+    Comprehensive Quality Assurance System for Content Fingerprinting.
     
     Features:
     - Automated validation with configurable rules
@@ -664,7 +695,8 @@ class QualityAssuranceSystem:
     - Continuous quality monitoring
     - Performance regression detection
     - Detailed reporting and recommendations
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -690,7 +722,8 @@ class QualityAssuranceSystem:
     async def assess_quality(self, 
                            fingerprint: FingerprintResult,
                            processing_metrics: Optional[ProcessingMetrics] = None) -> QualityReport:
-        """Perform comprehensive quality assessment."""        
+        """Perform comprehensive quality assessment."""
+        
         # Run validation
         report = await self.validator.validate_fingerprint(fingerprint, processing_metrics)
         
@@ -706,7 +739,8 @@ class QualityAssuranceSystem:
         return report
     
     def _track_quality_metrics(self, report: QualityReport):
-        """Track quality metrics for trending analysis."""        
+        """Track quality metrics for trending analysis."""
+        
         quality_point = {
             'timestamp': report.timestamp,
             'content_type': report.content_type.value,
@@ -727,7 +761,8 @@ class QualityAssuranceSystem:
         self.quality_trends[f'{content_type}_processing_time'].append(report.performance_metrics.processing_time_seconds)
     
     def _check_quality_regression(self, report: QualityReport) -> List[str]:
-        """Check for quality regressions compared to historical data."""        
+        """Check for quality regressions compared to historical data."""
+        
         alerts = []
         content_type = report.content_type.value
         
@@ -760,7 +795,8 @@ class QualityAssuranceSystem:
         return alerts
     
     def generate_quality_dashboard(self) -> Dict[str, Any]:
-        """Generate quality dashboard data."""        
+        """Generate quality dashboard data."""
+        
         if not self.quality_history:
             return {'message': 'No quality data available'}
         
@@ -818,7 +854,8 @@ class QualityAssuranceSystem:
         return dashboard
     
     async def run_continuous_monitoring(self, interval_seconds: int = 300):
-        """Run continuous quality monitoring."""        
+        """Run continuous quality monitoring."""
+        
         logger.info(f"Starting continuous quality monitoring (interval: {interval_seconds}s)")
         
         while self.monitoring_enabled:
@@ -843,7 +880,8 @@ class QualityAssuranceSystem:
                 await asyncio.sleep(interval_seconds)
     
     def stop_monitoring(self):
-        """Stop continuous monitoring."""        self.monitoring_enabled = False
+        """Stop continuous monitoring."""
+        self.monitoring_enabled = False
         logger.info("Quality monitoring stopped")
 
 # Export main classes

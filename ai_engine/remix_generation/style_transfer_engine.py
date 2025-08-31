@@ -17,7 +17,8 @@ Contact: mlaiel@live.de
 MISSION: Engine de transfert de style neural ultra-avancé pour remixes professionnels
 TECHNOLOGIES: Neural Style Transfer, Deep Learning, Audio Style Analysis
 LOGIQUE MÉTIER: Source audio → Style analysis → Neural transfer → Quality optimization
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 import torch
@@ -35,14 +36,16 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class StyleTransferMode(Enum):
-    """Style transfer operation modes"""    FULL_TRANSFER = "full_transfer"
+    """Style transfer operation modes"""
+    FULL_TRANSFER = "full_transfer"
     PARTIAL_BLEND = "partial_blend"
     FEATURE_EXTRACTION = "feature_extraction"
     STYLE_INTERPOLATION = "style_interpolation"
     ADAPTIVE_TRANSFER = "adaptive_transfer"
 
 class StyleFeature(Enum):
-    """Musical style features for analysis"""    RHYTHM = "rhythm"
+    """Musical style features for analysis"""
+    RHYTHM = "rhythm"
     MELODY = "melody"
     HARMONY = "harmony"
     TIMBRE = "timbre"
@@ -53,7 +56,8 @@ class StyleFeature(Enum):
 
 @dataclass
 class StyleAnalysisResult:
-    """Result of style analysis"""    features: Dict[StyleFeature, float]
+    """Result of style analysis"""
+    features: Dict[StyleFeature, float]
     style_vector: np.ndarray
     confidence_score: float
     genre_probabilities: Dict[str, float]
@@ -63,7 +67,8 @@ class StyleAnalysisResult:
 
 @dataclass
 class StyleTransferRequest:
-    """Request for style transfer operation"""    source_audio_path: str
+    """Request for style transfer operation"""
+    source_audio_path: str
     target_style_path: Optional[str] = None
     target_style_description: Optional[str] = None
     transfer_mode: StyleTransferMode = StyleTransferMode.FULL_TRANSFER
@@ -80,7 +85,8 @@ class StyleTransferRequest:
 
 @dataclass
 class StyleTransferResult:
-    """Result of style transfer operation"""    output_audio_path: str
+    """Result of style transfer operation"""
+    output_audio_path: str
     transfer_success: bool
     style_similarity_score: float
     quality_score: float
@@ -90,11 +96,13 @@ class StyleTransferResult:
     error_message: Optional[str] = None
 
 class StyleAnalyzer:
-    """    Advanced style analyzer for extracting musical characteristics from audio.
+    """
+    Advanced style analyzer for extracting musical characteristics from audio.
     
     Uses deep learning and signal processing to analyze musical style features
     including rhythm patterns, harmonic progressions, and timbral characteristics.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logger
         self.sample_rate = 44100
@@ -114,7 +122,8 @@ class StyleAnalyzer:
         self._initialize_analyzers()
     
     def _initialize_analyzers(self):
-        """Initialize analysis models and parameters"""        try:
+        """Initialize analysis models and parameters"""
+        try:
             self.logger.info("🎯 Initializing style analyzers...")
             
             # Initialize neural networks for style analysis
@@ -128,7 +137,8 @@ class StyleAnalyzer:
             raise
     
     def _create_style_classifier(self) -> torch_nn.Module:
-        """Create neural network for style classification"""        class StyleClassifier(torch_nn.Module):
+        """Create neural network for style classification"""
+        class StyleClassifier(torch_nn.Module):
             def __init__(self, input_dim=128, hidden_dim=512, output_dim=64):
                 super().__init__()
                 self.conv_layers = torch_nn.Sequential(
@@ -154,7 +164,8 @@ class StyleAnalyzer:
         return StyleClassifier()
     
     def _create_genre_classifier(self) -> torch_nn.Module:
-        """Create neural network for genre classification"""        class GenreClassifier(torch_nn.Module):
+        """Create neural network for genre classification"""
+        class GenreClassifier(torch_nn.Module):
             def __init__(self, input_dim=128, num_genres=50):
                 super().__init__()
                 self.features = torch_nn.Sequential(
@@ -184,14 +195,16 @@ class StyleAnalyzer:
         return GenreClassifier()
     
     async def analyze_style(self, audio_path: str) -> StyleAnalysisResult:
-        """        Comprehensive style analysis of audio file.
+        """
+        Comprehensive style analysis of audio file.
         
         Args:
             audio_path: Path to audio file for analysis
             
         Returns:
             Detailed style analysis results
-        """        try:
+        """
+        try:
             self.logger.info(f"🔍 Analyzing style for: {audio_path}")
             
             # Load audio
@@ -252,7 +265,8 @@ class StyleAnalyzer:
             raise
     
     async def _extract_spectral_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract spectral characteristics"""        try:
+        """Extract spectral characteristics"""
+        try:
             # Mel-frequency cepstral coefficients
             mfcc = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=13)
             
@@ -280,7 +294,8 @@ class StyleAnalyzer:
             raise
     
     async def _extract_temporal_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract temporal characteristics"""        try:
+        """Extract temporal characteristics"""
+        try:
             # RMS energy
             rms = librosa.feature.rms(y=audio)
             
@@ -304,7 +319,8 @@ class StyleAnalyzer:
             raise
     
     async def _extract_harmonic_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract harmonic and melodic characteristics"""        try:
+        """Extract harmonic and melodic characteristics"""
+        try:
             # Chroma features
             chroma = librosa.feature.chroma_stft(y=audio, sr=sr)
             
@@ -332,7 +348,8 @@ class StyleAnalyzer:
             raise
     
     async def _extract_rhythmic_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract rhythmic characteristics"""        try:
+        """Extract rhythmic characteristics"""
+        try:
             # Tempo estimation
             tempo, beats = librosa.beat.beat_track(y=audio, sr=sr)
             
@@ -358,7 +375,8 @@ class StyleAnalyzer:
             raise
     
     async def _classify_genre(self, audio: np.ndarray, sr: int) -> Dict[str, float]:
-        """Classify musical genre"""        try:
+        """Classify musical genre"""
+        try:
             # Extract mel spectrogram for genre classification
             mel_spec = librosa.feature.melspectrogram(y=audio, sr=sr, n_mels=self.n_mels)
             mel_spec_db = librosa.power_to_db(mel_spec, ref=np.max)
@@ -380,11 +398,13 @@ class StyleAnalyzer:
             return {}
 
 class NeuralStyleTransfer:
-    """    Neural style transfer implementation for musical audio.
+    """
+    Neural style transfer implementation for musical audio.
     
     Uses deep learning techniques to transfer style characteristics
     from one audio piece to another while preserving content structure.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logger
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -405,7 +425,8 @@ class NeuralStyleTransfer:
         self._initialize_networks()
     
     def _initialize_networks(self):
-        """Initialize neural networks for style transfer"""        try:
+        """Initialize neural networks for style transfer"""
+        try:
             self.logger.info("🧠 Initializing neural style transfer networks...")
             
             # Content encoder
@@ -427,7 +448,8 @@ class NeuralStyleTransfer:
             raise
     
     def _create_content_encoder(self) -> torch_nn.Module:
-        """Create content encoding network"""        class ContentEncoder(torch_nn.Module):
+        """Create content encoding network"""
+        class ContentEncoder(torch_nn.Module):
             def __init__(self):
                 super().__init__()
                 self.layers = torch_nn.Sequential(
@@ -445,7 +467,8 @@ class NeuralStyleTransfer:
         return ContentEncoder().to(self.device)
     
     def _create_style_encoder(self) -> torch_nn.Module:
-        """Create style encoding network"""        class StyleEncoder(torch_nn.Module):
+        """Create style encoding network"""
+        class StyleEncoder(torch_nn.Module):
             def __init__(self):
                 super().__init__()
                 self.layers = torch_nn.Sequential(
@@ -464,7 +487,8 @@ class NeuralStyleTransfer:
         return StyleEncoder().to(self.device)
     
     def _create_decoder(self) -> torch_nn.Module:
-        """Create decoder network"""        class Decoder(torch_nn.Module):
+        """Create decoder network"""
+        class Decoder(torch_nn.Module):
             def __init__(self):
                 super().__init__()
                 self.layers = torch_nn.Sequential(
@@ -482,7 +506,8 @@ class NeuralStyleTransfer:
         return Decoder().to(self.device)
     
     def _create_loss_network(self) -> torch_nn.Module:
-        """Create network for loss calculation"""        class LossNetwork(torch_nn.Module):
+        """Create network for loss calculation"""
+        class LossNetwork(torch_nn.Module):
             def __init__(self):
                 super().__init__()
                 self.content_layers = torch_nn.ModuleList([
@@ -508,14 +533,16 @@ class NeuralStyleTransfer:
         return LossNetwork().to(self.device)
     
     async def transfer_style(self, request: StyleTransferRequest) -> StyleTransferResult:
-        """        Perform neural style transfer on audio.
+        """
+        Perform neural style transfer on audio.
         
         Args:
             request: Style transfer request with source and target specifications
             
         Returns:
             Style transfer result with output audio and metadata
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         
         try:
             self.logger.info(f"🎨 Starting style transfer: {request.transfer_mode.value}")
@@ -594,7 +621,8 @@ class NeuralStyleTransfer:
     
     async def _perform_neural_transfer(self, source: torch.Tensor, target: torch.Tensor, 
                                      request: StyleTransferRequest) -> torch.Tensor:
-        """Perform the actual neural style transfer"""        try:
+        """Perform the actual neural style transfer"""
+        try:
             # Initialize output as copy of source
             output = source.clone().requires_grad_(True)
             
@@ -637,7 +665,8 @@ class NeuralStyleTransfer:
             raise
     
     async def _generate_style_from_description(self, description: str) -> np.ndarray:
-        """Generate style audio from text description"""        try:
+        """Generate style audio from text description"""
+        try:
             # Simulate style generation from description
             # In production, this would use text-to-music models
             duration = 10  # seconds
@@ -665,7 +694,8 @@ class NeuralStyleTransfer:
     
     async def _calculate_style_similarity(self, output: torch.Tensor, 
                                         target: torch.Tensor) -> float:
-        """Calculate style similarity between output and target"""        try:
+        """Calculate style similarity between output and target"""
+        try:
             output_style = self.style_encoder(output)
             target_style = self.style_encoder(target)
             
@@ -680,7 +710,8 @@ class NeuralStyleTransfer:
             return 0.0
     
     async def _calculate_quality_score(self, audio: torch.Tensor) -> float:
-        """Calculate quality score of transferred audio"""        try:
+        """Calculate quality score of transferred audio"""
+        try:
             # Simple quality metrics
             audio_np = audio.cpu().numpy().flatten()
             
@@ -699,11 +730,13 @@ class NeuralStyleTransfer:
             return 0.0
 
 class StyleTransferProcessor:
-    """    High-level processor for style transfer operations.
+    """
+    High-level processor for style transfer operations.
     
     Provides enterprise-grade interface for style transfer with
     preprocessing, optimization, and quality control.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logger
         self.analyzer = StyleAnalyzer()
@@ -714,14 +747,16 @@ class StyleTransferProcessor:
         self.max_concurrent_transfers = 3
     
     async def process_style_transfer(self, request: StyleTransferRequest) -> StyleTransferResult:
-        """        Process style transfer request with full pipeline.
+        """
+        Process style transfer request with full pipeline.
         
         Args:
             request: Complete style transfer request
             
         Returns:
             Style transfer result with all metadata
-        """        try:
+        """
+        try:
             # Add to processing queue if at capacity
             if len(self.active_transfers) >= self.max_concurrent_transfers:
                 await self.processing_queue.put(request)
@@ -766,11 +801,13 @@ class StyleTransferProcessor:
             raise
 
 class StyleConverter:
-    """    Utility class for style conversion and manipulation.
+    """
+    Utility class for style conversion and manipulation.
     
     Provides tools for style interpolation, feature extraction,
     and style database management.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logger
         self.style_database = {}
@@ -778,7 +815,8 @@ class StyleConverter:
     
     async def interpolate_styles(self, style1_path: str, style2_path: str, 
                                interpolation_factor: float = 0.5) -> str:
-        """        Interpolate between two styles to create a hybrid style.
+        """
+        Interpolate between two styles to create a hybrid style.
         
         Args:
             style1_path: First style audio path
@@ -787,7 +825,8 @@ class StyleConverter:
             
         Returns:
             Path to interpolated style audio
-        """        try:
+        """
+        try:
             self.logger.info(f"🔄 Interpolating styles with factor: {interpolation_factor}")
             
             # Analyze both styles
@@ -812,14 +851,16 @@ class StyleConverter:
             raise
     
     async def extract_style_template(self, audio_path: str) -> Dict[str, Any]:
-        """        Extract style template for reuse.
+        """
+        Extract style template for reuse.
         
         Args:
             audio_path: Audio file to extract style from
             
         Returns:
             Style template dictionary
-        """        try:
+        """
+        try:
             analyzer = StyleAnalyzer()
             analysis = await analyzer.analyze_style(audio_path)
             

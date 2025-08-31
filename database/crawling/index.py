@@ -10,7 +10,8 @@ Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security Expert
 Copyright: All rights reserved
-"""from typing import Dict, List, Optional, Any, Union
+"""
+from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, asc, func
@@ -34,7 +35,8 @@ from ..core.exceptions import (
 
 
 class CrawlingDatabaseManager(DatabaseManager):
-    """    Enterprise-grade crawling database manager for multi-platform
+    """
+    Enterprise-grade crawling database manager for multi-platform
     web surveillance and content discovery operations.
     
     Handles all database operations for:
@@ -44,13 +46,16 @@ class CrawlingDatabaseManager(DatabaseManager):
     - Proxy pool rotation and health monitoring
     - Content discovery and metadata storage
     - Performance analytics and reporting
-    """    
+    """
+    
     def __init__(self, db_session: Session):
-        """        Initialize crawling database manager with all sub-managers.
+        """
+        Initialize crawling database manager with all sub-managers.
         
         Args:
             db_session: SQLAlchemy database session
-        """        super().__init__(db_session)
+        """
+        super().__init__(db_session)
         
         # Initialize specialized managers
         self.sessions = CrawlingSessionManager(db_session)
@@ -67,7 +72,8 @@ class CrawlingDatabaseManager(DatabaseManager):
         user_id: str,
         config_overrides: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Initialize a new crawler for specified platform with optimal configuration.
+        """
+        Initialize a new crawler for specified platform with optimal configuration.
         
         Args:
             platform: Target platform (youtube, tiktok, instagram, twitter, generic)
@@ -80,7 +86,8 @@ class CrawlingDatabaseManager(DatabaseManager):
         Raises:
             CrawlingSessionError: If session initialization fails
             RateLimitExceededError: If platform rate limits exceeded
-        """        try:
+        """
+        try:
             # Check rate limits for platform
             if not await self.rate_limits.check_platform_quota(platform, user_id):
                 raise RateLimitExceededError(
@@ -140,7 +147,8 @@ class CrawlingDatabaseManager(DatabaseManager):
         schedule_time: Optional[datetime] = None,
         recurring_interval: Optional[int] = None
     ) -> Dict[str, Any]:
-        """        Schedule a new crawling job with specified parameters.
+        """
+        Schedule a new crawling job with specified parameters.
         
         Args:
             session_id: Active crawling session ID
@@ -152,7 +160,8 @@ class CrawlingDatabaseManager(DatabaseManager):
             
         Returns:
             Dict containing job details and scheduling information
-        """        try:
+        """
+        try:
             # Validate session exists and is active
             session_info = await self.sessions.get_session(session_id)
             if not session_info or session_info['status'] != 'active':
@@ -203,7 +212,8 @@ class CrawlingDatabaseManager(DatabaseManager):
         job_id: str,
         discovered_content: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Store discovered content with metadata and analysis results.
+        """
+        Store discovered content with metadata and analysis results.
         
         Args:
             session_id: Crawling session ID
@@ -212,7 +222,8 @@ class CrawlingDatabaseManager(DatabaseManager):
             
         Returns:
             Dict containing stored content information
-        """        try:
+        """
+        try:
             # Validate session and job
             session_info = await self.sessions.get_session(session_id)
             job_info = await self.jobs.get_job(job_id)
@@ -260,7 +271,8 @@ class CrawlingDatabaseManager(DatabaseManager):
         user_id: str,
         time_range: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
-        """        Get comprehensive dashboard data for crawling operations.
+        """
+        Get comprehensive dashboard data for crawling operations.
         
         Args:
             user_id: User identifier
@@ -268,7 +280,8 @@ class CrawlingDatabaseManager(DatabaseManager):
             
         Returns:
             Dict containing dashboard metrics and statistics
-        """        try:
+        """
+        try:
             since_time = datetime.utcnow() - time_range
             
             # Get active sessions
@@ -319,14 +332,16 @@ class CrawlingDatabaseManager(DatabaseManager):
             raise DatabaseError(f"Failed to generate dashboard data: {str(e)}")
     
     async def cleanup_expired_sessions(self, max_age_hours: int = 24) -> Dict[str, int]:
-        """        Clean up expired crawling sessions and associated data.
+        """
+        Clean up expired crawling sessions and associated data.
         
         Args:
             max_age_hours: Maximum age in hours before session cleanup
             
         Returns:
             Dict containing cleanup statistics
-        """        try:
+        """
+        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
             
             # Get expired sessions
@@ -374,11 +389,13 @@ class CrawlingDatabaseManager(DatabaseManager):
             raise DatabaseError(f"Failed to cleanup expired sessions: {str(e)}")
     
     async def health_check(self) -> Dict[str, Any]:
-        """        Perform comprehensive health check of crawling database systems.
+        """
+        Perform comprehensive health check of crawling database systems.
         
         Returns:
             Dict containing health status of all components
-        """        try:
+        """
+        try:
             health_status = {
                 'overall_status': 'healthy',
                 'components': {},

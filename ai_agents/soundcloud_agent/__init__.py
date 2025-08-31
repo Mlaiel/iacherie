@@ -6,7 +6,8 @@ intelligent content scraping, and advanced audio discovery capabilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
-"""from .core.soundcloud_engine import SoundCloudEngine, SoundCloudTrack, SoundCloudPlaylist
+"""
+from .core.soundcloud_engine import SoundCloudEngine, SoundCloudTrack, SoundCloudPlaylist
 from .core.intelligent_scraper import IntelligentScraper
 from .utils.soundcloud_auth import SoundCloudAuthManager
 
@@ -23,10 +24,12 @@ __all__ = [
 ]
 
 def create_soundcloud_agent(config=None):
-    """Factory function to create configured SoundCloud agent"""    return SoundCloudEngine(config)
+    """Factory function to create configured SoundCloud agent"""
+    return SoundCloudEngine(config)
 
 def get_module_info():
-    """Get module information and capabilities"""    return {
+    """Get module information and capabilities"""
+    return {
         "name": "SoundCloud Agent",
         "version": __version__,
         "author": __author__,

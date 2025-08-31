@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import os
@@ -28,7 +29,8 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class ConfigScope(Enum):
-    """Configuration scope levels."""    GLOBAL = "global"
+    """Configuration scope levels."""
+    GLOBAL = "global"
     ENVIRONMENT = "environment"
     SERVICE = "service"
     COMPONENT = "component"
@@ -36,7 +38,8 @@ class ConfigScope(Enum):
 
 
 class ConfigType(Enum):
-    """Configuration value types."""    STRING = "string"
+    """Configuration value types."""
+    STRING = "string"
     INTEGER = "integer"
     FLOAT = "float"
     BOOLEAN = "boolean"
@@ -49,7 +52,8 @@ class ConfigType(Enum):
 
 
 class ConfigSource(Enum):
-    """Configuration sources."""    FILE = "file"
+    """Configuration sources."""
+    FILE = "file"
     ENVIRONMENT = "environment"
     DATABASE = "database"
     REMOTE_API = "remote_api"
@@ -59,7 +63,8 @@ class ConfigSource(Enum):
 
 
 class ValidationLevel(Enum):
-    """Configuration validation levels."""    NONE = "none"
+    """Configuration validation levels."""
+    NONE = "none"
     BASIC = "basic"
     STRICT = "strict"
     CUSTOM = "custom"
@@ -67,7 +72,8 @@ class ValidationLevel(Enum):
 
 @dataclass
 class ConfigDefinition:
-    """Configuration parameter definition."""    config_id: str
+    """Configuration parameter definition."""
+    config_id: str
     name: str
     config_type: ConfigType
     scope: ConfigScope
@@ -84,7 +90,8 @@ class ConfigDefinition:
 
 @dataclass
 class ConfigValue:
-    """Configuration value instance."""    config_id: str
+    """Configuration value instance."""
+    config_id: str
     value: Any
     source: ConfigSource
     scope: ConfigScope
@@ -101,7 +108,8 @@ class ConfigValue:
 
 @dataclass
 class ConfigSnapshot:
-    """Configuration snapshot for versioning."""    snapshot_id: str
+    """Configuration snapshot for versioning."""
+    snapshot_id: str
     name: str
     description: str
     configs: Dict[str, ConfigValue]
@@ -113,7 +121,8 @@ class ConfigSnapshot:
 
 @dataclass
 class ConfigWatcher:
-    """Configuration change watcher."""    watcher_id: str
+    """Configuration change watcher."""
+    watcher_id: str
     config_patterns: List[str]
     callback: Callable
     watch_scope: ConfigScope
@@ -126,7 +135,8 @@ class ConfigWatcher:
 
 @dataclass
 class ConfigValidationResult:
-    """Configuration validation result."""    config_id: str
+    """Configuration validation result."""
+    config_id: str
     valid: bool
     errors: List[str] = field(default_factory=list)
     warnings: List[str] = field(default_factory=list)
@@ -135,7 +145,8 @@ class ConfigValidationResult:
 
 
 class ConfigurationManager:
-    """    Advanced configuration management system for orchestration platforms.
+    """
+    Advanced configuration management system for orchestration platforms.
     
     Provides comprehensive configuration capabilities including:
     - Multi-source configuration loading (files, environment, remote APIs)
@@ -145,7 +156,8 @@ class ConfigurationManager:
     - Secure handling of sensitive configuration data
     - Configuration versioning and snapshot management
     - Environment-specific configuration profiles
-    """    
+    """
+    
     def __init__(
         self,
         config_dirs: Optional[List[str]] = None,
@@ -199,19 +211,22 @@ class ConfigurationManager:
         self.logger.info(f"ConfigurationManager initialized for environment: {default_environment}")
     
     def _start_background_tasks(self) -> None:
-        """Start background configuration management tasks."""        asyncio.create_task(self._config_refresh_task())
+        """Start background configuration management tasks."""
+        asyncio.create_task(self._config_refresh_task())
         asyncio.create_task(self._cache_cleanup_task())
         asyncio.create_task(self._validation_task())
     
     async def register_config_definition(self, definition: ConfigDefinition) -> bool:
-        """        Register configuration parameter definition.
+        """
+        Register configuration parameter definition.
         
         Args:
             definition: Configuration definition to register
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             # Validate definition
             if not await self._validate_config_definition(definition):
                 return False
@@ -236,14 +251,16 @@ class ConfigurationManager:
             return False
     
     async def load_configurations(self, environment: Optional[str] = None) -> bool:
-        """        Load configurations from all enabled sources.
+        """
+        Load configurations from all enabled sources.
         
         Args:
             environment: Environment name (uses current if None)
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             environment = environment or self.current_environment
             
             # Load from each source in priority order
@@ -284,7 +301,8 @@ class ConfigurationManager:
         user: Optional[str] = None,
         use_cache: bool = True
     ) -> Any:
-        """        Get configuration value with scope hierarchy resolution.
+        """
+        Get configuration value with scope hierarchy resolution.
         
         Args:
             config_id: Configuration identifier
@@ -297,7 +315,8 @@ class ConfigurationManager:
             
         Returns:
             Configuration value or None if not found
-        """        try:
+        """
+        try:
             # Check cache first
             cache_key = self._generate_cache_key(config_id, scope, environment, service, component, user)
             if use_cache and cache_key in self.config_cache:
@@ -330,7 +349,8 @@ class ConfigurationManager:
         user: Optional[str] = None,
         source: ConfigSource = ConfigSource.DATABASE
     ) -> bool:
-        """        Set configuration value.
+        """
+        Set configuration value.
         
         Args:
             config_id: Configuration identifier
@@ -344,7 +364,8 @@ class ConfigurationManager:
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             # Get or create definition
             definition = self.config_definitions.get(config_id)
             if definition:
@@ -417,7 +438,8 @@ class ConfigurationManager:
             return False
     
     async def create_snapshot(self, name: str, description: str = "", created_by: str = "system") -> str:
-        """        Create configuration snapshot.
+        """
+        Create configuration snapshot.
         
         Args:
             name: Snapshot name
@@ -426,7 +448,8 @@ class ConfigurationManager:
             
         Returns:
             str: Snapshot ID
-        """        try:
+        """
+        try:
             snapshot_id = str(uuid.uuid4())
             
             # Collect all current configurations
@@ -462,14 +485,16 @@ class ConfigurationManager:
             raise
     
     async def restore_snapshot(self, snapshot_id: str) -> bool:
-        """        Restore configuration from snapshot.
+        """
+        Restore configuration from snapshot.
         
         Args:
             snapshot_id: Snapshot identifier
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             if snapshot_id not in self.config_snapshots:
                 raise ValueError(f"Snapshot not found: {snapshot_id}")
             
@@ -513,14 +538,16 @@ class ConfigurationManager:
             return False
     
     async def register_watcher(self, watcher: ConfigWatcher) -> bool:
-        """        Register configuration change watcher.
+        """
+        Register configuration change watcher.
         
         Args:
             watcher: Configuration watcher
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             self.config_watchers[watcher.watcher_id] = watcher
             
             await self.event_dispatcher.emit('config_watcher_registered', {
@@ -539,7 +566,8 @@ class ConfigurationManager:
             return False
     
     async def validate_configuration(self, config_id: str, value: Any) -> ConfigValidationResult:
-        """        Validate configuration value.
+        """
+        Validate configuration value.
         
         Args:
             config_id: Configuration identifier
@@ -547,7 +575,8 @@ class ConfigurationManager:
             
         Returns:
             ConfigValidationResult: Validation result
-        """        try:
+        """
+        try:
             definition = self.config_definitions.get(config_id)
             if not definition:
                 return ConfigValidationResult(
@@ -572,7 +601,8 @@ class ConfigurationManager:
         environment: Optional[str] = None,
         include_sensitive: bool = False
     ) -> str:
-        """        Export configuration to string format.
+        """
+        Export configuration to string format.
         
         Args:
             format_type: Export format (json, yaml)
@@ -582,7 +612,8 @@ class ConfigurationManager:
             
         Returns:
             str: Exported configuration
-        """        try:
+        """
+        try:
             # Collect configurations
             export_data = {}
             
@@ -624,7 +655,8 @@ class ConfigurationManager:
             return "{}"
     
     async def import_configuration(self, config_data: str, format_type: str = "json") -> bool:
-        """        Import configuration from string format.
+        """
+        Import configuration from string format.
         
         Args:
             config_data: Configuration data string
@@ -632,7 +664,8 @@ class ConfigurationManager:
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             # Parse data
             if format_type.lower() == "yaml":
                 data = yaml.safe_load(config_data)
@@ -667,7 +700,8 @@ class ConfigurationManager:
             return False
     
     async def _load_from_source(self, source: ConfigSource, environment: str) -> None:
-        """Load configurations from specific source."""        try:
+        """Load configurations from specific source."""
+        try:
             if source == ConfigSource.FILE:
                 await self._load_from_files(environment)
             elif source == ConfigSource.ENVIRONMENT:
@@ -680,7 +714,8 @@ class ConfigurationManager:
             self.logger.error(f"Failed to load from source {source.value}: {e}")
     
     async def _load_from_files(self, environment: str) -> None:
-        """Load configurations from files."""        for config_dir in self.config_dirs:
+        """Load configurations from files."""
+        for config_dir in self.config_dirs:
             config_path = Path(config_dir).expanduser()
             
             if not config_path.exists():
@@ -697,7 +732,8 @@ class ConfigurationManager:
                     await self._load_config_file(config_file, environment)
     
     async def _load_config_file(self, file_path: Path, environment: str) -> None:
-        """Load configuration from single file."""        try:
+        """Load configuration from single file."""
+        try:
             with open(file_path, 'r') as f:
                 if file_path.suffix == '.json':
                     data = json.load(f)
@@ -721,7 +757,8 @@ class ConfigurationManager:
             self.logger.error(f"Failed to load config file {file_path}: {e}")
     
     async def _load_from_environment(self) -> None:
-        """Load configurations from environment variables."""        prefix = "IA_INFLUENCER_"
+        """Load configurations from environment variables."""
+        prefix = "IA_INFLUENCER_"
         
         for key, value in os.environ.items():
             if key.startswith(prefix):
@@ -737,7 +774,8 @@ class ConfigurationManager:
                 self.manager_stats['total_configs_loaded'] += 1
     
     async def _load_from_database(self, environment: str) -> None:
-        """Load configurations from database."""        # Placeholder for database loading
+        """Load configurations from database."""
+        # Placeholder for database loading
         # In real implementation, this would connect to database
         pass
     
@@ -750,7 +788,8 @@ class ConfigurationManager:
         component: Optional[str],
         user: Optional[str]
     ) -> Any:
-        """Resolve configuration value through scope hierarchy."""        # Define search order (most specific to least specific)
+        """Resolve configuration value through scope hierarchy."""
+        # Define search order (most specific to least specific)
         search_scopes = []
         
         if not scope:
@@ -789,7 +828,8 @@ class ConfigurationManager:
         return None
     
     async def _validate_config_value(self, definition: ConfigDefinition, value: Any) -> ConfigValidationResult:
-        """Validate configuration value against definition."""        result = ConfigValidationResult(config_id=definition.config_id, valid=True)
+        """Validate configuration value against definition."""
+        result = ConfigValidationResult(config_id=definition.config_id, valid=True)
         
         try:
             # Type validation
@@ -815,7 +855,8 @@ class ConfigurationManager:
         return result
     
     async def _validate_type(self, config_type: ConfigType, value: Any) -> bool:
-        """Validate value type."""        try:
+        """Validate value type."""
+        try:
             if config_type == ConfigType.STRING:
                 return isinstance(value, str)
             elif config_type == ConfigType.INTEGER:
@@ -838,7 +879,8 @@ class ConfigurationManager:
             return False
     
     async def _apply_validation_rule(self, rule_name: str, rule_config: Any, value: Any) -> Dict[str, Any]:
-        """Apply specific validation rule."""        result = {'valid': True, 'errors': [], 'warnings': []}
+        """Apply specific validation rule."""
+        result = {'valid': True, 'errors': [], 'warnings': []}
         
         try:
             if rule_name == 'min_length' and isinstance(value, str):
@@ -879,7 +921,8 @@ class ConfigurationManager:
         return result
     
     async def _notify_watchers(self, config_id: str, config_value: ConfigValue) -> None:
-        """Notify configuration watchers."""        for watcher in self.config_watchers.values():
+        """Notify configuration watchers."""
+        for watcher in self.config_watchers.values():
             if not watcher.active:
                 continue
             
@@ -897,7 +940,8 @@ class ConfigurationManager:
                     self.logger.error(f"Watcher callback failed: {watcher.watcher_id} - {e}")
     
     async def _notify_all_watchers(self) -> None:
-        """Notify all watchers of configuration restore."""        for watcher in self.config_watchers.values():
+        """Notify all watchers of configuration restore."""
+        for watcher in self.config_watchers.values():
             if watcher.active:
                 try:
                     await watcher.callback("*", None)  # Special signal for full restore
@@ -913,7 +957,8 @@ class ConfigurationManager:
         component: Optional[str],
         user: Optional[str]
     ) -> str:
-        """Generate cache key for configuration."""        parts = [config_id]
+        """Generate cache key for configuration."""
+        parts = [config_id]
         if scope:
             parts.append(scope.value)
         if environment:
@@ -935,7 +980,8 @@ class ConfigurationManager:
         component: Optional[str],
         user: Optional[str]
     ) -> str:
-        """Generate scope key for configuration storage."""        parts = [scope.value]
+        """Generate scope key for configuration storage."""
+        parts = [scope.value]
         if environment:
             parts.append(environment)
         if service:
@@ -948,11 +994,13 @@ class ConfigurationManager:
         return ":".join(parts)
     
     def _calculate_checksum(self, value: Any) -> str:
-        """Calculate checksum for configuration value."""        value_str = json.dumps(value, sort_keys=True, default=str)
+        """Calculate checksum for configuration value."""
+        value_str = json.dumps(value, sort_keys=True, default=str)
         return hashlib.md5(value_str.encode()).hexdigest()
     
     async def _encrypt_value(self, value: Any) -> str:
-        """Encrypt sensitive configuration value."""        # Simple encryption placeholder
+        """Encrypt sensitive configuration value."""
+        # Simple encryption placeholder
         # In production, use proper encryption libraries
         if self.encryption_key:
             import base64
@@ -963,7 +1011,8 @@ class ConfigurationManager:
         return value
     
     async def _decrypt_value(self, encrypted_value: str) -> Any:
-        """Decrypt sensitive configuration value."""        # Simple decryption placeholder
+        """Decrypt sensitive configuration value."""
+        # Simple decryption placeholder
         if isinstance(encrypted_value, str) and encrypted_value.startswith("encrypted:"):
             import base64
             encoded = encrypted_value[10:]  # Remove "encrypted:" prefix
@@ -973,12 +1022,14 @@ class ConfigurationManager:
         return encrypted_value
     
     async def _invalidate_cache(self, config_id: str) -> None:
-        """Invalidate cache entries for configuration."""        keys_to_remove = [key for key in self.config_cache.keys() if key.startswith(config_id)]
+        """Invalidate cache entries for configuration."""
+        keys_to_remove = [key for key in self.config_cache.keys() if key.startswith(config_id)]
         for key in keys_to_remove:
             del self.config_cache[key]
     
     async def _refresh_cache(self) -> None:
-        """Refresh configuration cache."""        self.config_cache.clear()
+        """Refresh configuration cache."""
+        self.config_cache.clear()
     
     async def _record_config_change(
         self,
@@ -986,7 +1037,8 @@ class ConfigurationManager:
         new_value: ConfigValue,
         old_value: Optional[ConfigValue]
     ) -> None:
-        """Record configuration change for auditing."""        change_record = {
+        """Record configuration change for auditing."""
+        change_record = {
             'config_id': config_id,
             'timestamp': datetime.now().isoformat(),
             'new_value': {
@@ -1008,7 +1060,8 @@ class ConfigurationManager:
             self.config_history = self.config_history[-1000:]
     
     async def _validate_all_configurations(self) -> None:
-        """Validate all loaded configurations."""        for scope_values in self.config_values.values():
+        """Validate all loaded configurations."""
+        for scope_values in self.config_values.values():
             for config_id, config_value in scope_values.items():
                 definition = self.config_definitions.get(config_id)
                 if definition:
@@ -1017,7 +1070,8 @@ class ConfigurationManager:
                         self.logger.warning(f"Config validation failed: {config_id} - {result.errors}")
     
     async def _config_refresh_task(self) -> None:
-        """Background task for configuration refresh."""        while True:
+        """Background task for configuration refresh."""
+        while True:
             try:
                 # Reload configurations periodically
                 await self.load_configurations()
@@ -1029,7 +1083,8 @@ class ConfigurationManager:
                 await asyncio.sleep(60)
     
     async def _cache_cleanup_task(self) -> None:
-        """Background task for cache cleanup."""        while True:
+        """Background task for cache cleanup."""
+        while True:
             try:
                 # Clear old cache entries periodically
                 if len(self.config_cache) > 10000:  # Arbitrary limit
@@ -1042,7 +1097,8 @@ class ConfigurationManager:
                 await asyncio.sleep(300)
     
     async def _validation_task(self) -> None:
-        """Background task for periodic validation."""        while True:
+        """Background task for periodic validation."""
+        while True:
             try:
                 # Validate all configurations periodically
                 await self._validate_all_configurations()
@@ -1054,10 +1110,12 @@ class ConfigurationManager:
                 await asyncio.sleep(300)
     
     async def _validate_config_definition(self, definition: ConfigDefinition) -> bool:
-        """Validate configuration definition."""        return bool(definition.config_id and definition.name)
+        """Validate configuration definition."""
+        return bool(definition.config_id and definition.name)
     
     async def get_config_summary(self) -> Dict[str, Any]:
-        """Get configuration summary."""        total_configs = sum(len(configs) for configs in self.config_values.values())
+        """Get configuration summary."""
+        total_configs = sum(len(configs) for configs in self.config_values.values())
         
         return {
             'total_definitions': len(self.config_definitions),
@@ -1073,7 +1131,8 @@ class ConfigurationManager:
         }
     
     async def get_manager_stats(self) -> Dict[str, Any]:
-        """Get configuration manager statistics."""        return {
+        """Get configuration manager statistics."""
+        return {
             **self.manager_stats,
             'config_definitions': len(self.config_definitions),
             'active_watchers': len([w for w in self.config_watchers.values() if w.active]),

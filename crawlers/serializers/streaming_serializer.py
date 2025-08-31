@@ -28,7 +28,8 @@ Expertise combinée:
 - Audio/Vidéo: Streaming optimisé pour contenu multimédia haute qualité
 - DevOps: Monitoring et scaling automatique des flux temps réel
 - IA Prompt Engineer: Streaming intelligent pour interactions IA en temps réel
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union, AsyncGenerator, Callable
 from datetime import datetime, timedelta
@@ -42,7 +43,8 @@ from pydantic import BaseModel, Field, validator
 logger = logging.getLogger(__name__)
 
 class StreamType(Enum):
-    """Types of streaming data."""    REAL_TIME = "real_time"
+    """Types of streaming data."""
+    REAL_TIME = "real_time"
     BATCH = "batch"
     EVENT = "event"
     WEBSOCKET = "websocket"
@@ -51,14 +53,16 @@ class StreamType(Enum):
     KAFKA = "kafka"
 
 class StreamPriority(Enum):
-    """Stream message priority levels."""    LOW = 1
+    """Stream message priority levels."""
+    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
     EMERGENCY = 5
 
 class StreamFormat(Enum):
-    """Streaming data formats."""    JSON = "json"
+    """Streaming data formats."""
+    JSON = "json"
     MSGPACK = "msgpack"
     PROTOBUF = "protobuf"
     AVRO = "avro"
@@ -66,14 +70,16 @@ class StreamFormat(Enum):
     PLAIN_TEXT = "text"
 
 class CompressionMode(Enum):
-    """Compression modes for streaming."""    NONE = "none"
+    """Compression modes for streaming."""
+    NONE = "none"
     REAL_TIME = "real_time"  # Fast compression
     BALANCED = "balanced"    # Balance speed/ratio
     HIGH_RATIO = "high_ratio"  # Maximum compression
 
 @dataclass
 class StreamMetrics:
-    """Streaming performance metrics."""    messages_sent: int = 0
+    """Streaming performance metrics."""
+    messages_sent: int = 0
     messages_received: int = 0
     bytes_sent: int = 0
     bytes_received: int = 0
@@ -88,7 +94,8 @@ class StreamMetrics:
 
 @dataclass
 class StreamMessage:
-    """Individual streaming message."""    message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Individual streaming message."""
+    message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     stream_id: str = ""
     sequence_number: int = 0
     timestamp: datetime = field(default_factory=datetime.now)
@@ -103,11 +110,13 @@ class StreamMessage:
     expires_at: Optional[datetime] = None
 
 class StreamData(BaseModel):
-    """    Comprehensive streaming data model.
+    """
+    Comprehensive streaming data model.
     
     Represents streaming configuration, messages, and performance metrics
     for the IA-Influencer-Agent real-time data streaming system.
-    """    
+    """
+    
     # Stream identification
     stream_id: str = Field(..., description="Unique stream identifier")
     stream_name: str = Field(..., description="Stream name/topic")
@@ -171,14 +180,17 @@ class StreamData(BaseModel):
         return v
 
 class StreamingSerializer:
-    """    Advanced streaming data serialization system.
+    """
+    Advanced streaming data serialization system.
     
     Handles efficient serialization and deserialization of streaming
     messages with optimization for real-time performance, low latency,
     and high throughput requirements.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize streaming serializer."""        self.active_streams: Dict[str, StreamData] = {}
+        """Initialize streaming serializer."""
+        self.active_streams: Dict[str, StreamData] = {}
         self.serialization_cache = {}
         self.compression_cache = {}
         self.performance_counters = {
@@ -198,7 +210,8 @@ class StreamingSerializer:
         include_buffer: bool = False,
         max_buffer_size: Optional[int] = None
     ) -> Dict[str, Any]:
-        """        Serialize streaming data to dictionary format.
+        """
+        Serialize streaming data to dictionary format.
         
         Args:
             stream_data: Stream data to serialize
@@ -207,7 +220,8 @@ class StreamingSerializer:
             
         Returns:
             Serialized stream dictionary
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Convert to dictionary
@@ -284,14 +298,16 @@ class StreamingSerializer:
         self,
         data: Dict[str, Any]
     ) -> StreamData:
-        """        Deserialize streaming data from dictionary format.
+        """
+        Deserialize streaming data from dictionary format.
         
         Args:
             data: Serialized stream dictionary
             
         Returns:
             Deserialized StreamData object
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Handle datetime conversions
@@ -352,7 +368,8 @@ class StreamingSerializer:
         message: StreamMessage,
         compress: bool = False
     ) -> Dict[str, Any]:
-        """        Serialize individual stream message.
+        """
+        Serialize individual stream message.
         
         Args:
             message: Stream message to serialize
@@ -360,7 +377,8 @@ class StreamingSerializer:
             
         Returns:
             Serialized message dictionary
-        """        try:
+        """
+        try:
             return self._serialize_stream_message(message, compress)
             
         except Exception as e:
@@ -371,14 +389,16 @@ class StreamingSerializer:
         self,
         data: Dict[str, Any]
     ) -> StreamMessage:
-        """        Deserialize individual stream message.
+        """
+        Deserialize individual stream message.
         
         Args:
             data: Serialized message dictionary
             
         Returns:
             Deserialized StreamMessage object
-        """        try:
+        """
+        try:
             return self._deserialize_stream_message(data)
             
         except Exception as e:
@@ -390,7 +410,8 @@ class StreamingSerializer:
         message: StreamMessage,
         compress: bool = False
     ) -> Dict[str, Any]:
-        """Internal stream message serialization."""        data = {
+        """Internal stream message serialization."""
+        data = {
             'message_id': message.message_id,
             'stream_id': message.stream_id,
             'sequence_number': message.sequence_number,
@@ -425,7 +446,8 @@ class StreamingSerializer:
         return data
     
     def _deserialize_stream_message(self, data: Dict[str, Any]) -> StreamMessage:
-        """Internal stream message deserialization."""        # Handle datetime conversions
+        """Internal stream message deserialization."""
+        # Handle datetime conversions
         if isinstance(data.get('timestamp'), str):
             data['timestamp'] = datetime.fromisoformat(data['timestamp'])
         
@@ -446,7 +468,8 @@ class StreamingSerializer:
         return StreamMessage(**data)
     
     def _serialize_stream_metrics(self, metrics: StreamMetrics) -> Dict[str, Any]:
-        """Serialize stream metrics."""        return {
+        """Serialize stream metrics."""
+        return {
             'messages_sent': metrics.messages_sent,
             'messages_received': metrics.messages_received,
             'bytes_sent': metrics.bytes_sent,
@@ -462,10 +485,12 @@ class StreamingSerializer:
         }
     
     def _deserialize_stream_metrics(self, data: Dict[str, Any]) -> StreamMetrics:
-        """Deserialize stream metrics."""        return StreamMetrics(**data)
+        """Deserialize stream metrics."""
+        return StreamMetrics(**data)
     
     def _compress_message_content(self, content: Any) -> str:
-        """Compress message content for streaming."""        try:
+        """Compress message content for streaming."""
+        try:
             import gzip
             import pickle
             
@@ -490,7 +515,8 @@ class StreamingSerializer:
             return json.dumps(content, default=str)
     
     def _decompress_message_content(self, compressed_content: str) -> Any:
-        """Decompress message content."""        try:
+        """Decompress message content."""
+        try:
             if compressed_content.startswith('gzip_pickle_fast:'):
                 import gzip
                 import pickle
@@ -524,7 +550,8 @@ class StreamingSerializer:
         processing_time: float,
         bytes_processed: int
     ):
-        """Update performance counters."""        try:
+        """Update performance counters."""
+        try:
             if operation in ['serialization', 'deserialization']:
                 self.performance_counters[f'{operation}s'] += 1
             elif operation in ['compression', 'decompression']:
@@ -555,7 +582,8 @@ class StreamingSerializer:
         message_generator: AsyncGenerator[StreamMessage, None],
         compression_enabled: bool = True
     ) -> AsyncGenerator[Dict[str, Any], None]:
-        """        Asynchronously stream and serialize messages.
+        """
+        Asynchronously stream and serialize messages.
         
         Args:
             stream_data: Stream configuration
@@ -564,7 +592,8 @@ class StreamingSerializer:
             
         Yields:
             Serialized message dictionaries
-        """        try:
+        """
+        try:
             async for message in message_generator:
                 # Update stream metrics
                 stream_data.metrics.messages_sent += 1
@@ -597,7 +626,8 @@ class StreamingSerializer:
         batch_size: int = 100,
         compression_enabled: bool = True
     ) -> List[Dict[str, Any]]:
-        """        Create serialized batch of stream messages.
+        """
+        Create serialized batch of stream messages.
         
         Args:
             messages: List of messages to batch
@@ -606,7 +636,8 @@ class StreamingSerializer:
             
         Returns:
             List of serialized message batches
-        """        try:
+        """
+        try:
             batches = []
             
             for i in range(0, len(messages), batch_size):
@@ -633,7 +664,8 @@ class StreamingSerializer:
             raise
     
     def get_streaming_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive streaming statistics."""        try:
+        """Get comprehensive streaming statistics."""
+        try:
             total_streams = len(self.active_streams)
             total_messages = sum(
                 len(stream.message_buffer) for stream in self.active_streams.values()

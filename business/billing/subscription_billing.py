@@ -6,7 +6,8 @@ dunning management, and revenue recognition for SaaS creators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
@@ -20,19 +21,22 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class SubscriptionPlan(Enum):
-    """Subscription plan types"""    STARTER = "starter"
+    """Subscription plan types"""
+    STARTER = "starter"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
     CUSTOM = "custom"
 
 class BillingCycle(Enum):
-    """Billing cycle options"""    MONTHLY = "monthly"
+    """Billing cycle options"""
+    MONTHLY = "monthly"
     QUARTERLY = "quarterly"
     ANNUALLY = "annually"
     LIFETIME = "lifetime"
 
 class SubscriptionStatus(Enum):
-    """Subscription status"""    ACTIVE = "active"
+    """Subscription status"""
+    ACTIVE = "active"
     TRIAL = "trial"
     PAST_DUE = "past_due"
     CANCELLED = "cancelled"
@@ -41,7 +45,8 @@ class SubscriptionStatus(Enum):
 
 @dataclass
 class SubscriptionData:
-    """Subscription data structure"""    subscription_id: str
+    """Subscription data structure"""
+    subscription_id: str
     customer_id: str
     plan: SubscriptionPlan
     billing_cycle: BillingCycle
@@ -54,15 +59,18 @@ class SubscriptionData:
     cancelled_at: Optional[datetime]
 
 class SubscriptionBillingEngine:
-    """    Advanced subscription billing system with automated charging,
+    """
+    Advanced subscription billing system with automated charging,
     proration calculations, and dunning management.
-    """    
+    """
+    
     def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
         self.redis = redis_client
         self.db_pool = db_pool
         
     async def initialize(self) -> None:
-        """Initialize subscription billing engine"""        try:
+        """Initialize subscription billing engine"""
+        try:
             await self._setup_database_tables()
             await self._load_subscription_plans()
             logger.info("Subscription Billing Engine initialized successfully")
@@ -71,8 +79,10 @@ class SubscriptionBillingEngine:
             raise
 
     async def _setup_database_tables(self) -> None:
-        """Setup database tables for subscription billing"""        async with self.db_pool.acquire() as conn:
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS subscription_plans (
+        """Setup database tables for subscription billing"""
+        async with self.db_pool.acquire() as conn:
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS subscription_plans (
                     id SERIAL PRIMARY KEY,
                     plan_name VARCHAR(50) NOT NULL,
                     monthly_price DECIMAL(10,2) NOT NULL,
@@ -85,7 +95,8 @@ class SubscriptionBillingEngine:
                 );
             """)
             
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS subscriptions (
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS subscriptions (
                     id SERIAL PRIMARY KEY,
                     subscription_id VARCHAR(100) UNIQUE NOT NULL,
                     customer_id VARCHAR(255) NOT NULL,
@@ -105,7 +116,8 @@ class SubscriptionBillingEngine:
                 );
             """)
             
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS subscription_invoices (
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS subscription_invoices (
                     id SERIAL PRIMARY KEY,
                     invoice_id VARCHAR(100) UNIQUE NOT NULL,
                     subscription_id VARCHAR(100) REFERENCES subscriptions(subscription_id),
@@ -120,7 +132,8 @@ class SubscriptionBillingEngine:
             """)
 
     async def _load_subscription_plans(self) -> None:
-        """Load subscription plans configuration"""        try:
+        """Load subscription plans configuration"""
+        try:
             plans_config = {
                 SubscriptionPlan.STARTER: {
                     'monthly_price': Decimal('29.99'),
@@ -158,7 +171,8 @@ class SubscriptionBillingEngine:
 
     async def create_subscription(self, customer_id: str, plan: SubscriptionPlan,
                                 billing_cycle: BillingCycle, trial_days: int = 0) -> SubscriptionData:
-        """Create new subscription"""        try:
+        """Create new subscription"""
+        try:
             subscription_id = f"sub_{customer_id}_{int(datetime.now().timestamp())}"
             
             # Get plan pricing
@@ -204,7 +218,8 @@ class SubscriptionBillingEngine:
             raise HTTPException(status_code=500, detail="Subscription creation failed")
 
     async def _get_plan_price(self, plan: SubscriptionPlan, billing_cycle: BillingCycle) -> Decimal:
-        """Get plan price for billing cycle"""        try:
+        """Get plan price for billing cycle"""
+        try:
             if billing_cycle == BillingCycle.MONTHLY:
                 price_key = 'monthly_price'
             elif billing_cycle == BillingCycle.QUARTERLY:
@@ -232,7 +247,8 @@ class SubscriptionBillingEngine:
             return Decimal('29.99')
 
     def _calculate_period_end(self, start_date: datetime, billing_cycle: BillingCycle) -> datetime:
-        """Calculate billing period end date"""        if billing_cycle == BillingCycle.MONTHLY:
+        """Calculate billing period end date"""
+        if billing_cycle == BillingCycle.MONTHLY:
             return start_date + timedelta(days=30)
         elif billing_cycle == BillingCycle.QUARTERLY:
             return start_date + timedelta(days=90)
@@ -242,9 +258,11 @@ class SubscriptionBillingEngine:
             return start_date + timedelta(days=30)
 
     async def _store_subscription(self, subscription: SubscriptionData) -> None:
-        """Store subscription in database"""        try:
+        """Store subscription in database"""
+        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""                    INSERT INTO subscriptions 
+                await conn.execute("""
+                    INSERT INTO subscriptions 
                     (subscription_id, customer_id, plan, billing_cycle, status,
                      current_period_start, current_period_end, amount, currency, trial_end)
                     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
@@ -264,11 +282,13 @@ class SubscriptionBillingEngine:
             logger.error(f"Failed to store subscription: {e}")
 
     async def _create_subscription_invoice(self, subscription: SubscriptionData) -> None:
-        """Create subscription invoice"""        try:
+        """Create subscription invoice"""
+        try:
             invoice_id = f"inv_{subscription.subscription_id}_{int(datetime.now().timestamp())}"
             
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""                    INSERT INTO subscription_invoices 
+                await conn.execute("""
+                    INSERT INTO subscription_invoices 
                     (invoice_id, subscription_id, amount, period_start, period_end, status, due_date)
                     VALUES ($1, $2, $3, $4, $5, 'pending', $6)
                 """,
@@ -283,10 +303,12 @@ class SubscriptionBillingEngine:
             logger.error(f"Failed to create subscription invoice: {e}")
 
     async def process_subscription_renewals(self) -> Dict[str, Any]:
-        """Process subscription renewals for due subscriptions"""        try:
+        """Process subscription renewals for due subscriptions"""
+        try:
             async with self.db_pool.acquire() as conn:
                 # Get subscriptions due for renewal
-                due_subscriptions = await conn.fetch("""                    SELECT subscription_id FROM subscriptions 
+                due_subscriptions = await conn.fetch("""
+                    SELECT subscription_id FROM subscriptions 
                     WHERE status = 'active' 
                     AND current_period_end <= CURRENT_DATE
                 """)
@@ -313,9 +335,11 @@ class SubscriptionBillingEngine:
             return {'success': 0, 'failed': 0, 'details': []}
 
     async def _get_subscription(self, subscription_id: str) -> Optional[SubscriptionData]:
-        """Get subscription by ID"""        try:
+        """Get subscription by ID"""
+        try:
             async with self.db_pool.acquire() as conn:
-                sub_row = await conn.fetchrow("""                    SELECT * FROM subscriptions WHERE subscription_id = $1
+                sub_row = await conn.fetchrow("""
+                    SELECT * FROM subscriptions WHERE subscription_id = $1
                 """, subscription_id)
                 
                 if not sub_row:
@@ -340,14 +364,16 @@ class SubscriptionBillingEngine:
             return None
 
     async def _renew_subscription(self, subscription: SubscriptionData) -> None:
-        """Renew subscription for next period"""        try:
+        """Renew subscription for next period"""
+        try:
             # Calculate new period
             new_period_start = subscription.current_period_end
             new_period_end = self._calculate_period_end(new_period_start, subscription.billing_cycle)
             
             # Update subscription
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""                    UPDATE subscriptions 
+                await conn.execute("""
+                    UPDATE subscriptions 
                     SET current_period_start = $1, current_period_end = $2, updated_at = NOW()
                     WHERE subscription_id = $3
                 """,
@@ -365,17 +391,20 @@ class SubscriptionBillingEngine:
             logger.error(f"Failed to renew subscription: {e}")
 
     async def cancel_subscription(self, subscription_id: str, immediate: bool = False) -> bool:
-        """Cancel subscription"""        try:
+        """Cancel subscription"""
+        try:
             async with self.db_pool.acquire() as conn:
                 if immediate:
                     # Cancel immediately
-                    await conn.execute("""                        UPDATE subscriptions 
+                    await conn.execute("""
+                        UPDATE subscriptions 
                         SET status = 'cancelled', cancelled_at = NOW(), updated_at = NOW()
                         WHERE subscription_id = $1
                     """, subscription_id)
                 else:
                     # Cancel at period end
-                    await conn.execute("""                        UPDATE subscriptions 
+                    await conn.execute("""
+                        UPDATE subscriptions 
                         SET cancelled_at = NOW(), updated_at = NOW()
                         WHERE subscription_id = $1
                     """, subscription_id)
@@ -387,17 +416,20 @@ class SubscriptionBillingEngine:
             return False
 
     async def get_subscription_dashboard_data(self, customer_id: str) -> Dict[str, Any]:
-        """Get subscription dashboard data"""        try:
+        """Get subscription dashboard data"""
+        try:
             async with self.db_pool.acquire() as conn:
                 # Current subscriptions
-                current_subs = await conn.fetch("""                    SELECT subscription_id, plan, status, current_period_end, amount
+                current_subs = await conn.fetch("""
+                    SELECT subscription_id, plan, status, current_period_end, amount
                     FROM subscriptions 
                     WHERE customer_id = $1 
                     AND status IN ('active', 'trial', 'past_due')
                 """, customer_id)
                 
                 # Subscription history
-                history = await conn.fetch("""                    SELECT subscription_id, plan, status, created_at, cancelled_at
+                history = await conn.fetch("""
+                    SELECT subscription_id, plan, status, created_at, cancelled_at
                     FROM subscriptions 
                     WHERE customer_id = $1
                     ORDER BY created_at DESC
@@ -405,7 +437,8 @@ class SubscriptionBillingEngine:
                 """, customer_id)
                 
                 # Usage summary
-                usage = await conn.fetchrow("""                    SELECT 
+                usage = await conn.fetchrow("""
+                    SELECT 
                         COUNT(*) as total_subscriptions,
                         COALESCE(SUM(CASE WHEN status = 'active' THEN amount ELSE 0 END), 0) as monthly_cost
                     FROM subscriptions 

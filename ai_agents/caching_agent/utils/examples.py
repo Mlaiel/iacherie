@@ -8,7 +8,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ATTENTION: Ce code fait partie de la propriété intellectuelle de Fahed Mlaiel.
 Toute reproduction, distribution, ou utilisation non autorisée est strictement interdite.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import json
 from typing import Dict, Any
 
@@ -19,7 +20,8 @@ from .exceptions import CachingAgentError
 
 
 async def basic_cache_example():
-    """Demonstrate basic cache operations."""    print("=== Basic Cache Operations Example ===")
+    """Demonstrate basic cache operations."""
+    print("=== Basic Cache Operations Example ===")
     
     # Initialize cache manager with development config
     cache_manager = CachingManager(DEVELOPMENT_CONFIG)
@@ -61,7 +63,8 @@ async def basic_cache_example():
 
 
 async def advanced_cache_example():
-    """Demonstrate advanced cache features."""    print("\n=== Advanced Cache Features Example ===")
+    """Demonstrate advanced cache features."""
+    print("\n=== Advanced Cache Features Example ===")
     
     # Use production configuration for advanced features
     prod_config = get_config_for_environment("production")
@@ -111,7 +114,8 @@ async def advanced_cache_example():
 
 
 async def caching_strategies_example():
-    """Demonstrate different caching strategies."""    print("\n=== Caching Strategies Example ===")
+    """Demonstrate different caching strategies."""
+    print("\n=== Caching Strategies Example ===")
     
     cache_manager = CachingManager(DEVELOPMENT_CONFIG)
     await cache_manager.initialize()
@@ -153,7 +157,8 @@ async def caching_strategies_example():
 
 
 async def distributed_cache_example():
-    """Demonstrate distributed cache coordination."""    print("\n=== Distributed Cache Example ===")
+    """Demonstrate distributed cache coordination."""
+    print("\n=== Distributed Cache Example ===")
     
     # This would typically be used in a multi-node environment
     config = get_config_for_environment("production")
@@ -184,7 +189,8 @@ async def distributed_cache_example():
 
 
 async def error_handling_example():
-    """Demonstrate error handling and recovery."""    print("\n=== Error Handling Example ===")
+    """Demonstrate error handling and recovery."""
+    print("\n=== Error Handling Example ===")
     
     cache_manager = CachingManager(DEVELOPMENT_CONFIG)
     await cache_manager.initialize()
@@ -215,7 +221,8 @@ async def error_handling_example():
 
 
 async def performance_monitoring_example():
-    """Demonstrate performance monitoring and optimization."""    print("\n=== Performance Monitoring Example ===")
+    """Demonstrate performance monitoring and optimization."""
+    print("\n=== Performance Monitoring Example ===")
     
     config = get_config_for_environment("production")
     cache_manager = CachingManager(config)
@@ -249,7 +256,8 @@ async def performance_monitoring_example():
 
 
 async def main():
-    """Run all examples."""    examples = [
+    """Run all examples."""
+    examples = [
         basic_cache_example,
         advanced_cache_example,
         caching_strategies_example,
@@ -274,21 +282,25 @@ if __name__ == "__main__":
 
 # Unit test examples
 class CacheTestSuite:
-    """Basic test suite for cache functionality."""    
+    """Basic test suite for cache functionality."""
+    
     def __init__(self):
         self.cache_manager = None
     
     async def setup(self):
-        """Set up test environment."""        config = DEVELOPMENT_CONFIG
+        """Set up test environment."""
+        config = DEVELOPMENT_CONFIG
         self.cache_manager = CachingManager(config)
         await self.cache_manager.initialize()
     
     async def teardown(self):
-        """Clean up test environment."""        if self.cache_manager:
+        """Clean up test environment."""
+        if self.cache_manager:
             await self.cache_manager.shutdown()
     
     async def test_basic_operations(self):
-        """Test basic cache operations."""        # Test set and get
+        """Test basic cache operations."""
+        # Test set and get
         await self.cache_manager.set("test:key", {"value": "test"})
         result = await self.cache_manager.get("test:key")
         assert result == {"value": "test"}
@@ -304,7 +316,8 @@ class CacheTestSuite:
         print("✓ Basic operations test passed")
     
     async def test_bulk_operations(self):
-        """Test bulk cache operations."""        bulk_data = {
+        """Test bulk cache operations."""
+        bulk_data = {
             "bulk:1": {"value": 1},
             "bulk:2": {"value": 2},
             "bulk:3": {"value": 3}
@@ -319,7 +332,8 @@ class CacheTestSuite:
         print("✓ Bulk operations test passed")
     
     async def test_invalidation(self):
-        """Test cache invalidation."""        # Set data with tags
+        """Test cache invalidation."""
+        # Set data with tags
         await self.cache_manager.set("tagged:1", {"data": 1}, tags=["group:a"])
         await self.cache_manager.set("tagged:2", {"data": 2}, tags=["group:a"])
         await self.cache_manager.set("tagged:3", {"data": 3}, tags=["group:b"])
@@ -339,7 +353,8 @@ class CacheTestSuite:
         print("✓ Invalidation test passed")
     
     async def run_all_tests(self):
-        """Run all tests."""        await self.setup()
+        """Run all tests."""
+        await self.setup()
         try:
             await self.test_basic_operations()
             await self.test_bulk_operations()
@@ -351,24 +366,28 @@ class CacheTestSuite:
 
 # Run tests if executed directly
 async def run_tests():
-    """Run test suite."""    test_suite = CacheTestSuite()
+    """Run test suite."""
+    test_suite = CacheTestSuite()
     await test_suite.run_all_tests()
 
 
 # Example of integrating with the IA-Influencer-Agent platform
 class IAInfluencerCacheIntegration:
-    """Integration example for IA-Influencer-Agent platform."""    
+    """Integration example for IA-Influencer-Agent platform."""
+    
     def __init__(self):
         self.cache_manager = None
     
     async def initialize(self):
-        """Initialize cache for IA-Influencer platform."""        # Use audio processing configuration for this platform
+        """Initialize cache for IA-Influencer platform."""
+        # Use audio processing configuration for this platform
         config = get_config_for_environment("audio_processing")
         self.cache_manager = CachingManager(config)
         await self.cache_manager.initialize()
     
     async def cache_audio_fingerprint(self, track_id: str, fingerprint_data: Dict[str, Any]):
-        """Cache audio fingerprint for content protection."""        key = CacheKey(
+        """Cache audio fingerprint for content protection."""
+        key = CacheKey(
             namespace="audio",
             identifier=f"fingerprint_{track_id}",
             content_type="audio_fingerprint"
@@ -383,7 +402,8 @@ class IAInfluencerCacheIntegration:
         )
     
     async def cache_user_session(self, user_id: str, session_data: Dict[str, Any]):
-        """Cache user session data."""        key = f"user:session:{user_id}"
+        """Cache user session data."""
+        key = f"user:session:{user_id}"
         
         await self.cache_manager.set(
             key,
@@ -394,7 +414,8 @@ class IAInfluencerCacheIntegration:
         )
     
     async def cache_collaboration_data(self, project_id: str, collaboration_data: Dict[str, Any]):
-        """Cache collaboration project data."""        key = f"collaboration:project:{project_id}"
+        """Cache collaboration project data."""
+        key = f"collaboration:project:{project_id}"
         
         await self.cache_manager.set(
             key,
@@ -405,7 +426,9 @@ class IAInfluencerCacheIntegration:
         )
     
     async def invalidate_user_data(self, user_id: str):
-        """Invalidate all cached data for a user."""        await self.cache_manager.invalidate_by_tag(f"user:{user_id}")
+        """Invalidate all cached data for a user."""
+        await self.cache_manager.invalidate_by_tag(f"user:{user_id}")
     
     async def get_cache_health_report(self):
-        """Get cache health and performance report."""        return await self.cache_manager.analytics.generate_report()
+        """Get cache health and performance report."""
+        return await self.cache_manager.analytics.generate_report()

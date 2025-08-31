@@ -6,7 +6,8 @@ multi-currency support, and advanced business tools.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -22,18 +23,21 @@ logger = logging.getLogger(__name__)
 
 
 class PayPalEnvironment(Enum):
-    """PayPal environment types"""    SANDBOX = "sandbox"
+    """PayPal environment types"""
+    SANDBOX = "sandbox"
     LIVE = "live"
 
 
 class PayPalAccountType(Enum):
-    """PayPal account types"""    PERSONAL = "personal"
+    """PayPal account types"""
+    PERSONAL = "personal"
     BUSINESS = "business"
     PREMIER = "premier"
 
 
 class PayPalPaymentMethod(Enum):
-    """PayPal payment methods"""    PAYPAL_WALLET = "paypal_wallet"
+    """PayPal payment methods"""
+    PAYPAL_WALLET = "paypal_wallet"
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_ACCOUNT = "bank_account"
@@ -42,7 +46,8 @@ class PayPalPaymentMethod(Enum):
 
 @dataclass
 class PayPalMerchantAccount:
-    """PayPal merchant account information"""    merchant_id: str
+    """PayPal merchant account information"""
+    merchant_id: str
     email: str
     account_type: PayPalAccountType
     verified: bool
@@ -54,7 +59,8 @@ class PayPalMerchantAccount:
 
 @dataclass
 class PayPalOrder:
-    """PayPal order structure"""    id: str
+    """PayPal order structure"""
+    id: str
     status: str
     amount: Decimal
     currency: str
@@ -67,7 +73,8 @@ class PayPalOrder:
 
 @dataclass
 class PayPalPayout:
-    """PayPal payout structure"""    batch_id: str
+    """PayPal payout structure"""
+    batch_id: str
     items: List[Dict[str, Any]]
     sender_batch_header: Dict[str, Any]
     total_amount: Decimal
@@ -76,11 +83,13 @@ class PayPalPayout:
 
 
 class PayPalBusinessProcessor:
-    """    PayPal Business Complete payment processor
+    """
+    PayPal Business Complete payment processor
     
     Handles enterprise PayPal integrations including marketplace payments,
     mass payouts, subscription billing, and advanced business features.
-    """    
+    """
+    
     def __init__(
         self,
         client_id: str,
@@ -88,7 +97,8 @@ class PayPalBusinessProcessor:
         environment: PayPalEnvironment = PayPalEnvironment.SANDBOX,
         webhook_id: Optional[str] = None
     ):
-        """Initialize PayPal Business processor"""        self.client_id = client_id
+        """Initialize PayPal Business processor"""
+        self.client_id = client_id
         self.client_secret = client_secret
         self.environment = environment
         self.webhook_id = webhook_id
@@ -109,7 +119,8 @@ class PayPalBusinessProcessor:
         self.token_expires_at = None
     
     async def authenticate(self) -> str:
-        """Get PayPal access token"""        try:
+        """Get PayPal access token"""
+        try:
             if self.access_token and self.token_expires_at and datetime.now() < self.token_expires_at:
                 return self.access_token
             
@@ -136,7 +147,8 @@ class PayPalBusinessProcessor:
         payee_email: Optional[str] = None,
         platform_fee: Optional[Decimal] = None
     ) -> PayPalOrder:
-        """Create a PayPal order with optional marketplace features"""        try:
+        """Create a PayPal order with optional marketplace features"""
+        try:
             await self.authenticate()
             
             order_id = f"ORDER-{uuid.uuid4().hex[:13].upper()}"
@@ -187,7 +199,8 @@ class PayPalBusinessProcessor:
             raise
     
     async def capture_order(self, order_id: str) -> Dict[str, Any]:
-        """Capture an approved PayPal order"""        try:
+        """Capture an approved PayPal order"""
+        try:
             await self.authenticate()
             
             # Simulate order capture
@@ -228,7 +241,8 @@ class PayPalBusinessProcessor:
         items: List[Dict[str, Any]],
         sender_batch_id: Optional[str] = None
     ) -> PayPalPayout:
-        """Create a batch payout to multiple recipients"""        try:
+        """Create a batch payout to multiple recipients"""
+        try:
             await self.authenticate()
             
             if not sender_batch_id:
@@ -284,7 +298,8 @@ class PayPalBusinessProcessor:
         return_url: str,
         cancel_url: str
     ) -> Dict[str, Any]:
-        """Create a PayPal subscription"""        try:
+        """Create a PayPal subscription"""
+        try:
             await self.authenticate()
             
             subscription_id = f"SUB-{uuid.uuid4().hex[:13].upper()}"
@@ -313,7 +328,8 @@ class PayPalBusinessProcessor:
             return {"success": False, "error": str(e)}
     
     async def cancel_subscription(self, subscription_id: str, reason: str) -> Dict[str, Any]:
-        """Cancel a PayPal subscription"""        try:
+        """Cancel a PayPal subscription"""
+        try:
             await self.authenticate()
             
             # Simulate subscription cancellation
@@ -339,7 +355,8 @@ class PayPalBusinessProcessor:
         description: str,
         due_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Create a PayPal invoice"""        try:
+        """Create a PayPal invoice"""
+        try:
             await self.authenticate()
             
             invoice_id = f"INV-{uuid.uuid4().hex[:13].upper()}"
@@ -385,7 +402,8 @@ class PayPalBusinessProcessor:
             return {"success": False, "error": str(e)}
     
     async def handle_webhook(self, headers: Dict[str, str], body: str) -> Dict[str, Any]:
-        """Handle PayPal webhook events"""        try:
+        """Handle PayPal webhook events"""
+        try:
             # Verify webhook signature
             if not self._verify_webhook_signature(headers, body):
                 return {"success": False, "error": "Invalid webhook signature"}
@@ -412,7 +430,8 @@ class PayPalBusinessProcessor:
             return {"success": False, "error": str(e)}
     
     def _verify_webhook_signature(self, headers: Dict[str, str], body: str) -> bool:
-        """Verify PayPal webhook signature"""        try:
+        """Verify PayPal webhook signature"""
+        try:
             # PayPal uses different signature verification
             # This is a simplified version
             auth_algo = headers.get("PAYPAL-AUTH-ALGO", "")
@@ -430,23 +449,28 @@ class PayPalBusinessProcessor:
             return False
     
     async def _handle_payment_completed(self, resource: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle payment completion event"""        self.logger.info(f"PayPal payment completed: {resource.get('id')}")
+        """Handle payment completion event"""
+        self.logger.info(f"PayPal payment completed: {resource.get('id')}")
         return {"success": True, "action": "payment_completed"}
     
     async def _handle_subscription_activated(self, resource: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle subscription activation event"""        self.logger.info(f"PayPal subscription activated: {resource.get('id')}")
+        """Handle subscription activation event"""
+        self.logger.info(f"PayPal subscription activated: {resource.get('id')}")
         return {"success": True, "action": "subscription_activated"}
     
     async def _handle_subscription_cancelled(self, resource: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle subscription cancellation event"""        self.logger.info(f"PayPal subscription cancelled: {resource.get('id')}")
+        """Handle subscription cancellation event"""
+        self.logger.info(f"PayPal subscription cancelled: {resource.get('id')}")
         return {"success": True, "action": "subscription_cancelled"}
     
     async def _handle_invoice_paid(self, resource: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle invoice payment event"""        self.logger.info(f"PayPal invoice paid: {resource.get('id')}")
+        """Handle invoice payment event"""
+        self.logger.info(f"PayPal invoice paid: {resource.get('id')}")
         return {"success": True, "action": "invoice_paid"}
     
     async def _handle_dispute_created(self, resource: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle dispute creation event"""        self.logger.info(f"PayPal dispute created: {resource.get('dispute_id')}")
+        """Handle dispute creation event"""
+        self.logger.info(f"PayPal dispute created: {resource.get('dispute_id')}")
         return {"success": True, "action": "dispute_created"}
     
     def calculate_fees(
@@ -455,7 +479,8 @@ class PayPalBusinessProcessor:
         is_international: bool = False,
         payment_method: PayPalPaymentMethod = PayPalPaymentMethod.PAYPAL_WALLET
     ) -> Dict[str, Decimal]:
-        """Calculate PayPal fees"""        base_fee = (amount * self.paypal_fee_percent) + self.paypal_fixed_fee
+        """Calculate PayPal fees"""
+        base_fee = (amount * self.paypal_fee_percent) + self.paypal_fixed_fee
         
         if is_international:
             base_fee += amount * self.international_fee

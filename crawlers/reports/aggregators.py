@@ -68,7 +68,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
-"""import asyncio
+"""
+import asyncio
 import logging
 import warnings
 import numpy as np
@@ -146,7 +147,8 @@ logger = logging.getLogger(__name__)
 
 
 class AggregationType(Enum):
-    """Comprehensive aggregation type enumeration."""    # Basic Aggregations
+    """Comprehensive aggregation type enumeration."""
+    # Basic Aggregations
     SUM = "sum"
     AVERAGE = "average"
     COUNT = "count"
@@ -205,7 +207,8 @@ class AggregationType(Enum):
 
 
 class TimeGranularity(Enum):
-    """Time granularity for aggregation."""    MINUTE = "minute"
+    """Time granularity for aggregation."""
+    MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -215,7 +218,8 @@ class TimeGranularity(Enum):
 
 
 class AggregationStatus(Enum):
-    """Aggregation status enumeration."""    PENDING = "pending"
+    """Aggregation status enumeration."""
+    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -224,7 +228,8 @@ class AggregationStatus(Enum):
 
 @dataclass
 class AggregationConfiguration:
-    """Aggregation configuration dataclass."""    aggregation_id: str = field(default_factory=lambda: str(__import__('uuid').uuid4()))
+    """Aggregation configuration dataclass."""
+    aggregation_id: str = field(default_factory=lambda: str(__import__('uuid').uuid4()))
     name: str = ""
     description: str = ""
     source_tables: List[str] = field(default_factory=list)
@@ -262,7 +267,8 @@ class AggregationConfiguration:
 
 
 class AggregationResult(BaseModel):
-    """Aggregation result model."""    aggregation_id: str
+    """Aggregation result model."""
+    aggregation_id: str
     status: AggregationStatus
     total_records_processed: int = 0
     total_records_aggregated: int = 0
@@ -277,7 +283,8 @@ class AggregationResult(BaseModel):
 
 
 class DataAggregator(ABC):
-    """    Abstract base class for data aggregators.
+    """
+    Abstract base class for data aggregators.
     
     Provides common functionality for all aggregators including:
     - Data extraction and processing
@@ -285,7 +292,8 @@ class DataAggregator(ABC):
     - Time-based grouping
     - Performance optimization
     - Result caching
-    """    
+    """
+    
     def __init__(self, config: AggregationConfiguration):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -294,10 +302,12 @@ class DataAggregator(ABC):
     
     @abstractmethod
     async def aggregate(self, session: AsyncSession) -> AggregationResult:
-        """Perform data aggregation."""        pass
+        """Perform data aggregation."""
+        pass
     
     async def extract_data(self, session: AsyncSession) -> pd.DataFrame:
-        """Extract data from source tables."""        try:
+        """Extract data from source tables."""
+        try:
             start_time = datetime.utcnow()
             
             # Build query based on configuration
@@ -328,7 +338,8 @@ class DataAggregator(ABC):
             raise
     
     async def _build_extraction_query(self) -> str:
-        """Build SQL query for data extraction."""        try:
+        """Build SQL query for data extraction."""
+        try:
             # Base query
             select_fields = []
             
@@ -398,7 +409,8 @@ class DataAggregator(ABC):
             raise
     
     async def apply_aggregations(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Apply aggregation functions to the data."""        try:
+        """Apply aggregation functions to the data."""
+        try:
             if df.empty:
                 return {}
             
@@ -438,7 +450,8 @@ class DataAggregator(ABC):
             raise
     
     async def _group_data(self, df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
-        """Group data by specified fields."""        try:
+        """Group data by specified fields."""
+        try:
             # Time-based grouping
             if self.config.time_field in df.columns:
                 df = await self._add_time_grouping_columns(df)
@@ -457,7 +470,8 @@ class DataAggregator(ABC):
             return {"all": df}
     
     async def _add_time_grouping_columns(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Add time-based grouping columns."""        try:
+        """Add time-based grouping columns."""
+        try:
             time_col = self.config.time_field
             
             if time_col in df.columns:
@@ -491,7 +505,8 @@ class DataAggregator(ABC):
             return df
     
     async def _calculate_aggregation(self, values: pd.Series, aggregation_type: AggregationType) -> Union[float, int]:
-        """Calculate aggregation for a series of values."""        try:
+        """Calculate aggregation for a series of values."""
+        try:
             if aggregation_type == AggregationType.SUM:
                 return float(values.sum())
             elif aggregation_type == AggregationType.AVERAGE:
@@ -522,7 +537,8 @@ class DataAggregator(ABC):
             return 0.0
     
     async def generate_summary_statistics(self, aggregated_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate summary statistics for aggregated data."""        try:
+        """Generate summary statistics for aggregated data."""
+        try:
             summary = {
                 "total_groups": len(aggregated_data),
                 "total_measures": 0,
@@ -561,7 +577,8 @@ class DataAggregator(ABC):
             return {}
     
     async def cache_results(self, aggregation_id: str, results: Dict[str, Any]):
-        """Cache aggregation results for performance."""        try:
+        """Cache aggregation results for performance."""
+        try:
             if self.config.cache_results:
                 cache_key = f"aggregation_{aggregation_id}_{datetime.utcnow().date()}"
                 self._cache[cache_key] = {
@@ -577,7 +594,8 @@ class DataAggregator(ABC):
             self.logger.error(f"Result caching failed: {e}")
     
     async def _clean_cache(self):
-        """Clean old cache entries."""        try:
+        """Clean old cache entries."""
+        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=24)
             
             keys_to_remove = [
@@ -593,7 +611,8 @@ class DataAggregator(ABC):
 
 
 class PerformanceAggregator(DataAggregator):
-    """    Performance data aggregator for crawler and system metrics.
+    """
+    Performance data aggregator for crawler and system metrics.
     
     Specializes in:
     - Crawler performance metrics aggregation
@@ -601,9 +620,11 @@ class PerformanceAggregator(DataAggregator):
     - Response time analytics
     - Success rate calculations
     - Performance trend analysis
-    """    
+    """
+    
     async def aggregate(self, session: AsyncSession) -> AggregationResult:
-        """Aggregate performance data."""        try:
+        """Aggregate performance data."""
+        try:
             result = AggregationResult(
                 aggregation_id=self.config.aggregation_id,
                 status=AggregationStatus.RUNNING
@@ -661,7 +682,8 @@ class PerformanceAggregator(DataAggregator):
             return result
     
     async def _aggregate_performance_metrics(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Aggregate general performance metrics."""        try:
+        """Aggregate general performance metrics."""
+        try:
             performance_data = {}
             
             # Platform-wise aggregation
@@ -703,7 +725,8 @@ class PerformanceAggregator(DataAggregator):
             return {}
     
     async def _aggregate_response_times(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Aggregate response time analytics."""        try:
+        """Aggregate response time analytics."""
+        try:
             response_time_data = {}
             
             if 'avg_response_time' in df.columns:
@@ -746,7 +769,8 @@ class PerformanceAggregator(DataAggregator):
             return {}
     
     async def _aggregate_success_rates(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Aggregate success rate analytics."""        try:
+        """Aggregate success rate analytics."""
+        try:
             success_rate_data = {}
             
             if 'total_requests' in df.columns and 'successful_requests' in df.columns:
@@ -789,7 +813,8 @@ class PerformanceAggregator(DataAggregator):
 
 
 class ContentAggregator(DataAggregator):
-    """    Content data aggregator for content discovery and protection metrics.
+    """
+    Content data aggregator for content discovery and protection metrics.
     
     Specializes in:
     - Content discovery statistics
@@ -797,9 +822,11 @@ class ContentAggregator(DataAggregator):
     - Creator engagement metrics
     - Protection coverage analysis
     - Content growth trends
-    """    
+    """
+    
     async def aggregate(self, session: AsyncSession) -> AggregationResult:
-        """Aggregate content data."""        try:
+        """Aggregate content data."""
+        try:
             result = AggregationResult(
                 aggregation_id=self.config.aggregation_id,
                 status=AggregationStatus.RUNNING
@@ -854,7 +881,8 @@ class ContentAggregator(DataAggregator):
             return result
     
     async def _aggregate_content_discovery(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Aggregate content discovery metrics."""        try:
+        """Aggregate content discovery metrics."""
+        try:
             discovery_data = {}
             
             # Overall content counts
@@ -893,7 +921,8 @@ class ContentAggregator(DataAggregator):
             return {}
     
     async def _aggregate_content_types(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Aggregate content type distribution."""        try:
+        """Aggregate content type distribution."""
+        try:
             content_type_data = {}
             
             if 'content_type' in df.columns and 'content_count' in df.columns:
@@ -918,7 +947,8 @@ class ContentAggregator(DataAggregator):
             return {}
     
     async def _aggregate_creator_metrics(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Aggregate creator engagement metrics."""        try:
+        """Aggregate creator engagement metrics."""
+        try:
             creator_data = {}
             
             if 'unique_creators' in df.columns:
@@ -943,7 +973,8 @@ class ContentAggregator(DataAggregator):
             return {}
     
     async def _aggregate_protection_coverage(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Aggregate protection coverage metrics."""        try:
+        """Aggregate protection coverage metrics."""
+        try:
             protection_data = {}
             
             # This would be enhanced based on actual protection data structure
@@ -974,7 +1005,8 @@ class ContentAggregator(DataAggregator):
 
 
 class RevenueAggregator(DataAggregator):
-    """    Revenue data aggregator for monetization and financial analytics.
+    """
+    Revenue data aggregator for monetization and financial analytics.
     
     Specializes in:
     - Revenue summaries by platform
@@ -982,9 +1014,11 @@ class RevenueAggregator(DataAggregator):
     - Payment frequency analysis
     - Revenue trend calculations
     - Financial performance metrics
-    """    
+    """
+    
     async def aggregate(self, session: AsyncSession) -> AggregationResult:
-        """Aggregate revenue data."""        try:
+        """Aggregate revenue data."""
+        try:
             result = AggregationResult(
                 aggregation_id=self.config.aggregation_id,
                 status=AggregationStatus.RUNNING
@@ -1039,7 +1073,8 @@ class RevenueAggregator(DataAggregator):
             return result
     
     async def _aggregate_revenue_summary(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Aggregate overall revenue summary."""        try:
+        """Aggregate overall revenue summary."""
+        try:
             revenue_data = {}
             
             if 'total_revenue' in df.columns:
@@ -1064,7 +1099,8 @@ class RevenueAggregator(DataAggregator):
             return {}
     
     async def _aggregate_platform_revenue(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Aggregate revenue by platform."""        try:
+        """Aggregate revenue by platform."""
+        try:
             platform_data = {}
             
             if 'platform' in df.columns and 'total_revenue' in df.columns:
@@ -1093,7 +1129,8 @@ class RevenueAggregator(DataAggregator):
             return {}
     
     async def _aggregate_creator_earnings(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Aggregate creator earnings distribution."""        try:
+        """Aggregate creator earnings distribution."""
+        try:
             creator_data = {}
             
             # This would be enhanced based on actual creator earnings data structure
@@ -1130,7 +1167,8 @@ class RevenueAggregator(DataAggregator):
             return {}
     
     async def _aggregate_payment_analytics(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Aggregate payment frequency and analytics."""        try:
+        """Aggregate payment frequency and analytics."""
+        try:
             payment_data = {}
             
             if 'payment_count' in df.columns:
@@ -1152,7 +1190,8 @@ class RevenueAggregator(DataAggregator):
 
 
 class MetricsAggregator(DataAggregator):
-    """    General metrics aggregator for system and business metrics.
+    """
+    General metrics aggregator for system and business metrics.
     
     Specializes in:
     - KPI calculations
@@ -1160,9 +1199,11 @@ class MetricsAggregator(DataAggregator):
     - System performance summaries
     - Custom metric calculations
     - Cross-functional analytics
-    """    
+    """
+    
     async def aggregate(self, session: AsyncSession) -> AggregationResult:
-        """Aggregate general metrics."""        try:
+        """Aggregate general metrics."""
+        try:
             result = AggregationResult(
                 aggregation_id=self.config.aggregation_id,
                 status=AggregationStatus.RUNNING
@@ -1211,7 +1252,8 @@ class MetricsAggregator(DataAggregator):
             return result
     
     async def _apply_custom_aggregations(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Apply custom aggregation functions."""        try:
+        """Apply custom aggregation functions."""
+        try:
             custom_results = {}
             
             for aggregation_name, aggregation_formula in self.config.custom_aggregations.items():
@@ -1236,7 +1278,8 @@ class MetricsAggregator(DataAggregator):
 
 
 class RealTimeAggregator(DataAggregator):
-    """    Real-time streaming data aggregator for continuous metrics processing.
+    """
+    Real-time streaming data aggregator for continuous metrics processing.
     
     Specializes in:
     - Streaming data aggregation
@@ -1244,7 +1287,8 @@ class RealTimeAggregator(DataAggregator):
     - Live performance monitoring
     - Event-driven aggregations
     - Low-latency processing
-    """    
+    """
+    
     def __init__(self, config: AggregationConfiguration):
         super().__init__(config)
         self._streaming_buffer = deque(maxlen=10000)
@@ -1253,7 +1297,8 @@ class RealTimeAggregator(DataAggregator):
         self._real_time_cache = {}
     
     async def aggregate(self, session: AsyncSession) -> AggregationResult:
-        """Aggregate real-time streaming data."""        try:
+        """Aggregate real-time streaming data."""
+        try:
             result = AggregationResult(
                 aggregation_id=self.config.aggregation_id,
                 status=AggregationStatus.RUNNING
@@ -1301,7 +1346,8 @@ class RealTimeAggregator(DataAggregator):
             return result
     
     async def add_streaming_data(self, data_point: Dict[str, Any]):
-        """Add a data point to the streaming buffer."""        try:
+        """Add a data point to the streaming buffer."""
+        try:
             data_point['timestamp'] = datetime.utcnow()
             self._streaming_buffer.append(data_point)
             
@@ -1313,7 +1359,8 @@ class RealTimeAggregator(DataAggregator):
             self.logger.error(f"Failed to add streaming data: {e}")
     
     async def _process_streaming_buffer(self) -> pd.DataFrame:
-        """Process the streaming buffer into a DataFrame."""        try:
+        """Process the streaming buffer into a DataFrame."""
+        try:
             if len(self._streaming_buffer) == 0:
                 return pd.DataFrame()
             
@@ -1332,7 +1379,8 @@ class RealTimeAggregator(DataAggregator):
             return pd.DataFrame()
     
     async def _combine_streaming_and_batch_data(self, streaming_df: pd.DataFrame, batch_df: pd.DataFrame) -> pd.DataFrame:
-        """Combine streaming and batch data."""        try:
+        """Combine streaming and batch data."""
+        try:
             if streaming_df.empty:
                 return batch_df
             if batch_df.empty:
@@ -1352,7 +1400,8 @@ class RealTimeAggregator(DataAggregator):
             return batch_df if not batch_df.empty else streaming_df
     
     async def _perform_real_time_aggregations(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Perform real-time specific aggregations."""        try:
+        """Perform real-time specific aggregations."""
+        try:
             if df.empty:
                 return {}
             
@@ -1394,7 +1443,8 @@ class RealTimeAggregator(DataAggregator):
             return {}
     
     async def _trigger_window_aggregation(self):
-        """Trigger aggregation for current window."""        try:
+        """Trigger aggregation for current window."""
+        try:
             self._last_aggregation = datetime.utcnow()
             
             # Process current buffer
@@ -1411,7 +1461,8 @@ class RealTimeAggregator(DataAggregator):
             self.logger.error(f"Window aggregation trigger failed: {e}")
     
     async def _calculate_quick_metrics(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Calculate quick metrics for real-time updates."""        try:
+        """Calculate quick metrics for real-time updates."""
+        try:
             if df.empty:
                 return {}
             
@@ -1438,7 +1489,8 @@ class RealTimeAggregator(DataAggregator):
             return {}
     
     async def _update_real_time_cache(self, aggregated_data: Dict[str, Any]):
-        """Update the real-time cache with latest results."""        try:
+        """Update the real-time cache with latest results."""
+        try:
             cache_key = f"realtime_{self.config.aggregation_id}"
             self._real_time_cache[cache_key] = {
                 'data': aggregated_data,
@@ -1459,7 +1511,8 @@ class RealTimeAggregator(DataAggregator):
             self.logger.error(f"Real-time cache update failed: {e}")
     
     def get_real_time_metrics(self) -> Dict[str, Any]:
-        """Get current real-time metrics."""        try:
+        """Get current real-time metrics."""
+        try:
             cache_key = f"realtime_{self.config.aggregation_id}"
             
             if cache_key in self._real_time_cache:
@@ -1476,7 +1529,8 @@ class RealTimeAggregator(DataAggregator):
 
 
 class AggregatorManager:
-    """    Manager class for coordinating multiple aggregators and managing aggregation workflows.
+    """
+    Manager class for coordinating multiple aggregators and managing aggregation workflows.
     
     Provides:
     - Aggregator orchestration
@@ -1484,7 +1538,8 @@ class AggregatorManager:
     - Result consolidation
     - Performance monitoring
     - Error handling and recovery
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._aggregators = {}
@@ -1492,14 +1547,16 @@ class AggregatorManager:
         self._performance_tracker = {}
     
     def register_aggregator(self, name: str, aggregator: DataAggregator):
-        """Register an aggregator."""        try:
+        """Register an aggregator."""
+        try:
             self._aggregators[name] = aggregator
             self.logger.info(f"Registered aggregator: {name}")
         except Exception as e:
             self.logger.error(f"Failed to register aggregator {name}: {e}")
     
     async def run_aggregation(self, session: AsyncSession, aggregator_name: str) -> AggregationResult:
-        """Run a single aggregation."""        try:
+        """Run a single aggregation."""
+        try:
             if aggregator_name not in self._aggregators:
                 raise ValueError(f"Aggregator {aggregator_name} not found")
             
@@ -1544,7 +1601,8 @@ class AggregatorManager:
             )
     
     async def run_parallel_aggregations(self, session: AsyncSession, aggregator_names: List[str]) -> Dict[str, AggregationResult]:
-        """Run multiple aggregations in parallel."""        try:
+        """Run multiple aggregations in parallel."""
+        try:
             # Validate aggregators
             valid_aggregators = [name for name in aggregator_names if name in self._aggregators]
             
@@ -1583,14 +1641,16 @@ class AggregatorManager:
             return {}
     
     async def run_all_aggregations(self, session: AsyncSession) -> Dict[str, AggregationResult]:
-        """Run all registered aggregations."""        try:
+        """Run all registered aggregations."""
+        try:
             return await self.run_parallel_aggregations(session, list(self._aggregators.keys()))
         except Exception as e:
             self.logger.error(f"Running all aggregations failed: {e}")
             return {}
     
     def get_aggregation_status(self, aggregator_name: str) -> Dict[str, Any]:
-        """Get the status of an aggregation."""        try:
+        """Get the status of an aggregation."""
+        try:
             if aggregator_name in self._active_aggregations:
                 return self._active_aggregations[aggregator_name]
             elif aggregator_name in self._performance_tracker:
@@ -1602,7 +1662,8 @@ class AggregatorManager:
             return {"status": "error", "error": str(e)}
     
     def get_performance_summary(self) -> Dict[str, Any]:
-        """Get performance summary for all aggregators."""        try:
+        """Get performance summary for all aggregators."""
+        try:
             summary = {
                 "total_aggregators": len(self._aggregators),
                 "performance_data": self._performance_tracker.copy(),
@@ -1631,7 +1692,8 @@ class AggregatorManager:
             return {}
     
     async def cleanup_completed_aggregations(self):
-        """Clean up completed aggregation tracking."""        try:
+        """Clean up completed aggregation tracking."""
+        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=24)
             
             # Remove old completed aggregations
@@ -1651,7 +1713,8 @@ class AggregatorManager:
 
 # Factory function for creating aggregators
 def create_aggregator(aggregator_type: str, config: AggregationConfiguration) -> DataAggregator:
-    """    Factory function to create aggregators based on type.
+    """
+    Factory function to create aggregators based on type.
     
     Args:
         aggregator_type: Type of aggregator to create
@@ -1659,7 +1722,8 @@ def create_aggregator(aggregator_type: str, config: AggregationConfiguration) ->
         
     Returns:
         DataAggregator: The created aggregator instance
-    """    try:
+    """
+    try:
         aggregator_classes = {
             'performance': PerformanceAggregator,
             'content': ContentAggregator,
@@ -1681,7 +1745,8 @@ def create_aggregator(aggregator_type: str, config: AggregationConfiguration) ->
 
 # Usage example and initialization
 async def initialize_aggregation_system() -> AggregatorManager:
-    """Initialize the aggregation system with default aggregators."""    try:
+    """Initialize the aggregation system with default aggregators."""
+    try:
         manager = AggregatorManager()
         
         # Performance aggregator configuration
@@ -1748,14 +1813,17 @@ async def initialize_aggregation_system() -> AggregatorManager:
 
 
 class MultiPlatformCrawlerAggregator(DataAggregator):
-    """    Specialized aggregator for multi-platform content crawling data.
+    """
+    Specialized aggregator for multi-platform content crawling data.
     
     Aggregates crawling metrics, content discovery rates, platform performance,
     and cross-platform content analysis according to the IA Influencer Agent
     business logic.
-    """    
+    """
+    
     def __init__(self, configuration: Optional[AggregatorConfiguration] = None):
-        """Initialize the multi-platform crawler aggregator."""        super().__init__(configuration)
+        """Initialize the multi-platform crawler aggregator."""
+        super().__init__(configuration)
         self.logger = logging.getLogger(__name__ + ".multiplatform")
         
         # Platform-specific aggregation settings
@@ -1775,14 +1843,16 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
         time_range: Dict[str, datetime],
         **kwargs
     ) -> AggregationResult:
-        """        Aggregate crawler performance metrics across platforms.
+        """
+        Aggregate crawler performance metrics across platforms.
         
         Metrics include:
         - Content discovery rate per platform
         - API response times and success rates
         - Data quality and completeness scores
         - Rate limit utilization and optimization
-        """        try:
+        """
+        try:
             aggregated_data = {}
             
             for platform in platforms:
@@ -1821,11 +1891,13 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
         time_range: Dict[str, datetime],
         **kwargs
     ) -> AggregationResult:
-        """        Aggregate content discovery metrics for multi-format content.
+        """
+        Aggregate content discovery metrics for multi-format content.
         
         Following business logic: musician/blogger/photographer/influencer/comedian
         content types with AI-powered categorization and protection.
-        """        try:
+        """
+        try:
             content_metrics = {}
             
             for content_type in content_types:
@@ -1870,11 +1942,13 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
         time_range: Dict[str, datetime],
         **kwargs
     ) -> AggregationResult:
-        """        Aggregate collaboration matching and opportunity data.
+        """
+        Aggregate collaboration matching and opportunity data.
         
         Implements the collaboration matching logic from the business flow:
         SEO optimization → Matching collaboration → Multi-platform distribution
-        """        try:
+        """
+        try:
             collaboration_data = {}
             
             # Analyze creator compatibility
@@ -1925,7 +1999,8 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
         platform: str,
         time_range: Dict[str, datetime]
     ) -> Dict[str, Any]:
-        """Aggregate performance metrics for a single platform."""        # Implementation would query actual crawler performance data
+        """Aggregate performance metrics for a single platform."""
+        # Implementation would query actual crawler performance data
         return {
             'platform': platform,
             'total_crawled': 0,  # From actual data
@@ -1939,7 +2014,8 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
         self,
         platform_data: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze performance across platforms to identify patterns."""        return {
+        """Analyze performance across platforms to identify patterns."""
+        return {
             'best_performing_platform': '',
             'performance_trends': {},
             'optimization_recommendations': []
@@ -1951,7 +2027,8 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
         content_type: str,
         time_range: Dict[str, datetime]
     ) -> Dict[str, Any]:
-        """Aggregate discovery metrics for a specific content type."""        return {
+        """Aggregate discovery metrics for a specific content type."""
+        return {
             'content_type': content_type,
             'discovered_count': 0,
             'protection_needed': 0,
@@ -1963,7 +2040,8 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
         self,
         content_metrics: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze content protection requirements using AI insights."""        return {
+        """Analyze content protection requirements using AI insights."""
+        return {
             'high_risk_content': [],
             'protection_recommendations': [],
             'ai_fingerprinting_priority': []
@@ -1973,7 +2051,8 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
         self,
         content_metrics: Dict[str, Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Generate SEO optimization recommendations."""        return [
+        """Generate SEO optimization recommendations."""
+        return [
             {
                 'content_type': '',
                 'seo_improvement': '',
@@ -1986,7 +2065,8 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
         self,
         creator_profiles: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate compatibility matrix between creators."""        return {
+        """Calculate compatibility matrix between creators."""
+        return {
             'compatibility_scores': {},
             'synergy_factors': {},
             'complementary_skills': {}
@@ -1997,7 +2077,8 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
         session: AsyncSession,
         time_range: Dict[str, datetime]
     ) -> List[Dict[str, Any]]:
-        """Identify trending collaboration opportunities."""        return [
+        """Identify trending collaboration opportunities."""
+        return [
             {
                 'collaboration_type': '',
                 'trend_score': 0.0,
@@ -2011,7 +2092,8 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
         creator_profiles: List[Dict[str, Any]],
         collaboration_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Project potential reach and engagement for collaborations."""        return {
+        """Project potential reach and engagement for collaborations."""
+        return {
             'projected_reach': 0,
             'engagement_estimate': 0.0,
             'revenue_potential': 0.0,
@@ -2023,7 +2105,8 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
         compatibility_matrix: Dict[str, Any],
         trending_opportunities: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Generate AI-powered collaboration recommendations."""        return [
+        """Generate AI-powered collaboration recommendations."""
+        return [
             {
                 'creator_pair': [],
                 'collaboration_type': '',
@@ -2036,13 +2119,16 @@ class MultiPlatformCrawlerAggregator(DataAggregator):
 
 
 class ContentProtectionAggregator(DataAggregator):
-    """    Specialized aggregator for AI fingerprinting and content protection data.
+    """
+    Specialized aggregator for AI fingerprinting and content protection data.
     
     Aggregates violation detection, fingerprinting accuracy, protection coverage,
     and threat intelligence according to the IA protection workflow.
-    """    
+    """
+    
     def __init__(self, configuration: Optional[AggregatorConfiguration] = None):
-        """Initialize the content protection aggregator."""        super().__init__(configuration)
+        """Initialize the content protection aggregator."""
+        super().__init__(configuration)
         self.logger = logging.getLogger(__name__ + ".protection")
         
         # Content protection settings
@@ -2060,11 +2146,13 @@ class ContentProtectionAggregator(DataAggregator):
         time_range: Dict[str, datetime],
         **kwargs
     ) -> AggregationResult:
-        """        Aggregate AI fingerprinting performance and accuracy metrics.
+        """
+        Aggregate AI fingerprinting performance and accuracy metrics.
         
         Tracks the effectiveness of the multi-format fingerprinting system
         from the business logic: Upload multi-format → IA protection rights
-        """        try:
+        """
+        try:
             fingerprinting_metrics = {}
             
             for content_type in content_types:
@@ -2107,7 +2195,8 @@ class ContentProtectionAggregator(DataAggregator):
         content_type: str,
         time_range: Dict[str, datetime]
     ) -> Dict[str, Any]:
-        """Aggregate fingerprinting metrics for a specific content type."""        return {
+        """Aggregate fingerprinting metrics for a specific content type."""
+        return {
             'content_type': content_type,
             'fingerprints_created': 0,
             'accuracy_score': 0.0,
@@ -2120,7 +2209,8 @@ class ContentProtectionAggregator(DataAggregator):
         self,
         fingerprinting_metrics: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate overall protection effectiveness."""        return {
+        """Calculate overall protection effectiveness."""
+        return {
             'overall_accuracy': 0.0,
             'protection_coverage': 0.0,
             'threat_mitigation_rate': 0.0
@@ -2130,7 +2220,8 @@ class ContentProtectionAggregator(DataAggregator):
         self,
         fingerprinting_metrics: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze threat patterns and violation trends."""        return {
+        """Analyze threat patterns and violation trends."""
+        return {
             'common_violation_types': [],
             'threat_evolution': {},
             'protection_gaps': []
@@ -2142,7 +2233,8 @@ if __name__ == "__main__":
     import asyncio
     
     async def main():
-        """Example usage of the aggregation system."""        try:
+        """Example usage of the aggregation system."""
+        try:
             # Initialize system
             manager = await initialize_aggregation_system()
             

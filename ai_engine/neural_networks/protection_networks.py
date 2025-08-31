@@ -5,7 +5,8 @@ and intellectual property safeguarding for content creators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import torch
+"""
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from typing import Dict, List, Optional, Tuple, Union, Any
@@ -19,7 +20,8 @@ from .base_networks import BaseNeuralNetwork, NetworkConfig
 
 
 class ProtectionType(Enum):
-    """Types of content protection"""    COPYRIGHT = "copyright"
+    """Types of content protection"""
+    COPYRIGHT = "copyright"
     PLAGIARISM = "plagiarism"
     DEEPFAKE = "deepfake"
     UNAUTHORIZED_USE = "unauthorized_use"
@@ -28,7 +30,8 @@ class ProtectionType(Enum):
 
 
 class ThreatLevel(Enum):
-    """Threat severity levels"""    LOW = "low"
+    """Threat severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -36,7 +39,8 @@ class ThreatLevel(Enum):
 
 @dataclass
 class ProtectionResult:
-    """Result of content protection analysis"""    
+    """Result of content protection analysis"""
+    
     content_id: str
     protection_type: ProtectionType
     threat_level: ThreatLevel
@@ -68,16 +72,19 @@ class ProtectionResult:
     processing_time: Optional[float] = None
     
     def __post_init__(self):
-        """Set analysis timestamp if not provided"""        if self.analysis_timestamp is None:
+        """Set analysis timestamp if not provided"""
+        if self.analysis_timestamp is None:
             self.analysis_timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
 
 
 class ContentFingerprintingNetwork(BaseNeuralNetwork):
-    """    Network for generating unique content fingerprints
+    """
+    Network for generating unique content fingerprints
     
     Creates robust fingerprints for audio, video, and image content
     that are resistant to common modifications and compression.
-    """    
+    """
+    
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
         
@@ -205,7 +212,8 @@ class ContentFingerprintingNetwork(BaseNeuralNetwork):
         content_data: Dict[str, torch.Tensor],
         content_id: str
     ) -> ProtectionResult:
-        """Generate complete fingerprint for content protection"""        
+        """Generate complete fingerprint for content protection"""
+        
         self.eval()
         
         with torch.no_grad():
@@ -267,10 +275,12 @@ class ContentFingerprintingNetwork(BaseNeuralNetwork):
 
 
 class PlagiarismDetectionNetwork(BaseNeuralNetwork):
-    """    Network for detecting plagiarism and unauthorized content use
+    """
+    Network for detecting plagiarism and unauthorized content use
     
     Compares content against databases to identify potential copyright violations.
-    """    
+    """
+    
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
         
@@ -364,7 +374,8 @@ class PlagiarismDetectionNetwork(BaseNeuralNetwork):
         content_id: str,
         threshold: float = 0.8
     ) -> ProtectionResult:
-        """Detect plagiarism against a database of reference content"""        
+        """Detect plagiarism against a database of reference content"""
+        
         self.eval()
         matches_found = []
         max_similarity = 0.0
@@ -412,7 +423,8 @@ class PlagiarismDetectionNetwork(BaseNeuralNetwork):
         return result
     
     def _get_recommended_actions(self, threat_level: ThreatLevel, matches: List[str]) -> List[str]:
-        """Get recommended actions based on threat level"""        
+        """Get recommended actions based on threat level"""
+        
         if threat_level == ThreatLevel.CRITICAL:
             return [
                 "Immediate takedown request",
@@ -459,10 +471,12 @@ class PlagiarismDetectionNetwork(BaseNeuralNetwork):
 
 
 class DeepfakeDetectionNetwork(BaseNeuralNetwork):
-    """    Network for detecting AI-generated and manipulated content
+    """
+    Network for detecting AI-generated and manipulated content
     
     Identifies deepfakes, AI-generated audio, and other synthetic content.
-    """    
+    """
+    
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
         
@@ -568,7 +582,8 @@ class DeepfakeDetectionNetwork(BaseNeuralNetwork):
         content_features: torch.Tensor,
         content_id: str
     ) -> ProtectionResult:
-        """Detect if content is AI-generated or manipulated"""        
+        """Detect if content is AI-generated or manipulated"""
+        
         self.eval()
         
         with torch.no_grad():
@@ -614,7 +629,8 @@ class DeepfakeDetectionNetwork(BaseNeuralNetwork):
             return result
     
     def _get_deepfake_actions(self, threat_level: ThreatLevel, is_original: bool) -> List[str]:
-        """Get recommended actions for deepfake detection"""        
+        """Get recommended actions for deepfake detection"""
+        
         if not is_original:
             if threat_level == ThreatLevel.CRITICAL:
                 return [
@@ -667,10 +683,12 @@ class DeepfakeDetectionNetwork(BaseNeuralNetwork):
 
 
 class CopyrightProtectionNetwork(BaseNeuralNetwork):
-    """    Comprehensive copyright protection system
+    """
+    Comprehensive copyright protection system
     
     Combines multiple protection methods for robust copyright enforcement.
-    """    
+    """
+    
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
         
@@ -703,7 +721,8 @@ class CopyrightProtectionNetwork(BaseNeuralNetwork):
         reference_database: Optional[List[torch.Tensor]],
         content_id: str
     ) -> List[ProtectionResult]:
-        """Perform comprehensive protection analysis"""        
+        """Perform comprehensive protection analysis"""
+        
         results = []
         
         # 1. Generate fingerprint

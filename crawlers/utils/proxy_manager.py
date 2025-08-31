@@ -10,7 +10,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple
 from datetime import datetime, timedelta
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ProxyInfo:
-    """Proxy information structure."""    host: str
+    """Proxy information structure."""
+    host: str
     port: int
     username: Optional[str] = None
     password: Optional[str] = None
@@ -36,7 +38,8 @@ class ProxyInfo:
 
 @dataclass
 class ProxyMetrics:
-    """Proxy performance metrics."""    success_rate: float = 1.0
+    """Proxy performance metrics."""
+    success_rate: float = 1.0
     average_response_time: float = 0.0
     total_requests: int = 0
     successful_requests: int = 0
@@ -48,7 +51,8 @@ class ProxyMetrics:
     ban_expires: Optional[datetime] = None
 
 class ProxyManager:
-    """    Professional proxy management system.
+    """
+    Professional proxy management system.
     
     Features:
     - Intelligent proxy rotation
@@ -59,9 +63,11 @@ class ProxyManager:
     - Ban detection and recovery
     - Load balancing
     - Proxy type optimization
-    """    
+    """
+    
     def __init__(self):
-        """Initialize proxy manager."""        self.proxies: List[ProxyInfo] = []
+        """Initialize proxy manager."""
+        self.proxies: List[ProxyInfo] = []
         self.proxy_metrics: Dict[str, ProxyMetrics] = {}
         self.current_proxy_index = 0
         self.rotation_strategy = 'round_robin'  # round_robin, random, performance_based
@@ -77,7 +83,8 @@ class ProxyManager:
         asyncio.create_task(self._health_monitor())
     
     def _load_proxy_configuration(self):
-        """Load proxy configuration from settings."""        # This would load from environment variables or config files
+        """Load proxy configuration from settings."""
+        # This would load from environment variables or config files
         # For now, we'll use sample configuration
         sample_proxies = [
             ProxyInfo("proxy1.example.com", 8080, "user1", "pass1"),
@@ -89,7 +96,8 @@ class ProxyManager:
             self.add_proxy(proxy)
     
     def add_proxy(self, proxy: ProxyInfo) -> None:
-        """Add a proxy to the pool."""        proxy_key = self._get_proxy_key(proxy)
+        """Add a proxy to the pool."""
+        proxy_key = self._get_proxy_key(proxy)
         
         if proxy not in self.proxies:
             self.proxies.append(proxy)
@@ -97,7 +105,8 @@ class ProxyManager:
             logger.info(f"Added proxy: {proxy.host}:{proxy.port}")
     
     def remove_proxy(self, proxy: ProxyInfo) -> None:
-        """Remove a proxy from the pool."""        if proxy in self.proxies:
+        """Remove a proxy from the pool."""
+        if proxy in self.proxies:
             self.proxies.remove(proxy)
             proxy_key = self._get_proxy_key(proxy)
             if proxy_key in self.proxy_metrics:
@@ -105,17 +114,20 @@ class ProxyManager:
             logger.info(f"Removed proxy: {proxy.host}:{proxy.port}")
     
     def _get_proxy_key(self, proxy: ProxyInfo) -> str:
-        """Generate unique key for proxy."""        return f"{proxy.host}:{proxy.port}"
+        """Generate unique key for proxy."""
+        return f"{proxy.host}:{proxy.port}"
     
     async def get_proxy(self, target_country: Optional[str] = None) -> Optional[ProxyInfo]:
-        """        Get next available proxy based on rotation strategy.
+        """
+        Get next available proxy based on rotation strategy.
         
         Args:
             target_country: Preferred country for geo-targeting
             
         Returns:
             ProxyInfo object or None if no proxies available
-        """        if not self.proxies:
+        """
+        if not self.proxies:
             logger.warning("No proxies available")
             return None
         
@@ -137,7 +149,8 @@ class ProxyManager:
             return available_proxies[0]
     
     def _get_available_proxies(self, target_country: Optional[str] = None) -> List[ProxyInfo]:
-        """Get list of available (non-banned) proxies."""        available = []
+        """Get list of available (non-banned) proxies."""
+        available = []
         current_time = datetime.now()
         
         for proxy in self.proxies:
@@ -166,7 +179,8 @@ class ProxyManager:
         return available
     
     def _get_next_round_robin(self, available_proxies: List[ProxyInfo]) -> ProxyInfo:
-        """Get next proxy using round-robin strategy."""        if self.current_proxy_index >= len(available_proxies):
+        """Get next proxy using round-robin strategy."""
+        if self.current_proxy_index >= len(available_proxies):
             self.current_proxy_index = 0
         
         proxy = available_proxies[self.current_proxy_index]
@@ -175,7 +189,8 @@ class ProxyManager:
         return proxy
     
     def _get_best_performing_proxy(self, available_proxies: List[ProxyInfo]) -> ProxyInfo:
-        """Get proxy with best performance metrics."""        best_proxy = None
+        """Get proxy with best performance metrics."""
+        best_proxy = None
         best_score = -1
         
         for proxy in available_proxies:
@@ -195,7 +210,8 @@ class ProxyManager:
         return best_proxy
     
     def _calculate_performance_score(self, metrics: ProxyMetrics) -> float:
-        """Calculate performance score for proxy."""        if metrics.total_requests == 0:
+        """Calculate performance score for proxy."""
+        if metrics.total_requests == 0:
             return 1.0
         
         # Base score from success rate
@@ -226,7 +242,8 @@ class ProxyManager:
         response_time: float,
         error_type: Optional[str] = None
     ) -> None:
-        """Record proxy usage metrics."""        proxy_key = self._get_proxy_key(proxy)
+        """Record proxy usage metrics."""
+        proxy_key = self._get_proxy_key(proxy)
         metrics = self.proxy_metrics.get(proxy_key)
         
         if not metrics:
@@ -264,7 +281,8 @@ class ProxyManager:
         metrics.success_rate = metrics.successful_requests / metrics.total_requests
     
     async def _ban_proxy(self, proxy: ProxyInfo, error_type: Optional[str] = None) -> None:
-        """Ban a proxy temporarily."""        proxy_key = self._get_proxy_key(proxy)
+        """Ban a proxy temporarily."""
+        proxy_key = self._get_proxy_key(proxy)
         metrics = self.proxy_metrics.get(proxy_key)
         
         if metrics:
@@ -277,7 +295,8 @@ class ProxyManager:
             )
     
     async def validate_proxy(self, proxy: ProxyInfo) -> bool:
-        """Validate if proxy is working."""        try:
+        """Validate if proxy is working."""
+        try:
             proxy_url = self._build_proxy_url(proxy)
             
             timeout = aiohttp.ClientTimeout(total=10)
@@ -313,13 +332,15 @@ class ProxyManager:
             return False
     
     def _build_proxy_url(self, proxy: ProxyInfo) -> str:
-        """Build proxy URL for aiohttp."""        if proxy.username and proxy.password:
+        """Build proxy URL for aiohttp."""
+        if proxy.username and proxy.password:
             return f"{proxy.protocol}://{proxy.username}:{proxy.password}@{proxy.host}:{proxy.port}"
         else:
             return f"{proxy.protocol}://{proxy.host}:{proxy.port}"
     
     async def _health_monitor(self) -> None:
-        """Background task to monitor proxy health."""        while True:
+        """Background task to monitor proxy health."""
+        while True:
             try:
                 await asyncio.sleep(self.health_check_interval)
                 
@@ -339,7 +360,8 @@ class ProxyManager:
                 logger.error(f"Health monitor error: {e}")
     
     def _log_health_status(self) -> None:
-        """Log current proxy health status."""        total_proxies = len(self.proxies)
+        """Log current proxy health status."""
+        total_proxies = len(self.proxies)
         available_proxies = len(self._get_available_proxies())
         banned_proxies = total_proxies - available_proxies
         
@@ -349,7 +371,8 @@ class ProxyManager:
         )
     
     def get_proxy_statistics(self) -> Dict:
-        """Get comprehensive proxy statistics."""        stats = {
+        """Get comprehensive proxy statistics."""
+        stats = {
             'total_proxies': len(self.proxies),
             'available_proxies': len(self._get_available_proxies()),
             'proxy_details': []
@@ -375,7 +398,8 @@ class ProxyManager:
         return stats
     
     def set_rotation_strategy(self, strategy: str) -> None:
-        """Set proxy rotation strategy."""        valid_strategies = ['round_robin', 'random', 'performance_based']
+        """Set proxy rotation strategy."""
+        valid_strategies = ['round_robin', 'random', 'performance_based']
         if strategy in valid_strategies:
             self.rotation_strategy = strategy
             logger.info(f"Proxy rotation strategy set to: {strategy}")
@@ -383,7 +407,8 @@ class ProxyManager:
             logger.warning(f"Invalid rotation strategy: {strategy}")
     
     async def refresh_proxy_pool(self, new_proxies: List[ProxyInfo]) -> None:
-        """Refresh the entire proxy pool."""        old_count = len(self.proxies)
+        """Refresh the entire proxy pool."""
+        old_count = len(self.proxies)
         
         # Clear existing proxies
         self.proxies.clear()
@@ -396,7 +421,8 @@ class ProxyManager:
         logger.info(f"Refreshed proxy pool: {old_count} -> {len(self.proxies)} proxies")
     
     def get_geographic_distribution(self) -> Dict[str, int]:
-        """Get geographic distribution of proxies."""        distribution = {}
+        """Get geographic distribution of proxies."""
+        distribution = {}
         
         for proxy in self.proxies:
             country = proxy.country or 'Unknown'

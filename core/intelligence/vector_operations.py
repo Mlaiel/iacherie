@@ -13,7 +13,8 @@ Features:
 - Dimensionality reduction and optimization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
 from dataclasses import dataclass
@@ -39,7 +40,8 @@ from ..storage.vector_storage import VectorStorage
 
 
 class VectorType(Enum):
-    """Types of vectors supported"""    CONTENT_EMBEDDING = "content_embedding"
+    """Types of vectors supported"""
+    CONTENT_EMBEDDING = "content_embedding"
     AUDIO_EMBEDDING = "audio_embedding"
     VIDEO_EMBEDDING = "video_embedding"
     IMAGE_EMBEDDING = "image_embedding"
@@ -49,7 +51,8 @@ class VectorType(Enum):
 
 
 class SimilarityMetric(Enum):
-    """Similarity metrics available"""    COSINE = "cosine"
+    """Similarity metrics available"""
+    COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
     DOT_PRODUCT = "dot_product"
@@ -58,7 +61,8 @@ class SimilarityMetric(Enum):
 
 
 class IndexType(Enum):
-    """Vector index types"""    FLAT = "flat"
+    """Vector index types"""
+    FLAT = "flat"
     IVF = "ivf"
     HNSW = "hnsw"
     LSH = "lsh"
@@ -67,7 +71,8 @@ class IndexType(Enum):
 
 @dataclass
 class VectorDocument:
-    """Vector document with metadata"""    vector_id: str
+    """Vector document with metadata"""
+    vector_id: str
     embedding: np.ndarray
     vector_type: VectorType
     metadata: Dict[str, Any]
@@ -79,7 +84,8 @@ class VectorDocument:
 
 @dataclass
 class SimilarityMatch:
-    """Similarity search result"""    document: VectorDocument
+    """Similarity search result"""
+    document: VectorDocument
     similarity_score: float
     distance: float
     rank: int
@@ -88,7 +94,8 @@ class SimilarityMatch:
 
 @dataclass
 class ClusterResult:
-    """Clustering analysis result"""    cluster_id: int
+    """Clustering analysis result"""
+    cluster_id: int
     cluster_center: np.ndarray
     cluster_size: int
     documents: List[VectorDocument]
@@ -98,7 +105,8 @@ class ClusterResult:
 
 @dataclass
 class VectorAnalysis:
-    """Vector space analysis result"""    total_vectors: int
+    """Vector space analysis result"""
+    total_vectors: int
     dimensions: int
     density_metrics: Dict[str, float]
     cluster_analysis: List[ClusterResult]
@@ -107,14 +115,18 @@ class VectorAnalysis:
 
 
 class VectorOperations:
-    """    Advanced vector operations engine for high-performance similarity matching
-    """    
+    """
+    Advanced vector operations engine for high-performance similarity matching
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize vector operations engine
+        """
+        Initialize vector operations engine
         
         Args:
             config: Configuration dictionary
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -133,7 +145,8 @@ class VectorOperations:
         }
     
     def _initialize_indexes(self) -> None:
-        """Initialize vector indexes for different types"""        try:
+        """Initialize vector indexes for different types"""
+        try:
             # Default dimensions for different vector types
             self.vector_dimensions = {
                 VectorType.CONTENT_EMBEDDING: 512,
@@ -181,12 +194,14 @@ class VectorOperations:
             raise
     
     def _initialize_processors(self) -> None:
-        """Initialize vector processors"""        self.vector_adapter = VectorAdapter(self.config)
+        """Initialize vector processors"""
+        self.vector_adapter = VectorAdapter(self.config)
         self.embedding_processor = EmbeddingProcessor(self.config)
         self.similarity_engine = SimilarityEngine(self.config)
     
     def _initialize_storage(self) -> None:
-        """Initialize vector storage"""        self.vector_storage = VectorStorage(self.config)
+        """Initialize vector storage"""
+        self.vector_storage = VectorStorage(self.config)
     
     async def add_vector(
         self,
@@ -197,7 +212,8 @@ class VectorOperations:
         source_id: Optional[str] = None,
         confidence: Optional[float] = None
     ) -> bool:
-        """        Add a vector to the appropriate index
+        """
+        Add a vector to the appropriate index
         
         Args:
             vector_id: Unique identifier for the vector
@@ -209,7 +225,8 @@ class VectorOperations:
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             # Validate embedding dimensions
             expected_dim = self.vector_dimensions[vector_type]
             if embedding.shape[0] != expected_dim:
@@ -255,7 +272,8 @@ class VectorOperations:
             return False
     
     def _resize_embedding(self, embedding: np.ndarray, target_dim: int) -> np.ndarray:
-        """Resize embedding to target dimension"""        current_dim = embedding.shape[0]
+        """Resize embedding to target dimension"""
+        current_dim = embedding.shape[0]
         
         if current_dim > target_dim:
             # Truncate
@@ -275,7 +293,8 @@ class VectorOperations:
         similarity_threshold: float = 0.0,
         metadata_filters: Optional[Dict[str, Any]] = None
     ) -> List[SimilarityMatch]:
-        """        Search for similar vectors
+        """
+        Search for similar vectors
         
         Args:
             query_embedding: Query vector
@@ -286,7 +305,8 @@ class VectorOperations:
             
         Returns:
             List[SimilarityMatch]: Similar vectors with scores
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             # Validate and normalize query embedding
@@ -359,7 +379,8 @@ class VectorOperations:
             return []
     
     def _matches_metadata_filters(self, metadata: Dict[str, Any], filters: Dict[str, Any]) -> bool:
-        """Check if metadata matches filters"""        for key, value in filters.items():
+        """Check if metadata matches filters"""
+        for key, value in filters.items():
             if key not in metadata:
                 return False
             
@@ -387,7 +408,8 @@ class VectorOperations:
         vector_type: VectorType,
         top_k: int = 10
     ) -> List[List[SimilarityMatch]]:
-        """Perform batch similarity search"""        results = []
+        """Perform batch similarity search"""
+        results = []
         
         for query_embedding in query_embeddings:
             matches = await self.search_similar(query_embedding, vector_type, top_k)
@@ -401,7 +423,8 @@ class VectorOperations:
         algorithm: str = "kmeans",
         n_clusters: Optional[int] = None
     ) -> List[ClusterResult]:
-        """        Cluster vectors of a specific type
+        """
+        Cluster vectors of a specific type
         
         Args:
             vector_type: Type of vectors to cluster
@@ -410,7 +433,8 @@ class VectorOperations:
             
         Returns:
             List[ClusterResult]: Clustering results
-        """        try:
+        """
+        try:
             # Get vectors of specified type
             vector_ids = self.type_indexes.get(vector_type, [])
             if len(vector_ids) < 2:
@@ -492,7 +516,8 @@ class VectorOperations:
             return []
     
     def _calculate_coherence(self, embeddings: np.ndarray) -> float:
-        """Calculate cluster coherence score"""        if len(embeddings) <= 1:
+        """Calculate cluster coherence score"""
+        if len(embeddings) <= 1:
             return 1.0
         
         # Calculate pairwise cosine similarities
@@ -510,7 +535,8 @@ class VectorOperations:
         cluster_center: np.ndarray,
         top_k: int = 3
     ) -> List[VectorDocument]:
-        """Find most representative documents for a cluster"""        if not documents:
+        """Find most representative documents for a cluster"""
+        if not documents:
             return []
         
         # Calculate distances to cluster center
@@ -528,7 +554,8 @@ class VectorOperations:
         vector_type: VectorType,
         sample_size: Optional[int] = None
     ) -> VectorAnalysis:
-        """        Analyze vector space characteristics
+        """
+        Analyze vector space characteristics
         
         Args:
             vector_type: Type of vectors to analyze
@@ -536,7 +563,8 @@ class VectorOperations:
             
         Returns:
             VectorAnalysis: Comprehensive vector space analysis
-        """        try:
+        """
+        try:
             # Get vectors of specified type
             vector_ids = self.type_indexes.get(vector_type, [])
             if not vector_ids:
@@ -591,7 +619,8 @@ class VectorOperations:
             )
     
     def _calculate_density_metrics(self, embeddings: np.ndarray) -> Dict[str, float]:
-        """Calculate vector space density metrics"""        if len(embeddings) < 2:
+        """Calculate vector space density metrics"""
+        if len(embeddings) < 2:
             return {}
         
         # Calculate pairwise distances
@@ -618,7 +647,8 @@ class VectorOperations:
         embeddings: np.ndarray,
         threshold: float = 2.0
     ) -> List[VectorDocument]:
-        """Find outlier vectors using statistical methods"""        if len(embeddings) < 3:
+        """Find outlier vectors using statistical methods"""
+        if len(embeddings) < 3:
             return []
         
         # Calculate mean and standard deviation
@@ -638,7 +668,8 @@ class VectorOperations:
         return outliers
     
     def _analyze_dimensionality(self, embeddings: np.ndarray) -> Dict[str, Any]:
-        """Analyze optimal dimensionality for embeddings"""        if len(embeddings) < 2:
+        """Analyze optimal dimensionality for embeddings"""
+        if len(embeddings) < 2:
             return {}
         
         try:
@@ -678,7 +709,8 @@ class VectorOperations:
         method: str = "pca",
         target_dimensions: Optional[int] = None
     ) -> bool:
-        """        Reduce dimensionality of vectors
+        """
+        Reduce dimensionality of vectors
         
         Args:
             vector_type: Type of vectors to reduce
@@ -687,7 +719,8 @@ class VectorOperations:
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             # Get vectors of specified type
             vector_ids = self.type_indexes.get(vector_type, [])
             if not vector_ids:
@@ -732,7 +765,8 @@ class VectorOperations:
             return False
     
     async def _rebuild_index(self, vector_type: VectorType) -> None:
-        """Rebuild FAISS index for a vector type"""        try:
+        """Rebuild FAISS index for a vector type"""
+        try:
             # Get new dimension
             new_dimension = self.vector_dimensions[vector_type]
             
@@ -760,7 +794,8 @@ class VectorOperations:
             self.logger.error(f"Index rebuild failed for {vector_type.value}: {e}")
     
     async def delete_vector(self, vector_id: str) -> bool:
-        """Delete a vector from storage"""        try:
+        """Delete a vector from storage"""
+        try:
             if vector_id not in self.vector_documents:
                 return False
             
@@ -788,7 +823,8 @@ class VectorOperations:
             return False
     
     def _update_search_metrics(self, search_time: float) -> None:
-        """Update search performance metrics"""        self.performance_metrics["search_operations"] += 1
+        """Update search performance metrics"""
+        self.performance_metrics["search_operations"] += 1
         total_searches = self.performance_metrics["search_operations"]
         current_avg = self.performance_metrics["average_search_time"]
         
@@ -798,10 +834,12 @@ class VectorOperations:
         )
     
     async def get_vector_info(self, vector_id: str) -> Optional[VectorDocument]:
-        """Get information about a specific vector"""        return self.vector_documents.get(vector_id)
+        """Get information about a specific vector"""
+        return self.vector_documents.get(vector_id)
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get vector operations performance metrics"""        metrics = self.performance_metrics.copy()
+        """Get vector operations performance metrics"""
+        metrics = self.performance_metrics.copy()
         
         # Add index information
         metrics["indexes"] = {}
@@ -815,7 +853,8 @@ class VectorOperations:
         return metrics
     
     async def backup_vectors(self, vector_type: Optional[VectorType] = None) -> Dict[str, Any]:
-        """Backup vectors to storage"""        try:
+        """Backup vectors to storage"""
+        try:
             backup_data = {
                 "timestamp": datetime.now().isoformat(),
                 "vectors": {},
@@ -853,7 +892,8 @@ class VectorOperations:
             return {}
     
     async def restore_vectors(self, backup_data: Dict[str, Any]) -> bool:
-        """Restore vectors from backup"""        try:
+        """Restore vectors from backup"""
+        try:
             for type_name, vectors_data in backup_data.get("vectors", {}).items():
                 vector_type = VectorType(type_name)
                 
@@ -877,7 +917,8 @@ class VectorOperations:
             return False
     
     async def clear_vectors(self, vector_type: Optional[VectorType] = None) -> None:
-        """Clear vectors of specified type or all vectors"""        if vector_type:
+        """Clear vectors of specified type or all vectors"""
+        if vector_type:
             # Clear specific type
             if vector_type in self.type_indexes:
                 vector_ids = self.type_indexes[vector_type].copy()

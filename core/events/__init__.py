@@ -5,7 +5,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 INTERDIT : Copie, reproduction, modification, ou usage sans autorisation écrite explicite.
 Toute violation sera poursuivie selon la loi allemande et française.
 Contact autorisations : mlaiel@live.de
@@ -14,7 +14,8 @@ Description:
     Système central de gestion d'événements pour la plateforme IA-Influencer-Agent.
     Gère les événements métier, notifications temps réel, et orchestration des workflows.
     Support événements : upload contenu, protection, monétisation, collaboration.
-"""__version__ = "1.0.0"
+"""
+__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 

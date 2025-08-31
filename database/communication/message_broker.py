@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""import uuid
+"""
+import uuid
 import json
 import asyncio
 from datetime import datetime, timezone, timedelta
@@ -42,7 +43,8 @@ logger = logging.getLogger(__name__)
 
 
 class MessagePriority(Enum):
-    """Message priority levels"""    LOW = "low"
+    """Message priority levels"""
+    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -50,7 +52,8 @@ class MessagePriority(Enum):
 
 
 class MessageStatus(Enum):
-    """Message processing status"""    QUEUED = "queued"
+    """Message processing status"""
+    QUEUED = "queued"
     PROCESSING = "processing"
     DELIVERED = "delivered"
     FAILED = "failed"
@@ -59,7 +62,8 @@ class MessageStatus(Enum):
 
 
 class QueueType(Enum):
-    """Message queue types"""    REAL_TIME = "real_time"
+    """Message queue types"""
+    REAL_TIME = "real_time"
     BACKGROUND = "background"
     DELAYED = "delayed"
     PRIORITY = "priority"
@@ -69,7 +73,8 @@ class QueueType(Enum):
 
 @dataclass
 class MessageHeader:
-    """Message header information"""    message_id: str
+    """Message header information"""
+    message_id: str
     sender_id: str
     recipient_id: Optional[str]
     channel: str
@@ -83,7 +88,8 @@ class MessageHeader:
 
 @dataclass
 class MessagePayload:
-    """Message payload structure"""    content_type: str
+    """Message payload structure"""
+    content_type: str
     data: Dict[str, Any]
     attachments: List[Dict[str, Any]]
     metadata: Dict[str, Any]
@@ -92,7 +98,8 @@ class MessagePayload:
 
 
 class MessageQueue(Base):
-    """Message queue persistence model"""    __tablename__ = "message_queues"
+    """Message queue persistence model"""
+    __tablename__ = "message_queues"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     queue_name = Column(String(255), nullable=False, index=True)
@@ -112,7 +119,8 @@ class MessageQueue(Base):
 
 
 class QueuedMessage(Base):
-    """Queued message persistence model"""    __tablename__ = "queued_messages"
+    """Queued message persistence model"""
+    __tablename__ = "queued_messages"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     message_id = Column(String(255), nullable=False, unique=True, index=True)
@@ -155,7 +163,8 @@ class QueuedMessage(Base):
 
 
 class MessageBrokerMetrics(Base):
-    """Message broker metrics and statistics"""    __tablename__ = "message_broker_metrics"
+    """Message broker metrics and statistics"""
+    __tablename__ = "message_broker_metrics"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     queue_name = Column(String(255), nullable=False, index=True)
@@ -170,7 +179,8 @@ class MessageBrokerMetrics(Base):
 
 
 class MessageBroker:
-    """Enterprise message broker with Redis and PostgreSQL persistence"""    
+    """Enterprise message broker with Redis and PostgreSQL persistence"""
+    
     def __init__(self, redis_client: redis.Redis, db_session: Session):
         self.redis = redis_client
         self.db = db_session
@@ -180,7 +190,8 @@ class MessageBroker:
         self.worker_tasks: List[asyncio.Task] = []
         
     async def initialize(self):
-        """Initialize message broker"""        try:
+        """Initialize message broker"""
+        try:
             # Load queue configurations from database
             await self._load_queue_configs()
             
@@ -195,7 +206,8 @@ class MessageBroker:
             raise
     
     async def shutdown(self):
-        """Graceful shutdown"""        self.running = False
+        """Graceful shutdown"""
+        self.running = False
         
         # Stop workers
         for task in self.worker_tasks:
@@ -215,7 +227,8 @@ class MessageBroker:
         dlq_enabled: bool = True,
         config: Optional[Dict[str, Any]] = None
     ) -> MessageQueue:
-        """Create new message queue"""        try:
+        """Create new message queue"""
+        try:
             # Check if queue exists
             existing = self.db.query(MessageQueue).filter(
                 MessageQueue.queue_name == queue_name
@@ -268,7 +281,8 @@ class MessageBroker:
         header: MessageHeader,
         delay_seconds: Optional[int] = None
     ) -> str:
-        """Publish message to queue"""        try:
+        """Publish message to queue"""
+        try:
             # Validate queue exists
             if queue_name not in self.queues:
                 raise ValueError(f"Queue {queue_name} does not exist")
@@ -317,7 +331,8 @@ class MessageBroker:
         queue_name: str,
         timeout: Optional[int] = None
     ) -> Optional[QueuedMessage]:
-        """Consume message from queue"""        try:
+        """Consume message from queue"""
+        try:
             # Get message from Redis
             message_id = await self._dequeue_message(queue_name, timeout)
             if not message_id:
@@ -345,7 +360,8 @@ class MessageBroker:
             return None
     
     async def acknowledge_message(self, message_id: str, success: bool = True):
-        """Acknowledge message processing"""        try:
+        """Acknowledge message processing"""
+        try:
             message = self.db.query(QueuedMessage).filter(
                 QueuedMessage.message_id == message_id
             ).first()
@@ -372,7 +388,8 @@ class MessageBroker:
             self.db.rollback()
     
     async def subscribe(self, channel: str, callback: Callable):
-        """Subscribe to message channel"""        if channel not in self.subscribers:
+        """Subscribe to message channel"""
+        if channel not in self.subscribers:
             self.subscribers[channel] = []
         
         self.subscribers[channel].append(callback)
@@ -382,7 +399,8 @@ class MessageBroker:
         logger.info(f"Subscribed to channel: {channel}")
     
     async def broadcast(self, channel: str, message: Dict[str, Any]):
-        """Broadcast message to channel subscribers"""        try:
+        """Broadcast message to channel subscribers"""
+        try:
             # Publish to Redis
             await self.redis.publish(f"channel:{channel}", json.dumps(message))
             
@@ -400,7 +418,8 @@ class MessageBroker:
             logger.error(f"Failed to broadcast to {channel}: {e}")
     
     async def get_queue_stats(self, queue_name: str) -> Dict[str, Any]:
-        """Get queue statistics"""        try:
+        """Get queue statistics"""
+        try:
             # Get from database
             queue = self.db.query(MessageQueue).filter(
                 MessageQueue.queue_name == queue_name
@@ -443,7 +462,8 @@ class MessageBroker:
     # Private methods
     
     async def _load_queue_configs(self):
-        """Load queue configurations from database"""        queues = self.db.query(MessageQueue).all()
+        """Load queue configurations from database"""
+        queues = self.db.query(MessageQueue).all()
         for queue in queues:
             self.queues[queue.queue_name] = {
                 "type": QueueType(queue.queue_type),
@@ -452,7 +472,8 @@ class MessageBroker:
             }
     
     async def _start_workers(self):
-        """Start background worker tasks"""        # Message processor worker
+        """Start background worker tasks"""
+        # Message processor worker
         self.worker_tasks.append(
             asyncio.create_task(self._message_processor_worker())
         )
@@ -473,20 +494,23 @@ class MessageBroker:
         )
     
     async def _initialize_queue_redis(self, queue_name: str, queue_type: QueueType):
-        """Initialize Redis structures for queue"""        # Initialize queue lists
+        """Initialize Redis structures for queue"""
+        # Initialize queue lists
         await self.redis.delete(f"queue:{queue_name}")
         await self.redis.delete(f"priority:{queue_name}")
         await self.redis.delete(f"processing:{queue_name}")
         await self.redis.delete(f"delayed:{queue_name}")
     
     async def _enqueue_message(self, queue_name: str, message_id: str, priority: MessagePriority):
-        """Add message to Redis queue"""        if priority in [MessagePriority.HIGH, MessagePriority.URGENT, MessagePriority.CRITICAL]:
+        """Add message to Redis queue"""
+        if priority in [MessagePriority.HIGH, MessagePriority.URGENT, MessagePriority.CRITICAL]:
             await self.redis.lpush(f"priority:{queue_name}", message_id)
         else:
             await self.redis.lpush(f"queue:{queue_name}", message_id)
     
     async def _dequeue_message(self, queue_name: str, timeout: Optional[int] = None) -> Optional[str]:
-        """Remove message from Redis queue"""        # Try priority queue first
+        """Remove message from Redis queue"""
+        # Try priority queue first
         message_id = await self.redis.rpop(f"priority:{queue_name}")
         if message_id:
             await self.redis.sadd(f"processing:{queue_name}", message_id)
@@ -508,11 +532,13 @@ class MessageBroker:
         return None
     
     async def _schedule_message(self, queue_name: str, message_id: str, delay_seconds: int):
-        """Schedule message for delayed delivery"""        score = datetime.now(timezone.utc).timestamp() + delay_seconds
+        """Schedule message for delayed delivery"""
+        score = datetime.now(timezone.utc).timestamp() + delay_seconds
         await self.redis.zadd(f"delayed:{queue_name}", {message_id: score})
     
     async def _handle_failed_message(self, message: QueuedMessage):
-        """Handle failed message processing"""        message.retry_count += 1
+        """Handle failed message processing"""
+        message.retry_count += 1
         
         if message.retry_count <= message.max_retries:
             # Retry with exponential backoff
@@ -528,7 +554,8 @@ class MessageBroker:
         await self._update_queue_metrics(message.queue_name, "messages_failed", 1)
     
     async def _update_queue_metrics(self, queue_name: str, metric_type: str, value: float):
-        """Update queue metrics"""        metric = MessageBrokerMetrics(
+        """Update queue metrics"""
+        metric = MessageBrokerMetrics(
             queue_name=queue_name,
             metric_type=metric_type,
             metric_value=value,
@@ -539,7 +566,8 @@ class MessageBroker:
         self.db.commit()
     
     async def _message_processor_worker(self):
-        """Background worker for processing messages"""        while self.running:
+        """Background worker for processing messages"""
+        while self.running:
             try:
                 await asyncio.sleep(1)
                 # Process scheduled messages and other background tasks
@@ -549,7 +577,8 @@ class MessageBroker:
                 await asyncio.sleep(5)
     
     async def _delayed_scheduler_worker(self):
-        """Background worker for delayed message scheduling"""        while self.running:
+        """Background worker for delayed message scheduling"""
+        while self.running:
             try:
                 await asyncio.sleep(10)
                 # Process delayed messages
@@ -559,7 +588,8 @@ class MessageBroker:
                 await asyncio.sleep(5)
     
     async def _dlq_processor_worker(self):
-        """Background worker for dead letter queue processing"""        while self.running:
+        """Background worker for dead letter queue processing"""
+        while self.running:
             try:
                 await asyncio.sleep(60)
                 # Process dead letter queues
@@ -569,7 +599,8 @@ class MessageBroker:
                 await asyncio.sleep(10)
     
     async def _metrics_collector_worker(self):
-        """Background worker for collecting metrics"""        while self.running:
+        """Background worker for collecting metrics"""
+        while self.running:
             try:
                 await asyncio.sleep(30)
                 # Collect and update metrics
@@ -581,7 +612,8 @@ class MessageBroker:
 
 @asynccontextmanager
 async def get_message_broker(redis_client: redis.Redis, db_session: Session):
-    """Context manager for message broker"""    broker = MessageBroker(redis_client, db_session)
+    """Context manager for message broker"""
+    broker = MessageBroker(redis_client, db_session)
     try:
         await broker.initialize()
         yield broker

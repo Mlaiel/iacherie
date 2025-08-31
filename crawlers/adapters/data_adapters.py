@@ -37,7 +37,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import csv
@@ -114,7 +115,8 @@ try:
     SKLEARN_AVAILABLE = True
 except ImportError:
     SKLEARN_AVAILABLE = False
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import csv
@@ -229,19 +231,22 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class CompressionType(Enum):
-    """Supported compression types."""    NONE = "none"
+    """Supported compression types."""
+    NONE = "none"
     GZIP = "gzip"
     BZIP2 = "bzip2"
     LZMA = "lzma"
 
 class EncryptionType(Enum):
-    """Supported encryption types."""    NONE = "none"
+    """Supported encryption types."""
+    NONE = "none"
     FERNET = "fernet"
     AES = "aes"
 
 @dataclass
 class DataProcessingMetrics:
-    """Metrics for data processing operations."""    items_processed: int = 0
+    """Metrics for data processing operations."""
+    items_processed: int = 0
     bytes_processed: int = 0
     processing_time: float = 0.0
     compression_ratio: float = 0.0
@@ -251,7 +256,8 @@ class DataProcessingMetrics:
 
 @dataclass
 class DataFormatConfig:
-    """Advanced configuration for data format processing."""    # Basic settings
+    """Advanced configuration for data format processing."""
+    # Basic settings
     encoding: str = 'utf-8'
     indent: Optional[int] = None
     ensure_ascii: bool = False
@@ -284,16 +290,19 @@ class DataFormatConfig:
 
 @dataclass
 class ProcessingResult:
-    """Result of data processing operation."""    success: bool
+    """Result of data processing operation."""
+    success: bool
     data: Any = None
     error: Optional[str] = None
     metrics: Optional[DataProcessingMetrics] = None
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class DataAdapter(ABC):
-    """Enterprise base class for all data format adapters."""    
+    """Enterprise base class for all data format adapters."""
+    
     def __init__(self, config: Optional[DataFormatConfig] = None):
-        """Initialize data adapter with enterprise configuration."""        self.config = config or DataFormatConfig()
+        """Initialize data adapter with enterprise configuration."""
+        self.config = config or DataFormatConfig()
         self.logger = logging.getLogger(self.__class__.__name__)
         self.supported_formats: List[str] = []
         self.metrics = DataProcessingMetrics()
@@ -306,7 +315,8 @@ class DataAdapter(ABC):
             self._init_encryption()
     
     def _init_encryption(self):
-        """Initialize encryption cipher."""        if not CRYPTO_AVAILABLE:
+        """Initialize encryption cipher."""
+        if not CRYPTO_AVAILABLE:
             raise ImportError("cryptography package required for encryption")
         
         if self.config.encryption == EncryptionType.FERNET:
@@ -316,17 +326,20 @@ class DataAdapter(ABC):
             self._encryption_cipher = Fernet(key)
     
     def _encrypt_data(self, data: bytes) -> bytes:
-        """Encrypt data using configured cipher."""        if self._encryption_cipher and self.config.encryption == EncryptionType.FERNET:
+        """Encrypt data using configured cipher."""
+        if self._encryption_cipher and self.config.encryption == EncryptionType.FERNET:
             return self._encryption_cipher.encrypt(data)
         return data
     
     def _decrypt_data(self, data: bytes) -> bytes:
-        """Decrypt data using configured cipher."""        if self._encryption_cipher and self.config.encryption == EncryptionType.FERNET:
+        """Decrypt data using configured cipher."""
+        if self._encryption_cipher and self.config.encryption == EncryptionType.FERNET:
             return self._encryption_cipher.decrypt(data)
         return data
     
     def _compress_data(self, data: bytes) -> bytes:
-        """Compress data using configured compression."""        if self.config.compression == CompressionType.GZIP:
+        """Compress data using configured compression."""
+        if self.config.compression == CompressionType.GZIP:
             return gzip.compress(data)
         elif self.config.compression == CompressionType.BZIP2:
             return bz2.compress(data)
@@ -335,7 +348,8 @@ class DataAdapter(ABC):
         return data
     
     def _decompress_data(self, data: bytes) -> bytes:
-        """Decompress data using configured compression."""        if self.config.compression == CompressionType.GZIP:
+        """Decompress data using configured compression."""
+        if self.config.compression == CompressionType.GZIP:
             return gzip.decompress(data)
         elif self.config.compression == CompressionType.BZIP2:
             return bz2.decompress(data)
@@ -345,22 +359,26 @@ class DataAdapter(ABC):
     
     @abstractmethod
     async def serialize(self, data: Any) -> Union[str, bytes]:
-        """Serialize data to format."""        pass
+        """Serialize data to format."""
+        pass
     
     @abstractmethod
     async def deserialize(self, data: Union[str, bytes, BinaryIO]) -> Any:
-        """Deserialize data from format."""        pass
+        """Deserialize data from format."""
+        pass
     
     @abstractmethod
     def validate_format(self, data: Union[str, bytes]) -> bool:
-        """Validate data format."""        pass
+        """Validate data format."""
+        pass
     
     async def process_batch(
         self, 
         data_items: List[Any],
         operation: str = "serialize"
     ) -> List[ProcessingResult]:
-        """Process multiple data items with enterprise features."""        results = []
+        """Process multiple data items with enterprise features."""
+        results = []
         start_time = time.time()
         
         for i, item in enumerate(data_items):
@@ -396,7 +414,8 @@ class DataAdapter(ABC):
         data_stream: AsyncGenerator[Any, None],
         callback: Optional[Callable] = None
     ) -> AsyncGenerator[ProcessingResult, None]:
-        """Stream process data with callback support."""        async for item in data_stream:
+        """Stream process data with callback support."""
+        async for item in data_stream:
             try:
                 result_data = await self.serialize(item)
                 result = ProcessingResult(success=True, data=result_data)
@@ -412,22 +431,28 @@ class DataAdapter(ABC):
                 yield result
     
     def get_content_type(self) -> str:
-        """Get MIME content type for this format."""        return "application/octet-stream"
+        """Get MIME content type for this format."""
+        return "application/octet-stream"
     
     def get_metrics(self) -> DataProcessingMetrics:
-        """Get processing metrics."""        return self.metrics
+        """Get processing metrics."""
+        return self.metrics
     
     def reset_metrics(self):
-        """Reset processing metrics."""        self.metrics = DataProcessingMetrics()
+        """Reset processing metrics."""
+        self.metrics = DataProcessingMetrics()
 
 class JSONAdapter(DataAdapter):
-    """Enterprise JSON adapter with advanced features."""    
+    """Enterprise JSON adapter with advanced features."""
+    
     def __init__(self, config: Optional[DataFormatConfig] = None):
-        """Initialize JSON adapter."""        super().__init__(config)
+        """Initialize JSON adapter."""
+        super().__init__(config)
         self.supported_formats = ['application/json', 'text/json']
     
     async def serialize(self, data: Any) -> str:
-        """Serialize data to JSON."""        try:
+        """Serialize data to JSON."""
+        try:
             # Handle datetime objects
             def json_serializer(obj):
                 if isinstance(obj, datetime):
@@ -453,7 +478,8 @@ class JSONAdapter(DataAdapter):
             raise
     
     async def deserialize(self, data: Union[str, bytes, BinaryIO]) -> Any:
-        """Deserialize JSON data."""        try:
+        """Deserialize JSON data."""
+        try:
             if isinstance(data, bytes):
                 json_str = data.decode(self.config.encoding)
             elif hasattr(data, 'read'):
@@ -482,7 +508,8 @@ class JSONAdapter(DataAdapter):
             raise
     
     def validate_format(self, data: Union[str, bytes]) -> bool:
-        """Validate JSON format."""        try:
+        """Validate JSON format."""
+        try:
             if isinstance(data, bytes):
                 data = data.decode(self.config.encoding)
             json.loads(data)
@@ -491,27 +518,33 @@ class JSONAdapter(DataAdapter):
             return False
     
     def get_content_type(self) -> str:
-        """Get JSON content type."""        return "application/json"
+        """Get JSON content type."""
+        return "application/json"
     
     async def pretty_format(self, data: Any) -> str:
-        """Format JSON with pretty printing."""        old_indent = self.config.indent
+        """Format JSON with pretty printing."""
+        old_indent = self.config.indent
         self.config.indent = 2
         result = await self.serialize(data)
         self.config.indent = old_indent
         return result
     
     async def minify(self, json_str: str) -> str:
-        """Minify JSON string."""        data = json.loads(json_str)
+        """Minify JSON string."""
+        data = json.loads(json_str)
         return json.dumps(data, separators=(',', ':'))
 
 class XMLAdapter(DataAdapter):
-    """Adapter for XML data format."""    
+    """Adapter for XML data format."""
+    
     def __init__(self, config: Optional[DataFormatConfig] = None):
-        """Initialize XML adapter."""        super().__init__(config)
+        """Initialize XML adapter."""
+        super().__init__(config)
         self.supported_formats = ['application/xml', 'text/xml']
     
     async def serialize(self, data: Any, root_name: str = "root") -> str:
-        """Serialize data to XML."""        try:
+        """Serialize data to XML."""
+        try:
             root = ET.Element(root_name)
             self._dict_to_xml(data, root)
             
@@ -524,7 +557,8 @@ class XMLAdapter(DataAdapter):
             raise
     
     def _dict_to_xml(self, data: Any, parent: ET.Element):
-        """Convert dictionary to XML elements."""        if isinstance(data, dict):
+        """Convert dictionary to XML elements."""
+        if isinstance(data, dict):
             for key, value in data.items():
                 key = str(key).replace(' ', '_')  # XML element names can't have spaces
                 child = ET.SubElement(parent, key)
@@ -542,7 +576,8 @@ class XMLAdapter(DataAdapter):
             parent.text = str(data)
     
     def _indent_xml(self, elem: ET.Element, level: int = 0):
-        """Add indentation to XML for pretty printing."""        indent = "\n" + level * "  "
+        """Add indentation to XML for pretty printing."""
+        indent = "\n" + level * "  "
         if len(elem):
             if not elem.text or not elem.text.strip():
                 elem.text = indent + "  "
@@ -557,7 +592,8 @@ class XMLAdapter(DataAdapter):
                 elem.tail = indent
     
     async def deserialize(self, data: Union[str, bytes, BinaryIO]) -> Dict[str, Any]:
-        """Deserialize XML data."""        try:
+        """Deserialize XML data."""
+        try:
             if isinstance(data, bytes):
                 xml_str = data.decode(self.config.encoding)
             elif hasattr(data, 'read'):
@@ -575,7 +611,8 @@ class XMLAdapter(DataAdapter):
             raise
     
     def _xml_to_dict(self, element: ET.Element) -> Any:
-        """Convert XML element to dictionary."""        result = {}
+        """Convert XML element to dictionary."""
+        result = {}
         
         # Add attributes
         if element.attrib:
@@ -612,7 +649,8 @@ class XMLAdapter(DataAdapter):
         return result if result else None
     
     def validate_format(self, data: Union[str, bytes]) -> bool:
-        """Validate XML format."""        try:
+        """Validate XML format."""
+        try:
             if isinstance(data, bytes):
                 data = data.decode(self.config.encoding)
             ET.fromstring(data)
@@ -621,12 +659,15 @@ class XMLAdapter(DataAdapter):
             return False
     
     def get_content_type(self) -> str:
-        """Get XML content type."""        return "application/xml"
+        """Get XML content type."""
+        return "application/xml"
 
 class CSVAdapter(DataAdapter):
-    """Adapter for CSV data format."""    
+    """Adapter for CSV data format."""
+    
     def __init__(self, config: Optional[DataFormatConfig] = None):
-        """Initialize CSV adapter."""        super().__init__(config)
+        """Initialize CSV adapter."""
+        super().__init__(config)
         self.supported_formats = ['text/csv', 'application/csv']
         self.delimiter = ','
         self.quote_char = '"'
@@ -634,7 +675,8 @@ class CSVAdapter(DataAdapter):
         self.has_header = True
     
     async def serialize(self, data: Any) -> str:
-        """Serialize data to CSV."""        try:
+        """Serialize data to CSV."""
+        try:
             output = io.StringIO()
             
             if isinstance(data, list) and data:
@@ -712,7 +754,8 @@ class CSVAdapter(DataAdapter):
             raise
     
     async def deserialize(self, data: Union[str, bytes, BinaryIO]) -> List[Dict[str, Any]]:
-        """Deserialize CSV data."""        try:
+        """Deserialize CSV data."""
+        try:
             if isinstance(data, bytes):
                 csv_str = data.decode(self.config.encoding)
             elif hasattr(data, 'read'):
@@ -782,7 +825,8 @@ class CSVAdapter(DataAdapter):
             raise
     
     def validate_format(self, data: Union[str, bytes]) -> bool:
-        """Validate CSV format."""        try:
+        """Validate CSV format."""
+        try:
             if isinstance(data, bytes):
                 data = data.decode(self.config.encoding)
             
@@ -796,16 +840,20 @@ class CSVAdapter(DataAdapter):
             return False
     
     def get_content_type(self) -> str:
-        """Get CSV content type."""        return "text/csv"
+        """Get CSV content type."""
+        return "text/csv"
 
 class BinaryAdapter(DataAdapter):
-    """Adapter for binary data format."""    
+    """Adapter for binary data format."""
+    
     def __init__(self, config: Optional[DataFormatConfig] = None):
-        """Initialize binary adapter."""        super().__init__(config)
+        """Initialize binary adapter."""
+        super().__init__(config)
         self.supported_formats = ['application/octet-stream', 'application/binary']
     
     async def serialize(self, data: Any) -> bytes:
-        """Serialize data to binary."""        try:
+        """Serialize data to binary."""
+        try:
             if isinstance(data, bytes):
                 return data
             elif isinstance(data, str):
@@ -822,7 +870,8 @@ class BinaryAdapter(DataAdapter):
             raise
     
     async def deserialize(self, data: Union[str, bytes, BinaryIO]) -> Any:
-        """Deserialize binary data."""        try:
+        """Deserialize binary data."""
+        try:
             if hasattr(data, 'read'):
                 binary_data = data.read()
             elif isinstance(data, str):
@@ -848,22 +897,28 @@ class BinaryAdapter(DataAdapter):
             raise
     
     def validate_format(self, data: Union[str, bytes]) -> bool:
-        """Validate binary format."""        # Binary data is always valid
+        """Validate binary format."""
+        # Binary data is always valid
         return isinstance(data, (str, bytes))
     
     def get_content_type(self) -> str:
-        """Get binary content type."""        return "application/octet-stream"
+        """Get binary content type."""
+        return "application/octet-stream"
     
     async def encode_base64(self, data: bytes) -> str:
-        """Encode binary data as base64."""        return base64.b64encode(data).decode('ascii')
+        """Encode binary data as base64."""
+        return base64.b64encode(data).decode('ascii')
     
     async def decode_base64(self, data: str) -> bytes:
-        """Decode base64 data to binary."""        return base64.b64decode(data)
+        """Decode base64 data to binary."""
+        return base64.b64decode(data)
 
 class ProtocolBufferAdapter(DataAdapter):
-    """Adapter for Protocol Buffer data format."""    
+    """Adapter for Protocol Buffer data format."""
+    
     def __init__(self, config: Optional[DataFormatConfig] = None):
-        """Initialize Protocol Buffer adapter."""        super().__init__(config)
+        """Initialize Protocol Buffer adapter."""
+        super().__init__(config)
         
         if not PROTOBUF_AVAILABLE:
             raise ImportError("Protocol Buffers not available. Install with: pip install protobuf")
@@ -872,10 +927,12 @@ class ProtocolBufferAdapter(DataAdapter):
         self.message_type = None
     
     def set_message_type(self, message_type):
-        """Set the Protocol Buffer message type."""        self.message_type = message_type
+        """Set the Protocol Buffer message type."""
+        self.message_type = message_type
     
     async def serialize(self, data: Any) -> bytes:
-        """Serialize data to Protocol Buffer."""        try:
+        """Serialize data to Protocol Buffer."""
+        try:
             if not self.message_type:
                 raise ValueError("Message type not set")
             
@@ -896,7 +953,8 @@ class ProtocolBufferAdapter(DataAdapter):
             raise
     
     async def deserialize(self, data: Union[str, bytes, BinaryIO]) -> Any:
-        """Deserialize Protocol Buffer data."""        try:
+        """Deserialize Protocol Buffer data."""
+        try:
             if not self.message_type:
                 raise ValueError("Message type not set")
             
@@ -918,7 +976,8 @@ class ProtocolBufferAdapter(DataAdapter):
             raise
     
     def validate_format(self, data: Union[str, bytes]) -> bool:
-        """Validate Protocol Buffer format."""        try:
+        """Validate Protocol Buffer format."""
+        try:
             if not self.message_type:
                 return False
             
@@ -932,22 +991,27 @@ class ProtocolBufferAdapter(DataAdapter):
             return False
     
     def get_content_type(self) -> str:
-        """Get Protocol Buffer content type."""        return "application/x-protobuf"
+        """Get Protocol Buffer content type."""
+        return "application/x-protobuf"
     
     async def to_json(self, protobuf_data: bytes) -> str:
-        """Convert Protocol Buffer to JSON."""        message_dict = await self.deserialize(protobuf_data)
+        """Convert Protocol Buffer to JSON."""
+        message_dict = await self.deserialize(protobuf_data)
         json_adapter = JSONAdapter(self.config)
         return await json_adapter.serialize(message_dict)
     
     async def from_json(self, json_data: str) -> bytes:
-        """Convert JSON to Protocol Buffer."""        json_adapter = JSONAdapter(self.config)
+        """Convert JSON to Protocol Buffer."""
+        json_adapter = JSONAdapter(self.config)
         data_dict = await json_adapter.deserialize(json_data)
         return await self.serialize(data_dict)
 
 class MessagePackAdapter(DataAdapter):
-    """Adapter for MessagePack data format."""    
+    """Adapter for MessagePack data format."""
+    
     def __init__(self, config: Optional[DataFormatConfig] = None):
-        """Initialize MessagePack adapter."""        super().__init__(config)
+        """Initialize MessagePack adapter."""
+        super().__init__(config)
         
         if not MSGPACK_AVAILABLE:
             raise ImportError("MessagePack not available. Install with: pip install msgpack")
@@ -955,7 +1019,8 @@ class MessagePackAdapter(DataAdapter):
         self.supported_formats = ['application/msgpack', 'application/x-msgpack']
     
     async def serialize(self, data: Any) -> bytes:
-        """Serialize data to MessagePack."""        try:
+        """Serialize data to MessagePack."""
+        try:
             def encode_datetime(obj):
                 if isinstance(obj, datetime):
                     return obj.isoformat()
@@ -968,7 +1033,8 @@ class MessagePackAdapter(DataAdapter):
             raise
     
     async def deserialize(self, data: Union[str, bytes, BinaryIO]) -> Any:
-        """Deserialize MessagePack data."""        try:
+        """Deserialize MessagePack data."""
+        try:
             if hasattr(data, 'read'):
                 binary_data = data.read()
             elif isinstance(data, str):
@@ -1002,7 +1068,8 @@ class MessagePackAdapter(DataAdapter):
             raise
     
     def validate_format(self, data: Union[str, bytes]) -> bool:
-        """Validate MessagePack format."""        try:
+        """Validate MessagePack format."""
+        try:
             if isinstance(data, str):
                 data = data.encode(self.config.encoding)
             
@@ -1012,29 +1079,35 @@ class MessagePackAdapter(DataAdapter):
             return False
     
     def get_content_type(self) -> str:
-        """Get MessagePack content type."""        return "application/msgpack"
+        """Get MessagePack content type."""
+        return "application/msgpack"
     
     async def to_json(self, msgpack_data: bytes) -> str:
-        """Convert MessagePack to JSON."""        data = await self.deserialize(msgpack_data)
+        """Convert MessagePack to JSON."""
+        data = await self.deserialize(msgpack_data)
         json_adapter = JSONAdapter(self.config)
         return await json_adapter.serialize(data)
     
     async def from_json(self, json_data: str) -> bytes:
-        """Convert JSON to MessagePack."""        json_adapter = JSONAdapter(self.config)
+        """Convert JSON to MessagePack."""
+        json_adapter = JSONAdapter(self.config)
         data = await json_adapter.deserialize(json_data)
         return await self.serialize(data)
 
 class YAMLAdapter(DataAdapter):
-    """Enterprise YAML adapter with advanced features."""    
+    """Enterprise YAML adapter with advanced features."""
+    
     def __init__(self, config: Optional[DataFormatConfig] = None):
-        """Initialize YAML adapter."""        super().__init__(config)
+        """Initialize YAML adapter."""
+        super().__init__(config)
         self.supported_formats = ['yaml', 'yml']
         
         if not YAML_AVAILABLE:
             raise ImportError("PyYAML package required for YAML support")
     
     async def serialize(self, data: Any) -> str:
-        """Serialize data to YAML format."""        try:
+        """Serialize data to YAML format."""
+        try:
             start_time = time.time()
             
             # Sanitize input if configured
@@ -1063,7 +1136,8 @@ class YAMLAdapter(DataAdapter):
             raise
     
     async def deserialize(self, data: Union[str, bytes, BinaryIO]) -> Any:
-        """Deserialize YAML data."""        try:
+        """Deserialize YAML data."""
+        try:
             start_time = time.time()
             
             if isinstance(data, bytes):
@@ -1091,7 +1165,8 @@ class YAMLAdapter(DataAdapter):
             raise
     
     def validate_format(self, data: Union[str, bytes]) -> bool:
-        """Validate YAML format."""        try:
+        """Validate YAML format."""
+        try:
             if isinstance(data, bytes):
                 data = data.decode(self.config.encoding)
             yaml.safe_load(data)
@@ -1100,19 +1175,23 @@ class YAMLAdapter(DataAdapter):
             return False
     
     def get_content_type(self) -> str:
-        """Get MIME content type."""        return "application/yaml"
+        """Get MIME content type."""
+        return "application/yaml"
 
 class TOMLAdapter(DataAdapter):
-    """Enterprise TOML adapter with advanced features."""    
+    """Enterprise TOML adapter with advanced features."""
+    
     def __init__(self, config: Optional[DataFormatConfig] = None):
-        """Initialize TOML adapter."""        super().__init__(config)
+        """Initialize TOML adapter."""
+        super().__init__(config)
         self.supported_formats = ['toml']
         
         if not TOML_AVAILABLE:
             raise ImportError("toml package required for TOML support")
     
     async def serialize(self, data: Any) -> str:
-        """Serialize data to TOML format."""        try:
+        """Serialize data to TOML format."""
+        try:
             start_time = time.time()
             
             # Sanitize input if configured
@@ -1134,7 +1213,8 @@ class TOMLAdapter(DataAdapter):
             raise
     
     async def deserialize(self, data: Union[str, bytes, BinaryIO]) -> Any:
-        """Deserialize TOML data."""        try:
+        """Deserialize TOML data."""
+        try:
             start_time = time.time()
             
             if isinstance(data, bytes):
@@ -1162,7 +1242,8 @@ class TOMLAdapter(DataAdapter):
             raise
     
     def validate_format(self, data: Union[str, bytes]) -> bool:
-        """Validate TOML format."""        try:
+        """Validate TOML format."""
+        try:
             if isinstance(data, bytes):
                 data = data.decode(self.config.encoding)
             toml.loads(data)
@@ -1171,19 +1252,23 @@ class TOMLAdapter(DataAdapter):
             return False
     
     def get_content_type(self) -> str:
-        """Get MIME content type."""        return "application/toml"
+        """Get MIME content type."""
+        return "application/toml"
 
 class ParquetAdapter(DataAdapter):
-    """Enterprise Parquet adapter with advanced features."""    
+    """Enterprise Parquet adapter with advanced features."""
+    
     def __init__(self, config: Optional[DataFormatConfig] = None):
-        """Initialize Parquet adapter."""        super().__init__(config)
+        """Initialize Parquet adapter."""
+        super().__init__(config)
         self.supported_formats = ['parquet']
         
         if not PARQUET_AVAILABLE:
             raise ImportError("pandas and pyarrow packages required for Parquet support")
     
     async def serialize(self, data: Any) -> bytes:
-        """Serialize data to Parquet format."""        try:
+        """Serialize data to Parquet format."""
+        try:
             start_time = time.time()
             
             # Convert to DataFrame if needed
@@ -1222,7 +1307,8 @@ class ParquetAdapter(DataAdapter):
             raise
     
     async def deserialize(self, data: Union[str, bytes, BinaryIO]) -> pd.DataFrame:
-        """Deserialize Parquet data."""        try:
+        """Deserialize Parquet data."""
+        try:
             start_time = time.time()
             
             if isinstance(data, str):
@@ -1256,7 +1342,8 @@ class ParquetAdapter(DataAdapter):
             raise
     
     def validate_format(self, data: Union[str, bytes]) -> bool:
-        """Validate Parquet format."""        try:
+        """Validate Parquet format."""
+        try:
             if isinstance(data, str):
                 # Assume it's a file path
                 pd.read_parquet(data, nrows=1)
@@ -1268,12 +1355,15 @@ class ParquetAdapter(DataAdapter):
             return False
     
     def get_content_type(self) -> str:
-        """Get MIME content type."""        return "application/parquet"
+        """Get MIME content type."""
+        return "application/parquet"
 
 class AvroAdapter(DataAdapter):
-    """Enterprise Avro adapter with schema support."""    
+    """Enterprise Avro adapter with schema support."""
+    
     def __init__(self, config: Optional[DataFormatConfig] = None, schema: Optional[Dict] = None):
-        """Initialize Avro adapter."""        super().__init__(config)
+        """Initialize Avro adapter."""
+        super().__init__(config)
         self.supported_formats = ['avro']
         self.schema = schema
         
@@ -1281,7 +1371,8 @@ class AvroAdapter(DataAdapter):
             raise ImportError("fastavro package required for Avro support")
     
     async def serialize(self, data: Any, schema: Optional[Dict] = None) -> bytes:
-        """Serialize data to Avro format."""        try:
+        """Serialize data to Avro format."""
+        try:
             start_time = time.time()
             
             schema_to_use = schema or self.schema
@@ -1317,7 +1408,8 @@ class AvroAdapter(DataAdapter):
             raise
     
     async def deserialize(self, data: Union[str, bytes, BinaryIO]) -> List[Dict]:
-        """Deserialize Avro data."""        try:
+        """Deserialize Avro data."""
+        try:
             start_time = time.time()
             
             if isinstance(data, str):
@@ -1354,7 +1446,8 @@ class AvroAdapter(DataAdapter):
             raise
     
     def validate_format(self, data: Union[str, bytes]) -> bool:
-        """Validate Avro format."""        try:
+        """Validate Avro format."""
+        try:
             if isinstance(data, str):
                 # Assume it's a file path
                 with open(data, 'rb') as f:
@@ -1369,10 +1462,12 @@ class AvroAdapter(DataAdapter):
             return False
     
     def get_content_type(self) -> str:
-        """Get MIME content type."""        return "application/avro"
+        """Get MIME content type."""
+        return "application/avro"
 
 class DataAdapterFactory:
-    """Factory for creating data adapters based on format."""    
+    """Factory for creating data adapters based on format."""
+    
     _adapters = {
         'json': JSONAdapter,
         'xml': XMLAdapter,
@@ -1394,7 +1489,8 @@ class DataAdapterFactory:
         config: Optional[DataFormatConfig] = None,
         **kwargs
     ) -> DataAdapter:
-        """Create adapter for specified format."""        format_type = format_type.lower()
+        """Create adapter for specified format."""
+        format_type = format_type.lower()
         
         if format_type not in cls._adapters:
             raise ValueError(f"Unsupported format: {format_type}")
@@ -1407,7 +1503,8 @@ class DataAdapterFactory:
     
     @classmethod
     def get_supported_formats(cls) -> List[str]:
-        """Get list of supported formats."""        return [fmt for fmt, adapter in cls._adapters.items() if adapter is not None]
+        """Get list of supported formats."""
+        return [fmt for fmt, adapter in cls._adapters.items() if adapter is not None]
 
 # Export all adapters
 __all__ = [

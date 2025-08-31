@@ -24,7 +24,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import time
@@ -55,7 +56,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class APIResponse:
-    """Standardized API response structure"""    success: bool
+    """Standardized API response structure"""
+    success: bool
     data: Dict[str, Any]
     status_code: int
     rate_limit_remaining: Optional[int] = None
@@ -65,9 +67,11 @@ class APIResponse:
 
 
 class PlatformAPIIntegrator:
-    """    Ultra-advanced platform API integration engine supporting all major content
+    """
+    Ultra-advanced platform API integration engine supporting all major content
     platforms with intelligent rate limiting, error recovery, and data synchronization
-    """    
+    """
+    
     def __init__(self):
         self.security_manager = SecurityManager()
         self.session_pools = {}
@@ -78,7 +82,8 @@ class PlatformAPIIntegrator:
         self._initialize_platform_configs()
     
     def _initialize_platform_configs(self):
-        """Initialize platform-specific API configurations"""        self.platform_configs = {
+        """Initialize platform-specific API configurations"""
+        self.platform_configs = {
             Platform.SPOTIFY: {
                 "base_url": "https://api.spotify.com/v1",
                 "auth_url": "https://accounts.spotify.com/api/token",
@@ -123,9 +128,11 @@ class PlatformAPIIntegrator:
         sync_types: List[str] = None,
         force_full_sync: bool = False
     ) -> Dict[str, Any]:
-        """        Synchronize data from a platform connection with comprehensive
+        """
+        Synchronize data from a platform connection with comprehensive
         error handling and intelligent retry logic
-        """        try:
+        """
+        try:
             # Get platform connection
             connection = await self._get_platform_connection(session, connection_id)
             if not connection:
@@ -215,7 +222,8 @@ class PlatformAPIIntegrator:
         api_client: Any,
         force_full_sync: bool
     ) -> Dict[str, int]:
-        """Sync analytics data from platform"""        
+        """Sync analytics data from platform"""
+        
         results = {"processed": 0, "created": 0, "updated": 0, "errors": 0}
         
         # Determine date range for sync
@@ -291,7 +299,8 @@ class PlatformAPIIntegrator:
         api_client: Any,
         force_full_sync: bool
     ) -> Dict[str, int]:
-        """Sync revenue data from platform"""        
+        """Sync revenue data from platform"""
+        
         results = {"processed": 0, "created": 0, "updated": 0, "errors": 0}
         
         # Determine date range for sync
@@ -362,7 +371,8 @@ class PlatformAPIIntegrator:
         start_date: datetime,
         end_date: datetime
     ) -> List[Dict[str, Any]]:
-        """Fetch analytics data from Spotify API"""        
+        """Fetch analytics data from Spotify API"""
+        
         analytics_data = []
         
         try:
@@ -428,7 +438,8 @@ class PlatformAPIIntegrator:
         start_date: datetime,
         end_date: datetime
     ) -> List[Dict[str, Any]]:
-        """Fetch analytics data from YouTube Analytics API"""        
+        """Fetch analytics data from YouTube Analytics API"""
+        
         analytics_data = []
         
         try:
@@ -476,7 +487,8 @@ class PlatformAPIIntegrator:
         start_date: datetime,
         end_date: datetime
     ) -> List[Dict[str, Any]]:
-        """Fetch analytics data from Instagram Basic Display API"""        
+        """Fetch analytics data from Instagram Basic Display API"""
+        
         analytics_data = []
         
         try:
@@ -521,7 +533,8 @@ class PlatformAPIIntegrator:
         start_date: datetime,
         end_date: datetime
     ) -> List[Dict[str, Any]]:
-        """Fetch analytics data from TikTok API"""        
+        """Fetch analytics data from TikTok API"""
+        
         analytics_data = []
         
         try:
@@ -570,7 +583,8 @@ class PlatformAPIIntegrator:
         data: Dict[str, Any] = None,
         headers: Dict[str, str] = None
     ) -> APIResponse:
-        """Make API request with rate limiting and error handling"""        
+        """Make API request with rate limiting and error handling"""
+        
         try:
             # Implement rate limiting
             await self._check_rate_limit(api_client.platform)
@@ -606,7 +620,8 @@ class PlatformAPIIntegrator:
             )
     
     async def _check_rate_limit(self, platform: Platform):
-        """Check and enforce rate limits for platform API"""        
+        """Check and enforce rate limits for platform API"""
+        
         config = self.platform_configs.get(platform)
         if not config:
             return
@@ -647,7 +662,8 @@ class PlatformAPIIntegrator:
         session: AsyncSession,
         connection_id: str
     ) -> Optional[PlatformConnection]:
-        """Get platform connection by ID"""        
+        """Get platform connection by ID"""
+        
         stmt = select(PlatformConnection).where(
             PlatformConnection.id == uuid.UUID(connection_id)
         )
@@ -656,7 +672,8 @@ class PlatformAPIIntegrator:
         return result.scalar_one_or_none()
     
     async def _get_platform_client(self, connection: PlatformConnection) -> Any:
-        """Get authenticated API client for platform"""        
+        """Get authenticated API client for platform"""
+        
         # Decrypt access token
         access_token = self.security_manager.decrypt(connection.access_token)
         
@@ -678,7 +695,8 @@ class PlatformAPIIntegrator:
         return None
     
     def _calculate_next_sync(self, frequency: DataSyncFrequency) -> datetime:
-        """Calculate next synchronization time based on frequency"""        
+        """Calculate next synchronization time based on frequency"""
+        
         now = datetime.now(timezone.utc)
         
         if frequency == DataSyncFrequency.HOURLY:
@@ -693,7 +711,8 @@ class PlatformAPIIntegrator:
             return now + timedelta(days=1)  # Default to daily
     
     def _map_analytics_data(self, raw_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Map raw API data to standardized analytics format"""        
+        """Map raw API data to standardized analytics format"""
+        
         mapped_data = {
             "metric_type": raw_data.get("metric_type", "unknown"),
             "content_id": raw_data.get("content_id"),
@@ -711,7 +730,8 @@ class PlatformAPIIntegrator:
         return {k: v for k, v in mapped_data.items() if v is not None}
     
     def _map_revenue_data(self, raw_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Map raw API data to standardized revenue format"""        
+        """Map raw API data to standardized revenue format"""
+        
         mapped_data = {
             "revenue_stream": raw_data.get("revenue_stream", "unknown"),
             "content_id": raw_data.get("content_id"),
@@ -733,7 +753,8 @@ class PlatformAPIIntegrator:
         platforms: Optional[List[Platform]] = None,
         sync_types: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """Batch synchronization across multiple platforms"""        
+        """Batch synchronization across multiple platforms"""
+        
         # Get connections to sync
         conditions = [PlatformConnection.status == ConnectionStatus.CONNECTED]
         
@@ -796,7 +817,8 @@ class PlatformAPIIntegrator:
         session: AsyncSession,
         platform: Optional[Platform] = None
     ) -> Dict[str, Any]:
-        """Get health status of platform integrations"""        
+        """Get health status of platform integrations"""
+        
         conditions = []
         if platform:
             conditions.append(PlatformConnection.platform == platform)
@@ -854,7 +876,8 @@ async def refresh_platform_token(
     session: AsyncSession,
     connection_id: str
 ) -> bool:
-    """Refresh expired platform authentication token"""    
+    """Refresh expired platform authentication token"""
+    
     try:
         connection = await session.get(PlatformConnection, uuid.UUID(connection_id))
         if not connection:
@@ -879,7 +902,8 @@ async def validate_platform_credentials(
     platform: Platform,
     credentials: Dict[str, str]
 ) -> bool:
-    """Validate platform API credentials"""    
+    """Validate platform API credentials"""
+    
     try:
         # Platform-specific credential validation
         if platform == Platform.SPOTIFY:

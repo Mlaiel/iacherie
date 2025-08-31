@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -81,15 +82,18 @@ except ImportError as e:
         pass
 
 class TestVisualEmbeddingModel(unittest.TestCase):
-    """Test suite for VisualEmbeddingModel class"""    
+    """Test suite for VisualEmbeddingModel class"""
+    
     def setUp(self):
-        """Set up test fixtures"""        self.embedding_model = VisualEmbeddingModel()
+        """Set up test fixtures"""
+        self.embedding_model = VisualEmbeddingModel()
         self.test_image = self._create_test_image()
         self.test_images = [self._create_test_image() for _ in range(5)]
         self.embedding_config = self._create_embedding_config()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for embedding generation"""        image = np.zeros((224, 224, 3), dtype=np.uint8)
+        """Create a test image for embedding generation"""
+        image = np.zeros((224, 224, 3), dtype=np.uint8)
         
         # Add distinctive visual features
         cv2.rectangle(image, (50, 50), (174, 174), (100, 150, 200), -1)
@@ -107,7 +111,8 @@ class TestVisualEmbeddingModel(unittest.TestCase):
         return image
     
     def _create_embedding_config(self):
-        """Create embedding configuration for testing"""        try:
+        """Create embedding configuration for testing"""
+        try:
             return EmbeddingConfig(
                 model_type='resnet50',
                 embedding_dim=2048,
@@ -125,10 +130,12 @@ class TestVisualEmbeddingModel(unittest.TestCase):
             }
     
     def test_embedding_model_initialization(self):
-        """Test VisualEmbeddingModel initialization"""        self.assertIsInstance(self.embedding_model, VisualEmbeddingModel)
+        """Test VisualEmbeddingModel initialization"""
+        self.assertIsInstance(self.embedding_model, VisualEmbeddingModel)
     
     def test_single_image_embedding(self):
-        """Test single image embedding generation"""        try:
+        """Test single image embedding generation"""
+        try:
             embedding = self.embedding_model.generate_embedding(
                 image=self.test_image,
                 config=self.embedding_config
@@ -154,7 +161,8 @@ class TestVisualEmbeddingModel(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_batch_embedding_generation(self):
-        """Test batch embedding generation"""        try:
+        """Test batch embedding generation"""
+        try:
             embeddings = self.embedding_model.generate_batch_embeddings(
                 images=self.test_images,
                 config=self.embedding_config,
@@ -175,7 +183,8 @@ class TestVisualEmbeddingModel(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_feature_extraction_layers(self):
-        """Test feature extraction from different layers"""        try:
+        """Test feature extraction from different layers"""
+        try:
             layer_features = self.embedding_model.extract_layer_features(
                 image=self.test_image,
                 layer_names=['conv1', 'conv2', 'conv3', 'fc']
@@ -192,7 +201,8 @@ class TestVisualEmbeddingModel(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_multi_scale_embeddings(self):
-        """Test multi-scale embedding generation"""        try:
+        """Test multi-scale embedding generation"""
+        try:
             multi_scale_embeddings = self.embedding_model.generate_multi_scale_embeddings(
                 image=self.test_image,
                 scales=[1.0, 0.75, 0.5, 0.25],
@@ -213,7 +223,8 @@ class TestVisualEmbeddingModel(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_embedding_consistency(self):
-        """Test embedding consistency for same image"""        try:
+        """Test embedding consistency for same image"""
+        try:
             # Generate embedding twice for same image
             embedding1 = self.embedding_model.generate_embedding(
                 image=self.test_image,
@@ -234,7 +245,8 @@ class TestVisualEmbeddingModel(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_embedding_robustness(self):
-        """Test embedding robustness to small image changes"""        try:
+        """Test embedding robustness to small image changes"""
+        try:
             # Original embedding
             original_embedding = self.embedding_model.generate_embedding(
                 image=self.test_image,
@@ -261,14 +273,17 @@ class TestVisualEmbeddingModel(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
 
 class TestSimilarityMatcher(unittest.TestCase):
-    """Test suite for SimilarityMatcher class"""    
+    """Test suite for SimilarityMatcher class"""
+    
     def setUp(self):
-        """Set up test fixtures"""        self.matcher = SimilarityMatcher()
+        """Set up test fixtures"""
+        self.matcher = SimilarityMatcher()
         self.test_embeddings = self._create_test_embeddings()
         self.query_embedding = self._create_query_embedding()
     
     def _create_test_embeddings(self) -> List[np.ndarray]:
-        """Create test embeddings for similarity matching"""        embeddings = []
+        """Create test embeddings for similarity matching"""
+        embeddings = []
         
         # Create similar embeddings (cluster 1)
         base_embedding1 = np.random.randn(512).astype(np.float32)
@@ -293,16 +308,19 @@ class TestSimilarityMatcher(unittest.TestCase):
         return embeddings
     
     def _create_query_embedding(self) -> np.ndarray:
-        """Create query embedding similar to first cluster"""        base = self.test_embeddings[0]  # Use first embedding as base
+        """Create query embedding similar to first cluster"""
+        base = self.test_embeddings[0]  # Use first embedding as base
         noise = np.random.normal(0, 0.05, base.shape).astype(np.float32)
         query = base + noise
         return query / np.linalg.norm(query)
     
     def test_matcher_initialization(self):
-        """Test SimilarityMatcher initialization"""        self.assertIsInstance(self.matcher, SimilarityMatcher)
+        """Test SimilarityMatcher initialization"""
+        self.assertIsInstance(self.matcher, SimilarityMatcher)
     
     def test_cosine_similarity_calculation(self):
-        """Test cosine similarity calculation"""        try:
+        """Test cosine similarity calculation"""
+        try:
             similarities = self.matcher.calculate_cosine_similarity(
                 query_embedding=self.query_embedding,
                 database_embeddings=self.test_embeddings
@@ -331,7 +349,8 @@ class TestSimilarityMatcher(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_euclidean_distance_calculation(self):
-        """Test Euclidean distance calculation"""        try:
+        """Test Euclidean distance calculation"""
+        try:
             distances = self.matcher.calculate_euclidean_distance(
                 query_embedding=self.query_embedding,
                 database_embeddings=self.test_embeddings
@@ -353,7 +372,8 @@ class TestSimilarityMatcher(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_top_k_similarity_search(self):
-        """Test top-k similarity search"""        try:
+        """Test top-k similarity search"""
+        try:
             top_matches = self.matcher.find_top_k_similar(
                 query_embedding=self.query_embedding,
                 database_embeddings=self.test_embeddings,
@@ -379,7 +399,8 @@ class TestSimilarityMatcher(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_threshold_based_matching(self):
-        """Test threshold-based similarity matching"""        try:
+        """Test threshold-based similarity matching"""
+        try:
             threshold_matches = self.matcher.find_matches_above_threshold(
                 query_embedding=self.query_embedding,
                 database_embeddings=self.test_embeddings,
@@ -400,7 +421,8 @@ class TestSimilarityMatcher(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_batch_similarity_matching(self):
-        """Test batch similarity matching"""        try:
+        """Test batch similarity matching"""
+        try:
             # Create multiple queries
             query_embeddings = [self.query_embedding, self.test_embeddings[0], self.test_embeddings[3]]
             
@@ -418,7 +440,8 @@ class TestSimilarityMatcher(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_similarity_matrix_computation(self):
-        """Test similarity matrix computation"""        try:
+        """Test similarity matrix computation"""
+        try:
             similarity_matrix = self.matcher.compute_similarity_matrix(
                 embeddings=self.test_embeddings,
                 metric='cosine'
@@ -444,14 +467,17 @@ class TestSimilarityMatcher(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
 
 class TestContentMatcher(unittest.TestCase):
-    """Test suite for ContentMatcher class"""    
+    """Test suite for ContentMatcher class"""
+    
     def setUp(self):
-        """Set up test fixtures"""        self.content_matcher = ContentMatcher()
+        """Set up test fixtures"""
+        self.content_matcher = ContentMatcher()
         self.test_images = self._create_test_images()
         self.content_database = self._create_content_database()
     
     def _create_test_images(self) -> List[np.ndarray]:
-        """Create test images for content matching"""        images = []
+        """Create test images for content matching"""
+        images = []
         
         # Create images with different content types
         # Type 1: Geometric shapes
@@ -475,7 +501,8 @@ class TestContentMatcher(unittest.TestCase):
         return images
     
     def _create_content_database(self) -> Dict[str, Any]:
-        """Create mock content database"""        return {
+        """Create mock content database"""
+        return {
             'contents': [
                 {
                     'id': f'content_{i}',
@@ -488,10 +515,12 @@ class TestContentMatcher(unittest.TestCase):
         }
     
     def test_content_matcher_initialization(self):
-        """Test ContentMatcher initialization"""        self.assertIsInstance(self.content_matcher, ContentMatcher)
+        """Test ContentMatcher initialization"""
+        self.assertIsInstance(self.content_matcher, ContentMatcher)
     
     def test_content_type_classification(self):
-        """Test content type classification"""        try:
+        """Test content type classification"""
+        try:
             for i, image in enumerate(self.test_images):
                 content_type = self.content_matcher.classify_content_type(
                     image=image,
@@ -511,7 +540,8 @@ class TestContentMatcher(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_duplicate_content_detection(self):
-        """Test duplicate content detection"""        try:
+        """Test duplicate content detection"""
+        try:
             # Create a duplicate of the first image with slight modifications
             duplicate_image = self.test_images[0].copy()
             noise = np.random.normal(0, 5, duplicate_image.shape).astype(np.int16)
@@ -535,7 +565,8 @@ class TestContentMatcher(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_similar_content_retrieval(self):
-        """Test similar content retrieval"""        try:
+        """Test similar content retrieval"""
+        try:
             query_image = self.test_images[0]  # Use first geometric shape
             
             similar_content = self.content_matcher.find_similar_content(
@@ -555,7 +586,8 @@ class TestContentMatcher(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_content_clustering(self):
-        """Test content clustering"""        try:
+        """Test content clustering"""
+        try:
             clustering_result = self.content_matcher.cluster_content(
                 images=self.test_images,
                 num_clusters=3,
@@ -576,7 +608,8 @@ class TestContentMatcher(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_content_recommendation(self):
-        """Test content recommendation"""        try:
+        """Test content recommendation"""
+        try:
             query_image = self.test_images[0]
             
             recommendations = self.content_matcher.recommend_content(
@@ -596,7 +629,8 @@ class TestContentMatcher(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_content_search_with_filters(self):
-        """Test content search with filters"""        try:
+        """Test content search with filters"""
+        try:
             search_filters = {
                 'content_type': 'geometric',
                 'min_similarity': 0.5,
@@ -619,14 +653,17 @@ class TestContentMatcher(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
 
 class TestEmbeddingDatabase(unittest.TestCase):
-    """Test suite for EmbeddingDatabase class"""    
+    """Test suite for EmbeddingDatabase class"""
+    
     def setUp(self):
-        """Set up test fixtures"""        self.db = EmbeddingDatabase()
+        """Set up test fixtures"""
+        self.db = EmbeddingDatabase()
         self.test_embeddings = self._create_test_embeddings()
         self.test_metadata = self._create_test_metadata()
     
     def _create_test_embeddings(self) -> List[np.ndarray]:
-        """Create test embeddings for database operations"""        embeddings = []
+        """Create test embeddings for database operations"""
+        embeddings = []
         for i in range(10):
             embedding = np.random.randn(512).astype(np.float32)
             embedding = embedding / np.linalg.norm(embedding)
@@ -634,7 +671,8 @@ class TestEmbeddingDatabase(unittest.TestCase):
         return embeddings
     
     def _create_test_metadata(self) -> List[Dict[str, Any]]:
-        """Create test metadata for embeddings"""        metadata = []
+        """Create test metadata for embeddings"""
+        metadata = []
         for i in range(10):
             metadata.append({
                 'id': f'embedding_{i}',
@@ -645,10 +683,12 @@ class TestEmbeddingDatabase(unittest.TestCase):
         return metadata
     
     def test_database_initialization(self):
-        """Test EmbeddingDatabase initialization"""        self.assertIsInstance(self.db, EmbeddingDatabase)
+        """Test EmbeddingDatabase initialization"""
+        self.assertIsInstance(self.db, EmbeddingDatabase)
     
     def test_embedding_insertion(self):
-        """Test embedding insertion into database"""        try:
+        """Test embedding insertion into database"""
+        try:
             for i, (embedding, metadata) in enumerate(zip(self.test_embeddings, self.test_metadata)):
                 result = self.db.insert_embedding(
                     embedding=embedding,
@@ -667,7 +707,8 @@ class TestEmbeddingDatabase(unittest.TestCase):
             self.skipTest(f"Skipping due to import or database error: {e}")
     
     def test_embedding_retrieval(self):
-        """Test embedding retrieval from database"""        try:
+        """Test embedding retrieval from database"""
+        try:
             # First insert some embeddings
             embedding_ids = []
             for embedding, metadata in zip(self.test_embeddings[:3], self.test_metadata[:3]):
@@ -691,7 +732,8 @@ class TestEmbeddingDatabase(unittest.TestCase):
             self.skipTest(f"Skipping due to import or database error: {e}")
     
     def test_similarity_search_in_database(self):
-        """Test similarity search within database"""        try:
+        """Test similarity search within database"""
+        try:
             # Insert embeddings into database
             for embedding, metadata in zip(self.test_embeddings, self.test_metadata):
                 self.db.insert_embedding(embedding, metadata)
@@ -714,7 +756,8 @@ class TestEmbeddingDatabase(unittest.TestCase):
             self.skipTest(f"Skipping due to import or database error: {e}")
     
     def test_batch_operations(self):
-        """Test batch database operations"""        try:
+        """Test batch database operations"""
+        try:
             # Batch insert
             batch_result = self.db.batch_insert_embeddings(
                 embeddings=self.test_embeddings,
@@ -737,7 +780,8 @@ class TestEmbeddingDatabase(unittest.TestCase):
             self.skipTest(f"Skipping due to import or database error: {e}")
     
     def test_database_indexing(self):
-        """Test database indexing for faster search"""        try:
+        """Test database indexing for faster search"""
+        try:
             # Insert embeddings
             for embedding, metadata in zip(self.test_embeddings, self.test_metadata):
                 self.db.insert_embedding(embedding, metadata)
@@ -766,7 +810,8 @@ class TestEmbeddingDatabase(unittest.TestCase):
             self.skipTest(f"Skipping due to import or indexing error: {e}")
     
     def test_database_persistence(self):
-        """Test database persistence and loading"""        try:
+        """Test database persistence and loading"""
+        try:
             # Insert some data
             for embedding, metadata in zip(self.test_embeddings[:3], self.test_metadata[:3]):
                 self.db.insert_embedding(embedding, metadata)
@@ -795,13 +840,16 @@ class TestEmbeddingDatabase(unittest.TestCase):
                 shutil.rmtree(temp_dir, ignore_errors=True)
 
 class TestClusteringEngine(unittest.TestCase):
-    """Test suite for ClusteringEngine class"""    
+    """Test suite for ClusteringEngine class"""
+    
     def setUp(self):
-        """Set up test fixtures"""        self.clustering_engine = ClusteringEngine()
+        """Set up test fixtures"""
+        self.clustering_engine = ClusteringEngine()
         self.test_embeddings = self._create_clusterable_embeddings()
     
     def _create_clusterable_embeddings(self) -> np.ndarray:
-        """Create embeddings with clear cluster structure"""        embeddings = []
+        """Create embeddings with clear cluster structure"""
+        embeddings = []
         
         # Cluster 1: centered around (1, 1, ...)
         center1 = np.ones(100)
@@ -827,10 +875,12 @@ class TestClusteringEngine(unittest.TestCase):
         return np.array(embeddings, dtype=np.float32)
     
     def test_clustering_engine_initialization(self):
-        """Test ClusteringEngine initialization"""        self.assertIsInstance(self.clustering_engine, ClusteringEngine)
+        """Test ClusteringEngine initialization"""
+        self.assertIsInstance(self.clustering_engine, ClusteringEngine)
     
     def test_kmeans_clustering(self):
-        """Test K-means clustering"""        try:
+        """Test K-means clustering"""
+        try:
             clustering_result = self.clustering_engine.kmeans_clustering(
                 embeddings=self.test_embeddings,
                 num_clusters=3,
@@ -855,7 +905,8 @@ class TestClusteringEngine(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_hierarchical_clustering(self):
-        """Test hierarchical clustering"""        try:
+        """Test hierarchical clustering"""
+        try:
             clustering_result = self.clustering_engine.hierarchical_clustering(
                 embeddings=self.test_embeddings,
                 num_clusters=3,
@@ -874,7 +925,8 @@ class TestClusteringEngine(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_dbscan_clustering(self):
-        """Test DBSCAN clustering"""        try:
+        """Test DBSCAN clustering"""
+        try:
             clustering_result = self.clustering_engine.dbscan_clustering(
                 embeddings=self.test_embeddings,
                 eps=1.0,
@@ -893,7 +945,8 @@ class TestClusteringEngine(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_optimal_cluster_number(self):
-        """Test optimal cluster number detection"""        try:
+        """Test optimal cluster number detection"""
+        try:
             optimal_k = self.clustering_engine.find_optimal_clusters(
                 embeddings=self.test_embeddings,
                 max_clusters=10,
@@ -912,7 +965,8 @@ class TestClusteringEngine(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_cluster_analysis(self):
-        """Test cluster analysis and metrics"""        try:
+        """Test cluster analysis and metrics"""
+        try:
             # First perform clustering
             clustering_result = self.clustering_engine.kmeans_clustering(
                 embeddings=self.test_embeddings,
@@ -939,9 +993,11 @@ class TestClusteringEngine(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
 
 class TestEmbeddingsIntegration(unittest.TestCase):
-    """Test suite for embeddings integration and workflows"""    
+    """Test suite for embeddings integration and workflows"""
+    
     def setUp(self):
-        """Set up integration test fixtures"""        self.embedding_model = VisualEmbeddingModel()
+        """Set up integration test fixtures"""
+        self.embedding_model = VisualEmbeddingModel()
         self.similarity_matcher = SimilarityMatcher()
         self.content_matcher = ContentMatcher()
         self.database = EmbeddingDatabase()
@@ -950,7 +1006,8 @@ class TestEmbeddingsIntegration(unittest.TestCase):
         self.test_images = self._create_diverse_test_images()
     
     def _create_diverse_test_images(self) -> List[np.ndarray]:
-        """Create diverse test images for integration testing"""        images = []
+        """Create diverse test images for integration testing"""
+        images = []
         
         # Category 1: Geometric shapes
         for i in range(5):
@@ -974,7 +1031,8 @@ class TestEmbeddingsIntegration(unittest.TestCase):
         return images
     
     def test_end_to_end_similarity_pipeline(self):
-        """Test end-to-end similarity search pipeline"""        try:
+        """Test end-to-end similarity search pipeline"""
+        try:
             # Step 1: Generate embeddings
             embeddings = []
             for image in self.test_images:
@@ -1005,7 +1063,8 @@ class TestEmbeddingsIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_content_clustering_workflow(self):
-        """Test content clustering workflow"""        try:
+        """Test content clustering workflow"""
+        try:
             # Generate embeddings for all images
             embeddings = []
             for image in self.test_images:
@@ -1035,7 +1094,8 @@ class TestEmbeddingsIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_duplicate_detection_workflow(self):
-        """Test duplicate detection workflow"""        try:
+        """Test duplicate detection workflow"""
+        try:
             # Create a duplicate with slight modifications
             original_image = self.test_images[0]
             duplicate_image = original_image.copy()
@@ -1063,7 +1123,8 @@ class TestEmbeddingsIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_performance_benchmarking(self):
-        """Test performance of embeddings system"""        try:
+        """Test performance of embeddings system"""
+        try:
             start_time = time.time()
             
             # Generate embeddings for all test images
@@ -1096,7 +1157,8 @@ class TestEmbeddingsIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_scalability_simulation(self):
-        """Test system scalability with larger datasets"""        try:
+        """Test system scalability with larger datasets"""
+        try:
             # Create larger dataset simulation
             large_embeddings = []
             for _ in range(100):  # Simulate 100 embeddings

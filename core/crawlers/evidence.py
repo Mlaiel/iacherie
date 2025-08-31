@@ -10,7 +10,8 @@ Unauthorized use, copying or distribution prohibited.
 Professional evidence collection system for content violation cases.
 Captures screenshots, metadata, timestamps, and legal documentation
 for copyright protection and legal proceedings.
-"""import os
+"""
+import os
 import logging
 import hashlib
 import json
@@ -33,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class EvidencePackage:
-    """Complete evidence package for a violation case."""    
+    """Complete evidence package for a violation case."""
+    
     violation_id: str
     detected_url: str
     platform: str
@@ -57,16 +59,19 @@ class EvidencePackage:
     platform_specific_data: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Initialize evidence package with legal timestamp and hash."""        self.legal_timestamp = self.collection_timestamp.isoformat() + "Z"
+        """Initialize evidence package with legal timestamp and hash."""
+        self.legal_timestamp = self.collection_timestamp.isoformat() + "Z"
         self.evidence_hash = self._calculate_evidence_hash()
         self._add_chain_of_custody_entry("evidence_created", "system")
     
     def _calculate_evidence_hash(self) -> str:
-        """Calculate cryptographic hash for evidence integrity."""        hash_input = f"{self.violation_id}{self.detected_url}{self.legal_timestamp}"
+        """Calculate cryptographic hash for evidence integrity."""
+        hash_input = f"{self.violation_id}{self.detected_url}{self.legal_timestamp}"
         return hashlib.sha256(hash_input.encode()).hexdigest()
     
     def _add_chain_of_custody_entry(self, action: str, actor: str, details: Optional[str] = None):
-        """Add entry to chain of custody log."""        entry = {
+        """Add entry to chain of custody log."""
+        entry = {
             "timestamp": datetime.utcnow().isoformat() + "Z",
             "action": action,
             "actor": actor,
@@ -76,11 +81,13 @@ class EvidencePackage:
         self.chain_of_custody.append(entry)
 
 class EvidenceCollector:
-    """    Professional evidence collection system for copyright violations.
+    """
+    Professional evidence collection system for copyright violations.
     
     Captures comprehensive digital evidence including screenshots,
     metadata, source code, and legal documentation for violation cases.
-    """    
+    """
+    
     def __init__(self, storage_path: str = "/data/evidence"):
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
@@ -96,7 +103,8 @@ class EvidenceCollector:
         logger.info("EvidenceCollector initialized with storage path: %s", self.storage_path)
     
     def _setup_chrome_options(self) -> Options:
-        """Configure Chrome WebDriver for evidence collection."""        
+        """Configure Chrome WebDriver for evidence collection."""
+        
         options = Options()
         options.add_argument("--headless")
         options.add_argument("--no-sandbox")
@@ -115,14 +123,16 @@ class EvidenceCollector:
         return options
     
     async def collect_evidence(self, violation_data: Dict[str, Any]) -> EvidencePackage:
-        """        Collect comprehensive evidence for a detected violation.
+        """
+        Collect comprehensive evidence for a detected violation.
         
         Args:
             violation_data: Violation detection results
             
         Returns:
             EvidencePackage with all collected evidence
-        """        
+        """
+        
         violation_id = self._generate_violation_id(violation_data)
         url = violation_data.get('url', '')
         platform = violation_data.get('platform', 'unknown')
@@ -169,7 +179,8 @@ class EvidenceCollector:
             raise
     
     async def _collect_visual_evidence(self, evidence: EvidencePackage, violation_dir: Path):
-        """Collect visual evidence including screenshots and video frames."""        
+        """Collect visual evidence including screenshots and video frames."""
+        
         try:
             driver = None
             
@@ -213,7 +224,8 @@ class EvidenceCollector:
             evidence._add_chain_of_custody_entry("visual_evidence_error", "evidence_collector", str(e))
     
     async def _capture_platform_specific_screenshots(self, driver, evidence: EvidencePackage, violation_dir: Path):
-        """Capture platform-specific content areas."""        
+        """Capture platform-specific content areas."""
+        
         platform = evidence.platform.lower()
         
         try:
@@ -230,7 +242,8 @@ class EvidenceCollector:
             logger.error("Error capturing platform-specific screenshots: %s", str(e))
     
     async def _capture_youtube_screenshots(self, driver, evidence: EvidencePackage, violation_dir: Path):
-        """Capture YouTube-specific evidence."""        
+        """Capture YouTube-specific evidence."""
+        
         try:
             # Video player area
             video_element = driver.find_element(By.ID, "movie_player")
@@ -257,7 +270,8 @@ class EvidenceCollector:
             logger.debug("Could not capture all YouTube elements: %s", str(e))
     
     async def _capture_tiktok_screenshots(self, driver, evidence: EvidencePackage, violation_dir: Path):
-        """Capture TikTok-specific evidence."""        
+        """Capture TikTok-specific evidence."""
+        
         try:
             # Video container
             video_container = driver.find_element(By.CSS_SELECTOR, "[data-e2e='browse-video']")
@@ -277,7 +291,8 @@ class EvidenceCollector:
             logger.debug("Could not capture all TikTok elements: %s", str(e))
     
     async def _capture_instagram_screenshots(self, driver, evidence: EvidencePackage, violation_dir: Path):
-        """Capture Instagram-specific evidence."""        
+        """Capture Instagram-specific evidence."""
+        
         try:
             # Post container
             post_element = driver.find_element(By.CSS_SELECTOR, "article")
@@ -290,7 +305,8 @@ class EvidenceCollector:
             logger.debug("Could not capture all Instagram elements: %s", str(e))
     
     async def _capture_twitter_screenshots(self, driver, evidence: EvidencePackage, violation_dir: Path):
-        """Capture Twitter-specific evidence."""        
+        """Capture Twitter-specific evidence."""
+        
         try:
             # Tweet container
             tweet_element = driver.find_element(By.CSS_SELECTOR, "[data-testid='tweet']")
@@ -303,7 +319,8 @@ class EvidenceCollector:
             logger.debug("Could not capture all Twitter elements: %s", str(e))
     
     async def _capture_video_frames(self, driver, evidence: EvidencePackage, violation_dir: Path):
-        """Capture multiple frames from video content for evidence."""        
+        """Capture multiple frames from video content for evidence."""
+        
         try:
             # This would be implemented with JavaScript to capture video frames
             # For now, we'll capture screenshots at different timestamps
@@ -312,13 +329,15 @@ class EvidenceCollector:
             
             for i, time_fraction in enumerate(frame_times):
                 # Use JavaScript to seek to specific time and capture
-                script = f"""                var video = document.querySelector('video');
+                script = f"""
+                var video = document.querySelector('video');
                 if (video) {{
                     video.currentTime = video.duration * {time_fraction};
                     return true;
                 }}
                 return false;
-                """                
+                """
+                
                 if driver.execute_script(script):
                     await asyncio.sleep(1)  # Wait for seek to complete
                     frame_path = violation_dir / f"video_frame_{i}_{int(time_fraction*100)}pct.png"
@@ -329,7 +348,8 @@ class EvidenceCollector:
             logger.error("Error capturing video frames: %s", str(e))
     
     async def _collect_metadata_evidence(self, evidence: EvidencePackage, violation_dir: Path):
-        """Collect metadata and technical evidence."""        
+        """Collect metadata and technical evidence."""
+        
         try:
             metadata = {}
             
@@ -367,7 +387,8 @@ class EvidenceCollector:
             evidence._add_chain_of_custody_entry("metadata_evidence_error", "evidence_collector", str(e))
     
     async def _collect_source_evidence(self, evidence: EvidencePackage, violation_dir: Path):
-        """Collect page source and technical documentation."""        
+        """Collect page source and technical documentation."""
+        
         try:
             # Download page source
             async with aiohttp.ClientSession() as session:
@@ -388,7 +409,8 @@ class EvidenceCollector:
             evidence._add_chain_of_custody_entry("source_evidence_error", "evidence_collector", str(e))
     
     async def _collect_platform_specific_evidence(self, evidence: EvidencePackage, violation_dir: Path):
-        """Collect platform-specific metadata and API data."""        
+        """Collect platform-specific metadata and API data."""
+        
         try:
             platform_data = {}
             
@@ -417,20 +439,25 @@ class EvidenceCollector:
             evidence._add_chain_of_custody_entry("platform_evidence_error", "evidence_collector", str(e))
     
     async def _collect_youtube_metadata(self, url: str) -> Dict[str, Any]:
-        """Collect YouTube-specific metadata."""        # This would use YouTube API to get video metadata
+        """Collect YouTube-specific metadata."""
+        # This would use YouTube API to get video metadata
         return {"platform": "youtube", "url": url, "api_data": "placeholder"}
     
     async def _collect_tiktok_metadata(self, url: str) -> Dict[str, Any]:
-        """Collect TikTok-specific metadata."""        return {"platform": "tiktok", "url": url, "api_data": "placeholder"}
+        """Collect TikTok-specific metadata."""
+        return {"platform": "tiktok", "url": url, "api_data": "placeholder"}
     
     async def _collect_instagram_metadata(self, url: str) -> Dict[str, Any]:
-        """Collect Instagram-specific metadata."""        return {"platform": "instagram", "url": url, "api_data": "placeholder"}
+        """Collect Instagram-specific metadata."""
+        return {"platform": "instagram", "url": url, "api_data": "placeholder"}
     
     async def _collect_twitter_metadata(self, url: str) -> Dict[str, Any]:
-        """Collect Twitter-specific metadata."""        return {"platform": "twitter", "url": url, "api_data": "placeholder"}
+        """Collect Twitter-specific metadata."""
+        return {"platform": "twitter", "url": url, "api_data": "placeholder"}
     
     async def _generate_legal_documentation(self, evidence: EvidencePackage, violation_dir: Path):
-        """Generate legal documentation for the evidence package."""        
+        """Generate legal documentation for the evidence package."""
+        
         try:
             legal_doc = {
                 "case_id": evidence.violation_id,
@@ -469,7 +496,8 @@ class EvidenceCollector:
             evidence._add_chain_of_custody_entry("legal_documentation_error", "evidence_collector", str(e))
     
     async def _create_evidence_manifest(self, evidence: EvidencePackage, violation_dir: Path):
-        """Create a manifest file listing all evidence components."""        
+        """Create a manifest file listing all evidence components."""
+        
         try:
             manifest = {
                 "evidence_package_id": evidence.violation_id,
@@ -507,7 +535,8 @@ class EvidenceCollector:
             evidence._add_chain_of_custody_entry("evidence_manifest_error", "evidence_collector", str(e))
     
     def _generate_violation_id(self, violation_data: Dict[str, Any]) -> str:
-        """Generate unique violation ID."""        
+        """Generate unique violation ID."""
+        
         timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
         url_hash = hashlib.md5(violation_data.get('url', '').encode()).hexdigest()[:8]
         platform = violation_data.get('platform', 'unknown')[:3].upper()
@@ -515,7 +544,8 @@ class EvidenceCollector:
         return f"VIO_{platform}_{timestamp}_{url_hash}"
     
     def _calculate_directory_size(self, directory: Path) -> float:
-        """Calculate total size of directory in MB."""        
+        """Calculate total size of directory in MB."""
+        
         try:
             total_size = sum(f.stat().st_size for f in directory.glob('**/*') if f.is_file())
             return round(total_size / (1024 * 1024), 2)
@@ -523,7 +553,8 @@ class EvidenceCollector:
             return 0.0
     
     async def cleanup_old_evidence(self, days_old: int = None):
-        """Clean up evidence older than specified days."""        
+        """Clean up evidence older than specified days."""
+        
         if days_old is None:
             days_old = self.evidence_retention_days
         

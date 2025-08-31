@@ -7,7 +7,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Data Collection → Metrics Processing → Alerting → Analytics → Insights → Optimization
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import json
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Metric types"""    COUNTER = "counter"
+    """Metric types"""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     TIMER = "timer"
@@ -35,21 +37,24 @@ class MetricType(Enum):
 
 
 class AlertLevel(Enum):
-    """Alert levels"""    INFO = "info"
+    """Alert levels"""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 
 class AlertStatus(Enum):
-    """Alert status"""    ACTIVE = "active"
+    """Alert status"""
+    ACTIVE = "active"
     RESOLVED = "resolved"
     ACKNOWLEDGED = "acknowledged"
     SILENCED = "silenced"
 
 
 class MonitoringStatus(Enum):
-    """Monitoring status"""    HEALTHY = "healthy"
+    """Monitoring status"""
+    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     CRITICAL = "critical"
@@ -57,7 +62,8 @@ class MonitoringStatus(Enum):
 
 @dataclass
 class Metric:
-    """Metric data structure"""    name: str = ""
+    """Metric data structure"""
+    name: str = ""
     metric_type: MetricType = MetricType.GAUGE
     value: Union[int, float] = 0
     timestamp: datetime = field(default_factory=datetime.now)
@@ -70,7 +76,8 @@ class Metric:
     source: str = ""
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metric to dictionary"""        return {
+        """Convert metric to dictionary"""
+        return {
             "name": self.name,
             "type": self.metric_type.value,
             "value": self.value,
@@ -85,7 +92,8 @@ class Metric:
 
 @dataclass
 class Alert:
-    """Alert data structure"""    alert_id: str = ""
+    """Alert data structure"""
+    alert_id: str = ""
     name: str = ""
     level: AlertLevel = AlertLevel.WARNING
     status: AlertStatus = AlertStatus.ACTIVE
@@ -112,7 +120,8 @@ class Alert:
     escalation_level: int = 0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert alert to dictionary"""        return {
+        """Convert alert to dictionary"""
+        return {
             "alert_id": self.alert_id,
             "name": self.name,
             "level": self.level.value,
@@ -135,7 +144,8 @@ class Alert:
 
 @dataclass
 class HealthCheck:
-    """Health check result"""    component: str = ""
+    """Health check result"""
+    component: str = ""
     status: MonitoringStatus = MonitoringStatus.HEALTHY
     message: str = ""
     response_time: float = 0.0
@@ -151,7 +161,8 @@ class HealthCheck:
     dependencies: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert health check to dictionary"""        return {
+        """Convert health check to dictionary"""
+        return {
             "component": self.component,
             "status": self.status.value,
             "message": self.message,
@@ -166,7 +177,8 @@ class HealthCheck:
 
 
 class MetricCollector:
-    """Advanced metric collection system"""    
+    """Advanced metric collection system"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.MetricCollector")
@@ -190,7 +202,8 @@ class MetricCollector:
             self._start_collection()
     
     def _start_collection(self):
-        """Start metric collection"""        self.collection_active = True
+        """Start metric collection"""
+        self.collection_active = True
         
         # Start system metrics collection
         self.collection_tasks["system"] = asyncio.create_task(
@@ -208,7 +221,8 @@ class MetricCollector:
         )
     
     async def _collect_system_metrics(self):
-        """Collect system-level metrics"""        collection_interval = self.config.get("system_collection_interval", 5.0)
+        """Collect system-level metrics"""
+        collection_interval = self.config.get("system_collection_interval", 5.0)
         
         while self.collection_active:
             try:
@@ -314,7 +328,8 @@ class MetricCollector:
                 await asyncio.sleep(collection_interval * 2)
     
     async def _collect_application_metrics(self):
-        """Collect application-level metrics"""        collection_interval = self.config.get("app_collection_interval", 10.0)
+        """Collect application-level metrics"""
+        collection_interval = self.config.get("app_collection_interval", 10.0)
         
         while self.collection_active:
             try:
@@ -400,7 +415,8 @@ class MetricCollector:
                 await asyncio.sleep(collection_interval * 2)
     
     async def _collect_custom_metrics(self):
-        """Collect custom metrics"""        collection_interval = self.config.get("custom_collection_interval", 30.0)
+        """Collect custom metrics"""
+        collection_interval = self.config.get("custom_collection_interval", 30.0)
         
         while self.collection_active:
             try:
@@ -422,13 +438,15 @@ class MetricCollector:
                 await asyncio.sleep(collection_interval * 2)
     
     async def _execute_collector(self, collector: Callable, timestamp: datetime) -> List[Metric]:
-        """Execute custom metric collector"""        if asyncio.iscoroutinefunction(collector):
+        """Execute custom metric collector"""
+        if asyncio.iscoroutinefunction(collector):
             return await collector(timestamp)
         else:
             return collector(timestamp)
     
     def _record_metric(self, metric: Metric):
-        """Record a metric"""        # Add to main storage
+        """Record a metric"""
+        # Add to main storage
         self.metrics.append(metric)
         
         # Add to metric-specific buffer
@@ -443,63 +461,77 @@ class MetricCollector:
     
     # Simulated metric getters (replace with actual implementations)
     def _get_pipeline_executions_count(self) -> int:
-        """Get pipeline executions count"""        import random
+        """Get pipeline executions count"""
+        import random
         return random.randint(1000, 5000)
     
     def _get_pipeline_success_rate(self) -> float:
-        """Get pipeline success rate"""        import random
+        """Get pipeline success rate"""
+        import random
         return random.uniform(85.0, 99.5)
     
     def _get_average_execution_duration(self) -> float:
-        """Get average execution duration"""        import random
+        """Get average execution duration"""
+        import random
         return random.uniform(15.0, 45.0)
     
     def _get_content_processed_count(self) -> int:
-        """Get content processed count"""        import random
+        """Get content processed count"""
+        import random
         return random.randint(500, 2000)
     
     def _get_processing_queue_size(self) -> int:
-        """Get processing queue size"""        import random
+        """Get processing queue size"""
+        import random
         return random.randint(0, 100)
     
     def _get_ai_analysis_requests(self) -> int:
-        """Get AI analysis requests"""        import random
+        """Get AI analysis requests"""
+        import random
         return random.randint(100, 500)
     
     def _get_ai_analysis_accuracy(self) -> float:
-        """Get AI analysis accuracy"""        import random
+        """Get AI analysis accuracy"""
+        import random
         return random.uniform(90.0, 98.5)
     
     def record_metric(self, metric: Metric):
-        """Public method to record a metric"""        self._record_metric(metric)
+        """Public method to record a metric"""
+        self._record_metric(metric)
     
     def get_metrics(self, metric_name: Optional[str] = None, limit: int = 1000) -> List[Metric]:
-        """Get metrics"""        if metric_name:
+        """Get metrics"""
+        if metric_name:
             return list(self.metric_buffer[metric_name])[-limit:]
         else:
             return list(self.metrics)[-limit:]
     
     def get_real_time_metrics(self) -> Dict[str, Metric]:
-        """Get real-time metrics"""        return self.real_time_metrics.copy()
+        """Get real-time metrics"""
+        return self.real_time_metrics.copy()
     
     def add_custom_collector(self, name: str, collector: Callable):
-        """Add custom metric collector"""        self.custom_collectors[name] = collector
+        """Add custom metric collector"""
+        self.custom_collectors[name] = collector
         self.logger.info(f"Added custom collector: {name}")
     
     def remove_custom_collector(self, name: str):
-        """Remove custom metric collector"""        if name in self.custom_collectors:
+        """Remove custom metric collector"""
+        if name in self.custom_collectors:
             del self.custom_collectors[name]
             self.logger.info(f"Removed custom collector: {name}")
     
     def stop_collection(self):
-        """Stop metric collection"""        self.collection_active = False
+        """Stop metric collection"""
+        self.collection_active = False
         for task in self.collection_tasks.values():
             task.cancel()
         self.collection_tasks.clear()
 
 
 class AlertManager:
-    """Advanced alerting system"""    
+    """Advanced alerting system"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.AlertManager")
@@ -526,7 +558,8 @@ class AlertManager:
         self._start_alert_processing()
     
     def _initialize_default_rules(self):
-        """Initialize default alert rules"""        self.alert_rules = {
+        """Initialize default alert rules"""
+        self.alert_rules = {
             "high_cpu_usage": {
                 "metric": "system.cpu.usage",
                 "condition": ">",
@@ -578,11 +611,13 @@ class AlertManager:
         }
     
     def _start_alert_processing(self):
-        """Start alert processing"""        self.processing_active = True
+        """Start alert processing"""
+        self.processing_active = True
         self.alert_processor_task = asyncio.create_task(self._process_alerts())
     
     async def _process_alerts(self):
-        """Process alert queue"""        while self.processing_active:
+        """Process alert queue"""
+        while self.processing_active:
             try:
                 # Get metric from queue
                 metric = await asyncio.wait_for(self.alert_queue.get(), timeout=1.0)
@@ -597,12 +632,14 @@ class AlertManager:
                 await asyncio.sleep(1.0)
     
     async def _check_alert_rules(self, metric: Metric):
-        """Check metric against alert rules"""        for rule_name, rule in self.alert_rules.items():
+        """Check metric against alert rules"""
+        for rule_name, rule in self.alert_rules.items():
             if rule["metric"] == metric.name:
                 await self._evaluate_rule(rule_name, rule, metric)
     
     async def _evaluate_rule(self, rule_name: str, rule: Dict[str, Any], metric: Metric):
-        """Evaluate alert rule"""        condition = rule["condition"]
+        """Evaluate alert rule"""
+        condition = rule["condition"]
         threshold = rule["threshold"]
         current_value = metric.value
         
@@ -673,7 +710,8 @@ class AlertManager:
                 self.logger.info(f"Alert resolved: {alert.name}")
     
     async def _send_alert_notification(self, alert: Alert):
-        """Send alert notification"""        for channel_name, channel in self.notification_channels.items():
+        """Send alert notification"""
+        for channel_name, channel in self.notification_channels.items():
             try:
                 if asyncio.iscoroutinefunction(channel):
                     await channel(alert)
@@ -683,7 +721,8 @@ class AlertManager:
                 self.logger.error(f"Failed to send alert to {channel_name}: {e}")
     
     async def _send_resolution_notification(self, alert: Alert):
-        """Send alert resolution notification"""        for channel_name, channel in self.notification_channels.items():
+        """Send alert resolution notification"""
+        for channel_name, channel in self.notification_channels.items():
             try:
                 if asyncio.iscoroutinefunction(channel):
                     await channel(alert)
@@ -693,49 +732,59 @@ class AlertManager:
                 self.logger.error(f"Failed to send resolution to {channel_name}: {e}")
     
     async def process_metric(self, metric: Metric):
-        """Process metric for alerting"""        await self.alert_queue.put(metric)
+        """Process metric for alerting"""
+        await self.alert_queue.put(metric)
     
     def add_alert_rule(self, name: str, rule: Dict[str, Any]):
-        """Add alert rule"""        self.alert_rules[name] = rule
+        """Add alert rule"""
+        self.alert_rules[name] = rule
         self.logger.info(f"Added alert rule: {name}")
     
     def remove_alert_rule(self, name: str):
-        """Remove alert rule"""        if name in self.alert_rules:
+        """Remove alert rule"""
+        if name in self.alert_rules:
             del self.alert_rules[name]
             self.logger.info(f"Removed alert rule: {name}")
     
     def add_notification_channel(self, name: str, channel: Callable):
-        """Add notification channel"""        self.notification_channels[name] = channel
+        """Add notification channel"""
+        self.notification_channels[name] = channel
         self.logger.info(f"Added notification channel: {name}")
     
     def acknowledge_alert(self, alert_id: str):
-        """Acknowledge alert"""        if alert_id in self.active_alerts:
+        """Acknowledge alert"""
+        if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
             alert.status = AlertStatus.ACKNOWLEDGED
             alert.acknowledged_at = datetime.now()
             self.logger.info(f"Alert acknowledged: {alert.name}")
     
     def silence_alert(self, alert_id: str, duration: int = 3600):
-        """Silence alert for specified duration"""        if alert_id in self.active_alerts:
+        """Silence alert for specified duration"""
+        if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
             alert.status = AlertStatus.SILENCED
             # Note: In a real implementation, you'd set a timer to unsilence
             self.logger.info(f"Alert silenced for {duration} seconds: {alert.name}")
     
     def get_active_alerts(self) -> List[Alert]:
-        """Get active alerts"""        return list(self.active_alerts.values())
+        """Get active alerts"""
+        return list(self.active_alerts.values())
     
     def get_alert_history(self, limit: int = 100) -> List[Alert]:
-        """Get alert history"""        return list(self.alert_history)[-limit:]
+        """Get alert history"""
+        return list(self.alert_history)[-limit:]
     
     def stop_processing(self):
-        """Stop alert processing"""        self.processing_active = False
+        """Stop alert processing"""
+        self.processing_active = False
         if self.alert_processor_task:
             self.alert_processor_task.cancel()
 
 
 class HealthMonitor:
-    """Advanced health monitoring system"""    
+    """Advanced health monitoring system"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.HealthMonitor")
@@ -756,7 +805,8 @@ class HealthMonitor:
             self._start_health_monitoring()
     
     def _initialize_default_health_checks(self):
-        """Initialize default health checks"""        self.health_check_functions = {
+        """Initialize default health checks"""
+        self.health_check_functions = {
             "system": self._check_system_health,
             "database": self._check_database_health,
             "cache": self._check_cache_health,
@@ -765,7 +815,8 @@ class HealthMonitor:
         }
     
     def _start_health_monitoring(self):
-        """Start health monitoring"""        self.monitoring_active = True
+        """Start health monitoring"""
+        self.monitoring_active = True
         
         # Start health check tasks
         for component, check_func in self.health_check_functions.items():
@@ -774,7 +825,8 @@ class HealthMonitor:
             )
     
     async def _monitor_component_health(self, component: str, check_func: Callable):
-        """Monitor component health"""        check_interval = self.config.get("check_interval", 60.0)
+        """Monitor component health"""
+        check_interval = self.config.get("check_interval", 60.0)
         
         while self.monitoring_active:
             try:
@@ -816,7 +868,8 @@ class HealthMonitor:
                 await asyncio.sleep(check_interval * 2)
     
     async def _check_system_health(self) -> HealthCheck:
-        """Check system health"""        try:
+        """Check system health"""
+        try:
             # Check system resources
             cpu_percent = psutil.cpu_percent(interval=1)
             memory = psutil.virtual_memory()
@@ -852,7 +905,8 @@ class HealthMonitor:
             )
     
     async def _check_database_health(self) -> HealthCheck:
-        """Check database health"""        try:
+        """Check database health"""
+        try:
             # Simulate database check
             await asyncio.sleep(0.1)  # Simulate DB query
             
@@ -876,7 +930,8 @@ class HealthMonitor:
             )
     
     async def _check_cache_health(self) -> HealthCheck:
-        """Check cache health"""        try:
+        """Check cache health"""
+        try:
             # Simulate cache check
             await asyncio.sleep(0.05)  # Simulate cache ping
             
@@ -898,7 +953,8 @@ class HealthMonitor:
             )
     
     async def _check_ai_services_health(self) -> HealthCheck:
-        """Check AI services health"""        try:
+        """Check AI services health"""
+        try:
             # Simulate AI services check
             await asyncio.sleep(0.2)  # Simulate AI service ping
             
@@ -920,7 +976,8 @@ class HealthMonitor:
             )
     
     async def _check_content_pipeline_health(self) -> HealthCheck:
-        """Check content pipeline health"""        try:
+        """Check content pipeline health"""
+        try:
             # Simulate pipeline check
             await asyncio.sleep(0.15)  # Simulate pipeline status check
             
@@ -942,7 +999,8 @@ class HealthMonitor:
             )
     
     def add_health_check(self, component: str, check_func: Callable):
-        """Add custom health check"""        self.health_check_functions[component] = check_func
+        """Add custom health check"""
+        self.health_check_functions[component] = check_func
         
         if self.monitoring_active:
             self.monitoring_tasks[component] = asyncio.create_task(
@@ -952,10 +1010,12 @@ class HealthMonitor:
         self.logger.info(f"Added health check for: {component}")
     
     def get_health_status(self) -> Dict[str, HealthCheck]:
-        """Get health status for all components"""        return self.health_checks.copy()
+        """Get health status for all components"""
+        return self.health_checks.copy()
     
     def get_overall_health(self) -> MonitoringStatus:
-        """Get overall system health"""        if not self.health_checks:
+        """Get overall system health"""
+        if not self.health_checks:
             return MonitoringStatus.UNHEALTHY
         
         critical_count = sum(1 for hc in self.health_checks.values() 
@@ -974,14 +1034,16 @@ class HealthMonitor:
             return MonitoringStatus.HEALTHY
     
     def stop_monitoring(self):
-        """Stop health monitoring"""        self.monitoring_active = False
+        """Stop health monitoring"""
+        self.monitoring_active = False
         for task in self.monitoring_tasks.values():
             task.cancel()
         self.monitoring_tasks.clear()
 
 
 class MonitoringSystem:
-    """    Ultra-advanced monitoring and observability system for pipeline executions
+    """
+    Ultra-advanced monitoring and observability system for pipeline executions
     with real-time metrics, intelligent alerting, and comprehensive analytics.
     
     Features:
@@ -992,7 +1054,8 @@ class MonitoringSystem:
     - Multi-channel notifications
     - Historical data analysis
     - Predictive monitoring capabilities
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -1023,7 +1086,8 @@ class MonitoringSystem:
         self.logger.info("Monitoring System initialized successfully")
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""        return {
+        """Get default configuration"""
+        return {
             "auto_start": True,
             "metrics": {
                 "auto_collection": True,
@@ -1053,7 +1117,8 @@ class MonitoringSystem:
         }
     
     def _initialize_notification_channels(self):
-        """Initialize notification channels"""        # Console notification channel
+        """Initialize notification channels"""
+        # Console notification channel
         self.alert_manager.add_notification_channel(
             "console", self._console_notification
         )
@@ -1069,7 +1134,8 @@ class MonitoringSystem:
         )
     
     async def _console_notification(self, alert: Alert):
-        """Console notification channel"""        level_colors = {
+        """Console notification channel"""
+        level_colors = {
             AlertLevel.INFO: "\033[94m",      # Blue
             AlertLevel.WARNING: "\033[93m",   # Yellow
             AlertLevel.ERROR: "\033[91m",     # Red
@@ -1093,7 +1159,8 @@ class MonitoringSystem:
             self.logger.info(f"ALERT: {alert.name} - {alert.message}")
     
     async def _webhook_notification(self, alert: Alert):
-        """Webhook notification channel"""        webhook_url = self.config.get("webhook_url")
+        """Webhook notification channel"""
+        webhook_url = self.config.get("webhook_url")
         if not webhook_url:
             return
         
@@ -1113,12 +1180,14 @@ class MonitoringSystem:
             self.logger.error(f"Webhook notification error: {e}")
     
     async def _email_notification(self, alert: Alert):
-        """Email notification channel (placeholder)"""        # Placeholder for email notification
+        """Email notification channel (placeholder)"""
+        # Placeholder for email notification
         # In real implementation, integrate with email service
         self.logger.info(f"Email notification (placeholder): {alert.name}")
     
     def start_monitoring(self):
-        """Start monitoring system"""        if self.monitoring_active:
+        """Start monitoring system"""
+        if self.monitoring_active:
             return
         
         self.monitoring_active = True
@@ -1131,7 +1200,8 @@ class MonitoringSystem:
         self.logger.info("Monitoring system started")
     
     async def _monitoring_loop(self):
-        """Main monitoring loop"""        analytics_interval = self.config.get("analytics", {}).get("analysis_interval", 300.0)
+        """Main monitoring loop"""
+        analytics_interval = self.config.get("analytics", {}).get("analysis_interval", 300.0)
         last_analytics = time.time()
         
         while self.monitoring_active:
@@ -1159,7 +1229,8 @@ class MonitoringSystem:
                 await asyncio.sleep(5.0)
     
     async def _update_analytics(self):
-        """Update analytics data"""        try:
+        """Update analytics data"""
+        try:
             # Get metrics for analysis
             metrics = self.metric_collector.get_metrics(limit=10000)
             health_status = self.health_monitor.get_health_status()
@@ -1183,7 +1254,8 @@ class MonitoringSystem:
             self.logger.error(f"Analytics update error: {e}")
     
     def _calculate_metrics_summary(self, metrics: List[Metric]) -> Dict[str, Any]:
-        """Calculate metrics summary"""        if not metrics:
+        """Calculate metrics summary"""
+        if not metrics:
             return {}
         
         # Group metrics by name
@@ -1206,7 +1278,8 @@ class MonitoringSystem:
         return summary
     
     def _calculate_health_summary(self, health_status: Dict[str, HealthCheck]) -> Dict[str, Any]:
-        """Calculate health summary"""        if not health_status:
+        """Calculate health summary"""
+        if not health_status:
             return {}
         
         status_counts = defaultdict(int)
@@ -1227,7 +1300,8 @@ class MonitoringSystem:
         }
     
     def _calculate_alert_summary(self, alert_history: List[Alert]) -> Dict[str, Any]:
-        """Calculate alert summary"""        if not alert_history:
+        """Calculate alert summary"""
+        if not alert_history:
             return {}
         
         level_counts = defaultdict(int)
@@ -1245,7 +1319,8 @@ class MonitoringSystem:
         }
     
     def _calculate_performance_trends(self, metrics: List[Metric]) -> Dict[str, Any]:
-        """Calculate performance trends"""        trends = {}
+        """Calculate performance trends"""
+        trends = {}
         
         # Group metrics by name for trend analysis
         metric_groups = defaultdict(list)
@@ -1281,7 +1356,8 @@ class MonitoringSystem:
         return trends
     
     def _calculate_system_overview(self) -> Dict[str, Any]:
-        """Calculate system overview"""        real_time_metrics = self.metric_collector.get_real_time_metrics()
+        """Calculate system overview"""
+        real_time_metrics = self.metric_collector.get_real_time_metrics()
         
         overview = {
             "monitoring_uptime": time.time() - getattr(self, '_start_time', time.time()),
@@ -1295,7 +1371,8 @@ class MonitoringSystem:
         return overview
     
     def _analyze_trends(self, metrics: List[Metric]) -> Dict[str, Any]:
-        """Analyze performance trends"""        # Placeholder for advanced trend analysis
+        """Analyze performance trends"""
+        # Placeholder for advanced trend analysis
         # In real implementation, use machine learning models
         
         return {
@@ -1307,12 +1384,14 @@ class MonitoringSystem:
         }
     
     def _start_websocket_server(self):
-        """Start WebSocket server for real-time updates"""        # Placeholder for WebSocket server
+        """Start WebSocket server for real-time updates"""
+        # Placeholder for WebSocket server
         # In real implementation, start actual WebSocket server
         self.logger.info("WebSocket server started (placeholder)")
     
     async def _broadcast_real_time_updates(self):
-        """Broadcast real-time updates to WebSocket clients"""        if not self.websocket_connections:
+        """Broadcast real-time updates to WebSocket clients"""
+        if not self.websocket_connections:
             return
         
         try:
@@ -1338,22 +1417,28 @@ class MonitoringSystem:
     
     # Public API methods
     def record_metric(self, metric: Metric):
-        """Record a custom metric"""        self.metric_collector.record_metric(metric)
+        """Record a custom metric"""
+        self.metric_collector.record_metric(metric)
     
     def add_custom_metric_collector(self, name: str, collector: Callable):
-        """Add custom metric collector"""        self.metric_collector.add_custom_collector(name, collector)
+        """Add custom metric collector"""
+        self.metric_collector.add_custom_collector(name, collector)
     
     def add_health_check(self, component: str, check_func: Callable):
-        """Add custom health check"""        self.health_monitor.add_health_check(component, check_func)
+        """Add custom health check"""
+        self.health_monitor.add_health_check(component, check_func)
     
     def add_alert_rule(self, name: str, rule: Dict[str, Any]):
-        """Add custom alert rule"""        self.alert_manager.add_alert_rule(name, rule)
+        """Add custom alert rule"""
+        self.alert_manager.add_alert_rule(name, rule)
     
     def add_notification_channel(self, name: str, channel: Callable):
-        """Add custom notification channel"""        self.alert_manager.add_notification_channel(name, channel)
+        """Add custom notification channel"""
+        self.alert_manager.add_notification_channel(name, channel)
     
     def get_monitoring_dashboard_data(self) -> Dict[str, Any]:
-        """Get monitoring dashboard data"""        return {
+        """Get monitoring dashboard data"""
+        return {
             "real_time_metrics": {
                 name: metric.to_dict() 
                 for name, metric in self.metric_collector.get_real_time_metrics().items()
@@ -1369,17 +1454,21 @@ class MonitoringSystem:
         }
     
     def get_metrics_history(self, metric_name: Optional[str] = None, limit: int = 1000) -> List[Dict[str, Any]]:
-        """Get metrics history"""        metrics = self.metric_collector.get_metrics(metric_name, limit)
+        """Get metrics history"""
+        metrics = self.metric_collector.get_metrics(metric_name, limit)
         return [metric.to_dict() for metric in metrics]
     
     def acknowledge_alert(self, alert_id: str):
-        """Acknowledge alert"""        self.alert_manager.acknowledge_alert(alert_id)
+        """Acknowledge alert"""
+        self.alert_manager.acknowledge_alert(alert_id)
     
     def silence_alert(self, alert_id: str, duration: int = 3600):
-        """Silence alert"""        self.alert_manager.silence_alert(alert_id, duration)
+        """Silence alert"""
+        self.alert_manager.silence_alert(alert_id, duration)
     
     async def shutdown(self):
-        """Shutdown monitoring system"""        self.logger.info("Shutting down monitoring system")
+        """Shutdown monitoring system"""
+        self.logger.info("Shutting down monitoring system")
         
         # Stop monitoring
         self.monitoring_active = False

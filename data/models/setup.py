@@ -12,7 +12,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""from setuptools import setup, find_packages
+"""
+from setuptools import setup, find_packages
 import os
 import sys
 
@@ -217,7 +218,8 @@ setup(
 
 
 def post_install_message():
-    """Display post-installation message"""    print("""╔═══════════════════════════════════════════════════════════════╗
+    """Display post-installation message"""
+    print("""╔═══════════════════════════════════════════════════════════════╗
 ║                IA INFLUENCER AGENT DATA MODELS               ║
 ║                     Successfully Installed!                  ║
 ╠═══════════════════════════════════════════════════════════════╣

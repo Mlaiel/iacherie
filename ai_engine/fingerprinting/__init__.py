@@ -3,10 +3,15 @@ Advanced multi-modal content fingerprinting with ML-powered similarity matching.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from .audio_fingerprint_engine import AudioFingerprintEngine
+"""
+
+from .audio_fingerprint_engine import AudioFingerprintEngine
+
 from .video_fingerprint_engine import VideoFingerprintEngine  
 from .image_fingerprint_engine import ImageFingerprintEngine
+
 from .text_fingerprint_engine import TextFingerprintEngine
+
 from .vector_matching_engine import VectorMatchingEngine
 
 __all__ = [

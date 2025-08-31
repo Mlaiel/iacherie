@@ -11,7 +11,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import socket
@@ -29,14 +30,16 @@ logger = logging.getLogger(__name__)
 
 
 class HealthStatus(Enum):
-    """Health status enumeration"""    HEALTHY = "healthy"
+    """Health status enumeration"""
+    HEALTHY = "healthy"
     UNHEALTHY = "unhealthy"
     DEGRADED = "degraded"
     UNKNOWN = "unknown"
 
 
 class CheckType(Enum):
-    """Health check type enumeration"""    HTTP = "http"
+    """Health check type enumeration"""
+    HTTP = "http"
     HTTPS = "https"
     TCP = "tcp"
     UDP = "udp"
@@ -46,7 +49,8 @@ class CheckType(Enum):
 
 @dataclass
 class HealthCheckConfig:
-    """Health check configuration"""    name: str
+    """Health check configuration"""
+    name: str
     type: CheckType
     target: str
     port: Optional[int] = None
@@ -64,7 +68,8 @@ class HealthCheckConfig:
 
 @dataclass
 class HealthCheckResult:
-    """Health check result"""    name: str
+    """Health check result"""
+    name: str
     status: HealthStatus
     response_time: float
     timestamp: datetime
@@ -74,7 +79,8 @@ class HealthCheckResult:
 
 @dataclass
 class ServiceEndpoint:
-    """Service endpoint configuration"""    name: str
+    """Service endpoint configuration"""
+    name: str
     host: str
     port: int
     weight: int = 1
@@ -83,7 +89,8 @@ class ServiceEndpoint:
 
 
 class HealthChecker:
-    """Individual health checker implementation"""    
+    """Individual health checker implementation"""
+    
     def __init__(self, config: HealthCheckConfig):
         self.config = config
         self.session = None
@@ -104,7 +111,8 @@ class HealthChecker:
             await self.session.close()
     
     async def check_http(self) -> HealthCheckResult:
-        """Perform HTTP/HTTPS health check"""        start_time = time.time()
+        """Perform HTTP/HTTPS health check"""
+        start_time = time.time()
         
         try:
             scheme = "https" if self.config.type == CheckType.HTTPS else "http"
@@ -173,7 +181,8 @@ class HealthChecker:
             )
     
     async def check_tcp(self) -> HealthCheckResult:
-        """Perform TCP port health check"""        start_time = time.time()
+        """Perform TCP port health check"""
+        start_time = time.time()
         
         try:
             reader, writer = await asyncio.wait_for(
@@ -205,7 +214,8 @@ class HealthChecker:
             )
     
     async def check_ping(self) -> HealthCheckResult:
-        """Perform ping health check"""        start_time = time.time()
+        """Perform ping health check"""
+        start_time = time.time()
         
         try:
             # Use asyncio subprocess for ping
@@ -248,7 +258,8 @@ class HealthChecker:
             )
     
     async def check_custom(self) -> HealthCheckResult:
-        """Perform custom health check"""        start_time = time.time()
+        """Perform custom health check"""
+        start_time = time.time()
         
         try:
             if not self.config.custom_check:
@@ -298,7 +309,8 @@ class HealthChecker:
             )
     
     async def perform_check(self) -> HealthCheckResult:
-        """Perform health check based on type"""        for attempt in range(self.config.retries):
+        """Perform health check based on type"""
+        for attempt in range(self.config.retries):
             try:
                 if self.config.type in [CheckType.HTTP, CheckType.HTTPS]:
                     result = await self.check_http()
@@ -335,7 +347,8 @@ class HealthChecker:
 
 
 class HealthMonitor:
-    """Enterprise Health Monitor for Load Balancer Services"""    
+    """Enterprise Health Monitor for Load Balancer Services"""
+    
     def __init__(self):
         self.endpoints: Dict[str, ServiceEndpoint] = {}
         self.health_history: Dict[str, List[HealthCheckResult]] = {}
@@ -345,7 +358,8 @@ class HealthMonitor:
         self.history_retention = timedelta(hours=24)
     
     def add_endpoint(self, endpoint: ServiceEndpoint) -> bool:
-        """Add service endpoint for monitoring"""        try:
+        """Add service endpoint for monitoring"""
+        try:
             self.endpoints[endpoint.name] = endpoint
             self.health_history[endpoint.name] = []
             logger.info(f"Endpoint {endpoint.name} added to monitoring")
@@ -356,7 +370,8 @@ class HealthMonitor:
             return False
     
     def remove_endpoint(self, endpoint_name: str) -> bool:
-        """Remove service endpoint from monitoring"""        try:
+        """Remove service endpoint from monitoring"""
+        try:
             if endpoint_name in self.endpoints:
                 del self.endpoints[endpoint_name]
                 del self.health_history[endpoint_name]
@@ -371,10 +386,12 @@ class HealthMonitor:
             return False
     
     def add_alert_callback(self, callback: Callable[[HealthCheckResult], None]) -> None:
-        """Add callback for health status alerts"""        self.alert_callbacks.append(callback)
+        """Add callback for health status alerts"""
+        self.alert_callbacks.append(callback)
     
     async def check_endpoint_health(self, endpoint: ServiceEndpoint) -> List[HealthCheckResult]:
-        """Check health of a single endpoint"""        results = []
+        """Check health of a single endpoint"""
+        results = []
         
         for health_check in endpoint.health_checks:
             async with HealthChecker(health_check) as checker:
@@ -398,14 +415,16 @@ class HealthMonitor:
         return results
     
     def _clean_history(self, endpoint_name: str) -> None:
-        """Clean old health check history"""        cutoff_time = datetime.now() - self.history_retention
+        """Clean old health check history"""
+        cutoff_time = datetime.now() - self.history_retention
         self.health_history[endpoint_name] = [
             result for result in self.health_history[endpoint_name]
             if result.timestamp > cutoff_time
         ]
     
     async def monitor_endpoint(self, endpoint: ServiceEndpoint) -> None:
-        """Continuously monitor a single endpoint"""        while self.running:
+        """Continuously monitor a single endpoint"""
+        while self.running:
             try:
                 await self.check_endpoint_health(endpoint)
                 
@@ -421,7 +440,8 @@ class HealthMonitor:
                 await asyncio.sleep(10)  # Wait before retrying
     
     async def start_monitoring(self) -> None:
-        """Start health monitoring for all endpoints"""        if self.running:
+        """Start health monitoring for all endpoints"""
+        if self.running:
             logger.warning("Health monitoring is already running")
             return
         
@@ -436,7 +456,8 @@ class HealthMonitor:
         logger.info(f"Health monitoring started for {len(self.endpoints)} endpoints")
     
     async def stop_monitoring(self) -> None:
-        """Stop health monitoring"""        if not self.running:
+        """Stop health monitoring"""
+        if not self.running:
             logger.warning("Health monitoring is not running")
             return
         
@@ -455,7 +476,8 @@ class HealthMonitor:
         logger.info("Health monitoring stopped")
     
     def get_endpoint_status(self, endpoint_name: str) -> Dict[str, Any]:
-        """Get current status of an endpoint"""        if endpoint_name not in self.endpoints:
+        """Get current status of an endpoint"""
+        if endpoint_name not in self.endpoints:
             return {"error": f"Endpoint {endpoint_name} not found"}
         
         endpoint = self.endpoints[endpoint_name]
@@ -510,7 +532,8 @@ class HealthMonitor:
         }
     
     def get_all_endpoints_status(self) -> Dict[str, Any]:
-        """Get status of all monitored endpoints"""        return {
+        """Get status of all monitored endpoints"""
+        return {
             "monitoring_active": self.running,
             "endpoints_count": len(self.endpoints),
             "endpoints": [
@@ -520,7 +543,8 @@ class HealthMonitor:
         }
     
     def configure_platform_endpoints(self) -> bool:
-        """Configure health monitoring for platform services"""        try:
+        """Configure health monitoring for platform services"""
+        try:
             # Configure fingerprinting service endpoints
             fingerprinting_endpoints = [
                 ServiceEndpoint(

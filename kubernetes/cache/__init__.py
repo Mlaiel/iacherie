@@ -35,7 +35,8 @@ Cache Architecture:
 - Warming Strategies: Predictive cache warming
 - Health Monitor: AI-powered health monitoring
 - Invalidation Strategy: Intelligent cache lifecycle management
-"""from .configuration import (
+"""
+from .configuration import (
     CacheConfiguration,
     ContentTypeCache,
     AIOptimizationConfiguration,
@@ -103,7 +104,8 @@ from .invalidation_strategy import (
 
 # Main cache orchestrator for easy integration
 class IAInfluencerCacheOrchestrator:
-    """    Main orchestrator for the IA Influencer Agent cache infrastructure
+    """
+    Main orchestrator for the IA Influencer Agent cache infrastructure
     
     Provides unified interface for all caching operations with:
     - Automatic configuration management
@@ -111,13 +113,16 @@ class IAInfluencerCacheOrchestrator:
     - Performance optimization
     - Business intelligence integration
     - Creator-centric optimizations
-    """    
+    """
+    
     def __init__(self, config_path: str = None):
-        """        Initialize the cache orchestrator
+        """
+        Initialize the cache orchestrator
         
         Args:
             config_path: Path to configuration file
-        """        # Initialize all cache components
+        """
+        # Initialize all cache components
         self.config_manager = EnterpriseConfigurationManager(config_path)
         self.content_manager = ContentCacheManager(self.config_manager)
         self.distributed_cache = DistributedCacheManager(self.config_manager)
@@ -133,7 +138,8 @@ class IAInfluencerCacheOrchestrator:
         )
     
     async def initialize(self):
-        """Initialize all cache components"""        await self.config_manager.initialize()
+        """Initialize all cache components"""
+        await self.config_manager.initialize()
         await self.content_manager.initialize()
         await self.distributed_cache.initialize()
         await self.security_manager.initialize()
@@ -149,7 +155,8 @@ class IAInfluencerCacheOrchestrator:
         content_type: str,
         metadata: dict = None
     ) -> str:
-        """        Cache content for a creator with full optimization
+        """
+        Cache content for a creator with full optimization
         
         Args:
             creator_id: Creator identifier
@@ -159,7 +166,8 @@ class IAInfluencerCacheOrchestrator:
             
         Returns:
             Cache key for the stored content
-        """        return await self.content_manager.cache_content(
+        """
+        return await self.content_manager.cache_content(
             creator_id=creator_id,
             content_data=content_data,
             content_type=content_type,
@@ -171,7 +179,8 @@ class IAInfluencerCacheOrchestrator:
         cache_key: str,
         creator_id: str = None
     ) -> tuple:
-        """        Retrieve cached content with performance tracking
+        """
+        Retrieve cached content with performance tracking
         
         Args:
             cache_key: Cache key to retrieve
@@ -179,7 +188,8 @@ class IAInfluencerCacheOrchestrator:
             
         Returns:
             Tuple of (content_data, metadata) or (None, None) if not found
-        """        return await self.content_manager.get_content(
+        """
+        return await self.content_manager.get_content(
             cache_key=cache_key,
             creator_id=creator_id
         )
@@ -190,7 +200,8 @@ class IAInfluencerCacheOrchestrator:
         content_types: list = None,
         preserve_revenue_data: bool = True
     ) -> str:
-        """        Invalidate creator content with business impact assessment
+        """
+        Invalidate creator content with business impact assessment
         
         Args:
             creator_id: Creator whose content to invalidate
@@ -199,26 +210,32 @@ class IAInfluencerCacheOrchestrator:
             
         Returns:
             Invalidation request ID for tracking
-        """        return await self.invalidation_orchestrator.invalidate_creator_content(
+        """
+        return await self.invalidation_orchestrator.invalidate_creator_content(
             creator_id=creator_id,
             content_types=content_types,
             preserve_revenue_data=preserve_revenue_data
         )
     
     async def get_cache_health(self) -> dict:
-        """Get comprehensive cache health status"""        return await self.health_monitor.get_comprehensive_health_status()
+        """Get comprehensive cache health status"""
+        return await self.health_monitor.get_comprehensive_health_status()
     
     async def get_performance_metrics(self) -> dict:
-        """Get cache performance metrics"""        return await self.metrics_collector.get_comprehensive_metrics()
+        """Get cache performance metrics"""
+        return await self.metrics_collector.get_comprehensive_metrics()
     
     async def optimize_cache_performance(self) -> dict:
-        """Trigger cache performance optimization"""        return await self.performance_optimizer.optimize_cache_performance()
+        """Trigger cache performance optimization"""
+        return await self.performance_optimizer.optimize_cache_performance()
     
     async def warm_cache_for_creator(self, creator_id: str) -> dict:
-        """Warm cache for a specific creator"""        return await self.cache_warmer.warm_creator_content(creator_id)
+        """Warm cache for a specific creator"""
+        return await self.cache_warmer.warm_creator_content(creator_id)
     
     async def shutdown(self):
-        """Gracefully shutdown all cache components"""        await self.health_monitor.shutdown()
+        """Gracefully shutdown all cache components"""
+        await self.health_monitor.shutdown()
         await self.cache_warmer.shutdown()
         await self.metrics_collector.shutdown()
         await self.performance_optimizer.shutdown()

@@ -12,7 +12,8 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional monetization engine Docker configuration for revenue
 tracking, payment processing, and automated payout systems.
-"""from typing import Dict, List, Optional, Any, Union
+"""
+from typing import Dict, List, Optional, Any, Union
 import logging
 from dataclasses import dataclass, field
 import yaml
@@ -22,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MonetizationEngineDockerConfig:
-    """Enterprise Monetization Engine Docker configuration"""    
+    """Enterprise Monetization Engine Docker configuration"""
+    
     # Container Configuration
     image_name: str = "ia-influencer/monetization-engine"
     image_tag: str = "2.0.0"
@@ -125,7 +127,8 @@ class MonetizationEngineDockerConfig:
     health_check_retries: int = 3
     
     def generate_dockerfile(self) -> str:
-        """Generate production Dockerfile for Monetization Engine"""        return f"""# IA-Influencer Monetization Engine - Production Docker Image
+        """Generate production Dockerfile for Monetization Engine"""
+        return f"""# IA-Influencer Monetization Engine - Production Docker Image
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 # Professional financial and revenue management system
 
@@ -262,26 +265,31 @@ CMD ["gunicorn", \\
      "--log-level", "{self.log_level.lower()}", \\
      "--preload", \\
      "main:app"]
-"""    def _generate_feature_env_vars(self) -> str:
-        """Generate feature-specific environment variables"""        env_vars = []
+"""
+    def _generate_feature_env_vars(self) -> str:
+        """Generate feature-specific environment variables"""
+        env_vars = []
         for feature, enabled in self.enabled_features.items():
             env_vars.append(f"ENV FEATURE_{feature.upper()}={str(enabled).lower()}")
         return "\n".join(env_vars)
 
     def _generate_platform_env_vars(self) -> str:
-        """Generate platform API environment variables"""        env_vars = []
+        """Generate platform API environment variables"""
+        env_vars = []
         for platform, url in self.platform_apis.items():
             env_vars.append(f"ENV {platform.upper()}_API_URL={url}")
         return "\n".join(env_vars)
 
     def _generate_payment_env_vars(self) -> str:
-        """Generate payment gateway environment variables"""        env_vars = []
+        """Generate payment gateway environment variables"""
+        env_vars = []
         for gateway, enabled in self.payment_gateways.items():
             env_vars.append(f"ENV PAYMENT_{gateway.upper()}_ENABLED={str(enabled).lower()}")
         return "\n".join(env_vars)
 
     def _generate_revenue_env_vars(self) -> str:
-        """Generate revenue configuration environment variables"""        env_vars = []
+        """Generate revenue configuration environment variables"""
+        env_vars = []
         for config, value in self.commission_rates.items():
             env_vars.append(f"ENV {config.upper()}={value}")
         
@@ -291,7 +299,8 @@ CMD ["gunicorn", \\
         return "\n".join(env_vars)
 
     def generate_docker_compose_service(self) -> Dict[str, Any]:
-        """Generate docker-compose service configuration"""        return {
+        """Generate docker-compose service configuration"""
+        return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": self.container_name,
             "restart": "unless-stopped",
@@ -373,7 +382,8 @@ CMD ["gunicorn", \\
         }
 
     def generate_payment_worker_service(self) -> Dict[str, Any]:
-        """Generate payment processing worker service configuration"""        return {
+        """Generate payment processing worker service configuration"""
+        return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": f"{self.container_name}-payments",
             "restart": "unless-stopped",
@@ -435,7 +445,8 @@ CMD ["gunicorn", \\
         }
 
     def generate_requirements_txt(self) -> str:
-        """Generate monetization engine requirements.txt"""        return """# IA-Influencer Monetization Engine - Production Dependencies
+        """Generate monetization engine requirements.txt"""
+        return """# IA-Influencer Monetization Engine - Production Dependencies
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
 # Core Framework
@@ -561,8 +572,10 @@ pytest-asyncio==0.21.1
 black==23.11.0
 isort==5.12.0
 flake8==6.1.0
-"""    def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all configuration files to output directory"""        import os
+"""
+    def save_config_files(self, output_dir: str) -> List[str]:
+        """Save all configuration files to output directory"""
+        import os
         from pathlib import Path
         
         config_dir = Path(output_dir)

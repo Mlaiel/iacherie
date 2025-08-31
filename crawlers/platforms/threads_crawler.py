@@ -21,7 +21,8 @@ Features:
 - Media content analysis and fingerprinting
 - Comprehensive user analytics and behavior analysis
 - Content fingerprinting for copyright protection
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator, Tuple
 from datetime import datetime, timedelta
@@ -55,7 +56,8 @@ settings = get_settings()
 
 @dataclass
 class ThreadsPost:
-    """Threads post data structure with enhanced analysis."""    post_id: str
+    """Threads post data structure with enhanced analysis."""
+    post_id: str
     text: Optional[str]
     created_at: datetime
     updated_at: Optional[datetime]
@@ -95,7 +97,8 @@ class ThreadsPost:
 
 @dataclass
 class ThreadsUser:
-    """Threads user data structure."""    user_id: str
+    """Threads user data structure."""
+    user_id: str
     username: str
     display_name: str
     biography: Optional[str]
@@ -125,7 +128,8 @@ class ThreadsUser:
 
 @dataclass
 class ThreadsThread:
-    """Complete Threads conversation thread."""    thread_id: str
+    """Complete Threads conversation thread."""
+    thread_id: str
     root_post: ThreadsPost
     replies: List[ThreadsPost]
     total_replies: int
@@ -141,24 +145,28 @@ class ThreadsThread:
     language_distribution: Optional[Dict] = None
 
 class ThreadsCrawler:
-    """    Enterprise Meta Threads content crawler with advanced monitoring capabilities.
+    """
+    Enterprise Meta Threads content crawler with advanced monitoring capabilities.
     
     Provides comprehensive Threads content discovery, monitoring, and analysis
     with focus on social media engagement and content protection.
-    """    
+    """
+    
     def __init__(self, 
                  access_token: str = None,
                  proxy_manager: ProxyManager = None,
                  rate_limiter: ThreadsRateLimiter = None,
                  use_selenium: bool = False):
-        """        Initialize Threads crawler.
+        """
+        Initialize Threads crawler.
         
         Args:
             access_token: Threads API access token (when available)
             proxy_manager: Proxy manager instance
             rate_limiter: Rate limiter instance
             use_selenium: Use Selenium for web scraping fallback
-        """        self.access_token = access_token
+        """
+        self.access_token = access_token
         self.proxy_manager = proxy_manager or ProxyManager()
         self.rate_limiter = rate_limiter or ThreadsRateLimiter()
         self.user_agent_rotator = UserAgentRotator()
@@ -183,14 +191,17 @@ class ThreadsCrawler:
         self.content_violations = []
         
     async def __aenter__(self):
-        """Async context manager entry."""        await self.initialize()
+        """Async context manager entry."""
+        await self.initialize()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""        await self.close()
+        """Async context manager exit."""
+        await self.close()
         
     async def initialize(self):
-        """Initialize the crawler session and browser."""        self.session = aiohttp.ClientSession(
+        """Initialize the crawler session and browser."""
+        self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30),
             headers=self.user_agent_rotator.get_headers()
         )
@@ -201,7 +212,8 @@ class ThreadsCrawler:
         self.logger.info("Threads crawler initialized")
         
     async def close(self):
-        """Close the crawler session and browser."""        if self.session:
+        """Close the crawler session and browser."""
+        if self.session:
             await self.session.close()
         
         if self.driver:
@@ -210,7 +222,8 @@ class ThreadsCrawler:
         self.logger.info("Threads crawler closed")
         
     async def _initialize_selenium(self):
-        """Initialize Selenium WebDriver."""        chrome_options = Options()
+        """Initialize Selenium WebDriver."""
+        chrome_options = Options()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
@@ -224,7 +237,8 @@ class ThreadsCrawler:
         self.driver = webdriver.Chrome(options=chrome_options)
         
     async def _make_api_request(self, endpoint: str, params: Dict = None, method: str = "GET") -> Dict:
-        """Make request to Threads API (when available)."""        if not self.access_token:
+        """Make request to Threads API (when available)."""
+        if not self.access_token:
             raise AuthenticationError("Threads API access token required")
         
         await self.rate_limiter.acquire()
@@ -270,7 +284,8 @@ class ThreadsCrawler:
                           query: str, 
                           limit: int = 50,
                           sort_by: str = "recent") -> List[ThreadsPost]:
-        """        Search for posts on Threads.
+        """
+        Search for posts on Threads.
         
         Args:
             query: Search query
@@ -279,7 +294,8 @@ class ThreadsCrawler:
             
         Returns:
             List of matching posts
-        """        try:
+        """
+        try:
             # Since official API might not be available, use web scraping
             if self.use_selenium:
                 return await self._search_posts_selenium(query, limit, sort_by)
@@ -295,7 +311,8 @@ class ThreadsCrawler:
                             username: str, 
                             limit: int = 50,
                             include_replies: bool = False) -> List[ThreadsPost]:
-        """        Get posts from a specific user.
+        """
+        Get posts from a specific user.
         
         Args:
             username: Threads username
@@ -304,7 +321,8 @@ class ThreadsCrawler:
             
         Returns:
             List of user posts
-        """        try:
+        """
+        try:
             if self.use_selenium:
                 return await self._get_user_posts_selenium(username, limit, include_replies)
             else:
@@ -315,14 +333,16 @@ class ThreadsCrawler:
             raise CrawlerError(f"User posts error: {str(e)}")
     
     async def get_thread_conversation(self, post_id: str) -> ThreadsThread:
-        """        Get complete conversation thread.
+        """
+        Get complete conversation thread.
         
         Args:
             post_id: Root post ID
             
         Returns:
             Complete thread with all replies
-        """        try:
+        """
+        try:
             if self.use_selenium:
                 return await self._get_thread_selenium(post_id)
             else:
@@ -333,14 +353,16 @@ class ThreadsCrawler:
             raise CrawlerError(f"Thread retrieval error: {str(e)}")
     
     async def monitor_user(self, username: str) -> Dict:
-        """        Start monitoring a specific user.
+        """
+        Start monitoring a specific user.
         
         Args:
             username: Threads username to monitor
             
         Returns:
             Monitoring configuration
-        """        try:
+        """
+        try:
             self.monitored_users.add(username)
             
             # Get initial user data
@@ -364,7 +386,8 @@ class ThreadsCrawler:
     async def detect_trending_content(self, 
                                      time_window: int = 24,
                                      min_engagement: int = 100) -> List[ThreadsPost]:
-        """        Detect trending content based on engagement metrics.
+        """
+        Detect trending content based on engagement metrics.
         
         Args:
             time_window: Time window in hours to analyze
@@ -372,7 +395,8 @@ class ThreadsCrawler:
             
         Returns:
             List of trending posts
-        """        try:
+        """
+        try:
             trending_posts = []
             cutoff_time = datetime.utcnow() - timedelta(hours=time_window)
             
@@ -404,7 +428,8 @@ class ThreadsCrawler:
     async def detect_content_violations(self, 
                                        protected_content: List[str],
                                        similarity_threshold: float = 0.8) -> List[Dict]:
-        """        Detect potential content violations.
+        """
+        Detect potential content violations.
         
         Args:
             protected_content: List of protected content fingerprints
@@ -412,7 +437,8 @@ class ThreadsCrawler:
             
         Returns:
             List of potential violations
-        """        try:
+        """
+        try:
             violations = []
             
             # Check monitored users
@@ -449,7 +475,8 @@ class ThreadsCrawler:
             raise CrawlerError(f"Violation detection error: {str(e)}")
     
     async def _search_posts_selenium(self, query: str, limit: int, sort_by: str) -> List[ThreadsPost]:
-        """Search posts using Selenium web scraping."""        if not self.driver:
+        """Search posts using Selenium web scraping."""
+        if not self.driver:
             await self._initialize_selenium()
         
         search_url = f"{self.web_base_url}/search?q={urlencode({'q': query})}"
@@ -462,14 +489,16 @@ class ThreadsCrawler:
         return posts
     
     async def _search_posts_http(self, query: str, limit: int, sort_by: str) -> List[ThreadsPost]:
-        """Search posts using HTTP requests."""        # Implementation for HTTP-based searching
+        """Search posts using HTTP requests."""
+        # Implementation for HTTP-based searching
         # This would involve reverse-engineering web requests
         
         posts = []
         return posts
     
     async def get_user_profile(self, username: str) -> ThreadsUser:
-        """Get user profile information."""        try:
+        """Get user profile information."""
+        try:
             if self.use_selenium:
                 return await self._get_user_profile_selenium(username)
             else:
@@ -480,7 +509,8 @@ class ThreadsCrawler:
             raise CrawlerError(f"User profile error: {str(e)}")
     
     def _calculate_viral_score(self, post: ThreadsPost) -> float:
-        """Calculate viral score for a post."""        # Viral score calculation based on engagement metrics
+        """Calculate viral score for a post."""
+        # Viral score calculation based on engagement metrics
         total_engagement = post.like_count + (post.reply_count * 2) + (post.repost_count * 3)
         time_factor = max(1, (datetime.utcnow() - post.created_at).total_seconds() / 3600)
         
@@ -488,10 +518,12 @@ class ThreadsCrawler:
         return min(viral_score, 100.0)  # Cap at 100
     
     async def _calculate_content_similarity(self, fingerprint1: str, fingerprint2: str) -> float:
-        """Calculate similarity between content fingerprints."""        return await self.text_fingerprinter.calculate_similarity(fingerprint1, fingerprint2)
+        """Calculate similarity between content fingerprints."""
+        return await self.text_fingerprinter.calculate_similarity(fingerprint1, fingerprint2)
     
     def get_crawler_stats(self) -> Dict[str, any]:
-        """Get crawler statistics and status."""        return {
+        """Get crawler statistics and status."""
+        return {
             'platform': 'threads',
             'selenium_enabled': bool(self.driver),
             'monitored_users': len(self.monitored_users),
@@ -546,7 +578,8 @@ logger = logging.getLogger(__name__)
 
 
 class ThreadsPostType(str, Enum):
-    """Threads post types"""    TEXT = "text"
+    """Threads post types"""
+    TEXT = "text"
     PHOTO = "photo"
     VIDEO = "video"
     CAROUSEL = "carousel"
@@ -555,7 +588,8 @@ class ThreadsPostType(str, Enum):
 
 
 class ThreadsInteractionType(str, Enum):
-    """Threads interaction types"""    LIKE = "like"
+    """Threads interaction types"""
+    LIKE = "like"
     REPLY = "reply"
     REPOST = "repost"
     QUOTE = "quote"
@@ -563,14 +597,16 @@ class ThreadsInteractionType(str, Enum):
 
 
 class ThreadsContentVisibility(str, Enum):
-    """Threads content visibility levels"""    PUBLIC = "public"
+    """Threads content visibility levels"""
+    PUBLIC = "public"
     FOLLOWERS = "followers"
     MENTIONED_ONLY = "mentioned_only"
     HIDDEN = "hidden"
 
 
 class ThreadsUser(BaseModel):
-    """Threads user data model"""    user_id: str
+    """Threads user data model"""
+    user_id: str
     username: str
     display_name: str
     bio: Optional[str] = None
@@ -591,7 +627,8 @@ class ThreadsUser(BaseModel):
 
 
 class ThreadsMedia(BaseModel):
-    """Threads media data model"""    media_id: str
+    """Threads media data model"""
+    media_id: str
     media_type: str  # "image", "video", "carousel_album"
     url: str
     thumbnail_url: Optional[str] = None
@@ -605,7 +642,8 @@ class ThreadsMedia(BaseModel):
 
 
 class ThreadsPost(BaseModel):
-    """Threads post data model"""    post_id: str
+    """Threads post data model"""
+    post_id: str
     user: ThreadsUser
     text: Optional[str] = None
     media: List[ThreadsMedia] = Field(default_factory=list)
@@ -640,7 +678,8 @@ class ThreadsPost(BaseModel):
 
 
 class ThreadsConversation(BaseModel):
-    """Threads conversation/thread data model"""    conversation_id: str
+    """Threads conversation/thread data model"""
+    conversation_id: str
     root_post: ThreadsPost
     replies: List[ThreadsPost] = Field(default_factory=list)
     participants: List[ThreadsUser] = Field(default_factory=list)
@@ -653,7 +692,8 @@ class ThreadsConversation(BaseModel):
 
 
 class ThreadsTrend(BaseModel):
-    """Threads trending topic data model"""    trend_id: str
+    """Threads trending topic data model"""
+    trend_id: str
     hashtag: str
     posts_count: int
     mentions_count: int
@@ -666,7 +706,8 @@ class ThreadsTrend(BaseModel):
 
 
 class ThreadsSearchResults(BaseModel):
-    """Threads search results data model"""    query: str
+    """Threads search results data model"""
+    query: str
     total_results: int
     users: List[ThreadsUser] = Field(default_factory=list)
     posts: List[ThreadsPost] = Field(default_factory=list)
@@ -680,7 +721,8 @@ class ThreadsSearchResults(BaseModel):
 
 
 class ThreadsAnalytics(BaseModel):
-    """Threads analytics data model"""    user_id: str
+    """Threads analytics data model"""
+    user_id: str
     analysis_period: Tuple[datetime, datetime]
     total_posts: int
     total_replies: int
@@ -705,11 +747,13 @@ class ThreadsAnalytics(BaseModel):
 
 
 class ThreadsCrawler(BaseCrawler):
-    """    Ultra-Advanced Threads Platform Crawler
+    """
+    Ultra-Advanced Threads Platform Crawler
     
     Provides comprehensive crawling and monitoring capabilities for Meta Threads platform,
     specializing in text-based conversations, community interactions, and real-time discussions.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -753,14 +797,16 @@ class ThreadsCrawler(BaseCrawler):
         logger.info("Threads crawler initialized with ultra-advanced text conversation monitoring")
 
     async def authenticate(self, access_token: str) -> bool:
-        """        Authenticate with Threads API
+        """
+        Authenticate with Threads API
         
         Args:
             access_token: Access token for Threads API
             
         Returns:
             bool: Authentication success status
-        """        try:
+        """
+        try:
             self.access_token = access_token
             
             self.session.headers.update({
@@ -791,7 +837,8 @@ class ThreadsCrawler(BaseCrawler):
         hashtag: Optional[str] = None,
         limit: int = 100
     ) -> ThreadsSearchResults:
-        """        Search Threads content with advanced filtering
+        """
+        Search Threads content with advanced filtering
         
         Args:
             query: Search query
@@ -801,7 +848,8 @@ class ThreadsCrawler(BaseCrawler):
             
         Returns:
             ThreadsSearchResults: Comprehensive search results
-        """        await self.rate_limiter.acquire()
+        """
+        await self.rate_limiter.acquire()
         
         try:
             results = ThreadsSearchResults(
@@ -865,7 +913,8 @@ class ThreadsCrawler(BaseCrawler):
         keywords: List[str] = None,
         check_interval: int = 300
     ) -> AsyncGenerator[ThreadsPost, None]:
-        """        Real-time content monitoring for Threads
+        """
+        Real-time content monitoring for Threads
         
         Args:
             usernames: Users to monitor
@@ -875,7 +924,8 @@ class ThreadsCrawler(BaseCrawler):
             
         Yields:
             ThreadsPost: New posts detected
-        """        usernames = usernames or []
+        """
+        usernames = usernames or []
         hashtags = hashtags or []
         keywords = keywords or []
         
@@ -945,7 +995,8 @@ class ThreadsCrawler(BaseCrawler):
         comparison_set: List[ThreadsPost],
         threshold: float = None
     ) -> List[Tuple[ThreadsPost, float]]:
-        """        Detect post similarity for content protection
+        """
+        Detect post similarity for content protection
         
         Args:
             target_post: Post to compare
@@ -954,7 +1005,8 @@ class ThreadsCrawler(BaseCrawler):
             
         Returns:
             List[Tuple[ThreadsPost, float]]: Similar posts with scores
-        """        threshold = threshold or self.similarity_threshold
+        """
+        threshold = threshold or self.similarity_threshold
         similar_posts = []
         
         try:
@@ -986,7 +1038,8 @@ class ThreadsCrawler(BaseCrawler):
         user_id: str,
         analysis_period: Tuple[datetime, datetime]
     ) -> ThreadsAnalytics:
-        """        Generate comprehensive analytics for Threads user
+        """
+        Generate comprehensive analytics for Threads user
         
         Args:
             user_id: User ID to analyze
@@ -994,7 +1047,8 @@ class ThreadsCrawler(BaseCrawler):
             
         Returns:
             ThreadsAnalytics: Comprehensive analytics data
-        """        try:
+        """
+        try:
             start_time, end_time = analysis_period
             
             # Get user's posts in the period
@@ -1156,7 +1210,8 @@ class ThreadsCrawler(BaseCrawler):
     # Helper methods
     
     async def _search_users(self, query: str, limit: int) -> List[ThreadsUser]:
-        """Search for Threads users"""        try:
+        """Search for Threads users"""
+        try:
             params = {
                 "q": query,
                 "limit": limit,
@@ -1187,7 +1242,8 @@ class ThreadsCrawler(BaseCrawler):
         hashtag: Optional[str],
         limit: int
     ) -> List[ThreadsPost]:
-        """Search for Threads posts"""        try:
+        """Search for Threads posts"""
+        try:
             params = {
                 "q": hashtag if hashtag else query,
                 "limit": limit,
@@ -1215,15 +1271,18 @@ class ThreadsCrawler(BaseCrawler):
             return []
 
     async def _search_conversations(self, query: str, limit: int) -> List[ThreadsConversation]:
-        """Search for conversations/threads"""        # Implementation would require conversation API
+        """Search for conversations/threads"""
+        # Implementation would require conversation API
         return []
 
     async def _get_related_hashtags(self, hashtag: str) -> List[str]:
-        """Get related hashtags"""        # Implementation would require hashtag suggestion API
+        """Get related hashtags"""
+        # Implementation would require hashtag suggestion API
         return []
 
     async def _get_user_recent_posts(self, username: str) -> List[ThreadsPost]:
-        """Get recent posts from user"""        try:
+        """Get recent posts from user"""
+        try:
             # First get user ID from username
             user_id = await self._get_user_id_from_username(username)
             if not user_id:
@@ -1252,7 +1311,8 @@ class ThreadsCrawler(BaseCrawler):
             return []
 
     async def _get_hashtag_recent_posts(self, hashtag: str) -> List[ThreadsPost]:
-        """Get recent posts with hashtag"""        try:
+        """Get recent posts with hashtag"""
+        try:
             params = {
                 "fields": "id,media_type,media_url,permalink,timestamp,caption,like_count,comments_count",
                 "limit": 25
@@ -1276,7 +1336,8 @@ class ThreadsCrawler(BaseCrawler):
             return []
 
     async def _get_user_id_from_username(self, username: str) -> Optional[str]:
-        """Get user ID from username"""        try:
+        """Get user ID from username"""
+        try:
             params = {
                 "q": username,
                 "limit": 1,
@@ -1299,7 +1360,8 @@ class ThreadsCrawler(BaseCrawler):
             return None
 
     async def _parse_user_data(self, data: Dict[str, Any]) -> ThreadsUser:
-        """Parse user data from API response"""        return ThreadsUser(
+        """Parse user data from API response"""
+        return ThreadsUser(
             user_id=str(data.get("id", "")),
             username=data.get("username", ""),
             display_name=data.get("name", ""),
@@ -1314,7 +1376,8 @@ class ThreadsCrawler(BaseCrawler):
         )
 
     async def _parse_post_data(self, data: Dict[str, Any]) -> ThreadsPost:
-        """Parse post data from API response"""        # Parse media
+        """Parse post data from API response"""
+        # Parse media
         media = []
         if data.get("media_url"):
             media_item = ThreadsMedia(
@@ -1373,7 +1436,8 @@ class ThreadsCrawler(BaseCrawler):
         )
 
     async def _extract_post_features(self, post: ThreadsPost) -> Dict[str, Any]:
-        """Extract features for similarity comparison"""        features = {
+        """Extract features for similarity comparison"""
+        features = {
             "text": (post.text or "").lower(),
             "user_id": post.user.user_id,
             "post_type": post.post_type.value,
@@ -1394,7 +1458,8 @@ class ThreadsCrawler(BaseCrawler):
         features1: Dict[str, Any],
         features2: Dict[str, Any]
     ) -> float:
-        """Calculate similarity between post features"""        try:
+        """Calculate similarity between post features"""
+        try:
             scores = []
             
             # Text similarity
@@ -1432,7 +1497,8 @@ class ThreadsCrawler(BaseCrawler):
             return 0.0
 
     async def _analyze_sentiment(self, text: str) -> float:
-        """Analyze sentiment of text"""        try:
+        """Analyze sentiment of text"""
+        try:
             # Simplified sentiment analysis
             positive_words = ['good', 'great', 'amazing', 'awesome', 'love', 'happy', 'excellent']
             negative_words = ['bad', 'terrible', 'awful', 'hate', 'sad', 'angry', 'horrible']
@@ -1458,20 +1524,24 @@ class ThreadsCrawler(BaseCrawler):
         start_time: datetime,
         end_time: datetime
     ) -> List[ThreadsPost]:
-        """Get user's posts in specific time period"""        # Implementation would require pagination through posts with date filtering
+        """Get user's posts in specific time period"""
+        # Implementation would require pagination through posts with date filtering
         return []
 
     async def _calculate_similarity(self, post: ThreadsPost) -> float:
-        """Calculate similarity score against protected content"""        # Simplified similarity calculation
+        """Calculate similarity score against protected content"""
+        # Simplified similarity calculation
         return 0.0
 
     async def _check_protection_status(self, post: ThreadsPost) -> str:
-        """Check protection status of post"""        if post.post_id in self.protected_content:
+        """Check protection status of post"""
+        if post.post_id in self.protected_content:
             return "protected"
         return "unprotected"
 
     async def close(self):
-        """Close crawler and cleanup resources"""        try:
+        """Close crawler and cleanup resources"""
+        try:
             await self.cache_manager.close()
             await super().close()
             logger.info("Threads crawler closed successfully")

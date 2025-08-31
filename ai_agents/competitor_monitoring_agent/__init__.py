@@ -6,13 +6,22 @@ and strategic intelligence for content creators and businesses.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel. All rights reserved.
 WARNING: Unauthorized use, copying, or distribution is strictly prohibited.
-"""from .competitor_agent import CompetitorMonitoringAgent
+"""
+
+from .competitor_agent import CompetitorMonitoringAgent
+
 from .data_collection import DataCollectionManager
+
 from .market_intelligence import MarketIntelligenceEngine
+
 from .alert_system import AlertSystem
+
 from .strategic_analysis import StrategicAnalysisEngine
+
 from .config_manager import ConfigurationManager
+
 from .report_generator import ReportGenerator
+
 from .index import CompetitorMonitoringSystem, create_competitor_monitoring_system, get_system_info
 
 __version__ = "1.0.0"
@@ -33,10 +42,15 @@ __all__ = [
 ]
 
 from .core.monitoring_engine import CompetitorMonitoringEngine
+
 from .core.competitive_analyzer import CompetitiveAnalyzer
+
 from .core.market_intelligence import MarketIntelligenceEngine
+
 from .services.monitoring_service import MonitoringService
+
 from .services.intelligence_service import IntelligenceService
+
 from .models.competitor_models import (
     CompetitorProfile,
     CompetitorMetrics,

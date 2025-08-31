@@ -9,7 +9,8 @@ and validates that all modules have comprehensive testing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Final validation of unit test coverage requirement
-"""import subprocess
+"""
+import subprocess
 import sys
 import os
 from pathlib import Path
@@ -18,7 +19,8 @@ from datetime import datetime
 
 
 def validate_test_infrastructure():
-    """Validate the complete test infrastructure"""    
+    """Validate the complete test infrastructure"""
+    
     print("🎯 COMPREHENSIVE UNIT TESTS VALIDATION")
     print("=" * 80)
     print("Validating requirement: 'Tests unitaires pour tous les modules'")
@@ -182,7 +184,8 @@ def validate_test_infrastructure():
 
 
 def extract_number_from_output(output: str, pattern: str) -> int:
-    """Extract number from output text"""    try:
+    """Extract number from output text"""
+    try:
         lines = output.split('\n')
         for line in lines:
             if pattern in line:
@@ -197,7 +200,8 @@ def extract_number_from_output(output: str, pattern: str) -> int:
 
 
 def main():
-    """Main validation execution"""    
+    """Main validation execution"""
+    
     print("🚀 Starting comprehensive unit tests validation...")
     print(f"📅 Validation Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"📁 Working Directory: {os.getcwd()}")

@@ -19,7 +19,8 @@ Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import yaml
@@ -35,13 +36,15 @@ import math
 logger = logging.getLogger(__name__)
 
 class ScalingStrategy(Enum):
-    """Auto-scaling strategies"""    REACTIVE = "reactive"  # React to current metrics
+    """Auto-scaling strategies"""
+    REACTIVE = "reactive"  # React to current metrics
     PREDICTIVE = "predictive"  # Use ML to predict scaling needs
     SCHEDULED = "scheduled"  # Scale based on time patterns
     HYBRID = "hybrid"  # Combination of all strategies
 
 class ScalingMetric(Enum):
-    """Metrics for scaling decisions"""    CPU_UTILIZATION = "cpu_utilization"
+    """Metrics for scaling decisions"""
+    CPU_UTILIZATION = "cpu_utilization"
     MEMORY_UTILIZATION = "memory_utilization"
     NETWORK_IO = "network_io"
     DISK_IO = "disk_io"
@@ -54,7 +57,8 @@ class ScalingMetric(Enum):
     REVENUE_PROCESSING_LOAD = "revenue_processing_load"
 
 class ResourceType(Enum):
-    """Cloud resource types"""    COMPUTE_INSTANCE = "compute_instance"
+    """Cloud resource types"""
+    COMPUTE_INSTANCE = "compute_instance"
     CONTAINER_CLUSTER = "container_cluster"
     DATABASE_INSTANCE = "database_instance"
     STORAGE_VOLUME = "storage_volume"
@@ -64,14 +68,16 @@ class ResourceType(Enum):
     AI_MODEL_ENDPOINT = "ai_model_endpoint"
 
 class CostOptimizationLevel(Enum):
-    """Cost optimization aggressiveness levels"""    CONSERVATIVE = "conservative"  # Favor performance over cost
+    """Cost optimization aggressiveness levels"""
+    CONSERVATIVE = "conservative"  # Favor performance over cost
     BALANCED = "balanced"  # Balance performance and cost
     AGGRESSIVE = "aggressive"  # Favor cost over performance
     CUSTOM = "custom"  # Custom optimization rules
 
 @dataclass
 class ScalingPolicy:
-    """Auto-scaling policy configuration"""    policy_id: str
+    """Auto-scaling policy configuration"""
+    policy_id: str
     name: str
     resource_type: ResourceType
     scaling_strategy: ScalingStrategy
@@ -89,7 +95,8 @@ class ScalingPolicy:
 
 @dataclass
 class ResourceLimit:
-    """Resource limits and quotas"""    cpu_cores: Optional[float] = None
+    """Resource limits and quotas"""
+    cpu_cores: Optional[float] = None
     memory_gb: Optional[float] = None
     storage_gb: Optional[float] = None
     network_bandwidth_mbps: Optional[float] = None
@@ -98,7 +105,8 @@ class ResourceLimit:
 
 @dataclass
 class CostOptimizationRule:
-    """Cost optimization rule"""    rule_id: str
+    """Cost optimization rule"""
+    rule_id: str
     name: str
     description: str
     resource_type: ResourceType
@@ -109,7 +117,8 @@ class CostOptimizationRule:
 
 @dataclass
 class CloudResourceManagementSpec:
-    """Cloud resource management specification"""    namespace: str = "ia-influencer-resources"
+    """Cloud resource management specification"""
+    namespace: str = "ia-influencer-resources"
     cloud_providers: List[str] = field(default_factory=lambda: ["aws", "gcp", "azure"])
     enable_auto_scaling: bool = True
     enable_cost_optimization: bool = True
@@ -124,7 +133,8 @@ class CloudResourceManagementSpec:
     cost_analysis_interval: timedelta = timedelta(hours=1)
 
 class CloudResourceManager:
-    """Enterprise cloud resource management and auto-scaling manager"""    
+    """Enterprise cloud resource management and auto-scaling manager"""
+    
     def __init__(self, k8s_client=None, aws_client=None, gcp_client=None, azure_client=None):
         self.k8s_client = k8s_client
         self.aws_client = aws_client
@@ -141,7 +151,8 @@ class CloudResourceManager:
         self.scaling_history = []
         
     async def deploy_resource_management_infrastructure(self, spec: CloudResourceManagementSpec) -> Dict[str, Any]:
-        """Deploy comprehensive cloud resource management infrastructure"""        try:
+        """Deploy comprehensive cloud resource management infrastructure"""
+        try:
             results = {}
             logger.info("Deploying cloud resource management infrastructure for IA Influencer platform")
             
@@ -202,7 +213,8 @@ class CloudResourceManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_autoscaling_infrastructure(self, spec: CloudResourceManagementSpec) -> Dict[str, Any]:
-        """Deploy intelligent auto-scaling infrastructure"""        try:
+        """Deploy intelligent auto-scaling infrastructure"""
+        try:
             # Deploy Horizontal Pod Autoscaler (HPA) controller
             hpa_controller = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -304,7 +316,8 @@ class CloudResourceManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_cost_optimization_engine(self, spec: CloudResourceManagementSpec) -> Dict[str, Any]:
-        """Deploy intelligent cost optimization engine"""        try:
+        """Deploy intelligent cost optimization engine"""
+        try:
             # Deploy cost optimization service
             cost_optimizer = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -414,7 +427,8 @@ class CloudResourceManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_ia_influencer_hpas(self, spec: CloudResourceManagementSpec) -> Dict[str, Any]:
-        """Create IA Influencer specific Horizontal Pod Autoscalers"""        try:
+        """Create IA Influencer specific Horizontal Pod Autoscalers"""
+        try:
             hpas_created = []
             
             # HPA for content processing services
@@ -605,7 +619,8 @@ class CloudResourceManager:
     
     async def scale_resource(self, resource_name: str, target_replicas: int, 
                            namespace: str = "ia-influencer-production") -> Dict[str, Any]:
-        """Scale a specific resource manually"""        try:
+        """Scale a specific resource manually"""
+        try:
             # Get current deployment
             deployment = self.apps_v1.read_namespaced_deployment(
                 name=resource_name,
@@ -648,7 +663,8 @@ class CloudResourceManager:
             return {'status': 'error', 'message': str(e)}
     
     async def get_resource_management_status(self, namespace: str = "ia-influencer-resources") -> Dict[str, Any]:
-        """Get comprehensive resource management status"""        try:
+        """Get comprehensive resource management status"""
+        try:
             status = {
                 'overall_health': 'healthy',
                 'auto_scaling': {
@@ -747,17 +763,20 @@ class CloudResourceManager:
 def calculate_optimal_replica_count(current_replicas: int, current_utilization: float, 
                                   target_utilization: float, max_replicas: int, 
                                   min_replicas: int) -> int:
-    """Calculate optimal replica count based on utilization"""    if current_utilization == 0:
+    """Calculate optimal replica count based on utilization"""
+    if current_utilization == 0:
         return min_replicas
     
     desired_replicas = math.ceil(current_replicas * (current_utilization / target_utilization))
     return max(min_replicas, min(max_replicas, desired_replicas))
 
 def estimate_cost_savings(current_cost: float, optimization_percentage: float) -> float:
-    """Estimate cost savings from optimization"""    return current_cost * (optimization_percentage / 100)
+    """Estimate cost savings from optimization"""
+    return current_cost * (optimization_percentage / 100)
 
 def generate_scaling_policy(resource_type: ResourceType, workload_pattern: str) -> ScalingPolicy:
-    """Generate appropriate scaling policy based on resource type and workload pattern"""    if workload_pattern == "content_processing":
+    """Generate appropriate scaling policy based on resource type and workload pattern"""
+    if workload_pattern == "content_processing":
         return ScalingPolicy(
             policy_id=str(uuid.uuid4()),
             name=f"{resource_type.value}_content_processing_policy",

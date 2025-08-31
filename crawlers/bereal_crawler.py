@@ -11,7 +11,8 @@ Created by: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import json
 import logging
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class BeRealContentType(str, Enum):
-    """BeReal content types for classification"""    BEREAL_POST = "bereal_post"
+    """BeReal content types for classification"""
+    BEREAL_POST = "bereal_post"
     LATE_BEREAL = "late_bereal"
     MEMORY = "memory"
     COMMENT = "comment"
@@ -44,14 +46,16 @@ class BeRealContentType(str, Enum):
 
 
 class BeRealVisibility(str, Enum):
-    """BeReal post visibility settings"""    FRIENDS = "friends"
+    """BeReal post visibility settings"""
+    FRIENDS = "friends"
     FRIENDS_OF_FRIENDS = "friends_of_friends"
     DISCOVERY = "discovery"
     PRIVATE = "private"
 
 
 class BeRealLocation(BaseModel):
-    """BeReal location data model"""    latitude: Optional[float] = None
+    """BeReal location data model"""
+    latitude: Optional[float] = None
     longitude: Optional[float] = None
     city: Optional[str] = None
     country: Optional[str] = None
@@ -61,7 +65,8 @@ class BeRealLocation(BaseModel):
 
 
 class BeRealPhoto(BaseModel):
-    """BeReal photo data model"""    front_camera_url: str
+    """BeReal photo data model"""
+    front_camera_url: str
     back_camera_url: str
     front_camera_width: int
     front_camera_height: int
@@ -76,7 +81,8 @@ class BeRealPhoto(BaseModel):
 
 
 class BeRealUser(BaseModel):
-    """BeReal user data model"""    user_id: str
+    """BeReal user data model"""
+    user_id: str
     username: str
     display_name: str
     profile_picture_url: Optional[str] = None
@@ -93,7 +99,8 @@ class BeRealUser(BaseModel):
 
 
 class BeRealReaction(BaseModel):
-    """BeReal reaction data model"""    reaction_id: str
+    """BeReal reaction data model"""
+    reaction_id: str
     user: BeRealUser
     emoji: str
     created_at: datetime
@@ -101,7 +108,8 @@ class BeRealReaction(BaseModel):
 
 
 class BeRealComment(BaseModel):
-    """BeReal comment data model"""    comment_id: str
+    """BeReal comment data model"""
+    comment_id: str
     user: BeRealUser
     content: str
     created_at: datetime
@@ -112,7 +120,8 @@ class BeRealComment(BaseModel):
 
 
 class BeRealContent(BaseModel):
-    """Main BeReal content data model"""    post_id: str
+    """Main BeReal content data model"""
+    post_id: str
     user: BeRealUser
     content_type: BeRealContentType
     photos: BeRealPhoto
@@ -135,7 +144,8 @@ class BeRealContent(BaseModel):
 
 
 class BeRealSearchResults(BaseModel):
-    """BeReal search results data model"""    query: str
+    """BeReal search results data model"""
+    query: str
     total_results: int
     results: List[BeRealContent]
     search_type: str
@@ -146,7 +156,8 @@ class BeRealSearchResults(BaseModel):
 
 
 class BeRealAnalytics(BaseModel):
-    """BeReal analytics data model"""    user_id: str
+    """BeReal analytics data model"""
+    user_id: str
     analysis_period: Tuple[datetime, datetime]
     total_posts: int
     average_late_duration: float
@@ -163,11 +174,13 @@ class BeRealAnalytics(BaseModel):
 
 
 class BeRealCrawler(BaseCrawler):
-    """    Ultra-Advanced BeReal Platform Crawler
+    """
+    Ultra-Advanced BeReal Platform Crawler
     
     Provides comprehensive crawling and monitoring capabilities for BeReal platform,
     specializing in authentic moment capture, content protection, and real-time analytics.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -211,11 +224,13 @@ class BeRealCrawler(BaseCrawler):
         logger.info("BeReal crawler initialized with ultra-advanced monitoring capabilities")
 
     def _generate_device_id(self) -> str:
-        """Generate unique device identifier for BeReal API"""        import uuid
+        """Generate unique device identifier for BeReal API"""
+        import uuid
         return str(uuid.uuid4()).upper()
 
     async def authenticate(self, phone_number: str, verification_code: Optional[str] = None) -> bool:
-        """        Authenticate with BeReal platform
+        """
+        Authenticate with BeReal platform
         
         Args:
             phone_number: User's phone number for authentication
@@ -223,7 +238,8 @@ class BeRealCrawler(BaseCrawler):
             
         Returns:
             bool: Authentication success status
-        """        try:
+        """
+        try:
             headers = {
                 "User-Agent": f"BeReal/{self.client_version} (com.bereal.ft; build:99999; iOS 16.0.0)",
                 "Content-Type": "application/json",
@@ -285,7 +301,8 @@ class BeRealCrawler(BaseCrawler):
             return False
 
     async def _refresh_session(self) -> bool:
-        """Refresh authentication session"""        if not self.refresh_token:
+        """Refresh authentication session"""
+        if not self.refresh_token:
             return False
             
         try:
@@ -319,7 +336,8 @@ class BeRealCrawler(BaseCrawler):
         time_range: Optional[Tuple[datetime, datetime]] = None,
         limit: int = 50
     ) -> BeRealSearchResults:
-        """        Search BeReal content with advanced filtering
+        """
+        Search BeReal content with advanced filtering
         
         Args:
             query: Search query (username, location, etc.)
@@ -330,7 +348,8 @@ class BeRealCrawler(BaseCrawler):
             
         Returns:
             BeRealSearchResults: Comprehensive search results
-        """        await self.rate_limiter.acquire()
+        """
+        await self.rate_limiter.acquire()
         
         try:
             # Check cache first
@@ -402,7 +421,8 @@ class BeRealCrawler(BaseCrawler):
             )
 
     async def _search_discovery(self, query: str, limit: int) -> List[BeRealContent]:
-        """Search BeReal discovery feed"""        try:
+        """Search BeReal discovery feed"""
+        try:
             params = {
                 "limit": limit,
                 "offset": 0
@@ -422,7 +442,8 @@ class BeRealCrawler(BaseCrawler):
             return []
 
     async def _search_friends_feed(self, query: str, limit: int) -> List[BeRealContent]:
-        """Search user's friends feed"""        try:
+        """Search user's friends feed"""
+        try:
             params = {
                 "limit": limit,
                 "offset": 0
@@ -442,14 +463,16 @@ class BeRealCrawler(BaseCrawler):
             return []
 
     async def get_content_details(self, content_id: str) -> Optional[BeRealContent]:
-        """        Get detailed information about specific BeReal content
+        """
+        Get detailed information about specific BeReal content
         
         Args:
             content_id: BeReal post ID
             
         Returns:
             Optional[BeRealContent]: Detailed content information
-        """        await self.rate_limiter.acquire()
+        """
+        await self.rate_limiter.acquire()
         
         try:
             # Check cache first
@@ -488,7 +511,8 @@ class BeRealCrawler(BaseCrawler):
         keywords: List[str] = None,
         check_interval: int = 300  # 5 minutes
     ) -> AsyncGenerator[BeRealContent, None]:
-        """        Real-time content monitoring for BeReal
+        """
+        Real-time content monitoring for BeReal
         
         Args:
             user_ids: List of user IDs to monitor
@@ -497,7 +521,8 @@ class BeRealCrawler(BaseCrawler):
             
         Yields:
             BeRealContent: New content detected
-        """        self.monitored_users.update(user_ids)
+        """
+        self.monitored_users.update(user_ids)
         keywords = keywords or []
         
         logger.info(f"Starting BeReal monitoring for {len(user_ids)} users")
@@ -556,7 +581,8 @@ class BeRealCrawler(BaseCrawler):
         comparison_set: List[BeRealContent],
         threshold: float = None
     ) -> List[Tuple[BeRealContent, float]]:
-        """        Detect content similarity using advanced algorithms
+        """
+        Detect content similarity using advanced algorithms
         
         Args:
             target_content: Content to compare against
@@ -565,7 +591,8 @@ class BeRealCrawler(BaseCrawler):
             
         Returns:
             List[Tuple[BeRealContent, float]]: Similar content with scores
-        """        threshold = threshold or self.similarity_threshold
+        """
+        threshold = threshold or self.similarity_threshold
         similar_content = []
         
         try:
@@ -602,7 +629,8 @@ class BeRealCrawler(BaseCrawler):
         user_id: str,
         analysis_period: Tuple[datetime, datetime]
     ) -> BeRealAnalytics:
-        """        Generate comprehensive analytics for BeReal user
+        """
+        Generate comprehensive analytics for BeReal user
         
         Args:
             user_id: User ID to analyze
@@ -610,7 +638,8 @@ class BeRealCrawler(BaseCrawler):
             
         Returns:
             BeRealAnalytics: Comprehensive analytics data
-        """        try:
+        """
+        try:
             start_time, end_time = analysis_period
             
             # Gather user's content in the period
@@ -716,7 +745,8 @@ class BeRealCrawler(BaseCrawler):
             )
 
     async def _parse_post_data(self, data: Dict[str, Any]) -> BeRealContent:
-        """Parse BeReal post data into structured format"""        try:
+        """Parse BeReal post data into structured format"""
+        try:
             # Parse user data
             user_data = data.get("user", {})
             user = BeRealUser(
@@ -837,7 +867,8 @@ class BeRealCrawler(BaseCrawler):
             raise
 
     async def _extract_content_features(self, content: BeRealContent) -> Dict[str, Any]:
-        """Extract features for similarity comparison"""        features = {
+        """Extract features for similarity comparison"""
+        features = {
             "caption": content.caption or "",
             "location_city": content.location.city if content.location else "",
             "user_id": content.user.user_id,
@@ -860,7 +891,8 @@ class BeRealCrawler(BaseCrawler):
         features1: Dict[str, Any],
         features2: Dict[str, Any]
     ) -> float:
-        """Calculate similarity score between two content features"""        try:
+        """Calculate similarity score between two content features"""
+        try:
             scores = []
             
             # Caption similarity
@@ -898,7 +930,8 @@ class BeRealCrawler(BaseCrawler):
             return 0.0
 
     async def _calculate_similarity(self, content: BeRealContent) -> float:
-        """Calculate similarity score against protected content"""        if not self.protected_content:
+        """Calculate similarity score against protected content"""
+        if not self.protected_content:
             return 0.0
         
         try:
@@ -920,7 +953,8 @@ class BeRealCrawler(BaseCrawler):
             return 0.0
 
     async def _check_protection_status(self, content: BeRealContent) -> str:
-        """Check if content violates protection policies"""        try:
+        """Check if content violates protection policies"""
+        try:
             if content.post_id in self.protected_content:
                 return "protected"
             
@@ -937,7 +971,8 @@ class BeRealCrawler(BaseCrawler):
             return "unknown"
 
     async def _handle_rate_limit(self, response: aiohttp.ClientResponse) -> bool:
-        """Handle rate limiting responses"""        if response.status == 429:
+        """Handle rate limiting responses"""
+        if response.status == 429:
             retry_after = int(response.headers.get('Retry-After', 60))
             logger.warning(f"Rate limited. Waiting {retry_after} seconds")
             await asyncio.sleep(retry_after)
@@ -945,7 +980,8 @@ class BeRealCrawler(BaseCrawler):
         return False
 
     async def close(self):
-        """Close crawler and cleanup resources"""        try:
+        """Close crawler and cleanup resources"""
+        try:
             await self.cache_manager.close()
             await super().close()
             logger.info("BeReal crawler closed successfully")

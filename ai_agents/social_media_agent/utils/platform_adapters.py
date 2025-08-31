@@ -22,7 +22,8 @@ Expert Development Team Specialties:
 - DevOps & Infrastructure Engineer - CI/CD pipelines, containerization, and monitoring
 - AI Prompt Engineering Expert - Natural language processing and content generation
 - Content Protection Specialist - AI fingerprinting and copyright protection systems
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 from typing import Dict, Any, List, Optional, Tuple, Union, Type
 from dataclasses import dataclass, field, asdict
@@ -40,7 +41,8 @@ import mimetypes
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Comprehensive supported social media platforms"""    # Major Social Media Platforms
+    """Comprehensive supported social media platforms"""
+    # Major Social Media Platforms
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
     TWITTER = "twitter" 
@@ -77,7 +79,8 @@ class PlatformType(Enum):
     THREADS = "threads"
 
 class ContentFormat(Enum):
-    """Comprehensive content format types"""    # Standard Content Types
+    """Comprehensive content format types"""
+    # Standard Content Types
     POST = "post"
     STORY = "story"
     REEL = "reel"
@@ -115,7 +118,8 @@ class ContentFormat(Enum):
     COLLABORATION = "collaboration"
 
 class AdapterCapability(Enum):
-    """Comprehensive platform adapter capabilities"""    # Content Management
+    """Comprehensive platform adapter capabilities"""
+    # Content Management
     PUBLISH_CONTENT = "publish_content"
     SCHEDULE_CONTENT = "schedule_content"
     UPDATE_CONTENT = "update_content"
@@ -167,7 +171,8 @@ class AdapterCapability(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform authentication credentials"""    platform: PlatformType
+    """Platform authentication credentials"""
+    platform: PlatformType
     api_key: Optional[str] = None
     api_secret: Optional[str] = None
     access_token: Optional[str] = None
@@ -181,7 +186,8 @@ class PlatformCredentials:
 
 @dataclass
 class ContentPayload:
-    """Unified content payload for all platforms"""    platform: PlatformType
+    """Unified content payload for all platforms"""
+    platform: PlatformType
     format: ContentFormat
     title: Optional[str] = None
     caption: Optional[str] = None
@@ -199,7 +205,8 @@ class ContentPayload:
 
 @dataclass
 class PublishResult:
-    """Result of content publication"""    success: bool
+    """Result of content publication"""
+    success: bool
     platform: PlatformType
     content_id: Optional[str] = None
     platform_post_id: Optional[str] = None
@@ -211,7 +218,8 @@ class PublishResult:
 
 @dataclass 
 class AnalyticsData:
-    """Platform analytics data"""    platform: PlatformType
+    """Platform analytics data"""
+    platform: PlatformType
     content_id: str
     metrics: Dict[str, Union[int, float]]
     time_period: Tuple[datetime, datetime]
@@ -220,7 +228,8 @@ class AnalyticsData:
     engagement_breakdown: Optional[Dict[str, Any]] = None
 
 class BasePlatformAdapter(ABC):
-    """Abstract base class for platform adapters"""    
+    """Abstract base class for platform adapters"""
+    
     def __init__(self, credentials: PlatformCredentials):
         self.credentials = credentials
         self.platform = credentials.platform
@@ -231,55 +240,68 @@ class BasePlatformAdapter(ABC):
     @property
     @abstractmethod
     def supported_capabilities(self) -> List[AdapterCapability]:
-        """Get list of supported capabilities"""        pass
+        """Get list of supported capabilities"""
+        pass
     
     @property
     @abstractmethod
     def supported_formats(self) -> List[ContentFormat]:
-        """Get list of supported content formats"""        pass
+        """Get list of supported content formats"""
+        pass
     
     @property
     @abstractmethod
     def platform_limits(self) -> Dict[str, Any]:
-        """Get platform-specific limits"""        pass
+        """Get platform-specific limits"""
+        pass
     
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with the platform"""        pass
+        """Authenticate with the platform"""
+        pass
     
     @abstractmethod
     async def publish_content(self, payload: ContentPayload) -> PublishResult:
-        """Publish content to the platform"""        pass
+        """Publish content to the platform"""
+        pass
     
     @abstractmethod
     async def get_analytics(self, content_id: str, metrics: List[str],
                           start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get analytics for specific content"""        pass
+        """Get analytics for specific content"""
+        pass
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete content from platform"""        return False  # Default implementation
+        """Delete content from platform"""
+        return False  # Default implementation
     
     async def update_content(self, content_id: str, updates: Dict[str, Any]) -> bool:
-        """Update existing content"""        return False  # Default implementation
+        """Update existing content"""
+        return False  # Default implementation
     
     async def get_profile_info(self) -> Dict[str, Any]:
-        """Get account/profile information"""        return {}  # Default implementation
+        """Get account/profile information"""
+        return {}  # Default implementation
     
     async def refresh_token(self) -> bool:
-        """Refresh authentication token"""        return False  # Default implementation
+        """Refresh authentication token"""
+        return False  # Default implementation
     
     async def _ensure_session(self):
-        """Ensure HTTP session is available"""        if not self.session:
+        """Ensure HTTP session is available"""
+        if not self.session:
             timeout = aiohttp.ClientTimeout(total=30)
             self.session = aiohttp.ClientSession(timeout=timeout)
     
     async def _close_session(self):
-        """Close HTTP session"""        if self.session:
+        """Close HTTP session"""
+        if self.session:
             await self.session.close()
             self.session = None
     
     async def _rate_limit_wait(self, endpoint: str):
-        """Wait if rate limit would be exceeded"""        if endpoint not in self.rate_limits:
+        """Wait if rate limit would be exceeded"""
+        if endpoint not in self.rate_limits:
             return
         
         rate_limit = self.rate_limits[endpoint]
@@ -300,7 +322,8 @@ class BasePlatformAdapter(ABC):
         self.last_request_times[endpoint] = now
 
 class InstagramAdapter(BasePlatformAdapter):
-    """Instagram platform adapter"""    
+    """Instagram platform adapter"""
+    
     BASE_URL = "https://graph.facebook.com/v18.0"
     
     @property
@@ -336,7 +359,8 @@ class InstagramAdapter(BasePlatformAdapter):
         }
     
     async def authenticate(self) -> bool:
-        """Authenticate with Instagram Graph API"""        try:
+        """Authenticate with Instagram Graph API"""
+        try:
             await self._ensure_session()
             
             # Test API access with account info
@@ -361,7 +385,8 @@ class InstagramAdapter(BasePlatformAdapter):
             return False
     
     async def publish_content(self, payload: ContentPayload) -> PublishResult:
-        """Publish content to Instagram"""        try:
+        """Publish content to Instagram"""
+        try:
             await self._ensure_session()
             await self._rate_limit_wait('publish')
             
@@ -424,7 +449,8 @@ class InstagramAdapter(BasePlatformAdapter):
             )
     
     async def _validate_payload(self, payload: ContentPayload) -> Dict[str, Any]:
-        """Validate content payload for Instagram"""        if not payload.media_files:
+        """Validate content payload for Instagram"""
+        if not payload.media_files:
             return {'valid': False, 'error': 'No media files provided'}
         
         if payload.caption and len(payload.caption) > self.platform_limits['caption_max_length']:
@@ -436,7 +462,8 @@ class InstagramAdapter(BasePlatformAdapter):
         return {'valid': True}
     
     async def _upload_media(self, media_file: Dict[str, Any]) -> Optional[str]:
-        """Upload media file to Instagram"""        try:
+        """Upload media file to Instagram"""
+        try:
             media_type = media_file.get('type', 'IMAGE')
             media_url = media_file.get('url')
             
@@ -464,7 +491,8 @@ class InstagramAdapter(BasePlatformAdapter):
     
     async def _create_media_container(self, payload: ContentPayload, 
                                     media_ids: List[str]) -> Optional[str]:
-        """Create media container"""        try:
+        """Create media container"""
+        try:
             url = f"{self.BASE_URL}/{self.credentials.account_id}/media"
             
             # Build caption with hashtags
@@ -501,7 +529,8 @@ class InstagramAdapter(BasePlatformAdapter):
             return None
     
     async def _publish_container(self, container_id: str) -> Optional[str]:
-        """Publish media container"""        try:
+        """Publish media container"""
+        try:
             url = f"{self.BASE_URL}/{self.credentials.account_id}/media_publish"
             data = {
                 'creation_id': container_id,
@@ -523,7 +552,8 @@ class InstagramAdapter(BasePlatformAdapter):
     
     async def get_analytics(self, content_id: str, metrics: List[str],
                           start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get Instagram analytics"""        try:
+        """Get Instagram analytics"""
+        try:
             await self._ensure_session()
             
             # Map generic metrics to Instagram specific metrics
@@ -592,7 +622,8 @@ class InstagramAdapter(BasePlatformAdapter):
             )
 
 class TwitterAdapter(BasePlatformAdapter):
-    """Twitter platform adapter"""    
+    """Twitter platform adapter"""
+    
     BASE_URL = "https://api.twitter.com/2"
     UPLOAD_URL = "https://upload.twitter.com/1.1"
     
@@ -628,7 +659,8 @@ class TwitterAdapter(BasePlatformAdapter):
         }
     
     async def authenticate(self) -> bool:
-        """Authenticate with Twitter API v2"""        try:
+        """Authenticate with Twitter API v2"""
+        try:
             await self._ensure_session()
             
             # Test API access with user info
@@ -653,7 +685,8 @@ class TwitterAdapter(BasePlatformAdapter):
             return False
     
     async def publish_content(self, payload: ContentPayload) -> PublishResult:
-        """Publish content to Twitter"""        try:
+        """Publish content to Twitter"""
+        try:
             await self._ensure_session()
             await self._rate_limit_wait('publish')
             
@@ -702,7 +735,8 @@ class TwitterAdapter(BasePlatformAdapter):
             )
     
     def _build_tweet_text(self, payload: ContentPayload) -> str:
-        """Build tweet text from payload"""        text_parts = []
+        """Build tweet text from payload"""
+        text_parts = []
         
         if payload.title:
             text_parts.append(payload.title)
@@ -725,7 +759,8 @@ class TwitterAdapter(BasePlatformAdapter):
         return tweet_text
     
     async def _validate_payload(self, payload: ContentPayload) -> Dict[str, Any]:
-        """Validate content payload for Twitter"""        tweet_text = self._build_tweet_text(payload)
+        """Validate content payload for Twitter"""
+        tweet_text = self._build_tweet_text(payload)
         
         if len(tweet_text) > self.platform_limits['tweet_max_length']:
             return {'valid': False, 'error': 'Tweet text too long'}
@@ -736,7 +771,8 @@ class TwitterAdapter(BasePlatformAdapter):
         return {'valid': True}
     
     async def _upload_media(self, media_file: Dict[str, Any]) -> Optional[str]:
-        """Upload media file to Twitter"""        try:
+        """Upload media file to Twitter"""
+        try:
             # This is a simplified version - actual implementation would handle
             # chunked uploads for larger files
             media_url = media_file.get('url')
@@ -751,7 +787,8 @@ class TwitterAdapter(BasePlatformAdapter):
             return None
     
     async def _create_tweet(self, text: str, media_ids: List[str]) -> Optional[str]:
-        """Create a tweet"""        try:
+        """Create a tweet"""
+        try:
             url = f"{self.BASE_URL}/tweets"
             headers = {
                 'Authorization': f'Bearer {self.credentials.access_token}',
@@ -778,7 +815,8 @@ class TwitterAdapter(BasePlatformAdapter):
     
     async def get_analytics(self, content_id: str, metrics: List[str],
                           start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get Twitter analytics"""        try:
+        """Get Twitter analytics"""
+        try:
             await self._ensure_session()
             
             # Twitter API v2 analytics (simplified)
@@ -830,7 +868,8 @@ class TwitterAdapter(BasePlatformAdapter):
             )
 
 class LinkedInAdapter(BasePlatformAdapter):
-    """LinkedIn platform adapter"""    
+    """LinkedIn platform adapter"""
+    
     BASE_URL = "https://api.linkedin.com/v2"
     
     @property
@@ -862,11 +901,13 @@ class LinkedInAdapter(BasePlatformAdapter):
         }
     
     async def authenticate(self) -> bool:
-        """Authenticate with LinkedIn API"""        # Implementation similar to other platforms
+        """Authenticate with LinkedIn API"""
+        # Implementation similar to other platforms
         return True
     
     async def publish_content(self, payload: ContentPayload) -> PublishResult:
-        """Publish content to LinkedIn"""        # Implementation for LinkedIn posting
+        """Publish content to LinkedIn"""
+        # Implementation for LinkedIn posting
         return PublishResult(
             success=True,
             platform=self.platform,
@@ -876,7 +917,8 @@ class LinkedInAdapter(BasePlatformAdapter):
     
     async def get_analytics(self, content_id: str, metrics: List[str],
                           start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get LinkedIn analytics"""        return AnalyticsData(
+        """Get LinkedIn analytics"""
+        return AnalyticsData(
             platform=self.platform,
             content_id=content_id,
             metrics={},
@@ -884,9 +926,11 @@ class LinkedInAdapter(BasePlatformAdapter):
         )
 
 class PlatformAdapters:
-    """    Advanced Social Media Platform Integration Layer
+    """
+    Advanced Social Media Platform Integration Layer
     Manages all platform adapters with unified interface and intelligent routing
-    """    
+    """
+    
     def __init__(self):
         self.adapters: Dict[PlatformType, BasePlatformAdapter] = {}
         self.adapter_classes = {
@@ -899,7 +943,8 @@ class PlatformAdapters:
         
     async def register_platform(self, platform: PlatformType, 
                               credentials: PlatformCredentials) -> bool:
-        """Register a platform with credentials"""        try:
+        """Register a platform with credentials"""
+        try:
             adapter_class = self.adapter_classes.get(platform)
             if not adapter_class:
                 logger.error(f"No adapter available for platform: {platform.value}")
@@ -924,7 +969,8 @@ class PlatformAdapters:
             return False
     
     def unregister_platform(self, platform: PlatformType) -> bool:
-        """Unregister a platform"""        if platform in self.adapters:
+        """Unregister a platform"""
+        if platform in self.adapters:
             adapter = self.adapters[platform]
             # Close any open sessions
             asyncio.create_task(adapter._close_session())
@@ -934,14 +980,17 @@ class PlatformAdapters:
         return False
     
     def get_registered_platforms(self) -> List[PlatformType]:
-        """Get list of registered platforms"""        return list(self.adapters.keys())
+        """Get list of registered platforms"""
+        return list(self.adapters.keys())
     
     def is_platform_registered(self, platform: PlatformType) -> bool:
-        """Check if platform is registered"""        return platform in self.adapters
+        """Check if platform is registered"""
+        return platform in self.adapters
     
     async def publish_content(self, platforms: List[PlatformType], 
                             payload: ContentPayload) -> Dict[PlatformType, PublishResult]:
-        """Publish content to multiple platforms"""        results = {}
+        """Publish content to multiple platforms"""
+        results = {}
         
         # Create tasks for concurrent publishing
         tasks = []
@@ -974,7 +1023,8 @@ class PlatformAdapters:
     
     def _adapt_payload_for_platform(self, payload: ContentPayload, 
                                    platform: PlatformType) -> ContentPayload:
-        """Adapt payload for specific platform requirements"""        adapted_payload = ContentPayload(
+        """Adapt payload for specific platform requirements"""
+        adapted_payload = ContentPayload(
             platform=platform,
             format=payload.format,
             title=payload.title,
@@ -1030,7 +1080,8 @@ class PlatformAdapters:
     
     async def _publish_to_platform(self, platform: PlatformType, 
                                  payload: ContentPayload) -> PublishResult:
-        """Publish to a specific platform"""        adapter = self.adapters.get(platform)
+        """Publish to a specific platform"""
+        adapter = self.adapters.get(platform)
         if not adapter:
             return PublishResult(
                 success=False,
@@ -1043,7 +1094,8 @@ class PlatformAdapters:
     async def get_analytics(self, platform: PlatformType, content_id: str,
                           metrics: List[str], start_date: datetime,
                           end_date: datetime) -> Optional[AnalyticsData]:
-        """Get analytics for specific platform and content"""        adapter = self.adapters.get(platform)
+        """Get analytics for specific platform and content"""
+        adapter = self.adapters.get(platform)
         if not adapter:
             logger.error(f"No adapter found for platform {platform.value}")
             return None
@@ -1058,7 +1110,8 @@ class PlatformAdapters:
                                   content_mapping: Dict[PlatformType, str],
                                   metrics: List[str], start_date: datetime,
                                   end_date: datetime) -> Dict[str, Any]:
-        """Get unified analytics across multiple platforms"""        platform_analytics = {}
+        """Get unified analytics across multiple platforms"""
+        platform_analytics = {}
         
         # Get analytics from each platform
         for platform in platforms:
@@ -1098,7 +1151,8 @@ class PlatformAdapters:
         }
     
     async def delete_content(self, platform: PlatformType, content_id: str) -> bool:
-        """Delete content from platform"""        adapter = self.adapters.get(platform)
+        """Delete content from platform"""
+        adapter = self.adapters.get(platform)
         if not adapter:
             logger.error(f"No adapter found for platform {platform.value}")
             return False
@@ -1110,28 +1164,32 @@ class PlatformAdapters:
         return await adapter.delete_content(content_id)
     
     def get_platform_capabilities(self, platform: PlatformType) -> List[AdapterCapability]:
-        """Get capabilities for specific platform"""        adapter = self.adapters.get(platform)
+        """Get capabilities for specific platform"""
+        adapter = self.adapters.get(platform)
         if not adapter:
             return []
         
         return adapter.supported_capabilities
     
     def get_platform_limits(self, platform: PlatformType) -> Dict[str, Any]:
-        """Get limits for specific platform"""        adapter = self.adapters.get(platform)
+        """Get limits for specific platform"""
+        adapter = self.adapters.get(platform)
         if not adapter:
             return {}
         
         return adapter.platform_limits
     
     def get_supported_formats(self, platform: PlatformType) -> List[ContentFormat]:
-        """Get supported content formats for platform"""        adapter = self.adapters.get(platform)
+        """Get supported content formats for platform"""
+        adapter = self.adapters.get(platform)
         if not adapter:
             return []
         
         return adapter.supported_formats
     
     async def refresh_all_tokens(self) -> Dict[PlatformType, bool]:
-        """Refresh authentication tokens for all platforms"""        results = {}
+        """Refresh authentication tokens for all platforms"""
+        results = {}
         
         for platform, adapter in self.adapters.items():
             try:
@@ -1150,7 +1208,8 @@ class PlatformAdapters:
         return results
     
     async def get_all_profile_info(self) -> Dict[PlatformType, Dict[str, Any]]:
-        """Get profile information from all registered platforms"""        profiles = {}
+        """Get profile information from all registered platforms"""
+        profiles = {}
         
         for platform, adapter in self.adapters.items():
             try:
@@ -1163,7 +1222,8 @@ class PlatformAdapters:
         return profiles
     
     async def cleanup(self):
-        """Cleanup resources"""        # Close all adapter sessions
+        """Cleanup resources"""
+        # Close all adapter sessions
         for adapter in self.adapters.values():
             await adapter._close_session()
         

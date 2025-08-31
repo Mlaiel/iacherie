@@ -35,7 +35,8 @@ Core Features:
 - Real-time Monitoring & Alerts
 - Revenue Protection & Recovery
 - Advanced Web Crawling & Platform Monitoring
-"""from typing import Dict, List, Optional, Any, Union
+"""
+from typing import Dict, List, Optional, Any, Union
 import logging
 
 # Configure module logger
@@ -312,13 +313,15 @@ __all__ = [
 
 # Module initialization
 def initialize_protection_system():
-    """Initialize the complete protection system"""    logger.info("Initializing IA Influencer Agent Protection System v%s", __version__)
+    """Initialize the complete protection system"""
+    logger.info("Initializing IA Influencer Agent Protection System v%s", __version__)
     logger.info("Copyright: %s", __copyright__)
     logger.info("All modules loaded successfully")
 
 # Convenience factory functions
 def create_complete_protection_suite():
-    """Create a complete protection suite with all components"""    from .anti_piracy_engine import AntiPiracyEngine
+    """Create a complete protection suite with all components"""
+    from .anti_piracy_engine import AntiPiracyEngine
     from .licensing_enforcement import LicensingEnforcementManager
     from .monitoring import MonitoringService
     from .revenue_protection import RevenueProtectionService
@@ -371,7 +374,8 @@ PLATFORM_ENDPOINTS = {
 }
 
 def get_module_info():
-    """Get module information and capabilities"""    return {
+    """Get module information and capabilities"""
+    return {
         'name': 'IA Influencer Agent - Protection Module',
         'version': __version__,
         'author': __author__,
@@ -392,7 +396,8 @@ def get_module_info():
     }
 
 def create_protection_system(config=None):
-    """Factory function to create a complete protection system"""    if config is None:
+    """Factory function to create a complete protection system"""
+    if config is None:
         config = {
             'copyright_holder': COPYRIGHT_HOLDER_INFO,
             'similarity_threshold': DEFAULT_SIMILARITY_THRESHOLD,

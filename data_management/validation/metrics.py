@@ -14,7 +14,8 @@ Analytics avancées pour monitoring et optimisation
 - Analytics temps réel
 - Reporting et dashboards
 - Optimisation automatique des règles
-"""from typing import Dict, List, Optional, Any, Union, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
 from pathlib import Path
@@ -33,7 +34,8 @@ from scipy import stats
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types de métriques"""    PERFORMANCE = "performance"
+    """Types de métriques"""
+    PERFORMANCE = "performance"
     QUALITY = "quality"
     COMPLIANCE = "compliance"
     SECURITY = "security"
@@ -41,7 +43,8 @@ class MetricType(Enum):
     ERROR = "error"
 
 class AggregationType(Enum):
-    """Types d'agrégation"""    COUNT = "count"
+    """Types d'agrégation"""
+    COUNT = "count"
     SUM = "sum"
     AVERAGE = "average"
     MEDIAN = "median"
@@ -52,7 +55,8 @@ class AggregationType(Enum):
 
 @dataclass
 class ValidationMetric:
-    """Métrique de validation individuelle"""    id: str
+    """Métrique de validation individuelle"""
+    id: str
     name: str
     metric_type: MetricType
     value: Union[int, float, str]
@@ -63,7 +67,8 @@ class ValidationMetric:
 
 @dataclass
 class ValidationEvent:
-    """Événement de validation"""    event_id: str
+    """Événement de validation"""
+    event_id: str
     event_type: str
     timestamp: datetime
     file_path: str
@@ -76,7 +81,8 @@ class ValidationEvent:
 
 @dataclass
 class MetricSummary:
-    """Résumé de métriques"""    metric_name: str
+    """Résumé de métriques"""
+    metric_name: str
     metric_type: MetricType
     total_count: int
     average_value: float
@@ -89,7 +95,8 @@ class MetricSummary:
     time_range: Tuple[datetime, datetime]
 
 class MetricsCollector:
-    """Collecteur de métriques de validation"""    
+    """Collecteur de métriques de validation"""
+    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
         self.metrics_buffer: List[ValidationMetric] = []
@@ -97,7 +104,8 @@ class MetricsCollector:
         self.buffer_size = 1000
     
     def record_validation_event(self, event: ValidationEvent):
-        """Enregistre un événement de validation"""        try:
+        """Enregistre un événement de validation"""
+        try:
             # Génération automatique de métriques à partir de l'événement
             auto_metrics = self._generate_auto_metrics(event)
             event.metrics.extend(auto_metrics)
@@ -119,7 +127,8 @@ class MetricsCollector:
             self.logger.error(f"Erreur enregistrement événement: {e}")
     
     def record_metric(self, metric: ValidationMetric):
-        """Enregistre une métrique individuelle"""        try:
+        """Enregistre une métrique individuelle"""
+        try:
             self.metrics_buffer.append(metric)
             
             if len(self.metrics_buffer) > self.buffer_size * 10:
@@ -129,7 +138,8 @@ class MetricsCollector:
             self.logger.error(f"Erreur enregistrement métrique: {e}")
     
     def get_metrics_by_type(self, metric_type: MetricType, start_time: Optional[datetime] = None, end_time: Optional[datetime] = None) -> List[ValidationMetric]:
-        """Récupère les métriques par type et période"""        filtered_metrics = []
+        """Récupère les métriques par type et période"""
+        filtered_metrics = []
         
         for metric in self.metrics_buffer:
             # Filtrage par type
@@ -153,7 +163,8 @@ class MetricsCollector:
         start_time: Optional[datetime] = None,
         end_time: Optional[datetime] = None
     ) -> List[ValidationEvent]:
-        """Récupère les événements selon des critères"""        filtered_events = []
+        """Récupère les événements selon des critères"""
+        filtered_events = []
         
         for event in self.events_buffer:
             # Filtrage par type de créateur
@@ -175,7 +186,8 @@ class MetricsCollector:
         return filtered_events
     
     def _generate_auto_metrics(self, event: ValidationEvent) -> List[ValidationMetric]:
-        """Génère automatiquement des métriques depuis un événement"""        auto_metrics = []
+        """Génère automatiquement des métriques depuis un événement"""
+        auto_metrics = []
         base_timestamp = event.timestamp
         
         # Métrique de performance - durée
@@ -248,13 +260,15 @@ class MetricsCollector:
         return auto_metrics
 
 class MetricsAnalyzer:
-    """Analyseur de métriques avancé"""    
+    """Analyseur de métriques avancé"""
+    
     def __init__(self, collector: MetricsCollector):
         self.collector = collector
         self.logger = logging.getLogger(f"{__name__}.MetricsAnalyzer")
     
     def analyze_performance_trends(self, days: int = 7) -> Dict[str, Any]:
-        """Analyse les tendances de performance"""        end_time = datetime.now()
+        """Analyse les tendances de performance"""
+        end_time = datetime.now()
         start_time = end_time - timedelta(days=days)
         
         # Récupération des métriques de performance
@@ -305,7 +319,8 @@ class MetricsAnalyzer:
         return analysis
     
     def analyze_quality_metrics(self, creator_type: Optional[str] = None, days: int = 30) -> Dict[str, Any]:
-        """Analyse les métriques de qualité"""        end_time = datetime.now()
+        """Analyse les métriques de qualité"""
+        end_time = datetime.now()
         start_time = end_time - timedelta(days=days)
         
         # Récupération des événements
@@ -380,7 +395,8 @@ class MetricsAnalyzer:
         return analysis
     
     def analyze_security_metrics(self, days: int = 7) -> Dict[str, Any]:
-        """Analyse les métriques de sécurité"""        end_time = datetime.now()
+        """Analyse les métriques de sécurité"""
+        end_time = datetime.now()
         start_time = end_time - timedelta(days=days)
         
         # Récupération des métriques de sécurité
@@ -417,7 +433,8 @@ class MetricsAnalyzer:
         return analysis
     
     def generate_performance_report(self, days: int = 30) -> Dict[str, Any]:
-        """Génère un rapport de performance complet"""        end_time = datetime.now()
+        """Génère un rapport de performance complet"""
+        end_time = datetime.now()
         start_time = end_time - timedelta(days=days)
         
         report = {
@@ -458,7 +475,8 @@ class MetricsAnalyzer:
         return report
     
     def _calculate_trend(self, values: List[float], timestamps: List[datetime]) -> str:
-        """Calcule la tendance d'une série de valeurs"""        if len(values) < 2:
+        """Calcule la tendance d'une série de valeurs"""
+        if len(values) < 2:
             return 'stable'
         
         try:
@@ -481,7 +499,8 @@ class MetricsAnalyzer:
             return 'stable'
     
     def _detect_anomalies(self, values: List[float]) -> List[Dict[str, Any]]:
-        """Détecte les anomalies dans une série de valeurs"""        anomalies = []
+        """Détecte les anomalies dans une série de valeurs"""
+        anomalies = []
         
         if len(values) < 5:
             return anomalies
@@ -507,7 +526,8 @@ class MetricsAnalyzer:
         return anomalies
     
     def _detect_seasonal_patterns(self, values: List[float], timestamps: List[datetime]) -> Dict[str, Any]:
-        """Détecte les patterns saisonniers"""        patterns = {'hourly': {}, 'daily': {}, 'weekly': {}}
+        """Détecte les patterns saisonniers"""
+        patterns = {'hourly': {}, 'daily': {}, 'weekly': {}}
         
         try:
             for i, (value, timestamp) in enumerate(zip(values, timestamps)):
@@ -538,7 +558,8 @@ class MetricsAnalyzer:
         return patterns
     
     def _calculate_overall_risk_level(self, security_analysis: Dict[str, Any]) -> str:
-        """Calcule le niveau de risque global"""        if security_analysis.get('status') == 'no_data':
+        """Calcule le niveau de risque global"""
+        if security_analysis.get('status') == 'no_data':
             return 'unknown'
         
         risk_percentage = security_analysis.get('risk_percentage', 0)
@@ -558,7 +579,8 @@ class MetricsAnalyzer:
         quality_analysis: Dict[str, Any],
         security_analysis: Dict[str, Any]
     ) -> List[str]:
-        """Génère des recommandations basées sur les analyses"""        recommendations = []
+        """Génère des recommandations basées sur les analyses"""
+        recommendations = []
         
         # Recommandations performance
         if performance_analysis:
@@ -590,13 +612,15 @@ class MetricsAnalyzer:
         return recommendations
 
 class MetricsDashboard:
-    """Dashboard de métriques en temps réel"""    
+    """Dashboard de métriques en temps réel"""
+    
     def __init__(self, analyzer: MetricsAnalyzer):
         self.analyzer = analyzer
         self.logger = logging.getLogger(f"{__name__}.MetricsDashboard")
     
     def get_real_time_stats(self) -> Dict[str, Any]:
-        """Récupère les statistiques temps réel"""        now = datetime.now()
+        """Récupère les statistiques temps réel"""
+        now = datetime.now()
         last_hour = now - timedelta(hours=1)
         last_day = now - timedelta(days=1)
         
@@ -634,7 +658,8 @@ class MetricsDashboard:
         return stats
     
     def get_creator_type_dashboard(self, creator_type: str) -> Dict[str, Any]:
-        """Dashboard spécifique à un type de créateur"""        now = datetime.now()
+        """Dashboard spécifique à un type de créateur"""
+        now = datetime.now()
         last_week = now - timedelta(days=7)
         
         events = self.analyzer.collector.get_events_by_criteria(
@@ -693,7 +718,8 @@ class MetricsDashboard:
         return dashboard
     
     def _calculate_system_health(self, events: List[ValidationEvent]) -> str:
-        """Calcule l'état de santé du système"""        if not events:
+        """Calcule l'état de santé du système"""
+        if not events:
             return 'unknown'
         
         success_rate = sum(1 for e in events if e.validation_result.get('is_valid', False)) / len(events)
@@ -710,7 +736,8 @@ class MetricsDashboard:
             return 'poor'
     
     def _calculate_performance_status(self, events: List[ValidationEvent]) -> str:
-        """Calcule le statut de performance"""        if not events:
+        """Calcule le statut de performance"""
+        if not events:
             return 'unknown'
         
         avg_duration = statistics.mean([e.duration_ms for e in events])
@@ -725,7 +752,8 @@ class MetricsDashboard:
             return 'slow'
     
     def _calculate_security_status(self, events: List[ValidationEvent]) -> str:
-        """Calcule le statut de sécurité"""        if not events:
+        """Calcule le statut de sécurité"""
+        if not events:
             return 'unknown'
         
         high_risk_events = []
@@ -747,7 +775,8 @@ class MetricsDashboard:
             return 'high_risk'
 
 class ValidationMetrics:
-    """Système principal de métriques de validation"""    
+    """Système principal de métriques de validation"""
+    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.ValidationMetrics")
         self.collector = MetricsCollector()
@@ -763,7 +792,8 @@ class ValidationMetrics:
         duration_ms: float,
         errors: List[str] = None
     ):
-        """Enregistre une validation complète"""        event = ValidationEvent(
+        """Enregistre une validation complète"""
+        event = ValidationEvent(
             event_id=f"val_{datetime.now().strftime('%Y%m%d_%H%M%S_%f')}",
             event_type='file_validation',
             timestamp=datetime.now(),
@@ -778,16 +808,20 @@ class ValidationMetrics:
         self.collector.record_validation_event(event)
     
     def get_performance_report(self, days: int = 30) -> Dict[str, Any]:
-        """Récupère un rapport de performance"""        return self.analyzer.generate_performance_report(days)
+        """Récupère un rapport de performance"""
+        return self.analyzer.generate_performance_report(days)
     
     def get_real_time_dashboard(self) -> Dict[str, Any]:
-        """Récupère le dashboard temps réel"""        return self.dashboard.get_real_time_stats()
+        """Récupère le dashboard temps réel"""
+        return self.dashboard.get_real_time_stats()
     
     def get_creator_dashboard(self, creator_type: str) -> Dict[str, Any]:
-        """Récupère le dashboard d'un type de créateur"""        return self.dashboard.get_creator_type_dashboard(creator_type)
+        """Récupère le dashboard d'un type de créateur"""
+        return self.dashboard.get_creator_type_dashboard(creator_type)
     
     def export_metrics(self, start_time: datetime, end_time: datetime, format: str = 'json') -> str:
-        """Exporte les métriques dans un format spécifique"""        events = self.collector.get_events_by_criteria(start_time=start_time, end_time=end_time)
+        """Exporte les métriques dans un format spécifique"""
+        events = self.collector.get_events_by_criteria(start_time=start_time, end_time=end_time)
         
         if format == 'json':
             export_data = {

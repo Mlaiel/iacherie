@@ -14,7 +14,9 @@ This module provides advanced optimization capabilities for:
 
 Lead Developer: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Content Protection
-"""from .performance import (
+"""
+
+from .performance import (
     ModelOptimizer,
     FingerprintingOptimizer,
     CacheOptimizer,

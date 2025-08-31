@@ -12,7 +12,8 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, modification ou distribution sans autorisation 
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
 du droit d'auteur. Les contrevenants s'exposent à des poursuites judiciaires.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import logging
 from datetime import datetime, timedelta
@@ -49,7 +50,8 @@ from redis import Redis
 
 
 class PlatformType(Enum):
-    """Supported platform types"""    YOUTUBE = "youtube"
+    """Supported platform types"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -61,7 +63,8 @@ class PlatformType(Enum):
 
 
 class CrawlMethod(Enum):
-    """Crawling methods"""    API_OFFICIAL = "api_official"
+    """Crawling methods"""
+    API_OFFICIAL = "api_official"
     WEB_SCRAPING = "web_scraping"
     RSS_FEED = "rss_feed"
     SELENIUM_AUTOMATION = "selenium_automation"
@@ -69,7 +72,8 @@ class CrawlMethod(Enum):
 
 
 class ContentStatus(Enum):
-    """Crawled content status"""    DISCOVERED = "discovered"
+    """Crawled content status"""
+    DISCOVERED = "discovered"
     ANALYZING = "analyzing"
     MATCHED = "matched"
     FALSE_POSITIVE = "false_positive"
@@ -78,7 +82,8 @@ class ContentStatus(Enum):
 
 @dataclass
 class CrawlTarget:
-    """Crawling target configuration"""    target_id: str
+    """Crawling target configuration"""
+    target_id: str
     platform: PlatformType
     method: CrawlMethod
     search_queries: List[str]
@@ -92,7 +97,8 @@ class CrawlTarget:
 
 @dataclass
 class CrawledContent:
-    """Discovered content from crawling"""    content_id: str
+    """Discovered content from crawling"""
+    content_id: str
     platform: PlatformType
     url: str
     title: str
@@ -112,7 +118,8 @@ class CrawledContent:
 
 @dataclass
 class CrawlResult:
-    """Crawling session result"""    crawl_id: str
+    """Crawling session result"""
+    crawl_id: str
     target_id: str
     platform: PlatformType
     start_time: datetime
@@ -126,20 +133,24 @@ class CrawlResult:
 
 
 class PlatformCrawler:
-    """    Advanced platform crawler for content monitoring.
+    """
+    Advanced platform crawler for content monitoring.
     
     Provides comprehensive crawling capabilities across major social media
     and content platforms with intelligent rate limiting and detection evasion.
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, redis_client: Redis, 
                  config: Dict[str, Any]):
-        """        Initialize PlatformCrawler.
+        """
+        Initialize PlatformCrawler.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
             config: Crawler configuration and API keys
-        """        self.db_session = db_session
+        """
+        self.db_session = db_session
         self.redis = redis_client
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -166,7 +177,8 @@ class PlatformCrawler:
         self.driver = None
     
     def _initialize_api_clients(self):
-        """Initialize platform API clients"""        try:
+        """Initialize platform API clients"""
+        try:
             # YouTube API
             if 'youtube_api_key' in self.config:
                 self.youtube = build('youtube', 'v3', 
@@ -191,7 +203,8 @@ class PlatformCrawler:
             self.logger.error(f"Error initializing API clients: {str(e)}")
     
     async def start_crawler_session(self):
-        """Start new crawler session with HTTP client"""        if self.session is None:
+        """Start new crawler session with HTTP client"""
+        if self.session is None:
             connector = aiohttp.TCPConnector(limit=100, limit_per_host=10)
             timeout = aiohttp.ClientTimeout(total=self.request_timeout)
             self.session = aiohttp.ClientSession(
@@ -203,12 +216,14 @@ class PlatformCrawler:
             )
     
     async def close_crawler_session(self):
-        """Close crawler session"""        if self.session:
+        """Close crawler session"""
+        if self.session:
             await self.session.close()
             self.session = None
     
     def _get_selenium_driver(self):
-        """Get configured Selenium WebDriver"""        if self.driver is None:
+        """Get configured Selenium WebDriver"""
+        if self.driver is None:
             options = Options()
             options.add_argument('--headless')
             options.add_argument('--no-sandbox')
@@ -223,19 +238,22 @@ class PlatformCrawler:
         return self.driver
     
     def _close_selenium_driver(self):
-        """Close Selenium WebDriver"""        if self.driver:
+        """Close Selenium WebDriver"""
+        if self.driver:
             self.driver.quit()
             self.driver = None
     
     async def crawl_platform(self, target: CrawlTarget) -> CrawlResult:
-        """        Crawl specific platform for content.
+        """
+        Crawl specific platform for content.
         
         Args:
             target: Crawling target configuration
             
         Returns:
             Crawling result summary
-        """        try:
+        """
+        try:
             start_time = datetime.utcnow()
             crawl_id = str(uuid.uuid4())
             
@@ -299,7 +317,8 @@ class PlatformCrawler:
             raise
     
     async def _crawl_youtube(self, target: CrawlTarget) -> List[CrawledContent]:
-        """Crawl YouTube for content"""        discovered_content = []
+        """Crawl YouTube for content"""
+        discovered_content = []
         
         try:
             if self.youtube is None:
@@ -368,7 +387,8 @@ class PlatformCrawler:
         return discovered_content
     
     async def _crawl_youtube_web(self, target: CrawlTarget) -> List[CrawledContent]:
-        """Crawl YouTube using web scraping"""        discovered_content = []
+        """Crawl YouTube using web scraping"""
+        discovered_content = []
         
         try:
             await self.start_crawler_session()
@@ -397,7 +417,8 @@ class PlatformCrawler:
         return discovered_content
     
     async def _crawl_instagram(self, target: CrawlTarget) -> List[CrawledContent]:
-        """Crawl Instagram for content"""        discovered_content = []
+        """Crawl Instagram for content"""
+        discovered_content = []
         
         try:
             # Instagram requires special handling due to strict API limitations
@@ -461,7 +482,8 @@ class PlatformCrawler:
         return discovered_content
     
     async def _crawl_tiktok(self, target: CrawlTarget) -> List[CrawledContent]:
-        """Crawl TikTok for content"""        discovered_content = []
+        """Crawl TikTok for content"""
+        discovered_content = []
         
         try:
             # TikTok crawling typically requires specialized tools due to anti-bot measures
@@ -524,7 +546,8 @@ class PlatformCrawler:
         return discovered_content
     
     async def _crawl_twitter(self, target: CrawlTarget) -> List[CrawledContent]:
-        """Crawl Twitter for content"""        discovered_content = []
+        """Crawl Twitter for content"""
+        discovered_content = []
         
         try:
             if self.twitter is None:
@@ -578,7 +601,8 @@ class PlatformCrawler:
         return discovered_content
     
     async def _crawl_soundcloud(self, target: CrawlTarget) -> List[CrawledContent]:
-        """Crawl SoundCloud for content"""        discovered_content = []
+        """Crawl SoundCloud for content"""
+        discovered_content = []
         
         try:
             await self.start_crawler_session()
@@ -634,7 +658,8 @@ class PlatformCrawler:
         return discovered_content
     
     async def _crawl_generic_web(self, target: CrawlTarget) -> List[CrawledContent]:
-        """Crawl generic websites for content"""        discovered_content = []
+        """Crawl generic websites for content"""
+        discovered_content = []
         
         try:
             await self.start_crawler_session()
@@ -691,7 +716,8 @@ class PlatformCrawler:
         return discovered_content
     
     async def _quick_similarity_check(self, content: CrawledContent) -> bool:
-        """Perform quick similarity check on discovered content"""        try:
+        """Perform quick similarity check on discovered content"""
+        try:
             # This would integrate with the fingerprinting engine
             # for actual similarity comparison
             
@@ -703,21 +729,24 @@ class PlatformCrawler:
             return False
     
     async def _store_crawled_content(self, content: CrawledContent):
-        """Store crawled content in database"""        try:
+        """Store crawled content in database"""
+        try:
             # Implementation would store in database
             pass
         except Exception as e:
             self.logger.error(f"Error storing crawled content: {str(e)}")
     
     async def _store_crawl_result(self, result: CrawlResult):
-        """Store crawl result in database"""        try:
+        """Store crawl result in database"""
+        try:
             # Implementation would store crawl result
             pass
         except Exception as e:
             self.logger.error(f"Error storing crawl result: {str(e)}")
     
     async def schedule_crawl_targets(self, targets: List[CrawlTarget]) -> Dict[str, bool]:
-        """Schedule multiple crawl targets"""        results = {}
+        """Schedule multiple crawl targets"""
+        results = {}
         
         for target in targets:
             try:
@@ -741,7 +770,8 @@ class PlatformCrawler:
     
     async def get_crawl_statistics(self, platform: Optional[PlatformType] = None,
                                  days: int = 7) -> Dict[str, Any]:
-        """Get crawling statistics"""        try:
+        """Get crawling statistics"""
+        try:
             # Implementation would query crawl statistics from database
             return {
                 'total_crawls': 150,
@@ -757,5 +787,6 @@ class PlatformCrawler:
             return {}
     
     def __del__(self):
-        """Cleanup resources"""        if self.driver:
+        """Cleanup resources"""
+        if self.driver:
             self._close_selenium_driver()

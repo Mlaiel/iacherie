@@ -5,7 +5,8 @@ and use cases in the IA-Influencer-Agent platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from .manager import CacheConfig, CachePriority
+"""
+from .manager import CacheConfig, CachePriority
 from .storage import StorageLevel, CompressionType
 
 # Development Configuration
@@ -142,27 +143,31 @@ CONFIGURATION_TEMPLATES = {
 }
 
 def get_config_for_environment(environment: str) -> CacheConfig:
-    """    Get cache configuration for specific environment.
+    """
+    Get cache configuration for specific environment.
     
     Args:
         environment: Environment name (development, production, etc.)
         
     Returns:
         CacheConfig instance for the environment
-    """    if environment not in CONFIGURATION_TEMPLATES:
+    """
+    if environment not in CONFIGURATION_TEMPLATES:
         raise ValueError(f"Unknown environment: {environment}")
     
     return CONFIGURATION_TEMPLATES[environment]
 
 def create_custom_config(**kwargs) -> CacheConfig:
-    """    Create custom cache configuration with overrides.
+    """
+    Create custom cache configuration with overrides.
     
     Args:
         **kwargs: Configuration parameters to override
         
     Returns:
         Custom CacheConfig instance
-    """    base_config = PRODUCTION_CONFIG
+    """
+    base_config = PRODUCTION_CONFIG
     
     # Override with provided parameters
     config_dict = base_config.__dict__.copy()
@@ -193,14 +198,16 @@ CONTENT_TYPE_TTL_MAP = {
 }
 
 def get_ttl_for_content_type(content_type: str) -> int:
-    """    Get recommended TTL for specific content type.
+    """
+    Get recommended TTL for specific content type.
     
     Args:
         content_type: Type of content being cached
         
     Returns:
         Recommended TTL in seconds
-    """    return CONTENT_TYPE_TTL_MAP.get(content_type, 3600)  # Default 1 hour
+    """
+    return CONTENT_TYPE_TTL_MAP.get(content_type, 3600)  # Default 1 hour
 
 # Priority Mapping for Different Content Types
 CONTENT_PRIORITY_MAP = {
@@ -224,11 +231,13 @@ CONTENT_PRIORITY_MAP = {
 }
 
 def get_priority_for_content_type(content_type: str) -> CachePriority:
-    """    Get recommended priority for specific content type.
+    """
+    Get recommended priority for specific content type.
     
     Args:
         content_type: Type of content being cached
         
     Returns:
         Recommended cache priority
-    """    return CONTENT_PRIORITY_MAP.get(content_type, CachePriority.NORMAL)
+    """
+    return CONTENT_PRIORITY_MAP.get(content_type, CachePriority.NORMAL)

@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import logging
+"""
+import logging
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -33,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsPeriod(str, Enum):
-    """Analytics time periods"""    DAILY = "daily"
+    """Analytics time periods"""
+    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -42,7 +44,8 @@ class AnalyticsPeriod(str, Enum):
 
 
 class RevenueMetric(str, Enum):
-    """Revenue metrics types"""    TOTAL_REVENUE = "total_revenue"
+    """Revenue metrics types"""
+    TOTAL_REVENUE = "total_revenue"
     NET_REVENUE = "net_revenue"
     GROSS_REVENUE = "gross_revenue"
     AVERAGE_TRANSACTION = "average_transaction"
@@ -53,7 +56,8 @@ class RevenueMetric(str, Enum):
 
 @dataclass
 class AnalyticsQuery:
-    """Analytics query parameters"""    creator_id: Optional[str] = None
+    """Analytics query parameters"""
+    creator_id: Optional[str] = None
     content_id: Optional[str] = None
     start_date: Optional[datetime] = None
     end_date: Optional[datetime] = None
@@ -66,7 +70,8 @@ class AnalyticsQuery:
 
 @dataclass
 class RevenueInsight:
-    """Revenue insight data structure"""    insight_type: str
+    """Revenue insight data structure"""
+    insight_type: str
     title: str
     description: str
     value: Union[Decimal, float, int]
@@ -78,7 +83,8 @@ class RevenueInsight:
 
 @dataclass
 class ForecastResult:
-    """Revenue forecasting result"""    period: str
+    """Revenue forecasting result"""
+    period: str
     predicted_revenue: Decimal
     confidence_interval: Tuple[Decimal, Decimal]
     accuracy_score: float
@@ -88,16 +94,19 @@ class ForecastResult:
 
 
 class PaymentAnalytics:
-    """    Industrial payment analytics engine for comprehensive revenue intelligence.
+    """
+    Industrial payment analytics engine for comprehensive revenue intelligence.
     
     Provides advanced analytics, forecasting, trend analysis, and insights
     for creator revenue optimization and business intelligence.
-    """    def __init__(
+    """
+    def __init__(
         self,
         config: Optional[PaymentConfig] = None,
         db_session: Optional[Session] = None
     ):
-        """Initialize analytics engine"""        self.config = config or PaymentConfig()
+        """Initialize analytics engine"""
+        self.config = config or PaymentConfig()
         self.db_session = db_session
         
         # Analytics models (would be loaded from trained models)
@@ -115,7 +124,8 @@ class PaymentAnalytics:
         end_date: Optional[datetime] = None,
         currency: str = "EUR"
     ) -> RevenueAnalytics:
-        """        Get comprehensive analytics for creator.
+        """
+        Get comprehensive analytics for creator.
         
         Args:
             creator_id: Creator account identifier
@@ -125,7 +135,8 @@ class PaymentAnalytics:
             
         Returns:
             RevenueAnalytics object with complete analytics data
-        """        try:
+        """
+        try:
             # Set default date range (last 30 days)
             if not end_date:
                 end_date = datetime.utcnow()
@@ -192,7 +203,8 @@ class PaymentAnalytics:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """        Get platform-wide analytics and insights.
+        """
+        Get platform-wide analytics and insights.
         
         Args:
             start_date: Analysis period start
@@ -200,7 +212,8 @@ class PaymentAnalytics:
             
         Returns:
             Dict with comprehensive platform analytics
-        """        try:
+        """
+        try:
             # Set default date range (last 30 days)
             if not end_date:
                 end_date = datetime.utcnow()
@@ -245,7 +258,8 @@ class PaymentAnalytics:
         forecast_days: int = 30,
         currency: str = "EUR"
     ) -> ForecastResult:
-        """        Generate revenue forecast using ML models.
+        """
+        Generate revenue forecast using ML models.
         
         Args:
             creator_id: Creator account identifier
@@ -254,7 +268,8 @@ class PaymentAnalytics:
             
         Returns:
             ForecastResult with predicted revenue
-        """        try:
+        """
+        try:
             # Get historical data
             historical_data = await self._get_historical_revenue_data(
                 creator_id, currency, days=90
@@ -373,7 +388,8 @@ class PaymentAnalytics:
         creator_id: str,
         currency: str = "EUR"
     ) -> List[RevenueInsight]:
-        """        Detect revenue anomalies and generate insights.
+        """
+        Detect revenue anomalies and generate insights.
         
         Args:
             creator_id: Creator account identifier
@@ -381,7 +397,8 @@ class PaymentAnalytics:
             
         Returns:
             List of revenue insights and anomalies
-        """        try:
+        """
+        try:
             insights = []
             
             # Get recent revenue data
@@ -483,7 +500,8 @@ class PaymentAnalytics:
         comparison_type: str = "peer_average",
         currency: str = "EUR"
     ) -> Dict[str, Any]:
-        """        Get comparative analytics against benchmarks.
+        """
+        Get comparative analytics against benchmarks.
         
         Args:
             creator_id: Creator account identifier
@@ -492,7 +510,8 @@ class PaymentAnalytics:
             
         Returns:
             Dict with comparative analytics data
-        """        try:
+        """
+        try:
             # Get creator's metrics
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=30)
@@ -578,7 +597,8 @@ class PaymentAnalytics:
         end_date: datetime,
         currency: str
     ) -> Dict[str, Any]:
-        """Calculate basic revenue metrics"""        if not self.db_session:
+        """Calculate basic revenue metrics"""
+        if not self.db_session:
             return self._get_mock_revenue_metrics()
 
         # Query transactions for the period
@@ -625,7 +645,8 @@ class PaymentAnalytics:
         end_date: datetime,
         currency: str
     ) -> Dict[str, Any]:
-        """Analyze transaction trends over time"""        # Mock implementation - would query database for trend analysis
+        """Analyze transaction trends over time"""
+        # Mock implementation - would query database for trend analysis
         return {
             "daily_trends": [],
             "weekly_trends": [],
@@ -640,7 +661,8 @@ class PaymentAnalytics:
         end_date: datetime,
         currency: str
     ) -> Dict[str, Any]:
-        """Calculate various growth rates"""        # Mock implementation - would calculate actual growth rates
+        """Calculate various growth rates"""
+        # Mock implementation - would calculate actual growth rates
         return {
             "weekly_growth_rate": 0.05,  # 5% growth
             "monthly_growth_rate": 0.15,  # 15% growth
@@ -654,7 +676,8 @@ class PaymentAnalytics:
         end_date: datetime,
         currency: str
     ) -> List[Dict[str, Any]]:
-        """Analyze revenue sources breakdown"""        # Mock implementation - would query actual revenue sources
+        """Analyze revenue sources breakdown"""
+        # Mock implementation - would query actual revenue sources
         return [
             {"source": "spotify_royalties", "amount": 850.00, "percentage": 42.5},
             {"source": "youtube_ads", "amount": 600.00, "percentage": 30.0},
@@ -667,7 +690,8 @@ class PaymentAnalytics:
         creator_id: str,
         currency: str
     ) -> Dict[str, Decimal]:
-        """Generate revenue projections"""        # Mock implementation - would use ML models for projections
+        """Generate revenue projections"""
+        # Mock implementation - would use ML models for projections
         return {
             "next_week": Decimal("125.00"),
             "next_month": Decimal("500.00"),
@@ -680,7 +704,8 @@ class PaymentAnalytics:
         currency: str,
         days: int = 90
     ) -> List[Dict[str, Any]]:
-        """Get historical revenue data for analysis"""        # Mock implementation - would query database
+        """Get historical revenue data for analysis"""
+        # Mock implementation - would query database
         import random
         from datetime import date
         
@@ -702,7 +727,8 @@ class PaymentAnalytics:
         return data[::-1]  # Chronological order
 
     def _get_mock_revenue_metrics(self) -> Dict[str, Any]:
-        """Get mock revenue metrics for testing"""        return {
+        """Get mock revenue metrics for testing"""
+        return {
             "total_revenue": Decimal("2000.00"),
             "net_revenue": Decimal("1800.00"),
             "total_fees": Decimal("100.00"),
@@ -716,7 +742,8 @@ class PaymentAnalytics:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Calculate platform-wide revenue metrics"""        # Mock implementation
+        """Calculate platform-wide revenue metrics"""
+        # Mock implementation
         return {
             "total_revenue": 150000.00,
             "total_creators": 1250,
@@ -731,7 +758,8 @@ class PaymentAnalytics:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Analyze creator activity patterns"""        # Mock implementation
+        """Analyze creator activity patterns"""
+        # Mock implementation
         return {
             "new_creators": 45,
             "active_creators": 980,
@@ -745,7 +773,8 @@ class PaymentAnalytics:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Analyze payment method usage"""        # Mock implementation
+        """Analyze payment method usage"""
+        # Mock implementation
         return {
             "stripe": {"count": 1250, "volume": 85000.00, "percentage": 60.0},
             "wise": {"count": 450, "volume": 32000.00, "percentage": 22.5},
@@ -758,7 +787,8 @@ class PaymentAnalytics:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Analyze geographic revenue distribution"""        # Mock implementation
+        """Analyze geographic revenue distribution"""
+        # Mock implementation
         return {
             "DE": {"creators": 350, "revenue": 45000.00, "percentage": 30.0},
             "US": {"creators": 280, "revenue": 38000.00, "percentage": 25.3},
@@ -772,7 +802,8 @@ class PaymentAnalytics:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Analyze platform growth trends"""        # Mock implementation
+        """Analyze platform growth trends"""
+        # Mock implementation
         return {
             "revenue_growth_rate": 0.18,
             "creator_growth_rate": 0.12,
@@ -782,7 +813,8 @@ class PaymentAnalytics:
         }
 
     async def _get_peer_average_metrics(self, currency: str) -> Dict[str, Any]:
-        """Get peer average metrics for comparison"""        # Mock implementation
+        """Get peer average metrics for comparison"""
+        # Mock implementation
         return {
             "avg_revenue": 1500.00,
             "avg_transactions": 18,
@@ -791,7 +823,8 @@ class PaymentAnalytics:
         }
 
     async def _get_top_performer_metrics(self, currency: str) -> Dict[str, Any]:
-        """Get top performer metrics for comparison"""        # Mock implementation
+        """Get top performer metrics for comparison"""
+        # Mock implementation
         return {
             "avg_revenue": 5800.00,
             "avg_transactions": 65,
@@ -800,7 +833,8 @@ class PaymentAnalytics:
         }
 
     async def _get_platform_average_metrics(self, currency: str) -> Dict[str, Any]:
-        """Get platform average metrics for comparison"""        # Mock implementation
+        """Get platform average metrics for comparison"""
+        # Mock implementation
         return {
             "avg_revenue": 1200.00,
             "avg_transactions": 15,

@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 Text input → Language detection → Voice profile selection → Accent adaptation → 
 Cultural pronunciation → TTS synthesis → Audio processing → Quality enhancement
-"""import logging
+"""
+import logging
 import asyncio
 import json
 from typing import Dict, List, Any, Optional, Tuple, Union
@@ -29,14 +30,16 @@ logger = logging.getLogger(__name__)
 
 
 class VoiceGender(Enum):
-    """Voice gender options"""    MALE = "male"
+    """Voice gender options"""
+    MALE = "male"
     FEMALE = "female"
     NEUTRAL = "neutral"
     CHILD = "child"
 
 
 class VoiceAge(Enum):
-    """Voice age categories"""    CHILD = "child"  # 5-12 years
+    """Voice age categories"""
+    CHILD = "child"  # 5-12 years
     TEEN = "teen"    # 13-19 years
     YOUNG_ADULT = "young_adult"  # 20-35 years
     ADULT = "adult"  # 36-55 years
@@ -44,7 +47,8 @@ class VoiceAge(Enum):
 
 
 class AccentType(Enum):
-    """Accent types for voice synthesis"""    NATIVE = "native"
+    """Accent types for voice synthesis"""
+    NATIVE = "native"
     REGIONAL = "regional"
     INTERNATIONAL = "international"
     NEUTRAL = "neutral"
@@ -52,14 +56,16 @@ class AccentType(Enum):
 
 
 class AudioQuality(Enum):
-    """Audio quality levels"""    DRAFT = "draft"      # 16kHz, basic quality
+    """Audio quality levels"""
+    DRAFT = "draft"      # 16kHz, basic quality
     STANDARD = "standard"  # 22kHz, good quality
     HIGH = "high"        # 44kHz, professional quality
     STUDIO = "studio"    # 48kHz, studio quality
 
 
 class VoiceEmotion(Enum):
-    """Voice emotional states"""    NEUTRAL = "neutral"
+    """Voice emotional states"""
+    NEUTRAL = "neutral"
     HAPPY = "happy"
     SAD = "sad"
     EXCITED = "excited"
@@ -72,7 +78,8 @@ class VoiceEmotion(Enum):
 
 
 class SpeechStyle(Enum):
-    """Speech delivery styles"""    CONVERSATIONAL = "conversational"
+    """Speech delivery styles"""
+    CONVERSATIONAL = "conversational"
     NARRATION = "narration"
     NEWS = "news"
     FORMAL = "formal"
@@ -84,7 +91,8 @@ class SpeechStyle(Enum):
 
 @dataclass
 class VoiceProfile:
-    """Voice profile configuration"""    voice_id: str
+    """Voice profile configuration"""
+    voice_id: str
     name: str
     language_code: str
     region: str
@@ -105,7 +113,8 @@ class VoiceProfile:
 
 @dataclass
 class AudioLocalization:
-    """Audio localization parameters"""    language_code: str
+    """Audio localization parameters"""
+    language_code: str
     voice_profile: VoiceProfile
     speech_rate: float  # 0.5 - 2.0
     pitch_adjustment: float  # -20 to +20 semitones
@@ -121,7 +130,8 @@ class AudioLocalization:
 
 @dataclass
 class VoiceSynthesisRequest:
-    """Voice synthesis request"""    request_id: str
+    """Voice synthesis request"""
+    request_id: str
     text: str
     language_code: str
     voice_profile: VoiceProfile
@@ -135,7 +145,8 @@ class VoiceSynthesisRequest:
 
 @dataclass
 class VoiceSynthesisResult:
-    """Voice synthesis result"""    request_id: str
+    """Voice synthesis result"""
+    request_id: str
     audio_data: bytes
     audio_format: str
     duration_seconds: float
@@ -150,7 +161,8 @@ class VoiceSynthesisResult:
 
 
 class VoiceLocalization:
-    """Advanced voice localization and synthesis engine"""    
+    """Advanced voice localization and synthesis engine"""
+    
     def __init__(self):
         self.voice_profiles: Dict[str, VoiceProfile] = {}
         self.language_voices: Dict[str, List[str]] = {}
@@ -170,7 +182,8 @@ class VoiceLocalization:
         logger.info("Voice Localization Engine initialized")
     
     def _initialize_voice_profiles(self):
-        """Initialize voice profiles for different languages and regions"""        
+        """Initialize voice profiles for different languages and regions"""
+        
         # English voices
         self.voice_profiles["en_us_female_adult"] = VoiceProfile(
             voice_id="en_us_female_adult",
@@ -319,7 +332,8 @@ class VoiceLocalization:
         logger.info(f"Initialized {len(self.voice_profiles)} voice profiles for {len(self.language_voices)} languages")
     
     def _initialize_cultural_pronunciations(self):
-        """Initialize cultural pronunciation rules"""        
+        """Initialize cultural pronunciation rules"""
+        
         # Arabic regional pronunciations
         self.cultural_pronunciations["ar"] = {
             "EG": {  # Egyptian
@@ -376,7 +390,8 @@ class VoiceLocalization:
         logger.info(f"Initialized cultural pronunciations for {len(self.cultural_pronunciations)} languages")
     
     def _initialize_accent_mappings(self):
-        """Initialize accent adaptation mappings"""        
+        """Initialize accent adaptation mappings"""
+        
         self.accent_mappings = {
             "en": {
                 "US_to_GB": {
@@ -415,7 +430,8 @@ class VoiceLocalization:
         accent: AccentType = None,
         style: SpeechStyle = None
     ) -> Optional[VoiceProfile]:
-        """Select best voice profile based on criteria"""        try:
+        """Select best voice profile based on criteria"""
+        try:
             # Get available voices for language
             available_voices = self.language_voices.get(language_code, [])
             if not available_voices:
@@ -473,7 +489,8 @@ class VoiceLocalization:
         voice_profile: VoiceProfile = None,
         cultural_context: Dict[str, Any] = None
     ) -> AudioLocalization:
-        """Create audio localization configuration"""        try:
+        """Create audio localization configuration"""
+        try:
             # Use provided profile or select one
             if not voice_profile:
                 voice_profile = await self.select_voice_profile(language_code, region)
@@ -524,7 +541,8 @@ class VoiceLocalization:
             raise
     
     def _get_language_pause_patterns(self, language_code: str) -> Dict[str, float]:
-        """Get language-specific pause patterns"""        patterns = {
+        """Get language-specific pause patterns"""
+        patterns = {
             "en": {"comma": 0.3, "period": 0.6, "question": 0.7, "exclamation": 0.5},
             "ar": {"comma": 0.4, "period": 0.8, "question": 0.9, "exclamation": 0.7},
             "fr": {"comma": 0.35, "period": 0.65, "question": 0.75, "exclamation": 0.6},
@@ -534,7 +552,8 @@ class VoiceLocalization:
         return patterns.get(language_code, patterns["en"])
     
     def _get_language_emphasis_rules(self, language_code: str) -> List[str]:
-        """Get language-specific emphasis rules"""        rules = {
+        """Get language-specific emphasis rules"""
+        rules = {
             "en": ["stress_important_words", "emphasize_contrasts", "question_intonation"],
             "ar": ["emphasize_roots", "classical_pronunciation", "respectful_tone"],
             "fr": ["liaison_emphasis", "nasal_clarity", "syllable_timing"],
@@ -544,7 +563,8 @@ class VoiceLocalization:
         return rules.get(language_code, rules["en"])
     
     def _apply_cultural_context(self, localization: AudioLocalization, context: Dict[str, Any]):
-        """Apply cultural context to localization"""        if "formality" in context:
+        """Apply cultural context to localization"""
+        if "formality" in context:
             formality = context["formality"]
             if formality == "high":
                 localization.speech_rate *= 0.9  # Slower for formal
@@ -571,7 +591,8 @@ class VoiceLocalization:
         quality: AudioQuality = AudioQuality.STANDARD,
         output_format: str = "wav"
     ) -> VoiceSynthesisResult:
-        """Synthesize speech with localization"""        try:
+        """Synthesize speech with localization"""
+        try:
             request_id = f"tts_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{hash(text) % 10000}"
             
             # Create localization if not provided
@@ -623,7 +644,8 @@ class VoiceLocalization:
             )
     
     async def _process_synthesis_request(self, request: VoiceSynthesisRequest) -> VoiceSynthesisResult:
-        """Process speech synthesis request"""        start_time = datetime.now()
+        """Process speech synthesis request"""
+        start_time = datetime.now()
         
         try:
             # Mock synthesis - in production, this would call actual TTS engines
@@ -679,7 +701,8 @@ class VoiceLocalization:
             )
     
     def _preprocess_text(self, text: str, localization: AudioLocalization) -> str:
-        """Preprocess text for synthesis"""        processed = text
+        """Preprocess text for synthesis"""
+        processed = text
         
         # Apply pronunciation overrides
         for original, replacement in localization.pronunciation_overrides.items():
@@ -710,7 +733,8 @@ class VoiceLocalization:
         localization: AudioLocalization,
         quality: AudioQuality
     ) -> bytes:
-        """Generate mock audio data"""        # Mock audio generation - returns encoded metadata
+        """Generate mock audio data"""
+        # Mock audio generation - returns encoded metadata
         audio_info = {
             "text": text[:100],  # Truncate for size
             "voice": voice_profile.voice_id,
@@ -729,7 +753,8 @@ class VoiceLocalization:
         localization: AudioLocalization,
         quality: AudioQuality
     ) -> str:
-        """Generate cache key for synthesis"""        key_components = [
+        """Generate cache key for synthesis"""
+        key_components = [
             text,
             localization.voice_profile.voice_id,
             localization.emotion.value,
@@ -748,7 +773,8 @@ class VoiceLocalization:
         language_code: str,
         voice_profile: VoiceProfile
     ) -> VoiceProfile:
-        """Adapt voice profile for different accent"""        try:
+        """Adapt voice profile for different accent"""
+        try:
             # Check if accent mapping exists
             if language_code not in self.accent_mappings:
                 logger.warning(f"No accent mappings for language: {language_code}")
@@ -798,7 +824,8 @@ class VoiceLocalization:
             return voice_profile
     
     async def get_voice_statistics(self) -> Dict[str, Any]:
-        """Get voice localization statistics"""        return {
+        """Get voice localization statistics"""
+        return {
             "total_voice_profiles": len(self.voice_profiles),
             "supported_languages": list(self.language_voices.keys()),
             "synthesis_cache_size": len(self.synthesis_cache),
@@ -811,7 +838,8 @@ class VoiceLocalization:
         }
     
     def _get_quality_distribution(self) -> Dict[str, int]:
-        """Get quality score distribution of voice profiles"""        distribution = {"excellent": 0, "good": 0, "acceptable": 0, "poor": 0}
+        """Get quality score distribution of voice profiles"""
+        distribution = {"excellent": 0, "good": 0, "acceptable": 0, "poor": 0}
         
         for profile in self.voice_profiles.values():
             if profile.quality_score >= 0.9:
@@ -826,7 +854,8 @@ class VoiceLocalization:
         return distribution
     
     async def clear_synthesis_cache(self, max_age_hours: int = 24):
-        """Clear old synthesis cache entries"""        cutoff_time = datetime.now() - timedelta(hours=max_age_hours)
+        """Clear old synthesis cache entries"""
+        cutoff_time = datetime.now() - timedelta(hours=max_age_hours)
         
         # Note: In a real implementation, we'd track timestamps for cache entries
         cache_size_before = len(self.synthesis_cache)
@@ -841,7 +870,8 @@ class VoiceLocalization:
         logger.info(f"Cleared {cache_size_before - cache_size_after} cache entries")
     
     async def health_check(self) -> bool:
-        """Health check for voice localization service"""        try:
+        """Health check for voice localization service"""
+        try:
             # Check if voice profiles are loaded
             if not self.voice_profiles:
                 return False

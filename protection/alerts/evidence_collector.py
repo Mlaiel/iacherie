@@ -6,7 +6,8 @@ Captures screenshots, metadata, and digital fingerprints as legal proof.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import base64
@@ -40,7 +41,8 @@ from ...core.storage import StorageManager
 logger = logging.getLogger(__name__)
 
 class EvidenceCollectionType(str, Enum):
-    """Types of evidence collection."""    SCREENSHOT = "screenshot"
+    """Types of evidence collection."""
+    SCREENSHOT = "screenshot"
     VIDEO_CAPTURE = "video_capture"
     METADATA_EXTRACTION = "metadata_extraction"
     SOURCE_CODE = "source_code"
@@ -49,7 +51,8 @@ class EvidenceCollectionType(str, Enum):
     LEGAL_NOTICE = "legal_notice"
 
 class CollectionStatus(str, Enum):
-    """Evidence collection status."""    PENDING = "pending"
+    """Evidence collection status."""
+    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -57,7 +60,8 @@ class CollectionStatus(str, Enum):
 
 @dataclass
 class EvidenceConfig:
-    """Evidence collection configuration."""    screenshot_quality: int = 95
+    """Evidence collection configuration."""
+    screenshot_quality: int = 95
     screenshot_format: str = "PNG"
     video_duration_seconds: int = 30
     video_quality: str = "720p"
@@ -69,7 +73,8 @@ class EvidenceConfig:
 
 @dataclass
 class CollectionResult:
-    """Result of evidence collection."""    success: bool
+    """Result of evidence collection."""
+    success: bool
     evidence_id: Optional[str] = None
     file_path: Optional[str] = None
     file_size: int = 0
@@ -79,7 +84,8 @@ class CollectionResult:
     collection_time: Optional[datetime] = None
 
 class WebDriverManager:
-    """Manages headless web drivers for evidence collection."""    
+    """Manages headless web drivers for evidence collection."""
+    
     def __init__(self, config: EvidenceConfig):
         self.config = config
         self._driver_pool: List[webdriver.Chrome] = []
@@ -87,21 +93,24 @@ class WebDriverManager:
         self._max_drivers = config.parallel_collections
     
     async def get_driver(self) -> webdriver.Chrome:
-        """Get a web driver from the pool."""        async with self._pool_lock:
+        """Get a web driver from the pool."""
+        async with self._pool_lock:
             if self._driver_pool:
                 return self._driver_pool.pop()
             
             return self._create_driver()
     
     async def return_driver(self, driver: webdriver.Chrome) -> None:
-        """Return a web driver to the pool."""        async with self._pool_lock:
+        """Return a web driver to the pool."""
+        async with self._pool_lock:
             if len(self._driver_pool) < self._max_drivers:
                 self._driver_pool.append(driver)
             else:
                 driver.quit()
     
     def _create_driver(self) -> webdriver.Chrome:
-        """Create a new headless Chrome driver."""        options = Options()
+        """Create a new headless Chrome driver."""
+        options = Options()
         options.add_argument("--headless")
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
@@ -112,7 +121,8 @@ class WebDriverManager:
         return webdriver.Chrome(options=options)
     
     async def cleanup(self) -> None:
-        """Clean up all drivers."""        async with self._pool_lock:
+        """Clean up all drivers."""
+        async with self._pool_lock:
             for driver in self._driver_pool:
                 try:
                     driver.quit()
@@ -121,7 +131,8 @@ class WebDriverManager:
             self._driver_pool.clear()
 
 class ScreenshotCollector:
-    """Collects screenshot evidence with watermarking and metadata."""    
+    """Collects screenshot evidence with watermarking and metadata."""
+    
     def __init__(self, config: EvidenceConfig, driver_manager: WebDriverManager):
         self.config = config
         self.driver_manager = driver_manager
@@ -132,7 +143,8 @@ class ScreenshotCollector:
         alert: Alert,
         evidence_path: str
     ) -> CollectionResult:
-        """Collect screenshot evidence from URL."""        try:
+        """Collect screenshot evidence from URL."""
+        try:
             driver = await self.driver_manager.get_driver()
             
             try:
@@ -192,7 +204,8 @@ class ScreenshotCollector:
         alert: Alert,
         url: str
     ) -> Image.Image:
-        """Process screenshot with watermark and timestamp."""        # Convert to PIL Image
+        """Process screenshot with watermark and timestamp."""
+        # Convert to PIL Image
         image = Image.open(io.BytesIO(screenshot_data))
         
         if self.config.watermark_enabled:
@@ -206,7 +219,8 @@ class ScreenshotCollector:
         return image
     
     async def _add_watermark(self, image: Image.Image, alert: Alert, url: str) -> Image.Image:
-        """Add watermark to screenshot."""        draw = ImageDraw.Draw(image)
+        """Add watermark to screenshot."""
+        draw = ImageDraw.Draw(image)
         
         # Watermark text
         watermark_text = f"IA Influencer Agent - Evidence Collection\nAlert: {alert.id}\nURL: {url}\nTimestamp: {datetime.utcnow().isoformat()}"
@@ -238,7 +252,8 @@ class ScreenshotCollector:
         return image
     
     async def _add_timestamp(self, image: Image.Image) -> Image.Image:
-        """Add timestamp to screenshot."""        draw = ImageDraw.Draw(image)
+        """Add timestamp to screenshot."""
+        draw = ImageDraw.Draw(image)
         
         timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
         
@@ -253,7 +268,8 @@ class ScreenshotCollector:
         return image
     
     async def _save_image(self, image: Image.Image, file_path: str) -> None:
-        """Save image to file."""        # Ensure directory exists
+        """Save image to file."""
+        # Ensure directory exists
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
         
         # Save with specified quality
@@ -265,7 +281,8 @@ class ScreenshotCollector:
         )
     
     async def _collect_page_metadata(self, driver: webdriver.Chrome, url: str) -> Dict[str, Any]:
-        """Collect page metadata."""        metadata = {
+        """Collect page metadata."""
+        metadata = {
             "url": url,
             "title": driver.title,
             "page_source_hash": hashlib.sha256(driver.page_source.encode()).hexdigest(),
@@ -291,7 +308,8 @@ class ScreenshotCollector:
         return metadata
     
     async def _calculate_checksum(self, file_path: str) -> str:
-        """Calculate file checksum."""        sha256_hash = hashlib.sha256()
+        """Calculate file checksum."""
+        sha256_hash = hashlib.sha256()
         
         async with aiofiles.open(file_path, "rb") as f:
             while chunk := await f.read(8192):
@@ -300,7 +318,8 @@ class ScreenshotCollector:
         return sha256_hash.hexdigest()
 
 class VideoCollector:
-    """Collects video evidence of violations."""    
+    """Collects video evidence of violations."""
+    
     def __init__(self, config: EvidenceConfig, driver_manager: WebDriverManager):
         self.config = config
         self.driver_manager = driver_manager
@@ -311,7 +330,8 @@ class VideoCollector:
         alert: Alert,
         evidence_path: str
     ) -> CollectionResult:
-        """Collect video evidence from URL."""        try:
+        """Collect video evidence from URL."""
+        try:
             # For now, implement as series of screenshots
             # In production, would use screen recording tools
             
@@ -361,7 +381,8 @@ class VideoCollector:
         screenshots: List[bytes],
         output_path: str
     ) -> None:
-        """Create video from screenshot frames."""        if not screenshots:
+        """Create video from screenshot frames."""
+        if not screenshots:
             return
         
         # Ensure directory exists
@@ -387,7 +408,8 @@ class VideoCollector:
             out.release()
     
     async def _calculate_checksum(self, file_path: str) -> str:
-        """Calculate file checksum."""        sha256_hash = hashlib.sha256()
+        """Calculate file checksum."""
+        sha256_hash = hashlib.sha256()
         
         async with aiofiles.open(file_path, "rb") as f:
             while chunk := await f.read(8192):
@@ -396,7 +418,8 @@ class VideoCollector:
         return sha256_hash.hexdigest()
 
 class MetadataCollector:
-    """Collects detailed metadata evidence."""    
+    """Collects detailed metadata evidence."""
+    
     def __init__(self, config: EvidenceConfig):
         self.config = config
     
@@ -406,7 +429,8 @@ class MetadataCollector:
         alert: Alert,
         evidence_path: str
     ) -> CollectionResult:
-        """Collect comprehensive metadata."""        try:
+        """Collect comprehensive metadata."""
+        try:
             metadata = {}
             
             # HTTP headers
@@ -448,7 +472,8 @@ class MetadataCollector:
             )
     
     async def _collect_http_headers(self, url: str) -> Dict[str, Any]:
-        """Collect HTTP headers."""        try:
+        """Collect HTTP headers."""
+        try:
             async with aiohttp.ClientSession() as session:
                 async with session.head(url) as response:
                     return dict(response.headers)
@@ -457,7 +482,8 @@ class MetadataCollector:
             return {}
     
     async def _collect_dns_info(self, url: str) -> Dict[str, Any]:
-        """Collect DNS information."""        try:
+        """Collect DNS information."""
+        try:
             import socket
             parsed_url = urlparse(url)
             hostname = parsed_url.netloc
@@ -474,7 +500,8 @@ class MetadataCollector:
             return {}
     
     async def _collect_whois_info(self, url: str) -> Dict[str, Any]:
-        """Collect WHOIS information."""        try:
+        """Collect WHOIS information."""
+        try:
             # Would implement WHOIS lookup
             # For now, return placeholder
             return {
@@ -486,7 +513,8 @@ class MetadataCollector:
             return {}
     
     async def _collect_ssl_info(self, url: str) -> Dict[str, Any]:
-        """Collect SSL certificate information."""        try:
+        """Collect SSL certificate information."""
+        try:
             import ssl
             import socket
             from urllib.parse import urlparse
@@ -515,7 +543,8 @@ class MetadataCollector:
             return {}
     
     async def _collect_social_metadata(self, url: str) -> Dict[str, Any]:
-        """Collect social media metadata."""        try:
+        """Collect social media metadata."""
+        try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
                     html_content = await response.text()
@@ -549,13 +578,15 @@ class MetadataCollector:
             return {}
     
     async def _save_metadata(self, metadata: Dict[str, Any], file_path: str) -> None:
-        """Save metadata to JSON file."""        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        """Save metadata to JSON file."""
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
         
         async with aiofiles.open(file_path, 'w') as f:
             await f.write(json.dumps(metadata, indent=2, default=str))
     
     async def _calculate_checksum(self, file_path: str) -> str:
-        """Calculate file checksum."""        sha256_hash = hashlib.sha256()
+        """Calculate file checksum."""
+        sha256_hash = hashlib.sha256()
         
         async with aiofiles.open(file_path, "rb") as f:
             while chunk := await f.read(8192):
@@ -564,8 +595,10 @@ class MetadataCollector:
         return sha256_hash.hexdigest()
 
 class EvidenceCollector:
-    """    Main evidence collection orchestrator.
-    """    
+    """
+    Main evidence collection orchestrator.
+    """
+    
     def __init__(
         self,
         config: EvidenceConfig,
@@ -589,7 +622,8 @@ class EvidenceCollector:
         logger.info("EvidenceCollector initialized")
 
     async def start(self) -> None:
-        """Start evidence collection service."""        if self._is_running:
+        """Start evidence collection service."""
+        if self._is_running:
             return
             
         self._is_running = True
@@ -602,7 +636,8 @@ class EvidenceCollector:
         logger.info("EvidenceCollector started with %d workers", len(self._workers))
 
     async def stop(self) -> None:
-        """Stop evidence collection service."""        self._is_running = False
+        """Stop evidence collection service."""
+        self._is_running = False
         
         # Wait for queue to empty
         await self._collection_queue.join()
@@ -620,14 +655,16 @@ class EvidenceCollector:
         logger.info("EvidenceCollector stopped")
 
     async def collect_evidence(self, alert: Alert) -> Dict[str, CollectionResult]:
-        """        Collect comprehensive evidence for an alert.
+        """
+        Collect comprehensive evidence for an alert.
         
         Args:
             alert: Alert requiring evidence collection
             
         Returns:
             Dictionary of collection results by evidence type
-        """        try:
+        """
+        try:
             collection_id = str(uuid4())
             evidence_path = f"evidence/{alert.user_id}/{alert.id}/{collection_id}"
             
@@ -689,7 +726,8 @@ class EvidenceCollector:
             return {}
 
     async def get_evidence_summary(self, alert_id: str) -> Dict[str, Any]:
-        """Get evidence collection summary for an alert."""        try:
+        """Get evidence collection summary for an alert."""
+        try:
             async with get_async_session() as session:
                 result = await session.execute(
                     select(Evidence).where(Evidence.alert_id == alert_id)
@@ -728,7 +766,8 @@ class EvidenceCollector:
             return {}
 
     async def _collection_worker(self, worker_name: str) -> None:
-        """Background worker for evidence collection."""        logger.info("Evidence collection worker %s started", worker_name)
+        """Background worker for evidence collection."""
+        logger.info("Evidence collection worker %s started", worker_name)
         
         while self._is_running:
             try:
@@ -753,7 +792,8 @@ class EvidenceCollector:
         logger.info("Evidence collection worker %s stopped", worker_name)
 
     async def _determine_collection_types(self, alert: Alert) -> List[EvidenceCollectionType]:
-        """Determine what types of evidence to collect."""        collection_types = []
+        """Determine what types of evidence to collect."""
+        collection_types = []
         
         # Always collect metadata
         collection_types.append(EvidenceCollectionType.METADATA_EXTRACTION)
@@ -778,7 +818,8 @@ class EvidenceCollector:
         alert: Alert,
         evidence_path: str
     ) -> CollectionResult:
-        """Collect specific type of evidence."""        try:
+        """Collect specific type of evidence."""
+        try:
             # Get violation URL from alert metadata
             violation_url = alert.metadata.get("violation_url") or alert.metadata.get("url")
             
@@ -827,7 +868,8 @@ class EvidenceCollector:
         alert: Alert,
         evidence_path: str
     ) -> CollectionResult:
-        """Collect digital fingerprint evidence."""        try:
+        """Collect digital fingerprint evidence."""
+        try:
             # Create fingerprint data
             fingerprint_data = {
                 "alert_id": alert.id,
@@ -872,7 +914,8 @@ class EvidenceCollector:
         collection_id: str,
         results: Dict[str, CollectionResult]
     ) -> None:
-        """Store evidence records in database."""        try:
+        """Store evidence records in database."""
+        try:
             async with get_async_session() as session:
                 for evidence_type, result in results.items():
                     evidence = Evidence(
@@ -897,7 +940,8 @@ class EvidenceCollector:
             logger.error("Failed to store evidence records: %s", str(e))
 
     async def _calculate_checksum(self, file_path: str) -> str:
-        """Calculate file checksum."""        sha256_hash = hashlib.sha256()
+        """Calculate file checksum."""
+        sha256_hash = hashlib.sha256()
         
         async with aiofiles.open(file_path, "rb") as f:
             while chunk := await f.read(8192):
@@ -906,7 +950,8 @@ class EvidenceCollector:
         return sha256_hash.hexdigest()
 
     async def _process_collection_task(self, task: Dict[str, Any]) -> None:
-        """Process evidence collection task."""        try:
+        """Process evidence collection task."""
+        try:
             task_type = task.get("type")
             
             if task_type == "collect_evidence":

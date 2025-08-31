@@ -12,7 +12,8 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import time
@@ -35,7 +36,8 @@ settings = get_settings()
 
 
 class KafkaBrokerConfig(BaseModel):
-    """Configuration for Kafka broker"""    id: int = Field(..., description="Broker ID")
+    """Configuration for Kafka broker"""
+    id: int = Field(..., description="Broker ID")
     name: str = Field(..., description="Broker name")
     host: str = Field(..., description="Broker host")
     port: int = Field(default=9092, description="Kafka port")
@@ -45,7 +47,8 @@ class KafkaBrokerConfig(BaseModel):
 
 
 class ZookeeperConfig(BaseModel):
-    """Configuration for Zookeeper ensemble"""    id: int = Field(..., description="Zookeeper ID")
+    """Configuration for Zookeeper ensemble"""
+    id: int = Field(..., description="Zookeeper ID")
     name: str = Field(..., description="Zookeeper name")
     host: str = Field(..., description="Zookeeper host")
     port: int = Field(default=2181, description="Client port")
@@ -54,7 +57,8 @@ class ZookeeperConfig(BaseModel):
 
 
 class KafkaClusterConfig(BaseModel):
-    """Configuration for Kafka cluster"""    cluster_name: str = Field(default="ia-influencer-kafka", description="Cluster name")
+    """Configuration for Kafka cluster"""
+    cluster_name: str = Field(default="ia-influencer-kafka", description="Cluster name")
     brokers: List[KafkaBrokerConfig] = Field(..., description="Kafka brokers")
     zookeepers: List[ZookeeperConfig] = Field(..., description="Zookeeper ensemble")
     replication_factor: int = Field(default=3, description="Default replication factor")
@@ -67,7 +71,8 @@ class KafkaClusterConfig(BaseModel):
 
 
 class TopicConfig(BaseModel):
-    """Configuration for Kafka topic"""    name: str = Field(..., description="Topic name")
+    """Configuration for Kafka topic"""
+    name: str = Field(..., description="Topic name")
     partitions: int = Field(default=6, description="Number of partitions")
     replication_factor: int = Field(default=3, description="Replication factor")
     retention_ms: int = Field(default=604800000, description="Retention in milliseconds")
@@ -78,9 +83,11 @@ class TopicConfig(BaseModel):
 
 
 class KafkaManager:
-    """    Enterprise Kafka cluster deployment and management system
+    """
+    Enterprise Kafka cluster deployment and management system
     Handles high-throughput event streaming for IA content processing
-    """    def __init__(self, config: Optional[KafkaClusterConfig] = None):
+    """
+    def __init__(self, config: Optional[KafkaClusterConfig] = None):
         self.config = config or self._get_default_config()
         self.docker_client = docker.from_env()
         self.health_checker = HealthChecker()
@@ -90,7 +97,8 @@ class KafkaManager:
         self.monitoring_tasks: List[asyncio.Task] = []
 
     def _get_default_config(self) -> KafkaClusterConfig:
-        """Get default Kafka cluster configuration"""        return KafkaClusterConfig(
+        """Get default Kafka cluster configuration"""
+        return KafkaClusterConfig(
             cluster_name="ia-influencer-kafka",
             brokers=[
                 KafkaBrokerConfig(
@@ -128,7 +136,8 @@ class KafkaManager:
         )
 
     async def deploy_cluster(self) -> Dict[str, Union[str, bool, int]]:
-        """Deploy complete Kafka cluster"""        try:
+        """Deploy complete Kafka cluster"""
+        try:
             logger.info("Starting Kafka cluster deployment")
             
             # Create Docker network
@@ -174,7 +183,8 @@ class KafkaManager:
             raise
 
     async def _create_cluster_network(self) -> None:
-        """Create Docker network for cluster communication"""        try:
+        """Create Docker network for cluster communication"""
+        try:
             network_name = f"{self.config.cluster_name}-network"
             
             try:
@@ -196,7 +206,8 @@ class KafkaManager:
             raise
 
     async def _deploy_zookeeper_ensemble(self) -> List[Dict[str, Union[str, int]]]:
-        """Deploy Zookeeper ensemble"""        try:
+        """Deploy Zookeeper ensemble"""
+        try:
             deployment_results = []
             
             for zk_config in self.config.zookeepers:
@@ -211,7 +222,8 @@ class KafkaManager:
             raise
 
     async def _deploy_zookeeper_node(self, zk_config: ZookeeperConfig) -> Dict[str, Union[str, int]]:
-        """Deploy individual Zookeeper node"""        try:
+        """Deploy individual Zookeeper node"""
+        try:
             # Generate Zookeeper configuration
             zoo_cfg = self._generate_zookeeper_config(zk_config)
             
@@ -272,7 +284,8 @@ class KafkaManager:
             raise
 
     def _generate_zookeeper_config(self, zk_config: ZookeeperConfig) -> str:
-        """Generate Zookeeper configuration"""        config_lines = [
+        """Generate Zookeeper configuration"""
+        config_lines = [
             f"tickTime=2000",
             f"initLimit=10",
             f"syncLimit=5",
@@ -291,7 +304,8 @@ class KafkaManager:
         return "\n".join(config_lines)
 
     async def _deploy_kafka_brokers(self) -> List[Dict[str, Union[str, int]]]:
-        """Deploy Kafka brokers"""        try:
+        """Deploy Kafka brokers"""
+        try:
             deployment_results = []
             
             for broker_config in self.config.brokers:
@@ -306,7 +320,8 @@ class KafkaManager:
             raise
 
     async def _deploy_kafka_broker(self, broker_config: KafkaBrokerConfig) -> Dict[str, Union[str, int]]:
-        """Deploy individual Kafka broker"""        try:
+        """Deploy individual Kafka broker"""
+        try:
             # Build Zookeeper connection string
             zk_connect = ",".join([f"{zk.host}:{zk.port}" for zk in self.config.zookeepers])
             
@@ -399,7 +414,8 @@ class KafkaManager:
             raise
 
     async def _setup_admin_client(self) -> None:
-        """Setup Kafka admin client"""        try:
+        """Setup Kafka admin client"""
+        try:
             bootstrap_servers = [f"{broker.host}:{broker.port}" for broker in self.config.brokers]
             
             self.admin_client = AIOKafkaAdminClient(
@@ -415,7 +431,8 @@ class KafkaManager:
             raise
 
     async def _create_topics(self) -> None:
-        """Create topics for IA content processing"""        try:
+        """Create topics for IA content processing"""
+        try:
             topics_config = self._get_topics_config()
             
             new_topics = []
@@ -444,7 +461,8 @@ class KafkaManager:
             raise
 
     def _get_topics_config(self) -> List[TopicConfig]:
-        """Get topic configurations for IA processing pipeline"""        return [
+        """Get topic configurations for IA processing pipeline"""
+        return [
             # Content processing topics
             TopicConfig(
                 name="ia.content.uploads",
@@ -573,7 +591,8 @@ class KafkaManager:
         ]
 
     async def _setup_producer(self) -> None:
-        """Setup Kafka producer for high-throughput messaging"""        try:
+        """Setup Kafka producer for high-throughput messaging"""
+        try:
             bootstrap_servers = [f"{broker.host}:{broker.port}" for broker in self.config.brokers]
             
             self.producer = AIOKafkaProducer(
@@ -597,7 +616,8 @@ class KafkaManager:
             raise
 
     async def _enable_monitoring(self) -> None:
-        """Enable cluster monitoring and metrics collection"""        try:
+        """Enable cluster monitoring and metrics collection"""
+        try:
             # Start cluster health monitoring
             health_task = asyncio.create_task(self._monitor_cluster_health())
             self.monitoring_tasks.append(health_task)
@@ -617,7 +637,8 @@ class KafkaManager:
             raise
 
     async def _monitor_cluster_health(self) -> None:
-        """Monitor cluster health continuously"""        while True:
+        """Monitor cluster health continuously"""
+        while True:
             try:
                 # Check Zookeeper nodes
                 for zk_config in self.config.zookeepers:
@@ -642,7 +663,8 @@ class KafkaManager:
                 await asyncio.sleep(60)
 
     async def _monitor_performance(self) -> None:
-        """Monitor cluster performance metrics"""        while True:
+        """Monitor cluster performance metrics"""
+        while True:
             try:
                 # Get cluster metadata
                 metadata = await self.producer.client.cluster
@@ -659,7 +681,8 @@ class KafkaManager:
                 await asyncio.sleep(120)
 
     async def _monitor_topics(self) -> None:
-        """Monitor topic metrics and health"""        while True:
+        """Monitor topic metrics and health"""
+        while True:
             try:
                 # Get topic metadata
                 metadata = await self.admin_client.describe_topics()
@@ -677,7 +700,8 @@ class KafkaManager:
                 await asyncio.sleep(180)
 
     async def publish_event(self, topic: str, key: str, value: Dict, partition: Optional[int] = None) -> bool:
-        """Publish event to Kafka topic"""        try:
+        """Publish event to Kafka topic"""
+        try:
             if not self.producer:
                 raise ValueError("Producer not initialized")
                 
@@ -701,7 +725,8 @@ class KafkaManager:
             return False
 
     async def create_consumer(self, topics: List[str], group_id: str) -> AIOKafkaConsumer:
-        """Create Kafka consumer for specified topics"""        try:
+        """Create Kafka consumer for specified topics"""
+        try:
             bootstrap_servers = [f"{broker.host}:{broker.port}" for broker in self.config.brokers]
             
             consumer = AIOKafkaConsumer(
@@ -729,7 +754,8 @@ class KafkaManager:
             raise
 
     async def get_cluster_status(self) -> Dict[str, Union[str, int, List[Dict]]]:
-        """Get comprehensive cluster status"""        try:
+        """Get comprehensive cluster status"""
+        try:
             # Check Zookeeper status
             zk_statuses = []
             for zk_config in self.config.zookeepers:
@@ -790,7 +816,8 @@ class KafkaManager:
             return {"cluster_status": "error", "error": str(e)}
 
     async def _get_cluster_stats(self) -> Dict[str, Union[int, float]]:
-        """Get cluster statistics"""        try:
+        """Get cluster statistics"""
+        try:
             # This would integrate with JMX metrics and Kafka APIs
             # For now, return mock data
             return {
@@ -811,7 +838,8 @@ class KafkaManager:
             return {}
 
     async def shutdown_cluster(self) -> Dict[str, Union[str, bool]]:
-        """Gracefully shutdown the cluster"""        try:
+        """Gracefully shutdown the cluster"""
+        try:
             logger.info("Starting Kafka cluster shutdown")
             
             # Stop monitoring tasks
@@ -856,7 +884,8 @@ class KafkaManager:
             return {"status": "error", "error": str(e)}
 
     def export_cluster_config(self) -> Dict:
-        """Export current cluster configuration"""        return {
+        """Export current cluster configuration"""
+        return {
             "cluster_config": self.config.dict(),
             "deployment_timestamp": time.time(),
             "zookeeper_nodes": len(self.config.zookeepers),
@@ -867,7 +896,8 @@ class KafkaManager:
 
     @classmethod
     def from_config_file(cls, config_path: str) -> "KafkaManager":
-        """Create KafkaManager from configuration file"""        with open(config_path, 'r') as f:
+        """Create KafkaManager from configuration file"""
+        with open(config_path, 'r') as f:
             config_data = yaml.safe_load(f)
         
         config = KafkaClusterConfig(**config_data)

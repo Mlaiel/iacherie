@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -20,7 +21,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -50,9 +52,11 @@ except ImportError as e:
 
 
 class TestPerformanceMetrics:
-    """Test cases for PerformanceMetrics class"""    
+    """Test cases for PerformanceMetrics class"""
+    
     def test_performance_metrics_creation(self):
-        """Test basic performance metrics creation"""        timestamp = datetime.now()
+        """Test basic performance metrics creation"""
+        timestamp = datetime.now()
         
         metrics = PerformanceMetrics(
             cpu_percent=75.5,
@@ -71,7 +75,8 @@ class TestPerformanceMetrics:
         assert metrics.timestamp == timestamp
         
     def test_performance_metrics_defaults(self):
-        """Test performance metrics with default values"""        metrics = PerformanceMetrics()
+        """Test performance metrics with default values"""
+        metrics = PerformanceMetrics()
         
         assert metrics.cpu_percent == 0.0
         assert metrics.memory_percent == 0.0
@@ -81,7 +86,8 @@ class TestPerformanceMetrics:
         assert isinstance(metrics.timestamp, datetime)
         
     def test_performance_metrics_serialization(self):
-        """Test performance metrics serialization"""        metrics = PerformanceMetrics(
+        """Test performance metrics serialization"""
+        metrics = PerformanceMetrics(
             cpu_percent=45.2,
             memory_percent=67.8,
             disk_usage=55.1,
@@ -99,7 +105,8 @@ class TestPerformanceMetrics:
         assert "timestamp" in metrics_dict
         
     def test_performance_level_calculation(self):
-        """Test performance level calculation based on metrics"""        # Good performance
+        """Test performance level calculation based on metrics"""
+        # Good performance
         good_metrics = PerformanceMetrics(
             cpu_percent=30.0,
             memory_percent=40.0,
@@ -125,9 +132,11 @@ class TestPerformanceMetrics:
 
 
 class TestResourceAlert:
-    """Test cases for ResourceAlert class"""    
+    """Test cases for ResourceAlert class"""
+    
     def test_resource_alert_creation(self):
-        """Test resource alert creation"""        alert = ResourceAlert(
+        """Test resource alert creation"""
+        alert = ResourceAlert(
             resource_type=ResourceType.CPU,
             level=PerformanceLevel.WARNING,
             current_value=85.5,
@@ -143,7 +152,8 @@ class TestResourceAlert:
         assert isinstance(alert.timestamp, datetime)
         
     def test_alert_severity_ordering(self):
-        """Test alert severity ordering"""        info_alert = ResourceAlert(ResourceType.CPU, PerformanceLevel.GOOD, 50.0, 70.0, "Info")
+        """Test alert severity ordering"""
+        info_alert = ResourceAlert(ResourceType.CPU, PerformanceLevel.GOOD, 50.0, 70.0, "Info")
         warning_alert = ResourceAlert(ResourceType.CPU, PerformanceLevel.WARNING, 80.0, 70.0, "Warning")
         critical_alert = ResourceAlert(ResourceType.CPU, PerformanceLevel.CRITICAL, 95.0, 90.0, "Critical")
         
@@ -153,19 +163,23 @@ class TestResourceAlert:
 
 
 class TestPerformanceMonitor:
-    """Test cases for PerformanceMonitor class"""    
+    """Test cases for PerformanceMonitor class"""
+    
     def setup_method(self):
-        """Setup for each test method"""        self.monitor = PerformanceMonitor()
+        """Setup for each test method"""
+        self.monitor = PerformanceMonitor()
         
     def teardown_method(self):
-        """Cleanup after each test"""        if self.monitor.is_monitoring():
+        """Cleanup after each test"""
+        if self.monitor.is_monitoring():
             self.monitor.stop_monitoring()
             
     @patch('psutil.cpu_percent')
     @patch('psutil.virtual_memory')
     @patch('psutil.disk_usage')
     def test_collect_system_metrics(self, mock_disk, mock_memory, mock_cpu):
-        """Test system metrics collection"""        # Mock system metrics
+        """Test system metrics collection"""
+        # Mock system metrics
         mock_cpu.return_value = 45.5
         
         memory_mock = MagicMock()
@@ -188,7 +202,8 @@ class TestPerformanceMonitor:
         assert isinstance(metrics.timestamp, datetime)
         
     def test_start_stop_monitoring(self):
-        """Test starting and stopping monitoring"""        assert not self.monitor.is_monitoring()
+        """Test starting and stopping monitoring"""
+        assert not self.monitor.is_monitoring()
         
         # Start monitoring
         self.monitor.start_monitoring()
@@ -201,7 +216,8 @@ class TestPerformanceMonitor:
         assert not self.monitor.is_monitoring()
         
     def test_monitoring_interval(self):
-        """Test monitoring interval configuration"""        self.monitor.monitoring_interval = 0.1  # 100ms for testing
+        """Test monitoring interval configuration"""
+        self.monitor.monitoring_interval = 0.1  # 100ms for testing
         
         metrics_count_before = len(self.monitor.get_metrics_history())
         
@@ -215,7 +231,8 @@ class TestPerformanceMonitor:
         assert metrics_count_after >= metrics_count_before + 2
         
     def test_metrics_history(self):
-        """Test metrics history storage"""        # Manually add some metrics to history
+        """Test metrics history storage"""
+        # Manually add some metrics to history
         for i in range(5):
             metrics = PerformanceMetrics(
                 cpu_percent=50.0 + i,
@@ -232,7 +249,8 @@ class TestPerformanceMonitor:
             assert history[i].timestamp >= history[i + 1].timestamp
             
     def test_history_size_limit(self):
-        """Test metrics history size limiting"""        self.monitor.history_size = 3  # Set small limit for testing
+        """Test metrics history size limiting"""
+        self.monitor.history_size = 3  # Set small limit for testing
         
         # Add more metrics than the limit
         for i in range(10):
@@ -248,9 +266,11 @@ class TestPerformanceMonitor:
 
 
 class TestPerformanceAlerts:
-    """Test cases for performance alerting system"""    
+    """Test cases for performance alerting system"""
+    
     def setup_method(self):
-        """Setup for each test method"""        self.monitor = PerformanceMonitor()
+        """Setup for each test method"""
+        self.monitor = PerformanceMonitor()
         
         # Set test thresholds
         self.monitor.cpu_warning_threshold = 70.0
@@ -261,7 +281,8 @@ class TestPerformanceAlerts:
     @patch('psutil.cpu_percent')
     @patch('psutil.virtual_memory') 
     def test_cpu_warning_alert(self, mock_memory, mock_cpu):
-        """Test CPU warning alert generation"""        # Mock high CPU usage
+        """Test CPU warning alert generation"""
+        # Mock high CPU usage
         mock_cpu.return_value = 80.0  # Above warning threshold
         
         memory_mock = MagicMock()
@@ -279,7 +300,8 @@ class TestPerformanceAlerts:
     @patch('psutil.cpu_percent')
     @patch('psutil.virtual_memory')
     def test_memory_critical_alert(self, mock_memory, mock_cpu):
-        """Test memory critical alert generation"""        mock_cpu.return_value = 50.0  # Normal CPU
+        """Test memory critical alert generation"""
+        mock_cpu.return_value = 50.0  # Normal CPU
         
         memory_mock = MagicMock()
         memory_mock.percent = 95.0  # Critical memory usage
@@ -296,7 +318,8 @@ class TestPerformanceAlerts:
     @patch('psutil.cpu_percent')
     @patch('psutil.virtual_memory')
     def test_multiple_alerts(self, mock_memory, mock_cpu):
-        """Test multiple simultaneous alerts"""        # Mock high usage for both CPU and memory
+        """Test multiple simultaneous alerts"""
+        # Mock high usage for both CPU and memory
         mock_cpu.return_value = 90.0  # Critical CPU
         
         memory_mock = MagicMock()
@@ -315,7 +338,8 @@ class TestPerformanceAlerts:
     @patch('psutil.cpu_percent')
     @patch('psutil.virtual_memory')
     def test_no_alerts_normal_usage(self, mock_memory, mock_cpu):
-        """Test no alerts when usage is normal"""        mock_cpu.return_value = 30.0  # Normal CPU
+        """Test no alerts when usage is normal"""
+        mock_cpu.return_value = 30.0  # Normal CPU
         
         memory_mock = MagicMock()
         memory_mock.percent = 40.0  # Normal memory
@@ -328,12 +352,15 @@ class TestPerformanceAlerts:
 
 
 class TestPerformanceProfiler:
-    """Test cases for PerformanceProfiler class"""    
+    """Test cases for PerformanceProfiler class"""
+    
     def setup_method(self):
-        """Setup for each test method"""        self.profiler = PerformanceProfiler()
+        """Setup for each test method"""
+        self.profiler = PerformanceProfiler()
         
     def test_profiler_start_stop(self):
-        """Test profiler start and stop functionality"""        assert not self.profiler.is_profiling()
+        """Test profiler start and stop functionality"""
+        assert not self.profiler.is_profiling()
         
         self.profiler.start_profiling("test_operation")
         assert self.profiler.is_profiling()
@@ -347,7 +374,8 @@ class TestPerformanceProfiler:
         assert profile_data["duration"] > 0.0
         
     def test_profiler_context_manager(self):
-        """Test profiler context manager functionality"""        with self.profiler.profile_operation("context_test") as profile:
+        """Test profiler context manager functionality"""
+        with self.profiler.profile_operation("context_test") as profile:
             time.sleep(0.01)
             profile["custom_metric"] = 42
             
@@ -361,7 +389,8 @@ class TestPerformanceProfiler:
         assert profile_history[0]["custom_metric"] == 42
         
     def test_nested_profiling(self):
-        """Test nested profiling operations"""        with self.profiler.profile_operation("outer_operation"):
+        """Test nested profiling operations"""
+        with self.profiler.profile_operation("outer_operation"):
             time.sleep(0.01)
             
             with self.profiler.profile_operation("inner_operation"):
@@ -375,7 +404,8 @@ class TestPerformanceProfiler:
         assert "inner_operation" in operations
         
     def test_profiler_decorator(self):
-        """Test profiler decorator functionality"""        @self.profiler.profile
+        """Test profiler decorator functionality"""
+        @self.profiler.profile
         def test_function(x, y):
             time.sleep(0.01)
             return x + y
@@ -388,7 +418,8 @@ class TestPerformanceProfiler:
         assert profile_history[0]["operation"] == "test_function"
         
     def test_profiler_statistics(self):
-        """Test profiler statistics calculation"""        # Profile multiple operations
+        """Test profiler statistics calculation"""
+        # Profile multiple operations
         operations = ["op1", "op2", "op1", "op3", "op1"]
         
         for op in operations:
@@ -411,12 +442,15 @@ class TestPerformanceProfiler:
 
 
 class TestPerformanceOptimizer:
-    """Test cases for PerformanceOptimizer class"""    
+    """Test cases for PerformanceOptimizer class"""
+    
     def setup_method(self):
-        """Setup for each test method"""        self.optimizer = PerformanceOptimizer()
+        """Setup for each test method"""
+        self.optimizer = PerformanceOptimizer()
         
     def test_analyze_performance_data(self):
-        """Test performance data analysis"""        # Create sample performance data
+        """Test performance data analysis"""
+        # Create sample performance data
         sample_data = [
             PerformanceMetrics(cpu_percent=85.0, memory_percent=75.0, response_time=2.5),
             PerformanceMetrics(cpu_percent=90.0, memory_percent=80.0, response_time=3.0),
@@ -436,7 +470,8 @@ class TestPerformanceOptimizer:
         assert cpu_analysis["min"] == 75.0
         
     def test_get_optimization_suggestions(self):
-        """Test optimization suggestions generation"""        # Simulate performance issues
+        """Test optimization suggestions generation"""
+        # Simulate performance issues
         high_cpu_data = [
             PerformanceMetrics(cpu_percent=95.0, memory_percent=50.0, response_time=1.0)
         ]
@@ -457,7 +492,8 @@ class TestPerformanceOptimizer:
             assert "priority" in suggestion
             
     def test_memory_optimization_suggestions(self):
-        """Test memory-specific optimization suggestions"""        high_memory_data = [
+        """Test memory-specific optimization suggestions"""
+        high_memory_data = [
             PerformanceMetrics(cpu_percent=30.0, memory_percent=95.0, response_time=1.0)
         ]
         
@@ -467,7 +503,8 @@ class TestPerformanceOptimizer:
         assert len(memory_suggestions) > 0
         
     def test_response_time_optimization_suggestions(self):
-        """Test response time optimization suggestions"""        slow_response_data = [
+        """Test response time optimization suggestions"""
+        slow_response_data = [
             PerformanceMetrics(cpu_percent=50.0, memory_percent=60.0, response_time=5.0)
         ]
         
@@ -477,7 +514,8 @@ class TestPerformanceOptimizer:
         assert len(response_suggestions) > 0
         
     def test_auto_optimization(self):
-        """Test automatic optimization features"""        # Mock some optimization actions
+        """Test automatic optimization features"""
+        # Mock some optimization actions
         with patch.object(self.optimizer, '_optimize_memory_usage') as mock_memory_opt, \
              patch.object(self.optimizer, '_optimize_cpu_usage') as mock_cpu_opt:
             
@@ -500,18 +538,22 @@ class TestPerformanceOptimizer:
 
 
 class TestPerformanceIntegration:
-    """Test cases for performance monitoring integration"""    
+    """Test cases for performance monitoring integration"""
+    
     def setup_method(self):
-        """Setup for each test method"""        self.monitor = PerformanceMonitor()
+        """Setup for each test method"""
+        self.monitor = PerformanceMonitor()
         self.profiler = PerformanceProfiler()
         self.optimizer = PerformanceOptimizer()
         
     def teardown_method(self):
-        """Cleanup after each test"""        if self.monitor.is_monitoring():
+        """Cleanup after each test"""
+        if self.monitor.is_monitoring():
             self.monitor.stop_monitoring()
             
     def test_end_to_end_performance_workflow(self):
-        """Test complete performance monitoring workflow"""        # Step 1: Start monitoring
+        """Test complete performance monitoring workflow"""
+        # Step 1: Start monitoring
         self.monitor.start_monitoring()
         
         # Step 2: Simulate some operations with profiling
@@ -541,7 +583,8 @@ class TestPerformanceIntegration:
         assert isinstance(suggestions, list)
         
     def test_business_logic_performance_tracking(self):
-        """Test performance tracking for business logic stages"""        # Simulate the business logic workflow: 
+        """Test performance tracking for business logic stages"""
+        # Simulate the business logic workflow: 
         # User Upload → AI Protection → SEO → Collaboration → Distribution
         
         workflow_stages = [
@@ -579,7 +622,8 @@ class TestPerformanceIntegration:
         assert "distribution" in profile_stats
         
     def test_creator_specific_performance_scenarios(self):
-        """Test performance scenarios for different creator types"""        creator_scenarios = {
+        """Test performance scenarios for different creator types"""
+        creator_scenarios = {
             "musician": {
                 "operations": [("audio_validation", 0.1), ("copyright_check", 0.3), ("audio_processing", 0.8)],
                 "content_size": 5242880  # 5MB audio file
@@ -626,12 +670,15 @@ class TestPerformanceIntegration:
 
 
 class TestPerformanceDecorators:
-    """Test cases for performance monitoring decorators"""    
+    """Test cases for performance monitoring decorators"""
+    
     def setup_method(self):
-        """Setup for each test method"""        self.monitor = PerformanceMonitor()
+        """Setup for each test method"""
+        self.monitor = PerformanceMonitor()
         
     def test_monitor_performance_decorator(self):
-        """Test monitor_performance decorator"""        @monitor_performance
+        """Test monitor_performance decorator"""
+        @monitor_performance
         def test_function(x, y):
             time.sleep(0.01)
             return x * y
@@ -646,7 +693,8 @@ class TestPerformanceDecorators:
         # In a real scenario, we'd check the global performance_monitor instance
         
     def test_profiler_decorator_with_custom_name(self):
-        """Test profiler decorator with custom operation name"""        profiler = PerformanceProfiler()
+        """Test profiler decorator with custom operation name"""
+        profiler = PerformanceProfiler()
         
         @profiler.profile_as("custom_operation")
         def test_function():
@@ -661,13 +709,16 @@ class TestPerformanceDecorators:
 
 
 class TestPerformanceAsync:
-    """Test cases for async performance monitoring"""    
+    """Test cases for async performance monitoring"""
+    
     def setup_method(self):
-        """Setup for each test method"""        self.profiler = PerformanceProfiler()
+        """Setup for each test method"""
+        self.profiler = PerformanceProfiler()
         
     @pytest.mark.asyncio
     async def test_async_operation_profiling(self):
-        """Test profiling of async operations"""        async def async_operation():
+        """Test profiling of async operations"""
+        async def async_operation():
             await asyncio.sleep(0.01)
             return "async_result"
             
@@ -689,7 +740,8 @@ class TestPerformanceAsync:
         
     @pytest.mark.asyncio
     async def test_concurrent_async_profiling(self):
-        """Test profiling of concurrent async operations"""        async def async_task(task_id, duration):
+        """Test profiling of concurrent async operations"""
+        async def async_task(task_id, duration):
             await asyncio.sleep(duration)
             return f"task_{task_id}_done"
             
@@ -715,13 +767,16 @@ class TestPerformanceAsync:
 
 
 class TestPerformanceErrorHandling:
-    """Test cases for error handling in performance monitoring"""    
+    """Test cases for error handling in performance monitoring"""
+    
     def setup_method(self):
-        """Setup for each test method"""        self.monitor = PerformanceMonitor()
+        """Setup for each test method"""
+        self.monitor = PerformanceMonitor()
         self.profiler = PerformanceProfiler()
         
     def test_monitoring_with_exceptions(self):
-        """Test that monitoring continues despite exceptions"""        self.monitor.start_monitoring()
+        """Test that monitoring continues despite exceptions"""
+        self.monitor.start_monitoring()
         
         # Simulate an exception during monitoring
         with patch('psutil.cpu_percent', side_effect=Exception("Mock error")):
@@ -733,7 +788,8 @@ class TestPerformanceErrorHandling:
         self.monitor.stop_monitoring()
         
     def test_profiler_with_exceptions(self):
-        """Test profiler behavior when profiled function raises exception"""        try:
+        """Test profiler behavior when profiled function raises exception"""
+        try:
             with self.profiler.profile_operation("failing_operation"):
                 time.sleep(0.01)
                 raise ValueError("Test exception")
@@ -748,7 +804,8 @@ class TestPerformanceErrorHandling:
         assert profile_stats["failing_operation"]["total_time"] > 0.0
         
     def test_optimizer_with_invalid_data(self):
-        """Test optimizer behavior with invalid performance data"""        optimizer = PerformanceOptimizer()
+        """Test optimizer behavior with invalid performance data"""
+        optimizer = PerformanceOptimizer()
         
         # Test with empty data
         suggestions = optimizer.get_optimization_suggestions([])
@@ -765,11 +822,13 @@ class TestPerformanceErrorHandling:
 
 
 class TestPerformanceScalability:
-    """Test cases for performance monitoring scalability"""    
+    """Test cases for performance monitoring scalability"""
+    
     @pytest.mark.performance
     @pytest.mark.slow
     def test_high_frequency_monitoring(self, performance_tracker):
-        """Test monitoring performance under high frequency"""        monitor = PerformanceMonitor()
+        """Test monitoring performance under high frequency"""
+        monitor = PerformanceMonitor()
         monitor.monitoring_interval = 0.001  # 1ms interval for stress test
         
         performance_tracker.start()
@@ -789,7 +848,8 @@ class TestPerformanceScalability:
         
     @pytest.mark.performance
     def test_large_profile_history(self, performance_tracker):
-        """Test profiler performance with large history"""        profiler = PerformanceProfiler()
+        """Test profiler performance with large history"""
+        profiler = PerformanceProfiler()
         
         performance_tracker.start()
         

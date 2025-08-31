@@ -14,7 +14,8 @@ distribution, or modification without written permission from Fahed Mlaiel
 extent of the law. All rights reserved.
 
 Contact: mlaiel@live.de for licensing and authorization inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import numpy as np
@@ -45,7 +46,8 @@ settings = get_settings()
 
 
 class CreatorType(Enum):
-    """Types of content creators"""    MUSICIAN = "musician"
+    """Types of content creators"""
+    MUSICIAN = "musician"
     PHOTOGRAPHER = "photographer"
     VIDEOGRAPHER = "videographer"
     BLOGGER = "blogger"
@@ -60,7 +62,8 @@ class CreatorType(Enum):
 
 
 class CollaborationType(Enum):
-    """Types of collaboration"""    CREATIVE_PARTNERSHIP = "creative_partnership"
+    """Types of collaboration"""
+    CREATIVE_PARTNERSHIP = "creative_partnership"
     SKILL_EXCHANGE = "skill_exchange"
     CONTENT_CREATION = "content_creation"
     CROSS_PROMOTION = "cross_promotion"
@@ -72,7 +75,8 @@ class CollaborationType(Enum):
 
 
 class SkillLevel(Enum):
-    """Skill proficiency levels"""    BEGINNER = "beginner"
+    """Skill proficiency levels"""
+    BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     EXPERT = "expert"
@@ -80,7 +84,8 @@ class SkillLevel(Enum):
 
 
 class CollaborationStatus(Enum):
-    """Status of collaboration requests"""    PENDING = "pending"
+    """Status of collaboration requests"""
+    PENDING = "pending"
     ACCEPTED = "accepted"
     REJECTED = "rejected"
     IN_PROGRESS = "in_progress"
@@ -90,7 +95,8 @@ class CollaborationStatus(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile"""    user_id: str
+    """Comprehensive creator profile"""
+    user_id: str
     username: str
     creator_types: List[CreatorType]
     bio: str
@@ -129,7 +135,8 @@ class CreatorProfile:
 
 @dataclass
 class CollaborationRequest:
-    """Collaboration request details"""    request_id: str
+    """Collaboration request details"""
+    request_id: str
     requester_id: str
     target_creator_id: str
     collaboration_type: CollaborationType
@@ -160,7 +167,8 @@ class CollaborationRequest:
 
 @dataclass
 class MatchScore:
-    """Creator matching score details"""    creator_id: str
+    """Creator matching score details"""
+    creator_id: str
     overall_score: float
     compatibility_scores: Dict[str, float] = field(default_factory=dict)
     reasons: List[str] = field(default_factory=list)
@@ -170,7 +178,8 @@ class MatchScore:
 
 @dataclass
 class CollaborationOpportunity:
-    """Recommended collaboration opportunity"""    opportunity_id: str
+    """Recommended collaboration opportunity"""
+    opportunity_id: str
     creators: List[str]  # User IDs
     collaboration_type: CollaborationType
     title: str
@@ -188,7 +197,8 @@ class CollaborationOpportunity:
 
 
 class CreatorMatcher:
-    """AI-powered creator matching system"""    
+    """AI-powered creator matching system"""
+    
     def __init__(self):
         self.tokenizer = None
         self.model = None
@@ -197,7 +207,8 @@ class CreatorMatcher:
         self.creator_graph = nx.Graph()
         
     async def initialize_models(self):
-        """Initialize AI models for matching"""        try:
+        """Initialize AI models for matching"""
+        try:
             # Load sentence transformer for profile embeddings
             self.tokenizer = AutoTokenizer.from_pretrained('sentence-transformers/all-MiniLM-L6-v2')
             self.model = AutoModel.from_pretrained('sentence-transformers/all-MiniLM-L6-v2')
@@ -209,7 +220,8 @@ class CreatorMatcher:
             raise MatchingError(f"Model initialization failed: {str(e)}")
     
     async def analyze_creator_profile(self, profile: CreatorProfile) -> Dict[str, Any]:
-        """Analyze creator profile and generate embeddings"""        try:
+        """Analyze creator profile and generate embeddings"""
+        try:
             if not self.model:
                 await self.initialize_models()
             
@@ -248,7 +260,8 @@ class CreatorMatcher:
             raise MatchingError(f"Profile analysis failed: {str(e)}")
     
     def _create_profile_text(self, profile: CreatorProfile) -> str:
-        """Create text representation of profile for embedding"""        text_parts = [
+        """Create text representation of profile for embedding"""
+        text_parts = [
             profile.bio,
             f"Creator types: {', '.join([ct.value for ct in profile.creator_types])}",
             f"Skills: {', '.join(profile.skills.keys())}",
@@ -262,7 +275,8 @@ class CreatorMatcher:
         return " ".join(filter(None, text_parts))
     
     async def _calculate_activity_score(self, profile: CreatorProfile) -> float:
-        """Calculate creator activity score"""        try:
+        """Calculate creator activity score"""
+        try:
             # Time since last activity
             days_since_active = (datetime.utcnow() - profile.last_active).days
             activity_recency = max(0, 1 - (days_since_active / 30))  # Decay over 30 days
@@ -283,7 +297,8 @@ class CreatorMatcher:
             return 0.5
     
     async def _calculate_quality_score(self, profile: CreatorProfile) -> float:
-        """Calculate content quality score"""        try:
+        """Calculate content quality score"""
+        try:
             # Use existing content quality score if available
             base_quality = profile.content_quality_score
             
@@ -307,7 +322,8 @@ class CreatorMatcher:
             return 0.5
     
     async def _assess_collaboration_readiness(self, profile: CreatorProfile) -> float:
-        """Assess how ready creator is for collaboration"""        try:
+        """Assess how ready creator is for collaboration"""
+        try:
             readiness_factors = []
             
             # Open to new creators
@@ -336,7 +352,8 @@ class CreatorMatcher:
             return 0.5
     
     async def _calculate_specialization_focus(self, profile: CreatorProfile) -> float:
-        """Calculate how specialized vs generalist the creator is"""        try:
+        """Calculate how specialized vs generalist the creator is"""
+        try:
             total_skills = len(profile.skills)
             if total_skills == 0:
                 return 0.0
@@ -362,7 +379,8 @@ class CreatorMatcher:
             return 0.5
     
     async def _analyze_market_position(self, profile: CreatorProfile) -> str:
-        """Analyze creator's market position"""        try:
+        """Analyze creator's market position"""
+        try:
             follower_tiers = {
                 "micro": (1000, 10000),
                 "mid_tier": (10000, 100000),
@@ -381,7 +399,8 @@ class CreatorMatcher:
             return "unknown"
     
     async def _estimate_growth_potential(self, profile: CreatorProfile) -> float:
-        """Estimate creator's growth potential"""        try:
+        """Estimate creator's growth potential"""
+        try:
             growth_factors = []
             
             # Engagement rate factor (high engagement = growth potential)
@@ -415,7 +434,8 @@ class CreatorMatcher:
         collaboration_type: Optional[CollaborationType] = None,
         max_results: int = 20
     ) -> List[MatchScore]:
-        """Find compatible creators for collaboration"""        try:
+        """Find compatible creators for collaboration"""
+        try:
             if not self.model:
                 await self.initialize_models()
             
@@ -453,7 +473,8 @@ class CreatorMatcher:
         creator_profile: CreatorProfile,
         collaboration_type: Optional[CollaborationType]
     ) -> List[CreatorProfile]:
-        """Get potential creator matches from database"""        try:
+        """Get potential creator matches from database"""
+        try:
             async with get_session() as session:
                 query = select("creator_profiles").where(
                     "user_id" != creator_profile.user_id,  # Exclude self
@@ -507,7 +528,8 @@ class CreatorMatcher:
         creator2: CreatorProfile,
         collaboration_type: Optional[CollaborationType]
     ) -> MatchScore:
-        """Calculate detailed compatibility score between two creators"""        try:
+        """Calculate detailed compatibility score between two creators"""
+        try:
             compatibility_scores = {}
             reasons = []
             synergies = []
@@ -587,7 +609,8 @@ class CreatorMatcher:
         creator1: CreatorProfile,
         creator2: CreatorProfile
     ) -> float:
-        """Calculate skill compatibility score"""        try:
+        """Calculate skill compatibility score"""
+        try:
             skills1 = set(creator1.skills.keys())
             skills2 = set(creator2.skills.keys())
             
@@ -636,7 +659,8 @@ class CreatorMatcher:
         creator1: CreatorProfile,
         creator2: CreatorProfile
     ) -> float:
-        """Calculate audience compatibility score"""        try:
+        """Calculate audience compatibility score"""
+        try:
             # Similar follower counts work well together
             follower_ratio = min(creator1.total_followers, creator2.total_followers) / max(
                 creator1.total_followers, creator2.total_followers, 1
@@ -670,7 +694,8 @@ class CreatorMatcher:
         creator1: CreatorProfile,
         creator2: CreatorProfile
     ) -> float:
-        """Calculate experience level compatibility"""        try:
+        """Calculate experience level compatibility"""
+        try:
             exp1 = creator1.years_of_experience
             exp2 = creator2.years_of_experience
             
@@ -698,7 +723,8 @@ class CreatorMatcher:
         creator1: CreatorProfile,
         creator2: CreatorProfile
     ) -> float:
-        """Calculate creative style compatibility using embeddings"""        try:
+        """Calculate creative style compatibility using embeddings"""
+        try:
             if creator1.user_id not in self.profile_vectors or creator2.user_id not in self.profile_vectors:
                 # Generate embeddings if not available
                 await self.analyze_creator_profile(creator1)
@@ -723,7 +749,8 @@ class CreatorMatcher:
         creator1: CreatorProfile,
         creator2: CreatorProfile
     ) -> float:
-        """Calculate practical compatibility (schedule, budget, location)"""        try:
+        """Calculate practical compatibility (schedule, budget, location)"""
+        try:
             compatibility_factors = []
             
             # Location compatibility
@@ -776,7 +803,8 @@ class CreatorMatcher:
         creator2: CreatorProfile,
         compatibility_scores: Dict[str, float]
     ) -> List[CollaborationType]:
-        """Suggest best collaboration types based on compatibility"""        suggestions = []
+        """Suggest best collaboration types based on compatibility"""
+        suggestions = []
         
         try:
             # High skill compatibility suggests content creation or partnerships
@@ -812,7 +840,8 @@ class CreatorMatcher:
 
 
 class CollaborationManager:
-    """Manage collaboration requests and projects"""    
+    """Manage collaboration requests and projects"""
+    
     def __init__(self):
         self.matcher = CreatorMatcher()
         self.notification_service = NotificationService()
@@ -823,7 +852,8 @@ class CollaborationManager:
         target_creator_id: str,
         collaboration_details: Dict[str, Any]
     ) -> CollaborationRequest:
-        """Create a new collaboration request"""        try:
+        """Create a new collaboration request"""
+        try:
             request_id = f"collab_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{requester_profile.user_id[:8]}"
             
             # Validate target creator exists and is available for collaboration
@@ -866,7 +896,8 @@ class CollaborationManager:
         response: str,  # "accept", "reject", "negotiate"
         response_data: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Respond to a collaboration request"""        try:
+        """Respond to a collaboration request"""
+        try:
             request = await self._get_collaboration_request(request_id)
             if not request:
                 raise CollaborationError("Collaboration request not found")
@@ -923,7 +954,8 @@ class CollaborationManager:
         creator_profile: CreatorProfile,
         max_opportunities: int = 10
     ) -> List[CollaborationOpportunity]:
-        """Discover AI-generated collaboration opportunities"""        try:
+        """Discover AI-generated collaboration opportunities"""
+        try:
             opportunities = []
             
             # Find compatible creators
@@ -960,7 +992,8 @@ class CollaborationManager:
         creator_profile: CreatorProfile,
         match: MatchScore
     ) -> Optional[CollaborationOpportunity]:
-        """Generate a specific collaboration opportunity"""        try:
+        """Generate a specific collaboration opportunity"""
+        try:
             target_profile = await self._get_creator_profile(match.creator_id)
             if not target_profile:
                 return None
@@ -1010,7 +1043,8 @@ class CollaborationManager:
         creator2: CreatorProfile,
         collaboration_type: CollaborationType
     ) -> Decimal:
-        """Estimate the financial value of a collaboration"""        try:
+        """Estimate the financial value of a collaboration"""
+        try:
             # Base value on combined follower count and engagement
             combined_reach = creator1.total_followers + creator2.total_followers
             avg_engagement = (creator1.average_engagement + creator2.average_engagement) / 2
@@ -1048,7 +1082,8 @@ class CollaborationManager:
         creator2: CreatorProfile,
         collaboration_type: CollaborationType
     ) -> Tuple[str, str]:
-        """Generate title and description for collaboration opportunity"""        try:
+        """Generate title and description for collaboration opportunity"""
+        try:
             # Get creator types
             type1 = creator1.creator_types[0].value if creator1.creator_types else "creator"
             type2 = creator2.creator_types[0].value if creator2.creator_types else "creator"
@@ -1091,7 +1126,8 @@ class CollaborationManager:
             return "Collaboration Opportunity", "Join forces for an exciting creative partnership."
     
     async def _estimate_timeline(self, collaboration_type: CollaborationType) -> int:
-        """Estimate timeline in days for collaboration type"""        timelines = {
+        """Estimate timeline in days for collaboration type"""
+        timelines = {
             CollaborationType.CREATIVE_PARTNERSHIP: 90,
             CollaborationType.CONTENT_CREATION: 30,
             CollaborationType.CROSS_PROMOTION: 14,
@@ -1106,7 +1142,8 @@ class CollaborationManager:
         return timelines.get(collaboration_type, 30)
     
     async def _get_creator_profile(self, user_id: str) -> Optional[CreatorProfile]:
-        """Get creator profile from database"""        try:
+        """Get creator profile from database"""
+        try:
             async with get_session() as session:
                 stmt = select("creator_profiles").where("user_id" == user_id)
                 result = await session.execute(stmt)
@@ -1129,7 +1166,8 @@ class CollaborationManager:
             return None
     
     async def _store_collaboration_request(self, request: CollaborationRequest):
-        """Store collaboration request in database"""        try:
+        """Store collaboration request in database"""
+        try:
             async with get_session() as session:
                 request_data = {
                     "request_id": request.request_id,
@@ -1155,7 +1193,8 @@ class CollaborationManager:
             raise
     
     async def _get_collaboration_request(self, request_id: str) -> Optional[CollaborationRequest]:
-        """Get collaboration request from database"""        try:
+        """Get collaboration request from database"""
+        try:
             async with get_session() as session:
                 stmt = select("collaboration_requests").where("request_id" == request_id)
                 result = await session.execute(stmt)
@@ -1181,7 +1220,8 @@ class CollaborationManager:
             return None
     
     async def _update_collaboration_request(self, request: CollaborationRequest):
-        """Update collaboration request in database"""        try:
+        """Update collaboration request in database"""
+        try:
             async with get_session() as session:
                 stmt = update("collaboration_requests").where(
                     "request_id" == request.request_id
@@ -1198,7 +1238,8 @@ class CollaborationManager:
             raise
     
     async def _create_collaboration_project(self, request: CollaborationRequest) -> str:
-        """Create a collaboration project from accepted request"""        try:
+        """Create a collaboration project from accepted request"""
+        try:
             project_id = f"proj_{request.request_id}"
             
             # Store project details in database

@@ -21,7 +21,8 @@ Expertise combinée:
 - Audio/Vidéo: Traitement multimédia et analyse de contenu
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set
 from dataclasses import dataclass, field
@@ -36,7 +37,8 @@ from .monitor_engine import MonitorEngine, MonitoringConfiguration
 logger = logging.getLogger(__name__)
 
 class ComplianceFramework(Enum):
-    """Regulatory compliance frameworks."""    GDPR = "gdpr"  # General Data Protection Regulation (EU)
+    """Regulatory compliance frameworks."""
+    GDPR = "gdpr"  # General Data Protection Regulation (EU)
     CCPA = "ccpa"  # California Consumer Privacy Act
     COPPA = "coppa"  # Children's Online Privacy Protection Act
     DMCA = "dmca"  # Digital Millennium Copyright Act
@@ -47,7 +49,8 @@ class ComplianceFramework(Enum):
     SOC2 = "soc2"  # Service Organization Control 2
 
 class ViolationType(Enum):
-    """Types of compliance violations."""    DATA_PRIVACY = "data_privacy"
+    """Types of compliance violations."""
+    DATA_PRIVACY = "data_privacy"
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_DATA_ACCESS = "unauthorized_data_access"
     DATA_RETENTION_VIOLATION = "data_retention_violation"
@@ -59,14 +62,16 @@ class ViolationType(Enum):
     REGULATORY_REPORTING = "regulatory_reporting"
 
 class ComplianceSeverity(Enum):
-    """Compliance violation severity levels."""    LOW = "low"
+    """Compliance violation severity levels."""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
     REGULATORY_BREACH = "regulatory_breach"
 
 class DataClassification(Enum):
-    """Data classification levels."""    PUBLIC = "public"
+    """Data classification levels."""
+    PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
@@ -75,7 +80,8 @@ class DataClassification(Enum):
 
 @dataclass
 class ComplianceRule:
-    """Compliance rule definition."""    rule_id: str
+    """Compliance rule definition."""
+    rule_id: str
     name: str
     framework: ComplianceFramework
     description: str
@@ -88,7 +94,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceViolation:
-    """Compliance violation record."""    violation_id: str
+    """Compliance violation record."""
+    violation_id: str
     timestamp: datetime = field(default_factory=datetime.utcnow)
     rule_id: str = ""
     framework: ComplianceFramework = ComplianceFramework.GDPR
@@ -105,7 +112,8 @@ class ComplianceViolation:
 
 @dataclass
 class ComplianceAuditEntry:
-    """Compliance audit log entry."""    audit_id: str
+    """Compliance audit log entry."""
+    audit_id: str
     timestamp: datetime = field(default_factory=datetime.utcnow)
     user_id: str = ""
     action: str = ""
@@ -117,13 +125,15 @@ class ComplianceAuditEntry:
     compliance_frameworks: List[ComplianceFramework] = field(default_factory=list)
 
 class LegalMonitor:
-    """Legal and regulatory monitoring component."""    
+    """Legal and regulatory monitoring component."""
+    
     def __init__(self):
         self.legal_database = {}
         self.regulatory_updates = deque(maxlen=1000)
         
     async def check_content_legality(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Check content for legal compliance issues."""        issues = []
+        """Check content for legal compliance issues."""
+        issues = []
         
         try:
             # Check for copyright violations
@@ -148,7 +158,8 @@ class LegalMonitor:
         }
     
     async def _check_copyright_compliance(self, content: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Check for copyright compliance issues."""        issues = []
+        """Check for copyright compliance issues."""
+        issues = []
         
         # Check for copyrighted material patterns
         content_text = str(content.get("text", ""))
@@ -171,7 +182,8 @@ class LegalMonitor:
         return issues
     
     async def _check_privacy_compliance(self, content: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Check for privacy compliance issues."""        issues = []
+        """Check for privacy compliance issues."""
+        issues = []
         
         # Check for PII patterns
         content_text = str(content.get("text", ""))
@@ -194,7 +206,8 @@ class LegalMonitor:
         return issues
     
     async def _check_content_restrictions(self, content: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Check for content restriction violations."""        issues = []
+        """Check for content restriction violations."""
+        issues = []
         
         # Check for restricted content patterns
         content_text = str(content.get("text", "")).lower()
@@ -216,9 +229,11 @@ class LegalMonitor:
         return issues
 
 class ComplianceMonitor(MonitorEngine):
-    """    Advanced compliance monitoring engine.
+    """
+    Advanced compliance monitoring engine.
     Monitors regulatory compliance, data protection, and legal adherence.
-    """    
+    """
+    
     def __init__(self, config: MonitoringConfiguration):
         super().__init__(config)
         self.compliance_rules: Dict[str, ComplianceRule] = {}
@@ -232,7 +247,8 @@ class ComplianceMonitor(MonitorEngine):
         self._initialize_compliance_rules()
     
     def _initialize_compliance_rules(self) -> None:
-        """Initialize compliance monitoring rules."""        self.compliance_rules = {
+        """Initialize compliance monitoring rules."""
+        self.compliance_rules = {
             "gdpr_data_access": ComplianceRule(
                 rule_id="gdpr_data_access",
                 name="GDPR Data Access Control",
@@ -286,7 +302,8 @@ class ComplianceMonitor(MonitorEngine):
         }
     
     async def initialize(self) -> bool:
-        """Initialize compliance monitoring engine."""        try:
+        """Initialize compliance monitoring engine."""
+        try:
             logger.info("Initializing compliance monitor...")
             
             # Load compliance configurations
@@ -306,7 +323,8 @@ class ComplianceMonitor(MonitorEngine):
             return False
     
     async def start_monitoring(self, targets: List[Any]) -> bool:
-        """Start compliance monitoring operations."""        try:
+        """Start compliance monitoring operations."""
+        try:
             logger.info("Starting compliance monitoring...")
             
             # Start monitoring tasks
@@ -327,7 +345,8 @@ class ComplianceMonitor(MonitorEngine):
             return False
     
     async def stop_monitoring(self) -> bool:
-        """Stop compliance monitoring operations."""        try:
+        """Stop compliance monitoring operations."""
+        try:
             await self.cleanup()
             return True
         except Exception as e:
@@ -335,7 +354,8 @@ class ComplianceMonitor(MonitorEngine):
             return False
     
     async def collect_metrics(self) -> Any:
-        """Collect compliance monitoring metrics."""        from .monitor_engine import MonitoringMetrics
+        """Collect compliance monitoring metrics."""
+        from .monitor_engine import MonitoringMetrics
         
         active_violations = len([v for v in self.active_violations.values() if not v.resolved])
         total_violations = len(self.active_violations)
@@ -362,11 +382,13 @@ class ComplianceMonitor(MonitorEngine):
         return metrics
     
     async def process_events(self, events: List[Any]) -> None:
-        """Process compliance events."""        for event in events:
+        """Process compliance events."""
+        for event in events:
             await self._process_compliance_event(event)
     
     async def _process_compliance_event(self, event: Dict[str, Any]) -> None:
-        """Process individual compliance event."""        try:
+        """Process individual compliance event."""
+        try:
             event_type = event.get("type", "")
             
             if event_type == "data_access":
@@ -387,7 +409,8 @@ class ComplianceMonitor(MonitorEngine):
             logger.error(f"Failed to process compliance event: {e}")
     
     async def _process_data_access_event(self, event: Dict[str, Any]) -> None:
-        """Process data access events for compliance."""        user_id = event.get("user_id", "")
+        """Process data access events for compliance."""
+        user_id = event.get("user_id", "")
         data_type = event.get("data_type", "")
         access_type = event.get("access_type", "read")
         
@@ -415,7 +438,8 @@ class ComplianceMonitor(MonitorEngine):
             )
     
     async def _process_content_compliance_event(self, event: Dict[str, Any]) -> None:
-        """Process content upload events for compliance."""        content = event.get("content", {})
+        """Process content upload events for compliance."""
+        content = event.get("content", {})
         uploader_id = event.get("user_id", "")
         
         # Check content legality
@@ -437,7 +461,8 @@ class ComplianceMonitor(MonitorEngine):
                 )
     
     async def _process_consent_event(self, event: Dict[str, Any]) -> None:
-        """Process user consent events."""        user_id = event.get("user_id", "")
+        """Process user consent events."""
+        user_id = event.get("user_id", "")
         consent_type = event.get("consent_type", "")
         consent_given = event.get("consent_given", False)
         
@@ -464,7 +489,8 @@ class ComplianceMonitor(MonitorEngine):
             )
     
     async def _process_data_export_event(self, event: Dict[str, Any]) -> None:
-        """Process data export events for compliance."""        user_id = event.get("user_id", "")
+        """Process data export events for compliance."""
+        user_id = event.get("user_id", "")
         data_types = event.get("data_types", [])
         destination = event.get("destination", "")
         
@@ -481,7 +507,8 @@ class ComplianceMonitor(MonitorEngine):
             )
     
     async def _process_user_deletion_event(self, event: Dict[str, Any]) -> None:
-        """Process user data deletion events."""        user_id = event.get("user_id", "")
+        """Process user data deletion events."""
+        user_id = event.get("user_id", "")
         deletion_type = event.get("deletion_type", "full")
         
         # Verify GDPR right to be forgotten compliance
@@ -501,7 +528,8 @@ class ComplianceMonitor(MonitorEngine):
                 )
     
     def _map_legal_issue_to_violation(self, issue_type: str) -> ViolationType:
-        """Map legal issue types to violation types."""        mapping = {
+        """Map legal issue types to violation types."""
+        mapping = {
             "potential_copyright": ViolationType.COPYRIGHT_INFRINGEMENT,
             "pii_exposure": ViolationType.DATA_PRIVACY,
             "hate_speech": ViolationType.DISCLOSURE_VIOLATION,
@@ -511,7 +539,8 @@ class ComplianceMonitor(MonitorEngine):
         return mapping.get(issue_type, ViolationType.DATA_PRIVACY)
     
     def _map_severity(self, severity_str: str) -> ComplianceSeverity:
-        """Map severity strings to compliance severity enum."""        mapping = {
+        """Map severity strings to compliance severity enum."""
+        mapping = {
             "low": ComplianceSeverity.LOW,
             "medium": ComplianceSeverity.MEDIUM,
             "high": ComplianceSeverity.HIGH,
@@ -520,12 +549,14 @@ class ComplianceMonitor(MonitorEngine):
         return mapping.get(severity_str, ComplianceSeverity.MEDIUM)
     
     def _is_cross_border_transfer(self, destination: str) -> bool:
-        """Check if destination represents cross-border transfer."""        # Simplified check - would use more sophisticated geolocation in production
+        """Check if destination represents cross-border transfer."""
+        # Simplified check - would use more sophisticated geolocation in production
         eu_countries = ["DE", "FR", "IT", "ES", "NL", "BE", "AT", "PL", "PT"]
         return destination not in eu_countries
     
     async def _check_remaining_user_data(self, user_id: str) -> List[str]:
-        """Check for remaining user data after deletion request."""        # Implementation would check all systems for remaining user data
+        """Check for remaining user data after deletion request."""
+        # Implementation would check all systems for remaining user data
         # This is a simplified version
         remaining_data = []
         
@@ -551,7 +582,8 @@ class ComplianceMonitor(MonitorEngine):
         users_affected: List[str] = None,
         source_system: str = ""
     ) -> None:
-        """Create a compliance violation record."""        violation_id = f"violation_{datetime.utcnow().timestamp()}_{violation_type.value}"
+        """Create a compliance violation record."""
+        violation_id = f"violation_{datetime.utcnow().timestamp()}_{violation_type.value}"
         
         violation = ComplianceViolation(
             violation_id=violation_id,
@@ -588,7 +620,8 @@ class ComplianceMonitor(MonitorEngine):
         )
     
     async def _log_audit_event(self, event: Dict[str, Any]) -> None:
-        """Log event for audit trail."""        audit_entry = ComplianceAuditEntry(
+        """Log event for audit trail."""
+        audit_entry = ComplianceAuditEntry(
             audit_id=f"audit_{datetime.utcnow().timestamp()}",
             user_id=event.get("user_id", ""),
             action=event.get("type", ""),
@@ -603,15 +636,18 @@ class ComplianceMonitor(MonitorEngine):
         self.audit_log.append(audit_entry)
     
     async def _load_compliance_configurations(self) -> None:
-        """Load compliance configurations from external sources."""        # Implementation would load from configuration files or database
+        """Load compliance configurations from external sources."""
+        # Implementation would load from configuration files or database
         pass
     
     async def _initialize_audit_logging(self) -> None:
-        """Initialize audit logging infrastructure."""        # Implementation would setup audit log storage and rotation
+        """Initialize audit logging infrastructure."""
+        # Implementation would setup audit log storage and rotation
         pass
     
     async def _monitor_data_access(self) -> None:
-        """Monitor data access patterns for compliance."""        while True:
+        """Monitor data access patterns for compliance."""
+        while True:
             try:
                 # Monitor data access patterns
                 await asyncio.sleep(60)  # Check every minute
@@ -621,7 +657,8 @@ class ComplianceMonitor(MonitorEngine):
                 await asyncio.sleep(120)
     
     async def _monitor_consent_compliance(self) -> None:
-        """Monitor consent compliance."""        while True:
+        """Monitor consent compliance."""
+        while True:
             try:
                 # Check consent compliance
                 await asyncio.sleep(300)  # Check every 5 minutes
@@ -631,7 +668,8 @@ class ComplianceMonitor(MonitorEngine):
                 await asyncio.sleep(600)
     
     async def _monitor_data_retention(self) -> None:
-        """Monitor data retention compliance."""        while True:
+        """Monitor data retention compliance."""
+        while True:
             try:
                 # Check data retention policies
                 await asyncio.sleep(3600)  # Check every hour
@@ -641,7 +679,8 @@ class ComplianceMonitor(MonitorEngine):
                 await asyncio.sleep(1800)
     
     async def _monitor_content_compliance(self) -> None:
-        """Monitor content compliance."""        while True:
+        """Monitor content compliance."""
+        while True:
             try:
                 # Monitor content for compliance issues
                 await asyncio.sleep(180)  # Check every 3 minutes
@@ -651,7 +690,8 @@ class ComplianceMonitor(MonitorEngine):
                 await asyncio.sleep(300)
     
     async def _monitor_cross_border_transfers(self) -> None:
-        """Monitor cross-border data transfers."""        while True:
+        """Monitor cross-border data transfers."""
+        while True:
             try:
                 # Monitor data transfers
                 await asyncio.sleep(1800)  # Check every 30 minutes
@@ -661,7 +701,8 @@ class ComplianceMonitor(MonitorEngine):
                 await asyncio.sleep(3600)
     
     async def _generate_compliance_reports(self) -> None:
-        """Generate compliance reports."""        while True:
+        """Generate compliance reports."""
+        while True:
             try:
                 # Generate compliance reports
                 await asyncio.sleep(86400)  # Generate daily reports

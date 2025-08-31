@@ -9,7 +9,8 @@ Compliance verification → Security checks → Validation report
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import json
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationRuleType(Enum):
-    """Types of validation rules"""    REQUIRED_FIELD = "required_field"
+    """Types of validation rules"""
+    REQUIRED_FIELD = "required_field"
     FORMAT_VALIDATION = "format_validation"
     RANGE_VALIDATION = "range_validation"
     PATTERN_VALIDATION = "pattern_validation"
@@ -37,14 +39,16 @@ class ValidationRuleType(Enum):
 
 
 class ValidationSeverity(Enum):
-    """Validation result severity levels"""    INFO = "info"
+    """Validation result severity levels"""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 
 class ValidationStatus(Enum):
-    """Validation execution status"""    PENDING = "pending"
+    """Validation execution status"""
+    PENDING = "pending"
     RUNNING = "running"
     PASSED = "passed"
     FAILED = "failed"
@@ -54,7 +58,8 @@ class ValidationStatus(Enum):
 
 @dataclass
 class ValidationRule:
-    """Individual validation rule definition"""    id: str
+    """Individual validation rule definition"""
+    id: str
     name: str
     description: str
     rule_type: ValidationRuleType
@@ -91,7 +96,8 @@ class ValidationRule:
 
 @dataclass
 class ValidationIssue:
-    """Individual validation issue"""    rule_id: str
+    """Individual validation issue"""
+    rule_id: str
     rule_name: str
     severity: ValidationSeverity
     message: str
@@ -119,7 +125,8 @@ class ValidationIssue:
 
 @dataclass
 class ValidationResult:
-    """Comprehensive validation result"""    validation_id: str
+    """Comprehensive validation result"""
+    validation_id: str
     target_type: str
     target_id: str
     status: ValidationStatus
@@ -143,16 +150,20 @@ class ValidationResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def add_issue(self, issue: ValidationIssue):
-        """Add a validation issue"""        self.issues.append(issue)
+        """Add a validation issue"""
+        self.issues.append(issue)
     
     def get_issues_by_severity(self, severity: ValidationSeverity) -> List[ValidationIssue]:
-        """Get issues filtered by severity"""        return [issue for issue in self.issues if issue.severity == severity]
+        """Get issues filtered by severity"""
+        return [issue for issue in self.issues if issue.severity == severity]
     
     def has_critical_issues(self) -> bool:
-        """Check if there are critical issues"""        return any(issue.severity == ValidationSeverity.CRITICAL for issue in self.issues)
+        """Check if there are critical issues"""
+        return any(issue.severity == ValidationSeverity.CRITICAL for issue in self.issues)
     
     def has_blocking_issues(self) -> bool:
-        """Check if there are blocking issues (critical or error)"""        return any(
+        """Check if there are blocking issues (critical or error)"""
+        return any(
             issue.severity in [ValidationSeverity.CRITICAL, ValidationSeverity.ERROR]
             for issue in self.issues
         )
@@ -179,23 +190,28 @@ class ValidationResult:
 
 
 class BaseValidator(ABC):
-    """Abstract base class for validators"""    
+    """Abstract base class for validators"""
+    
     @abstractmethod
     def validate(self, data: Any, context: Dict[str, Any]) -> List[ValidationIssue]:
-        """Execute validation and return issues"""        pass
+        """Execute validation and return issues"""
+        pass
     
     @abstractmethod
     def get_rules(self) -> List[ValidationRule]:
-        """Get validation rules"""        pass
+        """Get validation rules"""
+        pass
 
 
 class FieldValidator(BaseValidator):
-    """Field-level validation"""    
+    """Field-level validation"""
+    
     def __init__(self, rules: List[ValidationRule]):
         self.rules = {rule.id: rule for rule in rules if rule.enabled}
     
     def validate(self, data: Any, context: Dict[str, Any]) -> List[ValidationIssue]:
-        """Validate data against field rules"""        issues = []
+        """Validate data against field rules"""
+        issues = []
         
         for rule in self.rules.values():
             try:
@@ -223,7 +239,8 @@ class FieldValidator(BaseValidator):
         return issues
     
     def _validate_required_field(self, data: Any, rule: ValidationRule) -> List[ValidationIssue]:
-        """Validate required field presence"""        issues = []
+        """Validate required field presence"""
+        issues = []
         
         if not rule.field_path:
             return issues
@@ -244,7 +261,8 @@ class FieldValidator(BaseValidator):
         return issues
     
     def _validate_format(self, data: Any, rule: ValidationRule) -> List[ValidationIssue]:
-        """Validate field format"""        issues = []
+        """Validate field format"""
+        issues = []
         
         if not rule.field_path:
             return issues
@@ -285,7 +303,8 @@ class FieldValidator(BaseValidator):
         return issues
     
     def _validate_range(self, data: Any, rule: ValidationRule) -> List[ValidationIssue]:
-        """Validate value range"""        issues = []
+        """Validate value range"""
+        issues = []
         
         if not rule.field_path:
             return issues
@@ -336,7 +355,8 @@ class FieldValidator(BaseValidator):
         return issues
     
     def _validate_pattern(self, data: Any, rule: ValidationRule) -> List[ValidationIssue]:
-        """Validate against regex pattern"""        issues = []
+        """Validate against regex pattern"""
+        issues = []
         
         if not rule.field_path or not rule.pattern:
             return issues
@@ -372,7 +392,8 @@ class FieldValidator(BaseValidator):
     
     def _validate_custom(self, data: Any, rule: ValidationRule, 
                         context: Dict[str, Any]) -> List[ValidationIssue]:
-        """Execute custom validation function"""        issues = []
+        """Execute custom validation function"""
+        issues = []
         
         if not rule.custom_validator:
             return issues
@@ -403,7 +424,8 @@ class FieldValidator(BaseValidator):
         return issues
     
     def _get_nested_value(self, data: Any, field_path: str) -> Any:
-        """Get nested field value using dot notation"""        if not isinstance(data, dict):
+        """Get nested field value using dot notation"""
+        if not isinstance(data, dict):
             return None
         
         keys = field_path.split('.')
@@ -418,16 +440,19 @@ class FieldValidator(BaseValidator):
         return current
     
     def get_rules(self) -> List[ValidationRule]:
-        """Get all validation rules"""        return list(self.rules.values())
+        """Get all validation rules"""
+        return list(self.rules.values())
 
 
 class BusinessRuleValidator(BaseValidator):
-    """Business logic validation"""    
+    """Business logic validation"""
+    
     def __init__(self):
         self.rules = self._initialize_business_rules()
     
     def _initialize_business_rules(self) -> Dict[str, ValidationRule]:
-        """Initialize standard business rules"""        rules = [
+        """Initialize standard business rules"""
+        rules = [
             ValidationRule(
                 id="content_monetization_ready",
                 name="Content Monetization Readiness",
@@ -460,7 +485,8 @@ class BusinessRuleValidator(BaseValidator):
         return {rule.id: rule for rule in rules}
     
     def validate(self, data: Any, context: Dict[str, Any]) -> List[ValidationIssue]:
-        """Execute business rule validation"""        issues = []
+        """Execute business rule validation"""
+        issues = []
         
         for rule in self.rules.values():
             if rule.enabled and rule.custom_validator:
@@ -483,7 +509,8 @@ class BusinessRuleValidator(BaseValidator):
     
     def _validate_monetization_readiness(self, data: Any, rule: ValidationRule, 
                                        context: Dict[str, Any]) -> List[ValidationIssue]:
-        """Validate monetization readiness"""        issues = []
+        """Validate monetization readiness"""
+        issues = []
         
         # Check if quality score meets monetization threshold
         quality_score = context.get('quality_score', 0)
@@ -500,7 +527,8 @@ class BusinessRuleValidator(BaseValidator):
     
     def _validate_platform_compliance(self, data: Any, rule: ValidationRule,
                                     context: Dict[str, Any]) -> List[ValidationIssue]:
-        """Validate platform compliance"""        issues = []
+        """Validate platform compliance"""
+        issues = []
         
         # Example platform compliance checks
         platforms = context.get('target_platforms', [])
@@ -536,7 +564,8 @@ class BusinessRuleValidator(BaseValidator):
     
     def _validate_quality_threshold(self, data: Any, rule: ValidationRule,
                                   context: Dict[str, Any]) -> List[ValidationIssue]:
-        """Validate quality threshold"""        issues = []
+        """Validate quality threshold"""
+        issues = []
         
         overall_score = context.get('overall_score', 0)
         if overall_score < 70:
@@ -551,11 +580,13 @@ class BusinessRuleValidator(BaseValidator):
         return issues
     
     def get_rules(self) -> List[ValidationRule]:
-        """Get business validation rules"""        return list(self.rules.values())
+        """Get business validation rules"""
+        return list(self.rules.values())
 
 
 class ValidationEngine:
-    """Enterprise validation engine with comprehensive rule processing"""    
+    """Enterprise validation engine with comprehensive rule processing"""
+    
     def __init__(self):
         self.field_validator = FieldValidator([])
         self.business_validator = BusinessRuleValidator()
@@ -565,7 +596,8 @@ class ValidationEngine:
         self._initialize_standard_field_rules()
     
     def _initialize_standard_field_rules(self):
-        """Initialize standard field validation rules"""        standard_rules = [
+        """Initialize standard field validation rules"""
+        standard_rules = [
             ValidationRule(
                 id="title_required",
                 name="Title Required",
@@ -606,13 +638,15 @@ class ValidationEngine:
         self.field_validator = FieldValidator(standard_rules)
     
     def add_custom_validator(self, name: str, validator: BaseValidator):
-        """Add a custom validator"""        self.custom_validators[name] = validator
+        """Add a custom validator"""
+        self.custom_validators[name] = validator
         logger.info(f"Added custom validator: {name}")
     
     def validate(self, data: Any, target_type: str = "content",
                 target_id: Optional[str] = None,
                 context: Optional[Dict[str, Any]] = None) -> ValidationResult:
-        """Execute comprehensive validation"""        start_time = datetime.now(timezone.utc)
+        """Execute comprehensive validation"""
+        start_time = datetime.now(timezone.utc)
         validation_id = self._generate_validation_id(data, target_type, target_id)
         
         if target_id is None:
@@ -701,12 +735,14 @@ class ValidationEngine:
     
     def _generate_validation_id(self, data: Any, target_type: str, 
                                target_id: Optional[str]) -> str:
-        """Generate unique validation ID"""        content_hash = hashlib.md5(str(data).encode()).hexdigest()[:8]
+        """Generate unique validation ID"""
+        content_hash = hashlib.md5(str(data).encode()).hexdigest()[:8]
         timestamp = int(time.time())
         return f"val_{target_type}_{timestamp}_{content_hash}"
     
     def _calculate_overall_score(self, result: ValidationResult) -> float:
-        """Calculate overall validation score"""        if result.total_rules == 0:
+        """Calculate overall validation score"""
+        if result.total_rules == 0:
             return 100.0
         
         # Base score
@@ -726,7 +762,8 @@ class ValidationEngine:
         return max(0.0, base_score)
     
     def _generate_recommendations(self, result: ValidationResult) -> List[str]:
-        """Generate validation recommendations"""        recommendations = []
+        """Generate validation recommendations"""
+        recommendations = []
         
         # Critical issues
         critical_issues = result.get_issues_by_severity(ValidationSeverity.CRITICAL)
@@ -756,13 +793,15 @@ class ValidationEngine:
     async def validate_async(self, data: Any, target_type: str = "content",
                            target_id: Optional[str] = None,
                            context: Optional[Dict[str, Any]] = None) -> ValidationResult:
-        """Execute validation asynchronously"""        loop = asyncio.get_event_loop()
+        """Execute validation asynchronously"""
+        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             None, self.validate, data, target_type, target_id, context
         )
     
     def batch_validate(self, items: List[Dict[str, Any]]) -> List[ValidationResult]:
-        """Validate multiple items in batch"""        results = []
+        """Validate multiple items in batch"""
+        results = []
         
         for item in items:
             data = item.get('data')
@@ -776,7 +815,8 @@ class ValidationEngine:
         return results
     
     def get_validation_summary(self, results: List[ValidationResult]) -> Dict[str, Any]:
-        """Get summary statistics for multiple validation results"""        if not results:
+        """Get summary statistics for multiple validation results"""
+        if not results:
             return {}
         
         total_results = len(results)

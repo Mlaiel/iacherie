@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Set, Union
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ from datetime import datetime, timedelta
 
 
 class SubscriptionStatus(str, Enum):
-    """Comprehensive subscription status states."""    ACTIVE = "active"
+    """Comprehensive subscription status states."""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     PENDING = "pending"
     TRIALING = "trialing"
@@ -41,7 +43,8 @@ class SubscriptionStatus(str, Enum):
 
 
 class SubscriptionType(str, Enum):
-    """Types of subscriptions available."""    STANDARD = "standard"
+    """Types of subscriptions available."""
+    STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
     CUSTOM = "custom"
@@ -54,7 +57,8 @@ class SubscriptionType(str, Enum):
 
 
 class BillingInterval(str, Enum):
-    """Billing frequency options."""    WEEKLY = "weekly"
+    """Billing frequency options."""
+    WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
     SEMI_ANNUALLY = "semi_annually"
@@ -65,7 +69,8 @@ class BillingInterval(str, Enum):
 
 
 class PaymentStatus(str, Enum):
-    """Payment attempt status."""    PENDING = "pending"
+    """Payment attempt status."""
+    PENDING = "pending"
     PROCESSING = "processing"
     SUCCEEDED = "succeeded"
     FAILED = "failed"
@@ -79,7 +84,8 @@ class PaymentStatus(str, Enum):
 
 
 class RenewalAction(str, Enum):
-    """Actions to take on subscription renewal."""    AUTO_RENEW = "auto_renew"
+    """Actions to take on subscription renewal."""
+    AUTO_RENEW = "auto_renew"
     REQUIRE_CONFIRMATION = "require_confirmation"
     PAUSE = "pause"
     CANCEL = "cancel"
@@ -89,7 +95,8 @@ class RenewalAction(str, Enum):
 
 
 class ChurnReason(str, Enum):
-    """Reasons for subscription cancellation."""    PRICE_TOO_HIGH = "price_too_high"
+    """Reasons for subscription cancellation."""
+    PRICE_TOO_HIGH = "price_too_high"
     LACK_OF_FEATURES = "lack_of_features"
     POOR_PERFORMANCE = "poor_performance"
     CUSTOMER_SUPPORT = "customer_support"
@@ -103,7 +110,8 @@ class ChurnReason(str, Enum):
 
 @dataclass
 class BillingCycle:
-    """Comprehensive billing cycle configuration."""    interval: BillingInterval
+    """Comprehensive billing cycle configuration."""
+    interval: BillingInterval
     interval_count: int = 1  # e.g., every 2 months
     anchor_day: Optional[int] = None  # Day of month for billing
     trial_period_days: int = 0
@@ -123,7 +131,8 @@ class BillingCycle:
 
 @dataclass
 class RetryPolicy:
-    """Payment retry configuration for failed payments."""    enabled: bool = True
+    """Payment retry configuration for failed payments."""
+    enabled: bool = True
     max_attempts: int = 4
     retry_schedule_days: List[int] = field(default_factory=lambda: [3, 7, 14, 21])
     exponential_backoff: bool = False
@@ -141,7 +150,8 @@ class RetryPolicy:
 
 @dataclass
 class TrialConfiguration:
-    """Free trial configuration options."""    enabled: bool = True
+    """Free trial configuration options."""
+    enabled: bool = True
     duration_days: int = 14
     
     # Trial types
@@ -163,7 +173,8 @@ class TrialConfiguration:
 
 @dataclass
 class CancellationPolicy:
-    """Subscription cancellation and retention policies."""    # Immediate vs. end of period cancellation
+    """Subscription cancellation and retention policies."""
+    # Immediate vs. end of period cancellation
     immediate_cancellation: bool = False
     cancel_at_period_end: bool = True
     
@@ -185,7 +196,8 @@ class CancellationPolicy:
 
 @dataclass
 class UsageTrackingConfig:
-    """Configuration for usage-based billing components."""    enabled: bool = True
+    """Configuration for usage-based billing components."""
+    enabled: bool = True
     
     # Tracking settings
     real_time_tracking: bool = True
@@ -207,7 +219,8 @@ class UsageTrackingConfig:
 
 @dataclass
 class AddOnConfiguration:
-    """Add-on products and services configuration."""    enabled: bool = True
+    """Add-on products and services configuration."""
+    enabled: bool = True
     
     # Available add-ons
     available_addons: Dict[str, Dict[str, Any]] = field(default_factory=lambda: {
@@ -254,7 +267,8 @@ class AddOnConfiguration:
 
 @dataclass
 class SubscriptionMetrics:
-    """Subscription business metrics configuration."""    # Key metrics tracking
+    """Subscription business metrics configuration."""
+    # Key metrics tracking
     track_churn_rate: bool = True
     track_ltv: bool = True
     track_mrr: bool = True
@@ -281,7 +295,8 @@ class SubscriptionMetrics:
 
 @dataclass
 class NotificationConfig:
-    """Subscription-related notification configuration."""    # Payment notifications
+    """Subscription-related notification configuration."""
+    # Payment notifications
     payment_succeeded: bool = True
     payment_failed: bool = True
     payment_retry: bool = True
@@ -317,7 +332,8 @@ class NotificationConfig:
 
 @dataclass
 class SubscriptionConfig:
-    """Professional subscription management configuration."""    
+    """Professional subscription management configuration."""
+    
     # Global Subscription Settings
     ENABLE_SUBSCRIPTIONS: bool = True
     DEFAULT_CURRENCY: str = "EUR"
@@ -507,19 +523,23 @@ class SubscriptionConfig:
     })
     
     def get_billing_cycle_config(self, interval: BillingInterval) -> Optional[BillingCycle]:
-        """Get billing cycle configuration for specific interval."""        return self.AVAILABLE_BILLING_CYCLES.get(interval)
+        """Get billing cycle configuration for specific interval."""
+        return self.AVAILABLE_BILLING_CYCLES.get(interval)
     
     def is_status_transition_allowed(self, from_status: SubscriptionStatus, 
                                    to_status: SubscriptionStatus) -> bool:
-        """Check if status transition is allowed."""        allowed_transitions = self.ALLOWED_STATUS_TRANSITIONS.get(from_status, [])
+        """Check if status transition is allowed."""
+        allowed_transitions = self.ALLOWED_STATUS_TRANSITIONS.get(from_status, [])
         return to_status in allowed_transitions
     
     def get_tier_settings(self, tier: str) -> Dict[str, Any]:
-        """Get tier-specific subscription settings."""        return self.TIER_SPECIFIC_SETTINGS.get(tier.lower(), {})
+        """Get tier-specific subscription settings."""
+        return self.TIER_SPECIFIC_SETTINGS.get(tier.lower(), {})
     
     def calculate_proration(self, old_price: Decimal, new_price: Decimal, 
                            days_remaining: int, days_in_period: int) -> Decimal:
-        """Calculate prorated amount for plan changes."""        if not self.BUSINESS_RULES.get("prorate_plan_changes", True):
+        """Calculate prorated amount for plan changes."""
+        if not self.BUSINESS_RULES.get("prorate_plan_changes", True):
             return Decimal("0.00")
         
         # Calculate unused portion of current period
@@ -533,7 +553,8 @@ class SubscriptionConfig:
     
     def get_retention_offer(self, subscription_value: Decimal, 
                            tier: str, churn_reason: ChurnReason) -> Dict[str, Any]:
-        """Generate retention offer based on subscription value and churn reason."""        tier_settings = self.get_tier_settings(tier)
+        """Generate retention offer based on subscription value and churn reason."""
+        tier_settings = self.get_tier_settings(tier)
         max_discount = tier_settings.get("retention_discount_max", Decimal("20.0"))
         
         # Base retention offers by churn reason
@@ -578,7 +599,8 @@ from datetime import datetime, timedelta
 
 
 class SubscriptionStatus(str, Enum):
-    """Subscription status types."""    ACTIVE = "active"
+    """Subscription status types."""
+    ACTIVE = "active"
     TRIAL = "trial"
     PAST_DUE = "past_due"
     CANCELLED = "cancelled"
@@ -590,7 +612,8 @@ class SubscriptionStatus(str, Enum):
 
 
 class BillingCycle(str, Enum):
-    """Billing cycle options."""    MONTHLY = "monthly"
+    """Billing cycle options."""
+    MONTHLY = "monthly"
     QUARTERLY = "quarterly"
     SEMI_ANNUALLY = "semi_annually"
     ANNUALLY = "annually"
@@ -598,7 +621,8 @@ class BillingCycle(str, Enum):
 
 
 class SubscriptionEvent(str, Enum):
-    """Subscription event types."""    CREATED = "created"
+    """Subscription event types."""
+    CREATED = "created"
     ACTIVATED = "activated"
     RENEWED = "renewed"
     UPGRADED = "upgraded"
@@ -614,7 +638,8 @@ class SubscriptionEvent(str, Enum):
 
 
 class RenewalPolicy(str, Enum):
-    """Subscription renewal policies."""    AUTOMATIC = "automatic"
+    """Subscription renewal policies."""
+    AUTOMATIC = "automatic"
     MANUAL = "manual"
     GRACE_PERIOD = "grace_period"
     IMMEDIATE_CANCEL = "immediate_cancel"
@@ -622,7 +647,8 @@ class RenewalPolicy(str, Enum):
 
 @dataclass
 class TrialConfig:
-    """Trial period configuration."""    enabled: bool = True
+    """Trial period configuration."""
+    enabled: bool = True
     duration_days: int = 14
     requires_payment_method: bool = True
     auto_convert: bool = True
@@ -633,7 +659,8 @@ class TrialConfig:
 
 @dataclass
 class GracePeriodConfig:
-    """Grace period configuration for failed payments."""    enabled: bool = True
+    """Grace period configuration for failed payments."""
+    enabled: bool = True
     duration_days: int = 5
     retry_attempts: int = 3
     retry_interval_hours: int = 24
@@ -643,7 +670,8 @@ class GracePeriodConfig:
 
 @dataclass
 class ProrationConfig:
-    """Proration configuration for subscription changes."""    enabled: bool = True
+    """Proration configuration for subscription changes."""
+    enabled: bool = True
     prorate_upgrades: bool = True
     prorate_downgrades: bool = False
     credit_unused_time: bool = True
@@ -652,7 +680,8 @@ class ProrationConfig:
 
 @dataclass
 class CancellationConfig:
-    """Cancellation policy configuration."""    allow_immediate_cancellation: bool = True
+    """Cancellation policy configuration."""
+    allow_immediate_cancellation: bool = True
     allow_end_of_period_cancellation: bool = True
     cancellation_survey_required: bool = True
     retention_offers_enabled: bool = True
@@ -663,7 +692,8 @@ class CancellationConfig:
 
 @dataclass
 class SubscriptionTierConfig:
-    """Configuration for subscription tiers."""    tier_id: str
+    """Configuration for subscription tiers."""
+    tier_id: str
     name: str
     description: str
     monthly_price: Decimal
@@ -683,7 +713,8 @@ class SubscriptionTierConfig:
 
 @dataclass
 class SubscriptionConfig:
-    """Main subscription configuration class."""    
+    """Main subscription configuration class."""
+    
     # Database Configuration
     DATABASE_URL: str = os.getenv(
         "SUBSCRIPTION_DB_URL", 
@@ -1008,10 +1039,12 @@ class SubscriptionConfig:
     })
     
     def get_tier_config(self, tier_id: str) -> Optional[SubscriptionTierConfig]:
-        """Get configuration for a specific subscription tier."""        return self.SUBSCRIPTION_TIERS.get(tier_id)
+        """Get configuration for a specific subscription tier."""
+        return self.SUBSCRIPTION_TIERS.get(tier_id)
     
     def get_available_tiers(self) -> List[str]:
-        """Get list of available subscription tiers."""        return list(self.SUBSCRIPTION_TIERS.keys())
+        """Get list of available subscription tiers."""
+        return list(self.SUBSCRIPTION_TIERS.keys())
     
     def calculate_proration(
         self,
@@ -1020,7 +1053,8 @@ class SubscriptionConfig:
         days_remaining: int,
         days_in_cycle: int
     ) -> Decimal:
-        """Calculate proration amount for subscription changes."""        if not self.PRORATION_CONFIG.enabled:
+        """Calculate proration amount for subscription changes."""
+        if not self.PRORATION_CONFIG.enabled:
             return Decimal("0.00")
         
         daily_old_rate = old_price / days_in_cycle
@@ -1041,7 +1075,8 @@ class SubscriptionConfig:
         current_date: datetime,
         billing_cycle: BillingCycle
     ) -> datetime:
-        """Calculate next billing date based on cycle."""        if billing_cycle == BillingCycle.MONTHLY:
+        """Calculate next billing date based on cycle."""
+        if billing_cycle == BillingCycle.MONTHLY:
             return current_date + timedelta(days=30)
         elif billing_cycle == BillingCycle.QUARTERLY:
             return current_date + timedelta(days=90)
@@ -1053,7 +1088,8 @@ class SubscriptionConfig:
             return current_date + timedelta(days=30)  # Default to monthly
     
     def calculate_annual_savings(self, tier_id: str) -> Decimal:
-        """Calculate savings percentage for annual billing."""        tier_config = self.get_tier_config(tier_id)
+        """Calculate savings percentage for annual billing."""
+        tier_config = self.get_tier_config(tier_id)
         if not tier_config:
             return Decimal("0.00")
         
@@ -1065,7 +1101,8 @@ class SubscriptionConfig:
         return (savings / monthly_annual_cost * 100).quantize(Decimal("0.1"))
     
     def is_upgrade(self, from_tier: str, to_tier: str) -> bool:
-        """Determine if a tier change is an upgrade."""        tier_hierarchy = [
+        """Determine if a tier change is an upgrade."""
+        tier_hierarchy = [
             "free", "creator_basic", "creator_pro", "creator_premium", "enterprise"
         ]
         

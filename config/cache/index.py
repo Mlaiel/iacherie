@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, Any, Optional, Union
+"""
+from typing import Dict, Any, Optional, Union
 from enum import Enum
 import os
 from dataclasses import dataclass
@@ -103,21 +104,24 @@ from . import (
 
 
 class Environment(str, Enum):
-    """Deployment environments"""    DEVELOPMENT = "development"
+    """Deployment environments"""
+    DEVELOPMENT = "development"
     TESTING = "testing"
     PRODUCTION = "production"
     STAGING = "staging"
 
 
 class CacheType(str, Enum):
-    """Cache system types"""    REDIS = "redis"
+    """Cache system types"""
+    REDIS = "redis"
     MEMCACHED = "memcached"
     HYBRID = "hybrid"  # Both Redis and Memcached
 
 
 @dataclass
 class CacheConfigurationBundle:
-    """Complete cache configuration bundle for an environment"""    environment: Environment
+    """Complete cache configuration bundle for an environment"""
+    environment: Environment
     cache_type: CacheType
     
     # Core configurations
@@ -139,7 +143,8 @@ class CacheConfigurationBundle:
     revenue_config: Optional[RevenueCacheConfig] = None
     
     def validate(self) -> bool:
-        """Validate configuration bundle consistency"""        if self.cache_type == CacheType.REDIS and not self.redis_config:
+        """Validate configuration bundle consistency"""
+        if self.cache_type == CacheType.REDIS and not self.redis_config:
             return False
         
         if self.cache_type == CacheType.MEMCACHED and not self.memcached_config:
@@ -152,7 +157,8 @@ class CacheConfigurationBundle:
         return True
     
     def get_summary(self) -> Dict[str, Any]:
-        """Get configuration bundle summary"""        return {
+        """Get configuration bundle summary"""
+        return {
             "environment": self.environment,
             "cache_type": self.cache_type,
             "components": {
@@ -178,10 +184,12 @@ class CacheConfigurationBundle:
 
 
 class CacheConfigurationFactory:
-    """Factory for creating complete cache configuration bundles"""    
+    """Factory for creating complete cache configuration bundles"""
+    
     @staticmethod
     def create_development_bundle(cache_type: CacheType = CacheType.REDIS) -> CacheConfigurationBundle:
-        """Create development environment configuration bundle"""        bundle = CacheConfigurationBundle(
+        """Create development environment configuration bundle"""
+        bundle = CacheConfigurationBundle(
             environment=Environment.DEVELOPMENT,
             cache_type=cache_type
         )
@@ -213,7 +221,8 @@ class CacheConfigurationFactory:
     @staticmethod
     def create_production_bundle(cache_type: CacheType = CacheType.HYBRID,
                                multi_region: bool = True) -> CacheConfigurationBundle:
-        """Create production environment configuration bundle"""        bundle = CacheConfigurationBundle(
+        """Create production environment configuration bundle"""
+        bundle = CacheConfigurationBundle(
             environment=Environment.PRODUCTION,
             cache_type=cache_type
         )
@@ -240,7 +249,8 @@ class CacheConfigurationFactory:
     
     @staticmethod
     def create_testing_bundle(cache_type: CacheType = CacheType.REDIS) -> CacheConfigurationBundle:
-        """Create testing environment configuration bundle"""        bundle = CacheConfigurationBundle(
+        """Create testing environment configuration bundle"""
+        bundle = CacheConfigurationBundle(
             environment=Environment.TESTING,
             cache_type=cache_type
         )
@@ -265,7 +275,8 @@ class CacheConfigurationFactory:
     def create_custom_bundle(environment: Environment,
                            cache_type: CacheType,
                            **component_configs) -> CacheConfigurationBundle:
-        """Create custom configuration bundle"""        bundle = CacheConfigurationBundle(
+        """Create custom configuration bundle"""
+        bundle = CacheConfigurationBundle(
             environment=environment,
             cache_type=cache_type
         )
@@ -279,14 +290,16 @@ class CacheConfigurationFactory:
 
 
 class CacheConfigurationManager:
-    """Manager for cache configurations across the application"""    
+    """Manager for cache configurations across the application"""
+    
     def __init__(self):
         self._bundles: Dict[str, CacheConfigurationBundle] = {}
         self._active_bundle: Optional[CacheConfigurationBundle] = None
         self._environment = self._detect_environment()
     
     def _detect_environment(self) -> Environment:
-        """Detect current environment from environment variables"""        env = os.getenv("ENVIRONMENT", "development").lower()
+        """Detect current environment from environment variables"""
+        env = os.getenv("ENVIRONMENT", "development").lower()
         
         if env in ["prod", "production"]:
             return Environment.PRODUCTION
@@ -298,25 +311,30 @@ class CacheConfigurationManager:
             return Environment.DEVELOPMENT
     
     def register_bundle(self, name: str, bundle: CacheConfigurationBundle):
-        """Register a configuration bundle"""        if not bundle.validate():
+        """Register a configuration bundle"""
+        if not bundle.validate():
             raise ValueError(f"Invalid configuration bundle: {name}")
         
         self._bundles[name] = bundle
     
     def get_bundle(self, name: str) -> Optional[CacheConfigurationBundle]:
-        """Get registered configuration bundle"""        return self._bundles.get(name)
+        """Get registered configuration bundle"""
+        return self._bundles.get(name)
     
     def set_active_bundle(self, name: str):
-        """Set active configuration bundle"""        if name not in self._bundles:
+        """Set active configuration bundle"""
+        if name not in self._bundles:
             raise ValueError(f"Bundle not found: {name}")
         
         self._active_bundle = self._bundles[name]
     
     def get_active_bundle(self) -> Optional[CacheConfigurationBundle]:
-        """Get active configuration bundle"""        return self._active_bundle
+        """Get active configuration bundle"""
+        return self._active_bundle
     
     def auto_configure(self, cache_type: CacheType = None) -> CacheConfigurationBundle:
-        """Auto-configure based on detected environment"""        if cache_type is None:
+        """Auto-configure based on detected environment"""
+        if cache_type is None:
             cache_type = CacheType.REDIS if self._environment == Environment.TESTING else CacheType.HYBRID
         
         if self._environment == Environment.PRODUCTION:
@@ -333,7 +351,8 @@ class CacheConfigurationManager:
         return bundle
     
     def get_configuration_summary(self) -> Dict[str, Any]:
-        """Get complete configuration summary"""        return {
+        """Get complete configuration summary"""
+        return {
             "detected_environment": self._environment,
             "registered_bundles": list(self._bundles.keys()),
             "active_bundle": self._active_bundle.get_summary() if self._active_bundle else None,
@@ -341,7 +360,8 @@ class CacheConfigurationManager:
         }
     
     def validate_all_bundles(self) -> Dict[str, bool]:
-        """Validate all registered bundles"""        return {name: bundle.validate() for name, bundle in self._bundles.items()}
+        """Validate all registered bundles"""
+        return {name: bundle.validate() for name, bundle in self._bundles.items()}
 
 
 # Global configuration manager instance
@@ -350,7 +370,8 @@ config_manager = CacheConfigurationManager()
 # Convenience functions for quick setup
 def get_default_config(environment: Environment = None,
                       cache_type: CacheType = None) -> CacheConfigurationBundle:
-    """Get default configuration for environment"""    if environment is None:
+    """Get default configuration for environment"""
+    if environment is None:
         environment = config_manager._detect_environment()
     
     if cache_type is None:
@@ -367,7 +388,8 @@ def get_default_config(environment: Environment = None,
 def setup_cache_config(environment: Environment = None,
                       cache_type: CacheType = None,
                       auto_activate: bool = True) -> CacheConfigurationBundle:
-    """Setup cache configuration with automatic detection"""    bundle = config_manager.auto_configure(cache_type)
+    """Setup cache configuration with automatic detection"""
+    bundle = config_manager.auto_configure(cache_type)
     
     if auto_activate:
         # Additional setup logic would go here

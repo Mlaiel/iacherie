@@ -25,7 +25,8 @@ Architecture Components:
 - Network and connectivity testing
 - Load testing and capacity validation
 - Disaster recovery testing
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import time
@@ -50,7 +51,8 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationLevel(Enum):
-    """Validation severity levels"""    CRITICAL = "critical"
+    """Validation severity levels"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -58,7 +60,8 @@ class ValidationLevel(Enum):
 
 
 class ValidationStatus(Enum):
-    """Validation status"""    PASSED = "passed"
+    """Validation status"""
+    PASSED = "passed"
     FAILED = "failed"
     WARNING = "warning"
     SKIPPED = "skipped"
@@ -66,7 +69,8 @@ class ValidationStatus(Enum):
 
 
 class ValidationCategory(Enum):
-    """Validation categories"""    INFRASTRUCTURE = "infrastructure"
+    """Validation categories"""
+    INFRASTRUCTURE = "infrastructure"
     NETWORKING = "networking"
     SECURITY = "security"
     PERFORMANCE = "performance"
@@ -78,7 +82,8 @@ class ValidationCategory(Enum):
 
 @dataclass
 class ValidationResult:
-    """Result of a validation check"""    name: str
+    """Result of a validation check"""
+    name: str
     category: ValidationCategory
     level: ValidationLevel
     status: ValidationStatus
@@ -95,7 +100,8 @@ class ValidationResult:
 
 @dataclass
 class ValidationSuite:
-    """Collection of validation results"""    name: str
+    """Collection of validation results"""
+    name: str
     environment: str
     total_checks: int = 0
     passed_checks: int = 0
@@ -107,7 +113,8 @@ class ValidationSuite:
     results: List[ValidationResult] = field(default_factory=list)
     
     def add_result(self, result: ValidationResult):
-        """Add validation result and update counters"""        self.results.append(result)
+        """Add validation result and update counters"""
+        self.results.append(result)
         self.total_checks += 1
         
         if result.status == ValidationStatus.PASSED:
@@ -122,19 +129,22 @@ class ValidationSuite:
             self.error_checks += 1
     
     def get_success_rate(self) -> float:
-        """Calculate success rate"""        if self.total_checks == 0:
+        """Calculate success rate"""
+        if self.total_checks == 0:
             return 0.0
         return (self.passed_checks / self.total_checks) * 100
     
     def has_critical_failures(self) -> bool:
-        """Check if there are critical failures"""        return any(
+        """Check if there are critical failures"""
+        return any(
             r.status == ValidationStatus.FAILED and r.level == ValidationLevel.CRITICAL 
             for r in self.results
         )
 
 
 class BaseValidator(ABC):
-    """Abstract base class for validators"""    
+    """Abstract base class for validators"""
+    
     def __init__(self, name: str, category: ValidationCategory, level: ValidationLevel):
         self.name = name
         self.category = category
@@ -143,11 +153,13 @@ class BaseValidator(ABC):
         
     @abstractmethod
     async def validate(self, context: Dict[str, Any]) -> ValidationResult:
-        """Perform validation"""        pass
+        """Perform validation"""
+        pass
     
     def create_result(self, status: ValidationStatus, message: str, 
                      details: Dict[str, Any] = None, remediation: str = None) -> ValidationResult:
-        """Create validation result"""        return ValidationResult(
+        """Create validation result"""
+        return ValidationResult(
             name=self.name,
             category=self.category,
             level=self.level,
@@ -159,13 +171,15 @@ class BaseValidator(ABC):
 
 
 class AWSInfrastructureValidator(BaseValidator):
-    """Validator for AWS infrastructure components"""    
+    """Validator for AWS infrastructure components"""
+    
     def __init__(self):
         super().__init__("AWS Infrastructure", ValidationCategory.INFRASTRUCTURE, ValidationLevel.CRITICAL)
         self.aws_session = boto3.Session()
         
     async def validate(self, context: Dict[str, Any]) -> ValidationResult:
-        """Validate AWS infrastructure"""        start_time = time.time()
+        """Validate AWS infrastructure"""
+        start_time = time.time()
         
         try:
             environment = context.get('environment', 'development')
@@ -292,7 +306,8 @@ class AWSInfrastructureValidator(BaseValidator):
 
 
 class KubernetesValidator(BaseValidator):
-    """Validator for Kubernetes cluster and applications"""    
+    """Validator for Kubernetes cluster and applications"""
+    
     def __init__(self):
         super().__init__("Kubernetes Cluster", ValidationCategory.INFRASTRUCTURE, ValidationLevel.CRITICAL)
         self.k8s_client = None
@@ -311,7 +326,8 @@ class KubernetesValidator(BaseValidator):
             self.logger.warning(f"Could not initialize Kubernetes client: {e}")
     
     async def validate(self, context: Dict[str, Any]) -> ValidationResult:
-        """Validate Kubernetes cluster and applications"""        start_time = time.time()
+        """Validate Kubernetes cluster and applications"""
+        start_time = time.time()
         
         if not self.k8s_client:
             return self.create_result(
@@ -467,12 +483,14 @@ class KubernetesValidator(BaseValidator):
 
 
 class DatabaseConnectivityValidator(BaseValidator):
-    """Validator for database connectivity and health"""    
+    """Validator for database connectivity and health"""
+    
     def __init__(self):
         super().__init__("Database Connectivity", ValidationCategory.INFRASTRUCTURE, ValidationLevel.CRITICAL)
     
     async def validate(self, context: Dict[str, Any]) -> ValidationResult:
-        """Validate database connectivity"""        start_time = time.time()
+        """Validate database connectivity"""
+        start_time = time.time()
         
         try:
             db_config = context.get('database', {})
@@ -547,12 +565,14 @@ class DatabaseConnectivityValidator(BaseValidator):
 
 
 class RedisConnectivityValidator(BaseValidator):
-    """Validator for Redis connectivity and health"""    
+    """Validator for Redis connectivity and health"""
+    
     def __init__(self):
         super().__init__("Redis Connectivity", ValidationCategory.INFRASTRUCTURE, ValidationLevel.HIGH)
     
     async def validate(self, context: Dict[str, Any]) -> ValidationResult:
-        """Validate Redis connectivity"""        start_time = time.time()
+        """Validate Redis connectivity"""
+        start_time = time.time()
         
         try:
             redis_config = context.get('redis', {})
@@ -627,12 +647,14 @@ class RedisConnectivityValidator(BaseValidator):
 
 
 class NetworkConnectivityValidator(BaseValidator):
-    """Validator for network connectivity"""    
+    """Validator for network connectivity"""
+    
     def __init__(self):
         super().__init__("Network Connectivity", ValidationCategory.NETWORKING, ValidationLevel.HIGH)
     
     async def validate(self, context: Dict[str, Any]) -> ValidationResult:
-        """Validate network connectivity"""        start_time = time.time()
+        """Validate network connectivity"""
+        start_time = time.time()
         
         try:
             environment = context.get('environment', 'development')
@@ -711,12 +733,14 @@ class NetworkConnectivityValidator(BaseValidator):
 
 
 class SecurityValidator(BaseValidator):
-    """Validator for security configurations"""    
+    """Validator for security configurations"""
+    
     def __init__(self):
         super().__init__("Security Configuration", ValidationCategory.SECURITY, ValidationLevel.HIGH)
     
     async def validate(self, context: Dict[str, Any]) -> ValidationResult:
-        """Validate security configurations"""        start_time = time.time()
+        """Validate security configurations"""
+        start_time = time.time()
         
         try:
             validation_details = {}
@@ -822,12 +846,14 @@ class SecurityValidator(BaseValidator):
 
 
 class PerformanceValidator(BaseValidator):
-    """Validator for system performance"""    
+    """Validator for system performance"""
+    
     def __init__(self):
         super().__init__("System Performance", ValidationCategory.PERFORMANCE, ValidationLevel.MEDIUM)
     
     async def validate(self, context: Dict[str, Any]) -> ValidationResult:
-        """Validate system performance metrics"""        start_time = time.time()
+        """Validate system performance metrics"""
+        start_time = time.time()
         
         try:
             validation_details = {}
@@ -923,7 +949,8 @@ class PerformanceValidator(BaseValidator):
 
 
 class ValidationEngine:
-    """Main validation engine that orchestrates all validators"""    
+    """Main validation engine that orchestrates all validators"""
+    
     def __init__(self):
         self.validators: List[BaseValidator] = []
         self.logger = logging.getLogger(__name__)
@@ -932,7 +959,8 @@ class ValidationEngine:
         self._initialize_default_validators()
     
     def _initialize_default_validators(self):
-        """Initialize default set of validators"""        self.validators = [
+        """Initialize default set of validators"""
+        self.validators = [
             AWSInfrastructureValidator(),
             KubernetesValidator(),
             DatabaseConnectivityValidator(),
@@ -943,12 +971,14 @@ class ValidationEngine:
         ]
     
     def add_validator(self, validator: BaseValidator):
-        """Add a custom validator"""        self.validators.append(validator)
+        """Add a custom validator"""
+        self.validators.append(validator)
         self.logger.info(f"Added validator: {validator.name}")
     
     async def run_validation_suite(self, context: Dict[str, Any], 
                                  validator_names: Optional[List[str]] = None) -> ValidationSuite:
-        """Run validation suite"""        start_time = time.time()
+        """Run validation suite"""
+        start_time = time.time()
         
         environment = context.get('environment', 'development')
         suite = ValidationSuite(
@@ -998,7 +1028,8 @@ class ValidationEngine:
     
     async def _run_single_validator(self, validator: BaseValidator, 
                                   context: Dict[str, Any]) -> ValidationResult:
-        """Run a single validator with error handling"""        try:
+        """Run a single validator with error handling"""
+        try:
             self.logger.debug(f"Running validator: {validator.name}")
             result = await validator.validate(context)
             self.logger.debug(f"Validator {validator.name} completed with status: {result.status.value}")
@@ -1016,7 +1047,8 @@ class ValidationEngine:
     
     def generate_validation_report(self, suite: ValidationSuite, 
                                  format: str = 'json') -> str:
-        """Generate validation report"""        if format == 'json':
+        """Generate validation report"""
+        if format == 'json':
             return self._generate_json_report(suite)
         elif format == 'html':
             return self._generate_html_report(suite)
@@ -1026,7 +1058,8 @@ class ValidationEngine:
             raise ValueError(f"Unsupported report format: {format}")
     
     def _generate_json_report(self, suite: ValidationSuite) -> str:
-        """Generate JSON validation report"""        report_data = {
+        """Generate JSON validation report"""
+        report_data = {
             'suite_name': suite.name,
             'environment': suite.environment,
             'timestamp': time.strftime("%Y-%m-%d %H:%M:%S"),
@@ -1060,7 +1093,8 @@ class ValidationEngine:
         return json.dumps(report_data, indent=2)
     
     def _generate_text_report(self, suite: ValidationSuite) -> str:
-        """Generate text validation report"""        report_lines = [
+        """Generate text validation report"""
+        report_lines = [
             "=" * 80,
             f"IA INFLUENCER PLATFORM VALIDATION REPORT",
             "=" * 80,
@@ -1105,7 +1139,8 @@ class ValidationEngine:
         return "\n".join(report_lines)
     
     def _generate_html_report(self, suite: ValidationSuite) -> str:
-        """Generate HTML validation report"""        # Basic HTML report template
+        """Generate HTML validation report"""
+        # Basic HTML report template
         html_template = f"""<!DOCTYPE html>
 <html>
 <head>
@@ -1142,30 +1177,35 @@ class ValidationEngine:
     </div>
     
     <h2>Detailed Results</h2>
-"""        
+"""
+        
         for result in suite.results:
             status_class = result.status.value
-            html_template += f"""    <div class="result {status_class}">
+            html_template += f"""
+    <div class="result {status_class}">
         <h3>{result.name}</h3>
         <p class="status">Status: {result.status.value.upper()}</p>
         <p><strong>Category:</strong> {result.category.value}</p>
         <p><strong>Level:</strong> {result.level.value}</p>
         <p><strong>Message:</strong> {result.message}</p>
         <p><strong>Execution Time:</strong> {result.execution_time:.2f}s</p>
-"""            if result.remediation:
+"""
+            if result.remediation:
                 html_template += f"        <p><strong>Remediation:</strong> {result.remediation}</p>"
             
             html_template += "    </div>"
         
         html_template += """</body>
 </html>
-"""        
+"""
+        
         return html_template
 
 
 # Utility functions
 async def run_infrastructure_validation(environment: str, config: Dict[str, Any]) -> ValidationSuite:
-    """Run complete infrastructure validation"""    engine = ValidationEngine()
+    """Run complete infrastructure validation"""
+    engine = ValidationEngine()
     
     context = {
         'environment': environment,
@@ -1176,7 +1216,8 @@ async def run_infrastructure_validation(environment: str, config: Dict[str, Any]
 
 
 def create_validation_context(environment: str, **kwargs) -> Dict[str, Any]:
-    """Create validation context from environment and additional parameters"""    context = {
+    """Create validation context from environment and additional parameters"""
+    context = {
         'environment': environment,
         'region': kwargs.get('region', 'us-east-1'),
         'database': {

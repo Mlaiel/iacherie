@@ -5,7 +5,8 @@ Central module for all social media and content platforms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""from typing import Dict, List, Any
+"""
+from typing import Dict, List, Any
 
 from .base import (
     PlatformBase, PlatformConfig, PlatformType, ContentType,
@@ -128,11 +129,13 @@ SUPPORTED_PLATFORMS = {
 
 
 def get_platform_count() -> int:
-    """Get total number of supported platforms"""    return len(SUPPORTED_PLATFORMS)
+    """Get total number of supported platforms"""
+    return len(SUPPORTED_PLATFORMS)
 
 
 def get_platform_categories() -> Dict[str, List[str]]:
-    """Get platforms organized by categories"""    return {
+    """Get platforms organized by categories"""
+    return {
         "social_media": [
             "instagram", "tiktok", "twitter", "facebook", "linkedin", 
             "snapchat", "reddit", "discord", "mastodon", "bereal", "threads"
@@ -159,7 +162,8 @@ def get_platform_categories() -> Dict[str, List[str]]:
 
 
 def get_ecosystem_info() -> Dict[str, Any]:
-    """Get comprehensive ecosystem information"""    return {
+    """Get comprehensive ecosystem information"""
+    return {
         "total_platforms": get_platform_count(),
         "core_platforms": 16,
         "extended_platforms": 12,

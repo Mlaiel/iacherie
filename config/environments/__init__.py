@@ -14,7 +14,8 @@ Contact: mlaiel@live.de
 Gestionnaires de configuration multi-environnements enterprise.
 Support complet: Development, Staging, Testing, Production, Docker, K8s, Cloud.
 ==================================================================
-"""import os
+"""
+import os
 from typing import Dict, Any, Optional, Type, Union
 from enum import Enum
 
@@ -45,7 +46,8 @@ from .cloud import (
 
 
 class DeploymentType(str, Enum):
-    """Types de déploiement supportés"""    LOCAL = "local"
+    """Types de déploiement supportés"""
+    LOCAL = "local"
     DOCKER = "docker"
     KUBERNETES = "kubernetes"
     CLOUD = "cloud"
@@ -53,9 +55,11 @@ class DeploymentType(str, Enum):
 
 
 class EnvironmentManagerFactory:
-    """    Factory avancé pour créer les gestionnaires d'environnements.
+    """
+    Factory avancé pour créer les gestionnaires d'environnements.
     Support auto-détection et configuration intelligente.
-    """    
+    """
+    
     # Mapping des configurations par environnement
     _environment_managers: Dict[EnvironmentType, Type[BaseEnvironmentConfigManager]] = {
         EnvironmentType.DEVELOPMENT: DevelopmentConfigManager,
@@ -80,7 +84,8 @@ class EnvironmentManagerFactory:
         cloud_provider: Optional[CloudProvider] = None,
         auto_detect: bool = True
     ) -> BaseEnvironmentConfigManager:
-        """        Crée un gestionnaire de configuration intelligent.
+        """
+        Crée un gestionnaire de configuration intelligent.
         
         Args:
             env_type: Type d'environnement (development, staging, testing, production)
@@ -90,7 +95,8 @@ class EnvironmentManagerFactory:
             
         Returns:
             Instance du gestionnaire de configuration approprié
-        """        
+        """
+        
         # Détection automatique si activée
         if auto_detect:
             if env_type is None:
@@ -120,7 +126,8 @@ class EnvironmentManagerFactory:
         
     @classmethod
     def _auto_detect_environment(cls) -> EnvironmentType:
-        """Détecte automatiquement l'environnement"""        env_indicators = {
+        """Détecte automatiquement l'environnement"""
+        env_indicators = {
             EnvironmentType.PRODUCTION: [
                 "PROD", "PRODUCTION", "prod",
                 lambda: os.getenv("NODE_ENV") == "production",
@@ -160,7 +167,8 @@ class EnvironmentManagerFactory:
         
     @classmethod
     def _auto_detect_deployment(cls) -> DeploymentType:
-        """Détecte automatiquement le type de déploiement"""        
+        """Détecte automatiquement le type de déploiement"""
+        
         # Kubernetes
         if (os.getenv("KUBERNETES_SERVICE_HOST") or 
             os.path.exists("/var/run/secrets/kubernetes.io")):
@@ -189,7 +197,8 @@ class EnvironmentManagerFactory:
         
     @classmethod
     def get_available_environments(cls) -> Dict[str, Any]:
-        """Retourne les environnements disponibles avec leurs descriptions"""        return {
+        """Retourne les environnements disponibles avec leurs descriptions"""
+        return {
             "environments": {
                 env_type.value: {
                     "name": env_type.value.title(),
@@ -212,11 +221,13 @@ class EnvironmentManagerFactory:
 
 # Configuration par défaut du système
 def get_default_config() -> BaseEnvironmentConfigManager:
-    """Retourne la configuration par défaut avec détection automatique"""    return EnvironmentManagerFactory.create_manager(auto_detect=True)
+    """Retourne la configuration par défaut avec détection automatique"""
+    return EnvironmentManagerFactory.create_manager(auto_detect=True)
 
 
 def create_config_from_env() -> BaseEnvironmentConfigManager:
-    """Crée la configuration à partir des variables d'environnement"""    env_type_str = os.getenv("ENVIRONMENT", "development").lower()
+    """Crée la configuration à partir des variables d'environnement"""
+    env_type_str = os.getenv("ENVIRONMENT", "development").lower()
     deployment_type_str = os.getenv("DEPLOYMENT_TYPE", "local").lower()
     cloud_provider_str = os.getenv("CLOUD_PROVIDER", "aws").lower()
     
@@ -244,7 +255,8 @@ def create_config_from_env() -> BaseEnvironmentConfigManager:
 
 
 def validate_all_configurations() -> Dict[str, bool]:
-    """Valide toutes les configurations disponibles"""    results = {}
+    """Valide toutes les configurations disponibles"""
+    results = {}
     
     # Test des environnements standard
     for env_type, manager_class in EnvironmentManagerFactory._environment_managers.items():

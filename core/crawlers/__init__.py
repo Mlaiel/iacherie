@@ -8,7 +8,7 @@ intelligent content fingerprinting.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
@@ -167,4 +167,4 @@ __all__ = [
 
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."

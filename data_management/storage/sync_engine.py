@@ -16,7 +16,8 @@ Contact: mlaiel@live.de
 - Backend Senior: Fahed Mlaiel  
 - DBA: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
-"""from typing import Dict, List, Optional, Any, Union, Set, Tuple, Callable
+"""
+from typing import Dict, List, Optional, Any, Union, Set, Tuple, Callable
 import logging
 import asyncio
 import json
@@ -36,13 +37,15 @@ import threading
 logger = logging.getLogger(__name__)
 
 class SyncDirection(Enum):
-    """Synchronization directions"""    BIDIRECTIONAL = "bidirectional"
+    """Synchronization directions"""
+    BIDIRECTIONAL = "bidirectional"
     UPLOAD_ONLY = "upload_only"
     DOWNLOAD_ONLY = "download_only"
     MIRROR = "mirror"
 
 class SyncStatus(Enum):
-    """Synchronization status"""    IDLE = "idle"
+    """Synchronization status"""
+    IDLE = "idle"
     SYNCING = "syncing"
     PAUSED = "paused"
     ERROR = "error"
@@ -50,7 +53,8 @@ class SyncStatus(Enum):
     CONFLICT = "conflict"
 
 class ConflictResolution(Enum):
-    """Conflict resolution strategies"""    MANUAL = "manual"
+    """Conflict resolution strategies"""
+    MANUAL = "manual"
     LOCAL_WINS = "local_wins"
     REMOTE_WINS = "remote_wins"
     TIMESTAMP_WINS = "timestamp_wins"
@@ -59,7 +63,8 @@ class ConflictResolution(Enum):
     BACKUP_AND_REPLACE = "backup_and_replace"
 
 class SyncEvent(Enum):
-    """Synchronization events"""    FILE_ADDED = "file_added"
+    """Synchronization events"""
+    FILE_ADDED = "file_added"
     FILE_MODIFIED = "file_modified"
     FILE_DELETED = "file_deleted"
     FILE_MOVED = "file_moved"
@@ -70,7 +75,8 @@ class SyncEvent(Enum):
 
 @dataclass
 class SyncEndpoint:
-    """Represents a sync endpoint"""    endpoint_id: str
+    """Represents a sync endpoint"""
+    endpoint_id: str
     name: str
     endpoint_type: str  # local, s3, azure, gcp, ftp, sftp, webdav
     connection_config: Dict[str, Any]
@@ -96,7 +102,8 @@ class SyncEndpoint:
 
 @dataclass
 class SyncProfile:
-    """Synchronization profile configuration"""    profile_id: str
+    """Synchronization profile configuration"""
+    profile_id: str
     name: str
     description: str
     
@@ -133,7 +140,8 @@ class SyncProfile:
 
 @dataclass
 class SyncOperation:
-    """Represents a sync operation"""    operation_id: str
+    """Represents a sync operation"""
+    operation_id: str
     profile_id: str
     operation_type: str  # upload, download, delete, move
     
@@ -162,7 +170,8 @@ class SyncOperation:
 
 @dataclass
 class SyncConflict:
-    """Represents a synchronization conflict"""    conflict_id: str
+    """Represents a synchronization conflict"""
+    conflict_id: str
     profile_id: str
     file_path: str
     
@@ -186,7 +195,8 @@ class SyncConflict:
 
 @dataclass
 class SyncConfig:
-    """Configuration for sync engine"""    sync_root_path: str
+    """Configuration for sync engine"""
+    sync_root_path: str
     temp_directory: str
     metadata_directory: str
     
@@ -215,7 +225,8 @@ class SyncConfig:
     encryption_in_transit: bool = True
 
 class SyncEngine:
-    """    Enterprise synchronization engine for data coordination.
+    """
+    Enterprise synchronization engine for data coordination.
     
     Features:
     - Bidirectional synchronization
@@ -225,9 +236,11 @@ class SyncEngine:
     - Delta synchronization
     - Performance optimization
     - Comprehensive monitoring
-    """    
+    """
+    
     def __init__(self, config: SyncConfig):
-        """Initialize sync engine"""        self.config = config
+        """Initialize sync engine"""
+        self.config = config
         self.sync_profiles: Dict[str, SyncProfile] = {}
         self.sync_endpoints: Dict[str, SyncEndpoint] = {}
         self.active_operations: Dict[str, SyncOperation] = {}
@@ -271,7 +284,8 @@ class SyncEngine:
         logger.info("SyncEngine initialized successfully")
     
     def _initialize_sync_directories(self) -> None:
-        """Initialize sync directory structure"""        try:
+        """Initialize sync directory structure"""
+        try:
             directories = [
                 self.config.sync_root_path,
                 self.config.temp_directory,
@@ -296,7 +310,8 @@ class SyncEngine:
             raise
     
     async def create_sync_endpoint(self, endpoint_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Create new sync endpoint"""        try:
+        """Create new sync endpoint"""
+        try:
             # Validate required fields
             required_fields = ['name', 'endpoint_type', 'connection_config']
             for field in required_fields:
@@ -354,7 +369,8 @@ class SyncEngine:
             }
     
     async def create_sync_profile(self, profile_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Create new sync profile"""        try:
+        """Create new sync profile"""
+        try:
             # Validate required fields
             required_fields = ['name', 'source_endpoint', 'target_endpoints']
             for field in required_fields:
@@ -434,7 +450,8 @@ class SyncEngine:
             }
     
     async def start_sync(self, profile_id: str, force: bool = False) -> Dict[str, Any]:
-        """Start synchronization for a profile"""        try:
+        """Start synchronization for a profile"""
+        try:
             if profile_id not in self.sync_profiles:
                 return {
                     'success': False,
@@ -517,7 +534,8 @@ class SyncEngine:
         resolution_strategy: ConflictResolution,
         custom_resolution: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Resolve synchronization conflict"""        try:
+        """Resolve synchronization conflict"""
+        try:
             if conflict_id not in self.sync_conflicts:
                 return {
                     'success': False,
@@ -574,7 +592,8 @@ class SyncEngine:
             }
     
     async def get_sync_status(self, profile_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get synchronization status"""        try:
+        """Get synchronization status"""
+        try:
             if profile_id:
                 # Get status for specific profile
                 if profile_id not in self.sync_profiles:
@@ -649,12 +668,14 @@ class SyncEngine:
             }
     
     def register_event_handler(self, event: SyncEvent, handler: Callable) -> None:
-        """Register event handler"""        if event not in self.event_handlers:
+        """Register event handler"""
+        if event not in self.event_handlers:
             self.event_handlers[event] = []
         self.event_handlers[event].append(handler)
     
     async def shutdown(self) -> None:
-        """Shutdown sync engine"""        try:
+        """Shutdown sync engine"""
+        try:
             logger.info("Shutting down sync engine...")
             
             # Stop all active operations
@@ -677,7 +698,8 @@ class SyncEngine:
     # Private implementation methods
     
     async def _execute_sync_profile(self, sync_profile: SyncProfile) -> Dict[str, Any]:
-        """Execute synchronization for a profile"""        try:
+        """Execute synchronization for a profile"""
+        try:
             start_time = datetime.now()
             operations_count = 0
             bytes_transferred = 0
@@ -787,7 +809,8 @@ class SyncEngine:
         change: Dict[str, Any],
         conflict_details: Dict[str, Any]
     ) -> SyncConflict:
-        """Create conflict record"""        conflict_id = f"conflict_{int(time.time())}_{hash(change['path']) & 0xFFFF:04x}"
+        """Create conflict record"""
+        conflict_id = f"conflict_{int(time.time())}_{hash(change['path']) & 0xFFFF:04x}"
         
         conflict = SyncConflict(
             conflict_id=conflict_id,
@@ -816,7 +839,8 @@ class SyncEngine:
         return conflict
     
     async def _emit_event(self, event: SyncEvent, data: Dict[str, Any]) -> None:
-        """Emit sync event"""        try:
+        """Emit sync event"""
+        try:
             await self.event_queue.put({
                 'event': event,
                 'data': data,
@@ -826,7 +850,8 @@ class SyncEngine:
             logger.error(f"Failed to emit event {event}: {str(e)}")
     
     async def _start_event_processor(self) -> None:
-        """Start event processing loop"""        while not self.shutdown_event.is_set():
+        """Start event processing loop"""
+        while not self.shutdown_event.is_set():
             try:
                 # Process events with timeout
                 try:
@@ -849,7 +874,8 @@ class SyncEngine:
                 await asyncio.sleep(1)
     
     async def _start_health_monitor(self) -> None:
-        """Start health monitoring for endpoints"""        while not self.shutdown_event.is_set():
+        """Start health monitoring for endpoints"""
+        while not self.shutdown_event.is_set():
             try:
                 await asyncio.sleep(300)  # Check every 5 minutes
                 
@@ -871,7 +897,8 @@ class SyncEngine:
                 logger.error(f"Health monitor error: {str(e)}")
     
     async def _save_endpoint_configuration(self, endpoint: SyncEndpoint) -> None:
-        """Save endpoint configuration to disk"""        try:
+        """Save endpoint configuration to disk"""
+        try:
             config_path = Path(self.config.metadata_directory) / "endpoints" / f"{endpoint.endpoint_id}.json"
             
             endpoint_data = {
@@ -897,7 +924,8 @@ class SyncEngine:
             logger.error(f"Failed to save endpoint configuration: {str(e)}")
     
     async def _save_profile_configuration(self, profile: SyncProfile) -> None:
-        """Save profile configuration to disk"""        try:
+        """Save profile configuration to disk"""
+        try:
             config_path = Path(self.config.metadata_directory) / "profiles" / f"{profile.profile_id}.json"
             
             profile_data = {
@@ -932,7 +960,8 @@ class SyncEngine:
             logger.error(f"Failed to save profile configuration: {str(e)}")
     
     async def _save_conflict_record(self, conflict: SyncConflict) -> None:
-        """Save conflict record to disk"""        try:
+        """Save conflict record to disk"""
+        try:
             record_path = Path(self.config.metadata_directory) / "conflicts" / f"{conflict.conflict_id}.json"
             
             conflict_data = {
@@ -959,12 +988,15 @@ class SyncEngine:
 
 
 class EndpointManager:
-    """Manages sync endpoints and connections"""    
+    """Manages sync endpoints and connections"""
+    
     def __init__(self, sync_engine: SyncEngine):
-        """Initialize endpoint manager"""        self.sync_engine = sync_engine
+        """Initialize endpoint manager"""
+        self.sync_engine = sync_engine
     
     async def test_connection(self, endpoint: SyncEndpoint) -> Dict[str, Any]:
-        """Test connection to endpoint"""        try:
+        """Test connection to endpoint"""
+        try:
             if endpoint.endpoint_type == "local":
                 # Test local filesystem access
                 base_path = Path(endpoint.base_path)
@@ -989,7 +1021,8 @@ class EndpointManager:
             return {'success': False, 'error': str(e)}
     
     async def check_health(self, endpoint: SyncEndpoint) -> Dict[str, Any]:
-        """Check endpoint health"""        try:
+        """Check endpoint health"""
+        try:
             # Perform basic connectivity check
             connection_result = await self.test_connection(endpoint)
             
@@ -1005,9 +1038,11 @@ class EndpointManager:
 
 
 class ConflictResolver:
-    """Resolves synchronization conflicts"""    
+    """Resolves synchronization conflicts"""
+    
     def __init__(self, sync_engine: SyncEngine):
-        """Initialize conflict resolver"""        self.sync_engine = sync_engine
+        """Initialize conflict resolver"""
+        self.sync_engine = sync_engine
     
     async def resolve_conflict(
         self,
@@ -1015,7 +1050,8 @@ class ConflictResolver:
         strategy: ConflictResolution,
         custom_resolution: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Resolve conflict using specified strategy"""        try:
+        """Resolve conflict using specified strategy"""
+        try:
             if strategy == ConflictResolution.MANUAL:
                 if not custom_resolution:
                     return {
@@ -1053,7 +1089,8 @@ class ConflictResolver:
             }
     
     async def _resolve_manual(self, conflict: SyncConflict, custom_resolution: Dict[str, Any]) -> Dict[str, Any]:
-        """Resolve conflict manually"""        # Implementation would depend on custom resolution data
+        """Resolve conflict manually"""
+        # Implementation would depend on custom resolution data
         return {
             'success': True,
             'result': {
@@ -1063,7 +1100,8 @@ class ConflictResolver:
         }
     
     async def _resolve_local_wins(self, conflict: SyncConflict) -> Dict[str, Any]:
-        """Resolve conflict by keeping local version"""        return {
+        """Resolve conflict by keeping local version"""
+        return {
             'success': True,
             'result': {
                 'resolution_type': 'local_wins',
@@ -1072,7 +1110,8 @@ class ConflictResolver:
         }
     
     async def _resolve_remote_wins(self, conflict: SyncConflict) -> Dict[str, Any]:
-        """Resolve conflict by keeping remote version"""        return {
+        """Resolve conflict by keeping remote version"""
+        return {
             'success': True,
             'result': {
                 'resolution_type': 'remote_wins',
@@ -1081,7 +1120,8 @@ class ConflictResolver:
         }
     
     async def _resolve_timestamp_wins(self, conflict: SyncConflict) -> Dict[str, Any]:
-        """Resolve conflict by keeping newer version"""        local_time = conflict.local_version.get('modified_time', 0)
+        """Resolve conflict by keeping newer version"""
+        local_time = conflict.local_version.get('modified_time', 0)
         remote_time = conflict.remote_version.get('modified_time', 0)
         
         if local_time > remote_time:
@@ -1090,7 +1130,8 @@ class ConflictResolver:
             return await self._resolve_remote_wins(conflict)
     
     async def _resolve_size_wins(self, conflict: SyncConflict) -> Dict[str, Any]:
-        """Resolve conflict by keeping larger version"""        local_size = conflict.local_version.get('size', 0)
+        """Resolve conflict by keeping larger version"""
+        local_size = conflict.local_version.get('size', 0)
         remote_size = conflict.remote_version.get('size', 0)
         
         if local_size > remote_size:
@@ -1099,7 +1140,8 @@ class ConflictResolver:
             return await self._resolve_remote_wins(conflict)
     
     async def _resolve_backup_and_replace(self, conflict: SyncConflict) -> Dict[str, Any]:
-        """Resolve conflict by backing up local and using remote"""        # Create backup of local version
+        """Resolve conflict by backing up local and using remote"""
+        # Create backup of local version
         backup_path = f"{conflict.file_path}.backup.{int(time.time())}"
         
         return {
@@ -1113,24 +1155,29 @@ class ConflictResolver:
 
 
 class ChangeDetector:
-    """Detects file system changes for synchronization"""    
+    """Detects file system changes for synchronization"""
+    
     def __init__(self, sync_engine: SyncEngine):
-        """Initialize change detector"""        self.sync_engine = sync_engine
+        """Initialize change detector"""
+        self.sync_engine = sync_engine
         self.monitoring_tasks: Dict[str, asyncio.Task] = {}
         self.file_cache: Dict[str, Dict[str, Any]] = {}
     
     async def start_monitoring(self, sync_profile: SyncProfile) -> None:
-        """Start real-time monitoring for a profile"""        if sync_profile.profile_id not in self.monitoring_tasks:
+        """Start real-time monitoring for a profile"""
+        if sync_profile.profile_id not in self.monitoring_tasks:
             task = asyncio.create_task(self._monitor_profile(sync_profile))
             self.monitoring_tasks[sync_profile.profile_id] = task
     
     async def stop_monitoring(self, profile_id: str) -> None:
-        """Stop monitoring for a profile"""        if profile_id in self.monitoring_tasks:
+        """Stop monitoring for a profile"""
+        if profile_id in self.monitoring_tasks:
             self.monitoring_tasks[profile_id].cancel()
             del self.monitoring_tasks[profile_id]
     
     async def stop(self) -> None:
-        """Stop all monitoring"""        for task in self.monitoring_tasks.values():
+        """Stop all monitoring"""
+        for task in self.monitoring_tasks.values():
             task.cancel()
         self.monitoring_tasks.clear()
     
@@ -1139,7 +1186,8 @@ class ChangeDetector:
         endpoint: SyncEndpoint,
         sync_profile: SyncProfile
     ) -> Dict[str, Any]:
-        """Scan endpoint for changes"""        try:
+        """Scan endpoint for changes"""
+        try:
             changes = []
             
             if endpoint.endpoint_type == "local":
@@ -1162,7 +1210,8 @@ class ChangeDetector:
             }
     
     async def _monitor_profile(self, sync_profile: SyncProfile) -> None:
-        """Monitor profile for real-time changes"""        while True:
+        """Monitor profile for real-time changes"""
+        while True:
             try:
                 await asyncio.sleep(10)  # Check every 10 seconds
                 
@@ -1184,7 +1233,8 @@ class ChangeDetector:
         endpoint: SyncEndpoint,
         sync_profile: SyncProfile
     ) -> List[Dict[str, Any]]:
-        """Scan local filesystem for changes"""        changes = []
+        """Scan local filesystem for changes"""
+        changes = []
         base_path = Path(endpoint.base_path)
         
         if not base_path.exists():
@@ -1245,7 +1295,8 @@ class ChangeDetector:
         return changes
     
     async def _file_matches_filters(self, file_path: Path, sync_profile: SyncProfile) -> bool:
-        """Check if file matches sync profile filters"""        file_str = str(file_path)
+        """Check if file matches sync profile filters"""
+        file_str = str(file_path)
         
         # Check file filters
         if sync_profile.file_filters:
@@ -1284,7 +1335,8 @@ class ChangeDetector:
         return True
     
     async def _calculate_file_hash(self, file_path: Path) -> str:
-        """Calculate SHA-256 hash of file"""        try:
+        """Calculate SHA-256 hash of file"""
+        try:
             hash_sha256 = hashlib.sha256()
             
             async with aiofiles.open(file_path, 'rb') as f:
@@ -1298,9 +1350,11 @@ class ChangeDetector:
 
 
 class TransferManager:
-    """Manages file transfers between endpoints"""    
+    """Manages file transfers between endpoints"""
+    
     def __init__(self, sync_engine: SyncEngine):
-        """Initialize transfer manager"""        self.sync_engine = sync_engine
+        """Initialize transfer manager"""
+        self.sync_engine = sync_engine
     
     async def transfer_file(
         self,
@@ -1309,7 +1363,8 @@ class TransferManager:
         target_endpoint: SyncEndpoint,
         sync_profile: SyncProfile
     ) -> Dict[str, Any]:
-        """Transfer file between endpoints"""        try:
+        """Transfer file between endpoints"""
+        try:
             operation.status = SyncStatus.SYNCING
             
             # Check if target file exists and handle conflicts
@@ -1356,7 +1411,8 @@ class TransferManager:
         source_endpoint: SyncEndpoint,
         target_endpoint: SyncEndpoint
     ) -> Dict[str, Any]:
-        """Check for potential conflicts"""        try:
+        """Check for potential conflicts"""
+        try:
             source_path = Path(operation.source_path)
             target_path = Path(target_endpoint.base_path) / Path(operation.target_path).name
             
@@ -1397,7 +1453,8 @@ class TransferManager:
         source_endpoint: SyncEndpoint,
         target_endpoint: SyncEndpoint
     ) -> Dict[str, Any]:
-        """Transfer file from local to local"""        try:
+        """Transfer file from local to local"""
+        try:
             source_path = Path(operation.source_path)
             target_path = Path(target_endpoint.base_path) / Path(operation.target_path).name
             
@@ -1431,29 +1488,35 @@ class TransferManager:
 
 
 class SyncScheduler:
-    """Manages sync profile scheduling"""    
+    """Manages sync profile scheduling"""
+    
     def __init__(self, sync_engine: SyncEngine):
-        """Initialize sync scheduler"""        self.sync_engine = sync_engine
+        """Initialize sync scheduler"""
+        self.sync_engine = sync_engine
         self.scheduled_profiles: Dict[str, asyncio.Task] = {}
         self.scheduler_task = None
     
     async def start(self) -> None:
-        """Start the scheduler"""        self.scheduler_task = asyncio.create_task(self._scheduler_loop())
+        """Start the scheduler"""
+        self.scheduler_task = asyncio.create_task(self._scheduler_loop())
     
     async def stop(self) -> None:
-        """Stop the scheduler"""        if self.scheduler_task:
+        """Stop the scheduler"""
+        if self.scheduler_task:
             self.scheduler_task.cancel()
         
         for task in self.scheduled_profiles.values():
             task.cancel()
     
     async def add_profile(self, sync_profile: SyncProfile) -> None:
-        """Add profile to scheduler"""        if sync_profile.sync_schedule and sync_profile.enabled:
+        """Add profile to scheduler"""
+        if sync_profile.sync_schedule and sync_profile.enabled:
             # For this example, we'll simulate cron scheduling
             logger.info(f"Scheduled sync profile: {sync_profile.profile_id}")
     
     async def _scheduler_loop(self) -> None:
-        """Main scheduler loop"""        while True:
+        """Main scheduler loop"""
+        while True:
             try:
                 await asyncio.sleep(60)  # Check every minute
                 

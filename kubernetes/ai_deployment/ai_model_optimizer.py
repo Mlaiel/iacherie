@@ -11,7 +11,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass
@@ -39,7 +40,8 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationTechnique(Enum):
-    """Model optimization techniques"""    QUANTIZATION = "quantization"
+    """Model optimization techniques"""
+    QUANTIZATION = "quantization"
     PRUNING = "pruning"
     DISTILLATION = "distillation"
     ONNX_CONVERSION = "onnx_conversion"
@@ -52,7 +54,8 @@ class OptimizationTechnique(Enum):
 
 
 class OptimizationTarget(Enum):
-    """Optimization targets"""    INFERENCE_SPEED = "inference_speed"
+    """Optimization targets"""
+    INFERENCE_SPEED = "inference_speed"
     MODEL_SIZE = "model_size"
     MEMORY_USAGE = "memory_usage"
     POWER_EFFICIENCY = "power_efficiency"
@@ -62,7 +65,8 @@ class OptimizationTarget(Enum):
 
 
 class HardwareTarget(Enum):
-    """Hardware optimization targets"""    CPU = "cpu"
+    """Hardware optimization targets"""
+    CPU = "cpu"
     GPU = "gpu"
     TPU = "tpu"
     NVIDIA_GPU = "nvidia_gpu"
@@ -75,7 +79,8 @@ class HardwareTarget(Enum):
 
 @dataclass
 class OptimizationConfig:
-    """Model optimization configuration"""    optimization_name: str = "ai-model-optimization"
+    """Model optimization configuration"""
+    optimization_name: str = "ai-model-optimization"
     techniques: List[OptimizationTechnique] = None
     target_metrics: List[OptimizationTarget] = None
     hardware_targets: List[HardwareTarget] = None
@@ -113,7 +118,8 @@ class OptimizationConfig:
 
 
 class AIModelOptimizer:
-    """    Enterprise AI model optimization system
+    """
+    Enterprise AI model optimization system
     
     Provides comprehensive model optimization with:
     - Multiple optimization techniques (quantization, pruning, distillation)
@@ -122,13 +128,16 @@ class AIModelOptimizer:
     - Performance benchmarking and validation
     - Automated optimization pipelines
     - Model deployment optimization
-    """    
+    """
+    
     def __init__(self, namespace: str = "ia-influencer-optimization"):
-        """        Initialize AI model optimizer
+        """
+        Initialize AI model optimizer
         
         Args:
             namespace: Kubernetes namespace for optimization infrastructure
-        """        self.namespace = namespace
+        """
+        self.namespace = namespace
         self.config = OptimizationConfig()
         self.optimization_jobs = {}
         self.optimized_models = {}
@@ -140,7 +149,8 @@ class AIModelOptimizer:
         self._initialize_optimization_environments()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and optimization clients"""        try:
+        """Initialize Kubernetes, Docker, and optimization clients"""
+        try:
             # Kubernetes client
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -166,7 +176,8 @@ class AIModelOptimizer:
             raise
     
     def _initialize_optimization_environments(self) -> None:
-        """Initialize optimization environments"""        try:
+        """Initialize optimization environments"""
+        try:
             # TensorRT environment
             self.trt_logger = trt.Logger(trt.Logger.WARNING)
             self.trt_builder = trt.Builder(self.trt_logger)
@@ -187,11 +198,13 @@ class AIModelOptimizer:
             logger.warning(f"Some optimization environments failed to initialize: {e}")
     
     async def deploy_optimization_infrastructure(self) -> Dict[str, Any]:
-        """        Deploy complete model optimization infrastructure
+        """
+        Deploy complete model optimization infrastructure
         
         Returns:
             Infrastructure deployment summary
-        """        try:
+        """
+        try:
             self.status = "deploying_infrastructure"
             logger.info("Deploying model optimization infrastructure")
             
@@ -257,14 +270,16 @@ class AIModelOptimizer:
             raise
     
     async def optimize_model(self, optimization_request: Dict[str, Any]) -> Dict[str, Any]:
-        """        Optimize a model with specified techniques
+        """
+        Optimize a model with specified techniques
         
         Args:
             optimization_request: Model optimization request
             
         Returns:
             Optimization result with optimized model paths and metrics
-        """        try:
+        """
+        try:
             model_path = optimization_request.get("model_path")
             model_framework = optimization_request.get("framework", "pytorch")
             techniques = optimization_request.get("techniques", self.config.techniques)
@@ -391,14 +406,16 @@ class AIModelOptimizer:
             raise
     
     async def batch_optimize_models(self, models_request: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """        Optimize multiple models in batch
+        """
+        Optimize multiple models in batch
         
         Args:
             models_request: List of model optimization requests
             
         Returns:
             Batch optimization results
-        """        try:
+        """
+        try:
             batch_id = f"batch_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             logger.info(f"Starting batch model optimization: {batch_id}")
             
@@ -449,7 +466,8 @@ class AIModelOptimizer:
             raise
     
     async def _deploy_optimization_workers(self) -> Dict[str, Any]:
-        """Deploy optimization worker nodes"""        optimization_workers = {
+        """Deploy optimization worker nodes"""
+        optimization_workers = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -512,7 +530,8 @@ class AIModelOptimizer:
         }
     
     async def _deploy_optimization_api(self) -> Dict[str, Any]:
-        """Deploy optimization API service"""        optimization_api = {
+        """Deploy optimization API service"""
+        optimization_api = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -571,7 +590,8 @@ class AIModelOptimizer:
         }
     
     async def _load_and_analyze_model(self, model_path: str, framework: str) -> Dict[str, Any]:
-        """Load and analyze model for optimization"""        try:
+        """Load and analyze model for optimization"""
+        try:
             model_info = {
                 "model_path": model_path,
                 "framework": framework,
@@ -613,7 +633,8 @@ class AIModelOptimizer:
             raise
     
     async def _create_optimization_plan(self, model_info: Dict[str, Any], techniques: List[OptimizationTechnique], hardware_targets: List[HardwareTarget]) -> Dict[str, Any]:
-        """Create optimization execution plan"""        plan = {
+        """Create optimization execution plan"""
+        plan = {
             "model_info": model_info,
             "techniques": [t.value for t in techniques],
             "hardware_targets": [h.value for h in hardware_targets],
@@ -639,7 +660,8 @@ class AIModelOptimizer:
         return plan
     
     async def _apply_quantization(self, model_info: Dict[str, Any], request: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply quantization optimization"""        try:
+        """Apply quantization optimization"""
+        try:
             framework = model_info["framework"]
             model_path = model_info["model_path"]
             quantization_mode = request.get("quantization_mode", self.config.quantization_mode)
@@ -712,7 +734,8 @@ class AIModelOptimizer:
             }
     
     async def _apply_pruning(self, model_info: Dict[str, Any], request: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply pruning optimization"""        try:
+        """Apply pruning optimization"""
+        try:
             framework = model_info["framework"]
             model_path = model_info["model_path"]
             sparsity = request.get("pruning_sparsity", self.config.pruning_sparsity)
@@ -783,7 +806,8 @@ class AIModelOptimizer:
             }
     
     async def _convert_to_onnx(self, model_info: Dict[str, Any], request: Dict[str, Any]) -> Dict[str, Any]:
-        """Convert model to ONNX format"""        try:
+        """Convert model to ONNX format"""
+        try:
             framework = model_info["framework"]
             model_path = model_info["model_path"]
             
@@ -843,7 +867,8 @@ class AIModelOptimizer:
             }
     
     async def _optimize_with_tensorrt(self, model_info: Dict[str, Any], request: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize model with NVIDIA TensorRT"""        try:
+        """Optimize model with NVIDIA TensorRT"""
+        try:
             result = {
                 "technique": "tensorrt_optimization",
                 "status": "success",
@@ -901,7 +926,8 @@ class AIModelOptimizer:
             }
     
     async def _optimize_with_openvino(self, model_info: Dict[str, Any], request: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize model with Intel OpenVINO"""        try:
+        """Optimize model with Intel OpenVINO"""
+        try:
             result = {
                 "technique": "openvino_optimization",
                 "status": "success",
@@ -948,7 +974,8 @@ class AIModelOptimizer:
             }
     
     async def _optimize_onnx_graph(self, onnx_path: str) -> None:
-        """Optimize ONNX graph structure"""        try:
+        """Optimize ONNX graph structure"""
+        try:
             import onnxoptimizer
             
             model = onnx.load(onnx_path)
@@ -985,7 +1012,8 @@ class AIModelOptimizer:
             logger.warning(f"ONNX graph optimization failed: {e}")
     
     async def _validate_optimized_models(self, original_model: Dict[str, Any], optimization_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate optimized models against accuracy threshold"""        validation_results = {
+        """Validate optimized models against accuracy threshold"""
+        validation_results = {
             "status": "completed",
             "validations": {},
             "passed_threshold": {},
@@ -1008,7 +1036,8 @@ class AIModelOptimizer:
         return validation_results
     
     async def _benchmark_optimized_models(self, original_model: Dict[str, Any], optimization_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Benchmark optimized models performance"""        benchmark_results = {
+        """Benchmark optimized models performance"""
+        benchmark_results = {
             "status": "completed",
             "benchmarks": {},
             "baseline": {
@@ -1034,7 +1063,8 @@ class AIModelOptimizer:
         return benchmark_results
     
     async def _select_best_optimization(self, optimization_results: Dict[str, Any], validation_results: Dict[str, Any], benchmark_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Select best optimization based on target metrics"""        best_optimization = {
+        """Select best optimization based on target metrics"""
+        best_optimization = {
             "technique": "none",
             "score": 0.0,
             "metrics": {}
@@ -1077,7 +1107,8 @@ class AIModelOptimizer:
         return best_optimization
     
     async def _store_optimization_results(self, optimization_id: str, results: Dict[str, Any]) -> None:
-        """Store optimization results in Redis"""        try:
+        """Store optimization results in Redis"""
+        try:
             self._redis_client.hset(
                 f"optimization:{optimization_id}",
                 mapping={k: json.dumps(v) if isinstance(v, dict) else str(v) for k, v in results.items()}
@@ -1092,7 +1123,8 @@ class AIModelOptimizer:
             logger.error(f"Failed to store optimization results: {e}")
     
     async def get_optimization_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive optimization metrics"""        try:
+        """Get comprehensive optimization metrics"""
+        try:
             metrics = {
                 "infrastructure_status": self.status,
                 "active_optimizations": len([job for job in self.optimization_jobs.values() if job.get("status") == "running"]),
@@ -1115,7 +1147,8 @@ class AIModelOptimizer:
             return {"error": str(e)}
     
     async def _ensure_optimization_namespace(self) -> None:
-        """Create optimization namespace"""        try:
+        """Create optimization namespace"""
+        try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -1134,7 +1167,8 @@ class AIModelOptimizer:
                 logger.info(f"Created optimization namespace: {self.namespace}")
     
     async def _configure_optimization_networking(self) -> None:
-        """Configure networking for optimization infrastructure"""        # Optimization network policy
+        """Configure networking for optimization infrastructure"""
+        # Optimization network policy
         network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
@@ -1170,7 +1204,8 @@ class AIModelOptimizer:
         logger.info("Configured optimization networking policies")
     
     async def _validate_optimization_infrastructure(self) -> bool:
-        """Validate optimization infrastructure deployment"""        try:
+        """Validate optimization infrastructure deployment"""
+        try:
             # Check essential services
             essential_services = [
                 "optimization-workers", "optimization-api"
@@ -1197,7 +1232,8 @@ class AIModelOptimizer:
             return False
     
     async def _cleanup_failed_infrastructure(self) -> None:
-        """Clean up failed optimization infrastructure"""        try:
+        """Clean up failed optimization infrastructure"""
+        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             logger.info("Cleaned up failed optimization infrastructure")
@@ -1205,7 +1241,8 @@ class AIModelOptimizer:
             logger.error(f"Optimization infrastructure cleanup failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up entire optimization infrastructure"""        try:
+        """Clean up entire optimization infrastructure"""
+        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             

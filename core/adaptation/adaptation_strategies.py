@@ -5,7 +5,8 @@ content types, platforms, and business objectives.
 
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass, field
@@ -21,7 +22,8 @@ from .exceptions import StrategyError, InvalidStrategyError
 
 
 class StrategyType(str, Enum):
-    """Types of adaptation strategies"""    VIRAL_OPTIMIZATION = "viral_optimization"
+    """Types of adaptation strategies"""
+    VIRAL_OPTIMIZATION = "viral_optimization"
     ENGAGEMENT_MAXIMIZATION = "engagement_maximization"
     REACH_EXPANSION = "reach_expansion"
     CONVERSION_FOCUSED = "conversion_focused"
@@ -34,7 +36,8 @@ class StrategyType(str, Enum):
 
 
 class ContentCategory(str, Enum):
-    """Content categories for strategy selection"""    MUSIC_VIDEO = "music_video"
+    """Content categories for strategy selection"""
+    MUSIC_VIDEO = "music_video"
     PODCAST = "podcast"
     EDUCATIONAL = "educational"
     ENTERTAINMENT = "entertainment"
@@ -47,7 +50,8 @@ class ContentCategory(str, Enum):
 
 
 class BusinessObjective(str, Enum):
-    """Business objectives for strategy alignment"""    BRAND_AWARENESS = "brand_awareness"
+    """Business objectives for strategy alignment"""
+    BRAND_AWARENESS = "brand_awareness"
     LEAD_GENERATION = "lead_generation"
     AUDIENCE_GROWTH = "audience_growth"
     ENGAGEMENT_BOOST = "engagement_boost"
@@ -59,7 +63,8 @@ class BusinessObjective(str, Enum):
 
 @dataclass
 class StrategyRule:
-    """Individual strategy rule definition"""    condition: Dict[str, Any]
+    """Individual strategy rule definition"""
+    condition: Dict[str, Any]
     action: Dict[str, Any]
     priority: int
     confidence: float
@@ -68,7 +73,8 @@ class StrategyRule:
 
 @dataclass
 class AdaptationStrategy:
-    """Comprehensive adaptation strategy"""    strategy_id: str
+    """Comprehensive adaptation strategy"""
+    strategy_id: str
     strategy_type: StrategyType
     name: str
     description: str
@@ -87,7 +93,8 @@ class AdaptationStrategy:
 
 @dataclass
 class StrategyRequest:
-    """Strategy recommendation request"""    content_id: str
+    """Strategy recommendation request"""
+    content_id: str
     content_category: ContentCategory
     business_objective: BusinessObjective
     target_platforms: List[str]
@@ -101,7 +108,8 @@ class StrategyRequest:
 
 @dataclass
 class StrategyRecommendation:
-    """Strategy recommendation result"""    recommendation_id: str
+    """Strategy recommendation result"""
+    recommendation_id: str
     recommended_strategies: List[AdaptationStrategy]
     strategy_ranking: Dict[str, float]
     combined_strategy: Optional[AdaptationStrategy]
@@ -115,7 +123,8 @@ class StrategyRecommendation:
 
 
 class AdaptationStrategies:
-    """    Strategic adaptation patterns and recommendations engine
+    """
+    Strategic adaptation patterns and recommendations engine
     
     Features:
     - Intelligent strategy selection
@@ -124,7 +133,8 @@ class AdaptationStrategies:
     - Content-type aware recommendations
     - Business objective alignment
     - Performance prediction
-    """    
+    """
+    
     def __init__(self):
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
@@ -137,7 +147,8 @@ class AdaptationStrategies:
         request: StrategyRequest,
         session: AsyncSession = None
     ) -> StrategyRecommendation:
-        """        Recommend optimal adaptation strategy based on requirements
+        """
+        Recommend optimal adaptation strategy based on requirements
         
         Args:
             request: Strategy recommendation request
@@ -145,7 +156,8 @@ class AdaptationStrategies:
             
         Returns:
             StrategyRecommendation: Strategy recommendations and implementation plan
-        """        recommendation_id = f"strategy_{request.content_id}_{int(datetime.utcnow().timestamp())}"
+        """
+        recommendation_id = f"strategy_{request.content_id}_{int(datetime.utcnow().timestamp())}"
         
         try:
             self.logger.info(f"Generating strategy recommendation: {recommendation_id}")
@@ -228,7 +240,8 @@ class AdaptationStrategies:
         strategy_definition: Dict[str, Any],
         session: AsyncSession = None
     ) -> AdaptationStrategy:
-        """        Create custom adaptation strategy
+        """
+        Create custom adaptation strategy
         
         Args:
             strategy_definition: Custom strategy definition
@@ -236,7 +249,8 @@ class AdaptationStrategies:
             
         Returns:
             AdaptationStrategy: Created custom strategy
-        """        strategy_id = f"custom_{int(datetime.utcnow().timestamp())}"
+        """
+        strategy_id = f"custom_{int(datetime.utcnow().timestamp())}"
         
         # Validate strategy definition
         await self._validate_strategy_definition(strategy_definition)
@@ -283,7 +297,8 @@ class AdaptationStrategies:
         performance_data: Dict[str, Any],
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """        Analyze performance of implemented strategy
+        """
+        Analyze performance of implemented strategy
         
         Args:
             strategy_id: Strategy identifier
@@ -292,7 +307,8 @@ class AdaptationStrategies:
             
         Returns:
             Dict containing performance analysis
-        """        # Load strategy definition
+        """
+        # Load strategy definition
         strategy = await self._load_strategy(strategy_id, session)
         
         if not strategy:
@@ -346,7 +362,8 @@ class AdaptationStrategies:
         constraints: Optional[Dict[str, Any]] = None,
         session: AsyncSession = None
     ) -> AdaptationStrategy:
-        """        Optimize existing strategy based on goals and constraints
+        """
+        Optimize existing strategy based on goals and constraints
         
         Args:
             strategy_id: Strategy to optimize
@@ -356,7 +373,8 @@ class AdaptationStrategies:
             
         Returns:
             AdaptationStrategy: Optimized strategy
-        """        # Load original strategy
+        """
+        # Load original strategy
         original_strategy = await self._load_strategy(strategy_id, session)
         
         if not original_strategy:
@@ -408,7 +426,8 @@ class AdaptationStrategies:
         return optimized_strategy
     
     def _load_strategy_database(self) -> Dict[str, AdaptationStrategy]:
-        """Load predefined strategy database"""        strategies = {}
+        """Load predefined strategy database"""
+        strategies = {}
         
         # Viral Optimization Strategy
         strategies['viral_optimization'] = AdaptationStrategy(
@@ -537,7 +556,8 @@ class AdaptationStrategies:
         return strategies
     
     def _load_strategy_rules(self) -> Dict[str, List[StrategyRule]]:
-        """Load strategy rule sets"""        return {
+        """Load strategy rule sets"""
+        return {
             'platform_specific': [
                 StrategyRule(
                     condition={'platform': 'tiktok'},
@@ -566,7 +586,8 @@ class AdaptationStrategies:
         }
     
     def _initialize_performance_models(self) -> Dict[str, Any]:
-        """Initialize performance prediction models"""        return {
+        """Initialize performance prediction models"""
+        return {
             'engagement_model': {
                 'factors': ['content_quality', 'platform_fit', 'audience_match', 'timing'],
                 'weights': [0.3, 0.25, 0.25, 0.2]
@@ -602,7 +623,8 @@ class AdaptationStrategies:
         request: StrategyRequest,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Analyze content context for strategy selection"""        # Implementation would analyze content characteristics
+        """Analyze content context for strategy selection"""
+        # Implementation would analyze content characteristics
         return {
             'content_type': request.content_category.value,
             'target_platforms': request.target_platforms,

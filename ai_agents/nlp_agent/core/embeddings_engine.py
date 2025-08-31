@@ -6,7 +6,8 @@ on high-quality semantic embeddings using state-of-the-art models.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import logging
+"""
+import logging
 import asyncio
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -52,7 +53,8 @@ from .config import NLPAgentConfig, default_config
 logger = logging.getLogger(__name__)
 
 class EmbeddingModel(Enum):
-    """Available embedding models"""    SENTENCE_TRANSFORMERS = "sentence-transformers/all-MiniLM-L6-v2"
+    """Available embedding models"""
+    SENTENCE_TRANSFORMERS = "sentence-transformers/all-MiniLM-L6-v2"
     MPNET = "sentence-transformers/all-mpnet-base-v2"
     DISTILBERT = "sentence-transformers/all-distilroberta-v1"
     BERT_BASE = "bert-base-uncased"
@@ -60,21 +62,24 @@ class EmbeddingModel(Enum):
     CUSTOM = "custom"
 
 class SimilarityMetric(Enum):
-    """Similarity metrics for embeddings"""    COSINE = "cosine"
+    """Similarity metrics for embeddings"""
+    COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     DOT_PRODUCT = "dot_product"
     MANHATTAN = "manhattan"
     MINKOWSKI = "minkowski"
 
 class DimensionalityReduction(Enum):
-    """Dimensionality reduction techniques"""    PCA = "pca"
+    """Dimensionality reduction techniques"""
+    PCA = "pca"
     TSNE = "tsne"
     UMAP = "umap"
     NONE = "none"
 
 @dataclass
 class TextEmbedding:
-    """Text embedding with metadata"""    text_id: str
+    """Text embedding with metadata"""
+    text_id: str
     text: str
     embedding: np.ndarray
     model_name: str
@@ -84,7 +89,8 @@ class TextEmbedding:
 
 @dataclass
 class SimilarityResult:
-    """Result of similarity search"""    query_id: str
+    """Result of similarity search"""
+    query_id: str
     similar_items: List[Tuple[str, float]] = field(default_factory=list)  # (text_id, similarity_score)
     search_time: float = 0.0
     total_comparisons: int = 0
@@ -92,7 +98,8 @@ class SimilarityResult:
 
 @dataclass
 class ClusterResult:
-    """Result of embedding clustering"""    clusters: List[List[str]] = field(default_factory=list)  # Lists of text_ids
+    """Result of embedding clustering"""
+    clusters: List[List[str]] = field(default_factory=list)  # Lists of text_ids
     cluster_centers: List[np.ndarray] = field(default_factory=list)
     cluster_labels: List[int] = field(default_factory=list)
     inertia: float = 0.0
@@ -101,7 +108,8 @@ class ClusterResult:
 
 @dataclass
 class EmbeddingSpaceAnalysis:
-    """Analysis of embedding space"""    total_embeddings: int
+    """Analysis of embedding space"""
+    total_embeddings: int
     embedding_dimension: int
     average_similarity: float
     similarity_distribution: Dict[str, float] = field(default_factory=dict)
@@ -111,11 +119,14 @@ class EmbeddingSpaceAnalysis:
     density_metrics: Dict[str, float] = field(default_factory=dict)
 
 class EmbeddingsEngine:
-    """    Advanced text embeddings engine for generating, managing, and performing
+    """
+    Advanced text embeddings engine for generating, managing, and performing
     operations on high-quality semantic embeddings.
-    """    
+    """
+    
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize Embeddings Engine"""        self.config = config or default_config
+        """Initialize Embeddings Engine"""
+        self.config = config or default_config
         self.models = {}
         self.tokenizers = {}
         self.pipelines = {}
@@ -126,7 +137,8 @@ class EmbeddingsEngine:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize embedding models"""        try:
+        """Initialize embedding models"""
+        try:
             if TRANSFORMERS_AVAILABLE:
                 # Initialize sentence transformers pipeline
                 try:
@@ -161,11 +173,13 @@ class EmbeddingsEngine:
             self._setup_fallback_methods()
     
     def _setup_fallback_methods(self):
-        """Setup fallback methods for embeddings"""        logger.info("Setting up embedding fallback methods")
+        """Setup fallback methods for embeddings"""
+        logger.info("Setting up embedding fallback methods")
         self.fallback_mode = True
     
     def _get_device(self) -> int:
-        """Get optimal device for model execution"""        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
+        """Get optimal device for model execution"""
+        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
             try:
                 if torch.cuda.is_available():
                     return 0  # Use first GPU
@@ -174,7 +188,8 @@ class EmbeddingsEngine:
         return -1  # Use CPU
     
     def _initialize_faiss(self):
-        """Initialize FAISS index for fast similarity search"""        if FAISS_AVAILABLE:
+        """Initialize FAISS index for fast similarity search"""
+        if FAISS_AVAILABLE:
             # Will be initialized when first embeddings are added
             self.faiss_index = None
             logger.info("FAISS indexing will be initialized on demand")
@@ -186,7 +201,8 @@ class EmbeddingsEngine:
         text_ids: Optional[Union[str, List[str]]] = None,
         batch_size: int = 32
     ) -> Union[TextEmbedding, List[TextEmbedding]]:
-        """        Generate embeddings for text(s)
+        """
+        Generate embeddings for text(s)
         
         Args:
             texts: Text or list of texts to embed
@@ -196,7 +212,8 @@ class EmbeddingsEngine:
         
         Returns:
             TextEmbedding or list of TextEmbeddings
-        """        # Handle single text input
+        """
+        # Handle single text input
         is_single = isinstance(texts, str)
         if is_single:
             texts = [texts]
@@ -244,7 +261,8 @@ class EmbeddingsEngine:
         model: EmbeddingModel,
         text_ids: List[str]
     ) -> List[TextEmbedding]:
-        """Generate embeddings for a batch of texts"""        embeddings = []
+        """Generate embeddings for a batch of texts"""
+        embeddings = []
         
         try:
             if model == EmbeddingModel.SENTENCE_TRANSFORMERS and "sentence_transformers" in self.pipelines:
@@ -292,7 +310,8 @@ class EmbeddingsEngine:
         texts: List[str],
         text_ids: List[str]
     ) -> List[TextEmbedding]:
-        """Generate embeddings using BERT model"""        embeddings = []
+        """Generate embeddings using BERT model"""
+        embeddings = []
         
         try:
             tokenizer = self.tokenizers["bert"]
@@ -345,7 +364,8 @@ class EmbeddingsEngine:
         texts: List[str],
         text_ids: List[str]
     ) -> List[TextEmbedding]:
-        """Generate fallback embeddings using simple methods"""        embeddings = []
+        """Generate fallback embeddings using simple methods"""
+        embeddings = []
         
         try:
             # Simple TF-IDF based embeddings
@@ -409,7 +429,8 @@ class EmbeddingsEngine:
         return embeddings
     
     async def _update_faiss_index(self, new_embeddings: List[TextEmbedding]):
-        """Update FAISS index with new embeddings"""        if not FAISS_AVAILABLE:
+        """Update FAISS index with new embeddings"""
+        if not FAISS_AVAILABLE:
             return
         
         try:
@@ -444,7 +465,8 @@ class EmbeddingsEngine:
         similarity_metric: SimilarityMetric = SimilarityMetric.COSINE,
         min_similarity: float = 0.0
     ) -> SimilarityResult:
-        """        Find most similar texts to query
+        """
+        Find most similar texts to query
         
         Args:
             query: Query text or embedding
@@ -454,7 +476,8 @@ class EmbeddingsEngine:
         
         Returns:
             SimilarityResult with similar items
-        """        start_time = asyncio.get_event_loop().time()
+        """
+        start_time = asyncio.get_event_loop().time()
         
         # Generate query embedding if needed
         if isinstance(query, str):
@@ -500,7 +523,8 @@ class EmbeddingsEngine:
         top_k: int,
         min_similarity: float
     ) -> List[Tuple[str, float]]:
-        """Perform similarity search using FAISS"""        if self.faiss_index is None or self.faiss_index.ntotal == 0:
+        """Perform similarity search using FAISS"""
+        if self.faiss_index is None or self.faiss_index.ntotal == 0:
             return []
         
         try:
@@ -534,7 +558,8 @@ class EmbeddingsEngine:
         similarity_metric: SimilarityMetric,
         min_similarity: float
     ) -> List[Tuple[str, float]]:
-        """Perform brute force similarity search"""        similarities = []
+        """Perform brute force similarity search"""
+        similarities = []
         
         try:
             for text_id, embedding in self.embedding_store.items():
@@ -561,7 +586,8 @@ class EmbeddingsEngine:
         vector2: np.ndarray,
         metric: SimilarityMetric
     ) -> float:
-        """Calculate similarity between two vectors"""        try:
+        """Calculate similarity between two vectors"""
+        try:
             if metric == SimilarityMetric.COSINE:
                 # Cosine similarity
                 dot_product = np.dot(vector1, vector2)
@@ -597,7 +623,8 @@ class EmbeddingsEngine:
         n_clusters: int = 5,
         algorithm: str = "kmeans"
     ) -> ClusterResult:
-        """        Cluster embeddings using specified algorithm
+        """
+        Cluster embeddings using specified algorithm
         
         Args:
             embedding_ids: Specific embeddings to cluster (None for all)
@@ -606,7 +633,8 @@ class EmbeddingsEngine:
         
         Returns:
             ClusterResult with cluster assignments
-        """        if not SKLEARN_AVAILABLE:
+        """
+        if not SKLEARN_AVAILABLE:
             logger.error("Clustering requires scikit-learn")
             return ClusterResult()
         
@@ -665,7 +693,8 @@ class EmbeddingsEngine:
         method: DimensionalityReduction = DimensionalityReduction.PCA,
         n_components: int = 2
     ) -> Dict[str, np.ndarray]:
-        """        Reduce dimensionality of embeddings for visualization
+        """
+        Reduce dimensionality of embeddings for visualization
         
         Args:
             embedding_ids: Specific embeddings to reduce (None for all)
@@ -674,7 +703,8 @@ class EmbeddingsEngine:
         
         Returns:
             Dictionary mapping text_ids to reduced embeddings
-        """        if not SKLEARN_AVAILABLE:
+        """
+        if not SKLEARN_AVAILABLE:
             logger.error("Dimensionality reduction requires scikit-learn")
             return {}
         
@@ -718,7 +748,8 @@ class EmbeddingsEngine:
             return {}
     
     async def analyze_embedding_space(self) -> EmbeddingSpaceAnalysis:
-        """Analyze the current embedding space"""        if not self.embedding_store:
+        """Analyze the current embedding space"""
+        if not self.embedding_store:
             return EmbeddingSpaceAnalysis(
                 total_embeddings=0,
                 embedding_dimension=0,
@@ -780,7 +811,8 @@ class EmbeddingsEngine:
         return analysis
     
     def _calculate_space_coverage(self, embedding_matrix: np.ndarray) -> float:
-        """Calculate how well the embeddings cover the vector space"""        try:
+        """Calculate how well the embeddings cover the vector space"""
+        try:
             if len(embedding_matrix) < 2:
                 return 0.0
             
@@ -805,7 +837,8 @@ class EmbeddingsEngine:
             return 0.0
     
     def _calculate_density_metrics(self, embedding_matrix: np.ndarray) -> Dict[str, float]:
-        """Calculate density metrics for the embedding space"""        metrics = {}
+        """Calculate density metrics for the embedding space"""
+        metrics = {}
         
         try:
             if SKLEARN_AVAILABLE and len(embedding_matrix) > 1:
@@ -827,7 +860,8 @@ class EmbeddingsEngine:
         return metrics
     
     def save_embeddings(self, filepath: str) -> bool:
-        """Save embeddings to file"""        try:
+        """Save embeddings to file"""
+        try:
             # Convert to serializable format
             data = {
                 "embeddings": [],
@@ -861,7 +895,8 @@ class EmbeddingsEngine:
             return False
     
     def load_embeddings(self, filepath: str) -> bool:
-        """Load embeddings from file"""        try:
+        """Load embeddings from file"""
+        try:
             if not os.path.exists(filepath):
                 logger.error(f"File not found: {filepath}")
                 return False
@@ -901,10 +936,12 @@ class EmbeddingsEngine:
             return False
     
     def get_embedding(self, text_id: str) -> Optional[TextEmbedding]:
-        """Get specific embedding by ID"""        return self.embedding_store.get(text_id)
+        """Get specific embedding by ID"""
+        return self.embedding_store.get(text_id)
     
     def remove_embedding(self, text_id: str) -> bool:
-        """Remove embedding by ID"""        if text_id in self.embedding_store:
+        """Remove embedding by ID"""
+        if text_id in self.embedding_store:
             del self.embedding_store[text_id]
             if text_id in self.embeddings_cache:
                 del self.embeddings_cache[text_id]
@@ -917,11 +954,13 @@ class EmbeddingsEngine:
         return False
     
     def clear_cache(self):
-        """Clear embedding caches"""        self.embeddings_cache.clear()
+        """Clear embedding caches"""
+        self.embeddings_cache.clear()
         logger.info("Embedding cache cleared")
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""        status = {
+        """Perform health check"""
+        status = {
             "status": "healthy",
             "transformers_available": TRANSFORMERS_AVAILABLE,
             "sklearn_available": SKLEARN_AVAILABLE,
@@ -947,7 +986,8 @@ class EmbeddingsEngine:
         return status
     
     def shutdown(self):
-        """Shutdown the embeddings engine"""        logger.info("Shutting down Embeddings Engine")
+        """Shutdown the embeddings engine"""
+        logger.info("Shutting down Embeddings Engine")
         
         # Clear caches and stores
         self.clear_cache()
@@ -969,17 +1009,20 @@ class EmbeddingsEngine:
 
 # Utility functions
 def calculate_centroid(embeddings: List[np.ndarray]) -> np.ndarray:
-    """Calculate centroid of embeddings"""    if not embeddings:
+    """Calculate centroid of embeddings"""
+    if not embeddings:
         return np.array([])
     
     return np.mean(embeddings, axis=0)
 
 def normalize_embedding(embedding: np.ndarray) -> np.ndarray:
-    """Normalize embedding to unit vector"""    norm = np.linalg.norm(embedding)
+    """Normalize embedding to unit vector"""
+    norm = np.linalg.norm(embedding)
     return embedding / norm if norm > 0 else embedding
 
 def batch_cosine_similarity(matrix1: np.ndarray, matrix2: np.ndarray) -> np.ndarray:
-    """Calculate cosine similarity between two embedding matrices"""    if SKLEARN_AVAILABLE:
+    """Calculate cosine similarity between two embedding matrices"""
+    if SKLEARN_AVAILABLE:
         return cosine_similarity(matrix1, matrix2)
     
     # Manual implementation

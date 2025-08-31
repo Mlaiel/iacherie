@@ -14,7 +14,8 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Team Specialties: Lead AI Developer + Senior Backend Engineer + Database Administrator + 
 Performance Engineer + ML Engineer + CDN Specialist + Network Optimization Expert
-"""import asyncio
+"""
+import asyncio
 import json
 import uuid
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -41,7 +42,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class OptimizationStrategy(str, Enum):
-    """Content delivery optimization strategies"""    SPEED_FIRST = "speed_first"
+    """Content delivery optimization strategies"""
+    SPEED_FIRST = "speed_first"
     COST_EFFICIENT = "cost_efficient"
     QUALITY_FOCUSED = "quality_focused"
     BALANCED = "balanced"
@@ -50,7 +52,8 @@ class OptimizationStrategy(str, Enum):
     ENGAGEMENT_MAXIMIZED = "engagement_maximized"
 
 class DeliveryMethod(str, Enum):
-    """Content delivery methods"""    DIRECT_API = "direct_api"
+    """Content delivery methods"""
+    DIRECT_API = "direct_api"
     CDN_DELIVERY = "cdn_delivery"
     P2P_DISTRIBUTION = "p2p_distribution"
     HYBRID = "hybrid"
@@ -58,14 +61,16 @@ class DeliveryMethod(str, Enum):
     STREAMING = "streaming"
 
 class OptimizationLevel(str, Enum):
-    """Optimization processing levels"""    BASIC = "basic"
+    """Optimization processing levels"""
+    BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 class DeliveryStatus(str, Enum):
-    """Delivery operation status"""    QUEUED = "queued"
+    """Delivery operation status"""
+    QUEUED = "queued"
     OPTIMIZING = "optimizing"
     UPLOADING = "uploading"
     PROCESSING = "processing"
@@ -75,7 +80,8 @@ class DeliveryStatus(str, Enum):
 
 @dataclass
 class NetworkMetrics:
-    """Network performance metrics"""    latency_ms: float = 0.0
+    """Network performance metrics"""
+    latency_ms: float = 0.0
     bandwidth_mbps: float = 0.0
     packet_loss_percent: float = 0.0
     jitter_ms: float = 0.0
@@ -85,7 +91,8 @@ class NetworkMetrics:
 
 @dataclass
 class OptimizationParameters:
-    """Content optimization parameters"""    target_quality: str = "auto"
+    """Content optimization parameters"""
+    target_quality: str = "auto"
     max_file_size_mb: int = 100
     compression_level: int = 7
     format_preferences: List[str] = field(default_factory=list)
@@ -96,7 +103,8 @@ class OptimizationParameters:
 
 @dataclass
 class CostOptimization:
-    """Cost optimization configuration"""    budget_limit_cents: int = 0
+    """Cost optimization configuration"""
+    budget_limit_cents: int = 0
     cost_per_mb_limit: float = 0.0
     preferred_regions: List[str] = field(default_factory=list)
     avoid_premium_tiers: bool = False
@@ -104,7 +112,8 @@ class CostOptimization:
     cost_tracking_enabled: bool = True
 
 class DeliveryOptimization(Base):
-    """Delivery optimization database model"""    __tablename__ = "delivery_optimizations"
+    """Delivery optimization database model"""
+    __tablename__ = "delivery_optimizations"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -166,7 +175,8 @@ class DeliveryOptimization(Base):
     optimization_version = Column(String(20), nullable=False, default="1.0")
 
 class DeliveryRoute(Base):
-    """Delivery route optimization database model"""    __tablename__ = "delivery_routes"
+    """Delivery route optimization database model"""
+    __tablename__ = "delivery_routes"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     optimization_id = Column(UUID(as_uuid=True), ForeignKey('delivery_optimizations.id'), nullable=False)
@@ -207,7 +217,8 @@ class DeliveryRoute(Base):
     is_active = Column(Boolean, nullable=False, default=True)
 
 class OptimizationRule(Base):
-    """Optimization rules and policies database model"""    __tablename__ = "optimization_rules"
+    """Optimization rules and policies database model"""
+    __tablename__ = "optimization_rules"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -244,7 +255,8 @@ class OptimizationRule(Base):
     created_by = Column(String(100), nullable=True)
 
 class PerformanceBenchmark(Base):
-    """Performance benchmark database model"""    __tablename__ = "performance_benchmarks"
+    """Performance benchmark database model"""
+    __tablename__ = "performance_benchmarks"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     platform_name = Column(String(50), nullable=False, index=True)
@@ -282,7 +294,8 @@ class PerformanceBenchmark(Base):
     data_source = Column(String(50), nullable=False)
 
 class CostAnalysis(Base):
-    """Cost analysis and optimization database model"""    __tablename__ = "cost_analyses"
+    """Cost analysis and optimization database model"""
+    __tablename__ = "cost_analyses"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     optimization_id = Column(UUID(as_uuid=True), ForeignKey('delivery_optimizations.id'), nullable=False)
@@ -322,7 +335,8 @@ class CostAnalysis(Base):
 
 # Pydantic Models for API
 class OptimizationRequest(BaseModel):
-    """Request model for delivery optimization"""    content_id: str
+    """Request model for delivery optimization"""
+    content_id: str
     campaign_id: Optional[str] = None
     strategy: OptimizationStrategy = OptimizationStrategy.BALANCED
     optimization_level: OptimizationLevel = OptimizationLevel.STANDARD
@@ -334,7 +348,8 @@ class OptimizationRequest(BaseModel):
     delivery_deadline: Optional[datetime] = None
 
 class RouteConfiguration(BaseModel):
-    """Route configuration model"""    platform_name: str
+    """Route configuration model"""
+    platform_name: str
     source_region: str
     target_region: str
     route_type: str
@@ -343,7 +358,8 @@ class RouteConfiguration(BaseModel):
     priority_order: int = 1
 
 class OptimizationResponse(BaseModel):
-    """Response model for optimization results"""    optimization_id: str
+    """Response model for optimization results"""
+    optimization_id: str
     status: str
     predicted_delivery_time_sec: Optional[int]
     predicted_cost_cents: Optional[int]
@@ -353,7 +369,8 @@ class OptimizationResponse(BaseModel):
     estimated_completion: Optional[datetime]
 
 class DeliveryOptimizationManager:
-    """Enterprise delivery optimization management system"""    
+    """Enterprise delivery optimization management system"""
+    
     def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -364,7 +381,8 @@ class DeliveryOptimizationManager:
         user_id: str,
         optimization_request: OptimizationRequest
     ) -> DeliveryOptimization:
-        """Create new delivery optimization"""        try:
+        """Create new delivery optimization"""
+        try:
             # Analyze content requirements
             content_analysis = await self._analyze_content_requirements(
                 optimization_request.content_id
@@ -433,7 +451,8 @@ class DeliveryOptimizationManager:
         self,
         optimization_id: str
     ) -> Dict[str, Any]:
-        """Execute delivery optimization"""        try:
+        """Execute delivery optimization"""
+        try:
             optimization = await self._get_optimization_by_id(optimization_id)
             if not optimization:
                 raise ValueError(f"Optimization {optimization_id} not found")
@@ -495,7 +514,8 @@ class DeliveryOptimizationManager:
         content_id: str,
         target_platforms: List[str]
     ) -> Dict[str, Any]:
-        """Get AI-powered optimization recommendations"""        try:
+        """Get AI-powered optimization recommendations"""
+        try:
             # Analyze historical performance
             historical_data = await self._analyze_historical_performance(
                 user_id, target_platforms
@@ -536,7 +556,8 @@ class DeliveryOptimizationManager:
         region: str,
         performance_data: Dict[str, Any]
     ) -> PerformanceBenchmark:
-        """Update performance benchmarks with new data"""        try:
+        """Update performance benchmarks with new data"""
+        try:
             # Check for existing benchmark
             existing_benchmark = await self.db_session.query(PerformanceBenchmark).filter(
                 PerformanceBenchmark.platform_name == platform_name,
@@ -593,7 +614,8 @@ class DeliveryOptimizationManager:
             raise
     
     async def _analyze_content_requirements(self, content_id: str) -> Dict[str, Any]:
-        """Analyze content requirements for optimization"""        # This would analyze the content file size, format, quality, etc.
+        """Analyze content requirements for optimization"""
+        # This would analyze the content file size, format, quality, etc.
         # For now, return mock data
         return {
             'file_size_mb': 50.0,
@@ -610,7 +632,8 @@ class DeliveryOptimizationManager:
         request: OptimizationRequest,
         content_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate ML-powered optimization predictions"""        # This would use ML models to predict performance
+        """Generate ML-powered optimization predictions"""
+        # This would use ML models to predict performance
         # For now, return calculated estimates
         base_delivery_time = content_analysis['file_size_mb'] * 2  # 2 seconds per MB
         base_cost = content_analysis['file_size_mb'] * 5  # 5 cents per MB
@@ -628,7 +651,8 @@ class DeliveryOptimizationManager:
         optimization: DeliveryOptimization,
         content_analysis: Dict[str, Any]
     ) -> int:
-        """Calculate optimization priority score"""        score = 50  # Base score
+        """Calculate optimization priority score"""
+        score = 50  # Base score
         
         # Adjust based on deadline
         if optimization.delivery_deadline:
@@ -654,7 +678,8 @@ class DeliveryOptimizationManager:
         return min(100, max(0, score))
     
     async def _cache_optimization(self, optimization: DeliveryOptimization):
-        """Cache optimization data in Redis"""        try:
+        """Cache optimization data in Redis"""
+        try:
             cache_key = f"optimization:{optimization.id}"
             optimization_data = {
                 'id': str(optimization.id),
@@ -677,7 +702,8 @@ class DeliveryOptimizationManager:
             logger.warning(f"Error caching optimization: {str(e)}")
     
     async def _get_optimization_by_id(self, optimization_id: str) -> Optional[DeliveryOptimization]:
-        """Get optimization by ID with caching"""        try:
+        """Get optimization by ID with caching"""
+        try:
             optimization_uuid = uuid.UUID(optimization_id)
             optimization = await self.db_session.query(DeliveryOptimization).filter(
                 DeliveryOptimization.id == optimization_uuid

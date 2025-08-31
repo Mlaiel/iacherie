@@ -46,7 +46,8 @@ This code is the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
 Contact: mlaiel@live.de for licensing inquiries.
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import json
 import logging
@@ -107,7 +108,8 @@ from backend.utils.exceptions import (
 logger = logging.getLogger(__name__)
 
 class AIFingerprintingEngine:
-    """    🔬 SYSTÈME D'EMPREINTES NUMÉRIQUES IA ULTRA-AVANCÉ
+    """
+    🔬 SYSTÈME D'EMPREINTES NUMÉRIQUES IA ULTRA-AVANCÉ
     
     Moteur de fingerprinting multi-format utilisant les dernières avancées
     en intelligence artificielle pour la protection de contenu numérique.
@@ -119,9 +121,11 @@ class AIFingerprintingEngine:
     - Text : BERT + TF-IDF + Semantic Embeddings
     - Performance : <5s processing, >90% accuracy
     - Scalabilité : 10K+ fingerprints simultanés
-    """    
+    """
+    
     def __init__(self):
-        """Initialisation du moteur de fingerprinting IA."""        self.settings = get_settings()
+        """Initialisation du moteur de fingerprinting IA."""
+        self.settings = get_settings()
         self.redis_client = None
         self.elasticsearch_client = None
         self.faiss_index = None
@@ -148,7 +152,8 @@ class AIFingerprintingEngine:
         self._initialize_models()
         
     async def initialize(self):
-        """Initialisation asynchrone des connexions et modèles."""        try:
+        """Initialisation asynchrone des connexions et modèles."""
+        try:
             # Redis connection
             self.redis_client = await get_redis_client()
             
@@ -168,7 +173,8 @@ class AIFingerprintingEngine:
             raise FingerprintingError(f"Initialization failed: {e}")
     
     def _initialize_models(self):
-        """Initialisation des modèles ML pour le fingerprinting."""        try:
+        """Initialisation des modèles ML pour le fingerprinting."""
+        try:
             # CLIP Model for Image/Video
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
             self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -191,7 +197,8 @@ class AIFingerprintingEngine:
             raise FingerprintingError(f"Model initialization failed: {e}")
     
     async def _initialize_faiss_index(self):
-        """Initialisation de l'index FAISS pour la recherche vectorielle."""        try:
+        """Initialisation de l'index FAISS pour la recherche vectorielle."""
+        try:
             # Dimension based on CLIP embeddings (512)
             dimension = 512
             
@@ -215,7 +222,8 @@ class AIFingerprintingEngine:
         user_id: int,
         metadata: Optional[Dict] = None
     ) -> Dict[str, Any]:
-        """        🔬 CRÉATION D'EMPREINTE NUMÉRIQUE MULTI-FORMAT
+        """
+        🔬 CRÉATION D'EMPREINTE NUMÉRIQUE MULTI-FORMAT
         
         Génère une empreinte unique utilisant l'IA pour identifier
         et protéger le contenu numérique.
@@ -227,7 +235,8 @@ class AIFingerprintingEngine:
             
         Returns:
             Dict contenant l'empreinte et les métadonnées
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Security validation
@@ -290,7 +299,8 @@ class AIFingerprintingEngine:
             raise FingerprintingError(f"Failed to create fingerprint: {e}")
     
     def _detect_content_type(self, filename: str) -> str:
-        """Détection automatique du type de contenu."""        suffix = Path(filename).suffix.lower()
+        """Détection automatique du type de contenu."""
+        suffix = Path(filename).suffix.lower()
         
         for content_type, extensions in self.supported_formats.items():
             if suffix in extensions:
@@ -304,7 +314,8 @@ class AIFingerprintingEngine:
         content_type: str, 
         content: bytes
     ) -> Dict[str, Any]:
-        """Génération d'empreinte selon le type de contenu."""        
+        """Génération d'empreinte selon le type de contenu."""
+        
         if content_type == 'audio':
             return await self._generate_audio_fingerprint(file_path)
         elif content_type == 'video':
@@ -317,11 +328,13 @@ class AIFingerprintingEngine:
             raise UnsupportedFormatError(f"Content type not supported: {content_type}")
     
     async def _generate_audio_fingerprint(self, file_path: str) -> Dict[str, Any]:
-        """        🎵 GÉNÉRATION D'EMPREINTE AUDIO AVANCÉE
+        """
+        🎵 GÉNÉRATION D'EMPREINTE AUDIO AVANCÉE
         
         Utilise Chromaprint + Essentia + Librosa pour créer une empreinte
         audio robuste et unique.
-        """        try:
+        """
+        try:
             # Load audio file
             y, sr = librosa.load(file_path, sr=self.audio_sr)
             
@@ -381,10 +394,12 @@ class AIFingerprintingEngine:
             raise FingerprintingError(f"Audio processing failed: {e}")
     
     async def _generate_video_fingerprint(self, file_path: str) -> Dict[str, Any]:
-        """        🎬 GÉNÉRATION D'EMPREINTE VIDÉO AVANCÉE
+        """
+        🎬 GÉNÉRATION D'EMPREINTE VIDÉO AVANCÉE
         
         Utilise OpenCV + CLIP + Optical Flow pour analyser le contenu vidéo.
-        """        try:
+        """
+        try:
             cap = cv2.VideoCapture(file_path)
             
             # Video properties
@@ -466,10 +481,12 @@ class AIFingerprintingEngine:
             raise FingerprintingError(f"Video processing failed: {e}")
     
     async def _generate_image_fingerprint(self, file_path: str) -> Dict[str, Any]:
-        """        🖼️ GÉNÉRATION D'EMPREINTE IMAGE AVANCÉE
+        """
+        🖼️ GÉNÉRATION D'EMPREINTE IMAGE AVANCÉE
         
         Utilise CLIP + CNN + Perceptual Hashing pour analyser les images.
-        """        try:
+        """
+        try:
             # Load image
             image = Image.open(file_path).convert('RGB')
             
@@ -529,10 +546,12 @@ class AIFingerprintingEngine:
             raise FingerprintingError(f"Image processing failed: {e}")
     
     async def _generate_text_fingerprint(self, content: bytes) -> Dict[str, Any]:
-        """        📝 GÉNÉRATION D'EMPREINTE TEXTE AVANCÉE
+        """
+        📝 GÉNÉRATION D'EMPREINTE TEXTE AVANCÉE
         
         Utilise BERT + TF-IDF + Semantic Analysis pour analyser le texte.
-        """        try:
+        """
+        try:
             # Decode text content
             try:
                 text = content.decode('utf-8')
@@ -585,7 +604,8 @@ class AIFingerprintingEngine:
             raise FingerprintingError(f"Text processing failed: {e}")
     
     def _normalize_to_512d(self, vector: np.ndarray) -> np.ndarray:
-        """Normalise un vecteur à 512 dimensions pour FAISS."""        if len(vector) == 512:
+        """Normalise un vecteur à 512 dimensions pour FAISS."""
+        if len(vector) == 512:
             return vector / np.linalg.norm(vector)
         elif len(vector) > 512:
             # Truncate and normalize
@@ -596,7 +616,8 @@ class AIFingerprintingEngine:
             return padded / np.linalg.norm(padded)
     
     async def _store_fingerprint(self, fingerprint_record: Dict[str, Any]):
-        """Stockage de l'empreinte dans les bases de données."""        try:
+        """Stockage de l'empreinte dans les bases de données."""
+        try:
             # Store in Redis for fast access
             redis_key = f"fingerprint:{fingerprint_record['id']}"
             await self.redis_client.setex(
@@ -628,10 +649,12 @@ class AIFingerprintingEngine:
         threshold: float = 0.85,
         limit: int = 10
     ) -> List[Dict[str, Any]]:
-        """        🔍 RECHERCHE DE CONTENU SIMILAIRE
+        """
+        🔍 RECHERCHE DE CONTENU SIMILAIRE
         
         Utilise FAISS + Elasticsearch pour trouver du contenu similaire.
-        """        try:
+        """
+        try:
             # Get fingerprint from Redis
             redis_key = f"fingerprint:{fingerprint_id}"
             fingerprint_data = await self.redis_client.get(redis_key)
@@ -683,10 +706,12 @@ class AIFingerprintingEngine:
         user_id: int,
         metadata: Optional[Dict] = None
     ) -> List[Dict[str, Any]]:
-        """        ⚡ TRAITEMENT EN LOT D'EMPREINTES
+        """
+        ⚡ TRAITEMENT EN LOT D'EMPREINTES
         
         Traite plusieurs fichiers simultanément pour optimiser les performances.
-        """        try:
+        """
+        try:
             # Limit concurrent processing
             semaphore = asyncio.Semaphore(self.performance_targets['concurrent_limit'])
             
@@ -738,10 +763,12 @@ class AIFingerprintingEngine:
         user_id: Optional[int] = None,
         time_range: str = '24h'
     ) -> Dict[str, Any]:
-        """        📊 ANALYTICS DES EMPREINTES NUMÉRIQUES
+        """
+        📊 ANALYTICS DES EMPREINTES NUMÉRIQUES
         
         Fournit des statistiques avancées sur l'utilisation du fingerprinting.
-        """        try:
+        """
+        try:
             # Calculate time range
             time_ranges = {
                 '1h': timedelta(hours=1),
@@ -800,10 +827,12 @@ class AIFingerprintingEngine:
             raise FingerprintingError(f"Analytics failed: {e}")
     
     async def cleanup_expired_fingerprints(self, days_old: int = 30):
-        """        🧹 NETTOYAGE DES EMPREINTES EXPIRÉES
+        """
+        🧹 NETTOYAGE DES EMPREINTES EXPIRÉES
         
         Supprime les empreintes anciennes pour optimiser les performances.
-        """        try:
+        """
+        try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_old)
             
             # Query expired fingerprints
@@ -853,7 +882,8 @@ class AIFingerprintingEngine:
 
 # Factory function
 async def create_fingerprinting_engine() -> AIFingerprintingEngine:
-    """Factory pour créer et initialiser le moteur de fingerprinting."""    engine = AIFingerprintingEngine()
+    """Factory pour créer et initialiser le moteur de fingerprinting."""
+    engine = AIFingerprintingEngine()
     await engine.initialize()
     return engine
 

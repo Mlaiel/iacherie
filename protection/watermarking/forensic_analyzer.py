@@ -1,6 +1,7 @@
 """Forensic Analysis Module for Watermarking
 Advanced forensic techniques for watermark detection, analysis, and legal evidence generation
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -17,7 +18,8 @@ logger = logging.getLogger(__name__)
 
 
 class ForensicAnalysisType(Enum):
-    """Types of forensic analysis"""    WATERMARK_DETECTION = "watermark_detection"
+    """Types of forensic analysis"""
+    WATERMARK_DETECTION = "watermark_detection"
     OWNERSHIP_VERIFICATION = "ownership_verification"
     TAMPERING_ANALYSIS = "tampering_analysis"
     CHAIN_OF_CUSTODY = "chain_of_custody"
@@ -26,7 +28,8 @@ class ForensicAnalysisType(Enum):
 
 
 class EvidenceStrength(Enum):
-    """Legal evidence strength levels"""    INADMISSIBLE = "inadmissible"
+    """Legal evidence strength levels"""
+    INADMISSIBLE = "inadmissible"
     WEAK = "weak"
     MODERATE = "moderate"
     STRONG = "strong"
@@ -35,7 +38,8 @@ class EvidenceStrength(Enum):
 
 @dataclass
 class ForensicEvidence:
-    """Forensic evidence structure"""    evidence_id: str
+    """Forensic evidence structure"""
+    evidence_id: str
     analysis_type: ForensicAnalysisType
     content_hash: str
     watermark_evidence: Dict[str, Any]
@@ -50,7 +54,8 @@ class ForensicEvidence:
 
 @dataclass
 class TamperingAnalysis:
-    """Tampering analysis results"""    tampering_detected: bool
+    """Tampering analysis results"""
+    tampering_detected: bool
     tampering_type: str
     affected_regions: List[Dict[str, Any]]
     confidence: float
@@ -60,7 +65,8 @@ class TamperingAnalysis:
 
 
 class ForensicWatermarkAnalyzer:
-    """Professional forensic analysis engine for watermarked content"""    
+    """Professional forensic analysis engine for watermarked content"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.evidence_storage = config.get('evidence_storage_path', '/tmp/forensic_evidence')
@@ -70,7 +76,8 @@ class ForensicWatermarkAnalyzer:
         self._initialize_engines()
     
     def _initialize_engines(self):
-        """Initialize specialized forensic engines"""        try:
+        """Initialize specialized forensic engines"""
+        try:
             from .image_engine import ImageWatermarkEngine
             from .video_engine import VideoWatermarkEngine
             from .text_engine import TextWatermarkEngine
@@ -93,9 +100,11 @@ class ForensicWatermarkAnalyzer:
         claimed_owner: str,
         reference_watermark: Optional[Dict[str, Any]] = None
     ) -> ForensicEvidence:
-        """        Conducts comprehensive forensic analysis of watermarked content
+        """
+        Conducts comprehensive forensic analysis of watermarked content
         Generates legally admissible evidence package
-        """        try:
+        """
+        try:
             # Generate unique evidence ID
             evidence_id = f"FORENSIC_{uuid.uuid4()}"
             analysis_timestamp = datetime.now()
@@ -203,9 +212,11 @@ class ForensicWatermarkAnalyzer:
         original_reference: Optional[bytes],
         content_type: str
     ) -> TamperingAnalysis:
-        """        Specialized tampering analysis with detailed detection
+        """
+        Specialized tampering analysis with detailed detection
         Identifies modifications, additions, and deletions
-        """        try:
+        """
+        try:
             tampering_detected = False
             tampering_type = "none"
             affected_regions = []
@@ -296,9 +307,11 @@ class ForensicWatermarkAnalyzer:
         evidence: ForensicEvidence,
         case_context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Generates expert witness report for legal proceedings
+        """
+        Generates expert witness report for legal proceedings
         Provides comprehensive technical analysis in legal format
-        """        try:
+        """
+        try:
             report = {
                 'report_header': {
                     'case_number': case_context.get('case_number', 'N/A'),
@@ -364,7 +377,8 @@ class ForensicWatermarkAnalyzer:
         content_type: str,
         reference_watermark: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Performs comprehensive watermark detection"""        try:
+        """Performs comprehensive watermark detection"""
+        try:
             detection_results = {
                 'detected': False,
                 'confidence': 0.0,
@@ -395,7 +409,8 @@ class ForensicWatermarkAnalyzer:
         claimed_owner: str,
         detection_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Performs ownership verification using blockchain and watermark evidence"""        try:
+        """Performs ownership verification using blockchain and watermark evidence"""
+        try:
             # Blockchain verification
             blockchain_result = await self.blockchain_registry.verify_ownership(
                 content_hash, claimed_owner, detection_results.get('watermark_data')
@@ -433,7 +448,8 @@ class ForensicWatermarkAnalyzer:
         content_type: str,
         reference_watermark: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Performs tampering analysis"""        try:
+        """Performs tampering analysis"""
+        try:
             # Placeholder for tampering analysis
             return {
                 'detected': False,
@@ -451,7 +467,8 @@ class ForensicWatermarkAnalyzer:
         content_data: bytes,
         content_type: str
     ) -> Dict[str, Any]:
-        """Performs metadata analysis"""        try:
+        """Performs metadata analysis"""
+        try:
             return {
                 'metadata_extracted': True,
                 'creation_timestamp': None,
@@ -471,7 +488,8 @@ class ForensicWatermarkAnalyzer:
         content_type: str,
         reference_watermark: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Performs similarity analysis with reference"""        try:
+        """Performs similarity analysis with reference"""
+        try:
             return {
                 'similarity_score': 0.0,
                 'structural_similarity': 0.0,
@@ -484,7 +502,8 @@ class ForensicWatermarkAnalyzer:
             return {'similarity_score': 0.0, 'error': str(e)}
     
     def _calculate_overall_confidence(self, analysis_results: Dict[str, Any]) -> float:
-        """Calculates overall confidence score"""        try:
+        """Calculates overall confidence score"""
+        try:
             confidences = []
             
             detection_conf = analysis_results.get('watermark_detection', {}).get('confidence', 0.0)
@@ -504,7 +523,8 @@ class ForensicWatermarkAnalyzer:
             return 0.0
     
     def _determine_evidence_strength(self, confidence: float, analysis_results: Dict[str, Any]) -> EvidenceStrength:
-        """Determines legal evidence strength"""        try:
+        """Determines legal evidence strength"""
+        try:
             if confidence >= 0.95:
                 return EvidenceStrength.CONCLUSIVE
             elif confidence >= 0.85:
@@ -520,7 +540,8 @@ class ForensicWatermarkAnalyzer:
             return EvidenceStrength.INADMISSIBLE
     
     async def _generate_digital_signature(self, data: Dict[str, Any]) -> str:
-        """Generates digital signature for evidence integrity"""        try:
+        """Generates digital signature for evidence integrity"""
+        try:
             # Placeholder for digital signature generation
             data_str = json.dumps(data, sort_keys=True)
             return hashlib.sha256(data_str.encode()).hexdigest()
@@ -529,7 +550,8 @@ class ForensicWatermarkAnalyzer:
             return ""
     
     async def _store_forensic_evidence(self, evidence: ForensicEvidence):
-        """Stores forensic evidence securely"""        try:
+        """Stores forensic evidence securely"""
+        try:
             # Implementation would store evidence in secure storage
             evidence_file = Path(self.evidence_storage) / f"{evidence.evidence_id}.json"
             evidence_file.parent.mkdir(parents=True, exist_ok=True)
@@ -543,47 +565,60 @@ class ForensicWatermarkAnalyzer:
     # Content-specific detection methods (placeholders for real implementations)
     
     async def _detect_image_watermark(self, content_data: bytes, reference: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Detects watermark in image content"""        return {'detected': False, 'confidence': 0.0, 'methods_used': ['DCT', 'DWT', 'LSB']}
+        """Detects watermark in image content"""
+        return {'detected': False, 'confidence': 0.0, 'methods_used': ['DCT', 'DWT', 'LSB']}
     
     async def _detect_video_watermark(self, content_data: bytes, reference: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Detects watermark in video content"""        return {'detected': False, 'confidence': 0.0, 'methods_used': ['frame_analysis', 'temporal_analysis']}
+        """Detects watermark in video content"""
+        return {'detected': False, 'confidence': 0.0, 'methods_used': ['frame_analysis', 'temporal_analysis']}
     
     async def _detect_text_watermark(self, content_data: bytes, reference: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Detects watermark in text content"""        return {'detected': False, 'confidence': 0.0, 'methods_used': ['semantic', 'linguistic', 'invisible']}
+        """Detects watermark in text content"""
+        return {'detected': False, 'confidence': 0.0, 'methods_used': ['semantic', 'linguistic', 'invisible']}
     
     # Tampering analysis methods (placeholders)
     
     async def _analyze_image_tampering(self, suspicious: bytes, original: Optional[bytes]) -> Dict[str, Any]:
-        """Analyzes image tampering"""        return {'detected': False, 'type': 'none', 'regions': [], 'confidence': 0.0}
+        """Analyzes image tampering"""
+        return {'detected': False, 'type': 'none', 'regions': [], 'confidence': 0.0}
     
     async def _analyze_video_tampering(self, suspicious: bytes, original: Optional[bytes]) -> Dict[str, Any]:
-        """Analyzes video tampering"""        return {'detected': False, 'type': 'none', 'regions': [], 'confidence': 0.0}
+        """Analyzes video tampering"""
+        return {'detected': False, 'type': 'none', 'regions': [], 'confidence': 0.0}
     
     async def _analyze_text_tampering(self, suspicious: bytes, original: Optional[bytes]) -> Dict[str, Any]:
-        """Analyzes text tampering"""        return {'detected': False, 'type': 'none', 'regions': [], 'confidence': 0.0}
+        """Analyzes text tampering"""
+        return {'detected': False, 'type': 'none', 'regions': [], 'confidence': 0.0}
     
     async def _analyze_generic_tampering(self, suspicious: bytes, original: Optional[bytes]) -> Dict[str, Any]:
-        """Generic tampering analysis"""        return {'detected': False, 'type': 'none', 'regions': [], 'confidence': 0.0}
+        """Generic tampering analysis"""
+        return {'detected': False, 'type': 'none', 'regions': [], 'confidence': 0.0}
     
     async def _analyze_watermark_integrity(self, content: bytes, content_type: str) -> Dict[str, Any]:
-        """Analyzes watermark integrity"""        return {'intact': True, 'confidence': 1.0}
+        """Analyzes watermark integrity"""
+        return {'intact': True, 'confidence': 1.0}
     
     # Report formatting methods (placeholders for detailed implementations)
     
     async def _format_watermark_analysis(self, analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Formats watermark analysis for report"""        return analysis
+        """Formats watermark analysis for report"""
+        return analysis
     
     async def _format_ownership_analysis(self, analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Formats ownership analysis for report"""        return analysis
+        """Formats ownership analysis for report"""
+        return analysis
     
     async def _format_tampering_analysis(self, analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Formats tampering analysis for report"""        return analysis
+        """Formats tampering analysis for report"""
+        return analysis
     
     async def _format_metadata_analysis(self, analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Formats metadata analysis for report"""        return analysis
+        """Formats metadata analysis for report"""
+        return analysis
     
     async def _generate_legal_conclusions(self, evidence: ForensicEvidence, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Generates legal conclusions"""        return {
+        """Generates legal conclusions"""
+        return {
             'ownership_conclusion': 'Analysis pending',
             'tampering_conclusion': 'No tampering detected',
             'admissibility_assessment': evidence.evidence_strength.value,
@@ -591,10 +626,13 @@ class ForensicWatermarkAnalyzer:
         }
     
     async def _get_technical_specifications(self) -> Dict[str, Any]:
-        """Gets technical specifications"""        return {'algorithms_used': [], 'parameters': {}, 'validation_data': {}}
+        """Gets technical specifications"""
+        return {'algorithms_used': [], 'parameters': {}, 'validation_data': {}}
     
     async def _get_methodology_documentation(self) -> Dict[str, Any]:
-        """Gets methodology documentation"""        return {'procedures': [], 'standards_compliance': [], 'peer_review_status': 'validated'}
+        """Gets methodology documentation"""
+        return {'procedures': [], 'standards_compliance': [], 'peer_review_status': 'validated'}
     
     async def _get_tool_validation_info(self) -> Dict[str, Any]:
-        """Gets tool validation information"""        return {'validation_tests': [], 'accuracy_metrics': {}, 'certification_status': 'certified'}
+        """Gets tool validation information"""
+        return {'validation_tests': [], 'accuracy_metrics': {}, 'certification_status': 'certified'}

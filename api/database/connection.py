@@ -9,7 +9,8 @@ DevOps Engineer, AI Prompt Engineer
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""import asyncio
+"""
+import asyncio
 import asyncpg
 import psycopg2
 import redis
@@ -33,14 +34,16 @@ settings = get_settings()
 
 
 class DatabaseType(Enum):
-    """Supported database types"""    POSTGRESQL = "postgresql"
+    """Supported database types"""
+    POSTGRESQL = "postgresql"
     REDIS = "redis"
     MONGODB = "mongodb"
     ELASTICSEARCH = "elasticsearch"
 
 
 class ConnectionState(Enum):
-    """Connection state enumeration"""    DISCONNECTED = "disconnected"
+    """Connection state enumeration"""
+    DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
     CONNECTED = "connected"
     ERROR = "error"
@@ -49,7 +52,8 @@ class ConnectionState(Enum):
 
 @dataclass
 class ConnectionConfig:
-    """Database connection configuration"""    host: str
+    """Database connection configuration"""
+    host: str
     port: int
     database: str
     username: str
@@ -66,9 +70,11 @@ class ConnectionConfig:
 
 
 class DatabaseConnection:
-    """    Enterprise-grade database connection manager with connection pooling,
+    """
+    Enterprise-grade database connection manager with connection pooling,
     failover, monitoring, and automatic recovery capabilities.
-    """    
+    """
+    
     _instance = None
     _lock = asyncio.Lock()
     
@@ -83,7 +89,8 @@ class DatabaseConnection:
         
     @classmethod
     async def get_instance(cls) -> 'DatabaseConnection':
-        """Get singleton instance with async initialization"""        if cls._instance is None:
+        """Get singleton instance with async initialization"""
+        if cls._instance is None:
             async with cls._lock:
                 if cls._instance is None:
                     cls._instance = cls()
@@ -91,7 +98,8 @@ class DatabaseConnection:
         return cls._instance
     
     async def initialize(self):
-        """Initialize all database connections"""        if self._initialized:
+        """Initialize all database connections"""
+        if self._initialized:
             return
             
         logger.info("Initializing database connections...")
@@ -112,7 +120,8 @@ class DatabaseConnection:
         logger.info("Database connections initialized successfully")
     
     async def _initialize_postgresql(self):
-        """Initialize PostgreSQL connection with pooling"""        try:
+        """Initialize PostgreSQL connection with pooling"""
+        try:
             config = ConnectionConfig(
                 host=settings.DATABASE_HOST,
                 port=settings.DATABASE_PORT,
@@ -174,7 +183,8 @@ class DatabaseConnection:
             raise
     
     async def _initialize_redis(self):
-        """Initialize Redis connections"""        try:
+        """Initialize Redis connections"""
+        try:
             # Primary Redis connection
             self.connections["redis_primary"] = redis.Redis(
                 host=settings.REDIS_HOST,
@@ -237,7 +247,8 @@ class DatabaseConnection:
             raise
     
     async def _initialize_read_replicas(self):
-        """Initialize read replica connections if configured"""        if not hasattr(settings, 'DATABASE_READ_REPLICAS') or not settings.DATABASE_READ_REPLICAS:
+        """Initialize read replica connections if configured"""
+        if not hasattr(settings, 'DATABASE_READ_REPLICAS') or not settings.DATABASE_READ_REPLICAS:
             return
             
         for i, replica_config in enumerate(settings.DATABASE_READ_REPLICAS):
@@ -271,7 +282,8 @@ class DatabaseConnection:
                 self.connection_states[replica_name] = ConnectionState.ERROR
     
     async def _start_health_monitoring(self):
-        """Start background health monitoring tasks"""        for connection_name in self.connections.keys():
+        """Start background health monitoring tasks"""
+        for connection_name in self.connections.keys():
             if connection_name not in self.health_check_tasks:
                 task = asyncio.create_task(
                     self._health_check_loop(connection_name)
@@ -279,7 +291,8 @@ class DatabaseConnection:
                 self.health_check_tasks[connection_name] = task
     
     async def _health_check_loop(self, connection_name: str):
-        """Background health check loop for a specific connection"""        while True:
+        """Background health check loop for a specific connection"""
+        while True:
             try:
                 await asyncio.sleep(30)  # Check every 30 seconds
                 await self._perform_health_check(connection_name)
@@ -289,7 +302,8 @@ class DatabaseConnection:
                 logger.error(f"Health check error for {connection_name}: {e}")
     
     async def _perform_health_check(self, connection_name: str):
-        """Perform health check for a specific connection"""        try:
+        """Perform health check for a specific connection"""
+        try:
             connection = self.connections.get(connection_name)
             if not connection:
                 return
@@ -338,7 +352,8 @@ class DatabaseConnection:
                 self.metrics[connection_name]['last_error'] = str(e)
     
     def get_connection(self, connection_name: str) -> Any:
-        """Get a specific database connection"""        if connection_name not in self.connections:
+        """Get a specific database connection"""
+        if connection_name not in self.connections:
             raise ValueError(f"Unknown connection: {connection_name}")
         
         if self.connection_states.get(connection_name) != ConnectionState.CONNECTED:
@@ -347,13 +362,15 @@ class DatabaseConnection:
         return self.connections[connection_name]
     
     def get_postgresql_engine(self, async_mode: bool = True) -> Any:
-        """Get PostgreSQL engine (async by default)"""        if async_mode:
+        """Get PostgreSQL engine (async by default)"""
+        if async_mode:
             return self.get_connection("postgresql_async")
         else:
             return self.get_connection("postgresql_sync")
     
     def get_redis_connection(self, connection_type: str = "primary") -> redis.Redis:
-        """Get Redis connection by type"""        connection_map = {
+        """Get Redis connection by type"""
+        connection_map = {
             "primary": "redis_primary",
             "cache": "redis_cache", 
             "sessions": "redis_sessions"
@@ -363,7 +380,8 @@ class DatabaseConnection:
         return self.get_connection(connection_name)
     
     def get_read_replica(self, replica_index: int = 0) -> Any:
-        """Get a read replica connection"""        replica_name = f"postgresql_read_{replica_index}"
+        """Get a read replica connection"""
+        replica_name = f"postgresql_read_{replica_index}"
         
         if replica_name not in self.connections:
             logger.warning(f"Read replica {replica_name} not available, falling back to primary")
@@ -372,7 +390,8 @@ class DatabaseConnection:
         return self.get_connection(replica_name)
     
     def get_connection_health(self) -> Dict[str, Any]:
-        """Get health status of all connections"""        return {
+        """Get health status of all connections"""
+        return {
             "states": dict(self.connection_states),
             "metrics": dict(self.metrics),
             "active_connections": len(self.connections),
@@ -380,7 +399,8 @@ class DatabaseConnection:
         }
     
     async def close_all_connections(self):
-        """Close all database connections gracefully"""        logger.info("Closing all database connections...")
+        """Close all database connections gracefully"""
+        logger.info("Closing all database connections...")
         
         # Cancel health check tasks
         for task in self.health_check_tasks.values():
@@ -414,8 +434,10 @@ class DatabaseConnection:
 
 
 class ConnectionPool:
-    """    Advanced connection pool manager with load balancing and failover
-    """    
+    """
+    Advanced connection pool manager with load balancing and failover
+    """
+    
     def __init__(self, db_connection: DatabaseConnection):
         self.db_connection = db_connection
         self.pool_stats: Dict[str, Dict[str, int]] = {}
@@ -425,13 +447,15 @@ class ConnectionPool:
                            connection_type: str = "postgresql",
                            read_only: bool = False,
                            preferred_replica: Optional[int] = None) -> Any:
-        """        Get connection with intelligent routing
+        """
+        Get connection with intelligent routing
         
         Args:
             connection_type: Type of connection (postgresql, redis)
             read_only: Whether this is a read-only operation
             preferred_replica: Preferred replica index for read operations
-        """        if connection_type == "postgresql":
+        """
+        if connection_type == "postgresql":
             if read_only:
                 return await self._get_read_connection(preferred_replica)
             else:
@@ -442,7 +466,8 @@ class ConnectionPool:
             raise ValueError(f"Unsupported connection type: {connection_type}")
     
     async def _get_read_connection(self, preferred_replica: Optional[int] = None) -> Any:
-        """Get read connection with load balancing"""        # Check for read replicas
+        """Get read connection with load balancing"""
+        # Check for read replicas
         available_replicas = []
         for name, state in self.db_connection.connection_states.items():
             if name.startswith("postgresql_read_") and state == ConnectionState.CONNECTED:
@@ -464,7 +489,8 @@ class ConnectionPool:
         return self.db_connection.get_read_replica(selected_replica)
     
     def get_pool_statistics(self) -> Dict[str, Any]:
-        """Get connection pool statistics"""        stats = {}
+        """Get connection pool statistics"""
+        stats = {}
         
         for name, connection in self.db_connection.connections.items():
             if hasattr(connection, 'pool'):
@@ -480,15 +506,18 @@ class ConnectionPool:
 
 
 class SessionManager:
-    """    Enterprise session manager with automatic transaction handling
-    """    
+    """
+    Enterprise session manager with automatic transaction handling
+    """
+    
     def __init__(self):
         self.db_connection = None
         self.session_factories: Dict[str, Any] = {}
         self.active_sessions: Dict[str, List[Any]] = {}
     
     async def initialize(self):
-        """Initialize session manager"""        self.db_connection = await DatabaseConnection.get_instance()
+        """Initialize session manager"""
+        self.db_connection = await DatabaseConnection.get_instance()
         
         # Create async session factory
         async_engine = self.db_connection.get_postgresql_engine(async_mode=True)
@@ -511,7 +540,8 @@ class SessionManager:
     
     @asynccontextmanager
     async def get_async_session(self):
-        """Get async database session with automatic cleanup"""        if "async" not in self.session_factories:
+        """Get async database session with automatic cleanup"""
+        if "async" not in self.session_factories:
             await self.initialize()
         
         session = self.session_factories["async"]()
@@ -533,7 +563,8 @@ class SessionManager:
     
     @contextmanager
     def get_sync_session(self):
-        """Get sync database session with automatic cleanup"""        if "sync" not in self.session_factories:
+        """Get sync database session with automatic cleanup"""
+        if "sync" not in self.session_factories:
             raise RuntimeError("SessionManager not initialized")
         
         session = self.session_factories["sync"]()
@@ -554,7 +585,8 @@ class SessionManager:
                 self.active_sessions["sync"].remove(session_id)
     
     def get_session_statistics(self) -> Dict[str, Any]:
-        """Get session statistics"""        return {
+        """Get session statistics"""
+        return {
             "active_sessions": {
                 session_type: len(sessions) 
                 for session_type, sessions in self.active_sessions.items()
@@ -564,8 +596,10 @@ class SessionManager:
 
 
 class TransactionManager:
-    """    Enterprise transaction manager with nested transaction support
-    """    
+    """
+    Enterprise transaction manager with nested transaction support
+    """
+    
     def __init__(self):
         self.session_manager = SessionManager()
         self.transaction_history: List[Dict[str, Any]] = []
@@ -575,12 +609,14 @@ class TransactionManager:
     async def transaction(self, 
                          isolation_level: str = "READ_COMMITTED",
                          read_only: bool = False):
-        """        Async transaction context manager with configurable isolation
+        """
+        Async transaction context manager with configurable isolation
         
         Args:
             isolation_level: SQL isolation level
             read_only: Whether transaction is read-only
-        """        transaction_id = f"txn_{int(time.time() * 1000)}"
+        """
+        transaction_id = f"txn_{int(time.time() * 1000)}"
         start_time = time.time()
         
         self.active_transactions[transaction_id] = {
@@ -641,7 +677,8 @@ class TransactionManager:
                 del self.active_transactions[transaction_id]
     
     def get_transaction_statistics(self) -> Dict[str, Any]:
-        """Get transaction statistics"""        if not self.transaction_history:
+        """Get transaction statistics"""
+        if not self.transaction_history:
             return {
                 "total_transactions": 0,
                 "active_transactions": len(self.active_transactions),
@@ -665,8 +702,10 @@ class TransactionManager:
 
 
 class ReadReplicaManager:
-    """    Read replica manager with intelligent routing and failover
-    """    
+    """
+    Read replica manager with intelligent routing and failover
+    """
+    
     def __init__(self, db_connection: DatabaseConnection):
         self.db_connection = db_connection
         self.replica_weights: Dict[str, float] = {}
@@ -676,12 +715,14 @@ class ReadReplicaManager:
     async def route_read_query(self, 
                               query_complexity: str = "simple",
                               data_freshness_required: str = "eventual") -> Any:
-        """        Intelligently route read queries to optimal replica
+        """
+        Intelligently route read queries to optimal replica
         
         Args:
             query_complexity: simple, moderate, complex
             data_freshness_required: strict, moderate, eventual
-        """        # Get available replicas
+        """
+        # Get available replicas
         available_replicas = self._get_healthy_replicas()
         
         if not available_replicas:
@@ -705,7 +746,8 @@ class ReadReplicaManager:
             return self.db_connection.get_read_replica(replica_index)
     
     def _get_healthy_replicas(self) -> List[str]:
-        """Get list of healthy replica connections"""        healthy_replicas = []
+        """Get list of healthy replica connections"""
+        healthy_replicas = []
         
         for name, state in self.db_connection.connection_states.items():
             if name.startswith("postgresql_read_") and state == ConnectionState.CONNECTED:
@@ -717,7 +759,8 @@ class ReadReplicaManager:
                                available_replicas: List[str],
                                query_complexity: str,
                                data_freshness_required: str) -> str:
-        """Select optimal replica based on various factors"""        
+        """Select optimal replica based on various factors"""
+        
         # For strict freshness requirements, use primary
         if data_freshness_required == "strict":
             return "primary"
@@ -752,7 +795,8 @@ class ReadReplicaManager:
             return "primary"
     
     async def update_replica_health_scores(self):
-        """Update health scores for all replicas"""        for replica_name in self._get_healthy_replicas():
+        """Update health scores for all replicas"""
+        for replica_name in self._get_healthy_replicas():
             try:
                 # Get metrics for this replica
                 if replica_name in self.db_connection.metrics:
@@ -770,7 +814,8 @@ class ReadReplicaManager:
                 self.replica_health_scores[replica_name] = 0.1
     
     def get_routing_statistics(self) -> Dict[str, Any]:
-        """Get read routing statistics"""        total_queries = sum(self.query_routing_stats.values())
+        """Get read routing statistics"""
+        total_queries = sum(self.query_routing_stats.values())
         
         routing_distribution = {}
         if total_queries > 0:
@@ -788,7 +833,8 @@ class ReadReplicaManager:
 # Event listeners for connection monitoring
 @event.listens_for(pool.Pool, "connect")
 def set_sqlite_pragma(dbapi_connection, connection_record):
-    """Set connection-level pragmas for PostgreSQL"""    if hasattr(dbapi_connection, 'set_session'):
+    """Set connection-level pragmas for PostgreSQL"""
+    if hasattr(dbapi_connection, 'set_session'):
         # Set session parameters for PostgreSQL
         cursor = dbapi_connection.cursor()
         cursor.execute("SET application_name = 'ia_influencer_agent'")
@@ -799,9 +845,11 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
 
 @event.listens_for(pool.Pool, "checkout")
 def receive_checkout(dbapi_connection, connection_record, connection_proxy):
-    """Log connection checkout events"""    logger.debug("Database connection checked out")
+    """Log connection checkout events"""
+    logger.debug("Database connection checked out")
 
 
 @event.listens_for(pool.Pool, "checkin")
 def receive_checkin(dbapi_connection, connection_record):
-    """Log connection checkin events"""    logger.debug("Database connection returned to pool")
+    """Log connection checkin events"""
+    logger.debug("Database connection returned to pool")

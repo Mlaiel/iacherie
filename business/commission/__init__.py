@@ -5,7 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 This software, concept and intellectual property are protected by international copyright laws.
 Any unauthorized use, reproduction, distribution or appropriation of this code, ideas or 
@@ -133,7 +133,7 @@ from .index import (
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED."
+__copyright__ = "(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED."
 __license__ = "Proprietary - Unauthorized use strictly prohibited"
 
 # All public exports

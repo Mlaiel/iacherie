@@ -6,7 +6,8 @@ monetization insights, and predictive revenue modeling for content creators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -25,7 +26,8 @@ from decimal import Decimal, ROUND_HALF_UP
 logger = logging.getLogger(__name__)
 
 class RevenueStream(Enum):
-    """Different revenue streams for content creators"""    SPONSORSHIPS = "sponsorships"
+    """Different revenue streams for content creators"""
+    SPONSORSHIPS = "sponsorships"
     MERCHANDISE = "merchandise"
     SUBSCRIPTIONS = "subscriptions"
     DONATIONS = "donations"
@@ -37,14 +39,16 @@ class RevenueStream(Enum):
     PLATFORM_MONETIZATION = "platform_monetization"
 
 class RevenueCategory(Enum):
-    """Revenue categorization for analysis"""    DIRECT = "direct"
+    """Revenue categorization for analysis"""
+    DIRECT = "direct"
     INDIRECT = "indirect"
     RECURRING = "recurring"
     ONE_TIME = "one_time"
     PERFORMANCE_BASED = "performance_based"
 
 class OptimizationStrategy(Enum):
-    """Revenue optimization strategies"""    PRICE_OPTIMIZATION = "price_optimization"
+    """Revenue optimization strategies"""
+    PRICE_OPTIMIZATION = "price_optimization"
     AUDIENCE_SEGMENTATION = "audience_segmentation"
     CONTENT_MONETIZATION = "content_monetization"
     PLATFORM_DIVERSIFICATION = "platform_diversification"
@@ -52,7 +56,8 @@ class OptimizationStrategy(Enum):
 
 @dataclass
 class RevenueAnalysis:
-    """Comprehensive revenue analysis result"""    analysis_id: str
+    """Comprehensive revenue analysis result"""
+    analysis_id: str
     creator_id: str
     period_start: datetime
     period_end: datetime
@@ -68,7 +73,8 @@ class RevenueAnalysis:
 
 @dataclass
 class RevenueOptimization:
-    """Revenue optimization recommendation"""    optimization_id: str
+    """Revenue optimization recommendation"""
+    optimization_id: str
     creator_id: str
     strategy: OptimizationStrategy
     current_performance: Dict[str, float]
@@ -81,9 +87,11 @@ class RevenueOptimization:
     roi_projection: float
 
 class RevenueOptimizationEngine:
-    """    Enterprise-grade revenue optimization engine with AI-powered analytics,
+    """
+    Enterprise-grade revenue optimization engine with AI-powered analytics,
     predictive modeling, and comprehensive monetization strategy optimization.
-    """    
+    """
+    
     def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
         self.redis = redis_client
         self.db_pool = db_pool
@@ -93,7 +101,8 @@ class RevenueOptimizationEngine:
         self.optimization_cache = {}
         
     async def initialize(self) -> None:
-        """Initialize revenue optimization engine"""        try:
+        """Initialize revenue optimization engine"""
+        try:
             await self._setup_database_tables()
             await self._load_historical_data()
             await self._initialize_ml_models()
@@ -103,8 +112,10 @@ class RevenueOptimizationEngine:
             raise
 
     async def _setup_database_tables(self) -> None:
-        """Setup required database tables for revenue tracking"""        async with self.db_pool.acquire() as conn:
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS revenue_records (
+        """Setup required database tables for revenue tracking"""
+        async with self.db_pool.acquire() as conn:
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS revenue_records (
                     id SERIAL PRIMARY KEY,
                     creator_id VARCHAR(255) NOT NULL,
                     revenue_stream VARCHAR(50) NOT NULL,
@@ -155,8 +166,10 @@ class RevenueOptimizationEngine:
             """)
 
     async def _load_historical_data(self) -> None:
-        """Load historical revenue data for model training"""        async with self.db_pool.acquire() as conn:
-            historical_data = await conn.fetch("""                SELECT creator_id, revenue_stream, amount, transaction_date, metadata
+        """Load historical revenue data for model training"""
+        async with self.db_pool.acquire() as conn:
+            historical_data = await conn.fetch("""
+                SELECT creator_id, revenue_stream, amount, transaction_date, metadata
                 FROM revenue_records 
                 WHERE transaction_date >= NOW() - INTERVAL '12 months'
                 ORDER BY transaction_date
@@ -167,7 +180,8 @@ class RevenueOptimizationEngine:
                 await self._train_revenue_models(df)
 
     async def _train_revenue_models(self, df: pd.DataFrame) -> None:
-        """Train machine learning models with historical revenue data"""        try:
+        """Train machine learning models with historical revenue data"""
+        try:
             # Prepare features for revenue prediction
             df['month'] = pd.to_datetime(df['transaction_date']).dt.month
             df['day_of_week'] = pd.to_datetime(df['transaction_date']).dt.dayofweek
@@ -196,11 +210,13 @@ class RevenueOptimizationEngine:
             logger.error(f"Failed to train revenue models: {e}")
 
     async def _initialize_ml_models(self) -> None:
-        """Initialize machine learning models for optimization"""        # Additional model initialization would go here
+        """Initialize machine learning models for optimization"""
+        # Additional model initialization would go here
         pass
 
     async def analyze_revenue_comprehensive(self, creator_id: str, period_days: int = 30) -> RevenueAnalysis:
-        """Perform comprehensive revenue analysis with AI insights"""        try:
+        """Perform comprehensive revenue analysis with AI insights"""
+        try:
             period_end = datetime.now()
             period_start = period_end - timedelta(days=period_days)
             
@@ -259,9 +275,11 @@ class RevenueOptimizationEngine:
             raise HTTPException(status_code=500, detail="Revenue analysis failed")
 
     async def _collect_revenue_data(self, creator_id: str, period_start: datetime, period_end: datetime) -> List[Dict]:
-        """Collect revenue records for the specified period"""        try:
+        """Collect revenue records for the specified period"""
+        try:
             async with self.db_pool.acquire() as conn:
-                records = await conn.fetch("""                    SELECT revenue_stream, revenue_category, amount, currency, 
+                records = await conn.fetch("""
+                    SELECT revenue_stream, revenue_category, amount, currency, 
                            transaction_date, platform, metadata
                     FROM revenue_records 
                     WHERE creator_id = $1 
@@ -276,7 +294,8 @@ class RevenueOptimizationEngine:
             return []
 
     async def _analyze_revenue_by_stream(self, revenue_data: List[Dict]) -> Dict[RevenueStream, Decimal]:
-        """Analyze revenue distribution by stream"""        try:
+        """Analyze revenue distribution by stream"""
+        try:
             stream_totals = {}
             
             for record in revenue_data:
@@ -299,7 +318,8 @@ class RevenueOptimizationEngine:
             return {}
 
     async def _calculate_revenue_growth_rate(self, creator_id: str, period_start: datetime, period_end: datetime) -> float:
-        """Calculate revenue growth rate compared to previous period"""        try:
+        """Calculate revenue growth rate compared to previous period"""
+        try:
             period_duration = period_end - period_start
             previous_start = period_start - period_duration
             previous_end = period_start
@@ -323,11 +343,13 @@ class RevenueOptimizationEngine:
             return 0.0
 
     async def _calculate_arpu(self, creator_id: str, total_revenue: float) -> Decimal:
-        """Calculate Average Revenue Per User"""        try:
+        """Calculate Average Revenue Per User"""
+        try:
             # Get active user count (would integrate with audience data)
             # For now, use a placeholder calculation
             async with self.db_pool.acquire() as conn:
-                result = await conn.fetchrow("""                    SELECT active_followers 
+                result = await conn.fetchrow("""
+                    SELECT active_followers 
                     FROM audience_profiles 
                     WHERE creator_id = $1 
                     ORDER BY created_at DESC 
@@ -344,7 +366,8 @@ class RevenueOptimizationEngine:
             return Decimal('0.00')
 
     async def _analyze_conversion_rates(self, creator_id: str, period_start: datetime, period_end: datetime) -> Dict[str, float]:
-        """Analyze conversion rates for different revenue streams"""        try:
+        """Analyze conversion rates for different revenue streams"""
+        try:
             # This would integrate with actual conversion tracking data
             # For now, return realistic simulation
             return {
@@ -361,7 +384,8 @@ class RevenueOptimizationEngine:
             return {}
 
     async def _calculate_profitability_metrics(self, creator_id: str, revenue_data: List[Dict]) -> Dict[str, float]:
-        """Calculate comprehensive profitability metrics"""        try:
+        """Calculate comprehensive profitability metrics"""
+        try:
             total_revenue = sum(record['amount'] for record in revenue_data)
             
             # Estimate costs (would integrate with actual cost tracking)
@@ -391,9 +415,11 @@ class RevenueOptimizationEngine:
             return {}
 
     async def _identify_seasonal_patterns(self, creator_id: str) -> Dict[str, Any]:
-        """Identify seasonal revenue patterns"""        try:
+        """Identify seasonal revenue patterns"""
+        try:
             async with self.db_pool.acquire() as conn:
-                seasonal_data = await conn.fetch("""                    SELECT EXTRACT(MONTH FROM transaction_date) as month,
+                seasonal_data = await conn.fetch("""
+                    SELECT EXTRACT(MONTH FROM transaction_date) as month,
                            EXTRACT(QUARTER FROM transaction_date) as quarter,
                            EXTRACT(DOW FROM transaction_date) as day_of_week,
                            AVG(amount) as avg_amount,
@@ -440,7 +466,8 @@ class RevenueOptimizationEngine:
             return {}
 
     def _calculate_seasonality_strength(self, monthly_data: Dict[int, float]) -> float:
-        """Calculate the strength of seasonal patterns (0-1)"""        if not monthly_data or len(monthly_data) < 6:
+        """Calculate the strength of seasonal patterns (0-1)"""
+        if not monthly_data or len(monthly_data) < 6:
             return 0.0
         
         values = list(monthly_data.values())
@@ -456,7 +483,8 @@ class RevenueOptimizationEngine:
         return float(seasonality_strength)
 
     async def _identify_optimization_opportunities(self, creator_id: str, revenue_by_stream: Dict, conversion_rates: Dict, profitability_metrics: Dict) -> List[str]:
-        """Identify revenue optimization opportunities using AI analysis"""        opportunities = []
+        """Identify revenue optimization opportunities using AI analysis"""
+        opportunities = []
         
         try:
             total_revenue = sum(revenue_by_stream.values())
@@ -507,9 +535,11 @@ class RevenueOptimizationEngine:
             return ["Comprehensive revenue analysis needed for optimization recommendations"]
 
     async def _store_revenue_analysis(self, analysis: RevenueAnalysis) -> None:
-        """Store revenue analysis in database"""        try:
+        """Store revenue analysis in database"""
+        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""                    INSERT INTO revenue_analyses 
+                await conn.execute("""
+                    INSERT INTO revenue_analyses 
                     (analysis_id, creator_id, period_start, period_end, total_revenue,
                      revenue_by_stream, revenue_growth_rate, arpu, conversion_rates,
                      profitability_metrics, seasonal_patterns, optimization_opportunities)
@@ -541,7 +571,8 @@ class RevenueOptimizationEngine:
             logger.error(f"Failed to store revenue analysis: {e}")
 
     async def generate_optimization_strategies(self, creator_id: str) -> List[RevenueOptimization]:
-        """Generate AI-powered revenue optimization strategies"""        try:
+        """Generate AI-powered revenue optimization strategies"""
+        try:
             # Get latest revenue analysis
             analysis = await self._get_latest_revenue_analysis(creator_id)
             if not analysis:
@@ -578,9 +609,11 @@ class RevenueOptimizationEngine:
             return []
 
     async def _get_latest_revenue_analysis(self, creator_id: str) -> Optional[RevenueAnalysis]:
-        """Get the most recent revenue analysis"""        try:
+        """Get the most recent revenue analysis"""
+        try:
             async with self.db_pool.acquire() as conn:
-                record = await conn.fetchrow("""                    SELECT * FROM revenue_analyses 
+                record = await conn.fetchrow("""
+                    SELECT * FROM revenue_analyses 
                     WHERE creator_id = $1 
                     ORDER BY created_at DESC 
                     LIMIT 1
@@ -609,7 +642,8 @@ class RevenueOptimizationEngine:
             return None
 
     async def _generate_price_optimization(self, creator_id: str, analysis: RevenueAnalysis) -> Optional[RevenueOptimization]:
-        """Generate price optimization strategy"""        try:
+        """Generate price optimization strategy"""
+        try:
             current_arpu = float(analysis.average_revenue_per_user)
             profit_margin = analysis.profitability_metrics.get('profit_margin', 0.45)
             
@@ -645,7 +679,8 @@ class RevenueOptimizationEngine:
             return None
 
     async def _generate_audience_segmentation_optimization(self, creator_id: str, analysis: RevenueAnalysis) -> Optional[RevenueOptimization]:
-        """Generate audience segmentation optimization strategy"""        try:
+        """Generate audience segmentation optimization strategy"""
+        try:
             conversion_rates = analysis.conversion_rates
             avg_conversion = np.mean(list(conversion_rates.values()))
             
@@ -680,7 +715,8 @@ class RevenueOptimizationEngine:
             return None
 
     async def _generate_content_monetization_optimization(self, creator_id: str, analysis: RevenueAnalysis) -> Optional[RevenueOptimization]:
-        """Generate content monetization optimization strategy"""        try:
+        """Generate content monetization optimization strategy"""
+        try:
             current_revenue = float(analysis.total_revenue)
             course_sales_revenue = float(analysis.revenue_by_stream.get(RevenueStream.COURSE_SALES, Decimal('0')))
             
@@ -715,7 +751,8 @@ class RevenueOptimizationEngine:
             return None
 
     async def _generate_platform_diversification_optimization(self, creator_id: str, analysis: RevenueAnalysis) -> Optional[RevenueOptimization]:
-        """Generate platform diversification optimization strategy"""        try:
+        """Generate platform diversification optimization strategy"""
+        try:
             current_revenue = float(analysis.total_revenue)
             platform_revenue = float(analysis.revenue_by_stream.get(RevenueStream.PLATFORM_MONETIZATION, Decimal('0')))
             
@@ -751,9 +788,11 @@ class RevenueOptimizationEngine:
             return None
 
     async def _store_revenue_optimization(self, optimization: RevenueOptimization) -> None:
-        """Store revenue optimization in database"""        try:
+        """Store revenue optimization in database"""
+        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""                    INSERT INTO revenue_optimizations 
+                await conn.execute("""
+                    INSERT INTO revenue_optimizations 
                     (optimization_id, creator_id, strategy, current_performance, optimized_performance,
                      implementation_steps, estimated_impact, confidence_score, timeframe, investment_required, roi_projection)
                     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
@@ -775,7 +814,8 @@ class RevenueOptimizationEngine:
             logger.error(f"Failed to store revenue optimization: {e}")
 
     async def predict_revenue(self, creator_id: str, months_ahead: int = 3) -> Dict[str, Any]:
-        """Predict future revenue using AI models"""        try:
+        """Predict future revenue using AI models"""
+        try:
             # Get historical data for prediction
             analysis = await self._get_latest_revenue_analysis(creator_id)
             if not analysis:
@@ -825,7 +865,8 @@ class RevenueOptimizationEngine:
             return {'error': 'Revenue prediction failed'}
 
     async def get_revenue_dashboard_data(self, creator_id: str) -> Dict[str, Any]:
-        """Get comprehensive revenue data for dashboard"""        try:
+        """Get comprehensive revenue data for dashboard"""
+        try:
             # Get latest analysis
             analysis = await self._get_latest_revenue_analysis(creator_id)
             if not analysis:

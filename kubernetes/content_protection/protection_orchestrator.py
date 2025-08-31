@@ -6,7 +6,8 @@ services including violation detection, monitoring, alerting, and legal automati
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -22,14 +23,16 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""    BASIC = "basic"
+    """Content protection levels"""
+    BASIC = "basic"
     STANDARD = "standard"
     ENTERPRISE = "enterprise"
     ULTRA = "ultra"
 
 
 class ContentType(Enum):
-    """Supported content types for protection"""    AUDIO = "audio"
+    """Supported content types for protection"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -37,7 +40,8 @@ class ContentType(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    LOW = "low"
+    """Alert severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -45,7 +49,8 @@ class AlertSeverity(Enum):
 
 @dataclass
 class ProtectionConfig:
-    """Content protection deployment configuration"""    protection_level: ProtectionLevel = ProtectionLevel.ENTERPRISE
+    """Content protection deployment configuration"""
+    protection_level: ProtectionLevel = ProtectionLevel.ENTERPRISE
     content_types: List[ContentType] = None
     monitoring_frequency: int = 300  # seconds
     alert_threshold: float = 0.85  # similarity threshold
@@ -63,7 +68,8 @@ class ProtectionConfig:
 
 
 class ProtectionOrchestrator:
-    """    Enterprise content protection deployment orchestrator
+    """
+    Enterprise content protection deployment orchestrator
     
     Coordinates deployment of content protection services including:
     - Violation detection systems
@@ -71,13 +77,16 @@ class ProtectionOrchestrator:
     - Automated alert systems
     - Legal automation workflows
     - Compliance monitoring
-    """    
+    """
+    
     def __init__(self, namespace: str = "ia-influencer-protection"):
-        """        Initialize protection orchestrator
+        """
+        Initialize protection orchestrator
         
         Args:
             namespace: Kubernetes namespace for protection services
-        """        self.namespace = namespace
+        """
+        self.namespace = namespace
         self.config = ProtectionConfig()
         self.status = "initializing"
         self.deployed_services = []
@@ -86,7 +95,8 @@ class ProtectionOrchestrator:
         self._initialize_clients()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and Redis clients"""        try:
+        """Initialize Kubernetes, Docker, and Redis clients"""
+        try:
             # Kubernetes client
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -112,14 +122,16 @@ class ProtectionOrchestrator:
             raise
     
     async def deploy_full_protection_stack(self, config: Optional[ProtectionConfig] = None) -> Dict[str, Any]:
-        """        Deploy complete content protection stack
+        """
+        Deploy complete content protection stack
         
         Args:
             config: Optional custom protection configuration
             
         Returns:
             Deployment result with all service details
-        """        if config:
+        """
+        if config:
             self.config = config
         
         try:
@@ -198,7 +210,8 @@ class ProtectionOrchestrator:
             raise
     
     async def _ensure_protection_namespace(self) -> None:
-        """Create dedicated namespace for protection services"""        try:
+        """Create dedicated namespace for protection services"""
+        try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -216,7 +229,8 @@ class ProtectionOrchestrator:
                 logger.info(f"Created protection namespace: {self.namespace}")
     
     async def _deploy_protection_infrastructure(self) -> None:
-        """Deploy core infrastructure for protection services"""        # High-performance Redis cluster for protection coordination
+        """Deploy core infrastructure for protection services"""
+        # High-performance Redis cluster for protection coordination
         redis_cluster = {
             "apiVersion": "apps/v1",
             "kind": "StatefulSet",
@@ -313,7 +327,8 @@ class ProtectionOrchestrator:
         logger.info("Deployed protection infrastructure")
     
     async def _deploy_violation_detection(self) -> Dict[str, Any]:
-        """Deploy violation detection system"""        violation_detector = {
+        """Deploy violation detection system"""
+        violation_detector = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -411,7 +426,8 @@ class ProtectionOrchestrator:
         }
     
     async def _deploy_content_monitoring(self) -> Dict[str, Any]:
-        """Deploy content monitoring services"""        content_monitor = {
+        """Deploy content monitoring services"""
+        content_monitor = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -505,7 +521,8 @@ class ProtectionOrchestrator:
         }
     
     async def _deploy_alert_system(self) -> Dict[str, Any]:
-        """Deploy alert and notification system"""        alert_manager = {
+        """Deploy alert and notification system"""
+        alert_manager = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -595,7 +612,8 @@ class ProtectionOrchestrator:
         }
     
     async def _deploy_legal_automation(self) -> Dict[str, Any]:
-        """Deploy legal automation workflow system"""        if not self.config.legal_automation:
+        """Deploy legal automation workflow system"""
+        if not self.config.legal_automation:
             logger.info("Legal automation disabled, skipping deployment")
             return {"status": "disabled"}
         
@@ -698,7 +716,8 @@ class ProtectionOrchestrator:
         }
     
     async def _deploy_compliance_monitoring(self) -> Dict[str, Any]:
-        """Deploy compliance monitoring system"""        compliance_monitor = {
+        """Deploy compliance monitoring system"""
+        compliance_monitor = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -790,7 +809,8 @@ class ProtectionOrchestrator:
         }
     
     async def _deploy_protection_gateway(self) -> Dict[str, Any]:
-        """Deploy API gateway for protection services"""        api_gateway = {
+        """Deploy API gateway for protection services"""
+        api_gateway = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -872,7 +892,8 @@ class ProtectionOrchestrator:
         }
     
     async def _configure_protection_networking(self) -> None:
-        """Configure network policies for protection services"""        # Network policy for isolation
+        """Configure network policies for protection services"""
+        # Network policy for isolation
         network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
@@ -907,7 +928,8 @@ class ProtectionOrchestrator:
         logger.info("Configured protection networking and security policies")
     
     async def _deploy_protection_monitoring(self) -> None:
-        """Deploy monitoring and observability for protection stack"""        # Prometheus monitoring configuration
+        """Deploy monitoring and observability for protection stack"""
+        # Prometheus monitoring configuration
         monitoring_config = {
             "apiVersion": "v1",
             "kind": "ConfigMap",
@@ -916,7 +938,8 @@ class ProtectionOrchestrator:
                 "namespace": self.namespace
             },
             "data": {
-                "prometheus.yml": """                global:
+                "prometheus.yml": """
+                global:
                   scrape_interval: 15s
                   evaluation_interval: 15s
                   
@@ -934,7 +957,8 @@ class ProtectionOrchestrator:
                         action: keep
                         regex: true
                 """,
-                "protection_rules.yml": """                groups:
+                "protection_rules.yml": """
+                groups:
                   - name: protection.rules
                     rules:
                       - alert: HighViolationRate
@@ -952,7 +976,8 @@ class ProtectionOrchestrator:
                           severity: critical
                         annotations:
                           summary: "Protection service is down"
-                """            }
+                """
+            }
         }
         
         self.k8s_core_v1.create_namespaced_config_map(
@@ -963,7 +988,8 @@ class ProtectionOrchestrator:
         logger.info("Deployed protection monitoring configuration")
     
     async def _validate_protection_stack(self) -> bool:
-        """Validate complete protection stack deployment"""        try:
+        """Validate complete protection stack deployment"""
+        try:
             # Check all deployments are ready
             for service in self.deployed_services:
                 deployment = self.k8s_apps_v1.read_namespaced_deployment(
@@ -997,7 +1023,8 @@ class ProtectionOrchestrator:
             return False
     
     async def _cleanup_failed_protection_deployment(self) -> None:
-        """Clean up resources from failed protection deployment"""        try:
+        """Clean up resources from failed protection deployment"""
+        try:
             # Delete all deployments
             for service in self.deployed_services:
                 try:
@@ -1022,7 +1049,8 @@ class ProtectionOrchestrator:
             logger.error(f"Protection cleanup failed: {e}")
     
     async def get_protection_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive protection stack metrics"""        try:
+        """Get comprehensive protection stack metrics"""
+        try:
             # Get violations detected
             violations_24h = self._redis_client.get("violations_detected_24h") or 0
             active_monitors = self._redis_client.scard("active_monitors")
@@ -1070,7 +1098,8 @@ class ProtectionOrchestrator:
             return {"error": str(e)}
     
     async def cleanup(self) -> None:
-        """Clean up entire protection stack"""        try:
+        """Clean up entire protection stack"""
+        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             

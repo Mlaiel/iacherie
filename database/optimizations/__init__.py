@@ -6,7 +6,9 @@ specialized support for content protection, monetization, and multimedia process
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""from .cache_manager import CacheManager, CacheStrategy, CacheConfig
+"""
+
+from .cache_manager import CacheManager, CacheStrategy, CacheConfig
 from .connection_optimizer import (
     ConnectionOptimizer, 
     ConnectionPoolConfig,

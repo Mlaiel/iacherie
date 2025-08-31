@@ -23,7 +23,8 @@ Copyright: Fahed Mlaiel - All Rights Reserved
     
     Contact: mlaiel@live.de for licensing inquiries ONLY.
     Violators will be prosecuted to the full extent of German and EU law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
 from dataclasses import dataclass, field
@@ -52,7 +53,8 @@ logger = get_logger(__name__)
 
 
 class SentimentLevel(Enum):
-    """Sentiment intensity levels"""    VERY_POSITIVE = "very_positive"
+    """Sentiment intensity levels"""
+    VERY_POSITIVE = "very_positive"
     POSITIVE = "positive"
     NEUTRAL = "neutral"
     NEGATIVE = "negative"
@@ -60,7 +62,8 @@ class SentimentLevel(Enum):
 
 
 class EmotionalTone(Enum):
-    """Emotional tone categories for content"""    EXCITED = "excited"
+    """Emotional tone categories for content"""
+    EXCITED = "excited"
     CALM = "calm"
     PROFESSIONAL = "professional"
     CASUAL = "casual"
@@ -72,7 +75,8 @@ class EmotionalTone(Enum):
 
 @dataclass
 class SentimentResult:
-    """Comprehensive sentiment analysis result"""    overall_sentiment: SentimentLevel
+    """Comprehensive sentiment analysis result"""
+    overall_sentiment: SentimentLevel
     confidence_score: float
     positive_score: float
     negative_score: float
@@ -88,7 +92,8 @@ class SentimentResult:
 
 @dataclass
 class TextAnalysisResult:
-    """Complete text analysis result"""    text_length: int
+    """Complete text analysis result"""
+    text_length: int
     word_count: int
     sentence_count: int
     paragraph_count: int
@@ -105,7 +110,8 @@ class TextAnalysisResult:
 
 
 class SentimentAnalyzer:
-    """Enterprise sentiment analysis for content creators"""    
+    """Enterprise sentiment analysis for content creators"""
+    
     def __init__(self):
         self.vader_analyzer = SentimentIntensityAnalyzer()
         self.transformer_model = None
@@ -113,7 +119,8 @@ class SentimentAnalyzer:
         self._initialize_models()
         
     def _initialize_models(self):
-        """Initialize ML models for sentiment analysis"""        try:
+        """Initialize ML models for sentiment analysis"""
+        try:
             model_name = "cardiffnlp/twitter-roberta-base-sentiment-latest"
             self.transformer_tokenizer = AutoTokenizer.from_pretrained(model_name)
             self.transformer_model = AutoModelForSequenceClassification.from_pretrained(model_name)
@@ -130,7 +137,8 @@ class SentimentAnalyzer:
             logger.error(f"Failed to initialize sentiment models: {e}")
             
     async def analyze_sentiment(self, text: str, content_type: str = "general") -> SentimentResult:
-        """        Perform comprehensive sentiment analysis
+        """
+        Perform comprehensive sentiment analysis
         
         Args:
             text: Text content to analyze
@@ -138,7 +146,8 @@ class SentimentAnalyzer:
             
         Returns:
             SentimentResult with detailed analysis
-        """        try:
+        """
+        try:
             # Cache key for performance
             cache_key = f"sentiment_{hashlib.md5(text.encode()).hexdigest()}_{content_type}"
             cached_result = await cache_manager.get(cache_key)
@@ -190,7 +199,8 @@ class SentimentAnalyzer:
             raise
             
     async def _transformer_sentiment(self, text: str) -> Dict[str, float]:
-        """Use transformer model for sentiment analysis"""        try:
+        """Use transformer model for sentiment analysis"""
+        try:
             inputs = self.transformer_tokenizer(text, return_tensors="pt", truncation=True, padding=True, max_length=512)
             
             with torch.no_grad():
@@ -210,7 +220,8 @@ class SentimentAnalyzer:
             return {'confidence': 0.5, 'class': 1, 'scores': [0.33, 0.34, 0.33]}
             
     async def _analyze_emotions(self, text: str) -> Dict[str, float]:
-        """Analyze emotional content of text"""        try:
+        """Analyze emotional content of text"""
+        try:
             emotions_result = self.emotion_pipeline(text)
             emotions_dict = {emotion['label'].lower(): emotion['score'] for emotion in emotions_result}
             return emotions_dict
@@ -219,7 +230,8 @@ class SentimentAnalyzer:
             return {}
             
     def _determine_sentiment_level(self, compound_score: float) -> SentimentLevel:
-        """Determine sentiment level from compound score"""        if compound_score >= 0.6:
+        """Determine sentiment level from compound score"""
+        if compound_score >= 0.6:
             return SentimentLevel.VERY_POSITIVE
         elif compound_score >= 0.2:
             return SentimentLevel.POSITIVE
@@ -231,7 +243,8 @@ class SentimentAnalyzer:
             return SentimentLevel.NEUTRAL
             
     async def _determine_emotional_tone(self, text: str, emotions: Dict[str, float]) -> EmotionalTone:
-        """Determine emotional tone based on content analysis"""        try:
+        """Determine emotional tone based on content analysis"""
+        try:
             # Analyze text patterns for tone detection
             text_lower = text.lower()
             
@@ -258,7 +271,8 @@ class SentimentAnalyzer:
             return EmotionalTone.NEUTRAL
             
     async def _extract_sentiment_keywords(self, text: str) -> List[str]:
-        """Extract keywords that contribute to sentiment"""        try:
+        """Extract keywords that contribute to sentiment"""
+        try:
             # Simple keyword extraction based on sentiment-bearing words
             positive_words = ['great', 'amazing', 'excellent', 'fantastic', 'wonderful', 'awesome', 'love', 'best']
             negative_words = ['bad', 'terrible', 'awful', 'hate', 'worst', 'disappointing', 'frustrating']
@@ -277,7 +291,8 @@ class SentimentAnalyzer:
             return []
             
     def _calculate_subjectivity(self, text: str) -> float:
-        """Calculate text subjectivity score"""        try:
+        """Calculate text subjectivity score"""
+        try:
             # Simple subjectivity calculation based on personal pronouns and opinion words
             subjective_indicators = ['i', 'me', 'my', 'we', 'our', 'you', 'your', 'think', 'feel', 'believe', 'opinion']
             text_lower = text.lower()
@@ -294,21 +309,24 @@ class SentimentAnalyzer:
 
 
 class TextAnalyzer:
-    """Comprehensive text analysis for content optimization"""    
+    """Comprehensive text analysis for content optimization"""
+    
     def __init__(self):
         self.nlp = None
         self._initialize_nlp()
         self.sentiment_analyzer = SentimentAnalyzer()
         
     def _initialize_nlp(self):
-        """Initialize spaCy NLP pipeline"""        try:
+        """Initialize spaCy NLP pipeline"""
+        try:
             self.nlp = spacy.load("en_core_web_sm")
             logger.info("spaCy NLP pipeline initialized")
         except IOError:
             logger.warning("spaCy model not found, using fallback analysis")
             
     async def analyze_text(self, text: str, content_type: str = "general") -> TextAnalysisResult:
-        """        Perform comprehensive text analysis
+        """
+        Perform comprehensive text analysis
         
         Args:
             text: Text content to analyze
@@ -316,7 +334,8 @@ class TextAnalyzer:
             
         Returns:
             TextAnalysisResult with detailed metrics
-        """        try:
+        """
+        try:
             # Comprehensive text statistics
             analysis_result.text_length = len(text)
             analysis_result.word_count = len(text.split())
@@ -391,7 +410,8 @@ class TextAnalyzer:
             raise
             
     def _determine_complexity_level(self, readability_score: float) -> str:
-        """Determine text complexity level from readability score"""        if readability_score >= 90:
+        """Determine text complexity level from readability score"""
+        if readability_score >= 90:
             return "very_easy"
         elif readability_score >= 80:
             return "easy"
@@ -407,7 +427,8 @@ class TextAnalyzer:
             return "very_difficult"
             
     async def _detect_language(self, text: str) -> str:
-        """Detect text language"""        try:
+        """Detect text language"""
+        try:
             # Simple language detection based on character patterns
             # This would be enhanced with proper language detection library
             return "en"  # Default to English for now
@@ -416,7 +437,8 @@ class TextAnalyzer:
             return "unknown"
             
     async def _assess_content_quality(self, text: str, content_type: str) -> float:
-        """Assess overall content quality"""        try:
+        """Assess overall content quality"""
+        try:
             quality_factors = []
             
             # Length appropriateness for content type
@@ -448,7 +470,8 @@ class TextAnalyzer:
             return 0.5
             
     async def _calculate_engagement_potential(self, text: str, content_type: str) -> float:
-        """Calculate potential for audience engagement"""        try:
+        """Calculate potential for audience engagement"""
+        try:
             engagement_factors = []
             
             # Emotional content (using sentiment analysis)
@@ -480,7 +503,8 @@ class TextAnalyzer:
             return 0.5
             
     async def _extract_seo_keywords(self, text: str) -> List[str]:
-        """Extract SEO-relevant keywords"""        try:
+        """Extract SEO-relevant keywords"""
+        try:
             # Simple keyword extraction using TF-IDF
             words = re.findall(r'\b[a-zA-Z]{3,}\b', text.lower())
             word_freq = {}
@@ -496,7 +520,8 @@ class TextAnalyzer:
             return []
             
     async def _suggest_hashtags(self, text: str, content_type: str) -> List[str]:
-        """Generate hashtag suggestions based on content"""        try:
+        """Generate hashtag suggestions based on content"""
+        try:
             # Extract potential hashtag words
             words = re.findall(r'\b[a-zA-Z]{3,}\b', text.lower())
             

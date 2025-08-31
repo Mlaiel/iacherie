@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import json
 import logging
@@ -70,7 +71,8 @@ DetectorFactory.seed = 0
 logger = logging.getLogger(__name__)
 
 class TextProcessingType(Enum):
-    """Text processing operation types"""    ANALYSIS = "analysis"
+    """Text processing operation types"""
+    ANALYSIS = "analysis"
     GENERATION = "generation"
     TRANSLATION = "translation"
     SUMMARIZATION = "summarization"
@@ -80,7 +82,8 @@ class TextProcessingType(Enum):
     FINGERPRINTING = "fingerprinting"
 
 class TextQuality(Enum):
-    """Text quality assessment levels"""    EXCELLENT = "excellent"
+    """Text quality assessment levels"""
+    EXCELLENT = "excellent"
     GOOD = "good"
     AVERAGE = "average"
     POOR = "poor"
@@ -88,7 +91,8 @@ class TextQuality(Enum):
 
 @dataclass
 class TextProcessingConfig:
-    """Configuration for text processing operations"""    max_length: int = 10000
+    """Configuration for text processing operations"""
+    max_length: int = 10000
     min_length: int = 10
     enable_preprocessing: bool = True
     enable_sentiment_analysis: bool = True
@@ -101,7 +105,8 @@ class TextProcessingConfig:
 
 @dataclass
 class TextAnalysisResult:
-    """Comprehensive text analysis results"""    text_id: str
+    """Comprehensive text analysis results"""
+    text_id: str
     language: str
     language_confidence: float
     word_count: int
@@ -121,11 +126,13 @@ class TextAnalysisResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class TextAgent(BaseAgent):
-    """    Industrial-grade AI Text Processing Agent
+    """
+    Industrial-grade AI Text Processing Agent
     
     Provides comprehensive text analysis, processing, and generation capabilities
     for content creators with enterprise-level performance and security.
-    """    
+    """
+    
     def __init__(self, config: Optional[TextProcessingConfig] = None):
         super().__init__(
             agent_type="text_agent",
@@ -156,7 +163,8 @@ class TextAgent(BaseAgent):
         logger.info(f"TextAgent initialized with config: {self.config}")
     
     def _init_nlp_models(self):
-        """Initialize NLP models and pipelines"""        try:
+        """Initialize NLP models and pipelines"""
+        try:
             # Load spaCy models for different languages
             self.nlp_models = {}
             language_models = {
@@ -210,7 +218,8 @@ class TextAgent(BaseAgent):
         processing_type: TextProcessingType = TextProcessingType.ANALYSIS,
         options: Optional[Dict[str, Any]] = None
     ) -> TextAnalysisResult:
-        """        Process text with comprehensive analysis and protection
+        """
+        Process text with comprehensive analysis and protection
         
         Args:
             text: Input text to process
@@ -219,7 +228,8 @@ class TextAgent(BaseAgent):
             
         Returns:
             TextAnalysisResult: Comprehensive analysis results
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         text_id = str(uuid.uuid4())
         
         try:
@@ -307,7 +317,8 @@ class TextAgent(BaseAgent):
         style: Optional[str] = None,
         language: str = 'en'
     ) -> Dict[str, Any]:
-        """        Generate AI-powered text content
+        """
+        Generate AI-powered text content
         
         Args:
             prompt: Generation prompt
@@ -318,7 +329,8 @@ class TextAgent(BaseAgent):
             
         Returns:
             Dict containing generated content and metadata
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         generation_id = str(uuid.uuid4())
         
         try:
@@ -381,7 +393,8 @@ class TextAgent(BaseAgent):
         reference_texts: Optional[List[str]] = None,
         similarity_threshold: float = None
     ) -> Dict[str, Any]:
-        """        Detect potential plagiarism in text content
+        """
+        Detect potential plagiarism in text content
         
         Args:
             text: Text to check for plagiarism
@@ -390,7 +403,8 @@ class TextAgent(BaseAgent):
             
         Returns:
             Dict containing plagiarism detection results
-        """        threshold = similarity_threshold or self.config.similarity_threshold
+        """
+        threshold = similarity_threshold or self.config.similarity_threshold
         
         try:
             # Generate text embedding
@@ -442,7 +456,8 @@ class TextAgent(BaseAgent):
             raise ProcessingError(f"Plagiarism detection failed: {e}")
     
     async def _validate_text_input(self, text: str):
-        """Validate text input parameters"""        if not text or not isinstance(text, str):
+        """Validate text input parameters"""
+        if not text or not isinstance(text, str):
             raise ValidationError("Invalid text input: must be non-empty string")
         
         if len(text) > self.config.max_length:
@@ -452,7 +467,8 @@ class TextAgent(BaseAgent):
             raise ValidationError(f"Text too short: {len(text)} < {self.config.min_length}")
     
     async def _preprocess_text(self, text: str) -> str:
-        """Clean and preprocess text"""        # Remove excessive whitespace
+        """Clean and preprocess text"""
+        # Remove excessive whitespace
         text = re.sub(r'\s+', ' ', text.strip())
         
         # Remove or replace special characters
@@ -466,7 +482,8 @@ class TextAgent(BaseAgent):
         return text
     
     async def _detect_language(self, text: str) -> Tuple[str, float]:
-        """Detect text language with confidence score"""        try:
+        """Detect text language with confidence score"""
+        try:
             language = detect(text)
             # Simple confidence estimation based on text length and clarity
             confidence = min(0.9, len(text) / 1000 + 0.5)
@@ -475,7 +492,8 @@ class TextAgent(BaseAgent):
             return 'en', 0.5  # Default to English with low confidence
     
     async def _calculate_text_statistics(self, text: str) -> Dict[str, int]:
-        """Calculate basic text statistics"""        words = text.split()
+        """Calculate basic text statistics"""
+        words = text.split()
         sentences = re.split(r'[.!?]+', text)
         paragraphs = text.split('\n\n')
         
@@ -487,7 +505,8 @@ class TextAgent(BaseAgent):
         }
     
     async def _generate_fingerprint(self, text: str) -> str:
-        """Generate unique fingerprint for text content"""        # Normalize text for consistent fingerprinting
+        """Generate unique fingerprint for text content"""
+        # Normalize text for consistent fingerprinting
         normalized_text = re.sub(r'\s+', ' ', text.lower().strip())
         
         # Generate hash
@@ -499,7 +518,8 @@ class TextAgent(BaseAgent):
             return hashlib.sha256(normalized_text.encode()).hexdigest()
     
     async def _analyze_sentiment(self, text: str) -> Tuple[float, str]:
-        """Analyze text sentiment"""        try:
+        """Analyze text sentiment"""
+        try:
             result = self.sentiment_analyzer(text[:512])  # Limit text length for model
             
             if result and len(result) > 0:
@@ -524,7 +544,8 @@ class TextAgent(BaseAgent):
             return 0.0, 'neutral'
     
     async def _extract_entities(self, text: str, language: str) -> List[Dict[str, Any]]:
-        """Extract named entities from text"""        try:
+        """Extract named entities from text"""
+        try:
             nlp = self.nlp_models.get(language, self.nlp_models['en'])
             doc = nlp(text[:1000000])  # Limit text length for processing
             
@@ -546,7 +567,8 @@ class TextAgent(BaseAgent):
             return []
     
     async def _extract_topics(self, text: str) -> List[Dict[str, Any]]:
-        """Extract topics from text using TF-IDF"""        try:
+        """Extract topics from text using TF-IDF"""
+        try:
             # Simple topic extraction using TF-IDF
             tfidf_matrix = self.tfidf_vectorizer.fit_transform([text])
             feature_names = self.tfidf_vectorizer.get_feature_names_out()
@@ -571,7 +593,8 @@ class TextAgent(BaseAgent):
             return []
     
     async def _extract_keywords(self, text: str) -> List[str]:
-        """Extract keywords from text"""        try:
+        """Extract keywords from text"""
+        try:
             # Use TF-IDF to extract important terms
             tfidf_matrix = self.tfidf_vectorizer.fit_transform([text])
             feature_names = self.tfidf_vectorizer.get_feature_names_out()
@@ -588,7 +611,8 @@ class TextAgent(BaseAgent):
             return []
     
     async def _assess_text_quality(self, text: str) -> Tuple[float, TextQuality]:
-        """Assess overall text quality"""        try:
+        """Assess overall text quality"""
+        try:
             # Quality metrics
             word_count = len(text.split())
             sentence_count = len(re.split(r'[.!?]+', text))
@@ -626,13 +650,15 @@ class TextAgent(BaseAgent):
             return 0.5, TextQuality.AVERAGE
     
     async def _calculate_readability(self, text: str) -> float:
-        """Calculate text readability score"""        try:
+        """Calculate text readability score"""
+        try:
             return textstat.flesch_reading_ease(text)
         except:
             return 50.0  # Default average readability
     
     async def _estimate_grammar_quality(self, text: str) -> float:
-        """Estimate grammar quality (simplified implementation)"""        # Simplified grammar quality estimation
+        """Estimate grammar quality (simplified implementation)"""
+        # Simplified grammar quality estimation
         # In production, use tools like LanguageTool or Grammarly API
         
         sentences = re.split(r'[.!?]+', text)
@@ -652,7 +678,8 @@ class TextAgent(BaseAgent):
         return quality_indicators / max(total_checks * 2, 1)
     
     async def _store_analysis_results(self, result: TextAnalysisResult, text: str):
-        """Store analysis results in database"""        try:
+        """Store analysis results in database"""
+        try:
             async with get_db_session() as session:
                 # Create text content record
                 text_content = TextContent(
@@ -686,7 +713,8 @@ class TextAgent(BaseAgent):
             logger.error(f"Error storing analysis results: {e}")
     
     def _update_processing_stats(self, result: TextAnalysisResult):
-        """Update processing statistics"""        self.processing_stats["texts_processed"] += 1
+        """Update processing statistics"""
+        self.processing_stats["texts_processed"] += 1
         self.processing_stats["total_words_analyzed"] += result.word_count
         self.processing_stats["fingerprints_generated"] += 1
         self.processing_stats["sentiments_analyzed"] += 1
@@ -698,7 +726,8 @@ class TextAgent(BaseAgent):
         self.processing_stats["average_processing_time"] = total_time / self.processing_stats["texts_processed"]
     
     async def get_agent_stats(self) -> Dict[str, Any]:
-        """Get agent performance statistics"""        base_stats = await super().get_agent_stats()
+        """Get agent performance statistics"""
+        base_stats = await super().get_agent_stats()
         base_stats.update({
             "text_processing": self.processing_stats,
             "models_loaded": len(self.nlp_models),
@@ -707,7 +736,8 @@ class TextAgent(BaseAgent):
         return base_stats
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform agent health check"""        health_status = await super().health_check()
+        """Perform agent health check"""
+        health_status = await super().health_check()
         
         # Check NLP models
         models_healthy = all(model is not None for model in self.nlp_models.values())
@@ -725,8 +755,10 @@ class TextAgent(BaseAgent):
 
 
 class TextAgentManager:
-    """    Manager for multiple TextAgent instances with load balancing and orchestration
-    """    
+    """
+    Manager for multiple TextAgent instances with load balancing and orchestration
+    """
+    
     def __init__(self, num_agents: int = 3):
         self.agents: List[TextAgent] = []
         self.current_agent_index = 0
@@ -739,7 +771,8 @@ class TextAgentManager:
         logger.info(f"TextAgentManager initialized with {num_agents} agents")
     
     def get_next_agent(self) -> TextAgent:
-        """Get next available agent using round-robin"""        agent = self.agents[self.current_agent_index]
+        """Get next available agent using round-robin"""
+        agent = self.agents[self.current_agent_index]
         self.current_agent_index = (self.current_agent_index + 1) % len(self.agents)
         return agent
     
@@ -748,7 +781,8 @@ class TextAgentManager:
         texts: List[str],
         processing_type: TextProcessingType = TextProcessingType.ANALYSIS
     ) -> List[TextAnalysisResult]:
-        """Process multiple texts concurrently"""        tasks = []
+        """Process multiple texts concurrently"""
+        tasks = []
         
         for text in texts:
             agent = self.get_next_agent()
@@ -768,7 +802,8 @@ class TextAgentManager:
         return valid_results
     
     async def get_aggregate_stats(self) -> Dict[str, Any]:
-        """Get aggregated statistics from all agents"""        agent_stats = await asyncio.gather(*[agent.get_agent_stats() for agent in self.agents])
+        """Get aggregated statistics from all agents"""
+        agent_stats = await asyncio.gather(*[agent.get_agent_stats() for agent in self.agents])
         
         # Aggregate statistics
         total_texts = sum(stats["text_processing"]["texts_processed"] for stats in agent_stats)

@@ -27,7 +27,8 @@ Expert Project Team - Fahed Mlaiel:
 Business Logic Flow:
 Creator Registration → Multi-Factor Setup → Token Generation → Content Upload → 
 AI Protection → Fingerprinting → Distribution → Monetization Tracking
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import secrets
 from datetime import datetime, timedelta, timezone
@@ -53,7 +54,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class TokenType(Enum):
-    """Token type classifications"""    ACCESS = "access"
+    """Token type classifications"""
+    ACCESS = "access"
     REFRESH = "refresh"
     RESET_PASSWORD = "reset_password"
     EMAIL_VERIFICATION = "email_verification"
@@ -63,14 +65,16 @@ class TokenType(Enum):
     TEMPORARY = "temporary"
 
 class TokenStatus(Enum):
-    """Token status states"""    ACTIVE = "active"
+    """Token status states"""
+    ACTIVE = "active"
     EXPIRED = "expired"
     REVOKED = "revoked"
     BLACKLISTED = "blacklisted"
     PENDING = "pending"
 
 class OAuthProvider(Enum):
-    """OAuth provider types"""    GOOGLE = "google"
+    """OAuth provider types"""
+    GOOGLE = "google"
     FACEBOOK = "facebook"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
@@ -81,7 +85,8 @@ class OAuthProvider(Enum):
 
 @dataclass
 class TokenMetadata:
-    """Comprehensive token metadata"""    device_id: str = ""
+    """Comprehensive token metadata"""
+    device_id: str = ""
     user_agent: str = ""
     ip_address: str = ""
     location: str = ""
@@ -94,7 +99,8 @@ class TokenMetadata:
 
 @dataclass
 class TokenResponse:
-    """Token response structure"""    access_token: str
+    """Token response structure"""
+    access_token: str
     refresh_token: str
     token_type: str = "Bearer"
     expires_in: int = 3600
@@ -103,7 +109,8 @@ class TokenResponse:
     permissions: List[str] = field(default_factory=list)
 
 class TokenDatabase(Base):
-    """Database model for token storage"""    __tablename__ = 'authentication_tokens'
+    """Database model for token storage"""
+    __tablename__ = 'authentication_tokens'
     
     token_id = Column(String, primary_key=True)
     user_id = Column(String, nullable=False, index=True)
@@ -133,7 +140,8 @@ class TokenDatabase(Base):
     )
 
 class BlacklistedToken(Base):
-    """Database model for blacklisted tokens"""    __tablename__ = 'blacklisted_tokens'
+    """Database model for blacklisted tokens"""
+    __tablename__ = 'blacklisted_tokens'
     
     id = Column(String, primary_key=True)
     token_hash = Column(String, nullable=False, unique=True, index=True)
@@ -144,7 +152,8 @@ class BlacklistedToken(Base):
     expires_at = Column(DateTime, nullable=False)
 
 class TokenRepository:
-    """    Enterprise-grade token management repository with comprehensive security features.
+    """
+    Enterprise-grade token management repository with comprehensive security features.
     
     Features:
     - JWT/OAuth2 token lifecycle management
@@ -153,7 +162,8 @@ class TokenRepository:
     - Multi-device session management
     - Comprehensive audit logging
     - Redis caching for performance
-    """    
+    """
+    
     def __init__(
         self,
         session: AsyncSession,
@@ -181,7 +191,8 @@ class TokenRepository:
         metadata: TokenMetadata,
         scopes: Optional[List[str]] = None
     ) -> TokenResponse:
-        """Generate access and refresh token pair"""        try:
+        """Generate access and refresh token pair"""
+        try:
             # Generate access token
             access_payload = {
                 'user_id': user_id,
@@ -252,7 +263,8 @@ class TokenRepository:
             raise
     
     async def validate_token(self, token: str, required_permissions: Optional[List[str]] = None) -> Dict[str, Any]:
-        """Validate token and check permissions"""        try:
+        """Validate token and check permissions"""
+        try:
             # Check if token is blacklisted
             if await self._is_token_blacklisted(token):
                 raise ValueError("Token is blacklisted")
@@ -288,7 +300,8 @@ class TokenRepository:
             raise
     
     async def refresh_token(self, refresh_token: str, metadata: TokenMetadata) -> TokenResponse:
-        """Refresh access token using refresh token"""        try:
+        """Refresh access token using refresh token"""
+        try:
             # Validate refresh token
             payload = await self.validate_token(refresh_token)
             
@@ -318,7 +331,8 @@ class TokenRepository:
             raise
     
     async def revoke_token(self, token: str, user_id: str, reason: str = "Manual revocation"):
-        """Revoke a specific token"""        try:
+        """Revoke a specific token"""
+        try:
             token_hash = self._hash_token(token)
             
             # Update token status in database
@@ -354,7 +368,8 @@ class TokenRepository:
             raise
     
     async def revoke_all_user_tokens(self, user_id: str, reason: str = "Revoke all sessions"):
-        """Revoke all tokens for a specific user"""        try:
+        """Revoke all tokens for a specific user"""
+        try:
             # Get all active tokens for user
             stmt = select(TokenDatabase).where(
                 TokenDatabase.user_id == user_id,
@@ -393,7 +408,8 @@ class TokenRepository:
             raise
     
     async def get_user_sessions(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get all active sessions for a user"""        try:
+        """Get all active sessions for a user"""
+        try:
             stmt = select(TokenDatabase).where(
                 TokenDatabase.user_id == user_id,
                 TokenDatabase.status == TokenStatus.ACTIVE.value,
@@ -426,7 +442,8 @@ class TokenRepository:
             raise
     
     async def cleanup_expired_tokens(self):
-        """Clean up expired tokens from database and Redis"""        try:
+        """Clean up expired tokens from database and Redis"""
+        try:
             current_time = datetime.now(timezone.utc)
             
             # Mark expired tokens
@@ -463,7 +480,8 @@ class TokenRepository:
     # Private helper methods
     
     def _hash_token(self, token: str) -> str:
-        """Create secure hash of token"""        return hashlib.sha256(token.encode()).hexdigest()
+        """Create secure hash of token"""
+        return hashlib.sha256(token.encode()).hexdigest()
     
     async def _store_token(
         self,
@@ -474,7 +492,8 @@ class TokenRepository:
         permissions: Optional[List[str]] = None,
         scopes: Optional[List[str]] = None
     ):
-        """Store token in database with encryption"""        try:
+        """Store token in database with encryption"""
+        try:
             token_hash = self._hash_token(token)
             encrypted_token = self.fernet.encrypt(token.encode()).decode()
             
@@ -510,7 +529,8 @@ class TokenRepository:
             raise
     
     async def _cache_token(self, token: str, user_id: str, expires_in: timedelta):
-        """Cache token in Redis for fast validation"""        try:
+        """Cache token in Redis for fast validation"""
+        try:
             token_hash = self._hash_token(token)
             cache_data = {
                 'user_id': user_id,
@@ -528,7 +548,8 @@ class TokenRepository:
             logger.error(f"Failed to cache token: {e}")
     
     async def _is_token_blacklisted(self, token: str) -> bool:
-        """Check if token is blacklisted"""        try:
+        """Check if token is blacklisted"""
+        try:
             token_hash = self._hash_token(token)
             
             # Check Redis cache first
@@ -560,7 +581,8 @@ class TokenRepository:
             return False
     
     async def _update_token_usage(self, token: str):
-        """Update token last used timestamp"""        try:
+        """Update token last used timestamp"""
+        try:
             token_hash = self._hash_token(token)
             
             stmt = select(TokenDatabase).where(TokenDatabase.token_hash == token_hash)
@@ -575,7 +597,8 @@ class TokenRepository:
             logger.error(f"Failed to update token usage: {e}")
     
     async def _get_user_permissions(self, user_id: str) -> List[str]:
-        """Get user permissions from database"""        # This would typically query a user permissions table
+        """Get user permissions from database"""
+        # This would typically query a user permissions table
         # For now, return a default set of permissions
         return [
             "content:read",

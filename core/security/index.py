@@ -8,7 +8,8 @@ the application.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
-"""from typing import Dict, Any, Optional, Type
+"""
+from typing import Dict, Any, Optional, Type
 import logging
 
 # Core Security Components
@@ -83,14 +84,17 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityServiceRegistry:
-    """    Registry for all security services with dependency injection
-    """    
+    """
+    Registry for all security services with dependency injection
+    """
+    
     def __init__(self):
         self._services: Dict[str, Any] = {}
         self._initialized = False
     
     async def initialize(self):
-        """Initialize all security services"""        if self._initialized:
+        """Initialize all security services"""
+        if self._initialized:
             return
         
         try:
@@ -115,7 +119,8 @@ class SecurityServiceRegistry:
             raise
     
     async def _initialize_dependent_services(self):
-        """Initialize services that depend on other services"""        # These services need other services to be initialized first
+        """Initialize services that depend on other services"""
+        # These services need other services to be initialized first
         self._services['threat_detector'] = ThreatDetector(
             monitoring=self._services['monitoring']
         )
@@ -124,46 +129,56 @@ class SecurityServiceRegistry:
         )
     
     def get_service(self, service_name: str) -> Optional[Any]:
-        """Get a security service by name"""        if not self._initialized:
+        """Get a security service by name"""
+        if not self._initialized:
             raise RuntimeError("Security services not initialized. Call initialize() first.")
         
         return self._services.get(service_name)
     
     def get_all_services(self) -> Dict[str, Any]:
-        """Get all registered security services"""        if not self._initialized:
+        """Get all registered security services"""
+        if not self._initialized:
             raise RuntimeError("Security services not initialized. Call initialize() first.")
         
         return self._services.copy()
 
 
 class SecurityFacade:
-    """    Facade pattern for simplified access to security operations
-    """    
+    """
+    Facade pattern for simplified access to security operations
+    """
+    
     def __init__(self, registry: SecurityServiceRegistry):
         self.registry = registry
     
     async def authenticate_user(self, email: str, password: str, tenant_id: str, **kwargs):
-        """Simplified user authentication"""        auth_manager = self.registry.get_service('authentication')
+        """Simplified user authentication"""
+        auth_manager = self.registry.get_service('authentication')
         return await auth_manager.authenticate(email, password, tenant_id, **kwargs)
     
     async def authorize_action(self, user_id: str, resource: str, action: str, **kwargs):
-        """Simplified authorization check"""        auth_manager = self.registry.get_service('authorization')
+        """Simplified authorization check"""
+        auth_manager = self.registry.get_service('authorization')
         return await auth_manager.check_permission(user_id, resource, action, **kwargs)
     
     async def encrypt_data(self, data: bytes, **kwargs):
-        """Simplified data encryption"""        encryption_manager = self.registry.get_service('encryption')
+        """Simplified data encryption"""
+        encryption_manager = self.registry.get_service('encryption')
         return await encryption_manager.encrypt_sensitive_data(data, **kwargs)
     
     async def scan_content(self, content: bytes, content_type: str, **kwargs):
-        """Simplified content scanning"""        validator = self.registry.get_service('validation')
+        """Simplified content scanning"""
+        validator = self.registry.get_service('validation')
         return await validator.validate_content(content, content_type, **kwargs)
     
     async def protect_content(self, content: bytes, content_id: str, owner_id: str, **kwargs):
-        """Simplified content protection"""        protection = self.registry.get_service('protection')
+        """Simplified content protection"""
+        protection = self.registry.get_service('protection')
         return await protection.protect_content(content, content_id, owner_id, **kwargs)
     
     async def log_security_event(self, event_type: str, details: Dict[str, Any], **kwargs):
-        """Simplified security event logging"""        monitor = self.registry.get_service('monitoring')
+        """Simplified security event logging"""
+        monitor = self.registry.get_service('monitoring')
         return await monitor.log_security_event(event_type, details, **kwargs)
 
 
@@ -173,45 +188,53 @@ _security_facade = SecurityFacade(_security_registry)
 
 
 async def get_security_registry() -> SecurityServiceRegistry:
-    """Get the global security registry"""    if not _security_registry._initialized:
+    """Get the global security registry"""
+    if not _security_registry._initialized:
         await _security_registry.initialize()
     return _security_registry
 
 
 async def get_security_facade() -> SecurityFacade:
-    """Get the global security facade"""    if not _security_registry._initialized:
+    """Get the global security facade"""
+    if not _security_registry._initialized:
         await _security_registry.initialize()
     return _security_facade
 
 
 # Convenience functions for common operations
 async def quick_authenticate(email: str, password: str, tenant_id: str, **kwargs):
-    """Quick authentication function"""    facade = await get_security_facade()
+    """Quick authentication function"""
+    facade = await get_security_facade()
     return await facade.authenticate_user(email, password, tenant_id, **kwargs)
 
 
 async def quick_authorize(user_id: str, resource: str, action: str, **kwargs):
-    """Quick authorization function"""    facade = await get_security_facade()
+    """Quick authorization function"""
+    facade = await get_security_facade()
     return await facade.authorize_action(user_id, resource, action, **kwargs)
 
 
 async def quick_encrypt(data: bytes, **kwargs):
-    """Quick encryption function"""    facade = await get_security_facade()
+    """Quick encryption function"""
+    facade = await get_security_facade()
     return await facade.encrypt_data(data, **kwargs)
 
 
 async def quick_scan(content: bytes, content_type: str, **kwargs):
-    """Quick content scanning function"""    facade = await get_security_facade()
+    """Quick content scanning function"""
+    facade = await get_security_facade()
     return await facade.scan_content(content, content_type, **kwargs)
 
 
 async def quick_protect(content: bytes, content_id: str, owner_id: str, **kwargs):
-    """Quick content protection function"""    facade = await get_security_facade()
+    """Quick content protection function"""
+    facade = await get_security_facade()
     return await facade.protect_content(content, content_id, owner_id, **kwargs)
 
 
 async def quick_log_event(event_type: str, details: Dict[str, Any], **kwargs):
-    """Quick security event logging function"""    facade = await get_security_facade()
+    """Quick security event logging function"""
+    facade = await get_security_facade()
     return await facade.log_security_event(event_type, details, **kwargs)
 
 

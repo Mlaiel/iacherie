@@ -20,7 +20,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -49,7 +50,8 @@ from .scheduling_agent import ScheduledJob, SchedulingPriority, ScheduleStatus
 logger = logging.getLogger(__name__)
 
 class CampaignType(Enum):
-    """Types of campaigns"""    PRODUCT_LAUNCH = "product_launch"
+    """Types of campaigns"""
+    PRODUCT_LAUNCH = "product_launch"
     BRAND_AWARENESS = "brand_awareness"
     SEASONAL_PROMOTION = "seasonal_promotion"
     CONTENT_SERIES = "content_series"
@@ -59,7 +61,8 @@ class CampaignType(Enum):
     EDUCATIONAL_SERIES = "educational_series"
 
 class CampaignStatus(Enum):
-    """Campaign execution status"""    PLANNING = "planning"
+    """Campaign execution status"""
+    PLANNING = "planning"
     SCHEDULED = "scheduled"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -68,7 +71,8 @@ class CampaignStatus(Enum):
     OPTIMIZING = "optimizing"
 
 class DistributionStrategy(Enum):
-    """Content distribution strategies"""    SIMULTANEOUS = "simultaneous"
+    """Content distribution strategies"""
+    SIMULTANEOUS = "simultaneous"
     SEQUENTIAL = "sequential"
     PLATFORM_OPTIMIZED = "platform_optimized"
     AUDIENCE_TARGETED = "audience_targeted"
@@ -76,7 +80,8 @@ class DistributionStrategy(Enum):
 
 @dataclass
 class CampaignConfig:
-    """Campaign configuration"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Campaign configuration"""
+    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
     campaign_type: CampaignType = CampaignType.BRAND_AWARENESS
@@ -94,7 +99,8 @@ class CampaignConfig:
 
 @dataclass
 class PlatformSchedule:
-    """Platform-specific scheduling configuration"""    platform: str = ""
+    """Platform-specific scheduling configuration"""
+    platform: str = ""
     content_adaptations: Dict[str, Any] = field(default_factory=dict)
     optimal_posting_times: List[datetime] = field(default_factory=list)
     frequency_settings: Dict[str, int] = field(default_factory=dict)
@@ -105,7 +111,8 @@ class PlatformSchedule:
 
 @dataclass
 class CampaignMetrics:
-    """Campaign performance metrics"""    total_reach: int = 0
+    """Campaign performance metrics"""
+    total_reach: int = 0
     total_impressions: int = 0
     total_engagement: int = 0
     conversion_rate: float = 0.0
@@ -117,7 +124,8 @@ class CampaignMetrics:
     audience_growth: Dict[str, int] = field(default_factory=dict)
 
 class CampaignManager:
-    """    Enterprise campaign management system for multi-platform content campaigns.
+    """
+    Enterprise campaign management system for multi-platform content campaigns.
     
     Features:
     - Multi-platform campaign orchestration
@@ -128,7 +136,8 @@ class CampaignManager:
     - A/B testing for campaigns
     - Automated campaign scaling
     - ROI optimization
-    """    
+    """
+    
     def __init__(self):
         self.performance_monitor = PerformanceMonitor()
         
@@ -159,14 +168,16 @@ class CampaignManager:
         self,
         config: CampaignConfig
     ) -> str:
-        """        Create a new multi-platform campaign.
+        """
+        Create a new multi-platform campaign.
         
         Args:
             config: Campaign configuration
             
         Returns:
             Campaign ID
-        """        try:
+        """
+        try:
             logger.info(f"Creating campaign: {config.name}")
             
             # Validate campaign configuration
@@ -210,7 +221,8 @@ class CampaignManager:
         campaign_id: str,
         execution_mode: str = "automated"
     ) -> Dict[str, Any]:
-        """        Execute a campaign across all configured platforms.
+        """
+        Execute a campaign across all configured platforms.
         
         Args:
             campaign_id: Campaign identifier
@@ -218,7 +230,8 @@ class CampaignManager:
             
         Returns:
             Execution status and initial metrics
-        """        try:
+        """
+        try:
             logger.info(f"Executing campaign {campaign_id} in {execution_mode} mode")
             
             campaign = self.active_campaigns.get(campaign_id)
@@ -276,7 +289,8 @@ class CampaignManager:
         campaign_id: str,
         real_time: bool = True
     ) -> CampaignMetrics:
-        """        Monitor campaign performance across all platforms.
+        """
+        Monitor campaign performance across all platforms.
         
         Args:
             campaign_id: Campaign identifier
@@ -284,7 +298,8 @@ class CampaignManager:
             
         Returns:
             Campaign performance metrics
-        """        try:
+        """
+        try:
             logger.info(f"Monitoring campaign performance: {campaign_id}")
             
             # Check cache first
@@ -350,7 +365,8 @@ class CampaignManager:
         campaign_id: str,
         optimization_type: str = "automatic"
     ) -> Dict[str, Any]:
-        """        Optimize campaign performance based on real-time data.
+        """
+        Optimize campaign performance based on real-time data.
         
         Args:
             campaign_id: Campaign identifier
@@ -358,7 +374,8 @@ class CampaignManager:
             
         Returns:
             Optimization results and recommendations
-        """        try:
+        """
+        try:
             logger.info(f"Optimizing campaign {campaign_id} using {optimization_type} optimization")
             
             campaign_metrics = await self.monitor_campaign_performance(campaign_id)
@@ -424,7 +441,8 @@ class CampaignManager:
             raise AgentError(f"Campaign optimization failed: {str(e)}")
     
     async def _validate_campaign_config(self, config: CampaignConfig):
-        """Validate campaign configuration"""        if not config.name:
+        """Validate campaign configuration"""
+        if not config.name:
             raise AgentError("Campaign name is required")
         
         if not config.creator_id:
@@ -445,7 +463,8 @@ class CampaignManager:
         self,
         config: CampaignConfig
     ) -> Dict[str, Any]:
-        """Analyze target audience across platforms"""        audience_analysis = {
+        """Analyze target audience across platforms"""
+        audience_analysis = {
             'demographics': {},
             'platform_preferences': {},
             'optimal_timing': {},
@@ -471,7 +490,8 @@ class CampaignManager:
         config: CampaignConfig,
         audience_analysis: Dict[str, Any]
     ) -> Dict[str, PlatformSchedule]:
-        """Generate platform-specific schedules"""        platform_schedules = {}
+        """Generate platform-specific schedules"""
+        platform_schedules = {}
         
         for platform in config.platforms:
             audience_data = audience_analysis['platform_preferences'].get(platform, {})
@@ -509,7 +529,8 @@ class CampaignManager:
         platform: str,
         content_requirements: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate platform-specific content adaptations"""        adaptations = {
+        """Generate platform-specific content adaptations"""
+        adaptations = {
             'instagram': {
                 'aspect_ratios': ['1:1', '4:5', '9:16'],
                 'max_video_length': 90,
@@ -555,7 +576,8 @@ class CampaignManager:
         platform: str,
         audience_data: Dict[str, Any]
     ) -> List[datetime]:
-        """Calculate optimal posting times for platform"""        optimal_hours = audience_data.get('optimal_hours', [9, 12, 18, 21])
+        """Calculate optimal posting times for platform"""
+        optimal_hours = audience_data.get('optimal_hours', [9, 12, 18, 21])
         optimal_times = []
         
         # Generate optimal times for the next 7 days
@@ -583,7 +605,8 @@ class CampaignManager:
         platform_limits: Dict[str, int],
         config: CampaignConfig
     ) -> Dict[str, int]:
-        """Calculate posting frequency for platform"""        frequency_settings = {
+        """Calculate posting frequency for platform"""
+        frequency_settings = {
             'posts_per_day': min(
                 platform_limits.get('posts_per_day', 5),
                 5  # Conservative default
@@ -600,7 +623,8 @@ class CampaignManager:
         platform: str,
         audience_data: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Set engagement targets for platform"""        base_engagement_rate = audience_data.get('engagement_rate', 0.03)
+        """Set engagement targets for platform"""
+        base_engagement_rate = audience_data.get('engagement_rate', 0.03)
         
         targets = {
             'engagement_rate': base_engagement_rate * 1.2,  # 20% improvement target
@@ -616,7 +640,8 @@ class CampaignManager:
         platform: str,
         content_requirements: Dict[str, Any]
     ) -> List[str]:
-        """Generate platform-specific hashtags"""        # This would use hashtag research APIs
+        """Generate platform-specific hashtags"""
+        # This would use hashtag research APIs
         # For now, return generic hashtags
         
         base_hashtags = content_requirements.get('hashtags', ['content', 'creator'])
@@ -629,7 +654,8 @@ class CampaignManager:
         platform: str,
         config: CampaignConfig
     ) -> Dict[str, Any]:
-        """Configure platform-specific features"""        features = {
+        """Configure platform-specific features"""
+        features = {
             'instagram': {
                 'stories_highlights': True,
                 'reels_optimization': True,
@@ -669,7 +695,8 @@ class CampaignManager:
         config: CampaignConfig,
         platform_schedules: Dict[str, PlatformSchedule]
     ) -> Dict[str, float]:
-        """Optimize budget allocation across platforms"""        total_budget = sum(config.budget_allocation.values())
+        """Optimize budget allocation across platforms"""
+        total_budget = sum(config.budget_allocation.values())
         
         if total_budget == 0:
             # Equal distribution if no budget specified
@@ -702,7 +729,8 @@ class CampaignManager:
         config: CampaignConfig,
         platform_schedules: Dict[str, PlatformSchedule]
     ) -> Dict[str, Any]:
-        """Create content distribution timeline"""        timeline = {
+        """Create content distribution timeline"""
+        timeline = {
             'campaign_phases': [],
             'content_schedule': {},
             'milestone_dates': [],
@@ -747,7 +775,8 @@ class CampaignManager:
         self,
         config: CampaignConfig
     ) -> Dict[str, Any]:
-        """Set up campaign performance monitoring"""        monitoring_config = {
+        """Set up campaign performance monitoring"""
+        monitoring_config = {
             'metrics_to_track': [
                 'reach', 'impressions', 'engagement', 'clicks',
                 'conversions', 'cost_per_click', 'roi'
@@ -771,7 +800,8 @@ class CampaignManager:
         distribution_timeline: Dict[str, Any],
         monitoring_config: Dict[str, Any]
     ) -> str:
-        """Store campaign configuration in database"""        try:
+        """Store campaign configuration in database"""
+        try:
             campaign_id = config.id
             
             # Store in database
@@ -787,7 +817,8 @@ class CampaignManager:
         self,
         campaign_id: str
     ) -> Dict[str, Any]:
-        """Verify content protection for all campaign content"""        # This integrates with content protection workflows
+        """Verify content protection for all campaign content"""
+        # This integrates with content protection workflows
         protection_status = {
             'all_protected': True,
             'protected_content': [],
@@ -807,7 +838,8 @@ class CampaignManager:
         schedule: PlatformSchedule,
         execution_mode: str
     ) -> Dict[str, Any]:
-        """Execute campaign on specific platform"""        platform_status = {
+        """Execute campaign on specific platform"""
+        platform_status = {
             'platform': platform,
             'status': 'active',
             'scheduled_posts': len(schedule.optimal_posting_times),
@@ -834,7 +866,8 @@ class CampaignManager:
         campaign_id: str,
         platform: str
     ) -> List[Dict[str, Any]]:
-        """Get scheduled posts for platform"""        # This would query the database for scheduled posts
+        """Get scheduled posts for platform"""
+        # This would query the database for scheduled posts
         return [
             {
                 'post_id': f"post_{i}",
@@ -846,11 +879,13 @@ class CampaignManager:
         ]
     
     async def _activate_campaign_monitoring(self, campaign_id: str):
-        """Activate real-time campaign monitoring"""        logger.info(f"Activating monitoring for campaign {campaign_id}")
+        """Activate real-time campaign monitoring"""
+        logger.info(f"Activating monitoring for campaign {campaign_id}")
         # Implementation would set up monitoring tasks
     
     async def _setup_automated_optimization(self, campaign_id: str):
-        """Set up automated optimization for campaign"""        logger.info(f"Setting up automated optimization for campaign {campaign_id}")
+        """Set up automated optimization for campaign"""
+        logger.info(f"Setting up automated optimization for campaign {campaign_id}")
         # Implementation would set up optimization tasks
     
     async def _collect_platform_metrics(
@@ -858,7 +893,8 @@ class CampaignManager:
         campaign_id: str,
         platform: str
     ) -> Dict[str, Any]:
-        """Collect performance metrics from platform"""        # This would integrate with platform APIs
+        """Collect performance metrics from platform"""
+        # This would integrate with platform APIs
         import random
         
         return {
@@ -875,14 +911,16 @@ class CampaignManager:
         campaign_id: str,
         metrics: CampaignMetrics
     ) -> float:
-        """Calculate campaign return on investment"""        # This would calculate actual ROI based on revenue and costs
+        """Calculate campaign return on investment"""
+        # This would calculate actual ROI based on revenue and costs
         return 1.25  # 25% ROI simulation
     
     async def _analyze_content_performance(
         self,
         campaign_id: str
     ) -> Dict[str, Dict[str, float]]:
-        """Analyze performance of individual content pieces"""        # This would analyze individual post performance
+        """Analyze performance of individual content pieces"""
+        # This would analyze individual post performance
         return {
             'video_content': {'engagement_rate': 0.05, 'reach_rate': 0.12},
             'image_content': {'engagement_rate': 0.03, 'reach_rate': 0.08},
@@ -894,7 +932,8 @@ class CampaignManager:
         campaign_id: str,
         platforms: List[str]
     ) -> Dict[str, int]:
-        """Track audience growth across platforms"""        growth = {}
+        """Track audience growth across platforms"""
+        growth = {}
         
         for platform in platforms:
             import random
@@ -907,7 +946,8 @@ class CampaignManager:
         campaign_id: str,
         metrics: CampaignMetrics
     ) -> List[str]:
-        """Identify platforms that are underperforming"""        underperforming = []
+        """Identify platforms that are underperforming"""
+        underperforming = []
         
         for platform, performance in metrics.platform_performance.items():
             engagement_rate = performance.get('engagement', 0) / max(performance.get('impressions', 1), 1)
@@ -923,7 +963,8 @@ class CampaignManager:
         metrics: CampaignMetrics,
         underperforming_platforms: List[str]
     ) -> Dict[str, float]:
-        """Optimize budget reallocation based on performance"""        reallocation = {}
+        """Optimize budget reallocation based on performance"""
+        reallocation = {}
         
         # Move budget from underperforming to better performing platforms
         for platform, performance in metrics.platform_performance.items():
@@ -939,7 +980,8 @@ class CampaignManager:
         campaign_id: str,
         optimizations: Dict[str, float]
     ):
-        """Apply budget optimization changes"""        logger.info(f"Applying budget optimizations for campaign {campaign_id}: {optimizations}")
+        """Apply budget optimization changes"""
+        logger.info(f"Applying budget optimizations for campaign {campaign_id}: {optimizations}")
         # Implementation would update actual budget allocations
     
     async def _optimize_posting_timing(
@@ -947,7 +989,8 @@ class CampaignManager:
         campaign_id: str,
         metrics: CampaignMetrics
     ) -> List[Dict[str, Any]]:
-        """Generate timing optimization recommendations"""        recommendations = [
+        """Generate timing optimization recommendations"""
+        recommendations = [
             {
                 'type': 'timing_adjustment',
                 'platform': 'instagram',
@@ -969,7 +1012,8 @@ class CampaignManager:
         campaign_id: str,
         optimizations: List[Dict[str, Any]]
     ):
-        """Apply timing optimization changes"""        logger.info(f"Applying timing optimizations for campaign {campaign_id}")
+        """Apply timing optimization changes"""
+        logger.info(f"Applying timing optimizations for campaign {campaign_id}")
         # Implementation would update actual schedules
     
     async def _optimize_content_strategy(
@@ -977,7 +1021,8 @@ class CampaignManager:
         campaign_id: str,
         metrics: CampaignMetrics
     ) -> List[Dict[str, Any]]:
-        """Generate content strategy optimization recommendations"""        recommendations = [
+        """Generate content strategy optimization recommendations"""
+        recommendations = [
             {
                 'type': 'content_type_optimization',
                 'recommendation': 'Increase video content ratio from 30% to 50%',
@@ -997,7 +1042,8 @@ class CampaignManager:
         campaign_id: str,
         metrics: CampaignMetrics
     ) -> List[Dict[str, Any]]:
-        """Identify A/B testing opportunities"""        opportunities = [
+        """Identify A/B testing opportunities"""
+        opportunities = [
             {
                 'type': 'ab_test_opportunity',
                 'test_subject': 'posting_time',
@@ -1019,7 +1065,8 @@ class CampaignManager:
         current_metrics: CampaignMetrics,
         applied_optimizations: List[str]
     ) -> Dict[str, float]:
-        """Calculate expected improvements from optimizations"""        improvements = {
+        """Calculate expected improvements from optimizations"""
+        improvements = {
             'engagement_rate_improvement': 0.0,
             'reach_improvement': 0.0,
             'roi_improvement': 0.0
@@ -1036,7 +1083,8 @@ class CampaignManager:
 
 # Factory function
 def create_campaign_manager() -> CampaignManager:
-    """Create and initialize campaign manager"""    return CampaignManager()
+    """Create and initialize campaign manager"""
+    return CampaignManager()
 
 # Export main classes
 __all__ = [

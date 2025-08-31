@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -21,7 +22,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -44,10 +46,12 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class TestAdvancedMonitoringSystem:
-    """Comprehensive tests for AdvancedMonitoringSystem"""    
+    """Comprehensive tests for AdvancedMonitoringSystem"""
+    
     @pytest.mark.asyncio
     async def test_system_initialization(self, monitoring_system):
-        """Test monitoring system initialization"""        assert monitoring_system is not None
+        """Test monitoring system initialization"""
+        assert monitoring_system is not None
         assert hasattr(monitoring_system, 'config')
         assert hasattr(monitoring_system, 'performance_monitor')
         assert hasattr(monitoring_system, 'quality_tracker')
@@ -61,7 +65,8 @@ class TestAdvancedMonitoringSystem:
 
     @pytest.mark.asyncio
     async def test_performance_monitoring(self, monitoring_system):
-        """Test system performance monitoring"""        # Start performance monitoring
+        """Test system performance monitoring"""
+        # Start performance monitoring
         monitoring_session = await monitoring_system.start_performance_monitoring(
             session_id='test_performance_001',
             monitoring_config={
@@ -133,7 +138,8 @@ class TestAdvancedMonitoringSystem:
 
     @pytest.mark.asyncio
     async def test_quality_tracking(self, monitoring_system):
-        """Test content quality tracking"""        # Define quality test cases
+        """Test content quality tracking"""
+        # Define quality test cases
         quality_test_cases = [
             {
                 'content': "This is high-quality, well-structured content with proper grammar and engaging style.",
@@ -219,7 +225,8 @@ class TestAdvancedMonitoringSystem:
 
     @pytest.mark.asyncio
     async def test_system_health_monitoring(self, monitoring_system):
-        """Test system health and observability"""        # Start system health monitoring
+        """Test system health and observability"""
+        # Start system health monitoring
         health_monitoring = await monitoring_system.start_system_health_monitoring(
             monitoring_config={
                 'resource_usage': True,
@@ -285,7 +292,8 @@ class TestAdvancedMonitoringSystem:
 
     @pytest.mark.asyncio
     async def test_real_time_monitoring(self, monitoring_system):
-        """Test real-time monitoring capabilities"""        # Start real-time monitoring
+        """Test real-time monitoring capabilities"""
+        # Start real-time monitoring
         realtime_session = await monitoring_system.start_realtime_monitoring(
             session_id='test_realtime_001',
             monitoring_config={
@@ -339,7 +347,8 @@ class TestAdvancedMonitoringSystem:
 
     @pytest.mark.asyncio
     async def test_anomaly_detection(self, monitoring_system):
-        """Test anomaly detection in monitoring"""        # Create baseline normal behavior
+        """Test anomaly detection in monitoring"""
+        # Create baseline normal behavior
         normal_data = [
             {'response_time': 0.5, 'cpu_usage': 45.0, 'memory_usage': 60.0, 'error_rate': 1.0},
             {'response_time': 0.6, 'cpu_usage': 48.0, 'memory_usage': 62.0, 'error_rate': 1.2},
@@ -404,7 +413,8 @@ class TestAdvancedMonitoringSystem:
 
     @pytest.mark.asyncio
     async def test_monitoring_alerts(self, monitoring_system):
-        """Test monitoring alert system"""        # Configure alert rules
+        """Test monitoring alert system"""
+        # Configure alert rules
         alert_rules = {
             'high_response_time': {
                 'metric': 'response_time',
@@ -470,7 +480,8 @@ class TestAdvancedMonitoringSystem:
 
     @pytest.mark.asyncio
     async def test_monitoring_dashboard(self, monitoring_system):
-        """Test monitoring dashboard data generation"""        # Generate dashboard data
+        """Test monitoring dashboard data generation"""
+        # Generate dashboard data
         dashboard_data = await monitoring_system.generate_dashboard_data(
             time_range='24h',
             metrics=[
@@ -505,7 +516,8 @@ class TestAdvancedMonitoringSystem:
 
     @pytest.mark.asyncio
     async def test_monitoring_reports(self, monitoring_system):
-        """Test monitoring report generation"""        # Generate comprehensive monitoring report
+        """Test monitoring report generation"""
+        # Generate comprehensive monitoring report
         monitoring_report = await monitoring_system.generate_monitoring_report(
             report_type='comprehensive',
             time_period='1_week',
@@ -543,7 +555,8 @@ class TestAdvancedMonitoringSystem:
 
     @pytest.mark.asyncio
     async def test_batch_monitoring_analysis(self, monitoring_system, performance_test_data):
-        """Test batch monitoring analysis"""        # Simulate batch operation monitoring
+        """Test batch monitoring analysis"""
+        # Simulate batch operation monitoring
         batch_operations = performance_test_data['small_batch'][:5]
         
         start_time = time.time()
@@ -579,7 +592,8 @@ class TestAdvancedMonitoringSystem:
 
     @pytest.mark.asyncio
     async def test_performance_benchmarks(self, monitoring_system, benchmark_config):
-        """Test monitoring system performance benchmarks"""        # Test monitoring overhead
+        """Test monitoring system performance benchmarks"""
+        # Test monitoring overhead
         operations_to_monitor = 100
         
         start_time = time.time()
@@ -600,7 +614,8 @@ class TestAdvancedMonitoringSystem:
 
     @pytest.mark.asyncio
     async def test_error_handling(self, monitoring_system):
-        """Test monitoring error handling"""        # Test invalid session ID
+        """Test monitoring error handling"""
+        # Test invalid session ID
         result = await monitoring_system.get_performance_metrics(
             session_id='non_existent_session',
             options={'handle_missing': True}
@@ -625,33 +640,41 @@ class TestAdvancedMonitoringSystem:
         assert result is not None
 
 class TestPerformanceMonitor:
-    """Test performance monitor component"""    
+    """Test performance monitor component"""
+    
     @pytest.mark.asyncio
     async def test_performance_monitor_initialization(self):
-        """Test performance monitor initialization"""        monitor = PerformanceMonitor()
+        """Test performance monitor initialization"""
+        monitor = PerformanceMonitor()
         assert monitor is not None
         assert hasattr(monitor, 'monitor_performance')
 
 class TestQualityTracker:
-    """Test quality tracker component"""    
+    """Test quality tracker component"""
+    
     @pytest.mark.asyncio
     async def test_quality_tracker_initialization(self):
-        """Test quality tracker initialization"""        tracker = QualityTracker()
+        """Test quality tracker initialization"""
+        tracker = QualityTracker()
         assert tracker is not None
         assert hasattr(tracker, 'track_quality')
 
 class TestSystemObserver:
-    """Test system observer component"""    
+    """Test system observer component"""
+    
     @pytest.mark.asyncio
     async def test_system_observer_initialization(self):
-        """Test system observer initialization"""        observer = SystemObserver()
+        """Test system observer initialization"""
+        observer = SystemObserver()
         assert observer is not None
         assert hasattr(observer, 'observe_system')
 
 class TestMonitoringConfig:
-    """Test monitoring configuration"""    
+    """Test monitoring configuration"""
+    
     def test_config_creation(self):
-        """Test monitoring configuration creation"""        config = MonitoringConfig(
+        """Test monitoring configuration creation"""
+        config = MonitoringConfig(
             monitoring_interval=60,
             metrics_collection=['performance', 'quality', 'health'],
             alert_thresholds={'response_time': 2.0, 'error_rate': 5.0}

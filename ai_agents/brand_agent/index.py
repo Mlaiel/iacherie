@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Union
@@ -41,9 +42,11 @@ from ...utils.performance_monitor import PerformanceMonitor
 logger = logging.getLogger(__name__)
 
 class BrandAgentFactory:
-    """    Factory class for creating and managing brand agent instances
+    """
+    Factory class for creating and managing brand agent instances
     with optimal configuration and resource allocation
-    """    
+    """
+    
     def __init__(self):
         self.agent_instances: Dict[str, BrandAgent] = {}
         self.monitor_instances: Dict[str, BrandMonitor] = {}
@@ -56,7 +59,8 @@ class BrandAgentFactory:
         brand_id: str, 
         config: Optional[Dict[str, Any]] = None
     ) -> BrandAgent:
-        """Create optimally configured brand agent instance"""        try:
+        """Create optimally configured brand agent instance"""
+        try:
             if brand_id in self.agent_instances:
                 return self.agent_instances[brand_id]
             
@@ -81,7 +85,8 @@ class BrandAgentFactory:
         brand_id: str, 
         monitoring_config: Optional[Dict[str, Any]] = None
     ) -> BrandMonitor:
-        """Create comprehensive brand monitoring suite"""        try:
+        """Create comprehensive brand monitoring suite"""
+        try:
             if brand_id in self.monitor_instances:
                 return self.monitor_instances[brand_id]
             
@@ -105,7 +110,8 @@ class BrandAgentFactory:
         brand_id: str, 
         competitors: List[str] = None
     ) -> BrandIntelligenceEngine:
-        """Create competitive intelligence engine"""        try:
+        """Create competitive intelligence engine"""
+        try:
             if brand_id in self.intelligence_instances:
                 return self.intelligence_instances[brand_id]
             
@@ -129,7 +135,8 @@ class BrandAgentFactory:
         brand_id: str, 
         monetization_config: Optional[Dict[str, Any]] = None
     ) -> BrandMonetizationEngine:
-        """Create brand monetization and revenue optimization engine"""        try:
+        """Create brand monetization and revenue optimization engine"""
+        try:
             if brand_id in self.monetization_instances:
                 return self.monetization_instances[brand_id]
             
@@ -153,7 +160,8 @@ class BrandAgentFactory:
         brand_id: str, 
         suite_config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Create complete brand management suite with all components"""        try:
+        """Create complete brand management suite with all components"""
+        try:
             suite = {}
             
             # Create core brand agent
@@ -197,7 +205,8 @@ class BrandAgentFactory:
         agent: BrandAgent, 
         config: Dict[str, Any]
     ) -> None:
-        """Apply custom configuration to brand agent"""        try:
+        """Apply custom configuration to brand agent"""
+        try:
             # Configure protection levels
             if "protection_level" in config:
                 agent.protection_level = config["protection_level"]
@@ -222,7 +231,8 @@ class BrandAgentFactory:
         monitor: BrandMonitor, 
         config: Dict[str, Any]
     ) -> None:
-        """Apply monitoring configuration"""        try:
+        """Apply monitoring configuration"""
+        try:
             # Configure platforms to monitor
             if "platforms" in config:
                 monitor.monitored_platforms = config["platforms"]
@@ -239,7 +249,8 @@ class BrandAgentFactory:
             logger.error(f"Monitoring configuration failed: {str(e)}")
     
     async def get_brand_status_overview(self, brand_id: str) -> Dict[str, Any]:
-        """Get comprehensive status overview for a brand"""        try:
+        """Get comprehensive status overview for a brand"""
+        try:
             overview = {
                 "brand_id": brand_id,
                 "timestamp": datetime.utcnow().isoformat(),
@@ -281,22 +292,28 @@ brand_factory = BrandAgentFactory()
 
 # Convenience functions for easy access
 async def create_brand_agent(brand_id: str, config: Optional[Dict[str, Any]] = None) -> BrandAgent:
-    """Create a brand agent instance"""    return await brand_factory.create_brand_agent(brand_id, config)
+    """Create a brand agent instance"""
+    return await brand_factory.create_brand_agent(brand_id, config)
 
 async def create_monitoring_suite(brand_id: str, config: Optional[Dict[str, Any]] = None) -> BrandMonitor:
-    """Create a brand monitoring suite"""    return await brand_factory.create_monitoring_suite(brand_id, config)
+    """Create a brand monitoring suite"""
+    return await brand_factory.create_monitoring_suite(brand_id, config)
 
 async def create_intelligence_engine(brand_id: str, competitors: List[str] = None) -> BrandIntelligenceEngine:
-    """Create a competitive intelligence engine"""    return await brand_factory.create_intelligence_engine(brand_id, competitors)
+    """Create a competitive intelligence engine"""
+    return await brand_factory.create_intelligence_engine(brand_id, competitors)
 
 async def create_monetization_engine(brand_id: str, config: Optional[Dict[str, Any]] = None) -> BrandMonetizationEngine:
-    """Create a monetization engine"""    return await brand_factory.create_monetization_engine(brand_id, config)
+    """Create a monetization engine"""
+    return await brand_factory.create_monetization_engine(brand_id, config)
 
 async def create_complete_brand_suite(brand_id: str, config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-    """Create complete brand management suite"""    return await brand_factory.create_complete_brand_suite(brand_id, config)
+    """Create complete brand management suite"""
+    return await brand_factory.create_complete_brand_suite(brand_id, config)
 
 async def get_brand_overview(brand_id: str) -> Dict[str, Any]:
-    """Get brand status overview"""    return await brand_factory.get_brand_status_overview(brand_id)
+    """Get brand status overview"""
+    return await brand_factory.get_brand_status_overview(brand_id)
 
 # Brand Agent System Information
 BRAND_AGENT_INFO = {

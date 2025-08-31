@@ -24,7 +24,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import uuid
@@ -95,7 +96,8 @@ from ...utils.cache import CacheManager
 logger = logging.getLogger(__name__)
 
 class ModelType(Enum):
-    """Supported ML model types for content processing"""    CONTENT_CLASSIFIER = "content_classifier"
+    """Supported ML model types for content processing"""
+    CONTENT_CLASSIFIER = "content_classifier"
     QUALITY_SCORER = "quality_scorer"
     TREND_PREDICTOR = "trend_predictor"
     SIMILARITY_DETECTOR = "similarity_detector"
@@ -112,7 +114,8 @@ class ModelType(Enum):
     TEXT_PROCESSOR = "text_processor"
 
 class ModelStatus(Enum):
-    """Model lifecycle status"""    TRAINING = "training"
+    """Model lifecycle status"""
+    TRAINING = "training"
     VALIDATING = "validating"
     TESTING = "testing"
     READY = "ready"
@@ -122,13 +125,15 @@ class ModelStatus(Enum):
     ARCHIVED = "archived"
 
 class InferenceMode(Enum):
-    """Model inference execution modes"""    REAL_TIME = "real_time"
+    """Model inference execution modes"""
+    REAL_TIME = "real_time"
     BATCH = "batch"
     STREAMING = "streaming"
     ASYNC = "async"
 
 class ContentFormat(Enum):
-    """Supported content formats for ML processing"""    AUDIO = "audio"
+    """Supported content formats for ML processing"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -136,7 +141,8 @@ class ContentFormat(Enum):
 
 @dataclass
 class MLMetrics:
-    """Comprehensive ML performance metrics"""    model_accuracy: float = 0.0
+    """Comprehensive ML performance metrics"""
+    model_accuracy: float = 0.0
     precision: float = 0.0
     recall: float = 0.0
     f1_score: float = 0.0
@@ -157,7 +163,8 @@ class MLMetrics:
 
 @dataclass 
 class ModelConfig:
-    """Model configuration and hyperparameters"""    model_type: ModelType
+    """Model configuration and hyperparameters"""
+    model_type: ModelType
     model_name: str
     version: str = "1.0.0"
     framework: str = "sklearn"  # tensorflow, pytorch, sklearn, huggingface
@@ -185,7 +192,8 @@ class ModelConfig:
 
 @dataclass
 class TrainingRequest:
-    """Model training request structure"""    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Model training request structure"""
+    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     model_config: ModelConfig = None
     training_data_path: Optional[str] = None
     training_data: Optional[pd.DataFrame] = None
@@ -206,7 +214,8 @@ class TrainingRequest:
 
 @dataclass
 class InferenceRequest:
-    """Model inference request structure"""    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Model inference request structure"""
+    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     model_name: str
     model_version: Optional[str] = None
     input_data: Any = None
@@ -225,7 +234,8 @@ class InferenceRequest:
 
 @dataclass
 class MLResult:
-    """ML operation result structure"""    success: bool
+    """ML operation result structure"""
+    success: bool
     result_type: str  # training, inference, evaluation, optimization
     model_name: str
     model_version: str
@@ -243,7 +253,8 @@ class MLResult:
     created_at: datetime = field(default_factory=datetime.utcnow)
 
 class MLAgent(BaseAgent):
-    """    Ultra-Advanced Machine Learning Agent for Content Processing & AI Operations
+    """
+    Ultra-Advanced Machine Learning Agent for Content Processing & AI Operations
     
     Comprehensive ML orchestrator providing:
     - Multi-framework model training (TensorFlow, PyTorch, scikit-learn, Transformers)
@@ -256,7 +267,8 @@ class MLAgent(BaseAgent):
     - AutoML and hyperparameter optimization
     - Explainable AI and model interpretation
     - Production-grade MLOps integration
-    """    
+    """
+    
     # Prometheus metrics
     MODEL_TRAINING_COUNT = Counter('ml_agent_model_training_total', 'Total model training jobs', ['model_type', 'status'])
     INFERENCE_COUNT = Counter('ml_agent_inference_total', 'Total inference requests', ['model_name', 'content_format'])
@@ -342,7 +354,8 @@ class MLAgent(BaseAgent):
         logger.info(f"Frameworks: TensorFlow {self.tensorflow_version}, PyTorch {self.pytorch_version}, scikit-learn {self.sklearn_version}")
 
     async def initialize(self) -> bool:
-        """Initialize ML Agent with frameworks, models, and monitoring"""        try:
+        """Initialize ML Agent with frameworks, models, and monitoring"""
+        try:
             # Initialize base agent
             if not await super().initialize():
                 return False
@@ -375,7 +388,8 @@ class MLAgent(BaseAgent):
             return False
 
     async def train_model(self, request: TrainingRequest) -> AgentResponse:
-        """        Train machine learning model with advanced MLOps pipeline
+        """
+        Train machine learning model with advanced MLOps pipeline
         
         Features:
         - Multi-framework support (TensorFlow, PyTorch, scikit-learn)
@@ -384,7 +398,8 @@ class MLAgent(BaseAgent):
         - Model validation and testing
         - Experiment tracking with MLflow
         - Model versioning and deployment
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         training_id = request.request_id
         
         try:
@@ -520,7 +535,8 @@ class MLAgent(BaseAgent):
             )
 
     async def predict(self, request: InferenceRequest) -> AgentResponse:
-        """        Execute model inference with advanced processing pipeline
+        """
+        Execute model inference with advanced processing pipeline
         
         Features:
         - Multi-modal content processing
@@ -529,7 +545,8 @@ class MLAgent(BaseAgent):
         - Quality assessment and validation
         - Explainable AI predictions
         - Performance monitoring and metrics
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Increment inference counter
@@ -654,7 +671,8 @@ class MLAgent(BaseAgent):
                             content_data: Any, 
                             content_format: ContentFormat,
                             analysis_types: List[str] = None) -> AgentResponse:
-        """        Comprehensive multi-modal content analysis using specialized ML models
+        """
+        Comprehensive multi-modal content analysis using specialized ML models
         
         Analysis Types:
         - quality_assessment: Content quality scoring
@@ -664,7 +682,8 @@ class MLAgent(BaseAgent):
         - seo_optimization: SEO score and recommendations
         - monetization_prediction: Revenue potential analysis
         - collaboration_matching: Creator collaboration opportunities
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             logger.info(f"Starting content analysis for format: {content_format.value}")
@@ -801,7 +820,8 @@ class MLAgent(BaseAgent):
     async def batch_process_content(self,
                                   content_batch: List[Dict[str, Any]], 
                                   processing_config: Dict[str, Any] = None) -> AgentResponse:
-        """        Efficient batch processing of multiple content items with ML analysis
+        """
+        Efficient batch processing of multiple content items with ML analysis
         
         Features:
         - Parallel processing with configurable batch sizes
@@ -809,7 +829,8 @@ class MLAgent(BaseAgent):
         - Progress tracking and partial result handling
         - Quality control and error handling
         - Performance optimization with caching
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             logger.info(f"Starting batch processing for {len(content_batch)} items")
@@ -900,7 +921,8 @@ class MLAgent(BaseAgent):
             )
 
     async def get_model_metrics(self, model_name: str = None) -> AgentResponse:
-        """Get comprehensive ML model performance metrics and statistics"""        try:
+        """Get comprehensive ML model performance metrics and statistics"""
+        try:
             if model_name:
                 # Get specific model metrics
                 if model_name not in self.model_registry:
@@ -976,7 +998,8 @@ class MLAgent(BaseAgent):
 
     # Private helper methods
     async def _setup_mlflow_tracking(self):
-        """Setup MLflow experiment tracking"""        try:
+        """Setup MLflow experiment tracking"""
+        try:
             mlflow.set_tracking_uri(self.mlflow_tracking_uri)
             mlflow.set_experiment(self.mlflow_experiment_name)
             logger.info(f"MLflow tracking setup: {self.mlflow_tracking_uri}")
@@ -984,7 +1007,8 @@ class MLAgent(BaseAgent):
             logger.warning(f"MLflow setup failed: {str(e)}")
 
     async def _initialize_ml_frameworks(self):
-        """Initialize ML frameworks and GPU support"""        # TensorFlow GPU setup
+        """Initialize ML frameworks and GPU support"""
+        # TensorFlow GPU setup
         if self.config.get('use_gpu', True):
             gpus = tf.config.experimental.list_physical_devices('GPU')
             if gpus:
@@ -1001,42 +1025,48 @@ class MLAgent(BaseAgent):
                 logger.info(f"PyTorch GPU support enabled: {torch.cuda.device_count()} GPUs")
 
     def _init_audio_processor(self):
-        """Initialize audio content processor"""        return {
+        """Initialize audio content processor"""
+        return {
             "supported_formats": ["mp3", "wav", "flac", "aac", "ogg"],
             "preprocessing": ["normalize", "spectogram", "mfcc", "mel_scale"],
             "models": ["audio_classifier", "genre_detector", "quality_scorer"]
         }
 
     def _init_video_processor(self):
-        """Initialize video content processor"""        return {
+        """Initialize video content processor"""
+        return {
             "supported_formats": ["mp4", "avi", "mkv", "mov", "webm"],
             "preprocessing": ["frame_extraction", "optical_flow", "temporal_features"],
             "models": ["video_classifier", "scene_detector", "action_recognition"]
         }
 
     def _init_image_processor(self):
-        """Initialize image content processor"""        return {
+        """Initialize image content processor"""
+        return {
             "supported_formats": ["jpg", "png", "gif", "bmp", "tiff"],
             "preprocessing": ["resize", "normalize", "augmentation", "feature_extraction"],
             "models": ["image_classifier", "object_detector", "style_transfer"]
         }
 
     def _init_text_processor(self):
-        """Initialize text content processor"""        return {
+        """Initialize text content processor"""
+        return {
             "supported_formats": ["txt", "md", "html", "json"],
             "preprocessing": ["tokenization", "embedding", "normalization", "feature_extraction"],
             "models": ["text_classifier", "sentiment_analyzer", "topic_modeler"]
         }
 
     def _init_multimodal_processor(self):
-        """Initialize multimodal content processor"""        return {
+        """Initialize multimodal content processor"""
+        return {
             "supported_combinations": ["text_image", "audio_video", "text_audio", "all_modalities"],
             "preprocessing": ["modality_alignment", "feature_fusion", "cross_modal_attention"],
             "models": ["multimodal_classifier", "cross_modal_retrieval", "content_generator"]
         }
 
     async def _load_pretrained_models(self):
-        """Load pre-trained models for common tasks"""        try:
+        """Load pre-trained models for common tasks"""
+        try:
             # Load essential models for content processing
             pretrained_models = [
                 "content_quality_scorer",
@@ -1064,18 +1094,22 @@ class MLAgent(BaseAgent):
             logger.error(f"Failed to load pretrained models: {e}")
 
     async def _setup_model_monitoring(self):
-        """Setup model performance monitoring"""        # Start background monitoring task
+        """Setup model performance monitoring"""
+        # Start background monitoring task
         asyncio.create_task(self._monitor_model_performance())
 
     async def _initialize_content_processors(self):
-        """Initialize content processing pipelines"""        logger.info("Content processors initialized for multi-modal processing")
+        """Initialize content processing pipelines"""
+        logger.info("Content processors initialized for multi-modal processing")
 
     async def _setup_background_tasks(self):
-        """Setup background monitoring and maintenance tasks"""        asyncio.create_task(self._model_drift_detection())
+        """Setup background monitoring and maintenance tasks"""
+        asyncio.create_task(self._model_drift_detection())
         asyncio.create_task(self._cleanup_expired_cache())
 
     async def _monitor_model_performance(self):
-        """Background task for monitoring model performance"""        while not self.shutdown_requested:
+        """Background task for monitoring model performance"""
+        while not self.shutdown_requested:
             try:
                 # Update model metrics
                 for model_name, model_info in self.loaded_models.items():
@@ -1094,7 +1128,8 @@ class MLAgent(BaseAgent):
                 await asyncio.sleep(60)
 
     async def _model_drift_detection(self):
-        """Background model drift detection"""        while not self.shutdown_requested:
+        """Background model drift detection"""
+        while not self.shutdown_requested:
             try:
                 # Implement model drift detection logic
                 await asyncio.sleep(3600)  # Check hourly
@@ -1103,7 +1138,8 @@ class MLAgent(BaseAgent):
                 await asyncio.sleep(3600)
 
     async def _cleanup_expired_cache(self):
-        """Cleanup expired model cache entries"""        while not self.shutdown_requested:
+        """Cleanup expired model cache entries"""
+        while not self.shutdown_requested:
             try:
                 self.model_cache.cleanup_expired()
                 await asyncio.sleep(1800)  # Cleanup every 30 minutes
@@ -1113,7 +1149,8 @@ class MLAgent(BaseAgent):
 
     # Training helper methods
     async def _validate_training_request(self, request: TrainingRequest) -> Dict[str, Any]:
-        """Validate training request parameters"""        errors = []
+        """Validate training request parameters"""
+        errors = []
         
         if not request.model_config:
             errors.append("Model configuration is required")
@@ -1127,7 +1164,8 @@ class MLAgent(BaseAgent):
         return {"valid": len(errors) == 0, "errors": errors}
 
     async def _prepare_training_data(self, request: TrainingRequest) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-        """Prepare and split training data"""        if request.training_data is not None:
+        """Prepare and split training data"""
+        if request.training_data is not None:
             data = request.training_data
         else:
             data = pd.read_csv(request.training_data_path)
@@ -1147,7 +1185,8 @@ class MLAgent(BaseAgent):
         return train_data, val_data, test_data
 
     async def _auto_feature_engineering(self, data: pd.DataFrame, config: ModelConfig) -> Tuple[pd.DataFrame, Dict[str, Any]]:
-        """Automated feature engineering pipeline"""        feature_pipeline = {}
+        """Automated feature engineering pipeline"""
+        feature_pipeline = {}
         
         # Implement automatic feature engineering
         # This is a simplified version - in production, use libraries like featuretools
@@ -1156,12 +1195,14 @@ class MLAgent(BaseAgent):
         return engineered_data, feature_pipeline
 
     async def _hyperparameter_optimization(self, train_data: pd.DataFrame, val_data: pd.DataFrame, config: ModelConfig) -> Dict[str, Any]:
-        """Automated hyperparameter optimization"""        # Implement hyperparameter optimization using GridSearchCV or similar
+        """Automated hyperparameter optimization"""
+        # Implement hyperparameter optimization using GridSearchCV or similar
         best_params = {}
         return best_params
 
     async def _train_model_framework(self, train_data: pd.DataFrame, val_data: pd.DataFrame, config: ModelConfig) -> Tuple[Any, Dict[str, Any]]:
-        """Train model using specified framework"""        if config.framework == "sklearn":
+        """Train model using specified framework"""
+        if config.framework == "sklearn":
             return await self._train_sklearn_model(train_data, val_data, config)
         elif config.framework == "tensorflow":
             return await self._train_tensorflow_model(train_data, val_data, config)
@@ -1171,7 +1212,8 @@ class MLAgent(BaseAgent):
             raise ValueError(f"Unsupported framework: {config.framework}")
 
     async def _train_sklearn_model(self, train_data: pd.DataFrame, val_data: pd.DataFrame, config: ModelConfig) -> Tuple[Any, Dict[str, Any]]:
-        """Train scikit-learn model"""        X_train = train_data[config.feature_columns]
+        """Train scikit-learn model"""
+        X_train = train_data[config.feature_columns]
         y_train = train_data[config.target_column]
         
         # Choose model based on type
@@ -1186,7 +1228,8 @@ class MLAgent(BaseAgent):
         return model, {"training_completed": True}
 
     async def _evaluate_model(self, model: Any, test_data: pd.DataFrame, config: ModelConfig) -> Dict[str, float]:
-        """Evaluate trained model"""        X_test = test_data[config.feature_columns]
+        """Evaluate trained model"""
+        X_test = test_data[config.feature_columns]
         y_test = test_data[config.target_column]
         
         predictions = model.predict(X_test)
@@ -1202,7 +1245,8 @@ class MLAgent(BaseAgent):
 
     # Inference helper methods
     async def _validate_inference_request(self, request: InferenceRequest) -> Dict[str, Any]:
-        """Validate inference request parameters"""        errors = []
+        """Validate inference request parameters"""
+        errors = []
         
         if not request.model_name:
             errors.append("Model name is required")
@@ -1213,7 +1257,8 @@ class MLAgent(BaseAgent):
         return {"valid": len(errors) == 0, "errors": errors}
 
     async def _load_model_for_inference(self, model_name: str, model_version: str = None) -> Optional[Dict[str, Any]]:
-        """Load model for inference with caching"""        cache_key = f"{model_name}:{model_version or 'latest'}"
+        """Load model for inference with caching"""
+        cache_key = f"{model_name}:{model_version or 'latest'}"
         
         # Check cache first
         cached_model = self.model_cache.get(cache_key)
@@ -1229,38 +1274,46 @@ class MLAgent(BaseAgent):
         return None
 
     async def _preprocess_inference_input(self, input_data: Any, content_format: ContentFormat, model_config: Dict[str, Any], feature_pipeline: Dict[str, Any] = None) -> Any:
-        """Preprocess input data for inference"""        # Implement preprocessing based on content format
+        """Preprocess input data for inference"""
+        # Implement preprocessing based on content format
         return input_data
 
     async def _real_time_inference(self, model: Any, input_data: Any, request: InferenceRequest) -> Dict[str, Any]:
-        """Execute real-time inference"""        predictions = model.predict(input_data)
+        """Execute real-time inference"""
+        predictions = model.predict(input_data)
         return {"predictions": predictions}
 
     async def _batch_inference(self, model: Any, input_data: Any, request: InferenceRequest) -> Dict[str, Any]:
-        """Execute batch inference"""        predictions = model.predict(input_data)
+        """Execute batch inference"""
+        predictions = model.predict(input_data)
         return {"predictions": predictions}
 
     async def _streaming_inference(self, model: Any, input_data: Any, request: InferenceRequest) -> Dict[str, Any]:
-        """Execute streaming inference"""        predictions = model.predict(input_data)
+        """Execute streaming inference"""
+        predictions = model.predict(input_data)
         return {"predictions": predictions}
 
     async def _async_inference(self, model: Any, input_data: Any, request: InferenceRequest) -> Dict[str, Any]:
-        """Execute asynchronous inference"""        predictions = model.predict(input_data)
+        """Execute asynchronous inference"""
+        predictions = model.predict(input_data)
         return {"predictions": predictions}
 
     # Additional helper methods would continue here...
     # For brevity, I'm including just the essential structure
 
 class MLAgentManager:
-    """    Manager class for coordinating multiple ML agents and workflows
-    """    
+    """
+    Manager class for coordinating multiple ML agents and workflows
+    """
+    
     def __init__(self):
         self.agents: Dict[str, MLAgent] = {}
         self.workflow_queue = asyncio.Queue()
         self.active_workflows: Dict[str, Dict[str, Any]] = {}
         
     async def initialize(self):
-        """Initialize ML agent manager"""        # Create primary ML agent
+        """Initialize ML agent manager"""
+        # Create primary ML agent
         self.agents["primary"] = MLAgent()
         await self.agents["primary"].initialize()
         
@@ -1268,7 +1321,8 @@ class MLAgentManager:
         asyncio.create_task(self._process_workflows())
         
     async def process_bulk_training(self, training_requests: List[TrainingRequest]) -> List[AgentResponse]:
-        """Process multiple training requests in parallel"""        tasks = []
+        """Process multiple training requests in parallel"""
+        tasks = []
         for request in training_requests:
             task = self.agents["primary"].train_model(request)
             tasks.append(task)
@@ -1281,7 +1335,8 @@ class MLAgentManager:
         ) for r in results]
         
     async def _process_workflows(self):
-        """Background workflow processor"""        while True:
+        """Background workflow processor"""
+        while True:
             try:
                 workflow = await self.workflow_queue.get()
                 await self._execute_workflow(workflow)
@@ -1291,7 +1346,8 @@ class MLAgentManager:
                 await asyncio.sleep(1)
                 
     async def _execute_workflow(self, workflow: Dict[str, Any]):
-        """Execute ML workflow"""        workflow_id = workflow["id"]
+        """Execute ML workflow"""
+        workflow_id = workflow["id"]
         self.active_workflows[workflow_id] = workflow
         
         try:
@@ -1312,7 +1368,8 @@ class MLAgentManager:
             del self.active_workflows[workflow_id]
 
     async def _execute_workflow_step(self, step: Dict[str, Any]):
-        """Execute individual workflow step"""        step_type = step["type"]
+        """Execute individual workflow step"""
+        step_type = step["type"]
         agent = self.agents["primary"]
         
         if step_type == "training":

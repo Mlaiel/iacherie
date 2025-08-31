@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""import uuid
+"""
+import uuid
 import json
 import asyncio
 from datetime import datetime, timezone, timedelta
@@ -47,7 +48,8 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationType(Enum):
-    """Notification types for creators"""    CONTENT_PROTECTION_ALERT = "content_protection_alert"
+    """Notification types for creators"""
+    CONTENT_PROTECTION_ALERT = "content_protection_alert"
     COLLABORATION_REQUEST = "collaboration_request"
     REVENUE_UPDATE = "revenue_update"
     PLATFORM_SYNC = "platform_sync"
@@ -60,7 +62,8 @@ class NotificationType(Enum):
 
 
 class NotificationPriority(Enum):
-    """Notification priority levels"""    LOW = "low"
+    """Notification priority levels"""
+    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -68,7 +71,8 @@ class NotificationPriority(Enum):
 
 
 class ChannelType(Enum):
-    """Notification delivery channels"""    EMAIL = "email"
+    """Notification delivery channels"""
+    EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
     IN_APP = "in_app"
@@ -80,7 +84,8 @@ class ChannelType(Enum):
 
 
 class NotificationStatus(Enum):
-    """Notification delivery status"""    PENDING = "pending"
+    """Notification delivery status"""
+    PENDING = "pending"
     QUEUED = "queued"
     SENDING = "sending"
     DELIVERED = "delivered"
@@ -91,7 +96,8 @@ class NotificationStatus(Enum):
 
 
 class ContentCreatorType(Enum):
-    """Creator types for targeted notifications"""    MUSICIAN = "musician"
+    """Creator types for targeted notifications"""
+    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     COMEDIAN = "comedian"
@@ -103,7 +109,8 @@ class ContentCreatorType(Enum):
 
 @dataclass
 class NotificationTemplate:
-    """Notification template structure"""    template_id: str
+    """Notification template structure"""
+    template_id: str
     name: str
     content_type: str
     subject_template: str
@@ -116,7 +123,8 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationRecipient:
-    """Notification recipient information"""    user_id: str
+    """Notification recipient information"""
+    user_id: str
     creator_type: ContentCreatorType
     channels: List[ChannelType]
     preferences: Dict[str, Any]
@@ -126,7 +134,8 @@ class NotificationRecipient:
 
 
 class NotificationChannel(Base):
-    """Notification channel configuration"""    __tablename__ = "notification_channels"
+    """Notification channel configuration"""
+    __tablename__ = "notification_channels"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(String(255), nullable=False, index=True)
@@ -149,7 +158,8 @@ class NotificationChannel(Base):
 
 
 class NotificationTemplate(Base):
-    """Notification template model"""    __tablename__ = "notification_templates"
+    """Notification template model"""
+    __tablename__ = "notification_templates"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     template_key = Column(String(255), nullable=False, unique=True, index=True)
@@ -187,7 +197,8 @@ class NotificationTemplate(Base):
 
 
 class Notification(Base):
-    """Notification instance model"""    __tablename__ = "notifications"
+    """Notification instance model"""
+    __tablename__ = "notifications"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     notification_id = Column(String(255), nullable=False, unique=True, index=True)
@@ -234,7 +245,8 @@ class Notification(Base):
 
 
 class NotificationDelivery(Base):
-    """Notification delivery tracking per channel"""    __tablename__ = "notification_deliveries"
+    """Notification delivery tracking per channel"""
+    __tablename__ = "notification_deliveries"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     notification_id = Column(String(255), nullable=False, index=True)
@@ -272,7 +284,8 @@ class NotificationDelivery(Base):
 
 
 class NotificationPreference(Base):
-    """User notification preferences"""    __tablename__ = "notification_preferences"
+    """User notification preferences"""
+    __tablename__ = "notification_preferences"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(String(255), nullable=False, index=True)
@@ -299,7 +312,8 @@ class NotificationPreference(Base):
 
 
 class NotificationMetrics(Base):
-    """Notification system metrics"""    __tablename__ = "notification_metrics"
+    """Notification system metrics"""
+    __tablename__ = "notification_metrics"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     metric_type = Column(String(100), nullable=False, index=True)
@@ -315,7 +329,8 @@ class NotificationMetrics(Base):
 
 
 class NotificationEngine:
-    """Enterprise notification engine with multi-channel delivery"""    
+    """Enterprise notification engine with multi-channel delivery"""
+    
     def __init__(self, redis_client: redis.Redis, db_session: Session):
         self.redis = redis_client
         self.db = db_session
@@ -331,7 +346,8 @@ class NotificationEngine:
         self.webhook_config = {}
     
     async def initialize(self):
-        """Initialize notification engine"""        try:
+        """Initialize notification engine"""
+        try:
             # Load templates and channels
             await self._load_templates()
             await self._load_channel_configurations()
@@ -347,7 +363,8 @@ class NotificationEngine:
             raise
     
     async def shutdown(self):
-        """Graceful shutdown"""        self.running = False
+        """Graceful shutdown"""
+        self.running = False
         
         # Stop workers
         for task in self.worker_tasks:
@@ -371,7 +388,8 @@ class NotificationEngine:
         localizations: Optional[Dict[str, Dict[str, str]]] = None,
         priority: NotificationPriority = NotificationPriority.NORMAL
     ) -> NotificationTemplate:
-        """Create notification template"""        try:
+        """Create notification template"""
+        try:
             template = NotificationTemplate(
                 template_key=template_key,
                 name=name,
@@ -409,7 +427,8 @@ class NotificationEngine:
         scheduled_at: Optional[datetime] = None,
         context: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Send notification to user"""        try:
+        """Send notification to user"""
+        try:
             # Get template
             template = self.templates.get(template_key)
             if not template:
@@ -472,7 +491,8 @@ class NotificationEngine:
         priority: Optional[NotificationPriority] = None,
         creator_type_filter: Optional[ContentCreatorType] = None
     ) -> List[str]:
-        """Send bulk notifications to multiple users"""        notification_ids = []
+        """Send bulk notifications to multiple users"""
+        notification_ids = []
         
         for user_id in user_ids:
             try:
@@ -510,7 +530,8 @@ class NotificationEngine:
         config: Dict[str, Any],
         verify: bool = True
     ) -> NotificationChannel:
-        """Register notification channel for user"""        try:
+        """Register notification channel for user"""
+        try:
             # Check if channel already exists
             existing = self.db.query(NotificationChannel).filter(
                 NotificationChannel.user_id == user_id,
@@ -550,7 +571,8 @@ class NotificationEngine:
             raise
     
     async def verify_channel(self, user_id: str, channel_type: ChannelType, token: str) -> bool:
-        """Verify notification channel"""        try:
+        """Verify notification channel"""
+        try:
             channel = self.db.query(NotificationChannel).filter(
                 NotificationChannel.user_id == user_id,
                 NotificationChannel.channel_type == channel_type.value,
@@ -583,7 +605,8 @@ class NotificationEngine:
         channel_type: ChannelType,
         preferences: Dict[str, Any]
     ):
-        """Update user notification preferences"""        try:
+        """Update user notification preferences"""
+        try:
             existing = self.db.query(NotificationPreference).filter(
                 NotificationPreference.user_id == user_id,
                 NotificationPreference.notification_type == notification_type.value,
@@ -621,7 +644,8 @@ class NotificationEngine:
         offset: int = 0,
         notification_type: Optional[NotificationType] = None
     ) -> List[Dict[str, Any]]:
-        """Get user's notification history"""        try:
+        """Get user's notification history"""
+        try:
             query = self.db.query(Notification).filter(
                 Notification.user_id == user_id
             )
@@ -655,7 +679,8 @@ class NotificationEngine:
         self,
         notification_id: str
     ) -> Dict[str, Any]:
-        """Get notification delivery statistics"""        try:
+        """Get notification delivery statistics"""
+        try:
             deliveries = self.db.query(NotificationDelivery).filter(
                 NotificationDelivery.notification_id == notification_id
             ).all()
@@ -686,7 +711,8 @@ class NotificationEngine:
     # Private methods
     
     async def _load_templates(self):
-        """Load notification templates from database"""        templates = self.db.query(NotificationTemplate).filter(
+        """Load notification templates from database"""
+        templates = self.db.query(NotificationTemplate).filter(
             NotificationTemplate.is_active == True
         ).all()
         
@@ -694,7 +720,8 @@ class NotificationEngine:
             self.templates[template.template_key] = template
     
     async def _load_channel_configurations(self):
-        """Load channel configurations"""        try:
+        """Load channel configurations"""
+        try:
             # Email configuration
             self.channel_configs[ChannelType.EMAIL] = {
                 'smtp_host': 'smtp.gmail.com',
@@ -745,7 +772,8 @@ class NotificationEngine:
             raise
     
     async def _start_workers(self):
-        """Start background worker tasks"""        self.worker_tasks.extend([
+        """Start background worker tasks"""
+        self.worker_tasks.extend([
             asyncio.create_task(self._notification_processor_worker()),
             asyncio.create_task(self._delivery_scheduler_worker()),
             asyncio.create_task(self._metrics_collector_worker())
@@ -756,7 +784,8 @@ class NotificationEngine:
         user_id: str, 
         requested_channels: Optional[List[ChannelType]]
     ) -> List[ChannelType]:
-        """Get user's available notification channels"""        # Get user's verified channels
+        """Get user's available notification channels"""
+        # Get user's verified channels
         channels = self.db.query(NotificationChannel).filter(
             NotificationChannel.user_id == user_id,
             NotificationChannel.is_enabled == True,
@@ -771,7 +800,8 @@ class NotificationEngine:
         return available_channels
     
     async def _render_template(self, template: str, variables: Dict[str, Any]) -> str:
-        """Render template with variables"""        try:
+        """Render template with variables"""
+        try:
             # Simple string replacement - could use Jinja2 for more complex templates
             rendered = template
             for key, value in variables.items():
@@ -782,7 +812,8 @@ class NotificationEngine:
             return template
     
     async def _queue_notification(self, notification_id: str, channels: List[ChannelType]):
-        """Queue notification for delivery"""        await self.redis.lpush(
+        """Queue notification for delivery"""
+        await self.redis.lpush(
             "notification_queue",
             json.dumps({
                 "notification_id": notification_id,
@@ -792,7 +823,8 @@ class NotificationEngine:
         )
     
     async def _send_verification(self, channel: NotificationChannel):
-        """Send channel verification message"""        try:
+        """Send channel verification message"""
+        try:
             channel_type = ChannelType(channel.channel_type)
             verification_code = str(uuid.uuid4())[:8].upper()
             
@@ -824,8 +856,10 @@ class NotificationEngine:
             return False
     
     async def _send_email_verification(self, channel: NotificationChannel, code: str):
-        """Send email verification"""        subject = "Verify Your Email - IA Influencer Platform"
-        body = f"""        Dear Creator,
+        """Send email verification"""
+        subject = "Verify Your Email - IA Influencer Platform"
+        body = f"""
+        Dear Creator,
         
         Please verify your email address by entering this code: {code}
         
@@ -833,35 +867,41 @@ class NotificationEngine:
         
         Best regards,
         IA Influencer Team
-        """        
+        """
+        
         # Use your email service implementation
         await self._send_email(channel.endpoint, subject, body)
     
     async def _send_sms_verification(self, channel: NotificationChannel, code: str):
-        """Send SMS verification"""        message = f"IA Influencer: Your verification code is {code}. Expires in 15 minutes."
+        """Send SMS verification"""
+        message = f"IA Influencer: Your verification code is {code}. Expires in 15 minutes."
         
         # Use your SMS service implementation
         await self._send_sms(channel.endpoint, message)
     
     async def _send_push_verification(self, channel: NotificationChannel, code: str):
-        """Send push notification verification"""        title = "Verify Device"
+        """Send push notification verification"""
+        title = "Verify Device"
         body = f"Your verification code: {code}"
         
         # Use your push notification service implementation
         await self._send_push_notification(channel.endpoint, title, body)
     
     async def _get_user_creator_type(self, user_id: str) -> Optional[ContentCreatorType]:
-        """Get user's creator type"""        # Would query user profile for creator type
+        """Get user's creator type"""
+        # Would query user profile for creator type
         return ContentCreatorType.MULTI_FORMAT  # Default
     
     async def _personalize_variables(self, user_id: str, variables: Dict[str, Any]) -> Dict[str, Any]:
-        """Personalize variables for specific user"""        # Add user-specific data to variables
+        """Personalize variables for specific user"""
+        # Add user-specific data to variables
         personalized = variables.copy()
         personalized["user_id"] = user_id
         return personalized
     
     async def _notification_processor_worker(self):
-        """Background worker for processing notifications"""        while self.running:
+        """Background worker for processing notifications"""
+        while self.running:
             try:
                 await asyncio.sleep(1)
                 # Process notification queue
@@ -871,7 +911,8 @@ class NotificationEngine:
                 await asyncio.sleep(5)
     
     async def _delivery_scheduler_worker(self):
-        """Background worker for delivery scheduling"""        while self.running:
+        """Background worker for delivery scheduling"""
+        while self.running:
             try:
                 await asyncio.sleep(10)
                 # Process scheduled deliveries
@@ -881,7 +922,8 @@ class NotificationEngine:
                 await asyncio.sleep(5)
     
     async def _metrics_collector_worker(self):
-        """Background worker for metrics collection"""        while self.running:
+        """Background worker for metrics collection"""
+        while self.running:
             try:
                 await asyncio.sleep(30)
                 # Collect metrics

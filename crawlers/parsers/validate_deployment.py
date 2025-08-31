@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import sys
 import time
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 
 async def validate_module_imports() -> bool:
-    """Validate all module imports"""    logger.info("🔍 Validating module imports...")
+    """Validate all module imports"""
+    logger.info("🔍 Validating module imports...")
     
     try:
         # Core imports
@@ -80,7 +82,8 @@ async def validate_module_imports() -> bool:
 
 
 async def validate_module_structure() -> bool:
-    """Validate module file structure"""    logger.info("🏗️ Validating module structure...")
+    """Validate module file structure"""
+    logger.info("🏗️ Validating module structure...")
     
     required_files = [
         '__init__.py',
@@ -127,7 +130,8 @@ async def validate_module_structure() -> bool:
 
 
 async def test_parser_initialization() -> bool:
-    """Test parser system initialization"""    logger.info("🚀 Testing parser initialization...")
+    """Test parser system initialization"""
+    logger.info("🚀 Testing parser initialization...")
     
     try:
         # Test basic initialization
@@ -159,7 +163,8 @@ async def test_parser_initialization() -> bool:
 
 
 async def test_semantic_parser() -> bool:
-    """Test semantic parser functionality"""    logger.info("🧠 Testing semantic parser...")
+    """Test semantic parser functionality"""
+    logger.info("🧠 Testing semantic parser...")
     
     try:
         from .semantic_parsers import SemanticContentParser
@@ -183,7 +188,8 @@ async def test_semantic_parser() -> bool:
 
 
 async def test_economic_parser() -> bool:
-    """Test economic intelligence parser"""    logger.info("💰 Testing economic parser...")
+    """Test economic intelligence parser"""
+    logger.info("💰 Testing economic parser...")
     
     try:
         from .economic_parsers import EconomicIntelligenceEngine, RevenueRecord, RevenueSource, Currency
@@ -224,7 +230,8 @@ async def test_economic_parser() -> bool:
 
 
 async def test_collaboration_parser() -> bool:
-    """Test collaboration matching parser"""    logger.info("🤝 Testing collaboration parser...")
+    """Test collaboration matching parser"""
+    logger.info("🤝 Testing collaboration parser...")
     
     try:
         from .collaboration_parsers import (
@@ -273,7 +280,8 @@ async def test_collaboration_parser() -> bool:
 
 
 async def test_trend_parser() -> bool:
-    """Test trend analysis parser"""    logger.info("📈 Testing trend parser...")
+    """Test trend analysis parser"""
+    logger.info("📈 Testing trend parser...")
     
     try:
         from .trend_parsers import (
@@ -315,7 +323,8 @@ async def test_trend_parser() -> bool:
 
 
 async def run_comprehensive_validation() -> Dict[str, bool]:
-    """Run comprehensive validation suite"""    logger.info("🔬 Starting comprehensive parsers module validation...")
+    """Run comprehensive validation suite"""
+    logger.info("🔬 Starting comprehensive parsers module validation...")
     
     validation_results = {}
     
@@ -338,7 +347,8 @@ async def run_comprehensive_validation() -> Dict[str, bool]:
 
 
 async def main():
-    """Main validation execution"""    start_time = time.time()
+    """Main validation execution"""
+    start_time = time.time()
     
     logger.info("=" * 60)
     logger.info("🚀 IA INFLUENCER AGENT - PARSERS MODULE VALIDATION")

@@ -15,7 +15,8 @@ Contact: mlaiel@live.de for licensing and collaboration.
 Any unauthorized use, copying, or distribution without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any, Union
 import logging
@@ -38,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 
 class MultimodalContentClassifier:
-    """    Enterprise-grade multimodal content classification system.
+    """
+    Enterprise-grade multimodal content classification system.
     
     Features:
     - Unified classification across audio, video, image, and text content
@@ -48,9 +50,11 @@ class MultimodalContentClassifier:
     - Multi-format copyright detection
     - Quality assessment across all modalities
     - Intelligent content fusion and summarization
-    """    
+    """
+    
     def __init__(self, model_path: Optional[str] = None):
-        """Initialize multimodal classifier with all component classifiers."""        self.settings = get_settings()
+        """Initialize multimodal classifier with all component classifiers."""
+        self.settings = get_settings()
         self.ml_engine = MLEngine()
         
         # Initialize component classifiers
@@ -68,7 +72,8 @@ class MultimodalContentClassifier:
         }
 
     def _init_classifiers(self, model_path: Optional[str]):
-        """Initialize all content type classifiers."""        try:
+        """Initialize all content type classifiers."""
+        try:
             self.audio_classifier = AudioContentClassifier(model_path)
             self.video_classifier = VideoContentClassifier(model_path)
             self.image_classifier = ImageContentClassifier(model_path)
@@ -81,7 +86,8 @@ class MultimodalContentClassifier:
             raise ClassificationError(f"Failed to initialize multimodal classifiers: {e}")
 
     def _init_content_mappings(self):
-        """Initialize content type and format mappings."""        self.content_type_map = {
+        """Initialize content type and format mappings."""
+        self.content_type_map = {
             'audio': {
                 'extensions': ['.mp3', '.wav', '.flac', '.aac', '.m4a', '.ogg', '.wma'],
                 'mime_types': ['audio/mpeg', 'audio/wav', 'audio/flac', 'audio/aac', 'audio/ogg']
@@ -118,7 +124,8 @@ class MultimodalContentClassifier:
         content_paths: Dict[str, Union[str, List[str]]], 
         options: Optional[Dict] = None
     ) -> Dict[str, Any]:
-        """        Comprehensive multimodal content classification.
+        """
+        Comprehensive multimodal content classification.
         
         Args:
             content_paths: Dictionary mapping content types to file paths
@@ -127,7 +134,8 @@ class MultimodalContentClassifier:
             
         Returns:
             Unified multimodal classification results
-        """        try:
+        """
+        try:
             if not content_paths:
                 raise ClassificationError("No content paths provided")
             
@@ -178,7 +186,8 @@ class MultimodalContentClassifier:
             raise ClassificationError(f"Multimodal classification failed: {e}")
 
     async def _organize_content(self, content_paths: Dict[str, Union[str, List[str]]]) -> Dict[str, List[str]]:
-        """Organize and validate content paths by type."""        organized = {}
+        """Organize and validate content paths by type."""
+        organized = {}
         
         for content_type, paths in content_paths.items():
             if isinstance(paths, str):
@@ -210,7 +219,8 @@ class MultimodalContentClassifier:
         return organized
 
     def _detect_content_type(self, file_path: str) -> str:
-        """Detect content type from file extension and MIME type."""        file_path = Path(file_path)
+        """Detect content type from file extension and MIME type."""
+        file_path = Path(file_path)
         extension = file_path.suffix.lower()
         
         # Try MIME type detection
@@ -235,7 +245,8 @@ class MultimodalContentClassifier:
         organized_content: Dict[str, List[str]], 
         options: Optional[Dict]
     ) -> Dict[str, Any]:
-        """Process all content types in parallel."""        results = {}
+        """Process all content types in parallel."""
+        results = {}
         
         # Create tasks for parallel processing
         tasks = []
@@ -269,7 +280,8 @@ class MultimodalContentClassifier:
         file_path: str, 
         options: Optional[Dict]
     ) -> Dict[str, Any]:
-        """Process a single content file."""        try:
+        """Process a single content file."""
+        try:
             if content_type == 'audio':
                 return self.audio_classifier.classify_audio(file_path, options)
             elif content_type == 'video':
@@ -289,7 +301,8 @@ class MultimodalContentClassifier:
             raise
 
     async def _perform_cross_modal_analysis(self, individual_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform cross-modal analysis to find relationships between content types."""        try:
+        """Perform cross-modal analysis to find relationships between content types."""
+        try:
             cross_modal = {
                 'content_coherence': {},
                 'thematic_consistency': {},
@@ -345,7 +358,8 @@ class MultimodalContentClassifier:
         type1: str, 
         type2: str
     ) -> Dict[str, Any]:
-        """Analyze coherence between two content types."""        try:
+        """Analyze coherence between two content types."""
+        try:
             # Extract content themes and classifications
             themes1 = self._extract_content_themes(results1, type1)
             themes2 = self._extract_content_themes(results2, type2)
@@ -375,7 +389,8 @@ class MultimodalContentClassifier:
             return {'coherence_score': 0.0, 'is_coherent': False}
 
     def _extract_content_themes(self, results: Dict[str, Any], content_type: str) -> List[str]:
-        """Extract themes and topics from content classification results."""        themes = []
+        """Extract themes and topics from content classification results."""
+        themes = []
         
         try:
             # Get first result (assuming single file per type for now)
@@ -431,7 +446,8 @@ class MultimodalContentClassifier:
             return []
 
     def _calculate_thematic_overlap(self, themes1: List[str], themes2: List[str]) -> float:
-        """Calculate thematic overlap between two sets of themes."""        if not themes1 or not themes2:
+        """Calculate thematic overlap between two sets of themes."""
+        if not themes1 or not themes2:
             return 0.0
         
         # Convert to sets for intersection
@@ -451,7 +467,8 @@ class MultimodalContentClassifier:
         type1: str, 
         type2: str
     ) -> float:
-        """Analyze mood/sentiment consistency between content types."""        try:
+        """Analyze mood/sentiment consistency between content types."""
+        try:
             # Extract mood/sentiment from each type
             mood1 = self._extract_mood(results1, type1)
             mood2 = self._extract_mood(results2, type2)
@@ -485,7 +502,8 @@ class MultimodalContentClassifier:
             return 0.5
 
     def _extract_mood(self, results: Dict[str, Any], content_type: str) -> Optional[str]:
-        """Extract mood/sentiment from content results."""        try:
+        """Extract mood/sentiment from content results."""
+        try:
             first_result = next(iter(results.values())) if results else {}
             
             if content_type in ['audio', 'video']:
@@ -503,13 +521,15 @@ class MultimodalContentClassifier:
             return None
 
     def _categorize_mood(self, mood: str, mood_categories: Dict[str, List[str]]) -> str:
-        """Categorize a mood into broader categories."""        for category, moods in mood_categories.items():
+        """Categorize a mood into broader categories."""
+        for category, moods in mood_categories.items():
             if mood in moods:
                 return category
         return 'unknown'
 
     def _are_compatible_moods(self, category1: str, category2: str) -> bool:
-        """Check if two mood categories are compatible."""        compatible_pairs = [
+        """Check if two mood categories are compatible."""
+        compatible_pairs = [
             ('positive', 'energetic'),
             ('mellow', 'neutral'),
             ('negative', 'mellow'),
@@ -519,7 +539,8 @@ class MultimodalContentClassifier:
         return (category1, category2) in compatible_pairs or (category2, category1) in compatible_pairs
 
     def _calculate_relationship_score(self, type1: str, type2: str) -> float:
-        """Calculate relationship strength between content types."""        # Check if types have known relationships
+        """Calculate relationship strength between content types."""
+        # Check if types have known relationships
         for relationship, types in self.content_relationships.items():
             if type1 in types and type2 in types:
                 return 1.0  # Strong relationship
@@ -538,7 +559,8 @@ class MultimodalContentClassifier:
         return natural_relationships.get(key, 0.2)
 
     def _analyze_thematic_consistency(self, results1: Dict[str, Any], results2: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze thematic consistency between content types."""        try:
+        """Analyze thematic consistency between content types."""
+        try:
             # Extract themes
             themes1 = []
             themes2 = []
@@ -570,7 +592,8 @@ class MultimodalContentClassifier:
             return {'thematic_overlap': 0.0, 'is_consistent': False}
 
     def _analyze_quality_correlation(self, results1: Dict[str, Any], results2: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze quality correlation between content types."""        try:
+        """Analyze quality correlation between content types."""
+        try:
             # Extract quality scores
             quality1 = self._extract_quality_score(results1)
             quality2 = self._extract_quality_score(results2)
@@ -595,7 +618,8 @@ class MultimodalContentClassifier:
             return {'correlation': 0.0}
 
     def _extract_quality_score(self, results: Dict[str, Any]) -> Optional[float]:
-        """Extract quality score from content results."""        try:
+        """Extract quality score from content results."""
+        try:
             first_result = next(iter(results.values())) if results else {}
             quality_metrics = first_result.get('quality_metrics', {})
             
@@ -605,7 +629,8 @@ class MultimodalContentClassifier:
             return None
 
     def _calculate_overall_coherence(self, cross_modal: Dict[str, Any]) -> float:
-        """Calculate overall coherence across all modalities."""        try:
+        """Calculate overall coherence across all modalities."""
+        try:
             coherence_scores = []
             
             # Extract all coherence scores
@@ -622,7 +647,8 @@ class MultimodalContentClassifier:
             return 0.0
 
     def _assess_multimodal_consistency(self, cross_modal: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess overall multimodal consistency."""        try:
+        """Assess overall multimodal consistency."""
+        try:
             # Collect consistency metrics
             coherence_scores = []
             thematic_scores = []
@@ -661,7 +687,8 @@ class MultimodalContentClassifier:
             return {'overall_consistency': 0.0, 'is_consistent': False}
 
     def _get_consistency_level(self, score: float) -> str:
-        """Convert consistency score to descriptive level."""        if score >= 0.9:
+        """Convert consistency score to descriptive level."""
+        if score >= 0.9:
             return 'excellent'
         elif score >= 0.75:
             return 'good'
@@ -677,7 +704,8 @@ class MultimodalContentClassifier:
         individual_results: Dict[str, Any], 
         cross_modal: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate unified classification across all modalities."""        try:
+        """Generate unified classification across all modalities."""
+        try:
             # Aggregate classifications from all modalities
             unified = {
                 'content_type': self._determine_unified_content_type(individual_results),
@@ -696,7 +724,8 @@ class MultimodalContentClassifier:
             return {}
 
     def _determine_unified_content_type(self, individual_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Determine unified content type across modalities."""        try:
+        """Determine unified content type across modalities."""
+        try:
             # Collect content types from all modalities
             content_types = []
             
@@ -747,7 +776,8 @@ class MultimodalContentClassifier:
             return {'unified_type': 'unknown', 'confidence': 0.0}
 
     def _determine_unified_genre(self, individual_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Determine unified genre/theme across modalities."""        try:
+        """Determine unified genre/theme across modalities."""
+        try:
             genres = []
             
             for content_type, results in individual_results.items():
@@ -783,7 +813,8 @@ class MultimodalContentClassifier:
             return {'primary_genre': 'unknown', 'confidence': 0.0}
 
     def _determine_unified_mood(self, individual_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Determine unified mood/sentiment across modalities."""        try:
+        """Determine unified mood/sentiment across modalities."""
+        try:
             moods = []
             
             for content_type, results in individual_results.items():
@@ -835,7 +866,8 @@ class MultimodalContentClassifier:
             return {'primary_mood': 'neutral', 'confidence': 0.0}
 
     def _calculate_mood_consistency(self, moods: List[Tuple[str, float, str]]) -> float:
-        """Calculate consistency of moods across modalities."""        if len(moods) <= 1:
+        """Calculate consistency of moods across modalities."""
+        if len(moods) <= 1:
             return 1.0
         
         # Simple consistency: check if most moods are in the same category
@@ -858,7 +890,8 @@ class MultimodalContentClassifier:
         return 0.0
 
     def _determine_unified_quality(self, individual_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Determine unified quality assessment across modalities."""        try:
+        """Determine unified quality assessment across modalities."""
+        try:
             quality_scores = []
             
             for content_type, results in individual_results.items():
@@ -894,7 +927,8 @@ class MultimodalContentClassifier:
             return {'average_quality': 0.0, 'quality_grade': 'unknown'}
 
     def _determine_content_category(self, individual_results: Dict[str, Any]) -> str:
-        """Determine overall content category."""        modalities = list(individual_results.keys())
+        """Determine overall content category."""
+        modalities = list(individual_results.keys())
         
         # Categorize based on modality combination
         if 'audio' in modalities and 'video' in modalities:
@@ -915,7 +949,8 @@ class MultimodalContentClassifier:
             return 'unknown'
 
     def _determine_protection_level(self, individual_results: Dict[str, Any]) -> str:
-        """Determine required protection level based on content analysis."""        # This is a simplified version - in production, this would be more sophisticated
+        """Determine required protection level based on content analysis."""
+        # This is a simplified version - in production, this would be more sophisticated
         modality_count = len(individual_results)
         
         if modality_count >= 3:
@@ -926,10 +961,12 @@ class MultimodalContentClassifier:
             return 'standard'
 
     def _assess_multimodal_quality(self, individual_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess overall quality across all modalities."""        return self._determine_unified_quality(individual_results)
+        """Assess overall quality across all modalities."""
+        return self._determine_unified_quality(individual_results)
 
     async def _analyze_multimodal_similarity(self, individual_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze similarity signatures across all modalities."""        try:
+        """Analyze similarity signatures across all modalities."""
+        try:
             similarity_data = {
                 'hash_signatures': {},
                 'feature_vectors': {},
@@ -965,7 +1002,8 @@ class MultimodalContentClassifier:
             return {}
 
     def _calculate_type_confidence(self, content_types: List[Tuple[str, str]]) -> float:
-        """Calculate confidence in unified content type classification."""        if not content_types:
+        """Calculate confidence in unified content type classification."""
+        if not content_types:
             return 0.0
         
         # Simple confidence based on consistency
@@ -975,7 +1013,8 @@ class MultimodalContentClassifier:
         return min(consistency, 1.0)
 
     def _get_quality_grade(self, score: float) -> str:
-        """Convert quality score to letter grade."""        if score >= 0.9:
+        """Convert quality score to letter grade."""
+        if score >= 0.9:
             return 'A+'
         elif score >= 0.8:
             return 'A'
@@ -991,7 +1030,8 @@ class MultimodalContentClassifier:
             return 'D'
 
     def _get_timestamp(self) -> str:
-        """Get current timestamp."""        from datetime import datetime
+        """Get current timestamp."""
+        from datetime import datetime
         return datetime.now().isoformat()
 
     async def compare_multimodal_content(
@@ -999,7 +1039,8 @@ class MultimodalContentClassifier:
         content1_paths: Dict[str, Union[str, List[str]]], 
         content2_paths: Dict[str, Union[str, List[str]]]
     ) -> Dict[str, Any]:
-        """        Compare two sets of multimodal content for similarity.
+        """
+        Compare two sets of multimodal content for similarity.
         
         Args:
             content1_paths: First content set
@@ -1007,7 +1048,8 @@ class MultimodalContentClassifier:
             
         Returns:
             Comprehensive similarity analysis
-        """        try:
+        """
+        try:
             # Classify both content sets
             results1 = await self.classify_multimodal_content(content1_paths)
             results2 = await self.classify_multimodal_content(content2_paths)
@@ -1071,7 +1113,8 @@ class MultimodalContentClassifier:
         results2: Dict[str, Any], 
         modality: str
     ) -> Dict[str, Any]:
-        """Compare results for a specific modality."""        try:
+        """Compare results for a specific modality."""
+        try:
             # For now, compare the first file from each set
             result1 = next(iter(results1.values())) if results1 else {}
             result2 = next(iter(results2.values())) if results2 else {}
@@ -1096,7 +1139,8 @@ class MultimodalContentClassifier:
             return {'similarity_score': 0.0, 'error': str(e)}
 
     async def _compare_audio_results(self, result1: Dict, result2: Dict) -> Dict[str, Any]:
-        """Compare audio classification results."""        # Extract key features for comparison
+        """Compare audio classification results."""
+        # Extract key features for comparison
         features1 = result1.get('features', {})
         features2 = result2.get('features', {})
         
@@ -1120,7 +1164,8 @@ class MultimodalContentClassifier:
         }
 
     async def _compare_video_results(self, result1: Dict, result2: Dict) -> Dict[str, Any]:
-        """Compare video classification results."""        # Compare visual features
+        """Compare video classification results."""
+        # Compare visual features
         features1 = result1.get('features', {})
         features2 = result2.get('features', {})
         
@@ -1142,7 +1187,8 @@ class MultimodalContentClassifier:
         }
 
     async def _compare_image_results(self, result1: Dict, result2: Dict) -> Dict[str, Any]:
-        """Compare image classification results."""        # Compare hashes
+        """Compare image classification results."""
+        # Compare hashes
         hashes1 = result1.get('similarity_hashes', {})
         hashes2 = result2.get('similarity_hashes', {})
         
@@ -1164,7 +1210,8 @@ class MultimodalContentClassifier:
         }
 
     async def _compare_text_results(self, result1: Dict, result2: Dict) -> Dict[str, Any]:
-        """Compare text classification results."""        # Compare semantic hashes
+        """Compare text classification results."""
+        # Compare semantic hashes
         hashes1 = result1.get('similarity_hashes', {})
         hashes2 = result2.get('similarity_hashes', {})
         
@@ -1186,15 +1233,18 @@ class MultimodalContentClassifier:
         }
 
     def _compare_spectral_features(self, features1: Dict, features2: Dict) -> float:
-        """Compare spectral features between audio files."""        # Simplified comparison - in production this would be more sophisticated
+        """Compare spectral features between audio files."""
+        # Simplified comparison - in production this would be more sophisticated
         return 0.5  # Placeholder
 
     def _compare_visual_features(self, features1: Dict, features2: Dict) -> float:
-        """Compare visual features between video files."""        # Simplified comparison
+        """Compare visual features between video files."""
+        # Simplified comparison
         return 0.5  # Placeholder
 
     def _compare_image_hashes(self, hashes1: Dict, hashes2: Dict) -> float:
-        """Compare image perceptual hashes."""        if not hashes1 or not hashes2:
+        """Compare image perceptual hashes."""
+        if not hashes1 or not hashes2:
             return 0.0
         
         # Compare available hashes
@@ -1211,7 +1261,8 @@ class MultimodalContentClassifier:
         return np.mean(similarities) if similarities else 0.0
 
     def _compare_color_features(self, features1: Dict, features2: Dict) -> float:
-        """Compare color features between images."""        # Simplified color comparison
+        """Compare color features between images."""
+        # Simplified color comparison
         colors1 = features1.get('color_analysis', {}).get('dominant_colors', [])
         colors2 = features2.get('color_analysis', {}).get('dominant_colors', [])
         
@@ -1228,7 +1279,8 @@ class MultimodalContentClassifier:
             return 0.0
 
     def _compare_text_hashes(self, hashes1: Dict, hashes2: Dict) -> float:
-        """Compare text hashes."""        if not hashes1 or not hashes2:
+        """Compare text hashes."""
+        if not hashes1 or not hashes2:
             return 0.0
         
         # Compare semantic hash
@@ -1242,7 +1294,8 @@ class MultimodalContentClassifier:
         return 0.0
 
     def _compare_classifications(self, class1: Dict, class2: Dict) -> float:
-        """Compare classification results."""        if not class1 or not class2:
+        """Compare classification results."""
+        if not class1 or not class2:
             return 0.0
         
         # Simple comparison of primary classifications
@@ -1263,7 +1316,8 @@ class MultimodalContentClassifier:
         return np.mean(similarities) if similarities else 0.0
 
     def _compare_cross_modal_analysis(self, cross1: Dict, cross2: Dict) -> Dict[str, Any]:
-        """Compare cross-modal analysis between two content sets."""        # Simplified comparison
+        """Compare cross-modal analysis between two content sets."""
+        # Simplified comparison
         coherence1 = cross1.get('overall_coherence', 0)
         coherence2 = cross2.get('overall_coherence', 0)
         
@@ -1276,7 +1330,8 @@ class MultimodalContentClassifier:
         }
 
     def _get_similarity_confidence(self, similarity: float) -> str:
-        """Get confidence level for similarity score."""        if similarity >= 0.9:
+        """Get confidence level for similarity score."""
+        if similarity >= 0.9:
             return 'very_high'
         elif similarity >= 0.8:
             return 'high'
@@ -1288,7 +1343,8 @@ class MultimodalContentClassifier:
             return 'very_low'
 
     def _determine_match_type(self, comparison: Dict) -> str:
-        """Determine the type of match between content sets."""        overall_sim = comparison.get('overall_similarity', 0)
+        """Determine the type of match between content sets."""
+        overall_sim = comparison.get('overall_similarity', 0)
         
         if overall_sim >= 0.95:
             return 'exact_match'
@@ -1302,7 +1358,8 @@ class MultimodalContentClassifier:
             return 'no_match'
 
     def get_multimodal_summary(self, results: Dict[str, Any]) -> str:
-        """Generate a human-readable summary of multimodal classification results."""        try:
+        """Generate a human-readable summary of multimodal classification results."""
+        try:
             summary_parts = []
             
             # Content summary

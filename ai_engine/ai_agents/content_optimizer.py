@@ -9,7 +9,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import uuid
@@ -24,14 +25,16 @@ from .base_agent import BaseAIAgent, AgentCapability, AgentConfiguration, AgentT
 
 # Production-ready engines for content optimization
 class ContentAnalysisEngine:
-    """Advanced content analysis engine with NLP capabilities"""    
+    """Advanced content analysis engine with NLP capabilities"""
+    
     def __init__(self):
         self.initialized = False
         self.models = {}
         self.logger = logging.getLogger(f"{__name__}.ContentAnalysisEngine")
     
     async def initialize(self):
-        """Initialize NLP models and analysis components"""        try:
+        """Initialize NLP models and analysis components"""
+        try:
             # Initialize sentiment analysis models
             self.models['sentiment'] = {
                 'positive_words': ['good', 'great', 'excellent', 'amazing', 'wonderful'],
@@ -52,7 +55,8 @@ class ContentAnalysisEngine:
             raise
     
     async def analyze_text(self, text: str) -> Dict[str, float]:
-        """Analyze text for readability, sentiment, and engagement metrics"""        if not self.initialized:
+        """Analyze text for readability, sentiment, and engagement metrics"""
+        if not self.initialized:
             await self.initialize()
         
         try:
@@ -93,14 +97,16 @@ class ContentAnalysisEngine:
             return {'readability': 0.5, 'sentiment': 0.5, 'engagement_potential': 0.5}
 
 class SEOOptimizationEngine:
-    """SEO optimization engine with keyword analysis and content optimization"""    
+    """SEO optimization engine with keyword analysis and content optimization"""
+    
     def __init__(self):
         self.initialized = False
         self.seo_rules = {}
         self.logger = logging.getLogger(f"{__name__}.SEOOptimizationEngine")
     
     async def initialize(self):
-        """Initialize SEO models and optimization rules"""        try:
+        """Initialize SEO models and optimization rules"""
+        try:
             self.seo_rules = {
                 'title_length': {'min': 30, 'max': 60, 'weight': 0.2},
                 'keyword_density': {'min': 0.01, 'max': 0.03, 'weight': 0.3},
@@ -117,7 +123,8 @@ class SEOOptimizationEngine:
             raise
     
     async def analyze_seo_factors(self, content: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze SEO factors for content"""        if not self.initialized:
+        """Analyze SEO factors for content"""
+        if not self.initialized:
             await self.initialize()
         
         try:
@@ -159,7 +166,8 @@ class SEOOptimizationEngine:
             return {'score': 0.5, 'factors': {}, 'recommendations': []}
     
     def _score_title_length(self, length: int) -> float:
-        """Score title length based on SEO best practices"""        rules = self.seo_rules['title_length']
+        """Score title length based on SEO best practices"""
+        rules = self.seo_rules['title_length']
         if rules['min'] <= length <= rules['max']:
             return 1.0
         elif length < rules['min']:
@@ -168,14 +176,16 @@ class SEOOptimizationEngine:
             return max(0.3, 1.0 - (length - rules['max']) / rules['max'])
     
     def _score_content_length(self, length: int) -> float:
-        """Score content length"""        min_length = self.seo_rules['content_length']['min']
+        """Score content length"""
+        min_length = self.seo_rules['content_length']['min']
         if length >= min_length:
             return 1.0
         else:
             return length / min_length
     
     def _score_keyword_density(self, text: str, keywords: List[str]) -> float:
-        """Calculate keyword density score"""        if not keywords or not text:
+        """Calculate keyword density score"""
+        if not keywords or not text:
             return 0.0
         
         text_lower = text.lower()
@@ -193,7 +203,8 @@ class SEOOptimizationEngine:
             return max(0.2, 1.0 - (density - rules['max']) / rules['max'])
     
     def _score_headings(self, text: str) -> float:
-        """Score heading structure"""        h1_count = len(re.findall(r'<h1[^>]*>.*?</h1>', text, re.IGNORECASE))
+        """Score heading structure"""
+        h1_count = len(re.findall(r'<h1[^>]*>.*?</h1>', text, re.IGNORECASE))
         h2_count = len(re.findall(r'<h2[^>]*>.*?</h2>', text, re.IGNORECASE))
         h3_count = len(re.findall(r'<h3[^>]*>.*?</h3>', text, re.IGNORECASE))
         
@@ -209,7 +220,8 @@ class SEOOptimizationEngine:
             return 0.0
     
     def _generate_seo_recommendations(self, factors: Dict[str, float]) -> List[str]:
-        """Generate SEO improvement recommendations"""        recommendations = []
+        """Generate SEO improvement recommendations"""
+        recommendations = []
         
         if factors.get('title_score', 0) < 0.8:
             recommendations.append("Optimize title length (30-60 characters)")
@@ -226,7 +238,8 @@ class SEOOptimizationEngine:
         return recommendations
 
     async def optimize_content_seo(self, content: Dict[str, Any], keywords: List[str]) -> Dict[str, Any]:
-        """Optimize content for SEO based on keywords"""        try:
+        """Optimize content for SEO based on keywords"""
+        try:
             current_analysis = await self.analyze_seo_factors({**content, 'keywords': keywords})
             
             optimized_content = content.copy()
@@ -264,14 +277,16 @@ class SEOOptimizationEngine:
             return {'optimized_content': content, 'changes': [], 'score_improvement': 0.0}
 
 class EngagementPredictionEngine:
-    """Engagement prediction and optimization engine"""    
+    """Engagement prediction and optimization engine"""
+    
     def __init__(self):
         self.initialized = False
         self.engagement_models = {}
         self.logger = logging.getLogger(f"{__name__}.EngagementPredictionEngine")
     
     async def initialize(self):
-        """Initialize engagement prediction models"""        try:
+        """Initialize engagement prediction models"""
+        try:
             self.engagement_models = {
                 'platform_weights': {
                     'instagram': {'visual': 0.6, 'text': 0.2, 'hashtags': 0.2},
@@ -297,7 +312,8 @@ class EngagementPredictionEngine:
             raise
     
     async def analyze_engagement_factors(self, content: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze content for engagement potential"""        if not self.initialized:
+        """Analyze content for engagement potential"""
+        if not self.initialized:
             await self.initialize()
         
         try:
@@ -341,7 +357,8 @@ class EngagementPredictionEngine:
             return {'engagement_potential': 0.5, 'factors': {}, 'recommendations': []}
     
     def _score_content_length(self, length: int) -> float:
-        """Score content length for engagement"""        optimal_range = self.engagement_models['engagement_factors']['content_length']['optimal_range']
+        """Score content length for engagement"""
+        optimal_range = self.engagement_models['engagement_factors']['content_length']['optimal_range']
         min_length, max_length = optimal_range
         
         if min_length <= length <= max_length:
@@ -352,7 +369,8 @@ class EngagementPredictionEngine:
             return max(0.3, 1.0 - (length - max_length) / max_length)
     
     def _score_visual_elements(self, content: Dict[str, Any]) -> float:
-        """Score visual elements in content"""        score = 0.0
+        """Score visual elements in content"""
+        score = 0.0
         
         if content.get('images'):
             score += 0.4
@@ -372,7 +390,8 @@ class EngagementPredictionEngine:
         return min(1.0, score)
     
     def _score_emotional_tone(self, text: str) -> float:
-        """Score emotional tone of content"""        # Emotional words that drive engagement
+        """Score emotional tone of content"""
+        # Emotional words that drive engagement
         positive_emotional_words = [
             'amazing', 'incredible', 'fantastic', 'exciting', 'thrilling',
             'inspiring', 'motivating', 'uplifting', 'powerful', 'breakthrough'
@@ -398,7 +417,8 @@ class EngagementPredictionEngine:
         return min(1.0, emotional_density * 10)  # Scale up the score
     
     def _score_call_to_action(self, text: str) -> float:
-        """Score call-to-action elements"""        cta_patterns = [
+        """Score call-to-action elements"""
+        cta_patterns = [
             r'\bclick\b', r'\bshare\b', r'\blike\b', r'\bcomment\b',
             r'\bsubscribe\b', r'\bfollow\b', r'\bjoin\b', r'\bsign up\b',
             r'\bdownload\b', r'\btry\b', r'\bget\b', r'\blearn more\b'
@@ -417,7 +437,8 @@ class EngagementPredictionEngine:
             return max(0.3, 1.0 - (cta_count - 2) * 0.2)
     
     def _generate_engagement_recommendations(self, factors: Dict[str, float]) -> List[str]:
-        """Generate engagement improvement recommendations"""        recommendations = []
+        """Generate engagement improvement recommendations"""
+        recommendations = []
         
         if factors.get('length_score', 0) < 0.8:
             recommendations.append("Optimize content length (100-300 words)")
@@ -434,7 +455,8 @@ class EngagementPredictionEngine:
         return recommendations
 
     async def optimize_for_engagement(self, content: Dict[str, Any], platforms: List[str]) -> Dict[str, Any]:
-        """Optimize content for engagement across platforms"""        try:
+        """Optimize content for engagement across platforms"""
+        try:
             optimized_content = content.copy()
             changes = []
             
@@ -482,14 +504,16 @@ class EngagementPredictionEngine:
             return {'optimized_content': content, 'changes': [], 'score_improvement': 0.0}
 
 class ContentPerformanceAnalyzer:
-    """Analyzes and tracks content performance metrics"""    
+    """Analyzes and tracks content performance metrics"""
+    
     def __init__(self):
         self.initialized = False
         self.performance_metrics = {}
         self.logger = logging.getLogger(f"{__name__}.ContentPerformanceAnalyzer")
     
     async def initialize(self):
-        """Initialize performance tracking systems"""        try:
+        """Initialize performance tracking systems"""
+        try:
             self.performance_metrics = {
                 'engagement_weights': {
                     'likes': 1.0,
@@ -514,14 +538,16 @@ class ContentPerformanceAnalyzer:
             raise
 
 class ContentEnhancementEngine:
-    """Content enhancement and improvement engine"""    
+    """Content enhancement and improvement engine"""
+    
     def __init__(self):
         self.initialized = False
         self.enhancement_models = {}
         self.logger = logging.getLogger(f"{__name__}.ContentEnhancementEngine")
     
     async def initialize(self):
-        """Initialize content enhancement models"""        try:
+        """Initialize content enhancement models"""
+        try:
             self.enhancement_models = {
                 'improvement_strategies': {
                     'readability': ['simplify_sentences', 'add_transitions', 'break_paragraphs'],
@@ -542,7 +568,8 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationType(Enum):
-    """Content optimization types"""    SEO = "seo"
+    """Content optimization types"""
+    SEO = "seo"
     ENGAGEMENT = "engagement"
     VIRALITY = "virality"
     CONVERSION = "conversion"
@@ -555,14 +582,16 @@ class OptimizationType(Enum):
 
 
 class OptimizationPriority(Enum):
-    """Optimization priority levels"""    LOW = "low"
+    """Optimization priority levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class ContentFormat(Enum):
-    """Content format types"""    TEXT = "text"
+    """Content format types"""
+    TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
@@ -570,7 +599,8 @@ class ContentFormat(Enum):
 
 
 class PlatformTarget(Enum):
-    """Platform optimization targets"""    YOUTUBE = "youtube"
+    """Platform optimization targets"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -584,7 +614,8 @@ class PlatformTarget(Enum):
 
 @dataclass
 class OptimizationResult:
-    """Comprehensive optimization result"""    optimization_id: str
+    """Comprehensive optimization result"""
+    optimization_id: str
     content_id: str
     optimization_type: OptimizationType
     original_score: float
@@ -607,7 +638,8 @@ class OptimizationResult:
 
 @dataclass
 class OptimizationRequest:
-    """Optimization request structure"""    request_id: str
+    """Optimization request structure"""
+    request_id: str
     content: Dict[str, Any]
     optimization_types: List[OptimizationType]
     target_platforms: List[PlatformTarget]
@@ -621,7 +653,8 @@ class OptimizationRequest:
 
 @dataclass
 class BatchOptimizationResult:
-    """Batch optimization results"""    batch_id: str
+    """Batch optimization results"""
+    batch_id: str
     total_items: int
     successful_optimizations: int
     failed_optimizations: int
@@ -633,7 +666,8 @@ class BatchOptimizationResult:
 
 
 class ContentOptimizerAgent(BaseAIAgent):
-    """    Advanced AI agent for comprehensive content optimization and enhancement.
+    """
+    Advanced AI agent for comprehensive content optimization and enhancement.
     
     Capabilities:
     - Multi-dimensional content analysis and optimization
@@ -646,7 +680,8 @@ class ContentOptimizerAgent(BaseAIAgent):
     - Brand consistency enforcement
     - Multilingual optimization support
     - Trend-aligned content enhancement
-    """    
+    """
+    
     def __init__(self, config: AgentConfiguration):
         # Ensure required capabilities
         required_capabilities = {
@@ -730,7 +765,8 @@ class ContentOptimizerAgent(BaseAIAgent):
         logger.info("ContentOptimizerAgent initialized successfully")
 
     async def initialize(self) -> bool:
-        """Initialize content optimizer"""        try:
+        """Initialize content optimizer"""
+        try:
             await super().initialize()
             
             # Initialize optimization engines
@@ -759,7 +795,8 @@ class ContentOptimizerAgent(BaseAIAgent):
         target_platforms: List[PlatformTarget],
         optimization_params: Optional[Dict[str, Any]] = None
     ) -> OptimizationResult:
-        """        Optimize content for specific objectives and platforms
+        """
+        Optimize content for specific objectives and platforms
         
         Args:
             content: Content to optimize
@@ -769,7 +806,8 @@ class ContentOptimizerAgent(BaseAIAgent):
             
         Returns:
             Comprehensive optimization result
-        """        try:
+        """
+        try:
             logger.info(f"Optimizing content for {len(optimization_types)} optimization types")
             
             optimization_params = optimization_params or {}
@@ -892,7 +930,8 @@ class ContentOptimizerAgent(BaseAIAgent):
         content_batch: List[Dict[str, Any]],
         optimization_request: OptimizationRequest
     ) -> BatchOptimizationResult:
-        """        Optimize multiple content items in batch
+        """
+        Optimize multiple content items in batch
         
         Args:
             content_batch: List of content items to optimize
@@ -900,7 +939,8 @@ class ContentOptimizerAgent(BaseAIAgent):
             
         Returns:
             Batch optimization results
-        """        try:
+        """
+        try:
             logger.info(f"Starting batch optimization for {len(content_batch)} items")
             
             start_time = datetime.now(timezone.utc)
@@ -974,7 +1014,8 @@ class ContentOptimizerAgent(BaseAIAgent):
         content: Dict[str, Any],
         platforms: List[PlatformTarget]
     ) -> Dict[str, Any]:
-        """        Analyze content's performance potential across platforms
+        """
+        Analyze content's performance potential across platforms
         
         Args:
             content: Content to analyze
@@ -982,7 +1023,8 @@ class ContentOptimizerAgent(BaseAIAgent):
             
         Returns:
             Performance potential analysis
-        """        try:
+        """
+        try:
             logger.info("Analyzing content performance potential")
             
             # Comprehensive content analysis
@@ -1030,7 +1072,8 @@ class ContentOptimizerAgent(BaseAIAgent):
     # Private helper methods for content optimization
 
     async def _analyze_content_comprehensively(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform comprehensive content analysis"""        analysis = {}
+        """Perform comprehensive content analysis"""
+        analysis = {}
         
         # Text analysis (if content contains text)
         if 'text' in content or 'caption' in content or 'description' in content:
@@ -1049,7 +1092,8 @@ class ContentOptimizerAgent(BaseAIAgent):
         return analysis
 
     async def _optimize_for_seo(self, content: Dict[str, Any], params: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize content for SEO"""        
+        """Optimize content for SEO"""
+        
         # Use SEO optimization engine
         seo_optimization = await self.seo_optimization_engine.optimize_content_seo(
             content, params.get('target_keywords', [])
@@ -1098,7 +1142,8 @@ class ContentOptimizerAgent(BaseAIAgent):
         platforms: List[PlatformTarget],
         params: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize content for engagement"""        
+        """Optimize content for engagement"""
+        
         changes = []
         optimized_content = content.copy()
         
@@ -1132,7 +1177,8 @@ class ContentOptimizerAgent(BaseAIAgent):
         }
 
     async def can_handle_task(self, task_type: str, context: Dict[str, Any]) -> bool:
-        """Check if agent can handle content optimization task"""        supported_tasks = [
+        """Check if agent can handle content optimization task"""
+        supported_tasks = [
             "optimize_content",
             "batch_optimize_content",
             "analyze_content_performance_potential",

@@ -5,7 +5,8 @@ Handles project lifecycle, task management, milestones, and team coordination.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
-"""from typing import List, Dict, Any, Optional, Union, Tuple, Set
+"""
+from typing import List, Dict, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
 import json
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class TaskStatus(Enum):
-    """Task status enumeration"""    NOT_STARTED = "not_started"
+    """Task status enumeration"""
+    NOT_STARTED = "not_started"
     IN_PROGRESS = "in_progress"
     ON_HOLD = "on_hold"
     BLOCKED = "blocked"
@@ -36,14 +38,16 @@ class TaskStatus(Enum):
     CANCELLED = "cancelled"
 
 class TaskPriority(Enum):
-    """Task priority enumeration"""    LOW = "low"
+    """Task priority enumeration"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
     URGENT = "urgent"
 
 class MilestoneType(Enum):
-    """Milestone type enumeration"""    PROJECT_START = "project_start"
+    """Milestone type enumeration"""
+    PROJECT_START = "project_start"
     DESIGN_COMPLETE = "design_complete"
     CONTENT_DRAFT = "content_draft"
     REVIEW_COMPLETE = "review_complete"
@@ -54,7 +58,8 @@ class MilestoneType(Enum):
     PROJECT_COMPLETION = "project_completion"
 
 class ResourceType(Enum):
-    """Resource type enumeration"""    HUMAN = "human"
+    """Resource type enumeration"""
+    HUMAN = "human"
     EQUIPMENT = "equipment"
     SOFTWARE = "software"
     LOCATION = "location"
@@ -62,9 +67,11 @@ class ResourceType(Enum):
     EXTERNAL_SERVICE = "external_service"
 
 class ProjectTask(Base):
-    """    Comprehensive task management for collaborative projects.
+    """
+    Comprehensive task management for collaborative projects.
     Supports hierarchical tasks, dependencies, and resource allocation.
-    """    __tablename__ = 'project_tasks'
+    """
+    __tablename__ = 'project_tasks'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -153,9 +160,11 @@ class ProjectTask(Base):
     )
 
 class ProjectMilestone(Base):
-    """    Project milestones and key deliverables tracking.
+    """
+    Project milestones and key deliverables tracking.
     Provides structured project progress monitoring.
-    """    __tablename__ = 'project_milestones'
+    """
+    __tablename__ = 'project_milestones'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -219,9 +228,11 @@ class ProjectMilestone(Base):
     )
 
 class ResourceAllocation(Base):
-    """    Resource allocation and management for projects and tasks.
+    """
+    Resource allocation and management for projects and tasks.
     Tracks utilization, availability, and costs.
-    """    __tablename__ = 'resource_allocations'
+    """
+    __tablename__ = 'resource_allocations'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -280,9 +291,11 @@ class ResourceAllocation(Base):
     )
 
 class WorkLog(Base):
-    """    Detailed work logging for time tracking and progress monitoring.
+    """
+    Detailed work logging for time tracking and progress monitoring.
     Captures actual work performed on tasks and projects.
-    """    __tablename__ = 'work_logs'
+    """
+    __tablename__ = 'work_logs'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -352,7 +365,8 @@ class WorkLog(Base):
 
 @dataclass
 class TaskCreationRequest:
-    """Data class for task creation requests"""    title: str
+    """Data class for task creation requests"""
+    title: str
     project_id: str
     created_by: str
     description: str = None
@@ -368,7 +382,8 @@ class TaskCreationRequest:
 
 @dataclass
 class MilestoneCreationRequest:
-    """Data class for milestone creation requests"""    title: str
+    """Data class for milestone creation requests"""
+    title: str
     project_id: str
     milestone_type: MilestoneType
     target_date: datetime
@@ -379,23 +394,27 @@ class MilestoneCreationRequest:
     stakeholders: List[str] = None
 
 class ProjectManagementEngine:
-    """    Enterprise project management engine with advanced features.
+    """
+    Enterprise project management engine with advanced features.
     Handles task management, milestone tracking, and resource allocation.
-    """    
+    """
+    
     def __init__(self, db_session, redis_client: aioredis.Redis = None):
         self.db_session = db_session
         self.redis_client = redis_client
         self.cache_ttl = 1800  # 30 minutes cache
     
     async def create_task(self, request: TaskCreationRequest) -> Optional[ProjectTask]:
-        """        Create a new project task with enterprise features.
+        """
+        Create a new project task with enterprise features.
         
         Args:
             request: Task creation request
             
         Returns:
             Created task instance
-        """        try:
+        """
+        try:
             # Generate task ID
             task_id = await self._generate_task_id(request.project_id)
             
@@ -463,7 +482,8 @@ class ProjectManagementEngine:
         completion_percentage: float = None,
         notes: str = None
     ) -> Optional[ProjectTask]:
-        """        Update task status with progress tracking.
+        """
+        Update task status with progress tracking.
         
         Args:
             task_id: Task identifier
@@ -474,7 +494,8 @@ class ProjectManagementEngine:
             
         Returns:
             Updated task instance
-        """        try:
+        """
+        try:
             task = await self._get_task(task_id)
             if not task:
                 return None
@@ -536,14 +557,16 @@ class ProjectManagementEngine:
             raise
     
     async def create_milestone(self, request: MilestoneCreationRequest) -> Optional[ProjectMilestone]:
-        """        Create project milestone with tracking features.
+        """
+        Create project milestone with tracking features.
         
         Args:
             request: Milestone creation request
             
         Returns:
             Created milestone instance
-        """        try:
+        """
+        try:
             # Generate milestone ID
             milestone_id = await self._generate_milestone_id(request.project_id, request.milestone_type)
             
@@ -590,7 +613,8 @@ class ProjectManagementEngine:
         work_category: str = None,
         billable_hours: float = None
     ) -> Optional[WorkLog]:
-        """        Log work performed on project or task.
+        """
+        Log work performed on project or task.
         
         Args:
             project_id: Project identifier
@@ -603,7 +627,8 @@ class ProjectManagementEngine:
             
         Returns:
             Created work log instance
-        """        try:
+        """
+        try:
             # Generate log ID
             log_id = await self._generate_work_log_id(project_id, user_id)
             
@@ -644,14 +669,16 @@ class ProjectManagementEngine:
             raise
     
     async def get_project_dashboard(self, project_id: str) -> Dict[str, Any]:
-        """        Get comprehensive project dashboard data.
+        """
+        Get comprehensive project dashboard data.
         
         Args:
             project_id: Project identifier
             
         Returns:
             Dashboard data dictionary
-        """        try:
+        """
+        try:
             # Get project tasks summary
             tasks_summary = await self._get_tasks_summary(project_id)
             
@@ -690,14 +717,16 @@ class ProjectManagementEngine:
             return {}
     
     async def get_gantt_chart_data(self, project_id: str) -> Dict[str, Any]:
-        """        Generate Gantt chart data for project visualization.
+        """
+        Generate Gantt chart data for project visualization.
         
         Args:
             project_id: Project identifier
             
         Returns:
             Gantt chart data structure
-        """        try:
+        """
+        try:
             # Get all project tasks with timeline
             tasks = await self.db_session.query(ProjectTask)\
                 .filter(ProjectTask.project_id == uuid.UUID(project_id))\
@@ -777,7 +806,8 @@ class ProjectManagementEngine:
     # Private helper methods
     
     async def _generate_task_id(self, project_id: str) -> str:
-        """Generate unique task identifier"""        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M')
+        """Generate unique task identifier"""
+        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M')
         task_count = await self.db_session.query(ProjectTask)\
             .filter(ProjectTask.project_id == uuid.UUID(project_id))\
             .count()
@@ -785,19 +815,22 @@ class ProjectManagementEngine:
         return f"TASK-{timestamp}-{task_count + 1:04d}"
     
     async def _generate_milestone_id(self, project_id: str, milestone_type: MilestoneType) -> str:
-        """Generate unique milestone identifier"""        type_code = milestone_type.value.upper()[:3]
+        """Generate unique milestone identifier"""
+        type_code = milestone_type.value.upper()[:3]
         timestamp = datetime.utcnow().strftime('%Y%m%d')
         
         return f"MILE-{type_code}-{timestamp}-{str(uuid.uuid4())[:8]}"
     
     async def _generate_work_log_id(self, project_id: str, user_id: str) -> str:
-        """Generate unique work log identifier"""        date_str = datetime.utcnow().strftime('%Y%m%d')
+        """Generate unique work log identifier"""
+        date_str = datetime.utcnow().strftime('%Y%m%d')
         user_short = str(user_id)[:8]
         
         return f"WORK-{date_str}-{user_short}-{str(uuid.uuid4())[:8]}"
     
     async def _get_task(self, task_id: str) -> Optional[ProjectTask]:
-        """Get task by ID with caching"""        try:
+        """Get task by ID with caching"""
+        try:
             # Check cache first
             if self.redis_client:
                 cached_data = await self.redis_client.get(f"task:{task_id}")
@@ -820,7 +853,8 @@ class ProjectManagementEngine:
             return None
     
     async def _generate_task_ai_insights(self, request: TaskCreationRequest) -> Dict[str, Any]:
-        """Generate AI insights for new task"""        insights = {
+        """Generate AI insights for new task"""
+        insights = {
             'complexity_score': self._estimate_task_complexity(request),
             'recommended_assignee': await self._suggest_task_assignee(request),
             'estimated_duration': self._calculate_duration_estimate(request),
@@ -831,7 +865,8 @@ class ProjectManagementEngine:
         return insights
     
     def _estimate_task_complexity(self, request: TaskCreationRequest) -> float:
-        """Estimate task complexity based on various factors"""        complexity = 1.0  # Base complexity
+        """Estimate task complexity based on various factors"""
+        complexity = 1.0  # Base complexity
         
         # Adjust based on description length
         if request.description and len(request.description) > 500:
@@ -851,14 +886,16 @@ class ProjectManagementEngine:
         return min(5.0, complexity)  # Cap at 5.0
     
     def _calculate_task_duration(self, task: ProjectTask) -> int:
-        """Calculate task duration in days"""        if task.planned_start_date and task.planned_end_date:
+        """Calculate task duration in days"""
+        if task.planned_start_date and task.planned_end_date:
             return (task.planned_end_date - task.planned_start_date).days
         elif task.estimated_hours:
             return max(1, int(task.estimated_hours / 8))  # Assume 8 hours per day
         return 1
     
     def _calculate_date_difference(self, start_date: str, end_date: str) -> int:
-        """Calculate difference between two date strings"""        if not start_date or not end_date:
+        """Calculate difference between two date strings"""
+        if not start_date or not end_date:
             return 0
         
         start = datetime.fromisoformat(start_date.replace('Z', '+00:00'))
@@ -867,7 +904,8 @@ class ProjectManagementEngine:
         return (end - start).days
     
     async def _cache_task(self, task: ProjectTask):
-        """Cache task data in Redis"""        try:
+        """Cache task data in Redis"""
+        try:
             task_data = {
                 'id': str(task.id),
                 'task_id': task.task_id,

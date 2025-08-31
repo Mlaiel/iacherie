@@ -15,7 +15,8 @@ Contact: mlaiel@live.de for licensing and collaboration.
 Any unauthorized use, copying, or distribution without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of German and international copyright law.
-"""import asyncio
+"""
+import asyncio
 from typing import Dict, List, Optional, Union, Any
 import logging
 from datetime import datetime
@@ -44,7 +45,8 @@ logger = logging.getLogger(__name__)
 
 
 class ClassificationOrchestrator:
-    """    Central orchestrator for content classification operations.
+    """
+    Central orchestrator for content classification operations.
     
     Features:
     - Unified classification interface for all content types
@@ -53,9 +55,11 @@ class ClassificationOrchestrator:
     - Real-time monitoring and analytics
     - Quality assurance and validation
     - Performance optimization and caching
-    """    
+    """
+    
     def __init__(self):
-        """Initialize classification orchestrator."""        self.settings = get_settings()
+        """Initialize classification orchestrator."""
+        self.settings = get_settings()
         
         # Initialize core components
         self.factory = ClassifierFactory()
@@ -86,7 +90,8 @@ class ClassificationOrchestrator:
         owner_id: str,
         analysis_options: Optional[Dict[str, bool]] = None
     ) -> Dict[str, Any]:
-        """        Perform comprehensive content classification and analysis.
+        """
+        Perform comprehensive content classification and analysis.
         
         Args:
             content_path: Path to content file
@@ -96,7 +101,8 @@ class ClassificationOrchestrator:
             
         Returns:
             Comprehensive classification results
-        """        try:
+        """
+        try:
             # Determine content type
             content_type = self._determine_content_type(content_path)
             
@@ -227,11 +233,13 @@ class ClassificationOrchestrator:
             }
     
     async def _run_in_executor(self, func, *args):
-        """Run blocking function in thread pool executor."""        loop = asyncio.get_event_loop()
+        """Run blocking function in thread pool executor."""
+        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(self.executor, func, *args)
     
     def _determine_content_type(self, content_path: str) -> str:
-        """Determine content type from file path."""        try:
+        """Determine content type from file path."""
+        try:
             # Get file extension
             file_path = Path(content_path)
             extension = file_path.suffix.lower()
@@ -261,7 +269,8 @@ class ClassificationOrchestrator:
             return 'unknown'
     
     def _calculate_summary_metrics(self, results: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate summary metrics from classification results."""        try:
+        """Calculate summary metrics from classification results."""
+        try:
             summary = {
                 'overall_confidence': 0.0,
                 'quality_score': 0.0,
@@ -322,7 +331,8 @@ class ClassificationOrchestrator:
         content_list: List[Dict[str, str]],
         analysis_options: Optional[Dict[str, bool]] = None
     ) -> List[Dict[str, Any]]:
-        """        Batch classify multiple content items.
+        """
+        Batch classify multiple content items.
         
         Args:
             content_list: List of content items with path, id, owner_id
@@ -330,7 +340,8 @@ class ClassificationOrchestrator:
             
         Returns:
             List of classification results
-        """        try:
+        """
+        try:
             logger.info(f"Starting batch classification of {len(content_list)} items")
             
             # Create tasks for parallel processing
@@ -373,7 +384,8 @@ class ClassificationOrchestrator:
             return []
     
     def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get performance metrics for the classification system."""        try:
+        """Get performance metrics for the classification system."""
+        try:
             current_time = datetime.utcnow()
             time_since_last_report = (current_time - self.last_performance_report).total_seconds()
             
@@ -394,7 +406,8 @@ class ClassificationOrchestrator:
             return {}
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform health check on classification system."""        try:
+        """Perform health check on classification system."""
+        try:
             health_status = {
                 'status': 'healthy',
                 'timestamp': datetime.utcnow().isoformat(),
@@ -437,7 +450,8 @@ class ClassificationOrchestrator:
             }
     
     def shutdown(self):
-        """Gracefully shutdown the classification orchestrator."""        try:
+        """Gracefully shutdown the classification orchestrator."""
+        try:
             logger.info("Shutting down classification orchestrator...")
             
             # Shutdown thread pool
@@ -457,7 +471,8 @@ _orchestrator = None
 
 
 def get_orchestrator() -> ClassificationOrchestrator:
-    """Get global classification orchestrator instance."""    global _orchestrator
+    """Get global classification orchestrator instance."""
+    global _orchestrator
     if _orchestrator is None:
         _orchestrator = ClassificationOrchestrator()
     return _orchestrator
@@ -465,20 +480,24 @@ def get_orchestrator() -> ClassificationOrchestrator:
 
 # Convenience functions for direct access
 async def classify_content(content_path: str, content_id: str, owner_id: str) -> Dict[str, Any]:
-    """Convenience function for content classification."""    orchestrator = get_orchestrator()
+    """Convenience function for content classification."""
+    orchestrator = get_orchestrator()
     return await orchestrator.classify_content_comprehensive(content_path, content_id, owner_id)
 
 
 async def batch_classify(content_list: List[Dict[str, str]]) -> List[Dict[str, Any]]:
-    """Convenience function for batch classification."""    orchestrator = get_orchestrator()
+    """Convenience function for batch classification."""
+    orchestrator = get_orchestrator()
     return await orchestrator.batch_classify_content(content_list)
 
 
 def get_health_status() -> Dict[str, Any]:
-    """Convenience function for health check."""    orchestrator = get_orchestrator()
+    """Convenience function for health check."""
+    orchestrator = get_orchestrator()
     return orchestrator.health_check()
 
 
 def get_metrics() -> Dict[str, Any]:
-    """Convenience function for performance metrics."""    orchestrator = get_orchestrator()
+    """Convenience function for performance metrics."""
+    orchestrator = get_orchestrator()
     return orchestrator.get_performance_metrics()

@@ -4,7 +4,8 @@ Generates comprehensive reports for competitor monitoring analysis.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel. All rights reserved.
 WARNING: Unauthorized use, copying, or distribution is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
@@ -32,7 +33,8 @@ from ...utils.chart_generator import ChartGenerator
 
 @dataclass
 class ReportTemplate:
-    """Report template configuration."""    template_id: str
+    """Report template configuration."""
+    template_id: str
     name: str
     description: str
     template_type: str
@@ -45,7 +47,8 @@ class ReportTemplate:
 
 @dataclass
 class ReportData:
-    """Report data structure."""    report_id: str
+    """Report data structure."""
+    report_id: str
     template_id: str
     title: str
     subtitle: str
@@ -61,13 +64,16 @@ class ReportData:
 
 
 class ReportGenerator:
-    """    Advanced report generator for competitor monitoring analysis.
+    """
+    Advanced report generator for competitor monitoring analysis.
     
     Provides comprehensive reporting capabilities with multiple formats,
     automated scheduling, and interactive visualizations.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the report generator."""        self.config = config
+        """Initialize the report generator."""
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Core components
@@ -95,7 +101,8 @@ class ReportGenerator:
         self.logger.info("ReportGenerator initialized")
     
     def _initialize_default_templates(self):
-        """Initialize default report templates."""        try:
+        """Initialize default report templates."""
+        try:
             # Executive Summary Report
             executive_template = ReportTemplate(
                 template_id="executive_summary",
@@ -184,7 +191,8 @@ class ReportGenerator:
             self.logger.error(f"Error initializing default templates: {str(e)}")
     
     async def generate_report(self, template_id: str, data: Dict[str, Any], period: Optional[Tuple[datetime, datetime]] = None) -> ReportData:
-        """Generate a report using specified template and data."""        try:
+        """Generate a report using specified template and data."""
+        try:
             self.logger.info(f"Generating report with template: {template_id}")
             
             if template_id not in self.report_templates:
@@ -249,7 +257,8 @@ class ReportGenerator:
             raise ReportError(f"Failed to generate report: {str(e)}")
     
     async def _generate_section_data(self, section: str, data: Dict[str, Any], period: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Generate data for a specific report section."""        try:
+        """Generate data for a specific report section."""
+        try:
             section_generators = {
                 "executive_summary": self._generate_executive_section,
                 "key_metrics": self._generate_key_metrics_section,
@@ -278,7 +287,8 @@ class ReportGenerator:
             return {"content": f"Error generating section: {str(e)}", "data": {}}
     
     async def _generate_key_metrics_section(self, data: Dict[str, Any], period: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Generate key metrics section."""        try:
+        """Generate key metrics section."""
+        try:
             competitors = data.get("competitors", [])
             market_data = data.get("market_data", {})
             alerts = data.get("alerts", [])
@@ -315,7 +325,8 @@ class ReportGenerator:
             return {"content": "Error generating metrics", "data": {}}
     
     async def _generate_competitor_profiles_section(self, data: Dict[str, Any], period: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Generate competitor profiles section."""        try:
+        """Generate competitor profiles section."""
+        try:
             competitors = data.get("competitors", [])
             
             # Process competitor data
@@ -352,7 +363,8 @@ class ReportGenerator:
             return {"content": "Error generating profiles", "data": {}}
     
     async def _generate_report_charts(self, template: ReportTemplate, data: Dict[str, Any], period: Tuple[datetime, datetime]) -> List[Dict[str, Any]]:
-        """Generate charts for the report."""        try:
+        """Generate charts for the report."""
+        try:
             charts = []
             
             # Market share chart
@@ -386,7 +398,8 @@ class ReportGenerator:
             return []
     
     async def _create_market_share_chart(self, data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Create market share pie chart."""        try:
+        """Create market share pie chart."""
+        try:
             competitors = data.get("competitors", [])
             if not competitors:
                 return None
@@ -424,7 +437,8 @@ class ReportGenerator:
             return None
     
     async def _create_trend_analysis_chart(self, data: Dict[str, Any], period: Tuple[datetime, datetime]) -> Optional[Dict[str, Any]]:
-        """Create trend analysis line chart."""        try:
+        """Create trend analysis line chart."""
+        try:
             trends = data.get("trends", [])
             if not trends:
                 return None
@@ -472,7 +486,8 @@ class ReportGenerator:
             return None
     
     async def _generate_report_file(self, report_data: ReportData, template: ReportTemplate) -> str:
-        """Generate the actual report file."""        try:
+        """Generate the actual report file."""
+        try:
             if template.format_type == "html":
                 return await self._generate_html_report(report_data, template)
             elif template.format_type == "json":
@@ -487,9 +502,11 @@ class ReportGenerator:
             raise ReportError(f"Failed to generate report file: {str(e)}")
     
     async def _generate_html_report(self, report_data: ReportData, template: ReportTemplate) -> str:
-        """Generate HTML report."""        try:
+        """Generate HTML report."""
+        try:
             # HTML template
-            html_template = """            <!DOCTYPE html>
+            html_template = """
+            <!DOCTYPE html>
             <html>
             <head>
                 <title>{{ report.title }}</title>
@@ -562,7 +579,8 @@ class ReportGenerator:
                 </div>
             </body>
             </html>
-            """            
+            """
+            
             # Render template
             template_obj = Template(html_template)
             html_content = template_obj.render(report=report_data)
@@ -582,7 +600,8 @@ class ReportGenerator:
             raise ReportError(f"Failed to generate HTML report: {str(e)}")
     
     async def get_report_history(self, limit: int = 50) -> List[ReportData]:
-        """Get report generation history."""        try:
+        """Get report generation history."""
+        try:
             # Sort by generation time (newest first)
             sorted_reports = sorted(self.generated_reports, key=lambda x: x.generated_at, reverse=True)
             return sorted_reports[:limit]
@@ -592,7 +611,8 @@ class ReportGenerator:
             return []
     
     async def schedule_report(self, template_id: str, frequency: str, recipients: List[str]):
-        """Schedule automated report generation."""        try:
+        """Schedule automated report generation."""
+        try:
             if template_id not in self.report_templates:
                 raise ReportError(f"Template not found: {template_id}")
             
@@ -608,7 +628,8 @@ class ReportGenerator:
             raise ReportError(f"Failed to schedule report: {str(e)}")
     
     async def get_generator_status(self) -> Dict[str, Any]:
-        """Get report generator status."""        return {
+        """Get report generator status."""
+        return {
             "total_templates": len(self.report_templates),
             "generated_reports": len(self.generated_reports),
             "output_directory": self.output_dir,

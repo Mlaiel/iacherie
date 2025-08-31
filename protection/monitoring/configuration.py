@@ -19,7 +19,8 @@ License: Proprietary - Unauthorized use strictly prohibited
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
-"""import json
+"""
+import json
 from typing import Dict, Any, List
 from datetime import datetime
 
@@ -312,7 +313,8 @@ ULTRA_ADVANCED_MONITORING_CONFIG: Dict[str, Any] = {
 }
 
 def get_system_architecture_summary() -> Dict[str, Any]:
-    """Retourne un résumé de l'architecture du système."""    return {
+    """Retourne un résumé de l'architecture du système."""
+    return {
         "system_name": "IA Influencer Agent - Content Protection Monitoring",
         "completion_status": "✅ ULTRA-ADVANCED COMPLETE",
         "total_modules": len(ULTRA_ADVANCED_MONITORING_CONFIG["monitoring_components"]["core_components"]) + 
@@ -342,7 +344,8 @@ def get_system_architecture_summary() -> Dict[str, Any]:
     }
 
 def validate_system_completeness() -> Dict[str, Any]:
-    """Valide que tous les composants requis sont implémentés."""    required_files = [
+    """Valide que tous les composants requis sont implémentés."""
+    required_files = [
         "realtime_monitor.py",
         "analytics.py", 
         "performance_optimizer.py",

@@ -7,7 +7,8 @@ infrastructure is operational and provides quality validation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Demonstrate successful resolution of critical testing gap
-"""import subprocess
+"""
+import subprocess
 import sys
 import os
 from pathlib import Path
@@ -15,7 +16,8 @@ import time
 
 
 def run_core_tests():
-    """Run only the core working tests"""    project_root = Path(__file__).parent
+    """Run only the core working tests"""
+    project_root = Path(__file__).parent
     
     print("🚀 Ainflue Platform - Core Test Suite Validation")
     print("=" * 70)
@@ -120,7 +122,8 @@ def run_core_tests():
 
 
 def validate_test_infrastructure():
-    """Validate that the test infrastructure components are in place"""    project_root = Path(__file__).parent
+    """Validate that the test infrastructure components are in place"""
+    project_root = Path(__file__).parent
     
     print("\n🔍 Test Infrastructure Validation:")
     print("=" * 50)
@@ -162,7 +165,8 @@ def validate_test_infrastructure():
 
 
 def main():
-    """Main execution"""    print("🧪 AINFLUE PLATFORM - PRODUCTION TEST VALIDATION")
+    """Main execution"""
+    print("🧪 AINFLUE PLATFORM - PRODUCTION TEST VALIDATION")
     print("=" * 70)
     print("Validating core test suite for production quality assurance")
     print("")

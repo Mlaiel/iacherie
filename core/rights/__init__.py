@@ -15,16 +15,26 @@ intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, re
 distribution, or derivative work without explicit written permission is strictly prohibited 
 and will result in immediate legal action under German and international copyright law.
 
-All rights reserved. © 2025 Fahed Mlaiel
+All rights reserved. (c) 2025 Fahed Mlaiel
 Contact: mlaiel@live.de for licensing inquiries.
-"""from .rights_manager import RightsManager
+"""
+
+from .rights_manager import RightsManager
+
 from .digital_fingerprint import DigitalFingerprintEngine
+
 from .copyright_detector import CopyrightDetectionService
+
 from .license_manager import LicenseManagementSystem
+
 from .protection_engine import ContentProtectionEngine
+
 from .ownership_validator import OwnershipValidationService
+
 from .royalty_calculator import RoyaltyCalculationEngine
+
 from .dispute_handler import DisputeResolutionSystem
+
 from .web_monitoring import WebMonitoringEngine, MonitoringTarget, ViolationResult
 from .monetization_engine import MonetizationEngine, RevenueMetrics, RevenueLeak
 from .legal_compliance import LegalComplianceEngine, DMCANoticeData, LegalCaseData
@@ -34,7 +44,7 @@ from .index import RightsOrchestrator, router as rights_router
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 __all__ = [
     "RightsManager",
@@ -145,6 +155,7 @@ COMPLIANCE_CONFIG = {
 
 # Initialize logging for the rights module
 import logging
+
 logging.getLogger(__name__).info(
     f"Rights Management Core v{__version__} initialized - Enterprise Protection Active"
 )

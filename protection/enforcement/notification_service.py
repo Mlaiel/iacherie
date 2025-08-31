@@ -1,6 +1,7 @@
 """Notification Service for Copyright Enforcement
 Professional notification system for alerts, updates, and communications
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Callable
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationType(Enum):
-    """Types of notifications"""    CASE_CREATED = "case_created"
+    """Types of notifications"""
+    CASE_CREATED = "case_created"
     CASE_UPDATED = "case_updated"
     CASE_RESOLVED = "case_resolved"
     ESCALATION_CREATED = "escalation_created"
@@ -42,7 +44,8 @@ class NotificationType(Enum):
 
 
 class NotificationPriority(Enum):
-    """Notification priority levels"""    LOW = "low"
+    """Notification priority levels"""
+    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -50,7 +53,8 @@ class NotificationPriority(Enum):
 
 
 class NotificationChannel(Enum):
-    """Notification delivery channels"""    EMAIL = "email"
+    """Notification delivery channels"""
+    EMAIL = "email"
     SMS = "sms"
     WEBHOOK = "webhook"
     SLACK = "slack"
@@ -61,7 +65,8 @@ class NotificationChannel(Enum):
 
 
 class NotificationStatus(Enum):
-    """Status of notification delivery"""    PENDING = "pending"
+    """Status of notification delivery"""
+    PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
     FAILED = "failed"
@@ -72,7 +77,8 @@ class NotificationStatus(Enum):
 
 @dataclass
 class NotificationRecipient:
-    """Notification recipient information"""    id: str
+    """Notification recipient information"""
+    id: str
     name: str
     email: str = ""
     phone: str = ""
@@ -93,7 +99,8 @@ class NotificationRecipient:
 
 @dataclass
 class NotificationTemplate:
-    """Template for notification content"""    id: str
+    """Template for notification content"""
+    id: str
     notification_type: NotificationType
     channel: NotificationChannel
     subject_template: str
@@ -109,7 +116,8 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationMessage:
-    """Individual notification message"""    id: str
+    """Individual notification message"""
+    id: str
     notification_type: NotificationType
     recipient: NotificationRecipient
     channel: NotificationChannel
@@ -144,7 +152,8 @@ class NotificationMessage:
 
 
 class EmailProvider:
-    """Email notification provider"""    
+    """Email notification provider"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.smtp_host = config.get('smtp_host', 'localhost')
@@ -156,7 +165,8 @@ class EmailProvider:
         self.from_name = config.get('from_name', 'IA Influencer Agent')
     
     async def send_email(self, message: NotificationMessage) -> bool:
-        """Send email notification"""        try:
+        """Send email notification"""
+        try:
             # Create email message
             msg = MIMEMultipart('alternative')
             msg['Subject'] = message.subject
@@ -208,14 +218,16 @@ class EmailProvider:
 
 
 class WebhookProvider:
-    """Webhook notification provider"""    
+    """Webhook notification provider"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.timeout = config.get('timeout', 30)
         self.retry_delays = [1, 5, 15]  # seconds
     
     async def send_webhook(self, message: NotificationMessage) -> bool:
-        """Send webhook notification"""        try:
+        """Send webhook notification"""
+        try:
             webhook_url = message.recipient.webhook_url
             if not webhook_url:
                 logger.error("No webhook URL configured for recipient")
@@ -288,7 +300,8 @@ class WebhookProvider:
 
 
 class SlackProvider:
-    """Slack notification provider"""    
+    """Slack notification provider"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.bot_token = config.get('bot_token', '')
@@ -296,7 +309,8 @@ class SlackProvider:
         self.timeout = config.get('timeout', 30)
     
     async def send_slack_message(self, message: NotificationMessage) -> bool:
-        """Send Slack notification"""        try:
+        """Send Slack notification"""
+        try:
             if not self.webhook_url and not self.bot_token:
                 logger.error("No Slack configuration found")
                 return False
@@ -393,7 +407,8 @@ class SlackProvider:
 
 
 class NotificationService:
-    """Main notification service"""    
+    """Main notification service"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         
@@ -431,7 +446,8 @@ class NotificationService:
         logger.info("Notification service initialized")
     
     def _setup_default_templates(self):
-        """Setup default notification templates"""        default_templates = [
+        """Setup default notification templates"""
+        default_templates = [
             NotificationTemplate(
                 id="case_created_email",
                 notification_type=NotificationType.CASE_CREATED,
@@ -552,7 +568,8 @@ Immediate attention required!
             self.templates[template.id] = template
     
     async def add_recipient(self, recipient: NotificationRecipient):
-        """Add notification recipient"""        self.recipients[recipient.id] = recipient
+        """Add notification recipient"""
+        self.recipients[recipient.id] = recipient
         logger.info(f"Added notification recipient: {recipient.name} ({recipient.id})")
     
     async def send_notification(
@@ -564,7 +581,8 @@ Immediate attention required!
         channels: Optional[List[NotificationChannel]] = None,
         case_id: Optional[str] = None
     ) -> List[str]:
-        """Send notification to recipient"""        try:
+        """Send notification to recipient"""
+        try:
             recipient = self.recipients.get(recipient_id)
             if not recipient:
                 logger.error(f"Recipient not found: {recipient_id}")
@@ -625,7 +643,8 @@ Immediate attention required!
         context_data: Dict[str, Any],
         case_id: Optional[str] = None
     ) -> Optional[NotificationMessage]:
-        """Create notification message from template"""        try:
+        """Create notification message from template"""
+        try:
             # Find appropriate template
             template_id = f"{notification_type.value}_{channel.value}"
             template = self.templates.get(template_id)
@@ -675,7 +694,8 @@ Immediate attention required!
             return None
     
     async def _queue_message(self, message: NotificationMessage):
-        """Add message to processing queue"""        try:
+        """Add message to processing queue"""
+        try:
             # Check queue size limit
             if len(self.message_queue) >= self.max_queue_size:
                 # Remove oldest message
@@ -693,7 +713,8 @@ Immediate attention required!
             logger.error(f"Error queuing message: {e}")
     
     async def start_processing(self):
-        """Start message queue processing"""        if self.processing:
+        """Start message queue processing"""
+        if self.processing:
             return
         
         self.processing = True
@@ -701,7 +722,8 @@ Immediate attention required!
         logger.info("Started notification queue processing")
     
     async def stop_processing(self):
-        """Stop message queue processing"""        self.processing = False
+        """Stop message queue processing"""
+        self.processing = False
         if self.processing_task:
             self.processing_task.cancel()
             try:
@@ -711,7 +733,8 @@ Immediate attention required!
         logger.info("Stopped notification queue processing")
     
     async def _process_queue(self):
-        """Process notification message queue"""        while self.processing:
+        """Process notification message queue"""
+        while self.processing:
             try:
                 if not self.message_queue:
                     await asyncio.sleep(self.queue_processing_interval)
@@ -741,7 +764,8 @@ Immediate attention required!
                 await asyncio.sleep(5)
     
     async def _send_message(self, message: NotificationMessage):
-        """Send individual message"""        try:
+        """Send individual message"""
+        try:
             # Check rate limiting
             if self.enable_rate_limiting and not self._check_rate_limit(message):
                 # Re-queue for later
@@ -794,7 +818,8 @@ Immediate attention required!
             self.sent_messages[message.id] = message
     
     def _check_rate_limit(self, message: NotificationMessage) -> bool:
-        """Check if message can be sent within rate limits"""        try:
+        """Check if message can be sent within rate limits"""
+        try:
             channel = message.channel
             recipient_id = message.recipient.id
             rate_key = f"{channel.value}_{recipient_id}"
@@ -827,7 +852,8 @@ Immediate attention required!
             return True  # Allow send on error
     
     async def get_message_status(self, message_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of sent message"""        try:
+        """Get status of sent message"""
+        try:
             message = self.sent_messages.get(message_id)
             if not message:
                 return None
@@ -853,19 +879,22 @@ Immediate attention required!
             return None
     
     async def mark_message_delivered(self, message_id: str):
-        """Mark message as delivered"""        message = self.sent_messages.get(message_id)
+        """Mark message as delivered"""
+        message = self.sent_messages.get(message_id)
         if message:
             message.status = NotificationStatus.DELIVERED
             message.delivered_at = datetime.utcnow()
     
     async def mark_message_read(self, message_id: str):
-        """Mark message as read"""        message = self.sent_messages.get(message_id)
+        """Mark message as read"""
+        message = self.sent_messages.get(message_id)
         if message:
             message.status = NotificationStatus.READ
             message.read_at = datetime.utcnow()
     
     async def get_notification_statistics(self) -> Dict[str, Any]:
-        """Get notification service statistics"""        try:
+        """Get notification service statistics"""
+        try:
             stats = {
                 'queue_size': len(self.message_queue),
                 'total_sent': len(self.sent_messages),
@@ -899,7 +928,8 @@ Immediate attention required!
             return {}
     
     async def cleanup_old_messages(self):
-        """Clean up old messages"""        try:
+        """Clean up old messages"""
+        try:
             cutoff_date = datetime.utcnow() - timedelta(days=self.message_retention_days)
             
             # Clean up sent messages
@@ -928,7 +958,8 @@ Immediate attention required!
             logger.error(f"Error cleaning up old messages: {e}")
     
     async def shutdown(self):
-        """Shutdown notification service"""        try:
+        """Shutdown notification service"""
+        try:
             await self.stop_processing()
             
             # Process remaining messages in queue
@@ -948,7 +979,8 @@ notification_service = NotificationService()
 
 
 async def get_notification_service() -> NotificationService:
-    """Get the global notification service instance"""    return notification_service
+    """Get the global notification service instance"""
+    return notification_service
 
 
 __all__ = [

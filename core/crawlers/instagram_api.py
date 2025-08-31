@@ -12,7 +12,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
-"""import asyncio
+"""
+import asyncio
 import logging
 import re
 import json
@@ -38,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class InstagramMediaData:
-    """Comprehensive Instagram media metadata structure."""    
+    """Comprehensive Instagram media metadata structure."""
+    
     media_id: str
     media_url: str
     media_type: str  # IMAGE, VIDEO, CAROUSEL_ALBUM
@@ -70,7 +72,8 @@ class InstagramMediaData:
 
 @dataclass
 class InstagramUserData:
-    """Instagram user profile comprehensive information."""    
+    """Instagram user profile comprehensive information."""
+    
     user_id: str
     username: str
     display_name: str
@@ -86,14 +89,16 @@ class InstagramUserData:
     contact_info: Optional[Dict[str, Any]]
 
 class InstagramAPIManager:
-    """Professional Instagram API management with Graph API integration."""    
+    """Professional Instagram API management with Graph API integration."""
+    
     def __init__(
         self,
         app_id: str,
         app_secret: str,
         access_token: Optional[str] = None
     ):
-        """Initialize Instagram API service with Graph API credentials."""        self.app_id = app_id
+        """Initialize Instagram API service with Graph API credentials."""
+        self.app_id = app_id
         self.app_secret = app_secret
         self.access_token = access_token
         self.graph_api_url = "https://graph.instagram.com"
@@ -110,7 +115,8 @@ class InstagramAPIManager:
         limit: int = 25,
         fields: Optional[List[str]] = None
     ) -> List[Dict[str, Any]]:
-        """Fetch user media using Instagram Graph API."""        await self.rate_limiter.acquire()
+        """Fetch user media using Instagram Graph API."""
+        await self.rate_limiter.acquire()
         
         if not fields:
             fields = [
@@ -140,7 +146,8 @@ class InstagramAPIManager:
             return []
     
     async def get_media_details(self, media_id: str) -> Optional[Dict[str, Any]]:
-        """Get detailed information about specific media."""        await self.rate_limiter.acquire()
+        """Get detailed information about specific media."""
+        await self.rate_limiter.acquire()
         
         try:
             fields = [
@@ -173,7 +180,8 @@ class InstagramAPIManager:
         user_id: str,
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """Search media by hashtag using Instagram Graph API."""        await self.rate_limiter.acquire()
+        """Search media by hashtag using Instagram Graph API."""
+        await self.rate_limiter.acquire()
         
         try:
             # First get hashtag ID
@@ -218,15 +226,18 @@ class InstagramAPIManager:
             return []
 
 class InstagramWebScraper:
-    """Advanced Instagram web scraping with anti-detection measures."""    
+    """Advanced Instagram web scraping with anti-detection measures."""
+    
     def __init__(self, proxy_manager: Optional[ProxyManager] = None):
-        """Initialize Instagram web scraper with proxy support."""        self.proxy_manager = proxy_manager
+        """Initialize Instagram web scraper with proxy support."""
+        self.proxy_manager = proxy_manager
         self.session = None
         self.driver = None
         self._setup_selenium_driver()
     
     def _setup_selenium_driver(self):
-        """Configure Selenium WebDriver with anti-detection measures."""        chrome_options = Options()
+        """Configure Selenium WebDriver with anti-detection measures."""
+        chrome_options = Options()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
@@ -254,7 +265,8 @@ class InstagramWebScraper:
         self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
     
     async def scrape_post_data(self, post_url: str) -> Optional[InstagramMediaData]:
-        """Scrape comprehensive post data from Instagram post page."""        try:
+        """Scrape comprehensive post data from Instagram post page."""
+        try:
             self.driver.get(post_url)
             
             # Wait for content to load
@@ -301,7 +313,8 @@ class InstagramWebScraper:
         shared_data: Dict[str, Any],
         shortcode: str
     ) -> Optional[InstagramMediaData]:
-        """Extract post data from Instagram shared data object."""        try:
+        """Extract post data from Instagram shared data object."""
+        try:
             # Navigate through Instagram's complex shared data structure
             entry_data = shared_data.get('entry_data', {})
             post_page = entry_data.get('PostPage', [])
@@ -378,7 +391,8 @@ class InstagramWebScraper:
             return None
     
     def _extract_post_from_dom(self, shortcode: str, post_url: str) -> Optional[InstagramMediaData]:
-        """Fallback method to extract post data from DOM elements."""        try:
+        """Fallback method to extract post data from DOM elements."""
+        try:
             # Extract basic information from DOM
             # Note: Instagram's DOM structure changes frequently
             
@@ -461,7 +475,8 @@ class InstagramWebScraper:
             return None
     
     async def search_hashtag_posts(self, hashtag: str, limit: int = 50) -> List[str]:
-        """Search posts by hashtag and return post URLs."""        try:
+        """Search posts by hashtag and return post URLs."""
+        try:
             hashtag_url = f"https://www.instagram.com/explore/tags/{hashtag.replace('#', '')}/"
             self.driver.get(hashtag_url)
             
@@ -500,13 +515,16 @@ class InstagramWebScraper:
             return []
     
     def close(self):
-        """Clean up Selenium driver."""        if self.driver:
+        """Clean up Selenium driver."""
+        if self.driver:
             self.driver.quit()
 
 class InstagramCrawler(BaseCrawler):
-    """Professional Instagram crawler with comprehensive monitoring capabilities."""    
+    """Professional Instagram crawler with comprehensive monitoring capabilities."""
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize Instagram crawler with configuration."""        super().__init__(config)
+        """Initialize Instagram crawler with configuration."""
+        super().__init__(config)
         self.api_manager = None
         
         # Initialize API manager if credentials provided
@@ -523,7 +541,8 @@ class InstagramCrawler(BaseCrawler):
         self.platform = 'instagram'
     
     async def crawl_post(self, post_url: str) -> Optional[CrawlResult]:
-        """Crawl comprehensive data for a specific Instagram post."""        try:
+        """Crawl comprehensive data for a specific Instagram post."""
+        try:
             # Scrape post data
             post_data = await self.web_scraper.scrape_post_data(post_url)
             if not post_data:
@@ -577,7 +596,8 @@ class InstagramCrawler(BaseCrawler):
         limit: int = 100,
         time_range: Optional[timedelta] = None
     ) -> List[CrawlResult]:
-        """Search for potentially infringing content on Instagram."""        try:
+        """Search for potentially infringing content on Instagram."""
+        try:
             results = []
             
             # Try API search first if available
@@ -614,7 +634,8 @@ class InstagramCrawler(BaseCrawler):
         username: str,
         check_period: timedelta = timedelta(hours=24)
     ) -> List[CrawlResult]:
-        """Monitor a specific user for new content."""        try:
+        """Monitor a specific user for new content."""
+        try:
             user_url = f"https://www.instagram.com/{username}/"
             self.web_scraper.driver.get(user_url)
             
@@ -651,5 +672,6 @@ class InstagramCrawler(BaseCrawler):
             return []
     
     def cleanup(self):
-        """Clean up resources."""        if self.web_scraper:
+        """Clean up resources."""
+        if self.web_scraper:
             self.web_scraper.close()

@@ -6,7 +6,8 @@ and microservices with intelligent rollout strategies.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -26,7 +27,8 @@ from ..security.security_scanner import SecurityScanner
 
 
 class ServiceType(Enum):
-    """Service types in the IA Influencer Agent platform"""    AI_AGENT = "ai_agent"
+    """Service types in the IA Influencer Agent platform"""
+    AI_AGENT = "ai_agent"
     CONTENT_PROTECTION = "content_protection"
     FINGERPRINTING = "fingerprinting"
     MONETIZATION = "monetization"
@@ -40,7 +42,8 @@ class ServiceType(Enum):
 
 
 class DeploymentStatus(Enum):
-    """Deployment status types"""    PENDING = "pending"
+    """Deployment status types"""
+    PENDING = "pending"
     BUILDING = "building"
     DEPLOYING = "deploying"
     RUNNING = "running"
@@ -53,7 +56,8 @@ class DeploymentStatus(Enum):
 
 @dataclass
 class ServiceSpec:
-    """Service deployment specification"""    name: str
+    """Service deployment specification"""
+    name: str
     service_type: ServiceType
     image: str
     version: str
@@ -78,7 +82,8 @@ class ServiceSpec:
 
 @dataclass
 class DeploymentContext:
-    """Deployment execution context"""    deployment_id: str
+    """Deployment execution context"""
+    deployment_id: str
     environment: str
     namespace: str
     strategy: str = "rolling"
@@ -93,12 +98,14 @@ class DeploymentContext:
 
 
 class ServiceDeployer(BaseComponent):
-    """    Enterprise-grade service deployment engine.
+    """
+    Enterprise-grade service deployment engine.
     
     Handles deployment of microservices across the IA Influencer Agent platform
     with support for multiple deployment strategies, health validation, and
     automated rollbacks.
-    """    def __init__(self, config: Dict[str, Any]):
+    """
+    def __init__(self, config: Dict[str, Any]):
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -126,7 +133,8 @@ class ServiceDeployer(BaseComponent):
         }
 
     def _load_service_templates(self) -> Dict[str, ServiceSpec]:
-        """Load service deployment templates"""        templates = {}
+        """Load service deployment templates"""
+        templates = {}
         
         # AI Agent Service Template
         templates['ai_agent'] = ServiceSpec(
@@ -694,7 +702,8 @@ class ServiceDeployer(BaseComponent):
         environment: str,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Deploy multiple services to the specified environment.
+        """
+        Deploy multiple services to the specified environment.
         
         Args:
             services: List of service names to deploy
@@ -703,7 +712,8 @@ class ServiceDeployer(BaseComponent):
             
         Returns:
             Deployment results for all services
-        """        deployment_id = context.get('deployment_id', f"deploy-{datetime.utcnow().strftime('%Y%m%d-%H%M%S')}")
+        """
+        deployment_id = context.get('deployment_id', f"deploy-{datetime.utcnow().strftime('%Y%m%d-%H%M%S')}")
         
         self.logger.info(f"Starting deployment of {len(services)} services to {environment}")
         
@@ -782,7 +792,8 @@ class ServiceDeployer(BaseComponent):
         services: List[str],
         context: DeploymentContext
     ) -> None:
-        """Validate deployment prerequisites"""        
+        """Validate deployment prerequisites"""
+        
         # Validate namespace exists
         namespace_exists = await self.deployment_manager.namespace_exists(context.namespace)
         if not namespace_exists:
@@ -812,7 +823,8 @@ class ServiceDeployer(BaseComponent):
         services: List[str],
         context: DeploymentContext
     ) -> Dict[str, Any]:
-        """Build and push container images for services"""        
+        """Build and push container images for services"""
+        
         image_results = {}
         
         for service_name in services:
@@ -862,7 +874,8 @@ class ServiceDeployer(BaseComponent):
         services: List[str],
         context: DeploymentContext
     ) -> Dict[str, Any]:
-        """Execute rolling deployment strategy"""        
+        """Execute rolling deployment strategy"""
+        
         results = {}
         
         for service_name in services:
@@ -904,7 +917,8 @@ class ServiceDeployer(BaseComponent):
         services: List[str],
         context: DeploymentContext
     ) -> Dict[str, Any]:
-        """Execute blue-green deployment strategy"""        
+        """Execute blue-green deployment strategy"""
+        
         results = {}
         green_namespace = f"{context.namespace}-green"
         
@@ -965,7 +979,8 @@ class ServiceDeployer(BaseComponent):
         services: List[str],
         context: DeploymentContext
     ) -> Dict[str, Any]:
-        """Execute canary deployment strategy"""        
+        """Execute canary deployment strategy"""
+        
         results = {}
         canary_percentage = context.context.get('canary_percentage', 10)
         
@@ -1022,7 +1037,8 @@ class ServiceDeployer(BaseComponent):
         services: List[str],
         context: DeploymentContext
     ) -> Dict[str, Any]:
-        """Execute recreate deployment strategy"""        
+        """Execute recreate deployment strategy"""
+        
         results = {}
         
         for service_name in services:
@@ -1067,7 +1083,8 @@ class ServiceDeployer(BaseComponent):
         context: DeploymentContext,
         namespace: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Validate deployment health across all services"""        
+        """Validate deployment health across all services"""
+        
         target_namespace = namespace or context.namespace
         health_results = {
             'healthy': True,
@@ -1117,7 +1134,8 @@ class ServiceDeployer(BaseComponent):
         return health_results
 
     async def _execute_pre_deployment_hooks(self, context: DeploymentContext) -> None:
-        """Execute pre-deployment hooks"""        
+        """Execute pre-deployment hooks"""
+        
         for hook in context.pre_deployment_hooks:
             try:
                 await self._execute_hook(hook, context, "pre-deployment")
@@ -1126,7 +1144,8 @@ class ServiceDeployer(BaseComponent):
                 raise
 
     async def _execute_post_deployment_hooks(self, context: DeploymentContext) -> None:
-        """Execute post-deployment hooks"""        
+        """Execute post-deployment hooks"""
+        
         for hook in context.post_deployment_hooks:
             try:
                 await self._execute_hook(hook, context, "post-deployment")
@@ -1135,7 +1154,8 @@ class ServiceDeployer(BaseComponent):
                 # Post-deployment hook failures are non-fatal
 
     async def _execute_hook(self, hook: str, context: DeploymentContext, hook_type: str) -> None:
-        """Execute a deployment hook"""        
+        """Execute a deployment hook"""
+        
         # Hook execution logic would be implemented based on hook type
         # This could include database migrations, cache warming, notifications, etc.
         self.logger.info(f"Executing {hook_type} hook: {hook}")
@@ -1146,7 +1166,8 @@ class ServiceDeployer(BaseComponent):
         context: DeploymentContext,
         duration: int
     ) -> Dict[str, Any]:
-        """Monitor canary deployment metrics"""        
+        """Monitor canary deployment metrics"""
+        
         # Implement canary metrics collection
         # This would integrate with monitoring systems like Prometheus
         return {
@@ -1158,7 +1179,8 @@ class ServiceDeployer(BaseComponent):
         }
 
     async def _analyze_canary_performance(self, metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze canary deployment performance"""        
+        """Analyze canary deployment performance"""
+        
         analysis = {
             'successful': True,
             'issues': []
@@ -1186,7 +1208,8 @@ class ServiceDeployer(BaseComponent):
         return analysis
 
     async def _rollback_deployment(self, deployment_id: str, reason: str) -> None:
-        """Rollback a failed deployment"""        
+        """Rollback a failed deployment"""
+        
         if deployment_id not in self.active_deployments:
             return
         
@@ -1219,7 +1242,8 @@ class ServiceDeployer(BaseComponent):
         environment: str,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Deploy a batch of service instances (for rolling deployments)"""        
+        """Deploy a batch of service instances (for rolling deployments)"""
+        
         return await self.deploy_services(batch, environment, context)
 
     async def deploy_canary_services(
@@ -1229,7 +1253,8 @@ class ServiceDeployer(BaseComponent):
         canary_percentage: int,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Deploy canary versions of services"""        
+        """Deploy canary versions of services"""
+        
         context['canary_percentage'] = canary_percentage
         context['strategy'] = 'canary'
         
@@ -1241,7 +1266,8 @@ class ServiceDeployer(BaseComponent):
         environment: str,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Promote canary deployment to full deployment"""        
+        """Promote canary deployment to full deployment"""
+        
         results = {}
         
         for service_name in services:
@@ -1261,7 +1287,8 @@ class ServiceDeployer(BaseComponent):
         environment: str,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Stop services in the specified environment"""        
+        """Stop services in the specified environment"""
+        
         results = {}
         namespace = context.get('namespace', f"ia-influencer-{environment}")
         
@@ -1278,10 +1305,12 @@ class ServiceDeployer(BaseComponent):
         return results
 
     async def get_deployment_status(self, deployment_id: str) -> Optional[Dict[str, Any]]:
-        """Get deployment status"""        return self.active_deployments.get(deployment_id)
+        """Get deployment status"""
+        return self.active_deployments.get(deployment_id)
 
     async def list_active_deployments(self) -> List[Dict[str, Any]]:
-        """List all active deployments"""        return [
+        """List all active deployments"""
+        return [
             {
                 'deployment_id': deployment_id,
                 'environment': state['environment'],
@@ -1293,7 +1322,8 @@ class ServiceDeployer(BaseComponent):
         ]
 
     async def cleanup_completed_deployments(self, max_age_hours: int = 24) -> int:
-        """Cleanup old completed deployment states"""        cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
+        """Cleanup old completed deployment states"""
+        cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
         cleaned_count = 0
         
         deployments_to_remove = []

@@ -23,7 +23,8 @@ Team Specializations:
 - Audio Engineer: Professional audio processing
 - DevOps Engineer: CI/CD & infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt optimization
-"""import asyncio
+"""
+import asyncio
 import re
 from typing import Dict, List, Set, Tuple, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -50,7 +51,8 @@ from ...utils.validation import validate_input
 
 
 class CollaborationType(Enum):
-    """Types of collaboration opportunities"""    MUSIC_COLLABORATION = "music_collaboration"
+    """Types of collaboration opportunities"""
+    MUSIC_COLLABORATION = "music_collaboration"
     CONTENT_COLLABORATION = "content_collaboration"
     BRAND_PARTNERSHIP = "brand_partnership"
     CROSS_PROMOTION = "cross_promotion"
@@ -68,7 +70,8 @@ class CollaborationType(Enum):
 
 
 class CollaborationStatus(Enum):
-    """Status of collaboration opportunities"""    DETECTED = "detected"
+    """Status of collaboration opportunities"""
+    DETECTED = "detected"
     ANALYZED = "analyzed"
     CONTACTED = "contacted"
     IN_PROGRESS = "in_progress"
@@ -78,7 +81,8 @@ class CollaborationStatus(Enum):
 
 
 class CollaborationPriority(Enum):
-    """Priority levels for collaboration opportunities"""    CRITICAL = "critical"
+    """Priority levels for collaboration opportunities"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -86,7 +90,8 @@ class CollaborationPriority(Enum):
 
 @dataclass
 class CollaborationEntity:
-    """Collaboration opportunity entity with comprehensive metadata"""    text: str
+    """Collaboration opportunity entity with comprehensive metadata"""
+    text: str
     collaboration_type: CollaborationType
     priority: CollaborationPriority
     status: CollaborationStatus
@@ -116,7 +121,8 @@ class CollaborationEntity:
 
 @dataclass
 class CollaborationNetwork:
-    """Network analysis of collaboration opportunities"""    nodes: List[str]
+    """Network analysis of collaboration opportunities"""
+    nodes: List[str]
     edges: List[Tuple[str, str, float]]
     clusters: List[List[str]]
     central_nodes: List[str]
@@ -127,7 +133,8 @@ class CollaborationNetwork:
 
 @dataclass
 class CollaborationAnalysisResult:
-    """Complete collaboration analysis results"""    entities: List[CollaborationEntity]
+    """Complete collaboration analysis results"""
+    entities: List[CollaborationEntity]
     total_opportunities: int
     high_priority_count: int
     collaboration_network: CollaborationNetwork
@@ -137,7 +144,8 @@ class CollaborationAnalysisResult:
 
 
 class CollaborationEntityTracker(BaseService):
-    """    Advanced collaboration entity tracker for content creators.
+    """
+    Advanced collaboration entity tracker for content creators.
     
     Specializes in:
     - Collaboration opportunity detection
@@ -147,7 +155,8 @@ class CollaborationEntityTracker(BaseService):
     - Network effect optimization
     - Partnership compatibility scoring
     - Strategic recommendation generation
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
@@ -173,7 +182,8 @@ class CollaborationEntityTracker(BaseService):
         self.collaboration_history = {}
         
     def _load_models(self):
-        """Load comprehensive ML models for advanced collaboration analysis"""        try:
+        """Load comprehensive ML models for advanced collaboration analysis"""
+        try:
             # Primary collaboration classifier with domain-specific fine-tuning
             self.collaboration_classifier = pipeline(
                 "text-classification",
@@ -244,7 +254,8 @@ class CollaborationEntityTracker(BaseService):
             await self._load_fallback_models()
     
     def _initialize_success_prediction_model(self):
-        """Initialize ML model for predicting collaboration success"""        import torch.nn as nn
+        """Initialize ML model for predicting collaboration success"""
+        import torch.nn as nn
         
         class CollaborationSuccessPredictor(nn.Module):
             def __init__(self, input_dim=150, hidden_dims=[256, 128, 64]):
@@ -285,7 +296,8 @@ class CollaborationEntityTracker(BaseService):
         return model
     
     def _load_industry_vocabularies(self):
-        """Load comprehensive industry-specific vocabularies for collaboration detection"""        self.industry_vocab = {
+        """Load comprehensive industry-specific vocabularies for collaboration detection"""
+        self.industry_vocab = {
             'music_industry': {
                 'roles': [
                     'producer', 'songwriter', 'vocalist', 'rapper', 'singer', 'composer',
@@ -346,7 +358,8 @@ class CollaborationEntityTracker(BaseService):
         }
     
     def _initialize_real_time_tracking(self):
-        """Initialize real-time collaboration opportunity tracking"""        self.tracking_components = {
+        """Initialize real-time collaboration opportunity tracking"""
+        self.tracking_components = {
             'social_media_monitors': {
                 'twitter_api': self._initialize_twitter_monitor(),
                 'instagram_api': self._initialize_instagram_monitor(),
@@ -371,7 +384,8 @@ class CollaborationEntityTracker(BaseService):
         }
     
     def _initialize_twitter_monitor(self):
-        """Initialize Twitter API monitoring for collaboration opportunities"""        # This would initialize Twitter API v2 streaming
+        """Initialize Twitter API monitoring for collaboration opportunities"""
+        # This would initialize Twitter API v2 streaming
         # For now, return configuration structure
         return {
             'api_version': 'v2',
@@ -383,7 +397,8 @@ class CollaborationEntityTracker(BaseService):
         }
     
     def _initialize_instagram_monitor(self):
-        """Initialize Instagram API monitoring"""        return {
+        """Initialize Instagram API monitoring"""
+        return {
             'api_version': 'basic_display',
             'hashtags': ['#collab', '#collaboration', '#brandpartnership'],
             'user_fields': ['followers_count', 'media_count'],
@@ -392,7 +407,8 @@ class CollaborationEntityTracker(BaseService):
         }
     
     def _initialize_youtube_monitor(self):
-        """Initialize YouTube API monitoring"""        return {
+        """Initialize YouTube API monitoring"""
+        return {
             'api_version': 'v3',
             'search_terms': ['collaboration', 'featuring', 'guest appearance'],
             'channel_fields': ['statistics', 'snippet'],
@@ -402,7 +418,8 @@ class CollaborationEntityTracker(BaseService):
         }
     
     def _initialize_tiktok_monitor(self):
-        """Initialize TikTok API monitoring"""        return {
+        """Initialize TikTok API monitoring"""
+        return {
             'api_version': 'research',
             'hashtags': ['#collab', '#duet', '#collaboration'],
             'user_fields': ['follower_count', 'video_count'],
@@ -411,7 +428,8 @@ class CollaborationEntityTracker(BaseService):
         }
     
     async def _load_fallback_models(self):
-        """Load simplified fallback models if advanced models fail"""        try:
+        """Load simplified fallback models if advanced models fail"""
+        try:
             self.collaboration_classifier = pipeline(
                 "text-classification",
                 model="distilbert-base-uncased-finetuned-sst-2-english"
@@ -433,7 +451,8 @@ class CollaborationEntityTracker(BaseService):
             self.models_loaded = False
     
     def _initialize_collaboration_patterns(self) -> Dict[CollaborationType, List[re.Pattern]]:
-        """Initialize regex patterns for collaboration detection"""        patterns = {
+        """Initialize regex patterns for collaboration detection"""
+        patterns = {
             CollaborationType.MUSIC_COLLABORATION: [
                 re.compile(r"collab(?:oration)?.*music", re.IGNORECASE),
                 re.compile(r"looking for.*(?:producer|musician|artist)", re.IGNORECASE),
@@ -496,7 +515,8 @@ class CollaborationEntityTracker(BaseService):
         content_metadata: Optional[ContentMetadata] = None,
         user_profile: Optional[Dict[str, Any]] = None
     ) -> CollaborationAnalysisResult:
-        """        Track and analyze collaboration opportunities in text
+        """
+        Track and analyze collaboration opportunities in text
         
         Args:
             text: Input text to analyze
@@ -505,7 +525,8 @@ class CollaborationEntityTracker(BaseService):
             
         Returns:
             Complete collaboration analysis results
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             # Validate input
@@ -575,7 +596,8 @@ class CollaborationEntityTracker(BaseService):
         content_metadata: Optional[ContentMetadata],
         user_profile: Optional[Dict[str, Any]]
     ) -> List[CollaborationEntity]:
-        """Extract collaboration entities from text"""        entities = []
+        """Extract collaboration entities from text"""
+        entities = []
         
         try:
             # Pattern-based extraction
@@ -619,7 +641,8 @@ class CollaborationEntityTracker(BaseService):
         content_metadata: Optional[ContentMetadata],
         user_profile: Optional[Dict[str, Any]]
     ) -> Optional[CollaborationEntity]:
-        """Create collaboration entity from pattern match"""        try:
+        """Create collaboration entity from pattern match"""
+        try:
             # Extract context around match
             context_start = max(0, match.start() - 100)
             context_end = min(len(full_text), match.end() + 100)
@@ -665,7 +688,8 @@ class CollaborationEntityTracker(BaseService):
         content_metadata: Optional[ContentMetadata],
         user_profile: Optional[Dict[str, Any]]
     ) -> List[CollaborationEntity]:
-        """Extract implicit collaboration opportunities using ML"""        entities = []
+        """Extract implicit collaboration opportunities using ML"""
+        entities = []
         
         try:
             # Use NLP to identify entities and relationships
@@ -708,7 +732,8 @@ class CollaborationEntityTracker(BaseService):
         return entities
     
     async def _analyze_collaboration_sentiment(self, context: str) -> Dict[str, Any]:
-        """Analyze sentiment of collaboration context"""        try:
+        """Analyze sentiment of collaboration context"""
+        try:
             result = self.sentiment_analyzer(context)
             return {
                 "label": result[0]["label"],
@@ -720,7 +745,8 @@ class CollaborationEntityTracker(BaseService):
             return {"label": "NEUTRAL", "score": 0.5, "is_positive": True}
     
     async def _extract_collaborator_info(self, context: str) -> Dict[str, Any]:
-        """Extract information about potential collaborators"""        info = {}
+        """Extract information about potential collaborators"""
+        info = {}
         
         try:
             doc = self.nlp(context)
@@ -756,7 +782,8 @@ class CollaborationEntityTracker(BaseService):
         return info
     
     async def _extract_skills_and_genres(self, context: str) -> List[str]:
-        """Extract skills and genres from context"""        skills = []
+        """Extract skills and genres from context"""
+        skills = []
         
         # Music genres
         music_genres = [
@@ -785,7 +812,8 @@ class CollaborationEntityTracker(BaseService):
         return skills
     
     async def _extract_contact_information(self, context: str) -> Dict[str, str]:
-        """Extract contact information from context"""        contact = {}
+        """Extract contact information from context"""
+        contact = {}
         
         # Email pattern
         email_pattern = re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b')
@@ -814,7 +842,8 @@ class CollaborationEntityTracker(BaseService):
         context: str,
         sentiment: Dict[str, Any]
     ) -> float:
-        """Calculate confidence score for collaboration entity"""        base_confidence = 0.6
+        """Calculate confidence score for collaboration entity"""
+        base_confidence = 0.6
         
         # Type-specific confidence adjustments
         type_weights = {
@@ -853,7 +882,8 @@ class CollaborationEntityTracker(BaseService):
         context: str,
         user_profile: Optional[Dict[str, Any]]
     ):
-        """Enrich collaboration entity with additional metadata"""        try:
+        """Enrich collaboration entity with additional metadata"""
+        try:
             # Calculate compatibility score
             if user_profile:
                 entity.compatibility_score = await self._calculate_compatibility_score(
@@ -882,7 +912,8 @@ class CollaborationEntityTracker(BaseService):
         entity: CollaborationEntity,
         user_profile: Dict[str, Any]
     ) -> float:
-        """Calculate compatibility score between user and collaboration opportunity"""        score = 0.5  # Base score
+        """Calculate compatibility score between user and collaboration opportunity"""
+        score = 0.5  # Base score
         
         try:
             user_genres = user_profile.get("genres", [])
@@ -918,7 +949,8 @@ class CollaborationEntityTracker(BaseService):
         return min(1.0, max(0.0, score))
     
     async def _extract_requirements(self, context: str) -> List[str]:
-        """Extract requirements from collaboration context"""        requirements = []
+        """Extract requirements from collaboration context"""
+        requirements = []
         
         # Common requirement patterns
         requirement_patterns = [
@@ -938,7 +970,8 @@ class CollaborationEntityTracker(BaseService):
         return requirements
     
     async def _extract_benefits(self, context: str) -> List[str]:
-        """Extract benefits from collaboration context"""        benefits = []
+        """Extract benefits from collaboration context"""
+        benefits = []
         
         # Common benefit patterns
         benefit_patterns = [
@@ -959,7 +992,8 @@ class CollaborationEntityTracker(BaseService):
         return benefits
     
     async def _extract_risks(self, context: str) -> List[str]:
-        """Extract potential risks from collaboration context"""        risks = []
+        """Extract potential risks from collaboration context"""
+        risks = []
         
         # Risk indicators
         risk_keywords = [
@@ -986,7 +1020,8 @@ class CollaborationEntityTracker(BaseService):
         entities: List[CollaborationEntity],
         text: str
     ) -> CollaborationNetwork:
-        """Analyze collaboration network and relationships"""        try:
+        """Analyze collaboration network and relationships"""
+        try:
             # Create network graph
             G = nx.Graph()
             
@@ -1080,7 +1115,8 @@ class CollaborationEntityTracker(BaseService):
         user_profile: Optional[Dict[str, Any]],
         network: CollaborationNetwork
     ) -> List[Dict[str, Any]]:
-        """Generate strategic collaboration recommendations"""        recommendations = []
+        """Generate strategic collaboration recommendations"""
+        recommendations = []
         
         try:
             # High-priority opportunities
@@ -1164,7 +1200,8 @@ class CollaborationEntityTracker(BaseService):
         self, 
         entities: List[CollaborationEntity]
     ) -> List[CollaborationEntity]:
-        """Remove duplicate collaboration entities"""        if not entities:
+        """Remove duplicate collaboration entities"""
+        if not entities:
             return []
         
         # Group by text similarity
@@ -1202,7 +1239,8 @@ class CollaborationEntityTracker(BaseService):
         entity: CollaborationEntity,
         user_profile: Optional[Dict[str, Any]]
     ) -> float:
-        """Calculate overall opportunity score"""        score = entity.confidence * 0.4  # Base confidence weight
+        """Calculate overall opportunity score"""
+        score = entity.confidence * 0.4  # Base confidence weight
         
         # Add compatibility score
         score += entity.compatibility_score * 0.3
@@ -1229,7 +1267,8 @@ class CollaborationEntityTracker(BaseService):
         return min(1.0, max(0.0, score))
     
     async def _determine_priority(self, entity: CollaborationEntity) -> CollaborationPriority:
-        """Determine priority level for collaboration entity"""        score = entity.opportunity_score
+        """Determine priority level for collaboration entity"""
+        score = entity.opportunity_score
         
         # Time-sensitive boost
         if entity.expires_at and entity.expires_at < datetime.now() + timedelta(days=3):
@@ -1253,7 +1292,8 @@ class CollaborationEntityTracker(BaseService):
             return CollaborationPriority.LOW
     
     async def health_check(self) -> Dict[str, Any]:
-        """Check service health status"""        return {
+        """Check service health status"""
+        return {
             "status": "healthy" if self.models_loaded else "degraded",
             "models_loaded": self.models_loaded,
             "collaboration_types_supported": len(self._collaboration_patterns),

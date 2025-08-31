@@ -5,7 +5,8 @@ including content gap analysis, keyword monitoring, and competitive positioning 
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import re
+"""
+import re
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set
 from dataclasses import dataclass
@@ -18,14 +19,16 @@ logger = logging.getLogger(__name__)
 
 
 class CompetitorType(Enum):
-    """Types of competitors"""    DIRECT = "direct"
+    """Types of competitors"""
+    DIRECT = "direct"
     INDIRECT = "indirect"
     SUBSTITUTE = "substitute"
     ASPIRATIONAL = "aspirational"
 
 
 class AnalysisType(Enum):
-    """Types of competitive analysis"""    KEYWORD_GAP = "keyword_gap"
+    """Types of competitive analysis"""
+    KEYWORD_GAP = "keyword_gap"
     CONTENT_GAP = "content_gap"
     BACKLINK_ANALYSIS = "backlink_analysis"
     SOCIAL_MEDIA = "social_media"
@@ -34,7 +37,8 @@ class AnalysisType(Enum):
 
 
 class Platform(Enum):
-    """Platforms for competitive analysis"""    WEBSITE = "website"
+    """Platforms for competitive analysis"""
+    WEBSITE = "website"
     INSTAGRAM = "instagram"
     YOUTUBE = "youtube"
     TWITTER = "twitter"
@@ -45,7 +49,8 @@ class Platform(Enum):
 
 @dataclass
 class CompetitorProfile:
-    """Profile of a competitor"""    name: str
+    """Profile of a competitor"""
+    name: str
     domain: str
     competitor_type: CompetitorType
     industry: str
@@ -59,7 +64,8 @@ class CompetitorProfile:
 
 @dataclass
 class KeywordGap:
-    """Keyword gap analysis result"""    keyword: str
+    """Keyword gap analysis result"""
+    keyword: str
     competitor_rank: int
     user_rank: Optional[int]
     search_volume: int
@@ -70,7 +76,8 @@ class KeywordGap:
 
 @dataclass
 class ContentGap:
-    """Content gap analysis result"""    topic: str
+    """Content gap analysis result"""
+    topic: str
     competitor_coverage: int
     user_coverage: int
     content_types: List[str]
@@ -81,7 +88,8 @@ class ContentGap:
 
 @dataclass
 class CompetitiveIntelligenceResult:
-    """Complete competitive intelligence analysis"""    competitor_profiles: List[CompetitorProfile]
+    """Complete competitive intelligence analysis"""
+    competitor_profiles: List[CompetitorProfile]
     keyword_gaps: List[KeywordGap]
     content_gaps: List[ContentGap]
     competitive_positioning: Dict[str, Any]
@@ -92,15 +100,19 @@ class CompetitiveIntelligenceResult:
 
 
 class CompetitorIntelligence:
-    """    AI-powered competitive intelligence system that analyzes competitors,
+    """
+    AI-powered competitive intelligence system that analyzes competitors,
     identifies opportunities, and provides strategic insights for SEO and content marketing.
-    """    def __init__(self, industry: str = "general", region: str = "US"):
-        """        Initialize the competitor intelligence system.
+    """
+    def __init__(self, industry: str = "general", region: str = "US"):
+        """
+        Initialize the competitor intelligence system.
         
         Args:
             industry: Target industry for analysis
             region: Target region for competitive analysis
-        """        self.industry = industry
+        """
+        self.industry = industry
         self.region = region
         self.competitor_database = self._initialize_competitor_database()
         self.content_types = self._initialize_content_types()
@@ -115,7 +127,8 @@ class CompetitorIntelligence:
         include_social: bool = True,
         max_competitors: int = 5
     ) -> CompetitiveIntelligenceResult:
-        """        Perform comprehensive competitive intelligence analysis.
+        """
+        Perform comprehensive competitive intelligence analysis.
         
         Args:
             user_domain: User's domain/website
@@ -127,7 +140,8 @@ class CompetitorIntelligence:
             
         Returns:
             CompetitiveIntelligenceResult with comprehensive insights
-        """        try:
+        """
+        try:
             logger.info(f"Starting competitive intelligence analysis for {user_domain}")
             
             if analysis_types is None:
@@ -203,7 +217,8 @@ class CompetitorIntelligence:
             raise
 
     def _identify_competitors(self, user_domain: str, keywords: List[str]) -> List[str]:
-        """Identify competitors based on domain and keywords"""        
+        """Identify competitors based on domain and keywords"""
+        
         identified_competitors = []
         
         # Get competitors from database based on industry
@@ -230,7 +245,8 @@ class CompetitorIntelligence:
         return identified_competitors[:8]  # Top 8 competitors
 
     def _find_keyword_competitors(self, keywords: List[str]) -> List[str]:
-        """Find competitors based on keyword overlap"""        
+        """Find competitors based on keyword overlap"""
+        
         keyword_competitors = []
         
         # Simulated keyword-based competitor discovery
@@ -256,7 +272,8 @@ class CompetitorIntelligence:
         competitors: List[str], 
         include_social: bool
     ) -> List[CompetitorProfile]:
-        """Build detailed profiles for each competitor"""        
+        """Build detailed profiles for each competitor"""
+        
         profiles = []
         
         for competitor in competitors:
@@ -312,7 +329,8 @@ class CompetitorIntelligence:
         competitors: List[str], 
         user_keywords: List[str]
     ) -> List[KeywordGap]:
-        """Analyze keyword gaps between user and competitors"""        
+        """Analyze keyword gaps between user and competitors"""
+        
         keyword_gaps = []
         
         # Generate competitor keywords (simulated)
@@ -371,7 +389,8 @@ class CompetitorIntelligence:
         competitors: List[str], 
         user_keywords: List[str]
     ) -> List[ContentGap]:
-        """Analyze content gaps between user and competitors"""        
+        """Analyze content gaps between user and competitors"""
+        
         content_gaps = []
         
         # Identify content topics covered by competitors
@@ -411,7 +430,8 @@ class CompetitorIntelligence:
         competitor_profiles: List[CompetitorProfile], 
         user_keywords: List[str]
     ) -> Dict[str, Any]:
-        """Analyze competitive positioning"""        
+        """Analyze competitive positioning"""
+        
         # Calculate user's estimated metrics
         user_traffic = self._estimate_traffic(user_domain)
         user_authority = self._calculate_authority_score(user_domain)
@@ -464,7 +484,8 @@ class CompetitorIntelligence:
         content_gaps: List[ContentGap], 
         competitor_profiles: List[CompetitorProfile]
     ) -> Dict[str, List[str]]:
-        """Identify strategic opportunities"""        
+        """Identify strategic opportunities"""
+        
         opportunities = {
             "quick_wins": [],
             "long_term": [],
@@ -514,7 +535,8 @@ class CompetitorIntelligence:
         content_gaps: List[ContentGap],
         competitive_positioning: Dict[str, Any]
     ) -> List[str]:
-        """Generate strategic recommendations"""        
+        """Generate strategic recommendations"""
+        
         recommendations = []
         
         # Market position-based recommendations
@@ -579,7 +601,8 @@ class CompetitorIntelligence:
         keyword_gaps: List[KeywordGap],
         content_gaps: List[ContentGap]
     ) -> Dict[str, Any]:
-        """Generate market insights"""        
+        """Generate market insights"""
+        
         insights = {}
         
         # Market size estimation
@@ -624,7 +647,8 @@ class CompetitorIntelligence:
         keyword_gaps: List[KeywordGap],
         content_gaps: List[ContentGap]
     ) -> float:
-        """Calculate overall analysis quality score"""        
+        """Calculate overall analysis quality score"""
+        
         score = 0.0
         
         # Competitor coverage score (30 points)
@@ -648,7 +672,8 @@ class CompetitorIntelligence:
         return min(100.0, score)
 
     def _classify_competitor_type(self, competitor: str) -> CompetitorType:
-        """Classify the type of competitor"""        
+        """Classify the type of competitor"""
+        
         # Simplified competitor classification
         major_brands = ["google.com", "microsoft.com", "amazon.com", "apple.com"]
         
@@ -660,7 +685,8 @@ class CompetitorIntelligence:
             return CompetitorType.INDIRECT
 
     def _estimate_traffic(self, domain: str) -> int:
-        """Estimate website traffic (simulated)"""        
+        """Estimate website traffic (simulated)"""
+        
         # Simplified traffic estimation based on domain characteristics
         domain_length = len(domain)
         
@@ -685,7 +711,8 @@ class CompetitorIntelligence:
         return max(10000, traffic)
 
     def _calculate_authority_score(self, domain: str) -> float:
-        """Calculate domain authority score (simulated)"""        
+        """Calculate domain authority score (simulated)"""
+        
         # Simplified authority calculation
         domain_age_factor = 0.8  # Assume most domains are established
         
@@ -701,7 +728,8 @@ class CompetitorIntelligence:
         return round(min(100.0, authority), 1)
 
     def _estimate_social_followers(self, competitor: str) -> Dict[Platform, int]:
-        """Estimate social media followers (simulated)"""        
+        """Estimate social media followers (simulated)"""
+        
         base_followers = {
             Platform.INSTAGRAM: 50000,
             Platform.TWITTER: 30000,
@@ -719,7 +747,8 @@ class CompetitorIntelligence:
         }
 
     def _analyze_content_frequency(self, competitor: str) -> Dict[str, float]:
-        """Analyze content publishing frequency (simulated)"""        
+        """Analyze content publishing frequency (simulated)"""
+        
         # Simulated content frequency analysis
         return {
             "blog_posts_per_week": 2.5 + (hash(competitor) % 3),
@@ -734,7 +763,8 @@ class CompetitorIntelligence:
         traffic: int, 
         authority: float
     ) -> Tuple[List[str], List[str]]:
-        """Analyze competitor strengths and weaknesses"""        
+        """Analyze competitor strengths and weaknesses"""
+        
         strengths = []
         weaknesses = []
         
@@ -779,7 +809,8 @@ class CompetitorIntelligence:
         return strengths[:4], weaknesses[:3]
 
     def _generate_competitor_keywords(self, competitors: List[str]) -> Dict[str, Dict[str, Any]]:
-        """Generate competitor keyword data (simulated)"""        
+        """Generate competitor keyword data (simulated)"""
+        
         keyword_data = {}
         
         # Industry-specific keywords
@@ -820,7 +851,8 @@ class CompetitorIntelligence:
         competitor_data: Dict[str, Any], 
         user_rank: Optional[int] = None
     ) -> float:
-        """Calculate opportunity score for a keyword"""        
+        """Calculate opportunity score for a keyword"""
+        
         search_volume = competitor_data.get("search_volume", 1000)
         difficulty = competitor_data.get("difficulty", 50)
         competitor_rank = competitor_data.get("best_rank", 10)
@@ -847,7 +879,8 @@ class CompetitorIntelligence:
         return max(0, min(100, opportunity_score))
 
     def _generate_content_suggestions_for_keyword(self, keyword: str) -> List[str]:
-        """Generate content suggestions for a keyword"""        
+        """Generate content suggestions for a keyword"""
+        
         content_formats = [
             f"Complete guide to {keyword}",
             f"How to improve your {keyword} strategy",
@@ -859,13 +892,15 @@ class CompetitorIntelligence:
         return content_formats[:3]
 
     def _estimate_user_rank(self, keyword: str, user_domain: str) -> int:
-        """Estimate user's current ranking for a keyword"""        
+        """Estimate user's current ranking for a keyword"""
+        
         # Simplified ranking estimation
         base_rank = 15 + (hash(keyword + user_domain) % 35)
         return min(50, base_rank)
 
     def _identify_competitor_content_topics(self, competitors: List[str]) -> Dict[str, Dict[str, Any]]:
-        """Identify content topics covered by competitors"""        
+        """Identify content topics covered by competitors"""
+        
         topics = {}
         
         # Industry-specific content topics
@@ -900,7 +935,8 @@ class CompetitorIntelligence:
         return topics
 
     def _analyze_user_content_topics(self, user_domain: str, user_keywords: List[str]) -> Dict[str, int]:
-        """Analyze user's current content coverage"""        
+        """Analyze user's current content coverage"""
+        
         user_topics = {}
         
         # Estimate user's content coverage based on keywords
@@ -918,7 +954,8 @@ class CompetitorIntelligence:
         user_coverage: int, 
         competitor_data: Dict[str, Any]
     ) -> float:
-        """Calculate priority score for content gap"""        
+        """Calculate priority score for content gap"""
+        
         # Gap size factor
         gap_size = max(0, competitor_coverage - user_coverage)
         gap_score = min(40, gap_size * 8)
@@ -939,7 +976,8 @@ class CompetitorIntelligence:
         return min(100, priority_score)
 
     def _initialize_competitor_database(self) -> Dict[str, Dict[str, List[str]]]:
-        """Initialize competitor database by industry"""        
+        """Initialize competitor database by industry"""
+        
         return {
             "technology": {
                 "direct": ["microsoft.com", "google.com", "apple.com", "amazon.com"],
@@ -960,7 +998,8 @@ class CompetitorIntelligence:
         }
 
     def _initialize_content_types(self) -> List[str]:
-        """Initialize content types for analysis"""        
+        """Initialize content types for analysis"""
+        
         return [
             "blog post", "video", "infographic", "podcast", "webinar",
             "case study", "white paper", "guide", "tutorial", "review",
@@ -968,7 +1007,8 @@ class CompetitorIntelligence:
         ]
 
     def _initialize_ranking_factors(self) -> Dict[str, float]:
-        """Initialize SEO ranking factors and their weights"""        
+        """Initialize SEO ranking factors and their weights"""
+        
         return {
             "content_quality": 0.25,
             "backlinks": 0.20,
@@ -980,7 +1020,8 @@ class CompetitorIntelligence:
         }
 
     def export_competitive_analysis(self, result: CompetitiveIntelligenceResult, format: str = "json") -> str:
-        """Export competitive analysis in specified format"""        
+        """Export competitive analysis in specified format"""
+        
         if format == "json":
             return self._export_to_json(result)
         elif format == "csv":
@@ -989,7 +1030,8 @@ class CompetitorIntelligence:
             raise ValueError(f"Unsupported export format: {format}")
 
     def _export_to_json(self, result: CompetitiveIntelligenceResult) -> str:
-        """Export result to JSON format"""        
+        """Export result to JSON format"""
+        
         export_data = {
             "analysis_score": result.analysis_score,
             "competitor_profiles": [
@@ -1033,7 +1075,8 @@ class CompetitorIntelligence:
         return json.dumps(export_data, indent=2)
 
     def _export_to_csv(self, result: CompetitiveIntelligenceResult) -> str:
-        """Export result to CSV format"""        
+        """Export result to CSV format"""
+        
         csv_lines = ["Competitor,Traffic,Authority,Type,Main Strength,Main Weakness"]
         
         for profile in result.competitor_profiles:

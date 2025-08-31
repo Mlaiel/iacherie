@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -16,7 +17,8 @@ Validates the complete business workflow integration
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime
 
@@ -32,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 
 async def test_complete_integration():
-    """Test complete integration of 53 agents in business logic core"""    print("🚀 Testing Complete Business Logic Core Integration")
+    """Test complete integration of 53 agents in business logic core"""
+    print("🚀 Testing Complete Business Logic Core Integration")
     print("=" * 60)
     
     try:
@@ -177,7 +180,8 @@ async def test_complete_integration():
 
 
 async def test_agent_registry_completeness():
-    """Test that the agent registry matches the business logic core"""    print("\n🔍 Testing Agent Registry Completeness...")
+    """Test that the agent registry matches the business logic core"""
+    print("\n🔍 Testing Agent Registry Completeness...")
     
     try:
         # Import the existing agent registry
@@ -216,7 +220,8 @@ async def test_agent_registry_completeness():
 
 if __name__ == "__main__":
     async def main():
-        """Run all integration tests"""        print("🚀 Starting Business Logic Core Final Integration Tests")
+        """Run all integration tests"""
+        print("🚀 Starting Business Logic Core Final Integration Tests")
         print("📅 " + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         
         # Run main integration test

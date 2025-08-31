@@ -9,7 +9,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 import uuid
 from datetime import datetime, timedelta
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class ConversationType(Enum):
-    """Types of conversations"""    DIRECT_MESSAGE = "direct_message"
+    """Types of conversations"""
+    DIRECT_MESSAGE = "direct_message"
     PUBLIC_COMMENT = "public_comment"
     STORY_REPLY = "story_reply"
     LIVE_CHAT = "live_chat"
@@ -40,7 +42,8 @@ class ConversationType(Enum):
 
 
 class ResponseTone(Enum):
-    """Response tone styles"""    FRIENDLY = "friendly"
+    """Response tone styles"""
+    FRIENDLY = "friendly"
     PROFESSIONAL = "professional"
     CASUAL = "casual"
     ENTHUSIASTIC = "enthusiastic"
@@ -51,7 +54,8 @@ class ResponseTone(Enum):
 
 
 class ConversationPriority(Enum):
-    """Conversation priority levels"""    URGENT = "urgent"        # Business inquiries, crisis
+    """Conversation priority levels"""
+    URGENT = "urgent"        # Business inquiries, crisis
     HIGH = "high"           # Collaboration, VIP fans
     MEDIUM = "medium"       # Regular fan interactions
     LOW = "low"            # General comments
@@ -60,7 +64,8 @@ class ConversationPriority(Enum):
 
 @dataclass
 class ConversationContext:
-    """Comprehensive conversation context"""    conversation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive conversation context"""
+    conversation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     username: str = ""
     platform: SocialPlatform = SocialPlatform.INSTAGRAM
@@ -96,7 +101,8 @@ class ConversationContext:
 
 @dataclass
 class ConversationMessage:
-    """Individual conversation message"""    message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Individual conversation message"""
+    message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     conversation_id: str = ""
     sender: str = ""  # 'user' or 'agent'
     content: str = ""
@@ -123,7 +129,8 @@ class ConversationMessage:
 
 @dataclass
 class ResponseGeneration:
-    """Response generation configuration and result"""    response_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Response generation configuration and result"""
+    response_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     conversation_id: str = ""
     message_id: str = ""
     
@@ -150,7 +157,8 @@ class ResponseGeneration:
 
 
 class ConversationalAIAgent(BaseAIAgent):
-    """    Advanced conversational AI agent for intelligent communication
+    """
+    Advanced conversational AI agent for intelligent communication
     
     Capabilities:
     - Multi-platform conversation management
@@ -161,7 +169,8 @@ class ConversationalAIAgent(BaseAIAgent):
     - Automated community management
     - Business inquiry handling
     - Collaboration opportunity detection
-    """    
+    """
+    
     def __init__(self, config: AgentConfiguration):
         # Ensure required capabilities
         required_capabilities = {
@@ -196,7 +205,8 @@ class ConversationalAIAgent(BaseAIAgent):
         logger.info(f"Conversational AI Agent {self.agent_id} initialized successfully")
     
     def _create_mock_nlp(self):
-        """Create mock NLP processor for testing compatibility"""        class MockConversationalNLP:
+        """Create mock NLP processor for testing compatibility"""
+        class MockConversationalNLP:
             async def analyze_intent(self, text): return "general_inquiry"
             async def extract_entities(self, text): return []
             async def detect_language(self, text): return "en"
@@ -204,13 +214,15 @@ class ConversationalAIAgent(BaseAIAgent):
         return MockConversationalNLP()
     
     def _create_mock_sentiment_analyzer(self):
-        """Create mock sentiment analyzer for testing compatibility"""        class MockSentimentAnalyzer:
+        """Create mock sentiment analyzer for testing compatibility"""
+        class MockSentimentAnalyzer:
             async def analyze_sentiment(self, text): return 0.5
             async def detect_emotions(self, text): return {'positive': 0.7, 'neutral': 0.3}
         return MockSentimentAnalyzer()
     
     def _load_response_templates(self) -> Dict[str, List[str]]:
-        """Load response templates for different conversation types"""        return {
+        """Load response templates for different conversation types"""
+        return {
             'greeting': [
                 "Hi {name}! Thanks for reaching out! 😊",
                 "Hello {name}! Great to hear from you!",
@@ -239,7 +251,8 @@ class ConversationalAIAgent(BaseAIAgent):
         }
     
     async def process_incoming_message(self, message_content: str, user_info: Dict[str, Any], platform: SocialPlatform) -> ConversationMessage:
-        """Process incoming message and create conversation context"""        try:
+        """Process incoming message and create conversation context"""
+        try:
             # Create or update conversation context
             conversation = await self._get_or_create_conversation(user_info, platform)
             
@@ -269,7 +282,8 @@ class ConversationalAIAgent(BaseAIAgent):
             raise
     
     async def generate_response(self, conversation_id: str, message_id: str, custom_instructions: Optional[str] = None) -> ResponseGeneration:
-        """Generate intelligent response for conversation"""        try:
+        """Generate intelligent response for conversation"""
+        try:
             if conversation_id not in self.active_conversations:
                 raise ValueError(f"Conversation {conversation_id} not found")
             
@@ -308,7 +322,8 @@ class ConversationalAIAgent(BaseAIAgent):
             raise
     
     async def _get_or_create_conversation(self, user_info: Dict[str, Any], platform: SocialPlatform) -> ConversationContext:
-        """Get existing conversation or create new one"""        user_id = user_info.get('user_id', user_info.get('username', 'unknown'))
+        """Get existing conversation or create new one"""
+        user_id = user_info.get('user_id', user_info.get('username', 'unknown'))
         
         # Look for existing conversation
         for conv in self.active_conversations.values():
@@ -328,7 +343,8 @@ class ConversationalAIAgent(BaseAIAgent):
         return conversation
     
     def _determine_follower_status(self, user_info: Dict[str, Any]) -> str:
-        """Determine user's follower status"""        if user_info.get('verified', False):
+        """Determine user's follower status"""
+        if user_info.get('verified', False):
             return 'vip'
         elif user_info.get('followers_count', 0) > 10000:
             return 'collaborator'
@@ -338,7 +354,8 @@ class ConversationalAIAgent(BaseAIAgent):
             return 'non_follower'
     
     async def _analyze_message(self, message: ConversationMessage, conversation: ConversationContext):
-        """Perform comprehensive message analysis"""        try:
+        """Perform comprehensive message analysis"""
+        try:
             # Sentiment analysis
             message.sentiment_score = await self.sentiment_analyzer.analyze_sentiment(message.content)
             message.emotions = await self.sentiment_analyzer.detect_emotions(message.content)
@@ -366,7 +383,8 @@ class ConversationalAIAgent(BaseAIAgent):
             logger.error(f"Error analyzing message: {str(e)}")
     
     def _calculate_urgency_score(self, message: ConversationMessage, conversation: ConversationContext) -> float:
-        """Calculate urgency score for message prioritization"""        urgency = 0.0
+        """Calculate urgency score for message prioritization"""
+        urgency = 0.0
         
         # Check for urgent keywords
         urgent_keywords = ['urgent', 'asap', 'emergency', 'problem', 'issue', 'help', 'broken']
@@ -389,7 +407,8 @@ class ConversationalAIAgent(BaseAIAgent):
         return min(urgency, 1.0)
     
     async def _update_conversation_context(self, message: ConversationMessage, conversation: ConversationContext):
-        """Update conversation context with new insights"""        # Add sentiment to trend
+        """Update conversation context with new insights"""
+        # Add sentiment to trend
         conversation.sentiment_trend.append(message.sentiment_score)
         if len(conversation.sentiment_trend) > 10:
             conversation.sentiment_trend = conversation.sentiment_trend[-10:]
@@ -404,7 +423,8 @@ class ConversationalAIAgent(BaseAIAgent):
             conversation.intent_classification = message.intent
     
     async def _classify_conversation(self, conversation: ConversationContext, message: ConversationMessage):
-        """Classify conversation type and priority"""        # Determine conversation type
+        """Classify conversation type and priority"""
+        # Determine conversation type
         if 'collaboration' in message.intent.lower():
             conversation.conversation_type = ConversationType.COLLABORATION_INQUIRY
             conversation.priority = ConversationPriority.HIGH
@@ -427,7 +447,8 @@ class ConversationalAIAgent(BaseAIAgent):
         )
     
     async def _generate_intelligent_response(self, conversation: ConversationContext, message: Dict[str, Any], custom_instructions: Optional[str] = None) -> ResponseGeneration:
-        """Generate intelligent, personalized response"""        try:
+        """Generate intelligent, personalized response"""
+        try:
             # Determine response strategy
             response_type = self._determine_response_type(conversation, message)
             
@@ -468,7 +489,8 @@ class ConversationalAIAgent(BaseAIAgent):
             )
     
     def _determine_response_type(self, conversation: ConversationContext, message: Dict[str, Any]) -> str:
-        """Determine appropriate response type"""        if conversation.conversation_type == ConversationType.COLLABORATION_INQUIRY:
+        """Determine appropriate response type"""
+        if conversation.conversation_type == ConversationType.COLLABORATION_INQUIRY:
             return 'collaboration_inquiry'
         elif conversation.conversation_type == ConversationType.BUSINESS_INQUIRY:
             return 'business_inquiry'
@@ -480,7 +502,8 @@ class ConversationalAIAgent(BaseAIAgent):
             return 'fan_appreciation'
     
     async def _generate_base_response(self, conversation: ConversationContext, message: Dict[str, Any], response_type: str) -> str:
-        """Generate base response from templates"""        templates = self.response_templates.get(response_type, self.response_templates['greeting'])
+        """Generate base response from templates"""
+        templates = self.response_templates.get(response_type, self.response_templates['greeting'])
         
         # Select template based on conversation context
         template_index = hash(conversation.conversation_id) % len(templates)
@@ -495,7 +518,8 @@ class ConversationalAIAgent(BaseAIAgent):
         return formatted_response
     
     async def _apply_personalization(self, base_response: str, conversation: ConversationContext, message: Dict[str, Any]) -> str:
-        """Apply personalization to response"""        personalized = base_response
+        """Apply personalization to response"""
+        personalized = base_response
         
         # Add personal touches based on user profile
         if conversation.user_profile.get('interests'):
@@ -515,7 +539,8 @@ class ConversationalAIAgent(BaseAIAgent):
         return personalized
     
     def _generate_call_to_action(self, conversation: ConversationContext, message: Dict[str, Any]) -> Optional[str]:
-        """Generate appropriate call-to-action"""        if conversation.conversation_type == ConversationType.COLLABORATION_INQUIRY:
+        """Generate appropriate call-to-action"""
+        if conversation.conversation_type == ConversationType.COLLABORATION_INQUIRY:
             return "Feel free to DM me with more details about the collaboration!"
         elif conversation.follower_status == 'non_follower':
             return "If you enjoy my content, consider following for more updates!"
@@ -524,7 +549,8 @@ class ConversationalAIAgent(BaseAIAgent):
         return None
     
     def _calculate_response_confidence(self, response: str, conversation: ConversationContext) -> float:
-        """Calculate confidence score for generated response"""        confidence = 0.7  # Base confidence
+        """Calculate confidence score for generated response"""
+        confidence = 0.7  # Base confidence
         
         # Higher confidence for template-based responses
         if any(template in response for templates in self.response_templates.values() for template in templates):
@@ -541,7 +567,8 @@ class ConversationalAIAgent(BaseAIAgent):
         return max(0.1, min(confidence, 1.0))
     
     def _calculate_engagement_potential(self, response: str, conversation: ConversationContext) -> float:
-        """Calculate engagement potential of response"""        engagement = 0.5  # Base engagement
+        """Calculate engagement potential of response"""
+        engagement = 0.5  # Base engagement
         
         # Higher engagement for questions
         if '?' in response:
@@ -559,7 +586,8 @@ class ConversationalAIAgent(BaseAIAgent):
         return max(0.1, min(engagement, 1.0))
     
     async def get_conversation_analytics(self, time_range: timedelta = timedelta(days=7)) -> Dict[str, Any]:
-        """Get conversation analytics and insights"""        cutoff_time = datetime.utcnow() - time_range
+        """Get conversation analytics and insights"""
+        cutoff_time = datetime.utcnow() - time_range
         recent_conversations = [
             conv for conv in self.active_conversations.values()
             if conv.last_interaction >= cutoff_time

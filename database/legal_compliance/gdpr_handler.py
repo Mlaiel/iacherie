@@ -5,7 +5,8 @@ privacy controls, and automated compliance monitoring for the IA Influencer Agen
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""from typing import Dict, List, Any, Optional, Union, Tuple
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
 import asyncio
@@ -18,7 +19,8 @@ logger = logging.getLogger(__name__)
 
 
 class ConsentStatus(Enum):
-    """GDPR consent status enumeration."""    GIVEN = "given"
+    """GDPR consent status enumeration."""
+    GIVEN = "given"
     WITHDRAWN = "withdrawn"
     PENDING = "pending"
     EXPIRED = "expired"
@@ -26,7 +28,8 @@ class ConsentStatus(Enum):
 
 
 class DataCategory(Enum):
-    """Categories of personal data under GDPR."""    PERSONAL_IDENTIFIERS = "personal_identifiers"
+    """Categories of personal data under GDPR."""
+    PERSONAL_IDENTIFIERS = "personal_identifiers"
     CONTACT_INFORMATION = "contact_information"
     DEMOGRAPHIC_DATA = "demographic_data"
     BIOMETRIC_DATA = "biometric_data"
@@ -39,7 +42,8 @@ class DataCategory(Enum):
 
 
 class ProcessingPurpose(Enum):
-    """Lawful purposes for data processing under GDPR."""    CONTRACT_PERFORMANCE = "contract_performance"
+    """Lawful purposes for data processing under GDPR."""
+    CONTRACT_PERFORMANCE = "contract_performance"
     LEGAL_OBLIGATION = "legal_obligation"
     VITAL_INTERESTS = "vital_interests"
     PUBLIC_TASK = "public_task"
@@ -48,7 +52,8 @@ class ProcessingPurpose(Enum):
 
 
 class DataSubjectRight(Enum):
-    """Data subject rights under GDPR."""    ACCESS = "access"
+    """Data subject rights under GDPR."""
+    ACCESS = "access"
     RECTIFICATION = "rectification"
     ERASURE = "erasure"
     RESTRICT_PROCESSING = "restrict_processing"
@@ -59,7 +64,8 @@ class DataSubjectRight(Enum):
 
 @dataclass
 class ConsentRecord:
-    """GDPR consent record structure."""    consent_id: str
+    """GDPR consent record structure."""
+    consent_id: str
     user_id: str
     data_categories: List[DataCategory]
     processing_purposes: List[ProcessingPurpose]
@@ -76,7 +82,8 @@ class ConsentRecord:
 
 @dataclass
 class DataSubjectRequest:
-    """Data subject request structure."""    request_id: str
+    """Data subject request structure."""
+    request_id: str
     user_id: str
     request_type: DataSubjectRight
     data_categories: List[DataCategory]
@@ -89,17 +96,21 @@ class DataSubjectRequest:
 
 
 class GDPRHandler:
-    """    Comprehensive GDPR compliance handler.
+    """
+    Comprehensive GDPR compliance handler.
     
     Manages consent, data subject rights, privacy controls,
     and automated compliance monitoring.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize the GDPR Handler.
+        """
+        Initialize the GDPR Handler.
         
         Args:
             config: Configuration dictionary with database connections
-        """        self.config = config
+        """
+        self.config = config
         self.db_config = config.get("database", {})
         self.gdpr_config = config.get("gdpr", {})
         
@@ -125,7 +136,8 @@ class GDPRHandler:
         user_agent: Optional[str] = None,
         version: str = "1.0"
     ) -> Dict[str, Any]:
-        """        Record user consent for data processing.
+        """
+        Record user consent for data processing.
         
         Args:
             user_id: ID of the user giving consent
@@ -139,7 +151,8 @@ class GDPRHandler:
             
         Returns:
             Consent recording results
-        """        try:
+        """
+        try:
             # Generate unique consent ID
             consent_id = f"consent_{uuid.uuid4().hex[:12]}"
             
@@ -201,7 +214,8 @@ class GDPRHandler:
         data_categories: Optional[List[str]] = None,
         withdrawal_method: str = "user_request"
     ) -> Dict[str, Any]:
-        """        Process consent withdrawal.
+        """
+        Process consent withdrawal.
         
         Args:
             user_id: ID of user withdrawing consent
@@ -211,7 +225,8 @@ class GDPRHandler:
             
         Returns:
             Consent withdrawal results
-        """        try:
+        """
+        try:
             withdrawn_consents = []
             
             if consent_id:
@@ -284,7 +299,8 @@ class GDPRHandler:
         content_id: str,
         processing_purpose: str = "content_processing"
     ) -> Dict[str, Any]:
-        """        Verify GDPR compliance for user data processing.
+        """
+        Verify GDPR compliance for user data processing.
         
         Args:
             user_id: ID of the user whose data is being processed
@@ -293,7 +309,8 @@ class GDPRHandler:
             
         Returns:
             GDPR compliance verification results
-        """        try:
+        """
+        try:
             compliance_result = {
                 "user_id": user_id,
                 "content_id": content_id,
@@ -366,7 +383,8 @@ class GDPRHandler:
         data_categories: List[str],
         jurisdiction: str = "EU"
     ) -> Dict[str, Any]:
-        """        Process data subject rights request under GDPR.
+        """
+        Process data subject rights request under GDPR.
         
         Args:
             request_type: Type of request (access, erasure, portability, etc.)
@@ -376,7 +394,8 @@ class GDPRHandler:
             
         Returns:
             Request processing results
-        """        try:
+        """
+        try:
             # Generate request ID
             request_id = f"dsr_{uuid.uuid4().hex[:12]}"
             
@@ -449,7 +468,8 @@ class GDPRHandler:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """        Get GDPR compliance summary for reporting.
+        """
+        Get GDPR compliance summary for reporting.
         
         Args:
             user_id: Optional user ID to filter by
@@ -458,7 +478,8 @@ class GDPRHandler:
             
         Returns:
             GDPR compliance summary
-        """        try:
+        """
+        try:
             if not start_date:
                 start_date = datetime.utcnow() - timedelta(days=30)
             if not end_date:
@@ -549,7 +570,8 @@ class GDPRHandler:
         user_id: str,
         data_categories: List[DataCategory]
     ) -> None:
-        """Withdraw previous consents for the same data categories."""        for consent in self.consent_records.values():
+        """Withdraw previous consents for the same data categories."""
+        for consent in self.consent_records.values():
             if (consent.user_id == user_id and 
                 consent.consent_status == ConsentStatus.GIVEN):
                 
@@ -567,7 +589,8 @@ class GDPRHandler:
         user_id: str,
         processing_purpose: str
     ) -> List[ConsentRecord]:
-        """Get valid consents for user and purpose."""        valid_consents = []
+        """Get valid consents for user and purpose."""
+        valid_consents = []
         
         for consent in self.consent_records.values():
             if (consent.user_id == user_id and 
@@ -581,7 +604,8 @@ class GDPRHandler:
         return valid_consents
     
     async def _get_expired_consents(self, user_id: str) -> List[ConsentRecord]:
-        """Get expired consents for user."""        expired_consents = []
+        """Get expired consents for user."""
+        expired_consents = []
         
         for consent in self.consent_records.values():
             if (consent.user_id == user_id and 
@@ -600,7 +624,8 @@ class GDPRHandler:
         user_id: str,
         processing_purpose: str
     ) -> Optional[str]:
-        """Check for alternative legal basis for processing."""        # Check legitimate interests
+        """Check for alternative legal basis for processing."""
+        # Check legitimate interests
         if processing_purpose in ["fraud_prevention", "security", "analytics"]:
             return "legitimate_interests"
         
@@ -620,7 +645,8 @@ class GDPRHandler:
         content_id: str,
         processing_purpose: str
     ) -> Dict[str, Any]:
-        """Verify data minimization principle compliance."""        return {
+        """Verify data minimization principle compliance."""
+        return {
             "compliant": True,
             "issues": []
         }
@@ -629,7 +655,8 @@ class GDPRHandler:
         self,
         request_record: DataSubjectRequest
     ) -> Dict[str, Any]:
-        """Process specific type of data subject request."""        request_type = request_record.request_type
+        """Process specific type of data subject request."""
+        request_type = request_record.request_type
         
         if request_type == DataSubjectRight.ACCESS:
             return {"auto_processable": True, "complexity": "low"}
@@ -646,7 +673,8 @@ class GDPRHandler:
         self,
         request_record: DataSubjectRequest
     ) -> Dict[str, Any]:
-        """Auto-process eligible data subject requests."""        request_type = request_record.request_type
+        """Auto-process eligible data subject requests."""
+        request_type = request_record.request_type
         
         if request_type == DataSubjectRight.ACCESS:
             return await self._process_data_access_request(request_record)
@@ -661,7 +689,8 @@ class GDPRHandler:
         self,
         request_record: DataSubjectRequest
     ) -> Dict[str, Any]:
-        """Process data access request."""        # Collect user data from all sources
+        """Process data access request."""
+        # Collect user data from all sources
         user_data = {
             "personal_data": {},
             "content_data": {},
@@ -694,7 +723,8 @@ class GDPRHandler:
         self,
         request_record: DataSubjectRequest
     ) -> Dict[str, Any]:
-        """Process right to erasure request."""        # Schedule data deletion
+        """Process right to erasure request."""
+        # Schedule data deletion
         deletion_result = await self._schedule_data_deletion(
             request_record.user_id,
             request_record.data_categories
@@ -711,7 +741,8 @@ class GDPRHandler:
         self,
         request_record: DataSubjectRequest
     ) -> Dict[str, Any]:
-        """Process data portability request."""        # Export data in portable format
+        """Process data portability request."""
+        # Export data in portable format
         portable_data = await self._export_portable_data(
             request_record.user_id,
             request_record.data_categories
@@ -729,7 +760,8 @@ class GDPRHandler:
         user_id: str,
         data_categories: List[DataCategory]
     ) -> Dict[str, Any]:
-        """Schedule data deletion for user and categories."""        return {
+        """Schedule data deletion for user and categories."""
+        return {
             "scheduled": True,
             "deletion_date": (datetime.utcnow() + timedelta(days=1)).isoformat(),
             "categories": [cat.value for cat in data_categories],
@@ -741,7 +773,8 @@ class GDPRHandler:
         user_id: str,
         data_categories: List[DataCategory]
     ) -> Dict[str, Any]:
-        """Export user data in portable format."""        return {
+        """Export user data in portable format."""
+        return {
             "user_id": user_id,
             "export_date": datetime.utcnow().isoformat(),
             "data_categories": [cat.value for cat in data_categories],
@@ -749,7 +782,8 @@ class GDPRHandler:
         }
     
     def _estimate_completion_time(self, request_record: DataSubjectRequest) -> str:
-        """Estimate completion time for request."""        if request_record.status == "completed":
+        """Estimate completion time for request."""
+        if request_record.status == "completed":
             return "Completed"
         
         request_type = request_record.request_type
@@ -767,7 +801,8 @@ class GDPRHandler:
         start_date: datetime,
         end_date: datetime
     ) -> List[ConsentRecord]:
-        """Filter consent records by criteria."""        filtered = []
+        """Filter consent records by criteria."""
+        filtered = []
         
         for consent in self.consent_records.values():
             # Filter by user
@@ -789,7 +824,8 @@ class GDPRHandler:
         start_date: datetime,
         end_date: datetime
     ) -> List[DataSubjectRequest]:
-        """Filter request records by criteria."""        filtered = []
+        """Filter request records by criteria."""
+        filtered = []
         
         for request in self.data_subject_requests.values():
             # Filter by user
@@ -812,11 +848,13 @@ class GDPRHandler:
         consent_record: ConsentRecord,
         result: Dict[str, Any]
     ) -> None:
-        """Log consent-related actions."""        logger.info(f"GDPR consent {action}: {consent_record.consent_id} for user {consent_record.user_id}")
+        """Log consent-related actions."""
+        logger.info(f"GDPR consent {action}: {consent_record.consent_id} for user {consent_record.user_id}")
     
     async def _log_data_subject_request(
         self,
         request_record: DataSubjectRequest,
         result: Dict[str, Any]
     ) -> None:
-        """Log data subject request processing."""        logger.info(f"GDPR request {request_record.request_type.value}: {request_record.request_id} for user {request_record.user_id}")
+        """Log data subject request processing."""
+        logger.info(f"GDPR request {request_record.request_type.value}: {request_record.request_id} for user {request_record.user_id}")

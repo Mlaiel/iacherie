@@ -29,7 +29,8 @@ This module provides:
 - GDPR and privacy regulation compliance
 - Legal documentation generation
 - Court-admissible evidence formatting
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -47,7 +48,8 @@ from email.mime.application import MIMEApplication
 logger = logging.getLogger(__name__)
 
 class LegalJurisdiction(Enum):
-    """Legal jurisdictions supported."""    UNITED_STATES = "us"
+    """Legal jurisdictions supported."""
+    UNITED_STATES = "us"
     EUROPEAN_UNION = "eu"
     UNITED_KINGDOM = "uk"
     CANADA = "ca"
@@ -59,7 +61,8 @@ class LegalJurisdiction(Enum):
     BRAZIL = "br"
 
 class ComplianceFramework(Enum):
-    """Compliance frameworks."""    DMCA = "dmca"
+    """Compliance frameworks."""
+    DMCA = "dmca"
     GDPR = "gdpr"
     CCPA = "ccpa"
     COPPA = "coppa"
@@ -68,7 +71,8 @@ class ComplianceFramework(Enum):
     PRIVACY_ACT = "privacy_act"
 
 class LegalActionType(Enum):
-    """Types of legal actions."""    DMCA_TAKEDOWN = "dmca_takedown"
+    """Types of legal actions."""
+    DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     COPYRIGHT_CLAIM = "copyright_claim"
     COURT_FILING = "court_filing"
@@ -76,7 +80,8 @@ class LegalActionType(Enum):
     INJUNCTION_REQUEST = "injunction_request"
 
 class DocumentType(Enum):
-    """Types of legal documents."""    TAKEDOWN_NOTICE = "takedown_notice"
+    """Types of legal documents."""
+    TAKEDOWN_NOTICE = "takedown_notice"
     COUNTER_NOTICE = "counter_notice"
     CEASE_DESIST_LETTER = "cease_desist_letter"
     COPYRIGHT_REGISTRATION = "copyright_registration"
@@ -86,7 +91,8 @@ class DocumentType(Enum):
 
 @dataclass
 class LegalRequirement:
-    """Legal requirement specification."""    jurisdiction: LegalJurisdiction
+    """Legal requirement specification."""
+    jurisdiction: LegalJurisdiction
     framework: ComplianceFramework
     requirement_type: str
     description: str
@@ -97,7 +103,8 @@ class LegalRequirement:
 
 @dataclass
 class ComplianceCheck:
-    """Result of compliance verification."""    check_id: str
+    """Result of compliance verification."""
+    check_id: str
     jurisdiction: LegalJurisdiction
     framework: ComplianceFramework
     check_timestamp: datetime
@@ -109,7 +116,8 @@ class ComplianceCheck:
 
 @dataclass
 class LegalDocument:
-    """Generated legal document."""    document_id: str
+    """Generated legal document."""
+    document_id: str
     document_type: DocumentType
     jurisdiction: LegalJurisdiction
     creation_timestamp: datetime
@@ -124,7 +132,8 @@ class LegalDocument:
 
 @dataclass
 class TakedownRequest:
-    """DMCA takedown request."""    request_id: str
+    """DMCA takedown request."""
+    request_id: str
     copyright_holder: Dict[str, Any]
     infringing_content: Dict[str, Any]
     platform_info: Dict[str, Any]
@@ -136,14 +145,16 @@ class TakedownRequest:
     response_deadline: datetime
 
 class LegalTemplateEngine:
-    """Generates legal documents from templates."""    
+    """Generates legal documents from templates."""
+    
     def __init__(self, templates_path: str):
         self.templates_path = Path(templates_path)
         self.templates = {}
         self._load_templates()
     
     def _load_templates(self):
-        """Load legal document templates."""        # DMCA Takedown Notice Template
+        """Load legal document templates."""
+        # DMCA Takedown Notice Template
         self.templates['dmca_takedown'] = {
             'us': """DMCA TAKEDOWN NOTICE
 
@@ -215,7 +226,8 @@ I declare in good faith that the use of the work described above is not authoriz
 {digital_signature}
 {copyright_holder_name}
 {date_signed}
-"""        }
+"""
+        }
         
         # Cease and Desist Template
         self.templates['cease_desist'] = {
@@ -253,13 +265,15 @@ Failure to comply within {deadline_days} days may result in legal action seeking
 {copyright_holder_name}
 {copyright_holder_title}
 {contact_information}
-"""        }
+"""
+        }
     
     def generate_document(self, 
                          template_type: str,
                          jurisdiction: LegalJurisdiction,
                          variables: Dict[str, Any]) -> str:
-        """Generate legal document from template."""        try:
+        """Generate legal document from template."""
+        try:
             template_key = f"{template_type}_{jurisdiction.value}"
             if template_key not in self.templates.get(template_type, {}):
                 # Fallback to US template
@@ -280,12 +294,14 @@ Failure to comply within {deadline_days} days may result in legal action seeking
             raise
 
 class ComplianceValidator:
-    """Validates compliance with legal frameworks."""    
+    """Validates compliance with legal frameworks."""
+    
     def __init__(self):
         self.requirements = self._load_compliance_requirements()
     
     def _load_compliance_requirements(self) -> Dict[str, List[LegalRequirement]]:
-        """Load compliance requirements by framework."""        requirements = {
+        """Load compliance requirements by framework."""
+        requirements = {
             'gdpr': [
                 LegalRequirement(
                     jurisdiction=LegalJurisdiction.EUROPEAN_UNION,
@@ -329,7 +345,8 @@ class ComplianceValidator:
                                 framework: ComplianceFramework,
                                 jurisdiction: LegalJurisdiction,
                                 data: Dict[str, Any]) -> ComplianceCheck:
-        """Validate compliance with specific framework."""        try:
+        """Validate compliance with specific framework."""
+        try:
             check_id = f"compliance_{framework.value}_{int(datetime.now().timestamp())}"
             violations = []
             recommendations = []
@@ -378,7 +395,8 @@ class ComplianceValidator:
             raise
 
 class LegalDocumentManager:
-    """Manages legal document lifecycle."""    
+    """Manages legal document lifecycle."""
+    
     def __init__(self, storage_path: str, email_config: Dict[str, Any]):
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
@@ -389,7 +407,8 @@ class LegalDocumentManager:
                             document_type: DocumentType,
                             jurisdiction: LegalJurisdiction,
                             template_vars: Dict[str, Any]) -> LegalDocument:
-        """Create a new legal document."""        try:
+        """Create a new legal document."""
+        try:
             document_id = f"doc_{document_type.value}_{int(datetime.now().timestamp())}"
             
             # Generate document content
@@ -425,7 +444,8 @@ class LegalDocumentManager:
             raise
     
     async def send_document(self, document_id: str) -> bool:
-        """Send legal document via email."""        try:
+        """Send legal document via email."""
+        try:
             if document_id not in self.documents:
                 raise ValueError(f"Document not found: {document_id}")
             
@@ -476,7 +496,8 @@ class LegalDocumentManager:
             return False
     
     async def _save_document(self, document: LegalDocument):
-        """Save document to storage."""        try:
+        """Save document to storage."""
+        try:
             file_path = self.storage_path / f"{document.document_id}.json"
             
             # Convert document to JSON
@@ -498,17 +519,21 @@ class LegalDocumentManager:
             raise
 
 class LegalComplianceProcessor:
-    """    Advanced legal compliance processor system.
+    """
+    Advanced legal compliance processor system.
     
     Provides comprehensive legal compliance management for content protection
     with multi-jurisdictional support and automated document generation.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize the Legal Compliance Processor.
+        """
+        Initialize the Legal Compliance Processor.
         
         Args:
             config: Legal compliance configuration parameters
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self._initialized = False
         
         # Initialize components
@@ -541,11 +566,13 @@ class LegalComplianceProcessor:
         logger.info("Legal Compliance Processor initialized")
     
     async def initialize(self) -> bool:
-        """        Initialize legal compliance components.
+        """
+        Initialize legal compliance components.
         
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             self._initialized = True
             logger.info("Legal compliance processor initialized successfully")
             return True
@@ -558,7 +585,8 @@ class LegalComplianceProcessor:
                                   copyright_holder: Dict[str, Any],
                                   infringing_content: Dict[str, Any],
                                   platform_info: Dict[str, Any]) -> TakedownRequest:
-        """        Process DMCA takedown request.
+        """
+        Process DMCA takedown request.
         
         Args:
             copyright_holder: Copyright holder information
@@ -567,7 +595,8 @@ class LegalComplianceProcessor:
             
         Returns:
             Generated takedown request
-        """        if not self._initialized:
+        """
+        if not self._initialized:
             await self.initialize()
         
         try:
@@ -653,14 +682,16 @@ class LegalComplianceProcessor:
     
     async def check_gdpr_compliance(self, 
                                   data_processing_activities: Dict[str, Any]) -> ComplianceCheck:
-        """        Check GDPR compliance for data processing activities.
+        """
+        Check GDPR compliance for data processing activities.
         
         Args:
             data_processing_activities: Details of data processing
             
         Returns:
             GDPR compliance check result
-        """        try:
+        """
+        try:
             compliance_check = await self.compliance_validator.validate_compliance(
                 ComplianceFramework.GDPR,
                 LegalJurisdiction.EUROPEAN_UNION,
@@ -687,7 +718,8 @@ class LegalComplianceProcessor:
                                          recipient_info: Dict[str, Any],
                                          infringement_details: Dict[str, Any],
                                          jurisdiction: LegalJurisdiction) -> LegalDocument:
-        """        Generate cease and desist letter.
+        """
+        Generate cease and desist letter.
         
         Args:
             recipient_info: Recipient information
@@ -696,7 +728,8 @@ class LegalComplianceProcessor:
             
         Returns:
             Generated legal document
-        """        try:
+        """
+        try:
             template_vars = {
                 'current_date': datetime.now().strftime('%B %d, %Y'),
                 'recipient_name': recipient_info.get('name', 'To Whom It May Concern'),
@@ -728,7 +761,8 @@ class LegalComplianceProcessor:
     async def prepare_court_evidence_package(self,
                                            case_id: str,
                                            evidence_data: Dict[str, Any]) -> Dict[str, Any]:
-        """        Prepare court-admissible evidence package.
+        """
+        Prepare court-admissible evidence package.
         
         Args:
             case_id: Legal case identifier
@@ -736,7 +770,8 @@ class LegalComplianceProcessor:
             
         Returns:
             Court-ready evidence package
-        """        try:
+        """
+        try:
             package_id = f"evidence_{case_id}_{int(datetime.now().timestamp())}"
             
             # Create evidence package structure
@@ -790,11 +825,13 @@ class LegalComplianceProcessor:
             raise
     
     def _calculate_evidence_hash(self, evidence_data: Dict[str, Any]) -> str:
-        """Calculate hash for evidence integrity."""        evidence_string = json.dumps(evidence_data, sort_keys=True, default=str)
+        """Calculate hash for evidence integrity."""
+        evidence_string = json.dumps(evidence_data, sort_keys=True, default=str)
         return hashlib.sha256(evidence_string.encode()).hexdigest()
     
     def _calculate_package_hash(self, package_data: Dict[str, Any]) -> str:
-        """Calculate hash for entire evidence package."""        # Remove hash field temporarily for calculation
+        """Calculate hash for entire evidence package."""
+        # Remove hash field temporarily for calculation
         temp_package = package_data.copy()
         temp_package['metadata'] = temp_package['metadata'].copy()
         temp_package['metadata'].pop('package_hash', None)
@@ -803,7 +840,8 @@ class LegalComplianceProcessor:
         return hashlib.sha256(package_string.encode()).hexdigest()
     
     def _assess_admissibility(self, evidence_data: Dict[str, Any]) -> List[str]:
-        """Assess legal admissibility of evidence."""        notes = []
+        """Assess legal admissibility of evidence."""
+        notes = []
         
         # Check for chain of custody
         if 'chain_of_custody' not in evidence_data:
@@ -827,7 +865,8 @@ class LegalComplianceProcessor:
         return notes
     
     async def monitor_compliance_deadlines(self) -> List[Dict[str, Any]]:
-        """Monitor and alert on compliance deadlines."""        try:
+        """Monitor and alert on compliance deadlines."""
+        try:
             upcoming_deadlines = []
             current_time = datetime.now()
             
@@ -865,7 +904,8 @@ class LegalComplianceProcessor:
             return []
     
     def get_compliance_statistics(self) -> Dict[str, Any]:
-        """Get legal compliance statistics."""        return {
+        """Get legal compliance statistics."""
+        return {
             **self.compliance_stats,
             'active_cases': len(self.active_cases),
             'compliance_checks_count': len(self.compliance_checks),

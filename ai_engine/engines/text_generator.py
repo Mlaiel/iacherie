@@ -31,7 +31,8 @@ IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 🔒 NO UNAUTHORIZED USE, COPYING, MODIFICATION, OR DISTRIBUTION ALLOWED.
 
 Business Logic: User Upload → AI Processing → Protection → SEO → Collaboration → Distribution
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import time
@@ -53,7 +54,8 @@ from .base_engine import BaseContentEngine, EngineStatus, ProcessingPriority, Co
 
 
 class TextContentStyle(Enum):
-    """Advanced text content style types for creators"""    PROFESSIONAL = "professional"
+    """Advanced text content style types for creators"""
+    PROFESSIONAL = "professional"
     CASUAL = "casual"
     CREATIVE = "creative"
     TECHNICAL = "technical"
@@ -70,7 +72,8 @@ class TextContentStyle(Enum):
 
 
 class ContentFormat(Enum):
-    """Supported content output formats"""    PLAIN_TEXT = "plain_text"
+    """Supported content output formats"""
+    PLAIN_TEXT = "plain_text"
     MARKDOWN = "markdown"
     HTML = "html"
     JSON = "json"
@@ -88,7 +91,8 @@ class ContentFormat(Enum):
 
 @dataclass
 class TextGenerationRequest:
-    """Advanced text generation request configuration"""    content_type: ContentType
+    """Advanced text generation request configuration"""
+    content_type: ContentType
     style: TextContentStyle
     format: ContentFormat
     target_length: int
@@ -111,7 +115,8 @@ class TextGenerationRequest:
 
 @dataclass
 class TextGenerationResult:
-    """Comprehensive text generation result with analytics"""    generated_text: str
+    """Comprehensive text generation result with analytics"""
+    generated_text: str
     style_score: float
     seo_score: float
     engagement_score: float
@@ -132,11 +137,13 @@ class TextGenerationResult:
 
 
 class AdvancedTextGenerator:
-    """    Enterprise-grade text content generator with AI-powered optimization.
+    """
+    Enterprise-grade text content generator with AI-powered optimization.
     
     Supports advanced text generation for content creators with integrated
     SEO optimization, collaboration matching, and monetization strategies.
-    """    
+    """
+    
     def __init__(
         self,
         model_name: str = "gpt-3.5-turbo",
@@ -165,7 +172,8 @@ class AdvancedTextGenerator:
         self._initialize_seo_rules()
         
     def _initialize_analysis_models(self):
-        """Initialize text analysis and processing models"""        # Sentiment analysis
+        """Initialize text analysis and processing models"""
+        # Sentiment analysis
         self.sentiment_analyzer = None
         
         # Readability assessment
@@ -181,7 +189,8 @@ class AdvancedTextGenerator:
         self.style_classifier = None
         
     def _load_content_templates(self):
-        """Load content generation templates"""        self.templates = {
+        """Load content generation templates"""
+        self.templates = {
             TextContentStyle.SOCIAL_MEDIA: {
                 "structure": "hook + content + cta + hashtags",
                 "max_length": 280,
@@ -203,7 +212,8 @@ class AdvancedTextGenerator:
         }
         
     def _initialize_seo_rules(self):
-        """Initialize SEO optimization rules"""        self.seo_rules = {
+        """Initialize SEO optimization rules"""
+        self.seo_rules = {
             "keyword_density": {"min": 0.5, "max": 2.5},
             "title_length": {"min": 30, "max": 60},
             "meta_description": {"min": 150, "max": 160},
@@ -217,14 +227,16 @@ class AdvancedTextGenerator:
         self,
         request: TextGenerationRequest
     ) -> TextGenerationResult:
-        """        Generate advanced text content with comprehensive optimization.
+        """
+        Generate advanced text content with comprehensive optimization.
         
         Args:
             request: Text generation configuration and requirements
             
         Returns:
             TextGenerationResult: Complete generation result with analytics
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Pre-processing and prompt engineering
@@ -285,7 +297,9 @@ class AdvancedTextGenerator:
         self,
         request: TextGenerationRequest
     ) -> str:
-        """Create optimized prompt for text generation"""        base_prompt = f"""        Generate {request.content_type.value} content with the following specifications:
+        """Create optimized prompt for text generation"""
+        base_prompt = f"""
+        Generate {request.content_type.value} content with the following specifications:
         
         Style: {request.style.value}
         Format: {request.format.value}
@@ -295,7 +309,8 @@ class AdvancedTextGenerator:
         Language: {request.language}
         
         Keywords to include: {', '.join(request.keywords)}
-        """        
+        """
+        
         if request.seo_optimization:
             base_prompt += "\nOptimize for search engines with natural keyword integration."
             
@@ -328,7 +343,8 @@ class AdvancedTextGenerator:
         prompt: str,
         request: TextGenerationRequest
     ) -> str:
-        """Generate base content using AI model"""        # Implementation would integrate with actual AI model
+        """Generate base content using AI model"""
+        # Implementation would integrate with actual AI model
         # For now, return structured content based on style
         
         template = self.templates.get(request.style, {})
@@ -345,7 +361,8 @@ class AdvancedTextGenerator:
         return content
         
     def _generate_social_media_content(self, request: TextGenerationRequest) -> str:
-        """Generate optimized social media content"""        hook = f"🚀 {request.target_audience}, this is for you!"
+        """Generate optimized social media content"""
+        hook = f"🚀 {request.target_audience}, this is for you!"
         content = f"Discover amazing {request.keywords[0] if request.keywords else 'content'} that will transform your experience."
         cta = "👇 Share your thoughts in the comments!"
         hashtags = f"#{' #'.join(request.keywords[:5])}" if request.keywords else "#content #creation"
@@ -353,7 +370,8 @@ class AdvancedTextGenerator:
         return f"{hook}\n\n{content}\n\n{cta}\n\n{hashtags}"
         
     def _generate_blog_content(self, request: TextGenerationRequest) -> str:
-        """Generate SEO-optimized blog content"""        title = f"The Ultimate Guide to {request.keywords[0].title() if request.keywords else 'Content Creation'}"
+        """Generate SEO-optimized blog content"""
+        title = f"The Ultimate Guide to {request.keywords[0].title() if request.keywords else 'Content Creation'}"
         intro = f"In today's digital landscape, {request.target_audience} need to understand the importance of {request.keywords[0] if request.keywords else 'quality content'}."
         
         body_sections = []
@@ -369,7 +387,8 @@ class AdvancedTextGenerator:
         return f"# {title}\n\n{intro}\n\n{''.join(body_sections)}\n\n{conclusion}"
         
     def _generate_marketing_content(self, request: TextGenerationRequest) -> str:
-        """Generate conversion-focused marketing content"""        headline = f"Transform Your {request.keywords[0].title() if request.keywords else 'Business'} Today!"
+        """Generate conversion-focused marketing content"""
+        headline = f"Transform Your {request.keywords[0].title() if request.keywords else 'Business'} Today!"
         benefits = f"✅ Increase engagement\n✅ Boost conversions\n✅ Maximize ROI"
         proof = f"Join thousands of {request.target_audience} who have already achieved success."
         cta = "🚀 Get Started Now - Limited Time Offer!"
@@ -377,7 +396,8 @@ class AdvancedTextGenerator:
         return f"{headline}\n\n{benefits}\n\n{proof}\n\n{cta}"
         
     def _generate_generic_content(self, request: TextGenerationRequest) -> str:
-        """Generate generic content based on request parameters"""        content = f"Creating exceptional {request.content_type.value} content for {request.target_audience} requires careful consideration of multiple factors. "
+        """Generate generic content based on request parameters"""
+        content = f"Creating exceptional {request.content_type.value} content for {request.target_audience} requires careful consideration of multiple factors. "
         
         if request.keywords:
             content += f"Key areas to focus on include {', '.join(request.keywords[:3])}. "
@@ -394,7 +414,8 @@ class AdvancedTextGenerator:
         content: str,
         request: TextGenerationRequest
     ) -> str:
-        """Optimize generated content for specific requirements"""        optimized = content
+        """Optimize generated content for specific requirements"""
+        optimized = content
         
         # Length optimization
         if request.target_length > 0:
@@ -411,7 +432,8 @@ class AdvancedTextGenerator:
         return optimized
         
     def _adjust_content_length(self, content: str, target_length: int) -> str:
-        """Adjust content to target length"""        words = content.split()
+        """Adjust content to target length"""
+        words = content.split()
         current_length = len(words)
         
         if current_length > target_length:
@@ -425,7 +447,8 @@ class AdvancedTextGenerator:
         return content
         
     def _apply_seo_optimization(self, content: str, request: TextGenerationRequest) -> str:
-        """Apply SEO optimization techniques"""        optimized = content
+        """Apply SEO optimization techniques"""
+        optimized = content
         
         # Ensure keyword presence
         for keyword in request.keywords[:3]:
@@ -435,7 +458,8 @@ class AdvancedTextGenerator:
         return optimized
         
     def _optimize_for_platforms(self, content: str, platforms: List[str]) -> str:
-        """Optimize content for specific platforms"""        optimized = content
+        """Optimize content for specific platforms"""
+        optimized = content
         
         for platform in platforms:
             if platform.lower() == "twitter":
@@ -454,7 +478,8 @@ class AdvancedTextGenerator:
         content: str,
         request: TextGenerationRequest
     ) -> Dict[str, Any]:
-        """Perform comprehensive content analysis"""        analysis = {
+        """Perform comprehensive content analysis"""
+        analysis = {
             "style_score": self._calculate_style_score(content, request),
             "seo_score": self._calculate_seo_score(content, request),
             "engagement_score": self._calculate_engagement_score(content),
@@ -472,7 +497,8 @@ class AdvancedTextGenerator:
         return analysis
         
     def _calculate_style_score(self, content: str, request: TextGenerationRequest) -> float:
-        """Calculate style consistency score"""        # Simplified scoring based on style characteristics
+        """Calculate style consistency score"""
+        # Simplified scoring based on style characteristics
         style_indicators = {
             TextContentStyle.PROFESSIONAL: ["furthermore", "therefore", "consequently"],
             TextContentStyle.CASUAL: ["hey", "awesome", "cool", "great"],
@@ -486,7 +512,8 @@ class AdvancedTextGenerator:
         return min(1.0, matches / max(1, len(indicators)))
         
     def _calculate_seo_score(self, content: str, request: TextGenerationRequest) -> float:
-        """Calculate SEO optimization score"""        score = 0.0
+        """Calculate SEO optimization score"""
+        score = 0.0
         content_lower = content.lower()
         
         # Keyword presence
@@ -513,7 +540,8 @@ class AdvancedTextGenerator:
         return min(1.0, score)
         
     def _calculate_engagement_score(self, content: str) -> float:
-        """Calculate content engagement potential score"""        engagement_indicators = [
+        """Calculate content engagement potential score"""
+        engagement_indicators = [
             "?", "!", "you", "your", "we", "us", "share", "comment",
             "like", "follow", "subscribe", "join", "discover"
         ]
@@ -524,7 +552,8 @@ class AdvancedTextGenerator:
         return min(1.0, matches / 10)
         
     def _calculate_readability_score(self, content: str) -> float:
-        """Calculate content readability score"""        sentences = content.split('.')
+        """Calculate content readability score"""
+        sentences = content.split('.')
         words = content.split()
         
         if not sentences or not words:
@@ -543,13 +572,15 @@ class AdvancedTextGenerator:
             return 0.4
             
     def _calculate_uniqueness_score(self, content: str) -> float:
-        """Calculate content uniqueness score"""        # Simplified uniqueness calculation
+        """Calculate content uniqueness score"""
+        # Simplified uniqueness calculation
         words = set(content.lower().split())
         unique_ratio = len(words) / max(1, len(content.split()))
         return min(1.0, unique_ratio * 1.2)
         
     def _extract_hashtags(self, content: str, request: TextGenerationRequest) -> List[str]:
-        """Extract and suggest relevant hashtags"""        existing_hashtags = re.findall(r'#\w+', content)
+        """Extract and suggest relevant hashtags"""
+        existing_hashtags = re.findall(r'#\w+', content)
         
         # Generate hashtags from keywords
         suggested = []
@@ -573,7 +604,8 @@ class AdvancedTextGenerator:
         return existing_hashtags + suggested[:8]
         
     def _extract_keywords(self, content: str) -> List[str]:
-        """Extract important keywords from content"""        # Simplified keyword extraction
+        """Extract important keywords from content"""
+        # Simplified keyword extraction
         words = re.findall(r'\b\w{4,}\b', content.lower())
         
         # Filter common words
@@ -593,7 +625,8 @@ class AdvancedTextGenerator:
         return [word for word, freq in sorted_keywords[:10]]
         
     def _analyze_sentiment(self, content: str) -> Dict[str, float]:
-        """Analyze content sentiment"""        # Simplified sentiment analysis
+        """Analyze content sentiment"""
+        # Simplified sentiment analysis
         positive_words = ["great", "amazing", "excellent", "good", "best", "love", "awesome"]
         negative_words = ["bad", "terrible", "awful", "hate", "worst", "horrible"]
         neutral_words = ["okay", "fine", "normal", "standard", "average"]
@@ -616,7 +649,8 @@ class AdvancedTextGenerator:
         }
         
     def _calculate_monetization_potential(self, content: str) -> float:
-        """Calculate monetization potential score"""        monetization_indicators = [
+        """Calculate monetization potential score"""
+        monetization_indicators = [
             "buy", "purchase", "premium", "subscription", "exclusive",
             "limited", "offer", "discount", "price", "value", "investment"
         ]
@@ -627,7 +661,8 @@ class AdvancedTextGenerator:
         return min(1.0, matches / 5)
         
     def _identify_collaboration_opportunities(self, content: str) -> List[str]:
-        """Identify potential collaboration opportunities"""        opportunities = []
+        """Identify potential collaboration opportunities"""
+        opportunities = []
         content_lower = content.lower()
         
         if any(word in content_lower for word in ["partner", "collaborate", "team", "together"]):
@@ -645,7 +680,8 @@ class AdvancedTextGenerator:
         return opportunities[:3]
         
     def _recommend_platforms(self, content: str, request: TextGenerationRequest) -> List[str]:
-        """Recommend optimal platforms for content"""        platforms = []
+        """Recommend optimal platforms for content"""
+        platforms = []
         content_lower = content.lower()
         
         # Platform recommendations based on content characteristics
@@ -667,7 +703,8 @@ class AdvancedTextGenerator:
         return list(set(platforms))[:5]
         
     def _suggest_improvements(self, content: str, request: TextGenerationRequest) -> List[str]:
-        """Suggest content improvements"""        suggestions = []
+        """Suggest content improvements"""
+        suggestions = []
         
         word_count = len(content.split())
         
@@ -689,7 +726,8 @@ class AdvancedTextGenerator:
         return suggestions[:5]
         
     def _calculate_reading_time(self, content: str) -> int:
-        """Calculate estimated reading time in seconds"""        word_count = len(content.split())
+        """Calculate estimated reading time in seconds"""
+        word_count = len(content.split())
         # Average reading speed: 200-250 words per minute
         reading_time_minutes = word_count / 225
         return int(reading_time_minutes * 60)

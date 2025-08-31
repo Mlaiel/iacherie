@@ -22,7 +22,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import List, Dict, Any, Optional, Union
+"""
+from typing import List, Dict, Any, Optional, Union
 import logging
 from datetime import datetime
 
@@ -88,11 +89,13 @@ __all__ = [
 ]
 
 def get_module_info() -> Dict[str, Any]:
-    """    Get comprehensive blockchain module information.
+    """
+    Get comprehensive blockchain module information.
     
     Returns:
         Dict containing module version, features, and configuration
-    """    return {
+    """
+    return {
         "module": "blockchain",
         "version": __version__,
         "author": __author__,
@@ -143,11 +146,13 @@ def get_module_info() -> Dict[str, Any]:
     }
 
 def get_supported_chains() -> List[str]:
-    """    Get list of supported blockchain networks.
+    """
+    Get list of supported blockchain networks.
     
     Returns:
         List of supported chain names
-    """    return [
+    """
+    return [
         "Ethereum Mainnet",
         "Ethereum Sepolia",
         "Polygon Mainnet", 
@@ -161,11 +166,13 @@ def get_supported_chains() -> List[str]:
     ]
 
 def get_bridge_routes() -> List[Dict[str, Any]]:
-    """    Get available cross-chain bridge routes.
+    """
+    Get available cross-chain bridge routes.
     
     Returns:
         List of bridge route configurations
-    """    return [
+    """
+    return [
         {
             "source": "Ethereum Mainnet",
             "destination": "Polygon Mainnet",
@@ -190,11 +197,13 @@ def get_bridge_routes() -> List[Dict[str, Any]]:
     ]
 
 def get_defi_protocols() -> List[Dict[str, Any]]:
-    """    Get supported DeFi protocols and their capabilities.
+    """
+    Get supported DeFi protocols and their capabilities.
     
     Returns:
         List of DeFi protocol configurations
-    """    return [
+    """
+    return [
         {
             "name": "Uniswap V3",
             "type": "DEX",
@@ -227,14 +236,16 @@ def get_defi_protocols() -> List[Dict[str, Any]]:
     ]
 
 def validate_blockchain_config(config: Dict[str, Any]) -> bool:
-    """    Validate blockchain configuration.
+    """
+    Validate blockchain configuration.
     
     Args:
         config: Configuration dictionary to validate
         
     Returns:
         True if configuration is valid
-    """    try:
+    """
+    try:
         required_keys = ["networks", "contracts", "storage"]
         
         for key in required_keys:
@@ -262,31 +273,39 @@ def validate_blockchain_config(config: Dict[str, Any]) -> bool:
 
 # Initialize blockchain configuration
 class BlockchainConfig:
-    """    Configuration manager for blockchain services.
+    """
+    Configuration manager for blockchain services.
     
     Centralizes configuration for all blockchain components including
     smart contracts, networks, storage providers, and validation settings.
-    """    
+    """
+    
     def __init__(self, config_dict: Dict[str, Any]):
-        """Initialize blockchain configuration."""        self.config = config_dict
+        """Initialize blockchain configuration."""
+        self.config = config_dict
         self.validate()
         
     def validate(self) -> None:
-        """Validate configuration."""        if not validate_blockchain_config(self.config):
+        """Validate configuration."""
+        if not validate_blockchain_config(self.config):
             raise ValueError("Invalid blockchain configuration")
             
     def get_network_config(self, network_name: str) -> Dict[str, Any]:
-        """Get configuration for a specific network."""        return self.config.get("networks", {}).get(network_name, {})
+        """Get configuration for a specific network."""
+        return self.config.get("networks", {}).get(network_name, {})
         
     def get_contract_config(self, contract_type: str) -> Dict[str, Any]:
-        """Get configuration for a specific contract type."""        return self.config.get("contracts", {}).get(contract_type, {})
+        """Get configuration for a specific contract type."""
+        return self.config.get("contracts", {}).get(contract_type, {})
         
     def get_storage_config(self, provider: str) -> Dict[str, Any]:
-        """Get configuration for a specific storage provider."""        return self.config.get("storage", {}).get(provider, {})
+        """Get configuration for a specific storage provider."""
+        return self.config.get("storage", {}).get(provider, {})
     
     Returns:
         Dict[str, Any]: Informations du module
-    """    return {
+    """
+    return {
         "name": "Blockchain Database",
         "version": __version__,
         "author": "Fahed Mlaiel",

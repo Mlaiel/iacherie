@@ -21,7 +21,8 @@ This module implements enterprise-grade performance monitoring and system
 health tracking for surveillance operations. Features include real-time
 metrics collection, performance analytics, resource optimization,
 alerting, and comprehensive system observability.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Any, Callable, Union, Tuple
 from dataclasses import dataclass, field
@@ -39,7 +40,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of performance metrics."""    COUNTER = "counter"        # Monotonically increasing value
+    """Types of performance metrics."""
+    COUNTER = "counter"        # Monotonically increasing value
     GAUGE = "gauge"           # Point-in-time value
     HISTOGRAM = "histogram"   # Distribution of values
     TIMER = "timer"          # Timing measurements
@@ -48,7 +50,8 @@ class MetricType(Enum):
 
 
 class MetricCategory(Enum):
-    """Categories of performance metrics."""    SYSTEM = "system"          # System-level metrics (CPU, memory, disk)
+    """Categories of performance metrics."""
+    SYSTEM = "system"          # System-level metrics (CPU, memory, disk)
     APPLICATION = "application" # Application-level metrics
     BUSINESS = "business"      # Business logic metrics
     SECURITY = "security"      # Security-related metrics
@@ -60,7 +63,8 @@ class MetricCategory(Enum):
 
 
 class AlertCondition(Enum):
-    """Alert condition types."""    THRESHOLD_EXCEEDED = "threshold_exceeded"
+    """Alert condition types."""
+    THRESHOLD_EXCEEDED = "threshold_exceeded"
     THRESHOLD_BELOW = "threshold_below"
     RATE_INCREASE = "rate_increase"
     RATE_DECREASE = "rate_decrease"
@@ -70,7 +74,8 @@ class AlertCondition(Enum):
 
 
 class HealthStatus(Enum):
-    """System health status levels."""    HEALTHY = "healthy"
+    """System health status levels."""
+    HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
     UNKNOWN = "unknown"
@@ -79,7 +84,8 @@ class HealthStatus(Enum):
 
 @dataclass
 class Metric:
-    """Performance metric definition."""    metric_id: str
+    """Performance metric definition."""
+    metric_id: str
     name: str
     metric_type: MetricType
     category: MetricCategory
@@ -96,7 +102,8 @@ class Metric:
 
 @dataclass
 class MetricThreshold:
-    """Metric alerting threshold."""    threshold_id: str
+    """Metric alerting threshold."""
+    threshold_id: str
     metric_id: str
     condition: AlertCondition
     value: float
@@ -110,7 +117,8 @@ class MetricThreshold:
 
 @dataclass
 class PerformanceAlert:
-    """Performance monitoring alert."""    alert_id: str
+    """Performance monitoring alert."""
+    alert_id: str
     metric_id: str
     threshold_id: str
     condition: AlertCondition
@@ -127,7 +135,8 @@ class PerformanceAlert:
 
 @dataclass
 class SystemHealth:
-    """System health assessment."""    component: str
+    """System health assessment."""
+    component: str
     status: HealthStatus
     score: float  # 0.0 - 1.0
     last_check: datetime = field(default_factory=datetime.now)
@@ -138,7 +147,8 @@ class SystemHealth:
 
 @dataclass
 class PerformanceReport:
-    """Performance analysis report."""    report_id: str
+    """Performance analysis report."""
+    report_id: str
     period_start: datetime
     period_end: datetime
     overall_health_score: float
@@ -151,7 +161,8 @@ class PerformanceReport:
 
 
 class PerformanceMonitor:
-    """    Enterprise performance monitoring system for surveillance operations.
+    """
+    Enterprise performance monitoring system for surveillance operations.
     
     This system provides comprehensive performance monitoring capabilities including:
     - Real-time metrics collection and storage
@@ -162,13 +173,16 @@ class PerformanceMonitor:
     - Anomaly detection and trend analysis
     - Automated performance reporting
     - Integration with external monitoring systems
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize the performance monitoring system.
+        """
+        Initialize the performance monitoring system.
         
         Args:
             config: System configuration
-        """        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """
+        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
         self.config = config or {}
@@ -207,7 +221,8 @@ class PerformanceMonitor:
         self._lock = threading.RLock()
     
     async def initialize(self) -> None:
-        """Initialize the performance monitoring system."""        try:
+        """Initialize the performance monitoring system."""
+        try:
             self._logger.info("Initializing Performance Monitoring System...")
             
             # Initialize metric collectors
@@ -249,7 +264,8 @@ class PerformanceMonitor:
         unit: str = "",
         tags: Optional[Dict[str, str]] = None
     ) -> str:
-        """        Register a new performance metric.
+        """
+        Register a new performance metric.
         
         Args:
             name: Metric name
@@ -261,7 +277,8 @@ class PerformanceMonitor:
             
         Returns:
             Metric ID
-        """        try:
+        """
+        try:
             metric_id = f"metric_{uuid.uuid4().hex[:8]}"
             
             metric = Metric(
@@ -293,7 +310,8 @@ class PerformanceMonitor:
         timestamp: Optional[datetime] = None,
         tags: Optional[Dict[str, str]] = None
     ) -> bool:
-        """        Record a metric value.
+        """
+        Record a metric value.
         
         Args:
             metric_id: Metric to record
@@ -303,7 +321,8 @@ class PerformanceMonitor:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             if metric_id not in self.metrics:
                 self._logger.warning(f"Unknown metric ID: {metric_id}")
                 return False
@@ -356,7 +375,8 @@ class PerformanceMonitor:
         description: str = "",
         notification_channels: Optional[List[str]] = None
     ) -> str:
-        """        Set an alerting threshold for a metric.
+        """
+        Set an alerting threshold for a metric.
         
         Args:
             metric_id: Metric to monitor
@@ -368,7 +388,8 @@ class PerformanceMonitor:
             
         Returns:
             Threshold ID
-        """        try:
+        """
+        try:
             if metric_id not in self.metrics:
                 self._logger.warning(f"Unknown metric ID: {metric_id}")
                 return ""
@@ -399,7 +420,8 @@ class PerformanceMonitor:
             return ""
     
     async def get_metric_value(self, metric_id: str) -> Optional[float]:
-        """Get current value of a metric."""        metric = self.metrics.get(metric_id)
+        """Get current value of a metric."""
+        metric = self.metrics.get(metric_id)
         return metric.value if metric else None
     
     async def get_metric_history(
@@ -409,7 +431,8 @@ class PerformanceMonitor:
         end_time: Optional[datetime] = None,
         limit: int = 1000
     ) -> List[Dict[str, Any]]:
-        """        Get historical data for a metric.
+        """
+        Get historical data for a metric.
         
         Args:
             metric_id: Metric to query
@@ -419,7 +442,8 @@ class PerformanceMonitor:
             
         Returns:
             List of data points
-        """        try:
+        """
+        try:
             if metric_id not in self.metric_data:
                 return []
             
@@ -447,20 +471,23 @@ class PerformanceMonitor:
             return []
     
     async def get_system_health(self) -> Dict[str, SystemHealth]:
-        """Get current system health status."""        return self.system_health.copy()
+        """Get current system health status."""
+        return self.system_health.copy()
     
     async def generate_performance_report(
         self,
         period_hours: int = 24
     ) -> PerformanceReport:
-        """        Generate comprehensive performance report.
+        """
+        Generate comprehensive performance report.
         
         Args:
             period_hours: Report period in hours
             
         Returns:
             Performance report
-        """        try:
+        """
+        try:
             report_id = f"perf_report_{uuid.uuid4().hex[:8]}"
             period_end = datetime.now()
             period_start = period_end - timedelta(hours=period_hours)
@@ -519,7 +546,8 @@ class PerformanceMonitor:
     
     # Internal monitoring methods
     async def _check_metric_thresholds(self, metric_id: str, value: float) -> None:
-        """Check metric value against configured thresholds."""        metric_thresholds = [
+        """Check metric value against configured thresholds."""
+        metric_thresholds = [
             threshold for threshold in self.thresholds.values()
             if threshold.metric_id == metric_id and threshold.enabled
         ]
@@ -540,7 +568,8 @@ class PerformanceMonitor:
         threshold: MetricThreshold,
         current_value: float
     ) -> None:
-        """Trigger a performance alert."""        alert_id = f"perf_alert_{uuid.uuid4().hex[:8]}"
+        """Trigger a performance alert."""
+        alert_id = f"perf_alert_{uuid.uuid4().hex[:8]}"
         
         metric = self.metrics[threshold.metric_id]
         
@@ -564,7 +593,8 @@ class PerformanceMonitor:
         self._logger.warning(f"Performance alert triggered: {alert.message}")
     
     async def _perform_health_check(self) -> None:
-        """Perform comprehensive system health check."""        try:
+        """Perform comprehensive system health check."""
+        try:
             # Check system resources
             await self._check_system_health()
             
@@ -580,7 +610,8 @@ class PerformanceMonitor:
             self._logger.error(f"Error performing health check: {e}")
     
     async def _check_system_health(self) -> None:
-        """Check system-level health metrics."""        try:
+        """Check system-level health metrics."""
+        try:
             # CPU usage
             cpu_percent = psutil.cpu_percent(interval=1)
             cpu_status = HealthStatus.HEALTHY
@@ -648,7 +679,8 @@ class PerformanceMonitor:
             self._logger.error(f"Error checking system health: {e}")
     
     async def _check_application_health(self) -> None:
-        """Check application-specific health metrics."""        # Check metric collection health
+        """Check application-specific health metrics."""
+        # Check metric collection health
         collection_success_rate = 0.0
         if self.collection_stats['total_collections'] > 0:
             collection_success_rate = (
@@ -679,7 +711,8 @@ class PerformanceMonitor:
         )
     
     async def _check_monitoring_health(self) -> None:
-        """Check monitoring system health."""        # Check active alerts
+        """Check monitoring system health."""
+        # Check active alerts
         active_alerts = len([a for a in self.alerts.values() if a.status == 'active'])
         
         alert_status = HealthStatus.HEALTHY
@@ -709,7 +742,8 @@ class PerformanceMonitor:
         start_time: datetime,
         end_time: datetime
     ) -> Dict[str, List[float]]:
-        """Calculate performance trends for key metrics."""        trends = {}
+        """Calculate performance trends for key metrics."""
+        trends = {}
         
         key_metric_names = ['cpu_usage', 'memory_usage', 'response_time', 'throughput']
         
@@ -724,7 +758,8 @@ class PerformanceMonitor:
         return trends
     
     def _summarize_alerts(self, start_time: datetime, end_time: datetime) -> Dict[str, int]:
-        """Summarize alerts for the given period."""        period_alerts = [
+        """Summarize alerts for the given period."""
+        period_alerts = [
             alert for alert in self.alerts.values()
             if start_time <= alert.triggered_at <= end_time
         ]
@@ -740,7 +775,8 @@ class PerformanceMonitor:
         return summary
     
     async def _generate_performance_recommendations(self) -> List[str]:
-        """Generate performance optimization recommendations."""        recommendations = []
+        """Generate performance optimization recommendations."""
+        recommendations = []
         
         # Check CPU usage
         cpu_health = self.system_health.get('cpu')
@@ -766,7 +802,8 @@ class PerformanceMonitor:
     
     # Background monitoring tasks
     async def _start_background_monitoring(self) -> None:
-        """Start background monitoring tasks."""        if self._background_started:
+        """Start background monitoring tasks."""
+        if self._background_started:
             return
         
         # Metric collection task
@@ -794,7 +831,8 @@ class PerformanceMonitor:
         self._logger.info("Background monitoring tasks started")
     
     async def _metric_collection_loop(self) -> None:
-        """Background metric collection loop."""        while not self._shutdown_event.is_set():
+        """Background metric collection loop."""
+        while not self._shutdown_event.is_set():
             try:
                 start_time = time.time()
                 
@@ -834,7 +872,8 @@ class PerformanceMonitor:
                 await asyncio.sleep(30)  # Wait before retry
     
     async def _health_check_loop(self) -> None:
-        """Background health check loop."""        while not self._shutdown_event.is_set():
+        """Background health check loop."""
+        while not self._shutdown_event.is_set():
             try:
                 await self._perform_health_check()
                 await asyncio.sleep(self.health_check_interval)
@@ -844,7 +883,8 @@ class PerformanceMonitor:
                 await asyncio.sleep(60)
     
     async def _data_cleanup_loop(self) -> None:
-        """Background data cleanup loop."""        while not self._shutdown_event.is_set():
+        """Background data cleanup loop."""
+        while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(3600)  # Run every hour
                 
@@ -876,7 +916,8 @@ class PerformanceMonitor:
     
     # Initialization methods
     async def _initialize_collectors(self) -> None:
-        """Initialize metric collectors."""        # System metrics collector
+        """Initialize metric collectors."""
+        # System metrics collector
         self.collectors['system'] = SystemMetricsCollector(self)
         
         # Application metrics collector
@@ -890,7 +931,8 @@ class PerformanceMonitor:
             self._logger.debug(f"Initialized {name} metric collector")
     
     async def _initialize_analyzers(self) -> None:
-        """Initialize performance analyzers."""        # Trend analyzer
+        """Initialize performance analyzers."""
+        # Trend analyzer
         self.analyzers['trend'] = TrendAnalyzer(self)
         
         # Capacity analyzer
@@ -901,7 +943,8 @@ class PerformanceMonitor:
             self._logger.debug(f"Initialized {name} performance analyzer")
     
     async def _register_default_metrics(self) -> None:
-        """Register default system metrics."""        # System metrics
+        """Register default system metrics."""
+        # System metrics
         await self.register_metric(
             "cpu_usage_percent",
             MetricType.GAUGE,
@@ -952,20 +995,23 @@ class PerformanceMonitor:
         )
     
     async def _load_thresholds(self) -> None:
-        """Load existing alerting thresholds."""        # This would load from storage in production
+        """Load existing alerting thresholds."""
+        # This would load from storage in production
         # For now, set some default thresholds
         pass
     
     # Public API methods
     def get_metric(self, metric_id: str) -> Optional[Metric]:
-        """Get metric by ID."""        return self.metrics.get(metric_id)
+        """Get metric by ID."""
+        return self.metrics.get(metric_id)
     
     def get_metrics(
         self,
         category: Optional[MetricCategory] = None,
         metric_type: Optional[MetricType] = None
     ) -> List[Metric]:
-        """Get metrics with optional filtering."""        metrics = list(self.metrics.values())
+        """Get metrics with optional filtering."""
+        metrics = list(self.metrics.values())
         
         if category:
             metrics = [m for m in metrics if m.category == category]
@@ -976,7 +1022,8 @@ class PerformanceMonitor:
         return metrics
     
     def get_alerts(self, status: str = "active") -> List[PerformanceAlert]:
-        """Get alerts with optional status filtering."""        alerts = list(self.alerts.values())
+        """Get alerts with optional status filtering."""
+        alerts = list(self.alerts.values())
         
         if status:
             alerts = [a for a in alerts if a.status == status]
@@ -987,7 +1034,8 @@ class PerformanceMonitor:
         return alerts
     
     async def shutdown(self) -> None:
-        """Shutdown performance monitoring system gracefully."""        self._logger.info("Shutting down Performance Monitoring System...")
+        """Shutdown performance monitoring system gracefully."""
+        self._logger.info("Shutting down Performance Monitoring System...")
         
         # Signal shutdown to background tasks
         self._shutdown_event.set()
@@ -1017,23 +1065,28 @@ class PerformanceMonitor:
 
 # Helper classes for metric collection and analysis
 class MetricCollector:
-    """Base class for metric collectors."""    
+    """Base class for metric collectors."""
+    
     def __init__(self, monitor: PerformanceMonitor):
-        """Initialize collector."""        self.monitor = monitor
+        """Initialize collector."""
+        self.monitor = monitor
         self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def initialize(self) -> None:
-        """Initialize collector."""        pass
+        """Initialize collector."""
+        pass
     
     async def collect_metrics(self) -> Dict[str, Any]:
-        """        Collect metrics with default implementation and error handling.
+        """
+        Collect metrics with default implementation and error handling.
         
         This method can be implemented by concrete metric collector classes.
         Default implementation provides basic metric collection for development and testing.
         
         Returns:
             Dict[str, Any]: Basic system metrics or empty dict on error
-        """        # Default implementation for metric collectors that don't override this method
+        """
+        # Default implementation for metric collectors that don't override this method
         collector_name = self.__class__.__name__
         self.logger.info(f"Collecting metrics using {collector_name}")
         
@@ -1098,7 +1151,8 @@ class MetricCollector:
             }
     
     async def _collect_performance_metrics(self) -> Dict[str, Any]:
-        """Collect performance-specific metrics"""        return {
+        """Collect performance-specific metrics"""
+        return {
             "performance_metrics": {
                 "response_time_avg": 150.0,  # ms
                 "throughput_per_second": 100,
@@ -1110,7 +1164,8 @@ class MetricCollector:
         }
     
     async def _collect_system_metrics(self) -> Dict[str, Any]:
-        """Collect system-specific metrics"""        return {
+        """Collect system-specific metrics"""
+        return {
             "system_health": {
                 "uptime_hours": 72.5,
                 "load_average": [1.2, 1.1, 1.0],
@@ -1121,7 +1176,8 @@ class MetricCollector:
         }
     
     async def _collect_application_metrics(self) -> Dict[str, Any]:
-        """Collect application-specific metrics"""        return {
+        """Collect application-specific metrics"""
+        return {
             "application_metrics": {
                 "active_users": 125,
                 "requests_per_minute": 500,
@@ -1133,7 +1189,8 @@ class MetricCollector:
         }
     
     async def _collect_generic_metrics(self) -> Dict[str, Any]:
-        """Collect generic metrics when no specific type is identified"""        return {
+        """Collect generic metrics when no specific type is identified"""
+        return {
             "generic_metrics": {
                 "collection_count": 1,
                 "collector_status": "active",
@@ -1143,13 +1200,16 @@ class MetricCollector:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown collector."""        pass
+        """Shutdown collector."""
+        pass
 
 
 class SystemMetricsCollector(MetricCollector):
-    """Collector for system-level metrics."""    
+    """Collector for system-level metrics."""
+    
     async def collect_metrics(self) -> None:
-        """Collect system metrics."""        try:
+        """Collect system metrics."""
+        try:
             # CPU usage
             cpu_metric_id = None
             for metric_id, metric in self.monitor.metrics.items():
@@ -1189,9 +1249,11 @@ class SystemMetricsCollector(MetricCollector):
 
 
 class ApplicationMetricsCollector(MetricCollector):
-    """Collector for application-level metrics."""    
+    """Collector for application-level metrics."""
+    
     async def collect_metrics(self) -> None:
-        """Collect application metrics."""        try:
+        """Collect application metrics."""
+        try:
             # This would collect application-specific metrics
             # For now, just simulate some metrics
             pass
@@ -1201,9 +1263,11 @@ class ApplicationMetricsCollector(MetricCollector):
 
 
 class BusinessMetricsCollector(MetricCollector):
-    """Collector for business-level metrics."""    
+    """Collector for business-level metrics."""
+    
     async def collect_metrics(self) -> None:
-        """Collect business metrics."""        try:
+        """Collect business metrics."""
+        try:
             # This would collect business KPIs and metrics
             # For now, just simulate some metrics
             pass
@@ -1213,23 +1277,28 @@ class BusinessMetricsCollector(MetricCollector):
 
 
 class PerformanceAnalyzer:
-    """Base class for performance analyzers."""    
+    """Base class for performance analyzers."""
+    
     def __init__(self, monitor: PerformanceMonitor):
-        """Initialize analyzer."""        self.monitor = monitor
+        """Initialize analyzer."""
+        self.monitor = monitor
         self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def initialize(self) -> None:
-        """Initialize analyzer."""        pass
+        """Initialize analyzer."""
+        pass
     
     async def analyze(self) -> Dict[str, Any]:
-        """        Perform analysis with default implementation and error handling.
+        """
+        Perform analysis with default implementation and error handling.
         
         This method can be implemented by concrete performance analyzer classes.
         Default implementation provides basic analysis for development and testing.
         
         Returns:
             Dict[str, Any]: Analysis results with insights and recommendations
-        """        # Default implementation for performance analyzers that don't override this method
+        """
+        # Default implementation for performance analyzers that don't override this method
         analyzer_name = self.__class__.__name__
         self._logger.info(f"Performing analysis using {analyzer_name}")
         
@@ -1274,7 +1343,8 @@ class PerformanceAnalyzer:
             }
     
     async def _analyze_trends(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze trends in performance data"""        return {
+        """Analyze trends in performance data"""
+        return {
             "trend_analysis": {
                 "overall_trend": "stable",
                 "performance_direction": "improving",
@@ -1292,7 +1362,8 @@ class PerformanceAnalyzer:
         }
     
     async def _analyze_anomalies(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze anomalies in performance data"""        return {
+        """Analyze anomalies in performance data"""
+        return {
             "anomaly_analysis": {
                 "anomalies_detected": 2,
                 "anomaly_severity": "low",
@@ -1306,7 +1377,8 @@ class PerformanceAnalyzer:
         }
     
     async def _analyze_performance(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze overall performance"""        return {
+        """Analyze overall performance"""
+        return {
             "performance_analysis": {
                 "overall_score": 0.85,
                 "performance_grade": "B+",
@@ -1325,7 +1397,8 @@ class PerformanceAnalyzer:
         }
     
     async def _analyze_predictions(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze predictive metrics"""        return {
+        """Analyze predictive metrics"""
+        return {
             "predictive_analysis": {
                 "capacity_forecast": {
                     "days_until_capacity_limit": 45,
@@ -1346,7 +1419,8 @@ class PerformanceAnalyzer:
         }
     
     async def _analyze_generic(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform generic analysis when no specific type is identified"""        return {
+        """Perform generic analysis when no specific type is identified"""
+        return {
             "generic_analysis": {
                 "data_points_analyzed": len(str(metrics_data)),
                 "analysis_completeness": 0.80,
@@ -1360,44 +1434,55 @@ class PerformanceAnalyzer:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown analyzer."""        pass
+        """Shutdown analyzer."""
+        pass
 
 
 class TrendAnalyzer(PerformanceAnalyzer):
-    """Analyzer for performance trends."""    
+    """Analyzer for performance trends."""
+    
     async def analyze(self) -> None:
-        """Analyze performance trends."""        # Implementation would analyze trends in metrics
+        """Analyze performance trends."""
+        # Implementation would analyze trends in metrics
         pass
 
 
 class CapacityAnalyzer(PerformanceAnalyzer):
-    """Analyzer for capacity planning."""    
+    """Analyzer for capacity planning."""
+    
     async def analyze(self) -> None:
-        """Analyze capacity requirements."""        # Implementation would analyze capacity needs
+        """Analyze capacity requirements."""
+        # Implementation would analyze capacity needs
         pass
 
 
 class AlertingEngine:
-    """Engine for performance alerting."""    
+    """Engine for performance alerting."""
+    
     async def initialize(self) -> None:
-        """Initialize alerting engine."""        pass
+        """Initialize alerting engine."""
+        pass
     
     async def send_alert_notifications(
         self,
         alert: PerformanceAlert,
         threshold: MetricThreshold
     ) -> None:
-        """Send alert notifications."""        # Implementation would send notifications via configured channels
+        """Send alert notifications."""
+        # Implementation would send notifications via configured channels
         logger.info(f"Sending alert notification: {alert.message}")
     
     async def shutdown(self) -> None:
-        """Shutdown alerting engine."""        pass
+        """Shutdown alerting engine."""
+        pass
 
 
 class AnomalyDetector:
-    """Engine for anomaly detection."""    
+    """Engine for anomaly detection."""
+    
     async def initialize(self) -> None:
-        """Initialize anomaly detector."""        pass
+        """Initialize anomaly detector."""
+        pass
     
     async def check_anomaly(
         self,
@@ -1405,11 +1490,13 @@ class AnomalyDetector:
         value: float,
         timestamp: datetime
     ) -> bool:
-        """Check for anomalies in metric value."""        # Simple implementation - would use more sophisticated algorithms in production
+        """Check for anomalies in metric value."""
+        # Simple implementation - would use more sophisticated algorithms in production
         return False
     
     async def shutdown(self) -> None:
-        """Shutdown anomaly detector."""        pass
+        """Shutdown anomaly detector."""
+        pass
 
 
 # Export main classes

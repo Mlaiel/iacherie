@@ -9,7 +9,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from datetime import datetime, timedelta, timezone
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of collaboration"""    CROSS_PROMOTION = "cross_promotion"
+    """Types of collaboration"""
+    CROSS_PROMOTION = "cross_promotion"
     CONTENT_CREATION = "content_creation"
     MUSIC_COLLABORATION = "music_collaboration"
     VIDEO_COLLAB = "video_collaboration"
@@ -40,7 +42,8 @@ class CollaborationType(Enum):
 
 
 class ProjectStatus(Enum):
-    """Project status states"""    MATCHING = "matching"
+    """Project status states"""
+    MATCHING = "matching"
     PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     CONFIRMED = "confirmed"
@@ -53,7 +56,8 @@ class ProjectStatus(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile for matching"""    user_id: str
+    """Comprehensive creator profile for matching"""
+    user_id: str
     username: str
     primary_content_type: str
     secondary_content_types: List[str] = field(default_factory=list)
@@ -73,7 +77,8 @@ class CreatorProfile:
 
 @dataclass
 class CollaborationMatch:
-    """Potential collaboration match"""    match_id: str
+    """Potential collaboration match"""
+    match_id: str
     creator1_id: str
     creator2_id: str
     compatibility_score: float
@@ -89,7 +94,8 @@ class CollaborationMatch:
 
 @dataclass
 class CollaborationProject:
-    """Active collaboration project"""    project_id: str
+    """Active collaboration project"""
+    project_id: str
     project_name: str
     collaboration_type: CollaborationType
     collaborators: List[str]  # user IDs
@@ -109,7 +115,8 @@ class CollaborationProject:
 
 @dataclass
 class CollaborationProposal:
-    """Collaboration proposal"""    proposal_id: str
+    """Collaboration proposal"""
+    proposal_id: str
     proposer_id: str
     proposed_to_ids: List[str]
     collaboration_type: CollaborationType
@@ -124,7 +131,8 @@ class CollaborationProposal:
 
 
 class CollaborationCoordinatorAgent(BaseAIAgent):
-    """    AI agent specialized in creator collaboration matching and project coordination.
+    """
+    AI agent specialized in creator collaboration matching and project coordination.
     
     Capabilities:
     - Intelligent creator matching based on compatibility algorithms
@@ -134,7 +142,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
     - Contract negotiation assistance
     - Cross-platform campaign coordination
     - Performance tracking and success analysis
-    """    
+    """
+    
     def __init__(self, config: AgentConfiguration):
         # Ensure required capabilities
         required_capabilities = {
@@ -174,7 +183,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         logger.info("CollaborationCoordinatorAgent initialized successfully")
 
     async def initialize(self) -> bool:
-        """Initialize collaboration coordinator"""        try:
+        """Initialize collaboration coordinator"""
+        try:
             await super().initialize()
             
             # Initialize matching engine
@@ -204,7 +214,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         collaboration_type: Optional[CollaborationType] = None,
         max_matches: int = 10
     ) -> List[CollaborationMatch]:
-        """        Find potential collaboration matches for a creator
+        """
+        Find potential collaboration matches for a creator
         
         Args:
             creator_id: ID of the creator seeking collaborations
@@ -213,7 +224,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
             
         Returns:
             List of potential collaboration matches ranked by compatibility
-        """        try:
+        """
+        try:
             logger.info(f"Finding collaboration matches for creator {creator_id}")
             
             # Get creator profile
@@ -312,7 +324,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         proposed_to_ids: List[str],
         collaboration_details: Dict[str, Any]
     ) -> CollaborationProposal:
-        """        Create a collaboration proposal
+        """
+        Create a collaboration proposal
         
         Args:
             proposer_id: ID of the creator making the proposal
@@ -321,7 +334,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
             
         Returns:
             Created collaboration proposal
-        """        try:
+        """
+        try:
             logger.info(f"Creating collaboration proposal from {proposer_id}")
             
             # Generate proposal timeline
@@ -379,7 +393,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         collaborators: List[str],
         project_details: Dict[str, Any]
     ) -> CollaborationProject:
-        """        Initiate an active collaboration project
+        """
+        Initiate an active collaboration project
         
         Args:
             collaborators: List of creator IDs participating
@@ -387,7 +402,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
             
         Returns:
             Created collaboration project
-        """        try:
+        """
+        try:
             logger.info(f"Initiating collaboration project with {len(collaborators)} collaborators")
             
             # Generate project timeline and milestones
@@ -457,14 +473,16 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
             raise
 
     async def track_project_progress(self, project_id: str) -> Dict[str, Any]:
-        """        Track and analyze collaboration project progress
+        """
+        Track and analyze collaboration project progress
         
         Args:
             project_id: ID of the project to track
             
         Returns:
             Comprehensive progress report
-        """        try:
+        """
+        try:
             project = self.active_projects.get(project_id)
             if not project:
                 raise ValueError(f"Project {project_id} not found")
@@ -518,14 +536,16 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         self, 
         project_id: str
     ) -> Dict[str, Any]:
-        """        Optimize ongoing collaboration performance
+        """
+        Optimize ongoing collaboration performance
         
         Args:
             project_id: ID of the project to optimize
             
         Returns:
             Optimization recommendations and actions taken
-        """        try:
+        """
+        try:
             project = self.active_projects.get(project_id)
             if not project:
                 raise ValueError(f"Project {project_id} not found")
@@ -573,7 +593,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
     # Private helper methods for collaboration management
 
     async def _get_creator_profile(self, creator_id: str) -> Optional[CreatorProfile]:
-        """Get or build creator profile"""        if creator_id in self.creator_profiles:
+        """Get or build creator profile"""
+        if creator_id in self.creator_profiles:
             return self.creator_profiles[creator_id]
         
         # Build profile from creator analytics
@@ -610,7 +631,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         creator_id: str, 
         collaboration_type: Optional[CollaborationType]
     ) -> Dict[str, CreatorProfile]:
-        """Get potential collaborators for a creator"""        all_creators = await self.creator_analyzer.get_all_active_creators()
+        """Get potential collaborators for a creator"""
+        all_creators = await self.creator_analyzer.get_all_active_creators()
         potential_collaborators = {}
         
         for collaborator_id in all_creators:
@@ -628,7 +650,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         creator1: CreatorProfile, 
         creator2: CreatorProfile
     ) -> float:
-        """Calculate compatibility score between two creators"""        try:
+        """Calculate compatibility score between two creators"""
+        try:
             scores = {}
             
             # Audience overlap score
@@ -662,7 +685,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
             return 0.0
 
     async def _calculate_audience_overlap(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate audience overlap score"""        # Simplified audience overlap calculation
+        """Calculate audience overlap score"""
+        # Simplified audience overlap calculation
         # In reality, this would analyze actual audience demographics
         
         # Check platform overlap
@@ -686,7 +710,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         return (platform_overlap + demographic_score) / 2
 
     def _calculate_range_overlap(self, range1: List[int], range2: List[int]) -> float:
-        """Calculate overlap between two ranges"""        if len(range1) != 2 or len(range2) != 2:
+        """Calculate overlap between two ranges"""
+        if len(range1) != 2 or len(range2) != 2:
             return 0.5
         
         start1, end1 = range1
@@ -704,7 +729,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         return overlap_size / total_range if total_range > 0 else 0.0
 
     async def _calculate_style_similarity(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate content style similarity"""        styles1 = set(creator1.content_style)
+        """Calculate content style similarity"""
+        styles1 = set(creator1.content_style)
         styles2 = set(creator2.content_style)
         
         if not styles1 or not styles2:
@@ -716,7 +742,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         return intersection / union if union > 0 else 0.0
 
     async def _calculate_engagement_compatibility(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate engagement rate compatibility"""        # Get average engagement rates
+        """Calculate engagement rate compatibility"""
+        # Get average engagement rates
         avg_engagement1 = np.mean(list(creator1.engagement_rates.values())) if creator1.engagement_rates else 0.05
         avg_engagement2 = np.mean(list(creator2.engagement_rates.values())) if creator2.engagement_rates else 0.05
         
@@ -725,7 +752,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         return ratio
 
     async def _calculate_collaboration_history_score(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate score based on collaboration history"""        # Check if they've collaborated before
+        """Calculate score based on collaboration history"""
+        # Check if they've collaborated before
         if creator2.user_id in creator1.collaboration_history:
             return 0.9  # High score for proven compatibility
         
@@ -738,7 +766,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         return min(len(mutual_collaborators) * 0.1, 0.8)
 
     async def _calculate_brand_alignment(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate brand alignment score"""        # Use brand safety scores
+        """Calculate brand alignment score"""
+        # Use brand safety scores
         safety_alignment = 1.0 - abs(creator1.brand_safety_score - creator2.brand_safety_score)
         
         # Consider content type compatibility
@@ -747,7 +776,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         return (safety_alignment + type_compatibility) / 2
 
     async def _calculate_skill_complementarity(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate skill complementarity score"""        skills1 = set(creator1.skills)
+        """Calculate skill complementarity score"""
+        skills1 = set(creator1.skills)
         skills2 = set(creator2.skills)
         
         # Higher score for complementary (different) skills
@@ -761,7 +791,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         return complementarity
 
     async def can_handle_task(self, task_type: str, context: Dict[str, Any]) -> bool:
-        """Check if agent can handle collaboration task"""        supported_tasks = [
+        """Check if agent can handle collaboration task"""
+        supported_tasks = [
             "find_collaboration_matches",
             "create_collaboration_proposal",
             "initiate_collaboration",

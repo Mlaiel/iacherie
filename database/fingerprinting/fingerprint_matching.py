@@ -35,7 +35,8 @@ Development Team Specialties:
 - Microservices Specialist: Distributed systems and APIs
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: Infrastructure automation and monitoring
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import json
 import logging
@@ -71,7 +72,8 @@ logger = logging.getLogger(__name__)
 
 
 class MatchType(Enum):
-    """Advanced types of fingerprint matches"""    EXACT = "exact"
+    """Advanced types of fingerprint matches"""
+    EXACT = "exact"
     NEAR_EXACT = "near_exact"
     SIMILAR = "similar"
     PARTIAL = "partial"
@@ -83,7 +85,8 @@ class MatchType(Enum):
 
 
 class MatchAlgorithm(Enum):
-    """Comprehensive fingerprint matching algorithms"""    # Hash-based algorithms
+    """Comprehensive fingerprint matching algorithms"""
+    # Hash-based algorithms
     HASH_EXACT = "hash_exact"
     HASH_HAMMING = "hash_hamming"
     HASH_JACCARD = "hash_jaccard"
@@ -114,7 +117,8 @@ class MatchAlgorithm(Enum):
 
 
 class ConfidenceLevel(Enum):
-    """Confidence levels for matches"""    VERY_HIGH = "very_high"  # 95-100%
+    """Confidence levels for matches"""
+    VERY_HIGH = "very_high"  # 95-100%
     HIGH = "high"            # 85-95%
     MEDIUM = "medium"        # 70-85%
     LOW = "low"              # 50-70%
@@ -122,7 +126,8 @@ class ConfidenceLevel(Enum):
 
 
 class MatchStatus(Enum):
-    """Status of match processing"""    PENDING = "pending"
+    """Status of match processing"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -131,7 +136,8 @@ class MatchStatus(Enum):
 
 @dataclass
 class MatchResult:
-    """Comprehensive match result with advanced metrics"""    match_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive match result with advanced metrics"""
+    match_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     query_fingerprint_id: str = ""
     matched_fingerprint_id: str = ""
     similarity_score: float = 0.0
@@ -160,7 +166,8 @@ class MatchResult:
     expires_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""        return {
+        """Convert to dictionary for serialization"""
+        return {
             'match_id': self.match_id,
             'query_fingerprint_id': self.query_fingerprint_id,
             'matched_fingerprint_id': self.matched_fingerprint_id,
@@ -183,7 +190,8 @@ class MatchResult:
         }
     
     def get_confidence_score(self) -> float:
-        """Calculate normalized confidence score"""        confidence_map = {
+        """Calculate normalized confidence score"""
+        confidence_map = {
             ConfidenceLevel.VERY_HIGH: 0.975,
             ConfidenceLevel.HIGH: 0.9,
             ConfidenceLevel.MEDIUM: 0.775,
@@ -195,7 +203,8 @@ class MatchResult:
 
 @dataclass
 class MatchConfiguration:
-    """Comprehensive configuration for matching algorithms"""    # General thresholds
+    """Comprehensive configuration for matching algorithms"""
+    # General thresholds
     exact_match_threshold: float = 0.99
     near_exact_threshold: float = 0.95
     similar_match_threshold: float = 0.8
@@ -242,7 +251,8 @@ class MatchConfiguration:
 
 @dataclass 
 class MatchQuery:
-    """Comprehensive match query specification"""    query_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive match query specification"""
+    query_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     
     # Query fingerprint data
     fingerprint_id: Optional[str] = None
@@ -286,7 +296,8 @@ class MatchQuery:
 
 
 class HashMatcher:
-    """High-performance hash-based matching engine"""    
+    """High-performance hash-based matching engine"""
+    
     def __init__(self, config: MatchConfiguration):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.HashMatcher")
@@ -296,7 +307,8 @@ class HashMatcher:
         query_hash: str,
         candidate_hashes: List[Tuple[str, str]]
     ) -> List[MatchResult]:
-        """Exact hash matching"""        results = []
+        """Exact hash matching"""
+        results = []
         start_time = time.time()
         
         for fingerprint_id, candidate_hash in candidate_hashes:
@@ -321,7 +333,8 @@ class HashMatcher:
         query_hash: str,
         candidate_hashes: List[Tuple[str, str]]
     ) -> List[MatchResult]:
-        """Hamming distance-based hash matching"""        results = []
+        """Hamming distance-based hash matching"""
+        results = []
         start_time = time.time()
         
         for fingerprint_id, candidate_hash in candidate_hashes:
@@ -366,7 +379,8 @@ class HashMatcher:
         return results
     
     def _determine_match_type(self, similarity: float) -> MatchType:
-        """Determine match type based on similarity score"""        if similarity >= self.config.exact_match_threshold:
+        """Determine match type based on similarity score"""
+        if similarity >= self.config.exact_match_threshold:
             return MatchType.EXACT
         elif similarity >= self.config.similar_match_threshold:
             return MatchType.SIMILAR
@@ -376,7 +390,8 @@ class HashMatcher:
             return MatchType.VARIANT
     
     def _calculate_confidence(self, similarity: float, algorithm: MatchAlgorithm) -> str:
-        """Calculate confidence level based on similarity and algorithm"""        if similarity >= 0.9:
+        """Calculate confidence level based on similarity and algorithm"""
+        if similarity >= 0.9:
             return "high"
         elif similarity >= 0.7:
             return "medium"
@@ -385,7 +400,8 @@ class HashMatcher:
 
 
 class VectorMatcher:
-    """Advanced vector-based similarity matching"""    
+    """Advanced vector-based similarity matching"""
+    
     def __init__(self, config: MatchConfiguration):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.VectorMatcher")
@@ -395,7 +411,8 @@ class VectorMatcher:
         query_vector: np.ndarray,
         candidate_vectors: List[Tuple[str, np.ndarray]]
     ) -> List[MatchResult]:
-        """Cosine similarity-based vector matching"""        results = []
+        """Cosine similarity-based vector matching"""
+        results = []
         start_time = time.time()
         
         if len(candidate_vectors) == 0:
@@ -445,7 +462,8 @@ class VectorMatcher:
         query_vector: np.ndarray,
         candidate_vectors: List[Tuple[str, np.ndarray]]
     ) -> List[MatchResult]:
-        """Euclidean distance-based vector matching"""        results = []
+        """Euclidean distance-based vector matching"""
+        results = []
         start_time = time.time()
         
         if len(candidate_vectors) == 0:
@@ -496,7 +514,8 @@ class VectorMatcher:
         return results
     
     def _determine_match_type(self, similarity: float) -> MatchType:
-        """Determine match type based on similarity score"""        if similarity >= 0.95:
+        """Determine match type based on similarity score"""
+        if similarity >= 0.95:
             return MatchType.EXACT
         elif similarity >= 0.8:
             return MatchType.SIMILAR
@@ -506,7 +525,8 @@ class VectorMatcher:
             return MatchType.VARIANT
     
     def _calculate_confidence(self, similarity: float, algorithm: MatchAlgorithm) -> str:
-        """Calculate confidence level"""        if similarity >= 0.9:
+        """Calculate confidence level"""
+        if similarity >= 0.9:
             return "high"
         elif similarity >= 0.7:
             return "medium"
@@ -515,7 +535,8 @@ class VectorMatcher:
 
 
 class PerceptualMatcher:
-    """Perceptual hash-based content matching"""    
+    """Perceptual hash-based content matching"""
+    
     def __init__(self, config: MatchConfiguration):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.PerceptualMatcher")
@@ -525,7 +546,8 @@ class PerceptualMatcher:
         query_hash: str,
         candidate_hashes: List[Tuple[str, str]]
     ) -> List[MatchResult]:
-        """Image perceptual hash matching"""        results = []
+        """Image perceptual hash matching"""
+        results = []
         start_time = time.time()
         
         for fingerprint_id, candidate_hash in candidate_hashes:
@@ -567,7 +589,8 @@ class PerceptualMatcher:
         query_features: Dict[str, Any],
         candidate_features: List[Tuple[str, Dict[str, Any]]]
     ) -> List[MatchResult]:
-        """Audio perceptual feature matching"""        results = []
+        """Audio perceptual feature matching"""
+        results = []
         start_time = time.time()
         
         query_chroma = query_features.get('chroma')
@@ -625,7 +648,8 @@ class PerceptualMatcher:
         feature1: np.ndarray,
         feature2: np.ndarray
     ) -> float:
-        """Calculate similarity between feature vectors"""        try:
+        """Calculate similarity between feature vectors"""
+        try:
             # Ensure features are same length (truncate or pad)
             min_len = min(len(feature1), len(feature2))
             feature1 = feature1[:min_len]
@@ -638,7 +662,8 @@ class PerceptualMatcher:
             return 0.0
     
     def _determine_match_type(self, similarity: float) -> MatchType:
-        """Determine match type based on similarity"""        if similarity >= 0.9:
+        """Determine match type based on similarity"""
+        if similarity >= 0.9:
             return MatchType.EXACT
         elif similarity >= 0.75:
             return MatchType.SIMILAR
@@ -648,7 +673,8 @@ class PerceptualMatcher:
             return MatchType.VARIANT
     
     def _calculate_confidence(self, similarity: float) -> str:
-        """Calculate confidence level"""        if similarity >= 0.85:
+        """Calculate confidence level"""
+        if similarity >= 0.85:
             return "high"
         elif similarity >= 0.7:
             return "medium"
@@ -657,7 +683,8 @@ class PerceptualMatcher:
 
 
 class SemanticMatcher:
-    """Semantic content matching using NLP techniques"""    
+    """Semantic content matching using NLP techniques"""
+    
     def __init__(self, config: MatchConfiguration):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.SemanticMatcher")
@@ -672,7 +699,8 @@ class SemanticMatcher:
         query_text: str,
         candidate_texts: List[Tuple[str, str]]
     ) -> List[MatchResult]:
-        """Semantic text matching using TF-IDF and cosine similarity"""        results = []
+        """Semantic text matching using TF-IDF and cosine similarity"""
+        results = []
         start_time = time.time()
         
         if not candidate_texts:
@@ -730,7 +758,8 @@ class SemanticMatcher:
         return results
     
     def _calculate_word_overlap(self, text1: str, text2: str) -> float:
-        """Calculate word overlap ratio between two texts"""        words1 = set(text1.lower().split())
+        """Calculate word overlap ratio between two texts"""
+        words1 = set(text1.lower().split())
         words2 = set(text2.lower().split())
         
         if not words1 or not words2:
@@ -742,7 +771,8 @@ class SemanticMatcher:
         return len(intersection) / len(union) if union else 0.0
     
     def _determine_match_type(self, similarity: float) -> MatchType:
-        """Determine match type based on similarity"""        if similarity >= 0.9:
+        """Determine match type based on similarity"""
+        if similarity >= 0.9:
             return MatchType.EXACT
         elif similarity >= 0.7:
             return MatchType.SIMILAR
@@ -752,7 +782,8 @@ class SemanticMatcher:
             return MatchType.VARIANT
     
     def _calculate_confidence(self, similarity: float) -> str:
-        """Calculate confidence level"""        if similarity >= 0.8:
+        """Calculate confidence level"""
+        if similarity >= 0.8:
             return "high"
         elif similarity >= 0.6:
             return "medium"
@@ -761,9 +792,11 @@ class SemanticMatcher:
 
 
 class FingerprintMatchingEngine:
-    """    Comprehensive fingerprint matching engine that coordinates multiple
+    """
+    Comprehensive fingerprint matching engine that coordinates multiple
     matching algorithms for optimal content similarity detection.
-    """    
+    """
+    
     def __init__(
         self,
         db_manager: DatabaseManager,
@@ -796,7 +829,8 @@ class FingerprintMatchingEngine:
         algorithms: Optional[List[MatchAlgorithm]] = None,
         max_results: int = 100
     ) -> List[MatchResult]:
-        """        Find matches for a fingerprint using multiple algorithms
+        """
+        Find matches for a fingerprint using multiple algorithms
         
         Args:
             query_fingerprint: Fingerprint to search for
@@ -807,7 +841,8 @@ class FingerprintMatchingEngine:
             
         Returns:
             List of match results sorted by similarity score
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Check cache first
@@ -883,7 +918,8 @@ class FingerprintMatchingEngine:
         query_fingerprint: ContentFingerprint,
         user_id: Optional[str] = None
     ) -> List[MatchResult]:
-        """Find exact hash matches for a fingerprint"""        try:
+        """Find exact hash matches for a fingerprint"""
+        try:
             results = []
             
             # Check each hash type for exact matches
@@ -936,7 +972,8 @@ class FingerprintMatchingEngine:
         similarity_threshold: float = 0.7,
         max_results: int = 50
     ) -> List[MatchResult]:
-        """Find similar content using vector similarity"""        try:
+        """Find similar content using vector similarity"""
+        try:
             results = []
             
             # Use vector similarity if available
@@ -981,7 +1018,8 @@ class FingerprintMatchingEngine:
         query_fingerprints: List[ContentFingerprint],
         batch_size: int = 10
     ) -> Dict[str, List[MatchResult]]:
-        """Process multiple fingerprints in batches"""        try:
+        """Process multiple fingerprints in batches"""
+        try:
             results = {}
             
             # Process in batches
@@ -1018,7 +1056,8 @@ class FingerprintMatchingEngine:
         self,
         fingerprint: ContentFingerprint
     ) -> List[MatchAlgorithm]:
-        """Determine which algorithms are applicable for a fingerprint"""        algorithms = []
+        """Determine which algorithms are applicable for a fingerprint"""
+        algorithms = []
         
         # Hash-based algorithms
         if fingerprint.primary_hash:
@@ -1048,7 +1087,8 @@ class FingerprintMatchingEngine:
         content_type: Optional[str],
         user_id: Optional[str]
     ) -> List[MatchResult]:
-        """Execute a specific matching algorithm"""        try:
+        """Execute a specific matching algorithm"""
+        try:
             if algorithm == MatchAlgorithm.HASH_EXACT:
                 return await self._execute_hash_exact_matching(
                     query_fingerprint, content_type, user_id
@@ -1079,7 +1119,8 @@ class FingerprintMatchingEngine:
         content_type: Optional[str],
         user_id: Optional[str]
     ) -> List[MatchResult]:
-        """Execute exact hash matching"""        results = []
+        """Execute exact hash matching"""
+        results = []
         
         # Search for exact matches in all hash types
         hash_queries = {
@@ -1124,7 +1165,8 @@ class FingerprintMatchingEngine:
         content_type: Optional[str],
         user_id: Optional[str]
     ) -> List[MatchResult]:
-        """Execute vector cosine similarity matching"""        if not hasattr(query_fingerprint, 'feature_vector') or query_fingerprint.feature_vector is None:
+        """Execute vector cosine similarity matching"""
+        if not hasattr(query_fingerprint, 'feature_vector') or query_fingerprint.feature_vector is None:
             return []
         
         index_results = await self.index_manager.search_fingerprints(
@@ -1162,7 +1204,8 @@ class FingerprintMatchingEngine:
         content_type: Optional[str],
         user_id: Optional[str]
     ) -> List[MatchResult]:
-        """Execute perceptual hash matching"""        if not query_fingerprint.perceptual_hash:
+        """Execute perceptual hash matching"""
+        if not query_fingerprint.perceptual_hash:
             return []
         
         # Use hash index for perceptual hash search
@@ -1201,7 +1244,8 @@ class FingerprintMatchingEngine:
         content_type: Optional[str],
         user_id: Optional[str]
     ) -> List[MatchResult]:
-        """Execute semantic text matching"""        if not query_fingerprint.metadata:
+        """Execute semantic text matching"""
+        if not query_fingerprint.metadata:
             return []
         
         # Extract semantic content
@@ -1239,7 +1283,8 @@ class FingerprintMatchingEngine:
         return results
     
     def _extract_semantic_content(self, fingerprint: ContentFingerprint) -> str:
-        """Extract semantic content from fingerprint metadata"""        if not fingerprint.metadata:
+        """Extract semantic content from fingerprint metadata"""
+        if not fingerprint.metadata:
             return ""
         
         semantic_parts = []
@@ -1259,7 +1304,8 @@ class FingerprintMatchingEngine:
         self,
         all_results: List[MatchResult]
     ) -> List[MatchResult]:
-        """Merge and deduplicate match results"""        merged = {}
+        """Merge and deduplicate match results"""
+        merged = {}
         
         for result in all_results:
             key = result.matched_fingerprint_id
@@ -1283,7 +1329,8 @@ class FingerprintMatchingEngine:
         return list(merged.values())
     
     def _determine_match_type_from_similarity(self, similarity: float) -> MatchType:
-        """Determine match type from similarity score"""        if similarity >= self.config.exact_match_threshold:
+        """Determine match type from similarity score"""
+        if similarity >= self.config.exact_match_threshold:
             return MatchType.EXACT
         elif similarity >= self.config.similar_match_threshold:
             return MatchType.SIMILAR
@@ -1293,7 +1340,8 @@ class FingerprintMatchingEngine:
             return MatchType.VARIANT
     
     def _calculate_confidence_from_similarity(self, similarity: float) -> str:
-        """Calculate confidence level from similarity score"""        if similarity >= 0.9:
+        """Calculate confidence level from similarity score"""
+        if similarity >= 0.9:
             return "high"
         elif similarity >= 0.7:
             return "medium"
@@ -1306,7 +1354,8 @@ class FingerprintMatchingEngine:
         content_type: Optional[str],
         user_id: Optional[str]
     ) -> str:
-        """Generate cache key for match results"""        key_parts = [
+        """Generate cache key for match results"""
+        key_parts = [
             fingerprint.primary_hash or "",
             str(content_type or ""),
             str(user_id or "")
@@ -1314,7 +1363,8 @@ class FingerprintMatchingEngine:
         return hashlib.md5("|".join(key_parts).encode()).hexdigest()
     
     async def get_matching_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive matching statistics"""        try:
+        """Get comprehensive matching statistics"""
+        try:
             # This would typically involve querying match history
             # For now, return basic statistics
             return {

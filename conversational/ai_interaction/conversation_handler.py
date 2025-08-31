@@ -6,7 +6,8 @@ Handles complex conversation states, context management, and flow control.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Callable
 from datetime import datetime, timedelta
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 
 class ConversationState(Enum):
-    """Conversation state types"""    IDLE = "idle"
+    """Conversation state types"""
+    IDLE = "idle"
     ACTIVE = "active"
     WAITING_INPUT = "waiting_input"
     PROCESSING = "processing"
@@ -34,7 +36,8 @@ class ConversationState(Enum):
 
 
 class ConversationMode(Enum):
-    """Conversation interaction modes"""    FREE_FORM = "free_form"
+    """Conversation interaction modes"""
+    FREE_FORM = "free_form"
     GUIDED = "guided"
     STRUCTURED = "structured"
     INTERVIEW = "interview"
@@ -43,7 +46,8 @@ class ConversationMode(Enum):
 
 
 class MessageType(Enum):
-    """Types of conversation messages"""    USER_MESSAGE = "user_message"
+    """Types of conversation messages"""
+    USER_MESSAGE = "user_message"
     AI_RESPONSE = "ai_response"
     SYSTEM_MESSAGE = "system_message"
     ACTION_REQUIRED = "action_required"
@@ -53,7 +57,8 @@ class MessageType(Enum):
 
 @dataclass
 class ConversationMessage:
-    """Individual conversation message"""    message_id: str
+    """Individual conversation message"""
+    message_id: str
     message_type: MessageType
     content: str
     sender: str  # "user" or "ai" or "system"
@@ -65,7 +70,8 @@ class ConversationMessage:
 
 @dataclass
 class ConversationFlow:
-    """Conversation flow configuration"""    flow_id: str
+    """Conversation flow configuration"""
+    flow_id: str
     name: str
     description: str
     steps: List[Dict[str, Any]]
@@ -76,7 +82,8 @@ class ConversationFlow:
 
 @dataclass
 class ConversationSession:
-    """Complete conversation session data"""    session_id: str
+    """Complete conversation session data"""
+    session_id: str
     user_id: str
     creator_type: str
     state: ConversationState
@@ -92,11 +99,13 @@ class ConversationSession:
 
 
 class ConversationHandler:
-    """    Advanced Conversation Flow Management System
+    """
+    Advanced Conversation Flow Management System
     
     Manages complex conversation states, flow control, and context awareness
     for intelligent AI interactions with content creators.
-    """    
+    """
+    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.context_tracker = ContextTracker()
@@ -106,7 +115,8 @@ class ConversationHandler:
         self._message_handlers = {}
         
     async def initialize(self) -> None:
-        """Initialize the conversation handler"""        try:
+        """Initialize the conversation handler"""
+        try:
             await self.context_tracker.initialize()
             await self.session_manager.initialize()
             await self._load_conversation_flows()
@@ -124,7 +134,8 @@ class ConversationHandler:
         initial_context: Optional[Dict] = None,
         flow_id: Optional[str] = None
     ) -> str:
-        """        Start a new conversation session
+        """
+        Start a new conversation session
         
         Args:
             user_id: User identifier
@@ -135,7 +146,8 @@ class ConversationHandler:
             
         Returns:
             Session ID for the new conversation
-        """        try:
+        """
+        try:
             session_id = f"conv_{user_id}_{datetime.now().timestamp()}"
             
             # Load conversation flow if specified
@@ -185,7 +197,8 @@ class ConversationHandler:
         attachments: Optional[List[Dict]] = None,
         metadata: Optional[Dict] = None
     ) -> Dict[str, Any]:
-        """        Process incoming conversation message
+        """
+        Process incoming conversation message
         
         Args:
             session_id: Conversation session ID
@@ -196,7 +209,8 @@ class ConversationHandler:
             
         Returns:
             Processing result with AI response
-        """        try:
+        """
+        try:
             # Get conversation session
             session = await self._get_conversation_session(session_id)
             if not session:
@@ -276,7 +290,8 @@ class ConversationHandler:
         flow_action: str,
         action_data: Optional[Dict] = None
     ) -> Dict[str, Any]:
-        """        Handle conversation flow actions
+        """
+        Handle conversation flow actions
         
         Args:
             session_id: Conversation session ID
@@ -285,7 +300,8 @@ class ConversationHandler:
             
         Returns:
             Flow handling result
-        """        try:
+        """
+        try:
             session = await self._get_conversation_session(session_id)
             if not session or not session.current_flow:
                 raise ConversationError("No active conversation flow")
@@ -319,7 +335,8 @@ class ConversationHandler:
         session_id: str,
         summary_type: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """        Get conversation summary and insights
+        """
+        Get conversation summary and insights
         
         Args:
             session_id: Conversation session ID
@@ -327,7 +344,8 @@ class ConversationHandler:
             
         Returns:
             Conversation summary with insights
-        """        try:
+        """
+        try:
             session = await self._get_conversation_session(session_id)
             if not session:
                 raise ConversationError("Invalid session ID")
@@ -349,14 +367,16 @@ class ConversationHandler:
             raise ConversationError(f"Summary generation failed: {e}")
     
     async def pause_conversation(self, session_id: str) -> bool:
-        """        Pause an active conversation
+        """
+        Pause an active conversation
         
         Args:
             session_id: Conversation session ID
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             session = await self._get_conversation_session(session_id)
             if not session:
                 return False
@@ -374,14 +394,16 @@ class ConversationHandler:
             return False
     
     async def resume_conversation(self, session_id: str) -> bool:
-        """        Resume a paused conversation
+        """
+        Resume a paused conversation
         
         Args:
             session_id: Conversation session ID
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             session = await self._get_conversation_session(session_id)
             if not session or session.state != ConversationState.PAUSED:
                 return False
@@ -403,7 +425,8 @@ class ConversationHandler:
         session_id: str,
         reason: str = "user_request"
     ) -> Dict[str, Any]:
-        """        End a conversation session
+        """
+        End a conversation session
         
         Args:
             session_id: Conversation session ID
@@ -411,7 +434,8 @@ class ConversationHandler:
             
         Returns:
             Conversation end summary
-        """        try:
+        """
+        try:
             session = await self._get_conversation_session(session_id)
             if not session:
                 raise ConversationError("Invalid session ID")
@@ -445,14 +469,16 @@ class ConversationHandler:
         self,
         session_id: str
     ) -> Dict[str, Any]:
-        """        Get conversation performance metrics
+        """
+        Get conversation performance metrics
         
         Args:
             session_id: Conversation session ID
             
         Returns:
             Conversation metrics and analytics
-        """        try:
+        """
+        try:
             session = await self._get_conversation_session(session_id)
             if not session:
                 raise ConversationError("Invalid session ID")
@@ -484,7 +510,8 @@ class ConversationHandler:
     
     # Private helper methods
     async def _get_conversation_session(self, session_id: str) -> Optional[ConversationSession]:
-        """Get conversation session from cache or memory"""        if session_id in self._active_conversations:
+        """Get conversation session from cache or memory"""
+        if session_id in self._active_conversations:
             return self._active_conversations[session_id]
         
         # Try to load from cache
@@ -497,7 +524,8 @@ class ConversationHandler:
         return None
     
     async def _validate_message(self, message_content: str, session: ConversationSession) -> None:
-        """Validate incoming message"""        if not message_content or len(message_content.strip()) == 0:
+        """Validate incoming message"""
+        if not message_content or len(message_content.strip()) == 0:
             raise ValidationError("Message content cannot be empty")
         
         if len(message_content) > 10000:
@@ -511,7 +539,8 @@ class ConversationHandler:
         session: ConversationSession,
         message: ConversationMessage
     ) -> Dict[str, Any]:
-        """Process message based on conversation mode"""        if session.mode == ConversationMode.FREE_FORM:
+        """Process message based on conversation mode"""
+        if session.mode == ConversationMode.FREE_FORM:
             return await self._process_free_form_message(session, message)
         elif session.mode == ConversationMode.GUIDED:
             return await self._process_guided_message(session, message)
@@ -530,7 +559,8 @@ class ConversationHandler:
         user_message: ConversationMessage,
         processing_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate AI response for conversation"""        try:
+        """Generate AI response for conversation"""
+        try:
             # Prepare response context
             response_context = {
                 "session_data": {
@@ -565,7 +595,8 @@ class ConversationHandler:
             }
     
     async def _cache_conversation_session(self, session: ConversationSession) -> None:
-        """Cache conversation session"""        try:
+        """Cache conversation session"""
+        try:
             cache_key = f"conversation:{session.session_id}"
             serialized_session = await self._serialize_session(session)
             await self.cache_manager.set(cache_key, serialized_session, expire=3600)
@@ -573,7 +604,8 @@ class ConversationHandler:
             logger.error(f"Session caching failed: {e}")
     
     async def _serialize_session(self, session: ConversationSession) -> Dict[str, Any]:
-        """Serialize session for caching"""        return {
+        """Serialize session for caching"""
+        return {
             "session_id": session.session_id,
             "user_id": session.user_id,
             "creator_type": session.creator_type,
@@ -599,7 +631,8 @@ class ConversationHandler:
         }
     
     async def _deserialize_session(self, session_data: Dict[str, Any]) -> ConversationSession:
-        """Deserialize session from cache"""        messages = []
+        """Deserialize session from cache"""
+        messages = []
         for msg_data in session_data.get("messages", []):
             message = ConversationMessage(
                 message_id=msg_data["message_id"],
@@ -632,7 +665,8 @@ class ConversationHandler:
         session: ConversationSession, 
         message: ConversationMessage
     ) -> Dict[str, Any]:
-        """Process free-form conversation message"""        return {
+        """Process free-form conversation message"""
+        return {
             "processing_type": "free_form",
             "intent_analysis": await self._analyze_message_intent(message.content),
             "context_update": await self._update_conversation_context(session, message)
@@ -643,7 +677,8 @@ class ConversationHandler:
         session: ConversationSession, 
         message: ConversationMessage
     ) -> Dict[str, Any]:
-        """Process guided conversation message"""        return {
+        """Process guided conversation message"""
+        return {
             "processing_type": "guided",
             "guidance_step": await self._determine_guidance_step(session, message),
             "next_guidance": await self._prepare_next_guidance(session, message)
@@ -654,7 +689,8 @@ class ConversationHandler:
         session: ConversationSession, 
         message: ConversationMessage
     ) -> Dict[str, Any]:
-        """Process structured conversation message"""        return {
+        """Process structured conversation message"""
+        return {
             "processing_type": "structured",
             "flow_validation": await self._validate_flow_input(session, message),
             "flow_progression": await self._progress_conversation_flow(session, message)
@@ -662,7 +698,8 @@ class ConversationHandler:
     
     # Additional helper methods
     async def _load_conversation_flows(self) -> None:
-        """Load predefined conversation flows"""        self._conversation_flows = {
+        """Load predefined conversation flows"""
+        self._conversation_flows = {
             "onboarding": ConversationFlow(
                 flow_id="onboarding",
                 name="Creator Onboarding",
@@ -690,7 +727,8 @@ class ConversationHandler:
         }
     
     async def _register_message_handlers(self) -> None:
-        """Register message handlers for different types"""        self._message_handlers = {
+        """Register message handlers for different types"""
+        self._message_handlers = {
             MessageType.USER_MESSAGE: self._handle_user_message,
             MessageType.ACTION_REQUIRED: self._handle_action_required,
             MessageType.CLARIFICATION: self._handle_clarification_request,
@@ -698,7 +736,8 @@ class ConversationHandler:
         }
     
     def _get_flow_progress(self, session: ConversationSession) -> Dict[str, Any]:
-        """Get conversation flow progress"""        if not session.current_flow:
+        """Get conversation flow progress"""
+        if not session.current_flow:
             return {"has_flow": False}
         
         total_steps = len(session.current_flow.steps)

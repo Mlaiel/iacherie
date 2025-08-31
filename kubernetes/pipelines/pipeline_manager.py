@@ -20,7 +20,8 @@ Features:
 
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import yaml
@@ -37,7 +38,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from . import PipelineStatus, Environment, PipelineType, PipelineConfig
 
 class PipelineStep:
-    """Individual pipeline step definition and execution"""    
+    """Individual pipeline step definition and execution"""
+    
     def __init__(self, name: str, command: str, working_dir: Optional[str] = None,
                  environment_vars: Optional[Dict[str, str]] = None,
                  timeout: int = 300, retry_count: int = 1):
@@ -54,7 +56,8 @@ class PipelineStep:
         self.error_output: str = ""
         
     async def execute(self) -> bool:
-        """Execute pipeline step with retry logic"""        self.start_time = datetime.utcnow()
+        """Execute pipeline step with retry logic"""
+        self.start_time = datetime.utcnow()
         self.status = PipelineStatus.RUNNING
         
         for attempt in range(self.retry_count + 1):
@@ -105,7 +108,8 @@ class PipelineStep:
         return False
 
 class PipelineExecution:
-    """Pipeline execution context and management"""    
+    """Pipeline execution context and management"""
+    
     def __init__(self, config: PipelineConfig, execution_id: str):
         self.config = config
         self.execution_id = execution_id
@@ -117,10 +121,12 @@ class PipelineExecution:
         self.logger = logging.getLogger(f"{__name__}.{execution_id}")
         
     def add_step(self, step: PipelineStep):
-        """Add execution step to pipeline"""        self.steps.append(step)
+        """Add execution step to pipeline"""
+        self.steps.append(step)
         
     async def execute(self) -> bool:
-        """Execute complete pipeline with all steps"""        self.start_time = datetime.utcnow()
+        """Execute complete pipeline with all steps"""
+        self.start_time = datetime.utcnow()
         self.status = PipelineStatus.RUNNING
         self.logger.info(f"Starting pipeline execution: {self.execution_id}")
         
@@ -136,7 +142,8 @@ class PipelineExecution:
             return False
             
     async def _execute_sequential(self) -> bool:
-        """Execute pipeline steps sequentially"""        for step in self.steps:
+        """Execute pipeline steps sequentially"""
+        for step in self.steps:
             self.logger.info(f"Executing step: {step.name}")
             success = await step.execute()
             
@@ -152,7 +159,8 @@ class PipelineExecution:
         return True
         
     async def _execute_parallel(self) -> bool:
-        """Execute pipeline steps in parallel"""        tasks = [step.execute() for step in self.steps]
+        """Execute pipeline steps in parallel"""
+        tasks = [step.execute() for step in self.steps]
         results = await asyncio.gather(*tasks, return_exceptions=True)
         
         for i, result in enumerate(results):
@@ -168,12 +176,14 @@ class PipelineExecution:
         return True
         
     def get_duration(self) -> Optional[timedelta]:
-        """Get pipeline execution duration"""        if self.start_time and self.end_time:
+        """Get pipeline execution duration"""
+        if self.start_time and self.end_time:
             return self.end_time - self.start_time
         return None
 
 class AdvancedPipelineManager:
-    """    Advanced Pipeline Management System for IA Influencer Agent
+    """
+    Advanced Pipeline Management System for IA Influencer Agent
     
     Provides enterprise-grade pipeline orchestration with:
     - Multi-environment deployment support
@@ -182,7 +192,8 @@ class AdvancedPipelineManager:
     - Performance monitoring and alerting
     - Rollback and disaster recovery capabilities
     - Real-time execution tracking
-    """    
+    """
+    
     def __init__(self, config_dir: Optional[Path] = None, 
                  max_concurrent_pipelines: int = 10):
         self.config_dir = config_dir or Path(__file__).parent / "configs"
@@ -202,7 +213,8 @@ class AdvancedPipelineManager:
         self._load_pipeline_configurations()
         
     def _load_pipeline_configurations(self):
-        """Load pipeline configurations from config directory"""        if not self.config_dir.exists():
+        """Load pipeline configurations from config directory"""
+        if not self.config_dir.exists():
             self.config_dir.mkdir(parents=True, exist_ok=True)
             return
             
@@ -230,10 +242,12 @@ class AdvancedPipelineManager:
                 self.logger.error(f"Failed to load config {config_file}: {str(e)}")
                 
     def _get_pipeline_id(self, config: PipelineConfig) -> str:
-        """Generate unique pipeline identifier"""        return f"{config.name}_{config.environment.value}_{config.pipeline_type.value}"
+        """Generate unique pipeline identifier"""
+        return f"{config.name}_{config.environment.value}_{config.pipeline_type.value}"
         
     def register_pipeline(self, config: PipelineConfig) -> str:
-        """Register new pipeline configuration"""        pipeline_id = self._get_pipeline_id(config)
+        """Register new pipeline configuration"""
+        pipeline_id = self._get_pipeline_id(config)
         self.registered_pipelines[pipeline_id] = config
         
         # Save configuration to file
@@ -245,11 +259,13 @@ class AdvancedPipelineManager:
         return pipeline_id
         
     def add_notification_handler(self, handler: Callable):
-        """Add notification handler for pipeline events"""        self.notification_handlers.append(handler)
+        """Add notification handler for pipeline events"""
+        self.notification_handlers.append(handler)
         
     async def execute_pipeline(self, pipeline_id: str, 
                              context: Optional[Dict[str, Any]] = None) -> str:
-        """Execute pipeline with specified context"""        if pipeline_id not in self.registered_pipelines:
+        """Execute pipeline with specified context"""
+        if pipeline_id not in self.registered_pipelines:
             raise ValueError(f"Pipeline not found: {pipeline_id}")
             
         config = self.registered_pipelines[pipeline_id]
@@ -287,7 +303,8 @@ class AdvancedPipelineManager:
             
     async def _build_execution_steps(self, execution: PipelineExecution, 
                                    context: Dict[str, Any]):
-        """Build concrete execution steps from configuration"""        config = execution.config
+        """Build concrete execution steps from configuration"""
+        config = execution.config
         
         # Standard deployment pipeline steps
         if config.pipeline_type == PipelineType.BUILD:
@@ -303,7 +320,8 @@ class AdvancedPipelineManager:
             
     async def _build_steps_for_build(self, execution: PipelineExecution, 
                                    context: Dict[str, Any]):
-        """Build steps for application build pipeline"""        steps = [
+        """Build steps for application build pipeline"""
+        steps = [
             PipelineStep(
                 name="checkout_code",
                 command="git clone --depth 1 {repo_url} {build_dir}".format(
@@ -343,7 +361,8 @@ class AdvancedPipelineManager:
             
     async def _build_steps_for_test(self, execution: PipelineExecution, 
                                   context: Dict[str, Any]):
-        """Build steps for testing pipeline"""        steps = [
+        """Build steps for testing pipeline"""
+        steps = [
             PipelineStep(
                 name="unit_tests",
                 command="python -m pytest tests/unit/ -v --cov=backend --cov-report=xml",
@@ -371,7 +390,8 @@ class AdvancedPipelineManager:
             
     async def _build_steps_for_deploy(self, execution: PipelineExecution, 
                                     context: Dict[str, Any]):
-        """Build steps for deployment pipeline"""        env = execution.config.environment.value
+        """Build steps for deployment pipeline"""
+        env = execution.config.environment.value
         
         steps = [
             PipelineStep(
@@ -402,7 +422,8 @@ class AdvancedPipelineManager:
             
     async def _build_steps_for_security(self, execution: PipelineExecution, 
                                       context: Dict[str, Any]):
-        """Build steps for security scanning pipeline"""        steps = [
+        """Build steps for security scanning pipeline"""
+        steps = [
             PipelineStep(
                 name="dependency_scan",
                 command="safety check --json --output dependency-scan.json"
@@ -429,7 +450,8 @@ class AdvancedPipelineManager:
             
     async def _build_steps_for_rollback(self, execution: PipelineExecution, 
                                       context: Dict[str, Any]):
-        """Build steps for rollback pipeline"""        env = execution.config.environment.value
+        """Build steps for rollback pipeline"""
+        env = execution.config.environment.value
         previous_version = context.get('previous_version', 'previous')
         
         steps = [
@@ -456,14 +478,16 @@ class AdvancedPipelineManager:
             execution.add_step(step)
             
     async def _send_notifications(self, execution: PipelineExecution, success: bool):
-        """Send notifications for pipeline completion"""        for handler in self.notification_handlers:
+        """Send notifications for pipeline completion"""
+        for handler in self.notification_handlers:
             try:
                 await handler(execution, success)
             except Exception as e:
                 self.logger.error(f"Notification handler failed: {str(e)}")
                 
     def get_pipeline_status(self, execution_id: str) -> Optional[PipelineStatus]:
-        """Get current status of pipeline execution"""        if execution_id in self.active_executions:
+        """Get current status of pipeline execution"""
+        if execution_id in self.active_executions:
             return self.active_executions[execution_id].status
             
         # Check history
@@ -474,10 +498,12 @@ class AdvancedPipelineManager:
         return None
         
     def list_active_pipelines(self) -> List[str]:
-        """List all currently active pipeline executions"""        return list(self.active_executions.keys())
+        """List all currently active pipeline executions"""
+        return list(self.active_executions.keys())
         
     def get_execution_details(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get detailed information about pipeline execution"""        execution = None
+        """Get detailed information about pipeline execution"""
+        execution = None
         
         if execution_id in self.active_executions:
             execution = self.active_executions[execution_id]
@@ -511,7 +537,8 @@ class AdvancedPipelineManager:
         }
         
     async def cancel_pipeline(self, execution_id: str) -> bool:
-        """Cancel active pipeline execution"""        if execution_id not in self.active_executions:
+        """Cancel active pipeline execution"""
+        if execution_id not in self.active_executions:
             return False
             
         execution = self.active_executions[execution_id]

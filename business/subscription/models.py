@@ -7,7 +7,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
-"""from datetime import datetime, timedelta
+"""
+from datetime import datetime, timedelta
 from decimal import Decimal
 from enum import Enum
 from typing import Optional, Dict, Any, List
@@ -21,7 +22,8 @@ Base = declarative_base()
 
 
 class SubscriptionStatus(Enum):
-    """Subscription status enumeration."""    ACTIVE = "active"
+    """Subscription status enumeration."""
+    ACTIVE = "active"
     INACTIVE = "inactive" 
     CANCELLED = "cancelled"
     EXPIRED = "expired"
@@ -31,14 +33,16 @@ class SubscriptionStatus(Enum):
 
 
 class BillingCycleType(Enum):
-    """Billing cycle enumeration."""    MONTHLY = "monthly"
+    """Billing cycle enumeration."""
+    MONTHLY = "monthly"
     YEARLY = "yearly"
     QUARTERLY = "quarterly"
     LIFETIME = "lifetime"
 
 
 class PaymentStatus(Enum):
-    """Payment status enumeration."""    PENDING = "pending"
+    """Payment status enumeration."""
+    PENDING = "pending"
     COMPLETED = "completed"
     FAILED = "failed"
     REFUNDED = "refunded"
@@ -46,17 +50,20 @@ class PaymentStatus(Enum):
 
 
 class FeatureType(Enum):
-    """Feature type enumeration."""    BOOLEAN = "boolean"  # On/off feature
+    """Feature type enumeration."""
+    BOOLEAN = "boolean"  # On/off feature
     QUOTA = "quota"      # Usage-based limit
     UNLIMITED = "unlimited"  # No limits
 
 
 class SubscriptionPlan(Base):
-    """    Subscription plan model defining available tiers and features.
+    """
+    Subscription plan model defining available tiers and features.
     
     Supports multiple tier levels from Free to Enterprise with
     granular feature control and pricing flexibility.
-    """    __tablename__ = "subscription_plans"
+    """
+    __tablename__ = "subscription_plans"
     
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), nullable=False, unique=True)
@@ -89,11 +96,13 @@ class SubscriptionPlan(Base):
 
 
 class UserSubscription(Base):
-    """    User subscription model tracking active subscriptions and billing.
+    """
+    User subscription model tracking active subscriptions and billing.
     
     Manages subscription lifecycle including trials, upgrades, downgrades,
     and automatic renewals with payment processor integration.
-    """    __tablename__ = "user_subscriptions"
+    """
+    __tablename__ = "user_subscriptions"
     
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, nullable=False, index=True)
@@ -131,11 +140,13 @@ class UserSubscription(Base):
 
 
 class BillingCycle(Base):
-    """    Billing cycle tracking for subscription renewals and payments.
+    """
+    Billing cycle tracking for subscription renewals and payments.
     
     Records each billing period with payment status and amounts
     for accurate financial tracking and revenue analytics.
-    """    __tablename__ = "billing_cycles"
+    """
+    __tablename__ = "billing_cycles"
     
     id = Column(Integer, primary_key=True, index=True)
     subscription_id = Column(Integer, ForeignKey("user_subscriptions.id"), nullable=False)
@@ -166,11 +177,13 @@ class BillingCycle(Base):
 
 
 class PaymentMethod(Base):
-    """    Payment method storage for subscription billing.
+    """
+    Payment method storage for subscription billing.
     
     Securely stores payment method references from payment processors
     with support for multiple payment types and automatic billing.
-    """    __tablename__ = "payment_methods"
+    """
+    __tablename__ = "payment_methods"
     
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, nullable=False, index=True)
@@ -197,11 +210,13 @@ class PaymentMethod(Base):
 
 
 class Invoice(Base):
-    """    Invoice generation and tracking for subscription billing.
+    """
+    Invoice generation and tracking for subscription billing.
     
     Maintains complete invoice history with line items, taxes,
     and payment status for financial reporting and compliance.
-    """    __tablename__ = "invoices"
+    """
+    __tablename__ = "invoices"
     
     id = Column(Integer, primary_key=True, index=True)
     subscription_id = Column(Integer, ForeignKey("user_subscriptions.id"), nullable=False)
@@ -240,11 +255,13 @@ class Invoice(Base):
 
 
 class UsageMetrics(Base):
-    """    Usage tracking and quota management for subscription features.
+    """
+    Usage tracking and quota management for subscription features.
     
     Monitors feature usage against subscription limits with
     real-time tracking and quota enforcement capabilities.
-    """    __tablename__ = "usage_metrics"
+    """
+    __tablename__ = "usage_metrics"
     
     id = Column(Integer, primary_key=True, index=True)
     subscription_id = Column(Integer, ForeignKey("user_subscriptions.id"), nullable=False)
@@ -272,11 +289,13 @@ class UsageMetrics(Base):
 
 
 class SubscriptionHistory(Base):
-    """    Subscription change history and audit trail.
+    """
+    Subscription change history and audit trail.
     
     Tracks all subscription modifications including upgrades, downgrades,
     cancellations, and status changes for compliance and analytics.
-    """    __tablename__ = "subscription_history"
+    """
+    __tablename__ = "subscription_history"
     
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, nullable=False, index=True)
@@ -299,11 +318,13 @@ class SubscriptionHistory(Base):
 
 
 class FeatureAccess(Base):
-    """    Feature access control matrix for subscription tiers.
+    """
+    Feature access control matrix for subscription tiers.
     
     Defines granular feature access permissions based on subscription
     level with support for quota limits and boolean access controls.
-    """    __tablename__ = "feature_access"
+    """
+    __tablename__ = "feature_access"
     
     id = Column(Integer, primary_key=True, index=True)
     plan_id = Column(Integer, ForeignKey("subscription_plans.id"), nullable=False)
@@ -330,7 +351,8 @@ class FeatureAccess(Base):
 
 @dataclass
 class SubscriptionPlanConfig:
-    """Configuration for subscription plan creation."""    name: str
+    """Configuration for subscription plan creation."""
+    name: str
     display_name: str
     description: str
     tier_level: int
@@ -345,7 +367,8 @@ class SubscriptionPlanConfig:
 
 @dataclass 
 class UsageQuota:
-    """Usage quota configuration for features."""    feature_name: str
+    """Usage quota configuration for features."""
+    feature_name: str
     current_usage: int
     quota_limit: Optional[int]
     period_start: datetime
@@ -354,20 +377,23 @@ class UsageQuota:
     
     @property
     def usage_percentage(self) -> float:
-        """Calculate usage percentage."""        if self.is_unlimited or not self.quota_limit:
+        """Calculate usage percentage."""
+        if self.is_unlimited or not self.quota_limit:
             return 0.0
         return (self.current_usage / self.quota_limit) * 100
     
     @property
     def is_quota_exceeded(self) -> bool:
-        """Check if quota is exceeded."""        if self.is_unlimited or not self.quota_limit:
+        """Check if quota is exceeded."""
+        if self.is_unlimited or not self.quota_limit:
             return False
         return self.current_usage >= self.quota_limit
 
 
 @dataclass
 class BillingSummary:
-    """Billing summary for subscription analytics."""    subscription_id: int
+    """Billing summary for subscription analytics."""
+    subscription_id: int
     current_period_start: datetime
     current_period_end: datetime
     next_billing_date: datetime

@@ -11,7 +11,8 @@ Development Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
-"""import logging
+"""
+import logging
 from typing import Dict, List, Optional, Any, Tuple
 from enum import Enum
 from dataclasses import dataclass, field
@@ -270,29 +271,34 @@ CONTENT_TYPE_ROUTING = {
 
 
 def get_model_by_name(model_name: str) -> Optional[type]:
-    """    Get model class by name
+    """
+    Get model class by name
     
     Args:
         model_name: Name of the model
         
     Returns:
         Model class or None if not found
-    """    return MODEL_REGISTRY.get(model_name.lower())
+    """
+    return MODEL_REGISTRY.get(model_name.lower())
 
 
 def get_models_by_capability(capability: str) -> List[str]:
-    """    Get model names that support a specific capability
+    """
+    Get model names that support a specific capability
     
     Args:
         capability: Capability to search for
         
     Returns:
         List of model names
-    """    return CAPABILITY_MAPPING.get(capability.lower(), [])
+    """
+    return CAPABILITY_MAPPING.get(capability.lower(), [])
 
 
 def get_model_for_content_type(content_type: str, operation: str = "default") -> Optional[str]:
-    """    Get appropriate model for content type and operation
+    """
+    Get appropriate model for content type and operation
     
     Args:
         content_type: Type of content (audio, video, image, text)
@@ -300,12 +306,14 @@ def get_model_for_content_type(content_type: str, operation: str = "default") ->
         
     Returns:
         Model name or None if not found
-    """    routing = CONTENT_TYPE_ROUTING.get(content_type.lower(), {})
+    """
+    routing = CONTENT_TYPE_ROUTING.get(content_type.lower(), {})
     return routing.get(operation.lower(), routing.get("default"))
 
 
 async def create_model_instance(model_name: str, config: Optional[ModelConfig] = None) -> Optional[BaseAIModel]:
-    """    Create and initialize model instance
+    """
+    Create and initialize model instance
     
     Args:
         model_name: Name of the model to create
@@ -313,7 +321,8 @@ async def create_model_instance(model_name: str, config: Optional[ModelConfig] =
         
     Returns:
         Initialized model instance or None if creation failed
-    """    try:
+    """
+    try:
         return await model_orchestrator.get_model(model_name, config)
     except Exception as e:
         logger.error(f"Failed to create model instance {model_name}: {e}")
@@ -321,7 +330,8 @@ async def create_model_instance(model_name: str, config: Optional[ModelConfig] =
 
 
 async def process_with_best_model(content_type: str, operation: str, data: Any, **kwargs) -> ProcessingResult:
-    """    Process data with the best available model for the content type and operation
+    """
+    Process data with the best available model for the content type and operation
     
     Args:
         content_type: Type of content
@@ -331,7 +341,8 @@ async def process_with_best_model(content_type: str, operation: str, data: Any, 
         
     Returns:
         Processing result
-    """    try:
+    """
+    try:
         return await model_orchestrator.route_request(content_type, operation, data, **kwargs)
     except Exception as e:
         logger.error(f"Failed to process {content_type}/{operation}: {e}")
@@ -343,11 +354,13 @@ async def process_with_best_model(content_type: str, operation: str, data: Any, 
 
 
 def list_available_models() -> Dict[str, Dict[str, Any]]:
-    """    List all available models with their information
+    """
+    List all available models with their information
     
     Returns:
         Dictionary of model information
-    """    models_info = {}
+    """
+    models_info = {}
     
     for model_name, model_class in MODEL_REGISTRY.items():
         models_info[model_name] = {
@@ -366,19 +379,23 @@ def list_available_models() -> Dict[str, Dict[str, Any]]:
 
 
 def list_capabilities() -> Dict[str, List[str]]:
-    """    List all available capabilities and their supporting models
+    """
+    List all available capabilities and their supporting models
     
     Returns:
         Dictionary mapping capabilities to model lists
-    """    return CAPABILITY_MAPPING.copy()
+    """
+    return CAPABILITY_MAPPING.copy()
 
 
 def get_model_statistics() -> Dict[str, Any]:
-    """    Get statistics for all models
+    """
+    Get statistics for all models
     
     Returns:
         Model statistics dictionary
-    """    return model_orchestrator.get_model_stats()
+    """
+    return model_orchestrator.get_model_stats()
 
 
 # Initialize logging for the module
@@ -388,7 +405,8 @@ logger.info(f"Total capabilities: {len(CAPABILITY_MAPPING)}")
 
 
 class ModelType(Enum):
-    """AI model types for multi-modal content processing"""    # Core content types
+    """AI model types for multi-modal content processing"""
+    # Core content types
     AUDIO_MODEL = "audio_model"
     VIDEO_MODEL = "video_model"
     IMAGE_MODEL = "image_model"
@@ -417,7 +435,8 @@ class ModelType(Enum):
 
 
 class ModelProvider(Enum):
-    """AI model providers and platforms"""    # Major AI providers
+    """AI model providers and platforms"""
+    # Major AI providers
     OPENAI = "openai"
     ANTHROPIC = "anthropic"
     GOOGLE = "google"
@@ -442,7 +461,8 @@ class ModelProvider(Enum):
 
 
 class ModelStatus(Enum):
-    """Model status states"""    IDLE = "idle"
+    """Model status states"""
+    IDLE = "idle"
     LOADING = "loading"
     READY = "ready"
     PROCESSING = "processing"
@@ -451,7 +471,8 @@ class ModelStatus(Enum):
 
 
 class ProcessingPriority(Enum):
-    """Processing priority levels"""    LOW = 1
+    """Processing priority levels"""
+    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
@@ -459,7 +480,8 @@ class ProcessingPriority(Enum):
 
 @dataclass
 class ModelConfig:
-    """Configuration for AI models"""    name: str
+    """Configuration for AI models"""
+    name: str
     provider: ModelProvider
     model_type: ModelType
     api_key: Optional[str] = None
@@ -476,7 +498,8 @@ class ModelConfig:
 
 @dataclass
 class ProcessingResult:
-    """Result from AI model processing"""    success: bool
+    """Result from AI model processing"""
+    success: bool
     data: Any
     confidence: float = 0.0
     processing_time: float = 0.0
@@ -488,7 +511,8 @@ class ProcessingResult:
 
 @dataclass
 class ContentMetadata:
-    """Metadata for processed content"""    content_id: str
+    """Metadata for processed content"""
+    content_id: str
     content_type: str
     file_size: int
     duration: Optional[float] = None
@@ -502,7 +526,8 @@ class ContentMetadata:
 
 
 class BaseAIModel(ABC):
-    """    Base class for AI model integrations with enterprise features
+    """
+    Base class for AI model integrations with enterprise features
     
     Features:
     - Async processing with timeout handling
@@ -510,7 +535,8 @@ class BaseAIModel(ABC):
     - Result caching and performance metrics
     - Error handling and logging
     - Resource management and cleanup
-    """    
+    """
+    
     def __init__(self, config: ModelConfig):
         self.config = config
         self.model_name = config.name
@@ -529,16 +555,20 @@ class BaseAIModel(ABC):
     
     @abstractmethod
     async def process(self, data: Any, **kwargs) -> ProcessingResult:
-        """Process data using the AI model"""        pass
+        """Process data using the AI model"""
+        pass
     
     @abstractmethod
     async def validate_connection(self) -> bool:
-        """Validate connection to the AI model"""        pass
+        """Validate connection to the AI model"""
+        pass
     
     
     async def connect(self) -> bool:
-        """        Connect to the AI model with enhanced error handling
-        """        try:
+        """
+        Connect to the AI model with enhanced error handling
+        """
+        try:
             self.status = ModelStatus.LOADING
             self.logger.info(f"Connecting to {self.model_name} ({self.provider.value})")
             
@@ -560,7 +590,8 @@ class BaseAIModel(ABC):
             return False
     
     async def disconnect(self):
-        """Safely disconnect from the model"""        try:
+        """Safely disconnect from the model"""
+        try:
             self.is_connected = False
             self.status = ModelStatus.OFFLINE
             self.cache.clear()
@@ -569,11 +600,13 @@ class BaseAIModel(ABC):
             self.logger.error(f"Error disconnecting from {self.model_name}: {str(e)}")
     
     def _generate_cache_key(self, data: Any, **kwargs) -> str:
-        """Generate cache key for request"""        content = f"{str(data)}{str(kwargs)}"
+        """Generate cache key for request"""
+        content = f"{str(data)}{str(kwargs)}"
         return hashlib.md5(content.encode()).hexdigest()
     
     def _get_cached_result(self, cache_key: str) -> Optional[ProcessingResult]:
-        """Get cached result if available and not expired"""        if not self.config.enable_caching or cache_key not in self.cache:
+        """Get cached result if available and not expired"""
+        if not self.config.enable_caching or cache_key not in self.cache:
             return None
             
         cached_item = self.cache[cache_key]
@@ -584,15 +617,18 @@ class BaseAIModel(ABC):
         return cached_item['result']
     
     def _cache_result(self, cache_key: str, result: ProcessingResult):
-        """Cache processing result"""        if self.config.enable_caching:
+        """Cache processing result"""
+        if self.config.enable_caching:
             self.cache[cache_key] = {
                 'result': result,
                 'timestamp': time.time()
             }
     
     async def process_with_retry(self, data: Any, **kwargs) -> ProcessingResult:
-        """        Process data with automatic retry logic and caching
-        """        start_time = time.time()
+        """
+        Process data with automatic retry logic and caching
+        """
+        start_time = time.time()
         cache_key = self._generate_cache_key(data, **kwargs)
         
         # Check cache first
@@ -655,7 +691,8 @@ class BaseAIModel(ABC):
         )
     
     def _update_average_response_time(self, response_time: float):
-        """Update average response time metric"""        if self.average_response_time == 0:
+        """Update average response time metric"""
+        if self.average_response_time == 0:
             self.average_response_time = response_time
         else:
             # Exponential moving average
@@ -664,7 +701,8 @@ class BaseAIModel(ABC):
                                         (1 - alpha) * self.average_response_time)
     
     def get_model_info(self) -> Dict[str, Any]:
-        """Get comprehensive model information"""        return {
+        """Get comprehensive model information"""
+        return {
             "name": self.model_name,
             "provider": self.provider.value,
             "type": self.model_type.value,
@@ -693,7 +731,8 @@ class BaseAIModel(ABC):
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on the model"""        try:
+        """Perform health check on the model"""
+        try:
             start_time = time.time()
             is_healthy = await self.validate_connection()
             response_time = time.time() - start_time
@@ -713,17 +752,20 @@ class BaseAIModel(ABC):
             }
     
     def clear_cache(self):
-        """Clear model cache"""        self.cache.clear()
+        """Clear model cache"""
+        self.cache.clear()
         self.logger.info(f"Cache cleared for {self.model_name}")
     
     async def cleanup(self):
-        """Cleanup model resources"""        await self.disconnect()
+        """Cleanup model resources"""
+        await self.disconnect()
         self.clear_cache()
         self.processing_queue.clear()
 
 
 class AudioModel(BaseAIModel):
-    """Base class for audio processing models"""    
+    """Base class for audio processing models"""
+    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         self.supported_formats = ['mp3', 'wav', 'flac', 'ogg', 'm4a']
@@ -731,16 +773,19 @@ class AudioModel(BaseAIModel):
         self.sample_rate = 44100
     
     async def preprocess_audio(self, audio_data: Any) -> Any:
-        """Preprocess audio data before model processing"""        # Implement audio preprocessing (format conversion, normalization, etc.)
+        """Preprocess audio data before model processing"""
+        # Implement audio preprocessing (format conversion, normalization, etc.)
         return audio_data
     
     async def extract_features(self, audio_data: Any) -> Dict[str, Any]:
-        """Extract audio features for analysis"""        # Implement feature extraction (MFCC, spectral features, etc.)
+        """Extract audio features for analysis"""
+        # Implement feature extraction (MFCC, spectral features, etc.)
         return {}
 
 
 class VideoModel(BaseAIModel):
-    """Base class for video processing models"""    
+    """Base class for video processing models"""
+    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         self.supported_formats = ['mp4', 'avi', 'mov', 'webm', 'mkv']
@@ -749,16 +794,19 @@ class VideoModel(BaseAIModel):
         self.fps = 30
     
     async def preprocess_video(self, video_data: Any) -> Any:
-        """Preprocess video data before model processing"""        # Implement video preprocessing (format conversion, frame extraction, etc.)
+        """Preprocess video data before model processing"""
+        # Implement video preprocessing (format conversion, frame extraction, etc.)
         return video_data
     
     async def extract_frames(self, video_data: Any, num_frames: int = 10) -> List[Any]:
-        """Extract key frames from video for analysis"""        # Implement frame extraction
+        """Extract key frames from video for analysis"""
+        # Implement frame extraction
         return []
 
 
 class ImageModel(BaseAIModel):
-    """Base class for image processing models"""    
+    """Base class for image processing models"""
+    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         self.supported_formats = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'webp']
@@ -766,16 +814,19 @@ class ImageModel(BaseAIModel):
         self.min_resolution = (64, 64)
     
     async def preprocess_image(self, image_data: Any) -> Any:
-        """Preprocess image data before model processing"""        # Implement image preprocessing (resize, normalize, etc.)
+        """Preprocess image data before model processing"""
+        # Implement image preprocessing (resize, normalize, etc.)
         return image_data
     
     async def extract_features(self, image_data: Any) -> Dict[str, Any]:
-        """Extract visual features from image"""        # Implement feature extraction (CNN features, color histograms, etc.)
+        """Extract visual features from image"""
+        # Implement feature extraction (CNN features, color histograms, etc.)
         return {}
 
 
 class TextModel(BaseAIModel):
-    """Base class for text processing models"""    
+    """Base class for text processing models"""
+    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         self.supported_languages = ['en', 'fr', 'de', 'es', 'it', 'pt', 'ar']
@@ -783,16 +834,19 @@ class TextModel(BaseAIModel):
         self.min_length = 1
     
     async def preprocess_text(self, text: str) -> str:
-        """Preprocess text before model processing"""        # Implement text preprocessing (cleaning, tokenization, etc.)
+        """Preprocess text before model processing"""
+        # Implement text preprocessing (cleaning, tokenization, etc.)
         return text.strip()
     
     async def extract_features(self, text: str) -> Dict[str, Any]:
-        """Extract linguistic features from text"""        # Implement feature extraction (embeddings, sentiment, etc.)
+        """Extract linguistic features from text"""
+        # Implement feature extraction (embeddings, sentiment, etc.)
         return {}
 
 
 class ModelRegistry:
-    """    Advanced registry for managing AI models with enterprise features
+    """
+    Advanced registry for managing AI models with enterprise features
     
     Features:
     - Model lifecycle management
@@ -800,7 +854,8 @@ class ModelRegistry:
     - Load balancing across model instances
     - Performance analytics and optimization
     - Resource usage tracking
-    """    
+    """
+    
     def __init__(self):
         self._models: Dict[str, BaseAIModel] = {}
         self._model_groups: Dict[str, List[str]] = {}
@@ -809,7 +864,8 @@ class ModelRegistry:
         self.logger = logging.getLogger(f"{__name__}.ModelRegistry")
     
     def register_model(self, name: str, model: BaseAIModel, group: Optional[str] = None):
-        """Register an AI model with optional grouping"""        self._models[name] = model
+        """Register an AI model with optional grouping"""
+        self._models[name] = model
         
         if group:
             if group not in self._model_groups:
@@ -819,27 +875,33 @@ class ModelRegistry:
         self.logger.info(f"Registered model '{name}' of type {model.model_type.value}")
     
     def get_model(self, name: str) -> Optional[BaseAIModel]:
-        """Get a registered AI model"""        return self._models.get(name)
+        """Get a registered AI model"""
+        return self._models.get(name)
     
     def get_models_by_type(self, model_type: ModelType) -> List[BaseAIModel]:
-        """Get all models of a specific type"""        return [model for model in self._models.values() 
+        """Get all models of a specific type"""
+        return [model for model in self._models.values() 
                 if model.model_type == model_type]
     
     def get_models_by_group(self, group: str) -> List[BaseAIModel]:
-        """Get all models in a specific group"""        if group not in self._model_groups:
+        """Get all models in a specific group"""
+        if group not in self._model_groups:
             return []
         
         return [self._models[name] for name in self._model_groups[group] 
                 if name in self._models]
     
     def list_models(self) -> List[str]:
-        """List all registered model names"""        return list(self._models.keys())
+        """List all registered model names"""
+        return list(self._models.keys())
     
     def list_groups(self) -> List[str]:
-        """List all model groups"""        return list(self._model_groups.keys())
+        """List all model groups"""
+        return list(self._model_groups.keys())
     
     def remove_model(self, name: str) -> bool:
-        """Remove a model from registry"""        if name in self._models:
+        """Remove a model from registry"""
+        if name in self._models:
             model = self._models[name]
             # Cleanup model resources
             asyncio.create_task(model.cleanup())
@@ -856,7 +918,8 @@ class ModelRegistry:
         return False
     
     async def connect_all(self) -> Dict[str, bool]:
-        """Connect all registered models"""        results = {}
+        """Connect all registered models"""
+        results = {}
         tasks = []
         
         for name, model in self._models.items():
@@ -873,7 +936,8 @@ class ModelRegistry:
         return results
     
     async def health_check_all(self) -> Dict[str, Dict[str, Any]]:
-        """Perform health check on all models"""        results = {}
+        """Perform health check on all models"""
+        results = {}
         tasks = []
         
         for name, model in self._models.items():
@@ -893,7 +957,8 @@ class ModelRegistry:
         return results
     
     def get_registry_stats(self) -> Dict[str, Any]:
-        """Get comprehensive registry statistics"""        total_models = len(self._models)
+        """Get comprehensive registry statistics"""
+        total_models = len(self._models)
         models_by_type = {}
         models_by_provider = {}
         models_by_status = {}
@@ -921,7 +986,8 @@ class ModelRegistry:
         }
     
     async def cleanup_all(self):
-        """Cleanup all models and registry resources"""        tasks = []
+        """Cleanup all models and registry resources"""
+        tasks = []
         for model in self._models.values():
             tasks.append(asyncio.create_task(model.cleanup()))
         
@@ -996,7 +1062,8 @@ __all__ = [
 
 
 def create_video_model(name: str, provider: ModelProvider, **kwargs) -> VideoModel:
-    """Factory function to create video processing models"""    config = ModelConfig(
+    """Factory function to create video processing models"""
+    config = ModelConfig(
         name=name,
         provider=provider,
         model_type=ModelType.VIDEO_MODEL,
@@ -1006,7 +1073,8 @@ def create_video_model(name: str, provider: ModelProvider, **kwargs) -> VideoMod
 
 
 def create_image_model(name: str, provider: ModelProvider, **kwargs) -> ImageModel:
-    """Factory function to create image processing models"""    config = ModelConfig(
+    """Factory function to create image processing models"""
+    config = ModelConfig(
         name=name,
         provider=provider,
         model_type=ModelType.IMAGE_MODEL,
@@ -1016,7 +1084,8 @@ def create_image_model(name: str, provider: ModelProvider, **kwargs) -> ImageMod
 
 
 def create_text_model(name: str, provider: ModelProvider, **kwargs) -> TextModel:
-    """Factory function to create text processing models"""    config = ModelConfig(
+    """Factory function to create text processing models"""
+    config = ModelConfig(
         name=name,
         provider=provider,
         model_type=ModelType.TEXT_MODEL,
@@ -1027,7 +1096,8 @@ def create_text_model(name: str, provider: ModelProvider, **kwargs) -> TextModel
 
 # Utility functions
 def get_model_by_capability(capability: str) -> Optional[BaseAIModel]:
-    """Get the best model for a specific capability"""    # Implement capability-based model selection
+    """Get the best model for a specific capability"""
+    # Implement capability-based model selection
     capability_mapping = {
         'audio_fingerprint': ModelType.AUDIO_FINGERPRINT,
         'video_analysis': ModelType.VIDEO_ANALYSIS,
@@ -1046,7 +1116,8 @@ def get_model_by_capability(capability: str) -> Optional[BaseAIModel]:
 
 
 def calculate_content_fingerprint(content: Any, content_type: str) -> str:
-    """Calculate a unique fingerprint for content"""    # Implement content fingerprinting logic
+    """Calculate a unique fingerprint for content"""
+    # Implement content fingerprinting logic
     content_str = f"{content_type}:{str(content)}"
     return hashlib.sha256(content_str.encode()).hexdigest()
 
@@ -1058,7 +1129,8 @@ async def process_multimodal_content(
     text_data: Any = None,
     **kwargs
 ) -> Dict[str, ProcessingResult]:
-    """Process multi-modal content across different AI models"""    results = {}
+    """Process multi-modal content across different AI models"""
+    results = {}
     tasks = []
     
     if audio_data:

@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-""""""Payment Processing Agent - Industrial Payment Ecosystem
+""""""
+Payment Processing Agent - Industrial Payment Ecosystem
 
 Complete payment processing system for content monetization, revenue tracking,
 creator payments, licensing fees, and multi-currency support.
@@ -22,7 +23,10 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""from .payment_agent import PaymentProcessingAgent
+"""
+
+from .payment_agent import PaymentProcessingAgent
+
 from .index import (
     PaymentProcessingService,
     get_service,
@@ -44,12 +48,19 @@ from .models import (
     ComplianceCheck
 )
 from .validators import PaymentValidator
+
 from .schedulers import PayoutScheduler
+
 from .analytics import PaymentAnalytics
+
 from .compliance import ComplianceManager
+
 from .fraud_detection import FraudDetectionEngine
+
 from .cache import PerformanceCache
+
 from .currency import CurrencyConverter
+
 from .exceptions import (
     PaymentProcessingError,
     InsufficientFundsError,

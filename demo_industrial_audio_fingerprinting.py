@@ -12,7 +12,8 @@ INDUSTRIAL REQUIREMENTS DEMONSTRATION:
 ✅ Base vectorielle FAISS 100M+ empreintes
 ✅ Matching temps réel <50ms
 ✅ Précision >99.5% sur datasets industriels
-"""import asyncio
+"""
+import asyncio
 import numpy as np
 import tempfile
 import time
@@ -32,11 +33,13 @@ from data_management.fingerprinting.industrial_audio_fingerprint import (
 )
 
 class AudioGenerator:
-    """Generate test audio for demonstration"""    
+    """Generate test audio for demonstration"""
+    
     @staticmethod
     def create_music_sample(frequency: float = 440.0, duration: float = 10.0, 
                           sample_rate: int = 22050) -> np.ndarray:
-        """Create a musical audio sample"""        t = np.linspace(0, duration, int(sample_rate * duration), False)
+        """Create a musical audio sample"""
+        t = np.linspace(0, duration, int(sample_rate * duration), False)
         
         # Create a chord (multiple frequencies)
         audio = 0.3 * np.sin(2 * np.pi * frequency * t)          # Root note
@@ -61,7 +64,8 @@ class AudioGenerator:
     
     @staticmethod
     def apply_pitch_shift(audio: np.ndarray, semitones: float) -> np.ndarray:
-        """Apply pitch shift to audio"""        try:
+        """Apply pitch shift to audio"""
+        try:
             return librosa.effects.pitch_shift(audio, sr=22050, n_steps=semitones)
         except:
             # Simple approximation if pitch_shift fails
@@ -76,7 +80,8 @@ class AudioGenerator:
     
     @staticmethod
     def apply_tempo_change(audio: np.ndarray, factor: float) -> np.ndarray:
-        """Apply tempo change to audio"""        try:
+        """Apply tempo change to audio"""
+        try:
             return librosa.effects.time_stretch(audio, rate=factor)
         except:
             # Simple approximation
@@ -93,15 +98,18 @@ class AudioGenerator:
     
     @staticmethod
     def add_noise(audio: np.ndarray, noise_level: float = 0.1) -> np.ndarray:
-        """Add noise to audio"""        noise = np.random.normal(0, noise_level, len(audio))
+        """Add noise to audio"""
+        noise = np.random.normal(0, noise_level, len(audio))
         return audio + noise
     
     @staticmethod
     def save_to_file(audio: np.ndarray, filename: str, sample_rate: int = 22050):
-        """Save audio to file"""        sf.write(filename, audio, sample_rate)
+        """Save audio to file"""
+        sf.write(filename, audio, sample_rate)
 
 async def demonstrate_industrial_fingerprinting():
-    """Demonstrate the industrial audio fingerprinting system"""    print("🎵 Industrial Audio Fingerprinting System Demonstration")
+    """Demonstrate the industrial audio fingerprinting system"""
+    print("🎵 Industrial Audio Fingerprinting System Demonstration")
     print("=" * 60)
     
     # 1. Initialize Industrial Configuration
@@ -322,7 +330,8 @@ async def demonstrate_industrial_fingerprinting():
     print("=" * 60)
 
 def main():
-    """Main demo function"""    try:
+    """Main demo function"""
+    try:
         asyncio.run(demonstrate_industrial_fingerprinting())
     except KeyboardInterrupt:
         print("\n\n⚠️  Demo interrupted by user")

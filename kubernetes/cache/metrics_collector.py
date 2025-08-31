@@ -33,7 +33,8 @@ Key Performance Indicators:
 - Revenue analytics latency: <5 seconds for real-time insights
 - Creator dashboard response time: <2 seconds for all interactions
 - AI model inference time: <10 seconds for content analysis
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import statistics
@@ -61,7 +62,8 @@ import aiohttp
 
 
 class MetricType(Enum):
-    """Types of cache metrics for different content operations"""    COUNTER = "counter"              # Request counts, upload counts
+    """Types of cache metrics for different content operations"""
+    COUNTER = "counter"              # Request counts, upload counts
     GAUGE = "gauge"                 # Current values, active users
     HISTOGRAM = "histogram"         # Response times, content sizes
     TIMER = "timer"                 # Processing durations
@@ -71,7 +73,8 @@ class MetricType(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels for operational monitoring"""    INFO = "info"                   # Informational alerts
+    """Alert severity levels for operational monitoring"""
+    INFO = "info"                   # Informational alerts
     WARNING = "warning"             # Performance degradation
     ERROR = "error"                 # System errors
     CRITICAL = "critical"           # Service interruption
@@ -79,7 +82,8 @@ class AlertSeverity(Enum):
 
 
 class ContentCategory(Enum):
-    """Content categories for specialized metrics"""    AUDIO_MUSIC = "audio_music"
+    """Content categories for specialized metrics"""
+    AUDIO_MUSIC = "audio_music"
     AUDIO_PODCAST = "audio_podcast"
     VIDEO_ENTERTAINMENT = "video_entertainment"
     VIDEO_EDUCATIONAL = "video_educational"
@@ -92,7 +96,8 @@ class ContentCategory(Enum):
 
 
 class CreatorTier(Enum):
-    """Creator tier levels for performance tracking"""    FREE = "free"
+    """Creator tier levels for performance tracking"""
+    FREE = "free"
     BASIC = "basic"
     PREMIUM = "premium"
     PROFESSIONAL = "professional"
@@ -101,7 +106,8 @@ class CreatorTier(Enum):
 
 @dataclass
 class MetricDefinition:
-    """Definition of a cache metric"""    name: str
+    """Definition of a cache metric"""
+    name: str
     metric_type: MetricType
     description: str
     unit: str
@@ -114,7 +120,8 @@ class MetricDefinition:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""    metric_name: str
+    """Alert rule configuration"""
+    metric_name: str
     condition: str  # >, <, ==, !=
     threshold: float
     severity: AlertSeverity
@@ -127,7 +134,8 @@ class AlertRule:
 
 @dataclass
 class BusinessMetric:
-    """Business intelligence metric"""    name: str
+    """Business intelligence metric"""
+    name: str
     value: float
     trend: float  # Percentage change
     target: Optional[float] = None
@@ -139,7 +147,8 @@ class BusinessMetric:
 
 @dataclass
 class ContentAnalytics:
-    """Content-specific analytics data"""    content_id: str
+    """Content-specific analytics data"""
+    content_id: str
     content_type: str
     creator_id: str
     creator_tier: CreatorTier
@@ -155,7 +164,8 @@ class ContentAnalytics:
 
 
 class PrometheusMetricsManager:
-    """Prometheus metrics management for enterprise monitoring"""    
+    """Prometheus metrics management for enterprise monitoring"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.registry = CollectorRegistry()
@@ -171,7 +181,8 @@ class PrometheusMetricsManager:
             logging.info(f"Prometheus metrics server started on port {port}")
     
     def _initialize_core_metrics(self):
-        """Initialize core Prometheus metrics"""        
+        """Initialize core Prometheus metrics"""
+        
         # Cache performance metrics
         self.metrics["cache_operations"] = Counter(
             "cache_operations_total",
@@ -257,7 +268,8 @@ class PrometheusMetricsManager:
 
 
 class AIAnomalyDetector:
-    """AI-powered anomaly detection for cache metrics"""    
+    """AI-powered anomaly detection for cache metrics"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.models: Dict[str, IsolationForest] = {}
@@ -269,7 +281,8 @@ class AIAnomalyDetector:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize anomaly detection models for different metric types"""        
+        """Initialize anomaly detection models for different metric types"""
+        
         model_configs = {
             "performance": {
                 "contamination": 0.1,
@@ -294,7 +307,8 @@ class AIAnomalyDetector:
         metrics_data: Dict[str, List[float]],
         metric_category: str = "performance"
     ) -> Dict[str, Any]:
-        """Detect anomalies in metrics data"""        
+        """Detect anomalies in metrics data"""
+        
         try:
             if metric_category not in self.models:
                 return {"anomalies_detected": False, "details": []}
@@ -338,7 +352,8 @@ class AIAnomalyDetector:
             return {"anomalies_detected": False, "error": str(e)}
     
     def _prepare_feature_matrix(self, metrics_data: Dict[str, List[float]]) -> np.ndarray:
-        """Prepare feature matrix for anomaly detection"""        
+        """Prepare feature matrix for anomaly detection"""
+        
         # Ensure all metric lists have the same length
         min_length = min(len(values) for values in metrics_data.values())
         
@@ -350,7 +365,8 @@ class AIAnomalyDetector:
         return np.array(feature_matrix)
     
     def _classify_anomaly_severity(self, anomaly_score: float) -> str:
-        """Classify anomaly severity based on score"""        
+        """Classify anomaly severity based on score"""
+        
         if anomaly_score < -0.3:
             return "critical"
         elif anomaly_score < -0.2:
@@ -361,7 +377,8 @@ class AIAnomalyDetector:
             return "low"
     
     def _calculate_model_accuracy(self, predictions: np.ndarray) -> float:
-        """Calculate model accuracy (placeholder implementation)"""        
+        """Calculate model accuracy (placeholder implementation)"""
+        
         # In a real implementation, this would compare against known ground truth
         normal_predictions = np.sum(predictions == 1)
         total_predictions = len(predictions)
@@ -370,14 +387,16 @@ class AIAnomalyDetector:
 
 
 class BusinessIntelligenceAnalyzer:
-    """Business intelligence analyzer for content and revenue metrics"""    
+    """Business intelligence analyzer for content and revenue metrics"""
+    
     def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
         self.redis_client = redis_client
         self.db_pool = db_pool
         self.kpi_cache_ttl = 300  # 5 minutes
     
     async def calculate_business_kpis(self) -> Dict[str, BusinessMetric]:
-        """Calculate key business performance indicators"""        
+        """Calculate key business performance indicators"""
+        
         try:
             kpis = {}
             
@@ -411,22 +430,27 @@ class BusinessIntelligenceAnalyzer:
             return {}
     
     async def _calculate_revenue_kpi(self) -> BusinessMetric:
-        """Calculate total revenue KPI"""        
+        """Calculate total revenue KPI"""
+        
         try:
             # Query revenue data from database
             async with self.db_pool.acquire() as conn:
-                query = """                    SELECT COALESCE(SUM(amount), 0) as total_revenue
+                query = """
+                    SELECT COALESCE(SUM(amount), 0) as total_revenue
                     FROM revenue_transactions 
                     WHERE created_at >= NOW() - INTERVAL '24 hours'
-                """                result = await conn.fetchrow(query)
+                """
+                result = await conn.fetchrow(query)
                 current_revenue = float(result["total_revenue"])
                 
                 # Calculate previous day revenue for trend
-                prev_query = """                    SELECT COALESCE(SUM(amount), 0) as prev_revenue
+                prev_query = """
+                    SELECT COALESCE(SUM(amount), 0) as prev_revenue
                     FROM revenue_transactions 
                     WHERE created_at >= NOW() - INTERVAL '48 hours'
                     AND created_at < NOW() - INTERVAL '24 hours'
-                """                prev_result = await conn.fetchrow(prev_query)
+                """
+                prev_result = await conn.fetchrow(prev_query)
                 previous_revenue = float(prev_result["prev_revenue"])
                 
                 # Calculate trend
@@ -448,13 +472,16 @@ class BusinessIntelligenceAnalyzer:
             return BusinessMetric(name="total_revenue", value=0.0, trend=0.0)
     
     async def _calculate_active_creators(self) -> BusinessMetric:
-        """Calculate active creators KPI"""        
+        """Calculate active creators KPI"""
+        
         try:
             async with self.db_pool.acquire() as conn:
-                query = """                    SELECT COUNT(DISTINCT creator_id) as active_creators
+                query = """
+                    SELECT COUNT(DISTINCT creator_id) as active_creators
                     FROM content_uploads 
                     WHERE created_at >= NOW() - INTERVAL '24 hours'
-                """                result = await conn.fetchrow(query)
+                """
+                result = await conn.fetchrow(query)
                 active_creators = int(result["active_creators"])
                 
                 return BusinessMetric(
@@ -471,13 +498,16 @@ class BusinessIntelligenceAnalyzer:
             return BusinessMetric(name="active_creators", value=0.0, trend=0.0)
     
     async def _calculate_content_upload_rate(self) -> BusinessMetric:
-        """Calculate content upload rate KPI"""        
+        """Calculate content upload rate KPI"""
+        
         try:
             async with self.db_pool.acquire() as conn:
-                query = """                    SELECT COUNT(*) as upload_count
+                query = """
+                    SELECT COUNT(*) as upload_count
                     FROM content_uploads 
                     WHERE created_at >= NOW() - INTERVAL '1 hour'
-                """                result = await conn.fetchrow(query)
+                """
+                result = await conn.fetchrow(query)
                 hourly_uploads = int(result["upload_count"])
                 
                 return BusinessMetric(
@@ -494,7 +524,8 @@ class BusinessIntelligenceAnalyzer:
             return BusinessMetric(name="content_upload_rate", value=0.0, trend=0.0)
     
     async def _calculate_processing_efficiency(self) -> BusinessMetric:
-        """Calculate content processing efficiency KPI"""        
+        """Calculate content processing efficiency KPI"""
+        
         try:
             # Get processing time statistics from Redis
             processing_times = await self.redis_client.lrange("processing_times", 0, -1)
@@ -520,7 +551,8 @@ class BusinessIntelligenceAnalyzer:
             return BusinessMetric(name="content_processing_efficiency", value=0.0, trend=0.0)
     
     async def _cache_kpis(self, kpis: Dict[str, BusinessMetric]):
-        """Cache KPIs for quick access"""        
+        """Cache KPIs for quick access"""
+        
         try:
             for kpi_name, kpi_data in kpis.items():
                 cache_key = f"kpi:{kpi_name}"
@@ -563,7 +595,8 @@ class BusinessIntelligenceAnalyzer:
 
 
 class AlertManager:
-    """Advanced alerting system for cache and business metrics"""    
+    """Advanced alerting system for cache and business metrics"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.alert_rules: List[AlertRule] = []
@@ -575,7 +608,8 @@ class AlertManager:
         self._initialize_default_rules()
     
     def _initialize_default_rules(self):
-        """Initialize default alert rules for critical metrics"""        
+        """Initialize default alert rules for critical metrics"""
+        
         self.alert_rules = [
             AlertRule(
                 metric_name="cache_hit_ratio",
@@ -616,7 +650,8 @@ class AlertManager:
         ]
     
     async def evaluate_alerts(self, current_metrics: Dict[str, float]) -> List[Dict[str, Any]]:
-        """Evaluate current metrics against alert rules"""        
+        """Evaluate current metrics against alert rules"""
+        
         triggered_alerts = []
         
         for rule in self.alert_rules:
@@ -661,7 +696,8 @@ class AlertManager:
         return triggered_alerts
     
     def _evaluate_condition(self, value: float, condition: str, threshold: float) -> bool:
-        """Evaluate alert condition"""        
+        """Evaluate alert condition"""
+        
         if condition == ">":
             return value > threshold
         elif condition == "<":
@@ -674,7 +710,8 @@ class AlertManager:
         return False
     
     async def _send_alert_notifications(self, alert: Dict[str, Any]):
-        """Send alert notifications to configured channels"""        
+        """Send alert notifications to configured channels"""
+        
         try:
             rule = alert["rule"]
             
@@ -701,7 +738,8 @@ class AlertManager:
             logging.error(f"Failed to send alert notifications: {e}")
     
     async def _send_webhook_notification(self, url: str, message: Dict[str, Any]):
-        """Send webhook notification"""        
+        """Send webhook notification"""
+        
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.post(url, json=message) as response:
@@ -714,7 +752,8 @@ class AlertManager:
             logging.error(f"Webhook notification error: {e}")
     
     async def _send_resolution_notification(self, resolved_alert: Dict[str, Any]):
-        """Send alert resolution notification"""        
+        """Send alert resolution notification"""
+        
         try:
             rule = resolved_alert["rule"]
             
@@ -734,10 +773,12 @@ class AlertManager:
             logging.error(f"Failed to send resolution notification: {e}")
     
     async def _send_email_notification(self, email: str, message: Dict[str, Any]):
-        """Send email notification (placeholder)"""        logging.info(f"Email notification would be sent to {email}: {message}")
+        """Send email notification (placeholder)"""
+        logging.info(f"Email notification would be sent to {email}: {message}")
     
     async def _send_slack_notification(self, webhook: str, message: Dict[str, Any]):
-        """Send Slack notification (placeholder)"""        logging.info(f"Slack notification would be sent to {webhook}: {message}")
+        """Send Slack notification (placeholder)"""
+        logging.info(f"Slack notification would be sent to {webhook}: {message}")
 
 
 class CacheMetricsCollector:
@@ -745,7 +786,8 @@ class CacheMetricsCollector:
 
 @dataclass
 class MetricDataPoint:
-    """Individual metric data point"""    timestamp: datetime
+    """Individual metric data point"""
+    timestamp: datetime
     value: float
     labels: Dict[str, str] = field(default_factory=dict)
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -753,7 +795,8 @@ class MetricDataPoint:
 
 @dataclass
 class MetricSeries:
-    """Time series of metric data points"""    name: str
+    """Time series of metric data points"""
+    name: str
     metric_type: MetricType
     description: str
     unit: str
@@ -763,7 +806,8 @@ class MetricSeries:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""    rule_id: str
+    """Alert rule configuration"""
+    rule_id: str
     name: str
     metric_name: str
     condition: str  # e.g., "> 0.95", "< 0.1"
@@ -777,7 +821,8 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Active alert instance"""    alert_id: str
+    """Active alert instance"""
+    alert_id: str
     rule_id: str
     metric_name: str
     severity: AlertSeverity
@@ -790,14 +835,18 @@ class Alert:
 
 
 class CacheMetricsCollector:
-    """    Enterprise cache metrics collector with real-time monitoring,
+    """
+    Enterprise cache metrics collector with real-time monitoring,
     analytics, and intelligent alerting capabilities.
-    """    def __init__(self, config: CacheConfiguration):
-        """        Initialize cache metrics collector.
+    """
+    def __init__(self, config: CacheConfiguration):
+        """
+        Initialize cache metrics collector.
         
         Args:
             config: Cache configuration instance
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Metrics storage
@@ -828,7 +877,8 @@ class CacheMetricsCollector:
         self._initialize_default_alert_rules()
 
     async def initialize(self) -> None:
-        """Initialize the metrics collector"""        try:
+        """Initialize the metrics collector"""
+        try:
             # Start background tasks
             self._collection_task = asyncio.create_task(self._collection_loop())
             self._aggregation_task = asyncio.create_task(self._aggregation_loop())
@@ -841,7 +891,8 @@ class CacheMetricsCollector:
             raise
 
     async def shutdown(self) -> None:
-        """Shutdown the metrics collector"""        try:
+        """Shutdown the metrics collector"""
+        try:
             self._shutdown_event.set()
             
             # Stop background tasks
@@ -867,7 +918,8 @@ class CacheMetricsCollector:
         error: Optional[str] = None,
         **kwargs
     ) -> None:
-        """        Record cache operation metrics.
+        """
+        Record cache operation metrics.
         
         Args:
             operation: Operation type (read, write, delete, etc.)
@@ -877,7 +929,8 @@ class CacheMetricsCollector:
             success: Whether operation was successful
             error: Error message if operation failed
             **kwargs: Additional metadata
-        """        try:
+        """
+        try:
             labels = {
                 "operation": operation,
                 "content_type": content_type,
@@ -928,7 +981,8 @@ class CacheMetricsCollector:
         security_level: Optional[str] = None,
         **kwargs
     ) -> None:
-        """        Record security operation metrics.
+        """
+        Record security operation metrics.
         
         Args:
             operation: Security operation type
@@ -938,7 +992,8 @@ class CacheMetricsCollector:
             processing_time: Processing time in seconds
             security_level: Security level applied
             **kwargs: Additional metadata
-        """        try:
+        """
+        try:
             labels = {
                 "operation": operation,
                 "success": str(success)
@@ -974,7 +1029,8 @@ class CacheMetricsCollector:
         success: bool = True,
         **kwargs
     ) -> None:
-        """        Record distributed cache operation metrics.
+        """
+        Record distributed cache operation metrics.
         
         Args:
             operation: Distributed operation type
@@ -983,7 +1039,8 @@ class CacheMetricsCollector:
             processing_time: Processing time in seconds
             success: Whether operation was successful
             **kwargs: Additional metadata
-        """        try:
+        """
+        try:
             labels = {
                 "operation": operation,
                 "consistency_model": consistency_model,
@@ -1017,7 +1074,8 @@ class CacheMetricsCollector:
         description: str = "",
         unit: str = ""
     ) -> None:
-        """        Record custom metric.
+        """
+        Record custom metric.
         
         Args:
             name: Metric name
@@ -1026,7 +1084,8 @@ class CacheMetricsCollector:
             labels: Additional labels
             description: Metric description
             unit: Metric unit
-        """        try:
+        """
+        try:
             # Ensure metric exists
             if name not in self._metrics:
                 self._metrics[name] = MetricSeries(
@@ -1048,7 +1107,8 @@ class CacheMetricsCollector:
         time_range_minutes: int = 60,
         labels: Optional[Dict[str, str]] = None
     ) -> Optional[float]:
-        """        Get metric value with specified aggregation.
+        """
+        Get metric value with specified aggregation.
         
         Args:
             name: Metric name
@@ -1058,7 +1118,8 @@ class CacheMetricsCollector:
             
         Returns:
             Metric value or None if not found
-        """        try:
+        """
+        try:
             if name not in self._metrics:
                 return None
             
@@ -1098,14 +1159,16 @@ class CacheMetricsCollector:
         self,
         time_range_minutes: int = 60
     ) -> Dict[str, Any]:
-        """        Get comprehensive metrics summary.
+        """
+        Get comprehensive metrics summary.
         
         Args:
             time_range_minutes: Time range for summary
             
         Returns:
             Dict containing metrics summary
-        """        try:
+        """
+        try:
             summary = {
                 "timestamp": datetime.now(),
                 "time_range_minutes": time_range_minutes,
@@ -1132,14 +1195,16 @@ class CacheMetricsCollector:
             return {}
 
     async def add_alert_rule(self, alert_rule: AlertRule) -> bool:
-        """        Add custom alert rule.
+        """
+        Add custom alert rule.
         
         Args:
             alert_rule: Alert rule to add
             
         Returns:
             bool: True if rule added successfully
-        """        try:
+        """
+        try:
             self._alert_rules[alert_rule.rule_id] = alert_rule
             self.logger.info(f"Added alert rule: {alert_rule.name}")
             return True
@@ -1149,14 +1214,16 @@ class CacheMetricsCollector:
             return False
 
     async def remove_alert_rule(self, rule_id: str) -> bool:
-        """        Remove alert rule.
+        """
+        Remove alert rule.
         
         Args:
             rule_id: ID of rule to remove
             
         Returns:
             bool: True if rule removed successfully
-        """        try:
+        """
+        try:
             if rule_id in self._alert_rules:
                 del self._alert_rules[rule_id]
                 self.logger.info(f"Removed alert rule: {rule_id}")
@@ -1170,21 +1237,25 @@ class CacheMetricsCollector:
             return False
 
     async def get_active_alerts(self) -> List[Alert]:
-        """        Get list of active alerts.
+        """
+        Get list of active alerts.
         
         Returns:
             List of active alerts
-        """        return list(self._active_alerts.values())
+        """
+        return list(self._active_alerts.values())
 
     async def acknowledge_alert(self, alert_id: str) -> bool:
-        """        Acknowledge active alert.
+        """
+        Acknowledge active alert.
         
         Args:
             alert_id: Alert ID to acknowledge
             
         Returns:
             bool: True if alert acknowledged successfully
-        """        try:
+        """
+        try:
             if alert_id in self._active_alerts:
                 self._active_alerts[alert_id].status = "acknowledged"
                 self.logger.info(f"Acknowledged alert: {alert_id}")
@@ -1200,7 +1271,8 @@ class CacheMetricsCollector:
     # Private helper methods
     
     def _initialize_default_metrics(self) -> None:
-        """Initialize default cache metrics"""        default_metrics = [
+        """Initialize default cache metrics"""
+        default_metrics = [
             ("cache_operations_total", MetricType.COUNTER, "Total cache operations", "operations"),
             ("cache_operation_duration_seconds", MetricType.HISTOGRAM, "Cache operation duration", "seconds"),
             ("cache_content_size_bytes", MetricType.HISTOGRAM, "Cache content size", "bytes"),
@@ -1222,7 +1294,8 @@ class CacheMetricsCollector:
             )
 
     def _initialize_default_alert_rules(self) -> None:
-        """Initialize default alert rules"""        default_rules = [
+        """Initialize default alert rules"""
+        default_rules = [
             AlertRule(
                 rule_id="cache_hit_rate_low",
                 name="Low Cache Hit Rate",
@@ -1267,7 +1340,8 @@ class CacheMetricsCollector:
         value: float,
         labels: Optional[Dict[str, str]] = None
     ) -> None:
-        """Record metric data point"""        try:
+        """Record metric data point"""
+        try:
             if name not in self._metrics:
                 self._metrics[name] = MetricSeries(
                     name=name,
@@ -1290,7 +1364,8 @@ class CacheMetricsCollector:
             self._collection_stats["collection_errors"] += 1
 
     async def _collection_loop(self) -> None:
-        """Background metric collection loop"""        while not self._shutdown_event.is_set():
+        """Background metric collection loop"""
+        while not self._shutdown_event.is_set():
             try:
                 start_time = time.time()
                 
@@ -1311,7 +1386,8 @@ class CacheMetricsCollector:
                 await asyncio.sleep(60)
 
     async def _aggregation_loop(self) -> None:
-        """Background metric aggregation loop"""        while not self._shutdown_event.is_set():
+        """Background metric aggregation loop"""
+        while not self._shutdown_event.is_set():
             try:
                 await self._compute_aggregations()
                 await asyncio.sleep(60)  # Aggregate every minute
@@ -1321,7 +1397,8 @@ class CacheMetricsCollector:
                 await asyncio.sleep(120)
 
     async def _alerting_loop(self) -> None:
-        """Background alerting loop"""        while not self._shutdown_event.is_set():
+        """Background alerting loop"""
+        while not self._shutdown_event.is_set():
             try:
                 await self._check_alert_rules()
                 await asyncio.sleep(30)  # Check alerts every 30 seconds
@@ -1331,7 +1408,8 @@ class CacheMetricsCollector:
                 await asyncio.sleep(60)
 
     async def _collect_system_metrics(self) -> None:
-        """Collect system-level metrics"""        # This would integrate with actual system monitoring
+        """Collect system-level metrics"""
+        # This would integrate with actual system monitoring
         # For now, we'll simulate some metrics
         import psutil
         import random
@@ -1353,7 +1431,8 @@ class CacheMetricsCollector:
             self.logger.error(f"Error collecting system metrics: {str(e)}")
 
     async def _compute_aggregations(self) -> None:
-        """Compute metric aggregations"""        try:
+        """Compute metric aggregations"""
+        try:
             for metric_name, metric in self._metrics.items():
                 if not metric.data_points:
                     continue
@@ -1381,7 +1460,8 @@ class CacheMetricsCollector:
             self.logger.error(f"Error computing aggregations: {str(e)}")
 
     async def _check_alert_rules(self) -> None:
-        """Check alert rules and trigger alerts"""        try:
+        """Check alert rules and trigger alerts"""
+        try:
             for rule in self._alert_rules.values():
                 if not rule.enabled:
                     continue
@@ -1415,7 +1495,8 @@ class CacheMetricsCollector:
             self.logger.error(f"Error checking alert rules: {str(e)}")
 
     async def _trigger_alert(self, rule: AlertRule, current_value: float) -> None:
-        """Trigger alert for rule"""        try:
+        """Trigger alert for rule"""
+        try:
             alert_id = f"{rule.rule_id}_{int(time.time())}"
             
             # Check if alert already exists
@@ -1454,7 +1535,8 @@ class CacheMetricsCollector:
             self.logger.error(f"Error triggering alert: {str(e)}")
 
     async def _resolve_alert(self, rule_id: str) -> None:
-        """Resolve active alert for rule"""        try:
+        """Resolve active alert for rule"""
+        try:
             alerts_to_resolve = [
                 alert for alert in self._active_alerts.values()
                 if alert.rule_id == rule_id and alert.status == "active"
@@ -1472,7 +1554,8 @@ class CacheMetricsCollector:
             self.logger.error(f"Error resolving alert: {str(e)}")
 
     async def _execute_alert_actions(self, alert: Alert, actions: List[str]) -> None:
-        """Execute alert actions"""        try:
+        """Execute alert actions"""
+        try:
             for action in actions:
                 if action == "log":
                     self.logger.warning(f"ALERT: {alert.message}")
@@ -1491,7 +1574,8 @@ class CacheMetricsCollector:
         metric: MetricSeries,
         time_range_minutes: int
     ) -> Dict[str, Any]:
-        """Summarize metric for the given time range"""        try:
+        """Summarize metric for the given time range"""
+        try:
             cutoff_time = datetime.now() - timedelta(minutes=time_range_minutes)
             recent_points = [
                 dp for dp in metric.data_points

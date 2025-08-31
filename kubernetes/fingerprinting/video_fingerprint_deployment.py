@@ -7,7 +7,8 @@ content identification and protection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
@@ -22,13 +23,15 @@ logger = logging.getLogger(__name__)
 
 
 class VideoProcessingQuality(Enum):
-    """Video processing quality levels"""    FAST = "fast"
+    """Video processing quality levels"""
+    FAST = "fast"
     BALANCED = "balanced"
     ACCURATE = "accurate"
 
 
 class VideoResolution(Enum):
-    """Supported video resolutions for processing"""    SD_480P = "480p"
+    """Supported video resolutions for processing"""
+    SD_480P = "480p"
     HD_720P = "720p"
     FHD_1080P = "1080p"
     UHD_4K = "4k"
@@ -36,7 +39,8 @@ class VideoResolution(Enum):
 
 @dataclass
 class VideoFingerprintConfig:
-    """Video fingerprinting deployment configuration"""    replicas: int = 3
+    """Video fingerprinting deployment configuration"""
+    replicas: int = 3
     cpu_limit: str = "4000m"
     memory_limit: str = "8Gi"
     gpu_count: int = 2
@@ -53,17 +57,21 @@ class VideoFingerprintConfig:
 
 
 class VideoFingerprintDeployment:
-    """    Enterprise video fingerprinting deployment manager
+    """
+    Enterprise video fingerprinting deployment manager
     
     Handles deployment, scaling, and monitoring of video fingerprinting
     services with support for OpenCV, YOLO, and perceptual hashing.
-    """    
+    """
+    
     def __init__(self, namespace: str = "ia-influencer"):
-        """        Initialize video fingerprint deployment manager
+        """
+        Initialize video fingerprint deployment manager
         
         Args:
             namespace: Kubernetes namespace for deployment
-        """        self.namespace = namespace
+        """
+        self.namespace = namespace
         self.config = VideoFingerprintConfig()
         self.status = "pending"
         self._k8s_client = None
@@ -74,7 +82,8 @@ class VideoFingerprintDeployment:
         self._initialize_clients()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and Redis clients"""        try:
+        """Initialize Kubernetes, Docker, and Redis clients"""
+        try:
             # Kubernetes client
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -99,14 +108,16 @@ class VideoFingerprintDeployment:
             raise
     
     async def deploy(self, config: Optional[VideoFingerprintConfig] = None) -> Dict[str, Any]:
-        """        Deploy video fingerprinting services
+        """
+        Deploy video fingerprinting services
         
         Args:
             config: Optional custom configuration
             
         Returns:
             Deployment result with status and details
-        """        if config:
+        """
+        if config:
             self.config = config
         
         try:
@@ -160,7 +171,8 @@ class VideoFingerprintDeployment:
             raise
     
     async def _ensure_namespace(self) -> None:
-        """Ensure Kubernetes namespace exists"""        try:
+        """Ensure Kubernetes namespace exists"""
+        try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -171,7 +183,8 @@ class VideoFingerprintDeployment:
                 logger.info(f"Created namespace: {self.namespace}")
     
     async def _deploy_gpu_infrastructure(self) -> None:
-        """Deploy GPU-optimized infrastructure for video processing"""        # GPU device plugin DaemonSet (if not already deployed)
+        """Deploy GPU-optimized infrastructure for video processing"""
+        # GPU device plugin DaemonSet (if not already deployed)
         gpu_plugin = {
             "apiVersion": "apps/v1",
             "kind": "DaemonSet",
@@ -214,7 +227,8 @@ class VideoFingerprintDeployment:
         logger.info("Ensured GPU device plugin is available")
     
     async def _deploy_video_storage(self) -> None:
-        """Deploy video storage and caching infrastructure"""        # High-performance video storage PVC
+        """Deploy video storage and caching infrastructure"""
+        # High-performance video storage PVC
         video_storage_pvc = {
             "apiVersion": "v1",
             "kind": "PersistentVolumeClaim",
@@ -284,7 +298,8 @@ class VideoFingerprintDeployment:
         logger.info("Deployed video storage and caching infrastructure")
     
     async def _deploy_video_services(self) -> Dict[str, Any]:
-        """Deploy main video fingerprinting services"""        video_deployment = {
+        """Deploy main video fingerprinting services"""
+        video_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -453,7 +468,8 @@ class VideoFingerprintDeployment:
         }
     
     async def _deploy_gpu_autoscaler(self) -> None:
-        """Deploy GPU-aware horizontal pod autoscaler"""        hpa_manifest = {
+        """Deploy GPU-aware horizontal pod autoscaler"""
+        hpa_manifest = {
             "apiVersion": "autoscaling/v2",
             "kind": "HorizontalPodAutoscaler",
             "metadata": {
@@ -520,7 +536,8 @@ class VideoFingerprintDeployment:
         logger.info("Deployed GPU-aware autoscaler for video services")
     
     async def _deploy_video_monitoring(self) -> None:
-        """Deploy video-specific monitoring and alerting"""        # Custom metrics for video processing
+        """Deploy video-specific monitoring and alerting"""
+        # Custom metrics for video processing
         video_metrics_config = {
             "apiVersion": "v1",
             "kind": "ConfigMap",
@@ -529,7 +546,8 @@ class VideoFingerprintDeployment:
                 "namespace": self.namespace
             },
             "data": {
-                "metrics_config.yaml": """                metrics:
+                "metrics_config.yaml": """
+                metrics:
                   - name: video_processing_latency
                     type: histogram
                     help: Video processing latency in seconds
@@ -550,7 +568,8 @@ class VideoFingerprintDeployment:
                   - name: frames_processed_total
                     type: counter
                     help: Total number of video frames processed
-                """            }
+                """
+            }
         }
         
         self.k8s_core_v1.create_namespaced_config_map(
@@ -561,7 +580,8 @@ class VideoFingerprintDeployment:
         logger.info("Deployed video-specific monitoring configuration")
     
     async def _validate_deployment(self) -> bool:
-        """Validate video deployment health and GPU availability"""        try:
+        """Validate video deployment health and GPU availability"""
+        try:
             # Check deployment status
             deployment = self.k8s_apps_v1.read_namespaced_deployment(
                 name="video-fingerprint-service",
@@ -609,7 +629,8 @@ class VideoFingerprintDeployment:
             return False
     
     async def _cleanup_failed_deployment(self) -> None:
-        """Clean up resources from failed video deployment"""        try:
+        """Clean up resources from failed video deployment"""
+        try:
             # Delete HPA
             self.k8s_autoscaling_v1.delete_namespaced_horizontal_pod_autoscaler(
                 name="video-fingerprint-hpa",
@@ -634,7 +655,8 @@ class VideoFingerprintDeployment:
             logger.error(f"Video cleanup failed: {e}")
     
     async def get_gpu_metrics(self) -> Dict[str, Any]:
-        """Get GPU utilization and video processing metrics"""        try:
+        """Get GPU utilization and video processing metrics"""
+        try:
             # Get deployment status
             deployment = self.k8s_apps_v1.read_namespaced_deployment(
                 name="video-fingerprint-service",
@@ -693,7 +715,8 @@ class VideoFingerprintDeployment:
             return {"error": str(e)}
     
     async def optimize_for_resolution(self, resolution: VideoResolution) -> Dict[str, Any]:
-        """Optimize deployment for specific video resolution"""        try:
+        """Optimize deployment for specific video resolution"""
+        try:
             logger.info(f"Optimizing video deployment for {resolution.value}")
             
             # Adjust resource allocation based on resolution
@@ -751,7 +774,8 @@ class VideoFingerprintDeployment:
             raise
     
     async def cleanup(self) -> None:
-        """Clean up all video deployment resources"""        try:
+        """Clean up all video deployment resources"""
+        try:
             # Delete HPA
             self.k8s_autoscaling_v1.delete_namespaced_horizontal_pod_autoscaler(
                 name="video-fingerprint-hpa",

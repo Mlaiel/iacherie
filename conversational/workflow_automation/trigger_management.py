@@ -6,7 +6,8 @@ automation orchestration.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import uuid
 from datetime import datetime, timedelta
@@ -21,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 
 class TriggerType(Enum):
-    """Types of automation triggers"""    EVENT = "event"
+    """Types of automation triggers"""
+    EVENT = "event"
     TIME_BASED = "time_based"
     CONDITIONAL = "conditional"
     CONVERSATIONAL = "conversational"
@@ -34,7 +36,8 @@ class TriggerType(Enum):
 
 
 class TriggerStatus(Enum):
-    """Trigger execution status"""    ACTIVE = "active"
+    """Trigger execution status"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     TRIGGERED = "triggered"
     EXECUTED = "executed"
@@ -43,7 +46,8 @@ class TriggerStatus(Enum):
 
 
 class TriggerPriority(Enum):
-    """Trigger execution priority"""    LOW = 1
+    """Trigger execution priority"""
+    LOW = 1
     NORMAL = 2
     HIGH = 3
     URGENT = 4
@@ -51,7 +55,8 @@ class TriggerPriority(Enum):
 
 
 class EventType(Enum):
-    """System event types"""    CONTENT_UPLOAD = "content_upload"
+    """System event types"""
+    CONTENT_UPLOAD = "content_upload"
     USER_REGISTRATION = "user_registration"
     COLLABORATION_REQUEST = "collaboration_request"
     PROTECTION_VIOLATION = "protection_violation"
@@ -65,7 +70,8 @@ class EventType(Enum):
 
 @dataclass
 class TriggerCondition:
-    """Individual trigger condition"""    condition_id: str
+    """Individual trigger condition"""
+    condition_id: str
     condition_type: str
     field: str
     operator: str
@@ -77,7 +83,8 @@ class TriggerCondition:
 
 @dataclass
 class TriggerAction:
-    """Action to execute when trigger fires"""    action_id: str
+    """Action to execute when trigger fires"""
+    action_id: str
     action_type: str
     target: str
     parameters: Dict[str, Any] = field(default_factory=dict)
@@ -89,7 +96,8 @@ class TriggerAction:
 
 @dataclass
 class TriggerDefinition:
-    """Complete trigger definition"""    trigger_id: str
+    """Complete trigger definition"""
+    trigger_id: str
     name: str
     description: str
     trigger_type: TriggerType
@@ -108,7 +116,8 @@ class TriggerDefinition:
 
 @dataclass
 class TriggerExecution:
-    """Trigger execution record"""    execution_id: str
+    """Trigger execution record"""
+    execution_id: str
     trigger_id: str
     trigger_definition: TriggerDefinition
     event_data: Dict[str, Any]
@@ -122,11 +131,13 @@ class TriggerExecution:
 
 
 class TriggerEngine:
-    """    Advanced trigger engine for comprehensive automation orchestration.
+    """
+    Advanced trigger engine for comprehensive automation orchestration.
     
     Provides intelligent trigger management with event detection, condition evaluation,
     action execution, and performance optimization.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.triggers: Dict[str, TriggerDefinition] = {}
@@ -152,7 +163,8 @@ class TriggerEngine:
         self._monitoring_task = None
         
     async def initialize(self):
-        """Initialize trigger engine"""        try:
+        """Initialize trigger engine"""
+        try:
             # Register default condition evaluators
             await self._register_condition_evaluators()
             
@@ -172,7 +184,8 @@ class TriggerEngine:
             raise
     
     async def register_trigger(self, trigger_definition: TriggerDefinition) -> bool:
-        """Register a new trigger definition"""        try:
+        """Register a new trigger definition"""
+        try:
             # Validate trigger definition
             if not await self._validate_trigger_definition(trigger_definition):
                 return False
@@ -198,7 +211,8 @@ class TriggerEngine:
             return False
     
     async def fire_event(self, event_type: EventType, event_data: Dict[str, Any]) -> List[str]:
-        """Fire an event and trigger any matching automation"""        try:
+        """Fire an event and trigger any matching automation"""
+        try:
             # Add to event queue
             event = {
                 "event_id": str(uuid.uuid4()),
@@ -223,7 +237,8 @@ class TriggerEngine:
             return []
     
     async def _process_event(self, event: Dict[str, Any]) -> List[str]:
-        """Process a single event and trigger matching automation"""        execution_ids = []
+        """Process a single event and trigger matching automation"""
+        execution_ids = []
         event_type = event["event_type"]
         event_data = event["event_data"]
         
@@ -268,7 +283,8 @@ class TriggerEngine:
         trigger: TriggerDefinition,
         event_data: Dict[str, Any]
     ) -> Optional[str]:
-        """Execute a trigger and its actions"""        execution_id = str(uuid.uuid4())
+        """Execute a trigger and its actions"""
+        execution_id = str(uuid.uuid4())
         start_time = datetime.utcnow()
         
         try:
@@ -315,7 +331,8 @@ class TriggerEngine:
         event_data: Dict[str, Any],
         execution: TriggerExecution
     ) -> Dict[str, Any]:
-        """Execute a single action"""        action_start = datetime.utcnow()
+        """Execute a single action"""
+        action_start = datetime.utcnow()
         
         try:
             # Apply delay if specified
@@ -380,7 +397,8 @@ class TriggerEngine:
         trigger: TriggerDefinition,
         event_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate all conditions for a trigger"""        if not trigger.conditions:
+        """Evaluate all conditions for a trigger"""
+        if not trigger.conditions:
             return True  # No conditions means always trigger
         
         try:
@@ -431,7 +449,8 @@ class TriggerEngine:
         condition: TriggerCondition,
         event_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate a single condition"""        try:
+        """Evaluate a single condition"""
+        try:
             # Get condition evaluator
             evaluator = self.condition_evaluators.get(condition.condition_type)
             if not evaluator:
@@ -447,7 +466,8 @@ class TriggerEngine:
             return False
     
     async def _register_condition_evaluators(self):
-        """Register default condition evaluators"""        self.condition_evaluators = {
+        """Register default condition evaluators"""
+        self.condition_evaluators = {
             "equals": self._evaluate_equals_condition,
             "not_equals": self._evaluate_not_equals_condition,
             "greater_than": self._evaluate_greater_than_condition,
@@ -465,7 +485,8 @@ class TriggerEngine:
         }
     
     async def _register_action_executors(self):
-        """Register default action executors"""        self.action_executors = {
+        """Register default action executors"""
+        self.action_executors = {
             "send_notification": self._execute_send_notification,
             "start_workflow": self._execute_start_workflow,
             "send_email": self._execute_send_email,
@@ -484,7 +505,8 @@ class TriggerEngine:
         condition: TriggerCondition,
         event_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate equals condition"""        field_value = self._get_field_value(condition.field, event_data)
+        """Evaluate equals condition"""
+        field_value = self._get_field_value(condition.field, event_data)
         return field_value == condition.value
     
     async def _evaluate_not_equals_condition(
@@ -492,7 +514,8 @@ class TriggerEngine:
         condition: TriggerCondition,
         event_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate not equals condition"""        field_value = self._get_field_value(condition.field, event_data)
+        """Evaluate not equals condition"""
+        field_value = self._get_field_value(condition.field, event_data)
         return field_value != condition.value
     
     async def _evaluate_greater_than_condition(
@@ -500,7 +523,8 @@ class TriggerEngine:
         condition: TriggerCondition,
         event_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate greater than condition"""        field_value = self._get_field_value(condition.field, event_data)
+        """Evaluate greater than condition"""
+        field_value = self._get_field_value(condition.field, event_data)
         try:
             return float(field_value) > float(condition.value)
         except (ValueError, TypeError):
@@ -511,7 +535,8 @@ class TriggerEngine:
         condition: TriggerCondition,
         event_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate less than condition"""        field_value = self._get_field_value(condition.field, event_data)
+        """Evaluate less than condition"""
+        field_value = self._get_field_value(condition.field, event_data)
         try:
             return float(field_value) < float(condition.value)
         except (ValueError, TypeError):
@@ -522,7 +547,8 @@ class TriggerEngine:
         condition: TriggerCondition,
         event_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate greater than or equal condition"""        field_value = self._get_field_value(condition.field, event_data)
+        """Evaluate greater than or equal condition"""
+        field_value = self._get_field_value(condition.field, event_data)
         try:
             return float(field_value) >= float(condition.value)
         except (ValueError, TypeError):
@@ -533,7 +559,8 @@ class TriggerEngine:
         condition: TriggerCondition,
         event_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate less than or equal condition"""        field_value = self._get_field_value(condition.field, event_data)
+        """Evaluate less than or equal condition"""
+        field_value = self._get_field_value(condition.field, event_data)
         try:
             return float(field_value) <= float(condition.value)
         except (ValueError, TypeError):
@@ -544,7 +571,8 @@ class TriggerEngine:
         condition: TriggerCondition,
         event_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate contains condition"""        field_value = self._get_field_value(condition.field, event_data)
+        """Evaluate contains condition"""
+        field_value = self._get_field_value(condition.field, event_data)
         if field_value is None:
             return False
         return str(condition.value) in str(field_value)
@@ -554,7 +582,8 @@ class TriggerEngine:
         condition: TriggerCondition,
         event_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate not contains condition"""        field_value = self._get_field_value(condition.field, event_data)
+        """Evaluate not contains condition"""
+        field_value = self._get_field_value(condition.field, event_data)
         if field_value is None:
             return True
         return str(condition.value) not in str(field_value)
@@ -564,7 +593,8 @@ class TriggerEngine:
         condition: TriggerCondition,
         event_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate regex match condition"""        field_value = self._get_field_value(condition.field, event_data)
+        """Evaluate regex match condition"""
+        field_value = self._get_field_value(condition.field, event_data)
         if field_value is None:
             return False
         try:
@@ -578,7 +608,8 @@ class TriggerEngine:
         condition: TriggerCondition,
         event_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate in list condition"""        field_value = self._get_field_value(condition.field, event_data)
+        """Evaluate in list condition"""
+        field_value = self._get_field_value(condition.field, event_data)
         if not isinstance(condition.value, list):
             return False
         return field_value in condition.value
@@ -588,7 +619,8 @@ class TriggerEngine:
         condition: TriggerCondition,
         event_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate not in list condition"""        field_value = self._get_field_value(condition.field, event_data)
+        """Evaluate not in list condition"""
+        field_value = self._get_field_value(condition.field, event_data)
         if not isinstance(condition.value, list):
             return True
         return field_value not in condition.value
@@ -598,7 +630,8 @@ class TriggerEngine:
         condition: TriggerCondition,
         event_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate range condition"""        field_value = self._get_field_value(condition.field, event_data)
+        """Evaluate range condition"""
+        field_value = self._get_field_value(condition.field, event_data)
         if not isinstance(condition.value, dict) or "min" not in condition.value or "max" not in condition.value:
             return False
         try:
@@ -612,7 +645,8 @@ class TriggerEngine:
         condition: TriggerCondition,
         event_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate field exists condition"""        field_value = self._get_field_value(condition.field, event_data)
+        """Evaluate field exists condition"""
+        field_value = self._get_field_value(condition.field, event_data)
         return field_value is not None
     
     async def _evaluate_not_exists_condition(
@@ -620,11 +654,13 @@ class TriggerEngine:
         condition: TriggerCondition,
         event_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate field not exists condition"""        field_value = self._get_field_value(condition.field, event_data)
+        """Evaluate field not exists condition"""
+        field_value = self._get_field_value(condition.field, event_data)
         return field_value is None
     
     def _get_field_value(self, field_path: str, event_data: Dict[str, Any]) -> Any:
-        """Get field value from event data using dot notation"""        try:
+        """Get field value from event data using dot notation"""
+        try:
             value = event_data
             for key in field_path.split("."):
                 if isinstance(value, dict):
@@ -642,7 +678,8 @@ class TriggerEngine:
         event_data: Dict[str, Any],
         execution: TriggerExecution
     ) -> Dict[str, Any]:
-        """Execute send notification action"""        # Simulate notification sending
+        """Execute send notification action"""
+        # Simulate notification sending
         await asyncio.sleep(0.1)
         return {
             "notification_sent": True,
@@ -657,7 +694,8 @@ class TriggerEngine:
         event_data: Dict[str, Any],
         execution: TriggerExecution
     ) -> Dict[str, Any]:
-        """Execute start workflow action"""        # Simulate workflow starting
+        """Execute start workflow action"""
+        # Simulate workflow starting
         await asyncio.sleep(0.2)
         return {
             "workflow_started": True,
@@ -671,7 +709,8 @@ class TriggerEngine:
         event_data: Dict[str, Any],
         execution: TriggerExecution
     ) -> Dict[str, Any]:
-        """Execute send email action"""        # Simulate email sending
+        """Execute send email action"""
+        # Simulate email sending
         await asyncio.sleep(0.1)
         return {
             "email_sent": True,
@@ -686,7 +725,8 @@ class TriggerEngine:
         event_data: Dict[str, Any],
         execution: TriggerExecution
     ) -> Dict[str, Any]:
-        """Execute create task action"""        # Simulate task creation
+        """Execute create task action"""
+        # Simulate task creation
         await asyncio.sleep(0.1)
         return {
             "task_created": True,
@@ -701,7 +741,8 @@ class TriggerEngine:
         event_data: Dict[str, Any],
         execution: TriggerExecution
     ) -> Dict[str, Any]:
-        """Execute update status action"""        # Simulate status update
+        """Execute update status action"""
+        # Simulate status update
         await asyncio.sleep(0.05)
         return {
             "status_updated": True,
@@ -716,7 +757,8 @@ class TriggerEngine:
         event_data: Dict[str, Any],
         execution: TriggerExecution
     ) -> Dict[str, Any]:
-        """Execute log event action"""        # Log the event
+        """Execute log event action"""
+        # Log the event
         log_level = action.parameters.get("level", "info")
         message = action.parameters.get("message", f"Trigger {execution.trigger_id} executed")
         
@@ -739,7 +781,8 @@ class TriggerEngine:
         event_data: Dict[str, Any],
         execution: TriggerExecution
     ) -> Dict[str, Any]:
-        """Execute webhook call action"""        # Simulate webhook call
+        """Execute webhook call action"""
+        # Simulate webhook call
         await asyncio.sleep(0.2)
         return {
             "webhook_called": True,
@@ -754,7 +797,8 @@ class TriggerEngine:
         event_data: Dict[str, Any],
         execution: TriggerExecution
     ) -> Dict[str, Any]:
-        """Execute database update action"""        # Simulate database update
+        """Execute database update action"""
+        # Simulate database update
         await asyncio.sleep(0.1)
         return {
             "database_updated": True,
@@ -769,7 +813,8 @@ class TriggerEngine:
         event_data: Dict[str, Any],
         execution: TriggerExecution
     ) -> Dict[str, Any]:
-        """Execute API request action"""        # Simulate API request
+        """Execute API request action"""
+        # Simulate API request
         await asyncio.sleep(0.3)
         return {
             "api_request_sent": True,
@@ -784,7 +829,8 @@ class TriggerEngine:
         event_data: Dict[str, Any],
         execution: TriggerExecution
     ) -> Dict[str, Any]:
-        """Execute generate report action"""        # Simulate report generation
+        """Execute generate report action"""
+        # Simulate report generation
         await asyncio.sleep(0.5)
         return {
             "report_generated": True,
@@ -794,7 +840,8 @@ class TriggerEngine:
         }
     
     async def _load_default_triggers(self):
-        """Load default trigger definitions"""        default_triggers = await self._create_default_triggers()
+        """Load default trigger definitions"""
+        default_triggers = await self._create_default_triggers()
         
         for trigger in default_triggers:
             await self.register_trigger(trigger)
@@ -802,7 +849,8 @@ class TriggerEngine:
         logger.info(f"Loaded {len(default_triggers)} default triggers")
     
     async def _create_default_triggers(self) -> List[TriggerDefinition]:
-        """Create default trigger definitions"""        triggers = []
+        """Create default trigger definitions"""
+        triggers = []
         
         # Content Upload Trigger
         content_upload_trigger = TriggerDefinition(
@@ -971,7 +1019,8 @@ class TriggerEngine:
         return triggers
     
     async def _check_trigger_cooldown(self, trigger: TriggerDefinition) -> bool:
-        """Check if trigger is in cooldown period"""        if trigger.cooldown_seconds <= 0:
+        """Check if trigger is in cooldown period"""
+        if trigger.cooldown_seconds <= 0:
             return True
         
         # Check last execution time
@@ -979,7 +1028,8 @@ class TriggerEngine:
         return True  # Simplified for now
     
     async def _check_execution_limits(self, trigger: TriggerDefinition) -> bool:
-        """Check if trigger has reached execution limits"""        if trigger.max_executions is None:
+        """Check if trigger has reached execution limits"""
+        if trigger.max_executions is None:
             return True
         
         # Count executions
@@ -987,7 +1037,8 @@ class TriggerEngine:
         return True  # Simplified for now
     
     async def _check_execution_window(self, trigger: TriggerDefinition) -> bool:
-        """Check if current time is within trigger execution window"""        if not trigger.execution_window:
+        """Check if current time is within trigger execution window"""
+        if not trigger.execution_window:
             return True
         
         # Check time window
@@ -995,7 +1046,8 @@ class TriggerEngine:
         return True  # Simplified for now
     
     async def _validate_trigger_definition(self, trigger: TriggerDefinition) -> bool:
-        """Validate trigger definition"""        # Basic validation
+        """Validate trigger definition"""
+        # Basic validation
         if not trigger.trigger_id or not trigger.name:
             return False
         
@@ -1008,11 +1060,13 @@ class TriggerEngine:
         return True
     
     async def _start_event_monitoring(self):
-        """Start event monitoring and processing"""        if self.monitoring_enabled:
+        """Start event monitoring and processing"""
+        if self.monitoring_enabled:
             self._monitoring_task = asyncio.create_task(self._event_monitoring_loop())
     
     async def _event_monitoring_loop(self):
-        """Main event monitoring loop"""        while self.monitoring_enabled:
+        """Main event monitoring loop"""
+        while self.monitoring_enabled:
             try:
                 # Process pending events
                 unprocessed_events = [e for e in self.event_queue if not e.get("processed", False)]
@@ -1034,7 +1088,8 @@ class TriggerEngine:
                 await asyncio.sleep(5)
     
     def _update_average_execution_time(self, execution_time: float):
-        """Update average execution time metric"""        current_avg = self.metrics["average_execution_time"]
+        """Update average execution time metric"""
+        current_avg = self.metrics["average_execution_time"]
         total_successful = self.metrics["successful_executions"]
         
         if total_successful == 1:
@@ -1045,7 +1100,8 @@ class TriggerEngine:
             )
     
     async def get_trigger_status(self, trigger_id: str) -> Optional[Dict[str, Any]]:
-        """Get trigger status and statistics"""        trigger = self.triggers.get(trigger_id)
+        """Get trigger status and statistics"""
+        trigger = self.triggers.get(trigger_id)
         if not trigger:
             return None
         
@@ -1075,7 +1131,8 @@ class TriggerEngine:
         }
     
     async def get_engine_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive trigger engine metrics"""        return {
+        """Get comprehensive trigger engine metrics"""
+        return {
             "trigger_metrics": self.metrics.copy(),
             "active_triggers": len([t for t in self.triggers.values() if t.enabled]),
             "total_triggers": len(self.triggers),
@@ -1085,7 +1142,8 @@ class TriggerEngine:
         }
     
     async def stop(self):
-        """Stop trigger engine"""        self.monitoring_enabled = False
+        """Stop trigger engine"""
+        self.monitoring_enabled = False
         if self._monitoring_task:
             self._monitoring_task.cancel()
         
@@ -1094,24 +1152,28 @@ class TriggerEngine:
 
 
 class EventTriggerManager:
-    """Specialized event trigger management"""    
+    """Specialized event trigger management"""
+    
     def __init__(self, trigger_engine: TriggerEngine):
         self.trigger_engine = trigger_engine
         self.event_filters: Dict[str, Callable] = {}
         self.event_transformers: Dict[str, Callable] = {}
     
     async def register_event_filter(self, event_type: EventType, filter_func: Callable):
-        """Register event filter function"""        self.event_filters[event_type.value] = filter_func
+        """Register event filter function"""
+        self.event_filters[event_type.value] = filter_func
     
     async def register_event_transformer(self, event_type: EventType, transformer_func: Callable):
-        """Register event transformation function"""        self.event_transformers[event_type.value] = transformer_func
+        """Register event transformation function"""
+        self.event_transformers[event_type.value] = transformer_func
     
     async def fire_filtered_event(
         self,
         event_type: EventType,
         event_data: Dict[str, Any]
     ) -> List[str]:
-        """Fire event with filtering and transformation"""        # Apply filter if available
+        """Fire event with filtering and transformation"""
+        # Apply filter if available
         filter_func = self.event_filters.get(event_type.value)
         if filter_func and not await filter_func(event_data):
             return []  # Event filtered out
@@ -1126,7 +1188,8 @@ class EventTriggerManager:
 
 
 class ConversationalTriggers:
-    """Specialized conversational triggers for dialogue automation"""    
+    """Specialized conversational triggers for dialogue automation"""
+    
     def __init__(self, trigger_engine: TriggerEngine):
         self.trigger_engine = trigger_engine
         self.conversation_patterns: Dict[str, Dict[str, Any]] = {}
@@ -1137,7 +1200,8 @@ class ConversationalTriggers:
         intent: str,
         trigger_definition: TriggerDefinition
     ):
-        """Register trigger for specific conversational intent"""        self.intent_triggers[intent] = trigger_definition
+        """Register trigger for specific conversational intent"""
+        self.intent_triggers[intent] = trigger_definition
         await self.trigger_engine.register_trigger(trigger_definition)
     
     async def process_conversation_event(
@@ -1147,7 +1211,8 @@ class ConversationalTriggers:
         entities: Dict[str, Any],
         context: Dict[str, Any]
     ) -> List[str]:
-        """Process conversational event and trigger automation"""        event_data = {
+        """Process conversational event and trigger automation"""
+        event_data = {
             "conversation_id": conversation_id,
             "intent": intent,
             "entities": entities,
@@ -1159,7 +1224,8 @@ class ConversationalTriggers:
 
 
 class ContentTriggers:
-    """Specialized content-based triggers for content automation"""    
+    """Specialized content-based triggers for content automation"""
+    
     def __init__(self, trigger_engine: TriggerEngine):
         self.trigger_engine = trigger_engine
         self.content_rules: Dict[str, Dict[str, Any]] = {}
@@ -1169,7 +1235,8 @@ class ContentTriggers:
         content_type: str,
         rule_definition: Dict[str, Any]
     ):
-        """Register content-based trigger rule"""        self.content_rules[content_type] = rule_definition
+        """Register content-based trigger rule"""
+        self.content_rules[content_type] = rule_definition
     
     async def process_content_event(
         self,
@@ -1177,7 +1244,8 @@ class ContentTriggers:
         content_type: str,
         content_metadata: Dict[str, Any]
     ) -> List[str]:
-        """Process content event and trigger automation"""        event_data = {
+        """Process content event and trigger automation"""
+        event_data = {
             "content_id": content_id,
             "content_type": content_type,
             "metadata": content_metadata,
@@ -1188,7 +1256,8 @@ class ContentTriggers:
 
 
 class BusinessTriggers:
-    """Specialized business logic triggers for business automation"""    
+    """Specialized business logic triggers for business automation"""
+    
     def __init__(self, trigger_engine: TriggerEngine):
         self.trigger_engine = trigger_engine
         self.business_rules: Dict[str, Dict[str, Any]] = {}
@@ -1199,17 +1268,20 @@ class BusinessTriggers:
         rule_name: str,
         rule_definition: Dict[str, Any]
     ):
-        """Register business logic rule"""        self.business_rules[rule_name] = rule_definition
+        """Register business logic rule"""
+        self.business_rules[rule_name] = rule_definition
     
     async def set_kpi_threshold(self, kpi_name: str, threshold: float):
-        """Set KPI threshold for trigger activation"""        self.kpi_thresholds[kpi_name] = threshold
+        """Set KPI threshold for trigger activation"""
+        self.kpi_thresholds[kpi_name] = threshold
     
     async def process_business_event(
         self,
         event_type: str,
         business_data: Dict[str, Any]
     ) -> List[str]:
-        """Process business event and trigger automation"""        event_data = {
+        """Process business event and trigger automation"""
+        event_data = {
             "event_type": event_type,
             "business_data": business_data,
             "timestamp": datetime.utcnow().isoformat()
@@ -1227,7 +1299,8 @@ class BusinessTriggers:
 
 
 class TimeTriggers:
-    """Advanced time-based trigger management system"""    
+    """Advanced time-based trigger management system"""
+    
     def __init__(self, trigger_engine: TriggerEngine):
         self.trigger_engine = trigger_engine
         self.scheduled_triggers: Dict[str, Dict[str, Any]] = {}
@@ -1241,7 +1314,8 @@ class TimeTriggers:
         workflow_id: str,
         trigger_data: Dict[str, Any] = None
     ) -> str:
-        """Schedule a one-time trigger at specific time"""        scheduled_trigger = {
+        """Schedule a one-time trigger at specific time"""
+        scheduled_trigger = {
             "trigger_id": trigger_id,
             "execution_time": execution_time,
             "workflow_id": workflow_id,
@@ -1273,7 +1347,8 @@ class TimeTriggers:
         end_time: Optional[datetime] = None,
         trigger_data: Dict[str, Any] = None
     ) -> str:
-        """Schedule a recurring trigger with specified interval"""        recurring_trigger = {
+        """Schedule a recurring trigger with specified interval"""
+        recurring_trigger = {
             "trigger_id": trigger_id,
             "interval_seconds": interval_seconds,
             "workflow_id": workflow_id,
@@ -1303,7 +1378,8 @@ class TimeTriggers:
         workflow_id: str,
         trigger_data: Dict[str, Any] = None
     ) -> str:
-        """Schedule trigger based on cron expression"""        # Simplified cron implementation
+        """Schedule trigger based on cron expression"""
+        # Simplified cron implementation
         cron_trigger = {
             "trigger_id": trigger_id,
             "cron_expression": cron_expression,
@@ -1324,7 +1400,8 @@ class TimeTriggers:
         return trigger_id
     
     async def _execute_delayed_trigger(self, trigger_id: str, delay: float):
-        """Execute delayed trigger after specified delay"""        await asyncio.sleep(delay)
+        """Execute delayed trigger after specified delay"""
+        await asyncio.sleep(delay)
         
         if trigger_id in self.scheduled_triggers:
             trigger = self.scheduled_triggers[trigger_id]
@@ -1344,7 +1421,8 @@ class TimeTriggers:
             trigger["executed_at"] = datetime.utcnow()
     
     async def _execute_recurring_trigger(self, trigger_id: str):
-        """Execute recurring trigger at specified intervals"""        trigger = self.recurring_triggers.get(trigger_id)
+        """Execute recurring trigger at specified intervals"""
+        trigger = self.recurring_triggers.get(trigger_id)
         if not trigger:
             return
         
@@ -1373,7 +1451,8 @@ class TimeTriggers:
             trigger["execution_count"] += 1
     
     async def _execute_cron_trigger(self, trigger_id: str):
-        """Execute cron-based trigger"""        trigger = self.recurring_triggers.get(trigger_id)
+        """Execute cron-based trigger"""
+        trigger = self.recurring_triggers.get(trigger_id)
         if not trigger:
             return
         
@@ -1393,12 +1472,14 @@ class TimeTriggers:
                 await self.trigger_engine.fire_event(EventType.SCHEDULED_TRIGGER, event_data)
     
     async def _should_execute_cron(self, cron_expression: str) -> bool:
-        """Check if cron trigger should execute now"""        # Simplified cron evaluation
+        """Check if cron trigger should execute now"""
+        # Simplified cron evaluation
         # Real implementation would parse cron expression properly
         return True
     
     async def cancel_trigger(self, trigger_id: str):
-        """Cancel scheduled or recurring trigger"""        if trigger_id in self.timer_tasks:
+        """Cancel scheduled or recurring trigger"""
+        if trigger_id in self.timer_tasks:
             task = self.timer_tasks[trigger_id]
             task.cancel()
             del self.timer_tasks[trigger_id]
@@ -1411,7 +1492,8 @@ class TimeTriggers:
 
 
 class ConditionalTriggers:
-    """Conditional trigger system for complex business logic"""    
+    """Conditional trigger system for complex business logic"""
+    
     def __init__(self, trigger_engine: TriggerEngine):
         self.trigger_engine = trigger_engine
         self.conditions: Dict[str, Dict[str, Any]] = {}
@@ -1423,7 +1505,8 @@ class ConditionalTriggers:
         condition_definition: Dict[str, Any],
         evaluator: Optional[Callable] = None
     ):
-        """Register a conditional trigger"""        self.conditions[condition_id] = condition_definition
+        """Register a conditional trigger"""
+        self.conditions[condition_id] = condition_definition
         
         if evaluator:
             self.condition_evaluators[condition_id] = evaluator
@@ -1432,7 +1515,8 @@ class ConditionalTriggers:
         self,
         context_data: Dict[str, Any]
     ) -> List[str]:
-        """Evaluate all conditions and return triggered condition IDs"""        triggered_conditions = []
+        """Evaluate all conditions and return triggered condition IDs"""
+        triggered_conditions = []
         
         for condition_id, condition in self.conditions.items():
             if await self._evaluate_single_condition(condition_id, condition, context_data):
@@ -1455,7 +1539,8 @@ class ConditionalTriggers:
         condition: Dict[str, Any],
         context_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate a single condition"""        # Use custom evaluator if available
+        """Evaluate a single condition"""
+        # Use custom evaluator if available
         if condition_id in self.condition_evaluators:
             evaluator = self.condition_evaluators[condition_id]
             return await evaluator(condition, context_data)
@@ -1477,7 +1562,8 @@ class ConditionalTriggers:
         condition: Dict[str, Any],
         context_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate simple condition (field == value)"""        field = condition.get("field")
+        """Evaluate simple condition (field == value)"""
+        field = condition.get("field")
         operator = condition.get("operator", "eq")
         expected_value = condition.get("value")
         
@@ -1506,7 +1592,8 @@ class ConditionalTriggers:
         condition: Dict[str, Any],
         context_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate complex condition with multiple criteria"""        criteria = condition.get("criteria", [])
+        """Evaluate complex condition with multiple criteria"""
+        criteria = condition.get("criteria", [])
         logic = condition.get("logic", "and")  # "and" or "or"
         
         results = []
@@ -1526,7 +1613,8 @@ class ConditionalTriggers:
         condition: Dict[str, Any],
         context_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate threshold-based condition"""        metric = condition.get("metric")
+        """Evaluate threshold-based condition"""
+        metric = condition.get("metric")
         threshold = condition.get("threshold")
         comparison = condition.get("comparison", "gte")
         
@@ -1548,7 +1636,8 @@ class ConditionalTriggers:
 
 
 class WebhookTriggers:
-    """Webhook-based trigger system for external integrations"""    
+    """Webhook-based trigger system for external integrations"""
+    
     def __init__(self, trigger_engine: TriggerEngine):
         self.trigger_engine = trigger_engine
         self.webhook_endpoints: Dict[str, Dict[str, Any]] = {}
@@ -1561,7 +1650,8 @@ class WebhookTriggers:
         secret_key: Optional[str] = None,
         processor: Optional[Callable] = None
     ) -> str:
-        """Register webhook endpoint"""        webhook = {
+        """Register webhook endpoint"""
+        webhook = {
             "webhook_id": webhook_id,
             "endpoint_url": endpoint_url,
             "secret_key": secret_key,
@@ -1583,7 +1673,8 @@ class WebhookTriggers:
         request_data: Dict[str, Any],
         headers: Dict[str, str] = None
     ) -> Dict[str, Any]:
-        """Process incoming webhook request"""        if webhook_id not in self.webhook_endpoints:
+        """Process incoming webhook request"""
+        if webhook_id not in self.webhook_endpoints:
             return {"status": "webhook_not_found"}
         
         webhook = self.webhook_endpoints[webhook_id]
@@ -1627,13 +1718,15 @@ class WebhookTriggers:
         request_data: Dict[str, Any],
         headers: Dict[str, str]
     ) -> bool:
-        """Validate webhook signature for security"""        # Simplified signature validation
+        """Validate webhook signature for security"""
+        # Simplified signature validation
         # Real implementation would use HMAC or similar
         return True
 
 
 class UserActionTriggers:
-    """User action-based trigger system"""    
+    """User action-based trigger system"""
+    
     def __init__(self, trigger_engine: TriggerEngine):
         self.trigger_engine = trigger_engine
         self.action_patterns: Dict[str, Dict[str, Any]] = {}
@@ -1646,7 +1739,8 @@ class UserActionTriggers:
         time_window_seconds: int = 300,
         workflow_id: Optional[str] = None
     ):
-        """Register user action pattern trigger"""        pattern = {
+        """Register user action pattern trigger"""
+        pattern = {
             "pattern_id": pattern_id,
             "action_sequence": action_sequence,
             "time_window_seconds": time_window_seconds,
@@ -1662,7 +1756,8 @@ class UserActionTriggers:
         action: str,
         action_data: Dict[str, Any] = None
     ) -> List[str]:
-        """Track user action and check for pattern matches"""        # Initialize user session if not exists
+        """Track user action and check for pattern matches"""
+        # Initialize user session if not exists
         if user_id not in self.user_sessions:
             self.user_sessions[user_id] = {
                 "actions": [],
@@ -1701,7 +1796,8 @@ class UserActionTriggers:
         return triggered_patterns
     
     async def _clean_old_actions(self, user_id: str):
-        """Clean old actions outside time windows"""        session = self.user_sessions[user_id]
+        """Clean old actions outside time windows"""
+        session = self.user_sessions[user_id]
         current_time = datetime.utcnow()
         
         # Find maximum time window from all patterns
@@ -1719,7 +1815,8 @@ class UserActionTriggers:
         ]
     
     async def _check_action_patterns(self, user_id: str) -> List[str]:
-        """Check if any action patterns are matched"""        session = self.user_sessions[user_id]
+        """Check if any action patterns are matched"""
+        session = self.user_sessions[user_id]
         matched_patterns = []
         
         for pattern_id, pattern in self.action_patterns.items():
@@ -1733,7 +1830,8 @@ class UserActionTriggers:
         session: Dict[str, Any],
         pattern: Dict[str, Any]
     ) -> bool:
-        """Check if specific pattern is matched in session"""        required_sequence = pattern["action_sequence"]
+        """Check if specific pattern is matched in session"""
+        required_sequence = pattern["action_sequence"]
         time_window = pattern["time_window_seconds"]
         
         if len(session["actions"]) < len(required_sequence):
@@ -1753,7 +1851,8 @@ class UserActionTriggers:
 
 
 class SystemTriggers:
-    """System-level trigger management"""    
+    """System-level trigger management"""
+    
     def __init__(self, trigger_engine: TriggerEngine):
         self.trigger_engine = trigger_engine
         self.system_monitors: Dict[str, Dict[str, Any]] = {}
@@ -1766,7 +1865,8 @@ class SystemTriggers:
         threshold: float,
         check_interval_seconds: int = 60
     ):
-        """Register system monitoring trigger"""        monitor = {
+        """Register system monitoring trigger"""
+        monitor = {
             "monitor_id": monitor_id,
             "metric_name": metric_name,
             "threshold": threshold,
@@ -1782,7 +1882,8 @@ class SystemTriggers:
         asyncio.create_task(self._monitor_system_metric(monitor_id))
     
     async def _monitor_system_metric(self, monitor_id: str):
-        """Monitor system metric continuously"""        monitor = self.system_monitors[monitor_id]
+        """Monitor system metric continuously"""
+        monitor = self.system_monitors[monitor_id]
         
         while monitor["status"] == "active":
             try:
@@ -1811,7 +1912,8 @@ class SystemTriggers:
                 await asyncio.sleep(monitor["check_interval_seconds"])
     
     async def _get_system_metric(self, metric_name: str) -> float:
-        """Get system metric value"""        # Simplified metric collection
+        """Get system metric value"""
+        # Simplified metric collection
         # Real implementation would integrate with monitoring systems
         import psutil
         
@@ -1826,7 +1928,8 @@ class SystemTriggers:
 
 
 class ThresholdTriggers:
-    """Threshold-based trigger system for metrics and KPIs"""    
+    """Threshold-based trigger system for metrics and KPIs"""
+    
     def __init__(self, trigger_engine: TriggerEngine):
         self.trigger_engine = trigger_engine
         self.thresholds: Dict[str, Dict[str, Any]] = {}
@@ -1840,7 +1943,8 @@ class ThresholdTriggers:
         comparison: str = "gte",  # gte, lte, gt, lt, eq
         trigger_once: bool = True
     ):
-        """Register threshold trigger"""        threshold = {
+        """Register threshold trigger"""
+        threshold = {
             "threshold_id": threshold_id,
             "metric_name": metric_name,
             "threshold_value": threshold_value,
@@ -1858,7 +1962,8 @@ class ThresholdTriggers:
         value: float,
         metadata: Dict[str, Any] = None
     ) -> List[str]:
-        """Update metric value and check thresholds"""        # Record metric history
+        """Update metric value and check thresholds"""
+        # Record metric history
         if metric_name not in self.metric_history:
             self.metric_history[metric_name] = []
         
@@ -1902,7 +2007,8 @@ class ThresholdTriggers:
         threshold: Dict[str, Any],
         current_value: float
     ) -> bool:
-        """Check if threshold is exceeded"""        # Skip if already triggered and trigger_once is True
+        """Check if threshold is exceeded"""
+        # Skip if already triggered and trigger_once is True
         if threshold["trigger_once"] and threshold["triggered"]:
             return False
         

@@ -22,7 +22,8 @@ LOGIQUE MÉTIER:
 Content Upload → File Validation → Format Detection → 
 Security Scan → Storage Optimization → Fingerprint Generation → 
 Metadata Extraction → Multi-provider Storage → Access Control
-"""import asyncio
+"""
+import asyncio
 import logging
 import mimetypes
 import hashlib
@@ -61,7 +62,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Professional content type enumeration for multi-format platform"""    AUDIO = "audio"
+    """Professional content type enumeration for multi-format platform"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -71,7 +73,8 @@ class ContentType(Enum):
 
 
 class FileStatus(Enum):
-    """File processing status enumeration"""    UPLOADED = "uploaded"
+    """File processing status enumeration"""
+    UPLOADED = "uploaded"
     VALIDATING = "validating"
     PROCESSING = "processing"
     FINGERPRINTING = "fingerprinting"
@@ -82,7 +85,8 @@ class FileStatus(Enum):
 
 
 class CompressionLevel(Enum):
-    """Compression optimization levels"""    NONE = "none"
+    """Compression optimization levels"""
+    NONE = "none"
     LIGHT = "light"
     STANDARD = "standard"
     AGGRESSIVE = "aggressive"
@@ -91,7 +95,8 @@ class CompressionLevel(Enum):
 
 @dataclass
 class FileMetadata:
-    """Comprehensive file metadata structure"""    file_id: str
+    """Comprehensive file metadata structure"""
+    file_id: str
     original_filename: str
     file_size: int
     content_type: ContentType
@@ -139,7 +144,8 @@ class FileMetadata:
 
 @dataclass
 class FileValidationResult:
-    """File validation result structure"""    is_valid: bool
+    """File validation result structure"""
+    is_valid: bool
     content_type: ContentType
     mime_type: str
     file_size: int
@@ -151,7 +157,8 @@ class FileValidationResult:
 
 @dataclass
 class FileProcessingResult:
-    """File processing operation result"""    success: bool
+    """File processing operation result"""
+    success: bool
     file_id: str
     processed_path: Optional[str] = None
     thumbnails: List[str] = field(default_factory=list)
@@ -162,7 +169,8 @@ class FileProcessingResult:
 
 
 class FileValidationConfig(BaseModel):
-    """Configuration for file validation rules"""    max_file_size: int = 500 * 1024 * 1024  # 500MB default
+    """Configuration for file validation rules"""
+    max_file_size: int = 500 * 1024 * 1024  # 500MB default
     allowed_mime_types: List[str] = [
         # Audio
         "audio/mpeg", "audio/wav", "audio/flac", "audio/aac", "audio/ogg",
@@ -187,20 +195,24 @@ class FileValidationConfig(BaseModel):
 
 
 class FileManager:
-    """    Industrial-grade file manager for IA Influencer Agent platform.
+    """
+    Industrial-grade file manager for IA Influencer Agent platform.
     
     Handles multi-format content upload, validation, processing, and optimization
     for creators across music, video, image, and text content types.
-    """    
+    """
+    
     def __init__(self, 
                  storage_path: Union[str, Path] = "/tmp/ia_influencer_storage",
                  validation_config: Optional[FileValidationConfig] = None):
-        """        Initialize FileManager with professional configuration.
+        """
+        Initialize FileManager with professional configuration.
         
         Args:
             storage_path: Base path for file storage
             validation_config: File validation configuration
-        """        self.storage_path = Path(storage_path)
+        """
+        self.storage_path = Path(storage_path)
         self.validation_config = validation_config or FileValidationConfig()
         self.logger = logging.getLogger(__name__)
         
@@ -224,7 +236,8 @@ class FileManager:
         self.logger.info("🎯 FileManager initialized with industrial-grade capabilities")
     
     def _create_storage_structure(self):
-        """Create organized storage directory structure"""        directories = [
+        """Create organized storage directory structure"""
+        directories = [
             "uploads/pending",
             "uploads/processing", 
             "uploads/completed",
@@ -248,7 +261,8 @@ class FileManager:
                          filename: str,
                          user_id: str,
                          metadata: Optional[Dict[str, Any]] = None) -> FileProcessingResult:
-        """        Upload and process file with comprehensive validation and optimization.
+        """
+        Upload and process file with comprehensive validation and optimization.
         
         Args:
             file_data: File content as bytes or file-like object
@@ -258,7 +272,8 @@ class FileManager:
             
         Returns:
             Complete file processing result
-        """        try:
+        """
+        try:
             start_time = datetime.now()
             
             # Generate unique file ID
@@ -322,7 +337,8 @@ class FileManager:
     
     async def _save_temp_file(self, file_data: Union[bytes, BinaryIO], 
                              filename: str, file_id: str) -> Path:
-        """Save uploaded file to temporary location"""        if hasattr(file_data, 'read'):
+        """Save uploaded file to temporary location"""
+        if hasattr(file_data, 'read'):
             content = file_data.read()
             if hasattr(file_data, 'seek'):
                 file_data.seek(0)
@@ -339,7 +355,8 @@ class FileManager:
         return temp_path
     
     def _sanitize_filename(self, filename: str) -> str:
-        """Sanitize filename for safe storage"""        # Remove dangerous characters
+        """Sanitize filename for safe storage"""
+        # Remove dangerous characters
         safe_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_."
         safe_filename = ''.join(c for c in filename if c in safe_chars)
         
@@ -351,7 +368,8 @@ class FileManager:
         return safe_filename or "unknown_file"
     
     async def _validate_file(self, file_path: Path, filename: str) -> FileValidationResult:
-        """Comprehensive file validation with security checks"""        try:
+        """Comprehensive file validation with security checks"""
+        try:
             file_size = file_path.stat().st_size
             warnings = []
             errors = []
@@ -411,7 +429,8 @@ class FileManager:
             )
     
     async def _detect_mime_type(self, file_path: Path) -> str:
-        """Detect MIME type using multiple methods for accuracy"""        try:
+        """Detect MIME type using multiple methods for accuracy"""
+        try:
             # Primary: python-magic
             mime_type = self.magic_detector.from_file(str(file_path))
             
@@ -434,7 +453,8 @@ class FileManager:
             return "application/octet-stream"
     
     def _classify_content_type(self, mime_type: str) -> ContentType:
-        """Classify content type from MIME type"""        if mime_type.startswith('audio/'):
+        """Classify content type from MIME type"""
+        if mime_type.startswith('audio/'):
             return ContentType.AUDIO
         elif mime_type.startswith('video/'):
             return ContentType.VIDEO
@@ -450,7 +470,8 @@ class FileManager:
             return ContentType.UNKNOWN
     
     async def _verify_media_mime_type(self, file_path: Path, detected_mime: str) -> Optional[str]:
-        """Verify MIME type for media files using content analysis"""        try:
+        """Verify MIME type for media files using content analysis"""
+        try:
             if detected_mime.startswith('audio/'):
                 return await self._verify_audio_mime(file_path)
             elif detected_mime.startswith('video/'):
@@ -463,7 +484,8 @@ class FileManager:
             return None
     
     async def _verify_audio_mime(self, file_path: Path) -> Optional[str]:
-        """Verify audio file MIME type using librosa"""        try:
+        """Verify audio file MIME type using librosa"""
+        try:
             # Use soundfile for initial check
             info = sf.info(str(file_path))
             if info.format.lower() == 'wav':
@@ -481,7 +503,8 @@ class FileManager:
             return None
     
     async def _verify_video_mime(self, file_path: Path) -> Optional[str]:
-        """Verify video file MIME type using OpenCV"""        try:
+        """Verify video file MIME type using OpenCV"""
+        try:
             cap = cv2.VideoCapture(str(file_path))
             if cap.isOpened():
                 # Get codec information
@@ -505,7 +528,8 @@ class FileManager:
             return None
     
     async def _verify_image_mime(self, file_path: Path) -> Optional[str]:
-        """Verify image file MIME type using PIL"""        try:
+        """Verify image file MIME type using PIL"""
+        try:
             with Image.open(file_path) as img:
                 format_lower = img.format.lower()
                 if format_lower == 'jpeg':
@@ -525,7 +549,8 @@ class FileManager:
             return None
     
     async def _scan_for_malware(self, file_path: Path) -> Dict[str, Any]:
-        """Malware scanning simulation (integrate with real scanner in production)"""        try:
+        """Malware scanning simulation (integrate with real scanner in production)"""
+        try:
             # In production, integrate with ClamAV, VirusTotal API, or similar
             # For now, implement basic suspicious pattern detection
             
@@ -558,7 +583,8 @@ class FileManager:
             return {"threat_found": False, "error": str(e)}
     
     async def _check_content_policy(self, file_path: Path, content_type: ContentType) -> Dict[str, Any]:
-        """Content policy verification for platform compliance"""        violations = []
+        """Content policy verification for platform compliance"""
+        violations = []
         
         try:
             if content_type == ContentType.IMAGE:
@@ -581,7 +607,8 @@ class FileManager:
             return {"violations": [], "error": str(e)}
     
     async def _check_image_content_policy(self, file_path: Path) -> List[str]:
-        """Image content policy checks"""        violations = []
+        """Image content policy checks"""
+        violations = []
         
         try:
             with Image.open(file_path) as img:
@@ -608,7 +635,8 @@ class FileManager:
         return violations
     
     async def _check_text_content_policy(self, file_path: Path) -> List[str]:
-        """Text content policy checks"""        violations = []
+        """Text content policy checks"""
+        violations = []
         
         try:
             async with aiofiles.open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
@@ -636,7 +664,8 @@ class FileManager:
         return violations
     
     async def _check_media_content_policy(self, file_path: Path) -> List[str]:
-        """Media content policy checks"""        violations = []
+        """Media content policy checks"""
+        violations = []
         
         try:
             file_size = file_path.stat().st_size
@@ -659,7 +688,8 @@ class FileManager:
         return violations
     
     async def _check_file_integrity(self, file_path: Path, content_type: ContentType) -> Dict[str, Any]:
-        """Check file integrity based on content type"""        try:
+        """Check file integrity based on content type"""
+        try:
             if content_type == ContentType.AUDIO:
                 return await self._check_audio_integrity(file_path)
             elif content_type == ContentType.VIDEO:
@@ -673,7 +703,8 @@ class FileManager:
             return {"valid": False, "reason": f"Integrity check failed: {str(e)}"}
     
     async def _check_audio_integrity(self, file_path: Path) -> Dict[str, Any]:
-        """Check audio file integrity"""        try:
+        """Check audio file integrity"""
+        try:
             # Use soundfile to verify audio file structure
             info = sf.info(str(file_path))
             
@@ -700,7 +731,8 @@ class FileManager:
             return {"valid": False, "reason": f"Audio integrity check failed: {str(e)}"}
     
     async def _check_video_integrity(self, file_path: Path) -> Dict[str, Any]:
-        """Check video file integrity"""        try:
+        """Check video file integrity"""
+        try:
             cap = cv2.VideoCapture(str(file_path))
             
             if not cap.isOpened():
@@ -734,7 +766,8 @@ class FileManager:
             return {"valid": False, "reason": f"Video integrity check failed: {str(e)}"}
     
     async def _check_image_integrity(self, file_path: Path) -> Dict[str, Any]:
-        """Check image file integrity"""        try:
+        """Check image file integrity"""
+        try:
             with Image.open(file_path) as img:
                 img.verify()  # Verify image integrity
                 
@@ -758,7 +791,8 @@ class FileManager:
             return {"valid": False, "reason": f"Image integrity check failed: {str(e)}"}
     
     async def _quarantine_file(self, file_path: Path, file_id: str, errors: List[str]):
-        """Move suspicious or invalid files to quarantine"""        try:
+        """Move suspicious or invalid files to quarantine"""
+        try:
             quarantine_path = self.storage_path / "uploads" / "quarantine" / f"{file_id}_{file_path.name}"
             shutil.move(str(file_path), str(quarantine_path))
             
@@ -780,18 +814,21 @@ class FileManager:
             self.logger.error(f"Failed to quarantine file {file_id}: {e}")
     
     async def _move_to_processing(self, temp_path: Path, file_id: str) -> Path:
-        """Move file to processing directory"""        processing_path = self.storage_path / "uploads" / "processing" / f"{file_id}_{temp_path.name}"
+        """Move file to processing directory"""
+        processing_path = self.storage_path / "uploads" / "processing" / f"{file_id}_{temp_path.name}"
         shutil.move(str(temp_path), str(processing_path))
         return processing_path
     
     async def _move_to_completed(self, processing_path: Path, file_id: str) -> Path:
-        """Move file to completed directory"""        completed_path = self.storage_path / "uploads" / "completed" / f"{file_id}_{processing_path.name}"
+        """Move file to completed directory"""
+        completed_path = self.storage_path / "uploads" / "completed" / f"{file_id}_{processing_path.name}"
         shutil.move(str(processing_path), str(completed_path))
         return completed_path
     
     async def _extract_metadata(self, file_path: Path, filename: str, user_id: str, 
                                file_id: str, validation_result: FileValidationResult) -> FileMetadata:
-        """Extract comprehensive metadata from file"""        file_hash = await self._calculate_file_hash(file_path)
+        """Extract comprehensive metadata from file"""
+        file_hash = await self._calculate_file_hash(file_path)
         
         metadata = FileMetadata(
             file_id=file_id,
@@ -816,7 +853,8 @@ class FileManager:
         return metadata
     
     async def _calculate_file_hash(self, file_path: Path) -> str:
-        """Calculate SHA-256 hash of file"""        hash_sha256 = hashlib.sha256()
+        """Calculate SHA-256 hash of file"""
+        hash_sha256 = hashlib.sha256()
         
         async with aiofiles.open(file_path, 'rb') as f:
             while chunk := await f.read(8192):
@@ -825,7 +863,8 @@ class FileManager:
         return hash_sha256.hexdigest()
     
     async def _extract_audio_metadata(self, file_path: Path, metadata: FileMetadata):
-        """Extract audio-specific metadata"""        try:
+        """Extract audio-specific metadata"""
+        try:
             # Use soundfile for basic audio info
             info = sf.info(str(file_path))
             metadata.duration = info.frames / info.samplerate if info.samplerate > 0 else 0
@@ -861,7 +900,8 @@ class FileManager:
             self.logger.warning(f"Audio metadata extraction failed: {e}")
     
     async def _extract_video_metadata(self, file_path: Path, metadata: FileMetadata):
-        """Extract video-specific metadata"""        try:
+        """Extract video-specific metadata"""
+        try:
             cap = cv2.VideoCapture(str(file_path))
             
             if cap.isOpened():
@@ -886,7 +926,8 @@ class FileManager:
             self.logger.warning(f"Video metadata extraction failed: {e}")
     
     async def _extract_image_metadata(self, file_path: Path, metadata: FileMetadata):
-        """Extract image-specific metadata"""        try:
+        """Extract image-specific metadata"""
+        try:
             with Image.open(file_path) as img:
                 width, height = img.size
                 metadata.dimensions = (width, height)
@@ -915,7 +956,8 @@ class FileManager:
             self.logger.warning(f"Image metadata extraction failed: {e}")
     
     async def _process_by_content_type(self, file_path: Path, metadata: FileMetadata) -> Dict[str, Any]:
-        """Process file based on content type"""        result = {"thumbnails": [], "optimized_versions": {}}
+        """Process file based on content type"""
+        result = {"thumbnails": [], "optimized_versions": {}}
         
         try:
             if metadata.content_type == ContentType.AUDIO:
@@ -934,7 +976,8 @@ class FileManager:
         return result
     
     async def _process_audio_file(self, file_path: Path, metadata: FileMetadata) -> Dict[str, Any]:
-        """Process audio file for optimization and previews"""        result = {"thumbnails": [], "optimized_versions": {}}
+        """Process audio file for optimization and previews"""
+        result = {"thumbnails": [], "optimized_versions": {}}
         
         try:
             # Generate waveform thumbnail
@@ -952,7 +995,8 @@ class FileManager:
         return result
     
     async def _process_video_file(self, file_path: Path, metadata: FileMetadata) -> Dict[str, Any]:
-        """Process video file for optimization and thumbnails"""        result = {"thumbnails": [], "optimized_versions": {}}
+        """Process video file for optimization and thumbnails"""
+        result = {"thumbnails": [], "optimized_versions": {}}
         
         try:
             # Generate video thumbnails
@@ -969,7 +1013,8 @@ class FileManager:
         return result
     
     async def _process_image_file(self, file_path: Path, metadata: FileMetadata) -> Dict[str, Any]:
-        """Process image file for optimization and thumbnails"""        result = {"thumbnails": [], "optimized_versions": {}}
+        """Process image file for optimization and thumbnails"""
+        result = {"thumbnails": [], "optimized_versions": {}}
         
         try:
             # Generate thumbnails in different sizes
@@ -986,7 +1031,8 @@ class FileManager:
         return result
     
     async def _generate_audio_waveform(self, file_path: Path, file_id: str) -> Optional[str]:
-        """Generate audio waveform visualization"""        try:
+        """Generate audio waveform visualization"""
+        try:
             import matplotlib.pyplot as plt
             import matplotlib
             matplotlib.use('Agg')  # Non-interactive backend
@@ -1013,7 +1059,8 @@ class FileManager:
             return None
     
     async def _optimize_audio_file(self, file_path: Path, metadata: FileMetadata) -> Dict[str, str]:
-        """Generate optimized audio versions"""        optimized = {}
+        """Generate optimized audio versions"""
+        optimized = {}
         
         try:
             # This would typically use ffmpeg or similar tools
@@ -1041,7 +1088,8 @@ class FileManager:
         return optimized
     
     async def _generate_video_thumbnails(self, file_path: Path, file_id: str) -> List[str]:
-        """Generate video thumbnails at different timestamps"""        thumbnails = []
+        """Generate video thumbnails at different timestamps"""
+        thumbnails = []
         
         try:
             cap = cv2.VideoCapture(str(file_path))
@@ -1083,7 +1131,8 @@ class FileManager:
         return thumbnails
     
     async def _optimize_video_file(self, file_path: Path, metadata: FileMetadata) -> Dict[str, str]:
-        """Generate optimized video versions"""        optimized = {}
+        """Generate optimized video versions"""
+        optimized = {}
         
         try:
             base_name = f"{metadata.file_id}_video"
@@ -1110,7 +1159,8 @@ class FileManager:
         return optimized
     
     async def _generate_image_thumbnails(self, file_path: Path, file_id: str) -> List[str]:
-        """Generate image thumbnails in different sizes"""        thumbnails = []
+        """Generate image thumbnails in different sizes"""
+        thumbnails = []
         
         try:
             with Image.open(file_path) as img:
@@ -1136,7 +1186,8 @@ class FileManager:
         return thumbnails
     
     async def _optimize_image_file(self, file_path: Path, metadata: FileMetadata) -> Dict[str, str]:
-        """Generate optimized image versions"""        optimized = {}
+        """Generate optimized image versions"""
+        optimized = {}
         
         try:
             with Image.open(file_path) as img:
@@ -1166,7 +1217,8 @@ class FileManager:
         return optimized
     
     async def _save_metadata(self, metadata: FileMetadata):
-        """Save file metadata to storage"""        try:
+        """Save file metadata to storage"""
+        try:
             metadata_path = self.storage_path / "metadata" / f"{metadata.file_id}.json"
             
             # Convert metadata to dictionary
@@ -1212,7 +1264,8 @@ class FileManager:
             self.logger.error(f"Failed to save metadata for {metadata.file_id}: {e}")
     
     def _update_stats(self, metadata: FileMetadata, processing_time: float):
-        """Update processing statistics"""        self.stats["files_processed"] += 1
+        """Update processing statistics"""
+        self.stats["files_processed"] += 1
         self.stats["total_size_processed"] += metadata.file_size
         
         if metadata.optimization_savings:
@@ -1221,7 +1274,8 @@ class FileManager:
         self.logger.info(f"📊 Processing stats updated - Total files: {self.stats['files_processed']}")
     
     async def get_file_metadata(self, file_id: str) -> Optional[FileMetadata]:
-        """Retrieve file metadata by ID"""        try:
+        """Retrieve file metadata by ID"""
+        try:
             metadata_path = self.storage_path / "metadata" / f"{file_id}.json"
             
             if not metadata_path.exists():
@@ -1265,7 +1319,8 @@ class FileManager:
             return None
     
     async def delete_file(self, file_id: str) -> bool:
-        """Delete file and all associated data"""        try:
+        """Delete file and all associated data"""
+        try:
             success = True
             
             # Delete main file
@@ -1311,7 +1366,8 @@ class FileManager:
     async def list_files(self, user_id: Optional[str] = None, 
                         content_type: Optional[ContentType] = None,
                         limit: int = 100) -> List[FileMetadata]:
-        """List files with optional filtering"""        try:
+        """List files with optional filtering"""
+        try:
             files = []
             metadata_dir = self.storage_path / "metadata"
             
@@ -1344,7 +1400,8 @@ class FileManager:
             return []
     
     async def get_processing_stats(self) -> Dict[str, Any]:
-        """Get comprehensive processing statistics"""        try:
+        """Get comprehensive processing statistics"""
+        try:
             stats = self.stats.copy()
             
             # Add storage statistics
@@ -1368,7 +1425,8 @@ class FileManager:
             return self.stats.copy()
     
     async def cleanup_temp_files(self, max_age_hours: int = 24):
-        """Clean up temporary files older than specified hours"""        try:
+        """Clean up temporary files older than specified hours"""
+        try:
             cutoff_time = datetime.now() - timedelta(hours=max_age_hours)
             cleaned_count = 0
             
@@ -1404,7 +1462,8 @@ class FileManager:
             return 0
     
     def __del__(self):
-        """Cleanup resources on destruction"""        try:
+        """Cleanup resources on destruction"""
+        try:
             if hasattr(self, 'executor'):
                 self.executor.shutdown(wait=False)
         except:

@@ -23,7 +23,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import sqlite3
@@ -46,7 +47,8 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""    GDPR = "GDPR"                       # General Data Protection Regulation (EU)
+    """Supported compliance frameworks"""
+    GDPR = "GDPR"                       # General Data Protection Regulation (EU)
     CCPA = "CCPA"                       # California Consumer Privacy Act (US)
     DMCA = "DMCA"                       # Digital Millennium Copyright Act (US)
     PCI_DSS = "PCI_DSS"                # Payment Card Industry Data Security Standard
@@ -59,7 +61,8 @@ class ComplianceFramework(Enum):
 
 
 class ComplianceStatus(Enum):
-    """Compliance status levels"""    COMPLIANT = "COMPLIANT"             # Fully compliant
+    """Compliance status levels"""
+    COMPLIANT = "COMPLIANT"             # Fully compliant
     WARNING = "WARNING"                 # Minor compliance issues
     NON_COMPLIANT = "NON_COMPLIANT"     # Major compliance violations
     PENDING = "PENDING"                 # Compliance check in progress
@@ -68,7 +71,8 @@ class ComplianceStatus(Enum):
 
 
 class DataProcessingPurpose(Enum):
-    """GDPR data processing purposes"""    CONSENT = "CONSENT"                 # Based on user consent
+    """GDPR data processing purposes"""
+    CONSENT = "CONSENT"                 # Based on user consent
     CONTRACT = "CONTRACT"               # Necessary for contract performance
     LEGAL_OBLIGATION = "LEGAL_OBLIGATION"  # Required by law
     VITAL_INTERESTS = "VITAL_INTERESTS"    # Protecting vital interests
@@ -77,7 +81,8 @@ class DataProcessingPurpose(Enum):
 
 
 class DataCategory(Enum):
-    """Categories of personal data"""    BASIC_PERSONAL = "BASIC_PERSONAL"   # Name, email, address
+    """Categories of personal data"""
+    BASIC_PERSONAL = "BASIC_PERSONAL"   # Name, email, address
     SENSITIVE = "SENSITIVE"             # Race, religion, health, etc.
     FINANCIAL = "FINANCIAL"             # Payment information
     BIOMETRIC = "BIOMETRIC"             # Fingerprints, facial recognition
@@ -89,7 +94,8 @@ class DataCategory(Enum):
 
 @dataclass
 class DataSubject:
-    """Data subject information for GDPR compliance"""    subject_id: str
+    """Data subject information for GDPR compliance"""
+    subject_id: str
     email: Optional[str] = None
     country: Optional[str] = None
     age: Optional[int] = None
@@ -102,11 +108,13 @@ class DataSubject:
     
     @property
     def is_minor(self) -> bool:
-        """Check if subject is a minor (under 18)"""        return self.age is not None and self.age < 18
+        """Check if subject is a minor (under 18)"""
+        return self.age is not None and self.age < 18
     
     @property
     def is_eu_resident(self) -> bool:
-        """Check if subject is EU resident"""        eu_countries = {
+        """Check if subject is EU resident"""
+        eu_countries = {
             'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR',
             'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL',
             'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE'
@@ -115,12 +123,14 @@ class DataSubject:
     
     @property
     def requires_gdpr_protection(self) -> bool:
-        """Check if subject requires GDPR protection"""        return self.is_eu_resident or self.country == 'GB'  # Include UK
+        """Check if subject requires GDPR protection"""
+        return self.is_eu_resident or self.country == 'GB'  # Include UK
 
 
 @dataclass
 class ComplianceEvent:
-    """Compliance-related event"""    event_id: str
+    """Compliance-related event"""
+    event_id: str
     event_type: str
     framework: ComplianceFramework
     timestamp: datetime
@@ -131,7 +141,8 @@ class ComplianceEvent:
     resolution_notes: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'event_id': self.event_id,
             'event_type': self.event_type,
             'framework': self.framework.value,
@@ -146,7 +157,8 @@ class ComplianceEvent:
 
 @dataclass
 class ComplianceReport:
-    """Compliance assessment report"""    report_id: str
+    """Compliance assessment report"""
+    report_id: str
     framework: ComplianceFramework
     timestamp: datetime
     overall_status: ComplianceStatus
@@ -157,7 +169,8 @@ class ComplianceReport:
     pending_requests: int = 0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'report_id': self.report_id,
             'framework': self.framework.value,
             'timestamp': self.timestamp.isoformat(),
@@ -171,13 +184,15 @@ class ComplianceReport:
 
 
 class GDPRTracker:
-    """GDPR compliance tracking system"""    
+    """GDPR compliance tracking system"""
+    
     def __init__(self, db_path: str):
         self.db_path = db_path
         self._init_database()
         
     def _init_database(self) -> None:
-        """Initialize GDPR tracking database"""        
+        """Initialize GDPR tracking database"""
+        
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
@@ -247,7 +262,8 @@ class GDPRTracker:
         conn.close()
     
     def register_data_subject(self, data_subject: DataSubject) -> None:
-        """Register new data subject"""        
+        """Register new data subject"""
+        
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
@@ -285,7 +301,8 @@ class GDPRTracker:
         ip_address: str,
         evidence: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Record consent given or withdrawn"""        
+        """Record consent given or withdrawn"""
+        
         consent_id = str(uuid.uuid4())
         
         conn = sqlite3.connect(self.db_path)
@@ -334,7 +351,8 @@ class GDPRTracker:
         ip_address: str,
         user_agent: str
     ) -> str:
-        """Record data processing activity"""        
+        """Record data processing activity"""
+        
         activity_id = str(uuid.uuid4())
         
         conn = sqlite3.connect(self.db_path)
@@ -378,7 +396,8 @@ class GDPRTracker:
         subject_id: str,
         request_type: str  # 'access', 'portability', 'erasure', 'rectification'
     ) -> str:
-        """Create data subject request"""        
+        """Create data subject request"""
+        
         request_id = str(uuid.uuid4())
         
         conn = sqlite3.connect(self.db_path)
@@ -403,7 +422,8 @@ class GDPRTracker:
         return request_id
     
     def complete_data_request(self, request_id: str, response_data: Optional[Dict[str, Any]] = None) -> None:
-        """Complete data subject request"""        
+        """Complete data subject request"""
+        
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
@@ -424,7 +444,8 @@ class GDPRTracker:
         logger.info("Completed data request: %s", request_id)
     
     def get_subject_data(self, subject_id: str) -> Optional[Dict[str, Any]]:
-        """Get all data for a subject (for access requests)"""        
+        """Get all data for a subject (for access requests)"""
+        
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
@@ -458,7 +479,8 @@ class GDPRTracker:
         }
     
     def erase_subject_data(self, subject_id: str) -> Dict[str, int]:
-        """Erase all data for a subject (for erasure requests)"""        
+        """Erase all data for a subject (for erasure requests)"""
+        
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
@@ -479,13 +501,15 @@ class GDPRTracker:
 
 
 class CCPATracker:
-    """CCPA compliance tracking system"""    
+    """CCPA compliance tracking system"""
+    
     def __init__(self, db_path: str):
         self.db_path = db_path
         self._init_database()
     
     def _init_database(self) -> None:
-        """Initialize CCPA tracking database"""        
+        """Initialize CCPA tracking database"""
+        
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
@@ -520,13 +544,15 @@ class CCPATracker:
 
 
 class DMCATracker:
-    """DMCA compliance tracking system"""    
+    """DMCA compliance tracking system"""
+    
     def __init__(self, db_path: str):
         self.db_path = db_path
         self._init_database()
     
     def _init_database(self) -> None:
-        """Initialize DMCA tracking database"""        
+        """Initialize DMCA tracking database"""
+        
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
@@ -574,7 +600,8 @@ class DMCATracker:
         work_description: str,
         infringement_url: str
     ) -> str:
-        """File DMCA takedown notice"""        
+        """File DMCA takedown notice"""
+        
         notice_id = str(uuid.uuid4())
         
         conn = sqlite3.connect(self.db_path)
@@ -604,7 +631,8 @@ class DMCATracker:
         return notice_id
     
     def process_takedown_notice(self, notice_id: str, action_taken: str) -> None:
-        """Process DMCA takedown notice"""        
+        """Process DMCA takedown notice"""
+        
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
@@ -626,7 +654,8 @@ class DMCATracker:
 
 
 class ComplianceTracker:
-    """    Comprehensive compliance tracking and management system
+    """
+    Comprehensive compliance tracking and management system
     
     Features:
     - Multi-framework compliance monitoring (GDPR, CCPA, DMCA, etc.)
@@ -639,7 +668,8 @@ class ComplianceTracker:
     - Privacy impact assessments
     - Data mapping and inventory
     - Incident response coordination
-    """    
+    """
+    
     def __init__(
         self,
         db_path: str = "compliance.db",
@@ -709,7 +739,8 @@ class ComplianceTracker:
                    [f.value for f in self.enabled_frameworks])
     
     def _init_main_database(self) -> None:
-        """Initialize main compliance database"""        
+        """Initialize main compliance database"""
+        
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
@@ -768,7 +799,8 @@ class ComplianceTracker:
         user_agent: str = "",
         duration: float = 0.0
     ) -> str:
-        """Track data processing activity for compliance"""        
+        """Track data processing activity for compliance"""
+        
         # Determine subject location for jurisdiction-specific compliance
         country = self._get_country_from_ip(ip_address)
         
@@ -820,7 +852,8 @@ class ComplianceTracker:
         ip_address: str,
         evidence: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Record consent given or withdrawn"""        
+        """Record consent given or withdrawn"""
+        
         country = self._get_country_from_ip(ip_address)
         data_subject = await self._get_or_create_data_subject(subject_id, country)
         
@@ -862,7 +895,8 @@ class ComplianceTracker:
         request_type: str,  # 'access', 'portability', 'erasure', 'rectification'
         additional_info: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Handle data subject rights request"""        
+        """Handle data subject rights request"""
+        
         data_subject = await self._get_or_create_data_subject(subject_id)
         
         request_id = None
@@ -905,7 +939,8 @@ class ComplianceTracker:
         request_id: str,
         response_data: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Complete data subject rights request"""        
+        """Complete data subject rights request"""
+        
         if request_id not in self.pending_requests:
             raise ValueError(f"Request not found: {request_id}")
         
@@ -951,7 +986,8 @@ class ComplianceTracker:
         work_description: str,
         infringement_url: str
     ) -> str:
-        """File DMCA takedown notice"""        
+        """File DMCA takedown notice"""
+        
         if ComplianceFramework.DMCA not in self.enabled_frameworks:
             raise ValueError("DMCA compliance tracking not enabled")
         
@@ -986,7 +1022,8 @@ class ComplianceTracker:
         return notice_id
     
     async def process_dmca_takedown(self, notice_id: str, action_taken: str) -> None:
-        """Process DMCA takedown notice"""        
+        """Process DMCA takedown notice"""
+        
         self.dmca_tracker.process_takedown_notice(notice_id, action_taken)
         
         # Create compliance event
@@ -1010,7 +1047,8 @@ class ComplianceTracker:
         framework: ComplianceFramework,
         scope: Optional[str] = None
     ) -> ComplianceReport:
-        """Run comprehensive compliance assessment"""        
+        """Run comprehensive compliance assessment"""
+        
         if framework not in self.enabled_frameworks:
             raise ValueError(f"Framework not enabled: {framework}")
         
@@ -1075,7 +1113,8 @@ class ComplianceTracker:
         return report
     
     async def get_compliance_dashboard(self) -> Dict[str, Any]:
-        """Get compliance dashboard data"""        
+        """Get compliance dashboard data"""
+        
         dashboard_data = {
             'timestamp': datetime.now(timezone.utc).isoformat(),
             'enabled_frameworks': [f.value for f in self.enabled_frameworks],
@@ -1122,7 +1161,8 @@ class ComplianceTracker:
         return dashboard_data
     
     def _get_country_from_ip(self, ip_address: str) -> Optional[str]:
-        """Get country code from IP address using GeoIP"""        
+        """Get country code from IP address using GeoIP"""
+        
         if not self.geoip_reader:
             return None
         
@@ -1144,7 +1184,8 @@ class ComplianceTracker:
         subject_id: str,
         country: Optional[str] = None
     ) -> DataSubject:
-        """Get or create data subject"""        
+        """Get or create data subject"""
+        
         # Try to get existing data subject from GDPR tracker
         subject_data = self.gdpr_tracker.get_subject_data(subject_id)
         
@@ -1176,7 +1217,8 @@ class ComplianceTracker:
             return data_subject
     
     async def _store_compliance_event(self, event: ComplianceEvent) -> None:
-        """Store compliance event"""        
+        """Store compliance event"""
+        
         # Add to memory history
         with self.lock:
             self.events_history.append(event)
@@ -1206,7 +1248,8 @@ class ComplianceTracker:
         conn.close()
     
     async def _store_compliance_assessment(self, report: ComplianceReport) -> None:
-        """Store compliance assessment report"""        
+        """Store compliance assessment report"""
+        
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
@@ -1229,7 +1272,8 @@ class ComplianceTracker:
         conn.close()
     
     async def _count_data_subjects(self, framework: ComplianceFramework) -> int:
-        """Count data subjects for framework"""        
+        """Count data subjects for framework"""
+        
         if framework == ComplianceFramework.GDPR:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
@@ -1245,7 +1289,8 @@ class ComplianceTracker:
         framework: ComplianceFramework,
         findings: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate compliance recommendations"""        
+        """Generate compliance recommendations"""
+        
         recommendations = []
         
         violations = [f for f in findings if f.get('status') == ComplianceStatus.NON_COMPLIANT]
@@ -1289,7 +1334,8 @@ class ComplianceTracker:
     
     # Compliance rule check methods
     def _check_gdpr_consent(self) -> Optional[Dict[str, Any]]:
-        """Check GDPR consent compliance"""        
+        """Check GDPR consent compliance"""
+        
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
@@ -1314,7 +1360,8 @@ class ComplianceTracker:
         return None
     
     def _check_gdpr_data_retention(self) -> Optional[Dict[str, Any]]:
-        """Check GDPR data retention compliance"""        
+        """Check GDPR data retention compliance"""
+        
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
@@ -1340,7 +1387,8 @@ class ComplianceTracker:
         return None
     
     def _check_gdpr_data_minimization(self) -> Optional[Dict[str, Any]]:
-        """Check GDPR data minimization compliance"""        
+        """Check GDPR data minimization compliance"""
+        
         # Check for excessive data collection
         # This is a placeholder - real implementation would analyze actual data collection
         return {
@@ -1351,7 +1399,8 @@ class ComplianceTracker:
         }
     
     def _check_gdpr_requests_response_time(self) -> Optional[Dict[str, Any]]:
-        """Check GDPR request response time compliance"""        
+        """Check GDPR request response time compliance"""
+        
         # Check for overdue requests (GDPR requires response within 30 days)
         cutoff_date = datetime.now(timezone.utc) - timedelta(days=30)
         
@@ -1375,7 +1424,8 @@ class ComplianceTracker:
         return None
     
     def _check_ccpa_disclosure(self) -> Optional[Dict[str, Any]]:
-        """Check CCPA disclosure compliance"""        
+        """Check CCPA disclosure compliance"""
+        
         # Placeholder for CCPA disclosure checks
         return {
             'rule': 'ccpa_disclosure',
@@ -1385,7 +1435,8 @@ class ComplianceTracker:
         }
     
     def _check_ccpa_opt_out(self) -> Optional[Dict[str, Any]]:
-        """Check CCPA opt-out compliance"""        
+        """Check CCPA opt-out compliance"""
+        
         # Placeholder for opt-out mechanism checks
         return {
             'rule': 'ccpa_opt_out',
@@ -1395,7 +1446,8 @@ class ComplianceTracker:
         }
     
     def _check_ccpa_data_sales(self) -> Optional[Dict[str, Any]]:
-        """Check CCPA data sales compliance"""        
+        """Check CCPA data sales compliance"""
+        
         # Placeholder for data sales tracking
         return {
             'rule': 'ccpa_data_sales',
@@ -1405,7 +1457,8 @@ class ComplianceTracker:
         }
     
     def _check_dmca_response_time(self) -> Optional[Dict[str, Any]]:
-        """Check DMCA response time compliance"""        
+        """Check DMCA response time compliance"""
+        
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
@@ -1432,7 +1485,8 @@ class ComplianceTracker:
         return None
     
     def _check_dmca_counter_notice_process(self) -> Optional[Dict[str, Any]]:
-        """Check DMCA counter-notice process compliance"""        
+        """Check DMCA counter-notice process compliance"""
+        
         # Placeholder for counter-notice process checks
         return {
             'rule': 'dmca_counter_notice_process',
@@ -1442,7 +1496,8 @@ class ComplianceTracker:
         }
     
     def _check_pci_data_encryption(self) -> Optional[Dict[str, Any]]:
-        """Check PCI-DSS data encryption compliance"""        
+        """Check PCI-DSS data encryption compliance"""
+        
         # Placeholder for PCI encryption checks
         return {
             'rule': 'pci_data_encryption',
@@ -1452,7 +1507,8 @@ class ComplianceTracker:
         }
     
     def _check_pci_access_controls(self) -> Optional[Dict[str, Any]]:
-        """Check PCI-DSS access controls compliance"""        
+        """Check PCI-DSS access controls compliance"""
+        
         # Placeholder for PCI access control checks
         return {
             'rule': 'pci_access_controls',
@@ -1462,7 +1518,8 @@ class ComplianceTracker:
         }
     
     async def shutdown(self) -> None:
-        """Graceful shutdown of compliance tracker"""        logger.info("Shutting down ComplianceTracker...")
+        """Graceful shutdown of compliance tracker"""
+        logger.info("Shutting down ComplianceTracker...")
         
         # Close GeoIP reader
         if self.geoip_reader:
@@ -1481,7 +1538,8 @@ async def track_creator_data_processing(
     processing_purpose: DataProcessingPurpose,
     ip_address: str
 ) -> str:
-    """Track creator data processing"""    
+    """Track creator data processing"""
+    
     return await compliance_tracker.track_data_processing(
         subject_id=creator_id,
         processing_purpose=processing_purpose,
@@ -1495,7 +1553,8 @@ async def handle_creator_data_request(
     creator_id: str,
     request_type: str
 ) -> str:
-    """Handle creator data subject request"""    
+    """Handle creator data subject request"""
+    
     return await compliance_tracker.handle_data_subject_request(
         subject_id=creator_id,
         request_type=request_type
@@ -1508,7 +1567,8 @@ async def file_content_dmca_takedown(
     creator_id: str,
     claimant_info: Dict[str, str]
 ) -> str:
-    """File DMCA takedown for content violation"""    
+    """File DMCA takedown for content violation"""
+    
     return await compliance_tracker.file_dmca_takedown(
         content_id=content_id,
         creator_id=creator_id,

@@ -3,7 +3,8 @@ Video fingerprinting with frame analysis, motion detection, and YOLO object dete
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import cv2
 import numpy as np
 import hashlib
@@ -29,7 +30,8 @@ from ...config import settings
 
 @dataclass
 class VideoFingerprint:
-    """Video fingerprint data structure"""    file_id: str
+    """Video fingerprint data structure"""
+    file_id: str
     frame_hashes: List[str]
     motion_vectors: List[Dict[str, Any]]
     object_detections: List[Dict[str, Any]]
@@ -45,14 +47,16 @@ class VideoFingerprint:
 
 
 class VideoFingerprintEngine:
-    """    Advanced video fingerprinting engine supporting:
+    """
+    Advanced video fingerprinting engine supporting:
     - Frame-based perceptual hashing
     - Motion vector analysis
     - YOLO object detection (simplified)
     - Scene change detection
     - Optical flow analysis
     - Visual feature extraction
-    """    
+    """
+    
     def __init__(self):
         self.frame_sample_rate = 1.0  # Sample every 1 second
         self.max_frames = 300  # Max frames to analyze (5 min @ 1fps)
@@ -65,7 +69,8 @@ class VideoFingerprintEngine:
         logger.info("VideoFingerprintEngine initialized with YOLO and motion analysis")
     
     def _init_feature_extractor(self):
-        """Initialize ResNet feature extractor"""        try:
+        """Initialize ResNet feature extractor"""
+        try:
             self.feature_extractor = resnet50(pretrained=True)
             self.feature_extractor.eval()
             
@@ -83,7 +88,8 @@ class VideoFingerprintEngine:
             self.feature_extractor = None
     
     async def generate_fingerprint(self, video_file_path: str, metadata: Optional[Dict] = None) -> VideoFingerprint:
-        """        Generate comprehensive video fingerprint
+        """
+        Generate comprehensive video fingerprint
         
         Args:
             video_file_path: Path to video file
@@ -91,7 +97,8 @@ class VideoFingerprintEngine:
             
         Returns:
             VideoFingerprint: Complete fingerprint data
-        """        try:
+        """
+        try:
             logger.info(f"Generating video fingerprint for: {video_file_path}")
             
             # Open video file
@@ -160,12 +167,14 @@ class VideoFingerprintEngine:
             raise
     
     async def _generate_file_id(self, file_path: str) -> str:
-        """Generate unique file ID"""        file_stats = os.stat(file_path)
+        """Generate unique file ID"""
+        file_stats = os.stat(file_path)
         content_hash = hashlib.sha256(f"{file_path}_{file_stats.st_size}_{file_stats.st_mtime}".encode()).hexdigest()
         return f"video_{content_hash[:16]}"
     
     async def _extract_sample_frames(self, cap: cv2.VideoCapture, fps: float, duration: float) -> List[np.ndarray]:
-        """Extract sample frames from video at specified intervals"""        try:
+        """Extract sample frames from video at specified intervals"""
+        try:
             frames = []
             frame_interval = max(1, int(fps * self.frame_sample_rate))
             max_frame_count = min(self.max_frames, int(duration * fps))
@@ -192,7 +201,8 @@ class VideoFingerprintEngine:
             return []
     
     async def _generate_frame_hashes(self, frames: List[np.ndarray]) -> List[str]:
-        """Generate perceptual hashes for each frame"""        try:
+        """Generate perceptual hashes for each frame"""
+        try:
             frame_hashes = []
             
             for frame in frames:
@@ -215,7 +225,8 @@ class VideoFingerprintEngine:
             return []
     
     async def _detect_motion_vectors(self, frames: List[np.ndarray]) -> List[Dict[str, Any]]:
-        """Detect motion vectors between consecutive frames"""        try:
+        """Detect motion vectors between consecutive frames"""
+        try:
             motion_vectors = []
             
             if len(frames) < 2:
@@ -264,7 +275,8 @@ class VideoFingerprintEngine:
             return []
     
     async def _detect_objects(self, frames: List[np.ndarray]) -> List[Dict[str, Any]]:
-        """Simplified object detection (placeholder for YOLO)"""        try:
+        """Simplified object detection (placeholder for YOLO)"""
+        try:
             object_detections = []
             
             # This is a simplified version. In production, use actual YOLO
@@ -296,7 +308,8 @@ class VideoFingerprintEngine:
             return []
     
     async def _detect_scene_changes(self, frames: List[np.ndarray]) -> List[float]:
-        """Detect scene changes between frames"""        try:
+        """Detect scene changes between frames"""
+        try:
             scene_changes = []
             
             if len(frames) < 2:
@@ -325,7 +338,8 @@ class VideoFingerprintEngine:
             return []
     
     async def _extract_color_histograms(self, frames: List[np.ndarray]) -> List[Dict[str, Any]]:
-        """Extract color histograms for each frame"""        try:
+        """Extract color histograms for each frame"""
+        try:
             color_histograms = []
             
             for i, frame in enumerate(frames):
@@ -356,7 +370,8 @@ class VideoFingerprintEngine:
             return []
     
     async def _get_dominant_colors(self, frame: np.ndarray, k: int = 3) -> List[List[int]]:
-        """Get dominant colors using K-means clustering"""        try:
+        """Get dominant colors using K-means clustering"""
+        try:
             # Reshape frame to be a list of pixels
             data = frame.reshape((-1, 3))
             data = np.float32(data)
@@ -374,7 +389,8 @@ class VideoFingerprintEngine:
             return []
     
     async def _analyze_optical_flow(self, frames: List[np.ndarray]) -> Dict[str, Any]:
-        """Analyze optical flow patterns across the video"""        try:
+        """Analyze optical flow patterns across the video"""
+        try:
             if len(frames) < 2:
                 return {}
             
@@ -412,7 +428,8 @@ class VideoFingerprintEngine:
             return {}
     
     async def _extract_visual_features(self, frames: List[np.ndarray]) -> Dict[str, Any]:
-        """Extract deep visual features using pre-trained CNN"""        try:
+        """Extract deep visual features using pre-trained CNN"""
+        try:
             if self.feature_extractor is None:
                 return {}
             
@@ -446,7 +463,8 @@ class VideoFingerprintEngine:
             return {}
     
     async def _calculate_confidence_score(self, results: List[Any]) -> float:
-        """Calculate overall confidence score"""        try:
+        """Calculate overall confidence score"""
+        try:
             confidence_factors = []
             
             # Frame hashes quality
@@ -484,7 +502,8 @@ class VideoFingerprintEngine:
             return 0.5
     
     async def compare_fingerprints(self, fp1: VideoFingerprint, fp2: VideoFingerprint) -> float:
-        """        Compare two video fingerprints and return similarity score (0-1)
+        """
+        Compare two video fingerprints and return similarity score (0-1)
         
         Args:
             fp1: First fingerprint
@@ -492,7 +511,8 @@ class VideoFingerprintEngine:
             
         Returns:
             float: Similarity score between 0 and 1
-        """        try:
+        """
+        try:
             similarities = []
             
             # Compare frame hashes
@@ -526,7 +546,8 @@ class VideoFingerprintEngine:
             return 0.0
     
     async def _compare_frame_hashes(self, hashes1: List[str], hashes2: List[str]) -> float:
-        """Compare frame hash sequences"""        try:
+        """Compare frame hash sequences"""
+        try:
             if not hashes1 or not hashes2:
                 return 0.0
             
@@ -541,7 +562,8 @@ class VideoFingerprintEngine:
             return 0.0
     
     async def _compare_motion_patterns(self, motion1: List[Dict], motion2: List[Dict]) -> float:
-        """Compare motion vector patterns"""        try:
+        """Compare motion vector patterns"""
+        try:
             if not motion1 or not motion2:
                 return 0.0
             
@@ -556,7 +578,8 @@ class VideoFingerprintEngine:
             return 0.0
     
     async def _compare_sequences(self, seq1: List[float], seq2: List[float]) -> float:
-        """Compare two numerical sequences using correlation"""        try:
+        """Compare two numerical sequences using correlation"""
+        try:
             if not seq1 or not seq2:
                 return 0.0
             
@@ -573,7 +596,8 @@ class VideoFingerprintEngine:
             return 0.0
     
     async def _compare_optical_flow(self, flow1: Dict, flow2: Dict) -> float:
-        """Compare optical flow features"""        try:
+        """Compare optical flow features"""
+        try:
             similarities = []
             
             # Compare mean magnitudes

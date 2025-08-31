@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -16,7 +17,8 @@ Basic validation tests for the implemented cache and performance components
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -29,9 +31,11 @@ from fastapi.testclient import TestClient
 
 
 class TestAPIResponseCacheMiddleware:
-    """Test API response caching middleware"""    
+    """Test API response caching middleware"""
+    
     def test_cache_middleware_initialization(self):
-        """Test middleware initialization"""        from api.middleware.cache_middleware import APIResponseCacheMiddleware
+        """Test middleware initialization"""
+        from api.middleware.cache_middleware import APIResponseCacheMiddleware
         
         app = FastAPI()
         middleware = APIResponseCacheMiddleware(app)
@@ -42,7 +46,8 @@ class TestAPIResponseCacheMiddleware:
         assert "/health" in middleware.exclude_paths
     
     def test_cache_key_generation(self):
-        """Test cache key generation"""        from api.middleware.cache_middleware import APIResponseCacheMiddleware
+        """Test cache key generation"""
+        from api.middleware.cache_middleware import APIResponseCacheMiddleware
         
         app = FastAPI()
         middleware = APIResponseCacheMiddleware(app)
@@ -61,7 +66,8 @@ class TestAPIResponseCacheMiddleware:
         assert len(cache_key) > 20  # Should be a hash
     
     def test_should_cache_request(self):
-        """Test request caching logic"""        from api.middleware.cache_middleware import APIResponseCacheMiddleware
+        """Test request caching logic"""
+        from api.middleware.cache_middleware import APIResponseCacheMiddleware
         
         app = FastAPI()
         middleware = APIResponseCacheMiddleware(app)
@@ -84,7 +90,8 @@ class TestAPIResponseCacheMiddleware:
         assert middleware._should_cache_request(request) == False
     
     def test_cache_statistics(self):
-        """Test cache statistics tracking"""        from api.middleware.cache_middleware import APIResponseCacheMiddleware
+        """Test cache statistics tracking"""
+        from api.middleware.cache_middleware import APIResponseCacheMiddleware
         
         app = FastAPI()
         middleware = APIResponseCacheMiddleware(app)
@@ -106,9 +113,11 @@ class TestAPIResponseCacheMiddleware:
 
 
 class TestAssetCompressionMiddleware:
-    """Test asset compression middleware"""    
+    """Test asset compression middleware"""
+    
     def test_compression_middleware_initialization(self):
-        """Test compression middleware initialization"""        from api.middleware.compression_middleware import AssetCompressionMiddleware
+        """Test compression middleware initialization"""
+        from api.middleware.compression_middleware import AssetCompressionMiddleware
         
         app = FastAPI()
         middleware = AssetCompressionMiddleware(app)
@@ -119,7 +128,8 @@ class TestAssetCompressionMiddleware:
         assert "application/json" in middleware.compressible_types
     
     def test_should_compress_logic(self):
-        """Test compression decision logic"""        from api.middleware.compression_middleware import AssetCompressionMiddleware
+        """Test compression decision logic"""
+        from api.middleware.compression_middleware import AssetCompressionMiddleware
         
         app = FastAPI()
         middleware = AssetCompressionMiddleware(app)
@@ -143,7 +153,8 @@ class TestAssetCompressionMiddleware:
         assert middleware._should_compress(request, response) == False
     
     def test_compression_statistics(self):
-        """Test compression statistics"""        from api.middleware.compression_middleware import AssetCompressionMiddleware
+        """Test compression statistics"""
+        from api.middleware.compression_middleware import AssetCompressionMiddleware
         
         app = FastAPI()
         middleware = AssetCompressionMiddleware(app)
@@ -159,9 +170,11 @@ class TestAssetCompressionMiddleware:
 
 
 class TestRedisClusterOptimization:
-    """Test Redis cluster optimization"""    
+    """Test Redis cluster optimization"""
+    
     def test_cluster_optimization_configuration(self):
-        """Test cluster optimization is properly configured"""        from config.database.redis_config import RedisConfig, RedisDeploymentType
+        """Test cluster optimization is properly configured"""
+        from config.database.redis_config import RedisConfig, RedisDeploymentType
         
         # Create config for cluster deployment
         config = RedisConfig(
@@ -173,7 +186,8 @@ class TestRedisClusterOptimization:
         assert hasattr(config, 'optimize_cluster_performance')
     
     def test_cluster_optimization_methods_exist(self):
-        """Test that cluster optimization methods exist"""        from config.database.redis_config import RedisConfig
+        """Test that cluster optimization methods exist"""
+        from config.database.redis_config import RedisConfig
         
         config = RedisConfig()
         
@@ -185,9 +199,11 @@ class TestRedisClusterOptimization:
 
 
 class TestImageOptimizer:
-    """Test image optimization pipeline"""    
+    """Test image optimization pipeline"""
+    
     def test_image_optimizer_initialization(self):
-        """Test image optimizer initialization"""        from data_management.optimization.image_optimizer import ImageOptimizer
+        """Test image optimizer initialization"""
+        from data_management.optimization.image_optimizer import ImageOptimizer
         
         optimizer = ImageOptimizer()
         
@@ -197,7 +213,8 @@ class TestImageOptimizer:
         assert len(optimizer.responsive_sizes) > 0
     
     def test_optimization_options(self):
-        """Test optimization options structure"""        from data_management.optimization.image_optimizer import ImageOptimizer
+        """Test optimization options structure"""
+        from data_management.optimization.image_optimizer import ImageOptimizer
         
         optimizer = ImageOptimizer()
         
@@ -219,7 +236,8 @@ class TestImageOptimizer:
         assert 'optimization_stats' in result
     
     def test_batch_optimizer(self):
-        """Test batch image optimization"""        from data_management.optimization.image_optimizer import BatchImageOptimizer
+        """Test batch image optimization"""
+        from data_management.optimization.image_optimizer import BatchImageOptimizer
         
         batch_optimizer = BatchImageOptimizer()
         
@@ -229,9 +247,11 @@ class TestImageOptimizer:
 
 
 class TestSessionMiddleware:
-    """Test session management middleware"""    
+    """Test session management middleware"""
+    
     def test_session_middleware_initialization(self):
-        """Test session middleware initialization"""        from api.middleware.session_middleware import SessionManagerMiddleware
+        """Test session middleware initialization"""
+        from api.middleware.session_middleware import SessionManagerMiddleware
         
         app = FastAPI()
         middleware = SessionManagerMiddleware(app)
@@ -242,7 +262,8 @@ class TestSessionMiddleware:
         assert "/health" in middleware.exclude_paths
     
     def test_session_path_logic(self):
-        """Test session path logic"""        from api.middleware.session_middleware import SessionManagerMiddleware
+        """Test session path logic"""
+        from api.middleware.session_middleware import SessionManagerMiddleware
         
         app = FastAPI()
         middleware = SessionManagerMiddleware(app)
@@ -256,7 +277,8 @@ class TestSessionMiddleware:
         assert middleware._requires_session("/api/public/info") == False
     
     def test_session_statistics(self):
-        """Test session statistics"""        from api.middleware.session_middleware import SessionManagerMiddleware
+        """Test session statistics"""
+        from api.middleware.session_middleware import SessionManagerMiddleware
         
         app = FastAPI()
         middleware = SessionManagerMiddleware(app)
@@ -273,9 +295,11 @@ class TestSessionMiddleware:
 
 
 class TestCDNOptimization:
-    """Test CDN static content optimization"""    
+    """Test CDN static content optimization"""
+    
     def test_cdn_optimization_methods_exist(self):
-        """Test CDN optimization methods exist"""        # This test checks that the methods were added to CDN storage
+        """Test CDN optimization methods exist"""
+        # This test checks that the methods were added to CDN storage
         try:
             from data_management.storage.cdn_storage import CDNStorageManager
             
@@ -302,9 +326,11 @@ class TestCDNOptimization:
 
 
 class TestPerformanceIntegration:
-    """Integration tests for performance features"""    
+    """Integration tests for performance features"""
+    
     def test_cache_and_compression_integration(self):
-        """Test cache and compression working together"""        
+        """Test cache and compression working together"""
+        
         # Test that both middleware can be used together
         from api.middleware.cache_middleware import APIResponseCacheMiddleware
         from api.middleware.compression_middleware import AssetCompressionMiddleware
@@ -319,7 +345,8 @@ class TestPerformanceIntegration:
         assert compression_middleware is not None
     
     def test_session_and_cache_integration(self):
-        """Test session and cache integration"""        
+        """Test session and cache integration"""
+        
         from api.middleware.session_middleware import SessionManagerMiddleware
         from api.middleware.cache_middleware import APIResponseCacheMiddleware
         

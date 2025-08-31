@@ -12,7 +12,8 @@ This revolutionary legal compliance engine is the EXCLUSIVE property of Fahed Ml
 Unauthorized use, copying, distribution, or reverse engineering is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
-"""from typing import List, Dict, Any, Optional, Union, Tuple, Set
+"""
+from typing import List, Dict, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timezone, timedelta
 from enum import Enum
 from dataclasses import dataclass, asdict
@@ -30,7 +31,8 @@ Base = declarative_base()
 
 
 class LegalFramework(Enum):
-    """Legal frameworks and regulations."""    
+    """Legal frameworks and regulations."""
+    
     # International IP Law
     BERNE_CONVENTION = "berne_convention"
     TRIPS_AGREEMENT = "trips_agreement"
@@ -62,7 +64,8 @@ class LegalFramework(Enum):
 
 
 class LegalEventType(Enum):
-    """Legal event types for audit logging."""    
+    """Legal event types for audit logging."""
+    
     # Contract Events
     CONTRACT_CREATED = "contract_created"
     CONTRACT_SIGNED = "contract_signed"
@@ -101,7 +104,8 @@ class LegalEventType(Enum):
 
 
 class LegalRiskLevel(Enum):
-    """Legal risk assessment levels."""    
+    """Legal risk assessment levels."""
+    
     CRITICAL = "critical"      # Immediate legal action required
     HIGH = "high"             # Significant legal risk
     MEDIUM = "medium"         # Moderate legal risk
@@ -110,7 +114,8 @@ class LegalRiskLevel(Enum):
 
 
 class ContractType(Enum):
-    """Contract types for legal tracking."""    
+    """Contract types for legal tracking."""
+    
     ARTIST_AGREEMENT = "artist_agreement"
     LICENSING_AGREEMENT = "licensing_agreement"
     COLLABORATION_AGREEMENT = "collaboration_agreement"
@@ -123,7 +128,8 @@ class ContractType(Enum):
 
 
 class IPAssetType(Enum):
-    """Intellectual property asset types."""    
+    """Intellectual property asset types."""
+    
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PATENT = "patent"
@@ -135,7 +141,8 @@ class IPAssetType(Enum):
 
 @dataclass
 class LegalContext:
-    """Legal event context information."""    
+    """Legal event context information."""
+    
     jurisdiction: str
     applicable_law: List[str]
     legal_framework: LegalFramework
@@ -150,7 +157,8 @@ class LegalContext:
 
 
 class LegalComplianceLog(Base):
-    """Legal compliance audit log model."""    
+    """Legal compliance audit log model."""
+    
     __tablename__ = "legal_compliance_logs"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -206,9 +214,11 @@ class LegalComplianceLog(Base):
 
 
 class LegalEventLogger:
-    """Advanced legal event logging system."""    
+    """Advanced legal event logging system."""
+    
     def __init__(self, db_session=None):
-        """Initialize legal event logger."""        self.db_session = db_session
+        """Initialize legal event logger."""
+        self.db_session = db_session
         self.legal_cases = {}
         self.compliance_calendar = {}
         
@@ -227,7 +237,8 @@ class LegalEventLogger:
         legal_context: LegalContext,
         event_details: Dict[str, Any]
     ) -> str:
-        """        Log a legal event with comprehensive tracking.
+        """
+        Log a legal event with comprehensive tracking.
         
         Args:
             event_type: Type of legal event
@@ -237,7 +248,8 @@ class LegalEventLogger:
             
         Returns:
             str: Legal event ID
-        """        try:
+        """
+        try:
             event_id = f"LEGAL-{uuid.uuid4().hex[:8].upper()}"
             
             # Determine severity based on risk level
@@ -308,7 +320,8 @@ class LegalEventLogger:
         contract_details: Dict[str, Any],
         parties: List[str]
     ) -> str:
-        """        Log contract-related legal event.
+        """
+        Log contract-related legal event.
         
         Args:
             contract_id: Contract identifier
@@ -319,7 +332,8 @@ class LegalEventLogger:
             
         Returns:
             str: Event ID
-        """        try:
+        """
+        try:
             legal_context = LegalContext(
                 jurisdiction=contract_details.get('jurisdiction', 'US'),
                 applicable_law=[contract_details.get('governing_law', 'US Federal')],
@@ -357,7 +371,8 @@ class LegalEventLogger:
             raise
     
     def _track_legal_case(self, case_number: str, event_id: str, details: Dict[str, Any]):
-        """Track legal case progression."""        if case_number not in self.legal_cases:
+        """Track legal case progression."""
+        if case_number not in self.legal_cases:
             self.legal_cases[case_number] = {
                 'creation_date': datetime.now(timezone.utc),
                 'status': 'active',
@@ -379,7 +394,8 @@ class LegalEventLogger:
         self.legal_cases[case_number]['total_cost'] += details.get('cost', 0.0)
     
     def _get_dmca_template(self) -> Dict[str, str]:
-        """Get DMCA notice template."""        return {
+        """Get DMCA notice template."""
+        return {
             'title': 'DMCA Takedown Notice',
             'template': '''
 DMCA TAKEDOWN NOTICE
@@ -415,7 +431,8 @@ Contact: {contact_information}
         }
     
     def _get_cease_desist_template(self) -> Dict[str, str]:
-        """Get cease and desist template."""        return {
+        """Get cease and desist template."""
+        return {
             'title': 'Cease and Desist Letter',
             'template': '''
 CEASE AND DESIST LETTER
@@ -454,7 +471,8 @@ Sincerely,
         }
     
     def _get_licensing_template(self) -> Dict[str, str]:
-        """Get licensing agreement template."""        return {
+        """Get licensing agreement template."""
+        return {
             'title': 'Content Licensing Agreement',
             'template': '''
 CONTENT LICENSING AGREEMENT
@@ -498,7 +516,8 @@ Licensee: _________________
         }
     
     def _get_settlement_template(self) -> Dict[str, str]:
-        """Get settlement agreement template."""        return {
+        """Get settlement agreement template."""
+        return {
             'title': 'Settlement Agreement',
             'template': '''
 SETTLEMENT AGREEMENT
@@ -536,9 +555,11 @@ Witness: _________________
 
 
 class ContractAuditor:
-    """Advanced contract auditing and management system."""    
+    """Advanced contract auditing and management system."""
+    
     def __init__(self, db_session=None):
-        """Initialize contract auditor."""        self.db_session = db_session
+        """Initialize contract auditor."""
+        self.db_session = db_session
         self.active_contracts = {}
         self.contract_templates = {}
         self.compliance_checks = {}
@@ -549,7 +570,8 @@ class ContractAuditor:
         contract_data: Dict[str, Any],
         compliance_framework: str = "standard"
     ) -> Dict[str, Any]:
-        """        Audit contract compliance and identify issues.
+        """
+        Audit contract compliance and identify issues.
         
         Args:
             contract_id: Contract identifier
@@ -558,7 +580,8 @@ class ContractAuditor:
             
         Returns:
             Dict[str, Any]: Compliance audit results
-        """        try:
+        """
+        try:
             audit_results = {
                 'contract_id': contract_id,
                 'audit_timestamp': datetime.now(timezone.utc).isoformat(),
@@ -616,7 +639,8 @@ class ContractAuditor:
             raise
     
     def _check_contract_validity(self, contract_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check contract validity."""        issues = []
+        """Check contract validity."""
+        issues = []
         
         # Check required fields
         required_fields = ['parties', 'effective_date', 'governing_law', 'consideration']
@@ -645,7 +669,8 @@ class ContractAuditor:
         }
     
     def _check_legal_requirements(self, contract_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check legal requirements compliance."""        violations = []
+        """Check legal requirements compliance."""
+        violations = []
         
         # Check governing law
         governing_law = contract_data.get('governing_law', '')
@@ -670,7 +695,8 @@ class ContractAuditor:
         }
     
     def _check_platform_compliance(self, contract_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check platform-specific compliance."""        violations = []
+        """Check platform-specific compliance."""
+        violations = []
         
         platforms = contract_data.get('platforms', [])
         for platform in platforms:
@@ -688,15 +714,18 @@ class ContractAuditor:
         }
     
     def _check_youtube_compliance(self, contract_data: Dict[str, Any]) -> bool:
-        """Check YouTube terms compliance."""        # Implementation would check against YouTube's actual terms
+        """Check YouTube terms compliance."""
+        # Implementation would check against YouTube's actual terms
         return True  # Placeholder
     
     def _check_spotify_compliance(self, contract_data: Dict[str, Any]) -> bool:
-        """Check Spotify terms compliance."""        # Implementation would check against Spotify's actual terms
+        """Check Spotify terms compliance."""
+        # Implementation would check against Spotify's actual terms
         return True  # Placeholder
     
     def _generate_compliance_recommendations(self, issues: List[str]) -> List[str]:
-        """Generate recommendations based on compliance issues."""        recommendations = []
+        """Generate recommendations based on compliance issues."""
+        recommendations = []
         
         for issue in issues:
             if "missing required field" in issue.lower():
@@ -714,7 +743,8 @@ class ContractAuditor:
         return recommendations
     
     def _assess_contract_risk(self, issues: List[str]) -> str:
-        """Assess overall contract risk level."""        critical_keywords = ['governing law', 'termination', 'dispute resolution', 'ip rights']
+        """Assess overall contract risk level."""
+        critical_keywords = ['governing law', 'termination', 'dispute resolution', 'ip rights']
         high_risk_count = sum(1 for issue in issues if any(keyword in issue.lower() for keyword in critical_keywords))
         
         if high_risk_count >= 2:
@@ -727,14 +757,17 @@ class ContractAuditor:
             return 'minimal'
     
     async def _log_contract_audit(self, contract_id: str, audit_results: Dict[str, Any]):
-        """Log contract audit results."""        # Implementation would log to the legal compliance system
+        """Log contract audit results."""
+        # Implementation would log to the legal compliance system
         logger.info(f"Contract audit completed: {contract_id} - {audit_results['overall_compliance']}")
 
 
 class LicenseValidationTracker:
-    """Advanced license validation and tracking system."""    
+    """Advanced license validation and tracking system."""
+    
     def __init__(self, db_session=None):
-        """Initialize license validation tracker."""        self.db_session = db_session
+        """Initialize license validation tracker."""
+        self.db_session = db_session
         self.license_registry = {}
         self.validation_cache = {}
     
@@ -744,7 +777,8 @@ class LicenseValidationTracker:
         usage_context: Dict[str, Any],
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Validate license usage against terms and conditions.
+        """
+        Validate license usage against terms and conditions.
         
         Args:
             license_id: License identifier
@@ -753,7 +787,8 @@ class LicenseValidationTracker:
             
         Returns:
             Dict[str, Any]: Validation results
-        """        try:
+        """
+        try:
             validation_results = {
                 'license_id': license_id,
                 'validation_timestamp': datetime.now(timezone.utc).isoformat(),
@@ -821,7 +856,8 @@ class LicenseValidationTracker:
             raise
     
     def _get_license_terms(self, license_id: str) -> Dict[str, Any]:
-        """Get license terms from registry."""        # Placeholder - would fetch from database
+        """Get license terms from registry."""
+        # Placeholder - would fetch from database
         return {
             'license_id': license_id,
             'license_type': 'standard',
@@ -835,7 +871,8 @@ class LicenseValidationTracker:
         }
     
     def _validate_territory(self, usage_context: Dict[str, Any], license_terms: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate territory restrictions."""        allowed_territories = license_terms.get('territory', [])
+        """Validate territory restrictions."""
+        allowed_territories = license_terms.get('territory', [])
         usage_territory = usage_context.get('territory', 'unknown')
         
         if usage_territory == 'unknown':
@@ -853,7 +890,8 @@ class LicenseValidationTracker:
         return {'valid': True, 'violations': []}
     
     def _validate_usage_rights(self, usage_context: Dict[str, Any], license_terms: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate usage rights."""        allowed_rights = license_terms.get('usage_rights', [])
+        """Validate usage rights."""
+        allowed_rights = license_terms.get('usage_rights', [])
         requested_usage = usage_context.get('usage_type', 'unknown')
         
         if requested_usage == 'unknown':
@@ -871,7 +909,8 @@ class LicenseValidationTracker:
         return {'valid': True, 'violations': []}
     
     def _validate_time_restrictions(self, usage_context: Dict[str, Any], license_terms: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate time restrictions."""        current_date = datetime.now(timezone.utc)
+        """Validate time restrictions."""
+        current_date = datetime.now(timezone.utc)
         
         try:
             effective_date = datetime.fromisoformat(license_terms.get('effective_date', '1900-01-01'))
@@ -898,7 +937,8 @@ class LicenseValidationTracker:
         return {'valid': True, 'violations': []}
     
     def _validate_platform_restrictions(self, usage_context: Dict[str, Any], license_terms: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate platform restrictions."""        allowed_platforms = license_terms.get('platforms', [])
+        """Validate platform restrictions."""
+        allowed_platforms = license_terms.get('platforms', [])
         usage_platform = usage_context.get('platform', 'unknown')
         
         if usage_platform == 'unknown':
@@ -916,7 +956,8 @@ class LicenseValidationTracker:
         return {'valid': True, 'violations': []}
     
     def _generate_license_recommendations(self, violations: List[str]) -> List[str]:
-        """Generate license compliance recommendations."""        recommendations = []
+        """Generate license compliance recommendations."""
+        recommendations = []
         
         for violation in violations:
             if "territory" in violation.lower():
@@ -931,14 +972,17 @@ class LicenseValidationTracker:
         return recommendations
     
     async def _log_license_validation(self, license_id: str, validation_results: Dict[str, Any]):
-        """Log license validation results."""        # Implementation would log to legal compliance system
+        """Log license validation results."""
+        # Implementation would log to legal compliance system
         logger.info(f"License validation completed: {license_id} - Valid: {validation_results['usage_valid']}")
 
 
 class IntellectualPropertyAuditor:
-    """Advanced intellectual property auditing system."""    
+    """Advanced intellectual property auditing system."""
+    
     def __init__(self, db_session=None):
-        """Initialize IP auditor."""        self.db_session = db_session
+        """Initialize IP auditor."""
+        self.db_session = db_session
         self.ip_registry = {}
         self.infringement_cases = {}
     
@@ -947,7 +991,8 @@ class IntellectualPropertyAuditor:
         creator_id: str,
         portfolio_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Audit intellectual property portfolio.
+        """
+        Audit intellectual property portfolio.
         
         Args:
             creator_id: Creator identifier
@@ -955,7 +1000,8 @@ class IntellectualPropertyAuditor:
             
         Returns:
             Dict[str, Any]: IP audit results
-        """        try:
+        """
+        try:
             audit_results = {
                 'creator_id': creator_id,
                 'audit_timestamp': datetime.now(timezone.utc).isoformat(),
@@ -998,7 +1044,8 @@ class IntellectualPropertyAuditor:
             raise
     
     def _analyze_portfolio_composition(self, portfolio_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze IP portfolio composition."""        assets = portfolio_data.get('assets', [])
+        """Analyze IP portfolio composition."""
+        assets = portfolio_data.get('assets', [])
         
         composition = {
             'total_assets': len(assets),
@@ -1025,7 +1072,8 @@ class IntellectualPropertyAuditor:
         return composition
     
     def _check_protection_status(self, portfolio_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check IP protection status."""        assets = portfolio_data.get('assets', [])
+        """Check IP protection status."""
+        assets = portfolio_data.get('assets', [])
         
         protection_status = {
             'fully_protected': 0,
@@ -1062,7 +1110,8 @@ class IntellectualPropertyAuditor:
         return protection_status
     
     def _assess_ip_risks(self, portfolio_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess IP portfolio risks."""        risk_assessment = {
+        """Assess IP portfolio risks."""
+        risk_assessment = {
             'overall_risk_level': 'medium',
             'risk_factors': [],
             'infringement_risks': [],
@@ -1116,7 +1165,8 @@ class IntellectualPropertyAuditor:
         protection_status: Dict[str, Any],
         risk_assessment: Dict[str, Any]
     ) -> List[Dict[str, str]]:
-        """Generate IP portfolio recommendations."""        recommendations = []
+        """Generate IP portfolio recommendations."""
+        recommendations = []
         
         # Protection recommendations
         if protection_status['unprotected'] > 0:
@@ -1157,7 +1207,8 @@ class IntellectualPropertyAuditor:
         return recommendations
     
     def _create_action_items(self, recommendations: List[Dict[str, str]]) -> List[Dict[str, Any]]:
-        """Create actionable items from recommendations."""        action_items = []
+        """Create actionable items from recommendations."""
+        action_items = []
         
         for i, rec in enumerate(recommendations):
             action_items.append({
@@ -1175,7 +1226,8 @@ class IntellectualPropertyAuditor:
         return action_items
     
     def _estimate_action_cost(self, recommendation: Dict[str, str]) -> float:
-        """Estimate cost for recommendation action."""        cost_estimates = {
+        """Estimate cost for recommendation action."""
+        cost_estimates = {
             'protection': 2000.0,
             'maintenance': 500.0,
             'risk_management': 5000.0,
@@ -1184,7 +1236,8 @@ class IntellectualPropertyAuditor:
         return cost_estimates.get(recommendation['category'], 1000.0)
     
     def _estimate_action_duration(self, recommendation: Dict[str, str]) -> str:
-        """Estimate duration for recommendation action."""        duration_estimates = {
+        """Estimate duration for recommendation action."""
+        duration_estimates = {
             'protection': '3-6 months',
             'maintenance': '2-4 weeks',
             'risk_management': '2-3 months',
@@ -1193,7 +1246,8 @@ class IntellectualPropertyAuditor:
         return duration_estimates.get(recommendation['category'], '1 month')
     
     def _calculate_action_deadline(self, priority: str) -> str:
-        """Calculate deadline based on priority."""        base_date = datetime.now(timezone.utc)
+        """Calculate deadline based on priority."""
+        base_date = datetime.now(timezone.utc)
         
         if priority == 'critical':
             deadline = base_date + timedelta(days=7)
@@ -1207,14 +1261,17 @@ class IntellectualPropertyAuditor:
         return deadline.isoformat()
     
     async def _log_ip_audit(self, creator_id: str, audit_results: Dict[str, Any]):
-        """Log IP audit results."""        # Implementation would log to legal compliance system
+        """Log IP audit results."""
+        # Implementation would log to legal compliance system
         logger.info(f"IP portfolio audit completed: {creator_id} - {audit_results['portfolio_summary']['total_assets']} assets")
 
 
 class LegalComplianceEngine:
-    """Main legal compliance engine orchestrator."""    
+    """Main legal compliance engine orchestrator."""
+    
     def __init__(self, db_session=None, config: Dict[str, Any] = None):
-        """Initialize legal compliance engine."""        self.db_session = db_session
+        """Initialize legal compliance engine."""
+        self.db_session = db_session
         self.config = config or {}
         
         # Initialize components
@@ -1239,7 +1296,8 @@ class LegalComplianceEngine:
         entity_id: str,
         audit_scope: List[str] = None
     ) -> Dict[str, Any]:
-        """        Perform comprehensive legal compliance audit.
+        """
+        Perform comprehensive legal compliance audit.
         
         Args:
             entity_id: Entity to audit
@@ -1247,7 +1305,8 @@ class LegalComplianceEngine:
             
         Returns:
             Dict[str, Any]: Comprehensive legal audit results
-        """        if audit_scope is None:
+        """
+        if audit_scope is None:
             audit_scope = ['contracts', 'licenses', 'ip_portfolio', 'compliance']
         
         audit_results = {
@@ -1308,7 +1367,8 @@ class LegalComplianceEngine:
             raise
     
     async def _audit_entity_contracts(self, entity_id: str) -> Dict[str, Any]:
-        """Audit contracts for entity."""        # Implementation would query contract database
+        """Audit contracts for entity."""
+        # Implementation would query contract database
         return {
             'total_contracts': 5,
             'active_contracts': 4,
@@ -1318,7 +1378,8 @@ class LegalComplianceEngine:
         }
     
     async def _audit_entity_licenses(self, entity_id: str) -> Dict[str, Any]:
-        """Audit licenses for entity."""        # Implementation would query license database
+        """Audit licenses for entity."""
+        # Implementation would query license database
         return {
             'total_licenses': 8,
             'valid_licenses': 7,
@@ -1328,7 +1389,8 @@ class LegalComplianceEngine:
         }
     
     async def _audit_entity_ip(self, entity_id: str) -> Dict[str, Any]:
-        """Audit IP portfolio for entity."""        # Implementation would use IP auditor
+        """Audit IP portfolio for entity."""
+        # Implementation would use IP auditor
         return {
             'total_assets': 12,
             'protected_assets': 10,
@@ -1338,7 +1400,8 @@ class LegalComplianceEngine:
         }
     
     async def _audit_general_compliance(self, entity_id: str) -> Dict[str, Any]:
-        """Audit general legal compliance."""        # Implementation would check various compliance requirements
+        """Audit general legal compliance."""
+        # Implementation would check various compliance requirements
         return {
             'gdpr_compliance': 'compliant',
             'platform_compliance': 'compliant',
@@ -1348,7 +1411,8 @@ class LegalComplianceEngine:
         }
     
     def _assess_overall_compliance(self, results: Dict[str, Any]) -> Dict[str, str]:
-        """Assess overall compliance status."""        compliance_scores = []
+        """Assess overall compliance status."""
+        compliance_scores = []
         risk_indicators = []
         
         # Collect compliance scores
@@ -1386,7 +1450,8 @@ class LegalComplianceEngine:
         }
     
     def _generate_comprehensive_recommendations(self, results: Dict[str, Any]) -> List[Dict[str, str]]:
-        """Generate comprehensive legal recommendations."""        recommendations = []
+        """Generate comprehensive legal recommendations."""
+        recommendations = []
         
         # Contract recommendations
         if 'contracts' in results and results['contracts'].get('issues_found', 0) > 0:
@@ -1426,7 +1491,8 @@ class LegalComplianceEngine:
         return recommendations
     
     def _create_comprehensive_action_plan(self, recommendations: List[Dict[str, str]]) -> List[Dict[str, Any]]:
-        """Create comprehensive action plan."""        action_items = []
+        """Create comprehensive action plan."""
+        action_items = []
         
         for i, rec in enumerate(recommendations):
             action_items.append({
@@ -1445,7 +1511,8 @@ class LegalComplianceEngine:
         return action_items
     
     def _estimate_legal_cost(self, recommendation: Dict[str, str]) -> float:
-        """Estimate cost for legal recommendation."""        cost_estimates = {
+        """Estimate cost for legal recommendation."""
+        cost_estimates = {
             'contracts': 3000.0,
             'licenses': 1500.0,
             'ip_protection': 5000.0,
@@ -1454,7 +1521,8 @@ class LegalComplianceEngine:
         return cost_estimates.get(recommendation['category'], 2000.0)
     
     def _calculate_legal_deadline(self, priority: str) -> str:
-        """Calculate deadline for legal action."""        base_date = datetime.now(timezone.utc)
+        """Calculate deadline for legal action."""
+        base_date = datetime.now(timezone.utc)
         
         if priority == 'critical':
             deadline = base_date + timedelta(days=3)
@@ -1473,7 +1541,8 @@ async def create_legal_compliance_engine(
     db_session=None,
     config: Dict[str, Any] = None
 ) -> LegalComplianceEngine:
-    """    Create and configure legal compliance engine.
+    """
+    Create and configure legal compliance engine.
     
     Args:
         db_session: Database session
@@ -1481,7 +1550,8 @@ async def create_legal_compliance_engine(
         
     Returns:
         LegalComplianceEngine: Configured engine
-    """    engine = LegalComplianceEngine(db_session, config)
+    """
+    engine = LegalComplianceEngine(db_session, config)
     return engine
 
 

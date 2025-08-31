@@ -29,7 +29,8 @@ Business Logic Coverage:
 Text Input → Language Detection → Preprocessing → Feature Extraction → Model Processing
 → Entity Recognition → Sentiment Analysis → Content Classification → Text Generation
 → Quality Assessment → SEO Optimization → Business Intelligence
-"""from typing import Dict, List, Any, Optional, Union, Tuple, Callable, AsyncGenerator, Set
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple, Callable, AsyncGenerator, Set
 import asyncio
 import re
 import spacy
@@ -185,14 +186,16 @@ __email__ = "mlaiel@live.de"
 
 # NLP Processing Enums
 class ProcessingLevel(Enum):
-    """Levels of NLP processing."""    BASIC = "basic"
+    """Levels of NLP processing."""
+    BASIC = "basic"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     ENTERPRISE = "enterprise"
     RESEARCH = "research"
 
 class LanguageModel(Enum):
-    """Types of language models."""    BERT = "bert"
+    """Types of language models."""
+    BERT = "bert"
     GPT = "gpt"
     T5 = "t5"
     ROBERTA = "roberta"
@@ -204,7 +207,8 @@ class LanguageModel(Enum):
     LLAMA = "llama"
 
 class TextType(Enum):
-    """Types of text content."""    SOCIAL_MEDIA = "social_media"
+    """Types of text content."""
+    SOCIAL_MEDIA = "social_media"
     ARTICLE = "article"
     BLOG_POST = "blog_post"
     NEWS = "news"
@@ -216,7 +220,8 @@ class TextType(Enum):
     CREATIVE_WRITING = "creative_writing"
 
 class TaskType(Enum):
-    """Types of NLP tasks."""    CLASSIFICATION = "classification"
+    """Types of NLP tasks."""
+    CLASSIFICATION = "classification"
     SENTIMENT_ANALYSIS = "sentiment_analysis"
     ENTITY_RECOGNITION = "entity_recognition"
     TEXT_GENERATION = "text_generation"
@@ -228,7 +233,8 @@ class TaskType(Enum):
     TOPIC_MODELING = "topic_modeling"
 
 class AnalysisDepth(Enum):
-    """Depth of text analysis."""    SURFACE = "surface"
+    """Depth of text analysis."""
+    SURFACE = "surface"
     SEMANTIC = "semantic"
     SYNTACTIC = "syntactic"
     PRAGMATIC = "pragmatic"
@@ -237,7 +243,8 @@ class AnalysisDepth(Enum):
 
 @dataclass
 class NLPCapability:
-    """NLP capability configuration."""    name: str
+    """NLP capability configuration."""
+    name: str
     component: Any
     processing_levels: List[ProcessingLevel]
     language_models: List[LanguageModel]
@@ -462,9 +469,11 @@ NLP_ARCHITECTURE = {
 
 # Enterprise NLP Framework
 class NLPFrameworkManager:
-    """    Ultra-Professional Natural Language Processing Framework Manager
+    """
+    Ultra-Professional Natural Language Processing Framework Manager
     Comprehensive NLP suite for enterprise-grade text processing and analysis.
-    """    
+    """
+    
     def __init__(self):
         self.architecture = NLP_ARCHITECTURE
         self.version = __version__
@@ -474,7 +483,8 @@ class NLPFrameworkManager:
         self.supported_languages = self._get_supported_languages()
         
     def _initialize_capabilities(self) -> Dict[str, Any]:
-        """Initialize NLP capabilities."""        capabilities = {}
+        """Initialize NLP capabilities."""
+        capabilities = {}
         
         for category, components in self.architecture.items():
             capabilities[category] = {}
@@ -502,7 +512,8 @@ class NLPFrameworkManager:
         return capabilities
     
     def _get_supported_languages(self) -> Set[str]:
-        """Get all supported languages across components."""        languages = set()
+        """Get all supported languages across components."""
+        languages = set()
         for category in self.architecture.values():
             for capability in category.values():
                 languages.update(capability.supported_languages)
@@ -511,7 +522,8 @@ class NLPFrameworkManager:
     async def process_text_comprehensive(self, 
                                        text: str, 
                                        processing_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Process text with comprehensive NLP pipeline."""        # Language detection
+        """Process text with comprehensive NLP pipeline."""
+        # Language detection
         language_detector = LanguageDetector()
         language_result = await language_detector.detect(text)
         detected_language = language_result['language']
@@ -566,7 +578,8 @@ class NLPFrameworkManager:
     
     async def generate_content_professional(self, 
                                           generation_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate content with professional NLP capabilities."""        content_generator = ContentGenerator(generation_config)
+        """Generate content with professional NLP capabilities."""
+        content_generator = ContentGenerator(generation_config)
         
         # Content generation
         generation_result = await content_generator.generate(generation_config)
@@ -600,7 +613,8 @@ class NLPFrameworkManager:
     async def analyze_content_intelligence(self, 
                                          content: str, 
                                          analysis_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content with business intelligence capabilities."""        text_analytics = TextAnalytics(analysis_config)
+        """Analyze content with business intelligence capabilities."""
+        text_analytics = TextAnalytics(analysis_config)
         
         # Comprehensive analytics
         analytics_result = await text_analytics.analyze_comprehensive(content)
@@ -633,16 +647,20 @@ class NLPFrameworkManager:
         }
     
     def get_supported_languages(self) -> List[str]:
-        """Get list of all supported languages."""        return sorted(list(self.supported_languages))
+        """Get list of all supported languages."""
+        return sorted(list(self.supported_languages))
     
     def get_supported_models(self) -> List[str]:
-        """Get list of all supported language models."""        return [lm.value for lm in LanguageModel]
+        """Get list of all supported language models."""
+        return [lm.value for lm in LanguageModel]
     
     def get_task_types(self) -> List[str]:
-        """Get list of all supported task types."""        return [tt.value for tt in TaskType]
+        """Get list of all supported task types."""
+        return [tt.value for tt in TaskType]
     
     def get_nlp_capabilities(self) -> Dict[str, Any]:
-        """Get comprehensive NLP capabilities information."""        total_capabilities = sum(len(category) for category in self.architecture.values())
+        """Get comprehensive NLP capabilities information."""
+        total_capabilities = sum(len(category) for category in self.architecture.values())
         real_time_capabilities = sum(
             1 for category in self.architecture.values()
             for capability in category.values()
@@ -694,7 +712,8 @@ class NLPFrameworkManager:
         }
     
     def validate_business_logic_completeness(self) -> bool:
-        """Validate complete business logic coverage."""        required_business_logic = [
+        """Validate complete business logic coverage."""
+        required_business_logic = [
             'comprehensive_text_processing_pipeline',
             'intelligent_multilingual_detection_system',
             'comprehensive_sentiment_intelligence_system',
@@ -721,21 +740,25 @@ nlp_framework = NLPFrameworkManager()
 
 # NLP Utility Functions
 async def detect_language_professional(text: str) -> Dict[str, Any]:
-    """Professional language detection with confidence scoring."""    detector = LanguageDetector()
+    """Professional language detection with confidence scoring."""
+    detector = LanguageDetector()
     return await detector.detect_with_confidence(text)
 
 async def analyze_sentiment_comprehensive(text: str, language: str = 'auto') -> Dict[str, Any]:
-    """Comprehensive sentiment analysis with emotion detection."""    analyzer = SentimentAnalyzer()
+    """Comprehensive sentiment analysis with emotion detection."""
+    analyzer = SentimentAnalyzer()
     return await analyzer.analyze_comprehensive(text, language)
 
 async def extract_entities_advanced(text: str, entity_types: List[str] = None) -> Dict[str, Any]:
-    """Advanced entity extraction with relation detection."""    extractor = EntityExtractor()
+    """Advanced entity extraction with relation detection."""
+    extractor = EntityExtractor()
     return await extractor.extract_with_relations(text, entity_types)
 
 async def generate_content_seo_optimized(prompt: str, 
                                        target_keywords: List[str],
                                        content_type: str = 'blog_post') -> Dict[str, Any]:
-    """Generate SEO-optimized content with quality assessment."""    generator = ContentGenerator()
+    """Generate SEO-optimized content with quality assessment."""
+    generator = ContentGenerator()
     seo_optimizer = SEOOptimizer()
     
     content = await generator.generate_with_seo(prompt, target_keywords, content_type)
@@ -748,7 +771,8 @@ async def generate_content_seo_optimized(prompt: str,
     }
 
 def get_optimal_model(task_type: str, language: str, processing_level: str) -> str:
-    """Get optimal language model recommendation."""    model_recommendations = {
+    """Get optimal language model recommendation."""
+    model_recommendations = {
         ('sentiment_analysis', 'en', 'enterprise'): 'roberta',
         ('sentiment_analysis', 'de', 'advanced'): 'bert',
         ('entity_recognition', 'en', 'enterprise'): 'electra',

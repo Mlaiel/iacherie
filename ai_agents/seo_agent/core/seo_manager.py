@@ -19,7 +19,8 @@ Project Team Specializations:
 Any attempt to steal, copy, reverse-engineer, or commercialize this code without explicit written authorization 
 will result in immediate legal action under German and international intellectual property law.
 Contact mlaiel@live.de for licensing inquiries only.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import uuid
@@ -60,7 +61,8 @@ from ...ml.prediction_models import SEOROIPredictionModel
 logger = logging.getLogger(__name__)
 
 class CampaignStatus(Enum):
-    """Advanced SEO campaign status management"""    DRAFT = "draft"
+    """Advanced SEO campaign status management"""
+    DRAFT = "draft"
     PLANNING = "planning"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
@@ -74,7 +76,8 @@ class CampaignStatus(Enum):
     ARCHIVED = "archived"
 
 class CampaignType(Enum):
-    """Enterprise-level SEO campaign types"""    KEYWORD_OPTIMIZATION = "keyword_optimization"
+    """Enterprise-level SEO campaign types"""
+    KEYWORD_OPTIMIZATION = "keyword_optimization"
     CONTENT_AUDIT = "content_audit"
     TECHNICAL_SEO = "technical_seo"
     COMPETITOR_ANALYSIS = "competitor_analysis"
@@ -94,21 +97,24 @@ class CampaignType(Enum):
     ALGORITHM_RECOVERY = "algorithm_recovery"
 
 class CampaignPriority(IntEnum):
-    """Campaign priority levels"""    CRITICAL = 1
+    """Campaign priority levels"""
+    CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
     LOW = 4
     MAINTENANCE = 5
 
 class AutomationLevel(Enum):
-    """Campaign automation levels"""    MANUAL = "manual"
+    """Campaign automation levels"""
+    MANUAL = "manual"
     SEMI_AUTOMATED = "semi_automated"
     FULLY_AUTOMATED = "fully_automated"
     AI_DRIVEN = "ai_driven"
 
 @dataclass
 class SEOPerformanceMetrics:
-    """Comprehensive SEO performance tracking metrics"""    campaign_id: str
+    """Comprehensive SEO performance tracking metrics"""
+    campaign_id: str
     content_ids: List[str]
     organic_traffic_change: float
     ranking_improvements: Dict[str, int]
@@ -135,7 +141,8 @@ class SEOPerformanceMetrics:
 
 @dataclass
 class SEOCampaign:
-    """Enterprise SEO campaign with advanced tracking and automation"""    campaign_id: str
+    """Enterprise SEO campaign with advanced tracking and automation"""
+    campaign_id: str
     name: str
     description: str
     campaign_type: CampaignType
@@ -174,7 +181,8 @@ class SEOCampaign:
     attached_files: List[Dict[str, Any]] = field(default_factory=list)
 
 class SEOAgentManager(BaseAgent):
-    """    Industrial-grade SEO campaign management and orchestration system.
+    """
+    Industrial-grade SEO campaign management and orchestration system.
     
     Enterprise Features:
     - Multi-campaign orchestration with resource allocation
@@ -189,7 +197,8 @@ class SEOAgentManager(BaseAgent):
     - Compliance and audit trail management
     - Predictive analytics for SEO performance forecasting
     - Dynamic resource allocation based on campaign performance
-    """    
+    """
+    
     def __init__(self, manager_id: str = "seo_manager_enterprise", config: Optional[Dict[str, Any]] = None):
         super().__init__(manager_id, config)
         
@@ -226,7 +235,8 @@ class SEOAgentManager(BaseAgent):
         logger.info(f"SEO Agent Manager initialized with ID: {manager_id}")
 
     async def initialize(self) -> bool:
-        """Initialize the SEO manager system"""        try:
+        """Initialize the SEO manager system"""
+        try:
             # Initialize agent pool
             await self._initialize_agent_pool()
             
@@ -254,7 +264,8 @@ class SEOAgentManager(BaseAgent):
         campaign_config: Dict[str, Any],
         auto_start: bool = False
     ) -> SEOCampaign:
-        """        Create a comprehensive SEO campaign with advanced configuration
+        """
+        Create a comprehensive SEO campaign with advanced configuration
         
         Args:
             campaign_config: Detailed campaign configuration
@@ -262,7 +273,8 @@ class SEOAgentManager(BaseAgent):
             
         Returns:
             Created SEO campaign object
-        """        try:
+        """
+        try:
             # Validate campaign configuration
             await self._validate_campaign_config(campaign_config)
             
@@ -327,7 +339,8 @@ class SEOAgentManager(BaseAgent):
             raise SEOError(f"Failed to create campaign: {str(e)}")
 
     async def start_campaign(self, campaign_id: str) -> bool:
-        """Start an SEO campaign with full orchestration"""        try:
+        """Start an SEO campaign with full orchestration"""
+        try:
             campaign = self.active_campaigns.get(campaign_id)
             if not campaign:
                 raise ValidationError(f"Campaign not found: {campaign_id}")
@@ -363,7 +376,8 @@ class SEOAgentManager(BaseAgent):
         campaign_id: str,
         detailed_analysis: bool = True
     ) -> Dict[str, Any]:
-        """        Comprehensive campaign performance monitoring and analysis
+        """
+        Comprehensive campaign performance monitoring and analysis
         
         Args:
             campaign_id: Campaign to monitor
@@ -371,7 +385,8 @@ class SEOAgentManager(BaseAgent):
             
         Returns:
             Comprehensive performance report
-        """        try:
+        """
+        try:
             campaign = self.active_campaigns.get(campaign_id)
             if not campaign:
                 raise ValidationError(f"Campaign not found: {campaign_id}")
@@ -429,7 +444,8 @@ class SEOAgentManager(BaseAgent):
 
 @dataclass
 class SEOCampaign:
-    """SEO campaign configuration"""    campaign_id: str
+    """SEO campaign configuration"""
+    campaign_id: str
     name: str
     campaign_type: CampaignType
     status: CampaignStatus
@@ -447,7 +463,8 @@ class SEOCampaign:
 
 @dataclass
 class SEOPerformanceMetrics:
-    """SEO performance tracking metrics"""    content_id: str
+    """SEO performance tracking metrics"""
+    content_id: str
     timestamp: datetime
     organic_traffic: int = 0
     click_through_rate: float = 0.0
@@ -460,7 +477,8 @@ class SEOPerformanceMetrics:
     content_score: float = 0.0
 
 class SEOAgentManager:
-    """    Advanced SEO Agent Manager for coordinating SEO optimization campaigns.
+    """
+    Advanced SEO Agent Manager for coordinating SEO optimization campaigns.
     
     Capabilities:
     - Multi-content SEO campaign orchestration
@@ -471,7 +489,8 @@ class SEOAgentManager:
     - Cross-platform SEO coordination
     - Intelligent resource allocation
     - Competitive intelligence automation
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -512,7 +531,8 @@ class SEOAgentManager:
         self.auto_reporting_enabled = True
         
     async def initialize(self):
-        """Initialize SEO Agent Manager"""        try:
+        """Initialize SEO Agent Manager"""
+        try:
             # Initialize core SEO agent
             await self.seo_agent.initialize()
             
@@ -540,7 +560,8 @@ class SEOAgentManager:
         self, 
         campaign_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Create a new SEO campaign.
+        """
+        Create a new SEO campaign.
         
         Args:
             campaign_config: Campaign configuration including:
@@ -556,7 +577,8 @@ class SEOAgentManager:
         
         Returns:
             Campaign creation results
-        """        try:
+        """
+        try:
             # Validate campaign configuration
             campaign_id = await self._generate_campaign_id()
             
@@ -602,14 +624,16 @@ class SEOAgentManager:
             raise SEOError(f"Failed to create campaign: {e}")
     
     async def start_campaign(self, campaign_id: str) -> Dict[str, Any]:
-        """        Start an SEO campaign.
+        """
+        Start an SEO campaign.
         
         Args:
             campaign_id: ID of campaign to start
         
         Returns:
             Campaign start results
-        """        try:
+        """
+        try:
             campaign = self.active_campaigns.get(campaign_id)
             if not campaign:
                 raise ValidationError(f"Campaign {campaign_id} not found")
@@ -661,7 +685,8 @@ class SEOAgentManager:
             raise SEOError(f"Failed to start campaign: {e}")
     
     async def pause_campaign(self, campaign_id: str) -> Dict[str, Any]:
-        """Pause an active SEO campaign"""        try:
+        """Pause an active SEO campaign"""
+        try:
             campaign = self.active_campaigns.get(campaign_id)
             if not campaign:
                 raise ValidationError(f"Campaign {campaign_id} not found")
@@ -691,7 +716,8 @@ class SEOAgentManager:
             raise SEOError(f"Failed to pause campaign: {e}")
     
     async def resume_campaign(self, campaign_id: str) -> Dict[str, Any]:
-        """Resume a paused SEO campaign"""        try:
+        """Resume a paused SEO campaign"""
+        try:
             campaign = self.active_campaigns.get(campaign_id)
             if not campaign:
                 raise ValidationError(f"Campaign {campaign_id} not found")
@@ -724,7 +750,8 @@ class SEOAgentManager:
             raise SEOError(f"Failed to resume campaign: {e}")
     
     async def stop_campaign(self, campaign_id: str) -> Dict[str, Any]:
-        """Stop and complete an SEO campaign"""        try:
+        """Stop and complete an SEO campaign"""
+        try:
             campaign = self.active_campaigns.get(campaign_id)
             if not campaign:
                 raise ValidationError(f"Campaign {campaign_id} not found")
@@ -772,7 +799,8 @@ class SEOAgentManager:
             raise SEOError(f"Failed to stop campaign: {e}")
     
     async def get_campaign_status(self, campaign_id: str) -> Dict[str, Any]:
-        """Get current status of an SEO campaign"""        try:
+        """Get current status of an SEO campaign"""
+        try:
             # Check active campaigns
             campaign = self.active_campaigns.get(campaign_id)
             if not campaign:
@@ -808,7 +836,8 @@ class SEOAgentManager:
         content_id: str, 
         optimization_type: str = "full"
     ) -> Dict[str, Any]:
-        """        Optimize a single piece of content for SEO.
+        """
+        Optimize a single piece of content for SEO.
         
         Args:
             content_id: ID of content to optimize
@@ -816,7 +845,8 @@ class SEOAgentManager:
         
         Returns:
             Optimization results
-        """        try:
+        """
+        try:
             # Add to managed content
             self.managed_content.add(content_id)
             
@@ -867,7 +897,8 @@ class SEOAgentManager:
         content_ids: Optional[List[str]] = None,
         time_range: Optional[Dict[str, datetime]] = None
     ) -> Dict[str, Any]:
-        """        Get SEO performance analytics for content.
+        """
+        Get SEO performance analytics for content.
         
         Args:
             content_ids: Specific content IDs to analyze (all if None)
@@ -875,7 +906,8 @@ class SEOAgentManager:
         
         Returns:
             Performance analytics
-        """        try:
+        """
+        try:
             if not content_ids:
                 content_ids = list(self.managed_content)
             
@@ -929,7 +961,8 @@ class SEOAgentManager:
         industry: str,
         competitor_urls: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """        Discover keyword opportunities for content optimization.
+        """
+        Discover keyword opportunities for content optimization.
         
         Args:
             industry: Industry or niche for keyword research
@@ -937,7 +970,8 @@ class SEOAgentManager:
         
         Returns:
             Keyword opportunities
-        """        try:
+        """
+        try:
             # Research industry keywords
             industry_keywords = await self.seo_agent._research_keywords({
                 'content_topic': industry,
@@ -975,7 +1009,8 @@ class SEOAgentManager:
             raise SEOError(f"Failed to get keyword opportunities: {e}")
     
     async def _execute_campaign(self, campaign_id: str):
-        """Execute SEO campaign workflow"""        try:
+        """Execute SEO campaign workflow"""
+        try:
             campaign = self.active_campaigns.get(campaign_id)
             if not campaign or campaign.status != CampaignStatus.ACTIVE:
                 return
@@ -1012,7 +1047,8 @@ class SEOAgentManager:
     # Due to length constraints, showing key structure and main methods
 
     async def _campaign_monitor_loop(self):
-        """Background task to monitor campaign progress"""        while True:
+        """Background task to monitor campaign progress"""
+        while True:
             try:
                 for campaign_id, campaign in self.active_campaigns.items():
                     if campaign.status == CampaignStatus.ACTIVE:
@@ -1027,7 +1063,8 @@ class SEOAgentManager:
                 await asyncio.sleep(60)
     
     async def _performance_tracking_loop(self):
-        """Background task to track SEO performance"""        while True:
+        """Background task to track SEO performance"""
+        while True:
             try:
                 for content_id in self.managed_content:
                     # Collect performance metrics
@@ -1042,7 +1079,8 @@ class SEOAgentManager:
                 await asyncio.sleep(300)
     
     async def _optimization_learning_loop(self):
-        """Background task to learn from optimization patterns"""        while True:
+        """Background task to learn from optimization patterns"""
+        while True:
             try:
                 # Analyze optimization patterns
                 await self._analyze_optimization_patterns()
@@ -1058,5 +1096,6 @@ class SEOAgentManager:
                 await asyncio.sleep(3600)
     
     def __del__(self):
-        """Cleanup resources"""        if hasattr(self, 'thread_pool'):
+        """Cleanup resources"""
+        if hasattr(self, 'thread_pool'):
             self.thread_pool.shutdown(wait=True)

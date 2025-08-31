@@ -10,7 +10,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, modification, 
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
-"""import os
+"""
+import os
 import json
 import logging
 import asyncio
@@ -50,7 +51,8 @@ settings = get_settings()
 
 
 class ClusteringAlgorithm(Enum):
-    """Supported clustering algorithms"""    KMEANS = "kmeans"
+    """Supported clustering algorithms"""
+    KMEANS = "kmeans"
     DBSCAN = "dbscan"
     HIERARCHICAL = "hierarchical"
     SPECTRAL = "spectral"
@@ -61,7 +63,8 @@ class ClusteringAlgorithm(Enum):
 
 
 class DimensionalityReduction(Enum):
-    """Dimensionality reduction techniques"""    PCA = "pca"
+    """Dimensionality reduction techniques"""
+    PCA = "pca"
     UMAP = "umap"
     TSNE = "tsne"
     ISOMAP = "isomap"
@@ -69,7 +72,8 @@ class DimensionalityReduction(Enum):
 
 
 class ClusteringMode(Enum):
-    """Clustering operation modes"""    CONTENT_ANALYSIS = "content_analysis"
+    """Clustering operation modes"""
+    CONTENT_ANALYSIS = "content_analysis"
     DUPLICATE_DETECTION = "duplicate_detection"
     ANOMALY_DETECTION = "anomaly_detection"
     SIMILARITY_GROUPING = "similarity_grouping"
@@ -78,7 +82,8 @@ class ClusteringMode(Enum):
 
 @dataclass
 class ClusteringConfig:
-    """Clustering configuration parameters"""    algorithm: ClusteringAlgorithm
+    """Clustering configuration parameters"""
+    algorithm: ClusteringAlgorithm
     n_clusters: Optional[int] = None
     eps: float = 0.5
     min_samples: int = 5
@@ -93,7 +98,8 @@ class ClusteringConfig:
 
 @dataclass
 class ClusterInfo:
-    """Information about a single cluster"""    cluster_id: int
+    """Information about a single cluster"""
+    cluster_id: int
     content_type: str
     size: int
     centroid: np.ndarray
@@ -109,7 +115,8 @@ class ClusterInfo:
 
 @dataclass
 class ClusteringResult:
-    """Complete clustering analysis result"""    clustering_id: str
+    """Complete clustering analysis result"""
+    clustering_id: str
     content_type: str
     algorithm_used: str
     total_vectors: int
@@ -125,7 +132,8 @@ class ClusteringResult:
 
 @dataclass
 class AnomalyReport:
-    """Anomaly detection report"""    content_id: str
+    """Anomaly detection report"""
+    content_id: str
     anomaly_score: float
     anomaly_type: str
     cluster_id: Optional[int]
@@ -136,7 +144,8 @@ class AnomalyReport:
 
 
 class VectorClusteringEngine:
-    """    Advanced vector clustering engine for content analysis and pattern discovery.
+    """
+    Advanced vector clustering engine for content analysis and pattern discovery.
     
     Features:
     - Multiple clustering algorithms (K-means, DBSCAN, Hierarchical, etc.)
@@ -147,7 +156,8 @@ class VectorClusteringEngine:
     - Duplicate content identification
     - Interactive visualizations
     - Performance monitoring and caching
-    """    
+    """
+    
     def __init__(
         self,
         visualization_manager: VisualizationManager = None,
@@ -155,14 +165,16 @@ class VectorClusteringEngine:
         cache_enabled: bool = True,
         parallel_processing: bool = True
     ):
-        """        Initialize vector clustering engine
+        """
+        Initialize vector clustering engine
         
         Args:
             visualization_manager: Visualization utilities
             anomaly_detector: Anomaly detection system
             cache_enabled: Enable result caching
             parallel_processing: Enable parallel processing
-        """        self.visualization_manager = visualization_manager or VisualizationManager()
+        """
+        self.visualization_manager = visualization_manager or VisualizationManager()
         self.anomaly_detector = anomaly_detector or AnomalyDetector()
         self.cache_enabled = cache_enabled
         self.parallel_processing = parallel_processing
@@ -199,7 +211,8 @@ class VectorClusteringEngine:
         vector_data: Optional[List[Tuple[str, np.ndarray]]] = None,
         clustering_id: str = None
     ) -> ClusteringResult:
-        """        Perform vector clustering analysis
+        """
+        Perform vector clustering analysis
         
         Args:
             content_type: Content type to cluster
@@ -209,7 +222,8 @@ class VectorClusteringEngine:
             
         Returns:
             Comprehensive clustering result
-        """        try:
+        """
+        try:
             start_time = datetime.now()
             
             # Generate clustering ID
@@ -323,7 +337,8 @@ class VectorClusteringEngine:
         similarity_threshold: float = 0.95,
         clustering_config: ClusteringConfig = None
     ) -> List[List[str]]:
-        """        Detect potential duplicate content using clustering
+        """
+        Detect potential duplicate content using clustering
         
         Args:
             content_type: Content type to analyze
@@ -332,7 +347,8 @@ class VectorClusteringEngine:
             
         Returns:
             List of duplicate groups (each group is a list of content IDs)
-        """        try:
+        """
+        try:
             # Use DBSCAN for duplicate detection
             if clustering_config is None:
                 clustering_config = ClusteringConfig(
@@ -378,7 +394,8 @@ class VectorClusteringEngine:
         anomaly_threshold: float = 2.0,
         return_detailed_report: bool = True
     ) -> Union[List[str], List[AnomalyReport]]:
-        """        Detect anomalous content using clustering-based approach
+        """
+        Detect anomalous content using clustering-based approach
         
         Args:
             content_type: Content type to analyze
@@ -387,7 +404,8 @@ class VectorClusteringEngine:
             
         Returns:
             List of anomalous content IDs or detailed reports
-        """        try:
+        """
+        try:
             # Configure for anomaly detection
             config = ClusteringConfig(
                 algorithm=ClusteringAlgorithm.DBSCAN,
@@ -461,7 +479,8 @@ class VectorClusteringEngine:
         parameter_ranges: Dict[str, List[Any]],
         evaluation_metric: str = "silhouette"
     ) -> Dict[str, Any]:
-        """        Optimize clustering parameters using grid search
+        """
+        Optimize clustering parameters using grid search
         
         Args:
             content_type: Content type to optimize for
@@ -471,7 +490,8 @@ class VectorClusteringEngine:
             
         Returns:
             Best parameters and performance metrics
-        """        try:
+        """
+        try:
             # Load vector data
             vector_data = await self._load_vector_data(content_type)
             
@@ -553,7 +573,8 @@ class VectorClusteringEngine:
         algorithms: List[ClusteringAlgorithm],
         evaluation_metrics: List[str] = ["silhouette", "calinski_harabasz", "davies_bouldin"]
     ) -> Dict[str, Dict[str, float]]:
-        """        Compare performance of different clustering algorithms
+        """
+        Compare performance of different clustering algorithms
         
         Args:
             content_type: Content type to analyze
@@ -562,7 +583,8 @@ class VectorClusteringEngine:
             
         Returns:
             Comparison results for each algorithm
-        """        try:
+        """
+        try:
             # Load vector data once
             vector_data = await self._load_vector_data(content_type)
             
@@ -610,7 +632,8 @@ class VectorClusteringEngine:
     async def get_clustering_history(
         self, content_type: str = None, limit: int = 100
     ) -> List[Dict[str, Any]]:
-        """Get clustering history and quality trends"""        try:
+        """Get clustering history and quality trends"""
+        try:
             history = self.quality_history.copy()
             
             # Filter by content type if specified
@@ -626,7 +649,8 @@ class VectorClusteringEngine:
             return []
     
     async def get_clustering_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive clustering statistics"""        try:
+        """Get comprehensive clustering statistics"""
+        try:
             stats = self.clustering_stats.copy()
             
             # Add derived metrics
@@ -651,7 +675,8 @@ class VectorClusteringEngine:
             return {}
     
     async def _load_vector_data(self, content_type: str) -> List[Tuple[str, np.ndarray]]:
-        """Load vector data from database"""        try:
+        """Load vector data from database"""
+        try:
             vector_data = []
             
             async with get_db_session() as session:
@@ -680,7 +705,8 @@ class VectorClusteringEngine:
     async def _prepare_clustering_data(
         self, vector_data: List[Tuple[str, np.ndarray]], config: ClusteringConfig
     ) -> Tuple[List[str], np.ndarray, List[Dict]]:
-        """Prepare data for clustering"""        try:
+        """Prepare data for clustering"""
+        try:
             content_ids = [item[0] for item in vector_data]
             vectors = np.array([item[1] for item in vector_data])
             
@@ -701,7 +727,8 @@ class VectorClusteringEngine:
     async def _apply_dimensionality_reduction(
         self, vectors: np.ndarray, config: ClusteringConfig
     ) -> np.ndarray:
-        """Apply dimensionality reduction if configured"""        try:
+        """Apply dimensionality reduction if configured"""
+        try:
             if config.dimensionality_reduction == DimensionalityReduction.NONE:
                 return vectors
             
@@ -745,7 +772,8 @@ class VectorClusteringEngine:
     async def _perform_clustering(
         self, vectors: np.ndarray, config: ClusteringConfig
     ) -> Tuple[np.ndarray, Optional[np.ndarray]]:
-        """Perform clustering using specified algorithm"""        try:
+        """Perform clustering using specified algorithm"""
+        try:
             if config.algorithm == ClusteringAlgorithm.KMEANS:
                 n_clusters = config.n_clusters or self._estimate_optimal_clusters(vectors)
                 clusterer = KMeans(
@@ -829,7 +857,8 @@ class VectorClusteringEngine:
         centers: Optional[np.ndarray],
         content_type: str
     ) -> List[ClusterInfo]:
-        """Analyze clustering results and create cluster information"""        try:
+        """Analyze clustering results and create cluster information"""
+        try:
             clusters = []
             unique_labels = np.unique(labels)
             
@@ -920,7 +949,8 @@ class VectorClusteringEngine:
         labels: np.ndarray,
         config: ClusteringConfig
     ) -> List[str]:
-        """Detect outliers in clustering results"""        try:
+        """Detect outliers in clustering results"""
+        try:
             outliers = []
             
             # Method 1: Labels marked as -1 (for DBSCAN, OPTICS)
@@ -966,7 +996,8 @@ class VectorClusteringEngine:
     async def _calculate_clustering_quality(
         self, vectors: np.ndarray, labels: np.ndarray, config: ClusteringConfig
     ) -> Dict[str, float]:
-        """Calculate clustering quality metrics"""        try:
+        """Calculate clustering quality metrics"""
+        try:
             quality_metrics = {}
             
             # Skip if all points are outliers or single cluster
@@ -1015,7 +1046,8 @@ class VectorClusteringEngine:
     def _calculate_custom_metrics(
         self, vectors: np.ndarray, labels: np.ndarray
     ) -> Dict[str, float]:
-        """Calculate custom clustering quality metrics"""        try:
+        """Calculate custom clustering quality metrics"""
+        try:
             metrics = {}
             
             unique_labels = np.unique(labels)
@@ -1076,7 +1108,8 @@ class VectorClusteringEngine:
     def _calculate_cluster_centers(
         self, vectors: np.ndarray, labels: np.ndarray
     ) -> np.ndarray:
-        """Calculate cluster centers for given labels"""        try:
+        """Calculate cluster centers for given labels"""
+        try:
             unique_labels = np.unique(labels)
             centers = []
             
@@ -1104,7 +1137,8 @@ class VectorClusteringEngine:
         quality_metrics: Dict[str, float],
         content_type: str
     ) -> Dict[str, Any]:
-        """Generate insights from clustering results"""        try:
+        """Generate insights from clustering results"""
+        try:
             insights = {
                 "summary": {},
                 "quality_assessment": {},
@@ -1199,7 +1233,8 @@ class VectorClusteringEngine:
         clusters: List[ClusterInfo],
         clustering_id: str
     ) -> List[str]:
-        """Create visualizations for clustering results"""        try:
+        """Create visualizations for clustering results"""
+        try:
             visualization_paths = []
             
             if self.visualization_manager is None:
@@ -1291,7 +1326,8 @@ class VectorClusteringEngine:
             return []
     
     def _estimate_optimal_clusters(self, vectors: np.ndarray) -> int:
-        """Estimate optimal number of clusters using elbow method"""        try:
+        """Estimate optimal number of clusters using elbow method"""
+        try:
             max_clusters = min(10, len(vectors) // 2)
             
             if max_clusters < 2:
@@ -1328,7 +1364,8 @@ class VectorClusteringEngine:
     def _generate_parameter_combinations(
         self, parameter_ranges: Dict[str, List[Any]]
     ) -> List[Dict[str, Any]]:
-        """Generate all combinations of parameters for grid search"""        try:
+        """Generate all combinations of parameters for grid search"""
+        try:
             import itertools
             
             param_names = list(parameter_ranges.keys())
@@ -1346,7 +1383,8 @@ class VectorClusteringEngine:
             return []
     
     def _calculate_pairwise_similarities(self, vectors: List[np.ndarray]) -> List[float]:
-        """Calculate pairwise similarities between vectors"""        try:
+        """Calculate pairwise similarities between vectors"""
+        try:
             from sklearn.metrics.pairwise import cosine_similarity
             
             similarities = []
@@ -1366,7 +1404,8 @@ class VectorClusteringEngine:
             return []
     
     async def _get_vectors_for_content_ids(self, content_ids: List[str]) -> List[np.ndarray]:
-        """Get vectors for specific content IDs"""        try:
+        """Get vectors for specific content IDs"""
+        try:
             vectors = []
             
             async with get_db_session() as session:
@@ -1388,7 +1427,8 @@ class VectorClusteringEngine:
             return []
     
     async def _get_vector_for_content_id(self, content_id: str) -> Optional[np.ndarray]:
-        """Get vector for specific content ID"""        try:
+        """Get vector for specific content ID"""
+        try:
             async with get_db_session() as session:
                 stmt = select(ContentFingerprint).where(
                     ContentFingerprint.content_id == content_id
@@ -1408,7 +1448,8 @@ class VectorClusteringEngine:
     async def _calculate_anomaly_score(
         self, vector: np.ndarray, clusters: List[ClusterInfo]
     ) -> float:
-        """Calculate anomaly score for a vector"""        try:
+        """Calculate anomaly score for a vector"""
+        try:
             if not clusters:
                 return 1.0  # Maximum anomaly if no clusters
             
@@ -1433,7 +1474,8 @@ class VectorClusteringEngine:
     async def _find_nearest_cluster(
         self, vector: np.ndarray, clusters: List[ClusterInfo]
     ) -> Tuple[Optional[ClusterInfo], float]:
-        """Find nearest cluster to a vector"""        try:
+        """Find nearest cluster to a vector"""
+        try:
             if not clusters:
                 return None, float('inf')
             
@@ -1455,7 +1497,8 @@ class VectorClusteringEngine:
     async def _generate_anomaly_explanation(
         self, anomaly_score: float, distance: float, nearest_cluster: Optional[ClusterInfo]
     ) -> str:
-        """Generate explanation for anomaly detection"""        try:
+        """Generate explanation for anomaly detection"""
+        try:
             if anomaly_score > 0.8:
                 severity = "high"
             elif anomaly_score > 0.6:
@@ -1485,7 +1528,8 @@ class VectorClusteringEngine:
     async def _generate_anomaly_recommendation(
         self, anomaly_score: float, content_type: str
     ) -> str:
-        """Generate recommendation for handling anomaly"""        try:
+        """Generate recommendation for handling anomaly"""
+        try:
             if anomaly_score > 0.8:
                 recommendation = (
                     "High anomaly detected. Recommend manual review for potential "
@@ -1517,7 +1561,8 @@ class VectorClusteringEngine:
             return "Review recommended for anomalous content."
     
     def _initialize_algorithm_configs(self) -> Dict[ClusteringAlgorithm, ClusteringConfig]:
-        """Initialize default configurations for clustering algorithms"""        return {
+        """Initialize default configurations for clustering algorithms"""
+        return {
             ClusteringAlgorithm.KMEANS: ClusteringConfig(
                 algorithm=ClusteringAlgorithm.KMEANS,
                 n_clusters=5,
@@ -1556,7 +1601,8 @@ class VectorClusteringEngine:
         }
     
     def _generate_cache_key(self, content_type: str, config: ClusteringConfig) -> str:
-        """Generate cache key for clustering configuration"""        import hashlib
+        """Generate cache key for clustering configuration"""
+        import hashlib
         
         config_str = (
             f"{content_type}_{config.algorithm.value}_{config.n_clusters}_"
@@ -1569,7 +1615,8 @@ class VectorClusteringEngine:
     def _update_clustering_stats(
         self, execution_time: float, vector_count: int, outlier_count: int
     ) -> None:
-        """Update clustering performance statistics"""        self.clustering_stats["total_clusterings"] += 1
+        """Update clustering performance statistics"""
+        self.clustering_stats["total_clusterings"] += 1
         self.clustering_stats["total_vectors_processed"] += vector_count
         
         # Update average execution time
@@ -1579,7 +1626,8 @@ class VectorClusteringEngine:
         self.clustering_stats["avg_execution_time"] = new_avg
     
     async def close(self) -> None:
-        """Close clustering engine and cleanup resources"""        try:
+        """Close clustering engine and cleanup resources"""
+        try:
             # Clear cache
             self.clustering_cache.clear()
             

@@ -11,7 +11,8 @@ Copyright: 2025 - All Rights Reserved
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Tuple, Set
 from datetime import datetime, timedelta
@@ -41,7 +42,8 @@ from ...models.legal import LegalJurisdiction, ComplianceRule, LegalTemplate
 logger = logging.getLogger(__name__)
 
 class LegalFramework(Enum):
-    """Supported legal frameworks"""    DMCA_US = "dmca_us"
+    """Supported legal frameworks"""
+    DMCA_US = "dmca_us"
     EU_COPYRIGHT = "eu_copyright"
     UK_COPYRIGHT = "uk_copyright"
     CANADA_COPYRIGHT = "canada_copyright"
@@ -51,7 +53,8 @@ class LegalFramework(Enum):
     INDIA_COPYRIGHT = "india_copyright"
 
 class ComplianceStatus(Enum):
-    """Legal compliance status"""    COMPLIANT = "compliant"
+    """Legal compliance status"""
+    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIAL_COMPLIANT = "partial_compliant"
     UNDER_REVIEW = "under_review"
@@ -59,7 +62,8 @@ class ComplianceStatus(Enum):
 
 @dataclass
 class LegalRequirement:
-    """Legal requirement specification"""    framework: LegalFramework
+    """Legal requirement specification"""
+    framework: LegalFramework
     requirement_id: str
     description: str
     mandatory_fields: List[str]
@@ -70,7 +74,8 @@ class LegalRequirement:
     
 @dataclass
 class ComplianceResult:
-    """Legal compliance check result"""    case_id: str
+    """Legal compliance check result"""
+    case_id: str
     framework: LegalFramework
     status: ComplianceStatus
     compliance_score: float  # 0-100%
@@ -83,11 +88,13 @@ class ComplianceResult:
     created_at: datetime = field(default_factory=datetime.now)
 
 class LegalComplianceEngine:
-    """    Enterprise Legal Compliance Engine
+    """
+    Enterprise Legal Compliance Engine
     
     Provides comprehensive legal compliance checking, multi-jurisdiction support,
     and automated legal requirement validation for DMCA and international copyright laws.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.legal_validator = LegalValidator()
@@ -106,7 +113,8 @@ class LegalComplianceEngine:
         self.logger.info("Legal Compliance Engine initialized successfully")
     
     def _initialize_legal_frameworks(self) -> Dict[LegalFramework, LegalRequirement]:
-        """Initialize legal framework requirements"""        frameworks = {
+        """Initialize legal framework requirements"""
+        frameworks = {
             LegalFramework.DMCA_US: LegalRequirement(
                 framework=LegalFramework.DMCA_US,
                 requirement_id="dmca_us_standard",
@@ -181,7 +189,8 @@ class LegalComplianceEngine:
         return frameworks
     
     def _load_legal_templates(self) -> Dict[str, str]:
-        """Load legal document templates"""        templates = {
+        """Load legal document templates"""
+        templates = {
             "dmca_takedown_notice": """DMCA TAKEDOWN NOTICE
 Digital Millennium Copyright Act - 17 U.S.C. § 512
 
@@ -256,7 +265,8 @@ Contact Information:
 
 Signature: {signature}
 Date: {date}
-            """        }
+            """
+        }
         
         return templates
     
@@ -266,7 +276,8 @@ Date: {date}
         target_framework: LegalFramework,
         jurisdiction: Optional[str] = None
     ) -> ComplianceResult:
-        """        Comprehensive legal compliance check
+        """
+        Comprehensive legal compliance check
         
         Args:
             case_data: DMCA case information
@@ -275,7 +286,8 @@ Date: {date}
             
         Returns:
             ComplianceResult with detailed compliance status
-        """        try:
+        """
+        try:
             self.logger.info(f"Starting compliance check for case {case_data.get('case_id')}")
             
             # Get framework requirements
@@ -349,7 +361,8 @@ Date: {date}
         framework_req: LegalRequirement,
         result: ComplianceResult
     ) -> float:
-        """Check mandatory legal requirements"""        total_fields = len(framework_req.mandatory_fields)
+        """Check mandatory legal requirements"""
+        total_fields = len(framework_req.mandatory_fields)
         satisfied_fields = 0
         
         for field in framework_req.mandatory_fields:
@@ -367,7 +380,8 @@ Date: {date}
         framework_req: LegalRequirement,
         result: ComplianceResult
     ) -> float:
-        """Check optional requirements (bonus points)"""        total_fields = len(framework_req.optional_fields)
+        """Check optional requirements (bonus points)"""
+        total_fields = len(framework_req.optional_fields)
         if total_fields == 0:
             return 100.0
             
@@ -386,7 +400,8 @@ Date: {date}
         framework_req: LegalRequirement,
         result: ComplianceResult
     ) -> float:
-        """Validate data format and content quality"""        validation_rules = framework_req.validation_rules
+        """Validate data format and content quality"""
+        validation_rules = framework_req.validation_rules
         total_rules = len(validation_rules)
         passed_rules = 0
         
@@ -409,7 +424,8 @@ Date: {date}
         jurisdiction: Optional[str],
         result: ComplianceResult
     ) -> float:
-        """Check jurisdiction-specific legal requirements"""        try:
+        """Check jurisdiction-specific legal requirements"""
+        try:
             if not jurisdiction:
                 # Attempt to detect jurisdiction from case data
                 jurisdiction = await self._detect_jurisdiction(case_data)
@@ -443,7 +459,8 @@ Date: {date}
         field: str,
         framework_req: LegalRequirement
     ) -> bool:
-        """Check if a field exists and meets basic validation"""        value = case_data.get(field)
+        """Check if a field exists and meets basic validation"""
+        value = case_data.get(field)
         
         if not value:
             return False
@@ -465,7 +482,8 @@ Date: {date}
         rule_name: str,
         rule_value: Any
     ) -> bool:
-        """Apply specific validation rule"""        if rule_name == "url_format":
+        """Apply specific validation rule"""
+        if rule_name == "url_format":
             urls = self._extract_urls_from_case(case_data)
             return all(re.match(rule_value, url) for url in urls)
             
@@ -493,7 +511,8 @@ Date: {date}
         return True  # Default to true for unknown rules
     
     def _extract_urls_from_case(self, case_data: Dict[str, Any]) -> List[str]:
-        """Extract all URLs from case data"""        urls = []
+        """Extract all URLs from case data"""
+        urls = []
         url_fields = [
             "infringing_url", "infringing_urls", "infringing_material_location",
             "infringing_locations", "content_url", "platform_url"
@@ -510,7 +529,8 @@ Date: {date}
         return urls
     
     def _extract_emails_from_case(self, case_data: Dict[str, Any]) -> List[str]:
-        """Extract all email addresses from case data"""        emails = []
+        """Extract all email addresses from case data"""
+        emails = []
         email_fields = [
             "contact_email", "copyright_owner_email", "representative_email",
             "notification_email", "contact_information"
@@ -526,7 +546,8 @@ Date: {date}
         return emails
     
     async def _detect_jurisdiction(self, case_data: Dict[str, Any]) -> Optional[str]:
-        """Attempt to detect jurisdiction from case data"""        # Check explicit jurisdiction fields
+        """Attempt to detect jurisdiction from case data"""
+        # Check explicit jurisdiction fields
         jurisdiction_fields = ["jurisdiction", "country", "legal_jurisdiction"]
         for field in jurisdiction_fields:
             if case_data.get(field):
@@ -550,7 +571,8 @@ Date: {date}
         jurisdiction_rules: Dict[str, Any],
         result: ComplianceResult
     ) -> float:
-        """Apply jurisdiction-specific validation rules"""        if not jurisdiction_rules:
+        """Apply jurisdiction-specific validation rules"""
+        if not jurisdiction_rules:
             return 100.0
         
         total_rules = len(jurisdiction_rules)
@@ -573,12 +595,14 @@ Date: {date}
         rule_name: str,
         rule_config: Any
     ) -> bool:
-        """Evaluate specific jurisdiction rule"""        # Implement jurisdiction-specific rule evaluation
+        """Evaluate specific jurisdiction rule"""
+        # Implement jurisdiction-specific rule evaluation
         # This would contain specific logic for different jurisdictions
         return True  # Placeholder
     
     def _determine_compliance_status(self, compliance_score: float) -> ComplianceStatus:
-        """Determine compliance status based on score"""        if compliance_score >= 95.0:
+        """Determine compliance status based on score"""
+        if compliance_score >= 95.0:
             return ComplianceStatus.COMPLIANT
         elif compliance_score >= 80.0:
             return ComplianceStatus.PARTIAL_COMPLIANT
@@ -593,7 +617,8 @@ Date: {date}
         case_data: Dict[str, Any],
         framework: LegalFramework
     ) -> float:
-        """Estimate legal success rate based on compliance and historical data"""        base_rate = result.compliance_score
+        """Estimate legal success rate based on compliance and historical data"""
+        base_rate = result.compliance_score
         
         # Adjust based on case factors
         adjustments = 0.0
@@ -624,7 +649,8 @@ Date: {date}
         result: ComplianceResult,
         framework_req: LegalRequirement
     ) -> None:
-        """Generate actionable recommendations"""        if result.missing_requirements:
+        """Generate actionable recommendations"""
+        if result.missing_requirements:
             result.next_actions.append("Complete missing mandatory requirements")
             
         if result.compliance_score < 80.0:
@@ -643,19 +669,23 @@ Date: {date}
                 result.recommendations.append("Consider GDPR implications and member state specifics")
     
     async def _check_gdpr_compliance(self, case_data: Dict[str, Any]) -> bool:
-        """Check GDPR compliance for EU cases"""        # Implement GDPR-specific checks
+        """Check GDPR compliance for EU cases"""
+        # Implement GDPR-specific checks
         return True  # Placeholder
     
     async def _validate_eu_member_state(self, case_data: Dict[str, Any]) -> bool:
-        """Validate EU member state requirements"""        # Implement EU member state validation
+        """Validate EU member state requirements"""
+        # Implement EU member state validation
         return True  # Placeholder
     
     async def _check_proportionality(self, case_data: Dict[str, Any]) -> bool:
-        """Check proportionality of takedown request"""        # Implement proportionality assessment
+        """Check proportionality of takedown request"""
+        # Implement proportionality assessment
         return True  # Placeholder
     
     async def _check_platform_cooperation_history(self, platform: str) -> bool:
-        """Check historical cooperation of platform"""        # Implement platform cooperation history check
+        """Check historical cooperation of platform"""
+        # Implement platform cooperation history check
         return True  # Placeholder
     
     async def _check_legal_precedent_strength(
@@ -663,7 +693,8 @@ Date: {date}
         framework: LegalFramework,
         case_data: Dict[str, Any]
     ) -> bool:
-        """Check strength of legal precedent"""        # Implement legal precedent analysis
+        """Check strength of legal precedent"""
+        # Implement legal precedent analysis
         return True  # Placeholder
     
     async def get_legal_template(
@@ -671,7 +702,8 @@ Date: {date}
         framework: LegalFramework,
         case_data: Dict[str, Any]
     ) -> str:
-        """Generate legal document from template"""        try:
+        """Generate legal document from template"""
+        try:
             template_key = f"{framework.value}_notice"
             if template_key.replace(f"_{framework.value.split('_')[1]}", "_takedown") in self.legal_templates:
                 template_key = template_key.replace(f"_{framework.value.split('_')[1]}", "_takedown")
@@ -690,7 +722,8 @@ Date: {date}
             raise
     
     async def _fill_legal_template(self, template: str, case_data: Dict[str, Any]) -> str:
-        """Fill legal template with case data"""        # Create template variables
+        """Fill legal template with case data"""
+        # Create template variables
         template_vars = {
             'notice_date': datetime.now().strftime('%B %d, %Y'),
             'signature_date': datetime.now().strftime('%B %d, %Y'),
@@ -716,7 +749,8 @@ Date: {date}
             return template.format_map(DefaultDict(lambda: "[MISSING]", template_vars))
 
 class DefaultDict(dict):
-    """Dictionary that returns a default value for missing keys"""    def __init__(self, default_factory, *args, **kwargs):
+    """Dictionary that returns a default value for missing keys"""
+    def __init__(self, default_factory, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.default_factory = default_factory
     

@@ -21,7 +21,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 🚨 INTELLECTUAL PROPERTY WARNING 🚨
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, List, Optional, Union, Any, Tuple
 from datetime import datetime, timedelta
@@ -45,7 +46,8 @@ import psutil
 logger = logging.getLogger(__name__)
 
 class PartitionStrategy(Enum):
-    """Partition strategy types"""    HASH = "hash"
+    """Partition strategy types"""
+    HASH = "hash"
     RANGE = "range"
     LIST = "list"
     TEMPORAL = "temporal"
@@ -55,13 +57,15 @@ class PartitionStrategy(Enum):
     REVENUE_BASED = "revenue_based"
 
 class PartitionType(Enum):
-    """Partition type definitions"""    HORIZONTAL = "horizontal"
+    """Partition type definitions"""
+    HORIZONTAL = "horizontal"
     VERTICAL = "vertical"
     FUNCTIONAL = "functional"
     HYBRID = "hybrid"
 
 class PartitionStatus(Enum):
-    """Partition status states"""    ACTIVE = "active"
+    """Partition status states"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     CREATING = "creating"
     MIGRATING = "migrating"
@@ -71,28 +75,32 @@ class PartitionStatus(Enum):
     MAINTENANCE = "maintenance"
 
 class ShardingMethod(Enum):
-    """Sharding methodology"""    CONSISTENT_HASH = "consistent_hash"
+    """Sharding methodology"""
+    CONSISTENT_HASH = "consistent_hash"
     RANGE_BASED = "range_based"
     DIRECTORY_BASED = "directory_based"
     FEDERATION = "federation"
     VIRTUAL_PARTITIONING = "virtual_partitioning"
 
 class CompressionType(Enum):
-    """Data compression types"""    NONE = "none"
+    """Data compression types"""
+    NONE = "none"
     GZIP = "gzip"
     LZ4 = "lz4"
     ZSTD = "zstd"
     BROTLI = "brotli"
 
 class ArchivalPolicy(Enum):
-    """Data archival policies"""    TIME_BASED = "time_based"
+    """Data archival policies"""
+    TIME_BASED = "time_based"
     SIZE_BASED = "size_based"
     ACCESS_BASED = "access_based"
     COMPLIANCE_BASED = "compliance_based"
     CUSTOM = "custom"
 
 class MaintenanceWindow(Enum):
-    """Maintenance window schedules"""    DAILY = "daily"
+    """Maintenance window schedules"""
+    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -100,7 +108,8 @@ class MaintenanceWindow(Enum):
 
 @dataclass
 class PartitionConfig:
-    """Partition configuration settings"""    strategy: PartitionStrategy
+    """Partition configuration settings"""
+    strategy: PartitionStrategy
     partition_type: PartitionType
     table_name: str
     partition_key: str
@@ -118,7 +127,8 @@ class PartitionConfig:
 
 @dataclass
 class PartitionMetadata:
-    """Partition metadata tracking"""    partition_id: str
+    """Partition metadata tracking"""
+    partition_id: str
     table_name: str
     partition_name: str
     strategy: PartitionStrategy
@@ -132,7 +142,8 @@ class PartitionMetadata:
     constraints: Dict[str, Any] = field(default_factory=dict)
 
 class PartitionManager:
-    """    Ultra-industrial partition manager for enterprise database operations
+    """
+    Ultra-industrial partition manager for enterprise database operations
     
     Manages all aspects of database partitioning including:
     - Automatic partition creation and management
@@ -140,14 +151,17 @@ class PartitionManager:
     - Data archival and compression
     - Multi-tenant isolation
     - Load balancing and failover
-    """    
+    """
+    
     def __init__(self, database_url: str, config: Dict[str, Any] = None):
-        """        Initialize partition manager
+        """
+        Initialize partition manager
         
         Args:
             database_url: Database connection URL
             config: Configuration dictionary
-        """        self.database_url = database_url
+        """
+        self.database_url = database_url
         self.config = config or {}
         self.engine = create_engine(database_url, pool_pre_ping=True)
         self.session_factory = sessionmaker(bind=self.engine)
@@ -170,7 +184,8 @@ class PartitionManager:
         logger.info(f"PartitionManager initialized for database: {database_url}")
 
     def _initialize_default_configs(self):
-        """Initialize default partition configurations for platform tables"""        
+        """Initialize default partition configurations for platform tables"""
+        
         # Content fingerprints partitioning (time + user based)
         self.partition_configs['content_fingerprints'] = PartitionConfig(
             strategy=PartitionStrategy.COMPOSITE,
@@ -248,11 +263,13 @@ class PartitionManager:
         )
 
     def initialize(self) -> bool:
-        """        Initialize partition management system
+        """
+        Initialize partition management system
         
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             with self._lock:
                 logger.info("Initializing partition management system...")
                 
@@ -277,7 +294,8 @@ class PartitionManager:
             return False
 
     def _create_management_tables(self):
-        """Create internal partition management tables"""        
+        """Create internal partition management tables"""
+        
         # Partition registry table
         partition_registry = Table(
             'partition_registry',
@@ -328,10 +346,12 @@ class PartitionManager:
         logger.info("Partition management tables created successfully")
 
     def _load_partition_metadata(self):
-        """Load existing partition metadata from database"""        try:
+        """Load existing partition metadata from database"""
+        try:
             with self.session_factory() as session:
                 # Load partition configurations
-                config_query = text("""                    SELECT table_name, strategy, partition_type, partition_key,
+                config_query = text("""
+                    SELECT table_name, strategy, partition_type, partition_key,
                            partition_count, max_partition_size, compression,
                            archival_policy, retention_days, configuration_metadata
                     FROM partition_configurations
@@ -355,7 +375,8 @@ class PartitionManager:
                     self.partition_configs[row.table_name] = config
                 
                 # Load partition metadata
-                registry_query = text("""                    SELECT partition_id, table_name, partition_name, strategy,
+                registry_query = text("""
+                    SELECT partition_id, table_name, partition_name, strategy,
                            status, row_count, size_bytes, created_at, last_accessed,
                            last_maintained, performance_metrics, constraints, metadata
                     FROM partition_registry
@@ -386,7 +407,8 @@ class PartitionManager:
             logger.error(f"Failed to load partition metadata: {e}")
 
     def create_partition(self, table_name: str, config: PartitionConfig = None) -> bool:
-        """        Create new partition for specified table
+        """
+        Create new partition for specified table
         
         Args:
             table_name: Name of the table to partition
@@ -394,7 +416,8 @@ class PartitionManager:
             
         Returns:
             bool: True if partition created successfully
-        """        try:
+        """
+        try:
             with self._lock:
                 # Use provided config or default
                 partition_config = config or self.partition_configs.get(table_name)
@@ -424,7 +447,8 @@ class PartitionManager:
             return False
 
     def _create_temporal_partition(self, table_name: str, config: PartitionConfig) -> bool:
-        """Create time-based partitions"""        try:
+        """Create time-based partitions"""
+        try:
             with self.session_factory() as session:
                 # Create monthly partitions for the next year
                 current_date = datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
@@ -438,10 +462,12 @@ class PartitionManager:
                     partition_name = f"{table_name}_{partition_date.strftime('%Y_%m')}"
                     
                     # Create partition table
-                    create_partition_sql = f"""                    CREATE TABLE IF NOT EXISTS {partition_name} 
+                    create_partition_sql = f"""
+                    CREATE TABLE IF NOT EXISTS {partition_name} 
                     PARTITION OF {table_name}
                     FOR VALUES FROM ('{partition_date.isoformat()}') TO ('{next_month.isoformat()}')
-                    """                    
+                    """
+                    
                     session.execute(text(create_partition_sql))
                     
                     # Create partition metadata
@@ -472,16 +498,19 @@ class PartitionManager:
             return False
 
     def _create_hash_partition(self, table_name: str, config: PartitionConfig) -> bool:
-        """Create hash-based partitions"""        try:
+        """Create hash-based partitions"""
+        try:
             with self.session_factory() as session:
                 for i in range(config.partition_count):
                     partition_name = f"{table_name}_hash_{i:03d}"
                     
                     # Create hash partition
-                    create_partition_sql = f"""                    CREATE TABLE IF NOT EXISTS {partition_name}
+                    create_partition_sql = f"""
+                    CREATE TABLE IF NOT EXISTS {partition_name}
                     PARTITION OF {table_name}
                     FOR VALUES WITH (modulus {config.partition_count}, remainder {i})
-                    """                    
+                    """
+                    
                     session.execute(text(create_partition_sql))
                     
                     # Create partition metadata
@@ -512,16 +541,19 @@ class PartitionManager:
             return False
 
     def _create_user_based_partition(self, table_name: str, config: PartitionConfig) -> bool:
-        """Create user-based hash partitions for multi-tenant isolation"""        try:
+        """Create user-based hash partitions for multi-tenant isolation"""
+        try:
             with self.session_factory() as session:
                 for i in range(config.partition_count):
                     partition_name = f"{table_name}_user_{i:03d}"
                     
                     # Create user-based hash partition
-                    create_partition_sql = f"""                    CREATE TABLE IF NOT EXISTS {partition_name}
+                    create_partition_sql = f"""
+                    CREATE TABLE IF NOT EXISTS {partition_name}
                     PARTITION OF {table_name}
                     FOR VALUES WITH (modulus {config.partition_count}, remainder {i})
-                    """                    
+                    """
+                    
                     session.execute(text(create_partition_sql))
                     
                     # Create partition metadata
@@ -553,7 +585,8 @@ class PartitionManager:
             return False
 
     def _create_composite_partition(self, table_name: str, config: PartitionConfig) -> bool:
-        """Create composite partitions (e.g., time + user, time + severity)"""        try:
+        """Create composite partitions (e.g., time + user, time + severity)"""
+        try:
             # Composite partitions are more complex - implement based on specific keys
             partition_keys = config.partition_key.split(',')
             
@@ -570,7 +603,8 @@ class PartitionManager:
             return False
 
     def _create_time_user_composite_partition(self, table_name: str, config: PartitionConfig) -> bool:
-        """Create time+user composite partitions for optimal query performance"""        try:
+        """Create time+user composite partitions for optimal query performance"""
+        try:
             with self.session_factory() as session:
                 current_date = datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
                 
@@ -583,11 +617,13 @@ class PartitionManager:
                     month_partition_name = f"{table_name}_{partition_date.strftime('%Y_%m')}"
                     
                     # Create monthly partition first
-                    create_month_partition_sql = f"""                    CREATE TABLE IF NOT EXISTS {month_partition_name}
+                    create_month_partition_sql = f"""
+                    CREATE TABLE IF NOT EXISTS {month_partition_name}
                     PARTITION OF {table_name}
                     FOR VALUES FROM ('{partition_date.isoformat()}') TO ('{next_month.isoformat()}')
                     PARTITION BY HASH (user_id)
-                    """                    
+                    """
+                    
                     session.execute(text(create_month_partition_sql))
                     
                     # Create user sub-partitions within each month
@@ -595,10 +631,12 @@ class PartitionManager:
                     for user_idx in range(user_partitions):
                         user_partition_name = f"{month_partition_name}_user_{user_idx:02d}"
                         
-                        create_user_partition_sql = f"""                        CREATE TABLE IF NOT EXISTS {user_partition_name}
+                        create_user_partition_sql = f"""
+                        CREATE TABLE IF NOT EXISTS {user_partition_name}
                         PARTITION OF {month_partition_name}
                         FOR VALUES WITH (modulus {user_partitions}, remainder {user_idx})
-                        """                        
+                        """
+                        
                         session.execute(text(create_user_partition_sql))
                         
                         # Create metadata for composite partition
@@ -631,7 +669,8 @@ class PartitionManager:
             return False
 
     def _create_partition_indexes(self, session: Session, partition_name: str, config: PartitionConfig):
-        """Create optimized indexes for partition"""        try:
+        """Create optimized indexes for partition"""
+        try:
             # Primary key index (usually exists by default)
             session.execute(text(f"CREATE INDEX IF NOT EXISTS idx_{partition_name}_id ON {partition_name} (id)"))
             
@@ -658,7 +697,8 @@ class PartitionManager:
             logger.warning(f"Failed to create some indexes for {partition_name}: {e}")
 
     def _create_user_partition_indexes(self, session: Session, partition_name: str, config: PartitionConfig):
-        """Create specialized indexes for user-based partitions"""        try:
+        """Create specialized indexes for user-based partitions"""
+        try:
             # User-specific indexes
             session.execute(text(f"CREATE INDEX IF NOT EXISTS idx_{partition_name}_user_id ON {partition_name} (user_id)"))
             session.execute(text(f"CREATE INDEX IF NOT EXISTS idx_{partition_name}_user_created ON {partition_name} (user_id, created_at)"))
@@ -672,7 +712,8 @@ class PartitionManager:
             logger.warning(f"Failed to create user indexes for {partition_name}: {e}")
 
     def _create_composite_indexes(self, session: Session, partition_name: str, config: PartitionConfig):
-        """Create composite indexes for multi-column partitions"""        try:
+        """Create composite indexes for multi-column partitions"""
+        try:
             # Multi-column indexes based on partition keys
             if 'created_at' in config.partition_key and 'user_id' in config.partition_key:
                 session.execute(text(f"CREATE INDEX IF NOT EXISTS idx_{partition_name}_time_user ON {partition_name} (created_at, user_id)"))
@@ -684,22 +725,26 @@ class PartitionManager:
             logger.warning(f"Failed to create composite indexes for {partition_name}: {e}")
 
     def _initialize_monitoring(self):
-        """Initialize partition monitoring system"""        # This will be implemented with the monitoring module
+        """Initialize partition monitoring system"""
+        # This will be implemented with the monitoring module
         logger.info("Partition monitoring initialized")
 
     def _start_maintenance_scheduler(self):
-        """Start automated maintenance scheduler"""        # This will be implemented with maintenance automation
+        """Start automated maintenance scheduler"""
+        # This will be implemented with maintenance automation
         logger.info("Maintenance scheduler started")
 
     def get_partition_info(self, table_name: str) -> Dict[str, Any]:
-        """        Get comprehensive partition information for a table
+        """
+        Get comprehensive partition information for a table
         
         Args:
             table_name: Name of the table
             
         Returns:
             Dict containing partition information
-        """        try:
+        """
+        try:
             table_partitions = {
                 pid: metadata for pid, metadata in self.partitions.items() 
                 if metadata.table_name == table_name
@@ -741,14 +786,16 @@ class PartitionManager:
             return {}
 
     def optimize_partitions(self, table_name: str = None) -> bool:
-        """        Optimize partitions for better performance
+        """
+        Optimize partitions for better performance
         
         Args:
             table_name: Optional specific table to optimize
             
         Returns:
             bool: True if optimization successful
-        """        try:
+        """
+        try:
             tables_to_optimize = [table_name] if table_name else list(self.partition_configs.keys())
             
             for table in tables_to_optimize:
@@ -771,7 +818,8 @@ class PartitionManager:
             return False
 
     def _update_partition_statistics(self, table_name: str):
-        """Update partition statistics and metadata"""        try:
+        """Update partition statistics and metadata"""
+        try:
             with self.session_factory() as session:
                 table_partitions = [
                     metadata for metadata in self.partitions.values() 
@@ -780,7 +828,8 @@ class PartitionManager:
                 
                 for partition_meta in table_partitions:
                     # Get current row count and size
-                    stats_query = text(f"""                        SELECT 
+                    stats_query = text(f"""
+                        SELECT 
                             COUNT(*) as row_count,
                             pg_total_relation_size('{partition_meta.partition_name}') as size_bytes
                         FROM {partition_meta.partition_name}
@@ -799,7 +848,8 @@ class PartitionManager:
             logger.warning(f"Failed to update partition statistics for {table_name}: {e}")
 
     def _run_maintenance_operations(self, table_name: str):
-        """Run maintenance operations on partitions"""        try:
+        """Run maintenance operations on partitions"""
+        try:
             config = self.partition_configs.get(table_name)
             if not config:
                 return
@@ -829,7 +879,8 @@ class PartitionManager:
             logger.warning(f"Failed to run maintenance operations for {table_name}: {e}")
 
     def _check_rebalancing_needs(self, table_name: str):
-        """Check if partitions need rebalancing"""        try:
+        """Check if partitions need rebalancing"""
+        try:
             config = self.partition_configs.get(table_name)
             if not config:
                 return
@@ -867,7 +918,8 @@ class PartitionManager:
             logger.warning(f"Failed to check rebalancing needs for {table_name}: {e}")
 
     async def _rebalance_oversized_partitions(self, table_name: str, oversized_partitions: List[PartitionInfo], config: PartitionConfig):
-        """Automatically rebalance oversized partitions by splitting them"""        try:
+        """Automatically rebalance oversized partitions by splitting them"""
+        try:
             logger.info(f"Starting automatic rebalancing for {len(oversized_partitions)} oversized partitions in {table_name}")
             
             for partition in oversized_partitions:
@@ -891,7 +943,8 @@ class PartitionManager:
             logger.error(f"Failed to rebalance oversized partitions for {table_name}: {e}")
 
     async def _rebalance_hash_partitions(self, table_name: str, unbalanced_partitions: List[PartitionInfo], config: PartitionConfig):
-        """Rebalance unbalanced hash partitions by redistributing data"""        try:
+        """Rebalance unbalanced hash partitions by redistributing data"""
+        try:
             logger.info(f"Starting hash partition rebalancing for {table_name}")
             
             # Calculate if we need more partitions
@@ -916,7 +969,8 @@ class PartitionManager:
             logger.error(f"Failed to rebalance hash partitions for {table_name}: {e}")
 
     async def _split_range_partition(self, table_name: str, partition: PartitionInfo, config: PartitionConfig):
-        """Split a range partition into smaller partitions"""        try:
+        """Split a range partition into smaller partitions"""
+        try:
             # Implementation for splitting range partitions
             # This would require analyzing the range values and creating intermediate ranges
             logger.info(f"Splitting range partition {partition.name}")
@@ -934,7 +988,8 @@ class PartitionManager:
             logger.error(f"Failed to split range partition {partition.name}: {e}")
 
     async def _add_hash_partition(self, table_name: str, config: PartitionConfig):
-        """Add a new hash partition to distribute load"""        try:
+        """Add a new hash partition to distribute load"""
+        try:
             current_count = len(self.partition_info.get(table_name, []))
             new_partition_name = f"{table_name}_hash_{current_count}"
             
@@ -945,7 +1000,8 @@ class PartitionManager:
             logger.error(f"Failed to add hash partition for {table_name}: {e}")
 
     async def _create_additional_temporal_partitions(self, table_name: str, config: PartitionConfig):
-        """Create additional temporal partitions to handle high volume"""        try:
+        """Create additional temporal partitions to handle high volume"""
+        try:
             # For temporal partitions, create smaller time intervals
             logger.info(f"Creating additional temporal partitions for {table_name}")
             
@@ -956,12 +1012,15 @@ class PartitionManager:
             logger.error(f"Failed to create additional temporal partitions for {table_name}: {e}")
 
     async def _create_hash_partition(self, table_name: str, partition_name: str, modulus: int):
-        """Create a new hash partition"""        try:
+        """Create a new hash partition"""
+        try:
             with self.engine.connect() as conn:
                 # Create hash partition
-                create_sql = f"""                CREATE TABLE {partition_name} PARTITION OF {table_name}
+                create_sql = f"""
+                CREATE TABLE {partition_name} PARTITION OF {table_name}
                 FOR VALUES WITH (modulus {modulus + 1}, remainder {modulus})
-                """                conn.execute(text(create_sql))
+                """
+                conn.execute(text(create_sql))
                 conn.commit()
                 
                 logger.info(f"Created hash partition {partition_name}")
@@ -970,7 +1029,8 @@ class PartitionManager:
             logger.error(f"Failed to create hash partition {partition_name}: {e}")
 
     async def _redistribute_hash_data(self, table_name: str, config: PartitionConfig):
-        """Redistribute data across hash partitions after adding new partitions"""        try:
+        """Redistribute data across hash partitions after adding new partitions"""
+        try:
             # This is a complex operation that would require:
             # 1. Temporarily storing data
             # 2. Recreating the partitioning scheme
@@ -982,11 +1042,13 @@ class PartitionManager:
             logger.error(f"Failed to redistribute hash data for {table_name}: {e}")
 
     def get_system_status(self) -> Dict[str, Any]:
-        """        Get comprehensive system status
+        """
+        Get comprehensive system status
         
         Returns:
             Dict containing system status information
-        """        try:
+        """
+        try:
             total_partitions = len(self.partitions)
             active_partitions = len([p for p in self.partitions.values() if p.status == PartitionStatus.ACTIVE])
             total_rows = sum(p.row_count for p in self.partitions.values())
@@ -1033,14 +1095,16 @@ class PartitionManager:
             return {'error': str(e)}
 
     def cleanup_old_partitions(self, table_name: str = None) -> bool:
-        """        Clean up old partitions based on retention policies
+        """
+        Clean up old partitions based on retention policies
         
         Args:
             table_name: Optional specific table to clean up
             
         Returns:
             bool: True if cleanup successful
-        """        try:
+        """
+        try:
             tables_to_clean = [table_name] if table_name else list(self.partition_configs.keys())
             
             for table in tables_to_clean:
@@ -1069,7 +1133,8 @@ class PartitionManager:
             return False
 
     def _archive_partition(self, partition: PartitionMetadata, config: PartitionConfig):
-        """Archive an old partition"""        try:
+        """Archive an old partition"""
+        try:
             with self.session_factory() as session:
                 # Mark partition as archived
                 partition.status = PartitionStatus.ARCHIVED
@@ -1090,7 +1155,8 @@ class PartitionManager:
             logger.error(f"Failed to archive partition {partition.partition_name}: {e}")
 
     def shutdown(self):
-        """Shutdown partition manager gracefully"""        try:
+        """Shutdown partition manager gracefully"""
+        try:
             with self._lock:
                 logger.info("Shutting down partition manager...")
                 
@@ -1110,7 +1176,9 @@ class PartitionManager:
             logger.error(f"Error during partition manager shutdown: {e}")
 
     def __enter__(self):
-        """Context manager entry"""        return self
+        """Context manager entry"""
+        return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit"""        self.shutdown()
+        """Context manager exit"""
+        self.shutdown()

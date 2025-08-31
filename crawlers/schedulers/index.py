@@ -26,7 +26,8 @@ Business Logic Integration:
 Creator content upload → Scheduler coordination → AI processing → 
 Protection layer → Multi-platform distribution → Performance optimization → 
 Revenue maximization → User satisfaction → Business growth → Market leadership
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
@@ -164,15 +165,18 @@ logger = logging.getLogger(__name__)
 
 
 class SchedulerAPI:
-    """    Unified API for all scheduler operations.
+    """
+    Unified API for all scheduler operations.
     Provides simplified access to complex scheduler functionality.
-    """    
+    """
+    
     def __init__(self):
         self.manager: Optional[SchedulerManager] = None
         self.is_initialized = False
         
     async def initialize(self, configuration: Optional[SchedulerConfiguration] = None) -> None:
-        """Initialize the scheduler system."""        try:
+        """Initialize the scheduler system."""
+        try:
             self.manager = await initialize_schedulers(configuration)
             self.is_initialized = True
             logger.info("Scheduler API initialized successfully")
@@ -182,7 +186,8 @@ class SchedulerAPI:
             
     async def create_content_protection_task(self, content_id: str, creator_id: str,
                                            content_type: str, priority: float = 0.8) -> SchedulingDecision:
-        """Create a content protection task."""        if not self.is_initialized:
+        """Create a content protection task."""
+        if not self.is_initialized:
             raise RuntimeError("Scheduler API not initialized")
             
         return await schedule_task(
@@ -203,7 +208,8 @@ class SchedulerAPI:
         
     async def create_fingerprinting_task(self, content_path: str, content_type: str,
                                        creator_id: str) -> SchedulingDecision:
-        """Create a content fingerprinting task."""        if not self.is_initialized:
+        """Create a content fingerprinting task."""
+        if not self.is_initialized:
             raise RuntimeError("Scheduler API not initialized")
             
         return await schedule_task(
@@ -224,7 +230,8 @@ class SchedulerAPI:
         
     async def create_platform_crawling_task(self, platform: str, search_terms: List[str],
                                           creator_id: str) -> SchedulingDecision:
-        """Create a platform crawling task."""        if not self.is_initialized:
+        """Create a platform crawling task."""
+        if not self.is_initialized:
             raise RuntimeError("Scheduler API not initialized")
             
         return await schedule_task(
@@ -245,7 +252,8 @@ class SchedulerAPI:
         )
         
     async def create_revenue_analytics_task(self, creator_id: str, time_period: str) -> SchedulingDecision:
-        """Create a revenue analytics task."""        if not self.is_initialized:
+        """Create a revenue analytics task."""
+        if not self.is_initialized:
             raise RuntimeError("Scheduler API not initialized")
             
         return await schedule_task(
@@ -266,7 +274,8 @@ class SchedulerAPI:
         
     async def create_collaboration_sync_task(self, collaboration_id: str, 
                                            participants: List[str]) -> SchedulingDecision:
-        """Create a collaboration synchronization task."""        if not self.is_initialized:
+        """Create a collaboration synchronization task."""
+        if not self.is_initialized:
             raise RuntimeError("Scheduler API not initialized")
             
         return await schedule_task(
@@ -287,7 +296,8 @@ class SchedulerAPI:
         
     async def create_campaign_task(self, campaign_id: str, campaign_type: str,
                                  platforms: List[str], creator_id: str) -> SchedulingDecision:
-        """Create a campaign management task."""        if not self.is_initialized:
+        """Create a campaign management task."""
+        if not self.is_initialized:
             raise RuntimeError("Scheduler API not initialized")
             
         return await schedule_task(
@@ -309,13 +319,15 @@ class SchedulerAPI:
         )
         
     async def get_scheduler_status(self) -> Dict[str, Any]:
-        """Get comprehensive scheduler system status."""        if not self.is_initialized:
+        """Get comprehensive scheduler system status."""
+        if not self.is_initialized:
             return {"status": "not_initialized"}
             
         return await get_system_status()
         
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get detailed performance metrics for all schedulers."""        if not self.is_initialized:
+        """Get detailed performance metrics for all schedulers."""
+        if not self.is_initialized:
             return {"error": "not_initialized"}
             
         status = await self.get_scheduler_status()
@@ -342,7 +354,8 @@ class SchedulerAPI:
         return metrics
         
     async def optimize_scheduler_performance(self) -> Dict[str, Any]:
-        """Trigger scheduler performance optimization."""        if not self.is_initialized:
+        """Trigger scheduler performance optimization."""
+        if not self.is_initialized:
             return {"error": "not_initialized"}
             
         try:
@@ -388,22 +401,26 @@ class SchedulerAPI:
             return {"optimization_completed": False, "error": str(e)}
             
     async def shutdown(self) -> None:
-        """Shutdown the scheduler system gracefully."""        if self.is_initialized and self.manager:
+        """Shutdown the scheduler system gracefully."""
+        if self.is_initialized and self.manager:
             await stop_schedulers()
             self.is_initialized = False
             logger.info("Scheduler API shutdown completed")
 
 
 class ContentProtectionAPI:
-    """    Specialized API for content protection operations.
+    """
+    Specialized API for content protection operations.
     Simplifies access to protection-specific scheduler functions.
-    """    
+    """
+    
     def __init__(self, scheduler_api: SchedulerAPI):
         self.scheduler_api = scheduler_api
         
     async def protect_content(self, content_id: str, creator_id: str, 
                             content_type: str, protection_level: str = "high") -> Dict[str, Any]:
-        """Comprehensive content protection workflow."""        try:
+        """Comprehensive content protection workflow."""
+        try:
             # Step 1: Create fingerprinting task
             fingerprint_task = await self.scheduler_api.create_fingerprinting_task(
                 content_path=f"/content/{content_id}",
@@ -445,7 +462,8 @@ class ContentProtectionAPI:
             return {"protection_initiated": False, "error": str(e)}
             
     async def monitor_violations(self, creator_id: str) -> AsyncIterator[Dict[str, Any]]:
-        """Real-time violation monitoring stream."""        # This would integrate with the event-driven scheduler
+        """Real-time violation monitoring stream."""
+        # This would integrate with the event-driven scheduler
         # for real-time violation notifications
         yield {"message": "Violation monitoring not yet implemented in this demo"}
 
@@ -455,7 +473,8 @@ _scheduler_api: Optional[SchedulerAPI] = None
 
 
 async def get_scheduler_api() -> SchedulerAPI:
-    """Get global scheduler API instance."""    global _scheduler_api
+    """Get global scheduler API instance."""
+    global _scheduler_api
     
     if _scheduler_api is None:
         _scheduler_api = SchedulerAPI()
@@ -464,7 +483,8 @@ async def get_scheduler_api() -> SchedulerAPI:
 
 
 async def get_content_protection_api() -> ContentProtectionAPI:
-    """Get content protection API instance."""    scheduler_api = await get_scheduler_api()
+    """Get content protection API instance."""
+    scheduler_api = await get_scheduler_api()
     return ContentProtectionAPI(scheduler_api)
 
 

@@ -6,7 +6,10 @@ All endpoints are professionally designed following enterprise-grade standards.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""from .router import router
+"""
+
+from .router import router
+
 from .auth_endpoints import router as auth_router
 from .content_endpoints import router as content_router
 from .collaboration_endpoints import router as collaboration_router

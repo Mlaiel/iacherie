@@ -24,7 +24,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
-"""import asyncio
+"""
+import asyncio
 import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta, timezone
@@ -53,7 +54,8 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Time frame options for analytics"""    DAILY = "daily"
+    """Time frame options for analytics"""
+    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -62,7 +64,8 @@ class AnalyticsTimeframe(Enum):
 
 
 class MetricType(Enum):
-    """Types of metrics to analyze"""    REVENUE = "revenue"
+    """Types of metrics to analyze"""
+    REVENUE = "revenue"
     ENGAGEMENT = "engagement"
     GROWTH = "growth"
     EFFICIENCY = "efficiency"
@@ -72,7 +75,8 @@ class MetricType(Enum):
 
 @dataclass
 class RevenueInsight:
-    """Revenue insight data structure"""    insight_type: str
+    """Revenue insight data structure"""
+    insight_type: str
     title: str
     description: str
     impact_score: float  # 0-100
@@ -84,7 +88,8 @@ class RevenueInsight:
 
 @dataclass
 class AnalyticsReport:
-    """Complete analytics report structure"""    report_id: str
+    """Complete analytics report structure"""
+    report_id: str
     user_id: str
     timeframe: AnalyticsTimeframe
     period_start: datetime
@@ -99,16 +104,19 @@ class AnalyticsReport:
 
 
 class MonetizationAnalyticsEngine:
-    """    Ultra-advanced monetization analytics engine providing comprehensive
+    """
+    Ultra-advanced monetization analytics engine providing comprehensive
     revenue intelligence, predictive insights, and optimization recommendations
-    """    
+    """
+    
     def __init__(self):
         self.ml_models = {}
         self.analytics_cache = {}
         self._initialize_ml_models()
     
     def _initialize_ml_models(self):
-        """Initialize machine learning models for predictions"""        self.ml_models = {
+        """Initialize machine learning models for predictions"""
+        self.ml_models = {
             "revenue_prediction": RandomForestRegressor(n_estimators=100, random_state=42),
             "growth_prediction": LinearRegression(),
             "engagement_correlation": RandomForestRegressor(n_estimators=50, random_state=42)
@@ -122,8 +130,10 @@ class MonetizationAnalyticsEngine:
         period_start: Optional[datetime] = None,
         period_end: Optional[datetime] = None
     ) -> AnalyticsReport:
-        """        Generate comprehensive monetization analytics report with AI-powered insights
-        """        
+        """
+        Generate comprehensive monetization analytics report with AI-powered insights
+        """
+        
         # Set default time periods
         if not period_end:
             period_end = datetime.now(timezone.utc)
@@ -202,7 +212,8 @@ class MonetizationAnalyticsEngine:
         period_start: datetime,
         period_end: datetime
     ) -> List[Dict[str, Any]]:
-        """Get comprehensive revenue data for analysis"""        
+        """Get comprehensive revenue data for analysis"""
+        
         # Query platform revenue
         platform_stmt = select(PlatformRevenue).where(
             and_(
@@ -257,7 +268,8 @@ class MonetizationAnalyticsEngine:
         return revenue_data
     
     async def _calculate_total_revenue(self, revenue_data: List[Dict[str, Any]]) -> Decimal:
-        """Calculate total revenue with currency conversion"""        
+        """Calculate total revenue with currency conversion"""
+        
         total = Decimal("0")
         
         for record in revenue_data:
@@ -279,7 +291,8 @@ class MonetizationAnalyticsEngine:
         period_start: datetime,
         period_end: datetime
     ) -> float:
-        """Calculate revenue growth percentage compared to previous period"""        
+        """Calculate revenue growth percentage compared to previous period"""
+        
         # Calculate current period revenue
         current_revenue = await self._get_period_revenue(
             session, user_id, period_start, period_end
@@ -307,7 +320,8 @@ class MonetizationAnalyticsEngine:
         period_start: datetime,
         period_end: datetime
     ) -> List[Dict[str, Any]]:
-        """Analyze performance across different platforms"""        
+        """Analyze performance across different platforms"""
+        
         # Query platform revenue grouped by platform
         stmt = select(
             PlatformRevenue.platform,
@@ -368,7 +382,8 @@ class MonetizationAnalyticsEngine:
         revenue_data: List[Dict[str, Any]],
         platform_performance: List[Dict[str, Any]]
     ) -> List[RevenueInsight]:
-        """Generate AI-powered revenue insights"""        
+        """Generate AI-powered revenue insights"""
+        
         insights = []
         
         # Revenue diversification insight
@@ -402,7 +417,8 @@ class MonetizationAnalyticsEngine:
     async def _analyze_revenue_diversification(
         self, revenue_data: List[Dict[str, Any]]
     ) -> RevenueInsight:
-        """Analyze revenue stream diversification"""        
+        """Analyze revenue stream diversification"""
+        
         # Calculate revenue by stream
         stream_revenue = {}
         total_revenue = 0
@@ -460,7 +476,8 @@ class MonetizationAnalyticsEngine:
         user_id: str,
         revenue_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate ML-powered revenue predictions"""        
+        """Generate ML-powered revenue predictions"""
+        
         predictions = {}
         
         try:
@@ -548,7 +565,8 @@ class MonetizationAnalyticsEngine:
         predictions: Dict[str, Any],
         platform_performance: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate actionable recommendations based on insights"""        
+        """Generate actionable recommendations based on insights"""
+        
         recommendations = []
         
         # Diversification recommendations
@@ -614,7 +632,8 @@ class MonetizationAnalyticsEngine:
         user_id: str,
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTHLY
     ) -> Dict[str, Any]:
-        """Create interactive revenue dashboard data"""        
+        """Create interactive revenue dashboard data"""
+        
         # Get comprehensive analytics
         report = await self.generate_comprehensive_report(session, user_id, timeframe)
         
@@ -678,7 +697,8 @@ class MonetizationAnalyticsEngine:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Create revenue timeline chart data"""        
+        """Create revenue timeline chart data"""
+        
         # Query daily revenue data
         stmt = select(
             func.date(PlatformRevenue.date).label("date"),
@@ -724,7 +744,8 @@ class MonetizationAnalyticsEngine:
         }
     
     async def _convert_to_eur(self, amount: Decimal, currency: str) -> Decimal:
-        """Convert currency to EUR (simplified - in production would use real rates)"""        
+        """Convert currency to EUR (simplified - in production would use real rates)"""
+        
         # Simplified conversion rates
         rates = {
             "USD": Decimal("0.85"),
@@ -743,7 +764,8 @@ class MonetizationAnalyticsEngine:
         user_id: str,
         forecast_days: int = 90
     ) -> Dict[str, Any]:
-        """Generate detailed revenue forecasting"""        
+        """Generate detailed revenue forecasting"""
+        
         # Get historical data (at least 6 months for reliable forecasting)
         end_date = datetime.now(timezone.utc)
         start_date = end_date - timedelta(days=180)

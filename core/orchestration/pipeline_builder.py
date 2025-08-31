@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Callable, Union, Set, Type
@@ -25,7 +26,8 @@ from backend.core.orchestration.workflow_engine import (
 
 
 class PipelineType(Enum):
-    """Pipeline type classifications."""    CONTENT_PROCESSING = "content_processing"
+    """Pipeline type classifications."""
+    CONTENT_PROCESSING = "content_processing"
     PROTECTION_WORKFLOW = "protection_workflow"
     MONETIZATION_PIPELINE = "monetization_pipeline"
     COLLABORATION_MATCHING = "collaboration_matching"
@@ -36,7 +38,8 @@ class PipelineType(Enum):
 
 
 class StageType(Enum):
-    """Pipeline stage types."""    INPUT_VALIDATION = "input_validation"
+    """Pipeline stage types."""
+    INPUT_VALIDATION = "input_validation"
     PRE_PROCESSING = "pre_processing"
     AI_PROCESSING = "ai_processing"
     PROTECTION_SCAN = "protection_scan"
@@ -49,7 +52,8 @@ class StageType(Enum):
 
 @dataclass
 class PipelineStage:
-    """Individual pipeline stage definition."""    stage_id: str
+    """Individual pipeline stage definition."""
+    stage_id: str
     name: str
     stage_type: StageType
     handler_class: str
@@ -65,7 +69,8 @@ class PipelineStage:
 
 @dataclass
 class PipelineTemplate:
-    """Reusable pipeline template definition."""    template_id: str
+    """Reusable pipeline template definition."""
+    template_id: str
     name: str
     description: str
     pipeline_type: PipelineType
@@ -76,7 +81,8 @@ class PipelineTemplate:
 
 
 class PipelineBuilder:
-    """    Enterprise Pipeline Builder for constructing intelligent content processing pipelines.
+    """
+    Enterprise Pipeline Builder for constructing intelligent content processing pipelines.
     
     Features:
     - Template-based pipeline generation
@@ -84,8 +90,10 @@ class PipelineBuilder:
     - AI-powered optimization
     - Dependency resolution
     - Performance profiling
-    """    def __init__(self, logger: Optional[logging.Logger] = None):
-        """Initialize the pipeline builder."""        self.logger = logger or logging.getLogger(__name__)
+    """
+    def __init__(self, logger: Optional[logging.Logger] = None):
+        """Initialize the pipeline builder."""
+        self.logger = logger or logging.getLogger(__name__)
         self.templates: Dict[str, PipelineTemplate] = {}
         self.stage_handlers: Dict[str, Type] = {}
         self.optimization_rules: Dict[str, Callable] = {}
@@ -93,7 +101,8 @@ class PipelineBuilder:
         self._register_optimization_rules()
 
     def _initialize_default_templates(self):
-        """Initialize default pipeline templates for common workflows."""        # Content Processing Pipeline Template
+        """Initialize default pipeline templates for common workflows."""
+        # Content Processing Pipeline Template
         content_stages = [
             PipelineStage(
                 stage_id="input_validation",
@@ -247,7 +256,8 @@ class PipelineBuilder:
         self.templates["monetization_pipeline"] = monetization_template
 
     def _register_optimization_rules(self):
-        """Register optimization rules for pipeline efficiency."""        self.optimization_rules = {
+        """Register optimization rules for pipeline efficiency."""
+        self.optimization_rules = {
             "parallel_execution": self._optimize_parallel_execution,
             "resource_allocation": self._optimize_resource_allocation,
             "dependency_minimization": self._optimize_dependencies,
@@ -262,7 +272,8 @@ class PipelineBuilder:
         custom_config: Optional[Dict[str, Any]] = None,
         optimization_enabled: bool = True
     ) -> WorkflowDefinition:
-        """        Create a new pipeline from template with optional customization.
+        """
+        Create a new pipeline from template with optional customization.
         
         Args:
             pipeline_name: Name for the new pipeline
@@ -272,7 +283,8 @@ class PipelineBuilder:
             
         Returns:
             WorkflowDefinition: Complete workflow definition
-        """        try:
+        """
+        try:
             if template_id not in self.templates:
                 raise ValueError(f"Template '{template_id}' not found")
             
@@ -320,7 +332,8 @@ class PipelineBuilder:
         stage: PipelineStage,
         custom_config: Optional[Dict[str, Any]] = None
     ) -> TaskDefinition:
-        """Convert pipeline stage to workflow task definition."""        # Merge custom configuration with stage configuration
+        """Convert pipeline stage to workflow task definition."""
+        # Merge custom configuration with stage configuration
         final_config = {**stage.configuration}
         if custom_config and stage.stage_id in custom_config:
             final_config.update(custom_config[stage.stage_id])
@@ -344,7 +357,8 @@ class PipelineBuilder:
         )
 
     def _calculate_total_timeout(self, stages: List[PipelineStage]) -> int:
-        """Calculate total pipeline timeout based on stage timeouts."""        total_timeout = 0
+        """Calculate total pipeline timeout based on stage timeouts."""
+        total_timeout = 0
         for stage in stages:
             if stage.timeout:
                 total_timeout += stage.timeout
@@ -355,7 +369,8 @@ class PipelineBuilder:
         return int(total_timeout * 1.2)
 
     def _optimize_workflow(self, workflow: WorkflowDefinition) -> WorkflowDefinition:
-        """Apply optimization rules to workflow definition."""        try:
+        """Apply optimization rules to workflow definition."""
+        try:
             for rule_name, rule_func in self.optimization_rules.items():
                 workflow = rule_func(workflow)
                 self.logger.debug(f"Applied optimization rule: {rule_name}")
@@ -367,7 +382,8 @@ class PipelineBuilder:
             return workflow
 
     def _optimize_parallel_execution(self, workflow: WorkflowDefinition) -> WorkflowDefinition:
-        """Optimize workflow for parallel execution where possible."""        # Identify tasks that can run in parallel
+        """Optimize workflow for parallel execution where possible."""
+        # Identify tasks that can run in parallel
         parallel_groups = self._identify_parallel_groups(workflow.tasks)
         
         # Update execution mode based on parallelization opportunities
@@ -377,7 +393,8 @@ class PipelineBuilder:
         return workflow
 
     def _optimize_resource_allocation(self, workflow: WorkflowDefinition) -> WorkflowDefinition:
-        """Optimize resource allocation based on task requirements."""        for task in workflow.tasks:
+        """Optimize resource allocation based on task requirements."""
+        for task in workflow.tasks:
             # Add resource hints based on task type
             if "ai_processing" in task.metadata.get("stage_type", ""):
                 task.metadata["resource_requirements"] = {
@@ -395,14 +412,16 @@ class PipelineBuilder:
         return workflow
 
     def _optimize_dependencies(self, workflow: WorkflowDefinition) -> WorkflowDefinition:
-        """Minimize and optimize task dependencies."""        # Remove redundant dependencies
+        """Minimize and optimize task dependencies."""
+        # Remove redundant dependencies
         for task in workflow.tasks:
             task.dependencies = list(set(task.dependencies))  # Remove duplicates
         
         return workflow
 
     def _optimize_timeouts(self, workflow: WorkflowDefinition) -> WorkflowDefinition:
-        """Optimize timeout values based on task complexity."""        for task in workflow.tasks:
+        """Optimize timeout values based on task complexity."""
+        for task in workflow.tasks:
             if not task.timeout:
                 # Set intelligent defaults based on task type
                 if "ai_processing" in task.metadata.get("stage_type", ""):
@@ -415,12 +434,14 @@ class PipelineBuilder:
         return workflow
 
     def _optimize_stage_merging(self, workflow: WorkflowDefinition) -> WorkflowDefinition:
-        """Merge compatible stages for efficiency."""        # This is a placeholder for more sophisticated stage merging logic
+        """Merge compatible stages for efficiency."""
+        # This is a placeholder for more sophisticated stage merging logic
         # In practice, this would analyze stage compatibility and merge them
         return workflow
 
     def _identify_parallel_groups(self, tasks: List[TaskDefinition]) -> List[List[str]]:
-        """Identify groups of tasks that can run in parallel."""        parallel_groups = []
+        """Identify groups of tasks that can run in parallel."""
+        parallel_groups = []
         processed_tasks = set()
         
         for task in tasks:
@@ -443,17 +464,21 @@ class PipelineBuilder:
         return parallel_groups
 
     def register_template(self, template: PipelineTemplate):
-        """Register a new pipeline template."""        self.templates[template.template_id] = template
+        """Register a new pipeline template."""
+        self.templates[template.template_id] = template
         self.logger.info(f"Registered pipeline template: {template.template_id}")
 
     def get_template(self, template_id: str) -> Optional[PipelineTemplate]:
-        """Retrieve a pipeline template by ID."""        return self.templates.get(template_id)
+        """Retrieve a pipeline template by ID."""
+        return self.templates.get(template_id)
 
     def list_templates(self) -> List[str]:
-        """List all available pipeline template IDs."""        return list(self.templates.keys())
+        """List all available pipeline template IDs."""
+        return list(self.templates.keys())
 
     def validate_pipeline(self, workflow: WorkflowDefinition) -> Dict[str, List[str]]:
-        """Validate pipeline definition and return any issues."""        issues = {
+        """Validate pipeline definition and return any issues."""
+        issues = {
             "errors": [],
             "warnings": [],
             "recommendations": []
@@ -481,7 +506,8 @@ class PipelineBuilder:
         return issues
 
     def _has_circular_dependencies(self, tasks: List[TaskDefinition]) -> bool:
-        """Check for circular dependencies in task definitions."""        task_deps = {task.task_id: set(task.dependencies) for task in tasks}
+        """Check for circular dependencies in task definitions."""
+        task_deps = {task.task_id: set(task.dependencies) for task in tasks}
         
         def has_cycle(task_id: str, visited: Set[str], rec_stack: Set[str]) -> bool:
             visited.add(task_id)
@@ -506,7 +532,8 @@ class PipelineBuilder:
         return False
 
     def _find_orphaned_tasks(self, tasks: List[TaskDefinition]) -> List[str]:
-        """Find tasks with dependencies that don't exist."""        task_ids = {task.task_id for task in tasks}
+        """Find tasks with dependencies that don't exist."""
+        task_ids = {task.task_id for task in tasks}
         orphaned = []
         
         for task in tasks:
@@ -523,7 +550,8 @@ class PipelineBuilder:
         requirements: Dict[str, Any],
         optimization_level: str = "balanced"
     ) -> WorkflowDefinition:
-        """        Build a dynamic pipeline based on content type and specific requirements.
+        """
+        Build a dynamic pipeline based on content type and specific requirements.
         
         Args:
             content_type: Type of content (audio, video, image, text)
@@ -532,7 +560,8 @@ class PipelineBuilder:
             
         Returns:
             WorkflowDefinition: Dynamically generated workflow
-        """        try:
+        """
+        try:
             # Select appropriate base template
             base_template = self._select_base_template(content_type, requirements)
             
@@ -589,7 +618,8 @@ class PipelineBuilder:
         content_type: str, 
         requirements: Dict[str, Any]
     ) -> PipelineTemplate:
-        """Select the most appropriate base template."""        # Priority mapping for different content types and requirements
+        """Select the most appropriate base template."""
+        # Priority mapping for different content types and requirements
         if requirements.get("protection_required", False):
             return self.templates["protection_workflow"]
         elif requirements.get("monetization_focus", False):
@@ -604,7 +634,8 @@ class PipelineBuilder:
         requirements: Dict[str, Any],
         optimization_level: str
     ) -> List[PipelineStage]:
-        """Customize pipeline stages based on specific requirements."""        customized_stages = []
+        """Customize pipeline stages based on specific requirements."""
+        customized_stages = []
         
         for stage in base_stages:
             # Clone the stage
@@ -634,7 +665,8 @@ class PipelineBuilder:
         return customized_stages
 
     def _customize_handler(self, base_handler: str, content_type: str) -> str:
-        """Customize handler class based on content type."""        handler_mapping = {
+        """Customize handler class based on content type."""
+        handler_mapping = {
             "audio": {
                 "FingerprintEngine": "AudioFingerprintEngine",
                 "FormatDetector": "AudioFormatDetector"
@@ -669,7 +701,8 @@ class PipelineBuilder:
         content_type: str,
         requirements: Dict[str, Any]
     ):
-        """Apply content-type specific customizations to stage."""        # Content-specific configuration
+        """Apply content-type specific customizations to stage."""
+        # Content-specific configuration
         content_configs = {
             "audio": {
                 "sample_rate": requirements.get("sample_rate", 44100),
@@ -699,7 +732,8 @@ class PipelineBuilder:
         stage: PipelineStage,
         optimization_level: str
     ):
-        """Apply optimization level adjustments to stage."""        optimization_configs = {
+        """Apply optimization level adjustments to stage."""
+        optimization_configs = {
             "fast": {
                 "quality_level": "low",
                 "parallel_processing": True,
@@ -726,7 +760,8 @@ class PipelineBuilder:
                 stage.timeout = int(stage.timeout * config["timeout_multiplier"])
 
     def _determine_execution_mode(self, optimization_level: str) -> ExecutionMode:
-        """Determine execution mode based on optimization level."""        mode_mapping = {
+        """Determine execution mode based on optimization level."""
+        mode_mapping = {
             "fast": ExecutionMode.PARALLEL,
             "balanced": ExecutionMode.HYBRID,
             "quality": ExecutionMode.SEQUENTIAL
@@ -734,7 +769,8 @@ class PipelineBuilder:
         return mode_mapping.get(optimization_level, ExecutionMode.HYBRID)
 
     def export_pipeline(self, workflow: WorkflowDefinition) -> Dict[str, Any]:
-        """Export pipeline definition to JSON-serializable format."""        return {
+        """Export pipeline definition to JSON-serializable format."""
+        return {
             "workflow_id": workflow.workflow_id,
             "name": workflow.name,
             "description": workflow.description,
@@ -764,7 +800,8 @@ class PipelineBuilder:
         }
 
     def import_pipeline(self, pipeline_data: Dict[str, Any]) -> WorkflowDefinition:
-        """Import pipeline definition from JSON format."""        tasks = []
+        """Import pipeline definition from JSON format."""
+        tasks = []
         for task_data in pipeline_data["tasks"]:
             task = TaskDefinition(
                 task_id=task_data["task_id"],

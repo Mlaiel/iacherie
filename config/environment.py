@@ -6,7 +6,8 @@ environment validation, and security features.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import os
+"""
+import os
 import json
 import logging
 from typing import Dict, Any, Optional, List, Union
@@ -27,14 +28,16 @@ logger = logging.getLogger(__name__)
 
 
 class Environment(Enum):
-    """Environment types"""    DEVELOPMENT = "development"
+    """Environment types"""
+    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
 
 
 class SecretSource(Enum):
-    """Secret source types"""    ENVIRONMENT = "environment"
+    """Secret source types"""
+    ENVIRONMENT = "environment"
     FILE = "file"
     AWS_SECRETS_MANAGER = "aws_secrets_manager"
     AZURE_KEY_VAULT = "azure_key_vault"
@@ -44,7 +47,8 @@ class SecretSource(Enum):
 
 @dataclass
 class SecretConfig:
-    """Configuration for a secret"""    key: str
+    """Configuration for a secret"""
+    key: str
     source: SecretSource
     required: bool = True
     default: Optional[str] = None
@@ -53,7 +57,8 @@ class SecretConfig:
     
 @dataclass 
 class EnvironmentConfig:
-    """Environment configuration"""    name: str
+    """Environment configuration"""
+    name: str
     environment: Environment
     debug: bool = False
     secrets: List[SecretConfig] = field(default_factory=list)
@@ -61,7 +66,8 @@ class EnvironmentConfig:
 
 
 class SecretManager:
-    """Secure secret management with multiple backends"""    
+    """Secure secret management with multiple backends"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.cache = {}
@@ -69,7 +75,8 @@ class SecretManager:
         self.logger = logging.getLogger(__name__)
         
     async def get_secret(self, secret_config: SecretConfig) -> Optional[str]:
-        """Get secret from configured source"""        try:
+        """Get secret from configured source"""
+        try:
             cache_key = f"{secret_config.source.value}:{secret_config.key}"
             
             # Check cache first
@@ -112,11 +119,13 @@ class SecretManager:
             return secret_config.default
     
     def _get_from_environment(self, secret_config: SecretConfig) -> Optional[str]:
-        """Get secret from environment variables"""        env_key = secret_config.source_config.get('env_key', secret_config.key.upper())
+        """Get secret from environment variables"""
+        env_key = secret_config.source_config.get('env_key', secret_config.key.upper())
         return os.getenv(env_key)
     
     async def _get_from_file(self, secret_config: SecretConfig) -> Optional[str]:
-        """Get secret from file"""        file_path = secret_config.source_config.get('file_path')
+        """Get secret from file"""
+        file_path = secret_config.source_config.get('file_path')
         if not file_path:
             raise ValueError("file_path required for FILE secret source")
         
@@ -135,7 +144,8 @@ class SecretManager:
             return None
     
     async def _get_from_aws_secrets(self, secret_config: SecretConfig) -> Optional[str]:
-        """Get secret from AWS Secrets Manager"""        if not HAS_AWS:
+        """Get secret from AWS Secrets Manager"""
+        if not HAS_AWS:
             raise ImportError("boto3 required for AWS Secrets Manager")
         
         try:
@@ -159,26 +169,30 @@ class SecretManager:
             return None
     
     async def _get_from_azure_vault(self, secret_config: SecretConfig) -> Optional[str]:
-        """Get secret from Azure Key Vault"""        # Placeholder for Azure Key Vault integration
+        """Get secret from Azure Key Vault"""
+        # Placeholder for Azure Key Vault integration
         # Would use azure-keyvault-secrets in production
         self.logger.warning("Azure Key Vault integration not implemented")
         return None
     
     async def _get_from_google_secrets(self, secret_config: SecretConfig) -> Optional[str]:
-        """Get secret from Google Secret Manager"""        # Placeholder for Google Secret Manager integration
+        """Get secret from Google Secret Manager"""
+        # Placeholder for Google Secret Manager integration
         # Would use google-cloud-secret-manager in production
         self.logger.warning("Google Secret Manager integration not implemented")
         return None
     
     async def _get_from_vault(self, secret_config: SecretConfig) -> Optional[str]:
-        """Get secret from HashiCorp Vault"""        # Placeholder for HashiCorp Vault integration
+        """Get secret from HashiCorp Vault"""
+        # Placeholder for HashiCorp Vault integration
         # Would use hvac in production
         self.logger.warning("HashiCorp Vault integration not implemented")
         return None
 
 
 class EnvironmentManager:
-    """Advanced environment configuration manager"""    
+    """Advanced environment configuration manager"""
+    
     def __init__(self):
         self.secret_manager = SecretManager()
         self.config = {}
@@ -186,7 +200,8 @@ class EnvironmentManager:
         self.logger = logging.getLogger(__name__)
         
     def _detect_environment(self) -> Environment:
-        """Auto-detect current environment"""        env_name = os.getenv('ENVIRONMENT', os.getenv('ENV', 'development')).lower()
+        """Auto-detect current environment"""
+        env_name = os.getenv('ENVIRONMENT', os.getenv('ENV', 'development')).lower()
         
         # Map common environment names
         env_mapping = {
@@ -203,7 +218,8 @@ class EnvironmentManager:
         return env_mapping.get(env_name, Environment.DEVELOPMENT)
     
     async def load_configuration(self) -> Dict[str, Any]:
-        """Load complete environment configuration"""        try:
+        """Load complete environment configuration"""
+        try:
             self.logger.info(f"Loading configuration for environment: {self.environment.value}")
             
             # Load base configuration
@@ -237,7 +253,8 @@ class EnvironmentManager:
             raise
     
     def _load_base_config(self) -> Dict[str, Any]:
-        """Load base configuration common to all environments"""        base_config = {
+        """Load base configuration common to all environments"""
+        base_config = {
             # Application settings
             'app': {
                 'name': 'Ainflue',
@@ -311,7 +328,8 @@ class EnvironmentManager:
         return base_config
     
     def _load_environment_config(self) -> Dict[str, Any]:
-        """Load environment-specific configuration overrides"""        env_config = {}
+        """Load environment-specific configuration overrides"""
+        env_config = {}
         
         # Load from environment-specific config file if exists
         config_file = f"config/{self.environment.value}.yaml"
@@ -345,7 +363,8 @@ class EnvironmentManager:
         return env_config
     
     async def _load_secrets(self) -> Dict[str, Any]:
-        """Load secrets from configured sources"""        secrets_config = {}
+        """Load secrets from configured sources"""
+        secrets_config = {}
         
         # Define secrets configuration
         secrets = [
@@ -410,13 +429,16 @@ class EnvironmentManager:
         return secrets_config
     
     def _generate_secret_key(self) -> str:
-        """Generate a secure random secret key"""        return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
+        """Generate a secure random secret key"""
+        return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
     
     def _generate_encryption_key(self) -> str:
-        """Generate a secure encryption key"""        return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
+        """Generate a secure encryption key"""
+        return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
     
     async def _validate_configuration(self, config: Dict[str, Any]):
-        """Validate configuration completeness and security"""        
+        """Validate configuration completeness and security"""
+        
         # Required fields validation
         required_fields = [
             ('app', 'name'),
@@ -443,7 +465,8 @@ class EnvironmentManager:
             await self._validate_production_security(config)
     
     async def _validate_production_security(self, config: Dict[str, Any]):
-        """Validate production security requirements"""        
+        """Validate production security requirements"""
+        
         # Check secret key strength
         secret_key = config.get('secret_key', '')
         if len(secret_key) < 32:
@@ -464,11 +487,13 @@ class EnvironmentManager:
             self.logger.warning("Using localhost database in production - check configuration")
     
     def _get_timestamp(self) -> str:
-        """Get current timestamp"""        from datetime import datetime
+        """Get current timestamp"""
+        from datetime import datetime
         return datetime.utcnow().isoformat()
     
     def get(self, key: str, default: Any = None) -> Any:
-        """Get configuration value"""        keys = key.split('.')
+        """Get configuration value"""
+        keys = key.split('.')
         current = self.config
         
         try:
@@ -479,7 +504,8 @@ class EnvironmentManager:
             return default
     
     def get_database_url(self) -> str:
-        """Get complete database URL"""        database_url = self.get('database_url')
+        """Get complete database URL"""
+        database_url = self.get('database_url')
         if database_url:
             return database_url
         
@@ -498,10 +524,12 @@ class EnvironmentManager:
             return f"{driver}://{user}@{host}:{port}/{name}"
     
     def is_production(self) -> bool:
-        """Check if running in production environment"""        return self.environment == Environment.PRODUCTION
+        """Check if running in production environment"""
+        return self.environment == Environment.PRODUCTION
     
     def is_development(self) -> bool:
-        """Check if running in development environment"""        return self.environment == Environment.DEVELOPMENT
+        """Check if running in development environment"""
+        return self.environment == Environment.DEVELOPMENT
 
 
 # Global instance
@@ -509,20 +537,25 @@ env_manager = EnvironmentManager()
 
 
 async def load_configuration() -> Dict[str, Any]:
-    """Load application configuration"""    return await env_manager.load_configuration()
+    """Load application configuration"""
+    return await env_manager.load_configuration()
 
 
 def get_config(key: str, default: Any = None) -> Any:
-    """Get configuration value"""    return env_manager.get(key, default)
+    """Get configuration value"""
+    return env_manager.get(key, default)
 
 
 def get_environment() -> Environment:
-    """Get current environment"""    return env_manager.environment
+    """Get current environment"""
+    return env_manager.environment
 
 
 def is_production() -> bool:
-    """Check if running in production"""    return env_manager.is_production()
+    """Check if running in production"""
+    return env_manager.is_production()
 
 
 def is_development() -> bool:
-    """Check if running in development"""    return env_manager.is_development()
+    """Check if running in development"""
+    return env_manager.is_development()

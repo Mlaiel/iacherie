@@ -6,7 +6,8 @@ Transforms content fingerprints into high-dimensional vectors for similarity sea
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import numpy as np
+"""
+import numpy as np
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class EmbeddingType(Enum):
-    """Types of embeddings supported"""    AUDIO_SPECTRAL = "audio_spectral"
+    """Types of embeddings supported"""
+    AUDIO_SPECTRAL = "audio_spectral"
     VIDEO_TEMPORAL = "video_temporal"
     IMAGE_VISUAL = "image_visual"
     TEXT_SEMANTIC = "text_semantic"
@@ -43,7 +45,8 @@ class EmbeddingType(Enum):
 
 @dataclass
 class EmbeddingResult:
-    """Result of embedding generation"""    embedding_id: str
+    """Result of embedding generation"""
+    embedding_id: str
     vector: np.ndarray
     embedding_type: EmbeddingType
     dimension: int
@@ -53,7 +56,8 @@ class EmbeddingResult:
 
 
 class AudioEmbeddingGenerator:
-    """Generate embeddings for audio content"""    
+    """Generate embeddings for audio content"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.dimension = config.get('audio_embedding_dim', 512)
@@ -65,7 +69,8 @@ class AudioEmbeddingGenerator:
         content_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> EmbeddingResult:
-        """Generate embedding from audio features"""        start_time = asyncio.get_event_loop().time()
+        """Generate embedding from audio features"""
+        start_time = asyncio.get_event_loop().time()
         
         try:
             # Extract spectral features
@@ -138,7 +143,8 @@ class AudioEmbeddingGenerator:
 
 
 class VideoEmbeddingGenerator:
-    """Generate embeddings for video content"""    
+    """Generate embeddings for video content"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.dimension = config.get('video_embedding_dim', 1024)
@@ -150,7 +156,8 @@ class VideoEmbeddingGenerator:
         content_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> EmbeddingResult:
-        """Generate embedding from video features"""        start_time = asyncio.get_event_loop().time()
+        """Generate embedding from video features"""
+        start_time = asyncio.get_event_loop().time()
         
         try:
             # Extract visual features
@@ -239,7 +246,8 @@ class VideoEmbeddingGenerator:
 
 
 class ImageEmbeddingGenerator:
-    """Generate embeddings for image content"""    
+    """Generate embeddings for image content"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.dimension = config.get('image_embedding_dim', 768)
@@ -261,7 +269,8 @@ class ImageEmbeddingGenerator:
         content_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> EmbeddingResult:
-        """Generate embedding from image features"""        start_time = asyncio.get_event_loop().time()
+        """Generate embedding from image features"""
+        start_time = asyncio.get_event_loop().time()
         
         try:
             # Extract visual features
@@ -351,7 +360,8 @@ class ImageEmbeddingGenerator:
 
 
 class TextEmbeddingGenerator:
-    """Generate embeddings for text content"""    
+    """Generate embeddings for text content"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.dimension = config.get('text_embedding_dim', 384)
@@ -372,7 +382,8 @@ class TextEmbeddingGenerator:
         content_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> EmbeddingResult:
-        """Generate embedding from text features"""        start_time = asyncio.get_event_loop().time()
+        """Generate embedding from text features"""
+        start_time = asyncio.get_event_loop().time()
         
         try:
             # Extract text content
@@ -455,7 +466,8 @@ class TextEmbeddingGenerator:
 
 
 class CompositeEmbeddingGenerator:
-    """Generate composite embeddings for multi-modal content"""    
+    """Generate composite embeddings for multi-modal content"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.dimension = config.get('composite_embedding_dim', 1536)
@@ -473,7 +485,8 @@ class CompositeEmbeddingGenerator:
         content_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> EmbeddingResult:
-        """Generate composite embedding from multi-modal features"""        start_time = asyncio.get_event_loop().time()
+        """Generate composite embedding from multi-modal features"""
+        start_time = asyncio.get_event_loop().time()
         
         try:
             component_embeddings = []
@@ -555,7 +568,8 @@ class CompositeEmbeddingGenerator:
 
 
 class EmbeddingService:
-    """Main service for generating embeddings from content features"""    
+    """Main service for generating embeddings from content features"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.EmbeddingService")
@@ -576,7 +590,8 @@ class EmbeddingService:
         embedding_type: Optional[EmbeddingType] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> EmbeddingResult:
-        """Generate embedding based on content type and features"""        try:
+        """Generate embedding based on content type and features"""
+        try:
             # Auto-detect embedding type if not specified
             if embedding_type is None:
                 embedding_type = self._detect_embedding_type(content_features)
@@ -610,7 +625,8 @@ class EmbeddingService:
             raise
     
     def _detect_embedding_type(self, content_features: Dict[str, Any]) -> EmbeddingType:
-        """Auto-detect the appropriate embedding type based on available features"""        feature_types = set(content_features.keys())
+        """Auto-detect the appropriate embedding type based on available features"""
+        feature_types = set(content_features.keys())
         
         # Check for multi-modal content
         modality_count = sum([
@@ -642,7 +658,8 @@ class EmbeddingService:
         embedding_type: Optional[EmbeddingType] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[EmbeddingResult]:
-        """Generate embeddings for multiple content items in batch"""        try:
+        """Generate embeddings for multiple content items in batch"""
+        try:
             tasks = []
             for content_features, content_id in content_features_list:
                 task = self.generate_embedding(
@@ -668,7 +685,8 @@ class EmbeddingService:
             raise
     
     def get_embedding_stats(self) -> Dict[str, Any]:
-        """Get statistics about embedding generation"""        return {
+        """Get statistics about embedding generation"""
+        return {
             'supported_types': [e.value for e in EmbeddingType],
             'dimensions': {
                 'audio': self.config.get('audio_embedding_dim', 512),

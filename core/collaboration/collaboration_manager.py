@@ -23,7 +23,8 @@ Features:
 - Progress Monitoring
 - Quality Assurance
 - Project Analytics
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -35,7 +36,8 @@ import json
 logger = logging.getLogger(__name__)
 
 class ProjectStatus(Enum):
-    """Project status enumeration"""    DRAFT = "draft"
+    """Project status enumeration"""
+    DRAFT = "draft"
     PROPOSED = "proposed"
     APPROVED = "approved"
     IN_PROGRESS = "in_progress"
@@ -47,7 +49,8 @@ class ProjectStatus(Enum):
     OVERDUE = "overdue"
 
 class TaskStatus(Enum):
-    """Task status enumeration"""    TODO = "todo"
+    """Task status enumeration"""
+    TODO = "todo"
     IN_PROGRESS = "in_progress"
     UNDER_REVIEW = "under_review"
     COMPLETED = "completed"
@@ -55,14 +58,16 @@ class TaskStatus(Enum):
     CANCELLED = "cancelled"
 
 class TaskPriority(Enum):
-    """Task priority levels"""    LOW = "low"
+    """Task priority levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     URGENT = "urgent"
     CRITICAL = "critical"
 
 class MilestoneType(Enum):
-    """Milestone type enumeration"""    PLANNING = "planning"
+    """Milestone type enumeration"""
+    PLANNING = "planning"
     DEVELOPMENT = "development"
     REVIEW = "review"
     DELIVERY = "delivery"
@@ -71,7 +76,8 @@ class MilestoneType(Enum):
 
 @dataclass
 class ProjectTask:
-    """Individual project task"""    task_id: str
+    """Individual project task"""
+    task_id: str
     title: str
     description: str
     assigned_to: str
@@ -90,7 +96,8 @@ class ProjectTask:
 
 @dataclass
 class ProjectMilestone:
-    """Project milestone"""    milestone_id: str
+    """Project milestone"""
+    milestone_id: str
     title: str
     description: str
     milestone_type: MilestoneType
@@ -105,7 +112,8 @@ class ProjectMilestone:
 
 @dataclass
 class CollaborationProject:
-    """Core collaboration project entity"""    project_id: str
+    """Core collaboration project entity"""
+    project_id: str
     title: str
     description: str
     partnership_id: str
@@ -126,7 +134,8 @@ class CollaborationProject:
     updated_at: datetime = field(default_factory=datetime.utcnow)
 
 class CollaborationManager:
-    """Advanced collaboration project management system"""    
+    """Advanced collaboration project management system"""
+    
     def __init__(self, db_session, file_storage, notification_service, analytics_tracker):
         self.db_session = db_session
         self.file_storage = file_storage
@@ -145,7 +154,8 @@ class CollaborationManager:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> CollaborationProject:
-        """Create a new collaboration project"""        try:
+        """Create a new collaboration project"""
+        try:
             logger.info(f"Creating collaboration project: {title}")
             
             # Validate partnership exists
@@ -204,7 +214,8 @@ class CollaborationManager:
         estimated_hours: Optional[float] = None,
         dependencies: Optional[List[str]] = None
     ) -> ProjectTask:
-        """Add a new task to project"""        try:
+        """Add a new task to project"""
+        try:
             # Get project and validate access
             project = await self._get_project(project_id)
             await self._validate_project_access(project, user_id)
@@ -259,7 +270,8 @@ class CollaborationManager:
         progress_percentage: Optional[float] = None,
         comment: Optional[str] = None
     ) -> ProjectTask:
-        """Update task status and progress"""        try:
+        """Update task status and progress"""
+        try:
             # Get project and task
             project = await self._get_project(project_id)
             task = await self._get_task(project, task_id)
@@ -323,7 +335,8 @@ class CollaborationManager:
         user_id: str,
         payment_percentage: Optional[float] = None
     ) -> ProjectMilestone:
-        """Add milestone to project"""        try:
+        """Add milestone to project"""
+        try:
             # Get project and validate access
             project = await self._get_project(project_id)
             await self._validate_project_access(project, user_id)
@@ -372,7 +385,8 @@ class CollaborationManager:
         user_id: str,
         completion_notes: Optional[str] = None
     ) -> ProjectMilestone:
-        """Mark milestone as completed"""        try:
+        """Mark milestone as completed"""
+        try:
             # Get project and milestone
             project = await self._get_project(project_id)
             milestone = await self._get_milestone(project, milestone_id)
@@ -428,7 +442,8 @@ class CollaborationManager:
         task_id: Optional[str] = None,
         description: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Upload project deliverable"""        try:
+        """Upload project deliverable"""
+        try:
             # Get project and validate access
             project = await self._get_project(project_id)
             await self._validate_project_access(project, user_id)
@@ -487,7 +502,8 @@ class CollaborationManager:
         project_id: str,
         user_id: str
     ) -> Dict[str, Any]:
-        """Get comprehensive project analytics"""        try:
+        """Get comprehensive project analytics"""
+        try:
             # Get project and validate access
             project = await self._get_project(project_id)
             await self._validate_project_access(project, user_id)
@@ -517,7 +533,8 @@ class CollaborationManager:
         user_id: str,
         reason: Optional[str] = None
     ) -> CollaborationProject:
-        """Update project status"""        try:
+        """Update project status"""
+        try:
             # Get project and validate access
             project = await self._get_project(project_id)
             await self._validate_project_access(project, user_id)
@@ -563,13 +580,15 @@ class CollaborationManager:
             
     # Helper methods
     async def _validate_partnership(self, partnership_id: str) -> None:
-        """Validate partnership exists and is active"""        query = "SELECT id FROM partnerships WHERE partnership_id = %s AND status = 'active'"
+        """Validate partnership exists and is active"""
+        query = "SELECT id FROM partnerships WHERE partnership_id = %s AND status = 'active'"
         result = await self.db_session.execute(query, (partnership_id,))
         if not result.fetchone():
             raise ValueError("Partnership not found or not active")
             
     async def _validate_participants(self, participant_ids: List[str]) -> None:
-        """Validate all participants exist and are active"""        query = "SELECT id FROM creators WHERE id = ANY(%s) AND is_active = true"
+        """Validate all participants exist and are active"""
+        query = "SELECT id FROM creators WHERE id = ANY(%s) AND is_active = true"
         result = await self.db_session.execute(query, (participant_ids,))
         found_ids = [row['id'] for row in result.fetchall()]
         
@@ -578,13 +597,16 @@ class CollaborationManager:
             raise ValueError(f"Participants not found or inactive: {missing_ids}")
             
     async def _save_project(self, project: CollaborationProject) -> None:
-        """Save project to database"""        query = """        INSERT INTO collaboration_projects (
+        """Save project to database"""
+        query = """
+        INSERT INTO collaboration_projects (
             project_id, title, description, partnership_id, project_type,
             status, participants, start_date, end_date, budget, currency,
             tasks, milestones, deliverables, tags, metadata, created_by,
             created_at, updated_at
         ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-        """        
+        """
+        
         await self.db_session.execute(query, (
             project.project_id,
             project.title,
@@ -608,7 +630,8 @@ class CollaborationManager:
         ))
         
     async def _get_project(self, project_id: str) -> CollaborationProject:
-        """Get project by ID"""        query = "SELECT * FROM collaboration_projects WHERE project_id = %s"
+        """Get project by ID"""
+        query = "SELECT * FROM collaboration_projects WHERE project_id = %s"
         result = await self.db_session.execute(query, (project_id,))
         row = result.fetchone()
         
@@ -618,7 +641,8 @@ class CollaborationManager:
         return await self._row_to_project(row)
         
     async def _row_to_project(self, row: Dict[str, Any]) -> CollaborationProject:
-        """Convert database row to CollaborationProject"""        # Convert JSON fields back to objects
+        """Convert database row to CollaborationProject"""
+        # Convert JSON fields back to objects
         tasks_data = json.loads(row['tasks']) if row['tasks'] else []
         milestones_data = json.loads(row['milestones']) if row['milestones'] else []
         
@@ -650,24 +674,28 @@ class CollaborationManager:
         return project
         
     async def _validate_project_access(self, project: CollaborationProject, user_id: str) -> None:
-        """Validate user has access to project"""        if user_id not in project.participants:
+        """Validate user has access to project"""
+        if user_id not in project.participants:
             raise ValueError("User does not have access to this project")
             
     async def _get_task(self, project: CollaborationProject, task_id: str) -> ProjectTask:
-        """Get task from project"""        for task in project.tasks:
+        """Get task from project"""
+        for task in project.tasks:
             if task.task_id == task_id:
                 return task
         raise ValueError(f"Task not found: {task_id}")
         
     async def _get_milestone(self, project: CollaborationProject, milestone_id: str) -> ProjectMilestone:
-        """Get milestone from project"""        for milestone in project.milestones:
+        """Get milestone from project"""
+        for milestone in project.milestones:
             if milestone.milestone_id == milestone_id:
                 return milestone
         raise ValueError(f"Milestone not found: {milestone_id}")
         
     # Advanced project structure and management methods
     async def _setup_initial_project_structure(self, project: CollaborationProject) -> None:
-        """Set up initial project structure with templates and workflows"""        try:
+        """Set up initial project structure with templates and workflows"""
+        try:
             # Create project workspace structure
             await self._create_project_workspace(project)
             
@@ -693,14 +721,17 @@ class CollaborationManager:
             raise
             
     async def _update_project(self, project: CollaborationProject) -> None:
-        """Update project in database with full synchronization"""        try:
-            query = """            UPDATE collaboration_projects SET
+        """Update project in database with full synchronization"""
+        try:
+            query = """
+            UPDATE collaboration_projects SET
                 title = %s, description = %s, status = %s, participants = %s,
                 start_date = %s, end_date = %s, budget = %s, currency = %s,
                 tasks = %s, milestones = %s, deliverables = %s, tags = %s,
                 metadata = %s, updated_at = %s
             WHERE project_id = %s
-            """            
+            """
+            
             await self.db_session.execute(query, (
                 project.title,
                 project.description,
@@ -730,7 +761,8 @@ class CollaborationManager:
             raise
             
     async def _validate_task_update_access(self, project: CollaborationProject, task: ProjectTask, user_id: str) -> None:
-        """Validate user can update task with comprehensive permission checking"""        try:
+        """Validate user can update task with comprehensive permission checking"""
+        try:
             # Check if user is project participant
             if user_id not in project.participants:
                 raise ValueError("User is not a project participant")
@@ -755,7 +787,8 @@ class CollaborationManager:
             raise
             
     async def _handle_task_status_change(self, project: CollaborationProject, task: ProjectTask, old_status: TaskStatus, new_status: TaskStatus) -> None:
-        """Handle task status change with automated workflows"""        try:
+        """Handle task status change with automated workflows"""
+        try:
             # Update task dependencies
             if new_status == TaskStatus.COMPLETED:
                 await self._unlock_dependent_tasks(project, task)
@@ -783,7 +816,8 @@ class CollaborationManager:
             raise
             
     async def _validate_milestone_completion(self, project: CollaborationProject, milestone: ProjectMilestone) -> Dict[str, Any]:
-        """Validate milestone can be completed with comprehensive checks"""        try:
+        """Validate milestone can be completed with comprehensive checks"""
+        try:
             validation_result = {'allowed': True, 'reason': None, 'issues': []}
             
             # Check if all required tasks are completed
@@ -834,7 +868,8 @@ class CollaborationManager:
             return {'allowed': False, 'reason': f"Validation error: {str(e)}", 'issues': []}
             
     async def _handle_milestone_completion(self, project: CollaborationProject, milestone: ProjectMilestone) -> None:
-        """Handle milestone completion with automated processes"""        try:
+        """Handle milestone completion with automated processes"""
+        try:
             # Process milestone payment if applicable
             if milestone.payment_percentage:
                 await self._process_milestone_payment(project, milestone)
@@ -859,7 +894,8 @@ class CollaborationManager:
             raise
             
     async def _handle_project_status_change(self, project: CollaborationProject, old_status: ProjectStatus, new_status: ProjectStatus) -> None:
-        """Handle project status change with comprehensive workflow management"""        try:
+        """Handle project status change with comprehensive workflow management"""
+        try:
             # Handle status-specific workflows
             if new_status == ProjectStatus.APPROVED:
                 await self._activate_project(project)
@@ -886,12 +922,14 @@ class CollaborationManager:
             raise
         
     def _get_content_type(self, filename: str) -> str:
-        """Get content type from filename"""        # Implementation would map file extensions to content types
+        """Get content type from filename"""
+        # Implementation would map file extensions to content types
         return "application/octet-stream"
         
     # Advanced analytics and project intelligence methods
     async def _get_project_overview(self, project: CollaborationProject) -> Dict[str, Any]:
-        """Generate comprehensive project overview"""        try:
+        """Generate comprehensive project overview"""
+        try:
             overview = {
                 'basic_info': {
                     'project_id': project.project_id,
@@ -917,7 +955,8 @@ class CollaborationManager:
             return {'error': str(e)}
             
     async def _calculate_progress_metrics(self, project: CollaborationProject) -> Dict[str, Any]:
-        """Calculate detailed progress metrics"""        try:
+        """Calculate detailed progress metrics"""
+        try:
             total_tasks = len(project.tasks)
             completed_tasks = len([t for t in project.tasks if t.status == TaskStatus.COMPLETED])
             in_progress_tasks = len([t for t in project.tasks if t.status == TaskStatus.IN_PROGRESS])
@@ -975,7 +1014,8 @@ class CollaborationManager:
             return {}
             
     async def _analyze_tasks(self, project: CollaborationProject) -> Dict[str, Any]:
-        """Analyze task performance and patterns"""        try:
+        """Analyze task performance and patterns"""
+        try:
             tasks_by_status = {}
             for status in TaskStatus:
                 tasks_by_status[status.value] = len([t for t in project.tasks if t.status == status])
@@ -1029,7 +1069,8 @@ class CollaborationManager:
             return {}
             
     async def _analyze_milestones(self, project: CollaborationProject) -> Dict[str, Any]:
-        """Analyze milestone performance and patterns"""        try:
+        """Analyze milestone performance and patterns"""
+        try:
             total_milestones = len(project.milestones)
             completed_milestones = [m for m in project.milestones if m.is_completed]
             overdue_milestones = [
@@ -1088,7 +1129,8 @@ class CollaborationManager:
             return {}
             
     async def _analyze_team_performance(self, project: CollaborationProject) -> Dict[str, Any]:
-        """Analyze team performance and collaboration patterns"""        try:
+        """Analyze team performance and collaboration patterns"""
+        try:
             team_metrics = {}
             
             for participant_id in project.participants:
@@ -1132,7 +1174,8 @@ class CollaborationManager:
             return {}
             
     async def _analyze_timeline(self, project: CollaborationProject) -> Dict[str, Any]:
-        """Analyze project timeline and schedule performance"""        try:
+        """Analyze project timeline and schedule performance"""
+        try:
             timeline_analysis = {
                 'project_duration': {
                     'planned_days': (project.end_date - project.start_date).days if project.start_date and project.end_date else None,
@@ -1152,7 +1195,8 @@ class CollaborationManager:
             return {}
             
     async def _analyze_budget(self, project: CollaborationProject) -> Dict[str, Any]:
-        """Analyze budget utilization and financial performance"""        try:
+        """Analyze budget utilization and financial performance"""
+        try:
             if not project.budget:
                 return {'message': 'No budget defined for project'}
                 
@@ -1189,7 +1233,8 @@ class CollaborationManager:
             return {}
             
     async def _analyze_quality_metrics(self, project: CollaborationProject) -> Dict[str, Any]:
-        """Analyze project quality metrics and deliverable standards"""        try:
+        """Analyze project quality metrics and deliverable standards"""
+        try:
             quality_metrics = {
                 'deliverable_quality': await self._assess_deliverable_quality(project),
                 'code_review_metrics': await self._analyze_code_reviews(project),
@@ -1205,7 +1250,8 @@ class CollaborationManager:
             return {}
             
     async def _analyze_collaboration_patterns(self, project: CollaborationProject) -> Dict[str, Any]:
-        """Analyze collaboration patterns and team dynamics"""        try:
+        """Analyze collaboration patterns and team dynamics"""
+        try:
             collaboration_insights = {
                 'communication_network': await self._analyze_communication_network(project),
                 'knowledge_sharing': await self._measure_knowledge_sharing(project),
@@ -1222,12 +1268,14 @@ class CollaborationManager:
     
     # Advanced helper methods for project management
     def _get_content_type(self, filename: str) -> str:
-        """Get content type from filename extension"""        import mimetypes
+        """Get content type from filename extension"""
+        import mimetypes
         content_type, _ = mimetypes.guess_type(filename)
         return content_type or "application/octet-stream"
         
     def _task_to_dict(self, task: ProjectTask) -> Dict[str, Any]:
-        """Convert ProjectTask to dictionary"""        return {
+        """Convert ProjectTask to dictionary"""
+        return {
             'task_id': task.task_id,
             'title': task.title,
             'description': task.description,
@@ -1247,7 +1295,8 @@ class CollaborationManager:
         }
         
     def _milestone_to_dict(self, milestone: ProjectMilestone) -> Dict[str, Any]:
-        """Convert ProjectMilestone to dictionary"""        return {
+        """Convert ProjectMilestone to dictionary"""
+        return {
             'milestone_id': milestone.milestone_id,
             'title': milestone.title,
             'description': milestone.description,
@@ -1264,7 +1313,8 @@ class CollaborationManager:
         
     # Advanced project workflow methods
     async def _create_project_workspace(self, project: CollaborationProject) -> None:
-        """Create project workspace structure"""        workspace_structure = {
+        """Create project workspace structure"""
+        workspace_structure = {
             'folders': [
                 f"projects/{project.project_id}/documents",
                 f"projects/{project.project_id}/assets",
@@ -1280,7 +1330,8 @@ class CollaborationManager:
         await self.file_storage.create_workspace_structure(workspace_structure)
         
     async def _get_project_template(self, project_type: str) -> Optional[Dict[str, Any]]:
-        """Get project template based on type"""        templates = {
+        """Get project template based on type"""
+        templates = {
             'music_video_campaign': {
                 'default_tasks': [
                     {'title': 'Concept Development', 'type': 'planning', 'estimated_hours': 8},
@@ -1315,26 +1366,34 @@ class CollaborationManager:
         
     # Additional helper methods for comprehensive project management
     async def _calculate_schedule_adherence(self, project: CollaborationProject) -> float:
-        """Calculate schedule adherence score"""        return 0.85  # Placeholder
+        """Calculate schedule adherence score"""
+        return 0.85  # Placeholder
         
     async def _identify_critical_path(self, project: CollaborationProject) -> List[str]:
-        """Identify critical path tasks"""        return []  # Placeholder
+        """Identify critical path tasks"""
+        return []  # Placeholder
         
     async def _identify_schedule_risks(self, project: CollaborationProject) -> List[Dict[str, Any]]:
-        """Identify schedule risks"""        return []  # Placeholder
+        """Identify schedule risks"""
+        return []  # Placeholder
         
     async def _predict_timeline_outcomes(self, project: CollaborationProject) -> Dict[str, Any]:
-        """Predict timeline outcomes"""        return {}  # Placeholder
+        """Predict timeline outcomes"""
+        return {}  # Placeholder
         
     async def _calculate_actual_spending(self, project: CollaborationProject) -> float:
-        """Calculate actual project spending"""        return 0.0  # Placeholder
+        """Calculate actual project spending"""
+        return 0.0  # Placeholder
         
     async def _forecast_spending(self, project: CollaborationProject) -> Dict[str, Any]:
-        """Forecast future spending"""        return {}  # Placeholder
+        """Forecast future spending"""
+        return {}  # Placeholder
         
     async def _analyze_cost_efficiency(self, project: CollaborationProject) -> Dict[str, Any]:
-        """Analyze cost efficiency"""        return {}  # Placeholder
+        """Analyze cost efficiency"""
+        return {}  # Placeholder
         
     async def _identify_budget_risks(self, project: CollaborationProject) -> List[str]:
-        """Identify budget risks"""        return []  # Placeholder
+        """Identify budget risks"""
+        return []  # Placeholder
 

@@ -6,7 +6,8 @@ metadata optimization, and compliance checking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -23,7 +24,8 @@ from ..validation.compliance import ComplianceValidator
 
 
 class PublishingStatus(Enum):
-    """Publishing status enumeration."""    PENDING = "pending"
+    """Publishing status enumeration."""
+    PENDING = "pending"
     PROCESSING = "processing"
     UPLOADING = "uploading"
     PUBLISHED = "published"
@@ -33,7 +35,8 @@ class PublishingStatus(Enum):
 
 
 class ContentFormat(Enum):
-    """Content format enumeration."""    VIDEO = "video"
+    """Content format enumeration."""
+    VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
     TEXT = "text"
@@ -43,7 +46,8 @@ class ContentFormat(Enum):
 
 @dataclass
 class PublishingRequest:
-    """Publishing request data structure."""    request_id: UUID = field(default_factory=uuid4)
+    """Publishing request data structure."""
+    request_id: UUID = field(default_factory=uuid4)
     content_id: UUID = field(default_factory=uuid4)
     platform: str = ""
     content_format: ContentFormat = ContentFormat.VIDEO
@@ -66,7 +70,8 @@ class PublishingRequest:
 
 @dataclass
 class PublishingResult:
-    """Publishing result data structure."""    request_id: UUID
+    """Publishing result data structure."""
+    request_id: UUID
     platform: str
     success: bool
     status: PublishingStatus
@@ -82,13 +87,16 @@ class PublishingResult:
 
 
 class ContentPublisher:
-    """    Content Publisher Engine
+    """
+    Content Publisher Engine
     
     Handles multi-platform content publishing with advanced features including
     format adaptation, SEO optimization, compliance checking, and performance tracking.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize content publisher."""        self.config = config or {}
+        """Initialize content publisher."""
+        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Core components
@@ -125,11 +133,13 @@ class ContentPublisher:
         self.temp_dir = Path(config.get('temp_dir', '/tmp/publisher'))
         
     async def initialize(self) -> bool:
-        """        Initialize the content publisher.
+        """
+        Initialize the content publisher.
         
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             self.logger.info("Initializing Content Publisher")
             
             # Initialize core components
@@ -160,11 +170,13 @@ class ContentPublisher:
             return False
     
     async def shutdown(self) -> bool:
-        """        Gracefully shutdown the content publisher.
+        """
+        Gracefully shutdown the content publisher.
         
         Returns:
             bool: True if shutdown successful
-        """        try:
+        """
+        try:
             self.logger.info("Shutting down Content Publisher")
             
             # Wait for active publications to complete
@@ -208,7 +220,8 @@ class ContentPublisher:
         privacy_settings: Optional[Dict[str, Any]] = None,
         scheduling_options: Optional[Dict[str, Any]] = None
     ) -> PublishingResult:
-        """        Publish content to a specific platform.
+        """
+        Publish content to a specific platform.
         
         Args:
             content_id: Unique identifier for content
@@ -221,7 +234,8 @@ class ContentPublisher:
             
         Returns:
             PublishingResult: Result of publishing operation
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             raise RuntimeError("Content Publisher not initialized")
         
         # Create publishing request
@@ -269,7 +283,8 @@ class ContentPublisher:
             return result
     
     async def _prepare_content_for_publishing(self, request: PublishingRequest) -> None:
-        """Prepare content for publishing."""        self.logger.debug(f"Preparing content for publishing: {request.request_id}")
+        """Prepare content for publishing."""
+        self.logger.debug(f"Preparing content for publishing: {request.request_id}")
         
         # Get content information
         content_info = await self._get_content_information(request.content_id)
@@ -298,7 +313,8 @@ class ContentPublisher:
         await self._process_captions(request)
     
     async def _execute_publishing(self, request: PublishingRequest) -> PublishingResult:
-        """Execute the publishing process."""        start_time = datetime.utcnow()
+        """Execute the publishing process."""
+        start_time = datetime.utcnow()
         processing_start = asyncio.get_event_loop().time()
         
         # Add to active publications
@@ -409,7 +425,8 @@ class ContentPublisher:
             self.active_publications.pop(request.request_id, None)
     
     async def _publish_to_platform(self, adapter: Any, request: PublishingRequest) -> Dict[str, Any]:
-        """Publish content using platform adapter."""        # Prepare publication data
+        """Publish content using platform adapter."""
+        # Prepare publication data
         publication_data = {
             'content_id': request.content_id,
             'file_path': request.adapted_file_path or request.source_file_path,
@@ -430,7 +447,8 @@ class ContentPublisher:
         return await adapter.publish_content(publication_data)
     
     async def _get_content_information(self, content_id: UUID) -> Dict[str, Any]:
-        """Get content information from content management system."""        # This would interface with the content management system
+        """Get content information from content management system."""
+        # This would interface with the content management system
         # For now, return mock data
         return {
             'format': 'video',
@@ -442,7 +460,8 @@ class ContentPublisher:
         }
     
     async def _validate_platform_compatibility(self, request: PublishingRequest) -> None:
-        """Validate content compatibility with platform."""        platform_config = self.platform_configs.get(request.platform)
+        """Validate content compatibility with platform."""
+        platform_config = self.platform_configs.get(request.platform)
         if not platform_config:
             raise ValueError(f"Unknown platform: {request.platform}")
         
@@ -464,7 +483,8 @@ class ContentPublisher:
             raise ValueError(f"Missing required metadata fields: {missing_fields}")
     
     async def _perform_security_scan(self, request: PublishingRequest) -> None:
-        """Perform security scan on content."""        scan_result = await self.security_scanner.scan_content(request.source_file_path)
+        """Perform security scan on content."""
+        scan_result = await self.security_scanner.scan_content(request.source_file_path)
         
         if not scan_result['safe']:
             threats = scan_result.get('threats', [])
@@ -473,7 +493,8 @@ class ContentPublisher:
         request.metadata['security_scan'] = scan_result
     
     async def _validate_compliance(self, request: PublishingRequest) -> None:
-        """Validate content compliance."""        compliance_result = await self.compliance_validator.validate_content(
+        """Validate content compliance."""
+        compliance_result = await self.compliance_validator.validate_content(
             content_path=request.source_file_path,
             platform=request.platform,
             metadata=request.metadata
@@ -486,7 +507,8 @@ class ContentPublisher:
         request.metadata['compliance_checks'] = compliance_result
     
     async def _adapt_content_for_platform(self, request: PublishingRequest) -> None:
-        """Adapt content for specific platform requirements."""        platform_config = self.platform_configs.get(request.platform, {})
+        """Adapt content for specific platform requirements."""
+        platform_config = self.platform_configs.get(request.platform, {})
         adaptation_rules = platform_config.get('adaptation_rules', {})
         
         if not adaptation_rules:
@@ -511,7 +533,8 @@ class ContentPublisher:
         request.metadata['adaptation'] = adaptation_result
     
     async def _optimize_seo_metadata(self, request: PublishingRequest) -> None:
-        """Optimize metadata for SEO."""        seo_result = await self.seo_optimizer.optimize_metadata(
+        """Optimize metadata for SEO."""
+        seo_result = await self.seo_optimizer.optimize_metadata(
             content_metadata=request.metadata,
             platform=request.platform,
             content_format=request.content_format
@@ -521,7 +544,8 @@ class ContentPublisher:
         request.platform_metadata.update(seo_result.get('platform_specific', {}))
     
     async def _generate_thumbnails(self, request: PublishingRequest) -> None:
-        """Generate thumbnails for video content."""        if request.content_format != ContentFormat.VIDEO:
+        """Generate thumbnails for video content."""
+        if request.content_format != ContentFormat.VIDEO:
             return
         
         platform_config = self.platform_configs.get(request.platform, {})
@@ -544,7 +568,8 @@ class ContentPublisher:
             request.metadata['thumbnail'] = thumbnail_result
     
     async def _process_captions(self, request: PublishingRequest) -> None:
-        """Process captions/subtitles for content."""        if request.content_format not in [ContentFormat.VIDEO, ContentFormat.AUDIO]:
+        """Process captions/subtitles for content."""
+        if request.content_format not in [ContentFormat.VIDEO, ContentFormat.AUDIO]:
             return
         
         platform_config = self.platform_configs.get(request.platform, {})
@@ -572,7 +597,8 @@ class ContentPublisher:
                     request.metadata['captions'] = captions_result
     
     async def _post_publishing_actions(self, request: PublishingRequest, result: PublishingResult) -> None:
-        """Perform post-publishing actions."""        try:
+        """Perform post-publishing actions."""
+        try:
             # Cleanup temporary files
             await self._cleanup_request_files(request)
             
@@ -589,7 +615,8 @@ class ContentPublisher:
             self.logger.error(f"Error in post-publishing actions: {e}")
     
     async def _cleanup_request_files(self, request: PublishingRequest) -> None:
-        """Clean up temporary files for request."""        files_to_cleanup = [
+        """Clean up temporary files for request."""
+        files_to_cleanup = [
             request.adapted_file_path,
             request.thumbnail_path,
             request.captions_path
@@ -604,7 +631,8 @@ class ContentPublisher:
                     self.logger.warning(f"Failed to cleanup file {file_path}: {e}")
     
     async def _update_analytics(self, request: PublishingRequest, result: PublishingResult) -> None:
-        """Update analytics with publication data."""        # This would update analytics database
+        """Update analytics with publication data."""
+        # This would update analytics database
         analytics_data = {
             'content_id': request.content_id,
             'platform': request.platform,
@@ -618,7 +646,8 @@ class ContentPublisher:
         self.logger.debug(f"Updating analytics: {analytics_data}")
     
     async def _send_publication_notifications(self, request: PublishingRequest, result: PublishingResult) -> None:
-        """Send publication notifications."""        # This would send notifications to users
+        """Send publication notifications."""
+        # This would send notifications to users
         notification_data = {
             'type': 'publication_complete' if result.success else 'publication_failed',
             'content_id': request.content_id,
@@ -629,7 +658,8 @@ class ContentPublisher:
         self.logger.debug(f"Sending notification: {notification_data}")
     
     async def _update_content_metadata(self, request: PublishingRequest, result: PublishingResult) -> None:
-        """Update content metadata with publication information."""        # This would update the content management system
+        """Update content metadata with publication information."""
+        # This would update the content management system
         update_data = {
             'content_id': request.content_id,
             'platform_publications': {
@@ -645,7 +675,8 @@ class ContentPublisher:
         self.logger.debug(f"Updating content metadata: {update_data}")
     
     async def _load_platform_configurations(self) -> None:
-        """Load platform configurations."""        # This would typically load from database or configuration files
+        """Load platform configurations."""
+        # This would typically load from database or configuration files
         self.platform_configs = {
             'youtube': {
                 'name': 'YouTube',
@@ -715,14 +746,16 @@ class ContentPublisher:
         }
     
     async def _initialize_platform_adapters(self) -> None:
-        """Initialize platform adapters."""        # This would initialize actual platform adapters
+        """Initialize platform adapters."""
+        # This would initialize actual platform adapters
         for platform in self.platform_configs:
             self.platform_adapters[platform] = type('MockPlatformAdapter', (), {
                 'publish_content': self._mock_platform_publish
             })()
     
     async def _mock_platform_publish(self, publication_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Mock platform publication for testing."""        await asyncio.sleep(1)  # Simulate upload time
+        """Mock platform publication for testing."""
+        await asyncio.sleep(1)  # Simulate upload time
         
         return {
             'success': True,
@@ -737,7 +770,8 @@ class ContentPublisher:
         }
     
     async def _test_platform_connections(self) -> None:
-        """Test connections to all configured platforms."""        for platform, adapter in self.platform_adapters.items():
+        """Test connections to all configured platforms."""
+        for platform, adapter in self.platform_adapters.items():
             try:
                 if hasattr(adapter, 'test_connection'):
                     connected = await adapter.test_connection()
@@ -752,7 +786,8 @@ class ContentPublisher:
                 self.platform_connections[platform] = False
     
     async def _shutdown_platform_adapters(self) -> None:
-        """Shutdown platform adapters."""        for platform, adapter in self.platform_adapters.items():
+        """Shutdown platform adapters."""
+        for platform, adapter in self.platform_adapters.items():
             if hasattr(adapter, 'shutdown'):
                 try:
                     await adapter.shutdown()
@@ -760,7 +795,8 @@ class ContentPublisher:
                     self.logger.error(f"Error shutting down {platform} adapter: {e}")
     
     async def _cleanup_temp_files(self) -> None:
-        """Clean up all temporary files."""        if self.temp_dir.exists():
+        """Clean up all temporary files."""
+        if self.temp_dir.exists():
             try:
                 for file_path in self.temp_dir.glob('*'):
                     if file_path.is_file():
@@ -772,13 +808,15 @@ class ContentPublisher:
                 self.logger.error(f"Error cleaning up temporary files: {e}")
     
     async def _get_file_size(self, file_path: str) -> int:
-        """Get file size in bytes."""        try:
+        """Get file size in bytes."""
+        try:
             return Path(file_path).stat().st_size
         except (OSError, FileNotFoundError):
             return 0
     
     def _update_platform_metrics(self, platform: str, success: bool) -> None:
-        """Update platform-specific metrics."""        if platform not in self.metrics['platform_metrics']:
+        """Update platform-specific metrics."""
+        if platform not in self.metrics['platform_metrics']:
             self.metrics['platform_metrics'][platform] = {
                 'total': 0,
                 'successful': 0,
@@ -797,7 +835,8 @@ class ContentPublisher:
         platform_metrics['success_rate'] = platform_metrics['successful'] / platform_metrics['total']
     
     def get_publication_status(self, request_id: UUID) -> Optional[Dict[str, Any]]:
-        """Get status of a publication request."""        # Check active publications
+        """Get status of a publication request."""
+        # Check active publications
         if request_id in self.active_publications:
             request = self.active_publications[request_id]
             return {
@@ -817,7 +856,8 @@ class ContentPublisher:
         return None
     
     def get_platform_status(self, platform: str) -> Dict[str, Any]:
-        """Get status for a specific platform."""        return {
+        """Get status for a specific platform."""
+        return {
             'platform': platform,
             'connected': self.platform_connections.get(platform, False),
             'config': self.platform_configs.get(platform, {}),
@@ -826,7 +866,8 @@ class ContentPublisher:
         }
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get current performance metrics."""        return {
+        """Get current performance metrics."""
+        return {
             **self.metrics,
             'timestamp': datetime.utcnow().isoformat(),
             'active_publications': len(self.active_publications),
@@ -842,12 +883,15 @@ class ContentPublisher:
 
 # Custom exceptions
 class SecurityError(Exception):
-    """Content security scan failed."""    pass
+    """Content security scan failed."""
+    pass
 
 
 class ComplianceError(Exception):
-    """Content compliance validation failed."""    pass
+    """Content compliance validation failed."""
+    pass
 
 
 class ProcessingError(Exception):
-    """Content processing failed."""    pass
+    """Content processing failed."""
+    pass

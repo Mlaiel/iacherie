@@ -15,7 +15,8 @@ Key Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from typing import Dict, List, Optional, Any, Tuple
+"""
+from typing import Dict, List, Optional, Any, Tuple
 import logging
 import json
 from datetime import datetime, timezone
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TemplateMetrics:
-    """Template performance metrics."""    template_id: str
+    """Template performance metrics."""
+    template_id: str
     usage_count: int = 0
     success_rate: float = 0.0
     engagement_rate: float = 0.0
@@ -41,17 +43,21 @@ class TemplateMetrics:
 
 
 class TemplateProcessor:
-    """    Advanced template processing engine with AI optimization.
+    """
+    Advanced template processing engine with AI optimization.
     
     Provides intelligent template selection, personalization, and optimization
     for IA Influencer Agent notification system.
-    """    
+    """
+    
     def __init__(self, config: NotificationConfig):
-        """        Initialize template processor.
+        """
+        Initialize template processor.
         
         Args:
             config: Notification system configuration
-        """        self.config = config
+        """
+        self.config = config
         self.template_cache: Dict[str, NotificationTemplate] = {}
         self.template_metrics: Dict[str, TemplateMetrics] = {}
         self.a_b_tests: Dict[str, Dict[str, Any]] = {}
@@ -76,7 +82,8 @@ class TemplateProcessor:
         request: NotificationRequest,
         template_override: Optional[NotificationTemplate] = None
     ) -> NotificationTemplate:
-        """        Process and optimize notification template.
+        """
+        Process and optimize notification template.
         
         Args:
             request: Notification request
@@ -84,7 +91,8 @@ class TemplateProcessor:
         
         Returns:
             Processed and optimized notification template
-        """        try:
+        """
+        try:
             start_time = datetime.now(timezone.utc)
             
             # Get or create template
@@ -121,7 +129,8 @@ class TemplateProcessor:
             return await self._get_fallback_template(request)
     
     async def _select_optimal_template(self, request: NotificationRequest) -> NotificationTemplate:
-        """Select optimal template based on AI analysis."""        try:
+        """Select optimal template based on AI analysis."""
+        try:
             # Generate cache key
             cache_key = self._generate_template_cache_key(request)
             
@@ -145,7 +154,8 @@ class TemplateProcessor:
             return await self._get_default_template(request.notification_type)
     
     def _generate_template_cache_key(self, request: NotificationRequest) -> str:
-        """Generate cache key for template."""        key_components = [
+        """Generate cache key for template."""
+        key_components = [
             request.notification_type,
             request.priority,
             request.recipient.language,
@@ -159,7 +169,8 @@ class TemplateProcessor:
         return "_".join(str(c) for c in key_components)
     
     async def _ai_template_selection(self, request: NotificationRequest) -> NotificationTemplate:
-        """AI-powered template selection."""        try:
+        """AI-powered template selection."""
+        try:
             # Get template candidates
             candidates = await self._get_template_candidates(request)
             
@@ -184,7 +195,8 @@ class TemplateProcessor:
             return await self._get_default_template(request.notification_type)
     
     async def _get_template_candidates(self, request: NotificationRequest) -> List[NotificationTemplate]:
-        """Get template candidates for notification type."""        candidates = []
+        """Get template candidates for notification type."""
+        candidates = []
         
         # Get templates by notification type
         notification_type = request.notification_type
@@ -213,7 +225,8 @@ class TemplateProcessor:
         notification_type: str,
         request: NotificationRequest
     ) -> Optional[NotificationTemplate]:
-        """Create template from definition."""        try:
+        """Create template from definition."""
+        try:
             template_id = f"{notification_type}_{template_name}_{request.recipient.language}"
             
             # Get base template structure
@@ -244,12 +257,14 @@ class TemplateProcessor:
             return None
     
     async def _get_base_templates(self) -> Dict[str, Any]:
-        """Get base template definitions."""        return {
+        """Get base template definitions."""
+        return {
             "copyright_alert": {
                 "channels": {
                     "email": {
                         "subject": "🚨 Copyright Infringement Detected - {content_title}",
-                        "html_content": """                        <h2>Copyright Infringement Alert</h2>
+                        "html_content": """
+                        <h2>Copyright Infringement Alert</h2>
                         <p>Dear {user_name},</p>
                         <p>We have detected unauthorized use of your content:</p>
                         <ul>
@@ -288,7 +303,8 @@ class TemplateProcessor:
                 "channels": {
                     "email": {
                         "subject": "🤝 Perfect Collaboration Match Found - {match_score}% Match!",
-                        "html_content": """                        <h2>Great Collaboration Opportunity!</h2>
+                        "html_content": """
+                        <h2>Great Collaboration Opportunity!</h2>
                         <p>Hi {user_name},</p>
                         <p>We found an excellent collaboration match for you:</p>
                         <div style="border:1px solid #ddd;padding:15px;margin:15px 0;border-radius:8px;">
@@ -321,7 +337,8 @@ class TemplateProcessor:
                 "channels": {
                     "email": {
                         "subject": "💰 Revenue Opportunity - Earn ${revenue_potential}",
-                        "html_content": """                        <h2>New Revenue Opportunity!</h2>
+                        "html_content": """
+                        <h2>New Revenue Opportunity!</h2>
                         <p>Hello {user_name},</p>
                         <p>We've identified a high-value monetization opportunity:</p>
                         <div style="background-color:#f8f9fa;border-left:4px solid #28a745;padding:15px;margin:15px 0;">
@@ -348,7 +365,8 @@ class TemplateProcessor:
         }
     
     async def _get_custom_templates(self, request: NotificationRequest) -> List[NotificationTemplate]:
-        """Get custom templates for user/organization."""        # Placeholder for custom template loading
+        """Get custom templates for user/organization."""
+        # Placeholder for custom template loading
         return []
     
     async def _calculate_template_score(
@@ -356,7 +374,8 @@ class TemplateProcessor:
         template: NotificationTemplate,
         request: NotificationRequest
     ) -> float:
-        """Calculate template suitability score."""        try:
+        """Calculate template suitability score."""
+        try:
             score = 50.0  # Base score
             
             # Performance factor (40% weight)
@@ -407,7 +426,8 @@ class TemplateProcessor:
         template: NotificationTemplate,
         request: NotificationRequest
     ) -> float:
-        """Calculate business rules alignment score."""        try:
+        """Calculate business rules alignment score."""
+        try:
             score = 50.0
             template_rules = template.business_rules or {}
             
@@ -436,7 +456,8 @@ class TemplateProcessor:
             return 50.0
     
     def _priority_to_numeric(self, priority: str) -> int:
-        """Convert priority string to numeric value."""        priority_map = {"low": 1, "medium": 2, "high": 3, "urgent": 4, "critical": 5}
+        """Convert priority string to numeric value."""
+        priority_map = {"low": 1, "medium": 2, "high": 3, "urgent": 4, "critical": 5}
         return priority_map.get(priority, 2)
     
     async def _personalize_template(
@@ -444,7 +465,8 @@ class TemplateProcessor:
         request: NotificationRequest,
         template: NotificationTemplate
     ) -> NotificationTemplate:
-        """Apply AI-powered personalization to template."""        try:
+        """Apply AI-powered personalization to template."""
+        try:
             # Get personalization context
             personalization_context = await self._get_personalization_context(request)
             
@@ -467,7 +489,8 @@ class TemplateProcessor:
             return template
     
     async def _get_personalization_context(self, request: NotificationRequest) -> Dict[str, Any]:
-        """Get personalization context for request."""        context = {
+        """Get personalization context for request."""
+        context = {
             "user_name": request.recipient.user_id,  # Fallback to user_id
             "user_type": request.recipient.user_type or "creator",
             "language": request.recipient.language,
@@ -496,7 +519,8 @@ class TemplateProcessor:
         context: Dict[str, Any],
         request: NotificationRequest
     ) -> Dict[str, Any]:
-        """Personalize individual channel template."""        try:
+        """Personalize individual channel template."""
+        try:
             personalized = channel_template.copy()
             
             # Replace variables in all text fields
@@ -522,7 +546,8 @@ class TemplateProcessor:
             return channel_template
     
     def _replace_template_variables(self, text: str, context: Dict[str, Any]) -> str:
-        """Replace template variables with context values."""        try:
+        """Replace template variables with context values."""
+        try:
             # Replace direct context variables
             for key, value in context.items():
                 placeholder = f"{{{key}}}"
@@ -549,7 +574,8 @@ class TemplateProcessor:
         context: Dict[str, Any],
         request: NotificationRequest
     ) -> Dict[str, Any]:
-        """Apply user type specific customizations."""        try:
+        """Apply user type specific customizations."""
+        try:
             user_type = context.get("user_type", "creator")
             
             # User type specific customizations
@@ -608,7 +634,8 @@ class TemplateProcessor:
         template: Dict[str, Any],
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply AI-generated insights to template."""        try:
+        """Apply AI-generated insights to template."""
+        try:
             # Placeholder for AI insights application
             # In a real implementation, this would call ML models for:
             # - Optimal send times
@@ -634,13 +661,15 @@ class TemplateProcessor:
             return template
     
     def _is_personalization_enabled(self, request: NotificationRequest) -> bool:
-        """Check if personalization is enabled for request."""        return (
+        """Check if personalization is enabled for request."""
+        return (
             self.config.ai.personalization_enabled and
             (not request.metadata or request.metadata.get("personalization_enabled", True))
         )
     
     def _is_ab_testing_enabled(self, request: NotificationRequest, template: NotificationTemplate) -> bool:
-        """Check if A/B testing is enabled."""        return (
+        """Check if A/B testing is enabled."""
+        return (
             self.config.ai.a_b_testing_enabled and
             template.a_b_test_config is not None and
             (not request.metadata or request.metadata.get("ab_testing_enabled", True))
@@ -651,7 +680,8 @@ class TemplateProcessor:
         request: NotificationRequest,
         template: NotificationTemplate
     ) -> NotificationTemplate:
-        """Apply A/B testing to template."""        try:
+        """Apply A/B testing to template."""
+        try:
             # Get A/B test variant
             variant = await self._get_ab_test_variant(request, template)
             
@@ -684,7 +714,8 @@ class TemplateProcessor:
         request: NotificationRequest,
         template: NotificationTemplate
     ) -> str:
-        """Get A/B test variant for request."""        try:
+        """Get A/B test variant for request."""
+        try:
             # Simple hash-based variant assignment
             import hashlib
             hash_input = f"{request.recipient.user_id}_{template.template_id}"
@@ -705,7 +736,8 @@ class TemplateProcessor:
         template: NotificationTemplate,
         variant: str
     ) -> NotificationTemplate:
-        """Apply A/B test variant modifications."""        try:
+        """Apply A/B test variant modifications."""
+        try:
             if not template.a_b_test_config:
                 return template
             
@@ -734,7 +766,8 @@ class TemplateProcessor:
         request: NotificationRequest,
         template: NotificationTemplate
     ) -> NotificationTemplate:
-        """Process template content for optimization."""        try:
+        """Process template content for optimization."""
+        try:
             # Optimize content length for channels
             for channel, channel_template in template.channel_templates.items():
                 template.channel_templates[channel] = await self._optimize_content_for_channel(
@@ -758,7 +791,8 @@ class TemplateProcessor:
         channel_template: Dict[str, Any],
         channel: str
     ) -> Dict[str, Any]:
-        """Optimize content for specific channel."""        try:
+        """Optimize content for specific channel."""
+        try:
             optimized = channel_template.copy()
             
             # Channel-specific optimizations
@@ -786,7 +820,8 @@ class TemplateProcessor:
             return channel_template
     
     async def _apply_content_filters(self, template: NotificationTemplate) -> NotificationTemplate:
-        """Apply content safety and compliance filters."""        try:
+        """Apply content safety and compliance filters."""
+        try:
             # Placeholder for content filtering
             # In production, this would include:
             # - Spam detection
@@ -805,7 +840,8 @@ class TemplateProcessor:
         template: NotificationTemplate,
         request: NotificationRequest
     ) -> NotificationTemplate:
-        """Add tracking parameters to template."""        try:
+        """Add tracking parameters to template."""
+        try:
             tracking_params = {
                 "utm_source": "notification",
                 "utm_medium": "email",  # Will be overridden per channel
@@ -839,7 +875,8 @@ class TemplateProcessor:
             return template
     
     async def _get_default_template(self, notification_type: str) -> NotificationTemplate:
-        """Get default template for notification type."""        try:
+        """Get default template for notification type."""
+        try:
             base_templates = await self._get_base_templates()
             
             # Map notification types to base templates
@@ -892,10 +929,12 @@ class TemplateProcessor:
             )
     
     async def _get_fallback_template(self, request: NotificationRequest) -> NotificationTemplate:
-        """Get fallback template when processing fails."""        return await self._get_default_template(request.notification_type)
+        """Get fallback template when processing fails."""
+        return await self._get_default_template(request.notification_type)
     
     def _initialize_default_templates(self):
-        """Initialize default templates and metrics."""        # Initialize template metrics for tracking
+        """Initialize default templates and metrics."""
+        # Initialize template metrics for tracking
         default_template_ids = [
             "content_protection_copyright_alert",
             "collaboration_collaboration_match",
@@ -913,7 +952,8 @@ class TemplateProcessor:
             )
     
     async def _update_template_metrics(self, template: NotificationTemplate, success: bool):
-        """Update template performance metrics."""        try:
+        """Update template performance metrics."""
+        try:
             template_id = template.template_id
             
             if template_id not in self.template_metrics:
@@ -939,7 +979,8 @@ class TemplateProcessor:
             logger.error(f"Template metrics update failed: {e}")
     
     async def _update_processing_stats(self, processing_time: float):
-        """Update processing statistics."""        self.processing_stats["templates_processed"] += 1
+        """Update processing statistics."""
+        self.processing_stats["templates_processed"] += 1
         
         # Update average processing time
         total = self.processing_stats["templates_processed"]
@@ -949,7 +990,8 @@ class TemplateProcessor:
         )
     
     async def optimize_processing(self, optimization_config: Dict[str, Any]) -> bool:
-        """Optimize template processing based on analytics."""        try:
+        """Optimize template processing based on analytics."""
+        try:
             # Optimize cache size
             if "cache_optimization" in optimization_config:
                 max_cache_size = optimization_config["cache_optimization"].get("max_size", 1000)
@@ -971,7 +1013,8 @@ class TemplateProcessor:
             return False
     
     async def _optimize_ab_tests(self):
-        """Optimize A/B tests based on performance."""        try:
+        """Optimize A/B tests based on performance."""
+        try:
             # Analyze A/B test results and update winning variants
             for test_id, test_data in self.a_b_tests.items():
                 if test_data["participants"] >= 100:  # Minimum sample size
@@ -987,10 +1030,13 @@ class TemplateProcessor:
             logger.error(f"A/B test optimization failed: {e}")
     
     def get_processing_stats(self) -> Dict[str, Any]:
-        """Get template processing statistics."""        return self.processing_stats.copy()
+        """Get template processing statistics."""
+        return self.processing_stats.copy()
     
     def get_template_metrics(self) -> Dict[str, TemplateMetrics]:
-        """Get template performance metrics."""        return self.template_metrics.copy()
+        """Get template performance metrics."""
+        return self.template_metrics.copy()
     
     def get_ab_test_results(self) -> Dict[str, Dict[str, Any]]:
-        """Get A/B test results."""        return self.a_b_tests.copy()
+        """Get A/B test results."""
+        return self.a_b_tests.copy()

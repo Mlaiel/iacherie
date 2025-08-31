@@ -14,14 +14,16 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Optional, Any
+"""
+from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 import json
 from pathlib import Path
 
 
 class GCPConfig:
-    """    Professional Google Cloud Platform configuration manager for IA-Influencer Agent Platform.
+    """
+    Professional Google Cloud Platform configuration manager for IA-Influencer Agent Platform.
     
     Provides enterprise-grade GCP services integration:
     - GKE clusters for Kubernetes orchestration
@@ -34,7 +36,8 @@ class GCPConfig:
     - AI Platform and Vision API for content analysis
     - Cloud Monitoring for comprehensive observability
     - Secret Manager for secrets management
-    """    
+    """
+    
     def __init__(self, environment: str = "development", region: str = "us-central1", project_id: str = "ia-influencer-agent"):
         self.environment = environment
         self.region = region
@@ -53,7 +56,8 @@ class GCPConfig:
         }
     
     def get_vpc_configuration(self) -> Dict[str, Any]:
-        """Generate VPC network configuration"""        return {
+        """Generate VPC network configuration"""
+        return {
             "resource": {
                 "google_compute_network": {
                     "vpc_network": {
@@ -103,7 +107,8 @@ class GCPConfig:
         }
     
     def get_firewall_configuration(self) -> Dict[str, Any]:
-        """Generate firewall rules configuration"""        return {
+        """Generate firewall rules configuration"""
+        return {
             "resource": {
                 "google_compute_firewall": {
                     "allow_internal": {
@@ -159,7 +164,8 @@ class GCPConfig:
         }
     
     def get_gke_configuration(self) -> Dict[str, Any]:
-        """Generate GKE cluster configuration"""        node_count = 1 if self.environment == "development" else 3
+        """Generate GKE cluster configuration"""
+        node_count = 1 if self.environment == "development" else 3
         min_nodes = 1
         max_nodes = 3 if self.environment == "development" else 10
         machine_type = "e2-standard-2" if self.environment == "development" else "e2-standard-4"
@@ -311,7 +317,8 @@ class GCPConfig:
         }
     
     def get_cloud_sql_configuration(self) -> Dict[str, Any]:
-        """Generate Cloud SQL PostgreSQL configuration"""        return {
+        """Generate Cloud SQL PostgreSQL configuration"""
+        return {
             "resource": {
                 "google_sql_database_instance": {
                     "postgresql_instance": {
@@ -405,7 +412,8 @@ class GCPConfig:
         }
     
     def get_memorystore_redis_configuration(self) -> Dict[str, Any]:
-        """Generate Memorystore Redis configuration"""        return {
+        """Generate Memorystore Redis configuration"""
+        return {
             "resource": {
                 "google_redis_instance": {
                     "redis_cache": {
@@ -432,7 +440,8 @@ class GCPConfig:
         }
     
     def get_cloud_storage_configuration(self) -> Dict[str, Any]:
-        """Generate Cloud Storage buckets configuration"""        return {
+        """Generate Cloud Storage buckets configuration"""
+        return {
             "resource": {
                 "google_storage_bucket": {
                     "content_storage": {
@@ -515,7 +524,8 @@ class GCPConfig:
         }
     
     def get_cloud_functions_configuration(self) -> Dict[str, Any]:
-        """Generate Cloud Functions configuration"""        return {
+        """Generate Cloud Functions configuration"""
+        return {
             "resource": {
                 "google_storage_bucket": {
                     "functions_source_bucket": {
@@ -577,7 +587,8 @@ class GCPConfig:
         }
     
     def get_cloud_run_configuration(self) -> Dict[str, Any]:
-        """Generate Cloud Run services configuration"""        return {
+        """Generate Cloud Run services configuration"""
+        return {
             "resource": {
                 "google_cloud_run_v2_service": {
                     "api_service": {
@@ -682,7 +693,8 @@ class GCPConfig:
         }
     
     def get_monitoring_configuration(self) -> Dict[str, Any]:
-        """Generate Cloud Monitoring configuration"""        return {
+        """Generate Cloud Monitoring configuration"""
+        return {
             "resource": {
                 "google_monitoring_alert_policy": {
                     "high_cpu_usage": {
@@ -749,7 +761,8 @@ class GCPConfig:
         }
     
     def generate_terraform_configuration(self, output_file: str = "gcp-infrastructure.tf") -> None:
-        """Generate complete Terraform configuration"""        terraform_config = {
+        """Generate complete Terraform configuration"""
+        terraform_config = {
             "terraform": {
                 "required_version": ">= 1.0",
                 "required_providers": {
@@ -827,7 +840,8 @@ class GCPConfig:
                 f.write("\n}\n\n")
     
     def get_deployment_script(self) -> str:
-        """Generate GCP deployment script"""        return f'''#!/bin/bash
+        """Generate GCP deployment script"""
+        return f'''#!/bin/bash
 # GCP deployment script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
 

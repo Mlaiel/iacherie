@@ -18,7 +18,9 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class AgentStatus(Enum):
-    """Agent operational status"""
+    """
+Agent operational status"""
+
     INITIALIZING = "initializing"
     ACTIVE = "active"
     ERROR = "error"
@@ -43,13 +45,15 @@ class AgentResponse:
 
 @dataclass
 class WorkflowMetrics:
-    """Workflow performance metrics"""
+    """
+Workflow performance metrics"""
     total_processing_time: float
     stage_metrics: Dict[str, float] = field(default_factory=dict)
     success_rate: float = 0.0
 
 class BaseAgent:
-    """Base class for all AI agents"""
+    """
+Base class for all AI agents"""
     
     def __init__(self, agent_type: str, config: Optional[Dict[str, Any]] = None):
         self.agent_type = agent_type

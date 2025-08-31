@@ -12,7 +12,8 @@ Team Expertise:
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized copying, distribution, or use without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""import os
+"""
+import os
 import ssl
 import time
 import json
@@ -38,14 +39,16 @@ import psutil
 
 
 class AlertLevel(Enum):
-    """Alert severity levels"""    INFO = "info"
+    """Alert severity levels"""
+    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 
 class MonitoringStatus(Enum):
-    """Certificate monitoring status"""    VALID = "valid"
+    """Certificate monitoring status"""
+    VALID = "valid"
     EXPIRING_SOON = "expiring_soon"
     EXPIRED = "expired"
     INVALID = "invalid"
@@ -55,7 +58,8 @@ class MonitoringStatus(Enum):
 
 @dataclass
 class CertificateEndpoint:
-    """Certificate endpoint configuration"""    name: str
+    """Certificate endpoint configuration"""
+    name: str
     hostname: str
     port: int = 443
     check_interval: int = 3600  # seconds
@@ -71,7 +75,8 @@ class CertificateEndpoint:
 
 @dataclass
 class CertificateStatus:
-    """Certificate status information"""    endpoint: str
+    """Certificate status information"""
+    endpoint: str
     hostname: str
     port: int
     status: MonitoringStatus
@@ -86,7 +91,8 @@ class CertificateStatus:
 
 @dataclass
 class AlertConfig:
-    """Alert configuration"""    email_enabled: bool = True
+    """Alert configuration"""
+    email_enabled: bool = True
     email_recipients: List[str] = None
     email_smtp_server: str = "localhost"
     email_smtp_port: int = 587
@@ -110,19 +116,24 @@ class AlertConfig:
 
 
 class CertificateMonitoringError(Exception):
-    """Certificate monitoring exception"""    pass
+    """Certificate monitoring exception"""
+    pass
 
 
 class CertificateMonitor:
-    """    Enterprise SSL/TLS certificate monitoring system
+    """
+    Enterprise SSL/TLS certificate monitoring system
     Real-time monitoring, alerting, and reporting
-    """    
+    """
+    
     def __init__(self, config_path: Optional[Path] = None):
-        """        Initialize certificate monitor
+        """
+        Initialize certificate monitor
         
         Args:
             config_path: Path to monitoring configuration
-        """        self.logger = logging.getLogger(__name__)
+        """
+        self.logger = logging.getLogger(__name__)
         
         # Configuration
         self.endpoints: List[CertificateEndpoint] = []
@@ -153,11 +164,13 @@ class CertificateMonitor:
         self.logger.info("Certificate monitor initialized")
     
     def load_config(self, config_path: Path) -> None:
-        """        Load monitoring configuration from file
+        """
+        Load monitoring configuration from file
         
         Args:
             config_path: Path to configuration file
-        """        try:
+        """
+        try:
             with open(config_path, 'r') as f:
                 config_data = json.load(f)
             
@@ -182,11 +195,13 @@ class CertificateMonitor:
             raise CertificateMonitoringError(f"Configuration load failed: {e}")
     
     def save_config(self, config_path: Path) -> None:
-        """        Save monitoring configuration to file
+        """
+        Save monitoring configuration to file
         
         Args:
             config_path: Path to save configuration
-        """        try:
+        """
+        try:
             config_data = {
                 'endpoints': [asdict(endpoint) for endpoint in self.endpoints],
                 'alerts': asdict(self.alert_config),
@@ -205,22 +220,26 @@ class CertificateMonitor:
             raise
     
     def add_endpoint(self, endpoint: CertificateEndpoint) -> None:
-        """        Add certificate endpoint for monitoring
+        """
+        Add certificate endpoint for monitoring
         
         Args:
             endpoint: Endpoint configuration
-        """        self.endpoints.append(endpoint)
+        """
+        self.endpoints.append(endpoint)
         self.logger.info(f"Added endpoint: {endpoint.name} ({endpoint.hostname}:{endpoint.port})")
     
     def remove_endpoint(self, endpoint_name: str) -> bool:
-        """        Remove certificate endpoint from monitoring
+        """
+        Remove certificate endpoint from monitoring
         
         Args:
             endpoint_name: Name of endpoint to remove
             
         Returns:
             True if endpoint was removed
-        """        for i, endpoint in enumerate(self.endpoints):
+        """
+        for i, endpoint in enumerate(self.endpoints):
             if endpoint.name == endpoint_name:
                 del self.endpoints[i]
                 # Remove from status tracking
@@ -231,14 +250,16 @@ class CertificateMonitor:
         return False
     
     def check_certificate(self, endpoint: CertificateEndpoint) -> CertificateStatus:
-        """        Check certificate for single endpoint
+        """
+        Check certificate for single endpoint
         
         Args:
             endpoint: Endpoint to check
             
         Returns:
             Certificate status
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         issues = []
         certificate_info = {}
         status = MonitoringStatus.VALID
@@ -366,7 +387,8 @@ class CertificateMonitor:
         cert: x509.Certificate, 
         ssl_socket: ssl.SSLSocket
     ) -> Dict[str, Any]:
-        """Extract detailed certificate information"""        # Basic certificate info
+        """Extract detailed certificate information"""
+        # Basic certificate info
         subject = cert.subject
         issuer = cert.issuer
         
@@ -416,7 +438,8 @@ class CertificateMonitor:
         }
     
     def _verify_hostname_match(self, cert: x509.Certificate, hostname: str) -> bool:
-        """Verify certificate matches hostname"""        try:
+        """Verify certificate matches hostname"""
+        try:
             # Check common name
             subject = cert.subject
             for attribute in subject:
@@ -442,7 +465,8 @@ class CertificateMonitor:
             return False
     
     def _match_hostname(self, cert_hostname: str, request_hostname: str) -> bool:
-        """Match hostname with wildcard support"""        if cert_hostname == request_hostname:
+        """Match hostname with wildcard support"""
+        if cert_hostname == request_hostname:
             return True
         
         # Wildcard matching
@@ -455,7 +479,8 @@ class CertificateMonitor:
         return False
     
     def _verify_certificate_chain(self, cert: x509.Certificate, ssl_socket: ssl.SSLSocket) -> List[str]:
-        """Verify certificate chain"""        issues = []
+        """Verify certificate chain"""
+        issues = []
         try:
             # Get certificate chain
             cert_chain = ssl_socket.getpeercert_chain()
@@ -470,7 +495,8 @@ class CertificateMonitor:
         return issues
     
     def _check_ocsp_status(self, cert: x509.Certificate) -> List[str]:
-        """Check OCSP status"""        issues = []
+        """Check OCSP status"""
+        issues = []
         try:
             # Extract OCSP URL from certificate
             ocsp_url = None
@@ -500,7 +526,8 @@ class CertificateMonitor:
         return issues
     
     async def start_monitoring(self) -> None:
-        """Start continuous certificate monitoring"""        if self.monitoring_active:
+        """Start continuous certificate monitoring"""
+        if self.monitoring_active:
             self.logger.warning("Monitoring is already active")
             return
         
@@ -526,12 +553,14 @@ class CertificateMonitor:
         self.logger.info("Certificate monitoring stopped")
     
     def stop_monitoring(self) -> None:
-        """Stop certificate monitoring"""        self.monitoring_active = False
+        """Stop certificate monitoring"""
+        self.monitoring_active = False
         schedule.clear()
         self.logger.info("Stopping certificate monitoring")
     
     def _scheduled_check(self, endpoint: CertificateEndpoint) -> None:
-        """Perform scheduled certificate check"""        try:
+        """Perform scheduled certificate check"""
+        try:
             cert_status = self.check_certificate(endpoint)
             self.certificate_statuses[endpoint.name] = cert_status
             
@@ -543,7 +572,8 @@ class CertificateMonitor:
             self.logger.error(f"Scheduled check failed for {endpoint.name}: {e}")
     
     def _send_alert(self, cert_status: CertificateStatus) -> None:
-        """Send certificate alert"""        try:
+        """Send certificate alert"""
+        try:
             # Check alert rate limiting
             alert_key = f"{cert_status.endpoint}:{cert_status.alert_level.value}"
             now = datetime.utcnow()
@@ -582,7 +612,8 @@ class CertificateMonitor:
             self.logger.error(f"Failed to send alert: {e}")
     
     def _format_alert_message(self, cert_status: CertificateStatus) -> str:
-        """Format alert message"""        message_lines = [
+        """Format alert message"""
+        message_lines = [
             f"Certificate Alert - {cert_status.alert_level.value.upper()}",
             f"",
             f"Endpoint: {cert_status.endpoint}",
@@ -608,7 +639,8 @@ class CertificateMonitor:
         return "\n".join(message_lines)
     
     def _send_email_alert(self, cert_status: CertificateStatus, message: str) -> None:
-        """Send email alert"""        try:
+        """Send email alert"""
+        try:
             if not self.alert_config.email_recipients:
                 return
             
@@ -635,7 +667,8 @@ class CertificateMonitor:
             self.logger.error(f"Failed to send email alert: {e}")
     
     def _send_webhook_alert(self, cert_status: CertificateStatus, message: str) -> None:
-        """Send webhook alert"""        try:
+        """Send webhook alert"""
+        try:
             if not self.alert_config.webhook_url:
                 return
             
@@ -670,7 +703,8 @@ class CertificateMonitor:
             self.logger.error(f"Failed to send webhook alert: {e}")
     
     def _send_slack_alert(self, cert_status: CertificateStatus, message: str) -> None:
-        """Send Slack alert"""        try:
+        """Send Slack alert"""
+        try:
             if not self.alert_config.slack_webhook_url:
                 return
             
@@ -720,7 +754,8 @@ class CertificateMonitor:
             self.logger.error(f"Failed to send Slack alert: {e}")
     
     def _send_pagerduty_alert(self, cert_status: CertificateStatus, message: str) -> None:
-        """Send PagerDuty alert"""        try:
+        """Send PagerDuty alert"""
+        try:
             if not self.alert_config.pagerduty_integration_key:
                 return
             
@@ -761,7 +796,8 @@ class CertificateMonitor:
             self.logger.error(f"Failed to send PagerDuty alert: {e}")
     
     def get_status_summary(self) -> Dict[str, Any]:
-        """Get monitoring status summary"""        total_endpoints = len(self.endpoints)
+        """Get monitoring status summary"""
+        total_endpoints = len(self.endpoints)
         active_endpoints = len([e for e in self.endpoints if e.enabled])
         
         status_counts = {}
@@ -787,15 +823,18 @@ class CertificateMonitor:
         }
     
     def get_detailed_status(self) -> List[Dict[str, Any]]:
-        """Get detailed status for all endpoints"""        return [asdict(status) for status in self.certificate_statuses.values()]
+        """Get detailed status for all endpoints"""
+        return [asdict(status) for status in self.certificate_statuses.values()]
     
     def generate_report(self, output_path: Path, format_type: str = "json") -> None:
-        """        Generate monitoring report
+        """
+        Generate monitoring report
         
         Args:
             output_path: Report output path
             format_type: Report format (json/html/csv)
-        """        try:
+        """
+        try:
             report_data = {
                 'summary': self.get_status_summary(),
                 'endpoints': self.get_detailed_status(),
@@ -819,7 +858,9 @@ class CertificateMonitor:
             raise
     
     def _generate_html_report(self, report_data: Dict[str, Any], output_path: Path) -> None:
-        """Generate HTML report"""        html_content = f"""        <!DOCTYPE html>
+        """Generate HTML report"""
+        html_content = f"""
+        <!DOCTYPE html>
         <html>
         <head>
             <title>Certificate Monitoring Report</title>
@@ -852,7 +893,8 @@ class CertificateMonitor:
                     <th>Last Check</th>
                     <th>Issues</th>
                 </tr>
-        """        
+        """
+        
         for endpoint in report_data['endpoints']:
             status_class = {
                 'valid': 'valid',
@@ -864,7 +906,8 @@ class CertificateMonitor:
             
             issues_text = ', '.join(endpoint['issues']) if endpoint['issues'] else 'None'
             
-            html_content += f"""                <tr class="{status_class}">
+            html_content += f"""
+                <tr class="{status_class}">
                     <td>{endpoint['endpoint']}</td>
                     <td>{endpoint['hostname']}:{endpoint['port']}</td>
                     <td>{endpoint['status']}</td>
@@ -872,16 +915,20 @@ class CertificateMonitor:
                     <td>{endpoint['last_check']}</td>
                     <td>{issues_text}</td>
                 </tr>
-            """        
-        html_content += """            </table>
+            """
+        
+        html_content += """
+            </table>
         </body>
         </html>
-        """        
+        """
+        
         with open(output_path, 'w') as f:
             f.write(html_content)
     
     def _generate_csv_report(self, report_data: Dict[str, Any], output_path: Path) -> None:
-        """Generate CSV report"""        import csv
+        """Generate CSV report"""
+        import csv
         
         with open(output_path, 'w', newline='') as csvfile:
             fieldnames = [
@@ -906,11 +953,13 @@ class CertificateMonitor:
 
 
 def create_certificate_monitor(config_path: Optional[Path] = None) -> CertificateMonitor:
-    """    Factory function to create certificate monitor
+    """
+    Factory function to create certificate monitor
     
     Args:
         config_path: Path to monitoring configuration
         
     Returns:
         Configured certificate monitor
-    """    return CertificateMonitor(config_path)
+    """
+    return CertificateMonitor(config_path)

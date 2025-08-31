@@ -13,7 +13,8 @@ Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou reproduction sans 
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
 interdite et passible de poursuites judiciaires selon la loi allemande et internationale.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from pathlib import Path
@@ -34,14 +35,16 @@ logger = logging.getLogger(__name__)
 
 
 class ControllerMode(Enum):
-    """Quality controller operation modes"""    STRICT = "strict"           # Maximum quality enforcement
+    """Quality controller operation modes"""
+    STRICT = "strict"           # Maximum quality enforcement
     STANDARD = "standard"       # Standard quality requirements
     LENIENT = "lenient"        # Relaxed quality requirements
     CUSTOM = "custom"          # Custom quality configuration
 
 
 class QualityAction(Enum):
-    """Available quality control actions"""    ACCEPT = "accept"          # Content passes quality checks
+    """Available quality control actions"""
+    ACCEPT = "accept"          # Content passes quality checks
     REJECT = "reject"          # Content fails quality checks
     OPTIMIZE = "optimize"      # Content needs optimization
     REVIEW = "review"          # Content requires manual review
@@ -50,7 +53,8 @@ class QualityAction(Enum):
 
 @dataclass
 class QualityControlConfig:
-    """Quality control configuration"""    mode: ControllerMode = ControllerMode.STANDARD
+    """Quality control configuration"""
+    mode: ControllerMode = ControllerMode.STANDARD
     auto_optimize: bool = True
     auto_reject: bool = False
     manual_review_threshold: float = 0.7
@@ -65,7 +69,8 @@ class QualityControlConfig:
 
 @dataclass
 class QualityDecision:
-    """Quality control decision result"""    action: QualityAction
+    """Quality control decision result"""
+    action: QualityAction
     score: float
     confidence: float
     reasons: List[str]
@@ -76,7 +81,8 @@ class QualityDecision:
 
 
 class QualityController:
-    """    🎯 Professional Audio Quality Controller
+    """
+    🎯 Professional Audio Quality Controller
     
     Central orchestrator for audio quality management:
     - Quality validation and assessment
@@ -85,7 +91,8 @@ class QualityController:
     - Compliance checking
     - Quality monitoring and reporting
     - Decision making and workflow management
-    """    
+    """
+    
     def __init__(self, config: Optional[QualityControlConfig] = None):
         self.config = config or QualityControlConfig()
         
@@ -123,7 +130,8 @@ class QualityController:
         quality_profile: Optional[QualityProfile] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> QualityDecision:
-        """        Process audio through complete quality control pipeline
+        """
+        Process audio through complete quality control pipeline
         
         Args:
             audio_data: Audio data (array, file path, or Path object)
@@ -133,7 +141,8 @@ class QualityController:
             
         Returns:
             QualityDecision with action and details
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             # Generate cache key
@@ -222,7 +231,8 @@ class QualityController:
         quality_profile: Optional[QualityProfile] = None,
         max_concurrent: int = 10
     ) -> List[QualityDecision]:
-        """        Process multiple audio files concurrently
+        """
+        Process multiple audio files concurrently
         
         Args:
             audio_files: List of audio files or arrays
@@ -232,7 +242,8 @@ class QualityController:
             
         Returns:
             List of QualityDecision results
-        """        semaphore = asyncio.Semaphore(max_concurrent)
+        """
+        semaphore = asyncio.Semaphore(max_concurrent)
         
         async def process_single(audio, sr):
             async with semaphore:
@@ -272,7 +283,8 @@ class QualityController:
         validation_result: QualityReport,
         profile: QualityProfile
     ) -> List[QualityGateResult]:
-        """Run all configured quality gates"""        gate_results = []
+        """Run all configured quality gates"""
+        gate_results = []
         
         for gate in self.quality_gates:
             try:
@@ -298,7 +310,8 @@ class QualityController:
         compliance_result: Optional[Dict[str, Any]],
         profile: QualityProfile
     ) -> QualityDecision:
-        """Make final quality control decision"""        
+        """Make final quality control decision"""
+        
         # Calculate overall score
         overall_score = validation_result.overall_score
         
@@ -393,7 +406,8 @@ class QualityController:
         decision: QualityDecision,
         profile: QualityProfile
     ) -> QualityDecision:
-        """Handle audio optimization process"""        
+        """Handle audio optimization process"""
+        
         for attempt in range(self.config.optimization_attempts):
             try:
                 logger.info(f"Optimization attempt {attempt + 1}/{self.config.optimization_attempts}")
@@ -430,7 +444,8 @@ class QualityController:
         return decision
     
     def _setup_quality_gates(self):
-        """Initialize standard quality gates"""        from .gates import (
+        """Initialize standard quality gates"""
+        from .gates import (
             MinimumQualityGate, NoiseGate, DistortionGate,
             DynamicRangeGate, FrequencyResponseGate
         )
@@ -449,7 +464,8 @@ class QualityController:
         audio_data: Union[np.ndarray, str, Path],
         profile: Optional[QualityProfile]
     ) -> str:
-        """Generate cache key for audio processing"""        import hashlib
+        """Generate cache key for audio processing"""
+        import hashlib
         
         # Create hash components
         components = [
@@ -474,7 +490,8 @@ class QualityController:
         return hashlib.sha256('_'.join(components).encode()).hexdigest()
     
     def _update_statistics(self, decision: QualityDecision):
-        """Update processing statistics"""        self.stats['total_processed'] += 1
+        """Update processing statistics"""
+        self.stats['total_processed'] += 1
         
         if decision.action == QualityAction.ACCEPT:
             self.stats['accepted'] += 1
@@ -496,7 +513,8 @@ class QualityController:
             self.stats['processing_times'] = self.stats['processing_times'][-1000:]
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get controller statistics"""        stats = self.stats.copy()
+        """Get controller statistics"""
+        stats = self.stats.copy()
         
         if self.stats['processing_times']:
             stats['average_processing_time'] = sum(self.stats['processing_times']) / len(self.stats['processing_times'])
@@ -506,7 +524,8 @@ class QualityController:
         return stats
     
     def reset_statistics(self):
-        """Reset controller statistics"""        self.stats = {
+        """Reset controller statistics"""
+        self.stats = {
             'total_processed': 0,
             'accepted': 0,
             'rejected': 0,
@@ -517,19 +536,23 @@ class QualityController:
         }
     
     def configure_quality_gates(self, gates: List[QualityGate]):
-        """Configure custom quality gates"""        self.quality_gates = gates
+        """Configure custom quality gates"""
+        self.quality_gates = gates
         logger.info(f"Configured {len(gates)} quality gates")
     
     def add_quality_gate(self, gate: QualityGate):
-        """Add a quality gate"""        self.quality_gates.append(gate)
+        """Add a quality gate"""
+        self.quality_gates.append(gate)
         logger.info(f"Added quality gate: {gate.name}")
     
     def remove_quality_gate(self, gate_name: str):
-        """Remove a quality gate by name"""        self.quality_gates = [gate for gate in self.quality_gates if gate.name != gate_name]
+        """Remove a quality gate by name"""
+        self.quality_gates = [gate for gate in self.quality_gates if gate.name != gate_name]
         logger.info(f"Removed quality gate: {gate_name}")
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform system health check"""        health = {
+        """Perform system health check"""
+        health = {
             'status': 'healthy',
             'components': {},
             'timestamp': datetime.now().isoformat()

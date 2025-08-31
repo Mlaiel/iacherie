@@ -19,7 +19,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 This code is proprietary and confidential. Any unauthorized copying, modification, 
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and may result in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import uuid
@@ -66,21 +67,24 @@ logger = logging.getLogger(__name__)
 
 
 class BrowserType(Enum):
-    """Supported browser types for automation"""    CHROME = "chrome"
+    """Supported browser types for automation"""
+    CHROME = "chrome"
     FIREFOX = "firefox"
     EDGE = "edge"
     SAFARI = "safari"
 
 
 class BrowserMode(Enum):
-    """Browser operation modes"""    HEADLESS = "headless"
+    """Browser operation modes"""
+    HEADLESS = "headless"
     GUI = "gui"
     STEALTH = "stealth"
     PERFORMANCE = "performance"
 
 
 class SessionStatus(Enum):
-    """Browser session lifecycle status"""    INITIALIZING = "initializing"
+    """Browser session lifecycle status"""
+    INITIALIZING = "initializing"
     ACTIVE = "active"
     IDLE = "idle"
     BUSY = "busy"
@@ -90,7 +94,8 @@ class SessionStatus(Enum):
 
 @dataclass
 class BrowserCapabilities:
-    """Browser-specific capabilities configuration"""    javascript_enabled: bool = True
+    """Browser-specific capabilities configuration"""
+    javascript_enabled: bool = True
     images_enabled: bool = True
     css_enabled: bool = True
     plugins_enabled: bool = False
@@ -106,7 +111,8 @@ class BrowserCapabilities:
 
 @dataclass
 class BrowserConfiguration:
-    """Comprehensive browser configuration settings"""    browser_type: BrowserType = BrowserType.CHROME
+    """Comprehensive browser configuration settings"""
+    browser_type: BrowserType = BrowserType.CHROME
     mode: BrowserMode = BrowserMode.HEADLESS
     capabilities: BrowserCapabilities = field(default_factory=BrowserCapabilities)
     window_size: tuple = (1920, 1080)
@@ -126,7 +132,8 @@ class BrowserConfiguration:
 
 @dataclass
 class BrowserSession:
-    """Browser session management container"""    session_id: str
+    """Browser session management container"""
+    session_id: str
     browser_type: BrowserType
     driver: webdriver.Remote
     config: BrowserConfiguration
@@ -143,32 +150,39 @@ class BrowserSession:
 
 
 class BrowserDriver(ABC):
-    """Abstract base class for browser driver implementations"""    
+    """Abstract base class for browser driver implementations"""
+    
     def __init__(self, config: BrowserConfiguration):
         self.config = config
         self.capabilities = self._build_capabilities()
         
     @abstractmethod
     def _build_capabilities(self) -> Dict[str, Any]:
-        """Build browser-specific capabilities"""        pass
+        """Build browser-specific capabilities"""
+        pass
     
     @abstractmethod
     def _setup_options(self) -> Any:
-        """Setup browser-specific options"""        pass
+        """Setup browser-specific options"""
+        pass
     
     @abstractmethod
     def create_driver(self) -> webdriver.Remote:
-        """Create and configure browser driver instance"""        pass
+        """Create and configure browser driver instance"""
+        pass
     
     @abstractmethod
     def optimize_for_stealth(self, driver: webdriver.Remote) -> None:
-        """Apply stealth optimizations to browser"""        pass
+        """Apply stealth optimizations to browser"""
+        pass
 
 
 class ChromeDriver(BrowserDriver):
-    """Chrome browser driver implementation"""    
+    """Chrome browser driver implementation"""
+    
     def _build_capabilities(self) -> Dict[str, Any]:
-        """Build Chrome-specific capabilities"""        caps = DesiredCapabilities.CHROME.copy()
+        """Build Chrome-specific capabilities"""
+        caps = DesiredCapabilities.CHROME.copy()
         caps.update({
             'browserName': 'chrome',
             'version': '',
@@ -185,7 +199,8 @@ class ChromeDriver(BrowserDriver):
         return caps
     
     def _setup_options(self) -> ChromeOptions:
-        """Setup Chrome-specific options"""        options = ChromeOptions()
+        """Setup Chrome-specific options"""
+        options = ChromeOptions()
         
         # Basic configuration
         if self.config.mode in [BrowserMode.HEADLESS, BrowserMode.STEALTH]:
@@ -256,7 +271,8 @@ class ChromeDriver(BrowserDriver):
         return options
     
     def create_driver(self) -> webdriver.Chrome:
-        """Create and configure Chrome driver instance"""        try:
+        """Create and configure Chrome driver instance"""
+        try:
             options = self._setup_options()
             service = ChromeService(ChromeDriverManager().install())
             
@@ -281,7 +297,9 @@ class ChromeDriver(BrowserDriver):
             raise BrowserError(f"Chrome driver creation failed: {str(e)}")
     
     def optimize_for_stealth(self, driver: webdriver.Chrome) -> None:
-        """Apply stealth optimizations to Chrome"""        stealth_script = """        // Hide webdriver property
+        """Apply stealth optimizations to Chrome"""
+        stealth_script = """
+        // Hide webdriver property
         Object.defineProperty(navigator, 'webdriver', {get: () => undefined});
         
         // Mock plugins
@@ -310,14 +328,17 @@ class ChromeDriver(BrowserDriver):
         // Randomize screen properties
         Object.defineProperty(screen, 'availHeight', {get: () => 1040});
         Object.defineProperty(screen, 'availWidth', {get: () => 1920});
-        """        
+        """
+        
         driver.execute_script(stealth_script)
 
 
 class FirefoxDriver(BrowserDriver):
-    """Firefox browser driver implementation"""    
+    """Firefox browser driver implementation"""
+    
     def _build_capabilities(self) -> Dict[str, Any]:
-        """Build Firefox-specific capabilities"""        caps = DesiredCapabilities.FIREFOX.copy()
+        """Build Firefox-specific capabilities"""
+        caps = DesiredCapabilities.FIREFOX.copy()
         caps.update({
             'browserName': 'firefox',
             'marionette': True,
@@ -329,7 +350,8 @@ class FirefoxDriver(BrowserDriver):
         return caps
     
     def _setup_options(self) -> FirefoxOptions:
-        """Setup Firefox-specific options"""        options = FirefoxOptions()
+        """Setup Firefox-specific options"""
+        options = FirefoxOptions()
         
         if self.config.mode in [BrowserMode.HEADLESS, BrowserMode.STEALTH]:
             options.add_argument('--headless')
@@ -349,7 +371,8 @@ class FirefoxDriver(BrowserDriver):
         return options
     
     def create_driver(self) -> webdriver.Firefox:
-        """Create and configure Firefox driver instance"""        try:
+        """Create and configure Firefox driver instance"""
+        try:
             options = self._setup_options()
             service = FirefoxService(GeckoDriverManager().install())
             
@@ -372,17 +395,22 @@ class FirefoxDriver(BrowserDriver):
             raise BrowserError(f"Firefox driver creation failed: {str(e)}")
     
     def optimize_for_stealth(self, driver: webdriver.Firefox) -> None:
-        """Apply stealth optimizations to Firefox"""        # Firefox stealth script
-        stealth_script = """        Object.defineProperty(navigator, 'webdriver', {get: () => undefined});
-        """        driver.execute_script(stealth_script)
+        """Apply stealth optimizations to Firefox"""
+        # Firefox stealth script
+        stealth_script = """
+        Object.defineProperty(navigator, 'webdriver', {get: () => undefined});
+        """
+        driver.execute_script(stealth_script)
 
 
 class BrowserManager:
-    """    Enterprise Browser Management System
+    """
+    Enterprise Browser Management System
     
     Manages browser sessions, pools, and optimization for industrial-grade web automation.
     Provides session pooling, health monitoring, and resource management.
-    """    
+    """
+    
     def __init__(self, max_sessions: int = 10, session_timeout: int = 3600):
         self.max_sessions = max_sessions
         self.session_timeout = session_timeout
@@ -416,7 +444,8 @@ class BrowserManager:
         logger.info("BrowserManager initialized successfully")
     
     async def create_session(self, config: BrowserConfiguration) -> str:
-        """Create a new browser session with specified configuration"""        if len(self.sessions) >= self.max_sessions:
+        """Create a new browser session with specified configuration"""
+        if len(self.sessions) >= self.max_sessions:
             await self._cleanup_expired_sessions()
             
             if len(self.sessions) >= self.max_sessions:
@@ -460,14 +489,16 @@ class BrowserManager:
             raise BrowserError(f"Session creation failed: {str(e)}")
     
     async def get_session(self, session_id: str) -> Optional[BrowserSession]:
-        """Retrieve browser session by ID"""        session = self.sessions.get(session_id)
+        """Retrieve browser session by ID"""
+        session = self.sessions.get(session_id)
         if session and await self._is_session_healthy(session_id):
             session.last_activity = time.time()
             return session
         return None
     
     async def destroy_session(self, session_id: str) -> bool:
-        """Destroy browser session and cleanup resources"""        session = self.sessions.get(session_id)
+        """Destroy browser session and cleanup resources"""
+        session = self.sessions.get(session_id)
         if not session:
             return False
         
@@ -498,7 +529,8 @@ class BrowserManager:
     
     async def navigate_to(self, session_id: str, url: str, 
                          wait_condition: Optional[Callable] = None) -> bool:
-        """Navigate browser session to specified URL"""        session = await self.get_session(session_id)
+        """Navigate browser session to specified URL"""
+        session = await self.get_session(session_id)
         if not session:
             raise BrowserError(f"Session {session_id} not found or unhealthy")
         
@@ -528,7 +560,8 @@ class BrowserManager:
     
     async def execute_script(self, session_id: str, script: str, 
                            *args) -> Any:
-        """Execute JavaScript in browser session"""        session = await self.get_session(session_id)
+        """Execute JavaScript in browser session"""
+        session = await self.get_session(session_id)
         if not session:
             raise BrowserError(f"Session {session_id} not found")
         
@@ -544,7 +577,8 @@ class BrowserManager:
     
     async def take_screenshot(self, session_id: str, 
                             filename: Optional[str] = None) -> str:
-        """Take screenshot of current page"""        session = await self.get_session(session_id)
+        """Take screenshot of current page"""
+        session = await self.get_session(session_id)
         if not session:
             raise BrowserError(f"Session {session_id} not found")
         
@@ -562,7 +596,8 @@ class BrowserManager:
             raise BrowserError(f"Screenshot failed: {str(e)}")
     
     async def get_page_source(self, session_id: str) -> str:
-        """Get current page source"""        session = await self.get_session(session_id)
+        """Get current page source"""
+        session = await self.get_session(session_id)
         if not session:
             raise BrowserError(f"Session {session_id} not found")
         
@@ -577,7 +612,8 @@ class BrowserManager:
     
     @asynccontextmanager
     async def session_context(self, config: BrowserConfiguration):
-        """Context manager for automatic session lifecycle management"""        session_id = None
+        """Context manager for automatic session lifecycle management"""
+        session_id = None
         try:
             session_id = await self.create_session(config)
             session = await self.get_session(session_id)
@@ -587,10 +623,12 @@ class BrowserManager:
                 await self.destroy_session(session_id)
     
     async def _start_session_monitoring(self, session_id: str) -> None:
-        """Start monitoring for browser session"""        asyncio.create_task(self._monitor_session_health(session_id))
+        """Start monitoring for browser session"""
+        asyncio.create_task(self._monitor_session_health(session_id))
     
     async def _monitor_session_health(self, session_id: str) -> None:
-        """Monitor session health and performance"""        while session_id in self.sessions:
+        """Monitor session health and performance"""
+        while session_id in self.sessions:
             try:
                 session = self.sessions[session_id]
                 
@@ -616,7 +654,8 @@ class BrowserManager:
                 break
     
     async def _is_session_healthy(self, session_id: str) -> bool:
-        """Check if browser session is healthy and responsive"""        session = self.sessions.get(session_id)
+        """Check if browser session is healthy and responsive"""
+        session = self.sessions.get(session_id)
         if not session or session.status == SessionStatus.TERMINATED:
             return False
         
@@ -628,7 +667,8 @@ class BrowserManager:
             return False
     
     async def _update_session_metrics(self, session_id: str) -> None:
-        """Update performance metrics for session"""        session = self.sessions.get(session_id)
+        """Update performance metrics for session"""
+        session = self.sessions.get(session_id)
         if not session:
             return
         
@@ -643,7 +683,8 @@ class BrowserManager:
             logger.debug(f"Failed to update metrics for session {session_id}: {str(e)}")
     
     async def _cleanup_expired_sessions(self) -> None:
-        """Cleanup expired and unhealthy sessions"""        current_time = time.time()
+        """Cleanup expired and unhealthy sessions"""
+        current_time = time.time()
         expired_sessions = []
         
         for session_id, session in self.sessions.items():
@@ -655,7 +696,8 @@ class BrowserManager:
             await self.destroy_session(session_id)
     
     def _update_average_session_duration(self, duration: float) -> None:
-        """Update average session duration statistic"""        total_sessions = self.stats['sessions_destroyed']
+        """Update average session duration statistic"""
+        total_sessions = self.stats['sessions_destroyed']
         if total_sessions > 0:
             current_avg = self.stats['average_session_duration']
             self.stats['average_session_duration'] = (
@@ -663,7 +705,8 @@ class BrowserManager:
             )
     
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive browser manager statistics"""        active_count = len(self.active_sessions)
+        """Get comprehensive browser manager statistics"""
+        active_count = len(self.active_sessions)
         total_memory = sum(session.memory_usage for session in self.sessions.values())
         average_cpu = (
             sum(session.cpu_usage for session in self.sessions.values()) / active_count
@@ -680,7 +723,8 @@ class BrowserManager:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown browser manager and cleanup all resources"""        logger.info("Shutting down BrowserManager...")
+        """Shutdown browser manager and cleanup all resources"""
+        logger.info("Shutting down BrowserManager...")
         
         # Destroy all active sessions
         session_ids = list(self.sessions.keys())
@@ -698,12 +742,14 @@ class BrowserManager:
 # Factory function for easy instantiation
 def create_browser_manager(max_sessions: int = 10, 
                           session_timeout: int = 3600) -> BrowserManager:
-    """Create and configure browser manager instance"""    return BrowserManager(max_sessions=max_sessions, session_timeout=session_timeout)
+    """Create and configure browser manager instance"""
+    return BrowserManager(max_sessions=max_sessions, session_timeout=session_timeout)
 
 
 # Configuration helpers
 def create_stealth_config() -> BrowserConfiguration:
-    """Create configuration optimized for stealth operations"""    return BrowserConfiguration(
+    """Create configuration optimized for stealth operations"""
+    return BrowserConfiguration(
         browser_type=BrowserType.CHROME,
         mode=BrowserMode.STEALTH,
         capabilities=BrowserCapabilities(
@@ -716,7 +762,8 @@ def create_stealth_config() -> BrowserConfiguration:
 
 
 def create_performance_config() -> BrowserConfiguration:
-    """Create configuration optimized for performance"""    return BrowserConfiguration(
+    """Create configuration optimized for performance"""
+    return BrowserConfiguration(
         browser_type=BrowserType.CHROME,
         mode=BrowserMode.HEADLESS,
         capabilities=BrowserCapabilities(

@@ -28,7 +28,8 @@ Project Team Specialties:
 - Audio Engineer: Audio processing and analysis
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: AI conversation optimization
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 from datetime import datetime, timedelta
@@ -53,7 +54,8 @@ from ...ai.recommendation.emotional_intelligence import EmotionalIntelligenceEng
 
 
 class EmotionalState(Enum):
-    """Primary emotional states tracked"""    JOY = "joy"
+    """Primary emotional states tracked"""
+    JOY = "joy"
     EXCITEMENT = "excitement"
     CONTENTMENT = "contentment"
     LOVE = "love"
@@ -78,7 +80,8 @@ class EmotionalState(Enum):
 
 
 class SentimentPolarity(Enum):
-    """Sentiment polarity classifications"""    VERY_POSITIVE = "very_positive"
+    """Sentiment polarity classifications"""
+    VERY_POSITIVE = "very_positive"
     POSITIVE = "positive"
     SLIGHTLY_POSITIVE = "slightly_positive"
     NEUTRAL = "neutral"
@@ -88,7 +91,8 @@ class SentimentPolarity(Enum):
 
 
 class EmotionalTrigger(Enum):
-    """Common emotional triggers for content creators"""    AUDIENCE_FEEDBACK = "audience_feedback"
+    """Common emotional triggers for content creators"""
+    AUDIENCE_FEEDBACK = "audience_feedback"
     PERFORMANCE_METRICS = "performance_metrics"
     COLLABORATION_OUTCOME = "collaboration_outcome"
     CREATIVE_BLOCK = "creative_block"
@@ -103,7 +107,8 @@ class EmotionalTrigger(Enum):
 
 
 class MoodCategory(Enum):
-    """Mood categories for content optimization"""    ENERGETIC = "energetic"
+    """Mood categories for content optimization"""
+    ENERGETIC = "energetic"
     CALM = "calm"
     CREATIVE = "creative"
     FOCUSED = "focused"
@@ -117,7 +122,8 @@ class MoodCategory(Enum):
 
 @dataclass
 class EmotionalDataPoint:
-    """Individual emotional data point"""    timestamp: datetime
+    """Individual emotional data point"""
+    timestamp: datetime
     emotional_state: EmotionalState
     intensity: float  # 0.0 to 1.0
     sentiment_polarity: SentimentPolarity
@@ -131,7 +137,8 @@ class EmotionalDataPoint:
 
 @dataclass
 class EmotionalPattern:
-    """Identified emotional pattern"""    pattern_id: str
+    """Identified emotional pattern"""
+    pattern_id: str
     pattern_type: str
     emotional_states: List[EmotionalState]
     frequency: int
@@ -148,7 +155,8 @@ class EmotionalPattern:
 
 @dataclass
 class EmotionalProfile:
-    """Comprehensive emotional profile for user"""    user_id: str
+    """Comprehensive emotional profile for user"""
+    user_id: str
     dominant_emotions: List[EmotionalState]
     emotional_baseline: Dict[str, float]
     emotional_volatility: float
@@ -167,7 +175,8 @@ class EmotionalProfile:
 
 @dataclass
 class EmotionalRecommendation:
-    """Emotional optimization recommendation"""    recommendation_id: str
+    """Emotional optimization recommendation"""
+    recommendation_id: str
     user_id: str
     recommendation_type: str
     current_emotional_state: EmotionalState
@@ -184,12 +193,14 @@ class EmotionalRecommendation:
 
 
 class EmotionalContextTracker:
-    """    Ultra-advanced emotional context tracking and intelligence system
+    """
+    Ultra-advanced emotional context tracking and intelligence system
     
     Provides sophisticated emotional intelligence for content creators,
     including mood optimization, sentiment analysis, and empathetic
     engagement strategies.
-    """    
+    """
+    
     def __init__(self, 
                  cache_manager: CacheManager,
                  security_manager: SecurityManager,
@@ -243,7 +254,8 @@ class EmotionalContextTracker:
                                     user_id: str,
                                     emotional_data: Dict[str, Any],
                                     source: str = "interaction") -> EmotionalDataPoint:
-        """        Track emotional context from user interaction or content
+        """
+        Track emotional context from user interaction or content
         
         Args:
             user_id: User identifier
@@ -252,7 +264,8 @@ class EmotionalContextTracker:
             
         Returns:
             EmotionalDataPoint: Processed emotional data point
-        """        try:
+        """
+        try:
             # Validate emotional data
             await self._validate_emotional_data(user_id, emotional_data)
             
@@ -314,7 +327,8 @@ class EmotionalContextTracker:
     async def analyze_emotional_patterns(self, 
                                        user_id: str,
                                        analysis_period: timedelta = timedelta(days=30)) -> List[EmotionalPattern]:
-        """        Analyze emotional patterns from user's history
+        """
+        Analyze emotional patterns from user's history
         
         Args:
             user_id: User identifier
@@ -322,7 +336,8 @@ class EmotionalContextTracker:
             
         Returns:
             List of identified emotional patterns
-        """        try:
+        """
+        try:
             # Get emotional history
             emotional_history = await self._get_emotional_history(user_id, analysis_period)
             
@@ -404,7 +419,8 @@ class EmotionalContextTracker:
     async def generate_emotional_recommendations(self, 
                                                user_id: str,
                                                current_context: Dict[str, Any] = None) -> List[EmotionalRecommendation]:
-        """        Generate emotional optimization recommendations
+        """
+        Generate emotional optimization recommendations
         
         Args:
             user_id: User identifier
@@ -412,7 +428,8 @@ class EmotionalContextTracker:
             
         Returns:
             List of emotional recommendations
-        """        try:
+        """
+        try:
             # Get emotional profile
             emotional_profile = await self._get_emotional_profile(user_id)
             if not emotional_profile:
@@ -494,7 +511,8 @@ class EmotionalContextTracker:
                                                  user_id: str,
                                                  content_data: Dict[str, Any],
                                                  target_emotion: EmotionalState = None) -> Dict[str, Any]:
-        """        Optimize content for emotional alignment with audience and creator
+        """
+        Optimize content for emotional alignment with audience and creator
         
         Args:
             user_id: User identifier
@@ -503,7 +521,8 @@ class EmotionalContextTracker:
             
         Returns:
             Content optimization recommendations
-        """        try:
+        """
+        try:
             # Get emotional profile
             emotional_profile = await self._get_emotional_profile(user_id)
             if not emotional_profile:
@@ -582,14 +601,16 @@ class EmotionalContextTracker:
     # Private helper methods
 
     async def _validate_emotional_data(self, user_id: str, emotional_data: Dict[str, Any]):
-        """Validate emotional data input"""        if not user_id:
+        """Validate emotional data input"""
+        if not user_id:
             raise ValidationError("User ID is required for emotional tracking")
         
         if not emotional_data:
             raise ValidationError("Emotional data is required")
 
     async def _extract_emotional_signals(self, emotional_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract emotional signals from input data"""        signals = {
+        """Extract emotional signals from input data"""
+        signals = {
             "text_signals": [],
             "behavioral_signals": [],
             "contextual_signals": [],
@@ -616,7 +637,8 @@ class EmotionalContextTracker:
         return signals
 
     async def _analyze_sentiment(self, emotional_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze sentiment from emotional data"""        text_content = emotional_data.get("text", "")
+        """Analyze sentiment from emotional data"""
+        text_content = emotional_data.get("text", "")
         
         # Use VADER sentiment analyzer
         vader_scores = self.vader_analyzer.polarity_scores(text_content)
@@ -658,7 +680,8 @@ class EmotionalContextTracker:
     async def _determine_emotional_state(self, 
                                        emotional_signals: Dict[str, Any],
                                        sentiment_analysis: Dict[str, Any]) -> EmotionalState:
-        """Determine primary emotional state from signals and sentiment"""        # Start with sentiment-based emotion mapping
+        """Determine primary emotional state from signals and sentiment"""
+        # Start with sentiment-based emotion mapping
         sentiment_score = sentiment_analysis["score"]
         
         if sentiment_score >= 0.6:
@@ -692,7 +715,8 @@ class EmotionalContextTracker:
     async def _calculate_emotional_intensity(self, 
                                            emotional_signals: Dict[str, Any],
                                            sentiment_analysis: Dict[str, Any]) -> float:
-        """Calculate emotional intensity from signals"""        base_intensity = abs(sentiment_analysis["score"])
+        """Calculate emotional intensity from signals"""
+        base_intensity = abs(sentiment_analysis["score"])
         
         # Adjust based on text modifiers
         text_signals = emotional_signals.get("text_signals", [])
@@ -712,7 +736,8 @@ class EmotionalContextTracker:
     async def _identify_emotional_triggers(self, 
                                          emotional_data: Dict[str, Any],
                                          emotional_signals: Dict[str, Any]) -> List[EmotionalTrigger]:
-        """Identify emotional triggers from data"""        triggers = []
+        """Identify emotional triggers from data"""
+        triggers = []
         
         # Analyze context for trigger indicators
         context = emotional_data.get("context", {})
@@ -736,7 +761,8 @@ class EmotionalContextTracker:
         return triggers
 
     async def _get_emotional_profile(self, user_id: str) -> Optional[EmotionalProfile]:
-        """Retrieve cached emotional profile"""        cache_key = f"emotional_profile:{user_id}"
+        """Retrieve cached emotional profile"""
+        cache_key = f"emotional_profile:{user_id}"
         cached_data = await self.cache_manager.get(cache_key)
         
         if cached_data:
@@ -749,7 +775,8 @@ class EmotionalContextTracker:
         return None
 
     async def _build_emotional_profile(self, user_id: str) -> EmotionalProfile:
-        """Build emotional profile from user's history"""        # Get recent emotional history
+        """Build emotional profile from user's history"""
+        # Get recent emotional history
         emotional_history = list(self.emotional_history.get(user_id, []))
         
         if not emotional_history:
@@ -816,7 +843,8 @@ class EmotionalContextTracker:
         return profile
 
     async def _extract_text_emotional_signals(self, text: str) -> List[str]:
-        """Extract emotional signals from text using advanced NLP"""        try:
+        """Extract emotional signals from text using advanced NLP"""
+        try:
             if not text or len(text.strip()) < 3:
                 return []
             
@@ -883,7 +911,8 @@ class EmotionalContextTracker:
             return []
     
     async def _get_emotional_history(self, user_id: str, period: timedelta) -> List[EmotionalDataPoint]:
-        """Get emotional history for analysis period with comprehensive data"""        try:
+        """Get emotional history for analysis period with comprehensive data"""
+        try:
             # Get from cache first
             cache_key = f"emotional_history:{user_id}:{period.days}d"
             cached_history = await self.cache_manager.get(cache_key)
@@ -949,7 +978,8 @@ class EmotionalContextTracker:
             return []
 
     async def _get_recommended_content_emotions(self, profile: EmotionalProfile) -> List[Dict[str, Any]]:
-        """Get recommended emotions for content with strategic insights"""        try:
+        """Get recommended emotions for content with strategic insights"""
+        try:
             recommendations = []
             
             # Analyze current emotional patterns
@@ -990,7 +1020,8 @@ class EmotionalContextTracker:
             return []
 
     async def _identify_emotional_growth_opportunities(self, profile: EmotionalProfile) -> List[Dict[str, Any]]:
-        """Identify specific emotional growth opportunities with actionable insights"""        try:
+        """Identify specific emotional growth opportunities with actionable insights"""
+        try:
             opportunities = []
             
             # Emotional regulation opportunities
@@ -1101,7 +1132,8 @@ class EmotionalContextTracker:
             return []
 
     async def _assess_emotional_wellness(self, profile: EmotionalProfile) -> Dict[str, Any]:
-        """Assess emotional wellness with comprehensive health indicators"""        try:
+        """Assess emotional wellness with comprehensive health indicators"""
+        try:
             # Calculate wellness components
             emotional_balance = await self._calculate_emotional_balance(profile)
             stress_indicators = await self._identify_stress_indicators(profile)
@@ -1167,7 +1199,8 @@ class EmotionalContextTracker:
             }
 
     async def _calculate_emotional_balance(self, profile: EmotionalProfile) -> float:
-        """Calculate emotional balance score"""        if not profile.dominant_emotions:
+        """Calculate emotional balance score"""
+        if not profile.dominant_emotions:
             return 0.5
         
         # Check for healthy mix of positive and other emotions
@@ -1193,7 +1226,8 @@ class EmotionalContextTracker:
         return max(0, balance_score - volatility_penalty)
 
     async def _identify_stress_indicators(self, profile: EmotionalProfile) -> List[str]:
-        """Identify potential stress indicators"""        stress_indicators = []
+        """Identify potential stress indicators"""
+        stress_indicators = []
         
         # High emotional volatility
         if profile.emotional_volatility > 0.7:

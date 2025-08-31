@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import json
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RateLimitRule:
-    """Rate limiting rule configuration"""    identifier: str  # user_id, ip_address, api_key, etc.
+    """Rate limiting rule configuration"""
+    identifier: str  # user_id, ip_address, api_key, etc.
     limit: int      # requests per window
     window: int     # time window in seconds
     burst: int      # burst allowance
@@ -37,14 +39,16 @@ class RateLimitRule:
 
 @dataclass
 class RateLimitStatus:
-    """Current rate limit status"""    allowed: bool
+    """Current rate limit status"""
+    allowed: bool
     remaining: int
     reset_time: datetime
     retry_after: Optional[int] = None
 
 
 class RateLimiter:
-    """    Enterprise Rate Limiter
+    """
+    Enterprise Rate Limiter
     
     Features:
     - Multiple rate limiting algorithms
@@ -53,7 +57,8 @@ class RateLimiter:
     - Burst handling
     - Quota management
     - Dynamic rule updates
-    """    
+    """
+    
     def __init__(
         self,
         redis_url: str,
@@ -61,7 +66,8 @@ class RateLimiter:
         default_limit: int = 1000,
         window: int = 60
     ):
-        """Initialize rate limiter"""        self.redis_url = redis_url
+        """Initialize rate limiter"""
+        self.redis_url = redis_url
         self.strategy = strategy
         self.default_limit = default_limit
         self.window = window
@@ -79,7 +85,8 @@ class RateLimiter:
         logger.info(f"Rate limiter initialized with strategy: {strategy.value}")
     
     async def initialize(self):
-        """Initialize Redis connection"""        try:
+        """Initialize Redis connection"""
+        try:
             self.redis = aioredis.from_url(self.redis_url)
             
             # Test connection
@@ -96,7 +103,8 @@ class RateLimiter:
         request: Request,
         identifier: Optional[str] = None
     ) -> bool:
-        """        Check if request is allowed based on rate limits
+        """
+        Check if request is allowed based on rate limits
         
         Args:
             request: FastAPI request object
@@ -104,7 +112,8 @@ class RateLimiter:
             
         Returns:
             True if request is allowed, False otherwise
-        """        try:
+        """
+        try:
             # Get rate limit identifier
             rate_limit_id = identifier or await self._get_rate_limit_identifier(request)
             
@@ -126,7 +135,8 @@ class RateLimiter:
             return True
     
     async def _get_rate_limit_identifier(self, request: Request) -> str:
-        """Extract rate limit identifier from request"""        try:
+        """Extract rate limit identifier from request"""
+        try:
             # Priority order: User ID > API Key > IP Address
             
             # Try to get user ID from JWT token
@@ -149,7 +159,8 @@ class RateLimiter:
             return "unknown"
     
     def _get_client_ip(self, request: Request) -> str:
-        """Extract client IP address from request"""        try:
+        """Extract client IP address from request"""
+        try:
             # Check forwarded headers first
             forwarded_ips = request.headers.get("X-Forwarded-For")
             if forwarded_ips:
@@ -170,7 +181,8 @@ class RateLimiter:
             return "unknown"
     
     async def _get_applicable_rule(self, identifier: str, request: Request) -> RateLimitRule:
-        """Get applicable rate limiting rule for identifier"""        try:
+        """Get applicable rate limiting rule for identifier"""
+        try:
             # Check for specific rule
             if identifier in self.rules:
                 return self.rules[identifier]
@@ -207,7 +219,8 @@ class RateLimiter:
             )
     
     def _matches_pattern(self, identifier: str, pattern: str) -> bool:
-        """Check if identifier matches pattern"""        try:
+        """Check if identifier matches pattern"""
+        try:
             # Support wildcard patterns
             if "*" in pattern:
                 import fnmatch
@@ -225,7 +238,8 @@ class RateLimiter:
             return False
     
     async def _check_rate_limit(self, identifier: str, rule: RateLimitRule) -> RateLimitStatus:
-        """Check rate limit using configured strategy"""        
+        """Check rate limit using configured strategy"""
+        
         if rule.strategy == RateLimitStrategy.TOKEN_BUCKET:
             return await self._token_bucket_check(identifier, rule)
         elif rule.strategy == RateLimitStrategy.SLIDING_WINDOW:
@@ -239,7 +253,8 @@ class RateLimiter:
             return await self._sliding_window_check(identifier, rule)
     
     async def _token_bucket_check(self, identifier: str, rule: RateLimitRule) -> RateLimitStatus:
-        """Token bucket rate limiting algorithm"""        try:
+        """Token bucket rate limiting algorithm"""
+        try:
             current_time = time.time()
             bucket_key = f"rate_limit:token_bucket:{identifier}"
             
@@ -296,7 +311,8 @@ class RateLimiter:
             return RateLimitStatus(True, rule.limit, datetime.utcnow())
     
     async def _sliding_window_check(self, identifier: str, rule: RateLimitRule) -> RateLimitStatus:
-        """Sliding window rate limiting algorithm"""        try:
+        """Sliding window rate limiting algorithm"""
+        try:
             current_time = time.time()
             window_key = f"rate_limit:sliding:{identifier}"
             
@@ -356,7 +372,8 @@ class RateLimiter:
             return RateLimitStatus(True, rule.limit, datetime.utcnow())
     
     async def _fixed_window_check(self, identifier: str, rule: RateLimitRule) -> RateLimitStatus:
-        """Fixed window rate limiting algorithm"""        try:
+        """Fixed window rate limiting algorithm"""
+        try:
             current_time = time.time()
             window_start = int(current_time // rule.window) * rule.window
             window_key = f"rate_limit:fixed:{identifier}:{window_start}"
@@ -393,7 +410,8 @@ class RateLimiter:
             return RateLimitStatus(True, rule.limit, datetime.utcnow())
     
     async def _leaky_bucket_check(self, identifier: str, rule: RateLimitRule) -> RateLimitStatus:
-        """Leaky bucket rate limiting algorithm"""        try:
+        """Leaky bucket rate limiting algorithm"""
+        try:
             current_time = time.time()
             bucket_key = f"rate_limit:leaky:{identifier}"
             
@@ -451,7 +469,8 @@ class RateLimiter:
             return RateLimitStatus(True, rule.limit, datetime.utcnow())
     
     async def add_rate_limit_rule(self, rule: RateLimitRule) -> bool:
-        """Add or update rate limiting rule"""        try:
+        """Add or update rate limiting rule"""
+        try:
             self.rules[rule.identifier] = rule
             
             # Persist rule to Redis for distributed access
@@ -474,7 +493,8 @@ class RateLimiter:
             return False
     
     async def remove_rate_limit_rule(self, identifier: str) -> bool:
-        """Remove rate limiting rule"""        try:
+        """Remove rate limiting rule"""
+        try:
             # Remove from memory
             self.rules.pop(identifier, None)
             
@@ -490,7 +510,8 @@ class RateLimiter:
             return False
     
     async def get_rate_limit_stats(self, identifier: str) -> Dict[str, Any]:
-        """Get rate limit statistics for identifier"""        try:
+        """Get rate limit statistics for identifier"""
+        try:
             stats = {
                 "identifier": identifier,
                 "current_usage": {},
@@ -519,7 +540,8 @@ class RateLimiter:
             return {}
     
     async def _get_current_usage(self, identifier: str, strategy: RateLimitStrategy) -> Dict[str, Any]:
-        """Get current usage for specific strategy"""        try:
+        """Get current usage for specific strategy"""
+        try:
             current_time = time.time()
             
             if strategy == RateLimitStrategy.TOKEN_BUCKET:
@@ -558,7 +580,8 @@ class RateLimiter:
             return {}
     
     async def reset_rate_limit(self, identifier: str) -> bool:
-        """Reset rate limits for identifier"""        try:
+        """Reset rate limits for identifier"""
+        try:
             # Reset all strategy-specific keys
             keys_to_delete = []
             
@@ -586,5 +609,6 @@ class RateLimiter:
             return False
     
     async def close(self):
-        """Close Redis connection"""        if self.redis:
+        """Close Redis connection"""
+        if self.redis:
             await self.redis.close()

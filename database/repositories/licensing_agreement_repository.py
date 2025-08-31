@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from typing import List, Optional, Dict, Any, Union
+"""
+from typing import List, Optional, Dict, Any, Union
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, func, desc, asc
 from datetime import datetime, timedelta
@@ -44,11 +45,14 @@ import logging
 logger = logging.getLogger(__name__)
 
 class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
-    """    Repository for licensing agreement operations with comprehensive contract management,
+    """
+    Repository for licensing agreement operations with comprehensive contract management,
     automated compliance monitoring, and intelligent revenue distribution.
-    """    
+    """
+    
     def __init__(self, db_session: Session):
-        """Initialize licensing agreement repository"""        super().__init__(db_session, LicensingAgreement)
+        """Initialize licensing agreement repository"""
+        super().__init__(db_session, LicensingAgreement)
         
     def create_agreement(self,
                         licensor_id: int,
@@ -64,7 +68,8 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
                         terms_and_conditions: Optional[str] = None,
                         restrictions: Optional[Dict[str, Any]] = None,
                         metadata: Optional[Dict[str, Any]] = None) -> LicensingAgreement:
-        """        Create licensing agreement with validation and compliance checks
+        """
+        Create licensing agreement with validation and compliance checks
         
         Args:
             licensor_id: Content owner user ID
@@ -83,7 +88,8 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
             
         Returns:
             Created LicensingAgreement instance
-        """        try:
+        """
+        try:
             # Validate revenue share percentage
             if not (0 <= revenue_share_percentage <= 100):
                 raise RepositoryException("Revenue share percentage must be between 0 and 100")
@@ -145,7 +151,8 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
                                     start_date: datetime,
                                     end_date: Optional[datetime],
                                     usage_rights: List[UsageRight]) -> Optional[LicensingAgreement]:
-        """        Check for conflicting licensing agreements
+        """
+        Check for conflicting licensing agreements
         
         Args:
             content_id: Content ID
@@ -155,7 +162,8 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
             
         Returns:
             Conflicting agreement if found, None otherwise
-        """        try:
+        """
+        try:
             # Build date overlap condition
             if end_date:
                 date_overlap = and_(
@@ -197,7 +205,8 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
     def _rights_conflict(self,
                         existing_rights: List[UsageRight],
                         new_rights: List[UsageRight]) -> bool:
-        """        Check if usage rights conflict
+        """
+        Check if usage rights conflict
         
         Args:
             existing_rights: Existing usage rights
@@ -205,7 +214,8 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
             
         Returns:
             True if rights conflict, False otherwise
-        """        # Exclusive rights that cannot overlap
+        """
+        # Exclusive rights that cannot overlap
         exclusive_rights = {
             UsageRight.EXCLUSIVE_DISTRIBUTION,
             UsageRight.EXCLUSIVE_COMMERCIAL,
@@ -236,7 +246,8 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
     def _generate_agreement_reference(self,
                                     license_type: LicenseType,
                                     start_date: datetime) -> str:
-        """        Generate unique agreement reference
+        """
+        Generate unique agreement reference
         
         Args:
             license_type: License type
@@ -244,7 +255,8 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
             
         Returns:
             Agreement reference string
-        """        type_code = license_type.value[:3].upper()
+        """
+        type_code = license_type.value[:3].upper()
         date_code = start_date.strftime("%Y%m")
         sequence = self.db_session.query(func.count(LicensingAgreement.id)).filter(
             func.extract('year', LicensingAgreement.created_at) == start_date.year,
@@ -259,7 +271,8 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
                           status: Optional[LicenseStatus] = None,
                           license_type: Optional[LicenseType] = None,
                           active_only: bool = False) -> List[LicensingAgreement]:
-        """        Get agreements for a user in different roles
+        """
+        Get agreements for a user in different roles
         
         Args:
             user_id: User ID
@@ -270,7 +283,8 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
             
         Returns:
             List of LicensingAgreement instances
-        """        try:
+        """
+        try:
             query = self.db_session.query(LicensingAgreement)
             
             # Apply role filter
@@ -319,14 +333,16 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
             return []
             
     def get_content_agreements(self, content_id: int) -> List[LicensingAgreement]:
-        """        Get all agreements for a specific content
+        """
+        Get all agreements for a specific content
         
         Args:
             content_id: Content ID
             
         Returns:
             List of LicensingAgreement instances
-        """        try:
+        """
+        try:
             agreements = self.db_session.query(LicensingAgreement).filter(
                 LicensingAgreement.content_id == content_id
             ).order_by(LicensingAgreement.created_at.desc()).all()
@@ -343,7 +359,8 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
                               agreement_id: int,
                               new_status: LicenseStatus,
                               status_reason: Optional[str] = None) -> Optional[LicensingAgreement]:
-        """        Update agreement status with history tracking
+        """
+        Update agreement status with history tracking
         
         Args:
             agreement_id: Agreement ID
@@ -352,7 +369,8 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
             
         Returns:
             Updated LicensingAgreement instance
-        """        try:
+        """
+        try:
             agreement = self.get_by_id(agreement_id)
             if not agreement:
                 return None
@@ -392,14 +410,16 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
             raise RepositoryException(f"Agreement status update failed: {str(e)}")
             
     def check_expiring_agreements(self, days_ahead: int = 30) -> List[LicensingAgreement]:
-        """        Get agreements expiring within specified days
+        """
+        Get agreements expiring within specified days
         
         Args:
             days_ahead: Number of days ahead to check
             
         Returns:
             List of expiring agreements
-        """        try:
+        """
+        try:
             expiry_threshold = datetime.utcnow() + timedelta(days=days_ahead)
             
             expiring_agreements = self.db_session.query(LicensingAgreement).filter(
@@ -424,7 +444,8 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
     def calculate_revenue_distribution(self,
                                      agreement_id: int,
                                      total_revenue: Decimal) -> Dict[str, Any]:
-        """        Calculate revenue distribution based on agreement terms
+        """
+        Calculate revenue distribution based on agreement terms
         
         Args:
             agreement_id: Agreement ID
@@ -432,7 +453,8 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
             
         Returns:
             Revenue distribution breakdown
-        """        try:
+        """
+        try:
             agreement = self.get_by_id(agreement_id)
             if not agreement:
                 raise RepositoryException(f"Agreement {agreement_id} not found")
@@ -485,14 +507,16 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
             raise RepositoryException(f"Revenue calculation failed: {str(e)}")
             
     def get_agreement_statistics(self, user_id: Optional[int] = None) -> Dict[str, Any]:
-        """        Get comprehensive agreement statistics
+        """
+        Get comprehensive agreement statistics
         
         Args:
             user_id: Optional user ID to filter statistics
             
         Returns:
             Dictionary containing agreement statistics
-        """        try:
+        """
+        try:
             base_query = self.db_session.query(LicensingAgreement)
             
             if user_id:
@@ -570,11 +594,13 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
             return {'error': str(e)}
             
     def process_automatic_renewals(self) -> List[Dict[str, Any]]:
-        """        Process automatic renewals for eligible agreements
+        """
+        Process automatic renewals for eligible agreements
         
         Returns:
             List of renewal processing results
-        """        try:
+        """
+        try:
             # Find agreements eligible for automatic renewal
             renewal_candidates = self.db_session.query(LicensingAgreement).filter(
                 and_(

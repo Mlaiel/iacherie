@@ -21,7 +21,8 @@ Project Team Specialties:
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
 from datetime import datetime, timedelta
@@ -50,7 +51,8 @@ settings = get_settings()
 
 @dataclass
 class LinkedInPost:
-    """LinkedIn post data structure."""    post_id: str
+    """LinkedIn post data structure."""
+    post_id: str
     author_id: str
     author_name: str
     author_headline: str
@@ -69,7 +71,8 @@ class LinkedInPost:
 
 @dataclass
 class LinkedInProfile:
-    """LinkedIn profile data structure."""    profile_id: str
+    """LinkedIn profile data structure."""
+    profile_id: str
     name: str
     headline: str
     summary: str
@@ -86,7 +89,8 @@ class LinkedInProfile:
 
 @dataclass
 class LinkedInCompany:
-    """LinkedIn company data structure."""    company_id: str
+    """LinkedIn company data structure."""
+    company_id: str
     name: str
     description: str
     industry: str
@@ -100,7 +104,8 @@ class LinkedInCompany:
     logo_url: str
 
 class LinkedInCrawler:
-    """    Professional LinkedIn crawler implementation.
+    """
+    Professional LinkedIn crawler implementation.
     
     Features:
     - LinkedIn Marketing API integration
@@ -113,9 +118,11 @@ class LinkedInCrawler:
     - Influence measurement
     - B2B content discovery
     - Professional content verification
-    """    
+    """
+    
     def __init__(self):
-        """Initialize LinkedIn crawler."""        self.client_id = settings.LINKEDIN_CLIENT_ID
+        """Initialize LinkedIn crawler."""
+        self.client_id = settings.LINKEDIN_CLIENT_ID
         self.client_secret = settings.LINKEDIN_CLIENT_SECRET
         self.access_token = settings.LINKEDIN_ACCESS_TOKEN
         self.rate_limiter = LinkedInRateLimiter()
@@ -154,7 +161,8 @@ class LinkedInCrawler:
         content_type: Optional[str] = None,
         industry: Optional[str] = None
     ) -> AsyncGenerator[LinkedInPost, None]:
-        """        Search LinkedIn posts by keywords with advanced filtering.
+        """
+        Search LinkedIn posts by keywords with advanced filtering.
         
         Args:
             keywords: List of search keywords
@@ -165,7 +173,8 @@ class LinkedInCrawler:
             
         Yields:
             LinkedInPost: Post data
-        """        await self.rate_limiter.wait_if_needed("search")
+        """
+        await self.rate_limiter.wait_if_needed("search")
         
         try:
             # Use marketing API for advanced search
@@ -211,7 +220,8 @@ class LinkedInCrawler:
         profile_url: str,
         check_interval: int = 3600
     ) -> AsyncGenerator[LinkedInPost, None]:
-        """        Monitor LinkedIn profile for new posts.
+        """
+        Monitor LinkedIn profile for new posts.
         
         Args:
             profile_url: LinkedIn profile URL to monitor
@@ -219,7 +229,8 @@ class LinkedInCrawler:
             
         Yields:
             LinkedInPost: New posts from the profile
-        """        profile_id = self._extract_profile_id(profile_url)
+        """
+        profile_id = self._extract_profile_id(profile_url)
         last_check = datetime.now()
         
         while True:
@@ -259,7 +270,8 @@ class LinkedInCrawler:
         company_id: str,
         max_results: int = 50
     ) -> List[LinkedInPost]:
-        """        Get recent posts from LinkedIn company page.
+        """
+        Get recent posts from LinkedIn company page.
         
         Args:
             company_id: LinkedIn company ID
@@ -267,7 +279,8 @@ class LinkedInCrawler:
             
         Returns:
             List[LinkedInPost]: Company posts
-        """        await self.rate_limiter.wait_if_needed("company")
+        """
+        await self.rate_limiter.wait_if_needed("company")
         
         try:
             async with aiohttp.ClientSession() as session:
@@ -304,7 +317,8 @@ class LinkedInCrawler:
         search_query: str,
         max_scroll: int = 5
     ) -> List[LinkedInPost]:
-        """        Scrape LinkedIn using Selenium as fallback.
+        """
+        Scrape LinkedIn using Selenium as fallback.
         
         Args:
             search_query: Search query
@@ -312,7 +326,8 @@ class LinkedInCrawler:
             
         Returns:
             List[LinkedInPost]: Scraped posts
-        """        chrome_options = Options()
+        """
+        chrome_options = Options()
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
@@ -368,14 +383,16 @@ class LinkedInCrawler:
         self,
         post_id: str
     ) -> Dict:
-        """        Analyze engagement patterns for LinkedIn content.
+        """
+        Analyze engagement patterns for LinkedIn content.
         
         Args:
             post_id: LinkedIn post ID
             
         Returns:
             Dict: Engagement analysis
-        """        await self.rate_limiter.wait_if_needed("analytics")
+        """
+        await self.rate_limiter.wait_if_needed("analytics")
         
         try:
             async with aiohttp.ClientSession() as session:
@@ -405,7 +422,8 @@ class LinkedInCrawler:
             return {}
     
     async def _parse_post_data(self, post_data: Dict) -> Optional[LinkedInPost]:
-        """Parse LinkedIn post data from API response."""        try:
+        """Parse LinkedIn post data from API response."""
+        try:
             activity = post_data.get("activity", {})
             actor = activity.get("actor", {})
             
@@ -457,7 +475,8 @@ class LinkedInCrawler:
             return None
     
     def _extract_profile_id(self, profile_url: str) -> str:
-        """Extract profile ID from LinkedIn URL."""        # Handle different LinkedIn URL formats
+        """Extract profile ID from LinkedIn URL."""
+        # Handle different LinkedIn URL formats
         if "/in/" in profile_url:
             return profile_url.split("/in/")[1].split("/")[0]
         elif "/pub/" in profile_url:
@@ -466,7 +485,8 @@ class LinkedInCrawler:
             raise ValueError(f"Invalid LinkedIn profile URL: {profile_url}")
     
     def _determine_post_type(self, content_data: Dict) -> str:
-        """Determine post type from content data."""        if "article" in content_data:
+        """Determine post type from content data."""
+        if "article" in content_data:
             return "article"
         elif "video" in content_data:
             return "video"
@@ -478,7 +498,8 @@ class LinkedInCrawler:
             return "text"
     
     def _extract_post_from_element(self, element) -> Optional[LinkedInPost]:
-        """Extract post data from Selenium web element."""        try:
+        """Extract post data from Selenium web element."""
+        try:
             # This would be implemented based on LinkedIn's current HTML structure
             # Note: LinkedIn actively blocks scraping, so this is for fallback only
             text_content = element.text
@@ -507,7 +528,8 @@ class LinkedInCrawler:
             return None
     
     def _calculate_engagement_rate(self, metrics: Dict) -> float:
-        """Calculate engagement rate from metrics."""        try:
+        """Calculate engagement rate from metrics."""
+        try:
             likes = metrics.get("likes", 0)
             comments = metrics.get("comments", 0)
             shares = metrics.get("shares", 0)
@@ -520,7 +542,8 @@ class LinkedInCrawler:
             return 0.0
     
     async def _analyze_engagement_trend(self, post_id: str) -> Dict:
-        """Analyze engagement trend for a post."""        # This would implement historical engagement analysis
+        """Analyze engagement trend for a post."""
+        # This would implement historical engagement analysis
         return {
             "trend": "stable",
             "peak_time": None,
@@ -528,7 +551,8 @@ class LinkedInCrawler:
         }
     
     async def close(self):
-        """Clean up resources."""        if hasattr(self, 'session') and self.session:
+        """Clean up resources."""
+        if hasattr(self, 'session') and self.session:
             await self.session.close()
         
         logger.info("LinkedIn crawler closed")

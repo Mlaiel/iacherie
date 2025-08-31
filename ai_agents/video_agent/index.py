@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timezone
@@ -31,17 +32,21 @@ from .format_converter import VideoFormatConverter, CompressionOptimizer
 logger = logging.getLogger(__name__)
 
 class VideoAgentIndex:
-    """    Central index and orchestrator for all video processing operations.
+    """
+    Central index and orchestrator for all video processing operations.
     
     Provides unified interface to access all video processing capabilities
     including analysis, enhancement, generation, conversion, and compression.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize VideoAgentIndex with all video processing components.
+        """
+        Initialize VideoAgentIndex with all video processing components.
         
         Args:
             config: Optional configuration dictionary
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         
         # Initialize all video processing components
         self.video_agent = VideoAgent(config)
@@ -60,7 +65,8 @@ class VideoAgentIndex:
         logger.info("VideoAgentIndex initialized with all components")
     
     async def process_video_request(self, request_type: str, **kwargs) -> Dict[str, Any]:
-        """        Process video request using appropriate component.
+        """
+        Process video request using appropriate component.
         
         Args:
             request_type: Type of video processing request
@@ -68,7 +74,8 @@ class VideoAgentIndex:
             
         Returns:
             Processing result
-        """        try:
+        """
+        try:
             if request_type == "analyze":
                 return await self.analyze_video(**kwargs)
             elif request_type == "enhance":
@@ -96,28 +103,33 @@ class VideoAgentIndex:
             }
     
     async def analyze_video(self, video_path: str, analysis_types: List[str] = None) -> Dict[str, Any]:
-        """Comprehensive video analysis"""        return await self.video_analyzer.analyze_content(video_path, analysis_types)
+        """Comprehensive video analysis"""
+        return await self.video_analyzer.analyze_content(video_path, analysis_types)
     
     async def enhance_video(self, input_path: str, enhancements: List[str], 
                           quality_level: str = "medium", **kwargs) -> Dict[str, Any]:
-        """Enhanced video quality improvement"""        return await self.video_enhancer.enhance_video(
+        """Enhanced video quality improvement"""
+        return await self.video_enhancer.enhance_video(
             input_path, enhancements, quality_level, **kwargs
         )
     
     async def convert_video(self, input_path: str, output_format: str, 
                           preset: str = None, **kwargs) -> Dict[str, Any]:
-        """Convert video to different format"""        return await self.format_converter.convert_video(
+        """Convert video to different format"""
+        return await self.format_converter.convert_video(
             input_path, output_format, preset=preset, **kwargs
         )
     
     async def compress_video(self, input_path: str, target_size_mb: float = None, 
                            target_quality: str = None, **kwargs) -> Dict[str, Any]:
-        """Optimize video compression"""        return await self.compression_optimizer.optimize_compression(
+        """Optimize video compression"""
+        return await self.compression_optimizer.optimize_compression(
             input_path, target_size_mb, target_quality, **kwargs
         )
     
     async def generate_video(self, generation_type: str, **kwargs) -> Dict[str, Any]:
-        """Generate video using AI"""        if generation_type == "text_to_video":
+        """Generate video using AI"""
+        if generation_type == "text_to_video":
             return await self.ai_generator.generate_video_from_text(**kwargs)
         elif generation_type == "images_to_video":
             return await self.ai_generator.generate_video_from_images(**kwargs)
@@ -128,14 +140,17 @@ class VideoAgentIndex:
     
     async def stabilize_video(self, input_path: str, method: str = "optical_flow", 
                             **kwargs) -> Dict[str, Any]:
-        """Stabilize video using advanced algorithms"""        return await self.frame_stabilizer.stabilize_video(input_path, method, **kwargs)
+        """Stabilize video using advanced algorithms"""
+        return await self.frame_stabilizer.stabilize_video(input_path, method, **kwargs)
     
     async def process_video(self, input_path: str, operations: List[str], 
                           **kwargs) -> Dict[str, Any]:
-        """Process video with multiple operations"""        return await self.video_processor.process_video(input_path, operations, **kwargs)
+        """Process video with multiple operations"""
+        return await self.video_processor.process_video(input_path, operations, **kwargs)
     
     async def batch_process(self, jobs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Process multiple video jobs in batch"""        results = []
+        """Process multiple video jobs in batch"""
+        results = []
         
         # Group jobs by type for efficient processing
         job_groups = {}
@@ -171,18 +186,21 @@ class VideoAgentIndex:
     async def create_adaptive_stream(self, input_path: str, output_dir: str, 
                                    resolutions: List[str] = None, 
                                    format_type: str = "hls") -> Dict[str, Any]:
-        """Create adaptive streaming formats"""        return await self.format_converter.create_adaptive_stream(
+        """Create adaptive streaming formats"""
+        return await self.format_converter.create_adaptive_stream(
             input_path, output_dir, resolutions, format_type
         )
     
     async def synthesize_videos(self, video_sources: List[Dict[str, Any]], 
                               layout: str = "grid", **kwargs) -> Dict[str, Any]:
-        """Synthesize multiple videos into composition"""        return await self.video_synthesizer.synthesize_videos(
+        """Synthesize multiple videos into composition"""
+        return await self.video_synthesizer.synthesize_videos(
             video_sources, layout, **kwargs
         )
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
-        """Get list of supported input and output formats"""        return {
+        """Get list of supported input and output formats"""
+        return {
             "input_formats": [
                 "mp4", "avi", "mov", "wmv", "flv", "mkv", "webm", "m4v",
                 "3gp", "asf", "rm", "rmvb", "vob", "ts", "mts", "m2ts"
@@ -194,7 +212,8 @@ class VideoAgentIndex:
         }
     
     def get_available_operations(self) -> Dict[str, List[str]]:
-        """Get list of available operations for each component"""        return {
+        """Get list of available operations for each component"""
+        return {
             "analysis": [
                 "scenes", "objects", "motion", "color", "quality", "audio",
                 "metadata", "content_analysis", "technical_specs"
@@ -218,7 +237,8 @@ class VideoAgentIndex:
         }
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get current system status and capabilities"""        return {
+        """Get current system status and capabilities"""
+        return {
             "status": "operational",
             "components": {
                 "video_agent": "active",
@@ -240,7 +260,8 @@ class VideoAgentIndex:
         }
     
     async def cleanup(self):
-        """Cleanup all components and resources"""        cleanup_tasks = [
+        """Cleanup all components and resources"""
+        cleanup_tasks = [
             self.video_agent.cleanup(),
             self.video_processor.cleanup(),
             self.video_analyzer.cleanup(),
@@ -258,7 +279,8 @@ class VideoAgentIndex:
 
 # Convenience functions for direct access
 async def analyze_video(video_path: str, analysis_types: List[str] = None) -> Dict[str, Any]:
-    """Quick video analysis function"""    index = VideoAgentIndex()
+    """Quick video analysis function"""
+    index = VideoAgentIndex()
     try:
         return await index.analyze_video(video_path, analysis_types)
     finally:
@@ -266,7 +288,8 @@ async def analyze_video(video_path: str, analysis_types: List[str] = None) -> Di
 
 async def enhance_video(input_path: str, enhancements: List[str], 
                        quality_level: str = "medium") -> Dict[str, Any]:
-    """Quick video enhancement function"""    index = VideoAgentIndex()
+    """Quick video enhancement function"""
+    index = VideoAgentIndex()
     try:
         return await index.enhance_video(input_path, enhancements, quality_level)
     finally:
@@ -274,7 +297,8 @@ async def enhance_video(input_path: str, enhancements: List[str],
 
 async def convert_video(input_path: str, output_format: str, 
                        preset: str = None) -> Dict[str, Any]:
-    """Quick video conversion function"""    index = VideoAgentIndex()
+    """Quick video conversion function"""
+    index = VideoAgentIndex()
     try:
         return await index.convert_video(input_path, output_format, preset)
     finally:
@@ -282,7 +306,8 @@ async def convert_video(input_path: str, output_format: str,
 
 async def generate_video_from_text(prompt: str, duration: float = 10.0, 
                                  style: str = "cinematic") -> Dict[str, Any]:
-    """Quick text-to-video generation function"""    index = VideoAgentIndex()
+    """Quick text-to-video generation function"""
+    index = VideoAgentIndex()
     try:
         return await index.generate_video("text_to_video", 
                                         prompt=prompt, 

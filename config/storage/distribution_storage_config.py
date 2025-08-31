@@ -13,13 +13,15 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 
 class DistributionPlatform(Enum):
-    """Supported content distribution platforms."""    YOUTUBE = "youtube"
+    """Supported content distribution platforms."""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -37,7 +39,8 @@ class DistributionPlatform(Enum):
     WHATSAPP = "whatsapp"
 
 class ContentFormat(Enum):
-    """Content formats for distribution."""    VIDEO_SHORT = "video_short"  # TikTok, YouTube Shorts, Instagram Reels
+    """Content formats for distribution."""
+    VIDEO_SHORT = "video_short"  # TikTok, YouTube Shorts, Instagram Reels
     VIDEO_LONG = "video_long"    # YouTube, Facebook, LinkedIn
     AUDIO_TRACK = "audio_track"  # Spotify, Apple Music, SoundCloud
     AUDIO_PODCAST = "audio_podcast"  # Spotify, Apple Podcasts
@@ -48,7 +51,8 @@ class ContentFormat(Enum):
     LIVE_STREAM = "live_stream"  # Twitch, YouTube Live, Instagram Live
 
 class DistributionStatus(Enum):
-    """Status of content distribution."""    PENDING = "pending"
+    """Status of content distribution."""
+    PENDING = "pending"
     PROCESSING = "processing"
     SCHEDULED = "scheduled"
     PUBLISHED = "published"
@@ -58,7 +62,8 @@ class DistributionStatus(Enum):
 
 @dataclass
 class PlatformDistributionConfig:
-    """Configuration for individual platform distribution."""    
+    """Configuration for individual platform distribution."""
+    
     platform: DistributionPlatform
     api_credentials_storage: str
     content_storage_path: str
@@ -73,9 +78,11 @@ class PlatformDistributionConfig:
 
 @dataclass
 class MultiPlatformDistributionConfig:
-    """    Comprehensive multi-platform content distribution configuration.
+    """
+    Comprehensive multi-platform content distribution configuration.
     Handles content adaptation, scheduling, and syndication across platforms.
-    """    
+    """
+    
     # Distribution storage paths
     distribution_queue_path: str = "distribution/queue"
     processed_content_path: str = "distribution/processed"
@@ -130,7 +137,8 @@ class MultiPlatformDistributionConfig:
     })
     
     def __post_init__(self):
-        """Initialize platform-specific distribution configurations."""        if not self.platform_configs:
+        """Initialize platform-specific distribution configurations."""
+        if not self.platform_configs:
             self.platform_configs = {
                 DistributionPlatform.YOUTUBE: PlatformDistributionConfig(
                     platform=DistributionPlatform.YOUTUBE,
@@ -231,21 +239,25 @@ class MultiPlatformDistributionConfig:
             }
     
     def get_platform_config(self, platform: DistributionPlatform) -> Optional[PlatformDistributionConfig]:
-        """Get configuration for specific platform."""        return self.platform_configs.get(platform)
+        """Get configuration for specific platform."""
+        return self.platform_configs.get(platform)
     
     def get_supported_platforms_for_format(self, content_format: ContentFormat) -> List[DistributionPlatform]:
-        """Get platforms that support specific content format."""        supported_platforms = []
+        """Get platforms that support specific content format."""
+        supported_platforms = []
         for platform, config in self.platform_configs.items():
             if content_format in config.supported_formats:
                 supported_platforms.append(platform)
         return supported_platforms
     
     def is_content_adaptation_enabled(self) -> bool:
-        """Check if automatic content adaptation is enabled."""        return self.content_adaptation_config.get('enable_auto_adaptation', False)
+        """Check if automatic content adaptation is enabled."""
+        return self.content_adaptation_config.get('enable_auto_adaptation', False)
 
 @dataclass
 class ContentSyndicationConfig:
-    """Configuration for content syndication and cross-posting."""    
+    """Configuration for content syndication and cross-posting."""
+    
     # Syndication rules and logic
     syndication_rules: Dict[str, Any] = field(default_factory=lambda: {
         'enable_auto_syndication': True,
@@ -277,7 +289,8 @@ class ContentSyndicationConfig:
 
 @dataclass
 class DistributionAnalyticsConfig:
-    """Configuration for distribution analytics and performance tracking."""    
+    """Configuration for distribution analytics and performance tracking."""
+    
     # Analytics collection configuration
     analytics_collection: Dict[str, Any] = field(default_factory=lambda: {
         'real_time_metrics': True,
@@ -315,7 +328,8 @@ distribution_analytics_config = DistributionAnalyticsConfig()
 
 # Configuration validation functions
 def validate_distribution_config() -> bool:
-    """Validate multi-platform distribution configuration."""    try:
+    """Validate multi-platform distribution configuration."""
+    try:
         # Validate required paths
         required_paths = [
             multi_platform_distribution_config.distribution_queue_path,
@@ -345,7 +359,8 @@ def validate_distribution_config() -> bool:
         return False
 
 def validate_content_syndication_config() -> bool:
-    """Validate content syndication configuration."""    try:
+    """Validate content syndication configuration."""
+    try:
         # Validate syndication rules
         rules = content_syndication_config.syndication_rules
         required_keys = ['enable_auto_syndication', 'cross_platform_tagging']

@@ -14,7 +14,8 @@ without explicit written permission is STRICTLY PROHIBITED and will be
 prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Optional, Union, Any, Tuple
+"""
+from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
 from dataclasses import dataclass
@@ -22,7 +23,8 @@ import os
 
 
 class NLPTask(str, Enum):
-    """Supported NLP tasks for content processing."""    
+    """Supported NLP tasks for content processing."""
+    
     TEXT_CLASSIFICATION = "text_classification"
     SENTIMENT_ANALYSIS = "sentiment_analysis"
     NAMED_ENTITY_RECOGNITION = "ner"
@@ -41,7 +43,8 @@ class NLPTask(str, Enum):
 
 
 class NLPLanguage(str, Enum):
-    """Supported languages for NLP processing."""    
+    """Supported languages for NLP processing."""
+    
     ENGLISH = "en"
     FRENCH = "fr"
     GERMAN = "de"
@@ -60,7 +63,8 @@ class NLPLanguage(str, Enum):
 
 @dataclass
 class NLPModelSpec:
-    """Specification for NLP model configuration."""    
+    """Specification for NLP model configuration."""
+    
     task: NLPTask
     model_name: str
     model_path: str
@@ -76,11 +80,13 @@ class NLPModelSpec:
 
 
 class NLPConfig(BaseSettings):
-    """    Professional NLP Configuration for IA-Influencer Agent Platform.
+    """
+    Professional NLP Configuration for IA-Influencer Agent Platform.
     
     Manages all Natural Language Processing models and configurations for
     content analysis, generation, protection, and optimization.
-    """    
+    """
+    
     # Core NLP Configuration
     DEFAULT_LANGUAGE: NLPLanguage = NLPLanguage.ENGLISH
     AUTO_LANGUAGE_DETECTION: bool = True
@@ -157,11 +163,13 @@ class NLPConfig(BaseSettings):
     
     @validator("NLP_MODEL_CACHE_DIR")
     def create_cache_dir(cls, v):
-        """Ensure NLP model cache directory exists."""        os.makedirs(v, exist_ok=True)
+        """Ensure NLP model cache directory exists."""
+        os.makedirs(v, exist_ok=True)
         return v
     
     def get_nlp_model_spec(self, task: NLPTask) -> NLPModelSpec:
-        """Get NLP model specification by task."""        specs = {
+        """Get NLP model specification by task."""
+        specs = {
             NLPTask.TEXT_CLASSIFICATION: NLPModelSpec(
                 task=NLPTask.TEXT_CLASSIFICATION,
                 model_name="content_classifier",
@@ -325,7 +333,8 @@ class NLPConfig(BaseSettings):
         return specs.get(task, self._get_default_nlp_spec(task))
     
     def _get_default_nlp_spec(self, task: NLPTask) -> NLPModelSpec:
-        """Get default NLP model specification."""        return NLPModelSpec(
+        """Get default NLP model specification."""
+        return NLPModelSpec(
             task=task,
             model_name="default_nlp",
             model_path=self.SENTENCE_EMBEDDING_MODEL,
@@ -335,7 +344,8 @@ class NLPConfig(BaseSettings):
         )
     
     def get_models_by_language(self, language: NLPLanguage) -> List[NLPModelSpec]:
-        """Get all NLP models that support a specific language."""        all_tasks = [task for task in NLPTask]
+        """Get all NLP models that support a specific language."""
+        all_tasks = [task for task in NLPTask]
         models = []
         
         for task in all_tasks:
@@ -346,7 +356,8 @@ class NLPConfig(BaseSettings):
         return models
     
     def get_content_analysis_pipeline(self) -> List[NLPTask]:
-        """Get recommended NLP pipeline for content analysis."""        return [
+        """Get recommended NLP pipeline for content analysis."""
+        return [
             NLPTask.LANGUAGE_DETECTION,
             NLPTask.CONTENT_MODERATION,
             NLPTask.SENTIMENT_ANALYSIS,
@@ -357,7 +368,8 @@ class NLPConfig(BaseSettings):
         ]
     
     def get_content_optimization_pipeline(self) -> List[NLPTask]:
-        """Get recommended NLP pipeline for content optimization."""        return [
+        """Get recommended NLP pipeline for content optimization."""
+        return [
             NLPTask.SEO_OPTIMIZATION,
             NLPTask.HASHTAG_GENERATION,
             NLPTask.TEXT_SUMMARIZATION,
@@ -365,7 +377,8 @@ class NLPConfig(BaseSettings):
         ]
     
     def get_multilingual_config(self) -> Dict[str, Any]:
-        """Get multilingual processing configuration."""        return {
+        """Get multilingual processing configuration."""
+        return {
             "default_language": self.DEFAULT_LANGUAGE,
             "auto_detection": self.AUTO_LANGUAGE_DETECTION,
             "supported_languages": self.SUPPORTED_LANGUAGES,
@@ -380,7 +393,8 @@ class NLPConfig(BaseSettings):
         }
     
     def get_content_quality_config(self) -> Dict[str, float]:
-        """Get content quality thresholds and metrics."""        return {
+        """Get content quality thresholds and metrics."""
+        return {
             "sentiment_confidence": self.SENTIMENT_CONFIDENCE_THRESHOLD,
             "toxicity_threshold": self.TOXICITY_THRESHOLD,
             "spam_threshold": self.SPAM_THRESHOLD,
@@ -390,7 +404,8 @@ class NLPConfig(BaseSettings):
         }
     
     def get_seo_config(self) -> Dict[str, Any]:
-        """Get SEO optimization configuration."""        return {
+        """Get SEO optimization configuration."""
+        return {
             "keyword_density_target": self.SEO_KEYWORD_DENSITY_TARGET,
             "meta_description_length": self.META_DESCRIPTION_LENGTH,
             "title_optimal_length": self.TITLE_OPTIMAL_LENGTH,
@@ -406,7 +421,8 @@ class NLPConfig(BaseSettings):
         }
     
     def get_performance_config(self) -> Dict[str, Any]:
-        """Get NLP performance configuration."""        return {
+        """Get NLP performance configuration."""
+        return {
             "batch_size": self.NLP_BATCH_SIZE,
             "max_concurrent": self.MAX_CONCURRENT_REQUESTS,
             "warmup_enabled": self.MODEL_WARMUP_ENABLED,

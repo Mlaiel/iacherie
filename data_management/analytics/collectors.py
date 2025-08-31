@@ -14,7 +14,8 @@ Features:
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: Proprietary - All rights reserved
-"""import asyncio
+"""
+import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
@@ -33,7 +34,8 @@ from ...models.monetization import Revenue
 
 
 class MetricCategory(Enum):
-    """Business metric categories for organized tracking."""    USER_ACQUISITION = "user_acquisition"
+    """Business metric categories for organized tracking."""
+    USER_ACQUISITION = "user_acquisition"
     USER_ENGAGEMENT = "user_engagement"
     CONTENT_CREATION = "content_creation"
     PROTECTION_PERFORMANCE = "protection_performance"
@@ -43,7 +45,8 @@ class MetricCategory(Enum):
 
 @dataclass
 class BusinessMetric:
-    """Structured business metric data model."""    name: str
+    """Structured business metric data model."""
+    name: str
     value: float
     category: MetricCategory
     timestamp: datetime
@@ -53,11 +56,13 @@ class BusinessMetric:
 
 
 class BusinessMetricsCollector:
-    """    Enterprise-grade business metrics collection system.
+    """
+    Enterprise-grade business metrics collection system.
     
     Provides comprehensive analytics for strategic decision making
     and performance optimization across all platform operations.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self._cache = {}
@@ -68,7 +73,8 @@ class BusinessMetricsCollector:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> Dict[str, List[BusinessMetric]]:
-        """        Collect comprehensive business metrics across all categories.
+        """
+        Collect comprehensive business metrics across all categories.
         
         Args:
             start_date: Start of analysis period
@@ -76,7 +82,8 @@ class BusinessMetricsCollector:
             
         Returns:
             Dictionary of metrics organized by category
-        """        if not start_date:
+        """
+        if not start_date:
             start_date = datetime.now() - timedelta(days=30)
         if not end_date:
             end_date = datetime.now()
@@ -104,7 +111,8 @@ class BusinessMetricsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[BusinessMetric]:
-        """Collect metrics for specific category."""        
+        """Collect metrics for specific category."""
+        
         if category == MetricCategory.USER_ACQUISITION:
             return await self._collect_user_acquisition_metrics(start_date, end_date)
         elif category == MetricCategory.USER_ENGAGEMENT:
@@ -125,7 +133,8 @@ class BusinessMetricsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[BusinessMetric]:
-        """Collect user acquisition and growth metrics."""        
+        """Collect user acquisition and growth metrics."""
+        
         async with get_database_session() as session:
             # New user registrations
             new_users_query = select(func.count(User.id)).where(
@@ -211,7 +220,8 @@ class BusinessMetricsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[BusinessMetric]:
-        """Collect user engagement and activity metrics."""        
+        """Collect user engagement and activity metrics."""
+        
         async with get_database_session() as session:
             # Daily active users
             dau_query = select(
@@ -287,7 +297,8 @@ class BusinessMetricsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[BusinessMetric]:
-        """Collect content creation and upload metrics."""        
+        """Collect content creation and upload metrics."""
+        
         async with get_database_session() as session:
             # Total content uploads
             total_content_query = select(func.count(Content.id)).where(
@@ -352,7 +363,8 @@ class BusinessMetricsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[BusinessMetric]:
-        """Collect content protection performance metrics."""        
+        """Collect content protection performance metrics."""
+        
         async with get_database_session() as session:
             # Protection events
             protection_events_query = select(func.count(ProtectionEvent.id)).where(
@@ -405,7 +417,8 @@ class BusinessMetricsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[BusinessMetric]:
-        """Collect revenue and monetization metrics."""        
+        """Collect revenue and monetization metrics."""
+        
         async with get_database_session() as session:
             # Total revenue
             total_revenue_query = select(func.sum(Revenue.amount)).where(
@@ -458,7 +471,8 @@ class BusinessMetricsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[BusinessMetric]:
-        """Collect platform health and performance metrics."""        
+        """Collect platform health and performance metrics."""
+        
         # These would typically come from monitoring systems
         # For now, we'll simulate based on available data
         
@@ -506,7 +520,8 @@ class BusinessMetricsCollector:
         metrics: Dict[str, List[BusinessMetric]],
         output_path: str
     ) -> None:
-        """Export metrics to JSON format."""        
+        """Export metrics to JSON format."""
+        
         serialized_metrics = {}
         for category, metric_list in metrics.items():
             serialized_metrics[category] = [
@@ -531,7 +546,8 @@ class BusinessMetricsCollector:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Get executive KPI summary."""        
+        """Get executive KPI summary."""
+        
         metrics = await self.collect_all_metrics(start_date, end_date)
         
         summary = {

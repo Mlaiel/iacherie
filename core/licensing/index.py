@@ -13,7 +13,8 @@ Toute utilisation, copie, modification ou distribution sans autorisation écrite
 Les contrevenants s'exposent à des poursuites judiciaires.
 
 Contact autorisé: mlaiel@live.de
-"""from typing import Dict, Any, Optional, List
+"""
+from typing import Dict, Any, Optional, List
 import logging
 from datetime import datetime
 
@@ -43,17 +44,21 @@ logger = logging.getLogger(__name__)
 
 
 class LicensingSystemIndex:
-    """    Point d'entrée principal du système de licensing IA Influencer Agent.
+    """
+    Point d'entrée principal du système de licensing IA Influencer Agent.
     
     Coordonne tous les composants du système de licensing pour fournir
     une interface unifiée et professionnelle.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialise le système de licensing complet.
+        """
+        Initialise le système de licensing complet.
         
         Args:
             config: Configuration du système de licensing
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self.is_initialized = False
         
         # Composants principaux
@@ -87,11 +92,13 @@ class LicensingSystemIndex:
         logger.info("LicensingSystemIndex initialized")
     
     async def initialize(self) -> bool:
-        """        Initialise tous les composants du système de licensing.
+        """
+        Initialise tous les composants du système de licensing.
         
         Returns:
             bool: True si l'initialisation est réussie
-        """        try:
+        """
+        try:
             logger.info("Initializing Licensing System components...")
             
             # Initialisation des composants principaux
@@ -134,7 +141,8 @@ class LicensingSystemIndex:
             return False
     
     async def _initialize_components(self):
-        """Initialise les composants individuels."""        components = [
+        """Initialise les composants individuels."""
+        components = [
             self.licensing_engine,
             self.contract_generator,
             self.agreement_manager,
@@ -167,7 +175,8 @@ class LicensingSystemIndex:
     
     async def create_license(self, content_id: str, creator_id: str, 
                            license_type: str, terms: Dict[str, Any]) -> Dict[str, Any]:
-        """        Crée une nouvelle licence pour du contenu.
+        """
+        Crée une nouvelle licence pour du contenu.
         
         Args:
             content_id: ID du contenu
@@ -177,7 +186,8 @@ class LicensingSystemIndex:
             
         Returns:
             Dict contenant les détails de la licence créée
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             await self.initialize()
         
         # Validation des permissions
@@ -217,7 +227,8 @@ class LicensingSystemIndex:
         return license_data
     
     async def process_usage(self, license_id: str, usage_data: Dict[str, Any]) -> Dict[str, Any]:
-        """        Traite l'utilisation d'une licence.
+        """
+        Traite l'utilisation d'une licence.
         
         Args:
             license_id: ID de la licence
@@ -225,7 +236,8 @@ class LicensingSystemIndex:
             
         Returns:
             Dict contenant les détails du traitement
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             await self.initialize()
         
         # Suivi de l'utilisation
@@ -261,7 +273,8 @@ class LicensingSystemIndex:
     
     async def find_collaboration_opportunities(self, creator_id: str, 
                                              content_type: str) -> List[Dict[str, Any]]:
-        """        Trouve des opportunités de collaboration pour un créateur.
+        """
+        Trouve des opportunités de collaboration pour un créateur.
         
         Args:
             creator_id: ID du créateur
@@ -269,14 +282,16 @@ class LicensingSystemIndex:
             
         Returns:
             Liste des opportunités de collaboration
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             await self.initialize()
         
         return await self.collaboration_hub.find_opportunities(creator_id, content_type)
     
     async def get_licensing_analytics(self, creator_id: str, 
                                     period: str = 'month') -> Dict[str, Any]:
-        """        Récupère les analyses de licensing pour un créateur.
+        """
+        Récupère les analyses de licensing pour un créateur.
         
         Args:
             creator_id: ID du créateur
@@ -284,14 +299,16 @@ class LicensingSystemIndex:
             
         Returns:
             Dict contenant les analyses
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             await self.initialize()
         
         return await self.analytics.get_creator_analytics(creator_id, period)
     
     async def forecast_revenue(self, creator_id: str, 
                              forecast_period: int = 12) -> Dict[str, Any]:
-        """        Génère des prévisions de revenus pour un créateur.
+        """
+        Génère des prévisions de revenus pour un créateur.
         
         Args:
             creator_id: ID du créateur
@@ -299,7 +316,8 @@ class LicensingSystemIndex:
             
         Returns:
             Dict contenant les prévisions
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             await self.initialize()
         
         return await self.revenue_forecasting.forecast_creator_revenue(
@@ -307,24 +325,28 @@ class LicensingSystemIndex:
         )
     
     async def sync_cross_platform(self, creator_id: str) -> Dict[str, Any]:
-        """        Synchronise les licences sur toutes les plateformes.
+        """
+        Synchronise les licences sur toutes les plateformes.
         
         Args:
             creator_id: ID du créateur
             
         Returns:
             Dict contenant le statut de synchronisation
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             await self.initialize()
         
         return await self.cross_platform_sync.sync_creator_licenses(creator_id)
     
     async def get_system_health(self) -> Dict[str, Any]:
-        """        Récupère l'état de santé du système de licensing.
+        """
+        Récupère l'état de santé du système de licensing.
         
         Returns:
             Dict contenant les métriques de santé
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             return {'status': 'not_initialized'}
         
         performance_metrics = await self.performance_optimizer.get_system_metrics()
@@ -368,22 +390,29 @@ licensing_system = LicensingSystemIndex()
 # Fonctions d'API simplifiées pour l'accès externe
 async def create_license(content_id: str, creator_id: str, 
                         license_type: str, terms: Dict[str, Any]) -> Dict[str, Any]:
-    """API simplifiée pour créer une licence."""    return await licensing_system.create_license(content_id, creator_id, license_type, terms)
+    """API simplifiée pour créer une licence."""
+    return await licensing_system.create_license(content_id, creator_id, license_type, terms)
 
 async def process_usage(license_id: str, usage_data: Dict[str, Any]) -> Dict[str, Any]:
-    """API simplifiée pour traiter l'utilisation d'une licence."""    return await licensing_system.process_usage(license_id, usage_data)
+    """API simplifiée pour traiter l'utilisation d'une licence."""
+    return await licensing_system.process_usage(license_id, usage_data)
 
 async def find_collaborations(creator_id: str, content_type: str) -> List[Dict[str, Any]]:
-    """API simplifiée pour trouver des collaborations."""    return await licensing_system.find_collaboration_opportunities(creator_id, content_type)
+    """API simplifiée pour trouver des collaborations."""
+    return await licensing_system.find_collaboration_opportunities(creator_id, content_type)
 
 async def get_analytics(creator_id: str, period: str = 'month') -> Dict[str, Any]:
-    """API simplifiée pour récupérer les analyses."""    return await licensing_system.get_licensing_analytics(creator_id, period)
+    """API simplifiée pour récupérer les analyses."""
+    return await licensing_system.get_licensing_analytics(creator_id, period)
 
 async def forecast_revenue(creator_id: str, forecast_period: int = 12) -> Dict[str, Any]:
-    """API simplifiée pour les prévisions de revenus."""    return await licensing_system.forecast_revenue(creator_id, forecast_period)
+    """API simplifiée pour les prévisions de revenus."""
+    return await licensing_system.forecast_revenue(creator_id, forecast_period)
 
 async def sync_platforms(creator_id: str) -> Dict[str, Any]:
-    """API simplifiée pour synchroniser les plateformes."""    return await licensing_system.sync_cross_platform(creator_id)
+    """API simplifiée pour synchroniser les plateformes."""
+    return await licensing_system.sync_cross_platform(creator_id)
 
 async def get_health() -> Dict[str, Any]:
-    """API simplifiée pour l'état de santé du système."""    return await licensing_system.get_system_health()
+    """API simplifiée pour l'état de santé du système."""
+    return await licensing_system.get_system_health()

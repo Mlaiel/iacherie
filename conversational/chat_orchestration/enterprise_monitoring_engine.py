@@ -25,7 +25,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code and concept are proprietary intellectual property of Fahed Mlaiel.
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import uuid
 import json
@@ -52,7 +53,8 @@ from backend.conversational.chat_orchestration.advanced_content_protection impor
 
 
 class MonitoringType(Enum):
-    """Types of monitoring activities"""    PERFORMANCE = "performance"
+    """Types of monitoring activities"""
+    PERFORMANCE = "performance"
     SECURITY = "security"
     CONTENT = "content"
     ENGAGEMENT = "engagement"
@@ -63,7 +65,8 @@ class MonitoringType(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    INFO = "info"
+    """Alert severity levels"""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -71,7 +74,8 @@ class AlertSeverity(Enum):
 
 
 class MonitoringStatus(Enum):
-    """Monitoring system status"""    ACTIVE = "active"
+    """Monitoring system status"""
+    ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
     MAINTENANCE = "maintenance"
@@ -79,7 +83,8 @@ class MonitoringStatus(Enum):
 
 
 class EventType(Enum):
-    """Types of monitored events"""    CONTENT_UPLOAD = "content_upload"
+    """Types of monitored events"""
+    CONTENT_UPLOAD = "content_upload"
     CONTENT_VIEW = "content_view"
     CONTENT_SHARE = "content_share"
     ENGAGEMENT_SPIKE = "engagement_spike"
@@ -92,7 +97,8 @@ class EventType(Enum):
 
 
 class NotificationChannel(Enum):
-    """Notification delivery channels"""    EMAIL = "email"
+    """Notification delivery channels"""
+    EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
     WEBHOOK = "webhook"
@@ -104,7 +110,8 @@ class NotificationChannel(Enum):
 
 @dataclass
 class MonitoringEvent:
-    """Individual monitoring event"""    event_id: str
+    """Individual monitoring event"""
+    event_id: str
     event_type: EventType
     monitoring_type: MonitoringType
     severity: AlertSeverity
@@ -126,7 +133,8 @@ class MonitoringEvent:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""    rule_id: str
+    """Alert rule configuration"""
+    rule_id: str
     name: str
     monitoring_type: MonitoringType
     event_types: List[EventType]
@@ -144,7 +152,8 @@ class AlertRule:
 
 @dataclass
 class MonitoringMetrics:
-    """System monitoring metrics"""    timestamp: datetime
+    """System monitoring metrics"""
+    timestamp: datetime
     monitoring_type: MonitoringType
     metrics: Dict[str, float]
     creator_id: Optional[str] = None
@@ -155,7 +164,8 @@ class MonitoringMetrics:
 
 @dataclass
 class SystemHealth:
-    """Overall system health status"""    status: MonitoringStatus
+    """Overall system health status"""
+    status: MonitoringStatus
     health_score: float  # 0.0 to 1.0
     active_alerts: int
     critical_alerts: int
@@ -168,7 +178,8 @@ class SystemHealth:
 
 @dataclass
 class CreatorInsights:
-    """Creator-specific insights and recommendations"""    creator_id: str
+    """Creator-specific insights and recommendations"""
+    creator_id: str
     content_performance: Dict[str, float]
     engagement_metrics: Dict[str, float]
     revenue_metrics: Dict[str, float]
@@ -180,7 +191,8 @@ class CreatorInsights:
 
 
 class EnterpriseMonitoringEngine:
-    """    Enterprise-grade monitoring system providing real-time tracking of content
+    """
+    Enterprise-grade monitoring system providing real-time tracking of content
     performance, threat detection, platform analysis, and automated response
     coordination across all creator formats and distribution channels.
     
@@ -191,7 +203,8 @@ class EnterpriseMonitoringEngine:
     - Comprehensive analytics and business intelligence dashboard
     - Creator performance optimization recommendations
     - Enterprise-grade alerting and notification system
-    """    
+    """
+    
     def __init__(
         self,
         database_manager: DatabaseManager,
@@ -259,7 +272,8 @@ class EnterpriseMonitoringEngine:
         notification_channels: List[NotificationChannel] = None,
         escalation_config: Optional[Dict[str, Any]] = None
     ) -> AlertRule:
-        """        Create new alert rule
+        """
+        Create new alert rule
         
         Args:
             name: Rule name
@@ -272,7 +286,8 @@ class EnterpriseMonitoringEngine:
             
         Returns:
             AlertRule created
-        """        
+        """
+        
         if notification_channels is None:
             notification_channels = [NotificationChannel.EMAIL, NotificationChannel.IN_APP]
         
@@ -308,7 +323,8 @@ class EnterpriseMonitoringEngine:
         data: Optional[Dict[str, Any]] = None,
         metrics: Optional[Dict[str, float]] = None
     ) -> MonitoringEvent:
-        """        Log monitoring event
+        """
+        Log monitoring event
         
         Args:
             event_type: Type of event
@@ -324,7 +340,8 @@ class EnterpriseMonitoringEngine:
             
         Returns:
             MonitoringEvent created
-        """        
+        """
+        
         event = MonitoringEvent(
             event_id=str(uuid.uuid4()),
             event_type=event_type,
@@ -363,14 +380,16 @@ class EnterpriseMonitoringEngine:
         platform: str,
         metrics: Dict[str, float]
     ) -> None:
-        """        Monitor content performance metrics
+        """
+        Monitor content performance metrics
         
         Args:
             creator_id: Creator identifier
             content_id: Content identifier
             platform: Platform name
             metrics: Performance metrics
-        """        
+        """
+        
         try:
             # Store metrics
             monitoring_metrics = MonitoringMetrics(
@@ -425,12 +444,14 @@ class EnterpriseMonitoringEngine:
         creator_id: str,
         threat_data: Dict[str, Any]
     ) -> None:
-        """        Monitor security threats and violations
+        """
+        Monitor security threats and violations
         
         Args:
             creator_id: Creator identifier
             threat_data: Threat information
-        """        
+        """
+        
         try:
             severity = self._calculate_threat_severity(threat_data)
             
@@ -457,7 +478,8 @@ class EnterpriseMonitoringEngine:
         creator_id: str,
         timeframe_days: int = 30
     ) -> CreatorInsights:
-        """        Generate comprehensive insights for creator
+        """
+        Generate comprehensive insights for creator
         
         Args:
             creator_id: Creator identifier
@@ -465,7 +487,8 @@ class EnterpriseMonitoringEngine:
             
         Returns:
             CreatorInsights with recommendations
-        """        
+        """
+        
         try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=timeframe_days)
@@ -528,11 +551,13 @@ class EnterpriseMonitoringEngine:
             raise
     
     async def get_system_health(self) -> SystemHealth:
-        """        Get overall system health status
+        """
+        Get overall system health status
         
         Returns:
             SystemHealth status
-        """        
+        """
+        
         try:
             # Count active alerts
             active_alerts = len([e for e in self.active_events.values() if not e.resolved])
@@ -576,7 +601,8 @@ class EnterpriseMonitoringEngine:
     
     # Private helper methods
     async def _check_alert_rules(self, event: MonitoringEvent) -> None:
-        """Check event against alert rules"""        
+        """Check event against alert rules"""
+        
         for rule in self.alert_rules.values():
             if not rule.enabled:
                 continue
@@ -591,7 +617,8 @@ class EnterpriseMonitoringEngine:
                 await self._trigger_alert(event, rule)
     
     async def _event_matches_rule(self, event: MonitoringEvent, rule: AlertRule) -> bool:
-        """Check if event matches alert rule"""        
+        """Check if event matches alert rule"""
+        
         # Check monitoring type
         if event.monitoring_type != rule.monitoring_type:
             return False
@@ -619,7 +646,8 @@ class EnterpriseMonitoringEngine:
         return True
     
     async def _check_rule_conditions(self, event: MonitoringEvent, conditions: Dict[str, Any]) -> bool:
-        """Check custom rule conditions"""        
+        """Check custom rule conditions"""
+        
         try:
             for condition_key, condition_value in conditions.items():
                 if condition_key in event.metrics:
@@ -643,7 +671,8 @@ class EnterpriseMonitoringEngine:
             return False
     
     def _is_rule_in_cooldown(self, rule: AlertRule) -> bool:
-        """Check if rule is in cooldown period"""        
+        """Check if rule is in cooldown period"""
+        
         if not rule.last_triggered:
             return False
         
@@ -651,7 +680,8 @@ class EnterpriseMonitoringEngine:
         return datetime.utcnow() < cooldown_end
     
     async def _trigger_alert(self, event: MonitoringEvent, rule: AlertRule) -> None:
-        """Trigger alert for rule"""        
+        """Trigger alert for rule"""
+        
         try:
             # Update rule trigger time
             rule.last_triggered = datetime.utcnow()
@@ -677,7 +707,8 @@ class EnterpriseMonitoringEngine:
         rule: AlertRule,
         channel: NotificationChannel
     ) -> None:
-        """Send notification through specific channel"""        
+        """Send notification through specific channel"""
+        
         try:
             notification_data = {
                 "alert_rule": rule.name,
@@ -710,7 +741,8 @@ class EnterpriseMonitoringEngine:
         platform: str,
         current_metrics: Dict[str, float]
     ) -> List[Dict[str, Any]]:
-        """Detect performance anomalies using ML"""        
+        """Detect performance anomalies using ML"""
+        
         anomalies = []
         
         try:
@@ -746,7 +778,8 @@ class EnterpriseMonitoringEngine:
         return anomalies
     
     def _calculate_threat_severity(self, threat_data: Dict[str, Any]) -> AlertSeverity:
-        """Calculate threat severity based on data"""        
+        """Calculate threat severity based on data"""
+        
         threat_type = threat_data.get("type", "unknown")
         confidence = threat_data.get("confidence", 0.5)
         impact = threat_data.get("estimated_impact", 0.5)
@@ -764,7 +797,8 @@ class EnterpriseMonitoringEngine:
             return AlertSeverity.INFO
     
     async def _escalate_security_threat(self, creator_id: str, threat_data: Dict[str, Any]) -> None:
-        """Escalate critical security threat"""        
+        """Escalate critical security threat"""
+        
         try:
             # Auto-trigger protection measures
             if self.protection:
@@ -786,7 +820,8 @@ class EnterpriseMonitoringEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, float]:
-        """Analyze content performance metrics"""        
+        """Analyze content performance metrics"""
+        
         # Placeholder implementation
         return {
             "avg_views": 1250.0,
@@ -802,7 +837,8 @@ class EnterpriseMonitoringEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, float]:
-        """Analyze engagement metrics"""        
+        """Analyze engagement metrics"""
+        
         return {
             "likes_per_post": 89.5,
             "comments_per_post": 12.3,
@@ -817,7 +853,8 @@ class EnterpriseMonitoringEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, float]:
-        """Analyze revenue metrics"""        
+        """Analyze revenue metrics"""
+        
         return {
             "total_revenue": 2450.75,
             "revenue_per_view": 0.002,
@@ -832,7 +869,8 @@ class EnterpriseMonitoringEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, List[float]]:
-        """Calculate growth trends"""        
+        """Calculate growth trends"""
+        
         return {
             "daily_views": [100, 120, 95, 150, 200, 180, 220],
             "weekly_followers": [500, 520, 545, 580, 620],
@@ -846,7 +884,8 @@ class EnterpriseMonitoringEngine:
         engagement_metrics: Dict[str, float],
         revenue_metrics: Dict[str, float]
     ) -> List[str]:
-        """Identify optimization opportunities"""        
+        """Identify optimization opportunities"""
+        
         opportunities = []
         
         if engagement_metrics.get("engagement_rate", 0) < 0.03:
@@ -862,7 +901,8 @@ class EnterpriseMonitoringEngine:
     
     # System health methods
     async def _calculate_health_score(self) -> float:
-        """Calculate overall system health score"""        
+        """Calculate overall system health score"""
+        
         # Base score
         score = 1.0
         
@@ -880,11 +920,13 @@ class EnterpriseMonitoringEngine:
         return max(0.0, score)
     
     async def _calculate_uptime_percentage(self) -> float:
-        """Calculate system uptime percentage"""        # Placeholder implementation
+        """Calculate system uptime percentage"""
+        # Placeholder implementation
         return 99.95
     
     async def _identify_system_issues(self) -> List[str]:
-        """Identify current system issues"""        
+        """Identify current system issues"""
+        
         issues = []
         
         # Check for high alert volume
@@ -912,7 +954,8 @@ class EnterpriseMonitoringEngine:
         health_score: float,
         issues: List[str]
     ) -> List[str]:
-        """Generate system recommendations"""        
+        """Generate system recommendations"""
+        
         recommendations = []
         
         if health_score < 0.8:
@@ -927,28 +970,34 @@ class EnterpriseMonitoringEngine:
     
     # Storage methods
     async def _store_alert_rule(self, rule: AlertRule) -> None:
-        """Store alert rule in database"""        # Implementation would insert into database
+        """Store alert rule in database"""
+        # Implementation would insert into database
         pass
     
     async def _update_alert_rule(self, rule: AlertRule) -> None:
-        """Update alert rule in database"""        # Implementation would update database
+        """Update alert rule in database"""
+        # Implementation would update database
         pass
     
     async def _store_monitoring_event(self, event: MonitoringEvent) -> None:
-        """Store monitoring event in database"""        # Implementation would insert into database
+        """Store monitoring event in database"""
+        # Implementation would insert into database
         pass
     
     async def _store_monitoring_metrics(self, metrics: MonitoringMetrics) -> None:
-        """Store monitoring metrics in database"""        # Implementation would insert into database
+        """Store monitoring metrics in database"""
+        # Implementation would insert into database
         pass
     
     async def _store_creator_insights(self, insights: CreatorInsights) -> None:
-        """Store creator insights in database"""        # Implementation would insert into database
+        """Store creator insights in database"""
+        # Implementation would insert into database
         pass
     
     # Communication methods
     async def _broadcast_event(self, event: MonitoringEvent) -> None:
-        """Broadcast event to WebSocket connections"""        
+        """Broadcast event to WebSocket connections"""
+        
         if not self.websocket_connections:
             return
         
@@ -977,23 +1026,28 @@ class EnterpriseMonitoringEngine:
             self.websocket_connections.remove(ws)
     
     async def _send_email_notification(self, data: Dict[str, Any]) -> None:
-        """Send email notification"""        # Implementation would send actual email
+        """Send email notification"""
+        # Implementation would send actual email
         pass
     
     async def _send_sms_notification(self, data: Dict[str, Any]) -> None:
-        """Send SMS notification"""        # Implementation would send actual SMS
+        """Send SMS notification"""
+        # Implementation would send actual SMS
         pass
     
     async def _send_webhook_notification(self, data: Dict[str, Any]) -> None:
-        """Send webhook notification"""        # Implementation would send HTTP webhook
+        """Send webhook notification"""
+        # Implementation would send HTTP webhook
         pass
     
     async def _send_slack_notification(self, data: Dict[str, Any]) -> None:
-        """Send Slack notification"""        # Implementation would send to Slack
+        """Send Slack notification"""
+        # Implementation would send to Slack
         pass
     
     async def _send_emergency_notification(self, creator_id: str, threat_data: Dict[str, Any]) -> None:
-        """Send emergency notification for critical threats"""        # Implementation would send high-priority notifications
+        """Send emergency notification for critical threats"""
+        # Implementation would send high-priority notifications
         pass
     
     # Data retrieval methods
@@ -1004,7 +1058,8 @@ class EnterpriseMonitoringEngine:
         platform: str,
         days: int
     ) -> List[MonitoringMetrics]:
-        """Get historical metrics for analysis"""        # Implementation would query database
+        """Get historical metrics for analysis"""
+        # Implementation would query database
         return []
     
     async def _get_creator_threat_alerts(
@@ -1013,11 +1068,13 @@ class EnterpriseMonitoringEngine:
         start_date: datetime,
         end_date: datetime
     ) -> List[MonitoringEvent]:
-        """Get threat alerts for creator"""        # Implementation would query database
+        """Get threat alerts for creator"""
+        # Implementation would query database
         return []
     
     async def _get_system_performance_metrics(self) -> Dict[str, float]:
-        """Get system performance metrics"""        return {
+        """Get system performance metrics"""
+        return {
             "cpu_usage": 45.2,
             "memory_usage": 62.8,
             "disk_usage": 34.5,
@@ -1031,7 +1088,8 @@ class EnterpriseMonitoringEngine:
         content_performance: Dict[str, float],
         engagement_metrics: Dict[str, float]
     ) -> Dict[str, List[str]]:
-        """Generate platform-specific recommendations"""        
+        """Generate platform-specific recommendations"""
+        
         return {
             "youtube": [
                 "Optimize video thumbnails for higher CTR",
@@ -1049,7 +1107,8 @@ class EnterpriseMonitoringEngine:
     
     # Service initialization
     async def _initialize_monitoring_services(self) -> None:
-        """Initialize monitoring services"""        
+        """Initialize monitoring services"""
+        
         try:
             # Start health check task
             self.monitoring_tasks["health_check"] = asyncio.create_task(
@@ -1070,7 +1129,8 @@ class EnterpriseMonitoringEngine:
             self.logger.error(f"Failed to initialize monitoring services: {str(e)}")
     
     async def _health_check_loop(self) -> None:
-        """Continuous health check loop"""        
+        """Continuous health check loop"""
+        
         while self.monitoring_status == MonitoringStatus.ACTIVE:
             try:
                 # Perform health checks
@@ -1095,7 +1155,8 @@ class EnterpriseMonitoringEngine:
                 await asyncio.sleep(60)
     
     async def _metrics_collection_loop(self) -> None:
-        """Continuous metrics collection loop"""        
+        """Continuous metrics collection loop"""
+        
         while self.monitoring_status == MonitoringStatus.ACTIVE:
             try:
                 # Collect system metrics
@@ -1118,7 +1179,8 @@ class EnterpriseMonitoringEngine:
                 await asyncio.sleep(60)
     
     async def _initialize_anomaly_detectors(self) -> None:
-        """Initialize ML models for anomaly detection"""        
+        """Initialize ML models for anomaly detection"""
+        
         try:
             # Initialize different detectors for different metric types
             # Implementation would load actual ML models
@@ -1135,16 +1197,20 @@ class EnterpriseMonitoringEngine:
     
     # Public interface methods
     def get_monitoring_metrics(self) -> Dict[str, Any]:
-        """Get current monitoring metrics"""        return self.system_metrics.copy()
+        """Get current monitoring metrics"""
+        return self.system_metrics.copy()
     
     def get_active_events_count(self) -> int:
-        """Get count of active monitoring events"""        return len([e for e in self.active_events.values() if not e.resolved])
+        """Get count of active monitoring events"""
+        return len([e for e in self.active_events.values() if not e.resolved])
     
     def get_alert_rules_count(self) -> int:
-        """Get count of configured alert rules"""        return len(self.alert_rules)
+        """Get count of configured alert rules"""
+        return len(self.alert_rules)
     
     async def resolve_monitoring_event(self, event_id: str, resolution_notes: str) -> bool:
-        """Mark monitoring event as resolved"""        
+        """Mark monitoring event as resolved"""
+        
         if event_id in self.active_events:
             event = self.active_events[event_id]
             event.resolved = True

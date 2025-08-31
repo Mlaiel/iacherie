@@ -11,7 +11,8 @@ CRITICAL WARNING: Unauthorized use, copying, or distribution strictly prohibited
 
 Business Logic Integration:
 Content Upload → IA Protection → Quality Analysis → SEO Optimization → Platform Distribution → Performance Tracking
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
 from dataclasses import dataclass, field
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Types of content supported by the platform"""    AUDIO_MUSIC = "audio_music"
+    """Types of content supported by the platform"""
+    AUDIO_MUSIC = "audio_music"
     VIDEO_SHORT = "video_short"
     VIDEO_LONG = "video_long"
     IMAGE_PHOTO = "image_photo"
@@ -44,7 +46,8 @@ class ContentType(Enum):
 
 
 class ContentStatus(Enum):
-    """Content lifecycle status"""    UPLOADED = "uploaded"
+    """Content lifecycle status"""
+    UPLOADED = "uploaded"
     PROCESSING = "processing"
     PROTECTED = "protected"
     SEO_OPTIMIZED = "seo_optimized"
@@ -57,7 +60,8 @@ class ContentStatus(Enum):
 
 
 class PlatformType(Enum):
-    """Supported platform types"""    SPOTIFY = "spotify"
+    """Supported platform types"""
+    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -72,7 +76,8 @@ class PlatformType(Enum):
 
 
 class PerformanceMetricType(Enum):
-    """Types of performance metrics"""    REACH = "reach"
+    """Types of performance metrics"""
+    REACH = "reach"
     ENGAGEMENT = "engagement"
     CONVERSION = "conversion"
     RETENTION = "retention"
@@ -84,7 +89,8 @@ class PerformanceMetricType(Enum):
 
 @dataclass
 class ContentPerformanceMetrics:
-    """Comprehensive content performance metrics"""    content_id: str
+    """Comprehensive content performance metrics"""
+    content_id: str
     content_type: ContentType
     creator_id: str
     title: str
@@ -137,7 +143,8 @@ class ContentPerformanceMetrics:
 
 @dataclass
 class PlatformPerformanceTracker:
-    """Platform-specific performance tracking"""    platform: PlatformType
+    """Platform-specific performance tracking"""
+    platform: PlatformType
     content_id: str
     
     # Platform-specific metrics
@@ -166,7 +173,8 @@ class PlatformPerformanceTracker:
 
 @dataclass
 class ViralityAnalyzer:
-    """Virality analysis and prediction"""    content_id: str
+    """Virality analysis and prediction"""
+    content_id: str
     virality_score: float
     viral_threshold: float
     
@@ -191,7 +199,8 @@ class ViralityAnalyzer:
 
 @dataclass
 class ContentOptimizationEngine:
-    """Content optimization recommendations"""    content_id: str
+    """Content optimization recommendations"""
+    content_id: str
     
     # SEO optimization
     seo_recommendations: List[Dict[str, Any]]
@@ -222,7 +231,8 @@ class ContentOptimizationEngine:
 
 @dataclass
 class CrossPlatformAnalytics:
-    """Cross-platform performance analytics"""    content_id: str
+    """Cross-platform performance analytics"""
+    content_id: str
     
     # Platform distribution
     platforms_published: List[PlatformType]
@@ -247,7 +257,8 @@ class CrossPlatformAnalytics:
 
 @dataclass
 class ContentLifecycleMetrics:
-    """Content lifecycle and performance evolution"""    content_id: str
+    """Content lifecycle and performance evolution"""
+    content_id: str
     
     # Lifecycle stages
     lifecycle_stage: str
@@ -273,9 +284,11 @@ class ContentLifecycleMetrics:
 
 
 class ContentMetricsCollector:
-    """    Advanced content performance metrics collector.
+    """
+    Advanced content performance metrics collector.
     Tracks content performance across all platforms and provides comprehensive analytics.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.content_cache = {}
@@ -307,7 +320,8 @@ class ContentMetricsCollector:
         }
     
     async def initialize(self) -> None:
-        """Initialize the content metrics collector"""        try:
+        """Initialize the content metrics collector"""
+        try:
             self.logger.info("Initializing Content Performance Metrics Collector...")
             
             # Initialize platform connectors
@@ -326,7 +340,8 @@ class ContentMetricsCollector:
             raise
     
     async def collect_metrics(self, timeframe: Optional[timedelta] = None) -> Dict[str, Any]:
-        """Collect comprehensive content performance metrics"""        timeframe = timeframe or timedelta(hours=1)
+        """Collect comprehensive content performance metrics"""
+        timeframe = timeframe or timedelta(hours=1)
         end_time = datetime.now()
         start_time = end_time - timeframe
         
@@ -376,7 +391,8 @@ class ContentMetricsCollector:
             raise
     
     async def _collect_content_performance(self, start_time: datetime, end_time: datetime) -> List[ContentPerformanceMetrics]:
-        """Collect individual content performance metrics"""        try:
+        """Collect individual content performance metrics"""
+        try:
             # Simulate content performance data collection
             content_performance = []
             
@@ -466,7 +482,8 @@ class ContentMetricsCollector:
             raise
     
     async def _collect_platform_performance(self, start_time: datetime, end_time: datetime) -> List[PlatformPerformanceTracker]:
-        """Collect platform-specific performance metrics"""        try:
+        """Collect platform-specific performance metrics"""
+        try:
             platform_performance = []
             
             platforms = list(PlatformType)
@@ -511,7 +528,8 @@ class ContentMetricsCollector:
             raise
     
     async def _analyze_virality_patterns(self, start_time: datetime, end_time: datetime) -> List[ViralityAnalyzer]:
-        """Analyze content virality patterns"""        try:
+        """Analyze content virality patterns"""
+        try:
             virality_analysis = []
             
             for i in range(10):  # Analyze 10 content pieces for virality
@@ -550,7 +568,8 @@ class ContentMetricsCollector:
             raise
     
     async def _generate_optimization_recommendations(self, start_time: datetime, end_time: datetime) -> List[ContentOptimizationEngine]:
-        """Generate content optimization recommendations"""        try:
+        """Generate content optimization recommendations"""
+        try:
             optimization_recommendations = []
             
             for i in range(8):  # Generate recommendations for 8 content pieces
@@ -604,7 +623,8 @@ class ContentMetricsCollector:
             raise
     
     async def _analyze_cross_platform_performance(self, start_time: datetime, end_time: datetime) -> List[CrossPlatformAnalytics]:
-        """Analyze cross-platform performance"""        try:
+        """Analyze cross-platform performance"""
+        try:
             cross_platform_analytics = []
             
             for i in range(6):  # Analyze 6 content pieces for cross-platform performance
@@ -657,7 +677,8 @@ class ContentMetricsCollector:
             raise
     
     async def _track_content_lifecycle(self, start_time: datetime, end_time: datetime) -> List[ContentLifecycleMetrics]:
-        """Track content lifecycle metrics"""        try:
+        """Track content lifecycle metrics"""
+        try:
             lifecycle_metrics = []
             
             for i in range(5):  # Track lifecycle for 5 content pieces
@@ -707,7 +728,8 @@ class ContentMetricsCollector:
             raise
     
     async def _generate_performance_summary(self, metrics_list: List[Any]) -> Dict[str, Any]:
-        """Generate performance metrics summary"""        try:
+        """Generate performance metrics summary"""
+        try:
             content_performance, platform_performance, virality_analysis = metrics_list
             
             # Calculate summary statistics
@@ -742,7 +764,8 @@ class ContentMetricsCollector:
             return {}
     
     async def _calculate_overall_performance_score(self, metrics_list: List[Any]) -> float:
-        """Calculate overall content performance score"""        try:
+        """Calculate overall content performance score"""
+        try:
             content_performance, platform_performance, virality_analysis = metrics_list
             
             # Weighted scoring of different performance aspects
@@ -762,7 +785,8 @@ class ContentMetricsCollector:
             return 0.0
     
     def _get_base_views_for_content_type(self, content_type: ContentType) -> int:
-        """Get realistic base views for content type"""        base_views_map = {
+        """Get realistic base views for content type"""
+        base_views_map = {
             ContentType.VIDEO_SHORT: np.random.randint(5000, 50000),
             ContentType.AUDIO_MUSIC: np.random.randint(2000, 30000),
             ContentType.IMAGE_PHOTO: np.random.randint(1000, 20000),
@@ -773,7 +797,8 @@ class ContentMetricsCollector:
         return base_views_map.get(content_type, np.random.randint(1000, 20000))
     
     def _get_engagement_rate_for_content_type(self, content_type: ContentType) -> float:
-        """Get realistic engagement rate for content type"""        engagement_map = {
+        """Get realistic engagement rate for content type"""
+        engagement_map = {
             ContentType.VIDEO_SHORT: np.random.uniform(0.08, 0.15),
             ContentType.AUDIO_MUSIC: np.random.uniform(0.05, 0.12),
             ContentType.IMAGE_PHOTO: np.random.uniform(0.03, 0.08),
@@ -784,7 +809,8 @@ class ContentMetricsCollector:
         return engagement_map.get(content_type, np.random.uniform(0.03, 0.10))
     
     async def _update_prometheus_metrics(self, metrics: Dict[str, Any]) -> None:
-        """Update Prometheus metrics with performance data"""        try:
+        """Update Prometheus metrics with performance data"""
+        try:
             # Update content performance metrics
             content_performance = metrics.get("content_performance", [])
             for content in content_performance:
@@ -821,31 +847,37 @@ class ContentMetricsCollector:
             self.logger.error(f"Failed to update Prometheus metrics: {e}")
     
     async def _initialize_platform_connectors(self) -> None:
-        """Initialize platform API connectors"""        # In production, this would initialize API clients for each platform
+        """Initialize platform API connectors"""
+        # In production, this would initialize API clients for each platform
         platforms = list(PlatformType)
         for platform in platforms:
             self.platform_connectors[platform] = f"{platform.value}_connector_initialized"
     
     async def _setup_content_tracking(self) -> None:
-        """Setup content tracking systems"""        # In production, this would setup content tracking and monitoring
+        """Setup content tracking systems"""
+        # In production, this would setup content tracking and monitoring
         pass
     
     async def _initialize_quality_assessment(self) -> None:
-        """Initialize content quality assessment systems"""        # In production, this would initialize AI quality assessment models
+        """Initialize content quality assessment systems"""
+        # In production, this would initialize AI quality assessment models
         pass
 
 
 class ContentPerformanceAnalyzer:
-    """    Advanced analytics engine for content performance data.
+    """
+    Advanced analytics engine for content performance data.
     Provides insights, optimization recommendations, and performance predictions.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.analysis_models = {}
         self.performance_patterns = {}
     
     async def initialize(self) -> None:
-        """Initialize the content performance analyzer"""        try:
+        """Initialize the content performance analyzer"""
+        try:
             self.logger.info("Initializing Content Performance Analyzer...")
             
             # Initialize analysis models
@@ -861,7 +893,8 @@ class ContentPerformanceAnalyzer:
             raise
     
     async def analyze(self, metrics_data: Dict[str, Any], analysis_type: str = "comprehensive") -> Dict[str, Any]:
-        """Perform comprehensive analysis of content performance metrics"""        try:
+        """Perform comprehensive analysis of content performance metrics"""
+        try:
             self.logger.info(f"Performing {analysis_type} analysis of content performance")
             
             analysis_results = {
@@ -883,7 +916,8 @@ class ContentPerformanceAnalyzer:
             raise
     
     async def _analyze_performance_patterns(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content performance patterns"""        return {
+        """Analyze content performance patterns"""
+        return {
             "high_performing_content_types": ["video_short", "remix", "collaboration"],
             "peak_performance_times": ["19:00-22:00", "12:00-14:00"],
             "engagement_patterns": {
@@ -900,7 +934,8 @@ class ContentPerformanceAnalyzer:
         }
     
     async def _identify_optimization_opportunities(self, metrics_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Identify content optimization opportunities"""        return [
+        """Identify content optimization opportunities"""
+        return [
             {
                 "opportunity": "Cross-platform format optimization",
                 "description": "Adapt content formats for each platform's algorithm",
@@ -922,7 +957,8 @@ class ContentPerformanceAnalyzer:
         ]
     
     async def _analyze_viral_content(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze viral content characteristics"""        return {
+        """Analyze viral content characteristics"""
+        return {
             "viral_content_characteristics": [
                 "trending_audio_usage",
                 "high_initial_engagement_velocity",
@@ -935,7 +971,8 @@ class ContentPerformanceAnalyzer:
         }
     
     async def _analyze_platform_effectiveness(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze platform-specific effectiveness"""        return {
+        """Analyze platform-specific effectiveness"""
+        return {
             "platform_rankings": {
                 "highest_engagement": "tiktok",
                 "best_reach": "youtube",
@@ -951,7 +988,8 @@ class ContentPerformanceAnalyzer:
         }
     
     async def _analyze_content_lifecycle(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content lifecycle patterns"""        return {
+        """Analyze content lifecycle patterns"""
+        return {
             "average_content_lifespan": "14-21 days",
             "peak_performance_window": "24-72 hours",
             "long_tail_performance": "20-30% of total engagement",
@@ -959,7 +997,8 @@ class ContentPerformanceAnalyzer:
         }
     
     async def _generate_performance_predictions(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate performance predictions"""        return {
+        """Generate performance predictions"""
+        return {
             "predicted_top_content_types": ["video_short", "remix"],
             "predicted_platform_growth": {
                 "tiktok": "15-20%",
@@ -970,7 +1009,8 @@ class ContentPerformanceAnalyzer:
         }
     
     async def _generate_strategic_recommendations(self, metrics_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate strategic content recommendations"""        return [
+        """Generate strategic content recommendations"""
+        return [
             {
                 "recommendation": "Invest in short-form video content creation",
                 "priority": "high",
@@ -992,11 +1032,13 @@ class ContentPerformanceAnalyzer:
         ]
     
     async def _initialize_analysis_models(self) -> None:
-        """Initialize analysis models"""        self.analysis_models = {
+        """Initialize analysis models"""
+        self.analysis_models = {
             "performance_prediction": "initialized",
             "viral_detection": "initialized",
             "optimization_recommendation": "initialized"
         }
     
     async def _setup_pattern_recognition(self) -> None:
-        """Setup pattern recognition systems"""        pass
+        """Setup pattern recognition systems"""
+        pass

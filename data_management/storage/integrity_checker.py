@@ -16,7 +16,8 @@ Contact: mlaiel@live.de
 - Backend Senior: Fahed Mlaiel  
 - DBA: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
-"""from typing import Dict, List, Optional, Any, Union, Set, Tuple, Callable
+"""
+from typing import Dict, List, Optional, Any, Union, Set, Tuple, Callable
 import logging
 import asyncio
 import json
@@ -36,19 +37,22 @@ from concurrent.futures import ThreadPoolExecutor
 logger = logging.getLogger(__name__)
 
 class IntegrityLevel(Enum):
-    """Data integrity levels"""    BASIC = "basic"  # Basic checksum verification
+    """Data integrity levels"""
+    BASIC = "basic"  # Basic checksum verification
     STANDARD = "standard"  # Multi-algorithm verification
     ADVANCED = "advanced"  # Deep structure analysis
     PARANOID = "paranoid"  # Comprehensive multi-layer verification
 
 class CorruptionSeverity(Enum):
-    """Corruption severity levels"""    MINOR = "minor"  # Recoverable corruption
+    """Corruption severity levels"""
+    MINOR = "minor"  # Recoverable corruption
     MAJOR = "major"  # Significant data loss
     CRITICAL = "critical"  # Complete file corruption
     CATASTROPHIC = "catastrophic"  # System-wide corruption
 
 class VerificationStatus(Enum):
-    """Verification status"""    PENDING = "pending"
+    """Verification status"""
+    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -56,7 +60,8 @@ class VerificationStatus(Enum):
     REPAIRED = "repaired"
 
 class RepairStrategy(Enum):
-    """Corruption repair strategies"""    AUTO_REPAIR = "auto_repair"
+    """Corruption repair strategies"""
+    AUTO_REPAIR = "auto_repair"
     BACKUP_RESTORE = "backup_restore"
     REDUNDANT_COPY = "redundant_copy"
     MANUAL_INTERVENTION = "manual_intervention"
@@ -64,7 +69,8 @@ class RepairStrategy(Enum):
 
 @dataclass
 class IntegrityCheckpoint:
-    """Represents an integrity checkpoint"""    checkpoint_id: str
+    """Represents an integrity checkpoint"""
+    checkpoint_id: str
     file_path: str
     file_size: int
     
@@ -93,7 +99,8 @@ class IntegrityCheckpoint:
 
 @dataclass
 class CorruptionReport:
-    """Corruption detection report"""    report_id: str
+    """Corruption detection report"""
+    report_id: str
     checkpoint_id: str
     file_path: str
     
@@ -123,7 +130,8 @@ class CorruptionReport:
 
 @dataclass
 class IntegrityConfig:
-    """Configuration for integrity checker"""    storage_root_path: str
+    """Configuration for integrity checker"""
+    storage_root_path: str
     checkpoints_directory: str
     reports_directory: str
     
@@ -152,7 +160,8 @@ class IntegrityConfig:
     report_retention_days: int = 365
 
 class IntegrityChecker:
-    """    Enterprise data integrity checker and corruption detector.
+    """
+    Enterprise data integrity checker and corruption detector.
     
     Features:
     - Multi-algorithm checksum verification
@@ -161,9 +170,11 @@ class IntegrityChecker:
     - Comprehensive reporting
     - Performance optimization
     - Scheduled verification
-    """    
+    """
+    
     def __init__(self, config: IntegrityConfig):
-        """Initialize integrity checker"""        self.config = config
+        """Initialize integrity checker"""
+        self.config = config
         self.checkpoints: Dict[str, IntegrityCheckpoint] = {}
         self.corruption_reports: Dict[str, CorruptionReport] = {}
         self.active_verifications: Set[str] = set()
@@ -199,7 +210,8 @@ class IntegrityChecker:
         logger.info("IntegrityChecker initialized successfully")
     
     def _initialize_integrity_directories(self) -> None:
-        """Initialize integrity checking directories"""        try:
+        """Initialize integrity checking directories"""
+        try:
             directories = [
                 self.config.storage_root_path,
                 self.config.checkpoints_directory,
@@ -230,7 +242,8 @@ class IntegrityChecker:
         file_path: str,
         integrity_level: Optional[IntegrityLevel] = None
     ) -> Dict[str, Any]:
-        """Create integrity checkpoint for file"""        try:
+        """Create integrity checkpoint for file"""
+        try:
             file_path_obj = Path(file_path)
             
             if not file_path_obj.exists():
@@ -308,7 +321,8 @@ class IntegrityChecker:
         checkpoint_id: Optional[str] = None,
         create_if_missing: bool = True
     ) -> Dict[str, Any]:
-        """Verify file integrity"""        try:
+        """Verify file integrity"""
+        try:
             file_path_obj = Path(file_path)
             
             if not file_path_obj.exists():
@@ -433,7 +447,8 @@ class IntegrityChecker:
         recursive: bool = True,
         integrity_level: Optional[IntegrityLevel] = None
     ) -> Dict[str, Any]:
-        """Scan directory for integrity verification"""        try:
+        """Scan directory for integrity verification"""
+        try:
             directory_path_obj = Path(directory_path)
             
             if not directory_path_obj.exists():
@@ -537,7 +552,8 @@ class IntegrityChecker:
         report_id: str,
         repair_strategy: Optional[RepairStrategy] = None
     ) -> Dict[str, Any]:
-        """Repair detected corruption"""        try:
+        """Repair detected corruption"""
+        try:
             if report_id not in self.corruption_reports:
                 return {
                     'success': False,
@@ -622,7 +638,8 @@ class IntegrityChecker:
             }
     
     async def get_integrity_report(self) -> Dict[str, Any]:
-        """Get comprehensive integrity report"""        try:
+        """Get comprehensive integrity report"""
+        try:
             # Calculate statistics
             total_checkpoints = len(self.checkpoints)
             corrupted_checkpoints = len([cp for cp in self.checkpoints.values() if cp.corruption_detected])
@@ -703,7 +720,8 @@ class IntegrityChecker:
         file_path: Path,
         integrity_level: IntegrityLevel
     ) -> Dict[str, Any]:
-        """Calculate file checksums based on integrity level"""        try:
+        """Calculate file checksums based on integrity level"""
+        try:
             checksums = {}
             
             # Always calculate basic checksums
@@ -744,7 +762,8 @@ class IntegrityChecker:
             }
     
     async def _calculate_blake2b(self, file_path: Path) -> str:
-        """Calculate BLAKE2b hash"""        try:
+        """Calculate BLAKE2b hash"""
+        try:
             blake2b_hash = hashlib.blake2b()
             
             async with aiofiles.open(file_path, 'rb') as f:
@@ -757,7 +776,8 @@ class IntegrityChecker:
             return ""
     
     async def _calculate_sha3_256(self, file_path: Path) -> str:
-        """Calculate SHA3-256 hash"""        try:
+        """Calculate SHA3-256 hash"""
+        try:
             sha3_hash = hashlib.sha3_256()
             
             async with aiofiles.open(file_path, 'rb') as f:
@@ -770,7 +790,8 @@ class IntegrityChecker:
             return ""
     
     async def _analyze_file_structure(self, file_path: Path) -> Dict[str, Any]:
-        """Analyze file structure for corruption patterns"""        try:
+        """Analyze file structure for corruption patterns"""
+        try:
             structure_info = {
                 'file_type': file_path.suffix.lower(),
                 'size': file_path.stat().st_size,
@@ -806,7 +827,8 @@ class IntegrityChecker:
             return {}
     
     async def _get_extended_attributes(self, file_path: Path) -> Dict[str, Any]:
-        """Get extended file attributes"""        try:
+        """Get extended file attributes"""
+        try:
             attributes = {}
             
             # Get basic file attributes
@@ -829,7 +851,8 @@ class IntegrityChecker:
         checkpoint: IntegrityCheckpoint,
         verification_result: Dict[str, Any]
     ) -> CorruptionReport:
-        """Create corruption report"""        report_id = f"corruption_{int(time.time())}_{hash(checkpoint.file_path) & 0xFFFF:04x}"
+        """Create corruption report"""
+        report_id = f"corruption_{int(time.time())}_{hash(checkpoint.file_path) & 0xFFFF:04x}"
         
         # Determine corruption severity
         severity = CorruptionSeverity.MINOR
@@ -869,7 +892,8 @@ class IntegrityChecker:
         return corruption_report
     
     async def _assess_repairability(self, corruption_report: CorruptionReport) -> bool:
-        """Assess if corruption is repairable"""        try:
+        """Assess if corruption is repairable"""
+        try:
             # Basic repairability heuristics
             if corruption_report.severity == CorruptionSeverity.CATASTROPHIC:
                 return False
@@ -886,7 +910,8 @@ class IntegrityChecker:
             return False
     
     async def _recommend_repair_strategy(self, corruption_report: CorruptionReport) -> RepairStrategy:
-        """Recommend repair strategy based on corruption analysis"""        try:
+        """Recommend repair strategy based on corruption analysis"""
+        try:
             if corruption_report.severity == CorruptionSeverity.CRITICAL:
                 return RepairStrategy.BACKUP_RESTORE
             
@@ -902,7 +927,8 @@ class IntegrityChecker:
             return RepairStrategy.QUARANTINE
     
     async def _start_monitoring(self) -> None:
-        """Start background monitoring"""        try:
+        """Start background monitoring"""
+        try:
             # Start scheduler
             await self.scheduler.start()
             
@@ -914,7 +940,8 @@ class IntegrityChecker:
             logger.error(f"Failed to start monitoring: {str(e)}")
     
     async def _real_time_monitor(self) -> None:
-        """Real-time file system monitoring"""        while not self.shutdown_event.is_set():
+        """Real-time file system monitoring"""
+        while not self.shutdown_event.is_set():
             try:
                 await asyncio.sleep(300)  # Check every 5 minutes
                 
@@ -937,7 +964,8 @@ class IntegrityChecker:
                 await asyncio.sleep(60)
     
     async def _save_checkpoint(self, checkpoint: IntegrityCheckpoint) -> None:
-        """Save checkpoint to disk"""        try:
+        """Save checkpoint to disk"""
+        try:
             checkpoint_path = Path(self.config.checkpoints_directory) / "active" / f"{checkpoint.checkpoint_id}.json"
             
             checkpoint_data = {
@@ -966,7 +994,8 @@ class IntegrityChecker:
             logger.error(f"Failed to save checkpoint: {str(e)}")
     
     async def _save_corruption_report(self, corruption_report: CorruptionReport) -> None:
-        """Save corruption report to disk"""        try:
+        """Save corruption report to disk"""
+        try:
             report_path = Path(self.config.reports_directory) / "corruption" / f"{corruption_report.report_id}.json"
             
             report_data = {
@@ -997,12 +1026,15 @@ class IntegrityChecker:
 
 
 class VerificationEngine:
-    """Handles file verification operations"""    
+    """Handles file verification operations"""
+    
     def __init__(self, integrity_checker: IntegrityChecker):
-        """Initialize verification engine"""        self.integrity_checker = integrity_checker
+        """Initialize verification engine"""
+        self.integrity_checker = integrity_checker
     
     async def verify_checkpoint(self, checkpoint: IntegrityCheckpoint) -> Dict[str, Any]:
-        """Verify checkpoint integrity"""        try:
+        """Verify checkpoint integrity"""
+        try:
             start_time = datetime.now()
             file_path = Path(checkpoint.file_path)
             
@@ -1059,12 +1091,15 @@ class VerificationEngine:
 
 
 class CorruptionDetector:
-    """Detects various types of data corruption"""    
+    """Detects various types of data corruption"""
+    
     def __init__(self, integrity_checker: IntegrityChecker):
-        """Initialize corruption detector"""        self.integrity_checker = integrity_checker
+        """Initialize corruption detector"""
+        self.integrity_checker = integrity_checker
     
     async def detect_corruption_patterns(self, file_path: Path) -> List[str]:
-        """Detect corruption patterns in file"""        patterns = []
+        """Detect corruption patterns in file"""
+        patterns = []
         
         try:
             # Check for common corruption patterns
@@ -1091,16 +1126,19 @@ class CorruptionDetector:
 
 
 class RepairEngine:
-    """Handles corruption repair operations"""    
+    """Handles corruption repair operations"""
+    
     def __init__(self, integrity_checker: IntegrityChecker):
-        """Initialize repair engine"""        self.integrity_checker = integrity_checker
+        """Initialize repair engine"""
+        self.integrity_checker = integrity_checker
     
     async def attempt_repair(
         self,
         checkpoint: IntegrityCheckpoint,
         corruption_report: CorruptionReport
     ) -> Dict[str, Any]:
-        """Attempt automatic repair"""        try:
+        """Attempt automatic repair"""
+        try:
             if not corruption_report.is_repairable:
                 return {
                     'success': False,
@@ -1131,7 +1169,8 @@ class RepairEngine:
         corruption_report: CorruptionReport,
         strategy: RepairStrategy
     ) -> Dict[str, Any]:
-        """Repair using specific strategy"""        try:
+        """Repair using specific strategy"""
+        try:
             if strategy == RepairStrategy.AUTO_REPAIR:
                 return await self._auto_repair(checkpoint, corruption_report)
             elif strategy == RepairStrategy.BACKUP_RESTORE:
@@ -1154,7 +1193,8 @@ class RepairEngine:
             }
     
     async def _auto_repair(self, checkpoint: IntegrityCheckpoint, corruption_report: CorruptionReport) -> Dict[str, Any]:
-        """Attempt automatic repair"""        # This is a simplified implementation
+        """Attempt automatic repair"""
+        # This is a simplified implementation
         # In a real system, this would implement sophisticated repair algorithms
         return {
             'success': False,
@@ -1162,21 +1202,24 @@ class RepairEngine:
         }
     
     async def _backup_restore(self, checkpoint: IntegrityCheckpoint, corruption_report: CorruptionReport) -> Dict[str, Any]:
-        """Restore from backup"""        # Implement backup restoration logic
+        """Restore from backup"""
+        # Implement backup restoration logic
         return {
             'success': False,
             'error': 'Backup restore not implemented'
         }
     
     async def _redundant_copy_restore(self, checkpoint: IntegrityCheckpoint, corruption_report: CorruptionReport) -> Dict[str, Any]:
-        """Restore from redundant copy"""        # Implement redundant copy restoration logic
+        """Restore from redundant copy"""
+        # Implement redundant copy restoration logic
         return {
             'success': False,
             'error': 'Redundant copy restore not implemented'
         }
     
     async def _quarantine_file(self, checkpoint: IntegrityCheckpoint, corruption_report: CorruptionReport) -> Dict[str, Any]:
-        """Quarantine corrupted file"""        try:
+        """Quarantine corrupted file"""
+        try:
             file_path = Path(checkpoint.file_path)
             quarantine_dir = Path(self.integrity_checker.config.storage_root_path) / "quarantine"
             quarantine_dir.mkdir(parents=True, exist_ok=True)
@@ -1203,20 +1246,25 @@ class RepairEngine:
 
 
 class IntegrityScheduler:
-    """Manages scheduled integrity checks"""    
+    """Manages scheduled integrity checks"""
+    
     def __init__(self, integrity_checker: IntegrityChecker):
-        """Initialize integrity scheduler"""        self.integrity_checker = integrity_checker
+        """Initialize integrity scheduler"""
+        self.integrity_checker = integrity_checker
         self.scheduler_task = None
     
     async def start(self) -> None:
-        """Start the scheduler"""        self.scheduler_task = asyncio.create_task(self._scheduler_loop())
+        """Start the scheduler"""
+        self.scheduler_task = asyncio.create_task(self._scheduler_loop())
     
     async def stop(self) -> None:
-        """Stop the scheduler"""        if self.scheduler_task:
+        """Stop the scheduler"""
+        if self.scheduler_task:
             self.scheduler_task.cancel()
     
     async def _scheduler_loop(self) -> None:
-        """Main scheduler loop"""        while not self.integrity_checker.shutdown_event.is_set():
+        """Main scheduler loop"""
+        while not self.integrity_checker.shutdown_event.is_set():
             try:
                 await asyncio.sleep(3600)  # Check every hour
                 
@@ -1240,7 +1288,8 @@ class IntegrityScheduler:
                 logger.error(f"Scheduler loop error: {str(e)}")
     
     def _should_verify(self, checkpoint: IntegrityCheckpoint, current_time: datetime) -> bool:
-        """Check if checkpoint should be verified"""        if not checkpoint.last_verified:
+        """Check if checkpoint should be verified"""
+        if not checkpoint.last_verified:
             return True
         
         hours_since_verification = (current_time - checkpoint.last_verified).total_seconds() / 3600
@@ -1248,7 +1297,8 @@ class IntegrityScheduler:
         return hours_since_verification >= self.integrity_checker.config.verification_interval_hours
     
     async def _cleanup_old_records(self) -> None:
-        """Clean up old checkpoints and reports"""        try:
+        """Clean up old checkpoints and reports"""
+        try:
             current_time = datetime.now()
             
             # Clean up old checkpoints

@@ -5,7 +5,8 @@ Can be overridden through environment variables or config files.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import os
+"""
+import os
 from typing import List, Dict, Any
 
 # Text Processing Configuration
@@ -117,7 +118,8 @@ SECURITY_CONFIG = {
 }
 
 def get_config() -> Dict[str, Any]:
-    """Get complete configuration dictionary"""    return {
+    """Get complete configuration dictionary"""
+    return {
         "processing": DEFAULT_PROCESSING_CONFIG,
         "nlp_engine": NLP_ENGINE_CONFIG,
         "translation": TRANSLATION_CONFIG,
@@ -140,7 +142,8 @@ def get_config() -> Dict[str, Any]:
     }
 
 def load_config_from_file(config_path: str) -> Dict[str, Any]:
-    """Load configuration from JSON or YAML file"""    import json
+    """Load configuration from JSON or YAML file"""
+    import json
     from pathlib import Path
     
     config_file = Path(config_path)
@@ -161,7 +164,8 @@ def load_config_from_file(config_path: str) -> Dict[str, Any]:
         raise ValueError(f"Unsupported configuration file format: {config_file.suffix}")
 
 def merge_configs(base_config: Dict[str, Any], override_config: Dict[str, Any]) -> Dict[str, Any]:
-    """Recursively merge configuration dictionaries"""    merged = base_config.copy()
+    """Recursively merge configuration dictionaries"""
+    merged = base_config.copy()
     
     for key, value in override_config.items():
         if key in merged and isinstance(merged[key], dict) and isinstance(value, dict):

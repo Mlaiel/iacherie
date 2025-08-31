@@ -19,7 +19,8 @@ This code is proprietary and belongs to Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit 
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Set, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -27,7 +28,8 @@ from datetime import datetime, timedelta
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks."""    GDPR = "gdpr"                    # General Data Protection Regulation (EU)
+    """Supported compliance frameworks."""
+    GDPR = "gdpr"                    # General Data Protection Regulation (EU)
     CCPA = "ccpa"                    # California Consumer Privacy Act (US)
     PIPEDA = "pipeda"                # Personal Information Protection (Canada)
     LGPD = "lgpd"                    # Lei Geral de Proteção de Dados (Brazil)
@@ -40,7 +42,8 @@ class ComplianceFramework(Enum):
 
 
 class DataCategory(Enum):
-    """Categories of data for compliance purposes."""    PERSONAL_DATA = "personal_data"
+    """Categories of data for compliance purposes."""
+    PERSONAL_DATA = "personal_data"
     SENSITIVE_DATA = "sensitive_data"
     FINANCIAL_DATA = "financial_data"
     HEALTH_DATA = "health_data"
@@ -52,7 +55,8 @@ class DataCategory(Enum):
 
 
 class LegalBasis(Enum):
-    """Legal basis for data processing under GDPR."""    CONSENT = "consent"
+    """Legal basis for data processing under GDPR."""
+    CONSENT = "consent"
     CONTRACT = "contract"
     LEGAL_OBLIGATION = "legal_obligation"
     VITAL_INTERESTS = "vital_interests"
@@ -61,7 +65,8 @@ class LegalBasis(Enum):
 
 
 class DataSubjectRight(Enum):
-    """Data subject rights under privacy regulations."""    ACCESS = "access"                # Right to access personal data
+    """Data subject rights under privacy regulations."""
+    ACCESS = "access"                # Right to access personal data
     RECTIFICATION = "rectification"  # Right to correct inaccurate data
     ERASURE = "erasure"             # Right to be forgotten
     PORTABILITY = "portability"     # Right to data portability
@@ -72,7 +77,8 @@ class DataSubjectRight(Enum):
 
 @dataclass
 class GDPRConfig:
-    """GDPR (General Data Protection Regulation) configuration."""    
+    """GDPR (General Data Protection Regulation) configuration."""
+    
     # Compliance settings
     gdpr_compliance_enabled: bool = True
     data_protection_officer_contact: str = "dpo@ia-influencer.com"
@@ -160,7 +166,8 @@ class GDPRConfig:
 
 @dataclass
 class CCPAConfig:
-    """CCPA (California Consumer Privacy Act) configuration."""    
+    """CCPA (California Consumer Privacy Act) configuration."""
+    
     # Compliance settings
     ccpa_compliance_enabled: bool = True
     business_threshold_met: bool = True  # $25M+ revenue or 50K+ consumers
@@ -218,7 +225,8 @@ class CCPAConfig:
 
 @dataclass
 class CopyrightComplianceConfig:
-    """Copyright and intellectual property compliance configuration."""    
+    """Copyright and intellectual property compliance configuration."""
+    
     # DMCA compliance
     dmca_compliance: Dict[str, Any] = field(default_factory=lambda: {
         "enabled": True,
@@ -270,7 +278,8 @@ class CopyrightComplianceConfig:
 
 @dataclass
 class FinancialComplianceConfig:
-    """Financial and payment compliance configuration."""    
+    """Financial and payment compliance configuration."""
+    
     # PCI DSS compliance
     pci_dss_compliance: Dict[str, Any] = field(default_factory=lambda: {
         "compliance_level": "SAQ-A",  # Self-Assessment Questionnaire
@@ -315,7 +324,8 @@ class FinancialComplianceConfig:
 
 @dataclass
 class PlatformComplianceConfig:
-    """Platform-specific compliance requirements."""    
+    """Platform-specific compliance requirements."""
+    
     # Platform policies
     platform_policies: Dict[str, Dict[str, Any]] = field(default_factory=lambda: {
         "spotify": {
@@ -371,7 +381,8 @@ class PlatformComplianceConfig:
 
 @dataclass
 class DataProtectionConfig:
-    """Data protection and privacy configuration."""    
+    """Data protection and privacy configuration."""
+    
     # Privacy by design
     privacy_by_design: Dict[str, Any] = field(default_factory=lambda: {
         "data_minimization": True,
@@ -420,7 +431,8 @@ class DataProtectionConfig:
 
 @dataclass
 class ComplianceMonitoringConfig:
-    """Compliance monitoring and reporting configuration."""    
+    """Compliance monitoring and reporting configuration."""
+    
     # Automated monitoring
     automated_monitoring: Dict[str, Any] = field(default_factory=lambda: {
         "enabled": True,
@@ -484,7 +496,8 @@ class ComplianceMonitoringConfig:
 
 @dataclass
 class ComplianceConfig:
-    """Main compliance configuration container."""    
+    """Main compliance configuration container."""
+    
     # Framework configurations
     gdpr: GDPRConfig = field(default_factory=GDPRConfig)
     ccpa: CCPAConfig = field(default_factory=CCPAConfig)
@@ -542,26 +555,31 @@ compliance_config = ComplianceConfig()
 
 
 def get_compliance_config() -> ComplianceConfig:
-    """Get the compliance configuration instance."""    return compliance_config
+    """Get the compliance configuration instance."""
+    return compliance_config
 
 
 def get_applicable_frameworks(region: str) -> List[ComplianceFramework]:
-    """Get applicable compliance frameworks for a specific region."""    config = get_compliance_config()
+    """Get applicable compliance frameworks for a specific region."""
+    config = get_compliance_config()
     return config.regional_compliance.get(region, [])
 
 
 def is_framework_enabled(framework: ComplianceFramework) -> bool:
-    """Check if a compliance framework is enabled."""    config = get_compliance_config()
+    """Check if a compliance framework is enabled."""
+    config = get_compliance_config()
     return framework in config.enabled_frameworks
 
 
 def get_data_retention_period(data_category: DataCategory) -> int:
-    """Get data retention period for a specific data category under GDPR."""    config = get_compliance_config()
+    """Get data retention period for a specific data category under GDPR."""
+    config = get_compliance_config()
     return config.gdpr.data_retention_periods.get(data_category, 365)
 
 
 def validate_compliance_config(config: ComplianceConfig) -> bool:
-    """Validate compliance configuration settings."""    # Validate enabled frameworks
+    """Validate compliance configuration settings."""
+    # Validate enabled frameworks
     for framework in config.enabled_frameworks:
         if not isinstance(framework, ComplianceFramework):
             raise ValueError(f"Invalid compliance framework: {framework}")

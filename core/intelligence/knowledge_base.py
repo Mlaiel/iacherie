@@ -13,7 +13,8 @@ Features:
 - Multi-modal knowledge integration
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union, Set
 from dataclasses import dataclass
@@ -57,7 +58,8 @@ from ..adapters.ontology_adapter import OntologyAdapter
 
 
 class KnowledgeType(Enum):
-    """Knowledge representation types"""    FACTUAL = "factual"
+    """Knowledge representation types"""
+    FACTUAL = "factual"
     PROCEDURAL = "procedural"
     CONCEPTUAL = "conceptual"
     SEMANTIC = "semantic"
@@ -68,7 +70,8 @@ class KnowledgeType(Enum):
 
 
 class RelationType(Enum):
-    """Relationship types in knowledge graph"""    IS_A = "is_a"
+    """Relationship types in knowledge graph"""
+    IS_A = "is_a"
     HAS_PROPERTY = "has_property"
     RELATED_TO = "related_to"
     CAUSES = "causes"
@@ -82,7 +85,8 @@ class RelationType(Enum):
 
 @dataclass
 class KnowledgeEntity:
-    """Knowledge entity representation"""    entity_id: str
+    """Knowledge entity representation"""
+    entity_id: str
     entity_type: str
     name: str
     properties: Dict[str, Any]
@@ -94,7 +98,8 @@ class KnowledgeEntity:
 
 @dataclass
 class KnowledgeRelation:
-    """Knowledge relationship representation"""    relation_id: str
+    """Knowledge relationship representation"""
+    relation_id: str
     source_entity: str
     target_entity: str
     relation_type: RelationType
@@ -105,7 +110,8 @@ class KnowledgeRelation:
 
 @dataclass
 class QueryResult:
-    """Knowledge query result"""    entities: List[KnowledgeEntity]
+    """Knowledge query result"""
+    entities: List[KnowledgeEntity]
     relations: List[KnowledgeRelation]
     query_time: float
     confidence_score: float
@@ -113,7 +119,8 @@ class QueryResult:
 
 
 class SemanticMemory:
-    """Semantic memory for concept storage and retrieval"""    
+    """Semantic memory for concept storage and retrieval"""
+    
     def __init__(self, embedding_model: str = "all-MiniLM-L6-v2"):
         self.embedding_model = SentenceTransformer(embedding_model)
         self.concept_store = {}
@@ -122,7 +129,8 @@ class SemanticMemory:
         self.dimension = 384  # Default for MiniLM
         
     def add_concept(self, concept_id: str, concept_data: Dict[str, Any]) -> bool:
-        """Add concept to semantic memory"""        try:
+        """Add concept to semantic memory"""
+        try:
             # Create concept representation
             concept_text = self._concept_to_text(concept_data)
             embedding = self.embedding_model.encode(concept_text)
@@ -145,7 +153,8 @@ class SemanticMemory:
             return False
     
     def _concept_to_text(self, concept_data: Dict[str, Any]) -> str:
-        """Convert concept data to searchable text"""        text_parts = []
+        """Convert concept data to searchable text"""
+        text_parts = []
         
         # Add name and description
         if 'name' in concept_data:
@@ -164,7 +173,8 @@ class SemanticMemory:
         return " ".join(text_parts)
     
     def _update_index(self) -> None:
-        """Update FAISS index with current concepts"""        if not self.concept_store:
+        """Update FAISS index with current concepts"""
+        if not self.concept_store:
             return
         
         # Collect all embeddings
@@ -189,7 +199,8 @@ class SemanticMemory:
         top_k: int = 10,
         threshold: float = 0.5
     ) -> List[Tuple[str, float]]:
-        """Search for similar concepts"""        try:
+        """Search for similar concepts"""
+        try:
             if not self.concept_store or self.concept_index is None:
                 return []
             
@@ -217,7 +228,8 @@ class SemanticMemory:
 
 
 class KnowledgeGraph:
-    """Graph-based knowledge representation"""    
+    """Graph-based knowledge representation"""
+    
     def __init__(self, graph_db_url: Optional[str] = None):
         self.graph_db_url = graph_db_url
         
@@ -236,7 +248,8 @@ class KnowledgeGraph:
         self.relation_cache = {}
         
     def add_entity(self, entity: KnowledgeEntity) -> bool:
-        """Add entity to knowledge graph"""        try:
+        """Add entity to knowledge graph"""
+        try:
             if self.use_neo4j:
                 # Neo4j implementation
                 node = Node(
@@ -270,7 +283,8 @@ class KnowledgeGraph:
             return False
     
     def add_relation(self, relation: KnowledgeRelation) -> bool:
-        """Add relationship to knowledge graph"""        try:
+        """Add relationship to knowledge graph"""
+        try:
             if self.use_neo4j:
                 # Neo4j implementation
                 source_node = self.graph.nodes.match(entity_id=relation.source_entity).first()
@@ -309,7 +323,8 @@ class KnowledgeGraph:
             return False
     
     def get_entity(self, entity_id: str) -> Optional[KnowledgeEntity]:
-        """Get entity by ID"""        if entity_id in self.entity_cache:
+        """Get entity by ID"""
+        if entity_id in self.entity_cache:
             return self.entity_cache[entity_id]
         
         try:
@@ -342,15 +357,18 @@ class KnowledgeGraph:
         relation_types: Optional[List[RelationType]] = None,
         max_depth: int = 2
     ) -> List[KnowledgeEntity]:
-        """Get entities related to given entity"""        try:
+        """Get entities related to given entity"""
+        try:
             related_entities = []
             
             if self.use_neo4j:
                 # Neo4j query for related entities
-                query = f"""                MATCH (source {{entity_id: $entity_id}})
+                query = f"""
+                MATCH (source {{entity_id: $entity_id}})
                 MATCH (source)-[r*1..{max_depth}]-(target)
                 RETURN DISTINCT target
-                """                results = self.graph.run(query, entity_id=entity_id)
+                """
+                results = self.graph.run(query, entity_id=entity_id)
                 
                 for record in results:
                     entity = self._node_to_entity(record['target'])
@@ -384,7 +402,8 @@ class KnowledgeGraph:
             return []
     
     def _node_to_entity(self, node) -> Optional[KnowledgeEntity]:
-        """Convert Neo4j node to KnowledgeEntity"""        try:
+        """Convert Neo4j node to KnowledgeEntity"""
+        try:
             return KnowledgeEntity(
                 entity_id=node.get('entity_id', ''),
                 entity_type=list(node.labels)[0] if node.labels else 'unknown',
@@ -401,12 +420,15 @@ class KnowledgeGraph:
         source_id: str,
         target_id: str
     ) -> List[str]:
-        """Find shortest path between entities"""        try:
+        """Find shortest path between entities"""
+        try:
             if self.use_neo4j:
-                query = """                MATCH (source {entity_id: $source_id}), (target {entity_id: $target_id})
+                query = """
+                MATCH (source {entity_id: $source_id}), (target {entity_id: $target_id})
                 MATCH path = shortestPath((source)-[*]-(target))
                 RETURN path
-                """                result = self.graph.run(query, source_id=source_id, target_id=target_id).data()
+                """
+                result = self.graph.run(query, source_id=source_id, target_id=target_id).data()
                 
                 if result:
                     path = result[0]['path']
@@ -426,7 +448,8 @@ class KnowledgeGraph:
 
 
 class OntologyManager:
-    """Ontology management for structured knowledge"""    
+    """Ontology management for structured knowledge"""
+    
     def __init__(self):
         self.ontology = RDFGraph()
         self.namespaces = {}
@@ -438,7 +461,8 @@ class OntologyManager:
         self.ontology.bind("content", self.content_ns)
         
     def add_class(self, class_name: str, parent_class: Optional[str] = None) -> bool:
-        """Add class to ontology"""        try:
+        """Add class to ontology"""
+        try:
             class_uri = self.content_ns[class_name]
             
             # Add class declaration
@@ -462,7 +486,8 @@ class OntologyManager:
         domain: Optional[str] = None,
         range_type: Optional[str] = None
     ) -> bool:
-        """Add property to ontology"""        try:
+        """Add property to ontology"""
+        try:
             property_uri = self.content_ns[property_name]
             
             # Add property declaration
@@ -489,7 +514,8 @@ class OntologyManager:
             return False
     
     def validate_instance(self, instance_data: Dict[str, Any], class_name: str) -> bool:
-        """Validate instance against ontology"""        try:
+        """Validate instance against ontology"""
+        try:
             # Check if class exists
             if class_name not in self.classes:
                 return False
@@ -515,7 +541,8 @@ class OntologyManager:
             return False
     
     def query_ontology(self, sparql_query: str) -> List[Dict[str, Any]]:
-        """Execute SPARQL query on ontology"""        try:
+        """Execute SPARQL query on ontology"""
+        try:
             results = self.ontology.query(sparql_query)
             return [dict(row.asdict()) for row in results]
         except Exception as e:
@@ -524,14 +551,18 @@ class OntologyManager:
 
 
 class KnowledgeBase:
-    """    Comprehensive knowledge base for content intelligence
-    """    
+    """
+    Comprehensive knowledge base for content intelligence
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize knowledge base
+        """
+        Initialize knowledge base
         
         Args:
             config: Configuration dictionary
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -558,29 +589,34 @@ class KnowledgeBase:
         self.cache_size = config.get("cache_size", 1000)
     
     def _initialize_storage(self) -> None:
-        """Initialize knowledge storage"""        try:
+        """Initialize knowledge storage"""
+        try:
             self.knowledge_storage = KnowledgeStorage(self.config)
             self.logger.info("Knowledge storage initialized")
         except Exception as e:
             self.logger.warning(f"Knowledge storage initialization failed: {e}")
     
     def _initialize_graph(self) -> None:
-        """Initialize knowledge graph"""        graph_db_url = self.config.get("graph_db_url")
+        """Initialize knowledge graph"""
+        graph_db_url = self.config.get("graph_db_url")
         self.knowledge_graph = KnowledgeGraph(graph_db_url)
         self.logger.info("Knowledge graph initialized")
     
     def _initialize_semantic_memory(self) -> None:
-        """Initialize semantic memory"""        embedding_model = self.config.get("embedding_model", "all-MiniLM-L6-v2")
+        """Initialize semantic memory"""
+        embedding_model = self.config.get("embedding_model", "all-MiniLM-L6-v2")
         self.semantic_memory = SemanticMemory(embedding_model)
         self.logger.info("Semantic memory initialized")
     
     def _initialize_ontology(self) -> None:
-        """Initialize ontology manager"""        self.ontology_manager = OntologyManager()
+        """Initialize ontology manager"""
+        self.ontology_manager = OntologyManager()
         self._setup_content_ontology()
         self.logger.info("Ontology manager initialized")
     
     def _initialize_processors(self) -> None:
-        """Initialize knowledge processors"""        try:
+        """Initialize knowledge processors"""
+        try:
             self.knowledge_processor = KnowledgeProcessor(self.config)
             self.reasoning_engine = ReasoningEngine(self.config)
             self.ontology_adapter = OntologyAdapter(self.config)
@@ -588,7 +624,8 @@ class KnowledgeBase:
             self.logger.warning(f"Some processors could not be initialized: {e}")
     
     def _setup_content_ontology(self) -> None:
-        """Setup basic content ontology"""        # Add content classes
+        """Setup basic content ontology"""
+        # Add content classes
         self.ontology_manager.add_class("Content")
         self.ontology_manager.add_class("AudioContent", "Content")
         self.ontology_manager.add_class("VideoContent", "Content")
@@ -617,7 +654,8 @@ class KnowledgeBase:
         data: Dict[str, Any],
         source: str = "user_input"
     ) -> bool:
-        """        Add knowledge to the knowledge base
+        """
+        Add knowledge to the knowledge base
         
         Args:
             knowledge_type: Type of knowledge to add
@@ -626,7 +664,8 @@ class KnowledgeBase:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             if knowledge_type == KnowledgeType.FACTUAL:
                 return await self._add_factual_knowledge(data, source)
             elif knowledge_type == KnowledgeType.CONCEPTUAL:
@@ -643,7 +682,8 @@ class KnowledgeBase:
             return False
     
     async def _add_factual_knowledge(self, data: Dict[str, Any], source: str) -> bool:
-        """Add factual knowledge as entities and relations"""        try:
+        """Add factual knowledge as entities and relations"""
+        try:
             # Extract entities from data
             entities = data.get('entities', [])
             relations = data.get('relations', [])
@@ -691,7 +731,8 @@ class KnowledgeBase:
             return False
     
     async def _add_conceptual_knowledge(self, data: Dict[str, Any], source: str) -> bool:
-        """Add conceptual knowledge to semantic memory"""        try:
+        """Add conceptual knowledge to semantic memory"""
+        try:
             concepts = data.get('concepts', [])
             
             for concept_data in concepts:
@@ -710,14 +751,16 @@ class KnowledgeBase:
             return False
     
     async def _add_semantic_knowledge(self, data: Dict[str, Any], source: str) -> bool:
-        """Add semantic knowledge"""        # For semantic knowledge, we can add both to graph and semantic memory
+        """Add semantic knowledge"""
+        # For semantic knowledge, we can add both to graph and semantic memory
         success1 = await self._add_factual_knowledge(data, source)
         success2 = await self._add_conceptual_knowledge(data, source)
         
         return success1 or success2
     
     async def _add_procedural_knowledge(self, data: Dict[str, Any], source: str) -> bool:
-        """Add procedural knowledge (processes and workflows)"""        try:
+        """Add procedural knowledge (processes and workflows)"""
+        try:
             # Procedural knowledge as a sequence of steps
             process_id = data.get('process_id', f"process_{int(datetime.now().timestamp())}")
             steps = data.get('steps', [])
@@ -765,7 +808,8 @@ class KnowledgeBase:
         source: str,
         knowledge_type: KnowledgeType
     ) -> bool:
-        """Add general knowledge"""        # Default implementation: treat as factual knowledge
+        """Add general knowledge"""
+        # Default implementation: treat as factual knowledge
         return await self._add_factual_knowledge(data, source)
     
     async def query_knowledge(
@@ -775,7 +819,8 @@ class KnowledgeBase:
         filters: Optional[Dict[str, Any]] = None,
         limit: int = 10
     ) -> QueryResult:
-        """        Query the knowledge base
+        """
+        Query the knowledge base
         
         Args:
             query: Query string
@@ -785,7 +830,8 @@ class KnowledgeBase:
             
         Returns:
             QueryResult: Query results and metadata
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             # Check cache first
@@ -878,7 +924,8 @@ class KnowledgeBase:
         filters: Optional[Dict[str, Any]],
         limit: int
     ) -> List[KnowledgeEntity]:
-        """Search entities in knowledge graph"""        entities = []
+        """Search entities in knowledge graph"""
+        entities = []
         
         try:
             # Simple name-based search for now
@@ -901,7 +948,8 @@ class KnowledgeBase:
             return []
     
     def _apply_filters(self, entity: KnowledgeEntity, filters: Dict[str, Any]) -> bool:
-        """Apply filters to entity"""        try:
+        """Apply filters to entity"""
+        try:
             for filter_key, filter_value in filters.items():
                 if filter_key == "entity_type":
                     if entity.entity_type != filter_value:
@@ -919,7 +967,8 @@ class KnowledgeBase:
             return False
     
     async def _find_entity_relations(self, entities: List[KnowledgeEntity]) -> List[KnowledgeRelation]:
-        """Find relations between entities"""        relations = []
+        """Find relations between entities"""
+        relations = []
         
         try:
             entity_ids = {e.entity_id for e in entities}
@@ -937,28 +986,36 @@ class KnowledgeBase:
             return []
     
     def _natural_to_sparql(self, query: str) -> str:
-        """Convert natural language query to SPARQL (simplified)"""        # This is a very basic implementation
+        """Convert natural language query to SPARQL (simplified)"""
+        # This is a very basic implementation
         # A real system would use more sophisticated NLP
         
         query_lower = query.lower()
         
         if "content" in query_lower and "type" in query_lower:
-            return """            SELECT ?content ?type WHERE {
+            return """
+            SELECT ?content ?type WHERE {
                 ?content rdf:type content:Content .
                 ?content rdf:type ?type .
             }
-            """        elif "creator" in query_lower:
-            return """            SELECT ?creator ?name WHERE {
+            """
+        elif "creator" in query_lower:
+            return """
+            SELECT ?creator ?name WHERE {
                 ?creator rdf:type content:Creator .
                 ?creator content:hasName ?name .
             }
-            """        else:
-            return """            SELECT ?s ?p ?o WHERE {
+            """
+        else:
+            return """
+            SELECT ?s ?p ?o WHERE {
                 ?s ?p ?o .
             } LIMIT 10
-            """    
+            """
+    
     def _sparql_result_to_entity(self, result: Dict[str, Any]) -> Optional[KnowledgeEntity]:
-        """Convert SPARQL result to KnowledgeEntity"""        try:
+        """Convert SPARQL result to KnowledgeEntity"""
+        try:
             # Extract entity information from SPARQL result
             entity_id = str(result.get('s', result.get('content', 'unknown')))
             entity_type = str(result.get('type', 'unknown')).split('#')[-1]
@@ -978,7 +1035,8 @@ class KnowledgeBase:
             return None
     
     async def get_knowledge_summary(self) -> Dict[str, Any]:
-        """Get summary of knowledge base contents"""        try:
+        """Get summary of knowledge base contents"""
+        try:
             summary = {
                 "metrics": self.knowledge_metrics.copy(),
                 "entity_types": defaultdict(int),
@@ -1025,7 +1083,8 @@ class KnowledgeBase:
             return {"error": str(e)}
     
     async def validate_knowledge_consistency(self) -> Dict[str, Any]:
-        """Validate knowledge base consistency"""        try:
+        """Validate knowledge base consistency"""
+        try:
             validation_results = {
                 "is_consistent": True,
                 "issues": [],
@@ -1073,11 +1132,13 @@ class KnowledgeBase:
             return {"is_consistent": False, "error": str(e)}
     
     def clear_cache(self) -> None:
-        """Clear query cache"""        self.query_cache.clear()
+        """Clear query cache"""
+        self.query_cache.clear()
         self.logger.info("Knowledge base cache cleared")
     
     async def backup_knowledge(self, backup_path: str) -> bool:
-        """Backup knowledge base to file"""        try:
+        """Backup knowledge base to file"""
+        try:
             backup_data = {
                 "entities": {k: {
                     "entity_id": v.entity_id,

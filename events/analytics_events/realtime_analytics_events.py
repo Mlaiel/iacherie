@@ -11,7 +11,8 @@ Copyright: Fahed Mlaiel - All rights reserved
 
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
-"""import asyncio
+"""
+import asyncio
 import json
 import numpy as np
 from datetime import datetime, timedelta
@@ -39,7 +40,8 @@ logger = get_logger(__name__)
 
 
 class MetricType(Enum):
-    """Types of real-time metrics"""    ENGAGEMENT = "engagement"
+    """Types of real-time metrics"""
+    ENGAGEMENT = "engagement"
     REACH = "reach"
     IMPRESSIONS = "impressions"
     VIEWS = "views"
@@ -56,7 +58,8 @@ class MetricType(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    LOW = "low"
+    """Alert severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -64,7 +67,8 @@ class AlertSeverity(Enum):
 
 
 class StreamingChannel(Enum):
-    """Real-time streaming channels"""    METRICS = "metrics"
+    """Real-time streaming channels"""
+    METRICS = "metrics"
     ALERTS = "alerts"
     EVENTS = "events"
     ANOMALIES = "anomalies"
@@ -75,7 +79,8 @@ class StreamingChannel(Enum):
 
 
 class AnomalyType(Enum):
-    """Types of anomalies to detect"""    SPIKE = "spike"
+    """Types of anomalies to detect"""
+    SPIKE = "spike"
     DROP = "drop"
     TREND_CHANGE = "trend_change"
     OUTLIER = "outlier"
@@ -86,7 +91,8 @@ class AnomalyType(Enum):
 
 @dataclass
 class RealtimeAnalyticsEvent(BaseEvent):
-    """Represents a real-time analytics event"""    creator_id: str
+    """Represents a real-time analytics event"""
+    creator_id: str
     platform: str
     content_id: Optional[str]
     metric_type: MetricType
@@ -101,7 +107,8 @@ class RealtimeAnalyticsEvent(BaseEvent):
     device_breakdown: Optional[Dict[str, int]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert realtime analytics event to dictionary"""        return {
+        """Convert realtime analytics event to dictionary"""
+        return {
             **asdict(self),
             'metric_type': self.metric_type.value,
             'timestamp': self.timestamp.isoformat()
@@ -110,7 +117,8 @@ class RealtimeAnalyticsEvent(BaseEvent):
 
 @dataclass
 class RealtimeAlert:
-    """Represents a real-time alert"""    alert_id: str
+    """Represents a real-time alert"""
+    alert_id: str
     creator_id: str
     alert_type: str
     severity: AlertSeverity
@@ -127,7 +135,8 @@ class RealtimeAlert:
 
 @dataclass
 class MetricsSnapshot:
-    """Snapshot of current metrics"""    creator_id: str
+    """Snapshot of current metrics"""
+    creator_id: str
     timestamp: datetime
     metrics: Dict[str, float]
     trends: Dict[str, str]  # up, down, stable
@@ -137,7 +146,8 @@ class MetricsSnapshot:
 
 
 class RealtimeAnalyticsEventHandler(BaseEventHandler):
-    """Handles real-time analytics events with streaming capabilities"""    
+    """Handles real-time analytics events with streaming capabilities"""
+    
     def __init__(self):
         super().__init__()
         self.cache_manager = CacheManager()
@@ -150,12 +160,14 @@ class RealtimeAnalyticsEventHandler(BaseEventHandler):
         self.websocket_connections = set()
         
     async def initialize(self):
-        """Initialize real-time components"""        self.redis_client = redis.Redis.from_url(settings.REDIS_URL)
+        """Initialize real-time components"""
+        self.redis_client = redis.Redis.from_url(settings.REDIS_URL)
         await self.metrics_streamer.initialize()
         await self.alert_engine.initialize()
         
     async def handle(self, event: RealtimeAnalyticsEvent) -> Dict[str, Any]:
-        """Process real-time analytics event with streaming"""        try:
+        """Process real-time analytics event with streaming"""
+        try:
             # Validate event data
             await self._validate_event(event)
             
@@ -197,7 +209,8 @@ class RealtimeAnalyticsEventHandler(BaseEventHandler):
             raise
     
     async def _validate_event(self, event: RealtimeAnalyticsEvent) -> None:
-        """Validate real-time analytics event data"""        required_fields = ['creator_id', 'platform', 'metric_type', 'metric_value']
+        """Validate real-time analytics event data"""
+        required_fields = ['creator_id', 'platform', 'metric_type', 'metric_value']
         for field in required_fields:
             if not getattr(event, field):
                 raise ValueError(f"Missing required field: {field}")
@@ -209,7 +222,8 @@ class RealtimeAnalyticsEventHandler(BaseEventHandler):
             raise ValueError("Metric value cannot be negative")
     
     async def _store_realtime_data(self, event: RealtimeAnalyticsEvent) -> None:
-        """Store real-time data for historical analysis"""        # Store in time-series database for fast retrieval
+        """Store real-time data for historical analysis"""
+        # Store in time-series database for fast retrieval
         await self.redis_client.zadd(
             f"metrics:{event.creator_id}:{event.metric_type.value}",
             {json.dumps(event.to_dict()): event.timestamp.timestamp()}
@@ -225,7 +239,8 @@ class RealtimeAnalyticsEventHandler(BaseEventHandler):
         # Store in permanent database
         async with self.db_manager.get_session() as session:
             await session.execute(
-                """                INSERT INTO realtime_analytics_events 
+                """
+                INSERT INTO realtime_analytics_events 
                 (event_id, creator_id, platform, content_id, metric_type, metric_value,
                  timestamp, streaming_data, context_data, aggregation_window,
                  is_live_content, user_interactions, geolocation_data, device_breakdown)
@@ -244,7 +259,8 @@ class RealtimeAnalyticsEventHandler(BaseEventHandler):
     async def _broadcast_updates(self, event: RealtimeAnalyticsEvent, 
                                anomaly_results: Dict[str, Any],
                                alerts: List[RealtimeAlert]) -> None:
-        """Broadcast updates to connected WebSocket clients"""        update_message = {
+        """Broadcast updates to connected WebSocket clients"""
+        update_message = {
             'type': 'analytics_update',
             'creator_id': event.creator_id,
             'metric_type': event.metric_type.value,
@@ -263,7 +279,8 @@ class RealtimeAnalyticsEventHandler(BaseEventHandler):
 
 
 class RealtimeMetricsStreamer:
-    """Streams metrics in real-time to various channels"""    
+    """Streams metrics in real-time to various channels"""
+    
     def __init__(self):
         self.redis_client = None
         self.websocket_server = None
@@ -271,10 +288,12 @@ class RealtimeMetricsStreamer:
         self.metrics_buffer = defaultdict(deque)
         
     async def initialize(self):
-        """Initialize streaming infrastructure"""        self.redis_client = redis.Redis.from_url(settings.REDIS_URL)
+        """Initialize streaming infrastructure"""
+        self.redis_client = redis.Redis.from_url(settings.REDIS_URL)
         
     async def stream_metrics(self, event: RealtimeAnalyticsEvent) -> None:
-        """Stream metrics to appropriate channels"""        # Add to metrics buffer
+        """Stream metrics to appropriate channels"""
+        # Add to metrics buffer
         self.metrics_buffer[event.creator_id].append({
             'metric_type': event.metric_type.value,
             'value': event.metric_value,
@@ -296,7 +315,8 @@ class RealtimeMetricsStreamer:
         await self._update_aggregated_metrics(event)
     
     async def _stream_to_redis_channels(self, event: RealtimeAnalyticsEvent) -> None:
-        """Stream to Redis pub/sub channels"""        channels = [
+        """Stream to Redis pub/sub channels"""
+        channels = [
             f"metrics:{event.creator_id}",
             f"metrics:platform:{event.platform}",
             f"metrics:type:{event.metric_type.value}",
@@ -309,7 +329,8 @@ class RealtimeMetricsStreamer:
             await self.redis_client.publish(channel, message)
     
     async def _update_aggregated_metrics(self, event: RealtimeAnalyticsEvent) -> None:
-        """Update aggregated metrics for different time windows"""        windows = ['1m', '5m', '15m', '1h', '6h', '24h']
+        """Update aggregated metrics for different time windows"""
+        windows = ['1m', '5m', '15m', '1h', '6h', '24h']
         
         for window in windows:
             key = f"agg:{window}:{event.creator_id}:{event.metric_type.value}"
@@ -324,7 +345,8 @@ class RealtimeMetricsStreamer:
             await self.redis_client.expire(key, expiration)
     
     def _get_window_expiration(self, window: str) -> int:
-        """Get expiration time for aggregation window"""        window_map = {
+        """Get expiration time for aggregation window"""
+        window_map = {
             '1m': 300,    # 5 minutes
             '5m': 1800,   # 30 minutes
             '15m': 3600,  # 1 hour
@@ -336,7 +358,8 @@ class RealtimeMetricsStreamer:
 
 
 class RealtimeAlertEngine:
-    """Generates real-time alerts based on metric thresholds and patterns"""    
+    """Generates real-time alerts based on metric thresholds and patterns"""
+    
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.redis_client = None
@@ -344,12 +367,14 @@ class RealtimeAlertEngine:
         self.active_alerts = {}
         
     async def initialize(self):
-        """Initialize alert engine"""        self.redis_client = redis.Redis.from_url(settings.REDIS_URL)
+        """Initialize alert engine"""
+        self.redis_client = redis.Redis.from_url(settings.REDIS_URL)
         await self._load_alert_rules()
         
     async def check_alerts(self, event: RealtimeAnalyticsEvent, 
                           anomaly_results: Dict[str, Any]) -> List[RealtimeAlert]:
-        """Check for alert conditions and generate alerts"""        alerts = []
+        """Check for alert conditions and generate alerts"""
+        alerts = []
         
         # Check threshold-based alerts
         threshold_alerts = await self._check_threshold_alerts(event)
@@ -375,7 +400,8 @@ class RealtimeAlertEngine:
         return alerts
     
     async def _check_threshold_alerts(self, event: RealtimeAnalyticsEvent) -> List[RealtimeAlert]:
-        """Check for threshold-based alerts"""        alerts = []
+        """Check for threshold-based alerts"""
+        alerts = []
         creator_rules = self.alert_rules.get(event.creator_id, {})
         metric_rules = creator_rules.get(event.metric_type.value, {})
         
@@ -403,7 +429,8 @@ class RealtimeAlertEngine:
         return alerts
     
     def _evaluate_threshold_rule(self, event: RealtimeAnalyticsEvent, rule: Dict[str, Any]) -> bool:
-        """Evaluate if a threshold rule is triggered"""        threshold = rule.get('threshold')
+        """Evaluate if a threshold rule is triggered"""
+        threshold = rule.get('threshold')
         operator = rule.get('operator', 'greater_than')
         
         if operator == 'greater_than':
@@ -418,7 +445,8 @@ class RealtimeAlertEngine:
         return False
     
     async def _check_velocity_alerts(self, event: RealtimeAnalyticsEvent) -> List[RealtimeAlert]:
-        """Check for velocity-based alerts (rapid changes)"""        alerts = []
+        """Check for velocity-based alerts (rapid changes)"""
+        alerts = []
         
         # Get recent values for velocity calculation
         recent_values = await self._get_recent_metric_values(
@@ -485,7 +513,8 @@ class RealtimeAlertEngine:
         return alerts
     
     def _calculate_velocity(self, values: List[Tuple[datetime, float]]) -> float:
-        """Calculate velocity (rate of change) from time series data"""        if len(values) < 2:
+        """Calculate velocity (rate of change) from time series data"""
+        if len(values) < 2:
             return 0.0
         
         # Sort by timestamp
@@ -502,16 +531,19 @@ class RealtimeAlertEngine:
 
 
 class RealtimeDashboardEngine:
-    """Manages real-time dashboard updates"""    
+    """Manages real-time dashboard updates"""
+    
     def __init__(self):
         self.redis_client = None
         self.dashboard_cache = {}
         
     async def initialize(self):
-        """Initialize dashboard engine"""        self.redis_client = redis.Redis.from_url(settings.REDIS_URL)
+        """Initialize dashboard engine"""
+        self.redis_client = redis.Redis.from_url(settings.REDIS_URL)
         
     async def update_dashboard(self, event: RealtimeAnalyticsEvent) -> Dict[str, Any]:
-        """Update real-time dashboard with new metrics"""        # Update current metrics snapshot
+        """Update real-time dashboard with new metrics"""
+        # Update current metrics snapshot
         snapshot = await self._update_metrics_snapshot(event)
         
         # Update trend indicators
@@ -541,7 +573,8 @@ class RealtimeDashboardEngine:
         return dashboard_state
     
     async def _update_metrics_snapshot(self, event: RealtimeAnalyticsEvent) -> MetricsSnapshot:
-        """Update current metrics snapshot"""        # Get all current metrics for creator
+        """Update current metrics snapshot"""
+        # Get all current metrics for creator
         current_metrics = await self._get_current_metrics(event.creator_id)
         
         # Calculate trends
@@ -568,7 +601,8 @@ class RealtimeDashboardEngine:
 
 
 class RealtimeAnomalyDetector:
-    """Detects anomalies in real-time metrics"""    
+    """Detects anomalies in real-time metrics"""
+    
     def __init__(self):
         self.isolation_forest = IsolationForest(contamination=0.1, random_state=42)
         self.scaler = MinMaxScaler()
@@ -576,10 +610,12 @@ class RealtimeAnomalyDetector:
         self.redis_client = None
         
     async def initialize(self):
-        """Initialize anomaly detector"""        self.redis_client = redis.Redis.from_url(settings.REDIS_URL)
+        """Initialize anomaly detector"""
+        self.redis_client = redis.Redis.from_url(settings.REDIS_URL)
         
     async def detect_anomalies(self, event: RealtimeAnalyticsEvent) -> Dict[str, Any]:
-        """Detect anomalies in real-time metrics"""        # Get historical data for comparison
+        """Detect anomalies in real-time metrics"""
+        # Get historical data for comparison
         historical_data = await self._get_historical_data(event)
         
         # Statistical anomaly detection
@@ -615,7 +651,8 @@ class RealtimeAnomalyDetector:
     
     async def _detect_statistical_anomalies(self, event: RealtimeAnalyticsEvent, 
                                           historical_data: List[float]) -> Dict[str, Any]:
-        """Detect statistical anomalies using z-score and IQR"""        if len(historical_data) < 10:
+        """Detect statistical anomalies using z-score and IQR"""
+        if len(historical_data) < 10:
             return {'score': 0, 'method': 'insufficient_data'}
         
         # Z-score based detection
@@ -647,7 +684,8 @@ class RealtimeAnomalyDetector:
         }
     
     def _combine_anomaly_scores(self, scores: List[float]) -> float:
-        """Combine multiple anomaly scores into final score"""        # Remove zero scores (insufficient data)
+        """Combine multiple anomaly scores into final score"""
+        # Remove zero scores (insufficient data)
         valid_scores = [s for s in scores if s > 0]
         
         if not valid_scores:
@@ -663,7 +701,8 @@ class RealtimeAnomalyDetector:
         return min(1.0, weighted_sum / weight_sum)
     
     def _determine_anomaly_type(self, score: float) -> Optional[AnomalyType]:
-        """Determine the type of anomaly based on score and patterns"""        if score > 0.9:
+        """Determine the type of anomaly based on score and patterns"""
+        if score > 0.9:
             return AnomalyType.SPIKE
         elif score > 0.7:
             return AnomalyType.OUTLIER

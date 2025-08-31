@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is protected by copyright law. Unauthorized use, reproduction,
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
-"""from datetime import datetime, timedelta
+"""
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
 from enum import Enum
 from dataclasses import dataclass
@@ -28,7 +29,8 @@ from backend.utils.financial_calculator import FinancialCalculator
 
 
 class RevenueStream(str, Enum):
-    """Types of revenue streams"""    SPONSORED_CONTENT = "sponsored_content"
+    """Types of revenue streams"""
+    SPONSORED_CONTENT = "sponsored_content"
     AFFILIATE_MARKETING = "affiliate_marketing"
     LICENSING_FEES = "licensing_fees"
     SUBSCRIPTION_REVENUE = "subscription_revenue"
@@ -41,7 +43,8 @@ class RevenueStream(str, Enum):
 
 
 class PayoutStatus(str, Enum):
-    """Payout processing status"""    PENDING = "pending"
+    """Payout processing status"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -50,7 +53,8 @@ class PayoutStatus(str, Enum):
 
 
 class MonetizationModel(str, Enum):
-    """Monetization models"""    CPM = "cpm"  # Cost per thousand impressions
+    """Monetization models"""
+    CPM = "cpm"  # Cost per thousand impressions
     CPC = "cpc"  # Cost per click
     CPA = "cpa"  # Cost per acquisition
     REVENUE_SHARE = "revenue_share"
@@ -61,7 +65,8 @@ class MonetizationModel(str, Enum):
 
 @dataclass
 class RevenueMetrics:
-    """Revenue performance metrics"""    total_revenue: Decimal
+    """Revenue performance metrics"""
+    total_revenue: Decimal
     revenue_by_stream: Dict[str, Decimal]
     revenue_growth_rate: float
     average_revenue_per_user: Decimal
@@ -73,7 +78,8 @@ class RevenueMetrics:
 
 @dataclass
 class MonetizationConfiguration:
-    """Monetization configuration settings"""    campaign_id: str
+    """Monetization configuration settings"""
+    campaign_id: str
     enabled_revenue_streams: List[RevenueStream]
     monetization_model: MonetizationModel
     pricing_strategy: str
@@ -87,7 +93,8 @@ class MonetizationConfiguration:
 
 @dataclass
 class RevenueTransaction:
-    """Individual revenue transaction"""    transaction_id: str
+    """Individual revenue transaction"""
+    transaction_id: str
     campaign_id: str
     content_id: str
     revenue_stream: RevenueStream
@@ -100,12 +107,14 @@ class RevenueTransaction:
 
 
 class MonetizationEngine:
-    """    Advanced Revenue Generation and Management System
+    """
+    Advanced Revenue Generation and Management System
     
     Provides comprehensive monetization capabilities including multiple
     revenue streams, AI-powered optimization, automated payouts,
     and detailed financial analytics.
-    """    
+    """
+    
     def __init__(self):
         self.logger = get_logger(__name__)
         self.revenue_predictor = RevenuePredictor()
@@ -131,7 +140,8 @@ class MonetizationEngine:
         creator_id: str,
         config: MonetizationConfiguration
     ) -> Dict[str, Any]:
-        """        Setup comprehensive monetization for a campaign
+        """
+        Setup comprehensive monetization for a campaign
         
         Args:
             campaign_id: Campaign unique identifier
@@ -140,7 +150,8 @@ class MonetizationEngine:
             
         Returns:
             Monetization setup result
-        """        try:
+        """
+        try:
             monetization_id = f"mon_{campaign_id}_{int(datetime.utcnow().timestamp())}"
             
             # Initialize revenue streams
@@ -222,7 +233,8 @@ class MonetizationEngine:
         include_predictions: bool = True,
         detailed_breakdown: bool = True
     ) -> Dict[str, Any]:
-        """        Track comprehensive campaign revenue with analytics
+        """
+        Track comprehensive campaign revenue with analytics
         
         Args:
             campaign_id: Campaign unique identifier
@@ -231,7 +243,8 @@ class MonetizationEngine:
             
         Returns:
             Comprehensive revenue tracking data
-        """        try:
+        """
+        try:
             if campaign_id not in self._revenue_tracking:
                 raise ValueError(f"Campaign monetization not found: {campaign_id}")
             
@@ -302,7 +315,8 @@ class MonetizationEngine:
         optimization_goals: List[str],
         constraints: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Optimize campaign pricing using AI algorithms
+        """
+        Optimize campaign pricing using AI algorithms
         
         Args:
             campaign_id: Campaign unique identifier
@@ -311,7 +325,8 @@ class MonetizationEngine:
             
         Returns:
             Pricing optimization results
-        """        try:
+        """
+        try:
             if campaign_id not in self._revenue_tracking:
                 raise ValueError(f"Campaign monetization not found: {campaign_id}")
             
@@ -370,7 +385,8 @@ class MonetizationEngine:
         payout_amount: Optional[Decimal] = None,
         force_payout: bool = False
     ) -> Dict[str, Any]:
-        """        Process revenue payout for campaign
+        """
+        Process revenue payout for campaign
         
         Args:
             campaign_id: Campaign unique identifier
@@ -379,7 +395,8 @@ class MonetizationEngine:
             
         Returns:
             Payout processing result
-        """        try:
+        """
+        try:
             if campaign_id not in self._revenue_tracking:
                 raise ValueError(f"Campaign monetization not found: {campaign_id}")
             
@@ -457,7 +474,8 @@ class MonetizationEngine:
         report_type: str = "comprehensive",
         period: Optional[Dict[str, datetime]] = None
     ) -> Dict[str, Any]:
-        """        Generate comprehensive revenue report
+        """
+        Generate comprehensive revenue report
         
         Args:
             campaign_id: Campaign unique identifier
@@ -466,7 +484,8 @@ class MonetizationEngine:
             
         Returns:
             Generated revenue report
-        """        try:
+        """
+        try:
             if campaign_id not in self._revenue_tracking:
                 raise ValueError(f"Campaign monetization not found: {campaign_id}")
             
@@ -548,7 +567,8 @@ class MonetizationEngine:
         action: str,
         stream_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Manage campaign revenue streams
+        """
+        Manage campaign revenue streams
         
         Args:
             campaign_id: Campaign unique identifier
@@ -557,7 +577,8 @@ class MonetizationEngine:
             
         Returns:
             Revenue stream management result
-        """        try:
+        """
+        try:
             if campaign_id not in self._revenue_tracking:
                 raise ValueError(f"Campaign monetization not found: {campaign_id}")
             
@@ -625,7 +646,8 @@ class MonetizationEngine:
     # Private helper methods
     
     async def _revenue_collection_loop(self) -> None:
-        """Background revenue collection process"""        while True:
+        """Background revenue collection process"""
+        while True:
             try:
                 for campaign_id in self._revenue_tracking.keys():
                     await self._collect_campaign_revenue(campaign_id)
@@ -637,7 +659,8 @@ class MonetizationEngine:
                 await asyncio.sleep(1800)
     
     async def _payout_processing_loop(self) -> None:
-        """Background payout processing loop"""        while True:
+        """Background payout processing loop"""
+        while True:
             try:
                 await self._process_scheduled_payouts()
                 await asyncio.sleep(3600)  # Process every hour
@@ -652,7 +675,8 @@ class MonetizationEngine:
         stream: RevenueStream,
         config: MonetizationConfiguration
     ) -> Dict[str, Any]:
-        """Setup individual revenue stream"""        stream_config = {
+        """Setup individual revenue stream"""
+        stream_config = {
             "stream_type": stream.value,
             "enabled": True,
             "created_at": datetime.utcnow(),
@@ -677,7 +701,8 @@ class MonetizationEngine:
         return stream_config
     
     async def _collect_campaign_revenue(self, campaign_id: str) -> Dict[str, Any]:
-        """Collect current campaign revenue data"""        # Implementation would collect from various platforms and sources
+        """Collect current campaign revenue data"""
+        # Implementation would collect from various platforms and sources
         return {
             "total": Decimal('1250.50'),
             "by_stream": {
@@ -695,7 +720,8 @@ class MonetizationEngine:
         campaign_id: str,
         current_revenue: Dict[str, Any]
     ) -> RevenueMetrics:
-        """Calculate comprehensive revenue metrics"""        return RevenueMetrics(
+        """Calculate comprehensive revenue metrics"""
+        return RevenueMetrics(
             total_revenue=current_revenue["total"],
             revenue_by_stream=current_revenue["by_stream"],
             revenue_growth_rate=0.15,

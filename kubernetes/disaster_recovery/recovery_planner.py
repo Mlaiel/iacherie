@@ -10,7 +10,8 @@ This module provides comprehensive recovery planning capabilities:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -28,7 +29,8 @@ from backend.deployment.monitoring import MonitoringManager
 
 
 class DisasterType(Enum):
-    """Types of disaster scenarios"""    SYSTEM_FAILURE = "system_failure"
+    """Types of disaster scenarios"""
+    SYSTEM_FAILURE = "system_failure"
     DATACENTER_OUTAGE = "datacenter_outage"
     NETWORK_PARTITION = "network_partition"
     DATABASE_CORRUPTION = "database_corruption"
@@ -39,7 +41,8 @@ class DisasterType(Enum):
 
 
 class RecoveryPhase(Enum):
-    """Recovery operation phases"""    ASSESSMENT = "assessment"
+    """Recovery operation phases"""
+    ASSESSMENT = "assessment"
     PREPARATION = "preparation"
     EXECUTION = "execution"
     VALIDATION = "validation"
@@ -48,7 +51,8 @@ class RecoveryPhase(Enum):
 
 
 class RecoveryPriority(Enum):
-    """Service recovery priorities"""    CRITICAL = 1
+    """Service recovery priorities"""
+    CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
     LOW = 4
@@ -57,7 +61,8 @@ class RecoveryPriority(Enum):
 
 @dataclass
 class RecoveryObjective:
-    """Recovery time and point objectives"""    rto_seconds: int  # Recovery Time Objective
+    """Recovery time and point objectives"""
+    rto_seconds: int  # Recovery Time Objective
     rpo_seconds: int  # Recovery Point Objective
     availability_target: float  # Target availability percentage
     max_data_loss: int  # Maximum acceptable data loss in records
@@ -66,7 +71,8 @@ class RecoveryObjective:
 
 @dataclass
 class ServiceRecoveryPlan:
-    """Recovery plan for individual service"""    service_name: str
+    """Recovery plan for individual service"""
+    service_name: str
     objectives: RecoveryObjective
     dependencies: List[str]
     recovery_steps: List[Dict[str, Any]]
@@ -80,7 +86,8 @@ class ServiceRecoveryPlan:
 
 @dataclass
 class DisasterScenario:
-    """Disaster scenario configuration"""    scenario_id: str
+    """Disaster scenario configuration"""
+    scenario_id: str
     disaster_type: DisasterType
     affected_components: List[str]
     impact_assessment: Dict[str, Any]
@@ -92,7 +99,8 @@ class DisasterScenario:
 
 @dataclass
 class RecoveryExecution:
-    """Recovery execution tracking"""    execution_id: str
+    """Recovery execution tracking"""
+    execution_id: str
     scenario_id: str
     start_time: datetime
     current_phase: RecoveryPhase
@@ -106,7 +114,8 @@ class RecoveryExecution:
 
 
 class RecoveryPlanner:
-    """    Intelligent disaster recovery planning and execution system
+    """
+    Intelligent disaster recovery planning and execution system
     
     Capabilities:
     - Multi-scenario disaster recovery planning
@@ -115,7 +124,8 @@ class RecoveryPlanner:
     - Automated recovery procedure generation
     - Recovery simulation and testing framework
     - Real-time recovery execution monitoring
-    """    def __init__(self, config: Config):
+    """
+    def __init__(self, config: Config):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)
@@ -144,7 +154,8 @@ class RecoveryPlanner:
         }
 
     def _initialize_recovery_templates(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize recovery procedure templates"""        return {
+        """Initialize recovery procedure templates"""
+        return {
             'database_recovery': {
                 'steps': [
                     {'name': 'assess_database_integrity', 'timeout': 300, 'critical': True},
@@ -194,7 +205,8 @@ class RecoveryPlanner:
         }
 
     def _initialize_validation_frameworks(self) -> Dict[str, List[Dict[str, Any]]]:
-        """Initialize recovery validation frameworks"""        return {
+        """Initialize recovery validation frameworks"""
+        return {
             'functional_validation': [
                 {'test': 'user_authentication', 'timeout': 60, 'critical': True},
                 {'test': 'content_upload', 'timeout': 120, 'critical': True},
@@ -223,14 +235,16 @@ class RecoveryPlanner:
         }
 
     async def create_service_recovery_plan(self, service_config: Dict[str, Any]) -> str:
-        """        Create comprehensive recovery plan for a service
+        """
+        Create comprehensive recovery plan for a service
         
         Args:
             service_config: Service configuration and requirements
             
         Returns:
             str: Recovery plan ID
-        """        try:
+        """
+        try:
             service_name = service_config['service_name']
             
             # Define recovery objectives
@@ -282,7 +296,8 @@ class RecoveryPlanner:
             raise
 
     async def _generate_recovery_steps(self, service_config: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate recovery steps based on service configuration"""        service_type = service_config.get('type', 'application')
+        """Generate recovery steps based on service configuration"""
+        service_type = service_config.get('type', 'application')
         recovery_steps = []
         
         # Use appropriate template based on service type
@@ -316,14 +331,16 @@ class RecoveryPlanner:
         return recovery_steps
 
     async def create_disaster_scenario(self, scenario_config: Dict[str, Any]) -> str:
-        """        Create disaster scenario with recovery strategy
+        """
+        Create disaster scenario with recovery strategy
         
         Args:
             scenario_config: Disaster scenario configuration
             
         Returns:
             str: Scenario ID
-        """        try:
+        """
+        try:
             scenario_id = f"scenario_{len(self.disaster_scenarios) + 1}_{int(datetime.utcnow().timestamp())}"
             
             # Assess impact of disaster scenario
@@ -358,7 +375,8 @@ class RecoveryPlanner:
             raise
 
     async def execute_recovery(self, scenario_id: str, execution_mode: str = "automatic") -> str:
-        """        Execute disaster recovery for a specific scenario
+        """
+        Execute disaster recovery for a specific scenario
         
         Args:
             scenario_id: Disaster scenario to recover from
@@ -366,7 +384,8 @@ class RecoveryPlanner:
             
         Returns:
             str: Recovery execution ID
-        """        try:
+        """
+        try:
             if scenario_id not in self.disaster_scenarios:
                 raise ValueError(f"Disaster scenario {scenario_id} not found")
             
@@ -398,7 +417,8 @@ class RecoveryPlanner:
             raise
 
     async def _execute_recovery_procedure(self, execution: RecoveryExecution, execution_mode: str):
-        """Execute the complete recovery procedure"""        try:
+        """Execute the complete recovery procedure"""
+        try:
             scenario = self.disaster_scenarios[execution.scenario_id]
             
             # Phase 1: Assessment
@@ -439,7 +459,8 @@ class RecoveryPlanner:
             self.logger.error(f"Recovery {execution.execution_id} failed: {e}")
 
     async def _execute_recovery_steps(self, execution: RecoveryExecution, scenario: DisasterScenario):
-        """Execute recovery steps in optimal sequence"""        # Get recovery sequence based on dependencies
+        """Execute recovery steps in optimal sequence"""
+        # Get recovery sequence based on dependencies
         recovery_sequence = self._calculate_recovery_sequence(scenario.recovery_plans)
         
         total_steps = sum(len(self.service_plans[plan].recovery_steps) for plan in recovery_sequence)
@@ -483,7 +504,8 @@ class RecoveryPlanner:
                         raise
 
     def _calculate_recovery_sequence(self, service_plans: List[str]) -> List[str]:
-        """Calculate optimal recovery sequence based on dependencies"""        try:
+        """Calculate optimal recovery sequence based on dependencies"""
+        try:
             # Create subgraph with only affected services
             affected_services = set(service_plans)
             subgraph = self.dependency_graph.subgraph(affected_services)
@@ -505,7 +527,8 @@ class RecoveryPlanner:
                          key=lambda x: self.service_plans[x].objectives.recovery_priority.value)
 
     async def test_recovery_plan(self, plan_id: str, test_type: str = "simulation") -> Dict[str, Any]:
-        """        Test recovery plan without affecting production systems
+        """
+        Test recovery plan without affecting production systems
         
         Args:
             plan_id: Service recovery plan to test
@@ -513,7 +536,8 @@ class RecoveryPlanner:
             
         Returns:
             Dict[str, Any]: Test results and recommendations
-        """        try:
+        """
+        try:
             if plan_id not in self.service_plans:
                 raise ValueError(f"Recovery plan {plan_id} not found")
             
@@ -556,7 +580,8 @@ class RecoveryPlanner:
             return {'error': str(e)}
 
     async def get_recovery_status(self, execution_id: str) -> Dict[str, Any]:
-        """Get current status of recovery execution"""        if execution_id not in self.active_recoveries:
+        """Get current status of recovery execution"""
+        if execution_id not in self.active_recoveries:
             return {'error': 'Recovery execution not found'}
         
         execution = self.active_recoveries[execution_id]
@@ -575,7 +600,8 @@ class RecoveryPlanner:
         }
 
     async def get_recovery_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive recovery planning and execution metrics"""        return {
+        """Get comprehensive recovery planning and execution metrics"""
+        return {
             'metrics': self.recovery_metrics.copy(),
             'total_service_plans': len(self.service_plans),
             'total_disaster_scenarios': len(self.disaster_scenarios),
@@ -588,7 +614,8 @@ class RecoveryPlanner:
         }
 
     def _update_dependency_graph(self, recovery_plan: ServiceRecoveryPlan):
-        """Update service dependency graph"""        service_name = recovery_plan.service_name
+        """Update service dependency graph"""
+        service_name = recovery_plan.service_name
         
         # Add service node
         self.dependency_graph.add_node(service_name, 
@@ -599,7 +626,8 @@ class RecoveryPlanner:
             self.dependency_graph.add_edge(dependency, service_name)
 
     def _update_recovery_metrics(self, execution: RecoveryExecution, success: bool):
-        """Update recovery performance metrics"""        self.recovery_metrics['total_recoveries'] += 1
+        """Update recovery performance metrics"""
+        self.recovery_metrics['total_recoveries'] += 1
         
         if success:
             self.recovery_metrics['successful_recoveries'] += 1

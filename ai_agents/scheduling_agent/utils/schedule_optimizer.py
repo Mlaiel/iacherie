@@ -20,7 +20,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -55,7 +56,8 @@ from .scheduling_agent import ScheduledJob, AudienceActivity, OptimalTimingAnaly
 logger = logging.getLogger(__name__)
 
 class OptimizationStrategy(Enum):
-    """Schedule optimization strategies"""    ENGAGEMENT_MAX = "engagement_maximization"
+    """Schedule optimization strategies"""
+    ENGAGEMENT_MAX = "engagement_maximization"
     REACH_MAX = "reach_maximization"
     BALANCED = "balanced_optimization"
     COMPETITION_AVOID = "competition_avoidance"
@@ -63,7 +65,8 @@ class OptimizationStrategy(Enum):
     AUDIENCE_GROWTH = "audience_growth"
 
 class TimingFactor(Enum):
-    """Factors considered in timing optimization"""    AUDIENCE_ACTIVITY = "audience_activity"
+    """Factors considered in timing optimization"""
+    AUDIENCE_ACTIVITY = "audience_activity"
     PLATFORM_ALGORITHM = "platform_algorithm"
     COMPETITION_LEVEL = "competition_level"
     CONTENT_TYPE = "content_type"
@@ -74,7 +77,8 @@ class TimingFactor(Enum):
 
 @dataclass
 class OptimizationConfig:
-    """Configuration for schedule optimization"""    strategy: OptimizationStrategy = OptimizationStrategy.BALANCED
+    """Configuration for schedule optimization"""
+    strategy: OptimizationStrategy = OptimizationStrategy.BALANCED
     factors: List[TimingFactor] = field(default_factory=lambda: list(TimingFactor))
     weights: Dict[TimingFactor, float] = field(default_factory=dict)
     time_horizon_hours: int = 168  # 7 days
@@ -84,7 +88,8 @@ class OptimizationConfig:
 
 @dataclass
 class TimingPrediction:
-    """Timing prediction result"""    recommended_time: datetime
+    """Timing prediction result"""
+    recommended_time: datetime
     expected_performance: Dict[str, float]
     confidence_score: float
     factors_analysis: Dict[TimingFactor, float]
@@ -93,7 +98,8 @@ class TimingPrediction:
 
 @dataclass
 class PerformanceMetrics:
-    """Performance metrics for evaluation"""    engagement_rate: float
+    """Performance metrics for evaluation"""
+    engagement_rate: float
     reach: int
     impressions: int
     clicks: int
@@ -104,7 +110,8 @@ class PerformanceMetrics:
     cost_per_engagement: Optional[float] = None
 
 class ScheduleOptimizer:
-    """    Enterprise schedule optimizer using machine learning for optimal timing prediction.
+    """
+    Enterprise schedule optimizer using machine learning for optimal timing prediction.
     
     Features:
     - ML-based performance prediction
@@ -112,7 +119,8 @@ class ScheduleOptimizer:
     - Historical data analysis
     - A/B testing framework
     - Real-time adaptation
-    """    
+    """
+    
     def __init__(self):
         self.performance_monitor = PerformanceMonitor()
         
@@ -136,7 +144,8 @@ class ScheduleOptimizer:
         logger.info("Schedule optimizer initialized")
     
     def _load_or_initialize_models(self):
-        """Load existing models or initialize new ones"""        try:
+        """Load existing models or initialize new ones"""
+        try:
             # Try to load existing models
             self.engagement_model = joblib.load(f"{self.model_storage_path}/engagement_model.joblib")
             self.reach_model = joblib.load(f"{self.model_storage_path}/reach_model.joblib")
@@ -177,7 +186,8 @@ class ScheduleOptimizer:
         config: OptimizationConfig,
         target_timezone: str = "UTC"
     ) -> TimingPrediction:
-        """        Optimize schedule timing using ML-based analysis.
+        """
+        Optimize schedule timing using ML-based analysis.
         
         Args:
             creator_id: Creator identifier
@@ -188,7 +198,8 @@ class ScheduleOptimizer:
             
         Returns:
             Timing prediction with optimal schedule
-        """        try:
+        """
+        try:
             logger.info(f"Optimizing schedule for creator {creator_id}")
             
             # Check cache first
@@ -275,7 +286,8 @@ class ScheduleOptimizer:
         schedule_id: str,
         actual_performance: PerformanceMetrics
     ) -> Dict[str, Any]:
-        """        Evaluate actual performance vs predicted performance for model improvement.
+        """
+        Evaluate actual performance vs predicted performance for model improvement.
         
         Args:
             schedule_id: Schedule identifier
@@ -283,7 +295,8 @@ class ScheduleOptimizer:
             
         Returns:
             Performance evaluation results
-        """        try:
+        """
+        try:
             logger.info(f"Evaluating schedule performance for {schedule_id}")
             
             # Get schedule details
@@ -347,14 +360,16 @@ class ScheduleOptimizer:
             raise AgentError(f"Performance evaluation failed: {str(e)}")
     
     async def retrain_models(self, creator_id: Optional[str] = None) -> Dict[str, Any]:
-        """        Retrain optimization models with latest data.
+        """
+        Retrain optimization models with latest data.
         
         Args:
             creator_id: Optional creator ID for personalized training
             
         Returns:
             Retraining results
-        """        try:
+        """
+        try:
             logger.info("Starting model retraining")
             
             # Collect training data
@@ -439,7 +454,8 @@ class ScheduleOptimizer:
         creator_id: str,
         platforms: List[str]
     ) -> List[Dict[str, Any]]:
-        """Collect historical scheduling and performance data"""        historical_data = []
+        """Collect historical scheduling and performance data"""
+        historical_data = []
         
         try:
             with get_db_session() as db:
@@ -477,7 +493,8 @@ class ScheduleOptimizer:
         platforms: List[str],
         target_timezone: str
     ) -> pd.DataFrame:
-        """Extract features for ML prediction"""        features = {}
+        """Extract features for ML prediction"""
+        features = {}
         
         # Time-based features
         current_time = datetime.now(pytz.timezone(target_timezone))
@@ -510,7 +527,8 @@ class ScheduleOptimizer:
         return pd.DataFrame([features])
     
     async def _update_models(self, historical_data: List[Dict[str, Any]], features: pd.DataFrame):
-        """Update ML models with recent data"""        if len(historical_data) < 10:
+        """Update ML models with recent data"""
+        if len(historical_data) < 10:
             return
         
         try:
@@ -526,7 +544,8 @@ class ScheduleOptimizer:
         config: OptimizationConfig,
         target_timezone: str
     ) -> List[datetime]:
-        """Generate candidate posting times within the optimization window"""        candidates = []
+        """Generate candidate posting times within the optimization window"""
+        candidates = []
         
         # Start from minimum delay
         start_time = datetime.now(pytz.timezone(target_timezone)) + timedelta(hours=config.min_delay_hours)
@@ -548,7 +567,8 @@ class ScheduleOptimizer:
         platforms: List[str],
         config: OptimizationConfig
     ) -> float:
-        """Evaluate a candidate timing using multiple factors"""        try:
+        """Evaluate a candidate timing using multiple factors"""
+        try:
             total_score = 0.0
             total_weight = 0.0
             
@@ -578,7 +598,8 @@ class ScheduleOptimizer:
         content_metadata: Dict[str, Any],
         platforms: List[str]
     ) -> float:
-        """Evaluate a specific timing factor"""        try:
+        """Evaluate a specific timing factor"""
+        try:
             if factor == TimingFactor.AUDIENCE_ACTIVITY:
                 return await self._evaluate_audience_activity(candidate_time, creator_id, platforms)
             
@@ -616,7 +637,8 @@ class ScheduleOptimizer:
         creator_id: str,
         platforms: List[str]
     ) -> float:
-        """Evaluate audience activity at candidate time"""        try:
+        """Evaluate audience activity at candidate time"""
+        try:
             with get_db_session() as db:
                 hour = candidate_time.hour
                 day_of_week = candidate_time.weekday()
@@ -644,7 +666,8 @@ class ScheduleOptimizer:
         candidate_time: datetime,
         platforms: List[str]
     ) -> float:
-        """Evaluate platform algorithm preferences"""        # Mock implementation based on known platform preferences
+        """Evaluate platform algorithm preferences"""
+        # Mock implementation based on known platform preferences
         hour = candidate_time.hour
         day_of_week = candidate_time.weekday()
         
@@ -706,7 +729,8 @@ class ScheduleOptimizer:
         candidate_time: datetime,
         platforms: List[str]
     ) -> float:
-        """Evaluate competition level (lower competition = higher score)"""        hour = candidate_time.hour
+        """Evaluate competition level (lower competition = higher score)"""
+        hour = candidate_time.hour
         day_of_week = candidate_time.weekday()
         
         # Mock competition analysis
@@ -741,7 +765,8 @@ class ScheduleOptimizer:
         candidate_time: datetime,
         content_metadata: Dict[str, Any]
     ) -> float:
-        """Evaluate timing based on content type"""        content_type = content_metadata.get('content_type', 'general').lower()
+        """Evaluate timing based on content type"""
+        content_type = content_metadata.get('content_type', 'general').lower()
         hour = candidate_time.hour
         day_of_week = candidate_time.weekday()
         
@@ -778,7 +803,8 @@ class ScheduleOptimizer:
         creator_id: str,
         platforms: List[str]
     ) -> float:
-        """Evaluate based on historical performance at similar times"""        try:
+        """Evaluate based on historical performance at similar times"""
+        try:
             # Mock implementation - would analyze actual historical data
             hour = candidate_time.hour
             day_of_week = candidate_time.weekday()
@@ -801,7 +827,8 @@ class ScheduleOptimizer:
             return 0.5
     
     def _evaluate_seasonal_trends(self, candidate_time: datetime) -> float:
-        """Evaluate seasonal and trending factors"""        month = candidate_time.month
+        """Evaluate seasonal and trending factors"""
+        month = candidate_time.month
         day = candidate_time.day
         
         # Seasonal adjustments
@@ -826,7 +853,8 @@ class ScheduleOptimizer:
         return min(1.0, seasonal_score)
     
     async def _evaluate_global_events(self, candidate_time: datetime) -> float:
-        """Evaluate impact of global events (simplified)"""        # Mock implementation - would integrate with news/events APIs
+        """Evaluate impact of global events (simplified)"""
+        # Mock implementation - would integrate with news/events APIs
         # For now, return neutral score
         return 0.5
     
@@ -835,7 +863,8 @@ class ScheduleOptimizer:
         candidate_time: datetime,
         platforms: List[str]
     ) -> float:
-        """Evaluate timezone alignment with target audience"""        # Mock implementation - would consider creator's audience timezone distribution
+        """Evaluate timezone alignment with target audience"""
+        # Mock implementation - would consider creator's audience timezone distribution
         # For now, assume good alignment during reasonable hours
         hour = candidate_time.hour
         
@@ -845,7 +874,8 @@ class ScheduleOptimizer:
             return 0.3  # Poor timing for most timezones
     
     def _get_default_activity_score(self, hour: int, day_of_week: int) -> float:
-        """Get default activity score when no data available"""        # Mock default patterns
+        """Get default activity score when no data available"""
+        # Mock default patterns
         peak_hours = [7, 8, 9, 12, 17, 18, 19, 20]
         weekend_penalty = 0.1 if day_of_week >= 5 else 0
         
@@ -859,7 +889,8 @@ class ScheduleOptimizer:
         content_metadata: Dict[str, Any],
         platforms: List[str]
     ) -> Dict[str, float]:
-        """Predict performance metrics for optimal time"""        try:
+        """Predict performance metrics for optimal time"""
+        try:
             # Extract features for the optimal time
             features_df = await self._extract_features(
                 creator_id, content_metadata, platforms, optimal_time.tzinfo.zone or "UTC"
@@ -902,7 +933,8 @@ class ScheduleOptimizer:
         data_points: int,
         features: pd.DataFrame
     ) -> float:
-        """Calculate confidence in the optimization result"""        # Base confidence from optimization score
+        """Calculate confidence in the optimization result"""
+        # Base confidence from optimization score
         score_confidence = optimal_score
         
         # Data availability confidence
@@ -928,7 +960,8 @@ class ScheduleOptimizer:
         platforms: List[str],
         config: OptimizationConfig
     ) -> Dict[TimingFactor, float]:
-        """Analyze contribution of each factor to the optimal timing"""        factors_analysis = {}
+        """Analyze contribution of each factor to the optimal timing"""
+        factors_analysis = {}
         
         for factor in config.factors:
             score = await self._evaluate_factor(
@@ -945,7 +978,8 @@ class ScheduleOptimizer:
         optimal_time: datetime,
         expected_performance: Dict[str, float]
     ) -> List[str]:
-        """Generate human-readable optimization reasoning"""        reasoning = []
+        """Generate human-readable optimization reasoning"""
+        reasoning = []
         
         # Strategy-based reasoning
         if config.strategy == OptimizationStrategy.ENGAGEMENT_MAX:
@@ -987,7 +1021,8 @@ class ScheduleOptimizer:
         platforms: List[str],
         config: OptimizationConfig
     ) -> str:
-        """Generate cache key for optimization results"""        key_parts = [
+        """Generate cache key for optimization results"""
+        key_parts = [
             creator_id,
             content_metadata.get('content_type', 'general'),
             ':'.join(sorted(platforms)),
@@ -997,7 +1032,8 @@ class ScheduleOptimizer:
         return hashlib.md5('|'.join(key_parts).encode()).hexdigest()
     
     async def _collect_training_data(self, creator_id: Optional[str]) -> List[Dict[str, Any]]:
-        """Collect data for model training"""        training_data = []
+        """Collect data for model training"""
+        training_data = []
         
         try:
             with get_db_session() as db:
@@ -1031,7 +1067,8 @@ class ScheduleOptimizer:
         self,
         training_data: List[Dict[str, Any]]
     ) -> Tuple[pd.DataFrame, np.ndarray, np.ndarray, np.ndarray]:
-        """Prepare training data for ML models"""        features_list = []
+        """Prepare training data for ML models"""
+        features_list = []
         engagement_targets = []
         reach_targets = []
         competition_targets = []
@@ -1081,7 +1118,8 @@ class ScheduleOptimizer:
         )
     
     def _save_models(self):
-        """Save trained models to disk"""        try:
+        """Save trained models to disk"""
+        try:
             joblib.dump(self.engagement_model, f"{self.model_storage_path}/engagement_model.joblib")
             joblib.dump(self.reach_model, f"{self.model_storage_path}/reach_model.joblib")
             joblib.dump(self.competition_model, f"{self.model_storage_path}/competition_model.joblib")
@@ -1093,7 +1131,8 @@ class ScheduleOptimizer:
             logger.error(f"Failed to save models: {str(e)}")
     
     async def _store_performance_feedback(self, feedback_data: Dict[str, Any]):
-        """Store performance feedback for model improvement"""        # This would typically store feedback in a database or data pipeline
+        """Store performance feedback for model improvement"""
+        # This would typically store feedback in a database or data pipeline
         # For now, we'll just log it
         logger.info(f"Performance feedback recorded: {feedback_data['overall_accuracy']:.2f}")
     
@@ -1103,7 +1142,8 @@ class ScheduleOptimizer:
         predicted_performance: Dict[str, Any],
         actual_performance: Dict[str, Any]
     ) -> List[str]:
-        """Generate suggestions for model improvement"""        suggestions = []
+        """Generate suggestions for model improvement"""
+        suggestions = []
         
         overall_accuracy = np.mean(list(accuracy_metrics.values())) if accuracy_metrics else 0.5
         
@@ -1119,16 +1159,19 @@ class ScheduleOptimizer:
         return suggestions
 
 class TimingAnalyzer:
-    """    Enterprise timing analysis system for content scheduling optimization.
+    """
+    Enterprise timing analysis system for content scheduling optimization.
     
     Provides detailed analytics and insights for scheduling decisions.
-    """    
+    """
+    
     def __init__(self):
         self.performance_monitor = PerformanceMonitor()
         logger.info("Timing analyzer initialized")
     
     async def analyze_creator_patterns(self, creator_id: str) -> Dict[str, Any]:
-        """Analyze creator's posting patterns and performance"""        try:
+        """Analyze creator's posting patterns and performance"""
+        try:
             with get_db_session() as db:
                 # Get creator's schedule history
                 schedules = db.query(ScheduledJob).filter(
@@ -1156,7 +1199,8 @@ class TimingAnalyzer:
             raise AgentError(f"Pattern analysis failed: {str(e)}")
     
     def _analyze_posting_frequency(self, schedules: List[ScheduledJob]) -> Dict[str, Any]:
-        """Analyze posting frequency patterns"""        if not schedules:
+        """Analyze posting frequency patterns"""
+        if not schedules:
             return {}
         
         # Calculate daily posting frequency
@@ -1175,7 +1219,8 @@ class TimingAnalyzer:
         }
     
     def _analyze_optimal_hours(self, schedules: List[ScheduledJob]) -> Dict[str, Any]:
-        """Analyze optimal posting hours based on performance"""        hourly_performance = {}
+        """Analyze optimal posting hours based on performance"""
+        hourly_performance = {}
         
         for schedule in schedules:
             hour = schedule.schedule_time.hour
@@ -1207,7 +1252,8 @@ class TimingAnalyzer:
         }
     
     def _analyze_platform_performance(self, schedules: List[ScheduledJob]) -> Dict[str, Any]:
-        """Analyze performance across different platforms"""        platform_performance = {}
+        """Analyze performance across different platforms"""
+        platform_performance = {}
         
         for schedule in schedules:
             if not schedule.performance_metrics:
@@ -1236,7 +1282,8 @@ class TimingAnalyzer:
         return platform_averages
     
     def _analyze_content_type_performance(self, schedules: List[ScheduledJob]) -> Dict[str, Any]:
-        """Analyze performance by content type"""        content_performance = {}
+        """Analyze performance by content type"""
+        content_performance = {}
         
         for schedule in schedules:
             if not schedule.metadata or not schedule.performance_metrics:
@@ -1267,7 +1314,8 @@ class TimingAnalyzer:
         return content_averages
     
     def _analyze_seasonal_trends(self, schedules: List[ScheduledJob]) -> Dict[str, Any]:
-        """Analyze seasonal performance trends"""        monthly_performance = {}
+        """Analyze seasonal performance trends"""
+        monthly_performance = {}
         
         for schedule in schedules:
             if not schedule.performance_metrics:
@@ -1302,7 +1350,8 @@ class TimingAnalyzer:
         }
     
     def _analyze_performance_trends(self, schedules: List[ScheduledJob]) -> Dict[str, Any]:
-        """Analyze overall performance trends over time"""        # Sort schedules by time
+        """Analyze overall performance trends over time"""
+        # Sort schedules by time
         sorted_schedules = sorted(schedules, key=lambda x: x.schedule_time)
         
         # Calculate rolling averages

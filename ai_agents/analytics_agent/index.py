@@ -17,7 +17,8 @@ Enterprise Module Overview:
 - Real-time analytics dashboard and metrics aggregation
 - Multi-tenant analytics processing with enterprise security
 - Scalable microservices architecture with load balancing
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import time
@@ -72,14 +73,16 @@ content_analyzed_total = Counter('content_analyzed_total', 'Total content pieces
 ml_predictions_total = Counter('ml_predictions_total', 'Total ML predictions generated', ['prediction_type'])
 
 class ServiceStatus(Enum):
-    """Service status enumeration"""    HEALTHY = "healthy"
+    """Service status enumeration"""
+    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     MAINTENANCE = "maintenance"
 
 @dataclass
 class ServiceHealth:
-    """Service health status model"""    service_name: str
+    """Service health status model"""
+    service_name: str
     status: ServiceStatus
     version: str
     uptime_seconds: int
@@ -93,7 +96,8 @@ class ServiceHealth:
     metrics: Dict[str, Any]
 
 class AnalyticsRequestModel(BaseModel):
-    """Analytics request API model"""    content_id: str = Field(..., description="Unique content identifier")
+    """Analytics request API model"""
+    content_id: str = Field(..., description="Unique content identifier")
     analytics_type: str = Field(..., description="Type of analytics to perform")
     user_id: str = Field(..., description="User identifier")
     priority: str = Field(default="normal", description="Request priority level")
@@ -102,7 +106,8 @@ class AnalyticsRequestModel(BaseModel):
     timeout_seconds: Optional[int] = Field(default=300, description="Request timeout in seconds")
 
 class AnalyticsResponseModel(BaseModel):
-    """Analytics response API model"""    request_id: str = Field(..., description="Unique request identifier")
+    """Analytics response API model"""
+    request_id: str = Field(..., description="Unique request identifier")
     status: str = Field(..., description="Processing status")
     data: Dict[str, Any] = Field(..., description="Analytics results data")
     metadata: Dict[str, Any] = Field(..., description="Response metadata")
@@ -110,16 +115,19 @@ class AnalyticsResponseModel(BaseModel):
     timestamp: datetime = Field(..., description="Response timestamp")
 
 class BatchAnalyticsRequestModel(BaseModel):
-    """Batch analytics request API model"""    requests: List[AnalyticsRequestModel] = Field(..., description="List of analytics requests")
+    """Batch analytics request API model"""
+    requests: List[AnalyticsRequestModel] = Field(..., description="List of analytics requests")
     batch_options: Dict[str, Any] = Field(default_factory=dict, description="Batch processing options")
 
 class DashboardMetricsModel(BaseModel):
-    """Dashboard metrics API model"""    time_range: str = Field(default="24h", description="Time range for metrics")
+    """Dashboard metrics API model"""
+    time_range: str = Field(default="24h", description="Time range for metrics")
     granularity: str = Field(default="1h", description="Metrics granularity")
     filters: Dict[str, Any] = Field(default_factory=dict, description="Metrics filters")
 
 class EnterpriseAnalyticsService:
-    """    Enterprise Analytics Service - Production-grade orchestration and management
+    """
+    Enterprise Analytics Service - Production-grade orchestration and management
     
     Features:
     - Multi-tenant analytics processing with enterprise security
@@ -128,9 +136,11 @@ class EnterpriseAnalyticsService:
     - Scalable microservices architecture with service mesh
     - Production monitoring with health checks and metrics
     - Advanced caching and performance optimization
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize enterprise analytics service"""        self.config = config
+        """Initialize enterprise analytics service"""
+        self.config = config
         self.service_id = f"analytics_service_{int(time.time())}"
         self.start_time = datetime.utcnow()
         self.is_healthy = True
@@ -158,7 +168,8 @@ class EnterpriseAnalyticsService:
         logger.info(f"Enterprise Analytics Service initialized: {self.service_id}")
     
     async def health_check(self) -> ServiceHealth:
-        """Comprehensive service health check"""        try:
+        """Comprehensive service health check"""
+        try:
             # Calculate uptime
             uptime = (datetime.utcnow() - self.start_time).total_seconds()
             
@@ -219,7 +230,8 @@ class EnterpriseAnalyticsService:
             )
     
     async def _check_redis_health(self) -> ServiceStatus:
-        """Check Redis connection health"""        try:
+        """Check Redis connection health"""
+        try:
             await asyncio.wait_for(
                 asyncio.create_task(
                     asyncio.to_thread(self.redis_client.ping)
@@ -231,7 +243,8 @@ class EnterpriseAnalyticsService:
             return ServiceStatus.UNHEALTHY
     
     def _get_memory_usage(self) -> float:
-        """Get current memory usage in MB"""        try:
+        """Get current memory usage in MB"""
+        try:
             import psutil
             process = psutil.Process()
             return process.memory_info().rss / 1024 / 1024
@@ -239,14 +252,16 @@ class EnterpriseAnalyticsService:
             return 0.0
     
     def _get_cpu_usage(self) -> float:
-        """Get current CPU usage percentage"""        try:
+        """Get current CPU usage percentage"""
+        try:
             import psutil
             return psutil.cpu_percent(interval=1)
         except ImportError:
             return 0.0
     
     async def _get_cache_metrics(self) -> float:
-        """Get cache hit rate metrics"""        try:
+        """Get cache hit rate metrics"""
+        try:
             info = self.redis_client.info()
             hits = float(info.get('keyspace_hits', 0))
             misses = float(info.get('keyspace_misses', 0))
@@ -256,7 +271,8 @@ class EnterpriseAnalyticsService:
             return 0.0
     
     async def _get_performance_metrics(self) -> float:
-        """Get average response time metrics"""        try:
+        """Get average response time metrics"""
+        try:
             # Get metrics from Redis
             metrics_key = f"performance_metrics:{self.service_id}"
             metrics_data = self.redis_client.get(metrics_key)
@@ -268,7 +284,8 @@ class EnterpriseAnalyticsService:
             return 0.0
     
     async def _get_queue_metrics(self) -> int:
-        """Get current queue depth metrics"""        try:
+        """Get current queue depth metrics"""
+        try:
             queue_key = f"analytics_queue:{self.service_id}"
             return self.redis_client.llen(queue_key)
         except Exception:
@@ -303,7 +320,8 @@ analytics_service: Optional[EnterpriseAnalyticsService] = None
 
 @app.on_event("startup")
 async def startup_event():
-    """Application startup event handler"""    global analytics_service
+    """Application startup event handler"""
+    global analytics_service
     
     # Load configuration
     config = {
@@ -324,7 +342,8 @@ async def startup_event():
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    """Application shutdown event handler"""    global analytics_service
+    """Application shutdown event handler"""
+    global analytics_service
     
     if analytics_service:
         # Cleanup resources
@@ -334,7 +353,8 @@ async def shutdown_event():
 
 # Dependency for authentication
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    """Authentication dependency"""    # Implement your authentication logic here
+    """Authentication dependency"""
+    # Implement your authentication logic here
     # For now, just return a mock user
     return {"user_id": "user_123", "tenant_id": "tenant_456"}
 
@@ -342,7 +362,8 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
 
 @app.get("/health", response_model=Dict[str, Any])
 async def health_endpoint():
-    """Service health check endpoint"""    if not analytics_service:
+    """Service health check endpoint"""
+    if not analytics_service:
         raise HTTPException(status_code=503, detail="Service not initialized")
     
     health = await analytics_service.health_check()
@@ -358,7 +379,8 @@ async def health_endpoint():
 
 @app.get("/metrics")
 async def metrics_endpoint():
-    """Prometheus metrics endpoint"""    return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
+    """Prometheus metrics endpoint"""
+    return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
 @app.post("/analytics/process", response_model=AnalyticsResponseModel)
 async def process_analytics(
@@ -366,7 +388,8 @@ async def process_analytics(
     background_tasks: BackgroundTasks,
     user = Depends(get_current_user)
 ):
-    """Process single analytics request"""    if not analytics_service:
+    """Process single analytics request"""
+    if not analytics_service:
         raise HTTPException(status_code=503, detail="Service not initialized")
     
     start_time = time.time()
@@ -423,7 +446,8 @@ async def process_batch_analytics(
     background_tasks: BackgroundTasks,
     user = Depends(get_current_user)
 ):
-    """Process batch analytics requests"""    if not analytics_service:
+    """Process batch analytics requests"""
+    if not analytics_service:
         raise HTTPException(status_code=503, detail="Service not initialized")
     
     results = []
@@ -452,7 +476,8 @@ async def dashboard_metrics(
     granularity: str = "1h",
     user = Depends(get_current_user)
 ):
-    """Get dashboard metrics"""    if not analytics_service:
+    """Get dashboard metrics"""
+    if not analytics_service:
         raise HTTPException(status_code=503, detail="Service not initialized")
     
     try:
@@ -484,7 +509,8 @@ async def content_performance(
     time_range: str = "7d",
     user = Depends(get_current_user)
 ):
-    """Get content performance analytics"""    if not analytics_service:
+    """Get content performance analytics"""
+    if not analytics_service:
         raise HTTPException(status_code=503, detail="Service not initialized")
     
     try:
@@ -514,7 +540,8 @@ async def ml_predictions(
     prediction_type: str,
     user = Depends(get_current_user)
 ):
-    """Generate ML predictions"""    if not analytics_service:
+    """Generate ML predictions"""
+    if not analytics_service:
         raise HTTPException(status_code=503, detail="Service not initialized")
     
     try:
@@ -544,7 +571,8 @@ async def ml_predictions(
 # WebSocket endpoint for real-time analytics
 @app.websocket("/ws/analytics")
 async def websocket_analytics(websocket):
-    """WebSocket endpoint for real-time analytics streaming"""    await websocket.accept()
+    """WebSocket endpoint for real-time analytics streaming"""
+    await websocket.accept()
     
     try:
         while True:
@@ -571,7 +599,8 @@ async def websocket_analytics(websocket):
         await websocket.close()
 
 def create_enterprise_app(config: Optional[Dict[str, Any]] = None) -> FastAPI:
-    """Factory function to create enterprise analytics application"""    if config:
+    """Factory function to create enterprise analytics application"""
+    if config:
         # Apply custom configuration
         app.state.config = config
     
@@ -583,7 +612,8 @@ def run_server(
     workers: int = 1,
     reload: bool = False
 ):
-    """Run the analytics server"""    logger.info(f"Starting Enterprise Analytics Server on {host}:{port}")
+    """Run the analytics server"""
+    logger.info(f"Starting Enterprise Analytics Server on {host}:{port}")
     
     uvicorn.run(
         "analytics_agent.index:app",

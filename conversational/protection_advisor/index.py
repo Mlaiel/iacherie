@@ -16,7 +16,8 @@ Team Specialization:
 - Audio Processing Expert: Advanced signal processing algorithms
 - DevOps Engineer: Production deployment & monitoring systems
 - AI Prompt Engineer: Intelligent content analysis & classification
-"""import asyncio
+"""
+import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, asdict
@@ -46,7 +47,8 @@ logger = get_logger(__name__)
 
 
 class ServiceStatus(str, Enum):
-    """Service status enumeration."""    ACTIVE = "active"
+    """Service status enumeration."""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     MAINTENANCE = "maintenance"
     ERROR = "error"
@@ -54,7 +56,8 @@ class ServiceStatus(str, Enum):
 
 
 class RequestPriority(str, Enum):
-    """Request priority levels."""    CRITICAL = "critical"
+    """Request priority levels."""
+    CRITICAL = "critical"
     HIGH = "high"
     NORMAL = "normal"
     LOW = "low"
@@ -63,7 +66,8 @@ class RequestPriority(str, Enum):
 
 @dataclass
 class ServiceHealth:
-    """Service health status."""    service_name: str
+    """Service health status."""
+    service_name: str
     status: ServiceStatus
     last_check: datetime
     response_time_ms: float
@@ -78,7 +82,8 @@ class ServiceHealth:
 
 @dataclass
 class ProtectionRequest:
-    """Unified protection request."""    request_id: str
+    """Unified protection request."""
+    request_id: str
     user_id: str
     content_id: Optional[str]
     request_type: str
@@ -96,7 +101,8 @@ class ProtectionRequest:
 
 @dataclass
 class ProtectionResponse:
-    """Unified protection response."""    request_id: str
+    """Unified protection response."""
+    request_id: str
     success: bool
     data: Optional[Dict[str, Any]]
     metadata: Dict[str, Any]
@@ -109,7 +115,8 @@ class ProtectionResponse:
 
 
 class ProtectionAdvisorIndex:
-    """    Central orchestration and unified API interface for protection advisor services.
+    """
+    Central orchestration and unified API interface for protection advisor services.
     
     Provides:
     - Unified API access to all protection advisor services
@@ -118,7 +125,8 @@ class ProtectionAdvisorIndex:
     - Request queuing and priority management
     - Comprehensive analytics and reporting
     - Service discovery and coordination
-    """    def __init__(self):
+    """
+    def __init__(self):
         self.services = {}
         self.service_health = {}
         self.request_queue = asyncio.PriorityQueue()
@@ -146,11 +154,13 @@ class ProtectionAdvisorIndex:
         asyncio.create_task(self._initialize_protection_index())
     
     async def initialize_all_services(self) -> Dict[str, ServiceStatus]:
-        """        Initialize all protection advisor services.
+        """
+        Initialize all protection advisor services.
         
         Returns:
             Dictionary mapping service names to their initialization status
-        """        try:
+        """
+        try:
             logger.info("Initializing all protection advisor services")
             
             service_initialization = {}
@@ -228,7 +238,8 @@ class ProtectionAdvisorIndex:
         priority: RequestPriority = RequestPriority.NORMAL,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """        Submit unified protection request.
+        """
+        Submit unified protection request.
         
         Args:
             request_type: Type of protection request
@@ -239,7 +250,8 @@ class ProtectionAdvisorIndex:
             
         Returns:
             Request ID for tracking
-        """        try:
+        """
+        try:
             request_id = f"req_{uuid.uuid4().hex[:16]}"
             
             # Create protection request
@@ -290,14 +302,16 @@ class ProtectionAdvisorIndex:
             raise
     
     async def get_request_status(self, request_id: str) -> Optional[Dict[str, Any]]:
-        """        Get status of protection request.
+        """
+        Get status of protection request.
         
         Args:
             request_id: Request identifier
             
         Returns:
             Request status information
-        """        try:
+        """
+        try:
             request = self.active_requests.get(request_id)
             if not request:
                 # Check cache for completed requests
@@ -324,14 +338,16 @@ class ProtectionAdvisorIndex:
             return None
     
     async def get_request_results(self, request_id: str) -> Optional[ProtectionResponse]:
-        """        Get results of completed protection request.
+        """
+        Get results of completed protection request.
         
         Args:
             request_id: Request identifier
             
         Returns:
             Protection response with results
-        """        try:
+        """
+        try:
             request = self.active_requests.get(request_id)
             
             if not request:
@@ -368,11 +384,13 @@ class ProtectionAdvisorIndex:
             return None
     
     async def get_service_health_status(self) -> Dict[str, ServiceHealth]:
-        """        Get health status of all services.
+        """
+        Get health status of all services.
         
         Returns:
             Dictionary mapping service names to health status
-        """        try:
+        """
+        try:
             current_health = {}
             
             for service_name in self.services.keys():
@@ -389,14 +407,16 @@ class ProtectionAdvisorIndex:
         self,
         period: timedelta = timedelta(hours=24)
     ) -> Dict[str, Any]:
-        """        Get comprehensive performance analytics.
+        """
+        Get comprehensive performance analytics.
         
         Args:
             period: Analysis period
             
         Returns:
             Performance analytics data
-        """        try:
+        """
+        try:
             analytics = {
                 "period": {
                     "start": (datetime.utcnow() - period).isoformat(),
@@ -449,14 +469,16 @@ class ProtectionAdvisorIndex:
         self,
         optimization_goals: List[str]
     ) -> Dict[str, Any]:
-        """        Optimize service configuration based on performance data.
+        """
+        Optimize service configuration based on performance data.
         
         Args:
             optimization_goals: List of optimization objectives
             
         Returns:
             Optimization recommendations and plan
-        """        try:
+        """
+        try:
             logger.info("Optimizing service configuration")
             
             optimization_plan = {
@@ -513,7 +535,8 @@ class ProtectionAdvisorIndex:
     # Private helper methods
     
     async def _initialize_protection_index(self):
-        """Initialize protection advisor index."""        try:
+        """Initialize protection advisor index."""
+        try:
             logger.info("Initializing protection advisor index")
             
             # Initialize load balancer
@@ -528,7 +551,8 @@ class ProtectionAdvisorIndex:
             logger.error(f"Error initializing protection index: {str(e)}")
     
     async def _initialize_service(self, service_name: str, service_class) -> Any:
-        """Initialize individual service."""        try:
+        """Initialize individual service."""
+        try:
             logger.info(f"Initializing service: {service_name}")
             
             # Create service instance
@@ -554,7 +578,8 @@ class ProtectionAdvisorIndex:
             raise
     
     async def _initialize_service_health(self, service_name: str):
-        """Initialize health monitoring for service."""        try:
+        """Initialize health monitoring for service."""
+        try:
             self.service_health[service_name] = ServiceHealth(
                 service_name=service_name,
                 status=ServiceStatus.ACTIVE,
@@ -577,7 +602,8 @@ class ProtectionAdvisorIndex:
         request_type: str,
         parameters: Dict[str, Any]
     ) -> List[str]:
-        """Determine which services are required for request."""        try:
+        """Determine which services are required for request."""
+        try:
             service_mapping = {
                 "content_analysis": ["advisor_core", "risk_analyzer", "threat_detector"],
                 "protection_recommendation": ["recommendation_engine", "protection_strategies"],
@@ -599,7 +625,8 @@ class ProtectionAdvisorIndex:
             return ["advisor_core"]
     
     async def _estimate_completion_time(self, request: ProtectionRequest) -> datetime:
-        """Estimate request completion time."""        try:
+        """Estimate request completion time."""
+        try:
             base_time = 30  # seconds
             service_time = len(request.assigned_services) * 5  # 5 seconds per service
             queue_delay = self.request_queue.qsize() * 2  # 2 seconds per queued request
@@ -613,7 +640,8 @@ class ProtectionAdvisorIndex:
             return datetime.utcnow() + timedelta(minutes=5)  # Default 5 minutes
     
     def _get_priority_value(self, priority: RequestPriority) -> int:
-        """Convert priority to numeric value for queue ordering."""        priority_values = {
+        """Convert priority to numeric value for queue ordering."""
+        priority_values = {
             RequestPriority.CRITICAL: 0,
             RequestPriority.HIGH: 1,
             RequestPriority.NORMAL: 2,
@@ -623,7 +651,8 @@ class ProtectionAdvisorIndex:
         return priority_values.get(priority, 2)
     
     async def _calculate_progress_percentage(self, request: ProtectionRequest) -> float:
-        """Calculate request progress percentage."""        try:
+        """Calculate request progress percentage."""
+        try:
             if request.status == "completed":
                 return 100.0
             elif request.status == "processing":
@@ -641,7 +670,8 @@ class ProtectionAdvisorIndex:
             return 0.0
     
     def _calculate_processing_time(self, request: ProtectionRequest) -> float:
-        """Calculate request processing time in milliseconds."""        try:
+        """Calculate request processing time in milliseconds."""
+        try:
             if request.actual_completion and request.created_at:
                 delta = request.actual_completion - request.created_at
                 return delta.total_seconds() * 1000
@@ -652,7 +682,8 @@ class ProtectionAdvisorIndex:
             return 0.0
     
     async def _check_service_health(self, service_name: str) -> ServiceHealth:
-        """Check health of specific service."""        try:
+        """Check health of specific service."""
+        try:
             service = self.services.get(service_name)
             if not service:
                 return ServiceHealth(
@@ -713,7 +744,8 @@ class ProtectionAdvisorIndex:
     # Background monitoring tasks
     
     async def _service_health_monitor(self):
-        """Background task for monitoring service health."""        while True:
+        """Background task for monitoring service health."""
+        while True:
             try:
                 for service_name in self.services.keys():
                     health = await self._check_service_health(service_name)
@@ -726,7 +758,8 @@ class ProtectionAdvisorIndex:
                 await asyncio.sleep(60)
     
     async def _request_processor(self):
-        """Background task for processing requests."""        while True:
+        """Background task for processing requests."""
+        while True:
             try:
                 if not self.request_queue.empty():
                     priority, request = await self.request_queue.get()
@@ -741,7 +774,8 @@ class ProtectionAdvisorIndex:
                 await asyncio.sleep(5)
     
     async def _performance_monitor(self):
-        """Background task for monitoring performance."""        while True:
+        """Background task for monitoring performance."""
+        while True:
             try:
                 # Update performance metrics
                 await self._update_performance_metrics()
@@ -753,7 +787,8 @@ class ProtectionAdvisorIndex:
                 await asyncio.sleep(300)
     
     async def _process_protection_request(self, request: ProtectionRequest):
-        """Process individual protection request."""        try:
+        """Process individual protection request."""
+        try:
             request.status = "processing"
             start_time = datetime.utcnow()
             
@@ -796,14 +831,16 @@ class ProtectionAdvisorIndex:
     # Simplified analysis methods
     
     async def _analyze_request_patterns(self, period: timedelta) -> Dict[str, Any]:
-        """Analyze request patterns."""        return {
+        """Analyze request patterns."""
+        return {
             "peak_hours": [14, 15, 16],
             "request_types": {"content_analysis": 45, "protection_recommendation": 30},
             "average_queue_size": 5.2
         }
     
     async def _analyze_errors(self, period: timedelta) -> Dict[str, Any]:
-        """Analyze error patterns."""        return {
+        """Analyze error patterns."""
+        return {
             "total_errors": 12,
             "error_rate": 0.025,
             "top_errors": ["timeout", "service_unavailable"],
@@ -811,7 +848,8 @@ class ProtectionAdvisorIndex:
         }
     
     async def _analyze_capacity_utilization(self) -> Dict[str, Any]:
-        """Analyze capacity utilization."""        return {
+        """Analyze capacity utilization."""
+        return {
             "cpu_utilization": 65.0,
             "memory_utilization": 72.0,
             "request_queue_utilization": 45.0,
@@ -819,7 +857,8 @@ class ProtectionAdvisorIndex:
         }
     
     async def _analyze_performance_trends(self, period: timedelta) -> Dict[str, Any]:
-        """Analyze performance trends."""        return {
+        """Analyze performance trends."""
+        return {
             "response_time_trend": "stable",
             "throughput_trend": "increasing",
             "error_rate_trend": "decreasing",
@@ -827,7 +866,8 @@ class ProtectionAdvisorIndex:
         }
     
     async def _generate_performance_recommendations(self, analytics: Dict[str, Any]) -> List[str]:
-        """Generate performance optimization recommendations."""        return [
+        """Generate performance optimization recommendations."""
+        return [
             "Consider increasing concurrent request limit during peak hours",
             "Implement request caching for frequently accessed data",
             "Add horizontal scaling for high-demand services",
@@ -837,7 +877,8 @@ class ProtectionAdvisorIndex:
     # Optimization helper methods
     
     async def _identify_performance_bottlenecks(self) -> Dict[str, Any]:
-        """Identify current performance bottlenecks."""        return {
+        """Identify current performance bottlenecks."""
+        return {
             "cpu_bottlenecks": ["risk_analyzer"],
             "memory_bottlenecks": ["fingerprinting_integration"],
             "io_bottlenecks": ["content_surveillance"],
@@ -845,7 +886,8 @@ class ProtectionAdvisorIndex:
         }
     
     async def _optimize_throughput(self, bottlenecks: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate throughput optimization recommendations."""        return {
+        """Generate throughput optimization recommendations."""
+        return {
             "increase_concurrency": True,
             "implement_caching": True,
             "optimize_algorithms": ["risk_analysis"],
@@ -853,7 +895,8 @@ class ProtectionAdvisorIndex:
         }
     
     async def _optimize_latency(self, bottlenecks: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate latency optimization recommendations."""        return {
+        """Generate latency optimization recommendations."""
+        return {
             "reduce_network_calls": True,
             "implement_local_caching": True,
             "optimize_database_queries": True,
@@ -861,7 +904,8 @@ class ProtectionAdvisorIndex:
         }
     
     async def _optimize_resource_utilization(self, bottlenecks: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate resource utilization optimization recommendations."""        return {
+        """Generate resource utilization optimization recommendations."""
+        return {
             "optimize_memory_usage": True,
             "implement_resource_pooling": True,
             "use_lazy_loading": True,
@@ -869,7 +913,8 @@ class ProtectionAdvisorIndex:
         }
     
     async def _optimize_error_handling(self, bottlenecks: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate error handling optimization recommendations."""        return {
+        """Generate error handling optimization recommendations."""
+        return {
             "implement_circuit_breakers": True,
             "add_retry_mechanisms": True,
             "improve_error_monitoring": True,
@@ -879,17 +924,20 @@ class ProtectionAdvisorIndex:
     # Additional helper methods (simplified)
     
     async def _setup_monitoring(self):
-        """Set up monitoring infrastructure."""        logger.info("Monitoring infrastructure set up")
+        """Set up monitoring infrastructure."""
+        logger.info("Monitoring infrastructure set up")
     
     async def _update_performance_metrics(self):
-        """Update performance metrics."""        # Update average response time
+        """Update performance metrics."""
+        # Update average response time
         total_requests = self.performance_metrics["total_requests"]
         if total_requests > 0:
             success_rate = self.performance_metrics["successful_requests"] / total_requests
             self.performance_metrics["success_rate"] = success_rate
     
     async def _calculate_optimization_impact(self, changes: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate expected impact of optimizations."""        return {
+        """Calculate expected impact of optimizations."""
+        return {
             "throughput_improvement": 25.0,
             "latency_reduction": 30.0,
             "resource_savings": 15.0,
@@ -897,14 +945,16 @@ class ProtectionAdvisorIndex:
         }
     
     async def _generate_optimization_steps(self, changes: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate implementation steps for optimizations."""        return [
+        """Generate implementation steps for optimizations."""
+        return [
             {"step": 1, "action": "Implement caching layer", "duration": "2 days"},
             {"step": 2, "action": "Optimize database queries", "duration": "3 days"},
             {"step": 3, "action": "Add load balancing", "duration": "1 day"}
         ]
     
     async def _assess_optimization_risks(self, changes: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess risks of proposed optimizations."""        return {
+        """Assess risks of proposed optimizations."""
+        return {
             "implementation_risk": "low",
             "performance_risk": "minimal",
             "compatibility_risk": "none",
@@ -913,12 +963,14 @@ class ProtectionAdvisorIndex:
 
 
 class LoadBalancer:
-    """Simple load balancer for service requests."""    
+    """Simple load balancer for service requests."""
+    
     def __init__(self):
         self.service_loads = {}
     
     async def get_least_loaded_service(self, services: List[str]) -> str:
-        """Get the least loaded service from the list."""        if not services:
+        """Get the least loaded service from the list."""
+        if not services:
             return ""
         
         # Simple round-robin for now

@@ -10,7 +10,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 import uuid
 from datetime import datetime, timedelta
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status"""    PENDING = "pending"
+    """Workflow execution status"""
+    PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -33,7 +35,8 @@ class WorkflowStatus(Enum):
 
 
 class StepStatus(Enum):
-    """Individual step status"""    PENDING = "pending"
+    """Individual step status"""
+    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -42,7 +45,8 @@ class StepStatus(Enum):
 
 
 class StepType(Enum):
-    """Types of workflow steps"""    TASK = "task"                    # Execute a task on an agent
+    """Types of workflow steps"""
+    TASK = "task"                    # Execute a task on an agent
     CONDITION = "condition"          # Conditional logic
     PARALLEL = "parallel"            # Execute multiple steps in parallel
     SEQUENCE = "sequence"            # Execute steps in sequence
@@ -56,7 +60,8 @@ class StepType(Enum):
 
 @dataclass
 class WorkflowStep:
-    """Individual step in a workflow"""    step_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Individual step in a workflow"""
+    step_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     step_type: StepType = StepType.TASK
     agent_id: Optional[str] = None
@@ -80,22 +85,26 @@ class WorkflowStep:
     
     @property
     def duration(self) -> Optional[timedelta]:
-        """Calculate step execution duration"""        if self.started_at and self.completed_at:
+        """Calculate step execution duration"""
+        if self.started_at and self.completed_at:
             return self.completed_at - self.started_at
         return None
     
     @property
     def is_completed(self) -> bool:
-        """Check if step is completed"""        return self.status in [StepStatus.COMPLETED, StepStatus.SKIPPED]
+        """Check if step is completed"""
+        return self.status in [StepStatus.COMPLETED, StepStatus.SKIPPED]
     
     @property
     def is_failed(self) -> bool:
-        """Check if step failed"""        return self.status == StepStatus.FAILED
+        """Check if step failed"""
+        return self.status == StepStatus.FAILED
 
 
 @dataclass
 class WorkflowDefinition:
-    """Workflow definition and configuration"""    workflow_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Workflow definition and configuration"""
+    workflow_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
     version: str = "1.0"
@@ -109,25 +118,29 @@ class WorkflowDefinition:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def get_step(self, step_id: str) -> Optional[WorkflowStep]:
-        """Get step by ID"""        for step in self.steps:
+        """Get step by ID"""
+        for step in self.steps:
             if step.step_id == step_id:
                 return step
         return None
     
     def get_entry_steps(self) -> List[WorkflowStep]:
-        """Get steps with no dependencies (entry points)"""        dependency_ids = set()
+        """Get steps with no dependencies (entry points)"""
+        dependency_ids = set()
         for step in self.steps:
             dependency_ids.update(step.dependencies)
         
         return [step for step in self.steps if step.step_id not in dependency_ids]
     
     def get_dependent_steps(self, step_id: str) -> List[WorkflowStep]:
-        """Get steps that depend on the given step"""        return [step for step in self.steps if step_id in step.dependencies]
+        """Get steps that depend on the given step"""
+        return [step for step in self.steps if step_id in step.dependencies]
 
 
 @dataclass
 class WorkflowExecution:
-    """Runtime workflow execution instance"""    execution_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Runtime workflow execution instance"""
+    execution_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     workflow_id: str = ""
     workflow_definition: Optional[WorkflowDefinition] = None
     status: WorkflowStatus = WorkflowStatus.PENDING
@@ -153,13 +166,15 @@ class WorkflowExecution:
     
     @property
     def duration(self) -> Optional[timedelta]:
-        """Calculate total execution duration"""        if self.started_at and self.completed_at:
+        """Calculate total execution duration"""
+        if self.started_at and self.completed_at:
             return self.completed_at - self.started_at
         return None
     
     @property
     def progress_percentage(self) -> float:
-        """Calculate progress percentage"""        if not self.workflow_definition:
+        """Calculate progress percentage"""
+        if not self.workflow_definition:
             return 0.0
         
         total_steps = len(self.workflow_definition.steps)
@@ -170,11 +185,13 @@ class WorkflowExecution:
     
     @property
     def is_completed(self) -> bool:
-        """Check if workflow is completed"""        return self.status in [WorkflowStatus.COMPLETED, WorkflowStatus.FAILED, WorkflowStatus.CANCELLED]
+        """Check if workflow is completed"""
+        return self.status in [WorkflowStatus.COMPLETED, WorkflowStatus.FAILED, WorkflowStatus.CANCELLED]
 
 
 class WorkflowEngine:
-    """    Advanced workflow engine for multi-agent orchestration
+    """
+    Advanced workflow engine for multi-agent orchestration
     
     Features:
     - Sequential and parallel execution
@@ -184,7 +201,8 @@ class WorkflowEngine:
     - Performance monitoring
     - Event-driven triggers
     - Resource management
-    """    
+    """
+    
     def __init__(self, communication_hub, agent_registry):
         self.communication_hub = communication_hub
         self.agent_registry = agent_registry
@@ -216,7 +234,8 @@ class WorkflowEngine:
         self._background_tasks: List[asyncio.Task] = []
     
     async def initialize(self) -> None:
-        """Initialize the workflow engine"""        try:
+        """Initialize the workflow engine"""
+        try:
             # Start background tasks
             self._background_tasks.extend([
                 asyncio.create_task(self._execution_monitor()),
@@ -231,7 +250,8 @@ class WorkflowEngine:
             raise
     
     async def register_workflow(self, workflow: WorkflowDefinition) -> bool:
-        """Register a workflow definition"""        try:
+        """Register a workflow definition"""
+        try:
             # Validate workflow
             if not self._validate_workflow(workflow):
                 logger.error(f"Invalid workflow definition: {workflow.workflow_id}")
@@ -257,7 +277,8 @@ class WorkflowEngine:
     
     async def execute_workflow(self, workflow_id: str, context: Dict[str, Any] = None, 
                               triggered_by: str = None) -> str:
-        """Execute a workflow"""        try:
+        """Execute a workflow"""
+        try:
             # Get workflow definition
             workflow_def = self.workflow_definitions.get(workflow_id)
             if not workflow_def:
@@ -305,7 +326,8 @@ class WorkflowEngine:
             raise
     
     async def _execute_workflow_async(self, execution: WorkflowExecution) -> None:
-        """Asynchronous workflow execution"""        try:
+        """Asynchronous workflow execution"""
+        try:
             workflow_def = execution.workflow_definition
             
             # Execute entry steps
@@ -377,7 +399,8 @@ class WorkflowEngine:
                 self.execution_history.append(execution)
     
     async def _execute_steps_parallel(self, execution: WorkflowExecution, steps: List[WorkflowStep]) -> None:
-        """Execute multiple steps in parallel"""        if not steps:
+        """Execute multiple steps in parallel"""
+        if not steps:
             return
         
         # Create tasks for parallel execution
@@ -398,7 +421,8 @@ class WorkflowEngine:
                     logger.error(f"Step execution error: {str(result)}")
     
     async def _execute_step(self, execution: WorkflowExecution, step: WorkflowStep) -> None:
-        """Execute a single workflow step"""        try:
+        """Execute a single workflow step"""
+        try:
             step.status = StepStatus.RUNNING
             step.started_at = datetime.utcnow()
             execution.last_activity = step.started_at
@@ -460,7 +484,8 @@ class WorkflowEngine:
             logger.error(f"Step {step.name} failed: {str(e)}")
     
     async def _execute_task_step(self, execution: WorkflowExecution, step: WorkflowStep) -> Dict[str, Any]:
-        """Execute a task step on an agent"""        if not step.agent_id or not step.task_type:
+        """Execute a task step on an agent"""
+        if not step.agent_id or not step.task_type:
             raise ValueError("Task step requires agent_id and task_type")
         
         # Get agent
@@ -487,7 +512,8 @@ class WorkflowEngine:
         return result
     
     async def _get_ready_steps(self, execution: WorkflowExecution) -> List[WorkflowStep]:
-        """Get steps that are ready to execute (dependencies satisfied)"""        ready_steps = []
+        """Get steps that are ready to execute (dependencies satisfied)"""
+        ready_steps = []
         
         for step in execution.workflow_definition.steps:
             if (step.step_id not in execution.completed_steps and 
@@ -509,7 +535,8 @@ class WorkflowEngine:
         return ready_steps
     
     async def _is_workflow_complete(self, execution: WorkflowExecution) -> bool:
-        """Check if workflow execution is complete"""        workflow_def = execution.workflow_definition
+        """Check if workflow execution is complete"""
+        workflow_def = execution.workflow_definition
         
         # All steps completed or failed
         total_steps = len(workflow_def.steps)
@@ -518,7 +545,8 @@ class WorkflowEngine:
         return processed_steps >= total_steps and not execution.active_steps
     
     def get_execution_status(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of workflow execution"""        execution = self.active_executions.get(execution_id)
+        """Get status of workflow execution"""
+        execution = self.active_executions.get(execution_id)
         if not execution:
             # Check history
             for hist_execution in self.execution_history:
@@ -543,7 +571,8 @@ class WorkflowEngine:
         }
     
     async def can_handle_workflow(self, workflow_definition: WorkflowDefinition) -> bool:
-        """Check if all required agents and capabilities are available"""        for step in workflow_definition.steps:
+        """Check if all required agents and capabilities are available"""
+        for step in workflow_definition.steps:
             if step.step_type == StepType.TASK:
                 if not step.agent_id:
                     return False

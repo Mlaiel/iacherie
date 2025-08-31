@@ -12,7 +12,9 @@ will result in legal action.
 
 Contact: mlaiel@live.de
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from .base import BaseModel, TimestampMixin, UUIDMixin, AuditMixin, SoftDeleteMixin
+"""
+
+from .base import BaseModel, TimestampMixin, UUIDMixin, AuditMixin, SoftDeleteMixin
 from .user_models import User, UserProfile, UserSettings, UserSession, UserVerification
 from .creator_models import Creator, CreatorProfile, CreatorStatistics, CreatorSubscription
 from .content_models import Content, ContentMetadata, ContentVersion, ContentTag

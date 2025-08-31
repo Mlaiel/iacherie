@@ -22,7 +22,8 @@ Expert Development Team Specialties:
 - DevOps & Infrastructure Engineer - Scheduling infrastructure and monitoring
 - AI Prompt Engineering Expert - Content optimization and audience analysis
 - Content Protection Specialist - Scheduled content protection and monitoring
-"""import asyncio
+"""
+import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Callable, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
@@ -40,7 +41,8 @@ import holidays
 logger = logging.getLogger(__name__)
 
 class ScheduleType(Enum):
-    """Comprehensive content scheduling types"""    IMMEDIATE = "immediate"
+    """Comprehensive content scheduling types"""
+    IMMEDIATE = "immediate"
     DELAYED = "delayed"
     RECURRING = "recurring"
     OPTIMAL = "optimal"
@@ -54,14 +56,16 @@ class ScheduleType(Enum):
     FLASH_PROMOTION = "flash_promotion"
 
 class ContentPriority(Enum):
-    """Enhanced content priority levels"""    EMERGENCY = "emergency"  # Critical announcements, crisis management
+    """Enhanced content priority levels"""
+    EMERGENCY = "emergency"  # Critical announcements, crisis management
     HIGH = "high"  # Time-sensitive promotions, breaking news
     MEDIUM = "medium"  # Regular content, evergreen posts
     LOW = "low"  # Filler content, repurposed content
     BACKGROUND = "background"  # Automated content, social proof
 
 class SchedulingStrategy(Enum):
-    """AI scheduling optimization strategies"""    ENGAGEMENT_MAXIMIZATION = "engagement_maximization"
+    """AI scheduling optimization strategies"""
+    ENGAGEMENT_MAXIMIZATION = "engagement_maximization"
     REACH_OPTIMIZATION = "reach_optimization"
     CONVERSION_FOCUS = "conversion_focus"
     BRAND_AWARENESS = "brand_awareness"
@@ -71,7 +75,8 @@ class SchedulingStrategy(Enum):
     VIRAL_POTENTIAL = "viral_potential"
 
 class TimingModel(Enum):
-    """ML models for timing optimization"""    RANDOM_FOREST = "random_forest"
+    """ML models for timing optimization"""
+    RANDOM_FOREST = "random_forest"
     NEURAL_NETWORK = "neural_network"
     GRADIENT_BOOSTING = "gradient_boosting"
     TIME_SERIES = "time_series"
@@ -84,7 +89,8 @@ class TimingModel(Enum):
     CRITICAL = 5
 
 class AudienceSegment(Enum):
-    """Audience segments for targeted scheduling"""    GENERAL = "general"
+    """Audience segments for targeted scheduling"""
+    GENERAL = "general"
     YOUNG_ADULTS = "young_adults"
     PROFESSIONALS = "professionals"
     PARENTS = "parents"
@@ -94,7 +100,8 @@ class AudienceSegment(Enum):
 
 @dataclass
 class TimeSlot:
-    """Optimal time slot for content publication"""    start_time: datetime
+    """Optimal time slot for content publication"""
+    start_time: datetime
     end_time: datetime
     platform: str
     audience_segment: AudienceSegment
@@ -105,7 +112,8 @@ class TimeSlot:
 
 @dataclass
 class ScheduleRule:
-    """Content scheduling rule"""    id: str
+    """Content scheduling rule"""
+    id: str
     name: str
     platforms: List[str]
     content_types: List[str]
@@ -119,7 +127,8 @@ class ScheduleRule:
 
 @dataclass
 class ContentSchedule:
-    """Scheduled content item"""    id: str
+    """Scheduled content item"""
+    id: str
     content_id: str
     platforms: List[str]
     schedule_type: ScheduleType
@@ -136,7 +145,8 @@ class ContentSchedule:
     updated_at: datetime = field(default_factory=datetime.utcnow)
 
 class AudienceAnalyzer:
-    """AI-powered audience behavior analysis"""    
+    """AI-powered audience behavior analysis"""
+    
     def __init__(self):
         self.engagement_data: Dict[str, List[Dict]] = {}
         self.model_cache: Dict[str, Any] = {}
@@ -145,7 +155,8 @@ class AudienceAnalyzer:
         
     def add_engagement_data(self, platform: str, timestamp: datetime, 
                           engagement_metrics: Dict[str, Any]):
-        """Add engagement data for analysis"""        if platform not in self.engagement_data:
+        """Add engagement data for analysis"""
+        if platform not in self.engagement_data:
             self.engagement_data[platform] = []
         
         data_point = {
@@ -166,14 +177,16 @@ class AudienceAnalyzer:
             self.engagement_data[platform] = self.engagement_data[platform][-8000:]
     
     def _is_holiday(self, date: datetime) -> bool:
-        """Check if date is a holiday"""        try:
+        """Check if date is a holiday"""
+        try:
             us_holidays = holidays.UnitedStates()
             return date.date() in us_holidays
         except:
             return False
     
     def train_engagement_model(self, platform: str) -> bool:
-        """Train ML model to predict optimal posting times"""        if platform not in self.engagement_data:
+        """Train ML model to predict optimal posting times"""
+        if platform not in self.engagement_data:
             return False
         
         data = self.engagement_data[platform]
@@ -226,7 +239,8 @@ class AudienceAnalyzer:
             return False
     
     def predict_engagement(self, platform: str, timestamp: datetime) -> float:
-        """Predict engagement score for given timestamp"""        if platform not in self.model_cache:
+        """Predict engagement score for given timestamp"""
+        if platform not in self.model_cache:
             return 0.5  # Default score
         
         try:
@@ -256,7 +270,8 @@ class AudienceAnalyzer:
     
     def get_optimal_times(self, platform: str, date: datetime, 
                          count: int = 5) -> List[TimeSlot]:
-        """Get optimal posting times for a specific date"""        optimal_times = []
+        """Get optimal posting times for a specific date"""
+        optimal_times = []
         
         # Generate hourly slots for the date
         base_date = date.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -286,7 +301,8 @@ class AudienceAnalyzer:
         return optimal_times
 
 class TimezoneManager:
-    """Manage timezone-aware scheduling across global audiences"""    
+    """Manage timezone-aware scheduling across global audiences"""
+    
     def __init__(self):
         self.audience_timezones: Dict[str, List[str]] = {
             'global': ['UTC', 'America/New_York', 'Europe/London', 
@@ -300,7 +316,8 @@ class TimezoneManager:
         }
     
     def convert_to_timezone(self, dt: datetime, target_timezone: str) -> datetime:
-        """Convert datetime to target timezone"""        try:
+        """Convert datetime to target timezone"""
+        try:
             if dt.tzinfo is None:
                 dt = dt.replace(tzinfo=timezone.utc)
             
@@ -312,7 +329,8 @@ class TimezoneManager:
     
     def get_optimal_global_time(self, preferred_times: List[datetime],
                                audience_regions: List[str] = None) -> datetime:
-        """Find optimal time that works across multiple regions"""        if audience_regions is None:
+        """Find optimal time that works across multiple regions"""
+        if audience_regions is None:
             audience_regions = ['usa', 'europe']
         
         best_time = None
@@ -341,7 +359,8 @@ class TimezoneManager:
         return best_time or preferred_times[0]
     
     def _score_time_for_region(self, local_time: datetime) -> float:
-        """Score how good a time is for engagement in a region"""        hour = local_time.hour
+        """Score how good a time is for engagement in a region"""
+        hour = local_time.hour
         day_of_week = local_time.weekday()
         
         # Business hours get higher scores
@@ -364,9 +383,11 @@ class TimezoneManager:
         return base_score
 
 class ContentScheduler:
-    """    Advanced AI-Powered Content Scheduling System
+    """
+    Advanced AI-Powered Content Scheduling System
     Handles intelligent scheduling with ML optimization, timezone management, and campaign coordination
-    """    
+    """
+    
     def __init__(self, default_timezone: str = "UTC"):
         self.default_timezone = default_timezone
         self.schedule_queue: List[ContentSchedule] = []
@@ -378,13 +399,15 @@ class ContentScheduler:
         self.callbacks: Dict[str, Callable] = {}
         
     async def start_scheduler(self):
-        """Start the background scheduler"""        if not self.running:
+        """Start the background scheduler"""
+        if not self.running:
             self.running = True
             self.scheduler_task = asyncio.create_task(self._scheduler_loop())
             logger.info("Content scheduler started")
     
     async def stop_scheduler(self):
-        """Stop the background scheduler"""        self.running = False
+        """Stop the background scheduler"""
+        self.running = False
         if self.scheduler_task:
             self.scheduler_task.cancel()
             try:
@@ -394,7 +417,8 @@ class ContentScheduler:
         logger.info("Content scheduler stopped")
     
     async def _scheduler_loop(self):
-        """Main scheduler loop"""        while self.running:
+        """Main scheduler loop"""
+        while self.running:
             try:
                 await self._process_scheduled_content()
                 await asyncio.sleep(30)  # Check every 30 seconds
@@ -403,7 +427,8 @@ class ContentScheduler:
                 await asyncio.sleep(60)  # Wait longer on error
     
     async def _process_scheduled_content(self):
-        """Process content that's ready to be published"""        now = datetime.utcnow()
+        """Process content that's ready to be published"""
+        now = datetime.utcnow()
         ready_items = []
         
         for i, item in enumerate(self.schedule_queue):
@@ -432,7 +457,8 @@ class ContentScheduler:
                     item.status = "retrying"
     
     async def _execute_scheduled_item(self, item: ContentSchedule):
-        """Execute a scheduled content item"""        callback_name = f"publish_{item.schedule_type.value}"
+        """Execute a scheduled content item"""
+        callback_name = f"publish_{item.schedule_type.value}"
         
         if callback_name in self.callbacks:
             result = await self.callbacks[callback_name](item)
@@ -444,14 +470,16 @@ class ContentScheduler:
         item.updated_at = datetime.utcnow()
     
     def register_callback(self, event_type: str, callback: Callable):
-        """Register callback for scheduler events"""        self.callbacks[event_type] = callback
+        """Register callback for scheduler events"""
+        self.callbacks[event_type] = callback
         logger.info(f"Registered callback for {event_type}")
     
     async def schedule_content(self, content_id: str, platforms: List[str],
                              schedule_time: datetime, schedule_type: ScheduleType = ScheduleType.DELAYED,
                              priority: ContentPriority = ContentPriority.NORMAL,
                              audience_segments: List[AudienceSegment] = None) -> str:
-        """Schedule content for publication"""        if audience_segments is None:
+        """Schedule content for publication"""
+        if audience_segments is None:
             audience_segments = [AudienceSegment.GENERAL]
         
         schedule_id = f"sched_{content_id}_{int(datetime.utcnow().timestamp())}"
@@ -474,7 +502,8 @@ class ContentScheduler:
         return schedule_id
     
     def _insert_by_priority(self, item: ContentSchedule):
-        """Insert schedule item maintaining priority order"""        inserted = False
+        """Insert schedule item maintaining priority order"""
+        inserted = False
         for i, existing_item in enumerate(self.schedule_queue):
             if (item.priority.value > existing_item.priority.value or
                 (item.priority.value == existing_item.priority.value and
@@ -489,7 +518,8 @@ class ContentScheduler:
     async def schedule_optimal_content(self, content_id: str, platforms: List[str],
                                      date: datetime, audience_segments: List[AudienceSegment] = None,
                                      priority: ContentPriority = ContentPriority.NORMAL) -> List[str]:
-        """Schedule content at optimal times for each platform"""        if audience_segments is None:
+        """Schedule content at optimal times for each platform"""
+        if audience_segments is None:
             audience_segments = [AudienceSegment.GENERAL]
         
         schedule_ids = []
@@ -524,11 +554,13 @@ class ContentScheduler:
         return schedule_ids
     
     def add_schedule_rule(self, rule: ScheduleRule):
-        """Add recurring schedule rule"""        self.schedule_rules[rule.id] = rule
+        """Add recurring schedule rule"""
+        self.schedule_rules[rule.id] = rule
         logger.info(f"Added schedule rule: {rule.name}")
     
     async def generate_recurring_schedules(self, days_ahead: int = 7):
-        """Generate schedules based on recurring rules"""        now = datetime.utcnow()
+        """Generate schedules based on recurring rules"""
+        now = datetime.utcnow()
         end_date = now + timedelta(days=days_ahead)
         
         for rule in self.schedule_rules.values():
@@ -566,7 +598,8 @@ class ContentScheduler:
                 logger.error(f"Failed to generate recurring schedules for rule {rule.id}: {str(e)}")
     
     def _matches_rule_constraints(self, time: datetime, rule: ScheduleRule) -> bool:
-        """Check if time matches rule constraints"""        # Check day of week
+        """Check if time matches rule constraints"""
+        # Check day of week
         if rule.days_of_week and time.weekday() not in rule.days_of_week:
             return False
         
@@ -583,7 +616,8 @@ class ContentScheduler:
     
     def update_engagement_data(self, platform: str, timestamp: datetime,
                              engagement_metrics: Dict[str, Any]):
-        """Update engagement data for ML optimization"""        self.audience_analyzer.add_engagement_data(platform, timestamp, engagement_metrics)
+        """Update engagement data for ML optimization"""
+        self.audience_analyzer.add_engagement_data(platform, timestamp, engagement_metrics)
         
         # Retrain model periodically
         if (not self.audience_analyzer.last_training or
@@ -591,13 +625,15 @@ class ContentScheduler:
             asyncio.create_task(self._retrain_models())
     
     async def _retrain_models(self):
-        """Retrain engagement prediction models"""        for platform in self.audience_analyzer.engagement_data.keys():
+        """Retrain engagement prediction models"""
+        for platform in self.audience_analyzer.engagement_data.keys():
             success = self.audience_analyzer.train_engagement_model(platform)
             if success:
                 logger.info(f"Retrained engagement model for {platform}")
     
     def get_schedule_analytics(self, days_back: int = 30) -> Dict[str, Any]:
-        """Get scheduling analytics and performance metrics"""        cutoff_date = datetime.utcnow() - timedelta(days=days_back)
+        """Get scheduling analytics and performance metrics"""
+        cutoff_date = datetime.utcnow() - timedelta(days=days_back)
         
         recent_schedules = [
             item for item in self.schedule_queue 
@@ -643,7 +679,8 @@ class ContentScheduler:
         return analytics
     
     def get_upcoming_schedules(self, hours_ahead: int = 24) -> List[ContentSchedule]:
-        """Get schedules for the next specified hours"""        cutoff_time = datetime.utcnow() + timedelta(hours=hours_ahead)
+        """Get schedules for the next specified hours"""
+        cutoff_time = datetime.utcnow() + timedelta(hours=hours_ahead)
         
         upcoming = [
             item for item in self.schedule_queue
@@ -654,7 +691,8 @@ class ContentScheduler:
         return sorted(upcoming, key=lambda x: x.scheduled_time)
     
     async def reschedule_content(self, schedule_id: str, new_time: datetime) -> bool:
-        """Reschedule existing content"""        for item in self.schedule_queue:
+        """Reschedule existing content"""
+        for item in self.schedule_queue:
             if item.id == schedule_id:
                 item.scheduled_time = new_time
                 item.updated_at = datetime.utcnow()
@@ -669,7 +707,8 @@ class ContentScheduler:
         return False
     
     def cancel_schedule(self, schedule_id: str) -> bool:
-        """Cancel a scheduled content item"""        for i, item in enumerate(self.schedule_queue):
+        """Cancel a scheduled content item"""
+        for i, item in enumerate(self.schedule_queue):
             if item.id == schedule_id:
                 self.schedule_queue.pop(i)
                 logger.info(f"Cancelled schedule {schedule_id}")

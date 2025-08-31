@@ -6,7 +6,8 @@ customizable templates, and automated validation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""import logging
+"""
+import logging
 import hashlib
 import json
 from typing import Dict, List, Optional, Any, Union
@@ -20,7 +21,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContractType(Enum):
-    """Types of licensing contracts"""    BASIC = "basic"
+    """Types of licensing contracts"""
+    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     CUSTOM = "custom"
@@ -31,7 +33,8 @@ class ContractType(Enum):
 
 
 class ContractStatus(Enum):
-    """Contract status"""    DRAFT = "draft"
+    """Contract status"""
+    DRAFT = "draft"
     GENERATED = "generated"
     REVIEWED = "reviewed"
     SIGNED = "signed"
@@ -42,7 +45,8 @@ class ContractStatus(Enum):
 
 @dataclass
 class ContractClause:
-    """Individual contract clause"""    clause_id: str
+    """Individual contract clause"""
+    clause_id: str
     title: str
     content: str
     required: bool = True
@@ -53,7 +57,8 @@ class ContractClause:
 
 @dataclass
 class ContractTemplate:
-    """Contract template definition"""    template_id: str
+    """Contract template definition"""
+    template_id: str
     name: str
     description: str
     contract_type: ContractType
@@ -69,7 +74,8 @@ class ContractTemplate:
 
 @dataclass
 class GeneratedContract:
-    """Generated contract instance"""    contract_id: str
+    """Generated contract instance"""
+    contract_id: str
     template_id: str
     contract_type: ContractType
     parties: Dict[str, Any]
@@ -82,7 +88,8 @@ class GeneratedContract:
 
 
 class ContractGenerator:
-    """    Advanced contract generation system
+    """
+    Advanced contract generation system
     
     Features:
     - Multiple contract templates
@@ -93,9 +100,11 @@ class ContractGenerator:
     - Version control
     - Automated updates
     - Legal review workflow
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize contract generator"""        self.config = config or {}
+        """Initialize contract generator"""
+        self.config = config or {}
         
         # Template storage
         self.templates: Dict[str, ContractTemplate] = {}
@@ -146,7 +155,8 @@ class ContractGenerator:
         license_terms: Dict[str, Any],
         contract_type: str = "standard"
     ) -> GeneratedContract:
-        """        Generate a licensing contract
+        """
+        Generate a licensing contract
         
         Args:
             content_data: Information about the content being licensed
@@ -156,7 +166,8 @@ class ContractGenerator:
             
         Returns:
             GeneratedContract: Generated contract instance
-        """        try:
+        """
+        try:
             # Get appropriate template
             template = await self._get_template(contract_type, license_terms)
             
@@ -217,7 +228,8 @@ class ContractGenerator:
             raise
     
     async def get_contract(self, contract_id: str) -> Optional[GeneratedContract]:
-        """Get a generated contract by ID"""        return self.generated_contracts.get(contract_id)
+        """Get a generated contract by ID"""
+        return self.generated_contracts.get(contract_id)
     
     async def update_contract_status(
         self,
@@ -225,7 +237,8 @@ class ContractGenerator:
         status: ContractStatus,
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """        Update contract status
+        """
+        Update contract status
         
         Args:
             contract_id: Contract ID
@@ -234,7 +247,8 @@ class ContractGenerator:
             
         Returns:
             bool: True if updated successfully
-        """        try:
+        """
+        try:
             if contract_id not in self.generated_contracts:
                 return False
             
@@ -252,14 +266,16 @@ class ContractGenerator:
             return False
     
     async def validate_contract(self, contract_id: str) -> Dict[str, Any]:
-        """        Validate a generated contract
+        """
+        Validate a generated contract
         
         Args:
             contract_id: Contract ID
             
         Returns:
             Dict: Validation results
-        """        try:
+        """
+        try:
             if contract_id not in self.generated_contracts:
                 return {"valid": False, "error": "Contract not found"}
             
@@ -307,7 +323,8 @@ class ContractGenerator:
         contract_id: str,
         amendments: Dict[str, Any]
     ) -> Optional[GeneratedContract]:
-        """        Generate an amendment to an existing contract
+        """
+        Generate an amendment to an existing contract
         
         Args:
             contract_id: Original contract ID
@@ -315,7 +332,8 @@ class ContractGenerator:
             
         Returns:
             GeneratedContract: Amendment contract or None if failed
-        """        try:
+        """
+        try:
             original_contract = self.generated_contracts.get(contract_id)
             if not original_contract:
                 return None
@@ -359,7 +377,8 @@ class ContractGenerator:
         contract_type: str,
         license_terms: Dict[str, Any]
     ) -> Optional[ContractTemplate]:
-        """Get appropriate contract template"""        try:
+        """Get appropriate contract template"""
+        try:
             # Look for exact match first
             template_id = f"{contract_type}_template"
             if template_id in self.templates:
@@ -387,7 +406,8 @@ class ContractGenerator:
         license_terms: Dict[str, Any],
         template: ContractTemplate
     ) -> Dict[str, Any]:
-        """Prepare variables for contract rendering"""        try:
+        """Prepare variables for contract rendering"""
+        try:
             variables = {
                 **self.default_variables,
                 **template.variables,
@@ -438,7 +458,8 @@ class ContractGenerator:
         variables: Dict[str, Any],
         license_terms: Dict[str, Any]
     ) -> None:
-        """Validate legal compliance before contract generation"""        try:
+        """Validate legal compliance before contract generation"""
+        try:
             jurisdiction = template.jurisdiction
             
             # Check GDPR compliance for EU jurisdictions
@@ -462,7 +483,8 @@ class ContractGenerator:
         variables: Dict[str, Any],
         license_terms: Dict[str, Any]
     ) -> None:
-        """Validate GDPR compliance"""        required_clauses = ["data_protection", "user_rights", "data_retention"]
+        """Validate GDPR compliance"""
+        required_clauses = ["data_protection", "user_rights", "data_retention"]
         
         # Check if personal data is involved
         if license_terms.get("contains_personal_data", False):
@@ -476,7 +498,8 @@ class ContractGenerator:
         variables: Dict[str, Any],
         license_terms: Dict[str, Any]
     ) -> None:
-        """Validate CCPA compliance"""        logger.info("Validating CCPA compliance for contract")
+        """Validate CCPA compliance"""
+        logger.info("Validating CCPA compliance for contract")
         
         # Check for required CCPA elements
         required_clauses = [
@@ -519,7 +542,8 @@ class ContractGenerator:
         variables: Dict[str, Any],
         license_terms: Dict[str, Any]
     ) -> None:
-        """Validate DMCA compliance"""        logger.info("Validating DMCA compliance for contract")
+        """Validate DMCA compliance"""
+        logger.info("Validating DMCA compliance for contract")
         
         # Check for required DMCA elements
         required_dmca_elements = [
@@ -581,7 +605,8 @@ class ContractGenerator:
         template: ContractTemplate,
         variables: Dict[str, Any]
     ) -> str:
-        """Render contract content from template"""        try:
+        """Render contract content from template"""
+        try:
             # Build contract content from clauses
             contract_sections = []
             
@@ -638,14 +663,16 @@ class ContractGenerator:
             raise
     
     def _generate_contract_hash(self, content: str) -> str:
-        """Generate hash for contract integrity verification"""        return hashlib.sha256(content.encode('utf-8')).hexdigest()
+        """Generate hash for contract integrity verification"""
+        return hashlib.sha256(content.encode('utf-8')).hexdigest()
     
     async def _check_compliance(
         self,
         template: ContractTemplate,
         terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Check legal compliance of contract terms"""        try:
+        """Check legal compliance of contract terms"""
+        try:
             compliance_result = {
                 "compliant": True,
                 "violations": [],
@@ -685,7 +712,8 @@ class ContractGenerator:
             return {"compliant": False, "error": str(e)}
     
     def _initialize_templates(self) -> None:
-        """Initialize default contract templates"""        try:
+        """Initialize default contract templates"""
+        try:
             # Standard licensing template
             standard_clauses = [
                 ContractClause(
@@ -695,7 +723,8 @@ class ContractGenerator:
 
 The license is granted for the territory of {{ territory }} and is valid from {{ start_date }} to {{ end_date if end_date else 'indefinitely' }}.
 
-{{ 'Commercial use is permitted under this license.' if commercial_use else 'This license is for non-commercial use only.' }}"""                ),
+{{ 'Commercial use is permitted under this license.' if commercial_use else 'This license is for non-commercial use only.' }}"""
+                ),
                 ContractClause(
                     clause_id="usage_restrictions",
                     title="Usage Restrictions",
@@ -703,21 +732,25 @@ The license is granted for the territory of {{ territory }} and is valid from {{
 
 {{ 'The Licensee may modify the Licensed Content as necessary for the intended use.' if modifications_allowed else 'The Licensee may not modify, alter, or create derivative works based on the Licensed Content without prior written consent from the Licensor.' }}
 
-{{ 'Attribution to the Licensor is required in all uses of the Licensed Content.' if attribution_required else 'No attribution is required for the use of the Licensed Content.' }}"""                ),
+{{ 'Attribution to the Licensor is required in all uses of the Licensed Content.' if attribution_required else 'No attribution is required for the use of the Licensed Content.' }}"""
+                ),
                 ContractClause(
                     clause_id="payment_terms",
                     title="Payment Terms",
                     content="""The total license fee for the Licensed Content is {{ currency }} {{ price }}.
 
-Payment is due within 30 days of the execution of this Agreement. Late payments may incur additional charges as per the platform's payment policy."""                ),
+Payment is due within 30 days of the execution of this Agreement. Late payments may incur additional charges as per the platform's payment policy."""
+                ),
                 ContractClause(
                     clause_id="termination",
                     title="Termination",
-                    content="""This Agreement may be terminated by either party with 30 days written notice. Upon termination, the Licensee must cease all use of the Licensed Content and destroy any copies in their possession."""                ),
+                    content="""This Agreement may be terminated by either party with 30 days written notice. Upon termination, the Licensee must cease all use of the Licensed Content and destroy any copies in their possession."""
+                ),
                 ContractClause(
                     clause_id="governing_law",
                     title="Governing Law",
-                    content="""This Agreement shall be governed by and construed in accordance with {{ governing_law }}. Any disputes arising under this Agreement shall be subject to the exclusive jurisdiction of {{ jurisdiction }}."""                )
+                    content="""This Agreement shall be governed by and construed in accordance with {{ governing_law }}. Any disputes arising under this Agreement shall be subject to the exclusive jurisdiction of {{ jurisdiction }}."""
+                )
             ]
             
             standard_template = ContractTemplate(
@@ -739,15 +772,18 @@ Payment is due within 30 days of the execution of this Agreement. Late payments 
                 ContractClause(
                     clause_id="intellectual_property",
                     title="Intellectual Property Rights",
-                    content="""The Licensor retains all intellectual property rights in the Licensed Content. This Agreement does not transfer any ownership rights to the Licensee."""                ),
+                    content="""The Licensor retains all intellectual property rights in the Licensed Content. This Agreement does not transfer any ownership rights to the Licensee."""
+                ),
                 ContractClause(
                     clause_id="warranties",
                     title="Warranties and Representations",
-                    content="""The Licensor warrants that they have the full right and authority to grant this license and that the Licensed Content does not infringe upon any third-party rights."""                ),
+                    content="""The Licensor warrants that they have the full right and authority to grant this license and that the Licensed Content does not infringe upon any third-party rights."""
+                ),
                 ContractClause(
                     clause_id="indemnification",
                     title="Indemnification",
-                    content="""The Licensee agrees to indemnify and hold harmless the Licensor from any claims, damages, or expenses arising from the Licensee's use of the Licensed Content."""                )
+                    content="""The Licensee agrees to indemnify and hold harmless the Licensor from any claims, damages, or expenses arising from the Licensee's use of the Licensed Content."""
+                )
             ]
             
             premium_template = ContractTemplate(
@@ -770,7 +806,8 @@ Payment is due within 30 days of the execution of this Agreement. Late payments 
             logger.error(f"Error initializing templates: {e}")
     
     def get_generator_stats(self) -> Dict[str, Any]:
-        """Get contract generator statistics"""        try:
+        """Get contract generator statistics"""
+        try:
             total_contracts = len(self.generated_contracts)
             
             # Status breakdown

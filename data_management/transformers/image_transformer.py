@@ -11,7 +11,8 @@ Contact: mlaiel@live.de
 AVERTISSEMENT: Toute tentative de vol, copie ou utilisation non autorisée
 de ce code ou de cette technologie est strictement interdite et sera
 poursuivie selon les lois allemandes et internationales.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import tempfile
@@ -44,7 +45,8 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class ImageFormat(Enum):
-    """Formats d'image supportés"""    JPEG = "jpg"
+    """Formats d'image supportés"""
+    JPEG = "jpg"
     PNG = "png"
     WEBP = "webp"
     TIFF = "tiff"
@@ -54,13 +56,15 @@ class ImageFormat(Enum):
     RAW = "raw"
 
 class ImageQuality(Enum):
-    """Niveaux de qualité d'image"""    ULTRA = "ultra"      # Qualité maximale, pas de compression
+    """Niveaux de qualité d'image"""
+    ULTRA = "ultra"      # Qualité maximale, pas de compression
     HIGH = "high"        # Haute qualité, compression minimale
     STANDARD = "standard" # Qualité équilibrée
     LOW = "low"          # Compression élevée pour web
 
 class ColorSpace(Enum):
-    """Espaces colorimétriques supportés"""    RGB = "RGB"
+    """Espaces colorimétriques supportés"""
+    RGB = "RGB"
     RGBA = "RGBA"
     CMYK = "CMYK"
     LAB = "LAB"
@@ -68,7 +72,8 @@ class ColorSpace(Enum):
     GRAYSCALE = "L"
 
 class ContentType(Enum):
-    """Types de contenu image pour optimisation"""    PORTRAIT = "portrait"
+    """Types de contenu image pour optimisation"""
+    PORTRAIT = "portrait"
     LANDSCAPE = "landscape"
     PRODUCT = "product"
     ARTWORK = "artwork"
@@ -78,7 +83,8 @@ class ContentType(Enum):
 
 @dataclass
 class ImageProcessingResult:
-    """Résultat du traitement d'image"""    success: bool
+    """Résultat du traitement d'image"""
+    success: bool
     input_file: str
     output_file: Optional[str]
     original_metadata: ImageMetadata
@@ -90,7 +96,8 @@ class ImageProcessingResult:
     errors: List[str]
 
 class ImageAnalyzer:
-    """Analyseur d'image intelligent pour créateurs visuels"""    
+    """Analyseur d'image intelligent pour créateurs visuels"""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -110,7 +117,8 @@ class ImageAnalyzer:
         ])
     
     def analyze_image_file(self, image_path: str) -> ImageMetadata:
-        """Analyse complète d'un fichier image"""        try:
+        """Analyse complète d'un fichier image"""
+        try:
             # Ouverture avec PIL
             with Image.open(image_path) as img:
                 # Métadonnées basiques
@@ -195,7 +203,8 @@ class ImageAnalyzer:
             raise ImageProcessingError(f"Échec analyse image: {str(e)}")
     
     def _extract_exif_data(self, img: Image.Image) -> Dict[str, Any]:
-        """Extrait les métadonnées EXIF de l'image"""        exif_data = {}
+        """Extrait les métadonnées EXIF de l'image"""
+        exif_data = {}
         
         try:
             if hasattr(img, '_getexif') and img._getexif() is not None:
@@ -229,7 +238,8 @@ class ImageAnalyzer:
         return exif_data
     
     def _analyze_colors(self, img_array: np.ndarray) -> Dict[str, Any]:
-        """Analyse colorimétrique avancée"""        
+        """Analyse colorimétrique avancée"""
+        
         # Conversion en différents espaces colorimétriques
         hsv = cv2.cvtColor(img_array, cv2.COLOR_RGB2HSV)
         lab = cv2.cvtColor(img_array, cv2.COLOR_RGB2LAB)
@@ -259,7 +269,8 @@ class ImageAnalyzer:
         }
     
     def _extract_dominant_colors(self, img_array: np.ndarray, k: int = 5) -> List[List[int]]:
-        """Extrait les couleurs dominantes par k-means"""        
+        """Extrait les couleurs dominantes par k-means"""
+        
         try:
             # Reshape pour k-means
             pixels = img_array.reshape(-1, 3)
@@ -283,7 +294,8 @@ class ImageAnalyzer:
             return [[128, 128, 128]] * k  # Gris par défaut
     
     def _extract_color_palette(self, img_array: np.ndarray, n_colors: int = 8) -> List[List[int]]:
-        """Extrait une palette de couleurs représentative"""        
+        """Extrait une palette de couleurs représentative"""
+        
         try:
             # Quantification des couleurs
             img_pil = Image.fromarray(img_array)
@@ -302,7 +314,8 @@ class ImageAnalyzer:
         return [[i*32, i*32, i*32] for i in range(n_colors)]  # Palette en niveaux de gris
     
     def _analyze_composition(self, img_array: np.ndarray) -> Dict[str, float]:
-        """Analyse de la composition photographique"""        
+        """Analyse de la composition photographique"""
+        
         height, width = img_array.shape[:2]
         gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
         
@@ -322,7 +335,8 @@ class ImageAnalyzer:
         }
     
     def _calculate_rule_of_thirds(self, gray: np.ndarray) -> float:
-        """Calcule le score de la règle des tiers"""        
+        """Calcule le score de la règle des tiers"""
+        
         height, width = gray.shape
         
         # Lignes de tiers
@@ -360,7 +374,8 @@ class ImageAnalyzer:
         return score
     
     def _calculate_symmetry(self, gray: np.ndarray) -> float:
-        """Calcule le score de symétrie"""        
+        """Calcule le score de symétrie"""
+        
         height, width = gray.shape
         
         # Symétrie verticale
@@ -391,7 +406,8 @@ class ImageAnalyzer:
         return max(0.0, symmetry_score)
     
     def _calculate_balance(self, gray: np.ndarray) -> float:
-        """Calcule le score d'équilibre visuel"""        
+        """Calcule le score d'équilibre visuel"""
+        
         height, width = gray.shape
         
         # Calcul du centre de masse visuel
@@ -422,7 +438,8 @@ class ImageAnalyzer:
         return max(0.0, balance_score)
     
     def _assess_image_quality(self, img_array: np.ndarray) -> Dict[str, float]:
-        """Évaluation de la qualité technique de l'image"""        
+        """Évaluation de la qualité technique de l'image"""
+        
         gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
         
         # Netteté (variance du Laplacien)
@@ -451,7 +468,8 @@ class ImageAnalyzer:
         }
     
     def _detect_faces(self, img_array: np.ndarray) -> List[Dict[str, Any]]:
-        """Détecte les visages dans l'image"""        
+        """Détecte les visages dans l'image"""
+        
         faces_info = []
         
         try:
@@ -483,7 +501,8 @@ class ImageAnalyzer:
         return faces_info
     
     def _detect_objects(self, img_array: np.ndarray) -> List[Dict[str, Any]]:
-        """Détecte les objets dans l'image avec YOLO"""        
+        """Détecte les objets dans l'image avec YOLO"""
+        
         objects_info = []
         
         if not self.yolo_model:
@@ -520,7 +539,8 @@ class ImageAnalyzer:
         width: int,
         height: int
     ) -> str:
-        """Classifie automatiquement le type de contenu"""        
+        """Classifie automatiquement le type de contenu"""
+        
         aspect_ratio = width / height
         
         # Logique de classification
@@ -551,7 +571,8 @@ class ImageAnalyzer:
         objects: List[Dict],
         color_analysis: Dict
     ) -> List[str]:
-        """Génère des tags automatiques"""        
+        """Génère des tags automatiques"""
+        
         tags = []
         
         # Tags basés sur les visages
@@ -590,7 +611,8 @@ class ImageAnalyzer:
         return tags[:10]  # Limite à 10 tags
     
     def _color_to_name(self, rgb: List[int]) -> Optional[str]:
-        """Convertit une couleur RGB en nom approximatif"""        
+        """Convertit une couleur RGB en nom approximatif"""
+        
         r, g, b = rgb
         
         # Définition de couleurs de base
@@ -626,7 +648,8 @@ class ImageAnalyzer:
         quality_assessment: Dict[str, float],
         composition_analysis: Dict[str, float]
     ) -> float:
-        """Calcule un score de qualité global"""        
+        """Calcule un score de qualité global"""
+        
         # Pondération des différents aspects
         technical_score = (
             quality_assessment['sharpness'] * 0.4 +
@@ -646,7 +669,8 @@ class ImageAnalyzer:
         return round(overall_score, 3)
 
 class ImageEnhancer:
-    """Améliorateur d'image IA pour créateurs visuels"""    
+    """Améliorateur d'image IA pour créateurs visuels"""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
@@ -656,7 +680,8 @@ class ImageEnhancer:
         enhancement_type: str = "balanced",
         intensity: float = 0.5
     ) -> np.ndarray:
-        """Améliore la qualité d'image avec IA"""        
+        """Améliore la qualité d'image avec IA"""
+        
         try:
             if enhancement_type == "sharpen":
                 return self._sharpen_image(img_array, intensity)
@@ -676,7 +701,8 @@ class ImageEnhancer:
             return img_array
     
     def _sharpen_image(self, img_array: np.ndarray, intensity: float) -> np.ndarray:
-        """Améliore la netteté de l'image"""        
+        """Améliore la netteté de l'image"""
+        
         # Conversion en PIL pour enhancement
         img_pil = Image.fromarray(img_array)
         
@@ -688,7 +714,8 @@ class ImageEnhancer:
         return np.array(enhanced)
     
     def _denoise_image(self, img_array: np.ndarray, intensity: float) -> np.ndarray:
-        """Réduit le bruit dans l'image"""        
+        """Réduit le bruit dans l'image"""
+        
         # Débruitage avec filtrage bilatéral
         h = int(intensity * 20 + 5)  # Force du débruitage
         denoised = cv2.bilateralFilter(img_array, 9, h, h)
@@ -696,7 +723,8 @@ class ImageEnhancer:
         return denoised
     
     def _enhance_colors(self, img_array: np.ndarray, intensity: float) -> np.ndarray:
-        """Améliore les couleurs de l'image"""        
+        """Améliore les couleurs de l'image"""
+        
         img_pil = Image.fromarray(img_array)
         
         # Amélioration de la saturation
@@ -707,7 +735,8 @@ class ImageEnhancer:
         return np.array(enhanced)
     
     def _enhance_contrast(self, img_array: np.ndarray, intensity: float) -> np.ndarray:
-        """Améliore le contraste de l'image"""        
+        """Améliore le contraste de l'image"""
+        
         # Égalisation d'histogramme adaptative
         gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
         
@@ -724,7 +753,8 @@ class ImageEnhancer:
         return enhanced
     
     def _upscale_image(self, img_array: np.ndarray, intensity: float) -> np.ndarray:
-        """Upscale l'image avec interpolation avancée"""        
+        """Upscale l'image avec interpolation avancée"""
+        
         # Facteur d'upscaling basé sur l'intensité
         scale_factor = 1.0 + intensity
         
@@ -742,7 +772,8 @@ class ImageEnhancer:
         return upscaled
     
     def _balanced_enhancement(self, img_array: np.ndarray, intensity: float) -> np.ndarray:
-        """Amélioration équilibrée"""        
+        """Amélioration équilibrée"""
+        
         enhanced = img_array.copy()
         
         # Léger sharpening
@@ -757,7 +788,8 @@ class ImageEnhancer:
         return enhanced
 
 class ImageTransformer:
-    """Transformateur d'image principal pour créateurs visuels"""    
+    """Transformateur d'image principal pour créateurs visuels"""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.file_manager = FileManager()
@@ -815,7 +847,8 @@ class ImageTransformer:
         config: 'TransformationConfig',
         output_path: Optional[str] = None
     ) -> 'TransformationResult':
-        """Transformation d'image selon configuration"""        
+        """Transformation d'image selon configuration"""
+        
         start_time = time.time()
         operations = []
         warnings = []
@@ -907,7 +940,8 @@ class ImageTransformer:
             )
     
     def _resize_image(self, img_array: np.ndarray, params: Dict[str, Any]) -> np.ndarray:
-        """Redimensionne l'image"""        
+        """Redimensionne l'image"""
+        
         target_resolution = params.get('resolution', [1920, 1080])
         maintain_aspect = params.get('maintain_aspect', True)
         platform = params.get('platform')
@@ -956,7 +990,8 @@ class ImageTransformer:
             return cv2.resize(img_array, (target_width, target_height), interpolation=cv2.INTER_LANCZOS4)
     
     def _enhance_image(self, img_array: np.ndarray, params: Dict[str, Any]) -> np.ndarray:
-        """Améliore l'image"""        
+        """Améliore l'image"""
+        
         enhancement_type = params.get('type', 'balanced')
         intensity = params.get('intensity', 0.5)
         
@@ -968,7 +1003,8 @@ class ImageTransformer:
         output_path: str,
         config: 'TransformationConfig'
     ) -> None:
-        """Sauvegarde l'image traitée"""        
+        """Sauvegarde l'image traitée"""
+        
         # Création du répertoire si nécessaire
         Path(output_path).parent.mkdir(parents=True, exist_ok=True)
         
@@ -1024,7 +1060,8 @@ class ImageTransformer:
         img_pil.save(output_path, **save_params)
     
     def _generate_output_path(self, input_path: str, config: 'TransformationConfig') -> str:
-        """Génère le chemin de sortie automatiquement"""        
+        """Génère le chemin de sortie automatiquement"""
+        
         input_path_obj = Path(input_path)
         
         # Détermination de l'extension selon la transformation
@@ -1051,7 +1088,8 @@ class ImageTransformer:
         original: ImageMetadata,
         processed: ImageMetadata
     ) -> ImageQualityMetrics:
-        """Calcule les métriques de qualité de la transformation"""        
+        """Calcule les métriques de qualité de la transformation"""
+        
         # Calcul des changements de résolution
         resolution_change = (processed.width * processed.height) / (original.width * original.height)
         
@@ -1073,7 +1111,8 @@ class ImageTransformer:
         )
 
 class AsyncImageTransformer:
-    """Version asynchrone du transformateur d'image"""    
+    """Version asynchrone du transformateur d'image"""
+    
     def __init__(self):
         self.sync_transformer = ImageTransformer()
         self.logger = logging.getLogger(__name__)
@@ -1084,7 +1123,8 @@ class AsyncImageTransformer:
         config: 'TransformationConfig',
         output_path: Optional[str] = None
     ) -> 'TransformationResult':
-        """Transformation d'image asynchrone"""        
+        """Transformation d'image asynchrone"""
+        
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             None,
@@ -1099,7 +1139,8 @@ class AsyncImageTransformer:
         inputs: List[Tuple[str, 'TransformationConfig']],
         max_concurrent: int = 6  # Plus de concurrence pour images
     ) -> List['TransformationResult']:
-        """Transformation en lot asynchrone"""        
+        """Transformation en lot asynchrone"""
+        
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def transform_single(input_config_tuple):

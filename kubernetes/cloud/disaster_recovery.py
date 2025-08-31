@@ -13,7 +13,8 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive disaster recovery capabilities for the IA
 Influencer Agent platform, including automated failover, data replication,
 recovery orchestration, and business continuity management.
-"""import logging
+"""
+import logging
 import asyncio
 import json
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -30,7 +31,8 @@ from kubernetes import client, config
 logger = logging.getLogger(__name__)
 
 class DisasterType(Enum):
-    """Types of disasters that can occur"""    INFRASTRUCTURE_FAILURE = "infrastructure_failure"
+    """Types of disasters that can occur"""
+    INFRASTRUCTURE_FAILURE = "infrastructure_failure"
     DATA_CENTER_OUTAGE = "data_center_outage"
     NATURAL_DISASTER = "natural_disaster"
     CYBER_ATTACK = "cyber_attack"
@@ -40,13 +42,15 @@ class DisasterType(Enum):
     APPLICATION_FAILURE = "application_failure"
 
 class RecoveryTier(Enum):
-    """Recovery tier classifications"""    TIER_0 = "tier_0"  # Critical - RTO < 15 min, RPO < 5 min
+    """Recovery tier classifications"""
+    TIER_0 = "tier_0"  # Critical - RTO < 15 min, RPO < 5 min
     TIER_1 = "tier_1"  # High - RTO < 1 hour, RPO < 15 min
     TIER_2 = "tier_2"  # Medium - RTO < 4 hours, RPO < 1 hour
     TIER_3 = "tier_3"  # Low - RTO < 24 hours, RPO < 4 hours
 
 class RecoveryStatus(Enum):
-    """Recovery operation status"""    MONITORING = "monitoring"
+    """Recovery operation status"""
+    MONITORING = "monitoring"
     ALERT_TRIGGERED = "alert_triggered"
     ASSESSMENT = "assessment"
     RECOVERY_INITIATED = "recovery_initiated"
@@ -57,14 +61,16 @@ class RecoveryStatus(Enum):
     FAILED = "failed"
 
 class FailoverMode(Enum):
-    """Failover execution modes"""    AUTOMATIC = "automatic"
+    """Failover execution modes"""
+    AUTOMATIC = "automatic"
     MANUAL = "manual"
     PLANNED = "planned"
     FORCED = "forced"
 
 @dataclass
 class RecoveryObjective:
-    """Recovery time and point objectives"""    rto_minutes: int  # Recovery Time Objective
+    """Recovery time and point objectives"""
+    rto_minutes: int  # Recovery Time Objective
     rpo_minutes: int  # Recovery Point Objective
     max_downtime_minutes: int
     data_loss_tolerance_minutes: int
@@ -72,7 +78,8 @@ class RecoveryObjective:
 
 @dataclass
 class DisasterRecoveryPlan:
-    """Disaster recovery plan configuration"""    plan_id: str
+    """Disaster recovery plan configuration"""
+    plan_id: str
     name: str
     description: str
     tier: RecoveryTier
@@ -88,7 +95,8 @@ class DisasterRecoveryPlan:
 
 @dataclass
 class DisasterEvent:
-    """Disaster event representation"""    event_id: str
+    """Disaster event representation"""
+    event_id: str
     disaster_type: DisasterType
     affected_resources: List[str]
     detection_time: datetime
@@ -99,7 +107,8 @@ class DisasterEvent:
 
 @dataclass
 class RecoveryOperation:
-    """Recovery operation tracking"""    operation_id: str
+    """Recovery operation tracking"""
+    operation_id: str
     event_id: str
     plan_id: str
     failover_mode: FailoverMode
@@ -111,9 +120,11 @@ class RecoveryOperation:
     logs: List[str] = field(default_factory=list)
 
 class DisasterRecoveryService:
-    """Enterprise disaster recovery and business continuity service"""    
+    """Enterprise disaster recovery and business continuity service"""
+    
     def __init__(self):
-        """Initialize disaster recovery service"""        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize disaster recovery service"""
+        self.logger = logging.getLogger(self.__class__.__name__)
         
         # Cloud clients
         self.aws_client = None
@@ -142,7 +153,8 @@ class DisasterRecoveryService:
         self.logger.info("Disaster Recovery Service initialized")
 
     async def initialize_monitoring(self):
-        """Initialize monitoring and health checks"""        try:
+        """Initialize monitoring and health checks"""
+        try:
             # Initialize cloud clients
             await self._initialize_cloud_clients()
             
@@ -175,7 +187,8 @@ class DisasterRecoveryService:
             raise
 
     async def _initialize_cloud_clients(self):
-        """Initialize cloud provider clients"""        try:
+        """Initialize cloud provider clients"""
+        try:
             # AWS client initialization
             try:
                 self.aws_client = boto3.client('ec2')
@@ -189,7 +202,8 @@ class DisasterRecoveryService:
             self.logger.error(f"Failed to initialize cloud clients: {e}")
 
     async def create_dr_plan(self, plan_config: Dict[str, Any]) -> DisasterRecoveryPlan:
-        """Create a new disaster recovery plan"""        try:
+        """Create a new disaster recovery plan"""
+        try:
             plan_id = f"dr_plan_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             # Parse recovery objectives
@@ -231,7 +245,8 @@ class DisasterRecoveryService:
             raise
 
     async def _generate_recovery_procedures(self, plan_config: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate recovery procedures based on plan configuration"""        procedures = []
+        """Generate recovery procedures based on plan configuration"""
+        procedures = []
         
         # Standard recovery procedures
         procedures.extend([
@@ -312,7 +327,8 @@ class DisasterRecoveryService:
         return procedures
 
     async def _setup_resource_monitoring(self, dr_plan: DisasterRecoveryPlan):
-        """Setup monitoring for protected resources"""        try:
+        """Setup monitoring for protected resources"""
+        try:
             for resource in dr_plan.protected_resources:
                 resource_id = resource['id']
                 resource_type = resource['type']
@@ -346,7 +362,8 @@ class DisasterRecoveryService:
             raise
 
     async def _continuous_health_monitoring(self):
-        """Continuous health monitoring of protected resources"""        while True:
+        """Continuous health monitoring of protected resources"""
+        while True:
             try:
                 # Check health of all monitored resources
                 for resource_id, health_check in self.health_checks.items():
@@ -378,7 +395,8 @@ class DisasterRecoveryService:
                 await asyncio.sleep(60)  # Wait longer on error
 
     async def _check_resource_health(self, resource_id: str, health_check: Dict[str, Any]) -> bool:
-        """Check health of a specific resource"""        try:
+        """Check health of a specific resource"""
+        try:
             resource_type = health_check['resource_type']
             
             if resource_type == 'database':
@@ -397,7 +415,8 @@ class DisasterRecoveryService:
             return False
 
     async def _check_database_health(self, resource_id: str) -> bool:
-        """Check database health"""        try:
+        """Check database health"""
+        try:
             # Example PostgreSQL health check
             # In real implementation, this would use actual connection details
             conn = psycopg2.connect(
@@ -420,7 +439,8 @@ class DisasterRecoveryService:
             return False
 
     async def _check_application_health(self, resource_id: str) -> bool:
-        """Check application health"""        try:
+        """Check application health"""
+        try:
             # Example HTTP health check
             import aiohttp
             
@@ -432,7 +452,8 @@ class DisasterRecoveryService:
             return False
 
     async def _check_kubernetes_health(self, resource_id: str) -> bool:
-        """Check Kubernetes resource health"""        try:
+        """Check Kubernetes resource health"""
+        try:
             if not self.k8s_client:
                 return False
             
@@ -449,7 +470,8 @@ class DisasterRecoveryService:
             return False
 
     async def _trigger_disaster_event(self, resource_id: str, health_check: Dict[str, Any]):
-        """Trigger disaster event when resource fails"""        try:
+        """Trigger disaster event when resource fails"""
+        try:
             event_id = f"disaster_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             # Determine disaster type based on failure pattern
@@ -492,14 +514,16 @@ class DisasterRecoveryService:
             self.logger.error(f"Failed to trigger disaster event: {e}")
 
     async def _find_applicable_dr_plan(self, resource_id: str) -> Optional[DisasterRecoveryPlan]:
-        """Find DR plan that covers the affected resource"""        for plan in self.dr_plans.values():
+        """Find DR plan that covers the affected resource"""
+        for plan in self.dr_plans.values():
             for resource in plan.protected_resources:
                 if resource['id'] == resource_id:
                     return plan
         return None
 
     async def _initiate_automated_recovery(self, event: DisasterEvent, dr_plan: DisasterRecoveryPlan):
-        """Initiate automated disaster recovery"""        try:
+        """Initiate automated disaster recovery"""
+        try:
             operation_id = f"recovery_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             recovery_op = RecoveryOperation(
@@ -523,7 +547,8 @@ class DisasterRecoveryService:
             self.logger.error(f"Failed to initiate automated recovery: {e}")
 
     async def _execute_recovery_procedures(self, recovery_op: RecoveryOperation, dr_plan: DisasterRecoveryPlan):
-        """Execute recovery procedures"""        try:
+        """Execute recovery procedures"""
+        try:
             recovery_op.status = RecoveryStatus.RECOVERY_IN_PROGRESS
             recovery_op.logs.append("Starting recovery procedures")
             
@@ -592,7 +617,8 @@ class DisasterRecoveryService:
             self.logger.error(f"Recovery failed: {recovery_op.operation_id} - {e}")
 
     async def _execute_recovery_actions(self, actions: List[str], recovery_op: RecoveryOperation):
-        """Execute recovery actions"""        for action in actions:
+        """Execute recovery actions"""
+        for action in actions:
             recovery_op.logs.append(f"Executing action: {action}")
             
             # Simulate action execution
@@ -604,7 +630,8 @@ class DisasterRecoveryService:
             recovery_op.logs.append(f"Action completed: {action}")
 
     async def test_dr_plan(self, plan_id: str) -> Dict[str, Any]:
-        """Test disaster recovery plan"""        try:
+        """Test disaster recovery plan"""
+        try:
             if plan_id not in self.dr_plans:
                 raise ValueError(f"DR plan not found: {plan_id}")
             
@@ -659,7 +686,8 @@ class DisasterRecoveryService:
             raise
 
     async def _send_disaster_notification(self, event: DisasterEvent):
-        """Send disaster event notification"""        try:
+        """Send disaster event notification"""
+        try:
             message = f"Disaster Event Detected: {event.disaster_type.value} affecting {len(event.affected_resources)} resources"
             
             # In real implementation, this would send actual notifications
@@ -670,7 +698,8 @@ class DisasterRecoveryService:
             self.logger.error(f"Failed to send disaster notification: {e}")
 
     async def _send_recovery_completion_notification(self, recovery_op: RecoveryOperation, dr_plan: DisasterRecoveryPlan):
-        """Send recovery completion notification"""        try:
+        """Send recovery completion notification"""
+        try:
             message = f"Recovery Completed: {recovery_op.operation_id} in {recovery_op.metrics['total_recovery_time_minutes']:.1f} minutes"
             
             # In real implementation, this would send actual notifications
@@ -680,7 +709,8 @@ class DisasterRecoveryService:
             self.logger.error(f"Failed to send recovery notification: {e}")
 
     async def get_dr_status(self) -> Dict[str, Any]:
-        """Get overall disaster recovery status"""        return {
+        """Get overall disaster recovery status"""
+        return {
             'total_dr_plans': len(self.dr_plans),
             'monitored_resources': len(self.health_checks),
             'active_events': len(self.active_events),
@@ -693,7 +723,8 @@ class DisasterRecoveryService:
         }
 
     async def get_recovery_metrics(self) -> Dict[str, Any]:
-        """Get disaster recovery metrics and analytics"""        if not self.recovery_history:
+        """Get disaster recovery metrics and analytics"""
+        if not self.recovery_history:
             return {'message': 'No recovery history available'}
         
         successful_recoveries = [r for r in self.recovery_history if r.status == RecoveryStatus.RECOVERY_COMPLETED]

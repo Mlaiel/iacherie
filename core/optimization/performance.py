@@ -3,7 +3,8 @@ Copyright (C) 2025 Fahed Mlaiel <mlaiel@live.de>
 
 Advanced performance optimization for ML models, fingerprinting engines,
 caching systems, and database queries.
-"""import asyncio
+"""
+import asyncio
 import time
 import psutil
 import numpy as np
@@ -22,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class OptimizationMetrics:
-    """Performance optimization metrics"""    execution_time: float
+    """Performance optimization metrics"""
+    execution_time: float
     memory_usage: float
     cpu_usage: float
     gpu_usage: Optional[float]
@@ -33,7 +35,8 @@ class OptimizationMetrics:
 
 
 class ModelOptimizer(BaseEngine):
-    """Advanced ML model optimization engine"""    
+    """Advanced ML model optimization engine"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.resource_manager = ResourceManager(config.get("resources", {}))
@@ -47,7 +50,8 @@ class ModelOptimizer(BaseEngine):
         input_data: Any,
         optimization_level: str = "balanced"
     ) -> Tuple[Any, OptimizationMetrics]:
-        """Optimize model inference with intelligent caching and resource allocation"""        start_time = time.time()
+        """Optimize model inference with intelligent caching and resource allocation"""
+        start_time = time.time()
         
         # Check cache first
         cache_key = self._generate_cache_key(model_id, input_data)
@@ -82,7 +86,8 @@ class ModelOptimizer(BaseEngine):
         return result, metrics
     
     async def _get_optimal_device(self, model_id: str, optimization_level: str) -> str:
-        """Determine optimal compute device (CPU/GPU/TPU)"""        available_devices = await self.resource_manager.get_available_devices()
+        """Determine optimal compute device (CPU/GPU/TPU)"""
+        available_devices = await self.resource_manager.get_available_devices()
         model_complexity = self._get_model_complexity(model_id)
         
         if optimization_level == "speed" and "gpu" in available_devices:
@@ -100,7 +105,8 @@ class ModelOptimizer(BaseEngine):
         return "cpu"
     
     async def _optimize_model_architecture(self, model_id: str, level: str) -> Any:
-        """Apply model architecture optimizations"""        model = self.model_registry.get(model_id)
+        """Apply model architecture optimizations"""
+        model = self.model_registry.get(model_id)
         if not model:
             logger.warning(f"Model {model_id} not found in registry")
             return None
@@ -117,7 +123,8 @@ class ModelOptimizer(BaseEngine):
             return await self._apply_layer_fusion(optimized)
     
     async def _apply_quantization(self, model: Any, precision: str = "int8") -> Any:
-        """Apply model quantization for faster inference"""        logger.info(f"Applying {precision} quantization")
+        """Apply model quantization for faster inference"""
+        logger.info(f"Applying {precision} quantization")
         
         try:
             if hasattr(model, 'quantize'):
@@ -149,7 +156,8 @@ class ModelOptimizer(BaseEngine):
         return model
     
     async def _apply_pruning(self, model: Any, sparsity: float = 0.1) -> Any:
-        """Apply model pruning for memory efficiency"""        logger.info(f"Applying pruning with {sparsity} sparsity")
+        """Apply model pruning for memory efficiency"""
+        logger.info(f"Applying pruning with {sparsity} sparsity")
         
         try:
             # TensorFlow pruning
@@ -184,7 +192,8 @@ class ModelOptimizer(BaseEngine):
         return model
     
     async def _apply_layer_fusion(self, model: Any) -> Any:
-        """Fuse compatible layers for optimization"""        logger.info("Applying layer fusion optimization")
+        """Fuse compatible layers for optimization"""
+        logger.info("Applying layer fusion optimization")
         
         try:
             # PyTorch layer fusion
@@ -234,7 +243,8 @@ class ModelOptimizer(BaseEngine):
         return model
     
     async def _batch_inference(self, model: Any, batch_data: List[Any], device: str) -> List[Any]:
-        """Optimized batch inference processing"""        batch_size = self._calculate_optimal_batch_size(len(batch_data), device)
+        """Optimized batch inference processing"""
+        batch_size = self._calculate_optimal_batch_size(len(batch_data), device)
         results = []
         
         for i in range(0, len(batch_data), batch_size):
@@ -245,10 +255,12 @@ class ModelOptimizer(BaseEngine):
         return results
     
     async def _single_inference(self, model: Any, data: Any, device: str) -> Any:
-        """Optimized single inference"""        return await self._process_batch(model, [data], device)
+        """Optimized single inference"""
+        return await self._process_batch(model, [data], device)
     
     async def _process_batch(self, model: Any, batch: List[Any], device: str) -> List[Any]:
-        """Process a single batch with actual model inference"""        try:
+        """Process a single batch with actual model inference"""
+        try:
             # Convert batch to appropriate format
             if hasattr(model, 'predict'):
                 # TensorFlow/Keras model
@@ -309,7 +321,8 @@ class ModelOptimizer(BaseEngine):
             return [f"error_{i}" for i in range(len(batch))]
     
     def _calculate_optimal_batch_size(self, total_items: int, device: str) -> int:
-        """Calculate optimal batch size based on available resources"""        if device == "gpu":
+        """Calculate optimal batch size based on available resources"""
+        if device == "gpu":
             available_memory = self.resource_manager.get_available_gpu_memory()
             # Rough estimation: 1GB can handle batch_size of 32 for typical models
             optimal_size = min(64, max(1, int(available_memory * 32)))
@@ -320,7 +333,8 @@ class ModelOptimizer(BaseEngine):
         return min(optimal_size, total_items)
     
     def _get_model_complexity(self, model_id: str) -> int:
-        """Get model complexity score (parameter count)"""        # Placeholder - actual implementation would analyze model
+        """Get model complexity score (parameter count)"""
+        # Placeholder - actual implementation would analyze model
         complexity_map = {
             "audio_fingerprint": 500000,
             "video_fingerprint": 2000000,
@@ -330,7 +344,8 @@ class ModelOptimizer(BaseEngine):
         return complexity_map.get(model_id, 1000000)
     
     def _generate_cache_key(self, model_id: str, input_data: Any) -> str:
-        """Generate cache key for inference results"""        if isinstance(input_data, (str, int, float)):
+        """Generate cache key for inference results"""
+        if isinstance(input_data, (str, int, float)):
             data_hash = str(hash(str(input_data)))
         else:
             data_hash = str(hash(str(input_data)[:100]))  # Truncate for performance
@@ -343,7 +358,8 @@ class ModelOptimizer(BaseEngine):
         model_id: str, 
         batch_size: int
     ) -> OptimizationMetrics:
-        """Collect comprehensive performance metrics"""        
+        """Collect comprehensive performance metrics"""
+        
         # Get system metrics
         memory_usage = psutil.virtual_memory().percent
         cpu_usage = psutil.cpu_percent()
@@ -374,7 +390,8 @@ class ModelOptimizer(BaseEngine):
         cpu_usage: float, 
         throughput: float
     ) -> float:
-        """Calculate overall efficiency score (0-100)"""        
+        """Calculate overall efficiency score (0-100)"""
+        
         # Normalize metrics to 0-1 scale
         time_score = max(0, 1 - (execution_time / 10))  # Assume 10s is very slow
         memory_score = max(0, 1 - (memory_usage / 100))
@@ -393,7 +410,8 @@ class ModelOptimizer(BaseEngine):
 
 
 class FingerprintingOptimizer(BaseEngine):
-    """Specialized optimizer for fingerprinting operations"""    
+    """Specialized optimizer for fingerprinting operations"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.vector_cache = {}
@@ -404,7 +422,8 @@ class FingerprintingOptimizer(BaseEngine):
         content_data: bytes, 
         content_type: str
     ) -> Tuple[np.ndarray, OptimizationMetrics]:
-        """Optimize fingerprint extraction process"""        start_time = time.time()
+        """Optimize fingerprint extraction process"""
+        start_time = time.time()
         
         # Check if similar content already processed
         content_hash = self._generate_content_hash(content_data)
@@ -445,7 +464,8 @@ class FingerprintingOptimizer(BaseEngine):
         query_fingerprint: np.ndarray, 
         database_fingerprints: List[np.ndarray]
     ) -> Tuple[List[Tuple[int, float]], OptimizationMetrics]:
-        """Optimized similarity search with early termination and indexing"""        start_time = time.time()
+        """Optimized similarity search with early termination and indexing"""
+        start_time = time.time()
         
         # Use vectorized operations for batch similarity calculation
         if len(database_fingerprints) > 1000:
@@ -468,7 +488,8 @@ class FingerprintingOptimizer(BaseEngine):
         return results, metrics
     
     async def _extract_audio_fingerprint_optimized(self, audio_data: bytes) -> np.ndarray:
-        """Optimized audio fingerprint extraction using advanced algorithms"""        try:
+        """Optimized audio fingerprint extraction using advanced algorithms"""
+        try:
             import librosa
             import io
             from scipy.signal import spectrogram
@@ -521,7 +542,8 @@ class FingerprintingOptimizer(BaseEngine):
             return np.frombuffer(hash_digest, dtype=np.uint8).astype(np.float32) / 255.0
     
     async def _extract_video_fingerprint_optimized(self, video_data: bytes) -> np.ndarray:
-        """Optimized video fingerprint extraction using computer vision"""        try:
+        """Optimized video fingerprint extraction using computer vision"""
+        try:
             import cv2
             import io
             from PIL import Image
@@ -596,7 +618,8 @@ class FingerprintingOptimizer(BaseEngine):
             return np.frombuffer(hash_digest, dtype=np.uint8).astype(np.float32) / 255.0
     
     async def _extract_image_fingerprint_optimized(self, image_data: bytes) -> np.ndarray:
-        """Optimized image fingerprint extraction using computer vision"""        try:
+        """Optimized image fingerprint extraction using computer vision"""
+        try:
             import cv2
             import numpy as np
             from PIL import Image
@@ -688,7 +711,8 @@ class FingerprintingOptimizer(BaseEngine):
             return np.frombuffer(hash_digest, dtype=np.uint8).astype(np.float32) / 255.0
     
     async def _extract_generic_fingerprint(self, content_data: bytes) -> np.ndarray:
-        """Generic content fingerprinting"""        await asyncio.sleep(0.03)
+        """Generic content fingerprinting"""
+        await asyncio.sleep(0.03)
         return np.random.rand(64).astype(np.float32)
     
     async def _batch_similarity_search(
@@ -696,7 +720,8 @@ class FingerprintingOptimizer(BaseEngine):
         query: np.ndarray, 
         database: List[np.ndarray]
     ) -> List[Tuple[int, float]]:
-        """Batch similarity search for large databases"""        
+        """Batch similarity search for large databases"""
+        
         # Convert to numpy array for vectorized operations
         db_matrix = np.array(database)
         
@@ -724,7 +749,8 @@ class FingerprintingOptimizer(BaseEngine):
         query: np.ndarray, 
         database: List[np.ndarray]
     ) -> List[Tuple[int, float]]:
-        """Linear similarity search for smaller databases"""        results = []
+        """Linear similarity search for smaller databases"""
+        results = []
         
         for i, fingerprint in enumerate(database):
             similarity = np.dot(query, fingerprint) / (
@@ -738,11 +764,13 @@ class FingerprintingOptimizer(BaseEngine):
         return results
     
     def _generate_content_hash(self, content_data: bytes) -> str:
-        """Generate hash for content caching"""        import hashlib
+        """Generate hash for content caching"""
+        import hashlib
         return hashlib.md5(content_data[:1024]).hexdigest()  # Use first 1KB for speed
     
     def _calculate_fingerprint_efficiency(self, execution_time: float, data_size: int) -> float:
-        """Calculate fingerprinting efficiency score"""        # MB per second processing rate
+        """Calculate fingerprinting efficiency score"""
+        # MB per second processing rate
         processing_rate = (data_size / (1024 * 1024)) / execution_time if execution_time > 0 else 0
         
         # Normalize to 0-100 scale (assume 10 MB/s is excellent)
@@ -750,7 +778,8 @@ class FingerprintingOptimizer(BaseEngine):
         return round(efficiency, 2)
     
     def _calculate_search_efficiency(self, execution_time: float, database_size: int) -> float:
-        """Calculate search efficiency score"""        # Items searched per second
+        """Calculate search efficiency score"""
+        # Items searched per second
         search_rate = database_size / execution_time if execution_time > 0 else 0
         
         # Normalize to 0-100 scale (assume 10K items/s is excellent)
@@ -759,7 +788,8 @@ class FingerprintingOptimizer(BaseEngine):
 
 
 class CacheOptimizer(BaseEngine):
-    """Advanced caching optimization system"""    
+    """Advanced caching optimization system"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.cache_levels = {
@@ -771,7 +801,8 @@ class CacheOptimizer(BaseEngine):
         self.cache_stats = {"hits": 0, "misses": 0, "evictions": 0}
         
     async def optimize_cache_strategy(self, key: str, value: Any, access_pattern: str = "default") -> bool:
-        """Optimize caching strategy based on access patterns"""        
+        """Optimize caching strategy based on access patterns"""
+        
         # Analyze access pattern
         cache_level = self._determine_optimal_cache_level(key, access_pattern)
         
@@ -784,7 +815,8 @@ class CacheOptimizer(BaseEngine):
         return success
     
     def _determine_optimal_cache_level(self, key: str, access_pattern: str) -> str:
-        """Determine optimal cache level based on access pattern"""        
+        """Determine optimal cache level based on access pattern"""
+        
         pattern_config = {
             "hot": "l1",      # Frequently accessed
             "warm": "l2",     # Moderately accessed
@@ -795,7 +827,8 @@ class CacheOptimizer(BaseEngine):
         return pattern_config.get(access_pattern, "l2")
     
     async def _store_in_cache_level(self, key: str, value: Any, level: str) -> bool:
-        """Store value in specified cache level"""        try:
+        """Store value in specified cache level"""
+        try:
             if level == "l1":
                 # Memory cache with size limit
                 if len(self.cache_levels["l1"]) > 1000:
@@ -817,14 +850,16 @@ class CacheOptimizer(BaseEngine):
             return False
     
     def _evict_lru(self, level: str) -> None:
-        """Evict least recently used item"""        if self.cache_levels[level]:
+        """Evict least recently used item"""
+        if self.cache_levels[level]:
             # Simple LRU - remove first item (in production, use proper LRU)
             oldest_key = next(iter(self.cache_levels[level]))
             del self.cache_levels[level][oldest_key]
             self.cache_stats["evictions"] += 1
     
     def _update_access_pattern(self, key: str, pattern: str) -> None:
-        """Update access pattern tracking"""        if key not in self.access_patterns:
+        """Update access pattern tracking"""
+        if key not in self.access_patterns:
             self.access_patterns[key] = {"count": 0, "pattern": pattern, "last_access": time.time()}
         
         self.access_patterns[key]["count"] += 1
@@ -832,14 +867,16 @@ class CacheOptimizer(BaseEngine):
 
 
 class QueryOptimizer(BaseEngine):
-    """Database query optimization engine"""    
+    """Database query optimization engine"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.query_cache = {}
         self.execution_plans = {}
         
     async def optimize_query(self, query: str, parameters: Dict[str, Any] = None) -> Tuple[str, Dict[str, Any]]:
-        """Optimize database query for better performance"""        
+        """Optimize database query for better performance"""
+        
         # Generate query signature for caching
         query_signature = self._generate_query_signature(query, parameters)
         
@@ -857,7 +894,8 @@ class QueryOptimizer(BaseEngine):
         return optimized_query, optimized_params
     
     async def _analyze_and_optimize(self, query: str) -> str:
-        """Analyze and optimize SQL query"""        
+        """Analyze and optimize SQL query"""
+        
         # Add LIMIT if missing for potentially large result sets
         if "SELECT" in query.upper() and "LIMIT" not in query.upper():
             if "ORDER BY" in query.upper():
@@ -872,7 +910,8 @@ class QueryOptimizer(BaseEngine):
         return query
     
     async def _optimize_parameters(self, parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize query parameters"""        
+        """Optimize query parameters"""
+        
         # Convert lists to tuples for better performance in IN clauses
         optimized = {}
         for key, value in parameters.items():
@@ -886,7 +925,8 @@ class QueryOptimizer(BaseEngine):
         return optimized
     
     def _generate_query_signature(self, query: str, parameters: Dict[str, Any] = None) -> str:
-        """Generate unique signature for query caching"""        import hashlib
+        """Generate unique signature for query caching"""
+        import hashlib
         
         query_hash = hashlib.md5(query.encode()).hexdigest()
         if parameters:

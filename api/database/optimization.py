@@ -9,7 +9,8 @@ DevOps Engineer, AI Prompt Engineer
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""import asyncio
+"""
+import asyncio
 import time
 import statistics
 from typing import Dict, List, Optional, Any, Tuple, Set, NamedTuple
@@ -38,7 +39,8 @@ settings = get_settings()
 
 
 class OptimizationType(Enum):
-    """Database optimization type enumeration"""    INDEX_CREATION = "index_creation"
+    """Database optimization type enumeration"""
+    INDEX_CREATION = "index_creation"
     INDEX_REMOVAL = "index_removal"
     QUERY_REWRITE = "query_rewrite"
     PARTITION_SUGGESTION = "partition_suggestion"
@@ -50,7 +52,8 @@ class OptimizationType(Enum):
 
 
 class IndexType(Enum):
-    """Database index type enumeration"""    BTREE = "btree"
+    """Database index type enumeration"""
+    BTREE = "btree"
     HASH = "hash"
     GIN = "gin"
     GIST = "gist"
@@ -61,7 +64,8 @@ class IndexType(Enum):
 
 
 class QueryComplexity(Enum):
-    """Query complexity levels"""    SIMPLE = "simple"
+    """Query complexity levels"""
+    SIMPLE = "simple"
     MODERATE = "moderate"
     COMPLEX = "complex"
     VERY_COMPLEX = "very_complex"
@@ -69,7 +73,8 @@ class QueryComplexity(Enum):
 
 @dataclass
 class QueryProfile:
-    """Query execution profile"""    query_hash: str
+    """Query execution profile"""
+    query_hash: str
     query_text: str
     execution_count: int
     total_execution_time_ms: float
@@ -83,7 +88,8 @@ class QueryProfile:
     
     @property
     def performance_score(self) -> float:
-        """Calculate performance score (0-100, higher is better)"""        # Base score on execution time (lower is better)
+        """Calculate performance score (0-100, higher is better)"""
+        # Base score on execution time (lower is better)
         if self.avg_execution_time_ms < 10:
             return 100.0
         elif self.avg_execution_time_ms < 50:
@@ -102,7 +108,8 @@ class QueryProfile:
 
 @dataclass
 class IndexRecommendation:
-    """Index creation recommendation"""    table_name: str
+    """Index creation recommendation"""
+    table_name: str
     columns: List[str]
     index_type: IndexType
     estimated_benefit: float  # 0-100 score
@@ -115,7 +122,8 @@ class IndexRecommendation:
     
     @property
     def recommendation_score(self) -> float:
-        """Calculate overall recommendation score"""        # Benefit vs cost analysis
+        """Calculate overall recommendation score"""
+        # Benefit vs cost analysis
         benefit_weight = 0.6
         cost_weight = 0.4
         
@@ -125,7 +133,8 @@ class IndexRecommendation:
 
 @dataclass
 class OptimizationRecommendation:
-    """Database optimization recommendation"""    optimization_type: OptimizationType
+    """Database optimization recommendation"""
+    optimization_type: OptimizationType
     priority: str
     title: str
     description: str
@@ -139,18 +148,21 @@ class OptimizationRecommendation:
 
 
 class QueryAnalyzer:
-    """Advanced query analysis and optimization recommendations"""    
+    """Advanced query analysis and optimization recommendations"""
+    
     def __init__(self):
         self.query_profiles: Dict[str, QueryProfile] = {}
         self.session_manager = SessionManager()
         self.db_connection: Optional[DatabaseConnection] = None
     
     async def initialize(self):
-        """Initialize query analyzer"""        self.db_connection = await DatabaseConnection.get_instance()
+        """Initialize query analyzer"""
+        self.db_connection = await DatabaseConnection.get_instance()
         logger.info("Query analyzer initialized")
     
     async def analyze_query(self, query: str, execution_time_ms: float = None) -> QueryProfile:
-        """Analyze a single query"""        query_hash = self._generate_query_hash(query)
+        """Analyze a single query"""
+        query_hash = self._generate_query_hash(query)
         normalized_query = self._normalize_query(query)
         
         # Get or create profile
@@ -187,12 +199,14 @@ class QueryAnalyzer:
         return profile
     
     def _generate_query_hash(self, query: str) -> str:
-        """Generate hash for query normalization"""        import hashlib
+        """Generate hash for query normalization"""
+        import hashlib
         normalized = self._normalize_query(query)
         return hashlib.sha256(normalized.encode()).hexdigest()[:16]
     
     def _normalize_query(self, query: str) -> str:
-        """Normalize query for pattern matching"""        # Remove extra whitespace and standardize
+        """Normalize query for pattern matching"""
+        # Remove extra whitespace and standardize
         normalized = re.sub(r'\s+', ' ', query.strip().lower())
         
         # Replace parameter placeholders
@@ -207,7 +221,8 @@ class QueryAnalyzer:
         return normalized
     
     def _extract_tables_from_query(self, query: str) -> List[str]:
-        """Extract table names from query"""        tables = []
+        """Extract table names from query"""
+        tables = []
         query_lower = query.lower()
         
         # Common table extraction patterns
@@ -226,7 +241,8 @@ class QueryAnalyzer:
         return list(set(tables))  # Remove duplicates
     
     def _assess_query_complexity(self, query: str) -> QueryComplexity:
-        """Assess query complexity based on various factors"""        query_lower = query.lower()
+        """Assess query complexity based on various factors"""
+        query_lower = query.lower()
         complexity_score = 0
         
         # Count joins
@@ -261,7 +277,8 @@ class QueryAnalyzer:
             return QueryComplexity.VERY_COMPLEX
     
     async def _identify_optimization_opportunities(self, profile: QueryProfile) -> List[str]:
-        """Identify optimization opportunities for a query"""        opportunities = []
+        """Identify optimization opportunities for a query"""
+        opportunities = []
         
         # Slow query optimization
         if profile.avg_execution_time_ms > 1000:
@@ -294,17 +311,20 @@ class QueryAnalyzer:
         return opportunities
     
     async def get_slowest_queries(self, limit: int = 10) -> List[QueryProfile]:
-        """Get slowest queries by average execution time"""        profiles = list(self.query_profiles.values())
+        """Get slowest queries by average execution time"""
+        profiles = list(self.query_profiles.values())
         profiles.sort(key=lambda p: p.avg_execution_time_ms, reverse=True)
         return profiles[:limit]
     
     async def get_most_frequent_queries(self, limit: int = 10) -> List[QueryProfile]:
-        """Get most frequently executed queries"""        profiles = list(self.query_profiles.values())
+        """Get most frequently executed queries"""
+        profiles = list(self.query_profiles.values())
         profiles.sort(key=lambda p: p.execution_count, reverse=True)
         return profiles[:limit]
     
     async def get_query_statistics(self) -> Dict[str, Any]:
-        """Get query analysis statistics"""        if not self.query_profiles:
+        """Get query analysis statistics"""
+        if not self.query_profiles:
             return {}
         
         profiles = list(self.query_profiles.values())
@@ -326,21 +346,25 @@ class QueryAnalyzer:
 
 
 class IndexOptimizer:
-    """Advanced index optimization and recommendations"""    
+    """Advanced index optimization and recommendations"""
+    
     def __init__(self, query_analyzer: QueryAnalyzer):
         self.query_analyzer = query_analyzer
         self.session_manager = SessionManager()
         self.existing_indexes: Dict[str, List[Dict[str, Any]]] = {}
     
     async def initialize(self):
-        """Initialize index optimizer"""        await self._load_existing_indexes()
+        """Initialize index optimizer"""
+        await self._load_existing_indexes()
         logger.info("Index optimizer initialized")
     
     async def _load_existing_indexes(self):
-        """Load existing database indexes"""        try:
+        """Load existing database indexes"""
+        try:
             async with self.session_manager.get_async_session() as session:
                 # Query PostgreSQL system catalogs for indexes
-                query = text("""                    SELECT 
+                query = text("""
+                    SELECT 
                         schemaname,
                         tablename,
                         indexname,
@@ -376,10 +400,12 @@ class IndexOptimizer:
             logger.error(f"Failed to load existing indexes: {e}")
     
     async def analyze_index_usage(self) -> Dict[str, Any]:
-        """Analyze index usage statistics"""        try:
+        """Analyze index usage statistics"""
+        try:
             async with self.session_manager.get_async_session() as session:
                 # Get index usage statistics from PostgreSQL
-                query = text("""                    SELECT 
+                query = text("""
+                    SELECT 
                         schemaname,
                         tablename,
                         indexname,
@@ -440,7 +466,8 @@ class IndexOptimizer:
             return {}
     
     async def generate_index_recommendations(self) -> List[IndexRecommendation]:
-        """Generate index creation recommendations"""        recommendations = []
+        """Generate index creation recommendations"""
+        recommendations = []
         
         # Analyze slow queries for index opportunities
         slow_queries = await self.query_analyzer.get_slowest_queries(20)
@@ -459,7 +486,8 @@ class IndexOptimizer:
         return unique_recommendations
     
     async def _analyze_query_for_indexes(self, profile: QueryProfile) -> List[IndexRecommendation]:
-        """Analyze a query for potential index improvements"""        recommendations = []
+        """Analyze a query for potential index improvements"""
+        recommendations = []
         
         # Extract WHERE clause conditions
         where_conditions = self._extract_where_conditions(profile.query_text)
@@ -526,7 +554,8 @@ class IndexOptimizer:
         return recommendations
     
     def _extract_where_conditions(self, query: str) -> List[Dict[str, Any]]:
-        """Extract WHERE clause conditions from query"""        conditions = []
+        """Extract WHERE clause conditions from query"""
+        conditions = []
         
         # Simple pattern matching for WHERE conditions
         # In production, use a proper SQL parser
@@ -560,7 +589,8 @@ class IndexOptimizer:
         return conditions
     
     def _extract_order_by_columns(self, query: str) -> Dict[str, List[str]]:
-        """Extract ORDER BY columns from query"""        order_by_columns = {}
+        """Extract ORDER BY columns from query"""
+        order_by_columns = {}
         
         order_match = re.search(r'order\s+by\s+(.+?)(?:limit|$)', query, re.IGNORECASE)
         
@@ -586,7 +616,8 @@ class IndexOptimizer:
         return order_by_columns
     
     def _has_suitable_index(self, table_name: str, columns: List[str]) -> bool:
-        """Check if a suitable index already exists"""        if table_name not in self.existing_indexes:
+        """Check if a suitable index already exists"""
+        if table_name not in self.existing_indexes:
             return False
         
         for index in self.existing_indexes[table_name]:
@@ -600,7 +631,8 @@ class IndexOptimizer:
         return False
     
     def _estimate_index_benefit(self, profile: QueryProfile, columns: List[str]) -> float:
-        """Estimate benefit of creating an index"""        base_benefit = 60.0
+        """Estimate benefit of creating an index"""
+        base_benefit = 60.0
         
         # Higher benefit for slower queries
         if profile.avg_execution_time_ms > 1000:
@@ -621,7 +653,8 @@ class IndexOptimizer:
         return min(base_benefit, 100.0)
     
     def _estimate_index_size(self, table_name: str, columns: List[str]) -> float:
-        """Estimate index size in MB"""        # Simplified estimation - would need actual table statistics
+        """Estimate index size in MB"""
+        # Simplified estimation - would need actual table statistics
         base_size = 10.0  # Base size in MB
         
         # Estimate based on number of columns
@@ -631,7 +664,8 @@ class IndexOptimizer:
         return base_size + column_factor
     
     def _deduplicate_recommendations(self, recommendations: List[IndexRecommendation]) -> List[IndexRecommendation]:
-        """Remove duplicate index recommendations"""        seen = set()
+        """Remove duplicate index recommendations"""
+        seen = set()
         unique_recommendations = []
         
         for rec in recommendations:
@@ -650,12 +684,14 @@ class IndexOptimizer:
         return unique_recommendations
     
     async def get_unused_indexes(self) -> List[Dict[str, Any]]:
-        """Get list of unused indexes that could be removed"""        usage_stats = await self.analyze_index_usage()
+        """Get list of unused indexes that could be removed"""
+        usage_stats = await self.analyze_index_usage()
         return usage_stats.get('unused_index_details', [])
 
 
 class DatabaseOptimizer:
-    """Main database optimization orchestrator"""    
+    """Main database optimization orchestrator"""
+    
     def __init__(self):
         self.query_analyzer = QueryAnalyzer()
         self.index_optimizer = IndexOptimizer(self.query_analyzer)
@@ -663,14 +699,16 @@ class DatabaseOptimizer:
         self.db_monitor = None
     
     async def initialize(self):
-        """Initialize database optimizer"""        await self.query_analyzer.initialize()
+        """Initialize database optimizer"""
+        await self.query_analyzer.initialize()
         await self.index_optimizer.initialize()
         self.db_monitor = await get_database_monitor()
         
         logger.info("Database optimizer initialized")
     
     async def perform_comprehensive_analysis(self) -> Dict[str, Any]:
-        """Perform comprehensive database optimization analysis"""        logger.info("Starting comprehensive database optimization analysis")
+        """Perform comprehensive database optimization analysis"""
+        logger.info("Starting comprehensive database optimization analysis")
         
         analysis_results = {
             'timestamp': datetime.utcnow(),
@@ -685,7 +723,8 @@ class DatabaseOptimizer:
         return analysis_results
     
     async def generate_optimization_recommendations(self) -> List[OptimizationRecommendation]:
-        """Generate comprehensive optimization recommendations"""        recommendations = []
+        """Generate comprehensive optimization recommendations"""
+        recommendations = []
         
         # Index recommendations
         index_recommendations = await self.index_optimizer.generate_index_recommendations()
@@ -763,7 +802,8 @@ class DatabaseOptimizer:
         return recommendations
     
     def _generate_index_creation_sql(self, index_rec: IndexRecommendation) -> str:
-        """Generate SQL for index creation"""        index_name = f"idx_{index_rec.table_name}_{'_'.join(index_rec.columns)}"
+        """Generate SQL for index creation"""
+        index_name = f"idx_{index_rec.table_name}_{'_'.join(index_rec.columns)}"
         columns_str = ', '.join(index_rec.columns)
         
         if index_rec.index_type == IndexType.UNIQUE:
@@ -774,7 +814,8 @@ class DatabaseOptimizer:
             return f"CREATE INDEX {index_name} ON {index_rec.table_name} ({columns_str});"
     
     async def _collect_performance_metrics(self) -> Dict[str, Any]:
-        """Collect current performance metrics"""        try:
+        """Collect current performance metrics"""
+        try:
             if self.db_monitor:
                 metrics = await self.db_monitor.get_current_metrics()
                 return metrics or {}
@@ -784,9 +825,11 @@ class DatabaseOptimizer:
             return {}
     
     async def _collect_table_statistics(self) -> List[Dict[str, Any]]:
-        """Collect table-level statistics"""        try:
+        """Collect table-level statistics"""
+        try:
             async with self.session_manager.get_async_session() as session:
-                query = text("""                    SELECT 
+                query = text("""
+                    SELECT 
                         schemaname,
                         tablename,
                         n_tup_ins as inserts,
@@ -833,7 +876,8 @@ class DatabaseOptimizer:
     async def execute_optimization_recommendation(self, 
                                                 recommendation: OptimizationRecommendation,
                                                 dry_run: bool = True) -> Dict[str, Any]:
-        """Execute an optimization recommendation"""        result = {
+        """Execute an optimization recommendation"""
+        result = {
             'recommendation_id': recommendation.title,
             'success': False,
             'dry_run': dry_run,
@@ -874,7 +918,8 @@ class DatabaseOptimizer:
         return result
     
     async def schedule_maintenance_tasks(self) -> List[Dict[str, Any]]:
-        """Schedule routine maintenance tasks"""        maintenance_tasks = []
+        """Schedule routine maintenance tasks"""
+        maintenance_tasks = []
         
         # Get table statistics
         table_stats = await self._collect_table_statistics()
@@ -908,7 +953,8 @@ _optimizer_instance: Optional[DatabaseOptimizer] = None
 
 
 async def get_database_optimizer() -> DatabaseOptimizer:
-    """Get global database optimizer instance"""    global _optimizer_instance
+    """Get global database optimizer instance"""
+    global _optimizer_instance
     
     if _optimizer_instance is None:
         _optimizer_instance = DatabaseOptimizer()
@@ -919,15 +965,18 @@ async def get_database_optimizer() -> DatabaseOptimizer:
 
 # Convenience functions
 async def analyze_query_performance(query: str, execution_time_ms: float = None) -> QueryProfile:
-    """Analyze query performance"""    optimizer = await get_database_optimizer()
+    """Analyze query performance"""
+    optimizer = await get_database_optimizer()
     return await optimizer.query_analyzer.analyze_query(query, execution_time_ms)
 
 
 async def get_optimization_recommendations() -> List[OptimizationRecommendation]:
-    """Get database optimization recommendations"""    optimizer = await get_database_optimizer()
+    """Get database optimization recommendations"""
+    optimizer = await get_database_optimizer()
     return await optimizer.generate_optimization_recommendations()
 
 
 async def get_index_recommendations() -> List[IndexRecommendation]:
-    """Get index creation recommendations"""    optimizer = await get_database_optimizer()
+    """Get index creation recommendations"""
+    optimizer = await get_database_optimizer()
     return await optimizer.index_optimizer.generate_index_recommendations()

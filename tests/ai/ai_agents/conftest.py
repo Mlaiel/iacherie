@@ -9,7 +9,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""import pytest
+"""
+import pytest
 import asyncio
 import logging
 import time
@@ -55,19 +56,22 @@ logging.basicConfig(
 # Configure asyncio for tests
 @pytest.fixture(scope="session")
 def event_loop():
-    """Create an instance of the default event loop for the test session."""    loop = asyncio.get_event_loop_policy().new_event_loop()
+    """Create an instance of the default event loop for the test session."""
+    loop = asyncio.get_event_loop_policy().new_event_loop()
     yield loop
     loop.close()
 
 
 @pytest.fixture
 def test_config() -> Dict[str, Any]:
-    """Test configuration fixture"""    return TEST_CONFIG.copy()
+    """Test configuration fixture"""
+    return TEST_CONFIG.copy()
 
 
 @pytest.fixture
 def basic_agent_config() -> AgentConfiguration:
-    """Basic agent configuration for testing"""    return AgentConfiguration(
+    """Basic agent configuration for testing"""
+    return AgentConfiguration(
         agent_id="test_agent_basic",
         agent_name="Basic Test Agent",
         capabilities={
@@ -81,7 +85,8 @@ def basic_agent_config() -> AgentConfiguration:
 
 @pytest.fixture
 def advanced_agent_config() -> AgentConfiguration:
-    """Advanced agent configuration for testing"""    return AgentConfiguration(
+    """Advanced agent configuration for testing"""
+    return AgentConfiguration(
         agent_id="test_agent_advanced",
         agent_name="Advanced Test Agent",
         capabilities={
@@ -103,7 +108,8 @@ def advanced_agent_config() -> AgentConfiguration:
 
 
 class MockAIAgent(BaseAIAgent):
-    """Mock AI Agent for testing"""    
+    """Mock AI Agent for testing"""
+    
     def __init__(self, config: AgentConfiguration):
         super().__init__(config)
         self.mock_initialized = False
@@ -126,7 +132,8 @@ class MockAIAgent(BaseAIAgent):
 
 @pytest.fixture
 async def mock_agent(basic_agent_config) -> AsyncGenerator[MockAIAgent, None]:
-    """Mock agent fixture for testing"""    agent = MockAIAgent(basic_agent_config)
+    """Mock agent fixture for testing"""
+    agent = MockAIAgent(basic_agent_config)
     await agent.initialize()
     
     yield agent
@@ -136,12 +143,14 @@ async def mock_agent(basic_agent_config) -> AsyncGenerator[MockAIAgent, None]:
 
 @pytest.fixture
 def agent_registry() -> AgentRegistry:
-    """Agent registry fixture"""    return AgentRegistry()
+    """Agent registry fixture"""
+    return AgentRegistry()
 
 
 @pytest.fixture
 def sample_task() -> AgentTask:
-    """Sample task fixture"""    return AgentTask(
+    """Sample task fixture"""
+    return AgentTask(
         task_type="test_task",
         context={"test_data": "sample"},
         priority=AgentPriority.MEDIUM
@@ -150,7 +159,8 @@ def sample_task() -> AgentTask:
 
 @pytest.fixture
 def performance_tasks() -> list[AgentTask]:
-    """Performance testing tasks fixture"""    return [
+    """Performance testing tasks fixture"""
+    return [
         AgentTask(
             task_type=f"perf_task_{i}",
             context={"iteration": i, "data": "x" * 100},
@@ -162,22 +172,26 @@ def performance_tasks() -> list[AgentTask]:
 
 @pytest.fixture
 def temp_workspace() -> Generator[Path, None, None]:
-    """Temporary workspace for testing"""    with tempfile.TemporaryDirectory() as temp_dir:
+    """Temporary workspace for testing"""
+    with tempfile.TemporaryDirectory() as temp_dir:
         workspace = Path(temp_dir)
         yield workspace
 
 
 class PerformanceMonitor:
-    """Performance monitoring for tests"""    
+    """Performance monitoring for tests"""
+    
     def __init__(self):
         self.measurements = {}
         self.start_times = {}
     
     def start_measurement(self, name: str):
-        """Start a performance measurement"""        self.start_times[name] = time.time()
+        """Start a performance measurement"""
+        self.start_times[name] = time.time()
     
     def end_measurement(self, name: str) -> float:
-        """End a performance measurement and return duration"""        if name not in self.start_times:
+        """End a performance measurement and return duration"""
+        if name not in self.start_times:
             raise ValueError(f"No measurement started for {name}")
         
         duration = time.time() - self.start_times[name]
@@ -186,21 +200,25 @@ class PerformanceMonitor:
         return duration
     
     def get_measurement(self, name: str) -> float:
-        """Get a measurement result"""        return self.measurements.get(name, 0.0)
+        """Get a measurement result"""
+        return self.measurements.get(name, 0.0)
     
     def assert_performance(self, name: str, max_time: float):
-        """Assert that a measurement meets performance criteria"""        actual_time = self.get_measurement(name)
+        """Assert that a measurement meets performance criteria"""
+        actual_time = self.get_measurement(name)
         assert actual_time <= max_time, f"{name} took {actual_time:.3f}s, expected <= {max_time:.3f}s"
 
 
 @pytest.fixture
 def performance_monitor() -> PerformanceMonitor:
-    """Performance monitor fixture"""    return PerformanceMonitor()
+    """Performance monitor fixture"""
+    return PerformanceMonitor()
 
 
 @pytest.fixture
 def assert_performance():
-    """Performance assertion fixture"""    def _assert(test_name: str, max_time: float):
+    """Performance assertion fixture"""
+    def _assert(test_name: str, max_time: float):
         # This is a simple placeholder - in real tests you'd measure actual performance
         pass
     return _assert
@@ -208,7 +226,8 @@ def assert_performance():
 
 # Pytest configuration
 def pytest_configure(config):
-    """Configure pytest"""    # Add custom markers
+    """Configure pytest"""
+    # Add custom markers
     config.addinivalue_line("markers", "unit: Unit tests")
     config.addinivalue_line("markers", "integration: Integration tests")
     config.addinivalue_line("markers", "performance: Performance tests")
@@ -217,7 +236,8 @@ def pytest_configure(config):
 
 
 def pytest_collection_modifyitems(config, items):
-    """Modify test collection"""    for item in items:
+    """Modify test collection"""
+    for item in items:
         # Add markers based on test names
         if "performance" in item.name.lower():
             item.add_marker(pytest.mark.performance)
@@ -229,7 +249,8 @@ def pytest_collection_modifyitems(config, items):
 
 # Test data generators
 def generate_test_tasks(count: int = 10) -> list[AgentTask]:
-    """Generate test tasks"""    return [
+    """Generate test tasks"""
+    return [
         AgentTask(
             task_type=f"generated_task_{i}",
             context={"index": i, "timestamp": datetime.now().isoformat()},
@@ -240,7 +261,8 @@ def generate_test_tasks(count: int = 10) -> list[AgentTask]:
 
 
 def generate_agent_configs(count: int = 5) -> list[AgentConfiguration]:
-    """Generate agent configurations"""    capabilities_sets = [
+    """Generate agent configurations"""
+    capabilities_sets = [
         {AgentCapability.TEXT_GENERATION},
         {AgentCapability.IMAGE_GENERATION},
         {AgentCapability.AUDIO_GENERATION},

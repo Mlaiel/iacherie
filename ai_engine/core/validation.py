@@ -7,7 +7,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
-"""import re
+"""
+import re
 import string
 import hashlib
 import mimetypes
@@ -54,7 +55,8 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationLevel(Enum):
-    """Advanced validation severity levels for comprehensive monitoring"""    INFO = "info"
+    """Advanced validation severity levels for comprehensive monitoring"""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -65,7 +67,8 @@ class ValidationLevel(Enum):
 
 
 class ContentType(Enum):
-    """Supported content types for validation"""    TEXT = "text"
+    """Supported content types for validation"""
+    TEXT = "text"
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -82,7 +85,8 @@ class ContentType(Enum):
 
 
 class ValidationCategory(Enum):
-    """Categories of validation checks"""    CONTENT_SAFETY = "content_safety"
+    """Categories of validation checks"""
+    CONTENT_SAFETY = "content_safety"
     COPYRIGHT_COMPLIANCE = "copyright_compliance"
     TECHNICAL_QUALITY = "technical_quality"
     BRAND_SAFETY = "brand_safety"
@@ -96,7 +100,8 @@ class ValidationCategory(Enum):
 
 @dataclass
 class ValidationIssue:
-    """Detailed validation issue with comprehensive metadata"""    level: ValidationLevel
+    """Detailed validation issue with comprehensive metadata"""
+    level: ValidationLevel
     category: ValidationCategory
     message: str
     code: str
@@ -109,7 +114,8 @@ class ValidationIssue:
     source_location: Optional[Dict[str, Any]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert issue to dictionary"""        return {
+        """Convert issue to dictionary"""
+        return {
             "level": self.level.value,
             "category": self.category.value,
             "message": self.message,
@@ -126,7 +132,8 @@ class ValidationIssue:
 
 @dataclass
 class ValidationResult:
-    """Comprehensive content validation result with detailed analytics"""    is_valid: bool
+    """Comprehensive content validation result with detailed analytics"""
+    is_valid: bool
     overall_score: float  # 0.0 to 100.0
     quality_score: float  # 0.0 to 100.0
     safety_score: float  # 0.0 to 100.0
@@ -155,7 +162,8 @@ class ValidationResult:
         fix_suggestion: Optional[str] = None,
         context: Optional[Dict[str, Any]] = None
     ):
-        """Add a validation issue with comprehensive details"""        issue = ValidationIssue(
+        """Add a validation issue with comprehensive details"""
+        issue = ValidationIssue(
             level=level,
             category=category,
             message=message,
@@ -175,16 +183,20 @@ class ValidationResult:
             self.is_valid = False
             
     def get_issues_by_category(self, category: ValidationCategory) -> List[ValidationIssue]:
-        """Get issues filtered by category"""        return [issue for issue in self.issues if issue.category == category]
+        """Get issues filtered by category"""
+        return [issue for issue in self.issues if issue.category == category]
         
     def get_issues_by_level(self, level: ValidationLevel) -> List[ValidationIssue]:
-        """Get issues filtered by level"""        return [issue for issue in self.issues if issue.level == level]
+        """Get issues filtered by level"""
+        return [issue for issue in self.issues if issue.level == level]
         
     def get_fixable_issues(self) -> List[ValidationIssue]:
-        """Get issues that can be automatically fixed"""        return [issue for issue in self.issues if issue.auto_fixable]
+        """Get issues that can be automatically fixed"""
+        return [issue for issue in self.issues if issue.auto_fixable]
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convert validation result to dictionary"""        return {
+        """Convert validation result to dictionary"""
+        return {
             "is_valid": self.is_valid,
             "scores": {
                 "overall": self.overall_score,
@@ -206,7 +218,8 @@ class ValidationResult:
 
 
 class ContentSecurityValidator:
-    """Advanced content security and safety validation"""    
+    """Advanced content security and safety validation"""
+    
     def __init__(self):
         self.blocked_patterns = []
         self.suspicious_patterns = []
@@ -214,7 +227,8 @@ class ContentSecurityValidator:
         self.load_security_rules()
         
     def load_security_rules(self):
-        """Load security validation rules"""        # Malicious content patterns
+        """Load security validation rules"""
+        # Malicious content patterns
         self.blocked_patterns = [
             r'<script[^>]*>.*?</script>',  # Script injection
             r'javascript:',  # JavaScript URLs
@@ -232,7 +246,8 @@ class ContentSecurityValidator:
         ]
         
     def validate_security(self, content: str, result: ValidationResult):
-        """Validate content security"""        security_score = 100.0
+        """Validate content security"""
+        security_score = 100.0
         
         # Check for blocked patterns
         for pattern in self.blocked_patterns:
@@ -263,14 +278,16 @@ class ContentSecurityValidator:
 
 
 class ContentQualityAnalyzer:
-    """Advanced content quality analysis and scoring"""    
+    """Advanced content quality analysis and scoring"""
+    
     def __init__(self):
         self.quality_metrics = {}
         if TRANSFORMERS_AVAILABLE:
             self.init_ai_models()
             
     def init_ai_models(self):
-        """Initialize AI models for quality analysis"""        try:
+        """Initialize AI models for quality analysis"""
+        try:
             # Content quality model
             self.quality_tokenizer = AutoTokenizer.from_pretrained(
                 "distilbert-base-uncased"
@@ -280,7 +297,8 @@ class ContentQualityAnalyzer:
             logger.warning(f"Failed to initialize AI models: {e}")
             
     def analyze_text_quality(self, content: str, result: ValidationResult):
-        """Analyze text content quality"""        quality_score = 100.0
+        """Analyze text content quality"""
+        quality_score = 100.0
         
         # Basic quality metrics
         word_count = len(content.split())
@@ -339,7 +357,8 @@ class ContentQualityAnalyzer:
         result.quality_score = max(0, quality_score)
         
     def _check_capitalization(self, content: str) -> int:
-        """Check for capitalization errors"""        sentences = re.split(r'[.!?]+', content)
+        """Check for capitalization errors"""
+        sentences = re.split(r'[.!?]+', content)
         errors = 0
         
         for sentence in sentences:
@@ -351,7 +370,8 @@ class ContentQualityAnalyzer:
 
 
 class AudioContentValidator:
-    """Advanced audio content validation"""    
+    """Advanced audio content validation"""
+    
     def __init__(self):
         self.audio_formats = ['.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a']
         self.quality_thresholds = {
@@ -363,7 +383,8 @@ class AudioContentValidator:
         }
         
     def validate_audio(self, audio_path: str, result: ValidationResult):
-        """Validate audio content quality and compliance"""        if not AUDIO_AVAILABLE:
+        """Validate audio content quality and compliance"""
+        if not AUDIO_AVAILABLE:
             result.add_issue(
                 ValidationLevel.WARNING,
                 ValidationCategory.TECHNICAL_QUALITY,
@@ -430,7 +451,8 @@ class AudioContentValidator:
             )
             
     def _calculate_silence_ratio(self, audio_data: np.ndarray) -> float:
-        """Calculate ratio of silence in audio"""        # Simple silence detection based on amplitude threshold
+        """Calculate ratio of silence in audio"""
+        # Simple silence detection based on amplitude threshold
         threshold = 0.01
         silent_samples = np.sum(np.abs(audio_data) < threshold)
         return silent_samples / len(audio_data)
@@ -441,7 +463,8 @@ class AudioContentValidator:
         duration: float, 
         silence_ratio: float
     ) -> float:
-        """Calculate overall audio quality score"""        score = 100.0
+        """Calculate overall audio quality score"""
+        score = 100.0
         
         # Sample rate scoring
         if sample_rate < 44100:
@@ -465,7 +488,8 @@ class AudioContentValidator:
 
 
 class ImageContentValidator:
-    """Advanced image content validation"""    
+    """Advanced image content validation"""
+    
     def __init__(self):
         self.image_formats = ['.jpg', '.jpeg', '.png', '.bmp', '.tiff', '.webp']
         self.quality_thresholds = {
@@ -477,7 +501,8 @@ class ImageContentValidator:
         }
         
     def validate_image(self, image_path: str, result: ValidationResult):
-        """Validate image content quality and compliance"""        if not CV2_AVAILABLE:
+        """Validate image content quality and compliance"""
+        if not CV2_AVAILABLE:
             result.add_issue(
                 ValidationLevel.WARNING,
                 ValidationCategory.TECHNICAL_QUALITY,
@@ -561,7 +586,8 @@ class ImageContentValidator:
             )
             
     def _calculate_image_quality_score(self, image: np.ndarray, file_size: int) -> float:
-        """Calculate image quality score based on various factors"""        score = 100.0
+        """Calculate image quality score based on various factors"""
+        score = 100.0
         
         # Blur detection using Laplacian variance
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -591,7 +617,8 @@ class ImageContentValidator:
 
 
 class SEOValidator:
-    """SEO optimization validation for content"""    
+    """SEO optimization validation for content"""
+    
     def __init__(self):
         self.seo_rules = {
             'title_length': (30, 60),
@@ -603,7 +630,8 @@ class SEOValidator:
         }
         
     def validate_seo(self, content: str, metadata: Dict[str, Any], result: ValidationResult):
-        """Validate SEO optimization"""        seo_score = 100.0
+        """Validate SEO optimization"""
+        seo_score = 100.0
         
         # Title validation
         title = metadata.get('title', '')
@@ -691,13 +719,15 @@ class SEOValidator:
         result.seo_score = max(0, seo_score)
         
     def _calculate_keyword_density(self, content: str, keyword: str) -> float:
-        """Calculate keyword density percentage"""        words = content.lower().split()
+        """Calculate keyword density percentage"""
+        words = content.lower().split()
         keyword_count = words.count(keyword.lower())
         return (keyword_count / len(words)) * 100 if words else 0
 
 
 class ContentValidator:
-    """    Enterprise-grade content validation system
+    """
+    Enterprise-grade content validation system
     
     Features:
     - Multi-format content validation (text, audio, video, image)
@@ -708,7 +738,8 @@ class ContentValidator:
     - Copyright and legal compliance
     - Monetization readiness assessment
     - Collaboration readiness validation
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         
@@ -748,7 +779,8 @@ class ContentValidator:
         platform_targets: Optional[List[str]] = None,
         **kwargs
     ) -> ValidationResult:
-        """        Validate content with comprehensive analysis
+        """
+        Validate content with comprehensive analysis
         
         Args:
             content: Content to validate (text, file path, or bytes)
@@ -759,7 +791,8 @@ class ContentValidator:
             
         Returns:
             Comprehensive validation result
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         
         result = ValidationResult(
             is_valid=True,
@@ -833,7 +866,8 @@ class ContentValidator:
         return result
         
     def _generate_fingerprint(self, content: Union[str, bytes, Path]) -> str:
-        """Generate unique fingerprint for content"""        if isinstance(content, str):
+        """Generate unique fingerprint for content"""
+        if isinstance(content, str):
             content_bytes = content.encode('utf-8')
         elif isinstance(content, Path):
             content_bytes = content.read_bytes()
@@ -848,7 +882,8 @@ class ContentValidator:
         content_type: ContentType,
         result: ValidationResult
     ):
-        """Validate basic content requirements"""        if isinstance(content, str):
+        """Validate basic content requirements"""
+        if isinstance(content, str):
             if not content or not content.strip():
                 result.add_issue(
                     ValidationLevel.CRITICAL,
@@ -866,7 +901,8 @@ class ContentValidator:
                 )
                 
     def _validate_text_content(self, content: str, result: ValidationResult):
-        """Validate text content"""        self.quality_analyzer.analyze_text_quality(content, result)
+        """Validate text content"""
+        self.quality_analyzer.analyze_text_quality(content, result)
         
         # Character encoding validation
         try:
@@ -880,7 +916,8 @@ class ContentValidator:
             )
             
     def _validate_audio_content(self, content: Union[str, Path], result: ValidationResult):
-        """Validate audio content"""        if isinstance(content, str):
+        """Validate audio content"""
+        if isinstance(content, str):
             content = Path(content)
             
         if content.exists():
@@ -894,7 +931,8 @@ class ContentValidator:
             )
             
     def _validate_image_content(self, content: Union[str, Path], result: ValidationResult):
-        """Validate image content"""        if isinstance(content, str):
+        """Validate image content"""
+        if isinstance(content, str):
             content = Path(content)
             
         if content.exists():
@@ -908,7 +946,8 @@ class ContentValidator:
             )
             
     def _validate_video_content(self, content: Union[str, Path], result: ValidationResult):
-        """Validate video content"""        # Video validation implementation
+        """Validate video content"""
+        # Video validation implementation
         # This would include format validation, resolution checking, etc.
         result.add_issue(
             ValidationLevel.INFO,
@@ -918,7 +957,8 @@ class ContentValidator:
         )
         
     def _validate_social_post(self, content: str, result: ValidationResult, **kwargs):
-        """Validate social media post content"""        platform = kwargs.get('platform', 'generic')
+        """Validate social media post content"""
+        platform = kwargs.get('platform', 'generic')
         
         # Platform-specific length limits
         length_limits = {
@@ -951,7 +991,8 @@ class ContentValidator:
             )
             
     def _validate_blog_post(self, content: str, result: ValidationResult, **kwargs):
-        """Validate blog post content"""        word_count = len(content.split())
+        """Validate blog post content"""
+        word_count = len(content.split())
         
         # Blog post length validation
         if word_count < 300:
@@ -980,7 +1021,8 @@ class ContentValidator:
         platforms: List[str],
         result: ValidationResult
     ):
-        """Validate compliance with platform-specific requirements"""        for platform in platforms:
+        """Validate compliance with platform-specific requirements"""
+        for platform in platforms:
             platform_rules = self.platform_rules.get(platform, {})
             
             for rule_name, rule_value in platform_rules.items():
@@ -993,7 +1035,8 @@ class ContentValidator:
         content_type: ContentType,
         result: ValidationResult
     ):
-        """Assess content readiness for monetization"""        monetization_score = 100.0
+        """Assess content readiness for monetization"""
+        monetization_score = 100.0
         
         # Check for copyright compliance
         if len(result.get_issues_by_category(ValidationCategory.COPYRIGHT_COMPLIANCE)) > 0:
@@ -1010,7 +1053,8 @@ class ContentValidator:
         result.monetization_readiness = max(0, monetization_score)
         
     def _calculate_final_scores(self, result: ValidationResult):
-        """Calculate final validation scores"""        # Overall score is weighted average of component scores
+        """Calculate final validation scores"""
+        # Overall score is weighted average of component scores
         weights = {
             'quality': 0.25,
             'safety': 0.25,
@@ -1036,7 +1080,8 @@ class ContentValidator:
         contents: List[Tuple[Union[str, bytes, Path], ContentType]],
         **kwargs
     ) -> List[ValidationResult]:
-        """Validate multiple contents in batch"""        results = []
+        """Validate multiple contents in batch"""
+        results = []
         
         for content, content_type in contents:
             result = self.validate_content(content, content_type, **kwargs)
@@ -1050,7 +1095,8 @@ class ContentValidator:
         content_type: ContentType,
         **kwargs
     ) -> ValidationResult:
-        """Asynchronous content validation"""        loop = asyncio.get_event_loop()
+        """Asynchronous content validation"""
+        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             None,
             self.validate_content,
@@ -1070,13 +1116,15 @@ def validate_content_decorator(
     platform_targets: Optional[List[str]] = None,
     raise_on_invalid: bool = False
 ):
-    """    Decorator to automatically validate function return content
+    """
+    Decorator to automatically validate function return content
     
     Args:
         content_type: Type of content being validated
         platform_targets: Target platforms for validation
         raise_on_invalid: Whether to raise exception on invalid content
-    """    def decorator(func: Callable) -> Callable:
+    """
+    def decorator(func: Callable) -> Callable:
         @wraps(func)
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
@@ -1126,7 +1174,8 @@ def validate_content_decorator(
 
 
 class ContentQualityAnalyzer:
-    """Analyzes content quality and provides recommendations"""    
+    """Analyzes content quality and provides recommendations"""
+    
     def __init__(self):
         self.quality_thresholds = {
             "min_length": 10,
@@ -1134,7 +1183,8 @@ class ContentQualityAnalyzer:
         }
     
     def analyze_text_quality(self, content: str) -> ValidationResult:
-        """Analyze text content quality"""        result = ValidationResult()
+        """Analyze text content quality"""
+        result = ValidationResult()
         
         if not content or not content.strip():
             result.add_issue(
@@ -1161,7 +1211,8 @@ class ContentQualityAnalyzer:
             )
     
     def _validate_content_structure(self, content: str, result: ValidationResult):
-        """Validate content structure and formatting"""        # Check for proper sentence structure
+        """Validate content structure and formatting"""
+        # Check for proper sentence structure
         sentences = self._split_into_sentences(content)
         
         if len(sentences) == 0:
@@ -1192,7 +1243,8 @@ class ContentQualityAnalyzer:
                     )
     
     def _validate_language_quality(self, content: str, result: ValidationResult):
-        """Validate language quality (simplified implementation)"""        # Check for common spelling issues (simplified)
+        """Validate language quality (simplified implementation)"""
+        # Check for common spelling issues (simplified)
         words = re.findall(r'\b\w+\b', content.lower())
         
         # Common misspellings check (basic implementation)
@@ -1230,7 +1282,8 @@ class ContentQualityAnalyzer:
             )
     
     def _validate_content_safety(self, content: str, result: ValidationResult):
-        """Validate content safety and appropriateness"""        # Check for potentially harmful content (basic implementation)
+        """Validate content safety and appropriateness"""
+        # Check for potentially harmful content (basic implementation)
         harmful_patterns = [
             r'\b(hate|violence|discrimination)\b',
             r'\b(illegal|harmful|dangerous)\b'
@@ -1265,7 +1318,8 @@ class ContentQualityAnalyzer:
             )
     
     def _validate_social_post(self, content: str, result: ValidationResult, platform: str = None, **kwargs):
-        """Validate social media post specific requirements"""        if platform == "twitter" and len(content) > 280:
+        """Validate social media post specific requirements"""
+        if platform == "twitter" and len(content) > 280:
             result.add_issue(
                 ValidationLevel.ERROR,
                 f"Twitter post exceeds character limit: {len(content)}/280",
@@ -1289,7 +1343,8 @@ class ContentQualityAnalyzer:
             )
     
     def _validate_blog_post(self, content: str, result: ValidationResult, **kwargs):
-        """Validate blog post specific requirements"""        # Check for proper heading structure
+        """Validate blog post specific requirements"""
+        # Check for proper heading structure
         headings = re.findall(r'^#+\s+.+$', content, re.MULTILINE)
         
         if len(content) > 1000 and len(headings) == 0:
@@ -1320,7 +1375,8 @@ class ContentQualityAnalyzer:
                 )
     
     def _validate_email_content(self, content: str, result: ValidationResult, **kwargs):
-        """Validate email content specific requirements"""        # Check for subject line (if provided)
+        """Validate email content specific requirements"""
+        # Check for subject line (if provided)
         subject = kwargs.get('subject', '')
         if subject and len(subject) > 50:
             result.add_issue(
@@ -1347,12 +1403,14 @@ class ContentQualityAnalyzer:
             )
     
     def _split_into_sentences(self, content: str) -> List[str]:
-        """Split content into sentences"""        # Basic sentence splitting
+        """Split content into sentences"""
+        # Basic sentence splitting
         sentences = re.split(r'[.!?]+', content)
         return [s.strip() for s in sentences if s.strip()]
     
     def _check_basic_grammar(self, content: str) -> List[str]:
-        """Basic grammar checking (simplified implementation)"""        issues = []
+        """Basic grammar checking (simplified implementation)"""
+        issues = []
         
         # Check for common grammar mistakes
         if re.search(r'\bi\s+am\s+\w+ing\b', content, re.IGNORECASE):
@@ -1372,7 +1430,8 @@ class ContentQualityAnalyzer:
         return issues
     
     def _calculate_validation_score(self, result: ValidationResult) -> float:
-        """Calculate overall validation score"""        if not result.issues:
+        """Calculate overall validation score"""
+        if not result.issues:
             return 1.0
         
         score = 1.0
@@ -1391,13 +1450,16 @@ class ContentQualityAnalyzer:
         return max(0.0, score)
     
     def set_quality_thresholds(self, thresholds: Dict[str, Any]):
-        """Update quality thresholds"""        self.quality_thresholds.update(thresholds)
+        """Update quality thresholds"""
+        self.quality_thresholds.update(thresholds)
     
     def add_custom_validation_rule(self, rule_func):
-        """Add a custom validation rule"""        self.validation_rules.append(rule_func)
+        """Add a custom validation rule"""
+        self.validation_rules.append(rule_func)
     
     def validate_batch(self, contents: List[str], content_type: str = "text") -> List[ValidationResult]:
-        """Validate multiple content items"""        return [self.validate_content(content, content_type) for content in contents]
+        """Validate multiple content items"""
+        return [self.validate_content(content, content_type) for content in contents]
 
 
 # Global content validator instance

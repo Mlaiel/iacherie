@@ -6,7 +6,8 @@ Provides unified interface for index lifecycle management and optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 
 class IndexStatus(Enum):
-    """Status of vector index"""    INITIALIZING = "initializing"
+    """Status of vector index"""
+    INITIALIZING = "initializing"
     READY = "ready"
     TRAINING = "training"
     OPTIMIZING = "optimizing"
@@ -37,7 +39,8 @@ class IndexStatus(Enum):
 
 @dataclass
 class IndexConfiguration:
-    """Configuration for a vector index"""    index_name: str
+    """Configuration for a vector index"""
+    index_name: str
     embedding_type: EmbeddingType
     dimension: int
     index_type: IndexType
@@ -50,7 +53,8 @@ class IndexConfiguration:
 
 @dataclass
 class IndexInfo:
-    """Information about a managed index"""    config: IndexConfiguration
+    """Information about a managed index"""
+    config: IndexConfiguration
     status: IndexStatus
     vector_count: int
     memory_usage_mb: float
@@ -60,7 +64,8 @@ class IndexInfo:
 
 
 class VectorIndexManager:
-    """Manages multiple vector indexes for different content types"""    
+    """Manages multiple vector indexes for different content types"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.VectorIndexManager")
@@ -88,7 +93,8 @@ class VectorIndexManager:
         self.logger.info("VectorIndexManager initialized")
     
     def _create_default_configurations(self) -> Dict[EmbeddingType, IndexConfiguration]:
-        """Create default configurations for different embedding types"""        base_path = str(self.base_storage_path)
+        """Create default configurations for different embedding types"""
+        base_path = str(self.base_storage_path)
         
         return {
             EmbeddingType.AUDIO_SPECTRAL: IndexConfiguration(
@@ -143,7 +149,8 @@ class VectorIndexManager:
         embedding_type: EmbeddingType,
         custom_config: Optional[IndexConfiguration] = None
     ) -> bool:
-        """Create a new vector index"""        try:
+        """Create a new vector index"""
+        try:
             # Use custom config or default
             config = custom_config or self.default_configs[embedding_type]
             index_name = config.index_name
@@ -210,7 +217,8 @@ class VectorIndexManager:
         content_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Add an embedding to the appropriate index"""        try:
+        """Add an embedding to the appropriate index"""
+        try:
             # Find the appropriate index
             index_name = self._get_index_name(embedding_result.embedding_type)
             
@@ -265,7 +273,8 @@ class VectorIndexManager:
         self,
         embeddings: List[Tuple[EmbeddingResult, str, Optional[Dict[str, Any]]]]
     ) -> List[bool]:
-        """Add multiple embeddings in batch"""        try:
+        """Add multiple embeddings in batch"""
+        try:
             # Group embeddings by index
             grouped_embeddings = {}
             
@@ -334,7 +343,8 @@ class VectorIndexManager:
         cross_modal_search: bool = False,
         metadata_filter: Optional[Dict[str, Any]] = None
     ) -> List[SearchResult]:
-        """Search for similar embeddings"""        try:
+        """Search for similar embeddings"""
+        try:
             start_time = time.time()
             
             if cross_modal_search:
@@ -378,7 +388,8 @@ class VectorIndexManager:
         similarity_threshold: Optional[float],
         metadata_filter: Optional[Dict[str, Any]]
     ) -> List[SearchResult]:
-        """Search across multiple indexes"""        try:
+        """Search across multiple indexes"""
+        try:
             all_results = []
             
             # Search in each index
@@ -414,7 +425,8 @@ class VectorIndexManager:
             return []
     
     def _adapt_vector_dimension(self, vector: np.ndarray, target_dimension: int) -> np.ndarray:
-        """Adapt vector to target dimension"""        current_dim = len(vector)
+        """Adapt vector to target dimension"""
+        current_dim = len(vector)
         
         if current_dim == target_dimension:
             return vector
@@ -428,7 +440,8 @@ class VectorIndexManager:
             return padded
     
     async def train_indexes(self, training_data: Optional[Dict[str, List[np.ndarray]]] = None) -> Dict[str, bool]:
-        """Train indexes that require training"""        results = {}
+        """Train indexes that require training"""
+        results = {}
         
         for index_name, vector_store in self.indexes.items():
             try:
@@ -467,7 +480,8 @@ class VectorIndexManager:
         return results
     
     async def optimize_indexes(self) -> Dict[str, bool]:
-        """Optimize all indexes for better performance"""        results = {}
+        """Optimize all indexes for better performance"""
+        results = {}
         
         for index_name, vector_store in self.indexes.items():
             try:
@@ -490,7 +504,8 @@ class VectorIndexManager:
         return results
     
     async def save_indexes(self) -> Dict[str, str]:
-        """Save all indexes to disk"""        results = {}
+        """Save all indexes to disk"""
+        results = {}
         
         for index_name, vector_store in self.indexes.items():
             try:
@@ -517,7 +532,8 @@ class VectorIndexManager:
         return results
     
     async def load_indexes(self, index_files: Dict[str, str]) -> Dict[str, bool]:
-        """Load indexes from disk"""        results = {}
+        """Load indexes from disk"""
+        results = {}
         
         for index_name, filename in index_files.items():
             try:
@@ -565,10 +581,12 @@ class VectorIndexManager:
         return results
     
     def _get_index_name(self, embedding_type: EmbeddingType) -> str:
-        """Get index name for embedding type"""        return embedding_type.value.replace('_', '_')
+        """Get index name for embedding type"""
+        return embedding_type.value.replace('_', '_')
     
     async def get_index_info(self, index_name: Optional[str] = None) -> Union[IndexInfo, Dict[str, IndexInfo]]:
-        """Get information about indexes"""        try:
+        """Get information about indexes"""
+        try:
             if index_name:
                 # Get info for specific index
                 if index_name not in self.indexes:
@@ -598,7 +616,8 @@ class VectorIndexManager:
                 return {}
     
     async def _get_single_index_info(self, index_name: str) -> IndexInfo:
-        """Get information for a single index"""        vector_store = self.indexes[index_name]
+        """Get information for a single index"""
+        vector_store = self.indexes[index_name]
         config = self.index_configs[index_name]
         
         # Get stats from vector store
@@ -618,7 +637,8 @@ class VectorIndexManager:
         )
     
     async def remove_vector(self, embedding_id: str, index_name: Optional[str] = None) -> bool:
-        """Remove a vector from index(es)"""        try:
+        """Remove a vector from index(es)"""
+        try:
             if index_name:
                 # Remove from specific index
                 if index_name in self.indexes:
@@ -639,7 +659,8 @@ class VectorIndexManager:
             return False
     
     async def clear_index(self, index_name: str) -> bool:
-        """Clear all vectors from an index"""        try:
+        """Clear all vectors from an index"""
+        try:
             if index_name not in self.indexes:
                 return False
             
@@ -661,7 +682,8 @@ class VectorIndexManager:
             return False
     
     def get_manager_stats(self) -> Dict[str, Any]:
-        """Get overall manager statistics"""        total_vectors = sum(
+        """Get overall manager statistics"""
+        total_vectors = sum(
             self.performance_stats.get(name, {}).get('total_additions', 0)
             for name in self.indexes
         )
@@ -681,7 +703,8 @@ class VectorIndexManager:
         }
     
     def __del__(self):
-        """Cleanup resources"""        if self.auto_save_task:
+        """Cleanup resources"""
+        if self.auto_save_task:
             self.auto_save_task.cancel()
         
         if hasattr(self, 'executor'):

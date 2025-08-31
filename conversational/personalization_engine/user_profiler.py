@@ -13,7 +13,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 WARNING: Any attempt to steal, copy, or use the concept, idea, or code without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 
 class ProfileDimension(str, Enum):
-    """User profile dimensions"""    CREATIVE_STYLE = "creative_style"
+    """User profile dimensions"""
+    CREATIVE_STYLE = "creative_style"
     CONTENT_PREFERENCES = "content_preferences"
     ENGAGEMENT_PATTERNS = "engagement_patterns"
     COLLABORATION_STYLE = "collaboration_style"
@@ -48,7 +50,8 @@ class ProfileDimension(str, Enum):
 
 
 class UserPersona(str, Enum):
-    """User persona types"""    CREATIVE_EXPLORER = "creative_explorer"
+    """User persona types"""
+    CREATIVE_EXPLORER = "creative_explorer"
     BUSINESS_FOCUSED_CREATOR = "business_focused_creator"
     COMMUNITY_BUILDER = "community_builder"
     TECHNICAL_INNOVATOR = "technical_innovator"
@@ -59,7 +62,8 @@ class UserPersona(str, Enum):
 
 
 class PreferenceCategory(str, Enum):
-    """Categories of user preferences"""    CONTENT_TYPE = "content_type"
+    """Categories of user preferences"""
+    CONTENT_TYPE = "content_type"
     GENRE_MUSIC = "genre_music"
     VISUAL_STYLE = "visual_style"
     INTERACTION_TYPE = "interaction_type"
@@ -71,7 +75,8 @@ class PreferenceCategory(str, Enum):
 
 @dataclass
 class UserPreference:
-    """Individual user preference"""    category: PreferenceCategory
+    """Individual user preference"""
+    category: PreferenceCategory
     preference_key: str
     preference_value: str
     strength: float  # 0.0 to 1.0
@@ -83,7 +88,8 @@ class UserPreference:
 
 @dataclass
 class UserProfile:
-    """Comprehensive user profile"""    user_id: str
+    """Comprehensive user profile"""
+    user_id: str
     persona: UserPersona
     profile_dimensions: Dict[ProfileDimension, Dict[str, Any]]
     preferences: List[UserPreference]
@@ -105,7 +111,8 @@ class UserProfile:
 
 @dataclass
 class ProfileUpdateRequest:
-    """Request to update user profile"""    user_id: str
+    """Request to update user profile"""
+    user_id: str
     update_type: str  # explicit, implicit, batch
     updates: Dict[str, Any]
     interaction_data: Optional[List[Dict[str, Any]]] = None
@@ -114,8 +121,10 @@ class ProfileUpdateRequest:
 
 
 class UserProfiler(BaseService):
-    """    Advanced user profiling engine for personalization
-    """    
+    """
+    Advanced user profiling engine for personalization
+    """
+    
     def __init__(
         self,
         mongodb_handler: MongoDBHandler,
@@ -146,7 +155,8 @@ class UserProfiler(BaseService):
         logger.info("UserProfiler initialized successfully")
 
     async def initialize(self) -> None:
-        """Initialize user profiler"""        try:
+        """Initialize user profiler"""
+        try:
             # Initialize ML models
             await self.feature_engineer.initialize()
             await self.clustering_model.initialize()
@@ -169,7 +179,8 @@ class UserProfiler(BaseService):
         user_id: str,
         include_details: bool = True
     ) -> Optional[UserProfile]:
-        """        Get comprehensive user profile
+        """
+        Get comprehensive user profile
         
         Args:
             user_id: User identifier
@@ -177,7 +188,8 @@ class UserProfiler(BaseService):
             
         Returns:
             Complete user profile or None if not found
-        """        try:
+        """
+        try:
             # Check cache
             cache_key = f"user_profile:{user_id}:{include_details}"
             cached_profile = await self.redis_cache.get(cache_key)
@@ -220,14 +232,16 @@ class UserProfiler(BaseService):
         self,
         request: ProfileUpdateRequest
     ) -> bool:
-        """        Update user profile based on new data
+        """
+        Update user profile based on new data
         
         Args:
             request: Profile update request with new data
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             # Validate request
             await self._validate_profile_update_request(request)
             
@@ -297,7 +311,8 @@ class UserProfiler(BaseService):
         user_id: str,
         analysis_period: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """        Analyze user preferences from interaction data
+        """
+        Analyze user preferences from interaction data
         
         Args:
             user_id: User identifier
@@ -305,7 +320,8 @@ class UserProfiler(BaseService):
             
         Returns:
             Comprehensive preference analysis
-        """        try:
+        """
+        try:
             # Set default analysis period
             if not analysis_period:
                 end_date = datetime.now()
@@ -371,7 +387,8 @@ class UserProfiler(BaseService):
         user_ids: Optional[List[str]] = None,
         include_confidence: bool = True
     ) -> Dict[str, Dict[str, Any]]:
-        """        Get user personas for multiple users
+        """
+        Get user personas for multiple users
         
         Args:
             user_ids: List of user IDs (if None, get all)
@@ -379,7 +396,8 @@ class UserProfiler(BaseService):
             
         Returns:
             Dictionary mapping user IDs to persona information
-        """        try:
+        """
+        try:
             # Get user profiles
             if user_ids:
                 profiles = {}
@@ -418,7 +436,8 @@ class UserProfiler(BaseService):
         clustering_features: Optional[List[str]] = None,
         num_clusters: Optional[int] = None
     ) -> Dict[str, Any]:
-        """        Cluster users based on profile features
+        """
+        Cluster users based on profile features
         
         Args:
             clustering_features: Features to use for clustering
@@ -426,7 +445,8 @@ class UserProfiler(BaseService):
             
         Returns:
             Clustering results with user assignments
-        """        try:
+        """
+        try:
             # Get all user profiles
             all_profiles = await self._get_all_user_profiles()
             
@@ -477,7 +497,8 @@ class UserProfiler(BaseService):
     # Private helper methods
     
     async def _create_new_user_profile(self, user_id: str) -> UserProfile:
-        """Create a new user profile with default values"""        try:
+        """Create a new user profile with default values"""
+        try:
             # Get basic user information
             user_info = await self.mongodb.find_one("users", {"user_id": user_id})
             
@@ -530,7 +551,8 @@ class UserProfiler(BaseService):
         profile: UserProfile,
         updates: Dict[str, Any]
     ) -> UserProfile:
-        """Apply explicit user updates to profile"""        try:
+        """Apply explicit user updates to profile"""
+        try:
             # Update demographic information
             if "demographics" in updates:
                 profile.demographic_info.update(updates["demographics"])
@@ -574,7 +596,8 @@ class UserProfiler(BaseService):
         profile: UserProfile,
         interactions: List[Dict[str, Any]]
     ) -> UserProfile:
-        """Apply implicit updates from user interactions"""        try:
+        """Apply implicit updates from user interactions"""
+        try:
             # Analyze interaction patterns
             interaction_patterns = await self._analyze_interaction_patterns(interactions)
             
@@ -613,7 +636,8 @@ class UserProfiler(BaseService):
             return profile
 
     async def _classify_user_persona(self, profile: UserProfile) -> UserPersona:
-        """Classify user persona based on profile data"""        try:
+        """Classify user persona based on profile data"""
+        try:
             # Extract features for persona classification
             features = await self._extract_persona_features(profile)
             
@@ -631,7 +655,8 @@ class UserProfiler(BaseService):
             return UserPersona.CREATIVE_EXPLORER  # Default persona
 
     async def _calculate_profile_confidence(self, profile: UserProfile) -> float:
-        """Calculate confidence score for user profile"""        try:
+        """Calculate confidence score for user profile"""
+        try:
             confidence_factors = []
             
             # Number of preferences
@@ -677,7 +702,8 @@ def create_user_profiler(
     clustering_model: UserClusteringModel,
     demographic_analyzer: DemographicAnalyzer
 ) -> UserProfiler:
-    """Create user profiler instance"""    return UserProfiler(
+    """Create user profiler instance"""
+    return UserProfiler(
         mongodb_handler=mongodb_handler,
         redis_cache=redis_cache,
         feature_engineer=feature_engineer,
@@ -687,7 +713,8 @@ def create_user_profiler(
 
 
 def validate_profile_update_request(request: ProfileUpdateRequest) -> bool:
-    """Validate profile update request"""    if not request.user_id or not isinstance(request.user_id, str):
+    """Validate profile update request"""
+    if not request.user_id or not isinstance(request.user_id, str):
         return False
     
     if request.update_type not in ["explicit", "implicit", "batch"]:

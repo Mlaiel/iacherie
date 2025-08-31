@@ -4,7 +4,10 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+
+import sys
+
 import os
 from pathlib import Path
 
@@ -12,15 +15,21 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 #!/usr/bin/env python3
-"""Basic FastAPI application test to verify dependencies and startup
-"""import sys
+"""
+Basic FastAPI application test to verify dependencies and startup
+"""
+
+import sys
+
 from pathlib import Path
 
 # Add project root to Python path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from fastapi import FastAPI
+
 from pydantic import BaseModel
+
 import uvicorn
 
 # Test basic imports that should work with installed dependencies

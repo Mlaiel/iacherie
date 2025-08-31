@@ -9,7 +9,8 @@ prohibited and will result in severe legal consequences.
 
 This module provides comprehensive revenue analytics and monetization insights
 for content creators on the IA Influencer Agent platform.
-"""import logging
+"""
+import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ from collections import defaultdict
 logger = logging.getLogger(__name__)
 
 class RevenueAnalyticsType(Enum):
-    """Types of analytics for revenue tracking"""    PERFORMANCE = "performance"
+    """Types of analytics for revenue tracking"""
+    PERFORMANCE = "performance"
     FORECAST = "forecast"
     RISK = "risk"
     DIVERSIFICATION = "diversification"
@@ -34,14 +36,16 @@ class RevenueAnalyticsType(Enum):
 
 @dataclass
 class RevenueAnalyticsResult:
-    """Result of a revenue analytics operation"""    analytics_type: RevenueAnalyticsType
+    """Result of a revenue analytics operation"""
+    analytics_type: RevenueAnalyticsType
     metrics: Dict[str, Any]
     insights: List[str]
     recommendations: List[str]
     generated_at: datetime = field(default_factory=datetime.utcnow)
 
 class RevenueAnalyticsEngine:
-    """Advanced revenue analytics engine for creator monetization"""    def __init__(self, creator_id: str):
+    """Advanced revenue analytics engine for creator monetization"""
+    def __init__(self, creator_id: str):
         self.creator_id = creator_id
         self.metrics: Dict[str, Any] = {}
         self.insights: List[str] = []
@@ -49,7 +53,8 @@ class RevenueAnalyticsEngine:
         self.logger = logging.getLogger(f"RevenueAnalyticsEngine:{creator_id}")
 
     def analyze_performance(self, transactions: List[Dict[str, Any]]) -> RevenueAnalyticsResult:
-        """Analyze performance metrics from transactions"""        # ...existing code...
+        """Analyze performance metrics from transactions"""
+        # ...existing code...
         metrics = self._calculate_performance_metrics(transactions)
         insights = self._generate_performance_insights(metrics)
         recommendations = self._generate_optimization_recommendations(metrics)
@@ -61,7 +66,8 @@ class RevenueAnalyticsEngine:
         )
 
     def forecast_revenue(self, transactions: List[Dict[str, Any]], months: int = 6) -> RevenueAnalyticsResult:
-        """Forecast future revenue trends"""        # ...existing code...
+        """Forecast future revenue trends"""
+        # ...existing code...
         forecast_metrics = self._generate_forecast_metrics(transactions, months)
         insights = self._generate_forecast_insights(forecast_metrics)
         recommendations = self._generate_forecast_recommendations(forecast_metrics)
@@ -73,7 +79,8 @@ class RevenueAnalyticsEngine:
         )
 
     def analyze_risk(self, transactions: List[Dict[str, Any]]) -> RevenueAnalyticsResult:
-        """Analyze risk factors in revenue streams"""        # ...existing code...
+        """Analyze risk factors in revenue streams"""
+        # ...existing code...
         risk_metrics = self._calculate_risk_metrics(transactions)
         insights = self._generate_risk_insights(risk_metrics)
         recommendations = self._generate_risk_recommendations(risk_metrics)
@@ -85,7 +92,8 @@ class RevenueAnalyticsEngine:
         )
 
     def analyze_diversification(self, transactions: List[Dict[str, Any]]) -> RevenueAnalyticsResult:
-        """Analyze diversification of revenue sources"""        # ...existing code...
+        """Analyze diversification of revenue sources"""
+        # ...existing code...
         diversification_metrics = self._calculate_diversification_metrics(transactions)
         insights = self._generate_diversification_insights(diversification_metrics)
         recommendations = self._generate_diversification_recommendations(diversification_metrics)
@@ -97,7 +105,8 @@ class RevenueAnalyticsEngine:
         )
 
     def identify_opportunities(self, transactions: List[Dict[str, Any]]) -> RevenueAnalyticsResult:
-        """Identify monetization opportunities"""        # ...existing code...
+        """Identify monetization opportunities"""
+        # ...existing code...
         opportunity_metrics = self._calculate_opportunity_metrics(transactions)
         insights = self._generate_opportunity_insights(opportunity_metrics)
         recommendations = self._generate_opportunity_recommendations(opportunity_metrics)
@@ -109,7 +118,8 @@ class RevenueAnalyticsEngine:
         )
 
     def benchmark(self, transactions: List[Dict[str, Any]], industry_data: List[Dict[str, Any]]) -> RevenueAnalyticsResult:
-        """Benchmark revenue performance against industry data"""        # ...existing code...
+        """Benchmark revenue performance against industry data"""
+        # ...existing code...
         benchmark_metrics = self._calculate_benchmark_metrics(transactions, industry_data)
         insights = self._generate_benchmark_insights(benchmark_metrics)
         recommendations = self._generate_benchmark_recommendations(benchmark_metrics)
@@ -121,7 +131,8 @@ class RevenueAnalyticsEngine:
         )
 
     def analyze_profitability(self, transactions: List[Dict[str, Any]], costs: List[Dict[str, Any]]) -> RevenueAnalyticsResult:
-        """Analyze profitability trends and optimization"""        # ...existing code...
+        """Analyze profitability trends and optimization"""
+        # ...existing code...
         profitability_metrics = self._calculate_profitability_metrics(transactions, costs)
         insights = self._generate_profitability_insights(profitability_metrics)
         recommendations = self._generate_profitability_recommendations(profitability_metrics)

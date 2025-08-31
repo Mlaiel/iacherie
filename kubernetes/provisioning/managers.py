@@ -14,7 +14,8 @@ is strictly prohibited and will result in immediate legal action. All rights res
 Business Logic Flow:
 Content Creator → Upload Multi-format → AI Protection → SEO Optimization → 
 Collaboration Matching → Multi-platform Distribution
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import yaml
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 
 class DeploymentStrategy(Enum):
-    """Deployment strategy types"""    ROLLING_UPDATE = "rolling_update"
+    """Deployment strategy types"""
+    ROLLING_UPDATE = "rolling_update"
     BLUE_GREEN = "blue_green"
     CANARY = "canary"
     RECREATE = "recreate"
@@ -45,7 +47,8 @@ class DeploymentStrategy(Enum):
 
 
 class DeploymentStatus(Enum):
-    """Deployment status types"""    PENDING = "pending"
+    """Deployment status types"""
+    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -56,7 +59,8 @@ class DeploymentStatus(Enum):
 
 
 class Environment(Enum):
-    """Deployment environment types"""    DEVELOPMENT = "development"
+    """Deployment environment types"""
+    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
@@ -65,7 +69,8 @@ class Environment(Enum):
 
 @dataclass
 class DeploymentConfig:
-    """Deployment configuration specification"""    name: str
+    """Deployment configuration specification"""
+    name: str
     environment: Environment
     version: str
     strategy: DeploymentStrategy
@@ -135,7 +140,8 @@ class DeploymentConfig:
     labels: Dict[str, str] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Post-initialization setup"""        if not self.image_tag:
+        """Post-initialization setup"""
+        if not self.image_tag:
             self.image_tag = self.version
         
         # Add default labels
@@ -156,7 +162,8 @@ class DeploymentConfig:
 
 @dataclass
 class DeploymentResult:
-    """Deployment operation result"""    success: bool
+    """Deployment operation result"""
+    success: bool
     status: DeploymentStatus
     message: str
     resources_created: List[str] = field(default_factory=list)
@@ -167,7 +174,8 @@ class DeploymentResult:
     metrics: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert result to dictionary"""        return {
+        """Convert result to dictionary"""
+        return {
             'success': self.success,
             'status': self.status.value if isinstance(self.status, DeploymentStatus) else self.status,
             'message': self.message,
@@ -181,7 +189,8 @@ class DeploymentResult:
 
 
 class BaseDeploymentManager(ABC):
-    """Abstract base class for deployment managers"""    
+    """Abstract base class for deployment managers"""
+    
     def __init__(self, config: DeploymentConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -189,37 +198,45 @@ class BaseDeploymentManager(ABC):
         
     @abstractmethod
     async def deploy(self) -> DeploymentResult:
-        """Deploy the application"""        pass
+        """Deploy the application"""
+        pass
     
     @abstractmethod
     async def rollback(self, revision: Optional[int] = None) -> DeploymentResult:
-        """Rollback deployment to previous version"""        pass
+        """Rollback deployment to previous version"""
+        pass
     
     @abstractmethod
     async def scale(self, replicas: int) -> DeploymentResult:
-        """Scale the deployment"""        pass
+        """Scale the deployment"""
+        pass
     
     @abstractmethod
     async def get_status(self) -> Dict[str, Any]:
-        """Get deployment status"""        pass
+        """Get deployment status"""
+        pass
     
     @abstractmethod
     async def health_check(self) -> Dict[str, bool]:
-        """Perform health check"""        pass
+        """Perform health check"""
+        pass
     
     def add_to_history(self, result: DeploymentResult):
-        """Add deployment result to history"""        self.deployment_history.append(result)
+        """Add deployment result to history"""
+        self.deployment_history.append(result)
         
         # Keep only last 10 deployments
         if len(self.deployment_history) > 10:
             self.deployment_history = self.deployment_history[-10:]
     
     def get_deployment_history(self) -> List[Dict[str, Any]]:
-        """Get deployment history"""        return [result.to_dict() for result in self.deployment_history]
+        """Get deployment history"""
+        return [result.to_dict() for result in self.deployment_history]
 
 
 class KubernetesDeploymentManager(BaseDeploymentManager):
-    """Kubernetes-based deployment manager"""    
+    """Kubernetes-based deployment manager"""
+    
     def __init__(self, config: DeploymentConfig, kubeconfig_path: Optional[str] = None):
         super().__init__(config)
         self.kubeconfig_path = kubeconfig_path
@@ -231,7 +248,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
         self._initialize_kubernetes_clients()
         
     def _initialize_kubernetes_clients(self):
-        """Initialize Kubernetes API clients"""        try:
+        """Initialize Kubernetes API clients"""
+        try:
             if self.kubeconfig_path:
                 config.load_kube_config(config_file=self.kubeconfig_path)
             else:
@@ -253,7 +271,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
             raise
     
     async def deploy(self) -> DeploymentResult:
-        """Deploy application to Kubernetes"""        start_time = datetime.utcnow()
+        """Deploy application to Kubernetes"""
+        start_time = datetime.utcnow()
         
         try:
             self.logger.info(f"Starting deployment: {self.config.name} v{self.config.version}")
@@ -337,7 +356,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
             return result
     
     async def _deploy_with_strategy(self) -> List[str]:
-        """Deploy using the configured strategy"""        if self.config.strategy == DeploymentStrategy.ROLLING_UPDATE:
+        """Deploy using the configured strategy"""
+        if self.config.strategy == DeploymentStrategy.ROLLING_UPDATE:
             return await self._rolling_update_deployment()
         elif self.config.strategy == DeploymentStrategy.BLUE_GREEN:
             return await self._blue_green_deployment()
@@ -349,7 +369,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
             raise ValueError(f"Unsupported deployment strategy: {self.config.strategy}")
     
     async def _rolling_update_deployment(self) -> List[str]:
-        """Perform rolling update deployment"""        deployment_manifest = self._generate_deployment_manifest()
+        """Perform rolling update deployment"""
+        deployment_manifest = self._generate_deployment_manifest()
         
         try:
             # Try to get existing deployment
@@ -383,7 +404,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
                 raise
     
     async def _blue_green_deployment(self) -> List[str]:
-        """Perform blue-green deployment"""        green_deployment_name = f"{self.config.name}-green"
+        """Perform blue-green deployment"""
+        green_deployment_name = f"{self.config.name}-green"
         blue_deployment_name = f"{self.config.name}-blue"
         
         # Determine current active deployment
@@ -429,7 +451,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
         return [f"deployment/{new_deployment}", f"service/{self.config.name}"]
     
     async def _canary_deployment(self) -> List[str]:
-        """Perform canary deployment"""        canary_deployment_name = f"{self.config.name}-canary"
+        """Perform canary deployment"""
+        canary_deployment_name = f"{self.config.name}-canary"
         main_deployment_name = self.config.name
         
         # Get canary configuration
@@ -499,7 +522,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
             raise Exception("Canary deployment failed health checks")
     
     async def _recreate_deployment(self) -> List[str]:
-        """Perform recreate deployment (delete and create)"""        try:
+        """Perform recreate deployment (delete and create)"""
+        try:
             # Delete existing deployment
             self.apps_v1_api.delete_namespaced_deployment(
                 name=self.config.name,
@@ -524,7 +548,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
         return [f"deployment/{self.config.name}"]
     
     def _generate_deployment_manifest(self) -> client.V1Deployment:
-        """Generate Kubernetes deployment manifest"""        
+        """Generate Kubernetes deployment manifest"""
+        
         # Container specification
         container = client.V1Container(
             name=self.config.name,
@@ -632,7 +657,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
         return deployment
     
     def _generate_service_manifest(self) -> client.V1Service:
-        """Generate Kubernetes service manifest"""        
+        """Generate Kubernetes service manifest"""
+        
         service_spec = client.V1ServiceSpec(
             selector={'app': self.config.name},
             ports=[
@@ -660,7 +686,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
         return service
     
     async def _ensure_namespace_exists(self):
-        """Ensure the target namespace exists"""        try:
+        """Ensure the target namespace exists"""
+        try:
             self.core_v1_api.read_namespace(name=self.config.namespace)
         except client.ApiException as e:
             if e.status == 404:
@@ -671,7 +698,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
                 self.logger.info(f"Created namespace: {self.config.namespace}")
     
     async def _create_config_maps(self) -> List[str]:
-        """Create or update ConfigMaps"""        resources = []
+        """Create or update ConfigMaps"""
+        resources = []
         
         for name, data in self.config.config_maps.items():
             config_map = client.V1ConfigMap(
@@ -703,7 +731,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
         return resources
     
     async def _create_secrets(self) -> List[str]:
-        """Create or update Secrets"""        resources = []
+        """Create or update Secrets"""
+        resources = []
         
         for name, data in self.config.secrets.items():
             # Encode secret data to base64
@@ -743,11 +772,13 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
         return resources
     
     async def _create_persistent_volume_claims(self) -> List[str]:
-        """Create PersistentVolumeClaims for volumes"""        # Implementation would create PVCs based on volume_mounts configuration
+        """Create PersistentVolumeClaims for volumes"""
+        # Implementation would create PVCs based on volume_mounts configuration
         return []
     
     async def _create_service(self) -> List[str]:
-        """Create or update Service"""        service_manifest = self._generate_service_manifest()
+        """Create or update Service"""
+        service_manifest = self._generate_service_manifest()
         
         try:
             self.core_v1_api.patch_namespaced_service(
@@ -767,14 +798,16 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
                 raise
     
     async def _create_ingress(self) -> List[str]:
-        """Create or update Ingress if enabled"""        if not self.config.ingress_enabled or not self.config.ingress_host:
+        """Create or update Ingress if enabled"""
+        if not self.config.ingress_enabled or not self.config.ingress_host:
             return []
         
         # Implementation would create Ingress resource
         return []
     
     async def _create_horizontal_pod_autoscaler(self) -> List[str]:
-        """Create or update HorizontalPodAutoscaler if enabled"""        if not self.config.autoscaling_enabled:
+        """Create or update HorizontalPodAutoscaler if enabled"""
+        if not self.config.autoscaling_enabled:
             return []
         
         hpa = client.V1HorizontalPodAutoscaler(
@@ -813,7 +846,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
                 raise
     
     async def _wait_for_deployment_ready(self, deployment_name: Optional[str] = None, timeout: int = 600):
-        """Wait for deployment to be ready"""        deployment_name = deployment_name or self.config.name
+        """Wait for deployment to be ready"""
+        deployment_name = deployment_name or self.config.name
         
         start_time = time.time()
         while time.time() - start_time < timeout:
@@ -840,7 +874,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
         raise TimeoutError(f"Deployment {deployment_name} did not become ready within {timeout} seconds")
     
     async def _wait_for_deployment_deletion(self, timeout: int = 300):
-        """Wait for deployment to be deleted"""        start_time = time.time()
+        """Wait for deployment to be deleted"""
+        start_time = time.time()
         while time.time() - start_time < timeout:
             try:
                 self.apps_v1_api.read_namespaced_deployment(
@@ -858,7 +893,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
         raise TimeoutError(f"Deployment {self.config.name} was not deleted within {timeout} seconds")
     
     async def _monitor_canary_deployment(self, canary_deployment_name: str) -> bool:
-        """Monitor canary deployment health and metrics"""        # This would typically involve checking metrics, error rates, etc.
+        """Monitor canary deployment health and metrics"""
+        # This would typically involve checking metrics, error rates, etc.
         # For now, we'll simulate a basic health check
         
         monitor_duration = self.config.strategy_config.get('canary_monitor_duration', 300)  # 5 minutes
@@ -894,13 +930,15 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
         return True
     
     async def _get_current_service(self) -> client.V1Service:
-        """Get current service configuration"""        return self.core_v1_api.read_namespaced_service(
+        """Get current service configuration"""
+        return self.core_v1_api.read_namespaced_service(
             name=self.config.name,
             namespace=self.config.namespace
         )
     
     async def rollback(self, revision: Optional[int] = None) -> DeploymentResult:
-        """Rollback deployment to previous version"""        try:
+        """Rollback deployment to previous version"""
+        try:
             self.logger.info(f"Rolling back deployment: {self.config.name}")
             
             # Get deployment rollout history
@@ -950,7 +988,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
             )
     
     async def scale(self, replicas: int) -> DeploymentResult:
-        """Scale the deployment"""        try:
+        """Scale the deployment"""
+        try:
             self.logger.info(f"Scaling deployment {self.config.name} to {replicas} replicas")
             
             # Update deployment replicas
@@ -994,7 +1033,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
             )
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get current deployment status"""        try:
+        """Get current deployment status"""
+        try:
             deployment = self.apps_v1_api.read_namespaced_deployment(
                 name=self.config.name,
                 namespace=self.config.namespace
@@ -1058,7 +1098,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
                 raise
     
     async def health_check(self) -> Dict[str, bool]:
-        """Perform comprehensive health check"""        health_status = {}
+        """Perform comprehensive health check"""
+        health_status = {}
         
         try:
             # Check deployment status
@@ -1101,17 +1142,20 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
 
 
 class DeploymentOrchestrator:
-    """Orchestrates multiple deployment managers"""    
+    """Orchestrates multiple deployment managers"""
+    
     def __init__(self):
         self.managers: Dict[str, BaseDeploymentManager] = {}
         self.logger = logging.getLogger(__name__)
         
     def register_manager(self, name: str, manager: BaseDeploymentManager):
-        """Register a deployment manager"""        self.managers[name] = manager
+        """Register a deployment manager"""
+        self.managers[name] = manager
         self.logger.info(f"Registered deployment manager: {name}")
     
     async def deploy_all(self) -> Dict[str, DeploymentResult]:
-        """Deploy all registered managers"""        results = {}
+        """Deploy all registered managers"""
+        results = {}
         
         for name, manager in self.managers.items():
             try:
@@ -1136,7 +1180,8 @@ class DeploymentOrchestrator:
         return results
     
     async def rollback_all(self) -> Dict[str, DeploymentResult]:
-        """Rollback all deployments"""        results = {}
+        """Rollback all deployments"""
+        results = {}
         
         for name, manager in self.managers.items():
             try:
@@ -1156,7 +1201,8 @@ class DeploymentOrchestrator:
         return results
     
     async def get_all_status(self) -> Dict[str, Dict[str, Any]]:
-        """Get status of all deployments"""        results = {}
+        """Get status of all deployments"""
+        results = {}
         
         for name, manager in self.managers.items():
             try:
@@ -1170,7 +1216,8 @@ class DeploymentOrchestrator:
         return results
     
     async def health_check_all(self) -> Dict[str, Dict[str, bool]]:
-        """Perform health check on all deployments"""        results = {}
+        """Perform health check on all deployments"""
+        results = {}
         
         for name, manager in self.managers.items():
             try:
@@ -1186,14 +1233,16 @@ class DeploymentOrchestrator:
 
 # Factory functions and utilities
 def create_deployment_manager(manager_type: str, config: DeploymentConfig, **kwargs) -> BaseDeploymentManager:
-    """Factory function to create deployment managers"""    if manager_type.lower() == 'kubernetes':
+    """Factory function to create deployment managers"""
+    if manager_type.lower() == 'kubernetes':
         return KubernetesDeploymentManager(config, **kwargs)
     else:
         raise ValueError(f"Unsupported deployment manager type: {manager_type}")
 
 
 def create_deployment_config_from_dict(config_dict: Dict[str, Any]) -> DeploymentConfig:
-    """Create DeploymentConfig from dictionary"""    
+    """Create DeploymentConfig from dictionary"""
+    
     # Convert string enums to enum objects
     if 'environment' in config_dict:
         config_dict['environment'] = Environment(config_dict['environment'])
@@ -1206,7 +1255,8 @@ def create_deployment_config_from_dict(config_dict: Dict[str, Any]) -> Deploymen
 
 async def deploy_ia_influencer_platform(environment: Environment, version: str, 
                                        kubeconfig_path: Optional[str] = None) -> Dict[str, DeploymentResult]:
-    """Deploy complete IA Influencer platform"""    
+    """Deploy complete IA Influencer platform"""
+    
     # Create deployment configurations for all services
     services = [
         {
@@ -1298,7 +1348,8 @@ logger = logging.getLogger(__name__)
 
 
 class DeploymentPhase(Enum):
-    """Deployment phases"""    PREPARATION = "preparation"
+    """Deployment phases"""
+    PREPARATION = "preparation"
     VALIDATION = "validation"
     PROVISIONING = "provisioning"
     DEPLOYMENT = "deployment"
@@ -1311,7 +1362,8 @@ class DeploymentPhase(Enum):
 
 
 class DeploymentStatus(Enum):
-    """Deployment status"""    PENDING = "pending"
+    """Deployment status"""
+    PENDING = "pending"
     RUNNING = "running"
     SUCCESS = "success"
     FAILED = "failed"
@@ -1321,7 +1373,8 @@ class DeploymentStatus(Enum):
 
 
 class DeploymentStrategy(Enum):
-    """Deployment strategies"""    BLUE_GREEN = "blue_green"
+    """Deployment strategies"""
+    BLUE_GREEN = "blue_green"
     ROLLING = "rolling"
     CANARY = "canary"
     RECREATE = "recreate"
@@ -1329,7 +1382,8 @@ class DeploymentStrategy(Enum):
 
 
 class Environment(Enum):
-    """Environment types"""    DEVELOPMENT = "development"
+    """Environment types"""
+    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
@@ -1337,7 +1391,8 @@ class Environment(Enum):
 
 @dataclass
 class DeploymentConfig:
-    """Deployment configuration"""    name: str
+    """Deployment configuration"""
+    name: str
     environment: Environment
     version: str
     strategy: DeploymentStrategy = DeploymentStrategy.ROLLING
@@ -1371,7 +1426,8 @@ class DeploymentConfig:
 
 @dataclass
 class DeploymentStep:
-    """Individual deployment step"""    name: str
+    """Individual deployment step"""
+    name: str
     phase: DeploymentPhase
     description: str
     command: Optional[str] = None
@@ -1391,7 +1447,8 @@ class DeploymentStep:
 
 @dataclass
 class DeploymentResult:
-    """Result of a deployment step or entire deployment"""    name: str
+    """Result of a deployment step or entire deployment"""
+    name: str
     status: DeploymentStatus
     message: str
     start_time: datetime
@@ -1406,7 +1463,8 @@ class DeploymentResult:
 
 @dataclass
 class DeploymentHistory:
-    """Deployment history record"""    deployment_id: str
+    """Deployment history record"""
+    deployment_id: str
     config: DeploymentConfig
     result: DeploymentResult
     created_at: datetime
@@ -1417,7 +1475,8 @@ class DeploymentHistory:
 
 
 class BaseDeploymentManager(ABC):
-    """Abstract base class for deployment managers"""    
+    """Abstract base class for deployment managers"""
+    
     def __init__(self, config: DeploymentConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -1425,27 +1484,33 @@ class BaseDeploymentManager(ABC):
         self.history: List[DeploymentResult] = []
         
     def _generate_deployment_id(self) -> str:
-        """Generate unique deployment ID"""        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        """Generate unique deployment ID"""
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         return f"{self.config.name}_{self.config.environment.value}_{timestamp}"
     
     @abstractmethod
     async def deploy(self) -> DeploymentResult:
-        """Execute deployment"""        pass
+        """Execute deployment"""
+        pass
     
     @abstractmethod
     async def rollback(self, target_version: Optional[str] = None) -> DeploymentResult:
-        """Rollback deployment"""        pass
+        """Rollback deployment"""
+        pass
     
     @abstractmethod
     async def validate_deployment(self) -> bool:
-        """Validate deployment health"""        pass
+        """Validate deployment health"""
+        pass
     
     @abstractmethod
     async def get_deployment_status(self) -> DeploymentStatus:
-        """Get current deployment status"""        pass
+        """Get current deployment status"""
+        pass
     
     async def execute_step(self, step: DeploymentStep) -> DeploymentResult:
-        """Execute a single deployment step"""        start_time = datetime.now()
+        """Execute a single deployment step"""
+        start_time = datetime.now()
         
         self.logger.info(f"Executing step: {step.name}")
         
@@ -1512,7 +1577,8 @@ class BaseDeploymentManager(ABC):
         return result
     
     async def _execute_command(self, command: str, timeout: int):
-        """Execute shell command"""        process = await asyncio.create_subprocess_shell(
+        """Execute shell command"""
+        process = await asyncio.create_subprocess_shell(
             command,
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE
@@ -1533,20 +1599,23 @@ class BaseDeploymentManager(ABC):
             raise Exception(f"Command timed out after {timeout} seconds")
     
     async def _execute_script(self, script_path: str, timeout: int):
-        """Execute script file"""        if not Path(script_path).exists():
+        """Execute script file"""
+        if not Path(script_path).exists():
             raise Exception(f"Script not found: {script_path}")
         
         command = f"bash {script_path}"
         await self._execute_command(command, timeout)
     
     async def _check_prerequisite(self, prerequisite: str) -> bool:
-        """Check if prerequisite is met"""        # Implement prerequisite checking logic
+        """Check if prerequisite is met"""
+        # Implement prerequisite checking logic
         # This could check for running services, available resources, etc.
         self.logger.debug(f"Checking prerequisite: {prerequisite}")
         return True
     
     async def _check_success_criteria(self, criteria: Dict[str, Any]) -> bool:
-        """Check if success criteria are met"""        for criterion, expected_value in criteria.items():
+        """Check if success criteria are met"""
+        for criterion, expected_value in criteria.items():
             # Implement success criteria checking logic
             self.logger.debug(f"Checking criterion: {criterion} = {expected_value}")
         
@@ -1554,7 +1623,8 @@ class BaseDeploymentManager(ABC):
 
 
 class KubernetesDeploymentManager(BaseDeploymentManager):
-    """Kubernetes deployment manager"""    
+    """Kubernetes deployment manager"""
+    
     def __init__(self, config: DeploymentConfig):
         super().__init__(config)
         
@@ -1578,7 +1648,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
         self.deployment_name = f"ia-influencer-{config.name}"
     
     async def deploy(self) -> DeploymentResult:
-        """Execute Kubernetes deployment"""        start_time = datetime.now()
+        """Execute Kubernetes deployment"""
+        start_time = datetime.now()
         
         result = DeploymentResult(
             name=f"Deploy {self.config.name}",
@@ -1669,7 +1740,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
         return result
     
     async def _execute_rolling_deployment(self, steps: List[DeploymentStep]):
-        """Execute rolling deployment strategy"""        self.logger.info("Executing rolling deployment strategy")
+        """Execute rolling deployment strategy"""
+        self.logger.info("Executing rolling deployment strategy")
         
         for step in steps:
             if step.name == "deploy_application":
@@ -1678,7 +1750,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
                 await self.execute_step(step)
     
     async def _execute_blue_green_deployment(self, steps: List[DeploymentStep]):
-        """Execute blue-green deployment strategy"""        self.logger.info("Executing blue-green deployment strategy")
+        """Execute blue-green deployment strategy"""
+        self.logger.info("Executing blue-green deployment strategy")
         
         # Create green environment
         green_deployment_name = f"{self.deployment_name}-green"
@@ -1709,7 +1782,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
             raise
     
     async def _execute_canary_deployment(self, steps: List[DeploymentStep]):
-        """Execute canary deployment strategy"""        self.logger.info("Executing canary deployment strategy")
+        """Execute canary deployment strategy"""
+        self.logger.info("Executing canary deployment strategy")
         
         canary_deployment_name = f"{self.deployment_name}-canary"
         canary_replicas = max(1, int(self.config.replicas * self.config.canary_percentage / 100))
@@ -1734,7 +1808,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
             raise
     
     async def _execute_recreate_deployment(self, steps: List[DeploymentStep]):
-        """Execute recreate deployment strategy"""        self.logger.info("Executing recreate deployment strategy")
+        """Execute recreate deployment strategy"""
+        self.logger.info("Executing recreate deployment strategy")
         
         # Scale down existing deployment
         await self._scale_deployment(self.deployment_name, 0)
@@ -1749,7 +1824,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
         await self._wait_for_deployment_ready(self.deployment_name)
     
     async def _create_deployment(self, deployment_name: str, replicas: int):
-        """Create Kubernetes deployment"""        deployment_manifest = self._generate_deployment_manifest(deployment_name, replicas)
+        """Create Kubernetes deployment"""
+        deployment_manifest = self._generate_deployment_manifest(deployment_name, replicas)
         
         try:
             # Try to update existing deployment
@@ -1771,7 +1847,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
                 raise
     
     async def _generate_deployment_manifest(self, deployment_name: str, replicas: int) -> Dict[str, Any]:
-        """Generate Kubernetes deployment manifest"""        labels = {
+        """Generate Kubernetes deployment manifest"""
+        labels = {
             "app": "ia-influencer",
             "component": self.config.name,
             "environment": self.config.environment.value,
@@ -1870,7 +1947,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
         return manifest
     
     async def _wait_for_deployment_ready(self, deployment_name: str, timeout: int = 600):
-        """Wait for deployment to be ready"""        start_time = time.time()
+        """Wait for deployment to be ready"""
+        start_time = time.time()
         
         while time.time() - start_time < timeout:
             try:
@@ -1895,7 +1973,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
         raise Exception(f"Deployment {deployment_name} did not become ready within {timeout} seconds")
     
     async def rollback(self, target_version: Optional[str] = None) -> DeploymentResult:
-        """Rollback Kubernetes deployment"""        start_time = datetime.now()
+        """Rollback Kubernetes deployment"""
+        start_time = datetime.now()
         
         result = DeploymentResult(
             name=f"Rollback {self.config.name}",
@@ -1935,12 +2014,14 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
         return result
     
     async def _rollback_to_previous(self):
-        """Rollback to previous deployment revision"""        # Use kubectl rollout undo command
+        """Rollback to previous deployment revision"""
+        # Use kubectl rollout undo command
         command = f"kubectl rollout undo deployment/{self.deployment_name} -n {self.namespace}"
         await self._execute_command(command, 300)
     
     async def _rollback_to_version(self, version: str):
-        """Rollback to specific version"""        # Update deployment with target version
+        """Rollback to specific version"""
+        # Update deployment with target version
         deployment = self.apps_client.read_namespaced_deployment(
             name=self.deployment_name,
             namespace=self.namespace
@@ -1957,7 +2038,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
         )
     
     async def validate_deployment(self) -> bool:
-        """Validate Kubernetes deployment health"""        try:
+        """Validate Kubernetes deployment health"""
+        try:
             # Check deployment status
             deployment = self.apps_client.read_namespaced_deployment(
                 name=self.deployment_name,
@@ -1990,7 +2072,8 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
             return False
     
     async def get_deployment_status(self) -> DeploymentStatus:
-        """Get current deployment status"""        try:
+        """Get current deployment status"""
+        try:
             deployment = self.apps_client.read_namespaced_deployment(
                 name=self.deployment_name,
                 namespace=self.namespace
@@ -2008,14 +2091,16 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
 
 
 class TerraformInfrastructureManager(BaseDeploymentManager):
-    """Terraform infrastructure manager"""    
+    """Terraform infrastructure manager"""
+    
     def __init__(self, config: DeploymentConfig, terraform_dir: str):
         super().__init__(config)
         self.terraform_dir = Path(terraform_dir)
         self.terraform_state_file = self.terraform_dir / "terraform.tfstate"
         
     async def deploy(self) -> DeploymentResult:
-        """Execute Terraform infrastructure deployment"""        start_time = datetime.now()
+        """Execute Terraform infrastructure deployment"""
+        start_time = datetime.now()
         
         result = DeploymentResult(
             name=f"Deploy Infrastructure {self.config.name}",
@@ -2065,7 +2150,8 @@ class TerraformInfrastructureManager(BaseDeploymentManager):
         return result
     
     async def rollback(self, target_version: Optional[str] = None) -> DeploymentResult:
-        """Rollback Terraform infrastructure"""        start_time = datetime.now()
+        """Rollback Terraform infrastructure"""
+        start_time = datetime.now()
         
         result = DeploymentResult(
             name=f"Rollback Infrastructure {self.config.name}",
@@ -2105,7 +2191,8 @@ class TerraformInfrastructureManager(BaseDeploymentManager):
         return result
     
     async def validate_deployment(self) -> bool:
-        """Validate Terraform infrastructure"""        try:
+        """Validate Terraform infrastructure"""
+        try:
             # Check if state file exists and is valid
             if not self.terraform_state_file.exists():
                 return False
@@ -2128,26 +2215,30 @@ class TerraformInfrastructureManager(BaseDeploymentManager):
             return False
     
     async def get_deployment_status(self) -> DeploymentStatus:
-        """Get Terraform deployment status"""        if await self.validate_deployment():
+        """Get Terraform deployment status"""
+        if await self.validate_deployment():
             return DeploymentStatus.SUCCESS
         else:
             return DeploymentStatus.FAILED
 
 
 class DeploymentOrchestrator:
-    """Main deployment orchestrator that coordinates multiple deployment managers"""    
+    """Main deployment orchestrator that coordinates multiple deployment managers"""
+    
     def __init__(self):
         self.managers: Dict[str, BaseDeploymentManager] = {}
         self.deployment_history: List[DeploymentHistory] = []
         self.logger = logging.getLogger(__name__)
     
     def register_manager(self, name: str, manager: BaseDeploymentManager):
-        """Register a deployment manager"""        self.managers[name] = manager
+        """Register a deployment manager"""
+        self.managers[name] = manager
         self.logger.info(f"Registered deployment manager: {name}")
     
     async def deploy_environment(self, environment: Environment, 
                                version: str, configs: Dict[str, DeploymentConfig]) -> Dict[str, DeploymentResult]:
-        """Deploy entire environment"""        self.logger.info(f"Starting deployment of environment: {environment.value}")
+        """Deploy entire environment"""
+        self.logger.info(f"Starting deployment of environment: {environment.value}")
         
         results = {}
         
@@ -2205,7 +2296,8 @@ class DeploymentOrchestrator:
         return results
     
     async def rollback_environment(self, environment: Environment) -> Dict[str, DeploymentResult]:
-        """Rollback entire environment"""        self.logger.info(f"Starting rollback of environment: {environment.value}")
+        """Rollback entire environment"""
+        self.logger.info(f"Starting rollback of environment: {environment.value}")
         
         results = {}
         
@@ -2226,7 +2318,8 @@ class DeploymentOrchestrator:
         return results
     
     def get_deployment_status(self, environment: Environment) -> Dict[str, DeploymentStatus]:
-        """Get status of all deployments in environment"""        status = {}
+        """Get status of all deployments in environment"""
+        status = {}
         
         for name, manager in self.managers.items():
             # This would need to be implemented as async in a real scenario
@@ -2236,7 +2329,8 @@ class DeploymentOrchestrator:
         return status
     
     def generate_deployment_report(self, results: Dict[str, DeploymentResult]) -> str:
-        """Generate deployment report"""        report_lines = [
+        """Generate deployment report"""
+        report_lines = [
             "=" * 80,
             "IA INFLUENCER PLATFORM DEPLOYMENT REPORT",
             "=" * 80,
@@ -2282,7 +2376,8 @@ class DeploymentOrchestrator:
 
 # Utility functions
 def create_deployment_config(name: str, environment: Environment, version: str, **kwargs) -> DeploymentConfig:
-    """Create deployment configuration with defaults"""    config = DeploymentConfig(
+    """Create deployment configuration with defaults"""
+    config = DeploymentConfig(
         name=name,
         environment=environment,
         version=version
@@ -2297,7 +2392,8 @@ def create_deployment_config(name: str, environment: Environment, version: str, 
 
 
 async def deploy_ia_influencer_platform(environment: Environment, version: str) -> Dict[str, DeploymentResult]:
-    """Deploy complete IA Influencer Platform"""    orchestrator = DeploymentOrchestrator()
+    """Deploy complete IA Influencer Platform"""
+    orchestrator = DeploymentOrchestrator()
     
     # Create deployment configurations
     configs = {

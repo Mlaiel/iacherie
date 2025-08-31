@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 WARNING: This code is proprietary and confidential. Any unauthorized use, 
 reproduction, or distribution is strictly prohibited and may result in 
 severe legal consequences.
-"""import asyncio
+"""
+import asyncio
 import re
 import json
 from datetime import datetime, timedelta
@@ -41,7 +42,8 @@ from ..fingerprinting.vector_matcher import VectorMatcher
 
 @dataclass
 class CrawlTarget:
-    """Web crawl target specification"""    url: str
+    """Web crawl target specification"""
+    url: str
     domain: str
     max_depth: int
     allowed_paths: List[str]
@@ -53,7 +55,8 @@ class CrawlTarget:
 
 @dataclass
 class WebContent:
-    """Web content structure"""    url: str
+    """Web content structure"""
+    url: str
     title: str
     content: str
     content_type: str
@@ -66,7 +69,8 @@ class WebContent:
 
 
 class GenericWebCrawler(PlatformCrawler):
-    """    Professional generic web crawler for content monitoring and discovery.
+    """
+    Professional generic web crawler for content monitoring and discovery.
     
     Features:
     - Multi-domain crawling with respect for robots.txt
@@ -78,14 +82,17 @@ class GenericWebCrawler(PlatformCrawler):
     - JavaScript rendering with Selenium
     - Content similarity matching
     - Structured data extraction
-    """    
+    """
+    
     def __init__(self, config: CrawlerConfig, vector_matcher: VectorMatcher):
-        """        Initialize generic web crawler.
+        """
+        Initialize generic web crawler.
         
         Args:
             config: Crawler configuration
             vector_matcher: Vector matching service
-        """        super().__init__(config, vector_matcher)
+        """
+        super().__init__(config, vector_matcher)
         
         # Crawler settings
         self.max_concurrent_requests = 10
@@ -116,12 +123,14 @@ class GenericWebCrawler(PlatformCrawler):
         self.selenium_driver = None
     
     async def add_crawl_target(self, target: CrawlTarget):
-        """Add a new crawl target"""        self.crawl_targets.append(target)
+        """Add a new crawl target"""
+        self.crawl_targets.append(target)
         self.logger.info(f"Added crawl target: {target.domain}")
     
     async def search_content(self, search_terms: List[str], 
                            max_results: int = 100) -> List[Dict[str, Any]]:
-        """        Search for content across configured crawl targets.
+        """
+        Search for content across configured crawl targets.
         
         Args:
             search_terms: Terms to search for
@@ -129,7 +138,8 @@ class GenericWebCrawler(PlatformCrawler):
             
         Returns:
             List of found content items
-        """        try:
+        """
+        try:
             all_results = []
             
             for target in self.crawl_targets:
@@ -158,14 +168,16 @@ class GenericWebCrawler(PlatformCrawler):
             return []
     
     async def extract_content_metadata(self, content_url: str) -> Dict[str, Any]:
-        """        Extract detailed metadata from web content URL.
+        """
+        Extract detailed metadata from web content URL.
         
         Args:
             content_url: Web content URL
             
         Returns:
             Detailed content metadata
-        """        try:
+        """
+        try:
             # Check if URL was already processed
             if content_url in self.visited_urls:
                 self.logger.debug(f"URL already processed: {content_url}")
@@ -193,14 +205,16 @@ class GenericWebCrawler(PlatformCrawler):
             return {}
     
     async def download_content_sample(self, content_url: str) -> Optional[bytes]:
-        """        Download content sample for fingerprinting.
+        """
+        Download content sample for fingerprinting.
         
         Args:
             content_url: Web content URL
             
         Returns:
             Content sample data or None
-        """        try:
+        """
+        try:
             # Check file size first
             file_size = await self._get_content_size(content_url)
             if file_size and file_size > self.max_file_size:
@@ -229,7 +243,8 @@ class GenericWebCrawler(PlatformCrawler):
             return None
     
     async def crawl_domain_comprehensively(self, domain: str, max_pages: int = 1000) -> List[Dict[str, Any]]:
-        """        Perform comprehensive crawl of a specific domain.
+        """
+        Perform comprehensive crawl of a specific domain.
         
         Args:
             domain: Domain to crawl
@@ -237,7 +252,8 @@ class GenericWebCrawler(PlatformCrawler):
             
         Returns:
             List of discovered content
-        """        try:
+        """
+        try:
             # Create crawl target for domain
             target = CrawlTarget(
                 url=f"https://{domain}",
@@ -296,7 +312,8 @@ class GenericWebCrawler(PlatformCrawler):
             return []
     
     async def search_specific_file_types(self, domain: str, file_types: List[str]) -> List[Dict[str, Any]]:
-        """        Search for specific file types on a domain.
+        """
+        Search for specific file types on a domain.
         
         Args:
             domain: Domain to search
@@ -304,7 +321,8 @@ class GenericWebCrawler(PlatformCrawler):
             
         Returns:
             List of found files
-        """        try:
+        """
+        try:
             found_files = []
             
             # Use search engines to find files
@@ -339,7 +357,8 @@ class GenericWebCrawler(PlatformCrawler):
     # Private helper methods
     
     async def _crawl_target(self, target: CrawlTarget, search_terms: List[str], max_results: int) -> List[Dict[str, Any]]:
-        """Crawl a specific target"""        try:
+        """Crawl a specific target"""
+        try:
             results = []
             
             if target.use_selenium:
@@ -354,7 +373,8 @@ class GenericWebCrawler(PlatformCrawler):
             return []
     
     async def _crawl_with_requests(self, target: CrawlTarget, search_terms: List[str], max_results: int) -> List[Dict[str, Any]]:
-        """Crawl using HTTP requests"""        results = []
+        """Crawl using HTTP requests"""
+        results = []
         
         try:
             # Start with target URL
@@ -393,7 +413,8 @@ class GenericWebCrawler(PlatformCrawler):
         return results
     
     async def _crawl_with_selenium(self, target: CrawlTarget, search_terms: List[str], max_results: int) -> List[Dict[str, Any]]:
-        """Crawl using Selenium for JavaScript-heavy sites"""        results = []
+        """Crawl using Selenium for JavaScript-heavy sites"""
+        results = []
         
         try:
             # Initialize Selenium if needed
@@ -418,7 +439,8 @@ class GenericWebCrawler(PlatformCrawler):
         return results
     
     async def _fetch_content(self, url: str) -> Optional[str]:
-        """Fetch content from URL"""        try:
+        """Fetch content from URL"""
+        try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url, headers=self.headers) as response:
                     if response.status == 200:
@@ -433,7 +455,8 @@ class GenericWebCrawler(PlatformCrawler):
             return None
     
     async def _extract_metadata_from_content(self, content: str, url: str) -> Dict[str, Any]:
-        """Extract metadata from content"""        try:
+        """Extract metadata from content"""
+        try:
             soup = BeautifulSoup(content, 'html.parser')
             
             metadata = {
@@ -490,7 +513,8 @@ class GenericWebCrawler(PlatformCrawler):
             return {}
     
     async def _extract_structured_data(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extract structured data from HTML"""        structured_data = {}
+        """Extract structured data from HTML"""
+        structured_data = {}
         
         try:
             # JSON-LD
@@ -528,7 +552,8 @@ class GenericWebCrawler(PlatformCrawler):
         return structured_data
     
     async def _extract_links(self, content: str, base_url: str, target_domain: str) -> List[str]:
-        """Extract links from content"""        try:
+        """Extract links from content"""
+        try:
             soup = BeautifulSoup(content, 'html.parser')
             links = []
             
@@ -548,11 +573,13 @@ class GenericWebCrawler(PlatformCrawler):
             return []
     
     async def _content_matches_terms(self, content: str, search_terms: List[str]) -> bool:
-        """Check if content matches search terms"""        content_lower = content.lower()
+        """Check if content matches search terms"""
+        content_lower = content.lower()
         return any(term.lower() in content_lower for term in search_terms)
     
     async def _can_fetch_url(self, url: str) -> bool:
-        """Check if URL can be fetched according to robots.txt"""        try:
+        """Check if URL can be fetched according to robots.txt"""
+        try:
             parsed_url = urlparse(url)
             domain = parsed_url.netloc
             
@@ -579,7 +606,8 @@ class GenericWebCrawler(PlatformCrawler):
             return True  # Allow on error
     
     async def _get_content_size(self, url: str) -> Optional[int]:
-        """Get content size without downloading"""        try:
+        """Get content size without downloading"""
+        try:
             async with aiohttp.ClientSession() as session:
                 async with session.head(url, headers=self.headers) as response:
                     content_length = response.headers.get('content-length')
@@ -593,7 +621,8 @@ class GenericWebCrawler(PlatformCrawler):
             return None
     
     async def _deduplicate_and_rank(self, results: List[Dict[str, Any]], search_terms: List[str]) -> List[Dict[str, Any]]:
-        """Remove duplicates and rank results by relevance"""        try:
+        """Remove duplicates and rank results by relevance"""
+        try:
             # Remove duplicates based on URL
             unique_results = {}
             for result in results:
@@ -621,12 +650,14 @@ class GenericWebCrawler(PlatformCrawler):
             return results
     
     async def _search_files_via_search_engines(self, query: str) -> List[Dict[str, Any]]:
-        """Search for files using search engines (placeholder implementation)"""        # This would integrate with search engine APIs
+        """Search for files using search engines (placeholder implementation)"""
+        # This would integrate with search engine APIs
         # Placeholder implementation
         return []
     
     async def _initialize_selenium(self):
-        """Initialize Selenium WebDriver"""        try:
+        """Initialize Selenium WebDriver"""
+        try:
             chrome_options = Options()
             chrome_options.add_argument('--headless')
             chrome_options.add_argument('--no-sandbox')
@@ -643,7 +674,8 @@ class GenericWebCrawler(PlatformCrawler):
             raise
     
     async def _cleanup_selenium(self):
-        """Cleanup Selenium WebDriver"""        if self.selenium_driver:
+        """Cleanup Selenium WebDriver"""
+        if self.selenium_driver:
             try:
                 self.selenium_driver.quit()
                 self.selenium_driver = None
@@ -652,7 +684,8 @@ class GenericWebCrawler(PlatformCrawler):
                 self.logger.error(f"Error cleaning up Selenium driver: {str(e)}")
     
     def get_crawl_statistics(self) -> Dict[str, Any]:
-        """Get crawler statistics"""        return {
+        """Get crawler statistics"""
+        return {
             'platform': 'generic_web',
             'crawl_targets_count': len(self.crawl_targets),
             'visited_urls_count': len(self.visited_urls),
@@ -665,7 +698,8 @@ class GenericWebCrawler(PlatformCrawler):
         }
     
     async def close(self):
-        """Cleanup crawler resources"""        await self._cleanup_selenium()
+        """Cleanup crawler resources"""
+        await self._cleanup_selenium()
         await self.cleanup_session()
         self.visited_urls.clear()
         self.robots_cache.clear()

@@ -15,7 +15,8 @@ Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Revenue Operations
 ============================================================================================
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -43,7 +44,8 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueManagementOrchestrator:
-    """    Ultra-advanced revenue management orchestration system
+    """
+    Ultra-advanced revenue management orchestration system
     
     This class provides centralized coordination of all revenue management
     components, ensuring seamless integration and workflow orchestration
@@ -57,7 +59,8 @@ class RevenueManagementOrchestrator:
     - Error handling and recovery
     - Scalable processing pipelines
     - Real-time status monitoring
-    """    
+    """
+    
     def __init__(self,
                  db_manager: DatabaseManager,
                  security_manager: SecurityManager,
@@ -86,7 +89,8 @@ class RevenueManagementOrchestrator:
         self._components_status = {}
         
     async def initialize(self):
-        """Initialize all revenue management components"""        try:
+        """Initialize all revenue management components"""
+        try:
             logger.info("Initializing revenue management orchestrator...")
             
             # Initialize components in dependency order
@@ -127,7 +131,8 @@ class RevenueManagementOrchestrator:
                                        creator_id: str,
                                        revenue_data: Dict[str, Any],
                                        auto_distribute: bool = False) -> Dict[str, Any]:
-        """        Process revenue end-to-end through the entire pipeline
+        """
+        Process revenue end-to-end through the entire pipeline
         
         Args:
             creator_id: Creator ID
@@ -136,7 +141,8 @@ class RevenueManagementOrchestrator:
             
         Returns:
             Complete processing results
-        """        try:
+        """
+        try:
             if not self._initialized:
                 raise RuntimeError("Orchestrator not initialized")
             
@@ -253,7 +259,8 @@ class RevenueManagementOrchestrator:
             return results
 
     async def get_system_health(self) -> Dict[str, Any]:
-        """Get comprehensive system health status"""        try:
+        """Get comprehensive system health status"""
+        try:
             health_status = {
                 'overall_status': 'healthy',
                 'timestamp': datetime.utcnow().isoformat(),
@@ -292,7 +299,8 @@ class RevenueManagementOrchestrator:
             }
 
     async def cleanup(self):
-        """Cleanup all revenue management components"""        try:
+        """Cleanup all revenue management components"""
+        try:
             logger.info("Starting revenue management orchestrator cleanup...")
             
             # Cleanup components in reverse order
@@ -338,7 +346,8 @@ async def create_revenue_management_system(
     security_manager: SecurityManager,
     metrics_collector: MetricsCollector
 ) -> RevenueManagementOrchestrator:
-    """    Create and initialize a complete revenue management system
+    """
+    Create and initialize a complete revenue management system
     
     Args:
         db_manager: Database manager instance
@@ -347,7 +356,8 @@ async def create_revenue_management_system(
         
     Returns:
         Initialized revenue management orchestrator
-    """    orchestrator = RevenueManagementOrchestrator(
+    """
+    orchestrator = RevenueManagementOrchestrator(
         db_manager, security_manager, metrics_collector
     )
     await orchestrator.initialize()

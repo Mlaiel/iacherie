@@ -6,7 +6,8 @@ All templates are embedded directly in this module to respect the 3-level depth 
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent - Multi-format Content Protection Platform
-"""import os
+"""
+import os
 import json
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Set, Callable
@@ -25,7 +26,8 @@ from app.core.ai.content_generator import ContentGenerator
 
 
 class TemplateType(str, Enum):
-    """Notification template types."""    EMAIL_HTML = "email_html"
+    """Notification template types."""
+    EMAIL_HTML = "email_html"
     EMAIL_TEXT = "email_text"
     SMS = "sms"
     PUSH_NOTIFICATION = "push"
@@ -405,7 +407,8 @@ WEBHOOK_TEMPLATES = {
 
 
 class PersonalizationLevel(str, Enum):
-    """AI personalization levels."""    NONE = "none"
+    """AI personalization levels."""
+    NONE = "none"
     BASIC = "basic"
     ADVANCED = "advanced"
     AI_GENERATED = "ai_generated"
@@ -413,7 +416,8 @@ class PersonalizationLevel(str, Enum):
 
 
 class ContentTone(str, Enum):
-    """Content tone options."""    PROFESSIONAL = "professional"
+    """Content tone options."""
+    PROFESSIONAL = "professional"
     FRIENDLY = "friendly"
     CASUAL = "casual"
     URGENT = "urgent"
@@ -424,7 +428,8 @@ class ContentTone(str, Enum):
 
 @dataclass
 class TemplateVariable:
-    """Template variable definition with validation."""    name: str
+    """Template variable definition with validation."""
+    name: str
     type: str  # string, integer, float, boolean, datetime, list, dict
     required: bool = True
     default_value: Optional[Any] = None
@@ -435,7 +440,8 @@ class TemplateVariable:
 
 @dataclass
 class PersonalizationContext:
-    """Context for AI-powered personalization."""    user_id: str
+    """Context for AI-powered personalization."""
+    user_id: str
     creator_type: str  # musician, blogger, photographer, influencer, comedian
     user_preferences: Dict[str, Any] = field(default_factory=dict)
     content_history: List[Dict[str, Any]] = field(default_factory=list)
@@ -452,7 +458,8 @@ class PersonalizationContext:
 
 @dataclass
 class ABTestVariant:
-    """A/B test variant for notification templates."""    variant_id: str
+    """A/B test variant for notification templates."""
+    variant_id: str
     name: str
     template_content: str
     weight: float = 1.0  # Traffic allocation weight
@@ -479,7 +486,8 @@ class ABTestVariant:
 
 @dataclass
 class NotificationTemplate:
-    """Enterprise notification template with AI-powered features."""    id: str
+    """Enterprise notification template with AI-powered features."""
+    id: str
     name: str
     type: TemplateType
     subject: Optional[str] = None  # For email templates
@@ -524,7 +532,8 @@ class NotificationTemplate:
 
 
 class NotificationTemplateEngine:
-    """Enterprise notification template engine with AI-powered personalization and comprehensive analytics."""    def __init__(self):
+    """Enterprise notification template engine with AI-powered personalization and comprehensive analytics."""
+    def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.metrics = MetricsCollector()
         self.content_generator = ContentGenerator()
@@ -560,7 +569,8 @@ class NotificationTemplateEngine:
         }
 
     async def create_template(self, template: NotificationTemplate) -> str:
-        """Create a new notification template."""        # Validate template
+        """Create a new notification template."""
+        # Validate template
         await self._validate_template(template)
         
         # Store template
@@ -573,7 +583,8 @@ class NotificationTemplateEngine:
         return template.id
 
     async def update_template(self, template_id: str, updates: Dict[str, Any]) -> bool:
-        """Update an existing template."""        if template_id not in self.templates:
+        """Update an existing template."""
+        if template_id not in self.templates:
             return False
         
         template = self.templates[template_id]
@@ -590,7 +601,8 @@ class NotificationTemplateEngine:
         return True
 
     async def delete_template(self, template_id: str) -> bool:
-        """Delete a template."""        if template_id in self.templates:
+        """Delete a template."""
+        if template_id in self.templates:
             del self.templates[template_id]
             self.logger.info(f"Template deleted: {template_id}")
             return True
@@ -603,7 +615,8 @@ class NotificationTemplateEngine:
         personalization_context: Optional[PersonalizationContext] = None,
         language: str = "en"
     ) -> Dict[str, str]:
-        """Render template with AI-powered personalization."""        if template_id not in self.templates:
+        """Render template with AI-powered personalization."""
+        if template_id not in self.templates:
             raise ValueError(f"Template not found: {template_id}")
         
         template = self.templates[template_id]
@@ -660,7 +673,8 @@ class NotificationTemplateEngine:
         languages: List[str],
         personalization_context: Optional[PersonalizationContext] = None
     ) -> Dict[str, Dict[str, str]]:
-        """Render template in multiple languages."""        results = {}
+        """Render template in multiple languages."""
+        results = {}
         
         for language in languages:
             try:
@@ -679,7 +693,8 @@ class NotificationTemplateEngine:
         variants: List[Dict[str, Any]],
         test_name: Optional[str] = None
     ) -> str:
-        """Create A/B test for a template."""        if template_id not in self.templates:
+        """Create A/B test for a template."""
+        if template_id not in self.templates:
             raise ValueError(f"Template not found: {template_id}")
         
         template = self.templates[template_id]
@@ -713,7 +728,8 @@ class NotificationTemplateEngine:
         return test_id
 
     async def get_ab_test_results(self, test_id: str) -> Optional[Dict[str, Any]]:
-        """Get A/B test results and statistics."""        if test_id not in self.ab_test_results:
+        """Get A/B test results and statistics."""
+        if test_id not in self.ab_test_results:
             return None
         
         test_data = self.ab_test_results[test_id]
@@ -757,7 +773,8 @@ class NotificationTemplateEngine:
         creator_type: Optional[str] = None,
         platform: Optional[str] = None
     ) -> Optional[NotificationTemplate]:
-        """Get template by business event trigger."""        for template in self.templates.values():
+        """Get template by business event trigger."""
+        for template in self.templates.values():
             if (business_event in template.business_triggers and
                 (not creator_type or creator_type in template.target_creator_types) and
                 template.active):
@@ -806,7 +823,8 @@ class NotificationTemplateEngine:
         tags: Optional[List[str]] = None,
         active_only: bool = True
     ) -> List[NotificationTemplate]:
-        """Get templates filtered by criteria."""        filtered_templates = []
+        """Get templates filtered by criteria."""
+        filtered_templates = []
         
         for template in self.templates.values():
             if active_only and not template.active:
@@ -830,7 +848,8 @@ class NotificationTemplateEngine:
 
     # Private methods
     async def _validate_template(self, template: NotificationTemplate) -> None:
-        """Validate template structure and content."""        if not template.name:
+        """Validate template structure and content."""
+        if not template.name:
             raise ValueError("Template name is required")
         
         if not template.content:
@@ -856,7 +875,8 @@ class NotificationTemplateEngine:
         template: NotificationTemplate,
         context: PersonalizationContext
     ) -> str:
-        """Apply AI-powered personalization to template content."""        if template.personalization_level == PersonalizationLevel.NONE:
+        """Apply AI-powered personalization to template content."""
+        if template.personalization_level == PersonalizationLevel.NONE:
             return content
         
         # Check cache
@@ -896,7 +916,8 @@ class NotificationTemplateEngine:
         template: NotificationTemplate,
         context: PersonalizationContext
     ) -> str:
-        """Build AI prompt for personalization."""        prompt_parts = [
+        """Build AI prompt for personalization."""
+        prompt_parts = [
             f"Personalize the following {template.type.value} notification for a {context.creator_type}:",
             f"Content: {content}",
             f"Tone: {template.content_tone.value}",
@@ -928,7 +949,8 @@ class NotificationTemplateEngine:
         context: Dict[str, Any],
         personalization_context: Optional[PersonalizationContext] = None
     ) -> Dict[str, Any]:
-        """Prepare context for template rendering."""        render_context = context.copy()
+        """Prepare context for template rendering."""
+        render_context = context.copy()
         
         # Add system variables
         render_context.update({
@@ -964,7 +986,8 @@ class NotificationTemplateEngine:
         return render_context
 
     async def _select_ab_test_variant(self, template: NotificationTemplate) -> ABTestVariant:
-        """Select A/B test variant based on weights."""        if not template.ab_test_variants:
+        """Select A/B test variant based on weights."""
+        if not template.ab_test_variants:
             raise ValueError("No A/B test variants available")
         
         # Calculate total weight
@@ -985,7 +1008,8 @@ class NotificationTemplateEngine:
         return template.ab_test_variants[0]
 
     def _calculate_performance_score(self, variant: ABTestVariant) -> float:
-        """Calculate performance score for A/B test variant."""        if variant.sent_count == 0:
+        """Calculate performance score for A/B test variant."""
+        if variant.sent_count == 0:
             return 0.0
         
         # Weighted performance score
@@ -1002,7 +1026,8 @@ class NotificationTemplateEngine:
         return score
 
     def _increment_version(self, current_version: str) -> str:
-        """Increment template version."""        try:
+        """Increment template version."""
+        try:
             parts = current_version.split(".")
             patch = int(parts[2]) + 1
             return f"{parts[0]}.{parts[1]}.{patch}"
@@ -1011,7 +1036,8 @@ class NotificationTemplateEngine:
 
     # Formatting functions
     def _format_currency(self, amount: Union[int, float], currency: str = "USD") -> str:
-        """Format currency amount."""        if currency == "USD":
+        """Format currency amount."""
+        if currency == "USD":
             return f"${amount:,.2f}"
         elif currency == "EUR":
             return f"€{amount:,.2f}"
@@ -1019,10 +1045,12 @@ class NotificationTemplateEngine:
             return f"{amount:,.2f} {currency}"
 
     def _format_percentage(self, value: Union[int, float]) -> str:
-        """Format percentage value."""        return f"{value:.1f}%"
+        """Format percentage value."""
+        return f"{value:.1f}%"
 
     def _format_number(self, value: int) -> str:
-        """Format large numbers with appropriate suffixes."""        if value >= 1_000_000:
+        """Format large numbers with appropriate suffixes."""
+        if value >= 1_000_000:
             return f"{value/1_000_000:.1f}M"
         elif value >= 1_000:
             return f"{value/1_000:.1f}K"
@@ -1030,10 +1058,12 @@ class NotificationTemplateEngine:
             return str(value)
 
     def _format_datetime(self, dt: datetime, format_string: str = "%Y-%m-%d %H:%M UTC") -> str:
-        """Format datetime."""        return dt.strftime(format_string)
+        """Format datetime."""
+        return dt.strftime(format_string)
 
     def _format_duration(self, seconds: int) -> str:
-        """Format duration in human-readable format."""        if seconds < 60:
+        """Format duration in human-readable format."""
+        if seconds < 60:
             return f"{seconds}s"
         elif seconds < 3600:
             minutes = seconds // 60
@@ -1044,7 +1074,8 @@ class NotificationTemplateEngine:
             return f"{hours}h {minutes}m"
 
     def _format_platform_name(self, platform: str) -> str:
-        """Format platform name for display."""        platform_names = {
+        """Format platform name for display."""
+        platform_names = {
             "youtube": "YouTube",
             "tiktok": "TikTok",
             "instagram": "Instagram",
@@ -1057,7 +1088,8 @@ class NotificationTemplateEngine:
         return platform_names.get(platform.lower(), platform.title())
 
     def _format_creator_type(self, creator_type: str) -> str:
-        """Format creator type for display."""        creator_types = {
+        """Format creator type for display."""
+        creator_types = {
             "musician": "Musician",
             "blogger": "Blogger",
             "photographer": "Photographer",
@@ -1070,7 +1102,8 @@ class NotificationTemplateEngine:
         return creator_types.get(creator_type.lower(), creator_type.title())
 
     def _initialize_business_templates(self) -> None:
-        """Initialize IA Influencer Agent business-specific templates."""        # Load embedded templates
+        """Initialize IA Influencer Agent business-specific templates."""
+        # Load embedded templates
         business_templates = [
             # Welcome Templates
             NotificationTemplate(
@@ -1151,7 +1184,8 @@ template_engine = NotificationTemplateEngine()
 
 # Utility functions for easy template access
 def get_embedded_template(template_type: str, template_name: str) -> Optional[str]:
-    """Get embedded template by type and name."""    template_maps = {
+    """Get embedded template by type and name."""
+    template_maps = {
         "email_html": EMAIL_HTML_TEMPLATES,
         "sms": SMS_TEMPLATES,
         "push": PUSH_TEMPLATES,
@@ -1172,7 +1206,8 @@ async def render_notification_template(
     personalization_context: Optional[PersonalizationContext] = None,
     language: str = "en"
 ) -> Dict[str, str]:
-    """Convenience function to render a notification template."""    return await template_engine.render_template(
+    """Convenience function to render a notification template."""
+    return await template_engine.render_template(
         template_id, context, personalization_context, language
     )
 
@@ -1199,7 +1234,8 @@ __all__ = [
         return test_id
 
     async def get_ab_test_results(self, test_id: str) -> Dict[str, Any]:
-        """Get A/B test results with statistical analysis."""        if test_id not in self.ab_test_results:
+        """Get A/B test results with statistical analysis."""
+        if test_id not in self.ab_test_results:
             raise ValueError(f"A/B test not found: {test_id}")
         
         test_data = self.ab_test_results[test_id]
@@ -1244,7 +1280,8 @@ __all__ = [
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Get comprehensive template analytics."""        if template_id not in self.templates:
+        """Get comprehensive template analytics."""
+        if template_id not in self.templates:
             raise ValueError(f"Template not found: {template_id}")
         
         template = self.templates[template_id]
@@ -1264,7 +1301,8 @@ __all__ = [
         }
 
     async def suggest_template_improvements(self, template_id: str) -> List[Dict[str, Any]]:
-        """AI-powered template improvement suggestions."""        if template_id not in self.templates:
+        """AI-powered template improvement suggestions."""
+        if template_id not in self.templates:
             raise ValueError(f"Template not found: {template_id}")
         
         template = self.templates[template_id]
@@ -1305,13 +1343,15 @@ __all__ = [
         return suggestions
 
     async def _initialize_business_templates(self):
-        """Initialize business-specific templates for IA Influencer."""        business_templates = [
+        """Initialize business-specific templates for IA Influencer."""
+        business_templates = [
             {
                 "id": "content_upload_success",
                 "name": "Content Upload Success",
                 "type": TemplateType.EMAIL_HTML,
                 "subject": "🎉 Your {{content_type}} '{{content_title}}' is now protected!",
-                "content": """                <h2>Great job, {{creator_name}}! 🎯</h2>
+                "content": """
+                <h2>Great job, {{creator_name}}! 🎯</h2>
                 <p>Your {{content_type}} <strong>"{{content_title}}"</strong> has been successfully uploaded and is now protected by our AI copyright system.</p>
                 
                 <div style="background: #f0f9ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
@@ -1338,7 +1378,8 @@ __all__ = [
                 "name": "Collaboration Match Found",
                 "type": TemplateType.EMAIL_HTML,
                 "subject": "🤝 Perfect collaboration match found for {{creator_name}}!",
-                "content": """                <h2>Exciting collaboration opportunity! 🎉</h2>
+                "content": """
+                <h2>Exciting collaboration opportunity! 🎉</h2>
                 <p>Hi {{creator_name}},</p>
                 
                 <p>Our AI matching system found a perfect collaboration partner for you:</p>
@@ -1370,7 +1411,8 @@ __all__ = [
                 "name": "Revenue Milestone Reached",
                 "type": TemplateType.EMAIL_HTML,
                 "subject": "🎊 Congratulations! You've earned ${{revenue_amount}} this month!",
-                "content": """                <h2>Amazing milestone reached! 🎯💰</h2>
+                "content": """
+                <h2>Amazing milestone reached! 🎯💰</h2>
                 <p>Hi {{creator_name}},</p>
                 
                 <p>Congratulations! You've reached an incredible revenue milestone:</p>
@@ -1408,7 +1450,8 @@ __all__ = [
             self.templates[template.id] = template
 
     async def _validate_template(self, template: NotificationTemplate):
-        """Validate template structure and content."""        if not template.name:
+        """Validate template structure and content."""
+        if not template.name:
             raise ValueError("Template name is required")
         
         if not template.content:
@@ -1421,7 +1464,8 @@ __all__ = [
             raise ValueError(f"Invalid template syntax: {str(e)}")
 
     def _increment_version(self, current_version: str) -> str:
-        """Increment semantic version."""        try:
+        """Increment semantic version."""
+        try:
             parts = current_version.split(".")
             parts[-1] = str(int(parts[-1]) + 1)
             return ".".join(parts)
@@ -1429,7 +1473,8 @@ __all__ = [
             return "1.0.1"
 
     async def _select_ab_test_variant(self, template: NotificationTemplate) -> ABTestVariant:
-        """Select A/B test variant based on weights."""        if not template.ab_test_variants:
+        """Select A/B test variant based on weights."""
+        if not template.ab_test_variants:
             raise ValueError("No A/B test variants available")
         
         # Simple weighted selection (would use more sophisticated algorithm in production)
@@ -1452,7 +1497,8 @@ __all__ = [
         template: NotificationTemplate,
         context: PersonalizationContext
     ) -> str:
-        """Apply AI-powered personalization to template content."""        if template.personalization_level == PersonalizationLevel.AI_GENERATED:
+        """Apply AI-powered personalization to template content."""
+        if template.personalization_level == PersonalizationLevel.AI_GENERATED:
             # Generate completely new content based on context
             return await self.content_generator.generate_personalized_content(
                 template_type=template.type,
@@ -1476,7 +1522,8 @@ __all__ = [
         context: Dict[str, Any],
         personalization_context: Optional[PersonalizationContext]
     ) -> Dict[str, Any]:
-        """Prepare rendering context with all variables and functions."""        render_context = context.copy()
+        """Prepare rendering context with all variables and functions."""
+        render_context = context.copy()
         
         # Add personalization data
         if personalization_context:
@@ -1497,7 +1544,8 @@ __all__ = [
 
     # Formatting functions
     def _format_currency(self, amount: float, currency: str = "USD") -> str:
-        """Format currency amount."""        if currency == "USD":
+        """Format currency amount."""
+        if currency == "USD":
             return f"${amount:,.2f}"
         elif currency == "EUR":
             return f"€{amount:,.2f}"
@@ -1505,16 +1553,20 @@ __all__ = [
             return f"{amount:,.2f} {currency}"
 
     def _format_percentage(self, value: float, decimals: int = 1) -> str:
-        """Format percentage value."""        return f"{value:.{decimals}f}%"
+        """Format percentage value."""
+        return f"{value:.{decimals}f}%"
 
     def _format_number(self, value: Union[int, float], thousands_sep: str = ",") -> str:
-        """Format number with thousands separator."""        return f"{value:,}"
+        """Format number with thousands separator."""
+        return f"{value:,}"
 
     def _format_datetime(self, dt: datetime, format_string: str = "%B %d, %Y") -> str:
-        """Format datetime."""        return dt.strftime(format_string)
+        """Format datetime."""
+        return dt.strftime(format_string)
 
     def _format_duration(self, seconds: int) -> str:
-        """Format duration in human-readable format."""        if seconds < 60:
+        """Format duration in human-readable format."""
+        if seconds < 60:
             return f"{seconds} seconds"
         elif seconds < 3600:
             return f"{seconds // 60} minutes"
@@ -1522,7 +1574,8 @@ __all__ = [
             return f"{seconds // 3600} hours"
 
     def _format_platform_name(self, platform: str) -> str:
-        """Format platform name for display."""        platform_names = {
+        """Format platform name for display."""
+        platform_names = {
             "youtube": "YouTube",
             "instagram": "Instagram",
             "tiktok": "TikTok",
@@ -1535,7 +1588,8 @@ __all__ = [
         return platform_names.get(platform.lower(), platform.title())
 
     def _format_creator_type(self, creator_type: str) -> str:
-        """Format creator type for display."""        return creator_type.replace("_", " ").title()
+        """Format creator type for display."""
+        return creator_type.replace("_", " ").title()
 
     # Analytics methods (simplified implementations)
     async def _get_performance_by_creator_type(self, template_id: str) -> Dict[str, Dict]:

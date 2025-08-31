@@ -65,7 +65,8 @@ from . import BlockchainService
 
 
 def get_blockchain_service(encryption_manager, database_manager=None):
-    """    Factory function to create blockchain service instance
+    """
+    Factory function to create blockchain service instance
     
     Args:
         encryption_manager: Security encryption manager
@@ -73,31 +74,37 @@ def get_blockchain_service(encryption_manager, database_manager=None):
         
     Returns:
         BlockchainService: Configured blockchain service
-    """    return BlockchainService(encryption_manager, database_manager)
+    """
+    return BlockchainService(encryption_manager, database_manager)
 
 
 def get_copyright_manager(encryption_manager):
-    """Get standalone copyright registry manager"""    service = get_blockchain_service(encryption_manager)
+    """Get standalone copyright registry manager"""
+    service = get_blockchain_service(encryption_manager)
     return service.copyright_registry
 
 
 def get_drm_manager(encryption_manager):
-    """Get standalone digital rights manager"""    service = get_blockchain_service(encryption_manager)
+    """Get standalone digital rights manager"""
+    service = get_blockchain_service(encryption_manager)
     return service.drm_manager
 
 
 def get_collaboration_manager(encryption_manager):
-    """Get standalone collaboration manager"""    service = get_blockchain_service(encryption_manager)
+    """Get standalone collaboration manager"""
+    service = get_blockchain_service(encryption_manager)
     return service.collaboration_manager
 
 
 def get_monetization_manager(encryption_manager):
-    """Get standalone monetization manager"""    service = get_blockchain_service(encryption_manager)
+    """Get standalone monetization manager"""
+    service = get_blockchain_service(encryption_manager)
     return service.monetization_manager
 
 
 def get_distribution_manager(encryption_manager):
-    """Get standalone distribution manager"""    service = get_blockchain_service(encryption_manager)
+    """Get standalone distribution manager"""
+    service = get_blockchain_service(encryption_manager)
     return service.distribution_manager
 
 

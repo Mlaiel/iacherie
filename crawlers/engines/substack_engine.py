@@ -11,7 +11,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
 from dataclasses import dataclass, asdict
@@ -47,7 +48,8 @@ settings = get_settings()
 
 @dataclass
 class SubstackPost:
-    """Substack post data structure"""    id: str
+    """Substack post data structure"""
+    id: str
     title: str
     subtitle: Optional[str]
     slug: str
@@ -79,7 +81,8 @@ class SubstackPost:
 
 @dataclass
 class SubstackPublication:
-    """Substack publication data structure"""    id: str
+    """Substack publication data structure"""
+    id: str
     name: str
     subdomain: str
     custom_domain: Optional[str]
@@ -103,7 +106,8 @@ class SubstackPublication:
 
 @dataclass
 class SubstackWriter:
-    """Substack writer data structure"""    id: str
+    """Substack writer data structure"""
+    id: str
     name: str
     bio: Optional[str]
     photo_url: Optional[str]
@@ -116,7 +120,8 @@ class SubstackWriter:
 
 
 class SubstackCrawlerEngine(BaseCrawlerEngine):
-    """    Professional Substack crawler engine for newsletter and publication analysis.
+    """
+    Professional Substack crawler engine for newsletter and publication analysis.
     
     Features:
     - Newsletter discovery and monitoring
@@ -125,9 +130,11 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
     - Content engagement analysis
     - Subscription trend monitoring
     - Content protection monitoring
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Substack crawler engine"""        super().__init__(platform="substack", config=config)
+        """Initialize Substack crawler engine"""
+        super().__init__(platform="substack", config=config)
         
         # Rate limiting
         self.rate_limiter = RateLimiter(
@@ -154,7 +161,8 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
         logger.info("Substack crawler engine initialized")
     
     async def initialize(self) -> None:
-        """Initialize the crawler engine"""        try:
+        """Initialize the crawler engine"""
+        try:
             await self._create_session()
             self._setup_selenium()
             logger.info("Substack engine initialized successfully")
@@ -163,7 +171,8 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Initialization failed: {e}")
     
     async def _create_session(self) -> None:
-        """Create HTTP session with proper headers"""        headers = {
+        """Create HTTP session with proper headers"""
+        headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
             'Accept': 'application/json, text/plain, */*',
             'Accept-Language': 'en-US,en;q=0.9',
@@ -181,7 +190,8 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
         )
     
     def _setup_selenium(self) -> None:
-        """Setup Selenium WebDriver"""        try:
+        """Setup Selenium WebDriver"""
+        try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')
             options.add_argument('--no-sandbox')
@@ -199,7 +209,8 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
         category: Optional[str] = None,
         limit: int = 50
     ) -> List[SubstackPublication]:
-        """        Discover popular publications on Substack
+        """
+        Discover popular publications on Substack
         
         Args:
             category: Filter by category
@@ -207,7 +218,8 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of Substack publications
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -261,14 +273,16 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Publication discovery failed: {e}")
     
     async def get_publication_details(self, subdomain: str) -> Optional[SubstackPublication]:
-        """        Get detailed information about a publication
+        """
+        Get detailed information about a publication
         
         Args:
             subdomain: Publication subdomain
             
         Returns:
             Publication details or None if not found
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -309,7 +323,8 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
         subdomain: str,
         limit: int = 20
     ) -> List[SubstackPost]:
-        """        Get recent posts from a publication
+        """
+        Get recent posts from a publication
         
         Args:
             subdomain: Publication subdomain
@@ -317,7 +332,8 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of recent posts
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -359,7 +375,8 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Publication posts retrieval failed: {e}")
     
     async def _scrape_publication_posts(self, subdomain: str, limit: int) -> List[SubstackPost]:
-        """Scrape publication posts using Selenium"""        if not self.driver:
+        """Scrape publication posts using Selenium"""
+        if not self.driver:
             return []
         
         posts = []
@@ -391,7 +408,8 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
         return posts
     
     def _parse_publication_element(self, pub_element) -> Optional[SubstackPublication]:
-        """Parse publication element from discovery page"""        try:
+        """Parse publication element from discovery page"""
+        try:
             # Extract publication name
             name_elem = pub_element.find_element(By.CSS_SELECTOR, '.publication-name')
             name = name_elem.text if name_elem else ""
@@ -440,12 +458,14 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
             return None
     
     def _parse_publication_page(self, subdomain: str) -> SubstackPublication:
-        """Parse publication page data"""        # Implementation for parsing full publication page
+        """Parse publication page data"""
+        # Implementation for parsing full publication page
         # This would extract all available publication metadata
         pass
     
     def _parse_post_data(self, post_data: Dict[str, Any], subdomain: str) -> SubstackPost:
-        """Parse post data from API response"""        try:
+        """Parse post data from API response"""
+        try:
             return SubstackPost(
                 id=str(post_data.get('id', '')),
                 title=post_data.get('title', ''),
@@ -481,15 +501,18 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Post data parsing failed: {e}")
     
     def _parse_post_element(self, post_element, subdomain: str) -> Optional[SubstackPost]:
-        """Parse post element from page"""        # Implementation for parsing post elements from scraped page
+        """Parse post element from page"""
+        # Implementation for parsing post elements from scraped page
         pass
     
     async def analyze_newsletter_trends(self) -> Dict[str, Any]:
-        """        Analyze newsletter trends and growth patterns
+        """
+        Analyze newsletter trends and growth patterns
         
         Returns:
             Newsletter trend analysis
-        """        try:
+        """
+        try:
             trend_analysis = {
                 'top_categories': [],
                 'growth_leaders': [],
@@ -524,7 +547,8 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
         content_title: str,
         author_name: str
     ) -> Dict[str, Any]:
-        """        Monitor for unauthorized distribution of newsletter content
+        """
+        Monitor for unauthorized distribution of newsletter content
         
         Args:
             content_title: Title of the content to monitor
@@ -532,7 +556,8 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             Content distribution monitoring results
-        """        try:
+        """
+        try:
             monitoring_results = {
                 'content_title': content_title,
                 'original_author': author_name,
@@ -552,7 +577,8 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Content distribution monitoring failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up resources"""        try:
+        """Clean up resources"""
+        try:
             if self.session:
                 await self.session.close()
             if self.driver:

@@ -6,7 +6,8 @@ Tracks all revenue streams, analyzes patterns, and provides predictive insights.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueSource(Enum):
-    """Revenue source types"""    LICENSING = "licensing"
+    """Revenue source types"""
+    LICENSING = "licensing"
     SUBSCRIPTION = "subscription"
     COMMISSION = "commission"
     ADVERTISEMENT = "advertisement"
@@ -34,7 +36,8 @@ class RevenueSource(Enum):
 
 @dataclass
 class RevenueEvent:
-    """Individual revenue event"""    amount: Decimal
+    """Individual revenue event"""
+    amount: Decimal
     source: RevenueSource
     user_id: Optional[int]
     license_id: Optional[int]
@@ -45,7 +48,8 @@ class RevenueEvent:
 
 
 class RevenueTracker:
-    """    Advanced revenue tracking system
+    """
+    Advanced revenue tracking system
     
     Features:
     - Multi-source revenue tracking
@@ -54,9 +58,11 @@ class RevenueTracker:
     - Customer lifetime value analysis
     - Churn impact assessment
     - Revenue optimization recommendations
-    """    
+    """
+    
     def __init__(self):
-        """Initialize revenue tracker"""        
+        """Initialize revenue tracker"""
+        
         # Use unique metric names to avoid registry conflicts
         metric_prefix = f"ainflue_revenue_{int(time.time())}"
         
@@ -114,7 +120,8 @@ class RevenueTracker:
         currency: str = "EUR",
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """        Track a revenue event
+        """
+        Track a revenue event
         
         Args:
             amount: Revenue amount
@@ -124,7 +131,8 @@ class RevenueTracker:
             content_id: Associated content ID
             currency: Currency code
             metadata: Additional metadata
-        """        try:
+        """
+        try:
             # Create revenue event
             event = RevenueEvent(
                 amount=amount,
@@ -181,14 +189,16 @@ class RevenueTracker:
             logger.error(f"Error tracking revenue: {e}")
     
     async def get_revenue_analytics(self, period_days: int = 30) -> Dict[str, Any]:
-        """        Get comprehensive revenue analytics
+        """
+        Get comprehensive revenue analytics
         
         Args:
             period_days: Analysis period in days
             
         Returns:
             Revenue analytics data
-        """        try:
+        """
+        try:
             # Check cache
             cache_key = f"analytics_{period_days}"
             if (cache_key in self.analytics_cache and 
@@ -235,7 +245,8 @@ class RevenueTracker:
             return {"error": str(e)}
     
     async def _calculate_total_revenue(self, events: List[RevenueEvent]) -> Dict[str, Any]:
-        """Calculate total revenue metrics"""        if not events:
+        """Calculate total revenue metrics"""
+        if not events:
             return {"amount": 0, "currency": "EUR", "count": 0}
         
         total_amount = sum(event.amount for event in events)
@@ -248,7 +259,8 @@ class RevenueTracker:
         }
     
     async def _calculate_revenue_by_source(self, events: List[RevenueEvent]) -> Dict[str, Any]:
-        """Calculate revenue breakdown by source"""        source_data = defaultdict(lambda: {"amount": Decimal('0'), "count": 0})
+        """Calculate revenue breakdown by source"""
+        source_data = defaultdict(lambda: {"amount": Decimal('0'), "count": 0})
         
         for event in events:
             source_data[event.source.value]["amount"] += event.amount
@@ -268,7 +280,8 @@ class RevenueTracker:
         return result
     
     async def _calculate_daily_revenue(self, events: List[RevenueEvent]) -> List[Dict[str, Any]]:
-        """Calculate daily revenue breakdown"""        daily_revenue = defaultdict(Decimal)
+        """Calculate daily revenue breakdown"""
+        daily_revenue = defaultdict(Decimal)
         
         for event in events:
             day_key = event.timestamp.strftime("%Y-%m-%d")
@@ -284,7 +297,8 @@ class RevenueTracker:
         ]
     
     async def _calculate_top_users(self, events: List[RevenueEvent], limit: int = 10) -> List[Dict[str, Any]]:
-        """Calculate top revenue-generating users"""        user_revenue = defaultdict(Decimal)
+        """Calculate top revenue-generating users"""
+        user_revenue = defaultdict(Decimal)
         user_transactions = defaultdict(int)
         
         for event in events:
@@ -306,7 +320,8 @@ class RevenueTracker:
         ]
     
     async def _calculate_revenue_trends(self, period_days: int) -> Dict[str, Any]:
-        """Calculate revenue trends and patterns"""        try:
+        """Calculate revenue trends and patterns"""
+        try:
             current_period = datetime.utcnow() - timedelta(days=period_days)
             previous_period = current_period - timedelta(days=period_days)
             
@@ -343,7 +358,8 @@ class RevenueTracker:
             return {"error": str(e)}
     
     async def _calculate_revenue_forecasts(self, events: List[RevenueEvent]) -> Dict[str, Any]:
-        """Calculate revenue forecasts using simple linear regression"""        try:
+        """Calculate revenue forecasts using simple linear regression"""
+        try:
             if len(events) < 7:  # Need at least a week of data
                 return {"error": "Insufficient data for forecasting"}
             
@@ -398,17 +414,20 @@ class RevenueTracker:
             return {"error": str(e)}
     
     async def _calculate_arpu(self, events: List[RevenueEvent]) -> float:
-        """Calculate Average Revenue Per User"""        user_ids = set(event.user_id for event in events if event.user_id)
+        """Calculate Average Revenue Per User"""
+        user_ids = set(event.user_id for event in events if event.user_id)
         total_revenue = sum(event.amount for event in events)
         
         return float(total_revenue / len(user_ids)) if user_ids else 0
     
     async def _calculate_growth_rate(self, period_days: int) -> float:
-        """Calculate revenue growth rate"""        trends = await self._calculate_revenue_trends(period_days)
+        """Calculate revenue growth rate"""
+        trends = await self._calculate_revenue_trends(period_days)
         return trends.get("growth_rate_percentage", 0)
     
     async def _calculate_clv(self) -> Dict[str, Any]:
-        """Calculate Customer Lifetime Value metrics"""        if not self.user_revenue:
+        """Calculate Customer Lifetime Value metrics"""
+        if not self.user_revenue:
             return {"average": 0, "median": 0, "total_users": 0}
         
         clv_values = [
@@ -438,7 +457,8 @@ class RevenueTracker:
         }
     
     async def _calculate_churn_impact(self) -> Dict[str, Any]:
-        """Calculate potential churn impact on revenue"""        # This is a simplified churn impact calculation
+        """Calculate potential churn impact on revenue"""
+        # This is a simplified churn impact calculation
         # In a real scenario, you'd have more sophisticated churn prediction
         
         recent_users = set()
@@ -475,7 +495,8 @@ class RevenueTracker:
         }
     
     def get_tracker_stats(self) -> Dict[str, Any]:
-        """Get revenue tracker statistics"""        total_revenue = sum(event.amount for event in self.revenue_events)
+        """Get revenue tracker statistics"""
+        total_revenue = sum(event.amount for event in self.revenue_events)
         
         return {
             "total_events": len(self.revenue_events),

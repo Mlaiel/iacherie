@@ -13,7 +13,8 @@ Features:
 - Risk assessment models
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
 from dataclasses import dataclass
@@ -47,7 +48,8 @@ from ..storage.model_storage import ModelStorage
 
 
 class PredictionType(Enum):
-    """Types of predictions available"""    REVENUE = "revenue"
+    """Types of predictions available"""
+    REVENUE = "revenue"
     ENGAGEMENT = "engagement"
     VIRALITY = "virality"
     PERFORMANCE = "performance"
@@ -57,14 +59,16 @@ class PredictionType(Enum):
 
 
 class TimeHorizon(Enum):
-    """Prediction time horizons"""    SHORT_TERM = "1_week"
+    """Prediction time horizons"""
+    SHORT_TERM = "1_week"
     MEDIUM_TERM = "1_month"
     LONG_TERM = "3_months"
     ANNUAL = "1_year"
 
 
 class ModelType(Enum):
-    """Available model types"""    LINEAR = "linear"
+    """Available model types"""
+    LINEAR = "linear"
     RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
     XGBOOST = "xgboost"
@@ -75,7 +79,8 @@ class ModelType(Enum):
 
 @dataclass
 class PredictionInput:
-    """Input data for predictions"""    content_features: Dict[str, Any]
+    """Input data for predictions"""
+    content_features: Dict[str, Any]
     historical_data: Optional[List[Dict[str, Any]]] = None
     market_data: Optional[Dict[str, Any]] = None
     user_profile: Optional[Dict[str, Any]] = None
@@ -85,7 +90,8 @@ class PredictionInput:
 
 @dataclass
 class PredictionResult:
-    """Result of a prediction"""    prediction_id: str
+    """Result of a prediction"""
+    prediction_id: str
     prediction_type: PredictionType
     predicted_value: float
     confidence_interval: Tuple[float, float]
@@ -100,7 +106,8 @@ class PredictionResult:
 
 
 class NeuralPredictionModel(nn.Module):
-    """Neural network model for predictions"""    
+    """Neural network model for predictions"""
+    
     def __init__(self, input_size: int, hidden_sizes: List[int], output_size: int = 1):
         super(NeuralPredictionModel, self).__init__()
         
@@ -122,14 +129,18 @@ class NeuralPredictionModel(nn.Module):
 
 
 class PredictionModels:
-    """    Advanced ML/AI prediction system for content and revenue forecasting
-    """    
+    """
+    Advanced ML/AI prediction system for content and revenue forecasting
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize prediction models
+        """
+        Initialize prediction models
         
         Args:
             config: Configuration dictionary
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -147,7 +158,8 @@ class PredictionModels:
         self.feature_definitions = self._define_features()
     
     def _initialize_models(self) -> None:
-        """Initialize ML models"""        try:
+        """Initialize ML models"""
+        try:
             # Revenue prediction models
             self.revenue_models = {
                 ModelType.LINEAR: LinearRegression(),
@@ -204,15 +216,18 @@ class PredictionModels:
             raise
     
     def _initialize_processors(self) -> None:
-        """Initialize data processors"""        self.model_adapter = ModelAdapter(self.config)
+        """Initialize data processors"""
+        self.model_adapter = ModelAdapter(self.config)
         self.data_processor = DataProcessor(self.config)
         self.training_engine = TrainingEngine(self.config)
     
     def _initialize_storage(self) -> None:
-        """Initialize model storage"""        self.model_storage = ModelStorage(self.config)
+        """Initialize model storage"""
+        self.model_storage = ModelStorage(self.config)
     
     def _load_pretrained_models(self) -> None:
-        """Load pre-trained models from storage"""        try:
+        """Load pre-trained models from storage"""
+        try:
             # This would load actual models in production
             # For now, train with synthetic data
             self._train_with_synthetic_data()
@@ -220,7 +235,8 @@ class PredictionModels:
             self.logger.warning(f"Could not load pre-trained models: {e}")
     
     def _train_with_synthetic_data(self) -> None:
-        """Train models with synthetic data"""        # Generate synthetic training data
+        """Train models with synthetic data"""
+        # Generate synthetic training data
         n_samples = 5000
         n_features = 20
         
@@ -297,7 +313,8 @@ class PredictionModels:
         X_engagement: np.ndarray, 
         y_engagement: np.ndarray
     ) -> None:
-        """Train neural network models"""        try:
+        """Train neural network models"""
+        try:
             # Revenue neural network
             revenue_model = NeuralPredictionModel(
                 input_size=X_revenue.shape[1],
@@ -347,7 +364,8 @@ class PredictionModels:
             self.logger.warning(f"Failed to train neural models: {e}")
     
     def _define_features(self) -> Dict[str, Dict[str, Any]]:
-        """Define feature definitions for models"""        return {
+        """Define feature definitions for models"""
+        return {
             'content_quality': {
                 'type': 'continuous',
                 'range': [0, 100],
@@ -407,7 +425,8 @@ class PredictionModels:
         time_horizon: TimeHorizon = TimeHorizon.MEDIUM_TERM,
         model_type: Optional[ModelType] = None
     ) -> PredictionResult:
-        """        Make a prediction using appropriate models
+        """
+        Make a prediction using appropriate models
         
         Args:
             prediction_type: Type of prediction to make
@@ -417,7 +436,8 @@ class PredictionModels:
             
         Returns:
             PredictionResult: Comprehensive prediction result
-        """        prediction_id = self._generate_prediction_id(prediction_type)
+        """
+        prediction_id = self._generate_prediction_id(prediction_type)
         
         try:
             self.logger.info(f"Making prediction {prediction_id} of type {prediction_type.value}")
@@ -470,7 +490,8 @@ class PredictionModels:
         input_data: PredictionInput,
         prediction_type: PredictionType
     ) -> np.ndarray:
-        """Prepare features for model prediction"""        features = []
+        """Prepare features for model prediction"""
+        features = []
         
         # Extract content features
         content_features = input_data.content_features
@@ -541,7 +562,8 @@ class PredictionModels:
         return np.array(features).reshape(1, -1)
     
     def _calculate_historical_features(self, historical_data: List[Dict[str, Any]]) -> List[float]:
-        """Calculate features from historical data"""        if not historical_data:
+        """Calculate features from historical data"""
+        if not historical_data:
             return [0.5, 0.5, 0.5]
         
         # Extract metrics from historical data
@@ -560,7 +582,8 @@ class PredictionModels:
         ]
     
     def _calculate_trend(self, values: List[float]) -> float:
-        """Calculate trend from time series values"""        if len(values) < 2:
+        """Calculate trend from time series values"""
+        if len(values) < 2:
             return 0.0
         
         # Simple linear trend calculation
@@ -574,7 +597,8 @@ class PredictionModels:
         time_horizon: TimeHorizon,
         model_type: Optional[ModelType] = None
     ) -> PredictionResult:
-        """Predict revenue using revenue models"""        
+        """Predict revenue using revenue models"""
+        
         # Scale features
         features_scaled = self.scalers['standard'].transform(features)
         
@@ -659,7 +683,8 @@ class PredictionModels:
         time_horizon: TimeHorizon,
         model_type: Optional[ModelType] = None
     ) -> PredictionResult:
-        """Predict engagement using engagement models"""        
+        """Predict engagement using engagement models"""
+        
         features_scaled = self.scalers['standard'].transform(features)
         predictions = {}
         
@@ -725,7 +750,8 @@ class PredictionModels:
         time_horizon: TimeHorizon,
         model_type: Optional[ModelType] = None
     ) -> PredictionResult:
-        """Predict virality potential"""        
+        """Predict virality potential"""
+        
         features_scaled = self.scalers['standard'].transform(features)
         predictions = {}
         
@@ -779,7 +805,8 @@ class PredictionModels:
         time_horizon: TimeHorizon,
         model_type: Optional[ModelType] = None
     ) -> PredictionResult:
-        """Predict overall performance score"""        
+        """Predict overall performance score"""
+        
         # Performance is a composite of revenue, engagement, and virality
         revenue_result = await self._predict_revenue(features, time_horizon, model_type)
         engagement_result = await self._predict_engagement(features, time_horizon, model_type)
@@ -838,7 +865,8 @@ class PredictionModels:
         time_horizon: TimeHorizon,
         model_type: Optional[ModelType] = None
     ) -> PredictionResult:
-        """Predict market trends"""        
+        """Predict market trends"""
+        
         # Simplified trend prediction based on current features
         trend_score = features[0, 8] * 100  # Market trend feature
         
@@ -889,7 +917,8 @@ class PredictionModels:
         time_horizon: TimeHorizon,
         model_type: Optional[ModelType] = None
     ) -> PredictionResult:
-        """Predict risk levels"""        
+        """Predict risk levels"""
+        
         # Calculate risk based on various factors
         quality_risk = max(0, 80 - features[0, 0] * 100)
         market_risk = features[0, 9] * 50  # Competition level
@@ -936,7 +965,8 @@ class PredictionModels:
         time_horizon: TimeHorizon,
         model_type: Optional[ModelType] = None
     ) -> PredictionResult:
-        """Predict optimization potential"""        
+        """Predict optimization potential"""
+        
         # Calculate optimization score based on current performance gaps
         current_performance = features[0, 0] * 100  # Content quality
         potential_performance = min(100, current_performance + 30)  # Potential improvement
@@ -980,7 +1010,8 @@ class PredictionModels:
         model: Optional[Any],
         prediction_type: str
     ) -> Dict[str, float]:
-        """Calculate feature importance from model"""        if model is None or not hasattr(model, 'feature_importances_'):
+        """Calculate feature importance from model"""
+        if model is None or not hasattr(model, 'feature_importances_'):
             # Return default importance
             return {
                 'content_quality': 0.25,
@@ -1018,7 +1049,8 @@ class PredictionModels:
         predicted_value: float,
         features: np.ndarray
     ) -> List[str]:
-        """Generate revenue-specific recommendations"""        recommendations = []
+        """Generate revenue-specific recommendations"""
+        recommendations = []
         
         if predicted_value < 500:
             recommendations.append("Focus on improving content quality to increase monetization potential")
@@ -1041,7 +1073,8 @@ class PredictionModels:
         predicted_value: float,
         features: np.ndarray
     ) -> List[str]:
-        """Generate engagement-specific recommendations"""        recommendations = []
+        """Generate engagement-specific recommendations"""
+        recommendations = []
         
         if predicted_value < 50:
             recommendations.append("Improve content quality and visual appeal")
@@ -1062,7 +1095,8 @@ class PredictionModels:
         predicted_value: float,
         features: np.ndarray
     ) -> List[str]:
-        """Generate virality-specific recommendations"""        recommendations = []
+        """Generate virality-specific recommendations"""
+        recommendations = []
         
         if predicted_value > 70:
             recommendations.append("Prepare for viral marketing campaign with content ready for scaling")
@@ -1081,7 +1115,8 @@ class PredictionModels:
         predicted_value: float,
         features: np.ndarray
     ) -> List[str]:
-        """Generate trend-specific recommendations"""        recommendations = []
+        """Generate trend-specific recommendations"""
+        recommendations = []
         
         if predicted_value > 70:
             recommendations.append("Capitalize on positive market trends with increased content production")
@@ -1099,7 +1134,8 @@ class PredictionModels:
         predicted_value: float,
         features: np.ndarray
     ) -> List[str]:
-        """Generate risk mitigation recommendations"""        recommendations = []
+        """Generate risk mitigation recommendations"""
+        recommendations = []
         
         if predicted_value > 60:
             recommendations.append("Implement comprehensive risk mitigation strategies")
@@ -1116,7 +1152,8 @@ class PredictionModels:
         predicted_value: float,
         features: np.ndarray
     ) -> List[str]:
-        """Generate optimization-specific recommendations"""        recommendations = []
+        """Generate optimization-specific recommendations"""
+        recommendations = []
         
         if predicted_value > 20:
             recommendations.append("High optimization potential - implement A/B testing strategies")
@@ -1135,7 +1172,8 @@ class PredictionModels:
         predicted_value: float,
         features: np.ndarray
     ) -> List[str]:
-        """Identify revenue-specific risks"""        risks = []
+        """Identify revenue-specific risks"""
+        risks = []
         
         if predicted_value < 200:
             risks.append("Low revenue prediction indicates monetization challenges")
@@ -1155,7 +1193,8 @@ class PredictionModels:
         predicted_value: float,
         features: np.ndarray
     ) -> List[str]:
-        """Identify engagement-specific risks"""        risks = []
+        """Identify engagement-specific risks"""
+        risks = []
         
         if predicted_value < 30:
             risks.append("Low engagement prediction indicates content appeal issues")
@@ -1173,7 +1212,8 @@ class PredictionModels:
         predicted_value: float,
         features: np.ndarray
     ) -> List[str]:
-        """Identify virality-specific risks"""        risks = []
+        """Identify virality-specific risks"""
+        risks = []
         
         if predicted_value < 20:
             risks.append("Low virality potential limits organic growth opportunities")
@@ -1191,7 +1231,8 @@ class PredictionModels:
         predicted_value: float,
         features: np.ndarray
     ) -> List[str]:
-        """Identify trend-specific risks"""        risks = []
+        """Identify trend-specific risks"""
+        risks = []
         
         if predicted_value < 40:
             risks.append("Negative market trends may impact overall performance")
@@ -1207,7 +1248,8 @@ class PredictionModels:
         predicted_value: float,
         features: np.ndarray
     ) -> List[str]:
-        """Identify general risks"""        risks = []
+        """Identify general risks"""
+        risks = []
         
         if predicted_value > 70:
             risks.append("High risk levels require immediate attention and mitigation")
@@ -1225,7 +1267,8 @@ class PredictionModels:
         predicted_value: float,
         features: np.ndarray
     ) -> List[str]:
-        """Identify optimization-specific risks"""        risks = []
+        """Identify optimization-specific risks"""
+        risks = []
         
         if predicted_value < 10:
             risks.append("Limited optimization potential may indicate market saturation")
@@ -1237,7 +1280,8 @@ class PredictionModels:
         return risks[:4]
     
     def _get_model_accuracy(self, prediction_type: PredictionType) -> Dict[str, float]:
-        """Get model accuracy metrics"""        # Return cached accuracy metrics or defaults
+        """Get model accuracy metrics"""
+        # Return cached accuracy metrics or defaults
         return self.model_performance.get(prediction_type.value, {
             'mae': 0.15,
             'rmse': 0.25,
@@ -1246,7 +1290,8 @@ class PredictionModels:
         })
     
     def _generate_prediction_id(self, prediction_type: PredictionType) -> str:
-        """Generate unique prediction ID"""        import hashlib
+        """Generate unique prediction ID"""
+        import hashlib
         timestamp = str(datetime.now().timestamp())
         content = f"{prediction_type.value}_{timestamp}"
         return f"pred_{hashlib.md5(content.encode()).hexdigest()[:12]}"
@@ -1257,7 +1302,8 @@ class PredictionModels:
         input_data: PredictionInput,
         time_horizon: TimeHorizon
     ) -> str:
-        """Generate cache key for prediction"""        # Simple cache key based on content features
+        """Generate cache key for prediction"""
+        # Simple cache key based on content features
         features_hash = str(hash(str(input_data.content_features)))
         return f"{prediction_type.value}_{time_horizon.value}_{features_hash}"
     
@@ -1265,7 +1311,8 @@ class PredictionModels:
         self,
         prediction_requests: List[Tuple[PredictionType, PredictionInput, TimeHorizon]]
     ) -> List[PredictionResult]:
-        """Perform batch predictions"""        results = []
+        """Perform batch predictions"""
+        results = []
         
         for prediction_type, input_data, time_horizon in prediction_requests:
             try:
@@ -1283,7 +1330,8 @@ class PredictionModels:
         training_data: List[Tuple[Dict[str, Any], float]],
         model_type: ModelType = ModelType.RANDOM_FOREST
     ) -> bool:
-        """Update model with new training data"""        try:
+        """Update model with new training data"""
+        try:
             # Prepare training data
             X_new = []
             y_new = []
@@ -1316,7 +1364,8 @@ class PredictionModels:
             return False
     
     async def get_model_performance(self) -> Dict[str, Any]:
-        """Get overall model performance metrics"""        return {
+        """Get overall model performance metrics"""
+        return {
             "model_performance": self.model_performance,
             "cache_size": len(self.prediction_cache),
             "training_history": len(self.training_history),
@@ -1324,5 +1373,6 @@ class PredictionModels:
         }
     
     async def clear_cache(self) -> None:
-        """Clear prediction cache"""        self.prediction_cache.clear()
+        """Clear prediction cache"""
+        self.prediction_cache.clear()
         self.logger.info("Prediction cache cleared")

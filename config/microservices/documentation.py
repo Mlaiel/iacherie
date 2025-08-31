@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Any, Optional
+"""
+from typing import Dict, List, Any, Optional
 from dataclasses import dataclass
 import json
 from datetime import datetime
@@ -43,12 +44,15 @@ from . import (
 
 
 class TechnicalDocumentationGenerator:
-    """Generate comprehensive technical documentation"""    
+    """Generate comprehensive technical documentation"""
+    
     def __init__(self):
-        """Initialize documentation generator"""        self.timestamp = datetime.utcnow()
+        """Initialize documentation generator"""
+        self.timestamp = datetime.utcnow()
     
     def generate_architecture_overview(self) -> str:
-        """Generate architecture overview documentation"""        return f"""# IA-Influencer Agent Platform - Technical Architecture
+        """Generate architecture overview documentation"""
+        return f"""# IA-Influencer Agent Platform - Technical Architecture
 
 **Generated**: {self.timestamp.strftime('%Y-%m-%d %H:%M:%S UTC')}  
 **Author**: Fahed Mlaiel <mlaiel@live.de>  
@@ -233,15 +237,18 @@ Payment Processing → Creator Payouts → Tax Reporting
 
 *This document is automatically generated and updated with each system deployment.*
 *For technical inquiries: mlaiel@live.de*
-"""    
+"""
+    
     def _format_configuration_summary(self) -> str:
-        """Format the configuration summary as readable text"""        summary_text = "```json\n"
+        """Format the configuration summary as readable text"""
+        summary_text = "```json\n"
         summary_text += json.dumps(CONFIGURATION_SUMMARY, indent=2, default=str)
         summary_text += "\n```"
         return summary_text
     
     def generate_api_documentation(self) -> str:
-        """Generate API documentation"""        return f"""# API Documentation - IA-Influencer Agent Platform
+        """Generate API documentation"""
+        return f"""# API Documentation - IA-Influencer Agent Platform
 
 **Generated**: {self.timestamp.strftime('%Y-%m-%d %H:%M:%S UTC')}
 
@@ -445,9 +452,11 @@ Get event system health status.
 ---
 
 *Complete API documentation with authentication, rate limits, and examples available at `/docs` endpoint.*
-"""    
+"""
+    
     def generate_deployment_guide(self) -> str:
-        """Generate deployment documentation"""        return f"""# Deployment Guide - IA-Influencer Agent Platform
+        """Generate deployment documentation"""
+        return f"""# Deployment Guide - IA-Influencer Agent Platform
 
 **Generated**: {self.timestamp.strftime('%Y-%m-%d %H:%M:%S UTC')}
 
@@ -763,9 +772,11 @@ kubectl exec redis-master-0 -n ia-influencer -- redis-cli BGSAVE
 ---
 
 *For deployment support and consulting: mlaiel@live.de*
-"""    
+"""
+    
     def save_all_documentation(self, output_dir: str = "."):
-        """Save all documentation to files"""        docs = {
+        """Save all documentation to files"""
+        docs = {
             "architecture_overview.md": self.generate_architecture_overview(),
             "api_documentation.md": self.generate_api_documentation(), 
             "deployment_guide.md": self.generate_deployment_guide()
@@ -783,5 +794,6 @@ doc_generator = TechnicalDocumentationGenerator()
 
 
 def generate_technical_documentation(output_dir: str = "."):
-    """Generate all technical documentation"""    doc_generator.save_all_documentation(output_dir)
+    """Generate all technical documentation"""
+    doc_generator.save_all_documentation(output_dir)
     return True

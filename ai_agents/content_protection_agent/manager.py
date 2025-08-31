@@ -1,4 +1,5 @@
-"""Content Protection Manager - Multi-Platform Protection Orchestrator"""import asyncio
+"""Content Protection Manager - Multi-Platform Protection Orchestrator"""
+import asyncio
 import logging
 from datetime import datetime, timezone
 from typing import Dict, List, Optional, Any, Set
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentProtectionConfig:
-    """Configuration for content protection operations"""    enabled_platforms: Set[str] = field(default_factory=lambda: {
+    """Configuration for content protection operations"""
+    enabled_platforms: Set[str] = field(default_factory=lambda: {
         # Video Platforms
         'youtube', 'vimeo', 'dailymotion', 'twitch', 'kick', 'rumble',
         # Social Media
@@ -48,7 +50,8 @@ class ContentProtectionConfig:
     enable_blockchain_verification: bool = True
 
 class ContentProtectionManager(BaseAgent):
-    """    Enterprise Content Protection Manager
+    """
+    Enterprise Content Protection Manager
     
     Orchestrates content protection across 35+ platforms with:
     - Multi-modal content fingerprinting
@@ -56,7 +59,8 @@ class ContentProtectionManager(BaseAgent):
     - AI-powered violation detection  
     - Automated DMCA processing
     - Revenue loss tracking
-    """    
+    """
+    
     def __init__(self, agent_id: str = "content_protection_manager"):
         super().__init__(
             agent_id=agent_id,
@@ -75,7 +79,8 @@ class ContentProtectionManager(BaseAgent):
         self.violation_history: List[Dict] = []
         
     async def _load_models_and_resources(self):
-        """Load AI models and initialize resources"""        try:
+        """Load AI models and initialize resources"""
+        try:
             await self.platform_monitor.initialize()
             await self.blockchain_verifier.initialize()
             await self.fingerprint_engine.initialize()
@@ -85,10 +90,12 @@ class ContentProtectionManager(BaseAgent):
             raise
     
     def get_required_config_keys(self) -> List[str]:
-        """Required configuration keys"""        return ['enabled_platforms', 'monitoring_interval']
+        """Required configuration keys"""
+        return ['enabled_platforms', 'monitoring_interval']
     
     async def process(self, request: AgentRequest) -> AgentResponse:
-        """Main request processing logic"""        action = request.action.lower()
+        """Main request processing logic"""
+        action = request.action.lower()
         
         try:
             if action == "protect_content":
@@ -119,7 +126,8 @@ class ContentProtectionManager(BaseAgent):
             )
     
     async def _protect_content(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Start protection for content across platforms"""        content_id = data.get('content_id')
+        """Start protection for content across platforms"""
+        content_id = data.get('content_id')
         content_data = data.get('content_data')  # bytes
         content_type = data.get('content_type', 'unknown')
         platforms = set(data.get('platforms', self.config.enabled_platforms))
@@ -176,7 +184,8 @@ class ContentProtectionManager(BaseAgent):
         platforms: Set[str], 
         fingerprints: Dict[str, Any]
     ):
-        """Continuous monitoring across all platforms"""        try:
+        """Continuous monitoring across all platforms"""
+        try:
             while content_id in self.protected_content:
                 # Scan each platform for violations
                 violations = []
@@ -211,11 +220,13 @@ class ContentProtectionManager(BaseAgent):
             logger.error(f"Monitoring error for content {content_id}: {e}")
     
     def _batch_tasks(self, tasks: List, batch_size: int):
-        """Split tasks into batches for controlled concurrency"""        for i in range(0, len(tasks), batch_size):
+        """Split tasks into batches for controlled concurrency"""
+        for i in range(0, len(tasks), batch_size):
             yield tasks[i:i + batch_size]
     
     async def _process_violations(self, content_id: str, violations: List[Dict]):
-        """Process detected violations"""        for violation in violations:
+        """Process detected violations"""
+        for violation in violations:
             violation_record = {
                 'content_id': content_id,
                 'platform': violation.get('platform'),
@@ -242,7 +253,8 @@ class ContentProtectionManager(BaseAgent):
         logger.info(f"Processed {len(violations)} violations for content {content_id}")
     
     async def _trigger_dmca_takedown(self, violation: Dict[str, Any]):
-        """Trigger automated DMCA takedown"""        try:
+        """Trigger automated DMCA takedown"""
+        try:
             # Import DMCA agent
             from ..dmca_agent import DMCAOrchestrator
             
@@ -267,7 +279,8 @@ class ContentProtectionManager(BaseAgent):
             violation['dmca_error'] = str(e)
     
     async def _send_violation_alert(self, violation: Dict[str, Any]):
-        """Send real-time violation alert"""        try:
+        """Send real-time violation alert"""
+        try:
             # This would integrate with notification system
             alert_data = {
                 'type': 'violation_detected',
@@ -285,7 +298,8 @@ class ContentProtectionManager(BaseAgent):
             logger.error(f"Failed to send violation alert: {e}")
     
     async def _scan_platforms(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Manual scan of platforms for violations"""        content_id = data.get('content_id')
+        """Manual scan of platforms for violations"""
+        content_id = data.get('content_id')
         platforms = set(data.get('platforms', self.config.enabled_platforms))
         
         if content_id not in self.protected_content:
@@ -319,7 +333,8 @@ class ContentProtectionManager(BaseAgent):
         }
     
     async def _get_violations(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Get violation history for content"""        content_id = data.get('content_id')
+        """Get violation history for content"""
+        content_id = data.get('content_id')
         limit = data.get('limit', 100)
         
         # Filter violations by content_id if specified
@@ -337,7 +352,8 @@ class ContentProtectionManager(BaseAgent):
         }
     
     async def _stop_monitoring(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Stop monitoring for content"""        content_id = data.get('content_id')
+        """Stop monitoring for content"""
+        content_id = data.get('content_id')
         
         if content_id not in self.protected_content:
             raise ValueError(f"Content {content_id} is not being protected")
@@ -358,7 +374,8 @@ class ContentProtectionManager(BaseAgent):
         }
     
     async def _get_protection_status(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Get overall protection status"""        content_id = data.get('content_id')
+        """Get overall protection status"""
+        content_id = data.get('content_id')
         
         if content_id:
             if content_id not in self.protected_content:

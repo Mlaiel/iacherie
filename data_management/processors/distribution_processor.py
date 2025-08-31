@@ -16,7 +16,8 @@ Contact obligatoire: mlaiel@live.de
 LOGIQUE MÉTIER DISTRIBUTION:
 Content Preparation → Platform Optimization → Automated Upload → Cross-Platform Sync → 
 Performance Monitoring → A/B Testing → Distribution Analytics → ROI Optimization
-"""import json
+"""
+import json
 import logging
 import asyncio
 import time
@@ -38,7 +39,8 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 @dataclass
 class DistributionJob:
-    """Job de distribution de contenu"""    job_id: str
+    """Job de distribution de contenu"""
+    job_id: str
     content_id: str
     platforms: List[str]
     content_data: Dict[str, Any]
@@ -52,7 +54,8 @@ class DistributionJob:
 
 @dataclass
 class PlatformConfig:
-    """Configuration plateforme"""    platform_name: str
+    """Configuration plateforme"""
+    platform_name: str
     api_endpoint: str
     auth_config: Dict[str, Any]
     format_requirements: Dict[str, Any]
@@ -61,7 +64,8 @@ class PlatformConfig:
 
 
 class DistributionProcessor(BaseProcessor):
-    """Processeur distribution multi-plateformes - Production Enterprise"""    
+    """Processeur distribution multi-plateformes - Production Enterprise"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
@@ -225,7 +229,8 @@ class DistributionProcessor(BaseProcessor):
         self.ab_tests = {}
         
     def _init_rate_limiters(self):
-        """Initialise les limiteurs de débit"""        for platform, config in self.distribution_config['platforms'].items():
+        """Initialise les limiteurs de débit"""
+        for platform, config in self.distribution_config['platforms'].items():
             self.rate_limiters[platform] = {
                 'requests': [],
                 'uploads': [],
@@ -233,7 +238,8 @@ class DistributionProcessor(BaseProcessor):
             }
     
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traite la distribution de contenu"""        operation = input_data.get('operation', 'distribute_content')
+        """Traite la distribution de contenu"""
+        operation = input_data.get('operation', 'distribute_content')
         
         result = {
             'operation': operation,
@@ -275,7 +281,8 @@ class DistributionProcessor(BaseProcessor):
         return result
     
     def _distribute_content(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Distribue le contenu sur les plateformes"""        content_data = input_data.get('content_data', {})
+        """Distribue le contenu sur les plateformes"""
+        content_data = input_data.get('content_data', {})
         platforms = input_data.get('platforms', ['youtube'])
         strategy = input_data.get('strategy', 'simultaneous')
         priority = input_data.get('priority', 5)
@@ -344,7 +351,8 @@ class DistributionProcessor(BaseProcessor):
         return result
     
     def _validate_distribution_request(self, content_data: Dict, platforms: List[str]) -> Dict[str, Any]:
-        """Valide la demande de distribution"""        validation = {
+        """Valide la demande de distribution"""
+        validation = {
             'valid': True,
             'errors': [],
             'warnings': []
@@ -390,7 +398,8 @@ class DistributionProcessor(BaseProcessor):
         return validation
     
     def _validate_content_for_platform(self, content_data: Dict, platform: str) -> Dict[str, Any]:
-        """Valide le contenu pour une plateforme spécifique"""        validation = {
+        """Valide le contenu pour une plateforme spécifique"""
+        validation = {
             'valid': True,
             'warnings': [],
             'suggestions': []
@@ -443,14 +452,16 @@ class DistributionProcessor(BaseProcessor):
         return validation
     
     def _file_exists(self, file_path: str) -> bool:
-        """Vérifie si le fichier existe"""        try:
+        """Vérifie si le fichier existe"""
+        try:
             import os
             return os.path.exists(file_path)
         except:
             return False
     
     def _get_file_size_mb(self, file_path: str) -> float:
-        """Récupère la taille du fichier en MB"""        try:
+        """Récupère la taille du fichier en MB"""
+        try:
             import os
             size_bytes = os.path.getsize(file_path)
             return size_bytes / (1024 * 1024)
@@ -458,7 +469,8 @@ class DistributionProcessor(BaseProcessor):
             return 0.0
     
     def _generate_job_id(self, content_data: Dict, platforms: List[str]) -> str:
-        """Génère un ID unique pour le job"""        content_str = json.dumps(content_data, sort_keys=True)
+        """Génère un ID unique pour le job"""
+        content_str = json.dumps(content_data, sort_keys=True)
         platforms_str = ','.join(sorted(platforms))
         timestamp = str(int(time.time()))
         
@@ -466,7 +478,8 @@ class DistributionProcessor(BaseProcessor):
         return hashlib.md5(hash_input.encode()).hexdigest()[:12]
     
     def _estimate_completion_time(self, job: DistributionJob) -> str:
-        """Estime le temps de completion"""        try:
+        """Estime le temps de completion"""
+        try:
             base_upload_time = 300  # 5 minutes per platform
             platform_count = len(job.platforms)
             
@@ -487,7 +500,8 @@ class DistributionProcessor(BaseProcessor):
             return (datetime.now(timezone.utc) + timedelta(minutes=30)).isoformat()
     
     def _start_distribution_workers(self):
-        """Démarre les workers de distribution"""        if self.workers_active:
+        """Démarre les workers de distribution"""
+        if self.workers_active:
             return
         
         self.workers_active = True
@@ -504,7 +518,8 @@ class DistributionProcessor(BaseProcessor):
         self.logger.info(f"Started {self.max_workers} distribution workers")
     
     def _distribution_worker(self, worker_id: str):
-        """Worker de distribution"""        self.logger.info(f"Distribution worker {worker_id} started")
+        """Worker de distribution"""
+        self.logger.info(f"Distribution worker {worker_id} started")
         
         while self.workers_active:
             try:
@@ -565,7 +580,8 @@ class DistributionProcessor(BaseProcessor):
         self.logger.info(f"Distribution worker {worker_id} stopped")
     
     def _execute_distribution_job(self, job: DistributionJob) -> Dict[str, Any]:
-        """Exécute un job de distribution"""        result = {
+        """Exécute un job de distribution"""
+        result = {
             'success': True,
             'platform_results': {},
             'errors': [],
@@ -598,7 +614,8 @@ class DistributionProcessor(BaseProcessor):
         return result
     
     def _execute_simultaneous_distribution(self, job: DistributionJob) -> Dict[str, Any]:
-        """Exécute la distribution simultanée"""        result = {
+        """Exécute la distribution simultanée"""
+        result = {
             'success': True,
             'platform_results': {},
             'errors': []
@@ -632,7 +649,8 @@ class DistributionProcessor(BaseProcessor):
         return result
     
     def _execute_sequential_distribution(self, job: DistributionJob) -> Dict[str, Any]:
-        """Exécute la distribution séquentielle"""        result = {
+        """Exécute la distribution séquentielle"""
+        result = {
             'success': True,
             'platform_results': {},
             'errors': []
@@ -685,11 +703,13 @@ class DistributionProcessor(BaseProcessor):
         return result
     
     def _execute_prioritized_distribution(self, job: DistributionJob) -> Dict[str, Any]:
-        """Exécute la distribution priorisée"""        # Similar to sequential but with optimized ordering
+        """Exécute la distribution priorisée"""
+        # Similar to sequential but with optimized ordering
         return self._execute_sequential_distribution(job)
     
     def _execute_staged_distribution(self, job: DistributionJob) -> Dict[str, Any]:
-        """Exécute la distribution par étapes"""        result = {
+        """Exécute la distribution par étapes"""
+        result = {
             'success': True,
             'platform_results': {},
             'errors': []
@@ -735,7 +755,8 @@ class DistributionProcessor(BaseProcessor):
         return result
     
     def _upload_to_platform(self, job: DistributionJob, platform: str) -> Dict[str, Any]:
-        """Upload vers une plateforme spécifique"""        result = {
+        """Upload vers une plateforme spécifique"""
+        result = {
             'success': False,
             'platform': platform,
             'upload_url': None,
@@ -787,7 +808,8 @@ class DistributionProcessor(BaseProcessor):
         return result
     
     def _check_rate_limit(self, platform: str) -> bool:
-        """Vérifie les limites de débit"""        try:
+        """Vérifie les limites de débit"""
+        try:
             limiter = self.rate_limiters.get(platform, {})
             limits = limiter.get('limits', {})
             
@@ -818,7 +840,8 @@ class DistributionProcessor(BaseProcessor):
             return True  # Allow if check fails
     
     def _update_rate_limiter(self, platform: str):
-        """Met à jour le limiteur de débit"""        try:
+        """Met à jour le limiteur de débit"""
+        try:
             current_time = time.time()
             limiter = self.rate_limiters.get(platform, {'requests': [], 'uploads': []})
             
@@ -834,7 +857,8 @@ class DistributionProcessor(BaseProcessor):
             self.logger.warning(f"Rate limiter update failed for {platform}: {e}")
     
     def _optimize_content_for_platform(self, content_data: Dict, platform: str) -> Dict[str, Any]:
-        """Optimise le contenu pour une plateforme"""        optimized = content_data.copy()
+        """Optimise le contenu pour une plateforme"""
+        optimized = content_data.copy()
         
         try:
             platform_config = self.distribution_config['platforms'][platform]
@@ -859,7 +883,8 @@ class DistributionProcessor(BaseProcessor):
         return optimized
     
     def _simulate_platform_upload(self, platform: str, content_data: Dict, platform_config: Dict) -> Dict[str, Any]:
-        """Simule l'upload vers une plateforme (remplacer par vraies APIs)"""        import random
+        """Simule l'upload vers une plateforme (remplacer par vraies APIs)"""
+        import random
         import uuid
         
         # Simulate upload process
@@ -882,7 +907,8 @@ class DistributionProcessor(BaseProcessor):
             }
     
     def _track_platform_performance(self, platform: str, result: Dict[str, Any]):
-        """Suit les performances par plateforme"""        try:
+        """Suit les performances par plateforme"""
+        try:
             if platform not in self.performance_metrics['platform_success_rates']:
                 self.performance_metrics['platform_success_rates'][platform] = {
                     'total_attempts': 0,
@@ -907,7 +933,8 @@ class DistributionProcessor(BaseProcessor):
             self.logger.warning(f"Performance tracking failed: {e}")
     
     def _get_job_status(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Récupère le statut d'un job"""        job_id = input_data.get('job_id')
+        """Récupère le statut d'un job"""
+        job_id = input_data.get('job_id')
         
         result = {
             'job_id': job_id,
@@ -945,7 +972,8 @@ class DistributionProcessor(BaseProcessor):
         return result
     
     def _calculate_job_progress(self, job: DistributionJob) -> Dict[str, Any]:
-        """Calcule le progrès d'un job"""        progress = {
+        """Calcule le progrès d'un job"""
+        progress = {
             'completion_percentage': 0,
             'platforms_completed': 0,
             'platforms_total': len(job.platforms),
@@ -968,7 +996,8 @@ class DistributionProcessor(BaseProcessor):
         return progress
     
     def validate_input(self, input_data: Any) -> bool:
-        """Valide les données d'entrée pour la distribution"""        if not isinstance(input_data, dict):
+        """Valide les données d'entrée pour la distribution"""
+        if not isinstance(input_data, dict):
             return False
         
         operation = input_data.get('operation', 'distribute_content')
@@ -986,14 +1015,16 @@ class DistributionProcessor(BaseProcessor):
 
 
 class AsyncDistributionProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur distribution"""    
+    """Version asynchrone du processeur distribution"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.sync_processor = DistributionProcessor(config)
         self.executor = ThreadPoolExecutor(max_workers=8)
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traitement asynchrone de la distribution"""        loop = asyncio.get_event_loop()
+        """Traitement asynchrone de la distribution"""
+        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
             self.sync_processor.process_with_stats, 
@@ -1001,4 +1032,5 @@ class AsyncDistributionProcessor(AsyncBaseProcessor):
         )
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Validation asynchrone"""        return self.sync_processor.validate_input(input_data)
+        """Validation asynchrone"""
+        return self.sync_processor.validate_input(input_data)

@@ -6,7 +6,8 @@ provides unified interfaces, and handles complex billing workflows.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -32,7 +33,8 @@ from .dispute_manager import DisputeManagerEngine
 logger = logging.getLogger(__name__)
 
 class BillingWorkflowType(Enum):
-    """Types of billing workflows"""    ONE_TIME_PAYMENT = "one_time_payment"
+    """Types of billing workflows"""
+    ONE_TIME_PAYMENT = "one_time_payment"
     SUBSCRIPTION_BILLING = "subscription_billing"
     COMMISSION_PAYOUT = "commission_payout"
     ROYALTY_DISTRIBUTION = "royalty_distribution"
@@ -40,7 +42,8 @@ class BillingWorkflowType(Enum):
     DISPUTE_HANDLING = "dispute_handling"
 
 class WorkflowStatus(Enum):
-    """Workflow execution status"""    PENDING = "pending"
+    """Workflow execution status"""
+    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -48,7 +51,8 @@ class WorkflowStatus(Enum):
 
 @dataclass
 class BillingWorkflow:
-    """Billing workflow definition"""    workflow_id: str
+    """Billing workflow definition"""
+    workflow_id: str
     workflow_type: BillingWorkflowType
     parameters: Dict[str, Any]
     status: WorkflowStatus
@@ -58,7 +62,8 @@ class BillingWorkflow:
 
 @dataclass
 class BillingMetrics:
-    """Comprehensive billing metrics"""    total_revenue: Decimal
+    """Comprehensive billing metrics"""
+    total_revenue: Decimal
     processed_payments: int
     active_subscriptions: int
     pending_disputes: int
@@ -67,9 +72,11 @@ class BillingMetrics:
     processing_efficiency: float
 
 class BillingAggregatorEngine:
-    """    Master billing aggregator that orchestrates all billing operations,
+    """
+    Master billing aggregator that orchestrates all billing operations,
     provides unified APIs, and manages complex multi-step workflows.
-    """    
+    """
+    
     def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
         self.redis = redis_client
         self.db_pool = db_pool
@@ -86,7 +93,8 @@ class BillingAggregatorEngine:
         self.dispute_manager = DisputeManagerEngine(redis_client, db_pool)
         
     async def initialize(self) -> None:
-        """Initialize billing aggregator and all components"""        try:
+        """Initialize billing aggregator and all components"""
+        try:
             await self._setup_database_tables()
             
             # Initialize all engines
@@ -109,8 +117,10 @@ class BillingAggregatorEngine:
             raise
 
     async def _setup_database_tables(self) -> None:
-        """Setup database tables for billing aggregation"""        async with self.db_pool.acquire() as conn:
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS billing_workflows (
+        """Setup database tables for billing aggregation"""
+        async with self.db_pool.acquire() as conn:
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS billing_workflows (
                     id SERIAL PRIMARY KEY,
                     workflow_id VARCHAR(100) UNIQUE NOT NULL,
                     workflow_type VARCHAR(30) NOT NULL,
@@ -126,7 +136,8 @@ class BillingAggregatorEngine:
                 );
             """)
             
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS billing_events (
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS billing_events (
                     id SERIAL PRIMARY KEY,
                     event_id VARCHAR(100) UNIQUE NOT NULL,
                     event_type VARCHAR(50) NOT NULL,
@@ -140,7 +151,8 @@ class BillingAggregatorEngine:
                 );
             """)
             
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS billing_metrics_snapshots (
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS billing_metrics_snapshots (
                     id SERIAL PRIMARY KEY,
                     snapshot_date DATE UNIQUE NOT NULL,
                     metrics_data JSONB NOT NULL,
@@ -149,7 +161,8 @@ class BillingAggregatorEngine:
             """)
 
     async def _setup_workflow_templates(self) -> None:
-        """Setup workflow templates for common billing operations"""        try:
+        """Setup workflow templates for common billing operations"""
+        try:
             workflow_templates = {
                 BillingWorkflowType.ONE_TIME_PAYMENT: [
                     {'step': 'validate_payment_data', 'engine': 'payment_processor'},
@@ -193,7 +206,8 @@ class BillingAggregatorEngine:
             logger.error(f"Failed to setup workflow templates: {e}")
 
     async def process_one_time_payment(self, payment_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process one-time payment with full billing workflow"""        try:
+        """Process one-time payment with full billing workflow"""
+        try:
             workflow_id = f"payment_{payment_data['customer_id']}_{int(datetime.now().timestamp())}"
             
             workflow = BillingWorkflow(
@@ -224,7 +238,8 @@ class BillingAggregatorEngine:
             raise HTTPException(status_code=500, detail="One-time payment processing failed")
 
     async def process_subscription_billing(self, subscription_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process subscription billing cycle"""        try:
+        """Process subscription billing cycle"""
+        try:
             workflow_id = f"subscription_{subscription_data['subscription_id']}_{int(datetime.now().timestamp())}"
             
             workflow = BillingWorkflow(
@@ -254,7 +269,8 @@ class BillingAggregatorEngine:
             raise HTTPException(status_code=500, detail="Subscription billing processing failed")
 
     async def process_commission_payouts(self, payout_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process commission payouts for period"""        try:
+        """Process commission payouts for period"""
+        try:
             workflow_id = f"commission_payout_{int(datetime.now().timestamp())}"
             
             workflow = BillingWorkflow(
@@ -283,7 +299,8 @@ class BillingAggregatorEngine:
             raise HTTPException(status_code=500, detail="Commission payout processing failed")
 
     async def process_royalty_distribution(self, distribution_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process royalty distribution"""        try:
+        """Process royalty distribution"""
+        try:
             workflow_id = f"royalty_dist_{distribution_data['content_id']}_{int(datetime.now().timestamp())}"
             
             workflow = BillingWorkflow(
@@ -312,7 +329,8 @@ class BillingAggregatorEngine:
             raise HTTPException(status_code=500, detail="Royalty distribution processing failed")
 
     async def _execute_workflow(self, workflow: BillingWorkflow) -> Dict[str, Any]:
-        """Execute billing workflow"""        try:
+        """Execute billing workflow"""
+        try:
             # Store workflow
             await self._store_workflow(workflow)
             
@@ -370,7 +388,8 @@ class BillingAggregatorEngine:
             }
 
     async def _get_workflow_steps(self, workflow_type: BillingWorkflowType) -> List[Dict[str, Any]]:
-        """Get workflow steps from template"""        try:
+        """Get workflow steps from template"""
+        try:
             cached_template = self.redis.get(f"workflow_template_{workflow_type.value}")
             if cached_template:
                 return json.loads(cached_template.decode())
@@ -388,7 +407,8 @@ class BillingAggregatorEngine:
     async def _execute_workflow_step(self, step: Dict[str, Any], 
                                    parameters: Dict[str, Any],
                                    context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute individual workflow step"""        try:
+        """Execute individual workflow step"""
+        try:
             engine_name = step['engine']
             step_name = step['step']
             
@@ -419,7 +439,8 @@ class BillingAggregatorEngine:
     async def _execute_payment_processor_step(self, step_name: str, 
                                             parameters: Dict[str, Any],
                                             context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute payment processor step"""        if step_name == 'validate_payment_data':
+        """Execute payment processor step"""
+        if step_name == 'validate_payment_data':
             # Validate payment data
             required_fields = ['amount', 'currency', 'customer_id', 'payment_method']
             for field in required_fields:
@@ -444,7 +465,8 @@ class BillingAggregatorEngine:
     async def _execute_tax_compliance_step(self, step_name: str,
                                          parameters: Dict[str, Any],
                                          context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute tax compliance step"""        if step_name == 'calculate_taxes':
+        """Execute tax compliance step"""
+        if step_name == 'calculate_taxes':
             tax_calc = await self.tax_compliance.calculate_tax(
                 f"temp_{int(datetime.now().timestamp())}",
                 Decimal(str(parameters['amount'])),
@@ -463,7 +485,8 @@ class BillingAggregatorEngine:
     async def _execute_payment_gateway_step(self, step_name: str,
                                           parameters: Dict[str, Any],
                                           context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute payment gateway step"""        if step_name == 'process_payment':
+        """Execute payment gateway step"""
+        if step_name == 'process_payment':
             from .payment_gateway import PaymentRequest
             
             payment_request = PaymentRequest(
@@ -491,7 +514,8 @@ class BillingAggregatorEngine:
     async def _execute_invoice_generator_step(self, step_name: str,
                                             parameters: Dict[str, Any],
                                             context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute invoice generator step"""        if step_name == 'generate_invoice':
+        """Execute invoice generator step"""
+        if step_name == 'generate_invoice':
             # Use context data from previous steps
             invoice_data = {
                 'customer_id': parameters['customer_id'],
@@ -514,7 +538,8 @@ class BillingAggregatorEngine:
     async def _execute_subscription_billing_step(self, step_name: str,
                                                 parameters: Dict[str, Any],
                                                 context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute subscription billing step"""        if step_name == 'validate_subscription':
+        """Execute subscription billing step"""
+        if step_name == 'validate_subscription':
             subscription = await self.subscription_billing.get_subscription_details(
                 parameters['subscription_id']
             )
@@ -548,7 +573,8 @@ class BillingAggregatorEngine:
     async def _execute_commission_calculator_step(self, step_name: str,
                                                 parameters: Dict[str, Any],
                                                 context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute commission calculator step"""        if step_name == 'calculate_commissions':
+        """Execute commission calculator step"""
+        if step_name == 'calculate_commissions':
             calculations = await self.commission_calculator.calculate_period_commissions(
                 parameters.get('start_date', datetime.now() - timedelta(days=30)),
                 parameters.get('end_date', datetime.now())
@@ -575,7 +601,8 @@ class BillingAggregatorEngine:
     async def _execute_royalty_distributor_step(self, step_name: str,
                                               parameters: Dict[str, Any],
                                               context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute royalty distributor step"""        if step_name == 'calculate_distribution':
+        """Execute royalty distributor step"""
+        if step_name == 'calculate_distribution':
             from .royalty_distributor import RoyaltyType
             
             distribution = await self.royalty_distributor.calculate_royalty_distribution(
@@ -614,7 +641,8 @@ class BillingAggregatorEngine:
     async def _execute_billing_analytics_step(self, step_name: str,
                                             parameters: Dict[str, Any],
                                             context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute billing analytics step"""        if step_name == 'update_analytics':
+        """Execute billing analytics step"""
+        if step_name == 'update_analytics':
             # Trigger analytics update
             await self._trigger_analytics_update(parameters, context)
             return {'analytics_updated': True}
@@ -628,12 +656,14 @@ class BillingAggregatorEngine:
 
     async def _trigger_analytics_update(self, parameters: Dict[str, Any], 
                                       context: Dict[str, Any]) -> None:
-        """Trigger analytics update"""        try:
+        """Trigger analytics update"""
+        try:
             # Create analytics event
             event_id = f"analytics_update_{int(datetime.now().timestamp())}"
             
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""                    INSERT INTO billing_events
+                await conn.execute("""
+                    INSERT INTO billing_events
                     (event_id, event_type, entity_id, entity_type, event_data)
                     VALUES ($1, $2, $3, $4, $5)
                 """,
@@ -652,9 +682,11 @@ class BillingAggregatorEngine:
             logger.error(f"Failed to trigger analytics update: {e}")
 
     async def _store_workflow(self, workflow: BillingWorkflow) -> None:
-        """Store workflow in database"""        try:
+        """Store workflow in database"""
+        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""                    INSERT INTO billing_workflows
+                await conn.execute("""
+                    INSERT INTO billing_workflows
                     (workflow_id, workflow_type, parameters, status, steps)
                     VALUES ($1, $2, $3, $4, $5)
                 """,
@@ -669,9 +701,11 @@ class BillingAggregatorEngine:
             logger.error(f"Failed to store workflow: {e}")
 
     async def _update_workflow_status(self, workflow: BillingWorkflow) -> None:
-        """Update workflow status"""        try:
+        """Update workflow status"""
+        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""                    UPDATE billing_workflows
+                await conn.execute("""
+                    UPDATE billing_workflows
                     SET status = $1, updated_at = NOW(), completed_at = $2
                     WHERE workflow_id = $3
                 """,
@@ -684,9 +718,11 @@ class BillingAggregatorEngine:
             logger.error(f"Failed to update workflow status: {e}")
 
     async def _update_workflow_progress(self, workflow_id: str, current_step: int) -> None:
-        """Update workflow progress"""        try:
+        """Update workflow progress"""
+        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""                    UPDATE billing_workflows
+                await conn.execute("""
+                    UPDATE billing_workflows
                     SET current_step = $1, updated_at = NOW()
                     WHERE workflow_id = $2
                 """, current_step, workflow_id)
@@ -695,14 +731,16 @@ class BillingAggregatorEngine:
             logger.error(f"Failed to update workflow progress: {e}")
 
     async def get_comprehensive_billing_dashboard(self) -> Dict[str, Any]:
-        """Get comprehensive billing dashboard"""        try:
+        """Get comprehensive billing dashboard"""
+        try:
             # Gather data from all engines
             analytics_dashboard = await self.billing_analytics.create_analytics_dashboard()
             dispute_dashboard = await self.dispute_manager.get_dispute_dashboard()
             
             # Get workflow statistics
             async with self.db_pool.acquire() as conn:
-                workflow_stats = await conn.fetchrow("""                    SELECT 
+                workflow_stats = await conn.fetchrow("""
+                    SELECT 
                         COUNT(*) as total_workflows,
                         COUNT(CASE WHEN status = 'completed' THEN 1 END) as completed_workflows,
                         COUNT(CASE WHEN status = 'failed' THEN 1 END) as failed_workflows,
@@ -712,7 +750,8 @@ class BillingAggregatorEngine:
                 """)
                 
                 # Recent workflows
-                recent_workflows = await conn.fetch("""                    SELECT workflow_id, workflow_type, status, created_at, completed_at
+                recent_workflows = await conn.fetch("""
+                    SELECT workflow_id, workflow_type, status, created_at, completed_at
                     FROM billing_workflows
                     ORDER BY created_at DESC
                     LIMIT 10
@@ -747,7 +786,8 @@ class BillingAggregatorEngine:
             raise HTTPException(status_code=500, detail="Billing dashboard data retrieval failed")
 
     async def get_billing_health_status(self) -> Dict[str, Any]:
-        """Get overall billing system health status"""        try:
+        """Get overall billing system health status"""
+        try:
             # Check each component health
             health_checks = {
                 'invoice_generator': await self._check_component_health('invoice_generator'),
@@ -781,7 +821,8 @@ class BillingAggregatorEngine:
             }
 
     async def _check_component_health(self, component_name: str) -> Dict[str, Any]:
-        """Check health of specific billing component"""        try:
+        """Check health of specific billing component"""
+        try:
             # Basic health check - could be expanded with actual component tests
             return {
                 'healthy': True,

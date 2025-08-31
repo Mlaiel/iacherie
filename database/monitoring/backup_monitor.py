@@ -12,7 +12,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import os
 from datetime import datetime, timedelta
@@ -38,7 +39,8 @@ from ...security.encryption import BackupEncryption
 
 
 class BackupType(Enum):
-    """Types of database backups"""    FULL = "full"
+    """Types of database backups"""
+    FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
     LOGICAL = "logical"
@@ -47,7 +49,8 @@ class BackupType(Enum):
 
 
 class BackupStatus(Enum):
-    """Backup operation status"""    SCHEDULED = "scheduled"
+    """Backup operation status"""
+    SCHEDULED = "scheduled"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -58,7 +61,8 @@ class BackupStatus(Enum):
 
 
 class ReplicationStatus(Enum):
-    """Database replication status"""    HEALTHY = "healthy"
+    """Database replication status"""
+    HEALTHY = "healthy"
     LAGGING = "lagging"
     BROKEN = "broken"
     SYNCING = "syncing"
@@ -66,7 +70,8 @@ class ReplicationStatus(Enum):
 
 
 class RecoveryTestStatus(Enum):
-    """Recovery test status"""    PASSED = "passed"
+    """Recovery test status"""
+    PASSED = "passed"
     FAILED = "failed"
     PARTIAL = "partial"
     SKIPPED = "skipped"
@@ -74,7 +79,8 @@ class RecoveryTestStatus(Enum):
 
 @dataclass
 class BackupJob:
-    """Database backup job definition"""    job_id: str
+    """Database backup job definition"""
+    job_id: str
     name: str
     backup_type: BackupType
     schedule: str  # Cron expression
@@ -90,7 +96,8 @@ class BackupJob:
     enabled: bool = True
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'job_id': self.job_id,
             'name': self.name,
             'backup_type': self.backup_type.value,
@@ -110,7 +117,8 @@ class BackupJob:
 
 @dataclass
 class BackupExecution:
-    """Backup execution record"""    execution_id: str
+    """Backup execution record"""
+    execution_id: str
     job_id: str
     backup_type: BackupType
     status: BackupStatus
@@ -126,7 +134,8 @@ class BackupExecution:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'execution_id': self.execution_id,
             'job_id': self.job_id,
             'backup_type': self.backup_type.value,
@@ -146,7 +155,8 @@ class BackupExecution:
 
 @dataclass
 class ReplicationMonitor:
-    """Replication monitoring data"""    replica_id: str
+    """Replication monitoring data"""
+    replica_id: str
     replica_name: str
     master_host: str
     replica_host: str
@@ -160,7 +170,8 @@ class ReplicationMonitor:
     alerts: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'replica_id': self.replica_id,
             'replica_name': self.replica_name,
             'master_host': self.master_host,
@@ -178,7 +189,8 @@ class ReplicationMonitor:
 
 @dataclass
 class RecoveryTest:
-    """Recovery test execution"""    test_id: str
+    """Recovery test execution"""
+    test_id: str
     backup_id: str
     test_type: str
     started_at: datetime
@@ -191,7 +203,8 @@ class RecoveryTest:
     issues_found: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'test_id': self.test_id,
             'backup_id': self.backup_id,
             'test_type': self.test_type,
@@ -207,7 +220,8 @@ class RecoveryTest:
 
 
 class BackupMonitor:
-    """Enterprise backup monitoring and management system"""    
+    """Enterprise backup monitoring and management system"""
+    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
@@ -231,7 +245,8 @@ class BackupMonitor:
         asyncio.create_task(self._load_backup_jobs())
         
     async def _load_backup_jobs(self):
-        """Load backup job configurations"""        try:
+        """Load backup job configurations"""
+        try:
             # Default backup jobs for the IA Influencer platform
             default_jobs = [
                 BackupJob(
@@ -281,7 +296,8 @@ class BackupMonitor:
             self.logger.error(f"Failed to load backup jobs: {e}")
             
     async def start_monitoring(self, interval: int = 300):  # 5 minutes
-        """Start backup monitoring"""        if self._monitoring_active:
+        """Start backup monitoring"""
+        if self._monitoring_active:
             self.logger.warning("Backup monitoring already active")
             return
             
@@ -296,7 +312,8 @@ class BackupMonitor:
         self.logger.info("Database backup monitoring started")
         
     async def stop_monitoring(self):
-        """Stop backup monitoring"""        self._monitoring_active = False
+        """Stop backup monitoring"""
+        self._monitoring_active = False
         
         if self._monitoring_task:
             self._monitoring_task.cancel()
@@ -315,7 +332,8 @@ class BackupMonitor:
         self.logger.info("Database backup monitoring stopped")
         
     async def _monitoring_loop(self, interval: int):
-        """Main backup monitoring loop"""        while self._monitoring_active:
+        """Main backup monitoring loop"""
+        while self._monitoring_active:
             try:
                 await self._monitor_backup_executions()
                 await self._monitor_replication_health()
@@ -329,7 +347,8 @@ class BackupMonitor:
                 await asyncio.sleep(interval)
                 
     async def _backup_scheduler_loop(self):
-        """Backup scheduler loop"""        while self._monitoring_active:
+        """Backup scheduler loop"""
+        while self._monitoring_active:
             try:
                 await self._schedule_backup_jobs()
                 await asyncio.sleep(60)  # Check every minute
@@ -338,7 +357,8 @@ class BackupMonitor:
                 await asyncio.sleep(60)
                 
     async def _schedule_backup_jobs(self):
-        """Schedule backup jobs based on cron expressions"""        try:
+        """Schedule backup jobs based on cron expressions"""
+        try:
             current_time = datetime.utcnow()
             
             for job_id, job in self.backup_jobs.items():
@@ -353,7 +373,8 @@ class BackupMonitor:
             self.logger.error(f"Failed to schedule backup jobs: {e}")
             
     async def _should_run_backup_job(self, job: BackupJob, current_time: datetime) -> bool:
-        """Check if backup job should run"""        try:
+        """Check if backup job should run"""
+        try:
             # Simplified cron parsing - in production would use a proper cron library
             if job.last_run and (current_time - job.last_run).total_seconds() < 3600:
                 return False  # Don't run more than once per hour
@@ -376,7 +397,8 @@ class BackupMonitor:
             return False
             
     async def _execute_backup_job(self, job: BackupJob):
-        """Execute backup job"""        try:
+        """Execute backup job"""
+        try:
             execution_id = f"exec_{job.job_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             
             execution = BackupExecution(
@@ -414,7 +436,8 @@ class BackupMonitor:
                 await self._store_backup_execution(self.backup_executions[execution_id])
                 
     async def _execute_full_backup(self, execution: BackupExecution, job: BackupJob):
-        """Execute full database backup"""        try:
+        """Execute full database backup"""
+        try:
             backup_timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
             backup_filename = f"full_backup_{backup_timestamp}.sql"
             
@@ -512,7 +535,8 @@ class BackupMonitor:
             raise
             
     async def _execute_incremental_backup(self, execution: BackupExecution, job: BackupJob):
-        """Execute incremental backup"""        try:
+        """Execute incremental backup"""
+        try:
             # For PostgreSQL, incremental backups typically use WAL archiving
             # This is a simplified implementation
             
@@ -605,7 +629,8 @@ class BackupMonitor:
             raise
             
     async def _execute_logical_backup(self, execution: BackupExecution, job: BackupJob):
-        """Execute logical database backup"""        try:
+        """Execute logical database backup"""
+        try:
             backup_timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
             
             for database in job.databases:
@@ -687,7 +712,8 @@ class BackupMonitor:
             raise
             
     async def _calculate_file_checksum(self, file_path: str) -> str:
-        """Calculate file checksum"""        try:
+        """Calculate file checksum"""
+        try:
             hash_md5 = hashlib.md5()
             with open(file_path, "rb") as f:
                 for chunk in iter(lambda: f.read(4096), b""):
@@ -698,7 +724,8 @@ class BackupMonitor:
             return ""
             
     async def _verify_backup(self, execution: BackupExecution, job: BackupJob) -> bool:
-        """Verify backup integrity"""        try:
+        """Verify backup integrity"""
+        try:
             # Download backup file temporarily
             local_path = f"/tmp/verify_{execution.execution_id}"
             
@@ -737,7 +764,8 @@ class BackupMonitor:
             return False
             
     async def _get_last_successful_backup(self, job_id: str) -> Optional[BackupExecution]:
-        """Get last successful backup for job"""        try:
+        """Get last successful backup for job"""
+        try:
             for execution in reversed(list(self.backup_executions.values())):
                 if (execution.job_id == job_id and 
                     execution.status in [BackupStatus.COMPLETED, BackupStatus.VERIFIED]):
@@ -748,7 +776,8 @@ class BackupMonitor:
             return None
             
     async def _store_backup_execution(self, execution: BackupExecution):
-        """Store backup execution record"""        try:
+        """Store backup execution record"""
+        try:
             await self.cache.set(
                 f"backup_execution:{execution.execution_id}",
                 json.dumps(execution.to_dict()),
@@ -771,7 +800,8 @@ class BackupMonitor:
             self.logger.error(f"Failed to store backup execution: {e}")
             
     async def _monitor_backup_executions(self):
-        """Monitor ongoing backup executions"""        try:
+        """Monitor ongoing backup executions"""
+        try:
             current_time = datetime.utcnow()
             
             for execution in self.backup_executions.values():
@@ -795,10 +825,12 @@ class BackupMonitor:
             self.logger.error(f"Failed to monitor backup executions: {e}")
             
     async def _monitor_replication_health(self):
-        """Monitor database replication health"""        try:
+        """Monitor database replication health"""
+        try:
             async with get_database_session() as session:
                 # Check replication status
-                replication_query = text("""                    SELECT 
+                replication_query = text("""
+                    SELECT 
                         client_addr,
                         client_hostname,
                         client_port,
@@ -866,7 +898,8 @@ class BackupMonitor:
             self.logger.error(f"Failed to monitor replication health: {e}")
             
     async def _store_replication_monitor(self, monitor: ReplicationMonitor):
-        """Store replication monitor data"""        try:
+        """Store replication monitor data"""
+        try:
             await self.cache.set(
                 f"replication_monitor:{monitor.replica_id}",
                 json.dumps(monitor.to_dict()),
@@ -883,7 +916,8 @@ class BackupMonitor:
             self.logger.error(f"Failed to store replication monitor: {e}")
             
     async def _send_replication_alert(self, monitor: ReplicationMonitor):
-        """Send replication health alert"""        try:
+        """Send replication health alert"""
+        try:
             await self.notification_manager.send_replication_alert(
                 severity='CRITICAL',
                 title=f'Replication Issue: {monitor.replica_name}',
@@ -894,7 +928,8 @@ class BackupMonitor:
             self.logger.error(f"Failed to send replication alert: {e}")
             
     async def _verify_backup_integrity(self):
-        """Verify integrity of recent backups"""        try:
+        """Verify integrity of recent backups"""
+        try:
             # Get recent backups that need verification
             recent_executions = [
                 ex for ex in self.backup_executions.values()
@@ -922,7 +957,8 @@ class BackupMonitor:
             self.logger.error(f"Failed to verify backup integrity: {e}")
             
     async def _check_backup_retention(self):
-        """Check and enforce backup retention policies"""        try:
+        """Check and enforce backup retention policies"""
+        try:
             for job in self.backup_jobs.values():
                 # Get backups for this job
                 job_executions = [
@@ -944,7 +980,8 @@ class BackupMonitor:
             self.logger.error(f"Failed to check backup retention: {e}")
             
     async def _delete_backup(self, execution: BackupExecution):
-        """Delete expired backup"""        try:
+        """Delete expired backup"""
+        try:
             # Delete from storage
             if execution.backup_path:
                 await self.s3_manager.delete_file(execution.backup_path)
@@ -962,7 +999,8 @@ class BackupMonitor:
             self.logger.error(f"Failed to delete backup {execution.execution_id}: {e}")
             
     async def _run_recovery_tests(self):
-        """Run automated recovery tests"""        try:
+        """Run automated recovery tests"""
+        try:
             # Run recovery tests weekly
             if datetime.utcnow().weekday() == 0 and datetime.utcnow().hour == 3:  # Monday 3 AM
                 await self._execute_recovery_tests()
@@ -971,7 +1009,8 @@ class BackupMonitor:
             self.logger.error(f"Failed to run recovery tests: {e}")
             
     async def _execute_recovery_tests(self):
-        """Execute recovery tests on recent backups"""        try:
+        """Execute recovery tests on recent backups"""
+        try:
             # Get recent successful backups
             recent_backups = [
                 ex for ex in self.backup_executions.values()
@@ -1007,7 +1046,8 @@ class BackupMonitor:
             self.logger.error(f"Failed to execute recovery tests: {e}")
             
     async def _store_recovery_test(self, test: RecoveryTest):
-        """Store recovery test result"""        try:
+        """Store recovery test result"""
+        try:
             await self.cache.set(
                 f"recovery_test:{test.test_id}",
                 json.dumps(test.to_dict()),
@@ -1024,7 +1064,8 @@ class BackupMonitor:
             self.logger.error(f"Failed to store recovery test: {e}")
             
     async def _cleanup_old_backups(self):
-        """Cleanup old backup monitoring data"""        try:
+        """Cleanup old backup monitoring data"""
+        try:
             # Remove records older than 90 days
             cutoff_time = datetime.utcnow() - timedelta(days=90)
             cutoff_timestamp = cutoff_time.timestamp()
@@ -1049,7 +1090,8 @@ class BackupMonitor:
             self.logger.error(f"Failed to cleanup old backup data: {e}")
             
     async def _send_backup_alert(self, severity: str, title: str, message: str, details: Dict[str, Any]):
-        """Send backup alert notification"""        try:
+        """Send backup alert notification"""
+        try:
             await self.notification_manager.send_backup_alert(
                 severity=severity,
                 title=title,
@@ -1060,7 +1102,8 @@ class BackupMonitor:
             self.logger.error(f"Failed to send backup alert: {e}")
             
     async def get_backup_summary(self, days: int = 7) -> Dict[str, Any]:
-        """Get backup monitoring summary"""        try:
+        """Get backup monitoring summary"""
+        try:
             cutoff_time = datetime.utcnow() - timedelta(days=days)
             
             # Get recent executions
@@ -1134,30 +1177,36 @@ class BackupMonitor:
 
 
 class ReplicationHealthChecker:
-    """Advanced replication health monitoring"""    
+    """Advanced replication health monitoring"""
+    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
         
     async def check_replication_lag(self, replica_info: Dict[str, Any]) -> float:
-        """Check replication lag in seconds"""        # Implementation for detailed replication lag analysis
+        """Check replication lag in seconds"""
+        # Implementation for detailed replication lag analysis
         pass
         
     async def validate_replication_integrity(self, master_host: str, replica_host: str) -> bool:
-        """Validate replication data integrity"""        # Implementation for replication integrity validation
+        """Validate replication data integrity"""
+        # Implementation for replication integrity validation
         pass
 
 
 class DataIntegrityValidator:
-    """Data integrity validation for backups and replicas"""    
+    """Data integrity validation for backups and replicas"""
+    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
         
     async def validate_backup_integrity(self, backup_path: str) -> Dict[str, Any]:
-        """Validate backup file integrity"""        # Implementation for backup integrity validation
+        """Validate backup file integrity"""
+        # Implementation for backup integrity validation
         pass
         
     async def validate_data_consistency(self, source_db: str, target_db: str) -> Dict[str, Any]:
-        """Validate data consistency between databases"""        # Implementation for data consistency validation
+        """Validate data consistency between databases"""
+        # Implementation for data consistency validation
         pass

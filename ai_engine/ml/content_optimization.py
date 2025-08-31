@@ -4,7 +4,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive content optimization capabilities for improving
 engagement, SEO, and performance across multiple platforms and content types.
-"""import logging
+"""
+import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
@@ -19,7 +20,8 @@ from collections import Counter
 logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
-    """Types of content optimization"""    SEO = "seo"
+    """Types of content optimization"""
+    SEO = "seo"
     ENGAGEMENT = "engagement"
     PERFORMANCE = "performance"
     ACCESSIBILITY = "accessibility"
@@ -31,7 +33,8 @@ class OptimizationType(Enum):
     QUALITY = "quality"
 
 class ContentType(Enum):
-    """Content types for optimization"""    TEXT = "text"
+    """Content types for optimization"""
+    TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
@@ -43,7 +46,8 @@ class ContentType(Enum):
     LANDING_PAGE = "landing_page"
 
 class Platform(Enum):
-    """Platforms for content optimization"""    WEBSITE = "website"
+    """Platforms for content optimization"""
+    WEBSITE = "website"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
     TWITTER = "twitter"
@@ -56,7 +60,8 @@ class Platform(Enum):
 
 @dataclass
 class OptimizationMetrics:
-    """Metrics for content optimization"""    seo_score: float = 0.0
+    """Metrics for content optimization"""
+    seo_score: float = 0.0
     engagement_score: float = 0.0
     readability_score: float = 0.0
     viral_potential: float = 0.0
@@ -69,7 +74,8 @@ class OptimizationMetrics:
 
 @dataclass
 class OptimizationSuggestion:
-    """Individual optimization suggestion"""    suggestion_id: str
+    """Individual optimization suggestion"""
+    suggestion_id: str
     type: OptimizationType
     priority: str  # high, medium, low
     title: str
@@ -82,7 +88,8 @@ class OptimizationSuggestion:
 
 @dataclass
 class OptimizationResult:
-    """Result of content optimization analysis"""    content_id: str
+    """Result of content optimization analysis"""
+    content_id: str
     content_type: ContentType
     platform: Platform
     optimization_type: OptimizationType
@@ -95,7 +102,8 @@ class OptimizationResult:
 
 @dataclass
 class SEOAnalysis:
-    """SEO-specific analysis results"""    title_optimization: Dict[str, Any] = field(default_factory=dict)
+    """SEO-specific analysis results"""
+    title_optimization: Dict[str, Any] = field(default_factory=dict)
     meta_description: Dict[str, Any] = field(default_factory=dict)
     headings_structure: Dict[str, Any] = field(default_factory=dict)
     keyword_density: Dict[str, float] = field(default_factory=dict)
@@ -108,7 +116,8 @@ class SEOAnalysis:
     mobile_friendly: bool = True
 
 class ContentOptimizer:
-    """Main content optimization engine"""    
+    """Main content optimization engine"""
+    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.optimization_history = []
@@ -120,7 +129,8 @@ class ContentOptimizer:
         self.logger.info("ContentOptimizer initialized successfully")
     
     def _load_platform_guidelines(self) -> Dict[str, Dict[str, Any]]:
-        """Load platform-specific optimization guidelines"""        return {
+        """Load platform-specific optimization guidelines"""
+        return {
             Platform.INSTAGRAM.value: {
                 "caption_length": {"optimal": 125, "max": 2200},
                 "hashtags": {"optimal": 11, "max": 30},
@@ -169,7 +179,8 @@ class ContentOptimizer:
         }
     
     def _init_optimization_models(self):
-        """Initialize optimization models and patterns"""        # Engagement prediction patterns
+        """Initialize optimization models and patterns"""
+        # Engagement prediction patterns
         self.engagement_patterns = {
             "high_engagement_words": [
                 "amazing", "incredible", "secret", "exclusive", "limited",
@@ -209,7 +220,8 @@ class ContentOptimizer:
                         platform: Platform, optimization_type: OptimizationType = OptimizationType.ENGAGEMENT,
                         target_keywords: Optional[List[str]] = None,
                         target_audience: Optional[str] = None) -> OptimizationResult:
-        """Main content optimization function"""        try:
+        """Main content optimization function"""
+        try:
             start_time = datetime.utcnow()
             content_id = hashlib.md5(content.encode()).hexdigest()[:12]
             
@@ -262,7 +274,8 @@ class ContentOptimizer:
     
     def _analyze_content_metrics(self, content: str, content_type: ContentType, 
                                 platform: Platform) -> OptimizationMetrics:
-        """Analyze current content metrics"""        try:
+        """Analyze current content metrics"""
+        try:
             # SEO Analysis
             seo_score = self._calculate_seo_score(content, content_type)
             
@@ -314,7 +327,8 @@ class ContentOptimizer:
             return OptimizationMetrics()
     
     def _calculate_seo_score(self, content: str, content_type: ContentType) -> float:
-        """Calculate SEO optimization score"""        score = 0.0
+        """Calculate SEO optimization score"""
+        score = 0.0
         factors = 0
         
         # Content length (optimal 300-2000 words for blog posts)
@@ -363,7 +377,8 @@ class ContentOptimizer:
         return min(100.0, score)
     
     def _calculate_engagement_score(self, content: str, platform: Platform) -> float:
-        """Calculate engagement potential score"""        score = 0.0
+        """Calculate engagement potential score"""
+        score = 0.0
         content_lower = content.lower()
         
         # High-engagement words
@@ -417,7 +432,8 @@ class ContentOptimizer:
         return min(100.0, score)
     
     def _calculate_readability_score(self, content: str) -> float:
-        """Calculate readability score (simplified Flesch-like algorithm)"""        sentences = content.count('.') + content.count('!') + content.count('?')
+        """Calculate readability score (simplified Flesch-like algorithm)"""
+        sentences = content.count('.') + content.count('!') + content.count('?')
         if sentences == 0:
             sentences = 1
         
@@ -448,7 +464,8 @@ class ContentOptimizer:
         return min(100.0, readability)
     
     def _calculate_viral_potential(self, content: str, platform: Platform) -> float:
-        """Calculate viral potential score"""        score = 0.0
+        """Calculate viral potential score"""
+        score = 0.0
         content_lower = content.lower()
         
         # Trending/viral keywords
@@ -504,7 +521,8 @@ class ContentOptimizer:
         return min(100.0, score)
     
     def _calculate_quality_score(self, content: str, content_type: ContentType) -> float:
-        """Calculate content quality score"""        score = 0.0
+        """Calculate content quality score"""
+        score = 0.0
         
         # Content length appropriateness
         word_count = len(content.split())
@@ -573,7 +591,8 @@ class ContentOptimizer:
         return min(100.0, score)
     
     def _calculate_accessibility_score(self, content: str, content_type: ContentType) -> float:
-        """Calculate accessibility score"""        score = 0.0
+        """Calculate accessibility score"""
+        score = 0.0
         
         # Simple language usage
         complex_words = [
@@ -635,7 +654,8 @@ class ContentOptimizer:
         return max(0.0, min(100.0, score))
     
     def _calculate_brand_alignment(self, content: str) -> float:
-        """Calculate brand alignment score (simplified)"""        score = 50.0  # Neutral starting point
+        """Calculate brand alignment score (simplified)"""
+        score = 50.0  # Neutral starting point
         
         # Professional tone indicators
         professional_indicators = [
@@ -659,7 +679,8 @@ class ContentOptimizer:
         return max(0.0, min(100.0, score))
     
     def _calculate_conversion_potential(self, content: str, content_type: ContentType) -> float:
-        """Calculate conversion potential score"""        score = 0.0
+        """Calculate conversion potential score"""
+        score = 0.0
         content_lower = content.lower()
         
         # Clear call-to-action
@@ -719,7 +740,8 @@ class ContentOptimizer:
                                          target_keywords: Optional[List[str]],
                                          target_audience: Optional[str],
                                          current_metrics: OptimizationMetrics) -> List[OptimizationSuggestion]:
-        """Generate specific optimization suggestions"""        suggestions = []
+        """Generate specific optimization suggestions"""
+        suggestions = []
         
         try:
             # SEO Suggestions
@@ -766,7 +788,8 @@ class ContentOptimizer:
     def _generate_seo_suggestions(self, content: str, content_type: ContentType,
                                 target_keywords: Optional[List[str]],
                                 current_metrics: OptimizationMetrics) -> List[OptimizationSuggestion]:
-        """Generate SEO-specific suggestions"""        suggestions = []
+        """Generate SEO-specific suggestions"""
+        suggestions = []
         word_count = len(content.split())
         
         # Content length optimization
@@ -828,7 +851,8 @@ class ContentOptimizer:
     
     def _generate_engagement_suggestions(self, content: str, platform: Platform,
                                        current_metrics: OptimizationMetrics) -> List[OptimizationSuggestion]:
-        """Generate engagement-focused suggestions"""        suggestions = []
+        """Generate engagement-focused suggestions"""
+        suggestions = []
         content_lower = content.lower()
         
         # Call-to-action optimization
@@ -893,7 +917,8 @@ class ContentOptimizer:
     
     def _generate_readability_suggestions(self, content: str, 
                                         current_metrics: OptimizationMetrics) -> List[OptimizationSuggestion]:
-        """Generate readability improvement suggestions"""        suggestions = []
+        """Generate readability improvement suggestions"""
+        suggestions = []
         
         # Sentence length analysis
         sentences = re.split(r'[.!?]+', content)
@@ -939,7 +964,8 @@ class ContentOptimizer:
     
     def _generate_quality_suggestions(self, content: str, content_type: ContentType,
                                     current_metrics: OptimizationMetrics) -> List[OptimizationSuggestion]:
-        """Generate quality improvement suggestions"""        suggestions = []
+        """Generate quality improvement suggestions"""
+        suggestions = []
         
         # Grammar and spelling checks (simplified)
         grammar_issues = content.count(' i ') - content.count(' I ')
@@ -983,7 +1009,8 @@ class ContentOptimizer:
     
     def _generate_platform_suggestions(self, content: str, platform: Platform,
                                      current_metrics: OptimizationMetrics) -> List[OptimizationSuggestion]:
-        """Generate platform-specific suggestions"""        suggestions = []
+        """Generate platform-specific suggestions"""
+        suggestions = []
         guidelines = self.platform_guidelines.get(platform.value, {})
         
         if not guidelines:
@@ -1031,7 +1058,8 @@ class ContentOptimizer:
                                   suggestions: List[OptimizationSuggestion],
                                   content_type: ContentType, 
                                   platform: Platform) -> str:
-        """Generate optimized version of content based on suggestions"""        try:
+        """Generate optimized version of content based on suggestions"""
+        try:
             optimized = original_content
             
             # Apply high-priority suggestions
@@ -1068,7 +1096,8 @@ class ContentOptimizer:
             return original_content
     
     def analyze_seo_details(self, content: str, target_keywords: Optional[List[str]] = None) -> SEOAnalysis:
-        """Perform detailed SEO analysis"""        try:
+        """Perform detailed SEO analysis"""
+        try:
             analysis = SEOAnalysis()
             
             # Title analysis
@@ -1139,10 +1168,12 @@ class ContentOptimizer:
             return SEOAnalysis()
     
     def get_optimization_history(self, limit: int = 10) -> List[OptimizationResult]:
-        """Get recent optimization history"""        return self.optimization_history[-limit:]
+        """Get recent optimization history"""
+        return self.optimization_history[-limit:]
     
     def get_platform_guidelines(self, platform: Platform) -> Dict[str, Any]:
-        """Get optimization guidelines for specific platform"""        return self.platform_guidelines.get(platform.value, {})
+        """Get optimization guidelines for specific platform"""
+        return self.platform_guidelines.get(platform.value, {})
 
 # Export main classes
 __all__ = [

@@ -5,7 +5,8 @@ Enhanced monitoring and alerting configuration for Ainflue platform's critical b
 Includes performance SLAs, business metrics monitoring, and comprehensive alerting strategies.
 
 Author: Performance Optimization Team
-"""import json
+"""
+import json
 import logging
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
@@ -16,14 +17,16 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    INFO = "info"
+    """Alert severity levels"""
+    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 
 class MonitoringCategory(Enum):
-    """Monitoring categories"""    PERFORMANCE = "performance"
+    """Monitoring categories"""
+    PERFORMANCE = "performance"
     BUSINESS = "business"
     SECURITY = "security"
     INFRASTRUCTURE = "infrastructure"
@@ -32,7 +35,8 @@ class MonitoringCategory(Enum):
 
 @dataclass
 class SLATarget:
-    """Service Level Agreement target"""    metric_name: str
+    """Service Level Agreement target"""
+    metric_name: str
     target_value: float
     comparison: str  # >, <, >=, <=, ==
     unit: str
@@ -42,7 +46,8 @@ class SLATarget:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""    name: str
+    """Alert rule configuration"""
+    name: str
     description: str
     category: MonitoringCategory
     severity: AlertSeverity
@@ -56,7 +61,8 @@ class AlertRule:
 
 
 class CriticalBusinessMonitoring:
-    """Critical business operations monitoring configuration"""    
+    """Critical business operations monitoring configuration"""
+    
     def __init__(self):
         self.sla_targets = self._define_sla_targets()
         self.alert_rules = self._define_alert_rules()
@@ -64,7 +70,8 @@ class CriticalBusinessMonitoring:
         self.notification_channels = self._define_notification_channels()
         
     def _define_sla_targets(self) -> Dict[str, List[SLATarget]]:
-        """Define SLA targets for critical business operations"""        return {
+        """Define SLA targets for critical business operations"""
+        return {
             "authentication": [
                 SLATarget("api_response_time_seconds", 0.2, "<=", "seconds", "Users cannot login - direct revenue impact"),
                 SLATarget("auth_success_rate", 0.99, ">=", "ratio", "Authentication failures block user access"),
@@ -98,7 +105,8 @@ class CriticalBusinessMonitoring:
         }
     
     def _define_alert_rules(self) -> List[AlertRule]:
-        """Define comprehensive alert rules for critical operations"""        rules = []
+        """Define comprehensive alert rules for critical operations"""
+        rules = []
         
         # Performance alerts
         performance_rules = [
@@ -386,7 +394,8 @@ class CriticalBusinessMonitoring:
         return rules
     
     def _define_notification_channels(self) -> Dict[str, Dict[str, Any]]:
-        """Define notification channels for different alert types"""        return {
+        """Define notification channels for different alert types"""
+        return {
             "slack_critical": {
                 "type": "slack",
                 "webhook_url": "${SLACK_CRITICAL_WEBHOOK}",
@@ -444,7 +453,8 @@ class CriticalBusinessMonitoring:
         }
     
     def _define_monitoring_dashboards(self) -> Dict[str, Dict[str, Any]]:
-        """Define Grafana dashboard configurations"""        return {
+        """Define Grafana dashboard configurations"""
+        return {
             "critical_business_operations": {
                 "title": "Critical Business Operations - Ainflue Platform",
                 "tags": ["business", "critical", "sla"],
@@ -623,7 +633,8 @@ class CriticalBusinessMonitoring:
         }
     
     def generate_prometheus_config(self) -> Dict[str, Any]:
-        """Generate Prometheus configuration with alerting rules"""        rules_groups = {}
+        """Generate Prometheus configuration with alerting rules"""
+        rules_groups = {}
         
         # Group rules by category
         for rule in self.alert_rules:
@@ -696,7 +707,8 @@ class CriticalBusinessMonitoring:
         }
     
     def generate_alertmanager_config(self) -> Dict[str, Any]:
-        """Generate Alertmanager configuration"""        return {
+        """Generate Alertmanager configuration"""
+        return {
             "global": {
                 "smtp_smarthost": "smtp.gmail.com:587",
                 "smtp_from": "alerts@ainflue.com"
@@ -807,7 +819,8 @@ class CriticalBusinessMonitoring:
         }
     
     def generate_deployment_plan(self) -> Dict[str, Any]:
-        """Generate deployment plan for monitoring infrastructure"""        return {
+        """Generate deployment plan for monitoring infrastructure"""
+        return {
             "overview": {
                 "components": ["Prometheus", "Alertmanager", "Grafana", "Exporters"],
                 "alert_rules_count": len(self.alert_rules),

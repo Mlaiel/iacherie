@@ -52,7 +52,8 @@ from .seeds import *
 logger = logging.getLogger(__name__)
 
 class DataManagementConfig:
-    """Configuration avancée du module data management"""    
+    """Configuration avancée du module data management"""
+    
     # Formats supportés par type de créateur
     CREATOR_FORMATS = {
         "musician": {
@@ -163,7 +164,8 @@ __all__ = [
 ]
 
 def get_data_management_info() -> Dict[str, Any]:
-    """Retourne les informations du module data management"""    return {
+    """Retourne les informations du module data management"""
+    return {
         "version": __version__,
         "author": __author__,
         "team": __team__,

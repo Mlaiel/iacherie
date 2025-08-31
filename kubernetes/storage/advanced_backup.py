@@ -24,7 +24,8 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Content creation → Backup scheduling → Multi-cloud replication → 
 Version management → Point-in-time recovery → Integrity verification → Cost optimization
-"""import logging
+"""
+import logging
 import asyncio
 import hashlib
 import gzip
@@ -49,7 +50,8 @@ logger = logging.getLogger(__name__)
 
 
 class BackupType(Enum):
-    """Types of backup operations"""    FULL = "full"  # Complete backup
+    """Types of backup operations"""
+    FULL = "full"  # Complete backup
     INCREMENTAL = "incremental"  # Only changed data
     DIFFERENTIAL = "differential"  # Changes since last full backup
     SNAPSHOT = "snapshot"  # Point-in-time snapshot
@@ -57,7 +59,8 @@ class BackupType(Enum):
 
 
 class BackupTier(Enum):
-    """Backup storage tiers for cost optimization"""    HOT = "hot"  # Immediate access
+    """Backup storage tiers for cost optimization"""
+    HOT = "hot"  # Immediate access
     WARM = "warm"  # Access within hours
     COLD = "cold"  # Access within days
     ARCHIVE = "archive"  # Long-term storage
@@ -65,7 +68,8 @@ class BackupTier(Enum):
 
 
 class RecoveryObjective(Enum):
-    """Recovery time and point objectives"""    RTO_1_HOUR = "rto_1h"  # Recovery Time Objective: 1 hour
+    """Recovery time and point objectives"""
+    RTO_1_HOUR = "rto_1h"  # Recovery Time Objective: 1 hour
     RTO_4_HOURS = "rto_4h"  # Recovery Time Objective: 4 hours
     RTO_24_HOURS = "rto_24h"  # Recovery Time Objective: 24 hours
     RPO_ZERO = "rpo_0"  # Recovery Point Objective: no data loss
@@ -74,7 +78,8 @@ class RecoveryObjective(Enum):
 
 
 class BackupStatus(Enum):
-    """Backup operation status"""    PENDING = "pending"
+    """Backup operation status"""
+    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -84,7 +89,8 @@ class BackupStatus(Enum):
 
 
 class CloudProvider(Enum):
-    """Supported cloud providers for backup"""    AWS_S3 = "aws_s3"
+    """Supported cloud providers for backup"""
+    AWS_S3 = "aws_s3"
     GOOGLE_CLOUD = "google_cloud"
     AZURE_BLOB = "azure_blob"
     LOCAL_STORAGE = "local_storage"
@@ -93,7 +99,8 @@ class CloudProvider(Enum):
 
 @dataclass
 class BackupPolicy:
-    """Backup policy configuration"""    policy_name: str
+    """Backup policy configuration"""
+    policy_name: str
     backup_type: BackupType
     backup_tier: BackupTier
     schedule_cron: str  # Cron expression for scheduling
@@ -124,7 +131,8 @@ class BackupPolicy:
 
 @dataclass
 class BackupMetadata:
-    """Backup metadata and tracking information"""    backup_id: str
+    """Backup metadata and tracking information"""
+    backup_id: str
     policy_name: str
     backup_type: BackupType
     source_path: str
@@ -160,7 +168,8 @@ class BackupMetadata:
 
 @dataclass
 class RecoveryRequest:
-    """Data recovery request"""    request_id: str
+    """Data recovery request"""
+    request_id: str
     backup_id: str
     requested_by: str
     requested_at: datetime
@@ -184,7 +193,8 @@ class RecoveryRequest:
 
 @dataclass
 class BackupMetrics:
-    """Comprehensive backup metrics"""    total_backups: int = 0
+    """Comprehensive backup metrics"""
+    total_backups: int = 0
     successful_backups: int = 0
     failed_backups: int = 0
     
@@ -211,7 +221,8 @@ class BackupMetrics:
 
 
 class AdvancedBackupManager:
-    """    🎯 Advanced Backup Storage Manager - IA-Influencer-Agent
+    """
+    🎯 Advanced Backup Storage Manager - IA-Influencer-Agent
     
     Enterprise-grade backup and disaster recovery solution providing:
     - Multi-cloud backup strategies with automatic failover
@@ -222,7 +233,8 @@ class AdvancedBackupManager:
     - Cost optimization with intelligent tiering
     - Compliance-ready retention and audit trails
     - Real-time monitoring and alerting
-    """    
+    """
+    
     def __init__(self):
         self.policies: Dict[str, BackupPolicy] = {}
         self.backup_history: List[BackupMetadata] = []
@@ -247,7 +259,8 @@ class AdvancedBackupManager:
         logger.info("🚀 AdvancedBackupManager initialized with multi-cloud support")
     
     def _initialize_cloud_clients(self):
-        """Initialize cloud storage clients"""        try:
+        """Initialize cloud storage clients"""
+        try:
             # AWS S3 client
             if os.getenv("AWS_ACCESS_KEY_ID"):
                 self._aws_s3_client = boto3.client(
@@ -274,7 +287,8 @@ class AdvancedBackupManager:
             logger.warning(f"⚠️ Cloud client initialization partial: {e}")
     
     def _create_default_policies(self):
-        """Create default backup policies"""        try:
+        """Create default backup policies"""
+        try:
             # High-frequency policy for critical data
             self.policies["critical_data"] = BackupPolicy(
                 policy_name="critical_data",
@@ -322,7 +336,8 @@ class AdvancedBackupManager:
     
     async def create_backup(self, source_path: str, policy_name: str, 
                            tags: Optional[Dict[str, str]] = None) -> str:
-        """Create backup according to specified policy"""        try:
+        """Create backup according to specified policy"""
+        try:
             backup_id = f"backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{hashlib.sha256(source_path.encode()).hexdigest()[:8]}"
             
             if policy_name not in self.policies:
@@ -409,7 +424,8 @@ class AdvancedBackupManager:
             raise
     
     async def _determine_backup_files(self, source_path: str, policy: BackupPolicy) -> List[str]:
-        """Determine which files need to be backed up based on backup type"""        try:
+        """Determine which files need to be backed up based on backup type"""
+        try:
             files_to_backup = []
             
             if policy.backup_type == BackupType.FULL:
@@ -450,7 +466,8 @@ class AdvancedBackupManager:
             return []
     
     def _find_last_successful_backup(self, source_path: str, policy_name: str) -> Optional[BackupMetadata]:
-        """Find the last successful backup for given source and policy"""        try:
+        """Find the last successful backup for given source and policy"""
+        try:
             successful_backups = [
                 backup for backup in self.backup_history
                 if (backup.source_path == source_path and 
@@ -468,7 +485,8 @@ class AdvancedBackupManager:
             return None
     
     async def _create_backup_package(self, files: List[str], policy: BackupPolicy) -> bytes:
-        """Create compressed and optionally encrypted backup package"""        try:
+        """Create compressed and optionally encrypted backup package"""
+        try:
             # Create temporary tar-like structure in memory
             backup_data = {}
             
@@ -509,7 +527,8 @@ class AdvancedBackupManager:
     
     async def _upload_to_clouds(self, backup_data: bytes, metadata: BackupMetadata, 
                                policy: BackupPolicy) -> List[str]:
-        """Upload backup to configured cloud providers"""        try:
+        """Upload backup to configured cloud providers"""
+        try:
             upload_tasks = []
             cloud_locations = []
             
@@ -553,7 +572,8 @@ class AdvancedBackupManager:
     
     async def _upload_to_aws_s3(self, backup_data: bytes, metadata: BackupMetadata, 
                                policy: BackupPolicy) -> str:
-        """Upload backup to AWS S3"""        try:
+        """Upload backup to AWS S3"""
+        try:
             bucket_name = os.getenv("AWS_BACKUP_BUCKET", "ia-influencer-backups")
             key = f"{policy.policy_name}/{metadata.backup_id}/{metadata.backup_id}.backup"
             
@@ -609,7 +629,8 @@ class AdvancedBackupManager:
     
     async def _upload_to_gcs(self, backup_data: bytes, metadata: BackupMetadata, 
                             policy: BackupPolicy) -> str:
-        """Upload backup to Google Cloud Storage"""        try:
+        """Upload backup to Google Cloud Storage"""
+        try:
             bucket_name = os.getenv("GCS_BACKUP_BUCKET", "ia-influencer-backups")
             blob_name = f"{policy.policy_name}/{metadata.backup_id}/{metadata.backup_id}.backup"
             
@@ -648,7 +669,8 @@ class AdvancedBackupManager:
     
     async def _upload_to_azure(self, backup_data: bytes, metadata: BackupMetadata, 
                               policy: BackupPolicy) -> str:
-        """Upload backup to Azure Blob Storage"""        try:
+        """Upload backup to Azure Blob Storage"""
+        try:
             container_name = os.getenv("AZURE_BACKUP_CONTAINER", "ia-influencer-backups")
             blob_name = f"{policy.policy_name}/{metadata.backup_id}/{metadata.backup_id}.backup"
             
@@ -690,7 +712,8 @@ class AdvancedBackupManager:
             raise
     
     def _update_backup_metrics(self, metadata: BackupMetadata):
-        """Update backup metrics based on completed backup"""        try:
+        """Update backup metrics based on completed backup"""
+        try:
             self.metrics.total_backups += 1
             
             if metadata.status == BackupStatus.COMPLETED:
@@ -731,7 +754,8 @@ class AdvancedBackupManager:
     
     async def restore_backup(self, backup_id: str, target_path: str, 
                             requested_by: str, point_in_time: Optional[datetime] = None) -> str:
-        """Restore backup to specified location"""        try:
+        """Restore backup to specified location"""
+        try:
             request_id = f"restore_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{hashlib.sha256(backup_id.encode()).hexdigest()[:8]}"
             
             # Find backup metadata
@@ -799,7 +823,8 @@ class AdvancedBackupManager:
             raise
     
     async def _download_backup_data(self, metadata: BackupMetadata) -> bytes:
-        """Download backup data from cloud storage"""        try:
+        """Download backup data from cloud storage"""
+        try:
             # Try each cloud location until successful
             for location in metadata.cloud_locations:
                 try:
@@ -823,7 +848,8 @@ class AdvancedBackupManager:
             raise
     
     async def _download_from_aws_s3(self, s3_path: str) -> bytes:
-        """Download backup from AWS S3"""        try:
+        """Download backup from AWS S3"""
+        try:
             # Parse S3 path
             s3_path = s3_path.replace('s3://', '')
             bucket, key = s3_path.split('/', 1)
@@ -836,7 +862,8 @@ class AdvancedBackupManager:
             raise
     
     async def _download_from_gcs(self, gcs_path: str) -> bytes:
-        """Download backup from Google Cloud Storage"""        try:
+        """Download backup from Google Cloud Storage"""
+        try:
             # Parse GCS path
             gcs_path = gcs_path.replace('gs://', '')
             bucket_name, blob_name = gcs_path.split('/', 1)
@@ -851,7 +878,8 @@ class AdvancedBackupManager:
             raise
     
     async def _download_from_azure(self, azure_path: str) -> bytes:
-        """Download backup from Azure Blob Storage"""        try:
+        """Download backup from Azure Blob Storage"""
+        try:
             # Parse Azure path and extract container and blob name
             # Format: https://account.blob.core.windows.net/container/blob
             path_parts = azure_path.split('/')
@@ -870,7 +898,8 @@ class AdvancedBackupManager:
             raise
     
     async def _extract_backup_package(self, backup_data: bytes, metadata: BackupMetadata) -> Dict[str, Any]:
-        """Extract and decompress backup package"""        try:
+        """Extract and decompress backup package"""
+        try:
             # Get policy for compression settings
             policy = self.policies.get(metadata.policy_name)
             
@@ -898,7 +927,8 @@ class AdvancedBackupManager:
     
     async def _restore_files(self, restored_data: Dict[str, Any], target_path: str, 
                             recovery_request: RecoveryRequest) -> List[str]:
-        """Restore files to target location"""        try:
+        """Restore files to target location"""
+        try:
             restored_files = []
             
             # Create target directory if it doesn't exist
@@ -938,7 +968,8 @@ class AdvancedBackupManager:
             raise
     
     def _update_recovery_metrics(self, recovery_request: RecoveryRequest):
-        """Update recovery metrics"""        try:
+        """Update recovery metrics"""
+        try:
             self.metrics.total_recovery_requests += 1
             
             if recovery_request.status == BackupStatus.COMPLETED:
@@ -962,7 +993,8 @@ class AdvancedBackupManager:
             logger.error(f"❌ Recovery metrics update failed: {e}")
     
     async def verify_backup_integrity(self, backup_id: str) -> Dict[str, Any]:
-        """Verify backup integrity using checksums"""        try:
+        """Verify backup integrity using checksums"""
+        try:
             logger.info(f"🔍 Verifying backup integrity: {backup_id}")
             
             # Find backup metadata
@@ -1040,7 +1072,8 @@ class AdvancedBackupManager:
             return {"backup_id": backup_id, "error": str(e)}
     
     async def get_backup_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive backup metrics"""        try:
+        """Get comprehensive backup metrics"""
+        try:
             # Calculate additional metrics
             success_rate = (
                 (self.metrics.successful_backups / self.metrics.total_backups * 100)
@@ -1097,7 +1130,8 @@ backup_manager = AdvancedBackupManager()
 
 # Factory functions
 def create_backup_manager() -> AdvancedBackupManager:
-    """Factory function to create backup manager instance"""    return AdvancedBackupManager()
+    """Factory function to create backup manager instance"""
+    return AdvancedBackupManager()
 
 
 def create_custom_backup_policy(
@@ -1106,7 +1140,8 @@ def create_custom_backup_policy(
     schedule: str,
     retention_days: int = 90
 ) -> BackupPolicy:
-    """Factory function to create custom backup policy"""    return BackupPolicy(
+    """Factory function to create custom backup policy"""
+    return BackupPolicy(
         policy_name=name,
         backup_type=backup_type,
         backup_tier=BackupTier.WARM,
@@ -1119,7 +1154,8 @@ def create_custom_backup_policy(
 
 # Usage Example
 async def main():
-    """Example usage of AdvancedBackupManager"""    try:
+    """Example usage of AdvancedBackupManager"""
+    try:
         backup_mgr = create_backup_manager()
         
         # Create a backup

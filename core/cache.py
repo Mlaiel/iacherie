@@ -3,7 +3,8 @@ High-performance caching with Redis, intelligent invalidation, and distributed l
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import json
+"""
+import json
 import pickle
 import hashlib
 from datetime import datetime, timedelta
@@ -15,31 +16,38 @@ from ..config import settings
 
 
 class CacheKeyGenerator:
-    """Intelligent cache key generation and management"""    
+    """Intelligent cache key generation and management"""
+    
     @staticmethod
     def generate_key(prefix: str, *args, **kwargs) -> str:
-        """Generate consistent cache key from parameters"""        # Create deterministic hash from all parameters
+        """Generate consistent cache key from parameters"""
+        # Create deterministic hash from all parameters
         key_data = f"{prefix}:{':'.join(map(str, args))}:{':'.join(f'{k}={v}' for k, v in sorted(kwargs.items()))}"
         return hashlib.md5(key_data.encode()).hexdigest()
     
     @staticmethod
     def user_key(user_id: str, key_type: str, *args) -> str:
-        """Generate user-specific cache key"""        return CacheKeyGenerator.generate_key(f"user:{user_id}:{key_type}", *args)
+        """Generate user-specific cache key"""
+        return CacheKeyGenerator.generate_key(f"user:{user_id}:{key_type}", *args)
     
     @staticmethod
     def content_key(content_id: str, key_type: str, *args) -> str:
-        """Generate content-specific cache key"""        return CacheKeyGenerator.generate_key(f"content:{content_id}:{key_type}", *args)
+        """Generate content-specific cache key"""
+        return CacheKeyGenerator.generate_key(f"content:{content_id}:{key_type}", *args)
     
     @staticmethod
     def platform_key(platform: str, key_type: str, *args) -> str:
-        """Generate platform-specific cache key"""        return CacheKeyGenerator.generate_key(f"platform:{platform}:{key_type}", *args)
+        """Generate platform-specific cache key"""
+        return CacheKeyGenerator.generate_key(f"platform:{platform}:{key_type}", *args)
 
 
 class CacheSerializer:
-    """Advanced serialization for complex objects"""    
+    """Advanced serialization for complex objects"""
+    
     @staticmethod
     def serialize(data: Any) -> bytes:
-        """Serialize data for caching"""        if isinstance(data, (dict, list, tuple)):
+        """Serialize data for caching"""
+        if isinstance(data, (dict, list, tuple)):
             return json.dumps(data, default=str).encode()
         elif isinstance(data, (str, int, float, bool)):
             return json.dumps(data).encode()
@@ -48,7 +56,8 @@ class CacheSerializer:
     
     @staticmethod
     def deserialize(data: bytes) -> Any:
-        """Deserialize cached data"""        try:
+        """Deserialize cached data"""
+        try:
             # Try JSON first (faster)
             return json.loads(data.decode())
         except (json.JSONDecodeError, UnicodeDecodeError):
@@ -57,7 +66,8 @@ class CacheSerializer:
 
 
 class DistributedLock:
-    """Distributed locking mechanism using Redis"""    
+    """Distributed locking mechanism using Redis"""
+    
     def __init__(self, redis_client, lock_key: str, timeout: int = 10):
         self.redis_client = redis_client
         self.lock_key = f"lock:{lock_key}"
@@ -65,7 +75,8 @@ class DistributedLock:
         self.acquired = False
     
     async def __aenter__(self):
-        """Acquire distributed lock"""        start_time = datetime.utcnow()
+        """Acquire distributed lock"""
+        start_time = datetime.utcnow()
         
         while (datetime.utcnow() - start_time).seconds < self.timeout:
             # Try to acquire lock
@@ -86,15 +97,18 @@ class DistributedLock:
         raise TimeoutError(f"Could not acquire lock '{self.lock_key}' within {self.timeout} seconds")
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Release distributed lock"""        if self.acquired:
+        """Release distributed lock"""
+        if self.acquired:
             await self.redis_client.delete(self.lock_key)
             self.acquired = False
 
 
 class CacheManager:
-    """    Advanced cache management with intelligent strategies and performance optimization.
+    """
+    Advanced cache management with intelligent strategies and performance optimization.
     Supports multiple cache types, automatic invalidation, and distributed operations.
-    """    
+    """
+    
     def __init__(self):
         self.redis_client = None
         self.local_cache = {}
@@ -107,10 +121,12 @@ class CacheManager:
         self.invalidation_patterns = {}
     
     async def initialize(self, redis_client):
-        """Initialize cache manager with Redis client"""        self.redis_client = redis_client
+        """Initialize cache manager with Redis client"""
+        self.redis_client = redis_client
     
     async def get(self, key: str, default: Any = None) -> Any:
-        """Get value from cache with fallback hierarchy"""        try:
+        """Get value from cache with fallback hierarchy"""
+        try:
             # Try Redis first
             if self.redis_client:
                 cached_data = await self.redis_client.get(key)
@@ -135,7 +151,8 @@ class CacheManager:
             return default
     
     async def set(self, key: str, value: Any, ttl: int = 3600, cache_type: str = "redis") -> bool:
-        """Set value in cache with TTL"""        try:
+        """Set value in cache with TTL"""
+        try:
             serialized_data = CacheSerializer.serialize(value)
             
             # Set in Redis
@@ -156,7 +173,8 @@ class CacheManager:
             return False
     
     async def delete(self, key: str) -> bool:
-        """Delete key from all cache layers"""        try:
+        """Delete key from all cache layers"""
+        try:
             deleted = False
             
             # Delete from Redis
@@ -178,7 +196,8 @@ class CacheManager:
             return False
     
     async def delete_pattern(self, pattern: str) -> int:
-        """Delete all keys matching pattern"""        try:
+        """Delete all keys matching pattern"""
+        try:
             deleted_count = 0
             
             # Delete from Redis
@@ -200,10 +219,12 @@ class CacheManager:
             return 0
     
     def _match_pattern(self, key: str, pattern: str) -> bool:
-        """Simple pattern matching for cache keys"""        return pattern.replace("*", "") in key
+        """Simple pattern matching for cache keys"""
+        return pattern.replace("*", "") in key
     
     async def exists(self, key: str) -> bool:
-        """Check if key exists in cache"""        try:
+        """Check if key exists in cache"""
+        try:
             # Check Redis
             if self.redis_client:
                 exists = await self.redis_client.exists(key)
@@ -224,7 +245,8 @@ class CacheManager:
             return False
     
     async def increment(self, key: str, amount: int = 1, ttl: int = 3600) -> int:
-        """Increment numeric value in cache"""        try:
+        """Increment numeric value in cache"""
+        try:
             if self.redis_client:
                 result = await self.redis_client.incrby(key, amount)
                 await self.redis_client.expire(key, ttl)
@@ -240,7 +262,8 @@ class CacheManager:
     
     async def get_or_set(self, key: str, factory: Callable, ttl: int = 3600, 
                         cache_type: str = "redis") -> Any:
-        """Get value from cache or compute and store it"""        # Try to get from cache first
+        """Get value from cache or compute and store it"""
+        # Try to get from cache first
         cached_value = await self.get(key)
         if cached_value is not None:
             return cached_value
@@ -256,7 +279,8 @@ class CacheManager:
         return computed_value
     
     async def get_multi(self, keys: List[str]) -> Dict[str, Any]:
-        """Get multiple values from cache"""        results = {}
+        """Get multiple values from cache"""
+        results = {}
         
         try:
             # Get from Redis using pipeline
@@ -289,7 +313,8 @@ class CacheManager:
     
     async def set_multi(self, mapping: Dict[str, Any], ttl: int = 3600, 
                        cache_type: str = "redis") -> bool:
-        """Set multiple values in cache"""        try:
+        """Set multiple values in cache"""
+        try:
             # Set in Redis using pipeline
             if cache_type in ["redis", "both"] and self.redis_client:
                 pipe = self.redis_client.pipeline()
@@ -314,10 +339,12 @@ class CacheManager:
             return False
     
     def register_invalidation_pattern(self, event_type: str, patterns: List[str]):
-        """Register cache invalidation patterns for events"""        self.invalidation_patterns[event_type] = patterns
+        """Register cache invalidation patterns for events"""
+        self.invalidation_patterns[event_type] = patterns
     
     async def invalidate_by_event(self, event_type: str, **kwargs):
-        """Invalidate cache based on event type and parameters"""        if event_type not in self.invalidation_patterns:
+        """Invalidate cache based on event type and parameters"""
+        if event_type not in self.invalidation_patterns:
             return
         
         for pattern_template in self.invalidation_patterns[event_type]:
@@ -325,10 +352,12 @@ class CacheManager:
             await self.delete_pattern(pattern)
     
     async def get_distributed_lock(self, lock_key: str, timeout: int = 10) -> DistributedLock:
-        """Get distributed lock for cache operations"""        return DistributedLock(self.redis_client, lock_key, timeout)
+        """Get distributed lock for cache operations"""
+        return DistributedLock(self.redis_client, lock_key, timeout)
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get cache performance statistics"""        total_requests = self.cache_stats["hits"] + self.cache_stats["misses"]
+        """Get cache performance statistics"""
+        total_requests = self.cache_stats["hits"] + self.cache_stats["misses"]
         hit_rate = (self.cache_stats["hits"] / total_requests * 100) if total_requests > 0 else 0
         
         return {
@@ -339,7 +368,8 @@ class CacheManager:
         }
     
     async def clear_all(self) -> bool:
-        """Clear all cache layers"""        try:
+        """Clear all cache layers"""
+        try:
             # Clear Redis
             if self.redis_client:
                 await self.redis_client.flushdb()
@@ -354,7 +384,8 @@ class CacheManager:
     
     def cache_function(self, ttl: int = 3600, key_prefix: str = "func", 
                       cache_type: str = "redis"):
-        """Decorator to cache function results"""        def decorator(func: Callable):
+        """Decorator to cache function results"""
+        def decorator(func: Callable):
             @wraps(func)
             async def wrapper(*args, **kwargs):
                 # Generate cache key from function name and arguments

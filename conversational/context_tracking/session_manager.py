@@ -9,7 +9,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited. Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set
@@ -27,7 +28,8 @@ from ...utils.validation import validate_required_fields
 
 
 class SessionStatus(Enum):
-    """Session status types"""    ACTIVE = "active"
+    """Session status types"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPENDED = "suspended"
     EXPIRED = "expired"
@@ -35,7 +37,8 @@ class SessionStatus(Enum):
 
 
 class SessionType(Enum):
-    """Session types for different interaction modes"""    WEB = "web"
+    """Session types for different interaction modes"""
+    WEB = "web"
     MOBILE = "mobile"
     API = "api"
     WEBHOOK = "webhook"
@@ -44,7 +47,8 @@ class SessionType(Enum):
 
 
 class PlatformType(Enum):
-    """Supported platforms"""    INSTAGRAM = "instagram"
+    """Supported platforms"""
+    INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
@@ -58,7 +62,8 @@ class PlatformType(Enum):
 
 @dataclass
 class SessionActivity:
-    """Individual session activity record"""    activity_id: str
+    """Individual session activity record"""
+    activity_id: str
     session_id: str
     activity_type: str
     timestamp: datetime
@@ -69,7 +74,8 @@ class SessionActivity:
     error_message: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""        return {
+        """Convert to dictionary representation"""
+        return {
             "activity_id": self.activity_id,
             "session_id": self.session_id,
             "activity_type": self.activity_type,
@@ -84,7 +90,8 @@ class SessionActivity:
 
 @dataclass
 class SessionMetrics:
-    """Session performance metrics"""    total_activities: int = 0
+    """Session performance metrics"""
+    total_activities: int = 0
     successful_activities: int = 0
     failed_activities: int = 0
     total_duration: float = 0.0  # seconds
@@ -95,12 +102,14 @@ class SessionMetrics:
     engagement_score: float = 0.0
     
     def calculate_success_rate(self) -> float:
-        """Calculate success rate percentage"""        if self.total_activities == 0:
+        """Calculate success rate percentage"""
+        if self.total_activities == 0:
             return 0.0
         return (self.successful_activities / self.total_activities) * 100
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""        return {
+        """Convert to dictionary representation"""
+        return {
             "total_activities": self.total_activities,
             "successful_activities": self.successful_activities,
             "failed_activities": self.failed_activities,
@@ -116,7 +125,8 @@ class SessionMetrics:
 
 @dataclass
 class UserSession:
-    """Comprehensive user session with state management"""    session_id: str
+    """Comprehensive user session with state management"""
+    session_id: str
     user_id: str
     session_type: SessionType
     status: SessionStatus
@@ -145,21 +155,25 @@ class UserSession:
     preferences: Dict[str, Any] = field(default_factory=dict)
     
     def is_active(self) -> bool:
-        """Check if session is currently active"""        return (
+        """Check if session is currently active"""
+        return (
             self.status == SessionStatus.ACTIVE and
             datetime.utcnow() < self.expires_at
         )
     
     def is_expired(self) -> bool:
-        """Check if session has expired"""        return datetime.utcnow() >= self.expires_at
+        """Check if session has expired"""
+        return datetime.utcnow() >= self.expires_at
     
     def update_activity(self):
-        """Update last activity timestamp"""        self.last_activity = datetime.utcnow()
+        """Update last activity timestamp"""
+        self.last_activity = datetime.utcnow()
         if self.status == SessionStatus.INACTIVE:
             self.status = SessionStatus.ACTIVE
     
     def add_activity(self, activity: SessionActivity):
-        """Add activity to session"""        self.activities.append(activity)
+        """Add activity to session"""
+        self.activities.append(activity)
         self.update_activity()
         
         # Update metrics
@@ -179,7 +193,8 @@ class UserSession:
             self.metrics.total_duration += activity.duration
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""        return {
+        """Convert to dictionary representation"""
+        return {
             "session_id": self.session_id,
             "user_id": self.user_id,
             "session_type": self.session_type.value,
@@ -202,7 +217,8 @@ class UserSession:
 
 
 class SessionManager:
-    """    Enterprise session manager providing intelligent session tracking,
+    """
+    Enterprise session manager providing intelligent session tracking,
     state persistence, and cross-platform continuity for content creators.
     
     Features:
@@ -212,7 +228,8 @@ class SessionManager:
     - Activity tracking and analytics
     - Security-aware session handling
     - Cross-device session continuity
-    """    
+    """
+    
     def __init__(
         self,
         cache_manager: CacheManager,
@@ -242,7 +259,8 @@ class SessionManager:
         self.logger.info("SessionManager initialized")
     
     async def start(self):
-        """Start the session manager"""        try:
+        """Start the session manager"""
+        try:
             # Load existing sessions
             await self._load_sessions()
             
@@ -256,7 +274,8 @@ class SessionManager:
             raise SessionManagerError(f"Startup failed: {e}")
     
     async def stop(self):
-        """Stop the session manager"""        try:
+        """Stop the session manager"""
+        try:
             # Cancel background tasks
             if self.cleanup_task:
                 self.cleanup_task.cancel()
@@ -283,7 +302,8 @@ class SessionManager:
         initial_state: Optional[Dict[str, Any]] = None,
         security_context: Optional[Dict[str, Any]] = None
     ) -> UserSession:
-        """        Create new user session
+        """
+        Create new user session
         
         Args:
             user_id: User identifier
@@ -296,7 +316,8 @@ class SessionManager:
             
         Returns:
             UserSession: Created session
-        """        try:
+        """
+        try:
             validate_required_fields({"user_id": user_id, "session_type": session_type})
             
             # Security validation
@@ -361,7 +382,8 @@ class SessionManager:
         session_id: str,
         validate_active: bool = True
     ) -> Optional[UserSession]:
-        """        Get session by ID
+        """
+        Get session by ID
         
         Args:
             session_id: Session identifier
@@ -369,7 +391,8 @@ class SessionManager:
             
         Returns:
             UserSession or None if not found
-        """        try:
+        """
+        try:
             # Check in-memory storage first
             session = self.active_sessions.get(session_id)
             
@@ -409,7 +432,8 @@ class SessionManager:
         success: bool = True,
         error_message: Optional[str] = None
     ) -> bool:
-        """        Update session with new activity
+        """
+        Update session with new activity
         
         Args:
             session_id: Session identifier
@@ -422,7 +446,8 @@ class SessionManager:
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             session = await self.get_session(session_id)
             if not session:
                 return False
@@ -470,7 +495,8 @@ class SessionManager:
         value: Any,
         persistent: bool = False
     ) -> bool:
-        """        Set session state value
+        """
+        Set session state value
         
         Args:
             session_id: Session identifier
@@ -480,7 +506,8 @@ class SessionManager:
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             session = await self.get_session(session_id)
             if not session:
                 return False
@@ -507,7 +534,8 @@ class SessionManager:
         key: str,
         default: Any = None
     ) -> Any:
-        """        Get session state value
+        """
+        Get session state value
         
         Args:
             session_id: Session identifier
@@ -516,7 +544,8 @@ class SessionManager:
             
         Returns:
             State value or default
-        """        try:
+        """
+        try:
             session = await self.get_session(session_id)
             if not session:
                 return default
@@ -537,7 +566,8 @@ class SessionManager:
         user_id: str,
         active_only: bool = True
     ) -> List[UserSession]:
-        """        Get all sessions for a user
+        """
+        Get all sessions for a user
         
         Args:
             user_id: User identifier
@@ -545,7 +575,8 @@ class SessionManager:
             
         Returns:
             List of user sessions
-        """        try:
+        """
+        try:
             session_ids = self.user_sessions.get(user_id, set())
             sessions = []
             
@@ -565,7 +596,8 @@ class SessionManager:
         session_id: str,
         reason: str = "user_request"
     ) -> bool:
-        """        Terminate session
+        """
+        Terminate session
         
         Args:
             session_id: Session identifier
@@ -573,7 +605,8 @@ class SessionManager:
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             session = self.active_sessions.get(session_id)
             if not session:
                 return False
@@ -614,7 +647,8 @@ class SessionManager:
         session_id: str,
         extension_seconds: int
     ) -> bool:
-        """        Extend session expiration time
+        """
+        Extend session expiration time
         
         Args:
             session_id: Session identifier
@@ -622,7 +656,8 @@ class SessionManager:
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             session = await self.get_session(session_id)
             if not session:
                 return False
@@ -654,7 +689,8 @@ class SessionManager:
         platform: Optional[PlatformType] = None,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """        Get session analytics
+        """
+        Get session analytics
         
         Args:
             user_id: Filter by specific user
@@ -663,7 +699,8 @@ class SessionManager:
             
         Returns:
             Dict containing analytics data
-        """        try:
+        """
+        try:
             sessions_to_analyze = []
             
             # Collect sessions based on filters
@@ -746,7 +783,8 @@ class SessionManager:
     # Private helper methods
     
     async def _enforce_session_limits(self, user_id: str):
-        """Enforce maximum sessions per user"""        user_session_ids = self.user_sessions.get(user_id, set())
+        """Enforce maximum sessions per user"""
+        user_session_ids = self.user_sessions.get(user_id, set())
         
         if len(user_session_ids) >= self.max_sessions_per_user:
             # Terminate oldest sessions
@@ -765,7 +803,8 @@ class SessionManager:
                 await self.terminate_session(session.session_id, "session_limit_exceeded")
     
     async def _update_session_cache(self, session: UserSession):
-        """Update session in cache"""        try:
+        """Update session in cache"""
+        try:
             remaining_ttl = int((session.expires_at - datetime.utcnow()).total_seconds())
             if remaining_ttl > 0:
                 await self.cache_manager.set(
@@ -777,7 +816,8 @@ class SessionManager:
             self.logger.error(f"Error updating session cache: {e}")
     
     async def _expire_session(self, session_id: str):
-        """Mark session as expired"""        try:
+        """Mark session as expired"""
+        try:
             session = self.active_sessions.get(session_id)
             if session:
                 session.status = SessionStatus.EXPIRED
@@ -804,7 +844,8 @@ class SessionManager:
             self.logger.error(f"Error expiring session {session_id}: {e}")
     
     async def _archive_session(self, session: UserSession):
-        """Archive session for historical analysis"""        try:
+        """Archive session for historical analysis"""
+        try:
             archive_key = f"session_archive:{session.user_id}:{session.session_id}"
             await self.cache_manager.set(
                 archive_key,
@@ -815,7 +856,8 @@ class SessionManager:
             self.logger.error(f"Error archiving session: {e}")
     
     async def _background_cleanup(self):
-        """Background task for session cleanup"""        while True:
+        """Background task for session cleanup"""
+        while True:
             try:
                 await asyncio.sleep(self.cleanup_interval)
                 
@@ -847,7 +889,8 @@ class SessionManager:
                 await asyncio.sleep(60)  # Wait before retrying
     
     async def _load_sessions(self):
-        """Load sessions from persistent storage"""        try:
+        """Load sessions from persistent storage"""
+        try:
             # Load from cache
             session_data = await self.cache_manager.get("active_sessions")
             if session_data:
@@ -861,7 +904,8 @@ class SessionManager:
             self.logger.error(f"Error loading sessions: {e}")
     
     async def _save_sessions(self):
-        """Save sessions to persistent storage"""        try:
+        """Save sessions to persistent storage"""
+        try:
             # Save only important active sessions
             sessions_to_save = {}
             for session_id, session in self.active_sessions.items():
@@ -878,7 +922,8 @@ class SessionManager:
             self.logger.error(f"Error saving sessions: {e}")
     
     def _session_from_dict(self, data: Dict[str, Any]) -> UserSession:
-        """Reconstruct session from dictionary"""        # Reconstruct activities
+        """Reconstruct session from dictionary"""
+        # Reconstruct activities
         activities = []
         # Note: Activities are not stored in dict to reduce size
         # They would be loaded separately if needed

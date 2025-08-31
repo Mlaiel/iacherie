@@ -16,7 +16,8 @@ Features:
 - Multi-modal analysis (visual + audio)
 - Temporal pattern recognition
 - High-performance parallel processing
-"""import logging
+"""
+import logging
 import numpy as np
 import torch
 import torch.nn as nn
@@ -42,7 +43,8 @@ except ImportError:
 
 
 class VideoTaskType(Enum):
-    """Video analysis task types"""    CLASSIFICATION = "classification"
+    """Video analysis task types"""
+    CLASSIFICATION = "classification"
     ACTION_RECOGNITION = "action_recognition"
     SCENE_DETECTION = "scene_detection"
     OBJECT_TRACKING = "object_tracking"
@@ -50,7 +52,8 @@ class VideoTaskType(Enum):
 
 
 class ActionType(Enum):
-    """Recognized action types"""    WALKING = "walking"
+    """Recognized action types"""
+    WALKING = "walking"
     RUNNING = "running"
     SITTING = "sitting"
     STANDING = "standing"
@@ -62,7 +65,8 @@ class ActionType(Enum):
 
 
 class SceneType(Enum):
-    """Scene types in videos"""    INDOOR = "indoor"
+    """Scene types in videos"""
+    INDOOR = "indoor"
     OUTDOOR = "outdoor"
     NATURE = "nature"
     URBAN = "urban"
@@ -74,7 +78,8 @@ class SceneType(Enum):
 
 @dataclass
 class VideoFrame:
-    """Represents a single video frame"""    frame_id: int
+    """Represents a single video frame"""
+    frame_id: int
     timestamp: float
     image: np.ndarray
     metadata: Dict[str, Any] = None
@@ -82,7 +87,8 @@ class VideoFrame:
 
 @dataclass
 class VideoAnalysisResult:
-    """Result from video analysis"""    task_type: VideoTaskType
+    """Result from video analysis"""
+    task_type: VideoTaskType
     predictions: List[Dict[str, Any]]
     confidence: float
     processing_time: float
@@ -90,14 +96,16 @@ class VideoAnalysisResult:
     metadata: Dict[str, Any] = None
     
     def get_best_prediction(self) -> Dict[str, Any]:
-        """Get the prediction with highest confidence"""        if not self.predictions:
+        """Get the prediction with highest confidence"""
+        if not self.predictions:
             return {}
         return max(self.predictions, key=lambda x: x.get('confidence', 0))
 
 
 @dataclass
 class ActionDetection:
-    """Action detection result"""    action_type: ActionType
+    """Action detection result"""
+    action_type: ActionType
     confidence: float
     start_frame: int
     end_frame: int
@@ -108,7 +116,8 @@ class ActionDetection:
 
 @dataclass
 class SceneSegment:
-    """Scene segment in video"""    scene_type: SceneType
+    """Scene segment in video"""
+    scene_type: SceneType
     start_frame: int
     end_frame: int
     start_time: float
@@ -118,7 +127,8 @@ class SceneSegment:
 
 
 class BaseVideoAnalyzer(ABC):
-    """Base class for video analyzers"""    
+    """Base class for video analyzers"""
+    
     def __init__(self, analyzer_name: str = "base_video"):
         self.analyzer_name = analyzer_name
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -127,14 +137,17 @@ class BaseVideoAnalyzer(ABC):
         
     @abstractmethod
     def load_model(self) -> bool:
-        """Load the video analysis model"""        pass
+        """Load the video analysis model"""
+        pass
         
     @abstractmethod
     def analyze_video(self, video_path: str) -> VideoAnalysisResult:
-        """Analyze video file"""        pass
+        """Analyze video file"""
+        pass
         
     def extract_frames(self, video_path: str, max_frames: int = 100) -> List[VideoFrame]:
-        """Extract frames from video file"""        frames = []
+        """Extract frames from video file"""
+        frames = []
         
         try:
             cap = cv2.VideoCapture(video_path)
@@ -174,7 +187,8 @@ class BaseVideoAnalyzer(ABC):
         return frames
     
     def preprocess_frame(self, frame: np.ndarray) -> torch.Tensor:
-        """Preprocess video frame for model input"""        if not TORCHVISION_AVAILABLE:
+        """Preprocess video frame for model input"""
+        if not TORCHVISION_AVAILABLE:
             # Simple preprocessing without torchvision
             frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             frame_resized = cv2.resize(frame_rgb, (224, 224))
@@ -197,7 +211,8 @@ class BaseVideoAnalyzer(ABC):
 
 
 class VideoAnalyzer(BaseVideoAnalyzer):
-    """General video content analyzer"""    
+    """General video content analyzer"""
+    
     def __init__(self, model_name: str = "video_analyzer_v1"):
         super().__init__(f"analyzer_{model_name}")
         self.content_categories = [
@@ -206,7 +221,8 @@ class VideoAnalyzer(BaseVideoAnalyzer):
         ]
         
     def load_model(self) -> bool:
-        """Load video analysis model"""        try:
+        """Load video analysis model"""
+        try:
             if TORCHVISION_AVAILABLE:
                 # Use pre-trained model for video classification
                 self.model = resnet50(pretrained=True)
@@ -226,7 +242,8 @@ class VideoAnalyzer(BaseVideoAnalyzer):
             return False
     
     def _create_simple_model(self):
-        """Create a simple model when torchvision is not available"""        class SimpleVideoModel(nn.Module):
+        """Create a simple model when torchvision is not available"""
+        class SimpleVideoModel(nn.Module):
             def __init__(self, num_classes):
                 super().__init__()
                 self.features = nn.Sequential(
@@ -255,7 +272,8 @@ class VideoAnalyzer(BaseVideoAnalyzer):
         return SimpleVideoModel(len(self.content_categories))
     
     def analyze_video(self, video_path: str) -> VideoAnalysisResult:
-        """Analyze video content"""        start_time = time.time()
+        """Analyze video content"""
+        start_time = time.time()
         
         try:
             if not self.is_loaded:
@@ -335,7 +353,8 @@ class VideoAnalyzer(BaseVideoAnalyzer):
             )
     
     def analyze_frames(self, frames: List[VideoFrame]) -> VideoAnalysisResult:
-        """Analyze a list of video frames"""        start_time = time.time()
+        """Analyze a list of video frames"""
+        start_time = time.time()
         
         try:
             if not self.is_loaded:
@@ -392,14 +411,16 @@ class VideoAnalyzer(BaseVideoAnalyzer):
 
 
 class ActionRecognizer(BaseVideoAnalyzer):
-    """Action recognition in videos"""    
+    """Action recognition in videos"""
+    
     def __init__(self, model_name: str = "action_recognizer_v1"):
         super().__init__(f"action_{model_name}")
         self.action_types = [action.value for action in ActionType if action != ActionType.UNKNOWN]
         self.temporal_window = 16  # Number of frames to analyze together
         
     def load_model(self) -> bool:
-        """Load action recognition model"""        try:
+        """Load action recognition model"""
+        try:
             # Create 3D CNN for action recognition
             self.model = self._create_3d_model()
             self.model.to(self.device)
@@ -413,7 +434,8 @@ class ActionRecognizer(BaseVideoAnalyzer):
             return False
     
     def _create_3d_model(self):
-        """Create 3D CNN model for action recognition"""        class Action3DCNN(nn.Module):
+        """Create 3D CNN model for action recognition"""
+        class Action3DCNN(nn.Module):
             def __init__(self, num_classes):
                 super().__init__()
                 self.conv3d_1 = nn.Conv3d(3, 64, kernel_size=(3, 7, 7), stride=(1, 2, 2), padding=(1, 3, 3))
@@ -453,7 +475,8 @@ class ActionRecognizer(BaseVideoAnalyzer):
         return Action3DCNN(len(self.action_types))
     
     def analyze_video(self, video_path: str) -> VideoAnalysisResult:
-        """Recognize actions in video"""        start_time = time.time()
+        """Recognize actions in video"""
+        start_time = time.time()
         
         try:
             if not self.is_loaded:
@@ -520,7 +543,8 @@ class ActionRecognizer(BaseVideoAnalyzer):
             )
     
     def _analyze_action_segment(self, frames: List[VideoFrame]) -> Optional[ActionDetection]:
-        """Analyze action in a segment of frames"""        try:
+        """Analyze action in a segment of frames"""
+        try:
             # Prepare 3D tensor: (1, channels, frames, height, width)
             frame_tensors = []
             for frame in frames:
@@ -558,14 +582,16 @@ class ActionRecognizer(BaseVideoAnalyzer):
 
 
 class SceneDetector(BaseVideoAnalyzer):
-    """Scene detection and segmentation in videos"""    
+    """Scene detection and segmentation in videos"""
+    
     def __init__(self, model_name: str = "scene_detector_v1"):
         super().__init__(f"scene_{model_name}")
         self.scene_types = [scene.value for scene in SceneType]
         self.change_threshold = 0.3  # Threshold for scene change detection
         
     def load_model(self) -> bool:
-        """Load scene detection model"""        try:
+        """Load scene detection model"""
+        try:
             if TORCHVISION_AVAILABLE:
                 # Use pre-trained model for scene classification
                 self.model = mobilenet_v3_large(pretrained=True)
@@ -589,7 +615,8 @@ class SceneDetector(BaseVideoAnalyzer):
             return False
     
     def _create_scene_model(self):
-        """Create scene classification model"""        class SceneModel(nn.Module):
+        """Create scene classification model"""
+        class SceneModel(nn.Module):
             def __init__(self, num_classes):
                 super().__init__()
                 self.features = nn.Sequential(
@@ -615,7 +642,8 @@ class SceneDetector(BaseVideoAnalyzer):
         return SceneModel(len(self.scene_types))
     
     def analyze_video(self, video_path: str) -> VideoAnalysisResult:
-        """Detect scene changes and classify scenes"""        start_time = time.time()
+        """Detect scene changes and classify scenes"""
+        start_time = time.time()
         
         try:
             if not self.is_loaded:
@@ -691,7 +719,8 @@ class SceneDetector(BaseVideoAnalyzer):
             )
     
     def _detect_scene_changes(self, frame_scenes: List[Dict]) -> List[SceneSegment]:
-        """Detect scene changes and create segments"""        if not frame_scenes:
+        """Detect scene changes and create segments"""
+        if not frame_scenes:
             return []
         
         segments = []

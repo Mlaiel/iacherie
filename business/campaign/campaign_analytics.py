@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is protected by copyright law. Unauthorized use, reproduction,
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
-"""from datetime import datetime, timedelta
+"""
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from enum import Enum
 from dataclasses import dataclass
@@ -26,7 +27,8 @@ from backend.utils.data_processor import DataProcessor
 
 
 class AnalyticsTimeframe(str, Enum):
-    """Analytics timeframe options"""    REAL_TIME = "real_time"
+    """Analytics timeframe options"""
+    REAL_TIME = "real_time"
     HOURLY = "hourly" 
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -36,7 +38,8 @@ class AnalyticsTimeframe(str, Enum):
 
 
 class MetricType(str, Enum):
-    """Available metric types"""    REACH = "reach"
+    """Available metric types"""
+    REACH = "reach"
     IMPRESSIONS = "impressions"
     ENGAGEMENT = "engagement"
     CLICKS = "clicks"
@@ -50,7 +53,8 @@ class MetricType(str, Enum):
 
 @dataclass
 class AnalyticsFilter:
-    """Analytics filter configuration"""    start_date: Optional[datetime] = None
+    """Analytics filter configuration"""
+    start_date: Optional[datetime] = None
     end_date: Optional[datetime] = None
     platforms: Optional[List[str]] = None
     content_types: Optional[List[str]] = None
@@ -61,7 +65,8 @@ class AnalyticsFilter:
 
 @dataclass
 class MetricInsight:
-    """Individual metric insight"""    metric_name: str
+    """Individual metric insight"""
+    metric_name: str
     current_value: float
     previous_value: float
     change_percentage: float
@@ -73,7 +78,8 @@ class MetricInsight:
 
 @dataclass
 class CampaignAnalyticsReport:
-    """Comprehensive campaign analytics report"""    campaign_id: str
+    """Comprehensive campaign analytics report"""
+    campaign_id: str
     timeframe: AnalyticsTimeframe
     filter_config: AnalyticsFilter
     metrics_summary: Dict[str, MetricInsight]
@@ -87,11 +93,13 @@ class CampaignAnalyticsReport:
 
 
 class CampaignAnalytics:
-    """    Advanced Campaign Analytics Engine
+    """
+    Advanced Campaign Analytics Engine
     
     Provides comprehensive analytics, reporting, and AI-powered insights
     for campaign performance optimization and decision making.
-    """    
+    """
+    
     def __init__(self):
         self.logger = get_logger(__name__)
         self.prediction_engine = PredictionEngine()
@@ -108,7 +116,8 @@ class CampaignAnalytics:
         filter_config: Optional[AnalyticsFilter] = None,
         include_predictions: bool = True
     ) -> CampaignAnalyticsReport:
-        """        Generate comprehensive analytics report for a campaign
+        """
+        Generate comprehensive analytics report for a campaign
         
         Args:
             campaign_id: Campaign unique identifier
@@ -118,7 +127,8 @@ class CampaignAnalytics:
             
         Returns:
             Comprehensive analytics report
-        """        try:
+        """
+        try:
             filter_config = filter_config or AnalyticsFilter()
             
             # Get campaign data
@@ -188,7 +198,8 @@ class CampaignAnalytics:
         campaign_id: str,
         metrics: Optional[List[MetricType]] = None
     ) -> Dict[str, Any]:
-        """        Get real-time campaign metrics
+        """
+        Get real-time campaign metrics
         
         Args:
             campaign_id: Campaign unique identifier
@@ -196,7 +207,8 @@ class CampaignAnalytics:
             
         Returns:
             Real-time metrics data
-        """        try:
+        """
+        try:
             # Use cache for recent data
             cache_key = f"realtime_{campaign_id}"
             if cache_key in self._metrics_cache:
@@ -236,7 +248,8 @@ class CampaignAnalytics:
         campaign_id: str,
         comparison_period: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """        Analyze campaign performance with comparative analysis
+        """
+        Analyze campaign performance with comparative analysis
         
         Args:
             campaign_id: Campaign unique identifier
@@ -244,7 +257,8 @@ class CampaignAnalytics:
             
         Returns:
             Performance analysis results
-        """        try:
+        """
+        try:
             # Get current performance data
             current_data = await self._get_performance_data(campaign_id)
             
@@ -286,7 +300,8 @@ class CampaignAnalytics:
         campaign_id: str,
         funnel_stages: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """        Track and analyze conversion funnel performance
+        """
+        Track and analyze conversion funnel performance
         
         Args:
             campaign_id: Campaign unique identifier
@@ -294,7 +309,8 @@ class CampaignAnalytics:
             
         Returns:
             Conversion funnel analysis
-        """        try:
+        """
+        try:
             default_stages = ["impression", "click", "engagement", "conversion"]
             stages = funnel_stages or default_stages
             
@@ -333,7 +349,8 @@ class CampaignAnalytics:
         campaign_id: str,
         segmentation_criteria: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Analyze audience segments and their performance
+        """
+        Analyze audience segments and their performance
         
         Args:
             campaign_id: Campaign unique identifier
@@ -341,7 +358,8 @@ class CampaignAnalytics:
             
         Returns:
             Audience segment analysis
-        """        try:
+        """
+        try:
             # Get audience data
             audience_data = await self._get_audience_data(campaign_id)
             
@@ -385,7 +403,8 @@ class CampaignAnalytics:
         forecast_days: int = 30,
         confidence_interval: float = 0.95
     ) -> Dict[str, Any]:
-        """        Generate predictive forecasts for campaign metrics
+        """
+        Generate predictive forecasts for campaign metrics
         
         Args:
             campaign_id: Campaign unique identifier
@@ -394,7 +413,8 @@ class CampaignAnalytics:
             
         Returns:
             Predictive forecast results
-        """        try:
+        """
+        try:
             # Get historical data
             historical_data = await self._get_historical_campaign_data(campaign_id)
             
@@ -439,7 +459,8 @@ class CampaignAnalytics:
         export_format: str = "json",
         filter_config: Optional[AnalyticsFilter] = None
     ) -> Dict[str, Any]:
-        """        Export analytics data in various formats
+        """
+        Export analytics data in various formats
         
         Args:
             campaign_id: Campaign unique identifier
@@ -448,7 +469,8 @@ class CampaignAnalytics:
             
         Returns:
             Export data and metadata
-        """        try:
+        """
+        try:
             # Generate comprehensive analytics report
             report = await self.generate_analytics_report(
                 campaign_id, AnalyticsTimeframe.CUSTOM, filter_config
@@ -482,7 +504,8 @@ class CampaignAnalytics:
         campaign_id: str, 
         filter_config: AnalyticsFilter
     ) -> Dict[str, Any]:
-        """Get campaign data with filtering"""        # Implementation for data retrieval
+        """Get campaign data with filtering"""
+        # Implementation for data retrieval
         return {"campaign_id": campaign_id}
     
     async def _calculate_metrics_summary(
@@ -490,7 +513,8 @@ class CampaignAnalytics:
         campaign_data: Dict, 
         timeframe: AnalyticsTimeframe
     ) -> Dict[str, MetricInsight]:
-        """Calculate comprehensive metrics summary"""        metrics_summary = {}
+        """Calculate comprehensive metrics summary"""
+        metrics_summary = {}
         
         # Sample implementation for key metrics
         metrics_data = {
@@ -522,7 +546,8 @@ class CampaignAnalytics:
         campaign_data: Dict, 
         timeframe: AnalyticsTimeframe
     ) -> Dict[str, List[float]]:
-        """Analyze performance trends over time"""        # Implementation for trend analysis
+        """Analyze performance trends over time"""
+        # Implementation for trend analysis
         return {
             "reach": [1000, 1200, 1500, 1800, 2000],
             "engagement": [50, 60, 75, 90, 100],
@@ -534,7 +559,8 @@ class CampaignAnalytics:
         campaign_data: Dict, 
         filter_config: AnalyticsFilter
     ) -> Dict[str, Any]:
-        """Generate audience insights"""        return {
+        """Generate audience insights"""
+        return {
             "total_audience": 25000,
             "demographics": {
                 "age_groups": {"18-24": 0.3, "25-34": 0.4, "35-44": 0.2, "45+": 0.1},
@@ -553,7 +579,8 @@ class CampaignAnalytics:
         campaign_data: Dict, 
         filter_config: AnalyticsFilter
     ) -> Dict[str, Any]:
-        """Analyze content performance metrics"""        return {
+        """Analyze content performance metrics"""
+        return {
             "top_performing_content": [
                 {"id": "content_1", "engagement_rate": 0.08, "reach": 5000},
                 {"id": "content_2", "engagement_rate": 0.06, "reach": 4500}
@@ -570,7 +597,8 @@ class CampaignAnalytics:
         campaign_data: Dict, 
         timeframe: AnalyticsTimeframe
     ) -> Dict[str, Any]:
-        """Calculate detailed revenue breakdown"""        return {
+        """Calculate detailed revenue breakdown"""
+        return {
             "total_revenue": 1875.0,
             "revenue_by_source": {
                 "sponsored_content": 1125.0,
@@ -590,7 +618,8 @@ class CampaignAnalytics:
         campaign_data: Dict, 
         metrics_summary: Dict[str, MetricInsight]
     ) -> List[Dict[str, Any]]:
-        """Identify optimization opportunities"""        return [
+        """Identify optimization opportunities"""
+        return [
             {
                 "opportunity": "Increase posting frequency during peak hours",
                 "potential_impact": "15% engagement increase",
@@ -611,7 +640,8 @@ class CampaignAnalytics:
         metrics_summary: Dict[str, MetricInsight], 
         timeframe: AnalyticsTimeframe
     ) -> Dict[str, Any]:
-        """Generate AI-powered predictive insights"""        return {
+        """Generate AI-powered predictive insights"""
+        return {
             "next_week_forecast": {
                 "reach": 28750,
                 "engagement": 4312,
@@ -631,14 +661,17 @@ class CampaignAnalytics:
     
     # Additional helper methods for completeness
     async def _fetch_real_time_data(self, campaign_id: str) -> Dict[str, Any]:
-        """Fetch real-time campaign data"""        return {"raw_metrics": {}}
+        """Fetch real-time campaign data"""
+        return {"raw_metrics": {}}
     
     async def _process_metric(self, raw_data: Dict, metric_type: MetricType) -> Dict[str, Any]:
-        """Process individual metric"""        return {"value": 1000, "change": 0.05}
+        """Process individual metric"""
+        return {"value": 1000, "change": 0.05}
     
     async def _generate_real_time_insights(
         self, 
         metrics: Dict, 
         campaign_id: str
     ) -> Dict[str, Any]:
-        """Generate real-time AI insights"""        return {"trending": "up", "recommendation": "continue current strategy"}
+        """Generate real-time AI insights"""
+        return {"trending": "up", "recommendation": "continue current strategy"}

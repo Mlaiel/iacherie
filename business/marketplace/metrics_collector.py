@@ -13,7 +13,8 @@ Project Team Specialists: Lead AI Dev, Backend Senior, ML Engineer, DBA, Securit
 This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be pursued against any infringement.
-"""from typing import Dict, Any, List, Optional, Union
+"""
+from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
@@ -25,7 +26,8 @@ import statistics
 logger = logging.getLogger(__name__)
 
 class MetricCategory(Enum):
-    """Categories of marketplace metrics"""    USER_ENGAGEMENT = "user_engagement"
+    """Categories of marketplace metrics"""
+    USER_ENGAGEMENT = "user_engagement"
     CONTENT_PERFORMANCE = "content_performance"
     REVENUE_ANALYTICS = "revenue_analytics"
     COLLABORATION_METRICS = "collaboration_metrics"
@@ -35,7 +37,8 @@ class MetricCategory(Enum):
     SYSTEM_PERFORMANCE = "system_performance"
 
 class AggregationLevel(Enum):
-    """Data aggregation levels"""    REAL_TIME = "real_time"
+    """Data aggregation levels"""
+    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -45,7 +48,8 @@ class AggregationLevel(Enum):
 
 @dataclass
 class MetricDefinition:
-    """Definition of a marketplace metric"""    metric_id: str
+    """Definition of a marketplace metric"""
+    metric_id: str
     name: str
     category: MetricCategory
     description: str
@@ -59,7 +63,8 @@ class MetricDefinition:
 
 @dataclass
 class MarketplaceMetrics:
-    """Comprehensive marketplace metrics structure"""    collection_timestamp: datetime
+    """Comprehensive marketplace metrics structure"""
+    collection_timestamp: datetime
     aggregation_level: AggregationLevel
     time_period: Dict[str, datetime]
     
@@ -130,15 +135,18 @@ class MarketplaceMetrics:
     anomalies_detected: List[Dict[str, Any]] = field(default_factory=list)
     
     def __post_init__(self):
-        """Post-initialization calculations"""        if self.total_creators > 0:
+        """Post-initialization calculations"""
+        if self.total_creators > 0:
             self.creator_activation_rate = self.active_creators / self.total_creators
         else:
             self.creator_activation_rate = 0.0
 
 class MetricsCollector:
-    """    Advanced marketplace metrics collection system with real-time aggregation,
+    """
+    Advanced marketplace metrics collection system with real-time aggregation,
     trend analysis, and predictive analytics.
-    """    
+    """
+    
     def __init__(self):
         self.metric_definitions = self._initialize_metric_definitions()
         self.data_sources = {
@@ -170,7 +178,8 @@ class MetricsCollector:
         }
     
     def _initialize_metric_definitions(self) -> Dict[str, MetricDefinition]:
-        """Initialize marketplace metric definitions"""        definitions = {}
+        """Initialize marketplace metric definitions"""
+        definitions = {}
         
         # Core business metrics
         definitions['total_creators'] = MetricDefinition(
@@ -217,7 +226,8 @@ class MetricsCollector:
         return definitions
     
     async def collect_metrics(self, aggregation_level: AggregationLevel = AggregationLevel.DAILY) -> MarketplaceMetrics:
-        """Collect comprehensive marketplace metrics"""        try:
+        """Collect comprehensive marketplace metrics"""
+        try:
             collection_start = datetime.utcnow()
             
             # Determine time period for collection
@@ -279,7 +289,8 @@ class MetricsCollector:
             raise
     
     def _calculate_time_period(self, aggregation_level: AggregationLevel) -> Dict[str, datetime]:
-        """Calculate time period for metrics collection"""        end_time = datetime.utcnow()
+        """Calculate time period for metrics collection"""
+        end_time = datetime.utcnow()
         
         if aggregation_level == AggregationLevel.REAL_TIME:
             start_time = end_time - timedelta(minutes=5)
@@ -297,7 +308,8 @@ class MetricsCollector:
         return {'start_time': start_time, 'end_time': end_time}
     
     async def _collect_raw_data(self, time_period: Dict[str, datetime]) -> Dict[str, Any]:
-        """Collect raw data from all marketplace components"""        raw_data = {}
+        """Collect raw data from all marketplace components"""
+        raw_data = {}
         
         # Simulate data collection from various sources
         # In real implementation, this would query actual databases and services
@@ -383,7 +395,8 @@ class MetricsCollector:
         return raw_data
     
     async def _process_and_aggregate(self, raw_data: Dict[str, Any], aggregation_level: AggregationLevel) -> Dict[str, Any]:
-        """Process and aggregate raw data into structured metrics"""        processed = {}
+        """Process and aggregate raw data into structured metrics"""
+        processed = {}
         
         # Core business metrics
         processed.update({
@@ -446,7 +459,8 @@ class MetricsCollector:
         return processed
     
     async def _calculate_derived_metrics(self, processed_metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate derived metrics from processed data"""        derived = {}
+        """Calculate derived metrics from processed data"""
+        derived = {}
         
         # Growth rates (would use historical data in real implementation)
         derived['user_growth_rate'] = 0.15  # 15% growth
@@ -465,7 +479,8 @@ class MetricsCollector:
         return derived
     
     async def _perform_trend_analysis(self, processed_metrics: Dict[str, Any], aggregation_level: AggregationLevel) -> Dict[str, Any]:
-        """Perform trend analysis on marketplace data"""        trends = {}
+        """Perform trend analysis on marketplace data"""
+        trends = {}
         
         # Trending content categories (would use actual trend analysis)
         trends['trending_categories'] = [
@@ -502,7 +517,8 @@ class MetricsCollector:
         return trends
     
     async def _generate_predictions(self, processed_metrics: Dict[str, Any], trend_analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate predictive analytics"""        predictions = {}
+        """Generate predictive analytics"""
+        predictions = {}
         
         # Growth predictions
         current_creators = processed_metrics['total_creators']
@@ -541,7 +557,8 @@ class MetricsCollector:
         return predictions
     
     async def _calculate_confidence_scores(self, processed_metrics: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate confidence scores for metrics"""        confidence_scores = {}
+        """Calculate confidence scores for metrics"""
+        confidence_scores = {}
         
         # Base confidence on data completeness and source reliability
         for metric_name in processed_metrics.keys():
@@ -557,7 +574,8 @@ class MetricsCollector:
         return confidence_scores
     
     async def _detect_system_anomalies(self, processed_metrics: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect anomalies in marketplace metrics"""        anomalies = []
+        """Detect anomalies in marketplace metrics"""
+        anomalies = []
         
         # Check against thresholds
         for metric_name, thresholds in self.alert_thresholds.items():
@@ -594,7 +612,8 @@ class MetricsCollector:
         return anomalies
     
     async def get_real_time_dashboard(self) -> Dict[str, Any]:
-        """Get real-time dashboard metrics"""        real_time_metrics = await self.collect_metrics(AggregationLevel.REAL_TIME)
+        """Get real-time dashboard metrics"""
+        real_time_metrics = await self.collect_metrics(AggregationLevel.REAL_TIME)
         
         dashboard = {
             'last_updated': real_time_metrics.collection_timestamp,
@@ -611,7 +630,8 @@ class MetricsCollector:
         return dashboard
     
     async def export_metrics(self, metrics: MarketplaceMetrics, format: str = 'json') -> str:
-        """Export metrics in specified format"""        if format.lower() == 'json':
+        """Export metrics in specified format"""
+        if format.lower() == 'json':
             # Convert dataclass to dict for JSON serialization
             metrics_dict = {
                 'collection_timestamp': metrics.collection_timestamp.isoformat(),
@@ -642,7 +662,8 @@ class MetricsCollector:
         return str(metrics)
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for metrics collector"""        return {
+        """Health check for metrics collector"""
+        return {
             "status": "healthy",
             "metric_definitions": len(self.metric_definitions),
             "data_sources": len(self.data_sources),
@@ -652,4 +673,5 @@ class MetricsCollector:
         }
     
     async def shutdown(self):
-        """Graceful shutdown"""        logger.info("MetricsCollector shutting down...")
+        """Graceful shutdown"""
+        logger.info("MetricsCollector shutting down...")

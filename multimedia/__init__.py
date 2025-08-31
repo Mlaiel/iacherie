@@ -14,7 +14,9 @@ distribution, or modification without written permission from Fahed Mlaiel
 extent of the law. All rights reserved.
 
 Contact: mlaiel@live.de for licensing and authorization inquiries.
-"""from .processors import (
+"""
+
+from .processors import (
     MultimediaProcessor,
     AudioProcessor,
     VideoProcessor,

@@ -13,7 +13,8 @@ Toute utilisation, copie, modification ou distribution sans autorisation écrite
 Les contrevenants s'exposent à des poursuites judiciaires.
 
 Contact autorisé: mlaiel@live.de
-"""from typing import Dict, Any, List, Optional
+"""
+from typing import Dict, Any, List, Optional
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationType(Enum):
-    """Types de notifications."""    LICENSE_CREATED = "license_created"
+    """Types de notifications."""
+    LICENSE_CREATED = "license_created"
     LICENSE_APPROVED = "license_approved"
     LICENSE_REJECTED = "license_rejected"
     LICENSE_ACTIVATED = "license_activated"
@@ -42,7 +44,8 @@ class NotificationType(Enum):
 
 
 class NotificationChannel(Enum):
-    """Canaux de notification."""    EMAIL = "email"
+    """Canaux de notification."""
+    EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
     IN_APP = "in_app"
@@ -53,7 +56,8 @@ class NotificationChannel(Enum):
 
 
 class NotificationPriority(Enum):
-    """Priorités de notification."""    LOW = "low"
+    """Priorités de notification."""
+    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -61,7 +65,8 @@ class NotificationPriority(Enum):
 
 
 class NotificationStatus(Enum):
-    """Statuts de notification."""    PENDING = "pending"
+    """Statuts de notification."""
+    PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
     READ = "read"
@@ -70,17 +75,21 @@ class NotificationStatus(Enum):
 
 
 class LicenseNotificationManager:
-    """    Gestionnaire de notifications avancé pour l'IA Influencer Agent.
+    """
+    Gestionnaire de notifications avancé pour l'IA Influencer Agent.
     
     Gère toutes les communications liées au licensing avec support
     multi-canal et règles de personnalisation sophistiquées.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialise le gestionnaire de notifications.
+        """
+        Initialise le gestionnaire de notifications.
         
         Args:
             config: Configuration du gestionnaire
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self.notification_templates = {}
         self.user_preferences = {}
         self.notification_queue = []
@@ -91,7 +100,8 @@ class LicenseNotificationManager:
         logger.info("LicenseNotificationManager initialized")
     
     async def initialize(self):
-        """Initialise le gestionnaire de notifications."""        try:
+        """Initialise le gestionnaire de notifications."""
+        try:
             await self._load_notification_templates()
             await self._setup_channel_providers()
             await self._start_notification_processor()
@@ -102,7 +112,8 @@ class LicenseNotificationManager:
             raise
     
     async def _load_notification_templates(self):
-        """Charge les templates de notification."""        self.notification_templates = {
+        """Charge les templates de notification."""
+        self.notification_templates = {
             NotificationType.LICENSE_CREATED: {
                 "subject": {
                     "en": "License Created Successfully",
@@ -110,7 +121,8 @@ class LicenseNotificationManager:
                     "de": "Lizenz Erfolgreich Erstellt"
                 },
                 "body": {
-                    "en": """                    Hello {creator_name},
+                    "en": """
+                    Hello {creator_name},
                     
                     Your license for "{content_title}" has been created successfully.
                     
@@ -125,7 +137,8 @@ class LicenseNotificationManager:
                     Best regards,
                     IA Influencer Agent Team
                     """,
-                    "fr": """                    Bonjour {creator_name},
+                    "fr": """
+                    Bonjour {creator_name},
                     
                     Votre licence pour "{content_title}" a été créée avec succès.
                     
@@ -140,7 +153,8 @@ class LicenseNotificationManager:
                     Cordialement,
                     Équipe IA Influencer Agent
                     """,
-                    "de": """                    Hallo {creator_name},
+                    "de": """
+                    Hallo {creator_name},
                     
                     Ihre Lizenz für "{content_title}" wurde erfolgreich erstellt.
                     
@@ -154,7 +168,8 @@ class LicenseNotificationManager:
                     
                     Mit freundlichen Grüßen,
                     IA Influencer Agent Team
-                    """                },
+                    """
+                },
                 "channels": [NotificationChannel.EMAIL, NotificationChannel.IN_APP],
                 "priority": NotificationPriority.NORMAL
             },
@@ -166,7 +181,8 @@ class LicenseNotificationManager:
                     "de": "Lizenz Genehmigt - Bereit zur Aktivierung"
                 },
                 "body": {
-                    "en": """                    Congratulations {creator_name}!
+                    "en": """
+                    Congratulations {creator_name}!
                     
                     Your license for "{content_title}" has been approved and is ready for activation.
                     
@@ -185,7 +201,8 @@ class LicenseNotificationManager:
                     Best regards,
                     IA Influencer Agent Team
                     """,
-                    "fr": """                    Félicitations {creator_name}!
+                    "fr": """
+                    Félicitations {creator_name}!
                     
                     Votre licence pour "{content_title}" a été approuvée et est prête pour activation.
                     
@@ -204,7 +221,8 @@ class LicenseNotificationManager:
                     Cordialement,
                     Équipe IA Influencer Agent
                     """,
-                    "de": """                    Herzlichen Glückwunsch {creator_name}!
+                    "de": """
+                    Herzlichen Glückwunsch {creator_name}!
                     
                     Ihre Lizenz für "{content_title}" wurde genehmigt und ist bereit zur Aktivierung.
                     
@@ -222,7 +240,8 @@ class LicenseNotificationManager:
                     
                     Mit freundlichen Grüßen,
                     IA Influencer Agent Team
-                    """                },
+                    """
+                },
                 "channels": [NotificationChannel.EMAIL, NotificationChannel.PUSH, NotificationChannel.IN_APP],
                 "priority": NotificationPriority.HIGH
             },
@@ -234,7 +253,8 @@ class LicenseNotificationManager:
                     "de": "Lizenzantrag Benötigt Aufmerksamkeit"
                 },
                 "body": {
-                    "en": """                    Hello {creator_name},
+                    "en": """
+                    Hello {creator_name},
                     
                     Your license application for "{content_title}" requires some attention.
                     
@@ -250,7 +270,8 @@ class LicenseNotificationManager:
                     Best regards,
                     IA Influencer Agent Team
                     """,
-                    "fr": """                    Bonjour {creator_name},
+                    "fr": """
+                    Bonjour {creator_name},
                     
                     Votre demande de licence pour "{content_title}" nécessite votre attention.
                     
@@ -266,7 +287,8 @@ class LicenseNotificationManager:
                     Cordialement,
                     Équipe IA Influencer Agent
                     """,
-                    "de": """                    Hallo {creator_name},
+                    "de": """
+                    Hallo {creator_name},
                     
                     Ihr Lizenzantrag für "{content_title}" benötigt Ihre Aufmerksamkeit.
                     
@@ -281,7 +303,8 @@ class LicenseNotificationManager:
                     
                     Mit freundlichen Grüßen,
                     IA Influencer Agent Team
-                    """                },
+                    """
+                },
                 "channels": [NotificationChannel.EMAIL, NotificationChannel.IN_APP],
                 "priority": NotificationPriority.HIGH
             },
@@ -293,7 +316,8 @@ class LicenseNotificationManager:
                     "de": "DRINGEND: Lizenznutzungsverletzung Erkannt"
                 },
                 "body": {
-                    "en": """                    URGENT NOTICE - {creator_name}
+                    "en": """
+                    URGENT NOTICE - {creator_name}
                     
                     A potential license violation has been detected for your content "{content_title}".
                     
@@ -315,7 +339,8 @@ class LicenseNotificationManager:
                     
                     IA Influencer Agent Legal Team
                     """,
-                    "fr": """                    AVIS URGENT - {creator_name}
+                    "fr": """
+                    AVIS URGENT - {creator_name}
                     
                     Une violation potentielle de licence a été détectée pour votre contenu "{content_title}".
                     
@@ -337,7 +362,8 @@ class LicenseNotificationManager:
                     
                     Équipe Juridique IA Influencer Agent
                     """,
-                    "de": """                    DRINGENDE MITTEILUNG - {creator_name}
+                    "de": """
+                    DRINGENDE MITTEILUNG - {creator_name}
                     
                     Ein potenzieller Lizenzverstoß wurde für Ihren Content "{content_title}" erkannt.
                     
@@ -358,7 +384,8 @@ class LicenseNotificationManager:
                     Notfall-Hotline: +1-800-PROTECT
                     
                     IA Influencer Agent Rechtsteam
-                    """                },
+                    """
+                },
                 "channels": [NotificationChannel.EMAIL, NotificationChannel.SMS, 
                            NotificationChannel.PUSH, NotificationChannel.WEBHOOK],
                 "priority": NotificationPriority.CRITICAL
@@ -371,7 +398,8 @@ class LicenseNotificationManager:
                     "de": "🎉 Umsatzmeilenstein Erreicht!"
                 },
                 "body": {
-                    "en": """                    Congratulations {creator_name}! 🎉
+                    "en": """
+                    Congratulations {creator_name}! 🎉
                     
                     You've reached a significant revenue milestone with your content!
                     
@@ -388,7 +416,8 @@ class LicenseNotificationManager:
                     Celebrating with you,
                     IA Influencer Agent Team
                     """,
-                    "fr": """                    Félicitations {creator_name}! 🎉
+                    "fr": """
+                    Félicitations {creator_name}! 🎉
                     
                     Vous avez atteint un objectif significatif de revenus avec votre contenu!
                     
@@ -405,7 +434,8 @@ class LicenseNotificationManager:
                     Nous célébrons avec vous,
                     Équipe IA Influencer Agent
                     """,
-                    "de": """                    Herzlichen Glückwunsch {creator_name}! 🎉
+                    "de": """
+                    Herzlichen Glückwunsch {creator_name}! 🎉
                     
                     Sie haben einen bedeutenden Umsatzmeilenstein mit Ihrem Content erreicht!
                     
@@ -421,7 +451,8 @@ class LicenseNotificationManager:
                     
                     Wir feiern mit Ihnen,
                     IA Influencer Agent Team
-                    """                },
+                    """
+                },
                 "channels": [NotificationChannel.EMAIL, NotificationChannel.PUSH, 
                            NotificationChannel.IN_APP],
                 "priority": NotificationPriority.HIGH
@@ -429,7 +460,8 @@ class LicenseNotificationManager:
         }
     
     async def _setup_channel_providers(self):
-        """Configure les fournisseurs de canaux."""        self.channel_providers = {
+        """Configure les fournisseurs de canaux."""
+        self.channel_providers = {
             NotificationChannel.EMAIL: {
                 "provider": "smtp",
                 "config": self.config.get("email", {}),
@@ -468,7 +500,8 @@ class LicenseNotificationManager:
         }
     
     async def _start_notification_processor(self):
-        """Démarre le processeur de notifications."""        asyncio.create_task(self._process_notification_queue())
+        """Démarre le processeur de notifications."""
+        asyncio.create_task(self._process_notification_queue())
     
     async def send_notification(self, 
                               notification_type: NotificationType,
@@ -476,7 +509,8 @@ class LicenseNotificationManager:
                               data: Dict[str, Any],
                               channels: List[NotificationChannel] = None,
                               priority: NotificationPriority = None) -> str:
-        """        Envoie une notification.
+        """
+        Envoie une notification.
         
         Args:
             notification_type: Type de notification
@@ -487,7 +521,8 @@ class LicenseNotificationManager:
             
         Returns:
             str: ID de la notification
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             await self.initialize()
         
         # Génération de l'ID de notification
@@ -532,14 +567,16 @@ class LicenseNotificationManager:
         return notification_id
     
     async def _get_user_preferences(self, user_id: str) -> Dict[str, Any]:
-        """        Récupère les préférences de notification d'un utilisateur.
+        """
+        Récupère les préférences de notification d'un utilisateur.
         
         Args:
             user_id: ID de l'utilisateur
             
         Returns:
             Dict contenant les préférences
-        """        # Ici on récupérerait depuis la base de données
+        """
+        # Ici on récupérerait depuis la base de données
         default_prefs = {
             "language": "en",
             "timezone": "UTC",
@@ -567,7 +604,8 @@ class LicenseNotificationManager:
                                 notification_type: NotificationType,
                                 user_prefs: Dict[str, Any],
                                 template: Dict[str, Any]) -> List[NotificationChannel]:
-        """        Détermine les canaux appropriés pour une notification.
+        """
+        Détermine les canaux appropriés pour une notification.
         
         Args:
             notification_type: Type de notification
@@ -576,7 +614,8 @@ class LicenseNotificationManager:
             
         Returns:
             Liste des canaux à utiliser
-        """        # Canaux suggérés par le template
+        """
+        # Canaux suggérés par le template
         suggested_channels = template.get("channels", [])
         
         # Canaux activés par l'utilisateur
@@ -605,7 +644,8 @@ class LicenseNotificationManager:
         return final_channels
     
     async def _process_notification_queue(self):
-        """Traite la queue de notifications."""        while True:
+        """Traite la queue de notifications."""
+        while True:
             try:
                 if self.notification_queue:
                     # Tri par priorité
@@ -628,14 +668,16 @@ class LicenseNotificationManager:
                 await asyncio.sleep(30)
     
     def _get_priority_weight(self, priority: str) -> int:
-        """        Retourne le poids d'une priorité pour le tri.
+        """
+        Retourne le poids d'une priorité pour le tri.
         
         Args:
             priority: Priorité
             
         Returns:
             int: Poids de la priorité
-        """        weights = {
+        """
+        weights = {
             NotificationPriority.CRITICAL.value: 5,
             NotificationPriority.URGENT.value: 4,
             NotificationPriority.HIGH.value: 3,
@@ -645,11 +687,13 @@ class LicenseNotificationManager:
         return weights.get(priority, 2)
     
     async def _process_single_notification(self, notification: Dict[str, Any]):
-        """        Traite une notification individuelle.
+        """
+        Traite une notification individuelle.
         
         Args:
             notification: Notification à traiter
-        """        notification_id = notification["id"]
+        """
+        notification_id = notification["id"]
         
         try:
             # Vérification des heures silencieuses
@@ -710,14 +754,16 @@ class LicenseNotificationManager:
             self.sent_notifications[notification_id] = notification
     
     async def _is_quiet_hours(self, user_id: str) -> bool:
-        """        Vérifie si c'est l'heure silencieuse pour un utilisateur.
+        """
+        Vérifie si c'est l'heure silencieuse pour un utilisateur.
         
         Args:
             user_id: ID de l'utilisateur
             
         Returns:
             bool: True si heures silencieuses
-        """        user_prefs = await self._get_user_preferences(user_id)
+        """
+        user_prefs = await self._get_user_preferences(user_id)
         quiet_hours = user_prefs.get("quiet_hours", {})
         
         if not quiet_hours.get("enabled", False):
@@ -728,21 +774,24 @@ class LicenseNotificationManager:
         return False
     
     async def _calculate_next_send_time(self, user_id: str) -> str:
-        """        Calcule la prochaine heure d'envoi en dehors des heures silencieuses.
+        """
+        Calcule la prochaine heure d'envoi en dehors des heures silencieuses.
         
         Args:
             user_id: ID de l'utilisateur
             
         Returns:
             str: Prochaine heure d'envoi en ISO format
-        """        # Ici on calculerait la prochaine heure appropriée
+        """
+        # Ici on calculerait la prochaine heure appropriée
         # Pour l'instant, retournons dans 1 heure
         return (datetime.utcnow() + timedelta(hours=1)).isoformat()
     
     async def _send_via_channel(self, 
                               notification: Dict[str, Any],
                               channel: NotificationChannel) -> bool:
-        """        Envoie une notification via un canal spécifique.
+        """
+        Envoie une notification via un canal spécifique.
         
         Args:
             notification: Notification à envoyer
@@ -750,7 +799,8 @@ class LicenseNotificationManager:
             
         Returns:
             bool: True si envoi réussi
-        """        try:
+        """
+        try:
             provider_config = self.channel_providers.get(channel)
             if not provider_config or not provider_config.get("enabled", False):
                 logger.warning(f"Channel {channel.value} not available")
@@ -783,7 +833,8 @@ class LicenseNotificationManager:
     async def _prepare_message(self, 
                              notification: Dict[str, Any],
                              channel: NotificationChannel) -> Optional[Dict[str, Any]]:
-        """        Prépare le message pour un canal spécifique.
+        """
+        Prépare le message pour un canal spécifique.
         
         Args:
             notification: Notification
@@ -791,7 +842,8 @@ class LicenseNotificationManager:
             
         Returns:
             Dict contenant le message préparé ou None
-        """        notification_type = NotificationType(notification["type"])
+        """
+        notification_type = NotificationType(notification["type"])
         template = self.notification_templates.get(notification_type)
         
         if not template:
@@ -825,43 +877,51 @@ class LicenseNotificationManager:
         }
     
     async def _send_email(self, recipient_id: str, message: Dict[str, Any]) -> bool:
-        """Envoie un email."""        # Ici on intégrerait le vrai service email
+        """Envoie un email."""
+        # Ici on intégrerait le vrai service email
         logger.info(f"Email sent to {recipient_id}: {message['subject']}")
         return True
     
     async def _send_sms(self, recipient_id: str, message: Dict[str, Any]) -> bool:
-        """Envoie un SMS."""        # Ici on intégrerait le vrai service SMS
+        """Envoie un SMS."""
+        # Ici on intégrerait le vrai service SMS
         logger.info(f"SMS sent to {recipient_id}: {message['body'][:50]}...")
         return True
     
     async def _send_push(self, recipient_id: str, message: Dict[str, Any]) -> bool:
-        """Envoie une notification push."""        # Ici on intégrerait le vrai service push
+        """Envoie une notification push."""
+        # Ici on intégrerait le vrai service push
         logger.info(f"Push notification sent to {recipient_id}: {message['subject']}")
         return True
     
     async def _send_in_app(self, recipient_id: str, message: Dict[str, Any]) -> bool:
-        """Envoie une notification in-app."""        # Ici on stockerait dans la base pour affichage in-app
+        """Envoie une notification in-app."""
+        # Ici on stockerait dans la base pour affichage in-app
         logger.info(f"In-app notification sent to {recipient_id}: {message['subject']}")
         return True
     
     async def _send_webhook(self, recipient_id: str, message: Dict[str, Any]) -> bool:
-        """Envoie via webhook."""        # Ici on ferait l'appel HTTP webhook
+        """Envoie via webhook."""
+        # Ici on ferait l'appel HTTP webhook
         logger.info(f"Webhook notification sent for {recipient_id}")
         return True
     
     async def get_notification_status(self, notification_id: str) -> Optional[Dict[str, Any]]:
-        """        Récupère le statut d'une notification.
+        """
+        Récupère le statut d'une notification.
         
         Args:
             notification_id: ID de la notification
             
         Returns:
             Dict contenant le statut ou None
-        """        return self.sent_notifications.get(notification_id)
+        """
+        return self.sent_notifications.get(notification_id)
     
     async def update_user_preferences(self, user_id: str, 
                                     preferences: Dict[str, Any]) -> bool:
-        """        Met à jour les préférences de notification d'un utilisateur.
+        """
+        Met à jour les préférences de notification d'un utilisateur.
         
         Args:
             user_id: ID de l'utilisateur
@@ -869,7 +929,8 @@ class LicenseNotificationManager:
             
         Returns:
             bool: True si mise à jour réussie
-        """        try:
+        """
+        try:
             current_prefs = await self._get_user_preferences(user_id)
             current_prefs.update(preferences)
             self.user_preferences[user_id] = current_prefs

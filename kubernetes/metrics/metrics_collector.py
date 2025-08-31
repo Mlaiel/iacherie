@@ -32,7 +32,8 @@ Features:
 - Custom metrics collection framework
 - Automated metric export and storage
 - Performance optimization tracking
-"""import logging
+"""
+import logging
 import asyncio
 import time
 from typing import Dict, List, Optional, Any, Union, Callable, Set
@@ -62,7 +63,8 @@ metrics_config = get_metrics_config()
 
 
 class MetricType(Enum):
-    """Metric type enumeration"""    COUNTER = "counter"
+    """Metric type enumeration"""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
@@ -71,14 +73,16 @@ class MetricType(Enum):
 
 
 class MetricPriority(Enum):
-    """Metric collection priority"""    CRITICAL = "critical"
+    """Metric collection priority"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
 
 
 class AggregationType(Enum):
-    """Metric aggregation types"""    SUM = "sum"
+    """Metric aggregation types"""
+    SUM = "sum"
     AVG = "avg"
     MIN = "min"
     MAX = "max"
@@ -90,7 +94,8 @@ class AggregationType(Enum):
 
 
 class CollectionInterval(Enum):
-    """Collection interval enumeration"""    REALTIME = 1      # 1 second
+    """Collection interval enumeration"""
+    REALTIME = 1      # 1 second
     FAST = 5          # 5 seconds
     NORMAL = 30       # 30 seconds
     SLOW = 60         # 1 minute
@@ -99,7 +104,8 @@ class CollectionInterval(Enum):
 
 @dataclass
 class MetricDefinition:
-    """Metric definition with collection configuration"""    name: str
+    """Metric definition with collection configuration"""
+    name: str
     metric_type: MetricType
     description: str
     labels: List[str] = field(default_factory=list)
@@ -112,7 +118,8 @@ class MetricDefinition:
 
 @dataclass
 class CollectedMetric:
-    """Collected metric data structure"""    name: str
+    """Collected metric data structure"""
+    name: str
     value: Union[int, float]
     labels: Dict[str, str] = field(default_factory=dict)
     timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -121,7 +128,8 @@ class CollectedMetric:
 
 
 class MetricsCollector:
-    """    Enterprise metrics collector with multi-tenant support
+    """
+    Enterprise metrics collector with multi-tenant support
     
     Handles:
     - Real-time metrics collection
@@ -131,7 +139,8 @@ class MetricsCollector:
     - Custom metrics collection
     - Automated aggregation
     - Metric storage and export
-    """    
+    """
+    
     def __init__(self):
         self.redis_manager = RedisManager()
         self.logger = logger
@@ -154,7 +163,8 @@ class MetricsCollector:
         self._initialize_infrastructure_collectors()
         
     async def start(self) -> None:
-        """Start metrics collection"""        try:
+        """Start metrics collection"""
+        try:
             if self._running:
                 self.logger.warning("Metrics collector already running")
                 return
@@ -186,7 +196,8 @@ class MetricsCollector:
             raise
     
     async def stop(self) -> None:
-        """Stop metrics collection"""        try:
+        """Stop metrics collection"""
+        try:
             self._running = False
             self.logger.info("Stopping metrics collector...")
             
@@ -211,7 +222,8 @@ class MetricsCollector:
             self.logger.error(f"Error stopping metrics collector: {e}")
     
     def register_metric(self, definition: MetricDefinition) -> None:
-        """Register new metric definition"""        try:
+        """Register new metric definition"""
+        try:
             self.metric_definitions[definition.name] = definition
             self._metrics_buffer[definition.name] = []
             
@@ -221,7 +233,8 @@ class MetricsCollector:
             self.logger.error(f"Error registering metric: {e}")
     
     def register_collector(self, name: str, collector_func: Callable) -> None:
-        """Register custom metric collector function"""        try:
+        """Register custom metric collector function"""
+        try:
             self._collectors[name] = collector_func
             self.logger.info(f"Collector registered: {name}")
             
@@ -236,7 +249,8 @@ class MetricsCollector:
         tenant_id: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Collect single metric value"""        try:
+        """Collect single metric value"""
+        try:
             if name not in self.metric_definitions:
                 self.logger.warning(f"Unknown metric: {name}")
                 return
@@ -273,7 +287,8 @@ class MetricsCollector:
         user_agent: Optional[str] = None,
         ip_address: Optional[str] = None
     ) -> None:
-        """Collect HTTP request metrics"""        try:
+        """Collect HTTP request metrics"""
+        try:
             # Request count
             await self.collect_metric(
                 "http_requests_total",
@@ -326,7 +341,8 @@ class MetricsCollector:
         tenant_id: str,
         success: bool = True
     ) -> None:
-        """Collect AI model metrics"""        try:
+        """Collect AI model metrics"""
+        try:
             # Prediction count
             await self.collect_metric(
                 "ai_predictions_total",
@@ -379,7 +395,8 @@ class MetricsCollector:
         match_detected: bool = False,
         similarity_score: Optional[float] = None
     ) -> None:
-        """Collect content protection metrics"""        try:
+        """Collect content protection metrics"""
+        try:
             # Fingerprint creation
             await self.collect_metric(
                 "fingerprints_created_total",
@@ -430,7 +447,8 @@ class MetricsCollector:
         transaction_type: str = "revenue",
         fee_amount: Optional[float] = None
     ) -> None:
-        """Collect revenue tracking metrics"""        try:
+        """Collect revenue tracking metrics"""
+        try:
             # Revenue amount
             await self.collect_metric(
                 "revenue_tracked_total",
@@ -469,7 +487,8 @@ class MetricsCollector:
         duration: Optional[float] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Collect user activity metrics"""        try:
+        """Collect user activity metrics"""
+        try:
             # Activity count
             await self.collect_metric(
                 "user_activities_total",
@@ -498,7 +517,8 @@ class MetricsCollector:
             self.logger.error(f"Error collecting user activity metrics: {e}")
     
     async def _collection_loop(self, interval: CollectionInterval) -> None:
-        """Main collection loop for specific interval"""        try:
+        """Main collection loop for specific interval"""
+        try:
             self.logger.info(f"Starting collection loop for interval: {interval.name}")
             
             while self._running:
@@ -524,7 +544,8 @@ class MetricsCollector:
             self.logger.error(f"Error in collection loop {interval.name}: {e}")
     
     async def _buffer_flush_loop(self) -> None:
-        """Buffer flush loop"""        try:
+        """Buffer flush loop"""
+        try:
             while self._running:
                 await self._flush_all_buffers()
                 await asyncio.sleep(10)  # Flush every 10 seconds
@@ -535,7 +556,8 @@ class MetricsCollector:
             self.logger.error(f"Error in buffer flush loop: {e}")
     
     async def _aggregation_loop(self) -> None:
-        """Metrics aggregation loop"""        try:
+        """Metrics aggregation loop"""
+        try:
             while self._running:
                 await self._aggregate_metrics()
                 await asyncio.sleep(60)  # Aggregate every minute
@@ -546,7 +568,8 @@ class MetricsCollector:
             self.logger.error(f"Error in aggregation loop: {e}")
     
     async def _flush_all_buffers(self) -> None:
-        """Flush all metric buffers"""        try:
+        """Flush all metric buffers"""
+        try:
             for metric_name in self._metrics_buffer.keys():
                 await self._flush_metric_buffer(metric_name)
                 
@@ -554,7 +577,8 @@ class MetricsCollector:
             self.logger.error(f"Error flushing buffers: {e}")
     
     async def _flush_metric_buffer(self, metric_name: str) -> None:
-        """Flush specific metric buffer"""        try:
+        """Flush specific metric buffer"""
+        try:
             buffer = self._metrics_buffer.get(metric_name, [])
             if not buffer:
                 return
@@ -570,7 +594,8 @@ class MetricsCollector:
             self.logger.error(f"Error flushing buffer for {metric_name}: {e}")
     
     async def _store_metric(self, metric: CollectedMetric) -> None:
-        """Store metric in Redis"""        try:
+        """Store metric in Redis"""
+        try:
             # Create storage key
             timestamp_key = metric.timestamp.strftime("%Y%m%d%H%M")
             
@@ -600,7 +625,8 @@ class MetricsCollector:
             self.logger.error(f"Error storing metric: {e}")
     
     async def _aggregate_metrics(self) -> None:
-        """Aggregate metrics for reporting"""        try:
+        """Aggregate metrics for reporting"""
+        try:
             current_time = datetime.utcnow()
             
             for metric_name, definition in self.metric_definitions.items():
@@ -628,7 +654,8 @@ class MetricsCollector:
         metric_name: str,
         time_range: timedelta
     ) -> List[CollectedMetric]:
-        """Get recent metrics from storage"""        try:
+        """Get recent metrics from storage"""
+        try:
             end_time = datetime.utcnow()
             start_time = end_time - time_range
             
@@ -670,7 +697,8 @@ class MetricsCollector:
         metrics: List[CollectedMetric],
         functions: List[str]
     ) -> Dict[str, float]:
-        """Calculate metric aggregations"""        try:
+        """Calculate metric aggregations"""
+        try:
             values = [metric.value for metric in metrics]
             
             if not values:
@@ -705,7 +733,8 @@ class MetricsCollector:
         aggregations: Dict[str, float],
         timestamp: datetime
     ) -> None:
-        """Store metric aggregations"""        try:
+        """Store metric aggregations"""
+        try:
             timestamp_key = timestamp.strftime("%Y%m%d%H%M")
             key = f"aggregations:{metric_name}:{timestamp_key}"
             
@@ -721,7 +750,8 @@ class MetricsCollector:
             self.logger.error(f"Error storing aggregations: {e}")
     
     def _initialize_core_collectors(self) -> None:
-        """Initialize core metric collectors"""        # System metrics
+        """Initialize core metric collectors"""
+        # System metrics
         self.register_metric(MetricDefinition(
             name="system_cpu_percent",
             metric_type=MetricType.GAUGE,
@@ -760,7 +790,8 @@ class MetricsCollector:
         self.register_collector("system_memory_bytes", self._collect_memory_metrics)
     
     def _initialize_ai_collectors(self) -> None:
-        """Initialize AI-specific metric collectors"""        self.register_metric(MetricDefinition(
+        """Initialize AI-specific metric collectors"""
+        self.register_metric(MetricDefinition(
             name="ai_predictions_total",
             metric_type=MetricType.COUNTER,
             description="Total AI predictions made",
@@ -785,7 +816,8 @@ class MetricsCollector:
         ))
     
     def _initialize_business_collectors(self) -> None:
-        """Initialize business metric collectors"""        self.register_metric(MetricDefinition(
+        """Initialize business metric collectors"""
+        self.register_metric(MetricDefinition(
             name="revenue_tracked_total",
             metric_type=MetricType.COUNTER,
             description="Total revenue tracked",
@@ -810,7 +842,8 @@ class MetricsCollector:
         ))
     
     def _initialize_infrastructure_collectors(self) -> None:
-        """Initialize infrastructure metric collectors"""        self.register_metric(MetricDefinition(
+        """Initialize infrastructure metric collectors"""
+        self.register_metric(MetricDefinition(
             name="database_connections_active",
             metric_type=MetricType.GAUGE,
             description="Active database connections",
@@ -831,7 +864,8 @@ class MetricsCollector:
         self.register_collector("cache_operations_total", self._collect_cache_metrics)
     
     async def _collect_cpu_metrics(self) -> None:
-        """Collect CPU metrics"""        try:
+        """Collect CPU metrics"""
+        try:
             cpu_percent = psutil.cpu_percent(interval=None, percpu=True)
             for i, cpu in enumerate(cpu_percent):
                 await self.collect_metric(
@@ -843,7 +877,8 @@ class MetricsCollector:
             self.logger.error(f"Error collecting CPU metrics: {e}")
     
     async def _collect_memory_metrics(self) -> None:
-        """Collect memory metrics"""        try:
+        """Collect memory metrics"""
+        try:
             memory = psutil.virtual_memory()
             
             await self.collect_metric(
@@ -862,7 +897,8 @@ class MetricsCollector:
             self.logger.error(f"Error collecting memory metrics: {e}")
     
     async def _collect_database_metrics(self) -> None:
-        """Collect database metrics"""        try:
+        """Collect database metrics"""
+        try:
             # This would be implemented with actual database connection monitoring
             # Placeholder for demonstration
             pass
@@ -870,7 +906,8 @@ class MetricsCollector:
             self.logger.error(f"Error collecting database metrics: {e}")
     
     async def _collect_cache_metrics(self) -> None:
-        """Collect cache metrics"""        try:
+        """Collect cache metrics"""
+        try:
             # Get cache statistics from Redis
             info = await self.redis_manager.info()
             

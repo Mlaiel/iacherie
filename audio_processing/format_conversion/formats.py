@@ -5,7 +5,8 @@ Provides comprehensive format compatibility and optimization capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Tuple, Any, Union
 from dataclasses import dataclass, field
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class FormatCategory(Enum):
-    """Audio format categories"""    LOSSLESS = "lossless"
+    """Audio format categories"""
+    LOSSLESS = "lossless"
     LOSSY = "lossy"
     UNCOMPRESSED = "uncompressed"
     PROFESSIONAL = "professional"
@@ -38,7 +40,8 @@ class FormatCategory(Enum):
 
 
 class CompressionType(Enum):
-    """Audio compression types"""    NONE = "none"
+    """Audio compression types"""
+    NONE = "none"
     LOSSLESS = "lossless"
     LOSSY = "lossy"
     HYBRID = "hybrid"
@@ -46,7 +49,8 @@ class CompressionType(Enum):
 
 @dataclass
 class FormatCapabilities:
-    """Format capability specification"""    max_sample_rate: int
+    """Format capability specification"""
+    max_sample_rate: int
     max_bit_depth: int
     max_channels: int
     supports_metadata: bool
@@ -72,7 +76,8 @@ class FormatCapabilities:
 
 @dataclass
 class FormatProfile:
-    """Complete format profile"""    name: str
+    """Complete format profile"""
+    name: str
     extension: str
     mime_type: str
     category: FormatCategory
@@ -92,18 +97,22 @@ class FormatProfile:
 
 
 class SupportedFormats:
-    """    Registry of Supported Audio Formats
+    """
+    Registry of Supported Audio Formats
     
     Comprehensive catalog of audio formats with detailed specifications,
     capabilities, and optimization parameters.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize supported formats registry"""        self.formats = self._initialize_format_registry()
+        """Initialize supported formats registry"""
+        self.formats = self._initialize_format_registry()
         self.format_aliases = self._initialize_aliases()
         self.conversion_matrix = self._initialize_conversion_matrix()
         
     def _initialize_format_registry(self) -> Dict[str, FormatProfile]:
-        """Initialize comprehensive format registry"""        formats = {}
+        """Initialize comprehensive format registry"""
+        formats = {}
         
         # WAV - Uncompressed PCM
         formats['wav'] = FormatProfile(
@@ -358,7 +367,8 @@ class SupportedFormats:
         return formats
     
     def _initialize_aliases(self) -> Dict[str, str]:
-        """Initialize format aliases and alternative extensions"""        return {
+        """Initialize format aliases and alternative extensions"""
+        return {
             'wave': 'wav',
             'oga': 'ogg',
             'mp4': 'm4a',
@@ -367,7 +377,8 @@ class SupportedFormats:
         }
     
     def _initialize_conversion_matrix(self) -> Dict[Tuple[str, str], Dict[str, Any]]:
-        """Initialize format conversion compatibility matrix"""        matrix = {}
+        """Initialize format conversion compatibility matrix"""
+        matrix = {}
         
         # High-quality conversions (minimal loss)
         high_quality_pairs = [
@@ -417,7 +428,8 @@ class SupportedFormats:
         return matrix
     
     def get_format_profile(self, format_name: str) -> Optional[FormatProfile]:
-        """Get detailed format profile"""        format_name = format_name.lower().lstrip('.')
+        """Get detailed format profile"""
+        format_name = format_name.lower().lstrip('.')
         
         # Check aliases
         if format_name in self.format_aliases:
@@ -426,17 +438,20 @@ class SupportedFormats:
         return self.formats.get(format_name)
     
     def is_format_supported(self, format_name: str) -> bool:
-        """Check if format is supported"""        return self.get_format_profile(format_name) is not None
+        """Check if format is supported"""
+        return self.get_format_profile(format_name) is not None
     
     def get_supported_formats(self, category: Optional[FormatCategory] = None) -> List[str]:
-        """Get list of supported formats, optionally filtered by category"""        if category is None:
+        """Get list of supported formats, optionally filtered by category"""
+        if category is None:
             return list(self.formats.keys())
         
         return [name for name, profile in self.formats.items() 
                 if profile.category == category]
     
     def get_conversion_info(self, source_format: str, target_format: str) -> Optional[Dict[str, Any]]:
-        """Get conversion information between two formats"""        source = source_format.lower().lstrip('.')
+        """Get conversion information between two formats"""
+        source = source_format.lower().lstrip('.')
         target = target_format.lower().lstrip('.')
         
         # Check aliases
@@ -448,7 +463,8 @@ class SupportedFormats:
         return self.conversion_matrix.get((source, target))
     
     def recommend_format(self, use_case: str, constraints: Optional[Dict[str, Any]] = None) -> List[str]:
-        """Recommend formats for specific use case"""        constraints = constraints or {}
+        """Recommend formats for specific use case"""
+        constraints = constraints or {}
         
         use_case_recommendations = {
             'streaming': ['aac', 'mp3', 'ogg'],
@@ -493,13 +509,16 @@ class SupportedFormats:
 
 
 class FormatRegistry:
-    """    Professional Format Registry Manager
+    """
+    Professional Format Registry Manager
     
     Central registry for audio format management with advanced detection,
     validation, and compatibility checking capabilities.
-    """    
+    """
+    
     def __init__(self, config: Optional[FormatConfig] = None):
-        """Initialize format registry"""        self.config = config or FormatConfig()
+        """Initialize format registry"""
+        self.config = config or FormatConfig()
         self.supported_formats = SupportedFormats()
         self.detection_cache: Dict[str, str] = {}
         self.validation_cache: Dict[str, bool] = {}
@@ -508,14 +527,16 @@ class FormatRegistry:
         self.external_tools = self._detect_external_tools()
         
     async def detect_format(self, file_path: Path) -> Optional[str]:
-        """        Detect audio format from file
+        """
+        Detect audio format from file
         
         Args:
             file_path: Path to audio file
             
         Returns:
             Detected format name or None
-        """        file_str = str(file_path)
+        """
+        file_str = str(file_path)
         
         # Check cache first
         if file_str in self.detection_cache:
@@ -554,7 +575,8 @@ class FormatRegistry:
     async def validate_format_compatibility(self, 
                                           source_format: str, 
                                           target_format: str) -> Dict[str, Any]:
-        """        Validate format conversion compatibility
+        """
+        Validate format conversion compatibility
         
         Args:
             source_format: Source audio format
@@ -562,7 +584,8 @@ class FormatRegistry:
             
         Returns:
             Compatibility analysis
-        """        compatibility = {
+        """
+        compatibility = {
             'compatible': False,
             'quality_loss': 1.0,
             'recommended': False,
@@ -613,7 +636,8 @@ class FormatRegistry:
                                  source_format: str, 
                                  target_format: str,
                                  quality_profile: Optional[QualityProfile] = None) -> Dict[str, Any]:
-        """        Get optimal conversion settings for format pair
+        """
+        Get optimal conversion settings for format pair
         
         Args:
             source_format: Source audio format
@@ -622,7 +646,8 @@ class FormatRegistry:
             
         Returns:
             Optimal conversion settings
-        """        settings = {
+        """
+        settings = {
             'sample_rate': 44100,
             'bit_depth': 16,
             'bitrate': 192,
@@ -655,18 +680,21 @@ class FormatRegistry:
             return settings
     
     def get_format_capabilities(self, format_name: str) -> Optional[FormatCapabilities]:
-        """Get format capabilities"""        profile = self.supported_formats.get_format_profile(format_name)
+        """Get format capabilities"""
+        profile = self.supported_formats.get_format_profile(format_name)
         return profile.capabilities if profile else None
     
     def is_lossless_format(self, format_name: str) -> bool:
-        """Check if format is lossless"""        profile = self.supported_formats.get_format_profile(format_name)
+        """Check if format is lossless"""
+        profile = self.supported_formats.get_format_profile(format_name)
         if not profile:
             return False
         
         return profile.compression_type in [CompressionType.NONE, CompressionType.LOSSLESS]
     
     def is_high_resolution_capable(self, format_name: str) -> bool:
-        """Check if format supports high resolution audio"""        capabilities = self.get_format_capabilities(format_name)
+        """Check if format supports high resolution audio"""
+        capabilities = self.get_format_capabilities(format_name)
         if not capabilities:
             return False
         
@@ -675,18 +703,21 @@ class FormatRegistry:
                 capabilities.supports_high_resolution)
     
     def get_streaming_formats(self) -> List[str]:
-        """Get formats suitable for streaming"""        return self.supported_formats.get_supported_formats(FormatCategory.STREAMING) + \
+        """Get formats suitable for streaming"""
+        return self.supported_formats.get_supported_formats(FormatCategory.STREAMING) + \
                [fmt for fmt, profile in self.supported_formats.formats.items() 
                 if profile.capabilities.streaming_friendly]
     
     def get_professional_formats(self) -> List[str]:
-        """Get formats suitable for professional use"""        return [fmt for fmt, profile in self.supported_formats.formats.items() 
+        """Get formats suitable for professional use"""
+        return [fmt for fmt, profile in self.supported_formats.formats.items() 
                 if profile.capabilities.professional_grade]
     
     # Private methods
     
     def _detect_by_extension(self, file_path: Path) -> Optional[str]:
-        """Detect format by file extension"""        extension = file_path.suffix.lower().lstrip('.')
+        """Detect format by file extension"""
+        extension = file_path.suffix.lower().lstrip('.')
         
         # Check direct match
         if self.supported_formats.is_format_supported(extension):
@@ -699,7 +730,8 @@ class FormatRegistry:
         return None
     
     async def _detect_by_content(self, file_path: Path) -> Optional[str]:
-        """Detect format by analyzing file content"""        try:
+        """Detect format by analyzing file content"""
+        try:
             audio_file = mutagen.File(str(file_path))
             if not audio_file:
                 return None
@@ -721,7 +753,8 @@ class FormatRegistry:
             return None
     
     async def _detect_by_magic_number(self, file_path: Path) -> Optional[str]:
-        """Detect format by magic number (file signature)"""        try:
+        """Detect format by magic number (file signature)"""
+        try:
             with open(file_path, 'rb') as f:
                 header = f.read(16)
             
@@ -747,7 +780,8 @@ class FormatRegistry:
             return None
     
     def _detect_external_tools(self) -> Dict[str, bool]:
-        """Detect available external tools"""        tools = {
+        """Detect available external tools"""
+        tools = {
             'ffmpeg': False,
             'lame': False,
             'flac': False,
@@ -773,7 +807,8 @@ class FormatRegistry:
                                                source_profile: FormatProfile,
                                                target_profile: FormatProfile,
                                                compatibility: Dict[str, Any]):
-        """Calculate compatibility heuristically"""        # Quality loss estimation
+        """Calculate compatibility heuristically"""
+        # Quality loss estimation
         if (source_profile.compression_type == CompressionType.NONE and 
             target_profile.compression_type == CompressionType.LOSSY):
             compatibility['quality_loss'] = 0.3
@@ -793,7 +828,8 @@ class FormatRegistry:
                                              source_profile: FormatProfile,
                                              target_profile: FormatProfile,
                                              compatibility: Dict[str, Any]):
-        """Analyze specific conversion requirements"""        # Check sample rate compatibility
+        """Analyze specific conversion requirements"""
+        # Check sample rate compatibility
         if (hasattr(source_profile, 'max_sample_rate') and 
             target_profile.capabilities.max_sample_rate < source_profile.capabilities.max_sample_rate):
             compatibility['warnings'].append(
@@ -823,7 +859,8 @@ class FormatRegistry:
     async def _get_quality_profile_settings(self,
                                           target_profile: FormatProfile,
                                           quality_profile: QualityProfile) -> Dict[str, Any]:
-        """Get settings based on quality profile"""        settings = {}
+        """Get settings based on quality profile"""
+        settings = {}
         
         # Map quality profile to format presets
         if quality_profile.name.lower() in target_profile.quality_presets:
@@ -835,7 +872,8 @@ class FormatRegistry:
     async def _get_format_optimizations(self,
                                       source_format: str,
                                       target_format: str) -> Dict[str, Any]:
-        """Get format-specific optimizations"""        optimizations = {}
+        """Get format-specific optimizations"""
+        optimizations = {}
         
         # Source format specific optimizations
         if source_format == 'wav' and target_format in ['mp3', 'aac', 'ogg']:
@@ -866,23 +904,28 @@ class FormatRegistry:
 
 
 class FormatValidator:
-    """    Audio Format Validator
+    """
+    Audio Format Validator
     
     Comprehensive validation system for audio format integrity,
     compliance, and quality assurance.
-    """    
+    """
+    
     def __init__(self, registry: FormatRegistry):
-        """Initialize format validator"""        self.registry = registry
+        """Initialize format validator"""
+        self.registry = registry
         
     async def validate_file(self, file_path: Path) -> Dict[str, Any]:
-        """        Validate audio file integrity and compliance
+        """
+        Validate audio file integrity and compliance
         
         Args:
             file_path: Path to audio file to validate
             
         Returns:
             Validation report
-        """        validation_report = {
+        """
+        validation_report = {
             'valid': False,
             'format': None,
             'errors': [],
@@ -929,7 +972,8 @@ class FormatValidator:
     async def _validate_file_integrity(self, 
                                      file_path: Path, 
                                      format_name: str) -> Dict[str, Any]:
-        """Validate file integrity"""        integrity = {
+        """Validate file integrity"""
+        integrity = {
             'readable': False,
             'complete': False,
             'corrupted': False
@@ -965,7 +1009,8 @@ class FormatValidator:
     async def _validate_technical_specs(self, 
                                        file_path: Path, 
                                        format_name: str) -> Dict[str, Any]:
-        """Validate technical specifications"""        try:
+        """Validate technical specifications"""
+        try:
             # Load file info
             audio_file = mutagen.File(str(file_path))
             if not audio_file or not hasattr(audio_file, 'info'):
@@ -1004,7 +1049,8 @@ class FormatValidator:
     async def _validate_format_compliance(self, 
                                         file_path: Path, 
                                         format_name: str) -> Dict[str, Any]:
-        """Validate format compliance"""        compliance = {
+        """Validate format compliance"""
+        compliance = {
             'standard_compliant': True,
             'profile_info': {},
             'compatibility_issues': []
@@ -1022,15 +1068,18 @@ class FormatValidator:
             return compliance
     
     async def _try_mutagen_read(self, file_path: Path) -> bool:
-        """Try reading with mutagen"""        audio_file = mutagen.File(str(file_path))
+        """Try reading with mutagen"""
+        audio_file = mutagen.File(str(file_path))
         return audio_file is not None
     
     async def _try_soundfile_read(self, file_path: Path) -> bool:
-        """Try reading with soundfile"""        info = sf.info(str(file_path))
+        """Try reading with soundfile"""
+        info = sf.info(str(file_path))
         return info.frames > 0
     
     async def _try_librosa_read(self, file_path: Path) -> bool:
-        """Try reading with librosa"""        y, sr = librosa.load(str(file_path), duration=1.0)  # Load 1 second
+        """Try reading with librosa"""
+        y, sr = librosa.load(str(file_path), duration=1.0)  # Load 1 second
         return len(y) > 0
 
 

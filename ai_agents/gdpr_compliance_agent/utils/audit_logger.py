@@ -7,7 +7,8 @@ Email: mlaiel@live.de
 Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import hashlib
@@ -33,7 +34,8 @@ from ...models.gdpr_models import ComplianceAuditLog, AuditEvent, SecurityEvent
 logger = get_logger(__name__)
 
 class AuditEventType(Enum):
-    """Types of GDPR audit events"""    CONSENT_COLLECTED = "consent_collected"
+    """Types of GDPR audit events"""
+    CONSENT_COLLECTED = "consent_collected"
     CONSENT_WITHDRAWN = "consent_withdrawn"
     CONSENT_RENEWED = "consent_renewed"
     DATA_PROCESSING_START = "data_processing_start"
@@ -54,13 +56,15 @@ class AuditEventType(Enum):
     AUTHORIZATION_EVENT = "authorization_event"
 
 class AuditSeverity(Enum):
-    """Severity levels for audit events"""    LOW = "low"
+    """Severity levels for audit events"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 class ComplianceCategory(Enum):
-    """GDPR compliance categories"""    LAWFULNESS = "lawfulness"
+    """GDPR compliance categories"""
+    LAWFULNESS = "lawfulness"
     FAIRNESS = "fairness"
     TRANSPARENCY = "transparency"
     PURPOSE_LIMITATION = "purpose_limitation"
@@ -72,7 +76,8 @@ class ComplianceCategory(Enum):
 
 @dataclass
 class AuditMetrics:
-    """Audit trail metrics"""    total_events: int
+    """Audit trail metrics"""
+    total_events: int
     events_by_type: Dict[str, int]
     events_by_severity: Dict[str, int]
     compliance_events: int
@@ -82,9 +87,11 @@ class AuditMetrics:
     most_active_users: List[str]
 
 class ComplianceAuditLogger:
-    """    Advanced GDPR Compliance Audit Logger
+    """
+    Advanced GDPR Compliance Audit Logger
     Provides comprehensive audit logging for all GDPR-related activities
-    """    
+    """
+    
     def __init__(self):
         # Audit event templates
         self._event_templates = self._initialize_event_templates()
@@ -108,7 +115,8 @@ class ComplianceAuditLogger:
         logger.info("Compliance Audit Logger initialized successfully")
     
     def _initialize_event_templates(self) -> Dict[AuditEventType, Dict[str, str]]:
-        """Initialize audit event templates"""        return {
+        """Initialize audit event templates"""
+        return {
             AuditEventType.CONSENT_COLLECTED: {
                 "description": "User consent collected for data processing",
                 "compliance_categories": ["lawfulness", "transparency"],
@@ -137,7 +145,8 @@ class ComplianceAuditLogger:
         }
     
     def _initialize_compliance_mappings(self) -> Dict[str, List[str]]:
-        """Initialize compliance category mappings"""        return {
+        """Initialize compliance category mappings"""
+        return {
             "consent_management": [
                 ComplianceCategory.LAWFULNESS.value,
                 ComplianceCategory.TRANSPARENCY.value
@@ -162,7 +171,8 @@ class ComplianceAuditLogger:
         }
     
     def _initialize_criticality_levels(self) -> Dict[AuditEventType, AuditSeverity]:
-        """Initialize event criticality levels"""        return {
+        """Initialize event criticality levels"""
+        return {
             AuditEventType.BREACH_DETECTED: AuditSeverity.CRITICAL,
             AuditEventType.BREACH_NOTIFICATION: AuditSeverity.CRITICAL,
             AuditEventType.CONSENT_WITHDRAWN: AuditSeverity.HIGH,
@@ -181,7 +191,8 @@ class ComplianceAuditLogger:
         severity: AuditSeverity = None,
         compliance_categories: List[str] = None
     ) -> str:
-        """Log a GDPR compliance event"""        try:
+        """Log a GDPR compliance event"""
+        try:
             event_id = str(uuid.uuid4())
             
             # Convert string event type to enum if needed
@@ -252,7 +263,8 @@ class ComplianceAuditLogger:
         data_categories: List[str],
         lawful_basis: str = "consent"
     ) -> str:
-        """Log data processing activity"""        try:
+        """Log data processing activity"""
+        try:
             details = {
                 "processing_id": processing_id,
                 "processing_purpose": purpose,
@@ -284,7 +296,8 @@ class ComplianceAuditLogger:
         purpose: str,
         consent_details: Dict[str, Any] = None
     ) -> str:
-        """Log consent-related events"""        try:
+        """Log consent-related events"""
+        try:
             # Determine event type based on action
             event_type_mapping = {
                 "collected": AuditEventType.CONSENT_COLLECTED,
@@ -327,7 +340,8 @@ class ComplianceAuditLogger:
         request_type: str,
         details: Dict[str, Any]
     ) -> str:
-        """Log data subject rights request"""        try:
+        """Log data subject rights request"""
+        try:
             audit_details = {
                 "request_id": request_id,
                 "request_type": request_type,
@@ -359,7 +373,8 @@ class ComplianceAuditLogger:
         user_id: str = None,
         incident_id: str = None
     ) -> str:
-        """Log security-related events"""        try:
+        """Log security-related events"""
+        try:
             event_id = str(uuid.uuid4())
             
             # Create security event record
@@ -410,7 +425,8 @@ class ComplianceAuditLogger:
         breach_id: str,
         incident_details: Dict[str, Any]
     ) -> str:
-        """Log data breach notification"""        try:
+        """Log data breach notification"""
+        try:
             details = {
                 "breach_id": breach_id,
                 "incident_type": incident_details.get("incident_type", "unknown"),
@@ -441,7 +457,8 @@ class ComplianceAuditLogger:
         breach_id: str = None,
         notification_details: Dict[str, Any] = None
     ) -> str:
-        """Log regulatory compliance actions"""        try:
+        """Log regulatory compliance actions"""
+        try:
             audit_details = {
                 "action_type": action_type,
                 "breach_id": breach_id,
@@ -471,7 +488,8 @@ class ComplianceAuditLogger:
         breach_id: str,
         investigation_details: Dict[str, Any]
     ) -> str:
-        """Log breach investigation results"""        try:
+        """Log breach investigation results"""
+        try:
             details = {
                 "breach_id": breach_id,
                 "investigation_completed": datetime.utcnow().isoformat(),
@@ -495,7 +513,8 @@ class ComplianceAuditLogger:
             raise
     
     async def log_data_cleanup(self, cleanup_results: Dict[str, Any]) -> str:
-        """Log data cleanup activities"""        try:
+        """Log data cleanup activities"""
+        try:
             details = {
                 "cleanup_timestamp": datetime.utcnow().isoformat(),
                 "cleanup_results": cleanup_results,
@@ -527,7 +546,8 @@ class ComplianceAuditLogger:
         severity: AuditSeverity = None,
         limit: int = 100
     ) -> Dict[str, Any]:
-        """Retrieve audit trail with filtering options"""        try:
+        """Retrieve audit trail with filtering options"""
+        try:
             async with get_db() as db:
                 query = select(ComplianceAuditLog)
                 
@@ -592,7 +612,8 @@ class ComplianceAuditLogger:
             raise HTTPException(status_code=500, detail=f"Audit trail retrieval failed: {str(e)}")
     
     async def get_audit_metrics(self, period_days: int = 30) -> AuditMetrics:
-        """Get audit trail metrics for specified period"""        try:
+        """Get audit trail metrics for specified period"""
+        try:
             start_date = datetime.utcnow() - timedelta(days=period_days)
             
             async with get_db() as db:
@@ -671,7 +692,8 @@ class ComplianceAuditLogger:
         period_days: int = 90,
         categories: List[str] = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive compliance report"""        try:
+        """Generate comprehensive compliance report"""
+        try:
             start_date = datetime.utcnow() - timedelta(days=period_days)
             
             # Get audit trail
@@ -735,7 +757,8 @@ class ComplianceAuditLogger:
         event_type: Optional[AuditEventType], 
         details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate audit event data completeness"""        validation_result = {
+        """Validate audit event data completeness"""
+        validation_result = {
             "status": "valid",
             "warnings": []
         }
@@ -764,7 +787,8 @@ class ComplianceAuditLogger:
         event_type: Any, 
         details: Dict[str, Any]
     ) -> str:
-        """Generate integrity hash for audit event"""        try:
+        """Generate integrity hash for audit event"""
+        try:
             hash_data = f"{event_id}_{user_id}_{str(event_type)}_{json.dumps(details, sort_keys=True)}"
             event_hash = hashlib.sha256(hash_data.encode()).hexdigest()
             return event_hash
@@ -778,7 +802,8 @@ class ComplianceAuditLogger:
         event_type: Optional[AuditEventType], 
         details: Dict[str, Any]
     ) -> None:
-        """Create detailed audit event record"""        try:
+        """Create detailed audit event record"""
+        try:
             if not event_type:
                 return
             
@@ -806,7 +831,8 @@ class ComplianceAuditLogger:
         event_type: Any, 
         details: Dict[str, Any]
     ) -> None:
-        """Trigger real-time monitoring for critical events"""        try:
+        """Trigger real-time monitoring for critical events"""
+        try:
             # In production, this would trigger alerts, notifications, etc.
             logger.critical(f"CRITICAL EVENT DETECTED: {event_type} - Event ID: {event_id}")
             
@@ -822,7 +848,8 @@ class ComplianceAuditLogger:
         events: List[Dict[str, Any]], 
         categories: List[str] = None
     ) -> Dict[str, Any]:
-        """Analyze compliance events for patterns and issues"""        try:
+        """Analyze compliance events for patterns and issues"""
+        try:
             if not events:
                 return {"compliance_score": 0.0, "category_analysis": {}}
             
@@ -880,7 +907,8 @@ class ComplianceAuditLogger:
         events: List[Dict[str, Any]], 
         metrics: AuditMetrics
     ) -> Dict[str, Any]:
-        """Assess compliance risks based on audit data"""        try:
+        """Assess compliance risks based on audit data"""
+        try:
             risk_factors = []
             risk_score = 0.0  # 0-10 scale
             
@@ -938,7 +966,8 @@ class ComplianceAuditLogger:
         compliance_analysis: Dict[str, Any], 
         risk_assessment: Dict[str, Any]
     ) -> List[Dict[str, str]]:
-        """Generate actionable recommendations based on audit analysis"""        recommendations = []
+        """Generate actionable recommendations based on audit analysis"""
+        recommendations = []
         
         try:
             compliance_score = compliance_analysis.get("compliance_score", 0)
@@ -991,7 +1020,8 @@ class ComplianceAuditLogger:
             return []
 
     async def cleanup_expired_logs(self) -> Dict[str, Any]:
-        """Clean up expired audit logs based on retention policies"""        try:
+        """Clean up expired audit logs based on retention policies"""
+        try:
             cleanup_results = {
                 "categories_processed": 0,
                 "logs_deleted": 0,

@@ -15,7 +15,8 @@ Copyright: IA Influencer Agent Platform - All Rights Reserved
 WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
-"""import asyncio
+"""
+import asyncio
 import psutil
 import time
 from datetime import datetime, timedelta
@@ -30,7 +31,8 @@ import aiohttp
 
 
 class HealthStatus(str, Enum):
-    """Health status enumeration"""    HEALTHY = "healthy"
+    """Health status enumeration"""
+    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     CRITICAL = "critical"
@@ -38,7 +40,8 @@ class HealthStatus(str, Enum):
 
 @dataclass
 class HealthCheckResult:
-    """Health check result structure"""    service: str
+    """Health check result structure"""
+    service: str
     status: HealthStatus
     response_time_ms: float
     timestamp: datetime
@@ -48,7 +51,8 @@ class HealthCheckResult:
 
 @dataclass
 class SystemMetrics:
-    """System performance metrics"""    cpu_percent: float
+    """System performance metrics"""
+    cpu_percent: float
     memory_percent: float
     disk_percent: float
     load_average: List[float]
@@ -57,17 +61,21 @@ class SystemMetrics:
 
 
 class CoreHealthChecker:
-    """    Core application health monitoring service
+    """
+    Core application health monitoring service
     
     Provides comprehensive health checking for essential application
     components including FastAPI app, system resources, and core services.
-    """    def __init__(self, app: FastAPI, config: Dict[str, Any]):
-        """        Initialize core health checker
+    """
+    def __init__(self, app: FastAPI, config: Dict[str, Any]):
+        """
+        Initialize core health checker
         
         Args:
             app: FastAPI application instance
             config: Application configuration dictionary
-        """        self.app = app
+        """
+        self.app = app
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.start_time = datetime.utcnow()
@@ -79,11 +87,13 @@ class CoreHealthChecker:
         self.response_time_threshold = config.get("health_checks", {}).get("response_time_ms", 5000)
 
     async def check_application_health(self) -> HealthCheckResult:
-        """        Check FastAPI application health and performance
+        """
+        Check FastAPI application health and performance
         
         Returns:
             HealthCheckResult: Application health status and metrics
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Check application routes and middleware
@@ -134,11 +144,13 @@ class CoreHealthChecker:
             )
 
     async def check_system_resources(self) -> HealthCheckResult:
-        """        Check system resource utilization and performance
+        """
+        Check system resource utilization and performance
         
         Returns:
             HealthCheckResult: System resource health status
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Collect system metrics
@@ -208,11 +220,13 @@ class CoreHealthChecker:
             )
 
     async def check_security_components(self) -> HealthCheckResult:
-        """        Check security components and authentication systems
+        """
+        Check security components and authentication systems
         
         Returns:
             HealthCheckResult: Security components health status
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             details = {}
@@ -268,11 +282,13 @@ class CoreHealthChecker:
             )
 
     async def check_configuration_validity(self) -> HealthCheckResult:
-        """        Validate application configuration completeness and correctness
+        """
+        Validate application configuration completeness and correctness
         
         Returns:
             HealthCheckResult: Configuration validation status
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             details = {}
@@ -348,11 +364,13 @@ class CoreHealthChecker:
             )
 
     async def perform_comprehensive_check(self) -> List[HealthCheckResult]:
-        """        Perform all core health checks concurrently
+        """
+        Perform all core health checks concurrently
         
         Returns:
             List[HealthCheckResult]: All core health check results
-        """        checks = await asyncio.gather(
+        """
+        checks = await asyncio.gather(
             self.check_application_health(),
             self.check_system_resources(),
             self.check_security_components(),
@@ -378,11 +396,13 @@ class CoreHealthChecker:
         return results
 
     async def get_health_summary(self) -> Dict[str, Any]:
-        """        Get comprehensive health summary for core components
+        """
+        Get comprehensive health summary for core components
         
         Returns:
             Dict[str, Any]: Health summary with overall status and metrics
-        """        results = await self.perform_comprehensive_check()
+        """
+        results = await self.perform_comprehensive_check()
         
         # Calculate overall status
         status_weights = {

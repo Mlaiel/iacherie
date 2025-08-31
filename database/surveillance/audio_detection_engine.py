@@ -10,7 +10,8 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 WARNING: This code and concept are protected intellectual property.
 Any unauthorized use, copying, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 from typing import Dict, Any, List, Optional, Tuple
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioFingerprint:
-    """Audio fingerprint data structure."""    fingerprint_id: str
+    """Audio fingerprint data structure."""
+    fingerprint_id: str
     user_id: str
     title: str
     artist: str
@@ -42,7 +44,8 @@ class AudioFingerprint:
 
 @dataclass
 class AudioMatch:
-    """Audio match result structure."""    original_fingerprint_id: str
+    """Audio match result structure."""
+    original_fingerprint_id: str
     detected_url: str
     similarity_score: float
     confidence_level: float
@@ -54,7 +57,8 @@ class AudioMatch:
 
 
 class AudioFeatureExtractor:
-    """Advanced audio feature extraction for fingerprinting."""    
+    """Advanced audio feature extraction for fingerprinting."""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.sample_rate = config.get("sample_rate", 22050)
@@ -64,7 +68,8 @@ class AudioFeatureExtractor:
         self.hop_length = config.get("hop_length", 512)
         
     async def extract_features(self, audio_data: bytes) -> Dict[str, np.ndarray]:
-        """Extract comprehensive audio features from audio data."""        try:
+        """Extract comprehensive audio features from audio data."""
+        try:
             # Load audio from bytes
             audio_array, sr = librosa.load(io.BytesIO(audio_data), sr=self.sample_rate)
             
@@ -159,7 +164,8 @@ class AudioFeatureExtractor:
 
 
 class AudioSimilarityCalculator:
-    """Advanced audio similarity calculation engine."""    
+    """Advanced audio similarity calculation engine."""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.feature_weights = config.get("feature_weights", {
@@ -177,7 +183,8 @@ class AudioSimilarityCalculator:
         features1: Dict[str, np.ndarray], 
         features2: Dict[str, np.ndarray]
     ) -> Tuple[float, Dict[str, float]]:
-        """Calculate comprehensive similarity between two audio feature sets."""        try:
+        """Calculate comprehensive similarity between two audio feature sets."""
+        try:
             similarities = {}
             weighted_sum = 0.0
             total_weight = 0.0
@@ -246,11 +253,13 @@ class AudioSimilarityCalculator:
 
 
 class AudioDetectionEngine:
-    """    Advanced audio detection engine for content surveillance.
+    """
+    Advanced audio detection engine for content surveillance.
     
     Implements sophisticated audio fingerprinting, matching, and detection
     algorithms for protecting musical content across platforms.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.feature_extractor = AudioFeatureExtractor(config.get("feature_extraction", {}))
@@ -273,7 +282,8 @@ class AudioDetectionEngine:
         }
         
     async def initialize(self) -> bool:
-        """Initialize the audio detection engine."""        try:
+        """Initialize the audio detection engine."""
+        try:
             # Initialize ChromaDB client
             self.chroma_client = chromadb.Client()
             
@@ -300,7 +310,8 @@ class AudioDetectionEngine:
         audio_data: bytes, 
         metadata: Dict[str, Any]
     ) -> AudioFingerprint:
-        """Create audio fingerprint from audio data."""        try:
+        """Create audio fingerprint from audio data."""
+        try:
             start_time = datetime.utcnow()
             
             # Extract audio features
@@ -343,7 +354,8 @@ class AudioDetectionEngine:
             raise
     
     async def _store_fingerprint(self, fingerprint: AudioFingerprint) -> None:
-        """Store fingerprint in vector database."""        try:
+        """Store fingerprint in vector database."""
+        try:
             # Create embedding vector from key features
             embedding_features = []
             
@@ -390,7 +402,8 @@ class AudioDetectionEngine:
         audio_data: bytes, 
         detection_metadata: Dict[str, Any]
     ) -> List[AudioMatch]:
-        """Detect audio matches against stored fingerprints."""        try:
+        """Detect audio matches against stored fingerprints."""
+        try:
             start_time = datetime.utcnow()
             
             # Extract features from input audio
@@ -485,7 +498,8 @@ class AudioDetectionEngine:
             return []
     
     async def _load_fingerprint(self, fingerprint_id: str) -> Optional[AudioFingerprint]:
-        """Load full fingerprint data (placeholder - implement with your storage system)."""        # This would load the full fingerprint data from your database
+        """Load full fingerprint data (placeholder - implement with your storage system)."""
+        # This would load the full fingerprint data from your database
         # For now, return None to indicate not found
         return None
     
@@ -496,7 +510,8 @@ class AudioDetectionEngine:
         input_features: Dict[str, Any],
         stored_features: Dict[str, Any]
     ) -> float:
-        """Calculate confidence level for match."""        try:
+        """Calculate confidence level for match."""
+        try:
             # Base confidence from overall similarity
             confidence = similarity_score
             
@@ -519,7 +534,8 @@ class AudioDetectionEngine:
             return similarity_score
     
     async def get_detection_statistics(self) -> Dict[str, Any]:
-        """Get detection engine statistics."""        return {
+        """Get detection engine statistics."""
+        return {
             "engine_type": "audio",
             "status": "active",
             "statistics": self.detection_stats,
@@ -532,7 +548,8 @@ class AudioDetectionEngine:
     
     def _calculate_time_alignment(self, detected_features: Dict[str, np.ndarray], 
                                  reference_features: Dict[str, np.ndarray]) -> float:
-        """Calculate time offset between detected and reference audio."""        try:
+        """Calculate time offset between detected and reference audio."""
+        try:
             # Use MFCC features for time alignment
             detected_mfcc = detected_features.get('mfcc')
             reference_mfcc = reference_features.get('mfcc')
@@ -573,7 +590,8 @@ class AudioDetectionEngine:
             return 0.0
 
     async def cleanup(self) -> None:
-        """Cleanup resources."""        try:
+        """Cleanup resources."""
+        try:
             if self.chroma_client:
                 # ChromaDB cleanup if needed
                 pass

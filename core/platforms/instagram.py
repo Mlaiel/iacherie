@@ -5,7 +5,8 @@ Complete Instagram Basic Display API integration for content sharing and analyti
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import aiofiles
 from typing import Dict, List, Optional, Any
@@ -24,22 +25,26 @@ logger = logging.getLogger(__name__)
 
 
 class InstagramPlatform(PlatformBase):
-    """Instagram platform integration"""    
+    """Instagram platform integration"""
+    
     def __init__(self, config: PlatformConfig):
-        """Initialize Instagram platform"""        super().__init__(config)
+        """Initialize Instagram platform"""
+        super().__init__(config)
         self.api_base = "https://graph.facebook.com/v18.0"
         self.auth_base = "https://api.instagram.com"
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""        if not self.session or self.session.closed:
+        """Get or create HTTP session"""
+        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Instagram using OAuth2"""        try:
+        """Authenticate with Instagram using OAuth2"""
+        try:
             # If we have a long-lived token, validate it
             if self.config.credentials.access_token:
                 if await self._validate_token():
@@ -57,7 +62,8 @@ class InstagramPlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh Instagram long-lived access token"""        if not self.config.credentials.access_token:
+        """Refresh Instagram long-lived access token"""
+        if not self.config.credentials.access_token:
             logger.error("No access token available for Instagram")
             return False
         
@@ -94,7 +100,8 @@ class InstagramPlatform(PlatformBase):
             return False
     
     async def _validate_token(self) -> bool:
-        """Validate Instagram access token"""        try:
+        """Validate Instagram access token"""
+        try:
             params = {
                 'fields': 'id,username',
                 'access_token': self.config.credentials.access_token
@@ -108,7 +115,8 @@ class InstagramPlatform(PlatformBase):
             return False
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Instagram API"""        if not self.is_authenticated:
+        """Make authenticated request to Instagram API"""
+        if not self.is_authenticated:
             if not await self.authenticate():
                 return None
         
@@ -152,7 +160,8 @@ class InstagramPlatform(PlatformBase):
             return None
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload content to Instagram"""        try:
+        """Upload content to Instagram"""
+        try:
             if not os.path.exists(content_path):
                 return UploadResult(
                     success=False,
@@ -190,7 +199,8 @@ class InstagramPlatform(PlatformBase):
             )
     
     async def upload_from_url(self, media_url: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload content to Instagram from a public URL"""        try:
+        """Upload content to Instagram from a public URL"""
+        try:
             # Determine if it's a video or image
             mime_type = mimetypes.guess_type(media_url)[0]
             is_video = mime_type and mime_type.startswith('video/')
@@ -260,7 +270,8 @@ class InstagramPlatform(PlatformBase):
             )
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get Instagram analytics for a media"""        try:
+        """Get Instagram analytics for a media"""
+        try:
             # Get media insights
             insights_params = {
                 'metric': 'engagement,impressions,reach,saved'
@@ -321,7 +332,8 @@ class InstagramPlatform(PlatformBase):
             raise
     
     def _calculate_engagement_rate(self, media_data: Dict[str, Any], insights_data: Dict[str, Any]) -> float:
-        """Calculate engagement rate"""        likes = media_data.get('like_count', 0)
+        """Calculate engagement rate"""
+        likes = media_data.get('like_count', 0)
         comments = media_data.get('comments_count', 0)
         impressions = insights_data.get('impressions', 0)
         
@@ -331,13 +343,15 @@ class InstagramPlatform(PlatformBase):
         return ((likes + comments) / impressions) * 100
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on Instagram (limited by API)"""        # Instagram Basic Display API doesn't support content search
+        """Search content on Instagram (limited by API)"""
+        # Instagram Basic Display API doesn't support content search
         # This would require Instagram Graph API with appropriate permissions
         logger.warning("Instagram content search not available with Basic Display API")
         return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's media from Instagram"""        try:
+        """Get user's media from Instagram"""
+        try:
             params = {
                 'fields': 'id,media_type,media_url,permalink,thumbnail_url,timestamp,caption,like_count,comments_count'
             }
@@ -369,7 +383,8 @@ class InstagramPlatform(PlatformBase):
             return []
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete media from Instagram"""        try:
+        """Delete media from Instagram"""
+        try:
             result = await self._make_request('DELETE', content_id)
             return result is not None
         except Exception as e:
@@ -377,13 +392,15 @@ class InstagramPlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update media metadata on Instagram (very limited)"""        # Instagram API doesn't allow updating media content or captions
+        """Update media metadata on Instagram (very limited)"""
+        # Instagram API doesn't allow updating media content or captions
         # Only some fields can be updated on certain media types
         logger.warning("Instagram API doesn't support updating media content")
         return False
     
     async def get_user_info(self, user_id: str = None) -> Optional[Dict[str, Any]]:
-        """Get user information"""        try:
+        """Get user information"""
+        try:
             params = {
                 'fields': 'id,username,account_type,media_count'
             }
@@ -396,7 +413,8 @@ class InstagramPlatform(PlatformBase):
             return None
     
     async def get_media_comments(self, media_id: str) -> List[Dict[str, Any]]:
-        """Get comments for a media"""        try:
+        """Get comments for a media"""
+        try:
             params = {
                 'fields': 'id,text,timestamp,username'
             }
@@ -417,12 +435,14 @@ class InstagramPlatform(PlatformBase):
             return []
     
     async def get_hashtag_media(self, hashtag: str, limit: int = 25) -> List[Dict[str, Any]]:
-        """Get recent media for a hashtag (requires Instagram Graph API)"""        # This requires Instagram Graph API and specific permissions
+        """Get recent media for a hashtag (requires Instagram Graph API)"""
+        # This requires Instagram Graph API and specific permissions
         logger.warning("Hashtag media search requires Instagram Graph API")
         return []
     
     async def get_account_insights(self, period: str = "day") -> Dict[str, Any]:
-        """Get account insights"""        try:
+        """Get account insights"""
+        try:
             params = {
                 'metric': 'impressions,reach,profile_views,website_clicks',
                 'period': period
@@ -451,5 +471,6 @@ class InstagramPlatform(PlatformBase):
             return {}
     
     async def close(self):
-        """Close HTTP session"""        if self.session and not self.session.closed:
+        """Close HTTP session"""
+        if self.session and not self.session.closed:
             await self.session.close()

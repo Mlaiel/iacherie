@@ -7,7 +7,8 @@ inference engines for content analysis and recommendation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 
 class AIWorkloadType(Enum):
-    """AI workload types"""    TRAINING = "training"
+    """AI workload types"""
+    TRAINING = "training"
     INFERENCE = "inference"
     BATCH_PROCESSING = "batch_processing"
     REAL_TIME = "real_time"
@@ -32,7 +34,8 @@ class AIWorkloadType(Enum):
 
 
 class ModelFramework(Enum):
-    """Supported ML frameworks"""    TENSORFLOW = "tensorflow"
+    """Supported ML frameworks"""
+    TENSORFLOW = "tensorflow"
     PYTORCH = "pytorch"
     HUGGINGFACE = "huggingface"
     SCIKIT_LEARN = "scikit_learn"
@@ -41,7 +44,8 @@ class ModelFramework(Enum):
 
 
 class ComputeType(Enum):
-    """Compute resource types"""    CPU = "cpu"
+    """Compute resource types"""
+    CPU = "cpu"
     GPU_V100 = "gpu_v100"
     GPU_A100 = "gpu_a100"
     TPU = "tpu"
@@ -50,7 +54,8 @@ class ComputeType(Enum):
 
 @dataclass
 class AIDeploymentConfig:
-    """AI deployment configuration"""    workload_types: List[AIWorkloadType] = None
+    """AI deployment configuration"""
+    workload_types: List[AIWorkloadType] = None
     frameworks: List[ModelFramework] = None
     compute_types: List[ComputeType] = None
     training_enabled: bool = True
@@ -79,7 +84,8 @@ class AIDeploymentConfig:
 
 
 class MLOrchestrator:
-    """    Enterprise AI/ML deployment orchestrator
+    """
+    Enterprise AI/ML deployment orchestrator
     
     Coordinates deployment of AI/ML services including:
     - Model serving infrastructure
@@ -88,13 +94,16 @@ class MLOrchestrator:
     - Feature stores and data pipelines
     - Model registry and versioning
     - Monitoring and observability
-    """    
+    """
+    
     def __init__(self, namespace: str = "ia-influencer-ai"):
-        """        Initialize AI/ML orchestrator
+        """
+        Initialize AI/ML orchestrator
         
         Args:
             namespace: Kubernetes namespace for AI services
-        """        self.namespace = namespace
+        """
+        self.namespace = namespace
         self.config = AIDeploymentConfig()
         self.status = "initializing"
         self.deployed_services = []
@@ -104,7 +113,8 @@ class MLOrchestrator:
         self._initialize_clients()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and Redis clients"""        try:
+        """Initialize Kubernetes, Docker, and Redis clients"""
+        try:
             # Kubernetes client
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -131,14 +141,16 @@ class MLOrchestrator:
             raise
     
     async def deploy_ai_ml_stack(self, config: Optional[AIDeploymentConfig] = None) -> Dict[str, Any]:
-        """        Deploy complete AI/ML stack
+        """
+        Deploy complete AI/ML stack
         
         Args:
             config: Optional custom AI deployment configuration
             
         Returns:
             Deployment result with all service details
-        """        if config:
+        """
+        if config:
             self.config = config
         
         try:
@@ -231,7 +243,8 @@ class MLOrchestrator:
             raise
     
     async def _ensure_ai_namespace(self) -> None:
-        """Create dedicated namespace for AI services"""        try:
+        """Create dedicated namespace for AI services"""
+        try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -250,7 +263,8 @@ class MLOrchestrator:
                 logger.info(f"Created AI namespace: {self.namespace}")
     
     async def _deploy_ai_infrastructure(self) -> None:
-        """Deploy core infrastructure for AI/ML services"""        # High-performance Redis for ML metadata and caching
+        """Deploy core infrastructure for AI/ML services"""
+        # High-performance Redis for ML metadata and caching
         redis_cluster = {
             "apiVersion": "apps/v1",
             "kind": "StatefulSet",
@@ -400,7 +414,8 @@ class MLOrchestrator:
         logger.info("Deployed AI infrastructure")
     
     async def _deploy_model_registry(self) -> Dict[str, Any]:
-        """Deploy MLflow model registry"""        mlflow_deployment = {
+        """Deploy MLflow model registry"""
+        mlflow_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -491,7 +506,8 @@ class MLOrchestrator:
         }
     
     async def _deploy_feature_store(self) -> Dict[str, Any]:
-        """Deploy feature store for ML pipelines"""        if not self.config.feature_store_enabled:
+        """Deploy feature store for ML pipelines"""
+        if not self.config.feature_store_enabled:
             logger.info("Feature store disabled, skipping deployment")
             return {"status": "disabled"}
         
@@ -582,7 +598,8 @@ class MLOrchestrator:
         }
     
     async def _deploy_model_serving(self) -> Dict[str, Any]:
-        """Deploy model serving infrastructure"""        # TensorFlow Serving
+        """Deploy model serving infrastructure"""
+        # TensorFlow Serving
         tf_serving = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
@@ -747,7 +764,8 @@ class MLOrchestrator:
         }
     
     async def _deploy_training_pipelines(self) -> Dict[str, Any]:
-        """Deploy training pipeline system"""        if not self.config.training_enabled:
+        """Deploy training pipeline system"""
+        if not self.config.training_enabled:
             logger.info("Training disabled, skipping deployment")
             return {"status": "disabled"}
         
@@ -838,7 +856,8 @@ class MLOrchestrator:
         }
     
     async def _deploy_inference_engines(self) -> Dict[str, Any]:
-        """Deploy inference engines for real-time predictions"""        # Real-time inference engine
+        """Deploy inference engines for real-time predictions"""
+        # Real-time inference engine
         inference_engine = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
@@ -935,7 +954,8 @@ class MLOrchestrator:
         }
     
     async def _deploy_batch_processing(self) -> Dict[str, Any]:
-        """Deploy batch processing system"""        if not self.config.batch_processing:
+        """Deploy batch processing system"""
+        if not self.config.batch_processing:
             logger.info("Batch processing disabled, skipping deployment")
             return {"status": "disabled"}
         
@@ -1028,7 +1048,8 @@ class MLOrchestrator:
         }
     
     async def _deploy_ai_monitoring(self) -> Dict[str, Any]:
-        """Deploy AI-specific monitoring and observability"""        # Model monitoring service
+        """Deploy AI-specific monitoring and observability"""
+        # Model monitoring service
         model_monitor = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
@@ -1077,7 +1098,8 @@ class MLOrchestrator:
         }
     
     async def _deploy_ai_gateway(self) -> Dict[str, Any]:
-        """Deploy AI API gateway"""        ai_gateway = {
+        """Deploy AI API gateway"""
+        ai_gateway = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -1127,7 +1149,8 @@ class MLOrchestrator:
         }
     
     async def _configure_ai_networking(self) -> None:
-        """Configure network policies for AI services"""        # AI network policy
+        """Configure network policies for AI services"""
+        # AI network policy
         network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
@@ -1163,7 +1186,8 @@ class MLOrchestrator:
         logger.info("Configured AI networking policies")
     
     async def _deploy_gpu_management(self) -> Dict[str, Any]:
-        """Deploy GPU resource management"""        # GPU resource monitor
+        """Deploy GPU resource management"""
+        # GPU resource monitor
         gpu_monitor = {
             "apiVersion": "apps/v1",
             "kind": "DaemonSet",
@@ -1220,7 +1244,8 @@ class MLOrchestrator:
         }
     
     async def _deploy_automated_workflows(self) -> None:
-        """Deploy automated ML workflows"""        # Model retraining job
+        """Deploy automated ML workflows"""
+        # Model retraining job
         retrain_cronjob = {
             "apiVersion": "batch/v1",
             "kind": "CronJob",
@@ -1264,7 +1289,8 @@ class MLOrchestrator:
         logger.info("Deployed automated ML workflows")
     
     async def _validate_ai_stack(self) -> bool:
-        """Validate complete AI/ML stack deployment"""        try:
+        """Validate complete AI/ML stack deployment"""
+        try:
             # Check all deployments are ready
             for service in self.deployed_services:
                 deployment = self.k8s_apps_v1.read_namespaced_deployment(
@@ -1292,7 +1318,8 @@ class MLOrchestrator:
             return False
     
     async def _cleanup_failed_ai_deployment(self) -> None:
-        """Clean up resources from failed AI deployment"""        try:
+        """Clean up resources from failed AI deployment"""
+        try:
             # Delete all deployments
             for service in self.deployed_services:
                 try:
@@ -1309,7 +1336,8 @@ class MLOrchestrator:
             logger.error(f"AI cleanup failed: {e}")
     
     async def deploy_custom_model(self, model_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy a custom ML model"""        try:
+        """Deploy a custom ML model"""
+        try:
             model_name = model_config.get("name")
             framework = model_config.get("framework")
             version = model_config.get("version", "v1.0")
@@ -1377,7 +1405,8 @@ class MLOrchestrator:
             raise
     
     async def get_ai_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive AI/ML metrics"""        try:
+        """Get comprehensive AI/ML metrics"""
+        try:
             # Get AI performance data
             inference_count_24h = self._redis_client.get("inference_count_24h") or "0"
             training_jobs_active = self._redis_client.scard("active_training_jobs")
@@ -1427,7 +1456,8 @@ class MLOrchestrator:
             return {"error": str(e)}
     
     async def cleanup(self) -> None:
-        """Clean up entire AI/ML stack"""        try:
+        """Clean up entire AI/ML stack"""
+        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             

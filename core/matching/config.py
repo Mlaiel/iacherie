@@ -10,7 +10,8 @@ Copyright: 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This configuration module contains proprietary settings and algorithms
 developed by Fahed Mlaiel. Unauthorized use is prohibited.
-"""import os
+"""
+import os
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
 from datetime import timedelta
@@ -21,14 +22,16 @@ from pathlib import Path
 
 
 class EnvironmentType(Enum):
-    """Environment types for configuration"""    DEVELOPMENT = "development"
+    """Environment types for configuration"""
+    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
 
 
 class AIModelType(Enum):
-    """AI model types for matching system"""    NEURAL_NETWORK = "neural_network"
+    """AI model types for matching system"""
+    NEURAL_NETWORK = "neural_network"
     RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
     ENSEMBLE = "ensemble"
@@ -37,7 +40,8 @@ class AIModelType(Enum):
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration settings"""    host: str = "localhost"
+    """Database configuration settings"""
+    host: str = "localhost"
     port: int = 5432
     database: str = "ia_influencer_db"
     username: str = "postgres"
@@ -51,7 +55,8 @@ class DatabaseConfig:
 
 @dataclass
 class CacheConfig:
-    """Cache configuration settings"""    backend: str = "redis"
+    """Cache configuration settings"""
+    backend: str = "redis"
     host: str = "localhost"
     port: int = 6379
     database: int = 0
@@ -64,7 +69,8 @@ class CacheConfig:
 
 @dataclass
 class AIModelConfig:
-    """AI model configuration settings"""    model_type: AIModelType = AIModelType.ENSEMBLE
+    """AI model configuration settings"""
+    model_type: AIModelType = AIModelType.ENSEMBLE
     model_path: str = "models/"
     enable_gpu: bool = True
     batch_size: int = 32
@@ -79,7 +85,8 @@ class AIModelConfig:
 
 @dataclass
 class MatchingConfig:
-    """Matching algorithm configuration"""    enable_ai_matching: bool = True
+    """Matching algorithm configuration"""
+    enable_ai_matching: bool = True
     enable_neural_scoring: bool = True
     enable_business_intelligence: bool = True
     min_compatibility_score: float = 0.65
@@ -100,7 +107,8 @@ class MatchingConfig:
 
 @dataclass
 class RecommendationConfig:
-    """Recommendation engine configuration"""    enable_personalization: bool = True
+    """Recommendation engine configuration"""
+    enable_personalization: bool = True
     enable_collaborative_filtering: bool = True
     enable_content_based: bool = True
     recommendation_refresh_interval: timedelta = field(default_factory=lambda: timedelta(hours=6))
@@ -114,7 +122,8 @@ class RecommendationConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration settings"""    enable_encryption: bool = True
+    """Security configuration settings"""
+    enable_encryption: bool = True
     encryption_algorithm: str = "AES-256-GCM"
     key_rotation_interval: timedelta = field(default_factory=lambda: timedelta(days=30))
     enable_audit_logging: bool = True
@@ -128,7 +137,8 @@ class SecurityConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance optimization configuration"""    max_concurrent_requests: int = 100
+    """Performance optimization configuration"""
+    max_concurrent_requests: int = 100
     request_timeout: timedelta = field(default_factory=lambda: timedelta(minutes=5))
     enable_request_batching: bool = True
     batch_size: int = 10
@@ -142,7 +152,8 @@ class PerformanceConfig:
 
 @dataclass
 class BusinessConfig:
-    """Business logic configuration"""    enable_revenue_optimization: bool = True
+    """Business logic configuration"""
+    enable_revenue_optimization: bool = True
     enable_risk_assessment: bool = True
     enable_roi_calculation: bool = True
     default_collaboration_fee_percentage: float = 0.05
@@ -157,7 +168,8 @@ class BusinessConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring and observability configuration"""    enable_metrics_collection: bool = True
+    """Monitoring and observability configuration"""
+    enable_metrics_collection: bool = True
     enable_error_tracking: bool = True
     enable_performance_tracking: bool = True
     metrics_endpoint: str = "/metrics"
@@ -176,7 +188,8 @@ class MonitoringConfig:
 
 @dataclass
 class IntegrationConfig:
-    """External integration configuration"""    enable_social_media_apis: bool = True
+    """External integration configuration"""
+    enable_social_media_apis: bool = True
     enable_analytics_platforms: bool = True
     enable_payment_gateways: bool = True
     social_media_apis: Dict[str, Dict[str, str]] = field(default_factory=lambda: {
@@ -196,7 +209,8 @@ class IntegrationConfig:
 
 @dataclass
 class MatchingModuleConfig:
-    """Complete matching module configuration"""    environment: EnvironmentType = EnvironmentType.DEVELOPMENT
+    """Complete matching module configuration"""
+    environment: EnvironmentType = EnvironmentType.DEVELOPMENT
     debug_mode: bool = False
     version: str = "3.2.1"
     
@@ -217,18 +231,21 @@ class MatchingModuleConfig:
 
 
 class ConfigurationManager:
-    """Advanced configuration management system"""    
+    """Advanced configuration management system"""
+    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or self._get_default_config_path()
         self.config = MatchingModuleConfig()
         self._load_configuration()
     
     def _get_default_config_path(self) -> str:
-        """Get default configuration file path"""        env = os.getenv("ENVIRONMENT", "development")
+        """Get default configuration file path"""
+        env = os.getenv("ENVIRONMENT", "development")
         return f"config/matching_module_{env}.yaml"
     
     def _load_configuration(self) -> None:
-        """Load configuration from files and environment variables"""        try:
+        """Load configuration from files and environment variables"""
+        try:
             # Load from YAML file if exists
             if os.path.exists(self.config_path):
                 self._load_from_yaml()
@@ -244,7 +261,8 @@ class ConfigurationManager:
             print("Using default configuration")
     
     def _load_from_yaml(self) -> None:
-        """Load configuration from YAML file"""        try:
+        """Load configuration from YAML file"""
+        try:
             with open(self.config_path, 'r') as file:
                 config_data = yaml.safe_load(file)
                 self._update_config_from_dict(config_data)
@@ -252,7 +270,8 @@ class ConfigurationManager:
             print(f"Error loading YAML configuration: {e}")
     
     def _load_from_environment(self) -> None:
-        """Load configuration from environment variables"""        env_mappings = {
+        """Load configuration from environment variables"""
+        env_mappings = {
             # Database
             "DB_HOST": ("database", "host"),
             "DB_PORT": ("database", "port"),
@@ -289,7 +308,8 @@ class ConfigurationManager:
                 self._set_config_value(config_path, value)
     
     def _update_config_from_dict(self, config_data: Dict[str, Any]) -> None:
-        """Update configuration from dictionary"""        for key, value in config_data.items():
+        """Update configuration from dictionary"""
+        for key, value in config_data.items():
             if hasattr(self.config, key):
                 if isinstance(value, dict):
                     # Nested configuration
@@ -301,7 +321,8 @@ class ConfigurationManager:
                     setattr(self.config, key, value)
     
     def _set_config_value(self, config_path: tuple, value: str) -> None:
-        """Set configuration value from environment variable"""        try:
+        """Set configuration value from environment variable"""
+        try:
             # Convert string value to appropriate type
             converted_value = self._convert_env_value(value)
             
@@ -320,7 +341,8 @@ class ConfigurationManager:
             print(f"Error setting config value {config_path}: {e}")
     
     def _convert_env_value(self, value: str) -> Any:
-        """Convert environment variable string to appropriate type"""        # Boolean conversion
+        """Convert environment variable string to appropriate type"""
+        # Boolean conversion
         if value.lower() in ('true', 'false'):
             return value.lower() == 'true'
         
@@ -340,7 +362,8 @@ class ConfigurationManager:
         return value
     
     def _validate_configuration(self) -> None:
-        """Validate configuration settings"""        errors = []
+        """Validate configuration settings"""
+        errors = []
         
         # Validate database configuration
         if not self.config.database.host:
@@ -372,10 +395,12 @@ class ConfigurationManager:
             raise ValueError(f"Configuration validation failed: {'; '.join(errors)}")
     
     def get_config(self) -> MatchingModuleConfig:
-        """Get the current configuration"""        return self.config
+        """Get the current configuration"""
+        return self.config
     
     def save_configuration(self, file_path: Optional[str] = None) -> None:
-        """Save current configuration to file"""        output_path = file_path or self.config_path
+        """Save current configuration to file"""
+        output_path = file_path or self.config_path
         
         try:
             # Convert config to dictionary
@@ -394,7 +419,8 @@ class ConfigurationManager:
             print(f"Error saving configuration: {e}")
     
     def _config_to_dict(self) -> Dict[str, Any]:
-        """Convert configuration object to dictionary"""        config_dict = {}
+        """Convert configuration object to dictionary"""
+        config_dict = {}
         
         for field_name, field_value in self.config.__dict__.items():
             if hasattr(field_value, '__dict__'):
@@ -415,11 +441,13 @@ class ConfigurationManager:
         return config_dict
     
     def update_config(self, updates: Dict[str, Any]) -> None:
-        """Update configuration with new values"""        self._update_config_from_dict(updates)
+        """Update configuration with new values"""
+        self._update_config_from_dict(updates)
         self._validate_configuration()
     
     def get_environment_config(self, environment: EnvironmentType) -> MatchingModuleConfig:
-        """Get configuration optimized for specific environment"""        env_config = MatchingModuleConfig()
+        """Get configuration optimized for specific environment"""
+        env_config = MatchingModuleConfig()
         
         if environment == EnvironmentType.DEVELOPMENT:
             env_config.debug_mode = True
@@ -447,7 +475,8 @@ class ConfigurationManager:
         return env_config
     
     def create_default_config_files(self) -> None:
-        """Create default configuration files for all environments"""        environments = [
+        """Create default configuration files for all environments"""
+        environments = [
             EnvironmentType.DEVELOPMENT,
             EnvironmentType.TESTING,
             EnvironmentType.STAGING,
@@ -470,18 +499,21 @@ _config_manager: Optional[ConfigurationManager] = None
 
 
 def get_config_manager() -> ConfigurationManager:
-    """Get global configuration manager instance"""    global _config_manager
+    """Get global configuration manager instance"""
+    global _config_manager
     if _config_manager is None:
         _config_manager = ConfigurationManager()
     return _config_manager
 
 
 def get_config() -> MatchingModuleConfig:
-    """Get current configuration"""    return get_config_manager().get_config()
+    """Get current configuration"""
+    return get_config_manager().get_config()
 
 
 def update_config(updates: Dict[str, Any]) -> None:
-    """Update global configuration"""    get_config_manager().update_config(updates)
+    """Update global configuration"""
+    get_config_manager().update_config(updates)
 
 
 # Configuration presets for common scenarios
@@ -535,6 +567,7 @@ HIGH_PERFORMANCE_PRESET = {
 
 
 if __name__ == "__main__":
-    """Create default configuration files"""    manager = ConfigurationManager()
+    """Create default configuration files"""
+    manager = ConfigurationManager()
     manager.create_default_config_files()
     print("Default configuration files created successfully!")

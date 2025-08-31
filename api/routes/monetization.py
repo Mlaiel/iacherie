@@ -3,7 +3,8 @@ Revenue tracking and monetization management endpoints.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from typing import List, Dict, Any, Optional
+"""
+from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
 from decimal import Decimal
 import uuid
@@ -115,7 +116,8 @@ licensing_manager = LicensingManager()
 
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    """Get current authenticated user"""    if not credentials:
+    """Get current authenticated user"""
+    if not credentials:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Authentication required"
@@ -137,7 +139,8 @@ async def connect_platform(
     connection: PlatformConnection,
     user: dict = Depends(get_current_user)
 ):
-    """Connect a monetization platform"""    try:
+    """Connect a monetization platform"""
+    try:
         # Validate platform connection
         validation_result = await platform_apis.validate_connection(
             connection.platform, connection.api_key, connection.access_token
@@ -160,7 +163,8 @@ async def connect_platform(
         })
         
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO platform_connections (connection_id, user_id, platform, 
+            await session.execute("""
+                INSERT INTO platform_connections (connection_id, user_id, platform, 
                                                 encrypted_credentials, connection_settings,
                                                 status, created_at, last_validated)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
@@ -201,7 +205,8 @@ async def get_revenue_summary(
     period: str = Field(default="30d", regex="^(7d|30d|90d|1y|all)$"),
     user: dict = Depends(get_current_user)
 ):
-    """Get revenue summary and analytics"""    try:
+    """Get revenue summary and analytics"""
+    try:
         # Calculate period dates
         if period == "7d":
             start_date = datetime.utcnow() - timedelta(days=7)
@@ -218,7 +223,8 @@ async def get_revenue_summary(
         
         # Get total revenue
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT COALESCE(SUM(amount_usd), 0) as total_revenue
+            result = await session.execute("""
+                SELECT COALESCE(SUM(amount_usd), 0) as total_revenue
                 FROM revenue_streams
                 WHERE user_id = %s AND date_earned >= %s AND date_earned <= %s
             """, (user['user_id'], start_date, end_date))
@@ -226,7 +232,8 @@ async def get_revenue_summary(
             
             # Get previous period for comparison
             prev_start = start_date - (end_date - start_date)
-            result = await session.execute("""                SELECT COALESCE(SUM(amount_usd), 0) as prev_revenue
+            result = await session.execute("""
+                SELECT COALESCE(SUM(amount_usd), 0) as prev_revenue
                 FROM revenue_streams
                 WHERE user_id = %s AND date_earned >= %s AND date_earned < %s
             """, (user['user_id'], prev_start, start_date))
@@ -238,7 +245,8 @@ async def get_revenue_summary(
                 revenue_change = ((total_revenue - prev_revenue) / prev_revenue) * 100
             
             # Get platform breakdown
-            result = await session.execute("""                SELECT platform, COALESCE(SUM(amount_usd), 0) as platform_revenue
+            result = await session.execute("""
+                SELECT platform, COALESCE(SUM(amount_usd), 0) as platform_revenue
                 FROM revenue_streams
                 WHERE user_id = %s AND date_earned >= %s AND date_earned <= %s
                 GROUP BY platform
@@ -247,7 +255,8 @@ async def get_revenue_summary(
             platform_breakdown = {row[0]: row[1] for row in result.fetchall()}
             
             # Get top earning content
-            result = await session.execute("""                SELECT content_id, content_title, COALESCE(SUM(amount_usd), 0) as content_revenue
+            result = await session.execute("""
+                SELECT content_id, content_title, COALESCE(SUM(amount_usd), 0) as content_revenue
                 FROM revenue_streams
                 WHERE user_id = %s AND date_earned >= %s AND date_earned <= %s
                 GROUP BY content_id, content_title
@@ -298,12 +307,14 @@ async def add_revenue_stream(
     stream: RevenueStream,
     user: dict = Depends(get_current_user)
 ):
-    """Add a manual revenue stream entry"""    try:
+    """Add a manual revenue stream entry"""
+    try:
         # Convert amount to USD for analytics
         amount_usd = await revenue_calculator.convert_to_usd(stream.amount, stream.currency)
         
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO revenue_streams (stream_id, user_id, platform, content_id,
+            await session.execute("""
+                INSERT INTO revenue_streams (stream_id, user_id, platform, content_id,
                                            revenue_type, amount, currency, amount_usd,
                                            date_earned, payment_status, metadata, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -338,12 +349,14 @@ async def create_monetization_goal(
     goal: MonetizationGoal,
     user: dict = Depends(get_current_user)
 ):
-    """Create a new monetization goal"""    try:
+    """Create a new monetization goal"""
+    try:
         # Convert target amount to USD
         target_amount_usd = await revenue_calculator.convert_to_usd(goal.target_amount, goal.currency)
         
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO monetization_goals (goal_id, user_id, title, target_amount,
+            await session.execute("""
+                INSERT INTO monetization_goals (goal_id, user_id, title, target_amount,
                                               currency, target_amount_usd, target_date,
                                               platforms, revenue_types, status, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -374,12 +387,15 @@ async def get_monetization_goals(
     status: Optional[str] = None,
     user: dict = Depends(get_current_user)
 ):
-    """Get user's monetization goals with progress"""    try:
-        query = """            SELECT goal_id, title, target_amount, currency, target_amount_usd,
+    """Get user's monetization goals with progress"""
+    try:
+        query = """
+            SELECT goal_id, title, target_amount, currency, target_amount_usd,
                    target_date, platforms, revenue_types, status, created_at
             FROM monetization_goals
             WHERE user_id = %s
-        """        params = [user['user_id']]
+        """
+        params = [user['user_id']]
         
         if status:
             query += " AND status = %s"
@@ -429,10 +445,12 @@ async def request_payout(
     background_tasks: BackgroundTasks,
     user: dict = Depends(get_current_user)
 ):
-    """Request a payout of earned revenue"""    try:
+    """Request a payout of earned revenue"""
+    try:
         # Check available balance
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT COALESCE(SUM(amount_usd), 0) as available_balance
+            result = await session.execute("""
+                SELECT COALESCE(SUM(amount_usd), 0) as available_balance
                 FROM revenue_streams
                 WHERE user_id = %s AND payment_status = 'paid' AND payout_status = 'available'
             """, (user['user_id'],))
@@ -453,7 +471,8 @@ async def request_payout(
         
         # Create payout request
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO payout_requests (payout_id, user_id, amount, currency,
+            await session.execute("""
+                INSERT INTO payout_requests (payout_id, user_id, amount, currency,
                                            amount_usd, payment_method, payment_details,
                                            priority, status, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -490,10 +509,12 @@ async def create_licensing_deal(
     deal: LicensingDeal,
     user: dict = Depends(get_current_user)
 ):
-    """Create a new licensing deal"""    try:
+    """Create a new licensing deal"""
+    try:
         # Verify content ownership
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT content_id FROM user_content
+            result = await session.execute("""
+                SELECT content_id FROM user_content
                 WHERE content_id = %s AND user_id = %s
             """, (deal.content_id, user['user_id']))
             
@@ -509,7 +530,8 @@ async def create_licensing_deal(
         
         # Create licensing deal
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO licensing_deals (deal_id, user_id, content_id, licensee_name,
+            await session.execute("""
+                INSERT INTO licensing_deals (deal_id, user_id, content_id, licensee_name,
                                            license_type, territory, duration_months,
                                            total_amount, advance_amount, total_amount_usd,
                                            advance_amount_usd, royalty_rate, payment_schedule,
@@ -550,20 +572,23 @@ async def generate_revenue_report(
     report_type: str = Field(default="comprehensive", regex="^(summary|detailed|comprehensive|tax)$"),
     user: dict = Depends(get_current_user)
 ):
-    """Generate detailed revenue report"""    try:
+    """Generate detailed revenue report"""
+    try:
         report_id = str(uuid.uuid4())
         
         # Get comprehensive revenue data
         async with database_manager.get_postgres_session() as session:
             # Total revenue
-            result = await session.execute("""                SELECT COALESCE(SUM(amount_usd), 0) as total_revenue
+            result = await session.execute("""
+                SELECT COALESCE(SUM(amount_usd), 0) as total_revenue
                 FROM revenue_streams
                 WHERE user_id = %s AND date_earned >= %s AND date_earned <= %s
             """, (user['user_id'], start_date, end_date))
             total_revenue = result.fetchone()[0]
             
             # Revenue by platform
-            result = await session.execute("""                SELECT platform, COALESCE(SUM(amount_usd), 0) as platform_revenue
+            result = await session.execute("""
+                SELECT platform, COALESCE(SUM(amount_usd), 0) as platform_revenue
                 FROM revenue_streams
                 WHERE user_id = %s AND date_earned >= %s AND date_earned <= %s
                 GROUP BY platform
@@ -571,7 +596,8 @@ async def generate_revenue_report(
             revenue_by_platform = {row[0]: row[1] for row in result.fetchall()}
             
             # Revenue by type
-            result = await session.execute("""                SELECT revenue_type, COALESCE(SUM(amount_usd), 0) as type_revenue
+            result = await session.execute("""
+                SELECT revenue_type, COALESCE(SUM(amount_usd), 0) as type_revenue
                 FROM revenue_streams
                 WHERE user_id = %s AND date_earned >= %s AND date_earned <= %s
                 GROUP BY revenue_type
@@ -579,7 +605,8 @@ async def generate_revenue_report(
             revenue_by_type = {row[0]: row[1] for row in result.fetchall()}
             
             # Top performing content
-            result = await session.execute("""                SELECT content_id, content_title, platform, COALESCE(SUM(amount_usd), 0) as content_revenue
+            result = await session.execute("""
+                SELECT content_id, content_title, platform, COALESCE(SUM(amount_usd), 0) as content_revenue
                 FROM revenue_streams
                 WHERE user_id = %s AND date_earned >= %s AND date_earned <= %s
                 GROUP BY content_id, content_title, platform
@@ -597,7 +624,8 @@ async def generate_revenue_report(
             ]
             
             # Payment summary
-            result = await session.execute("""                SELECT payment_status, COUNT(*) as count, COALESCE(SUM(amount_usd), 0) as total
+            result = await session.execute("""
+                SELECT payment_status, COUNT(*) as count, COALESCE(SUM(amount_usd), 0) as total
                 FROM revenue_streams
                 WHERE user_id = %s AND date_earned >= %s AND date_earned <= %s
                 GROUP BY payment_status
@@ -629,7 +657,8 @@ async def generate_revenue_report(
         
         # Store report for future reference
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO revenue_reports (report_id, user_id, report_type, report_data,
+            await session.execute("""
+                INSERT INTO revenue_reports (report_id, user_id, report_type, report_data,
                                            period_start, period_end, generated_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
             """, (
@@ -652,10 +681,12 @@ async def generate_revenue_report(
 
 # Background task functions
 async def _sync_platform_revenue(user_id: str, platform: str):
-    """Sync revenue data from platform APIs"""    try:
+    """Sync revenue data from platform APIs"""
+    try:
         # Get platform connection
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT encrypted_credentials FROM platform_connections
+            result = await session.execute("""
+                SELECT encrypted_credentials FROM platform_connections
                 WHERE user_id = %s AND platform = %s AND status = 'active'
             """, (user_id, platform))
             
@@ -677,7 +708,8 @@ async def _sync_platform_revenue(user_id: str, platform: str):
                     stream['amount'], stream['currency']
                 )
                 
-                await session.execute("""                    INSERT INTO revenue_streams (stream_id, user_id, platform, content_id,
+                await session.execute("""
+                    INSERT INTO revenue_streams (stream_id, user_id, platform, content_id,
                                                revenue_type, amount, currency, amount_usd,
                                                date_earned, payment_status, metadata, created_at)
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -697,10 +729,12 @@ async def _sync_platform_revenue(user_id: str, platform: str):
 
 
 async def _process_payout(payout_id: str, payout_request: PayoutRequest, user: dict):
-    """Process payout request"""    try:
+    """Process payout request"""
+    try:
         # Update status to processing
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                UPDATE payout_requests 
+            await session.execute("""
+                UPDATE payout_requests 
                 SET status = 'processing', started_at = %s
                 WHERE payout_id = %s
             """, (datetime.utcnow(), payout_id))
@@ -713,7 +747,8 @@ async def _process_payout(payout_id: str, payout_request: PayoutRequest, user: d
         
         # Update payout status
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                UPDATE payout_requests 
+            await session.execute("""
+                UPDATE payout_requests 
                 SET status = %s, transaction_id = %s, completed_at = %s
                 WHERE payout_id = %s
             """, (
@@ -723,7 +758,8 @@ async def _process_payout(payout_id: str, payout_request: PayoutRequest, user: d
             
             # Mark revenue streams as paid out
             if payment_result['status'] == 'completed':
-                await session.execute("""                    UPDATE revenue_streams 
+                await session.execute("""
+                    UPDATE revenue_streams 
                     SET payout_status = 'paid_out', payout_id = %s
                     WHERE user_id = %s AND payout_status = 'available'
                       AND amount_usd <= %s
@@ -738,7 +774,8 @@ async def _process_payout(payout_id: str, payout_request: PayoutRequest, user: d
         
         # Mark as failed
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                UPDATE payout_requests 
+            await session.execute("""
+                UPDATE payout_requests 
                 SET status = 'failed', error_message = %s
                 WHERE payout_id = %s
             """, (str(e), payout_id))
@@ -746,10 +783,12 @@ async def _process_payout(payout_id: str, payout_request: PayoutRequest, user: d
 
 
 async def _update_goals_progress(user_id: str, platform: str, revenue_type: str, amount_usd: float):
-    """Update progress towards monetization goals"""    try:
+    """Update progress towards monetization goals"""
+    try:
         async with database_manager.get_postgres_session() as session:
             # Find matching goals
-            result = await session.execute("""                SELECT goal_id FROM monetization_goals
+            result = await session.execute("""
+                SELECT goal_id FROM monetization_goals
                 WHERE user_id = %s AND status = 'active'
                   AND (%s = ANY(platforms) OR 'all' = ANY(platforms))
                   AND (%s = ANY(revenue_types) OR 'all' = ANY(revenue_types))
@@ -759,7 +798,8 @@ async def _update_goals_progress(user_id: str, platform: str, revenue_type: str,
             
             # Update goal progress
             for goal_id in matching_goals:
-                await session.execute("""                    UPDATE monetization_goals 
+                await session.execute("""
+                    UPDATE monetization_goals 
                     SET current_progress = current_progress + %s,
                         last_updated = %s
                     WHERE goal_id = %s
@@ -775,17 +815,20 @@ async def _update_goals_progress(user_id: str, platform: str, revenue_type: str,
 
 async def _calculate_goal_progress(user_id: str, goal_id: str, platforms: List[str], 
                                   revenue_types: List[str], created_at: datetime) -> float:
-    """Calculate current progress towards a goal"""    try:
+    """Calculate current progress towards a goal"""
+    try:
         async with database_manager.get_postgres_session() as session:
             # Build dynamic query based on goal criteria
             platform_filter = "platform = ANY(%s)" if 'all' not in platforms else "TRUE"
             revenue_type_filter = "revenue_type = ANY(%s)" if 'all' not in revenue_types else "TRUE"
             
-            query = f"""                SELECT COALESCE(SUM(amount_usd), 0) as progress
+            query = f"""
+                SELECT COALESCE(SUM(amount_usd), 0) as progress
                 FROM revenue_streams
                 WHERE user_id = %s AND date_earned >= %s
                   AND {platform_filter} AND {revenue_type_filter}
-            """            
+            """
+            
             params = [user_id, created_at]
             if 'all' not in platforms:
                 params.append(platforms)

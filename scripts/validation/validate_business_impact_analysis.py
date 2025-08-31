@@ -4,13 +4,15 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Script de validation pour vérifier la précision de l'analyse des TODOs par impact métier.
-"""import json
+"""
+import json
 import sys
 from pathlib import Path
 from typing import List, Dict
 
 def load_analysis_results(json_file: str = "todo_business_impact_analysis.json") -> Dict:
-    """Charger les résultats d'analyse JSON"""    try:
+    """Charger les résultats d'analyse JSON"""
+    try:
         with open(json_file, 'r', encoding='utf-8') as f:
             return json.load(f)
     except FileNotFoundError:
@@ -21,7 +23,8 @@ def load_analysis_results(json_file: str = "todo_business_impact_analysis.json")
         return {}
 
 def validate_critical_files(analysis_data: Dict) -> bool:
-    """Valider l'identification des fichiers critiques"""    print("🔍 Validation des fichiers critiques...")
+    """Valider l'identification des fichiers critiques"""
+    print("🔍 Validation des fichiers critiques...")
     
     if not analysis_data or 'detailed_analysis' not in analysis_data:
         print("❌ Données d'analyse manquantes")
@@ -53,7 +56,8 @@ def validate_critical_files(analysis_data: Dict) -> bool:
     return len(found_patterns) >= len(expected_critical_patterns) * 0.5
 
 def validate_business_categorization(analysis_data: Dict) -> bool:
-    """Valider la catégorisation par type de business"""    print("\n🏗️ Validation de la catégorisation business...")
+    """Valider la catégorisation par type de business"""
+    print("\n🏗️ Validation de la catégorisation business...")
     
     if 'summary' not in analysis_data or 'by_code_type' not in analysis_data['summary']:
         print("❌ Données de catégorisation manquantes")
@@ -86,7 +90,8 @@ def validate_business_categorization(analysis_data: Dict) -> bool:
     return len(found_types) >= len(expected_types) * 0.7
 
 def validate_priority_scoring(analysis_data: Dict) -> bool:
-    """Valider le système de scoring de priorité"""    print("\n🎯 Validation du scoring de priorité...")
+    """Valider le système de scoring de priorité"""
+    print("\n🎯 Validation du scoring de priorité...")
     
     if 'detailed_analysis' not in analysis_data:
         print("❌ Données détaillées manquantes")
@@ -133,7 +138,8 @@ def validate_priority_scoring(analysis_data: Dict) -> bool:
     return True
 
 def validate_api_detection(analysis_data: Dict) -> bool:
-    """Valider la détection des APIs externes"""    print("\n🌐 Validation de la détection d'APIs externes...")
+    """Valider la détection des APIs externes"""
+    print("\n🌐 Validation de la détection d'APIs externes...")
     
     if 'detailed_analysis' not in analysis_data:
         print("❌ Données détaillées manquantes")
@@ -159,7 +165,8 @@ def validate_api_detection(analysis_data: Dict) -> bool:
     return len(files_with_apis) > 0
 
 def validate_implementation_percentage(analysis_data: Dict) -> bool:
-    """Valider le calcul des pourcentages d'implémentation"""    print("\n📈 Validation des pourcentages d'implémentation...")
+    """Valider le calcul des pourcentages d'implémentation"""
+    print("\n📈 Validation des pourcentages d'implémentation...")
     
     if 'detailed_analysis' not in analysis_data:
         print("❌ Données détaillées manquantes")
@@ -192,7 +199,8 @@ def validate_implementation_percentage(analysis_data: Dict) -> bool:
     return len(valid_percentages) == len(impl_percentages) and avg_impl > 50
 
 def generate_validation_summary(analysis_data: Dict) -> Dict:
-    """Générer un résumé de validation"""    if not analysis_data or 'summary' not in analysis_data:
+    """Générer un résumé de validation"""
+    if not analysis_data or 'summary' not in analysis_data:
         return {}
     
     summary = analysis_data['summary']
@@ -208,7 +216,8 @@ def generate_validation_summary(analysis_data: Dict) -> Dict:
     }
 
 def main():
-    """Point d'entrée principal de validation"""    print("🧪 VALIDATION DE L'ANALYSE BUSINESS IMPACT")
+    """Point d'entrée principal de validation"""
+    print("🧪 VALIDATION DE L'ANALYSE BUSINESS IMPACT")
     print("=" * 50)
     
     # Charger les résultats d'analyse

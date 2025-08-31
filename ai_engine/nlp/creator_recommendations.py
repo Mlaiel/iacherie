@@ -8,7 +8,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from dataclasses import dataclass, field
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 
 class RecommendationType(Enum):
-    """Types of recommendations available."""    CONTENT_OPTIMIZATION = "content_optimization"
+    """Types of recommendations available."""
+    CONTENT_OPTIMIZATION = "content_optimization"
     CREATOR_MATCHING = "creator_matching"
     AUDIENCE_TARGETING = "audience_targeting"
     COLLABORATION_OPPORTUNITIES = "collaboration_opportunities"
@@ -38,7 +40,8 @@ class RecommendationType(Enum):
 
 
 class RecommendationPriority(Enum):
-    """Priority levels for recommendations."""    CRITICAL = "critical"
+    """Priority levels for recommendations."""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -47,7 +50,8 @@ class RecommendationPriority(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile."""    creator_id: str
+    """Comprehensive creator profile."""
+    creator_id: str
     creator_type: str  # musician, blogger, photographer, influencer, comedian
     niche: List[str]
     follower_count: int
@@ -65,7 +69,8 @@ class CreatorProfile:
 
 @dataclass
 class RecommendationItem:
-    """Individual recommendation item."""    recommendation_id: str
+    """Individual recommendation item."""
+    recommendation_id: str
     type: RecommendationType
     priority: RecommendationPriority
     title: str
@@ -83,7 +88,8 @@ class RecommendationItem:
 
 @dataclass
 class RecommendationBundle:
-    """Bundle of related recommendations."""    bundle_id: str
+    """Bundle of related recommendations."""
+    bundle_id: str
     creator_id: str
     theme: str
     recommendations: List[RecommendationItem]
@@ -96,13 +102,16 @@ class RecommendationBundle:
 
 
 class CreatorRecommendationEngine:
-    """    Advanced recommendation engine for creator optimization and growth.
+    """
+    Advanced recommendation engine for creator optimization and growth.
     
     Provides personalized recommendations for content strategy, collaboration,
     monetization, and audience growth based on creator profiles and market analysis.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the recommendation engine."""        self.scaler = StandardScaler()
+        """Initialize the recommendation engine."""
+        self.scaler = StandardScaler()
         self.creator_profiles: Dict[str, CreatorProfile] = {}
         self.recommendation_history: Dict[str, List[RecommendationItem]] = defaultdict(list)
         self.market_trends: Dict[str, Any] = {}
@@ -157,7 +166,8 @@ class CreatorRecommendationEngine:
         creator_profile: CreatorProfile,
         context: Optional[Dict[str, Any]] = None
     ) -> RecommendationBundle:
-        """        Generate personalized recommendations for a creator.
+        """
+        Generate personalized recommendations for a creator.
         
         Args:
             creator_profile: Complete creator profile
@@ -165,7 +175,8 @@ class CreatorRecommendationEngine:
             
         Returns:
             RecommendationBundle: Personalized recommendation bundle
-        """        try:
+        """
+        try:
             # Store/update creator profile
             self.creator_profiles[creator_profile.creator_id] = creator_profile
             
@@ -230,7 +241,8 @@ class CreatorRecommendationEngine:
         self, 
         creator_profile: CreatorProfile
     ) -> List[RecommendationItem]:
-        """Generate content optimization recommendations."""        try:
+        """Generate content optimization recommendations."""
+        try:
             recommendations = []
             
             # Analyze current performance
@@ -329,7 +341,8 @@ class CreatorRecommendationEngine:
         self, 
         creator_profile: CreatorProfile
     ) -> List[RecommendationItem]:
-        """Generate creator matching recommendations."""        try:
+        """Generate creator matching recommendations."""
+        try:
             recommendations = []
             
             # Find similar creators for networking
@@ -402,7 +415,8 @@ class CreatorRecommendationEngine:
         self, 
         creator_profile: CreatorProfile
     ) -> List[RecommendationItem]:
-        """Generate audience targeting recommendations."""        try:
+        """Generate audience targeting recommendations."""
+        try:
             recommendations = []
             
             # Analyze current audience
@@ -473,7 +487,8 @@ class CreatorRecommendationEngine:
         self, 
         creator_profile: CreatorProfile
     ) -> List[RecommendationItem]:
-        """Generate collaboration opportunity recommendations."""        try:
+        """Generate collaboration opportunity recommendations."""
+        try:
             recommendations = []
             
             # Brand collaboration opportunities
@@ -541,7 +556,8 @@ class CreatorRecommendationEngine:
         self, 
         creator_profile: CreatorProfile
     ) -> List[RecommendationItem]:
-        """Generate monetization strategy recommendations."""        try:
+        """Generate monetization strategy recommendations."""
+        try:
             recommendations = []
             
             # Revenue stream diversification
@@ -644,7 +660,8 @@ class CreatorRecommendationEngine:
         self, 
         creator_profile: CreatorProfile
     ) -> List[RecommendationItem]:
-        """Generate trending topics recommendations."""        try:
+        """Generate trending topics recommendations."""
+        try:
             recommendations = []
             
             # Trend adoption strategy
@@ -684,7 +701,8 @@ class CreatorRecommendationEngine:
         self, 
         creator_profile: CreatorProfile
     ) -> List[RecommendationItem]:
-        """Generate posting schedule optimization recommendations."""        try:
+        """Generate posting schedule optimization recommendations."""
+        try:
             recommendations = []
             
             # Optimal timing analysis
@@ -724,7 +742,8 @@ class CreatorRecommendationEngine:
         self, 
         creator_profile: CreatorProfile
     ) -> List[RecommendationItem]:
-        """Generate content format optimization recommendations."""        try:
+        """Generate content format optimization recommendations."""
+        try:
             recommendations = []
             
             # Format diversification
@@ -764,7 +783,8 @@ class CreatorRecommendationEngine:
             return []
     
     def _find_similar_creators(self, creator_profile: CreatorProfile) -> List[str]:
-        """Find creators with similar profiles."""        try:
+        """Find creators with similar profiles."""
+        try:
             similar_creators = []
             
             for creator_id, profile in self.creator_profiles.items():
@@ -784,7 +804,8 @@ class CreatorRecommendationEngine:
             return []
     
     def _find_complementary_creators(self, creator_profile: CreatorProfile) -> List[str]:
-        """Find creators with complementary skills."""        try:
+        """Find creators with complementary skills."""
+        try:
             complementary_creators = []
             
             # Define complementary relationships
@@ -810,7 +831,8 @@ class CreatorRecommendationEngine:
             return []
     
     def _calculate_creator_similarity(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate similarity score between two creators."""        try:
+        """Calculate similarity score between two creators."""
+        try:
             similarity_factors = []
             
             # Niche similarity
@@ -837,7 +859,8 @@ class CreatorRecommendationEngine:
             return 0.0
     
     def _apply_creator_weights(self, recommendations: List[RecommendationItem], creator_type: str) -> List[RecommendationItem]:
-        """Apply creator-type specific weights to recommendations."""        try:
+        """Apply creator-type specific weights to recommendations."""
+        try:
             weights = self.creator_type_weights.get(creator_type, {})
             
             for rec in recommendations:
@@ -851,7 +874,8 @@ class CreatorRecommendationEngine:
             return recommendations
     
     def _select_top_recommendations(self, recommendations: List[RecommendationItem], max_recommendations: int) -> List[RecommendationItem]:
-        """Select top recommendations based on priority and confidence."""        try:
+        """Select top recommendations based on priority and confidence."""
+        try:
             # Sort by priority (critical first) and confidence score
             priority_order = {
                 RecommendationPriority.CRITICAL: 0,
@@ -873,7 +897,8 @@ class CreatorRecommendationEngine:
             return recommendations[:max_recommendations]
     
     def _estimate_implementation_timeframe(self, recommendations: List[RecommendationItem]) -> str:
-        """Estimate total implementation timeframe."""        try:
+        """Estimate total implementation timeframe."""
+        try:
             # Parse timeline strings and estimate total time
             total_weeks = 0
             
@@ -903,7 +928,8 @@ class CreatorRecommendationEngine:
             return "3-6 months"
     
     def _calculate_resource_requirements(self, recommendations: List[RecommendationItem]) -> Dict[str, Any]:
-        """Calculate total resource requirements."""        try:
+        """Calculate total resource requirements."""
+        try:
             all_resources = []
             for rec in recommendations:
                 all_resources.extend(rec.resources_needed)
@@ -922,9 +948,11 @@ class CreatorRecommendationEngine:
 
 
 class RecommendationTracker:
-    """Track recommendation implementation and success."""    
+    """Track recommendation implementation and success."""
+    
     def __init__(self):
-        """Initialize recommendation tracker."""        self.implementation_history: Dict[str, Dict[str, Any]] = {}
+        """Initialize recommendation tracker."""
+        self.implementation_history: Dict[str, Dict[str, Any]] = {}
         self.success_metrics: Dict[str, List[float]] = defaultdict(list)
     
     async def track_implementation(
@@ -933,7 +961,8 @@ class RecommendationTracker:
         status: str, 
         metrics: Optional[Dict[str, float]] = None
     ):
-        """Track implementation status of a recommendation."""        try:
+        """Track implementation status of a recommendation."""
+        try:
             self.implementation_history[recommendation_id] = {
                 'status': status,
                 'timestamp': datetime.now(),
@@ -949,7 +978,8 @@ class RecommendationTracker:
             logger.error(f"Implementation tracking failed: {e}")
     
     def get_recommendation_performance(self, recommendation_id: str) -> Dict[str, Any]:
-        """Get performance data for a specific recommendation."""        try:
+        """Get performance data for a specific recommendation."""
+        try:
             return self.implementation_history.get(recommendation_id, {})
             
         except Exception as e:
@@ -957,7 +987,8 @@ class RecommendationTracker:
             return {}
     
     def get_overall_success_rate(self) -> float:
-        """Calculate overall recommendation success rate."""        try:
+        """Calculate overall recommendation success rate."""
+        try:
             successful_recs = sum(1 for hist in self.implementation_history.values() 
                                 if hist.get('status') == 'completed')
             total_recs = len(self.implementation_history)

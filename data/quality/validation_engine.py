@@ -15,7 +15,8 @@ Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""from typing import Dict, Any, List, Optional, Union, Callable, Tuple, Set
+"""
+from typing import Dict, Any, List, Optional, Union, Callable, Tuple, Set
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -40,14 +41,16 @@ import io
 logger = logging.getLogger(__name__)
 
 class ValidationSeverity(Enum):
-    """Validation issue severity levels"""    CRITICAL = "critical"
+    """Validation issue severity levels"""
+    CRITICAL = "critical"
     HIGH = "high" 
     MEDIUM = "medium"
     LOW = "low"
     INFO = "info"
 
 class ContentType(Enum):
-    """Supported content types for validation"""    AUDIO = "audio"
+    """Supported content types for validation"""
+    AUDIO = "audio"
     VIDEO = "video"  
     IMAGE = "image"
     TEXT = "text"
@@ -55,7 +58,8 @@ class ContentType(Enum):
     METADATA = "metadata"
 
 class ValidationStatus(Enum):
-    """Validation status codes"""    PASSED = "passed"
+    """Validation status codes"""
+    PASSED = "passed"
     FAILED = "failed"
     WARNING = "warning"
     PENDING = "pending"
@@ -63,7 +67,8 @@ class ValidationStatus(Enum):
     ERROR = "error"
 
 class ValidationRule:
-    """Individual validation rule definition"""    
+    """Individual validation rule definition"""
+    
     def __init__(
         self,
         name: str,
@@ -90,19 +95,22 @@ class ValidationRule:
         self.last_execution = None
 
     def update_stats(self, passed: bool):
-        """Update rule execution statistics"""        self.execution_count += 1
+        """Update rule execution statistics"""
+        self.execution_count += 1
         if passed:
             self.success_count += 1
         self.last_execution = datetime.utcnow()
     
     @property
     def success_rate(self) -> float:
-        """Calculate success rate of this rule"""        if self.execution_count == 0:
+        """Calculate success rate of this rule"""
+        if self.execution_count == 0:
             return 0.0
         return (self.success_count / self.execution_count) * 100
 
 class ValidationIssue:
-    """Validation issue with detailed information"""    
+    """Validation issue with detailed information"""
+    
     def __init__(
         self,
         rule_name: str,
@@ -127,7 +135,8 @@ class ValidationIssue:
         self.timestamp = datetime.utcnow()
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert issue to dictionary"""        return {
+        """Convert issue to dictionary"""
+        return {
             'rule': self.rule_name,
             'severity': self.severity.value,
             'message': self.message,
@@ -141,7 +150,8 @@ class ValidationIssue:
         }
 
 class ValidationResult:
-    """Comprehensive validation result container"""    
+    """Comprehensive validation result container"""
+    
     def __init__(self, content_type: str, content_id: Optional[str] = None):
         self.content_type = content_type
         self.content_id = content_id
@@ -158,7 +168,8 @@ class ValidationResult:
         self.timestamp = datetime.utcnow()
     
     def add_issue(self, issue: ValidationIssue):
-        """Add validation issue"""        if issue.severity in [ValidationSeverity.CRITICAL, ValidationSeverity.HIGH]:
+        """Add validation issue"""
+        if issue.severity in [ValidationSeverity.CRITICAL, ValidationSeverity.HIGH]:
             self.issues.append(issue)
             self.overall_status = ValidationStatus.FAILED
         else:
@@ -167,7 +178,8 @@ class ValidationResult:
                 self.overall_status = ValidationStatus.WARNING
     
     def calculate_score(self) -> float:
-        """Calculate overall validation score"""        if not self.rules_executed:
+        """Calculate overall validation score"""
+        if not self.rules_executed:
             return 0.0
         
         total_weight = 0
@@ -191,7 +203,8 @@ class ValidationResult:
         return self.overall_score
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert result to dictionary"""        return {
+        """Convert result to dictionary"""
+        return {
             'content_type': self.content_type,
             'content_id': self.content_id,
             'status': self.overall_status.value,
@@ -208,17 +221,21 @@ class ValidationResult:
         }
 
 class ValidationEngine:
-    """    Enterprise-grade content validation engine.
+    """
+    Enterprise-grade content validation engine.
     
     Provides comprehensive validation for multiple content types with configurable rules,
     automatic issue detection, intelligent content fixing, and detailed reporting.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize validation engine.
+        """
+        Initialize validation engine.
         
         Args:
             config: Validation configuration
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logger
         self.rules: Dict[str, ValidationRule] = {}
         self.content_schemas: Dict[str, Dict[str, Any]] = {}
@@ -237,7 +254,8 @@ class ValidationEngine:
         self.logger.info("ValidationEngine initialized with {} rules".format(len(self.rules)))
     
     def _initialize_content_schemas(self):
-        """Initialize content validation schemas"""        
+        """Initialize content validation schemas"""
+        
         # Audio content schema
         audio_schema = {
             "type": "object",
@@ -311,7 +329,8 @@ class ValidationEngine:
         }
     
     def _initialize_validation_rules(self):
-        """Initialize comprehensive validation rules"""        
+        """Initialize comprehensive validation rules"""
+        
         # Audio validation rules
         self._add_rule(
             "audio_format_validation",
@@ -415,7 +434,8 @@ class ValidationEngine:
         auto_fixable: bool = False,
         fixer: Optional[Callable] = None
     ):
-        """Add validation rule to engine"""        rule = ValidationRule(
+        """Add validation rule to engine"""
+        rule = ValidationRule(
             name=name,
             description=description,
             validator=validator,
@@ -433,7 +453,8 @@ class ValidationEngine:
         metadata: Optional[Dict[str, Any]] = None,
         content_id: Optional[str] = None
     ) -> ValidationResult:
-        """        Validate content against all applicable rules.
+        """
+        Validate content against all applicable rules.
         
         Args:
             content_data: Content to validate
@@ -443,7 +464,8 @@ class ValidationEngine:
             
         Returns:
             Comprehensive validation result
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         result = ValidationResult(content_type, content_id)
         
         try:
@@ -564,7 +586,8 @@ class ValidationEngine:
     
     # Validation rule implementations
     async def _validate_audio_format(self, content_data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate audio format and codec"""        try:
+        """Validate audio format and codec"""
+        try:
             if isinstance(content_data, bytes):
                 # Analyze audio from bytes
                 audio_file = io.BytesIO(content_data)
@@ -607,7 +630,8 @@ class ValidationEngine:
             }
     
     async def _validate_audio_quality(self, content_data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate audio quality parameters"""        try:
+        """Validate audio quality parameters"""
+        try:
             if isinstance(content_data, bytes):
                 audio_file = io.BytesIO(content_data)
                 try:
@@ -650,7 +674,8 @@ class ValidationEngine:
             }
     
     async def _validate_video_format(self, content_data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate video format and codec"""        try:
+        """Validate video format and codec"""
+        try:
             # Placeholder for video format validation
             # In real implementation, use ffmpeg-python or similar
             return {'passed': True, 'message': 'Video format validation passed'}
@@ -662,7 +687,8 @@ class ValidationEngine:
             }
     
     async def _validate_video_quality(self, content_data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate video quality parameters"""        try:
+        """Validate video quality parameters"""
+        try:
             # Placeholder for video quality validation
             return {'passed': True, 'message': 'Video quality validation passed'}
             
@@ -673,7 +699,8 @@ class ValidationEngine:
             }
     
     async def _validate_image_format(self, content_data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate image format and properties"""        try:
+        """Validate image format and properties"""
+        try:
             if isinstance(content_data, bytes):
                 try:
                     image = Image.open(io.BytesIO(content_data))
@@ -723,7 +750,8 @@ class ValidationEngine:
             }
     
     async def _validate_image_quality(self, content_data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate image quality parameters"""        try:
+        """Validate image quality parameters"""
+        try:
             if isinstance(content_data, bytes):
                 try:
                     image = Image.open(io.BytesIO(content_data))
@@ -765,7 +793,8 @@ class ValidationEngine:
             }
     
     async def _validate_text_encoding(self, content_data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate text encoding and character set"""        try:
+        """Validate text encoding and character set"""
+        try:
             if isinstance(content_data, str):
                 text = content_data
             elif isinstance(content_data, bytes):
@@ -813,7 +842,8 @@ class ValidationEngine:
             }
     
     async def _validate_text_content(self, content_data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate text content structure and quality"""        try:
+        """Validate text content structure and quality"""
+        try:
             if isinstance(content_data, str):
                 text = content_data
             elif isinstance(content_data, bytes):
@@ -865,7 +895,8 @@ class ValidationEngine:
             }
     
     async def _validate_file_size(self, content_data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate file size constraints"""        try:
+        """Validate file size constraints"""
+        try:
             if isinstance(content_data, bytes):
                 size = len(content_data)
             elif isinstance(content_data, str):
@@ -905,7 +936,8 @@ class ValidationEngine:
             }
     
     async def _validate_metadata(self, content_data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate content metadata completeness"""        try:
+        """Validate content metadata completeness"""
+        try:
             required_fields = ['content_type', 'created_at']
             missing_fields = [field for field in required_fields if field not in metadata]
             
@@ -927,7 +959,8 @@ class ValidationEngine:
             }
     
     async def _validate_security(self, content_data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Security scan for malicious content"""        try:
+        """Security scan for malicious content"""
+        try:
             # Basic security checks
             if isinstance(content_data, bytes):
                 # Check for executable signatures
@@ -974,7 +1007,8 @@ class ValidationEngine:
             }
     
     def get_validation_statistics(self) -> Dict[str, Any]:
-        """Get validation engine statistics"""        total_validations = len(self.validation_history)
+        """Get validation engine statistics"""
+        total_validations = len(self.validation_history)
         
         if total_validations == 0:
             return {'message': 'No validations performed yet'}
@@ -1008,21 +1042,25 @@ class ValidationEngine:
         }
     
     def add_custom_rule(self, rule: ValidationRule):
-        """Add custom validation rule"""        self.rules[rule.name] = rule
+        """Add custom validation rule"""
+        self.rules[rule.name] = rule
         self.logger.info(f"Added custom validation rule: {rule.name}")
     
     def enable_rule(self, rule_name: str):
-        """Enable validation rule"""        if rule_name in self.rules:
+        """Enable validation rule"""
+        if rule_name in self.rules:
             self.rules[rule_name].enabled = True
             self.logger.info(f"Enabled rule: {rule_name}")
     
     def disable_rule(self, rule_name: str):
-        """Disable validation rule"""        if rule_name in self.rules:
+        """Disable validation rule"""
+        if rule_name in self.rules:
             self.rules[rule_name].enabled = False
             self.logger.info(f"Disabled rule: {rule_name}")
     
     def list_rules(self) -> List[Dict[str, Any]]:
-        """List all validation rules"""        return [
+        """List all validation rules"""
+        return [
             {
                 'name': rule.name,
                 'description': rule.description,
@@ -1038,7 +1076,8 @@ class ValidationEngine:
         
         Args:
             config: Validation configuration
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logger
         
         # Validation rules by content type
@@ -1066,7 +1105,8 @@ class ValidationEngine:
         self.logger.info("ValidationEngine initialized")
     
     def _initialize_validation_rules(self):
-        """Initialize validation rules for all content types"""        
+        """Initialize validation rules for all content types"""
+        
         # Audio validation rules
         audio_rules = [
             ValidationRule(
@@ -1251,7 +1291,8 @@ class ValidationEngine:
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Validate content using appropriate validation rules.
+        """
+        Validate content using appropriate validation rules.
         
         Args:
             content_data: Content to validate
@@ -1260,7 +1301,8 @@ class ValidationEngine:
             
         Returns:
             Validation results
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         
         try:
             # Get validation rules for content type
@@ -1341,7 +1383,8 @@ class ValidationEngine:
         content_type: str,
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Execute a single validation rule"""        
+        """Execute a single validation rule"""
+        
         try:
             # Call the rule's validator function
             if asyncio.iscoroutinefunction(rule.validator):
@@ -1357,7 +1400,8 @@ class ValidationEngine:
             }
     
     def _calculate_validation_score(self, result: ValidationResult) -> float:
-        """Calculate overall validation score"""        
+        """Calculate overall validation score"""
+        
         if not result.issues and not result.warnings:
             return 100.0
         
@@ -1389,124 +1433,157 @@ class ValidationEngine:
     
     # Audio validation methods
     async def _validate_audio_format(self, content_data: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate audio format and codec"""        # Placeholder implementation
+        """Validate audio format and codec"""
+        # Placeholder implementation
         return {'passed': True, 'message': 'Audio format validation passed'}
     
     async def _validate_audio_duration(self, content_data: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate audio duration"""        # Placeholder implementation
+        """Validate audio duration"""
+        # Placeholder implementation
         return {'passed': True, 'message': 'Audio duration validation passed'}
     
     async def _validate_audio_bitrate(self, content_data: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate audio bitrate"""        # Placeholder implementation
+        """Validate audio bitrate"""
+        # Placeholder implementation
         return {'passed': True, 'message': 'Audio bitrate validation passed'}
     
     async def _validate_audio_metadata(self, content_data: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate audio metadata"""        # Placeholder implementation
+        """Validate audio metadata"""
+        # Placeholder implementation
         return {'passed': True, 'message': 'Audio metadata validation passed'}
     
     # Video validation methods
     async def _validate_video_format(self, content_data: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate video format and codec"""        # Placeholder implementation
+        """Validate video format and codec"""
+        # Placeholder implementation
         return {'passed': True, 'message': 'Video format validation passed'}
     
     async def _validate_video_resolution(self, content_data: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate video resolution"""        # Placeholder implementation
+        """Validate video resolution"""
+        # Placeholder implementation
         return {'passed': True, 'message': 'Video resolution validation passed'}
     
     async def _validate_video_framerate(self, content_data: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate video framerate"""        # Placeholder implementation
+        """Validate video framerate"""
+        # Placeholder implementation
         return {'passed': True, 'message': 'Video framerate validation passed'}
     
     async def _validate_video_encoding(self, content_data: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate video encoding"""        # Placeholder implementation
+        """Validate video encoding"""
+        # Placeholder implementation
         return {'passed': True, 'message': 'Video encoding validation passed'}
     
     # Image validation methods
     async def _validate_image_format(self, content_data: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate image format"""        # Placeholder implementation
+        """Validate image format"""
+        # Placeholder implementation
         return {'passed': True, 'message': 'Image format validation passed'}
     
     async def _validate_image_dimensions(self, content_data: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate image dimensions"""        # Placeholder implementation
+        """Validate image dimensions"""
+        # Placeholder implementation
         return {'passed': True, 'message': 'Image dimensions validation passed'}
     
     async def _validate_image_quality(self, content_data: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate image quality"""        # Placeholder implementation
+        """Validate image quality"""
+        # Placeholder implementation
         return {'passed': True, 'message': 'Image quality validation passed'}
     
     async def _validate_image_metadata(self, content_data: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate image metadata"""        # Placeholder implementation
+        """Validate image metadata"""
+        # Placeholder implementation
         return {'passed': True, 'message': 'Image metadata validation passed'}
     
     # Text validation methods
     async def _validate_text_encoding(self, content_data: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate text encoding"""        # Placeholder implementation
+        """Validate text encoding"""
+        # Placeholder implementation
         return {'passed': True, 'message': 'Text encoding validation passed'}
     
     async def _validate_text_length(self, content_data: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate text length"""        # Placeholder implementation
+        """Validate text length"""
+        # Placeholder implementation
         return {'passed': True, 'message': 'Text length validation passed'}
     
     async def _validate_text_content(self, content_data: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate text content"""        # Placeholder implementation
+        """Validate text content"""
+        # Placeholder implementation
         return {'passed': True, 'message': 'Text content validation passed'}
     
     async def _validate_text_language(self, content_data: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate text language"""        # Placeholder implementation
+        """Validate text language"""
+        # Placeholder implementation
         return {'passed': True, 'message': 'Text language validation passed'}
     
     # Generic validation methods
     async def _validate_file_size(self, content_data: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate file size"""        # Placeholder implementation
+        """Validate file size"""
+        # Placeholder implementation
         return {'passed': True, 'message': 'File size validation passed'}
     
     async def _validate_file_integrity(self, content_data: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate file integrity"""        # Placeholder implementation
+        """Validate file integrity"""
+        # Placeholder implementation
         return {'passed': True, 'message': 'File integrity validation passed'}
     
     async def _validate_security(self, content_data: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate security (malware scan)"""        # Placeholder implementation
+        """Validate security (malware scan)"""
+        # Placeholder implementation
         return {'passed': True, 'message': 'Security validation passed'}
     
     # Auto-fixing methods (placeholders)
     async def _fix_audio_format(self, content_data: Any, issues: List[Dict[str, Any]]) -> Any:
-        """Fix audio format issues"""        return content_data
+        """Fix audio format issues"""
+        return content_data
     
     async def _fix_audio_bitrate(self, content_data: Any, issues: List[Dict[str, Any]]) -> Any:
-        """Fix audio bitrate issues"""        return content_data
+        """Fix audio bitrate issues"""
+        return content_data
     
     async def _fix_audio_metadata(self, content_data: Any, issues: List[Dict[str, Any]]) -> Any:
-        """Fix audio metadata issues"""        return content_data
+        """Fix audio metadata issues"""
+        return content_data
     
     async def _fix_video_format(self, content_data: Any, issues: List[Dict[str, Any]]) -> Any:
-        """Fix video format issues"""        return content_data
+        """Fix video format issues"""
+        return content_data
     
     async def _fix_video_resolution(self, content_data: Any, issues: List[Dict[str, Any]]) -> Any:
-        """Fix video resolution issues"""        return content_data
+        """Fix video resolution issues"""
+        return content_data
     
     async def _fix_video_framerate(self, content_data: Any, issues: List[Dict[str, Any]]) -> Any:
-        """Fix video framerate issues"""        return content_data
+        """Fix video framerate issues"""
+        return content_data
     
     async def _fix_video_encoding(self, content_data: Any, issues: List[Dict[str, Any]]) -> Any:
-        """Fix video encoding issues"""        return content_data
+        """Fix video encoding issues"""
+        return content_data
     
     async def _fix_image_format(self, content_data: Any, issues: List[Dict[str, Any]]) -> Any:
-        """Fix image format issues"""        return content_data
+        """Fix image format issues"""
+        return content_data
     
     async def _fix_image_dimensions(self, content_data: Any, issues: List[Dict[str, Any]]) -> Any:
-        """Fix image dimensions issues"""        return content_data
+        """Fix image dimensions issues"""
+        return content_data
     
     async def _fix_image_quality(self, content_data: Any, issues: List[Dict[str, Any]]) -> Any:
-        """Fix image quality issues"""        return content_data
+        """Fix image quality issues"""
+        return content_data
     
     async def _fix_image_metadata(self, content_data: Any, issues: List[Dict[str, Any]]) -> Any:
-        """Fix image metadata issues"""        return content_data
+        """Fix image metadata issues"""
+        return content_data
     
     async def _fix_text_encoding(self, content_data: Any, issues: List[Dict[str, Any]]) -> Any:
-        """Fix text encoding issues"""        return content_data
+        """Fix text encoding issues"""
+        return content_data
     
     async def _fix_text_length(self, content_data: Any, issues: List[Dict[str, Any]]) -> Any:
-        """Fix text length issues"""        return content_data
+        """Fix text length issues"""
+        return content_data
     
     async def _fix_text_content(self, content_data: Any, issues: List[Dict[str, Any]]) -> Any:
-        """Fix text content issues"""        return content_data
+        """Fix text content issues"""
+        return content_data

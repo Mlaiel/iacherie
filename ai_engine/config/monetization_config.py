@@ -8,7 +8,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 WARNING: This code is protected intellectual property. Unauthorized use is prohibited.
 Contact mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 import json
 from typing import Dict, Any, List, Optional, Union, Tuple
 from dataclasses import dataclass, field, asdict
@@ -22,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 
 class MonetizationModel(Enum):
-    """Monetization models"""    SUBSCRIPTION = "subscription"
+    """Monetization models"""
+    SUBSCRIPTION = "subscription"
     PAY_PER_VIEW = "pay_per_view"
     ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
@@ -35,7 +37,8 @@ class MonetizationModel(Enum):
 
 
 class RevenueStream(Enum):
-    """Revenue stream types"""    CONTENT_SALES = "content_sales"
+    """Revenue stream types"""
+    CONTENT_SALES = "content_sales"
     PLATFORM_REVENUE = "platform_revenue"
     BRAND_PARTNERSHIPS = "brand_partnerships"
     MERCHANDISE_SALES = "merchandise_sales"
@@ -48,7 +51,8 @@ class RevenueStream(Enum):
 
 
 class PlatformType(Enum):
-    """Monetization platforms"""    YOUTUBE = "youtube"
+    """Monetization platforms"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     SPOTIFY = "spotify"
@@ -61,7 +65,8 @@ class PlatformType(Enum):
 
 
 class CollaborationType(Enum):
-    """Collaboration types"""    MUSIC_COLLABORATION = "music_collaboration"
+    """Collaboration types"""
+    MUSIC_COLLABORATION = "music_collaboration"
     CONTENT_COLLABORATION = "content_collaboration"
     CROSS_PROMOTION = "cross_promotion"
     JOINT_VENTURE = "joint_venture"
@@ -71,7 +76,8 @@ class CollaborationType(Enum):
 
 
 class PaymentMethod(Enum):
-    """Payment methods"""    BANK_TRANSFER = "bank_transfer"
+    """Payment methods"""
+    BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
     CRYPTOCURRENCY = "cryptocurrency"
@@ -82,7 +88,8 @@ class PaymentMethod(Enum):
 
 @dataclass
 class PlatformMonetizationConfig:
-    """Platform-specific monetization configuration"""    platform: PlatformType
+    """Platform-specific monetization configuration"""
+    platform: PlatformType
     enabled: bool = True
     
     # Revenue sharing
@@ -110,7 +117,8 @@ class PlatformMonetizationConfig:
     platform_specific_settings: Dict[str, Any] = field(default_factory=dict)
 
     def __post_init__(self):
-        """Initialize platform-specific settings"""        if self.platform == PlatformType.YOUTUBE:
+        """Initialize platform-specific settings"""
+        if self.platform == PlatformType.YOUTUBE:
             self.platform_specific_settings.update({
                 "youtube_partner_program": True,
                 "super_chat_enabled": True,
@@ -136,7 +144,8 @@ class PlatformMonetizationConfig:
 
 @dataclass
 class CollaborationConfig:
-    """Collaboration and partnership configuration"""    enabled: bool = True
+    """Collaboration and partnership configuration"""
+    enabled: bool = True
     
     # Matching algorithm
     auto_matching_enabled: bool = True
@@ -178,7 +187,8 @@ class CollaborationConfig:
 
 @dataclass
 class RevenueTrackingConfig:
-    """Revenue tracking and analytics configuration"""    enabled: bool = True
+    """Revenue tracking and analytics configuration"""
+    enabled: bool = True
     
     # Tracking granularity
     real_time_tracking: bool = True
@@ -213,7 +223,8 @@ class RevenueTrackingConfig:
 
 @dataclass
 class PricingStrategy:
-    """Dynamic pricing strategy configuration"""    enabled: bool = True
+    """Dynamic pricing strategy configuration"""
+    enabled: bool = True
     
     # Pricing models
     dynamic_pricing: bool = True
@@ -246,7 +257,8 @@ class PricingStrategy:
 
 @dataclass
 class PaymentProcessingConfig:
-    """Payment processing configuration"""    enabled: bool = True
+    """Payment processing configuration"""
+    enabled: bool = True
     
     # Payment providers
     enabled_payment_methods: List[PaymentMethod] = field(default_factory=lambda: [
@@ -284,7 +296,8 @@ class PaymentProcessingConfig:
 
 @dataclass
 class MonetizationConfig:
-    """Main monetization configuration"""    
+    """Main monetization configuration"""
+    
     # Core settings
     enabled: bool = True
     creator_id: str = "fahed_mlaiel_creator"
@@ -336,11 +349,13 @@ class MonetizationConfig:
     content_licensing_compliance: bool = True
 
     def __post_init__(self):
-        """Initialize default platform configurations"""        if not self.platform_configs:
+        """Initialize default platform configurations"""
+        if not self.platform_configs:
             self._setup_default_platform_configs()
 
     def _setup_default_platform_configs(self):
-        """Setup default platform configurations"""        platforms = [
+        """Setup default platform configurations"""
+        platforms = [
             PlatformType.YOUTUBE,
             PlatformType.INSTAGRAM,
             PlatformType.TIKTOK,
@@ -359,7 +374,8 @@ class MonetizationConfig:
                                    engagement_rate: float, 
                                    platform: PlatformType,
                                    monetization_model: MonetizationModel) -> Dict[str, Any]:
-        """Calculate revenue projection for content"""        
+        """Calculate revenue projection for content"""
+        
         platform_config = self.platform_configs.get(platform.value)
         if not platform_config:
             return {"error": "Platform not configured"}
@@ -408,7 +424,8 @@ class MonetizationConfig:
         }
 
     def find_collaboration_matches(self, creator_profile: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Find potential collaboration matches"""        # This would integrate with a database of creators
+        """Find potential collaboration matches"""
+        # This would integrate with a database of creators
         # For now, return a simulated response
         
         matches = []
@@ -451,7 +468,8 @@ class MonetizationConfig:
                                             total_revenue: Decimal,
                                             collaboration_type: CollaborationType,
                                             creator_contribution: float = 0.5) -> Dict[str, Decimal]:
-        """Calculate revenue split for collaboration"""        
+        """Calculate revenue split for collaboration"""
+        
         if collaboration_type == CollaborationType.MUSIC_COLLABORATION:
             # Equal split for music collaborations by default
             split_percentage = creator_contribution
@@ -481,7 +499,8 @@ class MonetizationConfig:
                         content_type: str,
                         target_audience: str,
                         competition_analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize pricing using AI and market analysis"""        
+        """Optimize pricing using AI and market analysis"""
+        
         if not self.pricing_strategy.enabled:
             return {"error": "Pricing optimization disabled"}
         
@@ -527,7 +546,8 @@ class MonetizationConfig:
         }
 
     def validate_configuration(self) -> List[str]:
-        """Validate monetization configuration"""        issues = []
+        """Validate monetization configuration"""
+        issues = []
         
         # Check required fields
         if not self.creator_id:
@@ -554,7 +574,8 @@ class MonetizationConfig:
 
     @classmethod
     def from_env(cls) -> 'MonetizationConfig':
-        """Create configuration from environment variables"""        config = cls()
+        """Create configuration from environment variables"""
+        config = cls()
         
         # Load basic settings
         config.enabled = os.getenv("MONETIZATION_ENABLED", "true").lower() == "true"

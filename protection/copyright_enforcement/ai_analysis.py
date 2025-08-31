@@ -23,7 +23,8 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + DevOps + Leg
 ALL RIGHTS RESERVED. UNAUTHORIZED USE PROHIBITED.
 This code belongs exclusively to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use will result in immediate legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 import torch
@@ -61,7 +62,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentModality(Enum):
-    """Content modality types for AI analysis"""    AUDIO = "audio"
+    """Content modality types for AI analysis"""
+    AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
     TEXT = "text"
@@ -69,7 +71,8 @@ class ContentModality(Enum):
 
 
 class AnalysisType(Enum):
-    """Types of AI analysis"""    SIMILARITY_DETECTION = "similarity_detection"
+    """Types of AI analysis"""
+    SIMILARITY_DETECTION = "similarity_detection"
     LEGAL_STRENGTH_ASSESSMENT = "legal_strength_assessment"
     EVIDENCE_SCORING = "evidence_scoring"
     ENFORCEMENT_STRATEGY = "enforcement_strategy"
@@ -79,7 +82,8 @@ class AnalysisType(Enum):
 
 
 class SimilarityMethod(Enum):
-    """Similarity detection methods"""    PERCEPTUAL_HASH = "perceptual_hash"
+    """Similarity detection methods"""
+    PERCEPTUAL_HASH = "perceptual_hash"
     FEATURE_MATCHING = "feature_matching"
     DEEP_LEARNING = "deep_learning"
     AUDIO_FINGERPRINT = "audio_fingerprint"
@@ -90,7 +94,8 @@ class SimilarityMethod(Enum):
 
 @dataclass
 class ContentFeatures:
-    """Extracted content features for AI analysis"""    content_id: str
+    """Extracted content features for AI analysis"""
+    content_id: str
     modality: ContentModality
     audio_features: Optional[np.ndarray] = None
     visual_features: Optional[np.ndarray] = None
@@ -103,7 +108,8 @@ class ContentFeatures:
 
 @dataclass
 class SimilarityAnalysisResult:
-    """Result of content similarity analysis"""    original_content_id: str
+    """Result of content similarity analysis"""
+    original_content_id: str
     comparison_content_id: str
     overall_similarity: float
     modality_scores: Dict[ContentModality, float]
@@ -116,7 +122,8 @@ class SimilarityAnalysisResult:
 
 @dataclass
 class LegalAnalysisResult:
-    """Result of legal strength analysis"""    case_id: str
+    """Result of legal strength analysis"""
+    case_id: str
     legal_strength_score: float
     copyright_validity: float
     evidence_quality: float
@@ -128,7 +135,8 @@ class LegalAnalysisResult:
 
 
 class ContentAnalysisEngine:
-    """Ultra-advanced AI-powered content analysis engine"""    
+    """Ultra-advanced AI-powered content analysis engine"""
+    
     def __init__(self):
         self.settings = get_settings()
         self.cache_manager = CacheManager()
@@ -148,7 +156,8 @@ class ContentAnalysisEngine:
         self._initialize_models()
     
     def _initialize_models(self) -> None:
-        """Initialize all AI models"""        try:
+        """Initialize all AI models"""
+        try:
             # Text analysis models
             self.sentence_transformer = SentenceTransformer('all-MiniLM-L6-v2')
             self.nlp_model = spacy.load('en_core_web_sm')
@@ -174,7 +183,8 @@ class ContentAnalysisEngine:
         content_type: ContentModality,
         content_id: str
     ) -> ContentFeatures:
-        """Extract comprehensive features from content"""        try:
+        """Extract comprehensive features from content"""
+        try:
             features = ContentFeatures(
                 content_id=content_id,
                 modality=content_type
@@ -211,7 +221,8 @@ class ContentAnalysisEngine:
             raise
     
     async def _extract_audio_features(self, audio_path: str) -> np.ndarray:
-        """Extract advanced audio features"""        try:
+        """Extract advanced audio features"""
+        try:
             # Load audio file
             y, sr = librosa.load(audio_path, sr=22050)
             
@@ -252,7 +263,8 @@ class ContentAnalysisEngine:
             return np.array([])
     
     async def _extract_image_features(self, image_path: str) -> np.ndarray:
-        """Extract advanced image features using CLIP"""        try:
+        """Extract advanced image features using CLIP"""
+        try:
             # Load and preprocess image
             image = cv2.imread(image_path)
             image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -269,7 +281,8 @@ class ContentAnalysisEngine:
             return np.array([])
     
     async def _extract_video_features(self, video_path: str) -> np.ndarray:
-        """Extract video visual features"""        try:
+        """Extract video visual features"""
+        try:
             cap = cv2.VideoCapture(video_path)
             frame_features = []
             
@@ -304,7 +317,8 @@ class ContentAnalysisEngine:
             return np.array([])
     
     async def _extract_text_features(self, text_content: str) -> np.ndarray:
-        """Extract advanced text features"""        try:
+        """Extract advanced text features"""
+        try:
             # Use sentence transformer for semantic embeddings
             embeddings = self.sentence_transformer.encode(text_content)
             
@@ -326,7 +340,8 @@ class ContentAnalysisEngine:
             return np.array([])
     
     async def _generate_audio_fingerprint(self, audio_path: str) -> str:
-        """Generate audio fingerprint using chromaprint"""        try:
+        """Generate audio fingerprint using chromaprint"""
+        try:
             # This would use a library like pyacoustid for chromaprint
             # For now, return a hash of the audio features
             features = await self._extract_audio_features(audio_path)
@@ -335,7 +350,8 @@ class ContentAnalysisEngine:
             return ""
     
     async def _generate_perceptual_hash(self, image_path: str) -> str:
-        """Generate perceptual hash for image"""        try:
+        """Generate perceptual hash for image"""
+        try:
             import imagehash
             from PIL import Image
             
@@ -351,7 +367,8 @@ class ContentAnalysisEngine:
         comparison_features: ContentFeatures,
         methods: List[SimilarityMethod] = None
     ) -> SimilarityAnalysisResult:
-        """Calculate comprehensive similarity between content items"""        try:
+        """Calculate comprehensive similarity between content items"""
+        try:
             if methods is None:
                 methods = [
                     SimilarityMethod.FEATURE_MATCHING,
@@ -437,7 +454,8 @@ class ContentAnalysisEngine:
         features1: ContentFeatures, 
         features2: ContentFeatures
     ) -> float:
-        """Calculate feature-based similarity"""        try:
+        """Calculate feature-based similarity"""
+        try:
             similarities = []
             
             if features1.audio_features is not None and features2.audio_features is not None:
@@ -463,7 +481,8 @@ class ContentAnalysisEngine:
         features1: ContentFeatures, 
         features2: ContentFeatures
     ) -> float:
-        """Calculate perceptual hash similarity"""        try:
+        """Calculate perceptual hash similarity"""
+        try:
             if features1.perceptual_hash and features2.perceptual_hash:
                 # Calculate Hamming distance for perceptual hashes
                 hash1 = int(features1.perceptual_hash, 16)
@@ -486,7 +505,8 @@ class ContentAnalysisEngine:
         features1: ContentFeatures, 
         features2: ContentFeatures
     ) -> float:
-        """Calculate semantic similarity for text content"""        try:
+        """Calculate semantic similarity for text content"""
+        try:
             if features1.text_features is not None and features2.text_features is not None:
                 return cosine_similarity([features1.text_features], [features2.text_features])[0][0]
             return 0.0
@@ -499,7 +519,8 @@ class ContentAnalysisEngine:
         method_scores: Dict[SimilarityMethod, float],
         modality_scores: Dict[ContentModality, float]
     ) -> float:
-        """Calculate confidence score for similarity analysis"""        try:
+        """Calculate confidence score for similarity analysis"""
+        try:
             # Base confidence on consistency between methods
             if len(method_scores) < 2:
                 return 0.5
@@ -527,7 +548,8 @@ class ContentAnalysisEngine:
         confidence: float,
         modality_scores: Dict[ContentModality, float]
     ) -> Tuple[str, str]:
-        """Assess risk level and recommend action"""        try:
+        """Assess risk level and recommend action"""
+        try:
             # High similarity with high confidence
             if similarity > 0.9 and confidence > 0.8:
                 return "CRITICAL", "IMMEDIATE_DMCA"
@@ -549,7 +571,8 @@ class ContentAnalysisEngine:
         case_data: Dict[str, Any],
         evidence_data: List[Dict[str, Any]]
     ) -> LegalAnalysisResult:
-        """Analyze legal strength of copyright case using AI"""        try:
+        """Analyze legal strength of copyright case using AI"""
+        try:
             # Extract key factors for legal analysis
             copyright_factors = await self._analyze_copyright_validity(case_data)
             evidence_factors = await self._analyze_evidence_quality(evidence_data)
@@ -596,7 +619,8 @@ class ContentAnalysisEngine:
             raise
     
     async def _analyze_copyright_validity(self, case_data: Dict[str, Any]) -> float:
-        """Analyze copyright validity factors"""        try:
+        """Analyze copyright validity factors"""
+        try:
             score = 0.5  # Base score
             
             # Check for copyright registration
@@ -626,7 +650,8 @@ class ContentAnalysisEngine:
             return 0.5
     
     async def _analyze_evidence_quality(self, evidence_data: List[Dict[str, Any]]) -> float:
-        """Analyze quality of evidence using AI"""        try:
+        """Analyze quality of evidence using AI"""
+        try:
             if not evidence_data:
                 return 0.0
             
@@ -669,7 +694,8 @@ class ContentAnalysisEngine:
             return 0.5
     
     async def _analyze_jurisdictional_factors(self, case_data: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze jurisdictional factors affecting the case"""        try:
+        """Analyze jurisdictional factors affecting the case"""
+        try:
             factors = {}
             
             jurisdiction = case_data.get("jurisdiction", "US")
@@ -707,7 +733,8 @@ class ContentAnalysisEngine:
         evidence_quality: float,
         jurisdictional_factors: Dict[str, float]
     ) -> float:
-        """Predict case success probability using AI"""        try:
+        """Predict case success probability using AI"""
+        try:
             # Simple ML-based prediction
             # In production, this would use a trained model
             
@@ -733,7 +760,8 @@ class ContentAnalysisEngine:
         case_data: Dict[str, Any], 
         evidence_data: List[Dict[str, Any]]
     ) -> List[str]:
-        """Identify potential risk factors for the case"""        try:
+        """Identify potential risk factors for the case"""
+        try:
             risk_factors = []
             
             # Copyright-related risks
@@ -775,7 +803,8 @@ class ContentAnalysisEngine:
         risk_factors: List[str],
         case_data: Dict[str, Any]
     ) -> List[str]:
-        """Generate AI-powered legal recommendations"""        try:
+        """Generate AI-powered legal recommendations"""
+        try:
             recommendations = []
             
             # Strength-based recommendations
@@ -818,7 +847,8 @@ class ContentAnalysisEngine:
         case_data: Dict[str, Any],
         ai_analysis: LegalAnalysisResult
     ) -> str:
-        """Generate legal documents using AI"""        try:
+        """Generate legal documents using AI"""
+        try:
             if not self.settings.openai_api_key:
                 logger.warning("OpenAI API key not configured")
                 return ""
@@ -851,7 +881,9 @@ class ContentAnalysisEngine:
         case_data: Dict[str, Any],
         ai_analysis: LegalAnalysisResult
     ) -> str:
-        """Create prompt for legal document generation"""        base_prompt = f"""        Generate a professional {document_type} based on the following case information:
+        """Create prompt for legal document generation"""
+        base_prompt = f"""
+        Generate a professional {document_type} based on the following case information:
         
         Case Details:
         - Content Type: {case_data.get('content_type', 'Unknown')}
@@ -871,11 +903,13 @@ class ContentAnalysisEngine:
         {chr(10).join([f"- {rec}" for rec in ai_analysis.recommendations])}
         
         Please generate a comprehensive, legally sound document that addresses all relevant aspects of this copyright infringement case.
-        """        
+        """
+        
         return base_prompt
     
     async def cleanup_models(self) -> None:
-        """Cleanup AI models and free memory"""        try:
+        """Cleanup AI models and free memory"""
+        try:
             del self.text_model
             del self.clip_model
             del self.audio_model
@@ -891,7 +925,8 @@ class ContentAnalysisEngine:
 
 
 class IntelligentEnforcementStrategy:
-    """AI-powered enforcement strategy optimization"""    
+    """AI-powered enforcement strategy optimization"""
+    
     def __init__(self):
         self.content_analyzer = ContentAnalysisEngine()
         self.settings = get_settings()
@@ -902,7 +937,8 @@ class IntelligentEnforcementStrategy:
         similarity_analysis: SimilarityAnalysisResult,
         legal_analysis: LegalAnalysisResult
     ) -> Dict[str, Any]:
-        """Recommend optimal enforcement strategy using AI"""        try:
+        """Recommend optimal enforcement strategy using AI"""
+        try:
             # Analyze multiple factors
             urgency_score = self._calculate_urgency(violation_data, similarity_analysis)
             resource_efficiency = self._calculate_resource_efficiency(legal_analysis)
@@ -945,7 +981,8 @@ class IntelligentEnforcementStrategy:
         violation_data: Dict[str, Any],
         similarity_analysis: SimilarityAnalysisResult
     ) -> float:
-        """Calculate urgency score for enforcement action"""        urgency = 0.0
+        """Calculate urgency score for enforcement action"""
+        urgency = 0.0
         
         # High similarity = high urgency
         urgency += similarity_analysis.overall_similarity * 0.4
@@ -975,7 +1012,8 @@ class IntelligentEnforcementStrategy:
         return min(urgency, 1.0)
     
     def _calculate_resource_efficiency(self, legal_analysis: LegalAnalysisResult) -> float:
-        """Calculate resource efficiency for enforcement strategy"""        efficiency = legal_analysis.success_probability
+        """Calculate resource efficiency for enforcement strategy"""
+        efficiency = legal_analysis.success_probability
         
         # Lower risk = higher efficiency
         risk_penalty = len(legal_analysis.risk_factors) * 0.1
@@ -988,7 +1026,8 @@ class IntelligentEnforcementStrategy:
         return min(efficiency, 1.0)
     
     def _estimate_timeline(self, strategy: str) -> Dict[str, int]:
-        """Estimate timeline for enforcement strategy"""        timelines = {
+        """Estimate timeline for enforcement strategy"""
+        timelines = {
             "aggressive_immediate": {"dmca": 1, "legal": 30, "resolution": 90},
             "dmca_focused": {"dmca": 3, "response": 14, "resolution": 45},
             "legal_focused": {"preparation": 14, "filing": 30, "resolution": 180},
@@ -999,7 +1038,8 @@ class IntelligentEnforcementStrategy:
         return timelines.get(strategy, {"unknown": 30})
     
     def _estimate_cost(self, strategy: str, actions: List[str]) -> Dict[str, float]:
-        """Estimate costs for enforcement strategy"""        base_costs = {
+        """Estimate costs for enforcement strategy"""
+        base_costs = {
             "dmca_takedown": 50.0,
             "legal_action": 2000.0,
             "evidence_collection": 200.0,
@@ -1015,7 +1055,8 @@ class IntelligentEnforcementStrategy:
         }
     
     def _assess_strategy_risk(self, strategy: str, legal_analysis: LegalAnalysisResult) -> str:
-        """Assess risk level for enforcement strategy"""        if legal_analysis.legal_strength_score > 0.8 and len(legal_analysis.risk_factors) < 2:
+        """Assess risk level for enforcement strategy"""
+        if legal_analysis.legal_strength_score > 0.8 and len(legal_analysis.risk_factors) < 2:
             return "LOW"
         elif legal_analysis.legal_strength_score > 0.6 and len(legal_analysis.risk_factors) < 4:
             return "MEDIUM"

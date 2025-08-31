@@ -6,7 +6,8 @@ across multiple domains with high accuracy and contextual understanding.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
@@ -39,7 +40,8 @@ from .config import NLPAgentConfig, default_config
 logger = logging.getLogger(__name__)
 
 class ContentCategory(Enum):
-    """Main content categories"""    MUSIC = "music"
+    """Main content categories"""
+    MUSIC = "music"
     ENTERTAINMENT = "entertainment"
     TECHNOLOGY = "technology"
     SPORTS = "sports"
@@ -61,7 +63,8 @@ class ContentCategory(Enum):
     REVIEW = "review"
 
 class ContentTone(Enum):
-    """Content tone classification"""    PROFESSIONAL = "professional"
+    """Content tone classification"""
+    PROFESSIONAL = "professional"
     CASUAL = "casual"
     FORMAL = "formal"
     HUMOROUS = "humorous"
@@ -71,7 +74,8 @@ class ContentTone(Enum):
     CONVERSATIONAL = "conversational"
 
 class ContentIntent(Enum):
-    """Content intent classification"""    INFORM = "inform"
+    """Content intent classification"""
+    INFORM = "inform"
     ENTERTAIN = "entertain"
     PERSUADE = "persuade"
     SELL = "sell"
@@ -84,14 +88,16 @@ class ContentIntent(Enum):
 
 @dataclass
 class CategoryScore:
-    """Individual category score"""    category: str
+    """Individual category score"""
+    category: str
     confidence: float
     subcategory: Optional[str] = None
     keywords: List[str] = field(default_factory=list)
 
 @dataclass
 class ClassificationResult:
-    """Complete content classification result"""    text: str
+    """Complete content classification result"""
+    text: str
     primary_category: str
     confidence: float
     category_scores: List[CategoryScore] = field(default_factory=list)
@@ -107,11 +113,14 @@ class ClassificationResult:
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
 
 class ContentClassifier:
-    """    Advanced AI-powered content classification system for categorizing text content
+    """
+    Advanced AI-powered content classification system for categorizing text content
     across multiple domains with high accuracy and contextual understanding.
-    """    
+    """
+    
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize Content Classifier"""        self.config = config or default_config
+        """Initialize Content Classifier"""
+        self.config = config or default_config
         self.models = {}
         self.pipelines = {}
         self.category_keywords = self._load_category_keywords()
@@ -120,7 +129,8 @@ class ContentClassifier:
         self._initialize_models()
     
     def _load_category_keywords(self) -> Dict[str, Set[str]]:
-        """Load keyword sets for each category"""        return {
+        """Load keyword sets for each category"""
+        return {
             "music": {
                 "song", "album", "artist", "band", "concert", "tour", "music", "melody",
                 "lyrics", "beat", "rhythm", "sound", "acoustic", "genre", "playlist",
@@ -172,7 +182,8 @@ class ContentClassifier:
         }
     
     def _initialize_models(self):
-        """Initialize classification models"""        try:
+        """Initialize classification models"""
+        try:
             if TRANSFORMERS_AVAILABLE:
                 self._initialize_transformer_models()
             
@@ -187,7 +198,8 @@ class ContentClassifier:
             self._initialize_rule_based_classifier()
     
     def _initialize_transformer_models(self):
-        """Initialize transformer-based models"""        try:
+        """Initialize transformer-based models"""
+        try:
             # General content classification
             self.pipelines["content"] = pipeline(
                 "text-classification",
@@ -220,7 +232,8 @@ class ContentClassifier:
             logger.error(f"Failed to initialize transformer models: {e}")
     
     def _initialize_sklearn_models(self):
-        """Initialize scikit-learn based models"""        try:
+        """Initialize scikit-learn based models"""
+        try:
             # Create TF-IDF + Naive Bayes classifier
             self.fallback_classifiers["tfidf_nb"] = SklearnPipeline([
                 ('tfidf', TfidfVectorizer(max_features=5000, stop_words='english')),
@@ -239,7 +252,8 @@ class ContentClassifier:
             logger.error(f"Failed to initialize scikit-learn models: {e}")
     
     def _initialize_rule_based_classifier(self):
-        """Initialize rule-based classification system"""        self.rule_patterns = {
+        """Initialize rule-based classification system"""
+        self.rule_patterns = {
             "music": [
                 r'\b(song|album|artist|band|music|lyrics|melody|beat)\b',
                 r'\b(spotify|soundcloud|apple music|youtube music)\b',
@@ -276,7 +290,8 @@ class ContentClassifier:
         logger.info("Rule-based classifier initialized")
     
     def _get_device(self) -> int:
-        """Get optimal device for model execution"""        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
+        """Get optimal device for model execution"""
+        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
             try:
                 if torch.cuda.is_available():
                     return 0  # Use first GPU
@@ -292,7 +307,8 @@ class ContentClassifier:
         include_tone: bool = True,
         include_intent: bool = True
     ) -> Union[ClassificationResult, List[ClassificationResult]]:
-        """        Classify content into categories
+        """
+        Classify content into categories
         
         Args:
             text: Text or list of texts to classify
@@ -303,7 +319,8 @@ class ContentClassifier:
         
         Returns:
             ClassificationResult or list of results
-        """        start_time = asyncio.get_event_loop().time()
+        """
+        start_time = asyncio.get_event_loop().time()
         
         # Handle batch processing
         is_batch = isinstance(text, list)
@@ -345,7 +362,8 @@ class ContentClassifier:
         include_tone: bool,
         include_intent: bool
     ) -> ClassificationResult:
-        """Classify a single text"""        if not text or not isinstance(text, str):
+        """Classify a single text"""
+        if not text or not isinstance(text, str):
             raise ValueError("Input text must be a non-empty string")
         
         result = ClassificationResult(
@@ -403,7 +421,8 @@ class ContentClassifier:
         categories: List[str],
         result: ClassificationResult
     ):
-        """Classify using transformer model (zero-shot)"""        try:
+        """Classify using transformer model (zero-shot)"""
+        try:
             classifier = self.pipelines["content"]
             
             # Zero-shot classification
@@ -443,7 +462,8 @@ class ContentClassifier:
         categories: List[str],
         result: ClassificationResult
     ):
-        """Classify using rule-based approach"""        text_lower = text.lower()
+        """Classify using rule-based approach"""
+        text_lower = text.lower()
         category_scores = {}
         
         # Score based on keyword matches
@@ -501,7 +521,8 @@ class ContentClassifier:
             result.confidence = 0.1
     
     def _get_category_keywords(self, text: str, category: str) -> List[str]:
-        """Get keywords that match a specific category from text"""        if category not in self.category_keywords:
+        """Get keywords that match a specific category from text"""
+        if category not in self.category_keywords:
             return []
         
         text_lower = text.lower()
@@ -514,7 +535,8 @@ class ContentClassifier:
         return matched_keywords
     
     async def _extract_keywords(self, text: str, max_keywords: int = 10) -> List[str]:
-        """Extract key terms from text"""        try:
+        """Extract key terms from text"""
+        try:
             # Simple keyword extraction based on frequency and importance
             words = re.findall(r'\b[a-zA-Z]{3,}\b', text.lower())
             
@@ -540,7 +562,8 @@ class ContentClassifier:
             return []
     
     async def _extract_topics(self, text: str) -> List[str]:
-        """Extract main topics from text"""        # Simple topic extraction based on categories and keywords
+        """Extract main topics from text"""
+        # Simple topic extraction based on categories and keywords
         topics = []
         
         # Check for category-specific topics
@@ -552,7 +575,8 @@ class ContentClassifier:
         return topics[:5]  # Limit to top 5 topics
     
     async def _analyze_tone(self, text: str) -> Optional[str]:
-        """Analyze the tone of the content"""        # Rule-based tone detection
+        """Analyze the tone of the content"""
+        # Rule-based tone detection
         text_lower = text.lower()
         
         tone_indicators = {
@@ -575,7 +599,8 @@ class ContentClassifier:
         return "neutral"
     
     async def _detect_intent(self, text: str) -> Optional[str]:
-        """Detect the intent of the content"""        # Rule-based intent detection
+        """Detect the intent of the content"""
+        # Rule-based intent detection
         text_lower = text.lower()
         
         intent_patterns = {
@@ -602,7 +627,8 @@ class ContentClassifier:
         return "share"  # Default intent
     
     async def _assess_content_quality(self, text: str) -> float:
-        """Assess the quality of content"""        quality_score = 0.5  # Base score
+        """Assess the quality of content"""
+        quality_score = 0.5  # Base score
         
         # Length factor
         word_count = len(text.split())
@@ -627,7 +653,8 @@ class ContentClassifier:
         return min(quality_score, 1.0)
     
     async def _detect_audience_target(self, text: str) -> Optional[str]:
-        """Detect the target audience"""        text_lower = text.lower()
+        """Detect the target audience"""
+        text_lower = text.lower()
         
         audience_indicators = {
             "general": ["everyone", "all", "people"],
@@ -644,7 +671,8 @@ class ContentClassifier:
         return "general"
     
     async def _analyze_content_safety(self, text: str) -> Dict[str, Any]:
-        """Analyze content safety factors"""        safety_analysis = {
+        """Analyze content safety factors"""
+        safety_analysis = {
             "is_safe": True,
             "concerns": [],
             "confidence": 0.9
@@ -670,16 +698,20 @@ class ContentClassifier:
         categories: Optional[List[str]] = None,
         **kwargs
     ) -> List[ClassificationResult]:
-        """Classify multiple texts efficiently"""        return await self.classify(texts, categories, **kwargs)
+        """Classify multiple texts efficiently"""
+        return await self.classify(texts, categories, **kwargs)
     
     def get_available_categories(self) -> List[str]:
-        """Get list of available categories"""        return [cat.value for cat in ContentCategory]
+        """Get list of available categories"""
+        return [cat.value for cat in ContentCategory]
     
     def get_category_keywords(self, category: str) -> List[str]:
-        """Get keywords for a specific category"""        return list(self.category_keywords.get(category, []))
+        """Get keywords for a specific category"""
+        return list(self.category_keywords.get(category, []))
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""        status = {
+        """Perform health check"""
+        status = {
             "status": "healthy",
             "models_loaded": len(self.pipelines),
             "fallback_classifiers": len(self.fallback_classifiers),
@@ -703,7 +735,8 @@ class ContentClassifier:
         return status
     
     def shutdown(self):
-        """Shutdown the content classifier"""        logger.info("Shutting down Content Classifier")
+        """Shutdown the content classifier"""
+        logger.info("Shutting down Content Classifier")
         
         # Clear models
         self.models.clear()
@@ -716,7 +749,8 @@ class ContentClassifier:
 
 # Utility functions
 def merge_classification_results(results: List[ClassificationResult]) -> Dict[str, Any]:
-    """Merge multiple classification results for analysis"""    if not results:
+    """Merge multiple classification results for analysis"""
+    if not results:
         return {}
     
     # Category distribution

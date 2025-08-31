@@ -19,7 +19,8 @@ Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import yaml
@@ -40,21 +41,24 @@ import re
 logger = logging.getLogger(__name__)
 
 class SecurityLevel(Enum):
-    """Security level classifications"""    LOW = "low"
+    """Security level classifications"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
     TOP_SECRET = "top_secret"
 
 class ThreatLevel(Enum):
-    """Threat level classifications"""    GREEN = "green"      # No threat
+    """Threat level classifications"""
+    GREEN = "green"      # No threat
     YELLOW = "yellow"    # Low threat
     ORANGE = "orange"    # Medium threat
     RED = "red"         # High threat
     BLACK = "black"     # Critical threat
 
 class ComplianceStandard(Enum):
-    """Compliance standards"""    GDPR = "gdpr"
+    """Compliance standards"""
+    GDPR = "gdpr"
     CCPA = "ccpa"
     HIPAA = "hipaa"
     SOC2 = "soc2"
@@ -63,7 +67,8 @@ class ComplianceStandard(Enum):
     COPPA = "coppa"
 
 class EncryptionType(Enum):
-    """Encryption types"""    AES_256 = "aes_256"
+    """Encryption types"""
+    AES_256 = "aes_256"
     RSA_2048 = "rsa_2048"
     RSA_4096 = "rsa_4096"
     ECDSA = "ecdsa"
@@ -71,7 +76,8 @@ class EncryptionType(Enum):
 
 @dataclass
 class SecurityPolicy:
-    """Security policy configuration"""    name: str
+    """Security policy configuration"""
+    name: str
     description: str
     security_level: SecurityLevel
     compliance_standards: List[ComplianceStandard]
@@ -83,7 +89,8 @@ class SecurityPolicy:
 
 @dataclass
 class ThreatDetectionRule:
-    """Threat detection rule"""    name: str
+    """Threat detection rule"""
+    name: str
     description: str
     rule_type: str  # signature, anomaly, behavior
     severity: ThreatLevel
@@ -94,7 +101,8 @@ class ThreatDetectionRule:
 
 @dataclass
 class EncryptionConfig:
-    """Encryption configuration"""    encryption_type: EncryptionType
+    """Encryption configuration"""
+    encryption_type: EncryptionType
     key_rotation_days: int
     key_escrow_enabled: bool
     hardware_security_module: bool = False
@@ -102,7 +110,8 @@ class EncryptionConfig:
 
 @dataclass
 class ComplianceConfig:
-    """Compliance configuration"""    standards: List[ComplianceStandard]
+    """Compliance configuration"""
+    standards: List[ComplianceStandard]
     audit_frequency: str  # daily, weekly, monthly
     compliance_officer_email: str
     automated_reporting: bool = True
@@ -112,7 +121,8 @@ class ComplianceConfig:
 @dataclass
 class EnterpriseSecurityInfrastructureSpec:
     """Enterprise security infrastructure specification"""class EnterpriseSecurityInfrastructureManager:
-    """Enterprise-grade security infrastructure manager for IA Influencer platform"""    
+    """Enterprise-grade security infrastructure manager for IA Influencer platform"""
+    
     def __init__(self, k8s_client=None):
         self.k8s_client = k8s_client
         self.apps_v1 = client.AppsV1Api() if k8s_client else None
@@ -127,7 +137,8 @@ class EnterpriseSecurityInfrastructureSpec:
         self.compliance_status = {}
         
     async def deploy_security_infrastructure(self, spec: EnterpriseSecurityInfrastructureSpec) -> Dict[str, Any]:
-        """Deploy comprehensive security infrastructure"""        try:
+        """Deploy comprehensive security infrastructure"""
+        try:
             results = {}
             logger.info("Deploying advanced security infrastructure for IA Influencer platform")
             
@@ -194,7 +205,8 @@ class EnterpriseSecurityInfrastructureSpec:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_hardened_namespace(self, namespace: str) -> Dict[str, Any]:
-        """Create hardened Kubernetes namespace with security policies"""        try:
+        """Create hardened Kubernetes namespace with security policies"""
+        try:
             # Create namespace with security labels
             ns = client.V1Namespace(
                 metadata=client.V1ObjectMeta(
@@ -242,7 +254,8 @@ class EnterpriseSecurityInfrastructureSpec:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_threat_detection_system(self, spec: SecurityInfrastructureSpec) -> Dict[str, Any]:
-        """Deploy advanced threat detection system"""        try:
+        """Deploy advanced threat detection system"""
+        try:
             # Deploy Falco for runtime security monitoring
             falco_deployment = client.V1DaemonSet(
                 metadata=client.V1ObjectMeta(
@@ -360,7 +373,8 @@ class EnterpriseSecurityInfrastructureSpec:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_ia_influencer_falco_config(self, namespace: str) -> Dict[str, Any]:
-        """Create Falco configuration specific to IA Influencer platform"""        try:
+        """Create Falco configuration specific to IA Influencer platform"""
+        try:
             falco_rules = """# IA Influencer Agent Specific Security Rules
 
 # Content Protection Rules
@@ -464,7 +478,8 @@ class EnterpriseSecurityInfrastructureSpec:
     (connection=%fd.name sport=%fd.sport dport=%fd.dport container=%container.name)
   priority: WARNING
   tags: [network_security, suspicious_connection]
-"""            
+"""
+            
             # Create ConfigMap with Falco rules
             falco_configmap = client.V1ConfigMap(
                 metadata=client.V1ObjectMeta(
@@ -518,7 +533,8 @@ class EnterpriseSecurityInfrastructureSpec:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_compliance_monitoring(self, spec: SecurityInfrastructureSpec) -> Dict[str, Any]:
-        """Deploy compliance monitoring system"""        try:
+        """Deploy compliance monitoring system"""
+        try:
             # Deploy OPA (Open Policy Agent) for policy enforcement
             opa_deployment = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -627,7 +643,8 @@ class EnterpriseSecurityInfrastructureSpec:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_gdpr_compliance_policies(self, namespace: str) -> Dict[str, Any]:
-        """Create GDPR compliance policies for IA Influencer platform"""        try:
+        """Create GDPR compliance policies for IA Influencer platform"""
+        try:
             gdpr_policies = """package gdpr.compliance
 
 # GDPR Article 6 - Lawfulness of processing
@@ -785,7 +802,8 @@ revenue_data_processing_lawful[revenue_data] {
     revenue_data.legal_basis in {"consent", "contract"}
     revenue_data.retention_period <= 7 # years
 }
-"""            
+"""
+            
             gdpr_configmap = client.V1ConfigMap(
                 metadata=client.V1ObjectMeta(
                     name="gdpr-policies",
@@ -810,7 +828,8 @@ revenue_data_processing_lawful[revenue_data] {
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_encryption_management(self, spec: SecurityInfrastructureSpec) -> Dict[str, Any]:
-        """Deploy advanced encryption management system"""        try:
+        """Deploy advanced encryption management system"""
+        try:
             # Deploy HashiCorp Vault for secrets management
             vault_deployment = client.V1StatefulSet(
                 metadata=client.V1ObjectMeta(
@@ -924,7 +943,8 @@ revenue_data_processing_lawful[revenue_data] {
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_content_protection_security(self, spec: SecurityInfrastructureSpec) -> Dict[str, Any]:
-        """Deploy specialized security for content protection"""        try:
+        """Deploy specialized security for content protection"""
+        try:
             # Deploy content integrity monitoring
             content_integrity_deployment = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -1008,7 +1028,8 @@ revenue_data_processing_lawful[revenue_data] {
             return {'status': 'error', 'message': str(e)}
     
     async def get_security_status(self, namespace: str = "ia-influencer-security") -> Dict[str, Any]:
-        """Get comprehensive security infrastructure status"""        try:
+        """Get comprehensive security infrastructure status"""
+        try:
             status = {
                 'security_level': 'HIGH',
                 'threat_level': 'GREEN',
@@ -1069,10 +1090,12 @@ revenue_data_processing_lawful[revenue_data] {
 
 # Additional utility functions for security operations
 def generate_secure_token(length: int = 32) -> str:
-    """Generate cryptographically secure random token"""    return secrets.token_urlsafe(length)
+    """Generate cryptographically secure random token"""
+    return secrets.token_urlsafe(length)
 
 def hash_sensitive_data(data: str, salt: str = None) -> Tuple[str, str]:
-    """Hash sensitive data with salt"""    if salt is None:
+    """Hash sensitive data with salt"""
+    if salt is None:
         salt = secrets.token_hex(16)
     
     # Use PBKDF2 with SHA-256
@@ -1086,7 +1109,8 @@ def hash_sensitive_data(data: str, salt: str = None) -> Tuple[str, str]:
     return hashed, salt
 
 def validate_security_requirements(config: Dict[str, Any]) -> List[str]:
-    """Validate security configuration against requirements"""    violations = []
+    """Validate security configuration against requirements"""
+    violations = []
     
     # Check encryption requirements
     if not config.get('encryption', {}).get('enabled'):

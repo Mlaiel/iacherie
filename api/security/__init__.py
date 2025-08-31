@@ -27,7 +27,9 @@ Violators will face:
 - Immediate cease and desist enforcement
 
 Contact: mlaiel@live.de for any authorization requests.
-"""from .auth import *
+"""
+
+from .auth import *
 from .authorization import *
 from .encryption import *
 from .validation import *

@@ -5,7 +5,8 @@ Handles earnings tracking, profit sharing, and financial transparency.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
-"""from typing import List, Dict, Any, Optional, Union, Tuple, Set
+"""
+from typing import List, Dict, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
 import json
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class RevenueSource(Enum):
-    """Revenue source enumeration"""    CONTENT_SALES = "content_sales"
+    """Revenue source enumeration"""
+    CONTENT_SALES = "content_sales"
     STREAMING_ROYALTIES = "streaming_royalties"
     LICENSING_FEES = "licensing_fees"
     BRAND_PARTNERSHIPS = "brand_partnerships"
@@ -40,14 +42,16 @@ class RevenueSource(Enum):
     CONSULTATION_FEES = "consultation_fees"
 
 class ShareType(Enum):
-    """Revenue share type enumeration"""    PERCENTAGE = "percentage"
+    """Revenue share type enumeration"""
+    PERCENTAGE = "percentage"
     FIXED_AMOUNT = "fixed_amount"
     TIERED_PERCENTAGE = "tiered_percentage"
     PERFORMANCE_BASED = "performance_based"
     MILESTONE_BASED = "milestone_based"
 
 class PaymentStatus(Enum):
-    """Payment status enumeration"""    PENDING = "pending"
+    """Payment status enumeration"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -56,9 +60,11 @@ class PaymentStatus(Enum):
     REFUNDED = "refunded"
 
 class RevenueShareAgreement(Base):
-    """    Revenue sharing agreement for collaborative projects.
+    """
+    Revenue sharing agreement for collaborative projects.
     Defines how earnings are distributed among team members.
-    """    __tablename__ = 'revenue_share_agreements'
+    """
+    __tablename__ = 'revenue_share_agreements'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -128,9 +134,11 @@ class RevenueShareAgreement(Base):
     )
 
 class RevenueShare(Base):
-    """    Individual revenue share allocations for team members.
+    """
+    Individual revenue share allocations for team members.
     Defines specific share percentages and conditions.
-    """    __tablename__ = 'revenue_shares'
+    """
+    __tablename__ = 'revenue_shares'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -195,9 +203,11 @@ class RevenueShare(Base):
     )
 
 class RevenueEntry(Base):
-    """    Individual revenue entries from various sources.
+    """
+    Individual revenue entries from various sources.
     Tracks all incoming revenue for distribution.
-    """    __tablename__ = 'revenue_entries'
+    """
+    __tablename__ = 'revenue_entries'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -271,9 +281,11 @@ class RevenueEntry(Base):
     )
 
 class PaymentDistribution(Base):
-    """    Payment distributions to team members.
+    """
+    Payment distributions to team members.
     Tracks individual payments and their status.
-    """    __tablename__ = 'payment_distributions'
+    """
+    __tablename__ = 'payment_distributions'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -352,7 +364,8 @@ class PaymentDistribution(Base):
 
 @dataclass
 class RevenueShareRequest:
-    """Data class for revenue share agreement creation"""    project_id: str
+    """Data class for revenue share agreement creation"""
+    project_id: str
     agreement_name: str
     created_by: str
     sharing_model: str
@@ -365,7 +378,8 @@ class RevenueShareRequest:
 
 @dataclass
 class RevenueEntryRequest:
-    """Data class for revenue entry creation"""    project_id: str
+    """Data class for revenue entry creation"""
+    project_id: str
     agreement_id: str
     revenue_source: RevenueSource
     gross_amount: float
@@ -377,9 +391,11 @@ class RevenueEntryRequest:
     units_sold: int = None
 
 class RevenueShareManager:
-    """    Enterprise revenue sharing management system.
+    """
+    Enterprise revenue sharing management system.
     Handles agreement creation, revenue tracking, and automated distribution.
-    """    
+    """
+    
     def __init__(self, db_session, redis_client: aioredis.Redis = None, payment_processor = None):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -387,14 +403,16 @@ class RevenueShareManager:
         self.cache_ttl = 3600  # 1 hour cache
     
     async def create_revenue_share_agreement(self, request: RevenueShareRequest) -> Optional[RevenueShareAgreement]:
-        """        Create a comprehensive revenue sharing agreement.
+        """
+        Create a comprehensive revenue sharing agreement.
         
         Args:
             request: Revenue share agreement request
             
         Returns:
             Created agreement instance
-        """        try:
+        """
+        try:
             # Generate agreement ID
             agreement_id = self._generate_agreement_id(request.project_id)
             
@@ -436,14 +454,16 @@ class RevenueShareManager:
             raise
     
     async def add_revenue_entry(self, request: RevenueEntryRequest) -> Optional[RevenueEntry]:
-        """        Add new revenue entry for distribution.
+        """
+        Add new revenue entry for distribution.
         
         Args:
             request: Revenue entry request
             
         Returns:
             Created revenue entry instance
-        """        try:
+        """
+        try:
             # Generate entry ID
             entry_id = self._generate_revenue_entry_id(request.project_id)
             
@@ -491,7 +511,8 @@ class RevenueShareManager:
             raise
     
     async def process_payment_distribution(self, agreement_id: str, period_end: datetime = None) -> List[PaymentDistribution]:
-        """        Process revenue distribution payments to team members.
+        """
+        Process revenue distribution payments to team members.
         
         Args:
             agreement_id: Agreement identifier
@@ -499,7 +520,8 @@ class RevenueShareManager:
             
         Returns:
             List of created payment distributions
-        """        try:
+        """
+        try:
             if not period_end:
                 period_end = datetime.utcnow()
             
@@ -581,7 +603,8 @@ class RevenueShareManager:
             return []
     
     async def get_revenue_analytics(self, project_id: str, period_days: int = 30) -> Dict[str, Any]:
-        """        Get comprehensive revenue analytics for project.
+        """
+        Get comprehensive revenue analytics for project.
         
         Args:
             project_id: Project identifier
@@ -589,7 +612,8 @@ class RevenueShareManager:
             
         Returns:
             Revenue analytics data
-        """        try:
+        """
+        try:
             period_start = datetime.utcnow() - timedelta(days=period_days)
             
             # Get revenue entries for period
@@ -681,22 +705,26 @@ class RevenueShareManager:
     # Private helper methods
     
     def _generate_agreement_id(self, project_id: str) -> str:
-        """Generate unique agreement identifier"""        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M')
+        """Generate unique agreement identifier"""
+        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M')
         random_suffix = str(uuid.uuid4())[:8].upper()
         return f"REVSHARE-{timestamp}-{random_suffix}"
     
     def _generate_revenue_entry_id(self, project_id: str) -> str:
-        """Generate unique revenue entry identifier"""        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S')
+        """Generate unique revenue entry identifier"""
+        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S')
         random_suffix = str(uuid.uuid4())[:8].upper()
         return f"REV-{timestamp}-{random_suffix}"
     
     def _generate_batch_id(self, agreement_id: str) -> str:
-        """Generate unique batch identifier for payment processing"""        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M')
+        """Generate unique batch identifier for payment processing"""
+        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M')
         random_suffix = str(uuid.uuid4())[:8].upper()
         return f"BATCH-{timestamp}-{random_suffix}"
     
     async def _create_revenue_share(self, agreement_id: uuid.UUID, member_data: Dict[str, Any]) -> RevenueShare:
-        """Create individual revenue share for team member"""        share_id = f"SHARE-{datetime.utcnow().strftime('%Y%m%d%H%M')}-{str(uuid.uuid4())[:8]}"
+        """Create individual revenue share for team member"""
+        share_id = f"SHARE-{datetime.utcnow().strftime('%Y%m%d%H%M')}-{str(uuid.uuid4())[:8]}"
         
         revenue_share = RevenueShare(
             share_id=share_id,
@@ -721,7 +749,8 @@ class RevenueShareManager:
         total_amount: Decimal, 
         revenue_entries: List[RevenueEntry]
     ) -> Decimal:
-        """Calculate share amount based on share type and conditions"""        if share.share_type == ShareType.PERCENTAGE:
+        """Calculate share amount based on share type and conditions"""
+        if share.share_type == ShareType.PERCENTAGE:
             return total_amount * (share.share_percentage / 100)
         elif share.share_type == ShareType.FIXED_AMOUNT:
             return share.fixed_amount or Decimal('0')
@@ -741,7 +770,8 @@ class RevenueShareManager:
         revenue_entries: List[RevenueEntry],
         batch_id: str
     ) -> Optional[PaymentDistribution]:
-        """Create payment distribution record"""        payment_id = f"PAY-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{str(uuid.uuid4())[:8]}"
+        """Create payment distribution record"""
+        payment_id = f"PAY-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{str(uuid.uuid4())[:8]}"
         
         # Calculate tax withholding
         tax_withholding = amount * (share.tax_withholding_percentage / 100) if share.tax_withholding_percentage else Decimal('0')

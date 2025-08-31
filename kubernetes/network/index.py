@@ -11,7 +11,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
@@ -33,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 
 class NetworkDeploymentStatus(Enum):
-    """Network deployment status"""    INITIALIZING = "initializing"
+    """Network deployment status"""
+    INITIALIZING = "initializing"
     READY = "ready"
     DEPLOYING = "deploying"
     ERROR = "error"
@@ -42,7 +44,8 @@ class NetworkDeploymentStatus(Enum):
 
 @dataclass
 class NetworkConfiguration:
-    """Complete network configuration"""    name: str
+    """Complete network configuration"""
+    name: str
     environment: str
     region: str
     ingress_config: Dict[str, Any]
@@ -55,9 +58,11 @@ class NetworkConfiguration:
 
 
 class NetworkOrchestrator:
-    """    Network infrastructure orchestrator for IA Influencer Agent Platform
+    """
+    Network infrastructure orchestrator for IA Influencer Agent Platform
     Coordinates all network components for seamless deployment and management
-    """    
+    """
+    
     def __init__(
         self,
         config_path: str = "/etc/network/orchestrator.yaml",
@@ -91,7 +96,8 @@ class NetworkOrchestrator:
         self.metrics_collection_enabled = True
     
     async def initialize(self) -> bool:
-        """Initialize network orchestrator and all managers"""        try:
+        """Initialize network orchestrator and all managers"""
+        try:
             logger.info("Initializing Network Orchestrator...")
             
             # Load configuration
@@ -121,7 +127,8 @@ class NetworkOrchestrator:
         self,
         config: NetworkConfiguration
     ) -> bool:
-        """Deploy complete network infrastructure"""        try:
+        """Deploy complete network infrastructure"""
+        try:
             logger.info(f"Deploying network infrastructure: {config.name}")
             self.status = NetworkDeploymentStatus.DEPLOYING
             
@@ -163,7 +170,8 @@ class NetworkOrchestrator:
             return False
     
     async def remove_network_infrastructure(self, config_name: str) -> bool:
-        """Remove complete network infrastructure"""        try:
+        """Remove complete network infrastructure"""
+        try:
             if config_name not in self.network_configs:
                 logger.error(f"Network configuration not found: {config_name}")
                 return False
@@ -195,7 +203,8 @@ class NetworkOrchestrator:
             return False
     
     async def get_network_status(self) -> Dict[str, Any]:
-        """Get comprehensive network status"""        try:
+        """Get comprehensive network status"""
+        try:
             status = {
                 'orchestrator_status': self.status.value,
                 'total_deployments': len(self.network_configs),
@@ -254,7 +263,8 @@ class NetworkOrchestrator:
             return {}
     
     async def optimize_network_performance(self, config_name: str) -> bool:
-        """Optimize network performance for specific deployment"""        try:
+        """Optimize network performance for specific deployment"""
+        try:
             if config_name not in self.network_configs:
                 logger.error(f"Network configuration not found: {config_name}")
                 return False
@@ -291,7 +301,8 @@ class NetworkOrchestrator:
         source_ip: str,
         config_name: Optional[str] = None
     ) -> bool:
-        """Handle security incident across all network components"""        try:
+        """Handle security incident across all network components"""
+        try:
             logger.warning(f"Handling security incident: {incident_type} from {source_ip}")
             
             # Block IP immediately in firewall
@@ -324,7 +335,8 @@ class NetworkOrchestrator:
     # Private methods
     
     async def _load_configuration(self) -> None:
-        """Load orchestrator configuration"""        try:
+        """Load orchestrator configuration"""
+        try:
             with open(self.config_path, 'r') as f:
                 config_data = yaml.safe_load(f)
             
@@ -346,7 +358,8 @@ class NetworkOrchestrator:
             logger.error(f"Failed to load configuration: {e}")
     
     async def _initialize_managers(self) -> None:
-        """Initialize all network managers"""        try:
+        """Initialize all network managers"""
+        try:
             # Initialize Ingress Manager
             self.ingress_manager = IngressManager(
                 kubernetes_config=self.provider_credentials.get('kubernetes')
@@ -421,7 +434,8 @@ class NetworkOrchestrator:
             raise
     
     async def _deploy_vpc_infrastructure(self, config: NetworkConfiguration) -> bool:
-        """Deploy VPC infrastructure"""        try:
+        """Deploy VPC infrastructure"""
+        try:
             if not self.vpc_manager:
                 logger.error("VPC Manager not initialized")
                 return False
@@ -438,7 +452,8 @@ class NetworkOrchestrator:
             return False
     
     async def _deploy_dns_infrastructure(self, config: NetworkConfiguration) -> bool:
-        """Deploy DNS infrastructure"""        try:
+        """Deploy DNS infrastructure"""
+        try:
             if not self.dns_manager:
                 logger.error("DNS Manager not initialized")
                 return False
@@ -460,7 +475,8 @@ class NetworkOrchestrator:
             return False
     
     async def _deploy_firewall_infrastructure(self, config: NetworkConfiguration) -> bool:
-        """Deploy firewall infrastructure"""        try:
+        """Deploy firewall infrastructure"""
+        try:
             if not self.firewall_manager:
                 logger.error("Firewall Manager not initialized")
                 return False
@@ -489,7 +505,8 @@ class NetworkOrchestrator:
             return False
     
     async def _deploy_ingress_infrastructure(self, config: NetworkConfiguration) -> bool:
-        """Deploy ingress infrastructure"""        try:
+        """Deploy ingress infrastructure"""
+        try:
             if not self.ingress_manager:
                 logger.error("Ingress Manager not initialized")
                 return False
@@ -511,7 +528,8 @@ class NetworkOrchestrator:
             return False
     
     async def _validate_deployment(self, config: NetworkConfiguration) -> bool:
-        """Validate complete deployment"""        try:
+        """Validate complete deployment"""
+        try:
             # Validate each component
             validations = []
             
@@ -542,7 +560,8 @@ class NetworkOrchestrator:
             return False
     
     async def _setup_monitoring(self) -> None:
-        """Setup monitoring for network components"""        try:
+        """Setup monitoring for network components"""
+        try:
             # Start monitoring tasks
             asyncio.create_task(self._monitoring_loop())
             logger.info("Network monitoring setup completed")
@@ -550,7 +569,8 @@ class NetworkOrchestrator:
             logger.error(f"Failed to setup monitoring: {e}")
     
     async def _setup_health_checks(self) -> None:
-        """Setup health checks for network components"""        try:
+        """Setup health checks for network components"""
+        try:
             # Start health check tasks
             asyncio.create_task(self._health_check_loop())
             logger.info("Network health checks setup completed")
@@ -558,7 +578,8 @@ class NetworkOrchestrator:
             logger.error(f"Failed to setup health checks: {e}")
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop"""        while True:
+        """Main monitoring loop"""
+        while True:
             try:
                 # Collect metrics from all managers
                 await self._collect_metrics()
@@ -568,7 +589,8 @@ class NetworkOrchestrator:
                 await asyncio.sleep(60)
     
     async def _health_check_loop(self) -> None:
-        """Health check loop"""        while True:
+        """Health check loop"""
+        while True:
             try:
                 # Perform health checks
                 await self._perform_health_checks()
@@ -580,7 +602,8 @@ class NetworkOrchestrator:
 
 # Main execution
 async def main():
-    """Main orchestrator function"""    orchestrator = NetworkOrchestrator()
+    """Main orchestrator function"""
+    orchestrator = NetworkOrchestrator()
     
     if await orchestrator.initialize():
         logger.info("Network Orchestrator is ready")

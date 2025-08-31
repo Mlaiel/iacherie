@@ -15,7 +15,8 @@ WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 import sys
 from typing import Dict, List, Any
@@ -41,8 +42,10 @@ from . import (
 
 
 class AnalyticsModuleValidator:
-    """    Validator for analytics module completeness and functionality.
-    """    
+    """
+    Validator for analytics module completeness and functionality.
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.validation_results = {
@@ -55,11 +58,13 @@ class AnalyticsModuleValidator:
         }
     
     def validate_module_structure(self) -> Dict[str, Any]:
-        """        Validate the overall module structure and imports.
+        """
+        Validate the overall module structure and imports.
         
         Returns:
             Dict[str, Any]: Validation results
-        """        try:
+        """
+        try:
             self.logger.info("Starting Analytics Module Validation...")
             
             # Test 1: Core module imports
@@ -89,7 +94,8 @@ class AnalyticsModuleValidator:
             return self.validation_results
     
     def _test_core_imports(self):
-        """Test that all core modules can be imported"""        try:
+        """Test that all core modules can be imported"""
+        try:
             required_classes = [
                 ContentAnalytics,
                 PerformanceMetrics,
@@ -116,7 +122,8 @@ class AnalyticsModuleValidator:
             self.logger.error(f"❌ Core imports failed: {str(e)}")
     
     def _test_module_completeness(self):
-        """Test that all required modules are present"""        try:
+        """Test that all required modules are present"""
+        try:
             required_modules = [
                 'content_analytics',
                 'performance_metrics',
@@ -146,7 +153,8 @@ class AnalyticsModuleValidator:
             self.logger.error(f"❌ Module completeness failed: {str(e)}")
     
     def _test_class_structures(self):
-        """Test that all classes have required methods"""        try:
+        """Test that all classes have required methods"""
+        try:
             # Test ContentAnalytics
             content_methods = [
                 'track_content_metrics',
@@ -212,7 +220,8 @@ class AnalyticsModuleValidator:
             self.logger.error(f"❌ Class structure validation failed: {str(e)}")
     
     def _test_factory_pattern(self):
-        """Test the analytics service factory"""        try:
+        """Test the analytics service factory"""
+        try:
             # Test factory instantiation
             factory = AnalyticsServiceFactory(None, None, None, None)
             assert factory is not None, "Factory instantiation failed"
@@ -235,7 +244,8 @@ class AnalyticsModuleValidator:
             self.logger.error(f"❌ Factory pattern validation failed: {str(e)}")
     
     def _test_documentation(self):
-        """Test documentation completeness"""        try:
+        """Test documentation completeness"""
+        try:
             import os
             
             # Check README files exist
@@ -262,7 +272,8 @@ class AnalyticsModuleValidator:
             self.logger.error(f"❌ Documentation validation failed: {str(e)}")
     
     def _test_business_logic_compliance(self):
-        """Test compliance with business logic requirements"""        try:
+        """Test compliance with business logic requirements"""
+        try:
             # Test multi-creator support
             assert hasattr(CollaborationAnalytics, 'track_collaboration_performance'), \
                 "Missing multi-creator collaboration support"
@@ -292,11 +303,13 @@ class AnalyticsModuleValidator:
             self.logger.warning(f"⚠️ Business logic compliance warning: {str(e)}")
     
     def generate_validation_report(self) -> str:
-        """        Generate a comprehensive validation report.
+        """
+        Generate a comprehensive validation report.
         
         Returns:
             str: Formatted validation report
-        """        total_tests = self.validation_results['passed_tests'] + self.validation_results['failed_tests']
+        """
+        total_tests = self.validation_results['passed_tests'] + self.validation_results['failed_tests']
         success_rate = (self.validation_results['passed_tests'] / total_tests * 100) if total_tests > 0 else 0
         
         report = f"""📊 ANALYTICS MODULE VALIDATION REPORT
@@ -347,7 +360,8 @@ The Analytics Module is {'COMPLETE and PRODUCTION-READY' if self.validation_resu
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Validation Date: {logging.Formatter().formatTime(logging.LogRecord('', 0, '', 0, '', (), None))}
-"""        return report
+"""
+        return report
 
 
 # Module validation execution

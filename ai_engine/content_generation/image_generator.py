@@ -8,7 +8,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageFilter
@@ -23,7 +24,8 @@ from .base_generator import BaseContentGenerator, ContentGenerationContext
 
 
 class ImageConfig:
-    """Configuration for image generation settings"""    
+    """Configuration for image generation settings"""
+    
     def __init__(self, **kwargs):
         self.width = kwargs.get('width', 1024)
         self.height = kwargs.get('height', 1024)
@@ -34,7 +36,8 @@ class ImageConfig:
 
 
 class ImageFormat:
-    """Image format enumeration"""    PNG = "png"
+    """Image format enumeration"""
+    PNG = "png"
     JPG = "jpg"
     WEBP = "webp"
     GIF = "gif"
@@ -42,14 +45,16 @@ class ImageFormat:
 
 
 class ImageQuality:
-    """Image quality enumeration"""    LOW = "low"
+    """Image quality enumeration"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     ULTRA = "ultra"
 
 
 class ImageStyle:
-    """Image style enumeration"""    PHOTOREALISTIC = "photorealistic"
+    """Image style enumeration"""
+    PHOTOREALISTIC = "photorealistic"
     ARTISTIC = "artistic"
     CARTOON = "cartoon"
     ABSTRACT = "abstract"
@@ -57,7 +62,8 @@ class ImageStyle:
 
 
 class ImageGenerationOptions:
-    """Configuration options for image generation"""    
+    """Configuration options for image generation"""
+    
     def __init__(self, **kwargs):
         self.resolution = kwargs.get('resolution', '1024x1024')
         self.format = kwargs.get('format', 'png')
@@ -77,7 +83,8 @@ class ImageGenerationOptions:
 
 
 class ImageContentGenerator(BaseContentGenerator):
-    """    Advanced image content generator that creates high-quality images
+    """
+    Advanced image content generator that creates high-quality images
     for various purposes including:
     - Social media posts and stories
     - Product photography and showcases
@@ -87,9 +94,11 @@ class ImageContentGenerator(BaseContentGenerator):
     - Thumbnails and cover images
     - Artistic and creative content
     - Educational and informational graphics
-    """    
+    """
+    
     def _setup_models(self) -> None:
-        """Setup AI models and dependencies"""        try:
+        """Setup AI models and dependencies"""
+        try:
             # Initialize image generation models
             self._initialize_image_models()
             self._initialize_image_effects()
@@ -128,7 +137,8 @@ class ImageContentGenerator(BaseContentGenerator):
             raise
     
     def _initialize_image_models(self) -> None:
-        """Initialize image generation models"""        # In a real implementation, this would load models like:
+        """Initialize image generation models"""
+        # In a real implementation, this would load models like:
         # - DALL-E 3 for high-quality image generation
         # - Stable Diffusion for open-source generation
         # - Midjourney API for artistic generation
@@ -143,7 +153,8 @@ class ImageContentGenerator(BaseContentGenerator):
         self.current_image_model = 'dalle-3'
     
     def _initialize_image_effects(self) -> None:
-        """Initialize image effects and filters"""        self.available_effects = {
+        """Initialize image effects and filters"""
+        self.available_effects = {
             'blur': {'intensity': [1, 10], 'type': 'filter'},
             'sharpen': {'intensity': [1, 5], 'type': 'filter'},
             'brightness': {'level': [-50, 50], 'type': 'adjustment'},
@@ -157,7 +168,8 @@ class ImageContentGenerator(BaseContentGenerator):
         }
     
     def _initialize_image_processing(self) -> None:
-        """Initialize image processing capabilities"""        # Create temporary directory for image processing
+        """Initialize image processing capabilities"""
+        # Create temporary directory for image processing
         self.temp_dir = tempfile.mkdtemp(prefix='image_gen_')
         
         # Image processing settings
@@ -165,7 +177,8 @@ class ImageContentGenerator(BaseContentGenerator):
         self.default_dpi = 300
         
     def _setup_resources(self) -> None:
-        """Setup computational resources"""        # Image generation resource settings
+        """Setup computational resources"""
+        # Image generation resource settings
         self.max_concurrent_requests = self.config.get('max_concurrent_requests', 3)
         self.request_timeout = self.config.get('request_timeout', 180)  # 3 minutes
         
@@ -176,7 +189,8 @@ class ImageContentGenerator(BaseContentGenerator):
         self.use_gpu = self.config.get('use_gpu', True)
     
     def _setup_validation_rules(self) -> None:
-        """Setup image validation rules"""        self.validation_rules = {
+        """Setup image validation rules"""
+        self.validation_rules = {
             'min_resolution': (256, 256),
             'max_resolution': (4096, 4096),
             'supported_formats': ['png', 'jpg', 'jpeg', 'webp'],
@@ -190,7 +204,8 @@ class ImageContentGenerator(BaseContentGenerator):
         prompt: str,
         options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Generate image content based on context and prompt.
+        """
+        Generate image content based on context and prompt.
         
         Args:
             context: Generation context with user and platform information
@@ -199,7 +214,8 @@ class ImageContentGenerator(BaseContentGenerator):
             
         Returns:
             Generated image content with metadata
-        """        try:
+        """
+        try:
             # Parse options
             gen_options = ImageGenerationOptions(**(options or {}))
             
@@ -274,14 +290,16 @@ class ImageContentGenerator(BaseContentGenerator):
             raise
     
     async def validate_output(self, content: Any) -> bool:
-        """        Validate generated image content.
+        """
+        Validate generated image content.
         
         Args:
             content: Generated image content to validate
             
         Returns:
             True if content meets quality standards
-        """        if not isinstance(content, dict):
+        """
+        if not isinstance(content, dict):
             return False
         
         # Check required fields
@@ -328,7 +346,8 @@ class ImageContentGenerator(BaseContentGenerator):
         prompt: str,
         options: ImageGenerationOptions
     ) -> str:
-        """Determine the type of image to generate"""        prompt_lower = prompt.lower()
+        """Determine the type of image to generate"""
+        prompt_lower = prompt.lower()
         
         # Check for explicit type in prompt
         if any(word in prompt_lower for word in ['photo', 'photograph', 'realistic']):
@@ -369,7 +388,8 @@ class ImageContentGenerator(BaseContentGenerator):
         options: ImageGenerationOptions,
         image_type: str
     ) -> str:
-        """Build enhanced prompt with style and quality modifiers"""        prompt_parts = [base_prompt]
+        """Build enhanced prompt with style and quality modifiers"""
+        prompt_parts = [base_prompt]
         
         # Add style specifications
         style_modifiers = []
@@ -433,7 +453,8 @@ class ImageContentGenerator(BaseContentGenerator):
         context: ContentGenerationContext,
         options: ImageGenerationOptions
     ) -> Tuple[Image.Image, Dict[str, Any]]:
-        """Generate photorealistic image"""        start_time = datetime.now()
+        """Generate photorealistic image"""
+        start_time = datetime.now()
         
         # Enhanced prompt for photorealism
         photo_prompt = f"{prompt}, photorealistic, high quality, professional photography, 8k resolution"
@@ -458,7 +479,8 @@ class ImageContentGenerator(BaseContentGenerator):
         context: ContentGenerationContext,
         options: ImageGenerationOptions
     ) -> Tuple[Image.Image, Dict[str, Any]]:
-        """Generate illustration/artwork"""        start_time = datetime.now()
+        """Generate illustration/artwork"""
+        start_time = datetime.now()
         
         # Enhanced prompt for illustration
         illustration_prompt = f"{prompt}, digital illustration, artwork, detailed, vibrant colors"
@@ -482,7 +504,8 @@ class ImageContentGenerator(BaseContentGenerator):
         context: ContentGenerationContext,
         options: ImageGenerationOptions
     ) -> Tuple[Image.Image, Dict[str, Any]]:
-        """Generate logo design"""        start_time = datetime.now()
+        """Generate logo design"""
+        start_time = datetime.now()
         
         # Create logo using simple graphics (mock implementation)
         image = await self._create_simple_logo(prompt, options)
@@ -504,7 +527,8 @@ class ImageContentGenerator(BaseContentGenerator):
         context: ContentGenerationContext,
         options: ImageGenerationOptions
     ) -> Tuple[Image.Image, Dict[str, Any]]:
-        """Generate infographic"""        start_time = datetime.now()
+        """Generate infographic"""
+        start_time = datetime.now()
         
         # Create infographic layout
         image = await self._create_infographic_layout(prompt, options)
@@ -526,7 +550,8 @@ class ImageContentGenerator(BaseContentGenerator):
         context: ContentGenerationContext,
         options: ImageGenerationOptions
     ) -> Tuple[Image.Image, Dict[str, Any]]:
-        """Generate general image"""        start_time = datetime.now()
+        """Generate general image"""
+        start_time = datetime.now()
         
         # Generate using default settings
         image = await self._mock_image_generation(prompt, options, 'general')
@@ -547,7 +572,8 @@ class ImageContentGenerator(BaseContentGenerator):
         options: ImageGenerationOptions,
         image_type: str
     ) -> Image.Image:
-        """Mock image generation (replace with actual AI model)"""        # Parse resolution
+        """Mock image generation (replace with actual AI model)"""
+        # Parse resolution
         width, height = self._parse_resolution(options.resolution)
         
         # Create base image
@@ -575,7 +601,8 @@ class ImageContentGenerator(BaseContentGenerator):
         return image
     
     async def _create_simple_logo(self, prompt: str, options: ImageGenerationOptions) -> Image.Image:
-        """Create a simple logo design"""        width, height = self._parse_resolution(options.resolution)
+        """Create a simple logo design"""
+        width, height = self._parse_resolution(options.resolution)
         
         # Create image with transparent background for logo
         image = Image.new('RGBA', (width, height), (255, 255, 255, 0))
@@ -629,7 +656,8 @@ class ImageContentGenerator(BaseContentGenerator):
         return image
     
     async def _create_infographic_layout(self, prompt: str, options: ImageGenerationOptions) -> Image.Image:
-        """Create an infographic layout"""        width, height = self._parse_resolution(options.resolution)
+        """Create an infographic layout"""
+        width, height = self._parse_resolution(options.resolution)
         
         image = Image.new('RGB', (width, height), (240, 240, 240))
         draw = ImageDraw.Draw(image)
@@ -664,7 +692,8 @@ class ImageContentGenerator(BaseContentGenerator):
         return image
     
     def _parse_resolution(self, resolution_str: str) -> Tuple[int, int]:
-        """Parse resolution string to width, height tuple"""        if 'x' in resolution_str:
+        """Parse resolution string to width, height tuple"""
+        if 'x' in resolution_str:
             width, height = map(int, resolution_str.split('x'))
             return width, height
         elif resolution_str in self.supported_resolutions:
@@ -673,7 +702,8 @@ class ImageContentGenerator(BaseContentGenerator):
             return 1024, 1024  # Default
     
     def _get_color_palette(self, palette_name: str, mood: str) -> List[Tuple[int, int, int]]:
-        """Get color palette based on name and mood"""        palettes = {
+        """Get color palette based on name and mood"""
+        palettes = {
             'vibrant': [(255, 100, 100), (100, 255, 100), (100, 100, 255)],
             'pastel': [(255, 200, 200), (200, 255, 200), (200, 200, 255)],
             'monochrome': [(100, 100, 100), (150, 150, 150), (200, 200, 200)],
@@ -692,7 +722,8 @@ class ImageContentGenerator(BaseContentGenerator):
         return base_palette
     
     def _create_gradient_background(self, draw: ImageDraw.Draw, width: int, height: int, colors: List[Tuple[int, int, int]]) -> None:
-        """Create gradient background"""        if len(colors) < 2:
+        """Create gradient background"""
+        if len(colors) < 2:
             colors = [(100, 100, 100), (200, 200, 200)]
         
         start_color = colors[0]
@@ -707,7 +738,8 @@ class ImageContentGenerator(BaseContentGenerator):
             draw.line([(0, y), (width, y)], fill=(r, g, b))
     
     def _add_photorealistic_elements(self, draw: ImageDraw.Draw, width: int, height: int, prompt: str) -> None:
-        """Add photorealistic elements to image"""        # Add some geometric shapes to simulate photorealistic content
+        """Add photorealistic elements to image"""
+        # Add some geometric shapes to simulate photorealistic content
         center_x, center_y = width // 2, height // 2
         
         # Add main subject (simplified)
@@ -721,7 +753,8 @@ class ImageContentGenerator(BaseContentGenerator):
             draw.ellipse([width//4, height//4, 3*width//4, height//2], fill=(200, 200, 100))  # Sun/sky
     
     def _add_artistic_elements(self, draw: ImageDraw.Draw, width: int, height: int, prompt: str) -> None:
-        """Add artistic elements to image"""        # Add abstract artistic elements
+        """Add artistic elements to image"""
+        # Add abstract artistic elements
         import random
         
         for _ in range(10):
@@ -736,7 +769,8 @@ class ImageContentGenerator(BaseContentGenerator):
                 draw.rectangle([x-size//2, y-size//2, x+size//2, y+size//2], fill=color)
     
     def _add_general_elements(self, draw: ImageDraw.Draw, width: int, height: int, prompt: str) -> None:
-        """Add general elements to image"""        # Add some basic geometric elements
+        """Add general elements to image"""
+        # Add some basic geometric elements
         center_x, center_y = width // 2, height // 2
         
         # Add central focus element
@@ -744,7 +778,8 @@ class ImageContentGenerator(BaseContentGenerator):
                     fill=(255, 255, 255), outline=(100, 100, 100))
     
     def _add_text_to_image(self, draw: ImageDraw.Draw, prompt: str, width: int, height: int) -> None:
-        """Add text to image based on prompt"""        text = self._extract_text_from_prompt(prompt)
+        """Add text to image based on prompt"""
+        text = self._extract_text_from_prompt(prompt)
         
         try:
             font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 48)
@@ -764,7 +799,8 @@ class ImageContentGenerator(BaseContentGenerator):
         draw.text((x, y), text, fill=(255, 255, 255), font=font)  # Main text
     
     def _extract_logo_text(self, prompt: str) -> str:
-        """Extract logo text from prompt"""        # Look for quoted text
+        """Extract logo text from prompt"""
+        # Look for quoted text
         if '"' in prompt:
             parts = prompt.split('"')
             if len(parts) >= 3:
@@ -779,7 +815,8 @@ class ImageContentGenerator(BaseContentGenerator):
         return "LOGO"
     
     def _extract_text_from_prompt(self, prompt: str) -> str:
-        """Extract text content from prompt"""        # Look for quoted text
+        """Extract text content from prompt"""
+        # Look for quoted text
         if '"' in prompt:
             parts = prompt.split('"')
             if len(parts) >= 3:
@@ -791,7 +828,8 @@ class ImageContentGenerator(BaseContentGenerator):
         return ' '.join(important_words[:3])  # First 3 important words
     
     def _parse_infographic_content(self, prompt: str) -> List[str]:
-        """Parse infographic content from prompt"""        # Split by common delimiters
+        """Parse infographic content from prompt"""
+        # Split by common delimiters
         sections = []
         
         if '1.' in prompt or '2.' in prompt:
@@ -813,7 +851,8 @@ class ImageContentGenerator(BaseContentGenerator):
         options: ImageGenerationOptions,
         image_type: str
     ) -> Image.Image:
-        """Apply post-processing effects to image"""        processed_image = image.copy()
+        """Apply post-processing effects to image"""
+        processed_image = image.copy()
         
         # Apply requested effects
         for effect in options.effects:
@@ -827,7 +866,8 @@ class ImageContentGenerator(BaseContentGenerator):
         return processed_image
     
     async def _apply_image_effect(self, image: Image.Image, effect_name: str) -> Image.Image:
-        """Apply specific image effect"""        if effect_name == 'blur':
+        """Apply specific image effect"""
+        if effect_name == 'blur':
             return image.filter(ImageFilter.GaussianBlur(radius=2))
         elif effect_name == 'sharpen':
             return image.filter(ImageFilter.SHARPEN)
@@ -848,7 +888,8 @@ class ImageContentGenerator(BaseContentGenerator):
             return image
     
     def _enhance_image_quality(self, image: Image.Image) -> Image.Image:
-        """Enhance image quality"""        # Apply sharpening
+        """Enhance image quality"""
+        # Apply sharpening
         enhanced = image.filter(ImageFilter.SHARPEN)
         
         # Slight contrast enhancement
@@ -858,7 +899,8 @@ class ImageContentGenerator(BaseContentGenerator):
         return enhanced
     
     def _apply_vintage_effect(self, image: Image.Image) -> Image.Image:
-        """Apply vintage effect"""        # Convert to sepia tones and add vignette
+        """Apply vintage effect"""
+        # Convert to sepia tones and add vignette
         sepia_image = self._apply_sepia_effect(image)
         
         # Add slight blur for vintage feel
@@ -867,7 +909,8 @@ class ImageContentGenerator(BaseContentGenerator):
         return vintage_image
     
     def _apply_sepia_effect(self, image: Image.Image) -> Image.Image:
-        """Apply sepia effect"""        # Convert to grayscale then tint
+        """Apply sepia effect"""
+        # Convert to grayscale then tint
         grayscale = image.convert('L')
         sepia = Image.new('RGB', image.size)
         
@@ -891,7 +934,8 @@ class ImageContentGenerator(BaseContentGenerator):
         options: ImageGenerationOptions,
         user_id: str
     ) -> str:
-        """Save image to file and return path"""        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        """Save image to file and return path"""
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"image_{user_id}_{timestamp}.{options.format}"
         filepath = os.path.join(self.temp_dir, filename)
         
@@ -908,7 +952,8 @@ class ImageContentGenerator(BaseContentGenerator):
         return filepath
     
     async def _image_to_base64(self, image: Image.Image, format: str) -> str:
-        """Convert image to base64 string"""        buffer = io.BytesIO()
+        """Convert image to base64 string"""
+        buffer = io.BytesIO()
         image.save(buffer, format=format.upper())
         image_bytes = buffer.getvalue()
         buffer.close()
@@ -916,7 +961,8 @@ class ImageContentGenerator(BaseContentGenerator):
         return base64.b64encode(image_bytes).decode('utf-8')
     
     async def _analyze_image(self, image: Image.Image) -> Dict[str, Any]:
-        """Analyze image properties"""        width, height = image.size
+        """Analyze image properties"""
+        width, height = image.size
         
         # Convert to array for analysis
         img_array = np.array(image)
@@ -944,7 +990,8 @@ class ImageContentGenerator(BaseContentGenerator):
         }
     
     async def _is_valid_image_content(self, image: Image.Image) -> bool:
-        """Check if image has valid content"""        # Convert to array
+        """Check if image has valid content"""
+        # Convert to array
         img_array = np.array(image)
         
         # Check if image is not completely black or white
@@ -962,10 +1009,12 @@ class ImageContentGenerator(BaseContentGenerator):
         return True
     
     def _supports_content_type(self, content_type: str) -> bool:
-        """Check if generator supports the specified content type"""        return content_type == 'image'
+        """Check if generator supports the specified content type"""
+        return content_type == 'image'
     
     async def generate_brand_assets(self, brand_info: Dict[str, Any], asset_types: List[str] = None, format: str = "png") -> Dict[str, Any]:
-        """Generate brand assets like logos, icons, and brand imagery"""        brand_name = brand_info.get('company_name', brand_info.get('brand_name', 'Brand'))
+        """Generate brand assets like logos, icons, and brand imagery"""
+        brand_name = brand_info.get('company_name', brand_info.get('brand_name', 'Brand'))
         brand_colors = brand_info.get('colors', ['#000000', '#FFFFFF'])
         style = brand_info.get('style_preference', brand_info.get('style', 'modern'))
         
@@ -1015,7 +1064,8 @@ class ImageContentGenerator(BaseContentGenerator):
         return assets
     
     async def generate_social_media_templates(self, platform: str, content_type: str) -> Dict[str, Any]:
-        """Generate social media image templates"""        platform_sizes = {
+        """Generate social media image templates"""
+        platform_sizes = {
             'instagram': {'post': '1080x1080', 'story': '1080x1920'},
             'twitter': {'post': '1200x675', 'header': '1500x500'},
             'linkedin': {'post': '1200x627', 'banner': '1584x396'},
@@ -1039,7 +1089,8 @@ class ImageContentGenerator(BaseContentGenerator):
         }
     
     def get_style_presets(self) -> List[str]:
-        """Get available image style presets"""        return [
+        """Get available image style presets"""
+        return [
             "photorealistic", "artistic", "cartoon", "sketch",
             "oil_painting", "watercolor", "digital_art", "vintage",
             "modern", "minimalist", "abstract", "surreal",
@@ -1047,7 +1098,8 @@ class ImageContentGenerator(BaseContentGenerator):
         ]
     
     def get_color_palettes(self) -> List[Dict[str, Any]]:
-        """Get available color palettes"""        return [
+        """Get available color palettes"""
+        return [
             {
                 "name": "vibrant",
                 "colors": ["#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4"],
@@ -1071,7 +1123,8 @@ class ImageContentGenerator(BaseContentGenerator):
         ]
     
     async def apply_filter(self, image_path: str, filter_name: str) -> str:
-        """Apply filter to an image"""        try:
+        """Apply filter to an image"""
+        try:
             # Load image
             with Image.open(image_path) as img:
                 # Apply different filters based on name
@@ -1108,7 +1161,8 @@ class ImageContentGenerator(BaseContentGenerator):
             return image_path
     
     async def resize_image(self, image_path: str, new_size: Tuple[int, int]) -> str:
-        """Resize an image to new dimensions"""        try:
+        """Resize an image to new dimensions"""
+        try:
             with Image.open(image_path) as img:
                 resized_img = img.resize(new_size, Image.Resampling.LANCZOS)
                 
@@ -1121,7 +1175,8 @@ class ImageContentGenerator(BaseContentGenerator):
             return image_path
     
     async def crop_image(self, image_path: str, crop_box: Tuple[int, int, int, int]) -> str:
-        """Crop an image using the specified crop box (left, top, right, bottom)"""        try:
+        """Crop an image using the specified crop box (left, top, right, bottom)"""
+        try:
             with Image.open(image_path) as img:
                 cropped_img = img.crop(crop_box)
                 
@@ -1134,7 +1189,8 @@ class ImageContentGenerator(BaseContentGenerator):
             return image_path
     
     async def add_watermark(self, image_path: str, watermark_text: str, position: str = "bottom_right") -> str:
-        """Add watermark text to an image"""        try:
+        """Add watermark text to an image"""
+        try:
             with Image.open(image_path) as img:
                 # Create drawing context
                 draw = ImageDraw.Draw(img)
@@ -1189,7 +1245,8 @@ class ImageContentGenerator(BaseContentGenerator):
             return image_path
     
     async def enhance_image(self, image_path: str, enhancement_settings: Dict[str, float]) -> str:
-        """Enhance image with various adjustments"""        try:
+        """Enhance image with various adjustments"""
+        try:
             with Image.open(image_path) as img:
                 enhanced_img = img.copy()
                 
@@ -1223,7 +1280,8 @@ class ImageContentGenerator(BaseContentGenerator):
             return image_path
     
     def _apply_artistic_style(self, img: Image.Image, style: str) -> Image.Image:
-        """Apply artistic style to image"""        if style == "oil_painting":
+        """Apply artistic style to image"""
+        if style == "oil_painting":
             # Simulate oil painting effect
             return img.filter(ImageFilter.SMOOTH_MORE)
         elif style == "watercolor":
@@ -1241,7 +1299,8 @@ class ImageContentGenerator(BaseContentGenerator):
             return img
     
     def _add_text_overlay(self, img: Image.Image, text: str, font_size: int = 48) -> Image.Image:
-        """Add text overlay to image"""        draw = ImageDraw.Draw(img)
+        """Add text overlay to image"""
+        draw = ImageDraw.Draw(img)
         
         try:
             font = ImageFont.truetype("arial.ttf", font_size)
@@ -1268,7 +1327,8 @@ class ImageContentGenerator(BaseContentGenerator):
         return img
     
     async def _release_model_resources(self) -> None:
-        """Release model-specific resources"""        # Clean up temporary files
+        """Release model-specific resources"""
+        # Clean up temporary files
         if os.path.exists(self.temp_dir):
             import shutil
             shutil.rmtree(self.temp_dir)

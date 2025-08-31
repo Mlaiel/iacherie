@@ -3,7 +3,8 @@ Handles content distribution, engagement tracking, and monetization on Twitter/X
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TwitterCredentials:
-    """Twitter API v2 credentials configuration."""    api_key: str
+    """Twitter API v2 credentials configuration."""
+    api_key: str
     api_secret: str
     access_token: str
     access_token_secret: str
@@ -32,9 +34,11 @@ class TwitterCredentials:
     client_secret: Optional[str] = None
 
 class TwitterAdapter(BasePlatformAdapter):
-    """    Advanced Twitter/X platform adapter for content distribution and engagement.
+    """
+    Advanced Twitter/X platform adapter for content distribution and engagement.
     Supports tweets, threads, media uploads, spaces, and revenue tracking.
-    """    
+    """
+    
     PLATFORM_NAME = "twitter"
     MAX_IMAGE_SIZE_MB = 5
     MAX_VIDEO_SIZE_MB = 512
@@ -51,7 +55,8 @@ class TwitterAdapter(BasePlatformAdapter):
         self._initialize_clients()
     
     def _initialize_clients(self):
-        """Initialize Twitter API v1.1 and v2 clients."""        try:
+        """Initialize Twitter API v1.1 and v2 clients."""
+        try:
             # Twitter API v1.1 for media upload
             auth = tweepy.OAuthHandler(
                 self.credentials.api_key,
@@ -82,7 +87,8 @@ class TwitterAdapter(BasePlatformAdapter):
             raise AuthenticationError(f"Twitter authentication failed: {e}")
     
     async def authenticate_user(self, user_id: str) -> Dict[str, Any]:
-        """Authenticate user using OAuth 2.0 PKCE flow."""        try:
+        """Authenticate user using OAuth 2.0 PKCE flow."""
+        try:
             # Generate OAuth 2.0 authorization URL
             oauth2_user_handler = tweepy.OAuth2UserHandler(
                 client_id=self.credentials.client_id,
@@ -104,7 +110,8 @@ class TwitterAdapter(BasePlatformAdapter):
             raise AuthenticationError(f"Failed to authenticate user: {e}")
     
     async def validate_content(self, content_metadata: ContentMetadata) -> Dict[str, Any]:
-        """Validate content meets Twitter requirements."""        validation_results = {
+        """Validate content meets Twitter requirements."""
+        validation_results = {
             "is_valid": True,
             "errors": [],
             "warnings": []
@@ -158,7 +165,8 @@ class TwitterAdapter(BasePlatformAdapter):
         return validation_results
     
     async def upload_content(self, distribution_request: DistributionRequest) -> DistributionResult:
-        """Upload content to Twitter/X."""        try:
+        """Upload content to Twitter/X."""
+        try:
             # Validate content first
             validation = await self.validate_content(distribution_request.content_metadata)
             if not validation["is_valid"]:
@@ -210,7 +218,8 @@ class TwitterAdapter(BasePlatformAdapter):
             )
     
     def _prepare_tweet_text(self, content_metadata: ContentMetadata) -> str:
-        """Prepare optimized tweet text from content metadata."""        text_parts = []
+        """Prepare optimized tweet text from content metadata."""
+        text_parts = []
         
         # Add title
         if content_metadata.title:
@@ -240,7 +249,8 @@ class TwitterAdapter(BasePlatformAdapter):
         return " ".join(text_parts)
     
     async def _upload_media(self, file_path: str, content_metadata: ContentMetadata) -> Optional[str]:
-        """Upload media file to Twitter."""        try:
+        """Upload media file to Twitter."""
+        try:
             # Determine media category
             media_category = self._get_media_category(content_metadata.content_type)
             
@@ -264,7 +274,8 @@ class TwitterAdapter(BasePlatformAdapter):
             return None
     
     def _get_media_category(self, content_type: str) -> str:
-        """Determine Twitter media category based on content type."""        content_type = content_type.lower()
+        """Determine Twitter media category based on content type."""
+        content_type = content_type.lower()
         
         if content_type in ["image", "photo"]:
             return "tweet_image"
@@ -274,7 +285,8 @@ class TwitterAdapter(BasePlatformAdapter):
             return "tweet_image"  # Default fallback
     
     async def get_analytics(self, content_id: str, date_range: tuple = None) -> PlatformAnalytics:
-        """Retrieve analytics data for tweeted content."""        try:
+        """Retrieve analytics data for tweeted content."""
+        try:
             tweet_id = content_id.replace("twitter_", "")
             
             # Get tweet details with metrics
@@ -323,7 +335,8 @@ class TwitterAdapter(BasePlatformAdapter):
             raise DistributionError(f"Analytics retrieval failed: {e}")
     
     async def get_revenue_data(self, content_id: str, date_range: tuple = None) -> RevenueData:
-        """Calculate potential revenue from Twitter content (Tips, Super Follows, etc.)."""        try:
+        """Calculate potential revenue from Twitter content (Tips, Super Follows, etc.)."""
+        try:
             # Twitter doesn't have direct revenue sharing like YouTube
             # Revenue comes from tips, super follows, or promotional content
             
@@ -358,7 +371,8 @@ class TwitterAdapter(BasePlatformAdapter):
             raise DistributionError(f"Revenue calculation failed: {e}")
     
     async def create_thread(self, content_list: List[str], media_paths: Optional[List[str]] = None) -> List[str]:
-        """Create a Twitter thread with multiple tweets."""        try:
+        """Create a Twitter thread with multiple tweets."""
+        try:
             tweet_ids = []
             reply_to_id = None
             
@@ -400,7 +414,8 @@ class TwitterAdapter(BasePlatformAdapter):
             raise DistributionError(f"Thread creation failed: {e}")
     
     async def update_content_metadata(self, content_id: str, metadata: Dict[str, Any]) -> bool:
-        """Update content metadata (limited options on Twitter)."""        try:
+        """Update content metadata (limited options on Twitter)."""
+        try:
             # Twitter doesn't allow editing tweets, but we can update our tracking
             logger.info(f"Metadata update requested for Twitter content {content_id}")
             
@@ -414,7 +429,8 @@ class TwitterAdapter(BasePlatformAdapter):
             return False
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete tweet from Twitter."""        try:
+        """Delete tweet from Twitter."""
+        try:
             tweet_id = content_id.replace("twitter_", "")
             
             # Delete the tweet
@@ -432,7 +448,8 @@ class TwitterAdapter(BasePlatformAdapter):
             return False
     
     def get_platform_limits(self) -> Dict[str, Any]:
-        """Return platform-specific limits and requirements."""        return {
+        """Return platform-specific limits and requirements."""
+        return {
             "max_image_size_mb": self.MAX_IMAGE_SIZE_MB,
             "max_video_size_mb": self.MAX_VIDEO_SIZE_MB,
             "max_tweet_length": self.MAX_TWEET_LENGTH,

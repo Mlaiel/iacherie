@@ -5,7 +5,8 @@ resource allocation, timeline tracking, and workflow optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
@@ -15,21 +16,24 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class ProjectStatus(Enum):
-    """Project status enumeration"""    PLANNING = "planning"
+    """Project status enumeration"""
+    PLANNING = "planning"
     IN_PROGRESS = "in_progress"
     ON_HOLD = "on_hold"
     COMPLETED = "completed"
     CANCELLED = "cancelled"
 
 class TaskPriority(Enum):
-    """Task priority levels"""    LOW = "low"
+    """Task priority levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 @dataclass
 class ProjectManagementJob:
-    """Project management operation job"""    job_id: str
+    """Project management operation job"""
+    job_id: str
     operation_type: str
     project_id: Optional[str] = None
     task_data: Optional[Dict[str, Any]] = None
@@ -40,7 +44,8 @@ class ProjectManagementJob:
 
 @dataclass
 class ProjectManagementResult:
-    """Project management operation result"""    job_id: str
+    """Project management operation result"""
+    job_id: str
     success: bool
     result_data: Optional[Dict[str, Any]] = None
     error_message: Optional[str] = None
@@ -48,7 +53,8 @@ class ProjectManagementResult:
     completed_at: datetime = None
 
 class ProjectManagementEngine:
-    """Core project management processing engine"""    
+    """Core project management processing engine"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.is_running = False
@@ -58,18 +64,21 @@ class ProjectManagementEngine:
         logger.info("ProjectManagementEngine initialized")
 
     async def start(self) -> None:
-        """Start the project management engine"""        if self.is_running:
+        """Start the project management engine"""
+        if self.is_running:
             return
         
         self.is_running = True
         logger.info("Project Management Engine started")
 
     async def shutdown(self) -> None:
-        """Shutdown the project management engine"""        self.is_running = False
+        """Shutdown the project management engine"""
+        self.is_running = False
         logger.info("Project Management Engine shut down")
 
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process project management operation"""        operation = data.get("operation", "status")
+        """Process project management operation"""
+        operation = data.get("operation", "status")
         
         if operation == "create_project":
             return await self._create_project(data)
@@ -83,7 +92,8 @@ class ProjectManagementEngine:
             return await self._get_status(data)
 
     async def _create_project(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create a new project"""        project_id = data.get("project_id", f"proj_{datetime.now().timestamp()}")
+        """Create a new project"""
+        project_id = data.get("project_id", f"proj_{datetime.now().timestamp()}")
         project_name = data.get("name", "Untitled Project")
         
         project = {
@@ -105,7 +115,8 @@ class ProjectManagementEngine:
         }
 
     async def _add_task(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Add task to project"""        project_id = data.get("project_id")
+        """Add task to project"""
+        project_id = data.get("project_id")
         task_data = data.get("task", {})
         
         if project_id not in self.active_projects:
@@ -131,7 +142,8 @@ class ProjectManagementEngine:
         }
 
     async def _update_status(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Update project or task status"""        project_id = data.get("project_id")
+        """Update project or task status"""
+        project_id = data.get("project_id")
         new_status = data.get("status")
         task_id = data.get("task_id")
         
@@ -153,7 +165,8 @@ class ProjectManagementEngine:
             return {"status": "updated", "project": self.active_projects[project_id]}
 
     async def _get_timeline(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Get project timeline and milestones"""        project_id = data.get("project_id")
+        """Get project timeline and milestones"""
+        project_id = data.get("project_id")
         
         if project_id not in self.active_projects:
             return {"error": "Project not found"}
@@ -181,7 +194,8 @@ class ProjectManagementEngine:
         }
 
     async def _get_status(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Get overall status"""        return {
+        """Get overall status"""
+        return {
             "engine_status": "running" if self.is_running else "stopped",
             "active_projects": len(self.active_projects),
             "total_tasks": sum(len(p["tasks"]) for p in self.active_projects.values())

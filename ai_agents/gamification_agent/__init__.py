@@ -12,7 +12,7 @@ This gamification system and AI methodologies are the exclusive intellectual pro
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
 
-ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
+ALL RIGHTS RESERVED - FAHED MLAIEL (c)2025
 
 🎯 BUSINESS LOGIC INTEGRATION:
 Creator Registration → Content Upload → AI Gamification Analysis → Challenge Generation
@@ -24,7 +24,9 @@ Team Specialties:
 - Microservices Architect & Database Expert
 - DevOps Engineer & Security Specialist
 - Audio Processing & Multimedia Expert
-"""from .gamification_agent import GamificationAgent, GamificationConfig
+"""
+
+from .gamification_agent import GamificationAgent, GamificationConfig
 from .challenge_ai import ChallengeGenerator, ChallengeConfig
 from .reward_optimization_ai import RewardOptimizer, RewardConfig
 from .user_engagement_predictor import EngagementPredictor, EngagementConfig

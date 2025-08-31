@@ -13,7 +13,8 @@ Business Logic Validation:
 - AI protection metadata validation
 - Monetization data accuracy checks
 - Cross-platform compliance validation
-"""import re
+"""
+import re
 import json
 import time
 import hashlib
@@ -40,7 +41,8 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationLevel(str, Enum):
-    """Validation levels"""    BASIC = "basic"
+    """Validation levels"""
+    BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
     ENTERPRISE = "enterprise"
@@ -48,7 +50,8 @@ class ValidationLevel(str, Enum):
 
 
 class DataType(str, Enum):
-    """Supported data types"""    TEXT = "text"
+    """Supported data types"""
+    TEXT = "text"
     EMAIL = "email"
     URL = "url"
     PHONE = "phone"
@@ -74,7 +77,8 @@ class DataType(str, Enum):
 
 
 class SanitizationLevel(str, Enum):
-    """Sanitization levels"""    NONE = "none"
+    """Sanitization levels"""
+    NONE = "none"
     BASIC = "basic"
     MODERATE = "moderate"
     AGGRESSIVE = "aggressive"
@@ -82,7 +86,8 @@ class SanitizationLevel(str, Enum):
 
 
 class ContentQuality(str, Enum):
-    """Content quality levels"""    LOW = "low"
+    """Content quality levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     PREMIUM = "premium"
@@ -90,7 +95,8 @@ class ContentQuality(str, Enum):
 
 
 class ValidationRule(BaseModel):
-    """Enhanced data validation rule"""    rule_id: str = Field(description="Rule identifier")
+    """Enhanced data validation rule"""
+    rule_id: str = Field(description="Rule identifier")
     field_name: str = Field(description="Field name to validate")
     data_type: DataType = Field(description="Expected data type")
     required: bool = Field(default=True, description="Whether field is required")
@@ -108,7 +114,8 @@ class ValidationRule(BaseModel):
 
 
 class ValidationResult(BaseModel):
-    """Enhanced validation result"""    is_valid: bool = Field(description="Whether data is valid")
+    """Enhanced validation result"""
+    is_valid: bool = Field(description="Whether data is valid")
     field_name: str = Field(description="Field name")
     original_value: Any = Field(description="Original value")
     sanitized_value: Any = Field(description="Sanitized value")
@@ -121,7 +128,8 @@ class ValidationResult(BaseModel):
 
 
 class ContentValidationResult(BaseModel):
-    """Complete content validation result"""    content_id: str = Field(description="Content identifier")
+    """Complete content validation result"""
+    content_id: str = Field(description="Content identifier")
     overall_valid: bool = Field(description="Overall validation status")
     validation_level: ValidationLevel = Field(description="Validation level used")
     field_results: Dict[str, ValidationResult] = Field(description="Field validation results")
@@ -132,7 +140,8 @@ class ContentValidationResult(BaseModel):
 
 
 class SchemaValidator:
-    """Advanced schema validation engine"""    
+    """Advanced schema validation engine"""
+    
     def __init__(self, redis_client: redis.Redis):
         self.redis_client = redis_client
         self.cache = CacheManager()
@@ -143,7 +152,8 @@ class SchemaValidator:
         self._initialize_builtin_validators()
     
     def _initialize_builtin_validators(self):
-        """Initialize built-in validation patterns and rules"""        self.patterns = {
+        """Initialize built-in validation patterns and rules"""
+        self.patterns = {
             DataType.EMAIL: r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
             DataType.URL: r'^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$',
             DataType.PHONE: r'^\+?1?[-.\s]?\(?[0-9]{3}\)?[-.\s]?[0-9]{3}[-.\s]?[0-9]{4}$',
@@ -164,14 +174,17 @@ class SchemaValidator:
         })
     
     def register_validation_rule(self, rule: ValidationRule):
-        """Register validation rule for specific content type or field"""        self.validation_rules[rule.field_name] = rule
+        """Register validation rule for specific content type or field"""
+        self.validation_rules[rule.field_name] = rule
     
     def register_custom_validator(self, name: str, validator_func: Callable):
-        """Register custom validator function"""        self.custom_validators[name] = validator_func
+        """Register custom validator function"""
+        self.custom_validators[name] = validator_func
     
     async def validate_field(self, field_name: str, value: Any, 
                            rule: ValidationRule) -> ValidationResult:
-        """Validate single field according to rule"""        start_time = time.time()
+        """Validate single field according to rule"""
+        start_time = time.time()
         result = ValidationResult(
             is_valid=True,
             field_name=field_name,
@@ -249,7 +262,8 @@ class SchemaValidator:
         return result
     
     async def validate_data_type(self, value: Any, data_type: DataType) -> tuple[bool, str]:
-        """Validate value against specific data type"""        try:
+        """Validate value against specific data type"""
+        try:
             if data_type == DataType.TEXT:
                 return isinstance(value, str), "Value must be text"
             
@@ -329,7 +343,8 @@ class SchemaValidator:
             return False, f"Type validation error: {str(e)}"
     
     async def sanitize_value(self, value: Any, level: SanitizationLevel) -> Any:
-        """Sanitize value according to sanitization level"""        if not isinstance(value, str):
+        """Sanitize value according to sanitization level"""
+        if not isinstance(value, str):
             return value
         
         if level == SanitizationLevel.NONE:
@@ -375,7 +390,8 @@ class SchemaValidator:
     
     # Built-in custom validators
     async def _validate_json(self, value: Any) -> tuple[bool, str]:
-        """Validate JSON format"""        try:
+        """Validate JSON format"""
+        try:
             if isinstance(value, str):
                 json.loads(value)
             elif not isinstance(value, (dict, list)):
@@ -385,7 +401,8 @@ class SchemaValidator:
             return False, "Invalid JSON format"
     
     async def _validate_html(self, value: Any) -> tuple[bool, str]:
-        """Validate HTML content"""        if not isinstance(value, str):
+        """Validate HTML content"""
+        if not isinstance(value, str):
             return False, "HTML must be text"
         
         # Basic HTML validation - check for balanced tags
@@ -417,7 +434,8 @@ class SchemaValidator:
             return False, "HTML parsing error"
     
     async def _validate_markdown(self, value: Any) -> tuple[bool, str]:
-        """Validate Markdown content"""        if not isinstance(value, str):
+        """Validate Markdown content"""
+        if not isinstance(value, str):
             return False, "Markdown must be text"
         
         # Basic Markdown validation
@@ -439,7 +457,8 @@ class SchemaValidator:
             return False, "Markdown validation error"
     
     async def _validate_base64(self, value: Any) -> tuple[bool, str]:
-        """Validate Base64 encoding"""        if not isinstance(value, str):
+        """Validate Base64 encoding"""
+        if not isinstance(value, str):
             return False, "Base64 must be text"
         
         try:
@@ -450,7 +469,8 @@ class SchemaValidator:
             return False, "Invalid Base64 encoding"
     
     async def _validate_file_path(self, value: Any) -> tuple[bool, str]:
-        """Validate file path"""        if not isinstance(value, str):
+        """Validate file path"""
+        if not isinstance(value, str):
             return False, "File path must be text"
         
         # Check for path traversal attempts
@@ -461,7 +481,8 @@ class SchemaValidator:
         return True, ""
     
     async def _validate_date_range(self, value: Any) -> tuple[bool, str]:
-        """Validate date is within reasonable range"""        try:
+        """Validate date is within reasonable range"""
+        try:
             if isinstance(value, str):
                 date_obj = datetime.fromisoformat(value.replace('Z', '+00:00'))
             else:
@@ -476,7 +497,8 @@ class SchemaValidator:
             return False, "Date validation error"
     
     async def _validate_content_type(self, value: Any) -> tuple[bool, str]:
-        """Validate content type"""        if not isinstance(value, str):
+        """Validate content type"""
+        if not isinstance(value, str):
             return False, "Content type must be text"
         
         valid_content_types = [
@@ -493,13 +515,15 @@ class SchemaValidator:
 
 
 class DataQualityAnalyzer:
-    """Advanced data quality analysis"""    
+    """Advanced data quality analysis"""
+    
     def __init__(self, redis_client: redis.Redis):
         self.redis_client = redis_client
         self.cache = CacheManager()
     
     async def calculate_quality_score(self, validation_results: Dict[str, ValidationResult]) -> float:
-        """Calculate overall data quality score"""        if not validation_results:
+        """Calculate overall data quality score"""
+        if not validation_results:
             return 0.0
         
         total_fields = len(validation_results)
@@ -519,7 +543,8 @@ class DataQualityAnalyzer:
     
     async def analyze_data_completeness(self, data: Dict[str, Any], 
                                       required_fields: List[str]) -> Dict[str, Any]:
-        """Analyze data completeness"""        completeness_analysis = {
+        """Analyze data completeness"""
+        completeness_analysis = {
             "total_fields": len(required_fields),
             "present_fields": 0,
             "missing_fields": [],
@@ -543,7 +568,8 @@ class DataQualityAnalyzer:
         return completeness_analysis
     
     async def detect_data_anomalies(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect data anomalies"""        anomalies = []
+        """Detect data anomalies"""
+        anomalies = []
         
         for field_name, value in data.items():
             if isinstance(value, str):
@@ -588,7 +614,8 @@ class DataQualityAnalyzer:
 
 
 class ValidationMiddleware:
-    """Main data validation middleware orchestrator"""    
+    """Main data validation middleware orchestrator"""
+    
     def __init__(self):
         self.redis_client = redis.from_url(settings.REDIS_URL)
         self.cache = CacheManager()
@@ -601,7 +628,8 @@ class ValidationMiddleware:
         self._load_default_schemas()
     
     def _load_default_schemas(self):
-        """Load default validation schemas for common content types"""        # User profile validation schema
+        """Load default validation schemas for common content types"""
+        # User profile validation schema
         user_rules = [
             ValidationRule(
                 rule_id="user_email",
@@ -672,7 +700,8 @@ class ValidationMiddleware:
     async def validate_content(self, content_id: str, data: Dict[str, Any],
                              validation_level: ValidationLevel = ValidationLevel.STANDARD,
                              schema_name: Optional[str] = None) -> ContentValidationResult:
-        """Validate complete content according to schema"""        start_time = time.time()
+        """Validate complete content according to schema"""
+        start_time = time.time()
         
         # Get validation rules for schema
         if schema_name:
@@ -728,12 +757,14 @@ class ValidationMiddleware:
         return content_result
     
     async def get_schema_rules(self, schema_name: str) -> List[ValidationRule]:
-        """Get validation rules for specific schema"""        # This would typically load from database or configuration
+        """Get validation rules for specific schema"""
+        # This would typically load from database or configuration
         # For now, return all rules (simplified)
         return list(self.schema_validator.validation_rules.values())
     
     async def store_validation_result(self, result: ContentValidationResult):
-        """Store validation result for analytics and monitoring"""        try:
+        """Store validation result for analytics and monitoring"""
+        try:
             # Store in Redis with expiration
             result_key = f"validation_results:{result.content_id}"
             result_data = result.dict()
@@ -750,7 +781,8 @@ class ValidationMiddleware:
             logger.error(f"Failed to store validation result: {e}")
     
     async def update_validation_statistics(self, result: ContentValidationResult):
-        """Update validation statistics for monitoring"""        try:
+        """Update validation statistics for monitoring"""
+        try:
             now = time.time()
             hour_window = int(now // 3600)
             day_window = int(now // 86400)
@@ -779,7 +811,8 @@ class ValidationMiddleware:
             logger.error(f"Failed to update validation statistics: {e}")
     
     async def get_validation_statistics(self, time_range: str = "24h") -> Dict[str, Any]:
-        """Get validation statistics for specified time range"""        try:
+        """Get validation statistics for specified time range"""
+        try:
             now = time.time()
             
             if time_range == "1h":
@@ -838,17 +871,20 @@ class ValidationMiddleware:
 
 # Factory function for dependency injection
 def get_validation_middleware() -> ValidationMiddleware:
-    """Get validation middleware instance"""    return ValidationMiddleware()
+    """Get validation middleware instance"""
+    return ValidationMiddleware()
 
 
 # Convenience functions
 async def validate_data(content_id: str, data: Dict[str, Any],
                        validation_level: ValidationLevel = ValidationLevel.STANDARD) -> ContentValidationResult:
-    """Convenience function for data validation"""    middleware = get_validation_middleware()
+    """Convenience function for data validation"""
+    middleware = get_validation_middleware()
     return await middleware.validate_content(content_id, data, validation_level)
 
 
 async def register_validation_schema(schema_name: str, rules: List[ValidationRule]):
-    """Convenience function for registering validation schema"""    middleware = get_validation_middleware()
+    """Convenience function for registering validation schema"""
+    middleware = get_validation_middleware()
     for rule in rules:
         middleware.schema_validator.register_validation_rule(rule)

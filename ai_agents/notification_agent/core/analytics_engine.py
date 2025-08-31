@@ -28,7 +28,8 @@ Team Specialties & Expertise:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -58,7 +59,8 @@ from ...integrations.business_intelligence import BusinessIntelligenceIntegratio
 
 
 class MetricType(Enum):
-    """Comprehensive metric types for notification analytics"""    DELIVERY_RATE = "delivery_rate"
+    """Comprehensive metric types for notification analytics"""
+    DELIVERY_RATE = "delivery_rate"
     OPEN_RATE = "open_rate"
     CLICK_RATE = "click_rate"
     CONVERSION_RATE = "conversion_rate"
@@ -71,7 +73,8 @@ class MetricType(Enum):
 
 
 class AnalyticsTimeframe(Enum):
-    """Time frame options for analytics queries"""    REALTIME = "realtime"
+    """Time frame options for analytics queries"""
+    REALTIME = "realtime"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -81,7 +84,8 @@ class AnalyticsTimeframe(Enum):
 
 
 class SegmentationType(Enum):
-    """User segmentation types for advanced analytics"""    CREATOR_TYPE = "creator_type"  # musician, blogger, photographer, etc.
+    """User segmentation types for advanced analytics"""
+    CREATOR_TYPE = "creator_type"  # musician, blogger, photographer, etc.
     ENGAGEMENT_LEVEL = "engagement_level"
     SUBSCRIPTION_TIER = "subscription_tier"
     GEOGRAPHIC_REGION = "geographic_region"
@@ -92,7 +96,8 @@ class SegmentationType(Enum):
 
 @dataclass
 class AnalyticsQuery:
-    """Advanced analytics query configuration"""    metric_types: List[MetricType]
+    """Advanced analytics query configuration"""
+    metric_types: List[MetricType]
     timeframe: AnalyticsTimeframe
     start_date: datetime
     end_date: datetime
@@ -106,7 +111,8 @@ class AnalyticsQuery:
 
 @dataclass
 class MetricResult:
-    """Individual metric calculation result"""    metric_type: MetricType
+    """Individual metric calculation result"""
+    metric_type: MetricType
     value: float
     trend: float  # Percentage change from previous period
     confidence_interval: Tuple[float, float]
@@ -116,7 +122,8 @@ class MetricResult:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report with business insights"""    query_id: str
+    """Comprehensive analytics report with business insights"""
+    query_id: str
     generated_at: datetime
     timeframe: AnalyticsTimeframe
     metrics: List[MetricResult]
@@ -128,7 +135,8 @@ class AnalyticsReport:
 
 
 class NotificationAnalyticsEngine:
-    """    Advanced notification analytics engine with AI-powered insights
+    """
+    Advanced notification analytics engine with AI-powered insights
     
     Key Features:
     - Real-time performance monitoring and alerting
@@ -139,7 +147,8 @@ class NotificationAnalyticsEngine:
     - ROI and business impact measurement
     - Automated insight generation with AI recommendations
     - Cross-platform performance comparison and optimization
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.analytics_integration = AnalyticsIntegration()
@@ -167,14 +176,16 @@ class NotificationAnalyticsEngine:
     async def generate_analytics_report(
         self, query: AnalyticsQuery
     ) -> AnalyticsReport:
-        """        Generate comprehensive analytics report with business insights
+        """
+        Generate comprehensive analytics report with business insights
         
         Args:
             query: Analytics query configuration
             
         Returns:
             Detailed analytics report with metrics, insights, and recommendations
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         query_id = str(uuid.uuid4())
         
         try:
@@ -230,7 +241,8 @@ class NotificationAnalyticsEngine:
         metric_types: List[MetricType],
         lookback_minutes: int = 60
     ) -> Dict[MetricType, float]:
-        """        Get real-time metrics for immediate monitoring
+        """
+        Get real-time metrics for immediate monitoring
         
         Args:
             metric_types: Types of metrics to retrieve
@@ -238,7 +250,8 @@ class NotificationAnalyticsEngine:
             
         Returns:
             Current metric values
-        """        realtime_values = {}
+        """
+        realtime_values = {}
         cutoff_time = datetime.utcnow() - timedelta(minutes=lookback_minutes)
         
         for metric_type in metric_types:
@@ -275,7 +288,8 @@ class NotificationAnalyticsEngine:
         channel_type: ChannelType,
         metadata: Dict[str, Any]
     ):
-        """        Track individual notification event for analytics
+        """
+        Track individual notification event for analytics
         
         Args:
             user_id: User identifier
@@ -283,7 +297,8 @@ class NotificationAnalyticsEngine:
             event_type: Type of event (sent, delivered, opened, clicked, etc.)
             channel_type: Communication channel used
             metadata: Additional event metadata
-        """        try:
+        """
+        try:
             event_data = {
                 'user_id': user_id,
                 'notification_id': notification_id,
@@ -312,8 +327,10 @@ class NotificationAnalyticsEngine:
         timeframe: AnalyticsTimeframe,
         metric_types: List[MetricType]
     ) -> Dict[ChannelType, Dict[MetricType, float]]:
-        """        Compare performance across different communication channels
-        """        performance_data = {}
+        """
+        Compare performance across different communication channels
+        """
+        performance_data = {}
         
         for channel in ChannelType:
             channel_metrics = {}
@@ -339,8 +356,10 @@ class NotificationAnalyticsEngine:
         user_id: str,
         analysis_period_days: int = 30
     ) -> Dict[str, Any]:
-        """        Get detailed engagement insights for specific user
-        """        try:
+        """
+        Get detailed engagement insights for specific user
+        """
+        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=analysis_period_days)
             
@@ -377,8 +396,10 @@ class NotificationAnalyticsEngine:
     async def get_business_performance_dashboard(
         self, timeframe: AnalyticsTimeframe
     ) -> Dict[str, Any]:
-        """        Get comprehensive business performance dashboard data
-        """        try:
+        """
+        Get comprehensive business performance dashboard data
+        """
+        try:
             dashboard_data = {
                 'overview': await self._get_overview_metrics(timeframe),
                 'channel_performance': await self._get_channel_dashboard_data(timeframe),
@@ -399,7 +420,8 @@ class NotificationAnalyticsEngine:
     # Private implementation methods
     
     async def _calculate_metrics(self, query: AnalyticsQuery) -> List[MetricResult]:
-        """Calculate requested metrics based on query parameters"""        metrics = []
+        """Calculate requested metrics based on query parameters"""
+        metrics = []
         
         for metric_type in query.metric_types:
             try:
@@ -442,7 +464,8 @@ class NotificationAnalyticsEngine:
     async def _calculate_single_metric(
         self, metric_type: MetricType, query: AnalyticsQuery
     ) -> float:
-        """Calculate a single metric value"""        
+        """Calculate a single metric value"""
+        
         if metric_type == MetricType.DELIVERY_RATE:
             return await self._calculate_delivery_rate(query)
         elif metric_type == MetricType.OPEN_RATE:
@@ -461,19 +484,23 @@ class NotificationAnalyticsEngine:
             return 0.0
     
     async def _calculate_delivery_rate(self, query: AnalyticsQuery) -> float:
-        """Calculate notification delivery rate"""        # Implementation would query database for delivery statistics
+        """Calculate notification delivery rate"""
+        # Implementation would query database for delivery statistics
         # For now, return mock data
         return 0.95
     
     async def _calculate_open_rate(self, query: AnalyticsQuery) -> float:
-        """Calculate notification open rate"""        # Implementation would query database for open statistics
+        """Calculate notification open rate"""
+        # Implementation would query database for open statistics
         return 0.68
     
     async def _calculate_click_rate(self, query: AnalyticsQuery) -> float:
-        """Calculate notification click-through rate"""        return 0.24
+        """Calculate notification click-through rate"""
+        return 0.24
     
     async def _calculate_engagement_score(self, query: AnalyticsQuery) -> float:
-        """Calculate overall engagement score"""        # Composite score based on multiple factors
+        """Calculate overall engagement score"""
+        # Composite score based on multiple factors
         delivery_rate = await self._calculate_delivery_rate(query)
         open_rate = await self._calculate_open_rate(query)
         click_rate = await self._calculate_click_rate(query)
@@ -484,7 +511,8 @@ class NotificationAnalyticsEngine:
     async def _analyze_segments(
         self, query: AnalyticsQuery, base_metrics: List[MetricResult]
     ) -> Dict[str, List[MetricResult]]:
-        """Perform segmentation analysis"""        segments = {}
+        """Perform segmentation analysis"""
+        segments = {}
         
         if query.user_segments:
             for segment_type, segment_values in query.user_segments.items():
@@ -503,7 +531,8 @@ class NotificationAnalyticsEngine:
         segments: Dict[str, List[MetricResult]],
         query: AnalyticsQuery
     ) -> Dict[str, Any]:
-        """Generate AI-powered insights from metrics"""        insights = {
+        """Generate AI-powered insights from metrics"""
+        insights = {
             'performance_summary': self._summarize_performance(metrics),
             'trend_analysis': self._analyze_trends(metrics),
             'segment_insights': self._analyze_segment_performance(segments),
@@ -517,7 +546,8 @@ class NotificationAnalyticsEngine:
     async def _generate_recommendations(
         self, insights: Dict[str, Any], query: AnalyticsQuery
     ) -> List[str]:
-        """Generate actionable recommendations"""        recommendations = []
+        """Generate actionable recommendations"""
+        recommendations = []
         
         # Performance-based recommendations
         if insights['performance_summary']['overall_score'] < 0.7:
@@ -535,7 +565,8 @@ class NotificationAnalyticsEngine:
         return recommendations
     
     async def _process_realtime_metrics(self):
-        """Background task for processing real-time metrics"""        while True:
+        """Background task for processing real-time metrics"""
+        while True:
             try:
                 await asyncio.sleep(60)  # Process every minute
                 
@@ -547,7 +578,8 @@ class NotificationAnalyticsEngine:
                 self.logger.error(f"Realtime processing error: {str(e)}")
     
     async def _refresh_metric_cache(self):
-        """Background task for refreshing metric cache"""        while True:
+        """Background task for refreshing metric cache"""
+        while True:
             try:
                 await asyncio.sleep(1800)  # Refresh every 30 minutes
                 
@@ -565,7 +597,8 @@ class NotificationAnalyticsEngine:
                 self.logger.error(f"Cache refresh error: {str(e)}")
     
     async def _train_prediction_models(self):
-        """Background task for training prediction models"""        while True:
+        """Background task for training prediction models"""
+        while True:
             try:
                 await asyncio.sleep(86400)  # Train daily
                 
@@ -579,10 +612,12 @@ class NotificationAnalyticsEngine:
                 self.logger.error(f"Model training error: {str(e)}")
     
     def _generate_cache_key(self, metric_type: MetricType, query: AnalyticsQuery) -> str:
-        """Generate cache key for metric result"""        return f"{metric_type.value}_{query.timeframe.value}_{query.start_date.isoformat()}_{query.end_date.isoformat()}"
+        """Generate cache key for metric result"""
+        return f"{metric_type.value}_{query.timeframe.value}_{query.start_date.isoformat()}_{query.end_date.isoformat()}"
     
     def _summarize_performance(self, metrics: List[MetricResult]) -> Dict[str, Any]:
-        """Summarize overall performance from metrics"""        if not metrics:
+        """Summarize overall performance from metrics"""
+        if not metrics:
             return {'overall_score': 0.0, 'status': 'no_data'}
         
         # Calculate weighted overall score
@@ -611,13 +646,15 @@ class NotificationAnalyticsEngine:
         }
     
     def _calculate_rate(self, events: List[Dict], numerator_event: str, denominator_event: str) -> float:
-        """Calculate rate between two event types"""        numerator = len([e for e in events if e['event_type'] == numerator_event])
+        """Calculate rate between two event types"""
+        numerator = len([e for e in events if e['event_type'] == numerator_event])
         denominator = len([e for e in events if e['event_type'] == denominator_event])
         
         return numerator / denominator if denominator > 0 else 0.0
     
     async def _add_realtime_event(self, event_data: Dict[str, Any]):
-        """Add event to real-time processing queue"""        timestamp = event_data['timestamp']
+        """Add event to real-time processing queue"""
+        timestamp = event_data['timestamp']
         
         # Add to relevant metric queues
         for metric_type in MetricType:
@@ -636,7 +673,8 @@ class NotificationAnalyticsEngine:
                 ]
     
     def _event_affects_metric(self, event_data: Dict, metric_type: MetricType) -> bool:
-        """Check if event affects specific metric type"""        event_type = event_data['event_type']
+        """Check if event affects specific metric type"""
+        event_type = event_data['event_type']
         
         if metric_type == MetricType.DELIVERY_RATE:
             return event_type in ['sent', 'delivered', 'failed']
@@ -650,7 +688,8 @@ class NotificationAnalyticsEngine:
     def _extract_metric_value_from_event(
         self, event_data: Dict, metric_type: MetricType
     ) -> float:
-        """Extract metric contribution from event"""        event_type = event_data['event_type']
+        """Extract metric contribution from event"""
+        event_type = event_data['event_type']
         
         # Simplified metric value extraction
         if metric_type == MetricType.DELIVERY_RATE:

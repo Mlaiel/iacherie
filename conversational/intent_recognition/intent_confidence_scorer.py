@@ -11,7 +11,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
-"""from typing import Dict, List, Optional, Any, Union, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import numpy as np
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class ConfidenceLevel(Enum):
-    """Confidence level categories"""    VERY_HIGH = "very_high"
+    """Confidence level categories"""
+    VERY_HIGH = "very_high"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -36,14 +38,16 @@ class ConfidenceLevel(Enum):
 
 
 class UncertaintyType(Enum):
-    """Types of uncertainty in predictions"""    ALEATORIC = "aleatoric"  # Data uncertainty
+    """Types of uncertainty in predictions"""
+    ALEATORIC = "aleatoric"  # Data uncertainty
     EPISTEMIC = "epistemic"  # Model uncertainty
     DISTRIBUTIONAL = "distributional"  # Distribution mismatch
 
 
 @dataclass
 class ConfidenceMetrics:
-    """Comprehensive confidence metrics"""    
+    """Comprehensive confidence metrics"""
+    
     # Primary confidence scores
     raw_confidence: float
     calibrated_confidence: float
@@ -67,7 +71,8 @@ class ConfidenceMetrics:
 
 @dataclass
 class UncertaintyQuantifier:
-    """Uncertainty quantification components"""    
+    """Uncertainty quantification components"""
+    
     # Ensemble-based uncertainty
     epistemic_uncertainty: float = 0.0
     aleatoric_uncertainty: float = 0.0
@@ -84,14 +89,16 @@ class UncertaintyQuantifier:
 
 
 class IntentConfidenceScorer:
-    """    Advanced confidence scoring system for intent recognition
+    """
+    Advanced confidence scoring system for intent recognition
     
     Provides multiple confidence estimation methods including:
     - Temperature scaling
     - Ensemble variance
     - Entropy-based measures
     - Bayesian uncertainty quantification
-    """    
+    """
+    
     def __init__(self, config: IntentRecognitionConfig):
         self.config = config
         self.calibration_models = {}
@@ -100,7 +107,8 @@ class IntentConfidenceScorer:
         self._initialize_calibration()
     
     def _initialize_calibration(self):
-        """Initialize calibration components"""        try:
+        """Initialize calibration components"""
+        try:
             # Temperature scaling parameter
             self.temperature_parameter = self.config.confidence_config.temperature_scaling
             
@@ -122,7 +130,8 @@ class IntentConfidenceScorer:
         ground_truth: Optional[np.ndarray] = None,
         context: Optional[Dict[str, Any]] = None
     ) -> ConfidenceMetrics:
-        """        Calculate comprehensive confidence metrics
+        """
+        Calculate comprehensive confidence metrics
         
         Args:
             predictions: Primary model predictions
@@ -133,7 +142,8 @@ class IntentConfidenceScorer:
             
         Returns:
             ConfidenceMetrics: Comprehensive confidence assessment
-        """        try:
+        """
+        try:
             # Extract probability distribution
             if prediction_probabilities is None:
                 # Convert predictions to probabilities if needed
@@ -207,7 +217,8 @@ class IntentConfidenceScorer:
         self, 
         predictions: np.ndarray
     ) -> np.ndarray:
-        """Convert raw predictions to probability distribution"""        if len(predictions.shape) == 1:
+        """Convert raw predictions to probability distribution"""
+        if len(predictions.shape) == 1:
             # Single prediction - create binary distribution
             prob = max(0.0, min(1.0, float(predictions[0])))
             return np.array([1.0 - prob, prob])
@@ -217,7 +228,8 @@ class IntentConfidenceScorer:
             return exp_preds / np.sum(exp_preds)
     
     def _calculate_entropy_confidence(self, probabilities: np.ndarray) -> float:
-        """Calculate entropy-based confidence measure"""        # Avoid log(0) by adding small epsilon
+        """Calculate entropy-based confidence measure"""
+        # Avoid log(0) by adding small epsilon
         epsilon = 1e-10
         safe_probs = np.clip(probabilities, epsilon, 1.0 - epsilon)
         
@@ -235,7 +247,8 @@ class IntentConfidenceScorer:
         ensemble_predictions: Optional[List[np.ndarray]],
         base_probabilities: np.ndarray
     ) -> float:
-        """Calculate confidence based on ensemble agreement"""        if ensemble_predictions is None or len(ensemble_predictions) == 0:
+        """Calculate confidence based on ensemble agreement"""
+        if ensemble_predictions is None or len(ensemble_predictions) == 0:
             return float(np.max(base_probabilities))
         
         try:
@@ -275,7 +288,8 @@ class IntentConfidenceScorer:
         probabilities: np.ndarray, 
         temperature: float
     ) -> float:
-        """Apply temperature scaling for calibration"""        if temperature <= 0:
+        """Apply temperature scaling for calibration"""
+        if temperature <= 0:
             temperature = 1.0
         
         # Apply temperature scaling
@@ -290,7 +304,8 @@ class IntentConfidenceScorer:
         probabilities: np.ndarray,
         context: Optional[Dict[str, Any]] = None
     ) -> float:
-        """Calculate calibrated confidence using learned calibration"""        # Apply basic calibration adjustment based on historical performance
+        """Calculate calibrated confidence using learned calibration"""
+        # Apply basic calibration adjustment based on historical performance
         raw_confidence = float(np.max(probabilities))
         
         # Apply context-based adjustments
@@ -315,7 +330,8 @@ class IntentConfidenceScorer:
         probabilities: np.ndarray,
         ensemble_predictions: Optional[List[np.ndarray]] = None
     ) -> UncertaintyQuantifier:
-        """Quantify different types of uncertainty"""        
+        """Quantify different types of uncertainty"""
+        
         # Calculate aleatoric uncertainty (data uncertainty)
         entropy_value = entropy(probabilities + 1e-10)
         max_entropy = np.log(len(probabilities))
@@ -357,7 +373,8 @@ class IntentConfidenceScorer:
         )
     
     def _determine_confidence_level(self, confidence: float) -> ConfidenceLevel:
-        """Determine categorical confidence level"""        if confidence >= 0.9:
+        """Determine categorical confidence level"""
+        if confidence >= 0.9:
             return ConfidenceLevel.VERY_HIGH
         elif confidence >= 0.75:
             return ConfidenceLevel.HIGH
@@ -374,7 +391,8 @@ class IntentConfidenceScorer:
         entropy_confidence: float,
         uncertainty: float
     ) -> float:
-        """Calculate overall reliability score"""        # Weighted combination of different confidence measures
+        """Calculate overall reliability score"""
+        # Weighted combination of different confidence measures
         reliability = (
             0.4 * raw_confidence +
             0.3 * entropy_confidence +
@@ -388,7 +406,8 @@ class IntentConfidenceScorer:
         probabilities: np.ndarray,
         ground_truth: np.ndarray
     ) -> float:
-        """Calculate Brier score for calibration assessment"""        try:
+        """Calculate Brier score for calibration assessment"""
+        try:
             # Convert ground truth to one-hot if needed
             if len(ground_truth.shape) == 1:
                 num_classes = len(probabilities)
@@ -409,7 +428,8 @@ class IntentConfidenceScorer:
         probabilities: np.ndarray,
         uncertainty: float
     ) -> Tuple[float, float]:
-        """Calculate prediction interval based on uncertainty"""        max_prob = float(np.max(probabilities))
+        """Calculate prediction interval based on uncertainty"""
+        max_prob = float(np.max(probabilities))
         
         # Calculate interval width based on uncertainty
         interval_width = uncertainty * 0.5
@@ -425,7 +445,8 @@ class IntentConfidenceScorer:
         validation_labels: np.ndarray,
         method: str = "isotonic"
     ):
-        """Calibrate confidence scores using validation data"""        try:
+        """Calibrate confidence scores using validation data"""
+        try:
             from sklearn.calibration import CalibratedClassifierCV
             
             # Create dummy classifier for calibration
@@ -445,7 +466,8 @@ class IntentConfidenceScorer:
             raise ConfidenceCalculationError(f"Calibration failed: {e}")
     
     def update_temperature(self, validation_data: Dict[str, np.ndarray]):
-        """Update temperature parameter for temperature scaling"""        try:
+        """Update temperature parameter for temperature scaling"""
+        try:
             # Simple temperature optimization using validation data
             predictions = validation_data.get('predictions')
             labels = validation_data.get('labels')
@@ -471,7 +493,8 @@ class IntentConfidenceScorer:
             logger.warning(f"Temperature update failed: {e}")
     
     def get_confidence_explanation(self, metrics: ConfidenceMetrics) -> Dict[str, str]:
-        """Generate human-readable explanation of confidence assessment"""        explanations = {
+        """Generate human-readable explanation of confidence assessment"""
+        explanations = {
             "overall_assessment": f"Confidence level: {metrics.confidence_level.value}",
             "raw_confidence": f"Raw prediction confidence: {metrics.raw_confidence:.2%}",
             "calibrated_confidence": f"Calibrated confidence: {metrics.calibrated_confidence:.2%}",

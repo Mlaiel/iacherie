@@ -4,7 +4,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides advanced rate limiting capabilities for API requests
 including sliding window, token bucket, and adaptive rate limiting algorithms.
-"""import asyncio
+"""
+import asyncio
 import time
 import logging
 from typing import Dict, List, Any, Optional, Tuple
@@ -17,14 +18,16 @@ import json
 logger = logging.getLogger(__name__)
 
 class RateLimitStrategy(Enum):
-    """Rate limiting strategies"""    FIXED_WINDOW = "fixed_window"
+    """Rate limiting strategies"""
+    FIXED_WINDOW = "fixed_window"
     SLIDING_WINDOW = "sliding_window"
     TOKEN_BUCKET = "token_bucket"
     LEAKY_BUCKET = "leaky_bucket"
     ADAPTIVE = "adaptive"
 
 class RateLimitScope(Enum):
-    """Rate limit scope"""    GLOBAL = "global"
+    """Rate limit scope"""
+    GLOBAL = "global"
     PER_USER = "per_user"
     PER_API = "per_api"
     PER_ENDPOINT = "per_endpoint"
@@ -32,7 +35,8 @@ class RateLimitScope(Enum):
 
 @dataclass
 class RateLimitConfig:
-    """Rate limit configuration"""    api_name: str
+    """Rate limit configuration"""
+    api_name: str
     strategy: RateLimitStrategy
     scope: RateLimitScope
     
@@ -67,7 +71,8 @@ class RateLimitConfig:
     environments: Dict[str, Dict[str, Any]] = field(default_factory=dict)
     
     def get_environment_config(self, environment: str = "production") -> 'RateLimitConfig':
-        """Get configuration for specific environment"""        if environment in self.environments:
+        """Get configuration for specific environment"""
+        if environment in self.environments:
             env_overrides = self.environments[environment]
             # Create a copy with environment-specific overrides
             config_dict = self.__dict__.copy()
@@ -77,7 +82,8 @@ class RateLimitConfig:
 
 @dataclass
 class RateLimitResult:
-    """Rate limit check result"""    allowed: bool
+    """Rate limit check result"""
+    allowed: bool
     remaining_requests: int
     reset_time: datetime
     retry_after_seconds: Optional[int] = None
@@ -85,7 +91,8 @@ class RateLimitResult:
     limit: int = 0
 
 class RateLimiter:
-    """Base rate limiter class"""    
+    """Base rate limiter class"""
+    
     def __init__(self, config: RateLimitConfig):
         self.config = config
         self.redis_client = None
@@ -106,7 +113,8 @@ class RateLimiter:
         self.local_storage = {}
     
     async def check_rate_limit(self, identifier: str) -> RateLimitResult:
-        """Check if request is within rate limits"""        # Base implementation provides a simple fixed window rate limiter
+        """Check if request is within rate limits"""
+        # Base implementation provides a simple fixed window rate limiter
         current_time = int(time.time())
         window_start = current_time - (current_time % 60)  # 1-minute windows
         
@@ -132,15 +140,18 @@ class RateLimiter:
         )
     
     def _get_key(self, identifier: str, window: str = "") -> str:
-        """Generate Redis key for rate limiting"""        key_parts = [self.config.redis_key_prefix, self.config.api_name, identifier]
+        """Generate Redis key for rate limiting"""
+        key_parts = [self.config.redis_key_prefix, self.config.api_name, identifier]
         if window:
             key_parts.append(window)
         return ":".join(key_parts)
 
 class FixedWindowRateLimiter(RateLimiter):
-    """Fixed window rate limiter"""    
+    """Fixed window rate limiter"""
+    
     async def check_rate_limit(self, identifier: str) -> RateLimitResult:
-        """Check rate limit using fixed window strategy"""        current_time = int(time.time())
+        """Check rate limit using fixed window strategy"""
+        current_time = int(time.time())
         window_start = current_time - (current_time % 60)  # 1-minute windows
         
         key = self._get_key(identifier, str(window_start))
@@ -178,9 +189,11 @@ class FixedWindowRateLimiter(RateLimiter):
         )
 
 class SlidingWindowRateLimiter(RateLimiter):
-    """Sliding window rate limiter"""    
+    """Sliding window rate limiter"""
+    
     async def check_rate_limit(self, identifier: str) -> RateLimitResult:
-        """Check rate limit using sliding window strategy"""        current_time = time.time()
+        """Check rate limit using sliding window strategy"""
+        current_time = time.time()
         window_start = current_time - self.config.window_size_seconds
         
         key = self._get_key(identifier, "sliding")
@@ -233,9 +246,11 @@ class SlidingWindowRateLimiter(RateLimiter):
         )
 
 class TokenBucketRateLimiter(RateLimiter):
-    """Token bucket rate limiter"""    
+    """Token bucket rate limiter"""
+    
     async def check_rate_limit(self, identifier: str) -> RateLimitResult:
-        """Check rate limit using token bucket strategy"""        current_time = time.time()
+        """Check rate limit using token bucket strategy"""
+        current_time = time.time()
         key = self._get_key(identifier, "bucket")
         
         if self.redis_client:
@@ -313,7 +328,8 @@ class TokenBucketRateLimiter(RateLimiter):
         )
 
 class AdaptiveRateLimiter(RateLimiter):
-    """Adaptive rate limiter that adjusts limits based on system performance"""    
+    """Adaptive rate limiter that adjusts limits based on system performance"""
+    
     def __init__(self, config: RateLimitConfig):
         super().__init__(config)
         self.current_limit = config.requests_per_minute
@@ -322,7 +338,8 @@ class AdaptiveRateLimiter(RateLimiter):
         self.response_times = []
     
     async def check_rate_limit(self, identifier: str) -> RateLimitResult:
-        """Check rate limit with adaptive adjustment"""        # First check with current limit using sliding window
+        """Check rate limit with adaptive adjustment"""
+        # First check with current limit using sliding window
         temp_config = RateLimitConfig(
             api_name=self.config.api_name,
             strategy=RateLimitStrategy.SLIDING_WINDOW,
@@ -340,7 +357,8 @@ class AdaptiveRateLimiter(RateLimiter):
         return result
     
     def _adjust_limits(self):
-        """Adjust rate limits based on system performance"""        current_time = time.time()
+        """Adjust rate limits based on system performance"""
+        current_time = time.time()
         
         # Only adjust every 60 seconds
         if current_time - self.last_adjustment < 60:
@@ -372,7 +390,8 @@ class AdaptiveRateLimiter(RateLimiter):
             logger.info(f"Increased rate limit to {self.current_limit} due to good performance")
     
     def record_response(self, success: bool, response_time: float):
-        """Record response for adaptive adjustment"""        if not success:
+        """Record response for adaptive adjustment"""
+        if not success:
             self.error_rate = min(1.0, self.error_rate + 0.01)
         else:
             self.error_rate = max(0.0, self.error_rate - 0.001)
@@ -380,13 +399,15 @@ class AdaptiveRateLimiter(RateLimiter):
         self.response_times.append(response_time)
 
 class APIRateLimiter:
-    """Main API rate limiter coordinator"""    
+    """Main API rate limiter coordinator"""
+    
     def __init__(self):
         self.limiters: Dict[str, RateLimiter] = {}
         self.configs: Dict[str, RateLimitConfig] = {}
     
     def register_rate_limit(self, api_name: str, config: RateLimitConfig):
-        """Register rate limit configuration for an API"""        self.configs[api_name] = config
+        """Register rate limit configuration for an API"""
+        self.configs[api_name] = config
         
         # Create appropriate limiter based on strategy
         if config.strategy == RateLimitStrategy.FIXED_WINDOW:
@@ -405,7 +426,8 @@ class APIRateLimiter:
         logger.info(f"Registered rate limiter for {api_name} with strategy {config.strategy.value}")
     
     async def check_rate_limit(self, api_name: str, identifier: str) -> RateLimitResult:
-        """Check rate limit for API and identifier"""        if api_name not in self.limiters:
+        """Check rate limit for API and identifier"""
+        if api_name not in self.limiters:
             # No rate limiting configured - allow request
             return RateLimitResult(
                 allowed=True,
@@ -417,22 +439,27 @@ class APIRateLimiter:
         return await limiter.check_rate_limit(identifier)
     
     def record_api_response(self, api_name: str, success: bool, response_time: float):
-        """Record API response for adaptive rate limiting"""        if api_name in self.limiters:
+        """Record API response for adaptive rate limiting"""
+        if api_name in self.limiters:
             limiter = self.limiters[api_name]
             if isinstance(limiter, AdaptiveRateLimiter):
                 limiter.record_response(success, response_time)
     
     def get_rate_limit_config(self, api_name: str) -> Optional[RateLimitConfig]:
-        """Get rate limit configuration for API"""        return self.configs.get(api_name)
+        """Get rate limit configuration for API"""
+        return self.configs.get(api_name)
     
     def update_rate_limit_config(self, api_name: str, config: RateLimitConfig):
-        """Update rate limit configuration"""        self.register_rate_limit(api_name, config)
+        """Update rate limit configuration"""
+        self.register_rate_limit(api_name, config)
     
     def get_all_configs(self) -> Dict[str, RateLimitConfig]:
-        """Get all rate limit configurations"""        return self.configs.copy()
+        """Get all rate limit configurations"""
+        return self.configs.copy()
     
     def remove_rate_limit(self, api_name: str):
-        """Remove rate limiting for API"""        if api_name in self.limiters:
+        """Remove rate limiting for API"""
+        if api_name in self.limiters:
             del self.limiters[api_name]
         if api_name in self.configs:
             del self.configs[api_name]

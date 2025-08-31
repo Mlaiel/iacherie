@@ -11,7 +11,8 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
-"""from typing import Dict, List, Optional, Any, Tuple, Union
+"""
+from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta
 from decimal import Decimal, ROUND_HALF_UP
 from enum import Enum
@@ -37,7 +38,8 @@ Base = declarative_base()
 
 
 class TaxJurisdiction(Enum):
-    """Juridictions fiscales supportées"""    GERMANY = "DE"
+    """Juridictions fiscales supportées"""
+    GERMANY = "DE"
     FRANCE = "FR"
     UNITED_STATES = "US"
     UNITED_KINGDOM = "GB"
@@ -72,7 +74,8 @@ class TaxJurisdiction(Enum):
 
 
 class TaxType(Enum):
-    """Types de taxes"""    INCOME_TAX = "income_tax"
+    """Types de taxes"""
+    INCOME_TAX = "income_tax"
     VAT = "vat"
     WITHHOLDING_TAX = "withholding_tax"
     CORPORATE_TAX = "corporate_tax"
@@ -85,7 +88,8 @@ class TaxType(Enum):
 
 
 class TaxStatus(Enum):
-    """Status des calculs fiscaux"""    CALCULATED = "calculated"
+    """Status des calculs fiscaux"""
+    CALCULATED = "calculated"
     REVIEWED = "reviewed"
     FILED = "filed"
     PAID = "paid"
@@ -95,8 +99,10 @@ class TaxStatus(Enum):
 
 @dataclass
 class TaxJurisdictionRuleModel(BaseModel, TimestampMixin):
-    """    Modèle des règles fiscales par juridiction
-    """    __tablename__ = "tax_jurisdiction_rules"
+    """
+    Modèle des règles fiscales par juridiction
+    """
+    __tablename__ = "tax_jurisdiction_rules"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     jurisdiction_code = Column(String(5), nullable=False, index=True)
@@ -133,8 +139,10 @@ class TaxJurisdictionRuleModel(BaseModel, TimestampMixin):
 
 @dataclass
 class TaxCalculationModel(BaseModel, TimestampMixin):
-    """    Modèle des calculs fiscaux
-    """    __tablename__ = "tax_calculations"
+    """
+    Modèle des calculs fiscaux
+    """
+    __tablename__ = "tax_calculations"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     calculation_id = Column(String(255), unique=True, nullable=False, index=True)
@@ -187,8 +195,10 @@ class TaxCalculationModel(BaseModel, TimestampMixin):
 
 @dataclass
 class TaxReportModel(BaseModel, TimestampMixin):
-    """    Modèle des rapports fiscaux
-    """    __tablename__ = "tax_reports"
+    """
+    Modèle des rapports fiscaux
+    """
+    __tablename__ = "tax_reports"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     report_id = Column(String(255), unique=True, nullable=False, index=True)
@@ -232,8 +242,10 @@ class TaxReportModel(BaseModel, TimestampMixin):
 
 
 class TaxCalculationEngine:
-    """    Moteur de calcul fiscal avancé
-    """    
+    """
+    Moteur de calcul fiscal avancé
+    """
+    
     def __init__(self, db_session: Session, cache_manager: CacheManager):
         self.db_session = db_session
         self.cache_manager = cache_manager
@@ -250,8 +262,10 @@ class TaxCalculationEngine:
         jurisdiction_code: str,
         additional_context: Optional[Dict[str, Any]] = None
     ) -> TaxCalculationModel:
-        """        Calcule les taxes pour un enregistrement de revenus
-        """        try:
+        """
+        Calcule les taxes pour un enregistrement de revenus
+        """
+        try:
             # Récupération des données de base
             revenue_record = await self._get_revenue_record(revenue_record_id)
             user_profile = await self._get_user_tax_profile(user_id)
@@ -343,8 +357,10 @@ class TaxCalculationEngine:
         user_profile,
         jurisdiction_rule: TaxJurisdictionRuleModel
     ) -> Decimal:
-        """        Calcule le montant imposable après déductions
-        """        gross_amount = revenue_record.amount_net
+        """
+        Calcule le montant imposable après déductions
+        """
+        gross_amount = revenue_record.amount_net
         
         # Exemptions de base
         tax_free_threshold = jurisdiction_rule.tax_free_threshold or Decimal('0')
@@ -374,8 +390,10 @@ class TaxCalculationEngine:
         user_profile: Dict[str, Any],
         jurisdiction_rule: TaxJurisdictionRuleModel
     ) -> Decimal:
-        """        Calcule l'impôt sur le revenu
-        """        if not jurisdiction_rule.income_tax_rate or taxable_amount <= 0:
+        """
+        Calcule l'impôt sur le revenu
+        """
+        if not jurisdiction_rule.income_tax_rate or taxable_amount <= 0:
             return Decimal('0')
         
         # Système progressif pour certaines juridictions
@@ -393,8 +411,10 @@ class TaxCalculationEngine:
         taxable_amount: Decimal,
         jurisdiction_code: str
     ) -> Decimal:
-        """        Calcule l'impôt progressif selon la juridiction
-        """        # Barèmes progressifs (exemple pour l'Allemagne)
+        """
+        Calcule l'impôt progressif selon la juridiction
+        """
+        # Barèmes progressifs (exemple pour l'Allemagne)
         if jurisdiction_code == 'DE':
             brackets = [
                 (Decimal('10347'), Decimal('0')),      # Tranche 0%
@@ -437,8 +457,10 @@ class TaxCalculationEngine:
         revenue_record,
         jurisdiction_rule: TaxJurisdictionRuleModel
     ) -> Decimal:
-        """        Calcule la TVA
-        """        if not jurisdiction_rule.vat_rate:
+        """
+        Calcule la TVA
+        """
+        if not jurisdiction_rule.vat_rate:
             return Decimal('0')
         
         # La TVA s'applique sur le montant brut
@@ -451,8 +473,10 @@ class TaxCalculationEngine:
         user_profile: Dict[str, Any],
         jurisdiction_rule: TaxJurisdictionRuleModel
     ) -> Decimal:
-        """        Calcule la retenue à la source
-        """        if not jurisdiction_rule.withholding_tax_rate:
+        """
+        Calcule la retenue à la source
+        """
+        if not jurisdiction_rule.withholding_tax_rate:
             return Decimal('0')
         
         # Vérification du seuil minimum
@@ -469,8 +493,10 @@ class TaxCalculationEngine:
 
 
 class TaxReportingEngine:
-    """    Moteur de génération de rapports fiscaux
-    """    
+    """
+    Moteur de génération de rapports fiscaux
+    """
+    
     def __init__(self, db_session: Session):
         self.db_session = db_session
         self.event_emitter = EventEmitter()
@@ -482,8 +508,10 @@ class TaxReportingEngine:
         tax_year: int,
         reporting_period: str = "annual"
     ) -> TaxReportModel:
-        """        Génère un rapport fiscal complet
-        """        try:
+        """
+        Génère un rapport fiscal complet
+        """
+        try:
             # Définition de la période
             period_start, period_end = self._get_reporting_period_dates(tax_year, reporting_period)
             
@@ -531,8 +559,10 @@ class TaxReportingEngine:
 
 
 class TaxComplianceManager:
-    """    Gestionnaire principal de conformité fiscale
-    """    
+    """
+    Gestionnaire principal de conformité fiscale
+    """
+    
     def __init__(self, db_manager: DatabaseManager):
         self.db_manager = db_manager
         self.cache_manager = CacheManager()
@@ -547,8 +577,10 @@ class TaxComplianceManager:
         revenue_record_id: uuid.UUID,
         user_id: uuid.UUID
     ) -> List[TaxCalculationModel]:
-        """        Traite automatiquement les taxes pour un enregistrement de revenus
-        """        # Détermination des juridictions applicables
+        """
+        Traite automatiquement les taxes pour un enregistrement de revenus
+        """
+        # Détermination des juridictions applicables
         applicable_jurisdictions = await self._determine_applicable_jurisdictions(
             user_id, revenue_record_id
         )
@@ -571,8 +603,10 @@ class TaxComplianceManager:
         jurisdiction_code: str,
         rules_config: Dict[str, Any]
     ) -> TaxJurisdictionRuleModel:
-        """        Configure les règles fiscales pour une juridiction
-        """        rule = TaxJurisdictionRuleModel(
+        """
+        Configure les règles fiscales pour une juridiction
+        """
+        rule = TaxJurisdictionRuleModel(
             jurisdiction_code=jurisdiction_code,
             jurisdiction_name=rules_config['name'],
             income_tax_rate=Decimal(str(rules_config.get('income_tax_rate', 0))),
@@ -596,8 +630,10 @@ class TaxComplianceManager:
         user_id: uuid.UUID,
         tax_year: int
     ) -> Dict[str, TaxReportModel]:
-        """        Génère des rapports de conformité pour toutes les juridictions applicables
-        """        user_jurisdictions = await self._get_user_applicable_jurisdictions(user_id)
+        """
+        Génère des rapports de conformité pour toutes les juridictions applicables
+        """
+        user_jurisdictions = await self._get_user_applicable_jurisdictions(user_id)
         reports = {}
         
         for jurisdiction_code in user_jurisdictions:

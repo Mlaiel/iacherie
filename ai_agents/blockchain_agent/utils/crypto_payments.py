@@ -15,7 +15,8 @@ Copyright: 2025 - All Rights Reserved
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -39,7 +40,8 @@ from .blockchain_agent import BlockchainNetwork
 
 
 class PaymentStatus(Enum):
-    """Payment transaction statuses."""    PENDING = "pending"
+    """Payment transaction statuses."""
+    PENDING = "pending"
     CONFIRMING = "confirming"
     CONFIRMED = "confirmed"
     FAILED = "failed"
@@ -49,7 +51,8 @@ class PaymentStatus(Enum):
 
 
 class PaymentType(Enum):
-    """Types of cryptocurrency payments."""    ONE_TIME = "one_time"
+    """Types of cryptocurrency payments."""
+    ONE_TIME = "one_time"
     SUBSCRIPTION = "subscription"
     STREAMING = "streaming"
     ESCROW = "escrow"
@@ -58,7 +61,8 @@ class PaymentType(Enum):
 
 
 class CurrencyType(Enum):
-    """Supported cryptocurrency types."""    BITCOIN = "BTC"
+    """Supported cryptocurrency types."""
+    BITCOIN = "BTC"
     ETHEREUM = "ETH"
     POLYGON = "MATIC"
     BINANCE_COIN = "BNB"
@@ -72,7 +76,8 @@ class CurrencyType(Enum):
 
 @dataclass
 class PaymentRequest:
-    """Cryptocurrency payment request."""    id: str
+    """Cryptocurrency payment request."""
+    id: str
     payment_type: PaymentType
     from_address: str
     to_address: str
@@ -89,7 +94,8 @@ class PaymentRequest:
 
 @dataclass
 class PaymentTransaction:
-    """Completed payment transaction record."""    id: str
+    """Completed payment transaction record."""
+    id: str
     payment_request_id: str
     transaction_hash: str
     from_address: str
@@ -109,7 +115,8 @@ class PaymentTransaction:
 
 @dataclass
 class SubscriptionPlan:
-    """Cryptocurrency subscription plan."""    id: str
+    """Cryptocurrency subscription plan."""
+    id: str
     name: str
     description: str
     amount: Decimal
@@ -123,7 +130,8 @@ class SubscriptionPlan:
 
 @dataclass
 class PaymentStream:
-    """Real-time payment streaming configuration."""    id: str
+    """Real-time payment streaming configuration."""
+    id: str
     from_address: str
     to_address: str
     currency: CurrencyType
@@ -137,7 +145,8 @@ class PaymentStream:
 
 
 class CryptoPaymentProcessor:
-    """    Advanced Cryptocurrency Payment Processing System.
+    """
+    Advanced Cryptocurrency Payment Processing System.
     
     Provides comprehensive crypto payment services:
     - Multi-currency payment processing
@@ -146,9 +155,11 @@ class CryptoPaymentProcessor:
     - DeFi yield optimization
     - Cross-chain payment bridging
     - Compliance and reporting
-    """    
+    """
+    
     def __init__(self, blockchain_agent, config: Optional[Dict] = None):
-        """Initialize the Cryptocurrency Payment Processor."""        self.blockchain_agent = blockchain_agent
+        """Initialize the Cryptocurrency Payment Processor."""
+        self.blockchain_agent = blockchain_agent
         self.config = config or {}
         
         # Logging setup
@@ -205,7 +216,8 @@ class CryptoPaymentProcessor:
         self.logger.info("Cryptocurrency Payment Processor initialized")
     
     def _initialize_exchanges(self):
-        """Initialize cryptocurrency exchange connections."""        try:
+        """Initialize cryptocurrency exchange connections."""
+        try:
             if ccxt and self.exchange_api_key:
                 # Initialize supported exchanges
                 self.exchanges = {
@@ -237,7 +249,8 @@ class CryptoPaymentProcessor:
         due_date: Optional[datetime] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """        Create a cryptocurrency payment request.
+        """
+        Create a cryptocurrency payment request.
         
         Args:
             amount: Payment amount
@@ -251,7 +264,8 @@ class CryptoPaymentProcessor:
             
         Returns:
             str: Payment request ID
-        """        try:
+        """
+        try:
             request_id = str(uuid.uuid4())
             
             # Validate recipient address
@@ -303,7 +317,8 @@ class CryptoPaymentProcessor:
         from_address: str,
         transaction_hash: Optional[str] = None
     ) -> str:
-        """        Process a cryptocurrency payment transaction.
+        """
+        Process a cryptocurrency payment transaction.
         
         Args:
             payment_request_id: Payment request identifier
@@ -312,7 +327,8 @@ class CryptoPaymentProcessor:
             
         Returns:
             str: Payment transaction ID
-        """        try:
+        """
+        try:
             if payment_request_id not in self.payment_requests:
                 raise ValueError(f"Payment request not found: {payment_request_id}")
             
@@ -387,7 +403,8 @@ class CryptoPaymentProcessor:
         description: str = "",
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """        Create a cryptocurrency subscription plan.
+        """
+        Create a cryptocurrency subscription plan.
         
         Args:
             name: Subscription name
@@ -401,7 +418,8 @@ class CryptoPaymentProcessor:
             
         Returns:
             str: Subscription plan ID
-        """        try:
+        """
+        try:
             subscription_id = str(uuid.uuid4())
             
             subscription = SubscriptionPlan(
@@ -447,7 +465,8 @@ class CryptoPaymentProcessor:
         duration_seconds: int,
         start_time: Optional[datetime] = None
     ) -> str:
-        """        Create a real-time payment stream.
+        """
+        Create a real-time payment stream.
         
         Args:
             from_address: Sender's address
@@ -460,7 +479,8 @@ class CryptoPaymentProcessor:
             
         Returns:
             str: Payment stream ID
-        """        try:
+        """
+        try:
             stream_id = str(uuid.uuid4())
             
             if not start_time:
@@ -499,7 +519,8 @@ class CryptoPaymentProcessor:
         payments: List[Dict[str, Any]],
         network: BlockchainNetwork = BlockchainNetwork.POLYGON
     ) -> str:
-        """        Process multiple payments in a single batch transaction.
+        """
+        Process multiple payments in a single batch transaction.
         
         Args:
             payments: List of payment dictionaries
@@ -507,7 +528,8 @@ class CryptoPaymentProcessor:
             
         Returns:
             str: Batch transaction ID
-        """        try:
+        """
+        try:
             batch_id = str(uuid.uuid4())
             
             # Validate all payments
@@ -569,7 +591,8 @@ class CryptoPaymentProcessor:
             raise
     
     async def _monitor_transaction_confirmations(self, transaction_id: str):
-        """Monitor blockchain confirmations for a transaction."""        try:
+        """Monitor blockchain confirmations for a transaction."""
+        try:
             if transaction_id not in self.transactions:
                 return
             
@@ -595,7 +618,8 @@ class CryptoPaymentProcessor:
             self.logger.error(f"Confirmation monitoring failed: {str(e)}")
     
     async def _monitor_payment_stream(self, stream_id: str):
-        """Monitor and process payment stream."""        try:
+        """Monitor and process payment stream."""
+        try:
             if stream_id not in self.payment_streams:
                 return
             
@@ -633,7 +657,8 @@ class CryptoPaymentProcessor:
             self.logger.error(f"Payment stream monitoring failed: {str(e)}")
     
     async def _post_confirmation_processing(self, transaction_id: str):
-        """Execute post-confirmation processing."""        try:
+        """Execute post-confirmation processing."""
+        try:
             transaction = self.transactions[transaction_id]
             
             # Yield optimization if enabled
@@ -649,11 +674,13 @@ class CryptoPaymentProcessor:
             self.logger.error(f"Post-confirmation processing failed: {str(e)}")
     
     async def _optimize_yield(self, transaction_id: str):
-        """Optimize payment yield through DeFi protocols."""        # This would integrate with DeFi protocols for yield farming
+        """Optimize payment yield through DeFi protocols."""
+        # This would integrate with DeFi protocols for yield farming
         self.logger.info(f"Yield optimization initiated for transaction: {transaction_id}")
     
     async def _execute_callback(self, callback_url: str, transaction: PaymentTransaction):
-        """Execute payment confirmation callback."""        try:
+        """Execute payment confirmation callback."""
+        try:
             if requests:
                 callback_data = {
                     'transaction_id': transaction.id,
@@ -676,7 +703,8 @@ class CryptoPaymentProcessor:
             self.logger.error(f"Callback execution failed: {str(e)}")
     
     async def _get_exchange_rate(self, from_currency: str, to_currency: str) -> Decimal:
-        """Get current exchange rate between currencies."""        try:
+        """Get current exchange rate between currencies."""
+        try:
             if requests:
                 url = f"{self.price_api_url}/simple/price"
                 params = {
@@ -709,7 +737,8 @@ class CryptoPaymentProcessor:
         return fallback_rates.get((from_currency, to_currency), Decimal('1.0'))
     
     def _get_coingecko_id(self, currency: str) -> str:
-        """Get CoinGecko API ID for currency."""        coingecko_ids = {
+        """Get CoinGecko API ID for currency."""
+        coingecko_ids = {
             'BTC': 'bitcoin',
             'ETH': 'ethereum',
             'MATIC': 'matic-network',
@@ -729,7 +758,8 @@ class CryptoPaymentProcessor:
         currency: CurrencyType,
         network: BlockchainNetwork
     ) -> Dict[str, Any]:
-        """Calculate payment processing fees."""        # Gas fee estimate
+        """Calculate payment processing fees."""
+        # Gas fee estimate
         gas_fee = await self._estimate_gas_fee(network, amount)
         
         # Processing fee
@@ -752,11 +782,13 @@ class CryptoPaymentProcessor:
         }
     
     async def _estimate_gas_fee(self, network: BlockchainNetwork, amount: Decimal) -> Decimal:
-        """Estimate gas fee for transaction."""        gas_estimates = await self.blockchain_agent._estimate_gas_cost(network, amount)
+        """Estimate gas fee for transaction."""
+        gas_estimates = await self.blockchain_agent._estimate_gas_cost(network, amount)
         return Decimal(str(gas_estimates.get('estimated_cost_eth', 0.001)))
     
     async def _generate_payment_data(self, request: PaymentRequest) -> str:
-        """Generate payment data for QR codes."""        payment_data = {
+        """Generate payment data for QR codes."""
+        payment_data = {
             'type': 'crypto_payment',
             'amount': str(request.amount),
             'currency': request.currency.value,
@@ -774,7 +806,8 @@ class CryptoPaymentProcessor:
         interval: str,
         interval_count: int
     ) -> datetime:
-        """Calculate next payment date for subscription."""        if interval == "daily":
+        """Calculate next payment date for subscription."""
+        if interval == "daily":
             return start_date + timedelta(days=interval_count)
         elif interval == "weekly":
             return start_date + timedelta(weeks=interval_count)
@@ -787,7 +820,8 @@ class CryptoPaymentProcessor:
             return start_date + timedelta(days=30)  # Default to monthly
     
     async def get_payment_status(self, payment_id: str) -> Dict[str, Any]:
-        """Get comprehensive payment status."""        if payment_id in self.transactions:
+        """Get comprehensive payment status."""
+        if payment_id in self.transactions:
             transaction = self.transactions[payment_id]
             
             return {
@@ -824,7 +858,8 @@ class CryptoPaymentProcessor:
             raise ValueError(f"Payment not found: {payment_id}")
     
     async def get_payment_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive payment analytics."""        total_requests = len(self.payment_requests)
+        """Get comprehensive payment analytics."""
+        total_requests = len(self.payment_requests)
         total_transactions = len(self.transactions)
         
         # Transaction status distribution

@@ -7,7 +7,8 @@ Provides comprehensive reporting on test coverage across critical modules.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Validate test coverage meets production quality standards
-"""import subprocess
+"""
+import subprocess
 import sys
 import os
 from pathlib import Path
@@ -15,7 +16,8 @@ import json
 
 
 class CoverageValidator:
-    """Validates test coverage across the platform"""    
+    """Validates test coverage across the platform"""
+    
     def __init__(self):
         self.project_root = Path(__file__).parent
         self.coverage_requirements = {
@@ -30,7 +32,8 @@ class CoverageValidator:
         }
     
     def run_coverage_analysis(self):
-        """Run pytest with coverage analysis"""        print("🔍 Running Test Coverage Analysis...")
+        """Run pytest with coverage analysis"""
+        print("🔍 Running Test Coverage Analysis...")
         print("=" * 60)
         
         try:
@@ -61,7 +64,8 @@ class CoverageValidator:
             return False
     
     def analyze_coverage_data(self):
-        """Analyze coverage data from JSON report"""        coverage_file = self.project_root / "coverage.json"
+        """Analyze coverage data from JSON report"""
+        coverage_file = self.project_root / "coverage.json"
         
         if not coverage_file.exists():
             print("⚠️  Coverage JSON file not found")
@@ -103,7 +107,8 @@ class CoverageValidator:
             return False
     
     def validate_critical_components(self):
-        """Validate that critical components have adequate test coverage"""        print(f"\n🎯 Critical Component Validation:")
+        """Validate that critical components have adequate test coverage"""
+        print(f"\n🎯 Critical Component Validation:")
         print("=" * 60)
         
         # Check if our test files exist and are comprehensive
@@ -135,7 +140,8 @@ class CoverageValidator:
         return all_critical_covered
     
     def generate_quality_report(self):
-        """Generate a comprehensive quality report"""        print(f"\n📋 Quality Validation Report:")
+        """Generate a comprehensive quality report"""
+        print(f"\n📋 Quality Validation Report:")
         print("=" * 60)
         
         # Run all validations
@@ -187,7 +193,8 @@ class CoverageValidator:
 
 
 def main():
-    """Main execution function"""    validator = CoverageValidator()
+    """Main execution function"""
+    validator = CoverageValidator()
     
     print("🧪 Ainflue Platform - Test Coverage Validation")
     print("=" * 60)

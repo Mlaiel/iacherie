@@ -14,7 +14,8 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This is the main entry point for the cloud deployment module, providing
 command-line interface and programmatic access to all cloud deployment
 functionalities for the IA Influencer Agent platform.
-"""import asyncio
+"""
+import asyncio
 import argparse
 import logging
 import sys
@@ -49,13 +50,16 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class CloudDeploymentCLI:
-    """Command-line interface for cloud deployment operations"""    
+    """Command-line interface for cloud deployment operations"""
+    
     def __init__(self):
-        """Initialize the CLI"""        self.orchestrator = None
+        """Initialize the CLI"""
+        self.orchestrator = None
         self.config = {}
         
     async def initialize(self, config_path: Optional[str] = None):
-        """Initialize the cloud deployment system"""        try:
+        """Initialize the cloud deployment system"""
+        try:
             # Load configuration
             if config_path:
                 self.config = await self._load_config(config_path)
@@ -73,7 +77,8 @@ class CloudDeploymentCLI:
             raise
 
     async def _load_config(self, config_path: str) -> Dict[str, Any]:
-        """Load configuration from file"""        try:
+        """Load configuration from file"""
+        try:
             config_file = Path(config_path)
             if not config_file.exists():
                 raise FileNotFoundError(f"Configuration file not found: {config_path}")
@@ -92,7 +97,8 @@ class CloudDeploymentCLI:
             raise
 
     async def _load_default_config(self) -> Dict[str, Any]:
-        """Load default configuration"""        return {
+        """Load default configuration"""
+        return {
             'cloud': {
                 'providers': {
                     'aws': {'enabled': True, 'regions': ['us-east-1']},
@@ -106,7 +112,8 @@ class CloudDeploymentCLI:
         }
 
     async def deploy_infrastructure(self, environment: str, service_config: Dict[str, Any]):
-        """Deploy infrastructure to cloud"""        try:
+        """Deploy infrastructure to cloud"""
+        try:
             if not self.orchestrator:
                 raise RuntimeError("Cloud deployment system not initialized")
             
@@ -126,7 +133,8 @@ class CloudDeploymentCLI:
             raise
 
     async def monitor_resources(self):
-        """Start monitoring cloud resources"""        try:
+        """Start monitoring cloud resources"""
+        try:
             monitoring_service = CloudMonitoringService()
             await monitoring_service.initialize()
             
@@ -138,7 +146,8 @@ class CloudDeploymentCLI:
             raise
 
     async def backup_data(self, backup_config: Dict[str, Any]):
-        """Perform data backup"""        try:
+        """Perform data backup"""
+        try:
             backup_manager = CloudBackupManager()
             await backup_manager.initialize_providers()
             
@@ -153,7 +162,8 @@ class CloudDeploymentCLI:
             raise
 
     async def run_compliance_check(self, framework: str):
-        """Run compliance assessment"""        try:
+        """Run compliance assessment"""
+        try:
             compliance_manager = CloudComplianceManager()
             
             logger.info(f"Running compliance check for framework: {framework}")
@@ -174,7 +184,8 @@ class CloudDeploymentCLI:
             raise
 
     async def disaster_recovery_test(self, plan_id: str):
-        """Test disaster recovery plan"""        try:
+        """Test disaster recovery plan"""
+        try:
             dr_service = DisasterRecoveryService()
             await dr_service.initialize_monitoring()
             
@@ -190,7 +201,8 @@ class CloudDeploymentCLI:
             raise
 
     async def optimize_costs(self):
-        """Run cost optimization analysis"""        try:
+        """Run cost optimization analysis"""
+        try:
             cost_optimizer = CloudCostOptimizer()
             
             logger.info("Running cost optimization analysis...")
@@ -214,7 +226,8 @@ class CloudDeploymentCLI:
             raise
 
 def create_parser():
-    """Create argument parser for CLI"""    parser = argparse.ArgumentParser(
+    """Create argument parser for CLI"""
+    parser = argparse.ArgumentParser(
         description='IA Influencer Agent Cloud Deployment CLI',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""Examples:
@@ -224,7 +237,8 @@ def create_parser():
   python -m backend.deployment.cloud compliance --framework gdpr
   python -m backend.deployment.cloud dr-test --plan-id dr_plan_001
   python -m backend.deployment.cloud optimize-costs
-        """    )
+        """
+    )
     
     parser.add_argument(
         '--config', '-c',
@@ -269,7 +283,8 @@ def create_parser():
     return parser
 
 async def main():
-    """Main entry point"""    parser = create_parser()
+    """Main entry point"""
+    parser = create_parser()
     args = parser.parse_args()
     
     if args.verbose:
@@ -330,7 +345,8 @@ async def main():
         sys.exit(1)
 
 def sync_main():
-    """Synchronous wrapper for main"""    try:
+    """Synchronous wrapper for main"""
+    try:
         asyncio.run(main())
     except KeyboardInterrupt:
         logger.info("Operation cancelled by user")
@@ -344,20 +360,24 @@ if __name__ == '__main__':
 
 # API for programmatic access
 class CloudDeploymentAPI:
-    """Programmatic API for cloud deployment operations"""    
+    """Programmatic API for cloud deployment operations"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the API"""        self.config = config or {}
+        """Initialize the API"""
+        self.config = config or {}
         self.orchestrator = None
         self._initialized = False
     
     async def initialize(self):
-        """Initialize the API"""        if not self._initialized:
+        """Initialize the API"""
+        if not self._initialized:
             self.orchestrator = MultiCloudOrchestrator()
             await self.orchestrator.initialize()
             self._initialized = True
     
     async def deploy(self, environment: str, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy infrastructure"""        await self.initialize()
+        """Deploy infrastructure"""
+        await self.initialize()
         return await self.orchestrator.deploy_infrastructure({
             'environment': environment,
             'config': config,
@@ -365,18 +385,21 @@ class CloudDeploymentAPI:
         })
     
     async def monitor(self):
-        """Start monitoring"""        await self.initialize()
+        """Start monitoring"""
+        await self.initialize()
         monitoring = CloudMonitoringService()
         await monitoring.initialize()
         return await monitoring.start_monitoring()
     
     async def backup(self, config: Dict[str, Any]) -> str:
-        """Create backup"""        backup_manager = CloudBackupManager()
+        """Create backup"""
+        backup_manager = CloudBackupManager()
         await backup_manager.initialize_providers()
         return await backup_manager.create_backup_job(config)
     
     async def compliance_check(self, framework: str) -> Dict[str, Any]:
-        """Run compliance check"""        compliance_manager = CloudComplianceManager()
+        """Run compliance check"""
+        compliance_manager = CloudComplianceManager()
         from .cloud_compliance import ComplianceFramework
         framework_enum = ComplianceFramework(framework.lower())
         assessment = await compliance_manager.perform_compliance_assessment(

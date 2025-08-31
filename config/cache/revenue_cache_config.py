@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, Optional, List, Any, Union
+"""
+from typing import Dict, Optional, List, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime, timedelta
@@ -24,7 +25,8 @@ from pydantic import BaseModel, validator
 
 
 class RevenueType(str, Enum):
-    """Types of revenue streams"""    STREAMING_ROYALTIES = "streaming_royalties"     # Spotify, Apple Music, etc.
+    """Types of revenue streams"""
+    STREAMING_ROYALTIES = "streaming_royalties"     # Spotify, Apple Music, etc.
     CONTENT_LICENSING = "content_licensing"         # Licensed content usage
     BRAND_COLLABORATIONS = "brand_collaborations"   # Sponsored content
     MERCHANDISE = "merchandise"                     # Physical/digital products
@@ -39,7 +41,8 @@ class RevenueType(str, Enum):
 
 
 class CurrencyCode(str, Enum):
-    """Supported currencies"""    USD = "USD"
+    """Supported currencies"""
+    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     JPY = "JPY"
@@ -52,7 +55,8 @@ class CurrencyCode(str, Enum):
 
 
 class TimePeriod(str, Enum):
-    """Time periods for revenue aggregation"""    REAL_TIME = "real_time"    # Live updates
+    """Time periods for revenue aggregation"""
+    REAL_TIME = "real_time"    # Live updates
     HOURLY = "hourly"          # Last hour
     DAILY = "daily"            # Daily totals
     WEEKLY = "weekly"          # Weekly summaries  
@@ -62,7 +66,8 @@ class TimePeriod(str, Enum):
 
 
 class PlatformProvider(str, Enum):
-    """Revenue platform providers"""    SPOTIFY = "spotify"
+    """Revenue platform providers"""
+    SPOTIFY = "spotify"
     YOUTUBE = "youtube" 
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -77,7 +82,8 @@ class PlatformProvider(str, Enum):
 
 @dataclass
 class RevenueCacheSettings:
-    """Cache settings for revenue data"""    revenue_type: RevenueType
+    """Cache settings for revenue data"""
+    revenue_type: RevenueType
     platform: PlatformProvider
     currency: CurrencyCode = CurrencyCode.USD
     time_period: TimePeriod = TimePeriod.DAILY
@@ -106,7 +112,8 @@ class RevenueCacheSettings:
 
 @dataclass
 class RevenueCacheConfig:
-    """Complete configuration for revenue caching system"""    
+    """Complete configuration for revenue caching system"""
+    
     # Cache identification
     cache_name: str = "revenue_data"
     namespace: str = "ia_influencer_revenue"
@@ -230,7 +237,8 @@ class RevenueCacheConfig:
     def get_revenue_cache_key(self, user_id: str, revenue_type: RevenueType, 
                              platform: PlatformProvider, time_period: TimePeriod, 
                              timestamp: datetime) -> str:
-        """Generate cache key for revenue data"""        date_str = timestamp.strftime("%Y%m%d")
+        """Generate cache key for revenue data"""
+        date_str = timestamp.strftime("%Y%m%d")
         if time_period == TimePeriod.HOURLY:
             date_str += f"_{timestamp.hour:02d}"
         elif time_period == TimePeriod.REAL_TIME:
@@ -253,7 +261,8 @@ class RevenueCacheConfig:
     
     def get_aggregation_cache_key(self, user_id: str, revenue_type: RevenueType,
                                  time_period: TimePeriod) -> str:
-        """Generate cache key for aggregated revenue data"""        key_components = [
+        """Generate cache key for aggregated revenue data"""
+        key_components = [
             self.redis_key_prefix,
             "aggregated",
             self.namespace,
@@ -268,7 +277,8 @@ class RevenueCacheConfig:
         return ":".join(key_components)
     
     def get_all_revenue_settings(self) -> Dict[str, RevenueCacheSettings]:
-        """Get all configured revenue cache settings"""        all_settings = {}
+        """Get all configured revenue cache settings"""
+        all_settings = {}
         all_settings.update(self.streaming_config)
         all_settings.update(self.licensing_config)
         all_settings.update(self.social_media_config)
@@ -277,7 +287,8 @@ class RevenueCacheConfig:
 
 
 class RevenueCacheManager:
-    """Manager for revenue cache operations"""    
+    """Manager for revenue cache operations"""
+    
     def __init__(self, config: RevenueCacheConfig):
         self.config = config
         self._revenue_stats = {}
@@ -287,7 +298,8 @@ class RevenueCacheManager:
     
     def calculate_total_revenue(self, user_id: str, start_date: datetime, 
                               end_date: datetime, currency: CurrencyCode = None) -> Dict[str, Any]:
-        """Calculate total revenue across all streams for a period"""        if currency is None:
+        """Calculate total revenue across all streams for a period"""
+        if currency is None:
             currency = self.config.default_currency
         
         total_revenue = Decimal('0.00')
@@ -326,7 +338,8 @@ class RevenueCacheManager:
     
     def predict_revenue(self, user_id: str, revenue_type: RevenueType,
                        prediction_days: int = 30) -> Dict[str, Any]:
-        """Predict future revenue based on historical data"""        historical_data = self._get_historical_revenue_data(user_id, revenue_type, 90)  # 90 days
+        """Predict future revenue based on historical data"""
+        historical_data = self._get_historical_revenue_data(user_id, revenue_type, 90)  # 90 days
         
         if not historical_data:
             return {"prediction": 0, "confidence": 0, "error": "Insufficient historical data"}
@@ -378,7 +391,8 @@ class RevenueCacheManager:
         }
     
     def detect_revenue_anomalies(self, user_id: str, time_window_hours: int = 24) -> List[Dict[str, Any]]:
-        """Detect unusual revenue patterns or anomalies"""        anomalies = []
+        """Detect unusual revenue patterns or anomalies"""
+        anomalies = []
         
         for name, settings in self.config.get_all_revenue_settings().items():
             if not settings.anomaly_detection:
@@ -426,7 +440,8 @@ class RevenueCacheManager:
         return sorted(anomalies, key=lambda x: x["timestamp"], reverse=True)
     
     def get_revenue_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive revenue cache statistics"""        return {
+        """Get comprehensive revenue cache statistics"""
+        return {
             "total_revenue_streams": len(self.config.get_all_revenue_settings()),
             "cache_performance": {
                 "hit_rate": self._calculation_metrics.get("cache_hit_rate", 0.0),
@@ -447,19 +462,23 @@ class RevenueCacheManager:
     def _get_stream_revenue(self, user_id: str, revenue_type: RevenueType, 
                           platform: PlatformProvider, start_date: datetime,
                           end_date: datetime, currency: CurrencyCode) -> Decimal:
-        """Get revenue for a specific stream (mock implementation)"""        # In real implementation, this would query the cache/database
+        """Get revenue for a specific stream (mock implementation)"""
+        # In real implementation, this would query the cache/database
         return Decimal('0.00')
     
     def _get_historical_revenue_data(self, user_id: str, revenue_type: RevenueType, 
                                    days: int) -> List[Dict[str, Any]]:
-        """Get historical revenue data (mock implementation)"""        return []
+        """Get historical revenue data (mock implementation)"""
+        return []
     
     def _get_recent_revenue_data(self, user_id: str, revenue_type: RevenueType,
                                platform: PlatformProvider, hours: int) -> List[Dict[str, Any]]:
-        """Get recent revenue data for anomaly detection (mock implementation)"""        return []
+        """Get recent revenue data for anomaly detection (mock implementation)"""
+        return []
     
     def _count_alert_types(self) -> Dict[str, int]:
-        """Count alerts by type"""        alert_counts = {}
+        """Count alerts by type"""
+        alert_counts = {}
         for alert in self._alert_history:
             alert_type = alert.get("type", "unknown")
             alert_counts[alert_type] = alert_counts.get(alert_type, 0) + 1

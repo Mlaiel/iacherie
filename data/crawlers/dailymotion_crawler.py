@@ -21,7 +21,8 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -38,7 +39,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class DailymotionVideo:
-    """Dailymotion video information"""    video_id: str
+    """Dailymotion video information"""
+    video_id: str
     title: str
     description: Optional[str]
     url: str
@@ -103,7 +105,8 @@ class DailymotionVideo:
 
 @dataclass
 class DailymotionUser:
-    """Dailymotion user information"""    user_id: str
+    """Dailymotion user information"""
+    user_id: str
     username: str
     screenname: str
     description: Optional[str]
@@ -160,7 +163,8 @@ class DailymotionUser:
 
 @dataclass
 class DailymotionChannel:
-    """Dailymotion channel information"""    channel_id: str
+    """Dailymotion channel information"""
+    channel_id: str
     name: str
     description: Optional[str]
     url: str
@@ -189,7 +193,8 @@ class DailymotionChannel:
 
 
 class DailymotionCrawler(PlatformCrawler):
-    """    Advanced Dailymotion crawler for European video content monitoring.
+    """
+    Advanced Dailymotion crawler for European video content monitoring.
     
     Features:
     - Video discovery and metadata extraction
@@ -200,7 +205,8 @@ class DailymotionCrawler(PlatformCrawler):
     - Multi-language support
     - Geographic content analysis
     - Partner content tracking
-    """    
+    """
+    
     def __init__(self, config: CrawlerConfig, vector_matcher=None, api_key: str = None):
         super().__init__(config, vector_matcher)
         self.platform_name = "dailymotion"
@@ -235,7 +241,8 @@ class DailymotionCrawler(PlatformCrawler):
         self._setup_session_headers()
     
     def _setup_session_headers(self):
-        """Setup Dailymotion-specific headers"""        self.session_headers.update({
+        """Setup Dailymotion-specific headers"""
+        self.session_headers.update({
             'Accept': 'application/json',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'en-US,en;q=0.9,fr;q=0.8,de;q=0.7',
@@ -246,7 +253,8 @@ class DailymotionCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: str = "videos", 
                            max_results: int = 50) -> List[CrawlerResult]:
-        """        Search for content on Dailymotion.
+        """
+        Search for content on Dailymotion.
         
         Args:
             query: Search query
@@ -255,7 +263,8 @@ class DailymotionCrawler(PlatformCrawler):
             
         Returns:
             List of crawler results
-        """        try:
+        """
+        try:
             await self._check_rate_limit()
             
             if content_type not in self.content_types:
@@ -273,7 +282,8 @@ class DailymotionCrawler(PlatformCrawler):
             return []
     
     async def _crawl_videos(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl Dailymotion videos"""        try:
+        """Crawl Dailymotion videos"""
+        try:
             results = []
             
             # Search for videos
@@ -340,7 +350,8 @@ class DailymotionCrawler(PlatformCrawler):
             return []
     
     async def _crawl_users(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl Dailymotion users"""        try:
+        """Crawl Dailymotion users"""
+        try:
             results = []
             
             # Search for users
@@ -403,7 +414,8 @@ class DailymotionCrawler(PlatformCrawler):
             return []
     
     async def _crawl_channels(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl Dailymotion channels"""        try:
+        """Crawl Dailymotion channels"""
+        try:
             results = []
             
             # Search for channels
@@ -465,7 +477,8 @@ class DailymotionCrawler(PlatformCrawler):
             return []
     
     async def _crawl_search(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """General Dailymotion search"""        try:
+        """General Dailymotion search"""
+        try:
             results = []
             
             # Search across different content types
@@ -484,7 +497,8 @@ class DailymotionCrawler(PlatformCrawler):
             return []
     
     async def _crawl_featured(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl featured content"""        try:
+        """Crawl featured content"""
+        try:
             results = []
             
             # Get featured videos
@@ -540,7 +554,8 @@ class DailymotionCrawler(PlatformCrawler):
             return []
     
     async def _crawl_most_viewed(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl most viewed content"""        try:
+        """Crawl most viewed content"""
+        try:
             results = []
             
             # Get most viewed videos
@@ -598,7 +613,8 @@ class DailymotionCrawler(PlatformCrawler):
             return []
     
     async def _crawl_recent(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl recent content"""        try:
+        """Crawl recent content"""
+        try:
             results = []
             
             # Get recent videos
@@ -653,7 +669,8 @@ class DailymotionCrawler(PlatformCrawler):
             return []
     
     async def _crawl_live(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl live streams"""        try:
+        """Crawl live streams"""
+        try:
             results = []
             
             # Get live videos
@@ -716,7 +733,8 @@ class DailymotionCrawler(PlatformCrawler):
     # Helper methods
     
     async def _parse_video_data(self, video_data: Dict[str, Any]) -> Optional[DailymotionVideo]:
-        """Parse video data from API response"""        try:
+        """Parse video data from API response"""
+        try:
             created_time = datetime.fromtimestamp(video_data.get('created_time', 0))
             updated_time = datetime.fromtimestamp(video_data.get('updated_time', 0))
             published_time = datetime.fromtimestamp(video_data.get('published_time', 0))
@@ -798,7 +816,8 @@ class DailymotionCrawler(PlatformCrawler):
             return None
     
     async def _parse_user_data(self, user_data: Dict[str, Any]) -> Optional[DailymotionUser]:
-        """Parse user data from API response"""        try:
+        """Parse user data from API response"""
+        try:
             created_time = datetime.fromtimestamp(user_data.get('created_time', 0))
             updated_time = datetime.fromtimestamp(user_data.get('updated_time', 0))
             
@@ -865,7 +884,8 @@ class DailymotionCrawler(PlatformCrawler):
             return None
     
     async def _parse_channel_data(self, channel_data: Dict[str, Any]) -> Optional[DailymotionChannel]:
-        """Parse channel data from API response"""        try:
+        """Parse channel data from API response"""
+        try:
             created_time = datetime.fromtimestamp(channel_data.get('created_time', 0))
             updated_time = datetime.fromtimestamp(channel_data.get('updated_time', 0))
             
@@ -908,7 +928,8 @@ class DailymotionCrawler(PlatformCrawler):
             return None
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""        try:
+        """Check and enforce rate limiting"""
+        try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
             
@@ -924,7 +945,8 @@ class DailymotionCrawler(PlatformCrawler):
             self.logger.error(f"Error in rate limiting: {str(e)}")
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from Dailymotion content"""        try:
+        """Extract metadata from Dailymotion content"""
+        try:
             # Parse Dailymotion URL
             parsed_url = urlparse(url)
             path_parts = parsed_url.path.strip('/').split('/')
@@ -960,7 +982,8 @@ class DailymotionCrawler(PlatformCrawler):
             return {'error': str(e)}
     
     def get_platform_info(self) -> Dict[str, Any]:
-        """Get Dailymotion platform information"""        return {
+        """Get Dailymotion platform information"""
+        return {
             'platform_name': 'Dailymotion',
             'base_url': self.base_url,
             'api_base_url': self.api_base_url,

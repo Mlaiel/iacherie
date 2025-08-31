@@ -23,7 +23,8 @@ import os
 
 @dataclass
 class SyntaxIssue:
-    """Represents a syntax issue found in a file"""
+    """
+Represents a syntax issue found in a file"""
     file_path: str
     line_number: int
     column: int
@@ -34,7 +35,8 @@ class SyntaxIssue:
 
 @dataclass
 class AuditResult:
-    """Results from the comprehensive audit"""
+    """
+Results from the comprehensive audit"""
     total_files: int
     checked_files: int
     files_with_errors: int
@@ -46,7 +48,8 @@ class AuditResult:
 
 
 class ComprehensiveSyntaxAuditor:
-    """Advanced syntax auditor for industrial-scale Python code validation"""
+    """
+Advanced syntax auditor for industrial-scale Python code validation"""
     
     def __init__(self, root_path: str = "."):
         self.root_path = Path(root_path)

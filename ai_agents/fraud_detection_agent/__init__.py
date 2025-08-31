@@ -20,12 +20,20 @@ Team Expertise:
 - Audio Engineer: Audio deepfake and manipulation detection
 - DevOps Engineer: Real-time monitoring and fraud alert infrastructure
 - IA Prompt Engineer: Natural language fraud pattern recognition
-"""from .core import FraudDetectionAgent
+"""
+
+from .core import FraudDetectionAgent
+
 from .behavioral_analyzer import BehaviorAnalyzer
+
 from .pattern_detector import PatternDetector
+
 from .revenue_validator import RevenueValidator
+
 from .deepfake_detector import DeepfakeDetector
+
 from .anomaly_engine import AnomalyDetectionEngine
+
 from .threat_intelligence import ThreatIntelligenceEngine
 
 __version__ = "1.0.0"

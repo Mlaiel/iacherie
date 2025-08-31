@@ -6,7 +6,8 @@ using machine learning and fingerprinting technologies.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import hashlib
@@ -21,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 
 class InfringementType(Enum):
-    """Types of content infringement"""    EXACT_COPY = "exact_copy"
+    """Types of content infringement"""
+    EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     DERIVATIVE_WORK = "derivative_work"
     UNAUTHORIZED_REMIX = "unauthorized_remix"
@@ -31,7 +33,8 @@ class InfringementType(Enum):
 
 
 class RiskLevel(Enum):
-    """Risk levels for infringement"""    LOW = "low"
+    """Risk levels for infringement"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -39,7 +42,8 @@ class RiskLevel(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Fingerprint data for content identification"""    fingerprint_id: str
+    """Fingerprint data for content identification"""
+    fingerprint_id: str
     content_id: str
     content_type: str  # audio, video, image, text
     fingerprint_data: Dict[str, Any]
@@ -72,7 +76,8 @@ class ContentFingerprint:
 
 @dataclass
 class InfringementMatch:
-    """Detected infringement match"""    match_id: str
+    """Detected infringement match"""
+    match_id: str
     original_content_id: str
     infringing_url: str
     platform: str
@@ -89,7 +94,8 @@ class InfringementMatch:
 
 @dataclass
 class InfringementAnalysis:
-    """Analysis result for infringement detection"""    analysis_id: str
+    """Analysis result for infringement detection"""
+    analysis_id: str
     original_content_id: str
     total_matches_analyzed: int
     infringements: List[InfringementMatch]
@@ -101,7 +107,8 @@ class InfringementAnalysis:
 
 
 class AudioFingerprintMatcher:
-    """Audio content fingerprint matching"""    
+    """Audio content fingerprint matching"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.similarity_threshold = config.get("audio_similarity_threshold", 0.85)
@@ -111,7 +118,8 @@ class AudioFingerprintMatcher:
         original_fingerprint: ContentFingerprint,
         candidate_audio: Dict[str, Any]
     ) -> Tuple[float, Dict[str, Any]]:
-        """Analyze audio similarity between original and candidate"""        similarity_score = 0.0
+        """Analyze audio similarity between original and candidate"""
+        similarity_score = 0.0
         analysis_details = {}
         
         try:
@@ -164,7 +172,8 @@ class AudioFingerprintMatcher:
         return similarity_score, analysis_details
     
     def _compare_hashes(self, hash1: str, hash2: str) -> float:
-        """Compare audio hashes using Hamming distance"""        if len(hash1) != len(hash2):
+        """Compare audio hashes using Hamming distance"""
+        if len(hash1) != len(hash2):
             return 0.0
         
         hamming_distance = sum(c1 != c2 for c1, c2 in zip(hash1, hash2))
@@ -172,7 +181,8 @@ class AudioFingerprintMatcher:
         return similarity
     
     def _compare_spectral_features(self, features1: List[float], features2: List[float]) -> float:
-        """Compare spectral features using cosine similarity"""        try:
+        """Compare spectral features using cosine similarity"""
+        try:
             # Convert to numpy arrays
             f1 = np.array(features1)
             f2 = np.array(features2)
@@ -197,7 +207,8 @@ class AudioFingerprintMatcher:
             return 0.0
     
     def _compare_tempo(self, tempo1: float, tempo2: float) -> float:
-        """Compare tempo similarity"""        tempo_diff = abs(tempo1 - tempo2)
+        """Compare tempo similarity"""
+        tempo_diff = abs(tempo1 - tempo2)
         max_diff = 20.0  # Max acceptable BPM difference
         
         if tempo_diff <= max_diff:
@@ -206,7 +217,8 @@ class AudioFingerprintMatcher:
 
 
 class VideoFingerprintMatcher:
-    """Video content fingerprint matching"""    
+    """Video content fingerprint matching"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.similarity_threshold = config.get("video_similarity_threshold", 0.80)
@@ -216,7 +228,8 @@ class VideoFingerprintMatcher:
         original_fingerprint: ContentFingerprint,
         candidate_video: Dict[str, Any]
     ) -> Tuple[float, Dict[str, Any]]:
-        """Analyze video similarity between original and candidate"""        similarity_score = 0.0
+        """Analyze video similarity between original and candidate"""
+        similarity_score = 0.0
         analysis_details = {}
         
         try:
@@ -256,10 +269,12 @@ class VideoFingerprintMatcher:
         return similarity_score, analysis_details
     
     def _compare_video_hashes(self, hash1: str, hash2: str) -> float:
-        """Compare video hashes"""        return self._hamming_similarity(hash1, hash2)
+        """Compare video hashes"""
+        return self._hamming_similarity(hash1, hash2)
     
     def _compare_frame_sequences(self, frames1: List[str], frames2: List[str]) -> float:
-        """Compare frame hash sequences"""        if not frames1 or not frames2:
+        """Compare frame hash sequences"""
+        if not frames1 or not frames2:
             return 0.0
         
         # Find longest common subsequence of similar frames
@@ -281,7 +296,8 @@ class VideoFingerprintMatcher:
         scenes1: List[Dict[str, Any]], 
         scenes2: List[Dict[str, Any]]
     ) -> float:
-        """Compare scene descriptors"""        if not scenes1 or not scenes2:
+        """Compare scene descriptors"""
+        if not scenes1 or not scenes2:
             return 0.0
         
         # Simplified scene comparison
@@ -297,7 +313,8 @@ class VideoFingerprintMatcher:
         return matching_scenes / max(len(scenes1), len(scenes2))
     
     def _scenes_similar(self, scene1: Dict[str, Any], scene2: Dict[str, Any]) -> bool:
-        """Check if two scenes are similar"""        # Simplified scene similarity check
+        """Check if two scenes are similar"""
+        # Simplified scene similarity check
         color1 = scene1.get("dominant_colors", [])
         color2 = scene2.get("dominant_colors", [])
         
@@ -308,14 +325,16 @@ class VideoFingerprintMatcher:
         return False
     
     def _compare_color_lists(self, colors1: List, colors2: List) -> float:
-        """Compare color lists"""        # Simplified color comparison
+        """Compare color lists"""
+        # Simplified color comparison
         if not colors1 or not colors2:
             return 0.0
         
         return 0.8  # Placeholder similarity score
     
     def _hamming_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate Hamming similarity between hashes"""        if len(hash1) != len(hash2):
+        """Calculate Hamming similarity between hashes"""
+        if len(hash1) != len(hash2):
             return 0.0
         
         hamming_distance = sum(c1 != c2 for c1, c2 in zip(hash1, hash2))
@@ -323,7 +342,8 @@ class VideoFingerprintMatcher:
 
 
 class ImageFingerprintMatcher:
-    """Image content fingerprint matching"""    
+    """Image content fingerprint matching"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.similarity_threshold = config.get("image_similarity_threshold", 0.90)
@@ -333,7 +353,8 @@ class ImageFingerprintMatcher:
         original_fingerprint: ContentFingerprint,
         candidate_image: Dict[str, Any]
     ) -> Tuple[float, Dict[str, Any]]:
-        """Analyze image similarity between original and candidate"""        similarity_score = 0.0
+        """Analyze image similarity between original and candidate"""
+        similarity_score = 0.0
         analysis_details = {}
         
         try:
@@ -373,10 +394,12 @@ class ImageFingerprintMatcher:
         return similarity_score, analysis_details
     
     def _compare_perceptual_hashes(self, hash1: str, hash2: str) -> float:
-        """Compare perceptual hashes"""        return self._hamming_similarity(hash1, hash2)
+        """Compare perceptual hashes"""
+        return self._hamming_similarity(hash1, hash2)
     
     def _compare_color_histograms(self, hist1: List[float], hist2: List[float]) -> float:
-        """Compare color histograms using correlation"""        try:
+        """Compare color histograms using correlation"""
+        try:
             h1 = np.array(hist1)
             h2 = np.array(hist2)
             
@@ -394,7 +417,8 @@ class ImageFingerprintMatcher:
             return 0.0
     
     def _compare_visual_features(self, features1: List[float], features2: List[float]) -> float:
-        """Compare visual features using cosine similarity"""        try:
+        """Compare visual features using cosine similarity"""
+        try:
             f1 = np.array(features1)
             f2 = np.array(features2)
             
@@ -413,7 +437,8 @@ class ImageFingerprintMatcher:
             return 0.0
     
     def _hamming_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate Hamming similarity"""        if len(hash1) != len(hash2):
+        """Calculate Hamming similarity"""
+        if len(hash1) != len(hash2):
             return 0.0
         
         hamming_distance = sum(c1 != c2 for c1, c2 in zip(hash1, hash2))
@@ -421,7 +446,8 @@ class ImageFingerprintMatcher:
 
 
 class TextFingerprintMatcher:
-    """Text content fingerprint matching"""    
+    """Text content fingerprint matching"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.similarity_threshold = config.get("text_similarity_threshold", 0.85)
@@ -431,7 +457,8 @@ class TextFingerprintMatcher:
         original_fingerprint: ContentFingerprint,
         candidate_text: Dict[str, Any]
     ) -> Tuple[float, Dict[str, Any]]:
-        """Analyze text similarity between original and candidate"""        similarity_score = 0.0
+        """Analyze text similarity between original and candidate"""
+        similarity_score = 0.0
         analysis_details = {}
         
         try:
@@ -471,7 +498,8 @@ class TextFingerprintMatcher:
         return similarity_score, analysis_details
     
     def _compare_semantic_vectors(self, vectors1: List[float], vectors2: List[float]) -> float:
-        """Compare semantic vectors using cosine similarity"""        try:
+        """Compare semantic vectors using cosine similarity"""
+        try:
             v1 = np.array(vectors1)
             v2 = np.array(vectors2)
             
@@ -489,7 +517,8 @@ class TextFingerprintMatcher:
             return 0.0
     
     def _compare_keywords(self, keywords1: List[str], keywords2: List[str]) -> float:
-        """Compare keyword lists using Jaccard similarity"""        set1 = set(keyword.lower() for keyword in keywords1)
+        """Compare keyword lists using Jaccard similarity"""
+        set1 = set(keyword.lower() for keyword in keywords1)
         set2 = set(keyword.lower() for keyword in keywords2)
         
         intersection = len(set1.intersection(set2))
@@ -505,7 +534,8 @@ class TextFingerprintMatcher:
         features1: Dict[str, Any], 
         features2: Dict[str, Any]
     ) -> float:
-        """Compare writing style features"""        similarity_scores = []
+        """Compare writing style features"""
+        similarity_scores = []
         
         # Compare numerical features
         numeric_features = ["avg_sentence_length", "avg_word_length", "readability_score"]
@@ -528,9 +558,11 @@ class TextFingerprintMatcher:
 
 
 class InfringementDetectionEngine:
-    """    Advanced infringement detection engine using AI and ML techniques
+    """
+    Advanced infringement detection engine using AI and ML techniques
     for comprehensive content analysis and similarity matching
-    """    
+    """
+    
     def __init__(self, surveillance_config):
         self.config = surveillance_config
         self.audio_matcher = AudioFingerprintMatcher(surveillance_config.__dict__)
@@ -540,7 +572,8 @@ class InfringementDetectionEngine:
         self.initialized = False
     
     async def initialize(self) -> None:
-        """Initialize the infringement detection engine"""        try:
+        """Initialize the infringement detection engine"""
+        try:
             # Initialize AI models and resources
             # In production, this would load ML models for feature extraction
             self.initialized = True
@@ -556,7 +589,8 @@ class InfringementDetectionEngine:
         crawling_results: Dict[str, Any],
         similarity_threshold: float = 0.85
     ) -> InfringementAnalysis:
-        """Analyze crawling results for content infringements"""        start_time = time.time()
+        """Analyze crawling results for content infringements"""
+        start_time = time.time()
         analysis_id = f"analysis_{int(time.time())}_{hash(str(original_fingerprints))}"
         
         # Create fingerprint objects from original data
@@ -623,7 +657,8 @@ class InfringementDetectionEngine:
             )
     
     async def _create_fingerprints(self, fingerprint_data: Dict[str, Any]) -> List[ContentFingerprint]:
-        """Create fingerprint objects from raw data"""        fingerprints = []
+        """Create fingerprint objects from raw data"""
+        fingerprints = []
         
         content_types = fingerprint_data.get("content_types", ["mixed"])
         
@@ -671,7 +706,8 @@ class InfringementDetectionEngine:
         platform: str,
         similarity_threshold: float
     ) -> Optional[InfringementMatch]:
-        """Analyze a single content item for infringement"""        best_match = None
+        """Analyze a single content item for infringement"""
+        best_match = None
         best_similarity = 0.0
         
         try:
@@ -723,7 +759,8 @@ class InfringementDetectionEngine:
         fingerprint: ContentFingerprint,
         content_item: Dict[str, Any]
     ) -> Tuple[float, Dict[str, Any]]:
-        """Compare fingerprint with content item"""        content_type = fingerprint.content_type
+        """Compare fingerprint with content item"""
+        content_type = fingerprint.content_type
         
         if content_type == "audio":
             return await self.audio_matcher.analyze_audio_similarity(fingerprint, content_item)
@@ -742,7 +779,8 @@ class InfringementDetectionEngine:
         fingerprint: ContentFingerprint,
         content_item: Dict[str, Any]
     ) -> Tuple[float, Dict[str, Any]]:
-        """Generic content comparison for mixed media"""        similarity_scores = []
+        """Generic content comparison for mixed media"""
+        similarity_scores = []
         analysis_details = {}
         
         # Title/metadata comparison
@@ -772,7 +810,8 @@ class InfringementDetectionEngine:
         return overall_similarity, analysis_details
     
     def _compare_titles(self, title1: str, title2: str) -> float:
-        """Compare titles for similarity"""        # Simple title comparison using word overlap
+        """Compare titles for similarity"""
+        # Simple title comparison using word overlap
         words1 = set(title1.lower().split())
         words2 = set(title2.lower().split())
         
@@ -785,7 +824,8 @@ class InfringementDetectionEngine:
         return intersection / union if union > 0 else 0.0
     
     def _compare_keyword_lists(self, keywords1: List[str], keywords2: List[str]) -> float:
-        """Compare keyword lists"""        set1 = set(k.lower() for k in keywords1)
+        """Compare keyword lists"""
+        set1 = set(k.lower() for k in keywords1)
         set2 = set(k.lower() for k in keywords2)
         
         intersection = len(set1.intersection(set2))
@@ -798,7 +838,8 @@ class InfringementDetectionEngine:
         similarity_score: float, 
         analysis_details: Dict[str, Any]
     ) -> InfringementType:
-        """Determine the type of infringement based on similarity analysis"""        if similarity_score >= 0.98:
+        """Determine the type of infringement based on similarity analysis"""
+        if similarity_score >= 0.98:
             return InfringementType.EXACT_COPY
         elif similarity_score >= 0.90:
             return InfringementType.PARTIAL_COPY
@@ -813,7 +854,8 @@ class InfringementDetectionEngine:
         content_item: Dict[str, Any], 
         platform: str
     ) -> RiskLevel:
-        """Determine risk level of infringement"""        view_count = content_item.get("view_count", 0)
+        """Determine risk level of infringement"""
+        view_count = content_item.get("view_count", 0)
         engagement = content_item.get("like_count", 0) + content_item.get("share_count", 0)
         
         # Base risk on similarity score
@@ -841,7 +883,8 @@ class InfringementDetectionEngine:
         platform: str, 
         similarity_score: float
     ) -> float:
-        """Estimate potential revenue loss from infringement"""        view_count = content_item.get("view_count", 0)
+        """Estimate potential revenue loss from infringement"""
+        view_count = content_item.get("view_count", 0)
         
         # Platform-specific revenue estimation
         revenue_per_view = {
@@ -859,7 +902,8 @@ class InfringementDetectionEngine:
         return view_count * adjusted_rate
     
     def _assess_threats(self, infringements: List[InfringementMatch]) -> Dict[str, Any]:
-        """Assess overall threat level from detected infringements"""        if not infringements:
+        """Assess overall threat level from detected infringements"""
+        if not infringements:
             return {
                 "overall_threat_level": "none",
                 "risk_distribution": {},
@@ -905,7 +949,8 @@ class InfringementDetectionEngine:
         }
     
     def _get_threat_actions(self, threat_level: str, risk_counts: Dict[str, int]) -> List[str]:
-        """Get recommended actions based on threat level"""        actions = []
+        """Get recommended actions based on threat level"""
+        actions = []
         
         if threat_level == "critical":
             actions.extend([
@@ -940,7 +985,8 @@ class InfringementDetectionEngine:
         infringements: List[InfringementMatch],
         threat_assessment: Dict[str, Any]
     ) -> List[str]:
-        """Generate actionable recommendations based on analysis"""        recommendations = []
+        """Generate actionable recommendations based on analysis"""
+        recommendations = []
         
         if not infringements:
             recommendations.append("Continue monitoring - no infringements detected")
@@ -974,7 +1020,8 @@ class InfringementDetectionEngine:
         return recommendations[:10]  # Limit to top 10 recommendations
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on detection engine"""        return {
+        """Perform health check on detection engine"""
+        return {
             "engine": "healthy" if self.initialized else "unhealthy",
             "matchers": {
                 "audio": "ready",
@@ -986,7 +1033,8 @@ class InfringementDetectionEngine:
         }
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown detection engine"""        logger.info("Shutting down Infringement Detection Engine")
+        """Gracefully shutdown detection engine"""
+        logger.info("Shutting down Infringement Detection Engine")
         self.initialized = False
         logger.info("Infringement Detection Engine shutdown complete")
 

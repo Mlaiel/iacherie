@@ -12,7 +12,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""from typing import Dict, List, Any, Optional, Union, Tuple
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -32,7 +33,8 @@ from skimage import feature, filters, measure
 logger = logging.getLogger(__name__)
 
 class ImageFormat(Enum):
-    """Supported image formats with technical specifications"""    JPEG = {"ext": ".jpg", "compression": "lossy", "quality": "good", "transparency": False}
+    """Supported image formats with technical specifications"""
+    JPEG = {"ext": ".jpg", "compression": "lossy", "quality": "good", "transparency": False}
     PNG = {"ext": ".png", "compression": "lossless", "quality": "excellent", "transparency": True}
     TIFF = {"ext": ".tiff", "compression": "lossless", "quality": "excellent", "transparency": True}
     WEBP = {"ext": ".webp", "compression": "both", "quality": "very_good", "transparency": True}
@@ -42,7 +44,8 @@ class ImageFormat(Enum):
     SVG = {"ext": ".svg", "compression": "none", "quality": "vector", "transparency": True}
 
 class ImageContentType(Enum):
-    """Image content classification types"""    PHOTOGRAPH = "photograph"
+    """Image content classification types"""
+    PHOTOGRAPH = "photograph"
     ARTWORK = "artwork"
     DIAGRAM = "diagram"
     SCREENSHOT = "screenshot"
@@ -59,7 +62,8 @@ class ImageContentType(Enum):
     LANDSCAPE = "landscape"
 
 class ImageQuality(Enum):
-    """Image quality classifications"""    LOW = {"max_pixels": 307200, "description": "480p and below"}  # 640x480
+    """Image quality classifications"""
+    LOW = {"max_pixels": 307200, "description": "480p and below"}  # 640x480
     MEDIUM = {"max_pixels": 921600, "description": "720p"}  # 1280x720
     HIGH = {"max_pixels": 2073600, "description": "1080p"}  # 1920x1080
     VERY_HIGH = {"max_pixels": 8294400, "description": "4K"}  # 3840x2160
@@ -67,7 +71,8 @@ class ImageQuality(Enum):
 
 @dataclass
 class ImageMetadata:
-    """Comprehensive image metadata structure"""    # Technical metadata
+    """Comprehensive image metadata structure"""
+    # Technical metadata
     width: int
     height: int
     channels: int
@@ -145,7 +150,8 @@ class ImageMetadata:
 
 @dataclass
 class ImageFingerprint:
-    """Image fingerprint for content identification and protection"""    content_id: str
+    """Image fingerprint for content identification and protection"""
+    content_id: str
     primary_hash: str
     perceptual_hash: str
     difference_hash: str
@@ -162,14 +168,18 @@ class ImageFingerprint:
     quality_indicators: Dict[str, float] = field(default_factory=dict)
 
 class ImageContentManager:
-    """    Professional image content management system with advanced processing capabilities
-    """    
+    """
+    Professional image content management system with advanced processing capabilities
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize the Image Content Manager
+        """
+        Initialize the Image Content Manager
         
         Args:
             config: Configuration dictionary for image processing
-        """        self.config = config or self._get_default_config()
+        """
+        self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.ImageContentManager")
         self.supported_formats = [fmt.value["ext"] for fmt in ImageFormat]
         
@@ -177,7 +187,8 @@ class ImageContentManager:
         self._init_components()
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration for image processing"""        return {
+        """Get default configuration for image processing"""
+        return {
             "max_file_size_mb": 50,
             "max_dimension": 8192,
             "quality_threshold": 0.7,
@@ -195,7 +206,8 @@ class ImageContentManager:
         }
     
     def _init_components(self):
-        """Initialize image processing components"""        self.logger.info("Initializing Image Content Manager components...")
+        """Initialize image processing components"""
+        self.logger.info("Initializing Image Content Manager components...")
         
         # OpenCV configuration
         self.face_cascade = None
@@ -230,7 +242,8 @@ class ImageContentManager:
         quality_analysis: bool = True,
         content_analysis: bool = True
     ) -> Dict[str, Any]:
-        """        Process image file with comprehensive analysis
+        """
+        Process image file with comprehensive analysis
         
         Args:
             file_path: Path to image file
@@ -241,7 +254,8 @@ class ImageContentManager:
             
         Returns:
             Dict containing processed image information
-        """        try:
+        """
+        try:
             file_path = Path(file_path)
             self.logger.info(f"Processing image file: {file_path}")
             
@@ -300,7 +314,8 @@ class ImageContentManager:
             raise
     
     async def _validate_image_file(self, file_path: Path) -> bool:
-        """Validate image file format and accessibility"""        try:
+        """Validate image file format and accessibility"""
+        try:
             # Check file existence and size
             if not file_path.exists():
                 return False
@@ -335,7 +350,8 @@ class ImageContentManager:
         pil_image: Image.Image,
         cv_image: np.ndarray
     ) -> ImageMetadata:
-        """Extract comprehensive image metadata"""        try:
+        """Extract comprehensive image metadata"""
+        try:
             # Basic technical metadata
             width, height = pil_image.size
             channels = len(cv_image.shape) if len(cv_image.shape) == 3 else cv_image.shape[2]
@@ -407,7 +423,8 @@ class ImageContentManager:
             raise
     
     async def _extract_exif_metadata(self, pil_image: Image.Image, metadata: ImageMetadata):
-        """Extract EXIF metadata from image"""        try:
+        """Extract EXIF metadata from image"""
+        try:
             exif_data = pil_image._getexif()
             if exif_data is not None:
                 for tag_id, value in exif_data.items():
@@ -474,7 +491,8 @@ class ImageContentManager:
             self.logger.warning(f"EXIF extraction failed: {e}")
     
     def _extract_gps_coordinates(self, gps_info: Dict) -> Tuple[Optional[float], Optional[float]]:
-        """Extract GPS coordinates from EXIF GPS info"""        try:
+        """Extract GPS coordinates from EXIF GPS info"""
+        try:
             def convert_to_degrees(value):
                 d = float(value[0])
                 m = float(value[1])
@@ -501,7 +519,8 @@ class ImageContentManager:
             return None, None
     
     async def _analyze_color_properties(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze color properties of the image"""        try:
+        """Analyze color properties of the image"""
+        try:
             # Convert to different color spaces for analysis
             lab_image = cv2.cvtColor(image, cv2.COLOR_RGB2LAB)
             hsv_image = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
@@ -535,7 +554,8 @@ class ImageContentManager:
             }
     
     async def _extract_dominant_colors(self, image: np.ndarray, k: int = 5) -> List[Tuple[int, int, int]]:
-        """Extract dominant colors using K-means clustering"""        try:
+        """Extract dominant colors using K-means clustering"""
+        try:
             # Reshape image to list of pixels
             data = image.reshape((-1, 3))
             data = np.float32(data)
@@ -558,7 +578,8 @@ class ImageContentManager:
             return []
     
     async def _detect_faces(self, image: np.ndarray) -> int:
-        """Detect faces in the image"""        try:
+        """Detect faces in the image"""
+        try:
             if self.face_cascade is None:
                 return 0
             
@@ -571,7 +592,8 @@ class ImageContentManager:
             return 0
     
     async def _detect_text(self, image: np.ndarray) -> bool:
-        """Detect text presence in the image using edge analysis"""        try:
+        """Detect text presence in the image using edge analysis"""
+        try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             
             # Apply edge detection
@@ -594,7 +616,8 @@ class ImageContentManager:
             return False
     
     async def _assess_image_quality(self, image: np.ndarray) -> Dict[str, float]:
-        """Assess technical quality of the image"""        try:
+        """Assess technical quality of the image"""
+        try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             
             # Sharpness using Laplacian variance
@@ -631,7 +654,8 @@ class ImageContentManager:
         pil_image: Image.Image,
         content_id: str
     ) -> ImageFingerprint:
-        """Generate comprehensive image fingerprint for content protection"""        try:
+        """Generate comprehensive image fingerprint for content protection"""
+        try:
             # Primary hash (raw image data)
             primary_hash = hashlib.sha256(cv_image.tobytes()).hexdigest()
             
@@ -694,7 +718,8 @@ class ImageContentManager:
             raise
     
     async def _generate_color_hash(self, image: np.ndarray) -> str:
-        """Generate color-based hash"""        try:
+        """Generate color-based hash"""
+        try:
             # Calculate color histogram
             hist_r = cv2.calcHist([image], [0], None, [32], [0, 256])
             hist_g = cv2.calcHist([image], [1], None, [32], [0, 256])
@@ -713,7 +738,8 @@ class ImageContentManager:
             return hashlib.sha256(str(np.random.random()).encode()).hexdigest()[:32]
     
     async def _generate_structural_hash(self, image: np.ndarray) -> str:
-        """Generate structural hash based on edges and shapes"""        try:
+        """Generate structural hash based on edges and shapes"""
+        try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             
             # Edge detection
@@ -744,7 +770,8 @@ class ImageContentManager:
             return hashlib.sha256(str(np.random.random()).encode()).hexdigest()[:32]
     
     async def _extract_histogram_features(self, image: np.ndarray) -> Optional[np.ndarray]:
-        """Extract histogram-based features"""        try:
+        """Extract histogram-based features"""
+        try:
             # Color histograms
             hist_r = cv2.calcHist([image], [0], None, [64], [0, 256])
             hist_g = cv2.calcHist([image], [1], None, [64], [0, 256])
@@ -772,7 +799,8 @@ class ImageContentManager:
             return None
     
     async def _extract_texture_features(self, image: np.ndarray) -> Optional[np.ndarray]:
-        """Extract texture-based features using LBP and GLCM"""        try:
+        """Extract texture-based features using LBP and GLCM"""
+        try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             
             # Local Binary Pattern
@@ -815,7 +843,8 @@ class ImageContentManager:
             return None
     
     async def _extract_edge_features(self, image: np.ndarray) -> Optional[np.ndarray]:
-        """Extract edge-based features"""        try:
+        """Extract edge-based features"""
+        try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             
             # Different edge detection methods
@@ -853,7 +882,8 @@ class ImageContentManager:
             return None
     
     async def _extract_sift_features(self, image: np.ndarray) -> Tuple[Optional[List], Optional[np.ndarray]]:
-        """Extract SIFT keypoints and descriptors"""        try:
+        """Extract SIFT keypoints and descriptors"""
+        try:
             if self.sift is None:
                 return None, None
             
@@ -881,7 +911,8 @@ class ImageContentManager:
             return None, None
     
     async def _analyze_image_quality(self, image: np.ndarray) -> Dict[str, float]:
-        """Analyze comprehensive image quality metrics"""        try:
+        """Analyze comprehensive image quality metrics"""
+        try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             
             quality_metrics = {}
@@ -938,7 +969,8 @@ class ImageContentManager:
             return {"overall_quality": 0.5, "error": str(e)}
     
     async def _analyze_image_content(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze image content for objects, scenes, etc."""        try:
+        """Analyze image content for objects, scenes, etc."""
+        try:
             content_analysis = {
                 "objects_detected": [],
                 "scene_type": None,
@@ -1009,7 +1041,8 @@ class ImageContentManager:
         image: np.ndarray, 
         metadata: Optional[ImageMetadata] = None
     ) -> ImageContentType:
-        """Classify image content type using visual and metadata features"""        try:
+        """Classify image content type using visual and metadata features"""
+        try:
             # Simple heuristic classification (in production, use ML model)
             
             # Check for faces (portraits)
@@ -1075,7 +1108,8 @@ class ImageContentManager:
             return ImageContentType.PHOTOGRAPH  # Default fallback
     
     async def store_content(self, image_content: Dict[str, Any]) -> str:
-        """Store processed image content in database"""        try:
+        """Store processed image content in database"""
+        try:
             # Generate unique content ID
             content_id = hashlib.sha256(
                 f"{image_content['file_path']}{datetime.now().isoformat()}".encode()
@@ -1092,10 +1126,12 @@ class ImageContentManager:
             raise
     
     def get_supported_formats(self) -> List[str]:
-        """Get list of supported image formats"""        return [fmt.value["ext"] for fmt in ImageFormat]
+        """Get list of supported image formats"""
+        return [fmt.value["ext"] for fmt in ImageFormat]
     
     def get_format_info(self, format_name: str) -> Optional[Dict[str, Any]]:
-        """Get information about a specific image format"""        for fmt in ImageFormat:
+        """Get information about a specific image format"""
+        for fmt in ImageFormat:
             if fmt.value["ext"] == f".{format_name.lower()}" or fmt.name.lower() == format_name.lower():
                 return fmt.value
         return None

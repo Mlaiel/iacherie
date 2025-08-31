@@ -20,7 +20,8 @@ Key Components:
 - Monitoring: Real-time metrics, alerting, performance tracking, business metrics
 - Error Handling: Recovery strategies, circuit breakers, comprehensive reporting, business continuity
 - Validation: Schema validation, sanitization, quality analysis, compliance checks
-"""from typing import Dict, List, Optional, Any, Callable, Union
+"""
+from typing import Dict, List, Optional, Any, Callable, Union
 import logging
 from datetime import datetime
 
@@ -193,11 +194,13 @@ from .validation import (
 
 
 class MiddlewarePipeline:
-    """    Enterprise-grade middleware pipeline orchestrator
+    """
+    Enterprise-grade middleware pipeline orchestrator
     
     Coordinates all middleware components in the correct order for optimal
     performance and security while maintaining business logic compliance.
-    """    
+    """
+    
     def __init__(self, 
                  enable_authentication: bool = True,
                  enable_rate_limiting: bool = True,
@@ -207,7 +210,8 @@ class MiddlewarePipeline:
                  enable_fingerprinting: bool = True,
                  enable_monitoring: bool = True,
                  enable_error_handling: bool = True):
-        """Initialize middleware pipeline with configurable components"""        
+        """Initialize middleware pipeline with configurable components"""
+        
         self.logger = logging.getLogger(__name__)
         self.components = {}
         
@@ -237,7 +241,8 @@ class MiddlewarePipeline:
             self.components['error_handling'] = get_error_handling_middleware()
     
     async def process_request(self, request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """        Process request through complete middleware pipeline
+        """
+        Process request through complete middleware pipeline
         
         Pipeline Order:
         1. Authentication & Authorization
@@ -248,7 +253,8 @@ class MiddlewarePipeline:
         6. Fingerprinting & Protection
         7. Monitoring & Metrics Collection
         8. Error Handling & Recovery
-        """        
+        """
+        
         start_time = datetime.utcnow()
         pipeline_result = {
             "success": True,
@@ -346,11 +352,13 @@ class MiddlewarePipeline:
 
 # Factory functions for easy initialization
 def create_full_pipeline(**kwargs) -> MiddlewarePipeline:
-    """Create a complete middleware pipeline with all components enabled"""    return MiddlewarePipeline(**kwargs)
+    """Create a complete middleware pipeline with all components enabled"""
+    return MiddlewarePipeline(**kwargs)
 
 
 def create_basic_pipeline() -> MiddlewarePipeline:
-    """Create a basic middleware pipeline with essential components only"""    return MiddlewarePipeline(
+    """Create a basic middleware pipeline with essential components only"""
+    return MiddlewarePipeline(
         enable_authentication=True,
         enable_rate_limiting=True,
         enable_security=True,
@@ -363,7 +371,8 @@ def create_basic_pipeline() -> MiddlewarePipeline:
 
 
 def create_content_pipeline() -> MiddlewarePipeline:
-    """Create a content-focused pipeline for media processing"""    return MiddlewarePipeline(
+    """Create a content-focused pipeline for media processing"""
+    return MiddlewarePipeline(
         enable_authentication=True,
         enable_rate_limiting=True,
         enable_security=True,
@@ -520,11 +529,14 @@ logger = logging.getLogger(__name__)
 
 
 class MiddlewarePipeline:
-    """    Comprehensive middleware pipeline orchestrator.
+    """
+    Comprehensive middleware pipeline orchestrator.
     Coordinates all middleware components in the correct order.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize middleware pipeline with all components"""        self.authentication = get_authentication_middleware()
+        """Initialize middleware pipeline with all components"""
+        self.authentication = get_authentication_middleware()
         self.rate_limiting = get_rate_limiting_middleware()
         self.security = get_security_middleware()
         self.validation = get_validation_middleware()
@@ -541,7 +553,8 @@ class MiddlewarePipeline:
     
     async def process_request(self, request_data: Dict[str, Any],
                             user_context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """        Process request through complete middleware pipeline.
+        """
+        Process request through complete middleware pipeline.
         
         Pipeline Order:
         1. Monitoring (start tracking)
@@ -552,7 +565,8 @@ class MiddlewarePipeline:
         6. Content Processing
         7. Fingerprinting
         8. Monitoring (end tracking)
-        """        
+        """
+        
         request_id = request_data.get("request_id", f"req_{int(datetime.utcnow().timestamp())}")
         
         try:
@@ -647,7 +661,8 @@ class MiddlewarePipeline:
             }
     
     async def get_pipeline_status(self) -> Dict[str, Any]:
-        """Get comprehensive pipeline status"""        try:
+        """Get comprehensive pipeline status"""
+        try:
             # Get status from all components
             auth_status = await self.authentication.get_dashboard_data()
             rate_limit_status = await self.rate_limiting.get_dashboard_data()
@@ -683,7 +698,8 @@ class MiddlewarePipeline:
             }
     
     async def configure_pipeline(self, config: Dict[str, Any]):
-        """Configure pipeline settings"""        try:
+        """Configure pipeline settings"""
+        try:
             if "enabled" in config:
                 self.pipeline_enabled = config["enabled"]
             
@@ -712,7 +728,8 @@ _middleware_pipeline = None
 
 
 def get_middleware_pipeline() -> MiddlewarePipeline:
-    """Get global middleware pipeline instance"""    global _middleware_pipeline
+    """Get global middleware pipeline instance"""
+    global _middleware_pipeline
     if _middleware_pipeline is None:
         _middleware_pipeline = MiddlewarePipeline()
     return _middleware_pipeline
@@ -721,17 +738,20 @@ def get_middleware_pipeline() -> MiddlewarePipeline:
 # High-level convenience functions
 async def process_crawler_request(request_data: Dict[str, Any],
                                 user_context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-    """High-level function to process crawler request through full pipeline"""    pipeline = get_middleware_pipeline()
+    """High-level function to process crawler request through full pipeline"""
+    pipeline = get_middleware_pipeline()
     return await pipeline.process_request(request_data, user_context)
 
 
 async def get_middleware_status() -> Dict[str, Any]:
-    """Get comprehensive middleware status"""    pipeline = get_middleware_pipeline()
+    """Get comprehensive middleware status"""
+    pipeline = get_middleware_pipeline()
     return await pipeline.get_pipeline_status()
 
 
 async def configure_middleware(config: Dict[str, Any]):
-    """Configure middleware pipeline"""    pipeline = get_middleware_pipeline()
+    """Configure middleware pipeline"""
+    pipeline = get_middleware_pipeline()
     await pipeline.configure_pipeline(config)
 
 

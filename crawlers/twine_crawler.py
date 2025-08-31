@@ -5,7 +5,8 @@ and digital music platform monitoring capabilities for the IA Influencer Agent p
 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized reproduction or distribution of this code is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TwineTrack:
-    """Comprehensive Twine track data structure."""    track_id: str
+    """Comprehensive Twine track data structure."""
+    track_id: str
     title: str
     artist_name: str
     artist_id: str
@@ -53,7 +55,8 @@ class TwineTrack:
 
 @dataclass
 class TwineArtist:
-    """Twine artist profile data structure."""    artist_id: str
+    """Twine artist profile data structure."""
+    artist_id: str
     name: str
     stage_name: Optional[str]
     bio: str
@@ -79,7 +82,8 @@ class TwineArtist:
 
 @dataclass
 class TwineAlbum:
-    """Twine album data structure."""    album_id: str
+    """Twine album data structure."""
+    album_id: str
     title: str
     artist_id: str
     artist_name: str
@@ -101,7 +105,8 @@ class TwineAlbum:
 
 @dataclass
 class TwineSearchResult:
-    """Twine search result data structure."""    query: str
+    """Twine search result data structure."""
+    query: str
     total_results: int
     tracks: List[TwineTrack]
     artists: List[TwineArtist]
@@ -114,7 +119,8 @@ class TwineSearchResult:
 
 @dataclass
 class TwineAnalytics:
-    """Twine analytics and insights data."""    period_start: datetime
+    """Twine analytics and insights data."""
+    period_start: datetime
     period_end: datetime
     total_distributions: int
     total_streams: int
@@ -129,7 +135,8 @@ class TwineAnalytics:
 
 
 class TwineCrawler:
-    """    Enterprise-grade Twine crawler with advanced music distribution analysis.
+    """
+    Enterprise-grade Twine crawler with advanced music distribution analysis.
     
     Features:
     - Music distribution monitoring across platforms
@@ -139,7 +146,8 @@ class TwineCrawler:
     - Real-time release monitoring
     - Performance analytics across platforms
     - Advanced rate limiting with burst handling
-    """    
+    """
+    
     def __init__(self, config: Dict):
         self.config = config
         self.api_key = config.get('api_key')
@@ -172,14 +180,17 @@ class TwineCrawler:
         self.violations_detected = 0
         
     async def __aenter__(self):
-        """Async context manager entry."""        await self.initialize()
+        """Async context manager entry."""
+        await self.initialize()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""        await self.cleanup()
+        """Async context manager exit."""
+        await self.cleanup()
         
     async def initialize(self):
-        """Initialize crawler with authentication and configuration."""        connector = aiohttp.TCPConnector(limit=50, limit_per_host=10)
+        """Initialize crawler with authentication and configuration."""
+        connector = aiohttp.TCPConnector(limit=50, limit_per_host=10)
         timeout = aiohttp.ClientTimeout(total=30, connect=10)
         
         headers = {
@@ -202,11 +213,13 @@ class TwineCrawler:
         logger.info("Twine crawler initialized successfully")
         
     async def cleanup(self):
-        """Clean up resources."""        if self.session:
+        """Clean up resources."""
+        if self.session:
             await self.session.close()
             
     async def _make_request(self, endpoint: str, params: Dict = None) -> Dict:
-        """Make authenticated API request with rate limiting."""        await self.rate_limiter.acquire()
+        """Make authenticated API request with rate limiting."""
+        await self.rate_limiter.acquire()
         
         url = f"{self.base_url}/{endpoint.lstrip('/')}"
         proxy = await self.proxy_manager.get_proxy()
@@ -239,7 +252,8 @@ class TwineCrawler:
         limit: int = 50,
         filters: Dict = None
     ) -> TwineSearchResult:
-        """        Search for tracks with advanced filtering.
+        """
+        Search for tracks with advanced filtering.
         
         Args:
             query: Search query string
@@ -248,7 +262,8 @@ class TwineCrawler:
             
         Returns:
             TwineSearchResult with comprehensive track data
-        """        params = {
+        """
+        params = {
             'q': query,
             'limit': min(limit, 100),
             'type': 'track'
@@ -279,7 +294,8 @@ class TwineCrawler:
         )
         
     async def get_track_details(self, track_id: str) -> Optional[TwineTrack]:
-        """Get detailed information about a specific track."""        try:
+        """Get detailed information about a specific track."""
+        try:
             data = await self._make_request(f'tracks/{track_id}')
             return await self._parse_track_data(data)
         except Exception as e:
@@ -291,7 +307,8 @@ class TwineCrawler:
         artist_id: str, 
         limit: int = 50
     ) -> List[TwineTrack]:
-        """Get tracks from a specific artist."""        params = {'limit': min(limit, 100)}
+        """Get tracks from a specific artist."""
+        params = {'limit': min(limit, 100)}
         
         try:
             data = await self._make_request(f'artists/{artist_id}/tracks', params)
@@ -312,7 +329,8 @@ class TwineCrawler:
         self, 
         track_id: str
     ) -> Dict[str, Union[str, List, Dict]]:
-        """Get distribution status across platforms for a track."""        try:
+        """Get distribution status across platforms for a track."""
+        try:
             data = await self._make_request(f'tracks/{track_id}/distribution')
             
             return {
@@ -331,7 +349,8 @@ class TwineCrawler:
             return {}
             
     async def analyze_audio_content(self, track: TwineTrack) -> Dict:
-        """Analyze audio content of a track using advanced audio processing."""        if not track.preview_url and not track.download_url:
+        """Analyze audio content of a track using advanced audio processing."""
+        if not track.preview_url and not track.download_url:
             return {}
             
         try:
@@ -372,7 +391,8 @@ class TwineCrawler:
         artist_ids: List[str],
         duration: int = 3600
     ) -> AsyncGenerator[TwineTrack, None]:
-        """        Monitor Twine in real-time for new releases from specific artists.
+        """
+        Monitor Twine in real-time for new releases from specific artists.
         
         Args:
             artist_ids: List of artist IDs to monitor
@@ -380,7 +400,8 @@ class TwineCrawler:
             
         Yields:
             TwineTrack objects as they are released
-        """        self.monitored_artists.update(artist_ids)
+        """
+        self.monitored_artists.update(artist_ids)
         start_time = datetime.utcnow()
         
         logger.info(f"Starting real-time Twine monitoring for artists: {artist_ids}")
@@ -414,7 +435,8 @@ class TwineCrawler:
         self, 
         protected_content: List[str]
     ) -> List[Dict]:
-        """Detect potential copyright violations of protected content."""        violations = []
+        """Detect potential copyright violations of protected content."""
+        violations = []
         
         for content_id in protected_content:
             # Search for similar audio content
@@ -441,7 +463,8 @@ class TwineCrawler:
         artist_id: str, 
         period_days: int = 30
     ) -> Dict:
-        """Get royalty and revenue analytics for an artist."""        try:
+        """Get royalty and revenue analytics for an artist."""
+        try:
             params = {
                 'period': f'{period_days}d',
                 'granularity': 'daily'
@@ -469,7 +492,8 @@ class TwineCrawler:
             return {}
             
     async def _parse_track_data(self, data: Dict) -> Optional[TwineTrack]:
-        """Parse Twine API track data into structured format."""        try:
+        """Parse Twine API track data into structured format."""
+        try:
             return TwineTrack(
                 track_id=data.get('id', ''),
                 title=data.get('title', ''),
@@ -502,7 +526,8 @@ class TwineCrawler:
             return None
             
     async def _generate_audio_fingerprint(self, audio_url: str) -> str:
-        """Generate audio fingerprint for content."""        try:
+        """Generate audio fingerprint for content."""
+        try:
             audio_hash = await self.fingerprinter.generate_audio_hash(audio_url)
             return audio_hash
         except Exception as e:
@@ -510,7 +535,8 @@ class TwineCrawler:
             return ""
             
     async def _detect_similar_audio(self, audio_fingerprint: str) -> List[str]:
-        """Detect similar audio content using fingerprinting."""        try:
+        """Detect similar audio content using fingerprinting."""
+        try:
             similar_hashes = await self.fingerprinter.find_similar_content(
                 audio_fingerprint, 
                 threshold=0.1,
@@ -526,7 +552,8 @@ class TwineCrawler:
         track: TwineTrack, 
         audio_fingerprint: str
     ) -> float:
-        """Analyze content for potential copyright violations."""        violation_score = 0.0
+        """Analyze content for potential copyright violations."""
+        violation_score = 0.0
         
         try:
             # Check against protected content database
@@ -549,7 +576,8 @@ class TwineCrawler:
         return violation_score
         
     async def _extract_audio_features(self, audio_url: str) -> Dict:
-        """Extract audio features using advanced analysis."""        try:
+        """Extract audio features using advanced analysis."""
+        try:
             # This would implement audio feature extraction
             # using libraries like librosa
             features = await self.fingerprinter.extract_audio_features(audio_url)
@@ -559,7 +587,8 @@ class TwineCrawler:
             return {}
             
     async def _handle_violation_detected(self, track: TwineTrack):
-        """Handle detected copyright violation."""        logger.warning(
+        """Handle detected copyright violation."""
+        logger.warning(
             f"Copyright violation detected: Track {track.track_id} "
             f"(score: {track.violation_score:.2f})"
         )
@@ -573,7 +602,8 @@ class TwineCrawler:
         }
         
     async def _extract_trending_genres(self, tracks: List[TwineTrack]) -> List[str]:
-        """Extract trending genres from track collection."""        genre_counts = {}
+        """Extract trending genres from track collection."""
+        genre_counts = {}
         
         for track in tracks:
             genre = track.genre.lower()
@@ -583,17 +613,20 @@ class TwineCrawler:
         return [genre for genre, count in trending[:10]]
         
     async def _find_similar_content(self, content_id: str) -> List[TwineTrack]:
-        """Find content similar to protected content."""        return []
+        """Find content similar to protected content."""
+        return []
         
     async def _calculate_violation_score(
         self, 
         original_content_id: str, 
         track: TwineTrack
     ) -> float:
-        """Calculate violation score between original content and track."""        return 0.0
+        """Calculate violation score between original content and track."""
+        return 0.0
         
     async def _check_isrc_conflicts(self, isrc: str) -> List[Dict]:
-        """Check for ISRC conflicts in the database."""        try:
+        """Check for ISRC conflicts in the database."""
+        try:
             # This would check against a database of known ISRCs
             conflicts = []
             return conflicts
@@ -602,7 +635,8 @@ class TwineCrawler:
             return []
             
     def get_performance_metrics(self) -> Dict:
-        """Get crawler performance metrics."""        return {
+        """Get crawler performance metrics."""
+        return {
             'requests_made': self.requests_made,
             'content_analyzed': self.content_analyzed,
             'violations_detected': self.violations_detected,

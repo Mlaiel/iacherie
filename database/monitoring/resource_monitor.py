@@ -10,7 +10,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 ⚠️  AVERTISSEMENT STRICT ⚠️
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
-"""import asyncio
+"""
+import asyncio
 import time
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -34,7 +35,8 @@ from ...utils.cache import RedisCache
 
 
 class ResourceType(Enum):
-    """System resource types"""    CPU = "cpu"
+    """System resource types"""
+    CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
     NETWORK = "network"
@@ -42,7 +44,8 @@ class ResourceType(Enum):
 
 
 class ResourceStatus(Enum):
-    """Resource utilization status"""    OPTIMAL = "optimal"
+    """Resource utilization status"""
+    OPTIMAL = "optimal"
     NORMAL = "normal"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -51,7 +54,8 @@ class ResourceStatus(Enum):
 
 @dataclass
 class CPUMetrics:
-    """CPU utilization metrics"""    overall_percent: float
+    """CPU utilization metrics"""
+    overall_percent: float
     per_core_percent: List[float]
     user_percent: float
     system_percent: float
@@ -64,12 +68,14 @@ class CPUMetrics:
     interrupts_per_sec: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return asdict(self)
+        """Convert to dictionary"""
+        return asdict(self)
 
 
 @dataclass
 class MemoryMetrics:
-    """Memory utilization metrics"""    total_mb: float
+    """Memory utilization metrics"""
+    total_mb: float
     available_mb: float
     used_mb: float
     used_percent: float
@@ -83,12 +89,14 @@ class MemoryMetrics:
     database_memory_mb: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return asdict(self)
+        """Convert to dictionary"""
+        return asdict(self)
 
 
 @dataclass
 class DiskMetrics:
-    """Disk I/O and storage metrics"""    total_space_gb: float
+    """Disk I/O and storage metrics"""
+    total_space_gb: float
     used_space_gb: float
     free_space_gb: float
     used_percent: float
@@ -101,12 +109,14 @@ class DiskMetrics:
     queue_depth: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return asdict(self)
+        """Convert to dictionary"""
+        return asdict(self)
 
 
 @dataclass
 class NetworkMetrics:
-    """Network utilization metrics"""    bytes_sent_per_sec: float
+    """Network utilization metrics"""
+    bytes_sent_per_sec: float
     bytes_recv_per_sec: float
     packets_sent_per_sec: float
     packets_recv_per_sec: float
@@ -116,12 +126,14 @@ class NetworkMetrics:
     bandwidth_utilization_percent: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return asdict(self)
+        """Convert to dictionary"""
+        return asdict(self)
 
 
 @dataclass
 class DatabaseResourceMetrics:
-    """Database-specific resource metrics"""    shared_buffers_mb: float
+    """Database-specific resource metrics"""
+    shared_buffers_mb: float
     effective_cache_size_mb: float
     work_mem_mb: float
     maintenance_work_mem_mb: float
@@ -132,12 +144,14 @@ class DatabaseResourceMetrics:
     temp_files_size_mb: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return asdict(self)
+        """Convert to dictionary"""
+        return asdict(self)
 
 
 @dataclass
 class ResourceSnapshot:
-    """Complete resource utilization snapshot"""    timestamp: datetime
+    """Complete resource utilization snapshot"""
+    timestamp: datetime
     cpu_metrics: CPUMetrics
     memory_metrics: MemoryMetrics
     disk_metrics: DiskMetrics
@@ -148,7 +162,8 @@ class ResourceSnapshot:
     recommendations: List[str]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        data = asdict(self)
+        """Convert to dictionary"""
+        data = asdict(self)
         data['timestamp'] = self.timestamp.isoformat()
         data['cpu_metrics'] = self.cpu_metrics.to_dict()
         data['memory_metrics'] = self.memory_metrics.to_dict()
@@ -160,7 +175,8 @@ class ResourceSnapshot:
 
 
 class ResourceMonitor:
-    """    Advanced system resource monitoring for database operations.
+    """
+    Advanced system resource monitoring for database operations.
     
     Features:
     - Multi-dimensional resource tracking
@@ -169,7 +185,8 @@ class ResourceMonitor:
     - Automated optimization recommendations
     - Resource allocation planning
     - Capacity planning assistance
-    """    
+    """
+    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
@@ -202,7 +219,8 @@ class ResourceMonitor:
         self.logger.info("Resource Monitor initialized")
     
     async def start_monitoring(self, interval: int = 60) -> None:
-        """Start resource monitoring"""        if self.monitoring_active:
+        """Start resource monitoring"""
+        if self.monitoring_active:
             self.logger.warning("Resource monitoring already active")
             return
         
@@ -227,11 +245,13 @@ class ResourceMonitor:
             raise
     
     async def stop_monitoring(self) -> None:
-        """Stop resource monitoring"""        self.monitoring_active = False
+        """Stop resource monitoring"""
+        self.monitoring_active = False
         self.logger.info("Resource monitoring stopped")
     
     async def _establish_baseline(self) -> None:
-        """Establish baseline resource metrics"""        try:
+        """Establish baseline resource metrics"""
+        try:
             baseline_snapshots = []
             
             # Collect baseline over 5 minutes
@@ -250,7 +270,8 @@ class ResourceMonitor:
             self.logger.error(f"Error establishing baseline: {e}")
     
     async def _collect_resource_snapshot(self) -> Optional[ResourceSnapshot]:
-        """Collect comprehensive resource snapshot"""        try:
+        """Collect comprehensive resource snapshot"""
+        try:
             timestamp = datetime.utcnow()
             
             # Collect all metric types
@@ -291,7 +312,8 @@ class ResourceMonitor:
             return None
     
     async def _collect_cpu_metrics(self) -> CPUMetrics:
-        """Collect CPU utilization metrics"""        try:
+        """Collect CPU utilization metrics"""
+        try:
             # Get CPU times
             cpu_times = psutil.cpu_times()
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -340,7 +362,8 @@ class ResourceMonitor:
             return CPUMetrics(0, [], 0, 0, 0, 0, 0, 0, 0, 0, 0)
     
     async def _collect_memory_metrics(self) -> MemoryMetrics:
-        """Collect memory utilization metrics"""        try:
+        """Collect memory utilization metrics"""
+        try:
             memory = psutil.virtual_memory()
             swap = psutil.swap_memory()
             
@@ -373,7 +396,8 @@ class ResourceMonitor:
             return MemoryMetrics(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     
     async def _collect_disk_metrics(self) -> DiskMetrics:
-        """Collect disk I/O and storage metrics"""        try:
+        """Collect disk I/O and storage metrics"""
+        try:
             # Get disk usage for database data directory
             data_dir = getattr(self.settings, 'database_data_dir', '/')
             disk_usage = shutil.disk_usage(data_dir)
@@ -423,7 +447,8 @@ class ResourceMonitor:
             return DiskMetrics(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     
     async def _collect_network_metrics(self) -> NetworkMetrics:
-        """Collect network utilization metrics"""        try:
+        """Collect network utilization metrics"""
+        try:
             network_io = psutil.net_io_counters()
             
             # Calculate rates if we have previous data
@@ -475,10 +500,12 @@ class ResourceMonitor:
             return NetworkMetrics(0, 0, 0, 0, 0, 0, 0, 0)
     
     async def _collect_database_metrics(self) -> DatabaseResourceMetrics:
-        """Collect database-specific resource metrics"""        try:
+        """Collect database-specific resource metrics"""
+        try:
             async with get_database_session() as session:
                 # Get database configuration
-                result = await session.execute(text("""                    SELECT name, setting, unit
+                result = await session.execute(text("""
+                    SELECT name, setting, unit
                     FROM pg_settings 
                     WHERE name IN (
                         'shared_buffers', 'effective_cache_size', 
@@ -489,7 +516,8 @@ class ResourceMonitor:
                 config_values = {row.name: row.setting for row in result}
                 
                 # Get buffer cache hit ratio
-                result = await session.execute(text("""                    SELECT CASE 
+                result = await session.execute(text("""
+                    SELECT CASE 
                         WHEN sum(heap_blks_hit + heap_blks_read) = 0 THEN 1.0
                         ELSE sum(heap_blks_hit)::float / sum(heap_blks_hit + heap_blks_read)
                     END as hit_ratio
@@ -498,7 +526,8 @@ class ResourceMonitor:
                 hit_ratio = result.scalar() or 0
                 
                 # Get checkpoint and WAL statistics
-                result = await session.execute(text("""                    SELECT 
+                result = await session.execute(text("""
+                    SELECT 
                         checkpoint_write_time,
                         checkpoint_sync_time
                     FROM pg_stat_bgwriter
@@ -506,7 +535,8 @@ class ResourceMonitor:
                 checkpoint_stats = result.fetchone()
                 
                 # Get temporary file statistics
-                result = await session.execute(text("""                    SELECT 
+                result = await session.execute(text("""
+                    SELECT 
                         sum(temp_files) as temp_files_count,
                         sum(temp_bytes) / (1024*1024) as temp_files_size_mb
                     FROM pg_stat_database
@@ -530,7 +560,8 @@ class ResourceMonitor:
             return DatabaseResourceMetrics(0, 0, 0, 0, 0, 0, 0, 0, 0)
     
     def _parse_pg_size(self, size_str: str) -> float:
-        """Parse PostgreSQL size string to MB"""        try:
+        """Parse PostgreSQL size string to MB"""
+        try:
             if not size_str:
                 return 0.0
             
@@ -557,7 +588,8 @@ class ResourceMonitor:
         network: NetworkMetrics,
         database: DatabaseResourceMetrics
     ) -> List[str]:
-        """Identify system bottlenecks"""        bottlenecks = []
+        """Identify system bottlenecks"""
+        bottlenecks = []
         
         # CPU bottlenecks
         if cpu.overall_percent > self.thresholds['cpu_critical']:
@@ -611,7 +643,8 @@ class ResourceMonitor:
         disk: DiskMetrics,
         network: NetworkMetrics
     ) -> ResourceStatus:
-        """Determine overall resource status"""        
+        """Determine overall resource status"""
+        
         critical_count = 0
         warning_count = 0
         
@@ -656,7 +689,8 @@ class ResourceMonitor:
         bottlenecks: List[str], 
         status: ResourceStatus
     ) -> List[str]:
-        """Generate optimization recommendations based on bottlenecks"""        recommendations = []
+        """Generate optimization recommendations based on bottlenecks"""
+        recommendations = []
         
         for bottleneck in bottlenecks:
             if "CPU utilization" in bottleneck:
@@ -712,7 +746,8 @@ class ResourceMonitor:
         return unique_recommendations[:5]  # Limit to top 5 recommendations
     
     async def _process_snapshot(self, snapshot: ResourceSnapshot) -> None:
-        """Process resource snapshot"""        try:
+        """Process resource snapshot"""
+        try:
             # Store in history
             self.resource_history.append(snapshot)
             
@@ -731,7 +766,8 @@ class ResourceMonitor:
             self.logger.error(f"Error processing resource snapshot: {e}")
     
     async def _send_resource_alert(self, snapshot: ResourceSnapshot) -> None:
-        """Send resource alert"""        try:
+        """Send resource alert"""
+        try:
             alert = {
                 "type": "resource_alert",
                 "severity": "critical" if snapshot.overall_status == ResourceStatus.CRITICAL else "emergency",
@@ -762,7 +798,8 @@ class ResourceMonitor:
         self, 
         snapshots: List[ResourceSnapshot]
     ) -> ResourceSnapshot:
-        """Calculate average baseline from multiple snapshots"""        if not snapshots:
+        """Calculate average baseline from multiple snapshots"""
+        if not snapshots:
             return None
         
         # Calculate averages for each metric type
@@ -800,7 +837,8 @@ class ResourceMonitor:
         return baseline
     
     async def get_resource_summary(self) -> Dict[str, Any]:
-        """Get current resource summary"""        try:
+        """Get current resource summary"""
+        try:
             if not self.resource_history:
                 return {"error": "No resource data available", "monitoring_active": self.monitoring_active}
             
@@ -829,7 +867,8 @@ class ResourceMonitor:
             return {"error": str(e)}
     
     async def get_resource_history(self, hours: int = 24) -> List[Dict[str, Any]]:
-        """Get resource history"""        try:
+        """Get resource history"""
+        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             
             recent_snapshots = [
@@ -844,7 +883,8 @@ class ResourceMonitor:
             return []
     
     async def get_capacity_planning_report(self) -> Dict[str, Any]:
-        """Generate capacity planning report"""        try:
+        """Generate capacity planning report"""
+        try:
             if len(self.resource_history) < 100:  # Need sufficient data
                 return {"error": "Insufficient data for capacity planning"}
             
@@ -889,7 +929,8 @@ class ResourceMonitor:
             return {"error": str(e)}
     
     def _calculate_trend(self, values: List[float]) -> float:
-        """Calculate trend (slope) from values"""        if len(values) < 2:
+        """Calculate trend (slope) from values"""
+        if len(values) < 2:
             return 0.0
         
         try:
@@ -913,7 +954,8 @@ class ResourceMonitor:
             return 0.0
     
     def _project_capacity(self, trend: float, threshold: float) -> Dict[str, Any]:
-        """Project when capacity threshold will be reached"""        try:
+        """Project when capacity threshold will be reached"""
+        try:
             if trend <= 0:
                 return {"days_to_threshold": None, "action_needed": False}
             
@@ -935,7 +977,8 @@ class ResourceMonitor:
             return {"days_to_threshold": None, "action_needed": False}
     
     def _generate_capacity_recommendations(self, projections: Dict[str, Any]) -> List[str]:
-        """Generate capacity planning recommendations"""        recommendations = []
+        """Generate capacity planning recommendations"""
+        recommendations = []
         
         for resource, projection in projections.items():
             if projection.get("action_needed"):

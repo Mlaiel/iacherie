@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -24,7 +25,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -47,14 +49,17 @@ from ai.ai_agents.content_strategy_agents import (
 
 
 class TestContentStrategistAgent:
-    """Test ContentStrategistAgent functionality"""    
+    """Test ContentStrategistAgent functionality"""
+    
     @pytest.fixture
     def agent(self):
-        """Create ContentStrategistAgent instance"""        return ContentStrategistAgent()
+        """Create ContentStrategistAgent instance"""
+        return ContentStrategistAgent()
     
     @pytest.fixture
     def sample_content_data(self):
-        """Sample content data for strategy analysis"""        return {
+        """Sample content data for strategy analysis"""
+        return {
             "content_id": "content_001",
             "title": "AI Tutorial: Getting Started with Machine Learning",
             "description": "Complete beginner's guide to ML fundamentals",
@@ -88,7 +93,8 @@ class TestContentStrategistAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_content_performance(self, agent, sample_content_data):
-        """Test content performance analysis"""        analysis = await agent.analyze_content_performance(sample_content_data)
+        """Test content performance analysis"""
+        analysis = await agent.analyze_content_performance(sample_content_data)
         
         assert isinstance(analysis, ContentAnalysis)
         assert 0 <= analysis.engagement_score <= 1
@@ -102,7 +108,8 @@ class TestContentStrategistAgent:
     
     @pytest.mark.asyncio
     async def test_generate_strategy_recommendations(self, agent, sample_content_data):
-        """Test strategy recommendation generation"""        creator_profile = {
+        """Test strategy recommendation generation"""
+        creator_profile = {
             "creator_id": "creator_001",
             "niche": "tech_education",
             "goals": ["audience_growth", "engagement_increase"],
@@ -132,7 +139,8 @@ class TestContentStrategistAgent:
     
     @pytest.mark.asyncio
     async def test_optimize_content_timing(self, agent, sample_content_data):
-        """Test content timing optimization"""        timing_optimization = await agent.optimize_content_timing(sample_content_data)
+        """Test content timing optimization"""
+        timing_optimization = await agent.optimize_content_timing(sample_content_data)
         
         assert "optimal_posting_times" in timing_optimization
         assert "frequency_recommendations" in timing_optimization
@@ -151,7 +159,8 @@ class TestContentStrategistAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_audience_engagement(self, agent, sample_content_data):
-        """Test audience engagement analysis"""        engagement_analysis = await agent.analyze_audience_engagement(sample_content_data)
+        """Test audience engagement analysis"""
+        engagement_analysis = await agent.analyze_audience_engagement(sample_content_data)
         
         assert "engagement_breakdown" in engagement_analysis
         assert "audience_segments" in engagement_analysis
@@ -166,7 +175,8 @@ class TestContentStrategistAgent:
     
     @pytest.mark.asyncio
     async def test_recommend_content_themes(self, agent, sample_content_data):
-        """Test content theme recommendations"""        creator_goals = {
+        """Test content theme recommendations"""
+        creator_goals = {
             "target_audience": "tech_professionals",
             "content_pillars": ["education", "career_advice", "industry_trends"],
             "growth_objectives": ["follower_growth", "engagement_increase"]
@@ -191,7 +201,8 @@ class TestContentStrategistAgent:
     
     @pytest.mark.asyncio
     async def test_create_content_calendar(self, agent, sample_content_data):
-        """Test content calendar creation"""        calendar_params = {
+        """Test content calendar creation"""
+        calendar_params = {
             "duration_weeks": 4,
             "posting_frequency": "daily",
             "content_mix": {
@@ -222,14 +233,17 @@ class TestContentStrategistAgent:
 
 
 class TestPerformanceAnalysisAgent:
-    """Test PerformanceAnalysisAgent functionality"""    
+    """Test PerformanceAnalysisAgent functionality"""
+    
     @pytest.fixture
     def agent(self):
-        """Create PerformanceAnalysisAgent instance"""        return PerformanceAnalysisAgent()
+        """Create PerformanceAnalysisAgent instance"""
+        return PerformanceAnalysisAgent()
     
     @pytest.fixture
     def sample_performance_data(self):
-        """Sample performance data for analysis"""        return {
+        """Sample performance data for analysis"""
+        return {
             "creator_id": "creator_001",
             "time_period": "30_days",
             "content_metrics": [
@@ -262,7 +276,8 @@ class TestPerformanceAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_performance_trends(self, agent, sample_performance_data):
-        """Test performance trend analysis"""        trend_analysis = await agent.analyze_performance_trends(sample_performance_data)
+        """Test performance trend analysis"""
+        trend_analysis = await agent.analyze_performance_trends(sample_performance_data)
         
         assert "growth_trends" in trend_analysis
         assert "engagement_trends" in trend_analysis
@@ -276,7 +291,8 @@ class TestPerformanceAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_identify_top_performing_content(self, agent, sample_performance_data):
-        """Test top performing content identification"""        top_content = await agent.identify_top_performing_content(sample_performance_data)
+        """Test top performing content identification"""
+        top_content = await agent.identify_top_performing_content(sample_performance_data)
         
         assert "top_by_views" in top_content
         assert "top_by_engagement" in top_content
@@ -292,7 +308,8 @@ class TestPerformanceAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_calculate_roi_metrics(self, agent, sample_performance_data):
-        """Test ROI metrics calculation"""        investment_data = {
+        """Test ROI metrics calculation"""
+        investment_data = {
             "content_creation_time": {
                 "video": 8,  # hours per video
                 "image": 2,  # hours per image
@@ -318,7 +335,8 @@ class TestPerformanceAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_benchmark_performance(self, agent, sample_performance_data):
-        """Test performance benchmarking"""        industry_benchmarks = {
+        """Test performance benchmarking"""
+        industry_benchmarks = {
             "niche": "tech_education",
             "follower_range": "20k_50k",
             "benchmarks": {
@@ -345,14 +363,17 @@ class TestPerformanceAnalysisAgent:
 
 
 class TestTrendAnalysisAgent:
-    """Test TrendAnalysisAgent functionality"""    
+    """Test TrendAnalysisAgent functionality"""
+    
     @pytest.fixture
     def agent(self):
-        """Create TrendAnalysisAgent instance"""        return TrendAnalysisAgent()
+        """Create TrendAnalysisAgent instance"""
+        return TrendAnalysisAgent()
     
     @pytest.fixture
     def sample_trend_data(self):
-        """Sample trend data for analysis"""        return {
+        """Sample trend data for analysis"""
+        return {
             "platform": "youtube",
             "niche": "technology",
             "trending_topics": [
@@ -380,7 +401,8 @@ class TestTrendAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_identify_trending_topics(self, agent, sample_trend_data):
-        """Test trending topics identification"""        trending_analysis = await agent.identify_trending_topics(sample_trend_data)
+        """Test trending topics identification"""
+        trending_analysis = await agent.identify_trending_topics(sample_trend_data)
         
         assert "emerging_trends" in trending_analysis
         assert "declining_trends" in trending_analysis
@@ -399,7 +421,8 @@ class TestTrendAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_hashtag_performance(self, agent, sample_trend_data):
-        """Test hashtag performance analysis"""        hashtag_analysis = await agent.analyze_hashtag_performance(sample_trend_data)
+        """Test hashtag performance analysis"""
+        hashtag_analysis = await agent.analyze_hashtag_performance(sample_trend_data)
         
         assert "high_performing_hashtags" in hashtag_analysis
         assert "hashtag_combinations" in hashtag_analysis
@@ -414,7 +437,8 @@ class TestTrendAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_predict_content_virality(self, agent, sample_trend_data):
-        """Test content virality prediction"""        content_concept = {
+        """Test content virality prediction"""
+        content_concept = {
             "title": "AI Will Change Everything in 2025",
             "description": "Exploring the latest AI trends and their impact",
             "format": "video",
@@ -436,7 +460,8 @@ class TestTrendAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_monitor_competitor_trends(self, agent, sample_trend_data):
-        """Test competitor trend monitoring"""        competitor_monitoring = await agent.monitor_competitor_trends(sample_trend_data)
+        """Test competitor trend monitoring"""
+        competitor_monitoring = await agent.monitor_competitor_trends(sample_trend_data)
         
         assert "competitor_insights" in competitor_monitoring
         assert "content_gap_analysis" in competitor_monitoring
@@ -452,14 +477,17 @@ class TestTrendAnalysisAgent:
 
 
 class TestContentPlanningAgent:
-    """Test ContentPlanningAgent functionality"""    
+    """Test ContentPlanningAgent functionality"""
+    
     @pytest.fixture
     def agent(self):
-        """Create ContentPlanningAgent instance"""        return ContentPlanningAgent()
+        """Create ContentPlanningAgent instance"""
+        return ContentPlanningAgent()
     
     @pytest.fixture
     def sample_planning_requirements(self):
-        """Sample content planning requirements"""        return {
+        """Sample content planning requirements"""
+        return {
             "creator_profile": {
                 "creator_id": "creator_001",
                 "niche": "fitness_nutrition",
@@ -492,7 +520,8 @@ class TestContentPlanningAgent:
     
     @pytest.mark.asyncio
     async def test_create_comprehensive_content_plan(self, agent, sample_planning_requirements):
-        """Test comprehensive content plan creation"""        content_plan = await agent.create_comprehensive_content_plan(sample_planning_requirements)
+        """Test comprehensive content plan creation"""
+        content_plan = await agent.create_comprehensive_content_plan(sample_planning_requirements)
         
         assert isinstance(content_plan, ContentPlan)
         assert content_plan.plan_id is not None
@@ -503,7 +532,8 @@ class TestContentPlanningAgent:
     
     @pytest.mark.asyncio
     async def test_generate_content_ideas(self, agent, sample_planning_requirements):
-        """Test content idea generation"""        content_ideas = await agent.generate_content_ideas(sample_planning_requirements)
+        """Test content idea generation"""
+        content_ideas = await agent.generate_content_ideas(sample_planning_requirements)
         
         assert "video_ideas" in content_ideas
         assert "post_ideas" in content_ideas
@@ -520,7 +550,8 @@ class TestContentPlanningAgent:
     
     @pytest.mark.asyncio
     async def test_optimize_content_mix(self, agent, sample_planning_requirements):
-        """Test content mix optimization"""        current_performance = {
+        """Test content mix optimization"""
+        current_performance = {
             "workout_videos": {"avg_engagement": 0.065, "growth_impact": 0.8},
             "nutrition_tips": {"avg_engagement": 0.045, "growth_impact": 0.6},
             "motivation_content": {"avg_engagement": 0.055, "growth_impact": 0.7},
@@ -543,7 +574,8 @@ class TestContentPlanningAgent:
     
     @pytest.mark.asyncio
     async def test_schedule_content_production(self, agent, sample_planning_requirements):
-        """Test content production scheduling"""        production_schedule = await agent.schedule_content_production(sample_planning_requirements)
+        """Test content production scheduling"""
+        production_schedule = await agent.schedule_content_production(sample_planning_requirements)
         
         assert "production_timeline" in production_schedule
         assert "resource_allocation" in production_schedule
@@ -561,10 +593,12 @@ class TestContentPlanningAgent:
 
 
 class TestIntegrationScenarios:
-    """Test integration between different content strategy agents"""    
+    """Test integration between different content strategy agents"""
+    
     @pytest.fixture
     def agents(self):
-        """Create all content strategy agents for integration testing"""        return {
+        """Create all content strategy agents for integration testing"""
+        return {
             "strategist": ContentStrategistAgent(),
             "performance": PerformanceAnalysisAgent(),
             "trends": TrendAnalysisAgent(),
@@ -573,7 +607,8 @@ class TestIntegrationScenarios:
     
     @pytest.mark.asyncio
     async def test_comprehensive_strategy_development(self, agents):
-        """Test comprehensive content strategy development workflow"""        # Sample creator requiring full strategy development
+        """Test comprehensive content strategy development workflow"""
+        # Sample creator requiring full strategy development
         creator_data = {
             "creator_id": "strategic_creator",
             "profile": {
@@ -631,14 +666,17 @@ class TestIntegrationScenarios:
 
 
 class TestErrorHandling:
-    """Test error handling scenarios"""    
+    """Test error handling scenarios"""
+    
     @pytest.fixture
     def agent(self):
-        """Create ContentStrategistAgent for error testing"""        return ContentStrategistAgent()
+        """Create ContentStrategistAgent for error testing"""
+        return ContentStrategistAgent()
     
     @pytest.mark.asyncio
     async def test_insufficient_data_handling(self, agent):
-        """Test handling of insufficient content data"""        minimal_data = {"content_id": "test", "views": 100}
+        """Test handling of insufficient content data"""
+        minimal_data = {"content_id": "test", "views": 100}
         
         try:
             result = await agent.analyze_content_performance(minimal_data)
@@ -650,7 +688,8 @@ class TestErrorHandling:
     
     @pytest.mark.asyncio
     async def test_invalid_metrics_handling(self, agent):
-        """Test handling of invalid metrics"""        invalid_data = {
+        """Test handling of invalid metrics"""
+        invalid_data = {
             "content_id": "test",
             "views": -100,  # Invalid negative views
             "likes": "invalid",  # Invalid type
@@ -667,7 +706,8 @@ class TestErrorHandling:
     
     @pytest.mark.asyncio
     async def test_external_service_failures(self, agent):
-        """Test handling of external service failures"""        with patch('aiohttp.ClientSession.get') as mock_get:
+        """Test handling of external service failures"""
+        with patch('aiohttp.ClientSession.get') as mock_get:
             mock_get.side_effect = Exception("External API failure")
             
             content_data = {"content_id": "test", "views": 1000}
@@ -682,14 +722,17 @@ class TestErrorHandling:
 
 
 class TestPerformanceAndScaling:
-    """Test performance and scaling scenarios"""    
+    """Test performance and scaling scenarios"""
+    
     @pytest.fixture
     def agent(self):
-        """Create ContentStrategistAgent for performance testing"""        return ContentStrategistAgent()
+        """Create ContentStrategistAgent for performance testing"""
+        return ContentStrategistAgent()
     
     @pytest.mark.asyncio
     async def test_large_dataset_analysis(self, agent):
-        """Test analysis of large content datasets"""        large_dataset = {
+        """Test analysis of large content datasets"""
+        large_dataset = {
             "creator_id": "large_creator",
             "content_library": [
                 {
@@ -713,7 +756,8 @@ class TestPerformanceAndScaling:
     
     @pytest.mark.asyncio
     async def test_concurrent_strategy_analysis(self, agent):
-        """Test concurrent strategy analysis for multiple creators"""        creator_datasets = [
+        """Test concurrent strategy analysis for multiple creators"""
+        creator_datasets = [
             {
                 "content_id": f"creator_{i}_content",
                 "views": 5000 + (i * 1000),

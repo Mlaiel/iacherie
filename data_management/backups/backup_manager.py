@@ -11,7 +11,8 @@ Responsibility: Orchestration intelligente des sauvegardes multi-format
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional, Union, AsyncIterator
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class BackupConfiguration:
-    """Configuration avancée pour les sauvegardes"""    backup_type: str = "incremental"
+    """Configuration avancée pour les sauvegardes"""
+    backup_type: str = "incremental"
     compression_enabled: bool = True
     encryption_enabled: bool = True
     verification_enabled: bool = True
@@ -50,7 +52,8 @@ class BackupConfiguration:
     content_types: List[str] = field(default_factory=lambda: ["audio", "video", "image", "text"])
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit la configuration en dictionnaire"""        return {
+        """Convertit la configuration en dictionnaire"""
+        return {
             "backup_type": self.backup_type,
             "compression_enabled": self.compression_enabled,
             "encryption_enabled": self.encryption_enabled,
@@ -66,7 +69,8 @@ class BackupConfiguration:
 
 
 class BackupManager:
-    """    Gestionnaire principal des sauvegardes avec orchestration intelligente
+    """
+    Gestionnaire principal des sauvegardes avec orchestration intelligente
     
     Fonctionnalités:
     - Orchestration multi-engine backup
@@ -74,7 +78,8 @@ class BackupManager:
     - Monitoring performance temps réel
     - Récupération automatique erreurs
     - Optimisation basée sur patterns usage
-    """    
+    """
+    
     def __init__(self, config: Optional[BackupConfiguration] = None):
         self.config = config or BackupConfiguration()
         self.job_id = str(uuid.uuid4())
@@ -110,7 +115,8 @@ class BackupManager:
         priority: str = "medium",
         options: Optional[Dict[str, Any]] = None
     ) -> BackupJob:
-        """        Crée une nouvelle sauvegarde avec orchestration intelligente
+        """
+        Crée une nouvelle sauvegarde avec orchestration intelligente
         
         Args:
             source_paths: Chemins des fichiers/dossiers à sauvegarder
@@ -122,7 +128,8 @@ class BackupManager:
             
         Returns:
             BackupJob: Job de sauvegarde créé
-        """        try:
+        """
+        try:
             # Génération job unique
             job_id = str(uuid.uuid4())
             backup_name = backup_name or f"backup_{content_type}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
@@ -155,11 +162,13 @@ class BackupManager:
             raise BackupManagerException(f"Backup creation failed: {e}")
     
     async def _execute_backup_job(self, job: BackupJob) -> None:
-        """        Exécute un job de sauvegarde avec gestion d'erreurs avancée
+        """
+        Exécute un job de sauvegarde avec gestion d'erreurs avancée
         
         Args:
             job: Job de sauvegarde à exécuter
-        """        try:
+        """
+        try:
             # Mise à jour statut
             job.status = BackupStatus.RUNNING
             job.started_at = datetime.now()
@@ -230,7 +239,8 @@ class BackupManager:
                 self.job_history.append(self.active_jobs.pop(job.job_id))
     
     def _select_optimal_engine(self, content_type: str, priority: str) -> BackupEngine:
-        """        Sélectionne le moteur de sauvegarde optimal selon le contexte
+        """
+        Sélectionne le moteur de sauvegarde optimal selon le contexte
         
         Args:
             content_type: Type de contenu
@@ -238,7 +248,8 @@ class BackupManager:
             
         Returns:
             BackupEngine: Moteur optimal sélectionné
-        """        if priority == "critical":
+        """
+        if priority == "critical":
             return self.realtime_engine
         elif content_type in ["audio", "video"] and priority in ["high", "medium"]:
             return self.incremental_engine
@@ -246,11 +257,13 @@ class BackupManager:
             return self.backup_engine
     
     async def _preprocess_backup_sources(self, job: BackupJob) -> None:
-        """        Pré-traitement et validation des sources de sauvegarde
+        """
+        Pré-traitement et validation des sources de sauvegarde
         
         Args:
             job: Job de sauvegarde
-        """        validated_paths = []
+        """
+        validated_paths = []
         total_size = 0
         
         for source_path in job.source_paths:
@@ -273,11 +286,13 @@ class BackupManager:
         logger.info(f"Validated {len(validated_paths)} sources, total size: {total_size / (1024**3):.2f} GB")
     
     async def _compress_backup_data(self, job: BackupJob) -> None:
-        """        Compression intelligente des données de sauvegarde
+        """
+        Compression intelligente des données de sauvegarde
         
         Args:
             job: Job de sauvegarde
-        """        compression_config = {
+        """
+        compression_config = {
             "algorithm": "zstd",
             "level": 6,
             "content_aware": True
@@ -292,11 +307,13 @@ class BackupManager:
         logger.info(f"Compression ratio: {job.compression_ratio:.2f}")
     
     async def _encrypt_backup_data(self, job: BackupJob) -> None:
-        """        Chiffrement sécurisé des données de sauvegarde
+        """
+        Chiffrement sécurisé des données de sauvegarde
         
         Args:
             job: Job de sauvegarde
-        """        encryption_config = {
+        """
+        encryption_config = {
             "algorithm": "AES-256-GCM",
             "key_derivation": "PBKDF2",
             "iterations": 100000
@@ -311,11 +328,13 @@ class BackupManager:
         logger.info(f"Backup encrypted with key ID: {encryption_key.key_id}")
     
     async def _finalize_backup_job(self, job: BackupJob) -> None:
-        """        Finalisation du job de sauvegarde
+        """
+        Finalisation du job de sauvegarde
         
         Args:
             job: Job de sauvegarde complété
-        """        # Application des politiques de rétention
+        """
+        # Application des politiques de rétention
         await self.retention.apply_retention_policy(job)
         
         # Mise à jour index de recherche
@@ -325,11 +344,13 @@ class BackupManager:
         await self._cleanup_temporary_files(job)
     
     async def _update_backup_index(self, job: BackupJob) -> None:
-        """        Met à jour l'index de recherche des sauvegardes
+        """
+        Met à jour l'index de recherche des sauvegardes
         
         Args:
             job: Job de sauvegarde
-        """        index_entry = {
+        """
+        index_entry = {
             "job_id": job.job_id,
             "name": job.name,
             "content_type": job.content_type,
@@ -345,14 +366,16 @@ class BackupManager:
         await self.storage.index_backup(index_entry)
     
     def _extract_searchable_content(self, job: BackupJob) -> List[str]:
-        """        Extrait le contenu recherchable pour indexation
+        """
+        Extrait le contenu recherchable pour indexation
         
         Args:
             job: Job de sauvegarde
             
         Returns:
             List[str]: Termes recherchables
-        """        searchable = [job.name, job.content_type]
+        """
+        searchable = [job.name, job.content_type]
         
         if job.user_id:
             searchable.append(job.user_id)
@@ -365,11 +388,13 @@ class BackupManager:
         return list(set(searchable))
     
     async def _cleanup_temporary_files(self, job: BackupJob) -> None:
-        """        Nettoyage des fichiers temporaires
+        """
+        Nettoyage des fichiers temporaires
         
         Args:
             job: Job de sauvegarde
-        """        temp_patterns = ["*.tmp", "*.temp", "*.bak"]
+        """
+        temp_patterns = ["*.tmp", "*.temp", "*.bak"]
         
         for pattern in temp_patterns:
             for temp_file in Path("/tmp").glob(f"{job.job_id}_{pattern}"):
@@ -380,14 +405,16 @@ class BackupManager:
                     logger.warning(f"Failed to clean temporary file {temp_file}: {e}")
     
     async def get_backup_status(self, job_id: str) -> Optional[BackupJob]:
-        """        Récupère le statut d'un job de sauvegarde
+        """
+        Récupère le statut d'un job de sauvegarde
         
         Args:
             job_id: ID du job
             
         Returns:
             Optional[BackupJob]: Job si trouvé, None sinon
-        """        # Recherche dans jobs actifs
+        """
+        # Recherche dans jobs actifs
         if job_id in self.active_jobs:
             return self.active_jobs[job_id]
         
@@ -405,7 +432,8 @@ class BackupManager:
         limit: int = 50,
         offset: int = 0
     ) -> List[BackupJob]:
-        """        Liste les sauvegardes avec filtrage
+        """
+        Liste les sauvegardes avec filtrage
         
         Args:
             user_id: Filtrer par utilisateur
@@ -415,7 +443,8 @@ class BackupManager:
             
         Returns:
             List[BackupJob]: Liste des sauvegardes
-        """        all_jobs = list(self.active_jobs.values()) + self.job_history
+        """
+        all_jobs = list(self.active_jobs.values()) + self.job_history
         
         # Filtrage
         filtered_jobs = []
@@ -433,7 +462,8 @@ class BackupManager:
         return filtered_jobs[offset:offset + limit]
     
     async def cancel_backup(self, job_id: str, reason: str = "User requested") -> bool:
-        """        Annule un job de sauvegarde en cours
+        """
+        Annule un job de sauvegarde en cours
         
         Args:
             job_id: ID du job à annuler
@@ -441,7 +471,8 @@ class BackupManager:
             
         Returns:
             bool: True si annulé avec succès
-        """        if job_id not in self.active_jobs:
+        """
+        if job_id not in self.active_jobs:
             logger.warning(f"Cannot cancel job {job_id}: not found in active jobs")
             return False
         
@@ -462,11 +493,13 @@ class BackupManager:
         return True
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """        Récupère les métriques de performance du système de sauvegarde
+        """
+        Récupère les métriques de performance du système de sauvegarde
         
         Returns:
             Dict[str, Any]: Métriques de performance
-        """        completed_jobs = [job for job in self.job_history if job.status == BackupStatus.COMPLETED]
+        """
+        completed_jobs = [job for job in self.job_history if job.status == BackupStatus.COMPLETED]
         failed_jobs = [job for job in self.job_history if job.status == BackupStatus.FAILED]
         
         if not completed_jobs:
@@ -493,19 +526,22 @@ class BackupManager:
         }
     
     def __del__(self):
-        """Nettoyage lors de la destruction de l'objet"""        if hasattr(self, 'executor'):
+        """Nettoyage lors de la destruction de l'objet"""
+        if hasattr(self, 'executor'):
             self.executor.shutdown(wait=False)
 
 
 class BackupOrchestrator:
-    """    Orchestrateur avancé pour la coordination de multiples gestionnaires de sauvegarde
+    """
+    Orchestrateur avancé pour la coordination de multiples gestionnaires de sauvegarde
     
     Fonctionnalités:
     - Coordination multi-tenant
     - Load balancing intelligent
     - Priorisation dynamique
     - Optimisation ressources globales
-    """    
+    """
+    
     def __init__(self):
         self.managers: Dict[str, BackupManager] = {}
         self.global_scheduler = BackupScheduler()
@@ -514,7 +550,8 @@ class BackupOrchestrator:
         logger.info("BackupOrchestrator initialized")
     
     def _create_load_balancer(self):
-        """Create intelligent load balancer for backup managers"""        try:
+        """Create intelligent load balancer for backup managers"""
+        try:
             # Create load balancer with round-robin and health checking
             load_balancer_config = {
                 "algorithm": "weighted_round_robin",
@@ -558,7 +595,8 @@ class BackupOrchestrator:
             raise
     
     async def register_manager(self, tenant_id: str, config: BackupConfiguration) -> BackupManager:
-        """        Enregistre un nouveau gestionnaire pour un tenant
+        """
+        Enregistre un nouveau gestionnaire pour un tenant
         
         Args:
             tenant_id: ID du tenant
@@ -566,18 +604,21 @@ class BackupOrchestrator:
             
         Returns:
             BackupManager: Manager créé
-        """        manager = BackupManager(config)
+        """
+        manager = BackupManager(config)
         self.managers[tenant_id] = manager
         
         logger.info(f"Registered backup manager for tenant {tenant_id}")
         return manager
     
     async def orchestrate_global_backup(self) -> Dict[str, Any]:
-        """        Orchestre une sauvegarde globale coordonnée
+        """
+        Orchestre une sauvegarde globale coordonnée
         
         Returns:
             Dict[str, Any]: Résultats de l'orchestration
-        """        results = {}
+        """
+        results = {}
         
         for tenant_id, manager in self.managers.items():
             try:

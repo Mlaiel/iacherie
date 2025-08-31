@@ -4,11 +4,13 @@ Professional data models that define the structure and validation
 for all content generation operations and API responses.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""from typing import Dict, Any, List, Optional, Union, Literal
+"""
+
+from typing import Dict, Any, List, Optional, Union, Literal
 from datetime import datetime
 from pydantic import BaseModel, Field, validator, EmailStr
 from enum import Enum
@@ -16,7 +18,8 @@ from enum import Enum
 
 # Enums for type safety
 class ContentType(str, Enum):
-    """Content type enumeration"""    BLOG_POST = "blog_post"
+    """Content type enumeration"""
+    BLOG_POST = "blog_post"
     SOCIAL_POST = "social_post"
     INSTAGRAM_POST = "instagram_post"
     TWITTER_POST = "twitter_post"
@@ -35,7 +38,8 @@ class ContentType(str, Enum):
 
 
 class Platform(str, Enum):
-    """Social media platform enumeration"""    INSTAGRAM = "instagram"
+    """Social media platform enumeration"""
+    INSTAGRAM = "instagram"
     TWITTER = "twitter"
     LINKEDIN = "linkedin"
     TIKTOK = "tiktok"
@@ -47,7 +51,8 @@ class Platform(str, Enum):
 
 
 class ContentFormat(str, Enum):
-    """Content format enumeration"""    TEXT = "text"
+    """Content format enumeration"""
+    TEXT = "text"
     HTML = "html"
     MARKDOWN = "markdown"
     JSON = "json"
@@ -55,14 +60,16 @@ class ContentFormat(str, Enum):
 
 
 class QualityLevel(str, Enum):
-    """Quality level enumeration"""    BASIC = "basic"
+    """Quality level enumeration"""
+    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 
 class BrandVoice(str, Enum):
-    """Brand voice enumeration"""    PROFESSIONAL = "professional"
+    """Brand voice enumeration"""
+    PROFESSIONAL = "professional"
     CASUAL = "casual"
     FRIENDLY = "friendly"
     AUTHORITATIVE = "authoritative"
@@ -72,7 +79,8 @@ class BrandVoice(str, Enum):
 
 # Base Models
 class BaseContentModel(BaseModel):
-    """Base model for all content-related models"""    
+    """Base model for all content-related models"""
+    
     class Config:
         use_enum_values = True
         allow_population_by_field_name = True
@@ -81,7 +89,9 @@ class BaseContentModel(BaseModel):
 
 # Request Models
 class ContentGenerationRequest(BaseContentModel):
-    """Request model for content generation"""    
+    """
+Request model for content generation"""
+    
     content_type: ContentType = Field(..., description="Type of content to generate")
     topic: str = Field(..., min_length=3, max_length=200, description="Content topic or theme")
     target_audience: Optional[str] = Field(None, description="Target audience description")
@@ -127,7 +137,8 @@ class ContentGenerationRequest(BaseContentModel):
 
 
 class ContentOptimizationRequest(BaseContentModel):
-    """Request model for content optimization"""    
+    """Request model for content optimization"""
+    
     content: str = Field(..., min_length=10, description="Content to optimize")
     optimization_type: Literal["quality", "seo", "format", "engagement"] = Field(
         "quality", description="Type of optimization"
@@ -152,7 +163,8 @@ class ContentOptimizationRequest(BaseContentModel):
 
 
 class TemplateRequest(BaseContentModel):
-    """Request model for template-based content creation"""    
+    """Request model for template-based content creation"""
+    
     template_type: Literal["social", "blog", "marketing"] = Field(..., description="Template type")
     template_category: str = Field(..., description="Specific template category")
     platform: Optional[Platform] = Field(None, description="Target platform")
@@ -166,7 +178,8 @@ class TemplateRequest(BaseContentModel):
 
 
 class PerformanceAnalysisRequest(BaseContentModel):
-    """Request model for performance analysis"""    
+    """Request model for performance analysis"""
+    
     content_id: str = Field(..., description="Content identifier")
     platform: Platform = Field(..., description="Platform where content was published")
     
@@ -191,7 +204,8 @@ class PerformanceAnalysisRequest(BaseContentModel):
 
 # Response Models
 class QualityScoreResponse(BaseContentModel):
-    """Response model for quality scores"""    
+    """Response model for quality scores"""
+    
     overall_score: float = Field(..., ge=0, le=1, description="Overall quality score")
     readability_score: float = Field(..., ge=0, le=1, description="Readability score")
     engagement_score: float = Field(..., ge=0, le=1, description="Engagement potential score")
@@ -206,7 +220,8 @@ class QualityScoreResponse(BaseContentModel):
 
 
 class ContentGenerationResponse(BaseContentModel):
-    """Response model for content generation"""    
+    """Response model for content generation"""
+    
     content_id: str = Field(..., description="Unique content identifier")
     content_type: ContentType = Field(..., description="Type of content generated")
     status: Literal["completed", "failed", "in_progress", "needs_review"] = Field(
@@ -240,7 +255,8 @@ class ContentGenerationResponse(BaseContentModel):
 
 
 class ContentOptimizationResponse(BaseContentModel):
-    """Response model for content optimization"""    
+    """Response model for content optimization"""
+    
     content_id: str = Field(..., description="Content identifier")
     optimization_type: str = Field(..., description="Type of optimization applied")
     status: Literal["completed", "failed", "partial"] = Field(..., description="Optimization status")
@@ -267,7 +283,8 @@ class ContentOptimizationResponse(BaseContentModel):
 
 
 class PerformanceMetrics(BaseContentModel):
-    """Performance metrics model"""    
+    """Performance metrics model"""
+    
     content_id: str = Field(..., description="Content identifier")
     platform: Platform = Field(..., description="Platform")
     content_type: ContentType = Field(..., description="Content type")
@@ -299,7 +316,8 @@ class PerformanceMetrics(BaseContentModel):
 
 
 class PerformanceInsight(BaseContentModel):
-    """Performance insight model"""    
+    """Performance insight model"""
+    
     insight_type: str = Field(..., description="Type of insight")
     title: str = Field(..., description="Insight title")
     description: str = Field(..., description="Insight description")
@@ -310,7 +328,8 @@ class PerformanceInsight(BaseContentModel):
 
 
 class PerformanceAnalysisResponse(BaseContentModel):
-    """Response model for performance analysis"""    
+    """Response model for performance analysis"""
+    
     content_id: str = Field(..., description="Content identifier")
     analysis_type: str = Field(..., description="Type of analysis performed")
     
@@ -332,7 +351,8 @@ class PerformanceAnalysisResponse(BaseContentModel):
 
 
 class ContentRecommendationsResponse(BaseContentModel):
-    """Response model for content recommendations"""    
+    """Response model for content recommendations"""
+    
     content_type: ContentType = Field(..., description="Content type")
     target_audience: Optional[str] = Field(None, description="Target audience")
     platform: Optional[Platform] = Field(None, description="Target platform")
@@ -362,7 +382,8 @@ class ContentRecommendationsResponse(BaseContentModel):
 
 # Utility Models
 class ContentMetadata(BaseContentModel):
-    """Content metadata model"""    
+    """Content metadata model"""
+    
     title: Optional[str] = Field(None, description="Content title")
     description: Optional[str] = Field(None, description="Content description")
     author: Optional[str] = Field(None, description="Content author")
@@ -386,7 +407,8 @@ class ContentMetadata(BaseContentModel):
 
 
 class ABTestConfiguration(BaseContentModel):
-    """A/B test configuration model"""    
+    """A/B test configuration model"""
+    
     test_id: str = Field(..., description="Unique test identifier")
     test_name: str = Field(..., description="Test name")
     hypothesis: str = Field(..., description="Test hypothesis")
@@ -412,7 +434,8 @@ class ABTestConfiguration(BaseContentModel):
 
 # Error Models
 class ContentError(BaseContentModel):
-    """Content error model"""    
+    """Content error model"""
+    
     error_code: str = Field(..., description="Error code")
     error_message: str = Field(..., description="Error message")
     error_type: Literal["validation", "generation", "optimization", "system"] = Field(
@@ -425,7 +448,8 @@ class ContentError(BaseContentModel):
 
 # Batch Processing Models
 class BatchContentRequest(BaseContentModel):
-    """Batch content generation request"""    
+    """Batch content generation request"""
+    
     batch_id: str = Field(..., description="Batch identifier")
     requests: List[ContentGenerationRequest] = Field(..., description="List of content requests")
     
@@ -443,7 +467,8 @@ class BatchContentRequest(BaseContentModel):
 
 
 class BatchContentResponse(BaseContentModel):
-    """Batch content generation response"""    
+    """Batch content generation response"""
+    
     batch_id: str = Field(..., description="Batch identifier")
     status: Literal["processing", "completed", "failed", "partial"] = Field(
         ..., description="Batch status"

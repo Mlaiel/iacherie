@@ -11,7 +11,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️  Unauthorized reproduction, distribution, or use is strictly        ⚠️
 ⚠️  prohibited and may result in severe civil and criminal penalties.  ⚠️
 ⚠️  All rights reserved to Fahed Mlaiel (mlaiel@live.de).             ⚠️
-"""import asyncio
+"""
+import asyncio
 import logging
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
@@ -34,14 +35,16 @@ import threading
 logger = logging.getLogger(__name__)
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    LOW = "low"
+    """Alert severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 class AlertCategory(Enum):
-    """Alert categories"""    CONTENT_VIOLATION = "content_violation"
+    """Alert categories"""
+    CONTENT_VIOLATION = "content_violation"
     SECURITY_INCIDENT = "security_incident"
     SYSTEM_FAILURE = "system_failure"
     PERFORMANCE_DEGRADATION = "performance_degradation"
@@ -51,7 +54,8 @@ class AlertCategory(Enum):
     USER_ACTIVITY = "user_activity"
 
 class AlertChannel(Enum):
-    """Alert delivery channels"""    EMAIL = "email"
+    """Alert delivery channels"""
+    EMAIL = "email"
     SMS = "sms"
     WEBHOOK = "webhook"
     WEBSOCKET = "websocket"
@@ -62,7 +66,8 @@ class AlertChannel(Enum):
     TELEGRAM = "telegram"
 
 class AlertStatus(Enum):
-    """Alert processing status"""    PENDING = "pending"
+    """Alert processing status"""
+    PENDING = "pending"
     PROCESSING = "processing"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -73,7 +78,8 @@ class AlertStatus(Enum):
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""    rule_id: str
+    """Alert rule configuration"""
+    rule_id: str
     name: str
     category: AlertCategory
     severity: AlertSeverity
@@ -88,7 +94,8 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Real-time alert data structure"""    alert_id: str
+    """Real-time alert data structure"""
+    alert_id: str
     rule_id: str
     category: AlertCategory
     severity: AlertSeverity
@@ -109,7 +116,8 @@ class Alert:
 
 @dataclass
 class AlertInfrastructureSpec:
-    """Real-time alert infrastructure specification"""    redis_url: str = "redis://localhost:6379"
+    """Real-time alert infrastructure specification"""
+    redis_url: str = "redis://localhost:6379"
     email_config: Dict[str, str] = field(default_factory=dict)
     sms_config: Dict[str, str] = field(default_factory=dict)
     webhook_config: Dict[str, str] = field(default_factory=dict)
@@ -125,7 +133,8 @@ class AlertInfrastructureSpec:
     max_alerts_per_minute: int = 100
 
 class EmailAlertChannel:
-    """Email alert delivery channel"""    
+    """Email alert delivery channel"""
+    
     def __init__(self, config: Dict[str, str]):
         self.smtp_server = config.get("smtp_server", "smtp.gmail.com")
         self.smtp_port = int(config.get("smtp_port", "587"))
@@ -134,7 +143,8 @@ class EmailAlertChannel:
         self.from_email = config.get("from_email", self.username)
         
     async def send_alert(self, alert: Alert) -> Dict[str, Any]:
-        """Send alert via email"""        try:
+        """Send alert via email"""
+        try:
             msg = MIMEMultipart()
             msg['From'] = self.from_email
             msg['To'] = ', '.join(alert.recipients)
@@ -167,7 +177,8 @@ class EmailAlertChannel:
             }
     
     def _create_html_email_body(self, alert: Alert) -> str:
-        """Create HTML email body for alert"""        severity_colors = {
+        """Create HTML email body for alert"""
+        severity_colors = {
             AlertSeverity.LOW: "#28a745",
             AlertSeverity.MEDIUM: "#ffc107", 
             AlertSeverity.HIGH: "#fd7e14",
@@ -177,7 +188,8 @@ class EmailAlertChannel:
         
         color = severity_colors.get(alert.severity, "#6c757d")
         
-        return f"""        <html>
+        return f"""
+        <html>
         <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
             <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
                 <div style="background: linear-gradient(135deg, {color}, {color}cc); color: white; padding: 20px; border-radius: 8px 8px 0 0;">
@@ -208,9 +220,11 @@ class EmailAlertChannel:
             </div>
         </body>
         </html>
-        """    
+        """
+    
     def _format_metadata_html(self, metadata: Dict[str, Any]) -> str:
-        """Format metadata as HTML"""        if not metadata:
+        """Format metadata as HTML"""
+        if not metadata:
             return ""
         
         html = "<h4>Additional Information</h4><ul>"
@@ -220,14 +234,16 @@ class EmailAlertChannel:
         return html
 
 class WebhookAlertChannel:
-    """Webhook alert delivery channel"""    
+    """Webhook alert delivery channel"""
+    
     def __init__(self, config: Dict[str, str]):
         self.webhook_urls = config.get("webhook_urls", [])
         self.auth_headers = config.get("auth_headers", {})
         self.timeout = int(config.get("timeout", "30"))
         
     async def send_alert(self, alert: Alert) -> Dict[str, Any]:
-        """Send alert via webhook"""        results = []
+        """Send alert via webhook"""
+        results = []
         
         for url in self.webhook_urls:
             try:
@@ -275,27 +291,31 @@ class WebhookAlertChannel:
         }
 
 class WebSocketAlertChannel:
-    """WebSocket alert delivery channel"""    
+    """WebSocket alert delivery channel"""
+    
     def __init__(self, port: int = 8765):
         self.port = port
         self.clients = set()
         self.server = None
         
     async def start_server(self):
-        """Start WebSocket server"""        self.server = await websockets.serve(
+        """Start WebSocket server"""
+        self.server = await websockets.serve(
             self.handle_client, "localhost", self.port
         )
         logger.info(f"WebSocket alert server started on port {self.port}")
         
     async def handle_client(self, websocket, path):
-        """Handle WebSocket client connection"""        self.clients.add(websocket)
+        """Handle WebSocket client connection"""
+        self.clients.add(websocket)
         try:
             await websocket.wait_closed()
         finally:
             self.clients.remove(websocket)
     
     async def send_alert(self, alert: Alert) -> Dict[str, Any]:
-        """Send alert via WebSocket to all connected clients"""        if not self.clients:
+        """Send alert via WebSocket to all connected clients"""
+        if not self.clients:
             return {
                 "status": "no_clients",
                 "channel": "websocket",
@@ -338,14 +358,16 @@ class WebSocketAlertChannel:
         }
 
 class SlackAlertChannel:
-    """Slack alert delivery channel"""    
+    """Slack alert delivery channel"""
+    
     def __init__(self, config: Dict[str, str]):
         self.webhook_url = config.get("webhook_url")
         self.bot_token = config.get("bot_token")
         self.default_channel = config.get("default_channel", "#alerts")
         
     async def send_alert(self, alert: Alert) -> Dict[str, Any]:
-        """Send alert to Slack"""        try:
+        """Send alert to Slack"""
+        try:
             color_map = {
                 AlertSeverity.LOW: "good",
                 AlertSeverity.MEDIUM: "warning",
@@ -414,11 +436,13 @@ class SlackAlertChannel:
             }
 
 class RealTimeAlertInfrastructureManager:
-    """    Enterprise Real-time Alert Infrastructure Manager
+    """
+    Enterprise Real-time Alert Infrastructure Manager
     
     Manages comprehensive real-time alerting system with multiple delivery channels,
     escalation rules, acknowledgment workflows, and intelligent alert routing.
-    """    
+    """
+    
     def __init__(self, spec: AlertInfrastructureSpec):
         self.spec = spec
         self.redis_client = None
@@ -430,7 +454,8 @@ class RealTimeAlertInfrastructureManager:
         self._initialize_channels()
         
     async def initialize_alert_infrastructure(self) -> Dict[str, Any]:
-        """Initialize complete real-time alert infrastructure"""        try:
+        """Initialize complete real-time alert infrastructure"""
+        try:
             logger.info("Initializing real-time alert infrastructure...")
             
             # Initialize Redis for alert queuing
@@ -466,7 +491,8 @@ class RealTimeAlertInfrastructureManager:
             raise
 
     async def create_alert_rule(self, rule: AlertRule) -> Dict[str, Any]:
-        """Create new alert rule"""        try:
+        """Create new alert rule"""
+        try:
             # Validate rule
             validation_result = await self._validate_alert_rule(rule)
             if not validation_result["is_valid"]:
@@ -500,7 +526,8 @@ class RealTimeAlertInfrastructureManager:
                            message: str,
                            source: str,
                            metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Trigger new alert"""        try:
+        """Trigger new alert"""
+        try:
             alert = Alert(
                 alert_id=str(uuid.uuid4()),
                 rule_id="manual",
@@ -550,7 +577,8 @@ class RealTimeAlertInfrastructureManager:
             raise
 
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> Dict[str, Any]:
-        """Acknowledge alert"""        try:
+        """Acknowledge alert"""
+        try:
             if alert_id not in self.active_alerts:
                 return {"status": "not_found", "message": "Alert not found"}
             
@@ -579,7 +607,8 @@ class RealTimeAlertInfrastructureManager:
             raise
 
     async def resolve_alert(self, alert_id: str, resolved_by: str) -> Dict[str, Any]:
-        """Resolve alert"""        try:
+        """Resolve alert"""
+        try:
             if alert_id not in self.active_alerts:
                 return {"status": "not_found", "message": "Alert not found"}
             
@@ -612,7 +641,8 @@ class RealTimeAlertInfrastructureManager:
     async def get_active_alerts(self, 
                                category: Optional[AlertCategory] = None,
                                severity: Optional[AlertSeverity] = None) -> List[Alert]:
-        """Get active alerts with optional filtering"""        alerts = list(self.active_alerts.values())
+        """Get active alerts with optional filtering"""
+        alerts = list(self.active_alerts.values())
         
         if category:
             alerts = [a for a in alerts if a.category == category]
@@ -623,7 +653,8 @@ class RealTimeAlertInfrastructureManager:
         return sorted(alerts, key=lambda a: a.timestamp, reverse=True)
 
     async def get_alert_statistics(self) -> Dict[str, Any]:
-        """Get alert system statistics"""        try:
+        """Get alert system statistics"""
+        try:
             active_count = len(self.active_alerts)
             
             # Count by severity
@@ -658,7 +689,8 @@ class RealTimeAlertInfrastructureManager:
     # Private helper methods
     
     def _initialize_channels(self):
-        """Initialize alert delivery channels"""        if self.spec.email_config:
+        """Initialize alert delivery channels"""
+        if self.spec.email_config:
             self.channels[AlertChannel.EMAIL] = EmailAlertChannel(self.spec.email_config)
         
         if self.spec.webhook_config:
@@ -671,7 +703,8 @@ class RealTimeAlertInfrastructureManager:
             self.channels[AlertChannel.SLACK] = SlackAlertChannel(self.spec.slack_config)
 
     async def _setup_alert_channels(self) -> Dict[str, Any]:
-        """Setup all alert delivery channels"""        results = {}
+        """Setup all alert delivery channels"""
+        results = {}
         
         for channel_type, channel in self.channels.items():
             try:
@@ -691,28 +724,32 @@ class RealTimeAlertInfrastructureManager:
         return results
 
     async def _setup_alert_workers(self) -> Dict[str, Any]:
-        """Setup alert processing workers"""        return {
+        """Setup alert processing workers"""
+        return {
             "status": "configured",
             "max_concurrent_alerts": self.spec.max_concurrent_alerts,
             "worker_threads": 20
         }
 
     async def _setup_alert_rules_engine(self) -> Dict[str, Any]:
-        """Setup alert rules engine"""        return {
+        """Setup alert rules engine"""
+        return {
             "status": "configured",
             "rules_loaded": len(self.alert_rules),
             "escalation_enabled": self.spec.enable_escalation
         }
 
     async def _setup_alert_monitoring(self) -> Dict[str, Any]:
-        """Setup alert system monitoring"""        return {
+        """Setup alert system monitoring"""
+        return {
             "status": "configured",
             "retention_days": self.spec.alert_retention_days,
             "rate_limiting": self.spec.rate_limiting
         }
 
     async def _validate_alert_rule(self, rule: AlertRule) -> Dict[str, Any]:
-        """Validate alert rule configuration"""        errors = []
+        """Validate alert rule configuration"""
+        errors = []
         
         if not rule.name:
             errors.append("Rule name is required")
@@ -733,7 +770,8 @@ class RealTimeAlertInfrastructureManager:
         }
 
     async def _check_rate_limit(self, alert: Alert) -> bool:
-        """Check if alert passes rate limiting"""        if not self.spec.rate_limiting:
+        """Check if alert passes rate limiting"""
+        if not self.spec.rate_limiting:
             return True
         
         current_minute = datetime.utcnow().replace(second=0, microsecond=0)
@@ -747,7 +785,8 @@ class RealTimeAlertInfrastructureManager:
         return True
 
     async def _find_matching_rules(self, alert: Alert) -> List[AlertRule]:
-        """Find alert rules that match the alert"""        matching_rules = []
+        """Find alert rules that match the alert"""
+        matching_rules = []
         
         for rule in self.alert_rules.values():
             if not rule.enabled:
@@ -764,7 +803,8 @@ class RealTimeAlertInfrastructureManager:
         return matching_rules
 
     async def _rule_matches_alert(self, rule: AlertRule, alert: Alert) -> bool:
-        """Check if alert rule matches alert"""        # Basic matching by category
+        """Check if alert rule matches alert"""
+        # Basic matching by category
         if rule.category != alert.category:
             return False
         
@@ -783,7 +823,8 @@ class RealTimeAlertInfrastructureManager:
         return True
 
     async def _is_rule_in_cooldown(self, rule: AlertRule, alert: Alert) -> bool:
-        """Check if rule is in cooldown period"""        cooldown_key = f"cooldown:{rule.rule_id}:{alert.category.value}"
+        """Check if rule is in cooldown period"""
+        cooldown_key = f"cooldown:{rule.rule_id}:{alert.category.value}"
         last_triggered = await self.redis_client.get(cooldown_key)
         
         if last_triggered:
@@ -794,7 +835,8 @@ class RealTimeAlertInfrastructureManager:
         return False
 
     async def _process_alert_with_rule(self, alert: Alert, rule: AlertRule) -> Dict[str, Any]:
-        """Process alert using specific rule"""        try:
+        """Process alert using specific rule"""
+        try:
             # Update alert with rule information
             alert.rule_id = rule.rule_id
             alert.channels = rule.channels
@@ -834,7 +876,8 @@ class RealTimeAlertInfrastructureManager:
             }
 
     async def _get_redis_statistics(self) -> Dict[str, Any]:
-        """Get Redis statistics"""        try:
+        """Get Redis statistics"""
+        try:
             info = await self.redis_client.info()
             return {
                 "connected_clients": info.get("connected_clients", 0),

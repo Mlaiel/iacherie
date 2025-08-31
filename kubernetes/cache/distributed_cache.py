@@ -34,7 +34,8 @@ Enterprise Features:
 - Sub-50ms latency for cached content globally
 - GDPR/CCPA compliant data residency
 - Real-time content synchronization for collaboration
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import json
@@ -54,7 +55,8 @@ import aiohttp
 
 
 class ConsistencyModel(Enum):
-    """Cache consistency models for different content types"""    EVENTUAL = "eventual"      # Analytics, non-critical metadata
+    """Cache consistency models for different content types"""
+    EVENTUAL = "eventual"      # Analytics, non-critical metadata
     STRONG = "strong"          # Financial data, user authentication
     WEAK = "weak"             # Thumbnails, preview content
     CAUSAL = "causal"         # Content updates, collaboration
@@ -62,7 +64,8 @@ class ConsistencyModel(Enum):
 
 
 class ReplicationStrategy(Enum):
-    """Data replication strategies optimized for content distribution"""    MASTER_SLAVE = "master_slave"      # Critical data with read replicas
+    """Data replication strategies optimized for content distribution"""
+    MASTER_SLAVE = "master_slave"      # Critical data with read replicas
     MASTER_MASTER = "master_master"    # Collaborative content editing
     RING = "ring"                      # Geographic distribution
     CONTENT_AWARE = "content_aware"    # Based on content type and usage
@@ -70,7 +73,8 @@ class ReplicationStrategy(Enum):
 
 
 class ShardingStrategy(Enum):
-    """Intelligent sharding strategies for content distribution"""    CONSISTENT_HASH = "consistent_hash"
+    """Intelligent sharding strategies for content distribution"""
+    CONSISTENT_HASH = "consistent_hash"
     RANGE_BASED = "range_based"
     CONTENT_TYPE = "content_type"       # Shard by audio/video/image/text
     CREATOR_BASED = "creator_based"     # Shard by creator ID/region
@@ -79,7 +83,8 @@ class ShardingStrategy(Enum):
 
 
 class DataResidencyZone(Enum):
-    """Data residency zones for compliance"""    EU = "eu"                  # GDPR compliance
+    """Data residency zones for compliance"""
+    EU = "eu"                  # GDPR compliance
     US = "us"                  # CCPA compliance
     APAC = "apac"              # Regional data laws
     GLOBAL = "global"          # Non-sensitive data
@@ -88,7 +93,8 @@ class DataResidencyZone(Enum):
 
 @dataclass
 class NodeConfiguration:
-    """Configuration for cache nodes"""    node_id: str
+    """Configuration for cache nodes"""
+    node_id: str
     host: str
     port: int
     datacenter: str
@@ -105,7 +111,8 @@ class NodeConfiguration:
 
 @dataclass 
 class ContentDistributionRule:
-    """Rules for content distribution across nodes"""    content_type: str
+    """Rules for content distribution across nodes"""
+    content_type: str
     creator_type: str
     geographic_preference: List[str]
     replication_factor: int
@@ -116,7 +123,8 @@ class ContentDistributionRule:
 
 
 class GeographicManager:
-    """Geographic optimization for global content distribution"""    
+    """Geographic optimization for global content distribution"""
+    
     def __init__(self):
         self.geolocator = Nominatim(user_agent="ia_influencer_cache")
         self.regional_nodes: Dict[str, List[NodeConfiguration]] = {}
@@ -128,7 +136,8 @@ class GeographicManager:
         content_type: str,
         target_regions: List[str]
     ) -> List[str]:
-        """Calculate optimal cache nodes based on geography and content type"""        try:
+        """Calculate optimal cache nodes based on geography and content type"""
+        try:
             creator_coords = await self._get_coordinates(creator_location)
             optimal_nodes = []
             
@@ -160,7 +169,8 @@ class GeographicManager:
             return []
     
     async def _get_coordinates(self, location: str) -> Tuple[float, float]:
-        """Get coordinates for a location"""        try:
+        """Get coordinates for a location"""
+        try:
             location_obj = self.geolocator.geocode(location)
             if location_obj:
                 return (location_obj.latitude, location_obj.longitude)
@@ -170,7 +180,8 @@ class GeographicManager:
 
 
 class ContentAwareRouter:
-    """Intelligent content routing based on type and usage patterns"""    
+    """Intelligent content routing based on type and usage patterns"""
+    
     def __init__(self):
         self.content_routing_rules: Dict[str, ContentDistributionRule] = {}
         self.usage_patterns: Dict[str, Dict] = defaultdict(dict)
@@ -183,7 +194,8 @@ class ContentAwareRouter:
         creator_info: Dict,
         target_audience: List[str]
     ) -> Dict[str, Any]:
-        """Route content to optimal cache nodes"""        
+        """Route content to optimal cache nodes"""
+        
         routing_strategy = {
             "primary_nodes": [],
             "replica_nodes": [],
@@ -215,18 +227,22 @@ class ContentAwareRouter:
         return routing_strategy
     
     async def _get_audio_optimized_nodes(self, creator_info: Dict) -> List[str]:
-        """Get nodes optimized for audio processing"""        # Implementation for audio-optimized node selection
+        """Get nodes optimized for audio processing"""
+        # Implementation for audio-optimized node selection
         return ["audio-node-1", "audio-node-2"]
     
     async def _get_video_optimized_nodes(self, creator_info: Dict) -> List[str]:
-        """Get nodes optimized for video processing"""        return ["video-node-1", "video-node-2"]
+        """Get nodes optimized for video processing"""
+        return ["video-node-1", "video-node-2"]
     
     async def _get_financial_nodes(self, creator_info: Dict) -> List[str]:
-        """Get secure nodes for financial data"""        return ["secure-node-1", "secure-node-2"]
+        """Get secure nodes for financial data"""
+        return ["secure-node-1", "secure-node-2"]
 
 
 class ReplicationManager:
-    """Advanced replication management for distributed content"""    
+    """Advanced replication management for distributed content"""
+    
     def __init__(self, redis_clients: Dict[str, redis.Redis]):
         self.redis_clients = redis_clients
         self.replication_queue = asyncio.Queue()
@@ -245,7 +261,8 @@ class ReplicationManager:
         consistency_model: ConsistencyModel,
         metadata: Optional[Dict] = None
     ) -> bool:
-        """Replicate content across multiple nodes"""        
+        """Replicate content across multiple nodes"""
+        
         start_time = time.time()
         successful_replications = 0
         
@@ -288,7 +305,8 @@ class ReplicationManager:
         consistency_model: ConsistencyModel,
         metadata: Optional[Dict]
     ) -> bool:
-        """Replicate content to a specific node"""        try:
+        """Replicate content to a specific node"""
+        try:
             redis_client = self.redis_clients[node_id]
             
             # Prepare replication package
@@ -315,7 +333,8 @@ class ReplicationManager:
             return False
     
     def _get_ttl_for_consistency(self, consistency_model: ConsistencyModel) -> int:
-        """Get TTL based on consistency requirements"""        ttl_map = {
+        """Get TTL based on consistency requirements"""
+        ttl_map = {
             ConsistencyModel.STRONG: 86400,      # 24 hours
             ConsistencyModel.CAUSAL: 43200,      # 12 hours
             ConsistencyModel.EVENTUAL: 21600,    # 6 hours
@@ -326,13 +345,15 @@ class ReplicationManager:
 
 
 class ConflictResolver:
-    """Conflict resolution for distributed cache consistency"""    
+    """Conflict resolution for distributed cache consistency"""
+    
     async def resolve_conflict(
         self,
         content_key: str,
         conflicting_versions: List[Dict]
     ) -> Dict:
-        """Resolve conflicts between cache versions"""        
+        """Resolve conflicts between cache versions"""
+        
         if not conflicting_versions:
             return {}
         
@@ -349,7 +370,8 @@ class ConflictResolver:
 
 @dataclass
 class ClusterHealth:
-    """Cluster health monitoring data"""    total_nodes: int
+    """Cluster health monitoring data"""
+    total_nodes: int
     active_nodes: int
     failed_nodes: int
     avg_latency_ms: float
@@ -367,7 +389,8 @@ class DistributedCacheManager:
 
 
 class ShardingStrategy(Enum):
-    """Data sharding strategies"""    HASH_BASED = "hash_based"
+    """Data sharding strategies"""
+    HASH_BASED = "hash_based"
     RANGE_BASED = "range_based"
     DIRECTORY_BASED = "directory_based"
     CONSISTENT_HASH = "consistent_hash"
@@ -375,7 +398,8 @@ class ShardingStrategy(Enum):
 
 
 class NodeStatus(Enum):
-    """Cache node status"""    ACTIVE = "active"
+    """Cache node status"""
+    ACTIVE = "active"
     STANDBY = "standby"
     FAILED = "failed"
     RECOVERING = "recovering"
@@ -384,7 +408,8 @@ class NodeStatus(Enum):
 
 @dataclass
 class CacheNode:
-    """Cache node configuration and status"""    node_id: str
+    """Cache node configuration and status"""
+    node_id: str
     hostname: str
     port: int
     datacenter: str
@@ -401,7 +426,8 @@ class CacheNode:
 
 @dataclass
 class ReplicationGroup:
-    """Cache replication group"""    group_id: str
+    """Cache replication group"""
+    group_id: str
     primary_node: str
     replica_nodes: List[str]
     replication_strategy: ReplicationStrategy
@@ -413,7 +439,8 @@ class ReplicationGroup:
 
 @dataclass
 class ShardMapping:
-    """Shard mapping configuration"""    shard_id: str
+    """Shard mapping configuration"""
+    shard_id: str
     key_range_start: str
     key_range_end: str
     primary_node: str
@@ -422,21 +449,25 @@ class ShardMapping:
 
 
 class DistributedCacheManager:
-    """    Enterprise distributed cache manager with multi-node coordination,
+    """
+    Enterprise distributed cache manager with multi-node coordination,
     consistency management, and high-availability features.
-    """    def __init__(
+    """
+    def __init__(
         self,
         config: CacheConfiguration,
         metrics_collector: CacheMetricsCollector,
         local_node_id: Optional[str] = None
     ):
-        """        Initialize distributed cache manager.
+        """
+        Initialize distributed cache manager.
         
         Args:
             config: Cache configuration instance
             metrics_collector: Metrics collection service
             local_node_id: ID of local cache node
-        """        self.config = config
+        """
+        self.config = config
         self.metrics = metrics_collector
         self.local_node_id = local_node_id or str(uuid.uuid4())
         self.logger = logging.getLogger(__name__)
@@ -477,11 +508,13 @@ class DistributedCacheManager:
         self,
         initial_nodes: List[Dict[str, Any]]
     ) -> None:
-        """        Initialize distributed cache cluster.
+        """
+        Initialize distributed cache cluster.
         
         Args:
             initial_nodes: List of initial node configurations
-        """        try:
+        """
+        try:
             # Create local node
             await self._create_local_node()
             
@@ -507,7 +540,8 @@ class DistributedCacheManager:
             raise
 
     async def shutdown(self) -> None:
-        """Shutdown distributed cache manager"""        try:
+        """Shutdown distributed cache manager"""
+        try:
             self._shutdown_event.set()
             
             # Leave cluster gracefully
@@ -536,7 +570,8 @@ class DistributedCacheManager:
         content_id: str,
         consistency_model: ConsistencyModel = ConsistencyModel.EVENTUAL
     ) -> Optional[ContentCacheEntry]:
-        """        Get content from distributed cache with specified consistency.
+        """
+        Get content from distributed cache with specified consistency.
         
         Args:
             content_id: Content identifier
@@ -544,7 +579,8 @@ class DistributedCacheManager:
             
         Returns:
             ContentCacheEntry if found, None otherwise
-        """        try:
+        """
+        try:
             start_time = time.time()
             self._operation_metrics["distributed_reads"] += 1
             
@@ -587,7 +623,8 @@ class DistributedCacheManager:
         consistency_model: ConsistencyModel = ConsistencyModel.EVENTUAL,
         replication_factor: int = 2
     ) -> bool:
-        """        Put content to distributed cache with replication.
+        """
+        Put content to distributed cache with replication.
         
         Args:
             content_id: Content identifier
@@ -597,7 +634,8 @@ class DistributedCacheManager:
             
         Returns:
             bool: True if operation successful
-        """        try:
+        """
+        try:
             start_time = time.time()
             self._operation_metrics["distributed_writes"] += 1
             
@@ -650,7 +688,8 @@ class DistributedCacheManager:
         content_id: str,
         consistency_model: ConsistencyModel = ConsistencyModel.STRONG
     ) -> bool:
-        """        Delete content from distributed cache.
+        """
+        Delete content from distributed cache.
         
         Args:
             content_id: Content identifier
@@ -658,7 +697,8 @@ class DistributedCacheManager:
             
         Returns:
             bool: True if operation successful
-        """        try:
+        """
+        try:
             # Determine target nodes
             target_nodes = await self._get_target_nodes_for_key(content_id)
             
@@ -679,14 +719,16 @@ class DistributedCacheManager:
         self,
         node_config: Dict[str, Any]
     ) -> bool:
-        """        Add new node to distributed cache cluster.
+        """
+        Add new node to distributed cache cluster.
         
         Args:
             node_config: Node configuration dictionary
             
         Returns:
             bool: True if node added successfully
-        """        try:
+        """
+        try:
             node = await self._create_node_from_config(node_config)
             
             # Add to cluster
@@ -710,7 +752,8 @@ class DistributedCacheManager:
         node_id: str,
         graceful: bool = True
     ) -> bool:
-        """        Remove node from distributed cache cluster.
+        """
+        Remove node from distributed cache cluster.
         
         Args:
             node_id: Node ID to remove
@@ -718,7 +761,8 @@ class DistributedCacheManager:
             
         Returns:
             bool: True if node removed successfully
-        """        try:
+        """
+        try:
             if node_id not in self._nodes:
                 self.logger.warning(f"Node {node_id} not found in cluster")
                 return False
@@ -753,14 +797,16 @@ class DistributedCacheManager:
         self,
         failed_node_id: str
     ) -> bool:
-        """        Handle node failure with automatic failover.
+        """
+        Handle node failure with automatic failover.
         
         Args:
             failed_node_id: ID of failed node
             
         Returns:
             bool: True if failover successful
-        """        try:
+        """
+        try:
             if failed_node_id not in self._nodes:
                 return False
             
@@ -792,11 +838,13 @@ class DistributedCacheManager:
             return False
 
     async def get_cluster_status(self) -> Dict[str, Any]:
-        """        Get comprehensive cluster status information.
+        """
+        Get comprehensive cluster status information.
         
         Returns:
             Dict containing cluster status
-        """        try:
+        """
+        try:
             # Count nodes by status
             status_counts = defaultdict(int)
             for node in self._nodes.values():
@@ -840,7 +888,8 @@ class DistributedCacheManager:
     # Private helper methods
     
     async def _create_local_node(self) -> None:
-        """Create and configure local cache node"""        self._local_node = CacheNode(
+        """Create and configure local cache node"""
+        self._local_node = CacheNode(
             node_id=self.local_node_id,
             hostname="localhost",
             port=6379,
@@ -853,11 +902,13 @@ class DistributedCacheManager:
         self._nodes[self.local_node_id] = self._local_node
 
     async def _add_node(self, node_config: Dict[str, Any]) -> None:
-        """Add node from configuration"""        node = await self._create_node_from_config(node_config)
+        """Add node from configuration"""
+        node = await self._create_node_from_config(node_config)
         self._nodes[node.node_id] = node
 
     async def _create_node_from_config(self, config: Dict[str, Any]) -> CacheNode:
-        """Create cache node from configuration"""        node = CacheNode(
+        """Create cache node from configuration"""
+        node = CacheNode(
             node_id=config.get("node_id", str(uuid.uuid4())),
             hostname=config["hostname"],
             port=config.get("port", 6379),
@@ -874,7 +925,8 @@ class DistributedCacheManager:
         return node
 
     async def _initialize_sharding(self) -> None:
-        """Initialize sharding strategy"""        if self.config.sharding_strategy == ShardingStrategy.CONSISTENT_HASH:
+        """Initialize sharding strategy"""
+        if self.config.sharding_strategy == ShardingStrategy.CONSISTENT_HASH:
             await self._initialize_consistent_hashing()
         elif self.config.sharding_strategy == ShardingStrategy.HASH_BASED:
             await self._initialize_hash_based_sharding()
@@ -883,7 +935,8 @@ class DistributedCacheManager:
             await self._initialize_hash_based_sharding()
 
     async def _initialize_consistent_hashing(self) -> None:
-        """Initialize consistent hashing ring"""        self._consistent_hash_ring = []
+        """Initialize consistent hashing ring"""
+        self._consistent_hash_ring = []
         
         for node_id in self._nodes.keys():
             # Add virtual nodes for better distribution
@@ -896,7 +949,8 @@ class DistributedCacheManager:
         self._consistent_hash_ring.sort()
 
     async def _initialize_hash_based_sharding(self) -> None:
-        """Initialize hash-based sharding"""        node_ids = list(self._nodes.keys())
+        """Initialize hash-based sharding"""
+        node_ids = list(self._nodes.keys())
         shard_count = len(node_ids)
         
         for i, node_id in enumerate(node_ids):
@@ -910,13 +964,15 @@ class DistributedCacheManager:
             )
 
     async def _get_target_nodes_for_key(self, key: str) -> List[str]:
-        """Get target nodes for a given key"""        if self.config.sharding_strategy == ShardingStrategy.CONSISTENT_HASH:
+        """Get target nodes for a given key"""
+        if self.config.sharding_strategy == ShardingStrategy.CONSISTENT_HASH:
             return await self._get_nodes_consistent_hash(key)
         else:
             return await self._get_nodes_hash_based(key)
 
     async def _get_nodes_consistent_hash(self, key: str) -> List[str]:
-        """Get nodes using consistent hashing"""        if not self._consistent_hash_ring:
+        """Get nodes using consistent hashing"""
+        if not self._consistent_hash_ring:
             return list(self._nodes.keys())[:1]
         
         key_hash = int(hashlib.md5(key.encode()).hexdigest(), 16)
@@ -930,7 +986,8 @@ class DistributedCacheManager:
         return [self._consistent_hash_ring[0][1]]
 
     async def _get_nodes_hash_based(self, key: str) -> List[str]:
-        """Get nodes using hash-based sharding"""        if not self._shard_mappings:
+        """Get nodes using hash-based sharding"""
+        if not self._shard_mappings:
             return list(self._nodes.keys())[:1]
         
         key_hash = hash(key) % len(self._shard_mappings)
@@ -943,12 +1000,14 @@ class DistributedCacheManager:
         return list(self._nodes.keys())[:1]
 
     async def _start_background_tasks(self) -> None:
-        """Start background maintenance tasks"""        self._heartbeat_task = asyncio.create_task(self._heartbeat_loop())
+        """Start background maintenance tasks"""
+        self._heartbeat_task = asyncio.create_task(self._heartbeat_loop())
         self._coordination_task = asyncio.create_task(self._coordination_loop())
         self._maintenance_task = asyncio.create_task(self._maintenance_loop())
 
     async def _heartbeat_loop(self) -> None:
-        """Send periodic heartbeats to cluster"""        while not self._shutdown_event.is_set():
+        """Send periodic heartbeats to cluster"""
+        while not self._shutdown_event.is_set():
             try:
                 await self._send_heartbeat()
                 await asyncio.sleep(30)  # Heartbeat every 30 seconds
@@ -957,7 +1016,8 @@ class DistributedCacheManager:
                 await asyncio.sleep(60)
 
     async def _coordination_loop(self) -> None:
-        """Handle cluster coordination messages"""        while not self._shutdown_event.is_set():
+        """Handle cluster coordination messages"""
+        while not self._shutdown_event.is_set():
             try:
                 await self._process_coordination_messages()
                 await asyncio.sleep(5)  # Check messages every 5 seconds
@@ -966,7 +1026,8 @@ class DistributedCacheManager:
                 await asyncio.sleep(30)
 
     async def _maintenance_loop(self) -> None:
-        """Perform periodic cluster maintenance"""        while not self._shutdown_event.is_set():
+        """Perform periodic cluster maintenance"""
+        while not self._shutdown_event.is_set():
             try:
                 await self._perform_cluster_maintenance()
                 await asyncio.sleep(300)  # Maintenance every 5 minutes
@@ -975,7 +1036,8 @@ class DistributedCacheManager:
                 await asyncio.sleep(600)
 
     def _initialize_message_handlers(self) -> None:
-        """Initialize cluster message handlers"""        self._message_handlers = {
+        """Initialize cluster message handlers"""
+        self._message_handlers = {
             "heartbeat": self._handle_heartbeat_message,
             "node_added": self._handle_node_added_message,
             "node_removed": self._handle_node_removed_message,

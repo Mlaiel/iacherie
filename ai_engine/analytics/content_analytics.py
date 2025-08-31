@@ -9,7 +9,8 @@ prohibited and will result in severe legal consequences.
 
 This module provides comprehensive content analytics for multi-format creators,
 analyzing performance across platforms, content optimization, and audience insights.
-"""import logging
+"""
+import logging
 import numpy as np
 import hashlib
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -24,7 +25,8 @@ import asyncio
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Types of content supported by IA Influencer Agent"""    MUSIC = "music"
+    """Types of content supported by IA Influencer Agent"""
+    MUSIC = "music"
     AUDIO_PODCAST = "audio_podcast"
     VIDEO = "video"
     IMAGE = "image"
@@ -41,7 +43,8 @@ class ContentType(Enum):
     DOCUMENTARY = "documentary"
 
 class ContentStatus(Enum):
-    """Content processing and publication status"""    UPLOADED = "uploaded"
+    """Content processing and publication status"""
+    UPLOADED = "uploaded"
     PROCESSING = "processing"
     AI_ANALYZING = "ai_analyzing"
     PROTECTION_APPLIED = "protection_applied"
@@ -53,7 +56,8 @@ class ContentStatus(Enum):
     REMOVED = "removed"
 
 class AnalysisType(Enum):
-    """Types of content analysis"""    PERFORMANCE = "performance"
+    """Types of content analysis"""
+    PERFORMANCE = "performance"
     ENGAGEMENT = "engagement"
     AUDIENCE_INSIGHTS = "audience_insights"
     SEO_ANALYSIS = "seo_analysis"
@@ -65,7 +69,8 @@ class AnalysisType(Enum):
     TREND_ANALYSIS = "trend_analysis"
 
 class QualityScore(Enum):
-    """Content quality scoring levels"""    POOR = "poor"          # 0-20%
+    """Content quality scoring levels"""
+    POOR = "poor"          # 0-20%
     FAIR = "fair"          # 21-40%
     GOOD = "good"          # 41-60%
     VERY_GOOD = "very_good"  # 61-80%
@@ -73,7 +78,8 @@ class QualityScore(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Comprehensive content metadata"""    content_id: str
+    """Comprehensive content metadata"""
+    content_id: str
     creator_id: str
     content_type: ContentType
     title: str
@@ -91,7 +97,8 @@ class ContentMetadata:
 
 @dataclass
 class ContentAnalytics:
-    """Comprehensive content analytics data"""    content_id: str
+    """Comprehensive content analytics data"""
+    content_id: str
     analysis_timestamp: datetime = field(default_factory=datetime.utcnow)
     
     # Performance Metrics
@@ -126,7 +133,8 @@ class ContentAnalytics:
 
 @dataclass
 class CompetitorAnalysis:
-    """Competitor content analysis"""    competitor_id: str
+    """Competitor content analysis"""
+    competitor_id: str
     competitor_name: str
     content_category: str
     average_engagement: float
@@ -140,7 +148,8 @@ class CompetitorAnalysis:
 
 @dataclass
 class TrendAnalysis:
-    """Content trend analysis"""    trend_id: str
+    """Content trend analysis"""
+    trend_id: str
     trend_name: str
     category: str
     popularity_score: float  # 0-100
@@ -153,9 +162,11 @@ class TrendAnalysis:
     platforms_trending: List[str] = field(default_factory=list)
 
 class ContentAnalyticsEngine:
-    """Advanced content analytics engine for IA Influencer Agent platform"""    
+    """Advanced content analytics engine for IA Influencer Agent platform"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize content analytics engine"""        self.config = config or {}
+        """Initialize content analytics engine"""
+        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         self.analytics_cache = {}
         self.trend_cache = {}
@@ -175,7 +186,8 @@ class ContentAnalyticsEngine:
         self.logger.info("ContentAnalyticsEngine initialized successfully")
     
     def _initialize_ai_models(self):
-        """Initialize AI models for content analysis"""        try:
+        """Initialize AI models for content analysis"""
+        try:
             # Sentiment analysis model
             self.sentiment_model = None  # Initialize with actual model
             
@@ -198,7 +210,8 @@ class ContentAnalyticsEngine:
         metadata: ContentMetadata,
         timeframe: Optional[timedelta] = None
     ) -> ContentAnalytics:
-        """        Comprehensive content performance analysis
+        """
+        Comprehensive content performance analysis
         
         Args:
             content_id: Unique content identifier
@@ -207,7 +220,8 @@ class ContentAnalyticsEngine:
             
         Returns:
             ContentAnalytics: Comprehensive analytics results
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         
         try:
             self.logger.info(f"Starting performance analysis for content: {content_id}")
@@ -254,7 +268,8 @@ class ContentAnalyticsEngine:
         metadata: ContentMetadata,
         timeframe: timedelta
     ):
-        """Collect comprehensive performance metrics"""        try:
+        """Collect comprehensive performance metrics"""
+        try:
             # Simulate data collection from various platforms
             # In production, this would integrate with actual platform APIs
             
@@ -292,7 +307,8 @@ class ContentAnalyticsEngine:
         content_id: str,
         timeframe: timedelta
     ):
-        """Analyze audience demographics and behavior"""        try:
+        """Analyze audience demographics and behavior"""
+        try:
             # Demographic breakdown
             analytics.demographic_breakdown = await self._get_demographic_data(content_id, timeframe)
             
@@ -313,7 +329,8 @@ class ContentAnalyticsEngine:
         analytics: ContentAnalytics,
         metadata: ContentMetadata
     ):
-        """Calculate various quality and performance scores"""        try:
+        """Calculate various quality and performance scores"""
+        try:
             # Content quality score based on engagement and technical metrics
             analytics.quality_score = self._calculate_content_quality_score(analytics, metadata)
             
@@ -337,7 +354,8 @@ class ContentAnalyticsEngine:
         analytics: ContentAnalytics,
         metadata: ContentMetadata
     ) -> float:
-        """Calculate comprehensive content quality score"""        try:
+        """Calculate comprehensive content quality score"""
+        try:
             factors = []
             
             # Engagement quality (40% weight)
@@ -378,7 +396,8 @@ class ContentAnalyticsEngine:
             return 0.0
     
     def _calculate_virality_score(self, analytics: ContentAnalytics) -> float:
-        """Calculate virality prediction score"""        try:
+        """Calculate virality prediction score"""
+        try:
             factors = []
             
             # Engagement velocity (rapid growth in engagement)
@@ -419,7 +438,8 @@ class ContentAnalyticsEngine:
         analytics: ContentAnalytics,
         metadata: ContentMetadata
     ) -> float:
-        """Calculate monetization potential score"""        try:
+        """Calculate monetization potential score"""
+        try:
             factors = []
             
             # Audience size and engagement quality
@@ -466,7 +486,8 @@ class ContentAnalyticsEngine:
         analytics: ContentAnalytics,
         metadata: ContentMetadata
     ) -> float:
-        """Calculate SEO optimization score"""        try:
+        """Calculate SEO optimization score"""
+        try:
             factors = []
             
             # Title optimization
@@ -499,7 +520,8 @@ class ContentAnalyticsEngine:
             return 0.0
     
     def _calculate_content_freshness(self, metadata: ContentMetadata) -> float:
-        """Calculate content freshness score"""        try:
+        """Calculate content freshness score"""
+        try:
             now = datetime.utcnow()
             content_age = now - metadata.created_at
             
@@ -529,7 +551,8 @@ class ContentAnalyticsEngine:
         analytics: ContentAnalytics,
         metadata: ContentMetadata
     ):
-        """Generate AI-driven insights and recommendations"""        try:
+        """Generate AI-driven insights and recommendations"""
+        try:
             # Sentiment analysis of comments and reactions
             analytics.sentiment_analysis = await self._analyze_content_sentiment(analytics.content_id)
             
@@ -552,7 +575,8 @@ class ContentAnalyticsEngine:
         analytics: ContentAnalytics,
         metadata: ContentMetadata
     ) -> List[str]:
-        """Generate actionable optimization suggestions"""        suggestions = []
+        """Generate actionable optimization suggestions"""
+        suggestions = []
         
         try:
             # Engagement rate suggestions
@@ -596,7 +620,8 @@ class ContentAnalyticsEngine:
         category: str,
         timeframe: Optional[timedelta] = None
     ) -> List[CompetitorAnalysis]:
-        """Analyze competitor content performance"""        if not timeframe:
+        """Analyze competitor content performance"""
+        if not timeframe:
             timeframe = timedelta(days=30)
         
         competitor_analyses = []
@@ -643,7 +668,8 @@ class ContentAnalyticsEngine:
         category: Optional[str] = None,
         timeframe: Optional[timedelta] = None
     ) -> List[TrendAnalysis]:
-        """Analyze current content trends"""        if not timeframe:
+        """Analyze current content trends"""
+        if not timeframe:
             timeframe = timedelta(days=7)  # Weekly trend analysis
         
         try:
@@ -683,15 +709,18 @@ class ContentAnalyticsEngine:
     # Simulation methods for data collection (replace with actual API calls in production)
     
     async def _get_total_views(self, content_id: str, timeframe: timedelta) -> int:
-        """Simulate getting total views"""        # In production, this would query actual analytics databases
+        """Simulate getting total views"""
+        # In production, this would query actual analytics databases
         return hash(content_id) % 10000 + 1000
     
     async def _get_unique_views(self, content_id: str, timeframe: timedelta) -> int:
-        """Simulate getting unique views"""        total_views = await self._get_total_views(content_id, timeframe)
+        """Simulate getting unique views"""
+        total_views = await self._get_total_views(content_id, timeframe)
         return int(total_views * 0.8)  # 80% unique view rate
     
     async def _get_total_engagement(self, content_id: str, timeframe: timedelta) -> int:
-        """Simulate getting total engagement"""        total_views = await self._get_total_views(content_id, timeframe)
+        """Simulate getting total engagement"""
+        total_views = await self._get_total_views(content_id, timeframe)
         return int(total_views * 0.05)  # 5% engagement rate
     
     async def _get_platform_metrics(
@@ -700,7 +729,8 @@ class ContentAnalyticsEngine:
         platform: str,
         timeframe: timedelta
     ) -> Optional[Dict[str, Union[int, float]]]:
-        """Simulate platform-specific metrics"""        if hash(content_id + platform) % 3 == 0:  # Simulate content not on all platforms
+        """Simulate platform-specific metrics"""
+        if hash(content_id + platform) % 3 == 0:  # Simulate content not on all platforms
             return None
         
         views = hash(content_id + platform) % 5000 + 500
@@ -713,13 +743,16 @@ class ContentAnalyticsEngine:
         }
     
     async def _get_average_view_duration(self, content_id: str, timeframe: timedelta) -> float:
-        """Simulate average view duration percentage"""        return (hash(content_id) % 80) + 20  # 20-100% range
+        """Simulate average view duration percentage"""
+        return (hash(content_id) % 80) + 20  # 20-100% range
     
     async def _get_completion_rate(self, content_id: str, timeframe: timedelta) -> float:
-        """Simulate completion rate"""        return (hash(content_id) % 70) + 30  # 30-100% range
+        """Simulate completion rate"""
+        return (hash(content_id) % 70) + 30  # 30-100% range
     
     async def _get_demographic_data(self, content_id: str, timeframe: timedelta) -> Dict[str, Dict[str, Union[int, float]]]:
-        """Simulate demographic breakdown"""        return {
+        """Simulate demographic breakdown"""
+        return {
             'age_groups': {
                 '18-24': 25.0,
                 '25-34': 35.0,
@@ -735,7 +768,8 @@ class ContentAnalyticsEngine:
         }
     
     async def _get_geographic_data(self, content_id: str, timeframe: timedelta) -> Dict[str, int]:
-        """Simulate geographic distribution"""        return {
+        """Simulate geographic distribution"""
+        return {
             'US': 35,
             'UK': 15,
             'Canada': 12,
@@ -746,7 +780,8 @@ class ContentAnalyticsEngine:
         }
     
     async def _get_device_data(self, content_id: str, timeframe: timedelta) -> Dict[str, int]:
-        """Simulate device breakdown"""        return {
+        """Simulate device breakdown"""
+        return {
             'mobile': 70,
             'desktop': 20,
             'tablet': 8,
@@ -754,7 +789,8 @@ class ContentAnalyticsEngine:
         }
     
     async def _get_traffic_sources(self, content_id: str, timeframe: timedelta) -> Dict[str, int]:
-        """Simulate traffic sources"""        return {
+        """Simulate traffic sources"""
+        return {
             'organic_search': 30,
             'social_media': 40,
             'direct': 15,
@@ -763,7 +799,8 @@ class ContentAnalyticsEngine:
         }
     
     def _evaluate_metadata_quality(self, metadata: ContentMetadata) -> float:
-        """Evaluate metadata quality score"""        score_factors = []
+        """Evaluate metadata quality score"""
+        score_factors = []
         
         # Title quality
         if metadata.title and len(metadata.title.strip()) > 10:
@@ -796,7 +833,8 @@ class ContentAnalyticsEngine:
         return sum(score_factors) / len(score_factors) if score_factors else 0.0
     
     def _evaluate_title_seo(self, title: str) -> float:
-        """Evaluate title SEO quality"""        if not title:
+        """Evaluate title SEO quality"""
+        if not title:
             return 0.0
         
         score = 0.0
@@ -824,7 +862,8 @@ class ContentAnalyticsEngine:
         return min(score, 1.0)
     
     def _evaluate_description_seo(self, description: str) -> float:
-        """Evaluate description SEO quality"""        if not description:
+        """Evaluate description SEO quality"""
+        if not description:
             return 0.0
         
         score = 0.0
@@ -849,7 +888,8 @@ class ContentAnalyticsEngine:
         return min(score, 1.0)
     
     def _evaluate_tags_seo(self, tags: List[str]) -> float:
-        """Evaluate tags SEO quality"""        if not tags:
+        """Evaluate tags SEO quality"""
+        if not tags:
             return 0.0
         
         score = 0.0
@@ -874,7 +914,8 @@ class ContentAnalyticsEngine:
         return min(score, 1.0)
     
     async def _analyze_content_sentiment(self, content_id: str) -> Dict[str, float]:
-        """Simulate content sentiment analysis"""        return {
+        """Simulate content sentiment analysis"""
+        return {
             'positive': 0.6,
             'neutral': 0.3,
             'negative': 0.1,
@@ -882,7 +923,8 @@ class ContentAnalyticsEngine:
         }
     
     async def _extract_trending_keywords(self, content_id: str) -> List[str]:
-        """Simulate trending keywords extraction"""        keyword_pools = {
+        """Simulate trending keywords extraction"""
+        keyword_pools = {
             'music': ['trending', 'viral', 'remix', 'cover', 'original', 'beat', 'melody'],
             'video': ['tutorial', 'review', 'unboxing', 'vlog', 'challenge', 'reaction'],
             'general': ['amazing', 'incredible', 'must-see', 'exclusive', 'behind-scenes']
@@ -902,7 +944,8 @@ class ContentAnalyticsEngine:
         analytics: ContentAnalytics,
         metadata: ContentMetadata
     ) -> Dict[str, float]:
-        """Predict future performance metrics"""        try:
+        """Predict future performance metrics"""
+        try:
             # Base predictions on current performance and trends
             current_growth_rate = analytics.engagement_rate / 100
             
@@ -923,7 +966,8 @@ class ContentAnalyticsEngine:
             return {}
     
     def _update_analysis_stats(self, analysis_time: float, success: bool):
-        """Update internal performance statistics"""        self.analysis_stats['total_analyses'] += 1
+        """Update internal performance statistics"""
+        self.analysis_stats['total_analyses'] += 1
         
         if success:
             self.analysis_stats['successful_analyses'] += 1
@@ -938,7 +982,8 @@ class ContentAnalyticsEngine:
         )
     
     def get_analytics_summary(self) -> Dict[str, Any]:
-        """Get analytics engine performance summary"""        return {
+        """Get analytics engine performance summary"""
+        return {
             'engine_stats': self.analysis_stats.copy(),
             'cache_sizes': {
                 'analytics_cache': len(self.analytics_cache),
@@ -949,7 +994,8 @@ class ContentAnalyticsEngine:
         }
     
     async def cleanup_old_cache(self, max_age_hours: int = 24):
-        """Clean up old cache entries"""        cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
+        """Clean up old cache entries"""
+        cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
         
         # Clean analytics cache
         expired_keys = []
@@ -965,36 +1011,43 @@ class ContentAnalyticsEngine:
     # Additional simulation methods for competitor and trend analysis
     
     async def _get_competitor_engagement(self, competitor_id: str, timeframe: timedelta) -> float:
-        """Simulate competitor engagement rate"""        return (hash(competitor_id) % 8) + 2  # 2-10% range
+        """Simulate competitor engagement rate"""
+        return (hash(competitor_id) % 8) + 2  # 2-10% range
     
     async def _get_posting_frequency(self, competitor_id: str, timeframe: timedelta) -> int:
-        """Simulate posting frequency"""        return (hash(competitor_id) % 10) + 3  # 3-12 posts per week
+        """Simulate posting frequency"""
+        return (hash(competitor_id) % 10) + 3  # 3-12 posts per week
     
     async def _get_top_content(self, competitor_id: str, timeframe: timedelta) -> List[Dict[str, Any]]:
-        """Simulate top performing content"""        return [
+        """Simulate top performing content"""
+        return [
             {'content_id': f'{competitor_id}_top1', 'views': 50000, 'engagement_rate': 8.5},
             {'content_id': f'{competitor_id}_top2', 'views': 45000, 'engagement_rate': 7.2},
             {'content_id': f'{competitor_id}_top3', 'views': 40000, 'engagement_rate': 6.8}
         ]
     
     async def _get_trending_topics(self, competitor_id: str, timeframe: timedelta) -> List[str]:
-        """Simulate trending topics for competitor"""        topics_pool = ['AI music', 'viral dances', 'tech reviews', 'cooking tips', 'fitness challenges']
+        """Simulate trending topics for competitor"""
+        topics_pool = ['AI music', 'viral dances', 'tech reviews', 'cooking tips', 'fitness challenges']
         import random
         random.seed(hash(competitor_id))
         return random.sample(topics_pool, 3)
     
     async def _calculate_audience_overlap(self, competitor_id: str) -> float:
-        """Simulate audience overlap calculation"""        return (hash(competitor_id) % 30) / 100  # 0-30% overlap
+        """Simulate audience overlap calculation"""
+        return (hash(competitor_id) % 30) / 100  # 0-30% overlap
     
     async def _compare_performance(self, competitor_id: str, timeframe: timedelta) -> Dict[str, float]:
-        """Simulate performance comparison"""        return {
+        """Simulate performance comparison"""
+        return {
             'engagement_rate': (hash(competitor_id) % 15) / 10,  # 0-1.5x multiplier
             'view_count': (hash(competitor_id + 'views') % 20) / 10,  # 0-2x multiplier
             'growth_rate': (hash(competitor_id + 'growth') % 25) / 100  # 0-25% growth
         }
     
     def _analyze_competitor_swot(self, analysis: CompetitorAnalysis) -> Tuple[List[str], List[str]]:
-        """Analyze competitor strengths and weaknesses"""        strengths = []
+        """Analyze competitor strengths and weaknesses"""
+        strengths = []
         weaknesses = []
         
         if analysis.average_engagement > 5:
@@ -1013,7 +1066,8 @@ class ContentAnalyticsEngine:
         return strengths, weaknesses
     
     async def _analyze_music_trends(self, timeframe: timedelta) -> List[TrendAnalysis]:
-        """Simulate music trend analysis"""        return [
+        """Simulate music trend analysis"""
+        return [
             TrendAnalysis(
                 trend_id="music_trend_1",
                 trend_name="AI-generated music",
@@ -1027,7 +1081,8 @@ class ContentAnalyticsEngine:
         ]
     
     async def _analyze_video_trends(self, timeframe: timedelta) -> List[TrendAnalysis]:
-        """Simulate video trend analysis"""        return [
+        """Simulate video trend analysis"""
+        return [
             TrendAnalysis(
                 trend_id="video_trend_1",
                 trend_name="Short form tutorials",
@@ -1041,7 +1096,8 @@ class ContentAnalyticsEngine:
         ]
     
     async def _analyze_social_trends(self, timeframe: timedelta) -> List[TrendAnalysis]:
-        """Simulate social media trend analysis"""        return [
+        """Simulate social media trend analysis"""
+        return [
             TrendAnalysis(
                 trend_id="social_trend_1",
                 trend_name="Behind-the-scenes content",

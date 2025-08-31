@@ -21,7 +21,8 @@ poursuivie selon les lois allemandes et internationales.
 - DevOps Engineer: Fahed Mlaiel (mlaiel@live.de)
 - DBA: Fahed Mlaiel (mlaiel@live.de)
 - Sécurité Expert: Fahed Mlaiel (mlaiel@live.de)
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import re
@@ -71,7 +72,8 @@ except:
     pass
 
 class TextFormat(Enum):
-    """Formats de texte supportés"""    PLAIN = "txt"
+    """Formats de texte supportés"""
+    PLAIN = "txt"
     MARKDOWN = "md"
     HTML = "html"
     JSON = "json"
@@ -81,7 +83,8 @@ class TextFormat(Enum):
     PDF = "pdf"
 
 class TextEnhancementType(Enum):
-    """Types d'amélioration de texte"""    GRAMMAR_CHECK = "grammar_check"
+    """Types d'amélioration de texte"""
+    GRAMMAR_CHECK = "grammar_check"
     STYLE_IMPROVEMENT = "style_improvement"
     SEO_OPTIMIZATION = "seo_optimization"
     READABILITY_ENHANCEMENT = "readability_enhancement"
@@ -93,7 +96,8 @@ class TextEnhancementType(Enum):
     KEYWORD_OPTIMIZATION = "keyword_optimization"
 
 class ContentType(Enum):
-    """Types de contenu textuel"""    BLOG_POST = "blog_post"
+    """Types de contenu textuel"""
+    BLOG_POST = "blog_post"
     SOCIAL_MEDIA = "social_media"
     PRODUCT_DESCRIPTION = "product_description"
     EMAIL = "email"
@@ -106,7 +110,8 @@ class ContentType(Enum):
 
 @dataclass
 class TextTransformationConfig:
-    """Configuration spécialisée pour transformation de texte"""    enhancement_type: TextEnhancementType
+    """Configuration spécialisée pour transformation de texte"""
+    enhancement_type: TextEnhancementType
     content_type: ContentType
     target_language: str = "en"
     target_audience: str = "general"
@@ -118,7 +123,8 @@ class TextTransformationConfig:
 
 @dataclass
 class TextProcessingResult:
-    """Résultat du traitement de texte"""    success: bool
+    """Résultat du traitement de texte"""
+    success: bool
     original_text: str
     transformed_text: str
     metadata: TextMetadata
@@ -130,7 +136,8 @@ class TextProcessingResult:
     processing_time: float
 
 class TextAnalyzer:
-    """Analyseur de texte avancé pour créateurs de contenu"""    
+    """Analyseur de texte avancé pour créateurs de contenu"""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -169,7 +176,8 @@ class TextAnalyzer:
             self.classifier = None
     
     def analyze_text(self, text: str, content_type: ContentType = None) -> TextMetadata:
-        """Analyse complète d'un texte"""        try:
+        """Analyse complète d'un texte"""
+        try:
             # Détection de la langue
             try:
                 language = detect(text)
@@ -251,7 +259,8 @@ class TextAnalyzer:
             raise TextProcessingError(f"Échec analyse texte: {str(e)}")
     
     def _extract_named_entities(self, text: str, language: str) -> List[Dict[str, Any]]:
-        """Extraction des entités nommées"""        entities = []
+        """Extraction des entités nommées"""
+        entities = []
         
         try:
             # Sélection du modèle selon la langue
@@ -277,7 +286,8 @@ class TextAnalyzer:
         return entities
     
     def _extract_keywords(self, text: str, language: str, top_k: int = 20) -> List[str]:
-        """Extraction des mots-clés importants"""        try:
+        """Extraction des mots-clés importants"""
+        try:
             # Tokenization et nettoyage
             words = word_tokenize(text.lower())
             
@@ -309,7 +319,8 @@ class TextAnalyzer:
             return []
     
     def _extract_key_phrases(self, text: str, language: str, top_k: int = 10) -> List[str]:
-        """Extraction des phrases clés"""        try:
+        """Extraction des phrases clés"""
+        try:
             sentences = sent_tokenize(text)
             
             # Calcul de score pour chaque phrase
@@ -337,7 +348,8 @@ class TextAnalyzer:
             return []
     
     def _analyze_structure(self, text: str) -> ContentStructure:
-        """Analyse de la structure du contenu"""        lines = text.split('\n')
+        """Analyse de la structure du contenu"""
+        lines = text.split('\n')
         
         # Détection des titres (lignes courtes, formatage spécial)
         headers = []
@@ -396,7 +408,8 @@ class TextAnalyzer:
         )
     
     def _classify_content(self, text: str) -> str:
-        """Classification automatique du contenu"""        if not self.classifier:
+        """Classification automatique du contenu"""
+        if not self.classifier:
             return "unknown"
         
         try:
@@ -414,7 +427,8 @@ class TextAnalyzer:
             return "unknown"
     
     def _calculate_coherence(self, text: str) -> float:
-        """Calcul de la cohérence du texte"""        try:
+        """Calcul de la cohérence du texte"""
+        try:
             sentences = sent_tokenize(text)
             if len(sentences) < 2:
                 return 1.0
@@ -441,7 +455,8 @@ class TextAnalyzer:
             return 0.5
     
     def _generate_semantic_hash(self, text: str) -> str:
-        """Génère un hash sémantique pour détection de similarité"""        try:
+        """Génère un hash sémantique pour détection de similarité"""
+        try:
             if not self.sentence_model:
                 return hashlib.md5(text.encode()).hexdigest()
             
@@ -460,7 +475,8 @@ class TextAnalyzer:
             return hashlib.md5(text.encode()).hexdigest()
 
 class TextEnhancer:
-    """Améliorateur de texte IA pour créateurs de contenu"""    
+    """Améliorateur de texte IA pour créateurs de contenu"""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -495,7 +511,8 @@ class TextEnhancer:
         enhancement_type: TextEnhancementType,
         config: TextTransformationConfig
     ) -> Tuple[str, List[str], List[str]]:
-        """Améliore le texte selon le type spécifié"""        
+        """Améliore le texte selon le type spécifié"""
+        
         enhancements_applied = []
         suggestions = []
         
@@ -539,7 +556,8 @@ class TextEnhancer:
             return text, enhancements_applied, [f"Erreur amélioration: {str(e)}"]
     
     def _check_grammar(self, text: str, config: TextTransformationConfig) -> Tuple[str, List[str]]:
-        """Vérification et correction grammaticale"""        applied = []
+        """Vérification et correction grammaticale"""
+        applied = []
         
         if not self.grammar_checker:
             return text, applied
@@ -577,7 +595,8 @@ class TextEnhancer:
             return text, applied
     
     def _improve_style(self, text: str, config: TextTransformationConfig) -> Tuple[str, List[str]]:
-        """Amélioration du style d'écriture"""        applied = []
+        """Amélioration du style d'écriture"""
+        applied = []
         improved_text = text
         
         # Règles d'amélioration du style selon le type de contenu
@@ -604,7 +623,8 @@ class TextEnhancer:
         return improved_text, applied
     
     def _optimize_seo(self, text: str, config: TextTransformationConfig) -> Tuple[str, List[str]]:
-        """Optimisation SEO du contenu"""        applied = []
+        """Optimisation SEO du contenu"""
+        applied = []
         optimized_text = text
         
         if not config.keywords:
@@ -633,7 +653,8 @@ class TextEnhancer:
         return optimized_text, applied
     
     def _enhance_readability(self, text: str, config: TextTransformationConfig) -> Tuple[str, List[str]]:
-        """Amélioration de la lisibilité"""        applied = []
+        """Amélioration de la lisibilité"""
+        applied = []
         readable_text = text
         
         # Simplification des phrases trop longues
@@ -660,7 +681,8 @@ class TextEnhancer:
         return readable_text, applied
     
     def _adjust_tone(self, text: str, config: TextTransformationConfig) -> Tuple[str, List[str]]:
-        """Ajustement du ton"""        applied = []
+        """Ajustement du ton"""
+        applied = []
         adjusted_text = text
         
         target_tone = config.tone
@@ -684,7 +706,8 @@ class TextEnhancer:
         return adjusted_text, applied
     
     def _expand_content(self, text: str, config: TextTransformationConfig) -> Tuple[str, List[str]]:
-        """Expansion du contenu"""        applied = []
+        """Expansion du contenu"""
+        applied = []
         expanded_text = text
         
         # Ajout de détails et d'exemples
@@ -705,7 +728,8 @@ class TextEnhancer:
         return expanded_text, applied
     
     def _summarize_content(self, text: str, config: TextTransformationConfig) -> Tuple[str, List[str]]:
-        """Résumé du contenu"""        applied = []
+        """Résumé du contenu"""
+        applied = []
         
         if not self.summarizer:
             # Résumé simple par extraction de phrases clés
@@ -741,7 +765,8 @@ class TextEnhancer:
             return summary, applied
     
     def _optimize_keywords(self, text: str, config: TextTransformationConfig) -> Tuple[str, List[str]]:
-        """Optimisation des mots-clés"""        applied = []
+        """Optimisation des mots-clés"""
+        applied = []
         
         if not config.keywords:
             return text, applied
@@ -763,7 +788,8 @@ class TextEnhancer:
     # Méthodes utilitaires pour les améliorations
     
     def _make_more_engaging(self, text: str) -> str:
-        """Rend le texte plus engageant pour réseaux sociaux"""        # Ajout d'éléments d'engagement
+        """Rend le texte plus engageant pour réseaux sociaux"""
+        # Ajout d'éléments d'engagement
         engaging_starters = [
             "Did you know that", "Here's something interesting:",
             "You might be surprised to learn", "Here's a quick tip:"
@@ -778,7 +804,8 @@ class TextEnhancer:
         return ' '.join(sentences)
     
     def _improve_blog_style(self, text: str) -> str:
-        """Améliore le style pour blog"""        # Ajout de transitions et structure
+        """Améliore le style pour blog"""
+        # Ajout de transitions et structure
         paragraphs = text.split('\n\n')
         improved_paragraphs = []
         
@@ -800,13 +827,15 @@ class TextEnhancer:
         return '\n\n'.join(improved_paragraphs)
     
     def _clarify_technical_content(self, text: str) -> str:
-        """Clarifie le contenu technique"""        # Ajout d'explications pour termes techniques
+        """Clarifie le contenu technique"""
+        # Ajout d'explications pour termes techniques
         # Ici on pourrait ajouter un dictionnaire de termes techniques
         # et leurs explications simplifiées
         return text  # Simplification pour l'exemple
     
     def _improve_flow(self, text: str) -> str:
-        """Améliore la fluidité du texte"""        # Ajout de connecteurs logiques
+        """Améliore la fluidité du texte"""
+        # Ajout de connecteurs logiques
         sentences = sent_tokenize(text)
         improved_sentences = []
         
@@ -821,7 +850,8 @@ class TextEnhancer:
         return ' '.join(improved_sentences)
     
     def _naturally_insert_keyword(self, text: str, keyword: str) -> str:
-        """Insère naturellement un mot-clé dans le texte"""        # Recherche d'un endroit approprié pour insérer le mot-clé
+        """Insère naturellement un mot-clé dans le texte"""
+        # Recherche d'un endroit approprié pour insérer le mot-clé
         sentences = sent_tokenize(text)
         
         for i, sentence in enumerate(sentences):
@@ -837,7 +867,8 @@ class TextEnhancer:
         return ' '.join(sentences)
     
     def _optimize_headers_for_seo(self, text: str, keywords: List[str]) -> str:
-        """Optimise les en-têtes pour SEO"""        lines = text.split('\n')
+        """Optimise les en-têtes pour SEO"""
+        lines = text.split('\n')
         optimized_lines = []
         
         for line in lines:
@@ -860,7 +891,8 @@ class TextEnhancer:
         return '\n'.join(optimized_lines)
     
     def _split_long_sentence(self, sentence: str) -> List[str]:
-        """Divise une phrase trop longue"""        # Recherche de points de division naturels
+        """Divise une phrase trop longue"""
+        # Recherche de points de division naturels
         conjunctions = [', and ', ', but ', ', or ', ', so ', '; ']
         
         for conj in conjunctions:
@@ -878,7 +910,8 @@ class TextEnhancer:
         return [part1, part2]
     
     def _simplify_vocabulary(self, text: str) -> str:
-        """Simplifie le vocabulaire"""        # Dictionnaire de simplification (exemple basique)
+        """Simplifie le vocabulaire"""
+        # Dictionnaire de simplification (exemple basique)
         simplifications = {
             'utilize': 'use',
             'facilitate': 'help',
@@ -903,7 +936,8 @@ class TextEnhancer:
         return simplified_text
     
     def _make_formal(self, text: str) -> str:
-        """Rend le texte plus formel"""        # Remplacement d'expressions informelles
+        """Rend le texte plus formel"""
+        # Remplacement d'expressions informelles
         formal_replacements = {
             "can't": "cannot",
             "don't": "do not",
@@ -925,7 +959,8 @@ class TextEnhancer:
         return formal_text
     
     def _make_casual(self, text: str) -> str:
-        """Rend le texte plus décontracté"""        # Contractions et expressions plus décontractées
+        """Rend le texte plus décontracté"""
+        # Contractions et expressions plus décontractées
         casual_replacements = {
             "cannot": "can't",
             "do not": "don't",
@@ -947,7 +982,8 @@ class TextEnhancer:
         return casual_text
     
     def _make_friendly(self, text: str) -> str:
-        """Rend le texte plus amical"""        # Ajout d'éléments personnels et chaleureux
+        """Rend le texte plus amical"""
+        # Ajout d'éléments personnels et chaleureux
         sentences = sent_tokenize(text)
         friendly_sentences = []
         
@@ -961,7 +997,8 @@ class TextEnhancer:
         return ' '.join(friendly_sentences)
     
     def _make_professional(self, text: str) -> str:
-        """Rend le texte plus professionnel"""        # Suppression d'éléments trop décontractés
+        """Rend le texte plus professionnel"""
+        # Suppression d'éléments trop décontractés
         professional_text = text
         
         # Éviter les expressions trop familières
@@ -972,7 +1009,8 @@ class TextEnhancer:
         return professional_text
     
     def _add_supporting_details(self, paragraph: str, config: TextTransformationConfig) -> str:
-        """Ajoute des détails de soutien à un paragraphe"""        # Exemple simple d'expansion
+        """Ajoute des détails de soutien à un paragraphe"""
+        # Exemple simple d'expansion
         supporting_phrases = [
             "This is particularly important because",
             "For example,",
@@ -989,7 +1027,8 @@ class TextEnhancer:
         return paragraph
 
 class TextTransformer:
-    """Transformateur de texte principal pour créateurs de contenu"""    
+    """Transformateur de texte principal pour créateurs de contenu"""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.file_manager = FileManager()
@@ -1030,7 +1069,8 @@ class TextTransformer:
         config: 'TransformationConfig',
         output_path: Optional[str] = None
     ) -> 'TransformationResult':
-        """Transformation de texte selon configuration"""        
+        """Transformation de texte selon configuration"""
+        
         start_time = time.time()
         operations = []
         warnings = []
@@ -1130,7 +1170,8 @@ class TextTransformer:
             )
     
     def _convert_to_text_config(self, config: 'TransformationConfig') -> TextTransformationConfig:
-        """Convertit une config générique en config texte"""        
+        """Convertit une config générique en config texte"""
+        
         # Mapping des types de transformation
         enhancement_mapping = {
             'text_grammar_check': TextEnhancementType.GRAMMAR_CHECK,
@@ -1173,7 +1214,8 @@ class TextTransformer:
         original: TextMetadata,
         processed: TextMetadata
     ) -> TextQualityMetrics:
-        """Calcule les métriques de qualité de la transformation"""        
+        """Calcule les métriques de qualité de la transformation"""
+        
         # Comparaison de lisibilité
         readability_improvement = processed.readability_score - original.readability_score
         
@@ -1207,7 +1249,8 @@ class TextTransformer:
         )
     
     def _calculate_keyword_density(self, metadata: TextMetadata) -> float:
-        """Calcule la densité des mots-clés"""        if not metadata.keywords or metadata.word_count == 0:
+        """Calcule la densité des mots-clés"""
+        if not metadata.keywords or metadata.word_count == 0:
             return 0.0
         
         # Estimation simple de densité
@@ -1215,7 +1258,8 @@ class TextTransformer:
         return min(1.0, keyword_count / metadata.word_count * 100)
 
 class AsyncTextTransformer:
-    """Version asynchrone du transformateur de texte"""    
+    """Version asynchrone du transformateur de texte"""
+    
     def __init__(self):
         self.sync_transformer = TextTransformer()
         self.logger = logging.getLogger(__name__)
@@ -1226,7 +1270,8 @@ class AsyncTextTransformer:
         config: 'TransformationConfig',
         output_path: Optional[str] = None
     ) -> TextProcessingResult:
-        """Transformation de texte asynchrone"""        
+        """Transformation de texte asynchrone"""
+        
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             None,
@@ -1241,7 +1286,8 @@ class AsyncTextTransformer:
         inputs: List[Tuple[str, 'TransformationConfig']],
         max_concurrent: int = 4
     ) -> List[TextProcessingResult]:
-        """Transformation en lot asynchrone"""        
+        """Transformation en lot asynchrone"""
+        
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def transform_single(input_config_tuple):

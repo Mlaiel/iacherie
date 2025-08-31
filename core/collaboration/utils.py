@@ -33,7 +33,8 @@ Features:
 - Webhook Processing & Validation
 - Rate Limiting & Throttling Utilities
 - Notification Formatting Helpers
-"""import asyncio
+"""
+import asyncio
 import logging
 import functools
 import time
@@ -88,17 +89,20 @@ logger = logging.getLogger(__name__)
 T = TypeVar('T')
 
 class ValidationError(Exception):
-    """Custom validation error"""    pass
+    """Custom validation error"""
+    pass
 
 class ProcessingError(Exception):
-    """Custom processing error"""    pass
+    """Custom processing error"""
+    pass
 
 # ==============================================================================
 # PERFORMANCE & MONITORING UTILITIES
 # ==============================================================================
 
 def async_timer(func: Callable) -> Callable:
-    """Decorator to measure async function execution time"""    @functools.wraps(func)
+    """Decorator to measure async function execution time"""
+    @functools.wraps(func)
     async def wrapper(*args, **kwargs):
         start_time = time.time()
         try:
@@ -113,7 +117,8 @@ def async_timer(func: Callable) -> Callable:
     return wrapper
 
 def retry_on_failure(max_retries: int = 3, delay: float = 1.0, backoff: float = 2.0):
-    """Decorator for retrying failed operations with exponential backoff"""    def decorator(func: Callable) -> Callable:
+    """Decorator for retrying failed operations with exponential backoff"""
+    def decorator(func: Callable) -> Callable:
         @functools.wraps(func)
         async def wrapper(*args, **kwargs):
             current_delay = delay
@@ -140,10 +145,12 @@ def retry_on_failure(max_retries: int = 3, delay: float = 1.0, backoff: float = 
 # ==============================================================================
 
 class DataValidator:
-    """Comprehensive data validation utilities"""    
+    """Comprehensive data validation utilities"""
+    
     @staticmethod
     def validate_email(email: str) -> bool:
-        """Validate email address"""        try:
+        """Validate email address"""
+        try:
             validation = validate_email(email)
             return True
         except EmailNotValidError:
@@ -151,7 +158,8 @@ class DataValidator:
     
     @staticmethod
     def validate_phone(phone: str, region: str = "US") -> bool:
-        """Validate phone number"""        try:
+        """Validate phone number"""
+        try:
             parsed = phonenumbers.parse(phone, region)
             return phonenumbers.is_valid_number(parsed)
         except phonenumbers.NumberParseException:
@@ -159,7 +167,8 @@ class DataValidator:
     
     @staticmethod
     def validate_url(url: str) -> bool:
-        """Validate URL format"""        try:
+        """Validate URL format"""
+        try:
             result = urlparse(url)
             return all([result.scheme, result.netloc])
         except Exception:
@@ -167,7 +176,8 @@ class DataValidator:
     
     @staticmethod
     def validate_uuid(uuid_string: str) -> bool:
-        """Validate UUID format"""        try:
+        """Validate UUID format"""
+        try:
             uuid.UUID(uuid_string)
             return True
         except ValueError:
@@ -175,7 +185,8 @@ class DataValidator:
     
     @staticmethod
     def validate_json(json_string: str) -> bool:
-        """Validate JSON format"""        try:
+        """Validate JSON format"""
+        try:
             json.loads(json_string)
             return True
         except json.JSONDecodeError:
@@ -183,13 +194,15 @@ class DataValidator:
     
     @staticmethod
     def sanitize_html(html_content: str) -> str:
-        """Sanitize HTML content"""        allowed_tags = ['p', 'br', 'strong', 'em', 'u', 'ol', 'ul', 'li', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']
+        """Sanitize HTML content"""
+        allowed_tags = ['p', 'br', 'strong', 'em', 'u', 'ol', 'ul', 'li', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']
         allowed_attributes = {'a': ['href', 'title'], '*': ['class']}
         return bleach.clean(html_content, tags=allowed_tags, attributes=allowed_attributes)
     
     @staticmethod
     def validate_password_strength(password: str) -> Dict[str, Any]:
-        """Validate password strength"""        result = {
+        """Validate password strength"""
+        result = {
             'is_valid': True,
             'score': 0,
             'issues': []
@@ -239,21 +252,25 @@ class DataValidator:
 # ==============================================================================
 
 class DateTimeUtils:
-    """Advanced datetime utilities with timezone support"""    
+    """Advanced datetime utilities with timezone support"""
+    
     @staticmethod
     def now_utc() -> datetime:
-        """Get current UTC datetime"""        return datetime.now(timezone.utc)
+        """Get current UTC datetime"""
+        return datetime.now(timezone.utc)
     
     @staticmethod
     def to_timezone(dt: datetime, timezone_name: str) -> datetime:
-        """Convert datetime to specific timezone"""        tz = pytz.timezone(timezone_name)
+        """Convert datetime to specific timezone"""
+        tz = pytz.timezone(timezone_name)
         if dt.tzinfo is None:
             dt = pytz.utc.localize(dt)
         return dt.astimezone(tz)
     
     @staticmethod
     def format_duration(seconds: float) -> str:
-        """Format duration in human-readable format"""        if seconds < 60:
+        """Format duration in human-readable format"""
+        if seconds < 60:
             return f"{seconds:.1f} seconds"
         elif seconds < 3600:
             minutes = seconds / 60
@@ -267,11 +284,13 @@ class DateTimeUtils:
     
     @staticmethod
     def parse_iso_datetime(iso_string: str) -> datetime:
-        """Parse ISO format datetime string"""        return datetime.fromisoformat(iso_string.replace('Z', '+00:00'))
+        """Parse ISO format datetime string"""
+        return datetime.fromisoformat(iso_string.replace('Z', '+00:00'))
     
     @staticmethod
     def get_business_hours(timezone_name: str = "UTC") -> Dict[str, Any]:
-        """Get business hours for timezone"""        tz = pytz.timezone(timezone_name)
+        """Get business hours for timezone"""
+        tz = pytz.timezone(timezone_name)
         now = datetime.now(tz)
         
         return {
@@ -283,7 +302,8 @@ class DateTimeUtils:
     
     @staticmethod
     def _next_business_day(dt: datetime) -> datetime:
-        """Calculate next business day"""        next_day = dt + timedelta(days=1)
+        """Calculate next business day"""
+        next_day = dt + timedelta(days=1)
         while next_day.weekday() >= 5:  # Skip weekends
             next_day += timedelta(days=1)
         return next_day.replace(hour=9, minute=0, second=0, microsecond=0)
@@ -293,7 +313,8 @@ class DateTimeUtils:
 # ==============================================================================
 
 class SecurityUtils:
-    """Advanced security and encryption utilities"""    
+    """Advanced security and encryption utilities"""
+    
     def __init__(self, key: Optional[bytes] = None):
         if key:
             self.fernet = Fernet(key)
@@ -301,37 +322,44 @@ class SecurityUtils:
             self.fernet = Fernet(Fernet.generate_key())
     
     def encrypt_string(self, plaintext: str) -> str:
-        """Encrypt string and return base64 encoded result"""        encrypted = self.fernet.encrypt(plaintext.encode())
+        """Encrypt string and return base64 encoded result"""
+        encrypted = self.fernet.encrypt(plaintext.encode())
         return base64.b64encode(encrypted).decode()
     
     def decrypt_string(self, encrypted_text: str) -> str:
-        """Decrypt base64 encoded encrypted string"""        encrypted_bytes = base64.b64decode(encrypted_text.encode())
+        """Decrypt base64 encoded encrypted string"""
+        encrypted_bytes = base64.b64decode(encrypted_text.encode())
         decrypted = self.fernet.decrypt(encrypted_bytes)
         return decrypted.decode()
     
     @staticmethod
     def hash_password(password: str) -> str:
-        """Hash password using bcrypt"""        salt = bcrypt.gensalt()
+        """Hash password using bcrypt"""
+        salt = bcrypt.gensalt()
         hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
         return hashed.decode('utf-8')
     
     @staticmethod
     def verify_password(password: str, hashed: str) -> bool:
-        """Verify password against hash"""        return bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
+        """Verify password against hash"""
+        return bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
     
     @staticmethod
     def generate_token(length: int = 32) -> str:
-        """Generate secure random token"""        return base64.urlsafe_b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes)[:length].decode()
+        """Generate secure random token"""
+        return base64.urlsafe_b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes)[:length].decode()
     
     @staticmethod
     def generate_jwt(payload: Dict[str, Any], secret: str, expiry_hours: int = 24) -> str:
-        """Generate JWT token"""        payload['exp'] = datetime.utcnow() + timedelta(hours=expiry_hours)
+        """Generate JWT token"""
+        payload['exp'] = datetime.utcnow() + timedelta(hours=expiry_hours)
         payload['iat'] = datetime.utcnow()
         return jwt.encode(payload, secret, algorithm='HS256')
     
     @staticmethod
     def verify_jwt(token: str, secret: str) -> Optional[Dict[str, Any]]:
-        """Verify and decode JWT token"""        try:
+        """Verify and decode JWT token"""
+        try:
             return jwt.decode(token, secret, algorithms=['HS256'])
         except jwt.InvalidTokenError:
             return None
@@ -341,13 +369,15 @@ class SecurityUtils:
 # ==============================================================================
 
 class TextUtils:
-    """Advanced text processing and NLP utilities"""    
+    """Advanced text processing and NLP utilities"""
+    
     def __init__(self):
         self.sentiment_analyzer = pipeline("sentiment-analysis")
     
     @staticmethod
     def clean_text(text: str) -> str:
-        """Clean and normalize text"""        # Remove extra whitespace
+        """Clean and normalize text"""
+        # Remove extra whitespace
         text = re.sub(r'\s+', ' ', text)
         
         # Remove special characters but keep basic punctuation
@@ -358,26 +388,31 @@ class TextUtils:
     
     @staticmethod
     def extract_hashtags(text: str) -> List[str]:
-        """Extract hashtags from text"""        return re.findall(r'#(\w+)', text)
+        """Extract hashtags from text"""
+        return re.findall(r'#(\w+)', text)
     
     @staticmethod
     def extract_mentions(text: str) -> List[str]:
-        """Extract mentions from text"""        return re.findall(r'@(\w+)', text)
+        """Extract mentions from text"""
+        return re.findall(r'@(\w+)', text)
     
     @staticmethod
     def extract_urls(text: str) -> List[str]:
-        """Extract URLs from text"""        url_pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+        """Extract URLs from text"""
+        url_pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
         return re.findall(url_pattern, text)
     
     @staticmethod
     def truncate_text(text: str, max_length: int, ellipsis: str = "...") -> str:
-        """Truncate text to maximum length"""        if len(text) <= max_length:
+        """Truncate text to maximum length"""
+        if len(text) <= max_length:
             return text
         return text[:max_length - len(ellipsis)] + ellipsis
     
     @staticmethod
     def slugify(text: str) -> str:
-        """Convert text to URL-friendly slug"""        # Convert to lowercase
+        """Convert text to URL-friendly slug"""
+        # Convert to lowercase
         text = text.lower()
         
         # Replace spaces and special characters with hyphens
@@ -388,7 +423,8 @@ class TextUtils:
         return text.strip('-')
     
     async def analyze_sentiment(self, text: str) -> Dict[str, Any]:
-        """Analyze text sentiment"""        try:
+        """Analyze text sentiment"""
+        try:
             result = self.sentiment_analyzer(text)[0]
             return {
                 'label': result['label'],
@@ -404,7 +440,8 @@ class TextUtils:
 # ==============================================================================
 
 class MediaUtils:
-    """Advanced media processing utilities"""    
+    """Advanced media processing utilities"""
+    
     @staticmethod
     def process_image(
         image_path: str,
@@ -413,7 +450,8 @@ class MediaUtils:
         max_height: int = 1080,
         quality: int = 85
     ) -> Dict[str, Any]:
-        """Process and optimize image"""        try:
+        """Process and optimize image"""
+        try:
             with Image.open(image_path) as img:
                 # Get original dimensions
                 original_width, original_height = img.size
@@ -449,7 +487,8 @@ class MediaUtils:
     
     @staticmethod
     def extract_video_thumbnail(video_path: str, output_path: str, timestamp: float = 1.0) -> bool:
-        """Extract thumbnail from video"""        try:
+        """Extract thumbnail from video"""
+        try:
             cap = cv2.VideoCapture(video_path)
             
             # Set timestamp
@@ -473,7 +512,8 @@ class MediaUtils:
     
     @staticmethod
     def analyze_audio(audio_path: str) -> Dict[str, Any]:
-        """Analyze audio file"""        try:
+        """Analyze audio file"""
+        try:
             # Load audio
             y, sr = librosa.load(audio_path)
             
@@ -499,7 +539,8 @@ class MediaUtils:
     
     @staticmethod
     def _get_file_size(file_path: str) -> int:
-        """Get file size in bytes"""        import os
+        """Get file size in bytes"""
+        import os
         return os.path.getsize(file_path)
 
 # ==============================================================================
@@ -507,16 +548,19 @@ class MediaUtils:
 # ==============================================================================
 
 class GeoUtils:
-    """Geographic and location utilities"""    
+    """Geographic and location utilities"""
+    
     def __init__(self):
         self.geolocator = Nominatim(user_agent="collaboration_system")
     
     @staticmethod
     def calculate_distance(point1: Tuple[float, float], point2: Tuple[float, float]) -> float:
-        """Calculate distance between two geographic points in kilometers"""        return geodesic(point1, point2).kilometers
+        """Calculate distance between two geographic points in kilometers"""
+        return geodesic(point1, point2).kilometers
     
     async def geocode_address(self, address: str) -> Optional[Dict[str, Any]]:
-        """Geocode address to coordinates"""        try:
+        """Geocode address to coordinates"""
+        try:
             location = self.geolocator.geocode(address, timeout=10)
             if location:
                 return {
@@ -531,7 +575,8 @@ class GeoUtils:
             return None
     
     async def reverse_geocode(self, latitude: float, longitude: float) -> Optional[Dict[str, Any]]:
-        """Reverse geocode coordinates to address"""        try:
+        """Reverse geocode coordinates to address"""
+        try:
             location = self.geolocator.reverse((latitude, longitude), timeout=10)
             if location:
                 return {
@@ -545,7 +590,8 @@ class GeoUtils:
     
     @staticmethod
     def get_timezone_from_coordinates(latitude: float, longitude: float) -> str:
-        """Get timezone from coordinates (simplified)"""        # This is a simplified implementation
+        """Get timezone from coordinates (simplified)"""
+        # This is a simplified implementation
         # In production, use a proper timezone API
         if -180 <= longitude < -150:
             return "Pacific/Honolulu"
@@ -565,10 +611,12 @@ class GeoUtils:
 # ==============================================================================
 
 class FormatUtils:
-    """Data formatting and serialization utilities"""    
+    """Data formatting and serialization utilities"""
+    
     @staticmethod
     def format_currency(amount: float, currency: str = "USD", locale: str = "en_US") -> str:
-        """Format currency amount"""        if currency == "USD":
+        """Format currency amount"""
+        if currency == "USD":
             return f"${amount:,.2f}"
         elif currency == "EUR":
             return f"€{amount:,.2f}"
@@ -579,18 +627,21 @@ class FormatUtils:
     
     @staticmethod
     def format_number(number: Union[int, float], precision: int = 2) -> str:
-        """Format number with thousand separators"""        if isinstance(number, int):
+        """Format number with thousand separators"""
+        if isinstance(number, int):
             return f"{number:,}"
         else:
             return f"{number:,.{precision}f}"
     
     @staticmethod
     def format_percentage(value: float, precision: int = 1) -> str:
-        """Format percentage"""        return f"{value * 100:.{precision}f}%"
+        """Format percentage"""
+        return f"{value * 100:.{precision}f}%"
     
     @staticmethod
     def format_file_size(size_bytes: int) -> str:
-        """Format file size in human-readable format"""        if size_bytes < 1024:
+        """Format file size in human-readable format"""
+        if size_bytes < 1024:
             return f"{size_bytes} B"
         elif size_bytes < 1024 ** 2:
             return f"{size_bytes / 1024:.1f} KB"
@@ -601,20 +652,24 @@ class FormatUtils:
     
     @staticmethod
     def serialize_datetime(dt: datetime) -> str:
-        """Serialize datetime to ISO format"""        return dt.isoformat()
+        """Serialize datetime to ISO format"""
+        return dt.isoformat()
     
     @staticmethod
     def deserialize_datetime(iso_string: str) -> datetime:
-        """Deserialize ISO format datetime"""        return datetime.fromisoformat(iso_string.replace('Z', '+00:00'))
+        """Deserialize ISO format datetime"""
+        return datetime.fromisoformat(iso_string.replace('Z', '+00:00'))
     
     @staticmethod
     def to_camel_case(snake_str: str) -> str:
-        """Convert snake_case to camelCase"""        components = snake_str.split('_')
+        """Convert snake_case to camelCase"""
+        components = snake_str.split('_')
         return components[0] + ''.join(x.capitalize() for x in components[1:])
     
     @staticmethod
     def to_snake_case(camel_str: str) -> str:
-        """Convert camelCase to snake_case"""        return re.sub('([a-z0-9])([A-Z])', r'\1_\2', camel_str).lower()
+        """Convert camelCase to snake_case"""
+        return re.sub('([a-z0-9])([A-Z])', r'\1_\2', camel_str).lower()
 
 # ==============================================================================
 # PAGINATION UTILITIES
@@ -622,7 +677,8 @@ class FormatUtils:
 
 @dataclass
 class PaginationInfo:
-    """Pagination information"""    page: int
+    """Pagination information"""
+    page: int
     per_page: int
     total_items: int
     total_pages: int
@@ -632,7 +688,8 @@ class PaginationInfo:
     next_page: Optional[int]
 
 class PaginationUtils:
-    """Pagination utilities"""    
+    """Pagination utilities"""
+    
     @staticmethod
     def paginate(
         items: List[T],
@@ -640,7 +697,8 @@ class PaginationUtils:
         per_page: int = 20,
         max_per_page: int = 100
     ) -> Tuple[List[T], PaginationInfo]:
-        """Paginate list of items"""        # Validate inputs
+        """Paginate list of items"""
+        # Validate inputs
         page = max(1, page)
         per_page = min(max(1, per_page), max_per_page)
         
@@ -673,7 +731,8 @@ class PaginationUtils:
         pagination: PaginationInfo,
         meta: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Create standardized pagination response"""        return {
+        """Create standardized pagination response"""
+        return {
             'data': data,
             'pagination': asdict(pagination),
             'meta': meta or {}
@@ -684,7 +743,8 @@ class PaginationUtils:
 # ==============================================================================
 
 class CacheUtils:
-    """Advanced caching utilities"""    
+    """Advanced caching utilities"""
+    
     def __init__(self, redis_client: redis.Redis):
         self.redis = redis_client
     
@@ -694,7 +754,8 @@ class CacheUtils:
         factory_func: Callable[[], Any],
         ttl: int = 3600
     ) -> Any:
-        """Get from cache or set using factory function"""        try:
+        """Get from cache or set using factory function"""
+        try:
             # Try to get from cache
             cached_value = await self.redis.get(key)
             if cached_value:
@@ -714,7 +775,8 @@ class CacheUtils:
             return await factory_func() if asyncio.iscoroutinefunction(factory_func) else factory_func()
     
     async def invalidate_pattern(self, pattern: str) -> int:
-        """Invalidate all keys matching pattern"""        try:
+        """Invalidate all keys matching pattern"""
+        try:
             keys = await self.redis.keys(pattern)
             if keys:
                 return await self.redis.delete(*keys)

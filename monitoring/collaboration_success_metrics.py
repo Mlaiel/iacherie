@@ -6,7 +6,8 @@ and content co-creation effectiveness on the Ainflue platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of collaborations"""    BRAND_PARTNERSHIP = "brand_partnership"
+    """Types of collaborations"""
+    BRAND_PARTNERSHIP = "brand_partnership"
     CREATOR_COLLAB = "creator_collaboration"
     CONTENT_LICENSING = "content_licensing" 
     SPONSORED_CONTENT = "sponsored_content"
@@ -33,7 +35,8 @@ class CollaborationType(Enum):
 
 
 class CollaborationStatus(Enum):
-    """Collaboration status"""    PROPOSED = "proposed"
+    """Collaboration status"""
+    PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     ACCEPTED = "accepted"
     ACTIVE = "active"
@@ -44,7 +47,8 @@ class CollaborationStatus(Enum):
 
 @dataclass
 class CollaborationEvent:
-    """Individual collaboration event"""    collaboration_id: str
+    """Individual collaboration event"""
+    collaboration_id: str
     creator_id: int
     brand_id: Optional[int]
     collaboration_type: CollaborationType
@@ -58,7 +62,8 @@ class CollaborationEvent:
 
 @dataclass
 class CreatorPerformance:
-    """Creator performance metrics"""    creator_id: int
+    """Creator performance metrics"""
+    creator_id: int
     total_collaborations: int
     successful_collaborations: int
     total_revenue: Decimal
@@ -71,7 +76,8 @@ class CreatorPerformance:
 
 
 class CollaborationSuccessTracker:
-    """    Advanced collaboration success tracking system
+    """
+    Advanced collaboration success tracking system
     
     Features:
     - Partnership success analytics
@@ -81,9 +87,11 @@ class CollaborationSuccessTracker:
     - ROI analysis for partnerships
     - Collaboration funnel optimization
     - Network effect analysis
-    """    
+    """
+    
     def __init__(self):
-        """Initialize collaboration success tracker"""        
+        """Initialize collaboration success tracker"""
+        
         # Prometheus metrics
         self.collaborations_total = Counter(
             'ainflue_collaborations_total',
@@ -148,7 +156,8 @@ class CollaborationSuccessTracker:
         metrics: Optional[Dict[str, float]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """        Track a collaboration event
+        """
+        Track a collaboration event
         
         Args:
             collaboration_id: Unique collaboration identifier
@@ -160,7 +169,8 @@ class CollaborationSuccessTracker:
             content_ids: Associated content IDs
             metrics: Performance metrics
             metadata: Additional data
-        """        try:
+        """
+        try:
             # Create collaboration event
             event = CollaborationEvent(
                 collaboration_id=collaboration_id,
@@ -222,7 +232,8 @@ class CollaborationSuccessTracker:
         satisfaction_score: float,
         feedback: Optional[str] = None
     ) -> None:
-        """Track creator satisfaction with collaboration"""        try:
+        """Track creator satisfaction with collaboration"""
+        try:
             # Find the collaboration
             collaboration = None
             for event in self.collaboration_events:
@@ -259,14 +270,16 @@ class CollaborationSuccessTracker:
             logger.error(f"Error tracking creator satisfaction: {e}")
     
     async def get_collaboration_analytics(self, period_days: int = 30) -> Dict[str, Any]:
-        """        Get comprehensive collaboration analytics
+        """
+        Get comprehensive collaboration analytics
         
         Args:
             period_days: Analysis period in days
             
         Returns:
             Collaboration analytics data
-        """        try:
+        """
+        try:
             # Check cache
             cache_key = f"collaboration_analytics_{period_days}"
             if (cache_key in self.analytics_cache and 
@@ -309,7 +322,8 @@ class CollaborationSuccessTracker:
             return {"error": str(e)}
     
     async def _calculate_collaboration_summary(self, events: List[CollaborationEvent]) -> Dict[str, Any]:
-        """Calculate collaboration summary statistics"""        if not events:
+        """Calculate collaboration summary statistics"""
+        if not events:
             return {
                 "total_collaborations": 0,
                 "total_value": 0,
@@ -333,7 +347,8 @@ class CollaborationSuccessTracker:
         }
     
     async def _calculate_success_metrics(self, events: List[CollaborationEvent]) -> Dict[str, Any]:
-        """Calculate collaboration success metrics"""        if not events:
+        """Calculate collaboration success metrics"""
+        if not events:
             return {"overall_success_rate": 0, "completion_rate": 0, "average_duration": 0}
         
         # Group events by collaboration ID to track lifecycle
@@ -383,7 +398,8 @@ class CollaborationSuccessTracker:
         }
     
     async def _calculate_success_by_type(self, collaborations: Dict[str, List[CollaborationEvent]]) -> Dict[str, float]:
-        """Calculate success rate by collaboration type"""        type_success = defaultdict(list)
+        """Calculate success rate by collaboration type"""
+        type_success = defaultdict(list)
         
         for collab_events in collaborations.values():
             collab_type = collab_events[0].collaboration_type.value
@@ -398,7 +414,8 @@ class CollaborationSuccessTracker:
         }
     
     async def _calculate_top_creators(self, events: List[CollaborationEvent], limit: int = 10) -> List[Dict[str, Any]]:
-        """Calculate top performing creators"""        creator_stats = defaultdict(lambda: {
+        """Calculate top performing creators"""
+        creator_stats = defaultdict(lambda: {
             "collaborations": 0,
             "successful": 0,
             "total_value": Decimal('0'),
@@ -464,7 +481,8 @@ class CollaborationSuccessTracker:
         return sorted(top_creators, key=lambda x: x["performance_score"], reverse=True)[:limit]
     
     async def _calculate_brand_metrics(self, events: List[CollaborationEvent]) -> Dict[str, Any]:
-        """Calculate brand performance metrics"""        brand_stats = defaultdict(lambda: {
+        """Calculate brand performance metrics"""
+        brand_stats = defaultdict(lambda: {
             "collaborations": 0,
             "successful": 0,
             "total_value": Decimal('0'),
@@ -518,7 +536,8 @@ class CollaborationSuccessTracker:
         }
     
     async def _calculate_collaboration_funnel(self, events: List[CollaborationEvent]) -> Dict[str, Any]:
-        """Calculate collaboration conversion funnel"""        status_counts = Counter(event.status.value for event in events)
+        """Calculate collaboration conversion funnel"""
+        status_counts = Counter(event.status.value for event in events)
         
         # Define funnel stages
         funnel_stages = [
@@ -552,7 +571,8 @@ class CollaborationSuccessTracker:
         }
     
     async def _calculate_network_metrics(self) -> Dict[str, Any]:
-        """Calculate collaboration network metrics"""        # Calculate network density and connections
+        """Calculate collaboration network metrics"""
+        # Calculate network density and connections
         total_creators = len([key for key in self.collaboration_networks.keys() if key.startswith("creator_")])
         total_brands = len([key for key in self.collaboration_networks.keys() if key.startswith("brand_")])
         
@@ -578,7 +598,8 @@ class CollaborationSuccessTracker:
         }
     
     async def _get_most_connected_nodes(self, prefix: str, limit: int = 5) -> List[Dict[str, Any]]:
-        """Get most connected nodes in collaboration network"""        connections = [
+        """Get most connected nodes in collaboration network"""
+        connections = [
             (key.replace(prefix, ""), len(connections))
             for key, connections in self.collaboration_networks.items()
             if key.startswith(prefix)
@@ -590,7 +611,8 @@ class CollaborationSuccessTracker:
         ]
     
     async def _calculate_collaboration_trends(self, period_days: int) -> Dict[str, Any]:
-        """Calculate collaboration trends"""        # Implementation for trend calculation
+        """Calculate collaboration trends"""
+        # Implementation for trend calculation
         return {
             "growth_rate": "Implementation needed",
             "seasonal_patterns": "Implementation needed",
@@ -598,7 +620,8 @@ class CollaborationSuccessTracker:
         }
     
     async def _generate_optimization_recommendations(self, events: List[CollaborationEvent]) -> List[str]:
-        """Generate optimization recommendations"""        recommendations = []
+        """Generate optimization recommendations"""
+        recommendations = []
         
         # Analyze success rates by type
         if events:
@@ -614,7 +637,8 @@ class CollaborationSuccessTracker:
         return recommendations
     
     async def _update_creator_performance(self, creator_id: int) -> None:
-        """Update creator performance metrics"""        try:
+        """Update creator performance metrics"""
+        try:
             creator_events = [
                 event for event in self.collaboration_events
                 if event.creator_id == creator_id
@@ -658,7 +682,8 @@ class CollaborationSuccessTracker:
             logger.error(f"Error updating creator performance: {e}")
     
     async def _update_brand_metrics(self, brand_id: int, event: CollaborationEvent) -> None:
-        """Update brand metrics"""        try:
+        """Update brand metrics"""
+        try:
             if brand_id not in self.brand_metrics:
                 self.brand_metrics[brand_id] = {
                     "total_collaborations": 0,
@@ -678,7 +703,8 @@ class CollaborationSuccessTracker:
             logger.error(f"Error updating brand metrics: {e}")
     
     async def _update_success_rates(self, collaboration_type: CollaborationType, creator_tier: str) -> None:
-        """Update success rate metrics"""        try:
+        """Update success rate metrics"""
+        try:
             # Calculate success rate for this type and tier
             relevant_events = [
                 event for event in self.collaboration_events
@@ -710,7 +736,8 @@ class CollaborationSuccessTracker:
             logger.error(f"Error updating success rates: {e}")
     
     def _get_creator_tier(self, creator_id: int) -> str:
-        """Get creator tier based on performance (simplified logic)"""        if creator_id in self.creator_metrics:
+        """Get creator tier based on performance (simplified logic)"""
+        if creator_id in self.creator_metrics:
             performance = self.creator_metrics[creator_id]
             if performance.total_collaborations >= 10 and performance.completion_rate >= 80:
                 return "premium"
@@ -722,7 +749,8 @@ class CollaborationSuccessTracker:
             return "new"
     
     def get_tracker_stats(self) -> Dict[str, Any]:
-        """Get collaboration tracker statistics"""        return {
+        """Get collaboration tracker statistics"""
+        return {
             "total_events": len(self.collaboration_events),
             "unique_collaborations": len(set(event.collaboration_id for event in self.collaboration_events)),
             "unique_creators": len(set(event.creator_id for event in self.collaboration_events)),

@@ -24,7 +24,8 @@ Copyright: All rights reserved. Unauthorized use prohibited.
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Any, Optional, Union, Tuple
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import json
@@ -42,7 +43,8 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class DeFiProtocol(Enum):
-    """Supported DeFi protocols."""    UNISWAP_V3 = "uniswap_v3"
+    """Supported DeFi protocols."""
+    UNISWAP_V3 = "uniswap_v3"
     SUSHISWAP = "sushiswap"
     COMPOUND = "compound"
     AAVE = "aave"
@@ -52,21 +54,24 @@ class DeFiProtocol(Enum):
     CONVEX = "convex"
 
 class PoolType(Enum):
-    """Types of liquidity pools."""    LIQUIDITY_POOL = "liquidity_pool"
+    """Types of liquidity pools."""
+    LIQUIDITY_POOL = "liquidity_pool"
     LENDING_POOL = "lending_pool"
     STAKING_POOL = "staking_pool"
     YIELD_FARM = "yield_farm"
     GOVERNANCE_STAKING = "governance_staking"
 
 class RiskLevel(Enum):
-    """Risk levels for DeFi strategies."""    VERY_LOW = "very_low"
+    """Risk levels for DeFi strategies."""
+    VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     VERY_HIGH = "very_high"
 
 class StrategyType(Enum):
-    """DeFi strategy types."""    YIELD_FARMING = "yield_farming"
+    """DeFi strategy types."""
+    YIELD_FARMING = "yield_farming"
     LIQUIDITY_PROVISION = "liquidity_provision"
     LENDING = "lending"
     BORROWING = "borrowing"
@@ -76,7 +81,8 @@ class StrategyType(Enum):
 
 @dataclass
 class DeFiPosition:
-    """DeFi position tracking."""    position_id: str
+    """DeFi position tracking."""
+    position_id: str
     protocol: DeFiProtocol
     pool_type: PoolType
     strategy_type: StrategyType
@@ -93,7 +99,8 @@ class DeFiPosition:
 
 @dataclass
 class YieldFarmingStrategy:
-    """Yield farming strategy configuration."""    strategy_id: str
+    """Yield farming strategy configuration."""
+    strategy_id: str
     protocol: DeFiProtocol
     pool_address: str
     token_pair: Tuple[str, str]
@@ -106,7 +113,8 @@ class YieldFarmingStrategy:
 
 @dataclass
 class LiquidityPoolInfo:
-    """Liquidity pool information."""    pool_address: str
+    """Liquidity pool information."""
+    pool_address: str
     protocol: DeFiProtocol
     token0: str
     token1: str
@@ -120,7 +128,8 @@ class LiquidityPoolInfo:
 
 @dataclass
 class ArbitrageOpportunity:
-    """Arbitrage opportunity detection."""    opportunity_id: str
+    """Arbitrage opportunity detection."""
+    opportunity_id: str
     token: str
     buy_protocol: DeFiProtocol
     sell_protocol: DeFiProtocol
@@ -133,15 +142,19 @@ class ArbitrageOpportunity:
     expiry_timestamp: datetime
 
 class DeFiIntegration:
-    """    Comprehensive DeFi integration system providing automated yield optimization,
+    """
+    Comprehensive DeFi integration system providing automated yield optimization,
     risk management, and advanced financial operations.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize DeFi integration system.
+        """
+        Initialize DeFi integration system.
         
         Args:
             config: DeFi configuration including protocol settings, risk parameters
-        """        self.config = config
+        """
+        self.config = config
         self.positions: Dict[str, DeFiPosition] = {}
         self.strategies: Dict[str, YieldFarmingStrategy] = {}
         self.pool_cache: Dict[str, LiquidityPoolInfo] = {}
@@ -151,7 +164,8 @@ class DeFiIntegration:
         self._initialize_protocols()
     
     def _initialize_protocols(self) -> None:
-        """Initialize connections to DeFi protocols."""        protocol_configs = self.config.get("protocols", {})
+        """Initialize connections to DeFi protocols."""
+        protocol_configs = self.config.get("protocols", {})
         
         for protocol_name, protocol_config in protocol_configs.items():
             try:
@@ -173,7 +187,8 @@ class DeFiIntegration:
         target_apy: Decimal,
         risk_level: RiskLevel = RiskLevel.MEDIUM
     ) -> YieldFarmingStrategy:
-        """        Create a new yield farming strategy.
+        """
+        Create a new yield farming strategy.
         
         Args:
             protocol: DeFi protocol to use
@@ -184,7 +199,8 @@ class DeFiIntegration:
             
         Returns:
             Created yield farming strategy
-        """        try:
+        """
+        try:
             # Find suitable pool
             pool_info = await self._find_optimal_pool(
                 protocol, token_pair, target_apy, risk_level
@@ -230,7 +246,8 @@ class DeFiIntegration:
         target_apy: Decimal,
         risk_level: RiskLevel
     ) -> Optional[LiquidityPoolInfo]:
-        """Find the optimal liquidity pool for a strategy."""        try:
+        """Find the optimal liquidity pool for a strategy."""
+        try:
             # Get available pools for the token pair
             pools = await self._get_pools_for_pair(protocol, token_pair)
             
@@ -268,7 +285,8 @@ class DeFiIntegration:
         protocol: DeFiProtocol,
         token_pair: Tuple[str, str]
     ) -> List[LiquidityPoolInfo]:
-        """Get available liquidity pools for a token pair."""        # Mock implementation - in production, would query protocol APIs
+        """Get available liquidity pools for a token pair."""
+        # Mock implementation - in production, would query protocol APIs
         mock_pools = [
             LiquidityPoolInfo(
                 pool_address="0x" + "1" * 40,
@@ -292,7 +310,8 @@ class DeFiIntegration:
         pool_risk: RiskLevel,
         strategy_risk: RiskLevel
     ) -> bool:
-        """Check if pool risk level is compatible with strategy risk tolerance."""        risk_values = {
+        """Check if pool risk level is compatible with strategy risk tolerance."""
+        risk_values = {
             RiskLevel.VERY_LOW: 1,
             RiskLevel.LOW: 2,
             RiskLevel.MEDIUM: 3,
@@ -307,7 +326,8 @@ class DeFiIntegration:
         allocation_amount: Decimal,
         risk_level: RiskLevel
     ) -> Decimal:
-        """Calculate maximum allocation percentage based on risk level."""        risk_limits = {
+        """Calculate maximum allocation percentage based on risk level."""
+        risk_limits = {
             RiskLevel.VERY_LOW: Decimal("10"),
             RiskLevel.LOW: Decimal("20"),
             RiskLevel.MEDIUM: Decimal("40"),
@@ -322,7 +342,8 @@ class DeFiIntegration:
         strategy_id: str,
         amount_usd: Decimal
     ) -> DeFiPosition:
-        """        Execute a yield farming strategy by entering positions.
+        """
+        Execute a yield farming strategy by entering positions.
         
         Args:
             strategy_id: ID of the strategy to execute
@@ -330,7 +351,8 @@ class DeFiIntegration:
             
         Returns:
             Created DeFi position
-        """        try:
+        """
+        try:
             strategy = self.strategies.get(strategy_id)
             if not strategy:
                 raise ValueError(f"Strategy {strategy_id} not found")
@@ -363,7 +385,8 @@ class DeFiIntegration:
         token_pair: Tuple[str, str],
         amount_usd: Decimal
     ) -> Dict[str, Decimal]:
-        """Calculate required token amounts for a given USD value."""        # Get current token prices
+        """Calculate required token amounts for a given USD value."""
+        # Get current token prices
         price_0 = await self._get_token_price_usd(token_pair[0])
         price_1 = await self._get_token_price_usd(token_pair[1])
         
@@ -376,7 +399,8 @@ class DeFiIntegration:
         }
     
     async def _get_token_price_usd(self, token_address: str) -> Decimal:
-        """Get current USD price for a token."""        # Mock implementation - in production, would use price oracles
+        """Get current USD price for a token."""
+        # Mock implementation - in production, would use price oracles
         return Decimal("1500.0")  # Mock ETH price
     
     async def _enter_liquidity_position(
@@ -384,7 +408,8 @@ class DeFiIntegration:
         strategy: YieldFarmingStrategy,
         token_amounts: Dict[str, Decimal]
     ) -> DeFiPosition:
-        """Enter a liquidity position based on strategy."""        # Mock position creation
+        """Enter a liquidity position based on strategy."""
+        # Mock position creation
         position = DeFiPosition(
             position_id=str(uuid.uuid4()),
             protocol=strategy.protocol,
@@ -411,14 +436,16 @@ class DeFiIntegration:
         return position
     
     async def update_positions(self) -> None:
-        """Update all active DeFi positions with current values."""        for position in self.positions.values():
+        """Update all active DeFi positions with current values."""
+        for position in self.positions.values():
             try:
                 await self._update_position_value(position)
             except Exception as e:
                 logger.error(f"Failed to update position {position.position_id}: {e}")
     
     async def _update_position_value(self, position: DeFiPosition) -> None:
-        """Update the current value and PnL of a position."""        # Calculate current value
+        """Update the current value and PnL of a position."""
+        # Calculate current value
         current_value = Decimal("0")
         for i, token in enumerate(position.tokens):
             current_price = await self._get_token_price_usd(token)
@@ -438,7 +465,8 @@ class DeFiIntegration:
         position.last_updated = datetime.utcnow()
     
     async def _calculate_yield_earned(self, position: DeFiPosition) -> Decimal:
-        """Calculate yield earned from a position."""        # Mock yield calculation based on time and APY
+        """Calculate yield earned from a position."""
+        # Mock yield calculation based on time and APY
         time_elapsed = datetime.utcnow() - position.entry_timestamp
         days_elapsed = time_elapsed.days + time_elapsed.seconds / 86400
         
@@ -457,14 +485,16 @@ class DeFiIntegration:
         self,
         target_allocations: Dict[StrategyType, Decimal]
     ) -> Dict[str, Any]:
-        """        Rebalance the DeFi portfolio according to target allocations.
+        """
+        Rebalance the DeFi portfolio according to target allocations.
         
         Args:
             target_allocations: Target percentage allocations for each strategy type
             
         Returns:
             Rebalancing results and transactions
-        """        try:
+        """
+        try:
             # Calculate current allocations
             current_allocations = await self._calculate_current_allocations()
             
@@ -491,7 +521,8 @@ class DeFiIntegration:
             return {"status": "failed", "error": str(e)}
     
     async def _calculate_current_allocations(self) -> Dict[StrategyType, Decimal]:
-        """Calculate current portfolio allocations by strategy type."""        total_value = sum(pos.current_value_usd for pos in self.positions.values())
+        """Calculate current portfolio allocations by strategy type."""
+        total_value = sum(pos.current_value_usd for pos in self.positions.values())
         
         if total_value == 0:
             return {}
@@ -511,7 +542,8 @@ class DeFiIntegration:
         current: Dict[StrategyType, Decimal],
         target: Dict[StrategyType, Decimal]
     ) -> List[Dict[str, Any]]:
-        """Calculate required rebalancing actions."""        actions = []
+        """Calculate required rebalancing actions."""
+        actions = []
         tolerance = Decimal("2.0")  # 2% tolerance
         
         for strategy_type, target_percentage in target.items():
@@ -528,7 +560,8 @@ class DeFiIntegration:
         return actions
     
     async def _execute_rebalancing_action(self, action: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute a single rebalancing action."""        # Mock implementation
+        """Execute a single rebalancing action."""
+        # Mock implementation
         logger.info(f"Executing rebalancing action: {action}")
         return {
             "action": action,
@@ -537,7 +570,8 @@ class DeFiIntegration:
         }
     
     async def scan_arbitrage_opportunities(self) -> List[ArbitrageOpportunity]:
-        """Scan for arbitrage opportunities across protocols."""        try:
+        """Scan for arbitrage opportunities across protocols."""
+        try:
             opportunities = []
             
             # Define token list to scan
@@ -582,7 +616,8 @@ class DeFiIntegration:
         token: str,
         protocol: DeFiProtocol
     ) -> Decimal:
-        """Get token price on a specific protocol."""        # Mock implementation - in production, would query protocol contracts
+        """Get token price on a specific protocol."""
+        # Mock implementation - in production, would query protocol contracts
         base_price = Decimal("1500.0")  # Mock base price
         variance = np.random.uniform(-0.05, 0.05)  # 5% price variance
         return base_price * (1 + Decimal(str(variance)))
@@ -592,7 +627,8 @@ class DeFiIntegration:
         token: str,
         protocol_prices: Dict[DeFiProtocol, Decimal]
     ) -> List[ArbitrageOpportunity]:
-        """Find arbitrage opportunities in price differences."""        opportunities = []
+        """Find arbitrage opportunities in price differences."""
+        opportunities = []
         protocols = list(protocol_prices.keys())
         
         for i, buy_protocol in enumerate(protocols):
@@ -636,14 +672,16 @@ class DeFiIntegration:
         self,
         opportunity_id: str
     ) -> Dict[str, Any]:
-        """        Execute an arbitrage opportunity.
+        """
+        Execute an arbitrage opportunity.
         
         Args:
             opportunity_id: ID of the arbitrage opportunity
             
         Returns:
             Execution result
-        """        try:
+        """
+        try:
             opportunity = next(
                 (opp for opp in self.arbitrage_opportunities if opp.opportunity_id == opportunity_id),
                 None
@@ -672,7 +710,8 @@ class DeFiIntegration:
         self,
         opportunity: ArbitrageOpportunity
     ) -> Dict[str, Any]:
-        """Execute arbitrage using flash loan."""        # Mock implementation
+        """Execute arbitrage using flash loan."""
+        # Mock implementation
         logger.info(f"Executing flash loan arbitrage for {opportunity.token}")
         return {
             "status": "completed",
@@ -685,7 +724,8 @@ class DeFiIntegration:
         self,
         opportunity: ArbitrageOpportunity
     ) -> Dict[str, Any]:
-        """Execute simple arbitrage without flash loan."""        # Mock implementation
+        """Execute simple arbitrage without flash loan."""
+        # Mock implementation
         logger.info(f"Executing simple arbitrage for {opportunity.token}")
         return {
             "status": "completed",
@@ -695,7 +735,8 @@ class DeFiIntegration:
         }
     
     def get_portfolio_summary(self) -> Dict[str, Any]:
-        """Get comprehensive portfolio summary."""        total_value = sum(pos.current_value_usd for pos in self.positions.values())
+        """Get comprehensive portfolio summary."""
+        total_value = sum(pos.current_value_usd for pos in self.positions.values())
         total_pnl = sum(pos.unrealized_pnl for pos in self.positions.values())
         total_yield = sum(pos.yield_earned for pos in self.positions.values())
         
@@ -729,7 +770,8 @@ class DeFiIntegration:
         }
     
     async def emergency_exit_all_positions(self) -> Dict[str, Any]:
-        """Emergency exit from all positions."""        try:
+        """Emergency exit from all positions."""
+        try:
             results = []
             
             for position_id, position in self.positions.items():
@@ -756,7 +798,8 @@ class DeFiIntegration:
             return {"status": "failed", "error": str(e)}
     
     async def _exit_position(self, position_id: str) -> Dict[str, Any]:
-        """Exit a specific DeFi position."""        # Mock implementation
+        """Exit a specific DeFi position."""
+        # Mock implementation
         position = self.positions.get(position_id)
         if not position:
             raise ValueError(f"Position {position_id} not found")

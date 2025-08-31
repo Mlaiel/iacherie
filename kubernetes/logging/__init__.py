@@ -18,7 +18,8 @@ Team Expertise:
 - Security Specialist: Enterprise Security & Compliance
 - Microservices Architect: Distributed Systems
 - IA Prompt Engineer: Advanced AI Integration
-"""__version__ = "1.0.0"
+"""
+__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 

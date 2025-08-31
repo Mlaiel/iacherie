@@ -6,7 +6,8 @@ content uploads, collaboration data, and monetization records.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 from datetime import datetime, timedelta
@@ -24,7 +25,8 @@ from ...ai_agents.repositories.agent_repository import AgentRepository
 
 @dataclass
 class UserBackupRecord:
-    """User backup record metadata."""    user_id: str
+    """User backup record metadata."""
+    user_id: str
     backup_timestamp: datetime
     included_data: List[str]
     record_count: int
@@ -33,16 +35,20 @@ class UserBackupRecord:
 
 
 class UserDataBackupService:
-    """    Enterprise user data backup service for IA platform.
+    """
+    Enterprise user data backup service for IA platform.
     
     Manages backup and recovery of user profiles, content, collaborations,
     monetization data, and AI agent interactions.
-    """    def __init__(self, storage_config: Dict[str, Any]):
-        """        Initialize user data backup service.
+    """
+    def __init__(self, storage_config: Dict[str, Any]):
+        """
+        Initialize user data backup service.
         
         Args:
             storage_config: Storage configuration
-        """        self.logger = logging.getLogger(__name__)
+        """
+        self.logger = logging.getLogger(__name__)
         self.storage_config = storage_config
         
         # Initialize repositories
@@ -56,11 +62,13 @@ class UserDataBackupService:
         self.backup_progress = {}
 
     async def backup_all_users(self) -> Dict[str, Any]:
-        """        Backup all user data across the platform.
+        """
+        Backup all user data across the platform.
         
         Returns:
             Complete user backup data
-        """        self.logger.info("Starting complete user data backup...")
+        """
+        self.logger.info("Starting complete user data backup...")
         
         backup_data = {
             "user_profiles": {},
@@ -112,14 +120,16 @@ class UserDataBackupService:
         return backup_data
 
     async def backup_changes_since(self, since_date: datetime) -> Dict[str, Any]:
-        """        Backup user data changes since specified date.
+        """
+        Backup user data changes since specified date.
         
         Args:
             since_date: Date to check for changes
             
         Returns:
             Incremental user backup data
-        """        self.logger.info(f"Starting incremental user backup since {since_date}")
+        """
+        self.logger.info(f"Starting incremental user backup since {since_date}")
         
         backup_data = {
             "user_profiles": {},
@@ -216,7 +226,8 @@ class UserDataBackupService:
         backup_data: Dict[str, Any], 
         target_path: Optional[str] = None
     ) -> bool:
-        """        Restore user data from backup.
+        """
+        Restore user data from backup.
         
         Args:
             backup_data: User backup data to restore
@@ -224,7 +235,8 @@ class UserDataBackupService:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             self.logger.info("Starting user data restoration...")
             
             # Restore user profiles
@@ -271,14 +283,16 @@ class UserDataBackupService:
             return False
 
     async def backup_specific_user(self, user_id: str) -> Dict[str, Any]:
-        """        Backup specific user's complete data.
+        """
+        Backup specific user's complete data.
         
         Args:
             user_id: User identifier
             
         Returns:
             User backup data
-        """        self.logger.info(f"Starting backup for user: {user_id}")
+        """
+        self.logger.info(f"Starting backup for user: {user_id}")
         
         user_backup = {
             "user_id": user_id,
@@ -295,7 +309,8 @@ class UserDataBackupService:
         return user_backup
 
     async def _backup_user_profile(self, user_id: str) -> Dict[str, Any]:
-        """Backup user profile and account data."""        user_data = await self.user_repo.get_user_by_id(user_id)
+        """Backup user profile and account data."""
+        user_data = await self.user_repo.get_user_by_id(user_id)
         if not user_data:
             return {}
         
@@ -313,7 +328,8 @@ class UserDataBackupService:
         return profile_data
 
     async def _backup_user_content(self, user_id: str) -> Dict[str, Any]:
-        """Backup all user's content uploads and metadata."""        user_content = await self.content_repo.get_user_content(user_id)
+        """Backup all user's content uploads and metadata."""
+        user_content = await self.content_repo.get_user_content(user_id)
         
         content_backup = {
             "uploaded_content": {},
@@ -333,7 +349,8 @@ class UserDataBackupService:
         return content_backup
 
     async def _backup_user_collaborations(self, user_id: str) -> Dict[str, Any]:
-        """Backup user's collaboration data."""        collaborations = await self.collaboration_repo.get_user_collaborations(user_id)
+        """Backup user's collaboration data."""
+        collaborations = await self.collaboration_repo.get_user_collaborations(user_id)
         
         collaboration_backup = {
             "active_collaborations": {},
@@ -353,7 +370,8 @@ class UserDataBackupService:
         return collaboration_backup
 
     async def _backup_user_monetization(self, user_id: str) -> Dict[str, Any]:
-        """Backup user's monetization and revenue data."""        revenue_data = await self.revenue_repo.get_user_revenue_data(user_id)
+        """Backup user's monetization and revenue data."""
+        revenue_data = await self.revenue_repo.get_user_revenue_data(user_id)
         
         monetization_backup = {
             "revenue_records": revenue_data,
@@ -367,7 +385,8 @@ class UserDataBackupService:
         return monetization_backup
 
     async def _backup_user_agent_data(self, user_id: str) -> Dict[str, Any]:
-        """Backup user's AI agent interactions and data."""        agent_interactions = await self.agent_repo.get_user_interactions(user_id)
+        """Backup user's AI agent interactions and data."""
+        agent_interactions = await self.agent_repo.get_user_interactions(user_id)
         
         agent_backup = {
             "interaction_history": agent_interactions,
@@ -381,7 +400,8 @@ class UserDataBackupService:
         return agent_backup
 
     async def _backup_user_analytics(self, user_id: str) -> Dict[str, Any]:
-        """Backup user's analytics and usage data."""        analytics_data = {
+        """Backup user's analytics and usage data."""
+        analytics_data = {
             "usage_statistics": await self.user_repo.get_usage_statistics(user_id),
             "content_performance": await self.content_repo.get_content_performance(user_id),
             "engagement_metrics": await self.user_repo.get_engagement_metrics(user_id),
@@ -396,7 +416,8 @@ class UserDataBackupService:
         user_id: str, 
         since_date: datetime
     ) -> Dict[str, Any]:
-        """Backup user content changes since date."""        changed_content = await self.content_repo.get_user_content_changes_since(
+        """Backup user content changes since date."""
+        changed_content = await self.content_repo.get_user_content_changes_since(
             user_id, since_date
         )
         
@@ -417,7 +438,8 @@ class UserDataBackupService:
         user_id: str, 
         since_date: datetime
     ) -> Dict[str, Any]:
-        """Backup user collaboration changes since date."""        changed_collaborations = await self.collaboration_repo.get_user_changes_since(
+        """Backup user collaboration changes since date."""
+        changed_collaborations = await self.collaboration_repo.get_user_changes_since(
             user_id, since_date
         )
         
@@ -437,7 +459,8 @@ class UserDataBackupService:
         user_id: str, 
         since_date: datetime
     ) -> Dict[str, Any]:
-        """Backup user monetization changes since date."""        changed_revenue = await self.revenue_repo.get_user_changes_since(
+        """Backup user monetization changes since date."""
+        changed_revenue = await self.revenue_repo.get_user_changes_since(
             user_id, since_date
         )
         
@@ -457,7 +480,8 @@ class UserDataBackupService:
         user_id: str, 
         since_date: datetime
     ) -> Dict[str, Any]:
-        """Backup user agent interaction changes since date."""        changed_interactions = await self.agent_repo.get_user_interactions_since(
+        """Backup user agent interaction changes since date."""
+        changed_interactions = await self.agent_repo.get_user_interactions_since(
             user_id, since_date
         )
         
@@ -477,7 +501,8 @@ class UserDataBackupService:
         profile_data: Dict[str, Any], 
         target_path: Optional[str]
     ) -> None:
-        """Restore user profiles from backup."""        for user_id, profile in profile_data.items():
+        """Restore user profiles from backup."""
+        for user_id, profile in profile_data.items():
             # Restore basic user info
             if "basic_info" in profile:
                 await self.user_repo.restore_user(
@@ -508,7 +533,8 @@ class UserDataBackupService:
         content_data: Dict[str, Any], 
         target_path: Optional[str]
     ) -> None:
-        """Restore user content from backup."""        for user_id, content in content_data.items():
+        """Restore user content from backup."""
+        for user_id, content in content_data.items():
             for content_type in ["uploaded_content", "content_metadata", "protection_status", "sharing_settings"]:
                 if content_type in content:
                     for content_id, content_item in content[content_type].items():
@@ -521,7 +547,8 @@ class UserDataBackupService:
         collaboration_data: Dict[str, Any], 
         target_path: Optional[str]
     ) -> None:
-        """Restore collaboration data from backup."""        for user_id, collaborations in collaboration_data.items():
+        """Restore collaboration data from backup."""
+        for user_id, collaborations in collaboration_data.items():
             for collab_type in ["active_collaborations", "collaboration_history", "collaboration_requests", "shared_projects"]:
                 if collab_type in collaborations:
                     for collab_id, collab_item in collaborations[collab_type].items():
@@ -534,7 +561,8 @@ class UserDataBackupService:
         monetization_data: Dict[str, Any], 
         target_path: Optional[str]
     ) -> None:
-        """Restore monetization data from backup."""        for user_id, monetization in monetization_data.items():
+        """Restore monetization data from backup."""
+        for user_id, monetization in monetization_data.items():
             for data_type in ["revenue_records", "payment_methods", "payout_history", "licensing_agreements", "revenue_analytics", "tax_documents"]:
                 if data_type in monetization:
                     await getattr(self.revenue_repo, f"restore_{data_type}")(
@@ -546,7 +574,8 @@ class UserDataBackupService:
         agent_data: Dict[str, Any], 
         target_path: Optional[str]
     ) -> None:
-        """Restore agent interaction data from backup."""        for user_id, interactions in agent_data.items():
+        """Restore agent interaction data from backup."""
+        for user_id, interactions in agent_data.items():
             for interaction_type in ["interaction_history", "agent_preferences", "recommendation_history", "ai_generated_content", "learning_data", "feedback_data"]:
                 if interaction_type in interactions:
                     await getattr(self.agent_repo, f"restore_{interaction_type}")(
@@ -558,7 +587,8 @@ class UserDataBackupService:
         analytics_data: Dict[str, Any], 
         target_path: Optional[str]
     ) -> None:
-        """Restore user analytics from backup."""        for user_id, analytics in analytics_data.items():
+        """Restore user analytics from backup."""
+        for user_id, analytics in analytics_data.items():
             for analytics_type in ["usage_statistics", "content_performance", "engagement_metrics", "activity_logs", "platform_interactions"]:
                 if analytics_type in analytics:
                     await getattr(self.user_repo, f"restore_{analytics_type}")(
@@ -566,7 +596,8 @@ class UserDataBackupService:
                     )
 
     async def _calculate_total_records(self, backup_data: Dict[str, Any]) -> int:
-        """Calculate total number of records in backup."""        total = 0
+        """Calculate total number of records in backup."""
+        total = 0
         
         for category in ["user_profiles", "user_content", "collaborations", "monetization_data", "agent_interactions", "user_analytics"]:
             if category in backup_data:
@@ -581,18 +612,21 @@ class UserDataBackupService:
         return total
 
     def _calculate_user_checksum(self, user_data: Dict[str, Any]) -> str:
-        """Calculate checksum for user data."""        user_str = json.dumps(user_data, sort_keys=True, default=str)
+        """Calculate checksum for user data."""
+        user_str = json.dumps(user_data, sort_keys=True, default=str)
         return hashlib.sha256(user_str.encode()).hexdigest()
 
     async def get_user_backup_size(self, user_id: str) -> Dict[str, Any]:
-        """        Calculate estimated backup size for user.
+        """
+        Calculate estimated backup size for user.
         
         Args:
             user_id: User identifier
             
         Returns:
             Size information
-        """        size_info = {
+        """
+        size_info = {
             "profile_size": 0,
             "content_size": 0,
             "collaboration_size": 0,

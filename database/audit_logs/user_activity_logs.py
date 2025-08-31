@@ -13,7 +13,8 @@ This revolutionary user activity logging technology is the EXCLUSIVE property of
 Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
-"""from typing import List, Dict, Any, Optional, Union, Tuple, Callable, Set
+"""
+from typing import List, Dict, Any, Optional, Union, Tuple, Callable, Set
 import logging
 from datetime import datetime, timezone, timedelta
 from enum import Enum, IntEnum
@@ -50,7 +51,8 @@ Base = declarative_base()
 
 
 class UserActivityType(Enum):
-    """Ultra-comprehensive user activity types for complete behavioral tracking."""    
+    """Ultra-comprehensive user activity types for complete behavioral tracking."""
+    
     # Authentication & Security Activities
     LOGIN_SUCCESS = "login_success"
     LOGIN_FAILED = "login_failed"
@@ -306,7 +308,8 @@ class UserActivityType(Enum):
 
 
 class ActivityStatus(Enum):
-    """Ultra-comprehensive activity status types with detailed granularity."""    
+    """Ultra-comprehensive activity status types with detailed granularity."""
+    
     # Success States
     SUCCESS = "success"
     SUCCESS_WITH_WARNINGS = "success_with_warnings"
@@ -368,7 +371,8 @@ class ActivityStatus(Enum):
 
 
 class DeviceType(Enum):
-    """Ultra-detailed device types for comprehensive user activity tracking."""    
+    """Ultra-detailed device types for comprehensive user activity tracking."""
+    
     # Desktop Devices
     DESKTOP_WINDOWS = "desktop_windows"
     DESKTOP_MACOS = "desktop_macos"
@@ -418,7 +422,8 @@ class DeviceType(Enum):
 
 
 class ActivityPriority(IntEnum):
-    """Activity priority levels for user actions."""    
+    """Activity priority levels for user actions."""
+    
     CRITICAL = 1      # Critical business actions (payments, security)
     HIGH = 2          # High priority (content creation, collaboration)
     MEDIUM = 3        # Medium priority (general interactions)
@@ -427,7 +432,8 @@ class ActivityPriority(IntEnum):
 
 
 class ContentType(Enum):
-    """Content types for IA Influencer platform (Business Logic)."""    
+    """Content types for IA Influencer platform (Business Logic)."""
+    
     # Audio Content
     AUDIO_MUSIC = "audio_music"
     AUDIO_PODCAST = "audio_podcast"
@@ -471,7 +477,8 @@ class ContentType(Enum):
 
 
 class CreatorType(Enum):
-    """Creator types for IA Influencer platform (Business Logic)."""    
+    """Creator types for IA Influencer platform (Business Logic)."""
+    
     # Main Creator Categories
     MUSICIAN = "musician"
     BLOGGER = "blogger"
@@ -525,7 +532,8 @@ class CreatorType(Enum):
 
 
 class GeographicRegion(Enum):
-    """Geographic regions for compliance and analytics."""    
+    """Geographic regions for compliance and analytics."""
+    
     # Major Regions
     NORTH_AMERICA = "north_america"
     SOUTH_AMERICA = "south_america"
@@ -556,7 +564,8 @@ class GeographicRegion(Enum):
 
 @dataclass
 class UserContext:
-    """Ultra-comprehensive context information for user activities."""    
+    """Ultra-comprehensive context information for user activities."""
+    
     # Core User Information
     user_id: str
     user_email: str
@@ -643,14 +652,16 @@ class UserContext:
     custom_attributes: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for JSON serialization."""        result = asdict(self)
+        """Convert to dictionary for JSON serialization."""
+        result = asdict(self)
         # Handle datetime serialization
         if isinstance(result.get('session_start_time'), datetime):
             result['session_start_time'] = result['session_start_time'].isoformat()
         return result
     
     def get_device_info(self) -> Dict[str, Any]:
-        """Extract device information from user agent."""        if not self.user_agent:
+        """Extract device information from user agent."""
+        if not self.user_agent:
             return {}
         
         try:
@@ -668,7 +679,8 @@ class UserContext:
             return {"error": "Failed to parse user agent"}
     
     def get_geographic_info(self) -> Dict[str, Any]:
-        """Get geographic information from IP address."""        if not self.ip_address or self.ip_address == "0.0.0.0":
+        """Get geographic information from IP address."""
+        if not self.ip_address or self.ip_address == "0.0.0.0":
             return {}
         
         try:
@@ -681,7 +693,8 @@ class UserContext:
             return {"error": "Failed to get geographic info"}
     
     def calculate_risk_score(self) -> float:
-        """Calculate user risk score based on context."""        risk_score = 0.0
+        """Calculate user risk score based on context."""
+        risk_score = 0.0
         
         # IP-based risk
         if self.ip_address.startswith(("10.", "192.168.")):
@@ -707,7 +720,8 @@ class UserContext:
     @classmethod
     def create_from_request(cls, user_id: str, user_email: str, ip_address: str, 
                            user_agent: str, **kwargs) -> 'UserContext':
-        """Create context from HTTP request information."""        context = cls(
+        """Create context from HTTP request information."""
+        context = cls(
             user_id=user_id,
             user_email=user_email,
             ip_address=ip_address,
@@ -740,7 +754,8 @@ class UserContext:
 
 
 class UserActivityLog(Base):
-    """User activity log model."""    
+    """User activity log model."""
+    
     __tablename__ = "user_activity_logs"
     
     # Primary identifiers
@@ -829,7 +844,8 @@ class UserActivityLog(Base):
     )
     
     def to_dict(self, include_sensitive: bool = False) -> Dict[str, Any]:
-        """Convert model to dictionary."""        result = {
+        """Convert model to dictionary."""
+        result = {
             "id": str(self.id),
             "activity_id": self.activity_id,
             "user_id": str(self.user_id),
@@ -889,14 +905,17 @@ class UserActivityLog(Base):
 
 
 class UserActivityLogger:
-    """Enterprise user activity logger."""    
+    """Enterprise user activity logger."""
+    
     def __init__(self, db_session, service_name: str = "ia_influencer_agent"):
-        """        Initialize user activity logger.
+        """
+        Initialize user activity logger.
         
         Args:
             db_session: Database session
             service_name: Name of the service
-        """        self.db_session = db_session
+        """
+        self.db_session = db_session
         self.service_name = service_name
         self.logger = logging.getLogger(f"{__name__}.{service_name}")
     
@@ -924,7 +943,8 @@ class UserActivityLogger:
         error_message: Optional[str] = None,
         error_details: Optional[Dict[str, Any]] = None
     ) -> str:
-        """        Log a user activity.
+        """
+        Log a user activity.
         
         Args:
             user_context: User context information
@@ -951,7 +971,8 @@ class UserActivityLogger:
             
         Returns:
             str: Generated activity ID
-        """        try:
+        """
+        try:
             activity_id = f"act_{uuid.uuid4().hex[:16]}"
             
             # Parse location from user context
@@ -1024,7 +1045,8 @@ class UserActivityLogger:
             raise
     
     def log_login(self, user_context: UserContext, success: bool = True, failure_reason: Optional[str] = None) -> str:
-        """Log user login activity."""        status = ActivityStatus.SUCCESS if success else ActivityStatus.FAILED
+        """Log user login activity."""
+        status = ActivityStatus.SUCCESS if success else ActivityStatus.FAILED
         return self.log_activity(
             user_context=user_context,
             activity_type=UserActivityType.LOGIN,
@@ -1040,7 +1062,8 @@ class UserActivityLogger:
         )
     
     def log_logout(self, user_context: UserContext, session_duration_ms: Optional[int] = None) -> str:
-        """Log user logout activity."""        return self.log_activity(
+        """Log user logout activity."""
+        return self.log_activity(
             user_context=user_context,
             activity_type=UserActivityType.LOGOUT,
             activity_name="User Logout",
@@ -1063,7 +1086,8 @@ class UserActivityLogger:
         success: bool = True,
         error_details: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Log content upload activity."""        status = ActivityStatus.SUCCESS if success else ActivityStatus.FAILED
+        """Log content upload activity."""
+        status = ActivityStatus.SUCCESS if success else ActivityStatus.FAILED
         return self.log_activity(
             user_context=user_context,
             activity_type=UserActivityType.CONTENT_UPLOAD,
@@ -1094,7 +1118,8 @@ class UserActivityLogger:
         success: bool = True,
         result_content_id: Optional[str] = None
     ) -> str:
-        """Log AI content generation activity."""        status = ActivityStatus.SUCCESS if success else ActivityStatus.FAILED
+        """Log AI content generation activity."""
+        status = ActivityStatus.SUCCESS if success else ActivityStatus.FAILED
         return self.log_activity(
             user_context=user_context,
             activity_type=UserActivityType.AI_GENERATION,
@@ -1124,7 +1149,8 @@ class UserActivityLogger:
         search_time_ms: int,
         filters: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Log search query activity."""        return self.log_activity(
+        """Log search query activity."""
+        return self.log_activity(
             user_context=user_context,
             activity_type=UserActivityType.SEARCH_QUERY,
             activity_name="Search Query",
@@ -1149,7 +1175,8 @@ class UserActivityLogger:
         collaboration_type: str,
         message: Optional[str] = None
     ) -> str:
-        """Log collaboration invitation activity."""        return self.log_activity(
+        """Log collaboration invitation activity."""
+        return self.log_activity(
             user_context=user_context,
             activity_type=UserActivityType.COLLABORATION_INVITE,
             activity_name="Collaboration Invite",
@@ -1170,7 +1197,8 @@ class UserActivityLogger:
         days: int = 30,
         activity_types: Optional[List[UserActivityType]] = None
     ) -> Dict[str, Any]:
-        """        Get user activity summary.
+        """
+        Get user activity summary.
         
         Args:
             user_id: User ID to analyze
@@ -1179,7 +1207,8 @@ class UserActivityLogger:
             
         Returns:
             Dict[str, Any]: Activity summary
-        """        try:
+        """
+        try:
             start_date = datetime.now(timezone.utc) - timedelta(days=days)
             
             query = self.db_session.query(UserActivityLog).filter(
@@ -1242,7 +1271,8 @@ class UserActivityLogger:
             return {"error": str(e)}
     
     def anonymize_user_data(self, user_id: str, retention_days: int = 0) -> int:
-        """        Anonymize user activity data for GDPR compliance.
+        """
+        Anonymize user activity data for GDPR compliance.
         
         Args:
             user_id: User ID to anonymize
@@ -1250,7 +1280,8 @@ class UserActivityLogger:
             
         Returns:
             int: Number of records anonymized
-        """        try:
+        """
+        try:
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=retention_days)
             
             activities = self.db_session.query(UserActivityLog).filter(
@@ -1291,14 +1322,16 @@ class UserActivityLogger:
             return 0
     
     def cleanup_old_activities(self, days_to_keep: int = 730) -> int:
-        """        Clean up old activity logs based on retention policy.
+        """
+        Clean up old activity logs based on retention policy.
         
         Args:
             days_to_keep: Number of days to keep (default 2 years)
             
         Returns:
             int: Number of records deleted
-        """        try:
+        """
+        try:
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=days_to_keep)
             
             deleted_count = self.db_session.query(UserActivityLog).filter(
@@ -1317,7 +1350,8 @@ class UserActivityLogger:
 
 
 def create_user_activity_logger(db_session, service_name: str = "ia_influencer_agent") -> UserActivityLogger:
-    """    Factory function to create user activity logger.
+    """
+    Factory function to create user activity logger.
     
     Args:
         db_session: Database session
@@ -1325,7 +1359,8 @@ def create_user_activity_logger(db_session, service_name: str = "ia_influencer_a
         
     Returns:
         UserActivityLogger: Configured user activity logger
-    """    return UserActivityLogger(db_session, service_name)
+    """
+    return UserActivityLogger(db_session, service_name)
 
 
 # Export main classes and functions

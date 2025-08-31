@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from typing import Dict, List, Optional, Union, Any, Tuple
+"""
+from typing import Dict, List, Optional, Union, Any, Tuple
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, func, text
 from datetime import datetime, timedelta
@@ -36,11 +37,14 @@ from ..models.creator_profile import CreatorProfile
 logger = logging.getLogger(__name__)
 
 class CreatorProfileRepository(BaseRepository[CreatorProfile]):
-    """    Repository for creator profile management with enterprise-grade
+    """
+    Repository for creator profile management with enterprise-grade
     features including portfolio management, networking, and professional analytics.
-    """    
+    """
+    
     def __init__(self, db_session: Session):
-        """Initialize Creator Profile Repository"""        super().__init__(db_session, CreatorProfile)
+        """Initialize Creator Profile Repository"""
+        super().__init__(db_session, CreatorProfile)
         
     def create_creator_profile(self, 
                              user_id: int,
@@ -48,7 +52,8 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
                              portfolio_items: List[Dict[str, Any]],
                              specializations: List[str],
                              social_links: Dict[str, str]) -> CreatorProfile:
-        """        Create comprehensive creator profile
+        """
+        Create comprehensive creator profile
         
         Args:
             user_id: User ID
@@ -59,7 +64,8 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
             
         Returns:
             Created creator profile instance
-        """        try:
+        """
+        try:
             creator_profile_data = {
                 'user_id': user_id,
                 'display_name': profile_data.get('display_name'),
@@ -89,7 +95,8 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
                                profile_id: int,
                                portfolio_items: List[Dict[str, Any]],
                                action: str = 'replace') -> Optional[CreatorProfile]:
-        """        Update creator's portfolio items
+        """
+        Update creator's portfolio items
         
         Args:
             profile_id: Creator profile ID
@@ -98,7 +105,8 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
             
         Returns:
             Updated creator profile
-        """        try:
+        """
+        try:
             profile = self.get_by_id(profile_id)
             if not profile:
                 return None
@@ -129,7 +137,8 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
     def update_profile_specializations(self, 
                                      profile_id: int,
                                      specializations: List[str]) -> Optional[CreatorProfile]:
-        """        Update creator's specializations
+        """
+        Update creator's specializations
         
         Args:
             profile_id: Creator profile ID
@@ -137,7 +146,8 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
             
         Returns:
             Updated creator profile
-        """        try:
+        """
+        try:
             updated_profile = self.update(profile_id, 
                                         specializations=json.dumps(specializations),
                                         updated_at=datetime.utcnow())
@@ -151,14 +161,16 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
             raise RepositoryException(f"Failed to update profile specializations: {str(e)}")
             
     def get_creator_by_user_id(self, user_id: int) -> Optional[CreatorProfile]:
-        """        Get creator profile by user ID
+        """
+        Get creator profile by user ID
         
         Args:
             user_id: User ID
             
         Returns:
             Creator profile if found
-        """        try:
+        """
+        try:
             profile = self.db_session.query(CreatorProfile).filter(
                 CreatorProfile.user_id == user_id
             ).first()
@@ -172,7 +184,8 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
                        search_params: Dict[str, Any],
                        limit: int = 20,
                        offset: int = 0) -> List[CreatorProfile]:
-        """        Search creators based on various criteria
+        """
+        Search creators based on various criteria
         
         Args:
             search_params: Search parameters (specializations, location, creator_type, etc.)
@@ -181,7 +194,8 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
             
         Returns:
             List of matching creator profiles
-        """        try:
+        """
+        try:
             query = self.db_session.query(CreatorProfile).filter(
                 CreatorProfile.is_public == True
             )
@@ -235,7 +249,8 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
             raise RepositoryException(f"Failed to search creators: {str(e)}")
             
     def get_creator_analytics(self, profile_id: int, days: int = 30) -> Dict[str, Any]:
-        """        Get comprehensive analytics for creator profile
+        """
+        Get comprehensive analytics for creator profile
         
         Args:
             profile_id: Creator profile ID
@@ -243,7 +258,8 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
             
         Returns:
             Creator analytics data
-        """        try:
+        """
+        try:
             profile = self.get_by_id(profile_id)
             if not profile:
                 raise RepositoryException(f"Creator profile not found: {profile_id}")
@@ -280,7 +296,8 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
             raise RepositoryException(f"Failed to get creator analytics: {str(e)}")
             
     def _analyze_portfolio(self, profile: CreatorProfile) -> Dict[str, Any]:
-        """Analyze creator's portfolio"""        try:
+        """Analyze creator's portfolio"""
+        try:
             portfolio_items = json.loads(profile.portfolio_items or '[]')
             
             if not portfolio_items:
@@ -317,7 +334,8 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
             return {'total_items': 0, 'item_types': {}, 'latest_addition': None}
             
     def _analyze_specializations(self, profile: CreatorProfile) -> Dict[str, Any]:
-        """Analyze creator's specializations"""        try:
+        """Analyze creator's specializations"""
+        try:
             specializations = json.loads(profile.specializations or '[]')
             
             return {
@@ -330,7 +348,8 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
             return {'total_specializations': 0, 'specializations_list': [], 'specialization_diversity': 0}
             
     def _analyze_social_links(self, profile: CreatorProfile) -> Dict[str, Any]:
-        """Analyze creator's social media presence"""        try:
+        """Analyze creator's social media presence"""
+        try:
             social_links = json.loads(profile.social_links or '{}')
             
             platform_count = len(social_links)
@@ -346,7 +365,8 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
             return {'connected_platforms': 0, 'platforms': [], 'has_professional_links': False}
             
     def _calculate_profile_completeness(self, profile: CreatorProfile) -> Dict[str, Any]:
-        """Calculate profile completeness score"""        score = 0
+        """Calculate profile completeness score"""
+        score = 0
         total_fields = 10
         completed_fields = []
         missing_fields = []
@@ -431,17 +451,20 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
         }
         
     def _count_profile_updates(self, profile_id: int, start_date: datetime) -> int:
-        """Count profile updates in time period"""        # This would require an audit log or update tracking
+        """Count profile updates in time period"""
+        # This would require an audit log or update tracking
         # For now, return a placeholder
         return 0
         
     def _count_portfolio_updates(self, profile_id: int, start_date: datetime) -> int:
-        """Count portfolio updates in time period"""        # This would require portfolio change tracking
+        """Count portfolio updates in time period"""
+        # This would require portfolio change tracking
         # For now, return a placeholder
         return 0
         
     def _generate_profile_recommendations(self, profile: CreatorProfile) -> List[str]:
-        """Generate profile improvement recommendations"""        recommendations = []
+        """Generate profile improvement recommendations"""
+        recommendations = []
         
         completeness = self._calculate_profile_completeness(profile)
         
@@ -473,14 +496,16 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
         return recommendations
         
     def get_trending_specializations(self, days: int = 30) -> List[Dict[str, Any]]:
-        """        Get trending specializations among creators
+        """
+        Get trending specializations among creators
         
         Args:
             days: Number of days to analyze
             
         Returns:
             List of trending specializations
-        """        try:
+        """
+        try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
             # Get all creators created or updated in the period
@@ -525,7 +550,8 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
                                   profile_id: int,
                                   recommendation_type: str = 'collaboration',
                                   limit: int = 10) -> List[Dict[str, Any]]:
-        """        Get creator recommendations based on profile and preferences
+        """
+        Get creator recommendations based on profile and preferences
         
         Args:
             profile_id: Creator profile ID
@@ -534,7 +560,8 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
             
         Returns:
             List of recommended creators
-        """        try:
+        """
+        try:
             profile = self.get_by_id(profile_id)
             if not profile:
                 raise RepositoryException(f"Creator profile not found: {profile_id}")
@@ -611,14 +638,16 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
             raise RepositoryException(f"Failed to get creator recommendations: {str(e)}")
             
     def update_profile_score(self, profile_id: int) -> Optional[CreatorProfile]:
-        """        Update and calculate profile score based on various factors
+        """
+        Update and calculate profile score based on various factors
         
         Args:
             profile_id: Creator profile ID
             
         Returns:
             Updated creator profile
-        """        try:
+        """
+        try:
             profile = self.get_by_id(profile_id)
             if not profile:
                 return None

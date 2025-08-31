@@ -12,7 +12,8 @@ LEGAL WARNING: This software and all associated intellectual property
 belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import uuid
@@ -38,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""    GDPR = "gdpr"  # General Data Protection Regulation (EU)
+    """Supported compliance frameworks"""
+    GDPR = "gdpr"  # General Data Protection Regulation (EU)
     CCPA = "ccpa"  # California Consumer Privacy Act
     PCI_DSS = "pci_dss"  # Payment Card Industry Data Security Standard
     HIPAA = "hipaa"  # Health Insurance Portability and Accountability Act
@@ -53,7 +55,8 @@ class ComplianceFramework(Enum):
 
 
 class ComplianceStatus(Enum):
-    """Compliance status levels"""    COMPLIANT = "compliant"
+    """Compliance status levels"""
+    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
     UNDER_REVIEW = "under_review"
@@ -61,14 +64,16 @@ class ComplianceStatus(Enum):
 
 
 class RiskLevel(Enum):
-    """Risk assessment levels"""    LOW = "low"
+    """Risk assessment levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class DataCategory(Enum):
-    """Data categorization for privacy compliance"""    PERSONAL_DATA = "personal_data"
+    """Data categorization for privacy compliance"""
+    PERSONAL_DATA = "personal_data"
     SENSITIVE_DATA = "sensitive_data"
     FINANCIAL_DATA = "financial_data"
     HEALTH_DATA = "health_data"
@@ -79,7 +84,8 @@ class DataCategory(Enum):
 
 
 class ConsentType(Enum):
-    """Types of data processing consent"""    EXPLICIT = "explicit"
+    """Types of data processing consent"""
+    EXPLICIT = "explicit"
     IMPLIED = "implied"
     OPT_IN = "opt_in"
     OPT_OUT = "opt_out"
@@ -90,7 +96,8 @@ class ConsentType(Enum):
 
 
 class AuditEventType(Enum):
-    """Types of audit events"""    DATA_ACCESS = "data_access"
+    """Types of audit events"""
+    DATA_ACCESS = "data_access"
     DATA_MODIFICATION = "data_modification"
     DATA_DELETION = "data_deletion"
     DATA_EXPORT = "data_export"
@@ -105,7 +112,8 @@ class AuditEventType(Enum):
 
 @dataclass
 class ComplianceRule:
-    """Individual compliance rule definition"""    rule_id: str
+    """Individual compliance rule definition"""
+    rule_id: str
     framework: ComplianceFramework
     title: str
     description: str
@@ -124,7 +132,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceAssessment:
-    """Compliance assessment result"""    assessment_id: str
+    """Compliance assessment result"""
+    assessment_id: str
     framework: ComplianceFramework
     organization_id: str
     overall_status: ComplianceStatus
@@ -141,7 +150,8 @@ class ComplianceAssessment:
 
 @dataclass
 class DataProcessingRecord:
-    """Record of data processing activities (GDPR Article 30)"""    record_id: str
+    """Record of data processing activities (GDPR Article 30)"""
+    record_id: str
     organization_id: str
     processing_purpose: str
     data_categories: List[DataCategory]
@@ -160,7 +170,8 @@ class DataProcessingRecord:
 
 @dataclass
 class ConsentRecord:
-    """Individual consent record"""    consent_id: str
+    """Individual consent record"""
+    consent_id: str
     user_id: str
     organization_id: str
     consent_type: ConsentType
@@ -179,7 +190,8 @@ class ConsentRecord:
 
 @dataclass
 class AuditEvent:
-    """Audit trail event"""    event_id: str
+    """Audit trail event"""
+    event_id: str
     event_type: AuditEventType
     user_id: str
     organization_id: str
@@ -194,7 +206,8 @@ class AuditEvent:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""        return {
+        """Convert to dictionary for storage"""
+        return {
             'event_id': self.event_id,
             'event_type': self.event_type.value,
             'user_id': self.user_id,
@@ -212,7 +225,8 @@ class AuditEvent:
 
 
 class DataClassifier:
-    """Advanced data classification engine"""    
+    """Advanced data classification engine"""
+    
     def __init__(self):
         self._classification_patterns = {
             DataCategory.PERSONAL_DATA: [
@@ -240,7 +254,8 @@ class DataClassifier:
         }
     
     async def classify_data(self, data: Union[str, Dict[str, Any], List[Any]]) -> Dict[DataCategory, List[str]]:
-        """Classify data and identify sensitive information"""        try:
+        """Classify data and identify sensitive information"""
+        try:
             classifications = {category: [] for category in DataCategory}
             
             # Convert data to string for pattern matching
@@ -266,7 +281,8 @@ class DataClassifier:
             return {}
     
     async def scan_database_schema(self, schema_info: Dict[str, Any]) -> Dict[str, List[DataCategory]]:
-        """Scan database schema for sensitive data"""        try:
+        """Scan database schema for sensitive data"""
+        try:
             table_classifications = {}
             
             for table_name, columns in schema_info.items():
@@ -301,7 +317,8 @@ class DataClassifier:
 
 
 class ConsentManager:
-    """Advanced consent management system"""    
+    """Advanced consent management system"""
+    
     def __init__(self):
         self._consent_records: Dict[str, ConsentRecord] = {}
         self._consent_history: Dict[str, List[ConsentRecord]] = {}
@@ -318,7 +335,8 @@ class ConsentManager:
         user_agent: str,
         expires_at: Optional[datetime] = None
     ) -> str:
-        """Record user consent"""        try:
+        """Record user consent"""
+        try:
             consent_id = f"consent_{uuid.uuid4().hex[:12]}"
             
             consent_record = ConsentRecord(
@@ -356,7 +374,8 @@ class ConsentManager:
             raise
     
     async def withdraw_consent(self, consent_id: str, user_id: str, reason: str = "") -> bool:
-        """Withdraw user consent"""        try:
+        """Withdraw user consent"""
+        try:
             if consent_id not in self._consent_records:
                 raise ValueError(f"Consent record not found: {consent_id}")
             
@@ -382,7 +401,8 @@ class ConsentManager:
             return False
     
     async def check_consent_validity(self, user_id: str, purpose: str, data_categories: List[DataCategory]) -> bool:
-        """Check if user has valid consent for specified purpose and data categories"""        try:
+        """Check if user has valid consent for specified purpose and data categories"""
+        try:
             user_consents = self._consent_history.get(user_id, [])
             
             for consent in user_consents:
@@ -410,10 +430,12 @@ class ConsentManager:
             return False
     
     async def get_user_consents(self, user_id: str) -> List[ConsentRecord]:
-        """Get all consents for a user"""        return self._consent_history.get(user_id, [])
+        """Get all consents for a user"""
+        return self._consent_history.get(user_id, [])
     
     async def generate_consent_report(self, organization_id: str) -> Dict[str, Any]:
-        """Generate consent compliance report"""        try:
+        """Generate consent compliance report"""
+        try:
             org_consents = [
                 consent for consent_list in self._consent_history.values()
                 for consent in consent_list
@@ -457,14 +479,16 @@ class ConsentManager:
 
 
 class AuditTrail:
-    """Comprehensive audit trail system"""    
+    """Comprehensive audit trail system"""
+    
     def __init__(self, storage_config: Dict[str, Any]):
         self.storage_config = storage_config
         self._audit_events: List[AuditEvent] = []
         self._redis: Optional[aioredis.Redis] = None
         
     async def initialize(self):
-        """Initialize audit trail storage"""        try:
+        """Initialize audit trail storage"""
+        try:
             if 'redis_url' in self.storage_config:
                 self._redis = aioredis.from_url(self.storage_config['redis_url'])
                 await self._redis.ping()
@@ -487,7 +511,8 @@ class AuditTrail:
         resource_type: Optional[str] = None,
         risk_score: float = 0.0
     ) -> str:
-        """Log audit event"""        try:
+        """Log audit event"""
+        try:
             event_id = f"audit_{uuid.uuid4().hex[:12]}"
             
             audit_event = AuditEvent(
@@ -532,7 +557,8 @@ class AuditTrail:
             raise
     
     async def _check_compliance_violations(self, event: AuditEvent):
-        """Check audit event for potential compliance violations"""        try:
+        """Check audit event for potential compliance violations"""
+        try:
             violations = []
             
             # Check for unusual access patterns
@@ -578,7 +604,8 @@ class AuditTrail:
         end_time: Optional[datetime] = None,
         limit: int = 100
     ) -> List[AuditEvent]:
-        """Query audit events with filters"""        try:
+        """Query audit events with filters"""
+        try:
             filtered_events = []
             
             for event in self._audit_events:
@@ -617,7 +644,8 @@ class AuditTrail:
         organization_id: str,
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Generate comprehensive audit report"""        try:
+        """Generate comprehensive audit report"""
+        try:
             start_time, end_time = time_range
             events = await self.query_events(
                 organization_id=organization_id,
@@ -665,13 +693,15 @@ class AuditTrail:
 
 
 class RegulatoryFramework:
-    """Regulatory framework implementation"""    
+    """Regulatory framework implementation"""
+    
     def __init__(self):
         self._compliance_rules: Dict[ComplianceFramework, List[ComplianceRule]] = {}
         self._initialize_frameworks()
     
     def _initialize_frameworks(self):
-        """Initialize compliance frameworks with rules"""        # GDPR Rules
+        """Initialize compliance frameworks with rules"""
+        # GDPR Rules
         self._compliance_rules[ComplianceFramework.GDPR] = [
             ComplianceRule(
                 rule_id="gdpr_art_6",
@@ -754,7 +784,8 @@ class RegulatoryFramework:
         frameworks: List[ComplianceFramework],
         data_categories: List[DataCategory]
     ) -> List[ComplianceRule]:
-        """Get applicable compliance rules"""        try:
+        """Get applicable compliance rules"""
+        try:
             applicable_rules = []
             
             for framework in frameworks:
@@ -775,7 +806,8 @@ class RegulatoryFramework:
         rule: ComplianceRule,
         organization_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate compliance with specific rule"""        try:
+        """Validate compliance with specific rule"""
+        try:
             validation_result = {
                 'rule_id': rule.rule_id,
                 'status': ComplianceStatus.UNKNOWN,
@@ -803,7 +835,8 @@ class RegulatoryFramework:
             }
     
     async def _automated_rule_check(self, rule: ComplianceRule, org_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform automated compliance check"""        try:
+        """Perform automated compliance check"""
+        try:
             # Simplified automated checks - in real implementation, these would be more comprehensive
             if rule.rule_id == "gdpr_art_30":
                 # Check for processing records
@@ -855,7 +888,8 @@ class RegulatoryFramework:
 
 
 class DataGovernance:
-    """Data governance and lifecycle management"""    
+    """Data governance and lifecycle management"""
+    
     def __init__(self):
         self._data_inventory: Dict[str, Dict[str, Any]] = {}
         self._retention_policies: Dict[str, Dict[str, Any]] = {}
@@ -872,7 +906,8 @@ class DataGovernance:
         retention_period: str,
         security_level: str
     ) -> bool:
-        """Register data asset in inventory"""        try:
+        """Register data asset in inventory"""
+        try:
             self._data_inventory[asset_id] = {
                 'asset_name': asset_name,
                 'data_categories': [cat.value for cat in data_categories],
@@ -901,7 +936,8 @@ class DataGovernance:
         disposal_method: str,
         legal_basis: str
     ) -> bool:
-        """Create data retention policy"""        try:
+        """Create data retention policy"""
+        try:
             self._retention_policies[policy_id] = {
                 'data_categories': [cat.value for cat in data_categories],
                 'retention_period': retention_period,
@@ -919,7 +955,8 @@ class DataGovernance:
             return False
     
     async def identify_expired_data(self) -> List[Dict[str, Any]]:
-        """Identify data that has exceeded retention period"""        try:
+        """Identify data that has exceeded retention period"""
+        try:
             expired_data = []
             current_time = datetime.now(timezone.utc)
             
@@ -953,7 +990,8 @@ class DataGovernance:
             return []
     
     async def generate_data_map(self, organization_id: str) -> Dict[str, Any]:
-        """Generate comprehensive data map"""        try:
+        """Generate comprehensive data map"""
+        try:
             data_map = {
                 'organization_id': organization_id,
                 'total_assets': len(self._data_inventory),
@@ -991,7 +1029,8 @@ class DataGovernance:
 
 
 class ComplianceManager:
-    """Main compliance management orchestrator"""    
+    """Main compliance management orchestrator"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.data_classifier = DataClassifier()
@@ -1002,7 +1041,8 @@ class ComplianceManager:
         self._assessments: Dict[str, ComplianceAssessment] = {}
         
     async def initialize(self):
-        """Initialize compliance management system"""        try:
+        """Initialize compliance management system"""
+        try:
             await self.audit_trail.initialize()
             logger.info("Compliance management system initialized")
         except Exception as e:
@@ -1015,7 +1055,8 @@ class ComplianceManager:
         frameworks: List[ComplianceFramework],
         organization_data: Dict[str, Any]
     ) -> str:
-        """Conduct comprehensive compliance assessment"""        try:
+        """Conduct comprehensive compliance assessment"""
+        try:
             assessment_id = f"assessment_{uuid.uuid4().hex[:12]}"
             
             # Get all applicable rules
@@ -1097,7 +1138,8 @@ class ComplianceManager:
             raise
     
     async def get_compliance_dashboard(self, organization_id: str) -> Dict[str, Any]:
-        """Get compliance dashboard data"""        try:
+        """Get compliance dashboard data"""
+        try:
             # Get recent assessments
             org_assessments = [
                 assessment for assessment in self._assessments.values()
@@ -1159,7 +1201,8 @@ class ComplianceManager:
         organization_id: str,
         request_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Handle data subject requests (GDPR Articles 15-22)"""        try:
+        """Handle data subject requests (GDPR Articles 15-22)"""
+        try:
             request_id = f"dsr_{uuid.uuid4().hex[:12]}"
             
             # Log the request
@@ -1225,7 +1268,8 @@ class ComplianceManager:
             }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for compliance system"""        try:
+        """Health check for compliance system"""
+        try:
             return {
                 'status': 'healthy',
                 'components': {

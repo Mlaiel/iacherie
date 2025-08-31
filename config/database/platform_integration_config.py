@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -33,7 +34,8 @@ Base = declarative_base()
 
 
 class PlatformType(Enum):
-    """Supported platform types"""    SOCIAL_MEDIA = "social_media"
+    """Supported platform types"""
+    SOCIAL_MEDIA = "social_media"
     MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
     PODCAST_PLATFORM = "podcast_platform"
@@ -45,7 +47,8 @@ class PlatformType(Enum):
 
 
 class Platform(Enum):
-    """Specific platform implementations"""    # Social Media
+    """Specific platform implementations"""
+    # Social Media
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook" 
     TWITTER = "twitter"
@@ -87,7 +90,8 @@ class Platform(Enum):
 
 
 class IntegrationStatus(Enum):
-    """Platform integration status"""    DISCONNECTED = "disconnected"
+    """Platform integration status"""
+    DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
     CONNECTED = "connected"
     SYNCING = "syncing"
@@ -98,7 +102,8 @@ class IntegrationStatus(Enum):
 
 
 class SyncFrequency(Enum):
-    """Data synchronization frequency"""    REAL_TIME = "real_time"
+    """Data synchronization frequency"""
+    REAL_TIME = "real_time"
     EVERY_15_MIN = "15_minutes"
     EVERY_HOUR = "1_hour"
     EVERY_6_HOURS = "6_hours"
@@ -108,7 +113,8 @@ class SyncFrequency(Enum):
 
 
 class DataType(Enum):
-    """Types of data synchronized"""    CONTENT_METADATA = "content_metadata"
+    """Types of data synchronized"""
+    CONTENT_METADATA = "content_metadata"
     ANALYTICS_DATA = "analytics_data"
     REVENUE_DATA = "revenue_data"
     AUDIENCE_DATA = "audience_data"
@@ -120,7 +126,8 @@ class DataType(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform integration database credentials"""    database_url: str = os.getenv("PLATFORM_DATABASE_URL", "postgresql://user:pass@localhost:5432/platforms")
+    """Platform integration database credentials"""
+    database_url: str = os.getenv("PLATFORM_DATABASE_URL", "postgresql://user:pass@localhost:5432/platforms")
     redis_url: str = os.getenv("PLATFORM_REDIS_URL", "redis://localhost:6379/5")
     
     # Encryption keys for storing API tokens
@@ -139,7 +146,8 @@ class PlatformCredentials:
 
 @dataclass
 class PlatformConfig:
-    """Configuration for specific platform"""    platform: Platform
+    """Configuration for specific platform"""
+    platform: Platform
     platform_type: PlatformType
     
     # API Configuration
@@ -176,7 +184,8 @@ class PlatformConfig:
 
 @dataclass
 class WebhookConfig:
-    """Webhook configuration for platforms"""    enabled: bool = False
+    """Webhook configuration for platforms"""
+    enabled: bool = False
     endpoint_url: str = ""
     secret_key: str = ""
     events: List[str] = field(default_factory=list)
@@ -185,7 +194,8 @@ class WebhookConfig:
 
 
 class PlatformIntegration(Base):
-    """Platform integrations table"""    __tablename__ = 'platform_integrations'
+    """Platform integrations table"""
+    __tablename__ = 'platform_integrations'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, nullable=False, index=True)
@@ -254,7 +264,8 @@ class PlatformIntegration(Base):
 
 
 class SyncHistory(Base):
-    """Synchronization history tracking"""    __tablename__ = 'platform_sync_history'
+    """Synchronization history tracking"""
+    __tablename__ = 'platform_sync_history'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     integration_id = Column(Integer, nullable=False, index=True)
@@ -289,7 +300,8 @@ class SyncHistory(Base):
 
 
 class PlatformData(Base):
-    """Cached platform data"""    __tablename__ = 'platform_data_cache'
+    """Cached platform data"""
+    __tablename__ = 'platform_data_cache'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     integration_id = Column(Integer, nullable=False, index=True)
@@ -322,7 +334,8 @@ class PlatformData(Base):
 
 
 class WebhookEvent(Base):
-    """Webhook events from platforms"""    __tablename__ = 'platform_webhook_events'
+    """Webhook events from platforms"""
+    __tablename__ = 'platform_webhook_events'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     integration_id = Column(Integer, nullable=False, index=True)
@@ -354,7 +367,8 @@ class WebhookEvent(Base):
 
 @dataclass
 class PlatformIntegrationConfig:
-    """Professional platform integration configuration"""    
+    """Professional platform integration configuration"""
+    
     # Database credentials
     credentials: PlatformCredentials = field(default_factory=PlatformCredentials)
     
@@ -387,11 +401,13 @@ class PlatformIntegrationConfig:
     error_reporting: bool = True
     
     def __post_init__(self):
-        """Initialize default platform configurations"""        if not self.platform_configs:
+        """Initialize default platform configurations"""
+        if not self.platform_configs:
             self._initialize_default_configs()
     
     def _initialize_default_configs(self):
-        """Initialize default platform configurations"""        # YouTube configuration
+        """Initialize default platform configurations"""
+        # YouTube configuration
         self.platform_configs[Platform.YOUTUBE] = PlatformConfig(
             platform=Platform.YOUTUBE,
             platform_type=PlatformType.VIDEO_PLATFORM,
@@ -451,7 +467,8 @@ class PlatformIntegrationConfig:
 
 
 class PlatformIntegrationManager:
-    """Professional platform integration database manager"""    
+    """Professional platform integration database manager"""
+    
     def __init__(self, config: PlatformIntegrationConfig):
         self.config = config
         self._engine = None
@@ -460,7 +477,8 @@ class PlatformIntegrationManager:
         self._is_initialized = False
         
     async def initialize(self) -> bool:
-        """Initialize platform integration database connections"""        try:
+        """Initialize platform integration database connections"""
+        try:
             # Initialize PostgreSQL connection
             self._engine = create_engine(
                 self.config.credentials.database_url,
@@ -495,7 +513,8 @@ class PlatformIntegrationManager:
             return False
     
     async def _test_connections(self):
-        """Test database connections"""        with self._engine.connect() as conn:
+        """Test database connections"""
+        with self._engine.connect() as conn:
             conn.execute("SELECT 1")
         
         await self._redis_pool.ping()
@@ -506,7 +525,8 @@ class PlatformIntegrationManager:
                                access_token: str,
                                platform_user_id: str,
                                metadata: Optional[Dict] = None) -> int:
-        """Create new platform integration"""        try:
+        """Create new platform integration"""
+        try:
             # Encrypt tokens (simplified - use proper encryption in production)
             encrypted_token = self._encrypt_token(access_token)
             
@@ -540,14 +560,17 @@ class PlatformIntegrationManager:
             raise
     
     def _encrypt_token(self, token: str) -> str:
-        """Encrypt access token (simplified implementation)"""        # In production, use proper encryption like Fernet
+        """Encrypt access token (simplified implementation)"""
+        # In production, use proper encryption like Fernet
         return f"encrypted_{token}"
     
     def _decrypt_token(self, encrypted_token: str) -> str:
-        """Decrypt access token (simplified implementation)"""        return encrypted_token.replace("encrypted_", "")
+        """Decrypt access token (simplified implementation)"""
+        return encrypted_token.replace("encrypted_", "")
     
     async def sync_platform_data(self, integration_id: int) -> bool:
-        """Synchronize data from platform"""        try:
+        """Synchronize data from platform"""
+        try:
             with self._session_factory() as session:
                 integration = session.query(PlatformIntegration).filter_by(id=integration_id).first()
                 if not integration:
@@ -603,7 +626,8 @@ class PlatformIntegrationManager:
             return False
     
     async def _schedule_sync(self, integration_id: int):
-        """Schedule next synchronization"""        try:
+        """Schedule next synchronization"""
+        try:
             with self._session_factory() as session:
                 integration = session.query(PlatformIntegration).filter_by(id=integration_id).first()
                 if integration and integration.auto_sync_enabled:
@@ -628,7 +652,8 @@ class PlatformIntegrationManager:
                             event_type: str,
                             payload: Dict[str, Any],
                             headers: Dict[str, str] = None) -> int:
-        """Process webhook event from platform"""        try:
+        """Process webhook event from platform"""
+        try:
             with self._session_factory() as session:
                 webhook_event = WebhookEvent(
                     integration_id=integration_id,
@@ -654,7 +679,8 @@ class PlatformIntegrationManager:
             raise
     
     async def _process_webhook_event(self, event_id: int):
-        """Process webhook event asynchronously"""        try:
+        """Process webhook event asynchronously"""
+        try:
             with self._session_factory() as session:
                 event = session.query(WebhookEvent).filter_by(id=event_id).first()
                 if event:
@@ -670,7 +696,8 @@ class PlatformIntegrationManager:
             logger.error(f"Failed to process webhook event: {e}")
     
     async def get_integration_statistics(self, user_id: Optional[int] = None) -> Dict[str, Any]:
-        """Get platform integration statistics"""        try:
+        """Get platform integration statistics"""
+        try:
             with self._session_factory() as session:
                 base_query = session.query(PlatformIntegration)
                 if user_id:
@@ -710,7 +737,8 @@ class PlatformIntegrationManager:
             return {"error": str(e)}
     
     async def shutdown(self):
-        """Shutdown platform integration manager"""        try:
+        """Shutdown platform integration manager"""
+        try:
             if self._redis_pool:
                 await self._redis_pool.close()
             
@@ -725,11 +753,13 @@ class PlatformIntegrationManager:
 
 
 def create_platform_integration_config() -> PlatformIntegrationConfig:
-    """Create default platform integration configuration"""    return PlatformIntegrationConfig()
+    """Create default platform integration configuration"""
+    return PlatformIntegrationConfig()
 
 
 def create_platform_integration_manager(config: Optional[PlatformIntegrationConfig] = None) -> PlatformIntegrationManager:
-    """Create platform integration manager with configuration"""    if config is None:
+    """Create platform integration manager with configuration"""
+    if config is None:
         config = create_platform_integration_config()
     return PlatformIntegrationManager(config)
 

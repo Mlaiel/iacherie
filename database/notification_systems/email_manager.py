@@ -12,7 +12,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et constitue une violation des droits d'auteur.
 Les contrevenants s'exposent à des poursuites judiciaires.
-"""from typing import Dict, List, Optional, Any, Union
+"""
+from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
@@ -37,14 +38,16 @@ logger = logging.getLogger(__name__)
 
 
 class EmailPriority(Enum):
-    """Priorités des emails"""    LOW = "low"
+    """Priorités des emails"""
+    LOW = "low"
     NORMAL = "normal" 
     HIGH = "high"
     URGENT = "urgent"
 
 
 class EmailStatus(Enum):
-    """Statuts des emails"""    PENDING = "pending"
+    """Statuts des emails"""
+    PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
     BOUNCED = "bounced"
@@ -55,7 +58,8 @@ class EmailStatus(Enum):
 
 
 class EmailProvider(Enum):
-    """Fournisseurs d'email"""    SMTP = "smtp"
+    """Fournisseurs d'email"""
+    SMTP = "smtp"
     SENDGRID = "sendgrid"
     AWS_SES = "aws_ses"
     MAILGUN = "mailgun"
@@ -63,7 +67,8 @@ class EmailProvider(Enum):
 
 @dataclass
 class EmailTemplate:
-    """Template d'email"""    id: str
+    """Template d'email"""
+    id: str
     name: str
     subject: str
     html_content: str
@@ -78,7 +83,8 @@ class EmailTemplate:
 
 @dataclass
 class EmailMessage:
-    """Message email"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Message email"""
+    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     to_email: str = ""
     to_name: str = ""
     from_email: str = ""
@@ -100,7 +106,8 @@ class EmailMessage:
 
 @dataclass
 class EmailDelivery:
-    """Livraison d'email"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Livraison d'email"""
+    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     message_id: str = ""
     provider_message_id: str = ""
     status: EmailStatus = EmailStatus.PENDING
@@ -119,7 +126,8 @@ class EmailDelivery:
 
 
 class EmailDeliverabilityManager:
-    """Gestionnaire de délivrabilité email"""    
+    """Gestionnaire de délivrabilité email"""
+    
     def __init__(self, redis_client: aioredis.Redis):
         self.redis = redis_client
         self.reputation_key = "email:reputation"
@@ -127,7 +135,8 @@ class EmailDeliverabilityManager:
         self.complaint_key = "email:complaints"
         
     async def check_reputation(self, domain: str) -> Dict[str, Any]:
-        """Vérifier la réputation d'un domaine"""        try:
+        """Vérifier la réputation d'un domaine"""
+        try:
             # Récupérer les métriques du domaine
             reputation_data = await self.redis.hgetall(f"{self.reputation_key}:{domain}")
             
@@ -170,7 +179,8 @@ class EmailDeliverabilityManager:
             return {"domain": domain, "status": "unknown", "error": str(e)}
     
     async def update_delivery_stats(self, domain: str, event: str):
-        """Mettre à jour les statistiques de livraison"""        try:
+        """Mettre à jour les statistiques de livraison"""
+        try:
             key = f"{self.reputation_key}:{domain}"
             
             # Incrémenter les compteurs
@@ -194,7 +204,8 @@ class EmailDeliverabilityManager:
 
 
 class EmailProviderSMTP:
-    """Fournisseur SMTP"""    
+    """Fournisseur SMTP"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.host = config.get("host", "localhost")
         self.port = config.get("port", 587)
@@ -204,7 +215,8 @@ class EmailProviderSMTP:
         self.use_ssl = config.get("use_ssl", False)
     
     async def send_email(self, message: EmailMessage) -> Dict[str, Any]:
-        """Envoyer un email via SMTP"""        try:
+        """Envoyer un email via SMTP"""
+        try:
             # Créer le message MIME
             msg = MIMEMultipart('alternative')
             msg['Subject'] = message.subject
@@ -258,7 +270,8 @@ class EmailProviderSMTP:
             }
     
     def _add_attachment(self, msg: MIMEMultipart, attachment: Dict[str, Any]):
-        """Ajouter une pièce jointe"""        try:
+        """Ajouter une pièce jointe"""
+        try:
             part = MIMEBase('application', 'octet-stream')
             part.set_payload(attachment['content'])
             encoders.encode_base64(part)
@@ -272,12 +285,14 @@ class EmailProviderSMTP:
 
 
 class EmailProviderSendGrid:
-    """Fournisseur SendGrid"""    
+    """Fournisseur SendGrid"""
+    
     def __init__(self, api_key: str):
         self.client = SendGridAPIClient(api_key)
     
     async def send_email(self, message: EmailMessage) -> Dict[str, Any]:
-        """Envoyer un email via SendGrid"""        try:
+        """Envoyer un email via SendGrid"""
+        try:
             mail = Mail(
                 from_email=(message.from_email, message.from_name),
                 to_emails=(message.to_email, message.to_name),
@@ -317,16 +332,19 @@ class EmailProviderSendGrid:
 
 
 class EmailTemplateEngine:
-    """Moteur de templates email"""    
+    """Moteur de templates email"""
+    
     def __init__(self, template_dir: str = "templates/email"):
         self.env = Environment(loader=FileSystemLoader(template_dir))
         self.templates: Dict[str, EmailTemplate] = {}
     
     def register_template(self, template: EmailTemplate):
-        """Enregistrer un template"""        self.templates[template.id] = template
+        """Enregistrer un template"""
+        self.templates[template.id] = template
     
     def render_template(self, template_id: str, data: Dict[str, Any]) -> Dict[str, str]:
-        """Rendre un template avec les données"""        try:
+        """Rendre un template avec les données"""
+        try:
             template = self.templates.get(template_id)
             if not template:
                 raise ValueError(f"Template {template_id} non trouvé")
@@ -355,7 +373,8 @@ class EmailTemplateEngine:
 
 
 class EmailManager:
-    """Gestionnaire principal des emails"""    
+    """Gestionnaire principal des emails"""
+    
     def __init__(self, db_pool: asyncpg.Pool, redis_client: aioredis.Redis, config: Dict[str, Any]):
         self.db_pool = db_pool
         self.redis = redis_client
@@ -366,7 +385,8 @@ class EmailManager:
         self.default_provider = EmailProvider.SMTP
         
     def _init_providers(self) -> Dict[EmailProvider, Any]:
-        """Initialiser les fournisseurs d'email"""        providers = {}
+        """Initialiser les fournisseurs d'email"""
+        providers = {}
         
         # SMTP
         if smtp_config := self.config.get("smtp"):
@@ -379,7 +399,8 @@ class EmailManager:
         return providers
     
     async def send_email(self, message: EmailMessage) -> str:
-        """Envoyer un email"""        try:
+        """Envoyer un email"""
+        try:
             # Vérifier la réputation du domaine
             domain = message.to_email.split("@")[1]
             reputation = await self.deliverability.check_reputation(domain)
@@ -414,7 +435,8 @@ class EmailManager:
             raise
     
     async def _send_now(self, message: EmailMessage):
-        """Envoyer immédiatement un email"""        try:
+        """Envoyer immédiatement un email"""
+        try:
             provider = self.providers.get(message.provider, self.providers[self.default_provider])
             result = await provider.send_email(message)
             
@@ -446,7 +468,8 @@ class EmailManager:
             await self._save_delivery(delivery)
     
     async def _schedule_email(self, message: EmailMessage):
-        """Programmer un email"""        try:
+        """Programmer un email"""
+        try:
             # Ajouter à la queue Redis avec délai
             delay = (message.scheduled_at - datetime.utcnow()).total_seconds()
             
@@ -461,7 +484,8 @@ class EmailManager:
             logger.error(f"Erreur programmation email: {e}")
     
     async def process_scheduled_emails(self):
-        """Traiter les emails programmés"""        try:
+        """Traiter les emails programmés"""
+        try:
             now = datetime.utcnow().timestamp()
             
             # Récupérer les emails à envoyer
@@ -485,8 +509,10 @@ class EmailManager:
             logger.error(f"Erreur traitement emails programmés: {e}")
     
     async def _save_message(self, message: EmailMessage) -> str:
-        """Sauvegarder un message en base"""        async with self.db_pool.acquire() as conn:
-            query = """                INSERT INTO email_messages (
+        """Sauvegarder un message en base"""
+        async with self.db_pool.acquire() as conn:
+            query = """
+                INSERT INTO email_messages (
                     id, to_email, to_name, from_email, from_name,
                     subject, html_content, text_content, template_id,
                     template_data, priority, scheduled_at, provider,
@@ -494,7 +520,8 @@ class EmailManager:
                     created_at
                 ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
                 RETURNING id
-            """            
+            """
+            
             result = await conn.fetchval(
                 query,
                 message.id, message.to_email, message.to_name,
@@ -510,15 +537,18 @@ class EmailManager:
             return result
     
     async def _save_delivery(self, delivery: EmailDelivery):
-        """Sauvegarder une livraison en base"""        async with self.db_pool.acquire() as conn:
-            query = """                INSERT INTO email_deliveries (
+        """Sauvegarder une livraison en base"""
+        async with self.db_pool.acquire() as conn:
+            query = """
+                INSERT INTO email_deliveries (
                     id, message_id, provider_message_id, status,
                     provider, sent_at, delivered_at, opened_at,
                     clicked_at, bounced_at, bounce_reason,
                     tracking_data, retry_count, max_retries,
                     next_retry_at, created_at
                 ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
-            """            
+            """
+            
             await conn.execute(
                 query,
                 delivery.id, delivery.message_id, delivery.provider_message_id,
@@ -530,7 +560,8 @@ class EmailManager:
             )
     
     async def _load_message(self, message_id: str) -> Optional[EmailMessage]:
-        """Charger un message depuis la base"""        async with self.db_pool.acquire() as conn:
+        """Charger un message depuis la base"""
+        async with self.db_pool.acquire() as conn:
             query = "SELECT * FROM email_messages WHERE id = $1"
             row = await conn.fetchrow(query, message_id)
             
@@ -559,7 +590,8 @@ class EmailManager:
             )
     
     async def get_delivery_stats(self, message_id: str) -> Optional[EmailDelivery]:
-        """Récupérer les stats de livraison"""        async with self.db_pool.acquire() as conn:
+        """Récupérer les stats de livraison"""
+        async with self.db_pool.acquire() as conn:
             query = "SELECT * FROM email_deliveries WHERE message_id = $1"
             row = await conn.fetchrow(query, message_id)
             
@@ -586,9 +618,11 @@ class EmailManager:
             )
     
     async def get_email_analytics(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Récupérer les analytics email"""        async with self.db_pool.acquire() as conn:
+        """Récupérer les analytics email"""
+        async with self.db_pool.acquire() as conn:
             # Statistiques générales
-            stats_query = """                SELECT 
+            stats_query = """
+                SELECT 
                     COUNT(*) as total_sent,
                     COUNT(CASE WHEN d.status = 'delivered' THEN 1 END) as delivered,
                     COUNT(CASE WHEN d.status = 'bounced' THEN 1 END) as bounced,
@@ -597,7 +631,8 @@ class EmailManager:
                 FROM email_messages m
                 LEFT JOIN email_deliveries d ON m.id = d.message_id
                 WHERE m.created_at BETWEEN $1 AND $2
-            """            
+            """
+            
             stats = await conn.fetchrow(stats_query, start_date, end_date)
             
             # Taux de conversion

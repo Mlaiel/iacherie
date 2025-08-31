@@ -27,7 +27,8 @@ concept ou idée sans autorisation écrite explicite de Fahed Mlaiel
 sera poursuivie selon la loi allemande et internationale.
 
 Contact autorisé: mlaiel@live.de
-"""import os
+"""
+import os
 import re
 import hashlib
 import importlib.util
@@ -50,7 +51,8 @@ from backend.deployment.database.schema import SchemaMigration
 
 @dataclass
 class Migration:
-    """Migration metadata and execution details"""    version: str
+    """Migration metadata and execution details"""
+    version: str
     name: str
     filepath: str
     checksum: str
@@ -64,14 +66,16 @@ class Migration:
 
 
 class MigrationRunner:
-    """    Enterprise database migration runner with advanced features:
+    """
+    Enterprise database migration runner with advanced features:
     - Version-controlled migrations with dependency tracking
     - Parallel execution for independent migrations
     - Automatic rollback on failures
     - Checksum verification for integrity
     - Data migration support with validation
     - Point-in-time recovery integration
-    """    
+    """
+    
     def __init__(self, migrations_directory: Optional[str] = None):
         self.logger = get_logger(__name__)
         self.config = get_database_settings()
@@ -94,8 +98,10 @@ class MigrationRunner:
         self._discover_migrations()
     
     def _ensure_migrations_table(self) -> None:
-        """Ensure schema_migrations table exists"""        try:
-            create_table_sql = """                CREATE TABLE IF NOT EXISTS schema_migrations (
+        """Ensure schema_migrations table exists"""
+        try:
+            create_table_sql = """
+                CREATE TABLE IF NOT EXISTS schema_migrations (
                     id SERIAL PRIMARY KEY,
                     version VARCHAR(50) UNIQUE NOT NULL,
                     name VARCHAR(255) NOT NULL,
@@ -107,7 +113,8 @@ class MigrationRunner:
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
-            """            
+            """
+            
             self.db_manager.execute_query(create_table_sql, fetch_results=False)
             
             # Create indexes
@@ -127,7 +134,8 @@ class MigrationRunner:
             raise
     
     def _discover_migrations(self) -> None:
-        """Discover and parse all migration files"""        try:
+        """Discover and parse all migration files"""
+        try:
             if not self.migrations_dir.exists():
                 self.migrations_dir.mkdir(parents=True, exist_ok=True)
                 self.logger.info(f"Created migrations directory: {self.migrations_dir}")
@@ -154,7 +162,8 @@ class MigrationRunner:
             raise
     
     def _parse_migration_file(self, filepath: Path) -> Optional[Migration]:
-        """Parse migration file and extract metadata"""        try:
+        """Parse migration file and extract metadata"""
+        try:
             # Extract version from filename (format: YYYYMMDD_HHMMSS_name.py)
             filename_pattern = r"(\d{8}_\d{6})_(.+)\.py"
             match = re.match(filename_pattern, filepath.name)
@@ -205,7 +214,8 @@ class MigrationRunner:
             return None
     
     def _build_dependency_graph(self) -> None:
-        """Build dependency graph for migration ordering"""        self.dependency_graph = {}
+        """Build dependency graph for migration ordering"""
+        self.dependency_graph = {}
         
         for version, migration in self.discovered_migrations.items():
             self.dependency_graph[version] = migration.dependencies.copy()
@@ -220,7 +230,8 @@ class MigrationRunner:
                     self.dependency_graph[version] = [prev_version]
     
     def _calculate_execution_order(self) -> None:
-        """Calculate optimal execution order using topological sort"""        try:
+        """Calculate optimal execution order using topological sort"""
+        try:
             # Topological sort with Kahn's algorithm
             in_degree = {v: 0 for v in self.discovered_migrations.keys()}
             
@@ -266,12 +277,15 @@ class MigrationRunner:
             raise
     
     def get_migration_status(self) -> Dict[str, Any]:
-        """Get comprehensive migration status"""        try:
+        """Get comprehensive migration status"""
+        try:
             # Get executed migrations from database
-            executed_query = """                SELECT version, name, status, executed_at, execution_time, error_message
+            executed_query = """
+                SELECT version, name, status, executed_at, execution_time, error_message
                 FROM schema_migrations
                 ORDER BY executed_at DESC
-            """            
+            """
+            
             executed_result = self.db_manager.execute_query(executed_query)
             executed_migrations = {
                 row[0]: {
@@ -322,7 +336,8 @@ class MigrationRunner:
             return {}
     
     def migrate_up(self, target_version: Optional[str] = None) -> bool:
-        """Execute pending migrations up to target version"""        try:
+        """Execute pending migrations up to target version"""
+        try:
             status = self.get_migration_status()
             pending_migrations = status.get('pending_migrations', [])
             
@@ -360,7 +375,8 @@ class MigrationRunner:
             return False
     
     def migrate_down(self, target_version: str) -> bool:
-        """Rollback migrations to target version"""        try:
+        """Rollback migrations to target version"""
+        try:
             # Get current migration status
             status = self.get_migration_status()
             last_migration = status.get('last_migration')
@@ -374,10 +390,12 @@ class MigrationRunner:
                 return True
             
             # Find migrations to rollback
-            executed_query = """                SELECT version FROM schema_migrations
+            executed_query = """
+                SELECT version FROM schema_migrations
                 WHERE status = 'completed' AND version > %s
                 ORDER BY version DESC
-            """            
+            """
+            
             result = self.db_manager.execute_query(executed_query, (target_version,))
             versions_to_rollback = [row[0] for row in result] if result else []
             
@@ -412,7 +430,8 @@ class MigrationRunner:
             return False
     
     def _execute_migration(self, migration: Migration) -> bool:
-        """Execute a single migration"""        start_time = datetime.now()
+        """Execute a single migration"""
+        start_time = datetime.now()
         
         try:
             self.logger.info(f"Executing migration {migration.version}: {migration.name}")
@@ -482,7 +501,8 @@ class MigrationRunner:
             return False
     
     def _rollback_migration(self, migration: Migration) -> bool:
-        """Rollback a single migration"""        start_time = datetime.now()
+        """Rollback a single migration"""
+        start_time = datetime.now()
         
         try:
             self.logger.info(f"Rolling back migration {migration.version}: {migration.name}")
@@ -532,12 +552,15 @@ class MigrationRunner:
             return False
     
     def _record_migration_start(self, migration: Migration) -> None:
-        """Record migration start in database"""        try:
-            insert_query = """                INSERT INTO schema_migrations (version, name, checksum, status)
+        """Record migration start in database"""
+        try:
+            insert_query = """
+                INSERT INTO schema_migrations (version, name, checksum, status)
                 VALUES (%s, %s, %s, 'running')
                 ON CONFLICT (version) 
                 DO UPDATE SET status = 'running', updated_at = CURRENT_TIMESTAMP
-            """            
+            """
+            
             self.db_manager.execute_query(
                 insert_query,
                 (migration.version, migration.name, migration.checksum),
@@ -548,14 +571,17 @@ class MigrationRunner:
             self.logger.error(f"Failed to record migration start: {e}")
     
     def _record_migration_completion(self, migration: Migration, execution_time: float) -> None:
-        """Record successful migration completion"""        try:
-            update_query = """                UPDATE schema_migrations 
+        """Record successful migration completion"""
+        try:
+            update_query = """
+                UPDATE schema_migrations 
                 SET status = 'completed', 
                     execution_time = %s,
                     executed_at = CURRENT_TIMESTAMP,
                     updated_at = CURRENT_TIMESTAMP
                 WHERE version = %s
-            """            
+            """
+            
             self.db_manager.execute_query(
                 update_query,
                 (execution_time, migration.version),
@@ -566,14 +592,17 @@ class MigrationRunner:
             self.logger.error(f"Failed to record migration completion: {e}")
     
     def _record_migration_failure(self, migration: Migration, error_message: str, execution_time: float) -> None:
-        """Record migration failure"""        try:
-            update_query = """                UPDATE schema_migrations 
+        """Record migration failure"""
+        try:
+            update_query = """
+                UPDATE schema_migrations 
                 SET status = 'failed', 
                     error_message = %s,
                     execution_time = %s,
                     updated_at = CURRENT_TIMESTAMP
                 WHERE version = %s
-            """            
+            """
+            
             self.db_manager.execute_query(
                 update_query,
                 (error_message, execution_time, migration.version),
@@ -590,7 +619,8 @@ class MigrationRunner:
         is_data_migration: bool = False,
         dependencies: Optional[List[str]] = None
     ) -> str:
-        """Create a new migration file"""        try:
+        """Create a new migration file"""
+        try:
             # Generate version timestamp
             version = datetime.now().strftime("%Y%m%d_%H%M%S")
             
@@ -613,19 +643,23 @@ SIZE_IMPACT = None  # "small", "medium", "large"
 
 
 def migrate(db_manager):
-    """    Execute migration
+    """
+    Execute migration
     
     Args:
         db_manager: PostgreSQL database manager instance
-    """    # Add your migration SQL here
-    sql = """        -- Your migration SQL goes here
+    """
+    # Add your migration SQL here
+    sql = """
+        -- Your migration SQL goes here
         -- Example:
         -- CREATE TABLE example_table (
         --     id SERIAL PRIMARY KEY,
         --     name VARCHAR(255) NOT NULL,
         --     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         -- );
-    """    
+    """
+    
     # Execute migration
     # db_manager.execute_query(sql, fetch_results=False)
     
@@ -633,15 +667,19 @@ def migrate(db_manager):
 
 
 def rollback(db_manager):
-    """    Rollback migration
+    """
+    Rollback migration
     
     Args:
         db_manager: PostgreSQL database manager instance
-    """    # Add your rollback SQL here
-    sql = """        -- Your rollback SQL goes here
+    """
+    # Add your rollback SQL here
+    sql = """
+        -- Your rollback SQL goes here
         -- Example:
         -- DROP TABLE IF EXISTS example_table;
-    """    
+    """
+    
     # Execute rollback
     # db_manager.execute_query(sql, fetch_results=False)
     
@@ -649,14 +687,16 @@ def rollback(db_manager):
 
 
 def verify(db_manager):
-    """    Verify migration was successful
+    """
+    Verify migration was successful
     
     Args:
         db_manager: PostgreSQL database manager instance
         
     Returns:
         bool: True if verification passed, False otherwise
-    """    # Add verification logic here
+    """
+    # Add verification logic here
     # Example:
     # result = db_manager.execute_query("SELECT 1 FROM example_table LIMIT 1")
     # return result is not None
@@ -665,19 +705,23 @@ def verify(db_manager):
 
 
 def pre_migrate(db_manager):
-    """    Execute before migration (optional)
+    """
+    Execute before migration (optional)
     
     Args:
         db_manager: PostgreSQL database manager instance
-    """    pass
+    """
+    pass
 
 
 def post_migrate(db_manager):
-    """    Execute after migration (optional)
+    """
+    Execute after migration (optional)
     
     Args:
         db_manager: PostgreSQL database manager instance
-    """    pass
+    """
+    pass
 '''
             
             # Write migration file
@@ -696,7 +740,8 @@ def post_migrate(db_manager):
             raise
     
     def validate_migrations(self) -> Dict[str, Any]:
-        """Validate all discovered migrations"""        try:
+        """Validate all discovered migrations"""
+        try:
             validation_results = {
                 'valid': True,
                 'errors': [],
@@ -726,7 +771,8 @@ def post_migrate(db_manager):
             }
     
     def _validate_single_migration(self, migration: Migration) -> Dict[str, Any]:
-        """Validate a single migration"""        result = {
+        """Validate a single migration"""
+        result = {
             'errors': [],
             'warnings': [],
             'has_migrate_function': False,
@@ -778,7 +824,8 @@ def post_migrate(db_manager):
         return result
     
     def get_dependency_tree(self) -> Dict[str, Any]:
-        """Get migration dependency tree visualization"""        try:
+        """Get migration dependency tree visualization"""
+        try:
             tree = {
                 'nodes': [],
                 'edges': [],
@@ -818,7 +865,8 @@ def post_migrate(db_manager):
             return {'nodes': [], 'edges': [], 'levels': {}}
     
     def _get_migration_status(self, version: str) -> str:
-        """Get status of a specific migration"""        try:
+        """Get status of a specific migration"""
+        try:
             query = "SELECT status FROM schema_migrations WHERE version = %s"
             result = self.db_manager.execute_query(query, (version,))
             
@@ -831,7 +879,8 @@ def post_migrate(db_manager):
             return 'unknown'
     
     def cleanup_failed_migrations(self) -> bool:
-        """Clean up failed migration records"""        try:
+        """Clean up failed migration records"""
+        try:
             # Remove failed migration records
             cleanup_query = "DELETE FROM schema_migrations WHERE status = 'failed'"
             self.db_manager.execute_query(cleanup_query, fetch_results=False)
@@ -844,7 +893,8 @@ def post_migrate(db_manager):
             return False
     
     def export_migration_report(self, filepath: str) -> bool:
-        """Export detailed migration report"""        try:
+        """Export detailed migration report"""
+        try:
             status = self.get_migration_status()
             validation = self.validate_migrations()
             dependency_tree = self.get_dependency_tree()
@@ -885,7 +935,8 @@ def post_migrate(db_manager):
 _migration_runner = None
 
 def get_migration_runner() -> MigrationRunner:
-    """Get migration runner singleton instance"""    global _migration_runner
+    """Get migration runner singleton instance"""
+    global _migration_runner
     if _migration_runner is None:
         _migration_runner = MigrationRunner()
     return _migration_runner
@@ -906,7 +957,8 @@ from .postgresql_manager import get_postgresql_manager
 
 
 class MigrationStatus(Enum):
-    """Migration execution status"""    PENDING = "pending"
+    """Migration execution status"""
+    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -915,7 +967,8 @@ class MigrationStatus(Enum):
 
 @dataclass
 class MigrationFile:
-    """Migration file metadata"""    version: str
+    """Migration file metadata"""
+    version: str
     name: str
     filepath: Path
     checksum: str
@@ -927,7 +980,8 @@ class MigrationFile:
 
 @dataclass
 class MigrationRecord:
-    """Migration execution record"""    version: str
+    """Migration execution record"""
+    version: str
     name: str
     checksum: str
     status: MigrationStatus
@@ -937,14 +991,16 @@ class MigrationRecord:
 
 
 class MigrationRunner:
-    """    Enterprise database migration system with features:
+    """
+    Enterprise database migration system with features:
     - Automatic version detection and ordering
     - Rollback capabilities with dependency tracking
     - Migration validation and checksum verification
     - Parallel execution for independent migrations
     - Detailed logging and error reporting
     - Backup creation before major changes
-    """    
+    """
+    
     def __init__(self, migrations_dir: str = "migrations"):
         self.logger = get_logger(__name__)
         self.config = get_database_settings()
@@ -954,8 +1010,10 @@ class MigrationRunner:
         self._ensure_migrations_table()
     
     def _ensure_migrations_table(self) -> None:
-        """Create migrations tracking table if not exists"""        try:
-            create_table_sql = f"""                CREATE TABLE IF NOT EXISTS {self.migrations_table} (
+        """Create migrations tracking table if not exists"""
+        try:
+            create_table_sql = f"""
+                CREATE TABLE IF NOT EXISTS {self.migrations_table} (
                     id SERIAL PRIMARY KEY,
                     version VARCHAR(50) NOT NULL UNIQUE,
                     name VARCHAR(255) NOT NULL,
@@ -973,7 +1031,8 @@ class MigrationRunner:
                 
                 CREATE INDEX IF NOT EXISTS idx_schema_migrations_status 
                 ON {self.migrations_table}(status);
-            """            
+            """
+            
             self.db_manager.execute_query(create_table_sql, fetch_results=False)
             self.logger.info("Migration tracking table ensured")
             
@@ -982,10 +1041,12 @@ class MigrationRunner:
             raise
     
     def _calculate_checksum(self, content: str) -> str:
-        """Calculate MD5 checksum of migration content"""        return hashlib.md5(content.encode('utf-8')).hexdigest()
+        """Calculate MD5 checksum of migration content"""
+        return hashlib.md5(content.encode('utf-8')).hexdigest()
     
     def _parse_migration_file(self, filepath: Path) -> MigrationFile:
-        """Parse migration file and extract metadata"""        try:
+        """Parse migration file and extract metadata"""
+        try:
             with open(filepath, 'r', encoding='utf-8') as f:
                 content = f.read()
             
@@ -1040,7 +1101,8 @@ class MigrationRunner:
             raise
     
     def discover_migrations(self) -> List[MigrationFile]:
-        """Discover and parse all migration files"""        try:
+        """Discover and parse all migration files"""
+        try:
             if not self.migrations_dir.exists():
                 self.logger.warning(f"Migrations directory not found: {self.migrations_dir}")
                 return []
@@ -1067,7 +1129,8 @@ class MigrationRunner:
             raise
     
     def _version_sort_key(self, version: str) -> Tuple:
-        """Generate sort key for version comparison"""        try:
+        """Generate sort key for version comparison"""
+        try:
             # Handle numeric versions (1.0.0, 001, etc.)
             if re.match(r'^\d+(\.\d+)*$', version):
                 return tuple(int(x) for x in version.split('.'))
@@ -1091,12 +1154,15 @@ class MigrationRunner:
             return (version,)
     
     def get_migration_records(self) -> List[MigrationRecord]:
-        """Get all migration execution records"""        try:
-            query = f"""                SELECT version, name, checksum, status, executed_at, 
+        """Get all migration execution records"""
+        try:
+            query = f"""
+                SELECT version, name, checksum, status, executed_at, 
                        execution_time, error_message
                 FROM {self.migrations_table}
                 ORDER BY executed_at
-            """            
+            """
+            
             result = self.db_manager.execute_query(query)
             
             records = []
@@ -1118,7 +1184,8 @@ class MigrationRunner:
             return []
     
     def get_pending_migrations(self) -> List[MigrationFile]:
-        """Get list of pending migrations"""        try:
+        """Get list of pending migrations"""
+        try:
             all_migrations = self.discover_migrations()
             executed_versions = {
                 record.version for record in self.get_migration_records()
@@ -1151,21 +1218,25 @@ class MigrationRunner:
         migration: MigrationFile, 
         executed_versions: set
     ) -> bool:
-        """Validate migration dependencies are met"""        for dependency in migration.dependencies:
+        """Validate migration dependencies are met"""
+        for dependency in migration.dependencies:
             if dependency not in executed_versions:
                 return False
         return True
     
     def _record_migration_start(self, migration: MigrationFile) -> None:
-        """Record migration start in tracking table"""        try:
-            query = f"""                INSERT INTO {self.migrations_table} 
+        """Record migration start in tracking table"""
+        try:
+            query = f"""
+                INSERT INTO {self.migrations_table} 
                 (version, name, checksum, status, executed_at)
                 VALUES (%s, %s, %s, %s, %s)
                 ON CONFLICT (version) DO UPDATE SET
                     status = EXCLUDED.status,
                     executed_at = EXCLUDED.executed_at,
                     updated_at = NOW()
-            """            
+            """
+            
             params = (
                 migration.version,
                 migration.name,
@@ -1187,12 +1258,15 @@ class MigrationRunner:
         status: MigrationStatus,
         error_message: Optional[str] = None
     ) -> None:
-        """Record migration completion in tracking table"""        try:
-            query = f"""                UPDATE {self.migrations_table}
+        """Record migration completion in tracking table"""
+        try:
+            query = f"""
+                UPDATE {self.migrations_table}
                 SET status = %s, execution_time = %s, error_message = %s,
                     updated_at = NOW()
                 WHERE version = %s
-            """            
+            """
+            
             params = (
                 status.value,
                 execution_time,
@@ -1206,7 +1280,8 @@ class MigrationRunner:
             self.logger.error(f"Failed to record migration completion: {e}")
     
     def execute_migration(self, migration: MigrationFile) -> bool:
-        """Execute single migration with rollback capability"""        start_time = datetime.now()
+        """Execute single migration with rollback capability"""
+        start_time = datetime.now()
         
         try:
             self.logger.info(f"Executing migration {migration.version}: {migration.name}")
@@ -1283,7 +1358,8 @@ class MigrationRunner:
             return False
     
     def rollback_migration(self, migration: MigrationFile) -> bool:
-        """Rollback single migration"""        start_time = datetime.now()
+        """Rollback single migration"""
+        start_time = datetime.now()
         
         try:
             self.logger.info(f"Rolling back migration {migration.version}: {migration.name}")
@@ -1313,12 +1389,15 @@ class MigrationRunner:
             return False
     
     def _get_migration_record(self, version: str) -> Optional[MigrationRecord]:
-        """Get migration record by version"""        try:
-            query = f"""                SELECT version, name, checksum, status, executed_at, 
+        """Get migration record by version"""
+        try:
+            query = f"""
+                SELECT version, name, checksum, status, executed_at, 
                        execution_time, error_message
                 FROM {self.migrations_table}
                 WHERE version = %s
-            """            
+            """
+            
             result = self.db_manager.execute_query(query, (version,))
             
             if result:
@@ -1340,7 +1419,8 @@ class MigrationRunner:
             return None
     
     def migrate_up(self, target_version: Optional[str] = None) -> bool:
-        """Execute all pending migrations up to target version"""        try:
+        """Execute all pending migrations up to target version"""
+        try:
             pending_migrations = self.get_pending_migrations()
             
             if not pending_migrations:
@@ -1381,7 +1461,8 @@ class MigrationRunner:
             return False
     
     def migrate_down(self, target_version: str) -> bool:
-        """Rollback migrations down to target version"""        try:
+        """Rollback migrations down to target version"""
+        try:
             executed_records = [
                 record for record in self.get_migration_records()
                 if record.status == MigrationStatus.COMPLETED
@@ -1427,7 +1508,8 @@ class MigrationRunner:
             return False
     
     def get_migration_status(self) -> Dict[str, Any]:
-        """Get comprehensive migration status"""        try:
+        """Get comprehensive migration status"""
+        try:
             all_migrations = self.discover_migrations()
             records = self.get_migration_records()
             
@@ -1471,7 +1553,8 @@ class MigrationRunner:
         description: str = "",
         dependencies: List[str] = None
     ) -> Path:
-        """Create new migration file template"""        try:
+        """Create new migration file template"""
+        try:
             if dependencies is None:
                 dependencies = []
             
@@ -1501,7 +1584,8 @@ class MigrationRunner:
 -- DOWN --
 -- Add rollback statements here
 
-"""            
+"""
+            
             with open(filepath, 'w', encoding='utf-8') as f:
                 f.write(template)
             
@@ -1513,7 +1597,8 @@ class MigrationRunner:
             raise
     
     def validate_migrations(self) -> Dict[str, List[str]]:
-        """Validate all migration files for consistency"""        try:
+        """Validate all migration files for consistency"""
+        try:
             validation_errors = {
                 'syntax_errors': [],
                 'dependency_errors': [],
@@ -1563,7 +1648,8 @@ class MigrationRunner:
 _migration_runner = None
 
 def get_migration_runner() -> MigrationRunner:
-    """Get migration runner singleton instance"""    global _migration_runner
+    """Get migration runner singleton instance"""
+    global _migration_runner
     if _migration_runner is None:
         _migration_runner = MigrationRunner()
     return _migration_runner

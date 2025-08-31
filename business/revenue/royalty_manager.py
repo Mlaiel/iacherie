@@ -15,7 +15,8 @@ Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Royalty Management
 ============================================================================================
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -32,7 +33,8 @@ logger = logging.getLogger(__name__)
 
 
 class RoyaltyType(Enum):
-    """Royalty types"""    MECHANICAL = "mechanical"
+    """Royalty types"""
+    MECHANICAL = "mechanical"
     PERFORMANCE = "performance"
     SYNCHRONIZATION = "synchronization"
     PRINT = "print"
@@ -42,7 +44,8 @@ class RoyaltyType(Enum):
 
 @dataclass
 class RoyaltyCalculation:
-    """Royalty calculation result"""    calculation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Royalty calculation result"""
+    calculation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     content_id: str = ""
     royalty_type: RoyaltyType = RoyaltyType.STREAMING
@@ -54,7 +57,8 @@ class RoyaltyCalculation:
 
 
 class RoyaltyManager:
-    """    Ultra-advanced royalty management system
+    """
+    Ultra-advanced royalty management system
     
     Features:
     - Multi-type royalty calculations
@@ -65,7 +69,8 @@ class RoyaltyManager:
     - Detailed reporting and analytics
     - Dispute resolution tracking
     - Audit trail and compliance
-    """    
+    """
+    
     def __init__(self,
                  db_manager: DatabaseManager,
                  security_manager: SecurityManager,
@@ -75,7 +80,8 @@ class RoyaltyManager:
         self.metrics = metrics_collector
         
     async def initialize(self):
-        """Initialize royalty manager"""        try:
+        """Initialize royalty manager"""
+        try:
             logger.info("Royalty manager initialized successfully")
             
         except Exception as e:
@@ -87,7 +93,8 @@ class RoyaltyManager:
                                 content_id: str,
                                 usage_data: Dict[str, Any],
                                 royalty_type: RoyaltyType) -> RoyaltyCalculation:
-        """Calculate royalties for content usage"""        try:
+        """Calculate royalties for content usage"""
+        try:
             # Implementation would calculate royalties based on usage data
             calculation = RoyaltyCalculation(
                 creator_id=creator_id,
@@ -104,7 +111,8 @@ class RoyaltyManager:
             raise
 
     async def cleanup(self):
-        """Cleanup royalty manager resources"""        try:
+        """Cleanup royalty manager resources"""
+        try:
             logger.info("Royalty manager cleanup completed")
             
         except Exception as e:

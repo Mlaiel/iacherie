@@ -18,7 +18,8 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import statistics
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 
 class ComponentStatus(Enum):
-    """Enhanced component status levels with business impact"""    OPERATIONAL = "operational"
+    """Enhanced component status levels with business impact"""
+    OPERATIONAL = "operational"
     DEGRADED = "degraded"
     PARTIAL_OUTAGE = "partial_outage"
     MAJOR_OUTAGE = "major_outage"
@@ -47,7 +49,8 @@ class ComponentStatus(Enum):
 
 
 class BusinessDomain(Enum):
-    """Business domain categories for dashboard organization"""    CONTENT_PROTECTION = "content_protection"
+    """Business domain categories for dashboard organization"""
+    CONTENT_PROTECTION = "content_protection"
     AI_FINGERPRINTING = "ai_fingerprinting"
     REVENUE_TRACKING = "revenue_tracking"
     USER_ENGAGEMENT = "user_engagement"
@@ -59,7 +62,8 @@ class BusinessDomain(Enum):
 
 @dataclass
 class SystemComponent:
-    """Enhanced system component with business context"""    name: str
+    """Enhanced system component with business context"""
+    name: str
     description: str
     category: str
     domain: BusinessDomain
@@ -80,7 +84,8 @@ class SystemComponent:
 
 @dataclass
 class StatusIncident:
-    """Enhanced status incident with resolution tracking"""    id: str
+    """Enhanced status incident with resolution tracking"""
+    id: str
     title: str
     description: str
     status: str  # investigating, identified, monitoring, resolved
@@ -99,7 +104,8 @@ class StatusIncident:
 
 @dataclass
 class DashboardWidget:
-    """Dashboard widget configuration"""    id: str
+    """Dashboard widget configuration"""
+    id: str
     title: str
     type: str  # metric, chart, table, status, custom
     position: Tuple[int, int]  # (row, column)
@@ -113,7 +119,8 @@ class DashboardWidget:
 
 @dataclass
 class BusinessMetricSummary:
-    """Business metrics summary for dashboard"""    domain: BusinessDomain
+    """Business metrics summary for dashboard"""
+    domain: BusinessDomain
     kpis: Dict[str, float]
     trends: Dict[str, str]  # increasing, decreasing, stable
     alerts: List[str]
@@ -122,10 +129,12 @@ class BusinessMetricSummary:
 
 
 class DashboardTemplates:
-    """Dashboard HTML templates"""    
+    """Dashboard HTML templates"""
+    
     @staticmethod
     def get_main_template() -> str:
-        """Get main dashboard template"""        return '''
+        """Get main dashboard template"""
+        return '''
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -431,7 +440,8 @@ class DashboardTemplates:
     
     @staticmethod
     def get_overview_template() -> str:
-        """Get overview section template"""        return '''
+        """Get overview section template"""
+        return '''
         <div class="row">
             <div class="col-md-3">
                 <div class="status-card">
@@ -509,9 +519,11 @@ class DashboardTemplates:
 
 
 class StatusDashboard:
-    """    Industrial-grade real-time monitoring dashboard with AI-powered insights,
+    """
+    Industrial-grade real-time monitoring dashboard with AI-powered insights,
     business intelligence visualization, and comprehensive system observability.
-    """    
+    """
+    
     def __init__(
         self,
         redis_client: Optional[aioredis.Redis] = None,
@@ -549,7 +561,8 @@ class StatusDashboard:
         self._dashboard_running = False
     
     def _initialize_default_components(self):
-        """Initialize default system components"""        components_config = [
+        """Initialize default system components"""
+        components_config = [
             {
                 "name": "Core API Gateway",
                 "description": "Main API gateway handling all external requests",
@@ -637,7 +650,8 @@ class StatusDashboard:
             self.components[component.name.lower().replace(" ", "_")] = component
     
     def _initialize_default_widgets(self):
-        """Initialize default dashboard widgets"""        widgets_config = [
+        """Initialize default dashboard widgets"""
+        widgets_config = [
             {
                 "id": "overview_metrics",
                 "title": "Key Performance Indicators",
@@ -732,7 +746,8 @@ class StatusDashboard:
             self.widgets[widget.id] = widget
     
     def setup_routes(self):
-        """Setup web application routes"""        # Dashboard routes
+        """Setup web application routes"""
+        # Dashboard routes
         self.app.router.add_get('/', self.serve_dashboard)
         self.app.router.add_get('/dashboard', self.serve_dashboard)
         self.app.router.add_get('/dashboard/{section}', self.serve_dashboard_section)
@@ -761,7 +776,8 @@ class StatusDashboard:
         self.app.router.add_static('/', path='static', name='static')
     
     def setup_cors(self):
-        """Setup CORS for cross-origin requests"""        cors = aiohttp_cors.setup(self.app, defaults={
+        """Setup CORS for cross-origin requests"""
+        cors = aiohttp_cors.setup(self.app, defaults={
             "*": aiohttp_cors.ResourceOptions(
                 allow_credentials=True,
                 expose_headers="*",
@@ -775,7 +791,8 @@ class StatusDashboard:
             cors.add(route)
     
     async def serve_dashboard(self, request: web.Request) -> web.Response:
-        """Serve main dashboard page"""        try:
+        """Serve main dashboard page"""
+        try:
             # Get current system status
             system_status = await self.get_system_overview()
             
@@ -796,7 +813,8 @@ class StatusDashboard:
             )
     
     async def serve_dashboard_section(self, request: web.Request) -> web.Response:
-        """Serve specific dashboard section"""        section = request.match_info.get('section', 'overview')
+        """Serve specific dashboard section"""
+        section = request.match_info.get('section', 'overview')
         
         try:
             # Get section-specific data
@@ -818,7 +836,8 @@ class StatusDashboard:
             )
     
     async def get_system_status(self, request: web.Request) -> web.Response:
-        """Get overall system status"""        try:
+        """Get overall system status"""
+        try:
             status_data = await self.get_system_overview()
             return web.json_response(status_data)
             
@@ -830,7 +849,8 @@ class StatusDashboard:
             )
     
     async def get_components(self, request: web.Request) -> web.Response:
-        """Get all system components"""        try:
+        """Get all system components"""
+        try:
             # Update component statuses
             await self.update_component_statuses()
             
@@ -852,7 +872,8 @@ class StatusDashboard:
             )
     
     async def get_component_details(self, request: web.Request) -> web.Response:
-        """Get detailed information about a specific component"""        component_id = request.match_info.get('component_id')
+        """Get detailed information about a specific component"""
+        component_id = request.match_info.get('component_id')
         
         try:
             if component_id not in self.components:
@@ -883,7 +904,8 @@ class StatusDashboard:
             )
     
     async def get_incidents(self, request: web.Request) -> web.Response:
-        """Get all incidents with filtering"""        try:
+        """Get all incidents with filtering"""
+        try:
             # Get query parameters
             status_filter = request.query.get('status')
             impact_filter = request.query.get('impact')
@@ -929,7 +951,8 @@ class StatusDashboard:
         self._register_default_components()
         
     def _register_default_components(self):
-        """Register default system components"""        
+        """Register default system components"""
+        
         # Core platform components
         self.register_component(SystemComponent(
             name="api_gateway",
@@ -1013,7 +1036,8 @@ class StatusDashboard:
         ))
         
     def setup_routes(self):
-        """Setup web routes"""        # CORS setup
+        """Setup web routes"""
+        # CORS setup
         cors = aiohttp_cors.setup(self.app, defaults={
             "*": aiohttp_cors.ResourceOptions(
                 allow_credentials=True,
@@ -1045,7 +1069,8 @@ class StatusDashboard:
             cors.add(route)
             
     async def start_dashboard(self):
-        """Start the status dashboard"""        if self._dashboard_running:
+        """Start the status dashboard"""
+        if self._dashboard_running:
             logger.warning("Status dashboard already running")
             return
             
@@ -1064,7 +1089,8 @@ class StatusDashboard:
         logger.info(f"Status dashboard started on port {self.port}")
         
     async def stop_dashboard(self):
-        """Stop the status dashboard"""        self._dashboard_running = False
+        """Stop the status dashboard"""
+        self._dashboard_running = False
         
         if self._update_task:
             self._update_task.cancel()
@@ -1081,7 +1107,8 @@ class StatusDashboard:
         logger.info("Status dashboard stopped")
         
     async def _update_loop(self):
-        """Main update loop for dashboard data"""        while self._dashboard_running:
+        """Main update loop for dashboard data"""
+        while self._dashboard_running:
             try:
                 await self._update_component_status()
                 await self._broadcast_updates()
@@ -1094,7 +1121,8 @@ class StatusDashboard:
                 await asyncio.sleep(5)
                 
     async def _update_component_status(self):
-        """Update status of all components"""        if self.health_monitor:
+        """Update status of all components"""
+        if self.health_monitor:
             health_results = self.health_monitor.get_detailed_results()
             
             for component_name, component in self.components.items():
@@ -1137,7 +1165,8 @@ class StatusDashboard:
                                 component.status = ComponentStatus.DEGRADED
                                 
     def _map_component_to_health_check(self, component_name: str) -> str:
-        """Map component name to health check name"""        mapping = {
+        """Map component name to health check name"""
+        mapping = {
             "database": "database_connection",
             "redis_cache": "redis_connection",
             "api_gateway": "api_endpoints",
@@ -1148,7 +1177,8 @@ class StatusDashboard:
         return mapping.get(component_name, component_name)
         
     async def _broadcast_updates(self):
-        """Broadcast updates to all WebSocket connections"""        if not self.websocket_connections:
+        """Broadcast updates to all WebSocket connections"""
+        if not self.websocket_connections:
             return
             
         try:
@@ -1196,7 +1226,9 @@ class StatusDashboard:
             
     # Web handlers
     async def dashboard_home(self, request):
-        """Dashboard home page"""        html_template = """        <!DOCTYPE html>
+        """Dashboard home page"""
+        html_template = """
+        <!DOCTYPE html>
         <html>
         <head>
             <title>IA Influencer Agent - Status Dashboard</title>
@@ -1246,11 +1278,14 @@ class StatusDashboard:
             <script src="/dashboard.js"></script>
         </body>
         </html>
-        """        
+        """
+        
         return web.Response(text=html_template, content_type='text/html')
         
     async def dashboard_css(self, request):
-        """Dashboard CSS styles"""        css = """        * {
+        """Dashboard CSS styles"""
+        css = """
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -1439,11 +1474,14 @@ class StatusDashboard:
                 text-align: center;
             }
         }
-        """        
+        """
+        
         return web.Response(text=css, content_type='text/css')
         
     async def dashboard_js(self, request):
-        """Dashboard JavaScript"""        js = """        class StatusDashboard {
+        """Dashboard JavaScript"""
+        js = """
+        class StatusDashboard {
             constructor() {
                 this.ws = null;
                 this.reconnectInterval = 5000;
@@ -1711,11 +1749,13 @@ class StatusDashboard:
         document.addEventListener('DOMContentLoaded', () => {
             new StatusDashboard();
         });
-        """        
+        """
+        
         return web.Response(text=js, content_type='application/javascript')
         
     async def websocket_handler(self, request):
-        """WebSocket handler for real-time updates"""        ws = web.WebSocketResponse()
+        """WebSocket handler for real-time updates"""
+        ws = web.WebSocketResponse()
         await ws.prepare(request)
         
         self.websocket_connections.append(ws)
@@ -1737,7 +1777,8 @@ class StatusDashboard:
         return ws
         
     async def api_status(self, request):
-        """API endpoint for overall status"""        overall_status = self._calculate_overall_status()
+        """API endpoint for overall status"""
+        overall_status = self._calculate_overall_status()
         
         return web.json_response({
             "status": overall_status.value,
@@ -1747,7 +1788,8 @@ class StatusDashboard:
         })
         
     async def api_components(self, request):
-        """API endpoint for components status"""        components_data = {}
+        """API endpoint for components status"""
+        components_data = {}
         
         for name, component in self.components.items():
             components_data[name] = {
@@ -1764,7 +1806,8 @@ class StatusDashboard:
         return web.json_response(components_data)
         
     async def api_incidents(self, request):
-        """API endpoint for incidents"""        incidents_data = []
+        """API endpoint for incidents"""
+        incidents_data = []
         
         for incident in self.incidents.values():
             incidents_data.append({
@@ -1785,7 +1828,8 @@ class StatusDashboard:
         return web.json_response(incidents_data[:10])  # Return last 10 incidents
         
     async def api_metrics(self, request):
-        """API endpoint for metrics"""        metrics_data = {}
+        """API endpoint for metrics"""
+        metrics_data = {}
         
         if self.metrics_collector:
             current_metrics = self.metrics_collector.get_current_metrics()
@@ -1803,7 +1847,8 @@ class StatusDashboard:
         return web.json_response(metrics_data)
         
     async def api_health(self, request):
-        """API endpoint for health status"""        if self.health_monitor:
+        """API endpoint for health status"""
+        if self.health_monitor:
             health_summary = self.health_monitor.get_health_summary()
             detailed_results = self.health_monitor.get_detailed_results()
             
@@ -1815,14 +1860,16 @@ class StatusDashboard:
             return web.json_response({"error": "Health monitor not available"})
             
     async def api_performance(self, request):
-        """API endpoint for performance metrics"""        if self.performance_tracker:
+        """API endpoint for performance metrics"""
+        if self.performance_tracker:
             performance_summary = self.performance_tracker.get_performance_summary()
             return web.json_response(performance_summary)
         else:
             return web.json_response({"error": "Performance tracker not available"})
             
     async def api_business_metrics(self, request):
-        """API endpoint for business metrics"""        if self.business_metrics:
+        """API endpoint for business metrics"""
+        if self.business_metrics:
             business_kpis = await self.business_metrics.get_business_kpis()
             return web.json_response(business_kpis)
         else:
@@ -1830,11 +1877,13 @@ class StatusDashboard:
             
     # Utility methods
     def register_component(self, component: SystemComponent):
-        """Register a system component"""        self.components[component.name] = component
+        """Register a system component"""
+        self.components[component.name] = component
         logger.info(f"Registered component: {component.name}")
         
     def update_component_status(self, name: str, status: ComponentStatus, **kwargs):
-        """Update component status"""        if name in self.components:
+        """Update component status"""
+        if name in self.components:
             component = self.components[name]
             component.status = status
             component.last_updated = datetime.utcnow()
@@ -1848,7 +1897,8 @@ class StatusDashboard:
             
     
     async def get_section_data(self, section: str) -> Dict[str, Any]:
-        """Get data for a specific dashboard section"""        try:
+        """Get data for a specific dashboard section"""
+        try:
             if section == "overview":
                 return await self.get_overview_data()
             elif section == "content-protection":
@@ -1871,7 +1921,8 @@ class StatusDashboard:
             return {"error": str(e)}
     
     async def get_overview_data(self) -> Dict[str, Any]:
-        """Get overview dashboard data"""        system_overview = await self.get_system_overview()
+        """Get overview dashboard data"""
+        system_overview = await self.get_system_overview()
         
         # Get key metrics
         active_users = await self._get_metric_value("daily_active_users", 0)
@@ -1902,7 +1953,8 @@ class StatusDashboard:
         }
     
     async def get_content_protection_data(self) -> Dict[str, Any]:
-        """Get content protection dashboard data"""        metrics = await self.get_cached_business_metrics(BusinessDomain.CONTENT_PROTECTION)
+        """Get content protection dashboard data"""
+        metrics = await self.get_cached_business_metrics(BusinessDomain.CONTENT_PROTECTION)
         
         return {
             "metrics": asdict(metrics),
@@ -1913,7 +1965,8 @@ class StatusDashboard:
         }
     
     async def get_revenue_data(self) -> Dict[str, Any]:
-        """Get revenue dashboard data"""        metrics = await self.get_cached_business_metrics(BusinessDomain.REVENUE_TRACKING)
+        """Get revenue dashboard data"""
+        metrics = await self.get_cached_business_metrics(BusinessDomain.REVENUE_TRACKING)
         
         return {
             "metrics": asdict(metrics),
@@ -1924,7 +1977,8 @@ class StatusDashboard:
         }
     
     async def get_user_engagement_data(self) -> Dict[str, Any]:
-        """Get user engagement dashboard data"""        metrics = await self.get_cached_business_metrics(BusinessDomain.USER_ENGAGEMENT)
+        """Get user engagement dashboard data"""
+        metrics = await self.get_cached_business_metrics(BusinessDomain.USER_ENGAGEMENT)
         
         return {
             "metrics": asdict(metrics),
@@ -1935,7 +1989,8 @@ class StatusDashboard:
         }
     
     async def get_performance_data(self) -> Dict[str, Any]:
-        """Get performance dashboard data"""        performance_metrics = {}
+        """Get performance dashboard data"""
+        performance_metrics = {}
         
         if self.performance_tracker:
             performance_metrics = await self.performance_tracker.get_system_performance_summary()
@@ -1949,7 +2004,8 @@ class StatusDashboard:
         }
     
     async def get_security_data(self) -> Dict[str, Any]:
-        """Get security dashboard data"""        metrics = await self.get_cached_business_metrics(BusinessDomain.SECURITY)
+        """Get security dashboard data"""
+        metrics = await self.get_cached_business_metrics(BusinessDomain.SECURITY)
         
         return {
             "metrics": asdict(metrics),
@@ -1960,7 +2016,8 @@ class StatusDashboard:
         }
     
     async def get_incidents_data(self) -> Dict[str, Any]:
-        """Get incidents dashboard data"""        active_incidents = [
+        """Get incidents dashboard data"""
+        active_incidents = [
             asdict(incident) for incident in self.incidents.values()
             if incident.status not in ["resolved", "closed"]
         ]
@@ -1985,7 +2042,8 @@ class StatusDashboard:
         }
     
     async def render_section_template(self, section: str, data: Dict[str, Any]) -> str:
-        """Render HTML template for a section"""        try:
+        """Render HTML template for a section"""
+        try:
             if section == "overview":
                 return self.templates.get_overview_template().format(**data)
             else:
@@ -2007,7 +2065,8 @@ class StatusDashboard:
             return f"<div class='alert alert-danger'>Error rendering {section}: {str(e)}</div>"
     
     async def get_section_scripts(self, section: str) -> str:
-        """Get JavaScript code for a section"""        if section == "overview":
+        """Get JavaScript code for a section"""
+        if section == "overview":
             return '''
             // Initialize overview charts
             const ctx = document.getElementById('healthChart');
@@ -2040,26 +2099,31 @@ class StatusDashboard:
         return ""
     
     async def get_component_metrics(self, component_id: str) -> Dict[str, Any]:
-        """Get detailed metrics for a component"""        if self.performance_tracker:
+        """Get detailed metrics for a component"""
+        if self.performance_tracker:
             return await self.performance_tracker.get_component_performance(component_id)
         return {}
     
     async def get_component_history(self, component_id: str) -> List[Dict[str, Any]]:
-        """Get historical data for a component"""        # This would typically fetch from a time series database
+        """Get historical data for a component"""
+        # This would typically fetch from a time series database
         return []
     
     async def get_performance_metrics(self, time_range: str) -> Dict[str, Any]:
-        """Get system performance metrics"""        if self.performance_tracker:
+        """Get system performance metrics"""
+        if self.performance_tracker:
             return await self.performance_tracker.get_system_performance_summary()
         return {}
     
     async def get_health_metrics(self, time_range: str) -> Dict[str, Any]:
-        """Get system health metrics"""        if self.health_monitor:
+        """Get system health metrics"""
+        if self.health_monitor:
             return await self.health_monitor.get_health_summary()
         return {}
     
     async def start_dashboard(self):
-        """Start the status dashboard"""        try:
+        """Start the status dashboard"""
+        try:
             if self._dashboard_running:
                 logger.warning("Dashboard is already running")
                 return
@@ -2084,7 +2148,8 @@ class StatusDashboard:
             raise
     
     async def stop_dashboard(self):
-        """Stop the status dashboard"""        try:
+        """Stop the status dashboard"""
+        try:
             self._dashboard_running = False
             
             # Cancel update task
@@ -2106,7 +2171,8 @@ class StatusDashboard:
             logger.error(f"Error stopping dashboard: {e}")
     
     async def _update_loop(self):
-        """Background update loop for real-time data"""        try:
+        """Background update loop for real-time data"""
+        try:
             while self._dashboard_running:
                 # Update component statuses
                 await self.update_component_statuses()
@@ -2140,7 +2206,8 @@ class StatusDashboard:
         impact: str,
         components: List[str]
     ) -> str:
-        """Create a new incident"""        incident_id = f"incident_{int(datetime.utcnow().timestamp())}"
+        """Create a new incident"""
+        incident_id = f"incident_{int(datetime.utcnow().timestamp())}"
         
         incident = StatusIncident(
             id=incident_id,
@@ -2159,7 +2226,8 @@ class StatusDashboard:
         return incident_id
         
     def update_incident(self, incident_id: str, status: str, update_message: str):
-        """Update an incident"""        if incident_id in self.incidents:
+        """Update an incident"""
+        if incident_id in self.incidents:
             incident = self.incidents[incident_id]
             incident.status = status
             incident.updated_at = datetime.utcnow()
@@ -2176,7 +2244,8 @@ class StatusDashboard:
             logger.info(f"Updated incident {incident_id}: {status}")
             
     def _calculate_overall_status(self) -> ComponentStatus:
-        """Calculate overall system status"""        if not self.components:
+        """Calculate overall system status"""
+        if not self.components:
             return ComponentStatus.OPERATIONAL
             
         if ComponentStatus.MAJOR_OUTAGE in statuses:
@@ -2193,7 +2262,8 @@ class StatusDashboard:
 
 # Example usage
 async def create_status_dashboard_example():
-    """Example of creating and running a status dashboard"""    import aioredis
+    """Example of creating and running a status dashboard"""
+    import aioredis
     
     # Initialize Redis client
     redis_client = await aioredis.create_redis_pool('redis://localhost:6379')

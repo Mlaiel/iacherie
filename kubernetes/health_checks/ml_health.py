@@ -16,7 +16,8 @@ Copyright: IA Influencer Agent Platform - All Rights Reserved
 WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
-"""import asyncio
+"""
+import asyncio
 import time
 import json
 import os
@@ -37,7 +38,8 @@ from .core_health import HealthStatus, HealthCheckResult
 
 @dataclass
 class MLModelMetrics:
-    """Machine learning model performance metrics"""    model_name: str
+    """Machine learning model performance metrics"""
+    model_name: str
     model_version: str
     inference_latency_ms: float
     memory_usage_mb: float
@@ -49,7 +51,8 @@ class MLModelMetrics:
 
 @dataclass
 class GPUMetrics:
-    """GPU utilization and performance metrics"""    device_id: int
+    """GPU utilization and performance metrics"""
+    device_id: int
     device_name: str
     gpu_utilization_percent: float
     memory_used_mb: float
@@ -60,16 +63,20 @@ class GPUMetrics:
 
 
 class MLServiceHealthChecker:
-    """    Machine Learning services health monitoring system
+    """
+    Machine Learning services health monitoring system
     
     Monitors AI/ML pipeline components including model serving,
     training jobs, vector databases, and GPU resources.
-    """    def __init__(self, config: Dict[str, Any]):
-        """        Initialize ML service health checker
+    """
+    def __init__(self, config: Dict[str, Any]):
+        """
+        Initialize ML service health checker
         
         Args:
             config: ML configuration dictionary
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # ML configurations
@@ -89,11 +96,13 @@ class MLServiceHealthChecker:
         self._faiss_indexes = {}
 
     async def check_pytorch_models(self) -> HealthCheckResult:
-        """        Check PyTorch model health and performance
+        """
+        Check PyTorch model health and performance
         
         Returns:
             HealthCheckResult: PyTorch models health status
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             details = {
@@ -208,11 +217,13 @@ class MLServiceHealthChecker:
             )
 
     async def check_tensorflow_models(self) -> HealthCheckResult:
-        """        Check TensorFlow model health and performance
+        """
+        Check TensorFlow model health and performance
         
         Returns:
             HealthCheckResult: TensorFlow models health status
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             details = {
@@ -310,11 +321,13 @@ class MLServiceHealthChecker:
             )
 
     async def check_huggingface_models(self) -> HealthCheckResult:
-        """        Check Hugging Face transformers model health
+        """
+        Check Hugging Face transformers model health
         
         Returns:
             HealthCheckResult: Hugging Face models health status
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             details = {
@@ -401,11 +414,13 @@ class MLServiceHealthChecker:
             )
 
     async def check_vector_databases(self) -> HealthCheckResult:
-        """        Check vector database and similarity search health
+        """
+        Check vector database and similarity search health
         
         Returns:
             HealthCheckResult: Vector databases health status
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             details = {
@@ -510,11 +525,13 @@ class MLServiceHealthChecker:
             )
 
     async def check_gpu_resources(self) -> HealthCheckResult:
-        """        Check GPU resource utilization and performance
+        """
+        Check GPU resource utilization and performance
         
         Returns:
             HealthCheckResult: GPU resources health status
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             details = {
@@ -619,11 +636,13 @@ class MLServiceHealthChecker:
             )
 
     async def perform_comprehensive_check(self) -> List[HealthCheckResult]:
-        """        Perform all ML service health checks concurrently
+        """
+        Perform all ML service health checks concurrently
         
         Returns:
             List[HealthCheckResult]: All ML service health check results
-        """        checks = await asyncio.gather(
+        """
+        checks = await asyncio.gather(
             self.check_pytorch_models(),
             self.check_tensorflow_models(),
             self.check_huggingface_models(),
@@ -650,11 +669,13 @@ class MLServiceHealthChecker:
         return results
 
     async def get_ml_health_summary(self) -> Dict[str, Any]:
-        """        Get comprehensive ML services health summary
+        """
+        Get comprehensive ML services health summary
         
         Returns:
             Dict[str, Any]: ML services health summary with overall status
-        """        results = await self.perform_comprehensive_check()
+        """
+        results = await self.perform_comprehensive_check()
         
         # Calculate overall ML services health
         status_weights = {

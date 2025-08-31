@@ -18,7 +18,8 @@ Business Logic Flow:
 User (musician/blogger/photographer/influencer/comedian) → Upload multi-format content
 → AI protection rights analysis → Professional SEO optimization → Collaboration matching
 → Multi-platform distribution → Automated licensing & royalty management
-"""import asyncio
+"""
+import asyncio
 import uuid
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -43,7 +44,8 @@ from ..ai.distribution_optimizer import DistributionOptimizer
 
 
 class DistributionChannel(Enum):
-    """Comprehensive distribution channels"""    SPOTIFY = "spotify"
+    """Comprehensive distribution channels"""
+    SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
     AMAZON_MUSIC = "amazon_music"
@@ -68,7 +70,8 @@ class DistributionChannel(Enum):
 
 
 class PlatformType(Enum):
-    """Platform categorization types"""    STREAMING_MUSIC = "streaming_music"
+    """Platform categorization types"""
+    STREAMING_MUSIC = "streaming_music"
     STREAMING_VIDEO = "streaming_video"
     SOCIAL_MEDIA = "social_media"
     MUSIC_STORE = "music_store"
@@ -85,7 +88,8 @@ class PlatformType(Enum):
 
 
 class DeliveryMethod(Enum):
-    """Content delivery methods"""    API_UPLOAD = "api_upload"
+    """Content delivery methods"""
+    API_UPLOAD = "api_upload"
     FTP_TRANSFER = "ftp_transfer"
     CDN_DISTRIBUTION = "cdn_distribution"
     BLOCKCHAIN_MINT = "blockchain_mint"
@@ -98,7 +102,8 @@ class DeliveryMethod(Enum):
 
 
 class DistributionStrategy(Enum):
-    """Distribution strategies"""    GLOBAL_SIMULTANEOUS = "global_simultaneous"
+    """Distribution strategies"""
+    GLOBAL_SIMULTANEOUS = "global_simultaneous"
     REGIONAL_ROLLOUT = "regional_rollout"
     PLATFORM_EXCLUSIVE = "platform_exclusive"
     TIME_DELAYED = "time_delayed"
@@ -113,7 +118,8 @@ class DistributionStrategy(Enum):
 
 
 class QualityRequirement(Enum):
-    """Content quality requirements"""    LOW_QUALITY = "low_quality"        # 128kbps, 480p
+    """Content quality requirements"""
+    LOW_QUALITY = "low_quality"        # 128kbps, 480p
     STANDARD_QUALITY = "standard_quality"  # 256kbps, 720p
     HIGH_QUALITY = "high_quality"      # 320kbps, 1080p
     LOSSLESS_QUALITY = "lossless_quality"  # FLAC, 4K
@@ -124,7 +130,8 @@ class QualityRequirement(Enum):
 
 @dataclass
 class DistributionRequest:
-    """Comprehensive distribution request"""    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive distribution request"""
+    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     
     # Content information
     content_id: str = ""
@@ -196,7 +203,8 @@ class DistributionRequest:
 
 @dataclass
 class DistributionResult:
-    """Distribution operation result"""    result_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Distribution operation result"""
+    result_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     request_id: str = ""
     
     # Overall status
@@ -256,7 +264,8 @@ class DistributionResult:
 
 @dataclass
 class PlatformIntegration:
-    """Platform integration configuration"""    integration_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Platform integration configuration"""
+    integration_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     
     # Platform details
     platform: DistributionChannel = DistributionChannel.CUSTOM_PLATFORM
@@ -310,9 +319,11 @@ class PlatformIntegration:
 
 
 class UltraAdvancedDistributionManager:
-    """    Ultra-advanced distribution management engine with AI-powered platform optimization,
+    """
+    Ultra-advanced distribution management engine with AI-powered platform optimization,
     blockchain-secured revenue tracking, and global compliance management
-    """    
+    """
+    
     def __init__(
         self,
         security_manager: SecurityManager,
@@ -345,7 +356,8 @@ class UltraAdvancedDistributionManager:
         self._validate_business_logic()
     
     def _validate_business_logic(self) -> None:
-        """Validate business logic flow requirements"""        required_components = [
+        """Validate business logic flow requirements"""
+        required_components = [
             self.security_manager,
             self.blockchain_verifier,
             self.ai_optimizer,
@@ -363,8 +375,10 @@ class UltraAdvancedDistributionManager:
         request: DistributionRequest,
         session: Optional[AsyncSession] = None
     ) -> DistributionResult:
-        """        Distribute content across multiple platforms with AI optimization and compliance validation
-        """        start_time = datetime.utcnow()
+        """
+        Distribute content across multiple platforms with AI optimization and compliance validation
+        """
+        start_time = datetime.utcnow()
         
         try:
             # Validate distribution request
@@ -506,8 +520,10 @@ class UltraAdvancedDistributionManager:
         content_id: str,
         session: Optional[AsyncSession] = None
     ) -> Dict[DistributionChannel, Dict[str, Any]]:
-        """        Get current distribution status across all platforms for content
-        """        try:
+        """
+        Get current distribution status across all platforms for content
+        """
+        try:
             # Security validation
             await self.security_manager.validate_distribution_operation(
                 "system", content_id, "get_status"
@@ -561,8 +577,10 @@ class UltraAdvancedDistributionManager:
         optimization_goals: Optional[List[str]] = None,
         session: Optional[AsyncSession] = None
     ) -> Dict[str, Any]:
-        """        AI-powered optimization of distribution performance
-        """        try:
+        """
+        AI-powered optimization of distribution performance
+        """
+        try:
             # Security validation
             await self.security_manager.validate_distribution_operation(
                 "system", content_id, "optimize_performance"
@@ -604,7 +622,8 @@ class UltraAdvancedDistributionManager:
             return {"error": str(e)}
     
     async def _validate_distribution_request(self, request: DistributionRequest) -> None:
-        """Validate distribution request"""        if not request.content_id:
+        """Validate distribution request"""
+        if not request.content_id:
             raise ValidationError("Content ID is required")
         
         if not request.target_channels:
@@ -626,7 +645,8 @@ class UltraAdvancedDistributionManager:
     async def _get_platform_integrations(
         self, channels: List[DistributionChannel]
     ) -> Dict[DistributionChannel, PlatformIntegration]:
-        """Get platform integrations for specified channels"""        integrations = {}
+        """Get platform integrations for specified channels"""
+        integrations = {}
         
         for channel in channels:
             # Check cache first
@@ -659,7 +679,8 @@ class UltraAdvancedDistributionManager:
         request: DistributionRequest,
         integrations: Dict[DistributionChannel, PlatformIntegration]
     ) -> Dict[DistributionChannel, Dict[str, Any]]:
-        """Validate compliance for each platform"""        compliance_results = {}
+        """Validate compliance for each platform"""
+        compliance_results = {}
         
         for channel, integration in integrations.items():
             compliance_result = {
@@ -708,7 +729,8 @@ class UltraAdvancedDistributionManager:
         integration: PlatformIntegration,
         content_preparation: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Distribute content to a specific platform"""        try:
+        """Distribute content to a specific platform"""
+        try:
             # Platform-specific distribution logic
             platform_result = await self.platform_manager.distribute_content(
                 channel=channel,
@@ -741,7 +763,8 @@ class UltraAdvancedDistributionManager:
             }
     
     async def _cache_distribution_result(self, result: DistributionResult) -> None:
-        """Cache distribution result"""        if not self.redis_client:
+        """Cache distribution result"""
+        if not self.redis_client:
             return
         
         try:
@@ -768,7 +791,8 @@ class UltraAdvancedDistributionManager:
     def _content_violates_restriction(
         self, request: DistributionRequest, restriction: str
     ) -> bool:
-        """Check if content violates a platform restriction"""        # Simplified restriction checking - would be more comprehensive in production
+        """Check if content violates a platform restriction"""
+        # Simplified restriction checking - would be more comprehensive in production
         content_tags = [tag.lower() for tag in request.tags]
         content_title = request.content_title.lower()
         content_description = request.content_description.lower()
@@ -801,7 +825,8 @@ class UltraAdvancedDistributionManager:
 
 
 class ContentFormat(Enum):
-    """Content format specifications"""    AUDIO_MP3 = "audio_mp3"
+    """Content format specifications"""
+    AUDIO_MP3 = "audio_mp3"
     AUDIO_WAV = "audio_wav"
     AUDIO_FLAC = "audio_flac"
     VIDEO_MP4 = "video_mp4"
@@ -813,7 +838,8 @@ class ContentFormat(Enum):
 
 
 class RevenueModel(Enum):
-    """Revenue sharing models"""    PERCENTAGE = "percentage"
+    """Revenue sharing models"""
+    PERCENTAGE = "percentage"
     FIXED_FEE = "fixed_fee"
     SUBSCRIPTION = "subscription"
     PAY_PER_USE = "pay_per_use"
@@ -823,7 +849,8 @@ class RevenueModel(Enum):
 
 @dataclass
 class Platform:
-    """Distribution platform definition"""    platform_id: str
+    """Distribution platform definition"""
+    platform_id: str
     name: str
     platform_type: PlatformType
     supported_formats: List[ContentFormat]
@@ -842,7 +869,8 @@ class Platform:
 
 @dataclass
 class DistributionPackage:
-    """Content distribution package"""    package_id: str
+    """Content distribution package"""
+    package_id: str
     content_id: str
     license_id: str
     title: str
@@ -861,7 +889,8 @@ class DistributionPackage:
 
 @dataclass
 class DistributionTask:
-    """Individual platform distribution task"""    task_id: str
+    """Individual platform distribution task"""
+    task_id: str
     package_id: str
     platform_id: str
     status: DistributionStatus
@@ -878,7 +907,8 @@ class DistributionTask:
 
 @dataclass
 class DistributionAnalytics:
-    """Distribution performance analytics"""    analytics_id: str
+    """Distribution performance analytics"""
+    analytics_id: str
     package_id: str
     platform_id: str
     period_start: datetime
@@ -896,7 +926,8 @@ class DistributionAnalytics:
 
 @dataclass
 class RevenueShare:
-    """Revenue sharing configuration"""    share_id: str
+    """Revenue sharing configuration"""
+    share_id: str
     package_id: str
     platform_id: str
     stakeholder_id: str
@@ -910,7 +941,8 @@ class RevenueShare:
 
 
 class DistributionManager:
-    """    Multi-platform content distribution with automated licensing system
+    """
+    Multi-platform content distribution with automated licensing system
     
     Features:
     - Multi-platform content distribution automation
@@ -923,7 +955,8 @@ class DistributionManager:
     - Performance-based distribution strategies
     - Cross-platform promotion coordination
     - Advanced reporting and business intelligence
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -958,7 +991,8 @@ class DistributionManager:
         self.is_initialized = False
     
     async def initialize(self) -> None:
-        """Initialize distribution manager and platform integrations"""        try:
+        """Initialize distribution manager and platform integrations"""
+        try:
             self.logger.info("Initializing DistributionManager")
             
             # Initialize components
@@ -996,7 +1030,8 @@ class DistributionManager:
         release_date: Optional[datetime] = None,
         pricing_strategy: Optional[Dict[str, Any]] = None
     ) -> str:
-        """        Create a new distribution package for multi-platform deployment
+        """
+        Create a new distribution package for multi-platform deployment
         
         Args:
             content_id: Content identifier
@@ -1011,7 +1046,8 @@ class DistributionManager:
             
         Returns:
             Distribution package ID
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             raise DistributionError("DistributionManager not initialized")
         
         package_id = str(uuid.uuid4())
@@ -1076,7 +1112,8 @@ class DistributionManager:
         package_id: str,
         initiated_by: str
     ) -> List[str]:
-        """        Start distribution process for a package
+        """
+        Start distribution process for a package
         
         Args:
             package_id: Distribution package identifier
@@ -1084,7 +1121,8 @@ class DistributionManager:
             
         Returns:
             List of task IDs created for distribution
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             raise DistributionError("DistributionManager not initialized")
         
         try:
@@ -1138,14 +1176,16 @@ class DistributionManager:
         self,
         package_id: str
     ) -> Dict[str, Any]:
-        """        Monitor real-time distribution status for a package
+        """
+        Monitor real-time distribution status for a package
         
         Args:
             package_id: Distribution package identifier
             
         Returns:
             Distribution status report
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             raise DistributionError("DistributionManager not initialized")
         
         try:
@@ -1204,7 +1244,8 @@ class DistributionManager:
         platform_id: Optional[str] = None,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """        Collect and analyze distribution performance data
+        """
+        Collect and analyze distribution performance data
         
         Args:
             package_id: Distribution package identifier
@@ -1213,7 +1254,8 @@ class DistributionManager:
             
         Returns:
             Distribution analytics report
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             raise DistributionError("DistributionManager not initialized")
         
         try:
@@ -1277,7 +1319,8 @@ class DistributionManager:
         package_id: str,
         optimization_goals: List[str]
     ) -> Dict[str, Any]:
-        """        Optimize distribution strategy based on performance data
+        """
+        Optimize distribution strategy based on performance data
         
         Args:
             package_id: Distribution package identifier
@@ -1285,7 +1328,8 @@ class DistributionManager:
             
         Returns:
             Optimization recommendations and actions
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             raise DistributionError("DistributionManager not initialized")
         
         try:
@@ -1346,14 +1390,16 @@ class DistributionManager:
         paused_by: str = "",
         reason: str = ""
     ) -> None:
-        """        Pause distribution on specific platform or all platforms
+        """
+        Pause distribution on specific platform or all platforms
         
         Args:
             package_id: Distribution package identifier
             platform_id: Optional specific platform to pause
             paused_by: ID of user pausing distribution
             reason: Reason for pausing
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             raise DistributionError("DistributionManager not initialized")
         
         try:
@@ -1388,13 +1434,15 @@ class DistributionManager:
         platform_id: Optional[str] = None,
         resumed_by: str = ""
     ) -> None:
-        """        Resume paused distribution
+        """
+        Resume paused distribution
         
         Args:
             package_id: Distribution package identifier
             platform_id: Optional specific platform to resume
             resumed_by: ID of user resuming distribution
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             raise DistributionError("DistributionManager not initialized")
         
         try:
@@ -1424,7 +1472,8 @@ class DistributionManager:
     
     # Private helper methods
     async def _load_platform_configurations(self) -> None:
-        """Load platform configurations and capabilities"""        # Implementation would load platform configs from database or config files
+        """Load platform configurations and capabilities"""
+        # Implementation would load platform configs from database or config files
         
         # Example platform configurations
         default_platforms = [
@@ -1468,7 +1517,8 @@ class DistributionManager:
         self.logger.info(f"Loaded {len(self.platforms)} platform configurations")
     
     async def _initialize_platform_apis(self) -> None:
-        """Initialize API connections to distribution platforms"""        for platform_id, platform in self.platforms.items():
+        """Initialize API connections to distribution platforms"""
+        for platform_id, platform in self.platforms.items():
             if platform.is_active and platform.api_endpoint:
                 try:
                     api_client = await self.platform_manager.create_api_client(
@@ -1483,13 +1533,15 @@ class DistributionManager:
         self.logger.info(f"Initialized {len(self.platform_apis)} platform APIs")
     
     async def _start_distribution_processors(self) -> None:
-        """Start background processors for distribution tasks"""        # Start background tasks for processing distribution queue
+        """Start background processors for distribution tasks"""
+        # Start background tasks for processing distribution queue
         asyncio.create_task(self._distribution_processor())
         asyncio.create_task(self._retry_processor())
         asyncio.create_task(self._analytics_collector())
     
     async def _validate_target_platforms(self, platform_ids: List[str]) -> None:
-        """Validate that target platforms exist and are active"""        for platform_id in platform_ids:
+        """Validate that target platforms exist and are active"""
+        for platform_id in platform_ids:
             platform = self.platforms.get(platform_id)
             if not platform:
                 raise ValidationError(f"Platform not found: {platform_id}")
@@ -1501,7 +1553,8 @@ class DistributionManager:
         content_files: List[Dict[str, Any]],
         platform_ids: List[str]
     ) -> None:
-        """Validate content files against platform requirements"""        for platform_id in platform_ids:
+        """Validate content files against platform requirements"""
+        for platform_id in platform_ids:
             platform = self.platforms.get(platform_id)
             if platform:
                 for content_file in content_files:
@@ -1512,10 +1565,12 @@ class DistributionManager:
                         )
     
     async def _get_default_territories(self) -> List[str]:
-        """Get default distribution territories"""        return ['worldwide']
+        """Get default distribution territories"""
+        return ['worldwide']
     
     async def _create_distribution_tasks(self, package_id: str) -> None:
-        """Create distribution tasks for each target platform"""        package = self.distribution_packages[package_id]
+        """Create distribution tasks for each target platform"""
+        package = self.distribution_packages[package_id]
         
         for platform_id in package.target_platforms:
             platform = self.platforms.get(platform_id)
@@ -1544,7 +1599,8 @@ class DistributionManager:
         content_files: List[Dict[str, Any]],
         supported_formats: List[ContentFormat]
     ) -> ContentFormat:
-        """Select optimal content format for platform"""        # Find first matching format
+        """Select optimal content format for platform"""
+        # Find first matching format
         for content_file in content_files:
             file_format = ContentFormat(content_file.get('format'))
             if file_format in supported_formats:
@@ -1554,17 +1610,20 @@ class DistributionManager:
         return supported_formats[0] if supported_formats else ContentFormat.AUDIO_MP3
     
     async def _validate_distribution_licensing(self, package_id: str) -> None:
-        """Validate licensing requirements for distribution"""        # Implementation would check licensing compliance
+        """Validate licensing requirements for distribution"""
+        # Implementation would check licensing compliance
         pass
     
     async def _get_package_tasks(self, package_id: str) -> List[DistributionTask]:
-        """Get all distribution tasks for a package"""        return [
+        """Get all distribution tasks for a package"""
+        return [
             task for task in self.distribution_tasks.values()
             if task.package_id == package_id
         ]
     
     async def _determine_overall_status(self, tasks: List[DistributionTask]) -> str:
-        """Determine overall distribution status from individual tasks"""        if not tasks:
+        """Determine overall distribution status from individual tasks"""
+        if not tasks:
             return 'no_tasks'
         
         status_counts = defaultdict(int)
@@ -1585,7 +1644,8 @@ class DistributionManager:
             return 'mixed'
     
     async def _get_recent_analytics(self, package_id: str) -> Dict[str, Any]:
-        """Get recent analytics data for package"""        analytics_list = self.analytics_data.get(package_id, [])
+        """Get recent analytics data for package"""
+        analytics_list = self.analytics_data.get(package_id, [])
         if analytics_list:
             # Return most recent analytics
             latest_analytics = max(analytics_list, key=lambda x: x.collected_at)
@@ -1604,7 +1664,8 @@ class DistributionManager:
         start_date: datetime,
         end_date: datetime
     ) -> Optional[DistributionAnalytics]:
-        """Collect analytics from specific platform"""        # Implementation would call platform APIs to collect analytics
+        """Collect analytics from specific platform"""
+        # Implementation would call platform APIs to collect analytics
         
         # Mock analytics data
         analytics = DistributionAnalytics(
@@ -1633,7 +1694,8 @@ class DistributionManager:
         self,
         analytics_data: List[DistributionAnalytics]
     ) -> Dict[str, Any]:
-        """Aggregate analytics data across platforms"""        if not analytics_data:
+        """Aggregate analytics data across platforms"""
+        if not analytics_data:
             return {}
         
         # Aggregate metrics
@@ -1662,7 +1724,8 @@ class DistributionManager:
         package_id: str,
         analytics_data: List[DistributionAnalytics]
     ) -> List[str]:
-        """Generate performance improvement recommendations"""        recommendations = []
+        """Generate performance improvement recommendations"""
+        recommendations = []
         
         if analytics_data:
             avg_completion_rate = sum(
@@ -1682,7 +1745,8 @@ class DistributionManager:
         package_id: str,
         adjustments: Dict[str, Any]
     ) -> None:
-        """Apply platform-specific adjustments"""        # Implementation would apply platform adjustments
+        """Apply platform-specific adjustments"""
+        # Implementation would apply platform adjustments
         pass
     
     async def _apply_pricing_adjustments(
@@ -1690,7 +1754,8 @@ class DistributionManager:
         package_id: str,
         adjustments: Dict[str, Any]
     ) -> None:
-        """Apply pricing strategy adjustments"""        # Implementation would update pricing strategies
+        """Apply pricing strategy adjustments"""
+        # Implementation would update pricing strategies
         pass
     
     async def _apply_metadata_optimizations(
@@ -1698,7 +1763,8 @@ class DistributionManager:
         package_id: str,
         optimizations: Dict[str, Any]
     ) -> None:
-        """Apply metadata optimizations"""        # Implementation would update content metadata
+        """Apply metadata optimizations"""
+        # Implementation would update content metadata
         pass
     
     async def _get_tasks_to_pause(
@@ -1706,7 +1772,8 @@ class DistributionManager:
         package_id: str,
         platform_id: Optional[str]
     ) -> List[DistributionTask]:
-        """Get tasks that need to be paused"""        tasks = await self._get_package_tasks(package_id)
+        """Get tasks that need to be paused"""
+        tasks = await self._get_package_tasks(package_id)
         
         if platform_id:
             tasks = [t for t in tasks if t.platform_id == platform_id]
@@ -1718,7 +1785,8 @@ class DistributionManager:
         package_id: str,
         platform_id: Optional[str]
     ) -> List[DistributionTask]:
-        """Get tasks that need to be resumed"""        tasks = await self._get_package_tasks(package_id)
+        """Get tasks that need to be resumed"""
+        tasks = await self._get_package_tasks(package_id)
         
         if platform_id:
             tasks = [t for t in tasks if t.platform_id == platform_id]
@@ -1726,15 +1794,18 @@ class DistributionManager:
         return [t for t in tasks if t.status == DistributionStatus.PAUSED]
     
     async def _pause_platform_distribution(self, task: DistributionTask) -> None:
-        """Pause distribution on specific platform"""        # Implementation would call platform API to pause content
+        """Pause distribution on specific platform"""
+        # Implementation would call platform API to pause content
         pass
     
     async def _resume_platform_distribution(self, task: DistributionTask) -> None:
-        """Resume distribution on specific platform"""        # Implementation would call platform API to resume content
+        """Resume distribution on specific platform"""
+        # Implementation would call platform API to resume content
         pass
     
     async def _distribution_processor(self) -> None:
-        """Background processor for distribution tasks"""        while True:
+        """Background processor for distribution tasks"""
+        while True:
             try:
                 if self.pending_distributions:
                     # Process pending distributions
@@ -1751,7 +1822,8 @@ class DistributionManager:
                 await asyncio.sleep(60)  # Wait longer on error
     
     async def _process_distribution_task(self, task: DistributionTask) -> None:
-        """Process individual distribution task"""        try:
+        """Process individual distribution task"""
+        try:
             platform = self.platforms.get(task.platform_id)
             if not platform:
                 raise PlatformError(f"Platform not found: {task.platform_id}")
@@ -1783,7 +1855,8 @@ class DistributionManager:
         task: DistributionTask,
         platform: Platform
     ) -> Dict[str, Any]:
-        """Submit content to distribution platform"""        # Implementation would call platform-specific API
+        """Submit content to distribution platform"""
+        # Implementation would call platform-specific API
         
         # Mock successful submission
         return {
@@ -1793,7 +1866,8 @@ class DistributionManager:
         }
     
     async def _retry_processor(self) -> None:
-        """Background processor for retry queue"""        while True:
+        """Background processor for retry queue"""
+        while True:
             try:
                 if self.retry_queue:
                     # Process retry queue
@@ -1815,7 +1889,8 @@ class DistributionManager:
                 await asyncio.sleep(60)
     
     async def _analytics_collector(self) -> None:
-        """Background collector for analytics data"""        while True:
+        """Background collector for analytics data"""
+        while True:
             try:
                 # Collect analytics from active distributions
                 for package_id in self.active_distributions:

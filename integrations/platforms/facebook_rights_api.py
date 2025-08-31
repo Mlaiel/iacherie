@@ -6,7 +6,8 @@ Handles copyright claims, content monitoring, and rights administration.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import json
 import logging
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FacebookRightsClaim:
-    """Facebook rights claim information"""    claim_id: str
+    """Facebook rights claim information"""
+    claim_id: str
     content_id: str
     asset_id: str
     claim_type: str  # "copyright", "trademark", "other"
@@ -36,7 +38,8 @@ class FacebookRightsClaim:
 
 @dataclass
 class FacebookAsset:
-    """Facebook asset information"""    asset_id: str
+    """Facebook asset information"""
+    asset_id: str
     title: str
     asset_type: str  # "sound_recording", "musical_work", "video", "image"
     description: str = None
@@ -47,7 +50,8 @@ class FacebookAsset:
 
 @dataclass
 class FacebookPage:
-    """Facebook page information"""    page_id: str
+    """Facebook page information"""
+    page_id: str
     name: str
     category: str
     about: str = None
@@ -58,19 +62,22 @@ class FacebookPage:
 
 
 class FacebookRightsAPI:
-    """Facebook Rights Manager API integration"""    
+    """Facebook Rights Manager API integration"""
+    
     def __init__(self, rate_limiter: Optional[APIRateLimiter] = None):
         self.session = None
         self.rate_limiter = rate_limiter or APIRateLimiter()
         self.base_url = "https://graph.facebook.com/v18.0"
         
     async def __aenter__(self):
-        """Async context manager entry"""        self.session = aiohttp.ClientSession()
+        """Async context manager entry"""
+        self.session = aiohttp.ClientSession()
         await self.rate_limiter.__aenter__()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""        if self.session:
+        """Async context manager exit"""
+        if self.session:
             await self.session.close()
         await self.rate_limiter.__aexit__(exc_type, exc_val, exc_tb)
         
@@ -82,7 +89,8 @@ class FacebookRightsAPI:
         params: Optional[Dict[str, Any]] = None,
         data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Make authenticated API request with rate limiting"""        
+        """Make authenticated API request with rate limiting"""
+        
         # Check rate limit
         rate_status = await self.rate_limiter.check_rate_limit("facebook", endpoint)
         if rate_status.is_limited:
@@ -129,7 +137,8 @@ class FacebookRightsAPI:
             raise
             
     async def get_pages(self, tokens: OAuthTokens) -> List[FacebookPage]:
-        """Get user's Facebook pages"""        fields = [
+        """Get user's Facebook pages"""
+        fields = [
             "id", "name", "category", "about", "fan_count", 
             "talking_about_count", "website", "instagram_business_account"
         ]
@@ -163,7 +172,8 @@ class FacebookRightsAPI:
         metadata: Optional[Dict[str, Any]] = None,
         ownership_countries: Optional[List[str]] = None
     ) -> str:
-        """Create a rights asset"""        
+        """Create a rights asset"""
+        
         data = {
             "title": title,
             "type": asset_type
@@ -190,7 +200,8 @@ class FacebookRightsAPI:
         limit: int = 25,
         after: Optional[str] = None
     ) -> List[FacebookAsset]:
-        """Get user's assets"""        
+        """Get user's assets"""
+        
         fields = [
             "id", "title", "type", "description", "metadata", 
             "ownership_countries", "rights_type"
@@ -229,7 +240,8 @@ class FacebookRightsAPI:
         claim_type: str = "copyright",
         policy: str = "track"
     ) -> str:
-        """Create a rights claim"""        
+        """Create a rights claim"""
+        
         data = {
             "asset_id": asset_id,
             "content_id": content_id,
@@ -252,7 +264,8 @@ class FacebookRightsAPI:
         limit: int = 25,
         after: Optional[str] = None
     ) -> List[FacebookRightsClaim]:
-        """Get rights claims"""        
+        """Get rights claims"""
+        
         fields = [
             "id", "content_id", "asset_id", "claim_type", "status",
             "policy", "created_time", "match_details", "claimant_name"
@@ -295,7 +308,8 @@ class FacebookRightsAPI:
         claim_id: str,
         policy: str
     ) -> bool:
-        """Update claim policy"""        
+        """Update claim policy"""
+        
         data = {"policy": policy}
         
         try:
@@ -307,7 +321,8 @@ class FacebookRightsAPI:
             return False
             
     async def release_claim(self, tokens: OAuthTokens, claim_id: str) -> bool:
-        """Release a claim"""        
+        """Release a claim"""
+        
         data = {"status": "released"}
         
         try:
@@ -327,7 +342,8 @@ class FacebookRightsAPI:
         since: Optional[datetime] = None,
         until: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Get Facebook page insights"""        
+        """Get Facebook page insights"""
+        
         default_metrics = [
             "page_impressions", "page_reach", "page_engaged_users",
             "page_post_engagements", "page_fans", "page_fan_adds"
@@ -351,7 +367,8 @@ class FacebookRightsAPI:
         post_id: str,
         metrics: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """Get insights for a specific post"""        
+        """Get insights for a specific post"""
+        
         default_metrics = [
             "post_impressions", "post_reach", "post_engaged_users",
             "post_reactions_like_total", "post_reactions_love_total",
@@ -368,7 +385,8 @@ class FacebookRightsAPI:
         asset_id: str,
         monitoring_rules: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Set up content monitoring"""        
+        """Set up content monitoring"""
+        
         data = {
             "asset_id": asset_id,
             "monitoring_rules": monitoring_rules
@@ -382,7 +400,8 @@ class FacebookRightsAPI:
         asset_id: Optional[str] = None,
         limit: int = 25
     ) -> List[Dict[str, Any]]:
-        """Get copyright matches"""        
+        """Get copyright matches"""
+        
         params = {"limit": min(limit, 100)}
         
         if asset_id:
@@ -399,7 +418,8 @@ class FacebookRightsAPI:
         copyright_reason: str,
         asset_id: Optional[str] = None
     ) -> str:
-        """Submit a takedown request"""        
+        """Submit a takedown request"""
+        
         data = {
             "content_url": content_url,
             "copyright_reason": copyright_reason

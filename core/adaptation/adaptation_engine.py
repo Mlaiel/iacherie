@@ -19,7 +19,8 @@ Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 
 Business Logic: Creator Upload → IA Processing → Rights Protection → SEO Pro → Collaboration Matching → Multi-Platform Distribution
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
 from dataclasses import dataclass, field
@@ -55,7 +56,8 @@ from .exceptions import AdaptationError, WorkflowError, ProcessingTimeoutError
 
 
 class AdaptationWorkflow(str, Enum):
-    """Ultra-advanced predefined adaptation workflows for all creator types"""    COMPLETE_ADAPTATION = "complete_adaptation"
+    """Ultra-advanced predefined adaptation workflows for all creator types"""
+    COMPLETE_ADAPTATION = "complete_adaptation"
     PLATFORM_SPECIFIC = "platform_specific"
     QUALITY_ENHANCEMENT = "quality_enhancement"
     SEO_OPTIMIZATION = "seo_optimization"
@@ -73,7 +75,8 @@ class AdaptationWorkflow(str, Enum):
 
 
 class CreatorType(str, Enum):
-    """Supported creator types with specialized processing"""    MUSICIAN = "musician"
+    """Supported creator types with specialized processing"""
+    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -85,7 +88,8 @@ class CreatorType(str, Enum):
 
 
 class ContentFormat(str, Enum):
-    """Comprehensive content format support"""    AUDIO_MP3 = "audio/mp3"
+    """Comprehensive content format support"""
+    AUDIO_MP3 = "audio/mp3"
     AUDIO_WAV = "audio/wav"
     AUDIO_FLAC = "audio/flac"
     AUDIO_AAC = "audio/aac"
@@ -103,7 +107,8 @@ class ContentFormat(str, Enum):
 
 
 class ProcessingPriority(str, Enum):
-    """Advanced processing priority levels with resource allocation"""    LOW = "low"
+    """Advanced processing priority levels with resource allocation"""
+    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -112,7 +117,8 @@ class ProcessingPriority(str, Enum):
 
 
 class PlatformTarget(str, Enum):
-    """Comprehensive platform targeting support"""    YOUTUBE = "youtube"
+    """Comprehensive platform targeting support"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -129,7 +135,8 @@ class PlatformTarget(str, Enum):
 
 @dataclass
 class AdaptationPipeline:
-    """Ultra-advanced adaptation pipeline configuration with AI orchestration"""    workflow: AdaptationWorkflow
+    """Ultra-advanced adaptation pipeline configuration with AI orchestration"""
+    workflow: AdaptationWorkflow
     creator_type: CreatorType
     stages: List[str]
     dependencies: Dict[str, List[str]]
@@ -146,7 +153,8 @@ class AdaptationPipeline:
 
 @dataclass
 class AdaptationTask:
-    """Individual adaptation task with comprehensive tracking"""    task_id: str
+    """Individual adaptation task with comprehensive tracking"""
+    task_id: str
     task_type: str
     creator_type: CreatorType
     parameters: Dict[str, Any]
@@ -166,7 +174,8 @@ class AdaptationTask:
 
 @dataclass
 class ContentMetrics:
-    """Comprehensive content quality and performance metrics"""    format_compliance: float
+    """Comprehensive content quality and performance metrics"""
+    format_compliance: float
     quality_score: float
     platform_readiness: Dict[str, float]
     engagement_prediction: float
@@ -180,7 +189,8 @@ class ContentMetrics:
 
 @dataclass 
 class AdaptationEngineRequest:
-    """Enterprise-grade adaptation engine request with comprehensive configuration"""    content_id: str
+    """Enterprise-grade adaptation engine request with comprehensive configuration"""
+    content_id: str
     creator_id: str
     creator_type: CreatorType
     workflow: AdaptationWorkflow
@@ -210,7 +220,8 @@ class AdaptationEngineRequest:
 
 @dataclass
 class AdaptationEngineResult:
-    """Comprehensive adaptation engine result with detailed analytics"""    adaptation_id: str
+    """Comprehensive adaptation engine result with detailed analytics"""
+    adaptation_id: str
     creator_id: str
     creator_type: CreatorType
     workflow_executed: AdaptationWorkflow
@@ -237,7 +248,8 @@ class AdaptationEngineResult:
 
 
 class AdaptationEngine:
-    """    Ultra-Advanced Enterprise Content Adaptation Engine
+    """
+    Ultra-Advanced Enterprise Content Adaptation Engine
     
     Revolutionary orchestration system providing industrial-strength content transformation
     with real-time AI optimization, multi-platform targeting, and comprehensive analytics.
@@ -258,7 +270,8 @@ class AdaptationEngine:
     - Photographers: Image processing, watermarking, licensing automation
     - Influencers: Multi-format optimization, platform targeting, viral analysis
     - Comedians: Video timing analysis, audience optimization, engagement prediction
-    """    
+    """
+    
     def __init__(self):
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
@@ -301,7 +314,8 @@ class AdaptationEngine:
         request: AdaptationEngineRequest,
         session: AsyncSession = None
     ) -> AdaptationEngineResult:
-        """        Execute ultra-advanced content adaptation workflow with real-time optimization
+        """
+        Execute ultra-advanced content adaptation workflow with real-time optimization
         
         This method orchestrates the complete adaptation pipeline including:
         - Content analysis and format detection
@@ -320,7 +334,8 @@ class AdaptationEngine:
             
         Returns:
             AdaptationEngineResult: Complete adaptation results with analytics
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         adaptation_id = f"adapt_engine_{request.content_id}_{uuid.uuid4().hex[:8]}"
         
         try:
@@ -401,14 +416,16 @@ class AdaptationEngine:
         self,
         adaptation_id: str
     ) -> Dict[str, Any]:
-        """        Monitor progress of active adaptation
+        """
+        Monitor progress of active adaptation
         
         Args:
             adaptation_id: Adaptation identifier
             
         Returns:
             Dict containing progress information
-        """        if adaptation_id not in self.active_adaptations:
+        """
+        if adaptation_id not in self.active_adaptations:
             if adaptation_id in self.execution_history:
                 return {
                     'status': 'completed',
@@ -441,7 +458,8 @@ class AdaptationEngine:
         adaptation_id: str,
         reason: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Cancel active adaptation
+        """
+        Cancel active adaptation
         
         Args:
             adaptation_id: Adaptation identifier
@@ -449,7 +467,8 @@ class AdaptationEngine:
             
         Returns:
             Dict containing cancellation result
-        """        if adaptation_id not in self.active_adaptations:
+        """
+        if adaptation_id not in self.active_adaptations:
             return {
                 'success': False,
                 'error': 'Adaptation not found or already completed'
@@ -487,7 +506,8 @@ class AdaptationEngine:
         workflow: Optional[AdaptationWorkflow] = None,
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """        Get adaptation execution history
+        """
+        Get adaptation execution history
         
         Args:
             content_id: Filter by content ID
@@ -496,7 +516,8 @@ class AdaptationEngine:
             
         Returns:
             List of adaptation history records
-        """        history = []
+        """
+        history = []
         
         for adaptation_id, result in self.execution_history.items():
             # Apply filters
@@ -527,7 +548,8 @@ class AdaptationEngine:
         workflow: AdaptationWorkflow,
         performance_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Optimize workflow based on performance data
+        """
+        Optimize workflow based on performance data
         
         Args:
             workflow: Workflow to optimize
@@ -535,7 +557,8 @@ class AdaptationEngine:
             
         Returns:
             Dict containing optimization recommendations
-        """        current_workflow = self.workflows[workflow]
+        """
+        current_workflow = self.workflows[workflow]
         
         # Analyze performance bottlenecks
         bottlenecks = await self._identify_workflow_bottlenecks(
@@ -571,7 +594,8 @@ class AdaptationEngine:
         request: AdaptationEngineRequest,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Execute the adaptation pipeline stages"""        results = {}
+        """Execute the adaptation pipeline stages"""
+        results = {}
         
         # Update status
         self.active_adaptations[adaptation_id]['status'] = 'executing'
@@ -623,7 +647,8 @@ class AdaptationEngine:
         previous_results: Dict[str, Any],
         session: AsyncSession
     ) -> Any:
-        """Execute individual pipeline stage"""        
+        """Execute individual pipeline stage"""
+        
         if stage == "content_analysis":
             return await self._stage_content_analysis(
                 request.content_id, request, session
@@ -673,7 +698,8 @@ class AdaptationEngine:
         previous_results: Dict[str, Any],
         session: AsyncSession
     ) -> Any:
-        """Execute format conversion stage"""        if not request.format_requirements:
+        """Execute format conversion stage"""
+        if not request.format_requirements:
             return {"skipped": True, "reason": "No format requirements specified"}
         
         # Create conversion parameters
@@ -700,7 +726,8 @@ class AdaptationEngine:
         previous_results: Dict[str, Any],
         session: AsyncSession
     ) -> Any:
-        """Execute platform optimization stage"""        if not request.target_platforms:
+        """Execute platform optimization stage"""
+        if not request.target_platforms:
             return {"skipped": True, "reason": "No target platforms specified"}
         
         optimization_results = {}
@@ -728,7 +755,8 @@ class AdaptationEngine:
         return optimization_results
     
     def _load_workflow_definitions(self) -> Dict[AdaptationWorkflow, Dict[str, Any]]:
-        """Load predefined workflow definitions"""        return {
+        """Load predefined workflow definitions"""
+        return {
             AdaptationWorkflow.COMPLETE_ADAPTATION: {
                 'stages': [
                     'content_analysis',
@@ -781,7 +809,8 @@ class AdaptationEngine:
         }
     
     def _initialize_pipelines(self) -> Dict[AdaptationWorkflow, AdaptationPipeline]:
-        """Initialize adaptation pipelines"""        pipelines = {}
+        """Initialize adaptation pipelines"""
+        pipelines = {}
         
         for workflow, definition in self.workflows.items():
             pipelines[workflow] = AdaptationPipeline(
@@ -814,14 +843,16 @@ class AdaptationEngine:
         self,
         workflow: AdaptationWorkflow
     ) -> Dict[str, Any]:
-        """Load workflow definition"""        return self.workflows.get(workflow, {})
+        """Load workflow definition"""
+        return self.workflows.get(workflow, {})
     
     async def _create_execution_pipeline(
         self,
         workflow_definition: Dict[str, Any],
         request: AdaptationEngineRequest
     ) -> AdaptationPipeline:
-        """Create execution pipeline from workflow definition"""        return self.pipelines.get(request.workflow, AdaptationPipeline(
+        """Create execution pipeline from workflow definition"""
+        return self.pipelines.get(request.workflow, AdaptationPipeline(
             workflow=request.workflow,
             stages=['content_analysis', 'final_validation'],
             dependencies={},

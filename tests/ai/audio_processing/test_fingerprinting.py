@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -23,7 +24,8 @@ Comprehensive testing for audio fingerprinting and content identification includ
 
 Created by Expert Team: Security Specialist + ML Engineer + Audio Developer
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -56,7 +58,8 @@ from . import TEST_CONFIG, setup_test_environment
 
 
 class TestSpectralLandmarkExtractor:
-    """    Industrial-grade testing for SpectralLandmarkExtractor class
+    """
+    Industrial-grade testing for SpectralLandmarkExtractor class
     
     Test Coverage:
     - Spectrogram computation validation
@@ -64,16 +67,19 @@ class TestSpectralLandmarkExtractor:
     - Landmark extraction consistency
     - Noise robustness testing
     - Performance optimization
-    """    
+    """
+    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""        setup_test_environment()
+        """Setup test environment before each test"""
+        setup_test_environment()
         self.extractor = SpectralLandmarkExtractor()
         self.processor = AudioProcessor()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
     
     def test_initialization(self):
-        """Test SpectralLandmarkExtractor initialization"""        extractor = SpectralLandmarkExtractor()
+        """Test SpectralLandmarkExtractor initialization"""
+        extractor = SpectralLandmarkExtractor()
         assert extractor is not None
         assert hasattr(extractor, 'sample_rate')
         assert hasattr(extractor, 'window_size')
@@ -81,7 +87,8 @@ class TestSpectralLandmarkExtractor:
         assert hasattr(extractor, 'peak_threshold')
     
     def test_compute_spectrogram(self):
-        """Test spectrogram computation"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test spectrogram computation"""
+        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         spectrogram = self.extractor.compute_spectrogram(audio_data, sample_rate)
@@ -96,7 +103,8 @@ class TestSpectralLandmarkExtractor:
         assert spectrogram.shape[1] > 0  # Time frames
     
     def test_find_peaks(self):
-        """Test peak detection in spectrogram"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test peak detection in spectrogram"""
+        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         spectrogram = self.extractor.compute_spectrogram(audio_data, sample_rate)
@@ -116,7 +124,8 @@ class TestSpectralLandmarkExtractor:
             assert 0 <= peak[1] < spectrogram.shape[1]
     
     def test_extract_landmarks(self):
-        """Test landmark extraction"""        audio_file = self.test_data_dir / "chirp_sweep.wav"
+        """Test landmark extraction"""
+        audio_file = self.test_data_dir / "chirp_sweep.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         landmarks = self.extractor.extract_landmarks(audio_data, sample_rate)
@@ -144,7 +153,8 @@ class TestSpectralLandmarkExtractor:
             assert landmark['time_anchor'] >= 0
     
     def test_landmark_consistency(self):
-        """Test landmark extraction consistency"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test landmark extraction consistency"""
+        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         # Extract landmarks multiple times
@@ -161,7 +171,8 @@ class TestSpectralLandmarkExtractor:
             assert lm1['time_anchor'] == lm2['time_anchor']
     
     def test_noise_robustness(self):
-        """Test robustness to noise"""        # Load clean audio
+        """Test robustness to noise"""
+        # Load clean audio
         clean_file = self.test_data_dir / "pure_tone_440hz.wav"
         clean_audio, sample_rate = self.processor.load_audio(str(clean_file))
         
@@ -178,7 +189,8 @@ class TestSpectralLandmarkExtractor:
         assert len(noisy_landmarks) >= len(clean_landmarks) * 0.5  # At least 50% preserved
     
     def test_different_audio_types(self):
-        """Test landmark extraction for different audio types"""        audio_files = {
+        """Test landmark extraction for different audio types"""
+        audio_files = {
             "tone": "pure_tone_440hz.wav",
             "noise": "white_noise.wav",
             "chirp": "chirp_sweep.wav"
@@ -197,7 +209,8 @@ class TestSpectralLandmarkExtractor:
         assert landmarks_counts["noise"] > 0
     
     def test_performance_benchmarking(self):
-        """Test landmark extraction performance"""        audio_file = self.test_data_dir / "chirp_sweep.wav"
+        """Test landmark extraction performance"""
+        audio_file = self.test_data_dir / "chirp_sweep.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         start_time = time.time()
@@ -211,7 +224,8 @@ class TestSpectralLandmarkExtractor:
 
 
 class TestAudioFingerprinter:
-    """    Industrial-grade testing for AudioFingerprinter class
+    """
+    Industrial-grade testing for AudioFingerprinter class
     
     Test Coverage:
     - Fingerprint generation validation
@@ -219,10 +233,12 @@ class TestAudioFingerprinter:
     - Database storage testing
     - Fingerprint uniqueness
     - Collision detection
-    """    
+    """
+    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""        setup_test_environment()
+        """Setup test environment before each test"""
+        setup_test_environment()
         
         # Create temporary database for testing
         self.temp_db = tempfile.NamedTemporaryFile(suffix='.db', delete=False)
@@ -234,18 +250,21 @@ class TestAudioFingerprinter:
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
     
     def teardown_method(self):
-        """Cleanup test environment"""        if os.path.exists(self.temp_db_path):
+        """Cleanup test environment"""
+        if os.path.exists(self.temp_db_path):
             os.unlink(self.temp_db_path)
     
     def test_initialization(self):
-        """Test AudioFingerprinter initialization"""        fingerprinter = AudioFingerprinter(database_path=self.temp_db_path)
+        """Test AudioFingerprinter initialization"""
+        fingerprinter = AudioFingerprinter(database_path=self.temp_db_path)
         assert fingerprinter is not None
         assert hasattr(fingerprinter, 'database_path')
         assert hasattr(fingerprinter, 'extractor')
         assert os.path.exists(self.temp_db_path)
     
     def test_generate_fingerprint(self):
-        """Test fingerprint generation"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test fingerprint generation"""
+        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         fingerprint_result = self.fingerprinter.generate_fingerprint(
@@ -272,7 +291,8 @@ class TestAudioFingerprinter:
             assert hash_item['time_offset'] >= 0
     
     def test_store_fingerprint(self):
-        """Test fingerprint storage in database"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test fingerprint storage in database"""
+        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         fingerprint_result = self.fingerprinter.generate_fingerprint(
@@ -302,7 +322,8 @@ class TestAudioFingerprinter:
         conn.close()
     
     def test_fingerprint_uniqueness(self):
-        """Test fingerprint uniqueness for different audio"""        audio_files = [
+        """Test fingerprint uniqueness for different audio"""
+        audio_files = [
             ("pure_tone_440hz.wav", "track_001"),
             ("white_noise.wav", "track_002"),
             ("chirp_sweep.wav", "track_003")
@@ -335,7 +356,8 @@ class TestAudioFingerprinter:
                 assert overlap_ratio < 0.1  # Less than 10% overlap
     
     def test_fingerprint_reproducibility(self):
-        """Test fingerprint reproducibility"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test fingerprint reproducibility"""
+        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         # Generate fingerprint multiple times
@@ -354,7 +376,8 @@ class TestAudioFingerprinter:
         assert hashes1 == hashes2
     
     def test_fingerprint_with_noise(self):
-        """Test fingerprint robustness with noise"""        # Load clean audio
+        """Test fingerprint robustness with noise"""
+        # Load clean audio
         clean_file = self.test_data_dir / "pure_tone_440hz.wav"
         clean_audio, sample_rate = self.processor.load_audio(str(clean_file))
         
@@ -384,7 +407,8 @@ class TestAudioFingerprinter:
             assert overlap_ratio > 0.3, f"Overlap ratio {overlap_ratio} too low for noise level {noise_level}"
     
     def test_database_operations(self):
-        """Test database operations"""        # Store multiple fingerprints
+        """Test database operations"""
+        # Store multiple fingerprints
         audio_files = [
             ("pure_tone_440hz.wav", "db_test_001"),
             ("white_noise.wav", "db_test_002")
@@ -418,7 +442,8 @@ class TestAudioFingerprinter:
 
 
 class TestContentMatcher:
-    """    Industrial-grade testing for ContentMatcher class
+    """
+    Industrial-grade testing for ContentMatcher class
     
     Test Coverage:
     - Content matching accuracy
@@ -426,10 +451,12 @@ class TestContentMatcher:
     - Match ranking testing
     - Performance optimization
     - False positive/negative rates
-    """    
+    """
+    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""        setup_test_environment()
+        """Setup test environment before each test"""
+        setup_test_environment()
         
         # Create temporary database with test data
         self.temp_db = tempfile.NamedTemporaryFile(suffix='.db', delete=False)
@@ -445,11 +472,13 @@ class TestContentMatcher:
         self._populate_test_database()
     
     def teardown_method(self):
-        """Cleanup test environment"""        if os.path.exists(self.temp_db_path):
+        """Cleanup test environment"""
+        if os.path.exists(self.temp_db_path):
             os.unlink(self.temp_db_path)
     
     def _populate_test_database(self):
-        """Populate database with test fingerprints"""        audio_files = [
+        """Populate database with test fingerprints"""
+        audio_files = [
             ("pure_tone_440hz.wav", "reference_tone"),
             ("white_noise.wav", "reference_noise"),
             ("chirp_sweep.wav", "reference_chirp"),
@@ -466,14 +495,16 @@ class TestContentMatcher:
             self.fingerprinter.store_fingerprint(fingerprint_result)
     
     def test_initialization(self):
-        """Test ContentMatcher initialization"""        matcher = ContentMatcher(database_path=self.temp_db_path)
+        """Test ContentMatcher initialization"""
+        matcher = ContentMatcher(database_path=self.temp_db_path)
         assert matcher is not None
         assert hasattr(matcher, 'database_path')
         assert hasattr(matcher, 'threshold')
         assert os.path.exists(self.temp_db_path)
     
     def test_find_matches_exact(self):
-        """Test finding exact matches"""        # Use same audio as in database
+        """Test finding exact matches"""
+        # Use same audio as in database
         audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
@@ -491,7 +522,8 @@ class TestContentMatcher:
         assert best_match.offset_seconds >= 0
     
     def test_find_matches_partial(self):
-        """Test finding matches with partial audio"""        # Use subset of audio from database
+        """Test finding matches with partial audio"""
+        # Use subset of audio from database
         audio_file = self.test_data_dir / "chirp_sweep.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
@@ -510,7 +542,8 @@ class TestContentMatcher:
         assert found_reference, "Should find reference chirp in partial audio"
     
     def test_find_matches_with_noise(self):
-        """Test finding matches with noisy audio"""        # Load clean audio and add noise
+        """Test finding matches with noisy audio"""
+        # Load clean audio and add noise
         clean_file = self.test_data_dir / "pure_tone_440hz.wav"
         clean_audio, sample_rate = self.processor.load_audio(str(clean_file))
         
@@ -526,7 +559,8 @@ class TestContentMatcher:
         assert found_reference, "Should find reference tone despite noise"
     
     def test_no_matches_for_new_content(self):
-        """Test that new content doesn't produce false matches"""        # Create completely different audio
+        """Test that new content doesn't produce false matches"""
+        # Create completely different audio
         new_audio = np.sin(2 * np.pi * 880 * np.linspace(0, 1, 44100))  # 880Hz tone
         
         matches = self.matcher.find_matches(new_audio, 44100, threshold=0.3)
@@ -536,7 +570,8 @@ class TestContentMatcher:
         assert len(high_confidence_matches) == 0, "Should not find high-confidence matches for new content"
     
     def test_match_ranking(self):
-        """Test match result ranking"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test match result ranking"""
+        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         matches = self.matcher.find_matches(audio_data, sample_rate, threshold=0.05)
@@ -551,7 +586,8 @@ class TestContentMatcher:
         assert matches[0].track_id == "reference_tone"
     
     def test_threshold_filtering(self):
-        """Test confidence threshold filtering"""        audio_file = self.test_data_dir / "white_noise.wav"
+        """Test confidence threshold filtering"""
+        audio_file = self.test_data_dir / "white_noise.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         # Test with different thresholds
@@ -566,7 +602,8 @@ class TestContentMatcher:
             assert match.confidence >= 0.5
     
     def test_performance_benchmarking(self):
-        """Test matching performance"""        audio_file = self.test_data_dir / "chirp_sweep.wav"
+        """Test matching performance"""
+        audio_file = self.test_data_dir / "chirp_sweep.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         start_time = time.time()
@@ -579,7 +616,8 @@ class TestContentMatcher:
         assert matches is not None
     
     def test_batch_matching(self):
-        """Test batch content matching"""        audio_files = [
+        """Test batch content matching"""
+        audio_files = [
             "pure_tone_440hz.wav",
             "white_noise.wav", 
             "chirp_sweep.wav"
@@ -604,9 +642,11 @@ class TestContentMatcher:
 
 
 class TestFingerprintResult:
-    """Test FingerprintResult data structure"""    
+    """Test FingerprintResult data structure"""
+    
     def test_fingerprint_result_creation(self):
-        """Test FingerprintResult creation"""        hashes = [
+        """Test FingerprintResult creation"""
+        hashes = [
             {'hash': 12345, 'time_offset': 0.5},
             {'hash': 67890, 'time_offset': 1.0}
         ]
@@ -624,7 +664,8 @@ class TestFingerprintResult:
         assert result.hashes == hashes
     
     def test_fingerprint_result_serialization(self):
-        """Test FingerprintResult serialization"""        hashes = [{'hash': 12345, 'time_offset': 0.5}]
+        """Test FingerprintResult serialization"""
+        hashes = [{'hash': 12345, 'time_offset': 0.5}]
         
         result = FingerprintResult(
             track_id="test_track",
@@ -643,9 +684,11 @@ class TestFingerprintResult:
 
 
 class TestMatchResult:
-    """Test MatchResult data structure"""    
+    """Test MatchResult data structure"""
+    
     def test_match_result_creation(self):
-        """Test MatchResult creation"""        result = MatchResult(
+        """Test MatchResult creation"""
+        result = MatchResult(
             track_id="matched_track",
             confidence=0.85,
             offset_seconds=2.5,
@@ -658,7 +701,8 @@ class TestMatchResult:
         assert result.num_matches == 15
     
     def test_match_result_comparison(self):
-        """Test MatchResult comparison for sorting"""        result1 = MatchResult("track1", 0.9, 0.0, 20)
+        """Test MatchResult comparison for sorting"""
+        result1 = MatchResult("track1", 0.9, 0.0, 20)
         result2 = MatchResult("track2", 0.7, 1.0, 15)
         result3 = MatchResult("track3", 0.95, 2.0, 25)
         
@@ -671,11 +715,14 @@ class TestMatchResult:
 
 
 class TestFingerprintingIntegration:
-    """    Integration tests for fingerprinting workflow
-    """    
+    """
+    Integration tests for fingerprinting workflow
+    """
+    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""        setup_test_environment()
+        """Setup test environment"""
+        setup_test_environment()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
         
         # Create temporary database
@@ -684,11 +731,13 @@ class TestFingerprintingIntegration:
         self.temp_db.close()
     
     def teardown_method(self):
-        """Cleanup test environment"""        if os.path.exists(self.temp_db_path):
+        """Cleanup test environment"""
+        if os.path.exists(self.temp_db_path):
             os.unlink(self.temp_db_path)
     
     def test_complete_fingerprinting_workflow(self):
-        """Test complete fingerprinting workflow"""        processor = AudioProcessor()
+        """Test complete fingerprinting workflow"""
+        processor = AudioProcessor()
         fingerprinter = AudioFingerprinter(database_path=self.temp_db_path)
         matcher = ContentMatcher(database_path=self.temp_db_path)
         
@@ -713,7 +762,8 @@ class TestFingerprintingIntegration:
         assert matches[0].confidence > 0.5
     
     def test_copyright_detection_scenario(self):
-        """Test realistic copyright detection scenario"""        processor = AudioProcessor()
+        """Test realistic copyright detection scenario"""
+        processor = AudioProcessor()
         fingerprinter = AudioFingerprinter(database_path=self.temp_db_path)
         matcher = ContentMatcher(database_path=self.temp_db_path)
         

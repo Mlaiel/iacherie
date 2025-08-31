@@ -6,7 +6,8 @@ DMCA takedown automation, and rights management across multiple platforms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""from datetime import datetime, timedelta
+"""
+from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
 import asyncio
 import logging
@@ -51,7 +52,8 @@ class ProtectionStatus(str, Enum):
 
 # Pydantic models for request/response validation
 class ProtectionAlertResponse(BaseModel):
-    """Response model for protection alerts"""    alert_id: str = Field(..., description="Unique alert identifier")
+    """Response model for protection alerts"""
+    alert_id: str = Field(..., description="Unique alert identifier")
     fingerprint_id: str = Field(..., description="Associated fingerprint ID")
     detected_url: HttpUrl = Field(..., description="URL where infringement was detected")
     platform: str = Field(..., description="Platform where content was found")
@@ -63,7 +65,8 @@ class ProtectionAlertResponse(BaseModel):
     estimated_revenue_impact: Optional[float] = Field(None, description="Estimated revenue loss in EUR")
 
 class TakedownRequestModel(BaseModel):
-    """Request model for DMCA takedown"""    alert_id: str = Field(..., description="Protection alert ID to process")
+    """Request model for DMCA takedown"""
+    alert_id: str = Field(..., description="Protection alert ID to process")
     takedown_type: str = Field("dmca", description="Type of takedown request")
     legal_basis: str = Field(..., description="Legal basis for takedown")
     evidence_urls: List[HttpUrl] = Field(..., description="URLs of evidence files")
@@ -71,14 +74,16 @@ class TakedownRequestModel(BaseModel):
     custom_message: Optional[str] = Field(None, description="Custom message to include")
 
 class RightsManagementRequest(BaseModel):
-    """Request model for rights management setup"""    content_ids: List[str] = Field(..., description="List of content fingerprint IDs")
+    """Request model for rights management setup"""
+    content_ids: List[str] = Field(..., description="List of content fingerprint IDs")
     rights_holder: str = Field(..., description="Rights holder name")
     usage_terms: Dict[str, Any] = Field(..., description="Usage terms and conditions")
     licensing_enabled: bool = Field(True, description="Enable automated licensing")
     enforcement_level: str = Field("aggressive", description="Enforcement level: passive, standard, aggressive")
 
 class MonitoringConfigRequest(BaseModel):
-    """Request model for monitoring configuration"""    platforms: List[str] = Field(..., description="Platforms to monitor")
+    """Request model for monitoring configuration"""
+    platforms: List[str] = Field(..., description="Platforms to monitor")
     keywords: List[str] = Field(default=[], description="Additional keywords to monitor")
     geo_restrictions: List[str] = Field(default=[], description="Geographic restrictions")
     monitoring_depth: str = Field("deep", description="Monitoring depth: surface, standard, deep")
@@ -96,14 +101,16 @@ async def get_protection_alerts(
     db: Session = Depends(get_db),
     protection_service: ContentProtectionService = Depends()
 ):
-    """    Get protection alerts for user's content with advanced filtering.
+    """
+    Get protection alerts for user's content with advanced filtering.
     
     Features:
     - Real-time alert monitoring across 500+ platforms
     - Automated evidence collection with screenshots
     - AI-powered similarity detection and false positive reduction
     - Revenue impact estimation for each infringement
-    """    try:
+    """
+    try:
         # Get user's fingerprints to filter alerts
         user_fingerprints = db.query(ContentFingerprint).filter(
             ContentFingerprint.user_id == current_user.id
@@ -171,7 +178,8 @@ async def initiate_takedown_request(
     dmca_service: DMCAService = Depends(),
     legal_service: LegalService = Depends()
 ):
-    """    Initiate automated DMCA takedown process with legal compliance.
+    """
+    Initiate automated DMCA takedown process with legal compliance.
     
     Features:
     - Automated DMCA notice generation with legal templates
@@ -179,7 +187,8 @@ async def initiate_takedown_request(
     - Evidence collection and legal documentation
     - Platform-specific takedown procedures
     - Success rate tracking and follow-up automation
-    """    try:
+    """
+    try:
         # Validate alert belongs to user
         alert = db.query(ProtectionAlert).filter(
             ProtectionAlert.id == takedown_request.alert_id
@@ -315,14 +324,16 @@ async def setup_rights_management(
     db: Session = Depends(get_db),
     protection_service: ContentProtectionService = Depends()
 ):
-    """    Setup comprehensive rights management for content portfolio.
+    """
+    Setup comprehensive rights management for content portfolio.
     
     Features:
     - Automated licensing system with smart contracts
     - Rights verification and chain of title documentation
     - Revenue sharing and royalty distribution
     - Usage monitoring and compliance tracking
-    """    try:
+    """
+    try:
         # Validate all content IDs belong to user
         fingerprints = db.query(ContentFingerprint).filter(
             ContentFingerprint.id.in_(rights_request.content_ids),
@@ -418,14 +429,16 @@ async def configure_monitoring(
     db: Session = Depends(get_db),
     crawler_service: CrawlerService = Depends()
 ):
-    """    Configure advanced monitoring across multiple platforms and jurisdictions.
+    """
+    Configure advanced monitoring across multiple platforms and jurisdictions.
     
     Features:
     - Multi-platform crawler deployment (YouTube, Instagram, TikTok, etc.)
     - Deep web monitoring with custom search patterns
     - AI-powered content recognition across languages
     - Geographic monitoring with jurisdiction-specific enforcement
-    """    try:
+    """
+    try:
         # Validate supported platforms
         supported_platforms = settings.SUPPORTED_MONITORING_PLATFORMS
         invalid_platforms = set(config_request.platforms) - set(supported_platforms)
@@ -513,7 +526,8 @@ async def get_takedown_status(
     db: Session = Depends(get_db),
     dmca_service: DMCAService = Depends()
 ):
-    """Get detailed status of a DMCA takedown request."""    try:
+    """Get detailed status of a DMCA takedown request."""
+    try:
         takedown = db.query(TakedownRequest).filter(
             TakedownRequest.id == takedown_id,
             TakedownRequest.user_id == current_user.id
@@ -560,7 +574,8 @@ async def get_protection_statistics(
     db: Session = Depends(get_db),
     protection_service: ContentProtectionService = Depends()
 ):
-    """Get comprehensive protection statistics for user's content."""    try:
+    """Get comprehensive protection statistics for user's content."""
+    try:
         stats = await protection_service.get_user_protection_statistics(current_user.id)
         
         return {

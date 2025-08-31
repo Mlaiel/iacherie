@@ -8,7 +8,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from dataclasses import dataclass, field
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ExtractedEntity:
-    """Extracted entity structure"""    text: str
+    """Extracted entity structure"""
+    text: str
     entity_type: str
     confidence: float
     start_position: int
@@ -34,7 +36,8 @@ class ExtractedEntity:
 
 @dataclass
 class ContactInfo:
-    """Contact information structure"""    emails: List[str] = field(default_factory=list)
+    """Contact information structure"""
+    emails: List[str] = field(default_factory=list)
     phone_numbers: List[str] = field(default_factory=list)
     social_handles: Dict[str, List[str]] = field(default_factory=dict)
     websites: List[str] = field(default_factory=list)
@@ -42,7 +45,8 @@ class ContactInfo:
 
 @dataclass
 class ContentMetrics:
-    """Content metrics structure"""    engagement_indicators: List[str] = field(default_factory=list)
+    """Content metrics structure"""
+    engagement_indicators: List[str] = field(default_factory=list)
     performance_metrics: Dict[str, float] = field(default_factory=dict)
     trend_indicators: List[str] = field(default_factory=list)
     viral_signals: List[str] = field(default_factory=list)
@@ -50,7 +54,8 @@ class ContentMetrics:
 
 @dataclass
 class KeywordExtraction:
-    """Keyword extraction results"""    primary_keywords: List[str]
+    """Keyword extraction results"""
+    primary_keywords: List[str]
     secondary_keywords: List[str]
     hashtags: List[str]
     mentions: List[str]
@@ -60,7 +65,8 @@ class KeywordExtraction:
 
 @dataclass
 class StructuredData:
-    """Structured data extraction"""    titles: List[str]
+    """Structured data extraction"""
+    titles: List[str]
     headings: List[str]
     bullet_points: List[str]
     numbered_lists: List[str]
@@ -71,7 +77,8 @@ class StructuredData:
 
 @dataclass
 class ExtractionResult:
-    """Complete extraction result"""    request_id: str
+    """Complete extraction result"""
+    request_id: str
     original_text: str
     entities: List[ExtractedEntity]
     contact_info: ContactInfo
@@ -87,7 +94,8 @@ class ExtractionResult:
     timestamp: datetime = field(default_factory=datetime.utcnow)
 
 class AdvancedContentExtractor:
-    """    Advanced content extraction system
+    """
+    Advanced content extraction system
     
     Features:
     - Named Entity Recognition (NER)
@@ -99,7 +107,8 @@ class AdvancedContentExtractor:
     - Sentiment extraction
     - Key phrase identification
     - Content summarization
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or self._get_default_config()
         self.entity_patterns = self._load_entity_patterns()
@@ -110,7 +119,8 @@ class AdvancedContentExtractor:
         self.metrics_patterns = self._load_metrics_patterns()
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""        return {
+        """Get default configuration"""
+        return {
             'enable_entity_extraction': True,
             'enable_contact_extraction': True,
             'enable_keyword_extraction': True,
@@ -125,7 +135,8 @@ class AdvancedContentExtractor:
         }
     
     def _load_entity_patterns(self) -> Dict[str, Dict[str, Any]]:
-        """Load entity recognition patterns"""        return {
+        """Load entity recognition patterns"""
+        return {
             'person': {
                 'patterns': [
                     r'\b[A-Z][a-z]+ [A-Z][a-z]+\b',  # First Last
@@ -197,7 +208,8 @@ class AdvancedContentExtractor:
         }
     
     def _initialize_keyword_extractors(self) -> Dict[str, Any]:
-        """Initialize keyword extraction components"""        return {
+        """Initialize keyword extraction components"""
+        return {
             'tfidf': 'tfidf_vectorizer',  # Would use actual TF-IDF
             'keybert': 'keybert_model',  # Would use KeyBERT
             'rake': 'rake_algorithm',  # Would use RAKE
@@ -207,7 +219,8 @@ class AdvancedContentExtractor:
         }
     
     def _initialize_topic_extractors(self) -> Dict[str, Any]:
-        """Initialize topic extraction components"""        return {
+        """Initialize topic extraction components"""
+        return {
             'lda_model': 'latent_dirichlet_allocation',
             'bert_topic': 'bert_topic_model',
             'nmf_model': 'non_negative_matrix_factorization',
@@ -215,7 +228,8 @@ class AdvancedContentExtractor:
         }
     
     def _build_topic_database(self) -> Dict[str, List[str]]:
-        """Build comprehensive topic database"""        return {
+        """Build comprehensive topic database"""
+        return {
             'technology': ['tech', 'software', 'ai', 'machine learning', 'coding', 'programming', 'developer'],
             'lifestyle': ['fashion', 'beauty', 'fitness', 'health', 'wellness', 'self-care', 'routine'],
             'business': ['entrepreneur', 'startup', 'marketing', 'sales', 'growth', 'strategy', 'leadership'],
@@ -229,7 +243,8 @@ class AdvancedContentExtractor:
         }
     
     def _initialize_summarizers(self) -> Dict[str, Any]:
-        """Initialize summarization components"""        return {
+        """Initialize summarization components"""
+        return {
             'extractive': 'extractive_summarizer',  # Would use actual extractive summarizer
             'abstractive': 'abstractive_summarizer',  # Would use T5/BART
             'keyword_based': 'keyword_summarizer',
@@ -237,7 +252,8 @@ class AdvancedContentExtractor:
         }
     
     def _load_contact_patterns(self) -> Dict[str, List[str]]:
-        """Load contact information patterns"""        return {
+        """Load contact information patterns"""
+        return {
             'email': [
                 r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
             ],
@@ -272,7 +288,8 @@ class AdvancedContentExtractor:
         }
     
     def _load_metrics_patterns(self) -> Dict[str, List[str]]:
-        """Load content metrics patterns"""        return {
+        """Load content metrics patterns"""
+        return {
             'engagement': [
                 r'\b\d+(\.\d+)?[kKmM]?\s*(likes?|comments?|shares?|views?)\b',
                 r'\b(viral|trending|popular|hit|success)\b',
@@ -297,7 +314,8 @@ class AdvancedContentExtractor:
     
     async def extract_content(self, text: str, source_type: str = "text", 
                             extraction_options: Dict[str, bool] = None) -> ExtractionResult:
-        """Comprehensive content extraction"""        start_time = datetime.utcnow()
+        """Comprehensive content extraction"""
+        start_time = datetime.utcnow()
         request_id = self._generate_request_id(text)
         
         # Default extraction options
@@ -383,7 +401,8 @@ class AdvancedContentExtractor:
             raise
     
     async def batch_extract_content(self, texts: List[str], source_type: str = "text") -> List[ExtractionResult]:
-        """Batch content extraction"""        tasks = [self.extract_content(text, source_type) for text in texts]
+        """Batch content extraction"""
+        tasks = [self.extract_content(text, source_type) for text in texts]
         results = await asyncio.gather(*tasks, return_exceptions=True)
         
         valid_results = []
@@ -413,7 +432,8 @@ class AdvancedContentExtractor:
         return valid_results
     
     async def _extract_entities(self, text: str) -> List[ExtractedEntity]:
-        """Extract named entities from text"""        entities = []
+        """Extract named entities from text"""
+        entities = []
         
         for entity_type, entity_info in self.entity_patterns.items():
             patterns = entity_info.get('patterns', [])
@@ -457,7 +477,8 @@ class AdvancedContentExtractor:
     
     async def _calculate_entity_confidence(self, entity_text: str, entity_type: str, 
                                          context: str, context_keywords: List[str]) -> float:
-        """Calculate confidence score for extracted entity"""        base_confidence = 0.5
+        """Calculate confidence score for extracted entity"""
+        base_confidence = 0.5
         
         # Boost confidence if context keywords are found
         context_lower = context.lower()
@@ -482,7 +503,8 @@ class AdvancedContentExtractor:
         return min(1.0, max(0.0, final_confidence))
     
     async def _extract_entity_attributes(self, entity_text: str, entity_type: str) -> Dict[str, Any]:
-        """Extract additional attributes for entities"""        attributes = {}
+        """Extract additional attributes for entities"""
+        attributes = {}
         
         if entity_type == 'person':
             # Extract name components
@@ -516,7 +538,8 @@ class AdvancedContentExtractor:
         return attributes
     
     def _normalize_date(self, date_text: str) -> str:
-        """Normalize date to standard format"""        # Simplified date normalization
+        """Normalize date to standard format"""
+        # Simplified date normalization
         date_lower = date_text.lower()
         
         if date_lower in ['today', 'yesterday', 'tomorrow']:
@@ -529,7 +552,8 @@ class AdvancedContentExtractor:
             return date_text  # Return original for now
     
     def _remove_duplicate_entities(self, entities: List[ExtractedEntity]) -> List[ExtractedEntity]:
-        """Remove duplicate entities"""        seen = set()
+        """Remove duplicate entities"""
+        seen = set()
         unique_entities = []
         
         for entity in entities:
@@ -542,7 +566,8 @@ class AdvancedContentExtractor:
         return unique_entities
     
     async def _extract_contact_info(self, text: str) -> ContactInfo:
-        """Extract contact information"""        contact_info = ContactInfo()
+        """Extract contact information"""
+        contact_info = ContactInfo()
         
         # Extract emails
         email_patterns = self.contact_patterns['email']
@@ -584,7 +609,8 @@ class AdvancedContentExtractor:
         return contact_info
     
     async def _extract_content_metrics(self, text: str) -> ContentMetrics:
-        """Extract content performance metrics"""        metrics = ContentMetrics()
+        """Extract content performance metrics"""
+        metrics = ContentMetrics()
         
         # Extract engagement indicators
         engagement_patterns = self.metrics_patterns['engagement']
@@ -618,7 +644,8 @@ class AdvancedContentExtractor:
         return metrics
     
     async def _parse_numerical_metrics(self, text: str) -> Dict[str, float]:
-        """Parse numerical performance metrics"""        metrics = {}
+        """Parse numerical performance metrics"""
+        metrics = {}
         
         # Parse follower counts
         follower_pattern = r'(\d+(?:\.\d+)?[kKmM]?)\s*(?:followers?|subscribers?)'
@@ -641,7 +668,8 @@ class AdvancedContentExtractor:
         return metrics
     
     def _convert_metric_to_number(self, metric_str: str) -> float:
-        """Convert metric string (e.g., '1.2M') to number"""        metric_str = metric_str.upper()
+        """Convert metric string (e.g., '1.2M') to number"""
+        metric_str = metric_str.upper()
         
         if metric_str.endswith('K'):
             return float(metric_str[:-1]) * 1000
@@ -651,7 +679,8 @@ class AdvancedContentExtractor:
             return float(metric_str)
     
     async def _identify_viral_signals(self, text: str) -> List[str]:
-        """Identify signals that indicate viral content"""        viral_signals = []
+        """Identify signals that indicate viral content"""
+        viral_signals = []
         text_lower = text.lower()
         
         viral_keywords = [
@@ -675,7 +704,8 @@ class AdvancedContentExtractor:
         return viral_signals
     
     async def _extract_keywords(self, text: str) -> KeywordExtraction:
-        """Extract keywords using multiple methods"""        
+        """Extract keywords using multiple methods"""
+        
         # Extract primary keywords using TF-IDF approach (simplified)
         primary_keywords = await self._extract_tfidf_keywords(text)
         
@@ -710,7 +740,8 @@ class AdvancedContentExtractor:
         )
     
     async def _extract_tfidf_keywords(self, text: str) -> List[str]:
-        """Extract keywords using TF-IDF approach (simplified)"""        words = text.lower().split()
+        """Extract keywords using TF-IDF approach (simplified)"""
+        words = text.lower().split()
         
         # Remove stop words
         stop_words = {
@@ -735,7 +766,8 @@ class AdvancedContentExtractor:
         return keywords
     
     async def _extract_secondary_keywords(self, text: str) -> List[str]:
-        """Extract secondary keywords using phrase extraction"""        # Extract 2-word phrases
+        """Extract secondary keywords using phrase extraction"""
+        # Extract 2-word phrases
         words = text.lower().split()
         phrases = []
         
@@ -753,7 +785,8 @@ class AdvancedContentExtractor:
         return secondary_keywords
     
     async def _extract_trending_terms(self, text: str) -> List[str]:
-        """Extract trending terms and buzzwords"""        trending_indicators = [
+        """Extract trending terms and buzzwords"""
+        trending_indicators = [
             'trending', 'viral', 'hot', 'popular', 'buzzing', 'talked about',
             'everyone is', 'latest', 'new', 'breakthrough', 'revolutionary'
         ]
@@ -774,7 +807,8 @@ class AdvancedContentExtractor:
         return list(set(trending_terms))
     
     async def _calculate_keyword_density(self, text: str, keywords: List[str]) -> Dict[str, float]:
-        """Calculate keyword density"""        text_lower = text.lower()
+        """Calculate keyword density"""
+        text_lower = text.lower()
         total_words = len(text.split())
         
         keyword_density = {}
@@ -788,7 +822,8 @@ class AdvancedContentExtractor:
         return keyword_density
     
     async def _extract_semantic_keywords(self, text: str) -> List[str]:
-        """Extract semantically related keywords"""        # This would use actual semantic analysis in production
+        """Extract semantically related keywords"""
+        # This would use actual semantic analysis in production
         # For now, we'll use topic-based keyword extraction
         
         semantic_keywords = []
@@ -809,7 +844,8 @@ class AdvancedContentExtractor:
         return list(set(semantic_keywords))
     
     async def _extract_structured_data(self, text: str, source_type: str) -> StructuredData:
-        """Extract structured data elements"""        structured_data = StructuredData([], [], [], [], [], [], [], [])
+        """Extract structured data elements"""
+        structured_data = StructuredData([], [], [], [], [], [], [], [])
         
         if source_type in ['markdown', 'html', 'document']:
             # Extract titles and headings
@@ -835,7 +871,8 @@ class AdvancedContentExtractor:
         return structured_data
     
     def _extract_titles(self, text: str) -> List[str]:
-        """Extract titles from text"""        # Markdown-style titles
+        """Extract titles from text"""
+        # Markdown-style titles
         titles = re.findall(r'^#\s+(.+)$', text, re.MULTILINE)
         
         # HTML-style titles
@@ -845,7 +882,8 @@ class AdvancedContentExtractor:
         return titles
     
     def _extract_headings(self, text: str) -> List[str]:
-        """Extract headings from text"""        # Markdown-style headings
+        """Extract headings from text"""
+        # Markdown-style headings
         headings = re.findall(r'^#{2,6}\s+(.+)$', text, re.MULTILINE)
         
         # HTML-style headings
@@ -855,7 +893,8 @@ class AdvancedContentExtractor:
         return headings
     
     def _extract_bullet_points(self, text: str) -> List[str]:
-        """Extract bullet points from text"""        # Markdown-style bullet points
+        """Extract bullet points from text"""
+        # Markdown-style bullet points
         bullet_points = re.findall(r'^\s*[-*+]\s+(.+)$', text, re.MULTILINE)
         
         # HTML-style list items
@@ -865,13 +904,15 @@ class AdvancedContentExtractor:
         return bullet_points
     
     def _extract_numbered_lists(self, text: str) -> List[str]:
-        """Extract numbered lists from text"""        # Numbered lists
+        """Extract numbered lists from text"""
+        # Numbered lists
         numbered_items = re.findall(r'^\s*\d+\.\s+(.+)$', text, re.MULTILINE)
         
         return numbered_items
     
     def _extract_quotes(self, text: str) -> List[str]:
-        """Extract quotes from text"""        # Markdown-style quotes
+        """Extract quotes from text"""
+        # Markdown-style quotes
         quotes = re.findall(r'^>\s+(.+)$', text, re.MULTILINE)
         
         # Traditional quotes
@@ -884,7 +925,8 @@ class AdvancedContentExtractor:
         return quotes
     
     def _extract_code_blocks(self, text: str) -> List[str]:
-        """Extract code blocks from text"""        # Markdown-style code blocks
+        """Extract code blocks from text"""
+        # Markdown-style code blocks
         code_blocks = re.findall(r'```(?:\w+)?\n(.*?)\n```', text, re.DOTALL)
         
         # Inline code
@@ -894,7 +936,8 @@ class AdvancedContentExtractor:
         return code_blocks
     
     def _extract_links(self, text: str) -> List[Dict[str, str]]:
-        """Extract links from text"""        links = []
+        """Extract links from text"""
+        links = []
         
         # Markdown-style links
         markdown_links = re.findall(r'\[([^\]]+)\]\(([^)]+)\)', text)
@@ -914,7 +957,8 @@ class AdvancedContentExtractor:
         return links
     
     def _extract_image_references(self, text: str) -> List[Dict[str, str]]:
-        """Extract image references from text"""        images = []
+        """Extract image references from text"""
+        images = []
         
         # Markdown-style images
         markdown_images = re.findall(r'!\[([^\]]*)\]\(([^)]+)\)', text)
@@ -929,7 +973,8 @@ class AdvancedContentExtractor:
         return images
     
     async def _extract_topics(self, text: str) -> List[str]:
-        """Extract main topics from text"""        topics = []
+        """Extract main topics from text"""
+        topics = []
         text_lower = text.lower()
         
         topic_keywords = self.topic_extractors['topic_keywords']
@@ -956,7 +1001,8 @@ class AdvancedContentExtractor:
         return topics[:5]  # Top 5 topics
     
     async def _extract_sentiments(self, text: str) -> Dict[str, float]:
-        """Extract sentiment information (simplified)"""        # This would integrate with the sentiment module in production
+        """Extract sentiment information (simplified)"""
+        # This would integrate with the sentiment module in production
         
         positive_words = ['good', 'great', 'excellent', 'amazing', 'wonderful', 'fantastic', 'love', 'awesome']
         negative_words = ['bad', 'terrible', 'awful', 'hate', 'horrible', 'disappointing', 'worst']
@@ -981,7 +1027,8 @@ class AdvancedContentExtractor:
         }
     
     async def _extract_key_phrases(self, text: str) -> List[str]:
-        """Extract key phrases from text"""        # Extract noun phrases and important phrases
+        """Extract key phrases from text"""
+        # Extract noun phrases and important phrases
         sentences = text.split('.')
         key_phrases = []
         
@@ -1007,7 +1054,8 @@ class AdvancedContentExtractor:
         return unique_phrases[:10]  # Top 10 key phrases
     
     async def _generate_summary(self, text: str) -> str:
-        """Generate text summary"""        # Simplified extractive summarization
+        """Generate text summary"""
+        # Simplified extractive summarization
         sentences = text.split('.')
         
         if len(sentences) <= 3:
@@ -1035,7 +1083,8 @@ class AdvancedContentExtractor:
         return '. '.join(summary_sentences) + '.' if summary_sentences else text[:200] + '...'
     
     async def _extract_metadata(self, text: str, source_type: str) -> Dict[str, Any]:
-        """Extract metadata from content"""        metadata = {
+        """Extract metadata from content"""
+        metadata = {
             'source_type': source_type,
             'word_count': len(text.split()),
             'character_count': len(text),
@@ -1050,7 +1099,8 @@ class AdvancedContentExtractor:
         return metadata
     
     async def _detect_language(self, text: str) -> str:
-        """Detect text language (simplified)"""        # This would use actual language detection in production
+        """Detect text language (simplified)"""
+        # This would use actual language detection in production
         english_indicators = ['the', 'and', 'is', 'are', 'was', 'were', 'have', 'has']
         spanish_indicators = ['el', 'la', 'de', 'que', 'y', 'en', 'un', 'es']
         french_indicators = ['le', 'de', 'et', 'à', 'un', 'il', 'être', 'et']
@@ -1071,7 +1121,8 @@ class AdvancedContentExtractor:
             return 'unknown'
     
     async def _calculate_readability(self, text: str) -> float:
-        """Calculate readability score (simplified Flesch Reading Ease)"""        sentences = text.split('.')
+        """Calculate readability score (simplified Flesch Reading Ease)"""
+        sentences = text.split('.')
         words = text.split()
         syllables = sum(self._count_syllables(word) for word in words)
         
@@ -1087,7 +1138,8 @@ class AdvancedContentExtractor:
         return max(0.0, min(100.0, score))
     
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word (simplified)"""        word = word.lower()
+        """Count syllables in a word (simplified)"""
+        word = word.lower()
         vowels = 'aeiouy'
         syllable_count = 0
         previous_was_vowel = False
@@ -1105,7 +1157,8 @@ class AdvancedContentExtractor:
         return max(1, syllable_count)
     
     async def _assess_complexity(self, text: str) -> str:
-        """Assess text complexity level"""        words = text.split()
+        """Assess text complexity level"""
+        words = text.split()
         
         if not words:
             return 'unknown'
@@ -1126,18 +1179,21 @@ class AdvancedContentExtractor:
             return 'beginner'
     
     def _generate_request_id(self, text: str) -> str:
-        """Generate unique request ID"""        import hashlib
+        """Generate unique request ID"""
+        import hashlib
         id_string = f"{text[:100]}{datetime.utcnow().isoformat()}"
         return hashlib.md5(id_string.encode()).hexdigest()[:12]
 
 # Utility functions for quick extraction
 async def quick_extract_keywords(text: str) -> List[str]:
-    """Quick keyword extraction"""    extractor = AdvancedContentExtractor()
+    """Quick keyword extraction"""
+    extractor = AdvancedContentExtractor()
     result = await extractor.extract_content(text, extraction_options={'keywords': True})
     return result.keywords.primary_keywords + result.keywords.secondary_keywords
 
 async def quick_extract_entities(text: str) -> List[Dict[str, Any]]:
-    """Quick entity extraction"""    extractor = AdvancedContentExtractor()
+    """Quick entity extraction"""
+    extractor = AdvancedContentExtractor()
     result = await extractor.extract_content(text, extraction_options={'entities': True})
     
     return [
@@ -1150,7 +1206,8 @@ async def quick_extract_entities(text: str) -> List[Dict[str, Any]]:
     ]
 
 async def extract_contact_info(text: str) -> Dict[str, Any]:
-    """Extract contact information from text"""    extractor = AdvancedContentExtractor()
+    """Extract contact information from text"""
+    extractor = AdvancedContentExtractor()
     result = await extractor.extract_content(text, extraction_options={'contact_info': True})
     
     return {

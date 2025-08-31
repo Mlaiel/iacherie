@@ -7,7 +7,8 @@ monitoring, and governance for AI/ML models in production.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class PipelineStage(Enum):
-    """MLOps pipeline stages"""    DATA_INGESTION = "data_ingestion"
+    """MLOps pipeline stages"""
+    DATA_INGESTION = "data_ingestion"
     DATA_VALIDATION = "data_validation"
     DATA_PREPROCESSING = "data_preprocessing"
     FEATURE_ENGINEERING = "feature_engineering"
@@ -41,7 +43,8 @@ class PipelineStage(Enum):
 
 
 class TriggerType(Enum):
-    """Pipeline trigger types"""    MANUAL = "manual"
+    """Pipeline trigger types"""
+    MANUAL = "manual"
     SCHEDULED = "scheduled"
     DATA_DRIFT = "data_drift"
     MODEL_DRIFT = "model_drift"
@@ -52,7 +55,8 @@ class TriggerType(Enum):
 
 
 class ValidationStrategy(Enum):
-    """Model validation strategies"""    CROSS_VALIDATION = "cross_validation"
+    """Model validation strategies"""
+    CROSS_VALIDATION = "cross_validation"
     HOLDOUT_VALIDATION = "holdout_validation"
     TIME_SERIES_SPLIT = "time_series_split"
     STRATIFIED_VALIDATION = "stratified_validation"
@@ -62,7 +66,8 @@ class ValidationStrategy(Enum):
 
 
 class DeploymentStrategy(Enum):
-    """Model deployment strategies"""    BLUE_GREEN = "blue_green"
+    """Model deployment strategies"""
+    BLUE_GREEN = "blue_green"
     ROLLING_UPDATE = "rolling_update"
     CANARY_DEPLOYMENT = "canary_deployment"
     SHADOW_DEPLOYMENT = "shadow_deployment"
@@ -72,7 +77,8 @@ class DeploymentStrategy(Enum):
 
 @dataclass
 class MLOpsPipelineConfig:
-    """MLOps pipeline configuration"""    pipeline_name: str
+    """MLOps pipeline configuration"""
+    pipeline_name: str
     stages: List[PipelineStage] = field(default_factory=lambda: list(PipelineStage))
     trigger_type: TriggerType = TriggerType.MANUAL
     validation_strategy: ValidationStrategy = ValidationStrategy.CROSS_VALIDATION
@@ -130,7 +136,8 @@ class MLOpsPipelineConfig:
 
 
 class MLOpsPipelineDeployment:
-    """    Enterprise MLOps pipeline deployment system
+    """
+    Enterprise MLOps pipeline deployment system
     
     Provides comprehensive MLOps infrastructure with:
     - End-to-end ML pipeline orchestration
@@ -140,13 +147,16 @@ class MLOpsPipelineDeployment:
     - Model governance and compliance
     - Experiment tracking and lineage
     - Resource optimization and scaling
-    """    
+    """
+    
     def __init__(self, namespace: str = "ia-influencer-mlops"):
-        """        Initialize MLOps pipeline deployment
+        """
+        Initialize MLOps pipeline deployment
         
         Args:
             namespace: Kubernetes namespace for MLOps infrastructure
-        """        self.namespace = namespace
+        """
+        self.namespace = namespace
         self.pipelines = {}
         self.experiments = {}
         self.deployments = {}
@@ -156,7 +166,8 @@ class MLOpsPipelineDeployment:
         self._initialize_clients()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and Redis clients"""        try:
+        """Initialize Kubernetes, Docker, and Redis clients"""
+        try:
             # Kubernetes client
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -186,11 +197,13 @@ class MLOpsPipelineDeployment:
             raise
     
     async def deploy_mlops_infrastructure(self) -> Dict[str, Any]:
-        """        Deploy complete MLOps infrastructure
+        """
+        Deploy complete MLOps infrastructure
         
         Returns:
             MLOps infrastructure deployment summary
-        """        try:
+        """
+        try:
             self.status = "deploying_mlops_infrastructure"
             logger.info("Deploying MLOps infrastructure")
             
@@ -272,14 +285,16 @@ class MLOpsPipelineDeployment:
             raise
     
     async def deploy_mlops_pipeline(self, config: MLOpsPipelineConfig) -> Dict[str, Any]:
-        """        Deploy MLOps pipeline
+        """
+        Deploy MLOps pipeline
         
         Args:
             config: MLOps pipeline configuration
             
         Returns:
             Pipeline deployment result
-        """        try:
+        """
+        try:
             pipeline_id = f"{config.pipeline_name}-{int(time.time())}"
             logger.info(f"Deploying MLOps pipeline: {pipeline_id}")
             
@@ -342,7 +357,8 @@ class MLOpsPipelineDeployment:
             raise
     
     async def _ensure_mlops_namespace(self) -> None:
-        """Create MLOps namespace"""        try:
+        """Create MLOps namespace"""
+        try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -361,7 +377,8 @@ class MLOpsPipelineDeployment:
                 logger.info(f"Created MLOps namespace: {self.namespace}")
     
     async def _deploy_pipeline_orchestrator(self) -> Dict[str, Any]:
-        """Deploy MLOps pipeline orchestrator"""        orchestrator = {
+        """Deploy MLOps pipeline orchestrator"""
+        orchestrator = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -411,7 +428,8 @@ class MLOpsPipelineDeployment:
         }
     
     async def _deploy_experiment_tracking(self) -> Dict[str, Any]:
-        """Deploy experiment tracking system"""        experiment_tracking = {
+        """Deploy experiment tracking system"""
+        experiment_tracking = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -460,7 +478,8 @@ class MLOpsPipelineDeployment:
         }
     
     async def _deploy_model_registry(self) -> Dict[str, Any]:
-        """Deploy model registry"""        model_registry = {
+        """Deploy model registry"""
+        model_registry = {
             "apiVersion": "apps/v1",
             "kind": "StatefulSet",
             "metadata": {
@@ -522,7 +541,8 @@ class MLOpsPipelineDeployment:
         }
     
     async def _deploy_data_validation_service(self) -> Dict[str, Any]:
-        """Deploy data validation service"""        data_validation = {
+        """Deploy data validation service"""
+        data_validation = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -571,7 +591,8 @@ class MLOpsPipelineDeployment:
         }
     
     async def _deploy_model_validation_service(self) -> Dict[str, Any]:
-        """Deploy model validation service"""        model_validation = {
+        """Deploy model validation service"""
+        model_validation = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -620,7 +641,8 @@ class MLOpsPipelineDeployment:
         }
     
     async def _deploy_deployment_manager(self) -> Dict[str, Any]:
-        """Deploy model deployment manager"""        deployment_manager = {
+        """Deploy model deployment manager"""
+        deployment_manager = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -669,7 +691,8 @@ class MLOpsPipelineDeployment:
         }
     
     async def _deploy_mlops_monitoring(self) -> Dict[str, Any]:
-        """Deploy MLOps monitoring and observability"""        mlops_monitoring = {
+        """Deploy MLOps monitoring and observability"""
+        mlops_monitoring = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -718,7 +741,8 @@ class MLOpsPipelineDeployment:
         }
     
     async def _deploy_governance_service(self) -> Dict[str, Any]:
-        """Deploy model governance and compliance service"""        governance = {
+        """Deploy model governance and compliance service"""
+        governance = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -767,7 +791,8 @@ class MLOpsPipelineDeployment:
         }
     
     async def _deploy_feature_store(self) -> Dict[str, Any]:
-        """Deploy feature store"""        feature_store = {
+        """Deploy feature store"""
+        feature_store = {
             "apiVersion": "apps/v1",
             "kind": "StatefulSet",
             "metadata": {
@@ -829,7 +854,8 @@ class MLOpsPipelineDeployment:
         }
     
     async def _deploy_lineage_tracker(self) -> Dict[str, Any]:
-        """Deploy data and model lineage tracker"""        lineage_tracker = {
+        """Deploy data and model lineage tracker"""
+        lineage_tracker = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -878,7 +904,8 @@ class MLOpsPipelineDeployment:
         }
     
     async def _configure_mlops_networking(self) -> None:
-        """Configure networking for MLOps infrastructure"""        # MLOps network policy
+        """Configure networking for MLOps infrastructure"""
+        # MLOps network policy
         network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
@@ -914,7 +941,8 @@ class MLOpsPipelineDeployment:
         logger.info("Configured MLOps networking policies")
     
     async def _validate_mlops_infrastructure(self) -> bool:
-        """Validate MLOps infrastructure deployment"""        try:
+        """Validate MLOps infrastructure deployment"""
+        try:
             # Check essential MLOps services
             essential_services = [
                 "mlops-orchestrator", "experiment-tracking", "model-registry",
@@ -951,7 +979,8 @@ class MLOpsPipelineDeployment:
             return False
     
     async def _validate_mlops_config(self, config: MLOpsPipelineConfig) -> None:
-        """Validate MLOps pipeline configuration"""        if not config.pipeline_name:
+        """Validate MLOps pipeline configuration"""
+        if not config.pipeline_name:
             raise ValueError("Pipeline name is required")
         
         if not config.stages:
@@ -966,7 +995,8 @@ class MLOpsPipelineDeployment:
         logger.info(f"MLOps config validation passed for {config.pipeline_name}")
     
     async def _create_pipeline_definition(self, config: MLOpsPipelineConfig, pipeline_id: str) -> Dict[str, Any]:
-        """Create pipeline definition"""        pipeline_definition = {
+        """Create pipeline definition"""
+        pipeline_definition = {
             "pipeline_id": pipeline_id,
             "name": config.pipeline_name,
             "stages": [stage.value for stage in config.stages],
@@ -988,7 +1018,8 @@ class MLOpsPipelineDeployment:
         return pipeline_definition
     
     async def _deploy_pipeline_stages(self, config: MLOpsPipelineConfig, pipeline_id: str) -> Dict[str, Any]:
-        """Deploy individual pipeline stages"""        stage_deployments = {}
+        """Deploy individual pipeline stages"""
+        stage_deployments = {}
         
         for stage in config.stages:
             stage_config = await self._create_stage_config(stage, config, pipeline_id)
@@ -998,7 +1029,8 @@ class MLOpsPipelineDeployment:
         return stage_deployments
     
     async def _create_stage_config(self, stage: PipelineStage, config: MLOpsPipelineConfig, pipeline_id: str) -> Dict[str, Any]:
-        """Create configuration for individual pipeline stage"""        base_config = {
+        """Create configuration for individual pipeline stage"""
+        base_config = {
             "pipeline_id": pipeline_id,
             "stage": stage.value,
             "resources": config.training_resources.copy()
@@ -1036,7 +1068,8 @@ class MLOpsPipelineDeployment:
         return base_config
     
     async def _deploy_stage(self, stage: PipelineStage, stage_config: Dict[str, Any], pipeline_id: str) -> Dict[str, Any]:
-        """Deploy individual pipeline stage"""        stage_job = {
+        """Deploy individual pipeline stage"""
+        stage_job = {
             "apiVersion": "batch/v1",
             "kind": "Job",
             "metadata": {
@@ -1090,7 +1123,8 @@ class MLOpsPipelineDeployment:
         }
     
     async def _setup_pipeline_data_sources(self, config: MLOpsPipelineConfig, pipeline_id: str) -> Dict[str, Any]:
-        """Set up data sources for pipeline"""        data_config = {
+        """Set up data sources for pipeline"""
+        data_config = {
             "pipeline_id": pipeline_id,
             "data_source": config.data_source,
             "data_format": config.data_format,
@@ -1106,7 +1140,8 @@ class MLOpsPipelineDeployment:
         return data_config
     
     async def _setup_pipeline_monitoring(self, config: MLOpsPipelineConfig, pipeline_id: str) -> Dict[str, Any]:
-        """Set up monitoring for pipeline"""        monitoring_config = {
+        """Set up monitoring for pipeline"""
+        monitoring_config = {
             "pipeline_id": pipeline_id,
             "monitoring_enabled": config.monitoring_enabled,
             "drift_detection": config.drift_detection,
@@ -1123,7 +1158,8 @@ class MLOpsPipelineDeployment:
         return monitoring_config
     
     async def _setup_pipeline_governance(self, config: MLOpsPipelineConfig, pipeline_id: str) -> Dict[str, Any]:
-        """Set up governance for pipeline"""        governance_config = {
+        """Set up governance for pipeline"""
+        governance_config = {
             "pipeline_id": pipeline_id,
             "approval_required": config.model_approval_required,
             "audit_logging": config.audit_logging,
@@ -1140,7 +1176,8 @@ class MLOpsPipelineDeployment:
         return governance_config
     
     async def _setup_pipeline_scheduling(self, config: MLOpsPipelineConfig, pipeline_id: str) -> Dict[str, Any]:
-        """Set up scheduling for pipeline"""        schedule_config = {
+        """Set up scheduling for pipeline"""
+        schedule_config = {
             "pipeline_id": pipeline_id,
             "schedule_cron": config.schedule_cron,
             "trigger_type": config.trigger_type.value
@@ -1191,7 +1228,8 @@ class MLOpsPipelineDeployment:
         return schedule_config
     
     async def get_mlops_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive MLOps metrics"""        try:
+        """Get comprehensive MLOps metrics"""
+        try:
             metrics = {
                 "infrastructure_status": self.status,
                 "active_pipelines": len(self.pipelines),
@@ -1223,7 +1261,8 @@ class MLOpsPipelineDeployment:
             return {"error": str(e)}
     
     async def _cleanup_failed_mlops_infrastructure(self) -> None:
-        """Clean up failed MLOps infrastructure deployment"""        try:
+        """Clean up failed MLOps infrastructure deployment"""
+        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             logger.info("Cleaned up failed MLOps infrastructure")
@@ -1231,7 +1270,8 @@ class MLOpsPipelineDeployment:
             logger.error(f"MLOps infrastructure cleanup failed: {e}")
     
     async def _cleanup_failed_pipeline_deployment(self, pipeline_name: str) -> None:
-        """Clean up failed pipeline deployment"""        try:
+        """Clean up failed pipeline deployment"""
+        try:
             # Clean up pipeline-specific resources
             pipeline_keys = self._redis_client.keys(f"mlops:pipeline:*{pipeline_name}*")
             if pipeline_keys:
@@ -1243,7 +1283,8 @@ class MLOpsPipelineDeployment:
             logger.error(f"Pipeline deployment cleanup failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up entire MLOps infrastructure"""        try:
+        """Clean up entire MLOps infrastructure"""
+        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             

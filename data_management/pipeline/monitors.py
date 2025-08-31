@@ -3,7 +3,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 Advanced monitoring and observability systems for data pipeline health,
 performance metrics, error tracking, and resource optimization.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable
 from datetime import datetime, timedelta
@@ -36,14 +37,16 @@ from ..utils.notification import NotificationManager
 
 
 class HealthStatus(Enum):
-    """System health status levels."""    HEALTHY = "healthy"
+    """System health status levels."""
+    HEALTHY = "healthy"
     WARNING = "warning" 
     CRITICAL = "critical"
     UNKNOWN = "unknown"
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""    INFO = "info"
+    """Alert severity levels."""
+    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
@@ -51,7 +54,8 @@ class AlertSeverity(Enum):
 
 @dataclass
 class HealthCheck:
-    """Health check result."""    component: str
+    """Health check result."""
+    component: str
     status: HealthStatus
     message: str
     timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -61,7 +65,8 @@ class HealthCheck:
 
 @dataclass
 class Alert:
-    """System alert information."""    alert_id: str
+    """System alert information."""
+    alert_id: str
     component: str
     severity: AlertSeverity
     message: str
@@ -72,9 +77,11 @@ class Alert:
 
 
 class PipelineHealthMonitor:
-    """    Comprehensive health monitoring system for pipeline components
+    """
+    Comprehensive health monitoring system for pipeline components
     with automated health checks and intelligent anomaly detection.
-    """    
+    """
+    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -97,7 +104,8 @@ class PipelineHealthMonitor:
         self._start_monitoring()
     
     def _register_default_health_checks(self):
-        """Register default health checks for common components."""        
+        """Register default health checks for common components."""
+        
         # Database connectivity check
         self.register_health_check(
             'database',
@@ -146,7 +154,8 @@ class PipelineHealthMonitor:
         timeout: int = 10,
         critical: bool = True
     ):
-        """        Register a health check for a component.
+        """
+        Register a health check for a component.
         
         Args:
             component: Component name
@@ -154,7 +163,8 @@ class PipelineHealthMonitor:
             interval: Check interval in seconds
             timeout: Check timeout in seconds
             critical: Whether this is a critical component
-        """        
+        """
+        
         self.health_checks[component] = {
             'function': check_function,
             'interval': interval,
@@ -169,7 +179,8 @@ class PipelineHealthMonitor:
         self.logger.info(f"Registered health check for {component}")
     
     def _start_monitoring(self):
-        """Start background health monitoring."""        
+        """Start background health monitoring."""
+        
         self.monitoring_thread = threading.Thread(
             target=self._monitoring_loop,
             daemon=True
@@ -179,7 +190,8 @@ class PipelineHealthMonitor:
         self.logger.info("Health monitoring started")
     
     def _monitoring_loop(self):
-        """Main monitoring loop."""        
+        """Main monitoring loop."""
+        
         while not self.stop_monitoring.wait(5):  # Check every 5 seconds
             try:
                 current_time = datetime.utcnow()
@@ -199,7 +211,8 @@ class PipelineHealthMonitor:
                 self.logger.error(f"Monitoring loop error: {e}")
     
     async def _run_health_check(self, component: str):
-        """Run health check for a specific component."""        
+        """Run health check for a specific component."""
+        
         config = self.health_checks[component]
         start_time = time.time()
         
@@ -265,7 +278,8 @@ class PipelineHealthMonitor:
             )
     
     def _store_health_result(self, health_check: HealthCheck):
-        """Store health check result in history."""        
+        """Store health check result in history."""
+        
         component_history = self.health_history[health_check.component]
         component_history.append(health_check)
         
@@ -274,7 +288,8 @@ class PipelineHealthMonitor:
             component_history.pop(0)
     
     async def _evaluate_health_alerts(self, health_check: HealthCheck, is_critical: bool):
-        """Evaluate health check for alert conditions."""        
+        """Evaluate health check for alert conditions."""
+        
         component = health_check.component
         
         # Check for status degradation
@@ -307,7 +322,8 @@ class PipelineHealthMonitor:
         message: str,
         details: Dict[str, Any] = None
     ):
-        """Trigger system alert."""        
+        """Trigger system alert."""
+        
         alert_id = f"{component}_{int(time.time())}"
         
         alert = Alert(
@@ -326,7 +342,8 @@ class PipelineHealthMonitor:
         self.logger.warning(f"Alert triggered: {component} - {message}")
     
     async def _send_alert_notifications(self, alert: Alert):
-        """Send alert notifications via configured channels."""        
+        """Send alert notifications via configured channels."""
+        
         notification_manager = NotificationManager(self.config.notification_config)
         
         try:
@@ -342,7 +359,8 @@ class PipelineHealthMonitor:
     
     # Health check implementations
     async def _check_database_health(self) -> Dict[str, Any]:
-        """Check database connectivity and performance."""        
+        """Check database connectivity and performance."""
+        
         try:
             # Simulate database health check
             # In production, implement actual database connectivity test
@@ -364,7 +382,8 @@ class PipelineHealthMonitor:
             }
     
     async def _check_redis_health(self) -> Dict[str, Any]:
-        """Check Redis connectivity and performance."""        
+        """Check Redis connectivity and performance."""
+        
         try:
             # Simulate Redis health check
             # In production, implement actual Redis connectivity test
@@ -387,7 +406,8 @@ class PipelineHealthMonitor:
             }
     
     async def _check_storage_health(self) -> Dict[str, Any]:
-        """Check storage system accessibility and performance."""        
+        """Check storage system accessibility and performance."""
+        
         try:
             # Simulate storage health check
             # In production, implement actual storage accessibility test
@@ -409,7 +429,8 @@ class PipelineHealthMonitor:
             }
     
     async def _check_processing_engine_health(self) -> Dict[str, Any]:
-        """Check processing engine health and capacity."""        
+        """Check processing engine health and capacity."""
+        
         try:
             # Simulate processing engine health check
             # In production, implement actual processing engine status check
@@ -432,7 +453,8 @@ class PipelineHealthMonitor:
             }
     
     async def _check_api_health(self) -> Dict[str, Any]:
-        """Check API endpoint health and responsiveness."""        
+        """Check API endpoint health and responsiveness."""
+        
         try:
             # Simulate API health check
             # In production, implement actual API endpoint checks
@@ -455,7 +477,8 @@ class PipelineHealthMonitor:
             }
     
     async def get_overall_health(self) -> Dict[str, Any]:
-        """Get overall system health status."""        
+        """Get overall system health status."""
+        
         if not self.health_history:
             return {
                 'status': HealthStatus.UNKNOWN,
@@ -505,9 +528,11 @@ class PipelineHealthMonitor:
 
 
 class PerformanceMetricsCollector:
-    """    Advanced performance metrics collection system with real-time
+    """
+    Advanced performance metrics collection system with real-time
     monitoring, trend analysis, and predictive insights.
-    """    
+    """
+    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -530,7 +555,8 @@ class PerformanceMetricsCollector:
         self._start_collection()
     
     def _start_collection(self):
-        """Start background metrics collection."""        
+        """Start background metrics collection."""
+        
         self.collection_thread = threading.Thread(
             target=self._collection_loop,
             daemon=True
@@ -540,7 +566,8 @@ class PerformanceMetricsCollector:
         self.logger.info("Performance metrics collection started")
     
     def _collection_loop(self):
-        """Main metrics collection loop."""        
+        """Main metrics collection loop."""
+        
         while not self.stop_collection.wait(self.config.collection_interval):
             try:
                 # Collect system metrics
@@ -562,7 +589,8 @@ class PerformanceMetricsCollector:
                 self.logger.error(f"Metrics collection error: {e}")
     
     def _collect_system_metrics(self) -> Dict[str, Any]:
-        """Collect system-level performance metrics."""        
+        """Collect system-level performance metrics."""
+        
         return {
             'cpu_usage_percent': psutil.cpu_percent(interval=1),
             'memory_usage_percent': psutil.virtual_memory().percent,
@@ -574,7 +602,8 @@ class PerformanceMetricsCollector:
         }
     
     def _collect_application_metrics(self) -> Dict[str, Any]:
-        """Collect application-level performance metrics."""        
+        """Collect application-level performance metrics."""
+        
         # In production, collect actual application metrics
         return {
             'active_sessions': 150,
@@ -587,7 +616,8 @@ class PerformanceMetricsCollector:
         }
     
     def _collect_pipeline_metrics(self) -> Dict[str, Any]:
-        """Collect pipeline-specific performance metrics."""        
+        """Collect pipeline-specific performance metrics."""
+        
         # In production, collect actual pipeline metrics
         return {
             'jobs_processed_per_minute': 45,
@@ -600,7 +630,8 @@ class PerformanceMetricsCollector:
         }
     
     def _store_metrics(self, category: str, metrics: Dict[str, Any]):
-        """Store metrics data for analysis."""        
+        """Store metrics data for analysis."""
+        
         if category not in self.performance_data:
             self.performance_data[category] = []
         
@@ -611,7 +642,8 @@ class PerformanceMetricsCollector:
             self.performance_data[category].pop(0)
     
     def _update_trending_data(self):
-        """Update trending analysis data."""        
+        """Update trending analysis data."""
+        
         for category, data in self.performance_data.items():
             if len(data) < 2:
                 continue
@@ -642,7 +674,8 @@ class PerformanceMetricsCollector:
                     continue
     
     def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend direction from values."""        
+        """Calculate trend direction from values."""
+        
         if len(values) < 2:
             return 'stable'
         
@@ -667,7 +700,8 @@ class PerformanceMetricsCollector:
     
     @monitor_performance
     async def get_performance_summary(self, timeframe_minutes: int = 60) -> Dict[str, Any]:
-        """Get performance summary for specified timeframe."""        
+        """Get performance summary for specified timeframe."""
+        
         cutoff_time = datetime.utcnow() - timedelta(minutes=timeframe_minutes)
         
         summary = {
@@ -719,9 +753,11 @@ class PerformanceMetricsCollector:
 
 
 class ErrorTrackingSystem:
-    """    Comprehensive error tracking and analysis system with intelligent
+    """
+    Comprehensive error tracking and analysis system with intelligent
     categorization, root cause analysis, and automated resolution suggestions.
-    """    
+    """
+    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -739,7 +775,8 @@ class ErrorTrackingSystem:
         context: Dict[str, Any],
         severity: AlertSeverity = AlertSeverity.WARNING
     ) -> str:
-        """        Track and analyze error with context information.
+        """
+        Track and analyze error with context information.
         
         Args:
             error: Exception object
@@ -748,7 +785,8 @@ class ErrorTrackingSystem:
             
         Returns:
             Error tracking ID
-        """        
+        """
+        
         error_id = f"error_{int(time.time())}_{hash(str(error)) % 10000}"
         
         error_data = {
@@ -784,7 +822,8 @@ class ErrorTrackingSystem:
         return error_id
     
     async def _analyze_error_patterns(self, error_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze error patterns for insights."""        
+        """Analyze error patterns for insights."""
+        
         error_type = error_data['error_type']
         error_message = error_data['error_message']
         
@@ -809,7 +848,8 @@ class ErrorTrackingSystem:
         }
     
     def _calculate_message_similarity(self, msg1: str, msg2: str) -> float:
-        """Calculate similarity between error messages."""        
+        """Calculate similarity between error messages."""
+        
         # Simple similarity calculation based on common words
         words1 = set(msg1.lower().split())
         words2 = set(msg2.lower().split())
@@ -823,7 +863,8 @@ class ErrorTrackingSystem:
         return len(intersection) / len(union) if union else 0.0
     
     async def _generate_resolution_suggestions(self, error_data: Dict[str, Any]) -> List[str]:
-        """Generate automated resolution suggestions."""        
+        """Generate automated resolution suggestions."""
+        
         suggestions = []
         error_type = error_data['error_type']
         context = error_data['context']
@@ -875,9 +916,11 @@ class ErrorTrackingSystem:
 
 
 class ResourceUsageMonitor:
-    """    Real-time resource usage monitoring with intelligent optimization
+    """
+    Real-time resource usage monitoring with intelligent optimization
     recommendations and automated scaling triggers.
-    """    
+    """
+    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -894,7 +937,8 @@ class ResourceUsageMonitor:
         self.monitoring_thread.start()
     
     async def _monitor_resources(self):
-        """Monitor system resources continuously."""        
+        """Monitor system resources continuously."""
+        
         while True:
             try:
                 # Collect resource data
@@ -937,7 +981,8 @@ class ResourceUsageMonitor:
                 await asyncio.sleep(10)  # Wait before retrying
     
     def _store_resource_data(self, data: Dict[str, Any]):
-        """Store resource usage data."""        
+        """Store resource usage data."""
+        
         timestamp = data['timestamp']
         
         for category in ['cpu', 'memory', 'disk']:
@@ -954,7 +999,8 @@ class ResourceUsageMonitor:
                 self.resource_data[category].pop(0)
     
     async def _check_resource_thresholds(self, data: Dict[str, Any]):
-        """Check resource usage against thresholds."""        
+        """Check resource usage against thresholds."""
+        
         # CPU threshold check
         if data['cpu']['usage_percent'] > self.usage_thresholds.get('cpu_warning', 80):
             severity = AlertSeverity.CRITICAL if data['cpu']['usage_percent'] > 95 else AlertSeverity.WARNING
@@ -971,7 +1017,8 @@ class ResourceUsageMonitor:
             # Trigger disk usage alert
     
     async def get_resource_summary(self, timeframe_minutes: int = 60) -> Dict[str, Any]:
-        """Get resource usage summary for specified timeframe."""        
+        """Get resource usage summary for specified timeframe."""
+        
         cutoff_time = datetime.utcnow() - timedelta(minutes=timeframe_minutes)
         
         summary = {
@@ -1005,7 +1052,8 @@ class ResourceUsageMonitor:
         return summary
     
     def _generate_optimization_recommendations(self, summary: Dict[str, Any]) -> List[str]:
-        """Generate resource optimization recommendations."""        
+        """Generate resource optimization recommendations."""
+        
         recommendations = []
         
         # CPU recommendations

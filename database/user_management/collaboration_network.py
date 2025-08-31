@@ -12,7 +12,8 @@ Toute utilisation, reproduction ou distribution sans autorisation
 écrite explicite est strictement interdite et fera l'objet de 
 poursuites judiciaires selon la loi allemande.
 Email: mlaiel@live.de pour autorisation d'utilisation.
-"""from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal, Table
+"""
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal, Table
 from sqlalchemy.orm import relationship, Session
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime, timedelta
@@ -28,7 +29,8 @@ Base = declarative_base()
 
 
 class CollaborationType(PyEnum):
-    """Types de collaboration supportés."""    MUSIC_FEATURE = "music_feature"
+    """Types de collaboration supportés."""
+    MUSIC_FEATURE = "music_feature"
     PODCAST_GUEST = "podcast_guest"
     CONTENT_CROSS_PROMOTION = "content_cross_promotion"
     JOINT_PROJECT = "joint_project"
@@ -39,7 +41,8 @@ class CollaborationType(PyEnum):
 
 
 class CollaborationStatus(PyEnum):
-    """Statuts des collaborations."""    PENDING = "pending"
+    """Statuts des collaborations."""
+    PENDING = "pending"
     ACCEPTED = "accepted"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -48,14 +51,16 @@ class CollaborationStatus(PyEnum):
 
 
 class NetworkTier(PyEnum):
-    """Niveaux du réseau de collaboration."""    STARTER = "starter"
+    """Niveaux du réseau de collaboration."""
+    STARTER = "starter"
     PROFESSIONAL = "professional"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 
 class MatchingAlgorithm(PyEnum):
-    """Algorithmes de matching IA disponibles."""    CONTENT_SIMILARITY = "content_similarity"
+    """Algorithmes de matching IA disponibles."""
+    CONTENT_SIMILARITY = "content_similarity"
     AUDIENCE_OVERLAP = "audience_overlap"
     GENRE_COMPATIBILITY = "genre_compatibility"
     ENGAGEMENT_SCORE = "engagement_score"
@@ -76,9 +81,11 @@ collaboration_participants = Table(
 
 
 class CollaborationNetwork(Base):
-    """    Réseau principal de collaboration entre créateurs.
+    """
+    Réseau principal de collaboration entre créateurs.
     Utilise l'IA pour le matching intelligent et l'optimisation.
-    """    __tablename__ = "collaboration_networks"
+    """
+    __tablename__ = "collaboration_networks"
 
     # Identifiants principaux
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -121,8 +128,10 @@ class CollaborationNetwork(Base):
 
 
 class Collaboration(Base):
-    """    Modèle de collaboration entre créateurs avec suivi complet.
-    """    __tablename__ = "collaborations"
+    """
+    Modèle de collaboration entre créateurs avec suivi complet.
+    """
+    __tablename__ = "collaborations"
 
     # Identifiants principaux
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -177,8 +186,10 @@ class Collaboration(Base):
 
 
 class CollaborationInvitation(Base):
-    """    Invitations de collaboration avec gestion intelligente.
-    """    __tablename__ = "collaboration_invitations"
+    """
+    Invitations de collaboration avec gestion intelligente.
+    """
+    __tablename__ = "collaboration_invitations"
 
     # Identifiants principaux
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -217,8 +228,10 @@ class CollaborationInvitation(Base):
 
 
 class CollaborationMatchingProfile(Base):
-    """    Profil de matching IA pour optimiser les collaborations.
-    """    __tablename__ = "collaboration_matching_profiles"
+    """
+    Profil de matching IA pour optimiser les collaborations.
+    """
+    __tablename__ = "collaboration_matching_profiles"
 
     # Identifiants principaux
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -260,12 +273,15 @@ class CollaborationMatchingProfile(Base):
 
 
 class CollaborationNetworkRepository:
-    """    Repository pour la gestion des réseaux de collaboration.
-    """    def __init__(self, db_session: Session):
+    """
+    Repository pour la gestion des réseaux de collaboration.
+    """
+    def __init__(self, db_session: Session):
         self.db = db_session
 
     def create_network(self, creator_id: str, network_data: Dict[str, Any]) -> CollaborationNetwork:
-        """Créer un nouveau réseau de collaboration."""        try:
+        """Créer un nouveau réseau de collaboration."""
+        try:
             network = CollaborationNetwork(
                 creator_id=creator_id,
                 **network_data
@@ -284,7 +300,8 @@ class CollaborationNetworkRepository:
 
     def find_matches(self, creator_id: str, collaboration_type: CollaborationType, 
                     min_score: float = 0.70) -> List[Dict[str, Any]]:
-        """Trouver des matches de collaboration via IA."""        try:
+        """Trouver des matches de collaboration via IA."""
+        try:
             # Logique de matching IA sophistiquée
             network = self.db.query(CollaborationNetwork).filter(
                 CollaborationNetwork.creator_id == creator_id
@@ -325,7 +342,8 @@ class CollaborationNetworkRepository:
             return []
 
     def create_collaboration(self, collaboration_data: Dict[str, Any]) -> Collaboration:
-        """Créer une nouvelle collaboration."""        try:
+        """Créer une nouvelle collaboration."""
+        try:
             collaboration = Collaboration(**collaboration_data)
             self.db.add(collaboration)
             self.db.commit()
@@ -340,7 +358,8 @@ class CollaborationNetworkRepository:
             raise
 
     def send_invitation(self, invitation_data: Dict[str, Any]) -> CollaborationInvitation:
-        """Envoyer une invitation de collaboration."""        try:
+        """Envoyer une invitation de collaboration."""
+        try:
             invitation = CollaborationInvitation(**invitation_data)
             self.db.add(invitation)
             self.db.commit()
@@ -355,7 +374,8 @@ class CollaborationNetworkRepository:
             raise
 
     def update_matching_profile(self, creator_id: str, profile_data: Dict[str, Any]) -> CollaborationMatchingProfile:
-        """Mettre à jour le profil de matching IA."""        try:
+        """Mettre à jour le profil de matching IA."""
+        try:
             profile = self.db.query(CollaborationMatchingProfile).filter(
                 CollaborationMatchingProfile.creator_id == creator_id
             ).first()
@@ -383,7 +403,8 @@ class CollaborationNetworkRepository:
             raise
 
     def get_collaboration_analytics(self, creator_id: str, timeframe_days: int = 30) -> Dict[str, Any]:
-        """Obtenir les analytics de collaboration."""        try:
+        """Obtenir les analytics de collaboration."""
+        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=timeframe_days)
             
@@ -423,7 +444,8 @@ class CollaborationNetworkRepository:
 
     def _calculate_match_score(self, network1: CollaborationNetwork, network2: CollaborationNetwork, 
                              collaboration_type: CollaborationType) -> float:
-        """Calculer le score de compatibilité entre deux créateurs."""        score = 0.0
+        """Calculer le score de compatibilité entre deux créateurs."""
+        score = 0.0
         
         # Vérifier les types de collaboration préférés
         if network1.preferred_collaboration_types and network2.preferred_collaboration_types:
@@ -450,7 +472,8 @@ class CollaborationNetworkRepository:
         return min(score, 1.0)
 
     def _get_compatibility_factors(self, network1: CollaborationNetwork, network2: CollaborationNetwork) -> List[str]:
-        """Obtenir les facteurs de compatibilité."""        factors = []
+        """Obtenir les facteurs de compatibilité."""
+        factors = []
         
         if network1.preferred_genres and network2.preferred_genres:
             common_genres = set(network1.preferred_genres) & set(network2.preferred_genres)
@@ -465,12 +488,14 @@ class CollaborationNetworkRepository:
         return factors
 
     def _get_collaboration_type_breakdown(self, collaborations: List[Collaboration]) -> Dict[str, int]:
-        """Répartition par type de collaboration."""        breakdown = {}
+        """Répartition par type de collaboration."""
+        breakdown = {}
         for collaboration in collaborations:
             type_name = collaboration.collaboration_type.value
             breakdown[type_name] = breakdown.get(type_name, 0) + 1
         return breakdown
 
     def _get_monthly_trend(self, creator_id: str, timeframe_days: int) -> List[Dict[str, Any]]:
-        """Tendance mensuelle des collaborations."""        # Implémentation simplifiée - à enrichir selon les besoins
+        """Tendance mensuelle des collaborations."""
+        # Implémentation simplifiée - à enrichir selon les besoins
         return []

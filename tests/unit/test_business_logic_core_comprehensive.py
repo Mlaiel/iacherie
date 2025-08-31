@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -16,7 +17,8 @@ Tests all critical functionality of the business_logic_core module.
 
 Author: AI Assistant
 Purpose: Complete unit test coverage for business logic core
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -109,10 +111,12 @@ except ImportError as e:
 
 
 class TestCreatorType:
-    """Test CreatorType enum functionality"""    
+    """Test CreatorType enum functionality"""
+    
     @pytest.mark.unit
     def test_creator_type_values(self):
-        """Test that all creator types have correct values"""        assert CreatorType.MUSICIAN.value == "musician"
+        """Test that all creator types have correct values"""
+        assert CreatorType.MUSICIAN.value == "musician"
         assert CreatorType.BLOGGER.value == "blogger"
         assert CreatorType.PHOTOGRAPHER.value == "photographer"
         assert CreatorType.INFLUENCER.value == "influencer"
@@ -124,19 +128,23 @@ class TestCreatorType:
     
     @pytest.mark.unit
     def test_creator_type_count(self):
-        """Test that we have the expected number of creator types"""        assert len(CreatorType) == 9
+        """Test that we have the expected number of creator types"""
+        assert len(CreatorType) == 9
     
     @pytest.mark.unit
     def test_creator_type_uniqueness(self):
-        """Test that all creator type values are unique"""        values = [ct.value for ct in CreatorType]
+        """Test that all creator type values are unique"""
+        values = [ct.value for ct in CreatorType]
         assert len(values) == len(set(values))
 
 
 class TestWorkflowStage:
-    """Test WorkflowStage enum functionality"""    
+    """Test WorkflowStage enum functionality"""
+    
     @pytest.mark.unit
     def test_workflow_stage_values(self):
-        """Test that all workflow stages have correct values"""        assert WorkflowStage.CONTENT_UPLOAD.value == "content_upload"
+        """Test that all workflow stages have correct values"""
+        assert WorkflowStage.CONTENT_UPLOAD.value == "content_upload"
         assert WorkflowStage.CONTENT_ANALYSIS.value == "content_analysis"
         assert WorkflowStage.RIGHTS_PROTECTION.value == "rights_protection"
         assert WorkflowStage.SEO_OPTIMIZATION.value == "seo_optimization"
@@ -147,11 +155,13 @@ class TestWorkflowStage:
     
     @pytest.mark.unit
     def test_workflow_stage_count(self):
-        """Test that we have the expected number of workflow stages"""        assert len(WorkflowStage) == 8
+        """Test that we have the expected number of workflow stages"""
+        assert len(WorkflowStage) == 8
     
     @pytest.mark.unit
     def test_workflow_stage_order(self):
-        """Test that workflow stages follow logical order"""        stages = list(WorkflowStage)
+        """Test that workflow stages follow logical order"""
+        stages = list(WorkflowStage)
         # Verify upload comes first
         assert stages[0] == WorkflowStage.CONTENT_UPLOAD
         # Verify analytics comes last
@@ -159,10 +169,12 @@ class TestWorkflowStage:
 
 
 class TestContentUpload:
-    """Test ContentUpload data structure"""    
+    """Test ContentUpload data structure"""
+    
     @pytest.mark.unit
     def test_content_upload_creation(self):
-        """Test creating a ContentUpload instance"""        upload = ContentUpload(
+        """Test creating a ContentUpload instance"""
+        upload = ContentUpload(
             content_id="test_123",
             creator_id="creator_456",
             creator_type=CreatorType.MUSICIAN,
@@ -178,7 +190,8 @@ class TestContentUpload:
     
     @pytest.mark.unit
     def test_content_upload_types(self):
-        """Test ContentUpload with different creator types"""        for creator_type in CreatorType:
+        """Test ContentUpload with different creator types"""
+        for creator_type in CreatorType:
             upload = ContentUpload(
                 content_id=f"test_{creator_type.value}",
                 creator_id="creator_123",
@@ -190,10 +203,12 @@ class TestContentUpload:
 
 
 class TestCreatorProfile:
-    """Test CreatorProfile data structure"""    
+    """Test CreatorProfile data structure"""
+    
     @pytest.mark.unit
     def test_creator_profile_creation(self):
-        """Test creating a CreatorProfile instance"""        profile = CreatorProfile(
+        """Test creating a CreatorProfile instance"""
+        profile = CreatorProfile(
             creator_id="creator_123",
             creator_type=CreatorType.INFLUENCER,
             name="Test Creator",
@@ -211,10 +226,12 @@ class TestCreatorProfile:
 
 
 class TestContentAnalysisResult:
-    """Test ContentAnalysisResult data structure"""    
+    """Test ContentAnalysisResult data structure"""
+    
     @pytest.mark.unit
     def test_content_analysis_result_creation(self):
-        """Test creating a ContentAnalysisResult instance"""        result = ContentAnalysisResult(
+        """Test creating a ContentAnalysisResult instance"""
+        result = ContentAnalysisResult(
             content_id="content_123",
             analysis_score=0.87,
             metadata={"type": "video", "duration": 300, "quality": "HD"},
@@ -230,7 +247,8 @@ class TestContentAnalysisResult:
     
     @pytest.mark.unit
     def test_content_analysis_result_score_bounds(self):
-        """Test analysis score boundaries"""        # Test minimum score
+        """Test analysis score boundaries"""
+        # Test minimum score
         result_min = ContentAnalysisResult(
             content_id="test_min",
             analysis_score=0.0,
@@ -250,20 +268,24 @@ class TestContentAnalysisResult:
 
 
 class TestBusinessWorkflowEngine:
-    """Test BusinessWorkflowEngine functionality"""    
+    """Test BusinessWorkflowEngine functionality"""
+    
     @pytest.fixture
     def workflow_engine(self):
-        """Create a BusinessWorkflowEngine instance for testing"""        return BusinessWorkflowEngine()
+        """Create a BusinessWorkflowEngine instance for testing"""
+        return BusinessWorkflowEngine()
     
     @pytest.mark.unit
     def test_workflow_engine_initialization(self, workflow_engine):
-        """Test that workflow engine initializes correctly"""        assert hasattr(workflow_engine, 'active_workflows')
+        """Test that workflow engine initializes correctly"""
+        assert hasattr(workflow_engine, 'active_workflows')
         assert isinstance(workflow_engine.active_workflows, dict)
     
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_process_content_upload(self, workflow_engine):
-        """Test content upload processing"""        upload = ContentUpload(
+        """Test content upload processing"""
+        upload = ContentUpload(
             content_id="test_upload_123",
             creator_id="creator_456",
             creator_type=CreatorType.VIDEOGRAPHER,
@@ -281,7 +303,8 @@ class TestBusinessWorkflowEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_analyze_content(self, workflow_engine):
-        """Test content analysis functionality"""        content_id = "test_content_789"
+        """Test content analysis functionality"""
+        content_id = "test_content_789"
         
         result = await workflow_engine.analyze_content(content_id)
         
@@ -295,7 +318,8 @@ class TestBusinessWorkflowEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_multiple_content_uploads(self, workflow_engine):
-        """Test processing multiple content uploads"""        uploads = []
+        """Test processing multiple content uploads"""
+        uploads = []
         for i, creator_type in enumerate(list(CreatorType)[:3]):
             upload = ContentUpload(
                 content_id=f"test_multi_{i}",
@@ -319,7 +343,8 @@ class TestBusinessWorkflowEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_concurrent_content_analysis(self, workflow_engine):
-        """Test concurrent content analysis"""        content_ids = ["content_1", "content_2", "content_3"]
+        """Test concurrent content analysis"""
+        content_ids = ["content_1", "content_2", "content_3"]
         
         # Run analyses concurrently
         tasks = [workflow_engine.analyze_content(cid) for cid in content_ids]
@@ -332,11 +357,13 @@ class TestBusinessWorkflowEngine:
 
 
 class TestBusinessLogicIntegration:
-    """Integration tests for business logic components"""    
+    """Integration tests for business logic components"""
+    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_full_workflow_simulation(self):
-        """Test complete workflow from upload to analysis"""        # Create workflow engine
+        """Test complete workflow from upload to analysis"""
+        # Create workflow engine
         engine = BusinessWorkflowEngine()
         
         # Create content upload
@@ -362,7 +389,8 @@ class TestBusinessLogicIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_creator_type_specific_workflows(self):
-        """Test workflows for different creator types"""        engine = BusinessWorkflowEngine()
+        """Test workflows for different creator types"""
+        engine = BusinessWorkflowEngine()
         
         creator_workflows = {
             CreatorType.MUSICIAN: ("audio", "/tmp/song.mp3"),
@@ -388,10 +416,12 @@ class TestBusinessLogicIntegration:
 
 
 class TestErrorHandling:
-    """Test error handling in business logic"""    
+    """Test error handling in business logic"""
+    
     @pytest.mark.unit
     def test_invalid_creator_type(self):
-        """Test handling of invalid creator types"""        # Since ContentUpload is a dataclass without validation,
+        """Test handling of invalid creator types"""
+        # Since ContentUpload is a dataclass without validation,
         # it accepts any value. Test that we can create it but
         # it would fail in validation later
         upload = ContentUpload(
@@ -412,7 +442,8 @@ class TestErrorHandling:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_empty_content_id_analysis(self):
-        """Test analysis with empty content ID"""        engine = BusinessWorkflowEngine()
+        """Test analysis with empty content ID"""
+        engine = BusinessWorkflowEngine()
         
         # This should handle gracefully or raise appropriate error
         try:
@@ -425,11 +456,13 @@ class TestErrorHandling:
 
 
 class TestPerformance:
-    """Performance tests for business logic core"""    
+    """Performance tests for business logic core"""
+    
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_bulk_upload_processing_performance(self):
-        """Test performance of bulk upload processing"""        import time
+        """Test performance of bulk upload processing"""
+        import time
         
         engine = BusinessWorkflowEngine()
         
@@ -466,7 +499,8 @@ class TestPerformance:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_analysis_latency(self):
-        """Test content analysis latency"""        import time
+        """Test content analysis latency"""
+        import time
         
         engine = BusinessWorkflowEngine()
         content_id = "latency_test_content"

@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC FINGERPRINT PIPELINE:
 Content Upload → Multi-Modal Feature Extraction → AI Hash Generation → Vector Embedding → 
 Similarity Indexing → Real-Time Protection → Violation Detection → Automated Response
-"""from typing import Dict, List, Optional, Any, Union, Tuple, ClassVar
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple, ClassVar
 from datetime import datetime, timezone, timedelta
 from enum import Enum, IntEnum
 from dataclasses import dataclass, field
@@ -25,7 +26,8 @@ import numpy as np
 from decimal import Decimal
 
 class FingerprintType(Enum):
-    """Advanced fingerprint types for multi-modal content"""    AUDIO = "audio"
+    """Advanced fingerprint types for multi-modal content"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -34,7 +36,8 @@ class FingerprintType(Enum):
     COMPOSITE = "composite"
 
 class FingerprintAlgorithm(Enum):
-    """State-of-the-art fingerprinting algorithms"""    # Audio algorithms
+    """State-of-the-art fingerprinting algorithms"""
+    # Audio algorithms
     CHROMAPRINT = "chromaprint"  # Audio fingerprinting
     MFCC = "mfcc"  # Mel-frequency cepstral coefficients
     SPECTRAL_CENTROID = "spectral_centroid"  # Spectral analysis
@@ -71,14 +74,16 @@ class FingerprintAlgorithm(Enum):
     GPT_VISION = "gpt_vision"  # GPT-4 Vision embeddings
 
 class FingerprintQuality(IntEnum):
-    """Fingerprint quality levels"""    POOR = 1
+    """Fingerprint quality levels"""
+    POOR = 1
     FAIR = 2
     GOOD = 3
     EXCELLENT = 4
     PERFECT = 5
 
 class SimilarityThreshold(Enum):
-    """Similarity detection thresholds"""    EXACT_MATCH = "exact_match"  # 95-100%
+    """Similarity detection thresholds"""
+    EXACT_MATCH = "exact_match"  # 95-100%
     NEAR_DUPLICATE = "near_duplicate"  # 85-95%
     SIMILAR = "similar"  # 70-85%
     RELATED = "related"  # 50-70%
@@ -87,7 +92,8 @@ class SimilarityThreshold(Enum):
 
 @dataclass
 class AudioFingerprint:
-    """Empreinte digitale audio spécialisée"""    
+    """Empreinte digitale audio spécialisée"""
+    
     # Chromaprint fingerprint
     chromaprint_hash: Optional[str] = None
     chromaprint_duration: Optional[float] = None
@@ -142,7 +148,8 @@ class AudioFingerprint:
 
 @dataclass
 class VideoFingerprint:
-    """Empreinte digitale vidéo spécialisée"""    
+    """Empreinte digitale vidéo spécialisée"""
+    
     # Frame-based hashes
     frame_hashes: List[str] = field(default_factory=list)
     keyframe_hashes: List[str] = field(default_factory=list)
@@ -199,7 +206,8 @@ class VideoFingerprint:
 
 @dataclass
 class ImageFingerprint:
-    """Empreinte digitale image spécialisée"""    
+    """Empreinte digitale image spécialisée"""
+    
     # Perceptual hashes
     phash: Optional[str] = None
     dhash: Optional[str] = None
@@ -274,7 +282,8 @@ class ImageFingerprint:
 
 @dataclass
 class TextFingerprint:
-    """Empreinte digitale texte spécialisée"""    
+    """Empreinte digitale texte spécialisée"""
+    
     # NLP embeddings
     bert_embedding: Optional[List[float]] = None
     roberta_embedding: Optional[List[float]] = None
@@ -337,7 +346,8 @@ class TextFingerprint:
 
 @dataclass
 class FingerPrintModel:
-    """Modèle principal pour empreintes digitales"""    
+    """Modèle principal pour empreintes digitales"""
+    
     # Identifiants
     fingerprint_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
@@ -405,7 +415,8 @@ class FingerPrintModel:
     tags: List[str] = field(default_factory=list)
     
     def __post_init__(self):
-        """Post-initialisation et validation"""        if not self.content_id:
+        """Post-initialisation et validation"""
+        if not self.content_id:
             raise ValueError("content_id is required")
         
         if not self.creator_id:
@@ -415,13 +426,15 @@ class FingerPrintModel:
             raise ValueError("tenant_id is required")
     
     def generate_content_hash(self, content_bytes: bytes) -> str:
-        """Génère le hash SHA-256 du contenu"""        sha256_hash = hashlib.sha256()
+        """Génère le hash SHA-256 du contenu"""
+        sha256_hash = hashlib.sha256()
         sha256_hash.update(content_bytes)
         self.content_hash = sha256_hash.hexdigest()
         return self.content_hash
     
     def calculate_uniqueness_score(self) -> float:
-        """Calcule un score d'unicité basé sur les features"""        score = 0.0
+        """Calcule un score d'unicité basé sur les features"""
+        score = 0.0
         
         # Facteurs de complexité
         if self.complexity_score > 0:
@@ -443,7 +456,8 @@ class FingerPrintModel:
         return self.uniqueness_score
     
     def update_match_statistics(self, is_match: bool, similarity_score: float):
-        """Met à jour les statistiques de matching"""        if is_match:
+        """Met à jour les statistiques de matching"""
+        if is_match:
             self.match_count += 1
             self.last_match_date = datetime.now(timezone.utc)
             
@@ -454,7 +468,8 @@ class FingerPrintModel:
         self.updated_at = datetime.now(timezone.utc)
     
     def get_similarity_features(self) -> Dict[str, Any]:
-        """Retourne les features optimisées pour la recherche de similarité"""        features = {}
+        """Retourne les features optimisées pour la recherche de similarité"""
+        features = {}
         
         if self.primary_embedding:
             features["primary_embedding"] = self.primary_embedding
@@ -485,7 +500,8 @@ class FingerPrintModel:
         return features
     
     def to_dict(self) -> Dict[str, Any]:
-        """Conversion complète en dictionnaire"""        return {
+        """Conversion complète en dictionnaire"""
+        return {
             "fingerprint_id": self.fingerprint_id,
             "content_id": self.content_id,
             "creator_id": self.creator_id,

@@ -23,7 +23,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""import os
+"""
+import os
 import asyncio
 import json
 import gzip
@@ -48,7 +49,8 @@ logger = logging.getLogger(__name__)
 
 
 class PersistenceStrategy(Enum):
-    """Persistence strategy options"""    MEMORY_ONLY = "MEMORY_ONLY"           # No persistence (testing only)
+    """Persistence strategy options"""
+    MEMORY_ONLY = "MEMORY_ONLY"           # No persistence (testing only)
     FILE_BASED = "FILE_BASED"             # File-based persistence
     DATABASE = "DATABASE"                 # Database persistence
     HYBRID = "HYBRID"                     # Memory + periodic persistence
@@ -61,7 +63,8 @@ class PersistenceStrategy(Enum):
 
 
 class RecoveryMode(Enum):
-    """Recovery mode options"""    NONE = "NONE"                         # No recovery
+    """Recovery mode options"""
+    NONE = "NONE"                         # No recovery
     CHECKPOINT = "CHECKPOINT"             # Checkpoint-based recovery
     LOG_REPLAY = "LOG_REPLAY"             # Transaction log replay
     SNAPSHOT = "SNAPSHOT"                 # Snapshot-based recovery
@@ -71,7 +74,8 @@ class RecoveryMode(Enum):
 
 @dataclass
 class TransactionLogEntry:
-    """Single transaction log entry"""    transaction_id: str
+    """Single transaction log entry"""
+    transaction_id: str
     operation_type: str  # BEGIN, PREPARE, COMMIT, ROLLBACK, OPERATION
     timestamp: datetime
     data: Dict[str, Any] = field(default_factory=dict)
@@ -81,11 +85,13 @@ class TransactionLogEntry:
     content_metadata: Optional[Dict[str, Any]] = None
     
     def __post_init__(self):
-        """Calculate checksum after initialization"""        if self.checksum is None:
+        """Calculate checksum after initialization"""
+        if self.checksum is None:
             self.checksum = self._calculate_checksum()
     
     def _calculate_checksum(self) -> str:
-        """Calculate SHA-256 checksum of entry data"""        data_str = json.dumps({
+        """Calculate SHA-256 checksum of entry data"""
+        data_str = json.dumps({
             'transaction_id': self.transaction_id,
             'operation_type': self.operation_type,
             'timestamp': self.timestamp.isoformat(),
@@ -98,11 +104,13 @@ class TransactionLogEntry:
         return hashlib.sha256(data_str.encode('utf-8')).hexdigest()
     
     def verify_integrity(self) -> bool:
-        """Verify entry integrity using checksum"""        expected_checksum = self._calculate_checksum()
+        """Verify entry integrity using checksum"""
+        expected_checksum = self._calculate_checksum()
         return self.checksum == expected_checksum
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""        return {
+        """Convert to dictionary for serialization"""
+        return {
             'transaction_id': self.transaction_id,
             'operation_type': self.operation_type,
             'timestamp': self.timestamp.isoformat(),
@@ -115,7 +123,8 @@ class TransactionLogEntry:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'TransactionLogEntry':
-        """Create from dictionary"""        return cls(
+        """Create from dictionary"""
+        return cls(
             transaction_id=data['transaction_id'],
             operation_type=data['operation_type'],
             timestamp=datetime.fromisoformat(data['timestamp']),
@@ -129,7 +138,8 @@ class TransactionLogEntry:
 
 @dataclass
 class Checkpoint:
-    """System checkpoint for recovery"""    checkpoint_id: str
+    """System checkpoint for recovery"""
+    checkpoint_id: str
     timestamp: datetime
     sequence_number: int
     transaction_states: Dict[str, str] = field(default_factory=dict)
@@ -139,11 +149,13 @@ class Checkpoint:
     checksum: Optional[str] = None
     
     def __post_init__(self):
-        """Calculate checksum after initialization"""        if self.checksum is None:
+        """Calculate checksum after initialization"""
+        if self.checksum is None:
             self.checksum = self._calculate_checksum()
     
     def _calculate_checksum(self) -> str:
-        """Calculate checkpoint checksum"""        data_str = json.dumps({
+        """Calculate checkpoint checksum"""
+        data_str = json.dumps({
             'checkpoint_id': self.checkpoint_id,
             'timestamp': self.timestamp.isoformat(),
             'sequence_number': self.sequence_number,
@@ -156,12 +168,14 @@ class Checkpoint:
         return hashlib.sha256(data_str.encode('utf-8')).hexdigest()
     
     def verify_integrity(self) -> bool:
-        """Verify checkpoint integrity"""        expected_checksum = self._calculate_checksum()
+        """Verify checkpoint integrity"""
+        expected_checksum = self._calculate_checksum()
         return self.checksum == expected_checksum
 
 
 class TransactionLog:
-    """High-performance transaction log with integrity guarantees"""    
+    """High-performance transaction log with integrity guarantees"""
+    
     def __init__(self, log_dir: str, max_file_size: int = 100 * 1024 * 1024):  # 100MB
         self.log_dir = Path(log_dir)
         self.log_dir.mkdir(parents=True, exist_ok=True)
@@ -185,7 +199,8 @@ class TransactionLog:
         logger.info("TransactionLog initialized: %s", self.log_dir)
     
     def write_entry(self, entry: TransactionLogEntry) -> None:
-        """Write entry to transaction log"""        with self.lock:
+        """Write entry to transaction log"""
+        with self.lock:
             entry.sequence_number = self.sequence_number
             self.sequence_number += 1
             self.write_buffer.append(entry)
@@ -195,7 +210,8 @@ class TransactionLog:
                 self._flush_buffer()
     
     def _flush_buffer(self) -> None:
-        """Flush write buffer to disk"""        if not self.write_buffer:
+        """Flush write buffer to disk"""
+        if not self.write_buffer:
             return
         
         try:
@@ -220,7 +236,8 @@ class TransactionLog:
             raise
     
     def _rotate_log_file(self) -> None:
-        """Rotate to new log file"""        if self.current_file:
+        """Rotate to new log file"""
+        if self.current_file:
             self.current_file.close()
         
         timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
@@ -231,7 +248,8 @@ class TransactionLog:
         logger.info("Rotated to new log file: %s", self.current_file_path)
     
     def _flush_loop(self) -> None:
-        """Background flush loop"""        while self._flushing:
+        """Background flush loop"""
+        while self._flushing:
             try:
                 with self.lock:
                     if self.write_buffer:
@@ -249,7 +267,8 @@ class TransactionLog:
         to_sequence: Optional[int] = None,
         transaction_id: Optional[str] = None
     ) -> List[TransactionLogEntry]:
-        """Read entries from log with optional filtering"""        
+        """Read entries from log with optional filtering"""
+        
         entries = []
         log_files = sorted(self.log_dir.glob("transaction_log_*.log"))
         
@@ -282,11 +301,13 @@ class TransactionLog:
         return sorted(entries, key=lambda x: x.sequence_number)
     
     def get_latest_sequence(self) -> int:
-        """Get latest sequence number"""        with self.lock:
+        """Get latest sequence number"""
+        with self.lock:
             return self.sequence_number - 1
     
     def close(self) -> None:
-        """Close transaction log"""        self._flushing = False
+        """Close transaction log"""
+        self._flushing = False
         if self.flush_thread and self.flush_thread.is_alive():
             self.flush_thread.join(timeout=5)
         
@@ -299,7 +320,8 @@ class TransactionLog:
 
 
 class CheckpointManager:
-    """Checkpoint management for system state persistence"""    
+    """Checkpoint management for system state persistence"""
+    
     def __init__(self, checkpoint_dir: str, retention_count: int = 10):
         self.checkpoint_dir = Path(checkpoint_dir)
         self.checkpoint_dir.mkdir(parents=True, exist_ok=True)
@@ -316,7 +338,8 @@ class CheckpointManager:
         creator_states: Optional[Dict[str, Dict[str, Any]]] = None,
         content_states: Optional[Dict[str, Dict[str, Any]]] = None
     ) -> str:
-        """Create system checkpoint"""        
+        """Create system checkpoint"""
+        
         checkpoint_id = f"checkpoint_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}_{sequence_number}"
         
         checkpoint = Checkpoint(
@@ -360,7 +383,8 @@ class CheckpointManager:
             raise
     
     async def load_checkpoint(self, checkpoint_id: str) -> Optional[Checkpoint]:
-        """Load checkpoint by ID"""        
+        """Load checkpoint by ID"""
+        
         checkpoint_path = self.checkpoint_dir / f"{checkpoint_id}.checkpoint"
         
         if not checkpoint_path.exists():
@@ -393,7 +417,8 @@ class CheckpointManager:
             return None
     
     async def get_latest_checkpoint(self) -> Optional[Checkpoint]:
-        """Get the most recent checkpoint"""        
+        """Get the most recent checkpoint"""
+        
         checkpoint_files = list(self.checkpoint_dir.glob("*.checkpoint"))
         if not checkpoint_files:
             return None
@@ -405,12 +430,14 @@ class CheckpointManager:
         return await self.load_checkpoint(checkpoint_id)
     
     async def list_checkpoints(self) -> List[str]:
-        """List all available checkpoints"""        
+        """List all available checkpoints"""
+        
         checkpoint_files = list(self.checkpoint_dir.glob("*.checkpoint"))
         return [f.stem for f in sorted(checkpoint_files, key=lambda x: x.stat().st_mtime, reverse=True)]
     
     async def _cleanup_old_checkpoints(self) -> None:
-        """Remove old checkpoints beyond retention limit"""        
+        """Remove old checkpoints beyond retention limit"""
+        
         checkpoints = await self.list_checkpoints()
         
         if len(checkpoints) > self.retention_count:
@@ -426,7 +453,8 @@ class CheckpointManager:
 
 
 class DurabilityManager:
-    """    Advanced durability manager providing enterprise-grade persistence guarantees
+    """
+    Advanced durability manager providing enterprise-grade persistence guarantees
     
     Features:
     - Multi-strategy persistence (memory, file, database, hybrid)
@@ -437,7 +465,8 @@ class DurabilityManager:
     - Crash recovery and replay
     - Performance-optimized I/O
     - Multi-level backup strategies
-    """    
+    """
+    
     def __init__(
         self,
         strategy: PersistenceStrategy = PersistenceStrategy.FILE_BASED,
@@ -487,7 +516,8 @@ class DurabilityManager:
         transaction_data: Dict[str, Any],
         creator_id: Optional[str] = None
     ) -> None:
-        """Begin transaction persistence tracking"""        
+        """Begin transaction persistence tracking"""
+        
         # Create log entry
         entry = TransactionLogEntry(
             transaction_id=transaction_id,
@@ -518,7 +548,8 @@ class DurabilityManager:
         operation_data: Dict[str, Any],
         content_metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Log transaction operation"""        
+        """Log transaction operation"""
+        
         if transaction_id not in self.active_transactions:
             logger.warning("Transaction not found for operation log: %s", transaction_id)
             return
@@ -540,7 +571,8 @@ class DurabilityManager:
         logger.debug("Logged operation: %s for transaction %s", operation_type, transaction_id)
     
     async def prepare_transaction_persistence(self, transaction_id: str) -> bool:
-        """Prepare transaction for commit (ensure all data is persisted)"""        
+        """Prepare transaction for commit (ensure all data is persisted)"""
+        
         if transaction_id not in self.active_transactions:
             return False
         
@@ -565,7 +597,8 @@ class DurabilityManager:
         return True
     
     async def commit_transaction_persistence(self, transaction_id: str) -> bool:
-        """Commit transaction persistence"""        
+        """Commit transaction persistence"""
+        
         if transaction_id not in self.active_transactions:
             return False
         
@@ -600,7 +633,8 @@ class DurabilityManager:
         return True
     
     async def rollback_transaction_persistence(self, transaction_id: str) -> bool:
-        """Rollback transaction persistence"""        
+        """Rollback transaction persistence"""
+        
         if transaction_id not in self.active_transactions:
             return False
         
@@ -632,7 +666,8 @@ class DurabilityManager:
         recovery_mode: RecoveryMode = RecoveryMode.LOG_REPLAY,
         target_checkpoint: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Recover system state after crash or failure"""        
+        """Recover system state after crash or failure"""
+        
         recovery_result = {
             'recovered_transactions': 0,
             'failed_recoveries': 0,
@@ -700,7 +735,8 @@ class DurabilityManager:
             raise
     
     async def verify_data_integrity(self) -> Dict[str, Any]:
-        """Verify data integrity across all persistent storage"""        
+        """Verify data integrity across all persistent storage"""
+        
         integrity_report = {
             'total_entries_checked': 0,
             'corrupted_entries': 0,
@@ -752,7 +788,8 @@ class DurabilityManager:
         to_timestamp: Optional[datetime] = None,
         limit: int = 1000
     ) -> List[TransactionLogEntry]:
-        """Get transaction history with filtering"""        
+        """Get transaction history with filtering"""
+        
         entries = []
         
         # Get from transaction log
@@ -790,7 +827,8 @@ class DurabilityManager:
         return filtered_entries[:limit]
     
     async def get_durability_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive durability metrics"""        
+        """Get comprehensive durability metrics"""
+        
         metrics = self.metrics.copy()
         
         # Add current state metrics
@@ -812,7 +850,8 @@ class DurabilityManager:
         return metrics
     
     async def _persist_entry(self, entry: TransactionLogEntry) -> None:
-        """Persist log entry based on strategy"""        
+        """Persist log entry based on strategy"""
+        
         if self.strategy == PersistenceStrategy.MEMORY_ONLY:
             return
         
@@ -839,13 +878,15 @@ class DurabilityManager:
             raise
     
     async def _force_sync(self) -> None:
-        """Force synchronization of all pending writes"""        if self.transaction_log:
+        """Force synchronization of all pending writes"""
+        if self.transaction_log:
             # Force flush of transaction log
             with self.transaction_log.lock:
                 self.transaction_log._flush_buffer()
     
     def _should_create_checkpoint(self) -> bool:
-        """Check if checkpoint should be created"""        
+        """Check if checkpoint should be created"""
+        
         if not self.checkpoint_manager:
             return False
         
@@ -856,7 +897,8 @@ class DurabilityManager:
         return (current_sequence - self.last_checkpoint_sequence) >= self.checkpoint_interval
     
     async def _create_checkpoint(self) -> None:
-        """Create system checkpoint"""        
+        """Create system checkpoint"""
+        
         if not self.checkpoint_manager:
             return
         
@@ -897,7 +939,8 @@ class DurabilityManager:
             logger.error("Failed to create checkpoint: %s", str(e))
     
     async def _replay_log_entry(self, entry: TransactionLogEntry) -> None:
-        """Replay a single log entry during recovery"""        
+        """Replay a single log entry during recovery"""
+        
         # This would integrate with the actual transaction system
         # For now, just validate and track
         if not entry.verify_integrity():
@@ -906,7 +949,8 @@ class DurabilityManager:
         logger.debug("Replayed entry: %s %s", entry.operation_type, entry.transaction_id)
     
     async def _periodic_checkpoint(self) -> None:
-        """Background task for periodic checkpointing"""        
+        """Background task for periodic checkpointing"""
+        
         while self._monitoring:
             try:
                 if self._should_create_checkpoint():
@@ -919,7 +963,8 @@ class DurabilityManager:
                 await asyncio.sleep(10)
     
     async def _memory_management(self) -> None:
-        """Background task for memory management"""        
+        """Background task for memory management"""
+        
         while self._monitoring:
             try:
                 # Move old history entries to persistent storage if memory limit exceeded
@@ -937,7 +982,8 @@ class DurabilityManager:
                 await asyncio.sleep(30)
     
     async def shutdown(self) -> None:
-        """Graceful shutdown of durability manager"""        logger.info("Shutting down DurabilityManager...")
+        """Graceful shutdown of durability manager"""
+        logger.info("Shutting down DurabilityManager...")
         
         self._monitoring = False
         
@@ -965,7 +1011,8 @@ async def with_creator_persistence(
     creator_id: str,
     operation_data: Dict[str, Any]
 ):
-    """Ensure creator-specific persistence guarantees"""    await manager.log_transaction_operation(
+    """Ensure creator-specific persistence guarantees"""
+    await manager.log_transaction_operation(
         transaction_id=transaction_id,
         operation_type="CREATOR_OPERATION",
         operation_data=operation_data,
@@ -979,7 +1026,8 @@ async def with_content_persistence(
     content_data: Dict[str, Any],
     creator_id: str
 ):
-    """Ensure content operation persistence"""    await manager.log_transaction_operation(
+    """Ensure content operation persistence"""
+    await manager.log_transaction_operation(
         transaction_id=transaction_id,
         operation_type="CONTENT_OPERATION",
         operation_data=content_data,
@@ -997,7 +1045,8 @@ async def with_revenue_persistence(
     revenue_data: Dict[str, Any],
     creator_id: str
 ):
-    """Ensure revenue operation persistence with compliance"""    await manager.log_transaction_operation(
+    """Ensure revenue operation persistence with compliance"""
+    await manager.log_transaction_operation(
         transaction_id=transaction_id,
         operation_type="REVENUE_OPERATION",
         operation_data=revenue_data,

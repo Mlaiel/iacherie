@@ -11,7 +11,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
 from datetime import datetime, timezone, timedelta
@@ -30,7 +31,8 @@ from backend.services.notification.real_time_service import RealTimeNotification
 logger = logging.getLogger(__name__)
 
 class StateType(Enum):
-    """Types of conversation states"""    CONVERSATIONAL = "conversational"  # Basic dialogue states
+    """Types of conversation states"""
+    CONVERSATIONAL = "conversational"  # Basic dialogue states
     BUSINESS_WORKFLOW = "business_workflow"  # Business process states
     COLLABORATION = "collaboration"  # Collaboration states
     CONTENT_PROCESSING = "content_processing"  # Content workflow states
@@ -40,7 +42,8 @@ class StateType(Enum):
     SYSTEM = "system"  # System states
 
 class StateCategory(Enum):
-    """Categories for state organization"""    ENTRY = "entry"
+    """Categories for state organization"""
+    ENTRY = "entry"
     ACTIVE = "active"
     TRANSITION = "transition"
     COMPLETION = "completion"
@@ -48,7 +51,8 @@ class StateCategory(Enum):
     ESCALATION = "escalation"
 
 class StatePersistence(Enum):
-    """State persistence levels"""    TEMPORARY = "temporary"  # Session only
+    """State persistence levels"""
+    TEMPORARY = "temporary"  # Session only
     SHORT_TERM = "short_term"  # Hours
     MEDIUM_TERM = "medium_term"  # Days
     LONG_TERM = "long_term"  # Weeks/Months
@@ -56,7 +60,8 @@ class StatePersistence(Enum):
 
 @dataclass
 class StateDefinition:
-    """Definition of a conversation state"""    state_id: str
+    """Definition of a conversation state"""
+    state_id: str
     state_name: str
     state_type: StateType
     category: StateCategory
@@ -90,7 +95,8 @@ class StateDefinition:
 
 @dataclass
 class StateTransition:
-    """Definition of state transition"""    transition_id: str
+    """Definition of state transition"""
+    transition_id: str
     from_state: str
     to_state: str
     trigger: str
@@ -115,7 +121,8 @@ class StateTransition:
 
 @dataclass
 class ConversationState:
-    """Current state of a conversation"""    conversation_id: str
+    """Current state of a conversation"""
+    conversation_id: str
     current_state: str
     state_history: List[str] = field(default_factory=list)
     
@@ -140,7 +147,8 @@ class ConversationState:
 
 @dataclass
 class StateSnapshot:
-    """Snapshot of conversation state for rollback"""    snapshot_id: str
+    """Snapshot of conversation state for rollback"""
+    snapshot_id: str
     conversation_id: str
     state_data: Dict[str, Any]
     timestamp: datetime
@@ -148,7 +156,8 @@ class StateSnapshot:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class StateMachine:
-    """State machine for individual conversation workflow"""    
+    """State machine for individual conversation workflow"""
+    
     def __init__(self, conversation_id: str, initial_state: str):
         self.conversation_id = conversation_id
         self.machine = Machine(
@@ -162,7 +171,8 @@ class StateMachine:
         self.transition_definitions: Dict[str, StateTransition] = {}
 
 class StateManager:
-    """    Enterprise state management system for IA Influencer conversations.
+    """
+    Enterprise state management system for IA Influencer conversations.
     
     Manages complex conversation states across multiple workflows including:
     - Multi-party collaboration states
@@ -179,7 +189,8 @@ class StateManager:
     - Business rule enforcement
     - Workflow integration
     - Performance optimization
-    """    
+    """
+    
     def __init__(
         self,
         redis_client: aioredis.Redis,
@@ -221,7 +232,8 @@ class StateManager:
         logger.info("StateManager initialized for enterprise conversation management")
 
     def _initialize_state_definitions(self):
-        """Initialize core state definitions for IA Influencer platform"""        
+        """Initialize core state definitions for IA Influencer platform"""
+        
         # Conversational states
         conversational_states = [
             StateDefinition(
@@ -390,7 +402,8 @@ class StateManager:
         logger.info(f"Initialized {len(all_states)} state definitions")
 
     def _initialize_transition_definitions(self):
-        """Initialize state transition definitions"""        
+        """Initialize state transition definitions"""
+        
         transitions = [
             # Entry flow transitions
             StateTransition(
@@ -506,7 +519,8 @@ class StateManager:
         initial_state: str = "idle",
         business_context: Dict[str, Any] = None
     ) -> bool:
-        """        Initialize state management for new conversation
+        """
+        Initialize state management for new conversation
         
         Args:
             conversation_id: Conversation to initialize
@@ -515,7 +529,8 @@ class StateManager:
             
         Returns:
             Success status
-        """        
+        """
+        
         # Validate initial state
         if initial_state not in self.state_definitions:
             logger.error(f"Invalid initial state: {initial_state}")
@@ -588,7 +603,8 @@ class StateManager:
         trigger: str,
         transition_data: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """        Execute state transition
+        """
+        Execute state transition
         
         Args:
             conversation_id: Conversation to transition
@@ -597,7 +613,8 @@ class StateManager:
             
         Returns:
             Transition result
-        """        
+        """
+        
         conv_state = self.active_states.get(conversation_id)
         state_machine = self.state_machines.get(conversation_id)
         
@@ -703,7 +720,8 @@ class StateManager:
         conversation_id: str,
         reason: str = "manual_rollback"
     ) -> Dict[str, Any]:
-        """        Rollback conversation state to previous snapshot
+        """
+        Rollback conversation state to previous snapshot
         
         Args:
             conversation_id: Conversation to rollback
@@ -711,7 +729,8 @@ class StateManager:
             
         Returns:
             Rollback result
-        """        
+        """
+        
         conv_state = self.active_states.get(conversation_id)
         if not conv_state:
             return {"error": "Conversation state not found", "success": False}
@@ -777,7 +796,8 @@ class StateManager:
             return {"error": str(e), "success": False}
 
     def _find_applicable_transition(self, current_state: str, trigger: str) -> Optional[StateTransition]:
-        """Find applicable transition for current state and trigger"""        
+        """Find applicable transition for current state and trigger"""
+        
         for transition in self.transition_definitions.values():
             if (transition.from_state == current_state or transition.from_state == "*") and \
                transition.trigger == trigger:
@@ -791,7 +811,8 @@ class StateManager:
         transition: StateTransition,
         transition_data: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Validate transition conditions and business rules"""        
+        """Validate transition conditions and business rules"""
+        
         conv_state = self.active_states[conversation_id]
         validation_errors = []
         
@@ -826,7 +847,8 @@ class StateManager:
         condition: str,
         transition_data: Dict[str, Any] = None
     ) -> bool:
-        """Evaluate transition condition"""        
+        """Evaluate transition condition"""
+        
         conv_state = self.active_states[conversation_id]
         
         # Standard conditions
@@ -889,7 +911,8 @@ class StateManager:
         rule_value: Any,
         transition_data: Dict[str, Any] = None
     ) -> bool:
-        """Evaluate business rule"""        
+        """Evaluate business rule"""
+        
         conv_state = self.active_states[conversation_id]
         
         if rule_name == "always_personalize":
@@ -922,7 +945,8 @@ class StateManager:
         transition: StateTransition,
         transition_data: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Request approval for transition requiring approval"""        
+        """Request approval for transition requiring approval"""
+        
         approval_id = str(uuid.uuid4())
         
         # Create approval request
@@ -957,7 +981,8 @@ class StateManager:
         return {"approved": False, "approval_id": approval_id}
 
     def _create_entry_callback(self, state_def: StateDefinition):
-        """Create callback for state entry"""        
+        """Create callback for state entry"""
+        
         async def on_entry_callback(event_data):
             conversation_id = event_data.model.conversation_id
             await self._execute_state_entry_actions(conversation_id, state_def.state_id)
@@ -965,7 +990,8 @@ class StateManager:
         return on_entry_callback
 
     def _create_exit_callback(self, state_def: StateDefinition):
-        """Create callback for state exit"""        
+        """Create callback for state exit"""
+        
         async def on_exit_callback(event_data):
             conversation_id = event_data.model.conversation_id
             await self._execute_state_exit_actions(conversation_id, state_def.state_id)
@@ -973,7 +999,8 @@ class StateManager:
         return on_exit_callback
 
     def _create_transition_conditions(self, transition_def: StateTransition):
-        """Create condition functions for transition"""        
+        """Create condition functions for transition"""
+        
         async def check_conditions(event_data):
             conversation_id = event_data.model.conversation_id
             transition_data = event_data.kwargs
@@ -986,7 +1013,8 @@ class StateManager:
         return [check_conditions] if transition_def.conditions else []
 
     def _create_pre_actions(self, transition_def: StateTransition):
-        """Create pre-action functions for transition"""        
+        """Create pre-action functions for transition"""
+        
         async def execute_pre_actions(event_data):
             conversation_id = event_data.model.conversation_id
             for action in transition_def.pre_actions:
@@ -995,7 +1023,8 @@ class StateManager:
         return [execute_pre_actions] if transition_def.pre_actions else []
 
     def _create_post_actions(self, transition_def: StateTransition):
-        """Create post-action functions for transition"""        
+        """Create post-action functions for transition"""
+        
         async def execute_post_actions(event_data):
             conversation_id = event_data.model.conversation_id
             for action in transition_def.post_actions:
@@ -1004,7 +1033,8 @@ class StateManager:
         return [execute_post_actions] if transition_def.post_actions else []
 
     async def _execute_state_entry_actions(self, conversation_id: str, state_id: str):
-        """Execute actions when entering state"""        
+        """Execute actions when entering state"""
+        
         state_def = self.state_definitions.get(state_id)
         if not state_def:
             return
@@ -1013,7 +1043,8 @@ class StateManager:
             await self._execute_state_action(conversation_id, action, state_id)
 
     async def _execute_state_exit_actions(self, conversation_id: str, state_id: str):
-        """Execute actions when exiting state"""        
+        """Execute actions when exiting state"""
+        
         state_def = self.state_definitions.get(state_id)
         if not state_def:
             return
@@ -1022,7 +1053,8 @@ class StateManager:
             await self._execute_state_action(conversation_id, action, state_id)
 
     async def _execute_state_action(self, conversation_id: str, action: str, state_id: str):
-        """Execute individual state action"""        
+        """Execute individual state action"""
+        
         try:
             if action == "log_error":
                 logger.error(f"Conversation {conversation_id} entered error state {state_id}")
@@ -1053,7 +1085,8 @@ class StateManager:
             logger.error(f"Error executing state action {action}: {str(e)}")
 
     async def _execute_transition_action(self, conversation_id: str, action: str, transition_data: Dict[str, Any]):
-        """Execute individual transition action"""        
+        """Execute individual transition action"""
+        
         try:
             if action == "create_support_ticket":
                 # Create support ticket for escalation
@@ -1074,7 +1107,8 @@ class StateManager:
             logger.error(f"Error executing transition action {action}: {str(e)}")
 
     async def _execute_workflow_triggers(self, conversation_id: str, new_state: str, transition_data: Dict[str, Any]):
-        """Execute workflow triggers for new state"""        
+        """Execute workflow triggers for new state"""
+        
         state_def = self.state_definitions.get(new_state)
         if not state_def:
             return
@@ -1102,7 +1136,8 @@ class StateManager:
                 logger.error(f"Error triggering workflow {workflow}: {str(e)}")
 
     async def _notify_state_transition(self, conversation_id: str, old_state: str, new_state: str, trigger: str):
-        """Send notification about state transition"""        
+        """Send notification about state transition"""
+        
         await self.notification_service.send_notification(
             user_id="system",
             notification_type="state_transition",
@@ -1116,7 +1151,8 @@ class StateManager:
         )
 
     async def _create_state_snapshot(self, conversation_id: str, trigger: str) -> str:
-        """Create state snapshot for rollback"""        
+        """Create state snapshot for rollback"""
+        
         conv_state = self.active_states.get(conversation_id)
         if not conv_state:
             return ""
@@ -1155,7 +1191,8 @@ class StateManager:
         return snapshot_id
 
     async def _persist_conversation_state(self, conv_state: ConversationState):
-        """Persist conversation state to Redis"""        
+        """Persist conversation state to Redis"""
+        
         try:
             state_data = {
                 "conversation_id": conv_state.conversation_id,
@@ -1196,7 +1233,8 @@ class StateManager:
             logger.error(f"Error persisting conversation state: {str(e)}")
 
     async def _cleanup_expired_states(self):
-        """Background task to cleanup expired states"""        
+        """Background task to cleanup expired states"""
+        
         while True:
             try:
                 current_time = datetime.now(timezone.utc)
@@ -1222,7 +1260,8 @@ class StateManager:
                 await asyncio.sleep(600)  # Wait 10 minutes on error
 
     async def _monitor_state_timeouts(self):
-        """Background task to monitor state timeouts"""        
+        """Background task to monitor state timeouts"""
+        
         while True:
             try:
                 current_time = datetime.now(timezone.utc)
@@ -1245,7 +1284,8 @@ class StateManager:
                 await asyncio.sleep(300)
 
     async def _handle_state_timeout(self, conversation_id: str):
-        """Handle state timeout"""        
+        """Handle state timeout"""
+        
         conv_state = self.active_states.get(conversation_id)
         if not conv_state:
             return
@@ -1263,7 +1303,8 @@ class StateManager:
             logger.error(f"Error handling timeout for conversation {conversation_id}: {str(e)}")
 
     async def _send_timeout_warning(self, conversation_id: str, state_def: StateDefinition):
-        """Send warning about approaching timeout"""        
+        """Send warning about approaching timeout"""
+        
         await self.notification_service.send_notification(
             user_id="system",
             notification_type="state_timeout_warning",
@@ -1277,7 +1318,8 @@ class StateManager:
 
     # Public API methods
     async def get_conversation_state(self, conversation_id: str) -> Dict[str, Any]:
-        """Get current state of conversation"""        
+        """Get current state of conversation"""
+        
         conv_state = self.active_states.get(conversation_id)
         if not conv_state:
             return {"error": "Conversation state not found"}
@@ -1301,7 +1343,8 @@ class StateManager:
         }
 
     async def get_available_transitions(self, conversation_id: str) -> List[Dict[str, Any]]:
-        """Get available transitions from current state"""        
+        """Get available transitions from current state"""
+        
         conv_state = self.active_states.get(conversation_id)
         if not conv_state:
             return []
@@ -1326,7 +1369,8 @@ class StateManager:
         return available_transitions
 
     async def block_transition(self, conversation_id: str, transition_id: str, reason: str) -> bool:
-        """Block specific transition"""        
+        """Block specific transition"""
+        
         conv_state = self.active_states.get(conversation_id)
         if not conv_state:
             return False
@@ -1338,7 +1382,8 @@ class StateManager:
         return True
 
     async def unblock_transition(self, conversation_id: str, transition_id: str) -> bool:
-        """Unblock specific transition"""        
+        """Unblock specific transition"""
+        
         conv_state = self.active_states.get(conversation_id)
         if not conv_state:
             return False
@@ -1353,7 +1398,8 @@ class StateManager:
         return False
 
     def get_state_metrics(self) -> Dict[str, Any]:
-        """Get state management metrics"""        
+        """Get state management metrics"""
+        
         return {
             "global_metrics": self.metrics,
             "active_conversations": len(self.active_states),

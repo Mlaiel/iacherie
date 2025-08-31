@@ -11,7 +11,8 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable, Tuple, Union
 from dataclasses import dataclass, field
@@ -34,20 +35,23 @@ from .exceptions import BatchProcessingError, ResourceError
 logger = logging.getLogger(__name__)
 
 class ProcessingPriority(Enum):
-    """Processing priority levels."""    LOW = 1
+    """Processing priority levels."""
+    LOW = 1
     NORMAL = 2
     HIGH = 3
     URGENT = 4
 
 class ResourceAllocation(Enum):
-    """Resource allocation strategies."""    CONSERVATIVE = "conservative"
+    """Resource allocation strategies."""
+    CONSERVATIVE = "conservative"
     BALANCED = "balanced"
     AGGRESSIVE = "aggressive"
     CUSTOM = "custom"
 
 @dataclass
 class BatchConfig:
-    """Configuration for batch processing operations."""    batch_size: int = 32
+    """Configuration for batch processing operations."""
+    batch_size: int = 32
     max_workers: int = mp.cpu_count()
     memory_limit_gb: float = 8.0
     processing_timeout: int = 300  # seconds
@@ -62,7 +66,8 @@ class BatchConfig:
 
 @dataclass
 class ProcessingTask:
-    """Individual processing task within a batch."""    task_id: str
+    """Individual processing task within a batch."""
+    task_id: str
     file_path: str
     content_type: ContentType
     user_id: int
@@ -74,7 +79,8 @@ class ProcessingTask:
 
 @dataclass
 class BatchProgress:
-    """Progress tracking for batch operations."""    job_id: str
+    """Progress tracking for batch operations."""
+    job_id: str
     total_items: int
     completed_items: int = 0
     failed_items: int = 0
@@ -85,7 +91,8 @@ class BatchProgress:
     resource_usage: Dict[str, float] = field(default_factory=dict)
 
 class ResourceMonitor:
-    """Real-time resource monitoring for batch processing."""    
+    """Real-time resource monitoring for batch processing."""
+    
     def __init__(self, update_interval: float = 1.0):
         self.update_interval = update_interval
         self.monitoring = False
@@ -93,17 +100,20 @@ class ResourceMonitor:
         self.max_history = 1000
         
     def start_monitoring(self):
-        """Start resource monitoring in background thread."""        self.monitoring = True
+        """Start resource monitoring in background thread."""
+        self.monitoring = True
         self.monitor_thread = threading.Thread(target=self._monitor_loop, daemon=True)
         self.monitor_thread.start()
         
     def stop_monitoring(self):
-        """Stop resource monitoring."""        self.monitoring = False
+        """Stop resource monitoring."""
+        self.monitoring = False
         if hasattr(self, 'monitor_thread'):
             self.monitor_thread.join(timeout=2.0)
     
     def _monitor_loop(self):
-        """Main monitoring loop."""        while self.monitoring:
+        """Main monitoring loop."""
+        while self.monitoring:
             try:
                 stats = self._collect_stats()
                 self.stats_history.append(stats)
@@ -117,7 +127,8 @@ class ResourceMonitor:
                 logger.warning(f"Resource monitoring error: {e}")
                 
     def _collect_stats(self) -> Dict[str, float]:
-        """Collect current resource statistics."""        return {
+        """Collect current resource statistics."""
+        return {
             'cpu_percent': psutil.cpu_percent(),
             'memory_percent': psutil.virtual_memory().percent,
             'memory_used_gb': psutil.virtual_memory().used / (1024**3),
@@ -129,10 +140,12 @@ class ResourceMonitor:
         }
     
     def get_current_stats(self) -> Optional[Dict[str, float]]:
-        """Get most recent resource statistics."""        return self.stats_history[-1] if self.stats_history else None
+        """Get most recent resource statistics."""
+        return self.stats_history[-1] if self.stats_history else None
     
     def get_average_stats(self, window_seconds: int = 60) -> Dict[str, float]:
-        """Get average statistics over time window."""        if not self.stats_history:
+        """Get average statistics over time window."""
+        if not self.stats_history:
             return {}
             
         cutoff_time = time.time() - window_seconds
@@ -150,7 +163,8 @@ class ResourceMonitor:
         return avg_stats
 
 class AdaptiveBatchSizer:
-    """Intelligent batch size optimization based on system performance."""    
+    """Intelligent batch size optimization based on system performance."""
+    
     def __init__(self, initial_size: int = 32, min_size: int = 1, max_size: int = 256):
         self.current_size = initial_size
         self.min_size = min_size
@@ -160,7 +174,8 @@ class AdaptiveBatchSizer:
         
     def adapt_batch_size(self, processing_time: float, memory_usage: float, 
                         cpu_usage: float) -> int:
-        """Adapt batch size based on performance metrics."""        
+        """Adapt batch size based on performance metrics."""
+        
         # Record performance
         performance_score = self._calculate_performance_score(
             processing_time, memory_usage, cpu_usage
@@ -197,7 +212,8 @@ class AdaptiveBatchSizer:
     
     def _calculate_performance_score(self, processing_time: float, 
                                    memory_usage: float, cpu_usage: float) -> float:
-        """Calculate composite performance score (higher is better)."""        # Invert processing time (faster is better)
+        """Calculate composite performance score (higher is better)."""
+        # Invert processing time (faster is better)
         time_score = 1.0 / max(processing_time, 0.001)
         
         # Optimal memory usage around 70-80%
@@ -210,7 +226,8 @@ class AdaptiveBatchSizer:
         return (time_score * 0.5 + memory_score * 0.3 + cpu_score * 0.2)
 
 class BatchProcessor:
-    """    Enterprise-grade batch processing system for content fingerprinting.
+    """
+    Enterprise-grade batch processing system for content fingerprinting.
     
     Features:
     - Intelligent resource management and optimization
@@ -221,7 +238,8 @@ class BatchProcessor:
     - Checkpoint/resume capability for long-running jobs
     - Memory-efficient processing for large datasets
     - Multi-modal content type support
-    """    
+    """
+    
     def __init__(self, config: BatchConfig, fingerprinting_service: FingerprintingService):
         self.config = config
         self.fingerprinting_service = fingerprinting_service
@@ -251,7 +269,8 @@ class BatchProcessor:
         logger.info("Batch processor initialized with enterprise configuration")
     
     async def start(self):
-        """Start the batch processing system."""        if self.is_running:
+        """Start the batch processing system."""
+        if self.is_running:
             logger.warning("Batch processor already running")
             return
         
@@ -281,7 +300,8 @@ class BatchProcessor:
             raise BatchProcessingError(f"Startup failed: {e}")
     
     async def shutdown(self):
-        """Gracefully shutdown the batch processing system."""        logger.info("Shutting down batch processing system...")
+        """Gracefully shutdown the batch processing system."""
+        logger.info("Shutting down batch processing system...")
         
         self.is_running = False
         self.shutdown_event.set()
@@ -306,7 +326,8 @@ class BatchProcessor:
                               job_name: Optional[str] = None,
                               priority: ProcessingPriority = ProcessingPriority.NORMAL,
                               content_type_override: Optional[ContentType] = None) -> str:
-        """        Submit a new batch processing job.
+        """
+        Submit a new batch processing job.
         
         Args:
             file_paths: List of file paths to process
@@ -317,7 +338,8 @@ class BatchProcessor:
             
         Returns:
             Job ID for tracking
-        """        if not self.is_running:
+        """
+        if not self.is_running:
             raise BatchProcessingError("Batch processor not running")
         
         # Generate job ID
@@ -380,7 +402,8 @@ class BatchProcessor:
         return job_id
     
     async def _process_job(self, job_id: str, tasks: List[ProcessingTask]):
-        """Process a batch job with intelligent resource management."""        job = self.active_jobs.get(job_id)
+        """Process a batch job with intelligent resource management."""
+        job = self.active_jobs.get(job_id)
         if not job:
             logger.error(f"Job {job_id} not found")
             return
@@ -453,7 +476,8 @@ class BatchProcessor:
                 del self.active_jobs[job_id]
     
     async def _process_batch(self, tasks: List[ProcessingTask]) -> List[Optional[FingerprintResult]]:
-        """Process a batch of tasks in parallel."""        if not tasks:
+        """Process a batch of tasks in parallel."""
+        if not tasks:
             return []
         
         # Create processing futures
@@ -478,7 +502,8 @@ class BatchProcessor:
         return results
     
     def _process_single_task(self, task: ProcessingTask) -> Optional[FingerprintResult]:
-        """Process a single fingerprinting task."""        try:
+        """Process a single fingerprinting task."""
+        try:
             # Use synchronous processing for now
             # In a real implementation, this would be properly async
             loop = asyncio.new_event_loop()
@@ -510,7 +535,8 @@ class BatchProcessor:
                 return None
     
     async def _save_checkpoint(self, job_id: str):
-        """Save job progress checkpoint."""        job = self.active_jobs.get(job_id)
+        """Save job progress checkpoint."""
+        job = self.active_jobs.get(job_id)
         if not job:
             return
         
@@ -526,13 +552,16 @@ class BatchProcessor:
         logger.debug(f"Checkpoint saved for job {job_id}: {job.processed_items}/{job.total_items} items")
     
     def get_job_status(self, job_id: str) -> Optional[BatchProcessingJob]:
-        """Get current status of a batch job."""        return self.active_jobs.get(job_id)
+        """Get current status of a batch job."""
+        return self.active_jobs.get(job_id)
     
     def get_all_jobs(self) -> List[BatchProcessingJob]:
-        """Get status of all active jobs."""        return list(self.active_jobs.values())
+        """Get status of all active jobs."""
+        return list(self.active_jobs.values())
     
     def cancel_job(self, job_id: str) -> bool:
-        """Cancel a running batch job."""        job = self.active_jobs.get(job_id)
+        """Cancel a running batch job."""
+        job = self.active_jobs.get(job_id)
         if not job:
             return False
         
@@ -541,7 +570,8 @@ class BatchProcessor:
         return True
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get current system performance metrics."""        stats = self.resource_monitor.get_current_stats()
+        """Get current system performance metrics."""
+        stats = self.resource_monitor.get_current_stats()
         
         return {
             'resource_usage': stats or {},

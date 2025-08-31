@@ -3,7 +3,8 @@ High-performance caching for analytics data, metrics, and real-time statistics
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import time
@@ -20,14 +21,16 @@ from .memory_cache import MemoryCache
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types of metrics tracked"""    COUNTER = "counter"
+    """Types of metrics tracked"""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     TIMER = "timer"
     RATE = "rate"
 
 class TimeWindow(Enum):
-    """Time windows for aggregation"""    MINUTE = "1m"
+    """Time windows for aggregation"""
+    MINUTE = "1m"
     HOUR = "1h"
     DAY = "1d"
     WEEK = "1w"
@@ -35,7 +38,8 @@ class TimeWindow(Enum):
 
 @dataclass
 class MetricPoint:
-    """Single metric data point"""    timestamp: float
+    """Single metric data point"""
+    timestamp: float
     value: float
     tags: Dict[str, str] = None
     
@@ -45,7 +49,8 @@ class MetricPoint:
 
 @dataclass
 class AnalyticsEvent:
-    """Analytics event structure"""    event_type: str
+    """Analytics event structure"""
+    event_type: str
     user_id: Optional[str]
     session_id: Optional[str]
     tenant_id: Optional[str]
@@ -55,12 +60,15 @@ class AnalyticsEvent:
     user_agent: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return asdict(self)
+        """Convert to dictionary"""
+        return asdict(self)
 
 class AnalyticsCache:
-    """    Advanced analytics cache for tracking user behavior, performance metrics,
+    """
+    Advanced analytics cache for tracking user behavior, performance metrics,
     and business intelligence data
-    """    
+    """
+    
     def __init__(self,
                  redis_config: RedisConfig,
                  retention_days: int = 30,
@@ -102,7 +110,8 @@ class AnalyticsCache:
         logger.info("AnalyticsCache initialized")
     
     async def initialize(self):
-        """Initialize cache connections"""        await self.redis_cache.connect()
+        """Initialize cache connections"""
+        await self.redis_cache.connect()
     
     async def track_event(self,
                          event_type: str,
@@ -112,7 +121,8 @@ class AnalyticsCache:
                          properties: Optional[Dict[str, Any]] = None,
                          ip_address: Optional[str] = None,
                          user_agent: Optional[str] = None) -> bool:
-        """Track analytics event"""        
+        """Track analytics event"""
+        
         event = AnalyticsEvent(
             event_type=event_type,
             user_id=user_id,
@@ -161,7 +171,8 @@ class AnalyticsCache:
                           metric_type: MetricType = MetricType.GAUGE,
                           tags: Optional[Dict[str, str]] = None,
                           timestamp: Optional[float] = None) -> bool:
-        """Record performance metric"""        
+        """Record performance metric"""
+        
         if timestamp is None:
             timestamp = time.time()
         
@@ -233,7 +244,8 @@ class AnalyticsCache:
                         start_time: Optional[float] = None,
                         end_time: Optional[float] = None,
                         limit: int = 1000) -> List[AnalyticsEvent]:
-        """Query analytics events"""        
+        """Query analytics events"""
+        
         try:
             # Build search pattern
             if event_type:
@@ -294,7 +306,8 @@ class AnalyticsCache:
                             start_time: Optional[float] = None,
                             end_time: Optional[float] = None,
                             aggregation: str = "avg") -> List[Tuple[float, float]]:
-        """Get metric data points"""        
+        """Get metric data points"""
+        
         try:
             # Build time range
             if not start_time:
@@ -332,7 +345,8 @@ class AnalyticsCache:
             return []
     
     async def get_realtime_stats(self, time_window: int = 300) -> Dict[str, Any]:
-        """Get real-time statistics for last N seconds"""        
+        """Get real-time statistics for last N seconds"""
+        
         cache_key = f"realtime_stats_{time_window}"
         cached_stats = self.memory_cache.get(cache_key)
         
@@ -387,7 +401,8 @@ class AnalyticsCache:
             return {}
     
     async def get_user_analytics(self, user_id: str, days: int = 7) -> Dict[str, Any]:
-        """Get analytics for specific user"""        
+        """Get analytics for specific user"""
+        
         cache_key = f"user_analytics_{user_id}_{days}"
         cached_analytics = self.memory_cache.get(cache_key)
         
@@ -440,7 +455,8 @@ class AnalyticsCache:
             return {}
     
     async def get_content_analytics(self, content_id: str) -> Dict[str, Any]:
-        """Get analytics for specific content"""        
+        """Get analytics for specific content"""
+        
         cache_key = f"content_analytics_{content_id}"
         cached_analytics = self.memory_cache.get(cache_key)
         
@@ -469,7 +485,8 @@ class AnalyticsCache:
             return {}
     
     async def _update_realtime_counters(self, event: AnalyticsEvent):
-        """Update real-time event counters"""        try:
+        """Update real-time event counters"""
+        try:
             # Update minute-level counters
             minute_bucket = int(event.timestamp // 60) * 60
             counter_key = f"{self.REALTIME_PREFIX}:counters:{minute_bucket}"
@@ -485,7 +502,8 @@ class AnalyticsCache:
             logger.error(f"Failed to update realtime counters: {e}")
     
     async def _update_user_analytics(self, user_id: str, event: AnalyticsEvent):
-        """Update user-specific analytics"""        try:
+        """Update user-specific analytics"""
+        try:
             user_key = f"{self.USER_ANALYTICS_PREFIX}:{user_id}"
             user_data = await self.redis_cache.get(user_key)
             
@@ -515,7 +533,8 @@ class AnalyticsCache:
             logger.error(f"Failed to update user analytics: {e}")
     
     async def _update_content_analytics(self, content_id: str, event: AnalyticsEvent):
-        """Update content-specific analytics"""        try:
+        """Update content-specific analytics"""
+        try:
             content_key = f"{self.CONTENT_ANALYTICS_PREFIX}:{content_id}"
             content_data = await self.redis_cache.get(content_key)
             
@@ -555,7 +574,8 @@ class AnalyticsCache:
             logger.error(f"Failed to update content analytics: {e}")
     
     async def aggregate_metrics(self, time_window: TimeWindow) -> Dict[str, Any]:
-        """Aggregate metrics for specified time window"""        try:
+        """Aggregate metrics for specified time window"""
+        try:
             current_time = time.time()
             
             # Calculate time window boundaries
@@ -634,7 +654,8 @@ class AnalyticsCache:
             return {}
     
     async def cleanup_old_data(self):
-        """Clean up old analytics data beyond retention period"""        try:
+        """Clean up old analytics data beyond retention period"""
+        try:
             cutoff_time = time.time() - (self.retention_days * 86400)
             
             # Clean up old events
@@ -670,7 +691,8 @@ class AnalyticsCache:
             return 0
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get cache statistics"""        redis_stats = await self.redis_cache.get_stats()
+        """Get cache statistics"""
+        redis_stats = await self.redis_cache.get_stats()
         memory_stats = self.memory_cache.get_stats()
         
         return {
@@ -684,12 +706,15 @@ class AnalyticsCache:
         }
     
     async def close(self):
-        """Close cache connections"""        await self.redis_cache.close()
+        """Close cache connections"""
+        await self.redis_cache.close()
         self.memory_cache.close()
 
 class MetricsCache(AnalyticsCache):
-    """    Simplified metrics-only cache for performance monitoring
-    """    
+    """
+    Simplified metrics-only cache for performance monitoring
+    """
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
@@ -705,7 +730,8 @@ class MetricsCache(AnalyticsCache):
         self.FINGERPRINT_MATCHES = "fingerprint_matches"
     
     async def record_response_time(self, endpoint: str, response_time: float, status_code: int):
-        """Record HTTP response time"""        await self.record_metric(
+        """Record HTTP response time"""
+        await self.record_metric(
             self.RESPONSE_TIME,
             response_time,
             MetricType.TIMER,
@@ -713,7 +739,8 @@ class MetricsCache(AnalyticsCache):
         )
     
     async def increment_counter(self, metric_name: str, tags: Optional[Dict[str, str]] = None):
-        """Increment a counter metric"""        await self.record_metric(
+        """Increment a counter metric"""
+        await self.record_metric(
             metric_name,
             1,
             MetricType.COUNTER,
@@ -721,7 +748,8 @@ class MetricsCache(AnalyticsCache):
         )
     
     async def set_gauge(self, metric_name: str, value: float, tags: Optional[Dict[str, str]] = None):
-        """Set a gauge metric value"""        await self.record_metric(
+        """Set a gauge metric value"""
+        await self.record_metric(
             metric_name,
             value,
             MetricType.GAUGE,
@@ -729,7 +757,8 @@ class MetricsCache(AnalyticsCache):
         )
     
     async def get_dashboard_metrics(self) -> Dict[str, Any]:
-        """Get key metrics for dashboard display"""        try:
+        """Get key metrics for dashboard display"""
+        try:
             current_time = time.time()
             last_hour = current_time - 3600
             

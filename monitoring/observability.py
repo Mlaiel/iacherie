@@ -5,7 +5,8 @@ Prometheus, Grafana, and ELK stack integration for production monitoring.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import time
 import json
 import logging
@@ -39,14 +40,16 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Metric types"""    COUNTER = "counter"
+    """Metric types"""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
 
 
 class AlertLevel(Enum):
-    """Alert severity levels"""    INFO = "info"
+    """Alert severity levels"""
+    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
@@ -54,7 +57,8 @@ class AlertLevel(Enum):
 
 @dataclass
 class MetricConfig:
-    """Metric configuration"""    name: str
+    """Metric configuration"""
+    name: str
     metric_type: MetricType
     description: str
     labels: List[str] = field(default_factory=list)
@@ -63,7 +67,8 @@ class MetricConfig:
 
 @dataclass
 class Alert:
-    """Alert definition"""    alert_id: str
+    """Alert definition"""
+    alert_id: str
     name: str
     level: AlertLevel
     condition: str
@@ -76,7 +81,8 @@ class Alert:
 
 
 class PrometheusMetricsCollector:
-    """Prometheus metrics collector"""    
+    """Prometheus metrics collector"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.registry = CollectorRegistry()
@@ -90,7 +96,8 @@ class PrometheusMetricsCollector:
         self._initialize_default_metrics()
         
     def _initialize_default_metrics(self):
-        """Initialize default application metrics"""        if not HAS_PROMETHEUS:
+        """Initialize default application metrics"""
+        if not HAS_PROMETHEUS:
             return
             
         default_metrics = [
@@ -146,7 +153,8 @@ class PrometheusMetricsCollector:
             self.register_metric(metric_config)
     
     def register_metric(self, config: MetricConfig):
-        """Register a new metric"""        if not HAS_PROMETHEUS:
+        """Register a new metric"""
+        if not HAS_PROMETHEUS:
             return
             
         try:
@@ -179,7 +187,8 @@ class PrometheusMetricsCollector:
             self.logger.error(f"Failed to register metric {config.name}: {str(e)}")
     
     def increment_counter(self, name: str, labels: Dict[str, str] = None, value: float = 1):
-        """Increment a counter metric"""        if not HAS_PROMETHEUS or name not in self.metrics:
+        """Increment a counter metric"""
+        if not HAS_PROMETHEUS or name not in self.metrics:
             return
             
         try:
@@ -192,7 +201,8 @@ class PrometheusMetricsCollector:
             self.logger.error(f"Failed to increment counter {name}: {str(e)}")
     
     def set_gauge(self, name: str, value: float, labels: Dict[str, str] = None):
-        """Set a gauge metric value"""        if not HAS_PROMETHEUS or name not in self.metrics:
+        """Set a gauge metric value"""
+        if not HAS_PROMETHEUS or name not in self.metrics:
             return
             
         try:
@@ -205,7 +215,8 @@ class PrometheusMetricsCollector:
             self.logger.error(f"Failed to set gauge {name}: {str(e)}")
     
     def observe_histogram(self, name: str, value: float, labels: Dict[str, str] = None):
-        """Observe a histogram metric"""        if not HAS_PROMETHEUS or name not in self.metrics:
+        """Observe a histogram metric"""
+        if not HAS_PROMETHEUS or name not in self.metrics:
             return
             
         try:
@@ -218,14 +229,16 @@ class PrometheusMetricsCollector:
             self.logger.error(f"Failed to observe histogram {name}: {str(e)}")
     
     def get_metrics_data(self) -> str:
-        """Get Prometheus formatted metrics data"""        if not HAS_PROMETHEUS:
+        """Get Prometheus formatted metrics data"""
+        if not HAS_PROMETHEUS:
             return ""
             
         return generate_latest(self.registry).decode('utf-8')
 
 
 class SystemMetricsCollector:
-    """System-level metrics collector"""    
+    """System-level metrics collector"""
+    
     def __init__(self, prometheus_collector: PrometheusMetricsCollector):
         self.prometheus = prometheus_collector
         self.logger = logging.getLogger(__name__)
@@ -234,7 +247,8 @@ class SystemMetricsCollector:
         self._collector_thread = None
         
     def start_collection(self):
-        """Start system metrics collection"""        if self._collector_thread and self._collector_thread.is_alive():
+        """Start system metrics collection"""
+        if self._collector_thread and self._collector_thread.is_alive():
             return
             
         self._stop_event.clear()
@@ -244,20 +258,23 @@ class SystemMetricsCollector:
         self.logger.info("System metrics collection started")
     
     def stop_collection(self):
-        """Stop system metrics collection"""        self._stop_event.set()
+        """Stop system metrics collection"""
+        self._stop_event.set()
         if self._collector_thread:
             self._collector_thread.join(timeout=5)
         self.logger.info("System metrics collection stopped")
     
     def _collect_metrics_loop(self):
-        """Main metrics collection loop"""        while not self._stop_event.wait(self.collection_interval):
+        """Main metrics collection loop"""
+        while not self._stop_event.wait(self.collection_interval):
             try:
                 self._collect_system_metrics()
             except Exception as e:
                 self.logger.error(f"Error collecting system metrics: {str(e)}")
     
     def _collect_system_metrics(self):
-        """Collect system metrics"""        try:
+        """Collect system metrics"""
+        try:
             # Memory usage
             memory = psutil.virtual_memory()
             self.prometheus.set_gauge("memory_usage_bytes", memory.used)
@@ -281,7 +298,8 @@ class SystemMetricsCollector:
 
 
 class ELKStackIntegration:
-    """Elasticsearch, Logstash, Kibana integration"""    
+    """Elasticsearch, Logstash, Kibana integration"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.elasticsearch_client = None
@@ -293,7 +311,8 @@ class ELKStackIntegration:
             self.logger.warning("Elasticsearch client not available - log shipping disabled")
     
     def _initialize_elasticsearch(self):
-        """Initialize Elasticsearch client"""        try:
+        """Initialize Elasticsearch client"""
+        try:
             es_config = self.config.get('elasticsearch', {})
             hosts = es_config.get('hosts', ['localhost:9200'])
             username = es_config.get('username')
@@ -315,7 +334,8 @@ class ELKStackIntegration:
             self.logger.error(f"Failed to initialize Elasticsearch: {str(e)}")
     
     async def ship_log(self, log_data: Dict[str, Any], index: str = None):
-        """Ship log to Elasticsearch"""        if not self.elasticsearch_client:
+        """Ship log to Elasticsearch"""
+        if not self.elasticsearch_client:
             return
             
         try:
@@ -339,7 +359,8 @@ class ELKStackIntegration:
             self.logger.error(f"Failed to ship log to Elasticsearch: {str(e)}")
     
     async def search_logs(self, query: Dict[str, Any], index: str = None) -> Dict[str, Any]:
-        """Search logs in Elasticsearch"""        if not self.elasticsearch_client:
+        """Search logs in Elasticsearch"""
+        if not self.elasticsearch_client:
             return {'hits': {'hits': []}}
             
         try:
@@ -360,7 +381,8 @@ class ELKStackIntegration:
 
 
 class AlertManager:
-    """Alert management system"""    
+    """Alert management system"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.active_alerts: Dict[str, Alert] = {}
@@ -368,10 +390,12 @@ class AlertManager:
         self.logger = logging.getLogger(__name__)
         
     def register_alert_handler(self, handler: Callable):
-        """Register an alert handler"""        self.alert_handlers.append(handler)
+        """Register an alert handler"""
+        self.alert_handlers.append(handler)
         
     async def create_alert(self, alert: Alert):
-        """Create a new alert"""        try:
+        """Create a new alert"""
+        try:
             self.active_alerts[alert.alert_id] = alert
             
             # Notify all handlers
@@ -387,7 +411,8 @@ class AlertManager:
             self.logger.error(f"Failed to create alert: {str(e)}")
     
     async def resolve_alert(self, alert_id: str):
-        """Resolve an alert"""        if alert_id in self.active_alerts:
+        """Resolve an alert"""
+        if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
             alert.resolved_at = datetime.utcnow()
             
@@ -402,11 +427,13 @@ class AlertManager:
             self.logger.info(f"Alert resolved: {alert.name}")
     
     def get_active_alerts(self) -> List[Alert]:
-        """Get all active alerts"""        return list(self.active_alerts.values())
+        """Get all active alerts"""
+        return list(self.active_alerts.values())
 
 
 class MonitoringSystem:
-    """Comprehensive monitoring system"""    
+    """Comprehensive monitoring system"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.prometheus = PrometheusMetricsCollector(config.get('prometheus', {}))
@@ -420,7 +447,8 @@ class MonitoringSystem:
         self.alerts.register_alert_handler(self._elk_alert_handler)
         
     async def start(self):
-        """Start monitoring system"""        try:
+        """Start monitoring system"""
+        try:
             # Start Prometheus metrics server
             if HAS_PROMETHEUS and self.config.get('prometheus', {}).get('enabled', True):
                 port = self.config.get('prometheus', {}).get('port', 9090)
@@ -437,11 +465,13 @@ class MonitoringSystem:
             raise
     
     async def stop(self):
-        """Stop monitoring system"""        self.system_metrics.stop_collection()
+        """Stop monitoring system"""
+        self.system_metrics.stop_collection()
         self.logger.info("Monitoring system stopped")
     
     async def record_request(self, method: str, endpoint: str, status_code: int, duration: float):
-        """Record HTTP request metrics"""        self.prometheus.increment_counter(
+        """Record HTTP request metrics"""
+        self.prometheus.increment_counter(
             "http_requests_total",
             {"method": method, "endpoint": endpoint, "status_code": str(status_code)}
         )
@@ -453,20 +483,23 @@ class MonitoringSystem:
         )
     
     async def record_ai_inference(self, model_name: str, inference_type: str, duration: float):
-        """Record AI inference metrics"""        self.prometheus.observe_histogram(
+        """Record AI inference metrics"""
+        self.prometheus.observe_histogram(
             "ai_inference_duration_seconds",
             duration,
             {"model_name": model_name, "inference_type": inference_type}
         )
     
     async def record_content_processing(self, content_type: str, result: str):
-        """Record content processing metrics"""        self.prometheus.increment_counter(
+        """Record content processing metrics"""
+        self.prometheus.increment_counter(
             "content_processing_total",
             {"content_type": content_type, "processing_result": result}
         )
     
     async def check_alerts(self):
-        """Check for alert conditions"""        try:
+        """Check for alert conditions"""
+        try:
             # Check memory usage
             memory = psutil.virtual_memory()
             if memory.percent > 90:
@@ -499,7 +532,8 @@ class MonitoringSystem:
             self.logger.error(f"Error checking alerts: {str(e)}")
     
     async def _log_alert_handler(self, alert: Alert):
-        """Log alert handler"""        level_map = {
+        """Log alert handler"""
+        level_map = {
             AlertLevel.INFO: logging.INFO,
             AlertLevel.WARNING: logging.WARNING,
             AlertLevel.CRITICAL: logging.CRITICAL,
@@ -510,7 +544,8 @@ class MonitoringSystem:
         self.logger.log(log_level, f"ALERT: {alert.name} - {alert.message}")
     
     async def _elk_alert_handler(self, alert: Alert):
-        """ELK stack alert handler"""        alert_log = {
+        """ELK stack alert handler"""
+        alert_log = {
             'alert_id': alert.alert_id,
             'alert_name': alert.name,
             'level': alert.level.value,
@@ -531,7 +566,8 @@ monitoring_system = None
 
 
 async def initialize_monitoring(config: Dict[str, Any] = None) -> MonitoringSystem:
-    """Initialize global monitoring system"""    global monitoring_system
+    """Initialize global monitoring system"""
+    global monitoring_system
     
     if monitoring_system is None:
         monitoring_system = MonitoringSystem(config)
@@ -541,20 +577,24 @@ async def initialize_monitoring(config: Dict[str, Any] = None) -> MonitoringSyst
 
 
 def get_monitoring_system() -> Optional[MonitoringSystem]:
-    """Get global monitoring system instance"""    return monitoring_system
+    """Get global monitoring system instance"""
+    return monitoring_system
 
 
 # Convenience functions
 async def record_request_metric(method: str, endpoint: str, status_code: int, duration: float):
-    """Record HTTP request metric"""    if monitoring_system:
+    """Record HTTP request metric"""
+    if monitoring_system:
         await monitoring_system.record_request(method, endpoint, status_code, duration)
 
 
 async def record_ai_metric(model_name: str, inference_type: str, duration: float):
-    """Record AI inference metric"""    if monitoring_system:
+    """Record AI inference metric"""
+    if monitoring_system:
         await monitoring_system.record_ai_inference(model_name, inference_type, duration)
 
 
 async def ship_log(log_data: Dict[str, Any], index: str = None):
-    """Ship log to ELK stack"""    if monitoring_system:
+    """Ship log to ELK stack"""
+    if monitoring_system:
         await monitoring_system.elk.ship_log(log_data, index)

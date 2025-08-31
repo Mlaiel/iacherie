@@ -19,7 +19,8 @@ Ce logiciel est propriétaire et confidentiel. Contact: mlaiel@live.de
 - Spécialiste Traitement Audio : Fahed Mlaiel
 - Ingénieur DevOps : Fahed Mlaiel
 - Ingénieur Prompts IA : Fahed Mlaiel
-"""import os
+"""
+import os
 import logging
 from typing import Dict, List, Any, Tuple, Optional
 from datetime import datetime
@@ -32,14 +33,16 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationStatus(Enum):
-    """Statuts de validation pour les composants."""    COMPLETE = "complete"
+    """Statuts de validation pour les composants."""
+    COMPLETE = "complete"
     PARTIAL = "partial"
     MISSING = "missing"
     ERROR = "error"
 
 
 class RequirementLevel(Enum):
-    """Niveaux d'exigence pour les composants."""    CRITICAL = "critical"
+    """Niveaux d'exigence pour les composants."""
+    CRITICAL = "critical"
     ESSENTIAL = "essential"
     IMPORTANT = "important"
     OPTIONAL = "optional"
@@ -47,7 +50,8 @@ class RequirementLevel(Enum):
 
 @dataclass
 class ComponentValidation:
-    """Validation d'un composant spécifique."""    name: str
+    """Validation d'un composant spécifique."""
+    name: str
     status: ValidationStatus
     requirement_level: RequirementLevel
     description: str
@@ -62,23 +66,27 @@ class ComponentValidation:
 
 
 class NLPModuleValidator:
-    """    Validateur complet pour le module NLP.
+    """
+    Validateur complet pour le module NLP.
     
     Vérifie tous les composants selon les exigences strictes :
     - Nommage professionnel (pas de termes amateurs)
     - Code de qualité industrielle
     - Documentation tri-lingue (EN, DE, FR)
     - Avertissements copyright stricts
-    """    
+    """
+    
     def __init__(self, nlp_path: str = "/workspaces/Achiri/IA-Influencer-Agent/backend/ai/nlp"):
-        """Initialiser le validateur."""        self.nlp_path = Path(nlp_path)
+        """Initialiser le validateur."""
+        self.nlp_path = Path(nlp_path)
         self.validation_results: Dict[str, ComponentValidation] = {}
         self.overall_status = ValidationStatus.COMPLETE
         self.validation_timestamp = datetime.now()
         logger.info(f"NLP Module Validator initialized for path: {nlp_path}")
     
     def validate_complete_module(self) -> Dict[str, Any]:
-        """Validation complète du module NLP."""        logger.info("Démarrage de la validation complète du module NLP...")
+        """Validation complète du module NLP."""
+        logger.info("Démarrage de la validation complète du module NLP...")
         
         # 1. Validation des modules professionnels principaux
         self._validate_enterprise_modules()
@@ -99,7 +107,8 @@ class NLPModuleValidator:
         return self._generate_final_report()
     
     def _validate_enterprise_modules(self):
-        """Validation des modules entreprise principaux."""        enterprise_modules = {
+        """Validation des modules entreprise principaux."""
+        enterprise_modules = {
             "content_intelligence": {
                 "requirement_level": RequirementLevel.CRITICAL,
                 "expected_classes": ["ContentIntelligenceEngine", "ContentBatchProcessor"],
@@ -126,7 +135,8 @@ class NLPModuleValidator:
             self._validate_module_file(module_name, requirements)
     
     def _validate_foundation_modules(self):
-        """Validation des modules de base."""        foundation_modules = {
+        """Validation des modules de base."""
+        foundation_modules = {
             "performance_intelligence": {
                 "requirement_level": RequirementLevel.ESSENTIAL,
                 "expected_classes": ["PerformanceIntelligenceEngine"],
@@ -158,7 +168,8 @@ class NLPModuleValidator:
             self._validate_module_file(module_name, requirements)
     
     def _validate_module_file(self, module_name: str, requirements: Dict[str, Any]):
-        """Validation d'un fichier de module spécifique."""        file_path = self.nlp_path / f"{module_name}.py"
+        """Validation d'un fichier de module spécifique."""
+        file_path = self.nlp_path / f"{module_name}.py"
         
         validation = ComponentValidation(
             name=module_name,
@@ -238,7 +249,8 @@ class NLPModuleValidator:
         self.validation_results[module_name] = validation
     
     def _validate_documentation(self):
-        """Validation de la documentation."""        doc_files = {
+        """Validation de la documentation."""
+        doc_files = {
             "README.md": RequirementLevel.CRITICAL,
             "README.de.md": RequirementLevel.ESSENTIAL,
             "README.fr.md": RequirementLevel.ESSENTIAL
@@ -276,7 +288,8 @@ class NLPModuleValidator:
             self.validation_results[f"doc_{doc_file}"] = validation
     
     def _validate_module_structure(self):
-        """Validation de la structure du module."""        required_files = {
+        """Validation de la structure du module."""
+        required_files = {
             "__init__.py": RequirementLevel.CRITICAL,
             "professional_index.py": RequirementLevel.ESSENTIAL,
             "index.py": RequirementLevel.IMPORTANT
@@ -312,7 +325,8 @@ class NLPModuleValidator:
             self.validation_results[f"struct_{file_name}"] = validation
     
     def _validate_quality_requirements(self):
-        """Validation des exigences de qualité."""        quality_checks = {
+        """Validation des exigences de qualité."""
+        quality_checks = {
             "professional_naming": self._check_professional_naming(),
             "copyright_compliance": self._check_copyright_compliance(),
             "documentation_completeness": self._check_documentation_completeness(),
@@ -338,7 +352,8 @@ class NLPModuleValidator:
             self.validation_results[f"quality_{check_name}"] = validation
     
     def _check_professional_naming(self) -> Tuple[ValidationStatus, List[str], List[str]]:
-        """Vérification du nommage professionnel."""        issues = []
+        """Vérification du nommage professionnel."""
+        issues = []
         amateur_terms = ["advanced", "basic", "simple", "test", "demo", "example"]
         
         for file_path in self.nlp_path.glob("*.py"):
@@ -351,7 +366,8 @@ class NLPModuleValidator:
         return status, issues, recommendations
     
     def _check_copyright_compliance(self) -> Tuple[ValidationStatus, List[str], List[str]]:
-        """Vérification de la conformité copyright."""        issues = []
+        """Vérification de la conformité copyright."""
+        issues = []
         total_files = 0
         copyright_files = 0
         
@@ -383,7 +399,8 @@ class NLPModuleValidator:
         return status, issues, recommendations
     
     def _check_documentation_completeness(self) -> Tuple[ValidationStatus, List[str], List[str]]:
-        """Vérification de la complétude documentation."""        issues = []
+        """Vérification de la complétude documentation."""
+        issues = []
         required_docs = ["README.md", "README.de.md", "README.fr.md"]
         existing_docs = [doc for doc in required_docs if (self.nlp_path / doc).exists()]
         
@@ -403,7 +420,8 @@ class NLPModuleValidator:
         return status, issues, recommendations
     
     def _check_code_quality(self) -> Tuple[ValidationStatus, List[str], List[str]]:
-        """Vérification de la qualité du code."""        issues = []
+        """Vérification de la qualité du code."""
+        issues = []
         total_lines = 0
         enterprise_modules = 0
         
@@ -449,7 +467,8 @@ class NLPModuleValidator:
         return status, issues, recommendations
     
     def _generate_final_report(self) -> Dict[str, Any]:
-        """Génération du rapport final de validation."""        # Calcul des statistiques
+        """Génération du rapport final de validation."""
+        # Calcul des statistiques
         total_components = len(self.validation_results)
         complete_components = len([v for v in self.validation_results.values() if v.status == ValidationStatus.COMPLETE])
         critical_complete = len([v for v in self.validation_results.values() 
@@ -564,7 +583,8 @@ class NLPModuleValidator:
         return report
     
     def _generate_recommendations(self) -> List[str]:
-        """Génération des recommandations d'amélioration."""        recommendations = []
+        """Génération des recommandations d'amélioration."""
+        recommendations = []
         
         # Analyse des composants manquants ou partiels
         critical_issues = [
@@ -607,14 +627,16 @@ class NLPModuleValidator:
 
 
 def run_complete_validation(nlp_path: str = None) -> Dict[str, Any]:
-    """    Lancer la validation complète du module NLP.
+    """
+    Lancer la validation complète du module NLP.
     
     Args:
         nlp_path: Chemin vers le module NLP (optionnel)
     
     Returns:
         Rapport de validation complet
-    """    if nlp_path is None:
+    """
+    if nlp_path is None:
         nlp_path = "/workspaces/Achiri/IA-Influencer-Agent/backend/ai/nlp"
     
     validator = NLPModuleValidator(nlp_path)
@@ -630,7 +652,8 @@ def run_complete_validation(nlp_path: str = None) -> Dict[str, Any]:
 
 
 def generate_executive_summary(validation_report: Dict[str, Any]) -> str:
-    """Génération d'un résumé exécutif du rapport de validation."""    summary = validation_report.get("executive_summary", {})
+    """Génération d'un résumé exécutif du rapport de validation."""
+    summary = validation_report.get("executive_summary", {})
     
     return f"""=== RÉSUMÉ EXÉCUTIF - VALIDATION MODULE NLP ===
 

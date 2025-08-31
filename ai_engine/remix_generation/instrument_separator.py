@@ -17,7 +17,8 @@ Contact: mlaiel@live.de
 MISSION: Séparation avancée de sources audio et isolation d'instruments avec IA
 TECHNOLOGIES: Deep Learning, Spectral Analysis, Neural Networks, Audio Processing
 LOGIQUE MÉTIER: Mixed audio → Source analysis → Neural separation → Quality enhancement → Isolated tracks
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 import torch
@@ -37,7 +38,8 @@ import sklearn.decomposition
 logger = logging.getLogger(__name__)
 
 class InstrumentType(Enum):
-    """Types of instruments for separation"""    VOCALS = "vocals"
+    """Types of instruments for separation"""
+    VOCALS = "vocals"
     DRUMS = "drums"
     BASS = "bass"
     GUITAR = "guitar"
@@ -52,7 +54,8 @@ class InstrumentType(Enum):
     OTHER = "other"
 
 class SeparationMethod(Enum):
-    """Source separation methods"""    NEURAL_NETWORK = "neural_network"
+    """Source separation methods"""
+    NEURAL_NETWORK = "neural_network"
     SPECTRAL_MASKING = "spectral_masking"
     HARMONIC_PERCUSSIVE = "harmonic_percussive"
     NON_NEGATIVE_FACTORIZATION = "nnf"
@@ -62,14 +65,16 @@ class SeparationMethod(Enum):
     SPLEETER = "spleeter"
 
 class SeparationQuality(Enum):
-    """Quality levels for separation"""    FAST = "fast"
+    """Quality levels for separation"""
+    FAST = "fast"
     STANDARD = "standard"
     HIGH = "high"
     AUDIOPHILE = "audiophile"
 
 @dataclass
 class SeparationParameters:
-    """Parameters for source separation"""    method: SeparationMethod = SeparationMethod.NEURAL_NETWORK
+    """Parameters for source separation"""
+    method: SeparationMethod = SeparationMethod.NEURAL_NETWORK
     quality: SeparationQuality = SeparationQuality.HIGH
     target_instruments: List[InstrumentType] = field(default_factory=lambda: [InstrumentType.VOCALS, InstrumentType.DRUMS, InstrumentType.BASS, InstrumentType.OTHER])
     frame_size: int = 4096
@@ -84,7 +89,8 @@ class SeparationParameters:
 
 @dataclass
 class SeparatedTrack:
-    """Individual separated track"""    instrument_type: InstrumentType
+    """Individual separated track"""
+    instrument_type: InstrumentType
     audio_data: np.ndarray
     confidence_score: float
     spectral_mask: np.ndarray
@@ -93,7 +99,8 @@ class SeparatedTrack:
 
 @dataclass
 class SeparationResult:
-    """Complete separation result"""    separation_id: str
+    """Complete separation result"""
+    separation_id: str
     original_audio: np.ndarray
     separated_tracks: Dict[InstrumentType, SeparatedTrack]
     sample_rate: int
@@ -104,7 +111,8 @@ class SeparationResult:
     success: bool
 
 class UNetSeparator(nn.Module):
-    """U-Net architecture for source separation"""    
+    """U-Net architecture for source separation"""
+    
     def __init__(self, input_channels: int = 2, output_channels: int = 4, 
                  feature_maps: int = 64):
         super(UNetSeparator, self).__init__()
@@ -138,7 +146,8 @@ class UNetSeparator(nn.Module):
         self.final_conv = nn.Conv2d(feature_maps, output_channels, 1)
         
     def _conv_block(self, in_channels: int, out_channels: int):
-        """Convolutional block with batch normalization and activation"""        return nn.Sequential(
+        """Convolutional block with batch normalization and activation"""
+        return nn.Sequential(
             nn.Conv2d(in_channels, out_channels, 3, padding=1),
             nn.BatchNorm2d(out_channels),
             nn.ReLU(inplace=True),
@@ -180,7 +189,8 @@ class UNetSeparator(nn.Module):
         return output
 
 class ConvTasNet(nn.Module):
-    """Conv-TasNet for real-time source separation"""    
+    """Conv-TasNet for real-time source separation"""
+    
     def __init__(self, num_sources: int = 4, encoder_dim: int = 512, 
                  num_blocks: int = 8, num_repeats: int = 3):
         super(ConvTasNet, self).__init__()
@@ -225,7 +235,8 @@ class ConvTasNet(nn.Module):
         return separated
 
 class TCNSeparator(nn.Module):
-    """Temporal Convolutional Network for separation"""    
+    """Temporal Convolutional Network for separation"""
+    
     def __init__(self, input_dim: int, num_sources: int, 
                  num_blocks: int = 8, num_repeats: int = 3):
         super(TCNSeparator, self).__init__()
@@ -277,7 +288,8 @@ class TCNSeparator(nn.Module):
         return masks
 
 class TCNBlock(nn.Module):
-    """Temporal Convolutional Block"""    
+    """Temporal Convolutional Block"""
+    
     def __init__(self, input_dim: int, hidden_dim: int, 
                  kernel_size: int, dilation: int):
         super(TCNBlock, self).__init__()
@@ -313,12 +325,14 @@ class TCNBlock(nn.Module):
         return out
 
 class SpectralAnalyzer:
-    """Advanced spectral analysis for source separation"""    
+    """Advanced spectral analysis for source separation"""
+    
     def __init__(self):
         self.instrument_profiles = self._initialize_instrument_profiles()
     
     def _initialize_instrument_profiles(self) -> Dict[InstrumentType, Dict[str, Any]]:
-        """Initialize spectral profiles for different instruments"""        return {
+        """Initialize spectral profiles for different instruments"""
+        return {
             InstrumentType.VOCALS: {
                 "frequency_range": (80, 1200),
                 "formant_regions": [(400, 800), (800, 1200), (2400, 3200)],
@@ -358,7 +372,8 @@ class SpectralAnalyzer:
     
     async def analyze_spectral_content(self, audio: np.ndarray, 
                                      sample_rate: int = 44100) -> Dict[str, Any]:
-        """Analyze spectral content of audio"""        try:
+        """Analyze spectral content of audio"""
+        try:
             # Compute STFT
             stft = librosa.stft(audio, n_fft=2048, hop_length=512)
             magnitude = np.abs(stft)
@@ -399,7 +414,8 @@ class SpectralAnalyzer:
             return {}
     
     async def identify_instruments(self, spectral_data: Dict[str, Any]) -> Dict[InstrumentType, float]:
-        """Identify likely instruments based on spectral analysis"""        try:
+        """Identify likely instruments based on spectral analysis"""
+        try:
             instrument_scores = {}
             
             magnitude = spectral_data.get("stft_magnitude", np.array([]))
@@ -432,7 +448,8 @@ class SpectralAnalyzer:
                                         frequencies: np.ndarray,
                                         profile: Dict[str, Any],
                                         spectral_data: Dict[str, Any]) -> float:
-        """Calculate likelihood score for specific instrument"""        try:
+        """Calculate likelihood score for specific instrument"""
+        try:
             score = 0.0
             
             # Frequency range matching
@@ -494,7 +511,8 @@ class SpectralAnalyzer:
             return 0.0
 
 class InstrumentSeparator:
-    """Main instrument separation engine"""    
+    """Main instrument separation engine"""
+    
     def __init__(self):
         # Neural networks
         self.unet_model = UNetSeparator()
@@ -522,7 +540,8 @@ class InstrumentSeparator:
     async def separate_sources(self, audio: np.ndarray,
                              sample_rate: int = 44100,
                              parameters: SeparationParameters = SeparationParameters()) -> SeparationResult:
-        """Separate audio sources into individual instruments"""        try:
+        """Separate audio sources into individual instruments"""
+        try:
             start_time = datetime.now()
             separation_id = f"separation_{int(start_time.timestamp())}"
             
@@ -585,7 +604,8 @@ class InstrumentSeparator:
                                           parameters: SeparationParameters,
                                           spectral_data: Dict[str, Any],
                                           instrument_probs: Dict[InstrumentType, float]) -> Dict[InstrumentType, SeparatedTrack]:
-        """Separate using neural network models"""        try:
+        """Separate using neural network models"""
+        try:
             # Convert to tensor
             if audio.ndim == 1:
                 audio_tensor = torch.FloatTensor(audio).unsqueeze(0).unsqueeze(0)
@@ -645,7 +665,8 @@ class InstrumentSeparator:
                                             parameters: SeparationParameters,
                                             spectral_data: Dict[str, Any],
                                             instrument_probs: Dict[InstrumentType, float]) -> Dict[InstrumentType, SeparatedTrack]:
-        """Separate using spectral masking techniques"""        try:
+        """Separate using spectral masking techniques"""
+        try:
             stft_magnitude = spectral_data.get("stft_magnitude", np.array([]))
             stft_phase = spectral_data.get("stft_phase", np.array([]))
             
@@ -704,7 +725,8 @@ class InstrumentSeparator:
                                     instrument: InstrumentType,
                                     spectral_data: Dict[str, Any],
                                     sample_rate: int) -> np.ndarray:
-        """Create spectral mask for specific instrument"""        try:
+        """Create spectral mask for specific instrument"""
+        try:
             freqs = spectral_data.get("frequency_bins", librosa.fft_frequencies(sr=sample_rate))
             mask = np.zeros_like(magnitude)
             
@@ -780,7 +802,8 @@ class InstrumentSeparator:
             return np.ones_like(magnitude) * 0.5
     
     async def _smooth_mask(self, mask: np.ndarray, sigma: float = 1.0) -> np.ndarray:
-        """Apply smoothing to spectral mask"""        try:
+        """Apply smoothing to spectral mask"""
+        try:
             from scipy import ndimage
             return ndimage.gaussian_filter(mask, sigma=sigma)
         except ImportError:
@@ -795,7 +818,8 @@ class InstrumentSeparator:
                                           parameters: SeparationParameters,
                                           spectral_data: Dict[str, Any],
                                           instrument_probs: Dict[InstrumentType, float]) -> Dict[InstrumentType, SeparatedTrack]:
-        """Separate using harmonic-percussive decomposition"""        try:
+        """Separate using harmonic-percussive decomposition"""
+        try:
             # Get harmonic and percussive components
             harmonic_component = spectral_data.get("harmonic_component")
             percussive_component = spectral_data.get("percussive_component")
@@ -848,7 +872,8 @@ class InstrumentSeparator:
                                parameters: SeparationParameters,
                                spectral_data: Dict[str, Any],
                                instrument_probs: Dict[InstrumentType, float]) -> Dict[InstrumentType, SeparatedTrack]:
-        """Separate using Non-negative Matrix Factorization"""        try:
+        """Separate using Non-negative Matrix Factorization"""
+        try:
             # Compute magnitude spectrogram
             stft = librosa.stft(audio, n_fft=parameters.frame_size, hop_length=parameters.hop_length)
             magnitude = np.abs(stft)
@@ -912,7 +937,8 @@ class InstrumentSeparator:
                                parameters: SeparationParameters,
                                spectral_data: Dict[str, Any],
                                instrument_probs: Dict[InstrumentType, float]) -> Dict[InstrumentType, SeparatedTrack]:
-        """Separate using Independent Component Analysis"""        try:
+        """Separate using Independent Component Analysis"""
+        try:
             # ICA requires multiple channels
             if audio.ndim == 1:
                 # Create artificial stereo by phase shifting
@@ -965,7 +991,8 @@ class InstrumentSeparator:
                                             parameters: SeparationParameters,
                                             spectral_data: Dict[str, Any],
                                             instrument_probs: Dict[InstrumentType, float]) -> Dict[InstrumentType, SeparatedTrack]:
-        """Separate using median filtering techniques"""        try:
+        """Separate using median filtering techniques"""
+        try:
             stft = librosa.stft(audio, n_fft=parameters.frame_size, hop_length=parameters.hop_length)
             magnitude = np.abs(stft)
             phase = np.angle(stft)
@@ -1032,7 +1059,8 @@ class InstrumentSeparator:
                                  parameters: SeparationParameters,
                                  spectral_data: Dict[str, Any],
                                  instrument_probs: Dict[InstrumentType, float]) -> Dict[InstrumentType, SeparatedTrack]:
-        """Separate using REpeating Pattern Extraction Technique (REPET)"""        try:
+        """Separate using REpeating Pattern Extraction Technique (REPET)"""
+        try:
             # Compute STFT
             stft = librosa.stft(audio, n_fft=parameters.frame_size, hop_length=parameters.hop_length)
             magnitude = np.abs(stft)
@@ -1119,7 +1147,8 @@ class InstrumentSeparator:
     
     async def _calculate_track_quality(self, track_audio: np.ndarray, 
                                      original_audio: np.ndarray) -> Dict[str, float]:
-        """Calculate quality metrics for separated track"""        try:
+        """Calculate quality metrics for separated track"""
+        try:
             quality_metrics = {}
             
             # Signal-to-artifact ratio (simplified)
@@ -1171,7 +1200,8 @@ class InstrumentSeparator:
     
     async def _calculate_isolation_level(self, track_audio: np.ndarray,
                                        original_audio: np.ndarray) -> float:
-        """Calculate how well the track is isolated from the mix"""        try:
+        """Calculate how well the track is isolated from the mix"""
+        try:
             if len(track_audio) == 0 or len(original_audio) == 0:
                 return 0.0
             
@@ -1201,7 +1231,8 @@ class InstrumentSeparator:
     async def _assess_separation_quality(self, original_audio: np.ndarray,
                                        separated_tracks: Dict[InstrumentType, SeparatedTrack],
                                        parameters: SeparationParameters) -> Dict[str, float]:
-        """Assess overall separation quality"""        try:
+        """Assess overall separation quality"""
+        try:
             if not separated_tracks:
                 return {"overall_quality": 0.0}
             
@@ -1256,7 +1287,8 @@ class InstrumentSeparator:
             return {"overall_quality": 0.0}
     
     def get_separation_statistics(self) -> Dict[str, Any]:
-        """Get separation performance statistics"""        try:
+        """Get separation performance statistics"""
+        try:
             if not self.separation_history:
                 return {"total_separations": 0}
             

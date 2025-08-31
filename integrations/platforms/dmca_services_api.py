@@ -6,7 +6,8 @@ Handles copyright protection, violation detection, and takedown management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import json
 import logging
@@ -22,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class DMCARequest:
-    """DMCA takedown request information"""    request_id: str
+    """DMCA takedown request information"""
+    request_id: str
     content_url: str
     infringing_url: str
     copyright_holder: str
@@ -37,7 +39,8 @@ class DMCARequest:
 
 @dataclass
 class ContentMonitor:
-    """Content monitoring configuration"""    monitor_id: str
+    """Content monitoring configuration"""
+    monitor_id: str
     content_title: str
     content_type: str  # "video", "audio", "image", "text"
     keywords: List[str]
@@ -49,7 +52,8 @@ class ContentMonitor:
 
 @dataclass
 class InfringementAlert:
-    """Copyright infringement alert"""    alert_id: str
+    """Copyright infringement alert"""
+    alert_id: str
     monitor_id: str
     infringing_url: str
     platform: str
@@ -60,7 +64,8 @@ class InfringementAlert:
 
 
 class DMCAServicesAPI:
-    """DMCA Services API integration"""    
+    """DMCA Services API integration"""
+    
     def __init__(self, rate_limiter: Optional[APIRateLimiter] = None, api_key: Optional[str] = None):
         self.session = None
         self.rate_limiter = rate_limiter or APIRateLimiter()
@@ -85,12 +90,14 @@ class DMCAServicesAPI:
         self.default_service = "dmca_com"
         
     async def __aenter__(self):
-        """Async context manager entry"""        self.session = aiohttp.ClientSession()
+        """Async context manager entry"""
+        self.session = aiohttp.ClientSession()
         await self.rate_limiter.__aenter__()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""        if self.session:
+        """Async context manager exit"""
+        if self.session:
             await self.session.close()
         await self.rate_limiter.__aexit__(exc_type, exc_val, exc_tb)
         
@@ -102,7 +109,8 @@ class DMCAServicesAPI:
         data: Optional[Dict[str, Any]] = None,
         service: str = None
     ) -> Dict[str, Any]:
-        """Make authenticated API request with rate limiting"""        
+        """Make authenticated API request with rate limiting"""
+        
         service = service or self.default_service
         service_config = self.services.get(service)
         
@@ -182,7 +190,8 @@ class DMCAServicesAPI:
         platform: Optional[str] = None,
         service: str = None
     ) -> DMCARequest:
-        """Submit a DMCA takedown request"""        
+        """Submit a DMCA takedown request"""
+        
         data = {
             "content_url": content_url,
             "infringing_url": infringing_url,
@@ -214,7 +223,8 @@ class DMCAServicesAPI:
         request_id: str,
         service: str = None
     ) -> DMCARequest:
-        """Get status of a takedown request"""        
+        """Get status of a takedown request"""
+        
         response = await self._make_request("GET", f"takedown-requests/{request_id}", service=service)
         
         request = DMCARequest(
@@ -241,7 +251,8 @@ class DMCAServicesAPI:
         offset: int = 0,
         service: str = None
     ) -> List[DMCARequest]:
-        """List takedown requests"""        
+        """List takedown requests"""
+        
         params = {
             "limit": min(limit, 100),
             "offset": offset
@@ -281,7 +292,8 @@ class DMCAServicesAPI:
         platforms: List[str],
         service: str = None
     ) -> ContentMonitor:
-        """Create a content monitoring job"""        
+        """Create a content monitoring job"""
+        
         data = {
             "content_title": content_title,
             "content_type": content_type,
@@ -309,7 +321,8 @@ class DMCAServicesAPI:
         is_active: Optional[bool] = None,
         service: str = None
     ) -> List[ContentMonitor]:
-        """Get content monitors"""        
+        """Get content monitors"""
+        
         params = {}
         if is_active is not None:
             params["is_active"] = is_active
@@ -340,7 +353,8 @@ class DMCAServicesAPI:
         limit: int = 50,
         service: str = None
     ) -> List[InfringementAlert]:
-        """Get infringement alerts"""        
+        """Get infringement alerts"""
+        
         params = {"limit": min(limit, 100)}
         
         if monitor_id:
@@ -374,7 +388,8 @@ class DMCAServicesAPI:
         status: str,
         service: str = None
     ) -> bool:
-        """Update infringement alert status"""        
+        """Update infringement alert status"""
+        
         data = {"status": status}
         
         try:
@@ -392,7 +407,8 @@ class DMCAServicesAPI:
         description: str,
         service: str = None
     ) -> DMCARequest:
-        """Create a takedown request from an infringement alert"""        
+        """Create a takedown request from an infringement alert"""
+        
         # First get alert details
         alert_response = await self._make_request("GET", f"alerts/{alert_id}", service=service)
         
@@ -424,7 +440,8 @@ class DMCAServicesAPI:
         requests: List[Dict[str, Any]],
         service: str = None
     ) -> List[DMCARequest]:
-        """Submit multiple takedown requests in bulk"""        
+        """Submit multiple takedown requests in bulk"""
+        
         data = {"requests": requests}
         
         response = await self._make_request("POST", "takedown-requests/bulk", data=data, service=service)
@@ -452,7 +469,8 @@ class DMCAServicesAPI:
         end_date: datetime,
         service: str = None
     ) -> Dict[str, Any]:
-        """Get DMCA service analytics"""        
+        """Get DMCA service analytics"""
+        
         params = {
             "start_date": start_date.strftime("%Y-%m-%d"),
             "end_date": end_date.strftime("%Y-%m-%d")
@@ -461,7 +479,8 @@ class DMCAServicesAPI:
         return await self._make_request("GET", "analytics", params=params, service=service)
         
     async def pause_monitor(self, monitor_id: str, service: str = None) -> bool:
-        """Pause a content monitor"""        
+        """Pause a content monitor"""
+        
         data = {"is_active": False}
         
         try:
@@ -473,7 +492,8 @@ class DMCAServicesAPI:
             return False
             
     async def resume_monitor(self, monitor_id: str, service: str = None) -> bool:
-        """Resume a content monitor"""        
+        """Resume a content monitor"""
+        
         data = {"is_active": True}
         
         try:

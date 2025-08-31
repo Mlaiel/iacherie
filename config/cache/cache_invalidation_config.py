@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Optional, Set, Any, Callable, Pattern
+"""
+from typing import Dict, List, Optional, Set, Any, Callable, Pattern
 from dataclasses import dataclass, field
 from enum import Enum
 import re
@@ -27,7 +28,8 @@ import json
 
 
 class InvalidationStrategy(str, Enum):
-    """Cache invalidation strategies"""    TIME_BASED = "time_based"  # TTL-based invalidation
+    """Cache invalidation strategies"""
+    TIME_BASED = "time_based"  # TTL-based invalidation
     EVENT_DRIVEN = "event_driven"  # Invalidate on data changes
     PATTERN_BASED = "pattern_based"  # Invalidate by key patterns
     TAG_BASED = "tag_based"  # Invalidate by tags
@@ -37,7 +39,8 @@ class InvalidationStrategy(str, Enum):
 
 
 class InvalidationEvent(str, Enum):
-    """Events that can trigger cache invalidation"""    DATA_UPDATE = "data_update"
+    """Events that can trigger cache invalidation"""
+    DATA_UPDATE = "data_update"
     DATA_DELETE = "data_delete"
     USER_LOGIN = "user_login"
     USER_LOGOUT = "user_logout"
@@ -51,7 +54,8 @@ class InvalidationEvent(str, Enum):
 
 
 class InvalidationScope(str, Enum):
-    """Scope of cache invalidation"""    SINGLE_KEY = "single_key"  # Invalidate specific key
+    """Scope of cache invalidation"""
+    SINGLE_KEY = "single_key"  # Invalidate specific key
     KEY_PATTERN = "key_pattern"  # Invalidate keys matching pattern
     TAG_GROUP = "tag_group"  # Invalidate all keys with specific tag
     TENANT_SCOPE = "tenant_scope"  # Invalidate all tenant keys
@@ -61,7 +65,8 @@ class InvalidationScope(str, Enum):
 
 @dataclass
 class InvalidationRule:
-    """Cache invalidation rule definition"""    name: str
+    """Cache invalidation rule definition"""
+    name: str
     strategy: InvalidationStrategy
     scope: InvalidationScope
     pattern: Optional[str] = None
@@ -75,10 +80,12 @@ class InvalidationRule:
     enabled: bool = True
     
     def matches_event(self, event: InvalidationEvent) -> bool:
-        """Check if rule applies to given event"""        return event in self.events
+        """Check if rule applies to given event"""
+        return event in self.events
     
     def matches_conditions(self, context: Dict[str, Any]) -> bool:
-        """Check if rule conditions are met"""        if not self.conditions:
+        """Check if rule conditions are met"""
+        if not self.conditions:
             return True
         
         for key, expected_value in self.conditions.items():
@@ -95,7 +102,8 @@ class InvalidationRule:
         return True
     
     def _evaluate_condition(self, actual: Any, condition: Dict[str, Any]) -> bool:
-        """Evaluate complex conditions"""        operator = condition["operator"]
+        """Evaluate complex conditions"""
+        operator = condition["operator"]
         expected = condition["value"]
         
         if operator == "eq":
@@ -124,7 +132,8 @@ class InvalidationRule:
 
 @dataclass
 class InvalidationMetrics:
-    """Cache invalidation metrics"""    total_invalidations: int = 0
+    """Cache invalidation metrics"""
+    total_invalidations: int = 0
     keys_invalidated: int = 0
     pattern_invalidations: int = 0
     tag_invalidations: int = 0
@@ -136,8 +145,10 @@ class InvalidationMetrics:
 
 
 class CacheInvalidationConfig(BaseModel):
-    """    Comprehensive cache invalidation configuration
-    """    
+    """
+    Comprehensive cache invalidation configuration
+    """
+    
     # General settings
     enabled: bool = True
     default_strategy: InvalidationStrategy = InvalidationStrategy.TIME_BASED
@@ -210,7 +221,8 @@ class CacheInvalidationConfig(BaseModel):
         return v
     
     def add_rule(self, rule: InvalidationRule):
-        """Add invalidation rule"""        # Check for duplicate names
+        """Add invalidation rule"""
+        # Check for duplicate names
         if any(r.name == rule.name for r in self.rules):
             raise ValueError(f"Rule with name '{rule.name}' already exists")
         
@@ -224,7 +236,8 @@ class CacheInvalidationConfig(BaseModel):
                 raise ValueError(f"Invalid pattern in rule '{rule.name}': {e}")
     
     def remove_rule(self, rule_name: str) -> bool:
-        """Remove invalidation rule"""        for i, rule in enumerate(self.rules):
+        """Remove invalidation rule"""
+        for i, rule in enumerate(self.rules):
             if rule.name == rule_name:
                 del self.rules[i]
                 if rule_name in self.compiled_patterns:
@@ -233,7 +246,8 @@ class CacheInvalidationConfig(BaseModel):
         return False
     
     def get_rules_for_event(self, event: InvalidationEvent) -> List[InvalidationRule]:
-        """Get rules that apply to specific event"""        matching_rules = []
+        """Get rules that apply to specific event"""
+        matching_rules = []
         
         for rule in self.rules:
             if rule.enabled and rule.matches_event(event):
@@ -243,14 +257,16 @@ class CacheInvalidationConfig(BaseModel):
         return sorted(matching_rules, key=lambda r: r.priority, reverse=True)
     
     def get_keys_by_pattern(self, pattern: str, all_keys: List[str]) -> List[str]:
-        """Get keys matching pattern"""        try:
+        """Get keys matching pattern"""
+        try:
             compiled_pattern = re.compile(pattern)
             return [key for key in all_keys if compiled_pattern.match(key)]
         except re.error:
             return []
     
     def get_keys_by_tags(self, tags: List[str], tag_index: Dict[str, Set[str]]) -> Set[str]:
-        """Get keys associated with specific tags"""        if not self.tag_index_enabled:
+        """Get keys associated with specific tags"""
+        if not self.tag_index_enabled:
             return set()
         
         matching_keys = set()
@@ -261,14 +277,17 @@ class CacheInvalidationConfig(BaseModel):
         return matching_keys
     
     def increment_global_version(self):
-        """Increment global version for version-based invalidation"""        if self.version_tracking_enabled:
+        """Increment global version for version-based invalidation"""
+        if self.version_tracking_enabled:
             self.global_version += 1
     
     def should_invalidate_version(self, key_version: int) -> bool:
-        """Check if key should be invalidated based on version"""        return self.version_tracking_enabled and key_version < self.global_version
+        """Check if key should be invalidated based on version"""
+        return self.version_tracking_enabled and key_version < self.global_version
     
     def create_dependency_chain(self, key: str, dependencies: List[str]) -> Dict[str, List[str]]:
-        """Create dependency chain for cascade invalidation"""        if not self.dependency_tracking_enabled:
+        """Create dependency chain for cascade invalidation"""
+        if not self.dependency_tracking_enabled:
             return {}
         
         # Limit dependencies to prevent excessive cascade
@@ -277,7 +296,8 @@ class CacheInvalidationConfig(BaseModel):
         return {key: limited_deps}
     
     def get_configuration_summary(self) -> Dict[str, Any]:
-        """Get configuration summary for monitoring"""        return {
+        """Get configuration summary for monitoring"""
+        return {
             "enabled": self.enabled,
             "default_strategy": self.default_strategy,
             "total_rules": len(self.rules),
@@ -292,8 +312,10 @@ class CacheInvalidationConfig(BaseModel):
 
 
 class InvalidationExecutor:
-    """    Executes cache invalidation operations
-    """    
+    """
+    Executes cache invalidation operations
+    """
+    
     def __init__(self, config: CacheInvalidationConfig):
         self.config = config
         self.metrics = InvalidationMetrics()
@@ -303,11 +325,13 @@ class InvalidationExecutor:
         self.processing_task = None
     
     async def start(self):
-        """Start invalidation processing"""        if self.config.event_processing_enabled:
+        """Start invalidation processing"""
+        if self.config.event_processing_enabled:
             self.processing_task = asyncio.create_task(self._process_events())
     
     async def stop(self):
-        """Stop invalidation processing"""        if self.processing_task:
+        """Stop invalidation processing"""
+        if self.processing_task:
             self.processing_task.cancel()
             try:
                 await self.processing_task
@@ -315,7 +339,8 @@ class InvalidationExecutor:
                 pass
     
     async def invalidate_by_event(self, event: InvalidationEvent, context: Dict[str, Any]):
-        """Trigger invalidation based on event"""        if not self.config.enabled:
+        """Trigger invalidation based on event"""
+        if not self.config.enabled:
             return
         
         await self.event_queue.put({
@@ -325,7 +350,8 @@ class InvalidationExecutor:
         })
     
     async def invalidate_key(self, key: str, cache_client: Any) -> bool:
-        """Invalidate single cache key"""        start_time = time.time()
+        """Invalidate single cache key"""
+        start_time = time.time()
         
         try:
             # Remove from cache
@@ -356,7 +382,8 @@ class InvalidationExecutor:
             return False
     
     async def invalidate_pattern(self, pattern: str, cache_client: Any, all_keys: List[str]) -> int:
-        """Invalidate keys matching pattern"""        if not self.config.enabled:
+        """Invalidate keys matching pattern"""
+        if not self.config.enabled:
             return 0
         
         matching_keys = self.config.get_keys_by_pattern(pattern, all_keys)
@@ -383,7 +410,8 @@ class InvalidationExecutor:
         return invalidated_count
     
     async def invalidate_tags(self, tags: List[str], cache_client: Any) -> int:
-        """Invalidate keys associated with tags"""        if not self.config.tag_index_enabled:
+        """Invalidate keys associated with tags"""
+        if not self.config.tag_index_enabled:
             return 0
         
         keys_to_invalidate = self.config.get_keys_by_tags(tags, self.tag_index)
@@ -401,7 +429,8 @@ class InvalidationExecutor:
         return invalidated_count
     
     async def invalidate_dependencies(self, key: str, cache_client: Any) -> int:
-        """Invalidate dependent keys in cascade"""        if not self.config.dependency_tracking_enabled:
+        """Invalidate dependent keys in cascade"""
+        if not self.config.dependency_tracking_enabled:
             return 0
         
         dependent_keys = self._get_dependent_keys(key, depth=0)
@@ -418,7 +447,8 @@ class InvalidationExecutor:
         return invalidated_count
     
     async def _process_events(self):
-        """Process invalidation events from queue"""        while True:
+        """Process invalidation events from queue"""
+        while True:
             try:
                 # Get events in batch
                 events = []
@@ -453,7 +483,8 @@ class InvalidationExecutor:
                 await asyncio.sleep(1.0)
     
     async def _process_event_batch(self, events: List[Dict[str, Any]]):
-        """Process batch of invalidation events"""        for event_data in events:
+        """Process batch of invalidation events"""
+        for event_data in events:
             event = event_data["event"]
             context = event_data["context"]
             
@@ -465,12 +496,14 @@ class InvalidationExecutor:
                     await self._execute_rule(rule, context)
     
     async def _execute_rule(self, rule: InvalidationRule, context: Dict[str, Any]):
-        """Execute specific invalidation rule"""        # Implementation depends on cache client interface
+        """Execute specific invalidation rule"""
+        # Implementation depends on cache client interface
         # This is a placeholder that would be implemented with actual cache operations
         pass
     
     async def _delete_from_cache(self, cache_client: Any, key: str) -> bool:
-        """Delete key from cache"""        try:
+        """Delete key from cache"""
+        try:
             # Implementation depends on cache client interface
             if hasattr(cache_client, 'delete'):
                 if asyncio.iscoroutinefunction(cache_client.delete):
@@ -482,7 +515,8 @@ class InvalidationExecutor:
             return False
     
     async def _invalidate_batch(self, cache_client: Any, keys: List[str]) -> int:
-        """Invalidate batch of keys"""        if hasattr(cache_client, 'delete_many'):
+        """Invalidate batch of keys"""
+        if hasattr(cache_client, 'delete_many'):
             try:
                 if asyncio.iscoroutinefunction(cache_client.delete_many):
                     result = await cache_client.delete_many(keys)
@@ -500,7 +534,8 @@ class InvalidationExecutor:
         return count
     
     def _get_dependent_keys(self, key: str, depth: int) -> Set[str]:
-        """Get keys that depend on given key"""        if depth >= self.config.dependency_depth_limit:
+        """Get keys that depend on given key"""
+        if depth >= self.config.dependency_depth_limit:
             return set()
         
         dependents = set()
@@ -516,7 +551,8 @@ class InvalidationExecutor:
         return dependents
     
     def _remove_from_dependencies(self, key: str):
-        """Remove key from dependency graph"""        # Remove as dependent
+        """Remove key from dependency graph"""
+        # Remove as dependent
         if key in self.dependency_graph:
             del self.dependency_graph[key]
         
@@ -526,12 +562,14 @@ class InvalidationExecutor:
                 deps.remove(key)
     
     def _remove_from_tags(self, key: str):
-        """Remove key from tag index"""        for tag_keys in self.tag_index.values():
+        """Remove key from tag index"""
+        for tag_keys in self.tag_index.values():
             if key in tag_keys:
                 tag_keys.discard(key)
     
     def _update_average_time(self, elapsed_time: float):
-        """Update average invalidation time"""        total_ops = self.metrics.total_invalidations
+        """Update average invalidation time"""
+        total_ops = self.metrics.total_invalidations
         if total_ops > 1:
             self.metrics.average_invalidation_time = (
                 (self.metrics.average_invalidation_time * (total_ops - 1) + elapsed_time) / total_ops

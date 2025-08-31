@@ -11,7 +11,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Any
 import json
@@ -28,9 +29,11 @@ logger = logging.getLogger(__name__)
 
 
 class NetworkMetricsDashboard:
-    """    Comprehensive metrics dashboard for IA Influencer Agent Network Module
+    """
+    Comprehensive metrics dashboard for IA Influencer Agent Network Module
     Provides real-time monitoring and alerting for content protection infrastructure
-    """    
+    """
+    
     def __init__(
         self,
         prometheus_endpoint: str = "http://localhost:9090",
@@ -55,7 +58,8 @@ class NetworkMetricsDashboard:
         self._initialize_platform_metrics()
     
     def _initialize_platform_metrics(self):
-        """Initialize platform-specific metrics"""        
+        """Initialize platform-specific metrics"""
+        
         # Content Protection Metrics
         self.metrics['content_fingerprints_total'] = Counter(
             'ia_content_fingerprints_total',
@@ -146,7 +150,8 @@ class NetworkMetricsDashboard:
         )
     
     async def initialize(self) -> bool:
-        """Initialize metrics dashboard"""        try:
+        """Initialize metrics dashboard"""
+        try:
             logger.info("Initializing Network Metrics Dashboard...")
             
             # Initialize Redis for metrics caching
@@ -179,7 +184,8 @@ class NetworkMetricsDashboard:
         protection_status: str,
         processing_time: float
     ):
-        """Record content fingerprinting metrics"""        try:
+        """Record content fingerprinting metrics"""
+        try:
             # Update fingerprint counter
             self.metrics['content_fingerprints_total'].labels(
                 content_type=content_type,
@@ -207,7 +213,8 @@ class NetworkMetricsDashboard:
         action_taken: str,
         content_metadata: Dict[str, Any]
     ):
-        """Record content violation detection"""        try:
+        """Record content violation detection"""
+        try:
             # Update violation counter
             self.metrics['content_violations_detected'].labels(
                 violation_type=violation_type,
@@ -240,7 +247,8 @@ class NetworkMetricsDashboard:
         region: str,
         revenue_amount: float
     ):
-        """Update monetization revenue metrics"""        try:
+        """Update monetization revenue metrics"""
+        try:
             # Update revenue gauge
             self.metrics['monetization_revenue'].labels(
                 content_type=content_type,
@@ -271,7 +279,8 @@ class NetworkMetricsDashboard:
         latency_seconds: float,
         bandwidth_bytes: int
     ):
-        """Record network performance metrics"""        try:
+        """Record network performance metrics"""
+        try:
             # Record latency
             self.metrics['network_latency'].labels(
                 source_region=source_region,
@@ -295,7 +304,8 @@ class NetworkMetricsDashboard:
         content_type: str,
         hit_ratio: float
     ):
-        """Update CDN cache efficiency metrics"""        try:
+        """Update CDN cache efficiency metrics"""
+        try:
             self.metrics['cdn_cache_efficiency'].labels(
                 region=region,
                 content_type=content_type
@@ -310,7 +320,8 @@ class NetworkMetricsDashboard:
         user_segment: str,
         engagement_score: float
     ):
-        """Record user engagement metrics"""        try:
+        """Record user engagement metrics"""
+        try:
             self.metrics['user_engagement_score'].labels(
                 content_id=content_id,
                 user_segment=user_segment
@@ -326,7 +337,8 @@ class NetworkMetricsDashboard:
         creator_tier: str,
         popularity_score: float
     ):
-        """Update content popularity metrics"""        try:
+        """Update content popularity metrics"""
+        try:
             self.metrics['content_popularity'].labels(
                 content_id=content_id,
                 content_type=content_type,
@@ -343,7 +355,8 @@ class NetworkMetricsDashboard:
         action: str,
         source_details: Dict[str, Any]
     ):
-        """Record security event metrics"""        try:
+        """Record security event metrics"""
+        try:
             # Update security counter
             self.metrics['security_threats_blocked'].labels(
                 threat_type=threat_type,
@@ -373,7 +386,8 @@ class NetworkMetricsDashboard:
             logger.error(f"Failed to record security event: {e}")
     
     async def get_dashboard_data(self) -> Dict[str, Any]:
-        """Get comprehensive dashboard data"""        try:
+        """Get comprehensive dashboard data"""
+        try:
             dashboard_data = {
                 'overview': await self._get_overview_metrics(),
                 'content_protection': await self._get_content_protection_metrics(),
@@ -395,7 +409,8 @@ class NetworkMetricsDashboard:
         self,
         time_range: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
-        """Generate comprehensive performance report"""        try:
+        """Generate comprehensive performance report"""
+        try:
             end_time = datetime.now()
             start_time = end_time - time_range
             
@@ -439,7 +454,8 @@ class NetworkMetricsDashboard:
     # Private methods
     
     async def _setup_prometheus_server(self):
-        """Setup Prometheus metrics server"""        try:
+        """Setup Prometheus metrics server"""
+        try:
             # Start Prometheus metrics server on port 8000
             prometheus_client.start_http_server(8000, registry=self.registry)
             logger.info("Prometheus metrics server started on port 8000")
@@ -447,7 +463,8 @@ class NetworkMetricsDashboard:
             logger.error(f"Failed to start Prometheus server: {e}")
     
     async def _create_grafana_dashboards(self):
-        """Create Grafana dashboards for IA platform"""        try:
+        """Create Grafana dashboards for IA platform"""
+        try:
             # Dashboard configurations
             dashboards_config = {
                 'ia_network_overview': {
@@ -487,7 +504,8 @@ class NetworkMetricsDashboard:
             logger.error(f"Failed to create Grafana dashboards: {e}")
     
     async def _setup_alerting_rules(self):
-        """Setup alerting rules for critical metrics"""        try:
+        """Setup alerting rules for critical metrics"""
+        try:
             alerting_rules = {
                 'high_content_violation_rate': {
                     'condition': 'rate(ia_content_violations_detected_total[5m]) > 10',
@@ -518,7 +536,8 @@ class NetworkMetricsDashboard:
             logger.error(f"Failed to setup alerting rules: {e}")
     
     async def _metrics_collection_loop(self):
-        """Background metrics collection loop"""        while True:
+        """Background metrics collection loop"""
+        while True:
             try:
                 # Collect and cache metrics every minute
                 await asyncio.sleep(60)
@@ -529,7 +548,8 @@ class NetworkMetricsDashboard:
                 await asyncio.sleep(60)
     
     async def _dashboard_update_loop(self):
-        """Background dashboard update loop"""        while True:
+        """Background dashboard update loop"""
+        while True:
             try:
                 # Update dashboard data every 5 minutes
                 await asyncio.sleep(300)
@@ -542,7 +562,8 @@ class NetworkMetricsDashboard:
 
 # Example usage
 async def demo_metrics_dashboard():
-    """Demonstrate metrics dashboard functionality"""    
+    """Demonstrate metrics dashboard functionality"""
+    
     print("🚀 IA Influencer Agent - Network Metrics Dashboard Demo")
     print("=" * 60)
     

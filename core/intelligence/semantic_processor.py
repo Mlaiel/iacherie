@@ -13,7 +13,8 @@ Features:
 - Intent recognition and extraction
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
 from dataclasses import dataclass
@@ -48,7 +49,8 @@ from ..storage.semantic_storage import SemanticStorage
 
 
 class LanguageCode(Enum):
-    """Supported language codes"""    ENGLISH = "en"
+    """Supported language codes"""
+    ENGLISH = "en"
     FRENCH = "fr"
     GERMAN = "de"
     SPANISH = "es"
@@ -58,7 +60,8 @@ class LanguageCode(Enum):
 
 
 class SemanticTask(Enum):
-    """Available semantic processing tasks"""    SENTIMENT_ANALYSIS = "sentiment_analysis"
+    """Available semantic processing tasks"""
+    SENTIMENT_ANALYSIS = "sentiment_analysis"
     EMOTION_DETECTION = "emotion_detection"
     ENTITY_EXTRACTION = "entity_extraction"
     CONTENT_CLASSIFICATION = "content_classification"
@@ -70,7 +73,8 @@ class SemanticTask(Enum):
 
 @dataclass
 class SentimentResult:
-    """Sentiment analysis result"""    overall_sentiment: str  # positive, negative, neutral
+    """Sentiment analysis result"""
+    overall_sentiment: str  # positive, negative, neutral
     confidence: float
     scores: Dict[str, float]  # detailed sentiment scores
     emotional_tone: Optional[str] = None
@@ -79,7 +83,8 @@ class SentimentResult:
 
 @dataclass
 class EntityResult:
-    """Named entity recognition result"""    entities: List[Dict[str, Any]]
+    """Named entity recognition result"""
+    entities: List[Dict[str, Any]]
     entity_types: List[str]
     entity_links: Dict[str, str]
     confidence_scores: Dict[str, float]
@@ -87,7 +92,8 @@ class EntityResult:
 
 @dataclass
 class ClassificationResult:
-    """Content classification result"""    primary_category: str
+    """Content classification result"""
+    primary_category: str
     categories: Dict[str, float]
     confidence: float
     subcategories: Optional[Dict[str, float]] = None
@@ -95,7 +101,8 @@ class ClassificationResult:
 
 @dataclass
 class SimilarityResult:
-    """Similarity analysis result"""    similarity_score: float
+    """Similarity analysis result"""
+    similarity_score: float
     semantic_distance: float
     common_themes: List[str]
     distinctive_features: Dict[str, List[str]]
@@ -103,7 +110,8 @@ class SimilarityResult:
 
 @dataclass
 class SemanticAnalysisResult:
-    """Comprehensive semantic analysis result"""    analysis_id: str
+    """Comprehensive semantic analysis result"""
+    analysis_id: str
     input_text: str
     language: LanguageCode
     sentiment: SentimentResult
@@ -118,14 +126,18 @@ class SemanticAnalysisResult:
 
 
 class SemanticProcessor:
-    """    Advanced semantic processing engine for comprehensive text understanding
-    """    
+    """
+    Advanced semantic processing engine for comprehensive text understanding
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize semantic processor
+        """
+        Initialize semantic processor
         
         Args:
             config: Configuration dictionary
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize models and components
@@ -146,7 +158,8 @@ class SemanticProcessor:
         self.supported_languages = [lang.value for lang in LanguageCode if lang != LanguageCode.AUTO]
     
     def _initialize_models(self) -> None:
-        """Initialize NLP and semantic models"""        try:
+        """Initialize NLP and semantic models"""
+        try:
             # Download required NLTK data
             try:
                 nltk.download('vader_lexicon', quiet=True)
@@ -224,12 +237,14 @@ class SemanticProcessor:
             raise
     
     def _initialize_processors(self) -> None:
-        """Initialize semantic processors"""        self.semantic_adapter = SemanticAdapter(self.config)
+        """Initialize semantic processors"""
+        self.semantic_adapter = SemanticAdapter(self.config)
         self.language_processor = LanguageProcessor(self.config)
         self.nlp_engine = NLPEngine(self.config)
     
     def _initialize_storage(self) -> None:
-        """Initialize semantic storage"""        self.semantic_storage = SemanticStorage(self.config)
+        """Initialize semantic storage"""
+        self.semantic_storage = SemanticStorage(self.config)
     
     async def analyze_text(
         self,
@@ -237,7 +252,8 @@ class SemanticProcessor:
         language: LanguageCode = LanguageCode.AUTO,
         tasks: Optional[List[SemanticTask]] = None
     ) -> SemanticAnalysisResult:
-        """        Perform comprehensive semantic analysis on text
+        """
+        Perform comprehensive semantic analysis on text
         
         Args:
             text: Input text to analyze
@@ -246,7 +262,8 @@ class SemanticProcessor:
             
         Returns:
             SemanticAnalysisResult: Comprehensive analysis results
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         analysis_id = self._generate_analysis_id(text)
         
         try:
@@ -324,7 +341,8 @@ class SemanticProcessor:
             raise
     
     async def _detect_language(self, text: str) -> LanguageCode:
-        """Detect text language"""        try:
+        """Detect text language"""
+        try:
             # Use langdetect or simple heuristics
             from langdetect import detect
             detected = detect(text)
@@ -346,7 +364,8 @@ class SemanticProcessor:
             return LanguageCode.ENGLISH
     
     async def _analyze_sentiment(self, text: str, language: LanguageCode) -> SentimentResult:
-        """Analyze sentiment and emotional tone"""        try:
+        """Analyze sentiment and emotional tone"""
+        try:
             # VADER sentiment analysis (works well for social media text)
             vader_scores = self.vader_analyzer.polarity_scores(text)
             
@@ -393,7 +412,8 @@ class SemanticProcessor:
             )
     
     async def _extract_entities(self, text: str, language: LanguageCode) -> EntityResult:
-        """Extract named entities and their relationships"""        try:
+        """Extract named entities and their relationships"""
+        try:
             # Get appropriate spaCy model
             nlp_model = self.nlp_models.get(language.value, self.nlp_models['en'])
             
@@ -441,7 +461,8 @@ class SemanticProcessor:
             )
     
     async def _classify_content(self, text: str, language: LanguageCode) -> ClassificationResult:
-        """Classify content into categories"""        try:
+        """Classify content into categories"""
+        try:
             # Define content categories
             content_categories = [
                 "entertainment", "music", "education", "technology", "business",
@@ -485,7 +506,8 @@ class SemanticProcessor:
             )
     
     async def _extract_keywords(self, text: str, language: LanguageCode) -> List[str]:
-        """Extract important keywords and phrases"""        try:
+        """Extract important keywords and phrases"""
+        try:
             # Get spaCy model
             nlp_model = self.nlp_models.get(language.value, self.nlp_models['en'])
             doc = nlp_model(text)
@@ -530,7 +552,8 @@ class SemanticProcessor:
             return []
     
     async def _extract_topics(self, text: str, language: LanguageCode) -> List[Dict[str, Any]]:
-        """Extract topics from text"""        try:
+        """Extract topics from text"""
+        try:
             # Simple topic extraction based on entities and keywords
             nlp_model = self.nlp_models.get(language.value, self.nlp_models['en'])
             doc = nlp_model(text)
@@ -571,7 +594,8 @@ class SemanticProcessor:
             return []
     
     def _map_entity_to_topic(self, entity_label: str) -> str:
-        """Map entity labels to topic categories"""        entity_topic_mapping = {
+        """Map entity labels to topic categories"""
+        entity_topic_mapping = {
             'PERSON': 'people',
             'ORG': 'organizations',
             'GPE': 'locations',
@@ -584,7 +608,8 @@ class SemanticProcessor:
         return entity_topic_mapping.get(entity_label, 'general')
     
     async def _generate_embeddings(self, text: str) -> np.ndarray:
-        """Generate semantic embeddings for text"""        try:
+        """Generate semantic embeddings for text"""
+        try:
             # Use sentence transformer for embeddings
             embedding = self.sentence_transformer.encode(text)
             return embedding
@@ -600,7 +625,8 @@ class SemanticProcessor:
         entity_result: EntityResult,
         classification_result: ClassificationResult
     ) -> float:
-        """Calculate overall confidence score for analysis"""        confidences = [
+        """Calculate overall confidence score for analysis"""
+        confidences = [
             sentiment_result.confidence,
             classification_result.confidence,
             0.8 if entity_result.entities else 0.5  # Entity extraction confidence
@@ -614,7 +640,8 @@ class SemanticProcessor:
         text2: str,
         method: str = "semantic"
     ) -> SimilarityResult:
-        """        Calculate similarity between two texts
+        """
+        Calculate similarity between two texts
         
         Args:
             text1: First text
@@ -623,7 +650,8 @@ class SemanticProcessor:
             
         Returns:
             SimilarityResult: Similarity analysis result
-        """        try:
+        """
+        try:
             if method == "semantic":
                 # Semantic similarity using embeddings
                 embedding1 = await self._generate_embeddings(text1)
@@ -673,7 +701,8 @@ class SemanticProcessor:
             )
     
     async def _find_common_themes(self, text1: str, text2: str) -> List[str]:
-        """Find common themes between two texts"""        try:
+        """Find common themes between two texts"""
+        try:
             # Analyze both texts
             analysis1 = await self.analyze_text(text1)
             analysis2 = await self.analyze_text(text2)
@@ -702,7 +731,8 @@ class SemanticProcessor:
             return []
     
     async def _find_distinctive_features(self, text1: str, text2: str) -> Dict[str, List[str]]:
-        """Find distinctive features of each text"""        try:
+        """Find distinctive features of each text"""
+        try:
             # Analyze both texts
             analysis1 = await self.analyze_text(text1)
             analysis2 = await self.analyze_text(text2)
@@ -736,7 +766,8 @@ class SemanticProcessor:
         content_database: List[str],
         top_k: int = 10
     ) -> List[Tuple[str, float]]:
-        """        Search for similar content in a database
+        """
+        Search for similar content in a database
         
         Args:
             query_text: Query text to find similar content for
@@ -745,7 +776,8 @@ class SemanticProcessor:
             
         Returns:
             List of (content, similarity_score) tuples
-        """        try:
+        """
+        try:
             # Generate query embedding
             query_embedding = await self._generate_embeddings(query_text)
             
@@ -771,7 +803,8 @@ class SemanticProcessor:
             return []
     
     async def extract_intent(self, text: str) -> Dict[str, Any]:
-        """Extract user intent from text"""        try:
+        """Extract user intent from text"""
+        try:
             # Define intent categories
             intent_categories = [
                 "create_content", "analyze_performance", "monetize_content",
@@ -813,7 +846,8 @@ class SemanticProcessor:
             }
     
     def _generate_analysis_id(self, text: str) -> str:
-        """Generate unique analysis ID"""        import hashlib
+        """Generate unique analysis ID"""
+        import hashlib
         text_hash = hashlib.md5(text.encode()).hexdigest()
         timestamp = str(datetime.now().timestamp())
         return f"sem_{text_hash[:8]}_{timestamp[-6:]}"
@@ -824,12 +858,14 @@ class SemanticProcessor:
         language: LanguageCode,
         tasks: Optional[List[SemanticTask]]
     ) -> str:
-        """Generate cache key for analysis"""        text_hash = str(hash(text))
+        """Generate cache key for analysis"""
+        text_hash = str(hash(text))
         tasks_str = "_".join(sorted([task.value for task in tasks or []]))
         return f"{text_hash}_{language.value}_{tasks_str}"
     
     def _update_performance_metrics(self, processing_time: float) -> None:
-        """Update performance tracking metrics"""        self.performance_metrics["total_analyses"] += 1
+        """Update performance tracking metrics"""
+        self.performance_metrics["total_analyses"] += 1
         total = self.performance_metrics["total_analyses"]
         current_avg = self.performance_metrics["average_processing_time"]
         
@@ -848,7 +884,8 @@ class SemanticProcessor:
         language: LanguageCode = LanguageCode.AUTO,
         tasks: Optional[List[SemanticTask]] = None
     ) -> List[SemanticAnalysisResult]:
-        """Analyze multiple texts in batch"""        results = []
+        """Analyze multiple texts in batch"""
+        results = []
         
         for text in texts:
             try:
@@ -861,14 +898,17 @@ class SemanticProcessor:
         return results
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get current performance metrics"""        return self.performance_metrics.copy()
+        """Get current performance metrics"""
+        return self.performance_metrics.copy()
     
     async def clear_cache(self) -> None:
-        """Clear analysis cache"""        self.analysis_cache.clear()
+        """Clear analysis cache"""
+        self.analysis_cache.clear()
         self.logger.info("Semantic analysis cache cleared")
     
     async def update_similarity_index(self, new_content: List[str]) -> None:
-        """Update similarity search index with new content"""        try:
+        """Update similarity search index with new content"""
+        try:
             for content in new_content:
                 embedding = await self._generate_embeddings(content)
                 self.similarity_index.add(embedding.reshape(1, -1))
@@ -880,4 +920,5 @@ class SemanticProcessor:
             self.logger.error(f"Failed to update similarity index: {e}")
     
     async def get_supported_languages(self) -> List[str]:
-        """Get list of supported languages"""        return self.supported_languages
+        """Get list of supported languages"""
+        return self.supported_languages

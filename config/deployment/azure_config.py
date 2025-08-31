@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Optional, Any
+"""
+from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 import json
 from pathlib import Path
@@ -22,7 +23,8 @@ from pathlib import Path
 
 @dataclass
 class AzureResourceConfig:
-    """Azure resource configuration"""    resource_type: str
+    """Azure resource configuration"""
+    resource_type: str
     name: str
     location: str
     tags: Dict[str, str] = field(default_factory=dict)
@@ -30,7 +32,8 @@ class AzureResourceConfig:
 
 
 class AzureConfig:
-    """    Professional Azure cloud configuration manager for IA-Influencer Agent Platform.
+    """
+    Professional Azure cloud configuration manager for IA-Influencer Agent Platform.
     
     Provides enterprise-grade Azure services integration:
     - AKS clusters for Kubernetes orchestration
@@ -43,7 +46,8 @@ class AzureConfig:
     - Cognitive Services for content analysis
     - Azure Monitor for comprehensive observability
     - Key Vault for secrets management
-    """    
+    """
+    
     def __init__(self, environment: str = "development", location: str = "East US"):
         self.environment = environment
         self.location = location
@@ -63,7 +67,8 @@ class AzureConfig:
         }
     
     def get_resource_group_configuration(self) -> Dict[str, Any]:
-        """Generate resource group configuration"""        return {
+        """Generate resource group configuration"""
+        return {
             "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
             "contentVersion": "1.0.0.0",
             "parameters": {
@@ -99,7 +104,8 @@ class AzureConfig:
         }
     
     def get_virtual_network_configuration(self) -> Dict[str, Any]:
-        """Generate virtual network configuration"""        return {
+        """Generate virtual network configuration"""
+        return {
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2023-05-01",
             "name": f"{self.project_name}-vnet-{self.environment}",
@@ -156,7 +162,8 @@ class AzureConfig:
         }
     
     def get_network_security_groups_configuration(self) -> List[Dict[str, Any]]:
-        """Generate network security groups configuration"""        security_groups = []
+        """Generate network security groups configuration"""
+        security_groups = []
         
         # AKS Security Group
         aks_nsg = {
@@ -281,7 +288,8 @@ class AzureConfig:
         return security_groups
     
     def get_aks_configuration(self) -> Dict[str, Any]:
-        """Generate AKS cluster configuration"""        return {
+        """Generate AKS cluster configuration"""
+        return {
             "type": "Microsoft.ContainerService/managedClusters",
             "apiVersion": "2023-10-01",
             "name": f"{self.project_name}-aks-{self.environment}",
@@ -377,7 +385,8 @@ class AzureConfig:
         }
     
     def get_postgresql_configuration(self) -> Dict[str, Any]:
-        """Generate Azure Database for PostgreSQL configuration"""        return {
+        """Generate Azure Database for PostgreSQL configuration"""
+        return {
             "type": "Microsoft.DBforPostgreSQL/flexibleServers",
             "apiVersion": "2022-12-01",
             "name": f"{self.project_name}-postgres-{self.environment}",
@@ -415,7 +424,8 @@ class AzureConfig:
         }
     
     def get_redis_cache_configuration(self) -> Dict[str, Any]:
-        """Generate Azure Cache for Redis configuration"""        return {
+        """Generate Azure Cache for Redis configuration"""
+        return {
             "type": "Microsoft.Cache/Redis",
             "apiVersion": "2023-08-01",
             "name": f"{self.project_name}-redis-{self.environment}",
@@ -440,7 +450,8 @@ class AzureConfig:
         }
     
     def get_storage_account_configuration(self) -> List[Dict[str, Any]]:
-        """Generate Azure Storage Account configurations"""        storage_accounts = []
+        """Generate Azure Storage Account configurations"""
+        storage_accounts = []
         
         # Content Storage Account
         content_storage = {
@@ -534,7 +545,8 @@ class AzureConfig:
         return storage_accounts
     
     def get_key_vault_configuration(self) -> Dict[str, Any]:
-        """Generate Azure Key Vault configuration"""        return {
+        """Generate Azure Key Vault configuration"""
+        return {
             "type": "Microsoft.KeyVault/vaults",
             "apiVersion": "2023-07-01",
             "name": f"{self.project_name}-kv-{self.environment}",
@@ -566,7 +578,8 @@ class AzureConfig:
         }
     
     def get_function_app_configuration(self) -> Dict[str, Any]:
-        """Generate Azure Functions configuration"""        return {
+        """Generate Azure Functions configuration"""
+        return {
             "type": "Microsoft.Web/sites",
             "apiVersion": "2023-01-01",
             "name": f"{self.project_name}-functions-{self.environment}",
@@ -613,7 +626,8 @@ class AzureConfig:
         }
     
     def get_cognitive_services_configuration(self) -> List[Dict[str, Any]]:
-        """Generate Azure Cognitive Services configuration"""        services = []
+        """Generate Azure Cognitive Services configuration"""
+        services = []
         
         # Computer Vision for image analysis
         computer_vision = {
@@ -681,7 +695,8 @@ class AzureConfig:
         return services
     
     def get_log_analytics_configuration(self) -> Dict[str, Any]:
-        """Generate Log Analytics workspace configuration"""        return {
+        """Generate Log Analytics workspace configuration"""
+        return {
             "type": "Microsoft.OperationalInsights/workspaces",
             "apiVersion": "2023-09-01",
             "name": f"{self.project_name}-workspace-{self.environment}",
@@ -701,7 +716,8 @@ class AzureConfig:
         }
     
     def get_application_insights_configuration(self) -> Dict[str, Any]:
-        """Generate Application Insights configuration"""        return {
+        """Generate Application Insights configuration"""
+        return {
             "type": "Microsoft.Insights/components",
             "apiVersion": "2020-02-02",
             "name": f"{self.project_name}-insights-{self.environment}",
@@ -718,7 +734,8 @@ class AzureConfig:
         }
     
     def generate_arm_template(self, output_file: str = "azure-infrastructure.json") -> None:
-        """Generate complete ARM template"""        template = {
+        """Generate complete ARM template"""
+        template = {
             "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
             "contentVersion": "1.0.0.0",
             "metadata": {
@@ -799,7 +816,8 @@ class AzureConfig:
             json.dump(template, f, indent=2)
     
     def get_deployment_script(self) -> str:
-        """Generate Azure deployment script"""        return f'''#!/bin/bash
+        """Generate Azure deployment script"""
+        return f'''#!/bin/bash
 # Azure deployment script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
 
@@ -885,7 +903,8 @@ echo "4. Configure CI/CD: Setup GitHub Actions with Azure"
 '''
     
     def get_terraform_configuration(self) -> str:
-        """Generate Terraform configuration for Azure"""        return f'''# Terraform configuration for IA-Influencer Agent on Azure
+        """Generate Terraform configuration for Azure"""
+        return f'''# Terraform configuration for IA-Influencer Agent on Azure
 # Author: Fahed Mlaiel <mlaiel@live.de>
 
 terraform {{

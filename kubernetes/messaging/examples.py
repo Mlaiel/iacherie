@@ -12,7 +12,8 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import time
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 async def example_basic_deployment():
-    """Example: Basic messaging infrastructure deployment"""    print("
+    """Example: Basic messaging infrastructure deployment"""
+    print("
 === EXAMPLE: Basic Messaging Infrastructure Deployment ===")
     
     try:
@@ -75,7 +77,8 @@ async def example_basic_deployment():
 
 
 async def example_custom_configuration():
-    """Example: Custom messaging infrastructure configuration"""    print("
+    """Example: Custom messaging infrastructure configuration"""
+    print("
 === EXAMPLE: Custom Configuration Deployment ===")
     
     try:
@@ -129,7 +132,8 @@ async def example_custom_configuration():
 
 
 async def example_advanced_kafka_setup():
-    """Example: Advanced Kafka cluster setup"""    print("
+    """Example: Advanced Kafka cluster setup"""
+    print("
 === EXAMPLE: Advanced Kafka Cluster Setup ===")
     
     try:
@@ -241,7 +245,8 @@ async def example_advanced_kafka_setup():
 
 
 async def example_rabbitmq_high_availability():
-    """Example: RabbitMQ high availability setup"""    print("
+    """Example: RabbitMQ high availability setup"""
+    print("
 === EXAMPLE: RabbitMQ High Availability Setup ===")
     
     try:
@@ -349,7 +354,8 @@ async def example_rabbitmq_high_availability():
 
 
 async def example_celery_workers_specialization():
-    """Example: Specialized Celery workers configuration"""    print("
+    """Example: Specialized Celery workers configuration"""
+    print("
 === EXAMPLE: Specialized Celery Workers Configuration ===")
     
     try:
@@ -532,7 +538,8 @@ async def example_celery_workers_specialization():
 
 
 async def example_content_protection_workflow():
-    """Example: Complete content protection workflow"""    print("
+    """Example: Complete content protection workflow"""
+    print("
 === EXAMPLE: Complete Content Protection Workflow ===")
     
     try:
@@ -724,7 +731,8 @@ async def example_content_protection_workflow():
 
 
 async def example_monitoring_and_scaling():
-    """Example: Infrastructure monitoring and scaling"""    print("
+    """Example: Infrastructure monitoring and scaling"""
+    print("
 === EXAMPLE: Infrastructure Monitoring and Scaling ===")
     
     try:
@@ -825,7 +833,8 @@ async def example_monitoring_and_scaling():
 
 
 async def example_backup_and_recovery():
-    """Example: Backup and disaster recovery"""    print("
+    """Example: Backup and disaster recovery"""
+    print("
 === EXAMPLE: Backup and Disaster Recovery ===")
     
     try:
@@ -915,7 +924,8 @@ async def example_backup_and_recovery():
 
 
 async def run_all_examples():
-    """Run all examples in sequence"""    print("🚀 Running all IA Influencer Agent Messaging Examples")
+    """Run all examples in sequence"""
+    print("🚀 Running all IA Influencer Agent Messaging Examples")
     print("=" * 70)
     
     examples = [
@@ -1032,7 +1042,8 @@ from backend.deployment.messaging import (
 # ===== ADVANCED MESSAGING EXAMPLES =====
 
 async def example_real_time_communication():
-    """Example: Real-time communication setup and usage"""    print("\n=== EXAMPLE: Real-time Communication System ===")
+    """Example: Real-time communication setup and usage"""
+    print("\n=== EXAMPLE: Real-time Communication System ===")
     
     try:
         # Initialize real-time communication manager
@@ -1088,7 +1099,8 @@ async def example_real_time_communication():
 
 
 async def example_notification_system():
-    """Example: Advanced notification system usage"""    print("\n=== EXAMPLE: Advanced Notification System ===")
+    """Example: Advanced notification system usage"""
+    print("\n=== EXAMPLE: Advanced Notification System ===")
     
     try:
         # Initialize notification managers
@@ -1115,7 +1127,8 @@ async def example_notification_system():
         violation_template = NotificationTemplate(
             name="content_violation",
             subject="🚨 Content Violation Detected - {{content_title}}",
-            html_body="""            <h2>Content Violation Alert</h2>
+            html_body="""
+            <h2>Content Violation Alert</h2>
             <p>Your content "{{content_title}}" has been detected on {{platform}} without authorization.</p>
             <p><strong>Similarity Score:</strong> {{similarity_score}}%</p>
             <p><strong>Infringing URL:</strong> <a href="{{infringing_url}}">{{infringing_url}}</a></p>
@@ -1127,7 +1140,8 @@ async def example_notification_system():
         revenue_template = NotificationTemplate(
             name="revenue_update",
             subject="💰 Revenue Update - {{period}}",
-            html_body="""            <h2>Monthly Revenue Report</h2>
+            html_body="""
+            <h2>Monthly Revenue Report</h2>
             <p>Your earnings for {{period}}:</p>
             <ul>
                 <li><strong>Total Revenue:</strong> {{total_amount}} {{currency}}</li>
@@ -1202,7 +1216,8 @@ async def example_notification_system():
 
 
 async def example_queue_management():
-    """Example: Advanced queue management and optimization"""    print("\n=== EXAMPLE: Advanced Queue Management ===")
+    """Example: Advanced queue management and optimization"""
+    print("\n=== EXAMPLE: Advanced Queue Management ===")
     
     try:
         # Initialize queue manager
@@ -1313,7 +1328,8 @@ async def example_queue_management():
 
 
 async def example_performance_monitoring():
-    """Example: Comprehensive performance monitoring"""    print("\n=== EXAMPLE: Performance Monitoring System ===")
+    """Example: Comprehensive performance monitoring"""
+    print("\n=== EXAMPLE: Performance Monitoring System ===")
     
     try:
         # Initialize performance monitor
@@ -1400,7 +1416,8 @@ async def example_performance_monitoring():
 
 
 async def example_message_security():
-    """Example: Message security and encryption"""    print("\n=== EXAMPLE: Message Security System ===")
+    """Example: Message security and encryption"""
+    print("\n=== EXAMPLE: Message Security System ===")
     
     try:
         # Initialize security manager
@@ -1493,7 +1510,8 @@ async def example_message_security():
 
 
 async def example_integrated_workflow():
-    """Example: Complete integrated messaging workflow"""    print("\n=== EXAMPLE: Integrated Messaging Workflow ===")
+    """Example: Complete integrated messaging workflow"""
+    print("\n=== EXAMPLE: Integrated Messaging Workflow ===")
     
     try:
         # Initialize all components
@@ -1555,11 +1573,13 @@ async def example_integrated_workflow():
         await notification_managers["email_manager"].send_email(
             to_email="artist@example.com",
             subject="Content Upload Confirmed",
-            html_body=f"""            <h2>Upload Successful</h2>
+            html_body=f"""
+            <h2>Upload Successful</h2>
             <p>Your content "{content_data['metadata']['title']}" has been successfully uploaded and is being processed.</p>
             <p><strong>Content ID:</strong> {content_data['content_id']}</p>
             <p>You will receive updates as processing completes.</p>
-            """        )
+            """
+        )
         print("📧 Email confirmation sent")
         
         # Step 5: Monitor performance
@@ -1589,12 +1609,14 @@ async def example_integrated_workflow():
         await notification_managers["email_manager"].send_email(
             to_email="artist@example.com",
             subject="Processing Complete - Content Protected",
-            html_body=f"""            <h2>Processing Complete!</h2>
+            html_body=f"""
+            <h2>Processing Complete!</h2>
             <p>Your content "{content_data['metadata']['title']}" has been successfully processed and is now protected.</p>
             <p><strong>Fingerprint ID:</strong> {completion_data['fingerprint_id']}</p>
             <p><strong>Monitoring:</strong> Enabled across all major platforms</p>
             <p>We'll alert you immediately if any unauthorized use is detected.</p>
-            """        )
+            """
+        )
         print("📧 Processing completion email sent")
         
         # Step 8: Start monitoring workflow
@@ -1636,7 +1658,8 @@ async def example_integrated_workflow():
 # ===== PRODUCTION CONFIGURATION EXAMPLES =====
 
 def get_production_kafka_config():
-    """Production Kafka cluster configuration"""    return KafkaClusterConfig(
+    """Production Kafka cluster configuration"""
+    return KafkaClusterConfig(
         cluster_name="ia-influencer-kafka-prod",
         brokers=[
             KafkaBrokerConfig(
@@ -1667,7 +1690,8 @@ def get_production_kafka_config():
 
 
 def get_production_rabbitmq_config():
-    """Production RabbitMQ cluster configuration"""    return RabbitMQClusterConfig(
+    """Production RabbitMQ cluster configuration"""
+    return RabbitMQClusterConfig(
         cluster_name="ia-influencer-rabbitmq-prod",
         nodes=[
             RabbitMQNodeConfig(
@@ -1694,7 +1718,8 @@ def get_production_rabbitmq_config():
 
 
 def get_production_celery_config():
-    """Production Celery cluster configuration"""    return CeleryClusterConfig(
+    """Production Celery cluster configuration"""
+    return CeleryClusterConfig(
         broker_url="redis://redis-cluster.prod.ia-influencer.com:6379/0",
         result_backend="redis://redis-cluster.prod.ia-influencer.com:6379/1",
         workers=[
@@ -1758,7 +1783,8 @@ def get_production_celery_config():
 # ===== DEVELOPMENT CONFIGURATION EXAMPLES =====
 
 def get_development_kafka_config():
-    """Development Kafka configuration (single node)"""    return KafkaClusterConfig(
+    """Development Kafka configuration (single node)"""
+    return KafkaClusterConfig(
         cluster_name="ia-influencer-kafka-dev",
         brokers=[
             KafkaBrokerConfig(
@@ -1779,7 +1805,8 @@ def get_development_kafka_config():
 
 
 def get_development_rabbitmq_config():
-    """Development RabbitMQ configuration (single node)"""    return RabbitMQClusterConfig(
+    """Development RabbitMQ configuration (single node)"""
+    return RabbitMQClusterConfig(
         cluster_name="ia-influencer-rabbitmq-dev",
         nodes=[
             RabbitMQNodeConfig(
@@ -1798,7 +1825,8 @@ def get_development_rabbitmq_config():
 
 
 def get_development_celery_config():
-    """Development Celery configuration"""    return CeleryClusterConfig(
+    """Development Celery configuration"""
+    return CeleryClusterConfig(
         broker_url="redis://localhost:6379/0",
         result_backend="redis://localhost:6379/1",
         workers=[
@@ -1819,7 +1847,8 @@ def get_development_celery_config():
 # ===== DEPLOYMENT EXAMPLES =====
 
 async def deploy_production_environment():
-    """Deploy complete production messaging environment"""    try:
+    """Deploy complete production messaging environment"""
+    try:
         print("🚀 Deploying production messaging infrastructure...")
         
         # Get production configurations
@@ -1847,7 +1876,8 @@ async def deploy_production_environment():
 
 
 async def deploy_development_environment():
-    """Deploy development messaging environment"""    try:
+    """Deploy development messaging environment"""
+    try:
         print("🚀 Deploying development messaging infrastructure...")
         
         # Get development configurations
@@ -1875,7 +1905,8 @@ async def deploy_development_environment():
 
 
 async def test_message_routing(orchestrator):
-    """Test message routing across different protocols"""    try:
+    """Test message routing across different protocols"""
+    try:
         print("🧪 Testing message routing...")
         
         # Test content upload message
@@ -1946,7 +1977,8 @@ async def test_message_routing(orchestrator):
 
 
 async def test_basic_functionality(orchestrator):
-    """Test basic messaging functionality"""    try:
+    """Test basic messaging functionality"""
+    try:
         print("🧪 Testing basic functionality...")
         
         # Check infrastructure status
@@ -1971,7 +2003,8 @@ async def test_basic_functionality(orchestrator):
 # ===== MONITORING AND MAINTENANCE EXAMPLES =====
 
 async def monitor_infrastructure_health(orchestrator):
-    """Monitor infrastructure health and performance"""    try:
+    """Monitor infrastructure health and performance"""
+    try:
         print("📊 Monitoring infrastructure health...")
         
         # Get comprehensive status
@@ -1999,7 +2032,8 @@ async def monitor_infrastructure_health(orchestrator):
 
 
 async def performance_optimization_example(orchestrator):
-    """Example of performance monitoring and optimization"""    try:
+    """Example of performance monitoring and optimization"""
+    try:
         print("⚡ Performing optimization analysis...")
         
         # This would integrate with actual monitoring systems
@@ -2029,7 +2063,8 @@ if __name__ == "__main__":
     import asyncio
     
     async def main():
-        """Main example demonstrating messaging deployment"""        try:
+        """Main example demonstrating messaging deployment"""
+        try:
             print("🎯 IA Influencer Agent - Messaging Deployment Examples")
             print("=" * 60)
             

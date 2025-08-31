@@ -20,7 +20,8 @@ legal action. Contact mlaiel@live.de for authorization.
 
 Advanced business intelligence engine for creator economy analysis, revenue optimization,
 and strategic insights based on surveillance data and market intelligence.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Any, Callable, Union, Tuple
 from dataclasses import dataclass, field
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 
 class BusinessMetricType(Enum):
-    """Types of business metrics tracked."""    REVENUE = "revenue"
+    """Types of business metrics tracked."""
+    REVENUE = "revenue"
     ENGAGEMENT = "engagement"
     GROWTH = "growth"
     PROTECTION = "protection"
@@ -49,7 +51,8 @@ class BusinessMetricType(Enum):
 
 
 class TrendAnalysis(Enum):
-    """Trend analysis types."""    INCREASING = "increasing"
+    """Trend analysis types."""
+    INCREASING = "increasing"
     DECREASING = "decreasing"
     STABLE = "stable"
     VOLATILE = "volatile"
@@ -58,7 +61,8 @@ class TrendAnalysis(Enum):
 
 
 class BusinessImpactLevel(Enum):
-    """Business impact severity levels."""    MINIMAL = "minimal"
+    """Business impact severity levels."""
+    MINIMAL = "minimal"
     LOW = "low"
     MODERATE = "moderate"
     HIGH = "high"
@@ -67,7 +71,8 @@ class BusinessImpactLevel(Enum):
 
 
 class RecommendationCategory(Enum):
-    """Categories for business recommendations."""    REVENUE_OPTIMIZATION = "revenue_optimization"
+    """Categories for business recommendations."""
+    REVENUE_OPTIMIZATION = "revenue_optimization"
     COST_REDUCTION = "cost_reduction"
     RISK_MITIGATION = "risk_mitigation"
     GROWTH_OPPORTUNITY = "growth_opportunity"
@@ -79,7 +84,8 @@ class RecommendationCategory(Enum):
 
 @dataclass
 class BusinessMetric:
-    """Individual business metric with trend analysis."""    metric_id: str
+    """Individual business metric with trend analysis."""
+    metric_id: str
     metric_type: BusinessMetricType
     name: str
     value: float
@@ -96,7 +102,8 @@ class BusinessMetric:
 
 @dataclass
 class BusinessInsight:
-    """Strategic business insight derived from data analysis."""    insight_id: str
+    """Strategic business insight derived from data analysis."""
+    insight_id: str
     title: str
     description: str
     category: RecommendationCategory
@@ -114,7 +121,8 @@ class BusinessInsight:
 
 @dataclass
 class CreatorBusinessProfile:
-    """Comprehensive business profile for creators."""    creator_id: str
+    """Comprehensive business profile for creators."""
+    creator_id: str
     creator_category: str
     revenue_streams: Dict[str, float] = field(default_factory=dict)
     platform_performance: Dict[str, Dict] = field(default_factory=dict)
@@ -131,7 +139,8 @@ class CreatorBusinessProfile:
 
 @dataclass
 class MarketIntelligence:
-    """Market intelligence data for strategic decision making."""    market_id: str
+    """Market intelligence data for strategic decision making."""
+    market_id: str
     market_segment: str
     market_size: float
     growth_rate: float
@@ -145,9 +154,11 @@ class MarketIntelligence:
 
 
 class RevenueCalculationEngine:
-    """Advanced revenue calculation and optimization engine."""    
+    """Advanced revenue calculation and optimization engine."""
+    
     def __init__(self):
-        """Initialize revenue calculation engine."""        self.platform_revenue_models: Dict[str, Dict] = {}
+        """Initialize revenue calculation engine."""
+        self.platform_revenue_models: Dict[str, Dict] = {}
         self.creator_revenue_history: Dict[str, List] = defaultdict(list)
         self.market_rates: Dict[str, float] = {}
         
@@ -156,7 +167,8 @@ class RevenueCalculationEngine:
         platform_id: str,
         revenue_model: Dict[str, Any]
     ) -> None:
-        """Register revenue model for a platform."""        self.platform_revenue_models[platform_id] = revenue_model
+        """Register revenue model for a platform."""
+        self.platform_revenue_models[platform_id] = revenue_model
     
     def calculate_creator_revenue(
         self,
@@ -164,7 +176,8 @@ class RevenueCalculationEngine:
         platform_data: Dict[str, Any],
         time_period: timedelta = timedelta(days=30)
     ) -> Dict[str, float]:
-        """Calculate comprehensive revenue metrics for a creator."""        revenue_breakdown = {}
+        """Calculate comprehensive revenue metrics for a creator."""
+        revenue_breakdown = {}
         
         for platform_id, data in platform_data.items():
             if platform_id not in self.platform_revenue_models:
@@ -229,7 +242,8 @@ class RevenueCalculationEngine:
         violations_prevented: int,
         avg_loss_per_violation: float
     ) -> Dict[str, float]:
-        """Calculate return on investment for content protection."""        prevented_losses = violations_prevented * avg_loss_per_violation
+        """Calculate return on investment for content protection."""
+        prevented_losses = violations_prevented * avg_loss_per_violation
         roi_percentage = ((prevented_losses - protection_cost) / protection_cost) * 100 if protection_cost > 0 else 0
         
         return {
@@ -244,7 +258,8 @@ class RevenueCalculationEngine:
         self,
         creator_profile: CreatorBusinessProfile
     ) -> List[BusinessInsight]:
-        """Generate revenue optimization recommendations."""        insights = []
+        """Generate revenue optimization recommendations."""
+        insights = []
         
         # Analyze platform performance
         best_performing_platform = max(
@@ -295,9 +310,11 @@ class RevenueCalculationEngine:
 
 
 class MarketAnalysisEngine:
-    """Advanced market analysis and competitive intelligence engine."""    
+    """Advanced market analysis and competitive intelligence engine."""
+    
     def __init__(self):
-        """Initialize market analysis engine."""        self.market_data: Dict[str, MarketIntelligence] = {}
+        """Initialize market analysis engine."""
+        self.market_data: Dict[str, MarketIntelligence] = {}
         self.competitive_benchmarks: Dict[str, Dict] = defaultdict(dict)
         self.trend_algorithms: Dict[str, Callable] = {}
         
@@ -306,7 +323,8 @@ class MarketAnalysisEngine:
         market_segment: str,
         intelligence_data: Dict[str, Any]
     ) -> None:
-        """Update market intelligence data."""        market_id = f"market_{market_segment}_{uuid.uuid4().hex[:8]}"
+        """Update market intelligence data."""
+        market_id = f"market_{market_segment}_{uuid.uuid4().hex[:8]}"
         
         self.market_data[market_id] = MarketIntelligence(
             market_id=market_id,
@@ -325,7 +343,8 @@ class MarketAnalysisEngine:
         self,
         creator_profile: CreatorBusinessProfile
     ) -> Dict[str, Any]:
-        """Analyze creator's position in the market."""        market_segment = creator_profile.creator_category
+        """Analyze creator's position in the market."""
+        market_segment = creator_profile.creator_category
         relevant_markets = [m for m in self.market_data.values() if m.market_segment == market_segment]
         
         if not relevant_markets:
@@ -365,7 +384,8 @@ class MarketAnalysisEngine:
         creator_category: str,
         creator_platforms: List[str]
     ) -> List[BusinessInsight]:
-        """Identify market opportunities for creators."""        insights = []
+        """Identify market opportunities for creators."""
+        insights = []
         
         # Find market data for creator category
         relevant_markets = [m for m in self.market_data.values() if m.market_segment == creator_category]
@@ -418,7 +438,8 @@ class MarketAnalysisEngine:
 
 
 class BusinessIntelligenceEngine:
-    """    Professional business intelligence engine for creator economy analysis.
+    """
+    Professional business intelligence engine for creator economy analysis.
     
     Features:
     - Revenue calculation and optimization
@@ -431,9 +452,11 @@ class BusinessIntelligenceEngine:
     - Portfolio optimization
     - Business impact measurement
     - Decision support analytics
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize business intelligence engine."""        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize business intelligence engine."""
+        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
         self.config = config or {}
@@ -455,7 +478,8 @@ class BusinessIntelligenceEngine:
         self._initialize_defaults()
     
     async def initialize(self) -> None:
-        """Initialize the business intelligence engine."""        try:
+        """Initialize the business intelligence engine."""
+        try:
             self._logger.info("Initializing Business Intelligence Engine...")
             
             # Setup default platform revenue models
@@ -479,7 +503,8 @@ class BusinessIntelligenceEngine:
         platform_data: Dict[str, Any],
         protection_data: Dict[str, Any]
     ) -> CreatorBusinessProfile:
-        """Perform comprehensive business analysis for a creator."""        try:
+        """Perform comprehensive business analysis for a creator."""
+        try:
             # Calculate revenue metrics
             revenue_metrics = self.revenue_engine.calculate_creator_revenue(
                 creator_id, platform_data
@@ -533,7 +558,8 @@ class BusinessIntelligenceEngine:
         analysis_scope: str = "global",
         time_period: timedelta = timedelta(days=30)
     ) -> List[BusinessInsight]:
-        """Generate strategic business insights across the platform."""        insights = []
+        """Generate strategic business insights across the platform."""
+        insights = []
         
         try:
             # Aggregate metrics across all creators
@@ -621,7 +647,8 @@ class BusinessIntelligenceEngine:
             return []
     
     def get_creator_dashboard_data(self, creator_id: str) -> Dict[str, Any]:
-        """Get comprehensive dashboard data for a creator."""        if creator_id not in self.creator_profiles:
+        """Get comprehensive dashboard data for a creator."""
+        if creator_id not in self.creator_profiles:
             return {"error": "Creator not found"}
         
         profile = self.creator_profiles[creator_id]
@@ -652,7 +679,8 @@ class BusinessIntelligenceEngine:
         }
     
     def get_platform_intelligence(self) -> Dict[str, Any]:
-        """Get intelligence summary across all platforms."""        platform_summary = defaultdict(lambda: {
+        """Get intelligence summary across all platforms."""
+        platform_summary = defaultdict(lambda: {
             'total_revenue': 0,
             'creator_count': 0,
             'avg_revenue_per_creator': 0,
@@ -674,7 +702,8 @@ class BusinessIntelligenceEngine:
         return dict(platform_summary)
     
     async def _initialize_defaults(self) -> None:
-        """Initialize default configurations."""        # Default industry standards
+        """Initialize default configurations."""
+        # Default industry standards
         self.industry_standards = {
             'avg_protection_roi': 150.0,  # 150% ROI
             'avg_revenue_growth': 25.0,   # 25% annual growth
@@ -683,7 +712,8 @@ class BusinessIntelligenceEngine:
         }
     
     async def _setup_platform_models(self) -> None:
-        """Setup default platform revenue models."""        models = {
+        """Setup default platform revenue models."""
+        models = {
             'youtube': {
                 'type': 'advertising',
                 'cpm': 2.5,
@@ -713,7 +743,8 @@ class BusinessIntelligenceEngine:
             self.revenue_engine.register_platform_model(platform_id, model)
     
     async def _load_market_data(self) -> None:
-        """Load market intelligence data."""        # This would typically load from external data sources
+        """Load market intelligence data."""
+        # This would typically load from external data sources
         # For now, initialize with sample data
         
         market_segments = {
@@ -741,7 +772,8 @@ class BusinessIntelligenceEngine:
             self.market_engine.update_market_intelligence(segment, data)
     
     async def _load_benchmarks(self) -> None:
-        """Load industry benchmarks."""        self.benchmark_data = {
+        """Load industry benchmarks."""
+        self.benchmark_data = {
             'music': {
                 'median_revenue': 45000,
                 'avg_protection_roi': 180,
@@ -763,7 +795,8 @@ class BusinessIntelligenceEngine:
             self.market_engine.competitive_benchmarks[category] = benchmarks
     
     async def shutdown(self) -> None:
-        """Shutdown the business intelligence engine."""        self._logger.info("Shutting down Business Intelligence Engine...")
+        """Shutdown the business intelligence engine."""
+        self._logger.info("Shutting down Business Intelligence Engine...")
         
         try:
             # Save any pending data

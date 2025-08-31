@@ -5,7 +5,8 @@ optimization and comprehensive functionality.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -15,21 +16,24 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MarketplaceJob:
-    """Job configuration for marketplace operations"""    job_id: str
+    """Job configuration for marketplace operations"""
+    job_id: str
     data: Dict[str, Any]
     priority: int = 5
     created_at: datetime = None
 
 @dataclass 
 class MarketplaceResult:
-    """Result of marketplace operations"""    job_id: str
+    """Result of marketplace operations"""
+    job_id: str
     success: bool
     data: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
     completed_at: datetime = None
 
 class MarketplaceEngine:
-    """    Ultra-Advanced Marketplace Processing Engine
+    """
+    Ultra-Advanced Marketplace Processing Engine
     
     Provides enterprise-grade marketplace processing with:
     - High-performance operation handling
@@ -37,7 +41,8 @@ class MarketplaceEngine:
     - Comprehensive error handling
     - Real-time monitoring and metrics
     - Scalable architecture design
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.is_running = False
@@ -46,7 +51,8 @@ class MarketplaceEngine:
         logger.info("MarketplaceEngine initialized")
 
     async def start(self) -> None:
-        """Start the marketplace processing engine"""        try:
+        """Start the marketplace processing engine"""
+        try:
             self.is_running = True
             logger.info("MarketplaceEngine started successfully")
         except Exception as e:
@@ -54,7 +60,8 @@ class MarketplaceEngine:
             raise
 
     async def process(self, data: Dict[str, Any]) -> MarketplaceResult:
-        """Process marketplace operation"""        try:
+        """Process marketplace operation"""
+        try:
             job_id = data.get('job_id', 'auto-generated')
             
             # Implementation specific processing logic here
@@ -81,5 +88,6 @@ class MarketplaceEngine:
             )
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the processing engine"""        self.is_running = False
+        """Graceful shutdown of the processing engine"""
+        self.is_running = False
         logger.info("MarketplaceEngine shutdown complete")

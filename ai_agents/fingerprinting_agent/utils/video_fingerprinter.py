@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import hashlib
@@ -61,7 +62,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import hashlib
@@ -108,13 +110,15 @@ from .audio_fingerprinter import AudioFingerprinter
 logger = logging.getLogger(__name__)
 
 class VideoFingerprintQuality(Enum):
-    """Video fingerprint quality levels"""    BASIC = "basic"          # Frame hashes only
+    """Video fingerprint quality levels"""
+    BASIC = "basic"          # Frame hashes only
     STANDARD = "standard"    # + Motion analysis
     ADVANCED = "advanced"    # + Temporal features, audio
     ULTRA = "ultra"          # + Deep learning embeddings
 
 class VideoFeatureType(Enum):
-    """Types of video features extracted"""    FRAME_HASH = "frame_hash"
+    """Types of video features extracted"""
+    FRAME_HASH = "frame_hash"
     MOTION_FEATURES = "motion_features"
     TEMPORAL_FEATURES = "temporal_features"
     COLOR_FEATURES = "color_features"
@@ -126,7 +130,8 @@ class VideoFeatureType(Enum):
 
 @dataclass
 class VideoFeatureVector:
-    """Video feature vector structure"""    feature_type: VideoFeatureType
+    """Video feature vector structure"""
+    feature_type: VideoFeatureType
     vector_data: np.ndarray
     confidence_score: float
     extraction_params: Dict[str, Any]
@@ -135,7 +140,8 @@ class VideoFeatureVector:
 
 @dataclass
 class VideoFingerprint:
-    """Complete video fingerprint structure"""    fingerprint_id: str
+    """Complete video fingerprint structure"""
+    fingerprint_id: str
     video_hash: str
     frame_hashes: List[str]
     feature_vectors: List[VideoFeatureVector]
@@ -147,7 +153,8 @@ class VideoFingerprint:
     created_at: datetime = field(default_factory=lambda: datetime.now())
 
 class VideoFingerprinter:
-    """    Ultra-advanced video fingerprinting system with temporal analysis and deep learning.
+    """
+    Ultra-advanced video fingerprinting system with temporal analysis and deep learning.
     
     Features:
     - Frame-by-frame analysis with perceptual hashing
@@ -157,7 +164,8 @@ class VideoFingerprinter:
     - Audio track fingerprinting integration
     - Deep learning video embeddings
     - Quality assessment and optimization
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -190,7 +198,8 @@ class VideoFingerprinter:
         logger.info("VideoFingerprinter initialized with advanced configuration")
     
     async def initialize(self):
-        """Initialize all video processing models and components"""        try:
+        """Initialize all video processing models and components"""
+        try:
             start_time = time.time()
             
             # Initialize deep learning models
@@ -218,8 +227,10 @@ class VideoFingerprinter:
         video_data: Union[str, bytes], 
         quality_level: VideoFingerprintQuality = VideoFingerprintQuality.ADVANCED
     ) -> Dict[str, Any]:
-        """        Generate comprehensive video fingerprint with configurable quality levels
-        """        start_time = time.time()
+        """
+        Generate comprehensive video fingerprint with configurable quality levels
+        """
+        start_time = time.time()
         
         try:
             # Extract frames and metadata
@@ -334,7 +345,8 @@ class VideoFingerprinter:
             raise VideoProcessingError(f"Fingerprint generation failed: {e}")
     
     async def _extract_video_components(self, video_data: Union[str, bytes]) -> Tuple[List[np.ndarray], Optional[np.ndarray], Dict[str, Any]]:
-        """Extract frames, audio, and metadata from video"""        try:
+        """Extract frames, audio, and metadata from video"""
+        try:
             if isinstance(video_data, str):
                 # Load from file path
                 if not Path(video_data).exists():
@@ -369,7 +381,8 @@ class VideoFingerprinter:
             raise VideoProcessingError(f"Component extraction failed: {e}")
     
     async def _extract_video_metadata(self, video_path: str) -> Dict[str, Any]:
-        """Extract comprehensive video metadata"""        try:
+        """Extract comprehensive video metadata"""
+        try:
             # Use OpenCV to get basic properties
             cap = cv2.VideoCapture(video_path)
             
@@ -415,7 +428,8 @@ class VideoFingerprinter:
             return {'error': str(e)}
     
     async def _extract_frames(self, video_path: str, metadata: Dict[str, Any]) -> List[np.ndarray]:
-        """Extract representative frames from video"""        try:
+        """Extract representative frames from video"""
+        try:
             cap = cv2.VideoCapture(video_path)
             frames = []
             
@@ -465,7 +479,8 @@ class VideoFingerprinter:
             return []
     
     async def _extract_audio_track(self, video_path: str) -> Optional[np.ndarray]:
-        """Extract audio track from video"""        try:
+        """Extract audio track from video"""
+        try:
             # Use ffmpeg to extract audio
             temp_audio_path = f"/tmp/audio_{uuid.uuid4()}.wav"
             
@@ -491,7 +506,8 @@ class VideoFingerprinter:
             return None
     
     def _create_video_hash(self, frames: List[np.ndarray], metadata: Dict[str, Any]) -> str:
-        """Create fast hash of video data for quick lookups"""        try:
+        """Create fast hash of video data for quick lookups"""
+        try:
             # Create hash from video statistics
             video_stats = [
                 len(frames),
@@ -526,7 +542,8 @@ class VideoFingerprinter:
             return ""
     
     async def _extract_frame_hashes(self, frames: List[np.ndarray]) -> List[str]:
-        """Extract perceptual hashes for each frame"""        try:
+        """Extract perceptual hashes for each frame"""
+        try:
             frame_hashes = []
             
             for frame in frames:
@@ -547,7 +564,8 @@ class VideoFingerprinter:
     # Including motion analysis, temporal features, scene detection, etc.
     
     async def cleanup(self):
-        """Clean up resources"""        try:
+        """Clean up resources"""
+        try:
             # Clean up models
             if hasattr(self, 'resnet_model') and self.resnet_model is not None:
                 del self.resnet_model
@@ -565,19 +583,22 @@ class VideoFingerprinter:
             logger.error(f"VideoFingerprinter cleanup failed: {e}")
     
     def get_supported_formats(self) -> List[str]:
-        """Get list of supported video formats"""        return [
+        """Get list of supported video formats"""
+        return [
             '.mp4', '.avi', '.mov', '.wmv', '.flv', '.webm', '.mkv',
             '.m4v', '.3gp', '.ogv', '.ts', '.mts'
         ]
 
 class VideoFingerprintQuality(Enum):
-    """Video fingerprint quality levels"""    BASIC = "basic"          # Frame hashing only
+    """Video fingerprint quality levels"""
+    BASIC = "basic"          # Frame hashing only
     STANDARD = "standard"    # + Motion analysis
     ADVANCED = "advanced"    # + Deep features
     ULTRA = "ultra"          # + Temporal embeddings
 
 class VideoFingerprinter:
-    """    Ultra-advanced video fingerprinting system with computer vision and deep learning.
+    """
+    Ultra-advanced video fingerprinting system with computer vision and deep learning.
     
     Features:
     - Multi-scale frame analysis
@@ -588,7 +609,8 @@ class VideoFingerprinter:
     - Scene change detection
     - Object detection integration
     - Audio-visual synchronization analysis
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -625,7 +647,8 @@ class VideoFingerprinter:
         }
         
     async def initialize(self):
-        """Initialize video fingerprinting system"""        try:
+        """Initialize video fingerprinting system"""
+        try:
             # Initialize deep learning models
             await self._initialize_deep_models()
             
@@ -640,8 +663,10 @@ class VideoFingerprinter:
     
     async def generate_fingerprint(self, video_data: Union[str, bytes], 
                                  quality_level: VideoFingerprintQuality) -> Dict[str, Any]:
-        """        Generate comprehensive video fingerprint with specified quality level
-        """        start_time = time.time()
+        """
+        Generate comprehensive video fingerprint with specified quality level
+        """
+        start_time = time.time()
         
         try:
             # Load and preprocess video
@@ -732,7 +757,8 @@ class VideoFingerprinter:
             raise VideoProcessingError(f"Fingerprint generation failed: {e}")
     
     async def _extract_frames(self, video_data: Union[str, bytes]) -> Tuple[List[np.ndarray], Dict[str, Any]]:
-        """Extract frames from video with metadata"""        frames = []
+        """Extract frames from video with metadata"""
+        frames = []
         metadata = {}
         
         try:
@@ -812,7 +838,8 @@ class VideoFingerprinter:
             raise VideoProcessingError(f"Frame extraction failed: {e}")
     
     async def _generate_frame_hashes(self, frames: List[np.ndarray]) -> List[str]:
-        """Generate perceptual hashes for all frames"""        frame_hashes = []
+        """Generate perceptual hashes for all frames"""
+        frame_hashes = []
         
         for frame in frames:
             # Convert to PIL Image
@@ -831,13 +858,15 @@ class VideoFingerprinter:
         return frame_hashes
     
     async def _combine_frame_hashes(self, frame_hashes: List[str]) -> str:
-        """Combine frame hashes into single video hash"""        # Create a sequence hash based on frame order
+        """Combine frame hashes into single video hash"""
+        # Create a sequence hash based on frame order
         sequence_string = "|".join(frame_hashes)
         video_hash = hashlib.sha256(sequence_string.encode()).hexdigest()
         return video_hash
     
     async def _analyze_motion(self, frames: List[np.ndarray]) -> np.ndarray:
-        """Analyze motion between consecutive frames"""        motion_features = []
+        """Analyze motion between consecutive frames"""
+        motion_features = []
         
         if len(frames) < 2:
             return np.array([0.0] * 10)  # Return zeros if insufficient frames
@@ -878,7 +907,8 @@ class VideoFingerprinter:
         return np.array(motion_features)
     
     async def _extract_visual_features(self, frames: List[np.ndarray]) -> np.ndarray:
-        """Extract deep visual features using ResNet"""        if self.resnet_model is None:
+        """Extract deep visual features using ResNet"""
+        if self.resnet_model is None:
             logger.warning("ResNet model not loaded, using fallback features")
             return np.random.rand(512)  # Fallback features
         
@@ -919,7 +949,8 @@ class VideoFingerprinter:
             return np.random.rand(512)  # Fallback
     
     async def _analyze_scenes(self, frames: List[np.ndarray]) -> np.ndarray:
-        """Analyze scene changes and transitions"""        scene_features = []
+        """Analyze scene changes and transitions"""
+        scene_features = []
         
         if len(frames) < 2:
             return np.array([0.0] * 5)
@@ -953,7 +984,8 @@ class VideoFingerprinter:
         return np.array(scene_features)
     
     async def _generate_temporal_embedding(self, frames: List[np.ndarray]) -> np.ndarray:
-        """Generate temporal sequence embedding using CLIP"""        if self.clip_model is None:
+        """Generate temporal sequence embedding using CLIP"""
+        if self.clip_model is None:
             logger.warning("CLIP model not loaded, using fallback embedding")
             return np.random.rand(512)
         
@@ -991,7 +1023,8 @@ class VideoFingerprinter:
     
     async def _assess_video_quality(self, frames: List[np.ndarray], 
                                   metadata: Dict[str, Any]) -> Dict[str, float]:
-        """Assess video quality for fingerprinting reliability"""        quality_metrics = {}
+        """Assess video quality for fingerprinting reliability"""
+        quality_metrics = {}
         
         try:
             # Resolution score
@@ -1044,7 +1077,8 @@ class VideoFingerprinter:
         return quality_metrics
     
     def _hash_to_vector(self, hashes: List[str]) -> np.ndarray:
-        """Convert hash strings to numerical vectors"""        vectors = []
+        """Convert hash strings to numerical vectors"""
+        vectors = []
         for hash_str in hashes:
             # Convert hash to binary vector
             hash_parts = hash_str.split('_')
@@ -1076,7 +1110,8 @@ class VideoFingerprinter:
             return np.zeros(128)
     
     async def _initialize_deep_models(self):
-        """Initialize deep learning models"""        try:
+        """Initialize deep learning models"""
+        try:
             # Load ResNet for visual features
             self.resnet_model = resnet50(pretrained=True)
             self.resnet_model.eval()
@@ -1092,7 +1127,8 @@ class VideoFingerprinter:
             # Continue without deep models
     
     async def _initialize_cv_components(self):
-        """Initialize computer vision components"""        try:
+        """Initialize computer vision components"""
+        try:
             # Initialize optical flow
             self.optical_flow = cv2.FarnebackOpticalFlow_create()
             
@@ -1105,7 +1141,8 @@ class VideoFingerprinter:
             logger.warning(f"Failed to initialize CV components: {e}")
     
     async def cleanup(self):
-        """Cleanup resources"""        # Clear models to free memory
+        """Cleanup resources"""
+        # Clear models to free memory
         self.resnet_model = None
         self.clip_model = None
         self.clip_preprocess = None

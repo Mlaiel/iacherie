@@ -11,7 +11,8 @@ WARNING: This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
-"""import logging
+"""
+import logging
 import hashlib
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
 from datetime import datetime
@@ -25,7 +26,8 @@ from ...core.exceptions import MetadataError, ValidationError
 
 
 class DataType(Enum):
-    """Data type classifications"""    AUDIO = "audio"
+    """Data type classifications"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -37,7 +39,8 @@ class DataType(Enum):
 
 
 class SchemaType(Enum):
-    """Schema definition types"""    JSON_SCHEMA = "json_schema"
+    """Schema definition types"""
+    JSON_SCHEMA = "json_schema"
     AVRO = "avro"
     PROTOBUF = "protobuf"
     PARQUET = "parquet"
@@ -45,7 +48,8 @@ class SchemaType(Enum):
 
 
 class MetadataCategory(Enum):
-    """Metadata categories"""    TECHNICAL = "technical"
+    """Metadata categories"""
+    TECHNICAL = "technical"
     BUSINESS = "business"
     OPERATIONAL = "operational"
     QUALITY = "quality"
@@ -55,7 +59,8 @@ class MetadataCategory(Enum):
 
 
 class SensitivityLevel(Enum):
-    """Data sensitivity levels"""    PUBLIC = "public"
+    """Data sensitivity levels"""
+    PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
@@ -64,7 +69,8 @@ class SensitivityLevel(Enum):
 
 @dataclass
 class DataSchema:
-    """Data schema definition"""    schema_id: str
+    """Data schema definition"""
+    schema_id: str
     name: str
     version: str
     schema_type: SchemaType
@@ -79,7 +85,8 @@ class DataSchema:
 
 @dataclass
 class BusinessGlossaryTerm:
-    """Business glossary term definition"""    term_id: str
+    """Business glossary term definition"""
+    term_id: str
     name: str
     definition: str
     category: str
@@ -93,7 +100,8 @@ class BusinessGlossaryTerm:
 
 @dataclass
 class DataAssetMetadata:
-    """Comprehensive data asset metadata"""    asset_id: str
+    """Comprehensive data asset metadata"""
+    asset_id: str
     name: str
     description: str
     data_type: DataType
@@ -153,7 +161,8 @@ class DataAssetMetadata:
 
 @dataclass
 class MetadataLineage:
-    """Metadata lineage relationship"""    lineage_id: str
+    """Metadata lineage relationship"""
+    lineage_id: str
     source_asset_id: str
     target_asset_id: str
     relationship_type: str  # "derives_from", "transforms_to", "references", etc.
@@ -166,7 +175,8 @@ class MetadataLineage:
 
 @dataclass
 class DataCatalogEntry:
-    """Data catalog entry combining asset and metadata"""    catalog_id: str
+    """Data catalog entry combining asset and metadata"""
+    catalog_id: str
     asset_metadata: DataAssetMetadata
     schema: Optional[DataSchema] = None
     lineage: List[MetadataLineage] = field(default_factory=list)
@@ -176,11 +186,13 @@ class DataCatalogEntry:
 
 
 class SchemaManager:
-    """    Manages data schemas and schema evolution
+    """
+    Manages data schemas and schema evolution
     
     Handles schema definition, versioning, validation,
     and compatibility checking.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -197,7 +209,8 @@ class SchemaManager:
         description: Optional[str] = None,
         created_by: str = "system"
     ) -> DataSchema:
-        """        Create a new data schema
+        """
+        Create a new data schema
         
         Args:
             name: Schema name
@@ -208,7 +221,8 @@ class SchemaManager:
             
         Returns:
             DataSchema: Created schema
-        """        try:
+        """
+        try:
             # Validate schema definition
             await self._validate_schema_definition(schema_type, definition)
             
@@ -248,7 +262,8 @@ class SchemaManager:
         description: Optional[str] = None,
         updated_by: str = "system"
     ) -> DataSchema:
-        """        Update an existing schema (creates new version)
+        """
+        Update an existing schema (creates new version)
         
         Args:
             schema_name: Name of schema to update
@@ -258,7 +273,8 @@ class SchemaManager:
             
         Returns:
             DataSchema: New schema version
-        """        try:
+        """
+        try:
             # Get current schema versions
             versions = self.schema_versions.get(schema_name, [])
             if not versions:
@@ -316,7 +332,8 @@ class SchemaManager:
         name: Optional[str] = None,
         version: Optional[str] = None
     ) -> Optional[DataSchema]:
-        """        Get schema by ID or name/version
+        """
+        Get schema by ID or name/version
         
         Args:
             schema_id: Schema ID
@@ -325,7 +342,8 @@ class SchemaManager:
             
         Returns:
             DataSchema or None
-        """        if schema_id:
+        """
+        if schema_id:
             return self.schemas.get(schema_id)
         
         if name:
@@ -347,7 +365,8 @@ class SchemaManager:
         data: Any,
         schema_id: str
     ) -> Tuple[bool, List[str]]:
-        """        Validate data against schema
+        """
+        Validate data against schema
         
         Args:
             data: Data to validate
@@ -355,7 +374,8 @@ class SchemaManager:
             
         Returns:
             Tuple[bool, List[str]]: Validation result and errors
-        """        try:
+        """
+        try:
             schema = self.schemas.get(schema_id)
             if not schema:
                 return False, [f"Schema {schema_id} not found"]
@@ -376,7 +396,8 @@ class SchemaManager:
         schema_type: SchemaType,
         definition: Dict[str, Any]
     ) -> None:
-        """Validate schema definition"""        if schema_type == SchemaType.JSON_SCHEMA:
+        """Validate schema definition"""
+        if schema_type == SchemaType.JSON_SCHEMA:
             required_fields = ["type"]
             for field in required_fields:
                 if field not in definition:
@@ -387,7 +408,8 @@ class SchemaManager:
         old_definition: Dict[str, Any],
         new_definition: Dict[str, Any]
     ) -> bool:
-        """Check if new schema is backward compatible"""        # Simplified compatibility check
+        """Check if new schema is backward compatible"""
+        # Simplified compatibility check
         # Real implementation would be more sophisticated
         return True
     
@@ -396,7 +418,8 @@ class SchemaManager:
         data: Any,
         schema_definition: Dict[str, Any]
     ) -> Tuple[bool, List[str]]:
-        """Validate data against JSON schema"""        # Simplified validation - real implementation would use jsonschema library
+        """Validate data against JSON schema"""
+        # Simplified validation - real implementation would use jsonschema library
         errors = []
         
         if "type" in schema_definition:
@@ -412,11 +435,13 @@ class SchemaManager:
 
 
 class BusinessGlossaryManager:
-    """    Manages business glossary and terminology
+    """
+    Manages business glossary and terminology
     
     Maintains business terms, definitions, and relationships
     to enable consistent understanding of data assets.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -435,7 +460,8 @@ class BusinessGlossaryManager:
         domain: Optional[str] = None,
         steward: Optional[str] = None
     ) -> BusinessGlossaryTerm:
-        """        Create a new business glossary term
+        """
+        Create a new business glossary term
         
         Args:
             name: Term name
@@ -447,7 +473,8 @@ class BusinessGlossaryManager:
             
         Returns:
             BusinessGlossaryTerm: Created term
-        """        try:
+        """
+        try:
             # Generate term ID
             term_id = f"term_{name.lower().replace(' ', '_')}_{datetime.utcnow().timestamp()}"
             
@@ -489,7 +516,8 @@ class BusinessGlossaryManager:
         category: Optional[str] = None,
         domain: Optional[str] = None
     ) -> List[BusinessGlossaryTerm]:
-        """        Search business glossary terms
+        """
+        Search business glossary terms
         
         Args:
             query: Search query
@@ -498,7 +526,8 @@ class BusinessGlossaryManager:
             
         Returns:
             List of matching terms
-        """        results = []
+        """
+        results = []
         query_lower = query.lower()
         
         for term in self.terms.values():
@@ -526,7 +555,8 @@ class BusinessGlossaryManager:
         return results
     
     async def link_related_terms(self, term_id: str, related_term_ids: List[str]) -> None:
-        """Link related business terms"""        term = self.terms.get(term_id)
+        """Link related business terms"""
+        term = self.terms.get(term_id)
         if not term:
             raise MetadataError(f"Term {term_id} not found")
         
@@ -542,11 +572,13 @@ class BusinessGlossaryManager:
 
 
 class DataCatalogManager:
-    """    Central data catalog management system
+    """
+    Central data catalog management system
     
     Maintains comprehensive catalog of all data assets with
     rich metadata, lineage, and discoverability features.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -573,7 +605,8 @@ class DataCatalogManager:
         data_type: DataType,
         **metadata_kwargs
     ) -> DataAssetMetadata:
-        """        Register a new data asset in the catalog
+        """
+        Register a new data asset in the catalog
         
         Args:
             asset_id: Unique asset identifier
@@ -584,7 +617,8 @@ class DataCatalogManager:
             
         Returns:
             DataAssetMetadata: Created asset metadata
-        """        try:
+        """
+        try:
             # Create asset metadata
             asset_metadata = DataAssetMetadata(
                 asset_id=asset_id,
@@ -622,7 +656,8 @@ class DataCatalogManager:
         asset_id: str,
         updates: Dict[str, Any]
     ) -> DataAssetMetadata:
-        """        Update asset metadata
+        """
+        Update asset metadata
         
         Args:
             asset_id: Asset identifier
@@ -630,7 +665,8 @@ class DataCatalogManager:
             
         Returns:
             DataAssetMetadata: Updated metadata
-        """        try:
+        """
+        try:
             asset_metadata = self.asset_metadata.get(asset_id)
             if not asset_metadata:
                 raise MetadataError(f"Asset {asset_id} not found")
@@ -666,7 +702,8 @@ class DataCatalogManager:
         transformation_description: Optional[str] = None,
         transformation_logic: Optional[str] = None
     ) -> MetadataLineage:
-        """        Add lineage relationship between assets
+        """
+        Add lineage relationship between assets
         
         Args:
             source_asset_id: Source asset ID
@@ -677,7 +714,8 @@ class DataCatalogManager:
             
         Returns:
             MetadataLineage: Created lineage relationship
-        """        try:
+        """
+        try:
             # Generate lineage ID
             lineage_id = f"lineage_{source_asset_id}_{target_asset_id}_{datetime.utcnow().timestamp()}"
             
@@ -725,7 +763,8 @@ class DataCatalogManager:
         tags: Optional[List[str]] = None,
         sensitivity_level: Optional[SensitivityLevel] = None
     ) -> List[DataCatalogEntry]:
-        """        Search the data catalog
+        """
+        Search the data catalog
         
         Args:
             query: Search query
@@ -736,7 +775,8 @@ class DataCatalogManager:
             
         Returns:
             List of matching catalog entries
-        """        try:
+        """
+        try:
             results = []
             query_lower = query.lower()
             
@@ -774,7 +814,8 @@ class DataCatalogManager:
         asset_id: str,
         direction: str = "both"  # "upstream", "downstream", "both"
     ) -> Dict[str, List[MetadataLineage]]:
-        """        Get lineage relationships for an asset
+        """
+        Get lineage relationships for an asset
         
         Args:
             asset_id: Asset identifier
@@ -782,7 +823,8 @@ class DataCatalogManager:
             
         Returns:
             Dict with upstream and downstream lineage
-        """        upstream = []
+        """
+        upstream = []
         downstream = []
         
         for lineage in self.lineage_relationships:
@@ -797,7 +839,8 @@ class DataCatalogManager:
         }
     
     async def get_catalog_statistics(self) -> Dict[str, Any]:
-        """Get catalog statistics"""        total_assets = len(self.asset_metadata)
+        """Get catalog statistics"""
+        total_assets = len(self.asset_metadata)
         
         # Count by data type
         type_counts = {}
@@ -830,7 +873,8 @@ class DataCatalogManager:
         }
     
     def _generate_search_keywords(self, asset_metadata: DataAssetMetadata) -> List[str]:
-        """Generate search keywords for an asset"""        keywords = []
+        """Generate search keywords for an asset"""
+        keywords = []
         
         # Add name and description words
         keywords.extend(asset_metadata.name.lower().split())
@@ -853,7 +897,8 @@ class DataCatalogManager:
         return list(set([k for k in keywords if k and len(k) > 2]))
     
     async def _update_search_indexes(self, asset_metadata: DataAssetMetadata) -> None:
-        """Update search indexes for an asset"""        asset_id = asset_metadata.asset_id
+        """Update search indexes for an asset"""
+        asset_id = asset_metadata.asset_id
         
         # Update keyword index
         for keyword in self._generate_search_keywords(asset_metadata):
@@ -875,13 +920,16 @@ class DataCatalogManager:
 
 
 class MetadataManager(BaseManager):
-    """    Central metadata management system
+    """
+    Central metadata management system
     
     Coordinates schema management, business glossary, and data catalog
     to provide comprehensive metadata services for data governance.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the metadata manager"""        super().__init__(config)
+        """Initialize the metadata manager"""
+        super().__init__(config)
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -899,7 +947,8 @@ class MetadataManager(BaseManager):
         }
     
     async def initialize(self) -> None:
-        """Initialize the metadata manager"""        try:
+        """Initialize the metadata manager"""
+        try:
             self.logger.info("Metadata manager initialized successfully")
             
         except Exception as e:
@@ -914,7 +963,8 @@ class MetadataManager(BaseManager):
         data_type: DataType,
         **metadata_kwargs
     ) -> DataAssetMetadata:
-        """Register a new data asset"""        asset_metadata = await self.catalog_manager.register_data_asset(
+        """Register a new data asset"""
+        asset_metadata = await self.catalog_manager.register_data_asset(
             asset_id, name, description, data_type, **metadata_kwargs
         )
         self.metrics["assets_registered"] += 1
@@ -927,7 +977,8 @@ class MetadataManager(BaseManager):
         definition: Dict[str, Any],
         description: Optional[str] = None
     ) -> DataSchema:
-        """Create a new data schema"""        schema = await self.schema_manager.create_schema(
+        """Create a new data schema"""
+        schema = await self.schema_manager.create_schema(
             name, schema_type, definition, description
         )
         self.metrics["schemas_created"] += 1
@@ -940,7 +991,8 @@ class MetadataManager(BaseManager):
         category: str,
         **term_kwargs
     ) -> BusinessGlossaryTerm:
-        """Create a new business glossary term"""        term = await self.glossary_manager.create_term(
+        """Create a new business glossary term"""
+        term = await self.glossary_manager.create_term(
             name, definition, category, **term_kwargs
         )
         self.metrics["terms_created"] += 1
@@ -953,7 +1005,8 @@ class MetadataManager(BaseManager):
         relationship_type: str,
         **lineage_kwargs
     ) -> MetadataLineage:
-        """Add lineage relationship between assets"""        lineage = await self.catalog_manager.add_lineage_relationship(
+        """Add lineage relationship between assets"""
+        lineage = await self.catalog_manager.add_lineage_relationship(
             source_asset_id, target_asset_id, relationship_type, **lineage_kwargs
         )
         self.metrics["lineage_relationships"] += 1
@@ -964,12 +1017,14 @@ class MetadataManager(BaseManager):
         query: str,
         **search_kwargs
     ) -> List[DataCatalogEntry]:
-        """Search the data catalog"""        results = await self.catalog_manager.search_catalog(query, **search_kwargs)
+        """Search the data catalog"""
+        results = await self.catalog_manager.search_catalog(query, **search_kwargs)
         self.metrics["catalog_searches"] += 1
         return results
     
     async def get_metadata_summary(self) -> Dict[str, Any]:
-        """Get comprehensive metadata summary"""        catalog_stats = await self.catalog_manager.get_catalog_statistics()
+        """Get comprehensive metadata summary"""
+        catalog_stats = await self.catalog_manager.get_catalog_statistics()
         
         return {
             "catalog_statistics": catalog_stats,

@@ -15,7 +15,7 @@ Upload Multi-Format → Protection IA Droits → SEO Pro → Matching Collaborat
 Distribution Multi-Plateformes → Monétisation Avancée
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
 """# Core Data Management Imports - Architecture Enterprise
 from .analytics import *
@@ -39,7 +39,7 @@ from .vector_db import *
 __version__ = "2.1.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel - All Rights Reserved"
+__copyright__ = "(c) 2025 Fahed Mlaiel - All Rights Reserved"
 __license__ = "Proprietary - Unauthorized use prohibited"
 
 # Exports principaux pour la logique métier IA-Influencer-Agent

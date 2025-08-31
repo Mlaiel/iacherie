@@ -5,7 +5,8 @@ Provides standardized architecture, training, and deployment capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import torch
+"""
+import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 
 class NetworkType(Enum):
-    """Neural network architecture types"""    TRANSFORMER = "transformer"
+    """Neural network architecture types"""
+    TRANSFORMER = "transformer"
     CNN = "convolutional"
     RNN = "recurrent"  
     GAN = "generative_adversarial"
@@ -34,14 +36,16 @@ class NetworkType(Enum):
 
 
 class DeviceType(Enum):
-    """Supported computation devices"""    CPU = "cpu"
+    """Supported computation devices"""
+    CPU = "cpu"
     CUDA = "cuda"
     MPS = "mps"  # Apple Silicon
 
 
 @dataclass
 class NetworkConfig:
-    """Neural network configuration"""    
+    """Neural network configuration"""
+    
     # Architecture parameters
     input_dim: int
     hidden_dims: List[int]
@@ -75,7 +79,8 @@ class NetworkConfig:
 
 @dataclass  
 class TrainingConfig:
-    """Training process configuration"""    
+    """Training process configuration"""
+    
     # Data parameters
     train_split: float = 0.8
     validation_split: float = 0.1
@@ -108,10 +113,12 @@ class TrainingConfig:
 
 
 class BaseNeuralNetwork(nn.Module, ABC):
-    """    Base class for all neural networks in the platform.
+    """
+    Base class for all neural networks in the platform.
     
     Provides standardized architecture, training, and inference capabilities.
-    """    
+    """
+    
     def __init__(
         self,
         config: NetworkConfig,
@@ -144,7 +151,8 @@ class BaseNeuralNetwork(nn.Module, ABC):
         logger.info(f"Initialized {self.name} on device: {self.device}")
     
     def _get_device(self) -> torch.device:
-        """Determine and return the appropriate device"""        if self.config.device == DeviceType.CUDA and torch.cuda.is_available():
+        """Determine and return the appropriate device"""
+        if self.config.device == DeviceType.CUDA and torch.cuda.is_available():
             return torch.device("cuda")
         elif self.config.device == DeviceType.MPS and torch.backends.mps.is_available():
             return torch.device("mps")
@@ -153,7 +161,8 @@ class BaseNeuralNetwork(nn.Module, ABC):
     
     @abstractmethod
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        """Forward pass through the network"""        pass
+        """Forward pass through the network"""
+        pass
     
     @abstractmethod
     def compute_loss(
@@ -161,10 +170,12 @@ class BaseNeuralNetwork(nn.Module, ABC):
         predictions: torch.Tensor, 
         targets: torch.Tensor
     ) -> torch.Tensor:
-        """Compute loss for the specific network type"""        pass
+        """Compute loss for the specific network type"""
+        pass
     
     def configure_optimizer(self) -> optim.Optimizer:
-        """Configure optimizer for training"""        if hasattr(self.config, 'optimizer_type'):
+        """Configure optimizer for training"""
+        if hasattr(self.config, 'optimizer_type'):
             optimizer_type = self.config.optimizer_type
         else:
             optimizer_type = "adamw"
@@ -196,7 +207,8 @@ class BaseNeuralNetwork(nn.Module, ABC):
         optimizer: optim.Optimizer,
         num_training_steps: int
     ) -> Optional[optim.lr_scheduler._LRScheduler]:
-        """Configure learning rate scheduler"""        if hasattr(self.config, 'scheduler_type'):
+        """Configure learning rate scheduler"""
+        if hasattr(self.config, 'scheduler_type'):
             scheduler_type = self.config.scheduler_type
         else:
             scheduler_type = "cosine_annealing"
@@ -221,7 +233,8 @@ class BaseNeuralNetwork(nn.Module, ABC):
         optimizer: optim.Optimizer,
         scheduler: Optional[optim.lr_scheduler._LRScheduler] = None
     ) -> Dict[str, float]:
-        """Train for one epoch"""        self.train()
+        """Train for one epoch"""
+        self.train()
         epoch_loss = 0.0
         epoch_accuracy = 0.0
         num_batches = 0
@@ -287,7 +300,8 @@ class BaseNeuralNetwork(nn.Module, ABC):
         predictions: torch.Tensor, 
         targets: torch.Tensor
     ) -> float:
-        """Compute accuracy metric"""        if len(predictions.shape) > 1 and predictions.shape[1] > 1:
+        """Compute accuracy metric"""
+        if len(predictions.shape) > 1 and predictions.shape[1] > 1:
             # Classification
             predicted = torch.argmax(predictions, dim=1)
             correct = (predicted == targets).float().mean()
@@ -304,13 +318,15 @@ class BaseNeuralNetwork(nn.Module, ABC):
         outputs: torch.Tensor, 
         inputs: torch.Tensor
     ) -> torch.Tensor:
-        """Compute unsupervised loss (reconstruction, etc.)"""        return nn.MSELoss()(outputs, inputs)
+        """Compute unsupervised loss (reconstruction, etc.)"""
+        return nn.MSELoss()(outputs, inputs)
     
     def validate(
         self, 
         dataloader: DataLoader
     ) -> Dict[str, float]:
-        """Validate the model"""        self.eval()
+        """Validate the model"""
+        self.eval()
         total_loss = 0.0
         total_accuracy = 0.0
         num_batches = 0
@@ -344,7 +360,8 @@ class BaseNeuralNetwork(nn.Module, ABC):
         }
     
     def save_model(self, path: Union[str, Path]) -> None:
-        """Save model checkpoint"""        path = Path(path)
+        """Save model checkpoint"""
+        path = Path(path)
         path.mkdir(parents=True, exist_ok=True)
         
         checkpoint = {
@@ -376,7 +393,8 @@ class BaseNeuralNetwork(nn.Module, ABC):
     
     @classmethod
     def load_model(cls, path: Union[str, Path]) -> 'BaseNeuralNetwork':
-        """Load model from checkpoint"""        path = Path(path)
+        """Load model from checkpoint"""
+        path = Path(path)
         checkpoint = torch.load(path / 'model.pt', map_location='cpu')
         
         # Create instance with saved config
@@ -392,7 +410,8 @@ class BaseNeuralNetwork(nn.Module, ABC):
 
 
 class ModelRegistry:
-    """Registry for managing trained models"""    
+    """Registry for managing trained models"""
+    
     def __init__(self, registry_path: Union[str, Path]):
         self.registry_path = Path(registry_path)
         self.registry_path.mkdir(parents=True, exist_ok=True)
@@ -400,13 +419,15 @@ class ModelRegistry:
         self.models = self._load_registry()
     
     def _load_registry(self) -> Dict[str, Any]:
-        """Load model registry from disk"""        if self.registry_file.exists():
+        """Load model registry from disk"""
+        if self.registry_file.exists():
             with open(self.registry_file, 'r') as f:
                 return json.load(f)
         return {}
     
     def _save_registry(self) -> None:
-        """Save model registry to disk"""        with open(self.registry_file, 'w') as f:
+        """Save model registry to disk"""
+        with open(self.registry_file, 'w') as f:
             json.dump(self.models, f, indent=2, default=str)
     
     def register_model(
@@ -416,7 +437,8 @@ class ModelRegistry:
         description: str = "",
         tags: List[str] = None
     ) -> None:
-        """Register a trained model"""        model_info = {
+        """Register a trained model"""
+        model_info = {
             'name': name,
             'description': description,
             'tags': tags or [],
@@ -441,10 +463,12 @@ class ModelRegistry:
         logger.info(f"Registered model: {name}")
     
     def get_model(self, name: str) -> Optional[Dict[str, Any]]:
-        """Get model information"""        return self.models.get(name)
+        """Get model information"""
+        return self.models.get(name)
     
     def list_models(self, tag: str = None) -> List[str]:
-        """List available models, optionally filtered by tag"""        if tag:
+        """List available models, optionally filtered by tag"""
+        if tag:
             return [
                 name for name, info in self.models.items()
                 if tag in info.get('tags', [])
@@ -452,7 +476,8 @@ class ModelRegistry:
         return list(self.models.keys())
     
     def remove_model(self, name: str) -> None:
-        """Remove model from registry"""        if name in self.models:
+        """Remove model from registry"""
+        if name in self.models:
             del self.models[name]
             self._save_registry()
             
@@ -466,7 +491,8 @@ class ModelRegistry:
 
 
 class InferenceEngine:
-    """High-performance inference engine for deployed models"""    
+    """High-performance inference engine for deployed models"""
+    
     def __init__(
         self,
         model: BaseNeuralNetwork,
@@ -497,7 +523,8 @@ class InferenceEngine:
         self._warmup()
     
     def _warmup(self) -> None:
-        """Warm up the model for consistent inference timing"""        with torch.no_grad():
+        """Warm up the model for consistent inference timing"""
+        with torch.no_grad():
             dummy_input = torch.randn(
                 self.batch_size, 
                 self.model.config.input_dim,
@@ -515,7 +542,8 @@ class InferenceEngine:
         inputs: Union[torch.Tensor, np.ndarray],
         return_numpy: bool = True
     ) -> Union[torch.Tensor, np.ndarray]:
-        """Run inference on input data"""        
+        """Run inference on input data"""
+        
         # Convert to tensor if needed
         if isinstance(inputs, np.ndarray):
             inputs = torch.from_numpy(inputs).float()
@@ -542,7 +570,8 @@ class InferenceEngine:
         inputs: Union[torch.Tensor, np.ndarray],
         batch_size: Optional[int] = None
     ) -> np.ndarray:
-        """Run batch inference on large inputs"""        
+        """Run batch inference on large inputs"""
+        
         if batch_size is None:
             batch_size = self.batch_size
         

@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable
 from dataclasses import dataclass, field
@@ -40,7 +41,8 @@ logger = logging.getLogger(__name__)
 
 
 class TranscodingQuality(Enum):
-    """Transcoding quality levels"""    ULTRA_HIGH = "ultra_high"
+    """Transcoding quality levels"""
+    ULTRA_HIGH = "ultra_high"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -48,7 +50,8 @@ class TranscodingQuality(Enum):
 
 
 class OutputFormat(Enum):
-    """Supported output formats"""    # Video formats
+    """Supported output formats"""
+    # Video formats
     MP4 = "mp4"
     WEBM = "webm"
     AVI = "avi"
@@ -74,7 +77,8 @@ class OutputFormat(Enum):
 
 
 class TranscodingPreset(Enum):
-    """Predefined transcoding presets"""    WEB_OPTIMIZED = "web_optimized"
+    """Predefined transcoding presets"""
+    WEB_OPTIMIZED = "web_optimized"
     MOBILE_FRIENDLY = "mobile_friendly"
     STREAMING_4K = "streaming_4k"
     STREAMING_HD = "streaming_hd"
@@ -86,7 +90,8 @@ class TranscodingPreset(Enum):
 
 @dataclass
 class TranscodingProfile:
-    """Transcoding configuration profile"""    name: str
+    """Transcoding configuration profile"""
+    name: str
     input_format: str
     output_format: OutputFormat
     quality: TranscodingQuality
@@ -103,7 +108,8 @@ class TranscodingProfile:
 
 @dataclass
 class TranscodingJob:
-    """Transcoding job configuration"""    job_id: str
+    """Transcoding job configuration"""
+    job_id: str
     input_path: str
     output_path: str
     profile: TranscodingProfile
@@ -119,7 +125,8 @@ class TranscodingJob:
 
 @dataclass
 class TranscodingResult:
-    """Transcoding operation result"""    success: bool
+    """Transcoding operation result"""
+    success: bool
     job_id: str
     input_path: str
     output_path: str
@@ -132,7 +139,8 @@ class TranscodingResult:
 
 
 class MultimediaTranscoder:
-    """    Advanced multimedia transcoding engine with intelligent format conversion.
+    """
+    Advanced multimedia transcoding engine with intelligent format conversion.
     
     Features:
     - Multi-format support (video, audio, image)
@@ -141,9 +149,11 @@ class MultimediaTranscoder:
     - Real-time progress monitoring
     - Quality optimization
     - Streaming-ready outputs
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize multimedia transcoder"""        self.config = config or {}
+        """Initialize multimedia transcoder"""
+        self.config = config or {}
         self.metrics = MetricsCollector()
         self.events = EventDispatcher()
         self.metadata_analyzer = MultimediaMetadata()
@@ -169,7 +179,8 @@ class MultimediaTranscoder:
         logger.info("Multimedia transcoder initialized successfully")
     
     def _initialize_default_profiles(self) -> Dict[str, TranscodingProfile]:
-        """Initialize default transcoding profiles"""        return {
+        """Initialize default transcoding profiles"""
+        return {
             'web_video_hd': TranscodingProfile(
                 name="Web Video HD",
                 input_format="*",
@@ -244,7 +255,8 @@ class MultimediaTranscoder:
         custom_profile: Optional[TranscodingProfile] = None,
         priority: int = 5
     ) -> str:
-        """        Start transcoding job
+        """
+        Start transcoding job
         
         Args:
             input_path: Input file path
@@ -255,7 +267,8 @@ class MultimediaTranscoder:
             
         Returns:
             str: Job ID
-        """        # Get transcoding profile
+        """
+        # Get transcoding profile
         profile = custom_profile or self.profiles.get(profile_name)
         if not profile:
             raise ValueError(f"Unknown transcoding profile: {profile_name}")
@@ -290,7 +303,8 @@ class MultimediaTranscoder:
         return job_id
     
     async def process_job_queue(self, max_concurrent: int = 3):
-        """Process transcoding job queue"""        semaphore = asyncio.Semaphore(max_concurrent)
+        """Process transcoding job queue"""
+        semaphore = asyncio.Semaphore(max_concurrent)
         
         async def process_job(job: TranscodingJob):
             async with semaphore:
@@ -304,7 +318,8 @@ class MultimediaTranscoder:
             await asyncio.gather(*tasks, return_exceptions=True)
     
     async def _execute_transcoding_job(self, job: TranscodingJob) -> TranscodingResult:
-        """Execute single transcoding job"""        start_time = time.time()
+        """Execute single transcoding job"""
+        start_time = time.time()
         
         try:
             # Update job status
@@ -415,7 +430,8 @@ class MultimediaTranscoder:
             return result
     
     async def _execute_ffmpeg_transcoding(self, job: TranscodingJob) -> bool:
-        """Execute FFmpeg transcoding command"""        try:
+        """Execute FFmpeg transcoding command"""
+        try:
             # Build FFmpeg command
             cmd = await self._build_ffmpeg_command(job)
             
@@ -443,7 +459,8 @@ class MultimediaTranscoder:
             return False
     
     async def _build_ffmpeg_command(self, job: TranscodingJob) -> List[str]:
-        """Build FFmpeg command for transcoding job"""        cmd = ["ffmpeg", "-i", job.input_path]
+        """Build FFmpeg command for transcoding job"""
+        cmd = ["ffmpeg", "-i", job.input_path]
         
         profile = job.profile
         
@@ -498,7 +515,8 @@ class MultimediaTranscoder:
         return cmd
     
     async def _monitor_ffmpeg_progress(self, job: TranscodingJob, process):
-        """Monitor FFmpeg progress and update job progress"""        # This would parse FFmpeg output to extract progress information
+        """Monitor FFmpeg progress and update job progress"""
+        # This would parse FFmpeg output to extract progress information
         # For now, simulate progress updates
         
         for progress in range(0, 101, 10):
@@ -511,7 +529,8 @@ class MultimediaTranscoder:
         job.progress = 100.0
     
     async def _calculate_quality_metrics(self, job: TranscodingJob) -> Dict[str, Any]:
-        """Calculate quality metrics for transcoded content"""        # This would implement actual quality measurement algorithms
+        """Calculate quality metrics for transcoded content"""
+        # This would implement actual quality measurement algorithms
         # For now, return simulated metrics
         
         return {
@@ -528,7 +547,8 @@ class MultimediaTranscoder:
         profile_name: str = "web_video_hd",
         max_concurrent: int = 3
     ) -> List[str]:
-        """        Batch transcode multiple files
+        """
+        Batch transcode multiple files
         
         Args:
             input_paths: List of input file paths
@@ -538,7 +558,8 @@ class MultimediaTranscoder:
             
         Returns:
             List[str]: List of job IDs
-        """        job_ids = []
+        """
+        job_ids = []
         
         for input_path in input_paths:
             # Generate output path
@@ -561,7 +582,8 @@ class MultimediaTranscoder:
         return job_ids
     
     def get_job_status(self, job_id: str) -> Optional[Dict[str, Any]]:
-        """Get transcoding job status"""        # Check active jobs
+        """Get transcoding job status"""
+        # Check active jobs
         if job_id in self.active_jobs:
             job = self.active_jobs[job_id]
             return {
@@ -595,7 +617,8 @@ class MultimediaTranscoder:
         return None
     
     def cancel_job(self, job_id: str) -> bool:
-        """Cancel transcoding job"""        # Remove from queue
+        """Cancel transcoding job"""
+        # Remove from queue
         for job in self.job_queue:
             if job.job_id == job_id:
                 self.job_queue.remove(job)
@@ -605,17 +628,20 @@ class MultimediaTranscoder:
         return False
     
     def add_custom_profile(self, profile: TranscodingProfile):
-        """Add custom transcoding profile"""        self.profiles[profile.name] = profile
+        """Add custom transcoding profile"""
+        self.profiles[profile.name] = profile
         logger.info(f"Added custom transcoding profile: {profile.name}")
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
-        """Get supported input and output formats"""        return {
+        """Get supported input and output formats"""
+        return {
             'input': ['mp4', 'avi', 'mov', 'mkv', 'webm', 'flv', 'mp3', 'wav', 'flac', 'aac', 'jpg', 'png', 'gif'],
             'output': [fmt.value for fmt in OutputFormat]
         }
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get transcoding statistics"""        stats = self.stats.copy()
+        """Get transcoding statistics"""
+        stats = self.stats.copy()
         stats.update({
             'active_jobs': len(self.active_jobs),
             'queued_jobs': len(self.job_queue),
@@ -624,7 +650,8 @@ class MultimediaTranscoder:
         return stats
     
     def cleanup_completed_jobs(self, max_age_hours: int = 24):
-        """Clean up old completed jobs"""        cutoff_time = datetime.now(timezone.utc).timestamp() - (max_age_hours * 3600)
+        """Clean up old completed jobs"""
+        cutoff_time = datetime.now(timezone.utc).timestamp() - (max_age_hours * 3600)
         
         to_remove = []
         for job_id, result in self.completed_jobs.items():

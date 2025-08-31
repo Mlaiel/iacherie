@@ -4,26 +4,36 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+
+import sys
+
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test TODO Implementations
+"""
+Test TODO Implementations
 =========================
 
 Basic validation tests for the implemented TODO patterns to ensure
 the implementations work correctly without external dependencies.
 
 Author: Copilot Assistant
-"""import pytest
+"""
+
+import pytest
+
 import sys
 import os
+
 from pathlib import Path
+
 import sys
 import os
+
 from unittest.mock import Mock, patch
 
 # Add the project root to the path
@@ -31,7 +41,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 def test_licensing_repositories():
-    """Test that licensing repositories initialize correctly"""
+    """
+Test that licensing repositories initialize correctly"""
     from monetization.licensing_manager import LicenseRepository, ContentRepository
     
     # Test LicenseRepository
@@ -50,7 +61,8 @@ def test_licensing_repositories():
 @patch('secrets.SystemRandom')
 @patch('cryptography.hazmat.backends.default_backend')
 def test_crypto_provider_initialization(mock_backend, mock_random):
-    """Test CryptoProvider initialization"""
+    """
+Test CryptoProvider initialization"""
     # Mock the backend and random
     mock_backend.return_value = Mock()
     mock_random.return_value = Mock()
@@ -65,7 +77,8 @@ def test_crypto_provider_initialization(mock_backend, mock_random):
 
 
 def test_fingerprinting_processor_names():
-    """Test that fingerprinting processors have correct names"""
+    """
+Test that fingerprinting processors have correct names"""
     # Simplified test that verifies processor name logic without complex imports
     # This avoids the deep import chain issues with data_management dependencies
     
@@ -122,7 +135,8 @@ def test_watermarker_configurations():
 
 @pytest.mark.asyncio
 async def test_watermarker_initialization():
-    """Test watermarker initialization methods"""
+    """
+Test watermarker initialization methods"""
     from ai_engine.content_protection.watermarking import (
         AudioWatermarker, ImageWatermarker, VideoWatermarker, TextWatermarker
     )
@@ -159,7 +173,8 @@ async def test_watermarker_initialization():
 
 
 def test_implementation_completeness():
-    """Test that no critical TODO patterns remain in implemented files"""
+    """
+Test that no critical TODO patterns remain in implemented files"""
     import re
     
     implemented_files = [

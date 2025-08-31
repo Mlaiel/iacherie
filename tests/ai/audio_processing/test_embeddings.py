@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -23,7 +24,8 @@ Comprehensive testing for audio embeddings and similarity matching including:
 
 Created by Expert Team: ML Engineer + AI Architect + Audio Developer
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -56,7 +58,8 @@ from . import TEST_CONFIG, setup_test_environment
 
 
 class TestAudioEmbeddingModel:
-    """    Industrial-grade testing for AudioEmbeddingModel class
+    """
+    Industrial-grade testing for AudioEmbeddingModel class
     
     Test Coverage:
     - Model architecture validation
@@ -64,22 +67,26 @@ class TestAudioEmbeddingModel:
     - Embedding dimension consistency
     - Gradient flow validation
     - Model serialization/deserialization
-    """    
+    """
+    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""        setup_test_environment()
+        """Setup test environment before each test"""
+        setup_test_environment()
         self.embedding_model = AudioEmbeddingModel()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
     
     def test_model_initialization(self):
-        """Test AudioEmbeddingModel initialization"""        model = AudioEmbeddingModel()
+        """Test AudioEmbeddingModel initialization"""
+        model = AudioEmbeddingModel()
         assert model is not None
         assert hasattr(model, 'embedding_dim')
         assert hasattr(model, 'model')
         assert model.embedding_dim == 512  # Standard embedding dimension
     
     def test_model_architecture(self):
-        """Test model architecture consistency"""        model = AudioEmbeddingModel()
+        """Test model architecture consistency"""
+        model = AudioEmbeddingModel()
         
         # Test with sample input
         sample_input = np.random.randn(1, 128, 128)  # Batch, freq, time
@@ -91,7 +98,8 @@ class TestAudioEmbeddingModel:
         assert embeddings.dtype == np.float32
     
     def test_embedding_consistency(self):
-        """Test embedding consistency for same input"""        model = AudioEmbeddingModel()
+        """Test embedding consistency for same input"""
+        model = AudioEmbeddingModel()
         sample_input = np.random.randn(1, 128, 128)
         
         # Generate embeddings multiple times
@@ -102,7 +110,8 @@ class TestAudioEmbeddingModel:
         assert np.allclose(embedding1, embedding2, atol=1e-6)
     
     def test_embedding_normalization(self):
-        """Test embedding normalization"""        model = AudioEmbeddingModel()
+        """Test embedding normalization"""
+        model = AudioEmbeddingModel()
         sample_input = np.random.randn(5, 128, 128)  # Batch of 5
         
         embeddings = model.encode(sample_input)
@@ -112,7 +121,8 @@ class TestAudioEmbeddingModel:
         assert np.allclose(norms, 1.0, atol=1e-5)  # Unit norm
     
     def test_batch_processing(self):
-        """Test batch processing capabilities"""        model = AudioEmbeddingModel()
+        """Test batch processing capabilities"""
+        model = AudioEmbeddingModel()
         
         # Test different batch sizes
         for batch_size in [1, 4, 8, 16]:
@@ -123,7 +133,8 @@ class TestAudioEmbeddingModel:
             assert embeddings.shape[1] == 512
     
     def test_model_serialization(self):
-        """Test model save/load functionality"""        model = AudioEmbeddingModel()
+        """Test model save/load functionality"""
+        model = AudioEmbeddingModel()
         
         # Create temporary file for model
         with tempfile.NamedTemporaryFile(suffix='.pth', delete=False) as tmp_file:
@@ -151,7 +162,8 @@ class TestAudioEmbeddingModel:
 
 
 class TestAudioEmbeddingGenerator:
-    """    Industrial-grade testing for AudioEmbeddingGenerator class
+    """
+    Industrial-grade testing for AudioEmbeddingGenerator class
     
     Test Coverage:
     - Audio preprocessing validation
@@ -159,23 +171,27 @@ class TestAudioEmbeddingGenerator:
     - Embedding generation accuracy
     - Batch processing efficiency
     - Memory management
-    """    
+    """
+    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""        setup_test_environment()
+        """Setup test environment before each test"""
+        setup_test_environment()
         self.generator = AudioEmbeddingGenerator()
         self.processor = AudioProcessor()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
     
     def test_generator_initialization(self):
-        """Test AudioEmbeddingGenerator initialization"""        generator = AudioEmbeddingGenerator()
+        """Test AudioEmbeddingGenerator initialization"""
+        generator = AudioEmbeddingGenerator()
         assert generator is not None
         assert hasattr(generator, 'model')
         assert hasattr(generator, 'preprocessing')
         assert hasattr(generator, 'embedding_dim')
     
     def test_generate_embeddings_single_audio(self):
-        """Test embedding generation for single audio file"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test embedding generation for single audio file"""
+        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         embeddings = self.generator.generate_embeddings(audio_data, sample_rate)
@@ -191,7 +207,8 @@ class TestAudioEmbeddingGenerator:
         assert np.isclose(norm, 1.0, atol=1e-5)
     
     def test_generate_embeddings_batch(self):
-        """Test batch embedding generation"""        # Load multiple audio files
+        """Test batch embedding generation"""
+        # Load multiple audio files
         audio_files = [
             "pure_tone_440hz.wav",
             "white_noise.wav", 
@@ -222,7 +239,8 @@ class TestAudioEmbeddingGenerator:
             assert np.isclose(norm, 1.0, atol=1e-5)
     
     def test_preprocessing_consistency(self):
-        """Test preprocessing consistency"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test preprocessing consistency"""
+        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         # Generate embeddings multiple times
@@ -233,7 +251,8 @@ class TestAudioEmbeddingGenerator:
         assert np.allclose(embedding1, embedding2, atol=1e-6)
     
     def test_different_audio_types(self):
-        """Test embedding generation for different audio types"""        audio_types = {
+        """Test embedding generation for different audio types"""
+        audio_types = {
             "pure_tone": "pure_tone_440hz.wav",
             "noise": "white_noise.wav",
             "chirp": "chirp_sweep.wav",
@@ -258,7 +277,8 @@ class TestAudioEmbeddingGenerator:
                     assert similarity < 0.9  # Should be distinct
     
     def test_memory_efficiency(self):
-        """Test memory efficiency for large batch processing"""        # Create large batch of random audio data
+        """Test memory efficiency for large batch processing"""
+        # Create large batch of random audio data
         batch_size = 10
         audio_length = 220500  # 5 seconds at 44.1kHz
         large_batch = [np.random.randn(audio_length) for _ in range(batch_size)]
@@ -279,7 +299,8 @@ class TestAudioEmbeddingGenerator:
         assert batch_embeddings.shape == (batch_size, 512)
     
     def test_performance_benchmarking(self):
-        """Test embedding generation performance"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test embedding generation performance"""
+        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         start_time = time.time()
@@ -293,7 +314,8 @@ class TestAudioEmbeddingGenerator:
 
 
 class TestSimilarityMatcher:
-    """    Industrial-grade testing for SimilarityMatcher class
+    """
+    Industrial-grade testing for SimilarityMatcher class
     
     Test Coverage:
     - Similarity computation accuracy
@@ -301,10 +323,12 @@ class TestSimilarityMatcher:
     - Ranking and retrieval testing
     - Performance optimization
     - Large database handling
-    """    
+    """
+    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""        setup_test_environment()
+        """Setup test environment before each test"""
+        setup_test_environment()
         self.matcher = SimilarityMatcher()
         self.generator = AudioEmbeddingGenerator()
         self.processor = AudioProcessor()
@@ -314,7 +338,8 @@ class TestSimilarityMatcher:
         self._create_test_database()
     
     def _create_test_database(self):
-        """Create test database of audio embeddings"""        audio_files = [
+        """Create test database of audio embeddings"""
+        audio_files = [
             "pure_tone_440hz.wav",
             "white_noise.wav", 
             "chirp_sweep.wav",
@@ -329,13 +354,15 @@ class TestSimilarityMatcher:
             self.test_database[filename] = embedding
     
     def test_matcher_initialization(self):
-        """Test SimilarityMatcher initialization"""        matcher = SimilarityMatcher()
+        """Test SimilarityMatcher initialization"""
+        matcher = SimilarityMatcher()
         assert matcher is not None
         assert hasattr(matcher, 'distance_metric')
         assert hasattr(matcher, 'threshold')
     
     def test_cosine_similarity_computation(self):
-        """Test cosine similarity computation"""        embedding1 = self.test_database["pure_tone_440hz.wav"]
+        """Test cosine similarity computation"""
+        embedding1 = self.test_database["pure_tone_440hz.wav"]
         embedding2 = self.test_database["white_noise.wav"]
         
         # Test self-similarity (should be 1.0)
@@ -348,7 +375,8 @@ class TestSimilarityMatcher:
         assert cross_similarity < 1.0  # Should be less than self-similarity
     
     def test_euclidean_distance_computation(self):
-        """Test Euclidean distance computation"""        matcher = SimilarityMatcher(distance_metric='euclidean')
+        """Test Euclidean distance computation"""
+        matcher = SimilarityMatcher(distance_metric='euclidean')
         
         embedding1 = self.test_database["pure_tone_440hz.wav"]
         embedding2 = self.test_database["white_noise.wav"]
@@ -363,7 +391,8 @@ class TestSimilarityMatcher:
         assert cross_distance > 0.0  # Should be greater than self-distance
     
     def test_find_similar_embeddings(self):
-        """Test finding similar embeddings"""        query_embedding = self.test_database["pure_tone_440hz.wav"]
+        """Test finding similar embeddings"""
+        query_embedding = self.test_database["pure_tone_440hz.wav"]
         
         # Create database array
         database_embeddings = np.array(list(self.test_database.values()))
@@ -386,7 +415,8 @@ class TestSimilarityMatcher:
             assert similar_results[0].similarity >= 0.99  # Very high self-similarity
     
     def test_similarity_ranking(self):
-        """Test similarity ranking correctness"""        query_embedding = self.test_database["pure_tone_440hz.wav"]
+        """Test similarity ranking correctness"""
+        query_embedding = self.test_database["pure_tone_440hz.wav"]
         
         database_embeddings = np.array(list(self.test_database.values()))
         database_labels = list(self.test_database.keys())
@@ -403,7 +433,8 @@ class TestSimilarityMatcher:
             assert results[i].similarity >= results[i + 1].similarity
     
     def test_threshold_filtering(self):
-        """Test similarity threshold filtering"""        matcher = SimilarityMatcher(threshold=0.9)  # High threshold
+        """Test similarity threshold filtering"""
+        matcher = SimilarityMatcher(threshold=0.9)  # High threshold
         
         query_embedding = self.test_database["pure_tone_440hz.wav"]
         database_embeddings = np.array(list(self.test_database.values()))
@@ -421,7 +452,8 @@ class TestSimilarityMatcher:
             assert result.similarity >= 0.9
     
     def test_large_database_performance(self):
-        """Test performance with large database"""        # Create large database
+        """Test performance with large database"""
+        # Create large database
         large_database_size = 1000
         large_database = np.random.randn(large_database_size, 512)
         large_database = large_database / np.linalg.norm(large_database, axis=1, keepdims=True)
@@ -443,7 +475,8 @@ class TestSimilarityMatcher:
         assert len(results) == 10
     
     def test_batch_similarity_computation(self):
-        """Test batch similarity computation"""        query_embeddings = np.array([
+        """Test batch similarity computation"""
+        query_embeddings = np.array([
             self.test_database["pure_tone_440hz.wav"],
             self.test_database["white_noise.wav"]
         ])
@@ -466,15 +499,18 @@ class TestSimilarityMatcher:
 
 
 class TestSimilarityResult:
-    """    Industrial-grade testing for SimilarityResult class
+    """
+    Industrial-grade testing for SimilarityResult class
     
     Test Coverage:
     - Result object creation
     - Sorting functionality
     - Serialization/deserialization
-    """    
+    """
+    
     def test_result_creation(self):
-        """Test SimilarityResult creation"""        result = SimilarityResult(
+        """Test SimilarityResult creation"""
+        result = SimilarityResult(
             label="test_audio.wav",
             similarity=0.85,
             distance=0.15,
@@ -487,7 +523,8 @@ class TestSimilarityResult:
         assert result.metadata["duration"] == 5.0
     
     def test_result_comparison(self):
-        """Test result comparison for sorting"""        result1 = SimilarityResult("audio1.wav", 0.9, 0.1)
+        """Test result comparison for sorting"""
+        result1 = SimilarityResult("audio1.wav", 0.9, 0.1)
         result2 = SimilarityResult("audio2.wav", 0.8, 0.2)
         result3 = SimilarityResult("audio3.wav", 0.95, 0.05)
         
@@ -499,7 +536,8 @@ class TestSimilarityResult:
         assert sorted_results[2].label == "audio2.wav"  # Lowest similarity
     
     def test_result_serialization(self):
-        """Test result serialization to dict"""        result = SimilarityResult(
+        """Test result serialization to dict"""
+        result = SimilarityResult(
             label="test_audio.wav",
             similarity=0.85,
             distance=0.15,
@@ -517,15 +555,19 @@ class TestSimilarityResult:
 
 
 class TestEmbeddingIntegration:
-    """    Integration tests for embedding workflow
-    """    
+    """
+    Integration tests for embedding workflow
+    """
+    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""        setup_test_environment()
+        """Setup test environment"""
+        setup_test_environment()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
     
     def test_complete_embedding_workflow(self):
-        """Test complete embedding workflow"""        # Load audio
+        """Test complete embedding workflow"""
+        # Load audio
         processor = AudioProcessor()
         audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = processor.load_audio(str(audio_file))
@@ -555,7 +597,8 @@ class TestEmbeddingIntegration:
         assert results[0].similarity >= 0.99
     
     def test_embedding_reproducibility(self):
-        """Test embedding reproducibility across sessions"""        # Load same audio multiple times
+        """Test embedding reproducibility across sessions"""
+        # Load same audio multiple times
         processor = AudioProcessor()
         generator = AudioEmbeddingGenerator()
         
@@ -580,7 +623,8 @@ class TestEmbeddingIntegration:
             assert similarity >= 0.99
     
     def test_embedding_discriminative_power(self):
-        """Test that embeddings can discriminate between different audio"""        processor = AudioProcessor()
+        """Test that embeddings can discriminate between different audio"""
+        processor = AudioProcessor()
         generator = AudioEmbeddingGenerator()
         
         # Load different types of audio

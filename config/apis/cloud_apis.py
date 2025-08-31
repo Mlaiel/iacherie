@@ -4,13 +4,15 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module configures cloud service APIs including storage (AWS S3, MinIO),
 CDN (CloudFlare, AWS CloudFront), and other infrastructure services.
-"""import os
+"""
+import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional
 from enum import Enum
 
 class CloudServiceType(Enum):
-    """Cloud service types"""    OBJECT_STORAGE = "object_storage"
+    """Cloud service types"""
+    OBJECT_STORAGE = "object_storage"
     CDN = "cdn"
     DATABASE = "database"
     SEARCH_ENGINE = "search_engine"
@@ -19,14 +21,16 @@ class CloudServiceType(Enum):
     MONITORING = "monitoring"
 
 class StorageClass(Enum):
-    """Storage class types"""    STANDARD = "standard"
+    """Storage class types"""
+    STANDARD = "standard"
     INFREQUENT_ACCESS = "infrequent_access"
     ARCHIVE = "archive"
     COLD_STORAGE = "cold_storage"
 
 @dataclass
 class CloudAPIConfig:
-    """Configuration class for cloud service APIs"""    service_name: str
+    """Configuration class for cloud service APIs"""
+    service_name: str
     service_type: CloudServiceType
     provider: str  # AWS, Google Cloud, Azure, etc.
     base_url: str
@@ -64,7 +68,8 @@ class CloudAPIConfig:
     environments: Dict[str, Dict[str, Any]] = field(default_factory=dict)
     
     def get_environment_config(self, environment: str = "production") -> Dict[str, Any]:
-        """Get configuration for specific environment"""        base_config = self.__dict__.copy()
+        """Get configuration for specific environment"""
+        base_config = self.__dict__.copy()
         env_config = self.environments.get(environment, {})
         base_config.update(env_config)
         return base_config
@@ -350,21 +355,27 @@ CLOUD_CONFIGS: Dict[str, CloudAPIConfig] = {
 }
 
 def get_cloud_config(service: str) -> Optional[CloudAPIConfig]:
-    """Get cloud service configuration by name"""    return CLOUD_CONFIGS.get(service.lower())
+    """Get cloud service configuration by name"""
+    return CLOUD_CONFIGS.get(service.lower())
 
 def get_services_by_type(service_type: CloudServiceType) -> List[CloudAPIConfig]:
-    """Get all cloud services of specific type"""    return [config for config in CLOUD_CONFIGS.values() 
+    """Get all cloud services of specific type"""
+    return [config for config in CLOUD_CONFIGS.values() 
             if config.service_type == service_type]
 
 def get_services_by_provider(provider: str) -> List[CloudAPIConfig]:
-    """Get all services from specific cloud provider"""    return [config for config in CLOUD_CONFIGS.values() 
+    """Get all services from specific cloud provider"""
+    return [config for config in CLOUD_CONFIGS.values() 
             if config.provider.lower() == provider.lower()]
 
 def get_storage_services() -> List[CloudAPIConfig]:
-    """Get all object storage services"""    return get_services_by_type(CloudServiceType.OBJECT_STORAGE)
+    """Get all object storage services"""
+    return get_services_by_type(CloudServiceType.OBJECT_STORAGE)
 
 def get_cdn_services() -> List[CloudAPIConfig]:
-    """Get all CDN services"""    return get_services_by_type(CloudServiceType.CDN)
+    """Get all CDN services"""
+    return get_services_by_type(CloudServiceType.CDN)
 
 def get_monitoring_services() -> List[CloudAPIConfig]:
-    """Get all monitoring services"""    return get_services_by_type(CloudServiceType.MONITORING)
+    """Get all monitoring services"""
+    return get_services_by_type(CloudServiceType.MONITORING)

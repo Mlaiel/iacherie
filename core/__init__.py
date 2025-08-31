@@ -473,7 +473,8 @@ __all__ = [item for item in __all__ if item is not None]
 
 # Module initialization
 def _initialize_core_logging():
-    """Initialize core module logging"""    try:
+    """Initialize core module logging"""
+    try:
         logging.basicConfig(
             level=logging.INFO,
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -529,10 +530,12 @@ Pour toute demande de licence ou autorisation: mlaiel@live.de
 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 """def get_legal_notice() -> str:
-    """Retourne l'avertissement légal"""    return LEGAL_NOTICE
+    """Retourne l'avertissement légal"""
+    return LEGAL_NOTICE
 
 def get_module_metadata() -> Dict[str, Any]:
-    """Retourne les métadonnées complètes du module"""    return MODULE_METADATA.copy()
+    """Retourne les métadonnées complètes du module"""
+    return MODULE_METADATA.copy()
 
 # Core validation system
 from .validation import (

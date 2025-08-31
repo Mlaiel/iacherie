@@ -12,7 +12,8 @@ Business Logic Integration:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable
 from dataclasses import dataclass, field
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringMode(Enum):
-    """Monitoring operation modes"""    FULL = "full"
+    """Monitoring operation modes"""
+    FULL = "full"
     ESSENTIAL = "essential"
     LIGHTWEIGHT = "lightweight"
     MAINTENANCE = "maintenance"
@@ -44,7 +46,8 @@ class MonitoringMode(Enum):
 
 @dataclass
 class MonitoringConfiguration:
-    """Monitoring system configuration"""    mode: MonitoringMode = MonitoringMode.FULL
+    """Monitoring system configuration"""
+    mode: MonitoringMode = MonitoringMode.FULL
     collection_interval: int = 30
     retention_days: int = 30
     alert_sensitivity: str = "medium"  # low, medium, high, critical
@@ -58,7 +61,8 @@ class MonitoringConfiguration:
 
 @dataclass
 class MonitoringHealth:
-    """Overall monitoring system health"""    status: str
+    """Overall monitoring system health"""
+    status: str
     components_healthy: int
     components_total: int
     last_update: datetime
@@ -67,9 +71,11 @@ class MonitoringHealth:
 
 
 class MonitoringOrchestrator:
-    """    Central orchestrator for all monitoring components with intelligent
+    """
+    Central orchestrator for all monitoring components with intelligent
     coordination and business-focused optimization.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = MonitoringConfiguration(**(config or {}))
         
@@ -102,7 +108,8 @@ class MonitoringOrchestrator:
         logger.info("Monitoring Orchestrator initialized")
         
     async def initialize(self, redis_client=None, db_engine=None):
-        """Initialize all monitoring components"""        try:
+        """Initialize all monitoring components"""
+        try:
             logger.info("Initializing monitoring components...")
             
             # Initialize core components based on configuration
@@ -128,7 +135,8 @@ class MonitoringOrchestrator:
             raise
             
     async def _initialize_core_components(self, redis_client=None, db_engine=None):
-        """Initialize core monitoring components"""        
+        """Initialize core monitoring components"""
+        
         # Metrics Collector
         self.metrics_collector = MetricsCollector(
             redis_client=redis_client,
@@ -182,7 +190,8 @@ class MonitoringOrchestrator:
         )
         
     async def _initialize_enhanced_components(self, redis_client=None, db_engine=None):
-        """Initialize enhanced monitoring components"""        
+        """Initialize enhanced monitoring components"""
+        
         # AI Analytics Engine
         if self.config.ai_analytics_enabled:
             from .ai_analytics_engine import AIAnalyticsEngine
@@ -208,7 +217,8 @@ class MonitoringOrchestrator:
             )
             
     async def _setup_component_coordination(self):
-        """Setup coordination between monitoring components"""        
+        """Setup coordination between monitoring components"""
+        
         # Connect alert manager to health monitor
         if self.health_monitor and self.alert_manager:
             self.health_monitor.register_alert_callback(
@@ -234,7 +244,8 @@ class MonitoringOrchestrator:
             )
             
     def _register_business_rules(self):
-        """Register business-specific monitoring rules"""        
+        """Register business-specific monitoring rules"""
+        
         # Content protection monitoring rules
         self._business_rules.extend([
             self._monitor_content_protection_performance,
@@ -245,7 +256,8 @@ class MonitoringOrchestrator:
         ])
         
     def _register_optimization_rules(self):
-        """Register performance optimization rules"""        
+        """Register performance optimization rules"""
+        
         self._optimization_rules.extend([
             self._optimize_collection_intervals,
             self._optimize_resource_allocation,
@@ -255,7 +267,8 @@ class MonitoringOrchestrator:
         ])
         
     async def start(self):
-        """Start the monitoring orchestrator and all components"""        if self._running:
+        """Start the monitoring orchestrator and all components"""
+        if self._running:
             logger.warning("Monitoring orchestrator already running")
             return
             
@@ -276,7 +289,8 @@ class MonitoringOrchestrator:
             raise
             
     async def _start_components(self):
-        """Start all monitoring components"""        
+        """Start all monitoring components"""
+        
         components = [
             ("metrics_collector", self.metrics_collector),
             ("health_monitor", self.health_monitor),
@@ -318,7 +332,8 @@ class MonitoringOrchestrator:
                     }
                     
     async def stop(self):
-        """Stop the monitoring orchestrator and all components"""        self._running = False
+        """Stop the monitoring orchestrator and all components"""
+        self._running = False
         
         # Cancel orchestration task
         if self._orchestration_task:
@@ -334,7 +349,8 @@ class MonitoringOrchestrator:
         logger.info("Monitoring orchestrator stopped")
         
     async def _stop_components(self):
-        """Stop all monitoring components"""        
+        """Stop all monitoring components"""
+        
         components = [
             ("metrics_collector", self.metrics_collector),
             ("health_monitor", self.health_monitor),
@@ -365,7 +381,8 @@ class MonitoringOrchestrator:
                     logger.error(f"Error stopping component {name}: {e}")
                     
     async def _orchestration_loop(self):
-        """Main orchestration loop"""        while self._running:
+        """Main orchestration loop"""
+        while self._running:
             try:
                 # Monitor component health
                 await self._monitor_component_health()
@@ -391,7 +408,8 @@ class MonitoringOrchestrator:
                 await asyncio.sleep(30)  # Backoff on error
                 
     async def _monitor_component_health(self):
-        """Monitor health of all components"""        
+        """Monitor health of all components"""
+        
         for name, status in self._components_status.items():
             if status.get("status") == "running":
                 component = getattr(self, name, None)
@@ -412,7 +430,8 @@ class MonitoringOrchestrator:
                         status["errors"] = status.get("errors", 0) + 1
                         
     async def _restart_component(self, name: str, component):
-        """Restart a failed component"""        try:
+        """Restart a failed component"""
+        try:
             logger.info(f"Restarting component: {name}")
             
             # Stop component
@@ -443,7 +462,8 @@ class MonitoringOrchestrator:
             self._components_status[name]["status"] = "failed"
             
     async def _apply_business_rules(self):
-        """Apply business-specific monitoring rules"""        
+        """Apply business-specific monitoring rules"""
+        
         for rule in self._business_rules:
             try:
                 await rule()
@@ -451,7 +471,8 @@ class MonitoringOrchestrator:
                 logger.error(f"Error applying business rule {rule.__name__}: {e}")
                 
     async def _apply_optimization_rules(self):
-        """Apply performance optimization rules"""        
+        """Apply performance optimization rules"""
+        
         for rule in self._optimization_rules:
             try:
                 await rule()
@@ -459,7 +480,8 @@ class MonitoringOrchestrator:
                 logger.error(f"Error applying optimization rule {rule.__name__}: {e}")
                 
     async def _optimize_resources(self):
-        """Optimize resource usage across components"""        
+        """Optimize resource usage across components"""
+        
         # Monitor resource usage
         resource_usage = await self._resource_monitor.get_usage()
         
@@ -470,7 +492,8 @@ class MonitoringOrchestrator:
             await self._workload_balancer.increase_load()
             
     async def _generate_business_insights(self):
-        """Generate business insights from monitoring data"""        
+        """Generate business insights from monitoring data"""
+        
         if self.ai_analytics_engine:
             try:
                 insights = await self.ai_analytics_engine.generate_insights()
@@ -484,7 +507,8 @@ class MonitoringOrchestrator:
                 
     # Business monitoring rules
     async def _monitor_content_protection_performance(self):
-        """Monitor content protection system performance"""        
+        """Monitor content protection system performance"""
+        
         if self.business_metrics:
             metrics = await self.business_metrics.get_protection_metrics()
             
@@ -499,7 +523,8 @@ class MonitoringOrchestrator:
                 )
                 
     async def _monitor_fingerprint_accuracy(self):
-        """Monitor AI fingerprinting accuracy"""        
+        """Monitor AI fingerprinting accuracy"""
+        
         if self.business_metrics:
             accuracy = await self.business_metrics.get_fingerprint_accuracy()
             
@@ -512,7 +537,8 @@ class MonitoringOrchestrator:
                 )
                 
     async def _monitor_revenue_optimization(self):
-        """Monitor revenue optimization performance"""        
+        """Monitor revenue optimization performance"""
+        
         if self.business_metrics:
             revenue_metrics = await self.business_metrics.get_revenue_metrics()
             
@@ -529,7 +555,8 @@ class MonitoringOrchestrator:
                 )
                 
     async def _monitor_collaboration_success(self):
-        """Monitor collaboration platform success metrics"""        
+        """Monitor collaboration platform success metrics"""
+        
         if self.business_metrics:
             collab_metrics = await self.business_metrics.get_collaboration_metrics()
             
@@ -543,7 +570,8 @@ class MonitoringOrchestrator:
                 )
                 
     async def _monitor_platform_integration_health(self):
-        """Monitor multi-platform integration health"""        
+        """Monitor multi-platform integration health"""
+        
         if self.uptime_monitor:
             platform_health = await self.uptime_monitor.get_platform_health()
             
@@ -559,7 +587,8 @@ class MonitoringOrchestrator:
                     
     # Optimization rules
     async def _optimize_collection_intervals(self):
-        """Optimize metrics collection intervals based on load"""        
+        """Optimize metrics collection intervals based on load"""
+        
         if self.metrics_collector and self.performance_tracker:
             system_load = await self.performance_tracker.get_system_load()
             
@@ -575,27 +604,32 @@ class MonitoringOrchestrator:
                 )
                 
     async def _optimize_resource_allocation(self):
-        """Optimize resource allocation across components"""        
+        """Optimize resource allocation across components"""
+        
         # Implementation for resource optimization
         pass
         
     async def _optimize_alert_thresholds(self):
-        """Dynamically optimize alert thresholds"""        
+        """Dynamically optimize alert thresholds"""
+        
         # Implementation for threshold optimization
         pass
         
     async def _optimize_storage_efficiency(self):
-        """Optimize storage efficiency and cleanup"""        
+        """Optimize storage efficiency and cleanup"""
+        
         # Implementation for storage optimization
         pass
         
     async def _optimize_network_usage(self):
-        """Optimize network usage for external integrations"""        
+        """Optimize network usage for external integrations"""
+        
         # Implementation for network optimization
         pass
         
     def get_monitoring_health(self) -> MonitoringHealth:
-        """Get overall monitoring system health"""        
+        """Get overall monitoring system health"""
+        
         total_components = len(self._components_status)
         healthy_components = sum(
             1 for status in self._components_status.values() 
@@ -628,7 +662,8 @@ class MonitoringOrchestrator:
         )
         
     def _generate_recommendations(self, issues: List[Dict[str, Any]]) -> List[str]:
-        """Generate recommendations based on current issues"""        
+        """Generate recommendations based on current issues"""
+        
         recommendations = []
         
         if len(issues) > 3:
@@ -643,7 +678,8 @@ class MonitoringOrchestrator:
         return recommendations
         
     async def get_business_overview(self) -> Dict[str, Any]:
-        """Get comprehensive business monitoring overview"""        
+        """Get comprehensive business monitoring overview"""
+        
         overview = {
             "timestamp": datetime.utcnow().isoformat(),
             "monitoring_health": self.get_monitoring_health().__dict__,
@@ -673,9 +709,11 @@ class MonitoringOrchestrator:
 
 
 class ResourceMonitor:
-    """Monitor system resources for optimization"""    
+    """Monitor system resources for optimization"""
+    
     async def get_usage(self) -> Dict[str, float]:
-        """Get current resource usage"""        import psutil
+        """Get current resource usage"""
+        import psutil
         
         return {
             "cpu_percent": psutil.cpu_percent(interval=1),
@@ -686,9 +724,12 @@ class ResourceMonitor:
 
 
 class WorkloadBalancer:
-    """Balance workload across monitoring components"""    
+    """Balance workload across monitoring components"""
+    
     async def reduce_load(self):
-        """Reduce monitoring load"""        logger.info("Reducing monitoring workload due to high resource usage")
+        """Reduce monitoring load"""
+        logger.info("Reducing monitoring workload due to high resource usage")
         
     async def increase_load(self):
-        """Increase monitoring granularity"""        logger.info("Increasing monitoring granularity due to low resource usage")
+        """Increase monitoring granularity"""
+        logger.info("Increasing monitoring granularity due to low resource usage")

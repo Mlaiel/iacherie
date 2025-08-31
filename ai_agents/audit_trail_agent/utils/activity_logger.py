@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import uuid
@@ -58,7 +59,8 @@ from ...utils.activity_aggregator import ActivityAggregator
 logger = logging.getLogger(__name__)
 
 class ActivityType(Enum):
-    """Comprehensive activity type classification"""    USER_LOGIN = "user_login"
+    """Comprehensive activity type classification"""
+    USER_LOGIN = "user_login"
     USER_LOGOUT = "user_logout"
     USER_REGISTRATION = "user_registration"
     CONTENT_UPLOAD = "content_upload"
@@ -79,14 +81,16 @@ class ActivityType(Enum):
     SECURITY_EVENT = "security_event"
 
 class ActivitySeverity(IntEnum):
-    """Activity severity levels"""    DEBUG = 1
+    """Activity severity levels"""
+    DEBUG = 1
     INFO = 2
     WARNING = 3
     ERROR = 4
     CRITICAL = 5
 
 class ActivitySource(Enum):
-    """Activity source classification"""    WEB_APP = "web_app"
+    """Activity source classification"""
+    WEB_APP = "web_app"
     MOBILE_APP = "mobile_app"
     API = "api"
     SYSTEM = "system"
@@ -97,7 +101,8 @@ class ActivitySource(Enum):
 
 @dataclass
 class ActivityConfiguration:
-    """Advanced activity logging configuration"""    enable_real_time_logging: bool = True
+    """Advanced activity logging configuration"""
+    enable_real_time_logging: bool = True
     enable_batch_processing: bool = True
     enable_aggregation: bool = True
     enable_encryption: bool = True
@@ -111,7 +116,8 @@ class ActivityConfiguration:
 
 @dataclass
 class ActivityMetrics:
-    """Comprehensive activity metrics tracking"""    total_activities_logged: int = 0
+    """Comprehensive activity metrics tracking"""
+    total_activities_logged: int = 0
     activities_by_type: Dict[str, int] = field(default_factory=dict)
     activities_by_source: Dict[str, int] = field(default_factory=dict)
     average_processing_time_ms: float = 0.0
@@ -120,7 +126,8 @@ class ActivityMetrics:
     storage_size_mb: float = 0.0
 
 class ActivityLogger:
-    """    Enterprise Activity Logging System
+    """
+    Enterprise Activity Logging System
     
     High-performance activity tracking system providing:
     - Real-time activity logging with microsecond precision
@@ -130,7 +137,8 @@ class ActivityLogger:
     - Real-time aggregation and analytics
     - Performance-optimized storage and retrieval
     - Compliance-ready activity trails
-    """    def __init__(self, config: Optional[ActivityConfiguration] = None):
+    """
+    def __init__(self, config: Optional[ActivityConfiguration] = None):
         self.config = config or ActivityConfiguration()
         self.metrics = ActivityMetrics()
         
@@ -164,7 +172,8 @@ class ActivityLogger:
         logger.info("ActivityLogger initialized with enterprise performance capabilities")
 
     async def initialize(self) -> bool:
-        """Initialize activity logging system with background services"""        try:
+        """Initialize activity logging system with background services"""
+        try:
             # Initialize database connections and indexes
             await self._initialize_activity_storage()
             
@@ -204,7 +213,8 @@ class ActivityLogger:
         resource_id: Optional[str] = None,
         timestamp: Optional[datetime] = None
     ) -> str:
-        """        Log high-performance activity with comprehensive tracking
+        """
+        Log high-performance activity with comprehensive tracking
         
         Args:
             activity_type: Type of activity being logged
@@ -219,7 +229,8 @@ class ActivityLogger:
             
         Returns:
             Unique activity ID
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Generate unique activity ID
@@ -308,7 +319,8 @@ class ActivityLogger:
         sort_order: str = "desc",
         include_aggregated: bool = False
     ) -> Dict[str, Any]:
-        """        High-performance activity querying with advanced filtering
+        """
+        High-performance activity querying with advanced filtering
         
         Args:
             filters: Query filters (user_id, activity_type, source, etc.)
@@ -321,7 +333,8 @@ class ActivityLogger:
             
         Returns:
             Query results with metadata
-        """        try:
+        """
+        try:
             query_start_time = time.time()
             
             # Build optimized database query
@@ -392,7 +405,8 @@ class ActivityLogger:
         user_id: str,
         time_period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """        Generate comprehensive user activity summary with analytics
+        """
+        Generate comprehensive user activity summary with analytics
         
         Args:
             user_id: User identifier
@@ -400,7 +414,8 @@ class ActivityLogger:
             
         Returns:
             Detailed user activity summary
-        """        try:
+        """
+        try:
             end_time = datetime.now(timezone.utc)
             start_time = end_time - time_period
             
@@ -484,7 +499,8 @@ class ActivityLogger:
         granularity: str = "hour",
         metrics: List[str] = None
     ) -> Dict[str, Any]:
-        """        Generate comprehensive platform activity analytics
+        """
+        Generate comprehensive platform activity analytics
         
         Args:
             time_range: Time range for analytics
@@ -493,7 +509,8 @@ class ActivityLogger:
             
         Returns:
             Detailed activity analytics
-        """        try:
+        """
+        try:
             start_time, end_time = time_range
             metrics = metrics or ["activity_count", "user_count", "session_count", "error_rate"]
             
@@ -565,7 +582,8 @@ class ActivityLogger:
 
     # Private helper methods
     async def _should_log_activity(self, activity_type: ActivityType, user_id: Optional[str]) -> bool:
-        """Determine if activity should be logged based on sampling strategy"""        # Global sampling rate
+        """Determine if activity should be logged based on sampling strategy"""
+        # Global sampling rate
         if np.random.random() > self.config.sampling_rate:
             return False
         
@@ -577,7 +595,8 @@ class ActivityLogger:
         return True
 
     async def _encrypt_sensitive_activity_data(self, activity_record: Dict[str, Any]) -> Dict[str, Any]:
-        """Encrypt sensitive fields in activity record"""        sensitive_fields = ['user_id', 'details', 'client_info']
+        """Encrypt sensitive fields in activity record"""
+        sensitive_fields = ['user_id', 'details', 'client_info']
         encrypted_record = activity_record.copy()
         
         for field in sensitive_fields:
@@ -589,7 +608,8 @@ class ActivityLogger:
         return encrypted_record
 
     async def _log_activity_real_time(self, activity_record: Dict[str, Any]) -> None:
-        """Log activity in real-time for critical events"""        try:
+        """Log activity in real-time for critical events"""
+        try:
             async with get_db_session() as session:
                 activity_log = ActivityLog(
                     activity_id=activity_record['activity_id'],
@@ -613,14 +633,16 @@ class ActivityLogger:
             await self._add_to_batch_queue(activity_record)
 
     async def _add_to_batch_queue(self, activity_record: Dict[str, Any]) -> None:
-        """Add activity to batch processing queue"""        self.activity_buffer.append(activity_record)
+        """Add activity to batch processing queue"""
+        self.activity_buffer.append(activity_record)
         
         # Force batch processing if buffer is full
         if len(self.activity_buffer) >= self.config.batch_size:
             asyncio.create_task(self._process_activity_batch())
 
     async def _start_batch_processor(self) -> None:
-        """Start background batch processing service"""        while True:
+        """Start background batch processing service"""
+        while True:
             try:
                 if self.activity_buffer:
                     await self._process_activity_batch()
@@ -630,7 +652,8 @@ class ActivityLogger:
                 await asyncio.sleep(5)
 
     async def _process_activity_batch(self) -> None:
-        """Process batched activities for high-performance storage"""        if not self.activity_buffer:
+        """Process batched activities for high-performance storage"""
+        if not self.activity_buffer:
             return
         
         batch_start_time = time.time()
@@ -681,7 +704,8 @@ class ActivityLogger:
             self.activity_buffer.extendleft(reversed(batch_activities))
 
     def _generate_session_id(self, user_id: Optional[str]) -> str:
-        """Generate session ID for activity correlation"""        if user_id and user_id in self.session_cache:
+        """Generate session ID for activity correlation"""
+        if user_id and user_id in self.session_cache:
             return self.session_cache[user_id]["session_id"]
         
         session_id = str(uuid.uuid4())
@@ -695,10 +719,12 @@ class ActivityLogger:
         return session_id
 
     def _generate_correlation_id(self) -> str:
-        """Generate correlation ID for request tracing"""        return str(uuid.uuid4())
+        """Generate correlation ID for request tracing"""
+        return str(uuid.uuid4())
 
     async def _gather_client_info(self) -> Dict[str, Any]:
-        """Gather client information from request context"""        # This would typically extract from web framework context
+        """Gather client information from request context"""
+        # This would typically extract from web framework context
         return {
             "ip_address": "127.0.0.1",  # Placeholder
             "user_agent": "Unknown",    # Placeholder
@@ -707,7 +733,8 @@ class ActivityLogger:
         }
 
     async def _gather_performance_context(self) -> Dict[str, Any]:
-        """Gather performance context for activity"""        return {
+        """Gather performance context for activity"""
+        return {
             "memory_usage_mb": 0,  # Placeholder
             "cpu_usage_percent": 0,  # Placeholder
             "request_duration_ms": 0,  # Placeholder

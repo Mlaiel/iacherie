@@ -3,7 +3,8 @@
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
-"""import asyncio
+"""
+import asyncio
 from typing import Dict, List, Callable, Optional, Any, Set, Union
 from datetime import datetime, timedelta
 from enum import Enum
@@ -24,7 +25,8 @@ from ..utils.metrics import MetricsCollector
 
 
 class TriggerType(Enum):
-    """Enhanced trigger types for automation."""    TIME_BASED = "time_based"
+    """Enhanced trigger types for automation."""
+    TIME_BASED = "time_based"
     EVENT_BASED = "event_based"
     CONTENT_BASED = "content_based"
     THRESHOLD_BASED = "threshold_based"
@@ -35,7 +37,8 @@ class TriggerType(Enum):
 
 
 class ActionType(Enum):
-    """Types of automation actions."""    WORKFLOW_START = "workflow_start"
+    """Types of automation actions."""
+    WORKFLOW_START = "workflow_start"
     NOTIFICATION_SEND = "notification_send"
     CONTENT_ANALYSIS = "content_analysis"
     PROTECTION_SCAN = "protection_scan"
@@ -46,7 +49,8 @@ class ActionType(Enum):
 
 
 class AutomationStatus(Enum):
-    """Enhanced automation status."""    ACTIVE = "active"
+    """Enhanced automation status."""
+    ACTIVE = "active"
     PAUSED = "paused"
     DISABLED = "disabled"
     FAILED = "failed"
@@ -55,7 +59,8 @@ class AutomationStatus(Enum):
 
 
 class ExecutionMode(Enum):
-    """Automation execution modes."""    IMMEDIATE = "immediate"
+    """Automation execution modes."""
+    IMMEDIATE = "immediate"
     QUEUED = "queued"
     BATCH = "batch"
     PARALLEL = "parallel"
@@ -63,7 +68,8 @@ class ExecutionMode(Enum):
 
 @dataclass
 class TriggerCondition:
-    """Complex trigger condition with evaluation logic."""    name: str
+    """Complex trigger condition with evaluation logic."""
+    name: str
     condition_type: str  # comparison, regex, function, composite
     field_path: str  # dot notation path to field
     operator: str  # eq, ne, gt, lt, gte, lte, in, not_in, contains, regex, custom
@@ -72,7 +78,8 @@ class TriggerCondition:
     required: bool = True
     
     def evaluate(self, context: Dict[str, Any]) -> tuple[bool, float]:
-        """Evaluate condition and return (matches, confidence_score)."""        try:
+        """Evaluate condition and return (matches, confidence_score)."""
+        try:
             # Get field value using dot notation
             field_value = self._get_field_value(context, self.field_path)
             
@@ -87,7 +94,8 @@ class TriggerCondition:
             return False, 0.0
     
     def _get_field_value(self, context: Dict, field_path: str) -> Any:
-        """Get nested field value using dot notation."""        keys = field_path.split('.')
+        """Get nested field value using dot notation."""
+        keys = field_path.split('.')
         value = context
         
         for key in keys:
@@ -101,7 +109,8 @@ class TriggerCondition:
         return value
     
     def _evaluate_operator(self, field_value: Any, operator: str, expected: Any) -> bool:
-        """Evaluate operator-based comparison."""        operators = {
+        """Evaluate operator-based comparison."""
+        operators = {
             "eq": lambda a, b: a == b,
             "ne": lambda a, b: a != b,
             "gt": lambda a, b: a > b,
@@ -123,7 +132,8 @@ class TriggerCondition:
 
 @dataclass
 class AutomationRule:
-    """Enhanced automation rule with complex conditions and actions."""    id: str
+    """Enhanced automation rule with complex conditions and actions."""
+    id: str
     name: str
     description: str
     trigger_type: TriggerType
@@ -154,7 +164,8 @@ class AutomationRule:
     owner_id: Optional[str] = None
     
     def evaluate_conditions(self, context: Dict[str, Any]) -> tuple[bool, float]:
-        """Evaluate all conditions and return overall match and confidence."""        if not self.conditions:
+        """Evaluate all conditions and return overall match and confidence."""
+        if not self.conditions:
             return True, 1.0
         
         total_weight = sum(condition.weight for condition in self.conditions)
@@ -183,7 +194,8 @@ class AutomationRule:
         return overall_match, overall_confidence
     
     def can_execute(self) -> tuple[bool, str]:
-        """Check if rule can be executed considering limits."""        if not self.enabled or self.status != AutomationStatus.ACTIVE:
+        """Check if rule can be executed considering limits."""
+        if not self.enabled or self.status != AutomationStatus.ACTIVE:
             return False, f"Rule is {self.status.value}"
         
         now = datetime.utcnow()
@@ -205,7 +217,8 @@ class AutomationRule:
         return True, "Can execute"
     
     def record_execution(self, success: bool, duration: float):
-        """Record execution statistics."""        self.last_executed = datetime.utcnow()
+        """Record execution statistics."""
+        self.last_executed = datetime.utcnow()
         self.execution_count += 1
         
         if success:
@@ -224,7 +237,8 @@ class AutomationRule:
 
 
 class AutomationActionHandler:
-    """Base handler for automation actions."""    
+    """Base handler for automation actions."""
+    
     def __init__(self, action_type: ActionType):
         self.action_type = action_type
         self.logger = logging.getLogger(f"automation.handler.{action_type.value}")
@@ -234,7 +248,8 @@ class AutomationActionHandler:
         action_config: Dict[str, Any], 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute automation action."""        start_time = datetime.utcnow()
+        """Execute automation action."""
+        start_time = datetime.utcnow()
         
         try:
             self.logger.info(f"Executing action {self.action_type.value}")
@@ -268,7 +283,8 @@ class AutomationActionHandler:
         action_config: Dict[str, Any], 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute the specific action - to be overridden by subclasses."""        # Default implementation for base class
+        """Execute the specific action - to be overridden by subclasses."""
+        # Default implementation for base class
         self.logger.warning(f"Base _execute_action called for {self.action_type.value}")
         
         return {
@@ -280,14 +296,16 @@ class AutomationActionHandler:
 
 
 class WorkflowStartActionHandler(AutomationActionHandler):
-    """Handler for starting workflows."""    
+    """Handler for starting workflows."""
+    
     def __init__(self):
         super().__init__(ActionType.WORKFLOW_START)
         # Would inject workflow orchestrator
         # self.workflow_orchestrator = WorkflowOrchestrator()
     
     async def _execute_action(self, action_config: Dict, context: Dict) -> Dict:
-        """Start a workflow."""        template_id = action_config.get("template_id")
+        """Start a workflow."""
+        template_id = action_config.get("template_id")
         input_data = action_config.get("input_data", {})
         
         # Merge context data
@@ -304,13 +322,15 @@ class WorkflowStartActionHandler(AutomationActionHandler):
 
 
 class NotificationActionHandler(AutomationActionHandler):
-    """Handler for sending notifications."""    
+    """Handler for sending notifications."""
+    
     def __init__(self):
         super().__init__(ActionType.NOTIFICATION_SEND)
         self.notification_manager = NotificationManager()
     
     async def _execute_action(self, action_config: Dict, context: Dict) -> Dict:
-        """Send notification."""        message = action_config.get("message", "Automation trigger activated")
+        """Send notification."""
+        message = action_config.get("message", "Automation trigger activated")
         channels = action_config.get("channels", ["email"])
         recipients = action_config.get("recipients", [])
         urgent = action_config.get("urgent", False)
@@ -334,20 +354,23 @@ class NotificationActionHandler(AutomationActionHandler):
         }
     
     def _template_message(self, message: str, context: Dict) -> str:
-        """Template message with context variables."""        try:
+        """Template message with context variables."""
+        try:
             return message.format(**context)
         except (KeyError, ValueError):
             return message
 
 
 class ContentAnalysisActionHandler(AutomationActionHandler):
-    """Handler for content analysis actions."""    
+    """Handler for content analysis actions."""
+    
     def __init__(self):
         super().__init__(ActionType.CONTENT_ANALYSIS)
         self.content_analyzer = ContentAnalyzer()
     
     async def _execute_action(self, action_config: Dict, context: Dict) -> Dict:
-        """Execute content analysis."""        content_items = action_config.get("content_items", [])
+        """Execute content analysis."""
+        content_items = action_config.get("content_items", [])
         analysis_type = action_config.get("analysis_type", "quick")
         
         # Get content from context if not provided
@@ -375,13 +398,15 @@ class ContentAnalysisActionHandler(AutomationActionHandler):
 
 
 class ProtectionScanActionHandler(AutomationActionHandler):
-    """Handler for protection scanning actions."""    
+    """Handler for protection scanning actions."""
+    
     def __init__(self):
         super().__init__(ActionType.PROTECTION_SCAN)
         self.fingerprint_service = FingerprintService()
     
     async def _execute_action(self, action_config: Dict, context: Dict) -> Dict:
-        """Execute protection scan."""        scan_type = action_config.get("scan_type", "fingerprint")
+        """Execute protection scan."""
+        scan_type = action_config.get("scan_type", "fingerprint")
         platforms = action_config.get("platforms", ["youtube", "instagram"])
         content_ids = action_config.get("content_ids", [])
         
@@ -408,7 +433,8 @@ class ProtectionScanActionHandler(AutomationActionHandler):
 
 
 class EnterpriseWorkflowAutomation:
-    """Enterprise-grade workflow automation engine."""    
+    """Enterprise-grade workflow automation engine."""
+    
     def __init__(self):
         self.logger = logging.getLogger("workflow.automation")
         self.event_bus = EventBus()
@@ -439,7 +465,8 @@ class EnterpriseWorkflowAutomation:
         self.execution_stats = defaultdict(int)
     
     async def initialize(self):
-        """Initialize automation engine."""        self.logger.info("Initializing workflow automation engine")
+        """Initialize automation engine."""
+        self.logger.info("Initializing workflow automation engine")
         
         # Set up event subscriptions
         await self._setup_event_subscriptions()
@@ -452,7 +479,8 @@ class EnterpriseWorkflowAutomation:
         self.running = True
     
     async def _setup_event_subscriptions(self):
-        """Set up subscriptions to relevant events."""        # Subscribe to content events
+        """Set up subscriptions to relevant events."""
+        # Subscribe to content events
         self.event_bus.subscribe("content.uploaded", self._handle_content_event)
         self.event_bus.subscribe("content.analyzed", self._handle_content_event)
         self.event_bus.subscribe("content.published", self._handle_content_event)
@@ -470,7 +498,8 @@ class EnterpriseWorkflowAutomation:
         self.event_bus.subscribe("workflow.failed", self._handle_workflow_event)
     
     async def register_automation_rule(self, rule: AutomationRule) -> str:
-        """Register a new automation rule."""        rule_id = rule.id
+        """Register a new automation rule."""
+        rule_id = rule.id
         self.automation_rules[rule_id] = rule
         
         self.logger.info(f"Registered automation rule: {rule.name} ({rule_id})")
@@ -482,7 +511,8 @@ class EnterpriseWorkflowAutomation:
         user_id: str,
         trigger_conditions: Dict[str, Any]
     ) -> str:
-        """Create automation for content upload events."""        rule_id = f"content_upload_{user_id}_{uuid.uuid4().hex[:8]}"
+        """Create automation for content upload events."""
+        rule_id = f"content_upload_{user_id}_{uuid.uuid4().hex[:8]}"
         
         # Define conditions
         conditions = [
@@ -553,7 +583,8 @@ class EnterpriseWorkflowAutomation:
         content_ids: List[str],
         monitoring_config: Dict[str, Any]
     ) -> str:
-        """Create automation for protection monitoring."""        rule_id = f"protection_monitor_{user_id}_{uuid.uuid4().hex[:8]}"
+        """Create automation for protection monitoring."""
+        rule_id = f"protection_monitor_{user_id}_{uuid.uuid4().hex[:8]}"
         
         conditions = [
             TriggerCondition(
@@ -635,7 +666,8 @@ class EnterpriseWorkflowAutomation:
         self,
         threshold_config: Dict[str, Any]
     ) -> str:
-        """Create automation for performance threshold monitoring."""        rule_id = f"performance_threshold_{uuid.uuid4().hex[:8]}"
+        """Create automation for performance threshold monitoring."""
+        rule_id = f"performance_threshold_{uuid.uuid4().hex[:8]}"
         
         conditions = [
             TriggerCondition(
@@ -700,7 +732,8 @@ class EnterpriseWorkflowAutomation:
         return rule_id
     
     async def trigger_event(self, event_type: str, event_data: Dict[str, Any]):
-        """Trigger event for automation processing."""        event = {
+        """Trigger event for automation processing."""
+        event = {
             "event_type": event_type,
             "event_data": event_data,
             "timestamp": datetime.utcnow().isoformat(),
@@ -711,7 +744,8 @@ class EnterpriseWorkflowAutomation:
         self.logger.debug(f"Queued event: {event_type}")
     
     async def _event_processing_loop(self):
-        """Main event processing loop."""        while self.running:
+        """Main event processing loop."""
+        while self.running:
             try:
                 # Process events in batches
                 events_batch = []
@@ -739,7 +773,8 @@ class EnterpriseWorkflowAutomation:
                 await asyncio.sleep(1)
     
     async def _process_event(self, event: Dict[str, Any]):
-        """Process individual event against automation rules."""        event_type = event["event_type"]
+        """Process individual event against automation rules."""
+        event_type = event["event_type"]
         event_data = event["event_data"]
         
         # Find matching rules
@@ -789,7 +824,8 @@ class EnterpriseWorkflowAutomation:
             await self.execution_queue.put(execution_item)
     
     async def _execution_loop(self):
-        """Main automation execution loop."""        while self.running:
+        """Main automation execution loop."""
+        while self.running:
             try:
                 # Check execution capacity
                 if len(self.active_executions) >= self.max_concurrent_executions:
@@ -818,7 +854,8 @@ class EnterpriseWorkflowAutomation:
                 await asyncio.sleep(1)
     
     async def _execute_automation_rule(self, execution_item: Dict[str, Any]):
-        """Execute automation rule actions."""        execution_id = execution_item["execution_id"]
+        """Execute automation rule actions."""
+        execution_id = execution_item["execution_id"]
         rule = execution_item["rule"]
         context = execution_item["context"]
         
@@ -886,7 +923,8 @@ class EnterpriseWorkflowAutomation:
             self.active_executions.discard(execution_id)
     
     async def _monitoring_loop(self):
-        """Monitor automation health and performance."""        while self.running:
+        """Monitor automation health and performance."""
+        while self.running:
             try:
                 await asyncio.sleep(300)  # Every 5 minutes
                 
@@ -915,19 +953,24 @@ class EnterpriseWorkflowAutomation:
                 self.logger.error(f"Error in monitoring loop: {e}")
     
     async def _handle_content_event(self, event: Event):
-        """Handle content-related events."""        await self.trigger_event(event.type, event.data)
+        """Handle content-related events."""
+        await self.trigger_event(event.type, event.data)
     
     async def _handle_protection_event(self, event: Event):
-        """Handle protection-related events."""        await self.trigger_event(event.type, event.data)
+        """Handle protection-related events."""
+        await self.trigger_event(event.type, event.data)
     
     async def _handle_system_event(self, event: Event):
-        """Handle system-related events."""        await self.trigger_event(event.type, event.data)
+        """Handle system-related events."""
+        await self.trigger_event(event.type, event.data)
     
     async def _handle_workflow_event(self, event: Event):
-        """Handle workflow-related events."""        await self.trigger_event(event.type, event.data)
+        """Handle workflow-related events."""
+        await self.trigger_event(event.type, event.data)
     
     def get_automation_rule(self, rule_id: str) -> Optional[AutomationRule]:
-        """Get automation rule by ID."""        return self.automation_rules.get(rule_id)
+        """Get automation rule by ID."""
+        return self.automation_rules.get(rule_id)
     
     def list_automation_rules(
         self, 
@@ -935,7 +978,8 @@ class EnterpriseWorkflowAutomation:
         trigger_type: Optional[TriggerType] = None,
         status: Optional[AutomationStatus] = None
     ) -> List[AutomationRule]:
-        """List automation rules with optional filtering."""        rules = list(self.automation_rules.values())
+        """List automation rules with optional filtering."""
+        rules = list(self.automation_rules.values())
         
         if owner_id:
             rules = [r for r in rules if r.owner_id == owner_id]
@@ -949,7 +993,8 @@ class EnterpriseWorkflowAutomation:
         return rules
     
     def disable_automation_rule(self, rule_id: str) -> bool:
-        """Disable automation rule."""        rule = self.automation_rules.get(rule_id)
+        """Disable automation rule."""
+        rule = self.automation_rules.get(rule_id)
         if rule:
             rule.enabled = False
             rule.status = AutomationStatus.DISABLED
@@ -958,7 +1003,8 @@ class EnterpriseWorkflowAutomation:
         return False
     
     def enable_automation_rule(self, rule_id: str) -> bool:
-        """Enable automation rule."""        rule = self.automation_rules.get(rule_id)
+        """Enable automation rule."""
+        rule = self.automation_rules.get(rule_id)
         if rule:
             rule.enabled = True
             rule.status = AutomationStatus.ACTIVE
@@ -967,7 +1013,8 @@ class EnterpriseWorkflowAutomation:
         return False
     
     def get_automation_stats(self) -> Dict[str, Any]:
-        """Get automation engine statistics."""        total_rules = len(self.automation_rules)
+        """Get automation engine statistics."""
+        total_rules = len(self.automation_rules)
         active_rules = sum(1 for r in self.automation_rules.values() if r.enabled)
         
         return {
@@ -982,14 +1029,16 @@ class EnterpriseWorkflowAutomation:
         }
 
     async def trigger_event_manual(self, event_type: str, event_data: Dict[str, Any]):
-        """Trigger an event that may activate automation rules."""        await self.event_queue.put({
+        """Trigger an event that may activate automation rules."""
+        await self.event_queue.put({
             "type": event_type,
             "data": event_data,
             "timestamp": datetime.utcnow()
         })
 
     async def start_automation_engine(self):
-        """Start the automation engine."""        self.is_running = True
+        """Start the automation engine."""
+        self.is_running = True
         
         # Start event processing
         event_task = asyncio.create_task(self._process_events())
@@ -1005,10 +1054,12 @@ class EnterpriseWorkflowAutomation:
             self.is_running = False
 
     async def stop_automation_engine(self):
-        """Stop the automation engine."""        self.is_running = False
+        """Stop the automation engine."""
+        self.is_running = False
 
     async def _process_events(self):
-        """Process events from the queue."""        while self.is_running:
+        """Process events from the queue."""
+        while self.is_running:
             try:
                 # Wait for event with timeout
                 event = await asyncio.wait_for(self.event_queue.get(), timeout=1.0)
@@ -1028,7 +1079,8 @@ class EnterpriseWorkflowAutomation:
                 print(f"Event processing error: {e}")
 
     async def _process_scheduled_tasks(self):
-        """Process time-based automation rules."""        while self.is_running:
+        """Process time-based automation rules."""
+        while self.is_running:
             try:
                 current_time = datetime.utcnow()
                 
@@ -1046,7 +1098,8 @@ class EnterpriseWorkflowAutomation:
                 print(f"Scheduled task processing error: {e}")
 
     def _rule_matches_event(self, rule: AutomationRule, event: Dict) -> bool:
-        """Check if a rule matches the given event."""        event_type = event.get("type")
+        """Check if a rule matches the given event."""
+        event_type = event.get("type")
         event_data = event.get("data", {})
         
         # Check if rule is configured for this event type
@@ -1057,7 +1110,8 @@ class EnterpriseWorkflowAutomation:
         return rule.matches_conditions(event_data)
 
     def _should_execute_scheduled_rule(self, rule: AutomationRule, current_time: datetime) -> bool:
-        """Check if a scheduled rule should be executed now."""        if "schedule" not in rule.conditions:
+        """Check if a scheduled rule should be executed now."""
+        if "schedule" not in rule.conditions:
             return False
         
         schedule = rule.conditions["schedule"]
@@ -1090,7 +1144,8 @@ class EnterpriseWorkflowAutomation:
         return False
 
     async def _execute_rule(self, rule: AutomationRule, context: Dict):
-        """Execute an automation rule."""        try:
+        """Execute an automation rule."""
+        try:
             rule.execution_count += 1
             rule.last_executed = datetime.utcnow()
             
@@ -1108,7 +1163,8 @@ class EnterpriseWorkflowAutomation:
             print(f"Rule execution failed: {rule.name} - {str(e)}")
 
     def create_content_upload_automation(self) -> str:
-        """Create automation for new content uploads."""        async def handle_content_upload(context: Dict):
+        """Create automation for new content uploads."""
+        async def handle_content_upload(context: Dict):
             content_info = context.get("content", {})
             print(f"Auto-processing new content: {content_info.get('title', 'Unknown')}")
             
@@ -1130,7 +1186,8 @@ class EnterpriseWorkflowAutomation:
         return self.add_rule(rule)
 
     def create_seo_optimization_automation(self) -> str:
-        """Create automation for SEO optimization of popular content."""        async def optimize_popular_content(context: Dict):
+        """Create automation for SEO optimization of popular content."""
+        async def optimize_popular_content(context: Dict):
             print("Running SEO optimization for popular content")
             # Mock: Find content with high engagement and optimize
             # In reality, this would query the database for popular content
@@ -1151,7 +1208,8 @@ class EnterpriseWorkflowAutomation:
         return self.add_rule(rule)
 
     def create_collaboration_matching_automation(self) -> str:
-        """Create automation for finding collaboration opportunities."""        async def find_collaborations(context: Dict):
+        """Create automation for finding collaboration opportunities."""
+        async def find_collaborations(context: Dict):
             print("Finding new collaboration opportunities")
             # Mock: Analyze creator content and find matches
             # In reality, this would use AI to find suitable collaborators
@@ -1172,7 +1230,8 @@ class EnterpriseWorkflowAutomation:
         return self.add_rule(rule)
 
     def create_content_protection_automation(self) -> str:
-        """Create automation for content protection monitoring."""        async def monitor_content_protection(context: Dict):
+        """Create automation for content protection monitoring."""
+        async def monitor_content_protection(context: Dict):
             content_info = context.get("content", {})
             print(f"Monitoring protection for: {content_info.get('title', 'Unknown')}")
             
@@ -1192,7 +1251,8 @@ class EnterpriseWorkflowAutomation:
         return self.add_rule(rule)
 
     def create_analytics_reporting_automation(self) -> str:
-        """Create automation for generating analytics reports."""        async def generate_analytics_report(context: Dict):
+        """Create automation for generating analytics reports."""
+        async def generate_analytics_report(context: Dict):
             print("Generating weekly analytics report")
             # Mock: Compile performance metrics and send report
             # In reality, this would gather metrics and generate reports
@@ -1213,7 +1273,8 @@ class EnterpriseWorkflowAutomation:
         return self.add_rule(rule)
 
     def get_automation_status(self) -> Dict:
-        """Get status of all automation rules."""        status_summary = {
+        """Get status of all automation rules."""
+        status_summary = {
             "total_rules": len(self.rules),
             "active_rules": sum(1 for r in self.rules.values() if r.status == AutomationStatus.ACTIVE),
             "paused_rules": sum(1 for r in self.rules.values() if r.status == AutomationStatus.PAUSED),
@@ -1235,7 +1296,8 @@ class EnterpriseWorkflowAutomation:
         return status_summary
 
     def setup_default_automations(self) -> Dict[str, str]:
-        """Setup default automation rules for the system."""        automation_ids = {}
+        """Setup default automation rules for the system."""
+        automation_ids = {}
         
         automation_ids["content_upload"] = self.create_content_upload_automation()
         automation_ids["seo_optimization"] = self.create_seo_optimization_automation()

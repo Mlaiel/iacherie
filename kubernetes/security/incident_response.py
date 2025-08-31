@@ -12,7 +12,8 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and
 will result in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import hashlib
@@ -34,14 +35,16 @@ logger = logging.getLogger(__name__)
 
 
 class IncidentSeverity(Enum):
-    """Incident severity levels"""    LOW = "low"
+    """Incident severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class IncidentStatus(Enum):
-    """Incident status values"""    NEW = "new"
+    """Incident status values"""
+    NEW = "new"
     ASSIGNED = "assigned"
     INVESTIGATING = "investigating"
     CONTAINMENT = "containment"
@@ -52,7 +55,8 @@ class IncidentStatus(Enum):
 
 
 class IncidentCategory(Enum):
-    """Incident categories"""    MALWARE = "malware"
+    """Incident categories"""
+    MALWARE = "malware"
     PHISHING = "phishing"
     WEB_INTRUSION = "web_intrusion"
     DOS_DDOS = "dos_ddos"
@@ -65,7 +69,8 @@ class IncidentCategory(Enum):
 
 
 class EvidenceType(Enum):
-    """Types of digital evidence"""    LOG_FILE = "log_file"
+    """Types of digital evidence"""
+    LOG_FILE = "log_file"
     NETWORK_CAPTURE = "network_capture"
     MEMORY_DUMP = "memory_dump"
     DISK_IMAGE = "disk_image"
@@ -78,7 +83,8 @@ class EvidenceType(Enum):
 
 
 class ResponseAction(Enum):
-    """Automated response actions"""    BLOCK_IP = "block_ip"
+    """Automated response actions"""
+    BLOCK_IP = "block_ip"
     ISOLATE_HOST = "isolate_host"
     DISABLE_ACCOUNT = "disable_account"
     QUARANTINE_FILE = "quarantine_file"
@@ -92,7 +98,8 @@ class ResponseAction(Enum):
 
 @dataclass
 class DigitalEvidence:
-    """Digital evidence data structure"""    evidence_id: str
+    """Digital evidence data structure"""
+    evidence_id: str
     evidence_type: EvidenceType
     file_path: str
     file_hash: str
@@ -108,7 +115,8 @@ class DigitalEvidence:
 
 @dataclass
 class SecurityIncident:
-    """Security incident data structure"""    incident_id: str
+    """Security incident data structure"""
+    incident_id: str
     title: str
     description: str
     category: IncidentCategory
@@ -129,7 +137,8 @@ class SecurityIncident:
 
 @dataclass
 class ForensicsTask:
-    """Forensics analysis task"""    task_id: str
+    """Forensics analysis task"""
+    task_id: str
     incident_id: str
     task_type: str
     priority: int
@@ -143,8 +152,10 @@ class ForensicsTask:
 
 
 class EvidenceCollector:
-    """    Digital evidence collection and preservation system
-    """    
+    """
+    Digital evidence collection and preservation system
+    """
+    
     def __init__(
         self,
         evidence_storage_path: str = "/var/evidence",
@@ -167,7 +178,8 @@ class EvidenceCollector:
         logger.info("Evidence collector initialized")
     
     def calculate_file_hash(self, file_path: str) -> str:
-        """Calculate SHA-256 hash of file"""        try:
+        """Calculate SHA-256 hash of file"""
+        try:
             sha256_hash = hashlib.sha256()
             with open(file_path, "rb") as f:
                 for chunk in iter(lambda: f.read(4096), b""):
@@ -185,7 +197,8 @@ class EvidenceCollector:
         analyst: str,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> DigitalEvidence:
-        """        Collect log file evidence
+        """
+        Collect log file evidence
         
         Args:
             incident_id: Related incident ID
@@ -196,7 +209,8 @@ class EvidenceCollector:
             
         Returns:
             Digital evidence object
-        """        try:
+        """
+        try:
             # Generate evidence ID
             evidence_id = f"LOG_{incident_id}_{int(datetime.utcnow().timestamp())}"
             
@@ -265,7 +279,8 @@ class EvidenceCollector:
         source_system: str,
         analyst: str
     ) -> DigitalEvidence:
-        """        Collect network capture evidence
+        """
+        Collect network capture evidence
         
         Args:
             incident_id: Related incident ID
@@ -275,7 +290,8 @@ class EvidenceCollector:
             
         Returns:
             Digital evidence object
-        """        try:
+        """
+        try:
             evidence_id = f"PCAP_{incident_id}_{int(datetime.utcnow().timestamp())}"
             
             # Copy and compress PCAP file
@@ -333,7 +349,8 @@ class EvidenceCollector:
             raise
     
     def _analyze_pcap_file(self, pcap_path: str) -> Dict[str, Any]:
-        """Analyze PCAP file and extract basic statistics"""        try:
+        """Analyze PCAP file and extract basic statistics"""
+        try:
             # This would use a proper PCAP analysis library in production
             # For now, return basic file information
             file_stat = Path(pcap_path).stat()
@@ -356,7 +373,8 @@ class EvidenceCollector:
         target_host: str,
         analyst: str
     ) -> DigitalEvidence:
-        """        Collect memory dump from target host
+        """
+        Collect memory dump from target host
         
         Args:
             incident_id: Related incident ID
@@ -365,7 +383,8 @@ class EvidenceCollector:
             
         Returns:
             Digital evidence object
-        """        try:
+        """
+        try:
             evidence_id = f"MEM_{incident_id}_{int(datetime.utcnow().timestamp())}"
             
             # In production, this would trigger actual memory collection
@@ -418,14 +437,16 @@ class EvidenceCollector:
             raise
     
     def encrypt_evidence(self, evidence_id: str) -> bool:
-        """        Encrypt evidence file
+        """
+        Encrypt evidence file
         
         Args:
             evidence_id: Evidence ID to encrypt
             
         Returns:
             True if successful
-        """        try:
+        """
+        try:
             if evidence_id not in self.evidence_registry:
                 logger.error(f"Evidence not found: {evidence_id}")
                 return False
@@ -478,7 +499,8 @@ class EvidenceCollector:
         evidence_ids: List[str],
         analyst: str
     ) -> str:
-        """        Create evidence package for transfer or archival
+        """
+        Create evidence package for transfer or archival
         
         Args:
             incident_id: Incident ID
@@ -487,7 +509,8 @@ class EvidenceCollector:
             
         Returns:
             Path to evidence package
-        """        try:
+        """
+        try:
             package_filename = f"evidence_package_{incident_id}_{int(datetime.utcnow().timestamp())}.zip"
             package_path = self.evidence_storage_path / package_filename
             
@@ -531,8 +554,10 @@ class EvidenceCollector:
 
 
 class IncidentResponseOrchestrator:
-    """    Coordinates automated incident response actions
-    """    
+    """
+    Coordinates automated incident response actions
+    """
+    
     def __init__(self, evidence_collector: EvidenceCollector):
         self.evidence_collector = evidence_collector
         
@@ -545,7 +570,8 @@ class IncidentResponseOrchestrator:
         logger.info("Incident response orchestrator initialized")
     
     def _load_response_playbooks(self) -> Dict[IncidentCategory, List[ResponseAction]]:
-        """Load incident response playbooks"""        return {
+        """Load incident response playbooks"""
+        return {
             IncidentCategory.MALWARE: [
                 ResponseAction.ISOLATE_HOST,
                 ResponseAction.CAPTURE_MEMORY,
@@ -583,7 +609,8 @@ class IncidentResponseOrchestrator:
         }
     
     def _setup_action_executors(self) -> Dict[ResponseAction, callable]:
-        """Setup action execution functions"""        return {
+        """Setup action execution functions"""
+        return {
             ResponseAction.BLOCK_IP: self._execute_block_ip,
             ResponseAction.ISOLATE_HOST: self._execute_isolate_host,
             ResponseAction.DISABLE_ACCOUNT: self._execute_disable_account,
@@ -597,14 +624,16 @@ class IncidentResponseOrchestrator:
         }
     
     async def initiate_response(self, incident: SecurityIncident) -> Dict[str, Any]:
-        """        Initiate automated incident response
+        """
+        Initiate automated incident response
         
         Args:
             incident: Security incident to respond to
             
         Returns:
             Response execution results
-        """        try:
+        """
+        try:
             logger.info(f"Initiating response for incident: {incident.incident_id}")
             
             # Get response playbook
@@ -677,7 +706,8 @@ class IncidentResponseOrchestrator:
             return {"error": str(e)}
     
     async def _execute_block_ip(self, incident: SecurityIncident) -> str:
-        """Execute IP blocking action"""        try:
+        """Execute IP blocking action"""
+        try:
             if incident.source_ip:
                 # In production, this would interface with firewall/WAF
                 logger.info(f"Blocking IP: {incident.source_ip}")
@@ -688,7 +718,8 @@ class IncidentResponseOrchestrator:
             raise Exception(f"Failed to block IP: {e}")
     
     async def _execute_isolate_host(self, incident: SecurityIncident) -> str:
-        """Execute host isolation action"""        try:
+        """Execute host isolation action"""
+        try:
             affected_hosts = incident.affected_systems
             isolated_hosts = []
             
@@ -703,7 +734,8 @@ class IncidentResponseOrchestrator:
             raise Exception(f"Failed to isolate hosts: {e}")
     
     async def _execute_disable_account(self, incident: SecurityIncident) -> str:
-        """Execute account disabling action"""        try:
+        """Execute account disabling action"""
+        try:
             affected_users = incident.affected_users
             disabled_accounts = []
             
@@ -718,7 +750,8 @@ class IncidentResponseOrchestrator:
             raise Exception(f"Failed to disable accounts: {e}")
     
     async def _execute_quarantine_file(self, incident: SecurityIncident) -> str:
-        """Execute file quarantine action"""        try:
+        """Execute file quarantine action"""
+        try:
             # In production, this would interface with endpoint protection systems
             logger.info(f"Quarantining files related to incident: {incident.incident_id}")
             return f"Files quarantined for incident {incident.incident_id}"
@@ -727,7 +760,8 @@ class IncidentResponseOrchestrator:
             raise Exception(f"Failed to quarantine files: {e}")
     
     async def _execute_reset_password(self, incident: SecurityIncident) -> str:
-        """Execute password reset action"""        try:
+        """Execute password reset action"""
+        try:
             affected_users = incident.affected_users
             reset_accounts = []
             
@@ -742,7 +776,8 @@ class IncidentResponseOrchestrator:
             raise Exception(f"Failed to reset passwords: {e}")
     
     async def _execute_enable_monitoring(self, incident: SecurityIncident) -> str:
-        """Execute enhanced monitoring action"""        try:
+        """Execute enhanced monitoring action"""
+        try:
             # In production, this would interface with monitoring systems
             logger.info(f"Enabling enhanced monitoring for incident: {incident.incident_id}")
             return f"Enhanced monitoring enabled for incident {incident.incident_id}"
@@ -751,7 +786,8 @@ class IncidentResponseOrchestrator:
             raise Exception(f"Failed to enable monitoring: {e}")
     
     async def _execute_notify_admin(self, incident: SecurityIncident) -> str:
-        """Execute admin notification action"""        try:
+        """Execute admin notification action"""
+        try:
             # In production, this would send actual notifications
             logger.info(f"Notifying administrators about incident: {incident.incident_id}")
             return f"Administrators notified about incident {incident.incident_id}"
@@ -760,7 +796,8 @@ class IncidentResponseOrchestrator:
             raise Exception(f"Failed to notify admin: {e}")
     
     async def _execute_backup_evidence(self, incident: SecurityIncident) -> str:
-        """Execute evidence backup action"""        try:
+        """Execute evidence backup action"""
+        try:
             # Collect and preserve evidence for the incident
             evidence_items = []
             
@@ -783,7 +820,8 @@ class IncidentResponseOrchestrator:
             raise Exception(f"Failed to backup evidence: {e}")
     
     async def _execute_capture_memory(self, incident: SecurityIncident) -> str:
-        """Execute memory capture action"""        try:
+        """Execute memory capture action"""
+        try:
             memory_dumps = []
             
             for system in incident.affected_systems:
@@ -803,7 +841,8 @@ class IncidentResponseOrchestrator:
             raise Exception(f"Failed to capture memory: {e}")
     
     async def _execute_preserve_logs(self, incident: SecurityIncident) -> str:
-        """Execute log preservation action"""        try:
+        """Execute log preservation action"""
+        try:
             preserved_logs = []
             
             for system in incident.affected_systems:
@@ -821,8 +860,10 @@ class IncidentResponseOrchestrator:
 
 
 class ForensicsAnalyzer:
-    """    Digital forensics analysis engine
-    """    
+    """
+    Digital forensics analysis engine
+    """
+    
     def __init__(self, evidence_collector: EvidenceCollector):
         self.evidence_collector = evidence_collector
         self.analysis_tasks: Dict[str, ForensicsTask] = {}
@@ -837,7 +878,8 @@ class ForensicsAnalyzer:
         assigned_analyst: str,
         priority: int = 5
     ) -> ForensicsTask:
-        """        Create forensics analysis task
+        """
+        Create forensics analysis task
         
         Args:
             incident_id: Related incident ID
@@ -848,7 +890,8 @@ class ForensicsAnalyzer:
             
         Returns:
             Created forensics task
-        """        try:
+        """
+        try:
             task_id = f"TASK_{incident_id}_{int(datetime.utcnow().timestamp())}"
             
             task = ForensicsTask(
@@ -873,14 +916,16 @@ class ForensicsAnalyzer:
             raise
     
     async def execute_log_analysis(self, task: ForensicsTask) -> Dict[str, Any]:
-        """        Execute log analysis task
+        """
+        Execute log analysis task
         
         Args:
             task: Forensics task to execute
             
         Returns:
             Analysis results
-        """        try:
+        """
+        try:
             logger.info(f"Executing log analysis task: {task.task_id}")
             
             analysis_results = {
@@ -919,7 +964,8 @@ class ForensicsAnalyzer:
             raise
     
     async def _analyze_log_file(self, evidence: DigitalEvidence) -> Dict[str, Any]:
-        """Analyze individual log file"""        try:
+        """Analyze individual log file"""
+        try:
             findings = []
             suspicious_entries = []
             
@@ -949,14 +995,16 @@ class ForensicsAnalyzer:
             return {"error": str(e)}
     
     async def execute_network_analysis(self, task: ForensicsTask) -> Dict[str, Any]:
-        """        Execute network capture analysis task
+        """
+        Execute network capture analysis task
         
         Args:
             task: Forensics task to execute
             
         Returns:
             Analysis results
-        """        try:
+        """
+        try:
             logger.info(f"Executing network analysis task: {task.task_id}")
             
             analysis_results = {
@@ -994,7 +1042,8 @@ class ForensicsAnalyzer:
             raise
     
     async def _analyze_network_capture(self, evidence: DigitalEvidence) -> Dict[str, Any]:
-        """Analyze individual network capture"""        try:
+        """Analyze individual network capture"""
+        try:
             # Simulate network analysis
             connections = [
                 {
@@ -1026,7 +1075,8 @@ class ForensicsAnalyzer:
             return {"error": str(e)}
     
     def get_analysis_status(self, task_id: str) -> Optional[Dict[str, Any]]:
-        """Get analysis task status"""        try:
+        """Get analysis task status"""
+        try:
             if task_id not in self.analysis_tasks:
                 return None
             
@@ -1050,8 +1100,10 @@ class ForensicsAnalyzer:
 
 
 class SecurityIncidentManager:
-    """    Main security incident management system
-    """    
+    """
+    Main security incident management system
+    """
+    
     def __init__(
         self,
         redis_url: str = "redis://localhost:6379",
@@ -1071,7 +1123,8 @@ class SecurityIncidentManager:
         logger.info("Security incident manager initialized")
     
     async def initialize_redis(self):
-        """Initialize Redis connection"""        try:
+        """Initialize Redis connection"""
+        try:
             self.redis_pool = aioredis.ConnectionPool.from_url(self.redis_url)
             logger.info("Redis connection initialized for incident management")
         except Exception as e:
@@ -1088,7 +1141,8 @@ class SecurityIncidentManager:
         affected_users: List[str] = None,
         source_ip: str = None
     ) -> SecurityIncident:
-        """        Create new security incident
+        """
+        Create new security incident
         
         Args:
             title: Incident title
@@ -1101,7 +1155,8 @@ class SecurityIncidentManager:
             
         Returns:
             Created security incident
-        """        try:
+        """
+        try:
             incident_id = f"INC_{int(datetime.utcnow().timestamp())}"
             current_time = datetime.utcnow()
             
@@ -1138,7 +1193,8 @@ class SecurityIncidentManager:
             raise
     
     async def handle_incident(self, incident_id: str, auto_respond: bool = True) -> Dict[str, Any]:
-        """        Handle security incident with automated response
+        """
+        Handle security incident with automated response
         
         Args:
             incident_id: Incident ID to handle
@@ -1146,7 +1202,8 @@ class SecurityIncidentManager:
             
         Returns:
             Incident handling results
-        """        try:
+        """
+        try:
             if incident_id not in self.incidents:
                 return {"error": "Incident not found"}
             
@@ -1194,7 +1251,8 @@ class SecurityIncidentManager:
             return {"error": str(e)}
     
     async def _collect_incident_evidence(self, incident: SecurityIncident) -> Dict[str, Any]:
-        """Collect evidence for incident"""        try:
+        """Collect evidence for incident"""
+        try:
             evidence_items = []
             
             # Collect logs from affected systems
@@ -1235,7 +1293,8 @@ class SecurityIncidentManager:
             return {"error": str(e)}
     
     async def _create_forensics_tasks(self, incident: SecurityIncident) -> List[str]:
-        """Create forensics analysis tasks for incident"""        try:
+        """Create forensics analysis tasks for incident"""
+        try:
             task_ids = []
             
             # Get evidence IDs
@@ -1278,7 +1337,8 @@ class SecurityIncidentManager:
             return []
     
     def get_incident_status(self, incident_id: str) -> Optional[Dict[str, Any]]:
-        """Get incident status and summary"""        try:
+        """Get incident status and summary"""
+        try:
             if incident_id not in self.incidents:
                 return None
             
@@ -1305,7 +1365,8 @@ class SecurityIncidentManager:
             return {"error": str(e)}
     
     def get_incident_dashboard_data(self) -> Dict[str, Any]:
-        """Get incident dashboard data"""        try:
+        """Get incident dashboard data"""
+        try:
             current_time = datetime.utcnow()
             
             # Count incidents by status

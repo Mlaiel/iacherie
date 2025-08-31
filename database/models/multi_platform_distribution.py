@@ -23,7 +23,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
+"""
+from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, JSONB
@@ -37,7 +38,8 @@ Base = declarative_base()
 
 
 class DistributionPlatform(Enum):
-    """Supported distribution platforms"""    SPOTIFY = "spotify"
+    """Supported distribution platforms"""
+    SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE = "youtube"
     YOUTUBE_MUSIC = "youtube_music"
@@ -65,7 +67,8 @@ class DistributionPlatform(Enum):
 
 
 class ContentFormat(Enum):
-    """Content formats for distribution"""    AUDIO_TRACK = "audio_track"
+    """Content formats for distribution"""
+    AUDIO_TRACK = "audio_track"
     MUSIC_VIDEO = "music_video"
     LYRIC_VIDEO = "lyric_video"
     BEHIND_SCENES = "behind_scenes"
@@ -89,7 +92,8 @@ class ContentFormat(Enum):
 
 
 class DistributionStatus(Enum):
-    """Distribution status tracking"""    PENDING = "pending"
+    """Distribution status tracking"""
+    PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
     UPLOADING = "uploading"
@@ -106,7 +110,8 @@ class DistributionStatus(Enum):
 
 
 class OptimizationStrategy(Enum):
-    """Platform optimization strategies"""    MAXIMUM_REACH = "maximum_reach"
+    """Platform optimization strategies"""
+    MAXIMUM_REACH = "maximum_reach"
     ENGAGEMENT_FOCUSED = "engagement_focused"
     REVENUE_OPTIMIZED = "revenue_optimized"
     VIRAL_POTENTIAL = "viral_potential"
@@ -121,7 +126,8 @@ class OptimizationStrategy(Enum):
 
 
 class PostingStrategy(Enum):
-    """Content posting strategies"""    SIMULTANEOUS = "simultaneous"
+    """Content posting strategies"""
+    SIMULTANEOUS = "simultaneous"
     STAGGERED = "staggered"
     SEQUENTIAL = "sequential"
     PLATFORM_SPECIFIC = "platform_specific"
@@ -132,11 +138,13 @@ class PostingStrategy(Enum):
 
 
 class MultiPlatformDistribution(Base):
-    """    Ultra-Industrial Multi-Platform Distribution Model
+    """
+    Ultra-Industrial Multi-Platform Distribution Model
     
     Comprehensive multi-platform content distribution system with AI-powered
     optimization, cross-platform analytics, and automated posting strategies.
-    """    __tablename__ = "multi_platform_distribution"
+    """
+    __tablename__ = "multi_platform_distribution"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -310,7 +318,8 @@ class MultiPlatformDistribution(Base):
         return f"<MultiPlatformDistribution(id={self.id}, creator_id={self.creator_id}, platforms={len(self.target_platforms)})>"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert model to dictionary for API responses"""        return {
+        """Convert model to dictionary for API responses"""
+        return {
             "id": str(self.id),
             "distribution_id": self.distribution_id,
             "content_id": str(self.content_id),
@@ -329,17 +338,20 @@ class MultiPlatformDistribution(Base):
         }
     
     def get_platform_status(self, platform: DistributionPlatform) -> str:
-        """Get status for a specific platform"""        if not self.platform_statuses:
+        """Get status for a specific platform"""
+        if not self.platform_statuses:
             return "pending"
         return self.platform_statuses.get(platform.value, "pending")
     
     def get_platform_metrics(self, platform: DistributionPlatform) -> Dict[str, Any]:
-        """Get metrics for a specific platform"""        if not self.platform_metrics:
+        """Get metrics for a specific platform"""
+        if not self.platform_metrics:
             return {}
         return self.platform_metrics.get(platform.value, {})
     
     def calculate_overall_performance(self) -> Dict[str, float]:
-        """Calculate overall performance metrics"""        total_engagement = self.total_likes + self.total_shares + self.total_comments
+        """Calculate overall performance metrics"""
+        total_engagement = self.total_likes + self.total_shares + self.total_comments
         
         return {
             "overall_engagement_rate": self.engagement_rate,
@@ -352,7 +364,8 @@ class MultiPlatformDistribution(Base):
         }
     
     def get_best_performing_platforms(self, top_n: int = 3) -> List[Dict[str, Any]]:
-        """Get top performing platforms"""        if not self.platform_efficiency_scores:
+        """Get top performing platforms"""
+        if not self.platform_efficiency_scores:
             return []
         
         sorted_platforms = sorted(
@@ -371,7 +384,8 @@ class MultiPlatformDistribution(Base):
         ]
     
     def get_optimization_recommendations(self) -> List[str]:
-        """Get AI-powered optimization recommendations"""        recommendations = []
+        """Get AI-powered optimization recommendations"""
+        recommendations = []
         
         if self.engagement_rate < 0.03:
             recommendations.append("Consider adjusting posting times for better engagement")
@@ -391,7 +405,8 @@ class MultiPlatformDistribution(Base):
         return recommendations
     
     def calculate_roi_by_platform(self) -> Dict[str, float]:
-        """Calculate ROI for each platform"""        if not self.platform_revenue or not self.cost_per_platform:
+        """Calculate ROI for each platform"""
+        if not self.platform_revenue or not self.cost_per_platform:
             return {}
         
         roi_data = {}
@@ -404,7 +419,8 @@ class MultiPlatformDistribution(Base):
         return roi_data
     
     def update_platform_status(self, platform: DistributionPlatform, status: str, external_id: str = None):
-        """Update status for a specific platform"""        if not self.platform_statuses:
+        """Update status for a specific platform"""
+        if not self.platform_statuses:
             self.platform_statuses = {}
         
         self.platform_statuses[platform.value] = status

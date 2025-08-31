@@ -8,7 +8,8 @@ Email: mlaiel@live.de
 
 ⚠️ COPYRIGHT WARNING ⚠️
 Unauthorized copying or distribution prohibited. All rights reserved © 2025 Fahed Mlaiel
-"""import asyncio
+"""
+import asyncio
 import logging
 import uuid
 from datetime import datetime, timezone, timedelta
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 
 class Jurisdiction(Enum):
-    """Supported jurisdictions"""    US = "US"          # United States (DMCA)
+    """Supported jurisdictions"""
+    US = "US"          # United States (DMCA)
     EU = "EU"          # European Union (GDPR, DSA)
     UK = "UK"          # United Kingdom (Copyright Act)
     CA = "CA"          # Canada (Copyright Act)
@@ -45,7 +47,8 @@ class Jurisdiction(Enum):
 
 
 class LegalFramework(Enum):
-    """Legal frameworks and treaties"""    DMCA = "dmca"                    # US Digital Millennium Copyright Act
+    """Legal frameworks and treaties"""
+    DMCA = "dmca"                    # US Digital Millennium Copyright Act
     EU_DSA = "eu_dsa"               # EU Digital Services Act
     EU_COPYRIGHT = "eu_copyright"    # EU Copyright Directive
     BERNE_CONVENTION = "berne"       # Berne Convention
@@ -56,7 +59,8 @@ class LegalFramework(Enum):
 
 @dataclass
 class JurisdictionConfig:
-    """Configuration for specific jurisdiction"""    jurisdiction: Jurisdiction
+    """Configuration for specific jurisdiction"""
+    jurisdiction: Jurisdiction
     legal_frameworks: List[LegalFramework]
     languages: List[str]
     notice_requirements: Dict[str, Any]
@@ -70,7 +74,8 @@ class JurisdictionConfig:
 
 @dataclass
 class InternationalComplianceCheck:
-    """International compliance validation result"""    jurisdiction: Jurisdiction
+    """International compliance validation result"""
+    jurisdiction: Jurisdiction
     compliant: bool
     missing_requirements: List[str]
     recommendations: List[str]
@@ -79,7 +84,8 @@ class InternationalComplianceCheck:
 
 
 class InternationalHandler:
-    """    Comprehensive international DMCA and copyright enforcement handler
+    """
+    Comprehensive international DMCA and copyright enforcement handler
     
     Features:
     - Multi-jurisdiction support
@@ -88,9 +94,11 @@ class InternationalHandler:
     - Local law adaptation
     - Cross-border enforcement
     - Cultural sensitivity
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize international handler"""        self.config = config or {}
+        """Initialize international handler"""
+        self.config = config or {}
         self.db = get_database()
         self.legal_framework = InternationalLegalFramework(config)
         self.translation_service = TranslationService(config)
@@ -139,7 +147,8 @@ class InternationalHandler:
                                           base_notice_id: str,
                                           target_jurisdictions: List[Jurisdiction],
                                           platform_specific: Optional[bool] = True) -> Dict[str, Any]:
-        """        Generate international DMCA notices for multiple jurisdictions
+        """
+        Generate international DMCA notices for multiple jurisdictions
         
         Args:
             base_notice_id: ID of the base notice to internationalize
@@ -148,7 +157,8 @@ class InternationalHandler:
             
         Returns:
             International notice generation result
-        """        try:
+        """
+        try:
             self.logger.info(f"Generating international notices for {len(target_jurisdictions)} jurisdictions")
             
             # Retrieve base notice
@@ -227,7 +237,8 @@ class InternationalHandler:
     async def validate_cross_border_enforcement(self, 
                                               notice_id: str,
                                               enforcement_jurisdictions: List[Jurisdiction]) -> Dict[str, Any]:
-        """        Validate cross-border enforcement feasibility and requirements
+        """
+        Validate cross-border enforcement feasibility and requirements
         
         Args:
             notice_id: ID of the notice for enforcement
@@ -235,7 +246,8 @@ class InternationalHandler:
             
         Returns:
             Cross-border enforcement validation result
-        """        try:
+        """
+        try:
             self.logger.info(f"Validating cross-border enforcement for {len(enforcement_jurisdictions)} jurisdictions")
             
             # Retrieve notice details
@@ -315,7 +327,8 @@ class InternationalHandler:
     async def coordinate_international_delivery(self, 
                                               international_notices: Dict[str, Any],
                                               delivery_preferences: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """        Coordinate delivery of international notices across jurisdictions
+        """
+        Coordinate delivery of international notices across jurisdictions
         
         Args:
             international_notices: Dictionary of jurisdiction-specific notices
@@ -323,7 +336,8 @@ class InternationalHandler:
             
         Returns:
             International delivery coordination result
-        """        try:
+        """
+        try:
             self.logger.info(f"Coordinating international delivery for {len(international_notices)} jurisdictions")
             
             delivery_results = {}
@@ -389,14 +403,16 @@ class InternationalHandler:
     
     async def monitor_international_compliance(self, 
                                              batch_id: str) -> Dict[str, Any]:
-        """        Monitor compliance across multiple international jurisdictions
+        """
+        Monitor compliance across multiple international jurisdictions
         
         Args:
             batch_id: ID of the international notice batch
             
         Returns:
             International compliance monitoring result
-        """        try:
+        """
+        try:
             self.logger.info(f"Monitoring international compliance for batch: {batch_id}")
             
             # Retrieve international notices
@@ -479,7 +495,8 @@ class InternationalHandler:
     # Private helper methods
     
     def _initialize_jurisdictions(self) -> None:
-        """Initialize jurisdiction configurations"""        # United States (DMCA)
+        """Initialize jurisdiction configurations"""
+        # United States (DMCA)
         self.jurisdictions[Jurisdiction.US] = JurisdictionConfig(
             jurisdiction=Jurisdiction.US,
             legal_frameworks=[LegalFramework.DMCA, LegalFramework.BERNE_CONVENTION],
@@ -590,7 +607,8 @@ class InternationalHandler:
         # Additional jurisdictions would be configured similarly...
     
     async def _get_base_notice(self, notice_id: str) -> Optional[TakedownNotice]:
-        """Retrieve base notice for internationalization"""        try:
+        """Retrieve base notice for internationalization"""
+        try:
             query = "SELECT * FROM dmca_notices WHERE notice_id = %s"
             result = await self.db.fetch_one(query, [notice_id])
             
@@ -615,7 +633,8 @@ class InternationalHandler:
             return None
     
     async def _extract_platform_from_notice(self, notice: TakedownNotice) -> str:
-        """Extract platform from notice"""        try:
+        """Extract platform from notice"""
+        try:
             from urllib.parse import urlparse
             parsed = urlparse(notice.infringing_url)
             return parsed.netloc.lower()
@@ -626,7 +645,8 @@ class InternationalHandler:
                                               jurisdiction: Jurisdiction,
                                               platform: str,
                                               notice: TakedownNotice) -> Dict[str, Any]:
-        """Check if jurisdiction is compatible with platform and notice"""        # Check if platform operates in this jurisdiction
+        """Check if jurisdiction is compatible with platform and notice"""
+        # Check if platform operates in this jurisdiction
         platform_jurisdictions = self.platform_jurisdictions.get(platform, [])
         
         if jurisdiction not in platform_jurisdictions:
@@ -653,7 +673,8 @@ class InternationalHandler:
                                           jurisdiction: Jurisdiction,
                                           platform_requirements: Dict[str, Any],
                                           platform_specific: bool) -> InternationalNotice:
-        """Generate jurisdiction-specific notice"""        jurisdiction_config = self.jurisdictions[jurisdiction]
+        """Generate jurisdiction-specific notice"""
+        jurisdiction_config = self.jurisdictions[jurisdiction]
         
         # Translate notice if required
         notice_content = base_notice.notice_content
@@ -697,7 +718,8 @@ class InternationalHandler:
                                            content: str,
                                            jurisdiction: Jurisdiction,
                                            config: JurisdictionConfig) -> str:
-        """Adapt notice content for specific jurisdiction requirements"""        adapted_content = content
+        """Adapt notice content for specific jurisdiction requirements"""
+        adapted_content = content
         
         # Add jurisdiction-specific legal elements
         if jurisdiction == Jurisdiction.EU:
@@ -722,13 +744,15 @@ class InternationalHandler:
                                            content: str,
                                            jurisdiction: Jurisdiction,
                                            platform_requirements: Dict[str, Any]) -> str:
-        """Apply platform-specific rules for jurisdiction"""        # This would implement platform-specific formatting and requirements
+        """Apply platform-specific rules for jurisdiction"""
+        # This would implement platform-specific formatting and requirements
         return content  # Simplified for this example
     
     async def _validate_international_compliance(self, 
                                                notice: InternationalNotice,
                                                jurisdiction: Jurisdiction) -> InternationalComplianceCheck:
-        """Validate notice compliance with international requirements"""        jurisdiction_config = self.jurisdictions[jurisdiction]
+        """Validate notice compliance with international requirements"""
+        jurisdiction_config = self.jurisdictions[jurisdiction]
         missing_requirements = []
         recommendations = []
         
@@ -757,7 +781,8 @@ class InternationalHandler:
         )
     
     def _check_requirement_met(self, notice: InternationalNotice, requirement: str) -> bool:
-        """Check if specific requirement is met in notice"""        # Simplified requirement checking - would be more sophisticated in production
+        """Check if specific requirement is met in notice"""
+        # Simplified requirement checking - would be more sophisticated in production
         content_lower = notice.notice_content.lower()
         
         requirement_checks = {

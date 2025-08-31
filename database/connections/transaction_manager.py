@@ -10,7 +10,8 @@ Manages distributed transactions across multiple database systems:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import uuid
 from typing import Dict, Any, Optional, List, Set, Callable
@@ -22,7 +23,8 @@ import json
 
 
 class TransactionState(Enum):
-    """Transaction states in distributed system"""    ACTIVE = "active"
+    """Transaction states in distributed system"""
+    ACTIVE = "active"
     PREPARING = "preparing" 
     PREPARED = "prepared"
     COMMITTING = "committing"
@@ -33,7 +35,8 @@ class TransactionState(Enum):
 
 
 class TransactionIsolation(Enum):
-    """Transaction isolation levels"""    READ_UNCOMMITTED = "read_uncommitted"
+    """Transaction isolation levels"""
+    READ_UNCOMMITTED = "read_uncommitted"
     READ_COMMITTED = "read_committed"
     REPEATABLE_READ = "repeatable_read"
     SERIALIZABLE = "serializable"
@@ -41,7 +44,8 @@ class TransactionIsolation(Enum):
 
 @dataclass
 class TransactionOperation:
-    """Single operation within a transaction"""    operation_id: str
+    """Single operation within a transaction"""
+    operation_id: str
     database_type: str
     operation_type: str  # insert, update, delete, select
     table_collection: str
@@ -52,7 +56,8 @@ class TransactionOperation:
 
 @dataclass
 class DistributedTransaction:
-    """Distributed transaction across multiple databases"""    transaction_id: str
+    """Distributed transaction across multiple databases"""
+    transaction_id: str
     tenant_id: Optional[str]
     state: TransactionState = TransactionState.ACTIVE
     isolation_level: TransactionIsolation = TransactionIsolation.READ_COMMITTED
@@ -62,11 +67,13 @@ class DistributedTransaction:
     timeout: timedelta = field(default_factory=lambda: timedelta(minutes=5))
     
     def is_expired(self) -> bool:
-        """Check if transaction has expired"""        return datetime.utcnow() - self.started_at > self.timeout
+        """Check if transaction has expired"""
+        return datetime.utcnow() - self.started_at > self.timeout
 
 
 class TransactionManager:
-    """    Distributed transaction manager for IA Influencer platform.
+    """
+    Distributed transaction manager for IA Influencer platform.
     
     Coordinates transactions across:
     - PostgreSQL (user data, content metadata)
@@ -75,7 +82,8 @@ class TransactionManager:
     - Elasticsearch (search index updates)
     - Vector stores (embedding updates)
     - Object storage (file operations)
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -110,7 +118,8 @@ class TransactionManager:
         }
     
     async def initialize(self, handlers: Dict[str, Any]) -> None:
-        """Initialize transaction manager with database handlers"""        self.handlers = handlers
+        """Initialize transaction manager with database handlers"""
+        self.handlers = handlers
         
         # Start background tasks
         self.deadlock_task = asyncio.create_task(self._deadlock_detection_loop())
@@ -123,7 +132,8 @@ class TransactionManager:
                          tenant_id: Optional[str] = None,
                          isolation_level: TransactionIsolation = TransactionIsolation.READ_COMMITTED,
                          timeout: Optional[timedelta] = None):
-        """Context manager for distributed transactions"""        
+        """Context manager for distributed transactions"""
+        
         # Create new transaction
         tx_id = str(uuid.uuid4())
         transaction = DistributedTransaction(
@@ -159,7 +169,8 @@ class TransactionManager:
                 del self.active_transactions[tx_id]
     
     async def _commit_transaction(self, tx_id: str) -> None:
-        """Commit distributed transaction using two-phase commit"""        if tx_id not in self.active_transactions:
+        """Commit distributed transaction using two-phase commit"""
+        if tx_id not in self.active_transactions:
             raise ValueError(f"Transaction {tx_id} not found")
         
         transaction = self.active_transactions[tx_id]
@@ -203,7 +214,8 @@ class TransactionManager:
             await self._release_transaction_locks(tx_id)
     
     async def _prepare_phase(self, transaction: DistributedTransaction) -> Dict[str, bool]:
-        """Execute prepare phase of two-phase commit"""        prepare_results = {}
+        """Execute prepare phase of two-phase commit"""
+        prepare_results = {}
         
         for db_type in transaction.participants:
             try:
@@ -227,7 +239,8 @@ class TransactionManager:
         return prepare_results
     
     async def _commit_phase(self, transaction: DistributedTransaction) -> None:
-        """Execute commit phase of two-phase commit"""        commit_tasks = []
+        """Execute commit phase of two-phase commit"""
+        commit_tasks = []
         
         for db_type in transaction.participants:
             task = asyncio.create_task(
@@ -246,7 +259,8 @@ class TransactionManager:
                 # Note: At this point, we can't abort - need compensation
     
     async def _commit_participant(self, db_type: str, transaction: DistributedTransaction) -> None:
-        """Commit transaction for a single database participant"""        try:
+        """Commit transaction for a single database participant"""
+        try:
             handler = self.handlers[db_type]
             
             if hasattr(handler, 'commit_transaction'):
@@ -262,7 +276,8 @@ class TransactionManager:
             raise
     
     async def _abort_transaction(self, tx_id: str, reason: str) -> None:
-        """Abort distributed transaction"""        if tx_id not in self.active_transactions:
+        """Abort distributed transaction"""
+        if tx_id not in self.active_transactions:
             return
         
         transaction = self.active_transactions[tx_id]
@@ -294,7 +309,8 @@ class TransactionManager:
             await self._release_transaction_locks(tx_id)
     
     async def _abort_participant(self, db_type: str, transaction: DistributedTransaction) -> None:
-        """Abort transaction for a single database participant"""        try:
+        """Abort transaction for a single database participant"""
+        try:
             handler = self.handlers[db_type]
             
             if hasattr(handler, 'abort_transaction'):
@@ -310,7 +326,8 @@ class TransactionManager:
             self.logger.error(f"Failed to abort {db_type} participant: {e}")
     
     async def _execute_operation(self, handler: Any, operation: TransactionOperation) -> None:
-        """Execute a single operation"""        if operation.operation_type == "insert":
+        """Execute a single operation"""
+        if operation.operation_type == "insert":
             if hasattr(handler, 'insert_one'):
                 await handler.insert_one(
                     operation.table_collection,
@@ -331,7 +348,8 @@ class TransactionManager:
                 )
     
     async def _execute_compensation(self, handler: Any, operation: TransactionOperation) -> None:
-        """Execute compensation for an operation"""        if not operation.compensation_data:
+        """Execute compensation for an operation"""
+        if not operation.compensation_data:
             return
         
         compensation = operation.compensation_data
@@ -360,7 +378,8 @@ class TransactionManager:
                 )
     
     async def _acquire_lock(self, resource_id: str, tx_id: str) -> bool:
-        """Acquire lock on resource for transaction"""        if resource_id in self.lock_owners:
+        """Acquire lock on resource for transaction"""
+        if resource_id in self.lock_owners:
             # Resource is already locked
             if self.lock_owners[resource_id] == tx_id:
                 return True  # Already owned by this transaction
@@ -376,7 +395,8 @@ class TransactionManager:
             return True
     
     async def _release_transaction_locks(self, tx_id: str) -> None:
-        """Release all locks held by transaction"""        # Release owned locks
+        """Release all locks held by transaction"""
+        # Release owned locks
         resources_to_release = [
             resource_id for resource_id, owner_id in self.lock_owners.items()
             if owner_id == tx_id
@@ -395,7 +415,8 @@ class TransactionManager:
             waiting_txs.discard(tx_id)
     
     async def _deadlock_detection_loop(self) -> None:
-        """Background task for deadlock detection"""        while True:
+        """Background task for deadlock detection"""
+        while True:
             try:
                 await asyncio.sleep(self.deadlock_detection_interval)
                 await self._detect_deadlocks()
@@ -405,7 +426,8 @@ class TransactionManager:
                 self.logger.error(f"Deadlock detection error: {e}")
     
     async def _detect_deadlocks(self) -> None:
-        """Detect and resolve deadlocks"""        # Build wait-for graph
+        """Detect and resolve deadlocks"""
+        # Build wait-for graph
         wait_for = {}  # tx_id -> set of tx_ids it's waiting for
         
         for resource_id, waiting_txs in self.locks.items():
@@ -457,7 +479,8 @@ class TransactionManager:
             self.logger.warning(f"Resolved deadlock by aborting transaction {youngest_tx}")
     
     async def _cleanup_loop(self) -> None:
-        """Background task for cleaning up expired transactions"""        while True:
+        """Background task for cleaning up expired transactions"""
+        while True:
             try:
                 await asyncio.sleep(self.cleanup_interval)
                 await self._cleanup_expired_transactions()
@@ -467,7 +490,8 @@ class TransactionManager:
                 self.logger.error(f"Cleanup error: {e}")
     
     async def _cleanup_expired_transactions(self) -> None:
-        """Clean up expired transactions"""        expired_transactions = [
+        """Clean up expired transactions"""
+        expired_transactions = [
             tx_id for tx_id, tx in self.active_transactions.items()
             if tx.is_expired()
         ]
@@ -480,7 +504,8 @@ class TransactionManager:
                                    tx_id: str, 
                                    event: str, 
                                    data: Optional[Dict[str, Any]] = None) -> None:
-        """Log transaction event for recovery purposes"""        log_entry = {
+        """Log transaction event for recovery purposes"""
+        log_entry = {
             "transaction_id": tx_id,
             "event": event,
             "timestamp": datetime.utcnow().isoformat(),
@@ -494,7 +519,8 @@ class TransactionManager:
             self.transaction_log = self.transaction_log[-1000:]
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get transaction manager metrics"""        active_count = len(self.active_transactions)
+        """Get transaction manager metrics"""
+        active_count = len(self.active_transactions)
         
         # Calculate average transaction duration
         if self.stats["committed_transactions"] > 0:
@@ -511,7 +537,8 @@ class TransactionManager:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown transaction manager"""        self.logger.info("Shutting down transaction manager...")
+        """Shutdown transaction manager"""
+        self.logger.info("Shutting down transaction manager...")
         
         # Cancel background tasks
         if self.deadlock_task:
@@ -536,7 +563,8 @@ class TransactionManager:
 
 
 class TransactionContext:
-    """Context for executing operations within a distributed transaction"""    
+    """Context for executing operations within a distributed transaction"""
+    
     def __init__(self, manager: TransactionManager, transaction: DistributedTransaction):
         self.manager = manager
         self.transaction = transaction
@@ -547,7 +575,8 @@ class TransactionContext:
                      table_collection: str,
                      data: Dict[str, Any],
                      compensation_data: Optional[Dict[str, Any]] = None) -> str:
-        """Execute operation within the transaction"""        
+        """Execute operation within the transaction"""
+        
         operation = TransactionOperation(
             operation_id=str(uuid.uuid4()),
             database_type=database_type,
@@ -566,7 +595,8 @@ class TransactionContext:
                     database_type: str,
                     table_collection: str,
                     data: Dict[str, Any]) -> str:
-        """Insert operation within transaction"""        # Compensation for insert is delete
+        """Insert operation within transaction"""
+        # Compensation for insert is delete
         compensation = {
             "type": "delete",
             "filter": {"id": data.get("id")}  # Simplified - use primary key
@@ -582,7 +612,8 @@ class TransactionContext:
                     filter_data: Dict[str, Any],
                     update_data: Dict[str, Any],
                     previous_data: Optional[Dict[str, Any]] = None) -> str:
-        """Update operation within transaction"""        # Compensation for update is restore previous values
+        """Update operation within transaction"""
+        # Compensation for update is restore previous values
         compensation = None
         if previous_data:
             compensation = {
@@ -602,7 +633,8 @@ class TransactionContext:
                     table_collection: str,
                     filter_data: Dict[str, Any],
                     backup_data: Optional[Dict[str, Any]] = None) -> str:
-        """Delete operation within transaction"""        # Compensation for delete is restore the data
+        """Delete operation within transaction"""
+        # Compensation for delete is restore the data
         compensation = None
         if backup_data:
             compensation = {

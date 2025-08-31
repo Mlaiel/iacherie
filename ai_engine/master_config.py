@@ -9,7 +9,8 @@ Contact: mlaiel@live.de
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This configuration system contains proprietary settings and algorithms.
 Unauthorized use is strictly prohibited.
-"""import os
+"""
+import os
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -22,13 +23,15 @@ import yaml
 logger = logging.getLogger(__name__)
 
 class EnvironmentType(Enum):
-    """Environment type enumeration"""    DEVELOPMENT = "development"
+    """Environment type enumeration"""
+    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
 
 class LogLevel(Enum):
-    """Log level enumeration"""    DEBUG = "DEBUG"
+    """Log level enumeration"""
+    DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
     ERROR = "ERROR"
@@ -36,7 +39,8 @@ class LogLevel(Enum):
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration"""    host: str = "localhost"
+    """Database configuration"""
+    host: str = "localhost"
     port: int = 5432
     database: str = "ia_influencer_agent"
     username: str = "postgres"
@@ -49,7 +53,8 @@ class DatabaseConfig:
 
 @dataclass
 class RedisConfig:
-    """Redis configuration"""    host: str = "localhost"
+    """Redis configuration"""
+    host: str = "localhost"
     port: int = 6379
     db: int = 0
     password: Optional[str] = None
@@ -60,7 +65,8 @@ class RedisConfig:
 
 @dataclass
 class AIModelsConfig:
-    """AI models configuration"""    model_cache_dir: str = "./models/cache"
+    """AI models configuration"""
+    model_cache_dir: str = "./models/cache"
     max_model_memory: int = 4096  # MB
     model_timeout: int = 300  # seconds
     auto_download: bool = True
@@ -74,7 +80,8 @@ class AIModelsConfig:
 
 @dataclass
 class ContentProtectionConfig:
-    """Content protection configuration"""    fingerprint_algorithm: str = "perceptual_hash"
+    """Content protection configuration"""
+    fingerprint_algorithm: str = "perceptual_hash"
     similarity_threshold: float = 0.85
     blockchain_enabled: bool = True
     watermark_strength: float = 0.3
@@ -86,7 +93,8 @@ class ContentProtectionConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance configuration"""    max_concurrent_operations: int = 100
+    """Performance configuration"""
+    max_concurrent_operations: int = 100
     request_timeout: int = 300
     cache_ttl: int = 3600
     batch_size: int = 32
@@ -97,7 +105,8 @@ class PerformanceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration"""    encryption_algorithm: str = "AES-256-GCM"
+    """Security configuration"""
+    encryption_algorithm: str = "AES-256-GCM"
     jwt_secret_key: str = "CHANGE_THIS_IN_PRODUCTION"
     jwt_expiration: int = 86400  # 24 hours
     rate_limiting: bool = True
@@ -108,7 +117,8 @@ class SecurityConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring configuration"""    metrics_enabled: bool = True
+    """Monitoring configuration"""
+    metrics_enabled: bool = True
     logging_level: LogLevel = LogLevel.INFO
     log_rotation: bool = True
     max_log_size: int = 100  # MB
@@ -124,7 +134,8 @@ class MonitoringConfig:
 
 @dataclass
 class IntegrationConfig:
-    """Integration configuration"""    spotify_api_key: Optional[str] = None
+    """Integration configuration"""
+    spotify_api_key: Optional[str] = None
     youtube_api_key: Optional[str] = None
     instagram_api_key: Optional[str] = None
     tiktok_api_key: Optional[str] = None
@@ -133,13 +144,16 @@ class IntegrationConfig:
     external_apis: Dict[str, Dict[str, Any]] = field(default_factory=dict)
 
 class AIModuleMasterConfig:
-    """    Ultra-Industrial AI Module Master Configuration
+    """
+    Ultra-Industrial AI Module Master Configuration
     
     Central configuration management system for all AI module components.
     Provides environment-specific configurations and runtime settings.
-    """    
+    """
+    
     def __init__(self, environment: EnvironmentType = EnvironmentType.DEVELOPMENT):
-        """Initialize master configuration"""        self.environment = environment
+        """Initialize master configuration"""
+        self.environment = environment
         self.config_dir = Path(__file__).parent.parent / "config"
         self.config_dir.mkdir(exist_ok=True)
         
@@ -160,7 +174,8 @@ class AIModuleMasterConfig:
         logger.info(f"AI Module Master Configuration initialized for {environment.value}")
     
     def _load_environment_config(self):
-        """Load environment-specific configuration"""        config_file = self.config_dir / f"config.{self.environment.value}.yaml"
+        """Load environment-specific configuration"""
+        config_file = self.config_dir / f"config.{self.environment.value}.yaml"
         
         if config_file.exists():
             try:
@@ -178,7 +193,8 @@ class AIModuleMasterConfig:
             logger.info(f"No environment config file found for {self.environment.value}")
     
     def _load_secrets(self):
-        """Load secrets from environment variables or secure storage"""        # Database secrets
+        """Load secrets from environment variables or secure storage"""
+        # Database secrets
         if os.getenv('DATABASE_PASSWORD'):
             self.database.password = os.getenv('DATABASE_PASSWORD')
         
@@ -208,7 +224,8 @@ class AIModuleMasterConfig:
                     setattr(self.integration, f"{key_name}_api_key", os.getenv(env_var))
     
     def _update_config_from_dict(self, config_dict: Dict[str, Any]):
-        """Update configuration from dictionary"""        for section, values in config_dict.items():
+        """Update configuration from dictionary"""
+        for section, values in config_dict.items():
             if hasattr(self, section) and isinstance(values, dict):
                 config_obj = getattr(self, section)
                 for key, value in values.items():
@@ -216,17 +233,20 @@ class AIModuleMasterConfig:
                         setattr(config_obj, key, value)
     
     def get_database_url(self) -> str:
-        """Get database connection URL"""        return (
+        """Get database connection URL"""
+        return (
             f"postgresql://{self.database.username}:{self.database.password}@"
             f"{self.database.host}:{self.database.port}/{self.database.database}"
         )
     
     def get_redis_url(self) -> str:
-        """Get Redis connection URL"""        auth = f":{self.redis.password}@" if self.redis.password else ""
+        """Get Redis connection URL"""
+        auth = f":{self.redis.password}@" if self.redis.password else ""
         return f"redis://{auth}{self.redis.host}:{self.redis.port}/{self.redis.db}"
     
     def get_logging_config(self) -> Dict[str, Any]:
-        """Get logging configuration"""        return {
+        """Get logging configuration"""
+        return {
             'version': 1,
             'disable_existing_loggers': False,
             'formatters': {
@@ -263,7 +283,8 @@ class AIModuleMasterConfig:
         }
     
     def get_cors_config(self) -> Dict[str, Any]:
-        """Get CORS configuration"""        return {
+        """Get CORS configuration"""
+        return {
             'allow_origins': self.security.allowed_origins,
             'allow_credentials': True,
             'allow_methods': ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -271,7 +292,8 @@ class AIModuleMasterConfig:
         }
     
     def validate_configuration(self) -> List[str]:
-        """Validate configuration and return list of issues"""        issues = []
+        """Validate configuration and return list of issues"""
+        issues = []
         
         # Validate database configuration
         if not self.database.password and self.environment == EnvironmentType.PRODUCTION:
@@ -296,7 +318,8 @@ class AIModuleMasterConfig:
         return issues
     
     def export_config(self, include_secrets: bool = False) -> Dict[str, Any]:
-        """Export configuration as dictionary"""        config_dict = {
+        """Export configuration as dictionary"""
+        config_dict = {
             'environment': self.environment.value,
             'database': self._dataclass_to_dict(self.database, include_secrets),
             'redis': self._dataclass_to_dict(self.redis, include_secrets),
@@ -311,7 +334,8 @@ class AIModuleMasterConfig:
         return config_dict
     
     def save_config_template(self, file_path: Optional[str] = None):
-        """Save configuration template file"""        if file_path is None:
+        """Save configuration template file"""
+        if file_path is None:
             file_path = self.config_dir / f"config.{self.environment.value}.template.yaml"
         
         config_dict = self.export_config(include_secrets=False)
@@ -322,7 +346,8 @@ class AIModuleMasterConfig:
         logger.info(f"Configuration template saved to {file_path}")
     
     def _dataclass_to_dict(self, config_obj, include_secrets: bool = False) -> Dict[str, Any]:
-        """Convert dataclass to dictionary"""        result = {}
+        """Convert dataclass to dictionary"""
+        result = {}
         
         for field_name in dir(config_obj):
             if not field_name.startswith('_'):
@@ -346,7 +371,8 @@ class AIModuleMasterConfig:
         return result
     
     def _is_sensitive_field(self, field_name: str, value: Any) -> bool:
-        """Check if field contains sensitive information"""        sensitive_keywords = [
+        """Check if field contains sensitive information"""
+        sensitive_keywords = [
             'password', 'secret', 'key', 'token', 'credential',
             'api_key', 'auth', 'private'
         ]
@@ -356,7 +382,8 @@ class AIModuleMasterConfig:
     
     @classmethod
     def from_file(cls, config_file: str, environment: EnvironmentType = EnvironmentType.DEVELOPMENT):
-        """Create configuration from file"""        config = cls(environment)
+        """Create configuration from file"""
+        config = cls(environment)
         
         if Path(config_file).exists():
             with open(config_file, 'r') as f:
@@ -377,24 +404,30 @@ master_config = AIModuleMasterConfig()
 
 # Configuration factory functions
 def get_config(environment: Optional[EnvironmentType] = None) -> AIModuleMasterConfig:
-    """Get configuration for specified environment"""    if environment is None:
+    """Get configuration for specified environment"""
+    if environment is None:
         return master_config
     return AIModuleMasterConfig(environment)
 
 def get_database_config() -> DatabaseConfig:
-    """Get database configuration"""    return master_config.database
+    """Get database configuration"""
+    return master_config.database
 
 def get_redis_config() -> RedisConfig:
-    """Get Redis configuration"""    return master_config.redis
+    """Get Redis configuration"""
+    return master_config.redis
 
 def get_ai_models_config() -> AIModelsConfig:
-    """Get AI models configuration"""    return master_config.ai_models
+    """Get AI models configuration"""
+    return master_config.ai_models
 
 def get_security_config() -> SecurityConfig:
-    """Get security configuration"""    return master_config.security
+    """Get security configuration"""
+    return master_config.security
 
 def get_monitoring_config() -> MonitoringConfig:
-    """Get monitoring configuration"""    return master_config.monitoring
+    """Get monitoring configuration"""
+    return master_config.monitoring
 
 # Export all configuration classes and functions
 __all__ = [

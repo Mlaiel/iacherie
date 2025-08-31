@@ -21,7 +21,8 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -38,7 +39,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class MastodonPost:
-    """Mastodon post (toot) information"""    post_id: str
+    """Mastodon post (toot) information"""
+    post_id: str
     uri: str
     url: str
     account_id: str
@@ -75,7 +77,8 @@ class MastodonPost:
 
 @dataclass
 class MastodonAccount:
-    """Mastodon account information"""    account_id: str
+    """Mastodon account information"""
+    account_id: str
     username: str
     acct: str  # username@domain for remote accounts
     display_name: str
@@ -108,7 +111,8 @@ class MastodonAccount:
 
 @dataclass
 class MastodonInstance:
-    """Mastodon instance information"""    domain: str
+    """Mastodon instance information"""
+    domain: str
     title: str
     short_description: str
     description: str
@@ -137,7 +141,8 @@ class MastodonInstance:
 
 @dataclass
 class MastodonNotification:
-    """Mastodon notification information"""    notification_id: str
+    """Mastodon notification information"""
+    notification_id: str
     type: str  # mention, status, reblog, follow, follow_request, favourite, poll, update
     created_at: datetime
     account: Dict[str, Any]
@@ -150,7 +155,8 @@ class MastodonNotification:
 
 @dataclass
 class MastodonHashtag:
-    """Mastodon hashtag information"""    name: str
+    """Mastodon hashtag information"""
+    name: str
     url: str
     history: List[Dict[str, Any]]  # usage statistics
     following: bool
@@ -164,7 +170,8 @@ class MastodonHashtag:
 
 
 class MastodonCrawler(PlatformCrawler):
-    """    Advanced Mastodon crawler for decentralized social networking content monitoring.
+    """
+    Advanced Mastodon crawler for decentralized social networking content monitoring.
     
     Features:
     - Multi-instance federation crawling
@@ -177,7 +184,8 @@ class MastodonCrawler(PlatformCrawler):
     - Moderation and community tracking
     - Federated timeline analysis
     - Local instance community analysis
-    """    
+    """
+    
     def __init__(self, config: CrawlerConfig, vector_matcher=None):
         super().__init__(config, vector_matcher)
         self.platform_name = "mastodon"
@@ -221,7 +229,8 @@ class MastodonCrawler(PlatformCrawler):
         self._setup_session_headers()
     
     def _setup_session_headers(self):
-        """Setup Mastodon-specific headers"""        self.session_headers.update({
+        """Setup Mastodon-specific headers"""
+        self.session_headers.update({
             'Accept': 'application/json',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'en-US,en;q=0.9',
@@ -231,7 +240,8 @@ class MastodonCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: str = "posts", 
                            max_results: int = 50, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """        Search for content on Mastodon across multiple instances.
+        """
+        Search for content on Mastodon across multiple instances.
         
         Args:
             query: Search query
@@ -241,7 +251,8 @@ class MastodonCrawler(PlatformCrawler):
             
         Returns:
             List of crawler results
-        """        try:
+        """
+        try:
             await self._check_rate_limit()
             
             if content_type not in self.content_types:
@@ -259,7 +270,8 @@ class MastodonCrawler(PlatformCrawler):
             return []
     
     async def _crawl_posts(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Mastodon posts across instances"""        try:
+        """Crawl Mastodon posts across instances"""
+        try:
             results = []
             instances_to_search = self.instances
             
@@ -311,7 +323,8 @@ class MastodonCrawler(PlatformCrawler):
             return []
     
     async def _crawl_accounts(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Mastodon accounts"""        try:
+        """Crawl Mastodon accounts"""
+        try:
             results = []
             
             # Mock account data
@@ -358,7 +371,8 @@ class MastodonCrawler(PlatformCrawler):
             return []
     
     async def _crawl_instances(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Mastodon instances"""        try:
+        """Crawl Mastodon instances"""
+        try:
             results = []
             
             # Mock instance data
@@ -404,7 +418,8 @@ class MastodonCrawler(PlatformCrawler):
             return []
     
     async def _crawl_hashtags(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Mastodon hashtags"""        try:
+        """Crawl Mastodon hashtags"""
+        try:
             results = []
             
             # Mock hashtag data
@@ -446,7 +461,8 @@ class MastodonCrawler(PlatformCrawler):
             return []
     
     async def _crawl_notifications(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Mastodon notifications"""        try:
+        """Crawl Mastodon notifications"""
+        try:
             results = []
             
             # Mock notification data
@@ -486,7 +502,8 @@ class MastodonCrawler(PlatformCrawler):
             return []
     
     async def _crawl_federated_timeline(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl federated timeline"""        try:
+        """Crawl federated timeline"""
+        try:
             results = []
             
             # Get federated timeline content
@@ -517,7 +534,8 @@ class MastodonCrawler(PlatformCrawler):
             return []
     
     async def _crawl_local_timeline(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl local instance timeline"""        try:
+        """Crawl local instance timeline"""
+        try:
             results = []
             
             # Get local timeline content
@@ -548,7 +566,8 @@ class MastodonCrawler(PlatformCrawler):
             return []
     
     async def _crawl_trending(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl trending Mastodon content"""        try:
+        """Crawl trending Mastodon content"""
+        try:
             results = []
             
             # Get trending content
@@ -579,7 +598,8 @@ class MastodonCrawler(PlatformCrawler):
             return []
     
     async def _crawl_search(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """General Mastodon search"""        try:
+        """General Mastodon search"""
+        try:
             results = []
             
             # Search across different content types
@@ -600,11 +620,13 @@ class MastodonCrawler(PlatformCrawler):
     # Mock data generators and helper methods
     
     async def _get_instance_posts(self, instance: str, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Get posts from specific instance"""        # Mock implementation - in reality would call actual API
+        """Get posts from specific instance"""
+        # Mock implementation - in reality would call actual API
         return await self._get_mock_posts(query, max_results, instance)
     
     async def _get_mock_posts(self, query: str, max_results: int, instance: str = "mastodon.social") -> List[Dict[str, Any]]:
-        """Generate mock post data"""        posts = []
+        """Generate mock post data"""
+        posts = []
         
         for i in range(min(max_results, 20)):
             created_at = datetime.utcnow() - timedelta(hours=random.randint(1, 72))
@@ -635,7 +657,8 @@ class MastodonCrawler(PlatformCrawler):
         return posts
     
     async def _get_mock_accounts(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock account data"""        accounts = []
+        """Generate mock account data"""
+        accounts = []
         
         for i in range(min(max_results, 15)):
             created_at = datetime.utcnow() - timedelta(days=random.randint(30, 1095))
@@ -664,7 +687,8 @@ class MastodonCrawler(PlatformCrawler):
         return accounts
     
     async def _get_mock_instances(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock instance data"""        instances = []
+        """Generate mock instance data"""
+        instances = []
         
         for i, domain in enumerate(self.instances[:max_results]):
             created_at = datetime.utcnow() - timedelta(days=random.randint(365, 2555))
@@ -692,7 +716,8 @@ class MastodonCrawler(PlatformCrawler):
         return instances
     
     async def _get_mock_hashtags(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock hashtag data"""        hashtags = []
+        """Generate mock hashtag data"""
+        hashtags = []
         
         for i in range(min(max_results, 20)):
             last_updated = datetime.utcnow() - timedelta(hours=random.randint(1, 24))
@@ -713,7 +738,8 @@ class MastodonCrawler(PlatformCrawler):
         return hashtags
     
     async def _get_mock_notifications(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock notification data"""        notifications = []
+        """Generate mock notification data"""
+        notifications = []
         notification_types = ['mention', 'status', 'reblog', 'follow', 'favourite', 'poll']
         
         for i in range(min(max_results, 25)):
@@ -732,7 +758,8 @@ class MastodonCrawler(PlatformCrawler):
         return notifications
     
     async def _get_federated_timeline(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get federated timeline content"""        content = []
+        """Get federated timeline content"""
+        content = []
         
         for i in range(min(max_results, 15)):
             content.append({
@@ -746,7 +773,8 @@ class MastodonCrawler(PlatformCrawler):
         return content
     
     async def _get_local_timeline(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get local timeline content"""        content = []
+        """Get local timeline content"""
+        content = []
         
         for i in range(min(max_results, 15)):
             content.append({
@@ -760,7 +788,8 @@ class MastodonCrawler(PlatformCrawler):
         return content
     
     async def _get_trending_content(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get trending content"""        content = []
+        """Get trending content"""
+        content = []
         
         for i in range(min(max_results, 10)):
             content.append({
@@ -776,7 +805,8 @@ class MastodonCrawler(PlatformCrawler):
     # Parser methods
     
     async def _parse_post_data(self, post_data: Dict[str, Any]) -> Optional[MastodonPost]:
-        """Parse post data"""        try:
+        """Parse post data"""
+        try:
             created_at = datetime.fromisoformat(post_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             post = MastodonPost(
@@ -822,7 +852,8 @@ class MastodonCrawler(PlatformCrawler):
             return None
     
     async def _parse_account_data(self, account_data: Dict[str, Any]) -> Optional[MastodonAccount]:
-        """Parse account data"""        try:
+        """Parse account data"""
+        try:
             created_at = datetime.fromisoformat(account_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             verified_at = None
             if account_data.get('verified_at'):
@@ -867,7 +898,8 @@ class MastodonCrawler(PlatformCrawler):
             return None
     
     async def _parse_instance_data(self, instance_data: Dict[str, Any]) -> Optional[MastodonInstance]:
-        """Parse instance data"""        try:
+        """Parse instance data"""
+        try:
             created_at = datetime.fromisoformat(instance_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             instance = MastodonInstance(
@@ -905,7 +937,8 @@ class MastodonCrawler(PlatformCrawler):
             return None
     
     async def _parse_hashtag_data(self, hashtag_data: Dict[str, Any]) -> Optional[MastodonHashtag]:
-        """Parse hashtag data"""        try:
+        """Parse hashtag data"""
+        try:
             last_updated = datetime.fromisoformat(hashtag_data.get('last_updated', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             hashtag = MastodonHashtag(
@@ -929,7 +962,8 @@ class MastodonCrawler(PlatformCrawler):
             return None
     
     async def _parse_notification_data(self, notification_data: Dict[str, Any]) -> Optional[MastodonNotification]:
-        """Parse notification data"""        try:
+        """Parse notification data"""
+        try:
             created_at = datetime.fromisoformat(notification_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             notification = MastodonNotification(
@@ -951,7 +985,8 @@ class MastodonCrawler(PlatformCrawler):
             return None
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""        try:
+        """Check and enforce rate limiting"""
+        try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
             
@@ -967,7 +1002,8 @@ class MastodonCrawler(PlatformCrawler):
             self.logger.error(f"Error in rate limiting: {str(e)}")
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from Mastodon content"""        try:
+        """Extract metadata from Mastodon content"""
+        try:
             # Parse Mastodon URL
             parsed_url = urlparse(url)
             
@@ -1029,7 +1065,8 @@ class MastodonCrawler(PlatformCrawler):
             return {'error': str(e)}
     
     def get_platform_info(self) -> Dict[str, Any]:
-        """Get Mastodon platform information"""        return {
+        """Get Mastodon platform information"""
+        return {
             'platform_name': 'Mastodon',
             'base_url': self.base_url,
             'api_base_url': self.api_base_url,

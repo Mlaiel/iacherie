@@ -10,7 +10,8 @@ permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will re
 in legal action.
 
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import logging
+"""
+import logging
 from typing import Dict, List, Any, Optional, Tuple, Set
 from datetime import datetime, timedelta
 from dataclasses import dataclass
@@ -24,13 +25,15 @@ from concurrent.futures import ThreadPoolExecutor
 logger = logging.getLogger(__name__)
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""    BASIC = "basic"
+    """Content protection levels"""
+    BASIC = "basic"
     STANDARD = "standard" 
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 class ViolationType(Enum):
-    """Types of copyright violations"""    EXACT_COPY = "exact_copy"
+    """Types of copyright violations"""
+    EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     DERIVATIVE_WORK = "derivative_work"
     UNAUTHORIZED_USE = "unauthorized_use"
@@ -39,7 +42,8 @@ class ViolationType(Enum):
 
 @dataclass
 class DigitalFingerprint:
-    """Comprehensive digital fingerprint for content protection"""    content_id: str
+    """Comprehensive digital fingerprint for content protection"""
+    content_id: str
     creator_id: str
     primary_hash: str
     secondary_hashes: List[str]
@@ -53,7 +57,8 @@ class DigitalFingerprint:
 
 @dataclass
 class ProtectionResult:
-    """Results of content protection analysis"""    is_protected: bool
+    """Results of content protection analysis"""
+    is_protected: bool
     protection_strength: float
     fingerprint: DigitalFingerprint
     warnings: List[str]
@@ -61,7 +66,8 @@ class ProtectionResult:
 
 @dataclass
 class ViolationAlert:
-    """Copyright violation detection alert"""    violation_id: str
+    """Copyright violation detection alert"""
+    violation_id: str
     original_content_id: str
     infringing_content_id: str
     violation_type: ViolationType
@@ -72,7 +78,8 @@ class ViolationAlert:
     legal_priority: str
 
 class AdvancedFingerprintGenerator:
-    """Advanced multi-modal fingerprint generation system"""    
+    """Advanced multi-modal fingerprint generation system"""
+    
     def __init__(self):
         self.hash_algorithms = ['sha256', 'sha3_256', 'blake2b']
         self.thread_executor = ThreadPoolExecutor(max_workers=4)
@@ -83,7 +90,8 @@ class AdvancedFingerprintGenerator:
         metadata: Dict[str, Any],
         protection_level: ProtectionLevel
     ) -> DigitalFingerprint:
-        """Generate multi-layered digital fingerprint"""        try:
+        """Generate multi-layered digital fingerprint"""
+        try:
             # Primary cryptographic hash
             primary_hash = await self._generate_primary_hash(content_data)
             
@@ -122,7 +130,8 @@ class AdvancedFingerprintGenerator:
             raise
     
     async def _generate_primary_hash(self, content_data: bytes) -> str:
-        """Generate primary cryptographic hash"""        def compute_hash():
+        """Generate primary cryptographic hash"""
+        def compute_hash():
             hasher = hashlib.sha3_256()
             # Add salt for additional security
             salt = secrets.token_bytes(32)
@@ -133,7 +142,8 @@ class AdvancedFingerprintGenerator:
         return await loop.run_in_executor(self.thread_executor, compute_hash)
     
     async def _generate_secondary_hashes(self, content_data: bytes) -> List[str]:
-        """Generate multiple secondary hashes for robustness"""        def compute_secondary():
+        """Generate multiple secondary hashes for robustness"""
+        def compute_secondary():
             hashes = []
             for algo in self.hash_algorithms:
                 hasher = getattr(hashlib, algo)()
@@ -145,7 +155,8 @@ class AdvancedFingerprintGenerator:
         return await loop.run_in_executor(self.thread_executor, compute_secondary)
     
     async def _generate_audio_fingerprint(self, content_data: bytes, metadata: Dict[str, Any]) -> Optional[str]:
-        """Generate audio-specific fingerprint using spectral analysis"""        if not self._is_audio_content(metadata):
+        """Generate audio-specific fingerprint using spectral analysis"""
+        if not self._is_audio_content(metadata):
             return None
         
         def compute_audio_fp():
@@ -168,7 +179,8 @@ class AdvancedFingerprintGenerator:
         return await loop.run_in_executor(self.thread_executor, compute_audio_fp)
     
     async def _generate_visual_fingerprint(self, content_data: bytes, metadata: Dict[str, Any]) -> Optional[str]:
-        """Generate visual-specific fingerprint using perceptual hashing"""        if not self._is_visual_content(metadata):
+        """Generate visual-specific fingerprint using perceptual hashing"""
+        if not self._is_visual_content(metadata):
             return None
         
         def compute_visual_fp():
@@ -191,7 +203,8 @@ class AdvancedFingerprintGenerator:
         return await loop.run_in_executor(self.thread_executor, compute_visual_fp)
     
     async def _generate_text_fingerprint(self, content_data: bytes, metadata: Dict[str, Any]) -> Optional[str]:
-        """Generate text-specific fingerprint using semantic analysis"""        if not self._is_text_content(metadata):
+        """Generate text-specific fingerprint using semantic analysis"""
+        if not self._is_text_content(metadata):
             return None
         
         def compute_text_fp():
@@ -216,7 +229,8 @@ class AdvancedFingerprintGenerator:
         return await loop.run_in_executor(self.thread_executor, compute_text_fp)
     
     async def _generate_metadata_hash(self, metadata: Dict[str, Any]) -> str:
-        """Generate hash from content metadata"""        # Extract relevant metadata for fingerprinting
+        """Generate hash from content metadata"""
+        # Extract relevant metadata for fingerprinting
         relevant_fields = ['title', 'creator_id', 'upload_timestamp', 'format']
         metadata_subset = {k: v for k, v in metadata.items() if k in relevant_fields}
         
@@ -226,7 +240,8 @@ class AdvancedFingerprintGenerator:
         return f"metadata:{hasher.hexdigest()}"
     
     async def _create_blockchain_record(self, primary_hash: str) -> str:
-        """Create blockchain record for premium protection"""        # Simulate blockchain integration
+        """Create blockchain record for premium protection"""
+        # Simulate blockchain integration
         # In production, integrate with actual blockchain networks
         record_data = {
             'hash': primary_hash,
@@ -239,22 +254,26 @@ class AdvancedFingerprintGenerator:
         return f"blockchain:{record_hash}"
     
     def _is_audio_content(self, metadata: Dict[str, Any]) -> bool:
-        """Check if content is audio-based"""        filename = metadata.get('filename', '').lower()
+        """Check if content is audio-based"""
+        filename = metadata.get('filename', '').lower()
         audio_extensions = ['.mp3', '.wav', '.flac', '.m4a', '.aac']
         return any(filename.endswith(ext) for ext in audio_extensions)
     
     def _is_visual_content(self, metadata: Dict[str, Any]) -> bool:
-        """Check if content is visual-based"""        filename = metadata.get('filename', '').lower()
+        """Check if content is visual-based"""
+        filename = metadata.get('filename', '').lower()
         visual_extensions = ['.jpg', '.jpeg', '.png', '.webp', '.tiff', '.mp4', '.avi', '.mkv']
         return any(filename.endswith(ext) for ext in visual_extensions)
     
     def _is_text_content(self, metadata: Dict[str, Any]) -> bool:
-        """Check if content is text-based"""        filename = metadata.get('filename', '').lower()
+        """Check if content is text-based"""
+        filename = metadata.get('filename', '').lower()
         text_extensions = ['.txt', '.md', '.html', '.pdf', '.doc']
         return any(filename.endswith(ext) for ext in text_extensions)
 
 class ViolationDetector:
-    """Advanced copyright violation detection system"""    
+    """Advanced copyright violation detection system"""
+    
     def __init__(self):
         self.similarity_threshold = 0.85
         self.fingerprint_database = {}  # In production, use proper database
@@ -265,7 +284,8 @@ class ViolationDetector:
         target_fingerprint: DigitalFingerprint,
         search_sources: List[str] = None
     ) -> List[ViolationAlert]:
-        """Scan for potential copyright violations"""        try:
+        """Scan for potential copyright violations"""
+        try:
             violations = []
             
             # Scan internal database
@@ -289,7 +309,8 @@ class ViolationDetector:
             raise
     
     async def _scan_internal_database(self, target_fp: DigitalFingerprint) -> List[ViolationAlert]:
-        """Scan internal fingerprint database"""        violations = []
+        """Scan internal fingerprint database"""
+        violations = []
         
         for stored_fp in self.fingerprint_database.values():
             if stored_fp.creator_id == target_fp.creator_id:
@@ -318,7 +339,8 @@ class ViolationDetector:
         target_fp: DigitalFingerprint, 
         sources: List[str]
     ) -> List[ViolationAlert]:
-        """Scan external sources for violations"""        # Simulate external scanning (YouTube, SoundCloud, etc.)
+        """Scan external sources for violations"""
+        # Simulate external scanning (YouTube, SoundCloud, etc.)
         external_violations = []
         
         for source in sources:
@@ -333,7 +355,8 @@ class ViolationDetector:
         target_fp: DigitalFingerprint, 
         platform: str
     ) -> List[ViolationAlert]:
-        """Simulate external platform scanning"""        # This would integrate with real platform APIs
+        """Simulate external platform scanning"""
+        # This would integrate with real platform APIs
         return []
     
     async def _calculate_similarity(
@@ -341,7 +364,8 @@ class ViolationDetector:
         fp1: DigitalFingerprint, 
         fp2: DigitalFingerprint
     ) -> float:
-        """Calculate similarity between two fingerprints"""        similarities = []
+        """Calculate similarity between two fingerprints"""
+        similarities = []
         
         # Primary hash comparison
         if fp1.primary_hash == fp2.primary_hash:
@@ -364,15 +388,18 @@ class ViolationDetector:
         return max(similarities) if similarities else 0.0
     
     def _compare_audio_fingerprints(self, fp1: str, fp2: str) -> float:
-        """Compare audio fingerprints"""        # Simulate audio fingerprint comparison
+        """Compare audio fingerprints"""
+        # Simulate audio fingerprint comparison
         return 0.95 if fp1 == fp2 else 0.0
     
     def _compare_visual_fingerprints(self, fp1: str, fp2: str) -> float:
-        """Compare visual fingerprints"""        # Simulate visual fingerprint comparison
+        """Compare visual fingerprints"""
+        # Simulate visual fingerprint comparison
         return 0.95 if fp1 == fp2 else 0.0
     
     def _determine_violation_type(self, similarity: float) -> ViolationType:
-        """Determine type of violation based on similarity"""        if similarity >= 0.98:
+        """Determine type of violation based on similarity"""
+        if similarity >= 0.98:
             return ViolationType.EXACT_COPY
         elif similarity >= 0.90:
             return ViolationType.PARTIAL_COPY
@@ -382,7 +409,8 @@ class ViolationDetector:
             return ViolationType.UNAUTHORIZED_USE
     
     def _assess_legal_priority(self, similarity: float) -> str:
-        """Assess legal priority of violation"""        if similarity >= 0.95:
+        """Assess legal priority of violation"""
+        if similarity >= 0.95:
             return "critical"
         elif similarity >= 0.90:
             return "high"
@@ -392,12 +420,14 @@ class ViolationDetector:
             return "low"
     
     def _generate_violation_id(self) -> str:
-        """Generate unique violation identifier"""        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        """Generate unique violation identifier"""
+        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         random_suffix = secrets.token_hex(4)
         return f"violation_{timestamp}_{random_suffix}"
 
 class RightsProtectionEngine:
-    """Main rights protection engine orchestrating all protection mechanisms"""    
+    """Main rights protection engine orchestrating all protection mechanisms"""
+    
     def __init__(self):
         self.fingerprint_generator = AdvancedFingerprintGenerator()
         self.violation_detector = ViolationDetector()
@@ -409,7 +439,8 @@ class RightsProtectionEngine:
         metadata: Dict[str, Any],
         protection_level: ProtectionLevel = ProtectionLevel.STANDARD
     ) -> ProtectionResult:
-        """Complete content protection process"""        try:
+        """Complete content protection process"""
+        try:
             # Generate comprehensive fingerprint
             fingerprint = await self.fingerprint_generator.generate_comprehensive_fingerprint(
                 content_data, metadata, protection_level
@@ -445,7 +476,8 @@ class RightsProtectionEngine:
         fingerprint: DigitalFingerprint, 
         violations: List[ViolationAlert]
     ) -> float:
-        """Assess overall protection strength"""        base_strength = 0.8
+        """Assess overall protection strength"""
+        base_strength = 0.8
         
         # Boost for premium protection levels
         if fingerprint.protection_level == ProtectionLevel.PREMIUM:
@@ -465,7 +497,8 @@ class RightsProtectionEngine:
         return min(base_strength, 1.0)
     
     def _generate_warnings(self, violations: List[ViolationAlert]) -> List[str]:
-        """Generate protection warnings"""        warnings = []
+        """Generate protection warnings"""
+        warnings = []
         
         if violations:
             high_risk_violations = [v for v in violations if v.legal_priority in ['critical', 'high']]
@@ -479,7 +512,8 @@ class RightsProtectionEngine:
         protection_level: ProtectionLevel, 
         violations: List[ViolationAlert]
     ) -> List[str]:
-        """Generate protection recommendations"""        recommendations = []
+        """Generate protection recommendations"""
+        recommendations = []
         
         if protection_level == ProtectionLevel.BASIC:
             recommendations.append("Consider upgrading to Standard protection for better security")

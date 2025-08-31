@@ -25,7 +25,8 @@ Copyright: All rights reserved. Unauthorized use prohibited.
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Any, Optional, Union, Tuple
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import json
@@ -42,7 +43,8 @@ from eth_account import Account
 logger = logging.getLogger(__name__)
 
 class ProposalType(Enum):
-    """Types of governance proposals."""    PARAMETER_CHANGE = "parameter_change"
+    """Types of governance proposals."""
+    PARAMETER_CHANGE = "parameter_change"
     TREASURY_ALLOCATION = "treasury_allocation"
     PROTOCOL_UPGRADE = "protocol_upgrade"
     PARTNERSHIP = "partnership"
@@ -50,7 +52,8 @@ class ProposalType(Enum):
     GENERAL = "general"
 
 class ProposalStatus(Enum):
-    """Status of governance proposals."""    DRAFT = "draft"
+    """Status of governance proposals."""
+    DRAFT = "draft"
     ACTIVE = "active"
     SUCCEEDED = "succeeded"
     DEFEATED = "defeated"
@@ -60,20 +63,23 @@ class ProposalStatus(Enum):
     EXPIRED = "expired"
 
 class VotingMechanism(Enum):
-    """Different voting mechanisms supported."""    SIMPLE_MAJORITY = "simple_majority"
+    """Different voting mechanisms supported."""
+    SIMPLE_MAJORITY = "simple_majority"
     SUPERMAJORITY = "supermajority"
     QUADRATIC_VOTING = "quadratic_voting"
     CONVICTION_VOTING = "conviction_voting"
     RANKED_CHOICE = "ranked_choice"
 
 class VoteChoice(Enum):
-    """Voting choices."""    FOR = "for"
+    """Voting choices."""
+    FOR = "for"
     AGAINST = "against"
     ABSTAIN = "abstain"
 
 @dataclass
 class GovernanceToken:
-    """Governance token configuration."""    token_address: str
+    """Governance token configuration."""
+    token_address: str
     token_symbol: str
     token_name: str
     total_supply: Decimal
@@ -83,7 +89,8 @@ class GovernanceToken:
 
 @dataclass
 class Proposal:
-    """Governance proposal structure."""    proposal_id: str
+    """Governance proposal structure."""
+    proposal_id: str
     proposer_address: str
     title: str
     description: str
@@ -101,7 +108,8 @@ class Proposal:
 
 @dataclass
 class Vote:
-    """Individual vote record."""    vote_id: str
+    """Individual vote record."""
+    vote_id: str
     proposal_id: str
     voter_address: str
     choice: VoteChoice
@@ -113,7 +121,8 @@ class Vote:
 
 @dataclass
 class VotingPower:
-    """Voting power calculation for an address."""    address: str
+    """Voting power calculation for an address."""
+    address: str
     token_balance: Decimal
     delegated_power: Decimal
     reputation_multiplier: Decimal
@@ -122,7 +131,8 @@ class VotingPower:
 
 @dataclass
 class GovernanceMetrics:
-    """Governance participation and health metrics."""    total_proposals: int
+    """Governance participation and health metrics."""
+    total_proposals: int
     active_proposals: int
     total_voters: int
     average_participation_rate: float
@@ -132,15 +142,19 @@ class GovernanceMetrics:
     last_updated: datetime
 
 class GovernanceSystem:
-    """    Comprehensive decentralized governance system providing democratic
+    """
+    Comprehensive decentralized governance system providing democratic
     decision-making capabilities for the IA Influencer Agent platform.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize governance system.
+        """
+        Initialize governance system.
         
         Args:
             config: Governance configuration including token settings, thresholds
-        """        self.config = config
+        """
+        self.config = config
         self.governance_tokens: List[GovernanceToken] = []
         self.proposals: Dict[str, Proposal] = {}
         self.votes: Dict[str, List[Vote]] = defaultdict(list)
@@ -149,7 +163,8 @@ class GovernanceSystem:
         self._initialize_governance_tokens()
     
     def _initialize_governance_tokens(self) -> None:
-        """Initialize governance tokens from configuration."""        token_configs = self.config.get("governance_tokens", [])
+        """Initialize governance tokens from configuration."""
+        token_configs = self.config.get("governance_tokens", [])
         
         for token_config in token_configs:
             token = GovernanceToken(**token_config)
@@ -167,7 +182,8 @@ class GovernanceSystem:
         execution_delay_hours: int = 48,
         custom_thresholds: Optional[Dict[str, Decimal]] = None
     ) -> Proposal:
-        """        Create a new governance proposal.
+        """
+        Create a new governance proposal.
         
         Args:
             proposer_address: Address of the proposer
@@ -181,7 +197,8 @@ class GovernanceSystem:
             
         Returns:
             Created proposal
-        """        try:
+        """
+        try:
             # Validate proposer eligibility
             await self._validate_proposer_eligibility(proposer_address)
             
@@ -229,7 +246,8 @@ class GovernanceSystem:
             raise
     
     async def _validate_proposer_eligibility(self, proposer_address: str) -> None:
-        """Validate that an address is eligible to create proposals."""        # Check minimum token balance requirement
+        """Validate that an address is eligible to create proposals."""
+        # Check minimum token balance requirement
         min_balance = self.config.get("min_proposal_balance", Decimal("1000"))
         
         voting_power = await self.calculate_voting_power(proposer_address)
@@ -251,7 +269,8 @@ class GovernanceSystem:
             )
     
     def _get_default_thresholds(self, proposal_type: ProposalType) -> Tuple[Decimal, Decimal]:
-        """Get default quorum and approval thresholds for proposal type."""        thresholds = {
+        """Get default quorum and approval thresholds for proposal type."""
+        thresholds = {
             ProposalType.PARAMETER_CHANGE: (Decimal("0.1"), Decimal("0.5")),
             ProposalType.TREASURY_ALLOCATION: (Decimal("0.15"), Decimal("0.6")),
             ProposalType.PROTOCOL_UPGRADE: (Decimal("0.2"), Decimal("0.67")),
@@ -270,7 +289,8 @@ class GovernanceSystem:
         conviction: Optional[float] = None,
         ranking: Optional[List[str]] = None
     ) -> Vote:
-        """        Cast a vote on a proposal.
+        """
+        Cast a vote on a proposal.
         
         Args:
             voter_address: Address of the voter
@@ -281,7 +301,8 @@ class GovernanceSystem:
             
         Returns:
             Vote record
-        """        try:
+        """
+        try:
             # Validate proposal exists and is active
             proposal = self.proposals.get(proposal_id)
             if not proposal:
@@ -354,7 +375,8 @@ class GovernanceSystem:
         base_power: Decimal,
         conviction: Optional[float]
     ) -> Decimal:
-        """Apply voting mechanism specific calculations to voting power."""        if mechanism == VotingMechanism.SIMPLE_MAJORITY:
+        """Apply voting mechanism specific calculations to voting power."""
+        if mechanism == VotingMechanism.SIMPLE_MAJORITY:
             return base_power
         
         elif mechanism == VotingMechanism.QUADRATIC_VOTING:
@@ -375,7 +397,8 @@ class GovernanceSystem:
         address: str,
         snapshot_block: Optional[int] = None
     ) -> VotingPower:
-        """        Calculate voting power for an address.
+        """
+        Calculate voting power for an address.
         
         Args:
             address: Address to calculate voting power for
@@ -383,7 +406,8 @@ class GovernanceSystem:
             
         Returns:
             Voting power calculation
-        """        try:
+        """
+        try:
             total_power = Decimal("0")
             total_balance = Decimal("0")
             delegated_power = Decimal("0")
@@ -434,7 +458,8 @@ class GovernanceSystem:
         token_address: str,
         snapshot_block: Optional[int]
     ) -> Decimal:
-        """Get token balance for an address at a specific block."""        # Mock implementation - in production, would query blockchain
+        """Get token balance for an address at a specific block."""
+        # Mock implementation - in production, would query blockchain
         return Decimal(str(np.random.uniform(100, 10000)))
     
     async def _calculate_delegated_power(
@@ -442,7 +467,8 @@ class GovernanceSystem:
         delegate_address: str,
         snapshot_block: Optional[int]
     ) -> Decimal:
-        """Calculate total power delegated to an address."""        delegated_power = Decimal("0")
+        """Calculate total power delegated to an address."""
+        delegated_power = Decimal("0")
         
         for delegator, delegate in self.delegations.items():
             if delegate == delegate_address:
@@ -452,7 +478,8 @@ class GovernanceSystem:
         return delegated_power
     
     async def _calculate_reputation_multiplier(self, address: str) -> Decimal:
-        """Calculate reputation-based voting power multiplier."""        # Mock implementation - in production, would calculate based on:
+        """Calculate reputation-based voting power multiplier."""
+        # Mock implementation - in production, would calculate based on:
         # - Participation history
         # - Proposal success rate
         # - Community contribution score
@@ -463,7 +490,8 @@ class GovernanceSystem:
         delegator_address: str,
         delegate_address: str
     ) -> bool:
-        """        Delegate voting power to another address.
+        """
+        Delegate voting power to another address.
         
         Args:
             delegator_address: Address delegating power
@@ -471,7 +499,8 @@ class GovernanceSystem:
             
         Returns:
             True if delegation successful
-        """        try:
+        """
+        try:
             # Validate addresses
             if delegator_address == delegate_address:
                 raise ValueError("Cannot delegate to self")
@@ -496,7 +525,8 @@ class GovernanceSystem:
         target_address: str,
         visited: Optional[set] = None
     ) -> bool:
-        """Check for circular delegation chains."""        if visited is None:
+        """Check for circular delegation chains."""
+        if visited is None:
             visited = set()
         
         if start_address in visited:
@@ -514,7 +544,8 @@ class GovernanceSystem:
         return False
     
     async def update_proposal_status(self) -> None:
-        """Update status of all proposals based on current state."""        now = datetime.utcnow()
+        """Update status of all proposals based on current state."""
+        now = datetime.utcnow()
         
         for proposal in self.proposals.values():
             try:
@@ -548,7 +579,8 @@ class GovernanceSystem:
                 logger.error(f"Failed to update proposal {proposal.proposal_id} status: {e}")
     
     async def _calculate_voting_result(self, proposal_id: str) -> Dict[str, Any]:
-        """Calculate voting results for a proposal."""        proposal = self.proposals[proposal_id]
+        """Calculate voting results for a proposal."""
+        proposal = self.proposals[proposal_id]
         votes = self.votes[proposal_id]
         
         # Calculate total voting power
@@ -580,18 +612,21 @@ class GovernanceSystem:
         }
     
     async def _queue_proposal_execution(self, proposal: Proposal) -> None:
-        """Queue a proposal for automated execution."""        # Mock implementation - in production, would integrate with execution system
+        """Queue a proposal for automated execution."""
+        # Mock implementation - in production, would integrate with execution system
         logger.info(f"Queued proposal {proposal.proposal_id} for execution")
     
     async def execute_proposal(self, proposal_id: str) -> bool:
-        """        Execute an approved proposal.
+        """
+        Execute an approved proposal.
         
         Args:
             proposal_id: ID of the proposal to execute
             
         Returns:
             True if execution successful
-        """        try:
+        """
+        try:
             proposal = self.proposals.get(proposal_id)
             if not proposal:
                 raise ValueError(f"Proposal {proposal_id} not found")
@@ -615,7 +650,8 @@ class GovernanceSystem:
             return False
     
     async def _execute_proposal_action(self, proposal: Proposal) -> bool:
-        """Execute the specific action defined in a proposal."""        # Mock implementation - in production, would execute based on proposal type
+        """Execute the specific action defined in a proposal."""
+        # Mock implementation - in production, would execute based on proposal type
         if proposal.proposal_type == ProposalType.PARAMETER_CHANGE:
             return await self._execute_parameter_change(proposal)
         elif proposal.proposal_type == ProposalType.TREASURY_ALLOCATION:
@@ -626,22 +662,26 @@ class GovernanceSystem:
         return True
     
     async def _execute_parameter_change(self, proposal: Proposal) -> bool:
-        """Execute a parameter change proposal."""        # Mock implementation
+        """Execute a parameter change proposal."""
+        # Mock implementation
         logger.info(f"Executing parameter change for proposal {proposal.proposal_id}")
         return True
     
     async def _execute_treasury_allocation(self, proposal: Proposal) -> bool:
-        """Execute a treasury allocation proposal."""        # Mock implementation
+        """Execute a treasury allocation proposal."""
+        # Mock implementation
         logger.info(f"Executing treasury allocation for proposal {proposal.proposal_id}")
         return True
     
     async def _execute_protocol_upgrade(self, proposal: Proposal) -> bool:
-        """Execute a protocol upgrade proposal."""        # Mock implementation
+        """Execute a protocol upgrade proposal."""
+        # Mock implementation
         logger.info(f"Executing protocol upgrade for proposal {proposal.proposal_id}")
         return True
     
     def get_proposal_details(self, proposal_id: str) -> Optional[Dict[str, Any]]:
-        """Get detailed information about a proposal including voting results."""        proposal = self.proposals.get(proposal_id)
+        """Get detailed information about a proposal including voting results."""
+        proposal = self.proposals.get(proposal_id)
         if not proposal:
             return None
         
@@ -675,7 +715,8 @@ class GovernanceSystem:
         }
     
     async def get_governance_metrics(self) -> GovernanceMetrics:
-        """Get comprehensive governance health and participation metrics."""        try:
+        """Get comprehensive governance health and participation metrics."""
+        try:
             total_proposals = len(self.proposals)
             active_proposals = len([
                 p for p in self.proposals.values() 
@@ -731,7 +772,8 @@ class GovernanceSystem:
         gini_coefficient: float,
         voter_count: int
     ) -> float:
-        """Calculate overall governance health score (0-100)."""        # Participation score (0-40 points)
+        """Calculate overall governance health score (0-100)."""
+        # Participation score (0-40 points)
         participation_score = min(participation_rate * 100, 40)
         
         # Distribution score (0-30 points) - lower Gini is better
@@ -744,7 +786,8 @@ class GovernanceSystem:
         return min(total_score, 100.0)
     
     def get_user_governance_activity(self, address: str) -> Dict[str, Any]:
-        """Get governance activity summary for a specific address."""        # Count proposals created
+        """Get governance activity summary for a specific address."""
+        # Count proposals created
         proposals_created = len([
             p for p in self.proposals.values()
             if p.proposer_address == address

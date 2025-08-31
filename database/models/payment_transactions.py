@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
+"""
+from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, JSONB
@@ -36,7 +37,8 @@ Base = declarative_base()
 
 
 class TransactionType(Enum):
-    """Transaction type enumeration"""    PAYMENT = "payment"
+    """Transaction type enumeration"""
+    PAYMENT = "payment"
     REFUND = "refund"
     PAYOUT = "payout"
     SUBSCRIPTION = "subscription"
@@ -59,7 +61,8 @@ class TransactionType(Enum):
 
 
 class TransactionStatus(Enum):
-    """Transaction status enumeration"""    PENDING = "pending"
+    """Transaction status enumeration"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -77,7 +80,8 @@ class TransactionStatus(Enum):
 
 
 class PaymentProvider(Enum):
-    """Payment provider enumeration"""    STRIPE = "stripe"
+    """Payment provider enumeration"""
+    STRIPE = "stripe"
     PAYPAL = "paypal"
     SQUARE = "square"
     WISE = "wise"
@@ -102,7 +106,8 @@ class PaymentProvider(Enum):
 
 
 class Currency(Enum):
-    """Currency enumeration"""    USD = "USD"
+    """Currency enumeration"""
+    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     CAD = "CAD"
@@ -127,7 +132,8 @@ class Currency(Enum):
 
 
 class RiskLevel(Enum):
-    """Transaction risk level"""    LOW = "low"
+    """Transaction risk level"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     VERY_HIGH = "very_high"
@@ -135,7 +141,8 @@ class RiskLevel(Enum):
 
 
 class PaymentMethod(Enum):
-    """Payment method types"""    CREDIT_CARD = "credit_card"
+    """Payment method types"""
+    CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_ACCOUNT = "bank_account"
     DIGITAL_WALLET = "digital_wallet"
@@ -151,11 +158,13 @@ class PaymentMethod(Enum):
 
 
 class PaymentTransaction(Base):
-    """    Enterprise Payment Transaction Model
+    """
+    Enterprise Payment Transaction Model
     
     Comprehensive financial transaction management with multi-provider support,
     fraud detection, compliance tracking, and detailed audit trails.
-    """    __tablename__ = 'payment_transactions'
+    """
+    __tablename__ = 'payment_transactions'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -366,7 +375,8 @@ class PaymentTransaction(Base):
         description: str = None,
         **kwargs
     ) -> 'PaymentTransaction':
-        """Create a new payment transaction"""        transaction = cls(
+        """Create a new payment transaction"""
+        transaction = cls(
             user_id=user_id,
             transaction_type=TransactionType.PAYMENT,
             amount=amount,
@@ -393,7 +403,8 @@ class PaymentTransaction(Base):
         description: str = None,
         **kwargs
     ) -> 'PaymentTransaction':
-        """Create a payout transaction"""        return cls(
+        """Create a payout transaction"""
+        return cls(
             user_id=user_id,
             transaction_type=TransactionType.PAYOUT,
             amount=amount,
@@ -407,7 +418,8 @@ class PaymentTransaction(Base):
         )
     
     def calculate_fees(self) -> None:
-        """Calculate transaction fees based on provider and amount"""        # Simplified fee calculation - in production, use actual provider rates
+        """Calculate transaction fees based on provider and amount"""
+        # Simplified fee calculation - in production, use actual provider rates
         if self.payment_provider == PaymentProvider.STRIPE:
             self.processing_fee = self.amount * Decimal('0.029') + Decimal('0.30')
             self.platform_fee = self.amount * Decimal('0.05')  # 5% platform fee
@@ -422,7 +434,8 @@ class PaymentTransaction(Base):
         self.net_amount = self.amount - self.total_fees
     
     def mark_as_completed(self, external_transaction_id: str = None, receipt_url: str = None) -> None:
-        """Mark transaction as completed"""        self.status = TransactionStatus.COMPLETED
+        """Mark transaction as completed"""
+        self.status = TransactionStatus.COMPLETED
         self.settled_at = datetime.now(timezone.utc)
         if external_transaction_id:
             self.external_transaction_id = external_transaction_id
@@ -431,7 +444,8 @@ class PaymentTransaction(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def mark_as_failed(self, error_message: str, error_code: str = None) -> None:
-        """Mark transaction as failed"""        self.status = TransactionStatus.FAILED
+        """Mark transaction as failed"""
+        self.status = TransactionStatus.FAILED
         self.failed_at = datetime.now(timezone.utc)
         self.provider_response = {
             'error_message': error_message,
@@ -441,7 +455,8 @@ class PaymentTransaction(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def process_refund(self, refund_amount: Decimal = None, reason: str = None, refunded_by: str = None) -> 'PaymentTransaction':
-        """Process a refund for this transaction"""        if self.status != TransactionStatus.COMPLETED:
+        """Process a refund for this transaction"""
+        if self.status != TransactionStatus.COMPLETED:
             raise ValueError("Can only refund completed transactions")
         
         refund_amount = refund_amount or self.amount
@@ -479,7 +494,8 @@ class PaymentTransaction(Base):
         return refund
     
     def calculate_risk_score(self) -> float:
-        """Calculate transaction risk score"""        risk_score = 0.0
+        """Calculate transaction risk score"""
+        risk_score = 0.0
         
         # Amount-based risk
         if self.amount > 1000:
@@ -520,7 +536,8 @@ class PaymentTransaction(Base):
         return self.risk_score
     
     def distribute_revenue_shares(self) -> List['PaymentTransaction']:
-        """Distribute revenue shares to collaborators"""        if not self.revenue_shares or self.status != TransactionStatus.COMPLETED:
+        """Distribute revenue shares to collaborators"""
+        if not self.revenue_shares or self.status != TransactionStatus.COMPLETED:
             return []
         
         payout_transactions = []
@@ -546,7 +563,8 @@ class PaymentTransaction(Base):
         return payout_transactions
     
     def get_transaction_summary(self) -> Dict[str, Any]:
-        """Get comprehensive transaction summary"""        return {
+        """Get comprehensive transaction summary"""
+        return {
             'transaction_info': {
                 'id': str(self.id),
                 'transaction_id': self.transaction_id,
@@ -580,7 +598,8 @@ class PaymentTransaction(Base):
         }
     
     def is_eligible_for_refund(self) -> bool:
-        """Check if transaction is eligible for refund"""        return (
+        """Check if transaction is eligible for refund"""
+        return (
             self.status == TransactionStatus.COMPLETED and
             self.transaction_type in [TransactionType.PAYMENT, TransactionType.SUBSCRIPTION] and
             (self.refund_amount or Decimal('0.00')) < self.amount and
@@ -589,7 +608,8 @@ class PaymentTransaction(Base):
         )
     
     def get_tax_summary(self) -> Dict[str, Any]:
-        """Get tax information summary"""        return {
+        """Get tax information summary"""
+        return {
             'tax_amount': float(self.tax_amount) if self.tax_amount else 0.0,
             'tax_rate': float(self.tax_rate) if self.tax_rate else 0.0,
             'tax_region': self.tax_region,

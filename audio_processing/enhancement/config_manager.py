@@ -11,7 +11,8 @@ Copyright: 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Unauthorized use, reproduction, 
 or distribution without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will be prosecuted to the full extent of the law.
-"""import json
+"""
+import json
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field, asdict
 from enum import Enum
@@ -25,7 +26,8 @@ from .quality_analyzer import QualityLevel
 
 
 class PresetCategory(Enum):
-    """Enhancement preset categories"""    MUSIC_PRODUCTION = "music_production"
+    """Enhancement preset categories"""
+    MUSIC_PRODUCTION = "music_production"
     PODCAST_BROADCAST = "podcast_broadcast" 
     VOICE_RECORDING = "voice_recording"
     LIVE_STREAMING = "live_streaming"
@@ -38,7 +40,8 @@ class PresetCategory(Enum):
 
 @dataclass
 class EnhancementPreset:
-    """Professional enhancement preset configuration"""    name: str
+    """Professional enhancement preset configuration"""
+    name: str
     category: PresetCategory
     description: str
     parameters: EnhancementParameters
@@ -51,7 +54,8 @@ class EnhancementPreset:
     author: str = "System"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert preset to dictionary"""        data = asdict(self)
+        """Convert preset to dictionary"""
+        data = asdict(self)
         data['category'] = self.category.value
         data['target_quality'] = self.target_quality.value
         data['content_types'] = [ct.value for ct in self.content_types]
@@ -59,7 +63,8 @@ class EnhancementPreset:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'EnhancementPreset':
-        """Create preset from dictionary"""        # Handle parameters
+        """Create preset from dictionary"""
+        # Handle parameters
         params_data = data.get('parameters', {})
         parameters = EnhancementParameters(**params_data)
         
@@ -85,7 +90,8 @@ class EnhancementPreset:
 
 @dataclass
 class AdaptiveConfig:
-    """Adaptive enhancement configuration"""    enable_content_detection: bool = True
+    """Adaptive enhancement configuration"""
+    enable_content_detection: bool = True
     enable_quality_monitoring: bool = True
     enable_performance_adaptation: bool = True
     
@@ -109,13 +115,16 @@ class AdaptiveConfig:
 
 
 class EnhancementConfigManager:
-    """    Professional Audio Enhancement Configuration Manager
+    """
+    Professional Audio Enhancement Configuration Manager
     
     Comprehensive configuration management system for audio enhancement,
     providing preset management, parameter validation, and adaptive processing.
-    """    
+    """
+    
     def __init__(self, config_dir: Optional[Union[str, Path]] = None):
-        """Initialize configuration manager"""        self.logger = logging.getLogger(__name__)
+        """Initialize configuration manager"""
+        self.logger = logging.getLogger(__name__)
         
         # Configuration directory
         if config_dir is None:
@@ -139,12 +148,14 @@ class EnhancementConfigManager:
         self.logger.info(f"Configuration manager initialized with {len(self.presets)} presets")
     
     def _load_default_presets(self):
-        """Load default enhancement presets"""        default_presets = self._create_default_presets()
+        """Load default enhancement presets"""
+        default_presets = self._create_default_presets()
         for preset in default_presets:
             self.presets[preset.name] = preset
     
     def _create_default_presets(self) -> List[EnhancementPreset]:
-        """Create default enhancement presets"""        presets = []
+        """Create default enhancement presets"""
+        presets = []
         
         # Music Production Preset
         music_params = EnhancementParameters(
@@ -311,17 +322,20 @@ class EnhancementConfigManager:
         return presets
     
     def get_preset(self, name: str) -> Optional[EnhancementPreset]:
-        """Get preset by name"""        return self.presets.get(name)
+        """Get preset by name"""
+        return self.presets.get(name)
     
     def list_presets(self, category: Optional[PresetCategory] = None) -> List[str]:
-        """List available presets, optionally filtered by category"""        if category is None:
+        """List available presets, optionally filtered by category"""
+        if category is None:
             return list(self.presets.keys())
         
         return [name for name, preset in self.presets.items() 
                 if preset.category == category]
     
     def add_preset(self, preset: EnhancementPreset, overwrite: bool = False):
-        """Add new preset"""        if preset.name in self.presets and not overwrite:
+        """Add new preset"""
+        if preset.name in self.presets and not overwrite:
             raise ValueError(f"Preset '{preset.name}' already exists. Use overwrite=True to replace.")
         
         preset.modified_timestamp = __import__('time').time()
@@ -330,7 +344,8 @@ class EnhancementConfigManager:
         self.logger.info(f"Added preset: {preset.name}")
     
     def update_preset(self, name: str, **kwargs):
-        """Update existing preset parameters"""        if name not in self.presets:
+        """Update existing preset parameters"""
+        if name not in self.presets:
             raise ValueError(f"Preset '{name}' not found")
         
         preset = self.presets[name]
@@ -348,14 +363,16 @@ class EnhancementConfigManager:
         self.logger.info(f"Updated preset: {name}")
     
     def delete_preset(self, name: str):
-        """Delete preset"""        if name not in self.presets:
+        """Delete preset"""
+        if name not in self.presets:
             raise ValueError(f"Preset '{name}' not found")
         
         del self.presets[name]
         self.logger.info(f"Deleted preset: {name}")
     
     def duplicate_preset(self, source_name: str, new_name: str) -> EnhancementPreset:
-        """Duplicate existing preset with new name"""        if source_name not in self.presets:
+        """Duplicate existing preset with new name"""
+        if source_name not in self.presets:
             raise ValueError(f"Source preset '{source_name}' not found")
         
         if new_name in self.presets:
@@ -381,7 +398,8 @@ class EnhancementConfigManager:
     
     def get_preset_for_content(self, content_type: ContentType, 
                               quality_target: Optional[QualityLevel] = None) -> Optional[EnhancementPreset]:
-        """Get best preset for specific content type and quality target"""        matching_presets = []
+        """Get best preset for specific content type and quality target"""
+        matching_presets = []
         
         for preset in self.presets.values():
             # Check content type match
@@ -416,7 +434,8 @@ class EnhancementConfigManager:
                                   base_preset: EnhancementPreset,
                                   content_analysis: Dict[str, Any],
                                   quality_metrics: Optional[Dict[str, float]] = None) -> EnhancementParameters:
-        """Create adaptive parameters based on content analysis and quality metrics"""        adapted_params = EnhancementParameters(**asdict(base_preset.parameters))
+        """Create adaptive parameters based on content analysis and quality metrics"""
+        adapted_params = EnhancementParameters(**asdict(base_preset.parameters))
         
         if not self.adaptive_config.enable_content_detection:
             return adapted_params
@@ -469,7 +488,8 @@ class EnhancementConfigManager:
         return adapted_params
     
     def save_presets(self):
-        """Save presets to file"""        try:
+        """Save presets to file"""
+        try:
             presets_data = {
                 name: preset.to_dict() 
                 for name, preset in self.presets.items()
@@ -485,7 +505,8 @@ class EnhancementConfigManager:
             raise
     
     def load_presets(self):
-        """Load presets from file"""        try:
+        """Load presets from file"""
+        try:
             if not self.presets_file.exists():
                 self.logger.info("No presets file found, using defaults only")
                 return
@@ -510,7 +531,8 @@ class EnhancementConfigManager:
             self.logger.error(f"Failed to load presets: {str(e)}")
     
     def save_adaptive_config(self):
-        """Save adaptive configuration to file"""        try:
+        """Save adaptive configuration to file"""
+        try:
             config_data = asdict(self.adaptive_config)
             
             with open(self.adaptive_config_file, 'w') as f:
@@ -523,7 +545,8 @@ class EnhancementConfigManager:
             raise
     
     def load_adaptive_config(self):
-        """Load adaptive configuration from file"""        try:
+        """Load adaptive configuration from file"""
+        try:
             if not self.adaptive_config_file.exists():
                 self.logger.info("No adaptive config file found, using defaults")
                 return
@@ -539,7 +562,8 @@ class EnhancementConfigManager:
             self.logger.error(f"Failed to load adaptive config: {str(e)}")
     
     def validate_parameters(self, parameters: EnhancementParameters) -> List[str]:
-        """Validate enhancement parameters and return any warnings"""        warnings = []
+        """Validate enhancement parameters and return any warnings"""
+        warnings = []
         
         # Check parameter ranges
         if not 0.0 <= parameters.noise_reduction_strength <= 1.0:
@@ -569,7 +593,8 @@ class EnhancementConfigManager:
         return warnings
     
     def get_preset_statistics(self) -> Dict[str, Any]:
-        """Get statistics about loaded presets"""        if not self.presets:
+        """Get statistics about loaded presets"""
+        if not self.presets:
             return {}
         
         categories = {}
@@ -602,7 +627,8 @@ class EnhancementConfigManager:
         }
     
     def export_preset(self, name: str, file_path: Union[str, Path]):
-        """Export single preset to file"""        if name not in self.presets:
+        """Export single preset to file"""
+        if name not in self.presets:
             raise ValueError(f"Preset '{name}' not found")
         
         preset_data = self.presets[name].to_dict()
@@ -613,7 +639,8 @@ class EnhancementConfigManager:
         self.logger.info(f"Exported preset '{name}' to {file_path}")
     
     def import_preset(self, file_path: Union[str, Path], overwrite: bool = False):
-        """Import preset from file"""        with open(file_path, 'r') as f:
+        """Import preset from file"""
+        with open(file_path, 'r') as f:
             preset_data = json.load(f)
         
         preset = EnhancementPreset.from_dict(preset_data)

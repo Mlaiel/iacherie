@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -22,7 +23,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -54,13 +56,16 @@ logger = logging.getLogger(__name__)
 
 
 class TestDataValidator:
-    """Test data validation functionality"""    
+    """Test data validation functionality"""
+    
     @pytest.fixture
     def data_validator(self):
-        """Create data validator for testing"""        return DataValidator()
+        """Create data validator for testing"""
+        return DataValidator()
     
     def test_basic_type_validation(self, data_validator):
-        """Test basic data type validation"""        # String validation
+        """Test basic data type validation"""
+        # String validation
         string_result = data_validator.validate_type("test_string", str)
         assert string_result.is_valid is True
         
@@ -89,7 +94,8 @@ class TestDataValidator:
         assert dict_result.is_valid is True
     
     def test_string_validation_rules(self, data_validator):
-        """Test string-specific validation rules"""        # Length validation
+        """Test string-specific validation rules"""
+        # Length validation
         min_length_result = data_validator.validate_string_length("test", min_length=3)
         assert min_length_result.is_valid is True
         
@@ -120,7 +126,8 @@ class TestDataValidator:
         assert non_alphanumeric_result.is_valid is False
     
     def test_numeric_validation_rules(self, data_validator):
-        """Test numeric validation rules"""        # Range validation
+        """Test numeric validation rules"""
+        # Range validation
         in_range_result = data_validator.validate_range(50, min_value=0, max_value=100)
         assert in_range_result.is_valid is True
         
@@ -145,7 +152,8 @@ class TestDataValidator:
         assert not_even_result.is_valid is False
     
     def test_collection_validation(self, data_validator):
-        """Test collection validation rules"""        # List validation
+        """Test collection validation rules"""
+        # List validation
         valid_list = [1, 2, 3, 4, 5]
         list_length_result = data_validator.validate_list_length(valid_list, min_length=3, max_length=10)
         assert list_length_result.is_valid is True
@@ -170,7 +178,8 @@ class TestDataValidator:
         assert missing_key_result.is_valid is False
     
     def test_date_time_validation(self, data_validator):
-        """Test date and time validation"""        # Date format validation
+        """Test date and time validation"""
+        # Date format validation
         valid_date_string = "2023-12-25"
         date_format_result = data_validator.validate_date_format(valid_date_string, "%Y-%m-%d")
         assert date_format_result.is_valid is True
@@ -199,9 +208,11 @@ class TestDataValidator:
         assert past_date_result.is_valid is False
     
     def test_custom_validation_rules(self, data_validator):
-        """Test custom validation rules"""        # Custom password validation
+        """Test custom validation rules"""
+        # Custom password validation
         def validate_strong_password(password):
-            """Validate password strength"""            if len(password) < 8:
+            """Validate password strength"""
+            if len(password) < 8:
                 return ValidationResult(False, "Password must be at least 8 characters long")
             
             if not re.search(r'[A-Z]', password):
@@ -231,7 +242,8 @@ class TestDataValidator:
         
         # Custom phone number validation
         def validate_phone_number(phone):
-            """Validate phone number format"""            phone_pattern = r'^\+?1?\d{9,15}$'
+            """Validate phone number format"""
+            phone_pattern = r'^\+?1?\d{9,15}$'
             if re.match(phone_pattern, phone):
                 return ValidationResult(True, "Valid phone number")
             return ValidationResult(False, "Invalid phone number format")
@@ -246,13 +258,16 @@ class TestDataValidator:
 
 
 class TestSchemaValidator:
-    """Test schema validation functionality"""    
+    """Test schema validation functionality"""
+    
     @pytest.fixture
     def schema_validator(self):
-        """Create schema validator for testing"""        return SchemaValidator()
+        """Create schema validator for testing"""
+        return SchemaValidator()
     
     def test_json_schema_validation(self, schema_validator):
-        """Test JSON schema validation"""        # Define user schema
+        """Test JSON schema validation"""
+        # Define user schema
         user_schema = {
             "type": "object",
             "properties": {
@@ -305,7 +320,8 @@ class TestSchemaValidator:
         assert "email" in invalid_result.error_message.lower()
     
     def test_nested_schema_validation(self, schema_validator):
-        """Test validation of nested schemas"""        # Define agent configuration schema
+        """Test validation of nested schemas"""
+        # Define agent configuration schema
         agent_config_schema = {
             "type": "object",
             "properties": {
@@ -367,7 +383,8 @@ class TestSchemaValidator:
         assert invalid_result.is_valid is False
     
     def test_schema_composition(self, schema_validator):
-        """Test schema composition with allOf, anyOf, oneOf"""        # Schema with allOf
+        """Test schema composition with allOf, anyOf, oneOf"""
+        # Schema with allOf
         all_of_schema = {
             "allOf": [
                 {"type": "object", "properties": {"name": {"type": "string"}}},
@@ -415,7 +432,8 @@ class TestSchemaValidator:
         assert ambiguous_result.is_valid is False
     
     def test_custom_format_validation(self, schema_validator):
-        """Test custom format validators"""        # Register custom UUID format validator
+        """Test custom format validators"""
+        # Register custom UUID format validator
         def validate_uuid_format(value):
             try:
                 UUID(value)
@@ -472,7 +490,8 @@ class TestSchemaValidator:
         assert valid_card_result.is_valid is True
     
     def test_schema_reference_resolution(self, schema_validator):
-        """Test schema reference resolution"""        # Define schemas with references
+        """Test schema reference resolution"""
+        # Define schemas with references
         address_schema = {
             "$id": "address",
             "type": "object",
@@ -515,13 +534,16 @@ class TestSchemaValidator:
 
 
 class TestBusinessRuleValidator:
-    """Test business rule validation functionality"""    
+    """Test business rule validation functionality"""
+    
     @pytest.fixture
     def business_validator(self):
-        """Create business rule validator for testing"""        return BusinessRuleValidator()
+        """Create business rule validator for testing"""
+        return BusinessRuleValidator()
     
     def test_simple_business_rules(self, business_validator):
-        """Test simple business rule validation"""        # Define age-based discount rule
+        """Test simple business rule validation"""
+        # Define age-based discount rule
         age_discount_rule = ValidationRule(
             name="age_discount_eligibility",
             description="Senior citizens (65+) are eligible for discount",
@@ -543,7 +565,8 @@ class TestBusinessRuleValidator:
         assert "65 or older" in ineligible_result.error_message
     
     def test_complex_business_rules(self, business_validator):
-        """Test complex business rule validation"""        # Define complex pricing rule
+        """Test complex business rule validation"""
+        # Define complex pricing rule
         pricing_rule = ValidationRule(
             name="bulk_pricing_rule",
             description="Bulk orders (100+ items) must have total value > $1000",
@@ -602,7 +625,8 @@ class TestBusinessRuleValidator:
         assert membership_result.is_valid is False
     
     def test_conditional_business_rules(self, business_validator):
-        """Test conditional business rules"""        # Define conditional shipping rule
+        """Test conditional business rules"""
+        # Define conditional shipping rule
         shipping_rule = ValidationRule(
             name="free_shipping_rule",
             description="Free shipping for orders over $50 or premium members",
@@ -657,7 +681,8 @@ class TestBusinessRuleValidator:
         assert no_shipping_result.is_valid is False
     
     def test_rule_groups(self, business_validator):
-        """Test business rule groups and priorities"""        # Define critical rules (must pass)
+        """Test business rule groups and priorities"""
+        # Define critical rules (must pass)
         critical_rule_1 = ValidationRule(
             name="age_verification",
             description="User must be 18 or older",
@@ -721,7 +746,8 @@ class TestBusinessRuleValidator:
         assert len(critical_fail_result.errors) >= 2  # Multiple critical failures
     
     def test_cross_field_validation(self, business_validator):
-        """Test cross-field business rule validation"""        # Define password confirmation rule
+        """Test cross-field business rule validation"""
+        # Define password confirmation rule
         password_confirmation_rule = ValidationRule(
             name="password_confirmation",
             description="Password and confirmation must match",
@@ -781,13 +807,16 @@ class TestBusinessRuleValidator:
 
 
 class TestIntegrityValidator:
-    """Test data integrity validation functionality"""    
+    """Test data integrity validation functionality"""
+    
     @pytest.fixture
     def integrity_validator(self):
-        """Create integrity validator for testing"""        return IntegrityValidator()
+        """Create integrity validator for testing"""
+        return IntegrityValidator()
     
     def test_referential_integrity(self, integrity_validator):
-        """Test referential integrity validation"""        # Mock database tables
+        """Test referential integrity validation"""
+        # Mock database tables
         users_table = [
             {"id": 1, "name": "John Doe", "email": "john@example.com"},
             {"id": 2, "name": "Jane Smith", "email": "jane@example.com"},
@@ -823,7 +852,8 @@ class TestIntegrityValidator:
         assert integrity_result.violations[0]["child_record"]["user_id"] == 4
     
     def test_uniqueness_constraints(self, integrity_validator):
-        """Test uniqueness constraint validation"""        # Mock user data with duplicate email
+        """Test uniqueness constraint validation"""
+        # Mock user data with duplicate email
         users_data = [
             {"id": 1, "name": "John Doe", "email": "john@example.com"},
             {"id": 2, "name": "Jane Smith", "email": "jane@example.com"},
@@ -850,7 +880,8 @@ class TestIntegrityValidator:
         assert uniqueness_result.violations[0]["field"] == "email"
     
     def test_data_consistency(self, integrity_validator):
-        """Test data consistency validation"""        # Mock order data with inconsistent totals
+        """Test data consistency validation"""
+        # Mock order data with inconsistent totals
         order_items = [
             {"order_id": 101, "product": "Widget A", "quantity": 2, "price": 25.0},
             {"order_id": 101, "product": "Widget B", "quantity": 1, "price": 50.0},
@@ -867,7 +898,8 @@ class TestIntegrityValidator:
         
         # Define consistency rule
         def validate_order_total_consistency():
-            """Validate that order totals match sum of item prices"""            violations = []
+            """Validate that order totals match sum of item prices"""
+            violations = []
             
             for order in orders:
                 order_id = order["id"]
@@ -901,7 +933,8 @@ class TestIntegrityValidator:
         assert consistency_result.violations[0]["order_id"] == 102
     
     def test_cascade_validation(self, integrity_validator):
-        """Test cascading integrity validation"""        # Mock hierarchical data (categories -> products -> orders)
+        """Test cascading integrity validation"""
+        # Mock hierarchical data (categories -> products -> orders)
         categories = [
             {"id": 1, "name": "Electronics"},
             {"id": 2, "name": "Books"}
@@ -952,7 +985,8 @@ class TestIntegrityValidator:
     
     @pytest.mark.performance
     def test_integrity_validation_performance(self, integrity_validator, assert_performance):
-        """Test integrity validation performance with large datasets"""        # Generate large dataset
+        """Test integrity validation performance with large datasets"""
+        # Generate large dataset
         large_users = [{"id": i, "email": f"user{i}@example.com"} for i in range(1000)]
         large_orders = [{"id": i + 1000, "user_id": (i % 1000) + 1, "total": 100.0} for i in range(5000)]
         
@@ -981,10 +1015,12 @@ class TestIntegrityValidator:
 
 
 class TestAsyncValidator:
-    """Test asynchronous validation functionality"""    
+    """Test asynchronous validation functionality"""
+    
     @pytest.fixture
     async def async_validator(self):
-        """Create async validator for testing"""        validator = AsyncValidator()
+        """Create async validator for testing"""
+        validator = AsyncValidator()
         await validator.initialize()
         
         yield validator
@@ -992,9 +1028,11 @@ class TestAsyncValidator:
         await validator.shutdown()
     
     async def test_async_validation_rules(self, async_validator):
-        """Test asynchronous validation rules"""        # Define async validation rule (simulating external API call)
+        """Test asynchronous validation rules"""
+        # Define async validation rule (simulating external API call)
         async def validate_email_deliverability(email):
-            """Simulate checking email deliverability via external service"""            await asyncio.sleep(0.1)  # Simulate network delay
+            """Simulate checking email deliverability via external service"""
+            await asyncio.sleep(0.1)  # Simulate network delay
             
             # Simple mock validation - reject emails from blocked domains
             blocked_domains = ["spam.com", "fake.net", "invalid.org"]
@@ -1017,9 +1055,11 @@ class TestAsyncValidator:
         assert "not deliverable" in blocked_result.error_message
     
     async def test_parallel_async_validation(self, async_validator):
-        """Test parallel execution of async validation rules"""        # Define multiple async validation rules
+        """Test parallel execution of async validation rules"""
+        # Define multiple async validation rules
         async def validate_username_availability(username):
-            """Simulate checking username availability"""            await asyncio.sleep(0.2)
+            """Simulate checking username availability"""
+            await asyncio.sleep(0.2)
             
             taken_usernames = ["admin", "root", "test", "user"]
             if username.lower() in taken_usernames:
@@ -1028,7 +1068,8 @@ class TestAsyncValidator:
             return ValidationResult(True, "Username is available")
         
         async def validate_phone_number_service(phone):
-            """Simulate validating phone number via service"""            await asyncio.sleep(0.15)
+            """Simulate validating phone number via service"""
+            await asyncio.sleep(0.15)
             
             # Simple validation - must start with country code
             if not phone.startswith("+"):
@@ -1060,9 +1101,11 @@ class TestAsyncValidator:
         assert all(result.is_valid for result in results.values())
     
     async def test_async_validation_with_timeout(self, async_validator):
-        """Test async validation with timeout handling"""        # Define slow validation rule
+        """Test async validation with timeout handling"""
+        # Define slow validation rule
         async def slow_validation(data):
-            """Simulate slow external validation"""            await asyncio.sleep(2.0)  # Intentionally slow
+            """Simulate slow external validation"""
+            await asyncio.sleep(2.0)  # Intentionally slow
             return ValidationResult(True, "Validation completed")
         
         async_validator.add_async_rule("slow_validation", slow_validation, timeout=1.0)
@@ -1072,9 +1115,11 @@ class TestAsyncValidator:
             await async_validator.validate_async_with_timeout("test_data", "slow_validation")
     
     async def test_async_validation_error_handling(self, async_validator):
-        """Test error handling in async validation"""        # Define validation rule that raises exception
+        """Test error handling in async validation"""
+        # Define validation rule that raises exception
         async def failing_validation(data):
-            """Validation that raises an exception"""            await asyncio.sleep(0.1)
+            """Validation that raises an exception"""
+            await asyncio.sleep(0.1)
             raise ValueError("Validation service unavailable")
         
         async_validator.add_async_rule("failing_validation", failing_validation)
@@ -1086,9 +1131,11 @@ class TestAsyncValidator:
         assert "unavailable" in result.error_message.lower()
     
     async def test_async_batch_validation(self, async_validator):
-        """Test batch validation of multiple items"""        # Define batch validation rule
+        """Test batch validation of multiple items"""
+        # Define batch validation rule
         async def validate_user_batch(users):
-            """Validate a batch of users"""            results = []
+            """Validate a batch of users"""
+            results = []
             
             for user in users:
                 await asyncio.sleep(0.05)  # Simulate processing time per user
@@ -1120,10 +1167,12 @@ class TestAsyncValidator:
 
 @pytest.mark.integration
 class TestValidationIntegration:
-    """Integration tests for complete validation system"""    
+    """Integration tests for complete validation system"""
+    
     @pytest.fixture
     async def complete_validator(self):
-        """Create complete validation system for integration testing"""        from ai.ai_agents.validate import ValidationSystem
+        """Create complete validation system for integration testing"""
+        from ai.ai_agents.validate import ValidationSystem
         
         system = ValidationSystem()
         await system.initialize()
@@ -1133,7 +1182,8 @@ class TestValidationIntegration:
         await system.shutdown()
     
     async def test_multi_layer_validation(self, complete_validator):
-        """Test multi-layer validation (data -> schema -> business -> integrity)"""        # Define user registration data
+        """Test multi-layer validation (data -> schema -> business -> integrity)"""
+        # Define user registration data
         registration_data = {
             "username": "johndoe",
             "email": "john.doe@example.com",
@@ -1158,7 +1208,8 @@ class TestValidationIntegration:
         assert validation_result.passed_layers == ["data", "schema", "business", "integrity"]
     
     async def test_validation_pipeline_with_failures(self, complete_validator):
-        """Test validation pipeline with failures at different layers"""        # Define invalid registration data
+        """Test validation pipeline with failures at different layers"""
+        # Define invalid registration data
         invalid_data = {
             "username": "admin",  # Business rule violation - reserved username
             "email": "invalid-email",  # Schema violation - invalid format
@@ -1181,7 +1232,8 @@ class TestValidationIntegration:
         assert "business" in validation_result.failed_layers
     
     async def test_conditional_validation_flows(self, complete_validator):
-        """Test conditional validation flows based on data type"""        # Test admin user registration (different rules)
+        """Test conditional validation flows based on data type"""
+        # Test admin user registration (different rules)
         admin_data = {
             "username": "admin_user",
             "email": "admin@company.com",
@@ -1218,7 +1270,8 @@ class TestValidationIntegration:
     
     @pytest.mark.performance
     async def test_validation_system_performance(self, complete_validator, assert_performance):
-        """Test performance of complete validation system"""        # Generate test data for performance testing
+        """Test performance of complete validation system"""
+        # Generate test data for performance testing
         test_users = []
         for i in range(100):
             test_users.append({

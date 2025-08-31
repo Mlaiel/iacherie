@@ -10,7 +10,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright © 2025 Fahed Mlaiel - All rights reserved
 WARNING: Any unauthorized copying, modification, distribution or use of this code
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
 from dataclasses import dataclass, field
@@ -45,7 +46,8 @@ from ..cache.redis_cache import RedisCache
 
 
 class SentimentPolarity(Enum):
-    """Sentiment polarity types"""    VERY_NEGATIVE = "very_negative"
+    """Sentiment polarity types"""
+    VERY_NEGATIVE = "very_negative"
     NEGATIVE = "negative"
     NEUTRAL = "neutral"
     POSITIVE = "positive"
@@ -53,7 +55,8 @@ class SentimentPolarity(Enum):
 
 
 class EmotionType(Enum):
-    """Emotion classification types"""    JOY = "joy"
+    """Emotion classification types"""
+    JOY = "joy"
     SADNESS = "sadness"
     ANGER = "anger"
     FEAR = "fear"
@@ -64,7 +67,8 @@ class EmotionType(Enum):
 
 
 class ContentSentimentCategory(Enum):
-    """Content-specific sentiment categories"""    ENGAGEMENT_POSITIVE = "engagement_positive"
+    """Content-specific sentiment categories"""
+    ENGAGEMENT_POSITIVE = "engagement_positive"
     ENGAGEMENT_NEGATIVE = "engagement_negative"
     BRAND_POSITIVE = "brand_positive"
     BRAND_NEGATIVE = "brand_negative"
@@ -76,7 +80,8 @@ class ContentSentimentCategory(Enum):
 
 @dataclass
 class SentimentScore:
-    """Sentiment score data structure"""    polarity: SentimentPolarity
+    """Sentiment score data structure"""
+    polarity: SentimentPolarity
     confidence: float
     raw_score: float
     emotion_scores: Dict[EmotionType, float]
@@ -86,7 +91,8 @@ class SentimentScore:
 
 @dataclass
 class SentimentAnalysis:
-    """Comprehensive sentiment analysis result"""    analysis_id: str
+    """Comprehensive sentiment analysis result"""
+    analysis_id: str
     content_id: str
     platform: str
     overall_sentiment: SentimentScore
@@ -110,7 +116,8 @@ class SentimentAnalysis:
 
 @dataclass
 class AudienceInsight:
-    """Audience insight from sentiment analysis"""    insight_id: str
+    """Audience insight from sentiment analysis"""
+    insight_id: str
     insight_type: str
     title: str
     description: str
@@ -124,7 +131,8 @@ class AudienceInsight:
 
 
 class SentimentAnalyzer:
-    """    Advanced sentiment analysis engine for creators
+    """
+    Advanced sentiment analysis engine for creators
     
     Provides comprehensive sentiment analysis including:
     - Multi-modal sentiment detection (text, emoji, context)
@@ -133,9 +141,11 @@ class SentimentAnalyzer:
     - Audience demographic sentiment analysis
     - Cross-platform sentiment comparison
     - Sentiment trend prediction and alerts
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize sentiment analyzer"""        self.config = config
+        """Initialize sentiment analyzer"""
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -167,7 +177,8 @@ class SentimentAnalyzer:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize sentiment analysis models"""        try:
+        """Initialize sentiment analysis models"""
+        try:
             # Ensure NLTK data is available
             try:
                 nltk.data.find('vader_lexicon')
@@ -252,7 +263,8 @@ class SentimentAnalyzer:
         include_audience_analysis: bool = True,
         platforms: List[str] = None
     ) -> SentimentAnalysis:
-        """        Perform comprehensive sentiment analysis on content
+        """
+        Perform comprehensive sentiment analysis on content
         
         Args:
             content_data: Content data including text, comments, engagement
@@ -262,7 +274,8 @@ class SentimentAnalyzer:
             
         Returns:
             Comprehensive sentiment analysis result
-        """        try:
+        """
+        try:
             content_id = content_data.get('content_id', 'unknown')
             platform = content_data.get('platform', 'unknown')
             
@@ -380,7 +393,8 @@ class SentimentAnalyzer:
             return self._create_fallback_analysis(content_data)
     
     async def _analyze_text_sentiment(self, text: str) -> SentimentScore:
-        """Analyze sentiment of text content"""        try:
+        """Analyze sentiment of text content"""
+        try:
             if not text or len(text.strip()) < self.min_text_length:
                 return self._create_neutral_sentiment()
             
@@ -441,7 +455,8 @@ class SentimentAnalyzer:
             return self._create_neutral_sentiment()
     
     async def _analyze_comments_sentiment(self, comments: List[Dict[str, Any]]) -> SentimentScore:
-        """Analyze sentiment of comments"""        try:
+        """Analyze sentiment of comments"""
+        try:
             if not comments:
                 return self._create_neutral_sentiment()
             
@@ -500,7 +515,8 @@ class SentimentAnalyzer:
             return self._create_neutral_sentiment()
     
     async def _analyze_audience_sentiment(self, content_id: str, platform: str) -> SentimentScore:
-        """Analyze general audience sentiment towards creator"""        try:
+        """Analyze general audience sentiment towards creator"""
+        try:
             # Get audience engagement data
             audience_data = await self.audience_analytics.get_audience_sentiment_data(
                 content_id, platform, timeframe='7d'
@@ -552,7 +568,8 @@ class SentimentAnalyzer:
             return self._create_neutral_sentiment()
     
     async def _analyze_brand_sentiment(self, text: str) -> SentimentScore:
-        """Analyze brand-specific sentiment"""        try:
+        """Analyze brand-specific sentiment"""
+        try:
             # Extract brand mentions
             brand_mentions = self._extract_brand_mentions(text)
             
@@ -593,7 +610,8 @@ class SentimentAnalyzer:
             return None
     
     async def _analyze_text_emotions(self, text: str) -> Dict[EmotionType, float]:
-        """Analyze emotions in text"""        try:
+        """Analyze emotions in text"""
+        try:
             if len(text.strip()) < self.min_text_length:
                 return {emotion: 0.0 for emotion in EmotionType}
             
@@ -629,7 +647,8 @@ class SentimentAnalyzer:
             return {emotion: 0.0 for emotion in EmotionType}
     
     def _extract_text_content(self, content_data: Dict[str, Any]) -> str:
-        """Extract text content from content data"""        text_parts = []
+        """Extract text content from content data"""
+        text_parts = []
         
         # Caption/description
         if content_data.get('caption'):
@@ -650,7 +669,8 @@ class SentimentAnalyzer:
         return ' '.join(text_parts)
     
     def _preprocess_text(self, text: str) -> str:
-        """Preprocess text for sentiment analysis"""        if not text:
+        """Preprocess text for sentiment analysis"""
+        if not text:
             return ""
         
         # Remove excessive whitespace
@@ -669,7 +689,8 @@ class SentimentAnalyzer:
         return text.strip()
     
     def _process_transformer_sentiment(self, result: Dict[str, Any]) -> Dict[str, float]:
-        """Process transformer model sentiment result"""        label = result['label'].upper()
+        """Process transformer model sentiment result"""
+        label = result['label'].upper()
         score = result['score']
         
         if 'POSITIVE' in label:
@@ -698,7 +719,8 @@ class SentimentAnalyzer:
             }
     
     def _convert_textblob_sentiment(self, textblob_result: Dict[str, float]) -> Dict[str, float]:
-        """Convert TextBlob sentiment to standard format"""        polarity = textblob_result['polarity']
+        """Convert TextBlob sentiment to standard format"""
+        polarity = textblob_result['polarity']
         
         if polarity > 0:
             positive = polarity
@@ -719,7 +741,8 @@ class SentimentAnalyzer:
         }
     
     def _analyze_emoji_sentiment(self, text: str) -> Optional[Dict[str, float]]:
-        """Analyze sentiment based on emojis"""        try:
+        """Analyze sentiment based on emojis"""
+        try:
             # Extract emojis from text
             emojis = [char for char in text if char in emoji.EMOJI_DATA]
             
@@ -756,7 +779,8 @@ class SentimentAnalyzer:
             return None
     
     def _ensemble_sentiment_scores(self, sentiment_scores: List[Dict[str, float]]) -> Dict[str, float]:
-        """Combine multiple sentiment scores using ensemble method"""        if not sentiment_scores:
+        """Combine multiple sentiment scores using ensemble method"""
+        if not sentiment_scores:
             return {'compound': 0.0, 'confidence': 0.0}
         
         # Weight different methods
@@ -786,7 +810,8 @@ class SentimentAnalyzer:
         }
     
     def _determine_polarity(self, compound_score: float) -> SentimentPolarity:
-        """Determine sentiment polarity from compound score"""        if compound_score >= 0.6:
+        """Determine sentiment polarity from compound score"""
+        if compound_score >= 0.6:
             return SentimentPolarity.VERY_POSITIVE
         elif compound_score >= 0.2:
             return SentimentPolarity.POSITIVE
@@ -798,7 +823,8 @@ class SentimentAnalyzer:
             return SentimentPolarity.NEUTRAL
     
     def _create_neutral_sentiment(self) -> SentimentScore:
-        """Create neutral sentiment score"""        return SentimentScore(
+        """Create neutral sentiment score"""
+        return SentimentScore(
             polarity=SentimentPolarity.NEUTRAL,
             confidence=0.5,
             raw_score=0.0,
@@ -808,7 +834,8 @@ class SentimentAnalyzer:
         )
     
     def _has_brand_mentions(self, text: str) -> bool:
-        """Check if text contains brand mentions"""        # Simple brand mention detection
+        """Check if text contains brand mentions"""
+        # Simple brand mention detection
         brand_patterns = [
             r'@\w+',  # Mentions
             r'#\w*brand\w*',  # Brand hashtags
@@ -822,7 +849,8 @@ class SentimentAnalyzer:
         return False
     
     def _extract_brand_mentions(self, text: str) -> List[str]:
-        """Extract brand mentions from text"""        mentions = []
+        """Extract brand mentions from text"""
+        mentions = []
         
         # Extract @ mentions
         at_mentions = re.findall(r'@(\w+)', text)
@@ -835,7 +863,8 @@ class SentimentAnalyzer:
         return list(set(mentions))  # Remove duplicates
     
     def _extract_brand_context(self, text: str, brand_mention: str) -> str:
-        """Extract context around brand mention"""        # Find the brand mention in text
+        """Extract context around brand mention"""
+        # Find the brand mention in text
         pattern = re.compile(re.escape(brand_mention), re.IGNORECASE)
         match = pattern.search(text)
         
@@ -849,7 +878,8 @@ class SentimentAnalyzer:
         return text[start:end]
     
     def _process_brand_sentiment_result(self, result: Dict[str, Any]) -> Dict[str, float]:
-        """Process brand sentiment model result"""        # This would depend on the specific model used
+        """Process brand sentiment model result"""
+        # This would depend on the specific model used
         # For now, use a simplified approach
         label = result.get('label', 'NEUTRAL')
         score = result.get('score', 0.5)
@@ -868,7 +898,8 @@ class SentimentAnalyzer:
         }
     
     def _create_fallback_analysis(self, content_data: Dict[str, Any]) -> SentimentAnalysis:
-        """Create fallback analysis when main analysis fails"""        return SentimentAnalysis(
+        """Create fallback analysis when main analysis fails"""
+        return SentimentAnalysis(
             analysis_id=self._generate_id(),
             content_id=content_data.get('content_id', 'unknown'),
             platform=content_data.get('platform', 'unknown'),
@@ -890,17 +921,21 @@ class SentimentAnalyzer:
         )
     
     def _generate_id(self) -> str:
-        """Generate unique ID"""        return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]
+        """Generate unique ID"""
+        return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]
 
 
 class AudienceInsightEngine:
-    """    Advanced audience insight engine using sentiment analysis
+    """
+    Advanced audience insight engine using sentiment analysis
     
     Generates actionable insights about audience behavior,
     preferences, and engagement patterns based on sentiment data.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize audience insight engine"""        self.config = config
+        """Initialize audience insight engine"""
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         self.sentiment_analyzer = SentimentAnalyzer(config)
@@ -911,7 +946,8 @@ class AudienceInsightEngine:
         timeframe: str = "30d",
         platforms: List[str] = None
     ) -> List[AudienceInsight]:
-        """        Generate audience insights based on sentiment analysis
+        """
+        Generate audience insights based on sentiment analysis
         
         Args:
             creator_id: Creator ID for analysis
@@ -920,7 +956,8 @@ class AudienceInsightEngine:
             
         Returns:
             List of audience insights
-        """        try:
+        """
+        try:
             self.logger.info(f"Generating audience insights for creator {creator_id}")
             
             # This would implement comprehensive audience insight generation
@@ -948,4 +985,5 @@ class AudienceInsightEngine:
             return []
     
     def _generate_id(self) -> str:
-        """Generate unique ID"""        return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]
+        """Generate unique ID"""
+        return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]

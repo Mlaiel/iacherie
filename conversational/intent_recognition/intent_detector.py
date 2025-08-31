@@ -11,7 +11,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import time
 from typing import Dict, List, Optional, Callable, AsyncGenerator, Any
 from dataclasses import dataclass, field
@@ -35,7 +36,8 @@ from .exceptions import ClassificationError
 
 
 class DetectionMode(Enum):
-    """Intent detection operation modes"""    REALTIME = "realtime"           # Sub-100ms response time
+    """Intent detection operation modes"""
+    REALTIME = "realtime"           # Sub-100ms response time
     BATCH = "batch"                 # Optimized for throughput
     STREAMING = "streaming"         # Continuous processing
     INTERACTIVE = "interactive"     # Conversational UI optimized
@@ -43,7 +45,8 @@ class DetectionMode(Enum):
 
 @dataclass
 class DetectionRequest:
-    """Intent detection request with metadata"""    text: str
+    """Intent detection request with metadata"""
+    text: str
     user_id: Optional[str] = None
     session_id: Optional[str] = None
     context: Optional[Dict[str, Any]] = None
@@ -56,7 +59,8 @@ class DetectionRequest:
 
 @dataclass
 class DetectionResponse:
-    """Intent detection response with performance metrics"""    request_id: str
+    """Intent detection response with performance metrics"""
+    request_id: str
     result: ClassificationResult
     processing_time_ms: float
     queue_time_ms: float = 0.0
@@ -66,7 +70,8 @@ class DetectionResponse:
 
 
 class RealTimeIntentProcessor:
-    """    High-performance real-time intent processing engine
+    """
+    High-performance real-time intent processing engine
     
     Features:
     - Sub-100ms response times for real-time detection
@@ -74,7 +79,8 @@ class RealTimeIntentProcessor:
     - Adaptive caching and precomputation
     - Performance monitoring and optimization
     - Graceful degradation under load
-    """    
+    """
+    
     def __init__(self, classifier: IntentClassifier, config: IntentRecognitionConfig):
         self.classifier = classifier
         self.config = config
@@ -103,7 +109,8 @@ class RealTimeIntentProcessor:
         self._start_background_processors()
     
     def _start_background_processors(self) -> None:
-        """Start background processing tasks"""        # Start request processors
+        """Start background processing tasks"""
+        # Start request processors
         for i in range(self.config.processor_threads):
             task = asyncio.create_task(self._process_requests())
             self.processing_tasks.append(task)
@@ -120,14 +127,16 @@ class RealTimeIntentProcessor:
         self,
         request: DetectionRequest
     ) -> DetectionResponse:
-        """        Asynchronously detect intent with performance optimization
+        """
+        Asynchronously detect intent with performance optimization
         
         Args:
             request: Detection request with input text and metadata
             
         Returns:
             Detection response with classification result and metrics
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Rate limiting check
@@ -188,7 +197,8 @@ class RealTimeIntentProcessor:
             )
     
     async def _process_realtime_request(self, request: DetectionRequest) -> DetectionResponse:
-        """Process high-priority real-time request immediately"""        try:
+        """Process high-priority real-time request immediately"""
+        try:
             # Use optimized fast-path classification
             result = await self.classifier.classify_intent(
                 text=request.text,
@@ -209,7 +219,8 @@ class RealTimeIntentProcessor:
             raise
     
     async def _process_requests(self) -> None:
-        """Background task to process queued requests"""        while True:
+        """Background task to process queued requests"""
+        while True:
             try:
                 # Get request from queue with timeout
                 request = await asyncio.wait_for(
@@ -250,7 +261,8 @@ class RealTimeIntentProcessor:
                 continue
     
     def _generate_cache_key(self, request: DetectionRequest) -> str:
-        """Generate cache key for request"""        key_components = [
+        """Generate cache key for request"""
+        key_components = [
             request.text.lower().strip(),
             request.user_id or "anonymous",
             str(request.mode.value)
@@ -264,7 +276,8 @@ class RealTimeIntentProcessor:
         return "|".join(key_components)
     
     def _get_cached_result(self, cache_key: str) -> Optional[ClassificationResult]:
-        """Retrieve cached classification result"""        try:
+        """Retrieve cached classification result"""
+        try:
             cached_entry = self.response_cache.get(cache_key)
             if cached_entry:
                 result, timestamp = cached_entry
@@ -288,7 +301,8 @@ class RealTimeIntentProcessor:
         result: ClassificationResult, 
         ttl: int
     ) -> None:
-        """Cache classification result"""        try:
+        """Cache classification result"""
+        try:
             # Prevent cache from growing too large
             if len(self.response_cache) >= self.config.max_cache_size:
                 # Remove oldest entries
@@ -307,7 +321,8 @@ class RealTimeIntentProcessor:
             self.logger.warning(f"Cache storage failed: {str(e)}")
     
     def _get_fallback_result(self) -> ClassificationResult:
-        """Get fallback result for failed classifications"""        from .intent_classifier import IntentConfidence
+        """Get fallback result for failed classifications"""
+        from .intent_classifier import IntentConfidence
         
         return ClassificationResult(
             primary_intent=IntentCategory.UNKNOWN,
@@ -322,7 +337,8 @@ class RealTimeIntentProcessor:
         request_id: str, 
         timeout_ms: int
     ) -> Optional[DetectionResponse]:
-        """Wait for background processing result"""        try:
+        """Wait for background processing result"""
+        try:
             start_time = time.time()
             timeout_seconds = timeout_ms / 1000.0
             
@@ -343,7 +359,8 @@ class RealTimeIntentProcessor:
             return None
     
     def _store_result(self, request_id: str, response: DetectionResponse) -> None:
-        """Store processing result for retrieval"""        # In production, this would use Redis or similar
+        """Store processing result for retrieval"""
+        # In production, this would use Redis or similar
         # For now, using in-memory storage with size limits
         if not hasattr(self, '_result_store'):
             self._result_store = {}
@@ -358,12 +375,14 @@ class RealTimeIntentProcessor:
         self._result_store[request_id] = response
     
     def _get_stored_result(self, request_id: str) -> Optional[DetectionResponse]:
-        """Retrieve stored processing result"""        if hasattr(self, '_result_store'):
+        """Retrieve stored processing result"""
+        if hasattr(self, '_result_store'):
             return self._result_store.get(request_id)
         return None
     
     async def _cleanup_cache(self) -> None:
-        """Background task to clean up expired cache entries"""        while True:
+        """Background task to clean up expired cache entries"""
+        while True:
             try:
                 await asyncio.sleep(self.config.cache_cleanup_interval_seconds)
                 
@@ -385,7 +404,8 @@ class RealTimeIntentProcessor:
                 await asyncio.sleep(60)  # Wait before retrying
     
     async def _collect_metrics(self) -> None:
-        """Background task to collect and report performance metrics"""        while True:
+        """Background task to collect and report performance metrics"""
+        while True:
             try:
                 await asyncio.sleep(self.config.metrics_interval_seconds)
                 
@@ -412,7 +432,8 @@ class RealTimeIntentProcessor:
                 await asyncio.sleep(60)  # Wait before retrying
     
     async def _update_performance_stats(self, response: DetectionResponse) -> None:
-        """Update performance statistics"""        try:
+        """Update performance statistics"""
+        try:
             stats = self.performance_stats
             stats['total_requests'] += 1
             
@@ -437,14 +458,16 @@ class RealTimeIntentProcessor:
 
 
 class IntentDetector(BaseService):
-    """    Main intent detection service with multiple operation modes
+    """
+    Main intent detection service with multiple operation modes
     
     Features:
     - Real-time and batch detection modes
     - Streaming intent processing for live conversations
     - Performance optimization and monitoring
     - Graceful degradation and error handling
-    """    
+    """
+    
     def __init__(self, config: IntentRecognitionConfig):
         super().__init__()
         self.config = config
@@ -458,7 +481,8 @@ class IntentDetector(BaseService):
         self.is_initialized = False
         
     async def initialize(self) -> None:
-        """Initialize the intent detection service"""        try:
+        """Initialize the intent detection service"""
+        try:
             self.logger.info("Initializing Intent Detection Service...")
             
             # Initialize classifier
@@ -481,7 +505,8 @@ class IntentDetector(BaseService):
         mode: DetectionMode = DetectionMode.REALTIME,
         timeout_ms: int = 500
     ) -> DetectionResponse:
-        """        Detect intent from input text
+        """
+        Detect intent from input text
         
         Args:
             text: Input text to analyze
@@ -493,7 +518,8 @@ class IntentDetector(BaseService):
             
         Returns:
             Detection response with classification result and metrics
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             await self.initialize()
         
         request = DetectionRequest(
@@ -514,7 +540,8 @@ class IntentDetector(BaseService):
         session_id: Optional[str] = None,
         context: Optional[Dict[str, Any]] = None
     ) -> AsyncGenerator[DetectionResponse, None]:
-        """        Process streaming text input for real-time intent detection
+        """
+        Process streaming text input for real-time intent detection
         
         Args:
             text_stream: Async generator of text chunks
@@ -524,7 +551,8 @@ class IntentDetector(BaseService):
             
         Yields:
             Detection responses for each text chunk
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             await self.initialize()
         
         accumulated_text = ""
@@ -571,7 +599,8 @@ class IntentDetector(BaseService):
                 self.logger.error(f"Final chunk detection error: {str(e)}")
     
     def _is_complete_thought(self, text: str) -> bool:
-        """Determine if text represents a complete thought for processing"""        # Simple heuristics for complete thoughts
+        """Determine if text represents a complete thought for processing"""
+        # Simple heuristics for complete thoughts
         text = text.strip()
         
         if len(text) < 3:
@@ -600,7 +629,8 @@ class IntentDetector(BaseService):
         contexts: Optional[List[Dict[str, Any]]] = None,
         timeout_ms: int = 5000
     ) -> List[DetectionResponse]:
-        """        Detect intents for multiple texts in batch mode
+        """
+        Detect intents for multiple texts in batch mode
         
         Args:
             texts: List of input texts
@@ -610,7 +640,8 @@ class IntentDetector(BaseService):
             
         Returns:
             List of detection responses
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             await self.initialize()
         
         # Prepare inputs
@@ -672,7 +703,8 @@ class IntentDetector(BaseService):
             ]
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get current performance metrics"""        return {
+        """Get current performance metrics"""
+        return {
             'service_initialized': self.is_initialized,
             'classifier_info': self.classifier.get_model_info(),
             'processor_stats': self.realtime_processor.performance_stats,
@@ -682,7 +714,8 @@ class IntentDetector(BaseService):
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform service health check"""        try:
+        """Perform service health check"""
+        try:
             # Test basic classification
             test_response = await self.detect_intent(
                 text="test intent detection",
@@ -712,7 +745,8 @@ class IntentDetector(BaseService):
             }
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown the service"""        try:
+        """Gracefully shutdown the service"""
+        try:
             self.logger.info("Shutting down Intent Detection Service...")
             
             # Cancel background tasks

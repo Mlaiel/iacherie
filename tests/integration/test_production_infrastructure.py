@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -12,7 +13,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 """Test implementation for production infrastructure components
-"""import asyncio
+"""
+import asyncio
 import sys
 import os
 
@@ -20,7 +22,8 @@ import os
 sys.path.insert(0, os.path.abspath('.'))
 
 async def test_monitoring_components():
-    """Test monitoring components"""    print("🔍 Testing Monitoring Components...")
+    """Test monitoring components"""
+    print("🔍 Testing Monitoring Components...")
     
     try:
         # Test revenue tracking
@@ -84,7 +87,8 @@ async def test_monitoring_components():
         traceback.print_exc()
 
 async def test_performance_profiler():
-    """Test performance profiler"""    print("\n⚡ Testing Performance Profiler...")
+    """Test performance profiler"""
+    print("\n⚡ Testing Performance Profiler...")
     
     try:
         from monitoring.profiling.performance_profiler import PerformanceProfiler, ProfilerType
@@ -93,7 +97,8 @@ async def test_performance_profiler():
         
         # Test function profiling
         def test_function():
-            """Test function for profiling"""            import time
+            """Test function for profiling"""
+            import time
             time.sleep(0.1)  # Simulate some work
             return "test result"
         
@@ -122,7 +127,8 @@ async def test_performance_profiler():
         traceback.print_exc()
 
 def test_security_hardening():
-    """Test security hardening"""    print("\n🔒 Testing Security Hardening...")
+    """Test security hardening"""
+    print("\n🔒 Testing Security Hardening...")
     
     try:
         # Test basic import and initialization
@@ -150,7 +156,8 @@ def test_security_hardening():
         traceback.print_exc()
 
 def test_alert_system():
-    """Test alert system"""    print("\n🚨 Testing Alert System...")
+    """Test alert system"""
+    print("\n🚨 Testing Alert System...")
     
     try:
         from monitoring.alerts.revenue_anomaly import RevenueAnomalyDetector, AnomalyType, AlertSeverity
@@ -170,7 +177,8 @@ def test_alert_system():
         traceback.print_exc()
 
 async def main():
-    """Main test function"""    print("🚀 Testing Production Infrastructure Implementation")
+    """Main test function"""
+    print("🚀 Testing Production Infrastructure Implementation")
     print("=" * 60)
     
     # Test monitoring components

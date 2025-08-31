@@ -28,7 +28,8 @@ Expertise combinée:
 - Audio/Vidéo: Détection de violations multimédia avancée
 - DevOps: Monitoring et alertes en temps réel des violations
 - IA Prompt Engineer: Génération automatique de notices légales
-"""import logging
+"""
+import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
@@ -40,7 +41,8 @@ from pydantic import BaseModel, Field, validator
 logger = logging.getLogger(__name__)
 
 class ViolationType(Enum):
-    """Types of content violations."""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Types of content violations."""
+    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     UNAUTHORIZED_USE = "unauthorized_use"
     CONTENT_THEFT = "content_theft"
@@ -52,14 +54,16 @@ class ViolationType(Enum):
     ATTRIBUTION_MISSING = "attribution_missing"
 
 class ViolationSeverity(Enum):
-    """Severity levels for violations."""    LOW = "low"
+    """Severity levels for violations."""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 class ViolationStatus(Enum):
-    """Status of violation cases."""    DETECTED = "detected"
+    """Status of violation cases."""
+    DETECTED = "detected"
     INVESTIGATING = "investigating"
     CONFIRMED = "confirmed"
     TAKEDOWN_REQUESTED = "takedown_requested"
@@ -70,7 +74,8 @@ class ViolationStatus(Enum):
     APPEALED = "appealed"
 
 class ActionType(Enum):
-    """Types of enforcement actions."""    DMCA_TAKEDOWN = "dmca_takedown"
+    """Types of enforcement actions."""
+    DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_AND_DESIST = "cease_and_desist"
     LEGAL_NOTICE = "legal_notice"
     PLATFORM_REPORT = "platform_report"
@@ -83,7 +88,8 @@ class ActionType(Enum):
 
 @dataclass
 class ViolationEvidence:
-    """Evidence for violation case."""    evidence_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Evidence for violation case."""
+    evidence_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     evidence_type: str = "screenshot"  # screenshot, video, document, fingerprint
     evidence_url: Optional[str] = None
     evidence_data: Optional[bytes] = None
@@ -95,7 +101,8 @@ class ViolationEvidence:
 
 @dataclass
 class LegalAction:
-    """Legal action taken for violation."""    action_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Legal action taken for violation."""
+    action_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     action_type: ActionType = ActionType.PLATFORM_REPORT
     action_date: datetime = field(default_factory=datetime.now)
     action_description: str = ""
@@ -113,7 +120,8 @@ class LegalAction:
 
 @dataclass
 class MonetizationImpact:
-    """Financial impact of violation."""    estimated_loss: float = 0.0
+    """Financial impact of violation."""
+    estimated_loss: float = 0.0
     currency: str = "EUR"
     lost_views: int = 0
     lost_revenue_period: Optional[timedelta] = None
@@ -123,11 +131,13 @@ class MonetizationImpact:
     roi_impact: Optional[float] = None
 
 class ViolationData(BaseModel):
-    """    Comprehensive violation data model.
+    """
+    Comprehensive violation data model.
     
     Represents content violations, evidence, legal actions,
     and enforcement for the IA-Influencer-Agent protection platform.
-    """    
+    """
+    
     # Basic violation information
     violation_id: str = Field(..., description="Unique violation identifier")
     content_id: str = Field(..., description="Original content identifier")
@@ -215,13 +225,16 @@ class ViolationData(BaseModel):
         return v
 
 class ViolationSerializer:
-    """    Advanced violation data serialization system.
+    """
+    Advanced violation data serialization system.
     
     Handles efficient serialization and deserialization of violation
     cases, evidence, legal actions, and enforcement tracking.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize violation serializer."""        self.evidence_compression_threshold = 1024 * 1024  # 1MB
+        """Initialize violation serializer."""
+        self.evidence_compression_threshold = 1024 * 1024  # 1MB
         self.max_evidence_size = 50 * 1024 * 1024  # 50MB
         
         logger.info("Violation serializer initialized")
@@ -232,7 +245,8 @@ class ViolationSerializer:
         include_evidence_data: bool = False,
         compress_evidence: bool = True
     ) -> Dict[str, Any]:
-        """        Serialize violation data to dictionary format.
+        """
+        Serialize violation data to dictionary format.
         
         Args:
             violation: Violation data to serialize
@@ -241,7 +255,8 @@ class ViolationSerializer:
             
         Returns:
             Serialized violation dictionary
-        """        try:
+        """
+        try:
             # Convert to dictionary
             data = violation.dict()
             
@@ -308,14 +323,16 @@ class ViolationSerializer:
         self,
         data: Dict[str, Any]
     ) -> ViolationData:
-        """        Deserialize violation data from dictionary format.
+        """
+        Deserialize violation data from dictionary format.
         
         Args:
             data: Serialized violation dictionary
             
         Returns:
             Deserialized ViolationData object
-        """        try:
+        """
+        try:
             # Handle datetime conversions
             datetime_fields = [
                 'detected_at', 'first_seen_at', 'last_seen_at',
@@ -364,7 +381,8 @@ class ViolationSerializer:
         violations: List[ViolationData],
         compact_mode: bool = True
     ) -> List[Dict[str, Any]]:
-        """Serialize multiple violations efficiently."""        try:
+        """Serialize multiple violations efficiently."""
+        try:
             serialized_list = []
             
             for violation in violations:
@@ -386,7 +404,8 @@ class ViolationSerializer:
         self,
         data_list: List[Dict[str, Any]]
     ) -> List[ViolationData]:
-        """Deserialize multiple violations efficiently."""        try:
+        """Deserialize multiple violations efficiently."""
+        try:
             violations = []
             
             for data in data_list:
@@ -406,7 +425,8 @@ class ViolationSerializer:
         include_data: bool = False,
         compress: bool = True
     ) -> Dict[str, Any]:
-        """Serialize violation evidence."""        data = {
+        """Serialize violation evidence."""
+        data = {
             'evidence_id': evidence.evidence_id,
             'evidence_type': evidence.evidence_type,
             'evidence_url': evidence.evidence_url,
@@ -436,7 +456,8 @@ class ViolationSerializer:
         return data
     
     def _deserialize_evidence(self, data: Dict[str, Any]) -> ViolationEvidence:
-        """Deserialize violation evidence."""        if isinstance(data.get('collected_at'), str):
+        """Deserialize violation evidence."""
+        if isinstance(data.get('collected_at'), str):
             data['collected_at'] = datetime.fromisoformat(data['collected_at'])
         
         # Handle binary evidence data
@@ -454,7 +475,8 @@ class ViolationSerializer:
         return ViolationEvidence(**data)
     
     def _serialize_legal_action(self, action: LegalAction) -> Dict[str, Any]:
-        """Serialize legal action."""        data = {
+        """Serialize legal action."""
+        data = {
             'action_id': action.action_id,
             'action_type': action.action_type.value,
             'action_date': action.action_date.isoformat(),
@@ -477,7 +499,8 @@ class ViolationSerializer:
         return data
     
     def _deserialize_legal_action(self, data: Dict[str, Any]) -> LegalAction:
-        """Deserialize legal action."""        if isinstance(data.get('action_date'), str):
+        """Deserialize legal action."""
+        if isinstance(data.get('action_date'), str):
             data['action_date'] = datetime.fromisoformat(data['action_date'])
         
         if isinstance(data.get('completed_at'), str):
@@ -489,7 +512,8 @@ class ViolationSerializer:
         return LegalAction(**data)
     
     def _serialize_monetization_impact(self, impact: MonetizationImpact) -> Dict[str, Any]:
-        """Serialize monetization impact."""        data = {
+        """Serialize monetization impact."""
+        data = {
             'estimated_loss': impact.estimated_loss,
             'currency': impact.currency,
             'lost_views': impact.lost_views,
@@ -505,13 +529,15 @@ class ViolationSerializer:
         return data
     
     def _deserialize_monetization_impact(self, data: Dict[str, Any]) -> MonetizationImpact:
-        """Deserialize monetization impact."""        if 'lost_revenue_period_days' in data:
+        """Deserialize monetization impact."""
+        if 'lost_revenue_period_days' in data:
             data['lost_revenue_period'] = timedelta(days=data.pop('lost_revenue_period_days'))
         
         return MonetizationImpact(**data)
     
     def _compress_evidence_data(self, data: bytes) -> str:
-        """Compress evidence data."""        try:
+        """Compress evidence data."""
+        try:
             import gzip
             import base64
             
@@ -525,7 +551,8 @@ class ViolationSerializer:
             return base64.b64encode(data).decode('utf-8')
     
     def _decompress_evidence_data(self, compressed_data: str) -> bytes:
-        """Decompress evidence data."""        try:
+        """Decompress evidence data."""
+        try:
             import gzip
             import base64
             
@@ -543,7 +570,8 @@ class ViolationSerializer:
             return base64.b64decode(compressed_data)
     
     def create_violation_summary(self, violation: ViolationData) -> Dict[str, Any]:
-        """Create compact summary of violation case."""        try:
+        """Create compact summary of violation case."""
+        try:
             summary = {
                 'violation_id': violation.violation_id,
                 'violation_type': violation.violation_type.value,
@@ -578,7 +606,8 @@ class ViolationSerializer:
         self,
         violations: List[ViolationData]
     ) -> Dict[str, Any]:
-        """Aggregate metrics across multiple violations."""        try:
+        """Aggregate metrics across multiple violations."""
+        try:
             if not violations:
                 return {}
             

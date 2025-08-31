@@ -15,7 +15,9 @@ Any unauthorized use is strictly prohibited.
 
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + 
 Microservices + Audio + DevOps + IA Prompt Engineer
-"""from .archival_manager import (
+"""
+
+from .archival_manager import (
     ArchivalManager,
     ArchivalPolicy,
     ArchivalStatus,

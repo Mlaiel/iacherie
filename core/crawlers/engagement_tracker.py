@@ -3,7 +3,8 @@ AI-Powered Social Media Engagement Monitoring and Analytics System
 
 This module provides comprehensive engagement tracking capabilities including
 real-time monitoring, sentiment analysis, influencer identification, and engagement optimization.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import json
 import logging
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class EngagementType(str, Enum):
-    """Types of engagement interactions"""    LIKE = "like"
+    """Types of engagement interactions"""
+    LIKE = "like"
     COMMENT = "comment"
     SHARE = "share"
     RETWEET = "retweet"
@@ -45,7 +47,8 @@ class EngagementType(str, Enum):
 
 
 class EngagementSentiment(str, Enum):
-    """Sentiment of engagement"""    VERY_POSITIVE = "very_positive"
+    """Sentiment of engagement"""
+    VERY_POSITIVE = "very_positive"
     POSITIVE = "positive"
     NEUTRAL = "neutral"
     NEGATIVE = "negative"
@@ -53,7 +56,8 @@ class EngagementSentiment(str, Enum):
 
 
 class EngagementSource(str, Enum):
-    """Source platforms for engagement"""    TWITTER = "twitter"
+    """Source platforms for engagement"""
+    TWITTER = "twitter"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
     LINKEDIN = "linkedin"
@@ -66,7 +70,8 @@ class EngagementSource(str, Enum):
 
 
 class UserType(str, Enum):
-    """Types of engaging users"""    REGULAR = "regular"
+    """Types of engaging users"""
+    REGULAR = "regular"
     VERIFIED = "verified"
     INFLUENCER = "influencer"
     CELEBRITY = "celebrity"
@@ -76,7 +81,8 @@ class UserType(str, Enum):
 
 
 class EngagementQuality(str, Enum):
-    """Quality levels of engagement"""    HIGH = "high"
+    """Quality levels of engagement"""
+    HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
     SPAM = "spam"
@@ -84,7 +90,8 @@ class EngagementQuality(str, Enum):
 
 
 class EngagementUser(BaseModel):
-    """User who performed engagement"""    user_id: str
+    """User who performed engagement"""
+    user_id: str
     username: str
     display_name: Optional[str] = None
     user_type: UserType
@@ -100,7 +107,8 @@ class EngagementUser(BaseModel):
 
 
 class EngagementInteraction(BaseModel):
-    """Individual engagement interaction"""    interaction_id: str
+    """Individual engagement interaction"""
+    interaction_id: str
     engagement_type: EngagementType
     user: EngagementUser
     content_id: str
@@ -131,7 +139,8 @@ class EngagementInteraction(BaseModel):
 
 
 class EngagementMetrics(BaseModel):
-    """Engagement metrics for a specific period"""    period_start: datetime
+    """Engagement metrics for a specific period"""
+    period_start: datetime
     period_end: datetime
     total_engagements: int
     unique_users: int
@@ -159,7 +168,8 @@ class EngagementMetrics(BaseModel):
 
 
 class EngagementTrend(BaseModel):
-    """Engagement trend analysis"""    trend_id: str
+    """Engagement trend analysis"""
+    trend_id: str
     trend_period: str
     trend_direction: str  # "increasing", "decreasing", "stable"
     trend_strength: float = Field(ge=0.0, le=1.0)
@@ -177,7 +187,8 @@ class EngagementTrend(BaseModel):
 
 
 class EngagementAlert(BaseModel):
-    """Engagement alert for significant events"""    alert_id: str
+    """Engagement alert for significant events"""
+    alert_id: str
     alert_type: str
     alert_level: str  # "low", "medium", "high", "critical"
     title: str
@@ -196,7 +207,8 @@ class EngagementAlert(BaseModel):
 
 
 class EngagementReport(BaseModel):
-    """Comprehensive engagement report"""    report_id: str
+    """Comprehensive engagement report"""
+    report_id: str
     report_period: str
     generation_timestamp: datetime
     
@@ -220,11 +232,13 @@ class EngagementReport(BaseModel):
 
 
 class AdvancedEngagementTracker(BaseCrawler):
-    """    Ultra-Advanced Engagement Tracker
+    """
+    Ultra-Advanced Engagement Tracker
     
     Provides comprehensive engagement tracking and analytics across multiple
     social media platforms with real-time monitoring and AI-powered insights.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -289,7 +303,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         platforms: List[EngagementSource] = None,
         tracking_duration: int = None
     ) -> bool:
-        """        Start engagement tracking for specified content and platforms
+        """
+        Start engagement tracking for specified content and platforms
         
         Args:
             content_ids: List of content IDs to track
@@ -298,7 +313,8 @@ class AdvancedEngagementTracker(BaseCrawler):
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             self.tracking_active = True
             self.last_tracking_timestamp = datetime.utcnow()
             
@@ -329,11 +345,13 @@ class AdvancedEngagementTracker(BaseCrawler):
             return False
 
     async def stop_tracking(self) -> bool:
-        """        Stop engagement tracking
+        """
+        Stop engagement tracking
         
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             self.tracking_active = False
             
             # Cancel all tracking tasks
@@ -356,7 +374,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         start_time: datetime = None,
         end_time: datetime = None
     ) -> EngagementMetrics:
-        """        Get engagement metrics for specified criteria
+        """
+        Get engagement metrics for specified criteria
         
         Args:
             content_id: Specific content ID to analyze
@@ -366,7 +385,8 @@ class AdvancedEngagementTracker(BaseCrawler):
             
         Returns:
             EngagementMetrics: Comprehensive engagement metrics
-        """        try:
+        """
+        try:
             end_time = end_time or datetime.utcnow()
             start_time = start_time or (end_time - timedelta(hours=24))
             
@@ -397,7 +417,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         platform: EngagementSource = None,
         analysis_period: str = "24h"
     ) -> List[EngagementTrend]:
-        """        Analyze engagement trends over time
+        """
+        Analyze engagement trends over time
         
         Args:
             content_id: Specific content ID to analyze
@@ -406,7 +427,8 @@ class AdvancedEngagementTracker(BaseCrawler):
             
         Returns:
             List[EngagementTrend]: Detected engagement trends
-        """        try:
+        """
+        try:
             # Get historical engagement data
             historical_data = await self._get_historical_engagement_data(
                 content_id, platform, analysis_period
@@ -426,7 +448,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         report_period: str = "24h",
         include_predictions: bool = True
     ) -> EngagementReport:
-        """        Generate comprehensive engagement report
+        """
+        Generate comprehensive engagement report
         
         Args:
             report_period: Period for report generation
@@ -434,7 +457,8 @@ class AdvancedEngagementTracker(BaseCrawler):
             
         Returns:
             EngagementReport: Comprehensive engagement report
-        """        try:
+        """
+        try:
             report_id = hashlib.md5(f"{report_period}_{datetime.utcnow()}".encode()).hexdigest()
             
             # Calculate period timestamps
@@ -513,7 +537,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         minimum_influence_score: float = 0.7,
         minimum_follower_count: int = 10000
     ) -> List[EngagementUser]:
-        """        Identify influential users based on engagement patterns
+        """
+        Identify influential users based on engagement patterns
         
         Args:
             minimum_influence_score: Minimum influence score threshold
@@ -521,7 +546,8 @@ class AdvancedEngagementTracker(BaseCrawler):
             
         Returns:
             List[EngagementUser]: List of identified influencers
-        """        try:
+        """
+        try:
             influencers = []
             
             for user_id, user_data in self.user_profiles.items():
@@ -546,7 +572,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         content_id: str = None,
         sensitivity: float = 0.8
     ) -> List[EngagementAlert]:
-        """        Detect engagement anomalies and generate alerts
+        """
+        Detect engagement anomalies and generate alerts
         
         Args:
             content_id: Specific content ID to analyze
@@ -554,7 +581,8 @@ class AdvancedEngagementTracker(BaseCrawler):
             
         Returns:
             List[EngagementAlert]: List of detected anomalies
-        """        try:
+        """
+        try:
             alerts = []
             
             # Get recent engagement data
@@ -590,7 +618,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         platform: EngagementSource,
         content_ids: List[str]
     ):
-        """Track engagement for a specific platform"""        try:
+        """Track engagement for a specific platform"""
+        try:
             while self.tracking_active:
                 await self.rate_limiters[platform.value].acquire()
                 
@@ -610,7 +639,8 @@ class AdvancedEngagementTracker(BaseCrawler):
             logger.error(f"Error tracking platform {platform.value}: {str(e)}")
 
     async def _real_time_monitoring_loop(self, duration: int = None):
-        """Real-time monitoring loop"""        try:
+        """Real-time monitoring loop"""
+        try:
             start_time = datetime.utcnow()
             
             while self.tracking_active:
@@ -640,7 +670,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         platform: EngagementSource,
         content_ids: List[str]
     ) -> List[EngagementInteraction]:
-        """Fetch engagements from specific platform"""        engagements = []
+        """Fetch engagements from specific platform"""
+        engagements = []
         
         try:
             # Platform-specific API calls (simplified)
@@ -658,15 +689,18 @@ class AdvancedEngagementTracker(BaseCrawler):
         return engagements
 
     async def _fetch_twitter_engagements(self, content_ids: List[str]) -> List[EngagementInteraction]:
-        """Fetch Twitter engagements (simplified implementation)"""        # Simulate Twitter API response
+        """Fetch Twitter engagements (simplified implementation)"""
+        # Simulate Twitter API response
         return await self._create_sample_engagements(EngagementSource.TWITTER, content_ids)
 
     async def _fetch_instagram_engagements(self, content_ids: List[str]) -> List[EngagementInteraction]:
-        """Fetch Instagram engagements (simplified implementation)"""        # Simulate Instagram API response
+        """Fetch Instagram engagements (simplified implementation)"""
+        # Simulate Instagram API response
         return await self._create_sample_engagements(EngagementSource.INSTAGRAM, content_ids)
 
     async def _fetch_facebook_engagements(self, content_ids: List[str]) -> List[EngagementInteraction]:
-        """Fetch Facebook engagements (simplified implementation)"""        # Simulate Facebook API response
+        """Fetch Facebook engagements (simplified implementation)"""
+        # Simulate Facebook API response
         return await self._create_sample_engagements(EngagementSource.FACEBOOK, content_ids)
 
     async def _create_sample_engagements(
@@ -674,7 +708,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         platform: EngagementSource,
         content_ids: List[str]
     ) -> List[EngagementInteraction]:
-        """Create sample engagements for testing"""        engagements = []
+        """Create sample engagements for testing"""
+        engagements = []
         
         engagement_types = [EngagementType.LIKE, EngagementType.COMMENT, EngagementType.SHARE]
         sentiments = [EngagementSentiment.POSITIVE, EngagementSentiment.NEUTRAL, EngagementSentiment.NEGATIVE]
@@ -707,7 +742,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         return engagements
 
     async def _process_engagement(self, engagement: EngagementInteraction):
-        """Process and store individual engagement"""        try:
+        """Process and store individual engagement"""
+        try:
             # Store engagement data
             self.engagement_data[engagement.content_id].append(engagement)
             
@@ -743,7 +779,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         start_time: datetime,
         end_time: datetime
     ) -> List[EngagementInteraction]:
-        """Filter engagements based on criteria"""        filtered = []
+        """Filter engagements based on criteria"""
+        filtered = []
         
         for cid, engagements in self.engagement_data.items():
             if content_id and cid != content_id:
@@ -766,7 +803,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         start_time: datetime,
         end_time: datetime
     ) -> EngagementMetrics:
-        """Calculate comprehensive engagement metrics"""        if not engagements:
+        """Calculate comprehensive engagement metrics"""
+        if not engagements:
             return EngagementMetrics(
                 period_start=start_time,
                 period_end=end_time,
@@ -832,7 +870,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         platform: EngagementSource,
         period: str
     ) -> List[Dict[str, Any]]:
-        """Get historical engagement data for trend analysis"""        # Simplified historical data generation
+        """Get historical engagement data for trend analysis"""
+        # Simplified historical data generation
         hours = self._parse_period_hours(period)
         data_points = []
         
@@ -850,7 +889,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         return data_points
 
     async def _analyze_trends(self, historical_data: List[Dict[str, Any]]) -> List[EngagementTrend]:
-        """Analyze engagement trends from historical data"""        if len(historical_data) < 3:
+        """Analyze engagement trends from historical data"""
+        if len(historical_data) < 3:
             return []
         
         engagement_counts = [d['engagement_count'] for d in historical_data]
@@ -895,7 +935,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         start_time: datetime,
         end_time: datetime
     ) -> List[Dict[str, Any]]:
-        """Get top performing content in the period"""        content_performance = []
+        """Get top performing content in the period"""
+        content_performance = []
         
         for content_id, perf in self.content_performance.items():
             content_performance.append({
@@ -916,7 +957,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         start_time: datetime,
         end_time: datetime
     ) -> List[Dict[str, Any]]:
-        """Analyze influencer engagement patterns"""        influencer_analysis = []
+        """Analyze influencer engagement patterns"""
+        influencer_analysis = []
         
         for user_id, user_data in self.user_profiles.items():
             if user_data.get('user_type') == UserType.INFLUENCER:
@@ -946,7 +988,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         metrics: EngagementMetrics,
         trends: List[EngagementTrend]
     ) -> List[str]:
-        """Generate key insights from metrics and trends"""        insights = []
+        """Generate key insights from metrics and trends"""
+        insights = []
         
         if metrics.total_engagements > 1000:
             insights.append("High engagement volume detected - content is performing well")
@@ -967,7 +1010,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         self,
         metrics: EngagementMetrics
     ) -> List[str]:
-        """Generate optimization recommendations"""        recommendations = []
+        """Generate optimization recommendations"""
+        recommendations = []
         
         if metrics.average_quality_score < 0.7:
             recommendations.append("Focus on improving content quality to increase engagement")
@@ -982,7 +1026,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         return recommendations
 
     async def _identify_risk_factors(self, metrics: EngagementMetrics) -> List[str]:
-        """Identify potential risk factors"""        risks = []
+        """Identify potential risk factors"""
+        risks = []
         
         if metrics.bot_detection_rate > 0.2:
             risks.append("High bot activity detected - potential artificial engagement")
@@ -998,7 +1043,8 @@ class AdvancedEngagementTracker(BaseCrawler):
         return risks
 
     def _parse_period_hours(self, period: str) -> int:
-        """Parse period string to hours"""        if period.endswith('h'):
+        """Parse period string to hours"""
+        if period.endswith('h'):
             return int(period[:-1])
         elif period.endswith('d'):
             return int(period[:-1]) * 24
@@ -1008,47 +1054,58 @@ class AdvancedEngagementTracker(BaseCrawler):
             return 24  # Default to 24 hours
 
     async def _perform_real_time_analysis(self):
-        """Perform real-time engagement analysis"""        # Implementation for real-time analysis
+        """Perform real-time engagement analysis"""
+        # Implementation for real-time analysis
         pass
 
     async def _check_alert_conditions(self):
-        """Check for alert conditions"""        # Implementation for alert checking
+        """Check for alert conditions"""
+        # Implementation for alert checking
         pass
 
     async def _update_real_time_metrics(self):
-        """Update real-time metrics"""        # Implementation for real-time metrics updates
+        """Update real-time metrics"""
+        # Implementation for real-time metrics updates
         pass
 
     async def _get_recent_engagements(self, content_id: str = None) -> List[EngagementInteraction]:
-        """Get recent engagements for anomaly detection"""        recent_time = datetime.utcnow() - timedelta(hours=1)
+        """Get recent engagements for anomaly detection"""
+        recent_time = datetime.utcnow() - timedelta(hours=1)
         return await self._filter_engagements(content_id, None, recent_time, datetime.utcnow())
 
     async def _detect_engagement_spikes(self, engagements: List[EngagementInteraction]) -> List[EngagementAlert]:
-        """Detect engagement spikes"""        # Implementation for spike detection
+        """Detect engagement spikes"""
+        # Implementation for spike detection
         return []
 
     async def _detect_bot_activity(self, engagements: List[EngagementInteraction]) -> List[EngagementAlert]:
-        """Detect bot activity"""        # Implementation for bot detection
+        """Detect bot activity"""
+        # Implementation for bot detection
         return []
 
     async def _detect_sentiment_anomalies(self, engagements: List[EngagementInteraction]) -> List[EngagementAlert]:
-        """Detect sentiment anomalies"""        # Implementation for sentiment anomaly detection
+        """Detect sentiment anomalies"""
+        # Implementation for sentiment anomaly detection
         return []
 
     async def _detect_spam_patterns(self, engagements: List[EngagementInteraction]) -> List[EngagementAlert]:
-        """Detect spam patterns"""        # Implementation for spam detection
+        """Detect spam patterns"""
+        # Implementation for spam detection
         return []
 
     async def _get_active_alerts(self) -> List[EngagementAlert]:
-        """Get currently active alerts"""        # Implementation for active alerts
+        """Get currently active alerts"""
+        # Implementation for active alerts
         return []
 
     async def _get_resolved_alerts(self, start_time: datetime, end_time: datetime) -> List[EngagementAlert]:
-        """Get resolved alerts in period"""        # Implementation for resolved alerts
+        """Get resolved alerts in period"""
+        # Implementation for resolved alerts
         return []
 
     async def close(self):
-        """Close tracker and cleanup resources"""        try:
+        """Close tracker and cleanup resources"""
+        try:
             await self.stop_tracking()
             await self.cache_manager.close()
             await super().close()

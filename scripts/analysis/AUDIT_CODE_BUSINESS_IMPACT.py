@@ -4,7 +4,8 @@ Outil d'audit professionnel pour classifier et prioriser le code par impact mét
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import os
+"""
+import os
 import re
 import json
 from pathlib import Path
@@ -14,14 +15,16 @@ from enum import Enum
 import datetime
 
 class BusinessImpact(Enum):
-    """Classification d'impact métier"""    CRITICAL = "CRITIQUE"           # Impact direct sur revenus/core business
+    """Classification d'impact métier"""
+    CRITICAL = "CRITIQUE"           # Impact direct sur revenus/core business
     HIGH = "ÉLEVÉ"                 # Important pour fonctionnalités principales
     MEDIUM = "MOYEN"               # Support aux fonctionnalités business
     LOW = "FAIBLE"                 # Infrastructure/utilitaires
     UNKNOWN = "INCONNU"            # Non classifié
 
 class CodeType(Enum):
-    """Type de code identifié"""    BUSINESS_LOGIC = "LOGIQUE_MÉTIER"
+    """Type de code identifié"""
+    BUSINESS_LOGIC = "LOGIQUE_MÉTIER"
     AI_AGENT = "AGENT_IA"
     MONETIZATION = "MONÉTISATION"
     PROTECTION = "PROTECTION"
@@ -34,14 +37,16 @@ class CodeType(Enum):
 
 @dataclass
 class CodeIssue:
-    """Problème de code identifié"""    type: str  # TODO, FIXME, HACK, etc.
+    """Problème de code identifié"""
+    type: str  # TODO, FIXME, HACK, etc.
     line_number: int
     content: str
     severity: str
 
 @dataclass
 class FileAnalysis:
-    """Analyse d'un fichier"""    file_path: str
+    """Analyse d'un fichier"""
+    file_path: str
     business_impact: BusinessImpact
     code_type: CodeType
     line_count: int
@@ -51,7 +56,8 @@ class FileAnalysis:
     revenue_impact: str        # Description impact revenus
 
 class CodeAuditor:
-    """Auditeur de code professionnel"""    
+    """Auditeur de code professionnel"""
+    
     def __init__(self, repo_path: str):
         self.repo_path = Path(repo_path)
         self.files_analyzed = 0
@@ -98,7 +104,8 @@ class CodeAuditor:
         }
         
     def classify_file(self, file_path: str) -> Tuple[BusinessImpact, CodeType]:
-        """Classifie un fichier selon son impact métier"""        relative_path = file_path.replace(str(self.repo_path), '')
+        """Classifie un fichier selon son impact métier"""
+        relative_path = file_path.replace(str(self.repo_path), '')
         
         for pattern, (impact, code_type) in self.business_patterns.items():
             if re.match(pattern, relative_path, re.IGNORECASE):
@@ -108,7 +115,8 @@ class CodeAuditor:
     
     def calculate_business_value_score(self, file_path: str, impact: BusinessImpact, 
                                      code_type: CodeType, content: str) -> int:
-        """Calcule un score de valeur métier (1-100)"""        base_scores = {
+        """Calcule un score de valeur métier (1-100)"""
+        base_scores = {
             BusinessImpact.CRITICAL: 90,
             BusinessImpact.HIGH: 70,
             BusinessImpact.MEDIUM: 50,
@@ -138,7 +146,8 @@ class CodeAuditor:
         return min(100, score)
     
     def analyze_file_content(self, file_path: str) -> Tuple[str, List[CodeIssue], int]:
-        """Analyse le contenu d'un fichier"""        try:
+        """Analyse le contenu d'un fichier"""
+        try:
             with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
                 content = f.read()
                 
@@ -164,7 +173,8 @@ class CodeAuditor:
             return "", [], 0
     
     def calculate_complexity(self, content: str) -> int:
-        """Calcule un score de complexité basique"""        if not content:
+        """Calcule un score de complexité basique"""
+        if not content:
             return 0
             
         # Compteurs de complexité
@@ -180,7 +190,8 @@ class CodeAuditor:
         return complexity
     
     def get_revenue_impact_description(self, impact: BusinessImpact, code_type: CodeType) -> str:
-        """Génère une description de l'impact sur les revenus"""        descriptions = {
+        """Génère une description de l'impact sur les revenus"""
+        descriptions = {
             (BusinessImpact.CRITICAL, CodeType.MONETIZATION): "Impact direct: gestion paiements/revenus créateurs",
             (BusinessImpact.CRITICAL, CodeType.AI_AGENT): "Différenciateur métier: IA unique pour créateurs",
             (BusinessImpact.CRITICAL, CodeType.PROTECTION): "Valeur core: protection contenu = rétention clients",
@@ -196,7 +207,8 @@ class CodeAuditor:
         return descriptions.get(key, f"Impact {impact.value.lower()}: {code_type.value.lower()}")
     
     def scan_repository(self) -> List[FileAnalysis]:
-        """Scanne tout le repository"""        print(f"🔍 Début audit repository: {self.repo_path}")
+        """Scanne tout le repository"""
+        print(f"🔍 Début audit repository: {self.repo_path}")
         results = []
         
         # Trouver tous les fichiers Python
@@ -238,7 +250,8 @@ class CodeAuditor:
         return results
     
     def generate_report(self, analyses: List[FileAnalysis]) -> Dict:
-        """Génère un rapport complet d'audit"""        
+        """Génère un rapport complet d'audit"""
+        
         # Statistiques globales
         total_files = len(analyses)
         total_lines = sum(a.line_count for a in analyses)
@@ -334,7 +347,8 @@ class CodeAuditor:
         return report
     
     def calculate_revenue_impact_summary(self, analyses: List[FileAnalysis]) -> Dict:
-        """Calcule un résumé d'impact sur les revenus"""        
+        """Calcule un résumé d'impact sur les revenus"""
+        
         critical_files = [a for a in analyses if a.business_impact == BusinessImpact.CRITICAL]
         high_files = [a for a in analyses if a.business_impact == BusinessImpact.HIGH]
         
@@ -357,7 +371,8 @@ class CodeAuditor:
         }
     
     def generate_recommendations(self, analyses: List[FileAnalysis]) -> List[Dict]:
-        """Génère des recommandations priorisées"""        
+        """Génère des recommandations priorisées"""
+        
         recommendations = []
         
         # 1. Fichiers critiques avec issues
@@ -420,7 +435,8 @@ class CodeAuditor:
         return recommendations
 
 def main():
-    """Fonction principale d'audit"""    
+    """Fonction principale d'audit"""
+    
     print("🔍 AUDIT CODE BUSINESS vs UTILITAIRES - DÉMARRAGE")
     print("=" * 60)
     

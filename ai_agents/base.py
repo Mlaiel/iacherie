@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import uuid
@@ -88,7 +89,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class AgentStatus(Enum):
-    """Agent operational status levels"""    INITIALIZING = "initializing"
+    """Agent operational status levels"""
+    INITIALIZING = "initializing"
     ACTIVE = "active"
     BUSY = "busy"
     MAINTENANCE = "maintenance"
@@ -96,14 +98,16 @@ class AgentStatus(Enum):
     SHUTDOWN = "shutdown"
 
 class AgentPriority(Enum):
-    """Request processing priority levels"""    LOW = 1
+    """Request processing priority levels"""
+    LOW = 1
     NORMAL = 2
     HIGH = 3
     URGENT = 4
     CRITICAL = 5
 
 class ResourceType(Enum):
-    """System resource types for monitoring"""    CPU = "cpu"
+    """System resource types for monitoring"""
+    CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
     NETWORK = "network"
@@ -112,7 +116,8 @@ class ResourceType(Enum):
 
 @dataclass
 class AgentMetrics:
-    """Comprehensive agent performance metrics"""    total_requests: int = 0
+    """Comprehensive agent performance metrics"""
+    total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
     average_response_time: float = 0.0
@@ -125,7 +130,8 @@ class AgentMetrics:
     
 @dataclass
 class AgentRequest:
-    """Standardized request format for all agents"""    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Standardized request format for all agents"""
+    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: Optional[str] = None
     tenant_id: Optional[str] = None
     action: str = ""
@@ -141,7 +147,8 @@ class AgentRequest:
 
 @dataclass
 class AgentResponse:
-    """Standardized response format for all agents"""    success: bool
+    """Standardized response format for all agents"""
+    success: bool
     request_id: str = ""
     data: Optional[Dict[str, Any]] = None
     message: str = ""
@@ -157,7 +164,8 @@ class AgentResponse:
     additional_info: Dict[str, Any] = field(default_factory=dict)
 
 class BaseAgent(ABC):
-    """    Ultra-advanced abstract base class for all AI agents with enterprise-level capabilities.
+    """
+    Ultra-advanced abstract base class for all AI agents with enterprise-level capabilities.
     
     Features:
     - Comprehensive monitoring and metrics collection
@@ -168,7 +176,8 @@ class BaseAgent(ABC):
     - Error handling with retry mechanisms
     - Performance profiling and optimization
     - Audit logging and compliance tracking
-    """    
+    """
+    
     # Prometheus metrics (with fallbacks)
     if Counter is not None:
         REQUEST_COUNT = Counter('agent_requests_total', 'Total agent requests', ['agent_type', 'status'])
@@ -187,15 +196,18 @@ class BaseAgent(ABC):
                 return self
                 
             def inc(self): 
-                """Increment counter metric for monitoring agent performance"""                self._value += 1
+                """Increment counter metric for monitoring agent performance"""
+                self._value += 1
                 logging.debug(f"MockMetric incremented to {self._value} with labels {self._labels}")
                 
             def observe(self, value): 
-                """Observe histogram value for performance tracking"""                self._observations.append(value)
+                """Observe histogram value for performance tracking"""
+                self._observations.append(value)
                 logging.debug(f"MockMetric observed value {value}, total observations: {len(self._observations)}")
                 
             def set(self, value): 
-                """Set gauge value for real-time monitoring"""                self._value = value
+                """Set gauge value for real-time monitoring"""
+                self._value = value
                 logging.debug(f"MockMetric set to {value} with labels {self._labels}")
         
         REQUEST_COUNT = MockMetric()
@@ -246,7 +258,8 @@ class BaseAgent(ABC):
         logger.info(f"Agent {self.agent_type}:{self.agent_id} initialized")
         
     async def initialize(self) -> bool:
-        """Initialize agent resources and dependencies"""        try:
+        """Initialize agent resources and dependencies"""
+        try:
             await self._setup_database_connection()
             await self._setup_redis_connection()
             await self._validate_configuration()
@@ -262,7 +275,8 @@ class BaseAgent(ABC):
             return False
     
     async def _setup_database_connection(self):
-        """Setup database connection with connection pooling"""        try:
+        """Setup database connection with connection pooling"""
+        try:
             self._db_session = await get_db_session()
             logger.debug(f"Database connection established for agent {self.agent_id}")
         except Exception as e:
@@ -270,7 +284,8 @@ class BaseAgent(ABC):
             raise
     
     async def _setup_redis_connection(self):
-        """Setup Redis connection for caching and message queuing"""        try:
+        """Setup Redis connection for caching and message queuing"""
+        try:
             self._redis_client = aioredis.Redis(
                 host=settings.REDIS_HOST,
                 port=settings.REDIS_PORT,
@@ -285,7 +300,8 @@ class BaseAgent(ABC):
             raise
     
     async def _validate_configuration(self):
-        """Validate agent configuration and required settings"""        required_settings = self.get_required_config_keys()
+        """Validate agent configuration and required settings"""
+        required_settings = self.get_required_config_keys()
         for key in required_settings:
             if key not in self.config:
                 raise ValidationError(f"Required configuration key missing: {key}")
@@ -296,16 +312,20 @@ class BaseAgent(ABC):
     
     @abstractmethod
     async def _load_models_and_resources(self):
-        """Load AI models and other resources specific to the agent"""        pass
+        """Load AI models and other resources specific to the agent"""
+        pass
     
     @abstractmethod
     def get_required_config_keys(self) -> List[str]:
-        """Return list of required configuration keys for this agent"""        return []
+        """Return list of required configuration keys for this agent"""
+        return []
     
     async def process_request(self, request: AgentRequest) -> AgentResponse:
-        """        Main request processing pipeline with comprehensive error handling,
+        """
+        Main request processing pipeline with comprehensive error handling,
         monitoring, and security checks.
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Pre-processing security and validation
@@ -353,7 +373,8 @@ class BaseAgent(ABC):
     
     @asynccontextmanager
     async def _request_timeout(self, timeout_seconds: int):
-        """Context manager for request timeout handling"""        try:
+        """Context manager for request timeout handling"""
+        try:
             async with asyncio.timeout(timeout_seconds):
                 yield
         except asyncio.TimeoutError:
@@ -361,7 +382,8 @@ class BaseAgent(ABC):
             raise
     
     async def _process_with_monitoring(self, request: AgentRequest) -> AgentResponse:
-        """Process request with comprehensive monitoring"""        with self.performance_monitor.track_operation(f"{self.agent_type}.process"):
+        """Process request with comprehensive monitoring"""
+        with self.performance_monitor.track_operation(f"{self.agent_type}.process"):
             
             # Check resource usage
             await self._check_resource_limits()
@@ -382,12 +404,15 @@ class BaseAgent(ABC):
     
     @abstractmethod
     async def process(self, request: AgentRequest) -> AgentResponse:
-        """        Abstract method to be implemented by concrete agents.
+        """
+        Abstract method to be implemented by concrete agents.
         This is where the main business logic happens.
-        """        pass
+        """
+        pass
     
     async def _validate_request(self, request: AgentRequest):
-        """Comprehensive request validation"""        # Basic validation
+        """Comprehensive request validation"""
+        # Basic validation
         if not request.action:
             raise ValidationError("Request action is required")
         
@@ -400,7 +425,8 @@ class BaseAgent(ABC):
             await self._validate_request_data(request.data)
     
     async def _validate_request_data(self, data: Dict[str, Any]):
-        """Validate request data structure and content"""        try:
+        """Validate request data structure and content"""
+        try:
             # Basic data structure validation
             if not isinstance(data, dict):
                 raise ValidationError("Request data must be a dictionary")
@@ -425,7 +451,8 @@ class BaseAgent(ABC):
             raise ValidationError(f"Invalid request data: {str(e)}")
 
     async def _validate_field_types(self, data: Dict[str, Any]):
-        """Validate field types according to agent schema"""        # Define expected types for common fields
+        """Validate field types according to agent schema"""
+        # Define expected types for common fields
         field_types = {
             'content_id': (str, int),
             'user_id': (str, int),
@@ -444,7 +471,8 @@ class BaseAgent(ABC):
                     raise ValidationError(f"Field '{field}' must be of type {expected_type}, got {type(data[field])}")
 
     async def _validate_field_constraints(self, data: Dict[str, Any]):
-        """Validate field constraints and business rules"""        # Priority validation
+        """Validate field constraints and business rules"""
+        # Priority validation
         if 'priority' in data:
             priority = data['priority']
             if not 1 <= priority <= 10:
@@ -466,26 +494,31 @@ class BaseAgent(ABC):
                     raise ValidationError(f"{id_field} cannot exceed 255 characters")
 
     async def _custom_data_validation(self, data: Dict[str, Any]):
-        """Agent-specific custom validation - to be overridden by subclasses"""        # Default implementation does nothing
+        """Agent-specific custom validation - to be overridden by subclasses"""
+        # Default implementation does nothing
         # Subclasses can override this for specific validation logic
         pass
     
     def _validate_tenant_access(self, tenant_id: str) -> bool:
-        """Validate tenant access permissions"""        # Implement tenant validation logic
+        """Validate tenant access permissions"""
+        # Implement tenant validation logic
         return True
     
     async def _check_rate_limits(self, request: AgentRequest):
-        """Check and enforce rate limiting"""        client_id = request.user_id or request.source_ip or "anonymous"
+        """Check and enforce rate limiting"""
+        client_id = request.user_id or request.source_ip or "anonymous"
         
         if not self.rate_limiter.is_allowed(client_id):
             raise ResourceLimitError("Rate limit exceeded")
     
     async def _check_circuit_breaker(self):
-        """Check circuit breaker status"""        if self.circuit_breaker.is_open():
+        """Check circuit breaker status"""
+        if self.circuit_breaker.is_open():
             raise ProcessingError("Service temporarily unavailable")
     
     async def _check_resource_limits(self):
-        """Check system resource usage limits"""        usage = self.performance_monitor.get_current_usage()
+        """Check system resource usage limits"""
+        usage = self.performance_monitor.get_current_usage()
         
         # Memory limit check
         if usage.get('memory_percent', 0) > 90:
@@ -496,7 +529,8 @@ class BaseAgent(ABC):
             raise ResourceLimitError("CPU usage too high")
     
     def _validate_response(self, response: AgentResponse):
-        """Validate agent response structure"""        if not isinstance(response, AgentResponse):
+        """Validate agent response structure"""
+        if not isinstance(response, AgentResponse):
             raise ValidationError("Invalid response type")
         
         if response.success and not response.data:
@@ -508,7 +542,8 @@ class BaseAgent(ABC):
         error_message: str,
         error_code: str
     ) -> AgentResponse:
-        """Create standardized error response"""        return AgentResponse(
+        """Create standardized error response"""
+        return AgentResponse(
             success=False,
             request_id=request.request_id,
             error=error_message,
@@ -519,7 +554,8 @@ class BaseAgent(ABC):
         )
     
     def _update_success_metrics(self, execution_time: float):
-        """Update success metrics"""        self.metrics.total_requests += 1
+        """Update success metrics"""
+        self.metrics.total_requests += 1
         self.metrics.successful_requests += 1
         self.metrics.last_request_time = datetime.now(timezone.utc)
         
@@ -537,12 +573,14 @@ class BaseAgent(ABC):
             self.metrics.peak_response_time = execution_time
     
     def _update_error_metrics(self):
-        """Update error metrics"""        self.metrics.total_requests += 1
+        """Update error metrics"""
+        self.metrics.total_requests += 1
         self.metrics.failed_requests += 1
         self.metrics.error_rate = self.metrics.failed_requests / self.metrics.total_requests
     
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get comprehensive agent health status"""        uptime = (datetime.now(timezone.utc) - self.created_at).total_seconds()
+        """Get comprehensive agent health status"""
+        uptime = (datetime.now(timezone.utc) - self.created_at).total_seconds()
         
         return {
             "agent_id": self.agent_id,
@@ -565,7 +603,8 @@ class BaseAgent(ABC):
         }
     
     async def shutdown(self, timeout_seconds: int = 30):
-        """Graceful shutdown with request completion"""        logger.info(f"Initiating graceful shutdown for agent {self.agent_id}")
+        """Graceful shutdown with request completion"""
+        logger.info(f"Initiating graceful shutdown for agent {self.agent_id}")
         
         self.shutdown_requested = True
         self.status = AgentStatus.SHUTDOWN

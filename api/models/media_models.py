@@ -12,9 +12,12 @@ will result in legal action.
 
 Contact: mlaiel@live.de
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from datetime import datetime, timezone
+"""
+
+from datetime import datetime, timezone
 from typing import Optional, Dict, Any, List
 from decimal import Decimal
+
 from sqlalchemy import (
     String, Text, Boolean, DateTime, Integer, Numeric,
     ForeignKey, UniqueConstraint, Index, CheckConstraint
@@ -29,7 +32,9 @@ from .base import (
 
 
 class MediaFile(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin, StatusMixin):
-    """Core media file model for all file types"""    
+    """
+Core media file model for all file types"""
+    
     __tablename__ = 'media_files'
     
     content_id: Mapped[UUID] = mapped_column(
@@ -236,7 +241,8 @@ class MediaFile(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixi
 
 
 class MediaProcessing(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
-    """Media processing jobs and pipeline management"""    
+    """Media processing jobs and pipeline management"""
+    
     __tablename__ = 'media_processing'
     
     media_file_id: Mapped[UUID] = mapped_column(
@@ -383,7 +389,8 @@ class MediaProcessing(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
 
 
 class MediaTransform(BaseModel, UUIDMixin, TimestampMixin, AuditMixin):
-    """Media transformation and conversion records"""    
+    """Media transformation and conversion records"""
+    
     __tablename__ = 'media_transforms'
     
     media_file_id: Mapped[UUID] = mapped_column(
@@ -485,7 +492,8 @@ class MediaTransform(BaseModel, UUIDMixin, TimestampMixin, AuditMixin):
 
 
 class MediaAnalysis(BaseModel, UUIDMixin, TimestampMixin):
-    """AI-powered media analysis and insights"""    
+    """AI-powered media analysis and insights"""
+    
     __tablename__ = 'media_analysis'
     
     media_file_id: Mapped[UUID] = mapped_column(

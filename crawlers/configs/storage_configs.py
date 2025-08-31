@@ -14,7 +14,8 @@ Contact: mlaiel@live.de | www.fahed-mlaiel.de
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Union, Any
 from dataclasses import dataclass, field
 from enum import Enum
@@ -23,7 +24,8 @@ import json
 from pathlib import Path
 
 class StorageBackend(Enum):
-    """Storage backend types."""    LOCAL = "local"
+    """Storage backend types."""
+    LOCAL = "local"
     AWS_S3 = "aws_s3"
     GOOGLE_CLOUD = "google_cloud"
     AZURE_BLOB = "azure_blob"
@@ -33,7 +35,8 @@ class StorageBackend(Enum):
     NFS = "nfs"
 
 class DatabaseType(Enum):
-    """Database types for different data."""    POSTGRESQL = "postgresql"
+    """Database types for different data."""
+    POSTGRESQL = "postgresql"
     MYSQL = "mysql"
     MONGODB = "mongodb"
     REDIS = "redis"
@@ -44,7 +47,8 @@ class DatabaseType(Enum):
     WEAVIATE = "weaviate"
 
 class CompressionType(Enum):
-    """Compression algorithms."""    NONE = "none"
+    """Compression algorithms."""
+    NONE = "none"
     GZIP = "gzip"
     BZIP2 = "bzip2"
     LZMA = "lzma"
@@ -52,7 +56,8 @@ class CompressionType(Enum):
     LZ4 = "lz4"
 
 class EncryptionType(Enum):
-    """Encryption algorithms."""    NONE = "none"
+    """Encryption algorithms."""
+    NONE = "none"
     AES_128 = "aes-128"
     AES_256 = "aes-256"
     CHACHA20 = "chacha20"
@@ -60,14 +65,16 @@ class EncryptionType(Enum):
     RSA_4096 = "rsa-4096"
 
 class DataLifecycleStage(Enum):
-    """Data lifecycle stages."""    ACTIVE = "active"
+    """Data lifecycle stages."""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     ARCHIVED = "archived"
     COLD_STORAGE = "cold_storage"
     MARKED_FOR_DELETION = "marked_for_deletion"
 
 class BackupType(Enum):
-    """Backup types."""    FULL = "full"
+    """Backup types."""
+    FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
     SNAPSHOT = "snapshot"
@@ -75,7 +82,8 @@ class BackupType(Enum):
 
 @dataclass
 class StorageCredentials:
-    """Storage credentials configuration."""    access_key: Optional[str] = None
+    """Storage credentials configuration."""
+    access_key: Optional[str] = None
     secret_key: Optional[str] = None
     token: Optional[str] = None
     region: Optional[str] = None
@@ -98,7 +106,8 @@ class StorageCredentials:
 
 @dataclass
 class CompressionConfig:
-    """Configuration for data compression."""    enabled: bool = True
+    """Configuration for data compression."""
+    enabled: bool = True
     algorithm: CompressionType = CompressionType.GZIP
     level: int = 6  # Compression level (1-9 for most algorithms)
     threshold_bytes: int = 1024  # Minimum size to compress
@@ -117,7 +126,8 @@ class CompressionConfig:
 
 @dataclass
 class EncryptionConfig:
-    """Configuration for data encryption."""    enabled: bool = True
+    """Configuration for data encryption."""
+    enabled: bool = True
     algorithm: EncryptionType = EncryptionType.AES_256
     key_derivation_function: str = "pbkdf2"
     key_iterations: int = 100000
@@ -142,7 +152,8 @@ class EncryptionConfig:
 
 @dataclass
 class CacheConfig:
-    """Configuration for caching system."""    enabled: bool = True
+    """Configuration for caching system."""
+    enabled: bool = True
     backend: str = "redis"  # redis, memcached, memory, disk
     
     # Redis configuration
@@ -174,7 +185,8 @@ class CacheConfig:
 
 @dataclass
 class DatabaseConfig:
-    """Configuration for database connections."""    # Primary database (PostgreSQL)
+    """Configuration for database connections."""
+    # Primary database (PostgreSQL)
     primary_db: DatabaseType = DatabaseType.POSTGRESQL
     primary_credentials: StorageCredentials = field(default_factory=StorageCredentials)
     primary_pool_size: int = 20
@@ -206,7 +218,8 @@ class DatabaseConfig:
 
 @dataclass
 class FileStorageConfig:
-    """Configuration for file storage."""    backend: StorageBackend = StorageBackend.AWS_S3
+    """Configuration for file storage."""
+    backend: StorageBackend = StorageBackend.AWS_S3
     credentials: StorageCredentials = field(default_factory=StorageCredentials)
     
     # Storage organization
@@ -238,7 +251,8 @@ class FileStorageConfig:
 
 @dataclass
 class BackupConfig:
-    """Configuration for backup system."""    enabled: bool = True
+    """Configuration for backup system."""
+    enabled: bool = True
     backend: StorageBackend = StorageBackend.AWS_S3
     credentials: StorageCredentials = field(default_factory=StorageCredentials)
     
@@ -267,7 +281,8 @@ class BackupConfig:
 
 @dataclass
 class DataLifecycleConfig:
-    """Configuration for data lifecycle management."""    enabled: bool = True
+    """Configuration for data lifecycle management."""
+    enabled: bool = True
     
     # Lifecycle rules
     evidence_retention_days: int = 2555  # 7 years for legal purposes
@@ -293,7 +308,8 @@ class DataLifecycleConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Configuration for storage monitoring."""    enabled: bool = True
+    """Configuration for storage monitoring."""
+    enabled: bool = True
     
     # Metrics collection
     collect_storage_metrics: bool = True
@@ -319,7 +335,8 @@ class MonitoringConfig:
 
 @dataclass
 class StorageConfig:
-    """Complete storage configuration."""    # Core configurations
+    """Complete storage configuration."""
+    # Core configurations
     file_storage: FileStorageConfig = field(default_factory=FileStorageConfig)
     database: DatabaseConfig = field(default_factory=DatabaseConfig)
     cache: CacheConfig = field(default_factory=CacheConfig)
@@ -345,14 +362,17 @@ class StorageConfig:
     circuit_breaker_enabled: bool = True
 
 class StorageConfigManager:
-    """Manager for storage configurations."""    
+    """Manager for storage configurations."""
+    
     def __init__(self, config_dir: Optional[str] = None):
-        """Initialize storage config manager."""        self.config_dir = Path(config_dir or os.getenv("STORAGE_CONFIG_DIR", "./configs"))
+        """Initialize storage config manager."""
+        self.config_dir = Path(config_dir or os.getenv("STORAGE_CONFIG_DIR", "./configs"))
         self.config_dir.mkdir(parents=True, exist_ok=True)
         self.config = self._load_default_config()
     
     def _load_default_config(self) -> StorageConfig:
-        """Load default storage configuration."""        return StorageConfig(
+        """Load default storage configuration."""
+        return StorageConfig(
             file_storage=FileStorageConfig(
                 backend=StorageBackend.AWS_S3,
                 credentials=StorageCredentials(
@@ -423,10 +443,12 @@ class StorageConfigManager:
         )
     
     def get_config(self) -> StorageConfig:
-        """Get current storage configuration."""        return self.config
+        """Get current storage configuration."""
+        return self.config
     
     def get_database_url(self, db_type: str = "primary") -> str:
-        """Get database connection URL."""        if db_type == "primary":
+        """Get database connection URL."""
+        if db_type == "primary":
             creds = self.config.database.primary_credentials
             return f"postgresql://{creds.username}:{creds.password}@{creds.host}:{creds.port}/{creds.database_name}"
         elif db_type == "redis":
@@ -437,7 +459,8 @@ class StorageConfigManager:
             raise ValueError(f"Unknown database type: {db_type}")
     
     def get_storage_client_config(self) -> dict:
-        """Get storage client configuration."""        file_config = self.config.file_storage
+        """Get storage client configuration."""
+        file_config = self.config.file_storage
         return {
             "backend": file_config.backend.value,
             "credentials": {
@@ -452,24 +475,28 @@ class StorageConfigManager:
         }
     
     def update_config(self, config: StorageConfig) -> None:
-        """Update storage configuration."""        self.config = config
+        """Update storage configuration."""
+        self.config = config
         self.save_config()
     
     def save_config(self) -> None:
-        """Save configuration to file."""        config_file = self.config_dir / "storage_config.json"
+        """Save configuration to file."""
+        config_file = self.config_dir / "storage_config.json"
         config_dict = self._serialize_config(self.config)
         with open(config_file, 'w') as f:
             json.dump(config_dict, f, indent=2, default=str)
     
     def load_config(self) -> None:
-        """Load configuration from file."""        config_file = self.config_dir / "storage_config.json"
+        """Load configuration from file."""
+        config_file = self.config_dir / "storage_config.json"
         if config_file.exists():
             with open(config_file, 'r') as f:
                 data = json.load(f)
                 self.config = self._deserialize_config(data)
     
     def _serialize_config(self, config: StorageConfig) -> dict:
-        """Serialize configuration to dictionary."""        try:
+        """Serialize configuration to dictionary."""
+        try:
             logger.debug("Serializing storage configuration")
             
             # Convert StorageConfig dataclass to dictionary
@@ -531,7 +558,8 @@ class StorageConfigManager:
             raise ValueError(f"Configuration serialization failed: {str(e)}")
     
     def _deserialize_config(self, data: dict) -> StorageConfig:
-        """Deserialize configuration from dictionary."""        try:
+        """Deserialize configuration from dictionary."""
+        try:
             logger.debug("Deserializing storage configuration")
             
             # Validate required fields
@@ -617,7 +645,8 @@ class StorageConfigManager:
             raise ValueError(f"Configuration deserialization failed: {str(e)}")
     
     def validate_config(self) -> List[str]:
-        """Validate storage configuration."""        errors = []
+        """Validate storage configuration."""
+        errors = []
         
         # Validate file storage
         if self.config.file_storage.backend == StorageBackend.AWS_S3:
@@ -643,7 +672,8 @@ class StorageConfigManager:
         return errors
     
     def test_connections(self) -> Dict[str, bool]:
-        """Test all storage connections."""        results = {}
+        """Test all storage connections."""
+        results = {}
         
         # Test database connection
         try:
@@ -669,7 +699,8 @@ class StorageConfigManager:
         return results
     
     def get_storage_usage(self) -> Dict[str, Any]:
-        """Get current storage usage statistics."""        return {
+        """Get current storage usage statistics."""
+        return {
             "database_size_mb": 0,  # Implementation would query actual size
             "file_storage_size_gb": 0,
             "cache_usage_mb": 0,
@@ -679,7 +710,8 @@ class StorageConfigManager:
         }
     
     def export_config(self, file_path: str) -> None:
-        """Export configuration to file."""        config_dict = self._serialize_config(self.config)
+        """Export configuration to file."""
+        config_dict = self._serialize_config(self.config)
         with open(file_path, 'w') as f:
             json.dump(config_dict, f, indent=2, default=str)
 

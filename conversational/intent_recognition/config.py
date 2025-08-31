@@ -11,7 +11,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -23,7 +24,8 @@ from ...core.config import BaseConfig
 
 @dataclass
 class ModelConfiguration:
-    """Model-specific configuration parameters"""    
+    """Model-specific configuration parameters"""
+    
     # Transformer model settings
     transformer_model_name: str = "distilbert-base-uncased"
     custom_model_path: Optional[str] = None
@@ -55,7 +57,8 @@ class ModelConfiguration:
 
 @dataclass 
 class PerformanceSettings:
-    """Performance and optimization settings"""    
+    """Performance and optimization settings"""
+    
     # Processing settings
     processor_threads: int = 4
     max_queue_size: int = 1000
@@ -82,7 +85,8 @@ class PerformanceSettings:
 
 @dataclass
 class ConfidenceSettings:
-    """Confidence scoring and uncertainty quantification settings"""    
+    """Confidence scoring and uncertainty quantification settings"""
+    
     # Temperature scaling
     temperature_scaling: float = 1.0
     temperature_optimization_enabled: bool = True
@@ -117,7 +121,8 @@ class ConfidenceSettings:
 
 @dataclass
 class ContextualSettings:
-    """Contextual processing configuration"""    
+    """Contextual processing configuration"""
+    
     # Context types and weights
     enable_conversation_context: bool = True
     enable_user_profile_context: bool = True
@@ -166,7 +171,8 @@ class ContextualSettings:
 
 @dataclass
 class CreativeWorkflowSettings:
-    """Creative industry specific workflow settings"""    
+    """Creative industry specific workflow settings"""
+    
     # Creator types
     supported_creator_types: List[str] = field(default_factory=lambda: [
         "musician", "influencer", "photographer", "blogger", 
@@ -232,7 +238,8 @@ class CreativeWorkflowSettings:
 
 @dataclass
 class SecuritySettings:
-    """Security and validation settings"""    
+    """Security and validation settings"""
+    
     # Input validation
     max_text_length: int = 10000
     min_text_length: int = 1
@@ -259,7 +266,8 @@ class SecuritySettings:
 
 @dataclass
 class IntegrationSettings:
-    """Integration settings for external services"""    
+    """Integration settings for external services"""
+    
     # Database settings
     use_database_cache: bool = True
     cache_database_url: Optional[str] = None
@@ -287,7 +295,8 @@ class IntegrationSettings:
 
 
 class IntentRecognitionConfig(BaseConfig):
-    """    Main configuration class for intent recognition system
+    """
+    Main configuration class for intent recognition system
     
     Provides centralized configuration management with:
     - Environment-specific settings
@@ -295,7 +304,8 @@ class IntentRecognitionConfig(BaseConfig):
     - Performance optimization
     - Security and validation rules
     - Integration settings
-    """    
+    """
+    
     def __init__(
         self,
         environment: str = "development",
@@ -323,7 +333,8 @@ class IntentRecognitionConfig(BaseConfig):
         self._validate_configuration()
     
     def _load_configuration(self, config_file: Optional[str] = None, **kwargs) -> None:
-        """Load configuration from multiple sources"""        
+        """Load configuration from multiple sources"""
+        
         # 1. Load from environment variables
         self._load_from_environment()
         
@@ -338,7 +349,8 @@ class IntentRecognitionConfig(BaseConfig):
         self._apply_environment_settings()
     
     def _load_from_environment(self) -> None:
-        """Load configuration from environment variables"""        
+        """Load configuration from environment variables"""
+        
         # Model configuration
         if os.getenv("INTENT_TRANSFORMER_MODEL"):
             self.model.transformer_model_name = os.getenv("INTENT_TRANSFORMER_MODEL")
@@ -377,7 +389,8 @@ class IntentRecognitionConfig(BaseConfig):
             self.integration.huggingface_api_key = os.getenv("HUGGINGFACE_API_KEY")
     
     def _load_from_file(self, config_file: str) -> None:
-        """Load configuration from JSON/YAML file"""        try:
+        """Load configuration from JSON/YAML file"""
+        try:
             config_path = Path(config_file)
             
             if not config_path.exists():
@@ -411,14 +424,16 @@ class IntentRecognitionConfig(BaseConfig):
             self.logger.error(f"Failed to load configuration from file: {str(e)}")
     
     def _update_dataclass(self, obj: Any, updates: Dict[str, Any]) -> None:
-        """Update dataclass fields from dictionary"""        for key, value in updates.items():
+        """Update dataclass fields from dictionary"""
+        for key, value in updates.items():
             if hasattr(obj, key):
                 setattr(obj, key, value)
             else:
                 self.logger.warning(f"Unknown configuration key: {key}")
     
     def _apply_overrides(self, **kwargs) -> None:
-        """Apply explicit parameter overrides"""        for key, value in kwargs.items():
+        """Apply explicit parameter overrides"""
+        for key, value in kwargs.items():
             if hasattr(self, key):
                 setattr(self, key, value)
             elif hasattr(self.model, key):
@@ -433,7 +448,8 @@ class IntentRecognitionConfig(BaseConfig):
                 self.logger.warning(f"Unknown configuration override: {key}")
     
     def _apply_environment_settings(self) -> None:
-        """Apply environment-specific configuration adjustments"""        
+        """Apply environment-specific configuration adjustments"""
+        
         if self.environment == "development":
             # Development optimizations
             self.performance.processor_threads = 2
@@ -471,7 +487,8 @@ class IntentRecognitionConfig(BaseConfig):
         self.logger.info(f"Applied {self.environment} environment settings")
     
     def _validate_configuration(self) -> None:
-        """Validate configuration settings"""        
+        """Validate configuration settings"""
+        
         errors = []
         
         # Validate model configuration
@@ -510,7 +527,8 @@ class IntentRecognitionConfig(BaseConfig):
         self.logger.info("Configuration validation passed")
     
     def get_model_config(self) -> Dict[str, Any]:
-        """Get model configuration as dictionary"""        return {
+        """Get model configuration as dictionary"""
+        return {
             'transformer_model_name': self.model.transformer_model_name,
             'custom_model_path': self.model.custom_model_path,
             'model_version': self.model.model_version,
@@ -521,7 +539,8 @@ class IntentRecognitionConfig(BaseConfig):
         }
     
     def get_performance_config(self) -> Dict[str, Any]:
-        """Get performance configuration as dictionary"""        return {
+        """Get performance configuration as dictionary"""
+        return {
             'processor_threads': self.performance.processor_threads,
             'max_queue_size': self.performance.max_queue_size,
             'max_requests_per_second': self.performance.max_requests_per_second,
@@ -531,7 +550,8 @@ class IntentRecognitionConfig(BaseConfig):
         }
     
     def get_security_config(self) -> Dict[str, Any]:
-        """Get security configuration as dictionary"""        return {
+        """Get security configuration as dictionary"""
+        return {
             'max_text_length': self.security.max_text_length,
             'min_text_length': self.security.min_text_length,
             'allowed_languages': self.security.allowed_languages,
@@ -541,7 +561,8 @@ class IntentRecognitionConfig(BaseConfig):
         }
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert entire configuration to dictionary"""        return {
+        """Convert entire configuration to dictionary"""
+        return {
             'environment': self.environment,
             'model': self.get_model_config(),
             'performance': self.get_performance_config(),
@@ -555,7 +576,8 @@ class IntentRecognitionConfig(BaseConfig):
         }
     
     def save_to_file(self, file_path: str) -> None:
-        """Save current configuration to file"""        try:
+        """Save current configuration to file"""
+        try:
             config_dict = self.to_dict()
             
             file_path_obj = Path(file_path)
@@ -577,17 +599,21 @@ class IntentRecognitionConfig(BaseConfig):
     
     @classmethod
     def load_from_file(cls, file_path: str, environment: str = "development") -> 'IntentRecognitionConfig':
-        """Create configuration instance from file"""        return cls(environment=environment, config_file=file_path)
+        """Create configuration instance from file"""
+        return cls(environment=environment, config_file=file_path)
     
     @classmethod
     def create_default(cls, environment: str = "development") -> 'IntentRecognitionConfig':
-        """Create default configuration for specified environment"""        return cls(environment=environment)
+        """Create default configuration for specified environment"""
+        return cls(environment=environment)
     
     def __str__(self) -> str:
-        """String representation of configuration"""        return f"IntentRecognitionConfig(environment={self.environment}, model={self.model.transformer_model_name})"
+        """String representation of configuration"""
+        return f"IntentRecognitionConfig(environment={self.environment}, model={self.model.transformer_model_name})"
     
     def __repr__(self) -> str:
-        """Detailed string representation"""        return (
+        """Detailed string representation"""
+        return (
             f"IntentRecognitionConfig("
             f"environment={self.environment}, "
             f"model={self.model.transformer_model_name}, "
@@ -600,15 +626,18 @@ class IntentRecognitionConfig(BaseConfig):
 # Convenience functions for common configurations
 
 def get_development_config() -> IntentRecognitionConfig:
-    """Get development configuration"""    return IntentRecognitionConfig.create_default("development")
+    """Get development configuration"""
+    return IntentRecognitionConfig.create_default("development")
 
 
 def get_production_config() -> IntentRecognitionConfig:
-    """Get production configuration"""    return IntentRecognitionConfig.create_default("production")
+    """Get production configuration"""
+    return IntentRecognitionConfig.create_default("production")
 
 
 def get_testing_config() -> IntentRecognitionConfig:
-    """Get testing configuration"""    return IntentRecognitionConfig.create_default("testing")
+    """Get testing configuration"""
+    return IntentRecognitionConfig.create_default("testing")
 
 
 # Configuration constants

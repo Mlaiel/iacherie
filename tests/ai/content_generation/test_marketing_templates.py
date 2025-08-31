@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -21,7 +22,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -44,14 +46,17 @@ from ai.content_generation.content_models import ContentType, Platform
 
 
 class TestMarketingTemplates:
-    """Test suite for MarketingTemplates"""    
+    """Test suite for MarketingTemplates"""
+    
     @pytest.fixture
     def marketing_templates(self):
-        """Create a marketing templates instance"""        return MarketingTemplates()
+        """Create a marketing templates instance"""
+        return MarketingTemplates()
     
     @pytest.fixture
     def campaign_data(self):
-        """Create sample campaign data"""        return {
+        """Create sample campaign data"""
+        return {
             "campaign_name": "AI Content Creation Course Launch",
             "product_name": "Master AI Content Creation",
             "campaign_type": CampaignType.PRODUCT_LAUNCH,
@@ -87,7 +92,8 @@ class TestMarketingTemplates:
     
     @pytest.fixture
     def email_campaign_data(self):
-        """Create sample email campaign data"""        return {
+        """Create sample email campaign data"""
+        return {
             "subject_line": "🚀 Transform Your Content Creation with AI",
             "preview_text": "Learn the tools and strategies that 10x productivity",
             "sender_name": "Fahed Mlaiel",
@@ -99,7 +105,8 @@ class TestMarketingTemplates:
         }
     
     def test_marketing_templates_initialization(self, marketing_templates):
-        """Test marketing templates initialization"""        assert marketing_templates is not None
+        """Test marketing templates initialization"""
+        assert marketing_templates is not None
         assert hasattr(marketing_templates, 'email_templates')
         assert hasattr(marketing_templates, 'sales_templates')
         assert hasattr(marketing_templates, 'landing_templates')
@@ -110,7 +117,8 @@ class TestMarketingTemplates:
     
     @pytest.mark.asyncio
     async def test_generate_email_campaign(self, marketing_templates, campaign_data, email_campaign_data):
-        """Test email campaign generation"""        with patch.object(marketing_templates, '_generate_email_sequence') as mock_email:
+        """Test email campaign generation"""
+        with patch.object(marketing_templates, '_generate_email_sequence') as mock_email:
             mock_email.return_value = {
                 "success": True,
                 "email_sequence": [
@@ -237,7 +245,8 @@ $200 off, but only for the next 12 hours.
     
     @pytest.mark.asyncio
     async def test_generate_social_media_ads(self, marketing_templates, campaign_data):
-        """Test social media ad generation"""        with patch.object(marketing_templates, '_generate_social_ads') as mock_ads:
+        """Test social media ad generation"""
+        with patch.object(marketing_templates, '_generate_social_ads') as mock_ads:
             mock_ads.return_value = {
                 "success": True,
                 "ad_variations": {
@@ -325,7 +334,8 @@ $200 off, but only for the next 12 hours.
     
     @pytest.mark.asyncio
     async def test_generate_landing_page(self, marketing_templates, campaign_data):
-        """Test landing page generation"""        with patch.object(marketing_templates, '_generate_landing_page') as mock_landing:
+        """Test landing page generation"""
+        with patch.object(marketing_templates, '_generate_landing_page') as mock_landing:
             mock_landing.return_value = {
                 "success": True,
                 "landing_page": {
@@ -461,7 +471,8 @@ $200 off, but only for the next 12 hours.
     
     @pytest.mark.asyncio
     async def test_generate_sales_funnel(self, marketing_templates, campaign_data):
-        """Test complete sales funnel generation"""        with patch.object(marketing_templates, '_generate_sales_funnel') as mock_funnel:
+        """Test complete sales funnel generation"""
+        with patch.object(marketing_templates, '_generate_sales_funnel') as mock_funnel:
             mock_funnel.return_value = {
                 "success": True,
                 "funnel_stages": {
@@ -528,7 +539,8 @@ $200 off, but only for the next 12 hours.
     
     @pytest.mark.asyncio
     async def test_a_b_test_generation(self, marketing_templates, campaign_data):
-        """Test A/B test generation for marketing content"""        with patch.object(marketing_templates, '_generate_ab_tests') as mock_ab:
+        """Test A/B test generation for marketing content"""
+        with patch.object(marketing_templates, '_generate_ab_tests') as mock_ab:
             mock_ab.return_value = {
                 "success": True,
                 "test_variations": {
@@ -582,7 +594,8 @@ $200 off, but only for the next 12 hours.
     
     @pytest.mark.asyncio
     async def test_campaign_personalization(self, marketing_templates, campaign_data):
-        """Test campaign personalization for different audience segments"""        audience_segments = [
+        """Test campaign personalization for different audience segments"""
+        audience_segments = [
             AudienceSegment.COLD_PROSPECTS,
             AudienceSegment.WARM_PROSPECTS,
             AudienceSegment.EXISTING_CUSTOMERS
@@ -638,7 +651,8 @@ $200 off, but only for the next 12 hours.
     
     @pytest.mark.asyncio
     async def test_performance_prediction(self, marketing_templates, campaign_data):
-        """Test campaign performance prediction"""        with patch.object(marketing_templates, '_predict_performance') as mock_predict:
+        """Test campaign performance prediction"""
+        with patch.object(marketing_templates, '_predict_performance') as mock_predict:
             mock_predict.return_value = {
                 "success": True,
                 "performance_prediction": {
@@ -690,9 +704,11 @@ $200 off, but only for the next 12 hours.
 
 
 class TestCampaignTemplate:
-    """Test suite for CampaignTemplate"""    
+    """Test suite for CampaignTemplate"""
+    
     def test_campaign_template_creation(self):
-        """Test campaign template creation"""        template = CampaignTemplate(
+        """Test campaign template creation"""
+        template = CampaignTemplate(
             template_id="campaign_001",
             name="Product Launch Campaign",
             campaign_type=CampaignType.PRODUCT_LAUNCH,

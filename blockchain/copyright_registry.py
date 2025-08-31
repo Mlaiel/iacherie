@@ -4,7 +4,8 @@ Blockchain-based intellectual property protection and rights management
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""import hashlib
+"""
+import hashlib
 import json
 import logging
 from datetime import datetime, timezone
@@ -25,7 +26,8 @@ from .smart_contracts import SmartContractManager
 
 
 class CopyrightType(Enum):
-    """Content copyright types for IA platform"""    MUSIC_COMPOSITION = "music_composition"
+    """Content copyright types for IA platform"""
+    MUSIC_COMPOSITION = "music_composition"
     MUSIC_RECORDING = "music_recording"
     BLOG_POST = "blog_post"
     PHOTOGRAPHY = "photography"
@@ -37,7 +39,8 @@ class CopyrightType(Enum):
 
 
 class ProtectionLevel(Enum):
-    """Blockchain protection levels"""    BASIC = "basic"
+    """Blockchain protection levels"""
+    BASIC = "basic"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
     ULTRA_SECURE = "ultra_secure"
@@ -45,7 +48,8 @@ class ProtectionLevel(Enum):
 
 @dataclass
 class CopyrightAsset:
-    """Blockchain copyright asset representation"""    asset_id: str
+    """Blockchain copyright asset representation"""
+    asset_id: str
     creator_id: str
     title: str
     description: str
@@ -64,7 +68,8 @@ class CopyrightAsset:
 
 @dataclass
 class CopyrightProof:
-    """Blockchain copyright proof"""    proof_id: str
+    """Blockchain copyright proof"""
+    proof_id: str
     asset_id: str
     creator_id: str
     timestamp: datetime
@@ -76,9 +81,11 @@ class CopyrightProof:
 
 
 class CopyrightRegistryManager:
-    """    Advanced blockchain copyright registry for multi-format content protection
+    """
+    Advanced blockchain copyright registry for multi-format content protection
     Manages intellectual property rights with enterprise-grade security
-    """    
+    """
+    
     def __init__(self, transaction_manager: TransactionManager, 
                  smart_contract_manager: SmartContractManager,
                  encryption_manager: EncryptionManager):
@@ -93,7 +100,8 @@ class CopyrightRegistryManager:
                                metadata: Dict[str, Any],
                                copyright_type: CopyrightType,
                                protection_level: ProtectionLevel = ProtectionLevel.PREMIUM) -> CopyrightAsset:
-        """        Register copyright on blockchain with advanced protection
+        """
+        Register copyright on blockchain with advanced protection
         
         Args:
             creator_id: Content creator identifier
@@ -107,7 +115,8 @@ class CopyrightRegistryManager:
             
         Raises:
             CopyrightError: If registration fails
-        """        try:
+        """
+        try:
             # Generate unique asset ID
             asset_id = self._generate_asset_id(creator_id, content_data)
             
@@ -173,7 +182,8 @@ class CopyrightRegistryManager:
     
     async def verify_copyright(self, asset_id: str, 
                              content_data: Optional[bytes] = None) -> CopyrightProof:
-        """        Verify copyright authenticity on blockchain
+        """
+        Verify copyright authenticity on blockchain
         
         Args:
             asset_id: Copyright asset identifier
@@ -184,7 +194,8 @@ class CopyrightRegistryManager:
             
         Raises:
             CopyrightError: If verification fails
-        """        try:
+        """
+        try:
             # Get asset from registry
             asset = await self.get_copyright_asset(asset_id)
             if not asset:
@@ -232,14 +243,16 @@ class CopyrightRegistryManager:
             raise CopyrightError(f"Failed to verify copyright: {str(e)}")
     
     async def get_copyright_asset(self, asset_id: str) -> Optional[CopyrightAsset]:
-        """        Retrieve copyright asset from registry
+        """
+        Retrieve copyright asset from registry
         
         Args:
             asset_id: Asset identifier
             
         Returns:
             Optional[CopyrightAsset]: Copyright asset if found
-        """        try:
+        """
+        try:
             # Check cache first
             if asset_id in self._registry_cache:
                 return self._registry_cache[asset_id]
@@ -260,14 +273,16 @@ class CopyrightRegistryManager:
             return None
     
     async def get_creator_assets(self, creator_id: str) -> List[CopyrightAsset]:
-        """        Get all copyright assets for a creator
+        """
+        Get all copyright assets for a creator
         
         Args:
             creator_id: Creator identifier
             
         Returns:
             List[CopyrightAsset]: List of creator's copyright assets
-        """        try:
+        """
+        try:
             asset_ids = await self.smart_contract_manager.get_creator_assets(creator_id)
             assets = []
             
@@ -284,7 +299,8 @@ class CopyrightRegistryManager:
     
     async def transfer_copyright(self, asset_id: str, from_creator: str,
                                to_creator: str, transfer_terms: Dict[str, Any]) -> bool:
-        """        Transfer copyright ownership on blockchain
+        """
+        Transfer copyright ownership on blockchain
         
         Args:
             asset_id: Asset identifier
@@ -294,7 +310,8 @@ class CopyrightRegistryManager:
             
         Returns:
             bool: True if transfer successful
-        """        try:
+        """
+        try:
             # Verify ownership
             asset = await self.get_copyright_asset(asset_id)
             if not asset or asset.creator_id != from_creator:
@@ -329,7 +346,8 @@ class CopyrightRegistryManager:
     
     async def license_content(self, asset_id: str, licensee_id: str,
                             license_terms: Dict[str, Any]) -> Optional[str]:
-        """        Create content license on blockchain
+        """
+        Create content license on blockchain
         
         Args:
             asset_id: Asset identifier
@@ -338,7 +356,8 @@ class CopyrightRegistryManager:
             
         Returns:
             Optional[str]: License transaction ID if successful
-        """        try:
+        """
+        try:
             # Verify asset exists
             asset = await self.get_copyright_asset(asset_id)
             if not asset:
@@ -368,23 +387,28 @@ class CopyrightRegistryManager:
             return None
     
     def _generate_asset_id(self, creator_id: str, content_data: bytes) -> str:
-        """Generate unique asset identifier"""        timestamp = str(int(datetime.now().timestamp()))
+        """Generate unique asset identifier"""
+        timestamp = str(int(datetime.now().timestamp()))
         data_hash = hashlib.sha256(content_data).hexdigest()[:16]
         return f"asset_{creator_id}_{timestamp}_{data_hash}"
     
     def _generate_content_hash(self, content_data: bytes) -> str:
-        """Generate secure content hash"""        return hashlib.sha3_256(content_data).hexdigest()
+        """Generate secure content hash"""
+        return hashlib.sha3_256(content_data).hexdigest()
     
     def _generate_metadata_hash(self, metadata: Dict[str, Any]) -> str:
-        """Generate metadata hash"""        metadata_str = json.dumps(metadata, sort_keys=True)
+        """Generate metadata hash"""
+        metadata_str = json.dumps(metadata, sort_keys=True)
         return hashlib.sha3_256(metadata_str.encode()).hexdigest()
     
     def _generate_verification_signature(self, asset: CopyrightAsset) -> str:
-        """Generate verification signature"""        signature_data = f"{asset.asset_id}_{asset.creator_id}_{asset.content_hash}"
+        """Generate verification signature"""
+        signature_data = f"{asset.asset_id}_{asset.creator_id}_{asset.content_hash}"
         return hashlib.sha256(signature_data.encode()).hexdigest()
     
     async def _create_copyright_nft(self, asset: CopyrightAsset) -> str:
-        """Create NFT for copyright protection"""        try:
+        """Create NFT for copyright protection"""
+        try:
             nft_metadata = {
                 'name': f"Copyright NFT - {asset.title}",
                 'description': f"Blockchain copyright protection for {asset.title}",
@@ -407,7 +431,8 @@ class CopyrightRegistryManager:
             raise CopyrightError(f"Failed to create copyright NFT: {str(e)}")
     
     def _reconstruct_asset_from_blockchain(self, blockchain_data: Dict[str, Any]) -> CopyrightAsset:
-        """Reconstruct asset object from blockchain data"""        return CopyrightAsset(
+        """Reconstruct asset object from blockchain data"""
+        return CopyrightAsset(
             asset_id=blockchain_data['asset_id'],
             creator_id=blockchain_data['creator_id'],
             title=blockchain_data['title'],
@@ -427,13 +452,15 @@ class CopyrightRegistryManager:
 
 
 class CopyrightAnalytics:
-    """Advanced copyright analytics and reporting"""    
+    """Advanced copyright analytics and reporting"""
+    
     def __init__(self, registry_manager: CopyrightRegistryManager):
         self.registry_manager = registry_manager
         self.logger = logging.getLogger(__name__)
     
     async def get_copyright_statistics(self, creator_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get comprehensive copyright statistics"""        try:
+        """Get comprehensive copyright statistics"""
+        try:
             stats = {
                 'total_assets': 0,
                 'by_type': {},

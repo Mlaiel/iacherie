@@ -11,7 +11,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
-"""import os
+"""
+import os
 import ssl
 import logging
 import subprocess
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SSLCertificate:
-    """SSL certificate information"""    domain: str
+    """SSL certificate information"""
+    domain: str
     cert_path: str
     key_path: str
     ca_bundle_path: Optional[str] = None
@@ -50,7 +52,8 @@ class SSLCertificate:
 
 @dataclass
 class TLSConfig:
-    """TLS configuration settings"""    min_version: str = "TLSv1.2"
+    """TLS configuration settings"""
+    min_version: str = "TLSv1.2"
     max_version: str = "TLSv1.3"
     cipher_suites: List[str] = field(default_factory=lambda: [
         "ECDHE-ECDSA-AES256-GCM-SHA384",
@@ -72,7 +75,8 @@ class TLSConfig:
 
 
 class CertificateManager:
-    """Certificate management and validation"""    
+    """Certificate management and validation"""
+    
     def __init__(self, cert_dir: str = "/etc/ssl/certs", key_dir: str = "/etc/ssl/private"):
         self.cert_dir = Path(cert_dir)
         self.key_dir = Path(key_dir)
@@ -82,7 +86,8 @@ class CertificateManager:
         self.key_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
     
     def load_certificate(self, cert_path: str, key_path: str) -> Optional[SSLCertificate]:
-        """Load and parse SSL certificate"""        try:
+        """Load and parse SSL certificate"""
+        try:
             cert_file = Path(cert_path)
             key_file = Path(key_path)
             
@@ -163,7 +168,8 @@ class CertificateManager:
                                        san_domains: List[str] = None,
                                        key_size: int = 2048,
                                        validity_days: int = 365) -> Optional[SSLCertificate]:
-        """Generate self-signed certificate"""        try:
+        """Generate self-signed certificate"""
+        try:
             san_domains = san_domains or []
             
             # Generate private key
@@ -228,7 +234,8 @@ class CertificateManager:
             return None
     
     def validate_certificate_chain(self, cert_path: str, ca_bundle_path: Optional[str] = None) -> bool:
-        """Validate certificate chain"""        try:
+        """Validate certificate chain"""
+        try:
             # Load certificate
             with open(cert_path, 'rb') as f:
                 cert_data = f.read()
@@ -264,7 +271,8 @@ class CertificateManager:
             return False
     
     def check_certificate_expiry(self, cert_path: str) -> Tuple[bool, int]:
-        """Check if certificate is expiring soon"""        try:
+        """Check if certificate is expiring soon"""
+        try:
             with open(cert_path, 'rb') as f:
                 cert_data = f.read()
             
@@ -285,7 +293,8 @@ class CertificateManager:
 
 
 class LetsEncryptManager:
-    """Let's Encrypt certificate management"""    
+    """Let's Encrypt certificate management"""
+    
     def __init__(self, email: str, staging: bool = False):
         self.email = email
         self.staging = staging
@@ -299,7 +308,8 @@ class LetsEncryptManager:
             directory.mkdir(parents=True, exist_ok=True)
     
     def obtain_certificate(self, domains: List[str], webroot_path: str = "/var/www/html") -> bool:
-        """Obtain certificate using webroot method"""        try:
+        """Obtain certificate using webroot method"""
+        try:
             # Prepare certbot command
             cmd = [
                 "certbot", "certonly",
@@ -330,7 +340,8 @@ class LetsEncryptManager:
             return False
     
     def renew_certificate(self, domain: str) -> bool:
-        """Renew certificate for domain"""        try:
+        """Renew certificate for domain"""
+        try:
             cmd = ["certbot", "renew", "--cert-name", domain, "--quiet"]
             
             result = subprocess.run(cmd, capture_output=True, text=True)
@@ -347,7 +358,8 @@ class LetsEncryptManager:
             return False
     
     def list_certificates(self) -> List[Dict[str, Any]]:
-        """List all Let's Encrypt certificates"""        try:
+        """List all Let's Encrypt certificates"""
+        try:
             cmd = ["certbot", "certificates"]
             result = subprocess.run(cmd, capture_output=True, text=True)
             
@@ -386,7 +398,8 @@ class LetsEncryptManager:
 
 
 class SSLTerminator:
-    """Enterprise SSL Terminator for Load Balancer"""    
+    """Enterprise SSL Terminator for Load Balancer"""
+    
     def __init__(self, 
                  cert_dir: str = "/etc/ssl/certs",
                  key_dir: str = "/etc/ssl/private",
@@ -400,7 +413,8 @@ class SSLTerminator:
             self.letsencrypt_manager = LetsEncryptManager(letsencrypt_email)
     
     def add_certificate(self, cert_path: str, key_path: str, ca_bundle_path: Optional[str] = None) -> bool:
-        """Add SSL certificate"""        try:
+        """Add SSL certificate"""
+        try:
             certificate = self.cert_manager.load_certificate(cert_path, key_path)
             if not certificate:
                 return False
@@ -427,7 +441,8 @@ class SSLTerminator:
             return False
     
     def remove_certificate(self, domain: str) -> bool:
-        """Remove SSL certificate"""        try:
+        """Remove SSL certificate"""
+        try:
             if domain in self.certificates:
                 certificate = self.certificates[domain]
                 
@@ -452,7 +467,8 @@ class SSLTerminator:
             return False
     
     def get_certificate_for_domain(self, domain: str) -> Optional[SSLCertificate]:
-        """Get certificate for specific domain"""        # Exact match first
+        """Get certificate for specific domain"""
+        # Exact match first
         if domain in self.certificates:
             return self.certificates[domain]
         
@@ -466,7 +482,8 @@ class SSLTerminator:
         return None
     
     def configure_platform_certificates(self) -> bool:
-        """Configure SSL certificates for platform services"""        try:
+        """Configure SSL certificates for platform services"""
+        try:
             platform_domains = [
                 "api.ia-influencer.com",
                 "dashboard.ia-influencer.com",
@@ -525,7 +542,8 @@ class SSLTerminator:
             return False
     
     def generate_nginx_ssl_config(self, domain: str) -> Optional[str]:
-        """Generate Nginx SSL configuration for domain"""        certificate = self.get_certificate_for_domain(domain)
+        """Generate Nginx SSL configuration for domain"""
+        certificate = self.get_certificate_for_domain(domain)
         if not certificate:
             return None
         
@@ -561,7 +579,8 @@ class SSLTerminator:
         return "\n".join(config_lines)
     
     def generate_haproxy_ssl_config(self, domain: str) -> Optional[str]:
-        """Generate HAProxy SSL configuration for domain"""        certificate = self.get_certificate_for_domain(domain)
+        """Generate HAProxy SSL configuration for domain"""
+        certificate = self.get_certificate_for_domain(domain)
         if not certificate:
             return None
         
@@ -596,7 +615,8 @@ class SSLTerminator:
             return None
     
     def check_certificate_renewals(self) -> List[str]:
-        """Check which certificates need renewal"""        expiring_certificates = []
+        """Check which certificates need renewal"""
+        expiring_certificates = []
         
         for domain, certificate in self.certificates.items():
             if certificate.days_until_expiry <= 30:
@@ -605,7 +625,8 @@ class SSLTerminator:
         return expiring_certificates
     
     def renew_certificates(self) -> Dict[str, bool]:
-        """Renew expiring certificates"""        renewal_results = {}
+        """Renew expiring certificates"""
+        renewal_results = {}
         expiring_certs = self.check_certificate_renewals()
         
         for domain in expiring_certs:
@@ -625,7 +646,8 @@ class SSLTerminator:
         return renewal_results
     
     def get_ssl_status(self) -> Dict[str, Any]:
-        """Get SSL terminator status"""        status = {
+        """Get SSL terminator status"""
+        status = {
             "certificates_count": len(set(cert.domain for cert in self.certificates.values())),
             "domains_count": len(self.certificates),
             "expiring_soon": len(self.check_certificate_renewals()),

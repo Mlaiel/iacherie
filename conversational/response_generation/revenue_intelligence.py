@@ -31,7 +31,8 @@ Features:
 - Revenue stream diversification strategies
 - Automated invoicing and payment processing
 - Revenue protection and loss prevention
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from dataclasses import dataclass, field
@@ -90,7 +91,8 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueStream(Enum):
-    """Revenue stream classifications"""    STREAMING_ROYALTIES = "streaming_royalties"
+    """Revenue stream classifications"""
+    STREAMING_ROYALTIES = "streaming_royalties"
     DIGITAL_SALES = "digital_sales"
     PHYSICAL_SALES = "physical_sales"
     PERFORMANCE_RIGHTS = "performance_rights"
@@ -107,7 +109,8 @@ class RevenueStream(Enum):
 
 
 class RevenueFrequency(Enum):
-    """Revenue payment frequency"""    DAILY = "daily"
+    """Revenue payment frequency"""
+    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -117,7 +120,8 @@ class RevenueFrequency(Enum):
 
 @dataclass
 class RevenueData:
-    """Revenue data structure"""    stream_type: RevenueStream
+    """Revenue data structure"""
+    stream_type: RevenueStream
     amount: Decimal
     currency: str
     period_start: datetime
@@ -127,8 +131,10 @@ class RevenueData:
     
 
 class RevenueIntelligenceEngine:
-    """    Advanced revenue intelligence and optimization system
-    """    
+    """
+    Advanced revenue intelligence and optimization system
+    """
+    
     def __init__(self, db_session: Session, cache_manager: CacheManager):
         self.db_session = db_session
         self.cache_manager = cache_manager
@@ -147,8 +153,10 @@ class RevenueIntelligenceEngine:
         user_id: str,
         time_period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """        Comprehensive revenue performance analysis
-        """        try:
+        """
+        Comprehensive revenue performance analysis
+        """
+        try:
             # Collect revenue data
             revenue_data = await self._collect_revenue_data(user_id, time_period)
             
@@ -188,8 +196,10 @@ class RevenueIntelligenceEngine:
         user_id: str,
         creator_profile: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Generate personalized monetization strategy
-        """        try:
+        """
+        Generate personalized monetization strategy
+        """
+        try:
             # Analyze current revenue streams
             current_streams = await self._analyze_current_streams(user_id)
             
@@ -231,8 +241,10 @@ class RevenueIntelligenceEngine:
         user_id: str,
         platform: str
     ) -> Dict[str, Any]:
-        """        Platform-specific earnings optimization
-        """        try:
+        """
+        Platform-specific earnings optimization
+        """
+        try:
             # Platform performance analysis
             platform_performance = await self._analyze_platform_performance_detailed(
                 user_id, platform
@@ -276,8 +288,10 @@ class RevenueIntelligenceEngine:
         content_id: str,
         investment_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Calculate return on investment for specific content
-        """        try:
+        """
+        Calculate return on investment for specific content
+        """
+        try:
             # Collect content revenue data
             content_revenue = await self._collect_content_revenue(content_id)
             
@@ -322,21 +336,24 @@ class RevenueIntelligenceEngine:
         user_id: str, 
         time_period: timedelta
     ) -> List[RevenueData]:
-        """Collect comprehensive revenue data"""        # Implementation details...
+        """Collect comprehensive revenue data"""
+        # Implementation details...
         pass
     
     async def _analyze_by_stream_type(
         self, 
         revenue_data: List[RevenueData]
     ) -> Dict[str, Any]:
-        """Analyze revenue by stream type"""        # Implementation details...
+        """Analyze revenue by stream type"""
+        # Implementation details...
         pass
     
     async def _analyze_platform_performance(
         self, 
         revenue_data: List[RevenueData]
     ) -> Dict[str, Any]:
-        """Analyze platform performance comparison"""        # Implementation details...
+        """Analyze platform performance comparison"""
+        # Implementation details...
         pass
     
     async def _analyze_growth_trends(
@@ -344,7 +361,8 @@ class RevenueIntelligenceEngine:
         user_id: str, 
         revenue_data: List[RevenueData]
     ) -> Dict[str, Any]:
-        """Analyze revenue growth trends"""        # Implementation details...
+        """Analyze revenue growth trends"""
+        # Implementation details...
         pass
     
     async def _identify_optimization_opportunities(
@@ -352,7 +370,8 @@ class RevenueIntelligenceEngine:
         revenue_data: List[RevenueData],
         stream_analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Identify revenue optimization opportunities"""        # Implementation details...
+        """Identify revenue optimization opportunities"""
+        # Implementation details...
         pass
     
     async def _generate_revenue_forecast(
@@ -360,13 +379,16 @@ class RevenueIntelligenceEngine:
         user_id: str, 
         revenue_data: List[RevenueData]
     ) -> Dict[str, Any]:
-        """Generate revenue forecasting"""        # Implementation details...
+        """Generate revenue forecasting"""
+        # Implementation details...
         pass
 
 
 class TaxOptimizationAdvisor:
-    """    Tax optimization and compliance advisor for content creators
-    """    
+    """
+    Tax optimization and compliance advisor for content creators
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
@@ -376,8 +398,10 @@ class TaxOptimizationAdvisor:
         revenue_data: List[RevenueData],
         jurisdiction: str
     ) -> Dict[str, Any]:
-        """        Analyze tax situation and provide optimization advice
-        """        try:
+        """
+        Analyze tax situation and provide optimization advice
+        """
+        try:
             # Categorize income streams
             income_categorization = await self._categorize_income_for_tax(revenue_data)
             
@@ -410,8 +434,10 @@ class TaxOptimizationAdvisor:
 
 
 class InvestmentAdvisor:
-    """    Investment advisor for content creators
-    """    
+    """
+    Investment advisor for content creators
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
@@ -420,8 +446,10 @@ class InvestmentAdvisor:
         user_id: str,
         financial_profile: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Generate personalized investment recommendations
-        """        try:
+        """
+        Generate personalized investment recommendations
+        """
+        try:
             # Risk assessment
             risk_profile = await self._assess_risk_profile(financial_profile)
             

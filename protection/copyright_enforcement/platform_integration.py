@@ -23,7 +23,8 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + DevOps + Leg
 ALL RIGHTS RESERVED. UNAUTHORIZED USE PROHIBITED.
 This code belongs exclusively to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use will result in immediate legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import aiohttp
 import json
@@ -51,7 +52,8 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types for content protection"""    YOUTUBE = "youtube"
+    """Supported platform types for content protection"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
     TIKTOK = "tiktok"
@@ -74,7 +76,8 @@ class PlatformType(Enum):
 
 
 class APICapability(Enum):
-    """API capabilities for each platform"""    CONTENT_SEARCH = "content_search"
+    """API capabilities for each platform"""
+    CONTENT_SEARCH = "content_search"
     CONTENT_UPLOAD = "content_upload"
     CONTENT_DELETE = "content_delete"
     DMCA_SUBMISSION = "dmca_submission"
@@ -87,7 +90,8 @@ class APICapability(Enum):
 
 
 class AuthMethod(Enum):
-    """Authentication methods for platform APIs"""    OAUTH2 = "oauth2"
+    """Authentication methods for platform APIs"""
+    OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
     BASIC_AUTH = "basic_auth"
@@ -97,7 +101,8 @@ class AuthMethod(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform API credentials structure"""    platform: PlatformType
+    """Platform API credentials structure"""
+    platform: PlatformType
     auth_method: AuthMethod
     client_id: Optional[str] = None
     client_secret: Optional[str] = None
@@ -110,14 +115,16 @@ class PlatformCredentials:
     quota_reset_time: Optional[datetime] = None
     
     def is_expired(self) -> bool:
-        """Check if token is expired"""        if not self.token_expires_at:
+        """Check if token is expired"""
+        if not self.token_expires_at:
             return False
         return datetime.utcnow() >= self.token_expires_at
 
 
 @dataclass
 class PlatformConfig:
-    """Platform-specific configuration"""    platform: PlatformType
+    """Platform-specific configuration"""
+    platform: PlatformType
     base_url: str
     api_version: str
     supported_capabilities: Set[APICapability]
@@ -131,7 +138,8 @@ class PlatformConfig:
 
 
 class ContentSearchResult(BaseModel):
-    """Content search result structure"""    platform: PlatformType
+    """Content search result structure"""
+    platform: PlatformType
     content_id: str
     url: str
     title: str
@@ -147,7 +155,8 @@ class ContentSearchResult(BaseModel):
 
 
 class RevenueData(BaseModel):
-    """Platform revenue data structure"""    platform: PlatformType
+    """Platform revenue data structure"""
+    platform: PlatformType
     content_id: str
     revenue_amount: float
     currency: str
@@ -158,7 +167,8 @@ class RevenueData(BaseModel):
 
 
 class PlatformAPIManager:
-    """Ultra-advanced multi-platform API management system"""    
+    """Ultra-advanced multi-platform API management system"""
+    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.rate_limiter = RateLimiter()
@@ -169,7 +179,8 @@ class PlatformAPIManager:
         self._initialize_platform_configs()
     
     def _initialize_platform_configs(self) -> None:
-        """Initialize platform-specific configurations"""        
+        """Initialize platform-specific configurations"""
+        
         # YouTube Configuration
         self.platform_configs[PlatformType.YOUTUBE] = PlatformConfig(
             platform=PlatformType.YOUTUBE,
@@ -277,7 +288,8 @@ class PlatformAPIManager:
         self._add_additional_platform_configs()
     
     def _add_additional_platform_configs(self) -> None:
-        """Add configurations for additional platforms"""        
+        """Add configurations for additional platforms"""
+        
         # Facebook Configuration
         self.platform_configs[PlatformType.FACEBOOK] = PlatformConfig(
             platform=PlatformType.FACEBOOK,
@@ -319,7 +331,8 @@ class PlatformAPIManager:
         platform: PlatformType, 
         credentials: PlatformCredentials
     ) -> bool:
-        """Authenticate with platform API"""        try:
+        """Authenticate with platform API"""
+        try:
             config = self.platform_configs.get(platform)
             if not config:
                 logger.error(f"Platform configuration not found: {platform}")
@@ -345,7 +358,8 @@ class PlatformAPIManager:
         credentials: PlatformCredentials,
         config: PlatformConfig
     ) -> bool:
-        """Handle OAuth2 authentication"""        try:
+        """Handle OAuth2 authentication"""
+        try:
             if credentials.is_expired():
                 # Refresh token
                 success = await self._refresh_oauth2_token(platform, credentials, config)
@@ -377,7 +391,8 @@ class PlatformAPIManager:
         credentials: PlatformCredentials,
         config: PlatformConfig
     ) -> bool:
-        """Refresh OAuth2 access token"""        try:
+        """Refresh OAuth2 access token"""
+        try:
             if not credentials.refresh_token:
                 return False
             
@@ -426,7 +441,8 @@ class PlatformAPIManager:
         credentials: PlatformCredentials,
         config: PlatformConfig
     ) -> bool:
-        """Handle API key authentication"""        try:
+        """Handle API key authentication"""
+        try:
             session = await self._get_session(platform)
             
             # Test API key with a simple endpoint
@@ -450,7 +466,8 @@ class PlatformAPIManager:
         credentials: PlatformCredentials,
         config: PlatformConfig
     ) -> bool:
-        """Handle JWT authentication"""        try:
+        """Handle JWT authentication"""
+        try:
             # JWT authentication logic would go here
             # Implementation depends on specific platform requirements
             self.credentials[platform] = credentials
@@ -460,7 +477,8 @@ class PlatformAPIManager:
             return False
     
     async def _get_session(self, platform: PlatformType) -> aiohttp.ClientSession:
-        """Get or create HTTP session for platform"""        if platform not in self.session_pool:
+        """Get or create HTTP session for platform"""
+        if platform not in self.session_pool:
             timeout = aiohttp.ClientTimeout(total=30)
             self.session_pool[platform] = aiohttp.ClientSession(timeout=timeout)
         return self.session_pool[platform]
@@ -472,7 +490,8 @@ class PlatformAPIManager:
         content_type: str = "all",
         max_results: int = 50
     ) -> List[ContentSearchResult]:
-        """Search for content on platform"""        try:
+        """Search for content on platform"""
+        try:
             if platform not in self.credentials:
                 logger.error(f"Platform not authenticated: {platform}")
                 return []
@@ -514,7 +533,8 @@ class PlatformAPIManager:
         query: str,
         max_results: int
     ) -> List[ContentSearchResult]:
-        """Search YouTube content"""        try:
+        """Search YouTube content"""
+        try:
             params = {
                 "part": "snippet",
                 "q": query,
@@ -565,7 +585,8 @@ class PlatformAPIManager:
         query: str,
         max_results: int
     ) -> List[ContentSearchResult]:
-        """Search Instagram content"""        try:
+        """Search Instagram content"""
+        try:
             # Instagram search implementation
             # Note: Instagram API has limited search capabilities
             headers = {"Authorization": f"Bearer {credentials.access_token}"}
@@ -618,7 +639,8 @@ class PlatformAPIManager:
         query: str,
         max_results: int
     ) -> List[ContentSearchResult]:
-        """Search Spotify content"""        try:
+        """Search Spotify content"""
+        try:
             headers = {"Authorization": f"Bearer {credentials.access_token}"}
             params = {
                 "q": query,
@@ -667,7 +689,8 @@ class PlatformAPIManager:
         query: str,
         max_results: int
     ) -> List[ContentSearchResult]:
-        """Search TikTok content"""        try:
+        """Search TikTok content"""
+        try:
             headers = {"Authorization": f"Bearer {credentials.access_token}"}
             
             # TikTok Research API
@@ -717,7 +740,8 @@ class PlatformAPIManager:
         platform: PlatformType, 
         content_id: str
     ) -> Dict[str, Any]:
-        """Get analytics data for specific content"""        try:
+        """Get analytics data for specific content"""
+        try:
             if platform not in self.credentials:
                 return {"error": "Platform not authenticated"}
             
@@ -747,7 +771,8 @@ class PlatformAPIManager:
         start_date: datetime,
         end_date: datetime
     ) -> List[RevenueData]:
-        """Get revenue data from platform"""        try:
+        """Get revenue data from platform"""
+        try:
             if platform not in self.credentials:
                 return []
             
@@ -769,7 +794,8 @@ class PlatformAPIManager:
         platform: PlatformType, 
         dmca_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Submit DMCA takedown request to platform"""        try:
+        """Submit DMCA takedown request to platform"""
+        try:
             if platform not in self.credentials:
                 return {"success": False, "error": "Platform not authenticated"}
             
@@ -796,7 +822,8 @@ class PlatformAPIManager:
         platform: PlatformType, 
         monitoring_config: Dict[str, Any]
     ) -> bool:
-        """Setup real-time content monitoring"""        try:
+        """Setup real-time content monitoring"""
+        try:
             config = self.platform_configs[platform]
             if not config.real_time_monitoring:
                 return False
@@ -811,16 +838,19 @@ class PlatformAPIManager:
             return False
     
     async def cleanup_sessions(self) -> None:
-        """Cleanup HTTP sessions"""        for session in self.session_pool.values():
+        """Cleanup HTTP sessions"""
+        for session in self.session_pool.values():
             await session.close()
         self.session_pool.clear()
     
     def __del__(self):
-        """Cleanup on destruction"""        asyncio.create_task(self.cleanup_sessions())
+        """Cleanup on destruction"""
+        asyncio.create_task(self.cleanup_sessions())
 
 
 class MultiPlatformMonitor:
-    """Real-time multi-platform content monitoring system"""    
+    """Real-time multi-platform content monitoring system"""
+    
     def __init__(self):
         self.api_manager = PlatformAPIManager()
         self.monitoring_tasks: Dict[PlatformType, asyncio.Task] = {}
@@ -832,7 +862,8 @@ class MultiPlatformMonitor:
         keywords: List[str],
         callback: callable
     ) -> bool:
-        """Start real-time monitoring across multiple platforms"""        try:
+        """Start real-time monitoring across multiple platforms"""
+        try:
             self.is_monitoring = True
             
             for platform in platforms:
@@ -848,7 +879,8 @@ class MultiPlatformMonitor:
             return False
     
     async def stop_monitoring(self) -> None:
-        """Stop all monitoring tasks"""        self.is_monitoring = False
+        """Stop all monitoring tasks"""
+        self.is_monitoring = False
         
         for task in self.monitoring_tasks.values():
             task.cancel()
@@ -861,7 +893,8 @@ class MultiPlatformMonitor:
         keywords: List[str],
         callback: callable
     ) -> None:
-        """Monitor specific platform for content"""        while self.is_monitoring:
+        """Monitor specific platform for content"""
+        while self.is_monitoring:
             try:
                 for keyword in keywords:
                     results = await self.api_manager.search_content(

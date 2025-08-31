@@ -3,7 +3,8 @@ Optimizes content for each platform's specific requirements and audience.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Tuple
 import re
@@ -18,9 +19,11 @@ from .utils.platform_rules import PLATFORM_OPTIMIZATION_RULES
 logger = logging.getLogger(__name__)
 
 class ContentOptimizer:
-    """    Advanced content optimizer that adapts content for each platform's 
+    """
+    Advanced content optimizer that adapts content for each platform's 
     specific requirements, algorithms, and audience preferences.
-    """    
+    """
+    
     def __init__(self):
         self.video_processor = VideoProcessor()
         self.audio_processor = AudioProcessor()
@@ -37,7 +40,8 @@ class ContentOptimizer:
         content_metadata: ContentMetadata,
         platform_name: str
     ) -> ContentMetadata:
-        """Optimize content for a specific platform."""        try:
+        """Optimize content for a specific platform."""
+        try:
             platform_rules = self.platform_rules.get(platform_name.lower(), {})
             if not platform_rules:
                 logger.warning(f"No optimization rules found for {platform_name}")
@@ -73,7 +77,8 @@ class ContentOptimizer:
         content_metadata: ContentMetadata,
         platform_rules: Dict[str, Any]
     ) -> ContentMetadata:
-        """Optimize text content based on platform rules."""        try:
+        """Optimize text content based on platform rules."""
+        try:
             # Title optimization
             if "title" in platform_rules:
                 title_rules = platform_rules["title"]
@@ -124,7 +129,8 @@ class ContentOptimizer:
         content_metadata: ContentMetadata,
         platform_rules: Dict[str, Any]
     ) -> ContentMetadata:
-        """Optimize media content based on platform rules."""        try:
+        """Optimize media content based on platform rules."""
+        try:
             if not content_metadata.file_path:
                 return content_metadata
             
@@ -199,7 +205,8 @@ class ContentOptimizer:
         content_metadata: ContentMetadata,
         platform_rules: Dict[str, Any]
     ) -> ContentMetadata:
-        """Optimize SEO elements for platform discovery."""        try:
+        """Optimize SEO elements for platform discovery."""
+        try:
             if "seo" in platform_rules:
                 seo_rules = platform_rules["seo"]
                 
@@ -237,7 +244,8 @@ class ContentOptimizer:
         content_metadata: ContentMetadata,
         platform_rules: Dict[str, Any]
     ) -> ContentMetadata:
-        """Optimize timing-related elements."""        try:
+        """Optimize timing-related elements."""
+        try:
             if "timing" in platform_rules:
                 timing_rules = platform_rules["timing"]
                 
@@ -270,7 +278,8 @@ class ContentOptimizer:
         content_metadata: ContentMetadata,
         platform_rules: Dict[str, Any]
     ) -> ContentMetadata:
-        """Optimize monetization settings for platform."""        try:
+        """Optimize monetization settings for platform."""
+        try:
             if "monetization" in platform_rules and content_metadata.monetization_enabled:
                 monetization_rules = platform_rules["monetization"]
                 
@@ -303,7 +312,8 @@ class ContentOptimizer:
         content_metadata: ContentMetadata,
         available_categories: List[str]
     ) -> Optional[str]:
-        """Automatically select the best category for content."""        try:
+        """Automatically select the best category for content."""
+        try:
             # Simple keyword-based category selection
             content_text = f"{content_metadata.title} {content_metadata.description}".lower()
             
@@ -339,7 +349,8 @@ class ContentOptimizer:
         content_metadata: ContentMetadata,
         platform_name: str
     ) -> Dict[str, Any]:
-        """Get optimization suggestions without applying them."""        try:
+        """Get optimization suggestions without applying them."""
+        try:
             platform_rules = self.platform_rules.get(platform_name.lower(), {})
             suggestions = {
                 "text_optimizations": [],
@@ -398,7 +409,8 @@ class ContentOptimizer:
         content_list: List[ContentMetadata],
         target_platforms: List[str]
     ) -> Dict[str, List[ContentMetadata]]:
-        """Optimize multiple content pieces for multiple platforms."""        try:
+        """Optimize multiple content pieces for multiple platforms."""
+        try:
             results = {}
             
             for platform in target_platforms:

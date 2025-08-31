@@ -204,7 +204,8 @@ __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
 
 # System configuration and initialization
 def get_system_info() -> dict:
-    """Get comprehensive system information"""    return {
+    """Get comprehensive system information"""
+    return {
         "package": "ai.core",
         "version": __version__,
         "author": __author__,
@@ -248,7 +249,8 @@ def get_system_info() -> dict:
     }
 
 def initialize_ai_system() -> dict:
-    """Initialize the complete AI system and return status"""    try:
+    """Initialize the complete AI system and return status"""
+    try:
         # System is automatically initialized when imported
         # This function provides initialization status
         return {
@@ -268,7 +270,8 @@ def initialize_ai_system() -> dict:
 
 # Convenience functions for quick AI operations
 async def quick_content_optimization(user_id: str, content_data: dict, target_platforms: list = None) -> dict:
-    """Quick content optimization workflow"""    try:
+    """Quick content optimization workflow"""
+    try:
         request = WorkflowRequest(
             request_id=f"quick_opt_{user_id}_{int(datetime.utcnow().timestamp())}",
             workflow_type=WorkflowType.CONTENT_OPTIMIZATION,
@@ -286,7 +289,8 @@ async def quick_content_optimization(user_id: str, content_data: dict, target_pl
         return {"error": str(e), "status": "failed"}
 
 async def quick_collaboration_discovery(user_id: str, collaboration_types: list = None) -> dict:
-    """Quick collaboration discovery workflow"""    try:
+    """Quick collaboration discovery workflow"""
+    try:
         request = WorkflowRequest(
             request_id=f"quick_collab_{user_id}_{int(datetime.utcnow().timestamp())}",
             workflow_type=WorkflowType.COLLABORATION_DISCOVERY,
@@ -303,7 +307,8 @@ async def quick_collaboration_discovery(user_id: str, collaboration_types: list 
         return {"error": str(e), "status": "failed"}
 
 async def quick_revenue_analysis(user_id: str, prediction_horizon: str = "30_days") -> dict:
-    """Quick revenue analysis and optimization"""    try:
+    """Quick revenue analysis and optimization"""
+    try:
         request = WorkflowRequest(
             request_id=f"quick_revenue_{user_id}_{int(datetime.utcnow().timestamp())}",
             workflow_type=WorkflowType.REVENUE_MAXIMIZATION,
@@ -321,7 +326,8 @@ async def quick_revenue_analysis(user_id: str, prediction_horizon: str = "30_day
 
 # System status and health check
 def get_system_status() -> dict:
-    """Get current AI system status"""    try:
+    """Get current AI system status"""
+    try:
         import asyncio
         
         # If we're in an async context, get full status
@@ -695,10 +701,12 @@ __module_info__ = {
 }
 
 def get_module_info() -> dict:
-    """Get comprehensive module information"""    return __module_info__
+    """Get comprehensive module information"""
+    return __module_info__
 
 def get_health_status() -> dict:
-    """Get overall module health status"""    return {
+    """Get overall module health status"""
+    return {
         "ai_engine": ai_engine.health_check(),
         "performance_monitor": performance_monitor.get_system_health(),
         "metrics_collector": metrics_collector.get_system_health(),
@@ -707,14 +715,16 @@ def get_health_status() -> dict:
     }
 
 def initialize_module(config: dict = None) -> bool:
-    """    Initialize the AI core module with configuration
+    """
+    Initialize the AI core module with configuration
     
     Args:
         config: Configuration dictionary
         
     Returns:
         True if initialization successful
-    """    try:
+    """
+    try:
         logger = logging.getLogger(__name__)
         logger.info(f"Initializing AI Core Module v{__version__}")
         
@@ -739,7 +749,8 @@ def initialize_module(config: dict = None) -> bool:
         return False
 
 def shutdown_module():
-    """Gracefully shutdown the AI core module"""    logger = logging.getLogger(__name__)
+    """Gracefully shutdown the AI core module"""
+    logger = logging.getLogger(__name__)
     logger.info("Shutting down AI Core Module...")
     
     try:

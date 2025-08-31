@@ -7,7 +7,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
-"""import numpy as np
+"""
+import numpy as np
 import torch
 import torch.nn as nn
 from typing import Dict, List, Optional, Tuple, Union, Any, Callable
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 
 class WaveformType(Enum):
-    """Waveform types for oscillator generation."""    SINE = "sine"
+    """Waveform types for oscillator generation."""
+    SINE = "sine"
     COSINE = "cosine"
     SQUARE = "square"
     SAWTOOTH = "sawtooth"
@@ -37,7 +39,8 @@ class WaveformType(Enum):
 
 
 class FilterType(Enum):
-    """Filter types for synthesis."""    LOWPASS = "lowpass"
+    """Filter types for synthesis."""
+    LOWPASS = "lowpass"
     HIGHPASS = "highpass"
     BANDPASS = "bandpass"
     BANDSTOP = "bandstop"
@@ -46,7 +49,8 @@ class FilterType(Enum):
 
 @dataclass
 class OscillatorConfig:
-    """Configuration for oscillator generation."""    sample_rate: int = 44100
+    """Configuration for oscillator generation."""
+    sample_rate: int = 44100
     frequency: float = 440.0
     amplitude: float = 1.0
     phase: float = 0.0
@@ -71,7 +75,8 @@ class OscillatorConfig:
 
 @dataclass
 class FilterConfig:
-    """Configuration for filtering operations."""    filter_type: FilterType = FilterType.LOWPASS
+    """Configuration for filtering operations."""
+    filter_type: FilterType = FilterType.LOWPASS
     cutoff_frequency: float = 1000.0
     resonance: float = 0.7
     order: int = 4
@@ -85,7 +90,8 @@ class FilterConfig:
 
 
 class BaseOscillator(ABC):
-    """Abstract base class for oscillators."""    
+    """Abstract base class for oscillators."""
+    
     def __init__(self, config: OscillatorConfig):
         self.config = config
         self.phase_accumulator = config.phase
@@ -93,25 +99,31 @@ class BaseOscillator(ABC):
         
     @abstractmethod
     def generate(self, num_samples: int) -> np.ndarray:
-        """Generate waveform samples."""        pass
+        """Generate waveform samples."""
+        pass
         
     def set_frequency(self, frequency: float) -> None:
-        """Set oscillator frequency."""        self.config.frequency = frequency
+        """Set oscillator frequency."""
+        self.config.frequency = frequency
         
     def set_amplitude(self, amplitude: float) -> None:
-        """Set oscillator amplitude."""        self.config.amplitude = amplitude
+        """Set oscillator amplitude."""
+        self.config.amplitude = amplitude
         
     def reset_phase(self, phase: float = 0.0) -> None:
-        """Reset phase accumulator."""        self.phase_accumulator = phase
+        """Reset phase accumulator."""
+        self.phase_accumulator = phase
 
 
 class SineOscillator(BaseOscillator):
-    """Sine wave oscillator with high precision."""    
+    """Sine wave oscillator with high precision."""
+    
     def __init__(self, config: OscillatorConfig):
         super().__init__(config)
         
     def generate(self, num_samples: int) -> np.ndarray:
-        """Generate sine wave samples."""        # Calculate phase increment
+        """Generate sine wave samples."""
+        # Calculate phase increment
         phase_increment = 2 * np.pi * self.config.frequency / self.sample_rate
         
         # Generate phase array
@@ -139,13 +151,15 @@ class SineOscillator(BaseOscillator):
 
 
 class SquareOscillator(BaseOscillator):
-    """Square wave oscillator with anti-aliasing."""    
+    """Square wave oscillator with anti-aliasing."""
+    
     def __init__(self, config: OscillatorConfig):
         super().__init__(config)
         self.blep_table = self._generate_blep_table() if config.use_antialiasing else None
         
     def _generate_blep_table(self, table_size: int = 4096) -> np.ndarray:
-        """Generate Band-Limited Step (BLEP) table for anti-aliasing."""        # Generate sinc function for band limiting
+        """Generate Band-Limited Step (BLEP) table for anti-aliasing."""
+        # Generate sinc function for band limiting
         x = np.linspace(-4, 4, table_size)
         sinc = np.sinc(x)
         
@@ -156,7 +170,8 @@ class SquareOscillator(BaseOscillator):
         return blep.astype(np.float32)
         
     def generate(self, num_samples: int) -> np.ndarray:
-        """Generate anti-aliased square wave."""        phase_increment = self.config.frequency / self.sample_rate
+        """Generate anti-aliased square wave."""
+        phase_increment = self.config.frequency / self.sample_rate
         waveform = np.zeros(num_samples, dtype=np.float32)
         
         for i in range(num_samples):
@@ -186,20 +201,23 @@ class SquareOscillator(BaseOscillator):
         return waveform
         
     def _apply_blep(self, start_index: int, num_samples: int, amplitude: float) -> np.ndarray:
-        """Apply BLEP correction."""        blep_samples = min(len(self.blep_table), num_samples - start_index)
+        """Apply BLEP correction."""
+        blep_samples = min(len(self.blep_table), num_samples - start_index)
         correction = np.zeros(num_samples - start_index, dtype=np.float32)
         correction[:blep_samples] = amplitude * self.blep_table[:blep_samples]
         return correction
 
 
 class SawtoothOscillator(BaseOscillator):
-    """Sawtooth wave oscillator with anti-aliasing."""    
+    """Sawtooth wave oscillator with anti-aliasing."""
+    
     def __init__(self, config: OscillatorConfig):
         super().__init__(config)
         self.polyblep_enabled = config.use_antialiasing
         
     def generate(self, num_samples: int) -> np.ndarray:
-        """Generate anti-aliased sawtooth wave."""        phase_increment = self.config.frequency / self.sample_rate
+        """Generate anti-aliased sawtooth wave."""
+        phase_increment = self.config.frequency / self.sample_rate
         waveform = np.zeros(num_samples, dtype=np.float32)
         
         for i in range(num_samples):
@@ -217,7 +235,8 @@ class SawtoothOscillator(BaseOscillator):
         return waveform
         
     def _polyblep_sawtooth(self, phase_increment: float) -> float:
-        """Generate PolyBLEP sawtooth sample."""        value = 2.0 * self.phase_accumulator - 1.0
+        """Generate PolyBLEP sawtooth sample."""
+        value = 2.0 * self.phase_accumulator - 1.0
         
         # Apply PolyBLEP at discontinuity
         if self.phase_accumulator < phase_increment:
@@ -227,7 +246,8 @@ class SawtoothOscillator(BaseOscillator):
         return self.config.amplitude * value
         
     def _polyblep(self, t: float) -> float:
-        """PolyBLEP function for anti-aliasing."""        if t < 1.0:
+        """PolyBLEP function for anti-aliasing."""
+        if t < 1.0:
             return t + t - t * t - 1.0
         elif t < 2.0:
             t -= 1.0
@@ -237,12 +257,14 @@ class SawtoothOscillator(BaseOscillator):
 
 
 class TriangleOscillator(BaseOscillator):
-    """Triangle wave oscillator."""    
+    """Triangle wave oscillator."""
+    
     def __init__(self, config: OscillatorConfig):
         super().__init__(config)
         
     def generate(self, num_samples: int) -> np.ndarray:
-        """Generate triangle wave."""        phase_increment = self.config.frequency / self.sample_rate
+        """Generate triangle wave."""
+        phase_increment = self.config.frequency / self.sample_rate
         waveform = np.zeros(num_samples, dtype=np.float32)
         
         for i in range(num_samples):
@@ -262,13 +284,15 @@ class TriangleOscillator(BaseOscillator):
 
 
 class NoiseOscillator(BaseOscillator):
-    """Noise generator with different color profiles."""    
+    """Noise generator with different color profiles."""
+    
     def __init__(self, config: OscillatorConfig):
         super().__init__(config)
         self.noise_state = np.random.RandomState(42)  # Reproducible noise
         
     def generate(self, num_samples: int) -> np.ndarray:
-        """Generate colored noise."""        if self.config.noise_type == "white":
+        """Generate colored noise."""
+        if self.config.noise_type == "white":
             return self._generate_white_noise(num_samples)
         elif self.config.noise_type == "pink":
             return self._generate_pink_noise(num_samples)
@@ -278,10 +302,12 @@ class NoiseOscillator(BaseOscillator):
             return self._generate_white_noise(num_samples)
             
     def _generate_white_noise(self, num_samples: int) -> np.ndarray:
-        """Generate white noise."""        return self.config.amplitude * self.noise_state.randn(num_samples).astype(np.float32)
+        """Generate white noise."""
+        return self.config.amplitude * self.noise_state.randn(num_samples).astype(np.float32)
         
     def _generate_pink_noise(self, num_samples: int) -> np.ndarray:
-        """Generate pink noise (1/f noise)."""        # Simple pink noise approximation using filtering
+        """Generate pink noise (1/f noise)."""
+        # Simple pink noise approximation using filtering
         white = self.noise_state.randn(num_samples)
         
         # Apply 1/f shaping filter
@@ -291,7 +317,8 @@ class NoiseOscillator(BaseOscillator):
         return self.config.amplitude * pink.astype(np.float32)
         
     def _generate_brown_noise(self, num_samples: int) -> np.ndarray:
-        """Generate brown noise (1/f² noise)."""        # Brown noise as integrated white noise
+        """Generate brown noise (1/f² noise)."""
+        # Brown noise as integrated white noise
         white = self.noise_state.randn(num_samples)
         brown = np.cumsum(white)
         
@@ -303,29 +330,34 @@ class NoiseOscillator(BaseOscillator):
 
 
 class OscillatorEngine:
-    """Multi-oscillator engine with mixing capabilities."""    
+    """Multi-oscillator engine with mixing capabilities."""
+    
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
         self.oscillators: Dict[str, BaseOscillator] = {}
         self.mixing_levels: Dict[str, float] = {}
         
     def add_oscillator(self, name: str, oscillator: BaseOscillator, level: float = 1.0) -> None:
-        """Add oscillator to engine."""        self.oscillators[name] = oscillator
+        """Add oscillator to engine."""
+        self.oscillators[name] = oscillator
         self.mixing_levels[name] = level
         logger.info(f"Added oscillator: {name}")
         
     def remove_oscillator(self, name: str) -> None:
-        """Remove oscillator from engine."""        if name in self.oscillators:
+        """Remove oscillator from engine."""
+        if name in self.oscillators:
             del self.oscillators[name]
             del self.mixing_levels[name]
             logger.info(f"Removed oscillator: {name}")
             
     def set_mixing_level(self, name: str, level: float) -> None:
-        """Set mixing level for oscillator."""        if name in self.mixing_levels:
+        """Set mixing level for oscillator."""
+        if name in self.mixing_levels:
             self.mixing_levels[name] = level
             
     def generate_mixed(self, num_samples: int) -> np.ndarray:
-        """Generate mixed output from all oscillators."""        if not self.oscillators:
+        """Generate mixed output from all oscillators."""
+        if not self.oscillators:
             return np.zeros(num_samples, dtype=np.float32)
             
         # Generate from all oscillators
@@ -344,7 +376,8 @@ class OscillatorEngine:
 
 
 class WavetableSynthesizer:
-    """Wavetable synthesis engine with interpolation."""    
+    """Wavetable synthesis engine with interpolation."""
+    
     def __init__(self, sample_rate: int = 44100, table_size: int = 2048):
         self.sample_rate = sample_rate
         self.table_size = table_size
@@ -355,7 +388,8 @@ class WavetableSynthesizer:
         self._generate_default_tables()
         
     def _generate_default_tables(self) -> None:
-        """Generate default wavetable collection."""        # Basic waveforms
+        """Generate default wavetable collection."""
+        # Basic waveforms
         x = np.linspace(0, 2 * np.pi, self.table_size, endpoint=False)
         
         self.wavetables['sine'] = np.sin(x)
@@ -374,7 +408,8 @@ class WavetableSynthesizer:
         logger.info(f"Generated {len(self.wavetables)} default wavetables")
         
     def add_wavetable(self, name: str, waveform: np.ndarray) -> None:
-        """Add custom wavetable."""        # Resample to table size if necessary
+        """Add custom wavetable."""
+        # Resample to table size if necessary
         if len(waveform) != self.table_size:
             x_old = np.linspace(0, 1, len(waveform))
             x_new = np.linspace(0, 1, self.table_size)
@@ -389,7 +424,8 @@ class WavetableSynthesizer:
         
     def synthesize(self, frequency: float, num_samples: int, 
                   wavetable: str = 'sine') -> np.ndarray:
-        """Synthesize audio using wavetable."""        if wavetable not in self.wavetables:
+        """Synthesize audio using wavetable."""
+        if wavetable not in self.wavetables:
             logger.warning(f"Wavetable {wavetable} not found, using sine")
             wavetable = 'sine'
             
@@ -419,7 +455,8 @@ class WavetableSynthesizer:
     def morphing_synthesis(self, frequency: float, num_samples: int,
                           wavetable1: str, wavetable2: str, 
                           morph_amount: float) -> np.ndarray:
-        """Synthesize with morphing between two wavetables."""        if wavetable1 not in self.wavetables or wavetable2 not in self.wavetables:
+        """Synthesize with morphing between two wavetables."""
+        if wavetable1 not in self.wavetables or wavetable2 not in self.wavetables:
             return self.synthesize(frequency, num_samples)
             
         table1 = self.wavetables[wavetable1]
@@ -442,7 +479,8 @@ class WavetableSynthesizer:
 
 
 class GranularSynthesis:
-    """Granular synthesis engine for texture generation."""    
+    """Granular synthesis engine for texture generation."""
+    
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
         self.grain_size = 1024
@@ -452,7 +490,8 @@ class GranularSynthesis:
     def synthesize_texture(self, source_audio: np.ndarray, duration: float,
                           pitch_shift: float = 1.0, time_stretch: float = 1.0,
                           grain_size_var: float = 0.1) -> np.ndarray:
-        """Generate granular synthesis texture."""        num_output_samples = int(duration * self.sample_rate)
+        """Generate granular synthesis texture."""
+        num_output_samples = int(duration * self.sample_rate)
         output = np.zeros(num_output_samples, dtype=np.float32)
         
         # Calculate grain parameters
@@ -494,7 +533,8 @@ class GranularSynthesis:
         return output
         
     def _extract_grain(self, source: np.ndarray, position: float, size: int) -> np.ndarray:
-        """Extract grain from source audio."""        start_sample = int(position * self.sample_rate)
+        """Extract grain from source audio."""
+        start_sample = int(position * self.sample_rate)
         end_sample = min(start_sample + size, len(source))
         
         if start_sample >= len(source):
@@ -510,7 +550,8 @@ class GranularSynthesis:
         return grain
         
     def _pitch_shift_grain(self, grain: np.ndarray, shift: float) -> np.ndarray:
-        """Apply pitch shifting to grain."""        if shift == 1.0:
+        """Apply pitch shifting to grain."""
+        if shift == 1.0:
             return grain
             
         # Simple pitch shifting using resampling
@@ -524,12 +565,14 @@ class GranularSynthesis:
             return grain
             
     def _grain_window(self, size: int) -> np.ndarray:
-        """Generate grain window function."""        # Hanning window
+        """Generate grain window function."""
+        # Hanning window
         return np.hanning(size).astype(np.float32)
 
 
 class FM_Synthesizer:
-    """Frequency Modulation synthesis engine."""    
+    """Frequency Modulation synthesis engine."""
+    
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
         
@@ -545,13 +588,15 @@ class FM_Synthesizer:
         
     def set_parameters(self, carrier_freq: float, modulator_freq: float,
                       modulation_index: float, amplitude: float = 1.0) -> None:
-        """Set FM synthesis parameters."""        self.carrier_freq = carrier_freq
+        """Set FM synthesis parameters."""
+        self.carrier_freq = carrier_freq
         self.modulator_freq = modulator_freq
         self.modulation_index = modulation_index
         self.amplitude = amplitude
         
     def synthesize(self, num_samples: int) -> np.ndarray:
-        """Generate FM synthesis audio."""        output = np.zeros(num_samples, dtype=np.float32)
+        """Generate FM synthesis audio."""
+        output = np.zeros(num_samples, dtype=np.float32)
         
         # Phase increments
         carrier_increment = 2 * np.pi * self.carrier_freq / self.sample_rate
@@ -582,7 +627,8 @@ class FM_Synthesizer:
 
 
 class AM_Synthesizer:
-    """Amplitude Modulation synthesis engine."""    
+    """Amplitude Modulation synthesis engine."""
+    
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
         
@@ -598,13 +644,15 @@ class AM_Synthesizer:
         
     def set_parameters(self, carrier_freq: float, modulator_freq: float,
                       modulation_depth: float, amplitude: float = 1.0) -> None:
-        """Set AM synthesis parameters."""        self.carrier_freq = carrier_freq
+        """Set AM synthesis parameters."""
+        self.carrier_freq = carrier_freq
         self.modulator_freq = modulator_freq
         self.modulation_depth = modulation_depth
         self.amplitude = amplitude
         
     def synthesize(self, num_samples: int) -> np.ndarray:
-        """Generate AM synthesis audio."""        # Phase increments
+        """Generate AM synthesis audio."""
+        # Phase increments
         carrier_increment = 2 * np.pi * self.carrier_freq / self.sample_rate
         modulator_increment = 2 * np.pi * self.modulator_freq / self.sample_rate
         
@@ -631,7 +679,8 @@ class AM_Synthesizer:
 
 
 class SubtractiveSynthesis:
-    """Subtractive synthesis engine with filters and envelopes."""    
+    """Subtractive synthesis engine with filters and envelopes."""
+    
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
         
@@ -646,7 +695,8 @@ class SubtractiveSynthesis:
         
     def synthesize_note(self, frequency: float, duration: float,
                        velocity: float = 1.0) -> np.ndarray:
-        """Synthesize note using subtractive synthesis."""        num_samples = int(duration * self.sample_rate)
+        """Synthesize note using subtractive synthesis."""
+        num_samples = int(duration * self.sample_rate)
         
         # Set oscillator frequency
         self.oscillator.set_frequency(frequency)
@@ -666,7 +716,8 @@ class SubtractiveSynthesis:
 
 
 class AdditiveSynthesis:
-    """Additive synthesis engine with harmonic control."""    
+    """Additive synthesis engine with harmonic control."""
+    
     def __init__(self, sample_rate: int = 44100, num_harmonics: int = 16):
         self.sample_rate = sample_rate
         self.num_harmonics = num_harmonics
@@ -681,7 +732,8 @@ class AdditiveSynthesis:
         self.harmonic_amplitudes = np.ones(num_harmonics) / num_harmonics
         
     def set_harmonic_series(self, fundamental: float, amplitudes: List[float]) -> None:
-        """Set harmonic series parameters."""        num_amps = min(len(amplitudes), self.num_harmonics)
+        """Set harmonic series parameters."""
+        num_amps = min(len(amplitudes), self.num_harmonics)
         
         for i in range(num_amps):
             self.harmonics[i].set_frequency(fundamental * (i + 1))
@@ -692,7 +744,8 @@ class AdditiveSynthesis:
             self.harmonic_amplitudes[i] = 0.0
             
     def synthesize(self, num_samples: int) -> np.ndarray:
-        """Generate additive synthesis audio."""        output = np.zeros(num_samples, dtype=np.float32)
+        """Generate additive synthesis audio."""
+        output = np.zeros(num_samples, dtype=np.float32)
         
         for i, oscillator in enumerate(self.harmonics):
             if self.harmonic_amplitudes[i] > 0:
@@ -704,7 +757,8 @@ class AdditiveSynthesis:
 
 
 class SpectralSynthesis:
-    """Spectral synthesis using FFT manipulation."""    
+    """Spectral synthesis using FFT manipulation."""
+    
     def __init__(self, sample_rate: int = 44100, fft_size: int = 2048):
         self.sample_rate = sample_rate
         self.fft_size = fft_size
@@ -714,7 +768,8 @@ class SpectralSynthesis:
         self.freqs = np.fft.fftfreq(fft_size, 1/sample_rate)[:fft_size//2 + 1]
         
     def synthesize_spectrum(self, spectrum: np.ndarray, num_frames: int) -> np.ndarray:
-        """Synthesize audio from spectral representation."""        if len(spectrum) != len(self.freqs):
+        """Synthesize audio from spectral representation."""
+        if len(spectrum) != len(self.freqs):
             raise ValueError("Spectrum size must match FFT bins")
             
         # Generate audio using overlap-add
@@ -744,7 +799,8 @@ class SpectralSynthesis:
         return output
         
     def spectral_filter(self, audio: np.ndarray, filter_func: Callable) -> np.ndarray:
-        """Apply spectral filtering to audio."""        # STFT
+        """Apply spectral filtering to audio."""
+        # STFT
         hop_length = self.hop_size
         stft = librosa.stft(audio, n_fft=self.fft_size, hop_length=hop_length)
         
@@ -760,7 +816,8 @@ class SpectralSynthesis:
 
 
 class StateVariableFilter:
-    """State variable filter implementation."""    
+    """State variable filter implementation."""
+    
     def __init__(self, config: FilterConfig):
         self.config = config
         self.sample_rate = 44100  # Default, should be set
@@ -773,7 +830,8 @@ class StateVariableFilter:
         self._update_coefficients()
         
     def _update_coefficients(self) -> None:
-        """Update filter coefficients."""        # Calculate filter coefficients
+        """Update filter coefficients."""
+        # Calculate filter coefficients
         f = 2 * np.sin(np.pi * self.config.cutoff_frequency / self.sample_rate)
         q = self.config.resonance
         
@@ -781,7 +839,8 @@ class StateVariableFilter:
         self.q = q
         
     def process(self, audio: np.ndarray) -> np.ndarray:
-        """Process audio through state variable filter."""        output = np.zeros_like(audio)
+        """Process audio through state variable filter."""
+        output = np.zeros_like(audio)
         
         for i, sample in enumerate(audio):
             # State variable filter equations
@@ -810,7 +869,8 @@ class StateVariableFilter:
 
 
 class ADSREnvelope:
-    """ADSR envelope generator."""    
+    """ADSR envelope generator."""
+    
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
         
@@ -822,13 +882,15 @@ class ADSREnvelope:
         
     def set_parameters(self, attack: float, decay: float, 
                       sustain: float, release: float) -> None:
-        """Set ADSR parameters."""        self.attack = attack
+        """Set ADSR parameters."""
+        self.attack = attack
         self.decay = decay
         self.sustain = sustain
         self.release = release
         
     def generate(self, duration: float) -> np.ndarray:
-        """Generate ADSR envelope."""        num_samples = int(duration * self.sample_rate)
+        """Generate ADSR envelope."""
+        num_samples = int(duration * self.sample_rate)
         envelope = np.zeros(num_samples, dtype=np.float32)
         
         # Calculate phase lengths
@@ -867,7 +929,8 @@ class ADSREnvelope:
 
 # Factory functions
 def create_oscillator(waveform_type: WaveformType, config: OscillatorConfig = None) -> BaseOscillator:
-    """Factory function to create oscillators."""    if config is None:
+    """Factory function to create oscillators."""
+    if config is None:
         config = OscillatorConfig()
         
     oscillators = {

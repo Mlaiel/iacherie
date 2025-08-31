@@ -30,7 +30,8 @@ IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 🔒 NO UNAUTHORIZED USE, COPYING, MODIFICATION, OR DISTRIBUTION ALLOWED.
 
 Business Logic: User Upload → AI Processing → Protection → SEO → Collaboration → Distribution
-"""import asyncio
+"""
+import asyncio
 import time
 import json
 import hashlib
@@ -49,14 +50,16 @@ import os
 
 
 class ValidationLevel(Enum):
-    """Validation strictness levels"""    BASIC = "basic"
+    """Validation strictness levels"""
+    BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
     ENTERPRISE = "enterprise"
 
 
 class TestType(Enum):
-    """Types of tests performed"""    FUNCTIONALITY = "functionality"
+    """Types of tests performed"""
+    FUNCTIONALITY = "functionality"
     PERFORMANCE = "performance"
     SECURITY = "security"
     QUALITY = "quality"
@@ -67,7 +70,8 @@ class TestType(Enum):
 
 
 class ValidationStatus(Enum):
-    """Validation result status"""    PASSED = "passed"
+    """Validation result status"""
+    PASSED = "passed"
     FAILED = "failed"
     WARNING = "warning"
     SKIPPED = "skipped"
@@ -76,7 +80,8 @@ class ValidationStatus(Enum):
 
 @dataclass
 class ValidationRule:
-    """Individual validation rule definition"""    name: str
+    """Individual validation rule definition"""
+    name: str
     description: str
     validation_function: Callable
     severity: str = "error"  # error, warning, info
@@ -88,7 +93,8 @@ class ValidationRule:
 
 @dataclass
 class ValidationResult:
-    """Result of a validation check"""    rule_name: str
+    """Result of a validation check"""
+    rule_name: str
     status: ValidationStatus
     message: str
     execution_time: float
@@ -99,7 +105,8 @@ class ValidationResult:
 
 @dataclass
 class TestCase:
-    """Test case definition"""    name: str
+    """Test case definition"""
+    name: str
     description: str
     test_type: TestType
     test_function: Callable
@@ -112,7 +119,8 @@ class TestCase:
 
 @dataclass
 class TestResult:
-    """Result of a test execution"""    test_name: str
+    """Result of a test execution"""
+    test_name: str
     status: ValidationStatus
     message: str
     execution_time: float
@@ -124,11 +132,13 @@ class TestResult:
 
 
 class ContentValidator:
-    """    Advanced content validation system.
+    """
+    Advanced content validation system.
     
     Provides comprehensive validation for all content types
     processed by AI engines with quality, security, and compliance checks.
-    """    
+    """
+    
     def __init__(self, validation_level: ValidationLevel = ValidationLevel.STANDARD):
         self.validation_level = validation_level
         self.logger = logging.getLogger(__name__)
@@ -149,7 +159,8 @@ class ContentValidator:
         self._initialize_validation_rules()
         
     def _initialize_validation_rules(self):
-        """Initialize all validation rules"""        
+        """Initialize all validation rules"""
+        
         # General content validation rules
         self.add_validation_rule(ValidationRule(
             name="content_not_empty",
@@ -246,10 +257,12 @@ class ContentValidator:
         self._assign_rules_to_content_types()
         
     def add_validation_rule(self, rule: ValidationRule):
-        """Add a validation rule to the registry"""        self.validation_rules[rule.name] = rule
+        """Add a validation rule to the registry"""
+        self.validation_rules[rule.name] = rule
         
     def _assign_rules_to_content_types(self):
-        """Assign validation rules to specific content types"""        for rule_name, rule in self.validation_rules.items():
+        """Assign validation rules to specific content types"""
+        for rule_name, rule in self.validation_rules.items():
             # General rules apply to all content types
             if not rule.tags or "general" in rule.tags:
                 for content_type in self.content_validators:
@@ -266,7 +279,8 @@ class ContentValidator:
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[ValidationResult]:
-        """        Validate content against all applicable rules.
+        """
+        Validate content against all applicable rules.
         
         Args:
             content: Content to validate
@@ -275,7 +289,8 @@ class ContentValidator:
             
         Returns:
             List of validation results
-        """        results = []
+        """
+        results = []
         metadata = metadata or {}
         
         # Get applicable validation rules
@@ -350,7 +365,8 @@ class ContentValidator:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute a single validation rule"""        try:
+        """Execute a single validation rule"""
+        try:
             return await rule.validation_function(content, content_type, metadata)
         except Exception as e:
             return {
@@ -367,7 +383,8 @@ class ContentValidator:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate that content is not empty"""        if content is None:
+        """Validate that content is not empty"""
+        if content is None:
             return {"passed": False, "message": "Content is None"}
             
         if isinstance(content, str) and not content.strip():
@@ -387,7 +404,8 @@ class ContentValidator:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate file size limits"""        size_limits = {
+        """Validate file size limits"""
+        size_limits = {
             "audio": 100 * 1024 * 1024,  # 100MB
             "video": 500 * 1024 * 1024,  # 500MB
             "image": 50 * 1024 * 1024,   # 50MB
@@ -428,7 +446,8 @@ class ContentValidator:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate file format is supported"""        supported_formats = {
+        """Validate file format is supported"""
+        supported_formats = {
             "audio": [".mp3", ".wav", ".flac", ".aac", ".ogg"],
             "video": [".mp4", ".mov", ".avi", ".mkv", ".webm"],
             "image": [".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp"],
@@ -479,7 +498,8 @@ class ContentValidator:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Scan content for malware (simplified implementation)"""        # In a real implementation, this would integrate with antivirus APIs
+        """Scan content for malware (simplified implementation)"""
+        # In a real implementation, this would integrate with antivirus APIs
         
         # Basic checks for suspicious patterns
         suspicious_patterns = [
@@ -522,7 +542,8 @@ class ContentValidator:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate content safety and appropriateness"""        # Simplified content safety check
+        """Validate content safety and appropriateness"""
+        # Simplified content safety check
         # In production, this would use ML models for content moderation
         
         if content_type == "text" and isinstance(content, str):
@@ -553,7 +574,8 @@ class ContentValidator:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Assess overall content quality"""        quality_score = 100.0
+        """Assess overall content quality"""
+        quality_score = 100.0
         issues = []
         
         if content_type == "text" and isinstance(content, str):
@@ -593,7 +615,8 @@ class ContentValidator:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate text readability"""        if content_type != "text" or not isinstance(content, str):
+        """Validate text readability"""
+        if content_type != "text" or not isinstance(content, str):
             return {"passed": True, "message": "Not applicable to non-text content"}
             
         # Simplified readability calculation
@@ -639,7 +662,8 @@ class ContentValidator:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Check for plagiarism and originality"""        if content_type != "text" or not isinstance(content, str):
+        """Check for plagiarism and originality"""
+        if content_type != "text" or not isinstance(content, str):
             return {"passed": True, "message": "Not applicable to non-text content"}
             
         # Simplified plagiarism check
@@ -686,7 +710,8 @@ class ContentValidator:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate audio quality"""        if content_type != "audio":
+        """Validate audio quality"""
+        if content_type != "audio":
             return {"passed": True, "message": "Not applicable to non-audio content"}
             
         # Simplified audio quality check based on metadata
@@ -730,7 +755,8 @@ class ContentValidator:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate video quality"""        if content_type != "video":
+        """Validate video quality"""
+        if content_type != "video":
             return {"passed": True, "message": "Not applicable to non-video content"}
             
         # Simplified video quality check
@@ -773,7 +799,8 @@ class ContentValidator:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate image quality"""        if content_type != "image":
+        """Validate image quality"""
+        if content_type != "image":
             return {"passed": True, "message": "Not applicable to non-image content"}
             
         # Simplified image quality check
@@ -815,11 +842,13 @@ class ContentValidator:
 
 
 class EngineTestSuite:
-    """    Comprehensive test suite for AI engines.
+    """
+    Comprehensive test suite for AI engines.
     
     Provides automated testing capabilities for functionality,
     performance, security, and integration testing.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.test_cases: Dict[str, TestCase] = {}
@@ -829,7 +858,8 @@ class EngineTestSuite:
         self._initialize_test_cases()
         
     def _initialize_test_cases(self):
-        """Initialize all test cases"""        
+        """Initialize all test cases"""
+        
         # Functionality tests
         self.add_test_case(TestCase(
             name="engine_initialization",
@@ -879,10 +909,12 @@ class EngineTestSuite:
         ))
         
     def add_test_case(self, test_case: TestCase):
-        """Add a test case to the suite"""        self.test_cases[test_case.name] = test_case
+        """Add a test case to the suite"""
+        self.test_cases[test_case.name] = test_case
         
     async def run_all_tests(self, engine: Any) -> List[TestResult]:
-        """Run all test cases for an engine"""        results = []
+        """Run all test cases for an engine"""
+        results = []
         
         for test_name, test_case in self.test_cases.items():
             result = await self.run_test(test_name, engine)
@@ -892,7 +924,8 @@ class EngineTestSuite:
         return results
         
     async def run_test(self, test_name: str, engine: Any) -> TestResult:
-        """Run a specific test case"""        test_case = self.test_cases.get(test_name)
+        """Run a specific test case"""
+        test_case = self.test_cases.get(test_name)
         if not test_case:
             return TestResult(
                 test_name=test_name,
@@ -968,7 +1001,8 @@ class EngineTestSuite:
     # Test case implementations
     
     async def _test_engine_initialization(self, engine: Any, test_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Test engine initialization"""        try:
+        """Test engine initialization"""
+        try:
             # Check if engine has required attributes
             required_attrs = ["engine_name", "status", "metrics"]
             missing_attrs = [attr for attr in required_attrs if not hasattr(engine, attr)]
@@ -1002,7 +1036,8 @@ class EngineTestSuite:
             }
             
     async def _test_content_processing_basic(self, engine: Any, test_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Test basic content processing"""        try:
+        """Test basic content processing"""
+        try:
             # Simple test content
             test_content = "This is a test content for processing validation."
             
@@ -1036,7 +1071,8 @@ class EngineTestSuite:
             }
             
     async def _test_processing_speed(self, engine: Any, test_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Test content processing speed"""        try:
+        """Test content processing speed"""
+        try:
             test_content = "This is a test content for speed validation." * 100
             
             start_time = time.time()
@@ -1083,7 +1119,8 @@ class EngineTestSuite:
             }
             
     async def _test_memory_usage(self, engine: Any, test_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Test memory usage during processing"""        try:
+        """Test memory usage during processing"""
+        try:
             import psutil
             import os
             
@@ -1146,7 +1183,8 @@ class EngineTestSuite:
             }
             
     async def _test_input_validation(self, engine: Any, test_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Test input validation and security"""        try:
+        """Test input validation and security"""
+        try:
             # Test with malicious inputs
             malicious_inputs = [
                 None,
@@ -1198,7 +1236,8 @@ class EngineTestSuite:
             }
             
     async def _test_concurrent_processing(self, engine: Any, test_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Test concurrent content processing"""        try:
+        """Test concurrent content processing"""
+        try:
             test_content = "Concurrent test content for load validation."
             concurrent_requests = 10
             
@@ -1259,7 +1298,8 @@ class EngineTestSuite:
             }
             
     def generate_test_report(self, results: List[TestResult]) -> Dict[str, Any]:
-        """Generate comprehensive test report"""        total_tests = len(results)
+        """Generate comprehensive test report"""
+        total_tests = len(results)
         passed_tests = sum(1 for r in results if r.status == ValidationStatus.PASSED)
         failed_tests = sum(1 for r in results if r.status == ValidationStatus.FAILED)
         error_tests = sum(1 for r in results if r.status == ValidationStatus.ERROR)
@@ -1317,15 +1357,18 @@ engine_test_suite = EngineTestSuite()
 
 # Convenience functions
 async def validate_content(content: Any, content_type: str, **kwargs) -> List[ValidationResult]:
-    """Validate content using the global validator"""    return await content_validator.validate_content(content, content_type, **kwargs)
+    """Validate content using the global validator"""
+    return await content_validator.validate_content(content, content_type, **kwargs)
 
 
 async def run_engine_tests(engine: Any) -> List[TestResult]:
-    """Run all tests for an engine"""    return await engine_test_suite.run_all_tests(engine)
+    """Run all tests for an engine"""
+    return await engine_test_suite.run_all_tests(engine)
 
 
 def generate_validation_report(results: List[ValidationResult]) -> Dict[str, Any]:
-    """Generate validation report"""    total_validations = len(results)
+    """Generate validation report"""
+    total_validations = len(results)
     passed_validations = sum(1 for r in results if r.status == ValidationStatus.PASSED)
     failed_validations = sum(1 for r in results if r.status == ValidationStatus.FAILED)
     warning_validations = sum(1 for r in results if r.status == ValidationStatus.WARNING)

@@ -5,7 +5,8 @@ automation, and professional mixing console capabilities.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import numpy as np
+"""
+import numpy as np
 import logging
 from typing import Dict, List, Optional, Tuple, Any
 from enum import Enum
@@ -14,7 +15,8 @@ import copy
 
 
 class PanLaw(Enum):
-    """Pan law types for stereo positioning"""    LINEAR = "linear"
+    """Pan law types for stereo positioning"""
+    LINEAR = "linear"
     CONSTANT_POWER = "constant_power"
     MINUS_3DB = "minus_3db"
     MINUS_4_5DB = "minus_4_5db"
@@ -22,7 +24,8 @@ class PanLaw(Enum):
 
 
 class ChannelType(Enum):
-    """Audio channel types"""    MONO = "mono"
+    """Audio channel types"""
+    MONO = "mono"
     STEREO = "stereo"
     SURROUND_5_1 = "surround_5_1"
     SURROUND_7_1 = "surround_7_1"
@@ -30,7 +33,8 @@ class ChannelType(Enum):
 
 @dataclass
 class ChannelSettings:
-    """Settings for individual mixer channel"""    gain: float = 1.0
+    """Settings for individual mixer channel"""
+    gain: float = 1.0
     pan: float = 0.0  # -1.0 (left) to 1.0 (right)
     mute: bool = False
     solo: bool = False
@@ -47,7 +51,8 @@ class ChannelSettings:
 
 
 class MixerChannel:
-    """Individual mixer channel"""    
+    """Individual mixer channel"""
+    
     def __init__(self, channel_id: str, channel_type: ChannelType = ChannelType.MONO):
         self.channel_id = channel_id
         self.channel_type = channel_type
@@ -64,7 +69,8 @@ class MixerChannel:
         self._init_filters()
     
     def _init_filters(self):
-        """Initialize channel filters"""        self.high_cut_filter = None
+        """Initialize channel filters"""
+        self.high_cut_filter = None
         self.low_cut_filter = None
         self.eq_filters = {
             'high': None,
@@ -73,7 +79,8 @@ class MixerChannel:
         }
     
     def process_audio(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Process audio through channel"""        processed = audio_data.copy()
+        """Process audio through channel"""
+        processed = audio_data.copy()
         
         # Apply filters
         processed = self._apply_filters(processed, sample_rate)
@@ -94,7 +101,8 @@ class MixerChannel:
         return processed
     
     def _apply_filters(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Apply high/low cut filters"""        processed = audio_data
+        """Apply high/low cut filters"""
+        processed = audio_data
         
         # High cut (low-pass) filter
         if self.settings.high_cut_freq is not None:
@@ -117,7 +125,8 @@ class MixerChannel:
         return processed
     
     def _apply_eq(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply 3-band EQ"""        # Simple gain-based EQ (would be more sophisticated in practice)
+        """Apply 3-band EQ"""
+        # Simple gain-based EQ (would be more sophisticated in practice)
         processed = audio_data
         
         # This is a simplified implementation
@@ -129,13 +138,15 @@ class MixerChannel:
         return processed
     
     def _update_meters(self, audio_data: np.ndarray):
-        """Update peak and RMS meters"""        if len(audio_data) > 0:
+        """Update peak and RMS meters"""
+        if len(audio_data) > 0:
             self.peak_meter = float(np.max(np.abs(audio_data)))
             self.rms_meter = float(np.sqrt(np.mean(audio_data**2)))
 
 
 class AudioMixerProcessor:
-    """Professional audio mixer processor"""    
+    """Professional audio mixer processor"""
+    
     def __init__(self, sample_rate: int = 44100):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -166,7 +177,8 @@ class AudioMixerProcessor:
         self.logger.info("AudioMixerProcessor initialized")
     
     def add_channel(self, channel_id: str, channel_type: ChannelType = ChannelType.MONO) -> bool:
-        """Add new mixer channel"""        try:
+        """Add new mixer channel"""
+        try:
             if channel_id in self.channels:
                 self.logger.warning(f"Channel {channel_id} already exists")
                 return False
@@ -185,7 +197,8 @@ class AudioMixerProcessor:
             return False
     
     def remove_channel(self, channel_id: str) -> bool:
-        """Remove mixer channel"""        try:
+        """Remove mixer channel"""
+        try:
             if channel_id not in self.channels:
                 self.logger.warning(f"Channel {channel_id} not found")
                 return False
@@ -208,7 +221,8 @@ class AudioMixerProcessor:
             return False
     
     def add_send(self, send_name: str) -> bool:
-        """Add auxiliary send"""        try:
+        """Add auxiliary send"""
+        try:
             if send_name in self.sends:
                 self.logger.warning(f"Send {send_name} already exists")
                 return False
@@ -225,7 +239,8 @@ class AudioMixerProcessor:
             return False
     
     def set_channel_gain(self, channel_id: str, gain: float):
-        """Set channel gain (0.0 to 2.0)"""        if channel_id in self.channels:
+        """Set channel gain (0.0 to 2.0)"""
+        if channel_id in self.channels:
             gain = max(0.0, min(2.0, gain))
             self.channels[channel_id].settings.gain = gain
             
@@ -234,7 +249,8 @@ class AudioMixerProcessor:
                 self.channels[channel_id].gain_history.append(gain)
     
     def set_channel_pan(self, channel_id: str, pan: float):
-        """Set channel pan (-1.0 to 1.0)"""        if channel_id in self.channels:
+        """Set channel pan (-1.0 to 1.0)"""
+        if channel_id in self.channels:
             pan = max(-1.0, min(1.0, pan))
             self.channels[channel_id].settings.pan = pan
             
@@ -243,11 +259,13 @@ class AudioMixerProcessor:
                 self.channels[channel_id].pan_history.append(pan)
     
     def set_channel_mute(self, channel_id: str, mute: bool):
-        """Set channel mute"""        if channel_id in self.channels:
+        """Set channel mute"""
+        if channel_id in self.channels:
             self.channels[channel_id].settings.mute = mute
     
     def set_channel_solo(self, channel_id: str, solo: bool):
-        """Set channel solo"""        if channel_id in self.channels:
+        """Set channel solo"""
+        if channel_id in self.channels:
             self.channels[channel_id].settings.solo = solo
             
             if solo:
@@ -258,13 +276,15 @@ class AudioMixerProcessor:
             self.solo_active = len(self.soloed_channels) > 0
     
     def set_send_level(self, channel_id: str, send_name: str, level: float):
-        """Set send level for channel"""        if channel_id in self.channels and send_name in self.sends:
+        """Set send level for channel"""
+        if channel_id in self.channels and send_name in self.sends:
             level = max(0.0, min(1.0, level))
             self.sends[send_name][channel_id] = level
             self.channels[channel_id].settings.send_levels[send_name] = level
     
     def process_mix(self, channel_inputs: Dict[str, np.ndarray]) -> Tuple[np.ndarray, Dict[str, np.ndarray]]:
-        """Process complete mix"""        try:
+        """Process complete mix"""
+        try:
             if not channel_inputs:
                 return np.array([]), {}
             
@@ -347,7 +367,8 @@ class AudioMixerProcessor:
             return np.array([]), {}
     
     def _calculate_pan_gains(self, pan: float) -> Tuple[float, float]:
-        """Calculate left/right gains based on pan position"""        # Normalize pan from -1,1 to 0,1
+        """Calculate left/right gains based on pan position"""
+        # Normalize pan from -1,1 to 0,1
         pan_normalized = (pan + 1.0) / 2.0
         
         if self.pan_law == PanLaw.LINEAR:
@@ -387,7 +408,8 @@ class AudioMixerProcessor:
         return left_gain, right_gain
     
     def get_channel_meters(self, channel_id: str) -> Dict[str, float]:
-        """Get channel meter readings"""        if channel_id not in self.channels:
+        """Get channel meter readings"""
+        if channel_id not in self.channels:
             return {"peak": 0.0, "rms": 0.0}
         
         channel = self.channels[channel_id]
@@ -399,7 +421,8 @@ class AudioMixerProcessor:
         }
     
     def get_master_meters(self) -> Dict[str, float]:
-        """Get master meter readings"""        return {
+        """Get master meter readings"""
+        return {
             "peak": self.master_peak,
             "rms": self.master_rms,
             "peak_db": 20 * np.log10(self.master_peak + 1e-10),
@@ -407,7 +430,8 @@ class AudioMixerProcessor:
         }
     
     def save_mix_snapshot(self) -> Dict[str, Any]:
-        """Save current mixer state"""        snapshot = {
+        """Save current mixer state"""
+        snapshot = {
             "master_gain": self.master_gain,
             "master_mute": self.master_mute,
             "pan_law": self.pan_law.value,
@@ -430,7 +454,8 @@ class AudioMixerProcessor:
         return snapshot
     
     def load_mix_snapshot(self, snapshot: Dict[str, Any]) -> bool:
-        """Load mixer state from snapshot"""        try:
+        """Load mixer state from snapshot"""
+        try:
             self.master_gain = snapshot.get("master_gain", 1.0)
             self.master_mute = snapshot.get("master_mute", False)
             

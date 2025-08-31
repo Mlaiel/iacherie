@@ -12,7 +12,8 @@ This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without written permission
 will result in legal action under German and international copyright law.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 
 class TextFingerprintAlgorithm(Enum):
-    """Text fingerprinting algorithms"""    BERT_EMBEDDING = "bert_embedding"
+    """Text fingerprinting algorithms"""
+    BERT_EMBEDDING = "bert_embedding"
     ROBERTA_EMBEDDING = "roberta_embedding"
     SENTENCE_TRANSFORMERS = "sentence_transformers"
     TFIDF_VECTORIZER = "tfidf_vectorizer"
@@ -42,7 +44,8 @@ class TextFingerprintAlgorithm(Enum):
 
 
 class TextSimilarityMetric(Enum):
-    """Text similarity metrics"""    COSINE_SIMILARITY = "cosine_similarity"
+    """Text similarity metrics"""
+    COSINE_SIMILARITY = "cosine_similarity"
     JACCARD_SIMILARITY = "jaccard_similarity"
     LEVENSHTEIN_DISTANCE = "levenshtein_distance"
     SEMANTIC_SIMILARITY = "semantic_similarity"
@@ -52,7 +55,8 @@ class TextSimilarityMetric(Enum):
 
 
 class ContentType(Enum):
-    """Text content types"""    ARTICLE = "article"
+    """Text content types"""
+    ARTICLE = "article"
     BLOG_POST = "blog_post"
     SOCIAL_MEDIA = "social_media"
     LYRICS = "lyrics"
@@ -66,7 +70,8 @@ class ContentType(Enum):
 
 @dataclass
 class TextFingerprintConfig:
-    """Text fingerprinting deployment configuration"""    deployment_name: str
+    """Text fingerprinting deployment configuration"""
+    deployment_name: str
     namespace: str = "ia-influencer-protection"
     algorithms: List[TextFingerprintAlgorithm] = None
     similarity_metrics: List[TextSimilarityMetric] = None
@@ -119,7 +124,8 @@ class TextFingerprintConfig:
 
 
 class TextFingerprintDeployment:
-    """    Enterprise text fingerprinting deployment system
+    """
+    Enterprise text fingerprinting deployment system
     
     Deploys and manages text content protection infrastructure:
     - BERT/RoBERTa-based semantic embeddings
@@ -128,13 +134,16 @@ class TextFingerprintDeployment:
     - Semantic similarity detection
     - Real-time and batch processing
     - Plagiarism and content theft detection
-    """    
+    """
+    
     def __init__(self, config: TextFingerprintConfig):
-        """        Initialize text fingerprinting deployment
+        """
+        Initialize text fingerprinting deployment
         
         Args:
             config: Deployment configuration
-        """        self.config = config
+        """
+        self.config = config
         self.deployment_status = "initializing"
         self.services_deployed = {}
         self.nlp_models_ready = False
@@ -143,7 +152,8 @@ class TextFingerprintDeployment:
         self._initialize_clients()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and Redis clients"""        try:
+        """Initialize Kubernetes, Docker, and Redis clients"""
+        try:
             # Kubernetes client
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -169,11 +179,13 @@ class TextFingerprintDeployment:
             raise
     
     async def deploy_text_fingerprinting_infrastructure(self) -> Dict[str, Any]:
-        """        Deploy complete text fingerprinting infrastructure
+        """
+        Deploy complete text fingerprinting infrastructure
         
         Returns:
             Infrastructure deployment summary
-        """        try:
+        """
+        try:
             self.deployment_status = "deploying_infrastructure"
             logger.info("Deploying text fingerprinting infrastructure")
             
@@ -265,7 +277,8 @@ class TextFingerprintDeployment:
             raise
     
     async def _ensure_namespace(self) -> None:
-        """Create namespace if it doesn't exist"""        try:
+        """Create namespace if it doesn't exist"""
+        try:
             self.k8s_core_v1.read_namespace(name=self.config.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -284,7 +297,8 @@ class TextFingerprintDeployment:
                 logger.info(f"Created namespace: {self.config.namespace}")
     
     async def _deploy_storage_infrastructure(self) -> Dict[str, Any]:
-        """Deploy storage infrastructure for text fingerprints"""        # Create persistent volume claim
+        """Deploy storage infrastructure for text fingerprints"""
+        # Create persistent volume claim
         pvc_spec = {
             "apiVersion": "v1",
             "kind": "PersistentVolumeClaim",
@@ -380,7 +394,8 @@ class TextFingerprintDeployment:
         }
     
     async def _deploy_model_storage(self) -> Dict[str, Any]:
-        """Deploy model storage and management service"""        model_storage_deployment = {
+        """Deploy model storage and management service"""
+        model_storage_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -456,7 +471,8 @@ class TextFingerprintDeployment:
         }
     
     async def _deploy_fingerprint_cache(self) -> Dict[str, Any]:
-        """Deploy Redis for text fingerprint caching"""        redis_deployment = {
+        """Deploy Redis for text fingerprint caching"""
+        redis_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -523,7 +539,8 @@ class TextFingerprintDeployment:
         }
     
     async def _deploy_bert_service(self) -> Dict[str, Any]:
-        """Deploy BERT embedding service"""        bert_deployment = {
+        """Deploy BERT embedding service"""
+        bert_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -619,7 +636,8 @@ class TextFingerprintDeployment:
         }
     
     async def _deploy_roberta_service(self) -> Dict[str, Any]:
-        """Deploy RoBERTa embedding service"""        roberta_deployment = {
+        """Deploy RoBERTa embedding service"""
+        roberta_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -713,7 +731,8 @@ class TextFingerprintDeployment:
         }
     
     async def _deploy_sentence_transformer_service(self) -> Dict[str, Any]:
-        """Deploy Sentence Transformers service"""        st_deployment = {
+        """Deploy Sentence Transformers service"""
+        st_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -790,7 +809,8 @@ class TextFingerprintDeployment:
         }
     
     async def _deploy_traditional_hash_service(self) -> Dict[str, Any]:
-        """Deploy traditional text hashing service"""        hash_deployment = {
+        """Deploy traditional text hashing service"""
+        hash_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -867,7 +887,8 @@ class TextFingerprintDeployment:
         }
     
     async def _deploy_preprocessing_service(self) -> Dict[str, Any]:
-        """Deploy text preprocessing service"""        preprocessing_deployment = {
+        """Deploy text preprocessing service"""
+        preprocessing_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -947,7 +968,8 @@ class TextFingerprintDeployment:
         }
     
     async def _deploy_similarity_service(self) -> Dict[str, Any]:
-        """Deploy text similarity calculation service"""        similarity_deployment = {
+        """Deploy text similarity calculation service"""
+        similarity_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -1026,7 +1048,8 @@ class TextFingerprintDeployment:
         }
     
     async def _deploy_processing_pipeline(self) -> Dict[str, Any]:
-        """Deploy text processing pipeline orchestrator"""        pipeline_deployment = {
+        """Deploy text processing pipeline orchestrator"""
+        pipeline_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -1107,7 +1130,8 @@ class TextFingerprintDeployment:
         }
     
     async def _deploy_api_gateway(self) -> Dict[str, Any]:
-        """Deploy API gateway for text fingerprinting services"""        gateway_deployment = {
+        """Deploy API gateway for text fingerprinting services"""
+        gateway_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -1187,7 +1211,8 @@ class TextFingerprintDeployment:
         }
     
     async def _deploy_monitoring_stack(self) -> Dict[str, Any]:
-        """Deploy monitoring and metrics collection"""        monitor_deployment = {
+        """Deploy monitoring and metrics collection"""
+        monitor_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -1255,7 +1280,8 @@ class TextFingerprintDeployment:
         }
     
     async def _setup_autoscaling(self, deployment_name: str) -> None:
-        """Set up horizontal pod autoscaling"""        hpa_spec = {
+        """Set up horizontal pod autoscaling"""
+        hpa_spec = {
             "apiVersion": "autoscaling/v2",
             "kind": "HorizontalPodAutoscaler",
             "metadata": {
@@ -1303,7 +1329,8 @@ class TextFingerprintDeployment:
         logger.info(f"Set up autoscaling for {deployment_name}")
     
     async def _configure_networking(self) -> None:
-        """Configure networking and security policies"""        # Network policy for text fingerprinting
+        """Configure networking and security policies"""
+        # Network policy for text fingerprinting
         network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
@@ -1339,7 +1366,8 @@ class TextFingerprintDeployment:
         logger.info("Configured networking policies for text fingerprinting")
     
     async def _validate_deployment(self) -> bool:
-        """Validate the deployment"""        try:
+        """Validate the deployment"""
+        try:
             essential_services = [
                 "text-bert-service", "text-roberta-service", "text-sentence-transformer",
                 "text-hash-service", "text-preprocessing", "text-similarity-service",
@@ -1376,7 +1404,8 @@ class TextFingerprintDeployment:
             return False
     
     async def get_deployment_status(self) -> Dict[str, Any]:
-        """Get deployment status and metrics"""        try:
+        """Get deployment status and metrics"""
+        try:
             services_status = {}
             
             # Check all services
@@ -1415,7 +1444,8 @@ class TextFingerprintDeployment:
             return {"error": str(e)}
     
     async def _cleanup_failed_deployment(self) -> None:
-        """Clean up failed deployment"""        try:
+        """Clean up failed deployment"""
+        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.config.namespace)
             logger.info("Cleaned up failed text fingerprinting deployment")
@@ -1423,7 +1453,8 @@ class TextFingerprintDeployment:
             logger.error(f"Cleanup failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up the entire deployment"""        try:
+        """Clean up the entire deployment"""
+        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.config.namespace)
             

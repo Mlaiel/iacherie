@@ -8,7 +8,8 @@ License: Proprietary - All rights reserved
 WARNING: This code is proprietary and protected by copyright.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Contact: Fahed Mlaiel (mlaiel@live.de) for licensing agreements.
-"""import numpy as np
+"""
+import numpy as np
 import asyncio
 from typing import Dict, List, Optional, Tuple, Union, Any, NamedTuple
 from dataclasses import dataclass, field
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 
 class MatchScore(NamedTuple):
-    """Container for match scoring results."""    overall_score: float
+    """Container for match scoring results."""
+    overall_score: float
     feature_scores: Dict[str, float]
     confidence: float
     match_quality: str
@@ -35,7 +37,8 @@ class MatchScore(NamedTuple):
 
 @dataclass
 class MatchCandidate:
-    """Represents a candidate match in the database."""    
+    """Represents a candidate match in the database."""
+    
     fingerprint_id: str
     fingerprint_hash: str
     spectral_features: Optional[np.ndarray]
@@ -47,7 +50,8 @@ class MatchCandidate:
 
 @dataclass 
 class MatchQuery:
-    """Query parameters for fingerprint matching."""    
+    """Query parameters for fingerprint matching."""
+    
     target_fingerprint: str
     target_features: Optional[np.ndarray] = None
     similarity_threshold: float = 0.80
@@ -59,7 +63,8 @@ class MatchQuery:
 
 @dataclass
 class MatchResult:
-    """Complete match result with detailed analysis."""    
+    """Complete match result with detailed analysis."""
+    
     candidate: MatchCandidate
     match_score: MatchScore
     timing_analysis: Optional[Dict[str, float]]
@@ -69,11 +74,14 @@ class MatchResult:
 
 
 class SpectralMatcher:
-    """    Advanced spectral analysis matching for audio fingerprints.
+    """
+    Advanced spectral analysis matching for audio fingerprints.
     Uses multi-resolution analysis and machine learning techniques.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the spectral matcher."""        self.config = config or self._default_config()
+        """Initialize the spectral matcher."""
+        self.config = config or self._default_config()
         self.executor = ThreadPoolExecutor(max_workers=self.config['max_workers'])
         self.scaler = StandardScaler()
         self._feature_cache = {}
@@ -81,7 +89,8 @@ class SpectralMatcher:
         logger.info("SpectralMatcher initialized with config: %s", self.config)
     
     def _default_config(self) -> Dict:
-        """Default configuration for spectral matching."""        return {
+        """Default configuration for spectral matching."""
+        return {
             'max_workers': 4,
             'feature_dimensions': 256,
             'resolution_levels': 3,
@@ -98,7 +107,8 @@ class SpectralMatcher:
         candidates: List[MatchCandidate],
         threshold: float = 0.8
     ) -> List[Tuple[MatchCandidate, float]]:
-        """        Match query spectral features against candidate fingerprints.
+        """
+        Match query spectral features against candidate fingerprints.
         
         Args:
             query_features: Target spectral features for matching
@@ -107,7 +117,8 @@ class SpectralMatcher:
             
         Returns:
             List of tuples (candidate, similarity_score) sorted by relevance
-        """        try:
+        """
+        try:
             if len(candidates) == 0:
                 return []
             
@@ -145,7 +156,8 @@ class SpectralMatcher:
         candidates: List[MatchCandidate],
         threshold: float
     ) -> List[Tuple[MatchCandidate, float]]:
-        """Execute spectral matching in parallel for performance."""        loop = asyncio.get_event_loop()
+        """Execute spectral matching in parallel for performance."""
+        loop = asyncio.get_event_loop()
         
         def _match_batch(batch_start: int, batch_size: int):
             batch_end = min(batch_start + batch_size, len(candidate_features))
@@ -193,7 +205,8 @@ class SpectralMatcher:
         features1: np.ndarray, 
         features2: np.ndarray
     ) -> float:
-        """Calculate similarity between two spectral feature vectors."""        try:
+        """Calculate similarity between two spectral feature vectors."""
+        try:
             # Ensure features are the same length
             min_len = min(len(features1), len(features2))
             f1 = features1[:min_len]
@@ -231,17 +244,21 @@ class SpectralMatcher:
 
 
 class TemporalMatcher:
-    """    Temporal analysis matching for detecting time-shifted or modified audio content.
+    """
+    Temporal analysis matching for detecting time-shifted or modified audio content.
     Handles variations in tempo, pitch, and timing.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the temporal matcher."""        self.config = config or self._default_config()
+        """Initialize the temporal matcher."""
+        self.config = config or self._default_config()
         self.executor = ThreadPoolExecutor(max_workers=self.config['max_workers'])
         
         logger.info("TemporalMatcher initialized")
     
     def _default_config(self) -> Dict:
-        """Default configuration for temporal matching."""        return {
+        """Default configuration for temporal matching."""
+        return {
             'max_workers': 2,
             'max_time_shift': 10.0,  # seconds
             'tempo_tolerance': 0.2,   # 20% tempo variation
@@ -256,7 +273,8 @@ class TemporalMatcher:
         candidates: List[MatchCandidate],
         query_duration: Optional[float] = None
     ) -> List[Tuple[MatchCandidate, Dict[str, Any]]]:
-        """        Find temporal matches allowing for time shifts and tempo changes.
+        """
+        Find temporal matches allowing for time shifts and tempo changes.
         
         Args:
             query_fingerprint: Target fingerprint for temporal matching
@@ -265,7 +283,8 @@ class TemporalMatcher:
             
         Returns:
             List of candidates with temporal match information
-        """        try:
+        """
+        try:
             matches = []
             
             # Process candidates in parallel batches
@@ -301,7 +320,8 @@ class TemporalMatcher:
         candidates: List[MatchCandidate],
         query_duration: Optional[float]
     ) -> List[Tuple[MatchCandidate, Dict[str, Any]]]:
-        """Process a batch of candidates for temporal matching."""        loop = asyncio.get_event_loop()
+        """Process a batch of candidates for temporal matching."""
+        loop = asyncio.get_event_loop()
         
         def _batch_process():
             batch_matches = []
@@ -329,7 +349,8 @@ class TemporalMatcher:
         candidate_fp: str,
         query_duration: Optional[float]
     ) -> Dict[str, Any]:
-        """Analyze temporal relationship between two fingerprints."""        # Simplified temporal analysis - would be enhanced with actual implementation
+        """Analyze temporal relationship between two fingerprints."""
+        # Simplified temporal analysis - would be enhanced with actual implementation
         # This is a placeholder for complex temporal analysis algorithms
         
         return {
@@ -343,11 +364,14 @@ class TemporalMatcher:
 
 
 class FingerprintMatchingEngine:
-    """    Comprehensive fingerprint matching engine combining multiple algorithms.
+    """
+    Comprehensive fingerprint matching engine combining multiple algorithms.
     Provides industrial-grade content identification and similarity analysis.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the matching engine."""        self.config = config or self._default_config()
+        """Initialize the matching engine."""
+        self.config = config or self._default_config()
         
         # Initialize sub-components
         self.spectral_matcher = SpectralMatcher(self.config.get('spectral'))
@@ -360,7 +384,8 @@ class FingerprintMatchingEngine:
         logger.info("FingerprintMatchingEngine initialized")
     
     def _default_config(self) -> Dict:
-        """Default configuration for the matching engine."""        return {
+        """Default configuration for the matching engine."""
+        return {
             'global_threshold': 0.80,
             'max_results_per_query': 100,
             'enable_caching': True,
@@ -372,14 +397,16 @@ class FingerprintMatchingEngine:
         }
     
     async def execute_match_query(self, query: MatchQuery) -> List[MatchResult]:
-        """        Execute a comprehensive match query using multiple algorithms.
+        """
+        Execute a comprehensive match query using multiple algorithms.
         
         Args:
             query: MatchQuery object with search parameters
             
         Returns:
             List of MatchResult objects with detailed analysis
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             logger.info("Executing match query with %d algorithms", 
@@ -413,7 +440,8 @@ class FingerprintMatchingEngine:
             return []
     
     async def _get_match_candidates(self, query: MatchQuery) -> List[MatchCandidate]:
-        """Retrieve candidate fingerprints for matching."""        # Placeholder implementation - would query actual database
+        """Retrieve candidate fingerprints for matching."""
+        # Placeholder implementation - would query actual database
         # In a real implementation, this would:
         # 1. Query database based on search_scope and metadata_filters
         # 2. Apply initial filtering based on content_type, user permissions, etc.
@@ -431,7 +459,8 @@ class FingerprintMatchingEngine:
         query: MatchQuery, 
         candidates: List[MatchCandidate]
     ) -> Dict[str, List]:
-        """Execute all requested matching algorithms."""        algorithm_results = {}
+        """Execute all requested matching algorithms."""
+        algorithm_results = {}
         
         # Execute algorithms in parallel
         tasks = []
@@ -464,7 +493,8 @@ class FingerprintMatchingEngine:
         algorithm_results: Dict[str, List], 
         query: MatchQuery
     ) -> List[MatchResult]:
-        """Post-process and combine results from different algorithms."""        # Combine results from different algorithms
+        """Post-process and combine results from different algorithms."""
+        # Combine results from different algorithms
         combined_results = {}  # fingerprint_id -> result data
         
         # Aggregate results by fingerprint ID
@@ -508,7 +538,8 @@ class FingerprintMatchingEngine:
         result_data: Dict, 
         query: MatchQuery
     ) -> MatchResult:
-        """Create a comprehensive MatchResult from algorithm outputs."""        candidate = result_data['candidate']
+        """Create a comprehensive MatchResult from algorithm outputs."""
+        candidate = result_data['candidate']
         algorithm_scores = result_data['algorithm_scores']
         algorithm_data = result_data['algorithm_data']
         
@@ -543,7 +574,8 @@ class FingerprintMatchingEngine:
         )
     
     def _calculate_overall_score(self, algorithm_scores: Dict[str, float]) -> float:
-        """Calculate weighted overall score from individual algorithms."""        if not algorithm_scores:
+        """Calculate weighted overall score from individual algorithms."""
+        if not algorithm_scores:
             return 0.0
         
         # Weight different algorithms
@@ -572,7 +604,8 @@ class FingerprintMatchingEngine:
         algorithm_scores: Dict[str, float], 
         algorithm_data: Dict[str, Dict]
     ) -> float:
-        """Calculate confidence in the match result."""        if not algorithm_scores:
+        """Calculate confidence in the match result."""
+        if not algorithm_scores:
             return 0.0
         
         # Factors affecting confidence:
@@ -590,7 +623,8 @@ class FingerprintMatchingEngine:
         return max(0.0, min(1.0, confidence))
     
     def _determine_match_quality(self, overall_score: float, confidence: float) -> str:
-        """Determine match quality category."""        combined_metric = (overall_score + confidence) / 2
+        """Determine match quality category."""
+        combined_metric = (overall_score + confidence) / 2
         
         if combined_metric >= 0.9:
             return "excellent"
@@ -607,7 +641,8 @@ class FingerprintMatchingEngine:
         confidence: float, 
         quality: str
     ) -> str:
-        """Generate actionable recommendation based on match results."""        if overall_score >= 0.85 and confidence >= 0.8:
+        """Generate actionable recommendation based on match results."""
+        if overall_score >= 0.85 and confidence >= 0.8:
             return "strong_match"
         elif overall_score >= 0.70 and confidence >= 0.6:
             return "possible_match"
@@ -621,7 +656,8 @@ class FingerprintMatchingEngine:
         algorithm_scores: Dict[str, float], 
         candidate: MatchCandidate
     ) -> float:
-        """Estimate probability that this is a false positive match."""        # Simplified implementation - would use ML models in production
+        """Estimate probability that this is a false positive match."""
+        # Simplified implementation - would use ML models in production
         mean_score = np.mean(list(algorithm_scores.values()))
         
         # Higher scores typically have lower false positive rates
@@ -635,7 +671,8 @@ class FingerprintMatchingEngine:
         results: List[MatchResult], 
         execution_time: float
     ):
-        """Update performance statistics."""        if not self.config['performance_monitoring']:
+        """Update performance statistics."""
+        if not self.config['performance_monitoring']:
             return
         
         self.match_statistics['total_queries'] += 1
@@ -651,7 +688,8 @@ class FingerprintMatchingEngine:
                 metric_list[:] = metric_list[-max_metrics:]
     
     def get_performance_stats(self) -> Dict[str, Any]:
-        """Get current performance statistics."""        stats = dict(self.match_statistics)
+        """Get current performance statistics."""
+        stats = dict(self.match_statistics)
         
         if self.performance_metrics['execution_time']:
             stats['avg_execution_time'] = np.mean(self.performance_metrics['execution_time'])
@@ -660,7 +698,8 @@ class FingerprintMatchingEngine:
         return stats
     
     async def cleanup(self):
-        """Cleanup resources."""        try:
+        """Cleanup resources."""
+        try:
             if hasattr(self.spectral_matcher, 'cleanup'):
                 self.spectral_matcher.cleanup()
             

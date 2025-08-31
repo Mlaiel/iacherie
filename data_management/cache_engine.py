@@ -8,7 +8,8 @@ License: Proprietary - All Rights Reserved
 WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, or use without explicit written permission from Fahed Mlaiel
 is strictly prohibited and may result in legal action.
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import pickle
 import json
@@ -30,14 +31,16 @@ from ..security.encryption import EncryptionService
 
 
 class CacheLevel(Enum):
-    """Cache level enumeration"""    L1_MEMORY = "l1_memory"
+    """Cache level enumeration"""
+    L1_MEMORY = "l1_memory"
     L2_REDIS = "l2_redis"
     L3_DISK = "l3_disk"
     L4_DATABASE = "l4_database"
 
 
 class CacheStrategy(Enum):
-    """Cache strategy enumeration"""    LRU = "lru"  # Least Recently Used
+    """Cache strategy enumeration"""
+    LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     FIFO = "fifo"  # First In, First Out
     TTL = "ttl"  # Time To Live
@@ -46,7 +49,8 @@ class CacheStrategy(Enum):
 
 
 class CachePolicy(Enum):
-    """Cache policy enumeration"""    WRITE_THROUGH = "write_through"
+    """Cache policy enumeration"""
+    WRITE_THROUGH = "write_through"
     WRITE_BACK = "write_back"
     WRITE_AROUND = "write_around"
     READ_THROUGH = "read_through"
@@ -55,7 +59,8 @@ class CachePolicy(Enum):
 
 @dataclass
 class CacheEntry:
-    """Cache entry data structure"""    key: str
+    """Cache entry data structure"""
+    key: str
     value: Any
     created_at: datetime
     last_accessed: datetime
@@ -70,22 +75,26 @@ class CacheEntry:
     
     @property
     def is_expired(self) -> bool:
-        """Check if cache entry is expired"""        if self.ttl is None:
+        """Check if cache entry is expired"""
+        if self.ttl is None:
             return False
         return datetime.utcnow() > self.created_at + timedelta(seconds=self.ttl)
     
     @property
     def age_seconds(self) -> int:
-        """Get age of cache entry in seconds"""        return int((datetime.utcnow() - self.created_at).total_seconds())
+        """Get age of cache entry in seconds"""
+        return int((datetime.utcnow() - self.created_at).total_seconds())
     
     def update_access(self):
-        """Update access information"""        self.last_accessed = datetime.utcnow()
+        """Update access information"""
+        self.last_accessed = datetime.utcnow()
         self.access_count += 1
 
 
 @dataclass
 class CacheMetrics:
-    """Cache performance metrics"""    hits: int = 0
+    """Cache performance metrics"""
+    hits: int = 0
     misses: int = 0
     evictions: int = 0
     writes: int = 0
@@ -95,14 +104,17 @@ class CacheMetrics:
     hit_ratio: float = 0.0
     
     def calculate_hit_ratio(self):
-        """Calculate cache hit ratio"""        total_requests = self.hits + self.misses
+        """Calculate cache hit ratio"""
+        total_requests = self.hits + self.misses
         self.hit_ratio = self.hits / total_requests if total_requests > 0 else 0.0
 
 
 class IntelligentCacheManager:
-    """    Advanced intelligent caching system with multi-level cache hierarchy,
+    """
+    Advanced intelligent caching system with multi-level cache hierarchy,
     ML-powered optimization, and adaptive strategies
-    """    
+    """
+    
     def __init__(
         self,
         config: Optional[Dict[str, Any]] = None,
@@ -136,7 +148,8 @@ class IntelligentCacheManager:
         asyncio.create_task(self._initialize_cache())
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default cache configuration"""        return {
+        """Get default cache configuration"""
+        return {
             "l1_max_size": 100 * 1024 * 1024,  # 100MB
             "l1_max_entries": 10000,
             "l2_max_size": 1024 * 1024 * 1024,  # 1GB
@@ -154,7 +167,8 @@ class IntelligentCacheManager:
         }
     
     async def _initialize_cache(self):
-        """Initialize cache system"""        try:
+        """Initialize cache system"""
+        try:
             # Initialize Redis connection
             if self.config.get("enable_redis", True):
                 self.l2_redis = redis.from_url(
@@ -182,8 +196,10 @@ class IntelligentCacheManager:
         default: Any = None,
         strategy: Optional[CacheStrategy] = None
     ) -> Any:
-        """        Get value from cache with intelligent lookup across all levels
-        """        start_time = time.time()
+        """
+        Get value from cache with intelligent lookup across all levels
+        """
+        start_time = time.time()
         
         try:
             async with self._lock:
@@ -289,8 +305,10 @@ class IntelligentCacheManager:
         content_type: str = "unknown",
         priority: int = 1
     ) -> bool:
-        """        Set value in cache with intelligent distribution across levels
-        """        try:
+        """
+        Set value in cache with intelligent distribution across levels
+        """
+        try:
             async with self._lock:
                 # Serialize and prepare value
                 serialized_value = await self._serialize_value(value)
@@ -347,7 +365,8 @@ class IntelligentCacheManager:
             return False
     
     async def delete(self, key: str) -> bool:
-        """Delete key from all cache levels"""        try:
+        """Delete key from all cache levels"""
+        try:
             async with self._lock:
                 deleted = False
                 
@@ -379,7 +398,8 @@ class IntelligentCacheManager:
             return False
     
     async def clear(self, level: Optional[CacheLevel] = None) -> bool:
-        """Clear cache at specified level or all levels"""        try:
+        """Clear cache at specified level or all levels"""
+        try:
             async with self._lock:
                 if level is None or level == CacheLevel.L1_MEMORY:
                     self.l1_cache.clear()
@@ -403,7 +423,8 @@ class IntelligentCacheManager:
             return False
     
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive cache statistics"""        self.cache_metrics.calculate_hit_ratio()
+        """Get comprehensive cache statistics"""
+        self.cache_metrics.calculate_hit_ratio()
         
         return {
             "metrics": {
@@ -427,7 +448,8 @@ class IntelligentCacheManager:
         }
     
     async def _serialize_value(self, value: Any) -> bytes:
-        """Serialize value for storage"""        if isinstance(value, bytes):
+        """Serialize value for storage"""
+        if isinstance(value, bytes):
             return value
         elif isinstance(value, str):
             return value.encode('utf-8')
@@ -435,7 +457,8 @@ class IntelligentCacheManager:
             return pickle.dumps(value)
     
     async def _deserialize_value(self, value: bytes, entry: CacheEntry) -> Any:
-        """Deserialize value from storage"""        try:
+        """Deserialize value from storage"""
+        try:
             # Decrypt if needed
             if entry.encrypted and self.encryption_service:
                 value = await self.encryption_service.decrypt(value)
@@ -457,22 +480,26 @@ class IntelligentCacheManager:
             return value
     
     async def _compress_value(self, value: bytes) -> bytes:
-        """Compress value using gzip"""        import gzip
+        """Compress value using gzip"""
+        import gzip
         return gzip.compress(value)
     
     async def _decompress_value(self, value: bytes) -> bytes:
-        """Decompress value using gzip"""        import gzip
+        """Decompress value using gzip"""
+        import gzip
         return gzip.decompress(value)
     
     def _hash_key(self, key: str) -> str:
-        """Generate hash for cache key"""        return hashlib.sha256(key.encode()).hexdigest()
+        """Generate hash for cache key"""
+        return hashlib.sha256(key.encode()).hexdigest()
     
     async def _determine_cache_level(
         self,
         entry: CacheEntry,
         strategy: Optional[CacheStrategy]
     ) -> CacheLevel:
-        """Determine optimal cache level for entry"""        strategy = strategy or self.default_strategy
+        """Determine optimal cache level for entry"""
+        strategy = strategy or self.default_strategy
         
         # Size-based decisions
         if entry.size_bytes > self.config["l1_max_size"] // 10:
@@ -489,7 +516,8 @@ class IntelligentCacheManager:
         level: CacheLevel,
         policy: Optional[CachePolicy]
     ) -> bool:
-        """Store entry in specified cache level"""        try:
+        """Store entry in specified cache level"""
+        try:
             if level == CacheLevel.L1_MEMORY:
                 # Check if eviction is needed
                 if (len(self.l1_cache) >= self.config["l1_max_entries"] or
@@ -523,7 +551,8 @@ class IntelligentCacheManager:
             return False
     
     async def _promote_to_l1(self, key: str, entry: CacheEntry):
-        """Promote entry to L1 cache"""        if entry.size_bytes <= self.config["l1_max_size"] // 10:
+        """Promote entry to L1 cache"""
+        if entry.size_bytes <= self.config["l1_max_size"] // 10:
             if (len(self.l1_cache) >= self.config["l1_max_entries"] or
                 sum(e.size_bytes for e in self.l1_cache.values()) + entry.size_bytes > self.config["l1_max_size"]):
                 await self._evict_from_l1()
@@ -531,7 +560,8 @@ class IntelligentCacheManager:
             self.l1_cache[key] = entry
     
     async def _promote_to_l2(self, key: str, entry: CacheEntry):
-        """Promote entry to L2 cache"""        if self.l2_redis and entry.size_bytes <= self.config["l2_max_size"] // 10:
+        """Promote entry to L2 cache"""
+        if self.l2_redis and entry.size_bytes <= self.config["l2_max_size"] // 10:
             serialized_entry = pickle.dumps(entry)
             await self.l2_redis.set(
                 f"cache:{key}",
@@ -540,7 +570,8 @@ class IntelligentCacheManager:
             )
     
     async def _evict_from_l1(self):
-        """Evict entries from L1 cache using intelligent strategy"""        if not self.l1_cache:
+        """Evict entries from L1 cache using intelligent strategy"""
+        if not self.l1_cache:
             return
         
         # Find candidate for eviction (LRU strategy)
@@ -558,7 +589,8 @@ class IntelligentCacheManager:
         self.cache_metrics.evictions += 1
     
     def _update_access_pattern(self, key: str):
-        """Update access pattern for key"""        if key not in self.access_patterns:
+        """Update access pattern for key"""
+        if key not in self.access_patterns:
             self.access_patterns[key] = []
         
         self.access_patterns[key].append(datetime.utcnow())
@@ -571,7 +603,8 @@ class IntelligentCacheManager:
         ]
     
     def _update_average_access_time(self, access_time: float):
-        """Update average access time"""        if self.cache_metrics.average_access_time == 0:
+        """Update average access time"""
+        if self.cache_metrics.average_access_time == 0:
             self.cache_metrics.average_access_time = access_time
         else:
             # Exponential moving average
@@ -582,7 +615,8 @@ class IntelligentCacheManager:
             )
     
     async def _periodic_cleanup(self):
-        """Periodic cleanup of expired entries"""        while True:
+        """Periodic cleanup of expired entries"""
+        while True:
             try:
                 await asyncio.sleep(self.config["cleanup_interval"])
                 
@@ -616,7 +650,8 @@ class IntelligentCacheManager:
                 self.logger.error(f"Cleanup error: {e}")
     
     async def close(self):
-        """Close cache manager and cleanup resources"""        if self._cleanup_task:
+        """Close cache manager and cleanup resources"""
+        if self._cleanup_task:
             self._cleanup_task.cancel()
             try:
                 await self._cleanup_task
@@ -638,7 +673,8 @@ async def get_cache_manager(
     encryption_service: Optional[EncryptionService] = None,
     metrics_collector: Optional[MetricsCollector] = None
 ) -> IntelligentCacheManager:
-    """Get or create cache manager instance"""    global _cache_manager
+    """Get or create cache manager instance"""
+    global _cache_manager
     
     if _cache_manager is None:
         _cache_manager = IntelligentCacheManager(
@@ -656,7 +692,8 @@ async def cache_context(
     encryption_service: Optional[EncryptionService] = None,
     metrics_collector: Optional[MetricsCollector] = None
 ):
-    """Context manager for cache operations"""    cache_manager = await get_cache_manager(config, encryption_service, metrics_collector)
+    """Context manager for cache operations"""
+    cache_manager = await get_cache_manager(config, encryption_service, metrics_collector)
     try:
         yield cache_manager
     finally:
@@ -670,7 +707,8 @@ async def cached_function(
     ttl: Optional[int] = None,
     strategy: Optional[CacheStrategy] = None
 ):
-    """Decorator for caching function results"""    def decorator(func):
+    """Decorator for caching function results"""
+    def decorator(func):
         async def wrapper(*args, **kwargs):
             # Generate cache key
             key_data = f"{key_prefix}:{func.__name__}:{hash(str(args) + str(sorted(kwargs.items())))}"

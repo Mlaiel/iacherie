@@ -24,7 +24,8 @@ This revolutionary deployment automation system is the EXCLUSIVE property of Fah
 Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
-"""import os
+"""
+import os
 import sys
 import subprocess
 import logging
@@ -42,25 +43,31 @@ logger = logging.getLogger(__name__)
 
 
 class AuditLogsDeployment:
-    """    Comprehensive deployment manager for the audit logs module.
-    """    
+    """
+    Comprehensive deployment manager for the audit logs module.
+    """
+    
     def __init__(self, environment: str = "production"):
-        """        Initialize deployment manager.
+        """
+        Initialize deployment manager.
         
         Args:
             environment: Target environment (development, testing, production)
-        """        self.environment = environment
+        """
+        self.environment = environment
         self.base_path = Path(__file__).parent
         self.project_root = self.base_path.parent.parent.parent
         
         logger.info(f"Initializing Audit Logs Deployment for {environment}")
     
     def check_prerequisites(self) -> bool:
-        """        Check system prerequisites for deployment.
+        """
+        Check system prerequisites for deployment.
         
         Returns:
             bool: True if all prerequisites are met
-        """        logger.info("Checking system prerequisites...")
+        """
+        logger.info("Checking system prerequisites...")
         
         prerequisites = {
             "python": ["python", "--version"],
@@ -92,11 +99,13 @@ class AuditLogsDeployment:
         return True
     
     def install_python_dependencies(self) -> bool:
-        """        Install required Python dependencies.
+        """
+        Install required Python dependencies.
         
         Returns:
             bool: True if installation successful
-        """        logger.info("Installing Python dependencies...")
+        """
+        logger.info("Installing Python dependencies...")
         
         requirements = [
             "sqlalchemy>=2.0.0",
@@ -131,11 +140,13 @@ class AuditLogsDeployment:
             return False
     
     def create_database_schema(self) -> bool:
-        """        Create database schema and tables.
+        """
+        Create database schema and tables.
         
         Returns:
             bool: True if schema creation successful
-        """        logger.info("Creating database schema...")
+        """
+        logger.info("Creating database schema...")
         
         try:
             from sqlalchemy import create_engine
@@ -156,11 +167,13 @@ class AuditLogsDeployment:
             return False
     
     def setup_elasticsearch_indices(self) -> bool:
-        """        Setup Elasticsearch indices for audit logs.
+        """
+        Setup Elasticsearch indices for audit logs.
         
         Returns:
             bool: True if setup successful
-        """        logger.info("Setting up Elasticsearch indices...")
+        """
+        logger.info("Setting up Elasticsearch indices...")
         
         try:
             from elasticsearch import Elasticsearch
@@ -225,11 +238,13 @@ class AuditLogsDeployment:
             return False
     
     def configure_redis_cache(self) -> bool:
-        """        Configure Redis for caching and real-time features.
+        """
+        Configure Redis for caching and real-time features.
         
         Returns:
             bool: True if configuration successful
-        """        logger.info("Configuring Redis cache...")
+        """
+        logger.info("Configuring Redis cache...")
         
         try:
             import redis
@@ -268,11 +283,13 @@ class AuditLogsDeployment:
             return False
     
     def setup_s3_storage(self) -> bool:
-        """        Setup S3 storage for evidence and exports.
+        """
+        Setup S3 storage for evidence and exports.
         
         Returns:
             bool: True if setup successful
-        """        logger.info("Setting up S3 storage...")
+        """
+        logger.info("Setting up S3 storage...")
         
         try:
             import boto3
@@ -329,11 +346,13 @@ class AuditLogsDeployment:
             return False
     
     def create_configuration_files(self) -> bool:
-        """        Create environment-specific configuration files.
+        """
+        Create environment-specific configuration files.
         
         Returns:
             bool: True if creation successful
-        """        logger.info("Creating configuration files...")
+        """
+        logger.info("Creating configuration files...")
         
         try:
             from .config import create_config
@@ -373,11 +392,13 @@ class AuditLogsDeployment:
             return False
     
     def setup_monitoring_and_alerts(self) -> bool:
-        """        Setup monitoring and alerting system.
+        """
+        Setup monitoring and alerting system.
         
         Returns:
             bool: True if setup successful
-        """        logger.info("Setting up monitoring and alerts...")
+        """
+        logger.info("Setting up monitoring and alerts...")
         
         try:
             # Create monitoring scripts directory
@@ -429,7 +450,8 @@ print(f'✅ Elasticsearch: {health[\"status\"].title()}')
 "
 
 echo "🎯 Health check completed successfully!"
-"""            
+"""
+            
             with open(monitoring_dir / "health_check.sh", 'w') as f:
                 f.write(health_check_script)
             
@@ -455,7 +477,8 @@ RestartSec=10
 
 [Install]
 WantedBy=multi-user.target
-"""                
+"""
+                
                 systemd_dir = self.project_root / "deploy" / "systemd"
                 systemd_dir.mkdir(parents=True, exist_ok=True)
                 
@@ -470,11 +493,13 @@ WantedBy=multi-user.target
             return False
     
     def run_tests(self) -> bool:
-        """        Run comprehensive test suite.
+        """
+        Run comprehensive test suite.
         
         Returns:
             bool: True if all tests pass
-        """        logger.info("Running test suite...")
+        """
+        logger.info("Running test suite...")
         
         try:
             # Run pytest
@@ -496,11 +521,13 @@ WantedBy=multi-user.target
             return False
     
     def deploy(self) -> bool:
-        """        Execute complete deployment process.
+        """
+        Execute complete deployment process.
         
         Returns:
             bool: True if deployment successful
-        """        logger.info("🚀 Starting Audit Logs Module Deployment")
+        """
+        logger.info("🚀 Starting Audit Logs Module Deployment")
         logger.info("=" * 80)
         logger.info("Author: Fahed Mlaiel <mlaiel@live.de>")
         logger.info("⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - Unauthorized use prohibited")
@@ -545,7 +572,8 @@ WantedBy=multi-user.target
 
 
 def main():
-    """Main deployment script entry point."""    import argparse
+    """Main deployment script entry point."""
+    import argparse
     
     parser = argparse.ArgumentParser(
         description="Deploy IA Influencer Agent Audit Logs Module"

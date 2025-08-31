@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -21,7 +22,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -57,9 +59,11 @@ from ai.ml.audio_intelligence import (
 
 
 class TestAudioIntelligenceEngine:
-    """Tests for core audio intelligence functionality"""    
+    """Tests for core audio intelligence functionality"""
+    
     def test_init_audio_intelligence_engine(self):
-        """Test audio intelligence engine initialization"""        engine = AudioIntelligenceEngine(
+        """Test audio intelligence engine initialization"""
+        engine = AudioIntelligenceEngine(
             supported_formats=["wav", "mp3", "flac", "m4a", "ogg"],
             sample_rate=44100,
             enable_gpu_acceleration=True,
@@ -74,7 +78,8 @@ class TestAudioIntelligenceEngine:
         assert engine.enable_real_time_processing
 
     def test_audio_file_loading(self, sample_audio_file, temp_dir):
-        """Test audio file loading and preprocessing"""        engine = AudioIntelligenceEngine()
+        """Test audio file loading and preprocessing"""
+        engine = AudioIntelligenceEngine()
         
         # Create mock audio file
         if not sample_audio_file:
@@ -98,7 +103,8 @@ class TestAudioIntelligenceEngine:
         assert loaded_audio["sample_rate"] == 22050
 
     def test_audio_preprocessing_pipeline(self, sample_audio_data):
-        """Test audio preprocessing pipeline"""        engine = AudioIntelligenceEngine()
+        """Test audio preprocessing pipeline"""
+        engine = AudioIntelligenceEngine()
         
         preprocessing_config = {
             "normalize": True,
@@ -128,7 +134,8 @@ class TestAudioIntelligenceEngine:
             assert processed_result["snr_improvement"] > 5.0
 
     def test_feature_extraction_comprehensive(self, sample_audio_data):
-        """Test comprehensive audio feature extraction"""        engine = AudioIntelligenceEngine()
+        """Test comprehensive audio feature extraction"""
+        engine = AudioIntelligenceEngine()
         
         feature_config = {
             "features": [
@@ -166,7 +173,8 @@ class TestAudioIntelligenceEngine:
             assert features["chroma"].shape[0] == 12
 
     def test_multi_modal_audio_analysis(self, sample_audio_data):
-        """Test multi-modal audio analysis"""        engine = AudioIntelligenceEngine()
+        """Test multi-modal audio analysis"""
+        engine = AudioIntelligenceEngine()
         
         analysis_config = {
             "speech_analysis": {"enabled": True, "language": "auto"},
@@ -222,9 +230,11 @@ class TestAudioIntelligenceEngine:
 
 
 class TestSpeechRecognitionEngine:
-    """Tests for speech recognition functionality"""    
+    """Tests for speech recognition functionality"""
+    
     def test_init_speech_recognition(self):
-        """Test speech recognition engine initialization"""        engine = SpeechRecognitionEngine(
+        """Test speech recognition engine initialization"""
+        engine = SpeechRecognitionEngine(
             model_name="wav2vec2-base",
             supported_languages=["en", "fr", "de", "es", "it"],
             enable_punctuation=True,
@@ -239,7 +249,8 @@ class TestSpeechRecognitionEngine:
         assert engine.real_time_transcription
 
     def test_speech_to_text_whisper(self, speech_audio_data):
-        """Test speech-to-text using Whisper model"""        engine = SpeechRecognitionEngine(model_name="whisper-base")
+        """Test speech-to-text using Whisper model"""
+        engine = SpeechRecognitionEngine(model_name="whisper-base")
         
         transcription_config = {
             "language": "auto",
@@ -287,7 +298,8 @@ class TestSpeechRecognitionEngine:
             assert transcription_result["language_confidence"] > 0.9
 
     def test_real_time_speech_recognition(self, streaming_audio_data):
-        """Test real-time speech recognition"""        engine = SpeechRecognitionEngine(real_time_transcription=True)
+        """Test real-time speech recognition"""
+        engine = SpeechRecognitionEngine(real_time_transcription=True)
         
         streaming_config = {
             "chunk_duration": 1.0,  # seconds
@@ -320,7 +332,8 @@ class TestSpeechRecognitionEngine:
             assert realtime_result["average_latency"] < 0.2
 
     def test_speaker_diarization(self, multi_speaker_audio):
-        """Test speaker diarization and identification"""        engine = SpeechRecognitionEngine(enable_speaker_diarization=True)
+        """Test speaker diarization and identification"""
+        engine = SpeechRecognitionEngine(enable_speaker_diarization=True)
         
         diarization_config = {
             "min_speakers": 2,
@@ -357,7 +370,8 @@ class TestSpeechRecognitionEngine:
             assert diarization_result["diarization_accuracy"] > 0.9
 
     def test_language_identification(self, multilingual_audio_samples):
-        """Test automatic language identification"""        engine = SpeechRecognitionEngine()
+        """Test automatic language identification"""
+        engine = SpeechRecognitionEngine()
         
         language_config = {
             "supported_languages": ["en", "fr", "de", "es", "it", "pt", "zh", "ja"],
@@ -393,9 +407,11 @@ class TestSpeechRecognitionEngine:
 
 
 class TestMusicAnalyzer:
-    """Tests for music analysis functionality"""    
+    """Tests for music analysis functionality"""
+    
     def test_init_music_analyzer(self):
-        """Test music analyzer initialization"""        analyzer = MusicAnalyzer(
+        """Test music analyzer initialization"""
+        analyzer = MusicAnalyzer(
             analysis_features=["tempo", "key", "genre", "mood", "instruments"],
             genre_model="deep_genre_classifier",
             enable_real_time_analysis=True,
@@ -408,7 +424,8 @@ class TestMusicAnalyzer:
         assert len(analyzer.supported_formats) == 3
 
     def test_tempo_detection(self, music_audio_data):
-        """Test tempo detection and beat tracking"""        analyzer = MusicAnalyzer()
+        """Test tempo detection and beat tracking"""
+        analyzer = MusicAnalyzer()
         
         tempo_config = {
             "method": "dynamic_programming",
@@ -439,7 +456,8 @@ class TestMusicAnalyzer:
             assert tempo_result["tempo_confidence"] > 0.8
 
     def test_key_detection(self, music_audio_data):
-        """Test musical key detection"""        analyzer = MusicAnalyzer()
+        """Test musical key detection"""
+        analyzer = MusicAnalyzer()
         
         key_config = {
             "method": "krumhansl_schmuckler",
@@ -473,7 +491,8 @@ class TestMusicAnalyzer:
             assert key_result["key_confidence"] > 0.8
 
     def test_genre_classification(self, music_audio_data):
-        """Test music genre classification"""        analyzer = MusicAnalyzer(genre_model="deep_genre_classifier")
+        """Test music genre classification"""
+        analyzer = MusicAnalyzer(genre_model="deep_genre_classifier")
         
         genre_config = {
             "model_type": "deep_neural_network",
@@ -512,7 +531,8 @@ class TestMusicAnalyzer:
             assert sum(genre_result["genre_probabilities"].values()) == pytest.approx(1.0)
 
     def test_instrument_detection(self, music_audio_data):
-        """Test musical instrument detection"""        analyzer = MusicAnalyzer()
+        """Test musical instrument detection"""
+        analyzer = MusicAnalyzer()
         
         instrument_config = {
             "instruments": [
@@ -554,7 +574,8 @@ class TestMusicAnalyzer:
             )
 
     def test_music_structure_analysis(self, music_audio_data):
-        """Test music structure analysis (intro, verse, chorus, etc.)"""        analyzer = MusicAnalyzer()
+        """Test music structure analysis (intro, verse, chorus, etc.)"""
+        analyzer = MusicAnalyzer()
         
         structure_config = {
             "segment_types": ["intro", "verse", "chorus", "bridge", "outro"],
@@ -595,9 +616,11 @@ class TestMusicAnalyzer:
 
 
 class TestAudioEmotionDetector:
-    """Tests for audio emotion detection"""    
+    """Tests for audio emotion detection"""
+    
     def test_init_emotion_detector(self):
-        """Test emotion detector initialization"""        detector = AudioEmotionDetector(
+        """Test emotion detector initialization"""
+        detector = AudioEmotionDetector(
             emotion_model="deep_emotion_recognition",
             emotions=["happy", "sad", "angry", "neutral", "surprised", "fear", "disgust"],
             enable_arousal_valence=True,
@@ -610,7 +633,8 @@ class TestAudioEmotionDetector:
         assert detector.real_time_detection
 
     def test_speech_emotion_recognition(self, emotional_speech_audio):
-        """Test emotion recognition in speech"""        detector = AudioEmotionDetector()
+        """Test emotion recognition in speech"""
+        detector = AudioEmotionDetector()
         
         emotion_config = {
             "feature_set": ["prosodic", "spectral", "voice_quality"],
@@ -651,7 +675,8 @@ class TestAudioEmotionDetector:
             assert 0 <= emotion_result["valence"] <= 1
 
     def test_music_emotion_analysis(self, emotional_music_audio):
-        """Test emotion analysis in music"""        detector = AudioEmotionDetector()
+        """Test emotion analysis in music"""
+        detector = AudioEmotionDetector()
         
         music_emotion_config = {
             "emotion_model": "music_emotion_vgg",
@@ -690,7 +715,8 @@ class TestAudioEmotionDetector:
             assert music_emotion_result["emotional_consistency"] > 0.7
 
     def test_cross_cultural_emotion_detection(self, multicultural_audio_samples):
-        """Test cross-cultural emotion detection"""        detector = AudioEmotionDetector()
+        """Test cross-cultural emotion detection"""
+        detector = AudioEmotionDetector()
         
         cultural_config = {
             "cultural_models": ["western", "eastern", "african", "latin"],
@@ -727,9 +753,11 @@ class TestAudioEmotionDetector:
 
 
 class TestVoiceActivityDetector:
-    """Tests for voice activity detection"""    
+    """Tests for voice activity detection"""
+    
     def test_init_vad(self):
-        """Test VAD initialization"""        vad = VoiceActivityDetector(
+        """Test VAD initialization"""
+        vad = VoiceActivityDetector(
             method="deep_learning",
             frame_length=25,  # ms
             frame_shift=10,   # ms
@@ -743,7 +771,8 @@ class TestVoiceActivityDetector:
         assert vad.enable_noise_robustness
 
     def test_voice_activity_detection(self, mixed_audio_with_silence):
-        """Test voice activity detection in mixed audio"""        vad = VoiceActivityDetector()
+        """Test voice activity detection in mixed audio"""
+        vad = VoiceActivityDetector()
         
         vad_config = {
             "sensitivity": 0.5,
@@ -785,10 +814,12 @@ class TestVoiceActivityDetector:
 
 @pytest.mark.integration
 class TestAudioIntelligenceIntegration:
-    """Integration tests for audio intelligence systems"""    
+    """Integration tests for audio intelligence systems"""
+    
     @pytest.mark.slow
     def test_end_to_end_audio_pipeline(self, sample_audio_file, temp_dir):
-        """Test complete audio intelligence pipeline"""        # Initialize components
+        """Test complete audio intelligence pipeline"""
+        # Initialize components
         engine = AudioIntelligenceEngine(
             models=["speech_recognition", "music_analysis", "emotion_detection"]
         )
@@ -870,7 +901,8 @@ class TestAudioIntelligenceIntegration:
             assert emotion_result["emotion_confidence"] > 0.8
 
     def test_real_time_audio_processing(self):
-        """Test real-time audio processing pipeline"""        processor = RealTimeAudioProcessor(
+        """Test real-time audio processing pipeline"""
+        processor = RealTimeAudioProcessor(
             buffer_size=4096,
             sample_rate=44100,
             processing_modules=["vad", "speech_recognition", "emotion_detection"]

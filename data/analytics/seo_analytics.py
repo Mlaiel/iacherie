@@ -15,7 +15,8 @@ WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -41,7 +42,8 @@ from ..vector_db.vector_db_manager import VectorDBManager
 
 
 class SearchPlatform(Enum):
-    """Search platforms for SEO tracking"""    GOOGLE = "google"
+    """Search platforms for SEO tracking"""
+    GOOGLE = "google"
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     SOUNDCLOUD = "soundcloud"
@@ -52,14 +54,16 @@ class SearchPlatform(Enum):
 
 
 class KeywordDifficulty(Enum):
-    """Keyword difficulty levels"""    EASY = "easy"
+    """Keyword difficulty levels"""
+    EASY = "easy"
     MEDIUM = "medium"
     HARD = "hard"
     VERY_HARD = "very_hard"
 
 
 class ContentCategory(Enum):
-    """Content categories for SEO"""    MUSIC = "music"
+    """Content categories for SEO"""
+    MUSIC = "music"
     PODCAST = "podcast"
     VIDEO = "video"
     BLOG = "blog"
@@ -68,7 +72,8 @@ class ContentCategory(Enum):
 
 
 class SEOMetricType(Enum):
-    """SEO metric types"""    ORGANIC_TRAFFIC = "organic_traffic"
+    """SEO metric types"""
+    ORGANIC_TRAFFIC = "organic_traffic"
     KEYWORD_RANKING = "keyword_ranking"
     VISIBILITY_SCORE = "visibility_score"
     CLICK_THROUGH_RATE = "click_through_rate"
@@ -80,7 +85,8 @@ class SEOMetricType(Enum):
 
 @dataclass
 class KeywordMetrics:
-    """Keyword performance metrics"""    keyword: str
+    """Keyword performance metrics"""
+    keyword: str
     search_volume: int
     difficulty: KeywordDifficulty
     current_ranking: Optional[int]
@@ -96,7 +102,8 @@ class KeywordMetrics:
 
 @dataclass
 class ContentSEOMetrics:
-    """Content SEO performance metrics"""    content_id: str
+    """Content SEO performance metrics"""
+    content_id: str
     title: str
     content_type: ContentCategory
     organic_traffic: int
@@ -112,7 +119,8 @@ class ContentSEOMetrics:
 
 @dataclass
 class SEOOpportunity:
-    """Identified SEO optimization opportunity"""    content_id: str
+    """Identified SEO optimization opportunity"""
+    content_id: str
     opportunity_type: str
     impact_score: float
     effort_required: str
@@ -125,7 +133,8 @@ class SEOOpportunity:
 
 @dataclass
 class CompetitorAnalysis:
-    """Competitor SEO analysis"""    competitor_id: str
+    """Competitor SEO analysis"""
+    competitor_id: str
     competitor_name: str
     domain_authority: float
     organic_traffic_estimate: int
@@ -139,7 +148,8 @@ class CompetitorAnalysis:
 
 @dataclass
 class SEOAnalyticsReport:
-    """Comprehensive SEO analytics report"""    user_id: str
+    """Comprehensive SEO analytics report"""
+    user_id: str
     analysis_period: Dict[str, datetime]
     overall_visibility_score: float
     organic_traffic_trend: List[Dict]
@@ -153,21 +163,25 @@ class SEOAnalyticsReport:
 
 
 class SEOAnalytics:
-    """    Professional SEO analytics engine for IA Influencer Agent platform.
+    """
+    Professional SEO analytics engine for IA Influencer Agent platform.
     
     Provides comprehensive SEO analytics for content optimization, keyword tracking,
     competitor analysis, and search visibility improvement across multiple platforms.
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, redis_client: Redis,
                  storage_manager: StorageManager, vector_db: VectorDBManager):
-        """        Initialize SEOAnalytics engine.
+        """
+        Initialize SEOAnalytics engine.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
             storage_manager: Storage management service
             vector_db: Vector database manager
-        """        self.db_session = db_session
+        """
+        self.db_session = db_session
         self.redis = redis_client
         self.storage = storage_manager
         self.vector_db = vector_db
@@ -187,7 +201,8 @@ class SEOAnalytics:
     
     async def track_keyword_performance(self, user_id: str, 
                                       keywords: List[str] = None) -> List[KeywordMetrics]:
-        """        Track keyword performance across multiple platforms.
+        """
+        Track keyword performance across multiple platforms.
         
         Args:
             user_id: User identifier
@@ -195,7 +210,8 @@ class SEOAnalytics:
             
         Returns:
             List[KeywordMetrics]: Keyword performance data
-        """        try:
+        """
+        try:
             cache_key = self.keyword_cache_key.format(f"{user_id}_{hash(str(keywords))}")
             cached_data = await self._get_from_cache(cache_key)
             if cached_data:
@@ -224,14 +240,16 @@ class SEOAnalytics:
             raise
     
     async def analyze_content_seo(self, content_id: str) -> ContentSEOMetrics:
-        """        Analyze SEO performance for specific content.
+        """
+        Analyze SEO performance for specific content.
         
         Args:
             content_id: Content identifier
             
         Returns:
             ContentSEOMetrics: Content SEO performance data
-        """        try:
+        """
+        try:
             cache_key = self.seo_cache_key.format(f"content_{content_id}")
             cached_data = await self._get_from_cache(cache_key)
             if cached_data:
@@ -256,7 +274,8 @@ class SEOAnalytics:
     
     async def identify_seo_opportunities(self, user_id: str, 
                                        content_ids: List[str] = None) -> List[SEOOpportunity]:
-        """        Identify SEO optimization opportunities for user content.
+        """
+        Identify SEO optimization opportunities for user content.
         
         Args:
             user_id: User identifier
@@ -264,7 +283,8 @@ class SEOAnalytics:
             
         Returns:
             List[SEOOpportunity]: Ranked SEO opportunities
-        """        try:
+        """
+        try:
             # Get user content if not specified
             if not content_ids:
                 content_ids = await self._get_user_content_ids(user_id)
@@ -300,7 +320,8 @@ class SEOAnalytics:
     
     async def analyze_competitors(self, user_id: str, 
                                 competitor_ids: List[str] = None) -> List[CompetitorAnalysis]:
-        """        Analyze competitor SEO performance and strategies.
+        """
+        Analyze competitor SEO performance and strategies.
         
         Args:
             user_id: User identifier
@@ -308,7 +329,8 @@ class SEOAnalytics:
             
         Returns:
             List[CompetitorAnalysis]: Competitor analysis data
-        """        try:
+        """
+        try:
             # Identify competitors if not specified
             if not competitor_ids:
                 competitor_ids = await self._identify_competitors(user_id)
@@ -327,7 +349,8 @@ class SEOAnalytics:
     
     async def generate_seo_report(self, user_id: str, 
                                 period_days: int = 30) -> SEOAnalyticsReport:
-        """        Generate comprehensive SEO analytics report.
+        """
+        Generate comprehensive SEO analytics report.
         
         Args:
             user_id: User identifier
@@ -335,7 +358,8 @@ class SEOAnalytics:
             
         Returns:
             SEOAnalyticsReport: Comprehensive SEO report
-        """        try:
+        """
+        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
             
@@ -381,7 +405,8 @@ class SEOAnalytics:
     
     async def optimize_content_keywords(self, content_id: str, 
                                       target_keywords: List[str]) -> Dict[str, Any]:
-        """        Optimize content for target keywords using AI.
+        """
+        Optimize content for target keywords using AI.
         
         Args:
             content_id: Content identifier
@@ -389,7 +414,8 @@ class SEOAnalytics:
             
         Returns:
             Dict[str, Any]: Optimization recommendations
-        """        try:
+        """
+        try:
             # Analyze current content
             content_data = await self._fetch_content_data(content_id)
             current_seo = await self.analyze_content_seo(content_id)
@@ -426,7 +452,8 @@ class SEOAnalytics:
     # Private helper methods
     
     async def _get_user_tracked_keywords(self, user_id: str) -> List[str]:
-        """Get user's tracked keywords"""        try:
+        """Get user's tracked keywords"""
+        try:
             query = select(AnalyticsModel).where(
                 AnalyticsModel.user_id == user_id,
                 AnalyticsModel.entity_type == 'seo_keywords'
@@ -444,7 +471,8 @@ class SEOAnalytics:
     
     async def _track_keyword_on_platform(self, keyword: str, platform: SearchPlatform, 
                                         user_id: str) -> Optional[KeywordMetrics]:
-        """Track keyword performance on specific platform"""        # Platform-specific keyword tracking implementation
+        """Track keyword performance on specific platform"""
+        # Platform-specific keyword tracking implementation
         # This would integrate with various platform APIs
         
         return KeywordMetrics(
@@ -463,7 +491,8 @@ class SEOAnalytics:
         )
     
     async def _fetch_content_data(self, content_id: str) -> Optional[Dict]:
-        """Fetch content data from database"""        try:
+        """Fetch content data from database"""
+        try:
             query = select(ContentModel).where(ContentModel.id == content_id)
             result = await self.db_session.execute(query)
             content = result.scalar_one_or_none()
@@ -483,7 +512,8 @@ class SEOAnalytics:
             return None
     
     async def _analyze_content_seo_metrics(self, content_data: Dict) -> ContentSEOMetrics:
-        """Analyze SEO metrics for content"""        # Comprehensive SEO analysis implementation
+        """Analyze SEO metrics for content"""
+        # Comprehensive SEO analysis implementation
         
         return ContentSEOMetrics(
             content_id=content_data['id'],
@@ -501,7 +531,8 @@ class SEOAnalytics:
         )
     
     async def _get_user_content_ids(self, user_id: str) -> List[str]:
-        """Get all content IDs for user"""        try:
+        """Get all content IDs for user"""
+        try:
             query = select(ContentModel.id).where(ContentModel.user_id == user_id)
             result = await self.db_session.execute(query)
             return [row[0] for row in result.fetchall()]
@@ -512,7 +543,8 @@ class SEOAnalytics:
     
     async def _identify_content_opportunities(self, content_id: str, 
                                             metrics: ContentSEOMetrics) -> List[SEOOpportunity]:
-        """Identify optimization opportunities for specific content"""        opportunities = []
+        """Identify optimization opportunities for specific content"""
+        opportunities = []
         
         # Low visibility opportunity
         if metrics.visibility_score < 0.6:
@@ -531,19 +563,23 @@ class SEOAnalytics:
         return opportunities
     
     async def _identify_keyword_opportunities(self, user_id: str) -> List[SEOOpportunity]:
-        """Identify keyword gap opportunities"""        # Keyword gap analysis implementation
+        """Identify keyword gap opportunities"""
+        # Keyword gap analysis implementation
         return []
     
     async def _identify_technical_opportunities(self, user_id: str) -> List[SEOOpportunity]:
-        """Identify technical SEO opportunities"""        # Technical SEO analysis implementation
+        """Identify technical SEO opportunities"""
+        # Technical SEO analysis implementation
         return []
     
     async def _identify_competitors(self, user_id: str) -> List[str]:
-        """Identify competitors for user"""        # Competitor identification algorithm
+        """Identify competitors for user"""
+        # Competitor identification algorithm
         return []
     
     async def _analyze_competitor_seo(self, competitor_id: str, user_id: str) -> CompetitorAnalysis:
-        """Analyze competitor SEO performance"""        # Competitor analysis implementation
+        """Analyze competitor SEO performance"""
+        # Competitor analysis implementation
         
         return CompetitorAnalysis(
             competitor_id=competitor_id,
@@ -560,60 +596,72 @@ class SEOAnalytics:
     
     async def _get_content_seo_performance(self, user_id: str, start_date: datetime, 
                                          end_date: datetime) -> List[ContentSEOMetrics]:
-        """Get content SEO performance for period"""        # Performance data retrieval
+        """Get content SEO performance for period"""
+        # Performance data retrieval
         return []
     
     async def _identify_technical_issues(self, user_id: str) -> List[Dict]:
-        """Identify technical SEO issues"""        # Technical issue identification
+        """Identify technical SEO issues"""
+        # Technical issue identification
         return []
     
     async def _calculate_overall_visibility_score(self, user_id: str) -> float:
-        """Calculate overall SEO visibility score"""        # Visibility score calculation
+        """Calculate overall SEO visibility score"""
+        # Visibility score calculation
         return 0.75
     
     async def _calculate_traffic_trend(self, user_id: str, start_date: datetime, 
                                      end_date: datetime) -> List[Dict]:
-        """Calculate organic traffic trend"""        # Traffic trend calculation
+        """Calculate organic traffic trend"""
+        # Traffic trend calculation
         return []
     
     async def _calculate_seo_roi(self, user_id: str, start_date: datetime, 
                                end_date: datetime) -> Dict[str, float]:
-        """Calculate SEO ROI metrics"""        # ROI calculation
+        """Calculate SEO ROI metrics"""
+        # ROI calculation
         return {}
     
     async def _generate_seo_recommendations(self, keyword_performance: List[KeywordMetrics],
                                           content_performance: List[ContentSEOMetrics],
                                           opportunities: List[SEOOpportunity]) -> List[str]:
-        """Generate SEO recommendations"""        # Recommendation generation logic
+        """Generate SEO recommendations"""
+        # Recommendation generation logic
         return []
     
     async def _analyze_keyword_potential(self, keywords: List[str]) -> Dict[str, Any]:
-        """Analyze keyword potential and difficulty"""        # Keyword analysis implementation
+        """Analyze keyword potential and difficulty"""
+        # Keyword analysis implementation
         return {}
     
     async def _generate_keyword_optimization(self, content_data: Dict, keywords: List[str],
                                            analysis: Dict) -> List[str]:
-        """Generate keyword optimization suggestions"""        # Optimization suggestions generation
+        """Generate keyword optimization suggestions"""
+        # Optimization suggestions generation
         return []
     
     async def _predict_optimization_impact(self, content_id: str, 
                                          suggestions: List[str]) -> Dict[str, Any]:
-        """Predict impact of optimization changes"""        # Impact prediction implementation
+        """Predict impact of optimization changes"""
+        # Impact prediction implementation
         return {}
     
     async def _generate_implementation_steps(self, suggestions: List[str]) -> List[Dict]:
-        """Generate implementation steps for optimizations"""        # Implementation steps generation
+        """Generate implementation steps for optimizations"""
+        # Implementation steps generation
         return []
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
-        """Get data from Redis cache"""        try:
+        """Get data from Redis cache"""
+        try:
             data = self.redis.get(key)
             return json.loads(data) if data else None
         except Exception:
             return None
     
     async def _cache_data(self, key: str, data: Any, ttl: int):
-        """Cache data in Redis"""        try:
+        """Cache data in Redis"""
+        try:
             self.redis.setex(key, ttl, json.dumps(data, default=str))
         except Exception as e:
             self.logger.warning(f"Failed to cache data: {str(e)}")

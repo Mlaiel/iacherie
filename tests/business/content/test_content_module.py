@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -19,7 +20,8 @@ including processing, distribution, monetization, quality assurance, and collabo
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 import os
 import tempfile
@@ -48,14 +50,17 @@ from ...backend.business.content.config import ContentModuleConfig
 
 
 class TestContentProcessingEngine:
-    """Test cases for ContentProcessingEngine."""    
+    """Test cases for ContentProcessingEngine."""
+    
     @pytest.fixture
     def processing_engine(self):
-        """Create ContentProcessingEngine instance for testing."""        return ContentProcessingEngine()
+        """Create ContentProcessingEngine instance for testing."""
+        return ContentProcessingEngine()
     
     @pytest.fixture
     def sample_video_metadata(self):
-        """Sample video metadata for testing."""        return {
+        """Sample video metadata for testing."""
+        return {
             'file_path': '/tmp/test_video.mp4',
             'file_name': 'test_video.mp4',
             'file_size': 1024000,  # 1MB
@@ -69,7 +74,8 @@ class TestContentProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_process_video_content(self, processing_engine, sample_video_metadata):
-        """Test video content processing."""        creator_id = uuid4()
+        """Test video content processing."""
+        creator_id = uuid4()
         
         with patch.object(processing_engine, '_extract_video_metadata', 
                          return_value=sample_video_metadata), \
@@ -93,7 +99,8 @@ class TestContentProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_batch_processing(self, processing_engine):
-        """Test batch content processing."""        creator_id = uuid4()
+        """Test batch content processing."""
+        creator_id = uuid4()
         content_items = [
             {'file_path': '/tmp/video1.mp4', 'content_type': 'video'},
             {'file_path': '/tmp/image1.jpg', 'content_type': 'image'},
@@ -120,7 +127,8 @@ class TestContentProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_processing_failure_handling(self, processing_engine):
-        """Test handling of processing failures."""        creator_id = uuid4()
+        """Test handling of processing failures."""
+        creator_id = uuid4()
         
         with patch.object(processing_engine, '_extract_video_metadata',
                          side_effect=Exception("File not found")):
@@ -137,14 +145,17 @@ class TestContentProcessingEngine:
 
 
 class TestMultiFormatHandler:
-    """Test cases for MultiFormatHandler."""    
+    """Test cases for MultiFormatHandler."""
+    
     @pytest.fixture
     def format_handler(self):
-        """Create MultiFormatHandler instance for testing."""        return MultiFormatHandler()
+        """Create MultiFormatHandler instance for testing."""
+        return MultiFormatHandler()
     
     @pytest.mark.asyncio
     async def test_video_format_conversion(self, format_handler):
-        """Test video format conversion."""        content_id = uuid4()
+        """Test video format conversion."""
+        content_id = uuid4()
         
         with patch('subprocess.run') as mock_run:
             mock_run.return_value.returncode = 0
@@ -163,7 +174,8 @@ class TestMultiFormatHandler:
     
     @pytest.mark.asyncio
     async def test_platform_optimization(self, format_handler):
-        """Test platform-specific optimization."""        content_id = uuid4()
+        """Test platform-specific optimization."""
+        content_id = uuid4()
         
         with patch.object(format_handler, '_get_platform_specifications',
                          return_value={
@@ -187,14 +199,17 @@ class TestMultiFormatHandler:
 
 
 class TestContentAIEnhancer:
-    """Test cases for ContentAIEnhancer."""    
+    """Test cases for ContentAIEnhancer."""
+    
     @pytest.fixture
     def ai_enhancer(self):
-        """Create ContentAIEnhancer instance for testing."""        return ContentAIEnhancer()
+        """Create ContentAIEnhancer instance for testing."""
+        return ContentAIEnhancer()
     
     @pytest.mark.asyncio
     async def test_content_enhancement(self, ai_enhancer):
-        """Test AI-powered content enhancement."""        content_id = uuid4()
+        """Test AI-powered content enhancement."""
+        content_id = uuid4()
         
         with patch.object(ai_enhancer, '_analyze_content_quality',
                          return_value={'quality_score': 0.7, 'issues': ['low_brightness']}), \
@@ -218,7 +233,8 @@ class TestContentAIEnhancer:
     
     @pytest.mark.asyncio
     async def test_auto_tagging(self, ai_enhancer):
-        """Test automatic content tagging."""        content_id = uuid4()
+        """Test automatic content tagging."""
+        content_id = uuid4()
         
         with patch.object(ai_enhancer, '_extract_content_features',
                          return_value={'objects': ['person', 'car'], 'scenes': ['outdoor']}), \
@@ -238,14 +254,17 @@ class TestContentAIEnhancer:
 
 
 class TestContentDistributionManager:
-    """Test cases for ContentDistributionManager."""    
+    """Test cases for ContentDistributionManager."""
+    
     @pytest.fixture
     def distribution_manager(self):
-        """Create ContentDistributionManager instance for testing."""        return ContentDistributionManager()
+        """Create ContentDistributionManager instance for testing."""
+        return ContentDistributionManager()
     
     @pytest.mark.asyncio
     async def test_single_platform_distribution(self, distribution_manager):
-        """Test distribution to single platform."""        creator_id = uuid4()
+        """Test distribution to single platform."""
+        creator_id = uuid4()
         content_id = uuid4()
         
         with patch.object(distribution_manager, '_validate_platform_requirements',
@@ -271,7 +290,8 @@ class TestContentDistributionManager:
     
     @pytest.mark.asyncio
     async def test_multi_platform_distribution(self, distribution_manager):
-        """Test distribution to multiple platforms."""        creator_id = uuid4()
+        """Test distribution to multiple platforms."""
+        creator_id = uuid4()
         content_id = uuid4()
         platforms = ['youtube', 'instagram', 'tiktok']
         
@@ -300,14 +320,17 @@ class TestContentDistributionManager:
 
 
 class TestContentMonetizationEngine:
-    """Test cases for ContentMonetizationEngine."""    
+    """Test cases for ContentMonetizationEngine."""
+    
     @pytest.fixture
     def monetization_engine(self):
-        """Create ContentMonetizationEngine instance for testing."""        return ContentMonetizationEngine()
+        """Create ContentMonetizationEngine instance for testing."""
+        return ContentMonetizationEngine()
     
     @pytest.mark.asyncio
     async def test_subscription_strategy_creation(self, monetization_engine):
-        """Test subscription monetization strategy creation."""        creator_id = uuid4()
+        """Test subscription monetization strategy creation."""
+        creator_id = uuid4()
         
         with patch.object(monetization_engine, '_setup_payment_processing',
                          return_value={'available_methods': ['credit_card', 'paypal']}), \
@@ -332,7 +355,8 @@ class TestContentMonetizationEngine:
     
     @pytest.mark.asyncio
     async def test_subscription_payment_processing(self, monetization_engine):
-        """Test subscription payment processing."""        strategy_id = uuid4()
+        """Test subscription payment processing."""
+        strategy_id = uuid4()
         subscriber_id = uuid4()
         
         with patch.object(monetization_engine.db.monetization_strategies, 'get_by_id',
@@ -357,7 +381,8 @@ class TestContentMonetizationEngine:
     
     @pytest.mark.asyncio
     async def test_revenue_analytics(self, monetization_engine):
-        """Test revenue analytics generation."""        creator_id = uuid4()
+        """Test revenue analytics generation."""
+        creator_id = uuid4()
         
         with patch.object(monetization_engine.db.revenue_transactions, 'get_by_creator_period',
                          return_value=[
@@ -376,14 +401,17 @@ class TestContentMonetizationEngine:
 
 
 class TestContentQualityAssuranceSystem:
-    """Test cases for ContentQualityAssuranceSystem."""    
+    """Test cases for ContentQualityAssuranceSystem."""
+    
     @pytest.fixture
     def qa_system(self):
-        """Create ContentQualityAssuranceSystem instance for testing."""        return ContentQualityAssuranceSystem()
+        """Create ContentQualityAssuranceSystem instance for testing."""
+        return ContentQualityAssuranceSystem()
     
     @pytest.mark.asyncio
     async def test_quality_check_initiation(self, qa_system):
-        """Test quality check initiation."""        content_id = uuid4()
+        """Test quality check initiation."""
+        content_id = uuid4()
         
         result = await qa_system.initiate_quality_check(
             content_id=content_id,
@@ -403,7 +431,8 @@ class TestContentQualityAssuranceSystem:
     
     @pytest.mark.asyncio
     async def test_automated_video_analysis(self, qa_system):
-        """Test automated video analysis."""        content_metadata = {
+        """Test automated video analysis."""
+        content_metadata = {
             'file_path': '/tmp/test_video.mp4',
             'file_size': 1024000
         }
@@ -427,7 +456,8 @@ class TestContentQualityAssuranceSystem:
     
     @pytest.mark.asyncio
     async def test_human_reviewer_assignment(self, qa_system):
-        """Test human reviewer assignment."""        check_id = uuid4()
+        """Test human reviewer assignment."""
+        check_id = uuid4()
         reviewer_id = uuid4()
         
         with patch.object(qa_system.db.quality_checks, 'get_by_id',
@@ -450,14 +480,17 @@ class TestContentQualityAssuranceSystem:
 
 
 class TestContentCollaborationHub:
-    """Test cases for ContentCollaborationHub."""    
+    """Test cases for ContentCollaborationHub."""
+    
     @pytest.fixture
     def collaboration_hub(self):
-        """Create ContentCollaborationHub instance for testing."""        return ContentCollaborationHub()
+        """Create ContentCollaborationHub instance for testing."""
+        return ContentCollaborationHub()
     
     @pytest.mark.asyncio
     async def test_collaboration_session_creation(self, collaboration_hub):
-        """Test collaboration session creation."""        owner_id = uuid4()
+        """Test collaboration session creation."""
+        owner_id = uuid4()
         content_id = uuid4()
         
         result = await collaboration_hub.create_collaboration_session(
@@ -477,7 +510,8 @@ class TestContentCollaborationHub:
     
     @pytest.mark.asyncio
     async def test_user_joining_session(self, collaboration_hub):
-        """Test user joining collaboration session."""        session_id = uuid4()
+        """Test user joining collaboration session."""
+        session_id = uuid4()
         user_id = uuid4()
         
         # Mock active session
@@ -502,10 +536,12 @@ class TestContentCollaborationHub:
 
 
 class TestContentModuleIntegration:
-    """Integration tests for content module components."""    
+    """Integration tests for content module components."""
+    
     @pytest.mark.asyncio
     async def test_full_content_workflow(self):
-        """Test complete content processing workflow."""        creator_id = uuid4()
+        """Test complete content processing workflow."""
+        creator_id = uuid4()
         
         # Initialize components
         processing_engine = ContentProcessingEngine()
@@ -573,7 +609,8 @@ class TestContentModuleIntegration:
     
     @pytest.mark.asyncio
     async def test_monetization_workflow_integration(self):
-        """Test monetization workflow integration."""        creator_id = uuid4()
+        """Test monetization workflow integration."""
+        creator_id = uuid4()
         subscriber_id = uuid4()
         
         monetization_engine = ContentMonetizationEngine()
@@ -624,11 +661,13 @@ class TestContentModuleIntegration:
 
 
 class TestContentModulePerformance:
-    """Performance tests for content module."""    
+    """Performance tests for content module."""
+    
     @pytest.mark.asyncio
     @pytest.mark.performance
     async def test_concurrent_processing_performance(self):
-        """Test performance under concurrent processing load."""        processing_engine = ContentProcessingEngine()
+        """Test performance under concurrent processing load."""
+        processing_engine = ContentProcessingEngine()
         
         async def process_single_content(creator_id, content_index):
             with patch.object(processing_engine, 'process_content',
@@ -663,7 +702,8 @@ class TestContentModulePerformance:
     @pytest.mark.asyncio
     @pytest.mark.performance
     async def test_memory_usage_under_load(self):
-        """Test memory usage under high load."""        import psutil
+        """Test memory usage under high load."""
+        import psutil
         import os
         
         process = psutil.Process(os.getpid())
@@ -696,7 +736,8 @@ class TestContentModulePerformance:
 pytest_plugins = ['pytest_asyncio']
 
 def pytest_configure(config):
-    """Configure pytest with custom markers."""    config.addinivalue_line(
+    """Configure pytest with custom markers."""
+    config.addinivalue_line(
         "markers", "performance: mark test as performance test"
     )
 

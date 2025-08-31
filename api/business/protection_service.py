@@ -6,7 +6,8 @@ watermarking, fingerprinting, and anti-theft mechanisms for multi-format content
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import hashlib
+"""
+import hashlib
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, Any, List, Optional, Tuple
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 class ProtectionService:
-    """    Comprehensive content protection service with advanced security features.
+    """
+    Comprehensive content protection service with advanced security features.
     
     Features:
     - Digital fingerprinting for all content types
@@ -39,7 +41,8 @@ class ProtectionService:
     - Real-time monitoring and theft detection
     - Automated DMCA takedown process
     - Advanced anti-recreation techniques
-    """    
+    """
+    
     def __init__(self):
         self.fingerprint_generator = FingerprintGenerator()
         self.watermark_processor = WatermarkProcessor()
@@ -47,7 +50,8 @@ class ProtectionService:
         self.monitoring_service = MonitoringService()
     
     async def protect_content(self, content_id: str, db: Session = None) -> Dict[str, Any]:
-        """        Apply comprehensive protection to content.
+        """
+        Apply comprehensive protection to content.
         
         Args:
             content_id: Content unique identifier
@@ -55,7 +59,8 @@ class ProtectionService:
             
         Returns:
             Protection results and security metadata
-        """        try:
+        """
+        try:
             if not db:
                 db = next(get_db())
             
@@ -143,8 +148,10 @@ class ProtectionService:
             raise
     
     async def verify_content_integrity(self, content_id: str, db: Session = None) -> Dict[str, Any]:
-        """        Verify content integrity and detect tampering.
-        """        try:
+        """
+        Verify content integrity and detect tampering.
+        """
+        try:
             if not db:
                 db = next(get_db())
             
@@ -195,8 +202,10 @@ class ProtectionService:
             return {"verified": False, "error": str(e)}
     
     async def detect_copyright_infringement(self, content_id: str, db: Session = None) -> Dict[str, Any]:
-        """        Detect potential copyright infringement using advanced AI analysis.
-        """        try:
+        """
+        Detect potential copyright infringement using advanced AI analysis.
+        """
+        try:
             if not db:
                 db = next(get_db())
             
@@ -251,8 +260,10 @@ class ProtectionService:
             return {"error": str(e), "risk_score": 0}
     
     async def process_dmca_takedown(self, claim_id: str, evidence: Dict[str, Any]) -> Dict[str, Any]:
-        """        Process DMCA takedown request with automated workflow.
-        """        try:
+        """
+        Process DMCA takedown request with automated workflow.
+        """
+        try:
             db = next(get_db())
             
             claim = db.query(CopyrightClaim).filter(CopyrightClaim.id == claim_id).first()
@@ -298,8 +309,10 @@ class ProtectionService:
             return {"success": False, "error": str(e)}
     
     async def apply_super_protection(self, content_id: str, db: Session = None) -> Dict[str, Any]:
-        """        Apply ultra-advanced protection with anti-recreation techniques.
-        """        try:
+        """
+        Apply ultra-advanced protection with anti-recreation techniques.
+        """
+        try:
             if not db:
                 db = next(get_db())
             
@@ -372,7 +385,8 @@ class ProtectionService:
     # Private helper methods
     
     async def _generate_digital_fingerprint(self, content: Content) -> Dict[str, Any]:
-        """Generate unique digital fingerprint for content"""        try:
+        """Generate unique digital fingerprint for content"""
+        try:
             fingerprint_data = await self.fingerprint_generator.generate_fingerprint(
                 content.file_path, 
                 content.file_type,
@@ -391,7 +405,8 @@ class ProtectionService:
             raise
     
     async def _apply_watermarking(self, content: Content) -> Dict[str, Any]:
-        """Apply invisible watermarking based on content type"""        try:
+        """Apply invisible watermarking based on content type"""
+        try:
             if content.file_type in ["image", "video"]:
                 watermark_result = await self.watermark_processor.apply_image_watermark(
                     content.file_path,
@@ -414,7 +429,8 @@ class ProtectionService:
             return {"applied": False, "error": str(e)}
     
     async def _register_blockchain_ownership(self, content: Content, fingerprint_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Register ownership on blockchain"""        try:
+        """Register ownership on blockchain"""
+        try:
             blockchain_record = await self.blockchain_recorder.register_content(
                 content_id=str(content.id),
                 owner_id=str(content.owner.id),
@@ -433,7 +449,8 @@ class ProtectionService:
             return {"registered": False, "error": str(e)}
     
     async def _setup_content_monitoring(self, content: Content, fingerprint_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup real-time monitoring for unauthorized usage"""        try:
+        """Setup real-time monitoring for unauthorized usage"""
+        try:
             monitoring_config = await self.monitoring_service.setup_content_monitoring(
                 content_id=str(content.id),
                 fingerprint=fingerprint_data["hash"],
@@ -448,7 +465,8 @@ class ProtectionService:
             return {"active": False, "error": str(e)}
     
     async def _generate_protection_certificate(self, content: Content, protection_id: str) -> Dict[str, Any]:
-        """Generate digital protection certificate"""        try:
+        """Generate digital protection certificate"""
+        try:
             certificate_data = {
                 "certificate_id": str(uuid.uuid4()),
                 "content_id": str(content.id),
@@ -468,7 +486,8 @@ class ProtectionService:
             return {}
     
     async def _log_protection_event(self, content_id: str, event_type: str, event_data: Any) -> None:
-        """Log protection-related events"""        try:
+        """Log protection-related events"""
+        try:
             db = next(get_db())
             
             event = ProtectionEvent(
@@ -486,7 +505,8 @@ class ProtectionService:
             logger.error(f"Protection event logging error: {str(e)}")
     
     def _get_risk_level(self, risk_score: float) -> str:
-        """Convert risk score to human-readable level"""        if risk_score >= 0.9:
+        """Convert risk score to human-readable level"""
+        if risk_score >= 0.9:
             return "critical"
         elif risk_score >= 0.7:
             return "high"

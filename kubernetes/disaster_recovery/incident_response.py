@@ -10,7 +10,8 @@ This module provides comprehensive incident response capabilities:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Callable
@@ -28,7 +29,8 @@ from backend.deployment.disaster_recovery.business_continuity import BusinessCon
 
 
 class IncidentSeverity(Enum):
-    """Incident severity levels"""    LOW = 1           # Minor issues, no service impact
+    """Incident severity levels"""
+    LOW = 1           # Minor issues, no service impact
     MEDIUM = 2        # Moderate impact, some features affected
     HIGH = 3          # Significant impact, core features degraded
     CRITICAL = 4      # Major outage, revenue impact
@@ -36,7 +38,8 @@ class IncidentSeverity(Enum):
 
 
 class IncidentStatus(Enum):
-    """Incident lifecycle status"""    DETECTED = "detected"
+    """Incident lifecycle status"""
+    DETECTED = "detected"
     INVESTIGATING = "investigating"
     CONFIRMED = "confirmed"
     RESPONDING = "responding"
@@ -47,7 +50,8 @@ class IncidentStatus(Enum):
 
 
 class IncidentCategory(Enum):
-    """Incident categories"""    SYSTEM_OUTAGE = "system_outage"
+    """Incident categories"""
+    SYSTEM_OUTAGE = "system_outage"
     PERFORMANCE_DEGRADATION = "performance_degradation"
     SECURITY_BREACH = "security_breach"
     DATA_CORRUPTION = "data_corruption"
@@ -59,7 +63,8 @@ class IncidentCategory(Enum):
 
 @dataclass
 class IncidentRule:
-    """Incident detection rule configuration"""    rule_id: str
+    """Incident detection rule configuration"""
+    rule_id: str
     name: str
     description: str
     category: IncidentCategory
@@ -75,7 +80,8 @@ class IncidentRule:
 
 @dataclass
 class Incident:
-    """Incident record and tracking"""    incident_id: str
+    """Incident record and tracking"""
+    incident_id: str
     title: str
     description: str
     category: IncidentCategory
@@ -97,7 +103,8 @@ class Incident:
 
 @dataclass
 class ResponseAction:
-    """Automated response action definition"""    action_id: str
+    """Automated response action definition"""
+    action_id: str
     name: str
     description: str
     action_type: str  # "command", "api_call", "notification", "escalation"
@@ -109,7 +116,8 @@ class ResponseAction:
 
 
 class IncidentResponseSystem:
-    """    Comprehensive incident response and management system
+    """
+    Comprehensive incident response and management system
     
     Features:
     - Real-time incident detection using ML and rule-based triggers
@@ -118,7 +126,8 @@ class IncidentResponseSystem:
     - Incident tracking and timeline management
     - Integration with failover and business continuity systems
     - Post-incident analysis and learning
-    """    def __init__(self, config: Config):
+    """
+    def __init__(self, config: Config):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)
@@ -157,7 +166,8 @@ class IncidentResponseSystem:
         self._initialize_response_actions()
 
     def _initialize_core_incident_rules(self):
-        """Initialize core incident detection rules"""        core_rules = [
+        """Initialize core incident detection rules"""
+        core_rules = [
             {
                 'rule_id': 'api_response_time_high',
                 'name': 'High API Response Time',
@@ -286,7 +296,8 @@ class IncidentResponseSystem:
             self.incident_rules[rule_config['rule_id']] = incident_rule
 
     def _initialize_response_actions(self):
-        """Initialize automated response actions"""        response_actions = [
+        """Initialize automated response actions"""
+        response_actions = [
             {
                 'action_id': 'scale_up_instances',
                 'name': 'Scale Up Application Instances',
@@ -362,14 +373,16 @@ class IncidentResponseSystem:
             self.response_actions[action_config['action_id']] = response_action
 
     async def register_incident_rule(self, rule_config: Dict[str, Any]) -> str:
-        """        Register new incident detection rule
+        """
+        Register new incident detection rule
         
         Args:
             rule_config: Incident rule configuration
             
         Returns:
             str: Rule ID
-        """        try:
+        """
+        try:
             rule_id = rule_config['rule_id']
             
             incident_rule = IncidentRule(
@@ -404,7 +417,8 @@ class IncidentResponseSystem:
             raise
 
     async def _monitor_incident_rule(self, rule: IncidentRule):
-        """Monitor incident detection rule"""        rule_id = rule.rule_id
+        """Monitor incident detection rule"""
+        rule_id = rule.rule_id
         
         while rule_id in self.incident_rules and rule.enabled:
             try:
@@ -421,7 +435,8 @@ class IncidentResponseSystem:
                 await asyncio.sleep(30)
 
     async def _evaluate_incident_rule(self, rule: IncidentRule) -> Optional[Dict[str, Any]]:
-        """Evaluate if incident rule conditions are met"""        try:
+        """Evaluate if incident rule conditions are met"""
+        try:
             conditions = rule.conditions
             metric_name = conditions['metric']
             operator = conditions['operator']
@@ -462,14 +477,16 @@ class IncidentResponseSystem:
             return None
 
     async def create_incident(self, incident_data: Dict[str, Any]) -> str:
-        """        Create new incident manually or through API
+        """
+        Create new incident manually or through API
         
         Args:
             incident_data: Incident details
             
         Returns:
             str: Incident ID
-        """        try:
+        """
+        try:
             incident_id = f"inc_{int(datetime.utcnow().timestamp())}_{len(self.active_incidents) + 1}"
             
             incident = Incident(
@@ -507,7 +524,8 @@ class IncidentResponseSystem:
             raise
 
     async def _handle_incident_workflow(self, incident: Incident):
-        """Handle complete incident response workflow"""        try:
+        """Handle complete incident response workflow"""
+        try:
             # Update incident status
             await self._update_incident_status(incident, IncidentStatus.INVESTIGATING)
             
@@ -528,7 +546,8 @@ class IncidentResponseSystem:
             self.logger.error(f"Incident workflow failed for {incident.incident_id}: {e}")
 
     async def _execute_automated_response(self, incident: Incident):
-        """Execute automated response actions for incident"""        try:
+        """Execute automated response actions for incident"""
+        try:
             # Find matching rule for response procedures
             matching_rule = None
             for rule in self.incident_rules.values():
@@ -566,7 +585,8 @@ class IncidentResponseSystem:
             self.logger.error(f"Automated response failed for incident {incident.incident_id}: {e}")
 
     async def resolve_incident(self, incident_id: str, resolution_data: Dict[str, Any]) -> bool:
-        """        Resolve an incident
+        """
+        Resolve an incident
         
         Args:
             incident_id: Incident to resolve
@@ -574,7 +594,8 @@ class IncidentResponseSystem:
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             if incident_id not in self.active_incidents:
                 return False
             
@@ -614,7 +635,8 @@ class IncidentResponseSystem:
             return False
 
     async def get_incident_status(self, incident_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get incident status and details"""        if incident_id:
+        """Get incident status and details"""
+        if incident_id:
             # Get specific incident
             if incident_id in self.active_incidents:
                 incident = self.active_incidents[incident_id]
@@ -655,7 +677,8 @@ class IncidentResponseSystem:
             }
 
     def _update_incident_metrics(self, incident: Incident):
-        """Update incident response metrics"""        self.incident_metrics['total_incidents'] += 1
+        """Update incident response metrics"""
+        self.incident_metrics['total_incidents'] += 1
         
         severity_name = incident.severity.name.lower()
         if severity_name in self.incident_metrics['incidents_by_severity']:

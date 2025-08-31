@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""import uuid
+"""
+import uuid
 import json
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -43,7 +44,8 @@ logger = logging.getLogger(__name__)
 
 
 class EngagementType(Enum):
-    """Types of engagement interactions"""    LIKE = "like"
+    """Types of engagement interactions"""
+    LIKE = "like"
     COMMENT = "comment"
     SHARE = "share"
     SAVE = "save"
@@ -56,18 +58,21 @@ class EngagementType(Enum):
 
 
 class SentimentType(Enum):
-    """Sentiment analysis types"""    POSITIVE = "positive"
+    """Sentiment analysis types"""
+    POSITIVE = "positive"
     NEGATIVE = "negative"
     NEUTRAL = "neutral"
     MIXED = "mixed"
 
 
 class EngagementMetric(Base):
-    """    Enterprise-grade engagement metrics tracking model
+    """
+    Enterprise-grade engagement metrics tracking model
     
     Stores detailed engagement data with advanced analytics capabilities
     for multi-platform content performance analysis.
-    """    __tablename__ = "engagement_metrics"
+    """
+    __tablename__ = "engagement_metrics"
     
     # Primary identifiers
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -127,7 +132,8 @@ class EngagementMetric(Base):
 
 @dataclass
 class EngagementInsight:
-    """Data class for engagement insights"""    insight_type: str
+    """Data class for engagement insights"""
+    insight_type: str
     title: str
     description: str
     confidence: float
@@ -138,7 +144,8 @@ class EngagementInsight:
     time_frame: str
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for JSON serialization"""        return {
+        """Convert to dictionary for JSON serialization"""
+        return {
             "insight_type": self.insight_type,
             "title": self.title,
             "description": self.description,
@@ -153,7 +160,8 @@ class EngagementInsight:
 
 @dataclass
 class AudienceInsights:
-    """Comprehensive audience insights data class"""    total_audience_size: int
+    """Comprehensive audience insights data class"""
+    total_audience_size: int
     active_audience_percentage: float
     audience_growth_rate: float
     engagement_distribution: Dict[str, float]
@@ -168,17 +176,21 @@ class AudienceInsights:
 
 
 class EngagementAnalyzer:
-    """    Enterprise-grade engagement analytics engine
+    """
+    Enterprise-grade engagement analytics engine
     
     Provides comprehensive engagement analysis with AI-powered insights,
     sentiment analysis, and predictive capabilities for content optimization.
-    """    
+    """
+    
     def __init__(self, db_session: Session):
-        """        Initialize engagement analyzer with database session
+        """
+        Initialize engagement analyzer with database session
         
         Args:
             db_session: Database session for analytics operations
-        """        self.db = db_session
+        """
+        self.db = db_session
         self.logger = logging.getLogger(__name__)
     
     async def record_engagement(
@@ -188,7 +200,8 @@ class EngagementAnalyzer:
         platform: str,
         engagement_data: Dict[str, Any]
     ) -> EngagementMetric:
-        """        Record new engagement data with comprehensive metrics
+        """
+        Record new engagement data with comprehensive metrics
         
         Args:
             user_id: User identifier
@@ -198,7 +211,8 @@ class EngagementAnalyzer:
             
         Returns:
             Created engagement metric record
-        """        try:
+        """
+        try:
             # Calculate derived metrics
             engagement_rate = self._calculate_engagement_rate(engagement_data)
             quality_score = self._calculate_quality_score(engagement_data)
@@ -247,7 +261,8 @@ class EngagementAnalyzer:
             raise
     
     def _calculate_engagement_rate(self, engagement_data: Dict[str, Any]) -> float:
-        """Calculate engagement rate from raw data"""        total_engagement = engagement_data.get("total_engagement", 0)
+        """Calculate engagement rate from raw data"""
+        total_engagement = engagement_data.get("total_engagement", 0)
         total_reach = engagement_data.get("total_reach", 1)
         
         if total_reach == 0:
@@ -256,7 +271,8 @@ class EngagementAnalyzer:
         return float(total_engagement / total_reach)
     
     def _calculate_quality_score(self, engagement_data: Dict[str, Any]) -> float:
-        """Calculate engagement quality score"""        # Factors: comment ratio, share ratio, save ratio, time spent
+        """Calculate engagement quality score"""
+        # Factors: comment ratio, share ratio, save ratio, time spent
         comments = engagement_data.get("comments", 0)
         shares = engagement_data.get("shares", 0) 
         saves = engagement_data.get("saves", 0)
@@ -279,7 +295,8 @@ class EngagementAnalyzer:
         return min(100.0, quality_score)  # Cap at 100
     
     def _calculate_viral_coefficient(self, engagement_data: Dict[str, Any]) -> float:
-        """Calculate viral coefficient for content"""        shares = engagement_data.get("shares", 0)
+        """Calculate viral coefficient for content"""
+        shares = engagement_data.get("shares", 0)
         original_reach = engagement_data.get("original_reach", 1)
         secondary_reach = engagement_data.get("secondary_reach", 0)
         
@@ -295,7 +312,8 @@ class EngagementAnalyzer:
         days_back: int = 30,
         platform: Optional[str] = None
     ) -> List[EngagementInsight]:
-        """        Analyze engagement trends with AI-powered insights
+        """
+        Analyze engagement trends with AI-powered insights
         
         Args:
             user_id: User identifier
@@ -304,7 +322,8 @@ class EngagementAnalyzer:
             
         Returns:
             List of engagement insights
-        """        try:
+        """
+        try:
             # Build query filters
             filters = [EngagementMetric.user_id == user_id]
             
@@ -356,7 +375,8 @@ class EngagementAnalyzer:
             raise
     
     async def _analyze_trend_patterns(self, engagement_data: List[EngagementMetric]) -> Optional[EngagementInsight]:
-        """Analyze engagement trend patterns"""        
+        """Analyze engagement trend patterns"""
+        
         if len(engagement_data) < 7:  # Need minimum data points
             return None
         
@@ -436,7 +456,8 @@ class EngagementAnalyzer:
         )
     
     async def _analyze_platform_performance(self, engagement_data: List[EngagementMetric]) -> Optional[EngagementInsight]:
-        """Analyze performance across different platforms"""        
+        """Analyze performance across different platforms"""
+        
         platform_metrics = defaultdict(list)
         
         for metric in engagement_data:
@@ -483,7 +504,8 @@ class EngagementAnalyzer:
         )
     
     async def _analyze_content_performance(self, engagement_data: List[EngagementMetric]) -> Optional[EngagementInsight]:
-        """Analyze content type performance patterns"""        
+        """Analyze content type performance patterns"""
+        
         # Analyze content elements if available
         content_performance = defaultdict(list)
         
@@ -530,7 +552,8 @@ class EngagementAnalyzer:
         )
     
     async def _analyze_audience_behavior(self, engagement_data: List[EngagementMetric]) -> Optional[EngagementInsight]:
-        """Analyze audience behavior patterns"""        
+        """Analyze audience behavior patterns"""
+        
         # Analyze posting time performance
         hourly_performance = defaultdict(list)
         
@@ -575,7 +598,8 @@ class EngagementAnalyzer:
         )
     
     async def _identify_optimization_opportunities(self, engagement_data: List[EngagementMetric]) -> Optional[EngagementInsight]:
-        """Identify specific optimization opportunities"""        
+        """Identify specific optimization opportunities"""
+        
         # Analyze quality scores and identify improvement areas
         quality_scores = [
             float(metric.engagement_quality_score) 
@@ -641,7 +665,8 @@ class EngagementAnalyzer:
         user_id: int,
         analysis_period_days: int = 30
     ) -> AudienceInsights:
-        """        Generate comprehensive audience insights
+        """
+        Generate comprehensive audience insights
         
         Args:
             user_id: User identifier
@@ -649,7 +674,8 @@ class EngagementAnalyzer:
             
         Returns:
             Comprehensive audience insights
-        """        try:
+        """
+        try:
             # Get engagement data for analysis period
             start_date = datetime.utcnow() - timedelta(days=analysis_period_days)
             
@@ -709,7 +735,8 @@ class EngagementAnalyzer:
             raise
     
     def _calculate_total_audience_size(self, engagement_data: List[EngagementMetric]) -> int:
-        """Calculate total audience size from engagement data"""        unique_engagers = set()
+        """Calculate total audience size from engagement data"""
+        unique_engagers = set()
         
         for metric in engagement_data:
             if metric.unique_engagers:
@@ -722,7 +749,8 @@ class EngagementAnalyzer:
         return estimated_total
     
     def _calculate_active_audience_percentage(self, engagement_data: List[EngagementMetric]) -> float:
-        """Calculate active audience percentage"""        if not engagement_data:
+        """Calculate active audience percentage"""
+        if not engagement_data:
             return 0.0
         
         # Calculate based on recent engagement patterns
@@ -740,7 +768,8 @@ class EngagementAnalyzer:
         return min(100.0, (total_engagers / total_audience) * 100)
     
     def _calculate_audience_growth_rate(self, engagement_data: List[EngagementMetric]) -> float:
-        """Calculate audience growth rate"""        if len(engagement_data) < 14:  # Need at least 2 weeks of data
+        """Calculate audience growth rate"""
+        if len(engagement_data) < 14:  # Need at least 2 weeks of data
             return 0.0
         
         # Compare first week vs last week
@@ -762,7 +791,8 @@ class EngagementAnalyzer:
         return growth_rate
     
     def _calculate_engagement_distribution(self, engagement_data: List[EngagementMetric]) -> Dict[str, float]:
-        """Calculate engagement type distribution"""        engagement_counts = defaultdict(int)
+        """Calculate engagement type distribution"""
+        engagement_counts = defaultdict(int)
         total_engagement = 0
         
         for metric in engagement_data:
@@ -781,7 +811,8 @@ class EngagementAnalyzer:
         return distribution
     
     def _extract_top_content_themes(self, engagement_data: List[EngagementMetric]) -> List[str]:
-        """Extract top content themes from content elements"""        theme_performance = defaultdict(list)
+        """Extract top content themes from content elements"""
+        theme_performance = defaultdict(list)
         
         for metric in engagement_data:
             if metric.content_elements and metric.engagement_rate:
@@ -801,7 +832,8 @@ class EngagementAnalyzer:
         return [theme for theme, _ in sorted_themes[:5]]
     
     def _identify_optimal_posting_times(self, engagement_data: List[EngagementMetric]) -> List[str]:
-        """Identify optimal posting times"""        hourly_performance = defaultdict(list)
+        """Identify optimal posting times"""
+        hourly_performance = defaultdict(list)
         
         for metric in engagement_data:
             if metric.engagement_rate and metric.measurement_timestamp:
@@ -822,7 +854,8 @@ class EngagementAnalyzer:
         return optimal_times
     
     def _analyze_audience_sentiment(self, engagement_data: List[EngagementMetric]) -> Dict[str, float]:
-        """Analyze overall audience sentiment"""        sentiment_scores = []
+        """Analyze overall audience sentiment"""
+        sentiment_scores = []
         
         for metric in engagement_data:
             if metric.sentiment_score:
@@ -842,7 +875,8 @@ class EngagementAnalyzer:
             return {"positive": 40, "neutral": 50, "negative": 10}
     
     def _analyze_demographic_breakdown(self, engagement_data: List[EngagementMetric]) -> Dict[str, Any]:
-        """Analyze demographic breakdown"""        demographics = {
+        """Analyze demographic breakdown"""
+        demographics = {
             "age_groups": {},
             "gender_distribution": {},
             "geographic_regions": {},
@@ -870,7 +904,8 @@ class EngagementAnalyzer:
         return demographics
     
     def _analyze_behavioral_patterns(self, engagement_data: List[EngagementMetric]) -> Dict[str, Any]:
-        """Analyze audience behavioral patterns"""        patterns = {
+        """Analyze audience behavioral patterns"""
+        patterns = {
             "peak_activity_hours": [],
             "engagement_frequency": "regular",
             "content_preference_patterns": {},
@@ -891,7 +926,8 @@ class EngagementAnalyzer:
         return patterns
     
     def _calculate_retention_metrics(self, engagement_data: List[EngagementMetric]) -> Dict[str, float]:
-        """Calculate audience retention metrics"""        # Simplified retention calculation
+        """Calculate audience retention metrics"""
+        # Simplified retention calculation
         metrics = {
             "weekly_retention": 0.0,
             "monthly_retention": 0.0,
@@ -919,7 +955,8 @@ class EngagementAnalyzer:
         return metrics
     
     def _calculate_influence_score(self, engagement_data: List[EngagementMetric]) -> float:
-        """Calculate overall influence score"""        if not engagement_data:
+        """Calculate overall influence score"""
+        if not engagement_data:
             return 0.0
         
         # Factors: engagement quality, reach, viral coefficient
@@ -935,7 +972,8 @@ class EngagementAnalyzer:
         return min(100.0, influence_score)
     
     def _calculate_community_health_score(self, engagement_data: List[EngagementMetric]) -> float:
-        """Calculate community health score"""        if not engagement_data:
+        """Calculate community health score"""
+        if not engagement_data:
             return 0.0
         
         # Factors: sentiment, engagement distribution, growth stability

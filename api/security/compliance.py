@@ -27,7 +27,8 @@ Violators will face:
 - Immediate cease and desist enforcement
 
 Contact: mlaiel@live.de for any authorization requests.
-"""import json
+"""
+import json
 import secrets
 from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Any, Set
@@ -45,7 +46,8 @@ settings = get_settings()
 
 
 class ComplianceStandard(Enum):
-    """Supported compliance standards"""    GDPR = "gdpr"  # General Data Protection Regulation
+    """Supported compliance standards"""
+    GDPR = "gdpr"  # General Data Protection Regulation
     CCPA = "ccpa"  # California Consumer Privacy Act
     COPPA = "coppa"  # Children's Online Privacy Protection Act
     SOX = "sox"  # Sarbanes-Oxley Act
@@ -58,7 +60,8 @@ class ComplianceStandard(Enum):
 
 
 class ComplianceStatus(Enum):
-    """Compliance status levels"""    COMPLIANT = "compliant"
+    """Compliance status levels"""
+    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIAL = "partial_compliance"
     PENDING_REVIEW = "pending_review"
@@ -67,7 +70,8 @@ class ComplianceStatus(Enum):
 
 
 class RiskLevel(Enum):
-    """Risk assessment levels"""    NEGLIGIBLE = "negligible"
+    """Risk assessment levels"""
+    NEGLIGIBLE = "negligible"
     LOW = "low"
     MODERATE = "moderate"
     HIGH = "high"
@@ -75,7 +79,8 @@ class RiskLevel(Enum):
 
 
 class DataCategory(Enum):
-    """Data categories for compliance"""    PERSONAL_DATA = "personal_data"
+    """Data categories for compliance"""
+    PERSONAL_DATA = "personal_data"
     SENSITIVE_DATA = "sensitive_data"
     FINANCIAL_DATA = "financial_data"
     HEALTH_DATA = "health_data"
@@ -87,7 +92,8 @@ class DataCategory(Enum):
 
 @dataclass
 class ComplianceRule:
-    """Individual compliance rule"""    rule_id: str = field(default_factory=lambda: secrets.token_hex(8))
+    """Individual compliance rule"""
+    rule_id: str = field(default_factory=lambda: secrets.token_hex(8))
     standard: ComplianceStandard = ComplianceStandard.GDPR
     rule_name: str = ""
     description: str = ""
@@ -108,7 +114,8 @@ class ComplianceRule:
     documentation: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             "rule_id": self.rule_id,
             "standard": self.standard.value,
             "rule_name": self.rule_name,
@@ -127,7 +134,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceAudit:
-    """Compliance audit record"""    audit_id: str = field(default_factory=lambda: secrets.token_hex(12))
+    """Compliance audit record"""
+    audit_id: str = field(default_factory=lambda: secrets.token_hex(12))
     audit_type: str = "internal"
     standard: ComplianceStandard = ComplianceStandard.GDPR
     
@@ -152,7 +160,8 @@ class ComplianceAudit:
     report_generated_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             "audit_id": self.audit_id,
             "audit_type": self.audit_type,
             "standard": self.standard.value,
@@ -174,7 +183,8 @@ class ComplianceAudit:
 
 @dataclass
 class DataProcessingActivity:
-    """Data processing activity for compliance tracking"""    activity_id: str = field(default_factory=lambda: secrets.token_hex(10))
+    """Data processing activity for compliance tracking"""
+    activity_id: str = field(default_factory=lambda: secrets.token_hex(10))
     activity_name: str = ""
     description: str = ""
     
@@ -203,7 +213,8 @@ class DataProcessingActivity:
 
 
 class ComplianceManager:
-    """Enterprise compliance and regulatory management system"""    
+    """Enterprise compliance and regulatory management system"""
+    
     def __init__(self):
         self.cache = CacheManager()
         self.rules: Dict[str, ComplianceRule] = {}
@@ -212,7 +223,8 @@ class ComplianceManager:
         self._setup_compliance_framework()
     
     def _setup_compliance_framework(self):
-        """Initialize compliance framework with standard rules"""        # GDPR Rules
+        """Initialize compliance framework with standard rules"""
+        # GDPR Rules
         self._setup_gdpr_rules()
         
         # CCPA Rules
@@ -225,7 +237,8 @@ class ComplianceManager:
         self._setup_iso27001_rules()
     
     def _setup_gdpr_rules(self):
-        """Setup GDPR compliance rules"""        gdpr_rules = [
+        """Setup GDPR compliance rules"""
+        gdpr_rules = [
             {
                 "rule_name": "Right to Information",
                 "description": "Users must be informed about data collection and processing",
@@ -301,7 +314,8 @@ class ComplianceManager:
             self.rules[rule.rule_id] = rule
     
     def _setup_ccpa_rules(self):
-        """Setup CCPA compliance rules"""        ccpa_rules = [
+        """Setup CCPA compliance rules"""
+        ccpa_rules = [
             {
                 "rule_name": "Right to Know",
                 "description": "Consumers have right to know about personal information collection",
@@ -346,7 +360,8 @@ class ComplianceManager:
             self.rules[rule.rule_id] = rule
     
     def _setup_dmca_rules(self):
-        """Setup DMCA compliance rules"""        dmca_rules = [
+        """Setup DMCA compliance rules"""
+        dmca_rules = [
             {
                 "rule_name": "Notice and Takedown",
                 "description": "Process for handling copyright takedown notices",
@@ -391,7 +406,8 @@ class ComplianceManager:
             self.rules[rule.rule_id] = rule
     
     def _setup_iso27001_rules(self):
-        """Setup ISO 27001 compliance rules"""        iso_rules = [
+        """Setup ISO 27001 compliance rules"""
+        iso_rules = [
             {
                 "rule_name": "Information Security Policy",
                 "description": "Establish and maintain information security policy",
@@ -440,7 +456,8 @@ class ComplianceManager:
         standard: ComplianceStandard,
         scope: Optional[List[str]] = None
     ) -> ComplianceAudit:
-        """Perform comprehensive compliance assessment"""        try:
+        """Perform comprehensive compliance assessment"""
+        try:
             # Create audit record
             audit = ComplianceAudit(
                 audit_type="automated_assessment",
@@ -513,7 +530,8 @@ class ComplianceManager:
             raise
     
     async def _assess_rule_compliance(self, rule: ComplianceRule) -> Dict[str, Any]:
-        """Assess compliance for individual rule"""        try:
+        """Assess compliance for individual rule"""
+        try:
             assessment = {
                 "status": ComplianceStatus.PENDING_REVIEW,
                 "risk_level": RiskLevel.MODERATE,
@@ -575,7 +593,8 @@ class ComplianceManager:
         control: str,
         rule: ComplianceRule
     ) -> bool:
-        """Check if a specific control is implemented"""        try:
+        """Check if a specific control is implemented"""
+        try:
             # This is a simplified implementation
             # In production, this would check actual system configurations
             
@@ -613,7 +632,8 @@ class ComplianceManager:
             return False
     
     def _generate_compliance_recommendations(self, audit: ComplianceAudit) -> List[str]:
-        """Generate compliance recommendations based on audit results"""        recommendations = []
+        """Generate compliance recommendations based on audit results"""
+        recommendations = []
         
         try:
             compliance_rate = audit.compliant_rules / audit.total_rules_checked if audit.total_rules_checked > 0 else 0
@@ -654,7 +674,8 @@ class ComplianceManager:
             return ["Error generating recommendations - manual review required"]
     
     def _generate_action_items(self, audit: ComplianceAudit) -> List[Dict[str, Any]]:
-        """Generate action items based on audit findings"""        action_items = []
+        """Generate action items based on audit findings"""
+        action_items = []
         
         try:
             for finding in audit.findings:
@@ -698,7 +719,8 @@ class ComplianceManager:
         purposes: List[str],
         legal_basis: List[str]
     ) -> DataProcessingActivity:
-        """Register new data processing activity"""        try:
+        """Register new data processing activity"""
+        try:
             activity = DataProcessingActivity(
                 activity_name=activity_name,
                 description=description,
@@ -736,7 +758,8 @@ class ComplianceManager:
         activity: DataProcessingActivity,
         standard: ComplianceStandard
     ) -> ComplianceStatus:
-        """Assess compliance status for data processing activity"""        try:
+        """Assess compliance status for data processing activity"""
+        try:
             # Simplified compliance assessment
             compliance_score = 0
             total_checks = 0
@@ -775,7 +798,8 @@ class ComplianceManager:
         activity: DataProcessingActivity,
         standard: ComplianceStandard
     ) -> RiskLevel:
-        """Assess risk level for data processing activity"""        try:
+        """Assess risk level for data processing activity"""
+        try:
             risk_score = 0
             
             # High-risk data categories
@@ -817,7 +841,8 @@ class ComplianceManager:
         standards: Optional[List[ComplianceStandard]] = None,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """Generate comprehensive compliance report"""        try:
+        """Generate comprehensive compliance report"""
+        try:
             standards = standards or [
                 ComplianceStandard.GDPR,
                 ComplianceStandard.CCPA,
@@ -914,7 +939,8 @@ async def assess_regulatory_compliance(
     standard: ComplianceStandard,
     scope: Optional[List[str]] = None
 ) -> ComplianceAudit:
-    """Assess compliance with regulatory standard"""    return await compliance_manager.assess_compliance(standard, scope)
+    """Assess compliance with regulatory standard"""
+    return await compliance_manager.assess_compliance(standard, scope)
 
 async def register_processing_activity(
     name: str,
@@ -923,7 +949,8 @@ async def register_processing_activity(
     purposes: List[str],
     legal_basis: List[str]
 ) -> DataProcessingActivity:
-    """Register data processing activity"""    return await compliance_manager.register_data_processing_activity(
+    """Register data processing activity"""
+    return await compliance_manager.register_data_processing_activity(
         name, description, data_categories, purposes, legal_basis
     )
 
@@ -931,4 +958,5 @@ async def generate_regulatory_report(
     standards: Optional[List[ComplianceStandard]] = None,
     period_days: int = 30
 ) -> Dict[str, Any]:
-    """Generate compliance report"""    return await compliance_manager.generate_compliance_report(standards, period_days)
+    """Generate compliance report"""
+    return await compliance_manager.generate_compliance_report(standards, period_days)

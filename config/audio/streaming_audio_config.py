@@ -17,7 +17,8 @@ explicit written permission from Fahed Mlaiel is strictly prohibited and will be
 to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import logging
+"""
+import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, NamedTuple
 from dataclasses import dataclass, field
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 
 class StreamingProtocol(Enum):
-    """Streaming protocols"""    HTTP_LIVE_STREAMING = "hls"         # Apple HLS
+    """Streaming protocols"""
+    HTTP_LIVE_STREAMING = "hls"         # Apple HLS
     DASH = "dash"                       # MPEG-DASH
     SMOOTH_STREAMING = "smooth"         # Microsoft Smooth Streaming
     RTMP = "rtmp"                       # Real-Time Messaging Protocol
@@ -38,7 +40,8 @@ class StreamingProtocol(Enum):
 
 
 class AdaptiveBitrateStrategy(Enum):
-    """Adaptive bitrate strategies"""    CONSERVATIVE = "conservative"        # Prefer stability over quality
+    """Adaptive bitrate strategies"""
+    CONSERVATIVE = "conservative"        # Prefer stability over quality
     BALANCED = "balanced"               # Balance quality and stability
     AGGRESSIVE = "aggressive"           # Prefer quality over stability
     BANDWIDTH_AWARE = "bandwidth_aware" # Optimize for available bandwidth
@@ -46,7 +49,8 @@ class AdaptiveBitrateStrategy(Enum):
 
 
 class StreamingQuality(Enum):
-    """Streaming quality levels"""    ULTRA_LOW = "ultra_low"             # 32-64 kbps
+    """Streaming quality levels"""
+    ULTRA_LOW = "ultra_low"             # 32-64 kbps
     LOW = "low"                         # 64-96 kbps
     STANDARD = "standard"               # 128-160 kbps
     HIGH = "high"                       # 192-256 kbps
@@ -55,7 +59,8 @@ class StreamingQuality(Enum):
 
 
 class BufferingStrategy(Enum):
-    """Audio buffering strategies"""    MINIMAL = "minimal"                 # Minimal buffering, low latency
+    """Audio buffering strategies"""
+    MINIMAL = "minimal"                 # Minimal buffering, low latency
     STANDARD = "standard"               # Standard buffering
     AGGRESSIVE = "aggressive"           # Large buffer, stable playback
     ADAPTIVE = "adaptive"               # Adaptive buffer sizing
@@ -63,7 +68,8 @@ class BufferingStrategy(Enum):
 
 
 class NetworkCondition(Enum):
-    """Network condition types"""    EXCELLENT = "excellent"             # >10 Mbps, <50ms latency
+    """Network condition types"""
+    EXCELLENT = "excellent"             # >10 Mbps, <50ms latency
     GOOD = "good"                      # 1-10 Mbps, 50-150ms latency
     FAIR = "fair"                      # 256kbps-1Mbps, 150-300ms latency
     POOR = "poor"                      # <256kbps, >300ms latency
@@ -72,7 +78,8 @@ class NetworkCondition(Enum):
 
 @dataclass
 class StreamingEndpoint:
-    """Streaming endpoint configuration"""    name: str
+    """Streaming endpoint configuration"""
+    name: str
     url: str
     protocol: StreamingProtocol
     backup_url: Optional[str] = None
@@ -84,7 +91,8 @@ class StreamingEndpoint:
 
 @dataclass
 class BitrateProfile:
-    """Bitrate profile for adaptive streaming"""    name: str
+    """Bitrate profile for adaptive streaming"""
+    name: str
     bitrate_kbps: int
     sample_rate: int
     channels: int
@@ -96,7 +104,8 @@ class BitrateProfile:
 
 @dataclass
 class BufferingConfig:
-    """Audio buffering configuration"""    initial_buffer_duration_ms: int = 2000
+    """Audio buffering configuration"""
+    initial_buffer_duration_ms: int = 2000
     target_buffer_duration_ms: int = 5000
     max_buffer_duration_ms: int = 10000
     rebuffer_threshold_ms: int = 500
@@ -107,7 +116,8 @@ class BufferingConfig:
 
 @dataclass
 class NetworkAdaptationConfig:
-    """Network adaptation configuration"""    bandwidth_estimation_enabled: bool = True
+    """Network adaptation configuration"""
+    bandwidth_estimation_enabled: bool = True
     bandwidth_probe_interval_ms: int = 5000
     quality_adaptation_enabled: bool = True
     quality_switch_threshold: float = 0.2
@@ -117,13 +127,16 @@ class NetworkAdaptationConfig:
 
 
 class StreamingAudioConfig:
-    """    Comprehensive streaming audio configuration manager
+    """
+    Comprehensive streaming audio configuration manager
     
     Manages all aspects of audio streaming including protocols, adaptive bitrates,
     buffering strategies, and network optimization.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize streaming audio configuration"""        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize streaming audio configuration"""
+        self.logger = logging.getLogger(self.__class__.__name__)
         
         # Core streaming configuration
         self._primary_protocol = StreamingProtocol.HTTP_LIVE_STREAMING
@@ -153,7 +166,8 @@ class StreamingAudioConfig:
         self.logger.info("StreamingAudioConfig initialized successfully")
     
     def _initialize_bitrate_profiles(self) -> Dict[str, BitrateProfile]:
-        """Initialize standard bitrate profiles"""        return {
+        """Initialize standard bitrate profiles"""
+        return {
             "ultra_low_mobile": BitrateProfile(
                 name="Ultra Low (Mobile)",
                 bitrate_kbps=32,
@@ -227,7 +241,8 @@ class StreamingAudioConfig:
         }
     
     def _initialize_platform_configs(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize platform-specific streaming configurations"""        return {
+        """Initialize platform-specific streaming configurations"""
+        return {
             "spotify": {
                 "preferred_protocols": [StreamingProtocol.HTTP_LIVE_STREAMING],
                 "supported_codecs": ["ogg", "aac", "mp3"],
@@ -310,7 +325,8 @@ class StreamingAudioConfig:
         }
     
     def _initialize_protocol_configs(self) -> Dict[StreamingProtocol, Dict[str, Any]]:
-        """Initialize protocol-specific configurations"""        return {
+        """Initialize protocol-specific configurations"""
+        return {
             StreamingProtocol.HTTP_LIVE_STREAMING: {
                 "name": "HTTP Live Streaming (HLS)",
                 "segment_duration": 6.0,
@@ -372,7 +388,8 @@ class StreamingAudioConfig:
         }
     
     def _initialize_quality_ladders(self) -> Dict[str, List[str]]:
-        """Initialize quality ladders for different use cases"""        return {
+        """Initialize quality ladders for different use cases"""
+        return {
             "music_streaming": [
                 "ultra_low_mobile",
                 "low_mobile",
@@ -412,40 +429,47 @@ class StreamingAudioConfig:
         }
     
     def get_protocol_config(self, protocol: StreamingProtocol) -> Dict[str, Any]:
-        """        Get configuration for specific streaming protocol
+        """
+        Get configuration for specific streaming protocol
         
         Args:
             protocol: Streaming protocol
             
         Returns:
             Protocol configuration
-        """        return self._protocol_configs.get(protocol, {})
+        """
+        return self._protocol_configs.get(protocol, {})
     
     def get_platform_config(self, platform: str) -> Dict[str, Any]:
-        """        Get platform-specific streaming configuration
+        """
+        Get platform-specific streaming configuration
         
         Args:
             platform: Platform name
             
         Returns:
             Platform configuration
-        """        return self._platform_configs.get(platform.lower(), {})
+        """
+        return self._platform_configs.get(platform.lower(), {})
     
     def get_bitrate_profile(self, profile_name: str) -> Optional[BitrateProfile]:
-        """        Get bitrate profile by name
+        """
+        Get bitrate profile by name
         
         Args:
             profile_name: Profile name
             
         Returns:
             Bitrate profile or None if not found
-        """        return self._bitrate_profiles.get(profile_name)
+        """
+        return self._bitrate_profiles.get(profile_name)
     
     def create_adaptive_ladder(self, 
                              use_case: str,
                              network_conditions: List[NetworkCondition],
                              target_devices: List[str]) -> List[BitrateProfile]:
-        """        Create adaptive bitrate ladder for specific requirements
+        """
+        Create adaptive bitrate ladder for specific requirements
         
         Args:
             use_case: Use case for the streaming
@@ -454,7 +478,8 @@ class StreamingAudioConfig:
             
         Returns:
             List of bitrate profiles forming the ladder
-        """        try:
+        """
+        try:
             # Get base quality ladder for use case
             base_ladder = self._quality_ladders.get(use_case, self._quality_ladders["music_streaming"])
             
@@ -506,7 +531,8 @@ class StreamingAudioConfig:
     def _is_network_compatible(self, 
                              required_condition: NetworkCondition,
                              available_condition: NetworkCondition) -> bool:
-        """Check if network condition is compatible"""        condition_hierarchy = {
+        """Check if network condition is compatible"""
+        condition_hierarchy = {
             NetworkCondition.POOR: 1,
             NetworkCondition.FAIR: 2,
             NetworkCondition.GOOD: 3,
@@ -523,7 +549,8 @@ class StreamingAudioConfig:
                                    use_case: str,
                                    target_latency: str = "medium",
                                    device_support: List[str] = None) -> StreamingProtocol:
-        """        Recommend optimal streaming protocol
+        """
+        Recommend optimal streaming protocol
         
         Args:
             use_case: Streaming use case
@@ -532,7 +559,8 @@ class StreamingAudioConfig:
             
         Returns:
             Recommended streaming protocol
-        """        try:
+        """
+        try:
             device_support = device_support or ["browser", "mobile"]
             
             # Real-time communication use cases
@@ -576,7 +604,8 @@ class StreamingAudioConfig:
                               network_conditions: Optional[List[NetworkCondition]] = None,
                               target_devices: Optional[List[str]] = None,
                               latency_requirement: str = "medium") -> Dict[str, Any]:
-        """        Create complete streaming configuration
+        """
+        Create complete streaming configuration
         
         Args:
             use_case: Streaming use case
@@ -587,7 +616,8 @@ class StreamingAudioConfig:
             
         Returns:
             Complete streaming configuration
-        """        try:
+        """
+        try:
             # Set defaults
             network_conditions = network_conditions or [NetworkCondition.GOOD, NetworkCondition.FAIR]
             target_devices = target_devices or ["browser", "mobile"]
@@ -649,7 +679,8 @@ class StreamingAudioConfig:
             return {"error": str(e)}
     
     def _get_buffer_config_for_latency(self, latency_requirement: str) -> Dict[str, Any]:
-        """Get buffer configuration for latency requirement"""        if latency_requirement == "ultra_low":
+        """Get buffer configuration for latency requirement"""
+        if latency_requirement == "ultra_low":
             return {
                 "initial_buffer_duration_ms": 100,
                 "target_buffer_duration_ms": 500,
@@ -683,7 +714,8 @@ class StreamingAudioConfig:
             }
     
     def _get_adaptation_config_for_use_case(self, use_case: str) -> Dict[str, Any]:
-        """Get network adaptation configuration for use case"""        base_config = {
+        """Get network adaptation configuration for use case"""
+        base_config = {
             "bandwidth_estimation_enabled": self.network_adaptation.bandwidth_estimation_enabled,
             "quality_adaptation_enabled": self.network_adaptation.quality_adaptation_enabled,
             "bandwidth_probe_interval_ms": self.network_adaptation.bandwidth_probe_interval_ms
@@ -707,7 +739,8 @@ class StreamingAudioConfig:
     def _get_cdn_config(self, 
                        platform: Optional[str],
                        network_conditions: List[NetworkCondition]) -> Dict[str, Any]:
-        """Get CDN configuration"""        config = {
+        """Get CDN configuration"""
+        config = {
             "edge_caching_enabled": True,
             "cache_duration_seconds": 3600,
             "geographic_distribution": True,
@@ -731,7 +764,8 @@ class StreamingAudioConfig:
         return config
     
     def _get_security_config(self, protocol: StreamingProtocol) -> Dict[str, Any]:
-        """Get security configuration for protocol"""        protocol_config = self.get_protocol_config(protocol)
+        """Get security configuration for protocol"""
+        protocol_config = self.get_protocol_config(protocol)
         
         return {
             "encryption_enabled": protocol_config.get("encryption_support", False),
@@ -744,7 +778,8 @@ class StreamingAudioConfig:
         }
     
     def _get_monitoring_config(self) -> Dict[str, Any]:
-        """Get streaming monitoring configuration"""        return {
+        """Get streaming monitoring configuration"""
+        return {
             "quality_monitoring_enabled": True,
             "bandwidth_monitoring_enabled": True,
             "buffer_health_monitoring": True,
@@ -756,14 +791,16 @@ class StreamingAudioConfig:
         }
     
     def add_streaming_endpoint(self, endpoint: StreamingEndpoint) -> bool:
-        """        Add streaming endpoint
+        """
+        Add streaming endpoint
         
         Args:
             endpoint: Streaming endpoint configuration
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             self._streaming_endpoints[endpoint.name] = endpoint
             self.logger.info(f"Added streaming endpoint: {endpoint.name}")
             return True
@@ -772,17 +809,20 @@ class StreamingAudioConfig:
             return False
     
     def get_streaming_endpoints(self) -> Dict[str, StreamingEndpoint]:
-        """Get all streaming endpoints"""        return self._streaming_endpoints.copy()
+        """Get all streaming endpoints"""
+        return self._streaming_endpoints.copy()
     
     def validate_streaming_config(self, config: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """        Validate streaming configuration
+        """
+        Validate streaming configuration
         
         Args:
             config: Streaming configuration to validate
             
         Returns:
             Tuple of (is_valid, error_messages)
-        """        errors = []
+        """
+        errors = []
         is_valid = True
         
         try:
@@ -836,7 +876,8 @@ class StreamingAudioConfig:
                                       bitrate_ladder: List[BitrateProfile],
                                       concurrent_streams: int = 1,
                                       overhead_factor: float = 1.2) -> Dict[str, Any]:
-        """        Estimate bandwidth requirements for streaming
+        """
+        Estimate bandwidth requirements for streaming
         
         Args:
             bitrate_ladder: List of bitrate profiles
@@ -845,7 +886,8 @@ class StreamingAudioConfig:
             
         Returns:
             Bandwidth requirements analysis
-        """        try:
+        """
+        try:
             requirements = {}
             
             for profile in bitrate_ladder:
@@ -882,7 +924,8 @@ class StreamingAudioConfig:
             return {"error": str(e)}
     
     def _get_bandwidth_recommendations(self, min_kbps: float, max_kbps: float) -> List[str]:
-        """Get bandwidth optimization recommendations"""        recommendations = []
+        """Get bandwidth optimization recommendations"""
+        recommendations = []
         
         if max_kbps > 1000:  # > 1 Mbps
             recommendations.append("Consider CDN usage for high-bandwidth streams")
@@ -898,7 +941,8 @@ class StreamingAudioConfig:
         return recommendations
     
     def export_config(self) -> Dict[str, Any]:
-        """Export complete streaming configuration"""        try:
+        """Export complete streaming configuration"""
+        try:
             return {
                 "primary_protocol": self._primary_protocol.value,
                 "fallback_protocols": [proto.value for proto in self._fallback_protocols],

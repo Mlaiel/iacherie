@@ -13,7 +13,8 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive cloud migration capabilities for the IA
 Influencer Agent platform, including assessment, planning, execution, and
 validation of cloud migrations across different providers and architectures.
-"""import logging
+"""
+import logging
 import asyncio
 import json
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -31,7 +32,8 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class MigrationType(Enum):
-    """Migration types supported"""    LIFT_AND_SHIFT = "lift_and_shift"
+    """Migration types supported"""
+    LIFT_AND_SHIFT = "lift_and_shift"
     REPLATFORM = "replatform"
     REFACTOR = "refactor"
     MODERNIZE = "modernize"
@@ -40,7 +42,8 @@ class MigrationType(Enum):
     SERVERLESS = "serverless"
 
 class MigrationPhase(Enum):
-    """Migration execution phases"""    ASSESSMENT = "assessment"
+    """Migration execution phases"""
+    ASSESSMENT = "assessment"
     PLANNING = "planning"
     PREPARATION = "preparation"
     EXECUTION = "execution"
@@ -50,7 +53,8 @@ class MigrationPhase(Enum):
     ROLLBACK = "rollback"
 
 class SourceEnvironment(Enum):
-    """Source environment types"""    ON_PREMISES = "on_premises"
+    """Source environment types"""
+    ON_PREMISES = "on_premises"
     AWS = "aws"
     AZURE = "azure"
     GCP = "gcp"
@@ -58,7 +62,8 @@ class SourceEnvironment(Enum):
     HYBRID = "hybrid"
 
 class TargetEnvironment(Enum):
-    """Target environment types"""    AWS = "aws"
+    """Target environment types"""
+    AWS = "aws"
     AZURE = "azure"
     GCP = "gcp"
     MULTI_CLOUD = "multi_cloud"
@@ -67,7 +72,8 @@ class TargetEnvironment(Enum):
 
 @dataclass
 class MigrationAssessment:
-    """Migration assessment results"""    assessment_id: str
+    """Migration assessment results"""
+    assessment_id: str
     source_environment: Dict[str, Any]
     target_environment: Dict[str, Any]
     applications: List[Dict[str, Any]]
@@ -85,7 +91,8 @@ class MigrationAssessment:
 
 @dataclass
 class MigrationPlan:
-    """Migration execution plan"""    plan_id: str
+    """Migration execution plan"""
+    plan_id: str
     assessment_id: str
     migration_type: MigrationType
     source_env: SourceEnvironment
@@ -101,7 +108,8 @@ class MigrationPlan:
 
 @dataclass
 class MigrationJob:
-    """Migration job execution state"""    job_id: str
+    """Migration job execution state"""
+    job_id: str
     plan_id: str
     current_phase: MigrationPhase
     status: str
@@ -114,9 +122,11 @@ class MigrationJob:
     metrics: Dict[str, Any] = field(default_factory=dict)
 
 class CloudMigrationService:
-    """Enterprise cloud migration and modernization service"""    
+    """Enterprise cloud migration and modernization service"""
+    
     def __init__(self):
-        """Initialize cloud migration service"""        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize cloud migration service"""
+        self.logger = logging.getLogger(self.__class__.__name__)
         
         # Cloud clients
         self.aws_client = None
@@ -141,7 +151,8 @@ class CloudMigrationService:
         self.logger.info("Cloud Migration Service initialized")
 
     def _check_terraform_availability(self) -> bool:
-        """Check if Terraform is available"""        try:
+        """Check if Terraform is available"""
+        try:
             import subprocess
             result = subprocess.run(['terraform', '--version'], 
                                  capture_output=True, text=True)
@@ -150,21 +161,24 @@ class CloudMigrationService:
             return False
 
     def _check_ansible_availability(self) -> bool:
-        """Check if Ansible is available"""        try:
+        """Check if Ansible is available"""
+        try:
             import ansible
             return True
         except ImportError:
             return False
 
     def _check_docker_availability(self) -> bool:
-        """Check if Docker is available"""        try:
+        """Check if Docker is available"""
+        try:
             self.docker_client.ping()
             return True
         except:
             return False
 
     def _check_kubernetes_availability(self) -> bool:
-        """Check if Kubernetes is available"""        try:
+        """Check if Kubernetes is available"""
+        try:
             import kubernetes
             return True
         except ImportError:
@@ -173,7 +187,8 @@ class CloudMigrationService:
     async def assess_migration_readiness(self, 
                                        source_config: Dict[str, Any],
                                        target_config: Dict[str, Any]) -> MigrationAssessment:
-        """Perform comprehensive migration readiness assessment"""        try:
+        """Perform comprehensive migration readiness assessment"""
+        try:
             assessment_id = f"assessment_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             # Discover source environment
@@ -235,7 +250,8 @@ class CloudMigrationService:
             raise
 
     async def _discover_source_environment(self, source_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Discover and inventory source environment"""        try:
+        """Discover and inventory source environment"""
+        try:
             inventory = {
                 'infrastructure': {},
                 'applications': [],
@@ -263,7 +279,8 @@ class CloudMigrationService:
             raise
 
     async def _discover_aws_environment(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Discover AWS environment resources"""        try:
+        """Discover AWS environment resources"""
+        try:
             # Initialize AWS clients
             ec2 = boto3.client('ec2', region_name=config.get('region', 'us-east-1'))
             rds = boto3.client('rds', region_name=config.get('region', 'us-east-1'))
@@ -325,7 +342,8 @@ class CloudMigrationService:
             raise
 
     async def _analyze_applications(self, inventory: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Analyze applications for migration compatibility"""        try:
+        """Analyze applications for migration compatibility"""
+        try:
             applications = []
             
             for instance in inventory.get('infrastructure', {}).get('instances', []):
@@ -359,7 +377,8 @@ class CloudMigrationService:
             raise
 
     async def _detect_linux_applications(self, instance: Dict[str, Any]) -> List[str]:
-        """Detect applications running on Linux instance"""        # This would typically involve connecting to the instance and scanning
+        """Detect applications running on Linux instance"""
+        # This would typically involve connecting to the instance and scanning
         # For demo purposes, we'll simulate common applications
         common_apps = [
             'nginx', 'apache2', 'mysql', 'postgresql', 
@@ -370,7 +389,8 @@ class CloudMigrationService:
         return common_apps[:3]  # Simulate finding first 3 apps
 
     async def _detect_windows_applications(self, instance: Dict[str, Any]) -> List[str]:
-        """Detect applications running on Windows instance"""        common_apps = [
+        """Detect applications running on Windows instance"""
+        common_apps = [
             'iis', 'sqlserver', '.net_framework', 
             'sharepoint', 'exchange'
         ]
@@ -378,7 +398,8 @@ class CloudMigrationService:
         return common_apps[:2]  # Simulate finding first 2 apps
 
     def _assess_app_complexity(self, app_analysis: Dict[str, Any]) -> str:
-        """Assess application migration complexity"""        complexity_score = 0
+        """Assess application migration complexity"""
+        complexity_score = 0
         
         # Factor in number of applications
         complexity_score += len(app_analysis['applications']) * 10
@@ -400,7 +421,8 @@ class CloudMigrationService:
             return 'high'
 
     def _recommend_migration_strategy(self, app_analysis: Dict[str, Any]) -> str:
-        """Recommend migration strategy based on analysis"""        if app_analysis['migration_complexity'] == 'low':
+        """Recommend migration strategy based on analysis"""
+        if app_analysis['migration_complexity'] == 'low':
             return 'containerize'
         elif app_analysis['migration_complexity'] == 'medium':
             return 'replatform'
@@ -410,7 +432,8 @@ class CloudMigrationService:
     async def create_migration_plan(self, assessment_id: str, 
                                   migration_type: MigrationType,
                                   target_env: TargetEnvironment) -> MigrationPlan:
-        """Create detailed migration execution plan"""        try:
+        """Create detailed migration execution plan"""
+        try:
             if assessment_id not in self.assessments:
                 raise ValueError(f"Assessment not found: {assessment_id}")
             
@@ -462,7 +485,8 @@ class CloudMigrationService:
 
     async def _create_migration_phases(self, assessment: MigrationAssessment, 
                                      migration_type: MigrationType) -> List[Dict[str, Any]]:
-        """Create migration execution phases"""        phases = []
+        """Create migration execution phases"""
+        phases = []
         
         # Phase 1: Preparation
         phases.append({
@@ -542,7 +566,8 @@ class CloudMigrationService:
         return phases
 
     async def execute_migration(self, plan_id: str) -> str:
-        """Execute migration according to plan"""        try:
+        """Execute migration according to plan"""
+        try:
             if plan_id not in self.plans:
                 raise ValueError(f"Migration plan not found: {plan_id}")
             
@@ -571,7 +596,8 @@ class CloudMigrationService:
             raise
 
     async def _execute_migration_phases(self, job: MigrationJob, plan: MigrationPlan) -> None:
-        """Execute migration phases sequentially"""        try:
+        """Execute migration phases sequentially"""
+        try:
             total_phases = len(plan.phases)
             
             for i, phase in enumerate(plan.phases):
@@ -610,7 +636,8 @@ class CloudMigrationService:
             self.logger.error(f"Migration execution failed: {e}")
 
     async def _execute_phase_tasks(self, job: MigrationJob, phase: Dict[str, Any]) -> None:
-        """Execute tasks for a migration phase"""        try:
+        """Execute tasks for a migration phase"""
+        try:
             for task in phase['tasks']:
                 job.logs.append(f"Executing task: {task}")
                 
@@ -624,7 +651,8 @@ class CloudMigrationService:
             raise
 
     async def _validate_phase_completion(self, job: MigrationJob, phase: Dict[str, Any]) -> bool:
-        """Validate that a phase completed successfully"""        try:
+        """Validate that a phase completed successfully"""
+        try:
             for validation in phase['validation']:
                 job.logs.append(f"Validating: {validation}")
                 
@@ -641,7 +669,8 @@ class CloudMigrationService:
             return False
 
     async def rollback_migration(self, job_id: str) -> bool:
-        """Rollback migration to previous state"""        try:
+        """Rollback migration to previous state"""
+        try:
             if job_id not in self.active_migrations:
                 raise ValueError(f"Active migration not found: {job_id}")
             
@@ -670,12 +699,14 @@ class CloudMigrationService:
             return False
 
     async def get_migration_status(self, job_id: str) -> Optional[MigrationJob]:
-        """Get migration job status"""        return self.active_migrations.get(job_id) or next(
+        """Get migration job status"""
+        return self.active_migrations.get(job_id) or next(
             (job for job in self.completed_migrations if job.job_id == job_id), None
         )
 
     async def get_migration_metrics(self) -> Dict[str, Any]:
-        """Get migration service metrics"""        total_assessments = len(self.assessments)
+        """Get migration service metrics"""
+        total_assessments = len(self.assessments)
         total_plans = len(self.plans)
         active_migrations = len(self.active_migrations)
         completed_migrations = len(self.completed_migrations)

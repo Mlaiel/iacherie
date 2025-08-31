@@ -38,13 +38,15 @@ Performance Analytics → Strategic Optimization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY ⚠️
 This revolutionary AI platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
-"""from .interaction_engine import (
+"""
+
+from .interaction_engine import (
     InteractionEngine,
     InteractionContext,
     InteractionResponse,
@@ -206,7 +208,7 @@ __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __license__ = "Proprietary"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 # Module metadata
 MODULE_INFO = {

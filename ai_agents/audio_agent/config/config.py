@@ -9,14 +9,16 @@ Project Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sec
 ⚠️  PROPRIETARY CONFIGURATION - AUTHORIZED ACCESS ONLY ⚠️
 This configuration contains proprietary settings and business logic owned exclusively by Fahed Mlaiel.
 Unauthorized access, modification, or distribution is strictly prohibited.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
 from pathlib import Path
 
 @dataclass
 class AudioProcessingConfig:
-    """Core audio processing configuration"""    
+    """Core audio processing configuration"""
+    
     # Audio Quality Settings
     DEFAULT_SAMPLE_RATE: int = 44100
     DEFAULT_BIT_DEPTH: int = 24
@@ -47,7 +49,8 @@ class AudioProcessingConfig:
 
 @dataclass 
 class AIModelsConfig:
-    """AI models configuration and paths"""    
+    """AI models configuration and paths"""
+    
     # Model Paths (configure according to your setup)
     DIFFUSION_MODEL_PATH: str = "facebook/musicgen-small"
     MUSIC_TRANSFORMER_PATH: str = "microsoft/DialoGPT-medium" 
@@ -68,7 +71,8 @@ class AIModelsConfig:
 
 @dataclass
 class BusinessConfig:
-    """Business logic and workflow configuration"""    
+    """Business logic and workflow configuration"""
+    
     # Creator Economy Settings
     ENABLE_COLLABORATION_MATCHING: bool = True
     ENABLE_REVENUE_PROJECTION: bool = True
@@ -108,7 +112,8 @@ class BusinessConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security and protection configuration"""    
+    """Security and protection configuration"""
+    
     # Content Protection
     ENABLE_CONTENT_FINGERPRINTING: bool = True
     FINGERPRINT_ALGORITHM: str = "perceptual_hash"
@@ -149,7 +154,8 @@ class SecurityConfig:
 
 @dataclass
 class DatabaseConfig:
-    """Database and storage configuration"""    
+    """Database and storage configuration"""
+    
     # Database Settings
     DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql://localhost/audio_agent")
     DATABASE_POOL_SIZE: int = 20
@@ -173,7 +179,8 @@ class DatabaseConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring and metrics configuration"""    
+    """Monitoring and metrics configuration"""
+    
     # Prometheus Settings
     ENABLE_PROMETHEUS_METRICS: bool = True
     METRICS_PORT: int = 9090
@@ -203,7 +210,8 @@ class MonitoringConfig:
     LOG_RETENTION_DAYS: int = 30
 
 class AudioAgentConfig:
-    """Main configuration class combining all settings"""    
+    """Main configuration class combining all settings"""
+    
     def __init__(self, environment: str = "production"):
         self.environment = environment
         
@@ -222,7 +230,8 @@ class AudioAgentConfig:
         self._validate_config()
     
     def _apply_environment_config(self):
-        """Apply environment-specific configuration overrides"""        
+        """Apply environment-specific configuration overrides"""
+        
         if self.environment == "development":
             # Development overrides
             self.audio.USE_GPU_ACCELERATION = False
@@ -243,7 +252,8 @@ class AudioAgentConfig:
             pass
     
     def _validate_config(self):
-        """Validate configuration settings"""        
+        """Validate configuration settings"""
+        
         # Validate audio settings
         assert self.audio.DEFAULT_SAMPLE_RATE > 0
         assert self.audio.MAX_AUDIO_DURATION_SECONDS > 0
@@ -266,7 +276,8 @@ class AudioAgentConfig:
             Path(path).mkdir(parents=True, exist_ok=True)
     
     def get_summary(self) -> Dict[str, Any]:
-        """Get configuration summary for logging"""        return {
+        """Get configuration summary for logging"""
+        return {
             "environment": self.environment,
             "audio_processing": {
                 "sample_rate": self.audio.DEFAULT_SAMPLE_RATE,
@@ -287,7 +298,8 @@ class AudioAgentConfig:
 
 # Global configuration instance
 def get_config(environment: Optional[str] = None) -> AudioAgentConfig:
-    """Get configuration instance for the specified environment"""    if environment is None:
+    """Get configuration instance for the specified environment"""
+    if environment is None:
         environment = os.getenv("AUDIO_AGENT_ENV", "production")
     
     return AudioAgentConfig(environment)

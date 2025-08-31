@@ -456,7 +456,8 @@ PROJECT_SUMMARY = {
 }
 
 def print_implementation_report():
-    """Print comprehensive implementation report."""    print("="*100)
+    """Print comprehensive implementation report."""
+    print("="*100)
     print("🎉 IA INFLUENCER AGENT - MONETIZATION ENGINE IMPLEMENTATION COMPLETE")
     print("="*100)
     print(f"📊 Implementation Status: {IMPLEMENTATION_STATUS['completion_percentage']}% Complete")

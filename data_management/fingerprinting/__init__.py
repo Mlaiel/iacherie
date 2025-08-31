@@ -164,21 +164,24 @@ from .index import (
 logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
-    """Types d'empreintes supportées"""    AUDIO = "audio"
+    """Types d'empreintes supportées"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
     COMPOSITE = "composite"
 
 class SimilarityThreshold(Enum):
-    """Seuils de similarité pour la détection"""    EXACT = 0.95      # Correspondance exacte
+    """Seuils de similarité pour la détection"""
+    EXACT = 0.95      # Correspondance exacte
     HIGH = 0.85       # Haute similarité
     MEDIUM = 0.70     # Similarité moyenne
     LOW = 0.55        # Faible similarité
     POTENTIAL = 0.40  # Correspondance potentielle
 
 class ProtectionLevel(Enum):
-    """Niveaux de protection du contenu"""    MAXIMUM = "maximum"     # Protection maximale
+    """Niveaux de protection du contenu"""
+    MAXIMUM = "maximum"     # Protection maximale
     HIGH = "high"          # Protection élevée
     STANDARD = "standard"   # Protection standard
     BASIC = "basic"        # Protection de base
@@ -186,7 +189,8 @@ class ProtectionLevel(Enum):
 
 @dataclass
 class FingerprintConfig:
-    """Configuration avancée du système de fingerprinting"""    
+    """Configuration avancée du système de fingerprinting"""
+    
     # Audio fingerprinting
     audio_enabled: bool = True
     audio_sample_rate: int = 22050
@@ -236,7 +240,8 @@ class FingerprintConfig:
     gpu_acceleration: bool = True
 
 class FingerprintingEngine:
-    """    Moteur principal de fingerprinting multi-format avec IA
+    """
+    Moteur principal de fingerprinting multi-format avec IA
     
     Fonctionnalités:
     - Fingerprinting audio avancé (Chromaprint, Essentia, Spectral)
@@ -246,7 +251,8 @@ class FingerprintingEngine:
     - Indexation vectorielle FAISS pour similarité
     - Monitoring temps réel et détection de violations
     - Protection automatisée et récupération de revenus
-    """    
+    """
+    
     def __init__(self, config: Optional[FingerprintConfig] = None):
         self.config = config or FingerprintConfig()
         
@@ -282,7 +288,8 @@ class FingerprintingEngine:
         creator_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Génère une empreinte complète pour un contenu
+        """
+        Génère une empreinte complète pour un contenu
         
         Args:
             content_path: Chemin vers le fichier de contenu
@@ -292,7 +299,8 @@ class FingerprintingEngine:
             
         Returns:
             Dictionnaire contenant l'empreinte complète
-        """        try:
+        """
+        try:
             start_time = datetime.now()
             
             # Détection automatique du type si nécessaire
@@ -359,7 +367,8 @@ class FingerprintingEngine:
         threshold: float = 0.75,
         max_results: int = 100
     ) -> List[Dict[str, Any]]:
-        """        Recherche du contenu similaire basé sur l'empreinte
+        """
+        Recherche du contenu similaire basé sur l'empreinte
         
         Args:
             fingerprint_data: Données d'empreinte à rechercher
@@ -368,7 +377,8 @@ class FingerprintingEngine:
             
         Returns:
             Liste des contenus similaires trouvés
-        """        try:
+        """
+        try:
             # Recherche dans l'index vectoriel
             similar_content = await self.vector_engine.search_similar(
                 fingerprint_data["vectors"],
@@ -401,7 +411,8 @@ class FingerprintingEngine:
             return []
 
     async def start_monitoring(self, creator_id: str, protection_level: str = "standard") -> str:
-        """        Démarre la surveillance en temps réel pour un créateur
+        """
+        Démarre la surveillance en temps réel pour un créateur
         
         Args:
             creator_id: ID du créateur
@@ -409,7 +420,8 @@ class FingerprintingEngine:
             
         Returns:
             ID de la session de monitoring
-        """        try:
+        """
+        try:
             if not self.realtime_monitor:
                 raise ValueError("Real-time monitoring not enabled")
             
@@ -426,14 +438,16 @@ class FingerprintingEngine:
             raise
 
     async def process_violation(self, violation_data: Dict[str, Any]) -> Dict[str, Any]:
-        """        Traite une violation détectée
+        """
+        Traite une violation détectée
         
         Args:
             violation_data: Données de la violation
             
         Returns:
             Résultat du traitement de la violation
-        """        try:
+        """
+        try:
             # Mise à jour des métriques
             self.metrics["violations_found"] += 1
             
@@ -457,7 +471,8 @@ class FingerprintingEngine:
             raise
 
     def _detect_content_type(self, content_path: str) -> str:
-        """Détecte automatiquement le type de contenu"""        from pathlib import Path
+        """Détecte automatiquement le type de contenu"""
+        from pathlib import Path
         
         ext = Path(content_path).suffix.lower()
         
@@ -478,7 +493,8 @@ class FingerprintingEngine:
             raise ValueError(f"Unknown file extension: {ext}")
 
     async def _generate_similarity_vectors(self, fingerprints: Dict[str, Any]) -> Dict[str, Any]:
-        """Génère les vecteurs pour la recherche de similarité"""        vectors = {}
+        """Génère les vecteurs pour la recherche de similarité"""
+        vectors = {}
         
         for fp_type, fp_data in fingerprints.items():
             if fp_type == "audio":
@@ -493,20 +509,24 @@ class FingerprintingEngine:
         return vectors
 
     async def _audio_to_vector(self, audio_fp: Dict[str, Any]) -> np.ndarray:
-        """Convertit une empreinte audio en vecteur"""        # Implémentation de conversion audio vers vecteur
+        """Convertit une empreinte audio en vecteur"""
+        # Implémentation de conversion audio vers vecteur
         # Simulation pour la démo
         return np.random.rand(512).astype(np.float32)
 
     async def _video_to_vector(self, video_fp: Dict[str, Any]) -> np.ndarray:
-        """Convertit une empreinte vidéo en vecteur"""        # Implémentation de conversion vidéo vers vecteur
+        """Convertit une empreinte vidéo en vecteur"""
+        # Implémentation de conversion vidéo vers vecteur
         return np.random.rand(1024).astype(np.float32)
 
     async def _image_to_vector(self, image_fp: Dict[str, Any]) -> np.ndarray:
-        """Convertit une empreinte image en vecteur"""        # Implémentation de conversion image vers vecteur
+        """Convertit une empreinte image en vecteur"""
+        # Implémentation de conversion image vers vecteur
         return np.random.rand(768).astype(np.float32)
 
     async def _text_to_vector(self, text_fp: Dict[str, Any]) -> np.ndarray:
-        """Convertit une empreinte texte en vecteur"""        # Implémentation de conversion texte vers vecteur
+        """Convertit une empreinte texte en vecteur"""
+        # Implémentation de conversion texte vers vecteur
         return np.random.rand(256).astype(np.float32)
 
     async def _calculate_detailed_similarity(
@@ -514,14 +534,17 @@ class FingerprintingEngine:
         fp1: Dict[str, Any], 
         fp2: Dict[str, Any]
     ) -> float:
-        """Calcule une similarité détaillée entre deux empreintes"""        # Implémentation du calcul de similarité avancé
+        """Calcule une similarité détaillée entre deux empreintes"""
+        # Implémentation du calcul de similarité avancé
         return 0.85  # Simulation
 
     def get_metrics(self) -> Dict[str, Any]:
-        """Retourne les métriques de performance"""        return self.metrics.copy()
+        """Retourne les métriques de performance"""
+        return self.metrics.copy()
 
     def get_status(self) -> Dict[str, Any]:
-        """Retourne le statut du système"""        return {
+        """Retourne le statut du système"""
+        return {
             "version": __version__,
             "engines_active": {
                 "audio": self.audio_engine is not None,

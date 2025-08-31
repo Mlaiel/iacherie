@@ -26,7 +26,8 @@ Expert Team:
 - Audio Processing Specialist - Advanced Audio Analytics
 - DevOps Engineer - Production Infrastructure
 - IA Prompt Engineer - AI Integration & Optimization
-"""from typing import List, Dict, Any, Optional
+"""
+from typing import List, Dict, Any, Optional
 import logging
 
 # Core orchestration
@@ -194,11 +195,13 @@ __all__ = [
 ]
 
 def get_module_info() -> Dict[str, Any]:
-    """    Returns comprehensive information about the Legal Compliance module.
+    """
+    Returns comprehensive information about the Legal Compliance module.
     
     Returns:
         Dict[str, Any]: Module information including capabilities and compliance features
-    """    return {
+    """
+    return {
         "name": "Legal Compliance Database",
         "version": __version__,
         "author": "Fahed Mlaiel",

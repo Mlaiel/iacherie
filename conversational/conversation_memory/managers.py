@@ -8,7 +8,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  LEGAL WARNING: Unauthorized use strictly prohibited ⚠️
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import uuid
 from datetime import datetime, timezone, timedelta
@@ -54,7 +55,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MemoryConfiguration:
-    """Configuration for conversation memory system"""    max_short_term_entries: int = 1000
+    """Configuration for conversation memory system"""
+    max_short_term_entries: int = 1000
     max_long_term_entries: int = 10000
     vector_dimension: int = 384
     similarity_threshold: float = 0.7
@@ -66,12 +68,14 @@ class MemoryConfiguration:
 
 
 class ConversationMemoryManager:
-    """    Enterprise conversation memory manager for multi-format content creators
+    """
+    Enterprise conversation memory manager for multi-format content creators
     
     Manages conversation storage, retrieval, and lifecycle across different
     creator types (musicians, bloggers, photographers, influencers, comedians)
     with content protection awareness and collaboration facilitation.
-    """    
+    """
+    
     def __init__(self, config: Optional[MemoryConfiguration] = None):
         self.config = config or MemoryConfiguration()
         self.security_manager = SecurityManager()
@@ -90,7 +94,8 @@ class ConversationMemoryManager:
         logger.info("ConversationMemoryManager initialized with enterprise configuration")
     
     async def initialize(self):
-        """Initialize async components"""        try:
+        """Initialize async components"""
+        try:
             self.redis_client = aioredis.from_url(
                 settings.REDIS_URL,
                 decode_responses=True
@@ -113,7 +118,8 @@ class ConversationMemoryManager:
         conversation_data: Dict[str, Any],
         context: Optional[ConversationContext] = None
     ) -> bool:
-        """        Store conversation with intelligent categorization
+        """
+        Store conversation with intelligent categorization
         
         Args:
             user_id: Content creator identifier
@@ -123,7 +129,8 @@ class ConversationMemoryManager:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             # Create conversation record
             record = ConversationRecord(
                 conversation_id=conversation_id,
@@ -160,7 +167,8 @@ class ConversationMemoryManager:
         conversation_id: str,
         include_context: bool = True
     ) -> Optional[ConversationRecord]:
-        """        Retrieve conversation with optional context
+        """
+        Retrieve conversation with optional context
         
         Args:
             conversation_id: Conversation identifier
@@ -168,7 +176,8 @@ class ConversationMemoryManager:
             
         Returns:
             Conversation record or None
-        """        try:
+        """
+        try:
             # Try short-term memory first (faster)
             record = await self.short_term_memory.get(conversation_id)
             
@@ -200,7 +209,8 @@ class ConversationMemoryManager:
         limit: int = 10,
         semantic_search: bool = True
     ) -> List[ConversationRecord]:
-        """        Search conversations with intelligent ranking
+        """
+        Search conversations with intelligent ranking
         
         Args:
             user_id: Content creator identifier
@@ -211,7 +221,8 @@ class ConversationMemoryManager:
             
         Returns:
             Ranked conversation results
-        """        try:
+        """
+        try:
             results = []
             
             if semantic_search:
@@ -257,7 +268,8 @@ class ConversationMemoryManager:
         user_id: str,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """        Generate insights from conversation history
+        """
+        Generate insights from conversation history
         
         Args:
             user_id: Content creator identifier
@@ -265,7 +277,8 @@ class ConversationMemoryManager:
             
         Returns:
             Conversation insights and analytics
-        """        try:
+        """
+        try:
             # Get conversation statistics
             stats = await self._calculate_conversation_stats(user_id, time_range)
             
@@ -301,7 +314,8 @@ class ConversationMemoryManager:
             return {}
     
     async def cleanup_expired_conversations(self):
-        """Clean up expired conversations based on retention policy"""        try:
+        """Clean up expired conversations based on retention policy"""
+        try:
             cutoff_date = datetime.now(timezone.utc) - timedelta(
                 days=self.config.retention_days
             )
@@ -323,7 +337,8 @@ class ConversationMemoryManager:
             self.metrics.increment("cleanup_errors")
     
     def _extract_conversation_text(self, conversation_data: Dict[str, Any]) -> str:
-        """Extract text content from conversation data"""        text_parts = []
+        """Extract text content from conversation data"""
+        text_parts = []
         
         if "messages" in conversation_data:
             for message in conversation_data["messages"]:
@@ -343,7 +358,8 @@ class ConversationMemoryManager:
         text: str,
         context: Optional[ConversationContext]
     ) -> str:
-        """Classify conversation content type for creator specialization"""        
+        """Classify conversation content type for creator specialization"""
+        
         # Define creator type keywords
         music_keywords = ["music", "song", "album", "track", "spotify", "beat", "melody"]
         blog_keywords = ["blog", "article", "writing", "post", "content", "seo"]
@@ -385,7 +401,8 @@ class ConversationMemoryManager:
         embeddings: np.ndarray,
         content_type: str
     ):
-        """Store conversation across memory layers"""        
+        """Store conversation across memory layers"""
+        
         # Store in long-term database
         await self.long_term_memory.store(record)
         
@@ -407,7 +424,8 @@ class ConversationMemoryManager:
         self,
         record: ConversationRecord
     ) -> ConversationRecord:
-        """Enrich conversation with additional context"""        
+        """Enrich conversation with additional context"""
+        
         # Add related conversations
         if record.conversation_data:
             query_text = self._extract_conversation_text(record.conversation_data)
@@ -440,7 +458,8 @@ class ConversationMemoryManager:
         user_id: str,
         time_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Calculate conversation statistics"""        
+        """Calculate conversation statistics"""
+        
         stats = {
             "total_conversations": 0,
             "content_type_breakdown": {},
@@ -488,7 +507,8 @@ class ConversationMemoryManager:
         user_id: str,
         time_range: Optional[Tuple[datetime, datetime]]
     ) -> List[Dict[str, Any]]:
-        """Analyze conversation themes and topics"""        
+        """Analyze conversation themes and topics"""
+        
         # Would implement NLP topic modeling here
         # This is a simplified version
         
@@ -520,7 +540,8 @@ class ConversationMemoryManager:
         user_id: str,
         time_range: Optional[Tuple[datetime, datetime]]
     ) -> List[Dict[str, Any]]:
-        """Identify potential collaboration opportunities"""        
+        """Identify potential collaboration opportunities"""
+        
         opportunities = [
             {
                 "type": "music_collaboration",
@@ -551,7 +572,8 @@ class ConversationMemoryManager:
         user_id: str,
         time_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Analyze content protection related conversations"""        
+        """Analyze content protection related conversations"""
+        
         protection_insights = {
             "protection_inquiries": 12,
             "common_concerns": [
@@ -578,7 +600,8 @@ class ConversationMemoryManager:
         content_types: Optional[List[str]],
         limit: int
     ) -> List[ConversationRecord]:
-        """Perform keyword-based search"""        
+        """Perform keyword-based search"""
+        
         # Would implement full-text search here
         # This is a simplified version
         
@@ -594,7 +617,8 @@ class ConversationMemoryManager:
         results: List[ConversationRecord],
         query: str
     ) -> List[ConversationRecord]:
-        """Rank search results by relevance and recency"""        
+        """Rank search results by relevance and recency"""
+        
         # Simple ranking algorithm
         # In production, would use more sophisticated ranking
         
@@ -616,7 +640,8 @@ class ConversationMemoryManager:
         return results
     
     def _get_content_type(self, conversation: ConversationRecord) -> str:
-        """Get content type from conversation record"""        if conversation.context:
+        """Get content type from conversation record"""
+        if conversation.context:
             if isinstance(conversation.context, ContentContext):
                 return conversation.context.content_type
         
@@ -626,8 +651,10 @@ class ConversationMemoryManager:
 
 
 class ConversationHistoryManager:
-    """    Manages conversation history with timeline tracking and evolution analysis
-    """    
+    """
+    Manages conversation history with timeline tracking and evolution analysis
+    """
+    
     def __init__(self):
         self.memory_manager = None  # Will be injected
         self.cache_manager = CacheManager()
@@ -642,7 +669,8 @@ class ConversationHistoryManager:
         offset: int = 0,
         content_type_filter: Optional[str] = None
     ) -> List[ConversationRecord]:
-        """        Get paginated conversation history for user
+        """
+        Get paginated conversation history for user
         
         Args:
             user_id: Content creator identifier
@@ -652,7 +680,8 @@ class ConversationHistoryManager:
             
         Returns:
             List of conversation records
-        """        try:
+        """
+        try:
             cache_key = f"history:{user_id}:{limit}:{offset}:{content_type_filter}"
             
             # Try cache first
@@ -696,7 +725,8 @@ class ConversationHistoryManager:
         user_id: str,
         conversation_id: str
     ) -> Dict[str, Any]:
-        """        Get detailed timeline for a specific conversation
+        """
+        Get detailed timeline for a specific conversation
         
         Args:
             user_id: Content creator identifier
@@ -704,7 +734,8 @@ class ConversationHistoryManager:
             
         Returns:
             Conversation timeline with events and evolution
-        """        try:
+        """
+        try:
             # Get main conversation
             conversation = await self.memory_manager.retrieve_conversation(
                 conversation_id,
@@ -752,7 +783,8 @@ class ConversationHistoryManager:
         self,
         conversation: ConversationRecord
     ) -> Dict[str, Any]:
-        """Analyze how conversation evolved over time"""        
+        """Analyze how conversation evolved over time"""
+        
         evolution = {
             "topic_shifts": [],
             "sentiment_progression": [],
@@ -768,8 +800,10 @@ class ConversationHistoryManager:
 
 
 class MemoryIndexer:
-    """    Intelligent indexing system for conversation memory with multi-dimensional indexing
-    """    
+    """
+    Intelligent indexing system for conversation memory with multi-dimensional indexing
+    """
+    
     def __init__(self):
         self.vector_store = None  # Will be injected
         self.cache_manager = CacheManager()
@@ -787,14 +821,16 @@ class MemoryIndexer:
         self,
         conversation: ConversationRecord
     ) -> bool:
-        """        Index conversation across multiple dimensions
+        """
+        Index conversation across multiple dimensions
         
         Args:
             conversation: Conversation record to index
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             # Extract indexable content
             text_content = self._extract_conversation_text(conversation.conversation_data or {})
             
@@ -822,7 +858,8 @@ class MemoryIndexer:
         user_id: str,
         batch_size: int = 100
     ) -> int:
-        """        Reindex all conversations for a user
+        """
+        Reindex all conversations for a user
         
         Args:
             user_id: Content creator identifier
@@ -830,7 +867,8 @@ class MemoryIndexer:
             
         Returns:
             Number of conversations reindexed
-        """        try:
+        """
+        try:
             indexed_count = 0
             offset = 0
             
@@ -873,7 +911,8 @@ class MemoryIndexer:
             return 0
     
     def _extract_conversation_text(self, conversation_data: Dict[str, Any]) -> str:
-        """Extract text content from conversation data"""        text_parts = []
+        """Extract text content from conversation data"""
+        text_parts = []
         
         if "messages" in conversation_data:
             for message in conversation_data["messages"]:
@@ -883,17 +922,21 @@ class MemoryIndexer:
         return " ".join(text_parts)
     
     async def _index_by_topic(self, conversation: ConversationRecord, text: str):
-        """Index conversation by topics"""        # Would implement topic modeling and indexing
+        """Index conversation by topics"""
+        # Would implement topic modeling and indexing
         pass
     
     async def _index_by_semantics(self, conversation: ConversationRecord, text: str):
-        """Index conversation by semantic meaning"""        # Would implement semantic embedding indexing
+        """Index conversation by semantic meaning"""
+        # Would implement semantic embedding indexing
         pass
     
     async def _index_by_content_type(self, conversation: ConversationRecord, text: str):
-        """Index conversation by content type"""        # Would implement content type classification and indexing
+        """Index conversation by content type"""
+        # Would implement content type classification and indexing
         pass
     
     async def _index_by_time(self, conversation: ConversationRecord):
-        """Index conversation by temporal patterns"""        # Would implement temporal indexing
+        """Index conversation by temporal patterns"""
+        # Would implement temporal indexing
         pass

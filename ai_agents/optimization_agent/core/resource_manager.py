@@ -28,7 +28,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import threading
@@ -91,7 +92,8 @@ from ...database.connection_pool import DatabaseConnectionPool
 logger = logging.getLogger(__name__)
 
 class ResourceType(Enum):
-    """Comprehensive system resource types"""    CPU_CORES = "cpu_cores"
+    """Comprehensive system resource types"""
+    CPU_CORES = "cpu_cores"
     CPU_FREQUENCY = "cpu_frequency"
     MEMORY_RAM = "memory_ram"
     MEMORY_SWAP = "memory_swap"
@@ -108,7 +110,8 @@ class ResourceType(Enum):
     GPU_COMPUTE = "gpu_compute"
 
 class AllocationStrategy(Enum):
-    """Advanced resource allocation strategies"""    BALANCED = "balanced"
+    """Advanced resource allocation strategies"""
+    BALANCED = "balanced"
     PERFORMANCE_OPTIMIZED = "performance_optimized"
     COST_OPTIMIZED = "cost_optimized"
     FAIR_SHARE = "fair_share"
@@ -120,7 +123,8 @@ class AllocationStrategy(Enum):
     HIGH_THROUGHPUT = "high_throughput"
 
 class ResourceStatus(Enum):
-    """Resource allocation status"""    AVAILABLE = "available"
+    """Resource allocation status"""
+    AVAILABLE = "available"
     ALLOCATED = "allocated"
     RESERVED = "reserved"
     EXHAUSTED = "exhausted"
@@ -131,7 +135,8 @@ class ResourceStatus(Enum):
 
 @dataclass
 class ResourceConstraints:
-    """Resource allocation constraints and limits"""    max_cpu_cores: Optional[int] = None
+    """Resource allocation constraints and limits"""
+    max_cpu_cores: Optional[int] = None
     max_memory_gb: Optional[float] = None
     max_storage_gb: Optional[float] = None
     max_network_mbps: Optional[float] = None
@@ -144,7 +149,8 @@ class ResourceConstraints:
 
 @dataclass
 class ResourcePool:
-    """Advanced resource pool management"""    pool_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Advanced resource pool management"""
+    pool_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     resource_type: ResourceType = None
     total_capacity: float = 0.0
     allocated_capacity: float = 0.0
@@ -175,7 +181,8 @@ class ResourcePool:
     last_updated: datetime = field(default_factory=datetime.utcnow)
     
     def calculate_efficiency_score(self) -> float:
-        """Calculate resource pool efficiency score"""        utilization_score = min(self.utilization_percentage, 85) / 85 * 100
+        """Calculate resource pool efficiency score"""
+        utilization_score = min(self.utilization_percentage, 85) / 85 * 100
         success_score = self.allocation_success_rate
         fragmentation_penalty = max(0, 100 - (self.fragmentation_ratio * 100))
         
@@ -184,7 +191,8 @@ class ResourcePool:
 
 @dataclass
 class ResourceAllocation:
-    """Comprehensive resource allocation tracking"""    allocation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive resource allocation tracking"""
+    allocation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     workload_id: str = ""
     
@@ -220,7 +228,8 @@ class ResourceAllocation:
     optimization_opportunities: List[str] = field(default_factory=list)
     
     def calculate_cost(self, duration_hours: float = None) -> float:
-        """Calculate total allocation cost"""        if duration_hours is None:
+        """Calculate total allocation cost"""
+        if duration_hours is None:
             if self.started_at and self.completed_at:
                 duration_hours = (self.completed_at - self.started_at).total_seconds() / 3600
             else:
@@ -229,7 +238,8 @@ class ResourceAllocation:
         return self.cost_per_hour * duration_hours
     
     def get_resource_efficiency(self, resource_type: ResourceType) -> float:
-        """Get efficiency for specific resource type"""        allocated = self.allocated_resources.get(resource_type, 0)
+        """Get efficiency for specific resource type"""
+        allocated = self.allocated_resources.get(resource_type, 0)
         actual = self.actual_utilization.get(resource_type, 0)
         
         if allocated == 0:
@@ -240,7 +250,8 @@ class ResourceAllocation:
 
 @dataclass
 class ResourceRequest:
-    """Comprehensive resource allocation request"""    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive resource allocation request"""
+    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     workload_type: str = ""
     
@@ -278,7 +289,8 @@ class ResourceRequest:
 
 @dataclass
 class ResourceMetrics:
-    """Comprehensive resource utilization metrics"""    timestamp: datetime = field(default_factory=datetime.utcnow)
+    """Comprehensive resource utilization metrics"""
+    timestamp: datetime = field(default_factory=datetime.utcnow)
     
     # CPU metrics
     cpu_utilization_percent: float = 0.0
@@ -325,7 +337,8 @@ class ResourceMetrics:
     queue_depth: int = 0
     
     def calculate_resource_pressure_score(self) -> float:
-        """Calculate overall resource pressure (0-100, higher = more pressure)"""        pressure_components = {
+        """Calculate overall resource pressure (0-100, higher = more pressure)"""
+        pressure_components = {
             'cpu': self.cpu_utilization_percent,
             'memory': self.memory_utilization_percent,
             'disk': self.disk_utilization_percent,
@@ -349,7 +362,8 @@ class ResourceMetrics:
         return round(weighted_pressure, 2)
 
 class ResourcePredictor:
-    """AI-powered resource usage prediction system"""    
+    """AI-powered resource usage prediction system"""
+    
     def __init__(self):
         self.cpu_predictor = RandomForestRegressor(n_estimators=100, random_state=42)
         self.memory_predictor = RandomForestRegressor(n_estimators=100, random_state=42)
@@ -358,7 +372,8 @@ class ResourcePredictor:
         self.model_trained = False
         
     def add_data_point(self, metrics: ResourceMetrics, workload_info: Dict[str, Any]):
-        """Add data point for training"""        data_point = {
+        """Add data point for training"""
+        data_point = {
             'timestamp': metrics.timestamp,
             'cpu_utilization': metrics.cpu_utilization_percent,
             'memory_utilization': metrics.memory_utilization_percent,
@@ -373,7 +388,8 @@ class ResourcePredictor:
         self.historical_data.append(data_point)
     
     def train_models(self) -> bool:
-        """Train prediction models on historical data"""        if len(self.historical_data) < 100:
+        """Train prediction models on historical data"""
+        if len(self.historical_data) < 100:
             return False
         
         try:
@@ -404,7 +420,8 @@ class ResourcePredictor:
             return False
     
     def predict_resource_usage(self, workload_info: Dict[str, Any]) -> Dict[str, float]:
-        """Predict resource usage for given workload"""        if not self.model_trained:
+        """Predict resource usage for given workload"""
+        if not self.model_trained:
             return {
                 'cpu_utilization': 50.0,
                 'memory_utilization': 60.0,
@@ -442,7 +459,8 @@ class ResourcePredictor:
             }
 
 class ResourceManager(BaseAgent):
-    """    Ultra-advanced intelligent resource allocation and management system.
+    """
+    Ultra-advanced intelligent resource allocation and management system.
     
     Capabilities:
     - Real-time resource monitoring across all system components
@@ -455,7 +473,8 @@ class ResourceManager(BaseAgent):
     - Advanced resource analytics and performance insights
     - Container and microservice resource orchestration
     - GPU and specialized hardware resource management
-    """    def __init__(self, config: Dict[str, Any] = None):
+    """
+    def __init__(self, config: Dict[str, Any] = None):
         super().__init__()
         self.config = config or {}
         
@@ -500,7 +519,8 @@ class ResourceManager(BaseAgent):
         logger.info("ResourceManager initialized with advanced capabilities")
 
     def _initialize_resource_pools(self):
-        """Initialize system resource pools"""        try:
+        """Initialize system resource pools"""
+        try:
             # CPU pool
             cpu_info = psutil.cpu_count()
             self.resource_pools[ResourceType.CPU_CORES] = ResourcePool(
@@ -544,7 +564,8 @@ class ResourceManager(BaseAgent):
             logger.error(f"Failed to initialize resource pools: {e}")
 
     def _setup_prometheus_metrics(self):
-        """Setup Prometheus metrics for monitoring"""        self.cpu_utilization_gauge = Gauge(
+        """Setup Prometheus metrics for monitoring"""
+        self.cpu_utilization_gauge = Gauge(
             'resource_cpu_utilization_percent',
             'CPU utilization percentage',
             registry=self.metrics_registry
@@ -570,7 +591,8 @@ class ResourceManager(BaseAgent):
         )
 
     async def start_monitoring(self):
-        """Start continuous resource monitoring"""        if self._monitoring_active:
+        """Start continuous resource monitoring"""
+        if self._monitoring_active:
             return
         
         self._monitoring_active = True
@@ -583,7 +605,8 @@ class ResourceManager(BaseAgent):
         logger.info("Resource monitoring started")
 
     def _monitoring_loop(self):
-        """Continuous monitoring loop"""        while self._monitoring_active:
+        """Continuous monitoring loop"""
+        while self._monitoring_active:
             try:
                 # Collect current metrics
                 self._collect_system_metrics()
@@ -607,7 +630,8 @@ class ResourceManager(BaseAgent):
                 time.sleep(60)  # Wait longer on error
 
     def _collect_system_metrics(self):
-        """Collect comprehensive system metrics"""        try:
+        """Collect comprehensive system metrics"""
+        try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent(interval=1)
             cpu_count = psutil.cpu_count()
@@ -661,7 +685,8 @@ class ResourceManager(BaseAgent):
             logger.error(f"Failed to collect system metrics: {e}")
 
     def _update_resource_pools(self):
-        """Update resource pool states based on current metrics"""        try:
+        """Update resource pool states based on current metrics"""
+        try:
             # Update CPU pool
             cpu_pool = self.resource_pools.get(ResourceType.CPU_CORES)
             if cpu_pool:
@@ -684,7 +709,8 @@ class ResourceManager(BaseAgent):
             logger.error(f"Failed to update resource pools: {e}")
 
     async def _process_allocation_queue(self):
-        """Process pending resource allocation requests"""        if not self.allocation_queue:
+        """Process pending resource allocation requests"""
+        if not self.allocation_queue:
             return
         
         processed_requests = []
@@ -704,7 +730,8 @@ class ResourceManager(BaseAgent):
             self.allocation_queue.remove(request)
 
     async def _check_auto_scaling(self):
-        """Check if any resource pools need auto-scaling"""        for resource_type, pool in self.resource_pools.items():
+        """Check if any resource pools need auto-scaling"""
+        for resource_type, pool in self.resource_pools.items():
             if not pool.auto_scaling_enabled:
                 continue
             
@@ -712,7 +739,8 @@ class ResourceManager(BaseAgent):
                 await self._scale_resource_pool(resource_type, pool)
 
     async def _scale_resource_pool(self, resource_type: ResourceType, pool: ResourcePool):
-        """Scale resource pool up or down based on demand"""        pool_id = pool.pool_id
+        """Scale resource pool up or down based on demand"""
+        pool_id = pool.pool_id
         
         if pool_id in self.scaling_locks:
             return  # Already scaling
@@ -750,12 +778,14 @@ class ResourceManager(BaseAgent):
             self.scaling_locks.discard(pool_id)
 
     async def _apply_scaling(self, resource_type: ResourceType, new_capacity: float) -> bool:
-        """Apply actual scaling changes (implementation depends on infrastructure)"""        # This would integrate with container orchestration, cloud APIs, etc.
+        """Apply actual scaling changes (implementation depends on infrastructure)"""
+        # This would integrate with container orchestration, cloud APIs, etc.
         # For now, return True to simulate successful scaling
         return True
 
     def _update_prometheus_metrics(self):
-        """Update Prometheus metrics"""        try:
+        """Update Prometheus metrics"""
+        try:
             self.cpu_utilization_gauge.set(self.current_metrics.cpu_utilization_percent)
             self.memory_utilization_gauge.set(self.current_metrics.memory_utilization_percent)
         except Exception as e:
@@ -771,7 +801,8 @@ class ResourceManager(BaseAgent):
         resource_constraints: Optional[Dict[str, Any]] = None,
         quality_requirements: Optional[Dict[str, str]] = None
     ) -> ResourceAllocation:
-        """Intelligent resource allocation based on requirements and constraints"""        
+        """Intelligent resource allocation based on requirements and constraints"""
+        
         allocation_id = f"alloc_{int(time.time())}_{user_id}"
         
         if allocation_id in self.allocation_locks:
@@ -828,7 +859,8 @@ class ResourceManager(BaseAgent):
             self.allocation_locks.discard(allocation_id)
 
     async def allocate_resources_from_request(self, request: ResourceRequest) -> ResourceAllocation:
-        """Allocate resources based on detailed request"""        
+        """Allocate resources based on detailed request"""
+        
         # Determine optimal allocation strategy
         strategy = self._select_allocation_strategy(request)
         
@@ -873,7 +905,8 @@ class ResourceManager(BaseAgent):
         return allocation
 
     def _parse_priority(self, priority: str) -> AgentPriority:
-        """Parse priority string to enum"""        priority_map = {
+        """Parse priority string to enum"""
+        priority_map = {
             'low': AgentPriority.LOW,
             'medium': AgentPriority.MEDIUM,
             'high': AgentPriority.HIGH,
@@ -882,7 +915,8 @@ class ResourceManager(BaseAgent):
         return priority_map.get(priority.lower(), AgentPriority.MEDIUM)
 
     def _calculate_cpu_requirement(self, workload_type: str, content_volume: int, prediction: Dict[str, float]) -> float:
-        """Calculate CPU core requirements"""        base_cpu = {
+        """Calculate CPU core requirements"""
+        base_cpu = {
             'audio_processing': 2.0,
             'video_processing': 4.0,
             'image_processing': 1.5,
@@ -896,7 +930,8 @@ class ResourceManager(BaseAgent):
         return round(base_cpu * (1 + volume_factor) * (1 + prediction_factor), 2)
 
     def _calculate_memory_requirement(self, workload_type: str, content_volume: int, prediction: Dict[str, float]) -> float:
-        """Calculate memory requirements in GB"""        base_memory = {
+        """Calculate memory requirements in GB"""
+        base_memory = {
             'audio_processing': 4.0,
             'video_processing': 8.0,
             'image_processing': 3.0,
@@ -910,7 +945,8 @@ class ResourceManager(BaseAgent):
         return round(base_memory * (1 + volume_factor * 0.5) * (1 + prediction_factor), 2)
 
     def _calculate_storage_requirement(self, workload_type: str, content_volume: int) -> float:
-        """Calculate storage requirements in GB"""        base_storage = {
+        """Calculate storage requirements in GB"""
+        base_storage = {
             'audio_processing': 5.0,
             'video_processing': 20.0,
             'image_processing': 10.0,
@@ -923,7 +959,8 @@ class ResourceManager(BaseAgent):
         return round(base_storage + volume_factor, 2)
 
     def _calculate_db_connections(self, workload_type: str, content_volume: int) -> int:
-        """Calculate database connection requirements"""        base_connections = {
+        """Calculate database connection requirements"""
+        base_connections = {
             'audio_processing': 3,
             'video_processing': 5,
             'image_processing': 2,
@@ -936,7 +973,8 @@ class ResourceManager(BaseAgent):
         return min(base_connections + volume_factor, 20)  # Cap at 20 connections
 
     def _select_allocation_strategy(self, request: ResourceRequest) -> AllocationStrategy:
-        """Select optimal allocation strategy based on request"""        
+        """Select optimal allocation strategy based on request"""
+        
         # Priority-based selection
         if request.priority == AgentPriority.CRITICAL:
             return AllocationStrategy.PERFORMANCE_OPTIMIZED
@@ -959,7 +997,8 @@ class ResourceManager(BaseAgent):
         return AllocationStrategy.BALANCED
 
     async def _check_resource_availability(self, requirements: Dict[ResourceType, float]) -> bool:
-        """Check if required resources are available"""        for resource_type, required_amount in requirements.items():
+        """Check if required resources are available"""
+        for resource_type, required_amount in requirements.items():
             pool = self.resource_pools.get(resource_type)
             if not pool or pool.available_capacity < required_amount:
                 return False
@@ -970,7 +1009,8 @@ class ResourceManager(BaseAgent):
         requirements: Dict[ResourceType, float], 
         strategy: AllocationStrategy
     ) -> Dict[ResourceType, float]:
-        """Allocate resources from pools"""        allocated = {}
+        """Allocate resources from pools"""
+        allocated = {}
         
         for resource_type, required_amount in requirements.items():
             pool = self.resource_pools.get(resource_type)
@@ -1005,7 +1045,8 @@ class ResourceManager(BaseAgent):
         allocated_resources: Dict[ResourceType, float], 
         strategy: AllocationStrategy
     ) -> float:
-        """Calculate cost per hour for resource allocation"""        
+        """Calculate cost per hour for resource allocation"""
+        
         # Base cost per hour by resource type
         cost_rates = {
             ResourceType.CPU_CORES: 0.50,  # $0.50 per core per hour
@@ -1037,7 +1078,8 @@ class ResourceManager(BaseAgent):
         request: ResourceRequest, 
         allocated_resources: Dict[ResourceType, float]
     ) -> List[str]:
-        """Generate optimization recommendations for allocation"""        recommendations = []
+        """Generate optimization recommendations for allocation"""
+        recommendations = []
         
         # CPU recommendations
         cpu_allocated = allocated_resources.get(ResourceType.CPU_CORES, 0)
@@ -1063,7 +1105,8 @@ class ResourceManager(BaseAgent):
         return recommendations
 
     async def optimize_allocation(self, parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize resource allocation based on parameters"""        return {
+        """Optimize resource allocation based on parameters"""
+        return {
             "optimization_type": "resource_allocation",
             "status": "completed",
             "improvements": {
@@ -1073,7 +1116,8 @@ class ResourceManager(BaseAgent):
         }
 
     async def get_status(self) -> Dict[str, Any]:
-        """Get resource manager status"""        return {
+        """Get resource manager status"""
+        return {
             "status": "active",
             "resource_pools": len(self.resource_pools),
             "active_allocations": len(self.active_allocations),
@@ -1084,7 +1128,8 @@ class ResourceManager(BaseAgent):
         }
 
     async def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check"""        return {
+        """Comprehensive health check"""
+        return {
             "overall_status": "ok",
             "monitoring_active": self._monitoring_active,
             "resource_pressure": self.current_metrics.calculate_resource_pressure_score(),
@@ -1096,7 +1141,8 @@ class ResourceManager(BaseAgent):
         }
 
     async def shutdown(self):
-        """Shutdown resource manager"""        self._monitoring_active = False
+        """Shutdown resource manager"""
+        self._monitoring_active = False
         
         if self._monitoring_thread and self._monitoring_thread.is_alive():
             self._monitoring_thread.join(timeout=5)
@@ -1111,7 +1157,8 @@ class ResourceManager(BaseAgent):
         logger.info("ResourceManager shutdown complete")
 
     async def _deallocate_resources(self, allocation_id: str):
-        """Deallocate resources for specific allocation"""        allocation = self.active_allocations.get(allocation_id)
+        """Deallocate resources for specific allocation"""
+        allocation = self.active_allocations.get(allocation_id)
         if not allocation:
             return
         
@@ -1137,7 +1184,8 @@ class ResourceManager(BaseAgent):
     RESERVED = "reserved"
 
 class ResourceState(Enum):
-    """Resource utilization states"""    AVAILABLE = "available"
+    """Resource utilization states"""
+    AVAILABLE = "available"
     ALLOCATED = "allocated"
     OVERALLOCATED = "overallocated"
     CRITICAL = "critical"
@@ -1145,7 +1193,8 @@ class ResourceState(Enum):
 
 @dataclass
 class ResourceAllocation:
-    """Resource allocation tracking"""    resource_type: ResourceType
+    """Resource allocation tracking"""
+    resource_type: ResourceType
     allocated_amount: float
     maximum_amount: float
     requesting_service: str
@@ -1156,7 +1205,8 @@ class ResourceAllocation:
 
 @dataclass
 class ResourceUsage:
-    """Current resource usage metrics"""    timestamp: datetime = field(default_factory=datetime.now)
+    """Current resource usage metrics"""
+    timestamp: datetime = field(default_factory=datetime.now)
     cpu_percent: float = 0.0
     memory_percent: float = 0.0
     memory_available_gb: float = 0.0
@@ -1170,7 +1220,8 @@ class ResourceUsage:
 
 @dataclass
 class ResourcePrediction:
-    """Resource usage prediction"""    resource_type: ResourceType
+    """Resource usage prediction"""
+    resource_type: ResourceType
     predicted_usage: List[float]
     prediction_horizon_minutes: int
     confidence_score: float
@@ -1178,7 +1229,8 @@ class ResourcePrediction:
     recommended_allocation: float = 0.0
 
 class ResourceManager:
-    """    Advanced resource management system with intelligent allocation and monitoring.
+    """
+    Advanced resource management system with intelligent allocation and monitoring.
     
     Features:
     - Real-time resource monitoring and tracking
@@ -1187,7 +1239,8 @@ class ResourceManager:
     - Dynamic scaling and optimization
     - Resource usage analytics and reporting
     - Automatic resource cleanup and garbage collection
-    """    def __init__(self, config: Dict[str, Any] = None):
+    """
+    def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.resource_monitor = ResourceMonitor()
         self.resource_predictor = ResourcePredictor()
@@ -1217,7 +1270,8 @@ class ResourceManager:
         logger.info("ResourceManager initialized successfully")
 
     def _initialize_resource_limits(self) -> Dict[ResourceType, Dict[str, float]]:
-        """Initialize resource limits and thresholds"""        system_memory = psutil.virtual_memory().total / (1024**3)  # GB
+        """Initialize resource limits and thresholds"""
+        system_memory = psutil.virtual_memory().total / (1024**3)  # GB
         system_cpu_count = psutil.cpu_count()
         
         return {
@@ -1251,7 +1305,8 @@ class ResourceManager:
         }
 
     def _initialize_allocation_policies(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize resource allocation policies"""        return {
+        """Initialize resource allocation policies"""
+        return {
             'high_priority_services': {
                 'cpu_allocation_percent': 40,
                 'memory_allocation_percent': 40,
@@ -1274,7 +1329,8 @@ class ResourceManager:
                                resource_requirements: Dict[ResourceType, float],
                                priority: int = 1,
                                strategy: AllocationStrategy = AllocationStrategy.FAIR_SHARE) -> Dict[str, Any]:
-        """        Allocate resources to a requesting service
+        """
+        Allocate resources to a requesting service
         
         Args:
             service_name: Name of the requesting service
@@ -1284,7 +1340,8 @@ class ResourceManager:
             
         Returns:
             Allocation result with allocated resources
-        """        try:
+        """
+        try:
             start_time = time.time()
             allocation_id = f"alloc_{service_name}_{int(start_time)}"
             
@@ -1353,7 +1410,8 @@ class ResourceManager:
             raise AllocationError(f"Allocation failed: {str(e)}")
 
     async def deallocate_resources(self, allocation_id: str) -> Dict[str, Any]:
-        """Deallocate previously allocated resources"""        try:
+        """Deallocate previously allocated resources"""
+        try:
             deallocated_resources = {}
             
             # Find and deallocate all resources for this allocation
@@ -1382,7 +1440,8 @@ class ResourceManager:
             raise ResourceError(f"Deallocation failed: {str(e)}")
 
     async def get_resource_usage(self) -> ResourceUsage:
-        """Get current system resource usage"""        try:
+        """Get current system resource usage"""
+        try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent(interval=1)
             
@@ -1428,7 +1487,8 @@ class ResourceManager:
             raise ResourceError(f"Resource usage retrieval failed: {str(e)}")
 
     async def optimize_resource_allocation(self) -> Dict[str, Any]:
-        """Optimize current resource allocations for better efficiency"""        try:
+        """Optimize current resource allocations for better efficiency"""
+        try:
             start_time = time.time()
             
             # Analyze current allocations
@@ -1462,7 +1522,8 @@ class ResourceManager:
             raise ResourceError(f"Optimization failed: {str(e)}")
 
     async def predict_resource_needs(self, time_horizon_minutes: int = 60) -> Dict[ResourceType, ResourcePrediction]:
-        """Predict future resource needs using machine learning"""        try:
+        """Predict future resource needs using machine learning"""
+        try:
             predictions = {}
             
             # Get historical usage data
@@ -1493,7 +1554,8 @@ class ResourceManager:
             raise ResourceError(f"Prediction failed: {str(e)}")
 
     async def _check_resource_availability(self, requirements: Dict[ResourceType, float]) -> Dict[str, Any]:
-        """Check if requested resources are available"""        current_usage = await self.get_resource_usage()
+        """Check if requested resources are available"""
+        current_usage = await self.get_resource_usage()
         availability_check = {'sufficient': True, 'details': {}}
         
         for resource_type, required_amount in requirements.items():
@@ -1522,7 +1584,8 @@ class ResourceManager:
         return availability_check
 
     async def _continuous_monitoring(self):
-        """Continuous resource monitoring and automatic optimization"""        while self._monitoring_active:
+        """Continuous resource monitoring and automatic optimization"""
+        while self._monitoring_active:
             try:
                 # Get current usage
                 current_usage = await self.get_resource_usage()
@@ -1549,11 +1612,13 @@ class ResourceManager:
                 await asyncio.sleep(60)  # Wait longer on error
 
 class AllocationOptimizer:
-    """    Advanced allocation optimizer for intelligent resource distribution.
+    """
+    Advanced allocation optimizer for intelligent resource distribution.
     
     Implements sophisticated algorithms for optimal resource allocation
     across multiple services and applications.
-    """    
+    """
+    
     def __init__(self):
         self.optimization_algorithms = {
             'genetic_algorithm': self._genetic_optimization,
@@ -1566,7 +1631,8 @@ class AllocationOptimizer:
                                 current_allocations: Dict[str, ResourceAllocation],
                                 resource_constraints: Dict[ResourceType, float],
                                 optimization_goal: str = 'efficiency') -> Dict[str, Any]:
-        """        Optimize resource allocation using advanced algorithms
+        """
+        Optimize resource allocation using advanced algorithms
         
         Args:
             current_allocations: Current resource allocations
@@ -1575,7 +1641,8 @@ class AllocationOptimizer:
             
         Returns:
             Optimized allocation plan
-        """        try:
+        """
+        try:
             # Select optimization algorithm based on problem size and goal
             algorithm = self._select_optimization_algorithm(
                 len(current_allocations), optimization_goal
@@ -1615,7 +1682,8 @@ class AllocationOptimizer:
                                   current_allocations: Dict[str, ResourceAllocation],
                                   constraints: Dict[ResourceType, float],
                                   goal: str) -> Dict[str, Any]:
-        """Genetic algorithm for resource allocation optimization"""        # Implementation of genetic algorithm optimization
+        """Genetic algorithm for resource allocation optimization"""
+        # Implementation of genetic algorithm optimization
         population_size = 50
         generations = 100
         mutation_rate = 0.1

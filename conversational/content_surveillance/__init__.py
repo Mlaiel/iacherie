@@ -26,13 +26,15 @@ content creators across all major platforms and the broader internet.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY ⚠️
 This revolutionary content surveillance platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
-"""from .web_crawler_intelligence import (
+"""
+
+from .web_crawler_intelligence import (
     WebCrawlerIntelligence,
     CrawlRequest,
     ContentMatch,
@@ -43,6 +45,7 @@ under German and International Law. Contact: mlaiel@live.de for legal authorizat
 )
 
 from .surveillance_orchestrator import SurveillanceOrchestrator
+
 from .platform_monitors import (
     YouTubeMonitor,
     InstagramMonitor,
@@ -51,7 +54,9 @@ from .platform_monitors import (
     GenericWebMonitor
 )
 from .violation_detector import ViolationDetector
+
 from .evidence_collector import EvidenceCollector
+
 from .alert_manager import AlertManager
 
 # Core Components
@@ -89,5 +94,5 @@ __all__ = [
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary - Unauthorized use prohibited"

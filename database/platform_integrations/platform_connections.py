@@ -5,7 +5,8 @@ pour la plateforme IA Influencer Agent.
 
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead AI Developer, Backend Senior, DevOps Engineer, Database Architect
-"""from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, JSON
+"""
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, JSON
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
@@ -20,11 +21,13 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformConnection(BaseModel):
-    """    Modèle pour les connexions aux plateformes externes.
+    """
+    Modèle pour les connexions aux plateformes externes.
     
     Stocke les informations de connexion, tokens d'accès et statut
     pour chaque plateforme intégrée.
-    """    
+    """
+    
     __tablename__ = "platform_connections"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -74,13 +77,15 @@ class PlatformConnection(BaseModel):
     
     @property
     def is_token_expired(self) -> bool:
-        """Vérifie si le token d'accès est expiré."""        if not self.token_expires_at:
+        """Vérifie si le token d'accès est expiré."""
+        if not self.token_expires_at:
             return False
         return datetime.utcnow() > self.token_expires_at
     
     @property
     def connection_health_score(self) -> float:
-        """Calcule un score de santé de la connexion (0-100)."""        if self.total_requests == 0:
+        """Calcule un score de santé de la connexion (0-100)."""
+        if self.total_requests == 0:
             return 100.0
         
         success_rate = (self.total_requests - self.failed_requests) / self.total_requests
@@ -97,7 +102,8 @@ class PlatformConnection(BaseModel):
         return max(0.0, min(100.0, health_score))
     
     def update_sync_status(self, success: bool, error_message: str = None):
-        """Met à jour le statut de synchronisation."""        self.total_requests += 1
+        """Met à jour le statut de synchronisation."""
+        self.total_requests += 1
         if success:
             self.last_success = datetime.utcnow()
             self.last_sync = datetime.utcnow()
@@ -107,7 +113,8 @@ class PlatformConnection(BaseModel):
                 self.last_error = error_message
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit la connexion en dictionnaire."""        return {
+        """Convertit la connexion en dictionnaire."""
+        return {
             "id": str(self.id),
             "platform_name": self.platform_name,
             "platform_type": self.platform_type,
@@ -124,11 +131,13 @@ class PlatformConnection(BaseModel):
 
 
 class PlatformEndpoint(BaseModel):
-    """    Modèle pour les endpoints d'API des plateformes.
+    """
+    Modèle pour les endpoints d'API des plateformes.
     
     Stocke les informations sur les endpoints disponibles,
     leurs limitations et performances.
-    """    
+    """
+    
     __tablename__ = "platform_endpoints"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -169,11 +178,13 @@ class PlatformEndpoint(BaseModel):
 
 
 class PlatformWebhook(BaseModel):
-    """    Modèle pour les webhooks des plateformes.
+    """
+    Modèle pour les webhooks des plateformes.
     
     Gère les notifications en temps réel des plateformes
     externes (nouvelles publications, interactions, etc.).
-    """    
+    """
+    
     __tablename__ = "platform_webhooks"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -209,11 +220,13 @@ class PlatformWebhook(BaseModel):
 
 
 class PlatformSyncLog(BaseModel):
-    """    Modèle pour les logs de synchronisation avec les plateformes.
+    """
+    Modèle pour les logs de synchronisation avec les plateformes.
     
     Enregistre l'historique des synchronisations pour audit,
     monitoring et debugging.
-    """    
+    """
+    
     __tablename__ = "platform_sync_logs"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -252,7 +265,8 @@ class PlatformSyncLog(BaseModel):
     
     @property
     def success_rate(self) -> float:
-        """Calcule le taux de succès de cette synchronisation."""        if self.records_processed == 0:
+        """Calcule le taux de succès de cette synchronisation."""
+        if self.records_processed == 0:
             return 100.0
         return ((self.records_processed - self.records_failed) / self.records_processed) * 100
         if not self.is_verified:
@@ -261,7 +275,8 @@ class PlatformSyncLog(BaseModel):
         return min(100.0, max(0.0, health_score))
     
     def update_api_usage(self, success: bool = True, error_message: str = None):
-        """Met à jour les métriques d'utilisation de l'API."""        self.total_requests += 1
+        """Met à jour les métriques d'utilisation de l'API."""
+        self.total_requests += 1
         
         if success:
             self.last_success = datetime.utcnow()
@@ -272,11 +287,13 @@ class PlatformSyncLog(BaseModel):
 
 
 class PlatformEndpoint(BaseModel):
-    """    Modèle pour les endpoints d'API des plateformes.
+    """
+    Modèle pour les endpoints d'API des plateformes.
     
     Stocke les configurations et limites des endpoints spécifiques
     pour chaque plateforme.
-    """    
+    """
+    
     __tablename__ = "platform_endpoints"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -312,11 +329,13 @@ class PlatformEndpoint(BaseModel):
 
 
 class PlatformWebhook(BaseModel):
-    """    Modèle pour les webhooks des plateformes.
+    """
+    Modèle pour les webhooks des plateformes.
     
     Gestion des webhooks entrants et sortants pour la synchronisation
     en temps réel avec les plateformes externes.
-    """    
+    """
+    
     __tablename__ = "platform_webhooks"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -349,10 +368,12 @@ class PlatformWebhook(BaseModel):
 
 
 class PlatformSyncLog(BaseModel):
-    """    Modèle pour les logs de synchronisation avec les plateformes.
+    """
+    Modèle pour les logs de synchronisation avec les plateformes.
     
     Trace toutes les opérations de synchronisation pour audit et débogage.
-    """    
+    """
+    
     __tablename__ = "platform_sync_logs"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -391,7 +412,8 @@ class PlatformSyncLog(BaseModel):
     
     @property
     def success_rate(self) -> float:
-        """Calcule le taux de succès de la synchronisation."""        if self.records_processed == 0:
+        """Calcule le taux de succès de la synchronisation."""
+        if self.records_processed == 0:
             return 0.0
         return (self.records_successful / self.records_processed) * 100
 

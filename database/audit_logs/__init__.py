@@ -12,7 +12,8 @@ This revolutionary audit logging system is the EXCLUSIVE property of Fahed Mlaie
 Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
-"""from typing import List, Dict, Any, Optional, Union, Tuple
+"""
+from typing import List, Dict, Any, Optional, Union, Tuple
 import logging
 from datetime import datetime, timezone
 import asyncio
@@ -285,11 +286,13 @@ __all__ = [
 ]
 
 def get_module_info() -> Dict[str, Any]:
-    """    Get comprehensive audit logs module information.
+    """
+    Get comprehensive audit logs module information.
     
     Returns:
         Dict[str, Any]: Detailed module information
-    """    return {
+    """
+    return {
         "name": "Ultra-Advanced Enterprise Audit Logs Database",
         "version": __version__,
         "build": __build__,
@@ -361,14 +364,16 @@ def get_module_info() -> Dict[str, Any]:
     }
 
 def validate_audit_configuration(config: Dict[str, Any]) -> Tuple[bool, List[str]]:
-    """    Validate audit configuration settings.
+    """
+    Validate audit configuration settings.
     
     Args:
         config: Configuration dictionary
         
     Returns:
         Tuple[bool, List[str]]: (is_valid, validation_errors)
-    """    errors = []
+    """
+    errors = []
     
     # Validate required fields
     required_fields = [
@@ -392,14 +397,16 @@ def validate_audit_configuration(config: Dict[str, Any]) -> Tuple[bool, List[str
     return len(errors) == 0, errors
 
 async def initialize_audit_system(config: Dict[str, Any] = None) -> AuditLogsManager:
-    """    Initialize the complete audit logging system.
+    """
+    Initialize the complete audit logging system.
     
     Args:
         config: Optional configuration override
         
     Returns:
         AuditLogsManager: Configured audit manager
-    """    if config is None:
+    """
+    if config is None:
         config = AUDIT_CONFIG
     
     # Validate configuration
@@ -419,7 +426,8 @@ def create_audit_report(
     categories: List[str] = None,
     format_type: str = "json"
 ) -> Dict[str, Any]:
-    """    Create comprehensive audit report for specified time range.
+    """
+    Create comprehensive audit report for specified time range.
     
     Args:
         start_date: Report start date
@@ -429,7 +437,8 @@ def create_audit_report(
         
     Returns:
         Dict[str, Any]: Audit report data
-    """    if categories is None:
+    """
+    if categories is None:
         categories = ["system", "user", "security", "compliance", "forensic"]
     
     report = {

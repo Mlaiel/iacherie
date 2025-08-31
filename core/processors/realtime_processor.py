@@ -12,7 +12,8 @@ distribution, or commercialization without explicit written permission is
 strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import time
@@ -58,7 +59,8 @@ logger = logging.getLogger(__name__)
 
 
 class StreamType(str, Enum):
-    """Types of real-time streams"""    VIDEO_STREAM = "video_stream"
+    """Types of real-time streams"""
+    VIDEO_STREAM = "video_stream"
     AUDIO_STREAM = "audio_stream"
     TEXT_STREAM = "text_stream"
     MIXED_MEDIA = "mixed_media"
@@ -71,7 +73,8 @@ class StreamType(str, Enum):
 
 
 class ProcessingMode(str, Enum):
-    """Real-time processing modes"""    LOW_LATENCY = "low_latency"
+    """Real-time processing modes"""
+    LOW_LATENCY = "low_latency"
     HIGH_QUALITY = "high_quality"
     BALANCED = "balanced"
     ENERGY_EFFICIENT = "energy_efficient"
@@ -79,7 +82,8 @@ class ProcessingMode(str, Enum):
 
 
 class StreamStatus(str, Enum):
-    """Stream processing status"""    CONNECTING = "connecting"
+    """Stream processing status"""
+    CONNECTING = "connecting"
     CONNECTED = "connected"
     PROCESSING = "processing"
     PAUSED = "paused"
@@ -90,7 +94,8 @@ class StreamStatus(str, Enum):
 
 
 class AlertType(str, Enum):
-    """Real-time alert types"""    QUALITY_ISSUE = "quality_issue"
+    """Real-time alert types"""
+    QUALITY_ISSUE = "quality_issue"
     CONTENT_WARNING = "content_warning"
     PERFORMANCE_ISSUE = "performance_issue"
     TECHNICAL_ERROR = "technical_error"
@@ -102,7 +107,8 @@ class AlertType(str, Enum):
 
 @dataclass
 class RealtimeProcessingConfig:
-    """Configuration for real-time processing"""    # Processing parameters
+    """Configuration for real-time processing"""
+    # Processing parameters
     processing_mode: ProcessingMode = ProcessingMode.BALANCED
     target_latency_ms: int = 100
     max_latency_ms: int = 500
@@ -155,7 +161,8 @@ class RealtimeProcessingConfig:
 
 @dataclass  
 class StreamMetadata:
-    """Metadata for a stream"""    stream_id: str
+    """Metadata for a stream"""
+    stream_id: str
     stream_type: StreamType
     title: Optional[str] = None
     description: Optional[str] = None
@@ -172,7 +179,8 @@ class StreamMetadata:
 
 @dataclass
 class StreamAnalytics:
-    """Real-time stream analytics"""    # Engagement metrics
+    """Real-time stream analytics"""
+    # Engagement metrics
     viewer_count: int = 0
     peak_viewers: int = 0
     average_watch_time: float = 0.0
@@ -211,7 +219,8 @@ class StreamAnalytics:
 
 @dataclass
 class StreamAlert:
-    """Real-time alert"""    alert_id: str
+    """Real-time alert"""
+    alert_id: str
     alert_type: AlertType
     severity: str  # low, medium, high, critical
     message: str
@@ -224,7 +233,8 @@ class StreamAlert:
 
 @dataclass
 class StreamFrame:
-    """Individual frame in a stream"""    frame_id: str
+    """Individual frame in a stream"""
+    frame_id: str
     timestamp: float
     frame_type: str  # video, audio, text, metadata
     data: Any
@@ -234,10 +244,12 @@ class StreamFrame:
 
 
 class RealtimeStream:
-    """    🎥 REALTIME STREAM HANDLER
+    """
+    🎥 REALTIME STREAM HANDLER
     
     Manages individual real-time streams with processing and analytics.
-    """    
+    """
+    
     def __init__(
         self,
         stream_id: str,
@@ -290,7 +302,8 @@ class RealtimeStream:
         }
     
     async def start(self) -> bool:
-        """Start stream processing"""        try:
+        """Start stream processing"""
+        try:
             self.logger.info(f"Starting stream {self.stream_id}")
             
             # Start WebSocket server
@@ -314,7 +327,8 @@ class RealtimeStream:
             return False
     
     async def stop(self):
-        """Stop stream processing"""        try:
+        """Stop stream processing"""
+        try:
             self.status = StreamStatus.DISCONNECTED
             
             # Cancel tasks
@@ -337,7 +351,8 @@ class RealtimeStream:
             self.logger.error(f"Stream stop failed: {e}")
     
     async def process_frame(self, frame_data: Any, frame_type: str) -> Dict[str, Any]:
-        """Process a single frame"""        start_time = time.time()
+        """Process a single frame"""
+        start_time = time.time()
         
         try:
             frame_id = f"{self.stream_id}_{self.frame_count}"
@@ -404,7 +419,8 @@ class RealtimeStream:
             }
     
     async def _process_video_frame(self, frame: StreamFrame) -> Dict[str, Any]:
-        """Process video frame"""        try:
+        """Process video frame"""
+        try:
             video_processor = self.processors["video"]
             
             # Prepare video data
@@ -433,7 +449,8 @@ class RealtimeStream:
             return {"error": str(e)}
     
     async def _process_audio_frame(self, frame: StreamFrame) -> Dict[str, Any]:
-        """Process audio frame"""        try:
+        """Process audio frame"""
+        try:
             audio_processor = self.processors["audio"]
             
             # Process with audio processor
@@ -454,7 +471,8 @@ class RealtimeStream:
             return {"error": str(e)}
     
     async def _process_text_frame(self, frame: StreamFrame) -> Dict[str, Any]:
-        """Process text frame"""        try:
+        """Process text frame"""
+        try:
             text_processor = self.processors["text"]
             
             # Process with text processor
@@ -474,7 +492,8 @@ class RealtimeStream:
             return {"error": str(e)}
     
     async def _processing_loop(self):
-        """Main processing loop"""        while self.status in [StreamStatus.CONNECTED, StreamStatus.PROCESSING]:
+        """Main processing loop"""
+        while self.status in [StreamStatus.CONNECTED, StreamStatus.PROCESSING]:
             try:
                 # Adaptive processing based on buffer health
                 await self._adaptive_processing()
@@ -487,7 +506,8 @@ class RealtimeStream:
                 await asyncio.sleep(0.1)
     
     async def _analytics_loop(self):
-        """Analytics update loop"""        while self.status in [StreamStatus.CONNECTED, StreamStatus.PROCESSING]:
+        """Analytics update loop"""
+        while self.status in [StreamStatus.CONNECTED, StreamStatus.PROCESSING]:
             try:
                 await self._update_analytics()
                 await asyncio.sleep(self.config.analytics_update_interval)
@@ -497,7 +517,8 @@ class RealtimeStream:
                 await asyncio.sleep(5)
     
     async def _quality_monitor_loop(self):
-        """Quality monitoring loop"""        while self.status in [StreamStatus.CONNECTED, StreamStatus.PROCESSING]:
+        """Quality monitoring loop"""
+        while self.status in [StreamStatus.CONNECTED, StreamStatus.PROCESSING]:
             try:
                 await self._monitor_quality()
                 await asyncio.sleep(self.config.quality_check_interval)
@@ -507,7 +528,8 @@ class RealtimeStream:
                 await asyncio.sleep(10)
     
     async def _adaptive_processing(self):
-        """Adaptive processing based on current conditions"""        try:
+        """Adaptive processing based on current conditions"""
+        try:
             # Check buffer health
             video_buffer_health = len(self.video_buffer) / self.video_buffer.maxlen
             audio_buffer_health = len(self.audio_buffer) / self.audio_buffer.maxlen
@@ -531,7 +553,8 @@ class RealtimeStream:
             self.logger.error(f"Adaptive processing failed: {e}")
     
     async def _update_analytics(self):
-        """Update real-time analytics"""        try:
+        """Update real-time analytics"""
+        try:
             current_time = time.time()
             
             # Calculate processing metrics
@@ -599,7 +622,8 @@ class RealtimeStream:
             self.logger.error(f"Analytics update failed: {e}")
     
     async def _monitor_quality(self):
-        """Monitor stream quality and create alerts"""        try:
+        """Monitor stream quality and create alerts"""
+        try:
             # Check overall quality
             if self.analytics.overall_quality < self.config.min_quality_threshold:
                 await self._create_alert(
@@ -639,7 +663,8 @@ class RealtimeStream:
         message: str,
         details: Optional[Dict[str, Any]] = None
     ):
-        """Create and broadcast an alert"""        try:
+        """Create and broadcast an alert"""
+        try:
             # Check cooldown
             recent_alerts = [
                 a for a in self.alerts
@@ -670,7 +695,8 @@ class RealtimeStream:
             self.logger.error(f"Alert creation failed: {e}")
     
     async def _handle_latency_issue(self, latency_ms: float):
-        """Handle high latency"""        try:
+        """Handle high latency"""
+        try:
             if self.config.enable_auto_corrections:
                 # Auto-adjust processing mode
                 if latency_ms > self.config.max_latency_ms * 2:
@@ -682,7 +708,8 @@ class RealtimeStream:
             self.logger.error(f"Latency handling failed: {e}")
     
     async def _start_websocket_server(self):
-        """Start WebSocket server for real-time communication"""        try:
+        """Start WebSocket server for real-time communication"""
+        try:
             if not STREAMING_LIBS_AVAILABLE:
                 self.logger.warning("WebSocket libraries not available")
                 return
@@ -711,7 +738,8 @@ class RealtimeStream:
             self.logger.error(f"WebSocket server start failed: {e}")
     
     async def _broadcast_frame_update(self, frame: StreamFrame):
-        """Broadcast frame update to WebSocket clients"""        try:
+        """Broadcast frame update to WebSocket clients"""
+        try:
             if not self.websocket_clients:
                 return
             
@@ -740,7 +768,8 @@ class RealtimeStream:
             self.logger.error(f"Frame broadcast failed: {e}")
     
     async def _broadcast_analytics_update(self):
-        """Broadcast analytics update to WebSocket clients"""        try:
+        """Broadcast analytics update to WebSocket clients"""
+        try:
             if not self.websocket_clients:
                 return
             
@@ -762,7 +791,8 @@ class RealtimeStream:
             self.logger.error(f"Analytics broadcast failed: {e}")
     
     async def _broadcast_alert(self, alert: StreamAlert):
-        """Broadcast alert to WebSocket clients"""        try:
+        """Broadcast alert to WebSocket clients"""
+        try:
             if not self.websocket_clients:
                 return
             
@@ -785,11 +815,13 @@ class RealtimeStream:
 
 
 class RealtimeProcessor:
-    """    ⚡ ENTERPRISE REALTIME PROCESSOR
+    """
+    ⚡ ENTERPRISE REALTIME PROCESSOR
     
     Industrial-grade real-time processing engine with ultra-low latency,
     adaptive quality, and comprehensive monitoring capabilities.
-    """    
+    """
+    
     def __init__(
         self,
         db_session,
@@ -838,7 +870,8 @@ class RealtimeProcessor:
             self.logger.warning("Streaming libraries not available")
     
     async def initialize(self) -> bool:
-        """Initialize the real-time processor"""        try:
+        """Initialize the real-time processor"""
+        try:
             # Initialize individual processors
             self.audio_processor = AudioProcessor(
                 db_session=self.db_session,
@@ -882,7 +915,8 @@ class RealtimeProcessor:
         metadata: StreamMetadata,
         options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Create a new real-time stream
+        """
+        Create a new real-time stream
         
         Args:
             stream_type: Type of stream to create
@@ -891,7 +925,8 @@ class RealtimeProcessor:
             
         Returns:
             Stream creation result
-        """        try:
+        """
+        try:
             if not self._initialized:
                 await self.initialize()
             
@@ -952,7 +987,8 @@ class RealtimeProcessor:
         frame_data: Any,
         frame_type: str
     ) -> Dict[str, Any]:
-        """        Process a frame in a real-time stream
+        """
+        Process a frame in a real-time stream
         
         Args:
             stream_id: Stream identifier
@@ -961,7 +997,8 @@ class RealtimeProcessor:
             
         Returns:
             Processing result
-        """        try:
+        """
+        try:
             if stream_id not in self._active_streams:
                 return {
                     "success": False,
@@ -986,7 +1023,8 @@ class RealtimeProcessor:
             }
     
     async def get_stream_analytics(self, stream_id: str) -> Dict[str, Any]:
-        """Get real-time analytics for a stream"""        try:
+        """Get real-time analytics for a stream"""
+        try:
             if stream_id not in self._active_streams:
                 return {
                     "success": False,
@@ -1012,7 +1050,8 @@ class RealtimeProcessor:
             }
     
     async def stop_stream(self, stream_id: str) -> Dict[str, Any]:
-        """Stop a real-time stream"""        try:
+        """Stop a real-time stream"""
+        try:
             if stream_id not in self._active_streams:
                 return {
                     "success": False,
@@ -1039,7 +1078,8 @@ class RealtimeProcessor:
             }
     
     async def list_active_streams(self) -> Dict[str, Any]:
-        """List all active streams"""        try:
+        """List all active streams"""
+        try:
             streams = []
             
             for stream_id, stream in self._active_streams.items():
@@ -1070,7 +1110,8 @@ class RealtimeProcessor:
             }
     
     async def get_global_metrics(self) -> Dict[str, Any]:
-        """Get global real-time processing metrics"""        return {
+        """Get global real-time processing metrics"""
+        return {
             "success": True,
             "metrics": self._global_metrics,
             "config": self.config.__dict__,
@@ -1082,7 +1123,8 @@ class RealtimeProcessor:
         }
     
     async def _monitor_system(self):
-        """Monitor system performance"""        while not self._shutdown_event.is_set():
+        """Monitor system performance"""
+        while not self._shutdown_event.is_set():
             try:
                 # Calculate average latency across all streams
                 all_latencies = []
@@ -1100,7 +1142,8 @@ class RealtimeProcessor:
                 await asyncio.sleep(30)
     
     async def _cleanup_inactive_streams(self):
-        """Clean up inactive streams"""        while not self._shutdown_event.is_set():
+        """Clean up inactive streams"""
+        while not self._shutdown_event.is_set():
             try:
                 current_time = datetime.now()
                 inactive_streams = []
@@ -1125,7 +1168,8 @@ class RealtimeProcessor:
                 await asyncio.sleep(120)
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on the real-time processor"""        health_status = {
+        """Perform health check on the real-time processor"""
+        health_status = {
             "status": "healthy" if self._initialized else "not_initialized",
             "realtime_vision_available": REALTIME_VISION_AVAILABLE,
             "realtime_audio_available": REALTIME_AUDIO_AVAILABLE,
@@ -1151,7 +1195,8 @@ class RealtimeProcessor:
         return health_status
     
     async def shutdown(self):
-        """Gracefully shutdown the real-time processor"""        try:
+        """Gracefully shutdown the real-time processor"""
+        try:
             self._shutdown_event.set()
             
             # Stop all active streams
@@ -1189,7 +1234,8 @@ async def create_realtime_processor(
     redis_client,
     config: Optional[Dict[str, Any]] = None
 ) -> RealtimeProcessor:
-    """    Factory function to create and initialize a real-time processor
+    """
+    Factory function to create and initialize a real-time processor
     
     Args:
         db_session: Database session
@@ -1198,7 +1244,8 @@ async def create_realtime_processor(
         
     Returns:
         Initialized RealtimeProcessor instance
-    """    # Create config from dict if provided
+    """
+    # Create config from dict if provided
     processor_config = None
     if config:
         processor_config = RealtimeProcessingConfig(**{

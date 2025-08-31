@@ -6,7 +6,8 @@ and intelligent insights in the IA Influencer Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""from datetime import datetime, date
+"""
+from datetime import datetime, date
 from decimal import Decimal
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any
@@ -17,7 +18,8 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class AnalyticsTypeEnum(str, Enum):
-    """Types of analytics"""    CONTENT_PERFORMANCE = "content_performance"
+    """Types of analytics"""
+    CONTENT_PERFORMANCE = "content_performance"
     AUDIENCE_INSIGHTS = "audience_insights"
     ENGAGEMENT_ANALYSIS = "engagement_analysis"
     REVENUE_ANALYTICS = "revenue_analytics"
@@ -32,7 +34,8 @@ class AnalyticsTypeEnum(str, Enum):
 
 
 class ModelTypeEnum(str, Enum):
-    """Types of ML models"""    CLASSIFICATION = "classification"
+    """Types of ML models"""
+    CLASSIFICATION = "classification"
     REGRESSION = "regression"
     CLUSTERING = "clustering"
     RECOMMENDATION = "recommendation"
@@ -47,7 +50,8 @@ class ModelTypeEnum(str, Enum):
 
 
 class ModelStatusEnum(str, Enum):
-    """ML model status"""    TRAINING = "training"
+    """ML model status"""
+    TRAINING = "training"
     VALIDATION = "validation"
     TESTING = "testing"
     DEPLOYED = "deployed"
@@ -58,7 +62,8 @@ class ModelStatusEnum(str, Enum):
 
 
 class DataQualityEnum(str, Enum):
-    """Data quality levels"""    EXCELLENT = "excellent"
+    """Data quality levels"""
+    EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
     POOR = "poor"
@@ -66,7 +71,8 @@ class DataQualityEnum(str, Enum):
 
 
 class InsightTypeEnum(str, Enum):
-    """Types of AI insights"""    OPTIMIZATION_SUGGESTION = "optimization_suggestion"
+    """Types of AI insights"""
+    OPTIMIZATION_SUGGESTION = "optimization_suggestion"
     TREND_PREDICTION = "trend_prediction"
     ANOMALY_ALERT = "anomaly_alert"
     RECOMMENDATION = "recommendation"
@@ -79,7 +85,8 @@ class InsightTypeEnum(str, Enum):
 
 
 class MetricAggregationSchema(BaseModel):
-    """Schema for metric aggregation"""    metric_name: str = Field(..., description="Name of the metric")
+    """Schema for metric aggregation"""
+    metric_name: str = Field(..., description="Name of the metric")
     aggregation_type: str = Field(..., description="Type of aggregation (sum, avg, max, min, count)")
     value: Union[int, float, Decimal] = Field(..., description="Aggregated value")
     unit: Optional[str] = Field(None, description="Unit of measurement")
@@ -101,7 +108,8 @@ class MetricAggregationSchema(BaseModel):
 
 
 class TimeSeriesDataSchema(BaseModel):
-    """Schema for time series data points"""    timestamp: datetime = Field(..., description="Data point timestamp")
+    """Schema for time series data points"""
+    timestamp: datetime = Field(..., description="Data point timestamp")
     value: Union[int, float, Decimal] = Field(..., description="Metric value")
     metadata: Optional[Dict[str, Any]] = Field(None, description="Additional metadata")
     anomaly_score: Optional[float] = Field(None, description="Anomaly detection score")
@@ -121,7 +129,8 @@ class TimeSeriesDataSchema(BaseModel):
 
 
 class AudienceSegmentSchema(BaseModel):
-    """Schema for audience segmentation"""    segment_id: str = Field(..., description="Unique segment identifier")
+    """Schema for audience segmentation"""
+    segment_id: str = Field(..., description="Unique segment identifier")
     segment_name: str = Field(..., description="Segment name")
     segment_description: str = Field(..., description="Segment description")
     
@@ -160,7 +169,8 @@ class AudienceSegmentSchema(BaseModel):
 
 
 class MLModelPerformanceSchema(BaseModel):
-    """Schema for ML model performance metrics"""    model_id: str = Field(..., description="Model identifier")
+    """Schema for ML model performance metrics"""
+    model_id: str = Field(..., description="Model identifier")
     evaluation_date: datetime = Field(..., description="Evaluation date")
     
     # Classification metrics
@@ -202,7 +212,8 @@ class MLModelPerformanceSchema(BaseModel):
 
 
 class PredictiveInsightSchema(BaseModel):
-    """Schema for predictive insights and forecasts"""    insight_id: str = Field(..., description="Unique insight identifier")
+    """Schema for predictive insights and forecasts"""
+    insight_id: str = Field(..., description="Unique insight identifier")
     insight_type: InsightTypeEnum = Field(..., description="Type of insight")
     title: str = Field(..., description="Insight title")
     description: str = Field(..., description="Detailed description")
@@ -244,7 +255,8 @@ class PredictiveInsightSchema(BaseModel):
 
 
 class ContentAnalyticsSchema(BaseModel):
-    """Schema for content performance analytics"""    content_id: PositiveInt = Field(..., description="Content ID")
+    """Schema for content performance analytics"""
+    content_id: PositiveInt = Field(..., description="Content ID")
     analytics_period: str = Field(..., description="Analytics time period")
     
     # Engagement metrics
@@ -299,7 +311,8 @@ class ContentAnalyticsSchema(BaseModel):
 
 
 class MarketIntelligenceSchema(BaseModel):
-    """Schema for market intelligence and industry insights"""    market_segment: str = Field(..., description="Market segment")
+    """Schema for market intelligence and industry insights"""
+    market_segment: str = Field(..., description="Market segment")
     analysis_date: datetime = Field(..., description="Analysis date")
     
     # Market size and growth
@@ -345,7 +358,8 @@ class MarketIntelligenceSchema(BaseModel):
 
 
 class AIModelManagementSchema(BaseModel):
-    """Schema for AI model management and deployment"""    model_id: str = Field(..., description="Unique model identifier")
+    """Schema for AI model management and deployment"""
+    model_id: str = Field(..., description="Unique model identifier")
     model_name: str = Field(..., description="Model name")
     model_type: ModelTypeEnum = Field(..., description="Type of ML model")
     model_version: str = Field(..., description="Model version")
@@ -398,7 +412,8 @@ class AIModelManagementSchema(BaseModel):
 
 
 class RecommendationSchema(BaseModel):
-    """Schema for AI-generated recommendations"""    recommendation_id: str = Field(..., description="Unique recommendation ID")
+    """Schema for AI-generated recommendations"""
+    recommendation_id: str = Field(..., description="Unique recommendation ID")
     user_id: PositiveInt = Field(..., description="Target user ID")
     recommendation_type: str = Field(..., description="Type of recommendation")
     

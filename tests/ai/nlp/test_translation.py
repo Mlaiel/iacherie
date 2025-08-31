@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -21,7 +22,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -44,10 +46,12 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class TestAdvancedTranslator:
-    """Comprehensive tests for AdvancedTranslator"""    
+    """Comprehensive tests for AdvancedTranslator"""
+    
     @pytest.mark.asyncio
     async def test_engine_initialization(self, translation_engine):
-        """Test translation engine initialization"""        assert translation_engine is not None
+        """Test translation engine initialization"""
+        assert translation_engine is not None
         assert hasattr(translation_engine, 'config')
         assert hasattr(translation_engine, 'multilingual_translator')
         assert hasattr(translation_engine, 'cultural_adapter')
@@ -61,7 +65,8 @@ class TestAdvancedTranslator:
 
     @pytest.mark.asyncio
     async def test_basic_translation(self, translation_engine):
-        """Test basic text translation"""        test_cases = [
+        """Test basic text translation"""
+        test_cases = [
             {
                 'text': "Hello, how are you today?",
                 'source_lang': Language.ENGLISH,
@@ -115,7 +120,8 @@ class TestAdvancedTranslator:
 
     @pytest.mark.asyncio
     async def test_social_media_translation(self, translation_engine, sample_social_content):
-        """Test social media content translation"""        platforms = [Platform.INSTAGRAM, Platform.TWITTER, Platform.LINKEDIN]
+        """Test social media content translation"""
+        platforms = [Platform.INSTAGRAM, Platform.TWITTER, Platform.LINKEDIN]
         languages = [Language.GERMAN, Language.FRENCH, Language.SPANISH]
         
         for platform in platforms:
@@ -155,7 +161,8 @@ class TestAdvancedTranslator:
 
     @pytest.mark.asyncio
     async def test_cultural_adaptation(self, translation_engine):
-        """Test cultural adaptation features"""        cultural_test_cases = [
+        """Test cultural adaptation features"""
+        cultural_test_cases = [
             {
                 'text': "It's as American as apple pie!",
                 'source_culture': 'US',
@@ -211,7 +218,8 @@ class TestAdvancedTranslator:
 
     @pytest.mark.asyncio
     async def test_multilingual_batch_translation(self, translation_engine, performance_test_data):
-        """Test batch translation capabilities"""        texts = performance_test_data['small_batch'][:5]  # Use smaller batch for translation
+        """Test batch translation capabilities"""
+        texts = performance_test_data['small_batch'][:5]  # Use smaller batch for translation
         target_languages = [Language.GERMAN, Language.FRENCH, Language.SPANISH]
         
         start_time = time.time()
@@ -247,11 +255,14 @@ class TestAdvancedTranslator:
 
     @pytest.mark.asyncio
     async def test_localization_features(self, translation_engine):
-        """Test content localization features"""        content = """        Our product launches on March 15th, 2024 at 2:00 PM EST.
+        """Test content localization features"""
+        content = """
+        Our product launches on March 15th, 2024 at 2:00 PM EST.
         The price is $299.99 with free shipping.
         Visit our store at 123 Main Street, New York, NY 10001.
         Call us at (555) 123-4567 for more information.
-        """        
+        """
+        
         localization_targets = [
             {
                 'country': 'DE',
@@ -308,7 +319,8 @@ class TestAdvancedTranslator:
 
     @pytest.mark.asyncio
     async def test_translation_quality_assessment(self, translation_engine):
-        """Test translation quality assessment"""        test_translations = [
+        """Test translation quality assessment"""
+        test_translations = [
             {
                 'source': "The quick brown fox jumps over the lazy dog.",
                 'target_lang': Language.GERMAN,
@@ -363,7 +375,8 @@ class TestAdvancedTranslator:
 
     @pytest.mark.asyncio
     async def test_context_aware_translation(self, translation_engine):
-        """Test context-aware translation"""        context_test_cases = [
+        """Test context-aware translation"""
+        context_test_cases = [
             {
                 'text': "Bank",
                 'contexts': [
@@ -422,7 +435,8 @@ class TestAdvancedTranslator:
 
     @pytest.mark.asyncio
     async def test_specialized_domain_translation(self, translation_engine):
-        """Test specialized domain translation"""        domain_test_cases = [
+        """Test specialized domain translation"""
+        domain_test_cases = [
             {
                 'domain': 'medical',
                 'text': "The patient shows symptoms of acute inflammation.",
@@ -470,7 +484,8 @@ class TestAdvancedTranslator:
 
     @pytest.mark.asyncio
     async def test_real_time_translation(self, translation_engine):
-        """Test real-time translation capabilities"""        # Simulate real-time translation scenario
+        """Test real-time translation capabilities"""
+        # Simulate real-time translation scenario
         conversation_messages = [
             "Hello, how can I help you today?",
             "I'm looking for information about your services.",
@@ -520,7 +535,8 @@ class TestAdvancedTranslator:
 
     @pytest.mark.asyncio
     async def test_translation_memory(self, translation_engine):
-        """Test translation memory and consistency"""        # Create consistent terminology
+        """Test translation memory and consistency"""
+        # Create consistent terminology
         terminology = {
             "AI": "KI",
             "content creation": "Content-Erstellung",
@@ -567,7 +583,8 @@ class TestAdvancedTranslator:
 
     @pytest.mark.asyncio
     async def test_collaborative_translation(self, translation_engine):
-        """Test collaborative translation features"""        content = "Welcome to our innovative AI platform for content creators!"
+        """Test collaborative translation features"""
+        content = "Welcome to our innovative AI platform for content creators!"
         
         # Set up collaborative translation
         collaboration = await translation_engine.setup_collaborative_translation(
@@ -595,7 +612,8 @@ class TestAdvancedTranslator:
 
     @pytest.mark.asyncio
     async def test_performance_benchmarks(self, translation_engine, benchmark_config):
-        """Test translation performance benchmarks"""        test_text = "This is a performance test for translation benchmarking."
+        """Test translation performance benchmarks"""
+        test_text = "This is a performance test for translation benchmarking."
         
         # Single translation performance
         start_time = time.time()
@@ -628,7 +646,8 @@ class TestAdvancedTranslator:
 
     @pytest.mark.asyncio
     async def test_error_handling(self, translation_engine):
-        """Test translation error handling"""        # Test empty text
+        """Test translation error handling"""
+        # Test empty text
         result = await translation_engine.translate(
             text="",
             source_language=Language.ENGLISH,
@@ -654,33 +673,41 @@ class TestAdvancedTranslator:
         assert result is not None
 
 class TestMultilingualTranslator:
-    """Test multilingual translator component"""    
+    """Test multilingual translator component"""
+    
     @pytest.mark.asyncio
     async def test_translator_initialization(self):
-        """Test multilingual translator initialization"""        translator = MultilingualTranslator()
+        """Test multilingual translator initialization"""
+        translator = MultilingualTranslator()
         assert translator is not None
         assert hasattr(translator, 'translate')
 
 class TestCulturalAdapter:
-    """Test cultural adapter component"""    
+    """Test cultural adapter component"""
+    
     @pytest.mark.asyncio
     async def test_cultural_adapter_initialization(self):
-        """Test cultural adapter initialization"""        adapter = CulturalAdapter()
+        """Test cultural adapter initialization"""
+        adapter = CulturalAdapter()
         assert adapter is not None
         assert hasattr(adapter, 'adapt_content')
 
 class TestLocalizationEngine:
-    """Test localization engine component"""    
+    """Test localization engine component"""
+    
     @pytest.mark.asyncio
     async def test_localization_engine_initialization(self):
-        """Test localization engine initialization"""        engine = LocalizationEngine()
+        """Test localization engine initialization"""
+        engine = LocalizationEngine()
         assert engine is not None
         assert hasattr(engine, 'localize_content')
 
 class TestTranslationConfig:
-    """Test translation configuration"""    
+    """Test translation configuration"""
+    
     def test_config_creation(self):
-        """Test translation configuration creation"""        config = TranslationConfig(
+        """Test translation configuration creation"""
+        config = TranslationConfig(
             supported_languages=[Language.ENGLISH, Language.GERMAN, Language.FRENCH],
             translation_quality='high',
             cultural_adaptation=True

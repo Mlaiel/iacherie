@@ -5,7 +5,8 @@ to detect and classify musical instruments in audio signals.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import numpy as np
+"""
+import numpy as np
 import logging
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
@@ -15,7 +16,8 @@ import librosa
 
 
 class InstrumentCategory(Enum):
-    """Musical instrument categories"""    STRINGS = "strings"
+    """Musical instrument categories"""
+    STRINGS = "strings"
     WOODWINDS = "woodwinds" 
     BRASS = "brass"
     PERCUSSION = "percussion"
@@ -26,7 +28,8 @@ class InstrumentCategory(Enum):
 
 @dataclass 
 class InstrumentDetection:
-    """Individual instrument detection result"""    instrument: str
+    """Individual instrument detection result"""
+    instrument: str
     category: InstrumentCategory
     confidence: float
     temporal_presence: List[Tuple[float, float]]  # (start, end) times
@@ -34,7 +37,8 @@ class InstrumentDetection:
 
 
 class InstrumentIdentifier:
-    """Professional instrument identification engine"""    
+    """Professional instrument identification engine"""
+    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         
@@ -55,7 +59,8 @@ class InstrumentIdentifier:
     async def identify_instruments(self, 
                                  audio_data: np.ndarray, 
                                  sample_rate: int = 44100) -> List[InstrumentDetection]:
-        """Identify instruments in audio signal"""        try:
+        """Identify instruments in audio signal"""
+        try:
             detections = []
             
             # Extract spectral features
@@ -93,7 +98,8 @@ class InstrumentIdentifier:
                                      magnitude: np.ndarray,
                                      freqs: np.ndarray, 
                                      signature: Dict) -> float:
-        """Compute confidence for instrument detection"""        freq_min, freq_max = signature['freq_range']
+        """Compute confidence for instrument detection"""
+        freq_min, freq_max = signature['freq_range']
         
         # Find frequency bins in range
         freq_mask = (freqs >= freq_min) & (freqs <= freq_max)

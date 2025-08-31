@@ -24,7 +24,8 @@ IA Protection & Rights Management →
 SEO Optimization → 
 Collaboration Matching → 
 Multi-Platform Distribution
-"""import logging
+"""
+import logging
 from typing import Dict, List, Any, Optional
 
 # Import all integration modules
@@ -114,11 +115,13 @@ __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 
 class IntegrationOrchestrator:
-    """    Master orchestrator for all integration services
+    """
+    Master orchestrator for all integration services
     
     This class provides a unified interface for managing all external integrations
     including social platforms, APIs, content distribution, analytics, and cloud services.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         
@@ -132,7 +135,8 @@ class IntegrationOrchestrator:
         self.logger.info("Integration orchestrator initialized with all services")
     
     async def initialize_all_services(self) -> Dict[str, bool]:
-        """Initialize all integration services"""        results = {}
+        """Initialize all integration services"""
+        results = {}
         
         try:
             # Start content distribution workers
@@ -160,7 +164,8 @@ class IntegrationOrchestrator:
     
     async def add_platform_integration(self, platform_type: str, 
                                      credentials: Dict[str, Any]) -> bool:
-        """Add a new platform integration"""        try:
+        """Add a new platform integration"""
+        try:
             success = False
             
             # Add to appropriate manager based on platform type
@@ -221,7 +226,8 @@ class IntegrationOrchestrator:
     
     async def distribute_content_everywhere(self, content_data: Dict[str, Any], 
                                           target_platforms: List[str]) -> Dict[str, Any]:
-        """Distribute content across all specified platforms"""        try:
+        """Distribute content across all specified platforms"""
+        try:
             # Create content asset
             metadata = ContentMetadata(
                 title=content_data['title'],
@@ -268,7 +274,8 @@ class IntegrationOrchestrator:
     
     async def get_unified_analytics(self, date_range: tuple, 
                                   metrics: List[str]) -> Dict[str, Any]:
-        """Get unified analytics across all platforms"""        try:
+        """Get unified analytics across all platforms"""
+        try:
             # Get analytics from all connected providers
             providers = list(self.analytics_hub.connectors.keys())
             
@@ -303,7 +310,8 @@ class IntegrationOrchestrator:
             }
     
     async def optimize_cloud_costs(self) -> Dict[str, Any]:
-        """Optimize costs across all cloud providers"""        try:
+        """Optimize costs across all cloud providers"""
+        try:
             # Discover all resources
             await self.cloud_orchestrator.discover_all_resources()
             
@@ -323,7 +331,8 @@ class IntegrationOrchestrator:
             }
     
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get health status of all integrated services"""        health_status = {
+        """Get health status of all integrated services"""
+        health_status = {
             'timestamp': logger.handlers[0].format(logger.makeRecord(
                 'health_check', 20, '', 0, '', (), None
             )) if logger.handlers else 'unknown',
@@ -385,7 +394,8 @@ class IntegrationOrchestrator:
         return health_status
     
     async def cleanup_all_services(self):
-        """Cleanup all integration services"""        try:
+        """Cleanup all integration services"""
+        try:
             await self.content_distribution.cleanup()
             await self.analytics_hub.cleanup()
             await self.cloud_orchestrator.cleanup_all()

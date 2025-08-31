@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Load monitoring → Trend analysis → Resource prediction → 
 Scaling decision → Worker allocation → Performance validation → Optimization
-"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
+"""
+from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -38,13 +39,15 @@ logger = logging.getLogger(__name__)
 
 
 class ScalingDirection(Enum):
-    """Scaling directions"""    SCALE_UP = "scale_up"
+    """Scaling directions"""
+    SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down"
     MAINTAIN = "maintain"
 
 
 class ScalingReason(Enum):
-    """Reasons for scaling decisions"""    HIGH_LOAD = "high_load"
+    """Reasons for scaling decisions"""
+    HIGH_LOAD = "high_load"
     LOW_LOAD = "low_load"
     QUEUE_BUILDUP = "queue_buildup"
     RESPONSE_TIME_DEGRADATION = "response_time_degradation"
@@ -55,7 +58,8 @@ class ScalingReason(Enum):
 
 
 class ScalingTrigger(Enum):
-    """Scaling trigger types"""    THRESHOLD = "threshold"
+    """Scaling trigger types"""
+    THRESHOLD = "threshold"
     TREND = "trend"
     PREDICTIVE = "predictive"
     MANUAL = "manual"
@@ -64,7 +68,8 @@ class ScalingTrigger(Enum):
 
 @dataclass
 class ScalingRule:
-    """Scaling rule definition"""    rule_id: str
+    """Scaling rule definition"""
+    rule_id: str
     metric_name: str
     threshold_up: float
     threshold_down: float
@@ -78,7 +83,8 @@ class ScalingRule:
 
 @dataclass
 class ScalingAction:
-    """Scaling action definition"""    should_scale: bool
+    """Scaling action definition"""
+    should_scale: bool
     direction: ScalingDirection
     target_workers: int
     confidence: float
@@ -91,7 +97,8 @@ class ScalingAction:
 
 @dataclass
 class ScalingHistory:
-    """Scaling action history"""    timestamp: datetime
+    """Scaling action history"""
+    timestamp: datetime
     action: ScalingAction
     previous_workers: int
     new_workers: int
@@ -102,14 +109,16 @@ class ScalingHistory:
 
 @dataclass
 class LoadPrediction:
-    """Load prediction result"""    predicted_load: float
+    """Load prediction result"""
+    predicted_load: float
     confidence: float
     time_horizon: int  # seconds
     contributing_factors: List[str] = field(default_factory=list)
 
 
 class WorkerScalingManager:
-    """    Intelligent scaling manager for dynamic worker pool optimization
+    """
+    Intelligent scaling manager for dynamic worker pool optimization
     
     Features:
     - Multi-metric scaling analysis
@@ -118,7 +127,8 @@ class WorkerScalingManager:
     - Performance impact assessment
     - Automatic rule learning
     - Cooldown management
-    """    def __init__(self, config: PoolConfig):
+    """
+    def __init__(self, config: PoolConfig):
         self.config = config
         
         # Scaling configuration
@@ -161,7 +171,8 @@ class WorkerScalingManager:
         self._initialize_default_rules()
 
     async def initialize(self) -> None:
-        """Initialize the scaling manager"""        try:
+        """Initialize the scaling manager"""
+        try:
             logger.info("🚀 Initializing scaling manager")
             
             # Initialize prediction engines
@@ -180,7 +191,8 @@ class WorkerScalingManager:
         metrics: PoolMetrics, 
         current_workers: int
     ) -> ScalingAction:
-        """Analyze if scaling is needed"""        try:
+        """Analyze if scaling is needed"""
+        try:
             # Record current metrics
             await self._record_metrics(current_load, metrics)
             
@@ -230,7 +242,8 @@ class WorkerScalingManager:
         new_workers: int, 
         success: bool
     ) -> None:
-        """Record scaling action result"""        try:
+        """Record scaling action result"""
+        try:
             # Create history record
             history = ScalingHistory(
                 timestamp=datetime.utcnow(),
@@ -265,7 +278,8 @@ class WorkerScalingManager:
             logger.error(f"❌ Failed to record scaling result: {e}")
 
     async def get_scaling_recommendations(self, current_workers: int) -> Dict[str, Any]:
-        """Get scaling recommendations and insights"""        try:
+        """Get scaling recommendations and insights"""
+        try:
             # Predict future load
             load_prediction = await self._predict_future_load()
             
@@ -304,7 +318,8 @@ class WorkerScalingManager:
             return {}
 
     def _initialize_default_rules(self) -> None:
-        """Initialize default scaling rules"""        try:
+        """Initialize default scaling rules"""
+        try:
             # CPU-based scaling
             self.scaling_rules['cpu_load'] = ScalingRule(
                 rule_id='cpu_load',
@@ -363,7 +378,8 @@ class WorkerScalingManager:
             logger.error(f"❌ Failed to initialize default rules: {e}")
 
     async def _record_metrics(self, current_load: float, metrics: PoolMetrics) -> None:
-        """Record current metrics for analysis"""        try:
+        """Record current metrics for analysis"""
+        try:
             timestamp = datetime.utcnow()
             
             # Record load history
@@ -386,7 +402,8 @@ class WorkerScalingManager:
             logger.error(f"❌ Failed to record metrics: {e}")
 
     async def _is_in_cooldown(self) -> bool:
-        """Check if scaling is in cooldown period"""        try:
+        """Check if scaling is in cooldown period"""
+        try:
             if not self.last_scaling_action:
                 return False
             
@@ -403,7 +420,8 @@ class WorkerScalingManager:
         metrics: PoolMetrics, 
         current_workers: int
     ) -> Dict[str, Any]:
-        """Collect signals for scaling decision"""        try:
+        """Collect signals for scaling decision"""
+        try:
             signals = {
                 'threshold_signals': {},
                 'trend_signals': {},
@@ -452,7 +470,8 @@ class WorkerScalingManager:
             return {}
 
     async def _get_metric_value(self, metric_name: str, metrics: PoolMetrics) -> float:
-        """Get metric value from pool metrics"""        try:
+        """Get metric value from pool metrics"""
+        try:
             metric_mapping = {
                 'cpu_utilization': metrics.resource_utilization,
                 'memory_utilization': metrics.resource_utilization * 0.8,  # Estimate
@@ -469,7 +488,8 @@ class WorkerScalingManager:
             return 0.0
 
     async def _analyze_metric_trends(self) -> Dict[str, Any]:
-        """Analyze metric trends for scaling signals"""        try:
+        """Analyze metric trends for scaling signals"""
+        try:
             trends = {}
             
             for metric_name, history in self.metric_history.items():
@@ -500,7 +520,8 @@ class WorkerScalingManager:
             return {}
 
     async def _calculate_trend_slope(self, values: List[float]) -> float:
-        """Calculate trend slope using linear regression"""        try:
+        """Calculate trend slope using linear regression"""
+        try:
             if len(values) < 2:
                 return 0.0
             
@@ -525,7 +546,8 @@ class WorkerScalingManager:
             return 0.0
 
     async def _generate_predictive_signals(self) -> Dict[str, Any]:
-        """Generate predictive scaling signals"""        try:
+        """Generate predictive scaling signals"""
+        try:
             if len(self.load_history) < 20:
                 return {}
             
@@ -575,7 +597,8 @@ class WorkerScalingManager:
             return {}
 
     async def _analyze_cost_efficiency(self, current_workers: int) -> Dict[str, Any]:
-        """Analyze cost efficiency for scaling"""        try:
+        """Analyze cost efficiency for scaling"""
+        try:
             # Calculate current cost efficiency
             if len(self.load_history) < 5:
                 return {}
@@ -621,7 +644,8 @@ class WorkerScalingManager:
             return {}
 
     async def _make_scaling_decision(self, signals: Dict[str, Any], current_workers: int) -> ScalingAction:
-        """Make scaling decision based on collected signals"""        try:
+        """Make scaling decision based on collected signals"""
+        try:
             # Weight and combine signals
             scale_up_score = 0.0
             scale_down_score = 0.0
@@ -752,7 +776,8 @@ class WorkerScalingManager:
             )
 
     async def _validate_scaling_decision(self, decision: ScalingAction, current_workers: int) -> ScalingAction:
-        """Validate and potentially modify scaling decision"""        try:
+        """Validate and potentially modify scaling decision"""
+        try:
             # Boundary checks
             if decision.target_workers < self.min_workers:
                 decision.target_workers = self.min_workers
@@ -786,7 +811,8 @@ class WorkerScalingManager:
             return decision
 
     async def _predict_future_load(self) -> LoadPrediction:
-        """Predict future load"""        try:
+        """Predict future load"""
+        try:
             if len(self.load_history) < 10:
                 return LoadPrediction(
                     predicted_load=0.5,
@@ -842,7 +868,8 @@ class WorkerScalingManager:
             )
 
     async def _calculate_optimal_workers(self, load_prediction: LoadPrediction) -> int:
-        """Calculate optimal number of workers"""        try:
+        """Calculate optimal number of workers"""
+        try:
             predicted_load = load_prediction.predicted_load
             
             # Simple calculation: workers needed for predicted load
@@ -862,7 +889,8 @@ class WorkerScalingManager:
             return self.min_workers
 
     async def _analyze_cost_implications(self, current_workers: int, optimal_workers: int) -> Dict[str, Any]:
-        """Analyze cost implications of scaling"""        try:
+        """Analyze cost implications of scaling"""
+        try:
             cost_per_worker_hour = 5.0  # Estimated cost
             
             worker_diff = optimal_workers - current_workers
@@ -890,7 +918,8 @@ class WorkerScalingManager:
             return {}
 
     async def _calculate_current_efficiency(self) -> float:
-        """Calculate current cost efficiency"""        try:
+        """Calculate current cost efficiency"""
+        try:
             if not self.load_history:
                 return 0.5
             
@@ -911,7 +940,8 @@ class WorkerScalingManager:
             return 0.5
 
     async def _calculate_projected_efficiency(self, projected_workers: int) -> float:
-        """Calculate projected efficiency with new worker count"""        try:
+        """Calculate projected efficiency with new worker count"""
+        try:
             if not self.load_history:
                 return 0.5
             
@@ -929,7 +959,8 @@ class WorkerScalingManager:
             return 0.5
 
     async def _calculate_success_rate(self) -> float:
-        """Calculate scaling action success rate"""        try:
+        """Calculate scaling action success rate"""
+        try:
             if not self.scaling_history:
                 return 0.0
             
@@ -943,7 +974,8 @@ class WorkerScalingManager:
             return 0.0
 
     async def _estimate_cost_impact(self, current_workers: int, target_workers: int) -> float:
-        """Estimate cost impact of scaling"""        try:
+        """Estimate cost impact of scaling"""
+        try:
             worker_diff = target_workers - current_workers
             cost_per_worker_hour = 5.0
             
@@ -954,7 +986,8 @@ class WorkerScalingManager:
             return 0.0
 
     async def _estimate_performance_impact(self, current_workers: int, target_workers: int) -> float:
-        """Estimate performance impact of scaling"""        try:
+        """Estimate performance impact of scaling"""
+        try:
             if target_workers > current_workers:
                 # Scaling up should improve performance
                 improvement_ratio = target_workers / max(1, current_workers)
@@ -971,7 +1004,8 @@ class WorkerScalingManager:
             return 0.0
 
     async def _learn_from_scaling_action(self, history: ScalingHistory) -> None:
-        """Learn from scaling action to improve future decisions"""        try:
+        """Learn from scaling action to improve future decisions"""
+        try:
             # This would implement machine learning to adapt thresholds
             # and improve scaling decisions based on historical outcomes
             

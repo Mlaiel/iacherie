@@ -35,7 +35,8 @@ This includes but not limited to: reverse engineering, code analysis, concept th
 All violations will be prosecuted to the FULL EXTENT of international copyright law.
 Legal action will be taken immediately against any infringement.
 Contact: mlaiel@live.de for authorized licensing only.
-"""from typing import Dict, List, Optional, Any, Tuple, Union, Set, Callable
+"""
+from typing import Dict, List, Optional, Any, Tuple, Union, Set, Callable
 from decimal import Decimal
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
@@ -69,7 +70,8 @@ active_distributions = Gauge('active_distributions', 'Currently active distribut
 platform_success_rate = Gauge('platform_success_rate', 'Platform success rate', ['platform'])
 
 class DistributionStatus(str, Enum):
-    """Enhanced distribution job status with granular tracking"""    PENDING = "pending"
+    """Enhanced distribution job status with granular tracking"""
+    PENDING = "pending"
     QUEUED = "queued"
     SCHEDULED = "scheduled"
     VALIDATING = "validating"
@@ -89,7 +91,8 @@ class DistributionStatus(str, Enum):
     ARCHIVED = "archived"
 
 class DistributionPriority(str, Enum):
-    """Enhanced priority levels with business impact"""    LOW = "low"
+    """Enhanced priority levels with business impact"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     URGENT = "urgent"
@@ -99,7 +102,8 @@ class DistributionPriority(str, Enum):
     VIRAL_POTENTIAL = "viral_potential"
 
 class ContentFormat(str, Enum):
-    """Comprehensive content format support"""    AUDIO = "audio"
+    """Comprehensive content format support"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -121,7 +125,8 @@ class ContentFormat(str, Enum):
     BEHIND_SCENES = "behind_scenes"
 
 class TargetPlatform(str, Enum):
-    """Comprehensive platform support"""    SPOTIFY = "spotify"
+    """Comprehensive platform support"""
+    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     YOUTUBE_MUSIC = "youtube_music"
     YOUTUBE_SHORTS = "youtube_shorts"
@@ -153,7 +158,8 @@ class TargetPlatform(str, Enum):
     ONLYFANS = "onlyfans"
 
 class OptimizationStrategy(str, Enum):
-    """Advanced optimization strategies"""    MAXIMIZE_REACH = "maximize_reach"
+    """Advanced optimization strategies"""
+    MAXIMIZE_REACH = "maximize_reach"
     MAXIMIZE_ENGAGEMENT = "maximize_engagement"
     MAXIMIZE_REVENUE = "maximize_revenue"
     MAXIMIZE_VIRALITY = "maximize_virality"
@@ -169,7 +175,8 @@ class OptimizationStrategy(str, Enum):
     CONVERSION_FOCUSED = "conversion_focused"
 
 class DistributionJobType(str, Enum):
-    """Distribution job types"""    SINGLE_UPLOAD = "single_upload"
+    """Distribution job types"""
+    SINGLE_UPLOAD = "single_upload"
     BATCH_UPLOAD = "batch_upload"
     SCHEDULED_CAMPAIGN = "scheduled_campaign"
     RECURRING_CAMPAIGN = "recurring_campaign"
@@ -180,7 +187,8 @@ class DistributionJobType(str, Enum):
     ARCHIVE_MIGRATION = "archive_migration"
 
 class ContentCategory(str, Enum):
-    """Content categories for better organization"""    MUSIC = "music"
+    """Content categories for better organization"""
+    MUSIC = "music"
     ENTERTAINMENT = "entertainment"
     EDUCATION = "education"
     NEWS = "news"
@@ -203,7 +211,8 @@ class ContentCategory(str, Enum):
 
 @dataclass
 class DistributionMetrics:
-    """Enhanced distribution performance metrics with detailed analytics"""    total_reach: int = 0
+    """Enhanced distribution performance metrics with detailed analytics"""
+    total_reach: int = 0
     total_engagement: int = 0
     total_views: int = 0
     total_likes: int = 0
@@ -233,7 +242,8 @@ class DistributionMetrics:
 
 @dataclass
 class PlatformLimits:
-    """Platform-specific limits and constraints"""    max_file_size: int  # in bytes
+    """Platform-specific limits and constraints"""
+    max_file_size: int  # in bytes
     max_duration: int  # in seconds
     supported_formats: List[str]
     max_title_length: int
@@ -253,8 +263,10 @@ class PlatformLimits:
     content_restrictions: List[str]
 
 class BatchDistributionManager:
-    """    Ultra-advanced batch distribution manager for handling multiple distributions simultaneously
-    """    
+    """
+    Ultra-advanced batch distribution manager for handling multiple distributions simultaneously
+    """
+    
     def __init__(self, db_session, redis_client=None, max_concurrent_jobs: int = 10):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -270,7 +282,8 @@ class BatchDistributionManager:
         batch_priority: DistributionPriority = DistributionPriority.MEDIUM,
         execution_strategy: str = "parallel"
     ) -> Dict[str, Any]:
-        """        Create and execute a batch of distribution jobs
+        """
+        Create and execute a batch of distribution jobs
         
         Args:
             user_id: User identifier
@@ -281,7 +294,8 @@ class BatchDistributionManager:
         
         Returns:
             Dict containing batch information and job UUIDs
-        """        try:
+        """
+        try:
             batch_uuid = str(uuid.uuid4())
             batch_info = {
                 "batch_uuid": batch_uuid,
@@ -336,7 +350,8 @@ class BatchDistributionManager:
         job_configs: List[Dict[str, Any]], 
         batch_uuid: str
     ) -> List[Dict[str, Any]]:
-        """Execute jobs in parallel"""        
+        """Execute jobs in parallel"""
+        
         tasks = []
         for config in job_configs:
             task = asyncio.create_task(
@@ -360,7 +375,8 @@ class BatchDistributionManager:
         job_configs: List[Dict[str, Any]], 
         batch_uuid: str
     ) -> List[Dict[str, Any]]:
-        """Execute jobs sequentially"""        
+        """Execute jobs sequentially"""
+        
         results = []
         for config in job_configs:
             try:
@@ -382,7 +398,8 @@ class BatchDistributionManager:
         job_configs: List[Dict[str, Any]], 
         batch_uuid: str
     ) -> List[Dict[str, Any]]:
-        """Execute jobs with adaptive strategy based on platform limits"""        
+        """Execute jobs with adaptive strategy based on platform limits"""
+        
         # Group jobs by platform to respect rate limits
         platform_groups = {}
         for config in job_configs:
@@ -409,7 +426,8 @@ class BatchDistributionManager:
         batch_uuid: str, 
         platform: str
     ) -> List[Dict[str, Any]]:
-        """Execute a group of jobs for a specific platform"""        
+        """Execute a group of jobs for a specific platform"""
+        
         # Get platform-specific rate limits
         platform_limits = self._get_platform_limits(platform)
         delay_between_jobs = 3600 / platform_limits.rate_limit_per_hour if platform_limits.rate_limit_per_hour > 0 else 5
@@ -435,7 +453,8 @@ class BatchDistributionManager:
         config: Dict[str, Any], 
         batch_uuid: str
     ) -> Dict[str, Any]:
-        """Create a single distribution job as part of a batch"""        
+        """Create a single distribution job as part of a batch"""
+        
         # This would integrate with the main CrossPlatformDistributionManager
         # For now, simulating job creation
         
@@ -454,7 +473,8 @@ class BatchDistributionManager:
         return job_result
     
     def _get_platform_limits(self, platform: str) -> PlatformLimits:
-        """Get platform-specific limits"""        
+        """Get platform-specific limits"""
+        
         # Default limits - these would be loaded from configuration
         default_limits = PlatformLimits(
             max_file_size=100 * 1024 * 1024,  # 100MB
@@ -536,8 +556,10 @@ class BatchDistributionManager:
         return platform_limits.get(platform, default_limits)
 
 class DistributionQueueManager:
-    """    Advanced queue management for distribution jobs with priority handling and load balancing
-    """    
+    """
+    Advanced queue management for distribution jobs with priority handling and load balancing
+    """
+    
     def __init__(self, redis_client, celery_app=None):
         self.redis_client = redis_client
         self.celery_app = celery_app
@@ -550,7 +572,8 @@ class DistributionQueueManager:
         priority: DistributionPriority = DistributionPriority.MEDIUM,
         delay_seconds: int = 0
     ) -> str:
-        """        Add a distribution job to the queue with priority and optional delay
+        """
+        Add a distribution job to the queue with priority and optional delay
         
         Args:
             job_data: Job configuration data
@@ -559,7 +582,8 @@ class DistributionQueueManager:
         
         Returns:
             str: Queue item ID
-        """        try:
+        """
+        try:
             queue_item_id = str(uuid.uuid4())
             queue_item = {
                 "id": queue_item_id,
@@ -603,14 +627,16 @@ class DistributionQueueManager:
             raise
     
     async def get_next_job(self, worker_id: str) -> Optional[Dict[str, Any]]:
-        """        Get the next highest priority job from the queue
+        """
+        Get the next highest priority job from the queue
         
         Args:
             worker_id: Identifier of the worker requesting the job
         
         Returns:
             Optional[Dict]: Next job to process or None if queue is empty
-        """        try:
+        """
+        try:
             # Get highest priority item from sorted set
             items = await self.redis_client.zrevrange(
                 f"{self.queue_prefix}:pending", 
@@ -651,7 +677,8 @@ class DistributionQueueManager:
             raise
     
     async def complete_job(self, queue_item_id: str, result: Dict[str, Any]) -> bool:
-        """        Mark a job as completed and store results
+        """
+        Mark a job as completed and store results
         
         Args:
             queue_item_id: Queue item identifier
@@ -659,7 +686,8 @@ class DistributionQueueManager:
         
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             # Remove from processing queue
             await self.redis_client.delete(f"{self.queue_prefix}:processing:{queue_item_id}")
             
@@ -685,7 +713,8 @@ class DistributionQueueManager:
             return False
     
     async def fail_job(self, queue_item_id: str, error: str, retry: bool = True) -> bool:
-        """        Mark a job as failed and optionally retry
+        """
+        Mark a job as failed and optionally retry
         
         Args:
             queue_item_id: Queue item identifier
@@ -694,7 +723,8 @@ class DistributionQueueManager:
         
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             # Get job from processing queue
             processing_data = await self.redis_client.get(f"{self.queue_prefix}:processing:{queue_item_id}")
             if not processing_data:
@@ -746,7 +776,8 @@ class DistributionQueueManager:
             return False
     
     def _calculate_priority_score(self, priority: DistributionPriority, scheduled_time: datetime) -> float:
-        """Calculate priority score for Redis sorted set"""        
+        """Calculate priority score for Redis sorted set"""
+        
         priority_weights = {
             DistributionPriority.EMERGENCY: 1000000,
             DistributionPriority.CRITICAL: 900000,
@@ -766,7 +797,8 @@ class DistributionQueueManager:
         return base_score - time_score
     
     def _celery_priority_from_enum(self, priority: DistributionPriority) -> int:
-        """Convert priority enum to Celery priority integer"""        
+        """Convert priority enum to Celery priority integer"""
+        
         priority_mapping = {
             DistributionPriority.EMERGENCY: 9,
             DistributionPriority.CRITICAL: 8,
@@ -781,8 +813,10 @@ class DistributionQueueManager:
         return priority_mapping.get(priority, 4)
 
 class FailoverManager:
-    """    Advanced failover management for handling platform failures and service disruptions
-    """    
+    """
+    Advanced failover management for handling platform failures and service disruptions
+    """
+    
     def __init__(self, db_session, redis_client):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -796,7 +830,8 @@ class FailoverManager:
         error: Exception,
         retry_strategy: str = "exponential_backoff"
     ) -> Dict[str, Any]:
-        """        Handle platform-specific failures with intelligent retry and failover
+        """
+        Handle platform-specific failures with intelligent retry and failover
         
         Args:
             platform: Platform that failed
@@ -806,7 +841,8 @@ class FailoverManager:
         
         Returns:
             Dict containing failover decisions and actions
-        """        try:
+        """
+        try:
             self.logger.error(f"Platform failure detected - Platform: {platform}, Job: {job_uuid}, Error: {str(error)}")
             
             # Update circuit breaker
@@ -839,7 +875,8 @@ class FailoverManager:
             raise
     
     async def _update_circuit_breaker(self, platform: str, success: bool):
-        """Update circuit breaker state for platform"""        
+        """Update circuit breaker state for platform"""
+        
         key = f"{self.circuit_breaker_key}:{platform}"
         
         # Get current state
@@ -879,7 +916,8 @@ class FailoverManager:
         await self.redis_client.setex(key, 3600, json.dumps(state))  # 1 hour TTL
     
     async def _get_platform_health(self, platform: str) -> Dict[str, Any]:
-        """Get current health status for platform"""        
+        """Get current health status for platform"""
+        
         key = f"{self.circuit_breaker_key}:{platform}"
         data = await self.redis_client.get(key)
         
@@ -919,7 +957,8 @@ class FailoverManager:
         }
     
     async def _get_alternative_platforms(self, failed_platform: str) -> List[str]:
-        """Get alternative platforms for content distribution"""        
+        """Get alternative platforms for content distribution"""
+        
         # Platform compatibility matrix
         alternatives = {
             TargetPlatform.YOUTUBE.value: [
@@ -959,7 +998,8 @@ class FailoverManager:
         failed_platform: str, 
         alternative_platforms: List[str]
     ) -> Dict[str, Any]:
-        """Execute failover to alternative platforms"""        
+        """Execute failover to alternative platforms"""
+        
         self.logger.info(f"Executing failover for job {job_uuid}: {failed_platform} -> {alternative_platforms}")
         
         failover_result = {
@@ -1002,7 +1042,8 @@ class FailoverManager:
         platform: str, 
         retry_strategy: str
     ) -> Dict[str, Any]:
-        """Schedule retry when platform becomes healthy"""        
+        """Schedule retry when platform becomes healthy"""
+        
         self.logger.info(f"Scheduling health-based retry for job {job_uuid} on platform {platform}")
         
         # Calculate retry delay based on strategy
@@ -1050,7 +1091,8 @@ class FailoverManager:
         platform: str, 
         retry_strategy: str
     ) -> Dict[str, Any]:
-        """Schedule immediate retry with backoff"""        
+        """Schedule immediate retry with backoff"""
+        
         # Get current retry count for this job
         retry_count_key = f"distribution:retry_count:{job_uuid}:{platform}"
         retry_count = await self.redis_client.get(retry_count_key)
@@ -1091,8 +1133,10 @@ class FailoverManager:
         }
 
 class DistributionOrchestrator:
-    """    Ultra-advanced orchestration engine for managing complex distribution workflows
-    """    
+    """
+    Ultra-advanced orchestration engine for managing complex distribution workflows
+    """
+    
     def __init__(self, db_session, redis_client, queue_manager, failover_manager):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -1106,7 +1150,8 @@ class DistributionOrchestrator:
         user_id: int,
         campaign_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Orchestrate a complete distribution campaign with multiple phases
+        """
+        Orchestrate a complete distribution campaign with multiple phases
         
         Args:
             user_id: User identifier
@@ -1114,7 +1159,8 @@ class DistributionOrchestrator:
         
         Returns:
             Dict containing campaign orchestration results
-        """        try:
+        """
+        try:
             campaign_uuid = str(uuid.uuid4())
             self.logger.info(f"Starting distribution campaign orchestration: {campaign_uuid}")
             
@@ -1146,7 +1192,8 @@ class DistributionOrchestrator:
             raise
     
     async def _validate_campaign_config(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate campaign configuration"""        
+        """Validate campaign configuration"""
+        
         errors = []
         
         # Required fields validation
@@ -1175,7 +1222,8 @@ class DistributionOrchestrator:
         }
     
     async def _execute_campaign_workflow(self, workflow: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute campaign workflow phases"""        
+        """Execute campaign workflow phases"""
+        
         workflow_result = {
             "workflow_uuid": workflow["uuid"],
             "phases_executed": [],
@@ -1205,7 +1253,8 @@ class DistributionOrchestrator:
         return workflow_result
     
     async def _execute_workflow_phase(self, phase: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute a single workflow phase"""        
+        """Execute a single workflow phase"""
+        
         phase_type = phase["type"]
         phase_uuid = phase["uuid"]
         
@@ -1225,7 +1274,8 @@ class DistributionOrchestrator:
             raise ValueError(f"Unknown phase type: {phase_type}")
     
     async def _execute_content_preparation_phase(self, phase: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute content preparation phase"""        
+        """Execute content preparation phase"""
+        
         # Content validation, format conversion, metadata enrichment
         preparation_tasks = [
             self._validate_content_files(phase["content"]),
@@ -1247,7 +1297,8 @@ class DistributionOrchestrator:
         }
     
     async def _execute_optimization_phase(self, phase: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute optimization phase"""        
+        """Execute optimization phase"""
+        
         # AI-powered optimization for each platform
         optimization_tasks = []
         for platform in phase["target_platforms"]:
@@ -1271,7 +1322,8 @@ class DistributionOrchestrator:
         }
     
     async def _execute_distribution_phase(self, phase: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute distribution phase"""        
+        """Execute distribution phase"""
+        
         # Create distribution jobs for all platforms
         distribution_jobs = []
         
@@ -1304,7 +1356,8 @@ class DistributionOrchestrator:
         }
     
     async def _execute_monitoring_phase(self, phase: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute monitoring phase"""        
+        """Execute monitoring phase"""
+        
         # Set up real-time monitoring for distribution progress
         monitoring_config = {
             "phase_uuid": phase["uuid"],
@@ -1332,7 +1385,8 @@ class DistributionOrchestrator:
         }
     
     async def _execute_analytics_phase(self, phase: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute analytics collection phase"""        
+        """Execute analytics collection phase"""
+        
         # Set up analytics collection for campaign performance
         analytics_config = {
             "phase_uuid": phase["uuid"],
@@ -1361,7 +1415,8 @@ class DistributionOrchestrator:
         }
     
     async def _optimize_campaign_performance(self, campaign_uuid: str) -> Dict[str, Any]:
-        """Optimize campaign performance in real-time"""        
+        """Optimize campaign performance in real-time"""
+        
         # This would implement real-time campaign optimization
         # For now, returning a placeholder
         
@@ -1379,27 +1434,35 @@ class DistributionOrchestrator:
     
     # Additional helper methods would be implemented here
     async def _validate_content_files(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate content files"""        return {"status": "validated", "files_checked": len(content.get("files", []))}
+        """Validate content files"""
+        return {"status": "validated", "files_checked": len(content.get("files", []))}
     
     async def _convert_content_formats(self, content: Dict[str, Any], platforms: List[str]) -> Dict[str, Any]:
-        """Convert content to platform-specific formats"""        return {"status": "converted", "platforms": platforms}
+        """Convert content to platform-specific formats"""
+        return {"status": "converted", "platforms": platforms}
     
     async def _enrich_content_metadata(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Enrich content metadata"""        return {"status": "enriched", "metadata_fields": 10}
+        """Enrich content metadata"""
+        return {"status": "enriched", "metadata_fields": 10}
     
     async def _generate_platform_variations(self, content: Dict[str, Any], platforms: List[str]) -> Dict[str, Any]:
-        """Generate platform-specific content variations"""        return {"status": "generated", "variations": len(platforms)}
+        """Generate platform-specific content variations"""
+        return {"status": "generated", "variations": len(platforms)}
     
     async def _optimize_content_for_platform(self, content: Dict[str, Any], platform: str, strategy: str) -> Dict[str, Any]:
-        """Optimize content for specific platform"""        return {"platform": platform, "strategy": strategy, "optimizations": ["seo", "hashtags", "timing"]}
+        """Optimize content for specific platform"""
+        return {"platform": platform, "strategy": strategy, "optimizations": ["seo", "hashtags", "timing"]}
     
     async def _wait_for_phase_completion(self, phase_uuid: str):
-        """Wait for phase to complete"""        # Implementation for waiting and monitoring phase completion
+        """Wait for phase to complete"""
+        # Implementation for waiting and monitoring phase completion
         await asyncio.sleep(1)  # Placeholder
 
 class WorkflowEngine:
-    """    Advanced workflow engine for managing complex distribution workflows
-    """    
+    """
+    Advanced workflow engine for managing complex distribution workflows
+    """
+    
     def __init__(self, db_session):
         self.db_session = db_session
         self.logger = structlog.get_logger(__name__)
@@ -1410,7 +1473,8 @@ class WorkflowEngine:
         user_id: int,
         campaign_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create a workflow for distribution campaign"""        
+        """Create a workflow for distribution campaign"""
+        
         workflow_uuid = str(uuid.uuid4())
         
         # Define workflow phases based on campaign type
@@ -1489,11 +1553,13 @@ class WorkflowEngine:
         return workflow
 
 class DistributionJob(Base):
-    """    Enterprise-grade distribution job model
+    """
+    Enterprise-grade distribution job model
     
     Manages automated content distribution across multiple platforms
     with AI-powered optimization and comprehensive tracking.
-    """    __tablename__ = "distribution_jobs"
+    """
+    __tablename__ = "distribution_jobs"
     
     # Primary Keys and Identity
     id = Column(Integer, primary_key=True, index=True)
@@ -1590,8 +1656,10 @@ class DistributionJob(Base):
     )
 
 class DistributionTemplate(Base):
-    """    Reusable distribution templates for efficient content publishing
-    """    __tablename__ = "distribution_templates"
+    """
+    Reusable distribution templates for efficient content publishing
+    """
+    __tablename__ = "distribution_templates"
     
     # Primary Keys
     id = Column(Integer, primary_key=True, index=True)
@@ -1628,11 +1696,13 @@ class DistributionTemplate(Base):
     last_used_at = Column(DateTime, nullable=True)
 
 class CrossPlatformDistributionManager:
-    """    Enterprise-grade cross-platform distribution manager
+    """
+    Enterprise-grade cross-platform distribution manager
     
     Manages automated content distribution across multiple platforms
     with AI-powered optimization and intelligent scheduling.
-    """    
+    """
+    
     def __init__(self, db_session):
         self.db_session = db_session
         self.logger = logging.getLogger(__name__)
@@ -1651,7 +1721,8 @@ class CrossPlatformDistributionManager:
         platform_configs: Optional[Dict[str, Any]] = None,
         auto_optimize: bool = True
     ) -> DistributionJob:
-        """        Create a new cross-platform distribution job
+        """
+        Create a new cross-platform distribution job
         
         Args:
             user_id: User identifier
@@ -1668,7 +1739,8 @@ class CrossPlatformDistributionManager:
             
         Returns:
             DistributionJob: Created distribution job
-        """        try:
+        """
+        try:
             self.logger.info(f"Creating distribution job for user {user_id}, content {content_id}")
             
             # Create distribution job
@@ -1706,7 +1778,8 @@ class CrossPlatformDistributionManager:
             raise
     
     async def _initialize_platform_statuses(self, job: DistributionJob):
-        """Initialize platform-specific statuses"""        
+        """Initialize platform-specific statuses"""
+        
         platform_statuses = {}
         for platform in job.target_platforms:
             platform_statuses[platform] = {
@@ -1721,7 +1794,8 @@ class CrossPlatformDistributionManager:
         await self.db_session.commit()
     
     async def _start_distribution_processing(self, job: DistributionJob):
-        """Start processing the distribution job"""        
+        """Start processing the distribution job"""
+        
         try:
             # Update job status
             job.status = DistributionStatus.IN_PROGRESS.value
@@ -1746,7 +1820,8 @@ class CrossPlatformDistributionManager:
             await self.db_session.commit()
     
     async def _apply_content_optimization(self, job: DistributionJob):
-        """Apply AI-powered content optimization"""        
+        """Apply AI-powered content optimization"""
+        
         self.logger.info(f"Applying optimization to job {job.job_uuid}")
         
         optimizations_applied = []
@@ -1764,7 +1839,8 @@ class CrossPlatformDistributionManager:
         await self.db_session.commit()
     
     async def _optimize_for_platform(self, job: DistributionJob, platform: str) -> Dict[str, Any]:
-        """Optimize content for specific platform"""        
+        """Optimize content for specific platform"""
+        
         # This would integrate with actual optimization algorithms
         # For now, returning simulated optimization results
         
@@ -1795,7 +1871,8 @@ class CrossPlatformDistributionManager:
         })
     
     async def _process_platform_distribution(self, job: DistributionJob, platform: str):
-        """Process distribution for a specific platform"""        
+        """Process distribution for a specific platform"""
+        
         try:
             self.logger.info(f"Processing {platform} distribution for job {job.job_uuid}")
             
@@ -1829,7 +1906,8 @@ class CrossPlatformDistributionManager:
             await self.db_session.commit()
     
     async def _upload_to_platform(self, job: DistributionJob, platform: str):
-        """Handle actual upload to platform"""        
+        """Handle actual upload to platform"""
+        
         # This would integrate with actual platform APIs
         # For now, simulating upload process
         
@@ -1855,7 +1933,8 @@ class CrossPlatformDistributionManager:
         await asyncio.sleep(1)
     
     async def _finalize_distribution_job(self, job: DistributionJob):
-        """Finalize the distribution job"""        
+        """Finalize the distribution job"""
+        
         # Check if all platforms completed successfully
         all_completed = True
         total_errors = 0
@@ -1884,7 +1963,8 @@ class CrossPlatformDistributionManager:
         await self._collect_distribution_analytics(job)
     
     async def _collect_distribution_analytics(self, job: DistributionJob):
-        """Collect analytics for completed distribution"""        
+        """Collect analytics for completed distribution"""
+        
         # This would integrate with actual analytics collection
         # For now, simulating analytics data
         
@@ -1928,7 +2008,8 @@ class CrossPlatformDistributionManager:
         await self.db_session.commit()
 
     async def get_distribution_job(self, job_uuid: str) -> Optional[DistributionJob]:
-        """Get distribution job by UUID"""        try:
+        """Get distribution job by UUID"""
+        try:
             job = await self.db_session.query(DistributionJob).filter(
                 DistributionJob.job_uuid == job_uuid
             ).first()
@@ -1943,7 +2024,8 @@ class CrossPlatformDistributionManager:
         status: Optional[DistributionStatus] = None,
         limit: int = 50
     ) -> List[DistributionJob]:
-        """Get distribution jobs for a user"""        try:
+        """Get distribution jobs for a user"""
+        try:
             query = self.db_session.query(DistributionJob).filter(
                 DistributionJob.user_id == user_id
             )
@@ -1958,7 +2040,8 @@ class CrossPlatformDistributionManager:
             raise
 
     async def cancel_distribution_job(self, job_uuid: str) -> bool:
-        """Cancel a distribution job"""        try:
+        """Cancel a distribution job"""
+        try:
             job = await self.get_distribution_job(job_uuid)
             if not job:
                 return False
@@ -1977,7 +2060,8 @@ class CrossPlatformDistributionManager:
             raise
 
     async def retry_failed_distribution(self, job_uuid: str) -> bool:
-        """Retry a failed distribution job"""        try:
+        """Retry a failed distribution job"""
+        try:
             job = await self.get_distribution_job(job_uuid)
             if not job or job.status != DistributionStatus.FAILED.value:
                 return False

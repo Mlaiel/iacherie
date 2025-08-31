@@ -10,7 +10,8 @@ Manages database sessions and connection state:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import uuid
 from typing import Dict, Any, Optional, Set, AsyncContextManager
@@ -21,7 +22,8 @@ from contextlib import asynccontextmanager
 
 
 class SessionState(Enum):
-    """Database session states"""    IDLE = "idle"
+    """Database session states"""
+    IDLE = "idle"
     ACTIVE = "active"
     TRANSACTION = "transaction"
     CLOSED = "closed"
@@ -30,7 +32,8 @@ class SessionState(Enum):
 
 @dataclass
 class DatabaseSession:
-    """Database session information"""    session_id: str
+    """Database session information"""
+    session_id: str
     database_type: str
     tenant_id: Optional[str]
     connection: Any
@@ -42,14 +45,17 @@ class DatabaseSession:
     operation_count: int = 0
     
     def is_expired(self) -> bool:
-        """Check if session has expired"""        return datetime.utcnow() - self.last_activity > self.timeout
+        """Check if session has expired"""
+        return datetime.utcnow() - self.last_activity > self.timeout
     
     def update_activity(self) -> None:
-        """Update last activity timestamp"""        self.last_activity = datetime.utcnow()
+        """Update last activity timestamp"""
+        self.last_activity = datetime.utcnow()
 
 
 class SessionManager:
-    """    Database session manager for IA Influencer platform.
+    """
+    Database session manager for IA Influencer platform.
     
     Manages sessions for:
     - PostgreSQL database connections
@@ -58,7 +64,8 @@ class SessionManager:
     - Elasticsearch client sessions
     - Vector store connections
     - Object storage sessions
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -89,7 +96,8 @@ class SessionManager:
         }
     
     async def initialize(self, handlers: Dict[str, Any]) -> None:
-        """Initialize session manager with database handlers"""        self.handlers = handlers
+        """Initialize session manager with database handlers"""
+        self.handlers = handlers
         
         # Initialize session pools
         for db_type in handlers.keys():
@@ -105,7 +113,8 @@ class SessionManager:
                      database_type: str,
                      tenant_id: Optional[str] = None,
                      timeout: Optional[timedelta] = None) -> AsyncContextManager[DatabaseSession]:
-        """Context manager for database sessions"""        
+        """Context manager for database sessions"""
+        
         session = await self.create_session(database_type, tenant_id, timeout)
         
         try:
@@ -117,7 +126,8 @@ class SessionManager:
                            database_type: str,
                            tenant_id: Optional[str] = None,
                            timeout: Optional[timedelta] = None) -> DatabaseSession:
-        """Create a new database session"""        
+        """Create a new database session"""
+        
         if database_type not in self.handlers:
             raise ValueError(f"Database type {database_type} not available")
         
@@ -165,7 +175,8 @@ class SessionManager:
         return session
     
     async def _enforce_tenant_session_limit(self, database_type: str, tenant_id: str) -> None:
-        """Enforce maximum sessions per tenant"""        if database_type in self.session_pools and tenant_id in self.session_pools[database_type]:
+        """Enforce maximum sessions per tenant"""
+        if database_type in self.session_pools and tenant_id in self.session_pools[database_type]:
             current_sessions = len(self.session_pools[database_type][tenant_id])
             
             if current_sessions >= self.max_sessions_per_tenant:
@@ -182,7 +193,8 @@ class SessionManager:
                 )
     
     async def get_session(self, session_id: str) -> Optional[DatabaseSession]:
-        """Get session by ID"""        session = self.sessions.get(session_id)
+        """Get session by ID"""
+        session = self.sessions.get(session_id)
         
         if session:
             # Check if session is expired
@@ -196,7 +208,8 @@ class SessionManager:
         return session
     
     async def close_session(self, session_id: str) -> bool:
-        """Close a database session"""        if session_id not in self.sessions:
+        """Close a database session"""
+        if session_id not in self.sessions:
             return False
         
         session = self.sessions[session_id]
@@ -238,7 +251,8 @@ class SessionManager:
                                 session_id: str,
                                 operation: str,
                                 *args, **kwargs) -> Any:
-        """Execute operation in specific session"""        session = await self.get_session(session_id)
+        """Execute operation in specific session"""
+        session = await self.get_session(session_id)
         
         if not session:
             raise ValueError(f"Session {session_id} not found or expired")
@@ -273,7 +287,8 @@ class SessionManager:
     
     @asynccontextmanager
     async def transaction_session(self, session_id: str):
-        """Context manager for transaction within a session"""        session = await self.get_session(session_id)
+        """Context manager for transaction within a session"""
+        session = await self.get_session(session_id)
         
         if not session:
             raise ValueError(f"Session {session_id} not found or expired")
@@ -305,7 +320,8 @@ class SessionManager:
     async def get_tenant_sessions(self, 
                                 database_type: str,
                                 tenant_id: str) -> List[DatabaseSession]:
-        """Get all sessions for a specific tenant"""        if (database_type not in self.session_pools or 
+        """Get all sessions for a specific tenant"""
+        if (database_type not in self.session_pools or 
             tenant_id not in self.session_pools[database_type]):
             return []
         
@@ -322,7 +338,8 @@ class SessionManager:
     async def close_tenant_sessions(self, 
                                   database_type: str,
                                   tenant_id: str) -> int:
-        """Close all sessions for a specific tenant"""        sessions = await self.get_tenant_sessions(database_type, tenant_id)
+        """Close all sessions for a specific tenant"""
+        sessions = await self.get_tenant_sessions(database_type, tenant_id)
         closed_count = 0
         
         for session in sessions:
@@ -334,7 +351,8 @@ class SessionManager:
         return closed_count
     
     async def _cleanup_loop(self) -> None:
-        """Background task for cleaning up expired sessions"""        while True:
+        """Background task for cleaning up expired sessions"""
+        while True:
             try:
                 await asyncio.sleep(self.cleanup_interval)
                 await self._cleanup_expired_sessions()
@@ -344,7 +362,8 @@ class SessionManager:
                 self.logger.error(f"Session cleanup error: {e}")
     
     async def _cleanup_expired_sessions(self) -> None:
-        """Clean up expired sessions"""        expired_sessions = []
+        """Clean up expired sessions"""
+        expired_sessions = []
         
         for session_id, session in self.sessions.items():
             if session.is_expired():
@@ -360,7 +379,8 @@ class SessionManager:
     async def get_session_stats(self, 
                               database_type: Optional[str] = None,
                               tenant_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get session statistics"""        if database_type and tenant_id:
+        """Get session statistics"""
+        if database_type and tenant_id:
             # Stats for specific database and tenant
             sessions = await self.get_tenant_sessions(database_type, tenant_id)
             
@@ -392,7 +412,8 @@ class SessionManager:
             return self.stats.copy()
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive session manager metrics"""        # Calculate sessions by state
+        """Get comprehensive session manager metrics"""
+        # Calculate sessions by state
         state_counts = {state.value: 0 for state in SessionState}
         
         for session in self.sessions.values():
@@ -423,7 +444,8 @@ class SessionManager:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown session manager"""        self.logger.info("Shutting down session manager...")
+        """Shutdown session manager"""
+        self.logger.info("Shutting down session manager...")
         
         # Cancel cleanup task
         if self.cleanup_task:

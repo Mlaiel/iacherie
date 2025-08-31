@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import time
 import logging
 from typing import Dict, Any, List, Optional, Tuple
@@ -60,7 +61,8 @@ escalation_rate_gauge = Gauge(
 
 @dataclass
 class MetricSnapshot:
-    """Snapshot of metrics at a point in time"""    timestamp: datetime
+    """Snapshot of metrics at a point in time"""
+    timestamp: datetime
     total_requests: int
     active_conversations: int
     average_response_time: float
@@ -80,7 +82,8 @@ class MetricSnapshot:
 
 @dataclass  
 class ConversationAnalytics:
-    """Analytics for individual conversation"""    conversation_id: str
+    """Analytics for individual conversation"""
+    conversation_id: str
     user_id: str
     start_time: datetime
     end_time: Optional[datetime] = None
@@ -104,18 +107,22 @@ class ConversationAnalytics:
     total_response_time: float = 0.0
     
     def get_duration(self) -> Optional[float]:
-        """Get conversation duration in seconds"""        if self.end_time:
+        """Get conversation duration in seconds"""
+        if self.end_time:
             return (self.end_time - self.start_time).total_seconds()
         return None
     
     def get_average_sentiment(self) -> float:
-        """Get average sentiment score"""        return statistics.mean(self.sentiment_scores) if self.sentiment_scores else 0.0
+        """Get average sentiment score"""
+        return statistics.mean(self.sentiment_scores) if self.sentiment_scores else 0.0
     
     def get_average_intent_confidence(self) -> float:
-        """Get average intent confidence"""        return statistics.mean(self.intent_confidence) if self.intent_confidence else 0.0
+        """Get average intent confidence"""
+        return statistics.mean(self.intent_confidence) if self.intent_confidence else 0.0
 
 class PerformanceMonitor:
-    """Real-time performance monitoring system"""    
+    """Real-time performance monitoring system"""
+    
     def __init__(self, window_size: int = 100):
         self.window_size = window_size
         
@@ -133,7 +140,8 @@ class PerformanceMonitor:
         self.last_reset = datetime.now(timezone.utc)
         
     def record_request(self, response_time: float, success: bool = True):
-        """Record a request with response time and success status"""        self.response_times.append(response_time)
+        """Record a request with response time and success status"""
+        self.response_times.append(response_time)
         self.total_requests += 1
         
         if not success:
@@ -146,7 +154,8 @@ class PerformanceMonitor:
         response_time_histogram.observe(response_time)
         
     def get_metrics(self) -> Dict[str, float]:
-        """Get current performance metrics"""        now = datetime.now(timezone.utc)
+        """Get current performance metrics"""
+        now = datetime.now(timezone.utc)
         uptime = (now - self.last_reset).total_seconds()
         
         return {
@@ -160,14 +169,16 @@ class PerformanceMonitor:
         }
     
     def _percentile(self, data: deque, percentile: float) -> float:
-        """Calculate percentile from deque data"""        if not data:
+        """Calculate percentile from deque data"""
+        if not data:
             return 0.0
         sorted_data = sorted(data)
         index = int((percentile / 100.0) * len(sorted_data))
         return sorted_data[min(index, len(sorted_data) - 1)]
 
 class AnalyticsEngine:
-    """Advanced analytics engine for support operations"""    
+    """Advanced analytics engine for support operations"""
+    
     def __init__(self):
         self.conversation_analytics: Dict[str, ConversationAnalytics] = {}
         self.historical_snapshots: List[MetricSnapshot] = []
@@ -196,7 +207,8 @@ class AnalyticsEngine:
         }
         
     def start_conversation(self, conversation_id: str, user_id: str) -> ConversationAnalytics:
-        """Start tracking a new conversation"""        analytics = ConversationAnalytics(
+        """Start tracking a new conversation"""
+        analytics = ConversationAnalytics(
             conversation_id=conversation_id,
             user_id=user_id,
             start_time=datetime.now(timezone.utc)
@@ -217,7 +229,8 @@ class AnalyticsEngine:
         resolution_method: str = "",
         customer_satisfaction: Optional[int] = None
     ):
-        """End conversation tracking"""        if conversation_id not in self.conversation_analytics:
+        """End conversation tracking"""
+        if conversation_id not in self.conversation_analytics:
             return
         
         analytics = self.conversation_analytics[conversation_id]
@@ -255,7 +268,8 @@ class AnalyticsEngine:
         sentiment_score: float = None,
         intent_confidence: float = None
     ):
-        """Record a message in conversation"""        if conversation_id not in self.conversation_analytics:
+        """Record a message in conversation"""
+        if conversation_id not in self.conversation_analytics:
             return
         
         analytics = self.conversation_analytics[conversation_id]
@@ -289,7 +303,8 @@ class AnalyticsEngine:
         channel: str,
         response_time: float = None
     ):
-        """Record a new support request"""        # Update Prometheus metrics
+        """Record a new support request"""
+        # Update Prometheus metrics
         support_requests_total.labels(
             category=category,
             priority=priority,
@@ -317,7 +332,8 @@ class AnalyticsEngine:
         })
     
     def get_real_time_metrics(self) -> Dict[str, Any]:
-        """Get real-time metrics dashboard data"""        performance = self.performance_monitor.get_metrics()
+        """Get real-time metrics dashboard data"""
+        performance = self.performance_monitor.get_metrics()
         
         # Calculate resolution rates
         total_resolutions = sum(self.resolution_stats.values())
@@ -352,7 +368,8 @@ class AnalyticsEngine:
         }
     
     def get_historical_analysis(self, days: int = 30) -> Dict[str, Any]:
-        """Get historical analysis and trends"""        cutoff_date = datetime.now(timezone.utc) - timedelta(days=days)
+        """Get historical analysis and trends"""
+        cutoff_date = datetime.now(timezone.utc) - timedelta(days=days)
         
         # Filter recent conversations
         recent_conversations = [
@@ -379,7 +396,8 @@ class AnalyticsEngine:
         }
     
     def get_predictive_insights(self) -> Dict[str, Any]:
-        """Generate predictive insights and forecasts"""        insights = {
+        """Generate predictive insights and forecasts"""
+        insights = {
             'predicted_volume': self._predict_volume(),
             'capacity_recommendations': self._recommend_capacity(),
             'trending_issues': self._identify_trending_issues(),
@@ -389,7 +407,8 @@ class AnalyticsEngine:
         return insights
     
     def export_analytics_data(self, format: str = 'json') -> str:
-        """Export analytics data for external analysis"""        export_data = {
+        """Export analytics data for external analysis"""
+        export_data = {
             'export_timestamp': datetime.now(timezone.utc).isoformat(),
             'conversation_analytics': [
                 {
@@ -418,7 +437,8 @@ class AnalyticsEngine:
     # Helper methods
     
     def _get_system_metrics(self) -> Dict[str, float]:
-        """Get current system performance metrics"""        try:
+        """Get current system performance metrics"""
+        try:
             return {
                 'cpu_percent': psutil.cpu_percent(interval=1),
                 'memory_percent': psutil.virtual_memory().percent,
@@ -435,7 +455,8 @@ class AnalyticsEngine:
             }
     
     def _calculate_avg_satisfaction(self) -> float:
-        """Calculate average customer satisfaction"""        satisfactions = [
+        """Calculate average customer satisfaction"""
+        satisfactions = [
             conv.customer_satisfaction
             for conv in self.conversation_analytics.values()
             if conv.customer_satisfaction is not None
@@ -444,7 +465,8 @@ class AnalyticsEngine:
         return statistics.mean(satisfactions) if satisfactions else 0.0
     
     def _calculate_daily_volumes(self, conversations: List[ConversationAnalytics]) -> Dict[str, int]:
-        """Calculate daily conversation volumes"""        daily_counts = defaultdict(int)
+        """Calculate daily conversation volumes"""
+        daily_counts = defaultdict(int)
         
         for conv in conversations:
             day_key = conv.start_time.date().isoformat()
@@ -453,7 +475,8 @@ class AnalyticsEngine:
         return dict(daily_counts)
     
     def _analyze_categories(self, conversations: List[ConversationAnalytics]) -> Dict[str, Any]:
-        """Analyze performance by category"""        # This would require category information to be stored in ConversationAnalytics
+        """Analyze performance by category"""
+        # This would require category information to be stored in ConversationAnalytics
         # Simplified implementation for now
         return {
             'top_categories': [
@@ -464,7 +487,8 @@ class AnalyticsEngine:
         }
     
     def _analyze_performance_trends(self, conversations: List[ConversationAnalytics]) -> Dict[str, Any]:
-        """Analyze performance trends over time"""        resolved_conversations = [conv for conv in conversations if conv.resolved]
+        """Analyze performance trends over time"""
+        resolved_conversations = [conv for conv in conversations if conv.resolved]
         
         if not resolved_conversations:
             return {}
@@ -482,7 +506,8 @@ class AnalyticsEngine:
         }
     
     def _calculate_satisfaction_trend(self, conversations: List[ConversationAnalytics]) -> Dict[str, Any]:
-        """Calculate customer satisfaction trends"""        satisfaction_scores = [
+        """Calculate customer satisfaction trends"""
+        satisfaction_scores = [
             conv.customer_satisfaction
             for conv in conversations
             if conv.customer_satisfaction is not None
@@ -505,7 +530,8 @@ class AnalyticsEngine:
         }
     
     def _calculate_resolution_trends(self, conversations: List[ConversationAnalytics]) -> Dict[str, Any]:
-        """Calculate resolution method trends"""        resolution_methods = [conv.resolution_method for conv in conversations if conv.resolved]
+        """Calculate resolution method trends"""
+        resolution_methods = [conv.resolution_method for conv in conversations if conv.resolved]
         
         method_counts = defaultdict(int)
         for method in resolution_methods:
@@ -518,7 +544,8 @@ class AnalyticsEngine:
         }
     
     def _predict_volume(self) -> Dict[str, Any]:
-        """Predict future conversation volumes"""        # Simplified predictive model
+        """Predict future conversation volumes"""
+        # Simplified predictive model
         recent_daily_avg = sum(self.trend_data['daily_volumes'].values()) / max(len(self.trend_data['daily_volumes']), 1)
         
         return {
@@ -528,7 +555,8 @@ class AnalyticsEngine:
         }
     
     def _recommend_capacity(self) -> List[Dict[str, Any]]:
-        """Recommend capacity adjustments"""        current_load = self.performance_monitor.active_conversations
+        """Recommend capacity adjustments"""
+        current_load = self.performance_monitor.active_conversations
         
         recommendations = []
         
@@ -551,7 +579,8 @@ class AnalyticsEngine:
         return recommendations
     
     def _identify_trending_issues(self) -> List[Dict[str, Any]]:
-        """Identify trending support issues"""        # This would analyze conversation content and categories
+        """Identify trending support issues"""
+        # This would analyze conversation content and categories
         return [
             {
                 'issue': 'Music upload failures',
@@ -562,7 +591,8 @@ class AnalyticsEngine:
         ]
     
     def _identify_optimizations(self) -> List[Dict[str, Any]]:
-        """Identify optimization opportunities"""        opportunities = []
+        """Identify optimization opportunities"""
+        opportunities = []
         
         # Check resolution rate
         total_resolutions = sum(self.resolution_stats.values())
@@ -579,7 +609,8 @@ class AnalyticsEngine:
         return opportunities
     
     def _convert_to_csv(self, data: Dict[str, Any]) -> str:
-        """Convert analytics data to CSV format"""        import csv
+        """Convert analytics data to CSV format"""
+        import csv
         import io
         
         output = io.StringIO()
@@ -604,7 +635,8 @@ class AnalyticsEngine:
 _analytics_engine: Optional[AnalyticsEngine] = None
 
 def get_analytics_engine() -> AnalyticsEngine:
-    """Get global analytics engine instance"""    global _analytics_engine
+    """Get global analytics engine instance"""
+    global _analytics_engine
     if _analytics_engine is None:
         _analytics_engine = AnalyticsEngine()
     return _analytics_engine

@@ -6,7 +6,8 @@ Provides personalized suggestions, optimization advice, and strategic insights.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 
 class RecommendationType(Enum):
-    """Types of recommendations"""    CONTENT_CREATION = "content_creation"
+    """Types of recommendations"""
+    CONTENT_CREATION = "content_creation"
     OPTIMIZATION = "optimization"
     MONETIZATION = "monetization"
     COLLABORATION = "collaboration"
@@ -38,7 +40,8 @@ class RecommendationType(Enum):
 
 
 class RecommendationPriority(Enum):
-    """Recommendation priority levels"""    CRITICAL = "critical"
+    """Recommendation priority levels"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -46,7 +49,8 @@ class RecommendationPriority(Enum):
 
 
 class RecommendationCategory(Enum):
-    """Recommendation categories"""    TECHNICAL = "technical"
+    """Recommendation categories"""
+    TECHNICAL = "technical"
     CREATIVE = "creative"
     BUSINESS = "business"
     MARKETING = "marketing"
@@ -56,7 +60,8 @@ class RecommendationCategory(Enum):
 
 @dataclass
 class RecommendationMetrics:
-    """Metrics for recommendation effectiveness"""    confidence_score: float
+    """Metrics for recommendation effectiveness"""
+    confidence_score: float
     impact_score: float
     effort_required: float
     time_to_implement: float
@@ -66,7 +71,8 @@ class RecommendationMetrics:
 
 @dataclass
 class RecommendationContext:
-    """Context for generating recommendations"""    user_id: str
+    """Context for generating recommendations"""
+    user_id: str
     creator_type: str
     current_goals: List[str]
     performance_data: Dict[str, Any]
@@ -80,7 +86,8 @@ class RecommendationContext:
 
 @dataclass
 class Recommendation:
-    """Individual recommendation structure"""    recommendation_id: str
+    """Individual recommendation structure"""
+    recommendation_id: str
     type: RecommendationType
     category: RecommendationCategory
     priority: RecommendationPriority
@@ -99,7 +106,8 @@ class Recommendation:
 
 @dataclass
 class RecommendationSet:
-    """Set of related recommendations"""    set_id: str
+    """Set of related recommendations"""
+    set_id: str
     title: str
     description: str
     recommendations: List[Recommendation]
@@ -110,11 +118,13 @@ class RecommendationSet:
 
 
 class SmartRecommendations:
-    """    Advanced Smart Recommendations Engine
+    """
+    Advanced Smart Recommendations Engine
     
     Provides intelligent, personalized recommendations for content creators
     based on AI analysis, performance data, and market insights.
-    """    
+    """
+    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.ai_models = AIModelManager()
@@ -124,7 +134,8 @@ class SmartRecommendations:
         self._scoring_models = {}
         
     async def initialize(self) -> None:
-        """Initialize the smart recommendations engine"""        try:
+        """Initialize the smart recommendations engine"""
+        try:
             await self.ai_models.load_recommendation_models()
             await self.recommendation_engine.initialize()
             await self.performance_tracker.initialize()
@@ -142,7 +153,8 @@ class SmartRecommendations:
         context_data: Optional[Dict] = None,
         limit: int = 10
     ) -> RecommendationSet:
-        """        Generate comprehensive recommendations for user
+        """
+        Generate comprehensive recommendations for user
         
         Args:
             user_id: User identifier
@@ -152,7 +164,8 @@ class SmartRecommendations:
             
         Returns:
             Set of personalized recommendations
-        """        try:
+        """
+        try:
             # Build recommendation context
             context = await self._build_recommendation_context(user_id, context_data)
             
@@ -206,7 +219,8 @@ class SmartRecommendations:
         content_data: Dict[str, Any],
         optimization_goals: List[str]
     ) -> List[Recommendation]:
-        """        Generate content-specific recommendations
+        """
+        Generate content-specific recommendations
         
         Args:
             user_id: User identifier
@@ -215,7 +229,8 @@ class SmartRecommendations:
             
         Returns:
             List of content recommendations
-        """        try:
+        """
+        try:
             # Analyze content
             content_analysis = await self._analyze_content_for_recommendations(
                 content_data, optimization_goals
@@ -269,7 +284,8 @@ class SmartRecommendations:
         growth_goals: Dict[str, Any],
         timeframe: str = "3_months"
     ) -> List[Recommendation]:
-        """        Generate growth strategy recommendations
+        """
+        Generate growth strategy recommendations
         
         Args:
             user_id: User identifier
@@ -278,7 +294,8 @@ class SmartRecommendations:
             
         Returns:
             List of strategic growth recommendations
-        """        try:
+        """
+        try:
             # Build context with growth focus
             context = await self._build_recommendation_context(user_id)
             
@@ -337,7 +354,8 @@ class SmartRecommendations:
         user_id: str,
         trend_categories: Optional[List[str]] = None
     ) -> List[Recommendation]:
-        """        Generate recommendations based on current trends
+        """
+        Generate recommendations based on current trends
         
         Args:
             user_id: User identifier
@@ -345,7 +363,8 @@ class SmartRecommendations:
             
         Returns:
             List of trend-based recommendations
-        """        try:
+        """
+        try:
             # Get current trends
             trends_data = await self._get_current_trends(trend_categories)
             
@@ -382,7 +401,8 @@ class SmartRecommendations:
         user_id: str,
         competitor_data: List[Dict[str, Any]]
     ) -> List[Recommendation]:
-        """        Generate recommendations based on competitive analysis
+        """
+        Generate recommendations based on competitive analysis
         
         Args:
             user_id: User identifier
@@ -390,7 +410,8 @@ class SmartRecommendations:
             
         Returns:
             List of competitive recommendations
-        """        try:
+        """
+        try:
             # Analyze competitive landscape
             competitive_analysis = await self._analyze_competitive_landscape(
                 competitor_data, user_id
@@ -444,7 +465,8 @@ class SmartRecommendations:
         recommendation_id: str,
         feedback_data: Dict[str, Any]
     ) -> bool:
-        """        Process feedback for recommendation improvement
+        """
+        Process feedback for recommendation improvement
         
         Args:
             user_id: User identifier
@@ -453,7 +475,8 @@ class SmartRecommendations:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             # Store feedback
             await self._store_recommendation_feedback(
                 user_id, recommendation_id, feedback_data
@@ -477,7 +500,8 @@ class SmartRecommendations:
         user_id: str,
         additional_context: Optional[Dict] = None
     ) -> RecommendationContext:
-        """Build comprehensive recommendation context"""        try:
+        """Build comprehensive recommendation context"""
+        try:
             # Get user profile
             user_profile = await self._get_user_profile(user_id)
             
@@ -538,7 +562,8 @@ class SmartRecommendations:
         context: RecommendationContext,
         limit: int
     ) -> List[Recommendation]:
-        """Generate recommendations for specific type"""        try:
+        """Generate recommendations for specific type"""
+        try:
             if rec_type == RecommendationType.CONTENT_CREATION:
                 return await self._generate_content_creation_recommendations(context, limit)
             elif rec_type == RecommendationType.OPTIMIZATION:
@@ -567,7 +592,8 @@ class SmartRecommendations:
         recommendations: List[Recommendation],
         context: RecommendationContext
     ) -> List[Recommendation]:
-        """Score and rank recommendations by relevance and impact"""        try:
+        """Score and rank recommendations by relevance and impact"""
+        try:
             scored_recommendations = []
             
             for rec in recommendations:
@@ -605,7 +631,8 @@ class SmartRecommendations:
     async def _generate_content_creation_recommendations(
         self, context: RecommendationContext, limit: int
     ) -> List[Recommendation]:
-        """Generate content creation recommendations"""        recommendations = []
+        """Generate content creation recommendations"""
+        recommendations = []
         
         # Format diversification
         if len(set(item.get("format") for item in context.content_history)) < 3:
@@ -670,18 +697,21 @@ class SmartRecommendations:
     async def _generate_optimization_recommendations(
         self, context: RecommendationContext, limit: int
     ) -> List[Recommendation]:
-        """Generate optimization recommendations"""        # Implementation for optimization recommendations
+        """Generate optimization recommendations"""
+        # Implementation for optimization recommendations
         return []
     
     async def _generate_monetization_recommendations(
         self, context: RecommendationContext, limit: int
     ) -> List[Recommendation]:
-        """Generate monetization recommendations"""        # Implementation for monetization recommendations
+        """Generate monetization recommendations"""
+        # Implementation for monetization recommendations
         return []
     
     # Helper methods for context building and analysis
     async def _get_user_profile(self, user_id: str) -> Dict[str, Any]:
-        """Get user profile data"""        # Implementation to fetch user profile
+        """Get user profile data"""
+        # Implementation to fetch user profile
         return {
             "creator_type": "musician",
             "goals": ["growth", "monetization"],
@@ -690,14 +720,16 @@ class SmartRecommendations:
         }
     
     async def _get_user_content_history(self, user_id: str) -> List[Dict]:
-        """Get user's content history"""        # Implementation to fetch content history
+        """Get user's content history"""
+        # Implementation to fetch content history
         return [
             {"id": "content_1", "format": "audio", "performance": 0.8},
             {"id": "content_2", "format": "video", "performance": 0.6}
         ]
     
     async def _get_audience_demographics(self, user_id: str) -> Dict[str, Any]:
-        """Get audience demographic data"""        # Implementation to fetch audience data
+        """Get audience demographic data"""
+        # Implementation to fetch audience data
         return {
             "age_groups": {"18-24": 0.3, "25-34": 0.4, "35-44": 0.2, "45+": 0.1},
             "locations": {"US": 0.5, "UK": 0.2, "Canada": 0.15, "Other": 0.15},
@@ -705,7 +737,8 @@ class SmartRecommendations:
         }
     
     async def _get_market_trends(self, creator_type: str) -> Dict[str, Any]:
-        """Get current market trends"""        # Implementation to fetch market trends
+        """Get current market trends"""
+        # Implementation to fetch market trends
         return {
             "trending_formats": ["short_form_video", "live_streaming"],
             "trending_topics": ["AI music", "virtual concerts"],
@@ -713,7 +746,8 @@ class SmartRecommendations:
         }
     
     async def _get_competitive_landscape(self, user_id: str) -> Dict[str, Any]:
-        """Get competitive landscape data"""        # Implementation to fetch competitive data
+        """Get competitive landscape data"""
+        # Implementation to fetch competitive data
         return {
             "top_competitors": ["creator_1", "creator_2"],
             "market_position": "emerging",

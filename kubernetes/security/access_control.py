@@ -11,7 +11,8 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and
 will result in legal action.
-"""import logging
+"""
+import logging
 import hashlib
 from datetime import datetime, timedelta
 from typing import Dict, Any, List, Optional, Set, Union
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 
 class AccessLevel(Enum):
-    """Access levels for resources"""    NONE = "none"
+    """Access levels for resources"""
+    NONE = "none"
     READ = "read"
     WRITE = "write"
     ADMIN = "admin"
@@ -38,7 +40,8 @@ class AccessLevel(Enum):
 
 
 class ResourceType(Enum):
-    """Types of resources that can be secured"""    DEPLOYMENT = "deployment"
+    """Types of resources that can be secured"""
+    DEPLOYMENT = "deployment"
     CONFIGURATION = "configuration"
     CERTIFICATE = "certificate"
     SECRET = "secret"
@@ -49,7 +52,8 @@ class ResourceType(Enum):
 
 
 class ActionType(Enum):
-    """Types of actions that can be performed"""    CREATE = "create"
+    """Types of actions that can be performed"""
+    CREATE = "create"
     READ = "read"
     UPDATE = "update"
     DELETE = "delete"
@@ -62,7 +66,8 @@ class ActionType(Enum):
 
 @dataclass
 class Permission:
-    """Permission definition"""    id: str
+    """Permission definition"""
+    id: str
     name: str
     description: str
     resource_type: ResourceType
@@ -73,7 +78,8 @@ class Permission:
 
 @dataclass
 class Role:
-    """Role definition with permissions"""    id: str
+    """Role definition with permissions"""
+    id: str
     name: str
     description: str
     permissions: List[Permission]
@@ -84,7 +90,8 @@ class Role:
 
 @dataclass
 class User:
-    """User definition for access control"""    id: str
+    """User definition for access control"""
+    id: str
     username: str
     email: str
     roles: List[Role]
@@ -97,7 +104,8 @@ class User:
 
 @dataclass
 class AccessRequest:
-    """Access request for authorization"""    user_id: str
+    """Access request for authorization"""
+    user_id: str
     resource_type: ResourceType
     resource_id: str
     action: ActionType
@@ -107,7 +115,8 @@ class AccessRequest:
 
 @dataclass
 class AccessSession:
-    """User access session"""    session_id: str
+    """User access session"""
+    session_id: str
     user_id: str
     created_at: datetime
     last_activity: datetime
@@ -119,15 +128,18 @@ class AccessSession:
 
 
 class PermissionManager:
-    """    Advanced permission management system
-    """    
+    """
+    Advanced permission management system
+    """
+    
     def __init__(self):
         self.permissions: Dict[str, Permission] = {}
         self._setup_default_permissions()
         logger.info("Permission manager initialized")
     
     def _setup_default_permissions(self):
-        """Setup default system permissions"""        default_permissions = [
+        """Setup default system permissions"""
+        default_permissions = [
             # Deployment permissions
             Permission(
                 id="deploy_read",
@@ -265,7 +277,8 @@ class PermissionManager:
         actions: List[ActionType],
         conditions: Dict[str, Any] = None
     ) -> Permission:
-        """        Create new permission
+        """
+        Create new permission
         
         Args:
             permission_id: Unique permission identifier
@@ -277,7 +290,8 @@ class PermissionManager:
             
         Returns:
             Created permission
-        """        try:
+        """
+        try:
             if permission_id in self.permissions:
                 raise ValueError(f"Permission already exists: {permission_id}")
             
@@ -299,14 +313,16 @@ class PermissionManager:
             raise
     
     def get_permission(self, permission_id: str) -> Optional[Permission]:
-        """Get permission by ID"""        return self.permissions.get(permission_id)
+        """Get permission by ID"""
+        return self.permissions.get(permission_id)
     
     def list_permissions(
         self,
         resource_type: Optional[ResourceType] = None,
         action: Optional[ActionType] = None
     ) -> List[Permission]:
-        """        List permissions with optional filters
+        """
+        List permissions with optional filters
         
         Args:
             resource_type: Filter by resource type
@@ -314,7 +330,8 @@ class PermissionManager:
             
         Returns:
             List of matching permissions
-        """        permissions = list(self.permissions.values())
+        """
+        permissions = list(self.permissions.values())
         
         if resource_type:
             permissions = [p for p in permissions if p.resource_type == resource_type]
@@ -325,7 +342,8 @@ class PermissionManager:
         return permissions
     
     def update_permission(self, permission_id: str, **kwargs) -> Optional[Permission]:
-        """        Update permission properties
+        """
+        Update permission properties
         
         Args:
             permission_id: Permission ID to update
@@ -333,7 +351,8 @@ class PermissionManager:
             
         Returns:
             Updated permission or None
-        """        try:
+        """
+        try:
             if permission_id not in self.permissions:
                 logger.warning(f"Permission not found: {permission_id}")
                 return None
@@ -354,14 +373,16 @@ class PermissionManager:
             return None
     
     def delete_permission(self, permission_id: str) -> bool:
-        """        Delete permission
+        """
+        Delete permission
         
         Args:
             permission_id: Permission ID to delete
             
         Returns:
             True if deleted successfully
-        """        try:
+        """
+        try:
             if permission_id not in self.permissions:
                 logger.warning(f"Permission not found: {permission_id}")
                 return False
@@ -376,8 +397,10 @@ class PermissionManager:
 
 
 class RoleBasedSecurity:
-    """    Role-based access control (RBAC) system
-    """    
+    """
+    Role-based access control (RBAC) system
+    """
+    
     def __init__(self, permission_manager: PermissionManager):
         self.permission_manager = permission_manager
         self.roles: Dict[str, Role] = {}
@@ -386,7 +409,8 @@ class RoleBasedSecurity:
         logger.info("Role-based security system initialized")
     
     def _setup_default_roles(self):
-        """Setup default system roles"""        # Get default permissions
+        """Setup default system roles"""
+        # Get default permissions
         permissions = self.permission_manager.permissions
         
         # System Administrator role
@@ -490,7 +514,8 @@ class RoleBasedSecurity:
         description: str,
         permission_ids: List[str]
     ) -> Role:
-        """        Create new role
+        """
+        Create new role
         
         Args:
             role_id: Unique role identifier
@@ -500,7 +525,8 @@ class RoleBasedSecurity:
             
         Returns:
             Created role
-        """        try:
+        """
+        try:
             if role_id in self.roles:
                 raise ValueError(f"Role already exists: {role_id}")
             
@@ -528,7 +554,8 @@ class RoleBasedSecurity:
             raise
     
     def assign_permissions_to_role(self, role_id: str, permission_ids: List[str]) -> bool:
-        """        Assign permissions to role
+        """
+        Assign permissions to role
         
         Args:
             role_id: Role ID
@@ -536,7 +563,8 @@ class RoleBasedSecurity:
             
         Returns:
             True if successful
-        """        try:
+        """
+        try:
             if role_id not in self.roles:
                 raise ValueError(f"Role not found: {role_id}")
             
@@ -565,7 +593,8 @@ class RoleBasedSecurity:
             return False
     
     def remove_permissions_from_role(self, role_id: str, permission_ids: List[str]) -> bool:
-        """        Remove permissions from role
+        """
+        Remove permissions from role
         
         Args:
             role_id: Role ID
@@ -573,7 +602,8 @@ class RoleBasedSecurity:
             
         Returns:
             True if successful
-        """        try:
+        """
+        try:
             if role_id not in self.roles:
                 raise ValueError(f"Role not found: {role_id}")
             
@@ -602,7 +632,8 @@ class RoleBasedSecurity:
         email: str,
         role_ids: List[str]
     ) -> User:
-        """        Create new user
+        """
+        Create new user
         
         Args:
             user_id: Unique user identifier
@@ -612,7 +643,8 @@ class RoleBasedSecurity:
             
         Returns:
             Created user
-        """        try:
+        """
+        try:
             if user_id in self.users:
                 raise ValueError(f"User already exists: {user_id}")
             
@@ -639,7 +671,8 @@ class RoleBasedSecurity:
             raise
     
     def assign_roles_to_user(self, user_id: str, role_ids: List[str]) -> bool:
-        """        Assign roles to user
+        """
+        Assign roles to user
         
         Args:
             user_id: User ID
@@ -647,7 +680,8 @@ class RoleBasedSecurity:
             
         Returns:
             True if successful
-        """        try:
+        """
+        try:
             if user_id not in self.users:
                 raise ValueError(f"User not found: {user_id}")
             
@@ -673,14 +707,16 @@ class RoleBasedSecurity:
             return False
     
     def get_user_permissions(self, user_id: str) -> Set[Permission]:
-        """        Get all permissions for user (aggregated from roles)
+        """
+        Get all permissions for user (aggregated from roles)
         
         Args:
             user_id: User ID
             
         Returns:
             Set of user permissions
-        """        try:
+        """
+        try:
             if user_id not in self.users:
                 return set()
             
@@ -703,7 +739,8 @@ class RoleBasedSecurity:
         action: ActionType,
         resource_id: Optional[str] = None
     ) -> bool:
-        """        Check if user has specific permission
+        """
+        Check if user has specific permission
         
         Args:
             user_id: User ID
@@ -713,7 +750,8 @@ class RoleBasedSecurity:
             
         Returns:
             True if user has permission
-        """        try:
+        """
+        try:
             permissions = self.get_user_permissions(user_id)
             
             for permission in permissions:
@@ -736,8 +774,10 @@ class RoleBasedSecurity:
 
 
 class DeploymentAccessControl:
-    """    Comprehensive access control system for deployment security
-    """    
+    """
+    Comprehensive access control system for deployment security
+    """
+    
     def __init__(
         self,
         redis_url: str = "redis://localhost:6379",
@@ -763,7 +803,8 @@ class DeploymentAccessControl:
         logger.info("Deployment access control initialized")
     
     async def initialize_redis_pool(self):
-        """Initialize Redis connection pool"""        try:
+        """Initialize Redis connection pool"""
+        try:
             self._redis_pool = aioredis.ConnectionPool.from_url(self.redis_url)
             logger.info("Redis connection pool initialized for access control")
         except Exception as e:
@@ -771,13 +812,16 @@ class DeploymentAccessControl:
             raise
     
     def hash_password(self, password: str) -> str:
-        """Hash password using bcrypt"""        return self.pwd_context.hash(password)
+        """Hash password using bcrypt"""
+        return self.pwd_context.hash(password)
     
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
-        """Verify password against hash"""        return self.pwd_context.verify(plain_password, hashed_password)
+        """Verify password against hash"""
+        return self.pwd_context.verify(plain_password, hashed_password)
     
     def generate_jwt_token(self, user_id: str, session_id: str, expires_in: int = None) -> str:
-        """        Generate JWT token for user session
+        """
+        Generate JWT token for user session
         
         Args:
             user_id: User ID
@@ -786,7 +830,8 @@ class DeploymentAccessControl:
             
         Returns:
             JWT token
-        """        try:
+        """
+        try:
             expires_in = expires_in or self.session_timeout
             
             payload = {
@@ -804,14 +849,16 @@ class DeploymentAccessControl:
             raise
     
     def verify_jwt_token(self, token: str) -> Optional[Dict[str, Any]]:
-        """        Verify JWT token and extract payload
+        """
+        Verify JWT token and extract payload
         
         Args:
             token: JWT token
             
         Returns:
             Token payload or None if invalid
-        """        try:
+        """
+        try:
             payload = jwt.decode(token, self.jwt_secret, algorithms=['HS256'])
             return payload
             
@@ -832,7 +879,8 @@ class DeploymentAccessControl:
         ip_address: str,
         user_agent: str
     ) -> Optional[str]:
-        """        Authenticate user and create session
+        """
+        Authenticate user and create session
         
         Args:
             username: Username
@@ -842,7 +890,8 @@ class DeploymentAccessControl:
             
         Returns:
             JWT token if authentication successful
-        """        try:
+        """
+        try:
             # Find user by username
             user = None
             for user_obj in self.rbac.users.values():
@@ -892,7 +941,8 @@ class DeploymentAccessControl:
             return None
     
     async def authorize_request(self, request: AccessRequest, token: str) -> bool:
-        """        Authorize access request
+        """
+        Authorize access request
         
         Args:
             request: Access request
@@ -900,7 +950,8 @@ class DeploymentAccessControl:
             
         Returns:
             True if authorized
-        """        try:
+        """
+        try:
             # Verify token
             payload = self.verify_jwt_token(token)
             if not payload:
@@ -949,14 +1000,16 @@ class DeploymentAccessControl:
             return False
     
     async def logout_session(self, session_id: str) -> bool:
-        """        Logout user session
+        """
+        Logout user session
         
         Args:
             session_id: Session ID to logout
             
         Returns:
             True if successful
-        """        try:
+        """
+        try:
             if session_id in self.sessions:
                 self.sessions[session_id].is_active = False
                 del self.sessions[session_id]
@@ -970,7 +1023,8 @@ class DeploymentAccessControl:
             return False
     
     async def cleanup_expired_sessions(self):
-        """Cleanup expired sessions"""        try:
+        """Cleanup expired sessions"""
+        try:
             current_time = datetime.utcnow()
             expired_sessions = []
             
@@ -991,14 +1045,16 @@ class DeploymentAccessControl:
             logger.error(f"Failed to cleanup expired sessions: {e}")
     
     def get_access_summary(self, user_id: str) -> Dict[str, Any]:
-        """        Get access summary for user
+        """
+        Get access summary for user
         
         Args:
             user_id: User ID
             
         Returns:
             Access summary
-        """        try:
+        """
+        try:
             if user_id not in self.rbac.users:
                 return {'error': 'User not found'}
             

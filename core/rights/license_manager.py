@@ -10,7 +10,8 @@ Enterprise Content Protection Platform - License Management Core
 ⚠️  COPYRIGHT NOTICE ⚠️
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -37,7 +38,8 @@ settings = get_settings()
 
 
 class LicenseType(str, Enum):
-    """License type categories."""    PERSONAL = "personal"
+    """License type categories."""
+    PERSONAL = "personal"
     COMMERCIAL = "commercial"
     EDUCATIONAL = "educational"
     EDITORIAL = "editorial"
@@ -48,7 +50,8 @@ class LicenseType(str, Enum):
 
 
 class LicenseStatus(str, Enum):
-    """License status states."""    ACTIVE = "active"
+    """License status states."""
+    ACTIVE = "active"
     EXPIRED = "expired"
     REVOKED = "revoked"
     SUSPENDED = "suspended"
@@ -57,7 +60,8 @@ class LicenseStatus(str, Enum):
 
 
 class UsageRights(str, Enum):
-    """Content usage rights."""    VIEW_ONLY = "view_only"
+    """Content usage rights."""
+    VIEW_ONLY = "view_only"
     DOWNLOAD = "download"
     MODIFY = "modify"
     REDISTRIBUTE = "redistribute"
@@ -71,7 +75,8 @@ class UsageRights(str, Enum):
 
 @dataclass
 class LicenseTerms:
-    """Comprehensive license terms structure."""    license_id: str
+    """Comprehensive license terms structure."""
+    license_id: str
     license_type: LicenseType
     usage_rights: List[UsageRights]
     territorial_restrictions: List[str] = field(default_factory=list)
@@ -87,7 +92,8 @@ class LicenseTerms:
 
 
 class LicenseRequest(BaseModel):
-    """License creation/purchase request model."""    content_id: str = Field(..., description="Content identifier")
+    """License creation/purchase request model."""
+    content_id: str = Field(..., description="Content identifier")
     license_type: LicenseType = Field(..., description="Type of license")
     usage_rights: List[UsageRights] = Field(..., min_items=1)
     duration_days: Optional[int] = Field(None, ge=1, le=36500)  # Max 100 years
@@ -107,7 +113,8 @@ class LicenseRequest(BaseModel):
 
 
 class LicensePricing(BaseModel):
-    """License pricing calculation model."""    base_price: Decimal = Field(..., ge=0)
+    """License pricing calculation model."""
+    base_price: Decimal = Field(..., ge=0)
     currency: str = Field(default="EUR")
     pricing_factors: Dict[str, Decimal] = Field(default_factory=dict)
     discounts_applied: List[Dict[str, Any]] = Field(default_factory=list)
@@ -117,7 +124,8 @@ class LicensePricing(BaseModel):
 
 
 class LicenseValidationResult(BaseModel):
-    """License validation result model."""    is_valid: bool
+    """License validation result model."""
+    is_valid: bool
     license_status: LicenseStatus
     usage_compliance: Dict[str, bool]
     remaining_usage: Dict[str, int]
@@ -127,11 +135,14 @@ class LicenseValidationResult(BaseModel):
 
 
 class LicenseManagementSystem:
-    """    Enterprise license management system with automated pricing,
+    """
+    Enterprise license management system with automated pricing,
     smart contracts integration, and comprehensive usage tracking.
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession):
-        """Initialize license management system."""        self.db = db_session
+        """Initialize license management system."""
+        self.db = db_session
         self.encryption = AdvancedEncryption()
         
         # License pricing engine
@@ -160,7 +171,8 @@ class LicenseManagementSystem:
         content_owner_id: str,
         license_request: LicenseRequest
     ) -> Dict[str, Any]:
-        """        Create new license for content with comprehensive terms.
+        """
+        Create new license for content with comprehensive terms.
         
         Args:
             content_owner_id: Content owner user ID
@@ -168,7 +180,8 @@ class LicenseManagementSystem:
             
         Returns:
             Created license details with secure token
-        """        try:
+        """
+        try:
             # Validate content ownership
             content = await self._get_content_record(license_request.content_id)
             if not content or content.owner_id != content_owner_id:
@@ -234,7 +247,8 @@ class LicenseManagementSystem:
         license_token: str,
         usage_context: Dict[str, Any]
     ) -> LicenseValidationResult:
-        """        Validate license token and check usage compliance.
+        """
+        Validate license token and check usage compliance.
         
         Args:
             license_token: Secure license token
@@ -242,7 +256,8 @@ class LicenseManagementSystem:
             
         Returns:
             Comprehensive validation result
-        """        try:
+        """
+        try:
             # Decode and verify license token
             license_data = await self._decode_license_token(license_token)
             
@@ -322,7 +337,8 @@ class LicenseManagementSystem:
         new_owner_id: str,
         transfer_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Transfer license ownership between users.
+        """
+        Transfer license ownership between users.
         
         Args:
             license_id: License identifier
@@ -332,7 +348,8 @@ class LicenseManagementSystem:
             
         Returns:
             Transfer result with updated license information
-        """        try:
+        """
+        try:
             # Validate current ownership
             license_record = await self._get_license_record(license_id)
             if not license_record or license_record.licensee_id != current_owner_id:
@@ -399,7 +416,8 @@ class LicenseManagementSystem:
         content_owner_id: str,
         revocation_reason: str
     ) -> Dict[str, Any]:
-        """        Revoke license and terminate usage rights.
+        """
+        Revoke license and terminate usage rights.
         
         Args:
             license_id: License identifier
@@ -408,7 +426,8 @@ class LicenseManagementSystem:
             
         Returns:
             Revocation result
-        """        try:
+        """
+        try:
             # Validate ownership
             license_record = await self._get_license_record(license_id)
             if not license_record:
@@ -458,7 +477,8 @@ class LicenseManagementSystem:
     async def generate_license_report(
         self, user_id: str, period_days: int = 30
     ) -> Dict[str, Any]:
-        """        Generate comprehensive license usage and revenue report.
+        """
+        Generate comprehensive license usage and revenue report.
         
         Args:
             user_id: User identifier
@@ -466,7 +486,8 @@ class LicenseManagementSystem:
             
         Returns:
             Detailed license analytics report
-        """        try:
+        """
+        try:
             start_date = datetime.utcnow() - timedelta(days=period_days)
             
             # Get user licenses
@@ -513,7 +534,8 @@ class LicenseManagementSystem:
     # License template methods
     
     def _get_personal_template(self) -> Dict[str, Any]:
-        """Get personal use license template."""        return {
+        """Get personal use license template."""
+        return {
             "usage_rights": [UsageRights.VIEW_ONLY, UsageRights.DOWNLOAD],
             "commercial_use": False,
             "attribution_required": True,
@@ -525,7 +547,8 @@ class LicenseManagementSystem:
         }
     
     def _get_commercial_template(self) -> Dict[str, Any]:
-        """Get commercial use license template."""        return {
+        """Get commercial use license template."""
+        return {
             "usage_rights": [
                 UsageRights.DOWNLOAD, UsageRights.COMMERCIAL_USE,
                 UsageRights.MODIFY, UsageRights.PUBLIC_DISPLAY
@@ -540,7 +563,8 @@ class LicenseManagementSystem:
         }
     
     def _get_educational_template(self) -> Dict[str, Any]:
-        """Get educational use license template."""        return {
+        """Get educational use license template."""
+        return {
             "usage_rights": [
                 UsageRights.VIEW_ONLY, UsageRights.DOWNLOAD,
                 UsageRights.PUBLIC_DISPLAY
@@ -555,7 +579,8 @@ class LicenseManagementSystem:
         }
     
     def _get_editorial_template(self) -> Dict[str, Any]:
-        """Get editorial use license template."""        return {
+        """Get editorial use license template."""
+        return {
             "usage_rights": [
                 UsageRights.DOWNLOAD, UsageRights.PUBLIC_DISPLAY,
                 UsageRights.BROADCAST
@@ -570,7 +595,8 @@ class LicenseManagementSystem:
         }
     
     def _get_extended_commercial_template(self) -> Dict[str, Any]:
-        """Get extended commercial license template."""        return {
+        """Get extended commercial license template."""
+        return {
             "usage_rights": [
                 UsageRights.DOWNLOAD, UsageRights.COMMERCIAL_USE,
                 UsageRights.MODIFY, UsageRights.REDISTRIBUTE,
@@ -586,7 +612,8 @@ class LicenseManagementSystem:
         }
     
     def _get_exclusive_template(self) -> Dict[str, Any]:
-        """Get exclusive license template."""        return {
+        """Get exclusive license template."""
+        return {
             "usage_rights": [
                 UsageRights.DOWNLOAD, UsageRights.COMMERCIAL_USE,
                 UsageRights.MODIFY, UsageRights.REDISTRIBUTE,
@@ -603,7 +630,8 @@ class LicenseManagementSystem:
         }
     
     def _get_royalty_free_template(self) -> Dict[str, Any]:
-        """Get royalty-free license template."""        return {
+        """Get royalty-free license template."""
+        return {
             "usage_rights": [
                 UsageRights.DOWNLOAD, UsageRights.COMMERCIAL_USE,
                 UsageRights.MODIFY, UsageRights.PUBLIC_DISPLAY
@@ -619,7 +647,8 @@ class LicenseManagementSystem:
         }
     
     def _get_rights_managed_template(self) -> Dict[str, Any]:
-        """Get rights-managed license template."""        return {
+        """Get rights-managed license template."""
+        return {
             "usage_rights": [],  # Customizable
             "commercial_use": None,  # Depends on agreement
             "attribution_required": True,
@@ -634,13 +663,15 @@ class LicenseManagementSystem:
     # Helper methods (simplified implementations)
     
     async def _get_content_record(self, content_id: str) -> Optional[Any]:
-        """Get content record from database."""        # Database query implementation
+        """Get content record from database."""
+        # Database query implementation
         pass
     
     async def _generate_license_terms(
         self, license_id: str, request: LicenseRequest, content: Any
     ) -> LicenseTerms:
-        """Generate license terms from template and request."""        template = self.license_templates[request.license_type]
+        """Generate license terms from template and request."""
+        template = self.license_templates[request.license_type]
         
         return LicenseTerms(
             license_id=license_id,
@@ -661,13 +692,15 @@ class LicenseManagementSystem:
         self, license_id: str, owner_id: str, request: LicenseRequest,
         terms: LicenseTerms, pricing: LicensePricing
     ) -> Any:
-        """Create license record in database."""        # Database creation implementation
+        """Create license record in database."""
+        # Database creation implementation
         pass
     
     async def _generate_license_token(
         self, license_record: Any, terms: LicenseTerms
     ) -> str:
-        """Generate secure license token."""        payload = {
+        """Generate secure license token."""
+        payload = {
             "license_id": license_record.id,
             "content_id": license_record.content_id,
             "licensee_id": license_record.licensee_id,
@@ -680,7 +713,8 @@ class LicenseManagementSystem:
     async def _generate_license_certificate(
         self, license_record: Any, terms: LicenseTerms
     ) -> Dict[str, Any]:
-        """Generate license certificate."""        return {
+        """Generate license certificate."""
+        return {
             "certificate_id": str(uuid4()),
             "license_id": license_record.id,
             "certificate_type": "digital_license",
@@ -691,11 +725,13 @@ class LicenseManagementSystem:
     async def _initialize_usage_tracking(
         self, license_id: str, terms: LicenseTerms
     ) -> None:
-        """Initialize usage tracking for license."""        # Usage tracking initialization
+        """Initialize usage tracking for license."""
+        # Usage tracking initialization
         pass
     
     async def _summarize_terms(self, terms: LicenseTerms) -> Dict[str, Any]:
-        """Summarize license terms for display."""        return {
+        """Summarize license terms for display."""
+        return {
             "license_type": terms.license_type.value,
             "usage_rights": [right.value for right in terms.usage_rights],
             "commercial_use": UsageRights.COMMERCIAL_USE in terms.usage_rights,
@@ -707,7 +743,8 @@ class LicenseManagementSystem:
 
 
 class LicensePricingEngine:
-    """Advanced pricing engine for license calculation."""    
+    """Advanced pricing engine for license calculation."""
+    
     def __init__(self):
         self.base_prices = {
             LicenseType.PERSONAL: Decimal("9.99"),
@@ -723,7 +760,8 @@ class LicensePricingEngine:
     async def calculate_pricing(
         self, request: LicenseRequest, content: Any
     ) -> LicensePricing:
-        """Calculate license pricing based on multiple factors."""        base_price = self.base_prices[request.license_type]
+        """Calculate license pricing based on multiple factors."""
+        base_price = self.base_prices[request.license_type]
         
         # Apply pricing factors
         multipliers = await self._calculate_multipliers(request, content)
@@ -744,7 +782,8 @@ class LicensePricingEngine:
     async def _calculate_multipliers(
         self, request: LicenseRequest, content: Any
     ) -> Dict[str, Decimal]:
-        """Calculate pricing multipliers based on license terms."""        multipliers = {}
+        """Calculate pricing multipliers based on license terms."""
+        multipliers = {}
         
         # Duration multiplier
         if request.duration_days:

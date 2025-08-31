@@ -23,7 +23,8 @@ Team Specialists:
 - Audio Engineer: Audio Session State Management
 - DevOps: State Scalability & Performance
 - IA Prompt Engineer: Conversational State Optimization
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Callable, Union, Set, Tuple
@@ -52,7 +53,8 @@ logger = get_logger(__name__)
 
 
 class ConversationState(Enum):
-    """Enhanced conversation state types"""    INITIALIZING = "initializing"
+    """Enhanced conversation state types"""
+    INITIALIZING = "initializing"
     ACTIVE = "active"
     WAITING_INPUT = "waiting_input"
     PROCESSING = "processing"
@@ -67,7 +69,8 @@ class ConversationState(Enum):
 
 
 class StateTransitionRule(BaseModel):
-    """State transition rule definition"""    from_state: ConversationState
+    """State transition rule definition"""
+    from_state: ConversationState
     to_state: ConversationState
     condition: Optional[str] = None
     action: Optional[str] = None
@@ -79,7 +82,8 @@ class StateTransitionRule(BaseModel):
 
 
 class SessionContext(BaseModel):
-    """Comprehensive session context"""    session_id: str
+    """Comprehensive session context"""
+    session_id: str
     user_id: str
     current_state: ConversationState
     previous_state: Optional[ConversationState] = None
@@ -106,7 +110,8 @@ class SessionContext(BaseModel):
 
 @dataclass
 class StateOrchestrationConfig:
-    """State orchestration configuration"""    max_state_history: int = 100
+    """State orchestration configuration"""
+    max_state_history: int = 100
     auto_save_interval: int = 30
     state_timeout_default: int = 300  # 5 minutes
     enable_state_prediction: bool = True
@@ -117,7 +122,8 @@ class StateOrchestrationConfig:
 
 
 class ConversationStateManager:
-    """Advanced conversation state management"""    
+    """Advanced conversation state management"""
+    
     def __init__(self, config: StateOrchestrationConfig):
         self.config = config
         self.cache_manager = CacheManager()
@@ -137,7 +143,8 @@ class ConversationStateManager:
         self._setup_default_transitions()
     
     def _setup_default_transitions(self):
-        """Setup default state transition rules"""        
+        """Setup default state transition rules"""
+        
         default_rules = [
             # Initialization flow
             StateTransitionRule(
@@ -232,7 +239,8 @@ class ConversationStateManager:
         self.transition_rules.extend(default_rules)
     
     async def get_session_context(self, session_id: str) -> Optional[SessionContext]:
-        """Get session context with caching"""        
+        """Get session context with caching"""
+        
         try:
             # Check memory cache first
             if session_id in self.active_contexts:
@@ -294,7 +302,8 @@ class ConversationStateManager:
             return None
     
     async def update_session_context(self, context: SessionContext) -> bool:
-        """Update session context across all storage layers"""        
+        """Update session context across all storage layers"""
+        
         try:
             context.updated_at = datetime.utcnow()
             
@@ -316,7 +325,8 @@ class ConversationStateManager:
             return False
     
     async def _cache_session_context(self, context: SessionContext):
-        """Cache session context in Redis"""        
+        """Cache session context in Redis"""
+        
         try:
             cache_key = f"session_context:{context.session_id}"
             context_data = context.json()
@@ -331,7 +341,8 @@ class ConversationStateManager:
             self.logger.error(f"Failed to cache session context: {str(e)}")
     
     async def _persist_session_context(self, context: SessionContext):
-        """Persist session context to database"""        
+        """Persist session context to database"""
+        
         try:
             async with get_async_session() as session:
                 await session.execute(
@@ -358,7 +369,8 @@ class ConversationStateManager:
         condition: Optional[str] = None,
         context_update: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Perform state transition with validation"""        
+        """Perform state transition with validation"""
+        
         try:
             context = await self.get_session_context(session_id)
             
@@ -437,7 +449,8 @@ class ConversationStateManager:
         to_state: ConversationState,
         condition: Optional[str]
     ) -> bool:
-        """Validate state transition according to rules"""        
+        """Validate state transition according to rules"""
+        
         # Find matching transition rules
         matching_rules = [
             rule for rule in self.transition_rules
@@ -458,7 +471,8 @@ class ConversationStateManager:
         return False
     
     async def _execute_state_handler(self, state: ConversationState, context: SessionContext):
-        """Execute state-specific handler"""        
+        """Execute state-specific handler"""
+        
         try:
             if state in self.state_handlers:
                 handler = self.state_handlers[state]
@@ -467,16 +481,19 @@ class ConversationStateManager:
             self.logger.error(f"State handler execution failed: {str(e)}")
     
     def register_state_handler(self, state: ConversationState, handler: Callable):
-        """Register state-specific handler"""        
+        """Register state-specific handler"""
+        
         self.state_handlers[state] = handler
     
     async def add_transition_rule(self, rule: StateTransitionRule):
-        """Add custom transition rule"""        
+        """Add custom transition rule"""
+        
         self.transition_rules.append(rule)
         self.transition_rules.sort(key=lambda r: r.priority, reverse=True)
     
     async def get_state_statistics(self) -> Dict[str, Any]:
-        """Get state management statistics"""        
+        """Get state management statistics"""
+        
         try:
             # Count states
             state_counts = defaultdict(int)
@@ -504,14 +521,16 @@ class ConversationStateManager:
 
 
 class SessionContextManager:
-    """Advanced session context management"""    
+    """Advanced session context management"""
+    
     def __init__(self, config: StateOrchestrationConfig):
         self.config = config
         self.state_manager = ConversationStateManager(config)
         self.logger = get_logger(self.__class__.__name__)
     
     async def create_context(self, session_id: str, user_id: str) -> SessionContext:
-        """Create new session context"""        
+        """Create new session context"""
+        
         context = SessionContext(
             session_id=session_id,
             user_id=user_id,
@@ -526,7 +545,8 @@ class SessionContextManager:
         session_id: str,
         conversation_data: Dict[str, Any]
     ) -> bool:
-        """Update conversation stack"""        
+        """Update conversation stack"""
+        
         try:
             context = await self.state_manager.get_session_context(session_id)
             
@@ -555,7 +575,8 @@ class SessionContextManager:
         session_id: str,
         entities: Dict[str, Any]
     ) -> bool:
-        """Update entity context"""        
+        """Update entity context"""
+        
         try:
             context = await self.state_manager.get_session_context(session_id)
             
@@ -583,7 +604,8 @@ class SessionContextManager:
         session_id: str,
         content_data: Dict[str, Any]
     ) -> bool:
-        """Update content context for protection and monetization"""        
+        """Update content context for protection and monetization"""
+        
         try:
             context = await self.state_manager.get_session_context(session_id)
             
@@ -625,7 +647,8 @@ class SessionContextManager:
         session_id: str,
         collaboration_data: Dict[str, Any]
     ) -> bool:
-        """Update collaboration context"""        
+        """Update collaboration context"""
+        
         try:
             context = await self.state_manager.get_session_context(session_id)
             
@@ -644,7 +667,8 @@ class SessionContextManager:
             return False
     
     async def get_context_summary(self, session_id: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive context summary"""        
+        """Get comprehensive context summary"""
+        
         try:
             context = await self.state_manager.get_session_context(session_id)
             
@@ -672,7 +696,8 @@ class SessionContextManager:
 
 
 class StateTransitionController:
-    """Controls and orchestrates state transitions"""    
+    """Controls and orchestrates state transitions"""
+    
     def __init__(self, config: StateOrchestrationConfig):
         self.config = config
         self.state_manager = ConversationStateManager(config)
@@ -684,12 +709,14 @@ class StateTransitionController:
         self.processing_task: Optional[asyncio.Task] = None
     
     async def start_transition_processor(self):
-        """Start background transition processor"""        
+        """Start background transition processor"""
+        
         self.processing_task = asyncio.create_task(self._process_transitions())
         self.logger.info("State transition processor started")
     
     async def stop_transition_processor(self):
-        """Stop background transition processor"""        
+        """Stop background transition processor"""
+        
         if self.processing_task:
             self.processing_task.cancel()
             try:
@@ -700,7 +727,8 @@ class StateTransitionController:
         self.logger.info("State transition processor stopped")
     
     async def _process_transitions(self):
-        """Background task to process state transitions"""        
+        """Background task to process state transitions"""
+        
         try:
             while True:
                 try:
@@ -729,7 +757,8 @@ class StateTransitionController:
         context_update: Optional[Dict[str, Any]] = None,
         priority: int = 0
     ):
-        """Queue state transition for processing"""        
+        """Queue state transition for processing"""
+        
         transition_request = {
             "session_id": session_id,
             "to_state": to_state,
@@ -742,7 +771,8 @@ class StateTransitionController:
         await self.transition_queue.put(transition_request)
     
     async def _execute_transition_request(self, request: Dict[str, Any]):
-        """Execute transition request"""        
+        """Execute transition request"""
+        
         try:
             success = await self.state_manager.transition_state(
                 request["session_id"],
@@ -763,7 +793,8 @@ class StateTransitionController:
         to_state: ConversationState,
         reason: str
     ) -> bool:
-        """Force immediate state transition (bypass validation)"""        
+        """Force immediate state transition (bypass validation)"""
+        
         try:
             context = await self.state_manager.get_session_context(session_id)
             
@@ -797,7 +828,8 @@ class StateTransitionController:
 
 
 class SessionStateOrchestrator:
-    """Main session state orchestration controller"""    
+    """Main session state orchestration controller"""
+    
     def __init__(self, config: Optional[StateOrchestrationConfig] = None):
         self.config = config or StateOrchestrationConfig()
         self.state_manager = ConversationStateManager(self.config)
@@ -806,17 +838,20 @@ class SessionStateOrchestrator:
         self.logger = get_logger(self.__class__.__name__)
     
     async def initialize(self):
-        """Initialize the orchestrator"""        
+        """Initialize the orchestrator"""
+        
         await self.transition_controller.start_transition_processor()
         self.logger.info("Session state orchestrator initialized")
     
     async def shutdown(self):
-        """Shutdown the orchestrator"""        
+        """Shutdown the orchestrator"""
+        
         await self.transition_controller.stop_transition_processor()
         self.logger.info("Session state orchestrator shutdown")
     
     async def create_session_state(self, session_id: str, user_id: str) -> SessionContext:
-        """Create new session with initial state"""        
+        """Create new session with initial state"""
+        
         context = await self.context_manager.create_context(session_id, user_id)
         
         # Transition to active state
@@ -833,7 +868,8 @@ class SessionStateOrchestrator:
         session_id: str,
         input_data: Dict[str, Any]
     ) -> bool:
-        """Handle user input and manage state transitions"""        
+        """Handle user input and manage state transitions"""
+        
         try:
             # Update conversation stack
             await self.context_manager.update_conversation_stack(session_id, {
@@ -867,7 +903,8 @@ class SessionStateOrchestrator:
         session_id: str,
         analysis_result: Dict[str, Any]
     ) -> bool:
-        """Handle content analysis completion"""        
+        """Handle content analysis completion"""
+        
         try:
             # Update content context
             await self.context_manager.update_content_context(session_id, analysis_result)
@@ -898,7 +935,8 @@ class SessionStateOrchestrator:
         session_id: str,
         protection_result: Dict[str, Any]
     ) -> bool:
-        """Handle content protection verification"""        
+        """Handle content protection verification"""
+        
         try:
             # Update protection context
             context = await self.state_manager.get_session_context(session_id)
@@ -924,7 +962,8 @@ class SessionStateOrchestrator:
         session_id: str,
         monetization_result: Dict[str, Any]
     ) -> bool:
-        """Handle monetization evaluation completion"""        
+        """Handle monetization evaluation completion"""
+        
         try:
             # Update monetization context
             context = await self.state_manager.get_session_context(session_id)
@@ -950,7 +989,8 @@ class SessionStateOrchestrator:
         session_id: str,
         collaboration_data: Dict[str, Any]
     ) -> bool:
-        """Enable collaboration mode for session"""        
+        """Enable collaboration mode for session"""
+        
         try:
             # Update collaboration context
             await self.context_manager.update_collaboration_context(session_id, collaboration_data)
@@ -969,7 +1009,8 @@ class SessionStateOrchestrator:
             return False
     
     async def suspend_session(self, session_id: str, reason: str = "user_request") -> bool:
-        """Suspend session"""        
+        """Suspend session"""
+        
         try:
             await self.transition_controller.queue_transition(
                 session_id,
@@ -984,7 +1025,8 @@ class SessionStateOrchestrator:
             return False
     
     async def resume_session(self, session_id: str) -> bool:
-        """Resume suspended session"""        
+        """Resume suspended session"""
+        
         try:
             await self.transition_controller.queue_transition(
                 session_id,
@@ -999,7 +1041,8 @@ class SessionStateOrchestrator:
             return False
     
     async def terminate_session(self, session_id: str, reason: str = "user_request") -> bool:
-        """Terminate session"""        
+        """Terminate session"""
+        
         try:
             await self.transition_controller.queue_transition(
                 session_id,
@@ -1014,7 +1057,8 @@ class SessionStateOrchestrator:
             return False
     
     async def get_session_status(self, session_id: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive session status"""        
+        """Get comprehensive session status"""
+        
         try:
             context_summary = await self.context_manager.get_context_summary(session_id)
             
@@ -1039,7 +1083,8 @@ class SessionStateOrchestrator:
             return None
     
     async def get_orchestrator_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive orchestrator statistics"""        
+        """Get comprehensive orchestrator statistics"""
+        
         try:
             state_stats = await self.state_manager.get_state_statistics()
             

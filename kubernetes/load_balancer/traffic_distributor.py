@@ -11,7 +11,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import hashlib
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class LoadBalancingAlgorithm(Enum):
-    """Load balancing algorithm types"""    ROUND_ROBIN = "round_robin"
+    """Load balancing algorithm types"""
+    ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     LEAST_CONNECTIONS = "least_connections"
     WEIGHTED_LEAST_CONNECTIONS = "weighted_least_connections"
@@ -39,7 +41,8 @@ class LoadBalancingAlgorithm(Enum):
 
 
 class TrafficType(Enum):
-    """Traffic classification types"""    API_REQUEST = "api_request"
+    """Traffic classification types"""
+    API_REQUEST = "api_request"
     FILE_UPLOAD = "file_upload"
     STREAMING = "streaming"
     BATCH_PROCESSING = "batch_processing"
@@ -48,7 +51,8 @@ class TrafficType(Enum):
 
 @dataclass
 class ServerMetrics:
-    """Server performance metrics"""    active_connections: int = 0
+    """Server performance metrics"""
+    active_connections: int = 0
     total_requests: int = 0
     failed_requests: int = 0
     avg_response_time: float = 0.0
@@ -59,7 +63,8 @@ class ServerMetrics:
 
 @dataclass
 class TrafficServer:
-    """Traffic server configuration and state"""    id: str
+    """Traffic server configuration and state"""
+    id: str
     host: str
     port: int
     weight: int = 1
@@ -77,7 +82,8 @@ class TrafficServer:
 
 @dataclass
 class TrafficRequest:
-    """Traffic request information"""    id: str
+    """Traffic request information"""
+    id: str
     client_ip: str
     path: str
     method: str
@@ -90,7 +96,8 @@ class TrafficRequest:
 
 @dataclass
 class RoutingRule:
-    """Traffic routing rule"""    name: str
+    """Traffic routing rule"""
+    name: str
     conditions: Dict[str, Any]
     target_servers: List[str]
     algorithm: LoadBalancingAlgorithm = LoadBalancingAlgorithm.ROUND_ROBIN
@@ -99,7 +106,8 @@ class RoutingRule:
 
 
 class ConsistentHashRing:
-    """Consistent hashing implementation"""    
+    """Consistent hashing implementation"""
+    
     def __init__(self, replicas: int = 150):
         self.replicas = replicas
         self.ring: Dict[int, str] = {}
@@ -107,10 +115,12 @@ class ConsistentHashRing:
         self.servers: Dict[str, TrafficServer] = {}
     
     def _hash(self, key: str) -> int:
-        """Generate hash for key"""        return int(hashlib.md5(key.encode()).hexdigest(), 16)
+        """Generate hash for key"""
+        return int(hashlib.md5(key.encode()).hexdigest(), 16)
     
     def add_server(self, server: TrafficServer) -> None:
-        """Add server to hash ring"""        self.servers[server.id] = server
+        """Add server to hash ring"""
+        self.servers[server.id] = server
         
         for i in range(self.replicas):
             key = self._hash(f"{server.id}:{i}")
@@ -120,7 +130,8 @@ class ConsistentHashRing:
         self.sorted_keys.sort()
     
     def remove_server(self, server_id: str) -> None:
-        """Remove server from hash ring"""        if server_id not in self.servers:
+        """Remove server from hash ring"""
+        if server_id not in self.servers:
             return
         
         del self.servers[server_id]
@@ -132,7 +143,8 @@ class ConsistentHashRing:
                 self.sorted_keys.remove(key)
     
     def get_server(self, key: str) -> Optional[TrafficServer]:
-        """Get server for given key"""        if not self.ring:
+        """Get server for given key"""
+        if not self.ring:
             return None
         
         hash_key = self._hash(key)
@@ -149,13 +161,15 @@ class ConsistentHashRing:
 
 
 class LoadBalancingStrategy:
-    """Base class for load balancing strategies"""    
+    """Base class for load balancing strategies"""
+    
     def __init__(self, servers: List[TrafficServer]):
         self.servers = {server.id: server for server in servers}
         self.lock = threading.RLock()
     
     def select_server(self, request: TrafficRequest) -> Optional[TrafficServer]:
-        """Select server for request"""        # Default implementation for load balancers without server selection
+        """Select server for request"""
+        # Default implementation for load balancers without server selection
         logging.warning(f"Server selection not implemented for {self.__class__.__name__}")
         
         # Return first available server as fallback
@@ -163,27 +177,32 @@ class LoadBalancingStrategy:
         return available_servers[0] if available_servers else None
     
     def update_server_metrics(self, server_id: str, metrics: ServerMetrics) -> None:
-        """Update server metrics"""        with self.lock:
+        """Update server metrics"""
+        with self.lock:
             if server_id in self.servers:
                 self.servers[server_id].metrics = metrics
     
     def mark_server_unhealthy(self, server_id: str) -> None:
-        """Mark server as unhealthy"""        with self.lock:
+        """Mark server as unhealthy"""
+        with self.lock:
             if server_id in self.servers:
                 self.servers[server_id].is_healthy = False
     
     def mark_server_healthy(self, server_id: str) -> None:
-        """Mark server as healthy"""        with self.lock:
+        """Mark server as healthy"""
+        with self.lock:
             if server_id in self.servers:
                 self.servers[server_id].is_healthy = True
     
     def get_healthy_servers(self) -> List[TrafficServer]:
-        """Get list of healthy servers"""        with self.lock:
+        """Get list of healthy servers"""
+        with self.lock:
             return [server for server in self.servers.values() if server.is_healthy and not server.is_backup]
 
 
 class RoundRobinStrategy(LoadBalancingStrategy):
-    """Round Robin load balancing strategy"""    
+    """Round Robin load balancing strategy"""
+    
     def __init__(self, servers: List[TrafficServer]):
         super().__init__(servers)
         self.current_index = 0
@@ -200,14 +219,16 @@ class RoundRobinStrategy(LoadBalancingStrategy):
 
 
 class WeightedRoundRobinStrategy(LoadBalancingStrategy):
-    """Weighted Round Robin load balancing strategy"""    
+    """Weighted Round Robin load balancing strategy"""
+    
     def __init__(self, servers: List[TrafficServer]):
         super().__init__(servers)
         self.current_weights = {}
         self.reset_weights()
     
     def reset_weights(self):
-        """Reset current weights to server weights"""        with self.lock:
+        """Reset current weights to server weights"""
+        with self.lock:
             for server in self.servers.values():
                 self.current_weights[server.id] = server.weight
     
@@ -231,7 +252,8 @@ class WeightedRoundRobinStrategy(LoadBalancingStrategy):
 
 
 class LeastConnectionsStrategy(LoadBalancingStrategy):
-    """Least Connections load balancing strategy"""    
+    """Least Connections load balancing strategy"""
+    
     def select_server(self, request: TrafficRequest) -> Optional[TrafficServer]:
         healthy_servers = self.get_healthy_servers()
         if not healthy_servers:
@@ -242,7 +264,8 @@ class LeastConnectionsStrategy(LoadBalancingStrategy):
 
 
 class WeightedLeastConnectionsStrategy(LoadBalancingStrategy):
-    """Weighted Least Connections load balancing strategy"""    
+    """Weighted Least Connections load balancing strategy"""
+    
     def select_server(self, request: TrafficRequest) -> Optional[TrafficServer]:
         healthy_servers = self.get_healthy_servers()
         if not healthy_servers:
@@ -258,7 +281,8 @@ class WeightedLeastConnectionsStrategy(LoadBalancingStrategy):
 
 
 class LeastResponseTimeStrategy(LoadBalancingStrategy):
-    """Least Response Time load balancing strategy"""    
+    """Least Response Time load balancing strategy"""
+    
     def select_server(self, request: TrafficRequest) -> Optional[TrafficServer]:
         healthy_servers = self.get_healthy_servers()
         if not healthy_servers:
@@ -269,7 +293,8 @@ class LeastResponseTimeStrategy(LoadBalancingStrategy):
 
 
 class ConsistentHashStrategy(LoadBalancingStrategy):
-    """Consistent Hash load balancing strategy"""    
+    """Consistent Hash load balancing strategy"""
+    
     def __init__(self, servers: List[TrafficServer]):
         super().__init__(servers)
         self.hash_ring = ConsistentHashRing()
@@ -290,7 +315,8 @@ class ConsistentHashStrategy(LoadBalancingStrategy):
 
 
 class ResourceBasedStrategy(LoadBalancingStrategy):
-    """Resource-based load balancing strategy"""    
+    """Resource-based load balancing strategy"""
+    
     def select_server(self, request: TrafficRequest) -> Optional[TrafficServer]:
         healthy_servers = self.get_healthy_servers()
         if not healthy_servers:
@@ -310,7 +336,8 @@ class ResourceBasedStrategy(LoadBalancingStrategy):
 
 
 class AdaptiveStrategy(LoadBalancingStrategy):
-    """Adaptive load balancing strategy that switches algorithms based on conditions"""    
+    """Adaptive load balancing strategy that switches algorithms based on conditions"""
+    
     def __init__(self, servers: List[TrafficServer]):
         super().__init__(servers)
         self.strategies = {
@@ -331,7 +358,8 @@ class AdaptiveStrategy(LoadBalancingStrategy):
         return strategy.select_server(request)
     
     def _adapt_algorithm(self):
-        """Adapt algorithm based on current conditions"""        now = datetime.now()
+        """Adapt algorithm based on current conditions"""
+        now = datetime.now()
         if now - self.last_adaptation < timedelta(minutes=5):
             return
         
@@ -359,7 +387,8 @@ class AdaptiveStrategy(LoadBalancingStrategy):
 
 
 class TrafficDistributor:
-    """Enterprise Traffic Distributor for Load Balancer"""    
+    """Enterprise Traffic Distributor for Load Balancer"""
+    
     def __init__(self):
         self.servers: Dict[str, TrafficServer] = {}
         self.routing_rules: List[RoutingRule] = []
@@ -370,7 +399,8 @@ class TrafficDistributor:
         self.lock = threading.RLock()
     
     def add_server(self, server: TrafficServer) -> bool:
-        """Add server to traffic distribution"""        try:
+        """Add server to traffic distribution"""
+        try:
             with self.lock:
                 self.servers[server.id] = server
                 self._rebuild_strategies()
@@ -383,7 +413,8 @@ class TrafficDistributor:
             return False
     
     def remove_server(self, server_id: str) -> bool:
-        """Remove server from traffic distribution"""        try:
+        """Remove server from traffic distribution"""
+        try:
             with self.lock:
                 if server_id in self.servers:
                     del self.servers[server_id]
@@ -399,7 +430,8 @@ class TrafficDistributor:
             return False
     
     def add_routing_rule(self, rule: RoutingRule) -> bool:
-        """Add traffic routing rule"""        try:
+        """Add traffic routing rule"""
+        try:
             with self.lock:
                 # Remove existing rule with same name
                 self.routing_rules = [r for r in self.routing_rules if r.name != rule.name]
@@ -415,7 +447,8 @@ class TrafficDistributor:
             return False
     
     def _rebuild_strategies(self):
-        """Rebuild load balancing strategies"""        servers_list = list(self.servers.values())
+        """Rebuild load balancing strategies"""
+        servers_list = list(self.servers.values())
         
         self.strategies = {
             LoadBalancingAlgorithm.ROUND_ROBIN.value: RoundRobinStrategy(servers_list),
@@ -429,7 +462,8 @@ class TrafficDistributor:
         }
     
     def _match_routing_rule(self, request: TrafficRequest) -> Optional[RoutingRule]:
-        """Find matching routing rule for request"""        for rule in self.routing_rules:
+        """Find matching routing rule for request"""
+        for rule in self.routing_rules:
             if not rule.enabled:
                 continue
                 
@@ -470,7 +504,8 @@ class TrafficDistributor:
         return None
     
     def distribute_request(self, request: TrafficRequest) -> Optional[TrafficServer]:
-        """Distribute request to appropriate server"""        try:
+        """Distribute request to appropriate server"""
+        try:
             with self.lock:
                 # Find matching routing rule
                 rule = self._match_routing_rule(request)
@@ -524,7 +559,8 @@ class TrafficDistributor:
             return None
     
     def _create_strategy(self, algorithm: LoadBalancingAlgorithm, servers: List[TrafficServer]) -> LoadBalancingStrategy:
-        """Create strategy instance for given algorithm and servers"""        if algorithm == LoadBalancingAlgorithm.ROUND_ROBIN:
+        """Create strategy instance for given algorithm and servers"""
+        if algorithm == LoadBalancingAlgorithm.ROUND_ROBIN:
             return RoundRobinStrategy(servers)
         elif algorithm == LoadBalancingAlgorithm.WEIGHTED_ROUND_ROBIN:
             return WeightedRoundRobinStrategy(servers)
@@ -544,7 +580,8 @@ class TrafficDistributor:
             return RoundRobinStrategy(servers)
     
     def update_server_metrics(self, server_id: str, metrics: ServerMetrics) -> bool:
-        """Update server metrics"""        try:
+        """Update server metrics"""
+        try:
             with self.lock:
                 if server_id in self.servers:
                     self.servers[server_id].metrics = metrics
@@ -563,7 +600,8 @@ class TrafficDistributor:
             return False
     
     def configure_platform_services(self) -> bool:
-        """Configure traffic distribution for platform services"""        try:
+        """Configure traffic distribution for platform services"""
+        try:
             # Configure servers for different services
             servers = [
                 # Fingerprinting service servers
@@ -803,7 +841,8 @@ class TrafficDistributor:
             return False
     
     def get_distribution_stats(self) -> Dict[str, Any]:
-        """Get traffic distribution statistics"""        with self.lock:
+        """Get traffic distribution statistics"""
+        with self.lock:
             # Calculate server utilization
             server_stats = {}
             for server_id, server in self.servers.items():

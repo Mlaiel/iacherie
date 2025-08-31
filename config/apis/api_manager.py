@@ -4,7 +4,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides centralized management for all API configurations,
 validation, health checking, and dynamic configuration loading.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Type, Union
 from dataclasses import dataclass
@@ -23,21 +24,24 @@ from .communication_apis import CommunicationAPIConfig, COMMUNICATION_CONFIGS
 logger = logging.getLogger(__name__)
 
 class APIStatus(Enum):
-    """API status enumeration"""    ACTIVE = "active"
+    """API status enumeration"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     DEPRECATED = "deprecated"
     MAINTENANCE = "maintenance"
     ERROR = "error"
 
 class ConfigurationSource(Enum):
-    """Configuration source types"""    ENVIRONMENT = "environment"
+    """Configuration source types"""
+    ENVIRONMENT = "environment"
     FILE = "file"
     DATABASE = "database"
     REMOTE = "remote"
 
 @dataclass
 class APIHealthCheck:
-    """API health check result"""    api_name: str
+    """API health check result"""
+    api_name: str
     status: APIStatus
     response_time_ms: float
     last_check: datetime
@@ -46,7 +50,8 @@ class APIHealthCheck:
 
 @dataclass
 class APIUsageMetrics:
-    """API usage metrics"""    api_name: str
+    """API usage metrics"""
+    api_name: str
     requests_count: int
     success_rate: float
     average_response_time: float
@@ -54,7 +59,8 @@ class APIUsageMetrics:
     last_reset: datetime
 
 class APIConfigValidator:
-    """Validates API configurations"""    
+    """Validates API configurations"""
+    
     def __init__(self):
         self.required_fields = {
             'platform': ['platform_name', 'base_url', 'api_version'],
@@ -66,7 +72,8 @@ class APIConfigValidator:
         }
     
     def validate_config(self, config: Any, config_type: str = "unknown") -> bool:
-        """        Validate API configuration
+        """
+        Validate API configuration
         
         Args:
             config: Configuration object to validate
@@ -74,7 +81,8 @@ class APIConfigValidator:
             
         Returns:
             True if valid, False otherwise
-        """        try:
+        """
+        try:
             if not config:
                 logger.error("Configuration is None or empty")
                 return False
@@ -105,7 +113,8 @@ class APIConfigValidator:
             return False
     
     def _validate_url(self, url: str) -> bool:
-        """Validate URL format"""        import re
+        """Validate URL format"""
+        import re
         url_pattern = re.compile(
             r'^https?://'  # http:// or https://
             r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?|'  # domain...
@@ -116,7 +125,8 @@ class APIConfigValidator:
         return url_pattern.match(url) is not None
 
 class APIManager:
-    """Central API management system"""    
+    """Central API management system"""
+    
     def __init__(self, environment: str = "production"):
         self.environment = environment
         self.configs: Dict[str, Any] = {}
@@ -126,7 +136,8 @@ class APIManager:
         self._load_configurations()
     
     def _load_configurations(self):
-        """Load all API configurations"""        try:
+        """Load all API configurations"""
+        try:
             # Load platform configurations
             for name, config in PLATFORM_CONFIGS.items():
                 self.register_api_config(f"platform_{name}", config, "platform")
@@ -158,13 +169,15 @@ class APIManager:
             raise
     
     def register_api_config(self, api_name: str, config: Any, config_type: str = "unknown"):
-        """        Register API configuration
+        """
+        Register API configuration
         
         Args:
             api_name: Unique API identifier
             config: Configuration object
             config_type: Type of configuration
-        """        try:
+        """
+        try:
             # Validate configuration
             if not self.validator.validate_config(config, config_type):
                 raise ValueError(f"Invalid configuration for {api_name}")
@@ -196,34 +209,40 @@ class APIManager:
             raise
     
     def get_api_config(self, api_name: str) -> Optional[Dict[str, Any]]:
-        """Get API configuration by name"""        return self.configs.get(api_name, {}).get('config')
+        """Get API configuration by name"""
+        return self.configs.get(api_name, {}).get('config')
     
     def get_all_configs(self) -> Dict[str, Any]:
-        """Get all API configurations"""        return {name: data['config'] for name, data in self.configs.items()}
+        """Get all API configurations"""
+        return {name: data['config'] for name, data in self.configs.items()}
     
     def get_configs_by_type(self, config_type: str) -> Dict[str, Any]:
-        """Get configurations by type"""        return {
+        """Get configurations by type"""
+        return {
             name: data['config'] 
             for name, data in self.configs.items() 
             if data['type'] == config_type
         }
     
     def get_active_configs(self) -> Dict[str, Any]:
-        """Get only active configurations"""        return {
+        """Get only active configurations"""
+        return {
             name: data['config'] 
             for name, data in self.configs.items() 
             if data['status'] == APIStatus.ACTIVE
         }
     
     async def check_api_health(self, api_name: str) -> APIHealthCheck:
-        """        Check health of specific API
+        """
+        Check health of specific API
         
         Args:
             api_name: API to check
             
         Returns:
             APIHealthCheck result
-        """        try:
+        """
+        try:
             config = self.get_api_config(api_name)
             if not config:
                 return APIHealthCheck(
@@ -305,7 +324,8 @@ class APIManager:
             )
     
     async def check_all_apis_health(self) -> Dict[str, APIHealthCheck]:
-        """Check health of all APIs"""        tasks = []
+        """Check health of all APIs"""
+        tasks = []
         for api_name in self.configs.keys():
             tasks.append(self.check_api_health(api_name))
         
@@ -328,7 +348,8 @@ class APIManager:
         return health_results
     
     def update_usage_metrics(self, api_name: str, success: bool, response_time: float):
-        """Update API usage metrics"""        if api_name not in self.usage_metrics:
+        """Update API usage metrics"""
+        if api_name not in self.usage_metrics:
             return
         
         metrics = self.usage_metrics[api_name]
@@ -347,13 +368,16 @@ class APIManager:
             metrics.average_response_time = (metrics.average_response_time + response_time) / 2
     
     def get_usage_metrics(self, api_name: str) -> Optional[APIUsageMetrics]:
-        """Get usage metrics for specific API"""        return self.usage_metrics.get(api_name)
+        """Get usage metrics for specific API"""
+        return self.usage_metrics.get(api_name)
     
     def get_all_usage_metrics(self) -> Dict[str, APIUsageMetrics]:
-        """Get usage metrics for all APIs"""        return self.usage_metrics.copy()
+        """Get usage metrics for all APIs"""
+        return self.usage_metrics.copy()
     
     def reset_usage_metrics(self, api_name: Optional[str] = None):
-        """Reset usage metrics for specific API or all APIs"""        if api_name:
+        """Reset usage metrics for specific API or all APIs"""
+        if api_name:
             if api_name in self.usage_metrics:
                 metrics = self.usage_metrics[api_name]
                 metrics.requests_count = 0
@@ -370,15 +394,18 @@ class APIManager:
                 metrics.last_reset = datetime.utcnow()
     
     def set_api_status(self, api_name: str, status: APIStatus):
-        """Set API status"""        if api_name in self.configs:
+        """Set API status"""
+        if api_name in self.configs:
             self.configs[api_name]['status'] = status
             logger.info(f"API {api_name} status changed to {status.value}")
     
     def get_api_status(self, api_name: str) -> Optional[APIStatus]:
-        """Get API status"""        return self.configs.get(api_name, {}).get('status')
+        """Get API status"""
+        return self.configs.get(api_name, {}).get('status')
     
     def export_configuration(self, file_path: str):
-        """Export current configuration to file"""        try:
+        """Export current configuration to file"""
+        try:
             export_data = {
                 'environment': self.environment,
                 'exported_at': datetime.utcnow().isoformat(),
@@ -409,7 +436,8 @@ class APIManager:
             raise
     
     def get_summary(self) -> Dict[str, Any]:
-        """Get API manager summary"""        active_count = sum(1 for data in self.configs.values() if data['status'] == APIStatus.ACTIVE)
+        """Get API manager summary"""
+        active_count = sum(1 for data in self.configs.values() if data['status'] == APIStatus.ACTIVE)
         inactive_count = len(self.configs) - active_count
         
         return {

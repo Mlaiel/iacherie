@@ -4,7 +4,7 @@ This module provides comprehensive audio processing, protection, and intelligenc
 capabilities for the IA Influencer Agent platform.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Expert Development Team:
 - Lead Dev IA: Advanced AI algorithms and intelligent processing
@@ -25,7 +25,9 @@ of this code WITHOUT explicit written permission is STRICTLY PROHIBITED
 and will result in legal action under German and International copyright law.
 
 For licensing inquiries: mlaiel@live.de
-"""from .analysis import (
+"""
+
+from .analysis import (
     SpectralAnalyzer,
     MelodyExtractor,
     RhythmAnalyzer,
@@ -127,7 +129,7 @@ from .index import (
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 # Export main classes and hub functionality
 __all__ = [

@@ -311,7 +311,8 @@ logger.info(f"Developed by {__author__} - {__email__}")
 logger.info("All rights reserved - Unauthorized use prohibited")
 
 def get_module_info():
-    """Get comprehensive module information"""    return {
+    """Get comprehensive module information"""
+    return {
         "name": "Advanced Payment Processing Module",
         "version": __version__,
         "author": __author__,
@@ -340,7 +341,8 @@ def get_module_info():
     }
 
 def get_compliance_status():
-    """Get compliance status for all supported standards"""    return {
+    """Get compliance status for all supported standards"""
+    return {
         "PCI_DSS": "Level 1 Compliant",
         "GDPR": "Fully Compliant", 
         "SOX": "Compliant",
@@ -352,7 +354,8 @@ def get_compliance_status():
     }
 
 def get_supported_gateways():
-    """Get list of supported payment gateways"""    return [
+    """Get list of supported payment gateways"""
+    return [
         "Stripe",
         "PayPal", 
         "Wise (TransferWise)",
@@ -367,7 +370,8 @@ def get_supported_gateways():
 
 # Initialize module components on import
 def _initialize_module():
-    """Initialize module components"""    try:
+    """Initialize module components"""
+    try:
         # Initialize logging
         logger.info("Initializing Payment Processing Module components...")
         

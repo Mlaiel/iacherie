@@ -10,7 +10,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import json
 import logging
@@ -32,14 +33,16 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityThreatLevel(Enum):
-    """Security threat levels"""    LOW = "low"
+    """Security threat levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class ValidationStatus(Enum):
-    """Model validation status"""    PENDING = "pending"
+    """Model validation status"""
+    PENDING = "pending"
     VALIDATING = "validating"
     PASSED = "passed"
     FAILED = "failed"
@@ -48,7 +51,8 @@ class ValidationStatus(Enum):
 
 @dataclass
 class SecurityMetrics:
-    """Security validation metrics"""    threat_level: SecurityThreatLevel
+    """Security validation metrics"""
+    threat_level: SecurityThreatLevel
     validation_status: ValidationStatus
     security_score: float = 0.0
     integrity_score: float = 0.0
@@ -77,8 +81,10 @@ class SecurityMetrics:
 
 
 class ModelSecurityValidator:
-    """    Advanced security validator for ML models
-    """    
+    """
+    Advanced security validator for ML models
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.security_thresholds = self.config.get('security_thresholds', {
@@ -89,8 +95,10 @@ class ModelSecurityValidator:
         })
         
     async def validate_model_security(self, model: torch.nn.Module, model_path: str, metadata: Dict[str, Any]) -> SecurityMetrics:
-        """        Comprehensive security validation of ML model
-        """        start_time = datetime.utcnow()
+        """
+        Comprehensive security validation of ML model
+        """
+        start_time = datetime.utcnow()
         
         try:
             # Initialize security metrics
@@ -156,7 +164,8 @@ class ModelSecurityValidator:
             )
     
     async def _validate_model_integrity(self, model: torch.nn.Module, model_path: str) -> float:
-        """Validate model file integrity and structure"""        try:
+        """Validate model file integrity and structure"""
+        try:
             # Check file existence and basic properties
             model_file = Path(model_path)
             if not model_file.exists():
@@ -188,7 +197,8 @@ class ModelSecurityValidator:
             return 0.0
     
     async def _validate_io_security(self, model: torch.nn.Module, metadata: Dict[str, Any]) -> float:
-        """Validate input/output security and sanitization"""        try:
+        """Validate input/output security and sanitization"""
+        try:
             security_score = 0.7  # Base score
             
             # Check input schema validation
@@ -212,7 +222,8 @@ class ModelSecurityValidator:
             return 0.0
     
     async def _test_adversarial_robustness(self, model: torch.nn.Module, metadata: Dict[str, Any]) -> float:
-        """Test model robustness against adversarial attacks"""        try:
+        """Test model robustness against adversarial attacks"""
+        try:
             # Simplified adversarial testing
             robustness_score = 0.6  # Base score
             
@@ -251,7 +262,8 @@ class ModelSecurityValidator:
             return 0.0
     
     async def _detect_model_poisoning(self, model: torch.nn.Module, metadata: Dict[str, Any]) -> float:
-        """Detect potential model poisoning attacks"""        try:
+        """Detect potential model poisoning attacks"""
+        try:
             poisoning_resistance = 0.7  # Base score
             
             # Check for unusual parameter distributions
@@ -284,7 +296,8 @@ class ModelSecurityValidator:
             return 0.5
     
     async def _assess_bias_fairness(self, model: torch.nn.Module, metadata: Dict[str, Any]) -> float:
-        """Assess model bias and fairness"""        try:
+        """Assess model bias and fairness"""
+        try:
             bias_score = 0.6  # Base score
             
             # Check if bias assessment was performed during training
@@ -311,7 +324,8 @@ class ModelSecurityValidator:
             return 0.5
     
     async def _validate_privacy_compliance(self, model: torch.nn.Module, metadata: Dict[str, Any]) -> float:
-        """Validate privacy compliance (GDPR, etc.)"""        try:
+        """Validate privacy compliance (GDPR, etc.)"""
+        try:
             privacy_score = 0.7  # Base score
             
             # Check for privacy-preserving techniques
@@ -339,7 +353,8 @@ class ModelSecurityValidator:
             return 0.5
     
     async def _scan_known_vulnerabilities(self, model: torch.nn.Module, model_path: str) -> List[str]:
-        """Scan for known vulnerabilities"""        vulnerabilities = []
+        """Scan for known vulnerabilities"""
+        vulnerabilities = []
         
         try:
             # Check model file format vulnerabilities
@@ -365,7 +380,8 @@ class ModelSecurityValidator:
         return vulnerabilities
     
     def _calculate_security_score(self, metrics: SecurityMetrics) -> float:
-        """Calculate overall security score"""        weights = {
+        """Calculate overall security score"""
+        weights = {
             'integrity': 0.25,
             'robustness': 0.20,
             'input_validation': 0.15,
@@ -390,7 +406,8 @@ class ModelSecurityValidator:
         return score
     
     def _determine_threat_level(self, metrics: SecurityMetrics) -> SecurityThreatLevel:
-        """Determine threat level based on security metrics"""        if metrics.security_score >= 0.8 and len(metrics.known_vulnerabilities) == 0:
+        """Determine threat level based on security metrics"""
+        if metrics.security_score >= 0.8 and len(metrics.known_vulnerabilities) == 0:
             return SecurityThreatLevel.LOW
         elif metrics.security_score >= 0.6 and len(metrics.known_vulnerabilities) <= 2:
             return SecurityThreatLevel.MEDIUM
@@ -400,7 +417,8 @@ class ModelSecurityValidator:
             return SecurityThreatLevel.CRITICAL
     
     def _determine_validation_status(self, metrics: SecurityMetrics) -> ValidationStatus:
-        """Determine validation status"""        if metrics.security_score >= self.security_thresholds['min_security_score']:
+        """Determine validation status"""
+        if metrics.security_score >= self.security_thresholds['min_security_score']:
             if metrics.threat_level in [SecurityThreatLevel.LOW, SecurityThreatLevel.MEDIUM]:
                 return ValidationStatus.PASSED
             else:
@@ -409,7 +427,8 @@ class ModelSecurityValidator:
             return ValidationStatus.FAILED
     
     def _generate_security_recommendations(self, metrics: SecurityMetrics) -> List[str]:
-        """Generate security improvement recommendations"""        recommendations = []
+        """Generate security improvement recommendations"""
+        recommendations = []
         
         if metrics.integrity_score < 0.8:
             recommendations.append("Improve model integrity validation and checksums")
@@ -439,8 +458,10 @@ class ModelSecurityValidator:
 
 
 class AdversarialDefense:
-    """    Adversarial attack defense mechanisms for ML models
-    """    
+    """
+    Adversarial attack defense mechanisms for ML models
+    """
+    
     def __init__(self):
         self.defense_techniques = [
             "input_preprocessing",
@@ -451,7 +472,8 @@ class AdversarialDefense:
         ]
     
     async def apply_input_preprocessing(self, input_data: torch.Tensor, technique: str = "gaussian_noise") -> torch.Tensor:
-        """Apply input preprocessing defense"""        try:
+        """Apply input preprocessing defense"""
+        try:
             if technique == "gaussian_noise":
                 noise = torch.randn_like(input_data) * 0.01
                 return input_data + noise
@@ -465,7 +487,8 @@ class AdversarialDefense:
             return input_data
     
     async def detect_adversarial_input(self, input_data: torch.Tensor, model: torch.nn.Module) -> Dict[str, Any]:
-        """Detect potential adversarial inputs"""        try:
+        """Detect potential adversarial inputs"""
+        try:
             detection_results = {
                 'is_adversarial': False,
                 'confidence': 0.0,
@@ -501,8 +524,10 @@ class AdversarialDefense:
 
 
 class ModelIntegrityChecker:
-    """    Advanced model integrity verification system
-    """    
+    """
+    Advanced model integrity verification system
+    """
+    
     def __init__(self):
         self.integrity_checks = [
             "checksum_verification",
@@ -512,7 +537,8 @@ class ModelIntegrityChecker:
         ]
     
     async def verify_model_integrity(self, model_path: str, expected_checksum: Optional[str] = None) -> Dict[str, Any]:
-        """Comprehensive model integrity verification"""        try:
+        """Comprehensive model integrity verification"""
+        try:
             integrity_results = {
                 'checksum_valid': False,
                 'structure_valid': False,
@@ -564,7 +590,8 @@ class ModelIntegrityChecker:
             }
     
     def _calculate_file_checksum(self, file_path: str) -> str:
-        """Calculate SHA-256 checksum of file"""        hash_sha256 = hashlib.sha256()
+        """Calculate SHA-256 checksum of file"""
+        hash_sha256 = hashlib.sha256()
         try:
             with open(file_path, "rb") as f:
                 for chunk in iter(lambda: f.read(4096), b""):
@@ -575,7 +602,8 @@ class ModelIntegrityChecker:
             return ""
     
     def _validate_parameters(self, parameters: Dict[str, torch.Tensor]) -> bool:
-        """Validate model parameters for anomalies"""        try:
+        """Validate model parameters for anomalies"""
+        try:
             for name, param in parameters.items():
                 # Check for NaN or infinite values
                 if torch.isnan(param).any() or torch.isinf(param).any():

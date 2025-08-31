@@ -22,7 +22,8 @@ distribution, or commercialization without explicit written permission from
 Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import numpy as np
@@ -87,7 +88,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentProtectionType(str, Enum):
-    """Types of content protection"""    FINGERPRINTING = "fingerprinting"
+    """Types of content protection"""
+    FINGERPRINTING = "fingerprinting"
     COPYRIGHT_DETECTION = "copyright_detection"
     PLAGIARISM_CHECK = "plagiarism_check"
     SIMILARITY_ANALYSIS = "similarity_analysis"
@@ -97,7 +99,8 @@ class ContentProtectionType(str, Enum):
 
 
 class FingerprintType(str, Enum):
-    """Types of fingerprints"""    AUDIO_CHROMAPRINT = "audio_chromaprint"
+    """Types of fingerprints"""
+    AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_SPECTRAL = "audio_spectral"
     VIDEO_PERCEPTUAL = "video_perceptual"
     VIDEO_FRAME_HASH = "video_frame_hash"
@@ -108,7 +111,8 @@ class FingerprintType(str, Enum):
 
 
 class ProtectionStatus(str, Enum):
-    """Protection status levels"""    UNPROTECTED = "unprotected"
+    """Protection status levels"""
+    UNPROTECTED = "unprotected"
     PROCESSING = "processing"
     PROTECTED = "protected"
     MONITORED = "monitored"
@@ -119,7 +123,8 @@ class ProtectionStatus(str, Enum):
 
 
 class SimilarityThreshold(str, Enum):
-    """Similarity thresholds for matching"""    EXACT = "exact"          # 95%+ similarity
+    """Similarity thresholds for matching"""
+    EXACT = "exact"          # 95%+ similarity
     HIGH = "high"            # 85%+ similarity
     MEDIUM = "medium"        # 70%+ similarity
     LOW = "low"              # 50%+ similarity
@@ -128,7 +133,8 @@ class SimilarityThreshold(str, Enum):
 
 @dataclass
 class ProtectionConfig:
-    """Configuration for content protection"""    # Fingerprinting settings
+    """Configuration for content protection"""
+    # Fingerprinting settings
     enable_audio_fingerprinting: bool = True
     enable_video_fingerprinting: bool = True
     enable_image_fingerprinting: bool = True
@@ -171,7 +177,8 @@ class ProtectionConfig:
 
 @dataclass
 class ContentFingerprint:
-    """Represents a content fingerprint"""    fingerprint_id: str
+    """Represents a content fingerprint"""
+    fingerprint_id: str
     user_id: str
     content_type: str
     fingerprint_type: FingerprintType
@@ -188,7 +195,8 @@ class ContentFingerprint:
 
 @dataclass
 class ProtectionAlert:
-    """Represents a protection violation alert"""    alert_id: str
+    """Represents a protection violation alert"""
+    alert_id: str
     original_fingerprint_id: str
     detected_url: str
     platform: str
@@ -205,7 +213,8 @@ class ProtectionAlert:
 
 @dataclass
 class ProtectionResult:
-    """Result of protection operation"""    success: bool
+    """Result of protection operation"""
+    success: bool
     content_type: str
     fingerprints_created: List[ContentFingerprint]
     protection_status: ProtectionStatus
@@ -217,7 +226,8 @@ class ProtectionResult:
 
 
 class AudioFingerprintEngine:
-    """AI-powered audio fingerprinting engine"""    
+    """AI-powered audio fingerprinting engine"""
+    
     def __init__(self, config: ProtectionConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.AudioFingerprintEngine")
@@ -227,7 +237,8 @@ class AudioFingerprintEngine:
         audio_data: Union[bytes, np.ndarray],
         sample_rate: int = 22050
     ) -> ContentFingerprint:
-        """Create audio fingerprint using multiple techniques"""        try:
+        """Create audio fingerprint using multiple techniques"""
+        try:
             # Load audio data
             if isinstance(audio_data, bytes):
                 with tempfile.NamedTemporaryFile(suffix=".wav") as temp_file:
@@ -273,7 +284,8 @@ class AudioFingerprintEngine:
             raise
     
     def _create_chromaprint(self, y: np.ndarray, sr: int) -> str:
-        """Create Chromaprint fingerprint"""        try:
+        """Create Chromaprint fingerprint"""
+        try:
             # Convert to int16 for chromaprint
             audio_int16 = (y * 32767).astype(np.int16)
             
@@ -286,7 +298,8 @@ class AudioFingerprintEngine:
             return ""
     
     def _create_spectral_fingerprint(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Create spectral fingerprint using MFCC and chroma"""        try:
+        """Create spectral fingerprint using MFCC and chroma"""
+        try:
             # Extract MFCC features
             mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
             
@@ -310,7 +323,8 @@ class AudioFingerprintEngine:
             return np.array([])
     
     def _create_audio_embedding(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Create high-dimensional audio embedding for similarity search"""        try:
+        """Create high-dimensional audio embedding for similarity search"""
+        try:
             # Extract comprehensive audio features
             features = []
             
@@ -351,7 +365,8 @@ class AudioFingerprintEngine:
         fingerprint1: ContentFingerprint,
         fingerprint2: ContentFingerprint
     ) -> float:
-        """Compare two audio fingerprints and return similarity score"""        try:
+        """Compare two audio fingerprints and return similarity score"""
+        try:
             # Load fingerprint data
             data1 = json.loads(fingerprint1.fingerprint_data)
             data2 = json.loads(fingerprint2.fingerprint_data)
@@ -390,7 +405,8 @@ class AudioFingerprintEngine:
             return 0.0
     
     def _compare_chromaprints(self, fp1: str, fp2: str) -> float:
-        """Compare chromaprint fingerprints"""        if not fp1 or not fp2:
+        """Compare chromaprint fingerprints"""
+        if not fp1 or not fp2:
             return 0.0
         
         # Simple string similarity (in production, use proper chromaprint comparison)
@@ -405,7 +421,8 @@ class AudioFingerprintEngine:
         return 0.0
     
     def _compare_spectral_features(self, features1: np.ndarray, features2: np.ndarray) -> float:
-        """Compare spectral feature vectors"""        if features1.size == 0 or features2.size == 0:
+        """Compare spectral feature vectors"""
+        if features1.size == 0 or features2.size == 0:
             return 0.0
         
         if len(features1) != len(features2):
@@ -416,13 +433,15 @@ class AudioFingerprintEngine:
 
 
 class VideoFingerprintEngine:
-    """AI-powered video fingerprinting engine"""    
+    """AI-powered video fingerprinting engine"""
+    
     def __init__(self, config: ProtectionConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.VideoFingerprintEngine")
     
     async def create_fingerprint(self, video_data: bytes) -> ContentFingerprint:
-        """Create video fingerprint using frame analysis"""        try:
+        """Create video fingerprint using frame analysis"""
+        try:
             # Save video to temporary file
             with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as temp_file:
                 temp_file.write(video_data)
@@ -485,7 +504,8 @@ class VideoFingerprintEngine:
             raise
     
     def _extract_key_frames(self, video_path: str, num_frames: int = 10) -> List[np.ndarray]:
-        """Extract key frames from video"""        cap = cv2.VideoCapture(video_path)
+        """Extract key frames from video"""
+        cap = cv2.VideoCapture(video_path)
         frames = []
         
         frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -501,7 +521,8 @@ class VideoFingerprintEngine:
         return frames
     
     def _create_frame_hash(self, frame: np.ndarray) -> str:
-        """Create hash for individual frame"""        # Convert to grayscale
+        """Create hash for individual frame"""
+        # Convert to grayscale
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         
         # Resize to standard size
@@ -511,7 +532,8 @@ class VideoFingerprintEngine:
         return hashlib.md5(resized.tobytes()).hexdigest()
     
     def _create_perceptual_hash(self, frames: List[np.ndarray]) -> str:
-        """Create perceptual hash from multiple frames"""        if not frames:
+        """Create perceptual hash from multiple frames"""
+        if not frames:
             return ""
         
         # Average frame
@@ -525,7 +547,8 @@ class VideoFingerprintEngine:
         return hashlib.sha256(resized.tobytes()).hexdigest()
     
     def _extract_motion_features(self, video_path: str) -> np.ndarray:
-        """Extract motion-based features from video"""        cap = cv2.VideoCapture(video_path)
+        """Extract motion-based features from video"""
+        cap = cv2.VideoCapture(video_path)
         features = []
         
         prev_frame = None
@@ -568,7 +591,8 @@ class VideoFingerprintEngine:
         frames: List[np.ndarray],
         motion_features: np.ndarray
     ) -> np.ndarray:
-        """Create comprehensive video embedding"""        try:
+        """Create comprehensive video embedding"""
+        try:
             embedding_parts = []
             
             # Color histogram features
@@ -601,13 +625,15 @@ class VideoFingerprintEngine:
 
 
 class ImageFingerprintEngine:
-    """AI-powered image fingerprinting engine"""    
+    """AI-powered image fingerprinting engine"""
+    
     def __init__(self, config: ProtectionConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.ImageFingerprintEngine")
     
     async def create_fingerprint(self, image_data: bytes) -> ContentFingerprint:
-        """Create image fingerprint using multiple techniques"""        try:
+        """Create image fingerprint using multiple techniques"""
+        try:
             # Load image
             image = Image.open(io.BytesIO(image_data))
             
@@ -653,7 +679,8 @@ class ImageFingerprintEngine:
             raise
     
     def _create_feature_hash(self, image: Image.Image) -> str:
-        """Create feature-based hash using color and texture"""        try:
+        """Create feature-based hash using color and texture"""
+        try:
             # Convert to RGB if needed
             if image.mode != 'RGB':
                 image = image.convert('RGB')
@@ -694,7 +721,8 @@ class ImageFingerprintEngine:
             return ""
     
     def _create_image_embedding(self, image: Image.Image) -> np.ndarray:
-        """Create high-dimensional image embedding"""        try:
+        """Create high-dimensional image embedding"""
+        try:
             # Convert to RGB if needed
             if image.mode != 'RGB':
                 image = image.convert('RGB')
@@ -736,14 +764,16 @@ class ImageFingerprintEngine:
 
 
 class TextFingerprintEngine:
-    """AI-powered text fingerprinting engine"""    
+    """AI-powered text fingerprinting engine"""
+    
     def __init__(self, config: ProtectionConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.TextFingerprintEngine")
         self.vectorizer = TfidfVectorizer(max_features=1000, stop_words='english')
     
     async def create_fingerprint(self, text_data: str) -> ContentFingerprint:
-        """Create text fingerprint using multiple techniques"""        try:
+        """Create text fingerprint using multiple techniques"""
+        try:
             # Create structural hash
             structural_hash = self._create_structural_hash(text_data)
             
@@ -787,7 +817,8 @@ class TextFingerprintEngine:
             raise
     
     def _create_structural_hash(self, text: str) -> str:
-        """Create hash based on text structure"""        # Remove content, keep structure
+        """Create hash based on text structure"""
+        # Remove content, keep structure
         lines = text.split('\n')
         structure = []
         
@@ -804,7 +835,8 @@ class TextFingerprintEngine:
         return hashlib.sha256(structure_string.encode()).hexdigest()
     
     def _create_semantic_hash(self, text: str) -> str:
-        """Create hash based on semantic content"""        # Extract key semantic elements
+        """Create hash based on semantic content"""
+        # Extract key semantic elements
         words = text.lower().split()
         
         # Remove stop words (simplified)
@@ -818,7 +850,8 @@ class TextFingerprintEngine:
         return hashlib.sha256(semantic_string.encode()).hexdigest()
     
     def _create_ngram_hash(self, text: str, n: int = 3) -> str:
-        """Create hash based on n-grams"""        words = text.lower().split()
+        """Create hash based on n-grams"""
+        words = text.lower().split()
         ngrams = []
         
         for i in range(len(words) - n + 1):
@@ -833,7 +866,8 @@ class TextFingerprintEngine:
         return hashlib.sha256(ngram_string.encode()).hexdigest()
     
     def _create_text_embedding(self, text: str) -> np.ndarray:
-        """Create text embedding using TF-IDF and statistics"""        try:
+        """Create text embedding using TF-IDF and statistics"""
+        try:
             # TF-IDF features
             tfidf_matrix = self.vectorizer.fit_transform([text])
             tfidf_features = tfidf_matrix.toarray().flatten()
@@ -868,7 +902,8 @@ class TextFingerprintEngine:
             return np.array([])
     
     def _extract_text_statistics(self, text: str) -> Dict[str, Any]:
-        """Extract comprehensive text statistics"""        words = text.split()
+        """Extract comprehensive text statistics"""
+        words = text.split()
         sentences = text.split('.')
         paragraphs = text.split('\n\n')
         
@@ -886,11 +921,13 @@ class TextFingerprintEngine:
 
 
 class ProtectionProcessor:
-    """    🛡️ ENTERPRISE CONTENT PROTECTION PROCESSOR
+    """
+    🛡️ ENTERPRISE CONTENT PROTECTION PROCESSOR
     
     Industrial-grade content protection system with AI-powered fingerprinting,
     similarity detection, and automated copyright enforcement.
-    """    
+    """
+    
     def __init__(
         self,
         db_session,
@@ -913,7 +950,8 @@ class ProtectionProcessor:
         self._initialize_vector_db()
     
     def _initialize_vector_db(self):
-        """Initialize FAISS vector database for similarity search"""        try:
+        """Initialize FAISS vector database for similarity search"""
+        try:
             if VECTOR_DB_AVAILABLE:
                 # Initialize FAISS index (would be persistent in production)
                 self.vector_db = {}  # Placeholder for actual FAISS implementation
@@ -930,7 +968,8 @@ class ProtectionProcessor:
         user_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ProtectionResult:
-        """        Protect content by creating fingerprints and checking for similarities
+        """
+        Protect content by creating fingerprints and checking for similarities
         
         Args:
             content: Content data (bytes for media, str for text)
@@ -940,7 +979,8 @@ class ProtectionProcessor:
             
         Returns:
             ProtectionResult with fingerprints and similarity analysis
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         fingerprints_created = []
         similarity_matches = []
         warnings = []
@@ -1024,7 +1064,8 @@ class ProtectionProcessor:
             )
     
     async def _store_fingerprint(self, fingerprint: ContentFingerprint):
-        """Store fingerprint in database and cache"""        try:
+        """Store fingerprint in database and cache"""
+        try:
             # Store in database (placeholder - would use actual DB)
             fingerprint_data = {
                 "fingerprint_id": fingerprint.fingerprint_id,
@@ -1059,7 +1100,8 @@ class ProtectionProcessor:
             raise
     
     async def _add_to_vector_db(self, fingerprint: ContentFingerprint):
-        """Add fingerprint to vector database for similarity search"""        try:
+        """Add fingerprint to vector database for similarity search"""
+        try:
             # In production, this would add to FAISS index
             vector_key = f"vector:{fingerprint.content_type}:{fingerprint.fingerprint_id}"
             vector_data = {
@@ -1083,7 +1125,8 @@ class ProtectionProcessor:
         fingerprint: ContentFingerprint,
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """Find similar content using fingerprint comparison"""        try:
+        """Find similar content using fingerprint comparison"""
+        try:
             matches = []
             
             # Search for similar fingerprints in Redis
@@ -1145,7 +1188,8 @@ class ProtectionProcessor:
         fingerprint_id: str,
         platforms: Optional[List[str]] = None
     ) -> List[ProtectionAlert]:
-        """        Monitor content across platforms for unauthorized use
+        """
+        Monitor content across platforms for unauthorized use
         
         Args:
             fingerprint_id: ID of fingerprint to monitor
@@ -1153,7 +1197,8 @@ class ProtectionProcessor:
             
         Returns:
             List of protection alerts found
-        """        try:
+        """
+        try:
             # Load fingerprint
             fingerprint = await self._load_fingerprint(fingerprint_id)
             if not fingerprint:
@@ -1178,7 +1223,8 @@ class ProtectionProcessor:
             return []
     
     async def _load_fingerprint(self, fingerprint_id: str) -> Optional[ContentFingerprint]:
-        """Load fingerprint from cache or database"""        try:
+        """Load fingerprint from cache or database"""
+        try:
             cache_key = f"fingerprint:{fingerprint_id}"
             fingerprint_data = await self.redis_client.get(cache_key)
             
@@ -1212,7 +1258,8 @@ class ProtectionProcessor:
         fingerprint: ContentFingerprint,
         platform: str
     ) -> List[ProtectionAlert]:
-        """Monitor specific platform for content violations"""        # This would integrate with platform APIs and web scraping
+        """Monitor specific platform for content violations"""
+        # This would integrate with platform APIs and web scraping
         # For now, return placeholder alerts
         
         alerts = []
@@ -1235,7 +1282,8 @@ class ProtectionProcessor:
         alert: ProtectionAlert,
         fingerprint: ContentFingerprint
     ) -> Dict[str, Any]:
-        """Generate automated DMCA takedown notice"""        try:
+        """Generate automated DMCA takedown notice"""
+        try:
             dmca_notice = {
                 "notice_id": str(uuid.uuid4()),
                 "alert_id": alert.alert_id,
@@ -1262,7 +1310,8 @@ class ProtectionProcessor:
         alert: ProtectionAlert,
         fingerprint: ContentFingerprint
     ) -> str:
-        """Generate DMCA notice text"""        return f"""DMCA Takedown Notice
+        """Generate DMCA notice text"""
+        return f"""DMCA Takedown Notice
 
 To: {alert.platform}
 From: Copyright Owner (User ID: {fingerprint.user_id})
@@ -1279,9 +1328,11 @@ I swear, under penalty of perjury, that the information in this notification is 
 
 Generated automatically by IA-Influencer-Agent Protection System
 Date: {alert.created_at.isoformat()}
-"""    
+"""
+    
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on protection system"""        try:
+        """Perform health check on protection system"""
+        try:
             health_status = {
                 "status": "healthy",
                 "timestamp": datetime.utcnow().isoformat(),
@@ -1324,14 +1375,16 @@ Date: {alert.created_at.isoformat()}
             }
     
     async def _test_redis_connection(self) -> bool:
-        """Test Redis connection"""        try:
+        """Test Redis connection"""
+        try:
             await self.redis_client.ping()
             return True
         except:
             return False
     
     async def _test_database_connection(self) -> bool:
-        """Test database connection"""        try:
+        """Test database connection"""
+        try:
             # Would test actual database connection
             return True
         except:
@@ -1344,7 +1397,8 @@ async def create_protection_processor(
     redis_client,
     config: Optional[Union[ProtectionConfig, Dict[str, Any]]] = None
 ) -> ProtectionProcessor:
-    """    Factory function to create a ProtectionProcessor instance
+    """
+    Factory function to create a ProtectionProcessor instance
     
     Args:
         db_session: Database session
@@ -1353,7 +1407,8 @@ async def create_protection_processor(
         
     Returns:
         Configured ProtectionProcessor instance
-    """    if isinstance(config, dict):
+    """
+    if isinstance(config, dict):
         config = ProtectionConfig(**config)
     
     processor = ProtectionProcessor(db_session, redis_client, config)

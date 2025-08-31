@@ -10,7 +10,8 @@ Enterprise Content Protection Platform - Monetization Core
 ⚠️  COPYRIGHT NOTICE ⚠️
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import json
@@ -38,7 +39,8 @@ settings = get_settings()
 
 
 class RevenueStreamType(str, Enum):
-    """Types of revenue streams."""    STREAMING = "streaming"
+    """Types of revenue streams."""
+    STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING = "licensing"
     ADVERTISING = "advertising"
@@ -51,7 +53,8 @@ class RevenueStreamType(str, Enum):
 
 
 class PlatformRevenue(str, Enum):
-    """Supported revenue platforms."""    SPOTIFY = "spotify"
+    """Supported revenue platforms."""
+    SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE = "youtube"
     YOUTUBE_MUSIC = "youtube_music"
@@ -67,7 +70,8 @@ class PlatformRevenue(str, Enum):
 
 
 class PaymentMethod(str, Enum):
-    """Supported payment methods."""    STRIPE = "stripe"
+    """Supported payment methods."""
+    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     BANK_TRANSFER = "bank_transfer"
@@ -75,7 +79,8 @@ class PaymentMethod(str, Enum):
 
 
 class RevenueStatus(str, Enum):
-    """Revenue tracking status."""    PENDING = "pending"
+    """Revenue tracking status."""
+    PENDING = "pending"
     DETECTED = "detected"
     CALCULATED = "calculated"
     VERIFIED = "verified"
@@ -86,7 +91,8 @@ class RevenueStatus(str, Enum):
 
 @dataclass
 class RevenueMetrics:
-    """Revenue metrics structure."""    total_streams: int = 0
+    """Revenue metrics structure."""
+    total_streams: int = 0
     total_downloads: int = 0
     total_revenue: Decimal = Decimal('0.00')
     platform_breakdown: Dict[str, Decimal] = field(default_factory=dict)
@@ -95,7 +101,8 @@ class RevenueMetrics:
     period_end: datetime = None
     
     def add_revenue(self, platform: str, amount: Decimal):
-        """Add revenue from specific platform."""        if platform not in self.platform_breakdown:
+        """Add revenue from specific platform."""
+        if platform not in self.platform_breakdown:
             self.platform_breakdown[platform] = Decimal('0.00')
         self.platform_breakdown[platform] += amount
         self.total_revenue += amount
@@ -103,7 +110,8 @@ class RevenueMetrics:
 
 @dataclass
 class RevenueLeak:
-    """Detected revenue leak structure."""    leak_id: str
+    """Detected revenue leak structure."""
+    leak_id: str
     content_id: str
     platform: str
     unauthorized_url: str
@@ -115,14 +123,16 @@ class RevenueLeak:
 
 
 class PlatformRevenueAPI:
-    """Base class for platform revenue APIs."""    
+    """Base class for platform revenue APIs."""
+    
     def __init__(self, platform: PlatformRevenue):
         self.platform = platform
         self.session = None
         self.rate_limit_delay = 1.0
     
     async def setup_session(self):
-        """Setup HTTP session."""        if not self.session:
+        """Setup HTTP session."""
+        if not self.session:
             connector = aiohttp.TCPConnector(limit=50)
             timeout = aiohttp.ClientTimeout(total=30)
             self.session = aiohttp.ClientSession(
@@ -131,12 +141,14 @@ class PlatformRevenueAPI:
             )
     
     async def cleanup_session(self):
-        """Cleanup session."""        if self.session:
+        """Cleanup session."""
+        if self.session:
             await self.session.close()
 
 
 class SpotifyRevenueAPI(PlatformRevenueAPI):
-    """Spotify Artists API for revenue tracking."""    
+    """Spotify Artists API for revenue tracking."""
+    
     def __init__(self):
         super().__init__(PlatformRevenue.SPOTIFY)
         self.client_id = settings.SPOTIFY_CLIENT_ID
@@ -145,7 +157,8 @@ class SpotifyRevenueAPI(PlatformRevenueAPI):
         self.base_url = "https://api.spotify.com/v1"
     
     async def authenticate(self):
-        """Authenticate with Spotify API."""        await self.setup_session()
+        """Authenticate with Spotify API."""
+        await self.setup_session()
         
         auth_url = "https://accounts.spotify.com/api/token"
         auth_data = {
@@ -164,7 +177,8 @@ class SpotifyRevenueAPI(PlatformRevenueAPI):
             return False
     
     async def get_artist_analytics(self, artist_id: str, date_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Get artist analytics from Spotify."""        if not self.access_token:
+        """Get artist analytics from Spotify."""
+        if not self.access_token:
             await self.authenticate()
         
         headers = {'Authorization': f'Bearer {self.access_token}'}
@@ -179,7 +193,8 @@ class SpotifyRevenueAPI(PlatformRevenueAPI):
         return {}
     
     async def get_track_analytics(self, track_id: str, date_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Get specific track analytics."""        if not self.access_token:
+        """Get specific track analytics."""
+        if not self.access_token:
             await self.authenticate()
         
         headers = {'Authorization': f'Bearer {self.access_token}'}
@@ -207,12 +222,14 @@ class SpotifyRevenueAPI(PlatformRevenueAPI):
         return {}
     
     def _encode_credentials(self) -> str:
-        """Encode Spotify credentials for authentication."""        import base64
+        """Encode Spotify credentials for authentication."""
+        import base64
         credentials = f"{self.client_id}:{self.client_secret}"
         return base64.b64encode(credentials.encode()).decode()
     
     def _estimate_streams_from_popularity(self, popularity: int) -> int:
-        """Estimate streams based on Spotify popularity score."""        # Rough estimation formula based on market data
+        """Estimate streams based on Spotify popularity score."""
+        # Rough estimation formula based on market data
         if popularity >= 80:
             return popularity * 100000
         elif popularity >= 60:
@@ -223,12 +240,14 @@ class SpotifyRevenueAPI(PlatformRevenueAPI):
             return popularity * 1000
     
     def _calculate_spotify_revenue(self, streams: int) -> Decimal:
-        """Calculate estimated Spotify revenue."""        # Spotify pays approximately $0.003-$0.005 per stream
+        """Calculate estimated Spotify revenue."""
+        # Spotify pays approximately $0.003-$0.005 per stream
         rate_per_stream = Decimal('0.004')
         return Decimal(streams) * rate_per_stream
     
     async def _process_artist_data(self, albums_data: Dict, date_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Process artist albums data."""        total_revenue = Decimal('0.00')
+        """Process artist albums data."""
+        total_revenue = Decimal('0.00')
         total_streams = 0
         
         for album in albums_data.get('items', []):
@@ -245,7 +264,8 @@ class SpotifyRevenueAPI(PlatformRevenueAPI):
         }
     
     async def _calculate_album_revenue(self, album_id: str) -> Dict[str, Any]:
-        """Calculate revenue for specific album."""        # Placeholder implementation
+        """Calculate revenue for specific album."""
+        # Placeholder implementation
         return {
             'revenue': Decimal('0.00'),
             'streams': 0
@@ -253,7 +273,8 @@ class SpotifyRevenueAPI(PlatformRevenueAPI):
 
 
 class YouTubeRevenueAPI(PlatformRevenueAPI):
-    """YouTube Creator API for revenue tracking."""    
+    """YouTube Creator API for revenue tracking."""
+    
     def __init__(self):
         super().__init__(PlatformRevenue.YOUTUBE)
         self.api_key = settings.YOUTUBE_API_KEY
@@ -261,7 +282,8 @@ class YouTubeRevenueAPI(PlatformRevenueAPI):
         self.analytics_url = "https://youtubeanalytics.googleapis.com/v2"
     
     async def get_channel_analytics(self, channel_id: str, date_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Get YouTube channel analytics."""        await self.setup_session()
+        """Get YouTube channel analytics."""
+        await self.setup_session()
         
         start_date = date_range[0].strftime('%Y-%m-%d')
         end_date = date_range[1].strftime('%Y-%m-%d')
@@ -282,7 +304,8 @@ class YouTubeRevenueAPI(PlatformRevenueAPI):
         return {}
     
     async def get_video_analytics(self, video_id: str, date_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Get specific video analytics."""        await self.setup_session()
+        """Get specific video analytics."""
+        await self.setup_session()
         
         # Get video statistics
         params = {
@@ -301,7 +324,8 @@ class YouTubeRevenueAPI(PlatformRevenueAPI):
         return {}
     
     def _process_youtube_analytics(self, data: Dict) -> Dict[str, Any]:
-        """Process YouTube analytics data."""        rows = data.get('rows', [])
+        """Process YouTube analytics data."""
+        rows = data.get('rows', [])
         if rows:
             row = rows[0]  # Aggregated data
             return {
@@ -314,7 +338,8 @@ class YouTubeRevenueAPI(PlatformRevenueAPI):
         return {}
     
     def _calculate_video_revenue(self, video_data: Dict) -> Dict[str, Any]:
-        """Calculate estimated revenue for video."""        statistics = video_data.get('statistics', {})
+        """Calculate estimated revenue for video."""
+        statistics = video_data.get('statistics', {})
         view_count = int(statistics.get('viewCount', 0))
         
         # Rough estimation: $1-5 per 1000 views depending on niche
@@ -332,36 +357,42 @@ class YouTubeRevenueAPI(PlatformRevenueAPI):
 
 
 class MonetizationEngine:
-    """Central monetization and revenue tracking engine."""    
+    """Central monetization and revenue tracking engine."""
+    
     def __init__(self):
         self.platform_apis = self._initialize_platform_apis()
         self.payment_processors = self._initialize_payment_processors()
         self.revenue_cache = {}
     
     def _initialize_platform_apis(self) -> Dict[str, PlatformRevenueAPI]:
-        """Initialize platform revenue APIs."""        return {
+        """Initialize platform revenue APIs."""
+        return {
             PlatformRevenue.SPOTIFY: SpotifyRevenueAPI(),
             PlatformRevenue.YOUTUBE: YouTubeRevenueAPI(),
             # Add more platform APIs
         }
     
     def _initialize_payment_processors(self) -> Dict[str, Any]:
-        """Initialize payment processors."""        return {
+        """Initialize payment processors."""
+        return {
             PaymentMethod.STRIPE: self._setup_stripe(),
             PaymentMethod.PAYPAL: self._setup_paypal(),
             PaymentMethod.WISE: self._setup_wise()
         }
     
     def _setup_stripe(self):
-        """Setup Stripe payment processor."""        stripe.api_key = settings.STRIPE_SECRET_KEY
+        """Setup Stripe payment processor."""
+        stripe.api_key = settings.STRIPE_SECRET_KEY
         return stripe
     
     def _setup_paypal(self):
-        """Setup PayPal payment processor."""        # PayPal SDK initialization
+        """Setup PayPal payment processor."""
+        # PayPal SDK initialization
         return None  # Placeholder
     
     def _setup_wise(self):
-        """Setup Wise payment processor."""        # Wise API initialization
+        """Setup Wise payment processor."""
+        # Wise API initialization
         return None  # Placeholder
     
     @performance_monitor
@@ -371,7 +402,8 @@ class MonetizationEngine:
         date_range: Tuple[datetime, datetime],
         platforms: List[str] = None
     ) -> RevenueMetrics:
-        """Calculate total revenue for content across platforms."""        
+        """Calculate total revenue for content across platforms."""
+        
         if platforms is None:
             platforms = list(self.platform_apis.keys())
         
@@ -413,7 +445,8 @@ class MonetizationEngine:
         platform: str, 
         date_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Get revenue data from specific platform."""        
+        """Get revenue data from specific platform."""
+        
         cache_key = f"revenue:{content_id}:{platform}:{date_range[0].date()}:{date_range[1].date()}"
         
         # Check cache first
@@ -452,7 +485,8 @@ class MonetizationEngine:
         actual_revenue: Decimal,
         platforms: List[str]
     ) -> List[RevenueLeak]:
-        """Detect potential revenue leaks."""        
+        """Detect potential revenue leaks."""
+        
         leaks = []
         
         # Check if actual revenue is significantly lower than expected
@@ -484,7 +518,8 @@ class MonetizationEngine:
         return leaks
     
     async def _detect_platform_leaks(self, content_id: str, platform: str) -> List[RevenueLeak]:
-        """Detect revenue leaks on specific platform."""        # This would integrate with web monitoring to find unauthorized content
+        """Detect revenue leaks on specific platform."""
+        # This would integrate with web monitoring to find unauthorized content
         # and estimate lost revenue
         
         leaks = []
@@ -498,7 +533,8 @@ class MonetizationEngine:
         total_revenue: Decimal,
         payment_method: PaymentMethod = PaymentMethod.STRIPE
     ) -> Dict[str, Any]:
-        """Process revenue distribution to content creator."""        
+        """Process revenue distribution to content creator."""
+        
         try:
             # Calculate platform fees and taxes
             platform_fee = total_revenue * Decimal('0.05')  # 5% platform fee
@@ -549,7 +585,8 @@ class MonetizationEngine:
         amount: Decimal, 
         payment_method: PaymentMethod
     ) -> Dict[str, Any]:
-        """Process payment through selected method."""        
+        """Process payment through selected method."""
+        
         try:
             if payment_method == PaymentMethod.STRIPE:
                 return await self._process_stripe_payment(user_id, amount)
@@ -571,7 +608,8 @@ class MonetizationEngine:
             }
     
     async def _process_stripe_payment(self, user_id: str, amount: Decimal) -> Dict[str, Any]:
-        """Process payment through Stripe."""        try:
+        """Process payment through Stripe."""
+        try:
             # Convert to cents for Stripe
             amount_cents = int(amount * 100)
             
@@ -596,14 +634,16 @@ class MonetizationEngine:
             }
     
     async def _process_paypal_payment(self, user_id: str, amount: Decimal) -> Dict[str, Any]:
-        """Process payment through PayPal."""        # PayPal payment implementation
+        """Process payment through PayPal."""
+        # PayPal payment implementation
         return {
             'success': False,
             'error': 'PayPal integration not implemented'
         }
     
     async def _process_wise_payment(self, user_id: str, amount: Decimal) -> Dict[str, Any]:
-        """Process payment through Wise."""        # Wise payment implementation
+        """Process payment through Wise."""
+        # Wise payment implementation
         return {
             'success': False,
             'error': 'Wise integration not implemented'
@@ -618,7 +658,8 @@ class MonetizationEngine:
         payment_method: PaymentMethod,
         transaction_id: str
     ):
-        """Record revenue transaction in database."""        # Database transaction recording
+        """Record revenue transaction in database."""
+        # Database transaction recording
         pass
     
     @performance_monitor
@@ -627,7 +668,8 @@ class MonetizationEngine:
         user_id: str, 
         date_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Get comprehensive revenue analytics."""        
+        """Get comprehensive revenue analytics."""
+        
         analytics = {
             'total_revenue': Decimal('0.00'),
             'platform_breakdown': {},
@@ -641,7 +683,8 @@ class MonetizationEngine:
         return analytics
     
     async def cleanup(self):
-        """Cleanup resources."""        for api in self.platform_apis.values():
+        """Cleanup resources."""
+        for api in self.platform_apis.values():
             if hasattr(api, 'cleanup_session'):
                 await api.cleanup_session()
 

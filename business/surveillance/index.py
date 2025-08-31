@@ -26,7 +26,8 @@ Business Logic Flow:
 Module Initialization → Component Registration → Service Discovery → 
 Configuration Management → Health Checks → Monitoring Activation → 
 Orchestration Layer → API Endpoints → Error Handling → Metrics Collection
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Type
 from dataclasses import dataclass, field
@@ -55,7 +56,8 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceStatus(Enum):
-    """Service status enumeration"""    INITIALIZING = "initializing"
+    """Service status enumeration"""
+    INITIALIZING = "initializing"
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -64,7 +66,8 @@ class ServiceStatus(Enum):
 
 
 class ComponentType(Enum):
-    """Surveillance component types"""    CRAWLER = "crawler"
+    """Surveillance component types"""
+    CRAWLER = "crawler"
     MONITOR = "monitor"
     DETECTOR = "detector"
     MANAGER = "manager"
@@ -79,7 +82,8 @@ class ComponentType(Enum):
 
 @dataclass
 class ServiceHealth:
-    """Service health information"""    service_name: str
+    """Service health information"""
+    service_name: str
     component_type: ComponentType
     status: ServiceStatus
     uptime: float
@@ -93,7 +97,8 @@ class ServiceHealth:
 
 @dataclass
 class SurveillanceConfig:
-    """Global surveillance configuration"""    # Database configuration
+    """Global surveillance configuration"""
+    # Database configuration
     database_url: Optional[str] = None
     redis_url: Optional[str] = "redis://localhost:6379"
     
@@ -129,13 +134,16 @@ class SurveillanceConfig:
 
 
 class SurveillanceOrchestrator:
-    """    Central Surveillance Orchestrator
+    """
+    Central Surveillance Orchestrator
     
     Manages and coordinates all surveillance components, providing
     a unified interface for surveillance operations and monitoring.
-    """    
+    """
+    
     def __init__(self, config: Optional[SurveillanceConfig] = None):
-        """Initialize surveillance orchestrator"""        self.config = config or SurveillanceConfig()
+        """Initialize surveillance orchestrator"""
+        self.config = config or SurveillanceConfig()
         self.services: Dict[str, Any] = {}
         self.service_health: Dict[str, ServiceHealth] = {}
         self.is_running = False
@@ -153,7 +161,8 @@ class SurveillanceOrchestrator:
         logger.info("SurveillanceOrchestrator initialized")
     
     async def initialize(self) -> bool:
-        """Initialize all surveillance services"""        try:
+        """Initialize all surveillance services"""
+        try:
             logger.info("Starting surveillance orchestrator initialization...")
             
             # Initialize connections
@@ -182,7 +191,8 @@ class SurveillanceOrchestrator:
             return False
     
     async def _initialize_connections(self):
-        """Initialize database and Redis connections"""        try:
+        """Initialize database and Redis connections"""
+        try:
             # Initialize Redis
             if self.config.redis_url:
                 self.redis_client = redis.from_url(
@@ -206,7 +216,8 @@ class SurveillanceOrchestrator:
             raise
     
     async def _initialize_services(self):
-        """Initialize all surveillance services"""        try:
+        """Initialize all surveillance services"""
+        try:
             # Storage paths
             storage_path = self.config.storage_path or Path("surveillance_data")
             storage_path.mkdir(exist_ok=True)
@@ -300,7 +311,8 @@ class SurveillanceOrchestrator:
             raise
     
     def _get_component_type(self, service_name: str) -> ComponentType:
-        """Get component type for service"""        mapping = {
+        """Get component type for service"""
+        mapping = {
             'web_crawler': ComponentType.CRAWLER,
             'platform_monitor': ComponentType.MONITOR,
             'infringement_detector': ComponentType.DETECTOR,
@@ -316,7 +328,8 @@ class SurveillanceOrchestrator:
         return mapping.get(service_name, ComponentType.MANAGER)
     
     def _get_service_dependencies(self, service_name: str) -> List[str]:
-        """Get service dependencies"""        dependencies = {
+        """Get service dependencies"""
+        dependencies = {
             'web_crawler': ['redis', 'database'],
             'platform_monitor': ['redis', 'database', 'alert_system'],
             'infringement_detector': ['redis', 'database', 'fingerprinting_engine'],
@@ -332,7 +345,8 @@ class SurveillanceOrchestrator:
         return dependencies.get(service_name, [])
     
     async def _start_health_monitoring(self):
-        """Start health monitoring task"""        async def health_monitor():
+        """Start health monitoring task"""
+        async def health_monitor():
             while self.is_running:
                 try:
                     await self._perform_health_checks()
@@ -345,7 +359,8 @@ class SurveillanceOrchestrator:
         logger.info("Health monitoring started")
     
     async def _start_metrics_collection(self):
-        """Start metrics collection task"""        async def metrics_collector():
+        """Start metrics collection task"""
+        async def metrics_collector():
             while self.is_running:
                 try:
                     await self._collect_metrics()
@@ -358,7 +373,8 @@ class SurveillanceOrchestrator:
         logger.info("Metrics collection started")
     
     async def _perform_health_checks(self):
-        """Perform health checks on all services"""        try:
+        """Perform health checks on all services"""
+        try:
             for service_name, service in self.services.items():
                 health = self.service_health[service_name]
                 
@@ -394,7 +410,8 @@ class SurveillanceOrchestrator:
             logger.error(f"Health check process failed: {e}")
     
     async def _collect_metrics(self):
-        """Collect metrics from all services"""        try:
+        """Collect metrics from all services"""
+        try:
             for service_name, service in self.services.items():
                 try:
                     if hasattr(service, 'get_metrics'):
@@ -414,7 +431,8 @@ class SurveillanceOrchestrator:
             logger.error(f"Metrics collection process failed: {e}")
     
     async def _verify_services(self) -> bool:
-        """Verify all services are properly initialized"""        try:
+        """Verify all services are properly initialized"""
+        try:
             verification_results = {}
             
             for service_name, service in self.services.items():
@@ -448,10 +466,12 @@ class SurveillanceOrchestrator:
             return False
     
     async def get_service_health(self) -> Dict[str, ServiceHealth]:
-        """Get health status of all services"""        return self.service_health.copy()
+        """Get health status of all services"""
+        return self.service_health.copy()
     
     async def get_service(self, service_name: str) -> Optional[Any]:
-        """Get specific service instance"""        return self.services.get(service_name)
+        """Get specific service instance"""
+        return self.services.get(service_name)
     
     async def execute_surveillance_task(
         self,
@@ -459,7 +479,8 @@ class SurveillanceOrchestrator:
         task_data: Dict[str, Any],
         priority: int = 5
     ) -> str:
-        """Execute a surveillance task"""        try:
+        """Execute a surveillance task"""
+        try:
             task_id = f"task_{int(datetime.now().timestamp())}_{task_type}"
             
             # Create task coroutine based on type
@@ -491,7 +512,8 @@ class SurveillanceOrchestrator:
             raise
     
     async def _execute_web_crawl(self, task_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute web crawling task"""        crawler = self.services['web_crawler']
+        """Execute web crawling task"""
+        crawler = self.services['web_crawler']
         
         config = CrawlerConfig(**task_data.get('config', {}))
         result = await crawler.crawl_platform(
@@ -503,7 +525,8 @@ class SurveillanceOrchestrator:
         return {'type': 'web_crawl', 'result': result}
     
     async def _execute_content_scan(self, task_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute content scanning task"""        scanner = self.services['content_scanner']
+        """Execute content scanning task"""
+        scanner = self.services['content_scanner']
         
         result = await scanner.scan_content(
             content_path=task_data['content_path'],
@@ -513,7 +536,8 @@ class SurveillanceOrchestrator:
         return {'type': 'content_scan', 'result': result}
     
     async def _execute_infringement_detection(self, task_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute infringement detection task"""        detector = self.services['infringement_detector']
+        """Execute infringement detection task"""
+        detector = self.services['infringement_detector']
         
         result = await detector.detect_infringement(
             content_fingerprint=task_data['content_fingerprint'],
@@ -523,7 +547,8 @@ class SurveillanceOrchestrator:
         return {'type': 'infringement_detection', 'result': result}
     
     async def _execute_takedown_request(self, task_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute takedown request task"""        manager = self.services['takedown_manager']
+        """Execute takedown request task"""
+        manager = self.services['takedown_manager']
         
         result = await manager.submit_takedown_request(
             infringement_report=task_data['infringement_report'],
@@ -533,7 +558,8 @@ class SurveillanceOrchestrator:
         return {'type': 'takedown_request', 'result': result}
     
     async def _execute_analytics_report(self, task_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute analytics report generation task"""        analytics = self.services['analytics_tracker']
+        """Execute analytics report generation task"""
+        analytics = self.services['analytics_tracker']
         
         result = await analytics.generate_analytics_report(
             time_range=task_data['time_range'],
@@ -545,7 +571,8 @@ class SurveillanceOrchestrator:
         return {'type': 'analytics_report', 'result': result}
     
     async def get_task_status(self, task_id: str) -> Dict[str, Any]:
-        """Get status of specific task"""        if task_id not in self.active_tasks:
+        """Get status of specific task"""
+        if task_id not in self.active_tasks:
             return {'status': 'not_found'}
         
         task = self.active_tasks[task_id]
@@ -566,7 +593,8 @@ class SurveillanceOrchestrator:
             return {'status': 'running'}
     
     async def cancel_task(self, task_id: str) -> bool:
-        """Cancel specific task"""        if task_id not in self.active_tasks:
+        """Cancel specific task"""
+        if task_id not in self.active_tasks:
             return False
         
         task = self.active_tasks[task_id]
@@ -581,7 +609,8 @@ class SurveillanceOrchestrator:
         return True
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""        try:
+        """Get comprehensive system status"""
+        try:
             # Calculate overall health
             healthy_services = sum(
                 1 for health in self.service_health.values() 
@@ -636,7 +665,8 @@ class SurveillanceOrchestrator:
             return {'status': 'error', 'error': str(e)}
     
     async def shutdown(self):
-        """Graceful shutdown of orchestrator"""        try:
+        """Graceful shutdown of orchestrator"""
+        try:
             logger.info("Starting surveillance orchestrator shutdown...")
             
             self.is_running = False
@@ -678,7 +708,8 @@ _orchestrator: Optional[SurveillanceOrchestrator] = None
 
 
 def get_orchestrator(config: Optional[SurveillanceConfig] = None) -> SurveillanceOrchestrator:
-    """Get global orchestrator instance"""    global _orchestrator
+    """Get global orchestrator instance"""
+    global _orchestrator
     
     if _orchestrator is None:
         _orchestrator = SurveillanceOrchestrator(config)
@@ -687,7 +718,8 @@ def get_orchestrator(config: Optional[SurveillanceConfig] = None) -> Surveillanc
 
 
 async def initialize_surveillance_module(config: Optional[SurveillanceConfig] = None) -> bool:
-    """Initialize the entire surveillance module"""    try:
+    """Initialize the entire surveillance module"""
+    try:
         orchestrator = get_orchestrator(config)
         return await orchestrator.initialize()
     except Exception as e:
@@ -696,7 +728,8 @@ async def initialize_surveillance_module(config: Optional[SurveillanceConfig] = 
 
 
 async def shutdown_surveillance_module():
-    """Shutdown the surveillance module"""    global _orchestrator
+    """Shutdown the surveillance module"""
+    global _orchestrator
     
     if _orchestrator:
         await _orchestrator.shutdown()
@@ -705,47 +738,56 @@ async def shutdown_surveillance_module():
 
 # Convenience functions for direct service access
 async def get_web_crawler() -> Optional[WebCrawlerEngine]:
-    """Get web crawler service"""    orchestrator = get_orchestrator()
+    """Get web crawler service"""
+    orchestrator = get_orchestrator()
     return await orchestrator.get_service('web_crawler')
 
 
 async def get_platform_monitor() -> Optional[PlatformMonitoringService]:
-    """Get platform monitoring service"""    orchestrator = get_orchestrator()
+    """Get platform monitoring service"""
+    orchestrator = get_orchestrator()
     return await orchestrator.get_service('platform_monitor')
 
 
 async def get_infringement_detector() -> Optional[InfringementDetectionEngine]:
-    """Get infringement detection service"""    orchestrator = get_orchestrator()
+    """Get infringement detection service"""
+    orchestrator = get_orchestrator()
     return await orchestrator.get_service('infringement_detector')
 
 
 async def get_takedown_manager() -> Optional[TakedownManager]:
-    """Get takedown manager service"""    orchestrator = get_orchestrator()
+    """Get takedown manager service"""
+    orchestrator = get_orchestrator()
     return await orchestrator.get_service('takedown_manager')
 
 
 async def get_analytics_tracker() -> Optional[SurveillanceAnalytics]:
-    """Get analytics tracker service"""    orchestrator = get_orchestrator()
+    """Get analytics tracker service"""
+    orchestrator = get_orchestrator()
     return await orchestrator.get_service('analytics_tracker')
 
 
 async def get_alert_system() -> Optional[AlertSystem]:
-    """Get alert system service"""    orchestrator = get_orchestrator()
+    """Get alert system service"""
+    orchestrator = get_orchestrator()
     return await orchestrator.get_service('alert_system')
 
 
 async def get_reporting_engine() -> Optional[ReportingEngine]:
-    """Get reporting engine service"""    orchestrator = get_orchestrator()
+    """Get reporting engine service"""
+    orchestrator = get_orchestrator()
     return await orchestrator.get_service('reporting_engine')
 
 
 async def get_content_scanner() -> Optional[ContentScanner]:
-    """Get content scanner service"""    orchestrator = get_orchestrator()
+    """Get content scanner service"""
+    orchestrator = get_orchestrator()
     return await orchestrator.get_service('content_scanner')
 
 
 async def get_fingerprinting_engine() -> Optional[FingerprintingEngine]:
-    """Get fingerprinting engine service"""    orchestrator = get_orchestrator()
+    """Get fingerprinting engine service"""
+    orchestrator = get_orchestrator()
     return await orchestrator.get_service('fingerprinting_engine')
 
 

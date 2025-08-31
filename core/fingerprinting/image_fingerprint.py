@@ -4,7 +4,8 @@ Advanced image fingerprinting for content protection and identification
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import logging
 import numpy as np
@@ -22,16 +23,20 @@ logger = logging.getLogger(__name__)
 
 
 class ImageFingerprintEngine:
-    """    Professional image fingerprinting engine using multiple computer vision
+    """
+    Professional image fingerprinting engine using multiple computer vision
     algorithms for robust content identification and protection
-    """    
+    """
+    
     def __init__(self, hash_size: int = 8, resize_dimension: int = 256):
-        """        Initialize image fingerprinting engine
+        """
+        Initialize image fingerprinting engine
         
         Args:
             hash_size: Size for perceptual hashing algorithms
             resize_dimension: Standard dimension for image preprocessing
-        """        self.hash_size = hash_size
+        """
+        self.hash_size = hash_size
         self.resize_dimension = resize_dimension
         self.similarity_threshold = 0.85
         
@@ -45,7 +50,8 @@ class ImageFingerprintEngine:
         image_path: Union[str, Path],
         methods: List[str] = None
     ) -> Dict[str, any]:
-        """        Extract comprehensive image fingerprint using multiple methods
+        """
+        Extract comprehensive image fingerprint using multiple methods
         
         Args:
             image_path: Path to image file
@@ -54,7 +60,8 @@ class ImageFingerprintEngine:
         
         Returns:
             Dictionary containing all fingerprint data
-        """        if methods is None:
+        """
+        if methods is None:
             methods = ['perceptual_hash', 'histogram', 'sift_features', 'texture_analysis']
         
         try:
@@ -103,7 +110,8 @@ class ImageFingerprintEngine:
             raise
     
     async def _load_image(self, image_path: Path) -> Optional[np.ndarray]:
-        """Load and preprocess image"""        try:
+        """Load and preprocess image"""
+        try:
             # Load with OpenCV (BGR format)
             image = cv2.imread(str(image_path))
             
@@ -133,7 +141,8 @@ class ImageFingerprintEngine:
             return None
     
     async def _get_image_info(self, image_path: Path, image: np.ndarray) -> Dict[str, any]:
-        """Extract image metadata"""        try:
+        """Extract image metadata"""
+        try:
             height, width, channels = image.shape
             
             # Get file format
@@ -158,7 +167,8 @@ class ImageFingerprintEngine:
             return {}
     
     async def _extract_perceptual_hash(self, image: np.ndarray) -> Dict[str, any]:
-        """Extract multiple perceptual hash fingerprints"""        try:
+        """Extract multiple perceptual hash fingerprints"""
+        try:
             # Convert BGR to RGB for PIL
             rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             pil_image = Image.fromarray(rgb_image)
@@ -198,7 +208,8 @@ class ImageFingerprintEngine:
             return {'error': str(e), 'algorithm': 'perceptual_hash'}
     
     async def _extract_histogram_features(self, image: np.ndarray) -> Dict[str, any]:
-        """Extract color histogram features"""        try:
+        """Extract color histogram features"""
+        try:
             # Convert to different color spaces for comprehensive analysis
             hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
             lab_image = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
@@ -243,7 +254,8 @@ class ImageFingerprintEngine:
             return {'error': str(e), 'algorithm': 'histogram'}
     
     async def _extract_dominant_colors(self, image: np.ndarray, k: int = 5) -> List[List[int]]:
-        """Extract dominant colors using K-means clustering"""        try:
+        """Extract dominant colors using K-means clustering"""
+        try:
             # Reshape image to be a list of pixels
             pixels = image.reshape((-1, 3)).astype(np.float32)
             
@@ -262,7 +274,8 @@ class ImageFingerprintEngine:
             return []
     
     async def _extract_sift_features(self, image: np.ndarray) -> Dict[str, any]:
-        """Extract SIFT (Scale-Invariant Feature Transform) features"""        try:
+        """Extract SIFT (Scale-Invariant Feature Transform) features"""
+        try:
             # Convert to grayscale
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             
@@ -310,7 +323,8 @@ class ImageFingerprintEngine:
             return {'error': str(e), 'algorithm': 'sift_features'}
     
     async def _extract_texture_features(self, image: np.ndarray) -> Dict[str, any]:
-        """Extract texture analysis features"""        try:
+        """Extract texture analysis features"""
+        try:
             # Convert to grayscale for texture analysis
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             
@@ -346,7 +360,8 @@ class ImageFingerprintEngine:
             return {'error': str(e), 'algorithm': 'texture_analysis'}
     
     async def _calculate_lbp(self, gray_image: np.ndarray) -> np.ndarray:
-        """Calculate Local Binary Pattern histogram"""        try:
+        """Calculate Local Binary Pattern histogram"""
+        try:
             # Simple LBP implementation
             height, width = gray_image.shape
             lbp_image = np.zeros((height-2, width-2), dtype=np.uint8)
@@ -380,7 +395,8 @@ class ImageFingerprintEngine:
             return np.zeros(256)
     
     async def _calculate_gabor_features(self, gray_image: np.ndarray) -> np.ndarray:
-        """Calculate Gabor filter responses for texture analysis"""        try:
+        """Calculate Gabor filter responses for texture analysis"""
+        try:
             # Define Gabor filter parameters
             orientations = [0, 45, 90, 135]  # degrees
             frequencies = [0.1, 0.3, 0.5]
@@ -407,7 +423,8 @@ class ImageFingerprintEngine:
             return np.zeros(24)  # 4 orientations * 3 frequencies * 2 statistics
     
     async def _calculate_edge_features(self, gray_image: np.ndarray) -> np.ndarray:
-        """Calculate edge-based texture features"""        try:
+        """Calculate edge-based texture features"""
+        try:
             # Sobel edge detection
             sobel_x = cv2.Sobel(gray_image, cv2.CV_64F, 1, 0, ksize=3)
             sobel_y = cv2.Sobel(gray_image, cv2.CV_64F, 0, 1, ksize=3)
@@ -436,7 +453,8 @@ class ImageFingerprintEngine:
             return np.zeros(11)  # 3 statistics + 8 direction bins
     
     def _generate_combined_hash(self, methods_data: Dict[str, any]) -> str:
-        """Generate combined hash from all fingerprinting methods"""        try:
+        """Generate combined hash from all fingerprinting methods"""
+        try:
             hash_parts = []
             
             for method, data in methods_data.items():
@@ -466,7 +484,8 @@ class ImageFingerprintEngine:
         fingerprint1: Dict[str, any], 
         fingerprint2: Dict[str, any]
     ) -> Dict[str, float]:
-        """        Compare two image fingerprints and return similarity scores
+        """
+        Compare two image fingerprints and return similarity scores
         
         Args:
             fingerprint1: First fingerprint data
@@ -474,7 +493,8 @@ class ImageFingerprintEngine:
         
         Returns:
             Dictionary with similarity scores for each method
-        """        similarities = {}
+        """
+        similarities = {}
         
         try:
             # Compare each method
@@ -513,7 +533,8 @@ class ImageFingerprintEngine:
         data2: Dict[str, any], 
         method: str
     ) -> float:
-        """Compare two fingerprints using specific method"""        try:
+        """Compare two fingerprints using specific method"""
+        try:
             if 'error' in data1 or 'error' in data2:
                 return 0.0
             
@@ -533,7 +554,8 @@ class ImageFingerprintEngine:
             return 0.0
     
     def _compare_perceptual_hash(self, data1: Dict, data2: Dict) -> float:
-        """Compare perceptual hash fingerprints"""        try:
+        """Compare perceptual hash fingerprints"""
+        try:
             hashes1 = data1.get('hashes', {})
             hashes2 = data2.get('hashes', {})
             
@@ -566,7 +588,8 @@ class ImageFingerprintEngine:
             return 0.0
     
     def _compare_histogram(self, data1: Dict, data2: Dict) -> float:
-        """Compare histogram features"""        try:
+        """Compare histogram features"""
+        try:
             # Compare BGR histograms
             bgr_hists1 = data1.get('bgr_histograms', [])
             bgr_hists2 = data2.get('bgr_histograms', [])
@@ -601,7 +624,8 @@ class ImageFingerprintEngine:
             return 0.0
     
     def _compare_sift_features(self, data1: Dict, data2: Dict) -> float:
-        """Compare SIFT features"""        try:
+        """Compare SIFT features"""
+        try:
             stats1 = data1.get('descriptor_stats', {})
             stats2 = data2.get('descriptor_stats', {})
             
@@ -628,7 +652,8 @@ class ImageFingerprintEngine:
             return 0.0
     
     def _compare_texture_analysis(self, data1: Dict, data2: Dict) -> float:
-        """Compare texture analysis features"""        try:
+        """Compare texture analysis features"""
+        try:
             # Compare LBP histograms
             lbp1 = np.array(data1.get('lbp_histogram', []))
             lbp2 = np.array(data2.get('lbp_histogram', []))
@@ -665,7 +690,8 @@ class ImageFingerprintEngine:
         image_paths: List[Union[str, Path]], 
         methods: List[str] = None
     ) -> List[Dict[str, any]]:
-        """        Process multiple image files in batch
+        """
+        Process multiple image files in batch
         
         Args:
             image_paths: List of image file paths
@@ -673,7 +699,8 @@ class ImageFingerprintEngine:
         
         Returns:
             List of fingerprint data for each file
-        """        tasks = []
+        """
+        tasks = []
         for image_path in image_paths:
             task = self.extract_fingerprint(image_path, methods)
             tasks.append(task)
@@ -697,7 +724,8 @@ class ImageFingerprintEngine:
             raise
     
     def get_engine_info(self) -> Dict[str, any]:
-        """Get engine configuration and capabilities"""        return {
+        """Get engine configuration and capabilities"""
+        return {
             'engine': 'ImageFingerprintEngine',
             'version': '1.0.0',
             'hash_size': self.hash_size,

@@ -7,7 +7,8 @@ experiment tracking, and automated model deployment.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 
 class TrainingFramework(Enum):
-    """Supported training frameworks"""    TENSORFLOW = "tensorflow"
+    """Supported training frameworks"""
+    TENSORFLOW = "tensorflow"
     PYTORCH = "pytorch"
     PYTORCH_LIGHTNING = "pytorch_lightning"
     HUGGINGFACE = "huggingface"
@@ -37,7 +39,8 @@ class TrainingFramework(Enum):
 
 
 class TrainingType(Enum):
-    """Training job types"""    SINGLE_NODE = "single_node"
+    """Training job types"""
+    SINGLE_NODE = "single_node"
     MULTI_NODE = "multi_node"
     DISTRIBUTED = "distributed"
     FEDERATED = "federated"
@@ -47,7 +50,8 @@ class TrainingType(Enum):
 
 
 class OptimizationStrategy(Enum):
-    """Hyperparameter optimization strategies"""    GRID_SEARCH = "grid_search"
+    """Hyperparameter optimization strategies"""
+    GRID_SEARCH = "grid_search"
     RANDOM_SEARCH = "random_search"
     BAYESIAN_OPTIMIZATION = "bayesian_optimization"
     GENETIC_ALGORITHM = "genetic_algorithm"
@@ -58,7 +62,8 @@ class OptimizationStrategy(Enum):
 
 @dataclass
 class TrainingPipelineConfig:
-    """Training pipeline configuration"""    pipeline_name: str
+    """Training pipeline configuration"""
+    pipeline_name: str
     framework: TrainingFramework
     training_type: TrainingType = TrainingType.SINGLE_NODE
     optimization_strategy: OptimizationStrategy = OptimizationStrategy.BAYESIAN_OPTIMIZATION
@@ -90,7 +95,8 @@ class TrainingPipelineConfig:
 
 
 class TrainingPipelineDeployment:
-    """    Enterprise training pipeline deployment system
+    """
+    Enterprise training pipeline deployment system
     
     Provides comprehensive ML training infrastructure with:
     - Multi-framework support (TensorFlow, PyTorch, Hugging Face, etc.)
@@ -99,13 +105,16 @@ class TrainingPipelineDeployment:
     - Experiment tracking and management
     - Automated model deployment
     - Resource optimization and scheduling
-    """    
+    """
+    
     def __init__(self, namespace: str = "ia-influencer-training"):
-        """        Initialize training pipeline deployment
+        """
+        Initialize training pipeline deployment
         
         Args:
             namespace: Kubernetes namespace for training infrastructure
-        """        self.namespace = namespace
+        """
+        self.namespace = namespace
         self.active_pipelines = {}
         self.completed_pipelines = {}
         self.training_jobs = {}
@@ -115,7 +124,8 @@ class TrainingPipelineDeployment:
         self._initialize_clients()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and Redis clients"""        try:
+        """Initialize Kubernetes, Docker, and Redis clients"""
+        try:
             # Kubernetes client
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -142,11 +152,13 @@ class TrainingPipelineDeployment:
             raise
     
     async def deploy_training_infrastructure(self) -> Dict[str, Any]:
-        """        Deploy complete training pipeline infrastructure
+        """
+        Deploy complete training pipeline infrastructure
         
         Returns:
             Infrastructure deployment summary
-        """        try:
+        """
+        try:
             self.status = "deploying_infrastructure"
             logger.info("Deploying training pipeline infrastructure")
             
@@ -215,14 +227,16 @@ class TrainingPipelineDeployment:
             raise
     
     async def submit_training_job(self, config: TrainingPipelineConfig) -> Dict[str, Any]:
-        """        Submit a training job
+        """
+        Submit a training job
         
         Args:
             config: Training pipeline configuration
             
         Returns:
             Training job submission result
-        """        try:
+        """
+        try:
             job_id = f"{config.pipeline_name}-{datetime.utcnow().strftime('%Y%m%d-%H%M%S')}"
             logger.info(f"Submitting training job: {job_id}")
             
@@ -282,7 +296,8 @@ class TrainingPipelineDeployment:
             raise
     
     async def _ensure_training_namespace(self) -> None:
-        """Create training namespace"""        try:
+        """Create training namespace"""
+        try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -302,7 +317,8 @@ class TrainingPipelineDeployment:
                 logger.info(f"Created training namespace: {self.namespace}")
     
     async def _deploy_training_redis(self) -> Dict[str, Any]:
-        """Deploy Redis for training coordination"""        redis_cluster = {
+        """Deploy Redis for training coordination"""
+        redis_cluster = {
             "apiVersion": "apps/v1",
             "kind": "StatefulSet",
             "metadata": {
@@ -364,7 +380,8 @@ class TrainingPipelineDeployment:
         }
     
     async def _deploy_training_scheduler(self) -> Dict[str, Any]:
-        """Deploy intelligent training scheduler"""        scheduler = {
+        """Deploy intelligent training scheduler"""
+        scheduler = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -413,7 +430,8 @@ class TrainingPipelineDeployment:
         }
     
     async def _deploy_experiment_tracker(self) -> Dict[str, Any]:
-        """Deploy experiment tracking system (MLflow)"""        experiment_tracker = {
+        """Deploy experiment tracking system (MLflow)"""
+        experiment_tracker = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -468,7 +486,8 @@ class TrainingPipelineDeployment:
         }
     
     async def _deploy_hyperparameter_optimizer(self) -> Dict[str, Any]:
-        """Deploy hyperparameter optimization system"""        hyperopt = {
+        """Deploy hyperparameter optimization system"""
+        hyperopt = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -516,7 +535,8 @@ class TrainingPipelineDeployment:
         }
     
     async def _deploy_distributed_training(self) -> Dict[str, Any]:
-        """Deploy distributed training infrastructure"""        # Ray cluster for distributed training
+        """Deploy distributed training infrastructure"""
+        # Ray cluster for distributed training
         ray_cluster = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
@@ -622,7 +642,8 @@ class TrainingPipelineDeployment:
         }
     
     async def _deploy_training_storage(self) -> Dict[str, Any]:
-        """Deploy high-performance training storage"""        # Fast SSD storage class for training data
+        """Deploy high-performance training storage"""
+        # Fast SSD storage class for training data
         storage_class = {
             "apiVersion": "storage.k8s.io/v1",
             "kind": "StorageClass",
@@ -694,7 +715,8 @@ class TrainingPipelineDeployment:
         }
     
     async def _deploy_training_monitoring(self) -> Dict[str, Any]:
-        """Deploy training monitoring and logging"""        training_monitor = {
+        """Deploy training monitoring and logging"""
+        training_monitor = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -742,7 +764,8 @@ class TrainingPipelineDeployment:
         }
     
     async def _deploy_model_registry_integration(self) -> Dict[str, Any]:
-        """Deploy model registry integration"""        registry_integration = {
+        """Deploy model registry integration"""
+        registry_integration = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -790,7 +813,8 @@ class TrainingPipelineDeployment:
         }
     
     async def _deploy_gpu_management(self) -> Dict[str, Any]:
-        """Deploy GPU resource management for training"""        gpu_manager = {
+        """Deploy GPU resource management for training"""
+        gpu_manager = {
             "apiVersion": "apps/v1",
             "kind": "DaemonSet",
             "metadata": {
@@ -860,7 +884,8 @@ class TrainingPipelineDeployment:
         }
     
     async def _configure_training_networking(self) -> None:
-        """Configure networking for training infrastructure"""        # Training network policy
+        """Configure networking for training infrastructure"""
+        # Training network policy
         network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
@@ -895,7 +920,8 @@ class TrainingPipelineDeployment:
         logger.info("Configured training networking policies")
     
     async def _validate_training_infrastructure(self) -> bool:
-        """Validate training infrastructure deployment"""        try:
+        """Validate training infrastructure deployment"""
+        try:
             # Check essential services
             essential_services = [
                 "training-redis", "training-scheduler", "experiment-tracker",
@@ -931,7 +957,8 @@ class TrainingPipelineDeployment:
             return False
     
     async def _validate_training_config(self, config: TrainingPipelineConfig) -> None:
-        """Validate training configuration"""        if not config.pipeline_name:
+        """Validate training configuration"""
+        if not config.pipeline_name:
             raise ValueError("Pipeline name is required")
         
         if config.num_nodes < 1:
@@ -949,7 +976,8 @@ class TrainingPipelineDeployment:
         logger.info(f"Training config validation passed for {config.pipeline_name}")
     
     async def _create_training_job_spec(self, config: TrainingPipelineConfig, job_id: str) -> Dict[str, Any]:
-        """Create Kubernetes job specification for training"""        job_spec = {
+        """Create Kubernetes job specification for training"""
+        job_spec = {
             "apiVersion": "batch/v1",
             "kind": "Job",
             "metadata": {
@@ -1034,7 +1062,8 @@ class TrainingPipelineDeployment:
         return job_spec
     
     async def _submit_single_node_job(self, config: TrainingPipelineConfig, job_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Submit single-node training job"""        # Adjust for single node
+        """Submit single-node training job"""
+        # Adjust for single node
         job_spec["spec"]["parallelism"] = 1
         job_spec["spec"]["completions"] = 1
         
@@ -1051,7 +1080,8 @@ class TrainingPipelineDeployment:
         }
     
     async def _submit_multi_node_job(self, config: TrainingPipelineConfig, job_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Submit multi-node training job"""        # Configure for multi-node
+        """Submit multi-node training job"""
+        # Configure for multi-node
         job_spec["spec"]["template"]["spec"]["containers"][0]["env"].extend([
             {"name": "WORLD_SIZE", "value": str(config.num_nodes)},
             {"name": "MASTER_ADDR", "value": "training-job-master"},
@@ -1072,7 +1102,8 @@ class TrainingPipelineDeployment:
         }
     
     async def _submit_distributed_job(self, config: TrainingPipelineConfig, job_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Submit distributed training job"""        # Configure for distributed training with Ray
+        """Submit distributed training job"""
+        # Configure for distributed training with Ray
         job_spec["spec"]["template"]["spec"]["containers"][0]["env"].extend([
             {"name": "RAY_ADDRESS", "value": "ray://ray-cluster-head:10001"},
             {"name": "DISTRIBUTED_BACKEND", "value": config.distributed_backend},
@@ -1093,7 +1124,8 @@ class TrainingPipelineDeployment:
         }
     
     async def _submit_hyperparameter_job(self, config: TrainingPipelineConfig, job_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Submit hyperparameter tuning job"""        # Configure for hyperparameter tuning
+        """Submit hyperparameter tuning job"""
+        # Configure for hyperparameter tuning
         job_spec["spec"]["template"]["spec"]["containers"][0]["env"].extend([
             {"name": "HYPEROPT_ENABLED", "value": "true"},
             {"name": "OPTIMIZATION_STRATEGY", "value": config.optimization_strategy.value},
@@ -1115,7 +1147,8 @@ class TrainingPipelineDeployment:
         }
     
     async def _submit_custom_job(self, config: TrainingPipelineConfig, job_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Submit custom training job"""        # Submit as-is for custom jobs
+        """Submit custom training job"""
+        # Submit as-is for custom jobs
         job = self.k8s_batch_v1.create_namespaced_job(
             namespace=self.namespace,
             body=job_spec
@@ -1128,7 +1161,8 @@ class TrainingPipelineDeployment:
         }
     
     async def _setup_job_monitoring(self, job_id: str, config: TrainingPipelineConfig) -> None:
-        """Set up monitoring for training job"""        monitoring_config = {
+        """Set up monitoring for training job"""
+        monitoring_config = {
             "job_id": job_id,
             "pipeline_name": config.pipeline_name,
             "framework": config.framework.value,
@@ -1145,7 +1179,8 @@ class TrainingPipelineDeployment:
         logger.info(f"Configured monitoring for job {job_id}")
     
     async def _setup_experiment_tracking(self, job_id: str, config: TrainingPipelineConfig) -> None:
-        """Set up experiment tracking for training job"""        experiment_config = {
+        """Set up experiment tracking for training job"""
+        experiment_config = {
             "job_id": job_id,
             "experiment_name": f"{config.pipeline_name}-{job_id}",
             "framework": config.framework.value,
@@ -1168,7 +1203,8 @@ class TrainingPipelineDeployment:
         logger.info(f"Configured experiment tracking for job {job_id}")
     
     def _estimate_training_duration(self, config: TrainingPipelineConfig) -> str:
-        """Estimate training duration based on configuration"""        # Simple estimation logic (can be made more sophisticated)
+        """Estimate training duration based on configuration"""
+        # Simple estimation logic (can be made more sophisticated)
         base_time = config.max_epochs * 5  # 5 minutes per epoch base
         
         # Adjust based on distributed training
@@ -1185,7 +1221,8 @@ class TrainingPipelineDeployment:
         return f"{hours}h {minutes}m"
     
     async def get_training_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive training metrics"""        try:
+        """Get comprehensive training metrics"""
+        try:
             metrics = {
                 "infrastructure_status": self.status,
                 "active_pipelines": len(self.active_pipelines),
@@ -1218,7 +1255,8 @@ class TrainingPipelineDeployment:
             return {"error": str(e)}
     
     async def _cleanup_failed_infrastructure(self) -> None:
-        """Clean up failed training infrastructure"""        try:
+        """Clean up failed training infrastructure"""
+        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             logger.info("Cleaned up failed training infrastructure")
@@ -1226,7 +1264,8 @@ class TrainingPipelineDeployment:
             logger.error(f"Training infrastructure cleanup failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up entire training infrastructure"""        try:
+        """Clean up entire training infrastructure"""
+        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             

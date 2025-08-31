@@ -21,7 +21,8 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import re
@@ -85,7 +86,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class YouTubeVideoMetadata:
-    """Comprehensive YouTube video metadata"""    video_id: str
+    """Comprehensive YouTube video metadata"""
+    video_id: str
     title: str
     description: str
     channel_id: str
@@ -109,7 +111,8 @@ class YouTubeVideoMetadata:
 
 @dataclass
 class YouTubeChannelMetadata:
-    """YouTube channel metadata"""    channel_id: str
+    """YouTube channel metadata"""
+    channel_id: str
     channel_name: str
     subscriber_count: Optional[int] = None
     video_count: Optional[int] = None
@@ -124,7 +127,8 @@ class YouTubeChannelMetadata:
 
 @dataclass
 class YouTubeSearchConfig:
-    """YouTube search configuration"""    query: str
+    """YouTube search configuration"""
+    query: str
     max_results: int = 50
     order: str = "relevance"  # relevance, date, rating, viewCount, title
     published_after: Optional[datetime] = None
@@ -138,7 +142,8 @@ class YouTubeSearchConfig:
     include_live: bool = True
 
 class YouTubeAPIManager:
-    """Advanced YouTube API management with quota optimization"""    
+    """Advanced YouTube API management with quota optimization"""
+    
     def __init__(self, api_keys: List[str]):
         self.api_keys = api_keys
         self.current_key_index = 0
@@ -148,7 +153,8 @@ class YouTubeAPIManager:
         self.logger = logging.getLogger(__name__)
     
     def get_service(self) -> Optional[Any]:
-        """Get YouTube API service with automatic key rotation"""        if not YOUTUBE_API_AVAILABLE:
+        """Get YouTube API service with automatic key rotation"""
+        if not YOUTUBE_API_AVAILABLE:
             return None
         
         for _ in range(len(self.api_keys)):
@@ -175,17 +181,21 @@ class YouTubeAPIManager:
         return None
     
     def _rotate_key(self):
-        """Rotate to next API key"""        self.current_key_index = (self.current_key_index + 1) % len(self.api_keys)
+        """Rotate to next API key"""
+        self.current_key_index = (self.current_key_index + 1) % len(self.api_keys)
     
     def record_quota_usage(self, cost: int = 1):
-        """Record API quota usage"""        current_key = self.api_keys[self.current_key_index]
+        """Record API quota usage"""
+        current_key = self.api_keys[self.current_key_index]
         self.quota_usage[current_key] += cost
     
     def reset_daily_quota(self):
-        """Reset daily quota usage (call this daily)"""        self.quota_usage = {key: 0 for key in self.api_keys}
+        """Reset daily quota usage (call this daily)"""
+        self.quota_usage = {key: 0 for key in self.api_keys}
 
 class YouTubeContentAnalyzer:
-    """Advanced YouTube content analysis engine"""    
+    """Advanced YouTube content analysis engine"""
+    
     def __init__(self):
         self.video_fingerprinter = VideoFingerprinter()
         self.audio_fingerprinter = AudioFingerprinter()
@@ -194,7 +204,8 @@ class YouTubeContentAnalyzer:
     
     @performance_timer
     async def analyze_video_content(self, video_url: str) -> Dict[str, Any]:
-        """Comprehensive video content analysis"""        try:
+        """Comprehensive video content analysis"""
+        try:
             analysis_result = {
                 "video_fingerprint": None,
                 "audio_fingerprint": None,
@@ -243,7 +254,8 @@ class YouTubeContentAnalyzer:
             return {}
     
     async def _download_video_segment(self, video_url: str, duration: int = 30) -> Optional[str]:
-        """Download video segment for analysis"""        if not YT_DLP_AVAILABLE:
+        """Download video segment for analysis"""
+        if not YT_DLP_AVAILABLE:
             return None
         
         try:
@@ -271,7 +283,8 @@ class YouTubeContentAnalyzer:
             return None
     
     async def _extract_video_fingerprint(self, video_path: str) -> Optional[str]:
-        """Extract video fingerprint using computer vision"""        try:
+        """Extract video fingerprint using computer vision"""
+        try:
             fingerprint = await asyncio.get_event_loop().run_in_executor(
                 None, self.video_fingerprinter.generate_fingerprint, video_path
             )
@@ -282,7 +295,8 @@ class YouTubeContentAnalyzer:
             return None
     
     async def _extract_audio_fingerprint(self, video_path: str) -> Optional[str]:
-        """Extract audio fingerprint from video"""        try:
+        """Extract audio fingerprint from video"""
+        try:
             fingerprint = await asyncio.get_event_loop().run_in_executor(
                 None, self.audio_fingerprinter.generate_fingerprint, video_path
             )
@@ -293,7 +307,8 @@ class YouTubeContentAnalyzer:
             return None
     
     async def _classify_content(self, video_path: str) -> Dict[str, Any]:
-        """Classify video content using AI models"""        try:
+        """Classify video content using AI models"""
+        try:
             classification = {
                 "content_type": "unknown",
                 "genre": [],
@@ -339,7 +354,8 @@ class YouTubeContentAnalyzer:
             return {}
     
     async def _assess_content_risk(self, analysis_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess content risk for IP protection"""        try:
+        """Assess content risk for IP protection"""
+        try:
             risk_assessment = {
                 "overall_risk": "low",
                 "risk_factors": [],
@@ -395,7 +411,8 @@ class YouTubeContentAnalyzer:
             return {"overall_risk": "unknown", "confidence": 0.0}
 
 class YouTubeCrawler(PlatformCrawler):
-    """Advanced YouTube crawler with industrial-grade capabilities"""    
+    """Advanced YouTube crawler with industrial-grade capabilities"""
+    
     def __init__(self, config: CrawlerConfig, api_keys: List[str]):
         super().__init__(config)
         self.platform_name = "YouTube"
@@ -423,20 +440,24 @@ class YouTubeCrawler(PlatformCrawler):
         self.logger = logging.getLogger(__name__)
     
     def add_search_config(self, search_config: YouTubeSearchConfig):
-        """Add search configuration for monitoring"""        self.search_configs.append(search_config)
+        """Add search configuration for monitoring"""
+        self.search_configs.append(search_config)
         self.logger.info(f"Added search config: {search_config.query}")
     
     def add_monitored_channel(self, channel_id: str):
-        """Add channel to monitoring list"""        self.monitored_channels.add(channel_id)
+        """Add channel to monitoring list"""
+        self.monitored_channels.add(channel_id)
         self.logger.info(f"Added monitored channel: {channel_id}")
     
     def add_blocked_channel(self, channel_id: str):
-        """Add channel to block list"""        self.blocked_channels.add(channel_id)
+        """Add channel to block list"""
+        self.blocked_channels.add(channel_id)
         self.logger.info(f"Added blocked channel: {channel_id}")
     
     @performance_timer
     async def crawl(self) -> CrawlerResult:
-        """Main crawling method with comprehensive monitoring"""        try:
+        """Main crawling method with comprehensive monitoring"""
+        try:
             self.status = CrawlerStatus.RUNNING
             start_time = datetime.now()
             
@@ -492,7 +513,8 @@ class YouTubeCrawler(PlatformCrawler):
     
     # Continue with remaining methods from the previous implementation...
     def _extract_video_id(self, url: str) -> Optional[str]:
-        """Extract video ID from YouTube URL"""        try:
+        """Extract video ID from YouTube URL"""
+        try:
             parsed_url = urlparse(url)
             
             if parsed_url.hostname in ['youtube.com', 'www.youtube.com']:

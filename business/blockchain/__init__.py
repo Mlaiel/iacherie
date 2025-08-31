@@ -16,7 +16,7 @@ Key Features:
 - Automated Royalty Distribution System
 - Staking & Yield Farming Mechanisms
 
-© 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform
+(c) 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform
 Propriété Intellectuelle Exclusive - Tous Droits Réservés
 
 Team Specialties:
@@ -29,7 +29,9 @@ Team Specialties:
 - Audio/NFT Engineer: Audio fingerprinting on blockchain, music NFT standards
 - DevOps Engineer: Blockchain infrastructure deployment, node management, monitoring
 - IA Prompt Engineer: AI-powered smart contract generation, natural language blockchain queries
-"""from .smart_contracts import (
+"""
+
+from .smart_contracts import (
     ContentProtectionContract,
     LicensingContract,
     RoyaltyDistributionContract,
@@ -240,5 +242,5 @@ __version__ = "1.0.0"
 # Module metadata
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel - IA-Influencer-Agent Platform"
+__copyright__ = "(c) 2025 Fahed Mlaiel - IA-Influencer-Agent Platform"
 __license__ = "Proprietary - All Rights Reserved"

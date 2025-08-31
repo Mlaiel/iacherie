@@ -8,7 +8,10 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
-"""import sys
+"""
+
+import sys
+
 import os
 from pathlib import Path
 

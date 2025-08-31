@@ -17,7 +17,8 @@ Tous droits réservés. Usage non autorisé strictement interdit.
 - Développeur Audio
 - DevOps Engineer
 - IA Prompt Engineer
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -100,9 +101,11 @@ class CacheConfig:
 
 
 class TestDatabaseConfig:
-    """Tests pour la configuration de base de données."""    
+    """Tests pour la configuration de base de données."""
+    
     def test_database_config_creation(self):
-        """Test la création d'une configuration de base de données."""        config = DatabaseConfig(
+        """Test la création d'une configuration de base de données."""
+        config = DatabaseConfig(
             host="localhost",
             port=5432,
             database="ia_influencer",
@@ -125,7 +128,8 @@ class TestDatabaseConfig:
         assert config.pool_timeout == 30
     
     def test_database_config_connection_string(self):
-        """Test la génération de chaîne de connexion."""        config = DatabaseConfig(
+        """Test la génération de chaîne de connexion."""
+        config = DatabaseConfig(
             host="localhost",
             port=5432,
             database="ia_influencer",
@@ -139,7 +143,8 @@ class TestDatabaseConfig:
         assert connection_string == expected
     
     def test_database_config_validation(self):
-        """Test la validation de la configuration de base de données."""        # Test avec configuration valide
+        """Test la validation de la configuration de base de données."""
+        # Test avec configuration valide
         config = DatabaseConfig(
             host="localhost",
             port=5432,
@@ -155,9 +160,11 @@ class TestDatabaseConfig:
 
 
 class TestRedisConfig:
-    """Tests pour la configuration Redis."""    
+    """Tests pour la configuration Redis."""
+    
     def test_redis_config_creation(self):
-        """Test la création d'une configuration Redis."""        config = RedisConfig(
+        """Test la création d'une configuration Redis."""
+        config = RedisConfig(
             host="localhost",
             port=6379,
             database=0,
@@ -176,7 +183,8 @@ class TestRedisConfig:
         assert config.socket_connect_timeout == 10
     
     def test_redis_config_client_creation(self):
-        """Test la création d'un client Redis."""        config = RedisConfig(
+        """Test la création d'un client Redis."""
+        config = RedisConfig(
             host="localhost",
             port=6379,
             database=0,
@@ -191,9 +199,11 @@ class TestRedisConfig:
 
 
 class TestAIModelConfig:
-    """Tests pour la configuration des modèles IA."""    
+    """Tests pour la configuration des modèles IA."""
+    
     def test_ai_model_config_creation(self):
-        """Test la création d'une configuration de modèle IA."""        config = AIModelConfig(
+        """Test la création d'une configuration de modèle IA."""
+        config = AIModelConfig(
             openai_api_key="sk-test-key",
             huggingface_token="hf_test_token",
             model_cache_dir="/tmp/models",
@@ -216,7 +226,8 @@ class TestAIModelConfig:
         assert config.timeout == 30.0
     
     def test_ai_model_config_validation(self):
-        """Test la validation de la configuration IA."""        with pytest.raises(ConfigValidationError):
+        """Test la validation de la configuration IA."""
+        with pytest.raises(ConfigValidationError):
             AIModelConfig(
                 openai_api_key="",  # Clé API vide invalide
                 huggingface_token="hf_test_token",
@@ -225,9 +236,11 @@ class TestAIModelConfig:
 
 
 class TestSecurityConfig:
-    """Tests pour la configuration de sécurité."""    
+    """Tests pour la configuration de sécurité."""
+    
     def test_security_config_creation(self):
-        """Test la création d'une configuration de sécurité."""        config = SecurityConfig(
+        """Test la création d'une configuration de sécurité."""
+        config = SecurityConfig(
             secret_key="super_secret_key_123",
             jwt_algorithm="HS256",
             jwt_expiration_minutes=30,
@@ -248,7 +261,8 @@ class TestSecurityConfig:
         assert config.cors_origins == ["http://localhost:3000"]
     
     def test_security_config_password_validation(self):
-        """Test la validation des mots de passe."""        config = SecurityConfig(
+        """Test la validation des mots de passe."""
+        config = SecurityConfig(
             secret_key="super_secret_key_123",
             password_min_length=8
         )
@@ -258,9 +272,11 @@ class TestSecurityConfig:
 
 
 class TestAudioConfig:
-    """Tests pour la configuration audio."""    
+    """Tests pour la configuration audio."""
+    
     def test_audio_config_creation(self):
-        """Test la création d'une configuration audio."""        config = AudioConfig(
+        """Test la création d'une configuration audio."""
+        config = AudioConfig(
             sample_rate=44100,
             channels=2,
             bit_depth=16,
@@ -282,9 +298,11 @@ class TestAudioConfig:
 
 
 class TestVideoConfig:
-    """Tests pour la configuration vidéo."""    
+    """Tests pour la configuration vidéo."""
+    
     def test_video_config_creation(self):
-        """Test la création d'une configuration vidéo."""        config = VideoConfig(
+        """Test la création d'une configuration vidéo."""
+        config = VideoConfig(
             max_resolution="1920x1080",
             max_fps=60,
             max_bitrate_mbps=10,
@@ -304,9 +322,11 @@ class TestVideoConfig:
 
 
 class TestImageConfig:
-    """Tests pour la configuration d'images."""    
+    """Tests pour la configuration d'images."""
+    
     def test_image_config_creation(self):
-        """Test la création d'une configuration d'images."""        config = ImageConfig(
+        """Test la création d'une configuration d'images."""
+        config = ImageConfig(
             max_width=4096,
             max_height=4096,
             max_file_size_mb=10,
@@ -326,9 +346,11 @@ class TestImageConfig:
 
 
 class TestAPIConfig:
-    """Tests pour la configuration API."""    
+    """Tests pour la configuration API."""
+    
     def test_api_config_creation(self):
-        """Test la création d'une configuration API."""        config = APIConfig(
+        """Test la création d'une configuration API."""
+        config = APIConfig(
             host="0.0.0.0",
             port=8000,
             debug=False,
@@ -352,9 +374,11 @@ class TestAPIConfig:
 
 
 class TestMonitoringConfig:
-    """Tests pour la configuration de monitoring."""    
+    """Tests pour la configuration de monitoring."""
+    
     def test_monitoring_config_creation(self):
-        """Test la création d'une configuration de monitoring."""        config = MonitoringConfig(
+        """Test la création d'une configuration de monitoring."""
+        config = MonitoringConfig(
             enabled=True,
             metrics_endpoint="/metrics",
             health_endpoint="/health",
@@ -376,9 +400,11 @@ class TestMonitoringConfig:
 
 
 class TestLoggingConfig:
-    """Tests pour la configuration de logging."""    
+    """Tests pour la configuration de logging."""
+    
     def test_logging_config_creation(self):
-        """Test la création d'une configuration de logging."""        config = LoggingConfig(
+        """Test la création d'une configuration de logging."""
+        config = LoggingConfig(
             level="INFO",
             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
             file_handler_enabled=True,
@@ -398,9 +424,11 @@ class TestLoggingConfig:
 
 
 class TestCacheConfig:
-    """Tests pour la configuration de cache."""    
+    """Tests pour la configuration de cache."""
+    
     def test_cache_config_creation(self):
-        """Test la création d'une configuration de cache."""        config = CacheConfig(
+        """Test la création d'une configuration de cache."""
+        config = CacheConfig(
             enabled=True,
             backend="redis",
             default_timeout=3600,
@@ -420,14 +448,17 @@ class TestCacheConfig:
 
 
 class TestConfigManager:
-    """Tests pour le gestionnaire de configuration."""    
+    """Tests pour le gestionnaire de configuration."""
+    
     @pytest.fixture
     def config_manager(self):
-        """Fixture pour créer un gestionnaire de configuration."""        return ConfigManager()
+        """Fixture pour créer un gestionnaire de configuration."""
+        return ConfigManager()
     
     @pytest.fixture
     def temp_config_file(self):
-        """Fixture pour créer un fichier de configuration temporaire."""        config_data = {
+        """Fixture pour créer un fichier de configuration temporaire."""
+        config_data = {
             "environment": "test",
             "database": {
                 "host": "localhost",
@@ -450,25 +481,30 @@ class TestConfigManager:
         os.unlink(f.name)
     
     def test_config_manager_initialization(self, config_manager):
-        """Test l'initialisation du gestionnaire de configuration."""        assert config_manager.environment == Environment.DEVELOPMENT
+        """Test l'initialisation du gestionnaire de configuration."""
+        assert config_manager.environment == Environment.DEVELOPMENT
         assert config_manager.config_sources == []
         assert isinstance(config_manager.settings, dict)
         assert config_manager.validators is not None
     
     def test_load_from_file_json(self, config_manager, temp_config_file):
-        """Test le chargement depuis un fichier JSON."""        config_manager.load_from_file(temp_config_file)
+        """Test le chargement depuis un fichier JSON."""
+        config_manager.load_from_file(temp_config_file)
         
         assert config_manager.get("environment") == "test"
         assert config_manager.get("database.host") == "localhost"
         assert config_manager.get("database.port") == 5432
     
     def test_load_from_file_yaml(self, config_manager):
-        """Test le chargement depuis un fichier YAML."""        config_data = """        environment: test
+        """Test le chargement depuis un fichier YAML."""
+        config_data = """
+        environment: test
         database:
           host: localhost
           port: 5432
           name: test_db
-        """        
+        """
+        
         with tempfile.NamedTemporaryFile(mode='w', suffix='.yaml', delete=False) as f:
             f.write(config_data)
             f.flush()
@@ -481,7 +517,8 @@ class TestConfigManager:
         os.unlink(f.name)
     
     def test_load_from_env(self, config_manager):
-        """Test le chargement depuis les variables d'environnement."""        with patch.dict(os.environ, {
+        """Test le chargement depuis les variables d'environnement."""
+        with patch.dict(os.environ, {
             'IA_INFLUENCER_DATABASE_HOST': 'env_host',
             'IA_INFLUENCER_DATABASE_PORT': '5433',
             'IA_INFLUENCER_DEBUG': 'true'
@@ -493,15 +530,18 @@ class TestConfigManager:
             assert config_manager.get("debug") == "true"
     
     def test_get_with_default(self, config_manager):
-        """Test la récupération de valeur avec défaut."""        value = config_manager.get("non_existent_key", "default_value")
+        """Test la récupération de valeur avec défaut."""
+        value = config_manager.get("non_existent_key", "default_value")
         assert value == "default_value"
     
     def test_set_configuration(self, config_manager):
-        """Test la définition de configuration."""        config_manager.set("test.key", "test_value")
+        """Test la définition de configuration."""
+        config_manager.set("test.key", "test_value")
         assert config_manager.get("test.key") == "test_value"
     
     def test_get_database_config(self, config_manager, temp_config_file):
-        """Test la récupération de configuration de base de données."""        config_manager.load_from_file(temp_config_file)
+        """Test la récupération de configuration de base de données."""
+        config_manager.load_from_file(temp_config_file)
         
         db_config = config_manager.get_database_config()
         
@@ -511,7 +551,8 @@ class TestConfigManager:
         assert db_config.name == "test_db"
     
     def test_get_redis_config(self, config_manager, temp_config_file):
-        """Test la récupération de configuration Redis."""        config_manager.load_from_file(temp_config_file)
+        """Test la récupération de configuration Redis."""
+        config_manager.load_from_file(temp_config_file)
         
         redis_config = config_manager.get_redis_config()
         
@@ -521,7 +562,8 @@ class TestConfigManager:
         assert redis_config.db == 1
     
     def test_validate_configuration(self, config_manager, temp_config_file):
-        """Test la validation de configuration."""        config_manager.load_from_file(temp_config_file)
+        """Test la validation de configuration."""
+        config_manager.load_from_file(temp_config_file)
         
         # Configuration valide
         is_valid, errors = config_manager.validate()
@@ -529,7 +571,8 @@ class TestConfigManager:
         assert len(errors) == 0
     
     def test_save_configuration(self, config_manager):
-        """Test la sauvegarde de configuration."""        config_manager.set("test.key", "test_value")
+        """Test la sauvegarde de configuration."""
+        config_manager.set("test.key", "test_value")
         
         with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
             config_manager.save_to_file(f.name)
@@ -542,7 +585,8 @@ class TestConfigManager:
         os.unlink(f.name)
     
     def test_merge_configurations(self, config_manager):
-        """Test la fusion de configurations."""        config1 = {"a": 1, "b": {"c": 2}}
+        """Test la fusion de configurations."""
+        config1 = {"a": 1, "b": {"c": 2}}
         config2 = {"b": {"d": 3}, "e": 4}
         
         config_manager.settings = config1
@@ -554,7 +598,8 @@ class TestConfigManager:
         assert config_manager.get("e") == 4
     
     def test_environment_specific_config(self, config_manager):
-        """Test la configuration spécifique à l'environnement."""        config_manager.set_environment(Environment.PRODUCTION)
+        """Test la configuration spécifique à l'environnement."""
+        config_manager.set_environment(Environment.PRODUCTION)
         assert config_manager.environment == Environment.PRODUCTION
         
         config_manager.set_environment(Environment.TESTING)
@@ -562,13 +607,16 @@ class TestConfigManager:
 
 
 class TestSettingsValidator:
-    """Tests pour le validateur de paramètres."""    
+    """Tests pour le validateur de paramètres."""
+    
     @pytest.fixture
     def validator(self):
-        """Fixture pour créer un validateur."""        return SettingsValidator()
+        """Fixture pour créer un validateur."""
+        return SettingsValidator()
     
     def test_validate_database_settings(self, validator):
-        """Test la validation des paramètres de base de données."""        valid_settings = {
+        """Test la validation des paramètres de base de données."""
+        valid_settings = {
             "host": "localhost",
             "port": 5432,
             "name": "test_db",
@@ -593,7 +641,8 @@ class TestSettingsValidator:
         assert len(errors) > 0
     
     def test_validate_redis_settings(self, validator):
-        """Test la validation des paramètres Redis."""        valid_settings = {
+        """Test la validation des paramètres Redis."""
+        valid_settings = {
             "host": "localhost",
             "port": 6379,
             "db": 0
@@ -604,7 +653,8 @@ class TestSettingsValidator:
         assert len(errors) == 0
     
     def test_validate_api_settings(self, validator):
-        """Test la validation des paramètres API."""        valid_settings = {
+        """Test la validation des paramètres API."""
+        valid_settings = {
             "host": "0.0.0.0",
             "port": 8000,
             "workers": 4
@@ -616,13 +666,16 @@ class TestSettingsValidator:
 
 
 class TestEnvironmentManager:
-    """Tests pour le gestionnaire d'environnement."""    
+    """Tests pour le gestionnaire d'environnement."""
+    
     @pytest.fixture
     def env_manager(self):
-        """Fixture pour créer un gestionnaire d'environnement."""        return EnvironmentManager()
+        """Fixture pour créer un gestionnaire d'environnement."""
+        return EnvironmentManager()
     
     def test_detect_environment(self, env_manager):
-        """Test la détection d'environnement."""        with patch.dict(os.environ, {'ENVIRONMENT': 'production'}):
+        """Test la détection d'environnement."""
+        with patch.dict(os.environ, {'ENVIRONMENT': 'production'}):
             env = env_manager.detect_environment()
             assert env == Environment.PRODUCTION
         
@@ -631,7 +684,8 @@ class TestEnvironmentManager:
             assert env == Environment.DEVELOPMENT
     
     def test_load_environment_config(self, env_manager):
-        """Test le chargement de configuration d'environnement."""        config = {
+        """Test le chargement de configuration d'environnement."""
+        config = {
             "development": {"debug": True, "log_level": "DEBUG"},
             "production": {"debug": False, "log_level": "INFO"}
         }
@@ -650,13 +704,16 @@ class TestEnvironmentManager:
 
 
 class TestSecretManager:
-    """Tests pour le gestionnaire de secrets."""    
+    """Tests pour le gestionnaire de secrets."""
+    
     @pytest.fixture
     def secret_manager(self):
-        """Fixture pour créer un gestionnaire de secrets."""        return SecretManager()
+        """Fixture pour créer un gestionnaire de secrets."""
+        return SecretManager()
     
     def test_encrypt_decrypt_secret(self, secret_manager):
-        """Test le chiffrement et déchiffrement de secrets."""        secret = "my_secret_password"
+        """Test le chiffrement et déchiffrement de secrets."""
+        secret = "my_secret_password"
         
         encrypted = secret_manager.encrypt(secret)
         assert encrypted != secret
@@ -665,7 +722,8 @@ class TestSecretManager:
         assert decrypted == secret
     
     def test_mask_sensitive_data(self, secret_manager):
-        """Test le masquage de données sensibles."""        config = {
+        """Test le masquage de données sensibles."""
+        config = {
             "database": {
                 "password": "secret_password",
                 "user": "admin"
@@ -681,13 +739,16 @@ class TestSecretManager:
 
 
 class TestConfigWatcher:
-    """Tests pour le surveillant de configuration."""    
+    """Tests pour le surveillant de configuration."""
+    
     @pytest.fixture
     def config_watcher(self):
-        """Fixture pour créer un surveillant de configuration."""        return ConfigWatcher()
+        """Fixture pour créer un surveillant de configuration."""
+        return ConfigWatcher()
     
     def test_watch_file_changes(self, config_watcher):
-        """Test la surveillance des changements de fichier."""        callback_called = False
+        """Test la surveillance des changements de fichier."""
+        callback_called = False
         
         def test_callback(file_path):
             nonlocal callback_called
@@ -711,13 +772,16 @@ class TestConfigWatcher:
 
 
 class TestConfigMerger:
-    """Tests pour le fusionneur de configuration."""    
+    """Tests pour le fusionneur de configuration."""
+    
     @pytest.fixture
     def config_merger(self):
-        """Fixture pour créer un fusionneur de configuration."""        return ConfigMerger()
+        """Fixture pour créer un fusionneur de configuration."""
+        return ConfigMerger()
     
     def test_merge_simple_configs(self, config_merger):
-        """Test la fusion de configurations simples."""        config1 = {"a": 1, "b": 2}
+        """Test la fusion de configurations simples."""
+        config1 = {"a": 1, "b": 2}
         config2 = {"b": 3, "c": 4}
         
         merged = config_merger.merge(config1, config2)
@@ -727,7 +791,8 @@ class TestConfigMerger:
         assert merged["c"] == 4
     
     def test_merge_nested_configs(self, config_merger):
-        """Test la fusion de configurations imbriquées."""        config1 = {"database": {"host": "localhost", "port": 5432}}
+        """Test la fusion de configurations imbriquées."""
+        config1 = {"database": {"host": "localhost", "port": 5432}}
         config2 = {"database": {"port": 5433, "name": "test_db"}}
         
         merged = config_merger.merge(config1, config2)
@@ -737,7 +802,8 @@ class TestConfigMerger:
         assert merged["database"]["name"] == "test_db"
     
     def test_merge_with_strategy(self, config_merger):
-        """Test la fusion avec stratégie spécifique."""        config1 = {"list": [1, 2, 3]}
+        """Test la fusion avec stratégie spécifique."""
+        config1 = {"list": [1, 2, 3]}
         config2 = {"list": [4, 5, 6]}
         
         # Stratégie de remplacement (par défaut)
@@ -750,10 +816,12 @@ class TestConfigMerger:
 
 
 class TestIntegration:
-    """Tests d'intégration pour le système de configuration complet."""    
+    """Tests d'intégration pour le système de configuration complet."""
+    
     @pytest.fixture
     def full_system(self):
-        """Fixture pour créer un système complet."""        return {
+        """Fixture pour créer un système complet."""
+        return {
             'manager': ConfigManager(),
             'validator': SettingsValidator(),
             'env_manager': EnvironmentManager(),
@@ -762,7 +830,8 @@ class TestIntegration:
         }
     
     def test_complete_config_workflow(self, full_system):
-        """Test le workflow complet de configuration."""        manager = full_system['manager']
+        """Test le workflow complet de configuration."""
+        manager = full_system['manager']
         validator = full_system['validator']
         
         # Configuration de base
@@ -801,7 +870,8 @@ class TestIntegration:
             assert client is not None
     
     def test_environment_specific_loading(self, full_system):
-        """Test le chargement spécifique à l'environnement."""        manager = full_system['manager']
+        """Test le chargement spécifique à l'environnement."""
+        manager = full_system['manager']
         env_manager = full_system['env_manager']
         
         # Configuration multi-environnement
@@ -832,7 +902,8 @@ class TestIntegration:
         assert final_config["database"]["host"] == "localhost"
     
     def test_secret_management_integration(self, full_system):
-        """Test l'intégration de la gestion des secrets."""        manager = full_system['manager']
+        """Test l'intégration de la gestion des secrets."""
+        manager = full_system['manager']
         secret_manager = full_system['secret_manager']
         
         # Configuration avec secrets
@@ -862,7 +933,8 @@ class TestIntegration:
         assert decrypted_password == "secret_password"
     
     def test_performance_benchmarks(self, full_system):
-        """Test les benchmarks de performance."""        manager = full_system['manager']
+        """Test les benchmarks de performance."""
+        manager = full_system['manager']
         
         # Test de performance de lecture/écriture
         import time

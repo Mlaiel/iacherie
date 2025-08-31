@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -36,7 +37,8 @@ Project Team Specialties:
 ✅ Développeur Audio
 ✅ DevOps Engineer
 ✅ IA Prompt Engineer
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -112,7 +114,8 @@ class ContentQuality:
 
 
 class TestableContentCreatorAgent(ContentCreatorAgent):
-    """Testable implementation of ContentCreatorAgent"""    
+    """Testable implementation of ContentCreatorAgent"""
+    
     def __init__(self, config: AgentConfiguration):
         try:
             super().__init__(config)
@@ -129,11 +132,13 @@ class TestableContentCreatorAgent(ContentCreatorAgent):
         self.mock_outputs = {}
         
     async def _custom_initialize(self) -> None:
-        """Test implementation of custom initialization"""        await asyncio.sleep(0.1)
+        """Test implementation of custom initialization"""
+        await asyncio.sleep(0.1)
         self.status = AgentStatus.READY
         
     async def _create_text_content(self, request: ContentCreationRequest) -> Dict[str, Any]:
-        """Mock text content creation"""        content = f"Generated text content for: {request.style_preferences.get('topic', 'general')}"
+        """Mock text content creation"""
+        content = f"Generated text content for: {request.style_preferences.get('topic', 'general')}"
         return {
             "content": content,
             "word_count": len(content.split()),
@@ -142,7 +147,8 @@ class TestableContentCreatorAgent(ContentCreatorAgent):
         }
         
     async def _create_image_content(self, request: ContentCreationRequest) -> Dict[str, Any]:
-        """Mock image content creation"""        return {
+        """Mock image content creation"""
+        return {
             "image_path": f"/tmp/generated_image_{uuid.uuid4()}.{request.format}",
             "dimensions": request.resolution or "1920x1080",
             "file_size": 1024000,  # 1MB
@@ -150,7 +156,8 @@ class TestableContentCreatorAgent(ContentCreatorAgent):
         }
         
     async def _create_audio_content(self, request: ContentCreationRequest) -> Dict[str, Any]:
-        """Mock audio content creation"""        return {
+        """Mock audio content creation"""
+        return {
             "audio_path": f"/tmp/generated_audio_{uuid.uuid4()}.{request.format}",
             "duration": request.duration_seconds or 30,
             "sample_rate": 44100,
@@ -159,7 +166,8 @@ class TestableContentCreatorAgent(ContentCreatorAgent):
         }
         
     async def _create_video_content(self, request: ContentCreationRequest) -> Dict[str, Any]:
-        """Mock video content creation"""        return {
+        """Mock video content creation"""
+        return {
             "video_path": f"/tmp/generated_video_{uuid.uuid4()}.{request.format}",
             "duration": request.duration_seconds or 60,
             "resolution": request.resolution or "1920x1080",
@@ -169,10 +177,12 @@ class TestableContentCreatorAgent(ContentCreatorAgent):
 
 
 class TestContentCreatorAgent:
-    """Comprehensive test suite for ContentCreatorAgent"""    
+    """Comprehensive test suite for ContentCreatorAgent"""
+    
     @pytest.fixture
     def creator_config(self) -> AgentConfiguration:
-        """Content creator agent configuration"""        return AgentConfiguration(
+        """Content creator agent configuration"""
+        return AgentConfiguration(
             agent_id="content_creator_001",
             agent_name="Advanced Content Creator",
             capabilities={
@@ -198,13 +208,15 @@ class TestContentCreatorAgent:
     
     @pytest_asyncio.fixture
     async def content_creator(self, creator_config) -> TestableContentCreatorAgent:
-        """Initialized content creator agent"""        agent = TestableContentCreatorAgent(creator_config)
+        """Initialized content creator agent"""
+        agent = TestableContentCreatorAgent(creator_config)
         await agent._custom_initialize()
         return agent
     
     @pytest.fixture
     def text_creation_request(self) -> ContentCreationRequest:
-        """Text content creation request"""        return ContentCreationRequest(
+        """Text content creation request"""
+        return ContentCreationRequest(
             content_type=ContentType.TEXT,
             format=ContentFormat.MARKDOWN,
             quality=ContentQuality.HIGH,
@@ -226,7 +238,8 @@ class TestContentCreatorAgent:
     
     @pytest.fixture
     def image_creation_request(self) -> ContentCreationRequest:
-        """Image content creation request"""        return ContentCreationRequest(
+        """Image content creation request"""
+        return ContentCreationRequest(
             content_type=ContentType.IMAGE,
             format=ContentFormat.PNG,
             quality=ContentQuality.PREMIUM,
@@ -245,7 +258,8 @@ class TestContentCreatorAgent:
     
     @pytest.fixture
     def audio_creation_request(self) -> ContentCreationRequest:
-        """Audio content creation request"""        return ContentCreationRequest(
+        """Audio content creation request"""
+        return ContentCreationRequest(
             content_type=ContentType.AUDIO,
             format=ContentFormat.MP3,
             quality=ContentQuality.HIGH,
@@ -262,7 +276,8 @@ class TestContentCreatorAgent:
         )
     
     async def test_agent_initialization_and_capabilities(self, content_creator):
-        """Test content creator agent initialization and capabilities"""        assert content_creator.status == AgentStatus.READY
+        """Test content creator agent initialization and capabilities"""
+        assert content_creator.status == AgentStatus.READY
         
         # Verify required capabilities
         required_capabilities = {
@@ -281,7 +296,8 @@ class TestContentCreatorAgent:
         assert await content_creator.can_handle_task("audio_generation", {})
     
     async def test_text_content_creation(self, content_creator, text_creation_request):
-        """Test text content creation functionality"""        # Create content creation task
+        """Test text content creation functionality"""
+        # Create content creation task
         task = AgentTask(
             task_type="create_content",
             context={
@@ -312,7 +328,8 @@ class TestContentCreatorAgent:
             assert "seo_score" in result
     
     async def test_image_content_creation(self, content_creator, image_creation_request):
-        """Test image content creation functionality"""        task = AgentTask(
+        """Test image content creation functionality"""
+        task = AgentTask(
             task_type="create_content",
             context={
                 "request": image_creation_request,
@@ -330,7 +347,8 @@ class TestContentCreatorAgent:
         assert "style" in result
     
     async def test_audio_content_creation(self, content_creator, audio_creation_request):
-        """Test audio content creation functionality"""        result = await content_creator._create_audio_content(audio_creation_request)
+        """Test audio content creation functionality"""
+        result = await content_creator._create_audio_content(audio_creation_request)
         
         # Verify audio result
         assert "audio_path" in result
@@ -340,7 +358,8 @@ class TestContentCreatorAgent:
         assert result["file_size"] > 0
     
     async def test_video_content_creation(self, content_creator):
-        """Test video content creation functionality"""        video_request = ContentCreationRequest(
+        """Test video content creation functionality"""
+        video_request = ContentCreationRequest(
             content_type=ContentType.VIDEO,
             format=ContentFormat.MP4,
             quality=ContentQuality.HIGH,
@@ -363,7 +382,8 @@ class TestContentCreatorAgent:
     
     @pytest.mark.integration
     async def test_multi_format_content_creation_workflow(self, content_creator):
-        """Test complete multi-format content creation workflow"""        # Create requests for different content types
+        """Test complete multi-format content creation workflow"""
+        # Create requests for different content types
         requests = [
             ContentCreationRequest(
                 content_type=ContentType.TEXT,
@@ -416,7 +436,8 @@ class TestContentCreatorAgent:
         assert "duration" in audio_result
     
     async def test_content_quality_assessment(self, content_creator):
-        """Test content quality assessment and scoring"""        request = ContentCreationRequest(
+        """Test content quality assessment and scoring"""
+        request = ContentCreationRequest(
             content_type=ContentType.TEXT,
             format=ContentFormat.MARKDOWN,
             quality=ContentQuality.PREMIUM,
@@ -448,7 +469,8 @@ class TestContentCreatorAgent:
     
     @pytest.mark.performance
     async def test_concurrent_content_creation(self, content_creator):
-        """Test concurrent content creation performance"""        num_requests = 10
+        """Test concurrent content creation performance"""
+        num_requests = 10
         requests = []
         
         for i in range(num_requests):
@@ -482,7 +504,8 @@ class TestContentCreatorAgent:
         assert throughput > 1.0  # At least 1 creation per second
     
     async def test_brand_consistency_enforcement(self, content_creator):
-        """Test brand consistency enforcement"""        brand_guidelines = {
+        """Test brand consistency enforcement"""
+        brand_guidelines = {
             "brand_voice": "friendly but professional",
             "prohibited_words": ["cheap", "bad", "worst"],
             "required_elements": ["company_name", "brand_message"],
@@ -518,7 +541,8 @@ class TestContentCreatorAgent:
             assert "content" in result
     
     async def test_platform_specific_optimization(self, content_creator):
-        """Test platform-specific content optimization"""        request = ContentCreationRequest(
+        """Test platform-specific content optimization"""
+        request = ContentCreationRequest(
             content_type=ContentType.TEXT,
             format=ContentFormat.MARKDOWN,
             quality=ContentQuality.HIGH,
@@ -571,7 +595,8 @@ class TestContentCreatorAgent:
                 assert "twitter" in optimized
     
     async def test_copyright_and_fingerprinting(self, content_creator):
-        """Test copyright protection and content fingerprinting"""        request = ContentCreationRequest(
+        """Test copyright protection and content fingerprinting"""
+        request = ContentCreationRequest(
             content_type=ContentType.IMAGE,
             format=ContentFormat.PNG,
             quality=ContentQuality.HIGH,
@@ -605,7 +630,8 @@ class TestContentCreatorAgent:
     
     @pytest.mark.stress
     async def test_high_volume_content_generation(self, content_creator):
-        """Stress test with high volume content generation"""        num_contents = 50
+        """Stress test with high volume content generation"""
+        num_contents = 50
         content_types = [ContentType.TEXT, ContentType.IMAGE, ContentType.AUDIO]
         
         tasks = []
@@ -645,7 +671,8 @@ class TestContentCreatorAgent:
         print(f"High volume test: {successful}/{num_contents} successful ({success_rate:.1%})")
     
     async def test_content_style_transfer(self, content_creator):
-        """Test content style transfer functionality"""        source_content = "Original technical article about AI..."
+        """Test content style transfer functionality"""
+        source_content = "Original technical article about AI..."
         target_styles = ["casual", "formal", "creative", "persuasive"]
         
         request = ContentCreationRequest(
@@ -678,7 +705,8 @@ class TestContentCreatorAgent:
     
     @pytest.mark.edge_cases
     async def test_edge_cases_and_error_handling(self, content_creator):
-        """Test edge cases and error handling"""        # Test with minimal request
+        """Test edge cases and error handling"""
+        # Test with minimal request
         minimal_request = ContentCreationRequest(
             content_type=ContentType.TEXT,
             format=ContentFormat.MARKDOWN,
@@ -717,7 +745,8 @@ class TestContentCreatorAgent:
         assert "video_path" in result
     
     async def test_collaboration_and_workflow_integration(self, content_creator):
-        """Test collaboration features and workflow integration"""        collaboration_request = ContentCreationRequest(
+        """Test collaboration features and workflow integration"""
+        collaboration_request = ContentCreationRequest(
             content_type=ContentType.TEXT,
             format=ContentFormat.HTML,
             quality=ContentQuality.HIGH,
@@ -745,7 +774,8 @@ class TestContentCreatorAgent:
             assert "content" in result
     
     def test_content_creation_request_validation(self):
-        """Test content creation request validation"""        # Valid request
+        """Test content creation request validation"""
+        # Valid request
         valid_request = ContentCreationRequest(
             content_type=ContentType.TEXT,
             format=ContentFormat.MARKDOWN,
@@ -788,7 +818,8 @@ class TestContentCreatorAgent:
         assert "color_scheme" in full_request.style_preferences
     
     def test_content_creation_result_structure(self):
-        """Test content creation result structure"""        result = ContentCreationResult(
+        """Test content creation result structure"""
+        result = ContentCreationResult(
             content_id="content_123",
             content_type=ContentType.TEXT,
             format=ContentFormat.MARKDOWN,
@@ -838,7 +869,8 @@ pytestmark = [
 
 # Manual test runner
 async def run_manual_content_creator_tests():
-    """Run content creator tests manually"""    print("🎨 Running Content Creator Agent Tests...")
+    """Run content creator tests manually"""
+    print("🎨 Running Content Creator Agent Tests...")
     
     try:
         test_suite = TestContentCreatorAgent()
@@ -896,10 +928,12 @@ logger = logging.getLogger(__name__)
 
 
 class TestContentCreatorAgent:
-    """Comprehensive test suite for ContentCreatorAgent"""    
+    """Comprehensive test suite for ContentCreatorAgent"""
+    
     @pytest.fixture
     def content_agent_config(self) -> AgentConfiguration:
-        """Content creator agent configuration"""        return AgentConfiguration(
+        """Content creator agent configuration"""
+        return AgentConfiguration(
             agent_id="content_creator_test",
             agent_name="Test Content Creator",
             capabilities={
@@ -925,7 +959,8 @@ class TestContentCreatorAgent:
     
     @pytest.fixture
     async def content_agent(self, content_agent_config) -> ContentCreatorAgent:
-        """Initialized content creator agent"""        agent = ContentCreatorAgent(content_agent_config)
+        """Initialized content creator agent"""
+        agent = ContentCreatorAgent(content_agent_config)
         await agent.initialize()
         
         yield agent
@@ -933,7 +968,8 @@ class TestContentCreatorAgent:
         await agent.shutdown()
     
     async def test_agent_initialization(self, content_agent_config):
-        """Test content creator agent initialization"""        agent = ContentCreatorAgent(content_agent_config)
+        """Test content creator agent initialization"""
+        agent = ContentCreatorAgent(content_agent_config)
         
         # Before initialization
         assert not agent.initialized
@@ -962,7 +998,8 @@ class TestContentCreatorAgent:
         await agent.shutdown()
     
     async def test_text_content_generation(self, content_agent, test_content_data):
-        """Test text content generation"""        text_request = {
+        """Test text content generation"""
+        text_request = {
             "task_type": "content_creation",
             "content_type": "text",
             "request": test_content_data["text_content"]
@@ -1000,7 +1037,8 @@ class TestContentCreatorAgent:
         assert metadata["content_type"] == "text"
     
     async def test_image_content_generation(self, content_agent, test_content_data):
-        """Test image content generation"""        image_request = {
+        """Test image content generation"""
+        image_request = {
             "task_type": "content_creation",
             "content_type": "image",
             "request": test_content_data["image_content"]
@@ -1036,7 +1074,8 @@ class TestContentCreatorAgent:
         assert 0 <= content["quality_score"] <= 1.0
     
     async def test_audio_content_generation(self, content_agent, test_content_data):
-        """Test audio content generation"""        audio_request = {
+        """Test audio content generation"""
+        audio_request = {
             "task_type": "content_creation",
             "content_type": "audio",
             "request": test_content_data["audio_content"]
@@ -1076,7 +1115,8 @@ class TestContentCreatorAgent:
         assert features["genre"] == requested_genre
     
     async def test_video_content_generation(self, content_agent, test_content_data):
-        """Test video content generation"""        video_request = {
+        """Test video content generation"""
+        video_request = {
             "task_type": "content_creation",
             "content_type": "video",
             "request": test_content_data["video_content"]
@@ -1110,7 +1150,8 @@ class TestContentCreatorAgent:
             assert metadata["format"] == "vertical"
     
     async def test_music_composition(self, content_agent, test_audio_data):
-        """Test music composition capabilities"""        composition_request = {
+        """Test music composition capabilities"""
+        composition_request = {
             "task_type": "music_composition",
             "request": test_audio_data["composition_request"]
         }
@@ -1146,7 +1187,8 @@ class TestContentCreatorAgent:
         assert requested_instruments.issubset(generated_instruments)
     
     async def test_multi_format_content_generation(self, content_agent):
-        """Test multi-format content generation"""        multi_format_request = {
+        """Test multi-format content generation"""
+        multi_format_request = {
             "task_type": "multi_format_creation",
             "topic": "AI revolution in creative industries",
             "formats": ["text", "image", "audio"],
@@ -1192,7 +1234,8 @@ class TestContentCreatorAgent:
         assert metadata["cross_format_consistency"] >= 0.8  # High consistency
     
     async def test_style_transfer(self, content_agent):
-        """Test style transfer capabilities"""        style_transfer_request = {
+        """Test style transfer capabilities"""
+        style_transfer_request = {
             "task_type": "style_transfer",
             "source_content": {
                 "text": "This is a basic informational text about AI technology.",
@@ -1239,7 +1282,8 @@ class TestContentCreatorAgent:
         assert analysis["tone_match"] >= 0.7
     
     async def test_quality_assessment(self, content_agent):
-        """Test content quality assessment"""        content_for_assessment = {
+        """Test content quality assessment"""
+        content_for_assessment = {
             "text": "Check out this amazing AI tool that will revolutionize your content creation! 🚀 With cutting-edge technology, you can now generate professional-quality content in seconds. Perfect for influencers, marketers, and creators! #AI #ContentCreation #Innovation",
             "type": "social_media_post",
             "platform": "instagram"
@@ -1288,7 +1332,8 @@ class TestContentCreatorAgent:
             assert "impact" in recommendation
     
     async def test_platform_optimization(self, content_agent):
-        """Test platform-specific optimization"""        platforms = ["instagram", "tiktok", "youtube", "twitter", "linkedin"]
+        """Test platform-specific optimization"""
+        platforms = ["instagram", "tiktok", "youtube", "twitter", "linkedin"]
         
         base_content = {
             "topic": "AI in business transformation",
@@ -1344,7 +1389,8 @@ class TestContentCreatorAgent:
         assert len(twitter_content["text"]) <= 280  # Twitter limit
     
     async def test_content_fingerprinting(self, content_agent):
-        """Test content fingerprinting for originality"""        original_content = {
+        """Test content fingerprinting for originality"""
+        original_content = {
             "text": "This is completely original content created for testing purposes. It contains unique ideas and perspectives that have never been expressed before in this exact combination.",
             "type": "article",
             "metadata": {
@@ -1396,7 +1442,8 @@ class TestContentCreatorAgent:
         assert duplicate_fingerprint["hash"] == fingerprint["hash"]
     
     async def test_brand_consistency(self, content_agent):
-        """Test brand consistency enforcement"""        brand_guidelines = {
+        """Test brand consistency enforcement"""
+        brand_guidelines = {
             "voice": "professional_friendly",
             "tone": "innovative_trustworthy",
             "values": ["innovation", "reliability", "customer_focus"],
@@ -1456,7 +1503,8 @@ class TestContentCreatorAgent:
             assert element in required_check
     
     async def test_content_enhancement(self, content_agent):
-        """Test content enhancement capabilities"""        basic_content = {
+        """Test content enhancement capabilities"""
+        basic_content = {
             "text": "AI is good for business. It helps companies.",
             "type": "social_media_post",
             "target_audience": "business_professionals"
@@ -1507,7 +1555,8 @@ class TestContentCreatorAgent:
         assert comparison["improvement_percentage"] > 0
     
     async def test_concurrent_content_generation(self, content_agent):
-        """Test concurrent content generation"""        requests = []
+        """Test concurrent content generation"""
+        requests = []
         
         # Create multiple content requests
         for i in range(5):
@@ -1535,7 +1584,8 @@ class TestContentCreatorAgent:
     
     @pytest.mark.performance
     async def test_content_generation_performance(self, content_agent, assert_performance):
-        """Test content generation performance"""        # Test text generation speed
+        """Test content generation performance"""
+        # Test text generation speed
         text_request = {
             "task_type": "content_creation",
             "content_type": "text",
@@ -1565,7 +1615,8 @@ class TestContentCreatorAgent:
         assert result["success"] is True
     
     async def test_error_handling(self, content_agent):
-        """Test error handling in content generation"""        # Test invalid content type
+        """Test error handling in content generation"""
+        # Test invalid content type
         invalid_request = {
             "task_type": "content_creation",
             "content_type": "invalid_type",

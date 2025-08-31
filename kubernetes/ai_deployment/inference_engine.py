@@ -7,7 +7,8 @@ and optimization capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 
 class InferenceType(Enum):
-    """Inference types"""    REAL_TIME = "real_time"
+    """Inference types"""
+    REAL_TIME = "real_time"
     BATCH = "batch"
     STREAMING = "streaming"
     EDGE = "edge"
@@ -33,7 +35,8 @@ class InferenceType(Enum):
 
 
 class OptimizationLevel(Enum):
-    """Optimization levels"""    SPEED = "speed"
+    """Optimization levels"""
+    SPEED = "speed"
     ACCURACY = "accuracy"
     BALANCED = "balanced"
     MEMORY = "memory"
@@ -41,7 +44,8 @@ class OptimizationLevel(Enum):
 
 
 class CachingStrategy(Enum):
-    """Caching strategies"""    LRU = "lru"
+    """Caching strategies"""
+    LRU = "lru"
     LFU = "lfu"
     FIFO = "fifo"
     ADAPTIVE = "adaptive"
@@ -50,7 +54,8 @@ class CachingStrategy(Enum):
 
 @dataclass
 class InferenceEngineConfig:
-    """Inference engine configuration"""    engine_name: str
+    """Inference engine configuration"""
+    engine_name: str
     model_name: str
     model_version: str
     inference_type: InferenceType = InferenceType.REAL_TIME
@@ -81,7 +86,8 @@ class InferenceEngineConfig:
 
 
 class InferenceEngineDeployment:
-    """    Enterprise inference engine deployment system
+    """
+    Enterprise inference engine deployment system
     
     Provides high-performance inference capabilities with:
     - Real-time and batch inference
@@ -90,13 +96,16 @@ class InferenceEngineDeployment:
     - GPU acceleration and quantization
     - Circuit breakers and rate limiting
     - Comprehensive monitoring and observability
-    """    
+    """
+    
     def __init__(self, namespace: str = "ia-influencer-inference"):
-        """        Initialize inference engine deployment
+        """
+        Initialize inference engine deployment
         
         Args:
             namespace: Kubernetes namespace for inference infrastructure
-        """        self.namespace = namespace
+        """
+        self.namespace = namespace
         self.deployed_engines = {}
         self.inference_metrics = {}
         self.status = "initializing"
@@ -105,7 +114,8 @@ class InferenceEngineDeployment:
         self._initialize_clients()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and Redis clients"""        try:
+        """Initialize Kubernetes, Docker, and Redis clients"""
+        try:
             # Kubernetes client
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -131,11 +141,13 @@ class InferenceEngineDeployment:
             raise
     
     async def deploy_inference_infrastructure(self) -> Dict[str, Any]:
-        """        Deploy complete inference infrastructure
+        """
+        Deploy complete inference infrastructure
         
         Returns:
             Infrastructure deployment summary
-        """        try:
+        """
+        try:
             self.status = "deploying_infrastructure"
             logger.info("Deploying inference infrastructure")
             
@@ -202,14 +214,16 @@ class InferenceEngineDeployment:
             raise
     
     async def deploy_inference_engine(self, config: InferenceEngineConfig) -> Dict[str, Any]:
-        """        Deploy an inference engine
+        """
+        Deploy an inference engine
         
         Args:
             config: Inference engine configuration
             
         Returns:
             Engine deployment result
-        """        try:
+        """
+        try:
             engine_id = f"{config.engine_name}-{config.model_version}"
             logger.info(f"Deploying inference engine: {engine_id}")
             
@@ -281,7 +295,8 @@ class InferenceEngineDeployment:
             raise
     
     async def _ensure_inference_namespace(self) -> None:
-        """Create inference namespace"""        try:
+        """Create inference namespace"""
+        try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -300,7 +315,8 @@ class InferenceEngineDeployment:
                 logger.info(f"Created inference namespace: {self.namespace}")
     
     async def _deploy_inference_redis(self) -> Dict[str, Any]:
-        """Deploy Redis cluster for inference caching"""        redis_cluster = {
+        """Deploy Redis cluster for inference caching"""
+        redis_cluster = {
             "apiVersion": "apps/v1",
             "kind": "StatefulSet",
             "metadata": {
@@ -351,7 +367,8 @@ class InferenceEngineDeployment:
         }
     
     async def _deploy_inference_load_balancer(self) -> Dict[str, Any]:
-        """Deploy intelligent load balancer for inference"""        load_balancer = {
+        """Deploy intelligent load balancer for inference"""
+        load_balancer = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -402,7 +419,8 @@ class InferenceEngineDeployment:
         }
     
     async def _deploy_cache_manager(self) -> Dict[str, Any]:
-        """Deploy intelligent cache manager"""        cache_manager = {
+        """Deploy intelligent cache manager"""
+        cache_manager = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -450,7 +468,8 @@ class InferenceEngineDeployment:
         }
     
     async def _deploy_inference_optimizer(self) -> Dict[str, Any]:
-        """Deploy inference optimizer"""        optimizer = {
+        """Deploy inference optimizer"""
+        optimizer = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -506,7 +525,8 @@ class InferenceEngineDeployment:
         }
     
     async def _deploy_model_quantizer(self) -> Dict[str, Any]:
-        """Deploy model quantization service"""        quantizer = {
+        """Deploy model quantization service"""
+        quantizer = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -553,7 +573,8 @@ class InferenceEngineDeployment:
         }
     
     async def _deploy_inference_monitoring(self) -> Dict[str, Any]:
-        """Deploy inference monitoring system"""        monitor = {
+        """Deploy inference monitoring system"""
+        monitor = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -601,7 +622,8 @@ class InferenceEngineDeployment:
         }
     
     async def _deploy_rate_limiter(self) -> Dict[str, Any]:
-        """Deploy rate limiting service"""        rate_limiter = {
+        """Deploy rate limiting service"""
+        rate_limiter = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -648,7 +670,8 @@ class InferenceEngineDeployment:
         }
     
     async def _deploy_circuit_breaker(self) -> Dict[str, Any]:
-        """Deploy circuit breaker service"""        circuit_breaker = {
+        """Deploy circuit breaker service"""
+        circuit_breaker = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -696,7 +719,8 @@ class InferenceEngineDeployment:
         }
     
     async def _deploy_inference_autoscaler(self) -> Dict[str, Any]:
-        """Deploy inference autoscaler"""        autoscaler = {
+        """Deploy inference autoscaler"""
+        autoscaler = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -744,7 +768,8 @@ class InferenceEngineDeployment:
         }
     
     async def _configure_inference_networking(self) -> None:
-        """Configure networking for inference infrastructure"""        # Inference network policy
+        """Configure networking for inference infrastructure"""
+        # Inference network policy
         network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
@@ -780,7 +805,8 @@ class InferenceEngineDeployment:
         logger.info("Configured inference networking policies")
     
     async def _validate_inference_infrastructure(self) -> bool:
-        """Validate inference infrastructure deployment"""        try:
+        """Validate inference infrastructure deployment"""
+        try:
             # Check essential services
             essential_services = [
                 "inference-redis", "inference-load-balancer", "cache-manager",
@@ -816,7 +842,8 @@ class InferenceEngineDeployment:
             return False
     
     async def _validate_inference_config(self, config: InferenceEngineConfig) -> None:
-        """Validate inference configuration"""        if not config.engine_name or not config.model_name:
+        """Validate inference configuration"""
+        if not config.engine_name or not config.model_name:
             raise ValueError("Engine name and model name are required")
         
         if config.target_latency_ms <= 0:
@@ -831,7 +858,8 @@ class InferenceEngineDeployment:
         logger.info(f"Inference config validation passed for {config.engine_name}")
     
     async def _create_inference_deployment_spec(self, config: InferenceEngineConfig) -> Dict[str, Any]:
-        """Create deployment specification for inference engine"""        engine_id = f"{config.engine_name}-{config.model_version}"
+        """Create deployment specification for inference engine"""
+        engine_id = f"{config.engine_name}-{config.model_version}"
         
         deployment_spec = {
             "apiVersion": "apps/v1",
@@ -917,7 +945,8 @@ class InferenceEngineDeployment:
         return deployment_spec
     
     async def _deploy_realtime_engine(self, config: InferenceEngineConfig, deployment_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy real-time inference engine"""        # Optimize for real-time
+        """Deploy real-time inference engine"""
+        # Optimize for real-time
         container = deployment_spec["spec"]["template"]["spec"]["containers"][0]
         container["env"].extend([
             {"name": "REAL_TIME_OPTIMIZATION", "value": "true"},
@@ -939,7 +968,8 @@ class InferenceEngineDeployment:
         }
     
     async def _deploy_batch_engine(self, config: InferenceEngineConfig, deployment_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy batch inference engine"""        # Optimize for batch processing
+        """Deploy batch inference engine"""
+        # Optimize for batch processing
         container = deployment_spec["spec"]["template"]["spec"]["containers"][0]
         container["env"].extend([
             {"name": "BATCH_OPTIMIZATION", "value": "true"},
@@ -960,7 +990,8 @@ class InferenceEngineDeployment:
         }
     
     async def _deploy_streaming_engine(self, config: InferenceEngineConfig, deployment_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy streaming inference engine"""        # Optimize for streaming
+        """Deploy streaming inference engine"""
+        # Optimize for streaming
         container = deployment_spec["spec"]["template"]["spec"]["containers"][0]
         container["env"].extend([
             {"name": "STREAMING_MODE", "value": "true"},
@@ -981,7 +1012,8 @@ class InferenceEngineDeployment:
         }
     
     async def _deploy_edge_engine(self, config: InferenceEngineConfig, deployment_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy edge inference engine"""        # Optimize for edge
+        """Deploy edge inference engine"""
+        # Optimize for edge
         container = deployment_spec["spec"]["template"]["spec"]["containers"][0]
         container["image"] = "ia-influencer/inference-edge:v1.0"
         container["env"].extend([
@@ -1009,7 +1041,8 @@ class InferenceEngineDeployment:
         }
     
     async def _deploy_serverless_engine(self, config: InferenceEngineConfig, deployment_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy serverless inference engine"""        # Convert to serverless (Knative)
+        """Deploy serverless inference engine"""
+        # Convert to serverless (Knative)
         serverless_spec = {
             "apiVersion": "serving.knative.dev/v1",
             "kind": "Service",
@@ -1049,7 +1082,8 @@ class InferenceEngineDeployment:
         }
     
     async def _configure_engine_autoscaling(self, config: InferenceEngineConfig) -> None:
-        """Configure autoscaling for inference engine"""        engine_id = f"{config.engine_name}-{config.model_version}"
+        """Configure autoscaling for inference engine"""
+        engine_id = f"{config.engine_name}-{config.model_version}"
         
         hpa_spec = {
             "apiVersion": "autoscaling/v2",
@@ -1101,7 +1135,8 @@ class InferenceEngineDeployment:
         logger.info(f"Configured autoscaling for inference engine {engine_id}")
     
     async def _setup_inference_caching(self, config: InferenceEngineConfig) -> None:
-        """Set up caching for inference engine"""        engine_id = f"{config.engine_name}-{config.model_version}"
+        """Set up caching for inference engine"""
+        engine_id = f"{config.engine_name}-{config.model_version}"
         
         caching_config = {
             "engine_id": engine_id,
@@ -1119,7 +1154,8 @@ class InferenceEngineDeployment:
         logger.info(f"Configured caching for inference engine {engine_id}")
     
     async def _setup_inference_monitoring(self, config: InferenceEngineConfig) -> None:
-        """Set up monitoring for inference engine"""        engine_id = f"{config.engine_name}-{config.model_version}"
+        """Set up monitoring for inference engine"""
+        engine_id = f"{config.engine_name}-{config.model_version}"
         
         monitoring_config = {
             "engine_id": engine_id,
@@ -1137,7 +1173,8 @@ class InferenceEngineDeployment:
         logger.info(f"Configured monitoring for inference engine {engine_id}")
     
     async def _setup_rate_limiting(self, config: InferenceEngineConfig) -> None:
-        """Set up rate limiting for inference engine"""        engine_id = f"{config.engine_name}-{config.model_version}"
+        """Set up rate limiting for inference engine"""
+        engine_id = f"{config.engine_name}-{config.model_version}"
         
         rate_config = {
             "engine_id": engine_id,
@@ -1154,7 +1191,8 @@ class InferenceEngineDeployment:
         logger.info(f"Configured rate limiting for inference engine {engine_id}")
     
     async def _setup_circuit_breaker(self, config: InferenceEngineConfig) -> None:
-        """Set up circuit breaker for inference engine"""        engine_id = f"{config.engine_name}-{config.model_version}"
+        """Set up circuit breaker for inference engine"""
+        engine_id = f"{config.engine_name}-{config.model_version}"
         
         breaker_config = {
             "engine_id": engine_id,
@@ -1171,7 +1209,8 @@ class InferenceEngineDeployment:
         logger.info(f"Configured circuit breaker for inference engine {engine_id}")
     
     async def get_inference_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive inference metrics"""        try:
+        """Get comprehensive inference metrics"""
+        try:
             metrics = {
                 "infrastructure_status": self.status,
                 "deployed_engines": len(self.deployed_engines),
@@ -1203,7 +1242,8 @@ class InferenceEngineDeployment:
             return {"error": str(e)}
     
     async def _cleanup_failed_infrastructure(self) -> None:
-        """Clean up failed inference infrastructure"""        try:
+        """Clean up failed inference infrastructure"""
+        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             logger.info("Cleaned up failed inference infrastructure")
@@ -1211,7 +1251,8 @@ class InferenceEngineDeployment:
             logger.error(f"Inference infrastructure cleanup failed: {e}")
     
     async def _cleanup_failed_engine_deployment(self, engine_name: str) -> None:
-        """Clean up failed engine deployment"""        try:
+        """Clean up failed engine deployment"""
+        try:
             # Delete deployment
             try:
                 self.k8s_apps_v1.delete_namespaced_deployment(
@@ -1227,7 +1268,8 @@ class InferenceEngineDeployment:
             logger.error(f"Engine cleanup failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up entire inference infrastructure"""        try:
+        """Clean up entire inference infrastructure"""
+        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             

@@ -5,7 +5,8 @@ Twitch API integration for live streaming and content analytics.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
@@ -20,22 +21,26 @@ logger = logging.getLogger(__name__)
 
 
 class TwitchPlatform(PlatformBase):
-    """Twitch platform integration"""    
+    """Twitch platform integration"""
+    
     def __init__(self, config: PlatformConfig):
-        """Initialize Twitch platform"""        super().__init__(config)
+        """Initialize Twitch platform"""
+        super().__init__(config)
         self.api_base = "https://api.twitch.tv/helix"
         self.auth_base = "https://id.twitch.tv/oauth2"
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""        if not self.session or self.session.closed:
+        """Get or create HTTP session"""
+        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Twitch using OAuth2"""        try:
+        """Authenticate with Twitch using OAuth2"""
+        try:
             session = await self._get_session()
             
             data = {
@@ -67,10 +72,12 @@ class TwitchPlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh Twitch access token"""        return await self.authenticate()  # Twitch uses client credentials flow
+        """Refresh Twitch access token"""
+        return await self.authenticate()  # Twitch uses client credentials flow
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Twitch API"""        if not self.is_authenticated or self._token_expired():
+        """Make authenticated request to Twitch API"""
+        if not self.is_authenticated or self._token_expired():
             if not await self.authenticate():
                 return None
         
@@ -111,12 +118,14 @@ class TwitchPlatform(PlatformBase):
             return None
     
     def _token_expired(self) -> bool:
-        """Check if token is expired"""        if not self.config.credentials.expires_at:
+        """Check if token is expired"""
+        if not self.config.credentials.expires_at:
             return True
         return datetime.utcnow() >= self.config.credentials.expires_at
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload content to Twitch (clips/highlights only)"""        # Twitch doesn't support direct video uploads via API
+        """Upload content to Twitch (clips/highlights only)"""
+        # Twitch doesn't support direct video uploads via API
         # Only supports creating clips from existing streams
         return UploadResult(
             success=False,
@@ -125,7 +134,8 @@ class TwitchPlatform(PlatformBase):
         )
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get Twitch analytics for streams/clips"""        try:
+        """Get Twitch analytics for streams/clips"""
+        try:
             # Get video/clip data
             params = {'id': content_id}
             
@@ -181,7 +191,8 @@ class TwitchPlatform(PlatformBase):
             raise
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on Twitch"""        try:
+        """Search content on Twitch"""
+        try:
             results = []
             
             # Search streams
@@ -221,7 +232,8 @@ class TwitchPlatform(PlatformBase):
             return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's videos/clips from Twitch"""        try:
+        """Get user's videos/clips from Twitch"""
+        try:
             if not user_id:
                 # Get current user
                 user_result = await self._make_request('GET', 'users')
@@ -281,7 +293,8 @@ class TwitchPlatform(PlatformBase):
             return []
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete video from Twitch"""        try:
+        """Delete video from Twitch"""
+        try:
             # Only videos can be deleted, not clips
             params = {'id': content_id}
             result = await self._make_request('DELETE', 'videos', params=params)
@@ -291,7 +304,8 @@ class TwitchPlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update video metadata on Twitch"""        try:
+        """Update video metadata on Twitch"""
+        try:
             data = {
                 'title': metadata.title,
                 'description': metadata.description,
@@ -307,7 +321,8 @@ class TwitchPlatform(PlatformBase):
             return False
     
     async def get_stream_info(self, user_id: str = None) -> Optional[Dict[str, Any]]:
-        """Get current stream information"""        try:
+        """Get current stream information"""
+        try:
             params = {}
             if user_id:
                 params['user_id'] = user_id
@@ -325,7 +340,8 @@ class TwitchPlatform(PlatformBase):
             return None
     
     async def create_clip(self, broadcaster_id: str) -> Optional[str]:
-        """Create a clip from current stream"""        try:
+        """Create a clip from current stream"""
+        try:
             data = {'broadcaster_id': broadcaster_id}
             result = await self._make_request('POST', 'clips', json=data)
             
@@ -338,7 +354,8 @@ class TwitchPlatform(PlatformBase):
             return None
     
     async def get_followers(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get followers for a user"""        try:
+        """Get followers for a user"""
+        try:
             params = {'to_id': user_id or self.config.credentials.user_id, 'first': 100}
             result = await self._make_request('GET', 'users/follows', params=params)
             
@@ -351,5 +368,6 @@ class TwitchPlatform(PlatformBase):
             return []
     
     async def close(self):
-        """Close HTTP session"""        if self.session and not self.session.closed:
+        """Close HTTP session"""
+        if self.session and not self.session.closed:
             await self.session.close()

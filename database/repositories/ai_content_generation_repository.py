@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from typing import Dict, List, Optional, Union, Any
+"""
+from typing import Dict, List, Optional, Union, Any
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, func, text
 from datetime import datetime, timedelta
@@ -36,11 +37,14 @@ from ..models.ai_content_generation import AIContentGeneration
 logger = logging.getLogger(__name__)
 
 class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
-    """    Repository for AI content generation management with enterprise-grade
+    """
+    Repository for AI content generation management with enterprise-grade
     features including generation tracking, quality metrics, and optimization.
-    """    
+    """
+    
     def __init__(self, db_session: Session):
-        """Initialize AI Content Generation Repository"""        super().__init__(db_session, AIContentGeneration)
+        """Initialize AI Content Generation Repository"""
+        super().__init__(db_session, AIContentGeneration)
         
     def create_generation_task(self, 
                              user_id: int,
@@ -49,7 +53,8 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
                              ai_model_name: str,
                              parameters: Dict[str, Any],
                              priority: str = 'normal') -> AIContentGeneration:
-        """        Create new AI content generation task
+        """
+        Create new AI content generation task
         
         Args:
             user_id: User creating the content
@@ -61,7 +66,8 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
             
         Returns:
             Created AI content generation instance
-        """        try:
+        """
+        try:
             generation_data = {
                 'user_id': user_id,
                 'content_type': content_type,
@@ -86,7 +92,8 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
                                 status: str,
                                 result_data: Optional[Dict[str, Any]] = None,
                                 error_message: Optional[str] = None) -> Optional[AIContentGeneration]:
-        """        Update AI generation task status and results
+        """
+        Update AI generation task status and results
         
         Args:
             generation_id: Generation task ID
@@ -96,7 +103,8 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
             
         Returns:
             Updated generation instance
-        """        try:
+        """
+        try:
             update_data = {
                 'status': status,
                 'updated_at': datetime.utcnow()
@@ -129,7 +137,8 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
                            status: Optional[str] = None,
                            limit: int = 50,
                            offset: int = 0) -> List[AIContentGeneration]:
-        """        Get user's AI content generations with filtering
+        """
+        Get user's AI content generations with filtering
         
         Args:
             user_id: User ID
@@ -140,7 +149,8 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
             
         Returns:
             List of user's AI content generations
-        """        try:
+        """
+        try:
             filters = {'user_id': user_id}
             
             if content_type:
@@ -166,7 +176,8 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
                               priority: Optional[str] = None,
                               content_type: Optional[str] = None,
                               limit: int = 100) -> List[AIContentGeneration]:
-        """        Get pending AI generation tasks for processing
+        """
+        Get pending AI generation tasks for processing
         
         Args:
             priority: Filter by priority
@@ -175,7 +186,8 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
             
         Returns:
             List of pending generation tasks
-        """        try:
+        """
+        try:
             filters = {'status': 'pending'}
             
             if priority:
@@ -200,7 +212,8 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
     def get_generation_analytics(self, 
                                user_id: Optional[int] = None,
                                days: int = 30) -> Dict[str, Any]:
-        """        Get AI content generation analytics and statistics
+        """
+        Get AI content generation analytics and statistics
         
         Args:
             user_id: Optional user ID filter
@@ -208,7 +221,8 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
             
         Returns:
             Analytics data
-        """        try:
+        """
+        try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
             base_query = self.db_session.query(AIContentGeneration).filter(
@@ -273,7 +287,8 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
             raise RepositoryException(f"Failed to get generation analytics: {str(e)}")
             
     def get_model_performance_stats(self, ai_model_name: str, days: int = 30) -> Dict[str, Any]:
-        """        Get performance statistics for specific AI model
+        """
+        Get performance statistics for specific AI model
         
         Args:
             ai_model_name: AI model name
@@ -281,7 +296,8 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
             
         Returns:
             Model performance statistics
-        """        try:
+        """
+        try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
             model_generations = self.db_session.query(AIContentGeneration).filter(
@@ -337,14 +353,16 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
             raise RepositoryException(f"Failed to get model performance stats: {str(e)}")
             
     def cleanup_old_generations(self, days_to_keep: int = 90) -> int:
-        """        Clean up old AI generation records
+        """
+        Clean up old AI generation records
         
         Args:
             days_to_keep: Number of days to keep records
             
         Returns:
             Number of cleaned up records
-        """        try:
+        """
+        try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_to_keep)
             
             # Only delete completed or failed generations older than cutoff
@@ -360,11 +378,13 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
             raise RepositoryException(f"Failed to cleanup old generations: {str(e)}")
             
     def get_content_type_queue_stats(self) -> Dict[str, Any]:
-        """        Get queue statistics by content type
+        """
+        Get queue statistics by content type
         
         Returns:
             Queue statistics by content type
-        """        try:
+        """
+        try:
             # Get pending tasks by content type
             pending_stats = self.db_session.query(
                 AIContentGeneration.content_type,

@@ -9,7 +9,8 @@ Unauthorized use, reproduction, modification, or distribution without explicit
 written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -38,7 +39,8 @@ Base = declarative_base()
 
 
 class RevenueSource(Enum):
-    """Revenue source types"""    SPOTIFY = "spotify"
+    """Revenue source types"""
+    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -59,7 +61,8 @@ class RevenueSource(Enum):
 
 
 class RevenueType(Enum):
-    """Revenue type classifications"""    RECURRING = "recurring"
+    """Revenue type classifications"""
+    RECURRING = "recurring"
     ONE_TIME = "one_time"
     COMMISSION = "commission"
     ROYALTY = "royalty"
@@ -70,7 +73,8 @@ class RevenueType(Enum):
 
 
 class TrackingStatus(Enum):
-    """Revenue tracking status"""    ACTIVE = "active"
+    """Revenue tracking status"""
+    ACTIVE = "active"
     PENDING = "pending"
     VERIFIED = "verified"
     DISPUTED = "disputed"
@@ -80,7 +84,8 @@ class TrackingStatus(Enum):
 
 
 class TrackingFrequency(Enum):
-    """Tracking frequency options"""    REAL_TIME = "real_time"
+    """Tracking frequency options"""
+    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -89,7 +94,8 @@ class TrackingFrequency(Enum):
 
 @dataclass
 class TrackingMetrics:
-    """Revenue tracking performance metrics"""    total_tracked_revenue: Decimal
+    """Revenue tracking performance metrics"""
+    total_tracked_revenue: Decimal
     verified_revenue: Decimal
     pending_revenue: Decimal
     disputed_revenue: Decimal
@@ -102,14 +108,16 @@ class TrackingMetrics:
     
     @property
     def verification_rate(self) -> float:
-        """Calculate revenue verification rate"""        if self.total_tracked_revenue == 0:
+        """Calculate revenue verification rate"""
+        if self.total_tracked_revenue == 0:
             return 0.0
         return float((self.verified_revenue / self.total_tracked_revenue) * 100)
 
 
 @dataclass
 class RevenueAlert:
-    """Revenue tracking alert"""    alert_id: str
+    """Revenue tracking alert"""
+    alert_id: str
     alert_type: str
     severity: str
     message: str
@@ -121,7 +129,8 @@ class RevenueAlert:
 
 
 class RevenueTrackingModel(BaseModel):
-    """Revenue tracking database model"""    __tablename__ = "revenue_tracking"
+    """Revenue tracking database model"""
+    __tablename__ = "revenue_tracking"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False)
@@ -142,7 +151,8 @@ class RevenueTrackingModel(BaseModel):
 
 
 class RevenueStreamModel(BaseModel):
-    """Revenue stream configuration model"""    __tablename__ = "revenue_streams"
+    """Revenue stream configuration model"""
+    __tablename__ = "revenue_streams"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False)
@@ -158,22 +168,27 @@ class RevenueStreamModel(BaseModel):
 
 
 class BaseRevenueTracker(ABC):
-    """Abstract base class for revenue trackers"""    
+    """Abstract base class for revenue trackers"""
+    
     @abstractmethod
     async def track_revenue(self, source: RevenueSource, data: Dict[str, Any]) -> str:
-        """Track revenue from specific source"""        pass
+        """Track revenue from specific source"""
+        pass
     
     @abstractmethod
     async def verify_revenue(self, tracking_id: str) -> bool:
-        """Verify tracked revenue"""        pass
+        """Verify tracked revenue"""
+        pass
     
     @abstractmethod
     async def get_metrics(self) -> TrackingMetrics:
-        """Get tracking metrics"""        pass
+        """Get tracking metrics"""
+        pass
 
 
 class PlatformRevenueTracker:
-    """Platform-specific revenue tracker"""    
+    """Platform-specific revenue tracker"""
+    
     def __init__(self, platform: RevenueSource, config: Dict[str, Any]):
         self.platform = platform
         self.config = config
@@ -181,7 +196,8 @@ class PlatformRevenueTracker:
         self.last_sync = None
         
     async def initialize(self) -> None:
-        """Initialize platform tracker"""        try:
+        """Initialize platform tracker"""
+        try:
             # Initialize platform-specific API client
             await self._setup_api_client()
             logger.info(f"Initialized tracker for {self.platform.value}")
@@ -190,7 +206,8 @@ class PlatformRevenueTracker:
             raise
     
     async def _setup_api_client(self) -> None:
-        """Setup platform API client"""        # Platform-specific API setup
+        """Setup platform API client"""
+        # Platform-specific API setup
         api_configs = {
             RevenueSource.SPOTIFY: self._setup_spotify_client,
             RevenueSource.YOUTUBE: self._setup_youtube_client,
@@ -203,23 +220,28 @@ class PlatformRevenueTracker:
             await setup_func()
     
     async def _setup_spotify_client(self) -> None:
-        """Setup Spotify API client"""        # Spotify-specific setup
+        """Setup Spotify API client"""
+        # Spotify-specific setup
         pass
     
     async def _setup_youtube_client(self) -> None:
-        """Setup YouTube API client"""        # YouTube-specific setup
+        """Setup YouTube API client"""
+        # YouTube-specific setup
         pass
     
     async def _setup_instagram_client(self) -> None:
-        """Setup Instagram API client"""        # Instagram-specific setup
+        """Setup Instagram API client"""
+        # Instagram-specific setup
         pass
     
     async def _setup_tiktok_client(self) -> None:
-        """Setup TikTok API client"""        # TikTok-specific setup
+        """Setup TikTok API client"""
+        # TikTok-specific setup
         pass
     
     async def fetch_revenue_data(self, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
-        """Fetch revenue data from platform"""        try:
+        """Fetch revenue data from platform"""
+        try:
             # Platform-specific data fetching
             fetch_methods = {
                 RevenueSource.SPOTIFY: self._fetch_spotify_data,
@@ -239,7 +261,8 @@ class PlatformRevenueTracker:
             raise RevenueTrackingError(f"Data fetch failed: {e}")
     
     async def _fetch_spotify_data(self, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
-        """Fetch Spotify revenue data"""        # Mock data for demonstration
+        """Fetch Spotify revenue data"""
+        # Mock data for demonstration
         return [
             {
                 'amount': Decimal('150.75'),
@@ -252,7 +275,8 @@ class PlatformRevenueTracker:
         ]
     
     async def _fetch_youtube_data(self, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
-        """Fetch YouTube revenue data"""        # Mock data for demonstration
+        """Fetch YouTube revenue data"""
+        # Mock data for demonstration
         return [
             {
                 'amount': Decimal('89.50'),
@@ -265,7 +289,8 @@ class PlatformRevenueTracker:
         ]
     
     async def _fetch_instagram_data(self, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
-        """Fetch Instagram revenue data"""        # Mock data for demonstration
+        """Fetch Instagram revenue data"""
+        # Mock data for demonstration
         return [
             {
                 'amount': Decimal('75.25'),
@@ -278,7 +303,8 @@ class PlatformRevenueTracker:
         ]
     
     async def _fetch_tiktok_data(self, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
-        """Fetch TikTok revenue data"""        # Mock data for demonstration
+        """Fetch TikTok revenue data"""
+        # Mock data for demonstration
         return [
             {
                 'amount': Decimal('45.80'),
@@ -292,7 +318,8 @@ class PlatformRevenueTracker:
 
 
 class RevenueTracker(BaseRevenueTracker):
-    """Comprehensive revenue tracking system"""    
+    """Comprehensive revenue tracking system"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.platform_trackers = {}
@@ -303,7 +330,8 @@ class RevenueTracker(BaseRevenueTracker):
         self.tracking_history = []
         
     async def initialize(self) -> None:
-        """Initialize revenue tracker"""        try:
+        """Initialize revenue tracker"""
+        try:
             # Initialize platform trackers
             await self._setup_platform_trackers()
             
@@ -317,7 +345,8 @@ class RevenueTracker(BaseRevenueTracker):
             raise
     
     async def _setup_platform_trackers(self) -> None:
-        """Setup platform-specific trackers"""        platform_configs = self.config.get('platforms', {})
+        """Setup platform-specific trackers"""
+        platform_configs = self.config.get('platforms', {})
         
         for platform_name, platform_config in platform_configs.items():
             try:
@@ -332,7 +361,8 @@ class RevenueTracker(BaseRevenueTracker):
                 logger.error(f"Error setting up {platform_name} tracker: {e}")
     
     async def _setup_alert_system(self) -> None:
-        """Setup revenue alert system"""        # Configure alert thresholds and rules
+        """Setup revenue alert system"""
+        # Configure alert thresholds and rules
         self.alert_config = self.config.get('alerts', {
             'threshold_amount': Decimal('1000'),
             'variance_threshold': 0.2,
@@ -341,7 +371,8 @@ class RevenueTracker(BaseRevenueTracker):
     
     @cache_revenue_tracking
     async def track_revenue(self, source: RevenueSource, data: Dict[str, Any]) -> str:
-        """Track revenue from specific source"""        try:
+        """Track revenue from specific source"""
+        try:
             validate_tracking_data(data)
             
             # Generate tracking ID
@@ -388,7 +419,8 @@ class RevenueTracker(BaseRevenueTracker):
             raise RevenueTrackingError(f"Revenue tracking failed: {e}")
     
     async def verify_revenue(self, tracking_id: str) -> bool:
-        """Verify tracked revenue"""        try:
+        """Verify tracked revenue"""
+        try:
             # Find tracking record
             tracking_record = next(
                 (r for r in self.tracking_history if r['id'] == tracking_id),
@@ -417,7 +449,8 @@ class RevenueTracker(BaseRevenueTracker):
             raise RevenueTrackingError(f"Revenue verification failed: {e}")
     
     async def _perform_verification(self, tracking_record: Dict[str, Any]) -> bool:
-        """Perform revenue verification"""        try:
+        """Perform revenue verification"""
+        try:
             source = RevenueSource(tracking_record['source'])
             
             # Platform-specific verification
@@ -446,7 +479,8 @@ class RevenueTracker(BaseRevenueTracker):
             return False
     
     async def get_metrics(self) -> TrackingMetrics:
-        """Get comprehensive tracking metrics"""        try:
+        """Get comprehensive tracking metrics"""
+        try:
             # Calculate metrics from tracking history
             total_tracked = sum(Decimal(r['amount']) for r in self.tracking_history)
             verified_revenue = sum(
@@ -504,7 +538,8 @@ class RevenueTracker(BaseRevenueTracker):
             raise RevenueTrackingError(f"Metrics calculation failed: {e}")
     
     async def _check_revenue_alerts(self, tracking_record: Dict[str, Any]) -> None:
-        """Check for revenue alerts"""        try:
+        """Check for revenue alerts"""
+        try:
             amount = tracking_record['amount']
             source = RevenueSource(tracking_record['source'])
             
@@ -547,7 +582,8 @@ class RevenueTracker(BaseRevenueTracker):
             logger.error(f"Error checking revenue alerts: {e}")
     
     async def sync_platform_revenue(self, source: RevenueSource, start_date: datetime, end_date: datetime) -> int:
-        """Sync revenue data from platform"""        try:
+        """Sync revenue data from platform"""
+        try:
             if source not in self.platform_trackers:
                 raise RevenueTrackingError(f"Platform tracker not configured: {source.value}")
             
@@ -572,7 +608,8 @@ class RevenueTracker(BaseRevenueTracker):
             raise RevenueTrackingError(f"Platform sync failed: {e}")
     
     async def get_revenue_summary(self, period: str = 'month') -> Dict[str, Any]:
-        """Get revenue summary for specified period"""        try:
+        """Get revenue summary for specified period"""
+        try:
             # Calculate date range
             end_date = datetime.utcnow()
             if period == 'day':
@@ -647,12 +684,14 @@ class RevenueTracker(BaseRevenueTracker):
             raise RevenueTrackingError(f"Summary generation failed: {e}")
     
     async def get_alerts(self, unresolved_only: bool = True) -> List[RevenueAlert]:
-        """Get revenue alerts"""        if unresolved_only:
+        """Get revenue alerts"""
+        if unresolved_only:
             return [alert for alert in self.alerts if not alert.is_resolved]
         return self.alerts
     
     async def resolve_alert(self, alert_id: str, resolution_notes: str) -> bool:
-        """Resolve revenue alert"""        try:
+        """Resolve revenue alert"""
+        try:
             alert = next((a for a in self.alerts if a.alert_id == alert_id), None)
             
             if not alert:
@@ -670,7 +709,8 @@ class RevenueTracker(BaseRevenueTracker):
             raise RevenueTrackingError(f"Alert resolution failed: {e}")
     
     async def export_tracking_report(self, format: str = 'json') -> Dict[str, Any]:
-        """Export comprehensive tracking report"""        try:
+        """Export comprehensive tracking report"""
+        try:
             metrics = await self.get_metrics()
             alerts = await self.get_alerts(unresolved_only=False)
             

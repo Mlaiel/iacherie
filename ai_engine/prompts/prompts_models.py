@@ -9,14 +9,16 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
-"""from dataclasses import dataclass, field
+"""
+from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional, Union
 from datetime import datetime
 from enum import Enum
 import uuid
 
 class PromptType(Enum):
-    """Types of prompts in the system"""    CONTENT_CREATION = "content_creation"
+    """Types of prompts in the system"""
+    CONTENT_CREATION = "content_creation"
     PROTECTION = "protection"
     SEO_OPTIMIZATION = "seo_optimization"
     MONETIZATION = "monetization"
@@ -25,7 +27,8 @@ class PromptType(Enum):
     DISTRIBUTION = "distribution"
 
 class PromptStatus(Enum):
-    """Status of prompt generation"""    PENDING = "pending"
+    """Status of prompt generation"""
+    PENDING = "pending"
     GENERATING = "generating"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -33,7 +36,8 @@ class PromptStatus(Enum):
 
 @dataclass
 class PromptContext:
-    """Context information for prompt generation"""    user_id: str
+    """Context information for prompt generation"""
+    user_id: str
     creator_type: str
     content_format: str
     target_platforms: List[str] = field(default_factory=list)
@@ -43,7 +47,8 @@ class PromptContext:
 
 @dataclass
 class PromptTemplate:
-    """Template for prompt generation"""    id: str
+    """Template for prompt generation"""
+    id: str
     name: str
     description: str
     template: str
@@ -57,7 +62,8 @@ class PromptTemplate:
 
 @dataclass
 class GeneratedPrompt:
-    """Model for a generated prompt"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Model for a generated prompt"""
+    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     prompt_type: PromptType = PromptType.CONTENT_CREATION
     status: PromptStatus = PromptStatus.PENDING
     
@@ -86,14 +92,16 @@ class GeneratedPrompt:
     version: str = "1.0"
     
     def update_quality_scores(self, scores: Dict[str, float]) -> None:
-        """Update quality scores"""        self.quality_score = scores.get('overall', 0.0)
+        """Update quality scores"""
+        self.quality_score = scores.get('overall', 0.0)
         self.readability_score = scores.get('readability', 0.0)
         self.relevance_score = scores.get('relevance', 0.0)
         self.creativity_score = scores.get('creativity', 0.0)
         self.updated_at = datetime.utcnow()
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'id': self.id,
             'prompt_type': self.prompt_type.value,
             'status': self.status.value,
@@ -115,7 +123,8 @@ class GeneratedPrompt:
 
 @dataclass
 class PromptOptimization:
-    """Model for prompt optimization results"""    original_prompt_id: str
+    """Model for prompt optimization results"""
+    original_prompt_id: str
     optimized_content: str
     optimization_type: str
     improvements: List[str] = field(default_factory=list)
@@ -125,7 +134,8 @@ class PromptOptimization:
 
 @dataclass
 class PromptAnalytics:
-    """Analytics data for prompts"""    prompt_id: str
+    """Analytics data for prompts"""
+    prompt_id: str
     usage_count: int = 0
     success_rate: float = 0.0
     average_quality_score: float = 0.0
@@ -136,7 +146,8 @@ class PromptAnalytics:
 
 @dataclass
 class PromptBatch:
-    """Batch processing for multiple prompts"""    batch_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Batch processing for multiple prompts"""
+    batch_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     prompts: List[GeneratedPrompt] = field(default_factory=list)
     status: str = "pending"
     total_prompts: int = 0
@@ -148,11 +159,13 @@ class PromptBatch:
     completed_at: Optional[datetime] = None
     
     def add_prompt(self, prompt: GeneratedPrompt) -> None:
-        """Add prompt to batch"""        self.prompts.append(prompt)
+        """Add prompt to batch"""
+        self.prompts.append(prompt)
         self.total_prompts = len(self.prompts)
     
     def update_completion_stats(self) -> None:
-        """Update completion statistics"""        self.completed_prompts = sum(1 for p in self.prompts if p.status == PromptStatus.COMPLETED)
+        """Update completion statistics"""
+        self.completed_prompts = sum(1 for p in self.prompts if p.status == PromptStatus.COMPLETED)
         self.failed_prompts = sum(1 for p in self.prompts if p.status == PromptStatus.FAILED)
         
         if self.completed_prompts > 0:

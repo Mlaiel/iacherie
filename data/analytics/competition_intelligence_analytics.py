@@ -15,7 +15,8 @@ WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -43,7 +44,8 @@ from ..vector_db.vector_db_manager import VectorDBManager
 
 
 class CompetitorTier(Enum):
-    """Competitor tier classification"""    DIRECT = "direct"
+    """Competitor tier classification"""
+    DIRECT = "direct"
     INDIRECT = "indirect"
     ASPIRATIONAL = "aspirational"
     EMERGING = "emerging"
@@ -51,7 +53,8 @@ class CompetitorTier(Enum):
 
 
 class MarketSegment(Enum):
-    """Market segment categories"""    MUSIC_CREATION = "music_creation"
+    """Market segment categories"""
+    MUSIC_CREATION = "music_creation"
     VIDEO_CONTENT = "video_content"
     PHOTOGRAPHY = "photography"
     BLOGGING = "blogging"
@@ -62,7 +65,8 @@ class MarketSegment(Enum):
 
 
 class AnalysisScope(Enum):
-    """Analysis scope levels"""    GLOBAL = "global"
+    """Analysis scope levels"""
+    GLOBAL = "global"
     REGIONAL = "regional"
     LOCAL = "local"
     NICHE = "niche"
@@ -70,7 +74,8 @@ class AnalysisScope(Enum):
 
 @dataclass
 class CompetitorProfile:
-    """Comprehensive competitor profile"""    competitor_id: str
+    """Comprehensive competitor profile"""
+    competitor_id: str
     name: str
     tier: CompetitorTier
     market_segments: List[MarketSegment]
@@ -94,7 +99,8 @@ class CompetitorProfile:
 
 @dataclass
 class MarketOpportunity:
-    """Market opportunity identification"""    opportunity_id: str
+    """Market opportunity identification"""
+    opportunity_id: str
     title: str
     description: str
     market_segment: MarketSegment
@@ -113,7 +119,8 @@ class MarketOpportunity:
 
 @dataclass
 class CompetitivePositioning:
-    """Competitive positioning analysis"""    user_position: Dict[str, float]
+    """Competitive positioning analysis"""
+    user_position: Dict[str, float]
     competitor_positions: Dict[str, Dict[str, float]]
     market_gaps: List[Dict[str, Any]]
     differentiation_opportunities: List[str]
@@ -124,21 +131,25 @@ class CompetitivePositioning:
 
 
 class CompetitionIntelligenceAnalytics:
-    """    Professional competition intelligence analytics engine for IA Influencer Agent platform.
+    """
+    Professional competition intelligence analytics engine for IA Influencer Agent platform.
     
     Provides comprehensive competitive analysis, market intelligence, and strategic
     positioning insights for content creators and influencers.
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, redis_client: Redis,
                  storage_manager: StorageManager, vector_db: VectorDBManager):
-        """        Initialize Competition Intelligence Analytics engine.
+        """
+        Initialize Competition Intelligence Analytics engine.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
             storage_manager: Storage management service
             vector_db: Vector database manager
-        """        self.db_session = db_session
+        """
+        self.db_session = db_session
         self.redis_client = redis_client
         self.storage_manager = storage_manager
         self.vector_db = vector_db
@@ -176,17 +187,20 @@ class CompetitionIntelligenceAnalytics:
         }
     
     async def __aenter__(self):
-        """Async context manager entry"""        self.http_session = aiohttp.ClientSession()
+        """Async context manager entry"""
+        self.http_session = aiohttp.ClientSession()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""        if self.http_session:
+        """Async context manager exit"""
+        if self.http_session:
             await self.http_session.close()
     
     async def discover_competitors(self, user_id: str, market_segments: List[MarketSegment],
                                  analysis_scope: AnalysisScope = AnalysisScope.GLOBAL,
                                  max_competitors: int = 50) -> List[CompetitorProfile]:
-        """        Discover and analyze competitors in specified market segments.
+        """
+        Discover and analyze competitors in specified market segments.
         
         Args:
             user_id: User identifier
@@ -196,7 +210,8 @@ class CompetitionIntelligenceAnalytics:
             
         Returns:
             List of discovered competitor profiles
-        """        try:
+        """
+        try:
             # Cache check
             cache_key = f"competitors:discovery:{user_id}:{'-'.join([s.value for s in market_segments])}"
             cached_competitors = await self._get_cached_result(cache_key)
@@ -257,7 +272,8 @@ class CompetitionIntelligenceAnalytics:
     
     async def analyze_competitive_positioning(self, user_id: str,
                                             competitors: List[str] = None) -> CompetitivePositioning:
-        """        Analyze competitive positioning and identify strategic opportunities.
+        """
+        Analyze competitive positioning and identify strategic opportunities.
         
         Args:
             user_id: User identifier
@@ -265,7 +281,8 @@ class CompetitionIntelligenceAnalytics:
             
         Returns:
             CompetitivePositioning analysis
-        """        try:
+        """
+        try:
             # Get user profile
             user_profile = await self._get_user_profile(user_id)
             
@@ -342,7 +359,8 @@ class CompetitionIntelligenceAnalytics:
     async def identify_market_opportunities(self, user_id: str,
                                           market_segments: List[MarketSegment] = None,
                                           min_opportunity_size: float = 1000000) -> List[MarketOpportunity]:
-        """        Identify and analyze market opportunities.
+        """
+        Identify and analyze market opportunities.
         
         Args:
             user_id: User identifier
@@ -351,7 +369,8 @@ class CompetitionIntelligenceAnalytics:
             
         Returns:
             List of identified market opportunities
-        """        try:
+        """
+        try:
             if market_segments is None:
                 market_segments = list(MarketSegment)
             
@@ -403,7 +422,8 @@ class CompetitionIntelligenceAnalytics:
     async def monitor_competitor_activities(self, user_id: str,
                                           competitors: List[str],
                                           monitoring_frequency: str = "daily") -> Dict[str, Any]:
-        """        Monitor competitor activities and changes.
+        """
+        Monitor competitor activities and changes.
         
         Args:
             user_id: User identifier
@@ -412,7 +432,8 @@ class CompetitionIntelligenceAnalytics:
             
         Returns:
             Competitor monitoring results
-        """        try:
+        """
+        try:
             if monitoring_frequency not in self.analysis_intervals:
                 raise ValueError(f"Invalid monitoring frequency: {monitoring_frequency}")
             
@@ -472,7 +493,8 @@ class CompetitionIntelligenceAnalytics:
     
     async def generate_competitive_intelligence_report(self, user_id: str,
                                                      report_type: str = "comprehensive") -> Dict[str, Any]:
-        """        Generate comprehensive competitive intelligence report.
+        """
+        Generate comprehensive competitive intelligence report.
         
         Args:
             user_id: User identifier
@@ -480,7 +502,8 @@ class CompetitionIntelligenceAnalytics:
             
         Returns:
             Competitive intelligence report
-        """        try:
+        """
+        try:
             # Get user data
             user_profile = await self._get_user_profile(user_id)
             
@@ -551,7 +574,8 @@ class CompetitionIntelligenceAnalytics:
     # Private helper methods
     
     def _configure_data_sources(self) -> Dict[str, Dict[str, Any]]:
-        """Configure data sources for competitive intelligence"""        return {
+        """Configure data sources for competitive intelligence"""
+        return {
             "social_platforms": {
                 "spotify": {"api_endpoint": "https://api.spotify.com/v1", "rate_limit": 100},
                 "youtube": {"api_endpoint": "https://www.googleapis.com/youtube/v3", "rate_limit": 10000},
@@ -576,7 +600,8 @@ class CompetitionIntelligenceAnalytics:
     async def _discover_from_platforms(self, user_profile: Dict[str, Any],
                                      market_segments: List[MarketSegment],
                                      analysis_scope: AnalysisScope) -> List[Dict[str, Any]]:
-        """Discover competitors from social platforms"""        try:
+        """Discover competitors from social platforms"""
+        try:
             discovered_competitors = []
             
             # Use platform APIs to find similar creators
@@ -594,7 +619,8 @@ class CompetitionIntelligenceAnalytics:
     
     async def _analyze_competitor_profile(self, competitor_data: Dict[str, Any],
                                         user_profile: Dict[str, Any]) -> CompetitorProfile:
-        """Analyze detailed competitor profile"""        try:
+        """Analyze detailed competitor profile"""
+        try:
             # Determine competitor tier
             tier = await self._classify_competitor_tier(competitor_data, user_profile)
             
@@ -641,7 +667,8 @@ class CompetitionIntelligenceAnalytics:
             raise
     
     async def _get_cached_result(self, cache_key: str) -> Optional[List[Dict[str, Any]]]:
-        """Get cached result from Redis"""        try:
+        """Get cached result from Redis"""
+        try:
             cached_data = self.redis_client.get(cache_key)
             if cached_data:
                 return json.loads(cached_data)
@@ -652,7 +679,8 @@ class CompetitionIntelligenceAnalytics:
     
     async def _cache_result(self, cache_key: str, data: List[Dict[str, Any]], 
                           ttl: int = None) -> None:
-        """Cache result in Redis"""        try:
+        """Cache result in Redis"""
+        try:
             if ttl is None:
                 ttl = self.cache_ttl
             serialized_data = json.dumps(data, default=str)

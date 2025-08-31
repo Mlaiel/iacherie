@@ -9,14 +9,16 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any
 from pydantic import BaseSettings, validator
 from enum import Enum
 
 
 class LoadBalancingStrategy(str, Enum):
-    """Load balancing strategies for service distribution"""    ROUND_ROBIN = "round_robin"
+    """Load balancing strategies for service distribution"""
+    ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"  
     LEAST_CONNECTIONS = "least_connections"
     IP_HASH = "ip_hash"
@@ -25,14 +27,16 @@ class LoadBalancingStrategy(str, Enum):
 
 
 class RateLimitStrategy(str, Enum):
-    """Rate limiting strategies for API protection"""    TOKEN_BUCKET = "token_bucket"
+    """Rate limiting strategies for API protection"""
+    TOKEN_BUCKET = "token_bucket"
     SLIDING_WINDOW = "sliding_window"
     FIXED_WINDOW = "fixed_window"
     LEAKY_BUCKET = "leaky_bucket"
 
 
 class APIGatewayConfig(BaseSettings):
-    """Comprehensive API Gateway configuration"""    
+    """Comprehensive API Gateway configuration"""
+    
     # Core Settings
     service_name: str = "api-gateway-agent"
     version: str = "1.0.0"
@@ -226,7 +230,8 @@ class APIGatewayConfig(BaseSettings):
     
     @validator('service_routes')
     def validate_service_routes(cls, v):
-        """Validate service routes configuration"""        required_fields = ['path_prefix', 'upstream', 'weight']
+        """Validate service routes configuration"""
+        required_fields = ['path_prefix', 'upstream', 'weight']
         for service_name, config in v.items():
             for field in required_fields:
                 if field not in config:
@@ -245,7 +250,8 @@ class APIGatewayConfig(BaseSettings):
     
     @validator('cors_origins')
     def validate_cors_origins(cls, v):
-        """Validate CORS origins"""        if isinstance(v, str):
+        """Validate CORS origins"""
+        if isinstance(v, str):
             return [v]
         return v
     

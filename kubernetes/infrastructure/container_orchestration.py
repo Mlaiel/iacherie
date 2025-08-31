@@ -7,7 +7,8 @@ Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
-"""import asyncio
+"""
+import asyncio
 import logging
 import yaml
 from abc import ABC, abstractmethod
@@ -22,19 +23,22 @@ import json
 logger = logging.getLogger(__name__)
 
 class OrchestrationPlatform(Enum):
-    """Supported orchestration platforms"""    KUBERNETES = "kubernetes"
+    """Supported orchestration platforms"""
+    KUBERNETES = "kubernetes"
     DOCKER_SWARM = "docker_swarm"
     DOCKER_COMPOSE = "docker_compose"
 
 class DeploymentStrategy(Enum):
-    """Deployment strategies"""    ROLLING_UPDATE = "rolling_update"
+    """Deployment strategies"""
+    ROLLING_UPDATE = "rolling_update"
     BLUE_GREEN = "blue_green"
     CANARY = "canary"
     RECREATE = "recreate"
 
 @dataclass
 class ContainerSpec:
-    """Container specification"""    name: str
+    """Container specification"""
+    name: str
     image: str
     tag: str = "latest"
     ports: List[Dict[str, Any]] = None
@@ -47,7 +51,8 @@ class ContainerSpec:
 
 @dataclass
 class ServiceSpec:
-    """Service specification"""    name: str
+    """Service specification"""
+    name: str
     containers: List[ContainerSpec]
     replicas: int = 1
     strategy: DeploymentStrategy = DeploymentStrategy.ROLLING_UPDATE
@@ -58,13 +63,15 @@ class ServiceSpec:
 
 @dataclass
 class NamespaceSpec:
-    """Namespace specification"""    name: str
+    """Namespace specification"""
+    name: str
     labels: Dict[str, str] = None
     resource_quotas: Optional[Dict[str, Any]] = None
     network_policies: Optional[List[Dict[str, Any]]] = None
 
 class ContainerOrchestrator:
-    """Main container orchestration manager"""    
+    """Main container orchestration manager"""
+    
     def __init__(self, platform: OrchestrationPlatform = OrchestrationPlatform.KUBERNETES):
         self.platform = platform
         self.k8s_client = None
@@ -72,7 +79,8 @@ class ContainerOrchestrator:
         self._init_clients()
         
     def _init_clients(self):
-        """Initialize orchestration clients"""        try:
+        """Initialize orchestration clients"""
+        try:
             if self.platform == OrchestrationPlatform.KUBERNETES:
                 config.load_incluster_config()
                 self.k8s_client = client.ApiClient()
@@ -89,7 +97,8 @@ class ContainerOrchestrator:
             logger.warning(f"Could not initialize orchestration clients: {e}")
     
     async def create_namespace(self, namespace_spec: NamespaceSpec) -> Dict[str, Any]:
-        """Create Kubernetes namespace"""        if self.platform != OrchestrationPlatform.KUBERNETES:
+        """Create Kubernetes namespace"""
+        if self.platform != OrchestrationPlatform.KUBERNETES:
             return {'status': 'skipped', 'message': 'Not applicable for current platform'}
         
         try:
@@ -129,7 +138,8 @@ class ContainerOrchestrator:
                 return {'status': 'error', 'message': str(e)}
     
     async def deploy_service(self, service_spec: ServiceSpec, namespace: str = "default") -> Dict[str, Any]:
-        """Deploy service to orchestration platform"""        if self.platform == OrchestrationPlatform.KUBERNETES:
+        """Deploy service to orchestration platform"""
+        if self.platform == OrchestrationPlatform.KUBERNETES:
             return await self._deploy_k8s_service(service_spec, namespace)
         elif self.platform == OrchestrationPlatform.DOCKER_COMPOSE:
             return await self._deploy_docker_compose_service(service_spec)
@@ -137,7 +147,8 @@ class ContainerOrchestrator:
             return {'status': 'error', 'message': f'Unsupported platform: {self.platform}'}
     
     async def _deploy_k8s_service(self, service_spec: ServiceSpec, namespace: str) -> Dict[str, Any]:
-        """Deploy service to Kubernetes"""        try:
+        """Deploy service to Kubernetes"""
+        try:
             # Create deployment
             deployment = self._create_k8s_deployment(service_spec, namespace)
             deployment_result = self.apps_v1.create_namespaced_deployment(
@@ -174,7 +185,8 @@ class ContainerOrchestrator:
             return {'status': 'error', 'message': str(e)}
     
     def _create_k8s_deployment(self, service_spec: ServiceSpec, namespace: str) -> client.V1Deployment:
-        """Create Kubernetes deployment manifest"""        containers = []
+        """Create Kubernetes deployment manifest"""
+        containers = []
         
         for container_spec in service_spec.containers:
             container = client.V1Container(
@@ -257,7 +269,8 @@ class ContainerOrchestrator:
         return deployment
     
     def _create_k8s_service(self, service_spec: ServiceSpec, namespace: str) -> client.V1Service:
-        """Create Kubernetes service manifest"""        ports = []
+        """Create Kubernetes service manifest"""
+        ports = []
         for container in service_spec.containers:
             for port in container.ports or []:
                 ports.append(client.V1ServicePort(
@@ -284,7 +297,8 @@ class ContainerOrchestrator:
         return service
     
     def _create_k8s_ingress(self, service_spec: ServiceSpec, namespace: str) -> client.V1Ingress:
-        """Create Kubernetes ingress manifest"""        ingress_config = service_spec.ingress_config
+        """Create Kubernetes ingress manifest"""
+        ingress_config = service_spec.ingress_config
         
         rules = []
         for rule in ingress_config.get('rules', []):
@@ -325,7 +339,8 @@ class ContainerOrchestrator:
         return ingress
     
     async def _deploy_docker_compose_service(self, service_spec: ServiceSpec) -> Dict[str, Any]:
-        """Deploy service using Docker Compose"""        try:
+        """Deploy service using Docker Compose"""
+        try:
             compose_config = self._generate_docker_compose(service_spec)
             
             # Write compose file
@@ -352,7 +367,8 @@ class ContainerOrchestrator:
             return {'status': 'error', 'message': str(e)}
     
     def _generate_docker_compose(self, service_spec: ServiceSpec) -> Dict[str, Any]:
-        """Generate docker-compose configuration"""        services = {}
+        """Generate docker-compose configuration"""
+        services = {}
         
         for container in service_spec.containers:
             service_config = {
@@ -396,7 +412,8 @@ class ContainerOrchestrator:
         }
     
     async def scale_service(self, service_name: str, replicas: int, namespace: str = "default") -> Dict[str, Any]:
-        """Scale service replicas"""        if self.platform == OrchestrationPlatform.KUBERNETES:
+        """Scale service replicas"""
+        if self.platform == OrchestrationPlatform.KUBERNETES:
             try:
                 self.apps_v1.patch_namespaced_deployment_scale(
                     name=service_name,
@@ -414,7 +431,8 @@ class ContainerOrchestrator:
             return {'status': 'error', 'message': 'Scaling not implemented for current platform'}
     
     async def update_service(self, service_spec: ServiceSpec, namespace: str = "default") -> Dict[str, Any]:
-        """Update existing service"""        if self.platform == OrchestrationPlatform.KUBERNETES:
+        """Update existing service"""
+        if self.platform == OrchestrationPlatform.KUBERNETES:
             try:
                 # Update deployment
                 deployment = self._create_k8s_deployment(service_spec, namespace)
@@ -434,7 +452,8 @@ class ContainerOrchestrator:
             return {'status': 'error', 'message': 'Update not implemented for current platform'}
     
     async def delete_service(self, service_name: str, namespace: str = "default") -> Dict[str, Any]:
-        """Delete service and related resources"""        if self.platform == OrchestrationPlatform.KUBERNETES:
+        """Delete service and related resources"""
+        if self.platform == OrchestrationPlatform.KUBERNETES:
             try:
                 # Delete deployment
                 self.apps_v1.delete_namespaced_deployment(
@@ -467,7 +486,8 @@ class ContainerOrchestrator:
             return {'status': 'error', 'message': 'Delete not implemented for current platform'}
     
     async def get_service_status(self, service_name: str, namespace: str = "default") -> Dict[str, Any]:
-        """Get service status and health"""        if self.platform == OrchestrationPlatform.KUBERNETES:
+        """Get service status and health"""
+        if self.platform == OrchestrationPlatform.KUBERNETES:
             try:
                 # Get deployment status
                 deployment = self.apps_v1.read_namespaced_deployment(
@@ -509,7 +529,8 @@ class ContainerOrchestrator:
             return {'status': 'error', 'message': 'Status check not implemented for current platform'}
     
     async def create_platform_manifests(self, services: List[ServiceSpec], namespace: str = "ia-influencer") -> Dict[str, Any]:
-        """Create complete platform manifests"""        manifests = {
+        """Create complete platform manifests"""
+        manifests = {
             'kubernetes': {},
             'docker_compose': {}
         }

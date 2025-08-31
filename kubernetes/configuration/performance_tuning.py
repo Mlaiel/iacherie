@@ -13,7 +13,8 @@ Contact: mlaiel@live.de
 
 Enterprise-grade performance optimization and resource management.
 ==================================================================
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ import json
 import psutil
 
 class ResourceProfile(Enum):
-    """Resource allocation profiles"""    MINIMAL = "minimal"
+    """Resource allocation profiles"""
+    MINIMAL = "minimal"
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -32,7 +34,8 @@ class ResourceProfile(Enum):
     GPU_INTENSIVE = "gpu_intensive"
 
 class OptimizationTarget(Enum):
-    """Performance optimization targets"""    LATENCY = "latency"
+    """Performance optimization targets"""
+    LATENCY = "latency"
     THROUGHPUT = "throughput"
     MEMORY = "memory"
     CPU = "cpu"
@@ -42,7 +45,8 @@ class OptimizationTarget(Enum):
     DATABASE = "database"
 
 class CachingStrategy(Enum):
-    """Caching strategies"""    NONE = "none"
+    """Caching strategies"""
+    NONE = "none"
     BASIC = "basic"
     AGGRESSIVE = "aggressive"
     INTELLIGENT = "intelligent"
@@ -50,7 +54,8 @@ class CachingStrategy(Enum):
 
 @dataclass
 class CPUConfiguration:
-    """CPU configuration settings"""    cores: int = 4
+    """CPU configuration settings"""
+    cores: int = 4
     threads_per_core: int = 2
     max_frequency: Optional[float] = None
     governor: str = "performance"
@@ -61,7 +66,8 @@ class CPUConfiguration:
 
 @dataclass
 class MemoryConfiguration:
-    """Memory configuration settings"""    total_memory: str = "8Gi"
+    """Memory configuration settings"""
+    total_memory: str = "8Gi"
     heap_size: str = "4Gi"
     swap_enabled: bool = False
     huge_pages: bool = False
@@ -72,7 +78,8 @@ class MemoryConfiguration:
 
 @dataclass
 class NetworkConfiguration:
-    """Network performance configuration"""    max_connections: int = 10000
+    """Network performance configuration"""
+    max_connections: int = 10000
     keep_alive_timeout: int = 75
     tcp_window_size: int = 65536
     tcp_congestion_control: str = "bbr"
@@ -83,7 +90,8 @@ class NetworkConfiguration:
 
 @dataclass
 class StorageConfiguration:
-    """Storage performance configuration"""    io_scheduler: str = "mq-deadline"
+    """Storage performance configuration"""
+    io_scheduler: str = "mq-deadline"
     read_ahead: int = 256
     queue_depth: int = 32
     cache_size: str = "1Gi"
@@ -94,7 +102,8 @@ class StorageConfiguration:
 
 @dataclass
 class DatabaseConfiguration:
-    """Database performance configuration"""    connection_pool_size: int = 20
+    """Database performance configuration"""
+    connection_pool_size: int = 20
     max_connections: int = 100
     shared_buffers: str = "256MB"
     effective_cache_size: str = "1GB"
@@ -106,7 +115,8 @@ class DatabaseConfiguration:
 
 @dataclass
 class CacheConfiguration:
-    """Caching configuration"""    strategy: CachingStrategy
+    """Caching configuration"""
+    strategy: CachingStrategy
     redis_memory: str = "512MB"
     redis_maxmemory_policy: str = "allkeys-lru"
     memcached_memory: int = 512
@@ -117,7 +127,8 @@ class CacheConfiguration:
 
 @dataclass
 class AIConfiguration:
-    """AI/ML performance configuration"""    gpu_enabled: bool = False
+    """AI/ML performance configuration"""
+    gpu_enabled: bool = False
     gpu_memory: str = "8GB"
     batch_size: int = 32
     model_parallelism: bool = False
@@ -129,7 +140,8 @@ class AIConfiguration:
 
 @dataclass
 class PerformanceConfiguration:
-    """Complete performance configuration"""    profile: ResourceProfile
+    """Complete performance configuration"""
+    profile: ResourceProfile
     optimization_targets: List[OptimizationTarget]
     cpu: CPUConfiguration
     memory: MemoryConfiguration
@@ -143,7 +155,8 @@ class PerformanceConfiguration:
     custom_settings: Dict[str, Any] = field(default_factory=dict)
 
 class PerformanceTuningManager:
-    """    Enterprise performance tuning and optimization manager.
+    """
+    Enterprise performance tuning and optimization manager.
     
     Provides comprehensive performance management:
     - Resource allocation optimization
@@ -155,9 +168,11 @@ class PerformanceTuningManager:
     - Network and I/O optimization
     - Real-time performance metrics
     - Automated performance tuning
-    """    
+    """
+    
     def __init__(self):
-        """Initialize performance tuning manager"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize performance tuning manager"""
+        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Performance configurations
         self.performance_configs = {}
@@ -176,11 +191,13 @@ class PerformanceTuningManager:
         self.logger.info("Performance tuning manager initialized")
     
     async def initialize(self) -> bool:
-        """        Initialize performance tuning manager.
+        """
+        Initialize performance tuning manager.
         
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             # Detect system resources
             await self._detect_system_resources()
             
@@ -201,7 +218,8 @@ class PerformanceTuningManager:
             return False
     
     async def _detect_system_resources(self) -> None:
-        """Detect available system resources"""        try:
+        """Detect available system resources"""
+        try:
             # CPU information
             cpu_info = {
                 "cores": psutil.cpu_count(logical=False),
@@ -246,7 +264,8 @@ class PerformanceTuningManager:
             self.logger.warning(f"Failed to detect system resources: {e}")
     
     async def _load_performance_configurations(self) -> None:
-        """Load performance configurations for all profiles"""        
+        """Load performance configurations for all profiles"""
+        
         # Minimal configuration
         minimal_config = PerformanceConfiguration(
             profile=ResourceProfile.MINIMAL,
@@ -472,12 +491,14 @@ class PerformanceTuningManager:
         self.logger.info(f"Loaded {len(self.performance_configs)} performance configurations")
     
     async def _initialize_performance_monitoring(self) -> None:
-        """Initialize performance monitoring"""        # Start monitoring task
+        """Initialize performance monitoring"""
+        # Start monitoring task
         asyncio.create_task(self._monitor_performance_metrics())
         self.logger.info("Performance monitoring initialized")
     
     async def _monitor_performance_metrics(self) -> None:
-        """Monitor performance metrics continuously"""        while True:
+        """Monitor performance metrics continuously"""
+        while True:
             try:
                 # Collect current metrics
                 metrics = await self._collect_performance_metrics()
@@ -503,7 +524,8 @@ class PerformanceTuningManager:
                 await asyncio.sleep(60)  # Wait longer on error
     
     async def _collect_performance_metrics(self) -> Dict[str, Any]:
-        """Collect current performance metrics"""        try:
+        """Collect current performance metrics"""
+        try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent(interval=1)
             cpu_per_core = psutil.cpu_percent(interval=1, percpu=True)
@@ -550,7 +572,8 @@ class PerformanceTuningManager:
             return {}
     
     async def _analyze_performance_metrics(self, metrics: Dict[str, Any]) -> None:
-        """Analyze metrics for performance issues"""        alerts = []
+        """Analyze metrics for performance issues"""
+        alerts = []
         recommendations = []
         
         # CPU analysis
@@ -597,14 +620,16 @@ class PerformanceTuningManager:
         ]
     
     async def set_performance_profile(self, profile: ResourceProfile) -> bool:
-        """        Set performance profile.
+        """
+        Set performance profile.
         
         Args:
             profile: Resource profile to activate
             
         Returns:
             bool: True if successful
-        """        try:
+        """
+        try:
             if profile not in self.performance_configs:
                 raise ValueError(f"Performance profile not configured: {profile.value}")
             
@@ -622,7 +647,8 @@ class PerformanceTuningManager:
             return False
     
     async def _apply_performance_configuration(self, config: PerformanceConfiguration) -> None:
-        """Apply performance configuration"""        # Apply CPU configuration
+        """Apply performance configuration"""
+        # Apply CPU configuration
         cpu_config = config.cpu
         if cpu_config.cores:
             # Set CPU affinity if specified
@@ -659,7 +685,8 @@ class PerformanceTuningManager:
         self.logger.info(f"Applied performance configuration for profile: {config.profile.value}")
     
     async def configure_gpu_resources(self) -> bool:
-        """Configure GPU resources for AI workloads"""        try:
+        """Configure GPU resources for AI workloads"""
+        try:
             if not self.active_config or not self.active_config.ai.gpu_enabled:
                 self.logger.info("GPU not enabled in current configuration")
                 return True
@@ -685,7 +712,8 @@ class PerformanceTuningManager:
             return False
     
     async def setup_auto_scaling(self) -> bool:
-        """Setup auto-scaling configuration"""        try:
+        """Setup auto-scaling configuration"""
+        try:
             if not self.active_config:
                 raise ValueError("No active performance configuration")
             
@@ -710,14 +738,16 @@ class PerformanceTuningManager:
             return False
     
     async def optimize_performance(self, target: OptimizationTarget) -> Dict[str, Any]:
-        """        Optimize performance for specific target.
+        """
+        Optimize performance for specific target.
         
         Args:
             target: Optimization target
             
         Returns:
             Optimization results
-        """        try:
+        """
+        try:
             optimization_result = {
                 "target": target.value,
                 "timestamp": datetime.now(),
@@ -757,7 +787,8 @@ class PerformanceTuningManager:
             raise
     
     async def _optimize_latency(self) -> List[str]:
-        """Optimize for low latency"""        changes = []
+        """Optimize for low latency"""
+        changes = []
         
         # Reduce network timeouts
         changes.append("Reduced keep-alive timeout to 30s")
@@ -771,7 +802,8 @@ class PerformanceTuningManager:
         return changes
     
     async def _optimize_throughput(self) -> List[str]:
-        """Optimize for high throughput"""        changes = []
+        """Optimize for high throughput"""
+        changes = []
         
         # Increase connection limits
         changes.append("Increased max connections to 20000")
@@ -785,7 +817,8 @@ class PerformanceTuningManager:
         return changes
     
     async def _optimize_memory(self) -> List[str]:
-        """Optimize memory usage"""        changes = []
+        """Optimize memory usage"""
+        changes = []
         
         # Enable memory compression
         changes.append("Enabled memory compression")
@@ -799,7 +832,8 @@ class PerformanceTuningManager:
         return changes
     
     async def _optimize_ai_inference(self) -> List[str]:
-        """Optimize AI inference performance"""        changes = []
+        """Optimize AI inference performance"""
+        changes = []
         
         # Enable mixed precision
         changes.append("Enabled mixed precision training")
@@ -813,7 +847,8 @@ class PerformanceTuningManager:
         return changes
     
     async def get_performance_report(self) -> Dict[str, Any]:
-        """Get comprehensive performance report"""        current_metrics = await self._collect_performance_metrics()
+        """Get comprehensive performance report"""
+        current_metrics = await self._collect_performance_metrics()
         
         return {
             "profile": self.current_profile.value,
@@ -826,7 +861,8 @@ class PerformanceTuningManager:
         }
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get performance manager status"""        return {
+        """Get performance manager status"""
+        return {
             "current_profile": self.current_profile.value,
             "monitoring_enabled": True,
             "auto_tuning": self.active_config.auto_tuning if self.active_config else False,

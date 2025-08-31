@@ -17,7 +17,8 @@ explicit written permission from Fahed Mlaiel is strictly prohibited and will be
 to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import logging
+"""
+import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, NamedTuple
 from dataclasses import dataclass, field
@@ -27,13 +28,15 @@ logger = logging.getLogger(__name__)
 
 
 class CodecType(Enum):
-    """Audio codec types"""    LOSSLESS = "lossless"
+    """Audio codec types"""
+    LOSSLESS = "lossless"
     LOSSY = "lossy"
     HYBRID = "hybrid"
 
 
 class CodecFamily(Enum):
-    """Audio codec families"""    PCM = "pcm"          # WAV, AIFF
+    """Audio codec families"""
+    PCM = "pcm"          # WAV, AIFF
     MPEG = "mpeg"        # MP3, AAC
     XIPH = "xiph"        # Vorbis, Opus, FLAC
     WINDOWS = "windows"   # WMA
@@ -41,14 +44,16 @@ class CodecFamily(Enum):
 
 
 class BitrateMode(Enum):
-    """Bitrate encoding modes"""    CBR = "cbr"          # Constant bitrate
+    """Bitrate encoding modes"""
+    CBR = "cbr"          # Constant bitrate
     VBR = "vbr"          # Variable bitrate
     ABR = "abr"          # Average bitrate
     CONSTRAINED_VBR = "constrained_vbr"
 
 
 class QualityProfile(Enum):
-    """Audio quality profiles"""    ARCHIVAL = "archival"        # Highest quality, no compression
+    """Audio quality profiles"""
+    ARCHIVAL = "archival"        # Highest quality, no compression
     MASTERING = "mastering"      # Studio mastering quality
     DISTRIBUTION = "distribution" # High quality distribution
     STREAMING = "streaming"       # Streaming optimized
@@ -58,7 +63,8 @@ class QualityProfile(Enum):
 
 @dataclass
 class CodecCapabilities:
-    """Codec technical capabilities"""    max_sample_rate: int
+    """Codec technical capabilities"""
+    max_sample_rate: int
     max_bit_depth: int
     max_channels: int
     supports_metadata: bool
@@ -71,7 +77,8 @@ class CodecCapabilities:
 
 @dataclass
 class EncodingPreset:
-    """Audio encoding preset configuration"""    name: str
+    """Audio encoding preset configuration"""
+    name: str
     bitrate_kbps: Optional[int] = None
     quality_level: Optional[float] = None  # 0.0-1.0 or codec-specific
     bitrate_mode: BitrateMode = BitrateMode.VBR
@@ -82,13 +89,16 @@ class EncodingPreset:
 
 
 class CodecConfig:
-    """    Comprehensive audio codec configuration manager
+    """
+    Comprehensive audio codec configuration manager
     
     Manages codec configurations, encoding presets, and optimization settings
     for all supported audio formats across different platforms.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize codec configuration manager"""        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize codec configuration manager"""
+        self.logger = logging.getLogger(self.__class__.__name__)
         
         # Initialize codec registry
         self._codecs = self._initialize_codec_registry()
@@ -105,7 +115,8 @@ class CodecConfig:
         self.logger.info("CodecConfig initialized successfully")
     
     def _initialize_codec_registry(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize comprehensive codec registry"""        return {
+        """Initialize comprehensive codec registry"""
+        return {
             "wav": {
                 "name": "WAV",
                 "type": CodecType.LOSSLESS,
@@ -235,7 +246,8 @@ class CodecConfig:
         }
     
     def _initialize_encoding_presets(self) -> Dict[str, Dict[str, EncodingPreset]]:
-        """Initialize encoding presets for each codec"""        presets = {}
+        """Initialize encoding presets for each codec"""
+        presets = {}
         
         # MP3 Presets
         presets["mp3"] = {
@@ -382,7 +394,8 @@ class CodecConfig:
         return presets
     
     def _initialize_platform_codecs(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize platform-specific codec preferences"""        return {
+        """Initialize platform-specific codec preferences"""
+        return {
             "spotify": {
                 "primary": "ogg",
                 "fallback": "mp3",
@@ -466,7 +479,8 @@ class CodecConfig:
         }
     
     def _initialize_quality_profiles(self) -> Dict[QualityProfile, Dict[str, Any]]:
-        """Initialize quality profiles with codec recommendations"""        return {
+        """Initialize quality profiles with codec recommendations"""
+        return {
             QualityProfile.ARCHIVAL: {
                 "description": "Highest quality for archival storage",
                 "recommended_codecs": ["flac", "wav"],
@@ -518,26 +532,31 @@ class CodecConfig:
         }
     
     def get_codec_info(self, codec: str) -> Optional[Dict[str, Any]]:
-        """        Get detailed information about a specific codec
+        """
+        Get detailed information about a specific codec
         
         Args:
             codec: Codec identifier
             
         Returns:
             Codec information dictionary or None if not found
-        """        return self._codecs.get(codec.lower())
+        """
+        return self._codecs.get(codec.lower())
     
     def get_supported_codecs(self) -> List[str]:
-        """Get list of all supported codecs"""        return list(self._codecs.keys())
+        """Get list of all supported codecs"""
+        return list(self._codecs.keys())
     
     def get_lossless_codecs(self) -> List[str]:
-        """Get list of lossless codecs"""        return [
+        """Get list of lossless codecs"""
+        return [
             codec for codec, info in self._codecs.items()
             if info["type"] == CodecType.LOSSLESS
         ]
     
     def get_streaming_codecs(self) -> List[str]:
-        """Get list of streaming-friendly codecs"""        return [
+        """Get list of streaming-friendly codecs"""
+        return [
             codec for codec, info in self._codecs.items()
             if info["capabilities"].streaming_friendly
         ]
@@ -547,7 +566,8 @@ class CodecConfig:
                        quality_profile: Optional[QualityProfile] = None,
                        use_case: Optional[str] = None,
                        file_size_priority: bool = False) -> Dict[str, Any]:
-        """        Recommend optimal codec based on requirements
+        """
+        Recommend optimal codec based on requirements
         
         Args:
             platform: Target platform
@@ -557,7 +577,8 @@ class CodecConfig:
             
         Returns:
             Codec recommendation with rationale
-        """        try:
+        """
+        try:
             recommendations = []
             
             # Platform-based recommendation
@@ -657,7 +678,8 @@ class CodecConfig:
             }
     
     def get_encoding_preset(self, codec: str, preset_name: str) -> Optional[EncodingPreset]:
-        """        Get encoding preset for specific codec
+        """
+        Get encoding preset for specific codec
         
         Args:
             codec: Codec identifier
@@ -665,20 +687,23 @@ class CodecConfig:
             
         Returns:
             Encoding preset or None if not found
-        """        codec_presets = self._presets.get(codec.lower())
+        """
+        codec_presets = self._presets.get(codec.lower())
         if codec_presets:
             return codec_presets.get(preset_name.lower())
         return None
     
     def get_available_presets(self, codec: str) -> List[str]:
-        """        Get list of available presets for a codec
+        """
+        Get list of available presets for a codec
         
         Args:
             codec: Codec identifier
             
         Returns:
             List of preset names
-        """        codec_presets = self._presets.get(codec.lower())
+        """
+        codec_presets = self._presets.get(codec.lower())
         if codec_presets:
             return list(codec_presets.keys())
         return []
@@ -689,7 +714,8 @@ class CodecConfig:
                                  bit_depth: int,
                                  channels: int,
                                  bitrate: Optional[int] = None) -> Tuple[bool, List[str]]:
-        """        Validate codec parameters against capabilities
+        """
+        Validate codec parameters against capabilities
         
         Args:
             codec: Codec identifier
@@ -700,7 +726,8 @@ class CodecConfig:
             
         Returns:
             Tuple of (is_valid, error_messages)
-        """        errors = []
+        """
+        errors = []
         is_valid = True
         
         try:
@@ -748,21 +775,24 @@ class CodecConfig:
         return is_valid, errors
     
     def get_platform_requirements(self, platform: str) -> Optional[Dict[str, Any]]:
-        """        Get platform-specific codec requirements
+        """
+        Get platform-specific codec requirements
         
         Args:
             platform: Platform identifier
             
         Returns:
             Platform requirements or None if not found
-        """        return self._platform_codecs.get(platform.lower())
+        """
+        return self._platform_codecs.get(platform.lower())
     
     def estimate_file_size(self, 
                           codec: str,
                           duration_seconds: float,
                           bitrate_kbps: int,
                           is_vbr: bool = False) -> Dict[str, float]:
-        """        Estimate encoded file size
+        """
+        Estimate encoded file size
         
         Args:
             codec: Codec identifier
@@ -772,7 +802,8 @@ class CodecConfig:
             
         Returns:
             Size estimates in different units
-        """        try:
+        """
+        try:
             # Base calculation: bitrate * duration
             base_size_bits = bitrate_kbps * 1000 * duration_seconds
             base_size_bytes = base_size_bits / 8
@@ -808,11 +839,13 @@ class CodecConfig:
             return {"bytes": 0, "error": str(e)}
     
     def get_quality_comparison(self) -> Dict[str, Dict[str, float]]:
-        """        Get quality comparison between codecs
+        """
+        Get quality comparison between codecs
         
         Returns:
             Quality metrics for each codec
-        """        return {
+        """
+        return {
             "flac": {
                 "quality_score": 1.0,
                 "compression_ratio": 0.6,
@@ -855,7 +888,8 @@ class CodecConfig:
                             codec: str,
                             preset_name: str,
                             **params) -> bool:
-        """        Create custom encoding preset
+        """
+        Create custom encoding preset
         
         Args:
             codec: Target codec
@@ -864,7 +898,8 @@ class CodecConfig:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             if codec.lower() not in self._presets:
                 self._presets[codec.lower()] = {}
             
@@ -882,7 +917,8 @@ class CodecConfig:
             return False
     
     def export_configuration(self) -> Dict[str, Any]:
-        """Export complete codec configuration"""        try:
+        """Export complete codec configuration"""
+        try:
             return {
                 "codecs": self._codecs,
                 "presets": {

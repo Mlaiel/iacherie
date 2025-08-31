@@ -8,7 +8,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import openai
 from typing import Dict, Any, List, Optional
@@ -22,7 +23,8 @@ from .seo_optimizer import SEOOptimizer
 
 
 class TextGenerationOptions:
-    """Configuration options for text generation"""    
+    """Configuration options for text generation"""
+    
     def __init__(self, **kwargs):
         self.max_tokens = kwargs.get('max_tokens', 1000)
         self.temperature = kwargs.get('temperature', 0.7)
@@ -41,7 +43,8 @@ class TextGenerationOptions:
 
 
 class TextContentGenerator(BaseContentGenerator):
-    """    Advanced text content generator that creates high-quality text content
+    """
+    Advanced text content generator that creates high-quality text content
     for various platforms and purposes including:
     - Social media posts (Instagram, TikTok, Twitter, Facebook)
     - Blog articles and SEO content
@@ -50,9 +53,11 @@ class TextContentGenerator(BaseContentGenerator):
     - Email content and newsletters
     - Product descriptions
     - Scripts for audio/video content
-    """    
+    """
+    
     def _setup_models(self) -> None:
-        """Setup AI models and dependencies"""        try:
+        """Setup AI models and dependencies"""
+        try:
             # Initialize OpenAI client
             self.openai_client = openai.AsyncOpenAI(
                 api_key=self.config.get('openai_api_key')
@@ -83,7 +88,8 @@ class TextContentGenerator(BaseContentGenerator):
             raise
     
     def _setup_resources(self) -> None:
-        """Setup computational resources"""        # Text generation doesn't require heavy computational resources
+        """Setup computational resources"""
+        # Text generation doesn't require heavy computational resources
         self.max_concurrent_requests = self.config.get('max_concurrent_requests', 10)
         self.request_timeout = self.config.get('request_timeout', 60)
         
@@ -92,7 +98,8 @@ class TextContentGenerator(BaseContentGenerator):
         self.rate_limit_tpm = self.config.get('rate_limit_tpm', 50000)
     
     def _setup_validation_rules(self) -> None:
-        """Setup content validation rules"""        self.validation_rules = {
+        """Setup content validation rules"""
+        self.validation_rules = {
             'min_length': 10,
             'max_length': 10000,
             'forbidden_words': ['spam', 'fake', 'scam'],
@@ -109,7 +116,8 @@ class TextContentGenerator(BaseContentGenerator):
         prompt: str,
         options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Generate text content based on context and prompt.
+        """
+        Generate text content based on context and prompt.
         
         Args:
             context: Generation context with user and platform information
@@ -118,7 +126,8 @@ class TextContentGenerator(BaseContentGenerator):
             
         Returns:
             Generated text content with metadata
-        """        try:
+        """
+        try:
             # Parse options
             gen_options = TextGenerationOptions(**(options or {}))
             
@@ -176,14 +185,16 @@ class TextContentGenerator(BaseContentGenerator):
             raise
     
     async def validate_output(self, content: Any) -> bool:
-        """        Validate generated text content.
+        """
+        Validate generated text content.
         
         Args:
             content: Generated text content to validate
             
         Returns:
             True if content meets quality standards
-        """        if not isinstance(content, dict):
+        """
+        if not isinstance(content, dict):
             return False
         
         text_content = content.get('content', '')
@@ -215,7 +226,8 @@ class TextContentGenerator(BaseContentGenerator):
         prompt: str,
         options: TextGenerationOptions
     ) -> str:
-        """Determine the appropriate content format"""        # Check explicit format in options
+        """Determine the appropriate content format"""
+        # Check explicit format in options
         if options.format_type and options.format_type in self.supported_formats:
             return options.format_type
         
@@ -253,7 +265,8 @@ class TextContentGenerator(BaseContentGenerator):
         options: TextGenerationOptions,
         content_format: str
     ) -> str:
-        """Build enhanced prompt with context and formatting instructions"""        # Get format-specific template
+        """Build enhanced prompt with context and formatting instructions"""
+        # Get format-specific template
         if content_format in ['instagram_post', 'tiktok_caption', 'twitter_post']:
             template = self.social_templates.get_template(content_format)
         elif content_format == 'blog_article':
@@ -305,7 +318,8 @@ CONTENT REQUEST:
 {base_prompt}
 
 Please generate high-quality, engaging content that follows the template structure and meets all specified requirements.
-"""        
+"""
+        
         return enhanced_prompt.strip()
     
     async def _generate_social_content(
@@ -315,7 +329,8 @@ Please generate high-quality, engaging content that follows the template structu
         options: TextGenerationOptions,
         format_type: str
     ) -> str:
-        """Generate social media specific content"""        # Adjust parameters for social content
+        """Generate social media specific content"""
+        # Adjust parameters for social content
         social_options = {
             'model': options.model_name,
             'messages': [
@@ -344,7 +359,8 @@ Please generate high-quality, engaging content that follows the template structu
         context: ContentGenerationContext,
         options: TextGenerationOptions
     ) -> str:
-        """Generate blog article content"""        blog_options = {
+        """Generate blog article content"""
+        blog_options = {
             'model': options.model_name,
             'messages': [
                 {
@@ -372,7 +388,8 @@ Please generate high-quality, engaging content that follows the template structu
         context: ContentGenerationContext,
         options: TextGenerationOptions
     ) -> str:
-        """Generate marketing and sales content"""        marketing_options = {
+        """Generate marketing and sales content"""
+        marketing_options = {
             'model': options.model_name,
             'messages': [
                 {
@@ -400,7 +417,8 @@ Please generate high-quality, engaging content that follows the template structu
         context: ContentGenerationContext,
         options: TextGenerationOptions
     ) -> str:
-        """Generate general text content"""        general_options = {
+        """Generate general text content"""
+        general_options = {
             'model': options.model_name,
             'messages': [
                 {
@@ -429,7 +447,8 @@ Please generate high-quality, engaging content that follows the template structu
         options: TextGenerationOptions,
         format_type: str
     ) -> str:
-        """Apply post-processing to generated content"""        processed = content
+        """Apply post-processing to generated content"""
+        processed = content
         
         # Apply format-specific processing
         if format_type in ['instagram_post', 'tiktok_caption']:
@@ -443,7 +462,8 @@ Please generate high-quality, engaging content that follows the template structu
         return processed
     
     async def _process_social_content(self, content: str, options: TextGenerationOptions) -> str:
-        """Process social media content"""        # Ensure proper hashtag formatting
+        """Process social media content"""
+        # Ensure proper hashtag formatting
         if options.include_hashtags and '#' not in content:
             # Add relevant hashtags if none present
             content += "\n\n#content #creator #influencer"
@@ -454,14 +474,16 @@ Please generate high-quality, engaging content that follows the template structu
         return content
     
     async def _process_blog_content(self, content: str, context: ContentGenerationContext) -> str:
-        """Process blog article content"""        # Apply SEO optimization
+        """Process blog article content"""
+        # Apply SEO optimization
         if hasattr(self, 'seo_optimizer'):
             content = await self.seo_optimizer.optimize_content(content, 'blog', context)
         
         return content
     
     async def _apply_general_improvements(self, content: str, context: ContentGenerationContext) -> str:
-        """Apply general content improvements"""        # Remove excessive whitespace
+        """Apply general content improvements"""
+        # Remove excessive whitespace
         content = ' '.join(content.split())
         
         # Ensure proper sentence spacing
@@ -475,7 +497,8 @@ Please generate high-quality, engaging content that follows the template structu
         return content
     
     def _get_general_template(self, format_type: str) -> str:
-        """Get general template for content format"""        templates = {
+        """Get general template for content format"""
+        templates = {
             'general': "Create engaging, high-quality content that provides value to the reader.",
             'script': "Write a compelling script with clear structure: introduction, main content, and conclusion.",
             'email': "Write a professional email with clear subject, greeting, body, and call-to-action.",
@@ -485,12 +508,14 @@ Please generate high-quality, engaging content that follows the template structu
         return templates.get(format_type, templates['general'])
     
     def _estimate_reading_time(self, content: str) -> float:
-        """Estimate reading time in minutes"""        word_count = len(content.split())
+        """Estimate reading time in minutes"""
+        word_count = len(content.split())
         # Average reading speed: 200-250 words per minute
         return round(word_count / 225, 1)
     
     async def _analyze_content_grade(self, content: str) -> str:
-        """Analyze content readability grade"""        # Simplified readability analysis
+        """Analyze content readability grade"""
+        # Simplified readability analysis
         sentences = content.count('.') + content.count('!') + content.count('?')
         words = len(content.split())
         
@@ -507,7 +532,8 @@ Please generate high-quality, engaging content that follows the template structu
             return "Difficult"
     
     async def _analyze_sentiment(self, content: str) -> float:
-        """Analyze content sentiment (simplified)"""        # This is a simplified sentiment analysis
+        """Analyze content sentiment (simplified)"""
+        # This is a simplified sentiment analysis
         # In production, use proper sentiment analysis models
         positive_words = ['great', 'amazing', 'excellent', 'wonderful', 'fantastic', 'love', 'best']
         negative_words = ['bad', 'terrible', 'awful', 'worst', 'hate', 'horrible']
@@ -523,7 +549,8 @@ Please generate high-quality, engaging content that follows the template structu
         return positive_count / total_sentiment_words
     
     async def _calculate_seo_score(self, content: str, context: ContentGenerationContext) -> float:
-        """Calculate basic SEO score"""        score = 0.5  # Base score
+        """Calculate basic SEO score"""
+        score = 0.5  # Base score
         
         # Check content length (good for SEO)
         word_count = len(content.split())
@@ -544,7 +571,8 @@ Please generate high-quality, engaging content that follows the template structu
         return min(1.0, score)
     
     async def _check_content_quality(self, content: str) -> bool:
-        """Check overall content quality"""        # Basic quality checks
+        """Check overall content quality"""
+        # Basic quality checks
         word_count = len(content.split())
         
         # Check minimum quality thresholds
@@ -565,17 +593,20 @@ Please generate high-quality, engaging content that follows the template structu
         return True
     
     def _count_tokens(self, text: str) -> int:
-        """Count tokens in text"""        try:
+        """Count tokens in text"""
+        try:
             return len(self.tokenizer.encode(text))
         except:
             # Fallback to word count approximation
             return len(text.split()) * 1.3
     
     def _supports_content_type(self, content_type: str) -> bool:
-        """Check if generator supports the specified content type"""        return content_type == 'text'
+        """Check if generator supports the specified content type"""
+        return content_type == 'text'
     
     def _validate_generated_content(self, content: str) -> Dict[str, Any]:
-        """Validate generated content against rules"""        validation_result = {
+        """Validate generated content against rules"""
+        validation_result = {
             'is_valid': True,
             'errors': [],
             'warnings': [],
@@ -599,7 +630,8 @@ Please generate high-quality, engaging content that follows the template structu
         return validation_result
     
     def get_model_config(self) -> Dict[str, Any]:
-        """Get current model configuration"""        return {
+        """Get current model configuration"""
+        return {
             'provider': 'openai',
             'model_name': 'gpt-4',
             'temperature': 0.7,
@@ -608,7 +640,8 @@ Please generate high-quality, engaging content that follows the template structu
         }
     
     def update_model_config(self, config: Dict[str, Any]) -> bool:
-        """Update model configuration"""        try:
+        """Update model configuration"""
+        try:
             # Mock implementation - would update actual config
             self.logger.info(f"Model config updated: {config}")
             return True
@@ -616,7 +649,8 @@ Please generate high-quality, engaging content that follows the template structu
             return False
     
     def add_template(self, template_name: str, template_content: str) -> bool:
-        """Add a content template"""        try:
+        """Add a content template"""
+        try:
             if not hasattr(self, 'templates'):
                 self.templates = {}
             self.templates[template_name] = template_content
@@ -625,24 +659,28 @@ Please generate high-quality, engaging content that follows the template structu
             return False
     
     def get_post_processors(self) -> List[str]:
-        """Get list of available post processors"""        return ['grammar_check', 'spell_check', 'seo_optimize', 'readability_enhance']
+        """Get list of available post processors"""
+        return ['grammar_check', 'spell_check', 'seo_optimize', 'readability_enhance']
     
     def get_writing_styles(self) -> List[str]:
-        """Get available writing styles"""        return [
+        """Get available writing styles"""
+        return [
             "professional", "casual", "formal", "conversational",
             "persuasive", "informative", "creative", "technical",
             "friendly", "authoritative", "humorous", "inspirational"
         ]
     
     def get_content_types(self) -> List[str]:
-        """Get supported content types"""        return [
+        """Get supported content types"""
+        return [
             "blog_post", "social_media", "email", "article",
             "product_description", "press_release", "newsletter",
             "advertisement", "script", "caption", "review"
         ]
     
     async def check_grammar(self, text: str) -> Dict[str, Any]:
-        """Check grammar and return suggestions"""        try:
+        """Check grammar and return suggestions"""
+        try:
             # Simulate grammar checking
             await asyncio.sleep(0.1)
             
@@ -676,7 +714,8 @@ Please generate high-quality, engaging content that follows the template structu
             return {"is_valid": True, "issues": [], "score": 100, "suggestions": []}
     
     async def check_readability(self, text: str) -> Dict[str, Any]:
-        """Check text readability and return metrics"""        try:
+        """Check text readability and return metrics"""
+        try:
             # Calculate basic readability metrics
             words = len(text.split())
             sentences = text.count('.') + text.count('!') + text.count('?')
@@ -723,7 +762,8 @@ Please generate high-quality, engaging content that follows the template structu
             return {"score": 70, "level": "Standard", "metrics": {}, "suggestions": []}
     
     async def extract_keywords(self, text: str, max_keywords: int = 10) -> List[str]:
-        """Extract keywords from text"""        try:
+        """Extract keywords from text"""
+        try:
             # Simple keyword extraction (in real implementation, use NLP)
             import re
             
@@ -757,7 +797,8 @@ Please generate high-quality, engaging content that follows the template structu
             return []
     
     async def generate_hashtags(self, text: str, max_hashtags: int = 10) -> List[str]:
-        """Generate relevant hashtags for text content"""        try:
+        """Generate relevant hashtags for text content"""
+        try:
             # Extract keywords first
             keywords = await self.extract_keywords(text, max_hashtags * 2)
             
@@ -786,7 +827,8 @@ Please generate high-quality, engaging content that follows the template structu
             return ['#content', '#social', '#marketing']
     
     async def summarize_text(self, text: str, target_length: int = 100) -> str:
-        """Generate a summary of the given text"""        try:
+        """Generate a summary of the given text"""
+        try:
             # Simple extractive summarization
             sentences = [s.strip() for s in text.split('.') if s.strip()]
             
@@ -831,7 +873,8 @@ Please generate high-quality, engaging content that follows the template structu
             return text[:target_length] + "..." if len(text) > target_length else text
     
     def _calculate_content_score(self, content: str, metrics: Dict[str, Any]) -> float:
-        """Calculate overall content quality score"""        try:
+        """Calculate overall content quality score"""
+        try:
             score = 0.0
             
             # Length score (optimal length gets higher score)
@@ -868,7 +911,8 @@ Please generate high-quality, engaging content that follows the template structu
             return 70.0  # Default score
     
     async def _release_model_resources(self) -> None:
-        """Release model-specific resources"""        # Close OpenAI client connections if needed
+        """Release model-specific resources"""
+        # Close OpenAI client connections if needed
         if hasattr(self.openai_client, 'close'):
             await self.openai_client.close()
         

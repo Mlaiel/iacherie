@@ -11,7 +11,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import json
 import re
 from abc import ABC, abstractmethod
@@ -26,30 +27,36 @@ from .parser_config import ParserConfig
 
 
 class BaseAnalyticsParser(ABC):
-    """Abstract base class for analytics parsers"""    
+    """Abstract base class for analytics parsers"""
+    
     def __init__(self, config: ParserConfig):
         self.config = config
         self.analytics_config = config.analytics
         self.session = None
     
     async def __aenter__(self):
-        """Async context manager entry"""        self.session = aiohttp.ClientSession()
+        """Async context manager entry"""
+        self.session = aiohttp.ClientSession()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""        if self.session:
+        """Async context manager exit"""
+        if self.session:
             await self.session.close()
     
     @abstractmethod
     async def parse_analytics(self, **kwargs) -> Dict[str, Any]:
-        """Parse analytics data from platform"""        pass
+        """Parse analytics data from platform"""
+        pass
     
     @abstractmethod
     def get_platform_name(self) -> str:
-        """Get the platform name for this analytics parser"""        pass
+        """Get the platform name for this analytics parser"""
+        pass
     
     def _calculate_date_range(self, days: Optional[int] = None) -> tuple:
-        """Calculate date range for analytics queries"""        if days is None:
+        """Calculate date range for analytics queries"""
+        if days is None:
             days = self.analytics_config.date_range_days
         
         end_date = datetime.now(timezone.utc)
@@ -58,7 +65,8 @@ class BaseAnalyticsParser(ABC):
         return start_date, end_date
     
     def _format_date_for_api(self, date: datetime, format_type: str = "iso") -> str:
-        """Format date for specific API requirements"""        if format_type == "iso":
+        """Format date for specific API requirements"""
+        if format_type == "iso":
             return date.strftime("%Y-%m-%d")
         elif format_type == "unix":
             return str(int(date.timestamp()))
@@ -69,12 +77,14 @@ class BaseAnalyticsParser(ABC):
 
 
 class GoogleAnalyticsParser(BaseAnalyticsParser):
-    """Parser for Google Analytics data"""    
+    """Parser for Google Analytics data"""
+    
     def get_platform_name(self) -> str:
         return "google_analytics"
     
     async def parse_analytics(self, property_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse Google Analytics 4 data"""        try:
+        """Parse Google Analytics 4 data"""
+        try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
             # GA4 API request structure
@@ -127,7 +137,8 @@ class GoogleAnalyticsParser(BaseAnalyticsParser):
             )
     
     async def _make_ga4_request(self, property_id: str, request_body: Dict[str, Any]) -> Dict[str, Any]:
-        """Make request to Google Analytics 4 API"""        url = f"https://analyticsdata.googleapis.com/v1beta/properties/{property_id}:runReport"
+        """Make request to Google Analytics 4 API"""
+        url = f"https://analyticsdata.googleapis.com/v1beta/properties/{property_id}:runReport"
         
         headers = {
             "Authorization": f"Bearer {self.config.platform['google'].access_token}",
@@ -152,7 +163,8 @@ class GoogleAnalyticsParser(BaseAnalyticsParser):
             return await response.json()
     
     async def _parse_ga4_response(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse Google Analytics 4 API response"""        parsed = {
+        """Parse Google Analytics 4 API response"""
+        parsed = {
             'overview': {},
             'time_series': [],
             'demographics': {},
@@ -250,12 +262,14 @@ class GoogleAnalyticsParser(BaseAnalyticsParser):
 
 
 class FacebookInsightsParser(BaseAnalyticsParser):
-    """Parser for Facebook Insights data"""    
+    """Parser for Facebook Insights data"""
+    
     def get_platform_name(self) -> str:
         return "facebook_insights"
     
     async def parse_analytics(self, page_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse Facebook Insights data"""        try:
+        """Parse Facebook Insights data"""
+        try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
             insights_data = await self._get_facebook_insights(page_id, start_date, end_date)
@@ -281,7 +295,8 @@ class FacebookInsightsParser(BaseAnalyticsParser):
             )
     
     async def _get_facebook_insights(self, page_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get insights data from Facebook Graph API"""        metrics = [
+        """Get insights data from Facebook Graph API"""
+        metrics = [
             'page_views_total',
             'page_posts_impressions',
             'page_posts_impressions_unique',
@@ -306,7 +321,8 @@ class FacebookInsightsParser(BaseAnalyticsParser):
             return await response.json()
     
     async def _parse_facebook_insights(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse Facebook Insights API response"""        parsed = {
+        """Parse Facebook Insights API response"""
+        parsed = {
             'overview': {},
             'time_series': [],
             'engagement': {},
@@ -355,12 +371,14 @@ class FacebookInsightsParser(BaseAnalyticsParser):
 
 
 class TwitterAnalyticsParser(BaseAnalyticsParser):
-    """Parser for Twitter Analytics data"""    
+    """Parser for Twitter Analytics data"""
+    
     def get_platform_name(self) -> str:
         return "twitter_analytics"
     
     async def parse_analytics(self, user_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse Twitter Analytics data"""        try:
+        """Parse Twitter Analytics data"""
+        try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
             # Twitter API v2 doesn't provide comprehensive analytics
@@ -390,7 +408,8 @@ class TwitterAnalyticsParser(BaseAnalyticsParser):
             )
     
     async def _get_twitter_metrics(self, user_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get Twitter metrics (placeholder implementation)"""        # This would implement actual Twitter analytics API calls
+        """Get Twitter metrics (placeholder implementation)"""
+        # This would implement actual Twitter analytics API calls
         return {
             'tweets': [],
             'user_metrics': {},
@@ -398,7 +417,8 @@ class TwitterAnalyticsParser(BaseAnalyticsParser):
         }
     
     async def _parse_twitter_metrics(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse Twitter metrics data"""        return {
+        """Parse Twitter metrics data"""
+        return {
             'overview': {
                 'total_tweets': 0,
                 'total_impressions': 0,
@@ -411,12 +431,14 @@ class TwitterAnalyticsParser(BaseAnalyticsParser):
 
 
 class YouTubeAnalyticsParser(BaseAnalyticsParser):
-    """Parser for YouTube Analytics data"""    
+    """Parser for YouTube Analytics data"""
+    
     def get_platform_name(self) -> str:
         return "youtube_analytics"
     
     async def parse_analytics(self, channel_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse YouTube Analytics data"""        try:
+        """Parse YouTube Analytics data"""
+        try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
             analytics_data = await self._get_youtube_analytics(channel_id, start_date, end_date)
@@ -442,7 +464,8 @@ class YouTubeAnalyticsParser(BaseAnalyticsParser):
             )
     
     async def _get_youtube_analytics(self, channel_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get YouTube Analytics data"""        url = "https://youtubeanalytics.googleapis.com/v2/reports"
+        """Get YouTube Analytics data"""
+        url = "https://youtubeanalytics.googleapis.com/v2/reports"
         
         params = {
             'ids': f'channel=={channel_id}',
@@ -461,7 +484,8 @@ class YouTubeAnalyticsParser(BaseAnalyticsParser):
             return await response.json()
     
     async def _parse_youtube_analytics(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse YouTube Analytics API response"""        parsed = {
+        """Parse YouTube Analytics API response"""
+        parsed = {
             'overview': {},
             'time_series': [],
             'engagement': {},
@@ -511,12 +535,14 @@ class YouTubeAnalyticsParser(BaseAnalyticsParser):
 
 
 class InstagramInsightsParser(BaseAnalyticsParser):
-    """Parser for Instagram Insights data"""    
+    """Parser for Instagram Insights data"""
+    
     def get_platform_name(self) -> str:
         return "instagram_insights"
     
     async def parse_analytics(self, account_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse Instagram Insights data"""        try:
+        """Parse Instagram Insights data"""
+        try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
             insights_data = await self._get_instagram_insights(account_id, start_date, end_date)
@@ -542,7 +568,8 @@ class InstagramInsightsParser(BaseAnalyticsParser):
             )
     
     async def _get_instagram_insights(self, account_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get Instagram Insights data"""        metrics = [
+        """Get Instagram Insights data"""
+        metrics = [
             'impressions',
             'reach',
             'profile_views',
@@ -564,7 +591,8 @@ class InstagramInsightsParser(BaseAnalyticsParser):
             return await response.json()
     
     async def _parse_instagram_insights(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse Instagram Insights API response"""        parsed = {
+        """Parse Instagram Insights API response"""
+        parsed = {
             'overview': {},
             'time_series': [],
             'engagement': {},
@@ -600,12 +628,14 @@ class InstagramInsightsParser(BaseAnalyticsParser):
 
 
 class TikTokAnalyticsParser(BaseAnalyticsParser):
-    """Parser for TikTok Analytics data"""    
+    """Parser for TikTok Analytics data"""
+    
     def get_platform_name(self) -> str:
         return "tiktok_analytics"
     
     async def parse_analytics(self, user_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse TikTok Analytics data"""        try:
+        """Parse TikTok Analytics data"""
+        try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
             # TikTok analytics would require their business API
@@ -632,11 +662,13 @@ class TikTokAnalyticsParser(BaseAnalyticsParser):
             )
     
     async def _get_tiktok_analytics(self, user_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get TikTok Analytics data (placeholder)"""        # Implementation would use TikTok Business API
+        """Get TikTok Analytics data (placeholder)"""
+        # Implementation would use TikTok Business API
         return {}
     
     async def _parse_tiktok_analytics(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse TikTok Analytics data"""        return {
+        """Parse TikTok Analytics data"""
+        return {
             'overview': {},
             'time_series': [],
             'engagement': {},
@@ -645,12 +677,14 @@ class TikTokAnalyticsParser(BaseAnalyticsParser):
 
 
 class SpotifyAnalyticsParser(BaseAnalyticsParser):
-    """Parser for Spotify for Artists analytics data"""    
+    """Parser for Spotify for Artists analytics data"""
+    
     def get_platform_name(self) -> str:
         return "spotify_analytics"
     
     async def parse_analytics(self, artist_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse Spotify analytics data"""        try:
+        """Parse Spotify analytics data"""
+        try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
             analytics_data = await self._get_spotify_analytics(artist_id, start_date, end_date)
@@ -676,12 +710,14 @@ class SpotifyAnalyticsParser(BaseAnalyticsParser):
             )
     
     async def _get_spotify_analytics(self, artist_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get Spotify analytics data"""        # This would require Spotify for Artists API access
+        """Get Spotify analytics data"""
+        # This would require Spotify for Artists API access
         # Currently, there's no public API for detailed analytics
         return {}
     
     async def _parse_spotify_analytics(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse Spotify analytics data"""        return {
+        """Parse Spotify analytics data"""
+        return {
             'overview': {
                 'total_streams': 0,
                 'monthly_listeners': 0,

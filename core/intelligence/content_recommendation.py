@@ -10,7 +10,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright © 2025 Fahed Mlaiel - All rights reserved
 WARNING: Any unauthorized copying, modification, distribution or use of this code
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
 from dataclasses import dataclass, field
@@ -36,7 +37,8 @@ from ..cache.redis_cache import RedisCache
 
 
 class RecommendationType(Enum):
-    """Content recommendation types"""    CONTENT_IDEAS = "content_ideas"
+    """Content recommendation types"""
+    CONTENT_IDEAS = "content_ideas"
     COLLABORATION = "collaboration"
     TIMING = "optimal_timing"
     PLATFORM = "platform_selection"
@@ -45,7 +47,8 @@ class RecommendationType(Enum):
 
 
 class PersonalizationLevel(Enum):
-    """Personalization sophistication levels"""    BASIC = "basic"
+    """Personalization sophistication levels"""
+    BASIC = "basic"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     EXPERT = "expert"
@@ -53,7 +56,8 @@ class PersonalizationLevel(Enum):
 
 @dataclass
 class ContentRecommendation:
-    """Content recommendation data structure"""    recommendation_id: str
+    """Content recommendation data structure"""
+    recommendation_id: str
     recommendation_type: RecommendationType
     content_category: str
     title: str
@@ -72,7 +76,8 @@ class ContentRecommendation:
 
 @dataclass
 class PersonalizationProfile:
-    """User personalization profile"""    user_id: str
+    """User personalization profile"""
+    user_id: str
     content_preferences: Dict[str, float]
     platform_preferences: Dict[str, float]
     audience_demographics: Dict[str, Any]
@@ -86,7 +91,8 @@ class PersonalizationProfile:
 
 
 class ContentRecommendationEngine:
-    """    Advanced content recommendation engine for creators
+    """
+    Advanced content recommendation engine for creators
     
     Provides intelligent content suggestions based on:
     - Historical performance data
@@ -94,9 +100,11 @@ class ContentRecommendationEngine:
     - Audience behavior analysis
     - Creator style and preferences
     - Monetization optimization
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize recommendation engine"""        self.config = config
+        """Initialize recommendation engine"""
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -119,7 +127,8 @@ class ContentRecommendationEngine:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize ML models for recommendations"""        try:
+        """Initialize ML models for recommendations"""
+        try:
             # Content embedding model
             self.content_embedder = AutoModel.from_pretrained(
                 self.config.get('embedding_model', 'sentence-transformers/all-MiniLM-L6-v2')
@@ -138,7 +147,8 @@ class ContentRecommendationEngine:
             raise
     
     def _initialize_trend_predictor(self):
-        """Initialize trend prediction neural network"""        class TrendPredictor(nn.Module):
+        """Initialize trend prediction neural network"""
+        class TrendPredictor(nn.Module):
             def __init__(self, input_size: int = 512, hidden_size: int = 256):
                 super().__init__()
                 self.lstm = nn.LSTM(input_size, hidden_size, batch_first=True)
@@ -160,7 +170,8 @@ class ContentRecommendationEngine:
         self.trend_predictor = TrendPredictor()
     
     def _initialize_engagement_predictor(self):
-        """Initialize engagement prediction neural network"""        class EngagementPredictor(nn.Module):
+        """Initialize engagement prediction neural network"""
+        class EngagementPredictor(nn.Module):
             def __init__(self, input_size: int = 256, hidden_size: int = 128):
                 super().__init__()
                 self.fc1 = nn.Linear(input_size, hidden_size)
@@ -187,7 +198,8 @@ class ContentRecommendationEngine:
         platform: str = None,
         limit: int = 10
     ) -> List[ContentRecommendation]:
-        """        Generate personalized content recommendations
+        """
+        Generate personalized content recommendations
         
         Args:
             user_id: Creator user ID
@@ -197,7 +209,8 @@ class ContentRecommendationEngine:
             
         Returns:
             List of content recommendations
-        """        try:
+        """
+        try:
             self.logger.info(f"Generating recommendations for user {user_id}")
             
             # Get user personalization profile
@@ -257,7 +270,8 @@ class ContentRecommendationEngine:
         trending_data: Dict[str, Any],
         performance_data: Dict[str, Any]
     ) -> List[ContentRecommendation]:
-        """Generate content idea recommendations"""        ideas = []
+        """Generate content idea recommendations"""
+        ideas = []
         
         try:
             # Analyze trending topics in user's niche
@@ -303,7 +317,8 @@ class ContentRecommendationEngine:
         profile: PersonalizationProfile,
         performance_data: Dict[str, Any]
     ) -> List[ContentRecommendation]:
-        """Generate optimal timing recommendations"""        timing_recs = []
+        """Generate optimal timing recommendations"""
+        timing_recs = []
         
         try:
             # Analyze user's historical posting patterns
@@ -342,7 +357,8 @@ class ContentRecommendationEngine:
         profile: PersonalizationProfile,
         trending_data: Dict[str, Any]
     ) -> List[ContentRecommendation]:
-        """Generate platform-specific recommendations"""        platform_recs = []
+        """Generate platform-specific recommendations"""
+        platform_recs = []
         
         try:
             # Analyze platform performance and trends
@@ -386,7 +402,8 @@ class ContentRecommendationEngine:
         profile: PersonalizationProfile,
         trending_data: Dict[str, Any]
     ) -> List[ContentRecommendation]:
-        """Generate hashtag recommendations"""        hashtag_recs = []
+        """Generate hashtag recommendations"""
+        hashtag_recs = []
         
         try:
             # Get trending hashtags for user's content categories
@@ -428,7 +445,8 @@ class ContentRecommendationEngine:
             return []
     
     def _generate_content_description(self, trend: Dict[str, Any], category: str) -> str:
-        """Generate compelling content description"""        topic = trend.get('topic', 'trending topic')
+        """Generate compelling content description"""
+        topic = trend.get('topic', 'trending topic')
         momentum = trend.get('momentum', 0.5)
         
         templates = [
@@ -440,7 +458,8 @@ class ContentRecommendationEngine:
         return templates[hash(topic) % len(templates)]
     
     def _find_optimal_times(self, engagement_by_time: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Find optimal posting times from historical data"""        optimal_times = []
+        """Find optimal posting times from historical data"""
+        optimal_times = []
         
         try:
             # Analyze engagement patterns by hour and day
@@ -469,7 +488,8 @@ class ContentRecommendationEngine:
             return []
     
     async def _get_personalization_profile(self, user_id: str) -> PersonalizationProfile:
-        """Get or create user personalization profile"""        try:
+        """Get or create user personalization profile"""
+        try:
             # Try to get from cache first
             cache_key = f"profile:{user_id}"
             cached_profile = await self.cache.get(cache_key)
@@ -515,7 +535,8 @@ class ContentRecommendationEngine:
             )
     
     async def _get_trending_patterns(self, content_type: str = None, platform: str = None) -> Dict[str, Any]:
-        """Get current trending patterns and data"""        try:
+        """Get current trending patterns and data"""
+        try:
             cache_key = f"trending:{content_type or 'all'}:{platform or 'all'}"
             cached_trends = await self.cache.get(cache_key)
             
@@ -539,7 +560,8 @@ class ContentRecommendationEngine:
             return {}
     
     async def _get_performance_history(self, user_id: str) -> Dict[str, Any]:
-        """Get user's historical performance data"""        try:
+        """Get user's historical performance data"""
+        try:
             # Fetch performance data from analytics
             performance_data = await self.engagement_analytics.get_user_performance_history(
                 user_id=user_id,
@@ -553,7 +575,8 @@ class ContentRecommendationEngine:
             return {}
     
     async def _fetch_user_profile_data(self, user_id: str) -> Dict[str, Any]:
-        """Fetch user profile data from database"""        # This would connect to your user database
+        """Fetch user profile data from database"""
+        # This would connect to your user database
         # For now, return mock data
         return {
             'content_preferences': {'music': 0.8, 'lifestyle': 0.6},
@@ -568,17 +591,21 @@ class ContentRecommendationEngine:
         }
     
     def _generate_id(self) -> str:
-        """Generate unique recommendation ID"""        return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]
+        """Generate unique recommendation ID"""
+        return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]
 
 
 class PersonalizationEngine:
-    """    Advanced personalization engine for content recommendations
+    """
+    Advanced personalization engine for content recommendations
     
     Uses machine learning to continuously improve recommendations
     based on user behavior and feedback.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize personalization engine"""        self.config = config
+        """Initialize personalization engine"""
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # ML Models for personalization
@@ -589,7 +616,8 @@ class PersonalizationEngine:
         self._initialize_personalization_models()
     
     def _initialize_personalization_models(self):
-        """Initialize ML models for personalization"""        try:
+        """Initialize ML models for personalization"""
+        try:
             # User behavior embedding model
             class UserEmbeddingModel(nn.Module):
                 def __init__(self, num_features: int = 100, embedding_dim: int = 64):
@@ -637,7 +665,8 @@ class PersonalizationEngine:
         user_id: str,
         interaction_data: Dict[str, Any]
     ) -> bool:
-        """Update user preferences based on interactions"""        try:
+        """Update user preferences based on interactions"""
+        try:
             # Process interaction data and update user model
             # This would involve training/updating the personalization models
             
@@ -653,7 +682,8 @@ class PersonalizationEngine:
         user_id: str,
         content_features: Dict[str, Any]
     ) -> float:
-        """Calculate personalization score for content"""        try:
+        """Calculate personalization score for content"""
+        try:
             # Get user embedding
             user_features = await self._get_user_features(user_id)
             user_embedding = self.user_embedding_model(torch.tensor(user_features).float())
@@ -671,6 +701,7 @@ class PersonalizationEngine:
             return 0.5
     
     async def _get_user_features(self, user_id: str) -> List[float]:
-        """Extract user features for ML model"""        # This would extract user features from profile and behavior data
+        """Extract user features for ML model"""
+        # This would extract user features from profile and behavior data
         # For now, return mock features
         return [0.5] * 100

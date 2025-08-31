@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 import statistics
 import numpy as np
@@ -27,7 +28,8 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class OptimizationStrategy(Enum):
-    """Performance optimization strategies."""    CONSERVATIVE = "conservative"
+    """Performance optimization strategies."""
+    CONSERVATIVE = "conservative"
     BALANCED = "balanced"
     AGGRESSIVE = "aggressive"
     ADAPTIVE = "adaptive"
@@ -35,7 +37,8 @@ class OptimizationStrategy(Enum):
 
 
 class PerformanceMetric(Enum):
-    """Performance metric types."""    THROUGHPUT = "throughput"
+    """Performance metric types."""
+    THROUGHPUT = "throughput"
     LATENCY = "latency"
     RESOURCE_UTILIZATION = "resource_utilization"
     ERROR_RATE = "error_rate"
@@ -48,7 +51,8 @@ class PerformanceMetric(Enum):
 
 
 class OptimizationAction(Enum):
-    """Available optimization actions."""    SCALE_UP = "scale_up"
+    """Available optimization actions."""
+    SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down"
     SCALE_OUT = "scale_out"
     SCALE_IN = "scale_in"
@@ -62,7 +66,8 @@ class OptimizationAction(Enum):
 
 @dataclass
 class PerformanceTarget:
-    """Performance target definition."""    target_id: str
+    """Performance target definition."""
+    target_id: str
     name: str
     metric: PerformanceMetric
     target_value: float
@@ -75,7 +80,8 @@ class PerformanceTarget:
 
 @dataclass
 class PerformanceMeasurement:
-    """Individual performance measurement."""    measurement_id: str
+    """Individual performance measurement."""
+    measurement_id: str
     target_id: str
     component_id: str
     metric: PerformanceMetric
@@ -87,7 +93,8 @@ class PerformanceMeasurement:
 
 @dataclass
 class BottleneckDetection:
-    """Bottleneck detection result."""    detection_id: str
+    """Bottleneck detection result."""
+    detection_id: str
     component_id: str
     bottleneck_type: str
     severity: str  # low, medium, high, critical
@@ -101,7 +108,8 @@ class BottleneckDetection:
 
 @dataclass
 class OptimizationPlan:
-    """Performance optimization plan."""    plan_id: str
+    """Performance optimization plan."""
+    plan_id: str
     component_id: str
     strategy: OptimizationStrategy
     actions: List[Dict[str, Any]]
@@ -115,7 +123,8 @@ class OptimizationPlan:
 
 @dataclass
 class OptimizationExecution:
-    """Optimization plan execution."""    execution_id: str
+    """Optimization plan execution."""
+    execution_id: str
     plan_id: str
     status: str = "pending"
     start_time: Optional[datetime] = None
@@ -130,7 +139,8 @@ class OptimizationExecution:
 
 @dataclass
 class PerformanceBaseline:
-    """Performance baseline for comparison."""    baseline_id: str
+    """Performance baseline for comparison."""
+    baseline_id: str
     component_id: str
     metrics: Dict[PerformanceMetric, float]
     confidence_interval: Dict[PerformanceMetric, Tuple[float, float]]
@@ -141,7 +151,8 @@ class PerformanceBaseline:
 
 
 class PerformanceOptimizer:
-    """    Advanced performance optimization engine with intelligent tuning capabilities.
+    """
+    Advanced performance optimization engine with intelligent tuning capabilities.
     
     Provides comprehensive performance optimization features including:
     - Real-time performance monitoring and baseline establishment
@@ -150,7 +161,8 @@ class PerformanceOptimizer:
     - Automated optimization execution with rollback capabilities
     - Continuous learning and adaptation
     - Performance trend analysis and prediction
-    """    
+    """
+    
     def __init__(
         self,
         strategy: OptimizationStrategy = OptimizationStrategy.BALANCED,
@@ -203,20 +215,23 @@ class PerformanceOptimizer:
         self.logger.info(f"PerformanceOptimizer initialized with strategy: {strategy.value}")
     
     def _start_background_tasks(self) -> None:
-        """Start background optimization tasks."""        asyncio.create_task(self._measurement_cleanup_task())
+        """Start background optimization tasks."""
+        asyncio.create_task(self._measurement_cleanup_task())
         asyncio.create_task(self._bottleneck_detection_task())
         asyncio.create_task(self._baseline_update_task())
         asyncio.create_task(self._continuous_optimization_task())
     
     async def register_performance_target(self, target: PerformanceTarget) -> bool:
-        """        Register performance target for monitoring.
+        """
+        Register performance target for monitoring.
         
         Args:
             target: Performance target definition
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             # Validate target
             if not await self._validate_performance_target(target):
                 return False
@@ -244,14 +259,16 @@ class PerformanceOptimizer:
             return False
     
     async def record_measurement(self, measurement: PerformanceMeasurement) -> bool:
-        """        Record performance measurement.
+        """
+        Record performance measurement.
         
         Args:
             measurement: Performance measurement data
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             # Validate measurement
             if not await self._validate_measurement(measurement):
                 return False
@@ -281,7 +298,8 @@ class PerformanceOptimizer:
             return False
     
     async def analyze_performance(self, component_id: str, time_window: int = 3600) -> Dict[str, Any]:
-        """        Analyze performance for a specific component.
+        """
+        Analyze performance for a specific component.
         
         Args:
             component_id: Component identifier
@@ -289,7 +307,8 @@ class PerformanceOptimizer:
             
         Returns:
             Dict containing performance analysis
-        """        try:
+        """
+        try:
             cutoff_time = datetime.now() - timedelta(seconds=time_window)
             analysis = {
                 'component_id': component_id,
@@ -358,7 +377,8 @@ class PerformanceOptimizer:
         component_id: str,
         strategy: Optional[OptimizationStrategy] = None
     ) -> Optional[str]:
-        """        Create optimization plan for component.
+        """
+        Create optimization plan for component.
         
         Args:
             component_id: Component identifier
@@ -366,7 +386,8 @@ class PerformanceOptimizer:
             
         Returns:
             Optional[str]: Plan ID if successful
-        """        try:
+        """
+        try:
             strategy = strategy or self.default_strategy
             plan_id = str(uuid.uuid4())
             
@@ -420,14 +441,16 @@ class PerformanceOptimizer:
             return None
     
     async def execute_optimization_plan(self, plan_id: str) -> str:
-        """        Execute optimization plan.
+        """
+        Execute optimization plan.
         
         Args:
             plan_id: Plan identifier
             
         Returns:
             str: Execution ID
-        """        execution_id = str(uuid.uuid4())
+        """
+        execution_id = str(uuid.uuid4())
         
         try:
             if plan_id not in self.optimization_plans:
@@ -462,7 +485,8 @@ class PerformanceOptimizer:
             raise
     
     async def _execute_plan_async(self, execution: OptimizationExecution, plan: OptimizationPlan) -> None:
-        """Execute optimization plan asynchronously."""        try:
+        """Execute optimization plan asynchronously."""
+        try:
             # Record baseline performance
             baseline_metrics = await self._capture_baseline_metrics(plan.component_id)
             
@@ -536,7 +560,8 @@ class PerformanceOptimizer:
             self.execution_history.append(execution)
     
     async def _execute_optimization_action(self, action: Dict[str, Any], component_id: str) -> bool:
-        """Execute individual optimization action."""        try:
+        """Execute individual optimization action."""
+        try:
             action_type = OptimizationAction(action.get('type'))
             parameters = action.get('parameters', {})
             
@@ -561,27 +586,32 @@ class PerformanceOptimizer:
             return False
     
     async def _simulate_scale_up(self, component_id: str, parameters: Dict[str, Any]) -> bool:
-        """Simulate scaling up resources."""        # Simulation: always succeeds for now
+        """Simulate scaling up resources."""
+        # Simulation: always succeeds for now
         self.logger.info(f"Scaled up {component_id} with parameters: {parameters}")
         return True
     
     async def _simulate_scale_down(self, component_id: str, parameters: Dict[str, Any]) -> bool:
-        """Simulate scaling down resources."""        # Simulation: always succeeds for now
+        """Simulate scaling down resources."""
+        # Simulation: always succeeds for now
         self.logger.info(f"Scaled down {component_id} with parameters: {parameters}")
         return True
     
     async def _simulate_parameter_tuning(self, component_id: str, parameters: Dict[str, Any]) -> bool:
-        """Simulate parameter tuning."""        # Simulation: always succeeds for now
+        """Simulate parameter tuning."""
+        # Simulation: always succeeds for now
         self.logger.info(f"Tuned parameters for {component_id}: {parameters}")
         return True
     
     async def _simulate_load_balancing(self, component_id: str, parameters: Dict[str, Any]) -> bool:
-        """Simulate load balancing optimization."""        # Simulation: always succeeds for now
+        """Simulate load balancing optimization."""
+        # Simulation: always succeeds for now
         self.logger.info(f"Optimized load balancing for {component_id}: {parameters}")
         return True
     
     async def _execute_rollback(self, execution: OptimizationExecution, plan: OptimizationPlan) -> None:
-        """Execute rollback plan."""        execution.rollback_executed = True
+        """Execute rollback plan."""
+        execution.rollback_executed = True
         
         # Execute rollback actions in reverse order
         for rollback_action in reversed(plan.rollback_plan):
@@ -592,7 +622,8 @@ class PerformanceOptimizer:
                 execution.errors.append(f"Rollback failed: {str(e)}")
     
     async def _check_immediate_optimization(self, measurement: PerformanceMeasurement) -> None:
-        """Check if immediate optimization is needed."""        target = self.performance_targets.get(measurement.target_id)
+        """Check if immediate optimization is needed."""
+        target = self.performance_targets.get(measurement.target_id)
         if not target:
             return
         
@@ -627,7 +658,8 @@ class PerformanceOptimizer:
         component_id: str,
         metrics: Dict[str, Any]
     ) -> List[BottleneckDetection]:
-        """Detect bottlenecks for a specific component."""        bottlenecks = []
+        """Detect bottlenecks for a specific component."""
+        bottlenecks = []
         
         for metric_name, metric_data in metrics.items():
             if not metric_data.get('meets_target', True):
@@ -652,7 +684,8 @@ class PerformanceOptimizer:
         return bottlenecks
     
     async def _calculate_bottleneck_severity(self, metric_data: Dict[str, Any]) -> str:
-        """Calculate bottleneck severity."""        target_value = metric_data.get('target_value', 0)
+        """Calculate bottleneck severity."""
+        target_value = metric_data.get('target_value', 0)
         current_value = metric_data.get('current_value', 0)
         
         if target_value == 0:
@@ -676,7 +709,8 @@ class PerformanceOptimizer:
         metric_name: str,
         metric_data: Dict[str, Any]
     ) -> List[str]:
-        """Generate recommendations for bottleneck resolution."""        recommendations = []
+        """Generate recommendations for bottleneck resolution."""
+        recommendations = []
         
         if 'cpu' in metric_name.lower():
             recommendations.extend([
@@ -713,7 +747,8 @@ class PerformanceOptimizer:
         analysis: Dict[str, Any],
         strategy: OptimizationStrategy
     ) -> List[Dict[str, Any]]:
-        """Generate optimization actions based on analysis."""        actions = []
+        """Generate optimization actions based on analysis."""
+        actions = []
         
         for metric_name, metric_data in analysis.get('metrics', {}).items():
             if not metric_data.get('meets_target', True):
@@ -735,7 +770,8 @@ class PerformanceOptimizer:
         metric_data: Dict[str, Any],
         strategy: OptimizationStrategy
     ) -> Optional[Dict[str, Any]]:
-        """Create optimization action for specific metric."""        current_value = metric_data.get('current_value', 0)
+        """Create optimization action for specific metric."""
+        current_value = metric_data.get('current_value', 0)
         target_value = metric_data.get('target_value', 0)
         
         if 'cpu' in metric_name.lower() and current_value > target_value:
@@ -767,7 +803,8 @@ class PerformanceOptimizer:
         component_id: str,
         analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate aggressive optimization actions."""        return [
+        """Generate aggressive optimization actions."""
+        return [
             {
                 'action_id': str(uuid.uuid4()),
                 'type': OptimizationAction.SCALE_OUT.value,
@@ -787,7 +824,8 @@ class PerformanceOptimizer:
         component_id: str,
         analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate conservative optimization actions."""        return [
+        """Generate conservative optimization actions."""
+        return [
             {
                 'action_id': str(uuid.uuid4()),
                 'type': OptimizationAction.TUNE_PARAMETERS.value,
@@ -801,7 +839,8 @@ class PerformanceOptimizer:
         component_id: str,
         actions: List[Dict[str, Any]]
     ) -> Dict[str, float]:
-        """Estimate expected performance improvement."""        # Simplified improvement estimation
+        """Estimate expected performance improvement."""
+        # Simplified improvement estimation
         improvement = {}
         
         for action in actions:
@@ -823,7 +862,8 @@ class PerformanceOptimizer:
         component_id: str,
         actions: List[Dict[str, Any]]
     ) -> str:
-        """Assess optimization risks."""        risk_score = 0
+        """Assess optimization risks."""
+        risk_score = 0
         
         for action in actions:
             action_type = OptimizationAction(action.get('type'))
@@ -841,12 +881,14 @@ class PerformanceOptimizer:
             return "low"
     
     async def _determine_execution_order(self, actions: List[Dict[str, Any]]) -> List[str]:
-        """Determine optimal execution order for actions."""        # Sort by priority (lower number = higher priority)
+        """Determine optimal execution order for actions."""
+        # Sort by priority (lower number = higher priority)
         sorted_actions = sorted(actions, key=lambda x: x.get('priority', 999))
         return [action['action_id'] for action in sorted_actions]
     
     async def _create_rollback_plan(self, actions: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Create rollback plan for optimization actions."""        rollback_actions = []
+        """Create rollback plan for optimization actions."""
+        rollback_actions = []
         
         for action in actions:
             action_type = OptimizationAction(action.get('type'))
@@ -867,7 +909,8 @@ class PerformanceOptimizer:
         return rollback_actions
     
     async def _capture_baseline_metrics(self, component_id: str) -> Dict[str, float]:
-        """Capture current baseline metrics."""        baseline = {}
+        """Capture current baseline metrics."""
+        baseline = {}
         
         for target_id, target in self.performance_targets.items():
             recent_measurements = [
@@ -882,7 +925,8 @@ class PerformanceOptimizer:
         return baseline
     
     async def _verify_improvement(self, component_id: str, baseline_metrics: Dict[str, float]) -> float:
-        """Verify performance improvement after optimization."""        current_metrics = await self._capture_baseline_metrics(component_id)
+        """Verify performance improvement after optimization."""
+        current_metrics = await self._capture_baseline_metrics(component_id)
         
         total_improvement = 0.0
         metric_count = 0
@@ -908,7 +952,8 @@ class PerformanceOptimizer:
         baseline_metrics: Dict[str, float],
         final_metrics: Dict[str, float]
     ) -> Dict[str, float]:
-        """Calculate performance impact of optimization."""        impact = {}
+        """Calculate performance impact of optimization."""
+        impact = {}
         
         for metric in baseline_metrics:
             if metric in final_metrics:
@@ -922,7 +967,8 @@ class PerformanceOptimizer:
         return impact
     
     async def _update_learning_model(self, plan: OptimizationPlan, execution: OptimizationExecution) -> None:
-        """Update learning model based on optimization results."""        component_id = plan.component_id
+        """Update learning model based on optimization results."""
+        component_id = plan.component_id
         
         if component_id not in self.optimization_history:
             self.optimization_history[component_id] = []
@@ -941,7 +987,8 @@ class PerformanceOptimizer:
             self.optimization_history[component_id] = self.optimization_history[component_id][-100:]
     
     async def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend direction for values."""        if len(values) < 2:
+        """Calculate trend direction for values."""
+        if len(values) < 2:
             return "stable"
         
         recent_avg = statistics.mean(values[-5:]) if len(values) >= 5 else statistics.mean(values)
@@ -955,7 +1002,8 @@ class PerformanceOptimizer:
             return "stable"
     
     async def _analyze_trend(self, values: List[float]) -> Dict[str, Any]:
-        """Analyze trend patterns in values."""        if len(values) < 3:
+        """Analyze trend patterns in values."""
+        if len(values) < 3:
             return {'pattern': 'insufficient_data'}
         
         # Calculate moving averages
@@ -979,7 +1027,8 @@ class PerformanceOptimizer:
         component_id: str,
         analysis: Dict[str, Any]
     ) -> List[str]:
-        """Generate performance recommendations."""        recommendations = []
+        """Generate performance recommendations."""
+        recommendations = []
         
         # Check for trending issues
         for metric_name, trend in analysis.get('trends', {}).items():
@@ -999,7 +1048,8 @@ class PerformanceOptimizer:
         return recommendations
     
     async def _measurement_cleanup_task(self) -> None:
-        """Background task to clean up old measurements."""        while True:
+        """Background task to clean up old measurements."""
+        while True:
             try:
                 cutoff_time = datetime.now() - timedelta(seconds=self.measurement_retention)
                 
@@ -1016,7 +1066,8 @@ class PerformanceOptimizer:
                 await asyncio.sleep(60)
     
     async def _bottleneck_detection_task(self) -> None:
-        """Background task for continuous bottleneck detection."""        while True:
+        """Background task for continuous bottleneck detection."""
+        while True:
             try:
                 for target_id, target in self.performance_targets.items():
                     recent_measurements = [
@@ -1047,7 +1098,8 @@ class PerformanceOptimizer:
                 await asyncio.sleep(60)
     
     async def _baseline_update_task(self) -> None:
-        """Background task to update performance baselines."""        while True:
+        """Background task to update performance baselines."""
+        while True:
             try:
                 for target_id, target in self.performance_targets.items():
                     measurements = list(self.measurements[target_id])
@@ -1077,7 +1129,8 @@ class PerformanceOptimizer:
                 await asyncio.sleep(300)
     
     async def _continuous_optimization_task(self) -> None:
-        """Background task for continuous optimization."""        while True:
+        """Background task for continuous optimization."""
+        while True:
             try:
                 if self.learning_enabled:
                     # Check for optimization opportunities
@@ -1118,10 +1171,12 @@ class PerformanceOptimizer:
                 await asyncio.sleep(300)
     
     async def _validate_performance_target(self, target: PerformanceTarget) -> bool:
-        """Validate performance target."""        return bool(target.target_id and target.name and target.target_value >= 0)
+        """Validate performance target."""
+        return bool(target.target_id and target.name and target.target_value >= 0)
     
     async def _validate_measurement(self, measurement: PerformanceMeasurement) -> bool:
-        """Validate performance measurement."""        return bool(
+        """Validate performance measurement."""
+        return bool(
             measurement.measurement_id and 
             measurement.target_id and 
             measurement.component_id and
@@ -1129,7 +1184,8 @@ class PerformanceOptimizer:
         )
     
     async def get_optimization_status(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get optimization execution status."""        # Check active executions
+        """Get optimization execution status."""
+        # Check active executions
         if execution_id in self.active_executions:
             execution = self.active_executions[execution_id]
         else:
@@ -1155,10 +1211,12 @@ class PerformanceOptimizer:
         }
     
     async def get_component_performance(self, component_id: str) -> Dict[str, Any]:
-        """Get current performance status for component."""        return await self.analyze_performance(component_id, 3600)
+        """Get current performance status for component."""
+        return await self.analyze_performance(component_id, 3600)
     
     async def get_optimizer_stats(self) -> Dict[str, Any]:
-        """Get performance optimizer statistics."""        return {
+        """Get performance optimizer statistics."""
+        return {
             **self.optimizer_stats,
             'active_targets': len(self.performance_targets),
             'active_executions': len(self.active_executions),

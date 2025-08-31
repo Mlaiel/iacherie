@@ -7,7 +7,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
-"""import asyncio
+"""
+import asyncio
 import json
 import base64
 from typing import Dict, Any, List, Optional, Union
@@ -39,7 +40,8 @@ logger = logging.getLogger(__name__)
 
 
 class ReportType(Enum):
-    """Types of reports that can be generated"""    DAILY_SUMMARY = "daily_summary"
+    """Types of reports that can be generated"""
+    DAILY_SUMMARY = "daily_summary"
     WEEKLY_PERFORMANCE = "weekly_performance"
     MONTHLY_BUSINESS = "monthly_business"
     QUARTERLY_REVIEW = "quarterly_review"
@@ -52,7 +54,8 @@ class ReportType(Enum):
 
 
 class ReportFormat(Enum):
-    """Report output formats"""    HTML = "html"
+    """Report output formats"""
+    HTML = "html"
     PDF = "pdf"
     JSON = "json"
     CSV = "csv"
@@ -60,7 +63,8 @@ class ReportFormat(Enum):
 
 
 class DeliveryMethod(Enum):
-    """Report delivery methods"""    EMAIL = "email"
+    """Report delivery methods"""
+    EMAIL = "email"
     FILE_SYSTEM = "file_system"
     API_ENDPOINT = "api_endpoint"
     DASHBOARD = "dashboard"
@@ -68,7 +72,8 @@ class DeliveryMethod(Enum):
 
 @dataclass
 class ReportConfig:
-    """Configuration for a report"""    report_id: str
+    """Configuration for a report"""
+    report_id: str
     name: str
     report_type: ReportType
     schedule: str  # Cron-like schedule
@@ -84,7 +89,8 @@ class ReportConfig:
 
 @dataclass
 class ReportSection:
-    """A section within a report"""    title: str
+    """A section within a report"""
+    title: str
     content: str
     charts: List[str] = field(default_factory=list)
     tables: List[Dict[str, Any]] = field(default_factory=list)
@@ -94,7 +100,8 @@ class ReportSection:
 
 @dataclass
 class Report:
-    """Generated report"""    report_id: str
+    """Generated report"""
+    report_id: str
     name: str
     report_type: ReportType
     generated_at: datetime
@@ -107,11 +114,13 @@ class Report:
 
 
 class ReportingSystem:
-    """    Advanced Reporting System
+    """
+    Advanced Reporting System
     
     Generates comprehensive automated reports for performance monitoring,
     business analytics, and system health in the IA Influencer Agent platform.
-    """    
+    """
+    
     def __init__(
         self,
         ai_monitor: Optional[AIPerformanceMonitor] = None,
@@ -150,7 +159,8 @@ class ReportingSystem:
         self._create_default_configs()
         
     async def start_reporting(self) -> None:
-        """Start the automated reporting system"""        if self.is_running:
+        """Start the automated reporting system"""
+        if self.is_running:
             logger.warning("Reporting system is already running")
             return
             
@@ -160,7 +170,8 @@ class ReportingSystem:
         logger.info("Reporting system started successfully")
         
     async def stop_reporting(self) -> None:
-        """Stop the automated reporting system"""        if not self.is_running:
+        """Stop the automated reporting system"""
+        if not self.is_running:
             return
             
         self.is_running = False
@@ -175,12 +186,14 @@ class ReportingSystem:
         logger.info("Reporting system stopped")
         
     def add_report_config(self, config: ReportConfig) -> None:
-        """Add a new report configuration"""        self.report_configs[config.report_id] = config
+        """Add a new report configuration"""
+        self.report_configs[config.report_id] = config
         self._update_next_generation_time(config)
         logger.info(f"Added report configuration: {config.name}")
         
     def remove_report_config(self, report_id: str) -> bool:
-        """Remove a report configuration"""        if report_id in self.report_configs:
+        """Remove a report configuration"""
+        if report_id in self.report_configs:
             del self.report_configs[report_id]
             logger.info(f"Removed report configuration: {report_id}")
             return True
@@ -193,7 +206,8 @@ class ReportingSystem:
         format: ReportFormat = ReportFormat.HTML,
         custom_params: Optional[Dict[str, Any]] = None
     ) -> Report:
-        """Generate a report on-demand"""        if time_period is None:
+        """Generate a report on-demand"""
+        if time_period is None:
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(days=1)  # Default to last 24 hours
             time_period = {"start": start_time, "end": end_time}
@@ -243,7 +257,8 @@ class ReportingSystem:
         delivery_method: DeliveryMethod,
         recipients: List[str]
     ) -> bool:
-        """Deliver a generated report"""        try:
+        """Deliver a generated report"""
+        try:
             if delivery_method == DeliveryMethod.EMAIL:
                 return await self._deliver_via_email(report, recipients)
             elif delivery_method == DeliveryMethod.FILE_SYSTEM:
@@ -265,7 +280,8 @@ class ReportingSystem:
         report_type: Optional[ReportType] = None,
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """Get history of generated reports"""        reports = self.generated_reports
+        """Get history of generated reports"""
+        reports = self.generated_reports
         
         if report_type:
             reports = [r for r in reports if r.report_type == report_type]
@@ -299,7 +315,8 @@ class ReportingSystem:
         time_period: Dict[str, datetime],
         custom_params: Optional[Dict[str, Any]]
     ) -> List[ReportSection]:
-        """Generate sections for a specific report type"""        sections = []
+        """Generate sections for a specific report type"""
+        sections = []
         
         if report_type == ReportType.DAILY_SUMMARY:
             sections = await self._generate_daily_summary_sections(time_period)
@@ -325,7 +342,8 @@ class ReportingSystem:
         self,
         time_period: Dict[str, datetime]
     ) -> List[ReportSection]:
-        """Generate daily summary report sections"""        sections = []
+        """Generate daily summary report sections"""
+        sections = []
         
         # Executive Summary
         exec_summary = await self._generate_executive_summary(time_period)
@@ -361,7 +379,8 @@ class ReportingSystem:
         self,
         time_period: Dict[str, datetime]
     ) -> List[ReportSection]:
-        """Generate weekly performance report sections"""        sections = []
+        """Generate weekly performance report sections"""
+        sections = []
         
         # Performance Trends
         trends_section = ReportSection(
@@ -385,7 +404,8 @@ class ReportingSystem:
         self,
         time_period: Dict[str, datetime]
     ) -> List[ReportSection]:
-        """Generate monthly business report sections"""        sections = []
+        """Generate monthly business report sections"""
+        sections = []
         
         if self.business_metrics:
             # Revenue Analysis
@@ -418,7 +438,8 @@ class ReportingSystem:
         self,
         time_period: Dict[str, datetime]
     ) -> List[ReportSection]:
-        """Generate system health report sections"""        sections = []
+        """Generate system health report sections"""
+        sections = []
         
         if self.health_checks:
             # Overall Health
@@ -426,7 +447,8 @@ class ReportingSystem:
             
             health_section = ReportSection(
                 title="System Health Overview",
-                content=f"""                Overall Status: {health_summary['overall_status']}
+                content=f"""
+                Overall Status: {health_summary['overall_status']}
                 Total Components: {health_summary['system_summary']['total_components']}
                 Healthy Components: {health_summary['system_summary']['healthy_components']}
                 Warning Components: {health_summary['system_summary']['warning_components']}
@@ -449,7 +471,8 @@ class ReportingSystem:
         self,
         time_period: Dict[str, datetime]
     ) -> List[ReportSection]:
-        """Generate anomaly analysis report sections"""        sections = []
+        """Generate anomaly analysis report sections"""
+        sections = []
         
         if self.anomaly_detection:
             # Anomaly Summary
@@ -458,7 +481,8 @@ class ReportingSystem:
             
             anomaly_section = ReportSection(
                 title="Anomaly Detection Summary",
-                content=f"""                Total Anomalies Detected: {anomaly_summary.get('total_anomalies', 0)}
+                content=f"""
+                Total Anomalies Detected: {anomaly_summary.get('total_anomalies', 0)}
                 Average Confidence: {anomaly_summary.get('statistics', {}).get('average_confidence', 0):.2f}
                 Anomaly Rate: {anomaly_summary.get('statistics', {}).get('anomaly_rate', 0):.2f} per hour
                 """,
@@ -476,7 +500,8 @@ class ReportingSystem:
         self,
         time_period: Dict[str, datetime]
     ) -> List[ReportSection]:
-        """Generate revenue report sections"""        sections = []
+        """Generate revenue report sections"""
+        sections = []
         
         if self.business_metrics:
             # Revenue overview
@@ -485,7 +510,8 @@ class ReportingSystem:
             
             revenue_section = ReportSection(
                 title="Revenue Overview",
-                content=f"""                Total Revenue: ${revenue_analytics.get('total_revenue', '0.00')}
+                content=f"""
+                Total Revenue: ${revenue_analytics.get('total_revenue', '0.00')}
                 Total Transactions: {revenue_analytics.get('total_transactions', 0)}
                 Average Transaction: ${revenue_analytics.get('average_transaction_value', '0.00')}
                 Commission Earned: ${revenue_analytics.get('commission_earned', '0.00')}
@@ -503,7 +529,8 @@ class ReportingSystem:
         self,
         time_period: Dict[str, datetime]
     ) -> List[ReportSection]:
-        """Generate creator insights report sections"""        sections = []
+        """Generate creator insights report sections"""
+        sections = []
         
         if self.business_metrics:
             # Creator analytics
@@ -512,7 +539,8 @@ class ReportingSystem:
             
             creator_section = ReportSection(
                 title="Creator Performance",
-                content=f"""                Total Creators: {creator_analytics.get('total_creators', 0)}
+                content=f"""
+                Total Creators: {creator_analytics.get('total_creators', 0)}
                 Average Success Score: {creator_analytics.get('average_success_score', 0):.2f}
                 """,
                 tables=[{
@@ -529,7 +557,8 @@ class ReportingSystem:
         params: Dict[str, Any],
         time_period: Dict[str, datetime]
     ) -> List[ReportSection]:
-        """Generate custom report sections based on parameters"""        sections = []
+        """Generate custom report sections based on parameters"""
+        sections = []
         
         # Basic custom section
         custom_section = ReportSection(
@@ -545,7 +574,8 @@ class ReportingSystem:
         self,
         time_period: Dict[str, datetime]
     ) -> str:
-        """Generate executive summary for the time period"""        summary_parts = []
+        """Generate executive summary for the time period"""
+        summary_parts = []
         
         # Platform status
         if self.health_checks:
@@ -566,16 +596,19 @@ class ReportingSystem:
         self,
         time_period: Dict[str, datetime]
     ) -> ReportSection:
-        """Generate AI performance section"""        content = "AI Performance metrics for the reporting period."
+        """Generate AI performance section"""
+        content = "AI Performance metrics for the reporting period."
         
         if self.ai_monitor:
             # Would get actual AI performance data
-            content = """            AI Model Performance Summary:
+            content = """
+            AI Model Performance Summary:
             - Average inference time: 1.2s
             - Model accuracy: 94.5%
             - Successful inferences: 1,250
             - Failed inferences: 15
-            """            
+            """
+            
         return ReportSection(
             title="AI Performance",
             content=content,
@@ -586,16 +619,19 @@ class ReportingSystem:
         self,
         time_period: Dict[str, datetime]
     ) -> ReportSection:
-        """Generate content processing section"""        content = "Content processing metrics for the reporting period."
+        """Generate content processing section"""
+        content = "Content processing metrics for the reporting period."
         
         if self.content_monitor:
             # Would get actual content processing data
-            content = """            Content Processing Summary:
+            content = """
+            Content Processing Summary:
             - Total content processed: 450 items
             - Success rate: 96.8%
             - Average processing time: 45s
             - Queue length: 12 items
-            """            
+            """
+            
         return ReportSection(
             title="Content Processing",
             content=content,
@@ -606,18 +642,21 @@ class ReportingSystem:
         self,
         time_period: Dict[str, datetime]
     ) -> ReportSection:
-        """Generate business metrics section"""        content = "Business metrics for the reporting period."
+        """Generate business metrics section"""
+        content = "Business metrics for the reporting period."
         
         if self.business_metrics:
             dashboard = await self.business_metrics.get_business_dashboard()
             real_time = dashboard.get('real_time_stats', {})
             
-            content = f"""            Business Metrics Summary:
+            content = f"""
+            Business Metrics Summary:
             - Revenue Today: ${real_time.get('revenue_today', '0.00')}
             - Active Users: {real_time.get('active_users_now', 0)}
             - Content Uploads: {real_time.get('uploads_today', 0)}
             - Collaborations: {real_time.get('collaborations_today', 0)}
-            """            
+            """
+            
         return ReportSection(
             title="Business Metrics",
             content=content,
@@ -628,18 +667,21 @@ class ReportingSystem:
         self,
         time_period: Dict[str, datetime]
     ) -> ReportSection:
-        """Generate health summary section"""        content = "System health summary for the reporting period."
+        """Generate health summary section"""
+        content = "System health summary for the reporting period."
         
         if self.health_checks:
             health_status = await self.health_checks.get_health_status()
             
-            content = f"""            System Health Summary:
+            content = f"""
+            System Health Summary:
             - Overall Status: {health_status['overall_status']}
             - Healthy Components: {health_status['system_summary']['healthy_components']}
             - Warning Components: {health_status['system_summary']['warning_components']}
             - Memory Usage: {health_status['system_summary']['memory_usage']:.1f}%
             - Disk Usage: {health_status['system_summary']['disk_usage']:.1f}%
-            """            
+            """
+            
         return ReportSection(
             title="System Health",
             content=content,
@@ -647,7 +689,8 @@ class ReportingSystem:
         )
         
     def _get_report_name(self, report_type: ReportType) -> str:
-        """Get human-readable report name"""        name_map = {
+        """Get human-readable report name"""
+        name_map = {
             ReportType.DAILY_SUMMARY: "Daily Platform Summary",
             ReportType.WEEKLY_PERFORMANCE: "Weekly Performance Report",
             ReportType.MONTHLY_BUSINESS: "Monthly Business Review",
@@ -662,7 +705,8 @@ class ReportingSystem:
         return name_map.get(report_type, "Unknown Report")
         
     async def _generate_report_summary(self, report: Report) -> str:
-        """Generate overall summary for the report"""        if not report.sections:
+        """Generate overall summary for the report"""
+        if not report.sections:
             return "No data available for this reporting period."
             
         summaries = [section.summary for section in report.sections if section.summary]
@@ -673,7 +717,8 @@ class ReportingSystem:
             return f"Report contains {len(report.sections)} sections with performance and business metrics."
             
     async def _save_report(self, report: Report) -> str:
-        """Save report to file"""        timestamp = report.generated_at.strftime("%Y%m%d_%H%M%S")
+        """Save report to file"""
+        timestamp = report.generated_at.strftime("%Y%m%d_%H%M%S")
         filename = f"{report.report_type.value}_{timestamp}.{report.format.value}"
         file_path = self.output_dir / filename
         
@@ -690,7 +735,8 @@ class ReportingSystem:
         return str(file_path)
         
     async def _save_html_report(self, report: Report, file_path: Path) -> None:
-        """Save report as HTML"""        template_path = self.template_dir / "report_template.html"
+        """Save report as HTML"""
+        template_path = self.template_dir / "report_template.html"
         
         if not template_path.exists():
             await self._create_html_template(template_path)
@@ -711,7 +757,8 @@ class ReportingSystem:
             await f.write(html_content)
             
     async def _save_json_report(self, report: Report, file_path: Path) -> None:
-        """Save report as JSON"""        report_data = {
+        """Save report as JSON"""
+        report_data = {
             "report_id": report.report_id,
             "name": report.name,
             "type": report.report_type.value,
@@ -740,7 +787,8 @@ class ReportingSystem:
             await f.write(json.dumps(report_data, indent=2))
             
     async def _save_csv_report(self, report: Report, file_path: Path) -> None:
-        """Save report as CSV (simplified)"""        # Create a simplified CSV with section summaries
+        """Save report as CSV (simplified)"""
+        # Create a simplified CSV with section summaries
         csv_data = [
             ["Section", "Summary", "Content Length"],
             *[
@@ -755,7 +803,8 @@ class ReportingSystem:
             writer.writerows(csv_data)
             
     async def _create_html_template(self, template_path: Path) -> None:
-        """Create default HTML template"""        template_content = """<!DOCTYPE html>
+        """Create default HTML template"""
+        template_content = """<!DOCTYPE html>
 <html>
 <head>
     <title>{{ report.name }}</title>
@@ -827,16 +876,19 @@ class ReportingSystem:
     </div>
 </body>
 </html>
-        """        
+        """
+        
         async with aiofiles.open(template_path, 'w') as f:
             await f.write(template_content)
             
     def _create_default_templates(self) -> None:
-        """Create default report templates"""        # This would create template files
+        """Create default report templates"""
+        # This would create template files
         pass
         
     def _create_default_configs(self) -> None:
-        """Create default report configurations"""        default_configs = [
+        """Create default report configurations"""
+        default_configs = [
             ReportConfig(
                 report_id="daily_summary",
                 name="Daily Platform Summary",
@@ -872,7 +924,8 @@ class ReportingSystem:
             self.report_configs[config.report_id] = config
             
     def _update_next_generation_time(self, config: ReportConfig) -> None:
-        """Update next generation time for a report config"""        # Simplified scheduling - would use proper cron parsing in production
+        """Update next generation time for a report config"""
+        # Simplified scheduling - would use proper cron parsing in production
         if "daily" in config.schedule or "* * *" in config.schedule:
             config.next_generation = datetime.utcnow() + timedelta(days=1)
         elif "weekly" in config.schedule or "* * 1" in config.schedule:
@@ -883,7 +936,8 @@ class ReportingSystem:
             config.next_generation = datetime.utcnow() + timedelta(hours=1)
             
     async def _deliver_via_email(self, report: Report, recipients: List[str]) -> bool:
-        """Deliver report via email"""        if not self.smtp_config:
+        """Deliver report via email"""
+        if not self.smtp_config:
             logger.warning("SMTP configuration not provided")
             return False
             
@@ -893,13 +947,15 @@ class ReportingSystem:
             msg['Subject'] = f"{report.name} - {report.generated_at.strftime('%Y-%m-%d')}"
             
             # Email body
-            body = f"""            Please find the attached {report.name} for the period {report.time_period['start'].strftime('%Y-%m-%d')} to {report.time_period['end'].strftime('%Y-%m-%d')}.
+            body = f"""
+            Please find the attached {report.name} for the period {report.time_period['start'].strftime('%Y-%m-%d')} to {report.time_period['end'].strftime('%Y-%m-%d')}.
             
             Summary: {report.summary or 'No summary available'}
             
             Best regards,
             IA Influencer Agent Reporting System
-            """            
+            """
+            
             msg.attach(MIMEText(body, 'plain'))
             
             # Attach report file
@@ -939,18 +995,22 @@ class ReportingSystem:
             return False
             
     async def _deliver_via_filesystem(self, report: Report) -> bool:
-        """Deliver report via file system (already saved)"""        return report.file_path is not None
+        """Deliver report via file system (already saved)"""
+        return report.file_path is not None
         
     async def _deliver_via_api(self, report: Report, endpoints: List[str]) -> bool:
-        """Deliver report via API endpoints"""        # Would implement API delivery
+        """Deliver report via API endpoints"""
+        # Would implement API delivery
         return True
         
     async def _deliver_to_dashboard(self, report: Report) -> bool:
-        """Deliver report to dashboard"""        # Would implement dashboard delivery
+        """Deliver report to dashboard"""
+        # Would implement dashboard delivery
         return True
         
     async def _scheduler_loop(self) -> None:
-        """Main scheduler loop for automated report generation"""        while self.is_running:
+        """Main scheduler loop for automated report generation"""
+        while self.is_running:
             try:
                 current_time = datetime.utcnow()
                 
@@ -995,7 +1055,8 @@ class ReportingSystem:
                 await asyncio.sleep(3600)
                 
     def _calculate_report_period(self, config: ReportConfig) -> Dict[str, datetime]:
-        """Calculate time period for a scheduled report"""        end_time = datetime.utcnow()
+        """Calculate time period for a scheduled report"""
+        end_time = datetime.utcnow()
         
         if config.report_type == ReportType.DAILY_SUMMARY:
             start_time = end_time - timedelta(days=1)

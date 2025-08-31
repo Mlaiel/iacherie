@@ -29,7 +29,8 @@ Business Logic Flow:
 Multi-Format Creator → Registration → Identity Verification → Multi-Factor Setup → 
 Device Trust → Biometric Enrollment → Content Upload → AI Protection → 
 Rights Management → Distribution → Monetization → Advanced Analytics
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import json
 import time
@@ -64,7 +65,8 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Content creator type classifications"""    MUSICIAN = "musician"
+    """Content creator type classifications"""
+    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -75,7 +77,8 @@ class CreatorType(Enum):
     
     
 class AuthenticationResult(Enum):
-    """Authentication operation results"""    SUCCESS = "success"
+    """Authentication operation results"""
+    SUCCESS = "success"
     INVALID_CREDENTIALS = "invalid_credentials"
     ACCOUNT_LOCKED = "account_locked"
     MFA_REQUIRED = "mfa_required"
@@ -89,7 +92,8 @@ class AuthenticationResult(Enum):
 
 @dataclass
 class AuthenticationContext:
-    """Complete authentication context"""    user_id: Optional[UUID] = None
+    """Complete authentication context"""
+    user_id: Optional[UUID] = None
     creator_type: Optional[CreatorType] = None
     session_id: Optional[str] = None
     device_fingerprint: Optional[str] = None
@@ -105,12 +109,14 @@ class AuthenticationContext:
 
 
 class AuthenticationDatabaseManager:
-    """    Enterprise Authentication Database Orchestrator
+    """
+    Enterprise Authentication Database Orchestrator
     
     Unified authentication database manager providing centralized access
     to all authentication-related database operations for multi-format
     content creators with enterprise security and compliance features.
-    """    
+    """
+    
     def __init__(
         self, 
         db_session: AsyncSession, 
@@ -120,7 +126,8 @@ class AuthenticationDatabaseManager:
         geoip_db_path: Optional[str] = None,
         fraud_detection_enabled: bool = True
     ):
-        """        Initialize enterprise authentication database manager.
+        """
+        Initialize enterprise authentication database manager.
         
         Args:
             db_session: Async SQLAlchemy database session
@@ -129,7 +136,8 @@ class AuthenticationDatabaseManager:
             security_config: Security configuration parameters
             geoip_db_path: Path to GeoIP database for location services
             fraud_detection_enabled: Enable ML-based fraud detection
-        """        self.db = db_session
+        """
+        self.db = db_session
         self.redis = redis_client
         self.encryption_key = encryption_key
         self.security_config = security_config
@@ -160,7 +168,8 @@ class AuthenticationDatabaseManager:
         device_info: Dict[str, Any],
         request_context: Dict[str, Any]
     ) -> Tuple[AuthenticationResult, Optional[AuthenticationContext]]:
-        """        Complete creator authentication flow with comprehensive security checks.
+        """
+        Complete creator authentication flow with comprehensive security checks.
         
         Args:
             username: Creator username or email
@@ -170,7 +179,8 @@ class AuthenticationDatabaseManager:
             
         Returns:
             Authentication result with tokens and security status
-        """        try:
+        """
+        try:
             # Step 1: Validate credentials
             credential_result = await self.credential_manager.validate_credentials(
                 username, password
@@ -278,7 +288,8 @@ class AuthenticationDatabaseManager:
         request_context: Dict[str, Any],
         consent_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Register new content creator with complete compliance and security setup.
+        """
+        Register new content creator with complete compliance and security setup.
         
         Args:
             username: Unique creator username
@@ -291,7 +302,8 @@ class AuthenticationDatabaseManager:
             
         Returns:
             Registration result with verification requirements
-        """        try:
+        """
+        try:
             # Step 1: Create user credentials
             user_id = await self.credential_manager.create_user_account(
                 username=username,
@@ -385,7 +397,8 @@ class AuthenticationDatabaseManager:
             return {"success": False, "reason": "Registration system error"}
     
     def _get_creator_data_categories(self, creator_type: str) -> List[str]:
-        """Get data categories based on creator type"""        base_categories = [
+        """Get data categories based on creator type"""
+        base_categories = [
             "personal_identity",
             "authentication_data",
             "device_data",
@@ -403,7 +416,8 @@ class AuthenticationDatabaseManager:
         return base_categories + creator_specific.get(creator_type, [])
     
     def _get_creator_processing_purposes(self) -> List[str]:
-        """Get processing purposes for creators"""        return [
+        """Get processing purposes for creators"""
+        return [
             "authentication",
             "content_protection",
             "personalization",
@@ -413,7 +427,8 @@ class AuthenticationDatabaseManager:
         ]
     
     async def _create_pending_session(self, user_id: str, device_info: Dict[str, Any]) -> str:
-        """Create pending session for MFA completion"""        try:
+        """Create pending session for MFA completion"""
+        try:
             pending_session = await self.session_manager.create_pending_session(
                 user_id=user_id,
                 device_info=device_info,
@@ -433,7 +448,8 @@ class AuthenticationDatabaseManager:
         mfa_method: str,
         device_info: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Complete MFA verification and issue full authentication"""        try:
+        """Complete MFA verification and issue full authentication"""
+        try:
             # Validate pending session
             session_data = await self.session_manager.validate_pending_session(session_token)
             if not session_data:
@@ -489,7 +505,8 @@ class AuthenticationDatabaseManager:
         biometric_data: bytes,
         device_info: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Enroll user biometric for authentication"""        try:
+        """Enroll user biometric for authentication"""
+        try:
             # Extract biometric features (implementation specific)
             features = await self._extract_biometric_features(biometric_type, biometric_data)
             if not features:
@@ -529,12 +546,14 @@ class AuthenticationDatabaseManager:
             return {"success": False, "reason": "Biometric enrollment system error"}
     
     async def _extract_biometric_features(self, biometric_type: str, data: bytes):
-        """Extract biometric features from raw data"""        # Implementation would use appropriate biometric libraries
+        """Extract biometric features from raw data"""
+        # Implementation would use appropriate biometric libraries
         # This is a placeholder for the actual feature extraction
         pass
     
     async def get_creator_dashboard_data(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive dashboard data for content creator"""        try:
+        """Get comprehensive dashboard data for content creator"""
+        try:
             dashboard_data = {
                 "authentication_status": {
                     "mfa_enabled": await self.mfa_manager.is_mfa_enabled(user_id),
@@ -558,7 +577,8 @@ class AuthenticationDatabaseManager:
             return {}
     
     async def revoke_all_access(self, user_id: str, reason: str = "security_breach") -> bool:
-        """Emergency access revocation for security incidents"""        try:
+        """Emergency access revocation for security incidents"""
+        try:
             # Revoke all tokens
             await self.token_repository.revoke_all_user_tokens(user_id, reason)
             
@@ -588,7 +608,8 @@ class AuthenticationDatabaseManager:
             return False
     
     async def cleanup_expired_data(self) -> Dict[str, int]:
-        """Cleanup expired authentication data"""        try:
+        """Cleanup expired authentication data"""
+        try:
             cleanup_stats = {}
             
             # Cleanup expired tokens
@@ -613,7 +634,8 @@ class AuthenticationDatabaseManager:
         user_id: Optional[str] = None,
         timeframe_days: int = 30
     ) -> Dict[str, Any]:
-        """Generate comprehensive security report"""        try:
+        """Generate comprehensive security report"""
+        try:
             report = {
                 "report_id": str(uuid4()),
                 "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -636,7 +658,8 @@ class AuthenticationDatabaseManager:
             return {"error": "Report generation failed"}
     
     async def _generate_user_security_report(self, user_id: str, days: int) -> Dict[str, Any]:
-        """Generate user-specific security report"""        return {
+        """Generate user-specific security report"""
+        return {
             "authentication_summary": {
                 "total_logins": await self.auth_logger.count_user_logins(user_id, days),
                 "failed_attempts": await self.auth_logger.count_failed_attempts(user_id, days),
@@ -650,7 +673,8 @@ class AuthenticationDatabaseManager:
         }
     
     async def _generate_system_security_report(self, days: int) -> Dict[str, Any]:
-        """Generate system-wide security report"""        return {
+        """Generate system-wide security report"""
+        return {
             "authentication_metrics": {
                 "total_authentications": await self.auth_logger.count_total_authentications(days),
                 "success_rate": await self.auth_logger.calculate_success_rate(days),
@@ -670,7 +694,8 @@ class AuthenticationDatabaseManager:
         }
     
     async def _calculate_user_risk_profile(self, user_id: str, days: int) -> Dict[str, Any]:
-        """Calculate comprehensive user risk profile"""        try:
+        """Calculate comprehensive user risk profile"""
+        try:
             # Behavioral analysis
             login_patterns = await self.auth_logger.analyze_login_patterns(user_id, days)
             device_patterns = await self.device_registry.analyze_device_usage(user_id, days)
@@ -718,7 +743,8 @@ class AuthenticationDatabaseManager:
             return {"error": "Risk calculation failed"}
     
     def _generate_security_recommendations(self, risk_score: float, risk_factors: List[str]) -> List[str]:
-        """Generate security recommendations based on risk analysis"""        recommendations = []
+        """Generate security recommendations based on risk analysis"""
+        recommendations = []
         
         if risk_score > 0.6:
             recommendations.append("Enable mandatory MFA for all logins")
@@ -748,7 +774,8 @@ class AuthenticationDatabaseManager:
         return recommendations
     
     async def _calculate_average_auth_time(self, days: int) -> float:
-        """Calculate average authentication time"""        try:
+        """Calculate average authentication time"""
+        try:
             auth_times = await self.auth_logger.get_authentication_durations(days)
             if auth_times:
                 return sum(auth_times) / len(auth_times)
@@ -758,7 +785,8 @@ class AuthenticationDatabaseManager:
             return 0.0
     
     async def _calculate_system_availability(self, days: int) -> float:
-        """Calculate system availability percentage"""        try:
+        """Calculate system availability percentage"""
+        try:
             # This would integrate with monitoring systems
             # For now, return a high availability assumption
             return 99.9
@@ -768,7 +796,8 @@ class AuthenticationDatabaseManager:
     
     @asynccontextmanager
     async def transaction(self):
-        """Database transaction context manager"""        try:
+        """Database transaction context manager"""
+        try:
             async with self.db.begin():
                 yield self.db
         except Exception as e:
@@ -779,7 +808,8 @@ class AuthenticationDatabaseManager:
             await self.db.close()
     
     async def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check for authentication system"""        try:
+        """Comprehensive health check for authentication system"""
+        try:
             health_status = {
                 "status": "healthy",
                 "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -840,7 +870,8 @@ class AuthenticationDatabaseManager:
             }
     
     async def _get_redis_memory_usage(self) -> Dict[str, Any]:
-        """Get Redis memory usage information"""        try:
+        """Get Redis memory usage information"""
+        try:
             info = await self.redis.info("memory")
             return {
                 "used_memory": info.get("used_memory", 0),
@@ -855,14 +886,16 @@ class AuthenticationDatabaseManager:
 
 # Advanced authentication factory and utilities
 class AuthenticationFactory:
-    """Factory for creating authentication components with different configurations"""    
+    """Factory for creating authentication components with different configurations"""
+    
     @staticmethod
     async def create_production_manager(
         db_session: AsyncSession,
         redis_client: redis.Redis,
         config: Dict[str, Any]
     ) -> AuthenticationDatabaseManager:
-        """Create production-ready authentication manager"""        return AuthenticationDatabaseManager(
+        """Create production-ready authentication manager"""
+        return AuthenticationDatabaseManager(
             db_session=db_session,
             redis_client=redis_client,
             encryption_key=config["encryption_key"],
@@ -876,7 +909,8 @@ class AuthenticationFactory:
         db_session: AsyncSession,
         redis_client: redis.Redis
     ) -> AuthenticationDatabaseManager:
-        """Create development authentication manager with relaxed security"""        dev_config = {
+        """Create development authentication manager with relaxed security"""
+        dev_config = {
             "max_user_attempts": 10,
             "max_ip_attempts": 50,
             "enforce_mfa": False

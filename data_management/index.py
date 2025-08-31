@@ -8,7 +8,8 @@ License: Proprietary - All Rights Reserved
 WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, or use without explicit written permission from Fahed Mlaiel
 is strictly prohibited and may result in legal action.
-"""from .analytics import AnalyticsEngine, DataAnalyzer, ReportGenerator
+"""
+from .analytics import AnalyticsEngine, DataAnalyzer, ReportGenerator
 from .archiving import ArchiveManager, CompressionService, StorageOptimizer
 from .backups import BackupManager, BackupScheduler, RestoreService
 from .cache_engine import IntelligentCacheManager, CacheLevel, CacheStrategy, CachePolicy
@@ -150,7 +151,8 @@ __all__ = [
 
 
 def get_module_info():
-    """Get comprehensive module information"""    return {
+    """Get comprehensive module information"""
+    return {
         "name": "Enterprise Data Management System",
         "version": __version__,
         "author": __author__,
@@ -200,7 +202,8 @@ def get_module_info():
 
 
 def initialize_module(config=None):
-    """Initialize the data management module with configuration"""    if config is None:
+    """Initialize the data management module with configuration"""
+    if config is None:
         config = {}
     
     return {
@@ -242,7 +245,8 @@ __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 logger = logging.getLogger(__name__)
 
 class ModuleStatus(Enum):
-    """Statuts des modules de data management"""    ACTIVE = "active"
+    """Statuts des modules de data management"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     INITIALIZING = "initializing"
     ERROR = "error"
@@ -250,7 +254,8 @@ class ModuleStatus(Enum):
     SCALING = "scaling"
 
 class PipelineStage(Enum):
-    """Étapes de la pipeline de traitement"""    VALIDATION = "validation"
+    """Étapes de la pipeline de traitement"""
+    VALIDATION = "validation"
     TRANSFORMATION = "transformation"
     FINGERPRINTING = "fingerprinting"
     INDEXING = "indexing"
@@ -262,7 +267,8 @@ class PipelineStage(Enum):
 
 @dataclass
 class ModuleInfo:
-    """Informations sur un module de data management"""    name: str
+    """Informations sur un module de data management"""
+    name: str
     status: ModuleStatus
     version: str
     capabilities: List[str]
@@ -275,7 +281,8 @@ class ModuleInfo:
 
 @dataclass
 class PipelineMetrics:
-    """Métriques de performance de la pipeline"""    total_processed: int = 0
+    """Métriques de performance de la pipeline"""
+    total_processed: int = 0
     success_rate: float = 100.0
     avg_processing_time: float = 0.0
     current_throughput: int = 0
@@ -285,7 +292,8 @@ class PipelineMetrics:
     stage_timings: Dict[str, float] = field(default_factory=dict)
 
 class DataManagementIndex:
-    """    Index central pour la gestion avancée des modules de data management
+    """
+    Index central pour la gestion avancée des modules de data management
     
     Fonctionnalités:
     - Découverte automatique des modules
@@ -294,7 +302,8 @@ class DataManagementIndex:
     - Optimisation des performances
     - Gestion de la scalabilité
     - Reporting avancé
-    """    
+    """
+    
     def __init__(self, config: Optional[DataManagementConfig] = None):
         self.config = config or DataManagementConfig()
         self.modules: Dict[str, ModuleInfo] = {}
@@ -314,7 +323,8 @@ class DataManagementIndex:
         logger.info("DataManagementIndex initialized successfully")
 
     def _initialize_modules(self) -> None:
-        """Initialise et découvre tous les modules de data management"""        try:
+        """Initialise et découvre tous les modules de data management"""
+        try:
             module_names = [
                 "models", "repositories", "processors", "transformers",
                 "validation", "storage", "analytics", "indexing",
@@ -345,7 +355,8 @@ class DataManagementIndex:
             raise
 
     def _get_module_capabilities(self, module_name: str) -> List[str]:
-        """Retourne les capacités d'un module spécifique"""        capabilities_map = {
+        """Retourne les capacités d'un module spécifique"""
+        capabilities_map = {
             "models": ["data_modeling", "orm_mapping", "validation_schemas"],
             "repositories": ["data_access", "query_optimization", "caching"],
             "processors": ["content_processing", "format_conversion", "enhancement"],
@@ -366,7 +377,8 @@ class DataManagementIndex:
         return capabilities_map.get(module_name, ["basic_functionality"])
 
     def _get_initial_metrics(self, module_name: str) -> Dict[str, float]:
-        """Retourne les métriques initiales pour un module"""        return {
+        """Retourne les métriques initiales pour un module"""
+        return {
             "uptime_percentage": 99.99,
             "response_time_ms": 50.0,
             "throughput_per_minute": 100,
@@ -376,13 +388,15 @@ class DataManagementIndex:
         }
 
     def _start_monitoring(self) -> None:
-        """Démarre le monitoring continu des modules"""        if not self._monitoring_active:
+        """Démarre le monitoring continu des modules"""
+        if not self._monitoring_active:
             self._monitoring_active = True
             self._executor.submit(self._monitoring_loop)
             logger.info("Monitoring system started")
 
     def _monitoring_loop(self) -> None:
-        """Boucle de monitoring principal"""        while self._monitoring_active:
+        """Boucle de monitoring principal"""
+        while self._monitoring_active:
             try:
                 self._update_module_metrics()
                 self._check_module_health()
@@ -394,7 +408,8 @@ class DataManagementIndex:
                 logger.error(f"Monitoring loop error: {e}")
 
     def _update_module_metrics(self) -> None:
-        """Met à jour les métriques de tous les modules"""        with self._lock:
+        """Met à jour les métriques de tous les modules"""
+        with self._lock:
             for module_name, module_info in self.modules.items():
                 try:
                     # Simulation de la collecte de métriques
@@ -407,7 +422,8 @@ class DataManagementIndex:
                     module_info.error_count += 1
 
     def _collect_module_metrics(self, module_name: str) -> Dict[str, float]:
-        """Collecte les métriques en temps réel d'un module"""        # Simulation de métriques réalistes
+        """Collecte les métriques en temps réel d'un module"""
+        # Simulation de métriques réalistes
         import random
         base_metrics = self._get_initial_metrics(module_name)
         
@@ -421,7 +437,8 @@ class DataManagementIndex:
         }
 
     def _check_module_health(self) -> None:
-        """Vérifie la santé de tous les modules"""        with self._lock:
+        """Vérifie la santé de tous les modules"""
+        with self._lock:
             for module_name, module_info in self.modules.items():
                 try:
                     # Vérifications de santé
@@ -447,7 +464,8 @@ class DataManagementIndex:
                     module_info.status = ModuleStatus.ERROR
 
     def _optimize_performance(self) -> None:
-        """Optimise automatiquement les performances"""        try:
+        """Optimise automatiquement les performances"""
+        try:
             # Analyse des goulots d'étranglement
             slow_modules = [
                 name for name, info in self.modules.items()
@@ -462,7 +480,8 @@ class DataManagementIndex:
             logger.error(f"Performance optimization failed: {e}")
 
     def _apply_optimizations(self, slow_modules: List[str]) -> None:
-        """Applique des optimisations aux modules lents"""        for module_name in slow_modules:
+        """Applique des optimisations aux modules lents"""
+        for module_name in slow_modules:
             try:
                 # Simulation d'optimisations
                 module_info = self.modules[module_name]
@@ -482,7 +501,8 @@ class DataManagementIndex:
                 logger.error(f"Failed to optimize {module_name}: {e}")
 
     def _collect_pipeline_metrics(self) -> None:
-        """Collecte les métriques globales de la pipeline"""        try:
+        """Collecte les métriques globales de la pipeline"""
+        try:
             with self._lock:
                 # Calcul des métriques agrégées
                 total_throughput = sum(
@@ -515,17 +535,21 @@ class DataManagementIndex:
             logger.error(f"Pipeline metrics collection failed: {e}")
 
     def get_module_status(self, module_name: str) -> Optional[ModuleInfo]:
-        """Retourne le statut d'un module spécifique"""        return self.modules.get(module_name)
+        """Retourne le statut d'un module spécifique"""
+        return self.modules.get(module_name)
 
     def get_all_modules_status(self) -> Dict[str, ModuleInfo]:
-        """Retourne le statut de tous les modules"""        with self._lock:
+        """Retourne le statut de tous les modules"""
+        with self._lock:
             return self.modules.copy()
 
     def get_pipeline_metrics(self) -> PipelineMetrics:
-        """Retourne les métriques de la pipeline"""        return self.pipeline_metrics
+        """Retourne les métriques de la pipeline"""
+        return self.pipeline_metrics
 
     def get_health_report(self) -> Dict[str, Any]:
-        """Génère un rapport de santé complet"""        with self._lock:
+        """Génère un rapport de santé complet"""
+        with self._lock:
             active_modules = sum(1 for info in self.modules.values() if info.status == ModuleStatus.ACTIVE)
             error_modules = sum(1 for info in self.modules.values() if info.status == ModuleStatus.ERROR)
             
@@ -552,7 +576,8 @@ class DataManagementIndex:
             }
 
     def restart_module(self, module_name: str) -> bool:
-        """Redémarre un module spécifique"""        try:
+        """Redémarre un module spécifique"""
+        try:
             if module_name in self.modules:
                 module_info = self.modules[module_name]
                 module_info.status = ModuleStatus.INITIALIZING
@@ -575,7 +600,8 @@ class DataManagementIndex:
             return False
 
     def scale_module(self, module_name: str, scale_factor: float) -> bool:
-        """Ajuste la scalabilité d'un module"""        try:
+        """Ajuste la scalabilité d'un module"""
+        try:
             if module_name in self.modules:
                 module_info = self.modules[module_name]
                 module_info.status = ModuleStatus.SCALING
@@ -597,7 +623,8 @@ class DataManagementIndex:
             return False
 
     def shutdown(self) -> None:
-        """Arrêt propre de l'index"""        try:
+        """Arrêt propre de l'index"""
+        try:
             self._monitoring_active = False
             self._executor.shutdown(wait=True)
             logger.info("DataManagementIndex shutdown completed")
@@ -615,13 +642,15 @@ class DataManagementIndex:
 _global_index: Optional[DataManagementIndex] = None
 
 def get_data_management_index() -> DataManagementIndex:
-    """Retourne l'instance globale de l'index"""    global _global_index
+    """Retourne l'instance globale de l'index"""
+    global _global_index
     if _global_index is None:
         _global_index = DataManagementIndex()
     return _global_index
 
 def initialize_data_management_index(config: Optional[DataManagementConfig] = None) -> DataManagementIndex:
-    """Initialise l'index global avec une configuration spécifique"""    global _global_index
+    """Initialise l'index global avec une configuration spécifique"""
+    global _global_index
     _global_index = DataManagementIndex(config)
     return _global_index
 

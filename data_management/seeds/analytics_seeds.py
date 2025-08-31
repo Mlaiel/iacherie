@@ -1,7 +1,8 @@
 """Analytics Seeds Manager - AI-Powered Analytics Initialization
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: All rights reserved - Unauthorized use strictly prohibited
-"""from typing import Dict, List, Any, Optional, Union, Set, Tuple
+"""
+from typing import Dict, List, Any, Optional, Union, Set, Tuple
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(str, Enum):
-    """Types of analytics metrics available on the platform."""    ENGAGEMENT = "engagement"
+    """Types of analytics metrics available on the platform."""
+    ENGAGEMENT = "engagement"
     REACH = "reach"
     PERFORMANCE = "performance"
     REVENUE = "revenue"
@@ -27,7 +29,8 @@ class MetricType(str, Enum):
 
 
 class AggregationPeriod(str, Enum):
-    """Time periods for data aggregation."""    REAL_TIME = "real_time"
+    """Time periods for data aggregation."""
+    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -37,7 +40,8 @@ class AggregationPeriod(str, Enum):
 
 
 class DataSource(str, Enum):
-    """Sources of analytics data."""    PLATFORM_API = "platform_api"
+    """Sources of analytics data."""
+    PLATFORM_API = "platform_api"
     USER_INTERACTION = "user_interaction"
     AI_PROCESSING = "ai_processing"
     CONTENT_ANALYSIS = "content_analysis"
@@ -47,7 +51,8 @@ class DataSource(str, Enum):
 
 
 class VisualizationType(str, Enum):
-    """Types of data visualizations."""    LINE_CHART = "line_chart"
+    """Types of data visualizations."""
+    LINE_CHART = "line_chart"
     BAR_CHART = "bar_chart"
     PIE_CHART = "pie_chart"
     HEATMAP = "heatmap"
@@ -60,7 +65,8 @@ class VisualizationType(str, Enum):
 
 
 class AlertType(str, Enum):
-    """Types of analytics alerts."""    THRESHOLD_EXCEEDED = "threshold_exceeded"
+    """Types of analytics alerts."""
+    THRESHOLD_EXCEEDED = "threshold_exceeded"
     ANOMALY_DETECTED = "anomaly_detected"
     TREND_CHANGE = "trend_change"
     GOAL_ACHIEVED = "goal_achieved"
@@ -70,7 +76,8 @@ class AlertType(str, Enum):
 
 @dataclass
 class MetricDefinition:
-    """Definition of an analytics metric."""    metric_id: str
+    """Definition of an analytics metric."""
+    metric_id: str
     metric_name: str
     metric_type: MetricType
     description: str
@@ -86,7 +93,8 @@ class MetricDefinition:
 
 @dataclass
 class KPIConfiguration:
-    """Key Performance Indicator configuration."""    kpi_id: str
+    """Key Performance Indicator configuration."""
+    kpi_id: str
     kpi_name: str
     target_value: float
     current_value: float = 0.0
@@ -98,7 +106,8 @@ class KPIConfiguration:
 
 
 class AnalyticsSeedsManager:
-    """    Enterprise-grade analytics seeds manager for comprehensive AI-powered insights and metrics.
+    """
+    Enterprise-grade analytics seeds manager for comprehensive AI-powered insights and metrics.
     
     Handles:
     - Advanced metrics definitions and KPI configurations
@@ -110,9 +119,11 @@ class AnalyticsSeedsManager:
     - Security and protection analytics
     - Cross-platform performance comparison
     - Automated reporting and alerting systems
-    """    
+    """
+    
     def __init__(self):
-        """Initialize analytics seeds manager with enterprise configurations."""        self.metrics_definitions = {}
+        """Initialize analytics seeds manager with enterprise configurations."""
+        self.metrics_definitions = {}
         self.kpi_configurations = {}
         self.dashboard_layouts = {}
         self.reporting_templates = {}
@@ -124,7 +135,8 @@ class AnalyticsSeedsManager:
         self.visualization_configs = {}
     
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize all analytics-related seed data with full enterprise support."""        logger.info("Initializing comprehensive analytics seeds data...")
+        """Initialize all analytics-related seed data with full enterprise support."""
+        logger.info("Initializing comprehensive analytics seeds data...")
         start_time = datetime.now(timezone.utc)
         
         results = {}
@@ -200,7 +212,8 @@ class AnalyticsSeedsManager:
             raise
     
     async def _initialize_metrics_definitions(self) -> Dict[str, Any]:
-        """Initialize comprehensive metrics definitions for all content types."""        metrics = {
+        """Initialize comprehensive metrics definitions for all content types."""
+        metrics = {
             # Engagement Metrics
             'views': {
                 'name': 'Content Views',
@@ -487,7 +500,8 @@ class AnalyticsSeedsManager:
         }
     
     async def _initialize_kpi_configurations(self) -> Dict[str, Any]:
-        """Initialize Key Performance Indicators for different creator types."""        kpi_configs = {
+        """Initialize Key Performance Indicators for different creator types."""
+        kpi_configs = {
             'musician_kpis': {
                 'primary_kpis': [
                     {
@@ -679,7 +693,8 @@ class AnalyticsSeedsManager:
         }
     
     async def _initialize_dashboard_layouts(self) -> Dict[str, Any]:
-        """Initialize dashboard layouts for different user roles."""        dashboard_layouts = {
+        """Initialize dashboard layouts for different user roles."""
+        dashboard_layouts = {
             'creator_dashboard': {
                 'layout_type': 'grid',
                 'columns': 12,
@@ -842,7 +857,8 @@ class AnalyticsSeedsManager:
         }
     
     async def _initialize_ai_insights(self) -> Dict[str, Any]:
-        """Initialize AI-powered insights and recommendations."""        ai_insights = {
+        """Initialize AI-powered insights and recommendations."""
+        ai_insights = {
             'content_optimization': {
                 'model_type': 'recommendation_engine',
                 'algorithms': ['collaborative_filtering', 'content_based', 'hybrid'],
@@ -960,7 +976,8 @@ class AnalyticsSeedsManager:
         }
     
     async def _initialize_reporting_templates(self) -> Dict[str, Any]:
-        """Initialize reporting templates for different stakeholders."""        reporting_templates = {
+        """Initialize reporting templates for different stakeholders."""
+        reporting_templates = {
             'creator_weekly_report': {
                 'name': 'Weekly Creator Performance Report',
                 'frequency': 'weekly',
@@ -1100,7 +1117,8 @@ class AnalyticsSeedsManager:
         }
     
     async def _initialize_audience_segmentation(self) -> Dict[str, Any]:
-        """Initialize audience segmentation models and criteria."""        segmentation_models = {
+        """Initialize audience segmentation models and criteria."""
+        segmentation_models = {
             'demographic_segmentation': {
                 'dimensions': {
                     'age_groups': ['13-17', '18-24', '25-34', '35-44', '45-54', '55-64', '65+'],
@@ -1163,7 +1181,8 @@ class AnalyticsSeedsManager:
         }
     
     async def _initialize_predictive_analytics(self) -> Dict[str, Any]:
-        """Initialize predictive analytics models and configurations."""        predictive_models = {
+        """Initialize predictive analytics models and configurations."""
+        predictive_models = {
             'content_performance_prediction': {
                 'model_type': 'ensemble',
                 'algorithms': ['random_forest', 'gradient_boosting', 'neural_network'],
@@ -1248,7 +1267,8 @@ class AnalyticsSeedsManager:
         }
     
     async def _initialize_performance_benchmarks(self) -> Dict[str, Any]:
-        """Initialize performance benchmarks for different industries and creator types."""        benchmarks = {
+        """Initialize performance benchmarks for different industries and creator types."""
+        benchmarks = {
             'music_industry_benchmarks': {
                 'engagement_rate': {
                     'emerging_artist': {'min': 2.0, 'avg': 5.0, 'top_10_percent': 12.0},
@@ -1331,7 +1351,8 @@ class AnalyticsSeedsManager:
         }
     
     async def reset(self) -> Dict[str, Any]:
-        """Reset all analytics seed data (use with caution)."""        logger.warning("Resetting analytics seeds data...")
+        """Reset all analytics seed data (use with caution)."""
+        logger.warning("Resetting analytics seeds data...")
         
         self.metrics_definitions.clear()
         self.kpi_configurations.clear()

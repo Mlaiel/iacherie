@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -37,7 +38,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -64,7 +66,8 @@ from ai.neural_networks.base_networks import NetworkType
 
 @pytest.fixture
 def generative_config():
-    """Configuration for generative models"""    return TransformerConfig(
+    """Configuration for generative models"""
+    return TransformerConfig(
         input_dim=768,
         hidden_dims=[768, 512, 256],
         output_dim=512,
@@ -79,7 +82,8 @@ def generative_config():
 
 @pytest.fixture
 def generation_config():
-    """Generation configuration for testing"""    return GenerationConfig(
+    """Generation configuration for testing"""
+    return GenerationConfig(
         task=GenerationTask.TEXT_COMPLETION,
         quality=GenerationQuality.STANDARD,
         max_length=512,
@@ -95,7 +99,8 @@ def generation_config():
 
 @pytest.fixture
 def sample_prompts():
-    """Sample prompts for generation testing"""    return {
+    """Sample prompts for generation testing"""
+    return {
         "text": {
             "short": "Once upon a time",
             "medium": "Create a social media post about sustainable living that would resonate with millennials",
@@ -126,7 +131,8 @@ def sample_prompts():
 
 @pytest.fixture
 def style_embeddings():
-    """Sample style embeddings for different creator styles"""    return {
+    """Sample style embeddings for different creator styles"""
+    return {
         "professional": torch.randn(1, 128),
         "casual": torch.randn(1, 128),
         "artistic": torch.randn(1, 128),
@@ -139,9 +145,11 @@ def style_embeddings():
 
 
 class TestGenerationTask:
-    """Test GenerationTask enum functionality"""    
+    """Test GenerationTask enum functionality"""
+    
     def test_generation_task_values(self):
-        """Test GenerationTask enum values"""        assert GenerationTask.TEXT_COMPLETION.value == "text_completion"
+        """Test GenerationTask enum values"""
+        assert GenerationTask.TEXT_COMPLETION.value == "text_completion"
         assert GenerationTask.AUDIO_SYNTHESIS.value == "audio_synthesis"
         assert GenerationTask.IMAGE_GENERATION.value == "image_generation"
         assert GenerationTask.MUSIC_COMPOSITION.value == "music_composition"
@@ -152,7 +160,8 @@ class TestGenerationTask:
         assert GenerationTask.REMIX_GENERATION.value == "remix_generation"
     
     def test_generation_task_coverage(self):
-        """Test that all major generation tasks are covered"""        tasks = list(GenerationTask)
+        """Test that all major generation tasks are covered"""
+        tasks = list(GenerationTask)
         task_values = [task.value for task in tasks]
         
         # Should cover main content creator needs
@@ -167,15 +176,18 @@ class TestGenerationTask:
 
 
 class TestGenerationQuality:
-    """Test GenerationQuality enum functionality"""    
+    """Test GenerationQuality enum functionality"""
+    
     def test_quality_levels(self):
-        """Test GenerationQuality enum values"""        assert GenerationQuality.DRAFT.value == "draft"
+        """Test GenerationQuality enum values"""
+        assert GenerationQuality.DRAFT.value == "draft"
         assert GenerationQuality.STANDARD.value == "standard"
         assert GenerationQuality.PROFESSIONAL.value == "professional"
         assert GenerationQuality.PREMIUM.value == "premium"
     
     def test_quality_hierarchy(self):
-        """Test quality level hierarchy"""        quality_order = [
+        """Test quality level hierarchy"""
+        quality_order = [
             GenerationQuality.DRAFT,
             GenerationQuality.STANDARD,
             GenerationQuality.PROFESSIONAL,
@@ -189,9 +201,11 @@ class TestGenerationQuality:
 
 
 class TestGenerationConfig:
-    """Test GenerationConfig functionality"""    
+    """Test GenerationConfig functionality"""
+    
     def test_config_creation(self):
-        """Test GenerationConfig creation with defaults"""        config = GenerationConfig(
+        """Test GenerationConfig creation with defaults"""
+        config = GenerationConfig(
             task=GenerationTask.TEXT_COMPLETION
         )
         
@@ -204,7 +218,8 @@ class TestGenerationConfig:
         assert config.repetition_penalty == 1.1
     
     def test_config_customization(self):
-        """Test custom GenerationConfig parameters"""        creator_style = {"professional": 0.8, "creative": 0.6}
+        """Test custom GenerationConfig parameters"""
+        creator_style = {"professional": 0.8, "creative": 0.6}
         audience_prefs = {"educational": 0.9, "entertainment": 0.3}
         
         config = GenerationConfig(
@@ -228,7 +243,8 @@ class TestGenerationConfig:
         assert config.audience_preferences == audience_prefs
     
     def test_config_validation_ranges(self):
-        """Test configuration parameter ranges"""        config = GenerationConfig(
+        """Test configuration parameter ranges"""
+        config = GenerationConfig(
             task=GenerationTask.IMAGE_GENERATION,
             temperature=0.1,
             top_p=0.95,
@@ -254,9 +270,11 @@ class TestGenerationConfig:
 
 
 class TestContentGeneratorNetwork:
-    """Test main ContentGeneratorNetwork functionality"""    
+    """Test main ContentGeneratorNetwork functionality"""
+    
     def test_network_initialization(self, generative_config):
-        """Test ContentGeneratorNetwork initialization"""        network = ContentGeneratorNetwork(generative_config)
+        """Test ContentGeneratorNetwork initialization"""
+        network = ContentGeneratorNetwork(generative_config)
         
         assert network.config == generative_config
         assert hasattr(network, 'content_encoder')
@@ -273,7 +291,8 @@ class TestContentGeneratorNetwork:
             assert modality in network.generation_heads
     
     def test_single_modality_generation(self, generative_config, sample_prompts):
-        """Test generation with single modality input"""        network = ContentGeneratorNetwork(generative_config)
+        """Test generation with single modality input"""
+        network = ContentGeneratorNetwork(generative_config)
         network.eval()
         
         # Test text generation
@@ -299,7 +318,8 @@ class TestContentGeneratorNetwork:
         assert torch.allclose(quality_sum, torch.ones(batch_size), atol=1e-6)
     
     def test_multimodal_generation(self, generative_config, sample_prompts):
-        """Test generation with multiple modalities"""        network = ContentGeneratorNetwork(generative_config)
+        """Test generation with multiple modalities"""
+        network = ContentGeneratorNetwork(generative_config)
         network.eval()
         
         multimodal_input = sample_prompts["multimodal"]
@@ -315,7 +335,8 @@ class TestContentGeneratorNetwork:
             assert torch.isfinite(output).all(), f"Non-finite values in {modality} output"
     
     def test_style_conditioning(self, generative_config, sample_prompts, style_embeddings):
-        """Test style conditioning in generation"""        network = ContentGeneratorNetwork(generative_config)
+        """Test style conditioning in generation"""
+        network = ContentGeneratorNetwork(generative_config)
         network.eval()
         
         input_data = {"text": sample_prompts["multimodal"]["text"]}
@@ -346,7 +367,8 @@ class TestContentGeneratorNetwork:
         assert style_diff > 1e-6, "Different styles should produce different outputs"
     
     def test_generation_method(self, generative_config, generation_config, sample_prompts, style_embeddings):
-        """Test the generate method"""        network = ContentGeneratorNetwork(generative_config)
+        """Test the generate method"""
+        network = ContentGeneratorNetwork(generative_config)
         network.eval()
         
         # Test with text prompt
@@ -366,7 +388,8 @@ class TestContentGeneratorNetwork:
             assert key in generated_content or "generated_" + key in generated_content
     
     def test_quality_control(self, generative_config, sample_prompts):
-        """Test quality control mechanism"""        network = ContentGeneratorNetwork(generative_config)
+        """Test quality control mechanism"""
+        network = ContentGeneratorNetwork(generative_config)
         network.eval()
         
         input_data = {"text": sample_prompts["multimodal"]["text"]}
@@ -386,7 +409,8 @@ class TestContentGeneratorNetwork:
         assert torch.allclose(quality_sums, torch.ones(quality_predictions.shape[0]))
     
     def test_coherence_enforcement(self, generative_config):
-        """Test coherence enforcement in generation"""        network = ContentGeneratorNetwork(generative_config)
+        """Test coherence enforcement in generation"""
+        network = ContentGeneratorNetwork(generative_config)
         network.eval()
         
         # Create input with low coherence (random noise)
@@ -410,9 +434,11 @@ class TestContentGeneratorNetwork:
 
 
 class TestAudioGeneratorNetwork:
-    """Test AudioGeneratorNetwork functionality"""    
+    """Test AudioGeneratorNetwork functionality"""
+    
     def test_audio_generator_initialization(self, generative_config):
-        """Test AudioGeneratorNetwork initialization"""        network = AudioGeneratorNetwork(generative_config)
+        """Test AudioGeneratorNetwork initialization"""
+        network = AudioGeneratorNetwork(generative_config)
         
         assert hasattr(network, 'audio_encoder')
         assert hasattr(network, 'waveform_generator')
@@ -420,7 +446,8 @@ class TestAudioGeneratorNetwork:
         assert hasattr(network, 'duration_controller')
     
     def test_music_generation(self, generative_config, sample_prompts):
-        """Test music generation functionality"""        network = AudioGeneratorNetwork(generative_config)
+        """Test music generation functionality"""
+        network = AudioGeneratorNetwork(generative_config)
         network.eval()
         
         music_prompt = sample_prompts["audio"]["music"]
@@ -437,7 +464,8 @@ class TestAudioGeneratorNetwork:
         assert torch.isfinite(generated_audio).all()
     
     def test_speech_synthesis(self, generative_config):
-        """Test speech synthesis functionality"""        network = AudioGeneratorNetwork(generative_config)
+        """Test speech synthesis functionality"""
+        network = AudioGeneratorNetwork(generative_config)
         network.eval()
         
         text_input = "Hello, this is a test of speech synthesis."
@@ -454,7 +482,8 @@ class TestAudioGeneratorNetwork:
         assert torch.isfinite(synthesized_speech).all()
     
     def test_audio_enhancement(self, generative_config, sample_prompts):
-        """Test audio enhancement functionality"""        network = AudioGeneratorNetwork(generative_config)
+        """Test audio enhancement functionality"""
+        network = AudioGeneratorNetwork(generative_config)
         network.eval()
         
         noisy_audio = sample_prompts["audio"]["podcast"]
@@ -473,7 +502,8 @@ class TestAudioGeneratorNetwork:
         assert diff > 1e-6
     
     def test_remix_generation(self, generative_config, sample_prompts):
-        """Test remix generation functionality"""        network = AudioGeneratorNetwork(generative_config)
+        """Test remix generation functionality"""
+        network = AudioGeneratorNetwork(generative_config)
         network.eval()
         
         original_track = sample_prompts["audio"]["music"]
@@ -495,9 +525,11 @@ class TestAudioGeneratorNetwork:
 
 
 class TestTextGeneratorNetwork:
-    """Test TextGeneratorNetwork functionality"""    
+    """Test TextGeneratorNetwork functionality"""
+    
     def test_text_generator_initialization(self, generative_config):
-        """Test TextGeneratorNetwork initialization"""        network = TextGeneratorNetwork(generative_config)
+        """Test TextGeneratorNetwork initialization"""
+        network = TextGeneratorNetwork(generative_config)
         
         assert hasattr(network, 'language_model')
         assert hasattr(network, 'style_adapter')
@@ -505,7 +537,8 @@ class TestTextGeneratorNetwork:
         assert hasattr(network, 'length_predictor')
     
     def test_text_completion(self, generative_config, sample_prompts, generation_config):
-        """Test text completion functionality"""        network = TextGeneratorNetwork(generative_config)
+        """Test text completion functionality"""
+        network = TextGeneratorNetwork(generative_config)
         network.eval()
         
         prompt = sample_prompts["text"]["short"]
@@ -522,7 +555,8 @@ class TestTextGeneratorNetwork:
         assert completion.startswith(prompt) or prompt in completion
     
     def test_social_post_generation(self, generative_config, sample_prompts):
-        """Test social media post generation"""        network = TextGeneratorNetwork(generative_config)
+        """Test social media post generation"""
+        network = TextGeneratorNetwork(generative_config)
         network.eval()
         
         topic = "sustainable living"
@@ -544,7 +578,8 @@ class TestTextGeneratorNetwork:
         assert len(post["content"]) <= 2200  # Instagram limit
     
     def test_script_writing(self, generative_config, sample_prompts):
-        """Test script writing functionality"""        network = TextGeneratorNetwork(generative_config)
+        """Test script writing functionality"""
+        network = TextGeneratorNetwork(generative_config)
         network.eval()
         
         with torch.no_grad():
@@ -567,7 +602,8 @@ class TestTextGeneratorNetwork:
             assert any(section in str(s).lower() for s in structure)
     
     def test_content_summarization(self, generative_config, sample_prompts):
-        """Test content summarization"""        network = TextGeneratorNetwork(generative_config)
+        """Test content summarization"""
+        network = TextGeneratorNetwork(generative_config)
         network.eval()
         
         long_content = sample_prompts["text"]["long"]
@@ -587,9 +623,11 @@ class TestTextGeneratorNetwork:
 
 
 class TestImageGenerationNetworks:
-    """Test image generation networks"""    
+    """Test image generation networks"""
+    
     def test_thumbnail_generator_initialization(self, generative_config):
-        """Test ThumbnailGeneratorNetwork initialization"""        network = ThumbnailGeneratorNetwork(generative_config)
+        """Test ThumbnailGeneratorNetwork initialization"""
+        network = ThumbnailGeneratorNetwork(generative_config)
         
         assert hasattr(network, 'image_generator')
         assert hasattr(network, 'text_overlay')
@@ -597,7 +635,8 @@ class TestImageGenerationNetworks:
         assert hasattr(network, 'thumbnail_styles')
     
     def test_thumbnail_generation(self, generative_config, sample_prompts):
-        """Test thumbnail generation"""        network = ThumbnailGeneratorNetwork(generative_config)
+        """Test thumbnail generation"""
+        network = ThumbnailGeneratorNetwork(generative_config)
         network.eval()
         
         video_content = sample_prompts["image"]["thumbnail"]
@@ -616,7 +655,8 @@ class TestImageGenerationNetworks:
         assert torch.all(thumbnail >= 0) and torch.all(thumbnail <= 1)  # Normalized
     
     def test_cover_art_generator_initialization(self, generative_config):
-        """Test CoverArtGeneratorNetwork initialization"""        network = CoverArtGeneratorNetwork(generative_config)
+        """Test CoverArtGeneratorNetwork initialization"""
+        network = CoverArtGeneratorNetwork(generative_config)
         
         assert hasattr(network, 'visual_generator')
         assert hasattr(network, 'style_mixer')
@@ -624,7 +664,8 @@ class TestImageGenerationNetworks:
         assert hasattr(network, 'composition_optimizer')
     
     def test_cover_art_generation(self, generative_config, sample_prompts):
-        """Test cover art generation"""        network = CoverArtGeneratorNetwork(generative_config)
+        """Test cover art generation"""
+        network = CoverArtGeneratorNetwork(generative_config)
         network.eval()
         
         music_features = sample_prompts["audio"]["music"]
@@ -643,7 +684,8 @@ class TestImageGenerationNetworks:
         assert torch.all(cover_art >= 0) and torch.all(cover_art <= 1)
     
     def test_style_transfer(self, generative_config, sample_prompts, style_embeddings):
-        """Test style transfer in image generation"""        network = CoverArtGeneratorNetwork(generative_config)
+        """Test style transfer in image generation"""
+        network = CoverArtGeneratorNetwork(generative_config)
         network.eval()
         
         base_image = sample_prompts["image"]["cover_art"]
@@ -665,9 +707,11 @@ class TestImageGenerationNetworks:
 
 
 class TestGenerativeModelPerformance:
-    """Performance tests for generative models"""    
+    """Performance tests for generative models"""
+    
     def test_generation_speed(self, generative_config, sample_prompts, generation_config):
-        """Test generation speed across different tasks"""        network = ContentGeneratorNetwork(generative_config)
+        """Test generation speed across different tasks"""
+        network = ContentGeneratorNetwork(generative_config)
         network.eval()
         
         input_data = sample_prompts["multimodal"]
@@ -695,7 +739,8 @@ class TestGenerativeModelPerformance:
         assert avg_time < 2000  # Less than 2 seconds
     
     def test_batch_generation_efficiency(self, generative_config, sample_prompts):
-        """Test batch generation efficiency"""        network = ContentGeneratorNetwork(generative_config)
+        """Test batch generation efficiency"""
+        network = ContentGeneratorNetwork(generative_config)
         network.eval()
         
         single_input = {k: v[:1] for k, v in sample_prompts["multimodal"].items()}
@@ -724,7 +769,8 @@ class TestGenerativeModelPerformance:
         assert efficiency_gain > 1.2  # At least 20% improvement
     
     def test_memory_usage_during_generation(self, generative_config, sample_prompts):
-        """Test memory usage during generation"""        import psutil
+        """Test memory usage during generation"""
+        import psutil
         import gc
         
         # Measure initial memory
@@ -756,9 +802,11 @@ class TestGenerativeModelPerformance:
 
 
 class TestGenerativeModelRobustness:
-    """Robustness tests for generative models"""    
+    """Robustness tests for generative models"""
+    
     def test_invalid_input_handling(self, generative_config):
-        """Test handling of invalid inputs"""        network = ContentGeneratorNetwork(generative_config)
+        """Test handling of invalid inputs"""
+        network = ContentGeneratorNetwork(generative_config)
         network.eval()
         
         # Test empty input
@@ -776,7 +824,8 @@ class TestGenerativeModelRobustness:
             network.forward(wrong_dim_input)
     
     def test_extreme_generation_parameters(self, generative_config, sample_prompts):
-        """Test with extreme generation parameters"""        network = ContentGeneratorNetwork(generative_config)
+        """Test with extreme generation parameters"""
+        network = ContentGeneratorNetwork(generative_config)
         network.eval()
         
         input_data = {"text": sample_prompts["multimodal"]["text"]}
@@ -804,7 +853,8 @@ class TestGenerativeModelRobustness:
         assert isinstance(generated_high, dict)
     
     def test_corrupted_input_resilience(self, generative_config, sample_prompts):
-        """Test resilience to corrupted inputs"""        network = ContentGeneratorNetwork(generative_config)
+        """Test resilience to corrupted inputs"""
+        network = ContentGeneratorNetwork(generative_config)
         network.eval()
         
         clean_input = {"text": sample_prompts["multimodal"]["text"]}
@@ -824,7 +874,8 @@ class TestGenerativeModelRobustness:
                 assert not torch.isnan(output).any(), f"NaN found in {modality} output"
     
     def test_generation_consistency(self, generative_config, sample_prompts):
-        """Test generation consistency with same inputs"""        network = ContentGeneratorNetwork(generative_config)
+        """Test generation consistency with same inputs"""
+        network = ContentGeneratorNetwork(generative_config)
         network.eval()
         
         input_data = {"text": sample_prompts["multimodal"]["text"]}
@@ -845,9 +896,11 @@ class TestGenerativeModelRobustness:
 
 
 class TestGenerativeModelIntegration:
-    """Integration tests for generative models"""    
+    """Integration tests for generative models"""
+    
     def test_multimodal_content_creation_pipeline(self, generative_config, sample_prompts, style_embeddings, generation_config):
-        """Test complete multimodal content creation pipeline"""        # Initialize networks
+        """Test complete multimodal content creation pipeline"""
+        # Initialize networks
         content_generator = ContentGeneratorNetwork(generative_config)
         audio_generator = AudioGeneratorNetwork(generative_config)
         text_generator = TextGeneratorNetwork(generative_config)
@@ -902,7 +955,8 @@ class TestGenerativeModelIntegration:
         assert "content" in description
     
     def test_creator_workflow_simulation(self, generative_config, sample_prompts, style_embeddings):
-        """Test typical creator workflow with generative models"""        content_generator = ContentGeneratorNetwork(generative_config)
+        """Test typical creator workflow with generative models"""
+        content_generator = ContentGeneratorNetwork(generative_config)
         text_generator = TextGeneratorNetwork(generative_config)
         
         content_generator.eval()

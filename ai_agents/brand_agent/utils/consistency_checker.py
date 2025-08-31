@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 import cv2
@@ -56,7 +57,8 @@ from ...content_protection.fingerprinting import VisualFingerprinter
 logger = logging.getLogger(__name__)
 
 class ConsistencyLevel(Enum):
-    """Brand consistency levels"""    PERFECT = "perfect"        # 95-100%
+    """Brand consistency levels"""
+    PERFECT = "perfect"        # 95-100%
     EXCELLENT = "excellent"    # 85-94%
     GOOD = "good"             # 70-84%
     FAIR = "fair"             # 55-69%
@@ -64,7 +66,8 @@ class ConsistencyLevel(Enum):
     CRITICAL = "critical"      # <40%
 
 class ConsistencyArea(Enum):
-    """Areas of brand consistency"""    VISUAL_IDENTITY = "visual_identity"
+    """Areas of brand consistency"""
+    VISUAL_IDENTITY = "visual_identity"
     COLOR_PALETTE = "color_palette"
     TYPOGRAPHY = "typography"
     LOGO_USAGE = "logo_usage"
@@ -74,7 +77,8 @@ class ConsistencyArea(Enum):
     LAYOUT_DESIGN = "layout_design"
 
 class ViolationType(Enum):
-    """Types of consistency violations"""    COLOR_DEVIATION = "color_deviation"
+    """Types of consistency violations"""
+    COLOR_DEVIATION = "color_deviation"
     FONT_MISMATCH = "font_mismatch"
     LOGO_MISUSE = "logo_misuse"
     TONE_INCONSISTENCY = "tone_inconsistency"
@@ -85,7 +89,8 @@ class ViolationType(Enum):
 
 @dataclass
 class BrandGuidelines:
-    """Comprehensive brand guidelines definition"""    brand_id: str
+    """Comprehensive brand guidelines definition"""
+    brand_id: str
     
     # Visual Guidelines
     primary_colors: List[str] = field(default_factory=list)
@@ -122,7 +127,8 @@ class BrandGuidelines:
 
 @dataclass
 class ConsistencyViolation:
-    """Brand consistency violation record"""    violation_id: str
+    """Brand consistency violation record"""
+    violation_id: str
     brand_id: str
     violation_type: ViolationType
     area: ConsistencyArea
@@ -151,7 +157,8 @@ class ConsistencyViolation:
 
 @dataclass
 class ConsistencyReport:
-    """Comprehensive brand consistency analysis report"""    report_id: str
+    """Comprehensive brand consistency analysis report"""
+    report_id: str
     brand_id: str
     overall_score: float
     consistency_level: ConsistencyLevel
@@ -177,7 +184,8 @@ class ConsistencyReport:
     generated_at: datetime = field(default_factory=datetime.utcnow)
 
 class ConsistencyChecker:
-    """    Advanced Brand Consistency & Style Guardian System
+    """
+    Advanced Brand Consistency & Style Guardian System
     
     Comprehensive brand consistency analysis including:
     - Visual identity consistency across platforms
@@ -186,7 +194,8 @@ class ConsistencyChecker:
     - Logo usage compliance monitoring
     - Tone of voice consistency analysis
     - Layout and design guideline enforcement
-    """    def __init__(self, brand_id: str):
+    """
+    def __init__(self, brand_id: str):
         self.brand_id = brand_id
         self.guidelines: Optional[BrandGuidelines] = None
         
@@ -210,7 +219,8 @@ class ConsistencyChecker:
         logger.info(f"Consistency checker initialized for brand: {brand_id}")
 
     async def load_brand_guidelines(self, guidelines_config: Dict[str, Any]) -> None:
-        """Load and configure brand guidelines"""        try:
+        """Load and configure brand guidelines"""
+        try:
             self.guidelines = BrandGuidelines(
                 brand_id=self.brand_id,
                 primary_colors=guidelines_config.get("primary_colors", []),
@@ -239,7 +249,8 @@ class ConsistencyChecker:
             raise
 
     async def check_content_consistency(self, content_items: List[Dict[str, Any]]) -> ConsistencyReport:
-        """Check consistency across multiple content items"""        try:
+        """Check consistency across multiple content items"""
+        try:
             if not self.guidelines:
                 raise ValueError("Brand guidelines not loaded")
             
@@ -298,7 +309,8 @@ class ConsistencyChecker:
             raise
 
     async def _analyze_content_item(self, item: Dict[str, Any]) -> List[ConsistencyViolation]:
-        """Analyze individual content item for consistency violations"""        violations = []
+        """Analyze individual content item for consistency violations"""
+        violations = []
         
         try:
             content_type = item.get("type", "unknown")
@@ -326,7 +338,8 @@ class ConsistencyChecker:
         return violations
 
     async def _check_visual_consistency(self, item: Dict[str, Any]) -> List[ConsistencyViolation]:
-        """Check visual consistency of content item"""        violations = []
+        """Check visual consistency of content item"""
+        violations = []
         
         try:
             image_path = item.get("file_path") or item.get("url")
@@ -362,7 +375,8 @@ class ConsistencyChecker:
         return violations
 
     async def _check_color_consistency(self, image_path: str, item: Dict[str, Any]) -> List[ConsistencyViolation]:
-        """Check color palette consistency"""        violations = []
+        """Check color palette consistency"""
+        violations = []
         
         try:
             # Extract colors from image
@@ -386,7 +400,8 @@ class ConsistencyChecker:
         return violations
 
     async def _check_primary_colors_usage(self, detected_colors: List[str], item: Dict[str, Any]) -> List[ConsistencyViolation]:
-        """Check if primary brand colors are used correctly"""        violations = []
+        """Check if primary brand colors are used correctly"""
+        violations = []
         
         try:
             if not self.guidelines.primary_colors:
@@ -444,7 +459,8 @@ class ConsistencyChecker:
         return violations
 
     def _calculate_color_distance(self, color1: str, color2: str) -> float:
-        """Calculate perceptual distance between two colors"""        try:
+        """Calculate perceptual distance between two colors"""
+        try:
             # Convert hex to RGB
             rgb1 = self._hex_to_rgb(color1)
             rgb2 = self._hex_to_rgb(color2)
@@ -470,11 +486,13 @@ class ConsistencyChecker:
                    (rgb1[2] - rgb2[2]) ** 2) ** 0.5
 
     def _hex_to_rgb(self, hex_color: str) -> Tuple[int, int, int]:
-        """Convert hex color to RGB tuple"""        hex_color = hex_color.lstrip('#')
+        """Convert hex color to RGB tuple"""
+        hex_color = hex_color.lstrip('#')
         return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
 
     def _rgb_to_lab(self, rgb: Tuple[int, int, int]) -> Tuple[float, float, float]:
-        """Convert RGB to LAB color space (simplified)"""        # Normalize RGB values
+        """Convert RGB to LAB color space (simplified)"""
+        # Normalize RGB values
         r, g, b = [x / 255.0 for x in rgb]
         
         # Convert to XYZ (simplified sRGB to XYZ)
@@ -490,7 +508,8 @@ class ConsistencyChecker:
         return (l, a, b_lab)
 
     def _deviation_to_severity(self, deviation: float) -> str:
-        """Convert deviation amount to severity level"""        if deviation >= 50:
+        """Convert deviation amount to severity level"""
+        if deviation >= 50:
             return "critical"
         elif deviation >= 30:
             return "high"
@@ -500,7 +519,8 @@ class ConsistencyChecker:
             return "low"
 
     async def _check_font_consistency(self, image_path: str, item: Dict[str, Any]) -> List[ConsistencyViolation]:
-        """Check font and typography consistency"""        violations = []
+        """Check font and typography consistency"""
+        violations = []
         
         try:
             # Detect fonts in image
@@ -550,7 +570,8 @@ class ConsistencyChecker:
         return violations
 
     def _find_similar_approved_font(self, font_name: str) -> Optional[str]:
-        """Find similar approved font for suggestion"""        try:
+        """Find similar approved font for suggestion"""
+        try:
             all_approved = self.guidelines.primary_fonts + self.guidelines.secondary_fonts
             
             font_name_lower = font_name.lower()
@@ -581,7 +602,8 @@ class ConsistencyChecker:
             return None
 
     async def _check_text_consistency(self, item: Dict[str, Any]) -> List[ConsistencyViolation]:
-        """Check text content consistency"""        violations = []
+        """Check text content consistency"""
+        violations = []
         
         try:
             text_content = item.get("text") or item.get("content", "")
@@ -606,7 +628,8 @@ class ConsistencyChecker:
         return violations
 
     async def _check_tone_consistency(self, text: str, item: Dict[str, Any]) -> List[ConsistencyViolation]:
-        """Check tone of voice consistency"""        violations = []
+        """Check tone of voice consistency"""
+        violations = []
         
         try:
             if not self.guidelines.tone_attributes:
@@ -654,7 +677,8 @@ class ConsistencyChecker:
         return violations
 
     def _get_opposite_tone_attribute(self, attribute: str) -> str:
-        """Get opposite tone attribute for comparison"""        opposites = {
+        """Get opposite tone attribute for comparison"""
+        opposites = {
             "friendly": "hostile",
             "professional": "casual",
             "formal": "informal",
@@ -670,7 +694,8 @@ class ConsistencyChecker:
         return opposites.get(attribute.lower(), "inconsistent")
 
     async def _calculate_area_score(self, violations: List[ConsistencyViolation], total_content: int) -> float:
-        """Calculate consistency score for specific area"""        try:
+        """Calculate consistency score for specific area"""
+        try:
             if total_content == 0:
                 return 100.0
             
@@ -698,7 +723,8 @@ class ConsistencyChecker:
             return 50.0
 
     def _score_to_level(self, score: float) -> ConsistencyLevel:
-        """Convert numeric score to consistency level"""        if score >= 95:
+        """Convert numeric score to consistency level"""
+        if score >= 95:
             return ConsistencyLevel.PERFECT
         elif score >= 85:
             return ConsistencyLevel.EXCELLENT
@@ -712,7 +738,8 @@ class ConsistencyChecker:
             return ConsistencyLevel.CRITICAL
 
     def _count_violations_by_severity(self, violations: List[ConsistencyViolation]) -> Dict[str, int]:
-        """Count violations by severity level"""        counts = {"critical": 0, "high": 0, "medium": 0, "low": 0}
+        """Count violations by severity level"""
+        counts = {"critical": 0, "high": 0, "medium": 0, "low": 0}
         
         for violation in violations:
             severity = violation.severity
@@ -722,7 +749,8 @@ class ConsistencyChecker:
         return counts
 
     async def _generate_priority_fixes(self, violations: List[ConsistencyViolation]) -> List[str]:
-        """Generate prioritized list of fixes"""        priority_fixes = []
+        """Generate prioritized list of fixes"""
+        priority_fixes = []
         
         try:
             # Sort violations by severity and frequency
@@ -751,7 +779,8 @@ class ConsistencyChecker:
         return priority_fixes
 
     async def _generate_type_specific_fix(self, violation_type: str, violations: List[ConsistencyViolation]) -> Optional[str]:
-        """Generate specific fix for violation type"""        try:
+        """Generate specific fix for violation type"""
+        try:
             count = len(violations)
             
             if violation_type == "color_deviation":
@@ -776,7 +805,8 @@ class ConsistencyChecker:
             return None
 
     async def monitor_brand_consistency(self, monitoring_config: Dict[str, Any]) -> None:
-        """Start continuous brand consistency monitoring"""        try:
+        """Start continuous brand consistency monitoring"""
+        try:
             platforms = monitoring_config.get("platforms", [])
             check_interval = monitoring_config.get("interval", 3600)  # 1 hour default
             
@@ -805,7 +835,8 @@ class ConsistencyChecker:
             logger.error(f"Brand consistency monitoring failed: {str(e)}")
 
     async def generate_style_guide_compliance_report(self) -> Dict[str, Any]:
-        """Generate comprehensive style guide compliance report"""        try:
+        """Generate comprehensive style guide compliance report"""
+        try:
             if not self.consistency_history:
                 return {"error": "No consistency data available"}
             
@@ -839,10 +870,12 @@ class ConsistencyChecker:
 
 
 class StyleGuardian:
-    """    Advanced Style Guardian System
+    """
+    Advanced Style Guardian System
     
     Real-time brand style monitoring and enforcement across all digital touchpoints.
-    """    def __init__(self, brand_id: str):
+    """
+    def __init__(self, brand_id: str):
         self.brand_id = brand_id
         self.consistency_checker = ConsistencyChecker(brand_id)
         self.auto_fix_enabled = False
@@ -859,7 +892,8 @@ class StyleGuardian:
         logger.info(f"Style guardian initialized for brand: {brand_id}")
 
     async def configure_enforcement_rules(self, rules_config: Dict[str, Any]) -> None:
-        """Configure style enforcement rules and automation"""        try:
+        """Configure style enforcement rules and automation"""
+        try:
             self.enforcement_rules = rules_config
             self.auto_fix_enabled = rules_config.get("auto_fix_enabled", False)
             self.violation_thresholds.update(rules_config.get("violation_thresholds", {}))
@@ -871,7 +905,8 @@ class StyleGuardian:
             raise
 
     async def enforce_style_compliance(self, content_item: Dict[str, Any]) -> Dict[str, Any]:
-        """Enforce style compliance on content item"""        try:
+        """Enforce style compliance on content item"""
+        try:
             # Check compliance
             violations = await self.consistency_checker._analyze_content_item(content_item)
             
@@ -899,7 +934,8 @@ class StyleGuardian:
             return {"compliant": False, "error": str(e)}
 
     async def _apply_automatic_fixes(self, content_item: Dict[str, Any], violations: List[ConsistencyViolation]) -> List[str]:
-        """Apply automatic fixes to violations"""        fixes_applied = []
+        """Apply automatic fixes to violations"""
+        fixes_applied = []
         
         try:
             for violation in violations:
@@ -919,7 +955,8 @@ class StyleGuardian:
         return fixes_applied
 
     def get_compliance_dashboard_data(self) -> Dict[str, Any]:
-        """Get data for compliance dashboard"""        try:
+        """Get data for compliance dashboard"""
+        try:
             if not self.consistency_checker.consistency_history:
                 return {"status": "no_data"}
             
@@ -945,7 +982,8 @@ class StyleGuardian:
             return {"status": "error", "error": str(e)}
 
     def _calculate_compliance_trend_indicator(self) -> str:
-        """Calculate compliance trend indicator"""        try:
+        """Calculate compliance trend indicator"""
+        try:
             if len(self.consistency_checker.consistency_history) < 2:
                 return "stable"
             

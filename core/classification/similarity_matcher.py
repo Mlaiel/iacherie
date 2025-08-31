@@ -10,7 +10,8 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DevOps + DBA + Security + Mic
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, modification, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing and collaboration.
-"""import numpy as np
+"""
+import numpy as np
 import torch
 import faiss
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 
 class SimilarityMatcher:
-    """    Enterprise-grade similarity matching system for content protection.
+    """
+    Enterprise-grade similarity matching system for content protection.
     
     Features:
     - Multi-modal similarity detection (audio, video, image, text)
@@ -46,9 +48,11 @@ class SimilarityMatcher:
     - Perceptual hashing and robust features
     - Copyright violation detection
     - Scalable similarity search
-    """    
+    """
+    
     def __init__(self):
-        """Initialize similarity matcher with vector engines."""        self.settings = get_settings()
+        """Initialize similarity matcher with vector engines."""
+        self.settings = get_settings()
         self.vector_engine = VectorEngine()
         
         # Initialize fingerprint extractors
@@ -82,7 +86,8 @@ class SimilarityMatcher:
         self._load_indexes()
         
     def _initialize_models(self) -> None:
-        """Initialize deep learning models for feature extraction."""        try:
+        """Initialize deep learning models for feature extraction."""
+        try:
             # Load CLIP model for image/video similarity
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
             self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -97,7 +102,8 @@ class SimilarityMatcher:
             logger.error(f"Error initializing similarity models: {e}")
     
     def _load_indexes(self) -> None:
-        """Load FAISS indexes for similarity search."""        try:
+        """Load FAISS indexes for similarity search."""
+        try:
             index_path = Path(self.settings.VECTOR_DB_PATH)
             
             # Load audio index
@@ -142,7 +148,8 @@ class SimilarityMatcher:
         top_k: int = 10,
         threshold: Optional[float] = None
     ) -> List[Dict[str, Any]]:
-        """        Find similar content across the database.
+        """
+        Find similar content across the database.
         
         Args:
             content_path: Path to content file
@@ -152,7 +159,8 @@ class SimilarityMatcher:
             
         Returns:
             List of similar content with scores and metadata
-        """        try:
+        """
+        try:
             # Get similarity threshold
             sim_threshold = threshold or self.similarity_thresholds.get(content_type, 0.8)
             
@@ -173,7 +181,8 @@ class SimilarityMatcher:
             return []
     
     def _find_similar_audio(self, audio_path: str, top_k: int, threshold: float) -> List[Dict[str, Any]]:
-        """Find similar audio content using acoustic fingerprints."""        try:
+        """Find similar audio content using acoustic fingerprints."""
+        try:
             # Extract audio fingerprint
             fingerprint = self.audio_fingerprint.extract_fingerprint(audio_path)
             
@@ -203,7 +212,8 @@ class SimilarityMatcher:
             return []
     
     def _find_similar_images(self, image_path: str, top_k: int, threshold: float) -> List[Dict[str, Any]]:
-        """Find similar images using CLIP embeddings and perceptual hashing."""        try:
+        """Find similar images using CLIP embeddings and perceptual hashing."""
+        try:
             # Load and process image
             image = cv2.imread(image_path)
             if image is None:
@@ -239,7 +249,8 @@ class SimilarityMatcher:
             return []
     
     def _find_similar_videos(self, video_path: str, top_k: int, threshold: float) -> List[Dict[str, Any]]:
-        """Find similar videos using frame analysis and temporal features."""        try:
+        """Find similar videos using frame analysis and temporal features."""
+        try:
             # Extract video features (keyframes + temporal)
             video_features = self._extract_video_features(video_path)
             
@@ -270,7 +281,8 @@ class SimilarityMatcher:
             return []
     
     def _find_similar_text(self, text_path: str, top_k: int, threshold: float) -> List[Dict[str, Any]]:
-        """Find similar text using semantic embeddings."""        try:
+        """Find similar text using semantic embeddings."""
+        try:
             # Read text content
             with open(text_path, 'r', encoding='utf-8') as f:
                 text_content = f.read()
@@ -305,7 +317,8 @@ class SimilarityMatcher:
             return []
     
     def _extract_audio_features(self, audio_path: str) -> np.ndarray:
-        """Extract comprehensive audio features for similarity matching."""        try:
+        """Extract comprehensive audio features for similarity matching."""
+        try:
             # Load audio
             y, sr = librosa.load(audio_path, sr=22050)
             
@@ -338,7 +351,8 @@ class SimilarityMatcher:
             return np.zeros(512)
     
     def _extract_clip_features(self, image: np.ndarray) -> np.ndarray:
-        """Extract CLIP features from image."""        try:
+        """Extract CLIP features from image."""
+        try:
             # Convert BGR to RGB
             image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             
@@ -355,7 +369,8 @@ class SimilarityMatcher:
             return np.zeros(512)
     
     def _extract_video_features(self, video_path: str) -> np.ndarray:
-        """Extract video features from keyframes and temporal analysis."""        try:
+        """Extract video features from keyframes and temporal analysis."""
+        try:
             cap = cv2.VideoCapture(video_path)
             
             # Extract keyframes
@@ -390,7 +405,8 @@ class SimilarityMatcher:
             return np.zeros(512)
     
     def _extract_text_embeddings(self, text: str) -> np.ndarray:
-        """Extract semantic text embeddings."""        try:
+        """Extract semantic text embeddings."""
+        try:
             # Tokenize text
             encoded = self.text_tokenizer(
                 text, 
@@ -413,20 +429,24 @@ class SimilarityMatcher:
             return np.zeros(384)
     
     def _compare_audio_fingerprints(self, fingerprint1: str, index: int) -> float:
-        """Compare audio fingerprints for exact matching."""        # This would compare with stored fingerprint at index
+        """Compare audio fingerprints for exact matching."""
+        # This would compare with stored fingerprint at index
         # Implementation depends on fingerprint storage format
         return 0.0
     
     def _calculate_hash_distance(self, hash1: str, index: int) -> int:
-        """Calculate Hamming distance between perceptual hashes."""        # Implementation for hash comparison
+        """Calculate Hamming distance between perceptual hashes."""
+        # Implementation for hash comparison
         return 0
     
     def _compare_temporal_patterns(self, fingerprint: Dict, index: int) -> float:
-        """Compare temporal patterns in video fingerprints."""        # Implementation for temporal pattern matching
+        """Compare temporal patterns in video fingerprints."""
+        # Implementation for temporal pattern matching
         return 0.0
     
     def _calculate_text_similarity(self, text: str, index: int) -> float:
-        """Calculate exact text similarity ratio."""        # Implementation for text similarity calculation
+        """Calculate exact text similarity ratio."""
+        # Implementation for text similarity calculation
         return 0.0
     
     def add_content_to_index(
@@ -436,7 +456,8 @@ class SimilarityMatcher:
         content_id: str,
         metadata: Optional[Dict] = None
     ) -> bool:
-        """Add new content to similarity index."""        try:
+        """Add new content to similarity index."""
+        try:
             if content_type == 'audio':
                 features = self._extract_audio_features(content_path)
                 self.audio_index.add(features.reshape(1, -1).astype('float32'))
@@ -461,7 +482,8 @@ class SimilarityMatcher:
             return False
     
     def save_indexes(self) -> None:
-        """Save FAISS indexes to disk."""        try:
+        """Save FAISS indexes to disk."""
+        try:
             index_path = Path(self.settings.VECTOR_DB_PATH)
             index_path.mkdir(parents=True, exist_ok=True)
             
@@ -480,7 +502,8 @@ class SimilarityMatcher:
             logger.error(f"Error saving indexes: {e}")
     
     def get_similarity_stats(self) -> Dict[str, Any]:
-        """Get statistics about similarity indexes."""        return {
+        """Get statistics about similarity indexes."""
+        return {
             'audio_index_size': self.audio_index.ntotal if self.audio_index else 0,
             'image_index_size': self.image_index.ntotal if self.image_index else 0,
             'video_index_size': self.video_index.ntotal if self.video_index else 0,

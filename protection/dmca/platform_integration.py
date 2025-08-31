@@ -13,7 +13,8 @@ This module provides:
 - Platform-specific adapters
 - Rate limiting and retry logic
 - Real-time status tracking
-"""import asyncio
+"""
+import asyncio
 import logging
 import aiohttp
 import secrets
@@ -39,7 +40,8 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types for DMCA integration"""    YOUTUBE = "youtube"
+    """Supported platform types for DMCA integration"""
+    YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     SOUNDCLOUD = "soundcloud"
     INSTAGRAM = "instagram"
@@ -52,7 +54,8 @@ class PlatformType(Enum):
 
 
 class SubmissionMethod(Enum):
-    """Available submission methods"""    API_REST = "api_rest"
+    """Available submission methods"""
+    API_REST = "api_rest"
     API_GRAPHQL = "api_graphql"
     WEB_FORM = "web_form"
     EMAIL = "email"
@@ -60,7 +63,8 @@ class SubmissionMethod(Enum):
 
 
 class SubmissionStatus(Enum):
-    """Submission status tracking"""    PENDING = "pending"
+    """Submission status tracking"""
+    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
@@ -71,7 +75,8 @@ class SubmissionStatus(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform API credentials"""    platform: PlatformType
+    """Platform API credentials"""
+    platform: PlatformType
     api_key: Optional[str] = None
     client_id: Optional[str] = None
     client_secret: Optional[str] = None
@@ -88,7 +93,8 @@ class PlatformCredentials:
 
 @dataclass
 class SubmissionResult:
-    """Platform submission result"""    platform: PlatformType
+    """Platform submission result"""
+    platform: PlatformType
     method: SubmissionMethod
     status: SubmissionStatus
     submission_id: Optional[str] = None
@@ -107,7 +113,8 @@ class SubmissionResult:
 
 
 class PlatformAdapter:
-    """Base platform adapter interface"""    
+    """Base platform adapter interface"""
+    
     def __init__(self, platform: PlatformType, credentials: PlatformCredentials):
         self.platform = platform
         self.credentials = credentials
@@ -115,7 +122,8 @@ class PlatformAdapter:
         self.rate_limiter = RateLimiter(platform)
         
     async def initialize(self) -> bool:
-        """Initialize platform connection"""        try:
+        """Initialize platform connection"""
+        try:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=60),
                 headers=await self._get_default_headers()
@@ -135,7 +143,8 @@ class PlatformAdapter:
             return False
     
     async def submit_dmca_notice(self, notice_data: Dict[str, Any]) -> SubmissionResult:
-        """Submit DMCA notice to platform"""        # Default implementation for platforms without specific DMCA support
+        """Submit DMCA notice to platform"""
+        # Default implementation for platforms without specific DMCA support
         logger.warning(f"DMCA submission not implemented for {self.platform.value}")
         
         return SubmissionResult(
@@ -149,34 +158,40 @@ class PlatformAdapter:
         )
     
     async def check_submission_status(self, submission_id: str) -> SubmissionStatus:
-        """Check status of submitted DMCA notice"""        # Default implementation for platforms without status checking
+        """Check status of submitted DMCA notice"""
+        # Default implementation for platforms without status checking
         logger.warning(f"DMCA status checking not implemented for {self.platform.value}")
         return SubmissionStatus.UNKNOWN
     
     async def _authenticate(self) -> bool:
-        """Authenticate with platform"""        return True  # Default implementation
+        """Authenticate with platform"""
+        return True  # Default implementation
     
     async def _get_default_headers(self) -> Dict[str, str]:
-        """Get default HTTP headers"""        return {
+        """Get default HTTP headers"""
+        return {
             'User-Agent': 'IA-Influencer-Agent DMCA System v2.0',
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
     
     async def cleanup(self):
-        """Clean up resources"""        if self.session:
+        """Clean up resources"""
+        if self.session:
             await self.session.close()
 
 
 class YouTubeAdapter(PlatformAdapter):
-    """YouTube platform adapter"""    
+    """YouTube platform adapter"""
+    
     def __init__(self, credentials: PlatformCredentials):
         super().__init__(PlatformType.YOUTUBE, credentials)
         self.api_base = "https://www.googleapis.com/youtube/v3"
         self.copyright_api = "https://youtubei.googleapis.com/youtubei/v1"
     
     async def submit_dmca_notice(self, notice_data: Dict[str, Any]) -> SubmissionResult:
-        """Submit DMCA notice to YouTube"""        
+        """Submit DMCA notice to YouTube"""
+        
         try:
             await self.rate_limiter.wait_if_needed()
             
@@ -218,7 +233,8 @@ class YouTubeAdapter(PlatformAdapter):
             )
     
     async def _prepare_youtube_payload(self, notice_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Prepare YouTube-specific DMCA payload"""        return {
+        """Prepare YouTube-specific DMCA payload"""
+        return {
             'videoId': self._extract_video_id(notice_data['infringing_url']),
             'copyrightOwner': notice_data['copyright_owner']['name'],
             'contactEmail': notice_data['copyright_owner']['email'],
@@ -233,7 +249,8 @@ class YouTubeAdapter(PlatformAdapter):
         }
     
     def _extract_video_id(self, url: str) -> str:
-        """Extract YouTube video ID from URL"""        import re
+        """Extract YouTube video ID from URL"""
+        import re
         patterns = [
             r'(?:v=|\/)([0-9A-Za-z_-]{11}).*',
             r'(?:embed\/)([0-9A-Za-z_-]{11})',
@@ -248,7 +265,8 @@ class YouTubeAdapter(PlatformAdapter):
         raise ValueError(f"Could not extract video ID from URL: {url}")
     
     async def _get_auth_headers(self) -> Dict[str, str]:
-        """Get authenticated headers for YouTube API"""        headers = await self._get_default_headers()
+        """Get authenticated headers for YouTube API"""
+        headers = await self._get_default_headers()
         if self.credentials.access_token:
             headers['Authorization'] = f"Bearer {self.credentials.access_token}"
         elif self.credentials.api_key:
@@ -257,14 +275,16 @@ class YouTubeAdapter(PlatformAdapter):
 
 
 class SpotifyAdapter(PlatformAdapter):
-    """Spotify platform adapter"""    
+    """Spotify platform adapter"""
+    
     def __init__(self, credentials: PlatformCredentials):
         super().__init__(PlatformType.SPOTIFY, credentials)
         self.api_base = "https://api.spotify.com/v1"
         self.copyright_email = "copyright@spotify.com"
     
     async def submit_dmca_notice(self, notice_data: Dict[str, Any]) -> SubmissionResult:
-        """Submit DMCA notice to Spotify via email"""        
+        """Submit DMCA notice to Spotify via email"""
+        
         try:
             # Spotify primarily uses email for DMCA notices
             from ..email_service import EmailService
@@ -305,7 +325,8 @@ class SpotifyAdapter(PlatformAdapter):
             )
     
     async def _prepare_spotify_email(self, notice_data: Dict[str, Any]) -> str:
-        """Prepare Spotify-specific DMCA email content"""        
+        """Prepare Spotify-specific DMCA email content"""
+        
         track_id = self._extract_spotify_track_id(notice_data['infringing_url'])
         
         return f"""Subject: DMCA Takedown Notice - Track ID: {track_id}
@@ -329,9 +350,11 @@ Please remove the infringing content expeditiously.
 
 Best regards,
 {notice_data['authorized_agent']['name']}
-        """    
+        """
+    
     def _extract_spotify_track_id(self, url: str) -> str:
-        """Extract Spotify track ID from URL"""        import re
+        """Extract Spotify track ID from URL"""
+        import re
         match = re.search(r'track/([a-zA-Z0-9]{22})', url)
         if match:
             return match.group(1)
@@ -339,14 +362,16 @@ Best regards,
 
 
 class InstagramAdapter(PlatformAdapter):
-    """Instagram/Meta platform adapter"""    
+    """Instagram/Meta platform adapter"""
+    
     def __init__(self, credentials: PlatformCredentials):
         super().__init__(PlatformType.INSTAGRAM, credentials)
         self.api_base = "https://graph.facebook.com/v18.0"
         self.copyright_form_url = "https://help.instagram.com/contact/372592039493026"
     
     async def submit_dmca_notice(self, notice_data: Dict[str, Any]) -> SubmissionResult:
-        """Submit DMCA notice to Instagram via web form"""        
+        """Submit DMCA notice to Instagram via web form"""
+        
         try:
             # Instagram requires web form submission
             form_submitter = WebFormSubmitter()
@@ -371,7 +396,8 @@ class InstagramAdapter(PlatformAdapter):
             )
     
     async def _prepare_instagram_form_data(self, notice_data: Dict[str, Any]) -> Dict[str, str]:
-        """Prepare Instagram form data"""        return {
+        """Prepare Instagram form data"""
+        return {
             'full_name': notice_data['copyright_owner']['name'],
             'email': notice_data['copyright_owner']['email'],
             'work_description': notice_data['original_work']['description'],
@@ -382,14 +408,16 @@ class InstagramAdapter(PlatformAdapter):
 
 
 class TikTokAdapter(PlatformAdapter):
-    """TikTok platform adapter"""    
+    """TikTok platform adapter"""
+    
     def __init__(self, credentials: PlatformCredentials):
         super().__init__(PlatformType.TIKTOK, credentials)
         self.api_base = "https://open-api.tiktok.com/platform/oauth/connect"
         self.copyright_form_url = "https://www.tiktok.com/legal/copyright-policy"
     
     async def submit_dmca_notice(self, notice_data: Dict[str, Any]) -> SubmissionResult:
-        """Submit DMCA notice to TikTok"""        
+        """Submit DMCA notice to TikTok"""
+        
         try:
             # TikTok uses a combination of API and form submission
             if self.credentials.api_key:
@@ -407,7 +435,8 @@ class TikTokAdapter(PlatformAdapter):
             )
     
     async def _submit_via_api(self, notice_data: Dict[str, Any]) -> SubmissionResult:
-        """Submit via TikTok API"""        
+        """Submit via TikTok API"""
+        
         payload = {
             'video_id': self._extract_tiktok_video_id(notice_data['infringing_url']),
             'copyright_owner': notice_data['copyright_owner']['name'],
@@ -440,7 +469,8 @@ class TikTokAdapter(PlatformAdapter):
                 )
     
     def _extract_tiktok_video_id(self, url: str) -> str:
-        """Extract TikTok video ID from URL"""        import re
+        """Extract TikTok video ID from URL"""
+        import re
         match = re.search(r'/video/(\d+)', url)
         if match:
             return match.group(1)
@@ -448,14 +478,16 @@ class TikTokAdapter(PlatformAdapter):
 
 
 class WebFormSubmitter:
-    """Automated web form submission using Selenium"""    
+    """Automated web form submission using Selenium"""
+    
     def __init__(self):
         self.driver: Optional[webdriver.Chrome] = None
         self.wait: Optional[WebDriverWait] = None
     
     async def submit_form(self, url: str, form_data: Dict[str, str], 
                          platform: PlatformType) -> SubmissionResult:
-        """Submit DMCA form on web platform"""        
+        """Submit DMCA form on web platform"""
+        
         try:
             await self._setup_driver()
             
@@ -494,7 +526,8 @@ class WebFormSubmitter:
             await self._cleanup_driver()
     
     async def _setup_driver(self):
-        """Setup Chrome WebDriver"""        options = Options()
+        """Setup Chrome WebDriver"""
+        options = Options()
         options.add_argument('--headless')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
@@ -506,7 +539,8 @@ class WebFormSubmitter:
     
     async def _fill_platform_form(self, platform: PlatformType, 
                                  form_data: Dict[str, str]) -> bool:
-        """Fill platform-specific form"""        
+        """Fill platform-specific form"""
+        
         try:
             if platform == PlatformType.INSTAGRAM:
                 return await self._fill_instagram_form(form_data)
@@ -525,7 +559,8 @@ class WebFormSubmitter:
             return False
     
     async def _fill_instagram_form(self, form_data: Dict[str, str]) -> bool:
-        """Fill Instagram copyright form"""        
+        """Fill Instagram copyright form"""
+        
         # Wait for form to load
         name_field = self.wait.until(
             EC.presence_of_element_located((By.NAME, "full_name"))
@@ -561,14 +596,16 @@ class WebFormSubmitter:
         return any(indicator.lower() in page_text for indicator in success_indicators)
     
     async def _cleanup_driver(self):
-        """Clean up WebDriver resources"""        if self.driver:
+        """Clean up WebDriver resources"""
+        if self.driver:
             self.driver.quit()
             self.driver = None
             self.wait = None
 
 
 class RateLimiter:
-    """Platform-specific rate limiting"""    
+    """Platform-specific rate limiting"""
+    
     def __init__(self, platform: PlatformType):
         self.platform = platform
         self.last_request_time: Optional[datetime] = None
@@ -576,7 +613,8 @@ class RateLimiter:
         self.rate_limits = self._get_platform_limits()
     
     def _get_platform_limits(self) -> Dict[str, Any]:
-        """Get platform-specific rate limits"""        limits = {
+        """Get platform-specific rate limits"""
+        limits = {
             PlatformType.YOUTUBE: {
                 'requests_per_minute': 30,
                 'requests_per_hour': 1000,
@@ -606,7 +644,8 @@ class RateLimiter:
         })
     
     async def wait_if_needed(self):
-        """Wait if rate limit requires it"""        
+        """Wait if rate limit requires it"""
+        
         now = datetime.utcnow()
         min_interval = self.rate_limits['min_interval_seconds']
         
@@ -622,14 +661,16 @@ class RateLimiter:
 
 
 class MultiPlatformIntegrationEngine:
-    """Main engine for multi-platform DMCA submissions"""    
+    """Main engine for multi-platform DMCA submissions"""
+    
     def __init__(self):
         self.adapters: Dict[PlatformType, PlatformAdapter] = {}
         self.credentials: Dict[PlatformType, PlatformCredentials] = {}
         self.submission_history: List[SubmissionResult] = []
         
     async def initialize(self, platform_credentials: Dict[PlatformType, PlatformCredentials]):
-        """Initialize all platform adapters"""        
+        """Initialize all platform adapters"""
+        
         self.credentials = platform_credentials
         
         for platform, creds in platform_credentials.items():
@@ -643,7 +684,8 @@ class MultiPlatformIntegrationEngine:
     
     def _create_adapter(self, platform: PlatformType, 
                        credentials: PlatformCredentials) -> Optional[PlatformAdapter]:
-        """Create platform-specific adapter"""        
+        """Create platform-specific adapter"""
+        
         adapter_map = {
             PlatformType.YOUTUBE: YouTubeAdapter,
             PlatformType.SPOTIFY: SpotifyAdapter,
@@ -660,7 +702,8 @@ class MultiPlatformIntegrationEngine:
     
     async def submit_to_platform(self, platform: PlatformType, 
                                 notice_data: Dict[str, Any]) -> SubmissionResult:
-        """Submit DMCA notice to specific platform"""        
+        """Submit DMCA notice to specific platform"""
+        
         adapter = self.adapters.get(platform)
         if not adapter:
             return SubmissionResult(
@@ -691,7 +734,8 @@ class MultiPlatformIntegrationEngine:
     async def submit_to_multiple_platforms(self, 
                                          platforms: List[PlatformType],
                                          notice_data: Dict[str, Any]) -> List[SubmissionResult]:
-        """Submit DMCA notice to multiple platforms simultaneously"""        
+        """Submit DMCA notice to multiple platforms simultaneously"""
+        
         tasks = [
             self.submit_to_platform(platform, notice_data)
             for platform in platforms
@@ -715,7 +759,8 @@ class MultiPlatformIntegrationEngine:
         return processed_results
     
     async def check_submission_status(self, submission_result: SubmissionResult) -> SubmissionStatus:
-        """Check status of a submitted notice"""        
+        """Check status of a submitted notice"""
+        
         adapter = self.adapters.get(submission_result.platform)
         if not adapter or not submission_result.submission_id:
             return SubmissionStatus.FAILED
@@ -727,7 +772,8 @@ class MultiPlatformIntegrationEngine:
             return SubmissionStatus.FAILED
     
     async def get_submission_statistics(self) -> Dict[str, Any]:
-        """Get submission statistics across all platforms"""        
+        """Get submission statistics across all platforms"""
+        
         if not self.submission_history:
             return {}
         
@@ -768,7 +814,8 @@ class MultiPlatformIntegrationEngine:
         return stats
     
     async def cleanup(self):
-        """Clean up all adapter resources"""        
+        """Clean up all adapter resources"""
+        
         cleanup_tasks = [
             adapter.cleanup() 
             for adapter in self.adapters.values()
@@ -782,11 +829,13 @@ class MultiPlatformIntegrationEngine:
 
 # Factory functions
 def create_platform_credentials(platform: PlatformType, **kwargs) -> PlatformCredentials:
-    """Create platform credentials"""    return PlatformCredentials(platform=platform, **kwargs)
+    """Create platform credentials"""
+    return PlatformCredentials(platform=platform, **kwargs)
 
 
 def create_integration_engine() -> MultiPlatformIntegrationEngine:
-    """Create new multi-platform integration engine"""    return MultiPlatformIntegrationEngine()
+    """Create new multi-platform integration engine"""
+    return MultiPlatformIntegrationEngine()
 
 
 __all__ = [

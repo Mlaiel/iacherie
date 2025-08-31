@@ -19,7 +19,8 @@ Supported Platforms:
 - LinkedIn: Marketing API, Creator content
 - Pinterest: Developer API, Creator insights
 - Snapchat: Creative Kit, Snap Pixel
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -38,7 +39,8 @@ from .base_adapter import (
 logger = logging.getLogger(__name__)
 
 class SocialMediaPlatform(Enum):
-    """Supported social media platforms."""    INSTAGRAM = "instagram"
+    """Supported social media platforms."""
+    INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
     TWITTER = "twitter"
@@ -50,7 +52,8 @@ class SocialMediaPlatform(Enum):
     TELEGRAM = "telegram"
 
 class ContentType(Enum):
-    """Content types for social media."""    POST = "post"
+    """Content types for social media."""
+    POST = "post"
     STORY = "story"
     REEL = "reel"
     VIDEO = "video"
@@ -63,7 +66,8 @@ class ContentType(Enum):
 
 @dataclass
 class SocialMediaContent:
-    """Content structure for social media posting."""    content_type: ContentType
+    """Content structure for social media posting."""
+    content_type: ContentType
     title: Optional[str] = None
     description: Optional[str] = None
     media_urls: List[str] = field(default_factory=list)
@@ -76,7 +80,8 @@ class SocialMediaContent:
 
 @dataclass
 class SocialMediaMetrics:
-    """Analytics metrics from social media platforms."""    views: int = 0
+    """Analytics metrics from social media platforms."""
+    views: int = 0
     likes: int = 0
     comments: int = 0
     shares: int = 0
@@ -90,7 +95,8 @@ class SocialMediaMetrics:
     platform_specific_metrics: Dict[str, Any] = field(default_factory=dict)
 
 class InstagramAdapter(BasePlatformAdapter):
-    """    Enterprise Instagram API adapter with comprehensive creator features.
+    """
+    Enterprise Instagram API adapter with comprehensive creator features.
     
     Supports:
     - Instagram Basic Display API
@@ -99,7 +105,8 @@ class InstagramAdapter(BasePlatformAdapter):
     - Stories, Reels, IGTV publishing
     - Advanced analytics and insights
     - Creator monetization tracking
-    """    
+    """
+    
     def __init__(self, credentials: AdapterCredentials, redis_client=None):
         rate_config = RateLimitConfig(
             requests_per_second=10.0,
@@ -120,7 +127,8 @@ class InstagramAdapter(BasePlatformAdapter):
         )
     
     async def authenticate(self) -> bool:
-        """Authenticate with Instagram API."""        try:
+        """Authenticate with Instagram API."""
+        try:
             # Test authentication with user info request
             response = await self.make_request(
                 method="GET",
@@ -142,7 +150,8 @@ class InstagramAdapter(BasePlatformAdapter):
             return False
     
     async def publish_content(self, content: SocialMediaContent) -> Dict[str, Any]:
-        """Publish content to Instagram."""        try:
+        """Publish content to Instagram."""
+        try:
             if content.content_type == ContentType.POST:
                 return await self._publish_feed_post(content)
             elif content.content_type == ContentType.STORY:
@@ -157,7 +166,8 @@ class InstagramAdapter(BasePlatformAdapter):
             raise AdapterError(f"Failed to publish content to Instagram: {e}")
     
     async def _publish_feed_post(self, content: SocialMediaContent) -> Dict[str, Any]:
-        """Publish a feed post to Instagram."""        # Step 1: Create media container
+        """Publish a feed post to Instagram."""
+        # Step 1: Create media container
         media_data = {
             "image_url": content.media_urls[0] if content.media_urls else None,
             "caption": self._format_caption(content),
@@ -189,7 +199,8 @@ class InstagramAdapter(BasePlatformAdapter):
         }
     
     async def _publish_story(self, content: SocialMediaContent) -> Dict[str, Any]:
-        """Publish a story to Instagram."""        story_data = {
+        """Publish a story to Instagram."""
+        story_data = {
             "image_url": content.media_urls[0] if content.media_urls else None,
             "media_type": "STORIES",
             "access_token": self.credentials.access_token
@@ -209,7 +220,8 @@ class InstagramAdapter(BasePlatformAdapter):
         }
     
     async def _publish_reel(self, content: SocialMediaContent) -> Dict[str, Any]:
-        """Publish a reel to Instagram."""        reel_data = {
+        """Publish a reel to Instagram."""
+        reel_data = {
             "video_url": content.media_urls[0] if content.media_urls else None,
             "media_type": "REELS",
             "caption": self._format_caption(content),
@@ -240,7 +252,8 @@ class InstagramAdapter(BasePlatformAdapter):
         }
     
     def _format_caption(self, content: SocialMediaContent) -> str:
-        """Format caption with description and hashtags."""        caption_parts = []
+        """Format caption with description and hashtags."""
+        caption_parts = []
         
         if content.description:
             caption_parts.append(content.description)
@@ -254,7 +267,8 @@ class InstagramAdapter(BasePlatformAdapter):
     async def get_analytics(self, post_id: Optional[str] = None, 
                            start_date: Optional[datetime] = None,
                            end_date: Optional[datetime] = None) -> SocialMediaMetrics:
-        """Get Instagram analytics and insights."""        try:
+        """Get Instagram analytics and insights."""
+        try:
             if post_id:
                 # Get specific post metrics
                 response = await self.make_request(
@@ -320,7 +334,8 @@ class InstagramAdapter(BasePlatformAdapter):
             return SocialMediaMetrics()
     
     async def health_check(self) -> bool:
-        """Perform Instagram API health check."""        try:
+        """Perform Instagram API health check."""
+        try:
             response = await self.make_request(
                 method="GET",
                 endpoint="me",
@@ -331,7 +346,8 @@ class InstagramAdapter(BasePlatformAdapter):
             return False
 
 class YouTubeAdapter(BasePlatformAdapter):
-    """    Enterprise YouTube Data API v3 adapter with creator features.
+    """
+    Enterprise YouTube Data API v3 adapter with creator features.
     
     Supports:
     - Video uploading and management
@@ -340,7 +356,8 @@ class YouTubeAdapter(BasePlatformAdapter):
     - Live streaming management
     - Monetization tracking
     - Shorts optimization
-    """    
+    """
+    
     def __init__(self, credentials: AdapterCredentials, redis_client=None):
         rate_config = RateLimitConfig(
             requests_per_second=100.0,
@@ -361,7 +378,8 @@ class YouTubeAdapter(BasePlatformAdapter):
         )
     
     async def authenticate(self) -> bool:
-        """Authenticate with YouTube API."""        try:
+        """Authenticate with YouTube API."""
+        try:
             response = await self.make_request(
                 method="GET",
                 endpoint="channels",
@@ -385,7 +403,8 @@ class YouTubeAdapter(BasePlatformAdapter):
             return False
     
     async def upload_video(self, content: SocialMediaContent, video_file_path: str) -> Dict[str, Any]:
-        """Upload video to YouTube."""        try:
+        """Upload video to YouTube."""
+        try:
             # Prepare video metadata
             video_metadata = {
                 "snippet": {
@@ -425,7 +444,8 @@ class YouTubeAdapter(BasePlatformAdapter):
             raise AdapterError(f"Failed to upload video to YouTube: {e}")
     
     def _format_description(self, content: SocialMediaContent) -> str:
-        """Format video description."""        description_parts = []
+        """Format video description."""
+        description_parts = []
         
         if content.description:
             description_parts.append(content.description)
@@ -439,7 +459,8 @@ class YouTubeAdapter(BasePlatformAdapter):
     async def get_analytics(self, video_id: Optional[str] = None,
                            start_date: Optional[datetime] = None,
                            end_date: Optional[datetime] = None) -> SocialMediaMetrics:
-        """Get YouTube analytics."""        try:
+        """Get YouTube analytics."""
+        try:
             if video_id:
                 # Get video statistics
                 response = await self.make_request(
@@ -496,7 +517,8 @@ class YouTubeAdapter(BasePlatformAdapter):
             return SocialMediaMetrics()
     
     async def health_check(self) -> bool:
-        """Perform YouTube API health check."""        try:
+        """Perform YouTube API health check."""
+        try:
             response = await self.make_request(
                 method="GET",
                 endpoint="channels",
@@ -512,7 +534,8 @@ class YouTubeAdapter(BasePlatformAdapter):
             return False
 
 class TikTokAdapter(BasePlatformAdapter):
-    """    Enterprise TikTok API adapter for creator content and analytics.
+    """
+    Enterprise TikTok API adapter for creator content and analytics.
     
     Supports:
     - Content Publishing API
@@ -520,7 +543,8 @@ class TikTokAdapter(BasePlatformAdapter):
     - Creator Fund data
     - Hashtag challenge participation
     - Live streaming integration
-    """    
+    """
+    
     def __init__(self, credentials: AdapterCredentials, redis_client=None):
         rate_config = RateLimitConfig(
             requests_per_second=10.0,
@@ -541,7 +565,8 @@ class TikTokAdapter(BasePlatformAdapter):
         )
     
     async def authenticate(self) -> bool:
-        """Authenticate with TikTok API."""        try:
+        """Authenticate with TikTok API."""
+        try:
             response = await self.make_request(
                 method="GET",
                 endpoint="v2/user/info/",
@@ -561,7 +586,8 @@ class TikTokAdapter(BasePlatformAdapter):
             return False
     
     async def publish_video(self, content: SocialMediaContent, video_file_path: str) -> Dict[str, Any]:
-        """Publish video to TikTok."""        try:
+        """Publish video to TikTok."""
+        try:
             # TikTok requires video upload in chunks
             # This is a simplified version - actual implementation would handle file upload
             
@@ -607,7 +633,8 @@ class TikTokAdapter(BasePlatformAdapter):
     
     async def get_analytics(self, start_date: Optional[datetime] = None,
                            end_date: Optional[datetime] = None) -> SocialMediaMetrics:
-        """Get TikTok creator analytics."""        try:
+        """Get TikTok creator analytics."""
+        try:
             # Get user videos first
             videos_response = await self.make_request(
                 method="POST",
@@ -651,7 +678,8 @@ class TikTokAdapter(BasePlatformAdapter):
             return SocialMediaMetrics()
     
     async def health_check(self) -> bool:
-        """Perform TikTok API health check."""        try:
+        """Perform TikTok API health check."""
+        try:
             response = await self.make_request(
                 method="GET",
                 endpoint="v2/user/info/",
@@ -665,7 +693,8 @@ class TikTokAdapter(BasePlatformAdapter):
 # Additional platform adapters would be implemented similarly...
 
 class SocialMediaAdapterFactory:
-    """Factory for creating social media platform adapters."""    
+    """Factory for creating social media platform adapters."""
+    
     _adapters = {
         SocialMediaPlatform.INSTAGRAM: InstagramAdapter,
         SocialMediaPlatform.YOUTUBE: YouTubeAdapter,
@@ -675,7 +704,8 @@ class SocialMediaAdapterFactory:
     
     @classmethod
     def create_adapter(cls, platform: SocialMediaPlatform, credentials: AdapterCredentials, redis_client=None) -> BasePlatformAdapter:
-        """Create adapter for specified platform."""        if platform not in cls._adapters:
+        """Create adapter for specified platform."""
+        if platform not in cls._adapters:
             raise AdapterError(f"Unsupported social media platform: {platform}")
         
         adapter_class = cls._adapters[platform]
@@ -683,7 +713,8 @@ class SocialMediaAdapterFactory:
     
     @classmethod
     def get_supported_platforms(cls) -> List[SocialMediaPlatform]:
-        """Get list of supported platforms."""        return list(cls._adapters.keys())
+        """Get list of supported platforms."""
+        return list(cls._adapters.keys())
 
 # Export all classes
 __all__ = [

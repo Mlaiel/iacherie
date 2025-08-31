@@ -12,7 +12,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""from typing import Dict, List, Any, Optional, Union, Tuple, AsyncIterator
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple, AsyncIterator
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -56,7 +57,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class StorageBackendType(Enum):
-    """Supported storage backend types"""    LOCAL_FILESYSTEM = "local_filesystem"
+    """Supported storage backend types"""
+    LOCAL_FILESYSTEM = "local_filesystem"
     AWS_S3 = "aws_s3"
     AZURE_BLOB = "azure_blob"
     GOOGLE_CLOUD = "google_cloud"
@@ -67,27 +69,31 @@ class StorageBackendType(Enum):
     DISTRIBUTED_FS = "distributed_fs"
 
 class StorageAccessMode(Enum):
-    """Storage access modes"""    READ_ONLY = "read_only"
+    """Storage access modes"""
+    READ_ONLY = "read_only"
     WRITE_ONLY = "write_only"
     READ_WRITE = "read_write"
     APPEND_ONLY = "append_only"
 
 class StorageRedundancyLevel(Enum):
-    """Storage redundancy and durability levels"""    NONE = "none"
+    """Storage redundancy and durability levels"""
+    NONE = "none"
     LOCAL_REDUNDANT = "local_redundant"
     ZONE_REDUNDANT = "zone_redundant"
     GEO_REDUNDANT = "geo_redundant"
     READ_ACCESS_GEO = "read_access_geo"
 
 class CompressionAlgorithm(Enum):
-    """Supported compression algorithms"""    NONE = "none"
+    """Supported compression algorithms"""
+    NONE = "none"
     GZIP = "gzip"
     LZMA = "lzma"
     BROTLI = "brotli"
     ZSTD = "zstd"
 
 class EncryptionType(Enum):
-    """Supported encryption types"""    NONE = "none"
+    """Supported encryption types"""
+    NONE = "none"
     AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     CHACHA20_POLY1305 = "chacha20_poly1305"
@@ -96,7 +102,8 @@ class EncryptionType(Enum):
 
 @dataclass
 class StorageConfiguration:
-    """Storage backend configuration"""    backend_type: StorageBackendType
+    """Storage backend configuration"""
+    backend_type: StorageBackendType
     name: str
     endpoint_url: Optional[str] = None
     region: Optional[str] = None
@@ -122,7 +129,8 @@ class StorageConfiguration:
 
 @dataclass
 class StorageMetrics:
-    """Storage backend metrics and statistics"""    total_files: int = 0
+    """Storage backend metrics and statistics"""
+    total_files: int = 0
     total_size_bytes: int = 0
     available_space_bytes: Optional[int] = None
     used_space_bytes: Optional[int] = None
@@ -139,7 +147,8 @@ class StorageMetrics:
 
 @dataclass
 class StorageOperation:
-    """Storage operation metadata"""    operation_id: str
+    """Storage operation metadata"""
+    operation_id: str
     operation_type: str  # upload, download, delete, copy, move
     file_path: str
     backend_name: str
@@ -152,7 +161,8 @@ class StorageOperation:
     metadata: Optional[Dict[str, Any]] = None
 
 class StorageBackend(ABC):
-    """Abstract base class for storage backends"""    
+    """Abstract base class for storage backends"""
+    
     def __init__(self, config: StorageConfiguration):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -162,11 +172,13 @@ class StorageBackend(ABC):
         
     @abstractmethod
     async def connect(self) -> bool:
-        """Connect to the storage backend"""        pass
+        """Connect to the storage backend"""
+        pass
     
     @abstractmethod
     async def disconnect(self):
-        """Disconnect from the storage backend"""        pass
+        """Disconnect from the storage backend"""
+        pass
     
     @abstractmethod
     async def upload_file(
@@ -175,7 +187,8 @@ class StorageBackend(ABC):
         remote_path: str,
         metadata: Optional[Dict[str, str]] = None
     ) -> StorageOperation:
-        """Upload a file to the storage backend"""        pass
+        """Upload a file to the storage backend"""
+        pass
     
     @abstractmethod
     async def download_file(
@@ -183,11 +196,13 @@ class StorageBackend(ABC):
         remote_path: str, 
         local_path: Union[str, Path]
     ) -> StorageOperation:
-        """Download a file from the storage backend"""        pass
+        """Download a file from the storage backend"""
+        pass
     
     @abstractmethod
     async def delete_file(self, remote_path: str) -> StorageOperation:
-        """Delete a file from the storage backend"""        pass
+        """Delete a file from the storage backend"""
+        pass
     
     @abstractmethod
     async def list_files(
@@ -195,26 +210,31 @@ class StorageBackend(ABC):
         path_prefix: str = "", 
         limit: Optional[int] = None
     ) -> List[Dict[str, Any]]:
-        """List files in the storage backend"""        pass
+        """List files in the storage backend"""
+        pass
     
     @abstractmethod
     async def file_exists(self, remote_path: str) -> bool:
-        """Check if a file exists in the storage backend"""        pass
+        """Check if a file exists in the storage backend"""
+        pass
     
     @abstractmethod
     async def get_file_metadata(self, remote_path: str) -> Dict[str, Any]:
-        """Get metadata for a file"""        pass
+        """Get metadata for a file"""
+        pass
     
     @abstractmethod
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on the storage backend"""        pass
+        """Perform health check on the storage backend"""
+        pass
     
     async def copy_file(
         self, 
         source_path: str, 
         destination_path: str
     ) -> StorageOperation:
-        """Copy a file within the storage backend"""        # Default implementation using download/upload
+        """Copy a file within the storage backend"""
+        # Default implementation using download/upload
         operation = StorageOperation(
             operation_id=str(uuid.uuid4()),
             operation_type="copy",
@@ -249,10 +269,12 @@ class StorageBackend(ABC):
             raise
     
     def get_metrics(self) -> StorageMetrics:
-        """Get current storage metrics"""        return self.metrics
+        """Get current storage metrics"""
+        return self.metrics
     
     def update_metrics(self, operation: StorageOperation):
-        """Update metrics based on completed operation"""        if operation.operation_type == "upload":
+        """Update metrics based on completed operation"""
+        if operation.operation_type == "upload":
             self.metrics.write_operations += 1
         elif operation.operation_type == "download":
             self.metrics.read_operations += 1
@@ -270,9 +292,11 @@ class StorageBackend(ABC):
             )
 
 class LocalFilesystemBackend(StorageBackend):
-    """Local filesystem storage backend"""    
+    """Local filesystem storage backend"""
+    
     async def connect(self) -> bool:
-        """Connect to local filesystem"""        try:
+        """Connect to local filesystem"""
+        try:
             self.base_path = Path(self.config.base_path or "/tmp/content_storage")
             self.base_path.mkdir(parents=True, exist_ok=True)
             self._is_connected = True
@@ -283,7 +307,8 @@ class LocalFilesystemBackend(StorageBackend):
             return False
     
     async def disconnect(self):
-        """Disconnect from local filesystem"""        self._is_connected = False
+        """Disconnect from local filesystem"""
+        self._is_connected = False
         self.logger.info("Disconnected from local filesystem")
     
     async def upload_file(
@@ -292,7 +317,8 @@ class LocalFilesystemBackend(StorageBackend):
         remote_path: str,
         metadata: Optional[Dict[str, str]] = None
     ) -> StorageOperation:
-        """Upload file to local filesystem"""        operation = StorageOperation(
+        """Upload file to local filesystem"""
+        operation = StorageOperation(
             operation_id=str(uuid.uuid4()),
             operation_type="upload",
             file_path=remote_path,
@@ -333,7 +359,8 @@ class LocalFilesystemBackend(StorageBackend):
         remote_path: str, 
         local_path: Union[str, Path]
     ) -> StorageOperation:
-        """Download file from local filesystem"""        operation = StorageOperation(
+        """Download file from local filesystem"""
+        operation = StorageOperation(
             operation_id=str(uuid.uuid4()),
             operation_type="download",
             file_path=remote_path,
@@ -364,7 +391,8 @@ class LocalFilesystemBackend(StorageBackend):
             raise
     
     async def delete_file(self, remote_path: str) -> StorageOperation:
-        """Delete file from local filesystem"""        operation = StorageOperation(
+        """Delete file from local filesystem"""
+        operation = StorageOperation(
             operation_id=str(uuid.uuid4()),
             operation_type="delete",
             file_path=remote_path,
@@ -398,7 +426,8 @@ class LocalFilesystemBackend(StorageBackend):
         path_prefix: str = "", 
         limit: Optional[int] = None
     ) -> List[Dict[str, Any]]:
-        """List files in local filesystem"""        try:
+        """List files in local filesystem"""
+        try:
             search_path = self.base_path / path_prefix.lstrip('/')
             files = []
             
@@ -425,14 +454,16 @@ class LocalFilesystemBackend(StorageBackend):
             return []
     
     async def file_exists(self, remote_path: str) -> bool:
-        """Check if file exists in local filesystem"""        try:
+        """Check if file exists in local filesystem"""
+        try:
             file_path = self.base_path / remote_path.lstrip('/')
             return file_path.exists() and file_path.is_file()
         except Exception:
             return False
     
     async def get_file_metadata(self, remote_path: str) -> Dict[str, Any]:
-        """Get file metadata from local filesystem"""        try:
+        """Get file metadata from local filesystem"""
+        try:
             file_path = self.base_path / remote_path.lstrip('/')
             
             if not file_path.exists():
@@ -460,7 +491,8 @@ class LocalFilesystemBackend(StorageBackend):
             raise
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on local filesystem"""        try:
+        """Perform health check on local filesystem"""
+        try:
             # Check if base path is accessible
             if not self.base_path.exists():
                 return {
@@ -493,14 +525,16 @@ class LocalFilesystemBackend(StorageBackend):
             }
 
 class AWSS3Backend(StorageBackend):
-    """AWS S3 storage backend"""    
+    """AWS S3 storage backend"""
+    
     def __init__(self, config: StorageConfiguration):
         super().__init__(config)
         if not AWS_AVAILABLE:
             raise ImportError("boto3 is required for AWS S3 backend")
     
     async def connect(self) -> bool:
-        """Connect to AWS S3"""        try:
+        """Connect to AWS S3"""
+        try:
             session = boto3.Session(
                 aws_access_key_id=self.config.access_key,
                 aws_secret_access_key=self.config.secret_key,
@@ -526,7 +560,8 @@ class AWSS3Backend(StorageBackend):
             return False
     
     async def disconnect(self):
-        """Disconnect from AWS S3"""        self._client = None
+        """Disconnect from AWS S3"""
+        self._client = None
         self._is_connected = False
         self.logger.info("Disconnected from AWS S3")
     
@@ -536,7 +571,8 @@ class AWSS3Backend(StorageBackend):
         remote_path: str,
         metadata: Optional[Dict[str, str]] = None
     ) -> StorageOperation:
-        """Upload file to AWS S3"""        operation = StorageOperation(
+        """Upload file to AWS S3"""
+        operation = StorageOperation(
             operation_id=str(uuid.uuid4()),
             operation_type="upload",
             file_path=remote_path,
@@ -582,7 +618,8 @@ class AWSS3Backend(StorageBackend):
         remote_path: str, 
         local_path: Union[str, Path]
     ) -> StorageOperation:
-        """Download file from AWS S3"""        operation = StorageOperation(
+        """Download file from AWS S3"""
+        operation = StorageOperation(
             operation_id=str(uuid.uuid4()),
             operation_type="download",
             file_path=remote_path,
@@ -617,7 +654,8 @@ class AWSS3Backend(StorageBackend):
             raise
     
     async def delete_file(self, remote_path: str) -> StorageOperation:
-        """Delete file from AWS S3"""        operation = StorageOperation(
+        """Delete file from AWS S3"""
+        operation = StorageOperation(
             operation_id=str(uuid.uuid4()),
             operation_type="delete",
             file_path=remote_path,
@@ -650,7 +688,8 @@ class AWSS3Backend(StorageBackend):
         path_prefix: str = "", 
         limit: Optional[int] = None
     ) -> List[Dict[str, Any]]:
-        """List files in AWS S3"""        try:
+        """List files in AWS S3"""
+        try:
             prefix = f"{self.config.base_path or ''}/{path_prefix}".strip('/')
             
             kwargs = {
@@ -681,7 +720,8 @@ class AWSS3Backend(StorageBackend):
             return []
     
     async def file_exists(self, remote_path: str) -> bool:
-        """Check if file exists in AWS S3"""        try:
+        """Check if file exists in AWS S3"""
+        try:
             key = f"{self.config.base_path or ''}/{remote_path}".strip('/')
             
             await asyncio.get_event_loop().run_in_executor(
@@ -698,7 +738,8 @@ class AWSS3Backend(StorageBackend):
             raise
     
     async def get_file_metadata(self, remote_path: str) -> Dict[str, Any]:
-        """Get file metadata from AWS S3"""        try:
+        """Get file metadata from AWS S3"""
+        try:
             key = f"{self.config.base_path or ''}/{remote_path}".strip('/')
             
             response = await asyncio.get_event_loop().run_in_executor(
@@ -721,7 +762,8 @@ class AWSS3Backend(StorageBackend):
             raise
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on AWS S3"""        try:
+        """Perform health check on AWS S3"""
+        try:
             # Test bucket access
             response = await asyncio.get_event_loop().run_in_executor(
                 None, self._client.head_bucket, Bucket=self.config.bucket_name
@@ -742,13 +784,16 @@ class AWSS3Backend(StorageBackend):
             }
 
 class StorageManager:
-    """Main storage manager for handling multiple storage backends"""    
+    """Main storage manager for handling multiple storage backends"""
+    
     def __init__(self, configurations: List[StorageConfiguration]):
-        """        Initialize storage manager with multiple backends
+        """
+        Initialize storage manager with multiple backends
         
         Args:
             configurations: List of storage backend configurations
-        """        self.logger = logging.getLogger(f"{__name__}.StorageManager")
+        """
+        self.logger = logging.getLogger(f"{__name__}.StorageManager")
         self.backends: Dict[str, StorageBackend] = {}
         self.primary_backend: Optional[str] = None
         self.load_balancing_strategy = "round_robin"
@@ -759,7 +804,8 @@ class StorageManager:
             self._create_backend(config)
     
     def _create_backend(self, config: StorageConfiguration):
-        """Create a storage backend based on configuration"""        try:
+        """Create a storage backend based on configuration"""
+        try:
             if config.backend_type == StorageBackendType.LOCAL_FILESYSTEM:
                 backend = LocalFilesystemBackend(config)
             elif config.backend_type == StorageBackendType.AWS_S3:
@@ -779,7 +825,8 @@ class StorageManager:
             self.logger.error(f"Failed to create backend {config.name}: {e}")
     
     async def connect_all(self) -> Dict[str, bool]:
-        """Connect to all storage backends"""        results = {}
+        """Connect to all storage backends"""
+        results = {}
         
         for name, backend in self.backends.items():
             try:
@@ -791,14 +838,16 @@ class StorageManager:
         return results
     
     async def disconnect_all(self):
-        """Disconnect from all storage backends"""        for name, backend in self.backends.items():
+        """Disconnect from all storage backends"""
+        for name, backend in self.backends.items():
             try:
                 await backend.disconnect()
             except Exception as e:
                 self.logger.error(f"Failed to disconnect from backend {name}: {e}")
     
     def get_backend(self, name: Optional[str] = None) -> StorageBackend:
-        """Get a specific backend or use load balancing"""        if name:
+        """Get a specific backend or use load balancing"""
+        if name:
             if name not in self.backends:
                 raise ValueError(f"Backend not found: {name}")
             return self.backends[name]
@@ -826,7 +875,8 @@ class StorageManager:
         redundancy_level: int = 2,
         metadata: Optional[Dict[str, str]] = None
     ) -> List[StorageOperation]:
-        """Upload file to multiple backends for redundancy"""        operations = []
+        """Upload file to multiple backends for redundancy"""
+        operations = []
         backend_names = list(self.backends.keys())
         
         # Limit redundancy to available backends
@@ -848,7 +898,8 @@ class StorageManager:
         local_path: Union[str, Path],
         preferred_backend: Optional[str] = None
     ) -> StorageOperation:
-        """Download file with fallback to other backends"""        # Try preferred backend first
+        """Download file with fallback to other backends"""
+        # Try preferred backend first
         if preferred_backend and preferred_backend in self.backends:
             try:
                 return await self.backends[preferred_backend].download_file(remote_path, local_path)
@@ -873,7 +924,8 @@ class StorageManager:
         target_backend: str,
         path_prefix: str = ""
     ) -> Dict[str, Any]:
-        """Synchronize files between two backends"""        if source_backend not in self.backends or target_backend not in self.backends:
+        """Synchronize files between two backends"""
+        if source_backend not in self.backends or target_backend not in self.backends:
             raise ValueError("Invalid backend names")
         
         source = self.backends[source_backend]
@@ -929,7 +981,8 @@ class StorageManager:
         return sync_stats
     
     async def get_comprehensive_metrics(self) -> Dict[str, StorageMetrics]:
-        """Get metrics from all backends"""        metrics = {}
+        """Get metrics from all backends"""
+        metrics = {}
         
         for name, backend in self.backends.items():
             metrics[name] = backend.get_metrics()
@@ -937,7 +990,8 @@ class StorageManager:
         return metrics
     
     async def health_check_all(self) -> Dict[str, Dict[str, Any]]:
-        """Perform health check on all backends"""        results = {}
+        """Perform health check on all backends"""
+        results = {}
         
         for name, backend in self.backends.items():
             try:
@@ -951,7 +1005,8 @@ class StorageManager:
         return results
     
     def get_backend_info(self) -> Dict[str, Dict[str, Any]]:
-        """Get information about all configured backends"""        info = {}
+        """Get information about all configured backends"""
+        info = {}
         
         for name, backend in self.backends.items():
             info[name] = {

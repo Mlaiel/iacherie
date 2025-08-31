@@ -18,7 +18,8 @@ without explicit written authorization from Fahed Mlaiel is strictly
 prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, AsyncIterator, AsyncGenerator
 from dataclasses import dataclass, field
@@ -45,7 +46,8 @@ logger = logging.getLogger(__name__)
 
 
 class DLTNetwork(Enum):
-    """Distributed Ledger Technology networks"""    IPFS = "ipfs"
+    """Distributed Ledger Technology networks"""
+    IPFS = "ipfs"
     ARWEAVE = "arweave"
     HYPERLEDGER_FABRIC = "hyperledger_fabric"
     STORJ = "storj"
@@ -54,7 +56,8 @@ class DLTNetwork(Enum):
 
 
 class StorageClass(Enum):
-    """Storage classification for content"""    PERMANENT = "permanent"  # Arweave, Filecoin
+    """Storage classification for content"""
+    PERMANENT = "permanent"  # Arweave, Filecoin
     DISTRIBUTED = "distributed"  # IPFS, Swarm
     ENTERPRISE = "enterprise"  # Hyperledger Fabric
     ENCRYPTED = "encrypted"  # Storj
@@ -63,7 +66,8 @@ class StorageClass(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Metadata for content stored on DLT"""    content_id: str
+    """Metadata for content stored on DLT"""
+    content_id: str
     original_filename: str
     mime_type: str
     file_size: int
@@ -93,7 +97,8 @@ class ContentMetadata:
 
 @dataclass
 class StorageResult:
-    """Result of storing content on DLT"""    network: DLTNetwork
+    """Result of storing content on DLT"""
+    network: DLTNetwork
     content_id: str
     storage_hash: str
     access_url: str
@@ -105,7 +110,8 @@ class StorageResult:
 
 
 class IPFSClient:
-    """Professional IPFS client for distributed storage"""    
+    """Professional IPFS client for distributed storage"""
+    
     def __init__(self, gateway_url: str = "http://localhost:5001", timeout: int = 300):
         self.gateway_url = gateway_url
         self.timeout = timeout
@@ -126,7 +132,8 @@ class IPFSClient:
         metadata: ContentMetadata,
         pin: bool = True
     ) -> StorageResult:
-        """Add content to IPFS network"""        try:
+        """Add content to IPFS network"""
+        try:
             if not self.session:
                 raise RuntimeError("IPFS client not initialized")
             
@@ -190,7 +197,8 @@ class IPFSClient:
             raise
     
     async def _add_metadata(self, metadata_json: str, pin: bool = True) -> str:
-        """Add metadata to IPFS"""        try:
+        """Add metadata to IPFS"""
+        try:
             data = aiohttp.FormData()
             data.add_field(
                 'file',
@@ -211,7 +219,8 @@ class IPFSClient:
             raise
     
     async def retrieve_content(self, ipfs_hash: str) -> bytes:
-        """Retrieve content from IPFS"""        try:
+        """Retrieve content from IPFS"""
+        try:
             url = urljoin(self.gateway_url, f'/api/v0/cat')
             params = {'arg': ipfs_hash}
             
@@ -226,7 +235,8 @@ class IPFSClient:
             raise
     
     async def pin_content(self, ipfs_hash: str) -> bool:
-        """Pin content to prevent garbage collection"""        try:
+        """Pin content to prevent garbage collection"""
+        try:
             url = urljoin(self.gateway_url, '/api/v0/pin/add')
             params = {'arg': ipfs_hash}
             
@@ -242,7 +252,8 @@ class IPFSClient:
             return False
     
     async def unpin_content(self, ipfs_hash: str) -> bool:
-        """Unpin content to allow garbage collection"""        try:
+        """Unpin content to allow garbage collection"""
+        try:
             url = urljoin(self.gateway_url, '/api/v0/pin/rm')
             params = {'arg': ipfs_hash}
             
@@ -259,7 +270,8 @@ class IPFSClient:
 
 
 class ArweaveClient:
-    """Professional Arweave client for permanent storage"""    
+    """Professional Arweave client for permanent storage"""
+    
     def __init__(self, gateway_url: str = "https://arweave.net", wallet_path: Optional[str] = None):
         self.gateway_url = gateway_url
         self.wallet_path = wallet_path
@@ -277,7 +289,8 @@ class ArweaveClient:
             await self.session.close()
     
     async def _load_wallet(self):
-        """Load Arweave wallet from file"""        try:
+        """Load Arweave wallet from file"""
+        try:
             async with aiofiles.open(self.wallet_path, 'r') as f:
                 wallet_content = await f.read()
                 self.wallet_data = json.loads(wallet_content)
@@ -292,7 +305,8 @@ class ArweaveClient:
         metadata: ContentMetadata,
         tags: Optional[Dict[str, str]] = None
     ) -> StorageResult:
-        """Store content permanently on Arweave"""        try:
+        """Store content permanently on Arweave"""
+        try:
             if not self.session or not self.wallet_data:
                 raise RuntimeError("Arweave client not properly initialized")
             
@@ -354,7 +368,8 @@ class ArweaveClient:
             raise
     
     async def _estimate_storage_cost(self, data_size: int) -> int:
-        """Estimate storage cost in winston (1 AR = 1e12 winston)"""        try:
+        """Estimate storage cost in winston (1 AR = 1e12 winston)"""
+        try:
             url = f"{self.gateway_url}/price/{data_size}"
             async with self.session.get(url) as response:
                 if response.status == 200:
@@ -367,7 +382,8 @@ class ArweaveClient:
             return data_size * 1000
     
     async def _submit_transaction(self, transaction_data: Dict[str, Any]) -> str:
-        """Submit transaction to Arweave network"""        try:
+        """Submit transaction to Arweave network"""
+        try:
             # In production, this would use proper Arweave transaction signing
             # and submission through arweave-python-client
             
@@ -386,7 +402,8 @@ class ArweaveClient:
             raise
     
     async def retrieve_content(self, transaction_id: str) -> bytes:
-        """Retrieve content from Arweave"""        try:
+        """Retrieve content from Arweave"""
+        try:
             url = f"{self.gateway_url}/{transaction_id}"
             async with self.session.get(url) as response:
                 if response.status == 200:
@@ -399,7 +416,8 @@ class ArweaveClient:
 
 
 class HyperledgerFabricClient:
-    """Professional Hyperledger Fabric client for enterprise DLT"""    
+    """Professional Hyperledger Fabric client for enterprise DLT"""
+    
     def __init__(
         self,
         network_config: Dict[str, Any],
@@ -415,7 +433,8 @@ class HyperledgerFabricClient:
         self.user_context = None
     
     async def initialize(self) -> bool:
-        """Initialize Hyperledger Fabric client"""        try:
+        """Initialize Hyperledger Fabric client"""
+        try:
             # In production, would use fabric-sdk-py
             # from hfc.api.client import Client
             # self.fabric_client = Client(net_profile=self.network_config)
@@ -434,7 +453,8 @@ class HyperledgerFabricClient:
         metadata: ContentMetadata,
         chaincode_name: str = "content-protection"
     ) -> StorageResult:
-        """Store content record on Hyperledger Fabric"""        try:
+        """Store content record on Hyperledger Fabric"""
+        try:
             # Prepare chaincode arguments
             args = [
                 content_id,
@@ -475,7 +495,8 @@ class HyperledgerFabricClient:
         function_name: str,
         args: List[str]
     ) -> str:
-        """Invoke chaincode on Hyperledger Fabric"""        try:
+        """Invoke chaincode on Hyperledger Fabric"""
+        try:
             # Mock implementation - in production would use fabric-sdk-py
             combined_input = f"{chaincode_name}:{function_name}:{':'.join(args)}"
             transaction_id = hashlib.sha256(
@@ -490,7 +511,8 @@ class HyperledgerFabricClient:
             raise
     
     async def query_content_record(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Query content record from Hyperledger Fabric"""        try:
+        """Query content record from Hyperledger Fabric"""
+        try:
             # Mock query implementation
             record = {
                 'content_id': content_id,
@@ -508,7 +530,8 @@ class HyperledgerFabricClient:
 
 
 class DistributedLedgerManager:
-    """Unified manager for all DLT operations"""    
+    """Unified manager for all DLT operations"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.clients: Dict[DLTNetwork, Any] = {}
@@ -521,7 +544,8 @@ class DistributedLedgerManager:
         }
     
     async def initialize(self) -> bool:
-        """Initialize all DLT clients"""        try:
+        """Initialize all DLT clients"""
+        try:
             success_count = 0
             
             # Initialize IPFS client
@@ -569,7 +593,8 @@ class DistributedLedgerManager:
         metadata: ContentMetadata,
         redundancy_level: int = 2
     ) -> List[StorageResult]:
-        """Store content across multiple DLT networks"""        try:
+        """Store content across multiple DLT networks"""
+        try:
             storage_class = metadata.storage_class
             target_networks = self.storage_strategies.get(storage_class, [DLTNetwork.IPFS])
             
@@ -619,7 +644,8 @@ class DistributedLedgerManager:
         self,
         storage_results: List[StorageResult]
     ) -> Optional[bytes]:
-        """Retrieve content from the most accessible DLT network"""        try:
+        """Retrieve content from the most accessible DLT network"""
+        try:
             # Try networks in order of preference
             network_priority = [DLTNetwork.IPFS, DLTNetwork.ARWEAVE, DLTNetwork.HYPERLEDGER_FABRIC]
             

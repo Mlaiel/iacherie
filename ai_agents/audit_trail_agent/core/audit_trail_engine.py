@@ -5,7 +5,8 @@ optimization and comprehensive functionality.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -15,21 +16,24 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AuditTrailJob:
-    """Job configuration for audit_trail operations"""    job_id: str
+    """Job configuration for audit_trail operations"""
+    job_id: str
     data: Dict[str, Any]
     priority: int = 5
     created_at: datetime = None
 
 @dataclass 
 class AuditTrailResult:
-    """Result of audit_trail operations"""    job_id: str
+    """Result of audit_trail operations"""
+    job_id: str
     success: bool
     data: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
     completed_at: datetime = None
 
 class AuditTrailEngine:
-    """    Ultra-Advanced AuditTrail Processing Engine
+    """
+    Ultra-Advanced AuditTrail Processing Engine
     
     Provides enterprise-grade audit_trail processing with:
     - High-performance operation handling
@@ -37,7 +41,8 @@ class AuditTrailEngine:
     - Comprehensive error handling
     - Real-time monitoring and metrics
     - Scalable architecture design
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.is_running = False
@@ -46,7 +51,8 @@ class AuditTrailEngine:
         logger.info("AuditTrailEngine initialized")
 
     async def start(self) -> None:
-        """Start the audit_trail processing engine"""        try:
+        """Start the audit_trail processing engine"""
+        try:
             self.is_running = True
             logger.info("AuditTrailEngine started successfully")
         except Exception as e:
@@ -54,7 +60,8 @@ class AuditTrailEngine:
             raise
 
     async def process(self, data: Dict[str, Any]) -> AuditTrailResult:
-        """Process audit_trail operation"""        try:
+        """Process audit_trail operation"""
+        try:
             job_id = data.get('job_id', 'auto-generated')
             
             # Implementation specific processing logic here
@@ -81,5 +88,6 @@ class AuditTrailEngine:
             )
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the processing engine"""        self.is_running = False
+        """Graceful shutdown of the processing engine"""
+        self.is_running = False
         logger.info("AuditTrailEngine shutdown complete")

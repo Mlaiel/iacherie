@@ -6,7 +6,8 @@ Handles content uploads, claims, analytics, and rights management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import json
 import logging
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class YouTubeVideo:
-    """YouTube video information"""    video_id: str
+    """YouTube video information"""
+    video_id: str
     title: str
     description: str
     channel_id: str
@@ -43,7 +45,8 @@ class YouTubeVideo:
 
 @dataclass
 class ContentClaim:
-    """YouTube Content ID claim information"""    claim_id: str
+    """YouTube Content ID claim information"""
+    claim_id: str
     video_id: str
     claimant: str
     claim_type: str  # "audiovisual", "audio", "visual"
@@ -57,7 +60,8 @@ class ContentClaim:
 
 @dataclass
 class YouTubeAnalytics:
-    """YouTube analytics data"""    video_id: str
+    """YouTube analytics data"""
+    video_id: str
     channel_id: str
     date_range: Dict[str, str]  # {"start": "2024-01-01", "end": "2024-01-31"}
     views: int = 0
@@ -74,7 +78,8 @@ class YouTubeAnalytics:
 
 
 class YouTubeContentIDAPI:
-    """YouTube Content ID API integration"""    
+    """YouTube Content ID API integration"""
+    
     def __init__(self, rate_limiter: Optional[APIRateLimiter] = None):
         self.session = None
         self.rate_limiter = rate_limiter or APIRateLimiter()
@@ -83,12 +88,14 @@ class YouTubeContentIDAPI:
         self.analytics_url = "https://youtubeanalytics.googleapis.com/v2"
         
     async def __aenter__(self):
-        """Async context manager entry"""        self.session = aiohttp.ClientSession()
+        """Async context manager entry"""
+        self.session = aiohttp.ClientSession()
         await self.rate_limiter.__aenter__()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""        if self.session:
+        """Async context manager exit"""
+        if self.session:
             await self.session.close()
         await self.rate_limiter.__aexit__(exc_type, exc_val, exc_tb)
         
@@ -102,7 +109,8 @@ class YouTubeContentIDAPI:
         files: Optional[Dict[str, Any]] = None,
         base_url: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Make authenticated API request with rate limiting"""        
+        """Make authenticated API request with rate limiting"""
+        
         # Check rate limit
         rate_status = await self.rate_limiter.check_rate_limit("youtube", endpoint)
         if rate_status.is_limited:
@@ -179,7 +187,8 @@ class YouTubeContentIDAPI:
             raise
             
     async def get_channel_info(self, tokens: OAuthTokens, channel_id: str = "mine") -> Dict[str, Any]:
-        """Get channel information"""        params = {
+        """Get channel information"""
+        params = {
             "part": "snippet,statistics,brandingSettings,status",
             "id": channel_id if channel_id != "mine" else None
         }
@@ -199,7 +208,8 @@ class YouTubeContentIDAPI:
         published_after: Optional[datetime] = None,
         published_before: Optional[datetime] = None
     ) -> List[YouTubeVideo]:
-        """Search for videos"""        params = {
+        """Search for videos"""
+        params = {
             "part": "snippet",
             "q": query,
             "type": "video",
@@ -232,7 +242,8 @@ class YouTubeContentIDAPI:
         return videos
         
     async def get_video_details(self, tokens: OAuthTokens, video_ids: Union[str, List[str]]) -> List[YouTubeVideo]:
-        """Get detailed video information"""        if isinstance(video_ids, str):
+        """Get detailed video information"""
+        if isinstance(video_ids, str):
             video_ids = [video_ids]
             
         params = {
@@ -274,7 +285,8 @@ class YouTubeContentIDAPI:
         category_id: str = "22",  # People & Blogs
         privacy_status: str = "private"
     ) -> YouTubeVideo:
-        """Upload a video to YouTube"""        
+        """Upload a video to YouTube"""
+        
         # Prepare video metadata
         snippet = {
             "title": title,
@@ -355,7 +367,8 @@ class YouTubeContentIDAPI:
         dimensions: Optional[List[str]] = None,
         filters: Optional[str] = None
     ) -> YouTubeAnalytics:
-        """Get YouTube Analytics data"""        
+        """Get YouTube Analytics data"""
+        
         default_metrics = [
             "views", "estimatedMinutesWatched", "estimatedRevenue",
             "impressions", "impressionCtrPercent", "averageViewDuration",
@@ -423,7 +436,8 @@ class YouTubeContentIDAPI:
         policy: str = "monetize",
         time_ranges: Optional[List[Dict[str, float]]] = None
     ) -> ContentClaim:
-        """Create a Content ID claim (requires Content ID access)"""        
+        """Create a Content ID claim (requires Content ID access)"""
+        
         claim_data = {
             "videoId": video_id,
             "assetId": asset_id,
@@ -461,7 +475,8 @@ class YouTubeContentIDAPI:
         video_id: Optional[str] = None,
         status: Optional[str] = None
     ) -> List[ContentClaim]:
-        """Get Content ID claims"""        
+        """Get Content ID claims"""
+        
         params = {}
         if video_id:
             params["videoId"] = video_id
@@ -496,7 +511,8 @@ class YouTubeContentIDAPI:
         tags: Optional[List[str]] = None,
         privacy_status: Optional[str] = None
     ) -> YouTubeVideo:
-        """Update video metadata"""        
+        """Update video metadata"""
+        
         # First get current video data
         current_videos = await self.get_video_details(tokens, video_id)
         if not current_videos:
@@ -532,7 +548,8 @@ class YouTubeContentIDAPI:
         return await self.get_video_details(tokens, video_id)
         
     async def delete_video(self, tokens: OAuthTokens, video_id: str) -> bool:
-        """Delete a video"""        params = {"id": video_id}
+        """Delete a video"""
+        params = {"id": video_id}
         
         try:
             await self._make_request("DELETE", "videos", tokens, params=params)

@@ -7,7 +7,7 @@ orchestrates the complete creator journey from registration to monetization.
 Project: IA Influencer Agent + Protection Platform
 Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.

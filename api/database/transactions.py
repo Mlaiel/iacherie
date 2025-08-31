@@ -9,7 +9,8 @@ DevOps Engineer, AI Prompt Engineer
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""import asyncio
+"""
+import asyncio
 import uuid
 from typing import Optional, Dict, Any, List, Callable, TypeVar, Generic, Union
 from dataclasses import dataclass, field
@@ -37,7 +38,8 @@ T = TypeVar('T')
 
 
 class TransactionState(Enum):
-    """Transaction state enumeration"""    PENDING = "pending"
+    """Transaction state enumeration"""
+    PENDING = "pending"
     ACTIVE = "active"
     COMMITTED = "committed"
     ROLLED_BACK = "rolled_back"
@@ -46,14 +48,16 @@ class TransactionState(Enum):
 
 
 class IsolationLevel(Enum):
-    """Transaction isolation levels"""    READ_UNCOMMITTED = "read_uncommitted"
+    """Transaction isolation levels"""
+    READ_UNCOMMITTED = "read_uncommitted"
     READ_COMMITTED = "read_committed"
     REPEATABLE_READ = "repeatable_read"
     SERIALIZABLE = "serializable"
 
 
 class TransactionType(Enum):
-    """Transaction types for different patterns"""    SIMPLE = "simple"                    # Basic single-database transaction
+    """Transaction types for different patterns"""
+    SIMPLE = "simple"                    # Basic single-database transaction
     DISTRIBUTED = "distributed"         # Multi-database transaction
     SAGA = "saga"                       # Saga pattern for microservices
     COMPENSATING = "compensating"       # Compensating transaction
@@ -62,7 +66,8 @@ class TransactionType(Enum):
 
 @dataclass
 class TransactionConfig:
-    """Transaction configuration"""    timeout_seconds: int = 30
+    """Transaction configuration"""
+    timeout_seconds: int = 30
     isolation_level: IsolationLevel = IsolationLevel.READ_COMMITTED
     read_only: bool = False
     retry_count: int = 3
@@ -74,7 +79,8 @@ class TransactionConfig:
 
 @dataclass
 class TransactionContext:
-    """Transaction execution context"""    transaction_id: str
+    """Transaction execution context"""
+    transaction_id: str
     transaction_type: TransactionType
     state: TransactionState
     config: TransactionConfig
@@ -89,13 +95,15 @@ class TransactionContext:
     
     @property
     def duration_ms(self) -> Optional[float]:
-        """Get transaction duration in milliseconds"""        if self.completed_at:
+        """Get transaction duration in milliseconds"""
+        if self.completed_at:
             return (self.completed_at - self.started_at).total_seconds() * 1000
         return None
 
 
 class TransactionOperation(ABC):
-    """Abstract transaction operation"""    
+    """Abstract transaction operation"""
+    
     def __init__(self, operation_id: str, operation_type: str):
         self.operation_id = operation_id
         self.operation_type = operation_type
@@ -104,15 +112,18 @@ class TransactionOperation(ABC):
     
     @abstractmethod
     async def execute(self, session: AsyncSession, context: TransactionContext) -> Any:
-        """Execute the operation"""        pass
+        """Execute the operation"""
+        pass
     
     @abstractmethod
     async def compensate(self, session: AsyncSession, context: TransactionContext) -> Any:
-        """Compensate (undo) the operation"""        pass
+        """Compensate (undo) the operation"""
+        pass
 
 
 class DatabaseOperation(TransactionOperation):
-    """Database operation with SQL execution"""    
+    """Database operation with SQL execution"""
+    
     def __init__(self, operation_id: str, sql: str, params: Dict[str, Any] = None):
         super().__init__(operation_id, "database")
         self.sql = sql
@@ -122,7 +133,8 @@ class DatabaseOperation(TransactionOperation):
         self.compensation_params: Dict[str, Any] = {}
     
     async def execute(self, session: AsyncSession, context: TransactionContext) -> Any:
-        """Execute database operation"""        try:
+        """Execute database operation"""
+        try:
             result = await session.execute(text(self.sql), self.params)
             self.result = result
             self.executed = True
@@ -143,7 +155,8 @@ class DatabaseOperation(TransactionOperation):
             raise
     
     async def compensate(self, session: AsyncSession, context: TransactionContext) -> Any:
-        """Compensate database operation"""        if not self.compensation_sql:
+        """Compensate database operation"""
+        if not self.compensation_sql:
             logger.warning(f"No compensation SQL for operation {self.operation_id}")
             return None
         
@@ -167,18 +180,21 @@ class DatabaseOperation(TransactionOperation):
             raise
     
     def set_compensation(self, sql: str, params: Dict[str, Any] = None):
-        """Set compensation SQL for this operation"""        self.compensation_sql = sql
+        """Set compensation SQL for this operation"""
+        self.compensation_sql = sql
         self.compensation_params = params or {}
 
 
 class TransactionManager:
-    """    Advanced transaction manager supporting multiple transaction patterns:
+    """
+    Advanced transaction manager supporting multiple transaction patterns:
     - Simple transactions
     - Distributed transactions
     - Saga pattern
     - Compensating transactions
     - Nested transactions
-    """    
+    """
+    
     def __init__(self):
         self.active_transactions: Dict[str, TransactionContext] = {}
         self.transaction_history: List[TransactionContext] = []
@@ -189,7 +205,8 @@ class TransactionManager:
         self._locks: Dict[str, asyncio.Lock] = {}
     
     async def initialize(self):
-        """Initialize transaction manager"""        try:
+        """Initialize transaction manager"""
+        try:
             self.db_connection = await DatabaseConnection.get_instance()
             self.redis_client = self.db_connection.connections.get('redis_primary')
             
@@ -203,7 +220,8 @@ class TransactionManager:
             raise
     
     def _setup_event_handlers(self):
-        """Setup SQLAlchemy event handlers for transaction monitoring"""        if not self.db_connection:
+        """Setup SQLAlchemy event handlers for transaction monitoring"""
+        if not self.db_connection:
             return
         
         # Transaction begin event
@@ -225,12 +243,14 @@ class TransactionManager:
     async def transaction(self, 
                          transaction_type: TransactionType = TransactionType.SIMPLE,
                          config: Optional[TransactionConfig] = None):
-        """        Context manager for transaction handling
+        """
+        Context manager for transaction handling
         
         Usage:
             async with transaction_manager.transaction() as tx:
                 await tx.execute_operation(operation)
-        """        config = config or TransactionConfig()
+        """
+        config = config or TransactionConfig()
         context = await self.begin_transaction(transaction_type, config)
         
         try:
@@ -244,7 +264,8 @@ class TransactionManager:
     async def begin_transaction(self, 
                               transaction_type: TransactionType,
                               config: TransactionConfig) -> TransactionContext:
-        """Begin a new transaction"""        transaction_id = str(uuid.uuid4())
+        """Begin a new transaction"""
+        transaction_id = str(uuid.uuid4())
         
         context = TransactionContext(
             transaction_id=transaction_id,
@@ -284,7 +305,8 @@ class TransactionManager:
         return context
     
     async def commit_transaction(self, transaction_id: str) -> bool:
-        """Commit a transaction"""        if transaction_id not in self.active_transactions:
+        """Commit a transaction"""
+        if transaction_id not in self.active_transactions:
             raise ValueError(f"Transaction {transaction_id} not found")
         
         context = self.active_transactions[transaction_id]
@@ -334,7 +356,8 @@ class TransactionManager:
         return context.state == TransactionState.COMMITTED
     
     async def rollback_transaction(self, transaction_id: str, reason: str = None) -> bool:
-        """Rollback a transaction"""        if transaction_id not in self.active_transactions:
+        """Rollback a transaction"""
+        if transaction_id not in self.active_transactions:
             logger.warning(f"Transaction {transaction_id} not found for rollback")
             return False
         
@@ -382,24 +405,28 @@ class TransactionManager:
     # === Simple Transaction Implementation ===
     
     async def _begin_simple_transaction(self, context: TransactionContext):
-        """Begin simple transaction"""        session = await self.session_manager.get_async_session()
+        """Begin simple transaction"""
+        session = await self.session_manager.get_async_session()
         context.session_ids.append(id(session))
         context.metadata['session'] = session
     
     async def _commit_simple_transaction(self, context: TransactionContext):
-        """Commit simple transaction"""        session = context.metadata.get('session')
+        """Commit simple transaction"""
+        session = context.metadata.get('session')
         if session:
             await session.commit()
     
     async def _rollback_simple_transaction(self, context: TransactionContext):
-        """Rollback simple transaction"""        session = context.metadata.get('session')
+        """Rollback simple transaction"""
+        session = context.metadata.get('session')
         if session:
             await session.rollback()
     
     # === Distributed Transaction Implementation ===
     
     async def _begin_distributed_transaction(self, context: TransactionContext):
-        """Begin distributed transaction using 2PC pattern"""        # For now, use simple approach - in production, implement proper 2PC
+        """Begin distributed transaction using 2PC pattern"""
+        # For now, use simple approach - in production, implement proper 2PC
         await self._begin_simple_transaction(context)
         
         # Store transaction state in Redis for coordination
@@ -418,7 +445,8 @@ class TransactionManager:
             )
     
     async def _commit_distributed_transaction(self, context: TransactionContext):
-        """Commit distributed transaction"""        # Phase 1: Prepare all participants
+        """Commit distributed transaction"""
+        # Phase 1: Prepare all participants
         # Phase 2: Commit all participants
         await self._commit_simple_transaction(context)
         
@@ -427,7 +455,8 @@ class TransactionManager:
             await self.redis_client.delete(f"tx:{context.transaction_id}")
     
     async def _rollback_distributed_transaction(self, context: TransactionContext):
-        """Rollback distributed transaction"""        await self._rollback_simple_transaction(context)
+        """Rollback distributed transaction"""
+        await self._rollback_simple_transaction(context)
         
         # Update Redis state
         if self.redis_client:
@@ -436,17 +465,20 @@ class TransactionManager:
     # === Saga Transaction Implementation ===
     
     async def _begin_saga_transaction(self, context: TransactionContext):
-        """Begin saga transaction"""        # Saga transactions are managed through operation execution
+        """Begin saga transaction"""
+        # Saga transactions are managed through operation execution
         context.metadata['operations'] = []
         context.metadata['compensations'] = []
     
     async def _commit_saga_transaction(self, context: TransactionContext):
-        """Commit saga transaction - all operations already executed"""        # In saga pattern, operations are executed immediately
+        """Commit saga transaction - all operations already executed"""
+        # In saga pattern, operations are executed immediately
         # Commit just marks the saga as successful
         pass
     
     async def _rollback_saga_transaction(self, context: TransactionContext):
-        """Rollback saga transaction by executing compensations"""        operations = context.metadata.get('operations', [])
+        """Rollback saga transaction by executing compensations"""
+        operations = context.metadata.get('operations', [])
         
         # Execute compensations in reverse order
         for operation in reversed(operations):
@@ -461,14 +493,17 @@ class TransactionManager:
     # === Compensating Transaction Implementation ===
     
     async def _begin_compensating_transaction(self, context: TransactionContext):
-        """Begin compensating transaction"""        await self._begin_simple_transaction(context)
+        """Begin compensating transaction"""
+        await self._begin_simple_transaction(context)
         context.metadata['compensations_enabled'] = True
     
     async def _commit_compensating_transaction(self, context: TransactionContext):
-        """Commit compensating transaction"""        await self._commit_simple_transaction(context)
+        """Commit compensating transaction"""
+        await self._commit_simple_transaction(context)
     
     async def _rollback_compensating_transaction(self, context: TransactionContext):
-        """Rollback compensating transaction"""        # Execute all registered compensations
+        """Rollback compensating transaction"""
+        # Execute all registered compensations
         for comp_op in context.compensation_operations:
             try:
                 # Execute compensation operation
@@ -483,7 +518,8 @@ class TransactionManager:
     # === Nested Transaction Implementation ===
     
     async def _begin_nested_transaction(self, context: TransactionContext):
-        """Begin nested transaction using savepoints"""        await self._begin_simple_transaction(context)
+        """Begin nested transaction using savepoints"""
+        await self._begin_simple_transaction(context)
         
         if context.config.enable_savepoints:
             session = context.metadata.get('session')
@@ -493,10 +529,12 @@ class TransactionManager:
                 context.savepoints.append(savepoint_name)
     
     async def _commit_nested_transaction(self, context: TransactionContext):
-        """Commit nested transaction"""        await self._commit_simple_transaction(context)
+        """Commit nested transaction"""
+        await self._commit_simple_transaction(context)
     
     async def _rollback_nested_transaction(self, context: TransactionContext):
-        """Rollback to savepoint or full rollback"""        session = context.metadata.get('session')
+        """Rollback to savepoint or full rollback"""
+        session = context.metadata.get('session')
         
         if session and context.savepoints:
             # Rollback to most recent savepoint
@@ -509,7 +547,8 @@ class TransactionManager:
     # === Query and Management Methods ===
     
     async def get_transaction_status(self, transaction_id: str) -> Optional[TransactionContext]:
-        """Get transaction status"""        if transaction_id in self.active_transactions:
+        """Get transaction status"""
+        if transaction_id in self.active_transactions:
             return self.active_transactions[transaction_id]
         
         # Check history
@@ -520,10 +559,12 @@ class TransactionManager:
         return None
     
     async def get_active_transactions(self) -> List[TransactionContext]:
-        """Get all active transactions"""        return list(self.active_transactions.values())
+        """Get all active transactions"""
+        return list(self.active_transactions.values())
     
     async def get_transaction_statistics(self) -> Dict[str, Any]:
-        """Get transaction statistics"""        total_transactions = len(self.transaction_history) + len(self.active_transactions)
+        """Get transaction statistics"""
+        total_transactions = len(self.transaction_history) + len(self.active_transactions)
         
         if not self.transaction_history:
             return {
@@ -553,7 +594,8 @@ class TransactionManager:
         }
     
     async def cleanup_stale_transactions(self, max_age_hours: int = 24):
-        """Clean up stale transactions"""        cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
+        """Clean up stale transactions"""
+        cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
         
         stale_transaction_ids = []
         
@@ -573,17 +615,20 @@ class TransactionManager:
 
 
 class TransactionExecutor:
-    """Transaction executor for operation management"""    
+    """Transaction executor for operation management"""
+    
     def __init__(self, manager: TransactionManager, context: TransactionContext):
         self.manager = manager
         self.context = context
         self.operations: List[TransactionOperation] = []
     
     async def add_operation(self, operation: TransactionOperation):
-        """Add operation to transaction"""        self.operations.append(operation)
+        """Add operation to transaction"""
+        self.operations.append(operation)
     
     async def execute_operation(self, operation: TransactionOperation) -> Any:
-        """Execute a single operation"""        session = self.context.metadata.get('session')
+        """Execute a single operation"""
+        session = self.context.metadata.get('session')
         
         if not session:
             raise RuntimeError("No session available for operation execution")
@@ -597,7 +642,8 @@ class TransactionExecutor:
         return result
     
     async def create_savepoint(self, name: Optional[str] = None) -> str:
-        """Create savepoint in nested transaction"""        if self.context.transaction_type != TransactionType.NESTED:
+        """Create savepoint in nested transaction"""
+        if self.context.transaction_type != TransactionType.NESTED:
             raise RuntimeError("Savepoints only available in nested transactions")
         
         session = self.context.metadata.get('session')
@@ -611,7 +657,8 @@ class TransactionExecutor:
         return savepoint_name
     
     async def rollback_to_savepoint(self, savepoint_name: str):
-        """Rollback to specific savepoint"""        if self.context.transaction_type != TransactionType.NESTED:
+        """Rollback to specific savepoint"""
+        if self.context.transaction_type != TransactionType.NESTED:
             raise RuntimeError("Savepoints only available in nested transactions")
         
         if savepoint_name not in self.context.savepoints:
@@ -628,7 +675,8 @@ class TransactionExecutor:
             self.context.savepoints.pop()
     
     async def execute_batch_operations(self, operations: List[TransactionOperation]) -> List[Any]:
-        """Execute multiple operations in batch"""        results = []
+        """Execute multiple operations in batch"""
+        results = []
         
         for operation in operations:
             try:
@@ -646,7 +694,8 @@ class TransactionExecutor:
         return results
     
     async def _compensate_executed_operations(self):
-        """Compensate all executed operations in reverse order"""        operations = self.context.metadata.get('operations', [])
+        """Compensate all executed operations in reverse order"""
+        operations = self.context.metadata.get('operations', [])
         
         for operation in reversed(operations):
             if hasattr(operation, 'compensate'):
@@ -659,19 +708,22 @@ class TransactionExecutor:
 
 
 class DistributedTransactionCoordinator:
-    """Coordinator for distributed transactions across multiple services"""    
+    """Coordinator for distributed transactions across multiple services"""
+    
     def __init__(self, transaction_manager: TransactionManager):
         self.transaction_manager = transaction_manager
         self.participants: Dict[str, Any] = {}
         self.coordinator_state: Dict[str, Dict[str, Any]] = {}
     
     def register_participant(self, participant_id: str, participant_client: Any):
-        """Register a participant in distributed transactions"""        self.participants[participant_id] = participant_client
+        """Register a participant in distributed transactions"""
+        self.participants[participant_id] = participant_client
     
     async def coordinate_distributed_transaction(self, 
                                                transaction_id: str,
                                                operations_by_participant: Dict[str, List[Any]]) -> bool:
-        """Coordinate distributed transaction using 2PC protocol"""        
+        """Coordinate distributed transaction using 2PC protocol"""
+        
         # Phase 1: Prepare
         prepare_results = {}
         
@@ -717,7 +769,8 @@ class DistributedTransactionCoordinator:
         return all(commit_results.values())
     
     async def _send_prepare_request(self, participant: Any, transaction_id: str, operations: List[Any]) -> bool:
-        """Send prepare request to participant"""        # Implementation depends on participant interface
+        """Send prepare request to participant"""
+        # Implementation depends on participant interface
         # This is a placeholder - implement based on your service communication protocol
         try:
             if hasattr(participant, 'prepare_transaction'):
@@ -728,7 +781,8 @@ class DistributedTransactionCoordinator:
             return False
     
     async def _send_commit_request(self, participant: Any, transaction_id: str) -> bool:
-        """Send commit request to participant"""        try:
+        """Send commit request to participant"""
+        try:
             if hasattr(participant, 'commit_transaction'):
                 return await participant.commit_transaction(transaction_id)
             return True
@@ -737,7 +791,8 @@ class DistributedTransactionCoordinator:
             return False
     
     async def _send_abort_to_all_participants(self, transaction_id: str, participant_ids: List[str]):
-        """Send abort to all participants"""        for participant_id in participant_ids:
+        """Send abort to all participants"""
+        for participant_id in participant_ids:
             if participant_id in self.participants:
                 participant = self.participants[participant_id]
                 try:
@@ -752,7 +807,8 @@ _transaction_manager: Optional[TransactionManager] = None
 
 
 async def get_transaction_manager() -> TransactionManager:
-    """Get global transaction manager instance"""    global _transaction_manager
+    """Get global transaction manager instance"""
+    global _transaction_manager
     
     if _transaction_manager is None:
         _transaction_manager = TransactionManager()
@@ -765,21 +821,24 @@ async def get_transaction_manager() -> TransactionManager:
 
 @asynccontextmanager
 async def simple_transaction(config: Optional[TransactionConfig] = None):
-    """Simple transaction context manager"""    manager = await get_transaction_manager()
+    """Simple transaction context manager"""
+    manager = await get_transaction_manager()
     async with manager.transaction(TransactionType.SIMPLE, config) as tx:
         yield tx
 
 
 @asynccontextmanager
 async def saga_transaction(config: Optional[TransactionConfig] = None):
-    """Saga transaction context manager"""    manager = await get_transaction_manager()
+    """Saga transaction context manager"""
+    manager = await get_transaction_manager()
     async with manager.transaction(TransactionType.SAGA, config) as tx:
         yield tx
 
 
 @asynccontextmanager
 async def distributed_transaction(config: Optional[TransactionConfig] = None):
-    """Distributed transaction context manager"""    manager = await get_transaction_manager()
+    """Distributed transaction context manager"""
+    manager = await get_transaction_manager()
     async with manager.transaction(TransactionType.DISTRIBUTED, config) as tx:
         yield tx
 
@@ -788,7 +847,8 @@ async def distributed_transaction(config: Optional[TransactionConfig] = None):
 def retry_transaction(max_retries: int = 3, 
                      delay_seconds: float = 1.0,
                      backoff_multiplier: float = 2.0):
-    """Decorator for automatic transaction retry on failure"""    
+    """Decorator for automatic transaction retry on failure"""
+    
     def decorator(func: Callable):
         async def wrapper(*args, **kwargs):
             last_exception = None

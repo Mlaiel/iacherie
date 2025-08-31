@@ -15,7 +15,8 @@ Enterprise compliance and regulatory environment management.
 Handles GDPR, CCPA, copyright law, data protection, audit trails,
 and regulatory compliance for multi-format content protection.
 ====================================================
-"""import os
+"""
+import os
 import logging
 from typing import Dict, Any, List, Optional, Set, Union
 from dataclasses import dataclass, field
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceRegulation(Enum):
-    """Compliance regulation enumeration"""    GDPR = "gdpr"                    # General Data Protection Regulation (EU)
+    """Compliance regulation enumeration"""
+    GDPR = "gdpr"                    # General Data Protection Regulation (EU)
     CCPA = "ccpa"                    # California Consumer Privacy Act (US)
     PIPEDA = "pipeda"                # Personal Information Protection (Canada)
     LGPD = "lgpd"                    # Lei Geral de Proteção de Dados (Brazil)
@@ -43,7 +45,8 @@ class ComplianceRegulation(Enum):
 
 
 class DataClassification(Enum):
-    """Data classification levels"""    PUBLIC = "public"
+    """Data classification levels"""
+    PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
@@ -52,7 +55,8 @@ class DataClassification(Enum):
 
 
 class ConsentType(Enum):
-    """User consent types"""    EXPLICIT = "explicit"
+    """User consent types"""
+    EXPLICIT = "explicit"
     IMPLIED = "implied"
     OPT_IN = "opt_in"
     OPT_OUT = "opt_out"
@@ -60,7 +64,8 @@ class ConsentType(Enum):
 
 
 class AuditEventType(Enum):
-    """Audit event types"""    DATA_ACCESS = "data_access"
+    """Audit event types"""
+    DATA_ACCESS = "data_access"
     DATA_MODIFICATION = "data_modification"
     DATA_DELETION = "data_deletion"
     DATA_EXPORT = "data_export"
@@ -74,7 +79,8 @@ class AuditEventType(Enum):
 
 @dataclass
 class GDPRConfiguration:
-    """GDPR compliance configuration"""    enabled: bool = bool(os.getenv('GDPR_ENABLED', 'true').lower() == 'true')
+    """GDPR compliance configuration"""
+    enabled: bool = bool(os.getenv('GDPR_ENABLED', 'true').lower() == 'true')
     data_protection_officer_email: str = os.getenv('DPO_EMAIL', 'dpo@ia-influencer.com')
     lawful_basis_processing: List[str] = field(default_factory=lambda: [
         'consent', 'contract', 'legal_obligation', 'vital_interests', 'public_task', 'legitimate_interests'
@@ -98,7 +104,8 @@ class GDPRConfiguration:
 
 @dataclass
 class CCPAConfiguration:
-    """CCPA compliance configuration"""    enabled: bool = bool(os.getenv('CCPA_ENABLED', 'true').lower() == 'true')
+    """CCPA compliance configuration"""
+    enabled: bool = bool(os.getenv('CCPA_ENABLED', 'true').lower() == 'true')
     consumer_rights_enabled: List[str] = field(default_factory=lambda: [
         'right_to_know', 'right_to_delete', 'right_to_opt_out', 'right_to_non_discrimination'
     ])
@@ -115,7 +122,8 @@ class CCPAConfiguration:
 
 @dataclass
 class CopyrightComplianceConfig:
-    """Copyright compliance configuration"""    dmca_enabled: bool = True
+    """Copyright compliance configuration"""
+    dmca_enabled: bool = True
     takedown_response_hours: int = 24
     counter_notification_enabled: bool = True
     copyright_detection_enabled: bool = True
@@ -129,7 +137,8 @@ class CopyrightComplianceConfig:
 
 @dataclass
 class DataProtectionConfig:
-    """Data protection configuration"""    encryption_at_rest: bool = True
+    """Data protection configuration"""
+    encryption_at_rest: bool = True
     encryption_in_transit: bool = True
     encryption_algorithm: str = "AES-256-GCM"
     key_management_service: str = "aws_kms"
@@ -145,7 +154,8 @@ class DataProtectionConfig:
 
 @dataclass
 class AuditConfiguration:
-    """Audit and logging configuration"""    comprehensive_logging: bool = True
+    """Audit and logging configuration"""
+    comprehensive_logging: bool = True
     log_retention_days: int = int(os.getenv('AUDIT_LOG_RETENTION_DAYS', '2190'))  # 6 years
     real_time_monitoring: bool = True
     log_integrity_protection: bool = True
@@ -158,7 +168,8 @@ class AuditConfiguration:
 
 
 class ComplianceEnvironmentManager:
-    """    Compliance environment manager for regulatory adherence.
+    """
+    Compliance environment manager for regulatory adherence.
     
     Features:
     - Multi-jurisdiction compliance (GDPR, CCPA, PIPEDA, etc.)
@@ -173,7 +184,8 @@ class ComplianceEnvironmentManager:
     - Data classification and handling
     - Third-party compliance monitoring
     - Legal documentation management
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or "/config/compliance.yml"
         self.environment = "compliance"
@@ -198,7 +210,8 @@ class ComplianceEnvironmentManager:
         logger.info(f"Compliance environment manager initialized: {self.environment}")
     
     def load_configuration(self) -> Dict[str, Any]:
-        """Load compliance environment configuration"""        try:
+        """Load compliance environment configuration"""
+        try:
             config = {
                 'environment': self.environment,
                 'active_regulations': [reg.value for reg in self.active_regulations],
@@ -283,7 +296,8 @@ class ComplianceEnvironmentManager:
             raise
     
     def setup_compliance_framework(self) -> bool:
-        """Setup comprehensive compliance framework"""        try:
+        """Setup comprehensive compliance framework"""
+        try:
             # Setup GDPR compliance
             if ComplianceRegulation.GDPR in self.active_regulations:
                 self._setup_gdpr_compliance()
@@ -317,7 +331,8 @@ class ComplianceEnvironmentManager:
     
     def record_consent(self, user_id: str, consent_type: ConsentType, 
                       purposes: List[str], timestamp: datetime = None) -> str:
-        """Record user consent for data processing"""        try:
+        """Record user consent for data processing"""
+        try:
             consent_id = self._generate_consent_id(user_id, timestamp or datetime.now())
             
             consent_record = {
@@ -357,7 +372,8 @@ class ComplianceEnvironmentManager:
     
     def withdraw_consent(self, user_id: str, consent_id: str = None, 
                         purposes: List[str] = None) -> bool:
-        """Withdraw user consent"""        try:
+        """Withdraw user consent"""
+        try:
             if consent_id:
                 # Withdraw specific consent
                 if consent_id in self.consent_records:
@@ -410,7 +426,8 @@ class ComplianceEnvironmentManager:
     
     def handle_data_subject_request(self, request_type: str, user_id: str, 
                                   request_details: Dict[str, Any]) -> str:
-        """Handle data subject requests (GDPR Article 15-22, CCPA)"""        try:
+        """Handle data subject requests (GDPR Article 15-22, CCPA)"""
+        try:
             request_id = f"dsr_{user_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             request_record = {
@@ -461,7 +478,8 @@ class ComplianceEnvironmentManager:
     
     def conduct_privacy_impact_assessment(self, project_name: str, 
                                         project_details: Dict[str, Any]) -> Dict[str, Any]:
-        """Conduct Privacy Impact Assessment (PIA)"""        try:
+        """Conduct Privacy Impact Assessment (PIA)"""
+        try:
             pia_id = f"pia_{project_name}_{datetime.now().strftime('%Y%m%d')}"
             
             assessment = {
@@ -488,7 +506,8 @@ class ComplianceEnvironmentManager:
             return {}
     
     def detect_compliance_violations(self) -> List[Dict[str, Any]]:
-        """Detect potential compliance violations"""        try:
+        """Detect potential compliance violations"""
+        try:
             violations = []
             
             # Check data retention violations
@@ -528,7 +547,8 @@ class ComplianceEnvironmentManager:
     
     def generate_compliance_report(self, regulation: ComplianceRegulation, 
                                  start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Generate compliance report for specific regulation"""        try:
+        """Generate compliance report for specific regulation"""
+        try:
             report = {
                 'regulation': regulation.value,
                 'report_period': {
@@ -554,7 +574,8 @@ class ComplianceEnvironmentManager:
             return {}
     
     def get_compliance_dashboard(self) -> Dict[str, Any]:
-        """Get compliance dashboard metrics"""        return {
+        """Get compliance dashboard metrics"""
+        return {
             'overall_compliance_score': self._calculate_overall_compliance_score(),
             'active_regulations': [reg.value for reg in self.active_regulations],
             'regulation_compliance': {
@@ -590,7 +611,8 @@ class ComplianceEnvironmentManager:
         }
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get compliance environment health status"""        return {
+        """Get compliance environment health status"""
+        return {
             'environment': self.environment,
             'status': 'compliant',
             'overall_compliance_score': self._calculate_overall_compliance_score(),
@@ -611,7 +633,8 @@ class ComplianceEnvironmentManager:
     
     # Private helper methods
     def _initialize_active_regulations(self):
-        """Initialize active regulations based on configuration"""        if self.gdpr_config.enabled:
+        """Initialize active regulations based on configuration"""
+        if self.gdpr_config.enabled:
             self.active_regulations.add(ComplianceRegulation.GDPR)
         if self.ccpa_config.enabled:
             self.active_regulations.add(ComplianceRegulation.CCPA)
@@ -625,38 +648,49 @@ class ComplianceEnvironmentManager:
             self.active_regulations.add(ComplianceRegulation.LGPD)
     
     def _setup_gdpr_compliance(self):
-        """Setup GDPR compliance controls"""        logger.info("Setting up GDPR compliance controls")
+        """Setup GDPR compliance controls"""
+        logger.info("Setting up GDPR compliance controls")
     
     def _setup_ccpa_compliance(self):
-        """Setup CCPA compliance controls"""        logger.info("Setting up CCPA compliance controls")
+        """Setup CCPA compliance controls"""
+        logger.info("Setting up CCPA compliance controls")
     
     def _setup_copyright_compliance(self):
-        """Setup copyright compliance controls"""        logger.info("Setting up copyright compliance controls")
+        """Setup copyright compliance controls"""
+        logger.info("Setting up copyright compliance controls")
     
     def _setup_data_protection_controls(self):
-        """Setup data protection controls"""        logger.info("Setting up data protection controls")
+        """Setup data protection controls"""
+        logger.info("Setting up data protection controls")
     
     def _setup_audit_monitoring(self):
-        """Setup audit and monitoring"""        logger.info("Setting up audit and monitoring")
+        """Setup audit and monitoring"""
+        logger.info("Setting up audit and monitoring")
     
     def _setup_consent_management(self):
-        """Setup consent management system"""        logger.info("Setting up consent management system")
+        """Setup consent management system"""
+        logger.info("Setting up consent management system")
     
     def _setup_data_subject_rights(self):
-        """Setup data subject rights management"""        logger.info("Setting up data subject rights management")
+        """Setup data subject rights management"""
+        logger.info("Setting up data subject rights management")
     
     def _generate_consent_id(self, user_id: str, timestamp: datetime) -> str:
-        """Generate unique consent ID"""        data = f"{user_id}_{timestamp.isoformat()}"
+        """Generate unique consent ID"""
+        data = f"{user_id}_{timestamp.isoformat()}"
         return hashlib.sha256(data.encode()).hexdigest()[:16]
     
     def _get_user_ip(self) -> str:
-        """Get user IP address"""        return "192.168.1.100"  # Placeholder
+        """Get user IP address"""
+        return "192.168.1.100"  # Placeholder
     
     def _get_user_agent(self) -> str:
-        """Get user agent"""        return "Mozilla/5.0 (compatible)"  # Placeholder
+        """Get user agent"""
+        return "Mozilla/5.0 (compatible)"  # Placeholder
     
     def _determine_legal_basis(self, consent_type: ConsentType) -> str:
-        """Determine legal basis for processing"""        if consent_type == ConsentType.EXPLICIT:
+        """Determine legal basis for processing"""
+        if consent_type == ConsentType.EXPLICIT:
             return "consent"
         elif consent_type == ConsentType.LEGITIMATE_INTEREST:
             return "legitimate_interests"
@@ -664,7 +698,8 @@ class ComplianceEnvironmentManager:
             return "consent"
     
     def _calculate_consent_expiry(self, consent_type: ConsentType) -> str:
-        """Calculate consent expiry date"""        if consent_type == ConsentType.EXPLICIT:
+        """Calculate consent expiry date"""
+        if consent_type == ConsentType.EXPLICIT:
             expiry = datetime.now() + timedelta(days=365)  # 1 year
         else:
             expiry = datetime.now() + timedelta(days=730)  # 2 years
@@ -672,7 +707,8 @@ class ComplianceEnvironmentManager:
     
     def _log_audit_event(self, event_type: AuditEventType, user_id: str = None, 
                         details: Dict[str, Any] = None):
-        """Log audit event"""        event = {
+        """Log audit event"""
+        event = {
             'event_id': f"audit_{datetime.now().strftime('%Y%m%d_%H%M%S_%f')}",
             'event_type': event_type.value,
             'timestamp': datetime.now().isoformat(),
@@ -686,11 +722,13 @@ class ComplianceEnvironmentManager:
         logger.debug(f"Audit event logged: {event['event_id']}")
     
     def _process_consent_withdrawal(self, consent_id: str):
-        """Process consent withdrawal"""        logger.info(f"Processing consent withdrawal: {consent_id}")
+        """Process consent withdrawal"""
+        logger.info(f"Processing consent withdrawal: {consent_id}")
         # Implement consent withdrawal processing logic
     
     def _calculate_response_due_date(self, request_type: str) -> str:
-        """Calculate response due date for data subject request"""        if request_type in ['access', 'erasure', 'portability', 'rectification']:
+        """Calculate response due date for data subject request"""
+        if request_type in ['access', 'erasure', 'portability', 'rectification']:
             # GDPR: 1 month, extendable to 3 months
             due_date = datetime.now() + timedelta(days=30)
         elif request_type in ['opt_out', 'delete']:
@@ -703,106 +741,138 @@ class ComplianceEnvironmentManager:
     
     # Data subject request processing methods
     def _process_access_request(self, request_id: str):
-        """Process data access request"""        logger.info(f"Processing access request: {request_id}")
+        """Process data access request"""
+        logger.info(f"Processing access request: {request_id}")
     
     def _process_erasure_request(self, request_id: str):
-        """Process data erasure request"""        logger.info(f"Processing erasure request: {request_id}")
+        """Process data erasure request"""
+        logger.info(f"Processing erasure request: {request_id}")
     
     def _process_portability_request(self, request_id: str):
-        """Process data portability request"""        logger.info(f"Processing portability request: {request_id}")
+        """Process data portability request"""
+        logger.info(f"Processing portability request: {request_id}")
     
     def _process_rectification_request(self, request_id: str):
-        """Process data rectification request"""        logger.info(f"Processing rectification request: {request_id}")
+        """Process data rectification request"""
+        logger.info(f"Processing rectification request: {request_id}")
     
     def _process_restriction_request(self, request_id: str):
-        """Process data processing restriction request"""        logger.info(f"Processing restriction request: {request_id}")
+        """Process data processing restriction request"""
+        logger.info(f"Processing restriction request: {request_id}")
     
     def _process_objection_request(self, request_id: str):
-        """Process data processing objection request"""        logger.info(f"Processing objection request: {request_id}")
+        """Process data processing objection request"""
+        logger.info(f"Processing objection request: {request_id}")
     
     # Privacy Impact Assessment methods
     def _assess_privacy_risk(self, project_details: Dict[str, Any]) -> str:
-        """Assess privacy risk level"""        # Implement risk assessment logic
+        """Assess privacy risk level"""
+        # Implement risk assessment logic
         return "medium"
     
     def _identify_data_types(self, project_details: Dict[str, Any]) -> List[str]:
-        """Identify data types in project"""        return ["personal_data", "biometric_data", "content_metadata"]
+        """Identify data types in project"""
+        return ["personal_data", "biometric_data", "content_metadata"]
     
     def _identify_processing_purposes(self, project_details: Dict[str, Any]) -> List[str]:
-        """Identify data processing purposes"""        return ["content_protection", "analytics", "personalization"]
+        """Identify data processing purposes"""
+        return ["content_protection", "analytics", "personalization"]
     
     def _determine_legal_basis_for_project(self, project_details: Dict[str, Any]) -> str:
-        """Determine legal basis for project"""        return "consent"
+        """Determine legal basis for project"""
+        return "consent"
     
     def _map_data_flows(self, project_details: Dict[str, Any]) -> List[Dict]:
-        """Map data flows in project"""        return [{"source": "user_upload", "destination": "ai_processing", "data_type": "content"}]
+        """Map data flows in project"""
+        return [{"source": "user_upload", "destination": "ai_processing", "data_type": "content"}]
     
     def _identify_security_measures(self, project_details: Dict[str, Any]) -> List[str]:
-        """Identify security measures"""        return ["encryption", "access_controls", "audit_logging"]
+        """Identify security measures"""
+        return ["encryption", "access_controls", "audit_logging"]
     
     def _recommend_risk_mitigation(self, project_details: Dict[str, Any]) -> List[str]:
-        """Recommend risk mitigation measures"""        return ["data_minimization", "pseudonymization", "regular_audits"]
+        """Recommend risk mitigation measures"""
+        return ["data_minimization", "pseudonymization", "regular_audits"]
     
     def _assess_compliance_status(self, project_details: Dict[str, Any]) -> str:
-        """Assess compliance status"""        return "compliant"
+        """Assess compliance status"""
+        return "compliant"
     
     def _generate_pia_recommendations(self, project_details: Dict[str, Any]) -> List[str]:
-        """Generate PIA recommendations"""        return ["Implement additional encryption", "Regular compliance reviews"]
+        """Generate PIA recommendations"""
+        return ["Implement additional encryption", "Regular compliance reviews"]
     
     # Violation detection methods
     def _check_data_retention_violations(self) -> List[Dict]:
-        """Check data retention violations"""        return []  # Placeholder
+        """Check data retention violations"""
+        return []  # Placeholder
     
     def _check_consent_violations(self) -> List[Dict]:
-        """Check consent violations"""        return []  # Placeholder
+        """Check consent violations"""
+        return []  # Placeholder
     
     def _check_data_processing_violations(self) -> List[Dict]:
-        """Check data processing violations"""        return []  # Placeholder
+        """Check data processing violations"""
+        return []  # Placeholder
     
     def _check_security_violations(self) -> List[Dict]:
-        """Check security violations"""        return []  # Placeholder
+        """Check security violations"""
+        return []  # Placeholder
     
     def _check_copyright_violations(self) -> List[Dict]:
-        """Check copyright violations"""        return []  # Placeholder
+        """Check copyright violations"""
+        return []  # Placeholder
     
     def _generate_compliance_alerts(self, violations: List[Dict]):
-        """Generate compliance alerts"""        logger.warning(f"Critical compliance violations detected: {len(violations)}")
+        """Generate compliance alerts"""
+        logger.warning(f"Critical compliance violations detected: {len(violations)}")
     
     # Reporting methods
     def _assess_regulation_compliance(self, regulation: ComplianceRegulation) -> str:
-        """Assess compliance status for regulation"""        return "compliant"
+        """Assess compliance status for regulation"""
+        return "compliant"
     
     def _calculate_compliance_metrics(self, regulation: ComplianceRegulation, 
                                     start_date: datetime, end_date: datetime) -> Dict:
-        """Calculate compliance metrics"""        return {"compliance_score": 95.5, "violations_count": 2}
+        """Calculate compliance metrics"""
+        return {"compliance_score": 95.5, "violations_count": 2}
     
     def _get_violations_for_period(self, regulation: ComplianceRegulation, 
                                  start_date: datetime, end_date: datetime) -> List[Dict]:
-        """Get violations for specific period"""        return []
+        """Get violations for specific period"""
+        return []
     
     def _get_dsr_metrics(self, start_date: datetime, end_date: datetime) -> Dict:
-        """Get data subject request metrics"""        return {"total_requests": 25, "completed_requests": 23, "pending_requests": 2}
+        """Get data subject request metrics"""
+        return {"total_requests": 25, "completed_requests": 23, "pending_requests": 2}
     
     def _get_consent_metrics(self, start_date: datetime, end_date: datetime) -> Dict:
-        """Get consent metrics"""        return {"consents_granted": 150, "consents_withdrawn": 15}
+        """Get consent metrics"""
+        return {"consents_granted": 150, "consents_withdrawn": 15}
     
     def _get_security_incidents(self, start_date: datetime, end_date: datetime) -> List[Dict]:
-        """Get security incidents"""        return []
+        """Get security incidents"""
+        return []
     
     def _generate_compliance_recommendations(self, regulation: ComplianceRegulation) -> List[str]:
-        """Generate compliance recommendations"""        return ["Regular compliance training", "Update privacy policies"]
+        """Generate compliance recommendations"""
+        return ["Regular compliance training", "Update privacy policies"]
     
     def _generate_action_items(self, regulation: ComplianceRegulation) -> List[str]:
-        """Generate action items"""        return ["Schedule quarterly compliance review", "Update consent mechanisms"]
+        """Generate action items"""
+        return ["Schedule quarterly compliance review", "Update consent mechanisms"]
     
     # Metrics calculation methods
     def _calculate_overall_compliance_score(self) -> float:
-        """Calculate overall compliance score"""        return 92.5
+        """Calculate overall compliance score"""
+        return 92.5
     
     def _calculate_consent_compliance_rate(self) -> float:
-        """Calculate consent compliance rate"""        total_consents = len(self.consent_records)
+        """Calculate consent compliance rate"""
+        total_consents = len(self.consent_records)
         active_consents = len([c for c in self.consent_records.values() if c['status'] == 'active'])
         return (active_consents / total_consents * 100) if total_consents > 0 else 100.0
     
     def _get_last_compliance_scan_time(self) -> str:
-        """Get last compliance scan time"""        return datetime.now().isoformat()
+        """Get last compliance scan time"""
+        return datetime.now().isoformat()

@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
-"""import asyncio
+"""
+import asyncio
 import logging
 import re
 import json
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class InstagramPostInfo:
-    """Instagram post information structure."""    post_id: str
+    """Instagram post information structure."""
+    post_id: str
     shortcode: str
     url: str
     caption: str
@@ -55,7 +57,8 @@ class InstagramPostInfo:
 
 @dataclass
 class InstagramUserInfo:
-    """Instagram user information structure."""    user_id: str
+    """Instagram user information structure."""
+    user_id: str
     username: str
     full_name: str
     bio: str
@@ -71,7 +74,8 @@ class InstagramUserInfo:
 
 @dataclass
 class InstagramStoryInfo:
-    """Instagram story information structure."""    story_id: str
+    """Instagram story information structure."""
+    story_id: str
     username: str
     user_id: str
     media_type: str
@@ -82,9 +86,11 @@ class InstagramStoryInfo:
     is_ad: bool = False
 
 class InstagramAPIClient:
-    """Instagram Graph API client for business accounts."""    
+    """Instagram Graph API client for business accounts."""
+    
     def __init__(self, access_token: str, app_id: str):
-        """Initialize Instagram API client."""        self.access_token = access_token
+        """Initialize Instagram API client."""
+        self.access_token = access_token
         self.app_id = app_id
         self.base_url = "https://graph.instagram.com"
         self.api_version = "v18.0"
@@ -96,7 +102,8 @@ class InstagramAPIClient:
         logger.info("Instagram API client initialized")
     
     def _check_rate_limit(self) -> bool:
-        """Check API rate limit."""        now = datetime.utcnow()
+        """Check API rate limit."""
+        now = datetime.utcnow()
         
         # Remove requests older than 1 hour
         self.requests_made = [
@@ -107,7 +114,8 @@ class InstagramAPIClient:
         return len(self.requests_made) < self.requests_per_hour
     
     async def _make_request(self, endpoint: str, params: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Make authenticated API request."""        if not self._check_rate_limit():
+        """Make authenticated API request."""
+        if not self._check_rate_limit():
             raise Exception("Instagram API rate limit exceeded")
         
         url = f"{self.base_url}/{endpoint}"
@@ -136,7 +144,8 @@ class InstagramAPIClient:
         limit: int = 25,
         fields: List[str] = None
     ) -> List[InstagramPostInfo]:
-        """Get user's media posts."""        if not fields:
+        """Get user's media posts."""
+        if not fields:
             fields = [
                 'id', 'caption', 'media_type', 'media_url', 'permalink',
                 'timestamp', 'username', 'like_count', 'comments_count'
@@ -163,7 +172,8 @@ class InstagramAPIClient:
             return []
     
     def _parse_media_item(self, item: Dict[str, Any]) -> Optional[InstagramPostInfo]:
-        """Parse media item from API response."""        try:
+        """Parse media item from API response."""
+        try:
             # Extract hashtags and mentions from caption
             caption = item.get('caption', '')
             hashtags = re.findall(r'#(\w+)', caption)
@@ -195,14 +205,17 @@ class InstagramAPIClient:
             return None
     
     def _extract_shortcode(self, permalink: str) -> str:
-        """Extract shortcode from Instagram permalink."""        # Instagram URLs: https://www.instagram.com/p/SHORTCODE/
+        """Extract shortcode from Instagram permalink."""
+        # Instagram URLs: https://www.instagram.com/p/SHORTCODE/
         match = re.search(r'/p/([A-Za-z0-9_-]+)/', permalink)
         return match.group(1) if match else ''
 
 class InstagramSeleniumCrawler:
-    """Selenium-based Instagram crawler for public content."""    
+    """Selenium-based Instagram crawler for public content."""
+    
     def __init__(self, headless: bool = True, proxy: Optional[str] = None):
-        """Initialize Instagram Selenium crawler."""        self.headless = headless
+        """Initialize Instagram Selenium crawler."""
+        self.headless = headless
         self.proxy = proxy
         self.driver = None
         self.wait = None
@@ -213,7 +226,8 @@ class InstagramSeleniumCrawler:
         self.min_request_interval = 3.0
     
     def _setup_driver(self) -> webdriver.Chrome:
-        """Setup Chrome WebDriver for Instagram."""        options = Options()
+        """Setup Chrome WebDriver for Instagram."""
+        options = Options()
         
         if self.headless:
             options.add_argument('--headless')
@@ -243,7 +257,8 @@ class InstagramSeleniumCrawler:
             raise
     
     async def _rate_limit(self):
-        """Apply rate limiting between requests."""        current_time = time.time()
+        """Apply rate limiting between requests."""
+        current_time = time.time()
         elapsed = current_time - self.last_request_time
         
         if elapsed < self.min_request_interval:
@@ -253,7 +268,8 @@ class InstagramSeleniumCrawler:
         self.last_request_time = time.time()
     
     async def search_hashtag(self, hashtag: str, max_results: int = 20) -> List[InstagramPostInfo]:
-        """Search posts by hashtag."""        if not self.driver:
+        """Search posts by hashtag."""
+        if not self.driver:
             self.driver = self._setup_driver()
             self.wait = WebDriverWait(self.driver, 10)
         
@@ -281,7 +297,8 @@ class InstagramSeleniumCrawler:
             return []
     
     async def search_location(self, location_id: str, max_results: int = 20) -> List[InstagramPostInfo]:
-        """Search posts by location."""        if not self.driver:
+        """Search posts by location."""
+        if not self.driver:
             self.driver = self._setup_driver()
             self.wait = WebDriverWait(self.driver, 10)
         
@@ -306,7 +323,8 @@ class InstagramSeleniumCrawler:
             return []
     
     async def _extract_posts_from_grid(self, max_results: int) -> List[InstagramPostInfo]:
-        """Extract posts from Instagram grid layout."""        posts = []
+        """Extract posts from Instagram grid layout."""
+        posts = []
         
         try:
             # Scroll to load more posts
@@ -337,7 +355,8 @@ class InstagramSeleniumCrawler:
             return []
     
     async def _extract_basic_post_info(self, link_element, post_url: str) -> Optional[InstagramPostInfo]:
-        """Extract basic post information from grid element."""        try:
+        """Extract basic post information from grid element."""
+        try:
             # Extract shortcode from URL
             shortcode = self._extract_shortcode(post_url)
             
@@ -393,11 +412,13 @@ class InstagramSeleniumCrawler:
             return None
     
     def _extract_shortcode(self, url: str) -> str:
-        """Extract shortcode from Instagram URL."""        match = re.search(r'/p/([A-Za-z0-9_-]+)/', url)
+        """Extract shortcode from Instagram URL."""
+        match = re.search(r'/p/([A-Za-z0-9_-]+)/', url)
         return match.group(1) if match else ''
     
     async def scrape_post_details(self, post_url: str) -> Optional[InstagramPostInfo]:
-        """Scrape detailed information from Instagram post page."""        if not self.driver:
+        """Scrape detailed information from Instagram post page."""
+        if not self.driver:
             self.driver = self._setup_driver()
             self.wait = WebDriverWait(self.driver, 10)
         
@@ -432,12 +453,14 @@ class InstagramSeleniumCrawler:
             return None
     
     def close(self):
-        """Close Selenium driver."""        if self.driver:
+        """Close Selenium driver."""
+        if self.driver:
             self.driver.quit()
             self.driver = None
 
 class InstagramCrawler(BasePlatformCrawler):
-    """    Professional Instagram Content Crawler
+    """
+    Professional Instagram Content Crawler
     ======================================
     
     Advanced Instagram content discovery and monitoring system featuring:
@@ -447,9 +470,11 @@ class InstagramCrawler(BasePlatformCrawler):
     - Story monitoring and analysis
     - User profile tracking
     - Media content extraction and analysis
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize Instagram crawler."""        super().__init__("instagram", config)
+        """Initialize Instagram crawler."""
+        super().__init__("instagram", config)
         
         # API configuration
         self.access_token = config.get('access_token')
@@ -484,7 +509,8 @@ class InstagramCrawler(BasePlatformCrawler):
         max_results: int = None,
         filters: Optional[Dict[str, Any]] = None
     ) -> List[CrawlResult]:
-        """Search for content on Instagram."""        max_results = max_results or self.max_results_per_search
+        """Search for content on Instagram."""
+        max_results = max_results or self.max_results_per_search
         results = []
         
         try:
@@ -512,7 +538,8 @@ class InstagramCrawler(BasePlatformCrawler):
         max_results: int,
         filters: Optional[Dict[str, Any]] = None
     ) -> List[CrawlResult]:
-        """Search content by hashtag."""        if not self.selenium_crawler:
+        """Search content by hashtag."""
+        if not self.selenium_crawler:
             return []
         
         try:
@@ -529,7 +556,8 @@ class InstagramCrawler(BasePlatformCrawler):
         max_results: int,
         filters: Optional[Dict[str, Any]] = None
     ) -> List[CrawlResult]:
-        """Search content by user."""        results = []
+        """Search content by user."""
+        results = []
         
         try:
             # Try API first if available
@@ -550,7 +578,8 @@ class InstagramCrawler(BasePlatformCrawler):
             return []
     
     async def _convert_posts_to_results(self, posts: List[InstagramPostInfo]) -> List[CrawlResult]:
-        """Convert Instagram posts to CrawlResult format."""        results = []
+        """Convert Instagram posts to CrawlResult format."""
+        results = []
         
         for post in posts:
             try:
@@ -595,7 +624,8 @@ class InstagramCrawler(BasePlatformCrawler):
         return results
     
     async def search_by_location(self, location_id: str, max_results: int = 20) -> List[CrawlResult]:
-        """Search content by location."""        if not self.selenium_crawler:
+        """Search content by location."""
+        if not self.selenium_crawler:
             return []
         
         try:
@@ -612,7 +642,8 @@ class InstagramCrawler(BasePlatformCrawler):
         callback_func: callable = None,
         interval_minutes: int = 60
     ) -> bool:
-        """Monitor hashtag for new content."""        try:
+        """Monitor hashtag for new content."""
+        try:
             monitoring_key = f"hashtag_{hashtag}"
             
             if monitoring_key in self.monitoring_tasks:
@@ -638,7 +669,8 @@ class InstagramCrawler(BasePlatformCrawler):
         callback_func: callable,
         interval_minutes: int
     ):
-        """Continuous hashtag monitoring loop."""        logger.info(f"Starting continuous monitoring for hashtag {hashtag}")
+        """Continuous hashtag monitoring loop."""
+        logger.info(f"Starting continuous monitoring for hashtag {hashtag}")
         
         try:
             while True:
@@ -660,14 +692,16 @@ class InstagramCrawler(BasePlatformCrawler):
             logger.error(f"Hashtag monitoring error: {e}")
     
     async def check_rate_limits(self) -> bool:
-        """Check if crawler is within rate limits."""        api_ok = True
+        """Check if crawler is within rate limits."""
+        api_ok = True
         if self.api_client:
             api_ok = self.api_client._check_rate_limit()
         
         return api_ok
     
     async def get_crawler_stats(self) -> Dict[str, Any]:
-        """Get crawler statistics."""        stats = {
+        """Get crawler statistics."""
+        stats = {
             "platform": "instagram",
             "api_available": self.api_client is not None,
             "selenium_available": self.selenium_crawler is not None,
@@ -681,7 +715,8 @@ class InstagramCrawler(BasePlatformCrawler):
         return stats
     
     def cleanup(self):
-        """Cleanup crawler resources."""        if self.selenium_crawler:
+        """Cleanup crawler resources."""
+        if self.selenium_crawler:
             self.selenium_crawler.close()
         
         # Cancel monitoring tasks

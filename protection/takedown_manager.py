@@ -3,7 +3,8 @@ Automated DMCA takedown and content removal management.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from typing import Dict, Any, List, Optional
+"""
+from typing import Dict, Any, List, Optional
 from datetime import datetime
 import uuid
 
@@ -12,17 +13,20 @@ from ..core.logging import logger
 
 
 class TakedownManager:
-    """Automated takedown notice generation and management"""    
+    """Automated takedown notice generation and management"""
+    
     def __init__(self):
         self.supported_platforms = ["youtube", "instagram", "tiktok", "twitter"]
         self.takedown_templates = self._load_takedown_templates()
     
     async def initiate_takedown(self, violation_id: str, takedown_type: str = "dmca") -> Dict[str, Any]:
-        """Initiate takedown process for a violation"""        try:
+        """Initiate takedown process for a violation"""
+        try:
             # Get violation details
             async with database_manager.get_postgres_session() as session:
                 result = await session.execute(
-                    """                    SELECT pv.*, c.title, c.description, u.email, u.first_name, u.last_name
+                    """
+                    SELECT pv.*, c.title, c.description, u.email, u.first_name, u.last_name
                     FROM protection_violations pv
                     JOIN content c ON pv.original_content_id = c.id
                     JOIN users u ON pv.user_id = u.id
@@ -81,7 +85,8 @@ class TakedownManager:
     
     async def _generate_takedown_notice(self, violation_data: Dict[str, Any], 
                                       takedown_type: str) -> Dict[str, Any]:
-        """Generate takedown notice based on violation data"""        template = self.takedown_templates.get(takedown_type, self.takedown_templates["dmca"])
+        """Generate takedown notice based on violation data"""
+        template = self.takedown_templates.get(takedown_type, self.takedown_templates["dmca"])
         
         notice = {
             "type": takedown_type,
@@ -118,12 +123,14 @@ class TakedownManager:
     
     async def _store_takedown_request(self, violation_id: str, notice: Dict[str, Any], 
                                     takedown_type: str) -> str:
-        """Store takedown request in database"""        takedown_id = str(uuid.uuid4())
+        """Store takedown request in database"""
+        takedown_id = str(uuid.uuid4())
         
         try:
             async with database_manager.get_postgres_session() as session:
                 await session.execute(
-                    """                    INSERT INTO takedown_requests 
+                    """
+                    INSERT INTO takedown_requests 
                     (id, violation_id, takedown_type, notice_content, status, created_at)
                     VALUES (%s, %s, %s, %s, %s, %s)
                     """,
@@ -138,7 +145,8 @@ class TakedownManager:
             raise
     
     async def _submit_takedown_notice(self, platform: str, notice: Dict[str, Any]) -> bool:
-        """Submit takedown notice to platform (if automated submission available)"""        try:
+        """Submit takedown notice to platform (if automated submission available)"""
+        try:
             if platform == "youtube":
                 return await self._submit_youtube_takedown(notice)
             elif platform == "instagram":
@@ -154,17 +162,20 @@ class TakedownManager:
             return False
     
     async def _submit_youtube_takedown(self, notice: Dict[str, Any]) -> bool:
-        """Submit takedown to YouTube (requires YouTube API integration)"""        # Implementation would use YouTube's Content ID API or copyright reporting
+        """Submit takedown to YouTube (requires YouTube API integration)"""
+        # Implementation would use YouTube's Content ID API or copyright reporting
         logger.info("YouTube takedown submission would be processed here")
         return False  # Placeholder
     
     async def _submit_instagram_takedown(self, notice: Dict[str, Any]) -> bool:
-        """Submit takedown to Instagram"""        # Implementation would use Instagram's reporting API
+        """Submit takedown to Instagram"""
+        # Implementation would use Instagram's reporting API
         logger.info("Instagram takedown submission would be processed here")
         return False  # Placeholder
     
     def _load_takedown_templates(self) -> Dict[str, Dict[str, str]]:
-        """Load takedown notice templates"""        return {
+        """Load takedown notice templates"""
+        return {
             "dmca": {
                 "good_faith_statement": "I have a good faith belief that the use of the copyrighted material described above is not authorized by the copyright owner, its agent, or the law.",
                 "accuracy_statement": "I swear, under penalty of perjury, that the information in this notification is accurate and that I am the copyright owner or am authorized to act on behalf of the copyright owner.",

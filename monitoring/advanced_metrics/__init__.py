@@ -193,10 +193,12 @@ MODULE_INFO = {
 }
 
 def get_module_info() -> dict:
-    """Get comprehensive module information and metadata"""    return MODULE_INFO.copy()
+    """Get comprehensive module information and metadata"""
+    return MODULE_INFO.copy()
 
 def get_health_status() -> dict:
-    """Get module health status and operational metrics"""    return {
+    """Get module health status and operational metrics"""
+    return {
         "status": "operational",
         "version": __version__,
         "components": {

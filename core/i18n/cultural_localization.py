@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 Content analysis → Cultural context detection → Regional preferences → 
 Hofstede dimensions → Communication style adaptation → Cultural compliance
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Tuple, Union
 from datetime import datetime, timezone
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class CommunicationStyle(Enum):
-    """Communication style preferences by culture"""    DIRECT = "direct"
+    """Communication style preferences by culture"""
+    DIRECT = "direct"
     INDIRECT = "indirect"
     HIGH_CONTEXT = "high_context"
     LOW_CONTEXT = "low_context"
@@ -39,7 +41,8 @@ class CommunicationStyle(Enum):
 
 
 class CulturalDimension(Enum):
-    """Hofstede cultural dimensions"""    POWER_DISTANCE = "power_distance"
+    """Hofstede cultural dimensions"""
+    POWER_DISTANCE = "power_distance"
     INDIVIDUALISM = "individualism"
     MASCULINITY = "masculinity"
     UNCERTAINTY_AVOIDANCE = "uncertainty_avoidance"
@@ -48,7 +51,8 @@ class CulturalDimension(Enum):
 
 
 class ColorCulturalMeaning(Enum):
-    """Cultural color meanings"""    LUCK = "luck"
+    """Cultural color meanings"""
+    LUCK = "luck"
     DEATH = "death"
     CELEBRATION = "celebration"
     MOURNING = "mourning"
@@ -60,7 +64,8 @@ class ColorCulturalMeaning(Enum):
 
 @dataclass
 class CulturalContext:
-    """Cultural context information"""    region: str
+    """Cultural context information"""
+    region: str
     country_code: str
     language_code: str
     communication_style: CommunicationStyle
@@ -85,7 +90,8 @@ class CulturalContext:
 
 @dataclass
 class CulturalAdaptation:
-    """Cultural adaptation instructions"""    content_modifications: Dict[str, str]
+    """Cultural adaptation instructions"""
+    content_modifications: Dict[str, str]
     style_adjustments: Dict[str, Any]
     color_replacements: Dict[str, str]
     image_suggestions: List[str]
@@ -98,7 +104,8 @@ class CulturalAdaptation:
 
 
 class CulturalLocalization:
-    """Advanced cultural localization and adaptation engine"""    
+    """Advanced cultural localization and adaptation engine"""
+    
     def __init__(self):
         self.cultural_contexts: Dict[str, CulturalContext] = {}
         self.adaptation_cache: Dict[str, CulturalAdaptation] = {}
@@ -111,7 +118,8 @@ class CulturalLocalization:
         logger.info("Cultural Localization Engine initialized")
     
     def _initialize_cultural_contexts(self):
-        """Initialize cultural context data for major regions"""        
+        """Initialize cultural context data for major regions"""
+        
         # Western cultures
         self.cultural_contexts["US"] = CulturalContext(
             region="North America",
@@ -335,7 +343,8 @@ class CulturalLocalization:
         logger.info(f"Initialized {len(self.cultural_contexts)} cultural contexts")
     
     def _initialize_adaptation_rules(self):
-        """Initialize cultural adaptation rules"""        
+        """Initialize cultural adaptation rules"""
+        
         # Communication style adaptations
         self.cultural_rules["communication"] = [
             {
@@ -394,7 +403,8 @@ class CulturalLocalization:
         logger.info("Cultural adaptation rules initialized")
     
     async def get_cultural_context(self, country_code: str, language_code: str = None) -> Optional[CulturalContext]:
-        """Get cultural context for a country/region"""        try:
+        """Get cultural context for a country/region"""
+        try:
             # Direct lookup
             context = self.cultural_contexts.get(country_code.upper())
             
@@ -418,7 +428,8 @@ class CulturalLocalization:
         target_culture: str,
         content_type: str = "text"
     ) -> Dict[str, Any]:
-        """Analyze content for cultural appropriateness"""        try:
+        """Analyze content for cultural appropriateness"""
+        try:
             source_ctx = await self.get_cultural_context(source_culture)
             target_ctx = await self.get_cultural_context(target_culture)
             
@@ -486,7 +497,8 @@ class CulturalLocalization:
         target_culture: str,
         content_type: str = "text"
     ) -> CulturalAdaptation:
-        """Create cultural adaptation based on analysis"""        try:
+        """Create cultural adaptation based on analysis"""
+        try:
             target_ctx = await self.get_cultural_context(target_culture)
             
             adaptation = CulturalAdaptation(
@@ -567,7 +579,8 @@ class CulturalLocalization:
         target_culture: str,
         content_type: str = "text"
     ) -> Dict[str, Any]:
-        """Complete cultural adaptation pipeline"""        try:
+        """Complete cultural adaptation pipeline"""
+        try:
             # Analyze content
             analysis = await self.analyze_cultural_content(
                 content, source_culture, target_culture, content_type
@@ -615,7 +628,8 @@ class CulturalLocalization:
         analysis: Dict[str, Any],
         adaptation: CulturalAdaptation
     ) -> float:
-        """Calculate confidence score for cultural adaptation"""        try:
+        """Calculate confidence score for cultural adaptation"""
+        try:
             confidence = 1.0
             
             # Reduce confidence based on issues found
@@ -641,7 +655,8 @@ class CulturalLocalization:
             return 0.5  # Default moderate confidence
     
     async def get_cultural_recommendations(self, target_culture: str) -> Dict[str, Any]:
-        """Get cultural recommendations for content creation"""        try:
+        """Get cultural recommendations for content creation"""
+        try:
             context = await self.get_cultural_context(target_culture)
             
             if not context:
@@ -677,7 +692,8 @@ class CulturalLocalization:
             return {"error": str(e)}
     
     def _get_communication_style_description(self, style: CommunicationStyle) -> str:
-        """Get description for communication style"""        descriptions = {
+        """Get description for communication style"""
+        descriptions = {
             CommunicationStyle.DIRECT: "Clear, straightforward communication preferred",
             CommunicationStyle.INDIRECT: "Subtle, context-dependent communication",
             CommunicationStyle.HIGH_CONTEXT: "Meaning derived from context and relationships",
@@ -690,7 +706,8 @@ class CulturalLocalization:
         return descriptions.get(style, "Standard communication")
     
     def _determine_formality_level(self, context: CulturalContext) -> str:
-        """Determine appropriate formality level"""        if context.hierarchy_importance > 0.8:
+        """Determine appropriate formality level"""
+        if context.hierarchy_importance > 0.8:
             return "very_high"
         elif context.hierarchy_importance > 0.6:
             return "high"
@@ -700,7 +717,8 @@ class CulturalLocalization:
             return "low"
     
     def _get_recommended_colors(self, context: CulturalContext) -> List[str]:
-        """Get culturally appropriate colors"""        recommended = []
+        """Get culturally appropriate colors"""
+        recommended = []
         for color, meanings in context.color_meanings.items():
             if any(m in [ColorCulturalMeaning.LUCK, ColorCulturalMeaning.PROSPERITY, 
                         ColorCulturalMeaning.CELEBRATION] for m in meanings):
@@ -708,7 +726,8 @@ class CulturalLocalization:
         return recommended
     
     def _get_colors_to_avoid(self, context: CulturalContext) -> List[str]:
-        """Get colors to avoid culturally"""        avoid = []
+        """Get colors to avoid culturally"""
+        avoid = []
         for color, meanings in context.color_meanings.items():
             if any(m in [ColorCulturalMeaning.DEATH, ColorCulturalMeaning.MOURNING, 
                         ColorCulturalMeaning.DANGER] for m in meanings):
@@ -716,7 +735,8 @@ class CulturalLocalization:
         return avoid
     
     async def health_check(self) -> bool:
-        """Health check for cultural localization service"""        try:
+        """Health check for cultural localization service"""
+        try:
             # Check if cultural contexts are loaded
             if not self.cultural_contexts:
                 return False

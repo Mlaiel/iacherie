@@ -15,7 +15,8 @@ WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -38,7 +39,8 @@ from ..vector_db.vector_db_manager import VectorDBManager
 
 
 class DistributionPlatform(Enum):
-    """Distribution platforms"""    SPOTIFY = "spotify"
+    """Distribution platforms"""
+    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -53,7 +55,8 @@ class DistributionPlatform(Enum):
 
 
 class DistributionStatus(Enum):
-    """Distribution status types"""    SCHEDULED = "scheduled"
+    """Distribution status types"""
+    SCHEDULED = "scheduled"
     PROCESSING = "processing"
     PUBLISHED = "published"
     FAILED = "failed"
@@ -62,7 +65,8 @@ class DistributionStatus(Enum):
 
 
 class ContentFormat(Enum):
-    """Content format types"""    AUDIO = "audio"
+    """Content format types"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -73,7 +77,8 @@ class ContentFormat(Enum):
 
 
 class PerformanceMetric(Enum):
-    """Distribution performance metrics"""    REACH = "reach"
+    """Distribution performance metrics"""
+    REACH = "reach"
     IMPRESSIONS = "impressions"
     ENGAGEMENT = "engagement"
     SHARES = "shares"
@@ -87,7 +92,8 @@ class PerformanceMetric(Enum):
 
 @dataclass
 class PlatformMetrics:
-    """Platform-specific performance metrics"""    platform: DistributionPlatform
+    """Platform-specific performance metrics"""
+    platform: DistributionPlatform
     content_id: str
     reach: int
     impressions: int
@@ -108,7 +114,8 @@ class PlatformMetrics:
 
 @dataclass
 class DistributionSchedule:
-    """Content distribution schedule"""    content_id: str
+    """Content distribution schedule"""
+    content_id: str
     platform_schedule: Dict[DistributionPlatform, datetime]
     optimal_timing: Dict[DistributionPlatform, datetime]
     timezone_adjustments: Dict[str, datetime]
@@ -119,7 +126,8 @@ class DistributionSchedule:
 
 @dataclass
 class CrossPlatformAnalysis:
-    """Cross-platform performance analysis"""    content_id: str
+    """Cross-platform performance analysis"""
+    content_id: str
     total_reach: int
     total_engagement: float
     platform_breakdown: Dict[DistributionPlatform, PlatformMetrics]
@@ -132,7 +140,8 @@ class CrossPlatformAnalysis:
 
 @dataclass
 class DistributionOptimization:
-    """Distribution optimization recommendations"""    content_id: str
+    """Distribution optimization recommendations"""
+    content_id: str
     recommended_platforms: List[DistributionPlatform]
     optimal_schedule: DistributionSchedule
     content_adaptations: Dict[DistributionPlatform, List[str]]
@@ -144,7 +153,8 @@ class DistributionOptimization:
 
 @dataclass
 class DistributionReport:
-    """Comprehensive distribution analytics report"""    user_id: str
+    """Comprehensive distribution analytics report"""
+    user_id: str
     analysis_period: Dict[str, datetime]
     total_content_distributed: int
     total_reach: int
@@ -158,21 +168,25 @@ class DistributionReport:
 
 
 class DistributionAnalytics:
-    """    Professional distribution analytics engine for IA Influencer Agent platform.
+    """
+    Professional distribution analytics engine for IA Influencer Agent platform.
     
     Provides comprehensive analytics for content distribution across multiple platforms,
     optimization recommendations, and cross-platform performance tracking.
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, redis_client: Redis,
                  storage_manager: StorageManager, vector_db: VectorDBManager):
-        """        Initialize DistributionAnalytics engine.
+        """
+        Initialize DistributionAnalytics engine.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
             storage_manager: Storage management service
             vector_db: Vector database manager
-        """        self.db_session = db_session
+        """
+        self.db_session = db_session
         self.redis = redis_client
         self.storage = storage_manager
         self.vector_db = vector_db
@@ -185,7 +199,8 @@ class DistributionAnalytics:
     
     async def track_platform_performance(self, content_id: str, 
                                        platform: DistributionPlatform) -> PlatformMetrics:
-        """        Track performance metrics for content on specific platform.
+        """
+        Track performance metrics for content on specific platform.
         
         Args:
             content_id: Content identifier
@@ -193,7 +208,8 @@ class DistributionAnalytics:
             
         Returns:
             PlatformMetrics: Platform-specific performance data
-        """        try:
+        """
+        try:
             cache_key = self.platform_cache_key.format(f"{content_id}_{platform.value}")
             cached_data = await self._get_from_cache(cache_key)
             if cached_data:
@@ -215,14 +231,16 @@ class DistributionAnalytics:
             raise
     
     async def analyze_cross_platform_performance(self, content_id: str) -> CrossPlatformAnalysis:
-        """        Analyze content performance across all distribution platforms.
+        """
+        Analyze content performance across all distribution platforms.
         
         Args:
             content_id: Content identifier
             
         Returns:
             CrossPlatformAnalysis: Cross-platform performance analysis
-        """        try:
+        """
+        try:
             cache_key = self.distribution_cache_key.format(f"cross_platform_{content_id}")
             cached_data = await self._get_from_cache(cache_key)
             if cached_data:
@@ -280,7 +298,8 @@ class DistributionAnalytics:
     
     async def optimize_distribution_strategy(self, content_id: str, 
                                            target_metrics: Dict[str, float] = None) -> DistributionOptimization:
-        """        Generate distribution optimization recommendations.
+        """
+        Generate distribution optimization recommendations.
         
         Args:
             content_id: Content identifier
@@ -288,7 +307,8 @@ class DistributionAnalytics:
             
         Returns:
             DistributionOptimization: Optimization recommendations
-        """        try:
+        """
+        try:
             # Analyze current performance
             current_analysis = await self.analyze_cross_platform_performance(content_id)
             
@@ -352,7 +372,8 @@ class DistributionAnalytics:
     
     async def generate_distribution_report(self, user_id: str, 
                                          period_days: int = 30) -> DistributionReport:
-        """        Generate comprehensive distribution analytics report.
+        """
+        Generate comprehensive distribution analytics report.
         
         Args:
             user_id: User identifier
@@ -360,7 +381,8 @@ class DistributionAnalytics:
             
         Returns:
             DistributionReport: Comprehensive distribution report
-        """        try:
+        """
+        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
             
@@ -429,7 +451,8 @@ class DistributionAnalytics:
     
     async def predict_platform_performance(self, content_data: Dict, 
                                          platform: DistributionPlatform) -> Dict[str, float]:
-        """        Predict performance metrics for content on specific platform.
+        """
+        Predict performance metrics for content on specific platform.
         
         Args:
             content_data: Content characteristics
@@ -437,7 +460,8 @@ class DistributionAnalytics:
             
         Returns:
             Dict[str, float]: Predicted performance metrics
-        """        try:
+        """
+        try:
             # Get historical data for similar content
             similar_content = await self._find_similar_content(content_data)
             
@@ -459,7 +483,8 @@ class DistributionAnalytics:
     
     async def _fetch_platform_metrics(self, content_id: str, 
                                      platform: DistributionPlatform) -> PlatformMetrics:
-        """Fetch platform-specific metrics from database"""        try:
+        """Fetch platform-specific metrics from database"""
+        try:
             query = select(AnalyticsModel).where(
                 AnalyticsModel.entity_id == content_id,
                 AnalyticsModel.entity_type == f"platform_{platform.value}"
@@ -516,28 +541,34 @@ class DistributionAnalytics:
     
     async def _enhance_platform_metrics(self, metrics: PlatformMetrics, 
                                       platform: DistributionPlatform) -> PlatformMetrics:
-        """Enhance metrics with additional analytics"""        # Enhanced metrics calculation logic
+        """Enhance metrics with additional analytics"""
+        # Enhanced metrics calculation logic
         return metrics
     
     async def _calculate_audience_overlap(self, content_id: str, 
                                         platform_metrics: Dict) -> Dict[Tuple[DistributionPlatform, DistributionPlatform], float]:
-        """Calculate audience overlap between platforms"""        # Audience overlap calculation
+        """Calculate audience overlap between platforms"""
+        # Audience overlap calculation
         return {}
     
     async def _identify_underperforming_platforms(self, platform_metrics: Dict) -> List[DistributionPlatform]:
-        """Identify underperforming platforms"""        # Performance analysis logic
+        """Identify underperforming platforms"""
+        # Performance analysis logic
         return []
     
     async def _calculate_cross_platform_synergy(self, platform_metrics: Dict) -> float:
-        """Calculate cross-platform synergy score"""        # Synergy calculation logic
+        """Calculate cross-platform synergy score"""
+        # Synergy calculation logic
         return 0.75
     
     async def _calculate_distribution_effectiveness(self, platform_metrics: Dict) -> float:
-        """Calculate distribution effectiveness score"""        # Effectiveness calculation logic
+        """Calculate distribution effectiveness score"""
+        # Effectiveness calculation logic
         return 0.80
     
     async def _fetch_content_data(self, content_id: str) -> Dict:
-        """Fetch content data from database"""        try:
+        """Fetch content data from database"""
+        try:
             query = select(ContentModel).where(ContentModel.id == content_id)
             result = await self.db_session.execute(query)
             content = result.scalar_one_or_none()
@@ -557,18 +588,21 @@ class DistributionAnalytics:
             return {}
     
     async def _analyze_historical_patterns(self, content_data: Dict) -> Dict:
-        """Analyze historical performance patterns"""        # Historical analysis logic
+        """Analyze historical performance patterns"""
+        # Historical analysis logic
         return {}
     
     async def _recommend_optimal_platforms(self, content_data: Dict, 
                                          current_analysis: CrossPlatformAnalysis,
                                          historical_patterns: Dict) -> List[DistributionPlatform]:
-        """Recommend optimal distribution platforms"""        # Platform recommendation logic
+        """Recommend optimal distribution platforms"""
+        # Platform recommendation logic
         return [DistributionPlatform.SPOTIFY, DistributionPlatform.YOUTUBE]
     
     async def _generate_optimal_schedule(self, content_id: str, 
                                        platforms: List[DistributionPlatform]) -> DistributionSchedule:
-        """Generate optimal distribution schedule"""        # Schedule optimization logic
+        """Generate optimal distribution schedule"""
+        # Schedule optimization logic
         return DistributionSchedule(
             content_id=content_id,
             platform_schedule={},
@@ -581,33 +615,39 @@ class DistributionAnalytics:
     
     async def _generate_content_adaptations(self, content_data: Dict, 
                                           platforms: List[DistributionPlatform]) -> Dict[DistributionPlatform, List[str]]:
-        """Generate content adaptations for each platform"""        # Content adaptation logic
+        """Generate content adaptations for each platform"""
+        # Content adaptation logic
         return {}
     
     async def _calculate_audience_targeting(self, content_data: Dict, 
                                           platforms: List[DistributionPlatform]) -> Dict[DistributionPlatform, Dict[str, Any]]:
-        """Calculate audience targeting strategies"""        # Audience targeting logic
+        """Calculate audience targeting strategies"""
+        # Audience targeting logic
         return {}
     
     async def _calculate_budget_allocation(self, platforms: List[DistributionPlatform], 
                                          target_metrics: Dict = None) -> Dict[DistributionPlatform, float]:
-        """Calculate optimal budget allocation"""        # Budget allocation logic
+        """Calculate optimal budget allocation"""
+        # Budget allocation logic
         return {}
     
     async def _calculate_expected_roi(self, content_data: Dict, 
                                     platforms: List[DistributionPlatform],
                                     budget_allocation: Dict) -> Dict[DistributionPlatform, float]:
-        """Calculate expected ROI for each platform"""        # ROI calculation logic
+        """Calculate expected ROI for each platform"""
+        # ROI calculation logic
         return {}
     
     async def _assess_distribution_risks(self, content_data: Dict, 
                                        platforms: List[DistributionPlatform]) -> Dict[DistributionPlatform, List[str]]:
-        """Assess distribution risks for each platform"""        # Risk assessment logic
+        """Assess distribution risks for each platform"""
+        # Risk assessment logic
         return {}
     
     async def _get_user_content_in_period(self, user_id: str, start_date: datetime, 
                                         end_date: datetime) -> List[str]:
-        """Get user content IDs in specified period"""        try:
+        """Get user content IDs in specified period"""
+        try:
             query = select(ContentModel.id).where(
                 ContentModel.user_id == user_id,
                 ContentModel.created_at >= start_date,
@@ -621,48 +661,57 @@ class DistributionAnalytics:
             return []
     
     async def _calculate_platform_performance_summary(self, analyses: List[CrossPlatformAnalysis]) -> Dict[DistributionPlatform, Dict[str, Any]]:
-        """Calculate platform performance summary"""        # Performance summary calculation
+        """Calculate platform performance summary"""
+        # Performance summary calculation
         return {}
     
     async def _analyze_distribution_trends(self, user_id: str, start_date: datetime, 
                                          end_date: datetime) -> Dict[str, Any]:
-        """Analyze distribution trends"""        # Trend analysis logic
+        """Analyze distribution trends"""
+        # Trend analysis logic
         return {}
     
     async def _calculate_distribution_roi(self, user_id: str, start_date: datetime, 
                                         end_date: datetime) -> Dict[str, float]:
-        """Calculate distribution ROI"""        # ROI calculation logic
+        """Calculate distribution ROI"""
+        # ROI calculation logic
         return {}
     
     async def _generate_distribution_recommendations(self, platform_performance: Dict,
                                                    trends: Dict,
                                                    opportunities: List[DistributionOptimization]) -> List[str]:
-        """Generate distribution recommendations"""        # Recommendation generation logic
+        """Generate distribution recommendations"""
+        # Recommendation generation logic
         return []
     
     async def _find_similar_content(self, content_data: Dict) -> List[Dict]:
-        """Find similar content for prediction"""        # Similar content finding logic
+        """Find similar content for prediction"""
+        # Similar content finding logic
         return []
     
     async def _extract_platform_features(self, content_data: Dict, 
                                        platform: DistributionPlatform) -> Dict:
-        """Extract platform-specific features"""        # Feature extraction logic
+        """Extract platform-specific features"""
+        # Feature extraction logic
         return {}
     
     async def _apply_performance_prediction_model(self, features: Dict, similar_content: List[Dict], 
                                                 platform: DistributionPlatform) -> Dict[str, float]:
-        """Apply ML model for performance prediction"""        # ML prediction logic
+        """Apply ML model for performance prediction"""
+        # ML prediction logic
         return {}
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
-        """Get data from Redis cache"""        try:
+        """Get data from Redis cache"""
+        try:
             data = self.redis.get(key)
             return json.loads(data) if data else None
         except Exception:
             return None
     
     async def _cache_data(self, key: str, data: Any, ttl: int):
-        """Cache data in Redis"""        try:
+        """Cache data in Redis"""
+        try:
             self.redis.setex(key, ttl, json.dumps(data, default=str))
         except Exception as e:
             self.logger.warning(f"Failed to cache data: {str(e)}")

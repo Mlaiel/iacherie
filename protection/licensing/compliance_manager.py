@@ -11,7 +11,8 @@ Professional legal compliance management system:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Legal Tech Specialist + Compliance Officer + Risk Manager
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Tuple
 from datetime import datetime, timedelta
@@ -24,19 +25,22 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class ComplianceLevel(Enum):
-    """Compliance validation levels"""    BASIC = "basic"
+    """Compliance validation levels"""
+    BASIC = "basic"
     STANDARD = "standard"
     ENHANCED = "enhanced"
     ENTERPRISE = "enterprise"
 
 class RiskLevel(Enum):
-    """Risk assessment levels"""    LOW = "low"
+    """Risk assessment levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 class ComplianceStatus(Enum):
-    """Compliance check status"""    COMPLIANT = "compliant"
+    """Compliance check status"""
+    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     CONDITIONAL = "conditional"
     PENDING_REVIEW = "pending_review"
@@ -44,7 +48,8 @@ class ComplianceStatus(Enum):
 
 @dataclass
 class ComplianceRule:
-    """Individual compliance rule definition"""    rule_id: str
+    """Individual compliance rule definition"""
+    rule_id: str
     jurisdiction: str
     category: str
     description: str
@@ -56,7 +61,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceResult:
-    """Compliance validation result"""    rule_id: str
+    """Compliance validation result"""
+    rule_id: str
     status: ComplianceStatus
     confidence_score: float
     issues: List[str]
@@ -66,7 +72,8 @@ class ComplianceResult:
 
 @dataclass
 class ComplianceReport:
-    """Comprehensive compliance assessment report"""    license_id: str
+    """Comprehensive compliance assessment report"""
+    license_id: str
     jurisdiction: str
     overall_status: ComplianceStatus
     compliance_score: float
@@ -78,13 +85,16 @@ class ComplianceReport:
     expires_at: datetime
 
 class ComplianceManager:
-    """    🚀 Professional legal compliance management system
+    """
+    🚀 Professional legal compliance management system
     
     Advanced system for ensuring legal compliance across multiple
     jurisdictions with automated validation and risk assessment.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize compliance manager with configuration."""        self.config = config
+        """Initialize compliance manager with configuration."""
+        self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Initialize compliance rules database
@@ -110,7 +120,8 @@ class ComplianceManager:
         self._load_risk_matrices()
     
     def _load_compliance_rules(self):
-        """Load comprehensive compliance rules database."""        compliance_rules_data = {
+        """Load comprehensive compliance rules database."""
+        compliance_rules_data = {
             # International Copyright Rules
             'copyright_duration_compliance': ComplianceRule(
                 rule_id='copyright_duration_compliance',
@@ -204,7 +215,8 @@ class ComplianceManager:
         self.logger.info(f"Loaded {len(compliance_rules_data)} compliance rules")
     
     def _load_jurisdiction_requirements(self):
-        """Load jurisdiction-specific legal requirements."""        jurisdiction_data = {
+        """Load jurisdiction-specific legal requirements."""
+        jurisdiction_data = {
             'international': {
                 'required_clauses': ['copyright_notice', 'liability_limitation'],
                 'prohibited_clauses': [],
@@ -239,7 +251,8 @@ class ComplianceManager:
         self.logger.info(f"Loaded requirements for {len(jurisdiction_data)} jurisdictions")
     
     def _load_risk_matrices(self):
-        """Load risk assessment matrices."""        risk_data = {
+        """Load risk assessment matrices."""
+        risk_data = {
             'financial_risk': {
                 'low': {'max_liability': 10000, 'probability': 0.1},
                 'medium': {'max_liability': 100000, 'probability': 0.3},
@@ -269,7 +282,8 @@ class ComplianceManager:
         jurisdiction: str,
         compliance_level: ComplianceLevel = ComplianceLevel.STANDARD
     ) -> ComplianceReport:
-        """        ⚖️ Validate license compliance across all applicable rules
+        """
+        ⚖️ Validate license compliance across all applicable rules
         
         Args:
             license_data: License document to validate
@@ -278,7 +292,8 @@ class ComplianceManager:
             
         Returns:
             compliance_report: Comprehensive compliance assessment
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             self.logger.info(f"Validating license compliance for jurisdiction: {jurisdiction}")
@@ -339,7 +354,8 @@ class ComplianceManager:
             raise
     
     def _get_applicable_rules(self, jurisdiction: str, compliance_level: ComplianceLevel) -> List[ComplianceRule]:
-        """Get list of compliance rules applicable to jurisdiction and level."""        applicable_rules = []
+        """Get list of compliance rules applicable to jurisdiction and level."""
+        applicable_rules = []
         
         # Always include international rules
         for rule in self.compliance_rules.values():
@@ -369,7 +385,8 @@ class ComplianceManager:
         license_data: Dict[str, Any],
         rule: ComplianceRule
     ) -> ComplianceResult:
-        """Validate license against a single compliance rule."""        try:
+        """Validate license against a single compliance rule."""
+        try:
             # Convert license to searchable text
             license_text = self._extract_license_text(license_data)
             
@@ -419,7 +436,8 @@ class ComplianceManager:
             )
     
     def _extract_license_text(self, license_data: Dict[str, Any]) -> str:
-        """Extract searchable text from license document."""        text_parts = []
+        """Extract searchable text from license document."""
+        text_parts = []
         
         # Extract from clauses
         clauses = license_data.get('clauses', {})
@@ -444,7 +462,8 @@ class ComplianceManager:
         license_text: str,
         pattern_match: bool
     ) -> Tuple[ComplianceStatus, float, List[str], List[str]]:
-        """Evaluate compliance for a specific rule."""        issues = []
+        """Evaluate compliance for a specific rule."""
+        issues = []
         recommendations = []
         
         # Rule-specific evaluation logic
@@ -471,7 +490,8 @@ class ComplianceManager:
         license_data: Dict[str, Any],
         pattern_match: bool
     ) -> Tuple[ComplianceStatus, float, List[str], List[str]]:
-        """Evaluate copyright-specific compliance."""        if rule.rule_id == 'copyright_duration_compliance':
+        """Evaluate copyright-specific compliance."""
+        if rule.rule_id == 'copyright_duration_compliance':
             # Check if license duration exceeds copyright protection
             terms = license_data.get('terms', {})
             duration = terms.get('duration', '')
@@ -500,7 +520,8 @@ class ComplianceManager:
         license_data: Dict[str, Any],
         pattern_match: bool
     ) -> Tuple[ComplianceStatus, float, List[str], List[str]]:
-        """Evaluate data protection compliance (GDPR, etc.)."""        if pattern_match:
+        """Evaluate data protection compliance (GDPR, etc.)."""
+        if pattern_match:
             return ComplianceStatus.COMPLIANT, 0.9, [], []
         else:
             return ComplianceStatus.NON_COMPLIANT, 0.8, ["Missing data protection provisions"], ["Add GDPR compliance clause"]
@@ -511,7 +532,8 @@ class ComplianceManager:
         license_data: Dict[str, Any],
         pattern_match: bool
     ) -> Tuple[ComplianceStatus, float, List[str], List[str]]:
-        """Evaluate digital protection compliance (DMCA, etc.)."""        if rule.rule_id == 'dmca_safe_harbor':
+        """Evaluate digital protection compliance (DMCA, etc.)."""
+        if rule.rule_id == 'dmca_safe_harbor':
             # Check for DMCA takedown procedures
             if pattern_match:
                 return ComplianceStatus.COMPLIANT, 0.95, [], []
@@ -529,7 +551,8 @@ class ComplianceManager:
         license_data: Dict[str, Any],
         pattern_match: bool
     ) -> Tuple[ComplianceStatus, float, List[str], List[str]]:
-        """Evaluate moral rights compliance."""        if pattern_match:
+        """Evaluate moral rights compliance."""
+        if pattern_match:
             return ComplianceStatus.COMPLIANT, 0.9, [], []
         else:
             return ComplianceStatus.NON_COMPLIANT, 0.8, ["Missing moral rights protection"], ["Add moral rights preservation clause"]
@@ -540,13 +563,15 @@ class ComplianceManager:
         license_data: Dict[str, Any],
         pattern_match: bool
     ) -> Tuple[ComplianceStatus, float, List[str], List[str]]:
-        """Evaluate royalties and collecting society compliance."""        if pattern_match:
+        """Evaluate royalties and collecting society compliance."""
+        if pattern_match:
             return ComplianceStatus.COMPLIANT, 0.9, [], []
         else:
             return ComplianceStatus.CONDITIONAL, 0.7, ["May need collecting society clearance"], ["Verify collecting society requirements"]
     
     def _assess_rule_risk(self, rule: ComplianceRule, status: ComplianceStatus) -> RiskLevel:
-        """Assess risk level for a specific rule compliance result."""        if status == ComplianceStatus.COMPLIANT:
+        """Assess risk level for a specific rule compliance result."""
+        if status == ComplianceStatus.COMPLIANT:
             return RiskLevel.LOW
         elif status == ComplianceStatus.CONDITIONAL:
             return rule.penalty_severity if rule.penalty_severity != RiskLevel.CRITICAL else RiskLevel.HIGH
@@ -554,7 +579,8 @@ class ComplianceManager:
             return rule.penalty_severity
     
     def _calculate_overall_compliance(self, validation_results: List[ComplianceResult]) -> Tuple[ComplianceStatus, float]:
-        """Calculate overall compliance status and score."""        if not validation_results:
+        """Calculate overall compliance status and score."""
+        if not validation_results:
             return ComplianceStatus.PENDING_REVIEW, 0.0
         
         total_score = 0.0
@@ -597,7 +623,8 @@ class ComplianceManager:
         return overall_status, compliance_score
     
     def _assess_overall_risk(self, validation_results: List[ComplianceResult]) -> RiskLevel:
-        """Assess overall risk level from validation results."""        risk_levels = [result.risk_level for result in validation_results]
+        """Assess overall risk level from validation results."""
+        risk_levels = [result.risk_level for result in validation_results]
         
         if RiskLevel.CRITICAL in risk_levels:
             return RiskLevel.CRITICAL
@@ -609,7 +636,8 @@ class ComplianceManager:
             return RiskLevel.LOW
     
     def _generate_required_actions(self, validation_results: List[ComplianceResult]) -> List[str]:
-        """Generate list of required actions to achieve compliance."""        required_actions = []
+        """Generate list of required actions to achieve compliance."""
+        required_actions = []
         
         for result in validation_results:
             if result.status in [ComplianceStatus.NON_COMPLIANT, ComplianceStatus.CONDITIONAL]:
@@ -621,7 +649,8 @@ class ComplianceManager:
         return list(set(required_actions))  # Remove duplicates
     
     def _generate_recommendations(self, validation_results: List[ComplianceResult], jurisdiction: str) -> List[str]:
-        """Generate recommendations for improving compliance."""        recommendations = []
+        """Generate recommendations for improving compliance."""
+        recommendations = []
         
         for result in validation_results:
             recommendations.extend(result.recommendations)
@@ -638,7 +667,8 @@ class ComplianceManager:
         license_info: Dict[str, Any],
         modifications: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate proposed license modifications for compliance."""        try:
+        """Validate proposed license modifications for compliance."""
+        try:
             # Create modified license for validation
             modified_license = license_info.copy()
             modified_license.update(modifications)
@@ -668,7 +698,8 @@ class ComplianceManager:
         license_info: Dict[str, Any],
         new_owner: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate license transfer for legal compliance."""        try:
+        """Validate license transfer for legal compliance."""
+        try:
             # Check if license allows transfers
             clauses = license_info.get('clauses', {})
             transfer_clause = clauses.get('transfer_restrictions', '')
@@ -700,7 +731,8 @@ class ComplianceManager:
             }
     
     def get_compliance_status(self) -> Dict[str, Any]:
-        """Get overall compliance manager status and metrics."""        return {
+        """Get overall compliance manager status and metrics."""
+        return {
             **self.metrics,
             'available_rules': len(self.compliance_rules),
             'supported_jurisdictions': list(self.jurisdiction_requirements.keys()),

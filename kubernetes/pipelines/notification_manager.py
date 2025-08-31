@@ -16,7 +16,8 @@ Features:
 
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import smtplib
 import logging
@@ -35,7 +36,8 @@ from pathlib import Path
 from .pipeline_manager import PipelineExecution
 
 class NotificationChannel(Enum):
-    """Notification channel types"""    EMAIL = "email"
+    """Notification channel types"""
+    EMAIL = "email"
     SLACK = "slack"
     TEAMS = "teams"
     WEBHOOK = "webhook"
@@ -43,13 +45,15 @@ class NotificationChannel(Enum):
     DISCORD = "discord"
 
 class NotificationLevel(Enum):
-    """Notification severity levels"""    INFO = "info"
+    """Notification severity levels"""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 class NotificationEvent(Enum):
-    """Pipeline events that trigger notifications"""    PIPELINE_STARTED = "pipeline_started"
+    """Pipeline events that trigger notifications"""
+    PIPELINE_STARTED = "pipeline_started"
     PIPELINE_COMPLETED = "pipeline_completed"
     PIPELINE_FAILED = "pipeline_failed"
     PIPELINE_CANCELLED = "pipeline_cancelled"
@@ -61,7 +65,8 @@ class NotificationEvent(Enum):
 
 @dataclass
 class NotificationConfig:
-    """Notification configuration settings"""    channel: NotificationChannel
+    """Notification configuration settings"""
+    channel: NotificationChannel
     enabled: bool = True
     recipients: List[str] = None
     webhook_url: Optional[str] = None
@@ -72,7 +77,8 @@ class NotificationConfig:
 
 @dataclass
 class NotificationMessage:
-    """Notification message structure"""    title: str
+    """Notification message structure"""
+    title: str
     content: str
     level: NotificationLevel
     event: NotificationEvent
@@ -86,7 +92,8 @@ class NotificationMessage:
             self.metadata = {}
 
 class NotificationTemplate:
-    """Notification template management"""    
+    """Notification template management"""
+    
     def __init__(self, templates_dir: Optional[Path] = None):
         self.templates_dir = templates_dir or Path(__file__).parent / "notification_templates"
         self.templates_dir.mkdir(parents=True, exist_ok=True)
@@ -97,7 +104,8 @@ class NotificationTemplate:
         self._create_default_templates()
         
     def _create_default_templates(self):
-        """Create default notification templates"""        templates = {
+        """Create default notification templates"""
+        templates = {
             'pipeline_started.html': '''
             <h2>🚀 Pipeline Started</h2>
             <p><strong>Pipeline:</strong> {{ pipeline_name }}</p>
@@ -189,7 +197,8 @@ class NotificationTemplate:
                     f.write(content.strip())
                     
     def render_template(self, template_name: str, **kwargs) -> str:
-        """Render notification template with provided data"""        try:
+        """Render notification template with provided data"""
+        try:
             template = self.jinja_env.get_template(template_name)
             return template.render(**kwargs)
         except Exception as e:
@@ -197,7 +206,8 @@ class NotificationTemplate:
             return f"Template rendering failed: {str(e)}"
 
 class EmailNotificationHandler:
-    """Email notification handler"""    
+    """Email notification handler"""
+    
     def __init__(self, smtp_server: str, smtp_port: int, username: str, 
                  password: str, use_tls: bool = True):
         self.smtp_server = smtp_server
@@ -209,7 +219,8 @@ class EmailNotificationHandler:
         
     async def send_notification(self, config: NotificationConfig, 
                               message: NotificationMessage) -> bool:
-        """Send email notification"""        try:
+        """Send email notification"""
+        try:
             # Create message
             msg = MIMEMultipart('alternative')
             msg['Subject'] = message.title
@@ -235,14 +246,16 @@ class EmailNotificationHandler:
             return False
 
 class SlackNotificationHandler:
-    """Slack notification handler"""    
+    """Slack notification handler"""
+    
     def __init__(self, default_webhook_url: Optional[str] = None):
         self.default_webhook_url = default_webhook_url
         self.logger = logging.getLogger(__name__)
         
     async def send_notification(self, config: NotificationConfig, 
                               message: NotificationMessage) -> bool:
-        """Send Slack notification"""        webhook_url = config.webhook_url or self.default_webhook_url
+        """Send Slack notification"""
+        webhook_url = config.webhook_url or self.default_webhook_url
         if not webhook_url:
             self.logger.error("No Slack webhook URL configured")
             return False
@@ -276,7 +289,8 @@ class SlackNotificationHandler:
             return False
             
     def _get_color_for_level(self, level: NotificationLevel) -> str:
-        """Get Slack color for notification level"""        color_map = {
+        """Get Slack color for notification level"""
+        color_map = {
             NotificationLevel.INFO: "good",
             NotificationLevel.WARNING: "warning", 
             NotificationLevel.ERROR: "danger",
@@ -285,14 +299,16 @@ class SlackNotificationHandler:
         return color_map.get(level, "good")
 
 class WebhookNotificationHandler:
-    """Generic webhook notification handler"""    
+    """Generic webhook notification handler"""
+    
     def __init__(self, default_headers: Optional[Dict[str, str]] = None):
         self.default_headers = default_headers or {"Content-Type": "application/json"}
         self.logger = logging.getLogger(__name__)
         
     async def send_notification(self, config: NotificationConfig, 
                               message: NotificationMessage) -> bool:
-        """Send webhook notification"""        if not config.webhook_url:
+        """Send webhook notification"""
+        if not config.webhook_url:
             self.logger.error("No webhook URL configured")
             return False
             
@@ -324,7 +340,8 @@ class WebhookNotificationHandler:
             return False
 
 class NotificationManager:
-    """    Advanced Notification Management System for Pipeline Events
+    """
+    Advanced Notification Management System for Pipeline Events
     
     Provides enterprise-grade notification capabilities with:
     - Multi-channel notification support
@@ -332,7 +349,8 @@ class NotificationManager:
     - Customizable templates and formatting
     - Throttling and escalation policies
     - Integration with monitoring systems
-    """    
+    """
+    
     def __init__(self, templates_dir: Optional[Path] = None):
         self.logger = logging.getLogger(__name__)
         self.template_manager = NotificationTemplate(templates_dir)
@@ -348,7 +366,8 @@ class NotificationManager:
         self._load_default_configurations()
         
     def _load_default_configurations(self):
-        """Load default notification configurations"""        # Default configurations for different environments
+        """Load default notification configurations"""
+        # Default configurations for different environments
         default_configs = [
             NotificationConfig(
                 channel=NotificationChannel.EMAIL,
@@ -379,16 +398,19 @@ class NotificationManager:
         self.configurations.extend(default_configs)
         
     def register_handler(self, channel: NotificationChannel, handler: Any):
-        """Register notification handler for specific channel"""        self.handlers[channel] = handler
+        """Register notification handler for specific channel"""
+        self.handlers[channel] = handler
         self.logger.info(f"Registered notification handler for {channel.value}")
         
     def add_configuration(self, config: NotificationConfig):
-        """Add notification configuration"""        self.configurations.append(config)
+        """Add notification configuration"""
+        self.configurations.append(config)
         self.logger.info(f"Added notification configuration for {config.channel.value}")
         
     async def send_pipeline_notification(self, execution: PipelineExecution, 
                                        event: NotificationEvent) -> List[bool]:
-        """Send notifications for pipeline events"""        # Determine notification level based on event
+        """Send notifications for pipeline events"""
+        # Determine notification level based on event
         level = self._get_level_for_event(event, execution)
         
         # Create message
@@ -405,7 +427,8 @@ class NotificationManager:
         
     def _get_level_for_event(self, event: NotificationEvent, 
                            execution: PipelineExecution) -> NotificationLevel:
-        """Determine notification level based on event and execution"""        if event in [NotificationEvent.PIPELINE_FAILED, NotificationEvent.DEPLOYMENT_FAILED]:
+        """Determine notification level based on event and execution"""
+        if event in [NotificationEvent.PIPELINE_FAILED, NotificationEvent.DEPLOYMENT_FAILED]:
             return NotificationLevel.ERROR
         elif event == NotificationEvent.SECURITY_ALERT:
             return NotificationLevel.CRITICAL
@@ -417,7 +440,8 @@ class NotificationManager:
     def _create_pipeline_message(self, execution: PipelineExecution, 
                                event: NotificationEvent, 
                                level: NotificationLevel) -> NotificationMessage:
-        """Create notification message for pipeline event"""        # Prepare template data
+        """Create notification message for pipeline event"""
+        # Prepare template data
         template_data = {
             'pipeline_name': execution.config.name,
             'environment': execution.config.environment.value,
@@ -477,7 +501,8 @@ class NotificationManager:
         
     def _should_send_notification(self, config: NotificationConfig, 
                                 message: NotificationMessage) -> bool:
-        """Check if notification should be sent based on configuration"""        if not config.enabled:
+        """Check if notification should be sent based on configuration"""
+        if not config.enabled:
             return False
             
         # Check level filter
@@ -502,7 +527,8 @@ class NotificationManager:
         
     async def _send_notification(self, config: NotificationConfig, 
                                message: NotificationMessage) -> bool:
-        """Send notification using configured handler"""        handler = self.handlers.get(config.channel)
+        """Send notification using configured handler"""
+        handler = self.handlers.get(config.channel)
         if not handler:
             self.logger.warning(f"No handler registered for {config.channel.value}")
             return False

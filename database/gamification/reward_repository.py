@@ -19,7 +19,8 @@ Incentive Optimization → User Motivation → Revenue Impact
 REWARD REPOSITORY ARCHITECTURE:
 Reward Configuration → Distribution Engine → Virtual Currency → 
 Economic Balance → Analytics Tracking → Performance Optimization
-"""from typing import Dict, List, Optional, Any, Tuple, Union
+"""
+from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 import hashlib
@@ -32,7 +33,8 @@ import uuid
 from ...data_management.repositories.base_repository import BaseRepository, OperationType
 
 class RewardType(Enum):
-    """Types of rewards"""    EXPERIENCE_POINTS = "experience_points"
+    """Types of rewards"""
+    EXPERIENCE_POINTS = "experience_points"
     VIRTUAL_CURRENCY = "virtual_currency"
     REAL_CURRENCY = "real_currency"
     BADGE = "badge"
@@ -44,7 +46,8 @@ class RewardType(Enum):
     EXCLUSIVE_CONTENT = "exclusive_content"
 
 class RewardCategory(Enum):
-    """Reward categorization"""    ENGAGEMENT = "engagement"
+    """Reward categorization"""
+    ENGAGEMENT = "engagement"
     ACHIEVEMENT = "achievement"
     MILESTONE = "milestone"
     CHALLENGE = "challenge"
@@ -54,7 +57,8 @@ class RewardCategory(Enum):
     COMPENSATION = "compensation"
 
 class RewardStatus(Enum):
-    """Reward distribution status"""    PENDING = "pending"
+    """Reward distribution status"""
+    PENDING = "pending"
     PROCESSING = "processing"
     DISTRIBUTED = "distributed"
     CLAIMED = "claimed"
@@ -63,7 +67,8 @@ class RewardStatus(Enum):
     FAILED = "failed"
 
 class RewardTrigger(Enum):
-    """Reward trigger events"""    MANUAL = "manual"
+    """Reward trigger events"""
+    MANUAL = "manual"
     ACHIEVEMENT_UNLOCK = "achievement_unlock"
     CHALLENGE_COMPLETION = "challenge_completion"
     MILESTONE_REACHED = "milestone_reached"
@@ -74,7 +79,8 @@ class RewardTrigger(Enum):
 
 @dataclass
 class Reward:
-    """Reward definition"""    reward_id: str
+    """Reward definition"""
+    reward_id: str
     name: str
     description: str
     reward_type: RewardType
@@ -93,7 +99,8 @@ class Reward:
 
 @dataclass
 class RewardDistribution:
-    """Reward distribution record"""    distribution_id: str
+    """Reward distribution record"""
+    distribution_id: str
     user_id: str
     reward_id: str
     trigger: RewardTrigger
@@ -110,7 +117,8 @@ class RewardDistribution:
 
 @dataclass
 class UserRewardBalance:
-    """User's accumulated rewards"""    balance_id: str
+    """User's accumulated rewards"""
+    balance_id: str
     user_id: str
     reward_type: RewardType
     current_balance: Union[int, float, Decimal]
@@ -122,7 +130,8 @@ class UserRewardBalance:
     metadata: Dict[str, Any]
 
 class RewardRepository(BaseRepository[Reward]):
-    """Enterprise reward management repository"""    
+    """Enterprise reward management repository"""
+    
     def __init__(self, db_connection=None, cache_manager=None,
                  analytics_service=None, notification_service=None,
                  payment_service=None, virtual_economy_service=None,
@@ -184,7 +193,8 @@ class RewardRepository(BaseRepository[Reward]):
         requirements: Optional[Dict[str, Any]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Reward:
-        """Create new reward with economic validation"""        try:
+        """Create new reward with economic validation"""
+        try:
             # Validate inputs
             if not name or len(name) < 3:
                 raise ValueError("Reward name must be at least 3 characters")
@@ -257,7 +267,8 @@ class RewardRepository(BaseRepository[Reward]):
         custom_value: Optional[Union[int, float, str, Dict[str, Any]]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Optional[RewardDistribution]:
-        """Distribute reward to user with validation"""        try:
+        """Distribute reward to user with validation"""
+        try:
             # Get reward definition
             reward = self.get_by_id(reward_id)
             if not reward or not reward.is_active:
@@ -355,7 +366,8 @@ class RewardRepository(BaseRepository[Reward]):
         user_id: str,
         distribution_id: str
     ) -> bool:
-        """Claim distributed reward"""        try:
+        """Claim distributed reward"""
+        try:
             # Get distribution record
             distribution = self.get_distribution_by_id(distribution_id)
             if not distribution:
@@ -408,7 +420,8 @@ class RewardRepository(BaseRepository[Reward]):
         limit: int = 50,
         offset: int = 0
     ) -> List[RewardDistribution]:
-        """Get user's reward distributions"""        try:
+        """Get user's reward distributions"""
+        try:
             cache_key = f"user_rewards:{user_id}:{status}:{reward_type}:{category}:{limit}:{offset}"
             
             # Try cache first
@@ -444,7 +457,8 @@ class RewardRepository(BaseRepository[Reward]):
         user_id: str,
         reward_type: Optional[RewardType] = None
     ) -> Union[UserRewardBalance, List[UserRewardBalance]]:
-        """Get user's reward balance(s)"""        try:
+        """Get user's reward balance(s)"""
+        try:
             if reward_type:
                 # Get specific balance
                 return self._get_user_balance(user_id, reward_type)
@@ -463,7 +477,8 @@ class RewardRepository(BaseRepository[Reward]):
         purpose: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Spend user's virtual currency"""        try:
+        """Spend user's virtual currency"""
+        try:
             # Get current balance
             balance = self._get_user_balance(user_id, RewardType.VIRTUAL_CURRENCY)
             if not balance or balance.current_balance < amount:
@@ -495,7 +510,8 @@ class RewardRepository(BaseRepository[Reward]):
         user_id: Optional[str] = None,
         days: int = 30
     ) -> Dict[str, Any]:
-        """Get reward analytics"""        try:
+        """Get reward analytics"""
+        try:
             cache_key = f"reward_analytics:{reward_id}:{user_id}:{days}"
             
             # Try cache first
@@ -518,7 +534,8 @@ class RewardRepository(BaseRepository[Reward]):
             return {}
     
     def _generate_reward_id(self, name: str, reward_type: RewardType) -> str:
-        """Generate unique reward ID"""        base_string = f"{reward_type.value}_{name.lower().replace(' ', '_')}"
+        """Generate unique reward ID"""
+        base_string = f"{reward_type.value}_{name.lower().replace(' ', '_')}"
         timestamp = str(int(datetime.now().timestamp()))
         return f"rew_{hashlib.md5((base_string + timestamp).encode()).hexdigest()[:12]}"
     
@@ -527,7 +544,8 @@ class RewardRepository(BaseRepository[Reward]):
         reward_type: RewardType,
         value: Union[int, float, str, Dict[str, Any]]
     ):
-        """Validate reward value based on type"""        if reward_type in [RewardType.EXPERIENCE_POINTS, RewardType.VIRTUAL_CURRENCY]:
+        """Validate reward value based on type"""
+        if reward_type in [RewardType.EXPERIENCE_POINTS, RewardType.VIRTUAL_CURRENCY]:
             if not isinstance(value, (int, float)) or value <= 0:
                 raise ValueError(f"Invalid value for {reward_type.value}")
         
@@ -541,7 +559,8 @@ class RewardRepository(BaseRepository[Reward]):
         value: Union[int, float, str, Dict[str, Any]],
         total_available: Optional[int]
     ) -> bool:
-        """Validate economic impact of reward"""        if reward_type == RewardType.VIRTUAL_CURRENCY and isinstance(value, (int, float)):
+        """Validate economic impact of reward"""
+        if reward_type == RewardType.VIRTUAL_CURRENCY and isinstance(value, (int, float)):
             daily_cap = self._economy_settings["daily_virtual_currency_cap"]
             if total_available and value * total_available > daily_cap * 30:  # Monthly limit
                 return False
@@ -549,7 +568,8 @@ class RewardRepository(BaseRepository[Reward]):
         return True
     
     def _validate_user_eligibility(self, user_id: str, reward: Reward) -> bool:
-        """Validate user eligibility for reward"""        # Check max claims per user
+        """Validate user eligibility for reward"""
+        # Check max claims per user
         if reward.max_claims_per_user:
             user_claims = self._count_user_claims(user_id, reward.reward_id)
             if user_claims >= reward.max_claims_per_user:
@@ -563,7 +583,8 @@ class RewardRepository(BaseRepository[Reward]):
         return True
     
     def _check_reward_availability(self, reward: Reward) -> bool:
-        """Check if reward is still available"""        if reward.total_available:
+        """Check if reward is still available"""
+        if reward.total_available:
             distributed_count = self._count_total_distributions(reward.reward_id)
             if distributed_count >= reward.total_available:
                 return False
@@ -571,7 +592,8 @@ class RewardRepository(BaseRepository[Reward]):
         return True
     
     def _get_rarity_multiplier(self, rarity: float) -> float:
-        """Get rarity multiplier for rewards"""        for (min_rarity, max_rarity), multiplier in self._rarity_multipliers.items():
+        """Get rarity multiplier for rewards"""
+        for (min_rarity, max_rarity), multiplier in self._rarity_multipliers.items():
             if min_rarity <= rarity < max_rarity:
                 return multiplier
         return 1.0
@@ -581,7 +603,8 @@ class RewardRepository(BaseRepository[Reward]):
         distribution: RewardDistribution,
         reward: Reward
     ) -> bool:
-        """Process reward distribution based on type"""        try:
+        """Process reward distribution based on type"""
+        try:
             if reward.reward_type in [RewardType.EXPERIENCE_POINTS, RewardType.VIRTUAL_CURRENCY]:
                 # Immediate distribution for virtual rewards
                 return True
@@ -608,7 +631,8 @@ class RewardRepository(BaseRepository[Reward]):
             return False
     
     def _process_reward_claim(self, distribution: RewardDistribution) -> bool:
-        """Process reward claim"""        # Most rewards are auto-claimed during distribution
+        """Process reward claim"""
+        # Most rewards are auto-claimed during distribution
         # Physical items and some premium features require explicit claiming
         return True
     
@@ -619,15 +643,18 @@ class RewardRepository(BaseRepository[Reward]):
         amount: Union[int, float, Decimal],
         transaction_type: str
     ) -> bool:
-        """Update user reward balance"""        # Implementation would update balance table
+        """Update user reward balance"""
+        # Implementation would update balance table
         return True
     
     def _save_distribution(self, distribution: RewardDistribution) -> RewardDistribution:
-        """Save distribution record"""        # Implementation would save to database
+        """Save distribution record"""
+        # Implementation would save to database
         return distribution
     
     def get_distribution_by_id(self, distribution_id: str) -> Optional[RewardDistribution]:
-        """Get distribution by ID"""        # Implementation would query database
+        """Get distribution by ID"""
+        # Implementation would query database
         return None
     
     def _query_distributions(
@@ -636,7 +663,8 @@ class RewardRepository(BaseRepository[Reward]):
         limit: int,
         offset: int
     ) -> List[RewardDistribution]:
-        """Query distributions with filters"""        # Implementation would query database
+        """Query distributions with filters"""
+        # Implementation would query database
         return []
     
     def _get_user_balance(
@@ -644,19 +672,23 @@ class RewardRepository(BaseRepository[Reward]):
         user_id: str,
         reward_type: RewardType
     ) -> Optional[UserRewardBalance]:
-        """Get user balance for specific reward type"""        # Implementation would query balance
+        """Get user balance for specific reward type"""
+        # Implementation would query balance
         return None
     
     def _get_all_user_balances(self, user_id: str) -> List[UserRewardBalance]:
-        """Get all user balances"""        # Implementation would query all balances
+        """Get all user balances"""
+        # Implementation would query all balances
         return []
     
     def _count_user_claims(self, user_id: str, reward_id: str) -> int:
-        """Count user claims for specific reward"""        # Implementation would count claims
+        """Count user claims for specific reward"""
+        # Implementation would count claims
         return 0
     
     def _count_total_distributions(self, reward_id: str) -> int:
-        """Count total distributions for reward"""        # Implementation would count distributions
+        """Count total distributions for reward"""
+        # Implementation would count distributions
         return 0
     
     def _check_user_requirement(
@@ -665,7 +697,8 @@ class RewardRepository(BaseRepository[Reward]):
         requirement_key: str,
         requirement_value: Any
     ) -> bool:
-        """Check user meets specific requirement"""        # Implementation would check requirement
+        """Check user meets specific requirement"""
+        # Implementation would check requirement
         return True
     
     def _calculate_reward_analytics(
@@ -674,28 +707,34 @@ class RewardRepository(BaseRepository[Reward]):
         user_id: Optional[str],
         days: int
     ) -> Dict[str, Any]:
-        """Calculate reward analytics"""        # Implementation would calculate analytics
+        """Calculate reward analytics"""
+        # Implementation would calculate analytics
         return {}
     
     # BaseRepository abstract method implementations
     def create(self, entity: Reward, **kwargs) -> Reward:
-        """Create reward entity"""        self._validate_entity(entity)
+        """Create reward entity"""
+        self._validate_entity(entity)
         # Implementation would save to database
         return entity
     
     def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[Reward]:
-        """Get reward by ID"""        # Implementation would query database
+        """Get reward by ID"""
+        # Implementation would query database
         return None
     
     def update(self, entity: Reward, **kwargs) -> Reward:
-        """Update reward entity"""        self._validate_entity(entity)
+        """Update reward entity"""
+        self._validate_entity(entity)
         # Implementation would update database
         return entity
     
     def delete(self, entity_id: str, **kwargs) -> bool:
-        """Soft delete reward"""        # Implementation would soft delete (set is_active=False)
+        """Soft delete reward"""
+        # Implementation would soft delete (set is_active=False)
         return True
     
     def list_all(self, limit: int = 100, offset: int = 0, **filters) -> List[Reward]:
-        """List all rewards with filtering"""        # Implementation would query with filters
+        """List all rewards with filtering"""
+        # Implementation would query with filters
         return []

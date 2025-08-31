@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -34,7 +35,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  STRICT LEGAL WARNING & COPYRIGHT PROTECTION ⚠️
 This entire test suite is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import json
 import pytest
 import sys
@@ -64,9 +66,11 @@ from ai.observability.metrics import (
 
 
 class TestMetricsCollectionComprehensive:
-    """Ultra-comprehensive test suite for Metrics Collection"""    @pytest.fixture
+    """Ultra-comprehensive test suite for Metrics Collection"""
+    @pytest.fixture
     def sample_metric_definitions(self):
-        """Sample metric definitions for testing"""        return {
+        """Sample metric definitions for testing"""
+        return {
             'http_requests_total': MetricDefinition(
                 name='http_requests_total',
                 metric_type=MetricType.COUNTER,
@@ -107,7 +111,8 @@ class TestMetricsCollectionComprehensive:
 
     @pytest.fixture
     async def metrics_collector(self, sample_metric_definitions):
-        """Create metrics collector instance"""        config = {
+        """Create metrics collector instance"""
+        config = {
             'collection_interval': 1,
             'buffer_size': 1000,
             'export_interval': 10,
@@ -125,7 +130,8 @@ class TestMetricsCollectionComprehensive:
 
     @pytest.fixture
     async def metrics_aggregator(self):
-        """Create metrics aggregator instance"""        config = {
+        """Create metrics aggregator instance"""
+        config = {
             'aggregation_interval': 60,
             'aggregation_functions': ['sum', 'avg', 'min', 'max', 'count', 'p95', 'p99'],
             'retention_policy': {
@@ -140,12 +146,14 @@ class TestMetricsCollectionComprehensive:
         await aggregator.shutdown()
 
     def test_metric_type_enum_comprehensive(self):
-        """Test MetricType enum completeness"""        expected_types = {'COUNTER', 'GAUGE', 'HISTOGRAM', 'SUMMARY', 'RATE'}
+        """Test MetricType enum completeness"""
+        expected_types = {'COUNTER', 'GAUGE', 'HISTOGRAM', 'SUMMARY', 'RATE'}
         actual_types = {member.name for member in MetricType}
         assert actual_types == expected_types
 
     def test_metric_unit_enum_comprehensive(self):
-        """Test MetricUnit enum completeness"""        expected_units = {
+        """Test MetricUnit enum completeness"""
+        expected_units = {
             # Time units
             'NANOSECONDS', 'MICROSECONDS', 'MILLISECONDS', 'SECONDS', 'MINUTES', 'HOURS',
             # Size units
@@ -161,7 +169,8 @@ class TestMetricsCollectionComprehensive:
         assert actual_units == expected_units
 
     def test_metric_sample_creation_and_validation(self):
-        """Test MetricSample creation and validation"""        timestamp = datetime.now(timezone.utc)
+        """Test MetricSample creation and validation"""
+        timestamp = datetime.now(timezone.utc)
         
         sample = MetricSample(
             timestamp=timestamp,
@@ -186,7 +195,8 @@ class TestMetricsCollectionComprehensive:
         assert sample_naive.timestamp.tzinfo == timezone.utc
 
     def test_metric_definition_creation_and_validation(self, sample_metric_definitions):
-        """Test MetricDefinition creation and validation"""        definition = sample_metric_definitions['http_requests_total']
+        """Test MetricDefinition creation and validation"""
+        definition = sample_metric_definitions['http_requests_total']
         
         assert definition.name == 'http_requests_total'
         assert definition.metric_type == MetricType.COUNTER
@@ -205,7 +215,8 @@ class TestMetricsCollectionComprehensive:
 
     @pytest.mark.asyncio
     async def test_metrics_collector_initialization_and_registration(self, sample_metric_definitions):
-        """Test metrics collector initialization and metric registration"""        collector = MetricsCollector({'collection_interval': 1})
+        """Test metrics collector initialization and metric registration"""
+        collector = MetricsCollector({'collection_interval': 1})
         await collector.initialize()
         
         # Test metric registration
@@ -225,7 +236,8 @@ class TestMetricsCollectionComprehensive:
 
     @pytest.mark.asyncio
     async def test_counter_metrics_comprehensive(self, metrics_collector):
-        """Test comprehensive counter metrics functionality"""        collector = metrics_collector
+        """Test comprehensive counter metrics functionality"""
+        collector = metrics_collector
         counter_name = 'http_requests_total'
         
         # Test incrementing counter
@@ -257,7 +269,8 @@ class TestMetricsCollectionComprehensive:
 
     @pytest.mark.asyncio
     async def test_gauge_metrics_comprehensive(self, metrics_collector):
-        """Test comprehensive gauge metrics functionality"""        collector = metrics_collector
+        """Test comprehensive gauge metrics functionality"""
+        collector = metrics_collector
         gauge_name = 'memory_usage_bytes'
         
         labels = {'component': 'ai_models', 'type': 'heap'}
@@ -284,7 +297,8 @@ class TestMetricsCollectionComprehensive:
 
     @pytest.mark.asyncio
     async def test_histogram_metrics_comprehensive(self, metrics_collector):
-        """Test comprehensive histogram metrics functionality"""        collector = metrics_collector
+        """Test comprehensive histogram metrics functionality"""
+        collector = metrics_collector
         histogram_name = 'request_duration_seconds'
         
         labels = {'method': 'POST', 'endpoint': '/api/upload'}
@@ -316,7 +330,8 @@ class TestMetricsCollectionComprehensive:
 
     @pytest.mark.asyncio
     async def test_summary_metrics_comprehensive(self, metrics_collector):
-        """Test comprehensive summary metrics functionality"""        collector = metrics_collector
+        """Test comprehensive summary metrics functionality"""
+        collector = metrics_collector
         summary_name = 'api_response_time'
         
         labels = {'service': 'content_protection', 'operation': 'fingerprint_analysis'}
@@ -348,7 +363,8 @@ class TestMetricsCollectionComprehensive:
 
     @pytest.mark.asyncio
     async def test_rate_metrics_comprehensive(self, metrics_collector):
-        """Test comprehensive rate metrics functionality"""        collector = metrics_collector
+        """Test comprehensive rate metrics functionality"""
+        collector = metrics_collector
         rate_name = 'content_processing_rate'
         
         labels = {'protection_type': 'fingerprint', 'status': 'success'}
@@ -380,7 +396,8 @@ class TestMetricsCollectionComprehensive:
 
     @pytest.mark.asyncio
     async def test_metrics_aggregation_comprehensive(self, metrics_aggregator):
-        """Test comprehensive metrics aggregation"""        aggregator = metrics_aggregator
+        """Test comprehensive metrics aggregation"""
+        aggregator = metrics_aggregator
         
         # Generate sample data points
         metric_name = 'cpu_usage_percent'
@@ -442,7 +459,8 @@ class TestMetricsCollectionComprehensive:
 
     @pytest.mark.asyncio
     async def test_metrics_query_engine_comprehensive(self, metrics_collector):
-        """Test comprehensive metrics query functionality"""        collector = metrics_collector
+        """Test comprehensive metrics query functionality"""
+        collector = metrics_collector
         
         # Setup test data
         metric_names = ['http_requests_total', 'memory_usage_bytes', 'request_duration_seconds']
@@ -510,7 +528,8 @@ class TestMetricsCollectionComprehensive:
 
     @pytest.mark.asyncio
     async def test_metrics_storage_and_retrieval(self, metrics_collector):
-        """Test metrics storage and retrieval functionality"""        collector = metrics_collector
+        """Test metrics storage and retrieval functionality"""
+        collector = metrics_collector
         
         # Configure storage backend
         storage_config = {
@@ -564,7 +583,8 @@ class TestMetricsCollectionComprehensive:
 
     @pytest.mark.asyncio
     async def test_metrics_analysis_and_insights(self, metrics_collector):
-        """Test metrics analysis and insights generation"""        collector = metrics_collector
+        """Test metrics analysis and insights generation"""
+        collector = metrics_collector
         
         # Setup analyzer
         analyzer = MetricsAnalyzer()
@@ -646,7 +666,8 @@ class TestMetricsCollectionComprehensive:
 
     @pytest.mark.asyncio
     async def test_real_time_metrics_streaming(self, metrics_collector):
-        """Test real-time metrics streaming functionality"""        collector = metrics_collector
+        """Test real-time metrics streaming functionality"""
+        collector = metrics_collector
         
         # Setup streaming configuration
         streaming_config = {
@@ -698,7 +719,8 @@ class TestMetricsCollectionComprehensive:
 
     @pytest.mark.asyncio
     async def test_metrics_export_formats(self, metrics_collector):
-        """Test various metrics export formats"""        collector = metrics_collector
+        """Test various metrics export formats"""
+        collector = metrics_collector
         
         # Setup test data
         metrics_data = {
@@ -753,7 +775,8 @@ class TestMetricsCollectionComprehensive:
 
     @pytest.mark.asyncio
     async def test_metrics_alerting_rules(self, metrics_collector):
-        """Test metrics-based alerting rules"""        collector = metrics_collector
+        """Test metrics-based alerting rules"""
+        collector = metrics_collector
         
         # Setup alerting rules
         alerting_rules = [
@@ -829,7 +852,8 @@ class TestMetricsCollectionComprehensive:
 
     @pytest.mark.asyncio
     async def test_metrics_retention_and_cleanup(self, metrics_collector):
-        """Test metrics retention policies and cleanup"""        collector = metrics_collector
+        """Test metrics retention policies and cleanup"""
+        collector = metrics_collector
         
         # Configure retention policy
         retention_policy = {
@@ -890,7 +914,8 @@ class TestMetricsCollectionComprehensive:
                 assert len(very_old_samples) < 50  # Some tolerance for timing
 
     def test_thread_safety_metrics_operations(self, sample_metric_definitions):
-        """Test thread safety of metrics operations"""        import concurrent.futures
+        """Test thread safety of metrics operations"""
+        import concurrent.futures
         import threading
         
         collector = MetricsCollector({'collection_interval': 1})
@@ -954,7 +979,8 @@ class TestMetricsCollectionComprehensive:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_high_throughput_metrics_ingestion(self, metrics_collector):
-        """Test high-throughput metrics ingestion performance"""        collector = metrics_collector
+        """Test high-throughput metrics ingestion performance"""
+        collector = metrics_collector
         
         # Configuration for high throughput
         await collector.configure_high_throughput(
@@ -1013,7 +1039,8 @@ class TestMetricsCollectionComprehensive:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_end_to_end_metrics_pipeline(self, metrics_collector, metrics_aggregator):
-        """Test end-to-end metrics pipeline"""        collector = metrics_collector
+        """Test end-to-end metrics pipeline"""
+        collector = metrics_collector
         aggregator = metrics_aggregator
         
         # Step 1: Setup complete metrics pipeline
@@ -1121,9 +1148,11 @@ class TestMetricsCollectionComprehensive:
 # Performance benchmarks
 @pytest.mark.benchmark
 class TestMetricsBenchmarks:
-    """Performance benchmarks for metrics collection"""    
+    """Performance benchmarks for metrics collection"""
+    
     def test_counter_increment_benchmark(self, benchmark):
-        """Benchmark counter increment performance"""        from ai.observability.metrics import MetricsCollector
+        """Benchmark counter increment performance"""
+        from ai.observability.metrics import MetricsCollector
         
         collector = MetricsCollector({'collection_interval': 1})
         metric_name = 'benchmark_counter'
@@ -1137,7 +1166,8 @@ class TestMetricsBenchmarks:
         assert result['success'] is True
     
     def test_sample_creation_benchmark(self, benchmark):
-        """Benchmark metric sample creation performance"""        def create_sample():
+        """Benchmark metric sample creation performance"""
+        def create_sample():
             return MetricSample(
                 timestamp=datetime.now(timezone.utc),
                 value=42.5,
@@ -1149,7 +1179,8 @@ class TestMetricsBenchmarks:
         assert sample.labels['endpoint'] == '/api/test'
     
     def test_aggregation_calculation_benchmark(self, benchmark):
-        """Benchmark aggregation calculation performance"""        # Generate test data
+        """Benchmark aggregation calculation performance"""
+        # Generate test data
         values = [i * 0.1 for i in range(10000)]
         
         def calculate_aggregations():

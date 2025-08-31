@@ -551,14 +551,16 @@ from .content_protection import (
 logger = logging.getLogger(__name__)
 
 def get_content_manager(content_type: str):
-    """    Get appropriate content manager based on content type
+    """
+    Get appropriate content manager based on content type
     
     Args:
         content_type: Type of content (audio, video, image, text, multimedia)
         
     Returns:
         Content manager instance
-    """    managers = {
+    """
+    managers = {
         'audio': AudioContentManager,
         'video': VideoContentManager,
         'image': ImageContentManager,
@@ -573,7 +575,8 @@ def get_content_manager(content_type: str):
     return manager_class()
 
 def validate_content_metadata(content_type: str, metadata: Dict[str, Any]) -> bool:
-    """    Validate content metadata structure
+    """
+    Validate content metadata structure
     
     Args:
         content_type: Type of content
@@ -581,7 +584,8 @@ def validate_content_metadata(content_type: str, metadata: Dict[str, Any]) -> bo
         
     Returns:
         True if valid, False otherwise
-    """    try:
+    """
+    try:
         manager = get_content_manager(content_type)
         
         # Basic validation - check required fields exist
@@ -606,14 +610,16 @@ def validate_content_metadata(content_type: str, metadata: Dict[str, Any]) -> bo
         return False
 
 def get_supported_formats(content_type: str) -> List[str]:
-    """    Get list of supported formats for content type
+    """
+    Get list of supported formats for content type
     
     Args:
         content_type: Type of content
         
     Returns:
         List of supported format strings
-    """    formats = {
+    """
+    formats = {
         'audio': ['mp3', 'wav', 'flac', 'aac', 'ogg'],
         'video': ['mp4', 'avi', 'mov', 'webm', 'mkv'],
         'image': ['jpg', 'jpeg', 'png', 'tiff', 'webp', 'gif'],
@@ -624,7 +630,8 @@ def get_supported_formats(content_type: str) -> List[str]:
     return formats.get(content_type.lower(), [])
 
 def calculate_content_hash(content_data: bytes, algorithm: str = 'sha256') -> str:
-    """    Calculate hash for content data
+    """
+    Calculate hash for content data
     
     Args:
         content_data: Binary content data
@@ -632,7 +639,8 @@ def calculate_content_hash(content_data: bytes, algorithm: str = 'sha256') -> st
         
     Returns:
         Hexadecimal hash string
-    """    import hashlib
+    """
+    import hashlib
     
     if algorithm == 'md5':
         hasher = hashlib.md5()
@@ -647,7 +655,8 @@ def calculate_content_hash(content_data: bytes, algorithm: str = 'sha256') -> st
     return hasher.hexdigest()
 
 def estimate_processing_time(file_size_mb: float, content_type: str) -> float:
-    """    Estimate processing time based on file size and type
+    """
+    Estimate processing time based on file size and type
     
     Args:
         file_size_mb: File size in megabytes
@@ -655,7 +664,8 @@ def estimate_processing_time(file_size_mb: float, content_type: str) -> float:
         
     Returns:
         Estimated processing time in seconds
-    """    # Processing speed estimates (MB/second)
+    """
+    # Processing speed estimates (MB/second)
     processing_speeds = {
         'audio': 50,        # Fast audio processing
         'video': 10,        # Slower video processing
@@ -668,7 +678,8 @@ def estimate_processing_time(file_size_mb: float, content_type: str) -> float:
     return max(1.0, file_size_mb / speed)
 
 def get_quality_recommendations(content_type: str, metadata: Dict[str, Any]) -> List[str]:
-    """    Get quality improvement recommendations
+    """
+    Get quality improvement recommendations
     
     Args:
         content_type: Type of content
@@ -676,7 +687,8 @@ def get_quality_recommendations(content_type: str, metadata: Dict[str, Any]) -> 
         
     Returns:
         List of recommendation strings
-    """    recommendations = []
+    """
+    recommendations = []
     
     if content_type.lower() == 'audio':
         sample_rate = metadata.get('sample_rate', 0)
@@ -716,11 +728,13 @@ def get_quality_recommendations(content_type: str, metadata: Dict[str, Any]) -> 
     return recommendations
 
 def create_comprehensive_content_suite():
-    """    Create a comprehensive content management suite with all components
+    """
+    Create a comprehensive content management suite with all components
     
     Returns:
         Dictionary containing all managers and systems
-    """    return {
+    """
+    return {
         'managers': {
             'audio': AudioContentManager(),
             'video': VideoContentManager(),
@@ -734,11 +748,13 @@ def create_comprehensive_content_suite():
     }
 
 def get_content_security_features() -> Dict[str, List[str]]:
-    """    Get available content security features
+    """
+    Get available content security features
     
     Returns:
         Dictionary of security features by category
-    """    return {
+    """
+    return {
         'fingerprinting': [
             'perceptual_hashing',
             'audio_chromaprint',
@@ -950,11 +966,13 @@ __all__ = [
 ]
 
 def get_module_info() -> Dict[str, Any]:
-    """    Returns comprehensive information about the Content Types module.
+    """
+    Returns comprehensive information about the Content Types module.
     
     Returns:
         Dict[str, Any]: Complete module information including capabilities
-    """    return {
+    """
+    return {
         "name": "Content Types Database Module",
         "version": __version__,
         "author": __author__,
@@ -987,14 +1005,16 @@ def get_module_info() -> Dict[str, Any]:
     }
 
 def initialize_content_system(config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-    """    Initialize the complete content management system.
+    """
+    Initialize the complete content management system.
     
     Args:
         config: Optional configuration dictionary
         
     Returns:
         Dict[str, Any]: Initialization status and component information
-    """    try:
+    """
+    try:
         logger.info("Initializing Content Types Database System...")
         
         # Default configuration
@@ -1039,7 +1059,8 @@ def initialize_content_system(config: Optional[Dict[str, Any]] = None) -> Dict[s
         }
 
 def validate_content_type(content_type: str, file_path: Optional[Union[str, Path]] = None) -> bool:
-    """    Validate if a content type is supported by the system.
+    """
+    Validate if a content type is supported by the system.
     
     Args:
         content_type: Content type to validate
@@ -1047,7 +1068,8 @@ def validate_content_type(content_type: str, file_path: Optional[Union[str, Path
         
     Returns:
         bool: True if content type is supported
-    """    supported_types = ["audio", "video", "image", "text", "multimedia"]
+    """
+    supported_types = ["audio", "video", "image", "text", "multimedia"]
     
     if content_type.lower() not in supported_types:
         return False
@@ -1069,11 +1091,13 @@ def validate_content_type(content_type: str, file_path: Optional[Union[str, Path
     return True
 
 def get_supported_formats() -> Dict[str, List[str]]:
-    """    Get all supported file formats by content type.
+    """
+    Get all supported file formats by content type.
     
     Returns:
         Dict[str, List[str]]: Mapping of content types to supported formats
-    """    return {
+    """
+    return {
         "audio": ["MP3", "WAV", "FLAC", "AAC", "OGG", "M4A", "WMA", "AIFF"],
         "video": ["MP4", "AVI", "MOV", "WebM", "MKV", "FLV", "WMV", "3GP"],
         "image": ["JPEG", "PNG", "TIFF", "WebP", "HEIF", "BMP", "GIF", "SVG"],

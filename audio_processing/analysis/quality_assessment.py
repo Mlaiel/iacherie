@@ -5,7 +5,8 @@ distortion analysis, dynamic range measurement, and professional standards compl
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import numpy as np
+"""
+import numpy as np
 import logging
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
@@ -18,7 +19,8 @@ from scipy import stats
 
 
 class QualityStandard(Enum):
-    """Audio quality standards"""    BROADCAST = "broadcast"
+    """Audio quality standards"""
+    BROADCAST = "broadcast"
     MASTERING = "mastering"
     STREAMING = "streaming"
     PODCAST = "podcast"
@@ -26,7 +28,8 @@ class QualityStandard(Enum):
 
 
 class QualityGrade(Enum):
-    """Quality grades"""    EXCELLENT = "excellent"
+    """Quality grades"""
+    EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
     POOR = "poor"
@@ -35,7 +38,8 @@ class QualityGrade(Enum):
 
 @dataclass
 class QualityMetrics:
-    """Audio quality metrics"""    snr: float  # Signal-to-noise ratio (dB)
+    """Audio quality metrics"""
+    snr: float  # Signal-to-noise ratio (dB)
     thd: float  # Total harmonic distortion (%)
     dynamic_range: float  # Dynamic range (dB)
     peak_level: float  # Peak level (dBFS)
@@ -51,7 +55,8 @@ class QualityMetrics:
 
 @dataclass
 class DistortionAnalysis:
-    """Distortion analysis results"""    total_harmonic_distortion: float
+    """Distortion analysis results"""
+    total_harmonic_distortion: float
     harmonic_distortion_spectrum: np.ndarray
     intermodulation_distortion: float
     clipping_percentage: float
@@ -61,7 +66,8 @@ class DistortionAnalysis:
 
 @dataclass
 class QualityAssessmentResult:
-    """Complete quality assessment results"""    overall_grade: QualityGrade
+    """Complete quality assessment results"""
+    overall_grade: QualityGrade
     overall_score: float  # 0-100
     quality_metrics: QualityMetrics
     distortion_analysis: DistortionAnalysis
@@ -73,22 +79,26 @@ class QualityAssessmentResult:
 
 
 class AudioQualityAssessment:
-    """    ✅ Professional Audio Quality Assessment Engine
+    """
+    ✅ Professional Audio Quality Assessment Engine
     
     Comprehensive quality analysis with professional standards compliance,
     distortion detection, dynamic range analysis, and mastering recommendations.
-    """    
+    """
+    
     def __init__(self,
                  sample_rate: int = 44100,
                  quality_standard: QualityStandard = QualityStandard.MASTERING,
                  reference_level: float = -23.0):  # LUFS
-        """        Initialize quality assessment engine
+        """
+        Initialize quality assessment engine
         
         Args:
             sample_rate: Audio sample rate
             quality_standard: Target quality standard
             reference_level: Reference loudness level (LUFS)
-        """        self.logger = logging.getLogger(self.__class__.__name__)
+        """
+        self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
         self.quality_standard = quality_standard
         self.reference_level = reference_level
@@ -146,7 +156,8 @@ class AudioQualityAssessment:
     async def assess_quality(self, 
                            audio_data: np.ndarray,
                            channels: int = 2) -> QualityAssessmentResult:
-        """        Perform comprehensive audio quality assessment
+        """
+        Perform comprehensive audio quality assessment
         
         Args:
             audio_data: Input audio signal
@@ -154,7 +165,8 @@ class AudioQualityAssessment:
             
         Returns:
             Complete quality assessment results
-        """        try:
+        """
+        try:
             self.logger.info("Starting quality assessment...")
             
             # Ensure proper format
@@ -214,7 +226,8 @@ class AudioQualityAssessment:
     async def _compute_quality_metrics(self, 
                                      audio_data: np.ndarray, 
                                      channels: int) -> Dict[str, float]:
-        """Compute basic quality metrics"""        def compute():
+        """Compute basic quality metrics"""
+        def compute():
             metrics = {}
             
             # Handle mono/stereo
@@ -274,7 +287,8 @@ class AudioQualityAssessment:
         return await asyncio.get_event_loop().run_in_executor(self.executor, compute)
     
     async def _analyze_distortion(self, audio_data: np.ndarray) -> DistortionAnalysis:
-        """Analyze various types of distortion"""        def analyze():
+        """Analyze various types of distortion"""
+        def analyze():
             # Convert to mono for analysis
             if audio_data.ndim == 2:
                 mono_audio = np.mean(audio_data, axis=1)
@@ -308,7 +322,8 @@ class AudioQualityAssessment:
         return await asyncio.get_event_loop().run_in_executor(self.executor, analyze)
     
     def _compute_thd(self, audio_data: np.ndarray) -> Tuple[float, np.ndarray]:
-        """Compute total harmonic distortion"""        try:
+        """Compute total harmonic distortion"""
+        try:
             # FFT analysis
             fft_data = np.fft.fft(audio_data)
             magnitude = np.abs(fft_data[:len(fft_data)//2])
@@ -340,7 +355,8 @@ class AudioQualityAssessment:
             return 0.0, np.array([])
     
     def _detect_clipping(self, audio_data: np.ndarray) -> float:
-        """Detect hard clipping"""        # Find samples at or near full scale
+        """Detect hard clipping"""
+        # Find samples at or near full scale
         threshold = 0.99  # 99% of full scale
         clipped_samples = np.sum(np.abs(audio_data) >= threshold)
         clipping_percentage = (clipped_samples / len(audio_data)) * 100
@@ -348,7 +364,8 @@ class AudioQualityAssessment:
         return float(clipping_percentage)
     
     def _detect_digital_artifacts(self, audio_data: np.ndarray) -> Dict[str, float]:
-        """Detect various digital artifacts"""        artifacts = {}
+        """Detect various digital artifacts"""
+        artifacts = {}
         
         # Intersample peaks (simplified)
         upsampled = scipy.signal.resample(audio_data, len(audio_data) * 4)
@@ -372,7 +389,8 @@ class AudioQualityAssessment:
         return artifacts
     
     def _detect_aliasing(self, audio_data: np.ndarray) -> float:
-        """Detect aliasing artifacts"""        # Simple aliasing detection based on high-frequency content
+        """Detect aliasing artifacts"""
+        # Simple aliasing detection based on high-frequency content
         fft_data = np.fft.fft(audio_data)
         magnitude = np.abs(fft_data[:len(fft_data)//2])
         
@@ -386,7 +404,8 @@ class AudioQualityAssessment:
         return float(aliasing_ratio)
     
     def _compute_imd(self, audio_data: np.ndarray) -> float:
-        """Compute intermodulation distortion (simplified)"""        # This is a simplified IMD estimation
+        """Compute intermodulation distortion (simplified)"""
+        # This is a simplified IMD estimation
         # Real IMD would require injecting test tones
         
         # Use spectral analysis to estimate IMD products
@@ -405,7 +424,8 @@ class AudioQualityAssessment:
         return float(imd_estimate * 100)  # Convert to percentage
     
     async def _analyze_loudness(self, audio_data: np.ndarray) -> Dict[str, float]:
-        """Analyze loudness metrics (LUFS, True Peak)"""        def analyze():
+        """Analyze loudness metrics (LUFS, True Peak)"""
+        def analyze():
             loudness_metrics = {}
             
             # Simplified LUFS calculation
@@ -426,7 +446,8 @@ class AudioQualityAssessment:
         return await asyncio.get_event_loop().run_in_executor(self.executor, analyze)
     
     async def _analyze_frequency_response(self, audio_data: np.ndarray) -> Dict[str, float]:
-        """Analyze frequency response characteristics"""        def analyze():
+        """Analyze frequency response characteristics"""
+        def analyze():
             freq_metrics = {}
             
             # FFT analysis
@@ -465,7 +486,8 @@ class AudioQualityAssessment:
                         basic_metrics: Dict[str, float], 
                         loudness_metrics: Dict[str, float],
                         freq_metrics: Dict[str, float]) -> QualityMetrics:
-        """Combine all metrics into QualityMetrics object"""        return QualityMetrics(
+        """Combine all metrics into QualityMetrics object"""
+        return QualityMetrics(
             snr=basic_metrics.get('snr', 0.0),
             thd=0.0,  # Will be filled from distortion analysis
             dynamic_range=basic_metrics.get('dynamic_range', 0.0),
@@ -481,7 +503,8 @@ class AudioQualityAssessment:
         )
     
     async def _assess_compliance(self, metrics: QualityMetrics) -> Dict[str, bool]:
-        """Assess compliance with quality standards"""        def assess():
+        """Assess compliance with quality standards"""
+        def assess():
             thresholds = self.quality_thresholds[self.quality_standard]
             
             compliance = {
@@ -499,7 +522,8 @@ class AudioQualityAssessment:
     async def _generate_improvement_suggestions(self, 
                                               metrics: QualityMetrics, 
                                               distortion: DistortionAnalysis) -> List[str]:
-        """Generate improvement suggestions"""        def generate():
+        """Generate improvement suggestions"""
+        def generate():
             suggestions = []
             
             if metrics.snr < 50:
@@ -530,7 +554,8 @@ class AudioQualityAssessment:
     async def _identify_technical_issues(self, 
                                        metrics: QualityMetrics, 
                                        distortion: DistortionAnalysis) -> List[str]:
-        """Identify technical issues"""        def identify():
+        """Identify technical issues"""
+        def identify():
             issues = []
             
             if distortion.clipping_percentage > 0.01:
@@ -553,7 +578,8 @@ class AudioQualityAssessment:
         return await asyncio.get_event_loop().run_in_executor(self.executor, identify)
     
     async def _generate_mastering_recommendations(self, metrics: QualityMetrics) -> Dict[str, Any]:
-        """Generate mastering recommendations"""        def generate():
+        """Generate mastering recommendations"""
+        def generate():
             recommendations = {}
             
             # EQ recommendations
@@ -584,7 +610,8 @@ class AudioQualityAssessment:
         return await asyncio.get_event_loop().run_in_executor(self.executor, generate)
     
     async def _assess_streaming_readiness(self, metrics: QualityMetrics) -> Dict[str, float]:
-        """Assess readiness for streaming platforms"""        def assess():
+        """Assess readiness for streaming platforms"""
+        def assess():
             readiness_scores = {}
             
             for platform, standards in self.streaming_standards.items():
@@ -612,7 +639,8 @@ class AudioQualityAssessment:
     async def _calculate_overall_quality(self, 
                                        metrics: QualityMetrics, 
                                        distortion: DistortionAnalysis) -> Tuple[float, QualityGrade]:
-        """Calculate overall quality score and grade"""        def calculate():
+        """Calculate overall quality score and grade"""
+        def calculate():
             score_components = []
             
             # SNR score (0-25 points)
@@ -655,9 +683,11 @@ class AudioQualityAssessment:
         return await asyncio.get_event_loop().run_in_executor(self.executor, calculate)
     
     def assess_real_time_quality(self, frame: np.ndarray) -> Dict[str, float]:
-        """        Real-time quality assessment for single frame
+        """
+        Real-time quality assessment for single frame
         Optimized for low-latency processing
-        """        try:
+        """
+        try:
             # Basic quality metrics for current frame
             peak_level = 20 * np.log10(np.max(np.abs(frame)) + 1e-10)
             rms_level = 20 * np.log10(np.sqrt(np.mean(frame ** 2)) + 1e-10)
@@ -687,5 +717,6 @@ class AudioQualityAssessment:
             }
     
     def __del__(self):
-        """Cleanup thread pool"""        if hasattr(self, 'executor'):
+        """Cleanup thread pool"""
+        if hasattr(self, 'executor'):
             self.executor.shutdown(wait=False)

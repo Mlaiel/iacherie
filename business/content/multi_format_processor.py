@@ -37,7 +37,8 @@ Business Logic Flow:
 Content Upload → Format Detection → AI Processing → Quality Enhancement → 
 Protection Fingerprinting → Metadata Extraction → SEO Optimization → 
 Multi-Platform Distribution → Performance Analytics → Monetization Integration
-"""import asyncio
+"""
+import asyncio
 import logging
 import mimetypes
 import hashlib
@@ -89,7 +90,8 @@ settings = get_settings()
 
 
 class ContentFormat(Enum):
-    """Supported content formats"""    AUDIO = "audio"
+    """Supported content formats"""
+    AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
     TEXT = "text"
@@ -98,7 +100,8 @@ class ContentFormat(Enum):
 
 
 class ProcessingStatus(Enum):
-    """Content processing status"""    UPLOADED = "uploaded"
+    """Content processing status"""
+    UPLOADED = "uploaded"
     ANALYZING = "analyzing"
     ENHANCING = "enhancing" 
     PROTECTING = "protecting"
@@ -109,7 +112,8 @@ class ProcessingStatus(Enum):
 
 
 class CreatorType(Enum):
-    """Creator types as per business requirements"""    MUSICIAN = "musician"
+    """Creator types as per business requirements"""
+    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -121,7 +125,8 @@ class CreatorType(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Content metadata structure"""    content_id: str
+    """Content metadata structure"""
+    content_id: str
     creator_id: str
     creator_type: CreatorType
     format_type: ContentFormat
@@ -141,7 +146,8 @@ class ContentMetadata:
 
 @dataclass
 class ProcessingResult:
-    """Processing result structure"""    content_id: str
+    """Processing result structure"""
+    content_id: str
     status: ProcessingStatus
     original_file_path: str
     processed_file_path: Optional[str] = None
@@ -157,9 +163,11 @@ class ProcessingResult:
 
 
 class MultiFormatContentProcessor:
-    """    Ultra-advanced multi-format content processing engine with AI enhancement,
+    """
+    Ultra-advanced multi-format content processing engine with AI enhancement,
     protection fingerprinting, and multi-platform distribution capabilities.
-    """    
+    """
+    
     def __init__(self, 
                  redis_client: redis.Redis,
                  db_session: AsyncSession,
@@ -194,7 +202,8 @@ class MultiFormatContentProcessor:
                             creator_id: str,
                             creator_type: CreatorType,
                             processing_options: Dict[str, Any] = None) -> ProcessingResult:
-        """        Process uploaded content through complete pipeline
+        """
+        Process uploaded content through complete pipeline
         
         Args:
             upload_file: Uploaded file
@@ -204,7 +213,8 @@ class MultiFormatContentProcessor:
             
         Returns:
             ProcessingResult: Complete processing result
-        """        start_time = datetime.now(timezone.utc)
+        """
+        start_time = datetime.now(timezone.utc)
         content_id = str(uuid.uuid4())
         
         try:
@@ -306,7 +316,8 @@ class MultiFormatContentProcessor:
                               upload_file: UploadFile, 
                               creator_id: str,
                               creator_type: CreatorType) -> ContentMetadata:
-        """Analyze uploaded content and extract metadata"""        
+        """Analyze uploaded content and extract metadata"""
+        
         # Basic file analysis
         file_content = await upload_file.read()
         await upload_file.seek(0)  # Reset file pointer
@@ -339,7 +350,8 @@ class MultiFormatContentProcessor:
     async def _analyze_audio_content(self, 
                                    file_content: bytes, 
                                    metadata: ContentMetadata) -> ContentMetadata:
-        """Analyze audio content using librosa and AI"""        
+        """Analyze audio content using librosa and AI"""
+        
         try:
             # Save temporary file for analysis
             with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as temp_file:
@@ -375,7 +387,8 @@ class MultiFormatContentProcessor:
     async def _analyze_video_content(self, 
                                    file_content: bytes, 
                                    metadata: ContentMetadata) -> ContentMetadata:
-        """Analyze video content using OpenCV and AI"""        
+        """Analyze video content using OpenCV and AI"""
+        
         try:
             # Save temporary file for analysis  
             with tempfile.NamedTemporaryFile(suffix='.mp4', delete=False) as temp_file:
@@ -418,7 +431,8 @@ class MultiFormatContentProcessor:
     async def _analyze_image_content(self, 
                                    file_content: bytes, 
                                    metadata: ContentMetadata) -> ContentMetadata:
-        """Analyze image content using PIL and AI vision models"""        
+        """Analyze image content using PIL and AI vision models"""
+        
         try:
             # Load image with PIL
             image = Image.open(io.BytesIO(file_content))
@@ -457,7 +471,8 @@ class MultiFormatContentProcessor:
     async def _analyze_text_content(self, 
                                   file_content: bytes, 
                                   metadata: ContentMetadata) -> ContentMetadata:
-        """Analyze text content using NLP and AI"""        
+        """Analyze text content using NLP and AI"""
+        
         try:
             # Decode text content
             text = file_content.decode('utf-8', errors='ignore')
@@ -494,7 +509,8 @@ class MultiFormatContentProcessor:
         return metadata
 
     def _determine_format_type(self, mime_type: str) -> ContentFormat:
-        """Determine content format from MIME type"""        
+        """Determine content format from MIME type"""
+        
         if not mime_type:
             return ContentFormat.MIXED_MEDIA
             
@@ -510,7 +526,8 @@ class MultiFormatContentProcessor:
             return ContentFormat.DOCUMENT
 
     async def _store_original_content(self, upload_file: UploadFile, content_id: str) -> str:
-        """Store original content in secure storage"""        
+        """Store original content in secure storage"""
+        
         # Generate secure file path
         file_extension = Path(upload_file.filename).suffix
         secure_filename = f"{content_id}_original{file_extension}"
@@ -529,7 +546,8 @@ class MultiFormatContentProcessor:
                                    content_path: str,
                                    metadata: ContentMetadata,
                                    options: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply AI enhancements based on content format"""        
+        """Apply AI enhancements based on content format"""
+        
         enhancements = {}
         
         try:
@@ -559,7 +577,8 @@ class MultiFormatContentProcessor:
     async def _apply_content_protection(self, 
                                       content_path: str,
                                       metadata: ContentMetadata) -> Dict[str, Any]:
-        """Apply content protection and generate fingerprints"""        
+        """Apply content protection and generate fingerprints"""
+        
         try:
             protection_result = await self.fingerprinting_engine.create_fingerprint(
                 content_path=content_path,
@@ -582,7 +601,8 @@ class MultiFormatContentProcessor:
     async def _optimize_for_seo(self, 
                               metadata: ContentMetadata,
                               enhancements: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize content metadata for SEO"""        
+        """Optimize content metadata for SEO"""
+        
         seo_data = {
             'title': self._generate_seo_title(metadata),
             'description': self._generate_seo_description(metadata, enhancements),
@@ -597,7 +617,8 @@ class MultiFormatContentProcessor:
                                 content_path: str,
                                 metadata: ContentMetadata,
                                 creator_type: CreatorType) -> Dict[str, str]:
-        """Setup multi-platform distribution"""        
+        """Setup multi-platform distribution"""
+        
         distribution_urls = {}
         
         # Platform-specific distribution based on creator type
@@ -624,7 +645,8 @@ class MultiFormatContentProcessor:
                                     result: ProcessingResult,
                                     creator_id: str,
                                     creator_type: CreatorType):
-        """Integrate with monetization engine"""        
+        """Integrate with monetization engine"""
+        
         try:
             monetization_data = await self.revenue_engine.setup_content_monetization(
                 content_id=result.content_id,
@@ -640,7 +662,8 @@ class MultiFormatContentProcessor:
             logger.error(f"Monetization integration failed: {str(e)}")
 
     async def _update_processing_status(self, content_id: str, status: ProcessingStatus):
-        """Update processing status in cache"""        
+        """Update processing status in cache"""
+        
         cache_key = f"content_processing:{content_id}"
         status_data = {
             'status': status.value,
@@ -650,7 +673,8 @@ class MultiFormatContentProcessor:
         await self.cache_manager.set(cache_key, json.dumps(status_data), expire=3600)
 
     async def _store_processing_result(self, result: ProcessingResult):
-        """Store complete processing result"""        
+        """Store complete processing result"""
+        
         # Store in database
         # Implementation depends on your database schema
         
@@ -663,7 +687,8 @@ class MultiFormatContentProcessor:
         )
 
     async def _update_statistics(self, result: ProcessingResult):
-        """Update processing statistics"""        
+        """Update processing statistics"""
+        
         self.processing_stats['total_processed'] += 1
         
         if result.status == ProcessingStatus.COMPLETED:
@@ -674,12 +699,14 @@ class MultiFormatContentProcessor:
             pass
 
     def _generate_seo_title(self, metadata: ContentMetadata) -> str:
-        """Generate SEO-optimized title"""        base_title = Path(metadata.file_name).stem
+        """Generate SEO-optimized title"""
+        base_title = Path(metadata.file_name).stem
         creator_type_title = metadata.creator_type.value.replace('_', ' ').title()
         return f"{base_title} | {creator_type_title} Content | IA Influencer Agent"
 
     def _generate_seo_description(self, metadata: ContentMetadata, enhancements: Dict[str, Any]) -> str:
-        """Generate SEO-optimized description"""        format_name = metadata.format_type.value.title()
+        """Generate SEO-optimized description"""
+        format_name = metadata.format_type.value.title()
         creator_type = metadata.creator_type.value.replace('_', ' ').title()
         
         description = f"Professional {format_name.lower()} content by {creator_type} "
@@ -688,7 +715,8 @@ class MultiFormatContentProcessor:
         return description
 
     def _generate_seo_keywords(self, metadata: ContentMetadata, enhancements: Dict[str, Any]) -> List[str]:
-        """Generate SEO keywords"""        keywords = [
+        """Generate SEO keywords"""
+        keywords = [
             metadata.format_type.value,
             metadata.creator_type.value.replace('_', ' '),
             'ai enhanced',
@@ -701,7 +729,8 @@ class MultiFormatContentProcessor:
         return list(set(keywords))  # Remove duplicates
 
     def _generate_og_tags(self, metadata: ContentMetadata) -> Dict[str, str]:
-        """Generate Open Graph tags"""        return {
+        """Generate Open Graph tags"""
+        return {
             'og:title': self._generate_seo_title(metadata),
             'og:description': self._generate_seo_description(metadata, {}),
             'og:type': 'website',
@@ -709,7 +738,8 @@ class MultiFormatContentProcessor:
         }
 
     def _generate_schema_markup(self, metadata: ContentMetadata) -> Dict[str, Any]:
-        """Generate Schema.org markup"""        return {
+        """Generate Schema.org markup"""
+        return {
             '@context': 'https://schema.org',
             '@type': 'CreativeWork',
             'name': metadata.file_name,
@@ -722,7 +752,8 @@ class MultiFormatContentProcessor:
         }
 
     async def get_processing_status(self, content_id: str) -> Dict[str, Any]:
-        """Get current processing status"""        cache_key = f"content_processing:{content_id}"
+        """Get current processing status"""
+        cache_key = f"content_processing:{content_id}"
         status_data = await self.cache_manager.get(cache_key)
         
         if status_data:
@@ -731,7 +762,8 @@ class MultiFormatContentProcessor:
             return {'status': 'unknown', 'message': 'Content ID not found'}
 
     async def get_processing_result(self, content_id: str) -> Optional[ProcessingResult]:
-        """Get complete processing result"""        cache_key = f"content_result:{content_id}"
+        """Get complete processing result"""
+        cache_key = f"content_result:{content_id}"
         result_data = await self.cache_manager.get(cache_key)
         
         if result_data:
@@ -742,10 +774,12 @@ class MultiFormatContentProcessor:
         return None
 
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get processing engine statistics"""        return self.processing_stats.copy()
+        """Get processing engine statistics"""
+        return self.processing_stats.copy()
 
     async def cleanup_temp_files(self):
-        """Cleanup temporary files and optimize performance"""        # Implementation for cleanup
+        """Cleanup temporary files and optimize performance"""
+        # Implementation for cleanup
         pass
 
 

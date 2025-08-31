@@ -12,7 +12,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import os
 import re
 from typing import Dict, List, Set, Tuple, Optional, Any, Union
@@ -40,7 +41,8 @@ from .entity_extractor import ExtractedEntity, EntityCategory
 
 
 class MetadataFormat(Enum):
-    """Supported metadata formats"""    AUDIO_ID3 = "audio_id3"
+    """Supported metadata formats"""
+    AUDIO_ID3 = "audio_id3"
     AUDIO_MP4 = "audio_mp4"
     AUDIO_FLAC = "audio_flac"
     AUDIO_VORBIS = "audio_vorbis"
@@ -54,7 +56,8 @@ class MetadataFormat(Enum):
 
 
 class MetadataEntityType(Enum):
-    """Types of entities extracted from metadata"""    ARTIST_NAME = "artist_name"
+    """Types of entities extracted from metadata"""
+    ARTIST_NAME = "artist_name"
     ALBUM_TITLE = "album_title"
     TRACK_TITLE = "track_title"
     GENRE_TAG = "genre_tag"
@@ -72,7 +75,8 @@ class MetadataEntityType(Enum):
 
 @dataclass
 class MetadataEntity:
-    """Entity extracted from metadata"""    entity: ExtractedEntity
+    """Entity extracted from metadata"""
+    entity: ExtractedEntity
     metadata_type: MetadataEntityType
     metadata_format: MetadataFormat
     raw_value: Any
@@ -84,7 +88,8 @@ class MetadataEntity:
 
 @dataclass
 class MetadataAnalysisResult:
-    """Result of metadata analysis"""    metadata_entities: List[MetadataEntity]
+    """Result of metadata analysis"""
+    metadata_entities: List[MetadataEntity]
     technical_profile: Dict[str, Any]
     content_fingerprint: Dict[str, Any]
     quality_assessment: Dict[str, float]
@@ -96,7 +101,8 @@ class MetadataAnalysisResult:
 
 
 class MetadataEntityParser(BaseService):
-    """    Advanced Metadata Entity Parser for creative content analysis.
+    """
+    Advanced Metadata Entity Parser for creative content analysis.
     
     Features:
     - Multi-format metadata extraction (audio, video, image, document)
@@ -107,7 +113,8 @@ class MetadataEntityParser(BaseService):
     - Collaboration network mapping
     - Content fingerprinting and quality assessment
     - Automated metadata validation and correction
-    """    
+    """
+    
     def __init__(self):
         super().__init__()
         self.logger = logging.getLogger(__name__)
@@ -142,7 +149,8 @@ class MetadataEntityParser(BaseService):
         }
     
     async def initialize(self):
-        """Initialize metadata parsing resources"""        try:
+        """Initialize metadata parsing resources"""
+        try:
             self.logger.info("Initializing MetadataEntityParser...")
             
             # Initialize metadata parsers
@@ -167,7 +175,8 @@ class MetadataEntityParser(BaseService):
             raise
     
     async def _initialize_metadata_parsers(self):
-        """Initialize comprehensive metadata parsing libraries and frameworks"""        # Audio metadata parsers with advanced capabilities
+        """Initialize comprehensive metadata parsing libraries and frameworks"""
+        # Audio metadata parsers with advanced capabilities
         self.audio_parsers = {
             'mp3': self._parse_mp3_metadata,
             'mp4': self._parse_mp4_metadata,
@@ -251,7 +260,8 @@ class MetadataEntityParser(BaseService):
         self.logger.info("Comprehensive metadata parsers initialized successfully")
     
     async def _initialize_ml_metadata_models(self):
-        """Initialize machine learning models for intelligent metadata analysis"""        try:
+        """Initialize machine learning models for intelligent metadata analysis"""
+        try:
             # Audio classification model for genre/mood detection
             self.audio_classifier = pipeline(
                 "audio-classification",
@@ -299,7 +309,8 @@ class MetadataEntityParser(BaseService):
             await self._load_fallback_models()
     
     def _initialize_rights_detection_model(self):
-        """Initialize model for detecting rights and copyright information"""        import torch.nn as nn
+        """Initialize model for detecting rights and copyright information"""
+        import torch.nn as nn
         
         class RightsDetectionModel(nn.Module):
             def __init__(self, vocab_size=30000, embedding_dim=256, hidden_dim=512):
@@ -341,7 +352,8 @@ class MetadataEntityParser(BaseService):
         return model
     
     def _initialize_quality_assessment_model(self):
-        """Initialize model for assessing metadata quality and completeness"""        import torch.nn as nn
+        """Initialize model for assessing metadata quality and completeness"""
+        import torch.nn as nn
         
         class MetadataQualityAssessor(nn.Module):
             def __init__(self, input_dim=100, hidden_dims=[256, 128, 64]):
@@ -391,7 +403,8 @@ class MetadataEntityParser(BaseService):
         return model
     
     async def _load_fallback_models(self):
-        """Load simplified fallback models if advanced models fail"""        try:
+        """Load simplified fallback models if advanced models fail"""
+        try:
             # Basic text classifier
             self.text_analyzer = pipeline(
                 "text-classification",
@@ -413,7 +426,8 @@ class MetadataEntityParser(BaseService):
         }
     
     async def _load_metadata_schemas(self):
-        """Load metadata schemas for different formats"""        self.metadata_schemas = {
+        """Load metadata schemas for different formats"""
+        self.metadata_schemas = {
             'id3v2': {
                 'title': ['TIT2', 'TITLE'],
                 'artist': ['TPE1', 'ARTIST'],
@@ -473,7 +487,8 @@ class MetadataEntityParser(BaseService):
         }
     
     async def _initialize_field_mappings(self):
-        """Initialize field mappings between formats"""        self.field_mappings = {
+        """Initialize field mappings between formats"""
+        self.field_mappings = {
             'artist_fields': [
                 'artist', 'performer', 'creator', 'author', 'TPE1', '\xa9ART', 'ARTIST'
             ],
@@ -495,7 +510,8 @@ class MetadataEntityParser(BaseService):
         }
     
     async def _load_normalization_rules(self):
-        """Load normalization rules for metadata values"""        self.normalization_rules = {
+        """Load normalization rules for metadata values"""
+        self.normalization_rules = {
             'genre_normalization': {
                 # Map common genre variations to standard forms
                 'hip hop': 'Hip-Hop',
@@ -531,7 +547,8 @@ class MetadataEntityParser(BaseService):
         }
     
     async def _initialize_quality_analyzers(self):
-        """Initialize quality assessment tools"""        self.quality_analyzers = {
+        """Initialize quality assessment tools"""
+        self.quality_analyzers = {
             'audio_quality': self._analyze_audio_quality,
             'image_quality': self._analyze_image_quality,
             'video_quality': self._analyze_video_quality,
@@ -546,7 +563,8 @@ class MetadataEntityParser(BaseService):
         metadata_dict: Optional[Dict[str, Any]] = None,
         content_type: Optional[str] = None
     ) -> MetadataAnalysisResult:
-        """        Parse metadata entities from various sources.
+        """
+        Parse metadata entities from various sources.
         
         Args:
             file_path: Path to file for metadata extraction
@@ -556,7 +574,8 @@ class MetadataEntityParser(BaseService):
             
         Returns:
             MetadataAnalysisResult with extracted entities and analysis
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             self.logger.debug(f"Parsing metadata entities from source")
@@ -641,7 +660,8 @@ class MetadataEntityParser(BaseService):
         file_data: Optional[bytes],
         content_type: Optional[str]
     ) -> MetadataFormat:
-        """Determine metadata format from file information"""        
+        """Determine metadata format from file information"""
+        
         # Use content type if provided
         if content_type:
             if content_type.startswith('audio/'):
@@ -685,7 +705,8 @@ class MetadataEntityParser(BaseService):
         metadata_dict: Optional[Dict[str, Any]],
         metadata_format: MetadataFormat
     ) -> Dict[str, Any]:
-        """Extract raw metadata from source"""        
+        """Extract raw metadata from source"""
+        
         # If metadata dictionary is provided, use it
         if metadata_dict:
             return metadata_dict
@@ -701,7 +722,8 @@ class MetadataEntityParser(BaseService):
         return {}
     
     async def _extract_from_file(self, file_path: str, metadata_format: MetadataFormat) -> Dict[str, Any]:
-        """Extract metadata from file"""        try:
+        """Extract metadata from file"""
+        try:
             if metadata_format in [MetadataFormat.AUDIO_ID3, MetadataFormat.AUDIO_MP4, 
                                  MetadataFormat.AUDIO_FLAC, MetadataFormat.AUDIO_VORBIS]:
                 return await self._extract_audio_metadata(file_path)
@@ -718,7 +740,8 @@ class MetadataEntityParser(BaseService):
         return {}
     
     async def _extract_audio_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract audio metadata using mutagen"""        try:
+        """Extract audio metadata using mutagen"""
+        try:
             audio_file = MutagenFile(file_path)
             if audio_file is None:
                 return {}
@@ -751,7 +774,8 @@ class MetadataEntityParser(BaseService):
             return {}
     
     async def _extract_image_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract image metadata using PIL"""        try:
+        """Extract image metadata using PIL"""
+        try:
             with Image.open(file_path) as image:
                 metadata = {}
                 
@@ -779,7 +803,8 @@ class MetadataEntityParser(BaseService):
             return {}
     
     async def _extract_video_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract video metadata using OpenCV"""        try:
+        """Extract video metadata using OpenCV"""
+        try:
             cap = cv2.VideoCapture(file_path)
             
             metadata = {
@@ -800,7 +825,8 @@ class MetadataEntityParser(BaseService):
             return {}
     
     async def _extract_from_data(self, file_data: bytes, metadata_format: MetadataFormat) -> Dict[str, Any]:
-        """Extract metadata from file data"""        # This would require writing data to temporary file or using in-memory processing
+        """Extract metadata from file data"""
+        # This would require writing data to temporary file or using in-memory processing
         # For now, return empty metadata
         return {}
     
@@ -809,7 +835,8 @@ class MetadataEntityParser(BaseService):
         raw_metadata: Dict[str, Any],
         metadata_format: MetadataFormat
     ) -> List[MetadataEntity]:
-        """Parse entities from raw metadata"""        entities = []
+        """Parse entities from raw metadata"""
+        entities = []
         
         # Get schema for this format
         schema = self._get_schema_for_format(metadata_format)
@@ -852,7 +879,8 @@ class MetadataEntityParser(BaseService):
         return entities
     
     def _get_schema_for_format(self, metadata_format: MetadataFormat) -> Dict[str, List[str]]:
-        """Get metadata schema for format"""        format_mapping = {
+        """Get metadata schema for format"""
+        format_mapping = {
             MetadataFormat.AUDIO_ID3: 'id3v2',
             MetadataFormat.AUDIO_MP4: 'mp4',
             MetadataFormat.AUDIO_VORBIS: 'vorbis',
@@ -869,7 +897,8 @@ class MetadataEntityParser(BaseService):
         field_value: Any,
         schema: Dict[str, List[str]]
     ) -> Optional[MetadataEntityType]:
-        """Determine entity type from field name and value"""        field_name_lower = field_name.lower()
+        """Determine entity type from field name and value"""
+        field_name_lower = field_name.lower()
         
         # Check against field mappings
         for entity_type_name, field_patterns in self.field_mappings.items():
@@ -897,7 +926,8 @@ class MetadataEntityParser(BaseService):
         return None
     
     def _map_field_to_entity_type(self, field_type_name: str) -> MetadataEntityType:
-        """Map field type name to metadata entity type"""        mapping = {
+        """Map field type name to metadata entity type"""
+        mapping = {
             'artist_fields': MetadataEntityType.ARTIST_NAME,
             'title_fields': MetadataEntityType.TRACK_TITLE,
             'album_fields': MetadataEntityType.ALBUM_TITLE,
@@ -909,7 +939,8 @@ class MetadataEntityParser(BaseService):
         return mapping.get(field_type_name, MetadataEntityType.ARTIST_NAME)
     
     def _normalize_metadata_value(self, value: Any, entity_type: MetadataEntityType) -> str:
-        """Normalize metadata value based on entity type"""        value_str = str(value).strip()
+        """Normalize metadata value based on entity type"""
+        value_str = str(value).strip()
         
         if entity_type == MetadataEntityType.GENRE_TAG:
             # Normalize genre
@@ -928,7 +959,8 @@ class MetadataEntityParser(BaseService):
             return self.text_processor.clean_text(value_str)
     
     def _normalize_genre(self, genre: str) -> str:
-        """Normalize genre value"""        genre_lower = genre.lower().strip()
+        """Normalize genre value"""
+        genre_lower = genre.lower().strip()
         
         # Check normalization rules
         normalized = self.normalization_rules['genre_normalization'].get(genre_lower)
@@ -939,7 +971,8 @@ class MetadataEntityParser(BaseService):
         return genre.title().strip()
     
     def _normalize_artist_name(self, artist: str) -> str:
-        """Normalize artist name"""        normalized = artist
+        """Normalize artist name"""
+        normalized = artist
         
         # Apply normalization rules
         for pattern, replacement in self.normalization_rules['artist_normalization'].items():
@@ -948,7 +981,8 @@ class MetadataEntityParser(BaseService):
         return self.text_processor.clean_text(normalized)
     
     def _normalize_date(self, date_str: str) -> str:
-        """Normalize date value"""        # Try to extract year from various formats
+        """Normalize date value"""
+        # Try to extract year from various formats
         for pattern in self.normalization_rules['date_normalization']['patterns']:
             match = re.search(pattern, date_str)
             if match:
@@ -965,7 +999,8 @@ class MetadataEntityParser(BaseService):
         field_value: Any,
         schema: Dict[str, List[str]]
     ) -> float:
-        """Calculate confidence for metadata field"""        confidence = 0.5  # Base confidence
+        """Calculate confidence for metadata field"""
+        confidence = 0.5  # Base confidence
         
         # Boost for known schema fields
         for entity_fields in schema.values():
@@ -988,7 +1023,8 @@ class MetadataEntityParser(BaseService):
         return max(0.1, min(1.0, confidence))
     
     def _extract_field_relationships(self, field_name: str, field_value: Any) -> List[str]:
-        """Extract relationships between metadata fields"""        relationships = []
+        """Extract relationships between metadata fields"""
+        relationships = []
         
         # Artist relationships
         if 'artist' in field_name.lower():
@@ -1008,7 +1044,8 @@ class MetadataEntityParser(BaseService):
         file_path: Optional[str],
         file_data: Optional[bytes]
     ) -> Dict[str, Any]:
-        """Analyze technical profile of content"""        profile = {
+        """Analyze technical profile of content"""
+        profile = {
             'format_info': {},
             'quality_metrics': {},
             'encoding_details': {},
@@ -1057,7 +1094,8 @@ class MetadataEntityParser(BaseService):
         return profile
     
     def _assess_audio_technical_quality(self, technical_data: Dict[str, Any]) -> Dict[str, float]:
-        """Assess audio technical quality"""        quality = {}
+        """Assess audio technical quality"""
+        quality = {}
         
         bitrate = technical_data.get('bitrate', 0)
         sample_rate = technical_data.get('sample_rate', 0)
@@ -1088,7 +1126,8 @@ class MetadataEntityParser(BaseService):
         return quality
     
     def _assess_image_technical_quality(self, technical_data: Dict[str, Any]) -> Dict[str, float]:
-        """Assess image technical quality"""        quality = {}
+        """Assess image technical quality"""
+        quality = {}
         
         dimensions = technical_data.get('size', (0, 0))
         total_pixels = dimensions[0] * dimensions[1]
@@ -1119,7 +1158,8 @@ class MetadataEntityParser(BaseService):
         return quality
     
     def _assess_video_technical_quality(self, technical_data: Dict[str, Any]) -> Dict[str, float]:
-        """Assess video technical quality"""        quality = {}
+        """Assess video technical quality"""
+        quality = {}
         
         fps = technical_data.get('fps', 0)
         width = technical_data.get('width', 0)
@@ -1155,7 +1195,8 @@ class MetadataEntityParser(BaseService):
         raw_metadata: Dict[str, Any],
         technical_profile: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate content fingerprint for identification"""        fingerprint = {
+        """Generate content fingerprint for identification"""
+        fingerprint = {
             'metadata_hash': self._generate_metadata_hash(raw_metadata),
             'technical_signature': self._generate_technical_signature(technical_profile),
             'content_type': technical_profile.get('format_info', {}).get('type', 'unknown'),
@@ -1166,7 +1207,8 @@ class MetadataEntityParser(BaseService):
         return fingerprint
     
     def _generate_metadata_hash(self, raw_metadata: Dict[str, Any]) -> str:
-        """Generate hash from metadata for content identification"""        # Create deterministic hash from key metadata fields
+        """Generate hash from metadata for content identification"""
+        # Create deterministic hash from key metadata fields
         key_fields = ['title', 'artist', 'album', 'date', 'TIT2', 'TPE1', 'TALB', '\xa9nam', '\xa9ART']
         
         hash_input = ""
@@ -1178,7 +1220,8 @@ class MetadataEntityParser(BaseService):
         return str(hash(hash_input))
     
     def _generate_technical_signature(self, technical_profile: Dict[str, Any]) -> str:
-        """Generate technical signature"""        format_info = technical_profile.get('format_info', {})
+        """Generate technical signature"""
+        format_info = technical_profile.get('format_info', {})
         
         signature_parts = [
             format_info.get('type', 'unknown'),
@@ -1190,7 +1233,8 @@ class MetadataEntityParser(BaseService):
         return "_".join(signature_parts)
     
     def _determine_quality_tier(self, technical_profile: Dict[str, Any]) -> str:
-        """Determine quality tier based on technical specs"""        quality_metrics = technical_profile.get('quality_metrics', {})
+        """Determine quality tier based on technical specs"""
+        quality_metrics = technical_profile.get('quality_metrics', {})
         overall_quality = quality_metrics.get('overall_quality', 0.5)
         
         if overall_quality >= 0.9:
@@ -1203,7 +1247,8 @@ class MetadataEntityParser(BaseService):
             return 'basic'
     
     def _assess_platform_suitability(self, technical_profile: Dict[str, Any]) -> Dict[str, bool]:
-        """Assess suitability for different platforms"""        format_info = technical_profile.get('format_info', {})
+        """Assess suitability for different platforms"""
+        format_info = technical_profile.get('format_info', {})
         suitability = {}
         
         if format_info.get('type') == 'audio':
@@ -1242,7 +1287,8 @@ class MetadataEntityParser(BaseService):
         file_path: Optional[str],
         file_data: Optional[bytes]
     ) -> Dict[str, float]:
-        """Assess overall content quality"""        quality_assessment = {}
+        """Assess overall content quality"""
+        quality_assessment = {}
         
         # Technical quality from profile
         tech_quality = technical_profile.get('quality_metrics', {}).get('overall_quality', 0.5)
@@ -1264,7 +1310,8 @@ class MetadataEntityParser(BaseService):
         return quality_assessment
     
     def _assess_metadata_completeness(self, raw_metadata: Dict[str, Any]) -> float:
-        """Assess completeness of metadata"""        essential_fields = ['title', 'artist', 'TIT2', 'TPE1', '\xa9nam', '\xa9ART']
+        """Assess completeness of metadata"""
+        essential_fields = ['title', 'artist', 'TIT2', 'TPE1', '\xa9nam', '\xa9ART']
         important_fields = ['album', 'date', 'genre', 'TALB', 'TDRC', 'TCON', '\xa9alb', '\xa9day']
         
         essential_count = sum(1 for field in essential_fields if field in raw_metadata and raw_metadata[field])
@@ -1276,7 +1323,8 @@ class MetadataEntityParser(BaseService):
         return (essential_score * 0.7) + (important_score * 0.3)
     
     def _assess_professional_indicators(self, raw_metadata: Dict[str, Any]) -> float:
-        """Assess professional production indicators"""        professional_fields = [
+        """Assess professional production indicators"""
+        professional_fields = [
             'producer', 'label', 'copyright', 'publisher', 'isrc', 'catalog',
             'TPUB', 'TCOP', 'TIPL', 'cprt'
         ]
@@ -1291,10 +1339,12 @@ class MetadataEntityParser(BaseService):
         technical_profile: Dict[str, Any],
         metadata_format: MetadataFormat
     ) -> Dict[str, bool]:
-        """Check compatibility with various platforms"""        return technical_profile.get('platform_suitability', {})
+        """Check compatibility with various platforms"""
+        return technical_profile.get('platform_suitability', {})
     
     async def _extract_rights_information(self, raw_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract rights and copyright information"""        rights_info = {
+        """Extract rights and copyright information"""
+        rights_info = {
             'copyright_holder': None,
             'publisher': None,
             'rights_statement': None,
@@ -1334,7 +1384,8 @@ class MetadataEntityParser(BaseService):
         return rights_info
     
     async def _map_collaboration_network(self, metadata_entities: List[MetadataEntity]) -> Dict[str, List[str]]:
-        """Map collaboration network from metadata"""        network = {}
+        """Map collaboration network from metadata"""
+        network = {}
         
         # Find artist entities
         artist_entities = [e for e in metadata_entities 
@@ -1367,7 +1418,8 @@ class MetadataEntityParser(BaseService):
         raw_metadata: Dict[str, Any],
         quality_assessment: Dict[str, float]
     ) -> float:
-        """Calculate overall parsing confidence"""        factors = []
+        """Calculate overall parsing confidence"""
+        factors = []
         
         # Entity extraction confidence
         if metadata_entities:
@@ -1389,7 +1441,8 @@ class MetadataEntityParser(BaseService):
         return np.mean(factors) if factors else 0.5
     
     def _update_parsing_stats(self, result: MetadataAnalysisResult, metadata_format: MetadataFormat):
-        """Update parsing statistics"""        self.parsing_stats['total_files_processed'] += 1
+        """Update parsing statistics"""
+        self.parsing_stats['total_files_processed'] += 1
         self.parsing_stats['successful_extractions'] += 1
         
         # Update format distribution
@@ -1415,41 +1468,53 @@ class MetadataEntityParser(BaseService):
     
     # Additional parsing methods for specific formats
     async def _parse_mp3_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Parse MP3 metadata specifically"""        return await self._extract_audio_metadata(file_path)
+        """Parse MP3 metadata specifically"""
+        return await self._extract_audio_metadata(file_path)
     
     async def _parse_mp4_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Parse MP4 metadata specifically"""        return await self._extract_audio_metadata(file_path)
+        """Parse MP4 metadata specifically"""
+        return await self._extract_audio_metadata(file_path)
     
     async def _parse_flac_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Parse FLAC metadata specifically"""        return await self._extract_audio_metadata(file_path)
+        """Parse FLAC metadata specifically"""
+        return await self._extract_audio_metadata(file_path)
     
     async def _parse_ogg_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Parse OGG metadata specifically"""        return await self._extract_audio_metadata(file_path)
+        """Parse OGG metadata specifically"""
+        return await self._extract_audio_metadata(file_path)
     
     async def _parse_wav_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Parse WAV metadata specifically"""        return await self._extract_audio_metadata(file_path)
+        """Parse WAV metadata specifically"""
+        return await self._extract_audio_metadata(file_path)
     
     async def _parse_jpg_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Parse JPEG metadata specifically"""        return await self._extract_image_metadata(file_path)
+        """Parse JPEG metadata specifically"""
+        return await self._extract_image_metadata(file_path)
     
     async def _parse_png_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Parse PNG metadata specifically"""        return await self._extract_image_metadata(file_path)
+        """Parse PNG metadata specifically"""
+        return await self._extract_image_metadata(file_path)
     
     async def _parse_tiff_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Parse TIFF metadata specifically"""        return await self._extract_image_metadata(file_path)
+        """Parse TIFF metadata specifically"""
+        return await self._extract_image_metadata(file_path)
     
     async def _parse_mp4_video_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Parse MP4 video metadata specifically"""        return await self._extract_video_metadata(file_path)
+        """Parse MP4 video metadata specifically"""
+        return await self._extract_video_metadata(file_path)
     
     async def _parse_avi_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Parse AVI metadata specifically"""        return await self._extract_video_metadata(file_path)
+        """Parse AVI metadata specifically"""
+        return await self._extract_video_metadata(file_path)
     
     async def _parse_mov_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Parse MOV metadata specifically"""        return await self._extract_video_metadata(file_path)
+        """Parse MOV metadata specifically"""
+        return await self._extract_video_metadata(file_path)
     
     # Quality analyzer implementations
     async def _analyze_audio_quality(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze audio quality in detail"""        quality_metrics = {}
+        """Analyze audio quality in detail"""
+        quality_metrics = {}
         
         try:
             # Use technical metadata for quality assessment
@@ -1480,7 +1545,8 @@ class MetadataEntityParser(BaseService):
         return quality_metrics
     
     async def _analyze_image_quality(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze image quality in detail"""        quality_metrics = {}
+        """Analyze image quality in detail"""
+        quality_metrics = {}
         
         try:
             technical_data = metadata.get('_technical', {})
@@ -1514,7 +1580,8 @@ class MetadataEntityParser(BaseService):
         return quality_metrics
     
     async def _analyze_video_quality(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze video quality in detail"""        quality_metrics = {}
+        """Analyze video quality in detail"""
+        quality_metrics = {}
         
         try:
             technical_data = metadata.get('_technical', {})
@@ -1563,7 +1630,8 @@ class MetadataEntityParser(BaseService):
         return quality_metrics
     
     async def get_parsing_statistics(self) -> Dict[str, Any]:
-        """Get metadata parsing statistics"""        stats = self.parsing_stats.copy()
+        """Get metadata parsing statistics"""
+        stats = self.parsing_stats.copy()
         
         # Calculate average quality score
         if stats['quality_scores']:
@@ -1578,7 +1646,8 @@ class MetadataEntityParser(BaseService):
         return stats
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for metadata entity parser"""        return {
+        """Health check for metadata entity parser"""
+        return {
             'status': 'healthy',
             'total_files_processed': self.parsing_stats['total_files_processed'],
             'success_rate': (

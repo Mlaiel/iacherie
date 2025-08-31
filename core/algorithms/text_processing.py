@@ -15,7 +15,8 @@ Professional text processing engine for content creators providing:
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
-"""import re
+"""
+import re
 import numpy as np
 from typing import Dict, List, Any, Optional, Tuple, Union
 import logging
@@ -44,7 +45,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TextFeatures:
-    """Comprehensive text feature representation"""    linguistic_features: Dict[str, Any]
+    """Comprehensive text feature representation"""
+    linguistic_features: Dict[str, Any]
     semantic_features: Dict[str, np.ndarray]
     sentiment_features: Dict[str, float]
     structural_features: Dict[str, int]
@@ -54,7 +56,8 @@ class TextFeatures:
 
 @dataclass
 class NamedEntity:
-    """Named entity representation"""    text: str
+    """Named entity representation"""
+    text: str
     label: str
     start: int
     end: int
@@ -62,14 +65,17 @@ class NamedEntity:
 
 @dataclass
 class SentimentResult:
-    """Sentiment analysis result"""    polarity: float
+    """Sentiment analysis result"""
+    polarity: float
     subjectivity: float
     emotion_scores: Dict[str, float]
     confidence: float
 
 class TextProcessingEngine:
-    """    Industrial-grade text processing engine for content creators
-    """    
+    """
+    Industrial-grade text processing engine for content creators
+    """
+    
     def __init__(self, language: str = 'en'):
         self.language = language
         
@@ -85,7 +91,8 @@ class TextProcessingEngine:
         logger.info("TextProcessingEngine initialized successfully")
     
     def _initialize_models(self) -> None:
-        """Initialize transformer models"""        try:
+        """Initialize transformer models"""
+        try:
             # BERT for general text understanding
             self.bert_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
             self.bert_model = BertModel.from_pretrained('bert-base-uncased')
@@ -123,7 +130,8 @@ class TextProcessingEngine:
             raise
     
     def _initialize_nlp_libraries(self) -> None:
-        """Initialize NLP libraries"""        try:
+        """Initialize NLP libraries"""
+        try:
             # Download required NLTK data
             nltk.download('punkt', quiet=True)
             nltk.download('stopwords', quiet=True)
@@ -147,7 +155,8 @@ class TextProcessingEngine:
             raise
     
     def _initialize_vectorizers(self) -> None:
-        """Initialize text vectorizers"""        try:
+        """Initialize text vectorizers"""
+        try:
             # TF-IDF vectorizer
             self.tfidf_vectorizer = TfidfVectorizer(
                 max_features=10000,
@@ -167,7 +176,8 @@ class TextProcessingEngine:
     
     def process(self, text_data: Union[str, List[str]], 
                 config: Dict[str, Any]) -> Dict[str, Any]:
-        """        Comprehensive text processing pipeline
+        """
+        Comprehensive text processing pipeline
         
         Args:
             text_data: Text string or list of text strings
@@ -175,7 +185,8 @@ class TextProcessingEngine:
             
         Returns:
             Complete text analysis results
-        """        try:
+        """
+        try:
             # Normalize input
             if isinstance(text_data, str):
                 texts = [text_data]
@@ -244,7 +255,8 @@ class TextProcessingEngine:
             raise
     
     def _preprocess_text(self, text: str, config: Dict[str, Any]) -> str:
-        """Preprocess text for analysis"""        try:
+        """Preprocess text for analysis"""
+        try:
             # Remove special characters if requested
             if config.get('remove_special_chars', False):
                 text = re.sub(r'[^a-zA-Z0-9\s]', '', text)
@@ -274,7 +286,8 @@ class TextProcessingEngine:
             return text
     
     def _extract_text_features(self, text: str, config: Dict[str, Any]) -> TextFeatures:
-        """Extract comprehensive text features"""        try:
+        """Extract comprehensive text features"""
+        try:
             # Linguistic features
             linguistic_features = self._extract_linguistic_features(text)
             
@@ -315,7 +328,8 @@ class TextProcessingEngine:
             raise
     
     def _extract_linguistic_features(self, text: str) -> Dict[str, Any]:
-        """Extract linguistic features"""        features = {}
+        """Extract linguistic features"""
+        features = {}
         
         # Tokenize
         words = word_tokenize(text)
@@ -345,7 +359,8 @@ class TextProcessingEngine:
         return features
     
     def _extract_semantic_features(self, text: str, config: Dict[str, Any]) -> Dict[str, np.ndarray]:
-        """Extract semantic features using embeddings"""        features = {}
+        """Extract semantic features using embeddings"""
+        features = {}
         
         # BERT embeddings
         if config.get('extract_bert_embeddings', True):
@@ -362,7 +377,8 @@ class TextProcessingEngine:
         return features
     
     def _extract_sentiment_features(self, text: str) -> Dict[str, float]:
-        """Extract sentiment-related features"""        features = {}
+        """Extract sentiment-related features"""
+        features = {}
         
         # TextBlob sentiment
         blob = TextBlob(text)
@@ -388,7 +404,8 @@ class TextProcessingEngine:
         return features
     
     def _extract_structural_features(self, text: str) -> Dict[str, int]:
-        """Extract structural features"""        features = {}
+        """Extract structural features"""
+        features = {}
         
         # Count different types of punctuation
         features['exclamation_count'] = text.count('!')
@@ -412,7 +429,8 @@ class TextProcessingEngine:
         return features
     
     def _extract_quality_metrics(self, text: str) -> Dict[str, float]:
-        """Extract text quality metrics"""        metrics = {}
+        """Extract text quality metrics"""
+        metrics = {}
         
         # Grammar and spelling (simplified)
         blob = TextBlob(text)
@@ -438,7 +456,8 @@ class TextProcessingEngine:
         return metrics
     
     def _calculate_readability_metrics(self, text: str, words: List[str], sentences: List[str]) -> Dict[str, float]:
-        """Calculate readability metrics"""        metrics = {}
+        """Calculate readability metrics"""
+        metrics = {}
         
         if not words or not sentences:
             return {'flesch_reading_ease': 0, 'flesch_kincaid_grade': 0}
@@ -481,7 +500,8 @@ class TextProcessingEngine:
         return metrics
     
     def _get_bert_embedding(self, text: str) -> np.ndarray:
-        """Get BERT embedding for text"""        try:
+        """Get BERT embedding for text"""
+        try:
             inputs = self.bert_tokenizer(text, return_tensors='pt', truncation=True, padding=True, max_length=512)
             
             with torch.no_grad():
@@ -496,7 +516,8 @@ class TextProcessingEngine:
             return np.zeros(768)  # Default BERT embedding size
     
     def _get_roberta_embedding(self, text: str) -> np.ndarray:
-        """Get RoBERTa embedding for text"""        try:
+        """Get RoBERTa embedding for text"""
+        try:
             inputs = self.roberta_tokenizer(text, return_tensors='pt', truncation=True, padding=True, max_length=512)
             
             with torch.no_grad():
@@ -511,7 +532,8 @@ class TextProcessingEngine:
             return np.zeros(768)  # Default RoBERTa embedding size
     
     def _get_tfidf_features(self, text: str) -> np.ndarray:
-        """Get TF-IDF features for text"""        try:
+        """Get TF-IDF features for text"""
+        try:
             # Fit and transform single text
             tfidf_matrix = self.tfidf_vectorizer.fit_transform([text])
             return tfidf_matrix.toarray().flatten()
@@ -521,7 +543,8 @@ class TextProcessingEngine:
             return np.zeros(1000)  # Default size
     
     def _analyze_sentiment(self, text: str, config: Dict[str, Any]) -> SentimentResult:
-        """Comprehensive sentiment analysis"""        try:
+        """Comprehensive sentiment analysis"""
+        try:
             # TextBlob sentiment
             blob = TextBlob(text)
             polarity = blob.sentiment.polarity
@@ -555,7 +578,8 @@ class TextProcessingEngine:
             return SentimentResult(polarity=0.0, subjectivity=0.0, emotion_scores={}, confidence=0.0)
     
     def _extract_named_entities(self, text: str, config: Dict[str, Any]) -> List[NamedEntity]:
-        """Extract named entities"""        entities = []
+        """Extract named entities"""
+        entities = []
         
         if not self.nlp or not config.get('extract_entities', True):
             return entities
@@ -578,7 +602,8 @@ class TextProcessingEngine:
         return entities
     
     def _generate_embeddings(self, text: str, config: Dict[str, Any]) -> Dict[str, np.ndarray]:
-        """Generate various text embeddings"""        embeddings = {}
+        """Generate various text embeddings"""
+        embeddings = {}
         
         if config.get('generate_bert_embedding', True):
             embeddings['bert'] = self._get_bert_embedding(text)
@@ -589,7 +614,8 @@ class TextProcessingEngine:
         return embeddings
     
     def _analyze_text_quality(self, text: str) -> Dict[str, float]:
-        """Analyze overall text quality"""        quality_metrics = {}
+        """Analyze overall text quality"""
+        quality_metrics = {}
         
         # Readability
         words = word_tokenize(text)
@@ -626,7 +652,8 @@ class TextProcessingEngine:
         return quality_metrics
     
     def _calculate_coherence(self, sentences: List[str]) -> float:
-        """Calculate text coherence based on sentence similarity"""        try:
+        """Calculate text coherence based on sentence similarity"""
+        try:
             if len(sentences) < 2:
                 return 1.0
             
@@ -653,7 +680,8 @@ class TextProcessingEngine:
             return 0.5
     
     def _calculate_completeness(self, text: str) -> float:
-        """Calculate text completeness based on structure"""        try:
+        """Calculate text completeness based on structure"""
+        try:
             sentences = sent_tokenize(text)
             if not sentences:
                 return 0.0
@@ -674,7 +702,8 @@ class TextProcessingEngine:
             return 0.5
     
     def _calculate_clarity(self, text: str) -> float:
-        """Calculate text clarity score"""        try:
+        """Calculate text clarity score"""
+        try:
             words = word_tokenize(text)
             sentences = sent_tokenize(text)
             
@@ -703,7 +732,8 @@ class TextProcessingEngine:
             return 0.5
     
     def _generate_text_fingerprint(self, text: str) -> str:
-        """Generate text fingerprint for similarity matching"""        try:
+        """Generate text fingerprint for similarity matching"""
+        try:
             # Normalize text
             normalized_text = re.sub(r'\s+', ' ', text.lower().strip())
             
@@ -727,7 +757,8 @@ class TextProcessingEngine:
             return hashlib.md5(text.encode()).hexdigest()
     
     def _extract_topics(self, text: str, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract topics from text using LDA"""        try:
+        """Extract topics from text using LDA"""
+        try:
             if not config.get('extract_topics', True):
                 return {}
             
@@ -767,7 +798,8 @@ class TextProcessingEngine:
             return {}
     
     def _suggest_enhancements(self, text: str, config: Dict[str, Any]) -> Dict[str, List[str]]:
-        """Suggest text enhancements"""        suggestions = {
+        """Suggest text enhancements"""
+        suggestions = {
             'grammar': [],
             'style': [],
             'readability': [],
@@ -816,7 +848,8 @@ class TextProcessingEngine:
         return suggestions
     
     def _analyze_seo_factors(self, text: str, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze SEO factors in text"""        seo_analysis = {}
+        """Analyze SEO factors in text"""
+        seo_analysis = {}
         
         try:
             if not config.get('analyze_seo', True):
@@ -873,7 +906,8 @@ class TextProcessingEngine:
         return seo_analysis
     
     def _extract_text_metadata(self, original_text: str, cleaned_text: str) -> Dict[str, Any]:
-        """Extract text metadata"""        metadata = {}
+        """Extract text metadata"""
+        metadata = {}
         
         try:
             # Language detection
@@ -913,7 +947,8 @@ class TextProcessingEngine:
         return metadata
     
     def calculate_similarity(self, text1: str, text2: str, method: str = 'semantic') -> float:
-        """Calculate similarity between two texts"""        try:
+        """Calculate similarity between two texts"""
+        try:
             if method == 'semantic':
                 # Use BERT embeddings for semantic similarity
                 embedding1 = self._get_bert_embedding(text1)
@@ -948,7 +983,8 @@ class TextProcessingEngine:
             return 0.0
     
     def generate_summary(self, text: str, max_length: int = 150) -> str:
-        """Generate text summary"""        try:
+        """Generate text summary"""
+        try:
             if len(text.split()) < 50:
                 return text  # Too short to summarize
             
@@ -962,7 +998,8 @@ class TextProcessingEngine:
     
     def detect_plagiarism(self, text: str, reference_texts: List[str], 
                          threshold: float = 0.8) -> Dict[str, Any]:
-        """Detect potential plagiarism"""        try:
+        """Detect potential plagiarism"""
+        try:
             plagiarism_results = {
                 'is_plagiarized': False,
                 'max_similarity': 0.0,
@@ -992,7 +1029,8 @@ class TextProcessingEngine:
             return {'is_plagiarized': False, 'max_similarity': 0.0}
     
     def enhance_text_for_seo(self, text: str, target_keywords: List[str] = None) -> str:
-        """Enhance text for SEO optimization"""        try:
+        """Enhance text for SEO optimization"""
+        try:
             enhanced_text = text
             
             if target_keywords:

@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -16,7 +17,8 @@ Tests for automated payment processing and distribution functionality.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -32,14 +34,17 @@ from monetization.payment_processor import (
 
 
 class TestPaymentProcessor:
-    """Test suite for PaymentProcessor class"""    
+    """Test suite for PaymentProcessor class"""
+    
     @pytest.fixture
     def processor(self):
-        """Create PaymentProcessor instance for testing"""        return PaymentProcessor()
+        """Create PaymentProcessor instance for testing"""
+        return PaymentProcessor()
     
     @pytest.fixture
     async def configured_processor(self, processor):
-        """Create configured PaymentProcessor for testing"""        await processor.configure_stripe(
+        """Create configured PaymentProcessor for testing"""
+        await processor.configure_stripe(
             secret_key="sk_test_123",
             webhook_secret="whsec_test_123"
         )
@@ -51,7 +56,8 @@ class TestPaymentProcessor:
     
     @pytest.fixture
     def sample_transaction_data(self):
-        """Sample transaction data for testing"""        return {
+        """Sample transaction data for testing"""
+        return {
             "license_id": "license_123",
             "payer_id": "user_456",
             "payee_id": "creator_789", 
@@ -62,7 +68,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_stripe_configuration(self, processor):
-        """Test Stripe provider configuration"""        await processor.configure_stripe(
+        """Test Stripe provider configuration"""
+        await processor.configure_stripe(
             secret_key="sk_test_123",
             webhook_secret="whsec_test_123",
             connect_enabled=True
@@ -76,7 +83,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_paypal_configuration(self, processor):
-        """Test PayPal provider configuration"""        await processor.configure_paypal(
+        """Test PayPal provider configuration"""
+        await processor.configure_paypal(
             client_id="paypal_test_client",
             client_secret="paypal_test_secret",
             environment="sandbox"
@@ -90,7 +98,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_fee_calculation_stripe(self, processor):
-        """Test fee calculation for Stripe"""        amount = 100.0
+        """Test fee calculation for Stripe"""
+        amount = 100.0
         fees = processor._calculate_fees(amount, PaymentProvider.STRIPE, "EUR")
         
         expected_fee = (100.0 * 0.029) + 0.30  # 2.9% + €0.30
@@ -99,7 +108,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_fee_calculation_international(self, processor):
-        """Test fee calculation for international payments"""        amount = 100.0
+        """Test fee calculation for international payments"""
+        amount = 100.0
         fees = processor._calculate_fees(
             amount, PaymentProvider.STRIPE, "EUR", international=True
         )
@@ -110,7 +120,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_fee_calculation_wise(self, processor):
-        """Test fee calculation for Wise transfers"""        amount = 100.0
+        """Test fee calculation for Wise transfers"""
+        amount = 100.0
         fees = processor._calculate_fees(amount, PaymentProvider.WISE, "EUR")
         
         expected_fee = (100.0 * 0.005) + 0.50  # 0.5% + €0.50
@@ -119,7 +130,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_fee_calculation_bitcoin(self, processor):
-        """Test fee calculation for Bitcoin payments"""        amount = 100.0
+        """Test fee calculation for Bitcoin payments"""
+        amount = 100.0
         fees = processor._calculate_fees(amount, PaymentProvider.BITCOIN, "BTC")
         
         expected_fee = 100.0 * 0.01  # 1% with no fixed fee
@@ -128,7 +140,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_fee_cap(self, processor):
-        """Test that fees are capped at reasonable amount"""        amount = 10.0  # Small amount
+        """Test that fees are capped at reasonable amount"""
+        amount = 10.0  # Small amount
         fees = processor._calculate_fees(amount, PaymentProvider.STRIPE, "EUR")
         
         # Fees should not exceed 10% of amount
@@ -137,7 +150,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_license_payment_processing(self, configured_processor, sample_transaction_data):
-        """Test license payment processing"""        transaction = await configured_processor.process_license_payment(
+        """Test license payment processing"""
+        transaction = await configured_processor.process_license_payment(
             license_id=sample_transaction_data["license_id"],
             payer_id=sample_transaction_data["payer_id"],
             payee_id=sample_transaction_data["payee_id"],
@@ -158,7 +172,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_license_payment_without_payment_method(self, configured_processor, sample_transaction_data):
-        """Test license payment processing without payment method"""        transaction = await configured_processor.process_license_payment(
+        """Test license payment processing without payment method"""
+        transaction = await configured_processor.process_license_payment(
             license_id=sample_transaction_data["license_id"],
             payer_id=sample_transaction_data["payer_id"],
             payee_id=sample_transaction_data["payee_id"],
@@ -172,7 +187,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_revenue_distribution(self, configured_processor):
-        """Test automated revenue distribution"""        revenue_data = {
+        """Test automated revenue distribution"""
+        revenue_data = {
             "youtube": 100.0,
             "spotify": 50.0,
             "instagram": 75.0
@@ -201,7 +217,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_revenue_distribution_minimum_threshold(self, configured_processor):
-        """Test revenue distribution respects minimum payout threshold"""        revenue_data = {"youtube": 5.0}  # Small amount
+        """Test revenue distribution respects minimum payout threshold"""
+        revenue_data = {"youtube": 5.0}  # Small amount
         split_rules = {"creator_1": 0.1}  # 10% = €0.50, below minimum
         
         transactions = await configured_processor.distribute_revenue_shares(
@@ -214,7 +231,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_escrow_creation(self, configured_processor):
-        """Test escrow transaction creation"""        escrow = await configured_processor.create_escrow_transaction(
+        """Test escrow transaction creation"""
+        escrow = await configured_processor.create_escrow_transaction(
             payment_id="payment_123",
             amount=100.0,
             currency="EUR",
@@ -236,7 +254,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_escrow_release(self, configured_processor, sample_transaction_data):
-        """Test escrow fund release"""        # First create a transaction and escrow
+        """Test escrow fund release"""
+        # First create a transaction and escrow
         transaction = await configured_processor.process_license_payment(
             **sample_transaction_data,
             payment_method_id="pm_test_123"
@@ -261,7 +280,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_escrow_release_nonexistent(self, configured_processor):
-        """Test escrow release for non-existent escrow"""        success = await configured_processor.release_escrow(
+        """Test escrow release for non-existent escrow"""
+        success = await configured_processor.release_escrow(
             escrow_id="nonexistent_escrow",
             release_reason="test"
         )
@@ -271,7 +291,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_multi_currency_payment(self, configured_processor):
-        """Test multi-currency payment processing"""        transaction = await configured_processor.process_multi_currency_payment(
+        """Test multi-currency payment processing"""
+        transaction = await configured_processor.process_multi_currency_payment(
             amount=100.0,
             from_currency="USD",
             to_currency="EUR",
@@ -289,7 +310,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_payment_dispute_handling(self, configured_processor, sample_transaction_data):
-        """Test payment dispute handling"""        # Create a transaction first
+        """Test payment dispute handling"""
+        # Create a transaction first
         transaction = await configured_processor.process_license_payment(
             **sample_transaction_data,
             payment_method_id="pm_test_123"
@@ -310,7 +332,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_dispute_nonexistent_transaction(self, configured_processor):
-        """Test dispute handling for non-existent transaction"""        result = await configured_processor.handle_payment_dispute(
+        """Test dispute handling for non-existent transaction"""
+        result = await configured_processor.handle_payment_dispute(
             transaction_id="nonexistent_transaction",
             dispute_reason="Test dispute",
             evidence={}
@@ -322,7 +345,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_tax_report_generation(self, configured_processor):
-        """Test tax report generation"""        # Create some test transactions
+        """Test tax report generation"""
+        # Create some test transactions
         user_id = "user_123"
         
         # Simulate completed transactions
@@ -359,7 +383,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_tax_calculation_germany(self, configured_processor):
-        """Test German tax calculation"""        tax_info = configured_processor._calculate_tax_obligations(20000.0, "DE")
+        """Test German tax calculation"""
+        tax_info = configured_processor._calculate_tax_obligations(20000.0, "DE")
         
         assert "taxable_income" in tax_info
         assert "tax_rate" in tax_info
@@ -374,7 +399,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_tax_calculation_below_threshold(self, configured_processor):
-        """Test tax calculation below threshold"""        tax_info = configured_processor._calculate_tax_obligations(5000.0, "DE")
+        """Test tax calculation below threshold"""
+        tax_info = configured_processor._calculate_tax_obligations(5000.0, "DE")
         
         assert tax_info["taxable_income"] == 0.0
         assert tax_info["tax_owed"] == 0.0
@@ -382,7 +408,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     def test_provider_fee_structures(self, processor):
-        """Test payment provider fee structures"""        fees = processor.PROVIDER_FEES
+        """Test payment provider fee structures"""
+        fees = processor.PROVIDER_FEES
         
         # Check all providers have required fee structure
         required_providers = [
@@ -404,7 +431,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     def test_payment_transaction_dataclass(self):
-        """Test PaymentTransaction dataclass structure"""        transaction = PaymentTransaction(
+        """Test PaymentTransaction dataclass structure"""
+        transaction = PaymentTransaction(
             id="test_123",
             transaction_type=PaymentType.LICENSE_PAYMENT,
             provider=PaymentProvider.STRIPE,
@@ -427,7 +455,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     def test_escrow_transaction_dataclass(self):
-        """Test EscrowTransaction dataclass structure"""        escrow = EscrowTransaction(
+        """Test EscrowTransaction dataclass structure"""
+        escrow = EscrowTransaction(
             id="escrow_123",
             payment_id="payment_456",
             amount=100.0,
@@ -448,7 +477,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization
     def test_payment_enums(self):
-        """Test payment-related enums"""        # Test PaymentProvider enum
+        """Test payment-related enums"""
+        # Test PaymentProvider enum
         assert PaymentProvider.STRIPE.value == "stripe"
         assert PaymentProvider.PAYPAL.value == "paypal"
         assert PaymentProvider.WISE.value == "wise"
@@ -468,7 +498,8 @@ class TestPaymentProcessor:
     @pytest.mark.slow
     @pytest.mark.monetization
     async def test_large_scale_revenue_distribution(self, configured_processor):
-        """Test revenue distribution with many recipients"""        revenue_data = {"youtube": 10000.0}  # Large revenue
+        """Test revenue distribution with many recipients"""
+        revenue_data = {"youtube": 10000.0}  # Large revenue
         
         # Create many recipients with small shares
         split_rules = {f"creator_{i}": 0.01 for i in range(50)}  # 50 creators, 1% each
@@ -486,7 +517,8 @@ class TestPaymentProcessor:
     @pytest.mark.unit
     @pytest.mark.monetization 
     async def test_exchange_rate_lookup(self, configured_processor):
-        """Test exchange rate lookup functionality"""        # Test known exchange rates
+        """Test exchange rate lookup functionality"""
+        # Test known exchange rates
         usd_to_eur = await configured_processor._get_exchange_rate("USD", "EUR")
         eur_to_usd = await configured_processor._get_exchange_rate("EUR", "USD")
         

@@ -10,7 +10,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import psutil
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class TrafficType(Enum):
-    """Traffic type classification"""    UPLOAD = "upload"
+    """Traffic type classification"""
+    UPLOAD = "upload"
     DOWNLOAD = "download"
     API_REQUESTS = "api_requests"
     WEBSOCKET = "websocket"
@@ -42,7 +44,8 @@ class TrafficType(Enum):
 
 @dataclass
 class BandwidthLimit:
-    """Bandwidth limit configuration"""    service_name: str
+    """Bandwidth limit configuration"""
+    service_name: str
     traffic_type: TrafficType
     max_bandwidth_mbps: float
     burst_bandwidth_mbps: float
@@ -52,7 +55,8 @@ class BandwidthLimit:
 
 @dataclass
 class TrafficSample:
-    """Traffic measurement sample"""    timestamp: datetime
+    """Traffic measurement sample"""
+    timestamp: datetime
     bytes_in: int
     bytes_out: int
     packets_in: int
@@ -64,7 +68,8 @@ class TrafficSample:
 
 @dataclass
 class ServiceTrafficStats:
-    """Traffic statistics for a service"""    service_name: str
+    """Traffic statistics for a service"""
+    service_name: str
     current_bandwidth_in_mbps: float = 0.0
     current_bandwidth_out_mbps: float = 0.0
     avg_bandwidth_in_mbps: float = 0.0
@@ -80,12 +85,14 @@ class ServiceTrafficStats:
 
 
 class BandwidthMonitor:
-    """    Enterprise Bandwidth Monitor for Load Balancer
+    """
+    Enterprise Bandwidth Monitor for Load Balancer
     
     Provides comprehensive traffic monitoring, bandwidth limiting,
     and Quality of Service (QoS) management for the IA Influencer
     Agent platform's microservices.
-    """    
+    """
+    
     def __init__(self, collection_interval: int = 10):
         self.collection_interval = collection_interval
         
@@ -115,7 +122,8 @@ class BandwidthMonitor:
         logger.info("Bandwidth Monitor initialized")
     
     async def initialize(self) -> None:
-        """Initialize bandwidth monitoring"""        try:
+        """Initialize bandwidth monitoring"""
+        try:
             logger.info("Initializing Bandwidth Monitor...")
             
             # Discover network interfaces
@@ -137,7 +145,8 @@ class BandwidthMonitor:
             raise
     
     async def _discover_network_interfaces(self) -> None:
-        """Discover available network interfaces"""        try:
+        """Discover available network interfaces"""
+        try:
             interfaces = psutil.net_if_stats()
             self.network_interfaces = [
                 name for name, stats in interfaces.items()
@@ -166,7 +175,8 @@ class BandwidthMonitor:
             raise
     
     async def _configure_service_limits(self) -> None:
-        """Configure bandwidth limits for platform services"""        # Fingerprinting service - high bandwidth for media uploads
+        """Configure bandwidth limits for platform services"""
+        # Fingerprinting service - high bandwidth for media uploads
         self.bandwidth_limits["fingerprinting_upload"] = BandwidthLimit(
             service_name="fingerprinting",
             traffic_type=TrafficType.UPLOAD,
@@ -222,7 +232,8 @@ class BandwidthMonitor:
         logger.info(f"Configured {len(self.bandwidth_limits)} bandwidth limits")
     
     async def _initialize_service_stats(self) -> None:
-        """Initialize statistics tracking for services"""        services = ["fingerprinting", "protection", "monetization", "ai_agent", "crawlers"]
+        """Initialize statistics tracking for services"""
+        services = ["fingerprinting", "protection", "monetization", "ai_agent", "crawlers"]
         
         for service in services:
             self.service_stats[service] = ServiceTrafficStats(service_name=service)
@@ -230,7 +241,8 @@ class BandwidthMonitor:
         logger.info(f"Initialized statistics for {len(services)} services")
     
     async def _setup_traffic_shaping(self) -> None:
-        """Setup traffic shaping using tc (Traffic Control)"""        try:
+        """Setup traffic shaping using tc (Traffic Control)"""
+        try:
             if not self.main_interface:
                 logger.warning("No main interface found, skipping traffic shaping")
                 return
@@ -285,7 +297,8 @@ class BandwidthMonitor:
             logger.error(f"Error in traffic shaping setup: {e}")
     
     async def start_monitoring(self) -> None:
-        """Start bandwidth monitoring"""        if self.is_monitoring:
+        """Start bandwidth monitoring"""
+        if self.is_monitoring:
             logger.warning("Bandwidth monitoring already running")
             return
         
@@ -296,7 +309,8 @@ class BandwidthMonitor:
         logger.info("Bandwidth monitoring started")
     
     async def stop_monitoring(self) -> None:
-        """Stop bandwidth monitoring"""        self.is_monitoring = False
+        """Stop bandwidth monitoring"""
+        self.is_monitoring = False
         
         if self.monitor_task:
             self.monitor_task.cancel()
@@ -315,7 +329,8 @@ class BandwidthMonitor:
         logger.info("Bandwidth monitoring stopped")
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop"""        while self.is_monitoring:
+        """Main monitoring loop"""
+        while self.is_monitoring:
             try:
                 # Collect network statistics
                 await self._collect_network_stats()
@@ -334,7 +349,8 @@ class BandwidthMonitor:
                 await asyncio.sleep(self.collection_interval)
     
     async def _collect_network_stats(self) -> None:
-        """Collect network interface statistics"""        try:
+        """Collect network interface statistics"""
+        try:
             current_time = datetime.now()
             
             # Get network I/O counters
@@ -378,7 +394,8 @@ class BandwidthMonitor:
             logger.error(f"Failed to collect network stats: {e}")
     
     async def _update_service_stats(self) -> None:
-        """Update statistics for each service"""        try:
+        """Update statistics for each service"""
+        try:
             current_time = datetime.now()
             
             for service_name, stats in self.service_stats.items():
@@ -419,7 +436,8 @@ class BandwidthMonitor:
             logger.error(f"Failed to update service stats: {e}")
     
     async def _check_bandwidth_alerts(self) -> None:
-        """Check for bandwidth usage alerts"""        try:
+        """Check for bandwidth usage alerts"""
+        try:
             for limit_name, limit in self.bandwidth_limits.items():
                 if not limit.enabled:
                     continue
@@ -452,7 +470,8 @@ class BandwidthMonitor:
             logger.error(f"Failed to check bandwidth alerts: {e}")
     
     async def _traffic_shaping_loop(self) -> None:
-        """Traffic shaping adjustment loop"""        while self.is_monitoring:
+        """Traffic shaping adjustment loop"""
+        while self.is_monitoring:
             try:
                 # Adjust traffic shaping based on current usage
                 await self._adjust_traffic_shaping()
@@ -465,7 +484,8 @@ class BandwidthMonitor:
                 await asyncio.sleep(60)
     
     async def _adjust_traffic_shaping(self) -> None:
-        """Adjust traffic shaping rules based on current usage"""        try:
+        """Adjust traffic shaping rules based on current usage"""
+        try:
             # This would implement dynamic adjustment of tc rules
             # based on current traffic patterns and service priorities
             
@@ -481,7 +501,8 @@ class BandwidthMonitor:
             logger.error(f"Failed to adjust traffic shaping: {e}")
     
     async def get_bandwidth_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive bandwidth statistics"""        try:
+        """Get comprehensive bandwidth statistics"""
+        try:
             with self._lock:
                 # Calculate total usage
                 total_in_mbps = sum(stats.current_bandwidth_in_mbps for stats in self.service_stats.values())
@@ -547,7 +568,8 @@ class BandwidthMonitor:
     async def set_bandwidth_limit(self, service_name: str, traffic_type: TrafficType,
                                 max_bandwidth_mbps: float, burst_bandwidth_mbps: float,
                                 priority: int = 5) -> bool:
-        """Set or update bandwidth limit for a service"""        try:
+        """Set or update bandwidth limit for a service"""
+        try:
             limit_name = f"{service_name}_{traffic_type.value}"
             
             self.bandwidth_limits[limit_name] = BandwidthLimit(
@@ -570,7 +592,8 @@ class BandwidthMonitor:
             return False
     
     async def shutdown(self) -> None:
-        """Shutdown bandwidth monitor"""        try:
+        """Shutdown bandwidth monitor"""
+        try:
             logger.info("Shutting down Bandwidth Monitor...")
             
             await self.stop_monitoring()

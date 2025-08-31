@@ -8,7 +8,8 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
-"""from typing import Dict, List, Optional, Tuple, Any
+"""
+from typing import Dict, List, Optional, Tuple, Any
 from enum import Enum
 from dataclasses import dataclass
 from datetime import datetime
@@ -19,7 +20,8 @@ from pydantic import BaseModel, Field
 logger = logging.getLogger(__name__)
 
 class ContentCreatorType(Enum):
-    """Content creator types supported by the platform"""    MUSICIAN = "musician"
+    """Content creator types supported by the platform"""
+    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -29,14 +31,16 @@ class ContentCreatorType(Enum):
     ARTIST = "artist"
 
 class ContentFormat(Enum):
-    """Content formats supported"""    AUDIO = "audio"
+    """Content formats supported"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
     MIXED_MEDIA = "mixed_media"
 
 class PromptCategory(Enum):
-    """Prompt categories for content creation"""    CREATION = "creation"
+    """Prompt categories for content creation"""
+    CREATION = "creation"
     PROTECTION = "protection"
     OPTIMIZATION = "optimization"
     MONETIZATION = "monetization"
@@ -45,7 +49,8 @@ class PromptCategory(Enum):
 
 @dataclass
 class PromptContext:
-    """Context for prompt generation"""    creator_type: ContentCreatorType
+    """Context for prompt generation"""
+    creator_type: ContentCreatorType
     content_format: ContentFormat
     category: PromptCategory
     user_preferences: Dict[str, Any]
@@ -53,19 +58,23 @@ class PromptContext:
     market_trends: Dict[str, Any]
 
 class ContentCreatorPrompts:
-    """Professional Content Creator Prompts System"""    
+    """Professional Content Creator Prompts System"""
+    
     def __init__(self):
-        """Initialize the content creator prompts system"""        self.prompts_cache = {}
+        """Initialize the content creator prompts system"""
+        self.prompts_cache = {}
         self.personalization_engine = PersonalizationEngine()
         self._load_prompt_templates()
     
     def _load_prompt_templates(self) -> None:
-        """Load and initialize prompt templates"""        self.base_prompts = {
+        """Load and initialize prompt templates"""
+        self.base_prompts = {
             ContentCreatorType.MUSICIAN: {
                 PromptCategory.CREATION: [
                     {
                         "id": "music_composition_ai",
-                        "template": """                        As an advanced AI music composition assistant, help create a {genre} track with the following specifications:
+                        "template": """
+                        As an advanced AI music composition assistant, help create a {genre} track with the following specifications:
                         
                         Musical Elements:
                         - Genre: {genre}
@@ -103,7 +112,8 @@ class ContentCreatorPrompts:
                     },
                     {
                         "id": "lyrics_generation_pro",
-                        "template": """                        Create professional song lyrics with the following parameters:
+                        "template": """
+                        Create professional song lyrics with the following parameters:
                         
                         Song Details:
                         - Title: {title}
@@ -145,7 +155,8 @@ class ContentCreatorPrompts:
                 PromptCategory.PROTECTION: [
                     {
                         "id": "audio_fingerprinting",
-                        "template": """                        Generate advanced audio fingerprinting protection for musical content:
+                        "template": """
+                        Generate advanced audio fingerprinting protection for musical content:
                         
                         Audio Analysis:
                         - File: {audio_file}
@@ -195,7 +206,8 @@ class ContentCreatorPrompts:
                 PromptCategory.CREATION: [
                     {
                         "id": "blog_content_ai",
-                        "template": """                        Create engaging blog content with professional SEO optimization:
+                        "template": """
+                        Create engaging blog content with professional SEO optimization:
                         
                         Content Specifications:
                         - Topic: {topic}
@@ -246,7 +258,8 @@ class ContentCreatorPrompts:
                 PromptCategory.CREATION: [
                     {
                         "id": "photo_optimization_ai",
-                        "template": """                        Professional photo optimization and protection system:
+                        "template": """
+                        Professional photo optimization and protection system:
                         
                         Image Analysis:
                         - File format: {format}
@@ -296,7 +309,8 @@ class ContentCreatorPrompts:
         }
     
     def generate_prompt(self, context: PromptContext, custom_params: Optional[Dict] = None) -> Dict[str, Any]:
-        """Generate a personalized prompt based on context"""        try:
+        """Generate a personalized prompt based on context"""
+        try:
             # Get base prompt template
             base_prompts = self.base_prompts.get(context.creator_type, {})
             category_prompts = base_prompts.get(context.category, [])
@@ -324,7 +338,8 @@ class ContentCreatorPrompts:
             return self._generate_fallback_prompt(context)
     
     def _select_optimal_prompt(self, prompts: List[Dict], context: PromptContext) -> Dict:
-        """Select the optimal prompt based on context and quality scores"""        # Sort by quality score and relevance
+        """Select the optimal prompt based on context and quality scores"""
+        # Sort by quality score and relevance
         scored_prompts = []
         for prompt in prompts:
             relevance_score = self._calculate_relevance_score(prompt, context)
@@ -335,7 +350,8 @@ class ContentCreatorPrompts:
         return scored_prompts[0][1] if scored_prompts else prompts[0]
     
     def _calculate_relevance_score(self, prompt: Dict, context: PromptContext) -> float:
-        """Calculate relevance score based on context matching"""        # Implementation for relevance scoring
+        """Calculate relevance score based on context matching"""
+        # Implementation for relevance scoring
         base_score = 70.0
         
         # Add scoring logic based on context parameters
@@ -350,9 +366,11 @@ class ContentCreatorPrompts:
         return min(base_score, 100.0)
     
     def _generate_fallback_prompt(self, context: PromptContext) -> Dict[str, Any]:
-        """Generate fallback prompt when no specific prompt is available"""        return {
+        """Generate fallback prompt when no specific prompt is available"""
+        return {
             "id": "fallback_generic",
-            "template": f"""            Create professional {context.content_format.value} content for {context.creator_type.value}:
+            "template": f"""
+            Create professional {context.content_format.value} content for {context.creator_type.value}:
             
             Content Requirements:
             - Format: {context.content_format.value}
@@ -372,18 +390,22 @@ class ContentCreatorPrompts:
         }
     
     def _generate_context_hash(self, context: PromptContext) -> str:
-        """Generate hash for context caching"""        import hashlib
+        """Generate hash for context caching"""
+        import hashlib
         context_string = f"{context.creator_type.value}_{context.content_format.value}_{context.category.value}"
         return hashlib.md5(context_string.encode()).hexdigest()[:12]
 
 class PersonalizationEngine:
-    """Advanced personalization engine for prompts"""    
+    """Advanced personalization engine for prompts"""
+    
     def __init__(self):
-        """Initialize personalization engine"""        self.user_models = {}
+        """Initialize personalization engine"""
+        self.user_models = {}
         self.learning_data = {}
     
     def personalize(self, prompt: Dict, context: PromptContext, custom_params: Optional[Dict] = None) -> Dict[str, Any]:
-        """Personalize prompt based on user context and preferences"""        personalized = prompt.copy()
+        """Personalize prompt based on user context and preferences"""
+        personalized = prompt.copy()
         
         # Apply user preferences
         if context.user_preferences:
@@ -404,7 +426,8 @@ class PersonalizationEngine:
         return personalized
     
     def _apply_user_preferences(self, prompt: Dict, preferences: Dict) -> Dict:
-        """Apply user preferences to prompt"""        # Implementation for user preference application
+        """Apply user preferences to prompt"""
+        # Implementation for user preference application
         modified_prompt = prompt.copy()
         
         # Update template with preference-based modifications
@@ -419,7 +442,8 @@ class PersonalizationEngine:
         return modified_prompt
     
     def _apply_platform_requirements(self, prompt: Dict, requirements: Dict) -> Dict:
-        """Apply platform-specific requirements"""        modified_prompt = prompt.copy()
+        """Apply platform-specific requirements"""
+        modified_prompt = prompt.copy()
         modified_prompt["platform_requirements"] = requirements
         
         # Modify template based on platform requirements
@@ -432,7 +456,8 @@ class PersonalizationEngine:
         return modified_prompt
     
     def _apply_market_trends(self, prompt: Dict, trends: Dict) -> Dict:
-        """Apply current market trends to prompt"""        modified_prompt = prompt.copy()
+        """Apply current market trends to prompt"""
+        modified_prompt = prompt.copy()
         modified_prompt["market_trends"] = trends
         
         # Integrate trending elements
@@ -444,7 +469,8 @@ class PersonalizationEngine:
         return modified_prompt
     
     def _apply_custom_parameters(self, prompt: Dict, custom_params: Dict) -> Dict:
-        """Apply custom parameters to prompt"""        modified_prompt = prompt.copy()
+        """Apply custom parameters to prompt"""
+        modified_prompt = prompt.copy()
         modified_prompt["custom_parameters"] = custom_params
         
         # Replace template variables with custom values
@@ -466,7 +492,8 @@ CONTENT_CREATOR_PROMPTS_REGISTRY = {
 }
 
 def get_content_creator_prompts() -> ContentCreatorPrompts:
-    """Get the main content creator prompts instance"""    return ContentCreatorPrompts()
+    """Get the main content creator prompts instance"""
+    return ContentCreatorPrompts()
 
 def create_prompt_context(
     creator_type: str,
@@ -476,7 +503,8 @@ def create_prompt_context(
     platform_requirements: Optional[Dict] = None,
     market_trends: Optional[Dict] = None
 ) -> PromptContext:
-    """Create a prompt context for content generation"""    return PromptContext(
+    """Create a prompt context for content generation"""
+    return PromptContext(
         creator_type=ContentCreatorType(creator_type),
         content_format=ContentFormat(content_format),
         category=PromptCategory(category),

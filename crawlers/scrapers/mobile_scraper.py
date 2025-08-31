@@ -10,7 +10,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 ⚠️ CRITICAL LEGAL WARNING ⚠️
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -23,7 +24,8 @@ from bs4 import BeautifulSoup
 
 @dataclass
 class MobileDevice:
-    """Mobile device configuration."""    name: str
+    """Mobile device configuration."""
+    name: str
     user_agent: str
     viewport: Dict[str, int]
     screen: Dict[str, int]
@@ -32,7 +34,8 @@ class MobileDevice:
 
 @dataclass
 class MobileContent:
-    """Mobile-optimized content structure."""    url: str
+    """Mobile-optimized content structure."""
+    url: str
     title: Optional[str] = None
     content: Optional[str] = None
     description: Optional[str] = None
@@ -58,7 +61,8 @@ class MobileContent:
             self.scraped_at = datetime.now()
 
 class MobileScraper:
-    """    Mobile-optimized web scraper.
+    """
+    Mobile-optimized web scraper.
     
     Features:
     - Mobile user agent simulation
@@ -68,7 +72,8 @@ class MobileScraper:
     - Touch-optimized interface analysis
     - Viewport emulation
     - Mobile-specific metadata
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.session: Optional[aiohttp.ClientSession] = None
@@ -108,15 +113,18 @@ class MobileScraper:
         self.current_device = self.devices['iphone_13']
         
     async def __aenter__(self):
-        """Async context manager entry."""        await self._initialize_session()
+        """Async context manager entry."""
+        await self._initialize_session()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""        if self.session:
+        """Async context manager exit."""
+        if self.session:
             await self.session.close()
             
     async def _initialize_session(self):
-        """Initialize HTTP session with mobile headers."""        headers = {
+        """Initialize HTTP session with mobile headers."""
+        headers = {
             'User-Agent': self.current_device.user_agent,
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
             'Accept-Language': 'en-US,en;q=0.5',
@@ -140,14 +148,16 @@ class MobileScraper:
         )
         
     def set_device(self, device_name: str):
-        """Set mobile device for emulation."""        if device_name in self.devices:
+        """Set mobile device for emulation."""
+        if device_name in self.devices:
             self.current_device = self.devices[device_name]
             self.logger.info(f"Set device to: {self.current_device.name}")
         else:
             self.logger.warning(f"Unknown device: {device_name}")
             
     async def scrape_mobile_content(self, url: str) -> MobileContent:
-        """Scrape content optimized for mobile."""        try:
+        """Scrape content optimized for mobile."""
+        try:
             async with self.session.get(url) as response:
                 html = await response.text()
                 soup = BeautifulSoup(html, 'html.parser')
@@ -181,7 +191,8 @@ class MobileScraper:
             return MobileContent(url=url)
             
     def _extract_title(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract page title."""        # Try mobile-specific title first
+        """Extract page title."""
+        # Try mobile-specific title first
         mobile_title = soup.find('meta', property='og:title')
         if mobile_title and mobile_title.get('content'):
             return mobile_title['content']
@@ -191,7 +202,8 @@ class MobileScraper:
         return title_tag.get_text().strip() if title_tag else None
         
     def _extract_description(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract page description."""        # Try various meta description tags
+        """Extract page description."""
+        # Try various meta description tags
         selectors = [
             'meta[name="description"]',
             'meta[property="og:description"]',
@@ -206,7 +218,8 @@ class MobileScraper:
         return None
         
     def _extract_main_content(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract main content from mobile-optimized selectors."""        # Mobile-first content selectors
+        """Extract main content from mobile-optimized selectors."""
+        # Mobile-first content selectors
         selectors = [
             'main',
             'article',
@@ -231,15 +244,18 @@ class MobileScraper:
         return None
         
     def _extract_viewport(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract viewport meta tag."""        viewport = soup.find('meta', attrs={'name': 'viewport'})
+        """Extract viewport meta tag."""
+        viewport = soup.find('meta', attrs={'name': 'viewport'})
         return viewport.get('content') if viewport else None
         
     def _extract_amp_url(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract AMP (Accelerated Mobile Pages) URL."""        amp_link = soup.find('link', rel='amphtml')
+        """Extract AMP (Accelerated Mobile Pages) URL."""
+        amp_link = soup.find('link', rel='amphtml')
         return amp_link.get('href') if amp_link else None
         
     def _extract_app_url(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract mobile app URL."""        # iOS app store
+        """Extract mobile app URL."""
+        # iOS app store
         ios_app = soup.find('meta', attrs={'name': 'apple-itunes-app'})
         if ios_app and ios_app.get('content'):
             return ios_app['content']
@@ -252,7 +268,8 @@ class MobileScraper:
         return None
         
     def _extract_app_banner(self, soup: BeautifulSoup) -> Optional[Dict[str, str]]:
-        """Extract app banner information."""        banner = {}
+        """Extract app banner information."""
+        banner = {}
         
         # Smart app banner
         smart_banner = soup.find('meta', attrs={'name': 'apple-itunes-app'})
@@ -267,7 +284,8 @@ class MobileScraper:
         return banner if banner else None
         
     def _extract_touch_icons(self, soup: BeautifulSoup) -> List[str]:
-        """Extract touch icons for mobile devices."""        icons = []
+        """Extract touch icons for mobile devices."""
+        icons = []
         
         # Apple touch icons
         touch_icons = soup.find_all('link', rel=lambda x: x and 'apple-touch-icon' in x)
@@ -284,7 +302,8 @@ class MobileScraper:
         return icons
         
     def _extract_images(self, soup: BeautifulSoup, base_url: str) -> List[str]:
-        """Extract images with mobile optimization."""        images = []
+        """Extract images with mobile optimization."""
+        images = []
         
         # Find all images
         img_tags = soup.find_all('img')
@@ -299,7 +318,8 @@ class MobileScraper:
         return list(set(images))
         
     def _extract_videos(self, soup: BeautifulSoup, base_url: str) -> List[str]:
-        """Extract videos with mobile support."""        videos = []
+        """Extract videos with mobile support."""
+        videos = []
         
         # Video tags
         video_tags = soup.find_all('video')
@@ -320,7 +340,8 @@ class MobileScraper:
         return list(set(videos))
         
     def _detect_responsive_design(self, soup: BeautifulSoup) -> bool:
-        """Detect if the page uses responsive design."""        # Check viewport meta tag
+        """Detect if the page uses responsive design."""
+        # Check viewport meta tag
         viewport = soup.find('meta', attrs={'name': 'viewport'})
         if viewport and 'width=device-width' in viewport.get('content', ''):
             return True
@@ -345,7 +366,8 @@ class MobileScraper:
         return False
         
     def _detect_mobile_optimization(self, soup: BeautifulSoup) -> bool:
-        """Detect mobile-specific optimizations."""        mobile_indicators = [
+        """Detect mobile-specific optimizations."""
+        mobile_indicators = [
             # Touch-friendly elements
             'touch', 'tap', 'swipe',
             # Mobile frameworks
@@ -360,7 +382,8 @@ class MobileScraper:
         return any(indicator in page_text for indicator in mobile_indicators)
         
     async def scrape_amp_content(self, amp_url: str) -> Optional[MobileContent]:
-        """Scrape AMP (Accelerated Mobile Pages) content."""        try:
+        """Scrape AMP (Accelerated Mobile Pages) content."""
+        try:
             async with self.session.get(amp_url) as response:
                 html = await response.text()
                 soup = BeautifulSoup(html, 'html.parser')
@@ -382,7 +405,8 @@ class MobileScraper:
             return None
             
     def get_device_capabilities(self) -> Dict[str, Any]:
-        """Get current device capabilities."""        return {
+        """Get current device capabilities."""
+        return {
             'name': self.current_device.name,
             'user_agent': self.current_device.user_agent,
             'viewport': self.current_device.viewport,

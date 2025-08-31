@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ from datetime import datetime, timedelta
 
 
 class ComplianceFramework(str, Enum):
-    """Supported compliance frameworks."""    # Financial Services
+    """Supported compliance frameworks."""
+    # Financial Services
     PCI_DSS = "pci_dss"
     SOX = "sox"  # Sarbanes-Oxley
     MiFID_II = "mifid_ii"  # EU Markets in Financial Instruments Directive
@@ -53,7 +55,8 @@ class ComplianceFramework(str, Enum):
 
 
 class JurisdictionCode(str, Enum):
-    """Legal jurisdictions for compliance."""    # Major Markets
+    """Legal jurisdictions for compliance."""
+    # Major Markets
     UNITED_STATES = "US"
     EUROPEAN_UNION = "EU"
     GERMANY = "DE"
@@ -77,7 +80,8 @@ class JurisdictionCode(str, Enum):
 
 
 class ComplianceRisk(str, Enum):
-    """Compliance risk levels."""    VERY_LOW = "very_low"
+    """Compliance risk levels."""
+    VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -85,7 +89,8 @@ class ComplianceRisk(str, Enum):
 
 
 class DataClassification(str, Enum):
-    """Data classification levels for compliance."""    PUBLIC = "public"
+    """Data classification levels for compliance."""
+    PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
@@ -94,7 +99,8 @@ class DataClassification(str, Enum):
 
 @dataclass
 class ComplianceRequirement:
-    """Individual compliance requirement configuration."""    requirement_id: str
+    """Individual compliance requirement configuration."""
+    requirement_id: str
     framework: ComplianceFramework
     jurisdiction: JurisdictionCode
     title: str
@@ -127,7 +133,8 @@ class ComplianceRequirement:
 
 @dataclass
 class DataProtectionPolicy:
-    """Data protection and privacy policy configuration."""    policy_name: str
+    """Data protection and privacy policy configuration."""
+    policy_name: str
     applicable_frameworks: List[ComplianceFramework] = field(default_factory=list)
     
     # Data Collection
@@ -178,7 +185,8 @@ class DataProtectionPolicy:
 
 @dataclass
 class FinancialCompliancePolicy:
-    """Financial services compliance policy configuration."""    policy_name: str
+    """Financial services compliance policy configuration."""
+    policy_name: str
     applicable_frameworks: List[ComplianceFramework] = field(default_factory=list)
     
     # Anti-Money Laundering (AML)
@@ -221,11 +229,14 @@ class FinancialCompliancePolicy:
 
 
 class RegulatoryComplianceConfig:
-    """    Professional regulatory compliance configuration.
+    """
+    Professional regulatory compliance configuration.
     Comprehensive compliance management for global regulations and standards.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize regulatory compliance configuration."""        
+        """Initialize regulatory compliance configuration."""
+        
         # Database Configuration
         self.COMPLIANCE_DB_URL = os.getenv(
             "COMPLIANCE_DB_URL",
@@ -306,7 +317,8 @@ class RegulatoryComplianceConfig:
         }
     
     def _initialize_compliance_requirements(self) -> List[ComplianceRequirement]:
-        """Initialize comprehensive compliance requirements."""        return [
+        """Initialize comprehensive compliance requirements."""
+        return [
             # PCI DSS Requirements
             ComplianceRequirement(
                 requirement_id="PCI_DSS_001",
@@ -425,7 +437,8 @@ class RegulatoryComplianceConfig:
         ]
     
     def _initialize_data_protection_policies(self) -> List[DataProtectionPolicy]:
-        """Initialize data protection policies."""        return [
+        """Initialize data protection policies."""
+        return [
             DataProtectionPolicy(
                 policy_name="GDPR Data Protection Policy",
                 applicable_frameworks=[ComplianceFramework.GDPR],
@@ -490,7 +503,8 @@ class RegulatoryComplianceConfig:
         ]
     
     def _initialize_financial_policies(self) -> List[FinancialCompliancePolicy]:
-        """Initialize financial compliance policies."""        return [
+        """Initialize financial compliance policies."""
+        return [
             FinancialCompliancePolicy(
                 policy_name="German AML/KYC Policy",
                 applicable_frameworks=[ComplianceFramework.AML, ComplianceFramework.KYC],
@@ -558,7 +572,8 @@ class RegulatoryComplianceConfig:
         ]
     
     def _initialize_jurisdictional_config(self) -> Dict[JurisdictionCode, Dict[str, Any]]:
-        """Initialize jurisdictional compliance configuration."""        return {
+        """Initialize jurisdictional compliance configuration."""
+        return {
             JurisdictionCode.GERMANY: {
                 "primary_regulator": "BaFin",
                 "data_protection_authority": "BfDI",
@@ -615,29 +630,37 @@ class RegulatoryComplianceConfig:
         }
     
     def get_compliance_requirement(self, requirement_id: str) -> Optional[ComplianceRequirement]:
-        """Get compliance requirement by ID."""        return next((req for req in self.COMPLIANCE_REQUIREMENTS if req.requirement_id == requirement_id), None)
+        """Get compliance requirement by ID."""
+        return next((req for req in self.COMPLIANCE_REQUIREMENTS if req.requirement_id == requirement_id), None)
     
     def get_requirements_by_framework(self, framework: ComplianceFramework) -> List[ComplianceRequirement]:
-        """Get all requirements for a specific compliance framework."""        return [req for req in self.COMPLIANCE_REQUIREMENTS if req.framework == framework]
+        """Get all requirements for a specific compliance framework."""
+        return [req for req in self.COMPLIANCE_REQUIREMENTS if req.framework == framework]
     
     def get_requirements_by_jurisdiction(self, jurisdiction: JurisdictionCode) -> List[ComplianceRequirement]:
-        """Get all requirements for a specific jurisdiction."""        return [req for req in self.COMPLIANCE_REQUIREMENTS if req.jurisdiction == jurisdiction]
+        """Get all requirements for a specific jurisdiction."""
+        return [req for req in self.COMPLIANCE_REQUIREMENTS if req.jurisdiction == jurisdiction]
     
     def get_critical_requirements(self) -> List[ComplianceRequirement]:
-        """Get all critical compliance requirements."""        return [req for req in self.COMPLIANCE_REQUIREMENTS if req.risk_level == ComplianceRisk.CRITICAL]
+        """Get all critical compliance requirements."""
+        return [req for req in self.COMPLIANCE_REQUIREMENTS if req.risk_level == ComplianceRisk.CRITICAL]
     
     def get_data_protection_policy(self, policy_name: str) -> Optional[DataProtectionPolicy]:
-        """Get data protection policy by name."""        return next((policy for policy in self.DATA_PROTECTION_POLICIES if policy.policy_name == policy_name), None)
+        """Get data protection policy by name."""
+        return next((policy for policy in self.DATA_PROTECTION_POLICIES if policy.policy_name == policy_name), None)
     
     def get_financial_policy(self, policy_name: str) -> Optional[FinancialCompliancePolicy]:
-        """Get financial compliance policy by name."""        return next((policy for policy in self.FINANCIAL_COMPLIANCE_POLICIES if policy.policy_name == policy_name), None)
+        """Get financial compliance policy by name."""
+        return next((policy for policy in self.FINANCIAL_COMPLIANCE_POLICIES if policy.policy_name == policy_name), None)
     
     def get_applicable_frameworks(self, jurisdiction: JurisdictionCode) -> List[ComplianceFramework]:
-        """Get applicable compliance frameworks for a jurisdiction."""        config = self.JURISDICTIONAL_CONFIG.get(jurisdiction)
+        """Get applicable compliance frameworks for a jurisdiction."""
+        config = self.JURISDICTIONAL_CONFIG.get(jurisdiction)
         return config.get("applicable_frameworks", []) if config else []
     
     def assess_compliance_risk(self, jurisdiction: JurisdictionCode) -> Dict[str, Any]:
-        """Assess compliance risk for a specific jurisdiction."""        requirements = self.get_requirements_by_jurisdiction(jurisdiction)
+        """Assess compliance risk for a specific jurisdiction."""
+        requirements = self.get_requirements_by_jurisdiction(jurisdiction)
         
         risk_assessment = {
             "jurisdiction": jurisdiction.value,
@@ -665,7 +688,8 @@ class RegulatoryComplianceConfig:
         return risk_assessment
     
     def generate_compliance_report(self, jurisdiction: Optional[JurisdictionCode] = None) -> Dict[str, Any]:
-        """Generate comprehensive compliance report."""        if jurisdiction:
+        """Generate comprehensive compliance report."""
+        if jurisdiction:
             requirements = self.get_requirements_by_jurisdiction(jurisdiction)
         else:
             requirements = self.COMPLIANCE_REQUIREMENTS

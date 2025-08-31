@@ -12,7 +12,8 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 This module provides advanced content distribution capabilities across multiple
 platforms with intelligent routing, optimization, and analytics.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
@@ -28,7 +29,8 @@ from abc import ABC, abstractmethod
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Supported content types"""    AUDIO = "audio"
+    """Supported content types"""
+    AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
     TEXT = "text"
@@ -38,7 +40,8 @@ class ContentType(Enum):
     LIVE = "live"
 
 class DistributionPlatform(Enum):
-    """Distribution platforms"""    SPOTIFY = "spotify"
+    """Distribution platforms"""
+    SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE = "youtube"
     YOUTUBE_MUSIC = "youtube_music"
@@ -57,7 +60,8 @@ class DistributionPlatform(Enum):
     REDDIT = "reddit"
 
 class ContentStatus(Enum):
-    """Content distribution status"""    PENDING = auto()
+    """Content distribution status"""
+    PENDING = auto()
     PROCESSING = auto()
     UPLOADING = auto()
     PUBLISHED = auto()
@@ -68,7 +72,8 @@ class ContentStatus(Enum):
     ARCHIVED = auto()
 
 class OptimizationLevel(Enum):
-    """Content optimization levels"""    NONE = "none"
+    """Content optimization levels"""
+    NONE = "none"
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -76,7 +81,8 @@ class OptimizationLevel(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Content metadata"""    title: str
+    """Content metadata"""
+    title: str
     description: Optional[str] = None
     tags: List[str] = field(default_factory=list)
     category: Optional[str] = None
@@ -97,7 +103,8 @@ class ContentMetadata:
 
 @dataclass
 class PlatformRequirements:
-    """Platform-specific requirements"""    platform: DistributionPlatform
+    """Platform-specific requirements"""
+    platform: DistributionPlatform
     supported_formats: List[str]
     max_file_size: Optional[int] = None
     max_duration: Optional[float] = None
@@ -109,7 +116,8 @@ class PlatformRequirements:
 
 @dataclass
 class ContentAsset:
-    """Content asset representation"""    asset_id: str
+    """Content asset representation"""
+    asset_id: str
     file_path: str
     metadata: ContentMetadata
     content_hash: str
@@ -121,7 +129,8 @@ class ContentAsset:
 
 @dataclass
 class DistributionJob:
-    """Content distribution job"""    job_id: str
+    """Content distribution job"""
+    job_id: str
     asset: ContentAsset
     target_platforms: List[DistributionPlatform]
     optimization_level: OptimizationLevel = OptimizationLevel.STANDARD
@@ -139,7 +148,8 @@ class DistributionJob:
 
 @dataclass
 class DistributionResult:
-    """Distribution operation result"""    job_id: str
+    """Distribution operation result"""
+    job_id: str
     platform: DistributionPlatform
     success: bool
     asset_url: Optional[str] = None
@@ -150,7 +160,8 @@ class DistributionResult:
     distributed_at: datetime = field(default_factory=datetime.utcnow)
 
 class ContentOptimizer:
-    """Content optimization engine"""    
+    """Content optimization engine"""
+    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.optimization_cache = {}
@@ -192,11 +203,13 @@ class ContentOptimizer:
         }
     
     def get_platform_requirements(self, platform: DistributionPlatform) -> Optional[PlatformRequirements]:
-        """Get requirements for specific platform"""        return self.platform_requirements.get(platform)
+        """Get requirements for specific platform"""
+        return self.platform_requirements.get(platform)
     
     async def validate_content(self, asset: ContentAsset, 
                              platform: DistributionPlatform) -> Tuple[bool, List[str]]:
-        """Validate content against platform requirements"""        requirements = self.get_platform_requirements(platform)
+        """Validate content against platform requirements"""
+        requirements = self.get_platform_requirements(platform)
         if not requirements:
             return True, []
         
@@ -236,7 +249,8 @@ class ContentOptimizer:
     async def optimize_for_platform(self, asset: ContentAsset, 
                                   platform: DistributionPlatform,
                                   optimization_level: OptimizationLevel) -> Optional[str]:
-        """Optimize content for specific platform"""        cache_key = f"{asset.content_hash}_{platform.value}_{optimization_level.value}"
+        """Optimize content for specific platform"""
+        cache_key = f"{asset.content_hash}_{platform.value}_{optimization_level.value}"
         
         if cache_key in self.optimization_cache:
             return self.optimization_cache[cache_key]
@@ -263,7 +277,8 @@ class ContentOptimizer:
                                   platform: DistributionPlatform,
                                   optimization_level: OptimizationLevel,
                                   requirements: PlatformRequirements) -> str:
-        """Perform actual content optimization"""        base_path = Path(asset.file_path)
+        """Perform actual content optimization"""
+        base_path = Path(asset.file_path)
         optimized_filename = f"{base_path.stem}_{platform.value}_{optimization_level.value}{base_path.suffix}"
         optimized_path = base_path.parent / optimized_filename
         
@@ -278,11 +293,13 @@ class ContentOptimizer:
         return str(optimized_path)
     
     def clear_cache(self):
-        """Clear optimization cache"""        self.optimization_cache.clear()
+        """Clear optimization cache"""
+        self.optimization_cache.clear()
         self.logger.info("Optimization cache cleared")
 
 class BasePlatformDistributor(ABC):
-    """Base class for platform distributors"""    
+    """Base class for platform distributors"""
+    
     def __init__(self, platform: DistributionPlatform):
         self.platform = platform
         self.logger = logging.getLogger(f"{self.__class__.__name__}")
@@ -291,39 +308,47 @@ class BasePlatformDistributor(ABC):
     
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with platform"""        pass
+        """Authenticate with platform"""
+        pass
     
     @abstractmethod
     async def upload_content(self, asset: ContentAsset, 
                            metadata: ContentMetadata) -> DistributionResult:
-        """Upload content to platform"""        pass
+        """Upload content to platform"""
+        pass
     
     @abstractmethod
     async def update_content(self, platform_id: str, 
                            metadata: ContentMetadata) -> bool:
-        """Update content metadata"""        pass
+        """Update content metadata"""
+        pass
     
     @abstractmethod
     async def delete_content(self, platform_id: str) -> bool:
-        """Delete content from platform"""        pass
+        """Delete content from platform"""
+        pass
     
     @abstractmethod
     async def get_analytics(self, platform_id: str, 
                           date_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Get content analytics"""        pass
+        """Get content analytics"""
+        pass
     
     async def check_upload_status(self, upload_id: str) -> ContentStatus:
-        """Check upload status"""        # Default implementation
+        """Check upload status"""
+        # Default implementation
         return ContentStatus.PUBLISHED
 
 class YouTubeDistributor(BasePlatformDistributor):
-    """YouTube content distributor"""    
+    """YouTube content distributor"""
+    
     def __init__(self):
         super().__init__(DistributionPlatform.YOUTUBE)
         self.api_client = None
     
     async def authenticate(self) -> bool:
-        """Authenticate with YouTube API"""        try:
+        """Authenticate with YouTube API"""
+        try:
             # Implementation would use Google API client
             self.logger.info("YouTube authentication successful")
             return True
@@ -333,7 +358,8 @@ class YouTubeDistributor(BasePlatformDistributor):
     
     async def upload_content(self, asset: ContentAsset, 
                            metadata: ContentMetadata) -> DistributionResult:
-        """Upload video to YouTube"""        try:
+        """Upload video to YouTube"""
+        try:
             self.logger.info(f"Uploading {asset.asset_id} to YouTube")
             
             # Simulate upload process
@@ -363,7 +389,8 @@ class YouTubeDistributor(BasePlatformDistributor):
     
     async def update_content(self, platform_id: str, 
                            metadata: ContentMetadata) -> bool:
-        """Update YouTube video metadata"""        try:
+        """Update YouTube video metadata"""
+        try:
             self.logger.info(f"Updating YouTube video {platform_id}")
             await asyncio.sleep(1)
             return True
@@ -372,7 +399,8 @@ class YouTubeDistributor(BasePlatformDistributor):
             return False
     
     async def delete_content(self, platform_id: str) -> bool:
-        """Delete YouTube video"""        try:
+        """Delete YouTube video"""
+        try:
             self.logger.info(f"Deleting YouTube video {platform_id}")
             await asyncio.sleep(1)
             return True
@@ -382,7 +410,8 @@ class YouTubeDistributor(BasePlatformDistributor):
     
     async def get_analytics(self, platform_id: str, 
                           date_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Get YouTube analytics"""        return {
+        """Get YouTube analytics"""
+        return {
             "views": 1000,
             "watch_time_hours": 500,
             "likes": 50,
@@ -394,13 +423,15 @@ class YouTubeDistributor(BasePlatformDistributor):
         }
 
 class SpotifyDistributor(BasePlatformDistributor):
-    """Spotify content distributor"""    
+    """Spotify content distributor"""
+    
     def __init__(self):
         super().__init__(DistributionPlatform.SPOTIFY)
         self.api_client = None
     
     async def authenticate(self) -> bool:
-        """Authenticate with Spotify API"""        try:
+        """Authenticate with Spotify API"""
+        try:
             self.logger.info("Spotify authentication successful")
             return True
         except Exception as e:
@@ -409,7 +440,8 @@ class SpotifyDistributor(BasePlatformDistributor):
     
     async def upload_content(self, asset: ContentAsset, 
                            metadata: ContentMetadata) -> DistributionResult:
-        """Upload track to Spotify"""        try:
+        """Upload track to Spotify"""
+        try:
             self.logger.info(f"Uploading {asset.asset_id} to Spotify")
             
             # Spotify requires music distributors like DistroKid, CD Baby, etc.
@@ -442,7 +474,8 @@ class SpotifyDistributor(BasePlatformDistributor):
     
     async def update_content(self, platform_id: str, 
                            metadata: ContentMetadata) -> bool:
-        """Update Spotify track metadata"""        try:
+        """Update Spotify track metadata"""
+        try:
             self.logger.info(f"Updating Spotify track {platform_id}")
             await asyncio.sleep(1)
             return True
@@ -451,7 +484,8 @@ class SpotifyDistributor(BasePlatformDistributor):
             return False
     
     async def delete_content(self, platform_id: str) -> bool:
-        """Delete Spotify track"""        try:
+        """Delete Spotify track"""
+        try:
             self.logger.info(f"Deleting Spotify track {platform_id}")
             await asyncio.sleep(1)
             return True
@@ -461,7 +495,8 @@ class SpotifyDistributor(BasePlatformDistributor):
     
     async def get_analytics(self, platform_id: str, 
                           date_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Get Spotify analytics"""        return {
+        """Get Spotify analytics"""
+        return {
             "streams": 5000,
             "listeners": 1200,
             "saves": 150,
@@ -472,7 +507,8 @@ class SpotifyDistributor(BasePlatformDistributor):
         }
 
 class ContentDistributionNetwork:
-    """Main CDN orchestrator"""    
+    """Main CDN orchestrator"""
+    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.optimizer = ContentOptimizer()
@@ -488,7 +524,8 @@ class ContentDistributionNetwork:
         self._initialize_distributors()
     
     def _initialize_distributors(self):
-        """Initialize platform distributors"""        self.distributors = {
+        """Initialize platform distributors"""
+        self.distributors = {
             DistributionPlatform.YOUTUBE: YouTubeDistributor(),
             DistributionPlatform.SPOTIFY: SpotifyDistributor(),
             # Add more distributors as needed
@@ -497,7 +534,8 @@ class ContentDistributionNetwork:
         self.logger.info(f"Initialized {len(self.distributors)} distributors")
     
     async def authenticate_all(self) -> Dict[DistributionPlatform, bool]:
-        """Authenticate with all platforms"""        results = {}
+        """Authenticate with all platforms"""
+        results = {}
         
         for platform, distributor in self.distributors.items():
             try:
@@ -509,7 +547,8 @@ class ContentDistributionNetwork:
         return results
     
     def create_asset(self, file_path: str, metadata: ContentMetadata) -> ContentAsset:
-        """Create content asset"""        # Generate asset ID
+        """Create content asset"""
+        # Generate asset ID
         asset_id = hashlib.md5(
             f"{file_path}_{metadata.title}_{datetime.utcnow().isoformat()}".encode()
         ).hexdigest()
@@ -529,7 +568,8 @@ class ContentDistributionNetwork:
                                     optimization_level: OptimizationLevel = OptimizationLevel.STANDARD,
                                     schedule_time: Optional[datetime] = None,
                                     priority: int = 5) -> str:
-        """Submit content distribution job"""        job_id = f"job_{int(datetime.utcnow().timestamp())}_{asset.asset_id[:8]}"
+        """Submit content distribution job"""
+        job_id = f"job_{int(datetime.utcnow().timestamp())}_{asset.asset_id[:8]}"
         
         job = DistributionJob(
             job_id=job_id,
@@ -548,7 +588,8 @@ class ContentDistributionNetwork:
         return job_id
     
     async def start_workers(self):
-        """Start distribution worker tasks"""        if self.running:
+        """Start distribution worker tasks"""
+        if self.running:
             return
         
         self.running = True
@@ -560,7 +601,8 @@ class ContentDistributionNetwork:
         self.logger.info(f"Started {self.max_workers} distribution workers")
     
     async def stop_workers(self):
-        """Stop distribution worker tasks"""        self.running = False
+        """Stop distribution worker tasks"""
+        self.running = False
         
         for task in self.worker_tasks:
             task.cancel()
@@ -571,7 +613,8 @@ class ContentDistributionNetwork:
         self.logger.info("Stopped all distribution workers")
     
     async def _distribution_worker(self, worker_id: int):
-        """Distribution worker coroutine"""        self.logger.info(f"Distribution worker {worker_id} started")
+        """Distribution worker coroutine"""
+        self.logger.info(f"Distribution worker {worker_id} started")
         
         while self.running:
             try:
@@ -605,7 +648,8 @@ class ContentDistributionNetwork:
         self.logger.info(f"Distribution worker {worker_id} stopped")
     
     async def _process_distribution_job(self, job: DistributionJob, worker_id: int):
-        """Process single distribution job"""        self.logger.info(f"Worker {worker_id} processing job {job.job_id}")
+        """Process single distribution job"""
+        self.logger.info(f"Worker {worker_id} processing job {job.job_id}")
         
         job.status = ContentStatus.PROCESSING
         job.started_at = datetime.utcnow()
@@ -717,7 +761,8 @@ class ContentDistributionNetwork:
         self.logger.info(f"Job {job.job_id} completed: {successful_distributions}/{len(job.target_platforms)} successful")
     
     def get_job_status(self, job_id: str) -> Optional[DistributionJob]:
-        """Get job status"""        if job_id in self.active_jobs:
+        """Get job status"""
+        if job_id in self.active_jobs:
             return self.active_jobs[job_id]
         
         for job in self.completed_jobs:
@@ -727,7 +772,8 @@ class ContentDistributionNetwork:
         return None
     
     def get_platform_statistics(self) -> Dict[str, Any]:
-        """Get distribution statistics"""        total_jobs = len(self.completed_jobs)
+        """Get distribution statistics"""
+        total_jobs = len(self.completed_jobs)
         
         if total_jobs == 0:
             return {"total_jobs": 0}
@@ -766,7 +812,8 @@ class ContentDistributionNetwork:
         }
     
     async def cleanup(self):
-        """Cleanup resources"""        await self.stop_workers()
+        """Cleanup resources"""
+        await self.stop_workers()
         self.optimizer.clear_cache()
         self.logger.info("Content distribution network cleaned up")
 

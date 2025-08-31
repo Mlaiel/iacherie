@@ -27,7 +27,8 @@ Technical Team Expertise:
 - IA Prompt Engineer: Prompt optimization and AI interaction
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import hashlib
@@ -45,7 +46,8 @@ from .filter_engine import FilterResponse, FilterResult, FilterType, ContentItem
 
 
 class QualityDimension(Enum):
-    """Quality assessment dimensions."""    TECHNICAL_QUALITY = "technical_quality"
+    """Quality assessment dimensions."""
+    TECHNICAL_QUALITY = "technical_quality"
     CONTENT_QUALITY = "content_quality"
     METADATA_QUALITY = "metadata_quality"
     STRUCTURAL_QUALITY = "structural_quality"
@@ -56,7 +58,8 @@ class QualityDimension(Enum):
 
 
 class QualityLevel(Enum):
-    """Quality levels for content assessment."""    EXCEPTIONAL = "exceptional"  # 90-100%
+    """Quality levels for content assessment."""
+    EXCEPTIONAL = "exceptional"  # 90-100%
     HIGH = "high"               # 80-89%
     GOOD = "good"               # 70-79%
     ACCEPTABLE = "acceptable"   # 60-69%
@@ -66,7 +69,8 @@ class QualityLevel(Enum):
 
 @dataclass
 class QualityMetrics:
-    """Quality assessment metrics."""    overall_score: float = 0.0
+    """Quality assessment metrics."""
+    overall_score: float = 0.0
     dimension_scores: Dict[str, float] = None
     quality_level: QualityLevel = QualityLevel.POOR
     improvement_suggestions: List[str] = None
@@ -85,12 +89,15 @@ class QualityMetrics:
 
 
 class TechnicalQualityAnalyzer:
-    """Analyzes technical quality aspects of content."""    
+    """Analyzes technical quality aspects of content."""
+    
     def __init__(self):
-        """Initialize technical quality analyzer."""        self.logger = logging.getLogger(__name__)
+        """Initialize technical quality analyzer."""
+        self.logger = logging.getLogger(__name__)
     
     async def analyze_technical_quality(self, content_item: ContentItem) -> Dict[str, float]:
-        """Analyze technical quality aspects."""        try:
+        """Analyze technical quality aspects."""
+        try:
             technical_scores = {}
             
             # File integrity assessment
@@ -115,7 +122,8 @@ class TechnicalQualityAnalyzer:
             return {"error": 0.0}
     
     async def _assess_file_integrity(self, content_item: ContentItem) -> float:
-        """Assess file integrity and corruption indicators."""        try:
+        """Assess file integrity and corruption indicators."""
+        try:
             score = 1.0
             
             # Check file size reasonableness
@@ -143,7 +151,8 @@ class TechnicalQualityAnalyzer:
             return 0.5
     
     async def _assess_format_compliance(self, content_item: ContentItem) -> float:
-        """Assess format compliance and standard adherence."""        try:
+        """Assess format compliance and standard adherence."""
+        try:
             score = 0.8  # Base score
             
             # Check MIME type consistency
@@ -163,7 +172,8 @@ class TechnicalQualityAnalyzer:
             return 0.5
     
     def _get_expected_extension(self, mime_type: str) -> Optional[str]:
-        """Get expected file extension for MIME type."""        mime_extensions = {
+        """Get expected file extension for MIME type."""
+        mime_extensions = {
             "audio/mpeg": ".mp3",
             "audio/wav": ".wav",
             "audio/flac": ".flac",
@@ -180,7 +190,8 @@ class TechnicalQualityAnalyzer:
         return mime_extensions.get(mime_type)
     
     async def _assess_encoding_quality(self, content_item: ContentItem) -> float:
-        """Assess encoding quality and compression artifacts."""        try:
+        """Assess encoding quality and compression artifacts."""
+        try:
             score = 0.7  # Base score
             
             # Analyze metadata for encoding information
@@ -211,7 +222,8 @@ class TechnicalQualityAnalyzer:
             return 0.5
     
     async def _assess_metadata_consistency(self, content_item: ContentItem) -> float:
-        """Assess metadata consistency and completeness."""        try:
+        """Assess metadata consistency and completeness."""
+        try:
             if not content_item.metadata:
                 return 0.2  # Low score for missing metadata
             
@@ -245,7 +257,8 @@ class TechnicalQualityAnalyzer:
             return 0.3
     
     async def _validate_file_structure(self, content_item: ContentItem) -> float:
-        """Validate file structure and organization."""        try:
+        """Validate file structure and organization."""
+        try:
             score = 0.8  # Base score
             
             # Validate filename structure
@@ -273,12 +286,15 @@ class TechnicalQualityAnalyzer:
 
 
 class ContentQualityAnalyzer:
-    """Analyzes content quality aspects."""    
+    """Analyzes content quality aspects."""
+    
     def __init__(self):
-        """Initialize content quality analyzer."""        self.logger = logging.getLogger(__name__)
+        """Initialize content quality analyzer."""
+        self.logger = logging.getLogger(__name__)
     
     async def analyze_content_quality(self, content_item: ContentItem) -> Dict[str, float]:
-        """Analyze content quality aspects."""        try:
+        """Analyze content quality aspects."""
+        try:
             content_scores = {}
             
             # Originality assessment
@@ -303,7 +319,8 @@ class ContentQualityAnalyzer:
             return {"error": 0.0}
     
     async def _assess_originality(self, content_item: ContentItem) -> float:
-        """Assess content originality and uniqueness."""        try:
+        """Assess content originality and uniqueness."""
+        try:
             score = 0.7  # Base originality score
             
             # Check filename for originality indicators
@@ -334,7 +351,8 @@ class ContentQualityAnalyzer:
             return 0.5
     
     async def _assess_content_richness(self, content_item: ContentItem) -> float:
-        """Assess content richness and depth."""        try:
+        """Assess content richness and depth."""
+        try:
             score = 0.5  # Base score
             
             # File size as richness indicator
@@ -363,7 +381,8 @@ class ContentQualityAnalyzer:
             return 0.5
     
     async def _assess_artistic_value(self, content_item: ContentItem) -> float:
-        """Assess artistic and creative value."""        try:
+        """Assess artistic and creative value."""
+        try:
             score = 0.6  # Base artistic score
             
             # Genre and style indicators
@@ -407,7 +426,8 @@ class ContentQualityAnalyzer:
             return 0.5
     
     async def _assess_professional_quality(self, content_item: ContentItem) -> float:
-        """Assess professional production quality."""        try:
+        """Assess professional production quality."""
+        try:
             score = 0.5  # Base score
             
             # Professional metadata indicators
@@ -451,7 +471,8 @@ class ContentQualityAnalyzer:
             return 0.5
     
     async def _assess_content_coherence(self, content_item: ContentItem) -> float:
-        """Assess content coherence and consistency."""        try:
+        """Assess content coherence and consistency."""
+        try:
             score = 0.8  # Base coherence score
             
             # Filename-metadata consistency
@@ -476,15 +497,18 @@ class ContentQualityAnalyzer:
 
 
 class QualityAssuranceEngine:
-    """Main quality assurance engine."""    
+    """Main quality assurance engine."""
+    
     def __init__(self, config_manager: FilterConfigManager):
-        """Initialize quality assurance engine."""        self.config_manager = config_manager
+        """Initialize quality assurance engine."""
+        self.config_manager = config_manager
         self.logger = logging.getLogger(__name__)
         self.technical_analyzer = TechnicalQualityAnalyzer()
         self.content_analyzer = ContentQualityAnalyzer()
     
     async def perform_quality_assessment(self, content_item: ContentItem) -> QualityMetrics:
-        """Perform comprehensive quality assessment."""        try:
+        """Perform comprehensive quality assessment."""
+        try:
             start_time = time.time()
             
             # Analyze different quality dimensions
@@ -542,7 +566,8 @@ class QualityAssuranceEngine:
             )
     
     def _determine_quality_level(self, score: float) -> QualityLevel:
-        """Determine quality level from score."""        if score >= 0.9:
+        """Determine quality level from score."""
+        if score >= 0.9:
             return QualityLevel.EXCEPTIONAL
         elif score >= 0.8:
             return QualityLevel.HIGH
@@ -556,7 +581,8 @@ class QualityAssuranceEngine:
             return QualityLevel.UNACCEPTABLE
     
     async def _assess_metadata_quality(self, content_item: ContentItem) -> float:
-        """Assess metadata quality specifically."""        if not content_item.metadata:
+        """Assess metadata quality specifically."""
+        if not content_item.metadata:
             return 0.1
         
         score = 0.5
@@ -575,7 +601,8 @@ class QualityAssuranceEngine:
         return min(1.0, score)
     
     async def _assess_structural_quality(self, content_item: ContentItem) -> float:
-        """Assess structural quality of content."""        score = 0.7
+        """Assess structural quality of content."""
+        score = 0.7
         
         # File naming structure
         if content_item.filename:
@@ -590,7 +617,8 @@ class QualityAssuranceEngine:
         return min(1.0, score)
     
     async def _assess_authenticity(self, content_item: ContentItem) -> float:
-        """Assess content authenticity."""        score = 0.7
+        """Assess content authenticity."""
+        score = 0.7
         
         if content_item.filename:
             filename = content_item.filename.lower()
@@ -606,7 +634,8 @@ class QualityAssuranceEngine:
         return min(1.0, score)
     
     async def _assess_completeness(self, content_item: ContentItem) -> float:
-        """Assess content completeness."""        score = 0.5
+        """Assess content completeness."""
+        score = 0.5
         
         # File size completeness indicator
         if content_item.size and content_item.size > 1024:
@@ -619,7 +648,8 @@ class QualityAssuranceEngine:
         return min(1.0, score)
     
     async def _assess_consistency(self, content_item: ContentItem) -> float:
-        """Assess internal consistency."""        score = 0.8
+        """Assess internal consistency."""
+        score = 0.8
         
         # Filename-metadata consistency
         if (content_item.filename and content_item.metadata and 
@@ -635,7 +665,8 @@ class QualityAssuranceEngine:
     async def _generate_improvement_suggestions(self, dimension_scores: Dict[str, float], 
                                               technical_scores: Dict[str, float],
                                               content_scores: Dict[str, float]) -> List[str]:
-        """Generate improvement suggestions based on scores."""        suggestions = []
+        """Generate improvement suggestions based on scores."""
+        suggestions = []
         
         # Technical improvements
         if technical_scores.get("encoding_quality", 1.0) < 0.6:
@@ -664,7 +695,8 @@ class QualityAssuranceEngine:
     async def _identify_critical_issues(self, dimension_scores: Dict[str, float],
                                        technical_scores: Dict[str, float],
                                        content_scores: Dict[str, float]) -> List[str]:
-        """Identify critical quality issues."""        issues = []
+        """Identify critical quality issues."""
+        issues = []
         
         # Critical technical issues
         if technical_scores.get("file_integrity", 1.0) < 0.3:
@@ -687,7 +719,8 @@ class QualityAssuranceEngine:
         return issues
     
     async def _generate_quality_recommendation(self, overall_score: float) -> str:
-        """Generate quality recommendation."""        if overall_score >= 0.9:
+        """Generate quality recommendation."""
+        if overall_score >= 0.9:
             return "Exceptional quality - ready for premium distribution"
         elif overall_score >= 0.8:
             return "High quality - suitable for professional platforms"

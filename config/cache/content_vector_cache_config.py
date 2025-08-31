@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, Optional, List, Any, Union, Tuple
+"""
+from typing import Dict, Optional, List, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import hashlib
@@ -24,7 +25,8 @@ from pydantic import BaseModel, validator
 
 
 class VectorType(str, Enum):
-    """Types of vectors used in content protection"""    # Audio vectors
+    """Types of vectors used in content protection"""
+    # Audio vectors
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_SPECTRAL = "audio_spectral"
     AUDIO_MFCC = "audio_mfcc"
@@ -52,7 +54,8 @@ class VectorType(str, Enum):
 
 
 class SimilarityMetric(str, Enum):
-    """Similarity metrics for vector comparison"""    COSINE = "cosine"
+    """Similarity metrics for vector comparison"""
+    COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     DOT_PRODUCT = "dot_product"
     MANHATTAN = "manhattan"
@@ -61,7 +64,8 @@ class SimilarityMetric(str, Enum):
 
 
 class IndexType(str, Enum):
-    """FAISS index types for different use cases"""    FLAT = "flat"                    # Exact search, brute force
+    """FAISS index types for different use cases"""
+    FLAT = "flat"                    # Exact search, brute force
     IVF_FLAT = "ivf_flat"           # Inverted file with flat quantizer
     IVF_PQ = "ivf_pq"               # Inverted file with product quantizer
     HNSW = "hnsw"                   # Hierarchical navigable small world
@@ -70,7 +74,8 @@ class IndexType(str, Enum):
 
 @dataclass
 class VectorCacheSettings:
-    """Cache settings for specific vector type"""    vector_type: VectorType
+    """Cache settings for specific vector type"""
+    vector_type: VectorType
     dimensions: int
     similarity_metric: SimilarityMetric = SimilarityMetric.COSINE
     index_type: IndexType = IndexType.FLAT
@@ -99,7 +104,8 @@ class VectorCacheSettings:
 
 @dataclass
 class ContentVectorCacheConfig:
-    """Complete configuration for content vector caching"""    
+    """Complete configuration for content vector caching"""
+    
     # Cache identification
     cache_name: str = "content_vectors"
     namespace: str = "ia_influencer_vectors"
@@ -242,7 +248,8 @@ class ContentVectorCacheConfig:
 
     def get_vector_cache_key(self, content_hash: str, vector_type: VectorType, 
                            version: str = "1.0") -> str:
-        """Generate cache key for vector data"""        key_components = [
+        """Generate cache key for vector data"""
+        key_components = [
             self.redis_key_prefix,
             self.namespace,
             vector_type.value,
@@ -254,7 +261,8 @@ class ContentVectorCacheConfig:
         return ":".join(key_components)
     
     def get_index_cache_key(self, vector_type: VectorType, index_version: str = "latest") -> str:
-        """Generate cache key for FAISS index"""        key_components = [
+        """Generate cache key for FAISS index"""
+        key_components = [
             self.redis_key_prefix,
             "index",
             self.namespace,
@@ -266,7 +274,8 @@ class ContentVectorCacheConfig:
         return ":".join(key_components)
     
     def get_all_vector_settings(self) -> Dict[str, VectorCacheSettings]:
-        """Get all configured vector settings"""        all_settings = {}
+        """Get all configured vector settings"""
+        all_settings = {}
         all_settings.update(self.audio_vectors)
         all_settings.update(self.video_vectors) 
         all_settings.update(self.image_vectors)
@@ -274,7 +283,8 @@ class ContentVectorCacheConfig:
         return all_settings
     
     def estimate_memory_usage(self) -> Dict[str, float]:
-        """Estimate memory usage for all vector types"""        memory_usage = {}
+        """Estimate memory usage for all vector types"""
+        memory_usage = {}
         total_memory = 0
         
         for name, settings in self.get_all_vector_settings().items():
@@ -293,7 +303,8 @@ class ContentVectorCacheConfig:
 
 
 class ContentVectorCacheManager:
-    """Manager for content vector cache operations"""    
+    """Manager for content vector cache operations"""
+    
     def __init__(self, config: ContentVectorCacheConfig):
         self.config = config
         self._loaded_indices = {}
@@ -302,7 +313,8 @@ class ContentVectorCacheManager:
     
     def calculate_similarity_threshold(self, vector_type: VectorType, 
                                      confidence_level: float = 0.95) -> float:
-        """Calculate dynamic similarity threshold based on vector type and confidence"""        base_settings = None
+        """Calculate dynamic similarity threshold based on vector type and confidence"""
+        base_settings = None
         for settings in self.config.get_all_vector_settings().values():
             if settings.vector_type == vector_type:
                 base_settings = settings
@@ -324,7 +336,8 @@ class ContentVectorCacheManager:
             return max(base_threshold - 0.10, 0.50)  # Minimum threshold
     
     def validate_vector_quality(self, vector: np.ndarray, vector_type: VectorType) -> Dict[str, Any]:
-        """Validate vector quality and characteristics"""        quality_report = {
+        """Validate vector quality and characteristics"""
+        quality_report = {
             "is_valid": True,
             "issues": [],
             "quality_score": 1.0,
@@ -371,7 +384,8 @@ class ContentVectorCacheManager:
         return quality_report
     
     def generate_vector_fingerprint(self, vector: np.ndarray, metadata: Dict[str, Any]) -> str:
-        """Generate unique fingerprint for vector with metadata"""        hasher = hashlib.sha256()
+        """Generate unique fingerprint for vector with metadata"""
+        hasher = hashlib.sha256()
         
         # Add vector data
         hasher.update(vector.tobytes())
@@ -386,7 +400,8 @@ class ContentVectorCacheManager:
         return hasher.hexdigest()
     
     def get_search_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive search statistics"""        return {
+        """Get comprehensive search statistics"""
+        return {
             "total_searches": self._search_metrics.get("total_searches", 0),
             "avg_search_time_ms": self._search_metrics.get("avg_search_time_ms", 0),
             "search_accuracy": self._search_metrics.get("search_accuracy", 0.0),
@@ -398,13 +413,15 @@ class ContentVectorCacheManager:
         }
     
     def _get_vector_counts_by_type(self) -> Dict[str, int]:
-        """Get vector counts by type"""        counts = {}
+        """Get vector counts by type"""
+        counts = {}
         for vector_type in VectorType:
             counts[vector_type.value] = self._vector_stats.get(vector_type.value, {}).get("count", 0)
         return counts
     
     def _get_index_status(self) -> Dict[str, Any]:
-        """Get status of all indices"""        status = {}
+        """Get status of all indices"""
+        status = {}
         for name in self.config.get_all_vector_settings().keys():
             status[name] = {
                 "loaded": name in self._loaded_indices,

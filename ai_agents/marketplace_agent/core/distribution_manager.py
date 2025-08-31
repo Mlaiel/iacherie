@@ -5,7 +5,8 @@ orchestrating delivery, optimization, and performance tracking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
 from datetime import datetime, timedelta
@@ -18,7 +19,8 @@ from .marketplace_agent import MarketplaceConfig, ContentType, PriceModel
 
 
 class DistributionPlatform(Enum):
-    """Supported distribution platforms."""    INSTAGRAM = "instagram"
+    """Supported distribution platforms."""
+    INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
     FACEBOOK = "facebook"
@@ -33,7 +35,8 @@ class DistributionPlatform(Enum):
 
 
 class DistributionStatus(Enum):
-    """Content distribution status."""    PENDING = "pending"
+    """Content distribution status."""
+    PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
     UPLOADING = "uploading"
@@ -44,7 +47,8 @@ class DistributionStatus(Enum):
 
 
 class ContentOptimization(Enum):
-    """Content optimization strategies."""    AUTO_RESIZE = "auto_resize"
+    """Content optimization strategies."""
+    AUTO_RESIZE = "auto_resize"
     QUALITY_ADAPTIVE = "quality_adaptive"
     PLATFORM_SPECIFIC = "platform_specific"
     MOBILE_OPTIMIZED = "mobile_optimized"
@@ -53,7 +57,8 @@ class ContentOptimization(Enum):
 
 @dataclass
 class PlatformConfig:
-    """Platform-specific configuration."""    platform: DistributionPlatform = DistributionPlatform.INSTAGRAM
+    """Platform-specific configuration."""
+    platform: DistributionPlatform = DistributionPlatform.INSTAGRAM
     enabled: bool = True
     api_credentials: Dict[str, str] = field(default_factory=dict)
     content_formats: List[str] = field(default_factory=list)
@@ -66,7 +71,8 @@ class PlatformConfig:
 
 @dataclass
 class DistributionJob:
-    """Content distribution job."""    id: str = ""
+    """Content distribution job."""
+    id: str = ""
     content_id: str = ""
     creator_id: int = 0
     platforms: List[DistributionPlatform] = field(default_factory=list)
@@ -85,7 +91,8 @@ class DistributionJob:
 
 @dataclass
 class DistributionAnalytics:
-    """Distribution performance analytics."""    job_id: str = ""
+    """Distribution performance analytics."""
+    job_id: str = ""
     platform: DistributionPlatform = DistributionPlatform.INSTAGRAM
     reach: int = 0
     impressions: int = 0
@@ -107,7 +114,8 @@ class DistributionAnalytics:
 
 @dataclass
 class ContentVariant:
-    """Platform-optimized content variant."""    platform: DistributionPlatform = DistributionPlatform.INSTAGRAM
+    """Platform-optimized content variant."""
+    platform: DistributionPlatform = DistributionPlatform.INSTAGRAM
     file_path: str = ""
     format: str = ""
     resolution: str = ""
@@ -123,17 +131,21 @@ class ContentVariant:
 
 
 class DistributionManager:
-    """    Advanced multi-platform content distribution system.
+    """
+    Advanced multi-platform content distribution system.
     
     Manages automated content distribution across social media platforms,
     streaming services, and content networks with intelligent optimization,
     scheduling, and performance tracking.
-    """    def __init__(self, config: MarketplaceConfig):
-        """        Initialize distribution management system.
+    """
+    def __init__(self, config: MarketplaceConfig):
+        """
+        Initialize distribution management system.
         
         Args:
             config: Marketplace configuration
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize distribution components
@@ -161,7 +173,8 @@ class DistributionManager:
         self.logger.info("Distribution management system initialized")
 
     def _initialize_platform_configs(self) -> None:
-        """Initialize platform-specific configurations."""        try:
+        """Initialize platform-specific configurations."""
+        try:
             # Instagram configuration
             self.platform_configs[DistributionPlatform.INSTAGRAM] = PlatformConfig(
                 platform=DistributionPlatform.INSTAGRAM,
@@ -204,7 +217,8 @@ class DistributionManager:
         scheduled_time: Optional[datetime] = None,
         priority: int = 5
     ) -> DistributionJob:
-        """        Create a new content distribution job.
+        """
+        Create a new content distribution job.
         
         Args:
             content_id: Unique content identifier
@@ -215,7 +229,8 @@ class DistributionManager:
             
         Returns:
             Created distribution job
-        """        try:
+        """
+        try:
             job = DistributionJob(
                 id=f"dist_{content_id}_{int(datetime.utcnow().timestamp())}",
                 content_id=content_id,
@@ -259,11 +274,13 @@ class DistributionManager:
             raise
 
     async def process_distribution_queue(self) -> Dict[str, Any]:
-        """        Process pending distribution jobs in the queue.
+        """
+        Process pending distribution jobs in the queue.
         
         Returns:
             Processing summary
-        """        try:
+        """
+        try:
             if not self.job_queue:
                 return {"processed": 0, "message": "No jobs in queue"}
             
@@ -316,7 +333,8 @@ class DistributionManager:
         content_id: str,
         platforms: List[DistributionPlatform]
     ) -> Dict[DistributionPlatform, ContentVariant]:
-        """        Create optimized content variants for each target platform.
+        """
+        Create optimized content variants for each target platform.
         
         Args:
             content_id: Content to optimize
@@ -324,7 +342,8 @@ class DistributionManager:
             
         Returns:
             Platform-specific content variants
-        """        try:
+        """
+        try:
             content_variants = {}
             
             # Get original content metadata
@@ -358,7 +377,8 @@ class DistributionManager:
         creator_id: Optional[int] = None,
         time_range: str = "7d"
     ) -> Dict[str, Any]:
-        """        Retrieve comprehensive distribution analytics.
+        """
+        Retrieve comprehensive distribution analytics.
         
         Args:
             job_id: Specific job ID to analyze
@@ -367,7 +387,8 @@ class DistributionManager:
             
         Returns:
             Distribution analytics data
-        """        try:
+        """
+        try:
             start_date, end_date = await self._parse_time_range(time_range)
             
             if job_id:
@@ -407,7 +428,8 @@ class DistributionManager:
         platforms: List[DistributionPlatform],
         schedule_config: Dict[str, Any]
     ) -> str:
-        """        Schedule recurring content distribution.
+        """
+        Schedule recurring content distribution.
         
         Args:
             content_id: Content to distribute
@@ -417,7 +439,8 @@ class DistributionManager:
             
         Returns:
             Recurring schedule ID
-        """        try:
+        """
+        try:
             schedule_id = f"recurring_{content_id}_{int(datetime.utcnow().timestamp())}"
             
             # Validate schedule configuration
@@ -447,14 +470,16 @@ class DistributionManager:
             raise
 
     async def cancel_distribution_job(self, job_id: str) -> bool:
-        """        Cancel a distribution job.
+        """
+        Cancel a distribution job.
         
         Args:
             job_id: Job to cancel
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             if job_id not in self.active_jobs:
                 return False
             
@@ -477,14 +502,16 @@ class DistributionManager:
             return False
 
     async def get_job_status(self, job_id: str) -> Optional[DistributionJob]:
-        """        Get current status of a distribution job.
+        """
+        Get current status of a distribution job.
         
         Args:
             job_id: Job to check
             
         Returns:
             Job status information
-        """        try:
+        """
+        try:
             if job_id in self.active_jobs:
                 return self.active_jobs[job_id]
             return None
@@ -494,14 +521,16 @@ class DistributionManager:
             return None
 
     async def _process_single_job(self, job: DistributionJob) -> bool:
-        """        Process a single distribution job.
+        """
+        Process a single distribution job.
         
         Args:
             job: Job to process
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             job.status = DistributionStatus.PROCESSING
             job.started_at = datetime.utcnow()
             
@@ -576,7 +605,8 @@ class DistributionManager:
         content_variant: ContentVariant,
         job: DistributionJob
     ) -> Dict[str, Any]:
-        """        Distribute content to a specific platform.
+        """
+        Distribute content to a specific platform.
         
         Args:
             platform: Target platform
@@ -585,7 +615,8 @@ class DistributionManager:
             
         Returns:
             Distribution result
-        """        try:
+        """
+        try:
             platform_config = self.platform_configs[platform]
             
             # Check rate limits
@@ -616,7 +647,8 @@ class DistributionManager:
             return {"success": False, "error": str(e)}
 
     async def _get_content_metadata(self, content_id: str) -> Dict[str, Any]:
-        """Get metadata for content to be distributed."""        # Mock implementation - would fetch from content database
+        """Get metadata for content to be distributed."""
+        # Mock implementation - would fetch from content database
         return {
             "id": content_id,
             "title": "Sample Content",
@@ -636,7 +668,8 @@ class DistributionManager:
         platform: DistributionPlatform,
         platform_config: PlatformConfig
     ) -> ContentVariant:
-        """Create optimized content variant for specific platform."""        try:
+        """Create optimized content variant for specific platform."""
+        try:
             variant = ContentVariant(
                 platform=platform,
                 file_path=original_content["file_path"],
@@ -681,7 +714,8 @@ class DistributionManager:
             raise
 
     def _calculate_success_rate(self) -> float:
-        """Calculate distribution success rate."""        total = self.distribution_metrics["total_distributions"]
+        """Calculate distribution success rate."""
+        total = self.distribution_metrics["total_distributions"]
         if total == 0:
             return 0.0
         return self.distribution_metrics["successful_distributions"] / total

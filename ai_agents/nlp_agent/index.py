@@ -6,7 +6,8 @@ Provides unified access to all NLP processing capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from typing import Dict, List, Any, Optional, Union, Type
+"""
+from typing import Dict, List, Any, Optional, Union, Type
 import logging
 from datetime import datetime
 
@@ -30,17 +31,21 @@ from .config import NLPAgentConfig, default_config
 logger = logging.getLogger(__name__)
 
 class NLPAgentIndex:
-    """    Central index for NLP Agent components providing unified access
+    """
+    Central index for NLP Agent components providing unified access
     to all natural language processing capabilities.
-    """    
+    """
+    
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize NLP Agent Index with configuration"""        self.config = config or default_config
+        """Initialize NLP Agent Index with configuration"""
+        self.config = config or default_config
         self.components: Dict[str, Any] = {}
         self.initialized_components: Dict[str, bool] = {}
         self._setup_component_registry()
     
     def _setup_component_registry(self):
-        """Setup registry of available components"""        self.component_registry = {
+        """Setup registry of available components"""
+        self.component_registry = {
             "orchestrator": {
                 "class": NLPOrchestrator,
                 "description": "Main orchestration engine for coordinating NLP tasks",
@@ -110,7 +115,8 @@ class NLPAgentIndex:
         }
     
     def get_component(self, component_name: str) -> Any:
-        """Get or create a component instance"""        if component_name not in self.component_registry:
+        """Get or create a component instance"""
+        if component_name not in self.component_registry:
             raise ValueError(f"Unknown component: {component_name}")
         
         if component_name not in self.components:
@@ -119,7 +125,8 @@ class NLPAgentIndex:
         return self.components[component_name]
     
     def _initialize_component(self, component_name: str):
-        """Initialize a specific component"""        try:
+        """Initialize a specific component"""
+        try:
             component_info = self.component_registry[component_name]
             component_class = component_info["class"]
             
@@ -140,7 +147,8 @@ class NLPAgentIndex:
             raise
     
     def initialize_all_components(self):
-        """Initialize all available components"""        for component_name in self.component_registry:
+        """Initialize all available components"""
+        for component_name in self.component_registry:
             if component_name not in self.components:
                 try:
                     self._initialize_component(component_name)
@@ -148,7 +156,8 @@ class NLPAgentIndex:
                     logger.warning(f"Failed to initialize {component_name}: {e}")
     
     def get_component_status(self) -> Dict[str, Dict[str, Any]]:
-        """Get status of all components"""        status = {}
+        """Get status of all components"""
+        status = {}
         for component_name, component_info in self.component_registry.items():
             status[component_name] = {
                 "description": component_info["description"],
@@ -160,18 +169,21 @@ class NLPAgentIndex:
         return status
     
     def get_components_by_category(self, category: str) -> List[str]:
-        """Get list of components by category"""        return [
+        """Get list of components by category"""
+        return [
             name for name, info in self.component_registry.items()
             if info["category"] == category
         ]
     
     def get_available_categories(self) -> List[str]:
-        """Get list of available component categories"""        return list(set(
+        """Get list of available component categories"""
+        return list(set(
             info["category"] for info in self.component_registry.values()
         ))
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform health check on all components"""        health_status = {
+        """Perform health check on all components"""
+        health_status = {
             "timestamp": datetime.now().isoformat(),
             "overall_status": "healthy",
             "components": {},
@@ -217,7 +229,8 @@ class NLPAgentIndex:
         return health_status
     
     def shutdown(self):
-        """Shutdown all components gracefully"""        for component_name, component in self.components.items():
+        """Shutdown all components gracefully"""
+        for component_name, component in self.components.items():
             try:
                 if hasattr(component, 'shutdown'):
                     component.shutdown()
@@ -230,27 +243,33 @@ class NLPAgentIndex:
 
 # Convenience functions for quick access
 def create_nlp_orchestrator(config: Optional[NLPAgentConfig] = None) -> NLPOrchestrator:
-    """Create and return NLP Orchestrator instance"""    index = NLPAgentIndex(config)
+    """Create and return NLP Orchestrator instance"""
+    index = NLPAgentIndex(config)
     return index.get_component("orchestrator")
 
 def create_text_analyzer(config: Optional[NLPAgentConfig] = None) -> TextAnalyzer:
-    """Create and return Text Analyzer instance"""    index = NLPAgentIndex(config)
+    """Create and return Text Analyzer instance"""
+    index = NLPAgentIndex(config)
     return index.get_component("text_analyzer")
 
 def create_sentiment_engine(config: Optional[NLPAgentConfig] = None) -> SentimentEngine:
-    """Create and return Sentiment Engine instance"""    index = NLPAgentIndex(config)
+    """Create and return Sentiment Engine instance"""
+    index = NLPAgentIndex(config)
     return index.get_component("sentiment_engine")
 
 def create_language_detector(config: Optional[NLPAgentConfig] = None) -> LanguageDetector:
-    """Create and return Language Detector instance"""    index = NLPAgentIndex(config)
+    """Create and return Language Detector instance"""
+    index = NLPAgentIndex(config)
     return index.get_component("language_detector")
 
 def create_content_classifier(config: Optional[NLPAgentConfig] = None) -> ContentClassifier:
-    """Create and return Content Classifier instance"""    index = NLPAgentIndex(config)
+    """Create and return Content Classifier instance"""
+    index = NLPAgentIndex(config)
     return index.get_component("content_classifier")
 
 def get_nlp_capabilities() -> Dict[str, List[str]]:
-    """Get overview of all NLP capabilities by category"""    index = NLPAgentIndex()
+    """Get overview of all NLP capabilities by category"""
+    index = NLPAgentIndex()
     capabilities = {}
     
     for category in index.get_available_categories():
@@ -262,13 +281,15 @@ def get_nlp_capabilities() -> Dict[str, List[str]]:
 _global_index: Optional[NLPAgentIndex] = None
 
 def get_global_index(config: Optional[NLPAgentConfig] = None) -> NLPAgentIndex:
-    """Get or create global NLP Agent index instance"""    global _global_index
+    """Get or create global NLP Agent index instance"""
+    global _global_index
     if _global_index is None:
         _global_index = NLPAgentIndex(config)
     return _global_index
 
 def reset_global_index():
-    """Reset global index (useful for testing)"""    global _global_index
+    """Reset global index (useful for testing)"""
+    global _global_index
     if _global_index:
         _global_index.shutdown()
     _global_index = None

@@ -1,4 +1,7 @@
-"""Simple API key auth dependency for service-to-service protection."""from typing import Optional
+"""Simple API key auth dependency for service-to-service protection."""
+
+from typing import Optional
+
 from fastapi import Header, HTTPException, status, Depends
 
 from .config import settings

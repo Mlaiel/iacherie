@@ -13,7 +13,8 @@ Business Logic Error Handling:
 - AI protection system failure handling
 - Monetization transaction error management
 - Cross-platform distribution error mitigation
-"""import asyncio
+"""
+import asyncio
 import json
 import time
 import traceback
@@ -38,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 
 class ErrorSeverity(str, Enum):
-    """Error severity levels"""    LOW = "low"
+    """Error severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -46,7 +48,8 @@ class ErrorSeverity(str, Enum):
 
 
 class ErrorCategory(str, Enum):
-    """Error categories"""    AUTHENTICATION = "authentication"
+    """Error categories"""
+    AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     VALIDATION = "validation"
     PROCESSING = "processing"
@@ -64,7 +67,8 @@ class ErrorCategory(str, Enum):
 
 
 class RecoveryAction(str, Enum):
-    """Recovery actions"""    RETRY = "retry"
+    """Recovery actions"""
+    RETRY = "retry"
     FALLBACK = "fallback"
     SKIP = "skip"
     ESCALATE = "escalate"
@@ -75,7 +79,8 @@ class RecoveryAction(str, Enum):
 
 
 class BusinessImpact(str, Enum):
-    """Business impact levels"""    NONE = "none"
+    """Business impact levels"""
+    NONE = "none"
     MINIMAL = "minimal"
     MODERATE = "moderate"
     SIGNIFICANT = "significant"
@@ -83,7 +88,8 @@ class BusinessImpact(str, Enum):
 
 
 class ErrorInfo(BaseModel):
-    """Enhanced error information model"""    error_id: str = Field(description="Unique error identifier")
+    """Enhanced error information model"""
+    error_id: str = Field(description="Unique error identifier")
     error_type: str = Field(description="Type of error")
     error_message: str = Field(description="Error message")
     severity: ErrorSeverity = Field(description="Error severity")
@@ -101,7 +107,8 @@ class ErrorInfo(BaseModel):
 
 
 class RecoveryStrategy(BaseModel):
-    """Enhanced error recovery strategy"""    strategy_id: str = Field(description="Strategy identifier")
+    """Enhanced error recovery strategy"""
+    strategy_id: str = Field(description="Strategy identifier")
     error_types: List[str] = Field(description="Applicable error types")
     error_categories: List[ErrorCategory] = Field(description="Applicable error categories")
     max_retries: int = Field(default=3, description="Maximum retry attempts")
@@ -117,7 +124,8 @@ class RecoveryStrategy(BaseModel):
 
 @dataclass
 class CircuitBreakerState:
-    """Circuit breaker state management"""    failure_count: int = 0
+    """Circuit breaker state management"""
+    failure_count: int = 0
     last_failure_time: Optional[datetime] = None
     state: str = "closed"  # closed, open, half_open
     reset_timeout: int = 60
@@ -129,7 +137,8 @@ class CircuitBreakerState:
 
 
 class ErrorRecoveryManager:
-    """Advanced error recovery management with business continuity"""    
+    """Advanced error recovery management with business continuity"""
+    
     def __init__(self, redis_client: redis.Redis):
         self.redis_client = redis_client
         self.cache = CacheManager()
@@ -143,7 +152,8 @@ class ErrorRecoveryManager:
         self._initialize_business_continuity_handlers()
     
     def _initialize_default_strategies(self):
-        """Initialize default recovery strategies"""        # Network error strategy
+        """Initialize default recovery strategies"""
+        # Network error strategy
         self.recovery_strategies["network"] = RecoveryStrategy(
             strategy_id="network_recovery",
             error_types=["ConnectionError", "TimeoutError", "HTTPError"],
@@ -186,7 +196,8 @@ class ErrorRecoveryManager:
     async def handle_error_with_recovery(self, error: Exception, 
                                        context: Dict[str, Any],
                                        operation: Callable) -> Any:
-        """Handle error with automatic recovery"""        error_type = type(error).__name__
+        """Handle error with automatic recovery"""
+        error_type = type(error).__name__
         strategy = await self.get_recovery_strategy(error_type)
         
         if not strategy:
@@ -202,7 +213,8 @@ class ErrorRecoveryManager:
         return await self.execute_recovery(error, strategy, context, operation)
     
     async def get_recovery_strategy(self, error_type: str) -> Optional[RecoveryStrategy]:
-        """Get appropriate recovery strategy for error type"""        for category, strategy in self.recovery_strategies.items():
+        """Get appropriate recovery strategy for error type"""
+        for category, strategy in self.recovery_strategies.items():
             if error_type in strategy.error_types:
                 return strategy
         return None
@@ -211,7 +223,8 @@ class ErrorRecoveryManager:
                              strategy: RecoveryStrategy,
                              context: Dict[str, Any],
                              operation: Callable) -> Any:
-        """Execute recovery strategy"""        attempt = 0
+        """Execute recovery strategy"""
+        attempt = 0
         last_error = error
         
         while attempt < strategy.max_retries:
@@ -252,7 +265,8 @@ class ErrorRecoveryManager:
         raise last_error
     
     async def is_circuit_breaker_open(self, error_type: str) -> bool:
-        """Check if circuit breaker is open for error type"""        cb_key = f"circuit_breaker:{error_type}"
+        """Check if circuit breaker is open for error type"""
+        cb_key = f"circuit_breaker:{error_type}"
         cb_data = await self.redis_client.get(cb_key)
         
         if not cb_data:
@@ -268,14 +282,16 @@ class ErrorRecoveryManager:
         return cb_info.get("state") == "open"
     
     async def track_recovery_failure(self, error_type: str):
-        """Track recovery failure for circuit breaker logic"""        failure_key = f"recovery_failures:{error_type}"
+        """Track recovery failure for circuit breaker logic"""
+        failure_key = f"recovery_failures:{error_type}"
         failures = await self.redis_client.incr(failure_key)
         await self.redis_client.expire(failure_key, 300)  # 5 minutes window
         
         return failures
     
     async def update_circuit_breaker(self, error_type: str):
-        """Update circuit breaker state based on failures"""        failures = await self.track_recovery_failure(error_type)
+        """Update circuit breaker state based on failures"""
+        failures = await self.track_recovery_failure(error_type)
         
         # Open circuit breaker if too many failures
         if failures >= 5:  # Threshold
@@ -291,7 +307,8 @@ class ErrorRecoveryManager:
             logger.warning(f"Circuit breaker opened for {error_type}")
     
     async def reset_circuit_breaker(self, error_type: str):
-        """Reset circuit breaker after successful operation"""        cb_key = f"circuit_breaker:{error_type}"
+        """Reset circuit breaker after successful operation"""
+        cb_key = f"circuit_breaker:{error_type}"
         failure_key = f"recovery_failures:{error_type}"
         
         await self.redis_client.delete(cb_key)
@@ -299,13 +316,15 @@ class ErrorRecoveryManager:
 
 
 class ErrorReporter:
-    """Comprehensive error reporting and analytics"""    
+    """Comprehensive error reporting and analytics"""
+    
     def __init__(self, redis_client: redis.Redis):
         self.redis_client = redis_client
         self.cache = CacheManager()
         
     async def report_error(self, error_info: ErrorInfo):
-        """Report error for monitoring and analytics"""        try:
+        """Report error for monitoring and analytics"""
+        try:
             # Store detailed error information
             error_key = f"errors:{error_info.error_id}"
             error_data = {
@@ -339,7 +358,8 @@ class ErrorReporter:
             logger.error(f"Error reporting failed: {e}")
     
     async def update_error_statistics(self, error_info: ErrorInfo):
-        """Update error statistics for monitoring"""        now = time.time()
+        """Update error statistics for monitoring"""
+        now = time.time()
         hour_window = int(now // 3600)
         day_window = int(now // 86400)
         
@@ -358,7 +378,8 @@ class ErrorReporter:
         await self.redis_client.expire(f"error_stats:daily:{day_window}:total", 86400 * 30)
     
     async def send_critical_error_alert(self, error_info: ErrorInfo):
-        """Send alert for critical errors"""        alert = {
+        """Send alert for critical errors"""
+        alert = {
             "type": "critical_error",
             "error_id": error_info.error_id,
             "error_type": error_info.error_type,
@@ -377,7 +398,8 @@ class ErrorReporter:
         await self.redis_client.ltrim("critical_errors", 0, 100)  # Keep last 100
     
     async def get_error_statistics(self, time_range: str = "24h") -> Dict[str, Any]:
-        """Get error statistics for specified time range"""        try:
+        """Get error statistics for specified time range"""
+        try:
             now = time.time()
             
             if time_range == "1h":
@@ -429,7 +451,8 @@ class ErrorReporter:
 
 
 class ErrorHandlingMiddleware:
-    """Main error handling middleware orchestrator"""    
+    """Main error handling middleware orchestrator"""
+    
     def __init__(self):
         self.redis_client = redis.from_url(settings.REDIS_URL)
         self.cache = CacheManager()
@@ -446,7 +469,8 @@ class ErrorHandlingMiddleware:
     async def handle_error(self, error: Exception, 
                          context: Dict[str, Any] = None,
                          operation: Callable = None) -> Any:
-        """Main error handling method"""        try:
+        """Main error handling method"""
+        try:
             # Create error information
             error_info = await self.create_error_info(error, context)
             
@@ -477,7 +501,8 @@ class ErrorHandlingMiddleware:
     
     async def create_error_info(self, error: Exception, 
                               context: Dict[str, Any] = None) -> ErrorInfo:
-        """Create comprehensive error information"""        error_id = f"error_{int(time.time() * 1000)}"
+        """Create comprehensive error information"""
+        error_id = f"error_{int(time.time() * 1000)}"
         error_type = type(error).__name__
         error_message = str(error)
         
@@ -506,7 +531,8 @@ class ErrorHandlingMiddleware:
         )
     
     def determine_error_severity(self, error_type: str, error_message: str) -> ErrorSeverity:
-        """Determine error severity based on type and message"""        critical_keywords = ["critical", "fatal", "security", "breach", "corruption"]
+        """Determine error severity based on type and message"""
+        critical_keywords = ["critical", "fatal", "security", "breach", "corruption"]
         high_keywords = ["timeout", "connection", "database", "service"]
         medium_keywords = ["validation", "permission", "rate limit"]
         
@@ -522,7 +548,8 @@ class ErrorHandlingMiddleware:
             return ErrorSeverity.LOW
     
     def determine_error_category(self, error_type: str, error_message: str) -> ErrorCategory:
-        """Determine error category based on type and message"""        category_mapping = {
+        """Determine error category based on type and message"""
+        category_mapping = {
             "authentication": ["auth", "login", "token", "credential"],
             "authorization": ["permission", "access", "forbidden", "unauthorized"],
             "validation": ["validation", "invalid", "format", "schema"],
@@ -542,7 +569,8 @@ class ErrorHandlingMiddleware:
         return ErrorCategory.PROCESSING  # Default category
     
     async def log_error(self, error_info: ErrorInfo):
-        """Log error with appropriate level"""        log_message = f"[{error_info.error_id}] {error_info.error_type}: {error_info.error_message}"
+        """Log error with appropriate level"""
+        log_message = f"[{error_info.error_id}] {error_info.error_type}: {error_info.error_message}"
         
         if error_info.severity == ErrorSeverity.CRITICAL:
             logger.critical(log_message)
@@ -563,13 +591,15 @@ class ErrorHandlingMiddleware:
     
     @asynccontextmanager
     async def error_context(self, context: Dict[str, Any] = None):
-        """Context manager for automatic error handling"""        try:
+        """Context manager for automatic error handling"""
+        try:
             yield
         except Exception as error:
             await self.handle_error(error, context)
     
     async def get_error_dashboard_data(self) -> Dict[str, Any]:
-        """Get error data for monitoring dashboard"""        try:
+        """Get error data for monitoring dashboard"""
+        try:
             # Get error statistics
             hourly_stats = await self.error_reporter.get_error_statistics("24h")
             daily_stats = await self.error_reporter.get_error_statistics("7d")
@@ -602,12 +632,14 @@ class ErrorHandlingMiddleware:
 
 # Factory function for dependency injection
 def get_error_handling_middleware() -> ErrorHandlingMiddleware:
-    """Get error handling middleware instance"""    return ErrorHandlingMiddleware()
+    """Get error handling middleware instance"""
+    return ErrorHandlingMiddleware()
 
 
 # Decorator for automatic error handling
 def handle_errors(context: Dict[str, Any] = None, auto_recovery: bool = True):
-    """Decorator for automatic error handling"""    def decorator(func):
+    """Decorator for automatic error handling"""
+    def decorator(func):
         async def wrapper(*args, **kwargs):
             middleware = get_error_handling_middleware()
             
@@ -638,10 +670,12 @@ def handle_errors(context: Dict[str, Any] = None, auto_recovery: bool = True):
 
 # Utility functions
 async def report_error(error: Exception, context: Dict[str, Any] = None):
-    """Convenience function for error reporting"""    middleware = get_error_handling_middleware()
+    """Convenience function for error reporting"""
+    middleware = get_error_handling_middleware()
     await middleware.handle_error(error, context)
 
 
 async def get_error_statistics(time_range: str = "24h") -> Dict[str, Any]:
-    """Convenience function for getting error statistics"""    middleware = get_error_handling_middleware()
+    """Convenience function for getting error statistics"""
+    middleware = get_error_handling_middleware()
     return await middleware.error_reporter.get_error_statistics(time_range)

@@ -37,7 +37,8 @@ Enterprise Features:
 - Risk assessment and mitigation for partnership decisions
 - Automated recommendation engine for optimal collaborations
 - Advanced analytics dashboard for collaboration managers
-"""import asyncio
+"""
+import asyncio
 import logging
 import uuid
 from datetime import datetime, timedelta
@@ -72,7 +73,8 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Professional collaboration types for multi-format creators."""    MUSIC_COLLABORATION = "music_collaboration"
+    """Professional collaboration types for multi-format creators."""
+    MUSIC_COLLABORATION = "music_collaboration"
     VIDEO_COLLABORATION = "video_collaboration"
     BLOG_COLLABORATION = "blog_collaboration"
     PHOTOGRAPHY_COLLABORATION = "photography_collaboration"
@@ -85,7 +87,8 @@ class CollaborationType(Enum):
 
 
 class CollaborationStatus(Enum):
-    """Collaboration lifecycle status tracking."""    PROPOSED = "proposed"
+    """Collaboration lifecycle status tracking."""
+    PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     ACTIVE = "active"
     COMPLETED = "completed"
@@ -95,7 +98,8 @@ class CollaborationStatus(Enum):
 
 
 class SuccessLevel(Enum):
-    """Collaboration success assessment levels."""    EXCEPTIONAL = "exceptional"
+    """Collaboration success assessment levels."""
+    EXCEPTIONAL = "exceptional"
     HIGHLY_SUCCESSFUL = "highly_successful"
     SUCCESSFUL = "successful"
     MODERATE = "moderate"
@@ -104,7 +108,8 @@ class SuccessLevel(Enum):
 
 
 class RiskLevel(Enum):
-    """Collaboration risk assessment levels."""    MINIMAL = "minimal"
+    """Collaboration risk assessment levels."""
+    MINIMAL = "minimal"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -113,7 +118,8 @@ class RiskLevel(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile for collaboration analysis."""    creator_id: str
+    """Comprehensive creator profile for collaboration analysis."""
+    creator_id: str
     name: str
     creator_type: str
     follower_count: int
@@ -137,7 +143,8 @@ class CreatorProfile:
 
 @dataclass
 class CollaborationOpportunity:
-    """AI-identified collaboration opportunity."""    opportunity_id: str
+    """AI-identified collaboration opportunity."""
+    opportunity_id: str
     creator_1: str
     creator_2: str
     collaboration_type: CollaborationType
@@ -157,7 +164,8 @@ class CollaborationOpportunity:
 
 @dataclass
 class CollaborationMetrics:
-    """Comprehensive collaboration performance metrics."""    collaboration_id: str
+    """Comprehensive collaboration performance metrics."""
+    collaboration_id: str
     creators_involved: List[str]
     collaboration_type: CollaborationType
     start_date: datetime
@@ -201,7 +209,8 @@ class CollaborationMetrics:
 
 @dataclass
 class CollaborationInsights:
-    """AI-generated collaboration insights and recommendations."""    insight_id: str
+    """AI-generated collaboration insights and recommendations."""
+    insight_id: str
     collaboration_id: str
     insight_category: str
     title: str
@@ -218,7 +227,8 @@ class CollaborationInsights:
 
 
 class EnterpriseCollaborationAnalytics:
-    """    🚀 ULTRA-ADVANCED ENTERPRISE COLLABORATION ANALYTICS ENGINE
+    """
+    🚀 ULTRA-ADVANCED ENTERPRISE COLLABORATION ANALYTICS ENGINE
     ===========================================================
     
     Enterprise-grade collaboration analytics engine for comprehensive partnership
@@ -236,7 +246,8 @@ class EnterpriseCollaborationAnalytics:
     - Automated recommendation engine for optimal partnerships
     - Advanced analytics dashboard for collaboration managers
     - Real-time collaboration performance monitoring
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, cache_manager: CacheManager, 
                  model_cache_dir: str = "./models"):
         self.db_session = db_session
@@ -265,7 +276,8 @@ class EnterpriseCollaborationAnalytics:
         self.compatibility_weights = self._initialize_compatibility_weights()
         
     def _initialize_success_benchmarks(self) -> Dict[str, Dict[str, float]]:
-        """Initialize success benchmarks for different collaboration types."""        return {
+        """Initialize success benchmarks for different collaboration types."""
+        return {
             "music_collaboration": {
                 "min_engagement_rate": 8.0,
                 "min_reach_multiplier": 1.5,
@@ -299,7 +311,8 @@ class EnterpriseCollaborationAnalytics:
         }
     
     def _initialize_compatibility_weights(self) -> Dict[str, float]:
-        """Initialize compatibility scoring weights for creator matching."""        return {
+        """Initialize compatibility scoring weights for creator matching."""
+        return {
             "audience_overlap": 0.25,
             "content_synergy": 0.20,
             "engagement_compatibility": 0.15,
@@ -310,7 +323,8 @@ class EnterpriseCollaborationAnalytics:
         }
     
     async def initialize_collaboration_analytics(self):
-        """Initialize collaboration analytics components and ML models."""        try:
+        """Initialize collaboration analytics components and ML models."""
+        try:
             self.logger.info("Initializing enterprise collaboration analytics engine")
             
             # Initialize ML models for collaboration analysis
@@ -332,7 +346,8 @@ class EnterpriseCollaborationAnalytics:
             raise
     
     async def _initialize_ml_models(self):
-        """Initialize machine learning models for collaboration prediction."""        try:
+        """Initialize machine learning models for collaboration prediction."""
+        try:
             # Creator compatibility model
             self.compatibility_model = RandomForestClassifier(
                 n_estimators=100,
@@ -367,8 +382,10 @@ class EnterpriseCollaborationAnalytics:
                                              creator_id: str,
                                              collaboration_types: List[CollaborationType] = None,
                                              max_opportunities: int = 10) -> List[CollaborationOpportunity]:
-        """        Find optimal collaboration opportunities for a creator using AI-powered analysis.
-        """        try:
+        """
+        Find optimal collaboration opportunities for a creator using AI-powered analysis.
+        """
+        try:
             if not collaboration_types:
                 collaboration_types = list(CollaborationType)
             
@@ -441,7 +458,8 @@ class EnterpriseCollaborationAnalytics:
                                            creator1: CreatorProfile,
                                            creator2: CreatorProfile,
                                            collab_type: CollaborationType) -> float:
-        """Calculate comprehensive compatibility score between creators."""        try:
+        """Calculate comprehensive compatibility score between creators."""
+        try:
             compatibility_factors = {}
             
             # Audience overlap analysis
@@ -485,7 +503,8 @@ class EnterpriseCollaborationAnalytics:
             return 0.0
     
     async def _calculate_audience_overlap(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate audience overlap and complementarity score."""        try:
+        """Calculate audience overlap and complementarity score."""
+        try:
             # Simulate audience analysis (in production, this would use real audience data)
             reach1 = creator1.market_reach
             reach2 = creator2.market_reach
@@ -517,7 +536,8 @@ class EnterpriseCollaborationAnalytics:
                                        creator1: CreatorProfile,
                                        creator2: CreatorProfile,
                                        collab_type: CollaborationType) -> float:
-        """Calculate content synergy and complementarity."""        try:
+        """Calculate content synergy and complementarity."""
+        try:
             categories1 = set(creator1.content_categories)
             categories2 = set(creator2.content_categories)
             
@@ -549,8 +569,10 @@ class EnterpriseCollaborationAnalytics:
             return 0.5
     
     async def analyze_collaboration_performance(self, collaboration_id: str) -> CollaborationMetrics:
-        """        Analyze comprehensive collaboration performance with detailed metrics and insights.
-        """        try:
+        """
+        Analyze comprehensive collaboration performance with detailed metrics and insights.
+        """
+        try:
             # Get collaboration details
             collaboration_data = await self._get_collaboration_data(collaboration_id)
             
@@ -628,8 +650,10 @@ class EnterpriseCollaborationAnalytics:
                                           creator_id: str = None,
                                           time_range: timedelta = timedelta(days=30),
                                           report_type: str = "comprehensive") -> Dict[str, Any]:
-        """        Generate comprehensive collaboration analytics report for creators or platform overview.
-        """        try:
+        """
+        Generate comprehensive collaboration analytics report for creators or platform overview.
+        """
+        try:
             end_time = datetime.utcnow()
             start_time = end_time - time_range
             

@@ -11,7 +11,8 @@ This module provides a complete validation of our enterprise security implementa
 - Session security
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""import asyncio
+"""
+import asyncio
 import json
 import os
 import tempfile
@@ -28,13 +29,15 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class SecurityValidationSuite:
-    """Comprehensive security validation suite"""    
+    """Comprehensive security validation suite"""
+    
     def __init__(self):
         self.test_results = {}
         self.setup_test_environment()
     
     def setup_test_environment(self):
-        """Setup test environment with mock data"""        logger.info("Setting up test environment...")
+        """Setup test environment with mock data"""
+        logger.info("Setting up test environment...")
         
         # Ensure test directories exist
         os.makedirs("/tmp/encryption_keys", exist_ok=True)
@@ -95,7 +98,8 @@ class SecurityValidationSuite:
         logger.info("Test environment setup complete")
     
     async def test_encryption_key_management(self):
-        """Test encryption key management functions"""        logger.info("Testing encryption key management...")
+        """Test encryption key management functions"""
+        logger.info("Testing encryption key management...")
         
         try:
             # Test key generation and storage
@@ -147,7 +151,8 @@ class SecurityValidationSuite:
             }
     
     async def _test_key_storage(self, key_id: str, key_data: bytes, metadata):
-        """Test key storage implementation"""        # Simulate the storage process
+        """Test key storage implementation"""
+        # Simulate the storage process
         import base64
         
         key_data_dict = {
@@ -171,7 +176,8 @@ class SecurityValidationSuite:
         logger.info(f"Key stored successfully: {key_id}")
     
     async def _test_key_retrieval(self, key_id: str) -> bytes:
-        """Test key retrieval implementation"""        import base64
+        """Test key retrieval implementation"""
+        import base64
         
         key_file = f"/tmp/encryption_keys/{key_id}.json"
         if os.path.exists(key_file):
@@ -185,7 +191,8 @@ class SecurityValidationSuite:
             raise Exception(f"Key file not found: {key_id}")
     
     async def _test_metadata_retrieval(self, key_id: str):
-        """Test metadata retrieval implementation"""        key_file = f"/tmp/encryption_keys/{key_id}.json"
+        """Test metadata retrieval implementation"""
+        key_file = f"/tmp/encryption_keys/{key_id}.json"
         if os.path.exists(key_file):
             with open(key_file, 'r') as f:
                 key_data = json.load(f)
@@ -197,7 +204,8 @@ class SecurityValidationSuite:
             raise Exception(f"Metadata file not found: {key_id}")
     
     async def _test_key_deactivation(self, key_id: str):
-        """Test key deactivation implementation"""        key_file = f"/tmp/encryption_keys/{key_id}.json"
+        """Test key deactivation implementation"""
+        key_file = f"/tmp/encryption_keys/{key_id}.json"
         if os.path.exists(key_file):
             with open(key_file, 'r') as f:
                 key_data = json.load(f)
@@ -213,7 +221,8 @@ class SecurityValidationSuite:
             raise Exception(f"Key file not found for deactivation: {key_id}")
     
     async def test_authorization_system(self):
-        """Test authorization and RBAC implementation"""        logger.info("Testing authorization system...")
+        """Test authorization and RBAC implementation"""
+        logger.info("Testing authorization system...")
         
         try:
             # Test content owner lookup
@@ -244,7 +253,8 @@ class SecurityValidationSuite:
             }
     
     async def _test_content_owner_lookup(self, content_id: str) -> str:
-        """Test content owner lookup"""        with open("/tmp/content_owners.json", "r") as f:
+        """Test content owner lookup"""
+        with open("/tmp/content_owners.json", "r") as f:
             content_owners = json.load(f)
         
         owner = content_owners.get(content_id)
@@ -252,7 +262,8 @@ class SecurityValidationSuite:
         return owner
     
     async def _test_user_roles_lookup(self, user_id: str, tenant_id: str) -> List[str]:
-        """Test user roles lookup"""        with open("/tmp/user_roles.json", "r") as f:
+        """Test user roles lookup"""
+        with open("/tmp/user_roles.json", "r") as f:
             user_roles_data = json.load(f)
         
         user_data = user_roles_data.get(user_id, {})
@@ -261,7 +272,8 @@ class SecurityValidationSuite:
         return roles
     
     async def _test_resource_access(self, user_id: str, resource_id: str, permission: str) -> bool:
-        """Test resource access check"""        with open("/tmp/resource_access.json", "r") as f:
+        """Test resource access check"""
+        with open("/tmp/resource_access.json", "r") as f:
             access_data = json.load(f)
         
         user_access = access_data.get(user_id, {})
@@ -272,7 +284,8 @@ class SecurityValidationSuite:
         return has_access
     
     async def test_mfa_system(self):
-        """Test MFA implementation"""        logger.info("Testing MFA system...")
+        """Test MFA implementation"""
+        logger.info("Testing MFA system...")
         
         try:
             # Test MFA secret retrieval
@@ -298,7 +311,8 @@ class SecurityValidationSuite:
             }
     
     async def _test_mfa_secret_retrieval(self, user_id: str) -> Optional[str]:
-        """Test MFA secret retrieval"""        if os.path.exists("/tmp/mfa_secrets.json"):
+        """Test MFA secret retrieval"""
+        if os.path.exists("/tmp/mfa_secrets.json"):
             with open("/tmp/mfa_secrets.json", "r") as f:
                 mfa_secrets = json.load(f)
             
@@ -309,7 +323,8 @@ class SecurityValidationSuite:
         return None
     
     async def _test_mfa_secret_storage(self, user_id: str, secret: str):
-        """Test MFA secret storage"""        # Load existing secrets
+        """Test MFA secret storage"""
+        # Load existing secrets
         mfa_secrets = {}
         if os.path.exists("/tmp/mfa_secrets.json"):
             with open("/tmp/mfa_secrets.json", "r") as f:
@@ -325,7 +340,8 @@ class SecurityValidationSuite:
         logger.info(f"MFA secret stored for {user_id}")
     
     async def test_api_key_system(self):
-        """Test API key management"""        logger.info("Testing API key system...")
+        """Test API key management"""
+        logger.info("Testing API key system...")
         
         try:
             # Test API key generation
@@ -354,7 +370,8 @@ class SecurityValidationSuite:
             }
     
     async def _test_api_key_generation(self, user_id: str, name: str) -> tuple:
-        """Test API key generation"""        key_prefix = "aif_"
+        """Test API key generation"""
+        key_prefix = "aif_"
         key_length = 32
         raw_key = secrets.token_urlsafe(key_length)
         key_id = str(uuid.uuid4())
@@ -393,7 +410,8 @@ class SecurityValidationSuite:
         return full_key, key_id
     
     async def _test_api_key_validation(self, api_key: str, key_id: str) -> bool:
-        """Test API key validation"""        # Load API key data
+        """Test API key validation"""
+        # Load API key data
         if not os.path.exists("/tmp/api_keys.json"):
             return False
         
@@ -417,7 +435,8 @@ class SecurityValidationSuite:
         return True
     
     async def _test_api_key_revocation(self, key_id: str):
-        """Test API key revocation"""        if not os.path.exists("/tmp/api_keys.json"):
+        """Test API key revocation"""
+        if not os.path.exists("/tmp/api_keys.json"):
             raise Exception("API keys file not found")
         
         with open("/tmp/api_keys.json", "r") as f:
@@ -436,7 +455,8 @@ class SecurityValidationSuite:
         logger.info(f"API key revoked: {key_id}")
     
     async def test_oauth2_implementation(self):
-        """Test OAuth2 implementation"""        logger.info("Testing OAuth2 implementation...")
+        """Test OAuth2 implementation"""
+        logger.info("Testing OAuth2 implementation...")
         
         try:
             # Test URL generation
@@ -460,7 +480,8 @@ class SecurityValidationSuite:
             }
     
     async def _test_oauth2_url_generation(self, provider: str, state: str) -> str:
-        """Test OAuth2 URL generation"""        # Mock OAuth2 providers configuration
+        """Test OAuth2 URL generation"""
+        # Mock OAuth2 providers configuration
         providers = {
             "google": {
                 "client_id": "test_google_client_id",
@@ -490,7 +511,8 @@ class SecurityValidationSuite:
         return auth_url
     
     async def _test_oauth2_token_exchange(self, provider: str, code: str, state: str) -> Dict[str, Any]:
-        """Test OAuth2 token exchange (mock implementation)"""        # Mock successful token response
+        """Test OAuth2 token exchange (mock implementation)"""
+        # Mock successful token response
         token_response = {
             "access_token": "mock_access_token_12345",
             "token_type": "Bearer",
@@ -503,7 +525,8 @@ class SecurityValidationSuite:
         return token_response
     
     async def run_all_tests(self):
-        """Run all security validation tests"""        logger.info("Starting comprehensive security validation...")
+        """Run all security validation tests"""
+        logger.info("Starting comprehensive security validation...")
         
         test_methods = [
             self.test_encryption_key_management,
@@ -523,7 +546,8 @@ class SecurityValidationSuite:
         self.generate_summary_report()
     
     def generate_summary_report(self):
-        """Generate summary validation report"""        logger.info("\n" + "="*60)
+        """Generate summary validation report"""
+        logger.info("\n" + "="*60)
         logger.info("ENTERPRISE SECURITY VALIDATION REPORT")
         logger.info("="*60)
         
@@ -556,7 +580,8 @@ class SecurityValidationSuite:
 
 # Main execution
 async def main():
-    """Main validation execution"""    validator = SecurityValidationSuite()
+    """Main validation execution"""
+    validator = SecurityValidationSuite()
     await validator.run_all_tests()
 
 

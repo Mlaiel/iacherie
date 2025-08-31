@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -34,7 +35,8 @@ Base = declarative_base()
 
 
 class Platform(Enum):
-    """Supported monetization platforms"""    YOUTUBE = "youtube"
+    """Supported monetization platforms"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     FACEBOOK = "facebook"
@@ -49,7 +51,8 @@ class Platform(Enum):
 
 
 class RevenueType(Enum):
-    """Revenue stream types"""    ADVERTISING = "advertising"
+    """Revenue stream types"""
+    ADVERTISING = "advertising"
     SUBSCRIPTION = "subscription"
     TIPS = "tips"
     MERCHANDISE = "merchandise"
@@ -64,7 +67,8 @@ class RevenueType(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment processing status"""    PENDING = "pending"
+    """Payment processing status"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -75,7 +79,8 @@ class PaymentStatus(Enum):
 
 
 class Currency(Enum):
-    """Supported currencies"""    USD = "USD"
+    """Supported currencies"""
+    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     CAD = "CAD"
@@ -88,7 +93,8 @@ class Currency(Enum):
 
 
 class DistributionStatus(Enum):
-    """Revenue distribution status"""    CALCULATED = "calculated"
+    """Revenue distribution status"""
+    CALCULATED = "calculated"
     APPROVED = "approved"
     DISTRIBUTED = "distributed"
     COMPLETED = "completed"
@@ -97,7 +103,8 @@ class DistributionStatus(Enum):
 
 @dataclass
 class MonetizationCredentials:
-    """Monetization database authentication and API credentials"""    database_url: str = os.getenv("MONETIZATION_DATABASE_URL", "postgresql://user:pass@localhost:5432/monetization")
+    """Monetization database authentication and API credentials"""
+    database_url: str = os.getenv("MONETIZATION_DATABASE_URL", "postgresql://user:pass@localhost:5432/monetization")
     redis_url: str = os.getenv("MONETIZATION_REDIS_URL", "redis://localhost:6379/3")
     
     # Payment processor credentials
@@ -120,7 +127,8 @@ class MonetizationCredentials:
 
 @dataclass
 class RevenueTrackingConfig:
-    """Revenue tracking configuration"""    auto_sync_enabled: bool = True
+    """Revenue tracking configuration"""
+    auto_sync_enabled: bool = True
     sync_interval_hours: int = 6
     historical_data_days: int = 365
     minimum_payout_threshold: Decimal = Decimal("50.00")
@@ -140,7 +148,8 @@ class RevenueTrackingConfig:
 
 @dataclass
 class PaymentProcessingConfig:
-    """Payment processing configuration"""    primary_processor: str = "stripe"
+    """Payment processing configuration"""
+    primary_processor: str = "stripe"
     fallback_processors: List[str] = field(default_factory=lambda: ["paypal", "wise"])
     
     auto_payout_enabled: bool = False
@@ -167,7 +176,8 @@ class PaymentProcessingConfig:
 
 @dataclass
 class AnalyticsConfig:
-    """Revenue analytics configuration"""    real_time_analytics: bool = True
+    """Revenue analytics configuration"""
+    real_time_analytics: bool = True
     predictive_analytics: bool = True
     trend_analysis: bool = True
     comparative_analysis: bool = True
@@ -189,7 +199,8 @@ class AnalyticsConfig:
 
 
 class RevenueTracking(Base):
-    """Revenue tracking table"""    __tablename__ = 'revenue_tracking'
+    """Revenue tracking table"""
+    __tablename__ = 'revenue_tracking'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, nullable=False, index=True)
@@ -225,7 +236,8 @@ class RevenueTracking(Base):
 
 
 class PaymentTransaction(Base):
-    """Payment transactions table"""    __tablename__ = 'payment_transactions'
+    """Payment transactions table"""
+    __tablename__ = 'payment_transactions'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, nullable=False, index=True)
@@ -262,7 +274,8 @@ class PaymentTransaction(Base):
 
 
 class RevenueDistribution(Base):
-    """Revenue distribution tracking"""    __tablename__ = 'revenue_distributions'
+    """Revenue distribution tracking"""
+    __tablename__ = 'revenue_distributions'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, nullable=False, index=True)
@@ -295,7 +308,8 @@ class RevenueDistribution(Base):
 
 
 class PlatformIntegration(Base):
-    """Platform integration status"""    __tablename__ = 'platform_integrations'
+    """Platform integration status"""
+    __tablename__ = 'platform_integrations'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, nullable=False, index=True)
@@ -326,7 +340,8 @@ class PlatformIntegration(Base):
 
 @dataclass
 class MonetizationConfig:
-    """Professional monetization configuration"""    
+    """Professional monetization configuration"""
+    
     # Database and API credentials
     credentials: MonetizationCredentials = field(default_factory=MonetizationCredentials)
     
@@ -358,7 +373,8 @@ class MonetizationConfig:
     dashboard_alerts: bool = True
     
     def __post_init__(self):
-        """Initialize platform-specific configurations"""        if not self.revenue_tracking.platform_configs:
+        """Initialize platform-specific configurations"""
+        if not self.revenue_tracking.platform_configs:
             self.revenue_tracking.platform_configs = {
                 Platform.YOUTUBE: {
                     "sync_interval": 6,
@@ -379,7 +395,8 @@ class MonetizationConfig:
 
 
 class MonetizationManager:
-    """Professional monetization database manager"""    
+    """Professional monetization database manager"""
+    
     def __init__(self, config: MonetizationConfig):
         self.config = config
         self._engine = None
@@ -388,7 +405,8 @@ class MonetizationManager:
         self._is_initialized = False
         
     async def initialize(self) -> bool:
-        """Initialize monetization database connections"""        try:
+        """Initialize monetization database connections"""
+        try:
             # Initialize PostgreSQL connection
             self._engine = create_engine(
                 self.config.credentials.database_url,
@@ -423,7 +441,8 @@ class MonetizationManager:
             return False
     
     async def _test_connections(self):
-        """Test database connections"""        # Test PostgreSQL
+        """Test database connections"""
+        # Test PostgreSQL
         with self._engine.connect() as conn:
             conn.execute("SELECT 1")
         
@@ -439,7 +458,8 @@ class MonetizationManager:
                           period_start: datetime = None,
                           period_end: datetime = None,
                           metadata: Optional[Dict] = None) -> int:
-        """Track revenue from platform"""        try:
+        """Track revenue from platform"""
+        try:
             if period_start is None:
                 period_start = datetime.utcnow() - timedelta(days=1)
             if period_end is None:
@@ -489,7 +509,8 @@ class MonetizationManager:
                             currency: Currency = Currency.EUR,
                             processor: str = "stripe",
                             recipient_info: Optional[Dict] = None) -> str:
-        """Process payment to creator"""        try:
+        """Process payment to creator"""
+        try:
             transaction_id = f"txn_{datetime.utcnow().strftime('%Y%m%d%H%M%S')}_{user_id}"
             
             # Calculate fees
@@ -526,7 +547,8 @@ class MonetizationManager:
                                    user_id: int,
                                    period_start: datetime,
                                    period_end: datetime) -> int:
-        """Calculate revenue distribution for period"""        try:
+        """Calculate revenue distribution for period"""
+        try:
             with self._session_factory() as session:
                 # Get all revenue for the period
                 revenues = session.query(RevenueTracking).filter(
@@ -572,7 +594,8 @@ class MonetizationManager:
     async def get_revenue_analytics(self, 
                                   user_id: int,
                                   days_back: int = 30) -> Dict[str, Any]:
-        """Get revenue analytics for user"""        try:
+        """Get revenue analytics for user"""
+        try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_back)
             
             with self._session_factory() as session:
@@ -618,7 +641,8 @@ class MonetizationManager:
             return {"error": str(e)}
     
     async def sync_platform_data(self, user_id: int, platform: Platform) -> bool:
-        """Sync revenue data from platform"""        try:
+        """Sync revenue data from platform"""
+        try:
             # This would integrate with platform APIs
             logger.info(f"Syncing {platform.value} data for user {user_id}")
             
@@ -643,7 +667,8 @@ class MonetizationManager:
             return False
     
     async def shutdown(self):
-        """Shutdown monetization manager"""        try:
+        """Shutdown monetization manager"""
+        try:
             if self._redis_pool:
                 await self._redis_pool.close()
             
@@ -658,11 +683,13 @@ class MonetizationManager:
 
 
 def create_monetization_config() -> MonetizationConfig:
-    """Create default monetization configuration"""    return MonetizationConfig()
+    """Create default monetization configuration"""
+    return MonetizationConfig()
 
 
 def create_monetization_manager(config: Optional[MonetizationConfig] = None) -> MonetizationManager:
-    """Create monetization manager with configuration"""    if config is None:
+    """Create monetization manager with configuration"""
+    if config is None:
         config = create_monetization_config()
     return MonetizationManager(config)
 

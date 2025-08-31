@@ -662,7 +662,8 @@ class MusicPlatformModerator:
             "playlist_recommendations": result.playlist_optimization_suggestions,
             "monetization_potential": result.revenue_prediction
         }
-"""    },
+"""
+    },
     
     "social_media_platform": {
         "description": "Multi-format content moderation for social platforms",
@@ -725,7 +726,8 @@ class SocialMediaModerator:
             "viral_potential": results.get("viral_score", 0),
             "brand_safety_score": results.get("brand_safety", 0)
         }
-"""    },
+"""
+    },
     
     "educational_platform": {
         "description": "Educational content moderation with academic focus",
@@ -771,7 +773,8 @@ class EducationalContentModerator:
             "learning_effectiveness": result.educational_metrics["effectiveness"],
             "improvement_suggestions": result.educational_recommendations
         }
-"""    },
+"""
+    },
     
     "enterprise_communication": {
         "description": "Corporate communication and collaboration platform",
@@ -816,7 +819,8 @@ class EnterpriseCommunicationModerator:
             "sensitivity_flags": result.workplace_metrics["sensitive_content"],
             "improvement_suggestions": result.workplace_recommendations
         }
-"""    }
+"""
+    }
 }
 
 # Professional best practices for production deployment
@@ -993,7 +997,8 @@ def validate_config(config):
         print("❌ Invalid threshold configuration")
     else:
         print("✅ Threshold configuration valid")
-"""    }
+"""
+    }
 }
 
 # Component Descriptions
@@ -1220,7 +1225,8 @@ TROUBLESHOOTING = {
 }
 
 def print_quick_reference():
-    """Print a quick reference guide for the moderation system"""    print("=" * 80)
+    """Print a quick reference guide for the moderation system"""
+    print("=" * 80)
     print("MODERATION AGENT - QUICK REFERENCE")
     print("=" * 80)
     print(f"Version: {__version__}")
@@ -1283,12 +1289,14 @@ __all__ = [
 ]
 
 def print_quick_reference():
-    """    Print comprehensive quick reference guide for Moderation Agent
+    """
+    Print comprehensive quick reference guide for Moderation Agent
     
     This function provides an extensive overview of the moderation system,
     including setup examples, performance metrics, and integration patterns.
     Perfect for developers getting started or needing quick reference.
-    """    
+    """
+    
     print("""╔══════════════════════════════════════════════════════════════════════════════════╗
 ║                    MODERATION AGENT - QUICK REFERENCE GUIDE                     ║
 ║                      Ultra-Advanced AI Content Safety System                    ║
@@ -1537,7 +1545,8 @@ support contracts, contact: mlaiel@live.de
 
 # Additional helper function for component exploration
 def explore_components():
-    """Print detailed component information"""    print("\\n🔍 MODERATION AGENT COMPONENTS EXPLORER:")
+    """Print detailed component information"""
+    print("\\n🔍 MODERATION AGENT COMPONENTS EXPLORER:")
     print("=" * 80)
     
     for component_name, details in COMPONENT_DESCRIPTIONS.items():
@@ -1555,7 +1564,8 @@ def explore_components():
         print("-" * 60)
 
 def show_performance_metrics():
-    """Display comprehensive performance metrics"""    print("\\n📊 COMPREHENSIVE PERFORMANCE METRICS:")
+    """Display comprehensive performance metrics"""
+    print("\\n📊 COMPREHENSIVE PERFORMANCE METRICS:")
     print("=" * 80)
     
     for category, metrics in PERFORMANCE_BENCHMARKS.items():

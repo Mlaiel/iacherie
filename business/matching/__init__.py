@@ -19,7 +19,7 @@ Expert Team Specialties:
 - AI Prompt Engineering Expert
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 This software, concept and intellectual property are protected by international copyright laws.
 Any unauthorized use, reproduction, distribution or appropriation of this code, ideas or 
@@ -33,7 +33,9 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 - Permanent legal documentation and public disclosure of violation
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
-"""from .matching_engine import (
+"""
+
+from .matching_engine import (
     CreatorMatchingEngine,
     CompatibilityAnalyzer,
     CollaborationMatcher,
@@ -118,7 +120,7 @@ from .quality_assessor import (
 __version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 __all__ = [
     # Core Matching Engine

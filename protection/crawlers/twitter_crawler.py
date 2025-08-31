@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
-"""import asyncio
+"""
+import asyncio
 import logging
 import re
 import json
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TwitterTweetInfo:
-    """Twitter tweet information structure."""    tweet_id: str
+    """Twitter tweet information structure."""
+    tweet_id: str
     url: str
     text: str
     author_id: str
@@ -50,7 +52,8 @@ class TwitterTweetInfo:
 
 @dataclass
 class TwitterUserInfo:
-    """Twitter user information structure."""    user_id: str
+    """Twitter user information structure."""
+    user_id: str
     username: str
     name: str
     description: str
@@ -66,7 +69,8 @@ class TwitterUserInfo:
 
 @dataclass
 class TwitterSpaceInfo:
-    """Twitter Space information structure."""    space_id: str
+    """Twitter Space information structure."""
+    space_id: str
     state: str
     title: str
     host_ids: List[str]
@@ -80,7 +84,8 @@ class TwitterSpaceInfo:
     ended_at: Optional[datetime] = None
 
 class TwitterAPIClient:
-    """Twitter API v2 client with comprehensive features."""    
+    """Twitter API v2 client with comprehensive features."""
+    
     def __init__(
         self,
         bearer_token: str,
@@ -89,7 +94,8 @@ class TwitterAPIClient:
         access_token: Optional[str] = None,
         access_token_secret: Optional[str] = None
     ):
-        """Initialize Twitter API client."""        self.bearer_token = bearer_token
+        """Initialize Twitter API client."""
+        self.bearer_token = bearer_token
         self.api_key = api_key
         self.api_secret = api_secret
         self.access_token = access_token
@@ -137,7 +143,8 @@ class TwitterAPIClient:
         start_time: Optional[datetime] = None,
         end_time: Optional[datetime] = None
     ) -> List[TwitterTweetInfo]:
-        """Search for tweets using Twitter API v2."""        if not tweet_fields:
+        """Search for tweets using Twitter API v2."""
+        if not tweet_fields:
             tweet_fields = [
                 'id', 'text', 'author_id', 'created_at', 'public_metrics',
                 'context_annotations', 'entities', 'referenced_tweets',
@@ -198,7 +205,8 @@ class TwitterAPIClient:
             raise
     
     def _parse_tweet(self, tweet, users_dict: Dict[str, Any]) -> Optional[TwitterTweetInfo]:
-        """Parse tweet data from API response."""        try:
+        """Parse tweet data from API response."""
+        try:
             # Get author info
             author = users_dict.get(tweet.author_id)
             author_username = author.username if author else 'unknown'
@@ -242,7 +250,8 @@ class TwitterAPIClient:
         max_results: int = 100,
         exclude: List[str] = None
     ) -> List[TwitterTweetInfo]:
-        """Get tweets from a specific user."""        try:
+        """Get tweets from a specific user."""
+        try:
             if not exclude:
                 exclude = ['retweets', 'replies']
             
@@ -272,7 +281,8 @@ class TwitterAPIClient:
             return []
     
     async def get_user_by_username(self, username: str) -> Optional[TwitterUserInfo]:
-        """Get user information by username."""        try:
+        """Get user information by username."""
+        try:
             response = self.client.get_user(
                 username=username,
                 user_fields=[
@@ -307,7 +317,8 @@ class TwitterAPIClient:
             return None
     
     async def search_spaces(self, query: str, max_results: int = 10) -> List[TwitterSpaceInfo]:
-        """Search for Twitter Spaces."""        try:
+        """Search for Twitter Spaces."""
+        try:
             response = self.client.search_spaces(
                 query=query,
                 max_results=min(max_results, 100),
@@ -346,7 +357,8 @@ class TwitterAPIClient:
             return []
     
     async def get_trending_topics(self, woeid: int = 1) -> List[Dict[str, Any]]:
-        """Get trending topics (requires API v1.1)."""        if not self.api:
+        """Get trending topics (requires API v1.1)."""
+        if not self.api:
             logger.warning("Twitter API v1.1 not available for trending topics")
             return []
         
@@ -373,7 +385,8 @@ class TwitterAPIClient:
             return []
 
 class TwitterCrawler(BasePlatformCrawler):
-    """    Professional Twitter/X Content Crawler
+    """
+    Professional Twitter/X Content Crawler
     ======================================
     
     Advanced Twitter content discovery and monitoring system featuring:
@@ -384,9 +397,11 @@ class TwitterCrawler(BasePlatformCrawler):
     - Trending topics monitoring
     - Twitter Spaces discovery
     - Advanced search and filtering capabilities
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize Twitter crawler."""        super().__init__("twitter", config)
+        """Initialize Twitter crawler."""
+        super().__init__("twitter", config)
         
         # API configuration
         self.bearer_token = config.get('bearer_token')
@@ -428,7 +443,8 @@ class TwitterCrawler(BasePlatformCrawler):
         max_results: int = None,
         filters: Optional[Dict[str, Any]] = None
     ) -> List[CrawlResult]:
-        """Search for content on Twitter."""        if not self.api_client:
+        """Search for content on Twitter."""
+        if not self.api_client:
             raise Exception("Twitter API client not available")
         
         max_results = max_results or self.max_results_per_search
@@ -463,7 +479,8 @@ class TwitterCrawler(BasePlatformCrawler):
             return []
     
     def _build_search_query(self, base_query: str, filters: Optional[Dict[str, Any]] = None) -> str:
-        """Build enhanced search query with filters."""        query_parts = [base_query]
+        """Build enhanced search query with filters."""
+        query_parts = [base_query]
         
         if not filters:
             return base_query
@@ -507,7 +524,8 @@ class TwitterCrawler(BasePlatformCrawler):
         return ' '.join(query_parts)
     
     async def _convert_tweets_to_results(self, tweets: List[TwitterTweetInfo]) -> List[CrawlResult]:
-        """Convert Twitter tweets to CrawlResult format."""        results = []
+        """Convert Twitter tweets to CrawlResult format."""
+        results = []
         
         for tweet in tweets:
             try:
@@ -571,7 +589,8 @@ class TwitterCrawler(BasePlatformCrawler):
         return results
     
     async def search_hashtag(self, hashtag: str, max_results: int = 50) -> List[CrawlResult]:
-        """Search for tweets by hashtag."""        if not hashtag.startswith('#'):
+        """Search for tweets by hashtag."""
+        if not hashtag.startswith('#'):
             hashtag = f"#{hashtag}"
         
         return await self.search_content(
@@ -581,7 +600,8 @@ class TwitterCrawler(BasePlatformCrawler):
         )
     
     async def search_user_tweets(self, username: str, max_results: int = 50) -> List[CrawlResult]:
-        """Search for tweets from a specific user."""        if not self.api_client:
+        """Search for tweets from a specific user."""
+        if not self.api_client:
             return []
         
         try:
@@ -610,7 +630,8 @@ class TwitterCrawler(BasePlatformCrawler):
         callback_func: callable = None,
         filters: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Monitor keywords for new tweets."""        try:
+        """Monitor keywords for new tweets."""
+        try:
             query = ' OR '.join(keywords)
             monitoring_key = f"keywords_{hash(query)}"
             
@@ -637,7 +658,8 @@ class TwitterCrawler(BasePlatformCrawler):
         callback_func: callable,
         filters: Optional[Dict[str, Any]] = None
     ):
-        """Continuous keyword monitoring loop."""        logger.info(f"Starting continuous monitoring for query: {query}")
+        """Continuous keyword monitoring loop."""
+        logger.info(f"Starting continuous monitoring for query: {query}")
         
         last_tweet_id = None
         
@@ -676,7 +698,8 @@ class TwitterCrawler(BasePlatformCrawler):
             logger.error(f"Keyword monitoring error: {e}")
     
     async def get_trending_topics(self, location_woeid: int = 1) -> List[Dict[str, Any]]:
-        """Get trending topics for a location."""        if not self.api_client:
+        """Get trending topics for a location."""
+        if not self.api_client:
             return []
         
         try:
@@ -688,7 +711,8 @@ class TwitterCrawler(BasePlatformCrawler):
             return []
     
     async def search_spaces(self, query: str, max_results: int = 10) -> List[Dict[str, Any]]:
-        """Search for Twitter Spaces."""        if not self.api_client:
+        """Search for Twitter Spaces."""
+        if not self.api_client:
             return []
         
         try:
@@ -702,11 +726,13 @@ class TwitterCrawler(BasePlatformCrawler):
             return []
     
     async def check_rate_limits(self) -> bool:
-        """Check if crawler is within rate limits."""        # Twitter API v2 has generous rate limits with automatic waiting
+        """Check if crawler is within rate limits."""
+        # Twitter API v2 has generous rate limits with automatic waiting
         return True
     
     async def get_crawler_stats(self) -> Dict[str, Any]:
-        """Get crawler statistics."""        return {
+        """Get crawler statistics."""
+        return {
             "platform": "twitter",
             "api_available": self.api_client is not None,
             "active_monitoring": len(self.monitoring_tasks),
@@ -714,7 +740,8 @@ class TwitterCrawler(BasePlatformCrawler):
         }
     
     def cleanup(self):
-        """Cleanup crawler resources."""        # Cancel monitoring tasks
+        """Cleanup crawler resources."""
+        # Cancel monitoring tasks
         for task in self.monitoring_tasks.values():
             task.cancel()
         self.monitoring_tasks.clear()

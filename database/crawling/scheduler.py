@@ -12,7 +12,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team Specialties: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + 
                  Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved
-"""from typing import Dict, List, Optional, Any, Union, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, asc, func, text
@@ -33,7 +34,8 @@ from ..core.exceptions import (
 
 
 class SchedulePriority(Enum):
-    """Crawler job priority levels."""    CRITICAL = "critical"      # Real-time monitoring, copyright alerts
+    """Crawler job priority levels."""
+    CRITICAL = "critical"      # Real-time monitoring, copyright alerts
     HIGH = "high"             # Content discovery, trending analysis
     MEDIUM = "medium"         # Regular monitoring, analytics
     LOW = "low"               # Background processing, archival
@@ -41,7 +43,8 @@ class SchedulePriority(Enum):
 
 
 class ScheduleStatus(Enum):
-    """Crawler schedule status."""    ACTIVE = "active"
+    """Crawler schedule status."""
+    ACTIVE = "active"
     PAUSED = "paused"
     DISABLED = "disabled"
     COMPLETED = "completed"
@@ -50,7 +53,8 @@ class ScheduleStatus(Enum):
 
 
 class ExecutionMode(Enum):
-    """Crawler execution modes."""    IMMEDIATE = "immediate"       # Execute immediately
+    """Crawler execution modes."""
+    IMMEDIATE = "immediate"       # Execute immediately
     SCHEDULED = "scheduled"       # Execute at specific time
     RECURRING = "recurring"       # Recurring schedule
     CONDITIONAL = "conditional"   # Execute based on conditions
@@ -58,7 +62,8 @@ class ExecutionMode(Enum):
 
 
 class QueueType(Enum):
-    """Different types of crawler queues."""    REAL_TIME = "real_time"       # High-frequency, low-latency
+    """Different types of crawler queues."""
+    REAL_TIME = "real_time"       # High-frequency, low-latency
     BATCH = "batch"               # Bulk processing operations
     PRIORITY = "priority"         # Priority-based processing
     SEQUENTIAL = "sequential"     # Sequential execution required
@@ -66,7 +71,8 @@ class QueueType(Enum):
 
 
 class CrawlerSchedulingManager(DatabaseManager):
-    """    Enterprise crawler scheduling and queue management system.
+    """
+    Enterprise crawler scheduling and queue management system.
     
     Manages:
     - Complex scheduling patterns (cron-like, interval-based, conditional)
@@ -75,9 +81,11 @@ class CrawlerSchedulingManager(DatabaseManager):
     - Workflow orchestration and dependencies
     - Distributed crawler coordination
     - Performance optimization and scaling
-    """    
+    """
+    
     def __init__(self, db_session: Session):
-        """Initialize crawler scheduling manager."""        super().__init__(db_session)
+        """Initialize crawler scheduling manager."""
+        super().__init__(db_session)
         self.active_schedules = {}
         self.execution_queues = {}
         self._initialize_queue_system()
@@ -93,7 +101,8 @@ class CrawlerSchedulingManager(DatabaseManager):
         user_id: str,
         dependencies: Optional[List[str]] = None
     ) -> str:
-        """        Create a new crawler schedule with advanced configuration.
+        """
+        Create a new crawler schedule with advanced configuration.
         
         Args:
             crawler_id: Target crawler identifier
@@ -110,7 +119,8 @@ class CrawlerSchedulingManager(DatabaseManager):
             
         Raises:
             CrawlerSchedulingError: If schedule creation fails
-        """        try:
+        """
+        try:
             schedule_id = str(uuid4())
             
             # Validate schedule expression
@@ -158,7 +168,8 @@ class CrawlerSchedulingManager(DatabaseManager):
         max_retries: int = 3,
         timeout_minutes: int = 60
     ) -> str:
-        """        Enqueue a crawler job for execution with priority and resource management.
+        """
+        Enqueue a crawler job for execution with priority and resource management.
         
         Args:
             crawler_id: Target crawler identifier
@@ -175,7 +186,8 @@ class CrawlerSchedulingManager(DatabaseManager):
             
         Raises:
             QueueManagementError: If enqueuing fails
-        """        try:
+        """
+        try:
             job_id = str(uuid4())
             execution_at = datetime.utcnow()
             
@@ -220,7 +232,8 @@ class CrawlerSchedulingManager(DatabaseManager):
         error_handling: Dict[str, Any],
         user_id: str
     ) -> str:
-        """        Create a complex crawler workflow with multiple steps and error handling.
+        """
+        Create a complex crawler workflow with multiple steps and error handling.
         
         Args:
             workflow_name: Human-readable workflow name
@@ -231,7 +244,8 @@ class CrawlerSchedulingManager(DatabaseManager):
             
         Returns:
             Workflow ID for execution management
-        """        try:
+        """
+        try:
             workflow_id = str(uuid4())
             
             # Validate workflow configuration
@@ -266,7 +280,8 @@ class CrawlerSchedulingManager(DatabaseManager):
         workflow_id: str,
         execution_context: Optional[Dict[str, Any]] = None
     ) -> str:
-        """        Execute a crawler workflow with proper orchestration and monitoring.
+        """
+        Execute a crawler workflow with proper orchestration and monitoring.
         
         Args:
             workflow_id: Workflow identifier
@@ -274,7 +289,8 @@ class CrawlerSchedulingManager(DatabaseManager):
             
         Returns:
             Execution ID for tracking workflow progress
-        """        try:
+        """
+        try:
             workflow = await self.db_session.query(CrawlerWorkflow).filter(
                 CrawlerWorkflow.workflow_id == workflow_id
             ).first()
@@ -313,14 +329,16 @@ class CrawlerSchedulingManager(DatabaseManager):
             )
     
     async def get_queue_status(self, queue_type: Optional[QueueType] = None) -> Dict[str, Any]:
-        """        Get comprehensive status of crawler job queues.
+        """
+        Get comprehensive status of crawler job queues.
         
         Args:
             queue_type: Optional specific queue type to check
             
         Returns:
             Dictionary containing queue status and metrics
-        """        try:
+        """
+        try:
             query = self.db_session.query(CrawlerJobQueue)
             
             if queue_type:
@@ -365,14 +383,16 @@ class CrawlerSchedulingManager(DatabaseManager):
         self,
         optimization_strategy: str = "balanced"
     ) -> Dict[str, Any]:
-        """        Optimize queue performance based on current load and system resources.
+        """
+        Optimize queue performance based on current load and system resources.
         
         Args:
             optimization_strategy: Strategy for optimization (balanced, throughput, latency)
             
         Returns:
             Dictionary containing optimization results and recommendations
-        """        try:
+        """
+        try:
             # Analyze current queue performance
             current_metrics = await self._analyze_queue_performance()
             
@@ -398,7 +418,8 @@ class CrawlerSchedulingManager(DatabaseManager):
             )
     
     async def cancel_scheduled_job(self, job_id: str, reason: str) -> bool:
-        """        Cancel a scheduled crawler job with proper cleanup.
+        """
+        Cancel a scheduled crawler job with proper cleanup.
         
         Args:
             job_id: Job identifier to cancel
@@ -406,7 +427,8 @@ class CrawlerSchedulingManager(DatabaseManager):
             
         Returns:
             True if cancellation successful
-        """        try:
+        """
+        try:
             job = await self.db_session.query(CrawlerJobQueue).filter(
                 CrawlerJobQueue.job_id == job_id
             ).first()
@@ -443,7 +465,8 @@ class CrawlerSchedulingManager(DatabaseManager):
         expression: str,
         mode: ExecutionMode
     ) -> bool:
-        """Validate schedule expression format."""        if mode == ExecutionMode.RECURRING:
+        """Validate schedule expression format."""
+        if mode == ExecutionMode.RECURRING:
             # Validate cron expression
             parts = expression.split()
             if len(parts) != 5 and len(parts) != 6:
@@ -462,7 +485,8 @@ class CrawlerSchedulingManager(DatabaseManager):
         return True
     
     async def _calculate_next_execution(self, expression: str) -> datetime:
-        """Calculate next execution time based on schedule expression."""        # Simplified implementation - would use proper cron parser
+        """Calculate next execution time based on schedule expression."""
+        # Simplified implementation - would use proper cron parser
         return datetime.utcnow() + timedelta(hours=1)
     
     async def _activate_schedule(
@@ -471,7 +495,8 @@ class CrawlerSchedulingManager(DatabaseManager):
         expression: str,
         priority: SchedulePriority
     ) -> None:
-        """Add schedule to active tracking system."""        self.active_schedules[schedule_id] = {
+        """Add schedule to active tracking system."""
+        self.active_schedules[schedule_id] = {
             "expression": expression,
             "priority": priority.value,
             "last_execution": None,
@@ -485,7 +510,8 @@ class CrawlerSchedulingManager(DatabaseManager):
         priority: SchedulePriority,
         execution_at: datetime
     ) -> None:
-        """Add job to appropriate execution queue with priority handling."""        queue_key = f"{queue_type.value}_{priority.value}"
+        """Add job to appropriate execution queue with priority handling."""
+        queue_key = f"{queue_type.value}_{priority.value}"
         
         if queue_key not in self.execution_queues:
             self.execution_queues[queue_key] = []
@@ -502,7 +528,8 @@ class CrawlerSchedulingManager(DatabaseManager):
         )
     
     async def _remove_from_execution_queue(self, job_id: str) -> None:
-        """Remove job from execution queues."""        for queue_key, jobs in self.execution_queues.items():
+        """Remove job from execution queues."""
+        for queue_key, jobs in self.execution_queues.items():
             self.execution_queues[queue_key] = [
                 job for job in jobs if job["job_id"] != job_id
             ]
@@ -512,7 +539,8 @@ class CrawlerSchedulingManager(DatabaseManager):
         steps: List[Dict[str, Any]],
         execution_order: str
     ) -> bool:
-        """Validate workflow step configuration."""        if not steps:
+        """Validate workflow step configuration."""
+        if not steps:
             raise WorkflowExecutionError("Workflow must have at least one step")
         
         required_fields = ["step_name", "crawler_id", "job_type"]
@@ -530,7 +558,8 @@ class CrawlerSchedulingManager(DatabaseManager):
         workflow: CrawlerWorkflow,
         execution_id: str
     ) -> None:
-        """Execute workflow steps sequentially."""        for i, step in enumerate(workflow.workflow_steps):
+        """Execute workflow steps sequentially."""
+        for i, step in enumerate(workflow.workflow_steps):
             try:
                 # Execute each step and wait for completion
                 job_id = await self.enqueue_crawler_job(
@@ -554,7 +583,8 @@ class CrawlerSchedulingManager(DatabaseManager):
         workflow: CrawlerWorkflow,
         execution_id: str
     ) -> None:
-        """Execute workflow steps in parallel."""        job_ids = []
+        """Execute workflow steps in parallel."""
+        job_ids = []
         
         # Start all jobs in parallel
         for step in workflow.workflow_steps:
@@ -575,15 +605,18 @@ class CrawlerSchedulingManager(DatabaseManager):
         workflow: CrawlerWorkflow,
         execution_id: str
     ) -> None:
-        """Execute workflow steps based on conditions."""        # Implementation would include condition evaluation logic
+        """Execute workflow steps based on conditions."""
+        # Implementation would include condition evaluation logic
         pass
     
     async def _wait_for_job_completion(self, job_id: str) -> None:
-        """Wait for a specific job to complete."""        # Implementation would poll job status until completion
+        """Wait for a specific job to complete."""
+        # Implementation would poll job status until completion
         pass
     
     async def _wait_for_all_jobs_completion(self, job_ids: List[str]) -> None:
-        """Wait for all jobs in list to complete."""        # Implementation would poll all job statuses until completion
+        """Wait for all jobs in list to complete."""
+        # Implementation would poll all job statuses until completion
         pass
     
     async def _handle_workflow_step_error(
@@ -593,7 +626,8 @@ class CrawlerSchedulingManager(DatabaseManager):
         step_index: int,
         error: Exception
     ) -> None:
-        """Handle workflow step execution error."""        error_handling = workflow.error_handling
+        """Handle workflow step execution error."""
+        error_handling = workflow.error_handling
         
         if error_handling.get("strategy") == "retry":
             max_retries = error_handling.get("max_retries", 3)
@@ -608,7 +642,8 @@ class CrawlerSchedulingManager(DatabaseManager):
             )
     
     async def _get_queue_performance_metrics(self) -> Dict[str, Any]:
-        """Get performance metrics for all queues."""        return {
+        """Get performance metrics for all queues."""
+        return {
             "average_wait_time": 45.2,  # seconds
             "throughput_per_hour": 850,  # jobs processed
             "error_rate": 2.1,          # percentage
@@ -616,12 +651,14 @@ class CrawlerSchedulingManager(DatabaseManager):
         }
     
     async def _get_active_executions_count(self) -> int:
-        """Get count of currently active job executions."""        return await self.db_session.query(CrawlerJobExecution).filter(
+        """Get count of currently active job executions."""
+        return await self.db_session.query(CrawlerJobExecution).filter(
             CrawlerJobExecution.status == "running"
         ).count()
     
     async def _get_system_resource_usage(self) -> Dict[str, Any]:
-        """Get current system resource usage."""        return {
+        """Get current system resource usage."""
+        return {
             "cpu_usage_percent": 45.2,
             "memory_usage_percent": 67.8,
             "disk_usage_percent": 34.1,
@@ -629,7 +666,8 @@ class CrawlerSchedulingManager(DatabaseManager):
         }
     
     async def _analyze_queue_performance(self) -> Dict[str, Any]:
-        """Analyze current queue performance for optimization."""        return {
+        """Analyze current queue performance for optimization."""
+        return {
             "bottlenecks": ["high_priority_queue_backlog"],
             "resource_constraints": ["memory_usage_high"],
             "efficiency_score": 78.5
@@ -640,7 +678,8 @@ class CrawlerSchedulingManager(DatabaseManager):
         metrics: Dict[str, Any],
         strategy: str
     ) -> List[Dict[str, Any]]:
-        """Generate queue optimization recommendations."""        return [
+        """Generate queue optimization recommendations."""
+        return [
             {
                 "action": "increase_worker_pool",
                 "target": "high_priority_queue",
@@ -653,7 +692,8 @@ class CrawlerSchedulingManager(DatabaseManager):
         self,
         recommendations: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Apply automatic queue optimizations."""        applied = []
+        """Apply automatic queue optimizations."""
+        applied = []
         for rec in recommendations:
             if rec["action"] == "increase_worker_pool":
                 # Apply worker pool optimization
@@ -666,7 +706,8 @@ class CrawlerSchedulingManager(DatabaseManager):
         return applied
     
     def _initialize_queue_system(self) -> None:
-        """Initialize queue management system."""        self.execution_queues = {
+        """Initialize queue management system."""
+        self.execution_queues = {
             f"{qt.value}_{p.value}": []
             for qt in QueueType
             for p in SchedulePriority

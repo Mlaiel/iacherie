@@ -8,7 +8,8 @@ recommendations, and comprehensive content intelligence.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import uuid
@@ -46,7 +47,8 @@ ACTIVE_ANALYSIS_JOBS = Gauge('active_content_analysis_jobs', 'Active content ana
 
 
 class ContentType(Enum):
-    """Comprehensive content types supported"""    AUDIO_TRACK = "audio_track"
+    """Comprehensive content types supported"""
+    AUDIO_TRACK = "audio_track"
     MUSIC_ALBUM = "music_album"
     PODCAST_EPISODE = "podcast_episode"
     VIDEO_CONTENT = "video_content"
@@ -65,7 +67,8 @@ class ContentType(Enum):
 
 
 class AnalysisDepth(Enum):
-    """Analysis depth and sophistication levels"""    QUICK_SCAN = "quick_scan"
+    """Analysis depth and sophistication levels"""
+    QUICK_SCAN = "quick_scan"
     STANDARD_ANALYSIS = "standard_analysis"
     DEEP_ANALYSIS = "deep_analysis"
     COMPREHENSIVE_AUDIT = "comprehensive_audit"
@@ -73,7 +76,8 @@ class AnalysisDepth(Enum):
 
 
 class QualityDimension(Enum):
-    """Quality assessment dimensions"""    TECHNICAL_QUALITY = "technical_quality"
+    """Quality assessment dimensions"""
+    TECHNICAL_QUALITY = "technical_quality"
     CONTENT_RELEVANCE = "content_relevance"
     ENGAGEMENT_POTENTIAL = "engagement_potential"
     SEO_OPTIMIZATION = "seo_optimization"
@@ -85,7 +89,8 @@ class QualityDimension(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Enhanced content metadata structure"""    content_id: str
+    """Enhanced content metadata structure"""
+    content_id: str
     content_type: ContentType
     title: str
     description: Optional[str] = None
@@ -112,7 +117,8 @@ class ContentMetadata:
 
 @dataclass
 class TechnicalAnalysis:
-    """Technical quality analysis results"""    overall_technical_score: float
+    """Technical quality analysis results"""
+    overall_technical_score: float
     video_quality: Optional[Dict[str, Any]] = None
     audio_quality: Optional[Dict[str, Any]] = None
     image_quality: Optional[Dict[str, Any]] = None
@@ -126,7 +132,8 @@ class TechnicalAnalysis:
 
 @dataclass
 class ContentInsights:
-    """Deep content insights and intelligence"""    sentiment_analysis: Dict[str, Any]
+    """Deep content insights and intelligence"""
+    sentiment_analysis: Dict[str, Any]
     topic_modeling: Dict[str, Any]
     emotion_detection: Dict[str, Any]
     style_analysis: Dict[str, Any]
@@ -142,7 +149,8 @@ class ContentInsights:
 
 @dataclass
 class OptimizationRecommendation:
-    """Detailed optimization recommendations"""    recommendation_id: str
+    """Detailed optimization recommendations"""
+    recommendation_id: str
     category: str
     priority: str  # critical, high, medium, low
     title: str
@@ -160,7 +168,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class AnalysisResult:
-    """Comprehensive content analysis result"""    analysis_id: str
+    """Comprehensive content analysis result"""
+    analysis_id: str
     content_id: str
     analysis_depth: AnalysisDepth
     processing_time_ms: int
@@ -183,7 +192,8 @@ class AnalysisResult:
 
 @dataclass
 class BatchAnalysisResult:
-    """Enterprise batch content analysis results"""    batch_id: str
+    """Enterprise batch content analysis results"""
+    batch_id: str
     total_items: int
     processed_items: int
     failed_items: int
@@ -199,12 +209,14 @@ class BatchAnalysisResult:
 
 
 class ContentAnalyzer:
-    """    Enterprise Content Analyzer
+    """
+    Enterprise Content Analyzer
     
     Revolutionary multi-format content analysis engine that provides comprehensive
     insights, quality assessment, optimization recommendations, and strategic
     content intelligence for digital creators and businesses.
-    """    
+    """
+    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.ai_models = AIModelManager()
@@ -268,7 +280,8 @@ class ContentAnalyzer:
         }
         
     async def initialize(self) -> None:
-        """Initialize the content analyzer with all dependencies"""        try:
+        """Initialize the content analyzer with all dependencies"""
+        try:
             # Initialize Redis connection
             self.redis_client = redis.from_url(
                 settings.REDIS_URL,
@@ -304,7 +317,8 @@ class ContentAnalyzer:
         analysis_depth: AnalysisDepth = AnalysisDepth.STANDARD_ANALYSIS,
         user_context: Optional[Dict] = None
     ) -> AnalysisResult:
-        """        Perform comprehensive content analysis
+        """
+        Perform comprehensive content analysis
         
         Args:
             content_data: Raw content data or file path
@@ -314,7 +328,8 @@ class ContentAnalyzer:
             
         Returns:
             AnalysisResult with comprehensive insights
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         analysis_id = str(uuid.uuid4())
         
         try:
@@ -408,11 +423,13 @@ class ContentAnalyzer:
             logger.error(f"Content analysis failed: {e}")
             ACTIVE_ANALYSIS_JOBS.dec()
             raise ContentAnalysisError(f"Content analysis failed: {e}")
-    """    Advanced Content Analysis Engine
+    """
+    Advanced Content Analysis Engine
     
     Provides comprehensive analysis for multi-format content including
     quality assessment, optimization recommendations, and strategic insights.
-    """    
+    """
+    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.ai_models = AIModelManager()
@@ -422,7 +439,8 @@ class ContentAnalyzer:
         self._quality_thresholds = {}
         
     async def initialize(self) -> None:
-        """Initialize the content analyzer"""        try:
+        """Initialize the content analyzer"""
+        try:
             await self.ai_models.load_analysis_models()
             await self.content_processor.initialize()
             await self.fingerprint_engine.initialize()
@@ -438,7 +456,8 @@ class ContentAnalyzer:
         analysis_level: str = "standard",
         user_context: Optional[Dict] = None
     ) -> AnalysisResult:
-        """        Analyze individual content piece
+        """
+        Analyze individual content piece
         
         Args:
             content_data: Content data and metadata
@@ -447,7 +466,8 @@ class ContentAnalyzer:
             
         Returns:
             Comprehensive analysis result
-        """        try:
+        """
+        try:
             # Validate input
             await self._validate_content_data(content_data)
             
@@ -485,7 +505,8 @@ class ContentAnalyzer:
         user_context: Optional[Dict] = None,
         parallel_processing: bool = True
     ) -> BatchAnalysisResult:
-        """        Analyze multiple content pieces in batch
+        """
+        Analyze multiple content pieces in batch
         
         Args:
             content_batch: List of content data
@@ -495,7 +516,8 @@ class ContentAnalyzer:
             
         Returns:
             Batch analysis result with aggregate insights
-        """        try:
+        """
+        try:
             start_time = datetime.now()
             batch_id = f"batch_{start_time.timestamp()}"
             
@@ -574,7 +596,8 @@ class ContentAnalyzer:
         timeframe: str = "30d",
         trend_type: str = "performance"
     ) -> Dict[str, Any]:
-        """        Analyze content trends over time
+        """
+        Analyze content trends over time
         
         Args:
             content_history: Historical content data
@@ -583,7 +606,8 @@ class ContentAnalyzer:
             
         Returns:
             Trend analysis with insights and predictions
-        """        try:
+        """
+        try:
             # Validate input
             if not content_history:
                 raise ValidationError("Content history cannot be empty")
@@ -629,7 +653,8 @@ class ContentAnalyzer:
         content_b: Dict[str, Any],
         comparison_criteria: List[str] = None
     ) -> Dict[str, Any]:
-        """        Compare two content pieces
+        """
+        Compare two content pieces
         
         Args:
             content_a: First content for comparison
@@ -638,7 +663,8 @@ class ContentAnalyzer:
             
         Returns:
             Detailed comparison analysis
-        """        try:
+        """
+        try:
             # Analyze both contents
             analysis_a = await self.analyze_content(content_a, "comprehensive")
             analysis_b = await self.analyze_content(content_b, "comprehensive")
@@ -679,7 +705,8 @@ class ContentAnalyzer:
         optimization_goal: str = "engagement",
         user_context: Optional[Dict] = None
     ) -> List[Dict[str, Any]]:
-        """        Get specific optimization recommendations
+        """
+        Get specific optimization recommendations
         
         Args:
             content_data: Content to optimize
@@ -688,7 +715,8 @@ class ContentAnalyzer:
             
         Returns:
             List of optimization recommendations
-        """        try:
+        """
+        try:
             # Analyze content
             analysis = await self.analyze_content(
                 content_data, "comprehensive", user_context
@@ -721,7 +749,8 @@ class ContentAnalyzer:
         competitor_data: List[Dict[str, Any]],
         analysis_focus: str = "performance"
     ) -> Dict[str, Any]:
-        """        Analyze competitive landscape
+        """
+        Analyze competitive landscape
         
         Args:
             user_content: User's content for comparison
@@ -730,7 +759,8 @@ class ContentAnalyzer:
             
         Returns:
             Competitive landscape analysis
-        """        try:
+        """
+        try:
             # Analyze user content
             user_analysis = await self.analyze_content(user_content, "comprehensive")
             
@@ -777,7 +807,8 @@ class ContentAnalyzer:
     
     # Private helper methods
     async def _validate_content_data(self, content_data: Dict[str, Any]) -> None:
-        """Validate content data structure"""        required_fields = ["type", "data"]
+        """Validate content data structure"""
+        required_fields = ["type", "data"]
         
         for field in required_fields:
             if field not in content_data:
@@ -788,7 +819,8 @@ class ContentAnalyzer:
             raise ValidationError(f"Unsupported content type: {content_type}")
     
     async def _extract_content_metadata(self, content_data: Dict[str, Any]) -> ContentMetadata:
-        """Extract and normalize content metadata"""        content_type = ContentType(content_data["type"])
+        """Extract and normalize content metadata"""
+        content_type = ContentType(content_data["type"])
         
         metadata = ContentMetadata(
             content_id=content_data.get("id", f"content_{datetime.now().timestamp()}"),
@@ -808,7 +840,8 @@ class ContentAnalyzer:
         return metadata
     
     def _generate_cache_key(self, metadata: ContentMetadata, analysis_level: str) -> str:
-        """Generate cache key for analysis result"""        return f"analysis:{metadata.content_id}:{analysis_level}:{metadata.content_type.value}"
+        """Generate cache key for analysis result"""
+        return f"analysis:{metadata.content_id}:{analysis_level}:{metadata.content_type.value}"
     
     async def _perform_content_analysis(
         self,
@@ -817,7 +850,8 @@ class ContentAnalyzer:
         analysis_level: AnalysisLevel,
         user_context: Optional[Dict]
     ) -> AnalysisResult:
-        """Perform comprehensive content analysis"""        start_time = datetime.now()
+        """Perform comprehensive content analysis"""
+        start_time = datetime.now()
         
         # Initialize analysis result
         analysis_result = AnalysisResult(
@@ -865,7 +899,8 @@ class ContentAnalyzer:
         analysis_result: AnalysisResult,
         analysis_level: AnalysisLevel
     ) -> None:
-        """Analyze audio content"""        # Audio quality metrics
+        """Analyze audio content"""
+        # Audio quality metrics
         analysis_result.quality_metrics.update({
             "audio_quality": 0.85,
             "bitrate_score": 0.90,
@@ -911,7 +946,8 @@ class ContentAnalyzer:
         analysis_result: AnalysisResult,
         analysis_level: AnalysisLevel
     ) -> None:
-        """Analyze video content"""        # Video quality metrics
+        """Analyze video content"""
+        # Video quality metrics
         analysis_result.quality_metrics.update({
             "video_quality": 0.88,
             "resolution_score": 0.92,
@@ -957,7 +993,8 @@ class ContentAnalyzer:
         analysis_result: AnalysisResult,
         analysis_level: AnalysisLevel
     ) -> None:
-        """Analyze image content"""        # Image quality metrics
+        """Analyze image content"""
+        # Image quality metrics
         analysis_result.quality_metrics.update({
             "image_quality": 0.90,
             "resolution_score": 0.95,
@@ -1002,7 +1039,8 @@ class ContentAnalyzer:
         analysis_result: AnalysisResult,
         analysis_level: AnalysisLevel
     ) -> None:
-        """Analyze text content"""        # Text quality metrics
+        """Analyze text content"""
+        # Text quality metrics
         analysis_result.quality_metrics.update({
             "readability": 0.85,
             "grammar_score": 0.92,
@@ -1047,7 +1085,8 @@ class ContentAnalyzer:
         analysis_result: AnalysisResult,
         user_context: Optional[Dict]
     ) -> None:
-        """Perform analysis common to all content types"""        # Protection assessment
+        """Perform analysis common to all content types"""
+        # Protection assessment
         analysis_result.protection_assessment = {
             "copyright_risk": 0.15,
             "plagiarism_risk": 0.10,
@@ -1090,7 +1129,8 @@ class ContentAnalyzer:
         ]
     
     async def _calculate_overall_score(self, analysis_result: AnalysisResult) -> float:
-        """Calculate overall content score"""        quality_scores = list(analysis_result.quality_metrics.values())
+        """Calculate overall content score"""
+        quality_scores = list(analysis_result.quality_metrics.values())
         if not quality_scores:
             return 0.5
         
@@ -1118,7 +1158,8 @@ class ContentAnalyzer:
         return min(1.0, max(0.0, overall_score))
     
     async def _load_quality_thresholds(self) -> None:
-        """Load quality thresholds for different content types"""        self._quality_thresholds = {
+        """Load quality thresholds for different content types"""
+        self._quality_thresholds = {
             ContentType.AUDIO: {
                 "excellent": 0.9,
                 "good": 0.75,
@@ -1151,7 +1192,8 @@ class ContentAnalyzer:
         analysis_results: List[AnalysisResult],
         user_context: Optional[Dict]
     ) -> Dict[str, Any]:
-        """Generate aggregate insights from batch analysis"""        if not analysis_results:
+        """Generate aggregate insights from batch analysis"""
+        if not analysis_results:
             return {}
         
         # Calculate aggregate metrics
@@ -1198,7 +1240,8 @@ class ContentAnalyzer:
         aggregate_insights: Dict[str, Any],
         user_context: Optional[Dict]
     ) -> List[Dict[str, Any]]:
-        """Generate recommendations for batch of content"""        recommendations = []
+        """Generate recommendations for batch of content"""
+        recommendations = []
         
         avg_score = aggregate_insights.get("average_score", 0.5)
         

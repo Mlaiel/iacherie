@@ -13,7 +13,8 @@ prosecuted to the full extent of the law.
 Advanced AI-powered content fingerprinting system supporting multiple
 formats: audio, video, image, and text. Provides high-precision 
 similarity matching using state-of-the-art ML algorithms.
-"""from typing import Dict, List, Optional, Any, Union, Tuple, Protocol
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple, Protocol
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum
@@ -42,7 +43,8 @@ logger = logging.getLogger(__name__)
 # =============== ENUMS & CONFIGURATION ===============
 
 class FingerprintingEngineStatus(Enum):
-    """Fingerprinting engine operational status"""    ACTIVE = "active"
+    """Fingerprinting engine operational status"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     PROCESSING = "processing"
     INDEXING = "indexing"
@@ -51,14 +53,16 @@ class FingerprintingEngineStatus(Enum):
     MAINTENANCE = "maintenance"
 
 class ContentType(Enum):
-    """Supported content types for fingerprinting"""    AUDIO = "audio"
+    """Supported content types for fingerprinting"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
     MIXED_MEDIA = "mixed_media"
 
 class FingerprintMethod(Enum):
-    """Fingerprinting methods for different content types"""    # Audio methods
+    """Fingerprinting methods for different content types"""
+    # Audio methods
     CHROMAPRINT = "chromaprint"
     SPECTRAL_HASH = "spectral_hash"
     MFCC_FEATURES = "mfcc_features"
@@ -80,7 +84,8 @@ class FingerprintMethod(Enum):
     BERT_EMBEDDING = "bert_embedding"
 
 class SimilarityAlgorithm(Enum):
-    """Similarity calculation algorithms"""    COSINE_SIMILARITY = "cosine_similarity"
+    """Similarity calculation algorithms"""
+    COSINE_SIMILARITY = "cosine_similarity"
     EUCLIDEAN_DISTANCE = "euclidean_distance"
     HAMMING_DISTANCE = "hamming_distance"
     JACCARD_SIMILARITY = "jaccard_similarity"
@@ -88,7 +93,8 @@ class SimilarityAlgorithm(Enum):
 
 @dataclass
 class FingerprintingEngineConfig:
-    """Configuration for fingerprinting engine"""    enabled: bool = True
+    """Configuration for fingerprinting engine"""
+    enabled: bool = True
     max_concurrent_jobs: int = 100
     vector_dimension: int = 512
     similarity_threshold: float = 0.85
@@ -105,7 +111,8 @@ class FingerprintingEngineConfig:
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint with metadata"""    fingerprint_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Content fingerprint with metadata"""
+    fingerprint_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
     content_type: ContentType = ContentType.AUDIO
     fingerprint_method: FingerprintMethod = FingerprintMethod.CHROMAPRINT
@@ -121,7 +128,8 @@ class ContentFingerprint:
 
 @dataclass
 class SimilarityMatch:
-    """Similarity match result"""    match_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Similarity match result"""
+    match_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     query_fingerprint_id: str = ""
     matched_fingerprint_id: str = ""
     similarity_score: float = 0.0
@@ -134,34 +142,41 @@ class SimilarityMatch:
 # =============== CORE INTERFACES ===============
 
 class IFingerprintingEngineService(ABC):
-    """Interface for fingerprinting engine service"""    
+    """Interface for fingerprinting engine service"""
+    
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialize fingerprinting engine"""        pass
+        """Initialize fingerprinting engine"""
+        pass
     
     @abstractmethod
     async def generate_fingerprint(self, content_data: bytes, content_type: ContentType) -> ContentFingerprint:
-        """Generate fingerprint for content"""        pass
+        """Generate fingerprint for content"""
+        pass
     
     @abstractmethod
     async def find_similar(self, fingerprint: ContentFingerprint, top_k: int = 10) -> List[SimilarityMatch]:
-        """Find similar content using fingerprint"""        pass
+        """Find similar content using fingerprint"""
+        pass
     
     @abstractmethod
     async def index_fingerprint(self, fingerprint: ContentFingerprint) -> bool:
-        """Add fingerprint to search index"""        pass
+        """Add fingerprint to search index"""
+        pass
 
 # =============== AUDIO FINGERPRINTING ENGINE ===============
 
 class AudioFingerprintEngine:
-    """Advanced audio fingerprinting using multiple methods"""    
+    """Advanced audio fingerprinting using multiple methods"""
+    
     def __init__(self, config: FingerprintingEngineConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.AudioEngine")
         self.sample_rate = config.audio_sample_rate
         
     async def generate_chromaprint(self, audio_data: bytes) -> np.ndarray:
-        """Generate Chromaprint fingerprint for audio"""        try:
+        """Generate Chromaprint fingerprint for audio"""
+        try:
             # Convert bytes to audio array
             audio_array = np.frombuffer(audio_data, dtype=np.float32)
             
@@ -182,7 +197,8 @@ class AudioFingerprintEngine:
             return np.array([])
     
     async def generate_spectral_hash(self, audio_data: bytes) -> np.ndarray:
-        """Generate spectral hash for audio content"""        try:
+        """Generate spectral hash for audio content"""
+        try:
             audio_array = np.frombuffer(audio_data, dtype=np.float32)
             
             # Compute spectrogram
@@ -200,7 +216,8 @@ class AudioFingerprintEngine:
             return np.array([])
     
     async def generate_mfcc_features(self, audio_data: bytes) -> np.ndarray:
-        """Generate MFCC features for audio"""        try:
+        """Generate MFCC features for audio"""
+        try:
             audio_array = np.frombuffer(audio_data, dtype=np.float32)
             
             # Extract MFCC features
@@ -229,14 +246,16 @@ class AudioFingerprintEngine:
 # =============== VIDEO FINGERPRINTING ENGINE ===============
 
 class VideoFingerprintEngine:
-    """Advanced video fingerprinting using computer vision"""    
+    """Advanced video fingerprinting using computer vision"""
+    
     def __init__(self, config: FingerprintingEngineConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.VideoEngine")
         self.target_fps = config.video_fps
         
     async def generate_perceptual_hash(self, video_data: bytes) -> List[str]:
-        """Generate perceptual hash for video frames"""        frame_hashes = []
+        """Generate perceptual hash for video frames"""
+        frame_hashes = []
         
         try:
             # Create temporary file for video processing
@@ -279,7 +298,8 @@ class VideoFingerprintEngine:
             return []
     
     async def generate_frame_analysis(self, video_data: bytes) -> np.ndarray:
-        """Advanced frame analysis for video fingerprinting"""        try:
+        """Advanced frame analysis for video fingerprinting"""
+        try:
             temp_path = f"/tmp/temp_video_{uuid.uuid4().hex}.mp4"
             
             with open(temp_path, 'wb') as f:
@@ -339,14 +359,16 @@ class VideoFingerprintEngine:
 # =============== IMAGE FINGERPRINTING ENGINE ===============
 
 class ImageFingerprintEngine:
-    """Advanced image fingerprinting using multiple hash methods"""    
+    """Advanced image fingerprinting using multiple hash methods"""
+    
     def __init__(self, config: FingerprintingEngineConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.ImageEngine")
         self.target_size = config.image_resize
         
     async def generate_dhash(self, image_data: bytes) -> str:
-        """Generate difference hash for image"""        try:
+        """Generate difference hash for image"""
+        try:
             image = Image.open(io.BytesIO(image_data))
             dhash = str(imagehash.dhash(image))
             return dhash
@@ -356,7 +378,8 @@ class ImageFingerprintEngine:
             return ""
     
     async def generate_phash(self, image_data: bytes) -> str:
-        """Generate perceptual hash for image"""        try:
+        """Generate perceptual hash for image"""
+        try:
             image = Image.open(io.BytesIO(image_data))
             phash = str(imagehash.phash(image))
             return phash
@@ -366,7 +389,8 @@ class ImageFingerprintEngine:
             return ""
     
     async def generate_whash(self, image_data: bytes) -> str:
-        """Generate wavelet hash for image"""        try:
+        """Generate wavelet hash for image"""
+        try:
             image = Image.open(io.BytesIO(image_data))
             whash = str(imagehash.whash(image))
             return whash
@@ -376,7 +400,8 @@ class ImageFingerprintEngine:
             return ""
     
     async def generate_clip_embedding(self, image_data: bytes) -> np.ndarray:
-        """Generate CLIP embedding for image (placeholder)"""        try:
+        """Generate CLIP embedding for image (placeholder)"""
+        try:
             # This would use actual CLIP model
             # For now, return mock embedding
             image = Image.open(io.BytesIO(image_data))
@@ -408,14 +433,16 @@ class ImageFingerprintEngine:
 # =============== TEXT FINGERPRINTING ENGINE ===============
 
 class TextFingerprintEngine:
-    """Advanced text fingerprinting using NLP techniques"""    
+    """Advanced text fingerprinting using NLP techniques"""
+    
     def __init__(self, config: FingerprintingEngineConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.TextEngine")
         self.vectorizer = TfidfVectorizer(max_features=config.vector_dimension)
         
     async def generate_semantic_hash(self, text: str) -> str:
-        """Generate semantic hash for text"""        try:
+        """Generate semantic hash for text"""
+        try:
             # Simple semantic hashing
             words = text.lower().split()
             word_frequencies = {}
@@ -437,7 +464,8 @@ class TextFingerprintEngine:
             return ""
     
     async def generate_tfidf_vector(self, text: str) -> np.ndarray:
-        """Generate TF-IDF vector for text"""        try:
+        """Generate TF-IDF vector for text"""
+        try:
             # Fit and transform text
             tfidf_matrix = self.vectorizer.fit_transform([text])
             vector = tfidf_matrix.toarray()[0]
@@ -449,7 +477,8 @@ class TextFingerprintEngine:
             return np.array([])
     
     async def generate_bert_embedding(self, text: str) -> np.ndarray:
-        """Generate BERT embedding for text (placeholder)"""        try:
+        """Generate BERT embedding for text (placeholder)"""
+        try:
             # This would use actual BERT model
             # For now, return mock embedding
             
@@ -476,7 +505,8 @@ class TextFingerprintEngine:
 # =============== MAIN SERVICE IMPLEMENTATION ===============
 
 class FingerprintingEngineService(IFingerprintingEngineService):
-    """Professional fingerprinting engine service"""    
+    """Professional fingerprinting engine service"""
+    
     def __init__(self, config: FingerprintingEngineConfig):
         self.config = config
         self.status = FingerprintingEngineStatus.INACTIVE
@@ -493,7 +523,8 @@ class FingerprintingEngineService(IFingerprintingEngineService):
         self.fingerprint_store: Dict[str, ContentFingerprint] = {}
         
     async def initialize(self) -> bool:
-        """Initialize fingerprinting engine service"""        try:
+        """Initialize fingerprinting engine service"""
+        try:
             self.logger.info("🚀 Initializing Fingerprinting Engine Service")
             
             # Create storage directories
@@ -515,7 +546,8 @@ class FingerprintingEngineService(IFingerprintingEngineService):
             return False
     
     async def generate_fingerprint(self, content_data: bytes, content_type: ContentType) -> ContentFingerprint:
-        """Generate comprehensive fingerprint for content"""        fingerprint = ContentFingerprint(
+        """Generate comprehensive fingerprint for content"""
+        fingerprint = ContentFingerprint(
             content_type=content_type,
             file_hash=hashlib.sha256(content_data).hexdigest(),
             file_size=len(content_data)
@@ -545,7 +577,8 @@ class FingerprintingEngineService(IFingerprintingEngineService):
         return fingerprint
     
     async def find_similar(self, fingerprint: ContentFingerprint, top_k: int = 10) -> List[SimilarityMatch]:
-        """Find similar content using FAISS vector search"""        matches = []
+        """Find similar content using FAISS vector search"""
+        matches = []
         
         try:
             self.status = FingerprintingEngineStatus.SEARCHING
@@ -586,7 +619,8 @@ class FingerprintingEngineService(IFingerprintingEngineService):
         return matches
     
     async def index_fingerprint(self, fingerprint: ContentFingerprint) -> bool:
-        """Add fingerprint to FAISS search index"""        try:
+        """Add fingerprint to FAISS search index"""
+        try:
             self.status = FingerprintingEngineStatus.INDEXING
             
             if fingerprint.vector_embedding is None:
@@ -618,7 +652,8 @@ class FingerprintingEngineService(IFingerprintingEngineService):
     # =============== PRIVATE HELPER METHODS ===============
     
     async def _generate_audio_fingerprint(self, audio_data: bytes, fingerprint: ContentFingerprint) -> ContentFingerprint:
-        """Generate audio fingerprint using multiple methods"""        try:
+        """Generate audio fingerprint using multiple methods"""
+        try:
             # Generate different types of audio fingerprints
             chromaprint = await self.audio_engine.generate_chromaprint(audio_data)
             spectral_hash = await self.audio_engine.generate_spectral_hash(audio_data)
@@ -648,7 +683,8 @@ class FingerprintingEngineService(IFingerprintingEngineService):
         return fingerprint
     
     async def _generate_video_fingerprint(self, video_data: bytes, fingerprint: ContentFingerprint) -> ContentFingerprint:
-        """Generate video fingerprint using computer vision"""        try:
+        """Generate video fingerprint using computer vision"""
+        try:
             # Generate perceptual hashes for frames
             frame_hashes = await self.video_engine.generate_perceptual_hash(video_data)
             frame_analysis = await self.video_engine.generate_frame_analysis(video_data)
@@ -675,7 +711,8 @@ class FingerprintingEngineService(IFingerprintingEngineService):
         return fingerprint
     
     async def _generate_image_fingerprint(self, image_data: bytes, fingerprint: ContentFingerprint) -> ContentFingerprint:
-        """Generate image fingerprint using multiple hash methods"""        try:
+        """Generate image fingerprint using multiple hash methods"""
+        try:
             # Generate multiple hash types
             dhash = await self.image_engine.generate_dhash(image_data)
             phash = await self.image_engine.generate_phash(image_data)
@@ -698,7 +735,8 @@ class FingerprintingEngineService(IFingerprintingEngineService):
         return fingerprint
     
     async def _generate_text_fingerprint(self, text: str, fingerprint: ContentFingerprint) -> ContentFingerprint:
-        """Generate text fingerprint using NLP techniques"""        try:
+        """Generate text fingerprint using NLP techniques"""
+        try:
             # Generate different text representations
             semantic_hash = await self.text_engine.generate_semantic_hash(text)
             tfidf_vector = await self.text_engine.generate_tfidf_vector(text)
@@ -723,10 +761,12 @@ class FingerprintingEngineService(IFingerprintingEngineService):
 # =============== FACTORY & UTILITIES ===============
 
 class FingerprintingEngineFactory:
-    """Factory for creating fingerprinting engine instances"""    
+    """Factory for creating fingerprinting engine instances"""
+    
     @staticmethod
     def create_service(config: Optional[FingerprintingEngineConfig] = None) -> FingerprintingEngineService:
-        """Create configured fingerprinting engine service"""        if config is None:
+        """Create configured fingerprinting engine service"""
+        if config is None:
             config = FingerprintingEngineConfig()
         
         return FingerprintingEngineService(config)
@@ -737,7 +777,8 @@ class FingerprintingEngineFactory:
         similarity_threshold: float = 0.85,
         **kwargs
     ) -> FingerprintingEngineConfig:
-        """Create fingerprinting engine configuration"""        return FingerprintingEngineConfig(
+        """Create fingerprinting engine configuration"""
+        return FingerprintingEngineConfig(
             vector_dimension=vector_dimension,
             similarity_threshold=similarity_threshold,
             **kwargs
@@ -745,14 +786,16 @@ class FingerprintingEngineFactory:
 
 
 def calculate_hamming_distance(hash1: str, hash2: str) -> int:
-    """Calculate Hamming distance between two hash strings"""    if len(hash1) != len(hash2):
+    """Calculate Hamming distance between two hash strings"""
+    if len(hash1) != len(hash2):
         return len(hash1)
     
     return sum(c1 != c2 for c1, c2 in zip(hash1, hash2))
 
 
 def normalize_vector(vector: np.ndarray) -> np.ndarray:
-    """Normalize vector for similarity calculations"""    norm = np.linalg.norm(vector)
+    """Normalize vector for similarity calculations"""
+    norm = np.linalg.norm(vector)
     if norm == 0:
         return vector
     return vector / norm

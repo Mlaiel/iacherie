@@ -23,7 +23,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""import uuid
+"""
+import uuid
 import json
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -44,7 +45,8 @@ logger = logging.getLogger(__name__)
 
 
 class TemplateCategory(Enum):
-    """Workflow template categories"""    CONTENT_CREATION = "content_creation"
+    """Workflow template categories"""
+    CONTENT_CREATION = "content_creation"
     SOCIAL_MEDIA_MANAGEMENT = "social_media_management"
     COLLABORATION = "collaboration"
     MARKETING_CAMPAIGN = "marketing_campaign"
@@ -59,14 +61,16 @@ class TemplateCategory(Enum):
 
 
 class TemplateComplexity(Enum):
-    """Template complexity levels"""    BEGINNER = "beginner"
+    """Template complexity levels"""
+    BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     EXPERT = "expert"
 
 
 class TemplateStatus(Enum):
-    """Template lifecycle status"""    DRAFT = "draft"
+    """Template lifecycle status"""
+    DRAFT = "draft"
     TESTING = "testing"
     ACTIVE = "active"
     DEPRECATED = "deprecated"
@@ -74,7 +78,8 @@ class TemplateStatus(Enum):
 
 
 class ParameterType(Enum):
-    """Template parameter types"""    STRING = "string"
+    """Template parameter types"""
+    STRING = "string"
     INTEGER = "integer"
     FLOAT = "float"
     BOOLEAN = "boolean"
@@ -89,7 +94,8 @@ class ParameterType(Enum):
 
 
 class ConfigurationScope(Enum):
-    """Configuration scope levels"""    GLOBAL = "global"
+    """Configuration scope levels"""
+    GLOBAL = "global"
     USER = "user"
     ORGANIZATION = "organization"
     WORKFLOW = "workflow"
@@ -98,8 +104,10 @@ class ConfigurationScope(Enum):
 
 
 class WorkflowTemplateMarketplace(Base):
-    """    Database model for workflow template marketplace
-    """    __tablename__ = "workflow_template_marketplace"
+    """
+    Database model for workflow template marketplace
+    """
+    __tablename__ = "workflow_template_marketplace"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     template_name = Column(String(200), nullable=False)
@@ -217,8 +225,10 @@ class WorkflowTemplateMarketplace(Base):
 
 
 class WorkflowTemplateParameter(Base):
-    """    Database model for template parameters
-    """    __tablename__ = "workflow_template_parameters"
+    """
+    Database model for template parameters
+    """
+    __tablename__ = "workflow_template_parameters"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     template_id = Column(UUID(as_uuid=True), ForeignKey('workflow_template_marketplace.id'), nullable=False, index=True)
@@ -278,8 +288,10 @@ class WorkflowTemplateParameter(Base):
 
 
 class WorkflowConfiguration(Base):
-    """    Database model for workflow configurations
-    """    __tablename__ = "workflow_configurations"
+    """
+    Database model for workflow configurations
+    """
+    __tablename__ = "workflow_configurations"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     configuration_name = Column(String(200), nullable=False)
@@ -352,8 +364,10 @@ class WorkflowConfiguration(Base):
 
 
 class TemplateUsageHistory(Base):
-    """    Database model for template usage tracking
-    """    __tablename__ = "template_usage_history"
+    """
+    Database model for template usage tracking
+    """
+    __tablename__ = "template_usage_history"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     template_id = Column(UUID(as_uuid=True), ForeignKey('workflow_template_marketplace.id'), nullable=False, index=True)
@@ -420,8 +434,10 @@ class TemplateUsageHistory(Base):
 
 
 class TemplateReview(Base):
-    """    Database model for template reviews and ratings
-    """    __tablename__ = "template_reviews"
+    """
+    Database model for template reviews and ratings
+    """
+    __tablename__ = "template_reviews"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     template_id = Column(UUID(as_uuid=True), ForeignKey('workflow_template_marketplace.id'), nullable=False, index=True)
@@ -485,8 +501,10 @@ class TemplateReview(Base):
 
 
 class WorkflowTemplateManager:
-    """    Enterprise workflow template management system
-    """    
+    """
+    Enterprise workflow template management system
+    """
+    
     def __init__(self, db_session: Session):
         self.db_session = db_session
         self.ai_generator = AITemplateGenerator(db_session)
@@ -498,7 +516,8 @@ class WorkflowTemplateManager:
         template_data: Dict[str, Any],
         creator_user_id: str
     ) -> str:
-        """        Create new workflow template
+        """
+        Create new workflow template
         
         Args:
             template_data: Template configuration data
@@ -506,7 +525,8 @@ class WorkflowTemplateManager:
             
         Returns:
             Template ID
-        """        # Validate template definition
+        """
+        # Validate template definition
         await self._validate_template_definition(template_data['template_definition'])
         
         # Generate template schema if not provided
@@ -565,7 +585,8 @@ class WorkflowTemplateManager:
         requirements: Dict[str, Any],
         user_id: str
     ) -> str:
-        """        Generate workflow template using AI
+        """
+        Generate workflow template using AI
         
         Args:
             requirements: Template requirements and specifications
@@ -573,7 +594,8 @@ class WorkflowTemplateManager:
             
         Returns:
             Generated template ID
-        """        # Use AI to generate template
+        """
+        # Use AI to generate template
         generated_template = await self.ai_generator.generate_template(requirements, user_id)
         
         # Create the template
@@ -598,7 +620,8 @@ class WorkflowTemplateManager:
         customization_data: Dict[str, Any],
         user_id: str
     ) -> str:
-        """        Create customized version of existing template
+        """
+        Create customized version of existing template
         
         Args:
             template_id: Base template ID
@@ -607,7 +630,8 @@ class WorkflowTemplateManager:
             
         Returns:
             Customized template ID
-        """        # Get base template
+        """
+        # Get base template
         base_template = self.db_session.query(WorkflowTemplateMarketplace).filter(
             WorkflowTemplateMarketplace.id == template_id
         ).first()
@@ -657,7 +681,8 @@ class WorkflowTemplateManager:
         search_criteria: Dict[str, Any],
         user_id: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """        Search workflow templates with advanced filtering
+        """
+        Search workflow templates with advanced filtering
         
         Args:
             search_criteria: Search and filter criteria
@@ -665,7 +690,8 @@ class WorkflowTemplateManager:
             
         Returns:
             List of matching templates
-        """        query = self.db_session.query(WorkflowTemplateMarketplace).filter(
+        """
+        query = self.db_session.query(WorkflowTemplateMarketplace).filter(
             WorkflowTemplateMarketplace.is_active == True,
             WorkflowTemplateMarketplace.status == "active"
         )
@@ -757,7 +783,8 @@ class WorkflowTemplateManager:
         template_id: str,
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Get detailed template information
+        """
+        Get detailed template information
         
         Args:
             template_id: Template ID
@@ -765,7 +792,8 @@ class WorkflowTemplateManager:
             
         Returns:
             Detailed template information
-        """        template = self.db_session.query(WorkflowTemplateMarketplace).filter(
+        """
+        template = self.db_session.query(WorkflowTemplateMarketplace).filter(
             WorkflowTemplateMarketplace.id == template_id
         ).first()
         
@@ -851,7 +879,8 @@ class WorkflowTemplateManager:
         return template_details
     
     async def _validate_template_definition(self, template_definition: Dict[str, Any]):
-        """Validate template definition structure"""        required_fields = ['name', 'tasks', 'triggers']
+        """Validate template definition structure"""
+        required_fields = ['name', 'tasks', 'triggers']
         
         for field in required_fields:
             if field not in template_definition:
@@ -866,7 +895,8 @@ class WorkflowTemplateManager:
                 raise ValueError(f"Task {i} missing required fields: name, type")
     
     async def _generate_parameter_schema(self, template_definition: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate parameter schema from template definition"""        # This would analyze the template and extract parameterizable values
+        """Generate parameter schema from template definition"""
+        # This would analyze the template and extract parameterizable values
         # For now, return basic schema
         return {
             'parameters': [],
@@ -875,7 +905,8 @@ class WorkflowTemplateManager:
         }
     
     async def _create_template_parameters(self, template_id: str, parameter_schema: Dict[str, Any]):
-        """Create parameter definitions for template"""        parameters = parameter_schema.get('parameters', [])
+        """Create parameter definitions for template"""
+        parameters = parameter_schema.get('parameters', [])
         
         for i, param_def in enumerate(parameters):
             parameter = WorkflowTemplateParameter(
@@ -896,7 +927,8 @@ class WorkflowTemplateManager:
         self.db_session.commit()
     
     async def _calculate_template_quality_scores(self, template_id: str):
-        """Calculate quality scores for template"""        # Implementation would analyze template quality
+        """Calculate quality scores for template"""
+        # Implementation would analyze template quality
         template = self.db_session.query(WorkflowTemplateMarketplace).filter(
             WorkflowTemplateMarketplace.id == template_id
         ).first()
@@ -912,7 +944,8 @@ class WorkflowTemplateManager:
         base_definition: Dict[str, Any],
         customizations: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply customizations to base template definition"""        # Deep copy base definition
+        """Apply customizations to base template definition"""
+        # Deep copy base definition
         import copy
         customized_definition = copy.deepcopy(base_definition)
         
@@ -931,7 +964,8 @@ class WorkflowTemplateManager:
         usage_type: str,
         usage_data: Dict[str, Any]
     ):
-        """Track template usage for analytics"""        usage_record = TemplateUsageHistory(
+        """Track template usage for analytics"""
+        usage_record = TemplateUsageHistory(
             template_id=template_id,
             user_id=user_id,
             usage_type=usage_type,
@@ -958,7 +992,8 @@ class WorkflowTemplateManager:
         template_id: str,
         user_id: str
     ) -> Dict[str, Any]:
-        """Get personalized recommendations for template"""        # Implementation would analyze user preferences and history
+        """Get personalized recommendations for template"""
+        # Implementation would analyze user preferences and history
         return {
             'compatibility_score': 0.85,
             'recommended_customizations': [],
@@ -967,7 +1002,8 @@ class WorkflowTemplateManager:
         }
     
     async def _calculate_template_usage_stats(self, template_id: str) -> Dict[str, Any]:
-        """Calculate template usage statistics"""        usage_records = self.db_session.query(TemplateUsageHistory).filter(
+        """Calculate template usage statistics"""
+        usage_records = self.db_session.query(TemplateUsageHistory).filter(
             TemplateUsageHistory.template_id == template_id
         ).all()
         
@@ -987,7 +1023,8 @@ class WorkflowTemplateManager:
 
 
 class AITemplateGenerator:
-    """AI-powered template generation system"""    
+    """AI-powered template generation system"""
+    
     def __init__(self, db_session: Session):
         self.db_session = db_session
     
@@ -996,7 +1033,8 @@ class AITemplateGenerator:
         requirements: Dict[str, Any],
         user_id: str
     ) -> Dict[str, Any]:
-        """Generate workflow template using AI"""        # AI would analyze requirements and generate optimized template
+        """Generate workflow template using AI"""
+        # AI would analyze requirements and generate optimized template
         # For now, return mock template
         return {
             'template_name': f"AI Generated Template for {requirements.get('purpose', 'Workflow')}",
@@ -1029,7 +1067,8 @@ class AITemplateGenerator:
 
 
 class ConfigurationManager:
-    """Advanced configuration management system"""    
+    """Advanced configuration management system"""
+    
     def __init__(self, db_session: Session):
         self.db_session = db_session
     
@@ -1038,7 +1077,8 @@ class ConfigurationManager:
         config_data: Dict[str, Any],
         user_id: str
     ) -> str:
-        """Create new workflow configuration"""        configuration = WorkflowConfiguration(
+        """Create new workflow configuration"""
+        configuration = WorkflowConfiguration(
             configuration_name=config_data['configuration_name'],
             configuration_description=config_data.get('configuration_description', ''),
             user_id=user_id,
@@ -1062,7 +1102,8 @@ class ConfigurationManager:
         scope_id: str,
         user_id: str
     ) -> Dict[str, Any]:
-        """Get configuration for specific scope"""        config = self.db_session.query(WorkflowConfiguration).filter(
+        """Get configuration for specific scope"""
+        config = self.db_session.query(WorkflowConfiguration).filter(
             WorkflowConfiguration.scope == scope,
             WorkflowConfiguration.scope_id == scope_id,
             WorkflowConfiguration.user_id == user_id,
@@ -1076,7 +1117,8 @@ class ConfigurationManager:
 
 
 class MarketplaceManager:
-    """Template marketplace management system"""    
+    """Template marketplace management system"""
+    
     def __init__(self, db_session: Session):
         self.db_session = db_session
     
@@ -1085,7 +1127,8 @@ class MarketplaceManager:
         template_id: str,
         marketplace_data: Dict[str, Any]
     ) -> bool:
-        """Publish template to marketplace"""        template = self.db_session.query(WorkflowTemplateMarketplace).filter(
+        """Publish template to marketplace"""
+        template = self.db_session.query(WorkflowTemplateMarketplace).filter(
             WorkflowTemplateMarketplace.id == template_id
         ).first()
         
@@ -1116,7 +1159,8 @@ class MarketplaceManager:
         reviewer_user_id: str,
         review_data: Dict[str, Any]
     ) -> str:
-        """Submit template review"""        review = TemplateReview(
+        """Submit template review"""
+        review = TemplateReview(
             template_id=template_id,
             reviewer_user_id=reviewer_user_id,
             rating=review_data['rating'],
@@ -1141,7 +1185,8 @@ class MarketplaceManager:
         return str(review.id)
     
     async def _update_template_rating(self, template_id: str):
-        """Update template average rating"""        reviews = self.db_session.query(TemplateReview).filter(
+        """Update template average rating"""
+        reviews = self.db_session.query(TemplateReview).filter(
             TemplateReview.template_id == template_id,
             TemplateReview.is_active == True
         ).all()

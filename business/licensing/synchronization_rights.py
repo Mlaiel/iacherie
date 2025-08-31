@@ -10,7 +10,8 @@ WARNING - COPYRIGHT PROTECTION:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""from typing import Dict, List, Optional, Any, Tuple
+"""
+from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
 from dataclasses import dataclass, field
@@ -28,7 +29,8 @@ from ..ai.sync_intelligence import SyncIntelligenceEngine
 
 
 class SyncMediaType(Enum):
-    """Types of synchronization media"""    FILM = "film"
+    """Types of synchronization media"""
+    FILM = "film"
     TELEVISION = "television"
     COMMERCIAL = "commercial"
     VIDEO_GAME = "video_game"
@@ -43,7 +45,8 @@ class SyncMediaType(Enum):
 
 
 class SyncUsageType(Enum):
-    """Types of synchronization usage"""    BACKGROUND_MUSIC = "background_music"
+    """Types of synchronization usage"""
+    BACKGROUND_MUSIC = "background_music"
     FEATURED_PERFORMANCE = "featured_performance"
     THEME_SONG = "theme_song"
     END_CREDITS = "end_credits"
@@ -56,7 +59,8 @@ class SyncUsageType(Enum):
 
 
 class LicenseDuration(Enum):
-    """License duration types"""    PERPETUAL = "perpetual"
+    """License duration types"""
+    PERPETUAL = "perpetual"
     TERM_LIMITED = "term_limited"
     FESTIVAL_ONLY = "festival_only"
     THEATRICAL_ONLY = "theatrical_only"
@@ -67,7 +71,8 @@ class LicenseDuration(Enum):
 
 @dataclass
 class SyncOpportunity:
-    """Sync placement opportunity"""    project_id: str
+    """Sync placement opportunity"""
+    project_id: str
     project_title: str
     media_type: SyncMediaType
     usage_type: SyncUsageType
@@ -81,7 +86,8 @@ class SyncOpportunity:
 
 
 class SyncLicenseRequest(BaseModel):
-    """Sync license request structure"""    content_id: str = Field(..., description="Content for sync licensing")
+    """Sync license request structure"""
+    content_id: str = Field(..., description="Content for sync licensing")
     project_id: str = Field(..., description="Media project ID")
     media_type: SyncMediaType = Field(..., description="Type of media project")
     usage_type: SyncUsageType = Field(..., description="How music will be used")
@@ -95,9 +101,11 @@ class SyncLicenseRequest(BaseModel):
 
 
 class SynchronizationRightsService:
-    """    Advanced synchronization rights management system with AI-driven opportunity matching,
+    """
+    Advanced synchronization rights management system with AI-driven opportunity matching,
     automated licensing workflows, and comprehensive sync placement analytics.
-    """    
+    """
+    
     def __init__(self, db: Session = None):
         self.db = db or next(get_db())
         self.logger = get_logger(__name__)
@@ -112,14 +120,16 @@ class SynchronizationRightsService:
         self,
         sync_request: SyncLicenseRequest
     ) -> Dict[str, Any]:
-        """        Process synchronization license request with intelligent matching and pricing
+        """
+        Process synchronization license request with intelligent matching and pricing
         
         Args:
             sync_request: Sync license request details
             
         Returns:
             Sync license processing results with recommendations
-        """        try:
+        """
+        try:
             self.logger.info(f"Processing sync license request for content {sync_request.content_id}")
             
             # Validate sync license request
@@ -193,7 +203,8 @@ class SynchronizationRightsService:
         content_ids: List[str],
         opportunity_criteria: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Discover sync placement opportunities using AI-powered matching
+        """
+        Discover sync placement opportunities using AI-powered matching
         
         Args:
             content_ids: Content to find opportunities for
@@ -201,7 +212,8 @@ class SynchronizationRightsService:
             
         Returns:
             Discovered sync opportunities with match scores
-        """        try:
+        """
+        try:
             if not opportunity_criteria:
                 opportunity_criteria = {
                     "min_budget": Decimal("1000"),
@@ -289,7 +301,8 @@ class SynchronizationRightsService:
         placement_ids: List[str],
         tracking_period: timedelta = timedelta(days=90)
     ) -> Dict[str, Any]:
-        """        Track sync placement performance with comprehensive analytics
+        """
+        Track sync placement performance with comprehensive analytics
         
         Args:
             placement_ids: Sync placements to track
@@ -297,7 +310,8 @@ class SynchronizationRightsService:
             
         Returns:
             Comprehensive sync placement performance analysis
-        """        try:
+        """
+        try:
             self.logger.info(f"Tracking performance for {len(placement_ids)} sync placements")
             
             placement_performance = {}
@@ -387,7 +401,8 @@ class SynchronizationRightsService:
         content_portfolio: List[str],
         optimization_goals: List[str] = None
     ) -> Dict[str, Any]:
-        """        Optimize sync licensing strategy using AI-driven analysis
+        """
+        Optimize sync licensing strategy using AI-driven analysis
         
         Args:
             content_portfolio: Content portfolio to optimize
@@ -395,7 +410,8 @@ class SynchronizationRightsService:
             
         Returns:
             Sync licensing strategy optimization results
-        """        try:
+        """
+        try:
             if not optimization_goals:
                 optimization_goals = [
                     "maximize_placement_volume",
@@ -470,7 +486,8 @@ class SynchronizationRightsService:
             raise SynchronizationRightsError(f"Sync strategy optimization failed: {str(e)}")
     
     def _initialize_sync_rate_database(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize sync licensing rate database"""        return {
+        """Initialize sync licensing rate database"""
+        return {
             "film": {
                 "independent": {
                     "budget_range": (Decimal("100000"), Decimal("5000000")),
@@ -518,7 +535,8 @@ class SynchronizationRightsService:
         }
     
     def _initialize_media_project_database(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize media project database with industry contacts"""        return {
+        """Initialize media project database with industry contacts"""
+        return {
             "active_projects": [
                 {
                     "project_id": "proj_001",
@@ -545,11 +563,13 @@ class SynchronizationRightsService:
         }
     
     def _initialize_sync_opportunity_database(self) -> List[SyncOpportunity]:
-        """Initialize sync opportunity database"""        return []  # Would be populated from various industry sources
+        """Initialize sync opportunity database"""
+        return []  # Would be populated from various industry sources
     
     # Helper methods for internal operations
     async def _validate_sync_license_request(self, request: SyncLicenseRequest) -> Dict[str, Any]:
-        """Validate sync license request"""        # Implementation for request validation
+        """Validate sync license request"""
+        # Implementation for request validation
         pass
     
     async def _analyze_content_sync_suitability(
@@ -557,7 +577,8 @@ class SynchronizationRightsService:
         content_id: str, 
         request: SyncLicenseRequest
     ) -> Dict[str, Any]:
-        """Analyze content suitability for sync placement"""        # Implementation for content analysis
+        """Analyze content suitability for sync placement"""
+        # Implementation for content analysis
         pass
     
     async def _generate_sync_pricing_analysis(
@@ -565,5 +586,6 @@ class SynchronizationRightsService:
         request: SyncLicenseRequest, 
         content_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate intelligent sync pricing analysis"""        # Implementation for pricing analysis
+        """Generate intelligent sync pricing analysis"""
+        # Implementation for pricing analysis
         pass

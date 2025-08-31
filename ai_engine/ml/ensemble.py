@@ -4,7 +4,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive ensemble learning capabilities including
 model blending, voting systems, stacking, and advanced ensemble techniques.
-"""import logging
+"""
+import logging
 import numpy as np
 import copy
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable
@@ -17,7 +18,8 @@ import json
 logger = logging.getLogger(__name__)
 
 class EnsembleStrategy(Enum):
-    """Ensemble learning strategies"""    VOTING = "voting"
+    """Ensemble learning strategies"""
+    VOTING = "voting"
     BAGGING = "bagging"
     BOOSTING = "boosting"
     STACKING = "stacking"
@@ -25,12 +27,14 @@ class EnsembleStrategy(Enum):
     CASCADING = "cascading"
 
 class VotingType(Enum):
-    """Types of voting for ensemble"""    HARD = "hard"
+    """Types of voting for ensemble"""
+    HARD = "hard"
     SOFT = "soft"
     WEIGHTED = "weighted"
 
 class BlendingStrategy(Enum):
-    """Model blending strategies"""    SIMPLE_AVERAGE = "simple_average"
+    """Model blending strategies"""
+    SIMPLE_AVERAGE = "simple_average"
     WEIGHTED_AVERAGE = "weighted_average"
     RANK_AVERAGE = "rank_average"
     GEOMETRIC_MEAN = "geometric_mean"
@@ -38,7 +42,8 @@ class BlendingStrategy(Enum):
 
 @dataclass
 class ModelInfo:
-    """Information about a model in the ensemble"""    model_id: str
+    """Information about a model in the ensemble"""
+    model_id: str
     model_name: str
     model: Any
     weight: float = 1.0
@@ -47,7 +52,8 @@ class ModelInfo:
 
 @dataclass
 class EnsembleConfig:
-    """Configuration for ensemble learning"""    strategy: EnsembleStrategy
+    """Configuration for ensemble learning"""
+    strategy: EnsembleStrategy
     voting_type: VotingType = VotingType.HARD
     blending_strategy: BlendingStrategy = BlendingStrategy.WEIGHTED_AVERAGE
     use_cross_validation: bool = True
@@ -56,7 +62,8 @@ class EnsembleConfig:
     diversity_threshold: float = 0.1
 
 class EnsembleManager:
-    """Main ensemble learning manager"""    
+    """Main ensemble learning manager"""
+    
     def __init__(self, config: EnsembleConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -69,7 +76,8 @@ class EnsembleManager:
     
     def add_model(self, model_id: str, model: Any, model_name: str = None,
                  weight: float = 1.0, metadata: Dict[str, Any] = None) -> bool:
-        """Add a model to the ensemble"""        try:
+        """Add a model to the ensemble"""
+        try:
             if model_name is None:
                 model_name = f"Model_{len(self.models) + 1}"
             
@@ -91,7 +99,8 @@ class EnsembleManager:
             return False
     
     def remove_model(self, model_id: str) -> bool:
-        """Remove a model from the ensemble"""        try:
+        """Remove a model from the ensemble"""
+        try:
             original_count = len(self.models)
             self.models = [m for m in self.models if m.model_id != model_id]
             
@@ -108,7 +117,8 @@ class EnsembleManager:
             return False
     
     def fit(self, X: np.ndarray, y: np.ndarray) -> 'EnsembleManager':
-        """Fit the ensemble on training data"""        try:
+        """Fit the ensemble on training data"""
+        try:
             if len(self.models) < 2:
                 raise ValueError("Ensemble requires at least 2 models")
             
@@ -150,12 +160,14 @@ class EnsembleManager:
             raise
     
     def _fit_individual_model(self, model_info: ModelInfo, X: np.ndarray, y: np.ndarray):
-        """Fit an individual model"""        # Simulate model training
+        """Fit an individual model"""
+        # Simulate model training
         # In production, this would call the actual model's fit method
         model_info.performance_score = np.random.uniform(0.7, 0.95)
     
     def _fit_meta_model(self, X: np.ndarray, y: np.ndarray):
-        """Fit meta-model for stacking ensemble"""        try:
+        """Fit meta-model for stacking ensemble"""
+        try:
             # Generate meta-features using cross-validation
             meta_features = self._generate_meta_features(X, y)
             
@@ -170,7 +182,8 @@ class EnsembleManager:
             self.logger.error(f"Meta-model fitting failed: {e}")
     
     def _generate_meta_features(self, X: np.ndarray, y: np.ndarray) -> np.ndarray:
-        """Generate meta-features for stacking"""        if not self.config.use_cross_validation:
+        """Generate meta-features for stacking"""
+        if not self.config.use_cross_validation:
             # Simple holdout approach
             split_idx = int(0.8 * len(X))
             X_train, X_val = X[:split_idx], X[split_idx:]
@@ -198,7 +211,8 @@ class EnsembleManager:
         return meta_features
     
     def _create_meta_model(self):
-        """Create meta-model for stacking"""        # Simplified meta-model
+        """Create meta-model for stacking"""
+        # Simplified meta-model
         return {
             "type": self.config.meta_learner,
             "weights": np.random.normal(0, 0.1, len(self.models)),
@@ -206,7 +220,8 @@ class EnsembleManager:
         }
     
     def _calculate_blend_weights(self, X: np.ndarray, y: np.ndarray):
-        """Calculate blending weights for models"""        try:
+        """Calculate blending weights for models"""
+        try:
             if self.config.blending_strategy == BlendingStrategy.SIMPLE_AVERAGE:
                 # Equal weights
                 weight = 1.0 / len(self.models)
@@ -242,7 +257,8 @@ class EnsembleManager:
             self.logger.error(f"Blend weight calculation failed: {e}")
     
     def _calculate_ensemble_weights(self, X: np.ndarray, y: np.ndarray):
-        """Calculate general ensemble weights"""        # For voting and other strategies
+        """Calculate general ensemble weights"""
+        # For voting and other strategies
         if self.config.voting_type == VotingType.WEIGHTED:
             self._calculate_blend_weights(X, y)
         else:
@@ -253,7 +269,8 @@ class EnsembleManager:
             }
     
     def predict(self, X: np.ndarray) -> np.ndarray:
-        """Make ensemble predictions"""        try:
+        """Make ensemble predictions"""
+        try:
             if not self.is_fitted:
                 raise ValueError("Ensemble not fitted. Call fit() first.")
             
@@ -271,7 +288,8 @@ class EnsembleManager:
             raise
     
     def _stacking_predict(self, X: np.ndarray) -> np.ndarray:
-        """Make predictions using stacking"""        # Generate meta-features
+        """Make predictions using stacking"""
+        # Generate meta-features
         meta_features = []
         for model_info in self.models:
             predictions = self._predict_with_model(model_info, X)
@@ -292,7 +310,8 @@ class EnsembleManager:
         return predictions
     
     def _voting_predict(self, X: np.ndarray) -> np.ndarray:
-        """Make predictions using voting"""        all_predictions = []
+        """Make predictions using voting"""
+        all_predictions = []
         
         for model_info in self.models:
             predictions = self._predict_with_model(model_info, X)
@@ -318,7 +337,8 @@ class EnsembleManager:
         return predictions
     
     def _blending_predict(self, X: np.ndarray) -> np.ndarray:
-        """Make predictions using blending"""        all_predictions = []
+        """Make predictions using blending"""
+        all_predictions = []
         weights = []
         
         for model_info in self.models:
@@ -350,15 +370,18 @@ class EnsembleManager:
         return predictions
     
     def _predict_with_model(self, model_info: ModelInfo, X: np.ndarray) -> np.ndarray:
-        """Make prediction with individual model"""        # Simulate model prediction
+        """Make prediction with individual model"""
+        # Simulate model prediction
         # In production, this would call the actual model's predict method
         return np.random.random(len(X))
     
     def get_model_weights(self) -> Dict[str, float]:
-        """Get current ensemble weights for all models"""        return self.ensemble_weights.copy()
+        """Get current ensemble weights for all models"""
+        return self.ensemble_weights.copy()
     
     def get_ensemble_info(self) -> Dict[str, Any]:
-        """Get comprehensive ensemble information"""        return {
+        """Get comprehensive ensemble information"""
+        return {
             "num_models": len(self.models),
             "strategy": self.config.strategy.value,
             "voting_type": self.config.voting_type.value if self.config.strategy == EnsembleStrategy.VOTING else None,
@@ -376,7 +399,8 @@ class EnsembleManager:
         }
 
 class ModelBlender:
-    """Advanced model blending system"""    
+    """Advanced model blending system"""
+    
     def __init__(self, blending_strategy: BlendingStrategy = BlendingStrategy.WEIGHTED_AVERAGE):
         self.blending_strategy = blending_strategy
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -387,14 +411,16 @@ class ModelBlender:
     
     def add_model_predictions(self, model_id: str, predictions: np.ndarray, 
                             validation_score: float = None):
-        """Add model predictions to the blender"""        self.model_predictions[model_id] = predictions
+        """Add model predictions to the blender"""
+        self.model_predictions[model_id] = predictions
         if validation_score is not None:
             self.validation_scores[model_id] = validation_score
         
         self.logger.info(f"Added predictions for model: {model_id}")
     
     def calculate_blend_weights(self, target_values: Optional[np.ndarray] = None) -> Dict[str, float]:
-        """Calculate optimal blending weights"""        try:
+        """Calculate optimal blending weights"""
+        try:
             if self.blending_strategy == BlendingStrategy.SIMPLE_AVERAGE:
                 # Equal weights
                 num_models = len(self.model_predictions)
@@ -431,7 +457,8 @@ class ModelBlender:
             raise
     
     def _calculate_rank_weights(self):
-        """Calculate rank-based weights"""        if not self.validation_scores:
+        """Calculate rank-based weights"""
+        if not self.validation_scores:
             # Equal weights if no scores
             num_models = len(self.model_predictions)
             weight = 1.0 / num_models
@@ -457,7 +484,8 @@ class ModelBlender:
             self.blend_weights[model_id] = rank_weight
     
     def blend_predictions(self) -> np.ndarray:
-        """Generate blended predictions"""        try:
+        """Generate blended predictions"""
+        try:
             if not self.model_predictions:
                 raise ValueError("No model predictions available")
             
@@ -494,7 +522,8 @@ class ModelBlender:
             raise
 
 class VotingClassifier:
-    """Advanced voting classifier with multiple voting strategies"""    
+    """Advanced voting classifier with multiple voting strategies"""
+    
     def __init__(self, voting_type: VotingType = VotingType.HARD):
         self.voting_type = voting_type
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -505,14 +534,16 @@ class VotingClassifier:
         self.logger.info("VotingClassifier initialized successfully")
     
     def add_classifier(self, classifier_id: str, classifier: Any, weight: float = 1.0):
-        """Add a classifier to the voting ensemble"""        self.classifiers[classifier_id] = classifier
+        """Add a classifier to the voting ensemble"""
+        self.classifiers[classifier_id] = classifier
         self.classifier_weights[classifier_id] = weight
         self.is_fitted = False
         
         self.logger.info(f"Added classifier: {classifier_id} with weight {weight}")
     
     def fit(self, X: np.ndarray, y: np.ndarray) -> 'VotingClassifier':
-        """Fit all classifiers in the ensemble"""        try:
+        """Fit all classifiers in the ensemble"""
+        try:
             self.logger.info(f"Fitting voting classifier with {len(self.classifiers)} classifiers")
             
             # Get unique class labels
@@ -536,11 +567,13 @@ class VotingClassifier:
             raise
     
     def _fit_classifier(self, classifier: Any, X: np.ndarray, y: np.ndarray):
-        """Fit individual classifier (simulation)"""        # In production, this would call classifier.fit(X, y)
+        """Fit individual classifier (simulation)"""
+        # In production, this would call classifier.fit(X, y)
         pass
     
     def predict(self, X: np.ndarray) -> np.ndarray:
-        """Make predictions using voting"""        try:
+        """Make predictions using voting"""
+        try:
             if not self.is_fitted:
                 raise ValueError("Voting classifier not fitted. Call fit() first.")
             
@@ -556,7 +589,8 @@ class VotingClassifier:
             raise
     
     def _hard_voting_predict(self, X: np.ndarray) -> np.ndarray:
-        """Hard voting predictions"""        all_predictions = []
+        """Hard voting predictions"""
+        all_predictions = []
         
         for classifier_id, classifier in self.classifiers.items():
             predictions = self._predict_with_classifier(classifier, X)
@@ -572,7 +606,8 @@ class VotingClassifier:
         return final_predictions
     
     def _soft_voting_predict(self, X: np.ndarray) -> np.ndarray:
-        """Soft voting predictions (average probabilities)"""        all_probabilities = []
+        """Soft voting predictions (average probabilities)"""
+        all_probabilities = []
         
         for classifier_id, classifier in self.classifiers.items():
             probabilities = self._predict_proba_with_classifier(classifier, X)
@@ -585,7 +620,8 @@ class VotingClassifier:
         return final_predictions
     
     def _weighted_voting_predict(self, X: np.ndarray) -> np.ndarray:
-        """Weighted voting predictions"""        if self.voting_type == VotingType.HARD:
+        """Weighted voting predictions"""
+        if self.voting_type == VotingType.HARD:
             # Weighted hard voting
             vote_counts = np.zeros((len(X), len(self.class_labels)))
             
@@ -615,16 +651,19 @@ class VotingClassifier:
         return final_predictions
     
     def _predict_with_classifier(self, classifier: Any, X: np.ndarray) -> np.ndarray:
-        """Make prediction with individual classifier"""        # Simulate classifier prediction
+        """Make prediction with individual classifier"""
+        # Simulate classifier prediction
         return np.random.randint(0, len(self.class_labels), len(X))
     
     def _predict_proba_with_classifier(self, classifier: Any, X: np.ndarray) -> np.ndarray:
-        """Get prediction probabilities from individual classifier"""        # Simulate classifier probability prediction
+        """Get prediction probabilities from individual classifier"""
+        # Simulate classifier probability prediction
         probabilities = np.random.dirichlet(np.ones(len(self.class_labels)), len(X))
         return probabilities
     
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
-        """Get ensemble prediction probabilities"""        try:
+        """Get ensemble prediction probabilities"""
+        try:
             if not self.is_fitted:
                 raise ValueError("Voting classifier not fitted. Call fit() first.")
             

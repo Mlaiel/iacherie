@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -18,7 +19,8 @@ Tests content filtering, ranking, diversity, and real-time adaptation.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -58,8 +60,10 @@ from ai.personalization.exceptions import (
 
 
 class TestContentItem(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ContentItem class"""    async def asyncSetUp(self):
-        """Set up test environment"""        self.content_data = self._generate_content_data()
+    """Comprehensive tests for ContentItem class"""
+    async def asyncSetUp(self):
+        """Set up test environment"""
+        self.content_data = self._generate_content_data()
         self.content_item = ContentItem(
             item_id='track_12345',
             content_type=ContentType.MUSIC,
@@ -69,7 +73,8 @@ class TestContentItem(IsolatedAsyncioTestCase):
         )
 
     def _generate_content_data(self) -> Dict[str, Any]:
-        """Generate comprehensive content data"""        return {
+        """Generate comprehensive content data"""
+        return {
             'metadata': {
                 'title': 'Test Track Title',
                 'artist': 'Test Artist',
@@ -113,14 +118,16 @@ class TestContentItem(IsolatedAsyncioTestCase):
         }
 
     async def test_content_item_initialization(self):
-        """Test content item proper initialization"""        self.assertEqual(self.content_item.item_id, 'track_12345')
+        """Test content item proper initialization"""
+        self.assertEqual(self.content_item.item_id, 'track_12345')
         self.assertEqual(self.content_item.content_type, ContentType.MUSIC)
         self.assertIsNotNone(self.content_item.metadata)
         self.assertIsNotNone(self.content_item.features)
         self.assertIsNotNone(self.content_item.quality_score)
 
     async def test_metadata_access(self):
-        """Test metadata access methods"""        title = self.content_item.get_metadata('title')
+        """Test metadata access methods"""
+        title = self.content_item.get_metadata('title')
         self.assertEqual(title, 'Test Track Title')
         
         genre = self.content_item.get_metadata('genre')
@@ -130,7 +137,8 @@ class TestContentItem(IsolatedAsyncioTestCase):
         self.assertIn('danceable', tags)
 
     async def test_feature_access(self):
-        """Test feature access methods"""        energy = self.content_item.get_feature('energy')
+        """Test feature access methods"""
+        energy = self.content_item.get_feature('energy')
         self.assertEqual(energy, 0.75)
         
         tempo = self.content_item.get_feature('tempo')
@@ -141,7 +149,8 @@ class TestContentItem(IsolatedAsyncioTestCase):
         self.assertIsNone(non_existent)
 
     async def test_feature_vector_generation(self):
-        """Test feature vector generation"""        feature_vector = await self.content_item.get_feature_vector()
+        """Test feature vector generation"""
+        feature_vector = await self.content_item.get_feature_vector()
         
         self.assertIsInstance(feature_vector, np.ndarray)
         self.assertGreater(len(feature_vector), 0)
@@ -151,7 +160,8 @@ class TestContentItem(IsolatedAsyncioTestCase):
         self.assertTrue(np.all(feature_vector <= 1.0))
 
     async def test_similarity_computation(self):
-        """Test similarity computation between content items"""        # Create similar content item
+        """Test similarity computation between content items"""
+        # Create similar content item
         similar_data = self.content_data.copy()
         similar_data['features']['energy'] = 0.73  # Slightly different
         similar_data['features']['valence'] = 0.70
@@ -172,7 +182,8 @@ class TestContentItem(IsolatedAsyncioTestCase):
         self.assertGreater(similarity, 0.8)  # Should be highly similar
 
     async def test_content_serialization(self):
-        """Test content item serialization"""        serialized = await self.content_item.to_dict()
+        """Test content item serialization"""
+        serialized = await self.content_item.to_dict()
         
         self.assertIsInstance(serialized, dict)
         self.assertIn('item_id', serialized)
@@ -181,7 +192,8 @@ class TestContentItem(IsolatedAsyncioTestCase):
         self.assertIn('features', serialized)
 
     async def test_content_validation(self):
-        """Test content item validation"""        is_valid = await self.content_item.validate()
+        """Test content item validation"""
+        is_valid = await self.content_item.validate()
         self.assertTrue(is_valid)
         
         # Test invalid content
@@ -198,8 +210,10 @@ class TestContentItem(IsolatedAsyncioTestCase):
 
 
 class TestContentCatalog(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ContentCatalog"""    async def asyncSetUp(self):
-        """Set up test environment"""        self.catalog = ContentCatalog(
+    """Comprehensive tests for ContentCatalog"""
+    async def asyncSetUp(self):
+        """Set up test environment"""
+        self.catalog = ContentCatalog(
             index_features=['genre', 'energy', 'valence', 'tempo'],
             similarity_threshold=0.1,
             auto_update=True
@@ -207,7 +221,8 @@ class TestContentCatalog(IsolatedAsyncioTestCase):
         self.content_items = self._generate_content_catalog()
 
     def _generate_content_catalog(self) -> List[ContentItem]:
-        """Generate content catalog for testing"""        items = []
+        """Generate content catalog for testing"""
+        items = []
         genres = ['Electronic', 'Pop', 'Rock', 'Classical', 'Jazz']
         
         for i in range(100):
@@ -249,12 +264,14 @@ class TestContentCatalog(IsolatedAsyncioTestCase):
         return items
 
     async def test_catalog_initialization(self):
-        """Test catalog initialization"""        self.assertIsNotNone(self.catalog.index_features)
+        """Test catalog initialization"""
+        self.assertIsNotNone(self.catalog.index_features)
         self.assertEqual(len(self.catalog.index_features), 4)
         self.assertTrue(self.catalog.auto_update)
 
     async def test_content_addition(self):
-        """Test adding content to catalog"""        initial_size = len(self.catalog)
+        """Test adding content to catalog"""
+        initial_size = len(self.catalog)
         
         for item in self.content_items[:10]:
             await self.catalog.add_item(item)
@@ -262,7 +279,8 @@ class TestContentCatalog(IsolatedAsyncioTestCase):
         self.assertEqual(len(self.catalog), initial_size + 10)
 
     async def test_content_retrieval(self):
-        """Test content retrieval from catalog"""        # Add items to catalog
+        """Test content retrieval from catalog"""
+        # Add items to catalog
         await self.catalog.add_items_batch(self.content_items)
         
         # Retrieve specific item
@@ -271,7 +289,8 @@ class TestContentCatalog(IsolatedAsyncioTestCase):
         self.assertEqual(item.item_id, 'track_5')
 
     async def test_content_search(self):
-        """Test content search functionality"""        await self.catalog.add_items_batch(self.content_items)
+        """Test content search functionality"""
+        await self.catalog.add_items_batch(self.content_items)
         
         # Search by genre
         electronic_tracks = await self.catalog.search({
@@ -283,7 +302,8 @@ class TestContentCatalog(IsolatedAsyncioTestCase):
             self.assertEqual(track.get_metadata('genre'), 'Electronic')
 
     async def test_content_filtering(self):
-        """Test content filtering"""        await self.catalog.add_items_batch(self.content_items)
+        """Test content filtering"""
+        await self.catalog.add_items_batch(self.content_items)
         
         # Filter by energy level
         high_energy_tracks = await self.catalog.filter_items(
@@ -295,7 +315,8 @@ class TestContentCatalog(IsolatedAsyncioTestCase):
             self.assertGreater(track.get_feature('energy'), 0.7)
 
     async def test_similarity_search(self):
-        """Test similarity-based content search"""        await self.catalog.add_items_batch(self.content_items)
+        """Test similarity-based content search"""
+        await self.catalog.add_items_batch(self.content_items)
         
         # Find similar items to first track
         seed_item = self.content_items[0]
@@ -312,7 +333,8 @@ class TestContentCatalog(IsolatedAsyncioTestCase):
             self.assertNotEqual(item.item_id, seed_item.item_id)
 
     async def test_catalog_statistics(self):
-        """Test catalog statistics computation"""        await self.catalog.add_items_batch(self.content_items)
+        """Test catalog statistics computation"""
+        await self.catalog.add_items_batch(self.content_items)
         
         stats = await self.catalog.compute_statistics()
         
@@ -323,7 +345,8 @@ class TestContentCatalog(IsolatedAsyncioTestCase):
         self.assertIn('quality_distribution', stats)
 
     async def test_catalog_indexing(self):
-        """Test catalog indexing for fast retrieval"""        await self.catalog.add_items_batch(self.content_items)
+        """Test catalog indexing for fast retrieval"""
+        await self.catalog.add_items_batch(self.content_items)
         
         # Build index
         await self.catalog.build_index()
@@ -339,8 +362,10 @@ class TestContentCatalog(IsolatedAsyncioTestCase):
 
 
 class TestContentRecommender(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ContentRecommender"""    async def asyncSetUp(self):
-        """Set up test environment"""        self.recommender = ContentRecommender(
+    """Comprehensive tests for ContentRecommender"""
+    async def asyncSetUp(self):
+        """Set up test environment"""
+        self.recommender = ContentRecommender(
             strategy=PersonalizationStrategy.HYBRID,
             diversity_weight=0.3,
             freshness_weight=0.2,
@@ -350,7 +375,8 @@ class TestContentRecommender(IsolatedAsyncioTestCase):
         self.content_catalog = self._generate_content_catalog()
 
     def _generate_user_profile(self) -> Dict[str, Any]:
-        """Generate user profile for recommendation testing"""        return {
+        """Generate user profile for recommendation testing"""
+        return {
             'user_id': 'test_user_123',
             'preferences': {
                 'music_genres': {
@@ -390,7 +416,8 @@ class TestContentRecommender(IsolatedAsyncioTestCase):
         }
 
     def _generate_content_catalog(self) -> List[ContentItem]:
-        """Generate content catalog for recommendation testing"""        # Reuse the catalog generation from previous test
+        """Generate content catalog for recommendation testing"""
+        # Reuse the catalog generation from previous test
         items = []
         genres = ['Electronic', 'Pop', 'Rock', 'Classical', 'Jazz']
         
@@ -447,7 +474,8 @@ class TestContentRecommender(IsolatedAsyncioTestCase):
         return items
 
     async def test_recommendation_generation(self):
-        """Test basic recommendation generation"""        recommendations = await self.recommender.generate_recommendations(
+        """Test basic recommendation generation"""
+        recommendations = await self.recommender.generate_recommendations(
             user_profile=self.user_profile,
             content_catalog=self.content_catalog,
             num_recommendations=20,
@@ -462,7 +490,8 @@ class TestContentRecommender(IsolatedAsyncioTestCase):
             self.assertGreaterEqual(item.quality_score.overall_score, 0.6)
 
     async def test_collaborative_filtering_recommendations(self):
-        """Test collaborative filtering recommendations"""        self.recommender.strategy = PersonalizationStrategy.COLLABORATIVE
+        """Test collaborative filtering recommendations"""
+        self.recommender.strategy = PersonalizationStrategy.COLLABORATIVE
         
         # Add similar users' data
         similar_users = [
@@ -489,7 +518,8 @@ class TestContentRecommender(IsolatedAsyncioTestCase):
         self.assertLessEqual(len(recommendations.items), 15)
 
     async def test_content_based_recommendations(self):
-        """Test content-based recommendations"""        self.recommender.strategy = PersonalizationStrategy.CONTENT_BASED
+        """Test content-based recommendations"""
+        self.recommender.strategy = PersonalizationStrategy.CONTENT_BASED
         
         recommendations = await self.recommender.generate_content_based_recommendations(
             user_profile=self.user_profile,
@@ -508,7 +538,8 @@ class TestContentRecommender(IsolatedAsyncioTestCase):
                 self.assertGreater(user_genre_pref, 0.0)  # User should have some preference
 
     async def test_hybrid_recommendations(self):
-        """Test hybrid recommendation strategy"""        self.recommender.strategy = PersonalizationStrategy.HYBRID
+        """Test hybrid recommendation strategy"""
+        self.recommender.strategy = PersonalizationStrategy.HYBRID
         
         recommendations = await self.recommender.generate_hybrid_recommendations(
             user_profile=self.user_profile,
@@ -522,7 +553,8 @@ class TestContentRecommender(IsolatedAsyncioTestCase):
         self.assertLessEqual(len(recommendations.items), 30)
 
     async def test_contextual_recommendations(self):
-        """Test contextual recommendations"""        # Test different contexts
+        """Test contextual recommendations"""
+        # Test different contexts
         contexts = [
             {'activity': 'working', 'time_of_day': 'morning'},
             {'activity': 'exercising', 'mood': 'energetic'},
@@ -541,7 +573,8 @@ class TestContentRecommender(IsolatedAsyncioTestCase):
             self.assertLessEqual(len(recommendations.items), 15)
 
     async def test_diversity_optimization(self):
-        """Test recommendation diversity optimization"""        self.recommender.diversity_weight = 0.8  # High diversity
+        """Test recommendation diversity optimization"""
+        self.recommender.diversity_weight = 0.8  # High diversity
         
         recommendations = await self.recommender.generate_recommendations(
             user_profile=self.user_profile,
@@ -558,7 +591,8 @@ class TestContentRecommender(IsolatedAsyncioTestCase):
         self.assertGreater(diversity_ratio, 0.5)  # Should have good diversity
 
     async def test_recommendation_explanation(self):
-        """Test recommendation explanation generation"""        recommendations = await self.recommender.generate_recommendations(
+        """Test recommendation explanation generation"""
+        recommendations = await self.recommender.generate_recommendations(
             user_profile=self.user_profile,
             content_catalog=self.content_catalog,
             num_recommendations=10,
@@ -573,7 +607,8 @@ class TestContentRecommender(IsolatedAsyncioTestCase):
             self.assertIn('confidence', explanation)
 
     async def test_recommendation_filtering(self):
-        """Test recommendation filtering"""        # Filter out recently played tracks
+        """Test recommendation filtering"""
+        # Filter out recently played tracks
         recently_played = set(self.user_profile['history']['recently_played'])
         
         recommendations = await self.recommender.generate_recommendations(
@@ -589,7 +624,8 @@ class TestContentRecommender(IsolatedAsyncioTestCase):
         self.assertEqual(len(overlap), 0)
 
     async def test_recommendation_ranking(self):
-        """Test recommendation ranking"""        recommendations = await self.recommender.generate_recommendations(
+        """Test recommendation ranking"""
+        recommendations = await self.recommender.generate_recommendations(
             user_profile=self.user_profile,
             content_catalog=self.content_catalog,
             num_recommendations=20,
@@ -606,8 +642,10 @@ class TestContentRecommender(IsolatedAsyncioTestCase):
 
 
 class TestContentFilter(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ContentFilter"""    async def asyncSetUp(self):
-        """Set up test environment"""        self.filter = ContentFilter(
+    """Comprehensive tests for ContentFilter"""
+    async def asyncSetUp(self):
+        """Set up test environment"""
+        self.filter = ContentFilter(
             filter_types=[FilterType.QUALITY, FilterType.CONTENT, FilterType.BEHAVIORAL],
             quality_threshold=0.6,
             content_safety_level='medium'
@@ -616,7 +654,8 @@ class TestContentFilter(IsolatedAsyncioTestCase):
         self.user_profile = self._generate_user_profile_for_filtering()
 
     def _generate_filterable_content(self) -> List[ContentItem]:
-        """Generate content items for filtering tests"""        items = []
+        """Generate content items for filtering tests"""
+        items = []
         
         for i in range(50):
             metadata = {
@@ -648,7 +687,8 @@ class TestContentFilter(IsolatedAsyncioTestCase):
         return items
 
     def _generate_user_profile_for_filtering(self) -> Dict[str, Any]:
-        """Generate user profile for filtering tests"""        return {
+        """Generate user profile for filtering tests"""
+        return {
             'user_id': 'filter_test_user',
             'preferences': {
                 'languages': ['en', 'de'],
@@ -667,7 +707,8 @@ class TestContentFilter(IsolatedAsyncioTestCase):
         }
 
     async def test_quality_filtering(self):
-        """Test quality-based content filtering"""        filtered_items = await self.filter.apply_quality_filter(
+        """Test quality-based content filtering"""
+        filtered_items = await self.filter.apply_quality_filter(
             items=self.content_items,
             min_quality=0.7
         )
@@ -676,7 +717,8 @@ class TestContentFilter(IsolatedAsyncioTestCase):
             self.assertGreaterEqual(item.quality_score.overall_score, 0.7)
 
     async def test_content_safety_filtering(self):
-        """Test content safety filtering"""        filtered_items = await self.filter.apply_content_filter(
+        """Test content safety filtering"""
+        filtered_items = await self.filter.apply_content_filter(
             items=self.content_items,
             user_profile=self.user_profile
         )
@@ -686,7 +728,8 @@ class TestContentFilter(IsolatedAsyncioTestCase):
             self.assertFalse(item.get_metadata('explicit'))
 
     async def test_language_filtering(self):
-        """Test language-based filtering"""        filtered_items = await self.filter.apply_language_filter(
+        """Test language-based filtering"""
+        filtered_items = await self.filter.apply_language_filter(
             items=self.content_items,
             preferred_languages=['en', 'de']
         )
@@ -696,7 +739,8 @@ class TestContentFilter(IsolatedAsyncioTestCase):
             self.assertIn(language, ['en', 'de'])
 
     async def test_behavioral_filtering(self):
-        """Test behavioral filtering based on user history"""        user_history = {
+        """Test behavioral filtering based on user history"""
+        user_history = {
             'disliked_genres': ['Rock'],
             'blocked_artists': ['Artist 3'],
             'preferred_duration': {'min': 120, 'max': 300}
@@ -715,7 +759,8 @@ class TestContentFilter(IsolatedAsyncioTestCase):
             self.assertNotEqual(artist, 'Artist 3')
 
     async def test_temporal_filtering(self):
-        """Test temporal filtering (freshness, recency)"""        filtered_items = await self.filter.apply_temporal_filter(
+        """Test temporal filtering (freshness, recency)"""
+        filtered_items = await self.filter.apply_temporal_filter(
             items=self.content_items,
             max_age_days=365,  # Only content from last year
             min_freshness=0.5
@@ -725,7 +770,8 @@ class TestContentFilter(IsolatedAsyncioTestCase):
             self.assertGreaterEqual(item.quality_score.freshness_score, 0.5)
 
     async def test_composite_filtering(self):
-        """Test composite filtering with multiple criteria"""        filtered_items = await self.filter.apply_composite_filter(
+        """Test composite filtering with multiple criteria"""
+        filtered_items = await self.filter.apply_composite_filter(
             items=self.content_items,
             user_profile=self.user_profile,
             criteria={
@@ -743,7 +789,8 @@ class TestContentFilter(IsolatedAsyncioTestCase):
             self.assertNotEqual(item.get_metadata('genre'), 'Explicit_Content')
 
     async def test_adaptive_filtering(self):
-        """Test adaptive filtering based on user feedback"""        user_feedback = [
+        """Test adaptive filtering based on user feedback"""
+        user_feedback = [
             {'item_id': 'filter_track_1', 'feedback': 'dislike', 'reason': 'too_low_quality'},
             {'item_id': 'filter_track_5', 'feedback': 'like', 'reason': 'good_quality'},
             {'item_id': 'filter_track_8', 'feedback': 'skip', 'reason': 'wrong_genre'}
@@ -762,8 +809,10 @@ class TestContentFilter(IsolatedAsyncioTestCase):
 
 
 class TestContentRanker(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ContentRanker"""    async def asyncSetUp(self):
-        """Set up test environment"""        self.ranker = ContentRanker(
+    """Comprehensive tests for ContentRanker"""
+    async def asyncSetUp(self):
+        """Set up test environment"""
+        self.ranker = ContentRanker(
             ranking_method=RankingMethod.HYBRID,
             relevance_weight=0.4,
             quality_weight=0.3,
@@ -774,7 +823,8 @@ class TestContentRanker(IsolatedAsyncioTestCase):
         self.user_profile = self._generate_ranking_user_profile()
 
     def _generate_rankable_content(self) -> List[ContentItem]:
-        """Generate content items for ranking tests"""        items = []
+        """Generate content items for ranking tests"""
+        items = []
         
         for i in range(30):
             metadata = {
@@ -811,7 +861,8 @@ class TestContentRanker(IsolatedAsyncioTestCase):
         return items
 
     def _generate_ranking_user_profile(self) -> Dict[str, Any]:
-        """Generate user profile for ranking tests"""        return {
+        """Generate user profile for ranking tests"""
+        return {
             'user_id': 'ranking_test_user',
             'preferences': {
                 'music_genres': {
@@ -831,7 +882,8 @@ class TestContentRanker(IsolatedAsyncioTestCase):
         }
 
     async def test_relevance_based_ranking(self):
-        """Test relevance-based ranking"""        ranked_items = await self.ranker.rank_by_relevance(
+        """Test relevance-based ranking"""
+        ranked_items = await self.ranker.rank_by_relevance(
             items=self.content_items,
             user_profile=self.user_profile
         )
@@ -852,7 +904,8 @@ class TestContentRanker(IsolatedAsyncioTestCase):
         self.assertTrue(is_sorted)
 
     async def test_quality_based_ranking(self):
-        """Test quality-based ranking"""        ranked_items = await self.ranker.rank_by_quality(self.content_items)
+        """Test quality-based ranking"""
+        ranked_items = await self.ranker.rank_by_quality(self.content_items)
         
         quality_scores = [item.quality_score.overall_score for item in ranked_items]
         
@@ -862,7 +915,8 @@ class TestContentRanker(IsolatedAsyncioTestCase):
         self.assertTrue(is_sorted)
 
     async def test_popularity_based_ranking(self):
-        """Test popularity-based ranking"""        ranked_items = await self.ranker.rank_by_popularity(self.content_items)
+        """Test popularity-based ranking"""
+        ranked_items = await self.ranker.rank_by_popularity(self.content_items)
         
         popularity_scores = [item.get_metadata('popularity') for item in ranked_items]
         
@@ -872,7 +926,8 @@ class TestContentRanker(IsolatedAsyncioTestCase):
         self.assertTrue(is_sorted)
 
     async def test_hybrid_ranking(self):
-        """Test hybrid ranking combining multiple factors"""        ranked_items = await self.ranker.rank_hybrid(
+        """Test hybrid ranking combining multiple factors"""
+        ranked_items = await self.ranker.rank_hybrid(
             items=self.content_items,
             user_profile=self.user_profile,
             weights={
@@ -904,7 +959,8 @@ class TestContentRanker(IsolatedAsyncioTestCase):
         self.assertTrue(is_sorted)
 
     async def test_contextual_ranking(self):
-        """Test contextual ranking based on user context"""        context = {
+        """Test contextual ranking based on user context"""
+        context = {
             'time_of_day': 'morning',
             'activity': 'working',
             'energy_level': 'medium'
@@ -926,7 +982,8 @@ class TestContentRanker(IsolatedAsyncioTestCase):
         self.assertLess(avg_energy, 0.8)     # Not too high energy
 
     async def test_diversity_aware_ranking(self):
-        """Test diversity-aware ranking"""        ranked_items = await self.ranker.rank_with_diversity(
+        """Test diversity-aware ranking"""
+        ranked_items = await self.ranker.rank_with_diversity(
             items=self.content_items,
             user_profile=self.user_profile,
             diversity_factor=0.5
@@ -940,7 +997,8 @@ class TestContentRanker(IsolatedAsyncioTestCase):
         self.assertGreater(diversity_ratio, 0.3)  # Should have reasonable diversity
 
     async def test_ranking_explanation(self):
-        """Test ranking explanation generation"""        ranked_items = await self.ranker.rank_with_explanation(
+        """Test ranking explanation generation"""
+        ranked_items = await self.ranker.rank_with_explanation(
             items=self.content_items,
             user_profile=self.user_profile
         )
@@ -958,8 +1016,10 @@ class TestContentRanker(IsolatedAsyncioTestCase):
 
 
 class TestContentDiversifier(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ContentDiversifier"""    async def asyncSetUp(self):
-        """Set up test environment"""        self.diversifier = ContentDiversifier(
+    """Comprehensive tests for ContentDiversifier"""
+    async def asyncSetUp(self):
+        """Set up test environment"""
+        self.diversifier = ContentDiversifier(
             strategy=DiversityStrategy.FEATURE_BASED,
             diversity_threshold=0.3,
             max_similarity=0.7
@@ -967,7 +1027,8 @@ class TestContentDiversifier(IsolatedAsyncioTestCase):
         self.content_items = self._generate_diverse_content()
 
     def _generate_diverse_content(self) -> List[ContentItem]:
-        """Generate content for diversity testing"""        items = []
+        """Generate content for diversity testing"""
+        items = []
         genres = ['Electronic', 'Pop', 'Rock', 'Jazz', 'Classical']
         
         for i in range(40):
@@ -1011,7 +1072,8 @@ class TestContentDiversifier(IsolatedAsyncioTestCase):
         return items
 
     async def test_feature_based_diversification(self):
-        """Test feature-based diversification"""        diversified_items = await self.diversifier.diversify_by_features(
+        """Test feature-based diversification"""
+        diversified_items = await self.diversifier.diversify_by_features(
             items=self.content_items,
             target_size=15,
             feature_weights={'energy': 0.3, 'valence': 0.3, 'genre': 0.4}
@@ -1031,7 +1093,8 @@ class TestContentDiversifier(IsolatedAsyncioTestCase):
         self.assertGreater(valence_std, 0.1)
 
     async def test_genre_based_diversification(self):
-        """Test genre-based diversification"""        diversified_items = await self.diversifier.diversify_by_genre(
+        """Test genre-based diversification"""
+        diversified_items = await self.diversifier.diversify_by_genre(
             items=self.content_items,
             target_size=20,
             max_per_genre=5
@@ -1050,7 +1113,8 @@ class TestContentDiversifier(IsolatedAsyncioTestCase):
             self.assertLessEqual(count, 5)
 
     async def test_artist_based_diversification(self):
-        """Test artist-based diversification"""        diversified_items = await self.diversifier.diversify_by_artist(
+        """Test artist-based diversification"""
+        diversified_items = await self.diversifier.diversify_by_artist(
             items=self.content_items,
             target_size=18,
             max_per_artist=2
@@ -1069,7 +1133,8 @@ class TestContentDiversifier(IsolatedAsyncioTestCase):
             self.assertLessEqual(count, 2)
 
     async def test_temporal_diversification(self):
-        """Test temporal diversification"""        # Add release dates to items
+        """Test temporal diversification"""
+        # Add release dates to items
         for i, item in enumerate(self.content_items):
             item.metadata['release_date'] = f'20{10 + (i % 15)}-01-01'
         
@@ -1088,7 +1153,8 @@ class TestContentDiversifier(IsolatedAsyncioTestCase):
         self.assertGreater(len(unique_years), 3)
 
     async def test_similarity_based_diversification(self):
-        """Test similarity-based diversification"""        diversified_items = await self.diversifier.diversify_by_similarity(
+        """Test similarity-based diversification"""
+        diversified_items = await self.diversifier.diversify_by_similarity(
             items=self.content_items,
             target_size=12,
             min_distance=0.3
@@ -1103,7 +1169,8 @@ class TestContentDiversifier(IsolatedAsyncioTestCase):
                 self.assertLessEqual(similarity, 0.7)  # Max similarity threshold
 
     async def test_adaptive_diversification(self):
-        """Test adaptive diversification based on user feedback"""        user_feedback = {
+        """Test adaptive diversification based on user feedback"""
+        user_feedback = {
             'diversity_preference': 0.8,  # High diversity preference
             'genre_exploration': True,
             'artist_exploration': True,
@@ -1126,7 +1193,8 @@ class TestContentDiversifier(IsolatedAsyncioTestCase):
         self.assertGreater(diversity_ratio, 0.6)
 
     async def test_diversity_metrics(self):
-        """Test diversity metrics computation"""        subset = self.content_items[:10]
+        """Test diversity metrics computation"""
+        subset = self.content_items[:10]
         
         metrics = await self.diversifier.compute_diversity_metrics(subset)
         
@@ -1144,8 +1212,10 @@ class TestContentDiversifier(IsolatedAsyncioTestCase):
 
 
 class TestRealTimeAdapter(IsolatedAsyncioTestCase):
-    """Comprehensive tests for RealTimeAdapter"""    async def asyncSetUp(self):
-        """Set up test environment"""        self.adapter = RealTimeAdapter(
+    """Comprehensive tests for RealTimeAdapter"""
+    async def asyncSetUp(self):
+        """Set up test environment"""
+        self.adapter = RealTimeAdapter(
             adaptation_rate=0.1,
             feedback_window=100,
             min_feedback_count=5
@@ -1153,7 +1223,8 @@ class TestRealTimeAdapter(IsolatedAsyncioTestCase):
         self.real_time_data = self._generate_real_time_data()
 
     def _generate_real_time_data(self) -> List[Dict[str, Any]]:
-        """Generate real-time interaction data"""        data = []
+        """Generate real-time interaction data"""
+        data = []
         user_id = 'realtime_user'
         
         for i in range(150):
@@ -1176,7 +1247,8 @@ class TestRealTimeAdapter(IsolatedAsyncioTestCase):
         return data
 
     async def test_real_time_preference_learning(self):
-        """Test real-time preference learning"""        initial_preferences = {
+        """Test real-time preference learning"""
+        initial_preferences = {
             'energy': 0.5,
             'valence': 0.5,
             'danceability': 0.5
@@ -1194,7 +1266,8 @@ class TestRealTimeAdapter(IsolatedAsyncioTestCase):
         self.assertNotEqual(updated_preferences, initial_preferences)
 
     async def test_session_adaptation(self):
-        """Test adaptation within a listening session"""        session_interactions = [
+        """Test adaptation within a listening session"""
+        session_interactions = [
             interaction for interaction in self.real_time_data 
             if interaction['session_id'] == 'session_1'
         ]
@@ -1210,7 +1283,8 @@ class TestRealTimeAdapter(IsolatedAsyncioTestCase):
             self.assertIn('parameters', adaptation)
 
     async def test_context_aware_adaptation(self):
-        """Test context-aware adaptation"""        current_context = {
+        """Test context-aware adaptation"""
+        current_context = {
             'time_of_day': 'evening',
             'device': 'mobile',
             'location': 'home',
@@ -1227,7 +1301,8 @@ class TestRealTimeAdapter(IsolatedAsyncioTestCase):
         self.assertIn('interaction_patterns', adapted_params)
 
     async def test_feedback_incorporation(self):
-        """Test incorporation of user feedback"""        feedback_events = [
+        """Test incorporation of user feedback"""
+        feedback_events = [
             {'item_id': 'rt_track_5', 'feedback': 'thumbs_up', 'timestamp': datetime.utcnow()},
             {'item_id': 'rt_track_12', 'feedback': 'thumbs_down', 'timestamp': datetime.utcnow()},
             {'item_id': 'rt_track_18', 'feedback': 'save_to_playlist', 'timestamp': datetime.utcnow()}
@@ -1242,7 +1317,8 @@ class TestRealTimeAdapter(IsolatedAsyncioTestCase):
         self.assertIn('preferences', updated_model)
 
     async def test_drift_detection(self):
-        """Test concept drift detection"""        # Create data with a clear shift in behavior
+        """Test concept drift detection"""
+        # Create data with a clear shift in behavior
         baseline_period = self.real_time_data[:75]  # First half
         recent_period = self.real_time_data[75:]    # Second half
         
@@ -1262,7 +1338,8 @@ class TestRealTimeAdapter(IsolatedAsyncioTestCase):
         self.assertIn('drift_type', drift_detected)
 
     async def test_adaptation_speed_control(self):
-        """Test adaptation speed control"""        # Test different adaptation rates
+        """Test adaptation speed control"""
+        # Test different adaptation rates
         fast_adapter = RealTimeAdapter(adaptation_rate=0.5)
         slow_adapter = RealTimeAdapter(adaptation_rate=0.01)
         
@@ -1279,7 +1356,8 @@ class TestRealTimeAdapter(IsolatedAsyncioTestCase):
         self.assertGreater(fast_change, slow_change)
 
     async def test_real_time_recommendation_adjustment(self):
-        """Test real-time recommendation adjustment"""        # Simulate recommendations that need adjustment
+        """Test real-time recommendation adjustment"""
+        # Simulate recommendations that need adjustment
         initial_recommendations = [
             {'item_id': f'rt_track_{i}', 'score': np.random.uniform(0.5, 1.0)}
             for i in range(10)
@@ -1305,8 +1383,10 @@ class TestRealTimeAdapter(IsolatedAsyncioTestCase):
 
 
 class TestContentPerformanceAndScalability(IsolatedAsyncioTestCase):
-    """Performance and scalability tests for content operations"""    async def test_large_catalog_operations(self):
-        """Test operations on large content catalogs"""        # Generate large catalog
+    """Performance and scalability tests for content operations"""
+    async def test_large_catalog_operations(self):
+        """Test operations on large content catalogs"""
+        # Generate large catalog
         large_catalog = ContentCatalog()
         n_items = 5000
         
@@ -1341,7 +1421,8 @@ class TestContentPerformanceAndScalability(IsolatedAsyncioTestCase):
         self.assertGreater(len(search_results), 0)
 
     async def test_recommendation_generation_speed(self):
-        """Test recommendation generation speed"""        recommender = ContentRecommender()
+        """Test recommendation generation speed"""
+        recommender = ContentRecommender()
         
         # Generate test data
         user_profile = {
@@ -1373,7 +1454,8 @@ class TestContentPerformanceAndScalability(IsolatedAsyncioTestCase):
         self.assertLessEqual(len(recommendations.items), 50)
 
     async def test_concurrent_content_operations(self):
-        """Test concurrent content operations"""        catalog = ContentCatalog()
+        """Test concurrent content operations"""
+        catalog = ContentCatalog()
         
         async def add_content_task(task_id: int):
             items = []

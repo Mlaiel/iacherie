@@ -11,7 +11,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
-"""from .nginx_manager import NginxManager
+"""
+from .nginx_manager import NginxManager
 from .haproxy_manager import HAProxyManager
 from .envoy_manager import EnvoyManager
 from .health_monitor import HealthMonitor
@@ -104,10 +105,13 @@ MODULE_INFO = {
 }
 
 def get_module_info():
-    """Get comprehensive module information"""    return MODULE_INFO
+    """Get comprehensive module information"""
+    return MODULE_INFO
 
 def get_version():
-    """Get module version"""    return __version__
+    """Get module version"""
+    return __version__
 
 def get_available_components():
-    """Get list of available load balancer components"""    return __all__
+    """Get list of available load balancer components"""
+    return __all__

@@ -6,7 +6,8 @@ Manages intelligent content discovery across social media platforms and web serv
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 from datetime import datetime, timedelta
@@ -37,7 +38,8 @@ from ...models.content import ContentDiscovery, ContentMetadata
 
 
 class ContentType(Enum):
-    """Content type enumeration for discovery targeting."""    AUDIO = "audio"
+    """Content type enumeration for discovery targeting."""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -45,7 +47,8 @@ class ContentType(Enum):
 
 
 class PlatformType(Enum):
-    """Supported platform types for content discovery."""    YOUTUBE = "youtube"
+    """Supported platform types for content discovery."""
+    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
@@ -59,7 +62,8 @@ class PlatformType(Enum):
 
 @dataclass
 class DiscoveryTarget:
-    """Content discovery target configuration."""    platform: PlatformType
+    """Content discovery target configuration."""
+    platform: PlatformType
     content_types: List[ContentType]
     keywords: List[str] = field(default_factory=list)
     hashtags: List[str] = field(default_factory=list)
@@ -73,7 +77,8 @@ class DiscoveryTarget:
 
 @dataclass
 class DiscoveredContent:
-    """Discovered content item with metadata."""    platform: PlatformType
+    """Discovered content item with metadata."""
+    platform: PlatformType
     content_type: ContentType
     url: str
     title: str
@@ -93,13 +98,16 @@ class DiscoveredContent:
 
 
 class ContentDiscoveryManager:
-    """    Advanced content discovery manager for multi-platform crawling.
+    """
+    Advanced content discovery manager for multi-platform crawling.
     
     Provides intelligent content discovery, deduplication, and metadata extraction
     across multiple social media platforms and web services.
-    """    
+    """
+    
     def __init__(self, config: Optional[DiscoveryConfig] = None):
-        """Initialize the content discovery manager."""        self.config = config or DiscoveryConfig()
+        """Initialize the content discovery manager."""
+        self.config = config or DiscoveryConfig()
         self.logger = get_logger(self.__class__.__name__)
         self.session = None
         self.driver = None
@@ -129,14 +137,17 @@ class ContentDiscoveryManager:
         }
         
     async def __aenter__(self):
-        """Async context manager entry."""        await self.initialize()
+        """Async context manager entry."""
+        await self.initialize()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""        await self.cleanup()
+        """Async context manager exit."""
+        await self.cleanup()
         
     async def initialize(self):
-        """Initialize discovery manager resources."""        try:
+        """Initialize discovery manager resources."""
+        try:
             # Initialize HTTP session
             connector = aiohttp.TCPConnector(
                 limit=self.config.MAX_CONCURRENT_REQUESTS,
@@ -163,7 +174,8 @@ class ContentDiscoveryManager:
             raise
             
     async def _initialize_selenium_driver(self):
-        """Initialize Selenium WebDriver for JavaScript-heavy sites."""        try:
+        """Initialize Selenium WebDriver for JavaScript-heavy sites."""
+        try:
             chrome_options = Options()
             chrome_options.add_argument('--headless')
             chrome_options.add_argument('--no-sandbox')
@@ -187,14 +199,16 @@ class ContentDiscoveryManager:
             self.driver = None
             
     async def discover_content(self, targets: List[DiscoveryTarget]) -> List[DiscoveredContent]:
-        """        Discover content across multiple platforms based on targets.
+        """
+        Discover content across multiple platforms based on targets.
         
         Args:
             targets: List of discovery targets
             
         Returns:
             List of discovered content items
-        """        discovered_items = []
+        """
+        discovered_items = []
         
         try:
             # Sort targets by priority
@@ -234,7 +248,8 @@ class ContentDiscoveryManager:
             raise
             
     async def _discover_target_content(self, target: DiscoveryTarget) -> List[DiscoveredContent]:
-        """Discover content for a specific target."""        try:
+        """Discover content for a specific target."""
+        try:
             # Get platform handler
             handler = self.platform_handlers.get(target.platform)
             if not handler:
@@ -261,7 +276,8 @@ class ContentDiscoveryManager:
             return []
             
     async def _discover_youtube_content(self, target: DiscoveryTarget) -> List[DiscoveredContent]:
-        """Discover YouTube content using API and web scraping."""        content_items = []
+        """Discover YouTube content using API and web scraping."""
+        content_items = []
         
         try:
             # Use YouTube Data API if available
@@ -280,7 +296,8 @@ class ContentDiscoveryManager:
         return content_items[:target.max_results]
         
     async def _discover_youtube_api(self, target: DiscoveryTarget) -> List[DiscoveredContent]:
-        """Discover YouTube content using official API."""        content_items = []
+        """Discover YouTube content using official API."""
+        content_items = []
         
         try:
             base_url = "https://www.googleapis.com/youtube/v3/search"
@@ -318,7 +335,8 @@ class ContentDiscoveryManager:
         return content_items
         
     async def _discover_youtube_scraping(self, target: DiscoveryTarget) -> List[DiscoveredContent]:
-        """Discover YouTube content using web scraping."""        content_items = []
+        """Discover YouTube content using web scraping."""
+        content_items = []
         
         if not self.driver:
             return content_items
@@ -354,7 +372,8 @@ class ContentDiscoveryManager:
         return content_items
         
     async def _discover_tiktok_content(self, target: DiscoveryTarget) -> List[DiscoveredContent]:
-        """Discover TikTok content using web scraping."""        content_items = []
+        """Discover TikTok content using web scraping."""
+        content_items = []
         
         if not self.driver:
             return content_items
@@ -390,7 +409,8 @@ class ContentDiscoveryManager:
         return content_items
         
     async def _discover_instagram_content(self, target: DiscoveryTarget) -> List[DiscoveredContent]:
-        """Discover Instagram content using web scraping."""        content_items = []
+        """Discover Instagram content using web scraping."""
+        content_items = []
         
         # Instagram discovery implementation
         # Note: Instagram requires careful handling due to anti-bot measures
@@ -398,7 +418,8 @@ class ContentDiscoveryManager:
         return content_items
         
     async def _discover_twitter_content(self, target: DiscoveryTarget) -> List[DiscoveredContent]:
-        """Discover Twitter/X content using API or scraping."""        content_items = []
+        """Discover Twitter/X content using API or scraping."""
+        content_items = []
         
         # Twitter discovery implementation
         # Note: May require Twitter API v2 or alternative methods
@@ -406,7 +427,8 @@ class ContentDiscoveryManager:
         return content_items
         
     async def _discover_spotify_content(self, target: DiscoveryTarget) -> List[DiscoveredContent]:
-        """Discover Spotify content using Web API."""        content_items = []
+        """Discover Spotify content using Web API."""
+        content_items = []
         
         try:
             if not self.config.SPOTIFY_CLIENT_ID or not self.config.SPOTIFY_CLIENT_SECRET:
@@ -422,14 +444,16 @@ class ContentDiscoveryManager:
         return content_items
         
     async def _discover_soundcloud_content(self, target: DiscoveryTarget) -> List[DiscoveredContent]:
-        """Discover SoundCloud content using web scraping."""        content_items = []
+        """Discover SoundCloud content using web scraping."""
+        content_items = []
         
         # SoundCloud discovery implementation
         
         return content_items
         
     async def _discover_web_content(self, target: DiscoveryTarget) -> List[DiscoveredContent]:
-        """Discover content from generic web sources."""        content_items = []
+        """Discover content from generic web sources."""
+        content_items = []
         
         try:
             for url in target.urls:
@@ -442,7 +466,8 @@ class ContentDiscoveryManager:
         return content_items
         
     async def _crawl_website(self, url: str, target: DiscoveryTarget) -> List[DiscoveredContent]:
-        """Crawl a website for content discovery."""        content_items = []
+        """Crawl a website for content discovery."""
+        content_items = []
         
         try:
             async with self.session.get(url) as response:
@@ -460,7 +485,8 @@ class ContentDiscoveryManager:
         return content_items
         
     def _parse_youtube_api_item(self, item: Dict) -> Optional[DiscoveredContent]:
-        """Parse YouTube API response item."""        try:
+        """Parse YouTube API response item."""
+        try:
             snippet = item.get('snippet', {})
             video_id = item.get('id', {}).get('videoId')
             
@@ -491,7 +517,8 @@ class ContentDiscoveryManager:
             return None
             
     def _parse_youtube_element(self, element) -> Optional[DiscoveredContent]:
-        """Parse YouTube web element."""        try:
+        """Parse YouTube web element."""
+        try:
             # Extract data from YouTube web element
             title_element = element.find_element(By.CSS_SELECTOR, 'a#video-title')
             url = title_element.get_attribute('href')
@@ -532,7 +559,8 @@ class ContentDiscoveryManager:
             return None
             
     def _parse_tiktok_element(self, element) -> Optional[DiscoveredContent]:
-        """Parse TikTok web element."""        try:
+        """Parse TikTok web element."""
+        try:
             # Extract TikTok video data
             # Implementation would depend on TikTok's current DOM structure
             return None
@@ -542,7 +570,8 @@ class ContentDiscoveryManager:
             return None
             
     def _extract_content_from_html(self, soup: BeautifulSoup, base_url: str, target: DiscoveryTarget) -> List[DiscoveredContent]:
-        """Extract content from HTML using BeautifulSoup."""        content_items = []
+        """Extract content from HTML using BeautifulSoup."""
+        content_items = []
         
         try:
             # Extract video content
@@ -575,19 +604,23 @@ class ContentDiscoveryManager:
         return content_items
         
     def _parse_video_element(self, element, base_url: str) -> Optional[DiscoveredContent]:
-        """Parse video element from HTML."""        # Implementation for video parsing
+        """Parse video element from HTML."""
+        # Implementation for video parsing
         return None
         
     def _parse_audio_element(self, element, base_url: str) -> Optional[DiscoveredContent]:
-        """Parse audio element from HTML."""        # Implementation for audio parsing
+        """Parse audio element from HTML."""
+        # Implementation for audio parsing
         return None
         
     def _parse_image_element(self, element, base_url: str) -> Optional[DiscoveredContent]:
-        """Parse image element from HTML."""        # Implementation for image parsing
+        """Parse image element from HTML."""
+        # Implementation for image parsing
         return None
         
     def _validate_discovered_content(self, content: DiscoveredContent, target: DiscoveryTarget) -> bool:
-        """Validate discovered content against target criteria."""        try:
+        """Validate discovered content against target criteria."""
+        try:
             # Check content type
             if target.content_types and content.content_type not in target.content_types:
                 return False
@@ -624,7 +657,8 @@ class ContentDiscoveryManager:
             return False
             
     def _apply_content_filter(self, content: DiscoveredContent, filter_key: str, filter_value: Any) -> bool:
-        """Apply custom filter to content."""        try:
+        """Apply custom filter to content."""
+        try:
             if filter_key == 'min_views' and content.view_count is not None:
                 return content.view_count >= filter_value
             elif filter_key == 'min_likes' and content.like_count is not None:
@@ -640,7 +674,8 @@ class ContentDiscoveryManager:
             return True
             
     def _deduplicate_content(self, content_items: List[DiscoveredContent]) -> List[DiscoveredContent]:
-        """Remove duplicate content items."""        unique_items = []
+        """Remove duplicate content items."""
+        unique_items = []
         seen_urls = set()
         seen_hashes = set()
         
@@ -663,11 +698,13 @@ class ContentDiscoveryManager:
         return unique_items
         
     def _generate_content_hash(self, content: DiscoveredContent) -> str:
-        """Generate hash for content deduplication."""        content_string = f"{content.platform.value}:{content.title}:{content.author}:{content.url}"
+        """Generate hash for content deduplication."""
+        content_string = f"{content.platform.value}:{content.title}:{content.author}:{content.url}"
         return hashlib.md5(content_string.encode()).hexdigest()
         
     def _parse_view_count(self, text: str) -> int:
-        """Parse view count from text."""        try:
+        """Parse view count from text."""
+        try:
             # Remove non-numeric characters except for K, M, B
             clean_text = ''.join(c for c in text if c.isdigit() or c in 'KMB.,')
             
@@ -693,7 +730,8 @@ class ContentDiscoveryManager:
         return 0
         
     def _parse_relative_date(self, text: str) -> Optional[datetime]:
-        """Parse relative date like '2 days ago'."""        try:
+        """Parse relative date like '2 days ago'."""
+        try:
             import re
             
             # Common patterns for relative dates
@@ -720,7 +758,8 @@ class ContentDiscoveryManager:
         return None
         
     def _update_discovery_stats(self, content_items: List[DiscoveredContent]):
-        """Update discovery statistics."""        self.discovery_stats['total_discovered'] = len(content_items)
+        """Update discovery statistics."""
+        self.discovery_stats['total_discovered'] = len(content_items)
         
         # Count by platform
         for item in content_items:
@@ -731,10 +770,12 @@ class ContentDiscoveryManager:
             self.discovery_stats['by_content_type'][content_type] = self.discovery_stats['by_content_type'].get(content_type, 0) + 1
             
     async def get_discovery_stats(self) -> Dict[str, Any]:
-        """Get discovery statistics."""        return self.discovery_stats.copy()
+        """Get discovery statistics."""
+        return self.discovery_stats.copy()
         
     async def save_discovered_content(self, content_items: List[DiscoveredContent]) -> bool:
-        """Save discovered content to database."""        try:
+        """Save discovered content to database."""
+        try:
             async with get_database_session() as db:
                 for item in content_items:
                     # Convert to database model
@@ -770,7 +811,8 @@ class ContentDiscoveryManager:
             return False
             
     async def cleanup(self):
-        """Cleanup resources."""        try:
+        """Cleanup resources."""
+        try:
             if self.session:
                 await self.session.close()
                 
@@ -785,12 +827,14 @@ class ContentDiscoveryManager:
 
 # Factory function for easy instantiation
 def create_content_discovery_manager(config: Optional[DiscoveryConfig] = None) -> ContentDiscoveryManager:
-    """Create and return a content discovery manager instance."""    return ContentDiscoveryManager(config)
+    """Create and return a content discovery manager instance."""
+    return ContentDiscoveryManager(config)
 
 
 # Discovery utilities
 async def discover_trending_content(platforms: List[PlatformType], content_types: List[ContentType], limit: int = 50) -> List[DiscoveredContent]:
-    """Discover trending content across platforms."""    async with create_content_discovery_manager() as manager:
+    """Discover trending content across platforms."""
+    async with create_content_discovery_manager() as manager:
         targets = []
         for platform in platforms:
             target = DiscoveryTarget(
@@ -806,7 +850,8 @@ async def discover_trending_content(platforms: List[PlatformType], content_types
 
 
 async def discover_content_by_keywords(keywords: List[str], platforms: List[PlatformType], limit: int = 100) -> List[DiscoveredContent]:
-    """Discover content by keywords across platforms."""    async with create_content_discovery_manager() as manager:
+    """Discover content by keywords across platforms."""
+    async with create_content_discovery_manager() as manager:
         targets = []
         for platform in platforms:
             target = DiscoveryTarget(

@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 
 🎯 LOGIQUE MÉTIER INTÉGRÉE :
 User (Créateur multi-format) → Upload → IA Protection → SEO Pro → Matching → Distribution → Monétisation
-"""import logging
+"""
+import logging
 import asyncio
 import uuid
 from typing import Dict, List, Any, Optional, Union
@@ -53,18 +54,21 @@ from . import (
 logger = logging.getLogger(__name__)
 
 class ContentTypeManagerFactory:
-    """Factory for creating content type managers"""    
+    """Factory for creating content type managers"""
+    
     _instances = {}
     
     @classmethod
     def get_manager(cls, content_type: ContentType, config: Dict[str, Any] = None):
-        """Get or create content type manager"""        if content_type not in cls._instances:
+        """Get or create content type manager"""
+        if content_type not in cls._instances:
             cls._instances[content_type] = cls._create_manager(content_type, config)
         return cls._instances[content_type]
     
     @classmethod
     def _create_manager(cls, content_type: ContentType, config: Dict[str, Any] = None):
-        """Create specific content type manager"""        config = config or {}
+        """Create specific content type manager"""
+        config = config or {}
         
         if content_type == ContentType.AUDIO:
             return AudioProcessor(config)
@@ -80,9 +84,11 @@ class ContentTypeManagerFactory:
             raise ValueError(f"Unsupported content type: {content_type}")
 
 class IntegratedContentPipeline:
-    """    Pipeline intégré pour le traitement complet du contenu selon la logique métier :
+    """
+    Pipeline intégré pour le traitement complet du contenu selon la logique métier :
     Upload → IA Protection → SEO → Distribution → Monétisation
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -97,7 +103,8 @@ class IntegratedContentPipeline:
         self.protection_manager = ContentProtectionManager(config.get('protection', {}))
     
     async def process_content_upload(self, user_id: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """        Traite un upload de contenu selon la logique métier complète
+        """
+        Traite un upload de contenu selon la logique métier complète
         
         Args:
             user_id: ID de l'utilisateur
@@ -105,7 +112,8 @@ class IntegratedContentPipeline:
             
         Returns:
             Résultat complet du traitement
-        """        try:
+        """
+        try:
             content_path = Path(content_data['file_path'])
             
             # ÉTAPE 1: Détection et validation du format
@@ -219,7 +227,8 @@ class IntegratedContentPipeline:
             }
     
     async def _setup_content_surveillance(self, user_id: str, content_id: str, keywords: List[str]):
-        """Configure la surveillance automatique du contenu"""        try:
+        """Configure la surveillance automatique du contenu"""
+        try:
             from .content_surveillance import SurveillanceTarget, PlatformType
             from datetime import timedelta
             
@@ -249,7 +258,8 @@ class IntegratedContentPipeline:
             self.logger.error(f"Surveillance setup failed: {e}")
     
     async def _create_default_licenses(self, user_id: str, content_id: str, content_data: Dict[str, Any]) -> List[Any]:
-        """Crée les licences par défaut pour le contenu"""        try:
+        """Crée les licences par défaut pour le contenu"""
+        try:
             from .content_licensing import LicenseType
             from decimal import Decimal
             
@@ -276,7 +286,8 @@ class IntegratedContentPipeline:
             return []
     
     async def _initialize_performance_tracking(self, content_id: str, user_id: str, content_type: str) -> Dict[str, Any]:
-        """Initialise le suivi de performance"""        try:
+        """Initialise le suivi de performance"""
+        try:
             # Créer une baseline de performance
             baseline = {
                 'content_id': content_id,
@@ -302,14 +313,16 @@ class IntegratedContentPipeline:
             return {}
 
 class ContentTypeController:
-    """Contrôleur principal pour la gestion des types de contenu"""    
+    """Contrôleur principal pour la gestion des types de contenu"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.pipeline = IntegratedContentPipeline(config)
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def upload_and_process(self, user_id: str, file_path: str, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
-        """        Point d'entrée principal pour l'upload et le traitement de contenu
+        """
+        Point d'entrée principal pour l'upload et le traitement de contenu
         
         Args:
             user_id: ID de l'utilisateur
@@ -318,7 +331,8 @@ class ContentTypeController:
             
         Returns:
             Résultat complet du traitement
-        """        metadata = metadata or {}
+        """
+        metadata = metadata or {}
         
         content_data = {
             'file_path': file_path,
@@ -338,7 +352,8 @@ class ContentTypeController:
         return await self.pipeline.process_content_upload(user_id, content_data)
     
     async def get_content_status(self, content_id: str) -> Dict[str, Any]:
-        """Obtient le statut complet d'un contenu"""        try:
+        """Obtient le statut complet d'un contenu"""
+        try:
             # Ici on interrogerait la base de données pour récupérer l'état complet
             # Pour l'instant, retour d'un exemple de structure
             
@@ -366,7 +381,8 @@ class ContentTypeController:
             return {'error': str(e)}
     
     async def generate_performance_report(self, content_id: str, report_type: str = 'monthly') -> Dict[str, Any]:
-        """Génère un rapport de performance complet"""        try:
+        """Génère un rapport de performance complet"""
+        try:
             report_generator = PerformanceReportGenerator(self.pipeline.performance_analyzer)
             return await report_generator.generate_comprehensive_report(content_id, report_type)
         except Exception as e:
@@ -382,7 +398,8 @@ __all__ = [
 
 # Point d'entrée par défaut
 def create_content_controller(config: Dict[str, Any] = None) -> ContentTypeController:
-    """Crée un contrôleur de contenu avec la configuration fournie"""    return ContentTypeController(config)
+    """Crée un contrôleur de contenu avec la configuration fournie"""
+    return ContentTypeController(config)
 
 # Exemple d'utilisation
 if __name__ == "__main__":
@@ -390,7 +407,8 @@ if __name__ == "__main__":
     import uuid
     
     async def example_usage():
-        """Exemple d'utilisation du système de gestion de contenu"""        
+        """Exemple d'utilisation du système de gestion de contenu"""
+        
         # Configuration exemple
         config = {
             'seo': {
@@ -442,7 +460,8 @@ if __name__ == "__main__":
     # Exécuter l'exemple
     # asyncio.run(example_usage())
     ) -> Dict[str, Any]:
-        """Phase 1: Content analysis and initial processing"""        try:
+        """Phase 1: Content analysis and initial processing"""
+        try:
             processor = self.content_processors[content_type]
             
             # Basic content analysis
@@ -480,7 +499,8 @@ if __name__ == "__main__":
         content_data: Dict[str, Any],
         analysis_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Phase 2: Rights verification and content protection"""        try:
+        """Phase 2: Rights verification and content protection"""
+        try:
             # Analyze copyright status
             rights_analysis = await self.rights_manager.analyze_content_rights(
                 content_id,
@@ -512,7 +532,8 @@ if __name__ == "__main__":
         analysis_results: Dict[str, Any],
         processing_options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Phase 3: Content quality enhancement"""        try:
+        """Phase 3: Content quality enhancement"""
+        try:
             if not processing_options.get('auto_enhance', True):
                 return {'enhancement_applied': False}
             
@@ -550,7 +571,8 @@ if __name__ == "__main__":
         content_data: Dict[str, Any],
         processing_options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Phase 4: Distribution setup and planning"""        try:
+        """Phase 4: Distribution setup and planning"""
+        try:
             target_platforms = processing_options.get('target_platforms', [
                 Platform.SPOTIFY, Platform.YOUTUBE, Platform.INSTAGRAM
             ])
@@ -583,7 +605,8 @@ if __name__ == "__main__":
         rights_results: Dict[str, Any],
         processing_options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Phase 5: Monetization configuration"""        try:
+        """Phase 5: Monetization configuration"""
+        try:
             if not processing_options.get('enable_monetization', True):
                 return {'monetization_enabled': False}
             
@@ -619,7 +642,8 @@ if __name__ == "__main__":
         content_id: str,
         distribution_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Phase 6: Analytics and tracking initialization"""        try:
+        """Phase 6: Analytics and tracking initialization"""
+        try:
             platforms = [
                 Platform(platform) for platform in distribution_results['target_platforms']
             ]
@@ -646,7 +670,8 @@ if __name__ == "__main__":
         content_data: Dict[str, Any],
         enhancement_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Phase 7: Final storage and backup"""        try:
+        """Phase 7: Final storage and backup"""
+        try:
             # Use enhanced version if available
             final_file_path = (
                 enhancement_results.get('enhancement_result', {}).get('output_file_path') 
@@ -676,7 +701,8 @@ if __name__ == "__main__":
             raise
 
     async def get_content_overview(self, content_id: str) -> Dict[str, Any]:
-        """Get comprehensive overview of content status and metrics"""        try:
+        """Get comprehensive overview of content status and metrics"""
+        try:
             # Get analytics data
             analytics = await self.analytics_engine.get_content_analytics_summary(content_id)
             
@@ -708,7 +734,8 @@ if __name__ == "__main__":
 
 # System status and health check
 async def system_health_check() -> Dict[str, Any]:
-    """Comprehensive system health check"""    try:
+    """Comprehensive system health check"""
+    try:
         health_status = {
             'timestamp': datetime.utcnow(),
             'overall_status': 'healthy',

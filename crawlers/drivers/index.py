@@ -16,9 +16,11 @@ from . import *
 
 # Convenience factory functions for common patterns
 def create_enterprise_automation_suite():
-    """    Create a complete enterprise automation suite with all components
+    """
+    Create a complete enterprise automation suite with all components
     configured for production use.
-    """    return {
+    """
+    return {
         'automation_controller': create_automation_controller(),
         'browser_manager': create_browser_manager(max_sessions=20),
         'api_manager': APIClientManager(),
@@ -31,8 +33,10 @@ def create_enterprise_automation_suite():
 
 
 async def create_production_automation_stack():
-    """    Create production-ready automation stack with all managers initialized.
-    """    # Initialize automation controller
+    """
+    Create production-ready automation stack with all managers initialized.
+    """
+    # Initialize automation controller
     controller = await create_automation_controller(
         mode=AutomationMode.BALANCED,
         max_concurrent_tasks=50,
@@ -64,8 +68,10 @@ async def create_production_automation_stack():
 
 
 def create_stealth_crawling_setup():
-    """    Create optimized setup for stealth web crawling operations.
-    """    # Browser configuration
+    """
+    Create optimized setup for stealth web crawling operations.
+    """
+    # Browser configuration
     browser_config = create_stealth_config()
     
     # Session pool configuration
@@ -86,8 +92,10 @@ def create_stealth_crawling_setup():
 
 
 def create_high_performance_crawling_setup():
-    """    Create setup optimized for high-performance crawling with request management.
-    """    # Request manager with performance settings
+    """
+    Create setup optimized for high-performance crawling with request management.
+    """
+    # Request manager with performance settings
     request_config = RequestConfig(
         timeout=15,
         enable_compression=True,
@@ -118,8 +126,10 @@ def create_high_performance_crawling_setup():
 
 
 def create_enterprise_monitoring_setup():
-    """    Create comprehensive monitoring setup for all drivers.
-    """    automation_metrics = AutomationMetrics()
+    """
+    Create comprehensive monitoring setup for all drivers.
+    """
+    automation_metrics = AutomationMetrics()
     request_metrics = RequestMetrics()
     pool_metrics = PoolMetrics()
     
@@ -133,8 +143,10 @@ def create_enterprise_monitoring_setup():
 
 
 def create_api_monitoring_setup():
-    """    Create setup optimized for API monitoring and data collection.
-    """    api_manager = APIClientManager()
+    """
+    Create setup optimized for API monitoring and data collection.
+    """
+    api_manager = APIClientManager()
     
     # Rate limit configurations for different platforms
     rate_configs = {
@@ -157,8 +169,10 @@ def create_api_monitoring_setup():
 
 
 def create_mobile_testing_setup():
-    """    Create setup optimized for mobile device testing and emulation.
-    """    # Mobile browser configurations
+    """
+    Create setup optimized for mobile device testing and emulation.
+    """
+    # Mobile browser configurations
     mobile_configs = [
         BrowserConfiguration(
             browser_type=BrowserType.CHROME,
@@ -194,7 +208,8 @@ COMMON_PATTERNS = {
 
 
 def get_pattern(pattern_name: str):
-    """Get a pre-configured pattern by name"""    pattern_func = COMMON_PATTERNS.get(pattern_name)
+    """Get a pre-configured pattern by name"""
+    pattern_func = COMMON_PATTERNS.get(pattern_name)
     if pattern_func:
         return pattern_func()
     else:

@@ -15,7 +15,7 @@ Business Logic Flow:
 User Upload → Stream Processing → AI Analysis → Protection → Monetization
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  LEGAL WARNING ⚠️
 Unauthorized use, copying, modification, or distribution of this code
@@ -50,7 +50,7 @@ from .index import (
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel - All Rights Reserved"
+__copyright__ = "(c) 2025 Fahed Mlaiel - All Rights Reserved"
 
 # Team Specialties
 __team_specialties__ = [

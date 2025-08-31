@@ -6,7 +6,8 @@ importée et adaptée de l'ancien projet IA-Influencer.
 
 Author: GitHub Copilot (adapté du projet original)
 Date: 2025-08-31
-"""import pytest
+"""
+import pytest
 import asyncio
 import logging
 import os
@@ -24,7 +25,8 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 # Configuration pytest
 def pytest_configure(config):
-    """Configuration pytest principale"""    # Marqueurs de test
+    """Configuration pytest principale"""
+    # Marqueurs de test
     config.addinivalue_line("markers", "unit: Tests unitaires")
     config.addinivalue_line("markers", "integration: Tests d'intégration") 
     config.addinivalue_line("markers", "performance: Tests de performance")
@@ -38,14 +40,16 @@ def pytest_configure(config):
 
 @pytest.fixture(scope="session")
 def event_loop():
-    """Event loop pour les tests asyncio"""    loop = asyncio.new_event_loop()
+    """Event loop pour les tests asyncio"""
+    loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     yield loop
     loop.close()
 
 @pytest.fixture(scope="session")
 def test_config():
-    """Configuration de test globale"""    return {
+    """Configuration de test globale"""
+    return {
         "test_env": "pytest",
         "project_root": str(PROJECT_ROOT),
         "test_data_dir": str(PROJECT_ROOT / "tests" / "data"),
@@ -54,11 +58,13 @@ def test_config():
 
 @pytest.fixture
 def temp_dir(tmp_path):
-    """Répertoire temporaire pour les tests"""    return tmp_path
+    """Répertoire temporaire pour les tests"""
+    return tmp_path
 
 # Hook pour modifier la collection de tests
 def pytest_collection_modifyitems(config, items):
-    """Modifie la collection de tests"""    for item in items:
+    """Modifie la collection de tests"""
+    for item in items:
         # Ajouter des marqueurs automatiquement basés sur le nom
         if "performance" in item.name.lower():
             item.add_marker(pytest.mark.performance)

@@ -19,7 +19,8 @@ LOGIQUE MÉTIER: User (créateur) → Upload multi-format → IA protection → 
 Matching collaboration + gamifications → Distribution multi-plateformes → Remix IA professionnel → Monétisation
 
 ARCHITECTURE: Enterprise-grade business logic pour remix IA industriel avec optimisation revenus
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
@@ -34,20 +35,23 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class CreatorTier(Enum):
-    """Creator subscription tiers."""    FREE = "free"
+    """Creator subscription tiers."""
+    FREE = "free"
     CREATOR = "creator"
     PRO = "pro"
     ENTERPRISE = "enterprise"
 
 class RemixBusinessPriority(Enum):
-    """Business priority levels for remix operations."""    LOW = "low"
+    """Business priority levels for remix operations."""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
     PREMIUM = "premium"
 
 class RevenueStreamType(Enum):
-    """Types of revenue streams for creators."""    STREAMING = "streaming"
+    """Types of revenue streams for creators."""
+    STREAMING = "streaming"
     LICENSING = "licensing"
     COLLABORATION = "collaboration"
     BRAND_PARTNERSHIP = "brand_partnership"
@@ -58,7 +62,8 @@ class RevenueStreamType(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile for business logic."""    creator_id: str
+    """Comprehensive creator profile for business logic."""
+    creator_id: str
     creator_type: str
     tier: CreatorTier
     experience_level: str
@@ -71,7 +76,8 @@ class CreatorProfile:
     created_at: datetime = field(default_factory=datetime.now)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation."""        return {
+        """Convert to dictionary representation."""
+        return {
             "creator_id": self.creator_id,
             "creator_type": self.creator_type,
             "tier": self.tier.value,
@@ -87,7 +93,8 @@ class CreatorProfile:
 
 @dataclass
 class RemixBusinessMetrics:
-    """Business metrics for remix operations."""    request_id: str
+    """Business metrics for remix operations."""
+    request_id: str
     creator_id: str
     processing_cost: Decimal
     estimated_revenue: Decimal
@@ -100,7 +107,8 @@ class RemixBusinessMetrics:
     calculated_at: datetime = field(default_factory=datetime.now)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation."""        return {
+        """Convert to dictionary representation."""
+        return {
             "request_id": self.request_id,
             "creator_id": self.creator_id,
             "processing_cost": float(self.processing_cost),
@@ -115,18 +123,22 @@ class RemixBusinessMetrics:
         }
 
 class RemixBusinessLogic:
-    """    Core business logic for remix operations in IA-Influencer-Agent platform.
+    """
+    Core business logic for remix operations in IA-Influencer-Agent platform.
     
     Orchestrates the complete business workflow from creator onboarding through
     revenue optimization, including collaboration matching, monetization strategies,
     and performance analytics.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize business remix logic.
+        """
+        Initialize business remix logic.
         
         Args:
             config (Optional[Dict[str, Any]]): Business configuration
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self.creator_profiles = {}
         self.business_metrics = {}
         self.collaboration_opportunities = {}
@@ -148,7 +160,8 @@ class RemixBusinessLogic:
         content_data: Dict[str, Any],
         business_objectives: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Process complete creator remix journey with business optimization.
+        """
+        Process complete creator remix journey with business optimization.
         
         Args:
             creator_id (str): Unique creator identifier
@@ -157,7 +170,8 @@ class RemixBusinessLogic:
             
         Returns:
             Dict[str, Any]: Comprehensive journey results with business metrics
-        """        try:
+        """
+        try:
             logger.info(f"Processing business remix journey for creator {creator_id}")
             start_time = time.time()
             
@@ -230,7 +244,8 @@ class RemixBusinessLogic:
     async def _get_or_create_creator_profile(
         self, creator_id: str, content_data: Dict[str, Any]
     ) -> CreatorProfile:
-        """Get existing creator profile or create new one."""        if creator_id in self.creator_profiles:
+        """Get existing creator profile or create new one."""
+        if creator_id in self.creator_profiles:
             return self.creator_profiles[creator_id]
         
         # Create new profile based on content analysis
@@ -271,7 +286,8 @@ class RemixBusinessLogic:
         content_data: Dict[str, Any],
         business_objectives: Optional[Dict[str, Any]]
     ) -> RemixBusinessMetrics:
-        """Calculate comprehensive business metrics for the remix operation."""        try:
+        """Calculate comprehensive business metrics for the remix operation."""
+        try:
             # Base cost calculation
             processing_cost = self._calculate_processing_cost(creator_profile, content_data)
             
@@ -331,7 +347,8 @@ class RemixBusinessLogic:
             )
     
     def _calculate_processing_cost(self, profile: CreatorProfile, content_data: Dict[str, Any]) -> Decimal:
-        """Calculate processing cost based on tier and content complexity."""        base_cost = Decimal("5")
+        """Calculate processing cost based on tier and content complexity."""
+        base_cost = Decimal("5")
         
         # Tier multipliers
         tier_multipliers = {
@@ -354,7 +371,8 @@ class RemixBusinessLogic:
         return total_cost
     
     def _estimate_revenue_potential(self, profile: CreatorProfile, content_data: Dict[str, Any]) -> Decimal:
-        """Estimate revenue potential based on creator profile and content."""        base_revenue = Decimal("50")
+        """Estimate revenue potential based on creator profile and content."""
+        base_revenue = Decimal("50")
         
         # Tier multipliers
         tier_multipliers = {
@@ -376,7 +394,8 @@ class RemixBusinessLogic:
         return min(total_revenue, Decimal("10000"))  # Cap at reasonable maximum
     
     def _analyze_market_potential(self, profile: CreatorProfile, content_data: Dict[str, Any]) -> float:
-        """Analyze market potential for the content."""        # Base market potential
+        """Analyze market potential for the content."""
+        # Base market potential
         potential = 0.5
         
         # Genre popularity bonus
@@ -400,7 +419,8 @@ class RemixBusinessLogic:
         return min(potential, 1.0)
     
     def _calculate_viral_probability(self, profile: CreatorProfile, content_data: Dict[str, Any]) -> float:
-        """Calculate probability of content going viral."""        base_probability = 0.05
+        """Calculate probability of content going viral."""
+        base_probability = 0.05
         
         # High engagement rate bonus
         engagement_rate = profile.platform_presence.get("engagement_rate", 0.05)
@@ -419,7 +439,8 @@ class RemixBusinessLogic:
         return min(base_probability, 0.5)
     
     def _estimate_collaboration_value(self, profile: CreatorProfile, content_data: Dict[str, Any]) -> Decimal:
-        """Estimate value of potential collaborations."""        base_value = Decimal("25")
+        """Estimate value of potential collaborations."""
+        base_value = Decimal("25")
         
         # Network effect multiplier
         if profile.collaboration_preferences.get("open_to_collaboration", False):
@@ -441,7 +462,8 @@ class RemixBusinessLogic:
         return base_value * multiplier
     
     def _calculate_platform_optimization_score(self, profile: CreatorProfile, content_data: Dict[str, Any]) -> float:
-        """Calculate platform optimization score."""        score = 0.5
+        """Calculate platform optimization score."""
+        score = 0.5
         
         # Multi-platform presence
         platform_count = len(profile.platform_presence.get("primary_platforms", []))
@@ -465,7 +487,8 @@ class RemixBusinessLogic:
         roi_projection: float, 
         market_potential: float
     ) -> RemixBusinessPriority:
-        """Determine business priority level."""        if profile.tier == CreatorTier.ENTERPRISE:
+        """Determine business priority level."""
+        if profile.tier == CreatorTier.ENTERPRISE:
             return RemixBusinessPriority.PREMIUM
         elif estimated_revenue > Decimal("500") and roi_projection > 10:
             return RemixBusinessPriority.CRITICAL
@@ -477,7 +500,8 @@ class RemixBusinessLogic:
             return RemixBusinessPriority.LOW
     
     async def _execute_business_journey_stages(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute all business journey stages."""        stages = {}
+        """Execute all business journey stages."""
+        stages = {}
         
         # Stage 1: Business Analysis
         stages["business_analysis"] = await self._execute_business_analysis_stage(context)
@@ -497,7 +521,8 @@ class RemixBusinessLogic:
         return stages
     
     async def _execute_business_analysis_stage(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute business analysis stage."""        return {
+        """Execute business analysis stage."""
+        return {
             "completed": True,
             "market_analysis": "favorable",
             "competitive_positioning": "strong",
@@ -510,7 +535,8 @@ class RemixBusinessLogic:
         }
     
     async def _execute_revenue_optimization_stage(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute revenue optimization stage."""        return {
+        """Execute revenue optimization stage."""
+        return {
             "completed": True,
             "optimization_strategies": [
                 "dynamic_pricing",
@@ -522,7 +548,8 @@ class RemixBusinessLogic:
         }
     
     async def _execute_market_positioning_stage(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute market positioning stage."""        return {
+        """Execute market positioning stage."""
+        return {
             "completed": True,
             "positioning_strategy": "differentiation",
             "target_segments": ["young_adults", "music_enthusiasts"],
@@ -530,7 +557,8 @@ class RemixBusinessLogic:
         }
     
     async def _execute_collaboration_strategy_stage(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute collaboration strategy stage."""        return {
+        """Execute collaboration strategy stage."""
+        return {
             "completed": True,
             "collaboration_types": ["cross_genre", "brand_partnership"],
             "networking_opportunities": 8,
@@ -538,7 +566,8 @@ class RemixBusinessLogic:
         }
     
     async def _execute_performance_tracking_stage(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute performance tracking stage."""        return {
+        """Execute performance tracking stage."""
+        return {
             "completed": True,
             "kpis_established": True,
             "tracking_systems_active": True,
@@ -546,7 +575,8 @@ class RemixBusinessLogic:
         }
     
     async def _generate_business_recommendations(self, context: Dict[str, Any]) -> List[str]:
-        """Generate business recommendations based on analysis."""        recommendations = []
+        """Generate business recommendations based on analysis."""
+        recommendations = []
         
         business_metrics = context["business_metrics"]
         creator_profile = context["creator_profile"]
@@ -573,7 +603,8 @@ class RemixBusinessLogic:
         return recommendations
     
     async def _calculate_roi_projections(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate ROI projections for different scenarios."""        business_metrics = context["business_metrics"]
+        """Calculate ROI projections for different scenarios."""
+        business_metrics = context["business_metrics"]
         
         return {
             "base_scenario": {
@@ -596,7 +627,8 @@ class RemixBusinessLogic:
         }
     
     async def _identify_collaboration_opportunities(self, context: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Identify potential collaboration opportunities."""        creator_profile = context["creator_profile"]
+        """Identify potential collaboration opportunities."""
+        creator_profile = context["creator_profile"]
         
         # Mock collaboration opportunities based on profile
         opportunities = []
@@ -614,7 +646,8 @@ class RemixBusinessLogic:
         return opportunities[:5]  # Limit to top 5 opportunities
     
     def _calculate_overall_business_score(self, context: Dict[str, Any]) -> float:
-        """Calculate overall business score for the journey."""        business_metrics = context["business_metrics"]
+        """Calculate overall business score for the journey."""
+        business_metrics = context["business_metrics"]
         
         # Weighted scoring
         score = (
@@ -628,7 +661,8 @@ class RemixBusinessLogic:
         return min(score, 10.0)  # Cap at 10
     
     async def _generate_next_actions(self, context: Dict[str, Any]) -> List[str]:
-        """Generate specific next actions for the creator."""        next_actions = []
+        """Generate specific next actions for the creator."""
+        next_actions = []
         
         recommendations = context.get("recommendations", [])
         
@@ -650,31 +684,36 @@ class RemixBusinessLogic:
 
 # Supporting business logic classes
 class RemixWorkflowManager:
-    """Manages business workflows for remix operations."""    
+    """Manages business workflows for remix operations."""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.workflows = {}
 
 class RemixCreatorJourneyOrchestrator:
-    """Orchestrates creator journey through business processes."""    
+    """Orchestrates creator journey through business processes."""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.journeys = {}
 
 class RemixCollaborationManager:
-    """Manages collaboration business logic and matching."""    
+    """Manages collaboration business logic and matching."""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.collaborations = {}
 
 class RemixMonetizationEngine:
-    """Handles monetization strategies and revenue optimization."""    
+    """Handles monetization strategies and revenue optimization."""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.strategies = {}
 
 class RemixAnalyticsProcessor:
-    """Processes business analytics and generates insights."""    
+    """Processes business analytics and generates insights."""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.analytics = {}

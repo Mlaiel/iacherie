@@ -8,7 +8,7 @@ Responsibility: Traitement avancé des données multi-format pour créateurs, pr
 ========================================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Toute tentative de vol de ce concept, de cette idée ou de ce code sans autorisation personnelle claire 
 et écrite de Fahed Mlaiel est strictement interdite et sera poursuivie en justice selon la loi allemande.
 Contact obligatoire: mlaiel@live.de
@@ -17,7 +17,8 @@ LOGIQUE MÉTIER PROCESSORS COMPLETE:
 User Upload → Format Detection → Quality Analysis → Metadata Extraction → Content Analysis → 
 Feature Extraction → AI Fingerprinting → Protection Preparation → Optimization → SEO Enhancement → 
 Collaboration Matching → Distribution Preparation → Monetization Analytics
-"""__version__ = "4.0.0"
+"""
+__version__ = "4.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 
 # Core Processor Imports

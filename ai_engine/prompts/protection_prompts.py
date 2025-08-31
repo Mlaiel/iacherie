@@ -8,7 +8,8 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
-"""from typing import Dict, List, Optional, Tuple, Any, Union
+"""
+from typing import Dict, List, Optional, Tuple, Any, Union
 from enum import Enum
 from dataclasses import dataclass
 from datetime import datetime
@@ -21,13 +22,15 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""    BASIC = "basic"
+    """Content protection levels"""
+    BASIC = "basic"
     INTERMEDIATE = "intermediate" 
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
 
 class ContentType(Enum):
-    """Content types for protection"""    AUDIO = "audio"
+    """Content types for protection"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -36,7 +39,8 @@ class ContentType(Enum):
     MIXED_MEDIA = "mixed_media"
 
 class FingerprintingMethod(Enum):
-    """Fingerprinting methods available"""    SPECTRAL = "spectral"
+    """Fingerprinting methods available"""
+    SPECTRAL = "spectral"
     PERCEPTUAL = "perceptual"
     CHROMAPRINT = "chromaprint"
     WATERMARK = "watermark"
@@ -44,7 +48,8 @@ class FingerprintingMethod(Enum):
     AI_SIGNATURE = "ai_signature"
 
 class MonitoringPlatform(Enum):
-    """Platforms to monitor for content theft"""    YOUTUBE = "youtube"
+    """Platforms to monitor for content theft"""
+    YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     SOUNDCLOUD = "soundcloud"
     INSTAGRAM = "instagram"
@@ -55,7 +60,8 @@ class MonitoringPlatform(Enum):
 
 @dataclass
 class ProtectionContext:
-    """Context for protection prompt generation"""    content_type: ContentType
+    """Context for protection prompt generation"""
+    content_type: ContentType
     protection_level: ProtectionLevel
     fingerprinting_methods: List[FingerprintingMethod]
     monitoring_platforms: List[MonitoringPlatform]
@@ -63,19 +69,23 @@ class ProtectionContext:
     technical_specs: Dict[str, Any]
 
 class AIProtectionPrompts:
-    """Professional AI Protection Prompts System"""    
+    """Professional AI Protection Prompts System"""
+    
     def __init__(self):
-        """Initialize the AI protection prompts system"""        self.protection_templates = {}
+        """Initialize the AI protection prompts system"""
+        self.protection_templates = {}
         self.fingerprinting_algorithms = {}
         self.legal_templates = {}
         self._load_protection_templates()
     
     def _load_protection_templates(self) -> None:
-        """Load and initialize protection prompt templates"""        self.protection_templates = {
+        """Load and initialize protection prompt templates"""
+        self.protection_templates = {
             ContentType.AUDIO: {
                 ProtectionLevel.BASIC: {
                     "id": "audio_basic_protection",
-                    "template": """                    Create basic audio content protection system:
+                    "template": """
+                    Create basic audio content protection system:
                     
                     Audio Analysis:
                     - File path: {file_path}
@@ -117,7 +127,8 @@ class AIProtectionPrompts:
                 },
                 ProtectionLevel.PROFESSIONAL: {
                     "id": "audio_professional_protection",
-                    "template": """                    Create professional multi-layer audio content protection:
+                    "template": """
+                    Create professional multi-layer audio content protection:
                     
                     Audio Technical Analysis:
                     - File: {file_path}
@@ -189,7 +200,8 @@ class AIProtectionPrompts:
             ContentType.VIDEO: {
                 ProtectionLevel.PROFESSIONAL: {
                     "id": "video_professional_protection",
-                    "template": """                    Create comprehensive video content protection system:
+                    "template": """
+                    Create comprehensive video content protection system:
                     
                     Video Analysis:
                     - File: {video_file}
@@ -265,7 +277,8 @@ class AIProtectionPrompts:
             ContentType.IMAGE: {
                 ProtectionLevel.PROFESSIONAL: {
                     "id": "image_professional_protection",
-                    "template": """                    Create professional image content protection system:
+                    "template": """
+                    Create professional image content protection system:
                     
                     Image Analysis:
                     - File: {image_file}
@@ -346,7 +359,8 @@ class AIProtectionPrompts:
             ContentType.TEXT: {
                 ProtectionLevel.PROFESSIONAL: {
                     "id": "text_professional_protection",
-                    "template": """                    Create comprehensive text content protection system:
+                    "template": """
+                    Create comprehensive text content protection system:
                     
                     Text Analysis:
                     - Content file: {text_file}
@@ -428,7 +442,8 @@ class AIProtectionPrompts:
         }
     
     def generate_protection_prompt(self, context: ProtectionContext, custom_params: Optional[Dict] = None) -> Dict[str, Any]:
-        """Generate a protection prompt based on context"""        try:
+        """Generate a protection prompt based on context"""
+        try:
             # Get protection template
             content_templates = self.protection_templates.get(context.content_type, {})
             protection_template = content_templates.get(context.protection_level)
@@ -464,7 +479,8 @@ class AIProtectionPrompts:
             return self._generate_fallback_protection_prompt(context)
     
     def _customize_for_fingerprinting(self, template: Dict, context: ProtectionContext) -> Dict:
-        """Customize template based on fingerprinting methods"""        customized = template.copy()
+        """Customize template based on fingerprinting methods"""
+        customized = template.copy()
         
         # Add fingerprinting method specific instructions
         fingerprinting_instructions = []
@@ -490,7 +506,8 @@ class AIProtectionPrompts:
         return customized
     
     def _apply_technical_specs(self, prompt: Dict, tech_specs: Dict) -> Dict:
-        """Apply technical specifications to prompt"""        modified_prompt = prompt.copy()
+        """Apply technical specifications to prompt"""
+        modified_prompt = prompt.copy()
         
         # Replace technical variables in template
         template = modified_prompt.get("template", "")
@@ -503,7 +520,8 @@ class AIProtectionPrompts:
         return modified_prompt
     
     def _apply_legal_requirements(self, prompt: Dict, legal_reqs: Dict) -> Dict:
-        """Apply legal requirements to prompt"""        modified_prompt = prompt.copy()
+        """Apply legal requirements to prompt"""
+        modified_prompt = prompt.copy()
         
         # Add legal compliance section
         legal_section = "\n\nLegal Compliance Requirements:\n"
@@ -517,7 +535,8 @@ class AIProtectionPrompts:
         return modified_prompt
     
     def _apply_custom_protection_params(self, prompt: Dict, custom_params: Dict) -> Dict:
-        """Apply custom protection parameters"""        modified_prompt = prompt.copy()
+        """Apply custom protection parameters"""
+        modified_prompt = prompt.copy()
         
         # Replace custom parameters in template
         template = modified_prompt.get("template", "")
@@ -530,9 +549,11 @@ class AIProtectionPrompts:
         return modified_prompt
     
     def _generate_fallback_protection_prompt(self, context: ProtectionContext) -> Dict[str, Any]:
-        """Generate fallback protection prompt"""        return {
+        """Generate fallback protection prompt"""
+        return {
             "id": "fallback_protection",
-            "template": f"""            Create {context.protection_level.value} protection for {context.content_type.value} content:
+            "template": f"""
+            Create {context.protection_level.value} protection for {context.content_type.value} content:
             
             Protection Requirements:
             - Content type: {context.content_type.value}
@@ -553,19 +574,24 @@ class AIProtectionPrompts:
         }
     
     def _generate_protection_hash(self, context: ProtectionContext) -> str:
-        """Generate hash for protection context"""        context_string = f"{context.content_type.value}_{context.protection_level.value}_{len(context.fingerprinting_methods)}"
+        """Generate hash for protection context"""
+        context_string = f"{context.content_type.value}_{context.protection_level.value}_{len(context.fingerprinting_methods)}"
         return hashlib.md5(context_string.encode()).hexdigest()[:12]
 
 class BlockchainProtectionPrompts:
-    """Blockchain-based content protection prompts"""    
+    """Blockchain-based content protection prompts"""
+    
     def __init__(self):
-        """Initialize blockchain protection system"""        self.blockchain_templates = {}
+        """Initialize blockchain protection system"""
+        self.blockchain_templates = {}
         self._load_blockchain_templates()
     
     def _load_blockchain_templates(self) -> None:
-        """Load blockchain protection templates"""        self.blockchain_templates = {
+        """Load blockchain protection templates"""
+        self.blockchain_templates = {
             "content_registration": {
-                "template": """                Create blockchain-based content registration system:
+                "template": """
+                Create blockchain-based content registration system:
                 
                 Content Registration:
                 - Content hash: {content_hash}
@@ -604,7 +630,8 @@ class BlockchainProtectionPrompts:
         }
     
     def generate_blockchain_prompt(self, content_type: ContentType, custom_params: Dict) -> Dict[str, Any]:
-        """Generate blockchain protection prompt"""        template = self.blockchain_templates.get("content_registration")
+        """Generate blockchain protection prompt"""
+        template = self.blockchain_templates.get("content_registration")
         if not template:
             return {"error": "Blockchain template not found"}
         
@@ -631,7 +658,8 @@ PROTECTION_PROMPTS_REGISTRY = {
 }
 
 def get_protection_prompts() -> AIProtectionPrompts:
-    """Get the main protection prompts instance"""    return AIProtectionPrompts()
+    """Get the main protection prompts instance"""
+    return AIProtectionPrompts()
 
 def create_protection_context(
     content_type: str,
@@ -641,7 +669,8 @@ def create_protection_context(
     legal_requirements: Optional[Dict] = None,
     technical_specs: Optional[Dict] = None
 ) -> ProtectionContext:
-    """Create a protection context for content protection"""    return ProtectionContext(
+    """Create a protection context for content protection"""
+    return ProtectionContext(
         content_type=ContentType(content_type),
         protection_level=ProtectionLevel(protection_level),
         fingerprinting_methods=[FingerprintingMethod(m) for m in fingerprinting_methods],

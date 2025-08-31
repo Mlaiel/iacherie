@@ -18,7 +18,8 @@ This code is proprietary and belongs to Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit 
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from datetime import timedelta
@@ -26,7 +27,8 @@ from enum import Enum
 
 
 class AuthenticationMethod(Enum):
-    """Supported authentication methods."""    JWT = "jwt"
+    """Supported authentication methods."""
+    JWT = "jwt"
     OAUTH2 = "oauth2"
     BASIC = "basic"
     API_KEY = "api_key"
@@ -35,7 +37,8 @@ class AuthenticationMethod(Enum):
 
 
 class SocialProvider(Enum):
-    """Supported social authentication providers."""    GOOGLE = "google"
+    """Supported social authentication providers."""
+    GOOGLE = "google"
     FACEBOOK = "facebook"
     TWITTER = "twitter"
     LINKEDIN = "linkedin"
@@ -47,7 +50,8 @@ class SocialProvider(Enum):
 
 @dataclass
 class JwtConfig:
-    """JWT authentication configuration."""    secret_key: str = field(default_factory=lambda: os.getenv("JWT_SECRET_KEY", ""))
+    """JWT authentication configuration."""
+    secret_key: str = field(default_factory=lambda: os.getenv("JWT_SECRET_KEY", ""))
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 30
     refresh_token_expire_days: int = 7
@@ -72,7 +76,8 @@ class JwtConfig:
 
 @dataclass
 class OAuth2Config:
-    """OAuth2 authentication configuration."""    authorization_server: str = ""
+    """OAuth2 authentication configuration."""
+    authorization_server: str = ""
     token_endpoint: str = ""
     userinfo_endpoint: str = ""
     client_id: str = field(default_factory=lambda: os.getenv("OAUTH2_CLIENT_ID", ""))
@@ -106,7 +111,8 @@ class OAuth2Config:
 
 @dataclass
 class MultiFactorConfig:
-    """Multi-factor authentication configuration."""    enabled: bool = True
+    """Multi-factor authentication configuration."""
+    enabled: bool = True
     required_for_creators: bool = True
     methods: List[str] = field(default_factory=lambda: [
         "totp",  # Time-based OTP
@@ -131,7 +137,8 @@ class MultiFactorConfig:
 
 @dataclass
 class SocialAuthConfig:
-    """Social authentication providers configuration."""    enabled_providers: List[SocialProvider] = field(default_factory=lambda: [
+    """Social authentication providers configuration."""
+    enabled_providers: List[SocialProvider] = field(default_factory=lambda: [
         SocialProvider.GOOGLE,
         SocialProvider.SPOTIFY,
         SocialProvider.INSTAGRAM,
@@ -166,7 +173,8 @@ class SocialAuthConfig:
 
 @dataclass
 class SessionConfig:
-    """Session management configuration."""    session_timeout: timedelta = timedelta(hours=24)
+    """Session management configuration."""
+    session_timeout: timedelta = timedelta(hours=24)
     idle_timeout: timedelta = timedelta(hours=2)
     concurrent_sessions_limit: int = 5
     
@@ -186,7 +194,8 @@ class SessionConfig:
 
 @dataclass
 class PasswordConfig:
-    """Password policy configuration."""    min_length: int = 12
+    """Password policy configuration."""
+    min_length: int = 12
     max_length: int = 128
     require_uppercase: bool = True
     require_lowercase: bool = True
@@ -209,7 +218,8 @@ class PasswordConfig:
 
 @dataclass
 class ApiKeyConfig:
-    """API key authentication configuration."""    enabled: bool = True
+    """API key authentication configuration."""
+    enabled: bool = True
     key_length: int = 64
     key_prefix: str = "ia_"
     
@@ -240,7 +250,8 @@ class ApiKeyConfig:
 
 @dataclass
 class AuthenticationConfig:
-    """Main authentication configuration container."""    jwt: JwtConfig = field(default_factory=JwtConfig)
+    """Main authentication configuration container."""
+    jwt: JwtConfig = field(default_factory=JwtConfig)
     oauth2: OAuth2Config = field(default_factory=OAuth2Config)
     mfa: MultiFactorConfig = field(default_factory=MultiFactorConfig)
     social: SocialAuthConfig = field(default_factory=SocialAuthConfig)
@@ -276,11 +287,13 @@ authentication_config = AuthenticationConfig()
 
 
 def get_authentication_config() -> AuthenticationConfig:
-    """Get the authentication configuration instance."""    return authentication_config
+    """Get the authentication configuration instance."""
+    return authentication_config
 
 
 def validate_authentication_config(config: AuthenticationConfig) -> bool:
-    """Validate authentication configuration settings."""    if not config.jwt.secret_key:
+    """Validate authentication configuration settings."""
+    if not config.jwt.secret_key:
         raise ValueError("JWT secret key is required")
     
     if config.oauth2.client_id and not config.oauth2.client_secret:

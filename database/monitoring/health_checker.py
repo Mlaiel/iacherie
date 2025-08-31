@@ -10,7 +10,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 ⚠️  AVERTISSEMENT STRICT ⚠️
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
-"""import asyncio
+"""
+import asyncio
 import time
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -32,7 +33,8 @@ from ...utils.cache import RedisCache
 
 
 class HealthStatus(Enum):
-    """Health status levels"""    HEALTHY = "healthy"
+    """Health status levels"""
+    HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
@@ -40,7 +42,8 @@ class HealthStatus(Enum):
 
 
 class CheckCategory(Enum):
-    """Health check categories"""    CONNECTIVITY = "connectivity"
+    """Health check categories"""
+    CONNECTIVITY = "connectivity"
     PERFORMANCE = "performance"
     RESOURCES = "resources"
     REPLICATION = "replication"
@@ -52,7 +55,8 @@ class CheckCategory(Enum):
 
 @dataclass
 class HealthCheck:
-    """Individual health check definition"""    check_id: str
+    """Individual health check definition"""
+    check_id: str
     name: str
     description: str
     category: CheckCategory
@@ -66,14 +70,16 @@ class HealthCheck:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        data = asdict(self)
+        """Convert to dictionary"""
+        data = asdict(self)
         data['category'] = self.category.value
         return data
 
 
 @dataclass
 class HealthCheckResult:
-    """Result of a health check"""    check_id: str
+    """Result of a health check"""
+    check_id: str
     status: HealthStatus
     value: Optional[float]
     message: str
@@ -83,7 +89,8 @@ class HealthCheckResult:
     error: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        data = asdict(self)
+        """Convert to dictionary"""
+        data = asdict(self)
         data['status'] = self.status.value
         data['timestamp'] = self.timestamp.isoformat()
         return data
@@ -91,7 +98,8 @@ class HealthCheckResult:
 
 @dataclass
 class HealthReport:
-    """Comprehensive health report"""    overall_status: HealthStatus
+    """Comprehensive health report"""
+    overall_status: HealthStatus
     health_score: float
     timestamp: datetime
     check_results: List[HealthCheckResult]
@@ -100,7 +108,8 @@ class HealthReport:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        data = asdict(self)
+        """Convert to dictionary"""
+        data = asdict(self)
         data['overall_status'] = self.overall_status.value
         data['timestamp'] = self.timestamp.isoformat()
         data['check_results'] = [result.to_dict() for result in self.check_results]
@@ -108,7 +117,8 @@ class HealthReport:
 
 
 class DatabaseHealthChecker:
-    """    Comprehensive database health monitoring system.
+    """
+    Comprehensive database health monitoring system.
     
     Features:
     - Multi-dimensional health checks
@@ -117,7 +127,8 @@ class DatabaseHealthChecker:
     - Proactive recommendations
     - Historical trend analysis
     - Customizable check definitions
-    """    
+    """
+    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
@@ -135,7 +146,8 @@ class DatabaseHealthChecker:
         self.logger.info("Database Health Checker initialized")
     
     def _initialize_standard_checks(self) -> None:
-        """Initialize standard health checks"""        
+        """Initialize standard health checks"""
+        
         # Connectivity checks
         self.add_health_check(HealthCheck(
             check_id="database_connectivity",
@@ -155,7 +167,8 @@ class DatabaseHealthChecker:
             name="Query Response Time",
             description="Average query response time",
             category=CheckCategory.PERFORMANCE,
-            sql_query="""                SELECT avg(mean_exec_time) 
+            sql_query="""
+                SELECT avg(mean_exec_time) 
                 FROM pg_stat_statements 
                 WHERE calls > 100
             """,
@@ -170,7 +183,8 @@ class DatabaseHealthChecker:
             name="Cache Hit Ratio",
             description="Database buffer cache hit ratio",
             category=CheckCategory.PERFORMANCE,
-            sql_query="""                SELECT CASE 
+            sql_query="""
+                SELECT CASE 
                     WHEN sum(heap_blks_hit + heap_blks_read) = 0 THEN 1.0
                     ELSE sum(heap_blks_hit)::float / sum(heap_blks_hit + heap_blks_read)
                 END * 100
@@ -187,7 +201,8 @@ class DatabaseHealthChecker:
             name="Active Connections",
             description="Number of active database connections",
             category=CheckCategory.RESOURCES,
-            sql_query="""                SELECT count(*)::float / 
+            sql_query="""
+                SELECT count(*)::float / 
                        (SELECT setting::float FROM pg_settings WHERE name = 'max_connections') * 100
                 FROM pg_stat_activity 
                 WHERE state = 'active'
@@ -229,7 +244,8 @@ class DatabaseHealthChecker:
             name="Lock Waits",
             description="Number of processes waiting for locks",
             category=CheckCategory.PERFORMANCE,
-            sql_query="""                SELECT count(*)
+            sql_query="""
+                SELECT count(*)
                 FROM pg_stat_activity 
                 WHERE wait_event_type = 'Lock'
             """,
@@ -244,7 +260,8 @@ class DatabaseHealthChecker:
             name="Long Running Queries",
             description="Number of queries running longer than 5 minutes",
             category=CheckCategory.PERFORMANCE,
-            sql_query="""                SELECT count(*)
+            sql_query="""
+                SELECT count(*)
                 FROM pg_stat_activity 
                 WHERE state = 'active'
                 AND query_start < now() - interval '5 minutes'
@@ -262,7 +279,8 @@ class DatabaseHealthChecker:
             name="Replication Lag",
             description="Replication lag in seconds",
             category=CheckCategory.REPLICATION,
-            sql_query="""                SELECT CASE 
+            sql_query="""
+                SELECT CASE 
                     WHEN pg_is_in_recovery() THEN 
                         EXTRACT(EPOCH FROM (now() - pg_last_xact_replay_timestamp()))
                     ELSE 0
@@ -280,7 +298,8 @@ class DatabaseHealthChecker:
             name="Table Bloat Ratio",
             description="Average table bloat ratio",
             category=CheckCategory.MAINTENANCE,
-            sql_query="""                SELECT COALESCE(AVG(
+            sql_query="""
+                SELECT COALESCE(AVG(
                     CASE WHEN relpages > 0 THEN 
                         (relpages - otta)::float / relpages * 100
                     ELSE 0 END
@@ -329,7 +348,8 @@ class DatabaseHealthChecker:
             name="Checkpoint Frequency",
             description="Time since last checkpoint",
             category=CheckCategory.CONFIGURATION,
-            sql_query="""                SELECT EXTRACT(EPOCH FROM (now() - stats_reset))
+            sql_query="""
+                SELECT EXTRACT(EPOCH FROM (now() - stats_reset))
                 FROM pg_stat_bgwriter
             """,
             check_function=None,
@@ -339,18 +359,21 @@ class DatabaseHealthChecker:
         ))
     
     def add_health_check(self, check: HealthCheck) -> None:
-        """Add health check definition"""        self.health_checks[check.check_id] = check
+        """Add health check definition"""
+        self.health_checks[check.check_id] = check
         self.logger.debug(f"Added health check: {check.name}")
     
     def remove_health_check(self, check_id: str) -> bool:
-        """Remove health check"""        if check_id in self.health_checks:
+        """Remove health check"""
+        if check_id in self.health_checks:
             del self.health_checks[check_id]
             self.logger.debug(f"Removed health check: {check_id}")
             return True
         return False
     
     async def start_health_monitoring(self) -> None:
-        """Start continuous health monitoring"""        if self.checking_active:
+        """Start continuous health monitoring"""
+        if self.checking_active:
             self.logger.warning("Health monitoring already active")
             return
         
@@ -379,11 +402,13 @@ class DatabaseHealthChecker:
             raise
     
     async def stop_health_monitoring(self) -> None:
-        """Stop health monitoring"""        self.checking_active = False
+        """Stop health monitoring"""
+        self.checking_active = False
         self.logger.info("Health monitoring stopped")
     
     async def _health_check_loop(self, check_id: str, check: HealthCheck) -> None:
-        """Continuous loop for individual health check"""        while self.checking_active:
+        """Continuous loop for individual health check"""
+        while self.checking_active:
             try:
                 result = await self._execute_health_check(check)
                 if result:
@@ -396,7 +421,8 @@ class DatabaseHealthChecker:
                 await asyncio.sleep(check.frequency_seconds)
     
     async def _execute_health_check(self, check: HealthCheck) -> Optional[HealthCheckResult]:
-        """Execute individual health check"""        start_time = time.time()
+        """Execute individual health check"""
+        start_time = time.time()
         
         try:
             # Execute based on check type
@@ -450,7 +476,8 @@ class DatabaseHealthChecker:
             )
     
     async def _execute_sql_check(self, check: HealthCheck) -> Tuple[Optional[float], Optional[str]]:
-        """Execute SQL-based health check"""        try:
+        """Execute SQL-based health check"""
+        try:
             async with get_database_session() as session:
                 # Set query timeout
                 await session.execute(text(f"SET statement_timeout = '{check.timeout_seconds}s'"))
@@ -469,7 +496,8 @@ class DatabaseHealthChecker:
             return None, f"Execution error: {str(e)}"
     
     async def _execute_function_check(self, check: HealthCheck) -> Tuple[Optional[float], Optional[str]]:
-        """Execute function-based health check"""        try:
+        """Execute function-based health check"""
+        try:
             if check.check_function == "check_disk_usage":
                 return await self._check_disk_usage()
             elif check.check_function == "check_memory_usage":
@@ -481,7 +509,8 @@ class DatabaseHealthChecker:
             return None, f"Function execution error: {str(e)}"
     
     async def _check_disk_usage(self) -> Tuple[Optional[float], Optional[str]]:
-        """Check disk usage percentage"""        try:
+        """Check disk usage percentage"""
+        try:
             # Get disk usage for database data directory
             data_dir = getattr(self.settings, 'database_data_dir', '/var/lib/postgresql/data')
             usage = psutil.disk_usage(data_dir)
@@ -491,7 +520,8 @@ class DatabaseHealthChecker:
             return None, f"Disk usage check failed: {str(e)}"
     
     async def _check_memory_usage(self) -> Tuple[Optional[float], Optional[str]]:
-        """Check memory usage percentage"""        try:
+        """Check memory usage percentage"""
+        try:
             memory = psutil.virtual_memory()
             return memory.percent, None
         except Exception as e:
@@ -503,7 +533,8 @@ class DatabaseHealthChecker:
         value: Optional[float], 
         error: Optional[str]
     ) -> HealthStatus:
-        """Determine health status based on value and thresholds"""        
+        """Determine health status based on value and thresholds"""
+        
         if error:
             return HealthStatus.CRITICAL
         
@@ -541,7 +572,8 @@ class DatabaseHealthChecker:
         value: Optional[float], 
         error: Optional[str]
     ) -> str:
-        """Generate human-readable message for check result"""        
+        """Generate human-readable message for check result"""
+        
         if error:
             return f"{check.name}: {error}"
         
@@ -581,7 +613,8 @@ class DatabaseHealthChecker:
         return f"{emoji} {check.name}: {formatted_value}"
     
     async def _store_check_result(self, check_id: str, result: HealthCheckResult) -> None:
-        """Store health check result"""        try:
+        """Store health check result"""
+        try:
             # Cache latest result
             await self.cache.set(
                 f"health_check:{check_id}",
@@ -598,7 +631,8 @@ class DatabaseHealthChecker:
             self.logger.error(f"Error storing check result {check_id}: {e}")
     
     async def _generate_health_reports(self) -> None:
-        """Generate periodic comprehensive health reports"""        while self.checking_active:
+        """Generate periodic comprehensive health reports"""
+        while self.checking_active:
             try:
                 report = await self.generate_health_report()
                 if report:
@@ -623,7 +657,8 @@ class DatabaseHealthChecker:
                 await asyncio.sleep(3600)
     
     async def generate_health_report(self) -> Optional[HealthReport]:
-        """Generate comprehensive health report"""        try:
+        """Generate comprehensive health report"""
+        try:
             # Collect all latest check results
             check_results = []
             for check_id in self.health_checks.keys():
@@ -680,7 +715,8 @@ class DatabaseHealthChecker:
         self, 
         check_results: List[HealthCheckResult]
     ) -> Tuple[HealthStatus, float]:
-        """Calculate overall health status and numeric score"""        
+        """Calculate overall health status and numeric score"""
+        
         if not check_results:
             return HealthStatus.UNKNOWN, 0.0
         
@@ -732,7 +768,8 @@ class DatabaseHealthChecker:
         self, 
         check_results: List[HealthCheckResult]
     ) -> Dict[str, Dict[str, Any]]:
-        """Generate summary by check category"""        
+        """Generate summary by check category"""
+        
         category_results = {}
         for result in check_results:
             category = result.details.get('category', 'unknown')
@@ -758,7 +795,8 @@ class DatabaseHealthChecker:
         return category_results
     
     def _generate_recommendations(self, check_results: List[HealthCheckResult]) -> List[str]:
-        """Generate health improvement recommendations"""        recommendations = []
+        """Generate health improvement recommendations"""
+        recommendations = []
         
         for result in check_results:
             if result.status in [HealthStatus.WARNING, HealthStatus.CRITICAL]:
@@ -797,7 +835,8 @@ class DatabaseHealthChecker:
         return list(set(recommendations))
     
     async def run_health_check_now(self, check_id: str) -> Optional[Dict[str, Any]]:
-        """Run specific health check immediately"""        try:
+        """Run specific health check immediately"""
+        try:
             check = self.health_checks.get(check_id)
             if not check:
                 return {"error": f"Health check {check_id} not found"}
@@ -815,7 +854,8 @@ class DatabaseHealthChecker:
             return {"error": str(e)}
     
     async def get_health_summary(self) -> Dict[str, Any]:
-        """Get current health summary"""        try:
+        """Get current health summary"""
+        try:
             if self.last_health_report:
                 return {
                     "overall_status": self.last_health_report.overall_status.value,
@@ -839,10 +879,12 @@ class DatabaseHealthChecker:
             return {"error": str(e)}
     
     async def get_health_check_definitions(self) -> List[Dict[str, Any]]:
-        """Get all health check definitions"""        return [check.to_dict() for check in self.health_checks.values()]
+        """Get all health check definitions"""
+        return [check.to_dict() for check in self.health_checks.values()]
     
     async def get_health_history(self, hours: int = 24) -> List[Dict[str, Any]]:
-        """Get health report history"""        try:
+        """Get health report history"""
+        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             
             recent_reports = [

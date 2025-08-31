@@ -28,13 +28,15 @@ and tracking across all major platforms and content formats.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY ⚠️
 This revolutionary fingerprinting platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
-"""from .multiplatform_fingerprinting import (
+"""
+
+from .multiplatform_fingerprinting import (
     MultiplePlatformFingerprintingEngine,
     ContentFingerprint,
     FingerprintMatch,
@@ -45,8 +47,11 @@ under German and International Law. Contact: mlaiel@live.de for legal authorizat
 )
 
 from .similarity_matcher import SimilarityMatcher
+
 from .fingerprint_validator import FingerprintValidator
+
 from .blockchain_verifier import BlockchainVerifier
+
 from .performance_optimizer import PerformanceOptimizer
 
 # Core Components
@@ -75,5 +80,5 @@ __all__ = [
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary - Unauthorized use prohibited"

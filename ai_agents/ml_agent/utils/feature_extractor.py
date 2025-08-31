@@ -13,7 +13,8 @@ Any unauthorized use, copying, distribution, or commercialization without explic
 is strictly PROHIBITED and will result in legal action.
 
 ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import uuid
@@ -120,7 +121,8 @@ from prometheus_client import Counter, Histogram, Gauge
 logger = logging.getLogger(__name__)
 
 class FeatureType(Enum):
-    """Feature extraction types"""    TEXT = "text"
+    """Feature extraction types"""
+    TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
     VIDEO = "video"
@@ -130,7 +132,8 @@ class FeatureType(Enum):
     MULTIMODAL = "multimodal"
 
 class ExtractionMethod(Enum):
-    """Feature extraction methods"""    STATISTICAL = "statistical"
+    """Feature extraction methods"""
+    STATISTICAL = "statistical"
     TRANSFORMER = "transformer"
     EMBEDDING = "embedding"
     HANDCRAFTED = "handcrafted"
@@ -139,14 +142,16 @@ class ExtractionMethod(Enum):
     SPATIAL = "spatial"
 
 class FeaturePriority(Enum):
-    """Feature priority levels"""    LOW = "low"
+    """Feature priority levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 @dataclass
 class FeatureConfig:
-    """Comprehensive feature extraction configuration"""    extraction_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive feature extraction configuration"""
+    extraction_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     feature_types: List[FeatureType] = field(default_factory=list)
     extraction_methods: List[ExtractionMethod] = field(default_factory=list)
     priority: FeaturePriority = FeaturePriority.MEDIUM
@@ -224,7 +229,8 @@ class FeatureConfig:
 
 @dataclass
 class FeatureMetrics:
-    """Comprehensive feature extraction metrics"""    # Feature statistics
+    """Comprehensive feature extraction metrics"""
+    # Feature statistics
     total_features: int = 0
     selected_features: int = 0
     feature_types_count: Dict[str, int] = field(default_factory=dict)
@@ -255,7 +261,8 @@ class FeatureMetrics:
 
 @dataclass
 class FeatureExtractionResult:
-    """Complete feature extraction result"""    extraction_id: str
+    """Complete feature extraction result"""
+    extraction_id: str
     content_id: str
     feature_types: List[str]
     
@@ -294,7 +301,8 @@ class FeatureExtractionResult:
     created_at: datetime = field(default_factory=datetime.utcnow)
 
 class FeatureExtractor:
-    """    Ultra-Advanced Feature Extraction Engine
+    """
+    Ultra-Advanced Feature Extraction Engine
     
     Comprehensive feature extraction system providing:
     - Multi-modal feature extraction (text, image, audio, video)
@@ -305,7 +313,8 @@ class FeatureExtractor:
     - Feature quality assessment and validation
     - Performance optimization and caching
     - Real-time and batch processing capabilities
-    """    
+    """
+    
     # Prometheus metrics
     EXTRACTION_JOBS = Counter('feature_extractor_jobs_total', 'Total extraction jobs', ['content_type', 'status'])
     EXTRACTION_DURATION = Histogram('feature_extractor_duration_seconds', 'Extraction duration', ['content_type'])
@@ -343,7 +352,8 @@ class FeatureExtractor:
         logger.info(f"FeatureExtractor initialized: {self.extractor_id}")
     
     async def initialize(self) -> bool:
-        """Initialize feature extractor"""        try:
+        """Initialize feature extractor"""
+        try:
             # Load NLP models
             if self.config.get("enable_nlp", True):
                 await self._load_nlp_models()
@@ -370,7 +380,8 @@ class FeatureExtractor:
                              content_id: str,
                              config: FeatureConfig,
                              async_execution: bool = False) -> Union[FeatureExtractionResult, str]:
-        """        Comprehensive multi-modal feature extraction
+        """
+        Comprehensive multi-modal feature extraction
         
         Args:
             content: Content data to extract features from
@@ -381,7 +392,8 @@ class FeatureExtractor:
             
         Returns:
             FeatureExtractionResult: Complete extraction results or job_id if async
-        """        extraction_id = config.extraction_id
+        """
+        extraction_id = config.extraction_id
         
         try:
             logger.info(f"Starting feature extraction: {extraction_id} ({content_type})")
@@ -450,8 +462,10 @@ class FeatureExtractor:
     async def extract_text_features(self,
                                   text: str,
                                   config: FeatureConfig = None) -> Dict[str, np.ndarray]:
-        """        Comprehensive text feature extraction
-        """        try:
+        """
+        Comprehensive text feature extraction
+        """
+        try:
             logger.info("Starting text feature extraction")
             
             config = config or FeatureConfig()
@@ -507,8 +521,10 @@ class FeatureExtractor:
     async def extract_image_features(self,
                                    image: np.ndarray,
                                    config: FeatureConfig = None) -> Dict[str, np.ndarray]:
-        """        Comprehensive image feature extraction
-        """        try:
+        """
+        Comprehensive image feature extraction
+        """
+        try:
             logger.info("Starting image feature extraction")
             
             if not CV2_AVAILABLE:
@@ -564,8 +580,10 @@ class FeatureExtractor:
                                    audio: np.ndarray,
                                    sample_rate: int,
                                    config: FeatureConfig = None) -> Dict[str, np.ndarray]:
-        """        Comprehensive audio feature extraction
-        """        try:
+        """
+        Comprehensive audio feature extraction
+        """
+        try:
             logger.info("Starting audio feature extraction")
             
             if not AUDIO_AVAILABLE:
@@ -621,8 +639,10 @@ class FeatureExtractor:
     async def extract_video_features(self,
                                    video_path: str,
                                    config: FeatureConfig = None) -> Dict[str, np.ndarray]:
-        """        Comprehensive video feature extraction
-        """        try:
+        """
+        Comprehensive video feature extraction
+        """
+        try:
             logger.info("Starting video feature extraction")
             
             if not VIDEO_AVAILABLE:
@@ -694,8 +714,10 @@ class FeatureExtractor:
                             target: np.ndarray,
                             feature_names: List[str],
                             config: FeatureConfig) -> Tuple[np.ndarray, List[str], Dict[str, float]]:
-        """        Advanced feature selection using multiple methods
-        """        try:
+        """
+        Advanced feature selection using multiple methods
+        """
+        try:
             logger.info("Starting feature selection")
             
             selected_features = features.copy()
@@ -772,8 +794,10 @@ class FeatureExtractor:
     async def reduce_dimensionality(self,
                                   features: np.ndarray,
                                   config: FeatureConfig) -> Tuple[np.ndarray, Any]:
-        """        Advanced dimensionality reduction
-        """        try:
+        """
+        Advanced dimensionality reduction
+        """
+        try:
             logger.info("Starting dimensionality reduction")
             
             n_components = config.n_components or min(features.shape[1] // 2, 100)
@@ -821,7 +845,8 @@ class FeatureExtractor:
                                         content_type: str,
                                         content_id: str,
                                         config: FeatureConfig) -> FeatureExtractionResult:
-        """Execute complete feature extraction pipeline"""        start_time = datetime.utcnow()
+        """Execute complete feature extraction pipeline"""
+        start_time = datetime.utcnow()
         extraction_id = config.extraction_id
         
         try:
@@ -932,7 +957,8 @@ class FeatureExtractor:
             raise
 
     def _initialize_feature_extractors(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize feature extractors registry"""        return {
+        """Initialize feature extractors registry"""
+        return {
             "text": {
                 "statistical": ["word_count", "char_count", "sentence_count", "avg_word_length"],
                 "vectorizers": ["tfidf", "count", "hash"],
@@ -969,7 +995,8 @@ class FeatureExtractor:
         }
 
     async def _load_nlp_models(self):
-        """Load NLP models"""        try:
+        """Load NLP models"""
+        try:
             # Load spaCy model
             try:
                 self.nlp_models["spacy"] = spacy.load("en_core_web_sm")
@@ -993,7 +1020,8 @@ class FeatureExtractor:
             logger.error(f"Failed to load NLP models: {e}")
 
     async def _load_pretrained_models(self):
-        """Load pre-trained models"""        try:
+        """Load pre-trained models"""
+        try:
             # Load Transformers models (lightweight versions)
             if self.config.get("enable_transformers", False):
                 try:
@@ -1008,7 +1036,8 @@ class FeatureExtractor:
             logger.error(f"Failed to load pre-trained models: {e}")
 
     async def _validate_extraction_config(self, config: FeatureConfig, content_type: str) -> Dict[str, Any]:
-        """Validate extraction configuration"""        errors = []
+        """Validate extraction configuration"""
+        errors = []
         
         if not config.feature_types and not content_type:
             errors.append("Either feature_types or content_type must be specified")
@@ -1025,7 +1054,8 @@ class FeatureExtractor:
         return {"valid": len(errors) == 0, "errors": errors}
 
     async def _preprocess_text(self, text: str, config: FeatureConfig) -> str:
-        """Preprocess text for feature extraction"""        try:
+        """Preprocess text for feature extraction"""
+        try:
             # Basic cleaning
             text = text.lower().strip()
             
@@ -1043,7 +1073,8 @@ class FeatureExtractor:
             return text
 
     async def _preprocess_image(self, image: np.ndarray, config: FeatureConfig) -> np.ndarray:
-        """Preprocess image for feature extraction"""        try:
+        """Preprocess image for feature extraction"""
+        try:
             if not CV2_AVAILABLE:
                 return image
             
@@ -1064,7 +1095,8 @@ class FeatureExtractor:
             return image
 
     async def _preprocess_audio(self, audio: np.ndarray, sample_rate: int, config: FeatureConfig) -> np.ndarray:
-        """Preprocess audio for feature extraction"""        try:
+        """Preprocess audio for feature extraction"""
+        try:
             if not AUDIO_AVAILABLE:
                 return audio
             
@@ -1085,7 +1117,8 @@ class FeatureExtractor:
     # For brevity, including the essential structure and main extraction methods
 
     async def _process_extraction_queue(self):
-        """Background extraction job processor"""        while True:
+        """Background extraction job processor"""
+        while True:
             try:
                 job_data = await self.extraction_queue.get()
                 
@@ -1137,8 +1170,10 @@ class FeatureExtractor:
 # The structure provides a comprehensive foundation for all feature extraction needs
 
 class FeaturePipeline:
-    """    Advanced Feature Pipeline for End-to-End Feature Processing
-    """    
+    """
+    Advanced Feature Pipeline for End-to-End Feature Processing
+    """
+    
     def __init__(self, extractor: FeatureExtractor):
         self.extractor = extractor
         self.pipeline_id = f"pipeline_{uuid.uuid4().hex[:8]}"
@@ -1148,7 +1183,8 @@ class FeaturePipeline:
     async def create_pipeline(self, 
                             steps: List[Dict[str, Any]],
                             pipeline_name: str) -> str:
-        """Create feature processing pipeline"""        try:
+        """Create feature processing pipeline"""
+        try:
             pipeline_config = {
                 "pipeline_id": str(uuid.uuid4()),
                 "name": pipeline_name,
@@ -1172,7 +1208,8 @@ class FeaturePipeline:
                              pipeline_id: str,
                              content: Any,
                              content_type: str) -> FeatureExtractionResult:
-        """Execute feature processing pipeline"""        try:
+        """Execute feature processing pipeline"""
+        try:
             logger.info(f"Executing pipeline: {pipeline_id}")
             
             # Load pipeline configuration

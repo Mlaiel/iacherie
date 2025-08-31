@@ -10,7 +10,8 @@ Description:
     Système de stockage d'événements avec persistance, streams, snapshots
     et requêtes avancées pour la plateforme IA-Influencer-Agent.
     Support PostgreSQL et Redis pour performance optimale.
-"""from typing import Any, Dict, List, Optional, Union, AsyncGenerator
+"""
+from typing import Any, Dict, List, Optional, Union, AsyncGenerator
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -31,20 +32,23 @@ logger = logging.getLogger(__name__)
 
 
 class StorageBackend(Enum):
-    """Types de backend de stockage"""    POSTGRESQL = "postgresql"
+    """Types de backend de stockage"""
+    POSTGRESQL = "postgresql"
     REDIS = "redis"
     MEMORY = "memory"
     HYBRID = "hybrid"
 
 
 class StreamDirection(Enum):
-    """Direction de lecture des streams"""    FORWARD = "forward"
+    """Direction de lecture des streams"""
+    FORWARD = "forward"
     BACKWARD = "backward"
 
 
 @dataclass
 class EventStreamCursor:
-    """Curseur pour navigation dans les streams"""    stream_id: str
+    """Curseur pour navigation dans les streams"""
+    stream_id: str
     position: int = 0
     timestamp: Optional[datetime] = None
     event_id: Optional[str] = None
@@ -62,7 +66,8 @@ class EventStreamCursor:
 
 @dataclass
 class EventQuery:
-    """Requête pour recherche d'événements"""    stream_id: Optional[str] = None
+    """Requête pour recherche d'événements"""
+    stream_id: Optional[str] = None
     event_types: Optional[List[str]] = None
     user_id: Optional[str] = None
     tenant_id: Optional[str] = None
@@ -77,18 +82,22 @@ class EventQuery:
 
 
 class EventStoreBackend(ABC):
-    """Interface pour les backends de stockage"""    
+    """Interface pour les backends de stockage"""
+    
     @abstractmethod
     async def store_event(self, event: Event, stream_id: str) -> bool:
-        """Stocke un événement dans un stream"""        pass
+        """Stocke un événement dans un stream"""
+        pass
     
     @abstractmethod
     async def get_event(self, event_id: str) -> Optional[Event]:
-        """Récupère un événement par ID"""        pass
+        """Récupère un événement par ID"""
+        pass
     
     @abstractmethod
     async def query_events(self, query: EventQuery) -> List[Event]:
-        """Recherche d'événements selon une requête"""        pass
+        """Recherche d'événements selon une requête"""
+        pass
     
     @abstractmethod
     async def get_stream_events(
@@ -97,22 +106,26 @@ class EventStoreBackend(ABC):
         from_position: int = 0, 
         limit: int = 100
     ) -> List[Event]:
-        """Récupère les événements d'un stream"""        pass
+        """Récupère les événements d'un stream"""
+        pass
     
     @abstractmethod
     async def get_stream_info(self, stream_id: str) -> Dict[str, Any]:
-        """Informations sur un stream"""        pass
+        """Informations sur un stream"""
+        pass
 
 
 class PostgreSQLEventStore(EventStoreBackend):
-    """Backend PostgreSQL pour stockage d'événements"""    
+    """Backend PostgreSQL pour stockage d'événements"""
+    
     def __init__(self, connection_string: str):
         self.connection_string = connection_string
         self.engine = None
         self.pool = None
     
     async def initialize(self):
-        """Initialise la connexion PostgreSQL"""        try:
+        """Initialise la connexion PostgreSQL"""
+        try:
             self.engine = create_async_engine(self.connection_string)
             self.pool = await asyncpg.create_pool(self.connection_string)
             await self._create_tables()
@@ -122,7 +135,9 @@ class PostgreSQLEventStore(EventStoreBackend):
             raise
     
     async def _create_tables(self):
-        """Crée les tables nécessaires"""        create_events_table = """        CREATE TABLE IF NOT EXISTS events (
+        """Crée les tables nécessaires"""
+        create_events_table = """
+        CREATE TABLE IF NOT EXISTS events (
             id VARCHAR(36) PRIMARY KEY,
             stream_id VARCHAR(255) NOT NULL,
             event_type VARCHAR(255) NOT NULL,
@@ -157,25 +172,31 @@ class PostgreSQLEventStore(EventStoreBackend):
             event_count BIGINT DEFAULT 0,
             metadata JSONB DEFAULT '{}'
         );
-        """        
+        """
+        
         async with self.pool.acquire() as conn:
             await conn.execute(create_events_table)
     
     async def store_event(self, event: Event, stream_id: str) -> bool:
-        """Stocke un événement dans PostgreSQL"""        try:
-            insert_event = """            INSERT INTO events (
+        """Stocke un événement dans PostgreSQL"""
+        try:
+            insert_event = """
+            INSERT INTO events (
                 id, stream_id, event_type, event_source, event_subject,
                 event_data, event_metadata, timestamp, priority, status,
                 user_id, tenant_id, correlation_id, causation_id, version
             ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
-            """            
-            update_stream = """            INSERT INTO event_streams (stream_id, stream_type, last_event_at, event_count)
+            """
+            
+            update_stream = """
+            INSERT INTO event_streams (stream_id, stream_type, last_event_at, event_count)
             VALUES ($1, $2, $3, 1)
             ON CONFLICT (stream_id) 
             DO UPDATE SET 
                 last_event_at = $3,
                 event_count = event_streams.event_count + 1
-            """            
+            """
+            
             async with self.pool.acquire() as conn:
                 async with conn.transaction():
                     await conn.execute(
@@ -200,12 +221,15 @@ class PostgreSQLEventStore(EventStoreBackend):
             return False
     
     async def get_event(self, event_id: str) -> Optional[Event]:
-        """Récupère un événement par ID"""        try:
-            query = """            SELECT id, event_type, event_source, event_subject, event_data,
+        """Récupère un événement par ID"""
+        try:
+            query = """
+            SELECT id, event_type, event_source, event_subject, event_data,
                    event_metadata, timestamp, priority, status, user_id,
                    tenant_id, correlation_id, causation_id, version
             FROM events WHERE id = $1
-            """            
+            """
+            
             async with self.pool.acquire() as conn:
                 row = await conn.fetchrow(query, event_id)
                 
@@ -234,7 +258,8 @@ class PostgreSQLEventStore(EventStoreBackend):
             return None
     
     async def query_events(self, query: EventQuery) -> List[Event]:
-        """Recherche d'événements selon une requête"""        try:
+        """Recherche d'événements selon une requête"""
+        try:
             # Construction de la requête SQL
             sql_parts = ["SELECT * FROM events WHERE 1=1"]
             params = []
@@ -314,7 +339,8 @@ class PostgreSQLEventStore(EventStoreBackend):
         from_position: int = 0, 
         limit: int = 100
     ) -> List[Event]:
-        """Récupère les événements d'un stream"""        query = EventQuery(
+        """Récupère les événements d'un stream"""
+        query = EventQuery(
             stream_id=stream_id,
             from_position=from_position,
             limit=limit,
@@ -324,10 +350,13 @@ class PostgreSQLEventStore(EventStoreBackend):
         return await self.query_events(query)
     
     async def get_stream_info(self, stream_id: str) -> Dict[str, Any]:
-        """Informations sur un stream"""        try:
-            query = """            SELECT stream_type, created_at, last_event_at, event_count, metadata
+        """Informations sur un stream"""
+        try:
+            query = """
+            SELECT stream_type, created_at, last_event_at, event_count, metadata
             FROM event_streams WHERE stream_id = $1
-            """            
+            """
+            
             async with self.pool.acquire() as conn:
                 row = await conn.fetchrow(query, stream_id)
                 
@@ -349,7 +378,8 @@ class PostgreSQLEventStore(EventStoreBackend):
 
 
 class EventStream:
-    """Stream d'événements avec curseur et navigation"""    
+    """Stream d'événements avec curseur et navigation"""
+    
     def __init__(
         self,
         stream_id: str,
@@ -368,7 +398,8 @@ class EventStream:
         count: int = 10,
         from_position: Optional[int] = None
     ) -> List[Event]:
-        """Lit les événements vers l'avant"""        if from_position is not None:
+        """Lit les événements vers l'avant"""
+        if from_position is not None:
             self._cursor.position = from_position
         
         events = await self.store.get_stream_events(
@@ -389,7 +420,8 @@ class EventStream:
         count: int = 10,
         from_position: Optional[int] = None
     ) -> List[Event]:
-        """Lit les événements vers l'arrière"""        # Implementation simplifiée - nécessiterait optimisation pour production
+        """Lit les événements vers l'arrière"""
+        # Implementation simplifiée - nécessiterait optimisation pour production
         if from_position is not None:
             self._cursor.position = from_position
         
@@ -408,20 +440,25 @@ class EventStream:
         return list(reversed(events))
     
     async def append(self, event: Event) -> bool:
-        """Ajoute un événement au stream"""        return await self.store.store_event(event, self.stream_id)
+        """Ajoute un événement au stream"""
+        return await self.store.store_event(event, self.stream_id)
     
     def get_cursor(self) -> EventStreamCursor:
-        """Retourne le curseur actuel"""        return self._cursor
+        """Retourne le curseur actuel"""
+        return self._cursor
     
     def set_cursor(self, cursor: EventStreamCursor):
-        """Définit le curseur"""        if cursor.stream_id != self.stream_id:
+        """Définit le curseur"""
+        if cursor.stream_id != self.stream_id:
             raise ValueError("Cursor stream_id must match stream_id")
         self._cursor = cursor
 
 
 class EventStore:
-    """    Système principal de stockage d'événements
-    """    
+    """
+    Système principal de stockage d'événements
+    """
+    
     def __init__(
         self,
         backend: EventStoreBackend,
@@ -444,7 +481,8 @@ class EventStore:
         }
     
     async def store_event(self, event: Event, stream_id: str) -> bool:
-        """Stocke un événement"""        success = await self.backend.store_event(event, stream_id)
+        """Stocke un événement"""
+        success = await self.backend.store_event(event, stream_id)
         
         if success:
             self._stats["events_stored"] += 1
@@ -455,7 +493,8 @@ class EventStore:
         return success
     
     async def get_event(self, event_id: str) -> Optional[Event]:
-        """Récupère un événement par ID"""        cache_key = f"event:{event_id}"
+        """Récupère un événement par ID"""
+        cache_key = f"event:{event_id}"
         
         # Vérification cache
         if self.enable_caching and self._is_cache_valid(cache_key):
@@ -475,12 +514,14 @@ class EventStore:
         return event
     
     async def query_events(self, query: EventQuery) -> List[Event]:
-        """Recherche d'événements"""        events = await self.backend.query_events(query)
+        """Recherche d'événements"""
+        events = await self.backend.query_events(query)
         self._stats["events_retrieved"] += len(events)
         return events
     
     async def get_stream(self, stream_id: str) -> EventStream:
-        """Crée ou récupère un stream"""        stream = EventStream(stream_id, self)
+        """Crée ou récupère un stream"""
+        stream = EventStream(stream_id, self)
         
         # Vérification si le stream existe
         info = await self.backend.get_stream_info(stream_id)
@@ -495,10 +536,12 @@ class EventStore:
         from_position: int = 0, 
         limit: int = 100
     ) -> List[Event]:
-        """Récupère les événements d'un stream"""        return await self.backend.get_stream_events(stream_id, from_position, limit)
+        """Récupère les événements d'un stream"""
+        return await self.backend.get_stream_events(stream_id, from_position, limit)
     
     def _is_cache_valid(self, cache_key: str) -> bool:
-        """Vérifie si une entrée cache est valide"""        if cache_key not in self._cache:
+        """Vérifie si une entrée cache est valide"""
+        if cache_key not in self._cache:
             return False
         
         timestamp = self._cache_timestamps.get(cache_key)
@@ -509,12 +552,14 @@ class EventStore:
         return age < self.cache_ttl
     
     def _invalidate_cache(self, cache_key: str):
-        """Invalide une entrée cache"""        if cache_key in self._cache:
+        """Invalide une entrée cache"""
+        if cache_key in self._cache:
             del self._cache[cache_key]
             del self._cache_timestamps[cache_key]
     
     def get_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques"""        return {
+        """Retourne les statistiques"""
+        return {
             "stats": self._stats.copy(),
             "cache_size": len(self._cache),
             "cache_hit_rate": (

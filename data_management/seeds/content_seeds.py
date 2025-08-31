@@ -1,7 +1,8 @@
 """Content Seeds Manager - Multi-format Content Initialization
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: All rights reserved - Unauthorized use strictly prohibited
-"""from typing import Dict, List, Any, Optional, Union, Set, Tuple
+"""
+from typing import Dict, List, Any, Optional, Union, Set, Tuple
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
@@ -17,7 +18,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(str, Enum):
-    """Supported content types for the IA Influencer platform."""    AUDIO = "audio"
+    """Supported content types for the IA Influencer platform."""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -28,7 +30,8 @@ class ContentType(str, Enum):
 
 
 class ContentFormat(str, Enum):
-    """Supported file formats for each content type."""    # Audio formats
+    """Supported file formats for each content type."""
+    # Audio formats
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -60,7 +63,8 @@ class ContentFormat(str, Enum):
 
 
 class ContentCategory(str, Enum):
-    """Content categories for better organization and AI processing."""    MUSIC = "music"
+    """Content categories for better organization and AI processing."""
+    MUSIC = "music"
     PODCAST = "podcast"
     BLOG = "blog"
     PHOTOGRAPHY = "photography"
@@ -83,7 +87,8 @@ class ContentCategory(str, Enum):
 
 
 class ContentStatus(str, Enum):
-    """Content lifecycle status."""    DRAFT = "draft"
+    """Content lifecycle status."""
+    DRAFT = "draft"
     PROCESSING = "processing"
     READY = "ready"
     PUBLISHED = "published"
@@ -94,7 +99,8 @@ class ContentStatus(str, Enum):
 
 
 class ProtectionLevel(str, Enum):
-    """Content protection levels."""    NONE = "none"
+    """Content protection levels."""
+    NONE = "none"
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -102,7 +108,8 @@ class ProtectionLevel(str, Enum):
 
 
 class QualityLevel(str, Enum):
-    """Content quality assessment levels."""    LOW = "low"
+    """Content quality assessment levels."""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     PROFESSIONAL = "professional"
@@ -110,7 +117,8 @@ class QualityLevel(str, Enum):
 
 
 class LicenseType(str, Enum):
-    """Content licensing types."""    ALL_RIGHTS_RESERVED = "all_rights_reserved"
+    """Content licensing types."""
+    ALL_RIGHTS_RESERVED = "all_rights_reserved"
     CREATIVE_COMMONS = "creative_commons"
     ROYALTY_FREE = "royalty_free"
     COMMERCIAL_USE = "commercial_use"
@@ -121,7 +129,8 @@ class LicenseType(str, Enum):
 
 @dataclass
 class ContentMetadata:
-    """Comprehensive content metadata structure."""    title: str
+    """Comprehensive content metadata structure."""
+    title: str
     description: Optional[str] = None
     tags: List[str] = field(default_factory=list)
     category: Optional[ContentCategory] = None
@@ -144,7 +153,8 @@ class ContentMetadata:
 
 @dataclass
 class ContentProcessingConfig:
-    """Content processing configuration."""    auto_generate_thumbnails: bool = True
+    """Content processing configuration."""
+    auto_generate_thumbnails: bool = True
     auto_generate_previews: bool = True
     quality_analysis: bool = True
     content_moderation: bool = True
@@ -157,7 +167,8 @@ class ContentProcessingConfig:
 
 
 class ContentSeedsManager:
-    """    Enterprise-grade content seeds manager for comprehensive multi-format content initialization.
+    """
+    Enterprise-grade content seeds manager for comprehensive multi-format content initialization.
     
     Handles:
     - Multi-format content types (Audio, Video, Image, Text, Podcast, Livestream)
@@ -168,9 +179,11 @@ class ContentSeedsManager:
     - Monetization configurations
     - Platform-specific format requirements
     - Content lifecycle management
-    """    
+    """
+    
     def __init__(self):
-        """Initialize content seeds manager with enterprise configurations."""        self.content_templates = {}
+        """Initialize content seeds manager with enterprise configurations."""
+        self.content_templates = {}
         self.format_specifications = {}
         self.category_mappings = {}
         self.metadata_schemas = {}
@@ -182,7 +195,8 @@ class ContentSeedsManager:
         self.platform_requirements = {}
     
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize all content-related seed data with full enterprise support."""        logger.info("Initializing comprehensive content management seeds data...")
+        """Initialize all content-related seed data with full enterprise support."""
+        logger.info("Initializing comprehensive content management seeds data...")
         start_time = datetime.now(timezone.utc)
         
         results = {}
@@ -282,7 +296,8 @@ class ContentSeedsManager:
             raise
     
     async def _initialize_content_types(self) -> Dict[str, Any]:
-        """Initialize content type configurations."""        content_types = {
+        """Initialize content type configurations."""
+        content_types = {
             ContentType.AUDIO: {
                 'name': 'Audio Content',
                 'description': 'Music, podcasts, audio books, and sound effects',
@@ -455,7 +470,8 @@ class ContentSeedsManager:
         }
     
     async def _initialize_format_specifications(self) -> Dict[str, Any]:
-        """Initialize detailed format specifications for each supported format."""        format_specs = {
+        """Initialize detailed format specifications for each supported format."""
+        format_specs = {
             # Audio Format Specifications
             ContentFormat.MP3: {
                 'mime_type': 'audio/mpeg',
@@ -563,7 +579,8 @@ class ContentSeedsManager:
         }
     
     async def _initialize_content_categories(self) -> Dict[str, Any]:
-        """Initialize content categories with detailed configurations."""        categories = {
+        """Initialize content categories with detailed configurations."""
+        categories = {
             ContentCategory.MUSIC: {
                 'name': 'Music & Audio',
                 'description': 'Musical content including songs, albums, and audio compositions',
@@ -647,7 +664,8 @@ class ContentSeedsManager:
         }
     
     async def _initialize_metadata_schemas(self) -> Dict[str, Any]:
-        """Initialize metadata schemas for different content types."""        schemas = {
+        """Initialize metadata schemas for different content types."""
+        schemas = {
             'audio_metadata': {
                 'required_fields': ['title', 'artist', 'duration'],
                 'optional_fields': [
@@ -704,7 +722,8 @@ class ContentSeedsManager:
         }
     
     async def _initialize_content_templates(self) -> Dict[str, Any]:
-        """Initialize content templates for different creator types."""        templates = {
+        """Initialize content templates for different creator types."""
+        templates = {
             'musician_profile': {
                 'content_types': [ContentType.AUDIO, ContentType.VIDEO],
                 'required_metadata': ['artist_name', 'genre', 'record_label'],
@@ -756,7 +775,8 @@ class ContentSeedsManager:
         }
     
     async def _initialize_quality_standards(self) -> Dict[str, Any]:
-        """Initialize quality standards and validation rules."""        quality_standards = {
+        """Initialize quality standards and validation rules."""
+        quality_standards = {
             'audio_quality': {
                 'minimum_standards': {
                     'bitrate_kbps': 128,
@@ -846,7 +866,8 @@ class ContentSeedsManager:
         }
     
     async def _initialize_ai_processing_configs(self) -> Dict[str, Any]:
-        """Initialize AI processing configurations for different content types."""        ai_configs = {
+        """Initialize AI processing configurations for different content types."""
+        ai_configs = {
             'audio_processing': {
                 'fingerprinting': {
                     'enabled': True,
@@ -936,7 +957,8 @@ class ContentSeedsManager:
         }
     
     async def reset(self) -> Dict[str, Any]:
-        """Reset all content seed data (use with caution)."""        logger.warning("Resetting content seeds data...")
+        """Reset all content seed data (use with caution)."""
+        logger.warning("Resetting content seeds data...")
         
         self.content_templates.clear()
         self.format_specifications.clear()

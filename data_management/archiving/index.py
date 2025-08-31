@@ -14,7 +14,8 @@ Any unauthorized use is strictly prohibited.
 
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + 
 Microservices + Audio + DevOps + IA Prompt Engineer
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class ArchivalSystemManager:
-    """    Central coordinator for the complete archival management system.
+    """
+    Central coordinator for the complete archival management system.
     
     Provides unified interface for all archival operations including:
     - Content archiving and storage management
@@ -44,13 +46,16 @@ class ArchivalSystemManager:
     - Metadata management and search
     - Compliance and audit tracking
     - Performance monitoring and analytics
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize the archival system.
+        """
+        Initialize the archival system.
         
         Args:
             config: Configuration dictionary for system components
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         
         # Core managers
         self.archival_manager = ArchivalManager()
@@ -71,7 +76,8 @@ class ArchivalSystemManager:
         logger.info("Archival System Manager created")
     
     async def initialize(self) -> bool:
-        """Initialize the complete archival system"""        try:
+        """Initialize the complete archival system"""
+        try:
             logger.info("Initializing Archival Management System...")
             
             # Initialize monitoring first
@@ -97,7 +103,8 @@ class ArchivalSystemManager:
             return False
     
     async def shutdown(self):
-        """Gracefully shutdown the archival system"""        try:
+        """Gracefully shutdown the archival system"""
+        try:
             logger.info("Shutting down Archival Management System...")
             
             # Stop monitoring
@@ -121,7 +128,8 @@ class ArchivalSystemManager:
         metadata: Optional[Dict[str, Any]] = None,
         user_id: str = "system"
     ) -> str:
-        """        Archive content with full lifecycle management.
+        """
+        Archive content with full lifecycle management.
         
         Args:
             content_id: Unique content identifier
@@ -132,7 +140,8 @@ class ArchivalSystemManager:
             
         Returns:
             Archive ID of stored content
-        """        try:
+        """
+        try:
             if not self.initialized:
                 raise ArchivalError("System not initialized")
             
@@ -172,7 +181,8 @@ class ArchivalSystemManager:
         user_id: str = "system",
         decompress: bool = True
     ) -> bytes:
-        """        Retrieve archived content.
+        """
+        Retrieve archived content.
         
         Args:
             archive_id: Archive identifier
@@ -181,7 +191,8 @@ class ArchivalSystemManager:
             
         Returns:
             Retrieved content data
-        """        try:
+        """
+        try:
             if not self.initialized:
                 raise ArchivalError("System not initialized")
             
@@ -209,7 +220,8 @@ class ArchivalSystemManager:
         date_range: Optional[tuple] = None,
         user_id: str = "system"
     ) -> List[Dict[str, Any]]:
-        """        Search archived content by metadata.
+        """
+        Search archived content by metadata.
         
         Args:
             query: Search query
@@ -219,7 +231,8 @@ class ArchivalSystemManager:
             
         Returns:
             List of search results
-        """        try:
+        """
+        try:
             if not self.initialized:
                 raise ArchivalError("System not initialized")
             
@@ -242,7 +255,8 @@ class ArchivalSystemManager:
             raise ArchivalError(f"Search operation failed: {e}")
     
     async def get_archive_info(self, archive_id: str) -> Dict[str, Any]:
-        """Get comprehensive information about an archive"""        try:
+        """Get comprehensive information about an archive"""
+        try:
             if not self.initialized:
                 raise ArchivalError("System not initialized")
             
@@ -271,7 +285,8 @@ class ArchivalSystemManager:
             raise ArchivalError(f"Archive info retrieval failed: {e}")
     
     async def run_maintenance(self, user_id: str = "system") -> Dict[str, Any]:
-        """Run system maintenance operations"""        try:
+        """Run system maintenance operations"""
+        try:
             if not self.initialized:
                 raise ArchivalError("System not initialized")
             
@@ -339,7 +354,8 @@ class ArchivalSystemManager:
             raise ArchivalError(f"Maintenance operation failed: {e}")
     
     async def get_system_health(self) -> Dict[str, Any]:
-        """Get comprehensive system health status"""        try:
+        """Get comprehensive system health status"""
+        try:
             # Get monitoring dashboard
             monitoring_data = await self.monitoring.get_monitoring_dashboard()
             
@@ -385,7 +401,8 @@ class ArchivalSystemManager:
             }
     
     async def get_system_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive system statistics"""        try:
+        """Get comprehensive system statistics"""
+        try:
             # Gather statistics from all components
             stats = {
                 "archival_stats": await self.archival_manager.get_statistics(),
@@ -410,7 +427,8 @@ class ArchivalSystemManager:
             return {"error": str(e)}
     
     async def _initialize_components(self):
-        """Initialize all system components"""        # In a real implementation, each component would have its own initialization
+        """Initialize all system components"""
+        # In a real implementation, each component would have its own initialization
         logger.info("Initializing system components...")
         
         # Initialize storage backends
@@ -426,7 +444,8 @@ class ArchivalSystemManager:
         logger.info("All components initialized")
     
     async def _setup_integrations(self):
-        """Setup integrations between components"""        logger.info("Setting up component integrations...")
+        """Setup integrations between components"""
+        logger.info("Setting up component integrations...")
         
         # Add monitoring collectors
         await self.monitoring.add_collector(self.archival_manager.get_metrics_collector())
@@ -435,7 +454,8 @@ class ArchivalSystemManager:
         logger.info("Component integrations configured")
     
     async def _shutdown_components(self):
-        """Shutdown all components gracefully"""        logger.info("Shutting down system components...")
+        """Shutdown all components gracefully"""
+        logger.info("Shutting down system components...")
         
         # Shutdown in reverse order of initialization
         components = [
@@ -467,7 +487,8 @@ class ArchivalSystemManager:
         success: bool,
         error_message: Optional[str] = None
     ):
-        """Log audit event for compliance"""        try:
+        """Log audit event for compliance"""
+        try:
             from .compliance import AuditEvent, AuditEventType
             import uuid
             
@@ -500,14 +521,16 @@ class ArchivalSystemManager:
 
 # Convenience function for creating system instance
 async def create_archival_system(config: Optional[Dict[str, Any]] = None) -> ArchivalSystemManager:
-    """    Create and initialize a complete archival system.
+    """
+    Create and initialize a complete archival system.
     
     Args:
         config: System configuration
         
     Returns:
         Initialized archival system manager
-    """    system = ArchivalSystemManager(config)
+    """
+    system = ArchivalSystemManager(config)
     
     if await system.initialize():
         return system
@@ -517,7 +540,8 @@ async def create_archival_system(config: Optional[Dict[str, Any]] = None) -> Arc
 
 # Main execution for testing
 async def main():
-    """Main function for testing the archival system"""    try:
+    """Main function for testing the archival system"""
+    try:
         logger.info("Starting Archival Management System test...")
         
         # Create and initialize system

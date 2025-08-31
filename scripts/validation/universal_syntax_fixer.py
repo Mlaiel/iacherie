@@ -45,7 +45,8 @@ class UniversalSyntaxFixer:
             content = content.replace('™', '(TM)')
             
             # Fix 2: Add newlines after docstrings that are immediately followed by code
-            # Pattern: """docstring"""    code -> """docstring"""\n    code
+            # Pattern: """docstring"""
+    code -> """docstring"""\n    code
             content = re.sub(
                 r'("""[^"]*?""")(\s+)([A-Z_][A-Z0-9_]*\s*=)',
                 r'\1\n    \3',
@@ -86,7 +87,8 @@ class UniversalSyntaxFixer:
             
             # Fix 5: Ensure proper spacing around imports
             content = re.sub(r'"""\nimport', '"""\n\nimport', content)
-            content = re.sub(r'"""import', '"""\nimport', content)
+            content = re.sub(r'"""
+import', '"""\nimport', content)
             
             # Verify the fix by trying to parse
             if content != original_content:

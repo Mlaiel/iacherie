@@ -10,13 +10,15 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import sys
+"""
+import sys
 import traceback
 from typing import List, Dict, Any
 
 
 def validate_orchestration_imports() -> Dict[str, Any]:
-    """Validate that all orchestration modules can be imported."""    results = {
+    """Validate that all orchestration modules can be imported."""
+    results = {
         "success": [],
         "failed": [],
         "summary": {}
@@ -122,7 +124,8 @@ def validate_orchestration_imports() -> Dict[str, Any]:
 
 
 def validate_orchestration_structure():
-    """Validate the overall orchestration module structure."""    print("\n🏗️  VALIDATING ORCHESTRATION STRUCTURE...")
+    """Validate the overall orchestration module structure."""
+    print("\n🏗️  VALIDATING ORCHESTRATION STRUCTURE...")
     print("=" * 60)
     
     try:
@@ -150,7 +153,8 @@ def validate_orchestration_structure():
 
 
 def validate_pipeline_templates():
-    """Validate pipeline template functionality."""    print("\n🔧 VALIDATING PIPELINE TEMPLATES...")
+    """Validate pipeline template functionality."""
+    print("\n🔧 VALIDATING PIPELINE TEMPLATES...")
     print("=" * 60)
     
     try:
@@ -177,7 +181,8 @@ def validate_pipeline_templates():
 
 
 def main():
-    """Run all validation tests."""    print("🚀 IA INFLUENCER AGENT - ORCHESTRATION MODULE VALIDATION")
+    """Run all validation tests."""
+    print("🚀 IA INFLUENCER AGENT - ORCHESTRATION MODULE VALIDATION")
     print("=" * 80)
     print("Author: Fahed Mlaiel <mlaiel@live.de>")
     print("Copyright (c) 2025 Fahed Mlaiel. All rights reserved.")

@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""import uuid
+"""
+import uuid
 import json
 import asyncio
 from datetime import datetime, timezone, timedelta
@@ -43,7 +44,8 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of collaboration for creators"""    MUSIC_PRODUCTION = "music_production"
+    """Types of collaboration for creators"""
+    MUSIC_PRODUCTION = "music_production"
     CONTENT_CREATION = "content_creation"
     PHOTO_EDITING = "photo_editing"
     VIDEO_PRODUCTION = "video_production"
@@ -56,7 +58,8 @@ class CollaborationType(Enum):
 
 
 class RoomStatus(Enum):
-    """Collaboration room status"""    CREATING = "creating"
+    """Collaboration room status"""
+    CREATING = "creating"
     ACTIVE = "active"
     PAUSED = "paused"
     ARCHIVED = "archived"
@@ -65,7 +68,8 @@ class RoomStatus(Enum):
 
 
 class ParticipantRole(Enum):
-    """Participant roles in collaboration"""    OWNER = "owner"
+    """Participant roles in collaboration"""
+    OWNER = "owner"
     MODERATOR = "moderator"
     COLLABORATOR = "collaborator"
     VIEWER = "viewer"
@@ -73,7 +77,8 @@ class ParticipantRole(Enum):
 
 
 class ParticipantStatus(Enum):
-    """Participant connection status"""    ONLINE = "online"
+    """Participant connection status"""
+    ONLINE = "online"
     OFFLINE = "offline"
     AWAY = "away"
     BUSY = "busy"
@@ -81,7 +86,8 @@ class ParticipantStatus(Enum):
 
 
 class ActivityType(Enum):
-    """Collaboration activity types"""    JOIN = "join"
+    """Collaboration activity types"""
+    JOIN = "join"
     LEAVE = "leave"
     MESSAGE = "message"
     FILE_UPLOAD = "file_upload"
@@ -96,7 +102,8 @@ class ActivityType(Enum):
 
 
 class ContentFormat(Enum):
-    """Supported content formats for collaboration"""    AUDIO = "audio"
+    """Supported content formats for collaboration"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -108,7 +115,8 @@ class ContentFormat(Enum):
 
 @dataclass
 class CollaborationPermissions:
-    """Collaboration permissions structure"""    can_edit: bool = False
+    """Collaboration permissions structure"""
+    can_edit: bool = False
     can_comment: bool = True
     can_share: bool = False
     can_invite: bool = False
@@ -119,7 +127,8 @@ class CollaborationPermissions:
 
 @dataclass
 class RoomSettings:
-    """Collaboration room settings"""    max_participants: int = 50
+    """Collaboration room settings"""
+    max_participants: int = 50
     is_public: bool = False
     requires_approval: bool = True
     enable_chat: bool = True
@@ -132,7 +141,8 @@ class RoomSettings:
 
 
 class CollaborationRoom(Base):
-    """Collaboration room model"""    __tablename__ = "collaboration_rooms"
+    """Collaboration room model"""
+    __tablename__ = "collaboration_rooms"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     room_id = Column(String(255), nullable=False, unique=True, index=True)
@@ -189,7 +199,8 @@ class CollaborationRoom(Base):
 
 
 class RoomParticipant(Base):
-    """Room participant model"""    __tablename__ = "room_participants"
+    """Room participant model"""
+    __tablename__ = "room_participants"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     room_id = Column(String(255), nullable=False, index=True)
@@ -231,7 +242,8 @@ class RoomParticipant(Base):
 
 
 class CollaborationActivity(Base):
-    """Collaboration activity tracking"""    __tablename__ = "collaboration_activities"
+    """Collaboration activity tracking"""
+    __tablename__ = "collaboration_activities"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     room_id = Column(String(255), nullable=False, index=True)
@@ -265,7 +277,8 @@ class CollaborationActivity(Base):
 
 
 class SharedContent(Base):
-    """Shared content in collaboration rooms"""    __tablename__ = "shared_content"
+    """Shared content in collaboration rooms"""
+    __tablename__ = "shared_content"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(String(255), nullable=False, unique=True, index=True)
@@ -320,7 +333,8 @@ class SharedContent(Base):
 
 
 class CollaborationMessage(Base):
-    """Real-time messages in collaboration rooms"""    __tablename__ = "collaboration_messages"
+    """Real-time messages in collaboration rooms"""
+    __tablename__ = "collaboration_messages"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     message_id = Column(String(255), nullable=False, unique=True, index=True)
@@ -372,7 +386,8 @@ class CollaborationMessage(Base):
 
 
 class CollaborationSession(Base):
-    """Collaboration session tracking"""    __tablename__ = "collaboration_sessions"
+    """Collaboration session tracking"""
+    __tablename__ = "collaboration_sessions"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     session_id = Column(String(255), nullable=False, unique=True, index=True)
@@ -411,7 +426,8 @@ class CollaborationSession(Base):
 
 
 class LiveCollaboration:
-    """Enterprise live collaboration system"""    
+    """Enterprise live collaboration system"""
+    
     def __init__(self, redis_client: redis.Redis, db_session: Session):
         self.redis = redis_client
         self.db = db_session
@@ -421,7 +437,8 @@ class LiveCollaboration:
         self.worker_tasks: List[asyncio.Task] = []
     
     async def initialize(self):
-        """Initialize collaboration system"""        try:
+        """Initialize collaboration system"""
+        try:
             # Load active rooms
             await self._load_active_rooms()
             
@@ -436,7 +453,8 @@ class LiveCollaboration:
             raise
     
     async def shutdown(self):
-        """Graceful shutdown"""        self.running = False
+        """Graceful shutdown"""
+        self.running = False
         
         # Close all active rooms
         for room_id in list(self.active_rooms.keys()):
@@ -461,7 +479,8 @@ class LiveCollaboration:
         scheduled_end: Optional[datetime] = None,
         description: Optional[str] = None
     ) -> str:
-        """Create new collaboration room"""        try:
+        """Create new collaboration room"""
+        try:
             room_id = f"room_{uuid.uuid4().hex[:12]}"
             
             # Create room record
@@ -526,7 +545,8 @@ class LiveCollaboration:
         invite_code: Optional[str] = None,
         role: ParticipantRole = ParticipantRole.COLLABORATOR
     ) -> bool:
-        """Join collaboration room"""        try:
+        """Join collaboration room"""
+        try:
             # Get room
             room = self.db.query(CollaborationRoom).filter(
                 CollaborationRoom.room_id == room_id,
@@ -608,7 +628,8 @@ class LiveCollaboration:
             return False
     
     async def leave_room(self, room_id: str, user_id: str) -> bool:
-        """Leave collaboration room"""        try:
+        """Leave collaboration room"""
+        try:
             participant = self.db.query(RoomParticipant).filter(
                 RoomParticipant.room_id == room_id,
                 RoomParticipant.user_id == user_id,
@@ -663,7 +684,8 @@ class LiveCollaboration:
         attachments: Optional[List[Dict[str, Any]]] = None,
         reply_to: Optional[str] = None
     ) -> str:
-        """Send message in collaboration room"""        try:
+        """Send message in collaboration room"""
+        try:
             message_id = f"msg_{uuid.uuid4().hex[:12]}"
             
             # Create message
@@ -739,7 +761,8 @@ class LiveCollaboration:
         size_bytes: int,
         permissions: Optional[Dict[str, bool]] = None
     ) -> str:
-        """Share content in collaboration room"""        try:
+        """Share content in collaboration room"""
+        try:
             content_id = f"content_{uuid.uuid4().hex[:12]}"
             
             shared_content = SharedContent(
@@ -807,7 +830,8 @@ class LiveCollaboration:
             raise
     
     async def get_room_participants(self, room_id: str) -> List[Dict[str, Any]]:
-        """Get room participants with status"""        try:
+        """Get room participants with status"""
+        try:
             participants = self.db.query(RoomParticipant).filter(
                 RoomParticipant.room_id == room_id,
                 RoomParticipant.is_active == True
@@ -846,7 +870,8 @@ class LiveCollaboration:
         offset: int = 0,
         since: Optional[datetime] = None
     ) -> List[Dict[str, Any]]:
-        """Get room messages"""        try:
+        """Get room messages"""
+        try:
             query = self.db.query(CollaborationMessage).filter(
                 CollaborationMessage.room_id == room_id,
                 CollaborationMessage.is_deleted == False
@@ -879,7 +904,8 @@ class LiveCollaboration:
             return []
     
     async def subscribe_to_room(self, room_id: str, callback: Callable):
-        """Subscribe to room events"""        if room_id not in self.room_subscribers:
+        """Subscribe to room events"""
+        if room_id not in self.room_subscribers:
             self.room_subscribers[room_id] = set()
         
         self.room_subscribers[room_id].add(callback)
@@ -890,7 +916,8 @@ class LiveCollaboration:
         logger.info(f"Subscribed to room events: {room_id}")
     
     async def unsubscribe_from_room(self, room_id: str, callback: Callable):
-        """Unsubscribe from room events"""        if room_id in self.room_subscribers:
+        """Unsubscribe from room events"""
+        if room_id in self.room_subscribers:
             self.room_subscribers[room_id].discard(callback)
             
             if not self.room_subscribers[room_id]:
@@ -900,7 +927,8 @@ class LiveCollaboration:
     # Private methods
     
     async def _load_active_rooms(self):
-        """Load active rooms from database"""        active_rooms = self.db.query(CollaborationRoom).filter(
+        """Load active rooms from database"""
+        active_rooms = self.db.query(CollaborationRoom).filter(
             CollaborationRoom.status.in_([RoomStatus.ACTIVE.value, RoomStatus.CREATING.value])
         ).all()
         
@@ -912,27 +940,32 @@ class LiveCollaboration:
             }
     
     async def _start_workers(self):
-        """Start background worker tasks"""        self.worker_tasks.extend([
+        """Start background worker tasks"""
+        self.worker_tasks.extend([
             asyncio.create_task(self._room_activity_monitor()),
             asyncio.create_task(self._session_timeout_monitor()),
             asyncio.create_task(self._metrics_collector())
         ])
     
     async def _initialize_room_redis(self, room_id: str):
-        """Initialize Redis structures for room"""        await self.redis.delete(f"room:{room_id}:participants")
+        """Initialize Redis structures for room"""
+        await self.redis.delete(f"room:{room_id}:participants")
         await self.redis.delete(f"room:{room_id}:messages")
         await self.redis.setex(f"room:{room_id}:created", 86400, datetime.now(timezone.utc).isoformat())
     
     async def _add_participant_to_redis(self, room_id: str, user_id: str):
-        """Add participant to Redis room structures"""        await self.redis.sadd(f"room:{room_id}:participants", user_id)
+        """Add participant to Redis room structures"""
+        await self.redis.sadd(f"room:{room_id}:participants", user_id)
         await self.redis.setex(f"room:{room_id}:participant:{user_id}", 3600, "online")
     
     async def _remove_participant_from_redis(self, room_id: str, user_id: str):
-        """Remove participant from Redis room structures"""        await self.redis.srem(f"room:{room_id}:participants", user_id)
+        """Remove participant from Redis room structures"""
+        await self.redis.srem(f"room:{room_id}:participants", user_id)
         await self.redis.delete(f"room:{room_id}:participant:{user_id}")
     
     async def _broadcast_to_room(self, room_id: str, message: Dict[str, Any]):
-        """Broadcast message to room participants"""        # Publish to Redis
+        """Broadcast message to room participants"""
+        # Publish to Redis
         await self.redis.publish(f"room:{room_id}", json.dumps(message))
         
         # Call local subscribers
@@ -951,7 +984,8 @@ class LiveCollaboration:
         description: str,
         details: Optional[Dict[str, Any]] = None
     ):
-        """Log collaboration activity"""        activity = CollaborationActivity(
+        """Log collaboration activity"""
+        activity = CollaborationActivity(
             room_id=room_id,
             user_id=user_id,
             activity_type=activity_type.value,
@@ -964,7 +998,8 @@ class LiveCollaboration:
         self.db.commit()
     
     def _get_default_permissions(self, role: ParticipantRole) -> CollaborationPermissions:
-        """Get default permissions for role"""        if role == ParticipantRole.OWNER:
+        """Get default permissions for role"""
+        if role == ParticipantRole.OWNER:
             return CollaborationPermissions(
                 can_edit=True, can_comment=True, can_share=True,
                 can_invite=True, can_moderate=True, can_export=True, can_delete=True
@@ -991,7 +1026,8 @@ class LiveCollaboration:
             )
     
     async def _close_room(self, room_id: str):
-        """Close and cleanup room"""        # Update room status
+        """Close and cleanup room"""
+        # Update room status
         room = self.db.query(CollaborationRoom).filter(
             CollaborationRoom.room_id == room_id
         ).first()
@@ -1009,7 +1045,8 @@ class LiveCollaboration:
         self.active_rooms.pop(room_id, None)
     
     async def _room_activity_monitor(self):
-        """Monitor room activity"""        while self.running:
+        """Monitor room activity"""
+        while self.running:
             try:
                 await asyncio.sleep(60)
                 # Monitor room activity and cleanup inactive rooms
@@ -1019,7 +1056,8 @@ class LiveCollaboration:
                 await asyncio.sleep(30)
     
     async def _session_timeout_monitor(self):
-        """Monitor session timeouts"""        while self.running:
+        """Monitor session timeouts"""
+        while self.running:
             try:
                 await asyncio.sleep(300)  # Check every 5 minutes
                 # Handle session timeouts
@@ -1029,7 +1067,8 @@ class LiveCollaboration:
                 await asyncio.sleep(60)
     
     async def _metrics_collector(self):
-        """Collect collaboration metrics"""        while self.running:
+        """Collect collaboration metrics"""
+        while self.running:
             try:
                 await asyncio.sleep(120)
                 # Collect and store metrics
@@ -1041,7 +1080,8 @@ class LiveCollaboration:
 
 @asynccontextmanager
 async def get_live_collaboration(redis_client: redis.Redis, db_session: Session):
-    """Context manager for live collaboration"""    collaboration = LiveCollaboration(redis_client, db_session)
+    """Context manager for live collaboration"""
+    collaboration = LiveCollaboration(redis_client, db_session)
     try:
         await collaboration.initialize()
         yield collaboration

@@ -9,7 +9,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited. Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -28,7 +29,8 @@ from ...utils.vector_search import VectorSearchEngine
 
 
 class MemoryType(Enum):
-    """Types of memory stored in the system"""    EPISODIC = "episodic"        # Specific conversation episodes
+    """Types of memory stored in the system"""
+    EPISODIC = "episodic"        # Specific conversation episodes
     SEMANTIC = "semantic"        # General knowledge and concepts
     PROCEDURAL = "procedural"    # How-to knowledge and workflows
     EMOTIONAL = "emotional"      # Emotional context and states
@@ -38,7 +40,8 @@ class MemoryType(Enum):
 
 
 class MemoryPersistence(Enum):
-    """Memory persistence levels"""    TRANSIENT = "transient"      # Session-only memory
+    """Memory persistence levels"""
+    TRANSIENT = "transient"      # Session-only memory
     SHORT_TERM = "short_term"    # Days to weeks
     MEDIUM_TERM = "medium_term"  # Weeks to months
     LONG_TERM = "long_term"     # Months to years
@@ -47,7 +50,8 @@ class MemoryPersistence(Enum):
 
 @dataclass
 class MemoryNode:
-    """Individual memory node with semantic information"""    memory_id: str
+    """Individual memory node with semantic information"""
+    memory_id: str
     content: Any
     memory_type: MemoryType
     persistence: MemoryPersistence
@@ -62,7 +66,8 @@ class MemoryNode:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def update_access(self):
-        """Update access statistics"""        self.last_accessed = datetime.utcnow()
+        """Update access statistics"""
+        self.last_accessed = datetime.utcnow()
         self.access_count += 1
         
         # Update importance based on access patterns
@@ -71,7 +76,8 @@ class MemoryNode:
         self.importance_score = (recency_factor * 0.3 + frequency_factor * 0.7)
     
     def is_expired(self) -> bool:
-        """Check if memory should expire"""        if self.persistence == MemoryPersistence.PERMANENT:
+        """Check if memory should expire"""
+        if self.persistence == MemoryPersistence.PERMANENT:
             return False
         
         age = datetime.utcnow() - self.created_at
@@ -88,7 +94,8 @@ class MemoryNode:
         return False
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""        return {
+        """Convert to dictionary representation"""
+        return {
             "memory_id": self.memory_id,
             "content": self.content,
             "memory_type": self.memory_type.value,
@@ -106,7 +113,8 @@ class MemoryNode:
 
 @dataclass
 class MemoryCluster:
-    """Cluster of related memories"""    cluster_id: str
+    """Cluster of related memories"""
+    cluster_id: str
     memories: List[MemoryNode]
     centroid_embedding: np.ndarray
     topic: str
@@ -114,7 +122,8 @@ class MemoryCluster:
     last_updated: datetime
     
     def update_centroid(self):
-        """Update cluster centroid based on member embeddings"""        if not self.memories or not any(m.embedding is not None for m in self.memories):
+        """Update cluster centroid based on member embeddings"""
+        if not self.memories or not any(m.embedding is not None for m in self.memories):
             return
         
         embeddings = [m.embedding for m in self.memories if m.embedding is not None]
@@ -125,14 +134,16 @@ class MemoryCluster:
 
 @dataclass
 class MemorySearchResult:
-    """Result from memory search operation"""    memory_node: MemoryNode
+    """Result from memory search operation"""
+    memory_node: MemoryNode
     relevance_score: float
     reasoning: str
     context_match: bool = False
 
 
 class ContextualMemory:
-    """    Advanced contextual memory system providing intelligent conversation 
+    """
+    Advanced contextual memory system providing intelligent conversation 
     memory management with semantic understanding and retrieval.
     
     Features:
@@ -142,7 +153,8 @@ class ContextualMemory:
     - Importance-based retention
     - Relationship mapping between memories
     - Context-aware memory activation
-    """    
+    """
+    
     def __init__(
         self,
         cache_manager: CacheManager,
@@ -184,7 +196,8 @@ class ContextualMemory:
         self.logger.info("ContextualMemory initialized")
     
     async def start(self):
-        """Start the contextual memory system"""        try:
+        """Start the contextual memory system"""
+        try:
             # Load existing memories
             await self._load_memories()
             
@@ -201,7 +214,8 @@ class ContextualMemory:
             raise MemoryError(f"Startup failed: {e}")
     
     async def stop(self):
-        """Stop the contextual memory system"""        try:
+        """Stop the contextual memory system"""
+        try:
             # Cancel background tasks
             if self.maintenance_task:
                 self.maintenance_task.cancel()
@@ -229,7 +243,8 @@ class ContextualMemory:
         metadata: Optional[Dict[str, Any]] = None,
         related_memories: Optional[List[str]] = None
     ) -> str:
-        """        Store new memory with semantic processing
+        """
+        Store new memory with semantic processing
         
         Args:
             user_id: User identifier
@@ -243,7 +258,8 @@ class ContextualMemory:
             
         Returns:
             str: Memory ID
-        """        try:
+        """
+        try:
             # Generate memory ID
             memory_id = hashlib.md5(
                 f"{user_id}_{datetime.utcnow().isoformat()}_{str(content)[:100]}".encode()
@@ -317,7 +333,8 @@ class ContextualMemory:
         memory_id: str,
         update_access: bool = True
     ) -> Optional[MemoryNode]:
-        """        Retrieve specific memory by ID
+        """
+        Retrieve specific memory by ID
         
         Args:
             user_id: User identifier
@@ -326,7 +343,8 @@ class ContextualMemory:
             
         Returns:
             MemoryNode or None if not found
-        """        try:
+        """
+        try:
             memory = self.user_memories.get(user_id, {}).get(memory_id)
             
             if memory:
@@ -352,7 +370,8 @@ class ContextualMemory:
         min_relevance: float = 0.3,
         include_context: bool = True
     ) -> List[MemorySearchResult]:
-        """        Search memories using semantic similarity
+        """
+        Search memories using semantic similarity
         
         Args:
             user_id: User identifier
@@ -364,7 +383,8 @@ class ContextualMemory:
             
         Returns:
             List of memory search results
-        """        try:
+        """
+        try:
             # Generate query embedding
             query_embedding = await self.embedding_generator.generate_embedding(query)
             
@@ -442,7 +462,8 @@ class ContextualMemory:
         relationship_threshold: float = 0.5,
         limit: int = 10
     ) -> List[Tuple[MemoryNode, float]]:
-        """        Get memories related to a specific memory
+        """
+        Get memories related to a specific memory
         
         Args:
             user_id: User identifier
@@ -452,7 +473,8 @@ class ContextualMemory:
             
         Returns:
             List of (memory, relationship_strength) tuples
-        """        try:
+        """
+        try:
             if user_id not in self.memory_relationships:
                 return []
             
@@ -482,7 +504,8 @@ class ContextualMemory:
         memory_types: Optional[List[MemoryType]] = None,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """        Get comprehensive memory summary for user
+        """
+        Get comprehensive memory summary for user
         
         Args:
             user_id: User identifier
@@ -491,7 +514,8 @@ class ContextualMemory:
             
         Returns:
             Dict containing memory summary
-        """        try:
+        """
+        try:
             user_memories = self.user_memories.get(user_id, {})
             
             # Filter memories
@@ -590,7 +614,8 @@ class ContextualMemory:
         user_id: str,
         memory_id: str
     ) -> bool:
-        """        Delete specific memory
+        """
+        Delete specific memory
         
         Args:
             user_id: User identifier
@@ -598,7 +623,8 @@ class ContextualMemory:
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             # Remove from user memories
             if user_id in self.user_memories and memory_id in self.user_memories[user_id]:
                 del self.user_memories[user_id][memory_id]
@@ -636,11 +662,13 @@ class ContextualMemory:
             return False
     
     async def cleanup_expired_memories(self, user_id: Optional[str] = None):
-        """        Clean up expired memories
+        """
+        Clean up expired memories
         
         Args:
             user_id: Specific user ID or None for all users
-        """        try:
+        """
+        try:
             users_to_clean = [user_id] if user_id else list(self.user_memories.keys())
             total_cleaned = 0
             
@@ -677,7 +705,8 @@ class ContextualMemory:
         similarity_score: float,
         include_context: bool
     ) -> float:
-        """Calculate comprehensive relevance score"""        # Base score from semantic similarity
+        """Calculate comprehensive relevance score"""
+        # Base score from semantic similarity
         relevance = similarity_score * 0.4
         
         # Importance factor
@@ -704,7 +733,8 @@ class ContextualMemory:
         query: str,
         similarity_score: float
     ) -> str:
-        """Generate reasoning for search result"""        reasons = []
+        """Generate reasoning for search result"""
+        reasons = []
         
         if similarity_score > 0.8:
             reasons.append("high semantic similarity")
@@ -738,7 +768,8 @@ class ContextualMemory:
         memory_id: str,
         related_memory_ids: List[str]
     ):
-        """Establish relationships between memories"""        for related_id in related_memory_ids:
+        """Establish relationships between memories"""
+        for related_id in related_memory_ids:
             if related_id in self.user_memories.get(user_id, {}):
                 # Bidirectional relationship with default strength
                 self.memory_relationships[user_id][memory_id][related_id] = 0.7
@@ -749,7 +780,8 @@ class ContextualMemory:
         user_id: str,
         new_memory: MemoryNode
     ):
-        """Auto-detect related memories using similarity"""        if new_memory.embedding is None:
+        """Auto-detect related memories using similarity"""
+        if new_memory.embedding is None:
             return
         
         user_memories = self.user_memories.get(user_id, {})
@@ -773,7 +805,8 @@ class ContextualMemory:
         user_id: str,
         new_memory: MemoryNode
     ):
-        """Update memory clusters with new memory"""        if new_memory.embedding is None:
+        """Update memory clusters with new memory"""
+        if new_memory.embedding is None:
             return
         
         user_clusters = self.memory_clusters[user_id]
@@ -809,7 +842,8 @@ class ContextualMemory:
             user_clusters.append(new_cluster)
     
     async def _remove_from_clusters(self, user_id: str, memory_id: str):
-        """Remove memory from clusters"""        user_clusters = self.memory_clusters.get(user_id, [])
+        """Remove memory from clusters"""
+        user_clusters = self.memory_clusters.get(user_id, [])
         
         for cluster in user_clusters:
             cluster.memories = [m for m in cluster.memories if m.memory_id != memory_id]
@@ -821,7 +855,8 @@ class ContextualMemory:
                 cluster.update_centroid()
     
     async def _enforce_memory_limits(self, user_id: str):
-        """Enforce memory limits per user"""        user_memories = self.user_memories.get(user_id, {})
+        """Enforce memory limits per user"""
+        user_memories = self.user_memories.get(user_id, {})
         
         if len(user_memories) > self.max_memories_per_user:
             # Remove least important memories
@@ -836,7 +871,8 @@ class ContextualMemory:
                 await self.delete_memory(user_id, memory.memory_id)
     
     async def _background_maintenance(self):
-        """Background task for memory maintenance"""        while True:
+        """Background task for memory maintenance"""
+        while True:
             try:
                 await asyncio.sleep(3600)  # Run every hour
                 
@@ -861,7 +897,8 @@ class ContextualMemory:
                 await asyncio.sleep(300)  # Wait before retrying
     
     async def _update_importance_scores(self):
-        """Update importance scores based on access patterns"""        for user_id, user_memories in self.user_memories.items():
+        """Update importance scores based on access patterns"""
+        for user_id, user_memories in self.user_memories.items():
             for memory in user_memories.values():
                 # Decay importance over time
                 age_factor = max(0, 1 - (datetime.utcnow() - memory.created_at).days / 365)
@@ -870,7 +907,8 @@ class ContextualMemory:
                 memory.importance_score = (age_factor * 0.3 + access_factor * 0.7)
     
     async def _optimize_clusters(self):
-        """Optimize memory clusters"""        for user_id, clusters in self.memory_clusters.items():
+        """Optimize memory clusters"""
+        for user_id, clusters in self.memory_clusters.items():
             # Merge similar clusters
             merged_clusters = []
             
@@ -896,7 +934,8 @@ class ContextualMemory:
             self.memory_clusters[user_id] = merged_clusters
     
     async def _load_memories(self):
-        """Load memories from persistent storage"""        try:
+        """Load memories from persistent storage"""
+        try:
             # Load from cache or database
             memories_data = await self.cache_manager.get("user_memories")
             if memories_data:
@@ -917,7 +956,8 @@ class ContextualMemory:
             self.logger.error(f"Error loading memories: {e}")
     
     async def _save_memories(self):
-        """Save memories to persistent storage"""        try:
+        """Save memories to persistent storage"""
+        try:
             memories_data = {}
             for user_id, user_memories in self.user_memories.items():
                 memories_data[user_id] = {}
@@ -941,7 +981,8 @@ class ContextualMemory:
             self.logger.error(f"Error saving memories: {e}")
     
     def _memory_from_dict(self, data: Dict[str, Any]) -> MemoryNode:
-        """Reconstruct memory node from dictionary"""        memory = MemoryNode(
+        """Reconstruct memory node from dictionary"""
+        memory = MemoryNode(
             memory_id=data["memory_id"],
             content=data["content"],
             memory_type=MemoryType(data["memory_type"]),

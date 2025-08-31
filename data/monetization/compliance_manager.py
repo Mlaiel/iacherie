@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -28,7 +29,8 @@ from .revenue_calculator import Currency
 
 
 class ComplianceType(Enum):
-    """Types of compliance requirements"""    DMCA = "dmca"
+    """Types of compliance requirements"""
+    DMCA = "dmca"
     COPYRIGHT = "copyright"
     TAX_REPORTING = "tax_reporting"
     GDPR = "gdpr"
@@ -41,7 +43,8 @@ class ComplianceType(Enum):
 
 
 class ComplianceStatus(Enum):
-    """Compliance status"""    COMPLIANT = "compliant"
+    """Compliance status"""
+    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING = "pending"
     UNDER_REVIEW = "under_review"
@@ -50,7 +53,8 @@ class ComplianceStatus(Enum):
 
 
 class ViolationType(Enum):
-    """Types of compliance violations"""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Types of compliance violations"""
+    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     DMCA_VIOLATION = "dmca_violation"
     TAX_EVASION = "tax_evasion"
     PRIVACY_VIOLATION = "privacy_violation"
@@ -60,7 +64,8 @@ class ViolationType(Enum):
 
 
 class LegalJurisdiction(Enum):
-    """Legal jurisdictions"""    US = "us"
+    """Legal jurisdictions"""
+    US = "us"
     EU = "eu"
     DE = "de"
     UK = "uk"
@@ -71,7 +76,8 @@ class LegalJurisdiction(Enum):
 
 @dataclass
 class ComplianceRequirement:
-    """Individual compliance requirement"""    requirement_id: str
+    """Individual compliance requirement"""
+    requirement_id: str
     compliance_type: ComplianceType
     jurisdiction: LegalJurisdiction
     title: str
@@ -86,7 +92,8 @@ class ComplianceRequirement:
 
 @dataclass
 class ComplianceCheck:
-    """Compliance check result"""    check_id: str
+    """Compliance check result"""
+    check_id: str
     user_id: str
     content_id: Optional[str]
     compliance_type: ComplianceType
@@ -101,7 +108,8 @@ class ComplianceCheck:
 
 @dataclass
 class DMCANotice:
-    """DMCA takedown notice"""    notice_id: str
+    """DMCA takedown notice"""
+    notice_id: str
     content_id: str
     claimant_info: Dict[str, str]
     infringement_claim: str
@@ -114,7 +122,8 @@ class DMCANotice:
 
 @dataclass
 class TaxReport:
-    """Tax reporting document"""    report_id: str
+    """Tax reporting document"""
+    report_id: str
     user_id: str
     tax_year: int
     jurisdiction: LegalJurisdiction
@@ -129,7 +138,8 @@ class TaxReport:
 
 @dataclass
 class ComplianceAudit:
-    """Compliance audit report"""    audit_id: str
+    """Compliance audit report"""
+    audit_id: str
     user_id: str
     audit_date: datetime
     compliance_score: float
@@ -142,18 +152,22 @@ class ComplianceAudit:
 
 
 class ComplianceManager:
-    """    Professional compliance management system for IA Influencer Agent platform.
+    """
+    Professional compliance management system for IA Influencer Agent platform.
     
     Provides comprehensive legal compliance management, DMCA protection,
     tax reporting, and regulatory compliance for content creator monetization.
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, redis_client: Redis):
-        """        Initialize ComplianceManager.
+        """
+        Initialize ComplianceManager.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
-        """        self.db_session = db_session
+        """
+        self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
         
@@ -218,14 +232,16 @@ class ComplianceManager:
         }
     
     async def perform_compliance_audit(self, user_id: str) -> ComplianceAudit:
-        """        Perform comprehensive compliance audit for user.
+        """
+        Perform comprehensive compliance audit for user.
         
         Args:
             user_id: User identifier
             
         Returns:
             Compliance audit results
-        """        try:
+        """
+        try:
             # Get user's applicable jurisdictions
             user_jurisdictions = await self._get_user_jurisdictions(user_id)
             
@@ -301,7 +317,8 @@ class ComplianceManager:
             )
     
     async def process_dmca_notice(self, content_id: str, notice_data: Dict[str, Any]) -> DMCANotice:
-        """        Process DMCA takedown notice.
+        """
+        Process DMCA takedown notice.
         
         Args:
             content_id: Content identifier
@@ -309,7 +326,8 @@ class ComplianceManager:
             
         Returns:
             Processed DMCA notice
-        """        try:
+        """
+        try:
             # Validate DMCA notice
             await self._validate_dmca_notice(notice_data)
             
@@ -353,7 +371,8 @@ class ComplianceManager:
     
     async def generate_tax_report(self, user_id: str, tax_year: int,
                                 jurisdiction: LegalJurisdiction) -> TaxReport:
-        """        Generate tax report for user.
+        """
+        Generate tax report for user.
         
         Args:
             user_id: User identifier
@@ -362,7 +381,8 @@ class ComplianceManager:
             
         Returns:
             Generated tax report
-        """        try:
+        """
+        try:
             # Get revenue data for tax year
             start_date = datetime(tax_year, 1, 1)
             end_date = datetime(tax_year, 12, 31)
@@ -417,14 +437,16 @@ class ComplianceManager:
             raise
     
     async def check_content_compliance(self, content_id: str) -> ComplianceCheck:
-        """        Check compliance for specific content.
+        """
+        Check compliance for specific content.
         
         Args:
             content_id: Content identifier
             
         Returns:
             Content compliance check results
-        """        try:
+        """
+        try:
             # Get content metadata
             content_info = await self._get_content_info(content_id)
             
@@ -502,14 +524,16 @@ class ComplianceManager:
             )
     
     async def setup_gdpr_compliance(self, user_id: str) -> bool:
-        """        Setup GDPR compliance for user.
+        """
+        Setup GDPR compliance for user.
         
         Args:
             user_id: User identifier
             
         Returns:
             Setup success status
-        """        try:
+        """
+        try:
             # Create privacy policy
             privacy_policy = await self._generate_privacy_policy(user_id)
             
@@ -545,11 +569,13 @@ class ComplianceManager:
             return False
     
     async def monitor_compliance_deadlines(self) -> List[Dict[str, Any]]:
-        """        Monitor upcoming compliance deadlines.
+        """
+        Monitor upcoming compliance deadlines.
         
         Returns:
             List of upcoming deadlines and required actions
-        """        try:
+        """
+        try:
             upcoming_deadlines = []
             
             # Get all active compliance requirements
@@ -590,13 +616,15 @@ class ComplianceManager:
     # Private helper methods
     
     async def _get_user_jurisdictions(self, user_id: str) -> List[LegalJurisdiction]:
-        """Get applicable legal jurisdictions for user"""        # Implementation would determine user's jurisdictions based on
+        """Get applicable legal jurisdictions for user"""
+        # Implementation would determine user's jurisdictions based on
         # location, business operations, revenue sources, etc.
         return [LegalJurisdiction.EU, LegalJurisdiction.DE]  # Placeholder
     
     async def _check_compliance_requirement(self, user_id: str,
                                           requirement: ComplianceRequirement) -> ComplianceCheck:
-        """Check specific compliance requirement"""        # Implementation would check specific requirement
+        """Check specific compliance requirement"""
+        # Implementation would check specific requirement
         # Placeholder implementation
         return ComplianceCheck(
             check_id=str(uuid.uuid4()),
@@ -613,7 +641,8 @@ class ComplianceManager:
         )
     
     async def _validate_dmca_notice(self, notice_data: Dict[str, Any]):
-        """Validate DMCA notice format and content"""        required_fields = ['claimant_name', 'claimant_contact', 'infringement_description']
+        """Validate DMCA notice format and content"""
+        required_fields = ['claimant_name', 'claimant_contact', 'infringement_description']
         
         for field in required_fields:
             if not notice_data.get(field):
@@ -621,17 +650,20 @@ class ComplianceManager:
     
     async def _get_tax_revenue_data(self, user_id: str, start_date: datetime,
                                   end_date: datetime) -> List[Dict]:
-        """Get revenue data for tax reporting"""        # Implementation would query revenue database
+        """Get revenue data for tax reporting"""
+        # Implementation would query revenue database
         return []  # Placeholder
     
     async def _get_deductible_expenses(self, user_id: str, start_date: datetime,
                                      end_date: datetime) -> List[Dict]:
-        """Get deductible business expenses"""        # Implementation would query expense records
+        """Get deductible business expenses"""
+        # Implementation would query expense records
         return []  # Placeholder
     
     async def _get_tax_rate(self, jurisdiction: LegalJurisdiction,
                           taxable_income: Decimal) -> Decimal:
-        """Get applicable tax rate"""        # Simplified tax rate calculation
+        """Get applicable tax rate"""
+        # Simplified tax rate calculation
         tax_rates = {
             LegalJurisdiction.DE: Decimal('0.25'),  # 25%
             LegalJurisdiction.EU: Decimal('0.20'),  # 20%
@@ -641,14 +673,16 @@ class ComplianceManager:
         return tax_rates.get(jurisdiction, Decimal('0.20'))
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
-        """Get data from cache"""        try:
+        """Get data from cache"""
+        try:
             cached_data = await self.redis.get(key)
             return json.loads(cached_data) if cached_data else None
         except:
             return None
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
-        """Save data to cache"""        try:
+        """Save data to cache"""
+        try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))
         except Exception as e:

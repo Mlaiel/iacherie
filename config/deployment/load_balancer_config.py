@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -23,7 +24,8 @@ import yaml
 
 
 class LoadBalancerType(Enum):
-    """Load balancer types"""    NGINX = "nginx"
+    """Load balancer types"""
+    NGINX = "nginx"
     HAPROXY = "haproxy"
     AWS_ALB = "aws_alb"
     AWS_NLB = "aws_nlb"
@@ -34,7 +36,8 @@ class LoadBalancerType(Enum):
 
 
 class RoutingStrategy(Enum):
-    """Load balancing algorithms"""    ROUND_ROBIN = "round_robin"
+    """Load balancing algorithms"""
+    ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_conn"
     IP_HASH = "ip_hash"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
@@ -43,7 +46,8 @@ class RoutingStrategy(Enum):
 
 
 class HealthCheckType(Enum):
-    """Health check types"""    HTTP = "http"
+    """Health check types"""
+    HTTP = "http"
     HTTPS = "https"
     TCP = "tcp"
     UDP = "udp"
@@ -52,7 +56,8 @@ class HealthCheckType(Enum):
 
 @dataclass
 class BackendServer:
-    """Backend server configuration"""    host: str
+    """Backend server configuration"""
+    host: str
     port: int
     weight: int = 1
     max_fails: int = 3
@@ -65,7 +70,8 @@ class BackendServer:
 
 @dataclass
 class HealthCheck:
-    """Health check configuration"""    type: HealthCheckType
+    """Health check configuration"""
+    type: HealthCheckType
     path: str = "/health"
     port: Optional[int] = None
     interval: int = 30
@@ -78,7 +84,8 @@ class HealthCheck:
 
 @dataclass
 class UpstreamConfig:
-    """Upstream server configuration"""    name: str
+    """Upstream server configuration"""
+    name: str
     servers: List[BackendServer]
     strategy: RoutingStrategy = RoutingStrategy.LEAST_CONNECTIONS
     health_check: Optional[HealthCheck] = None
@@ -91,7 +98,8 @@ class UpstreamConfig:
 
 @dataclass
 class RateLimitConfig:
-    """Rate limiting configuration"""    zone_name: str
+    """Rate limiting configuration"""
+    zone_name: str
     zone_size: str = "10m"
     rate: str = "10r/s"
     burst: int = 20
@@ -100,7 +108,8 @@ class RateLimitConfig:
 
 
 class LoadBalancerConfig:
-    """    Professional load balancer configuration manager for IA-Influencer Agent Platform.
+    """
+    Professional load balancer configuration manager for IA-Influencer Agent Platform.
     
     Manages traffic distribution for:
     - API services with intelligent routing
@@ -110,7 +119,8 @@ class LoadBalancerConfig:
     - Revenue tracking and analytics services
     - Database connection pooling and failover
     - CDN integration and edge caching
-    """    
+    """
+    
     def __init__(self, environment: str = "development"):
         self.environment = environment
         self.project_name = "ia-influencer-agent"
@@ -118,7 +128,8 @@ class LoadBalancerConfig:
         self.load_balancer_type = self._get_load_balancer_type()
         
     def _get_base_domain(self) -> str:
-        """Get base domain based on environment"""        domains = {
+        """Get base domain based on environment"""
+        domains = {
             "development": "dev.ia-influencer.com",
             "staging": "staging.ia-influencer.com",
             "production": "ia-influencer.com"
@@ -126,7 +137,8 @@ class LoadBalancerConfig:
         return domains.get(self.environment, "localhost")
     
     def _get_load_balancer_type(self) -> LoadBalancerType:
-        """Get load balancer type based on environment"""        lb_types = {
+        """Get load balancer type based on environment"""
+        lb_types = {
             "development": LoadBalancerType.NGINX,
             "staging": LoadBalancerType.NGINX,
             "production": LoadBalancerType.AWS_ALB
@@ -134,7 +146,8 @@ class LoadBalancerConfig:
         return lb_types.get(self.environment, LoadBalancerType.NGINX)
     
     def get_upstream_configs(self) -> Dict[str, UpstreamConfig]:
-        """Get upstream configurations for all services"""        base_port = 8000
+        """Get upstream configurations for all services"""
+        base_port = 8000
         
         upstreams = {
             # Main API service
@@ -367,7 +380,8 @@ class LoadBalancerConfig:
         return upstreams
     
     def get_rate_limit_configs(self) -> Dict[str, RateLimitConfig]:
-        """Get rate limiting configurations"""        return {
+        """Get rate limiting configurations"""
+        return {
             "api_general": RateLimitConfig(
                 zone_name="api_general",
                 zone_size="10m",
@@ -406,7 +420,8 @@ class LoadBalancerConfig:
         }
     
     def generate_nginx_config(self) -> str:
-        """Generate complete Nginx load balancer configuration"""        upstreams = self.get_upstream_configs()
+        """Generate complete Nginx load balancer configuration"""
+        upstreams = self.get_upstream_configs()
         rate_limits = self.get_rate_limit_configs()
         
         config = f"""# Nginx Load Balancer Configuration for IA-Influencer Agent Platform
@@ -477,7 +492,8 @@ http {{
         image/svg+xml;
     
     # Rate limiting zones
-"""        
+"""
+        
         # Add rate limiting zones
         for rate_limit in rate_limits.values():
             config += f"    limit_req_zone {rate_limit.key} zone={rate_limit.zone_name}:{rate_limit.zone_size} rate={rate_limit.rate};\n"
@@ -529,7 +545,8 @@ http {{
             config += "    }\n\n"
         
         # Server blocks
-        config += f"""    # Main server block
+        config += f"""
+    # Main server block
     server {{
         listen 80;
         listen [::]:80;
@@ -701,11 +718,13 @@ http {{
     # Include additional server blocks
     include /etc/nginx/sites-enabled/*;
 }}
-"""        
+"""
+        
         return config
     
     def generate_haproxy_config(self) -> str:
-        """Generate HAProxy load balancer configuration"""        upstreams = self.get_upstream_configs()
+        """Generate HAProxy load balancer configuration"""
+        upstreams = self.get_upstream_configs()
         
         config = f"""# HAProxy Load Balancer Configuration for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -810,7 +829,8 @@ frontend https_frontend
     
     default_backend api_backend
 
-"""        
+"""
+        
         # Add backend configurations
         for upstream in upstreams.values():
             config += f"""# Backend: {upstream.name}
@@ -819,7 +839,8 @@ backend {upstream.name}
     option httpchk GET {upstream.health_check.path if upstream.health_check else '/health'}
     http-check expect status {upstream.health_check.expected_codes if upstream.health_check else '200'}
     
-"""            for i, server in enumerate(upstream.servers):
+"""
+            for i, server in enumerate(upstream.servers):
                 server_options = []
                 if server.weight != 1:
                     server_options.append(f"weight {server.weight}")
@@ -841,11 +862,13 @@ backend {upstream.name}
         config += """# Health check backend
 backend health_backend
     http-request return status 200 content-type "text/plain" string "healthy"
-"""        
+"""
+        
         return config
     
     def get_aws_alb_config(self) -> Dict[str, Any]:
-        """Get AWS Application Load Balancer configuration"""        return {
+        """Get AWS Application Load Balancer configuration"""
+        return {
             "load_balancer": {
                 "name": f"{self.project_name}-{self.environment}-alb",
                 "scheme": "internet-facing",
@@ -951,7 +974,8 @@ backend health_backend
         }
     
     def get_kubernetes_ingress_config(self) -> Dict[str, Any]:
-        """Get Kubernetes Ingress configuration"""        return {
+        """Get Kubernetes Ingress configuration"""
+        return {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "Ingress",
             "metadata": {
@@ -1059,7 +1083,8 @@ backend health_backend
         }
     
     def export_configurations(self, output_dir: str = "./loadbalancer-configs") -> Dict[str, str]:
-        """Export all load balancer configurations to files"""        import os
+        """Export all load balancer configurations to files"""
+        import os
         os.makedirs(output_dir, exist_ok=True)
         
         configs = {}

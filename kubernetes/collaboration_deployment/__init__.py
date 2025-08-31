@@ -9,7 +9,7 @@
 # autorisation écrite explicite est STRICTEMENT INTERDITE et fera 
 # l'objet de poursuites judiciaires selon la loi allemande et internationale.
 # 
-# Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
+# Copyright (c) 2025 Fahed Mlaiel. Tous droits réservés.
 
 """Advanced Collaboration Deployment Module for IA Influencer Agent
 
@@ -26,9 +26,13 @@ User (musician/blogger/photographer/influencer/comedian)
 → Multi-platform distribution
 
 Industry-grade, production-ready collaboration deployment system.
-"""from typing import Dict, List, Optional, Any, Union
+"""
+
+from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
+
 from enum import Enum
+
 import asyncio
 import logging
 

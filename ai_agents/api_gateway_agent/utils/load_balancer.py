@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import random
 import hashlib
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ServiceInstance:
-    """Service instance information"""    service_name: str
+    """Service instance information"""
+    service_name: str
     upstream_url: str
     weight: int = 10
     current_connections: int = 0
@@ -39,7 +41,8 @@ class ServiceInstance:
 
 
 class LoadBalancer:
-    """    Enterprise Load Balancer
+    """
+    Enterprise Load Balancer
     
     Supports multiple load balancing strategies:
     - Round Robin (with weights)
@@ -48,13 +51,15 @@ class LoadBalancer:
     - Random
     - Health-based routing
     - Response time based routing
-    """    
+    """
+    
     def __init__(
         self, 
         strategy: LoadBalancingStrategy = LoadBalancingStrategy.WEIGHTED_ROUND_ROBIN,
         services: Optional[Dict[str, Dict[str, Any]]] = None
     ):
-        """Initialize load balancer"""        self.strategy = strategy
+        """Initialize load balancer"""
+        self.strategy = strategy
         self.services: Dict[str, List[ServiceInstance]] = {}
         
         # Strategy-specific state
@@ -75,7 +80,8 @@ class LoadBalancer:
         logger.info(f"Load balancer initialized with strategy: {strategy.value}")
     
     def _initialize_services(self, services_config: Dict[str, Dict[str, Any]]):
-        """Initialize service instances from configuration"""        try:
+        """Initialize service instances from configuration"""
+        try:
             for service_name, config in services_config.items():
                 instance = ServiceInstance(
                     service_name=service_name,
@@ -102,7 +108,8 @@ class LoadBalancer:
         client_ip: Optional[str] = None,
         request_id: Optional[str] = None
     ) -> Optional[str]:
-        """        Get upstream URL for service using configured strategy
+        """
+        Get upstream URL for service using configured strategy
         
         Args:
             service_name: Target service name
@@ -111,7 +118,8 @@ class LoadBalancer:
             
         Returns:
             Upstream URL or None if no healthy instance available
-        """        try:
+        """
+        try:
             if service_name not in self.services:
                 logger.warning(f"Service {service_name} not found")
                 return None
@@ -155,7 +163,8 @@ class LoadBalancer:
         instances: List[ServiceInstance],
         client_ip: Optional[str] = None
     ) -> Optional[ServiceInstance]:
-        """Select instance based on load balancing strategy"""        
+        """Select instance based on load balancing strategy"""
+        
         if self.strategy == LoadBalancingStrategy.ROUND_ROBIN:
             return self._round_robin_selection(service_name, instances)
         
@@ -183,7 +192,8 @@ class LoadBalancer:
         service_name: str, 
         instances: List[ServiceInstance]
     ) -> ServiceInstance:
-        """Round robin instance selection"""        index = self.round_robin_indices.get(service_name, 0)
+        """Round robin instance selection"""
+        index = self.round_robin_indices.get(service_name, 0)
         selected = instances[index % len(instances)]
         
         # Update index for next selection
@@ -196,7 +206,8 @@ class LoadBalancer:
         service_name: str, 
         instances: List[ServiceInstance]
     ) -> ServiceInstance:
-        """Weighted round robin instance selection"""        # Create weighted list
+        """Weighted round robin instance selection"""
+        # Create weighted list
         weighted_instances = []
         for instance in instances:
             weighted_instances.extend([instance] * instance.weight)
@@ -213,7 +224,8 @@ class LoadBalancer:
         return selected
     
     def _least_connections_selection(self, instances: List[ServiceInstance]) -> ServiceInstance:
-        """Least connections instance selection"""        return min(instances, key=lambda x: x.current_connections)
+        """Least connections instance selection"""
+        return min(instances, key=lambda x: x.current_connections)
     
     def _ip_hash_selection(
         self, 
@@ -221,7 +233,8 @@ class LoadBalancer:
         instances: List[ServiceInstance], 
         client_ip: Optional[str]
     ) -> ServiceInstance:
-        """IP hash based instance selection"""        if not client_ip:
+        """IP hash based instance selection"""
+        if not client_ip:
             # Fallback to round robin
             return self._round_robin_selection(service_name, instances)
         
@@ -233,10 +246,12 @@ class LoadBalancer:
         return instances[index]
     
     def _random_selection(self, instances: List[ServiceInstance]) -> ServiceInstance:
-        """Random instance selection"""        return random.choice(instances)
+        """Random instance selection"""
+        return random.choice(instances)
     
     def _health_based_selection(self, instances: List[ServiceInstance]) -> ServiceInstance:
-        """Health and performance based instance selection"""        # Score instances based on health metrics
+        """Health and performance based instance selection"""
+        # Score instances based on health metrics
         scored_instances = []
         
         for instance in instances:
@@ -249,7 +264,8 @@ class LoadBalancer:
         return scored_instances[0][0]
     
     def _calculate_instance_score(self, instance: ServiceInstance) -> float:
-        """Calculate instance health score"""        try:
+        """Calculate instance health score"""
+        try:
             score = 100.0  # Base score
             
             # Connection load factor (lower is better)
@@ -279,7 +295,8 @@ class LoadBalancer:
             return 0
     
     async def release_connection(self, service_name: str, upstream_url: str):
-        """Release connection after request completion"""        try:
+        """Release connection after request completion"""
+        try:
             if service_name in self.services:
                 for instance in self.services[service_name]:
                     if instance.upstream_url == upstream_url:
@@ -295,7 +312,8 @@ class LoadBalancer:
         response_time: float, 
         success: bool
     ):
-        """Record request metrics for instance"""        try:
+        """Record request metrics for instance"""
+        try:
             if service_name in self.services:
                 for instance in self.services[service_name]:
                     if instance.upstream_url == upstream_url:
@@ -322,7 +340,8 @@ class LoadBalancer:
         weight: int = 10,
         max_connections: int = 1000
     ) -> bool:
-        """Add new service instance"""        try:
+        """Add new service instance"""
+        try:
             instance = ServiceInstance(
                 service_name=service_name,
                 upstream_url=upstream_url,
@@ -344,7 +363,8 @@ class LoadBalancer:
             return False
     
     async def remove_service_instance(self, service_name: str, upstream_url: str) -> bool:
-        """Remove service instance"""        try:
+        """Remove service instance"""
+        try:
             if service_name in self.services:
                 initial_count = len(self.services[service_name])
                 
@@ -371,12 +391,14 @@ class LoadBalancer:
             return False
     
     async def start_health_checking(self):
-        """Start background health checking"""        if self._health_check_task is None or self._health_check_task.done():
+        """Start background health checking"""
+        if self._health_check_task is None or self._health_check_task.done():
             self._health_check_task = asyncio.create_task(self._health_check_loop())
             logger.info("Started health checking loop")
     
     async def stop_health_checking(self):
-        """Stop background health checking"""        if self._health_check_task and not self._health_check_task.done():
+        """Stop background health checking"""
+        if self._health_check_task and not self._health_check_task.done():
             self._health_check_task.cancel()
             try:
                 await self._health_check_task
@@ -385,7 +407,8 @@ class LoadBalancer:
             logger.info("Stopped health checking loop")
     
     async def _health_check_loop(self):
-        """Background health checking loop"""        while True:
+        """Background health checking loop"""
+        while True:
             try:
                 await self._perform_health_checks()
                 await asyncio.sleep(self.health_check_interval)
@@ -396,7 +419,8 @@ class LoadBalancer:
                 await asyncio.sleep(self.health_check_interval)
     
     async def _perform_health_checks(self):
-        """Perform health checks on all service instances"""        try:
+        """Perform health checks on all service instances"""
+        try:
             tasks = []
             
             for service_name, instances in self.services.items():
@@ -413,7 +437,8 @@ class LoadBalancer:
             logger.error(f"Error performing health checks: {e}")
     
     async def _check_instance_health(self, instance: ServiceInstance):
-        """Check health of individual service instance"""        try:
+        """Check health of individual service instance"""
+        try:
             health_url = f"{instance.upstream_url}/health"
             
             timeout = aiohttp.ClientTimeout(total=self.health_check_timeout)
@@ -444,7 +469,8 @@ class LoadBalancer:
             instance.last_health_check = datetime.utcnow()
     
     def get_load_balancer_stats(self) -> Dict[str, Any]:
-        """Get comprehensive load balancer statistics"""        try:
+        """Get comprehensive load balancer statistics"""
+        try:
             stats = {
                 "strategy": self.strategy.value,
                 "total_services": len(self.services),

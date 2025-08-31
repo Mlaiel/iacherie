@@ -11,13 +11,15 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Any attempt to steal the concept, idea, or code without explicit written authorization
 from Fahed Mlaiel will result in immediate legal prosecution under German and international law.
-"""import traceback
+"""
+import traceback
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timezone
 
 
 class VectorAgentBaseException(Exception):
-    """    Base exception class for all Vector Agent errors
+    """
+    Base exception class for all Vector Agent errors
     
     Provides comprehensive error information including:
     - Detailed error messages
@@ -25,7 +27,8 @@ class VectorAgentBaseException(Exception):
     - Context information for debugging
     - Recovery suggestions
     - Timestamp and stack trace information
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -44,7 +47,8 @@ class VectorAgentBaseException(Exception):
         self.stack_trace = traceback.format_stack()
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for logging/serialization"""        return {
+        """Convert exception to dictionary for logging/serialization"""
+        return {
             "error_type": self.__class__.__name__,
             "error_code": self.error_code,
             "message": self.message,
@@ -55,7 +59,8 @@ class VectorAgentBaseException(Exception):
         }
     
     def __str__(self) -> str:
-        """Enhanced string representation"""        base_msg = f"[{self.error_code}] {self.message}"
+        """Enhanced string representation"""
+        base_msg = f"[{self.error_code}] {self.message}"
         if self.context:
             context_str = ", ".join(f"{k}={v}" for k, v in self.context.items())
             base_msg += f" (Context: {context_str})"
@@ -67,7 +72,8 @@ class VectorAgentBaseException(Exception):
 # ===============================
 
 class VectorProcessingError(VectorAgentBaseException):
-    """General vector processing error"""    
+    """General vector processing error"""
+    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -77,7 +83,8 @@ class VectorProcessingError(VectorAgentBaseException):
 
 
 class VectorOrchestrationError(VectorAgentBaseException):
-    """Vector orchestrator-specific errors"""    
+    """Vector orchestrator-specific errors"""
+    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -92,7 +99,8 @@ class VectorOrchestrationError(VectorAgentBaseException):
 
 
 class BatchProcessingError(VectorAgentBaseException):
-    """Batch processing operation errors"""    
+    """Batch processing operation errors"""
+    
     def __init__(self, message: str, batch_id: str = None, failed_count: int = 0, **kwargs):
         context = kwargs.get("context", {})
         if batch_id:
@@ -118,7 +126,8 @@ class BatchProcessingError(VectorAgentBaseException):
 # ===============================
 
 class VectorIndexError(VectorAgentBaseException):
-    """Vector indexing and FAISS-related errors"""    
+    """Vector indexing and FAISS-related errors"""
+    
     def __init__(self, message: str, index_name: str = None, **kwargs):
         context = kwargs.get("context", {})
         if index_name:
@@ -138,7 +147,8 @@ class VectorIndexError(VectorAgentBaseException):
 
 
 class FAISSIndexError(VectorIndexError):
-    """FAISS-specific indexing errors"""    
+    """FAISS-specific indexing errors"""
+    
     def __init__(self, message: str, faiss_error: str = None, **kwargs):
         context = kwargs.get("context", {})
         if faiss_error:
@@ -158,7 +168,8 @@ class FAISSIndexError(VectorIndexError):
 
 
 class IndexNotFoundError(VectorIndexError):
-    """Index not found error"""    
+    """Index not found error"""
+    
     def __init__(self, index_name: str, **kwargs):
         super().__init__(
             f"Vector index '{index_name}' not found",
@@ -174,7 +185,8 @@ class IndexNotFoundError(VectorIndexError):
 
 
 class IndexCorruptionError(VectorIndexError):
-    """Index corruption or integrity error"""    
+    """Index corruption or integrity error"""
+    
     def __init__(self, index_name: str, corruption_details: str = None, **kwargs):
         context = kwargs.get("context", {})
         context["corruption_details"] = corruption_details
@@ -198,7 +210,8 @@ class IndexCorruptionError(VectorIndexError):
 # ===============================
 
 class SimilarityComputationError(VectorAgentBaseException):
-    """Similarity computation and algorithm errors"""    
+    """Similarity computation and algorithm errors"""
+    
     def __init__(self, message: str, algorithm: str = None, **kwargs):
         context = kwargs.get("context", {})
         if algorithm:
@@ -218,7 +231,8 @@ class SimilarityComputationError(VectorAgentBaseException):
 
 
 class VectorSearchError(VectorAgentBaseException):
-    """Vector search operation errors"""    
+    """Vector search operation errors"""
+    
     def __init__(self, message: str, query_id: str = None, **kwargs):
         context = kwargs.get("context", {})
         if query_id:
@@ -238,7 +252,8 @@ class VectorSearchError(VectorAgentBaseException):
 
 
 class SearchOptimizationError(VectorAgentBaseException):
-    """Search optimization and caching errors"""    
+    """Search optimization and caching errors"""
+    
     def __init__(self, message: str, optimization_type: str = None, **kwargs):
         context = kwargs.get("context", {})
         if optimization_type:
@@ -262,7 +277,8 @@ class SearchOptimizationError(VectorAgentBaseException):
 # ===============================
 
 class VectorStorageError(VectorAgentBaseException):
-    """Vector storage and persistence errors"""    
+    """Vector storage and persistence errors"""
+    
     def __init__(self, message: str, storage_path: str = None, **kwargs):
         context = kwargs.get("context", {})
         if storage_path:
@@ -282,7 +298,8 @@ class VectorStorageError(VectorAgentBaseException):
 
 
 class DocumentNotFoundError(VectorStorageError):
-    """Document not found in storage"""    
+    """Document not found in storage"""
+    
     def __init__(self, document_id: str, **kwargs):
         super().__init__(
             f"Vector document '{document_id}' not found in storage",
@@ -298,7 +315,8 @@ class DocumentNotFoundError(VectorStorageError):
 
 
 class StorageCorruptionError(VectorStorageError):
-    """Storage corruption or integrity error"""    
+    """Storage corruption or integrity error"""
+    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -317,7 +335,8 @@ class StorageCorruptionError(VectorStorageError):
 # ===============================
 
 class VectorValidationError(VectorAgentBaseException):
-    """Vector data validation errors"""    
+    """Vector data validation errors"""
+    
     def __init__(self, message: str, validation_type: str = None, **kwargs):
         context = kwargs.get("context", {})
         if validation_type:
@@ -337,7 +356,8 @@ class VectorValidationError(VectorAgentBaseException):
 
 
 class DimensionMismatchError(VectorValidationError):
-    """Vector dimension mismatch error"""    
+    """Vector dimension mismatch error"""
+    
     def __init__(self, expected_dim: int, actual_dim: int, **kwargs):
         super().__init__(
             f"Vector dimension mismatch: expected {expected_dim}, got {actual_dim}",
@@ -354,7 +374,8 @@ class DimensionMismatchError(VectorValidationError):
 
 
 class InvalidVectorDataError(VectorValidationError):
-    """Invalid vector data format or content"""    
+    """Invalid vector data format or content"""
+    
     def __init__(self, message: str, data_issue: str = None, **kwargs):
         context = kwargs.get("context", {})
         if data_issue:
@@ -379,7 +400,8 @@ class InvalidVectorDataError(VectorValidationError):
 # ===============================
 
 class VectorConfigurationError(VectorAgentBaseException):
-    """Vector configuration and setup errors"""    
+    """Vector configuration and setup errors"""
+    
     def __init__(self, message: str, config_parameter: str = None, **kwargs):
         context = kwargs.get("context", {})
         if config_parameter:
@@ -399,7 +421,8 @@ class VectorConfigurationError(VectorAgentBaseException):
 
 
 class InvalidConfigurationError(VectorConfigurationError):
-    """Invalid configuration parameter error"""    
+    """Invalid configuration parameter error"""
+    
     def __init__(self, parameter: str, value: Any, reason: str = None, **kwargs):
         message = f"Invalid configuration parameter '{parameter}' = {value}"
         if reason:
@@ -424,7 +447,8 @@ class InvalidConfigurationError(VectorConfigurationError):
 # ===============================
 
 class VectorResourceError(VectorAgentBaseException):
-    """System resource and capacity errors"""    
+    """System resource and capacity errors"""
+    
     def __init__(self, message: str, resource_type: str = None, **kwargs):
         context = kwargs.get("context", {})
         if resource_type:
@@ -444,7 +468,8 @@ class VectorResourceError(VectorAgentBaseException):
 
 
 class OutOfMemoryError(VectorResourceError):
-    """Out of memory error"""    
+    """Out of memory error"""
+    
     def __init__(self, operation: str = None, required_mb: int = None, **kwargs):
         context = kwargs.get("context", {})
         if operation:
@@ -474,7 +499,8 @@ class OutOfMemoryError(VectorResourceError):
 
 
 class TimeoutError(VectorResourceError):
-    """Operation timeout error"""    
+    """Operation timeout error"""
+    
     def __init__(self, operation: str, timeout_seconds: float = None, **kwargs):
         context = kwargs.get("context", {})
         context["operation"] = operation
@@ -505,7 +531,8 @@ class TimeoutError(VectorResourceError):
 # ===============================
 
 def handle_vector_exception(func):
-    """Decorator to handle and wrap vector exceptions"""    def wrapper(*args, **kwargs):
+    """Decorator to handle and wrap vector exceptions"""
+    def wrapper(*args, **kwargs):
         try:
             return func(*args, **kwargs)
         except VectorAgentBaseException:
@@ -523,7 +550,8 @@ def handle_vector_exception(func):
 
 
 def create_error_response(exception: VectorAgentBaseException) -> Dict[str, Any]:
-    """Create standardized error response from exception"""    return {
+    """Create standardized error response from exception"""
+    return {
         "success": False,
         "error": {
             "type": exception.__class__.__name__,
@@ -537,7 +565,8 @@ def create_error_response(exception: VectorAgentBaseException) -> Dict[str, Any]
 
 
 def log_vector_exception(logger, exception: VectorAgentBaseException, level: str = "error"):
-    """Log vector exception with appropriate detail level"""    log_method = getattr(logger, level, logger.error)
+    """Log vector exception with appropriate detail level"""
+    log_method = getattr(logger, level, logger.error)
     
     log_data = {
         "error_type": exception.__class__.__name__,

@@ -33,7 +33,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
-"""import logging
+"""
+import logging
 import warnings
 from typing import Dict, List, Any, Optional, Union, Type
 from datetime import datetime, timezone
@@ -364,11 +365,13 @@ except ImportError as e:
 
 
 class ReportsModuleManager:
-    """    Central manager for the reports module.
+    """
+    Central manager for the reports module.
     
     Provides unified access to all reporting components and manages
     module lifecycle, dependencies, and feature availability.
-    """    
+    """
+    
     def __init__(self):
         self.available_components = self._check_component_availability()
         self.logger = logging.getLogger(__name__ + ".manager")
@@ -390,7 +393,8 @@ class ReportsModuleManager:
         self.logger.info(f"ReportsModuleManager initialized with {len(self.available_components)} components")
     
     def _check_component_availability(self) -> Dict[str, bool]:
-        """Check which components are available."""        return {
+        """Check which components are available."""
+        return {
             "generators": GENERATORS_AVAILABLE,
             "analytics": ANALYTICS_AVAILABLE,
             "formatters": FORMATTERS_AVAILABLE,
@@ -405,7 +409,8 @@ class ReportsModuleManager:
         }
     
     def _register_components(self) -> None:
-        """Register all available components."""        # Register generators
+        """Register all available components."""
+        # Register generators
         if GENERATORS_AVAILABLE:
             self._generators.update({
                 "performance": PerformanceReportGenerator,
@@ -490,7 +495,8 @@ class ReportsModuleManager:
             })
     
     def get_component(self, component_type: str, component_name: str) -> Optional[Type]:
-        """Get a specific component by type and name."""        registry_map = {
+        """Get a specific component by type and name."""
+        registry_map = {
             "generators": self._generators,
             "analytics": self._analytics,
             "formatters": self._formatters,
@@ -515,7 +521,8 @@ class ReportsModuleManager:
         return component
     
     def list_components(self, component_type: Optional[str] = None) -> Dict[str, List[str]]:
-        """List all available components."""        if component_type:
+        """List all available components."""
+        if component_type:
             registry_map = {
                 "generators": self._generators,
                 "analytics": self._analytics,
@@ -544,10 +551,12 @@ class ReportsModuleManager:
         }
     
     def is_component_available(self, component_type: str) -> bool:
-        """Check if a component type is available."""        return self.available_components.get(component_type, False)
+        """Check if a component type is available."""
+        return self.available_components.get(component_type, False)
     
     def get_module_info(self) -> Dict[str, Any]:
-        """Get comprehensive module information."""        return {
+        """Get comprehensive module information."""
+        return {
             "version": __version__,
             "author": __author__,
             "copyright": __copyright__,
@@ -563,7 +572,8 @@ _module_manager: Optional[ReportsModuleManager] = None
 
 
 def get_module_manager() -> ReportsModuleManager:
-    """Get the global module manager instance."""    global _module_manager
+    """Get the global module manager instance."""
+    global _module_manager
     if _module_manager is None:
         _module_manager = ReportsModuleManager()
     return _module_manager
@@ -575,7 +585,8 @@ def create_report(
     configuration: Optional[Dict[str, Any]] = None,
     **kwargs
 ) -> Any:
-    """Create a report using the specified generator."""    if not GENERATORS_AVAILABLE:
+    """Create a report using the specified generator."""
+    if not GENERATORS_AVAILABLE:
         raise RuntimeError("Report generators are not available")
     
     manager = get_module_manager()
@@ -593,7 +604,8 @@ def analyze_data(
     configuration: Optional[Dict[str, Any]] = None,
     **kwargs
 ) -> Any:
-    """Analyze data using the specified analytics engine."""    if not ANALYTICS_AVAILABLE:
+    """Analyze data using the specified analytics engine."""
+    if not ANALYTICS_AVAILABLE:
         raise RuntimeError("Analytics engines are not available")
     
     manager = get_module_manager()
@@ -612,7 +624,8 @@ def format_report(
     configuration: Optional[Dict[str, Any]] = None,
     **kwargs
 ) -> Any:
-    """Format report data using the specified formatter."""    if not FORMATTERS_AVAILABLE:
+    """Format report data using the specified formatter."""
+    if not FORMATTERS_AVAILABLE:
         raise RuntimeError("Report formatters are not available")
     
     manager = get_module_manager()
@@ -631,7 +644,8 @@ def schedule_report(
     report_config: Dict[str, Any],
     **kwargs
 ) -> Any:
-    """Schedule a report using the specified scheduler."""    if not SCHEDULERS_AVAILABLE:
+    """Schedule a report using the specified scheduler."""
+    if not SCHEDULERS_AVAILABLE:
         raise RuntimeError("Report schedulers are not available")
     
     manager = get_module_manager()
@@ -651,7 +665,8 @@ def export_report(
     configuration: Optional[Dict[str, Any]] = None,
     **kwargs
 ) -> Any:
-    """Export report using the specified exporter."""    if not EXPORTERS_AVAILABLE:
+    """Export report using the specified exporter."""
+    if not EXPORTERS_AVAILABLE:
         raise RuntimeError("Report exporters are not available")
     
     manager = get_module_manager()
@@ -666,7 +681,8 @@ def export_report(
 
 # Module status and diagnostics
 def get_module_status() -> Dict[str, Any]:
-    """Get comprehensive module status."""    manager = get_module_manager()
+    """Get comprehensive module status."""
+    manager = get_module_manager()
     return {
         "module_info": manager.get_module_info(),
         "component_availability": manager.available_components,
@@ -676,7 +692,8 @@ def get_module_status() -> Dict[str, Any]:
 
 
 def run_diagnostics() -> Dict[str, Any]:
-    """Run comprehensive module diagnostics."""    diagnostics = {
+    """Run comprehensive module diagnostics."""
+    diagnostics = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "module_version": __version__,
         "component_status": {},

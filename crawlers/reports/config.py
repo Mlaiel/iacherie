@@ -37,7 +37,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
-"""import os
+"""
+import os
 import json
 import yaml
 import logging
@@ -87,7 +88,8 @@ logger = logging.getLogger(__name__)
 
 
 class Environment(str, Enum):
-    """Environment enumeration."""    DEVELOPMENT = "development"
+    """Environment enumeration."""
+    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -95,7 +97,8 @@ class Environment(str, Enum):
 
 
 class LogLevel(str, Enum):
-    """Log level enumeration."""    DEBUG = "DEBUG"
+    """Log level enumeration."""
+    DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
     ERROR = "ERROR"
@@ -103,7 +106,8 @@ class LogLevel(str, Enum):
 
 
 class DatabaseType(str, Enum):
-    """Database type enumeration."""    POSTGRESQL = "postgresql"
+    """Database type enumeration."""
+    POSTGRESQL = "postgresql"
     MYSQL = "mysql"
     SQLITE = "sqlite"
     ORACLE = "oracle"
@@ -111,14 +115,16 @@ class DatabaseType(str, Enum):
 
 
 class CacheType(str, Enum):
-    """Cache type enumeration."""    MEMORY = "memory"
+    """Cache type enumeration."""
+    MEMORY = "memory"
     REDIS = "redis"
     MEMCACHED = "memcached"
     DISK = "disk"
 
 
 class ExportFormat(str, Enum):
-    """Export format enumeration."""    PDF = "pdf"
+    """Export format enumeration."""
+    PDF = "pdf"
     EXCEL = "excel"
     CSV = "csv"
     JSON = "json"
@@ -128,7 +134,8 @@ class ExportFormat(str, Enum):
 
 
 class CloudProvider(str, Enum):
-    """Cloud provider enumeration."""    AWS = "aws"
+    """Cloud provider enumeration."""
+    AWS = "aws"
     AZURE = "azure"
     GCP = "gcp"
     ALIBABA = "alibaba"
@@ -137,7 +144,8 @@ class CloudProvider(str, Enum):
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration dataclass."""    type: DatabaseType = DatabaseType.POSTGRESQL
+    """Database configuration dataclass."""
+    type: DatabaseType = DatabaseType.POSTGRESQL
     host: str = "localhost"
     port: int = 5432
     database: str = "reports"
@@ -154,7 +162,8 @@ class DatabaseConfig:
     
     @property
     def url(self) -> str:
-        """Generate database URL."""        if self.type == DatabaseType.POSTGRESQL:
+        """Generate database URL."""
+        if self.type == DatabaseType.POSTGRESQL:
             driver = "postgresql+asyncpg"
         elif self.type == DatabaseType.MYSQL:
             driver = "mysql+aiomysql"
@@ -168,7 +177,8 @@ class DatabaseConfig:
 
 @dataclass
 class RedisConfig:
-    """Redis configuration dataclass."""    host: str = "localhost"
+    """Redis configuration dataclass."""
+    host: str = "localhost"
     port: int = 6379
     database: int = 0
     password: Optional[SecretStr] = None
@@ -185,14 +195,16 @@ class RedisConfig:
     
     @property
     def url(self) -> str:
-        """Generate Redis URL."""        scheme = "rediss" if self.ssl else "redis"
+        """Generate Redis URL."""
+        scheme = "rediss" if self.ssl else "redis"
         auth = f":{self.password.get_secret_value()}@" if self.password else ""
         return f"{scheme}://{auth}{self.host}:{self.port}/{self.database}"
 
 
 @dataclass
 class CacheConfig:
-    """Cache configuration dataclass."""    type: CacheType = CacheType.REDIS
+    """Cache configuration dataclass."""
+    type: CacheType = CacheType.REDIS
     ttl_default: int = 3600
     ttl_short: int = 300
     ttl_medium: int = 1800
@@ -206,7 +218,8 @@ class CacheConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration dataclass."""    secret_key: SecretStr = SecretStr("your-secret-key-here")
+    """Security configuration dataclass."""
+    secret_key: SecretStr = SecretStr("your-secret-key-here")
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 1440
     refresh_token_expire_days: int = 30
@@ -228,7 +241,8 @@ class SecurityConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring configuration dataclass."""    enabled: bool = True
+    """Monitoring configuration dataclass."""
+    enabled: bool = True
     metrics_port: int = 9090
     metrics_path: str = "/metrics"
     health_check_path: str = "/health"
@@ -249,7 +263,8 @@ class MonitoringConfig:
 
 @dataclass
 class APIConfig:
-    """API configuration dataclass."""    title: str = "IA Influencer Agent - Reports API"
+    """API configuration dataclass."""
+    title: str = "IA Influencer Agent - Reports API"
     version: str = "2.0.0"
     description: str = "Ultra-advanced enterprise reporting system"
     docs_enabled: bool = True
@@ -269,7 +284,8 @@ class APIConfig:
 
 @dataclass
 class ReportConfig:
-    """Report configuration dataclass."""    default_format: ExportFormat = ExportFormat.PDF
+    """Report configuration dataclass."""
+    default_format: ExportFormat = ExportFormat.PDF
     supported_formats: List[ExportFormat] = field(default_factory=lambda: list(ExportFormat))
     max_concurrent_reports: int = 10
     report_timeout: int = 1800
@@ -288,7 +304,8 @@ class ReportConfig:
 
 @dataclass
 class SchedulerConfig:
-    """Scheduler configuration dataclass."""    enabled: bool = True
+    """Scheduler configuration dataclass."""
+    enabled: bool = True
     max_concurrent_jobs: int = 20
     job_timeout: int = 3600
     retry_attempts: int = 3
@@ -308,7 +325,8 @@ class SchedulerConfig:
 
 @dataclass
 class CloudConfig:
-    """Cloud storage configuration dataclass."""    provider: CloudProvider = CloudProvider.AWS
+    """Cloud storage configuration dataclass."""
+    provider: CloudProvider = CloudProvider.AWS
     region: str = "us-east-1"
     bucket_name: str = "reports-storage"
     access_key: Optional[SecretStr] = None
@@ -330,7 +348,8 @@ class CloudConfig:
 
 @dataclass
 class MLConfig:
-    """Machine Learning configuration dataclass."""    enabled: bool = True
+    """Machine Learning configuration dataclass."""
+    enabled: bool = True
     model_cache_size: int = 10
     prediction_cache_ttl: int = 1800
     batch_size: int = 32
@@ -349,11 +368,13 @@ class MLConfig:
 
 
 class ReportsConfiguration:
-    """    Ultra-advanced configuration management system for the reports module.
+    """
+    Ultra-advanced configuration management system for the reports module.
     
     Provides comprehensive configuration handling with environment-specific settings,
     security configurations, validation, and dynamic updates.
-    """    
+    """
+    
     def __init__(
         self,
         environment: Environment = Environment.PRODUCTION,
@@ -391,11 +412,13 @@ class ReportsConfiguration:
         logger.info(f"ReportsConfiguration initialized for environment: {environment}")
     
     def _get_default_config_path(self) -> Path:
-        """Get default configuration file path."""        base_path = Path(__file__).parent.parent.parent.parent
+        """Get default configuration file path."""
+        base_path = Path(__file__).parent.parent.parent.parent
         return base_path / "config" / f"reports.{self.environment.value}.yml"
     
     def _load_configuration(self) -> None:
-        """Load configuration from file and environment variables."""        try:
+        """Load configuration from file and environment variables."""
+        try:
             # Load from file if exists
             if self.config_path.exists():
                 self._load_from_file()
@@ -420,7 +443,8 @@ class ReportsConfiguration:
             raise
     
     def _load_from_file(self) -> None:
-        """Load configuration from YAML file."""        try:
+        """Load configuration from YAML file."""
+        try:
             with open(self.config_path, 'r') as f:
                 config_data = yaml.safe_load(f)
             
@@ -494,7 +518,8 @@ class ReportsConfiguration:
             raise
     
     def _load_from_environment(self) -> None:
-        """Load configuration from environment variables."""        try:
+        """Load configuration from environment variables."""
+        try:
             # Database configuration
             if os.getenv('DB_HOST'):
                 self.database.host = os.getenv('DB_HOST')
@@ -544,7 +569,8 @@ class ReportsConfiguration:
             raise
     
     def _validate_configuration(self) -> None:
-        """Validate configuration values."""        try:
+        """Validate configuration values."""
+        try:
             # Validate database configuration
             if not self.database.host:
                 raise ValueError("Database host is required")
@@ -582,7 +608,8 @@ class ReportsConfiguration:
             raise
     
     def _initialize_encryption(self) -> None:
-        """Initialize encryption for sensitive data."""        try:
+        """Initialize encryption for sensitive data."""
+        try:
             if self.security.encryption_key:
                 # Use provided encryption key
                 key = self.security.encryption_key.get_secret_value().encode()
@@ -609,12 +636,14 @@ class ReportsConfiguration:
             raise
     
     def _calculate_config_hash(self) -> str:
-        """Calculate hash of current configuration."""        config_dict = self.to_dict(include_secrets=False)
+        """Calculate hash of current configuration."""
+        config_dict = self.to_dict(include_secrets=False)
         config_str = json.dumps(config_dict, sort_keys=True)
         return hashlib.sha256(config_str.encode()).hexdigest()
     
     def _setup_config_watching(self) -> None:
-        """Setup configuration file watching for auto-reload."""        try:
+        """Setup configuration file watching for auto-reload."""
+        try:
             class ConfigFileHandler(FileSystemEventHandler):
                 def __init__(self, config_instance):
                     self.config = config_instance
@@ -636,7 +665,8 @@ class ReportsConfiguration:
             logger.error(f"Failed to setup configuration watching: {e}")
     
     def encrypt_value(self, value: str) -> str:
-        """Encrypt sensitive value."""        if not ENCRYPTION_AVAILABLE or not self._encryption_key:
+        """Encrypt sensitive value."""
+        if not ENCRYPTION_AVAILABLE or not self._encryption_key:
             return value
         
         try:
@@ -648,7 +678,8 @@ class ReportsConfiguration:
             return value
     
     def decrypt_value(self, encrypted_value: str) -> str:
-        """Decrypt sensitive value."""        if not ENCRYPTION_AVAILABLE or not self._encryption_key:
+        """Decrypt sensitive value."""
+        if not ENCRYPTION_AVAILABLE or not self._encryption_key:
             return encrypted_value
         
         try:
@@ -661,7 +692,8 @@ class ReportsConfiguration:
             return encrypted_value
     
     def reload(self) -> None:
-        """Reload configuration from file and environment."""        try:
+        """Reload configuration from file and environment."""
+        try:
             old_hash = self._config_hash
             self._load_configuration()
             
@@ -675,7 +707,8 @@ class ReportsConfiguration:
             raise
     
     def to_dict(self, include_secrets: bool = False) -> Dict[str, Any]:
-        """Convert configuration to dictionary."""        config_dict = {
+        """Convert configuration to dictionary."""
+        config_dict = {
             "environment": self.environment.value,
             "database": asdict(self.database),
             "redis": asdict(self.redis),
@@ -705,11 +738,13 @@ class ReportsConfiguration:
         return config_dict
     
     def to_yaml(self, include_secrets: bool = False) -> str:
-        """Export configuration to YAML format."""        config_dict = self.to_dict(include_secrets=include_secrets)
+        """Export configuration to YAML format."""
+        config_dict = self.to_dict(include_secrets=include_secrets)
         return yaml.dump(config_dict, default_flow_style=False, sort_keys=True)
     
     def save_to_file(self, file_path: Optional[str] = None, include_secrets: bool = False) -> None:
-        """Save configuration to file."""        try:
+        """Save configuration to file."""
+        try:
             target_path = Path(file_path) if file_path else self.config_path
             target_path.parent.mkdir(parents=True, exist_ok=True)
             
@@ -723,22 +758,28 @@ class ReportsConfiguration:
             raise
     
     def get_database_url(self, async_driver: bool = True) -> str:
-        """Get formatted database URL."""        return self.database.url
+        """Get formatted database URL."""
+        return self.database.url
     
     def get_redis_url(self) -> str:
-        """Get formatted Redis URL."""        return self.redis.url
+        """Get formatted Redis URL."""
+        return self.redis.url
     
     def is_development(self) -> bool:
-        """Check if running in development environment."""        return self.environment in [Environment.DEVELOPMENT, Environment.LOCAL]
+        """Check if running in development environment."""
+        return self.environment in [Environment.DEVELOPMENT, Environment.LOCAL]
     
     def is_production(self) -> bool:
-        """Check if running in production environment."""        return self.environment == Environment.PRODUCTION
+        """Check if running in production environment."""
+        return self.environment == Environment.PRODUCTION
     
     def is_testing(self) -> bool:
-        """Check if running in testing environment."""        return self.environment == Environment.TESTING
+        """Check if running in testing environment."""
+        return self.environment == Environment.TESTING
     
     def cleanup(self) -> None:
-        """Cleanup watchers and resources."""        try:
+        """Cleanup watchers and resources."""
+        try:
             for watcher in self._watchers:
                 watcher.stop()
                 watcher.join()
@@ -760,7 +801,8 @@ def get_config(
     auto_reload: bool = False,
     force_reload: bool = False
 ) -> ReportsConfiguration:
-    """Get global configuration instance."""    global _config_instance
+    """Get global configuration instance."""
+    global _config_instance
     
     if _config_instance is None or force_reload:
         env = environment or Environment(os.getenv('ENVIRONMENT', 'production'))
@@ -774,7 +816,8 @@ def get_config(
 
 
 def reload_config() -> None:
-    """Reload global configuration."""    global _config_instance
+    """Reload global configuration."""
+    global _config_instance
     if _config_instance:
         _config_instance.reload()
 
@@ -785,7 +828,8 @@ def config_context(
     config_path: Optional[str] = None,
     auto_reload: bool = False
 ):
-    """Context manager for temporary configuration."""    original_config = _config_instance
+    """Context manager for temporary configuration."""
+    original_config = _config_instance
     
     try:
         temp_config = ReportsConfiguration(
@@ -830,7 +874,8 @@ API_SCHEMA = {
 
 
 def validate_configuration(config: ReportsConfiguration) -> List[str]:
-    """Validate configuration using schemas."""    if not VALIDATION_AVAILABLE:
+    """Validate configuration using schemas."""
+    if not VALIDATION_AVAILABLE:
         return []
     
     errors = []

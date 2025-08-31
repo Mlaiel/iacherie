@@ -3,7 +3,8 @@
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
-"""from typing import Dict, List, Optional, Callable, Any, Union
+"""
+from typing import Dict, List, Optional, Callable, Any, Union
 from enum import Enum
 from datetime import datetime, timedelta
 import asyncio
@@ -21,7 +22,8 @@ from ..utils.caching import CacheManager
 
 
 class PipelineStatus(Enum):
-    """Enhanced pipeline execution status."""    PENDING = "pending"
+    """Enhanced pipeline execution status."""
+    PENDING = "pending"
     QUEUED = "queued"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -33,7 +35,8 @@ class PipelineStatus(Enum):
 
 
 class PipelineStepType(Enum):
-    """Types of pipeline steps."""    VALIDATION = "validation"
+    """Types of pipeline steps."""
+    VALIDATION = "validation"
     TRANSFORMATION = "transformation"
     ANALYSIS = "analysis"
     PROCESSING = "processing"
@@ -43,7 +46,8 @@ class PipelineStepType(Enum):
 
 
 class ExecutionStrategy(Enum):
-    """Pipeline execution strategies."""    SEQUENTIAL = "sequential"
+    """Pipeline execution strategies."""
+    SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     CONDITIONAL = "conditional"
     DYNAMIC = "dynamic"
@@ -51,7 +55,8 @@ class ExecutionStrategy(Enum):
 
 @dataclass
 class PipelineStep:
-    """Enhanced pipeline step with intelligent capabilities."""    name: str
+    """Enhanced pipeline step with intelligent capabilities."""
+    name: str
     step_type: PipelineStepType
     handler: Callable
     dependencies: List[str] = field(default_factory=list)
@@ -72,7 +77,8 @@ class PipelineStep:
     execution_duration: float = 0.0
 
     def can_execute(self, completed_steps: set, context: Dict[str, Any]) -> bool:
-        """Check if this step can be executed."""        # Check dependencies
+        """Check if this step can be executed."""
+        # Check dependencies
         if not all(dep in completed_steps for dep in self.dependencies):
             return False
         
@@ -80,7 +86,8 @@ class PipelineStep:
         return self._evaluate_conditions(context)
     
     def _evaluate_conditions(self, context: Dict[str, Any]) -> bool:
-        """Evaluate step conditions against context."""        if not self.conditions:
+        """Evaluate step conditions against context."""
+        if not self.conditions:
             return True
         
         for condition in self.conditions:
@@ -119,11 +126,13 @@ class PipelineStep:
         return True
     
     def should_retry(self) -> bool:
-        """Check if step should be retried."""        max_retries = self.retry_policy.get("max_retries", 3)
+        """Check if step should be retried."""
+        max_retries = self.retry_policy.get("max_retries", 3)
         return self.retry_attempts < max_retries and self.status == PipelineStatus.FAILED
     
     def get_retry_delay(self) -> float:
-        """Get delay before retry."""        base_delay = self.retry_policy.get("delay", 1)
+        """Get delay before retry."""
+        base_delay = self.retry_policy.get("delay", 1)
         exponential = self.retry_policy.get("exponential_backoff", False)
         
         if exponential:
@@ -131,7 +140,8 @@ class PipelineStep:
         return base_delay
     
     def record_execution(self, success: bool, result: Any = None, error: str = None):
-        """Record step execution result."""        self.end_time = datetime.utcnow()
+        """Record step execution result."""
+        self.end_time = datetime.utcnow()
         if self.start_time:
             self.execution_duration = (self.end_time - self.start_time).total_seconds()
         
@@ -145,7 +155,8 @@ class PipelineStep:
 
 
 class IntelligentContentPipeline:
-    """Intelligent content processing pipeline with adaptive routing."""    
+    """Intelligent content processing pipeline with adaptive routing."""
+    
     def __init__(self, pipeline_id: str = None, config: Dict[str, Any] = None):
         self.pipeline_id = pipeline_id or f"pipeline_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
         self.config = config or {}
@@ -178,7 +189,8 @@ class IntelligentContentPipeline:
         self.enable_metrics = config.get("enable_metrics", True)
     
     def add_step(self, step: PipelineStep) -> 'IntelligentContentPipeline':
-        """Add a step to the pipeline."""        self.steps[step.name] = step
+        """Add a step to the pipeline."""
+        self.steps[step.name] = step
         
         # Build execution graph
         for dependency in step.dependencies:
@@ -188,14 +200,17 @@ class IntelligentContentPipeline:
         return self
     
     def set_context(self, key: str, value: Any) -> 'IntelligentContentPipeline':
-        """Set context data for the pipeline."""        self.context[key] = value
+        """Set context data for the pipeline."""
+        self.context[key] = value
         return self
     
     def get_context(self, key: str, default: Any = None) -> Any:
-        """Get context data."""        return self.context.get(key, default)
+        """Get context data."""
+        return self.context.get(key, default)
     
     async def execute(self, content_item: ContentItem = None) -> Dict[str, Any]:
-        """Execute the entire pipeline with intelligent routing."""        if content_item:
+        """Execute the entire pipeline with intelligent routing."""
+        if content_item:
             self.set_context("content_item", content_item)
         
         self.status = PipelineStatus.RUNNING
@@ -241,7 +256,8 @@ class IntelligentContentPipeline:
         return self._build_execution_summary()
     
     async def _execute_adaptive_pipeline(self):
-        """Execute pipeline with adaptive routing and parallel processing."""        execution_queue = deque()
+        """Execute pipeline with adaptive routing and parallel processing."""
+        execution_queue = deque()
         
         # Find initial steps (no dependencies)
         initial_steps = [
@@ -279,7 +295,8 @@ class IntelligentContentPipeline:
                     break
     
     async def _execute_step_with_monitoring(self, step_name: str):
-        """Execute step with comprehensive monitoring."""        step = self.steps[step_name]
+        """Execute step with comprehensive monitoring."""
+        step = self.steps[step_name]
         step.status = PipelineStatus.RUNNING
         step.start_time = datetime.utcnow()
         
@@ -330,7 +347,8 @@ class IntelligentContentPipeline:
             await self._handle_step_failure(step_name, str(e))
     
     async def _complete_step(self, step_name: str, result: Any):
-        """Handle successful step completion."""        self.completed_steps.add(step_name)
+        """Handle successful step completion."""
+        self.completed_steps.add(step_name)
         self.current_steps.discard(step_name)
         self.results[step_name] = {
             "result": result,
@@ -353,7 +371,8 @@ class IntelligentContentPipeline:
         self.logger.debug(f"Step completed: {step_name}")
     
     async def _handle_step_failure(self, step_name: str, error: str):
-        """Handle step failure with retry logic."""        step = self.steps[step_name]
+        """Handle step failure with retry logic."""
+        step = self.steps[step_name]
         
         # Check if step should be retried
         if step.should_retry():
@@ -391,7 +410,8 @@ class IntelligentContentPipeline:
             await self._cancel_remaining_steps()
     
     async def _wait_for_step_completion(self):
-        """Wait for at least one currently running step to complete."""        # Simple polling approach - could be improved with proper async coordination
+        """Wait for at least one currently running step to complete."""
+        # Simple polling approach - could be improved with proper async coordination
         while self.current_steps:
             await asyncio.sleep(0.1)
             
@@ -406,7 +426,8 @@ class IntelligentContentPipeline:
                 break
     
     def _find_available_steps(self) -> List[str]:
-        """Find steps that can now be executed."""        available_steps = []
+        """Find steps that can now be executed."""
+        available_steps = []
         
         for step_name, step in self.steps.items():
             if (step_name not in self.completed_steps and 
@@ -422,7 +443,8 @@ class IntelligentContentPipeline:
         return available_steps
     
     async def _resolve_stuck_pipeline(self, remaining_steps: Set[str]) -> bool:
-        """Attempt to resolve stuck pipeline by analyzing dependencies."""        self.logger.info(f"Attempting to resolve stuck pipeline with steps: {remaining_steps}")
+        """Attempt to resolve stuck pipeline by analyzing dependencies."""
+        self.logger.info(f"Attempting to resolve stuck pipeline with steps: {remaining_steps}")
         
         # Analyze dependencies
         for step_name in remaining_steps:
@@ -441,7 +463,8 @@ class IntelligentContentPipeline:
         return False
     
     async def _cancel_remaining_steps(self):
-        """Cancel all remaining steps due to critical failure."""        for step_name in self.current_steps.copy():
+        """Cancel all remaining steps due to critical failure."""
+        for step_name in self.current_steps.copy():
             step = self.steps[step_name]
             step.status = PipelineStatus.CANCELLED
             self.current_steps.discard(step_name)
@@ -449,7 +472,8 @@ class IntelligentContentPipeline:
         self.logger.warning("Cancelled remaining pipeline steps due to critical failure")
     
     def _is_failure_acceptable(self) -> bool:
-        """Check if pipeline failure is acceptable based on configuration."""        if not self.failed_steps:
+        """Check if pipeline failure is acceptable based on configuration."""
+        if not self.failed_steps:
             return True
         
         # Check if any failed steps are critical
@@ -468,7 +492,8 @@ class IntelligentContentPipeline:
         return failure_rate <= failure_threshold
     
     def _get_step_cache_key(self, step_name: str) -> Optional[str]:
-        """Generate cache key for step result."""        step = self.steps[step_name]
+        """Generate cache key for step result."""
+        step = self.steps[step_name]
         
         if not step.metadata.get("cacheable", False):
             return None
@@ -488,7 +513,8 @@ class IntelligentContentPipeline:
         return hashlib.md5(":".join(cache_components).encode()).hexdigest()
     
     def _should_cache_result(self, result: Any) -> bool:
-        """Determine if result should be cached."""        # Don't cache very large results
+        """Determine if result should be cached."""
+        # Don't cache very large results
         try:
             result_size = len(json.dumps(result, default=str))
             if result_size > 100000:  # 100KB limit
@@ -499,7 +525,8 @@ class IntelligentContentPipeline:
         return True
     
     def _build_execution_summary(self) -> Dict[str, Any]:
-        """Build comprehensive execution summary."""        duration = (self.end_time - self.start_time).total_seconds() if self.end_time and self.start_time else 0
+        """Build comprehensive execution summary."""
+        duration = (self.end_time - self.start_time).total_seconds() if self.end_time and self.start_time else 0
         
         return {
             "pipeline_id": self.pipeline_id,
@@ -524,7 +551,8 @@ class IntelligentContentPipeline:
         }
     
     def _calculate_performance_metrics(self) -> Dict[str, Any]:
-        """Calculate detailed performance metrics."""        completed_steps = [self.steps[name] for name in self.completed_steps]
+        """Calculate detailed performance metrics."""
+        completed_steps = [self.steps[name] for name in self.completed_steps]
         
         if not completed_steps:
             return {}
@@ -541,7 +569,8 @@ class IntelligentContentPipeline:
         }
     
     def _calculate_parallel_efficiency(self) -> float:
-        """Calculate how efficiently parallel execution was used."""        if not self.completed_steps:
+        """Calculate how efficiently parallel execution was used."""
+        if not self.completed_steps:
             return 0.0
         
         total_processing_time = sum(
@@ -556,21 +585,25 @@ class IntelligentContentPipeline:
         return min(total_processing_time / pipeline_duration, self.max_parallel_steps) / self.max_parallel_steps
     
     def pause(self):
-        """Pause pipeline execution."""        self.status = PipelineStatus.PAUSED
+        """Pause pipeline execution."""
+        self.status = PipelineStatus.PAUSED
         self.logger.info(f"Paused pipeline: {self.pipeline_id}")
     
     def resume(self):
-        """Resume pipeline execution."""        if self.status == PipelineStatus.PAUSED:
+        """Resume pipeline execution."""
+        if self.status == PipelineStatus.PAUSED:
             self.status = PipelineStatus.RUNNING
             self.logger.info(f"Resumed pipeline: {self.pipeline_id}")
     
     def cancel(self):
-        """Cancel pipeline execution."""        self.status = PipelineStatus.CANCELLED
+        """Cancel pipeline execution."""
+        self.status = PipelineStatus.CANCELLED
         asyncio.create_task(self._cancel_remaining_steps())
         self.logger.info(f"Cancelled pipeline: {self.pipeline_id}")
     
     def get_step_status(self, step_name: str) -> Optional[Dict[str, Any]]:
-        """Get detailed status of a specific step."""        if step_name not in self.steps:
+        """Get detailed status of a specific step."""
+        if step_name not in self.steps:
             return None
         
         step = self.steps[step_name]
@@ -590,13 +623,15 @@ class IntelligentContentPipeline:
         }
     
     def get_execution_graph(self) -> Dict[str, List[str]]:
-        """Get the execution dependency graph."""        return dict(self.execution_graph)
+        """Get the execution dependency graph."""
+        return dict(self.execution_graph)
             self.end_time = datetime.utcnow()
         
         return self.get_execution_summary()
 
     async def _execute_step(self, step: PipelineStep) -> bool:
-        """Execute a single pipeline step."""        step.status = PipelineStatus.RUNNING
+        """Execute a single pipeline step."""
+        step.status = PipelineStatus.RUNNING
         step.start_time = datetime.utcnow()
         
         for attempt in range(step.retry_count):
@@ -630,7 +665,8 @@ class IntelligentContentPipeline:
         return False
 
     def get_execution_summary(self) -> Dict:
-        """Get summary of pipeline execution."""        duration = None
+        """Get summary of pipeline execution."""
+        duration = None
         if self.start_time and self.end_time:
             duration = (self.end_time - self.start_time).total_seconds()
         
@@ -662,7 +698,8 @@ class IntelligentContentPipeline:
 
     @classmethod
     def create_content_processing_pipeline(cls, content_info: Dict) -> 'ContentPipeline':
-        """Create a standard content processing pipeline."""        pipeline = cls(f"content_processing_{content_info.get('id', 'unknown')}")
+        """Create a standard content processing pipeline."""
+        pipeline = cls(f"content_processing_{content_info.get('id', 'unknown')}")
         
         # Set initial context
         pipeline.set_context("content_info", content_info)
@@ -715,7 +752,8 @@ class IntelligentContentPipeline:
 
     @staticmethod
     async def _validate_content_step(context: Dict) -> Dict:
-        """Validate content before processing."""        content_info = context.get("content_info", {})
+        """Validate content before processing."""
+        content_info = context.get("content_info", {})
         
         # Basic validation
         required_fields = ["title", "media_type", "storage_uri"]
@@ -737,7 +775,8 @@ class IntelligentContentPipeline:
 
     @staticmethod
     async def _extract_metadata_step(context: Dict) -> Dict:
-        """Extract metadata from content."""        content_info = context.get("content_info", {})
+        """Extract metadata from content."""
+        content_info = context.get("content_info", {})
         media_type = content_info.get("media_type")
         
         # Mock metadata extraction based on media type
@@ -771,7 +810,8 @@ class IntelligentContentPipeline:
 
     @staticmethod
     async def _generate_fingerprint_step(context: Dict) -> Dict:
-        """Generate content fingerprint for protection."""        import hashlib
+        """Generate content fingerprint for protection."""
+        import hashlib
         
         content_info = context.get("content_info", {})
         metadata = context.get("extract_metadata", {})
@@ -788,7 +828,8 @@ class IntelligentContentPipeline:
 
     @staticmethod
     async def _ai_analysis_step(context: Dict) -> Dict:
-        """Perform AI analysis on content."""        media_type = context.get("media_type")
+        """Perform AI analysis on content."""
+        media_type = context.get("media_type")
         
         # Mock AI analysis results
         analysis = {
@@ -829,7 +870,8 @@ class IntelligentContentPipeline:
 
     @staticmethod
     async def _seo_optimization_step(context: Dict) -> Dict:
-        """Optimize content for SEO."""        content_info = context.get("content_info", {})
+        """Optimize content for SEO."""
+        content_info = context.get("content_info", {})
         ai_analysis = context.get("ai_analysis", {})
         
         # Generate SEO recommendations
@@ -854,7 +896,8 @@ class IntelligentContentPipeline:
 
     @staticmethod
     async def _find_collaborations_step(context: Dict) -> Dict:
-        """Find potential collaboration opportunities."""        ai_analysis = context.get("ai_analysis", {})
+        """Find potential collaboration opportunities."""
+        ai_analysis = context.get("ai_analysis", {})
         
         # Mock collaboration matching
         potential_collaborators = []
@@ -886,7 +929,8 @@ class IntelligentContentPipeline:
 
     @staticmethod
     async def _prepare_distribution_step(context: Dict) -> Dict:
-        """Prepare content for multi-platform distribution."""        content_info = context.get("content_info", {})
+        """Prepare content for multi-platform distribution."""
+        content_info = context.get("content_info", {})
         seo_optimization = context.get("seo_optimization", {})
         
         media_type = content_info.get("media_type")

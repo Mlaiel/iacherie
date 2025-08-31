@@ -9,7 +9,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from datetime import datetime
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class AIAgentsSystem:
-    """    Central system for managing all AI agents
+    """
+    Central system for managing all AI agents
     
     Features:
     - Centralized agent initialization
@@ -43,7 +45,8 @@ class AIAgentsSystem:
     - Configuration management
     - Performance analytics
     - Error handling and recovery
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.initialized = False
@@ -65,7 +68,8 @@ class AIAgentsSystem:
         self.error_log = []
     
     async def initialize(self) -> bool:
-        """Initialize the complete AI agents system"""        try:
+        """Initialize the complete AI agents system"""
+        try:
             logger.info("Initializing AI Agents System...")
             
             # Initialize core components
@@ -101,7 +105,8 @@ class AIAgentsSystem:
             return False
     
     async def _initialize_core_components(self) -> None:
-        """Initialize core system components"""        # Agent registry
+        """Initialize core system components"""
+        # Agent registry
         self.registry = AgentRegistry()
         
         # Communication hub
@@ -123,7 +128,8 @@ class AIAgentsSystem:
         logger.info("Core components initialized")
     
     async def _initialize_agents(self) -> None:
-        """Initialize and register all AI agents"""        agent_configs = self._get_agent_configurations()
+        """Initialize and register all AI agents"""
+        agent_configs = self._get_agent_configurations()
         
         for agent_type, config in agent_configs.items():
             try:
@@ -146,7 +152,8 @@ class AIAgentsSystem:
                 })
     
     async def _create_agent(self, agent_type: str, config: Dict[str, Any]) -> Optional[Any]:
-        """Create an agent instance based on type"""        agent_classes = {
+        """Create an agent instance based on type"""
+        agent_classes = {
             "content_creator": ContentCreatorAgent,
             "social_media_manager": SocialMediaManagerAgent,
             "engagement_specialist": EngagementSpecialistAgent,
@@ -172,7 +179,8 @@ class AIAgentsSystem:
         return agent_class(agent_config)
     
     def _get_agent_configurations(self) -> Dict[str, Dict[str, Any]]:
-        """Get agent configurations from config or defaults"""        default_configs = {
+        """Get agent configurations from config or defaults"""
+        default_configs = {
             "content_creator": {
                 "agent_id": "content_creator_001",
                 "agent_name": "Content Creator Agent",
@@ -252,12 +260,14 @@ class AIAgentsSystem:
         return default_configs
     
     async def _start_monitoring(self) -> None:
-        """Start system monitoring tasks"""        asyncio.create_task(self._health_monitor())
+        """Start system monitoring tasks"""
+        asyncio.create_task(self._health_monitor())
         asyncio.create_task(self._performance_monitor())
         asyncio.create_task(self._error_monitor())
     
     async def _health_monitor(self) -> None:
-        """Monitor system health"""        while True:
+        """Monitor system health"""
+        while True:
             try:
                 await asyncio.sleep(60)  # Check every minute
                 
@@ -292,7 +302,8 @@ class AIAgentsSystem:
                 logger.error(f"Health monitoring error: {str(e)}")
     
     async def _performance_monitor(self) -> None:
-        """Monitor system performance"""        while True:
+        """Monitor system performance"""
+        while True:
             try:
                 await asyncio.sleep(300)  # Check every 5 minutes
                 
@@ -326,7 +337,8 @@ class AIAgentsSystem:
                 logger.error(f"Performance monitoring error: {str(e)}")
     
     async def _error_monitor(self) -> None:
-        """Monitor and log system errors"""        while True:
+        """Monitor and log system errors"""
+        while True:
             try:
                 await asyncio.sleep(30)  # Check every 30 seconds
                 
@@ -341,7 +353,8 @@ class AIAgentsSystem:
                 logger.error(f"Error monitoring error: {str(e)}")
     
     async def _validate_system_health(self) -> bool:
-        """Validate that all critical components are healthy"""        try:
+        """Validate that all critical components are healthy"""
+        try:
             # Check core components
             if not all([self.registry, self.communication_hub, self.workflow_engine, self.task_manager]):
                 return False
@@ -363,7 +376,8 @@ class AIAgentsSystem:
             return False
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""        agent_statuses = {}
+        """Get comprehensive system status"""
+        agent_statuses = {}
         for agent_type, agent in self.agents.items():
             agent_statuses[agent_type] = await agent.get_health_status()
         
@@ -378,7 +392,8 @@ class AIAgentsSystem:
         }
     
     async def shutdown(self) -> None:
-        """Graceful system shutdown"""        logger.info("Shutting down AI Agents System...")
+        """Graceful system shutdown"""
+        logger.info("Shutting down AI Agents System...")
         
         try:
             # Shutdown agents
@@ -407,7 +422,8 @@ _system_instance: Optional[AIAgentsSystem] = None
 
 
 async def initialize_system(config: Dict[str, Any] = None) -> AIAgentsSystem:
-    """Initialize the global AI agents system"""    global _system_instance
+    """Initialize the global AI agents system"""
+    global _system_instance
     
     if _system_instance is None:
         _system_instance = AIAgentsSystem(config)
@@ -417,11 +433,13 @@ async def initialize_system(config: Dict[str, Any] = None) -> AIAgentsSystem:
 
 
 def get_system() -> Optional[AIAgentsSystem]:
-    """Get the global system instance"""    return _system_instance
+    """Get the global system instance"""
+    return _system_instance
 
 
 async def shutdown_system() -> None:
-    """Shutdown the global system"""    global _system_instance
+    """Shutdown the global system"""
+    global _system_instance
     
     if _system_instance:
         await _system_instance.shutdown()

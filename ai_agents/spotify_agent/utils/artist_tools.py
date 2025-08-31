@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 import pandas as pd
@@ -35,14 +36,16 @@ from ...utils.performance_monitor import PerformanceMonitor
 logger = logging.getLogger(__name__)
 
 class ArtistTier(Enum):
-    """Artist career tiers for targeted strategies"""    EMERGING = "emerging"          # <10k monthly listeners
+    """Artist career tiers for targeted strategies"""
+    EMERGING = "emerging"          # <10k monthly listeners
     DEVELOPING = "developing"      # 10k-100k monthly listeners
     ESTABLISHED = "established"    # 100k-1M monthly listeners
     MAJOR = "major"               # 1M-10M monthly listeners
     SUPERSTAR = "superstar"       # >10M monthly listeners
 
 class ReleaseStrategy(Enum):
-    """Release strategy types"""    SINGLE_FOCUS = "single_focus"
+    """Release strategy types"""
+    SINGLE_FOCUS = "single_focus"
     EP_CAMPAIGN = "ep_campaign"
     ALBUM_ROLLOUT = "album_rollout"
     COLLABORATIVE = "collaborative"
@@ -50,7 +53,8 @@ class ReleaseStrategy(Enum):
     PLAYLIST_TARGETING = "playlist_targeting"
 
 class OptimizationArea(Enum):
-    """Areas for artist optimization"""    PROFILE_COMPLETENESS = "profile_completeness"
+    """Areas for artist optimization"""
+    PROFILE_COMPLETENESS = "profile_completeness"
     CONTENT_STRATEGY = "content_strategy"
     AUDIENCE_ENGAGEMENT = "audience_engagement"
     RELEASE_TIMING = "release_timing"
@@ -60,7 +64,8 @@ class OptimizationArea(Enum):
 
 @dataclass
 class ArtistProfileScore:
-    """Comprehensive artist profile scoring"""    overall_score: float = 0.0
+    """Comprehensive artist profile scoring"""
+    overall_score: float = 0.0
     completeness_score: float = 0.0
     engagement_score: float = 0.0
     growth_score: float = 0.0
@@ -74,7 +79,8 @@ class ArtistProfileScore:
 
 @dataclass
 class ReleaseOptimizationPlan:
-    """Comprehensive release optimization strategy"""    optimal_release_date: datetime
+    """Comprehensive release optimization strategy"""
+    optimal_release_date: datetime
     alternative_dates: List[datetime] = field(default_factory=list)
     pre_release_timeline: Dict[str, datetime] = field(default_factory=dict)
     marketing_milestones: List[Dict[str, Any]] = field(default_factory=list)
@@ -84,7 +90,8 @@ class ReleaseOptimizationPlan:
     confidence_level: float = 0.0
 
 class ArtistProfileManager:
-    """Advanced artist profile management and optimization"""    
+    """Advanced artist profile management and optimization"""
+    
     def __init__(self, api_client: SpotifyAPIClient):
         self.api_client = api_client
         self.cache_manager = CacheManager(prefix="artist_profile")
@@ -95,7 +102,8 @@ class ArtistProfileManager:
         self.success_predictor = GradientBoostingRegressor(n_estimators=100, random_state=42)
         
     async def analyze_artist_profile(self, artist_id: str, access_token: Optional[str] = None) -> Dict[str, Any]:
-        """Comprehensive artist profile analysis"""        cache_key = f"profile_analysis:{artist_id}"
+        """Comprehensive artist profile analysis"""
+        cache_key = f"profile_analysis:{artist_id}"
         cached_data = await self.cache_manager.get(cache_key)
         if cached_data:
             return cached_data
@@ -152,7 +160,8 @@ class ArtistProfileManager:
     async def _calculate_profile_score(self, artist_info: Dict[str, Any],
                                      top_tracks: Dict[str, Any],
                                      albums: Dict[str, Any]) -> ArtistProfileScore:
-        """Calculate comprehensive profile score"""        
+        """Calculate comprehensive profile score"""
+        
         # Initialize scoring components
         profile_elements = {}
         missing_elements = []
@@ -243,7 +252,8 @@ class ArtistProfileManager:
         )
     
     def _is_recent_release(self, album: Dict[str, Any]) -> bool:
-        """Check if album is a recent release (last 12 months)"""        try:
+        """Check if album is a recent release (last 12 months)"""
+        try:
             release_date = album.get("release_date", "")
             if not release_date:
                 return False
@@ -262,7 +272,8 @@ class ArtistProfileManager:
             return False
     
     def _calculate_genre_consistency(self, genres: List[str]) -> float:
-        """Calculate genre consistency score"""        if not genres:
+        """Calculate genre consistency score"""
+        if not genres:
             return 0.0
         
         # Simple consistency based on number of genres (fewer = more consistent)
@@ -277,7 +288,8 @@ class ArtistProfileManager:
     
     def _calculate_discoverability_score(self, artist_info: Dict[str, Any], 
                                        tracks: List[Dict[str, Any]]) -> float:
-        """Calculate discoverability potential score"""        factors = []
+        """Calculate discoverability potential score"""
+        factors = []
         
         # Genre presence (popular genres score higher)
         genres = artist_info.get("genres", [])
@@ -301,7 +313,8 @@ class ArtistProfileManager:
     
     async def _estimate_monthly_listeners(self, artist_info: Dict[str, Any],
                                         top_tracks: Dict[str, Any]) -> int:
-        """Estimate monthly listeners based on available data"""        # This is an estimation algorithm - in production would use Spotify for Artists API
+        """Estimate monthly listeners based on available data"""
+        # This is an estimation algorithm - in production would use Spotify for Artists API
         
         followers = artist_info.get("followers", {}).get("total", 0)
         popularity = artist_info.get("popularity", 0)
@@ -324,7 +337,8 @@ class ArtistProfileManager:
         return int(base_estimate)
     
     def _determine_artist_tier(self, monthly_listeners: int) -> ArtistTier:
-        """Determine artist tier based on monthly listeners"""        if monthly_listeners >= 10_000_000:
+        """Determine artist tier based on monthly listeners"""
+        if monthly_listeners >= 10_000_000:
             return ArtistTier.SUPERSTAR
         elif monthly_listeners >= 1_000_000:
             return ArtistTier.MAJOR
@@ -338,7 +352,8 @@ class ArtistProfileManager:
     async def _generate_profile_recommendations(self, artist_info: Dict[str, Any],
                                               profile_score: ArtistProfileScore,
                                               artist_tier: ArtistTier) -> List[Dict[str, Any]]:
-        """Generate targeted profile optimization recommendations"""        recommendations = []
+        """Generate targeted profile optimization recommendations"""
+        recommendations = []
         
         # Profile completeness recommendations
         if profile_score.completeness_score < 0.8:
@@ -405,7 +420,8 @@ class ArtistProfileManager:
         return recommendations
     
     def _get_tier_specific_recommendations(self, artist_tier: ArtistTier) -> List[Dict[str, Any]]:
-        """Get recommendations specific to artist tier"""        recommendations = []
+        """Get recommendations specific to artist tier"""
+        recommendations = []
         
         if artist_tier == ArtistTier.EMERGING:
             recommendations.append({
@@ -459,7 +475,8 @@ class ArtistProfileManager:
     
     async def _analyze_career_trajectory(self, artist_id: str, artist_info: Dict[str, Any],
                                        top_tracks: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze artist's career trajectory and momentum"""        
+        """Analyze artist's career trajectory and momentum"""
+        
         # This would use historical data in production
         trajectory_analysis = {
             "momentum_score": np.random.uniform(0.3, 1.2),
@@ -482,7 +499,8 @@ class ArtistProfileManager:
     
     async def _perform_competitive_analysis(self, artist_info: Dict[str, Any],
                                           artist_tier: ArtistTier) -> Dict[str, Any]:
-        """Perform competitive analysis within genre and tier"""        
+        """Perform competitive analysis within genre and tier"""
+        
         genres = artist_info.get("genres", [])
         
         # Simulated competitive analysis
@@ -517,7 +535,8 @@ class ArtistProfileManager:
         return competitive_insights
     
     def _get_tier_benchmarks(self, tier: ArtistTier) -> Dict[str, Any]:
-        """Get benchmark data for artist tier"""        benchmarks = {
+        """Get benchmark data for artist tier"""
+        benchmarks = {
             ArtistTier.EMERGING: {
                 "monthly_listeners": 2000,
                 "growth_rate": 15,  # percent per month
@@ -550,7 +569,8 @@ class ArtistProfileManager:
     async def _identify_growth_opportunities(self, artist_info: Dict[str, Any],
                                            profile_score: ArtistProfileScore,
                                            artist_tier: ArtistTier) -> List[Dict[str, Any]]:
-        """Identify specific growth opportunities"""        
+        """Identify specific growth opportunities"""
+        
         opportunities = []
         
         # Market expansion opportunities
@@ -589,7 +609,8 @@ class ArtistProfileManager:
     
     async def _analyze_artist_brand(self, artist_info: Dict[str, Any],
                                    top_tracks: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze artist brand strength and consistency"""        
+        """Analyze artist brand strength and consistency"""
+        
         brand_analysis = {
             "brand_consistency": {
                 "visual_consistency": np.random.uniform(0.4, 0.9),
@@ -618,7 +639,8 @@ class ArtistProfileManager:
     
     async def _analyze_market_positioning(self, artist_info: Dict[str, Any],
                                         competitive_insights: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze market positioning relative to competition"""        
+        """Analyze market positioning relative to competition"""
+        
         positioning_analysis = {
             "current_position": {
                 "genre_ranking": np.random.randint(100, 10000),
@@ -645,7 +667,8 @@ class ArtistProfileManager:
         return positioning_analysis
 
 class ReleaseOptimizer:
-    """Advanced release timing and strategy optimization"""    
+    """Advanced release timing and strategy optimization"""
+    
     def __init__(self):
         self.cache_manager = CacheManager(prefix="release_optimizer")
         self.success_model = GradientBoostingRegressor(n_estimators=100, random_state=42)
@@ -655,7 +678,8 @@ class ReleaseOptimizer:
                                     seasonal_patterns: Dict[str, Any],
                                     competitive_landscape: Dict[str, Any],
                                     audience_behavior: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate comprehensive release optimization plan"""        
+        """Generate comprehensive release optimization plan"""
+        
         try:
             # Analyze optimal timing windows
             optimal_windows = self._analyze_timing_windows(
@@ -700,7 +724,8 @@ class ReleaseOptimizer:
     def _analyze_timing_windows(self, seasonal_patterns: Dict[str, Any],
                               competitive_landscape: Dict[str, Any],
                               audience_behavior: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Analyze and rank optimal timing windows"""        
+        """Analyze and rank optimal timing windows"""
+        
         # Generate timing windows for next 6 months
         windows = []
         base_date = datetime.now(timezone.utc)
@@ -732,7 +757,8 @@ class ReleaseOptimizer:
         return windows
     
     def _calculate_seasonal_score(self, date: datetime, seasonal_patterns: Dict[str, Any]) -> float:
-        """Calculate seasonal appropriateness score"""        month = date.month
+        """Calculate seasonal appropriateness score"""
+        month = date.month
         
         # Seasonal factors (higher is better)
         seasonal_multipliers = {
@@ -769,7 +795,8 @@ class ReleaseOptimizer:
         return base_score * weekday_score
     
     def _calculate_competition_score(self, date: datetime, competitive_landscape: Dict[str, Any]) -> float:
-        """Calculate competition level score (higher = less competition)"""        # Simulated competition analysis
+        """Calculate competition level score (higher = less competition)"""
+        # Simulated competition analysis
         # In production, this would analyze confirmed release dates
         
         base_competition = np.random.uniform(0.3, 0.9)
@@ -784,7 +811,8 @@ class ReleaseOptimizer:
         return base_competition
     
     def _calculate_audience_readiness_score(self, date: datetime, audience_behavior: Dict[str, Any]) -> float:
-        """Calculate audience readiness score"""        # Based on historical engagement patterns
+        """Calculate audience readiness score"""
+        # Based on historical engagement patterns
         base_readiness = np.random.uniform(0.6, 0.9)
         
         # Consider time since last release (optimal is 6-12 weeks)
@@ -801,7 +829,8 @@ class ReleaseOptimizer:
     async def _calculate_success_scenarios(self, track_data: Dict[str, Any],
                                          historical_performance: Dict[str, Any],
                                          optimal_windows: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate success probabilities for different scenarios"""        
+        """Calculate success probabilities for different scenarios"""
+        
         scenarios = {}
         
         for i, window in enumerate(optimal_windows[:3]):
@@ -834,7 +863,8 @@ class ReleaseOptimizer:
         return scenarios
     
     def _generate_marketing_timeline(self, optimal_window: Dict[str, Any]) -> Dict[str, datetime]:
-        """Generate comprehensive marketing timeline"""        release_date = optimal_window["date"]
+        """Generate comprehensive marketing timeline"""
+        release_date = optimal_window["date"]
         
         timeline = {
             "playlist_pitching_start": release_date - timedelta(weeks=4),
@@ -852,7 +882,8 @@ class ReleaseOptimizer:
     
     async def _identify_playlist_opportunities(self, track_data: Dict[str, Any],
                                              optimal_window: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Identify playlist opportunities for the track"""        
+        """Identify playlist opportunities for the track"""
+        
         # Simulated playlist opportunities
         opportunities = [
             {
@@ -885,7 +916,8 @@ class ReleaseOptimizer:
     
     def _assess_release_risks(self, competitive_landscape: Dict[str, Any],
                             seasonal_patterns: Dict[str, Any]) -> List[Dict[str, str]]:
-        """Assess potential risks for release"""        
+        """Assess potential risks for release"""
+        
         risks = []
         
         # Market saturation risk
@@ -917,7 +949,8 @@ class ReleaseOptimizer:
     
     def _determine_optimal_strategy(self, track_data: Dict[str, Any],
                                   historical_performance: Dict[str, Any]) -> str:
-        """Determine optimal release strategy type"""        
+        """Determine optimal release strategy type"""
+        
         strategies = [
             "single_focus",
             "playlist_targeting",

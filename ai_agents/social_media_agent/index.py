@@ -22,7 +22,8 @@ Expert Development Team Specialties:
 - DevOps & Infrastructure Engineer - CI/CD, containerization, and cloud deployment strategies
 - AI Prompt Engineering Expert - NLP, conversational AI, and content generation systems
 - Content Protection Specialist - AI fingerprinting, copyright protection, and anti-piracy
-"""from typing import Dict, Any, List, Optional, Type, Union, Callable, Tuple, Set
+"""
+from typing import Dict, Any, List, Optional, Type, Union, Callable, Tuple, Set
 import asyncio
 import logging
 import json
@@ -78,7 +79,8 @@ from ...security.access_control import RoleBasedAccessControl
 logger = logging.getLogger(__name__)
 
 class ServiceStatus(Enum):
-    """Service operational status"""    INITIALIZING = "initializing"
+    """Service operational status"""
+    INITIALIZING = "initializing"
     READY = "ready"
     RUNNING = "running"
     DEGRADED = "degraded"
@@ -87,7 +89,8 @@ class ServiceStatus(Enum):
     STOPPED = "stopped"
 
 class ComponentType(Enum):
-    """Component type classification"""    CORE_AGENT = "core_agent"
+    """Component type classification"""
+    CORE_AGENT = "core_agent"
     PLATFORM_MANAGER = "platform_manager"
     SCHEDULER = "scheduler"
     OPTIMIZER = "optimizer"
@@ -99,7 +102,8 @@ class ComponentType(Enum):
 
 @dataclass
 class ServiceRegistration:
-    """Service registration metadata"""    name: str
+    """Service registration metadata"""
+    name: str
     component_type: ComponentType
     instance: Any
     dependencies: List[str] = field(default_factory=list)
@@ -110,22 +114,26 @@ class ServiceRegistration:
     last_health_check: Optional[datetime] = None
 
 class SocialMediaAgentRegistry:
-    """    Enterprise Service Registry and Factory for Social Media Agent Components
+    """
+    Enterprise Service Registry and Factory for Social Media Agent Components
     
     Manages initialization, configuration, dependency injection, health monitoring,
     and lifecycle of all social media management components with enterprise-grade
     features including circuit breakers, health checks, and performance monitoring.
-    """    
+    """
+    
     _instance: Optional['SocialMediaAgentRegistry'] = None
     _initialized: bool = False
     
     def __new__(cls) -> 'SocialMediaAgentRegistry':
-        """Singleton pattern implementation"""        if cls._instance is None:
+        """Singleton pattern implementation"""
+        if cls._instance is None:
             cls._instance = super().__new__(cls)
         return cls._instance
 
     def __init__(self):
-        """Initialize the service registry"""        if self._initialized:
+        """Initialize the service registry"""
+        if self._initialized:
             return
             
         self.services: Dict[str, ServiceRegistration] = {}
@@ -152,7 +160,8 @@ class SocialMediaAgentRegistry:
         dependencies: Optional[List[str]] = None,
         health_check_url: Optional[str] = None
     ) -> bool:
-        """Register a service component with the registry"""        try:
+        """Register a service component with the registry"""
+        try:
             if name in self.services:
                 logger.warning(f"Service {name} already registered, updating...")
             
@@ -176,13 +185,15 @@ class SocialMediaAgentRegistry:
             return False
 
     def get_service(self, name: str) -> Optional[Any]:
-        """Get a service instance by name"""        registration = self.services.get(name)
+        """Get a service instance by name"""
+        registration = self.services.get(name)
         if registration and registration.status == ServiceStatus.READY:
             return registration.instance
         return None
 
     def unregister_service(self, name: str) -> bool:
-        """Unregister a service from the registry"""        try:
+        """Unregister a service from the registry"""
+        try:
             if name not in self.services:
                 logger.warning(f"Service {name} not found for unregistration")
                 return False
@@ -208,7 +219,8 @@ class SocialMediaAgentRegistry:
             return False
 
     async def initialize_all_services(self) -> Dict[str, bool]:
-        """Initialize all registered services in dependency order"""        initialization_results = {}
+        """Initialize all registered services in dependency order"""
+        initialization_results = {}
         
         try:
             # Calculate startup order based on dependencies
@@ -256,7 +268,8 @@ class SocialMediaAgentRegistry:
             return {name: False for name in self.services.keys()}
 
     def _calculate_startup_order(self) -> List[str]:
-        """Calculate service startup order based on dependencies using topological sort"""        in_degree = {name: 0 for name in self.services.keys()}
+        """Calculate service startup order based on dependencies using topological sort"""
+        in_degree = {name: 0 for name in self.services.keys()}
         
         # Calculate in-degrees
         for name, deps in self.dependency_graph.items():
@@ -282,7 +295,8 @@ class SocialMediaAgentRegistry:
         return result
 
     async def health_check_all_services(self) -> Dict[str, Dict[str, Any]]:
-        """Perform health checks on all services"""        results = {}
+        """Perform health checks on all services"""
+        results = {}
         
         for name, registration in self.services.items():
             try:
@@ -310,7 +324,8 @@ class SocialMediaAgentRegistry:
         return results
 
     def get_service_status(self) -> Dict[str, Dict[str, Any]]:
-        """Get comprehensive status of all services"""        status = {}
+        """Get comprehensive status of all services"""
+        status = {}
         
         for name, registration in self.services.items():
             status[name] = {
@@ -325,10 +340,12 @@ class SocialMediaAgentRegistry:
         return status
 
     def get_dependency_graph(self) -> Dict[str, List[str]]:
-        """Get the service dependency graph"""        return {name: list(deps) for name, deps in self.dependency_graph.items()}
+        """Get the service dependency graph"""
+        return {name: list(deps) for name, deps in self.dependency_graph.items()}
 
     async def shutdown_all_services(self) -> Dict[str, bool]:
-        """Shutdown all services in reverse dependency order"""        shutdown_results = {}
+        """Shutdown all services in reverse dependency order"""
+        shutdown_results = {}
         
         # Reverse the startup order for shutdown
         shutdown_order = list(reversed(self._startup_order))
@@ -362,7 +379,8 @@ class SocialMediaAgentRegistry:
 
     @asynccontextmanager
     async def service_context(self, service_name: str):
-        """Context manager for safe service operations"""        service = self.get_service(service_name)
+        """Context manager for safe service operations"""
+        service = self.get_service(service_name)
         if not service:
             raise ServiceNotAvailableError(f"Service {service_name} not available")
         
@@ -377,7 +395,8 @@ class SocialMediaAgentRegistry:
 
 # Factory functions for creating pre-configured registries
 def create_social_media_registry(auto_initialize: bool = True) -> SocialMediaAgentRegistry:
-    """Create and configure Social Media Agent Registry with default components"""    registry = SocialMediaAgentRegistry()
+    """Create and configure Social Media Agent Registry with default components"""
+    registry = SocialMediaAgentRegistry()
     
     # Register core components
     try:
@@ -449,7 +468,8 @@ def create_social_media_registry(auto_initialize: bool = True) -> SocialMediaAge
     return registry
 
 def create_minimal_registry() -> SocialMediaAgentRegistry:
-    """Create minimal registry with only core components"""    registry = SocialMediaAgentRegistry()
+    """Create minimal registry with only core components"""
+    registry = SocialMediaAgentRegistry()
     
     # Register only essential components
     registry.register_service(
@@ -464,13 +484,15 @@ def create_minimal_registry() -> SocialMediaAgentRegistry:
 _global_registry: Optional[SocialMediaAgentRegistry] = None
 
 def get_global_registry() -> SocialMediaAgentRegistry:
-    """Get the global registry instance"""    global _global_registry
+    """Get the global registry instance"""
+    global _global_registry
     if _global_registry is None:
         _global_registry = create_social_media_registry()
     return _global_registry
 
 def set_global_registry(registry: SocialMediaAgentRegistry) -> None:
-    """Set the global registry instance"""    global _global_registry
+    """Set the global registry instance"""
+    global _global_registry
     _global_registry = registry
     def __init__(self):
         self.components: Dict[str, Any] = {}
@@ -479,7 +501,8 @@ def set_global_registry(registry: SocialMediaAgentRegistry) -> None:
         self.version = "1.0.0"
         
     def register_component(self, name: str, component_class: Type, config: Optional[Dict] = None):
-        """Register a component class with configuration"""        try:
+        """Register a component class with configuration"""
+        try:
             if config is None:
                 config = {}
                 
@@ -497,12 +520,14 @@ def set_global_registry(registry: SocialMediaAgentRegistry) -> None:
             raise
     
     def get_component(self, name: str) -> Any:
-        """Get a registered component instance"""        if name not in self.components:
+        """Get a registered component instance"""
+        if name not in self.components:
             raise ValueError(f"Component '{name}' not found in registry")
         return self.components[name]['instance']
     
     def initialize_all(self, global_config: Optional[Dict] = None):
-        """Initialize all core social media components"""        try:
+        """Initialize all core social media components"""
+        try:
             if global_config is None:
                 global_config = {}
             
@@ -525,7 +550,8 @@ def set_global_registry(registry: SocialMediaAgentRegistry) -> None:
             raise
     
     def get_status(self) -> Dict[str, Any]:
-        """Get registry status and component health"""        return {
+        """Get registry status and component health"""
+        return {
             'initialized': self.initialized,
             'version': self.version,
             'created_at': self.created_at.isoformat(),
@@ -544,22 +570,26 @@ registry = SocialMediaAgentRegistry()
 
 # Convenience functions for quick access
 def get_social_media_agent(config: Optional[Dict] = None) -> SocialMediaAgent:
-    """Get or create the main social media agent"""    if not registry.initialized:
+    """Get or create the main social media agent"""
+    if not registry.initialized:
         registry.initialize_all({'agent': config or {}})
     return registry.get_component('agent')
 
 def get_platform_manager(config: Optional[Dict] = None) -> PlatformManager:
-    """Get or create the platform manager"""    if not registry.initialized:
+    """Get or create the platform manager"""
+    if not registry.initialized:
         registry.initialize_all({'platforms': config or {}})
     return registry.get_component('platform_manager')
 
 def get_content_scheduler(config: Optional[Dict] = None) -> ContentScheduler:
-    """Get or create the content scheduler"""    if not registry.initialized:
+    """Get or create the content scheduler"""
+    if not registry.initialized:
         registry.initialize_all({'scheduler': config or {}})
     return registry.get_component('scheduler')
 
 def get_engagement_optimizer(config: Optional[Dict] = None) -> EngagementOptimizer:
-    """Get or create the engagement optimizer"""    if not registry.initialized:
+    """Get or create the engagement optimizer"""
+    if not registry.initialized:
         registry.initialize_all({'optimizer': config or {}})
     return registry.get_component('optimizer')
 

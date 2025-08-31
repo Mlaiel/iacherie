@@ -5,16 +5,20 @@ Comprehensive examples demonstrating how to use all data models.
 Includes common patterns, advanced queries, and best practices.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  STRICT WARNING FOR UNAUTHORIZED USE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import uuid
+"""
+
+import uuid
+
 from datetime import datetime, date, timedelta
 from decimal import Decimal
+
 from sqlalchemy import create_engine, and_, or_, func
 from sqlalchemy.orm import sessionmaker
 
@@ -39,7 +43,9 @@ from . import (
 
 
 def example_database_setup():
-    """Example: Set up database connection and session"""    
+    """
+Example: Set up database connection and session"""
+    
     # Create engine (using SQLite for example)
     engine = create_engine('sqlite:///ia_influencer.db', echo=True)
     
@@ -57,7 +63,9 @@ def example_database_setup():
 
 
 def example_create_user():
-    """Example: Create a new user with validation"""    
+    """
+Example: Create a new user with validation"""
+    
     # User data
     user_data = {
         'id': str(uuid.uuid4()),
@@ -108,7 +116,8 @@ def example_create_user():
 
 
 def example_create_content(user_id: str):
-    """Example: Create video content with comprehensive metadata"""    
+    """Example: Create video content with comprehensive metadata"""
+    
     content_data = {
         'id': str(uuid.uuid4()),
         'user_id': user_id,
@@ -218,7 +227,8 @@ def example_create_content(user_id: str):
 
 
 def example_create_fingerprint(content_id: str):
-    """Example: Create content fingerprint for protection"""    
+    """Example: Create content fingerprint for protection"""
+    
     fingerprint_data = {
         'id': str(uuid.uuid4()),
         'content_id': content_id,
@@ -258,7 +268,8 @@ def example_create_fingerprint(content_id: str):
 
 
 def example_create_revenue_record(user_id: str, content_id: str):
-    """Example: Create revenue record from YouTube ads"""    
+    """Example: Create revenue record from YouTube ads"""
+    
     revenue_data = {
         'id': str(uuid.uuid4()),
         'user_id': user_id,
@@ -313,7 +324,8 @@ def example_create_revenue_record(user_id: str, content_id: str):
 
 
 def example_create_analytics_record(user_id: str, content_id: str):
-    """Example: Create analytics record for performance tracking"""    
+    """Example: Create analytics record for performance tracking"""
+    
     analytics_data = {
         'id': str(uuid.uuid4()),
         'user_id': user_id,
@@ -368,7 +380,8 @@ def example_create_analytics_record(user_id: str, content_id: str):
 
 
 def example_create_protection_alert(user_id: str, content_id: str, fingerprint_id: str):
-    """Example: Create content protection alert for copyright violation"""    
+    """Example: Create content protection alert for copyright violation"""
+    
     protection_data = {
         'id': str(uuid.uuid4()),
         'user_id': user_id,
@@ -434,7 +447,8 @@ def example_create_protection_alert(user_id: str, content_id: str, fingerprint_i
 
 
 def example_create_licensing_contract(user_id: str, content_id: str):
-    """Example: Create commercial licensing contract"""    
+    """Example: Create commercial licensing contract"""
+    
     licensing_data = {
         'id': str(uuid.uuid4()),
         'user_id': user_id,
@@ -502,7 +516,8 @@ def example_create_licensing_contract(user_id: str, content_id: str):
 
 
 def example_complex_queries(session):
-    """Example: Complex database queries across multiple models"""    
+    """Example: Complex database queries across multiple models"""
+    
     print("\n=== COMPLEX QUERY EXAMPLES ===\n")
     
     # 1. Get top performing content by revenue
@@ -583,7 +598,8 @@ def example_complex_queries(session):
 
 
 def example_model_manager_usage():
-    """Example: Using ModelManager utility"""    
+    """Example: Using ModelManager utility"""
+    
     print("\n=== MODEL MANAGER EXAMPLES ===\n")
     
     from .index import model_manager
@@ -614,7 +630,8 @@ def example_model_manager_usage():
 
 
 def run_all_examples():
-    """Run all examples"""    
+    """Run all examples"""
+    
     print("IA INFLUENCER AGENT - DATA MODELS EXAMPLES")
     print("=" * 50)
     

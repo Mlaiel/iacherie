@@ -26,7 +26,8 @@ Business Logic Flow:
 User (Creator) → Upload Content → AI Protection → Analytics Processing → 
 SEO Optimization → Performance Monitoring → Monetization Intelligence → 
 Collaboration Matching → Multi-platform Distribution Analytics
-"""import logging
+"""
+import logging
 from typing import Dict, Any, List, Optional
 
 # Core Analytics Modules
@@ -264,13 +265,16 @@ ANALYTICS_CONFIG = {
 }
 
 class AnalyticsManager:
-    """    Centralized Analytics Manager for IA Influencer Agent Platform
+    """
+    Centralized Analytics Manager for IA Influencer Agent Platform
     
     Manages all analytics engines and provides unified access to
     comprehensive analytics capabilities for content creators.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the Analytics Manager"""        self.config = config or ANALYTICS_CONFIG
+        """Initialize the Analytics Manager"""
+        self.config = config or ANALYTICS_CONFIG
         self.logger = logging.getLogger(__name__)
         
         # Initialize all analytics engines
@@ -297,7 +301,8 @@ class AnalyticsManager:
         self.logger.info("AnalyticsManager initialized successfully with all engines")
     
     def get_system_info(self) -> Dict[str, Any]:
-        """Get comprehensive system information"""        return {
+        """Get comprehensive system information"""
+        return {
             "package_info": {
                 "version": __version__,
                 "author": __author__,
@@ -319,13 +324,16 @@ class AnalyticsManager:
         }
     
     def get_capabilities(self) -> List[str]:
-        """Get list of all analytics capabilities"""        return self.config["analytics_capabilities"]
+        """Get list of all analytics capabilities"""
+        return self.config["analytics_capabilities"]
     
     def get_supported_platforms(self) -> List[str]:
-        """Get list of supported platforms"""        return self.config["supported_platforms"]
+        """Get list of supported platforms"""
+        return self.config["supported_platforms"]
     
     def get_performance_specs(self) -> Dict[str, str]:
-        """Get system performance specifications"""        return self.config["performance_specs"]
+        """Get system performance specifications"""
+        return self.config["performance_specs"]
 
 # Initialize the analytics manager instance
 analytics_manager = AnalyticsManager()

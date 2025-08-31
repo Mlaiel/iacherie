@@ -10,5 +10,6 @@ High-priority integration tests for Ainflue platform addressing:
 
 These tests ensure end-to-end functionality compliance with
 NOUVELLE_CHECKLIST_PROPRE.md requirements.
-"""__version__ = "1.0.0"
+"""
+__version__ = "1.0.0"
 __author__ = "Integration Test Suite"

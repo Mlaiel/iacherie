@@ -8,7 +8,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass, asdict
@@ -36,7 +37,8 @@ settings = get_settings()
 
 
 class AudienceSegment(Enum):
-    """Audience segmentation categories."""    GEN_Z = "gen_z"
+    """Audience segmentation categories."""
+    GEN_Z = "gen_z"
     MILLENNIALS = "millennials"
     GEN_X = "gen_x"
     BOOMERS = "boomers"
@@ -49,7 +51,8 @@ class AudienceSegment(Enum):
 
 
 class EngagementType(Enum):
-    """Types of audience engagement."""    PASSIVE = "passive"          # Views only
+    """Types of audience engagement."""
+    PASSIVE = "passive"          # Views only
     REACTIVE = "reactive"        # Likes, basic reactions
     INTERACTIVE = "interactive"  # Comments, shares
     ADVOCATE = "advocate"        # Promotes content to others
@@ -57,7 +60,8 @@ class EngagementType(Enum):
 
 
 class ContentPreference(Enum):
-    """Content format preferences."""    SHORT_VIDEO = "short_video"
+    """Content format preferences."""
+    SHORT_VIDEO = "short_video"
     LONG_VIDEO = "long_video"
     IMAGES = "images"
     TEXT_POSTS = "text_posts"
@@ -68,7 +72,8 @@ class ContentPreference(Enum):
 
 @dataclass
 class DemographicData:
-    """Demographic distribution data."""    age_distribution: Dict[str, float]
+    """Demographic distribution data."""
+    age_distribution: Dict[str, float]
     gender_distribution: Dict[str, float]
     location_distribution: Dict[str, float]
     language_distribution: Dict[str, float]
@@ -80,7 +85,8 @@ class DemographicData:
 
 @dataclass
 class EngagementPattern:
-    """Audience engagement patterns."""    peak_activity_hours: List[str]
+    """Audience engagement patterns."""
+    peak_activity_hours: List[str]
     peak_activity_days: List[str]
     average_session_duration: float
     content_completion_rates: Dict[str, float]
@@ -92,7 +98,8 @@ class EngagementPattern:
 
 @dataclass
 class AudienceInsight:
-    """Comprehensive audience insight data."""    insight_id: str
+    """Comprehensive audience insight data."""
+    insight_id: str
     insight_type: str
     title: str
     description: str
@@ -106,7 +113,8 @@ class AudienceInsight:
 
 @dataclass
 class AudienceGrowthAnalysis:
-    """Audience growth analysis and predictions."""    current_size: int
+    """Audience growth analysis and predictions."""
+    current_size: int
     growth_rate: float
     growth_trajectory: Dict[str, float]  # monthly projections
     churn_rate: float
@@ -120,7 +128,8 @@ class AudienceGrowthAnalysis:
 
 @dataclass
 class ContentPerformanceByAudience:
-    """Content performance broken down by audience segments."""    segment_performance: Dict[AudienceSegment, Dict[str, float]]
+    """Content performance broken down by audience segments."""
+    segment_performance: Dict[AudienceSegment, Dict[str, float]]
     content_resonance: Dict[str, Dict[AudienceSegment, float]]
     cross_segment_appeal: Dict[str, float]
     segment_specific_content_preferences: Dict[AudienceSegment, List[ContentPreference]]
@@ -129,7 +138,8 @@ class ContentPerformanceByAudience:
 
 @dataclass
 class AudienceHealthScore:
-    """Overall audience health and quality metrics."""    overall_score: float  # 0-100
+    """Overall audience health and quality metrics."""
+    overall_score: float  # 0-100
     engagement_quality: float
     audience_loyalty: float
     growth_sustainability: float
@@ -147,7 +157,8 @@ class AudienceHealthScore:
         platforms: List[str],
         time_period: str = "30d"
     ) -> List[AudienceInsight]:
-        """Generate comprehensive audience insights with actionable recommendations."""        
+        """Generate comprehensive audience insights with actionable recommendations."""
+        
         try:
             # Gather audience data
             demographics = await self.analyze_audience_demographics(creator_id, platforms, time_period)
@@ -186,7 +197,8 @@ class AudienceHealthScore:
             raise
     
     def _generate_demographic_insights(self, demographics: DemographicData) -> List[AudienceInsight]:
-        """Generate insights based on demographic analysis."""        
+        """Generate insights based on demographic analysis."""
+        
         insights = []
         
         # Age distribution insights
@@ -212,7 +224,8 @@ class AudienceHealthScore:
         return insights
     
     def _analyze_age_distribution(self, age_distribution: Dict[str, float]) -> Optional[AudienceInsight]:
-        """Analyze age distribution patterns."""        
+        """Analyze age distribution patterns."""
+        
         if not age_distribution:
             return None
         
@@ -283,7 +296,8 @@ class AudienceHealthScore:
         return None
     
     def _analyze_gender_distribution(self, gender_distribution: Dict[str, float]) -> Optional[AudienceInsight]:
-        """Analyze gender distribution patterns."""        
+        """Analyze gender distribution patterns."""
+        
         if not gender_distribution:
             return None
         
@@ -354,7 +368,8 @@ class AudienceHealthScore:
         return None
     
     def _analyze_location_distribution(self, location_distribution: Dict[str, float]) -> Optional[AudienceInsight]:
-        """Analyze geographic distribution patterns."""        
+        """Analyze geographic distribution patterns."""
+        
         if not location_distribution:
             return None
         
@@ -410,7 +425,8 @@ class AudienceHealthScore:
         return None
     
     def _analyze_language_distribution(self, language_distribution: Dict[str, float]) -> Optional[AudienceInsight]:
-        """Analyze language distribution patterns."""        
+        """Analyze language distribution patterns."""
+        
         if not language_distribution:
             return None
         
@@ -440,7 +456,8 @@ class AudienceHealthScore:
         return None
     
     def _generate_engagement_insights(self, engagement_patterns: EngagementPattern) -> List[AudienceInsight]:
-        """Generate insights based on engagement pattern analysis."""        
+        """Generate insights based on engagement pattern analysis."""
+        
         insights = []
         
         # Peak activity insights
@@ -466,7 +483,8 @@ class AudienceHealthScore:
         return insights
     
     def _analyze_peak_activity(self, engagement_patterns: EngagementPattern) -> Optional[AudienceInsight]:
-        """Analyze peak activity patterns."""        
+        """Analyze peak activity patterns."""
+        
         peak_hours = engagement_patterns.peak_activity_hours
         peak_days = engagement_patterns.peak_activity_days
         
@@ -497,7 +515,8 @@ class AudienceHealthScore:
         )
     
     def _analyze_completion_rates(self, engagement_patterns: EngagementPattern) -> Optional[AudienceInsight]:
-        """Analyze content completion rate patterns."""        
+        """Analyze content completion rate patterns."""
+        
         completion_rates = engagement_patterns.content_completion_rates
         
         if not completion_rates:
@@ -553,7 +572,8 @@ class AudienceHealthScore:
         return None
     
     def _analyze_content_preferences(self, engagement_patterns: EngagementPattern) -> Optional[AudienceInsight]:
-        """Analyze content format preferences."""        
+        """Analyze content format preferences."""
+        
         content_preferences = engagement_patterns.content_preferences
         
         if not content_preferences:
@@ -588,7 +608,8 @@ class AudienceHealthScore:
         return None
     
     def _analyze_session_duration(self, engagement_patterns: EngagementPattern) -> Optional[AudienceInsight]:
-        """Analyze average session duration patterns."""        
+        """Analyze average session duration patterns."""
+        
         avg_duration = engagement_patterns.average_session_duration
         
         if avg_duration == 0:
@@ -640,7 +661,8 @@ class AudienceHealthScore:
         return None
     
     def _generate_segmentation_insights(self, audience_segments: Dict[AudienceSegment, Dict[str, Any]]) -> List[AudienceInsight]:
-        """Generate insights based on audience segmentation."""        
+        """Generate insights based on audience segmentation."""
+        
         insights = []
         
         # Analyze segment distribution
@@ -677,7 +699,8 @@ class AudienceHealthScore:
         return insights
     
     def _create_dominant_segment_insight(self, segment: AudienceSegment, data: Dict[str, Any]) -> AudienceInsight:
-        """Create insight for dominant audience segment."""        
+        """Create insight for dominant audience segment."""
+        
         segment_name = segment.value.replace("_", " ").title()
         percentage = data.get("size_percentage", 0)
         
@@ -739,7 +762,8 @@ class AudienceHealthScore:
         demographics: DemographicData,
         engagement_patterns: EngagementPattern
     ) -> List[AudienceInsight]:
-        """Generate growth opportunity insights."""        
+        """Generate growth opportunity insights."""
+        
         insights = []
         
         # Analyze growth potential by demographics
@@ -759,7 +783,8 @@ class AudienceHealthScore:
         creator_id: str,
         demographics: DemographicData
     ) -> Optional[AudienceInsight]:
-        """Analyze audience growth opportunities."""        
+        """Analyze audience growth opportunities."""
+        
         # Analyze underrepresented demographics
         age_dist = demographics.age_distribution
         
@@ -796,7 +821,8 @@ class AudienceHealthScore:
         return None
     
     def _analyze_platform_opportunities(self, engagement_patterns: EngagementPattern) -> Optional[AudienceInsight]:
-        """Analyze untapped platform opportunities."""        
+        """Analyze untapped platform opportunities."""
+        
         platform_usage = engagement_patterns.platform_usage_patterns
         
         if not platform_usage:
@@ -840,7 +866,8 @@ class AudienceHealthScore:
         creator_id: str,
         demographics: DemographicData
     ) -> List[AudienceInsight]:
-        """Generate competitive landscape insights."""        
+        """Generate competitive landscape insights."""
+        
         insights = []
         
         # This would typically involve competitive analysis
@@ -872,7 +899,8 @@ class AudienceHealthScore:
         creator_id: str,
         time_period: str = "90d"
     ) -> AudienceGrowthAnalysis:
-        """Analyze audience growth patterns and predict future growth."""        
+        """Analyze audience growth patterns and predict future growth."""
+        
         try:
             # Fetch historical audience data
             growth_data = await self.analytics_service.get_growth_data(creator_id, time_period)
@@ -920,7 +948,8 @@ class AudienceHealthScore:
             raise
     
     def _calculate_growth_rate(self, historical_sizes: List[int]) -> float:
-        """Calculate compound monthly growth rate."""        
+        """Calculate compound monthly growth rate."""
+        
         if len(historical_sizes) < 2:
             return 0.0
         
@@ -938,7 +967,8 @@ class AudienceHealthScore:
         return np.mean(growth_rates)
     
     def _identify_growth_bottlenecks(self, growth_data: Dict[str, Any]) -> List[str]:
-        """Identify factors limiting audience growth."""        
+        """Identify factors limiting audience growth."""
+        
         bottlenecks = []
         
         # Check engagement rates
@@ -969,7 +999,8 @@ class AudienceHealthScore:
         return bottlenecks
     
     def _identify_growth_opportunities(self, growth_data: Dict[str, Any]) -> List[str]:
-        """Identify opportunities to accelerate growth."""        
+        """Identify opportunities to accelerate growth."""
+        
         opportunities = []
         
         # Check for trending content opportunities
@@ -1003,7 +1034,8 @@ class AudienceHealthScore:
         growth_rate: float,
         churn_rate: float
     ) -> Dict[str, Any]:
-        """Generate audience growth projections."""        
+        """Generate audience growth projections."""
+        
         # Monthly projections for next 12 months
         monthly_projections = {}
         projected_size = current_size
@@ -1028,7 +1060,8 @@ class AudienceHealthScore:
         engagement_patterns: EngagementPattern,
         growth_analysis: AudienceGrowthAnalysis
     ) -> AudienceHealthScore:
-        """Calculate comprehensive audience health score."""        
+        """Calculate comprehensive audience health score."""
+        
         try:
             # Calculate individual component scores
             engagement_quality = self._calculate_engagement_quality_score(engagement_patterns)
@@ -1091,7 +1124,8 @@ class AudienceHealthScore:
             raise
     
     def _calculate_engagement_quality_score(self, engagement_patterns: EngagementPattern) -> float:
-        """Calculate engagement quality score based on patterns."""        
+        """Calculate engagement quality score based on patterns."""
+        
         score = 0.0
         
         # Session duration component (0-30 points)
@@ -1124,7 +1158,8 @@ class AudienceHealthScore:
         engagement_patterns: EngagementPattern,
         growth_analysis: AudienceGrowthAnalysis
     ) -> float:
-        """Calculate audience loyalty score."""        
+        """Calculate audience loyalty score."""
+        
         score = 0.0
         
         # Retention rate component (0-40 points)
@@ -1143,7 +1178,8 @@ class AudienceHealthScore:
         return min(score, 100.0)
     
     def _calculate_growth_sustainability_score(self, growth_analysis: AudienceGrowthAnalysis) -> float:
-        """Calculate growth sustainability score."""        
+        """Calculate growth sustainability score."""
+        
         score = 0.0
         
         # Growth rate component (0-40 points)
@@ -1171,7 +1207,8 @@ class AudienceHealthScore:
         return min(score, 100.0)
     
     def _calculate_diversity_score(self, demographic_data: DemographicData) -> float:
-        """Calculate demographic diversity score."""        
+        """Calculate demographic diversity score."""
+        
         score = 0.0
         
         # Age diversity component (0-25 points)
@@ -1198,7 +1235,8 @@ class AudienceHealthScore:
         return min(score, 100.0)
     
     def _calculate_content_alignment_score(self, engagement_patterns: EngagementPattern) -> float:
-        """Calculate content-audience alignment score."""        
+        """Calculate content-audience alignment score."""
+        
         score = 0.0
         
         # Content preference clarity component (0-40 points)
@@ -1229,7 +1267,8 @@ class AudienceHealthScore:
         demographic_data: DemographicData,
         engagement_patterns: EngagementPattern
     ) -> float:
-        """Calculate monetization potential score."""        
+        """Calculate monetization potential score."""
+        
         score = 0.0
         
         # Age-based purchasing power component (0-30 points)
@@ -1261,7 +1300,8 @@ class AudienceHealthScore:
         return min(score, 100.0)
     
     def _identify_risk_factors(self, *scores) -> List[str]:
-        """Identify audience health risk factors."""        
+        """Identify audience health risk factors."""
+        
         risk_factors = []
         score_names = [
             "engagement_quality", "audience_loyalty", "growth_sustainability",
@@ -1284,7 +1324,8 @@ class AudienceHealthScore:
         return risk_factors
     
     def _identify_strengths(self, *scores) -> List[str]:
-        """Identify audience health strengths."""        
+        """Identify audience health strengths."""
+        
         strengths = []
         score_names = [
             "engagement_quality", "audience_loyalty", "growth_sustainability",
@@ -1300,7 +1341,8 @@ class AudienceHealthScore:
         return strengths
     
     def _identify_improvement_areas(self, *scores) -> List[str]:
-        """Identify areas needing improvement."""        
+        """Identify areas needing improvement."""
+        
         improvement_areas = []
         score_names = [
             "engagement_quality", "audience_loyalty", "growth_sustainability",
@@ -1316,27 +1358,33 @@ class AudienceHealthScore:
 
 # Analytics service classes (would be implemented separately)
 class AudienceAnalyticsService:
-    """Service for fetching audience analytics data."""    
+    """Service for fetching audience analytics data."""
+    
     async def get_demographic_data(self, creator_id: str, platform: str, time_period: str) -> Dict[str, Any]:
-        """Fetch demographic data from analytics APIs."""        # Implementation would connect to actual analytics APIs
+        """Fetch demographic data from analytics APIs."""
+        # Implementation would connect to actual analytics APIs
         return {}
     
     async def get_engagement_data(self, creator_id: str, platform: str, time_period: str) -> Dict[str, Any]:
-        """Fetch engagement data from analytics APIs."""        # Implementation would connect to actual analytics APIs
+        """Fetch engagement data from analytics APIs."""
+        # Implementation would connect to actual analytics APIs
         return {}
     
     async def get_growth_data(self, creator_id: str, time_period: str) -> Dict[str, Any]:
-        """Fetch growth data from analytics APIs."""        # Implementation would connect to actual analytics APIs
+        """Fetch growth data from analytics APIs."""
+        # Implementation would connect to actual analytics APIs
         return {}
 
 
 class AudiencePredictionEngine:
-    """ML engine for audience behavior predictions."""    
+    """ML engine for audience behavior predictions."""
+    
     def __init__(self):
         self.models = self._initialize_prediction_models()
     
     def _initialize_prediction_models(self) -> Dict[str, Any]:
-        """Initialize ML models for predictions."""        return {
+        """Initialize ML models for predictions."""
+        return {
             "engagement_predictor": RandomForestRegressor(n_estimators=100),
             "growth_predictor": GradientBoostingRegressor(n_estimators=100),
             "churn_predictor": LogisticRegression(),
@@ -1344,15 +1392,18 @@ class AudiencePredictionEngine:
         }
     
     async def predict_engagement(self, features: Dict[str, Any]) -> float:
-        """Predict engagement rate based on content and timing features."""        # Implementation would use trained ML models
+        """Predict engagement rate based on content and timing features."""
+        # Implementation would use trained ML models
         return 0.05
     
     async def predict_growth(self, historical_data: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Predict audience growth based on historical patterns."""        # Implementation would use trained ML models
+        """Predict audience growth based on historical patterns."""
+        # Implementation would use trained ML models
         return {"30_days": 0.1, "90_days": 0.3, "365_days": 1.2}
     
     async def predict_churn(self, user_features: Dict[str, Any]) -> float:
-        """Predict user churn probability."""        # Implementation would use trained ML models
+        """Predict user churn probability."""
+        # Implementation would use trained ML models
         return 0.15
         
         # ML models for audience analysis
@@ -1373,7 +1424,8 @@ class AudiencePredictionEngine:
         self.behavior_models = self._initialize_behavior_models()
         
     def _initialize_analysis_parameters(self) -> Dict[str, Any]:
-        """Initialize parameters for audience analysis."""        
+        """Initialize parameters for audience analysis."""
+        
         return {
             "demographic_weights": {
                 "age": 0.25,
@@ -1413,7 +1465,8 @@ class AudiencePredictionEngine:
         }
     
     def _load_industry_benchmarks(self) -> Dict[str, Dict[str, float]]:
-        """Load industry benchmarks for comparison."""        
+        """Load industry benchmarks for comparison."""
+        
         return {
             "entertainment": {
                 "avg_engagement_rate": 0.045,
@@ -1457,7 +1510,8 @@ class AudiencePredictionEngine:
         }
     
     def _initialize_behavior_models(self) -> Dict[str, Any]:
-        """Initialize audience behavior models."""        
+        """Initialize audience behavior models."""
+        
         return {
             "engagement_lifecycle": {
                 "discovery": {"duration": 1, "engagement_rate": 0.02},
@@ -1510,7 +1564,8 @@ class AudiencePredictionEngine:
         platforms: List[str],
         time_period: str = "30d"
     ) -> DemographicData:
-        """Analyze comprehensive audience demographics across platforms."""        
+        """Analyze comprehensive audience demographics across platforms."""
+        
         try:
             # Fetch demographic data from all platforms
             demographic_data = {}
@@ -1534,7 +1589,8 @@ class AudiencePredictionEngine:
             raise
     
     def _aggregate_demographics(self, platform_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Aggregate demographic data across platforms."""        
+        """Aggregate demographic data across platforms."""
+        
         aggregated = {
             "age_distribution": {},
             "gender_distribution": {},
@@ -1580,7 +1636,8 @@ class AudiencePredictionEngine:
         return aggregated
     
     def _analyze_demographic_patterns(self, demographics: Dict[str, Any]) -> DemographicData:
-        """Analyze and structure demographic patterns."""        
+        """Analyze and structure demographic patterns."""
+        
         return DemographicData(
             age_distribution=demographics.get("age_distribution", {}),
             gender_distribution=demographics.get("gender_distribution", {}),
@@ -1598,7 +1655,8 @@ class AudiencePredictionEngine:
         platforms: List[str],
         time_period: str = "30d"
     ) -> EngagementPattern:
-        """Analyze audience engagement patterns and behaviors."""        
+        """Analyze audience engagement patterns and behaviors."""
+        
         try:
             # Fetch engagement data
             engagement_data = {}
@@ -1637,7 +1695,8 @@ class AudiencePredictionEngine:
             raise
     
     def _analyze_temporal_engagement(self, engagement_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze temporal engagement patterns."""        
+        """Analyze temporal engagement patterns."""
+        
         hourly_engagement = defaultdict(list)
         daily_engagement = defaultdict(list)
         monthly_engagement = defaultdict(list)
@@ -1706,7 +1765,8 @@ class AudiencePredictionEngine:
         }
     
     def _analyze_interaction_patterns(self, engagement_data: Dict[str, Any]) -> Dict[EngagementType, float]:
-        """Analyze different types of audience interactions."""        
+        """Analyze different types of audience interactions."""
+        
         interaction_totals = {
             EngagementType.PASSIVE: 0,
             EngagementType.REACTIVE: 0,
@@ -1754,7 +1814,8 @@ class AudiencePredictionEngine:
         return interaction_totals
     
     def _analyze_content_preferences(self, engagement_data: Dict[str, Any]) -> Dict[ContentPreference, float]:
-        """Analyze audience content format preferences."""        
+        """Analyze audience content format preferences."""
+        
         content_performance = {
             ContentPreference.SHORT_VIDEO: 0,
             ContentPreference.LONG_VIDEO: 0,
@@ -1803,7 +1864,8 @@ class AudiencePredictionEngine:
         demographic_data: DemographicData,
         engagement_data: EngagementPattern
     ) -> Dict[AudienceSegment, Dict[str, Any]]:
-        """Segment audience into distinct groups based on demographics and behavior."""        
+        """Segment audience into distinct groups based on demographics and behavior."""
+        
         try:
             # Prepare data for segmentation
             segmentation_features = self._prepare_segmentation_features(
@@ -1835,7 +1897,8 @@ class AudiencePredictionEngine:
         demographic_data: DemographicData,
         engagement_data: EngagementPattern
     ) -> np.ndarray:
-        """Prepare features for ML-based audience segmentation."""        
+        """Prepare features for ML-based audience segmentation."""
+        
         features = []
         
         # Age distribution features
@@ -1872,7 +1935,8 @@ class AudiencePredictionEngine:
         return np.array(features).reshape(1, -1)
     
     def _perform_ml_segmentation(self, features: np.ndarray) -> Dict[str, Any]:
-        """Perform ML-based audience segmentation."""        
+        """Perform ML-based audience segmentation."""
+        
         try:
             # Scale features
             scaled_features = self.scaler.fit_transform(features)
@@ -1910,7 +1974,8 @@ class AudiencePredictionEngine:
         segments: Dict[str, Any],
         demographic_data: DemographicData
     ) -> Dict[AudienceSegment, Dict[str, Any]]:
-        """Map ML segments to predefined audience categories."""        
+        """Map ML segments to predefined audience categories."""
+        
         # Analyze age distribution to determine primary segments
         age_dist = demographic_data.age_distribution
         
@@ -1953,7 +2018,8 @@ class AudiencePredictionEngine:
         segment_data: Dict[str, Any],
         creator_id: str
     ) -> Dict[str, Any]:
-        """Analyze detailed characteristics of an audience segment."""        
+        """Analyze detailed characteristics of an audience segment."""
+        
         segment_analysis = {
             "size_percentage": segment_data.get("percentage", 0),
             "engagement_characteristics": self._get_segment_engagement_profile(segment),
@@ -1968,7 +2034,8 @@ class AudiencePredictionEngine:
         return segment_analysis
     
     def _get_segment_engagement_profile(self, segment: AudienceSegment) -> Dict[str, float]:
-        """Get engagement profile for specific audience segment."""        
+        """Get engagement profile for specific audience segment."""
+        
         engagement_profiles = {
             AudienceSegment.TEENS: {
                 "average_engagement_rate": 0.085,
@@ -2010,7 +2077,8 @@ class AudiencePredictionEngine:
         })
     
     def _get_segment_content_preferences(self, segment: AudienceSegment) -> List[ContentPreference]:
-        """Get content preferences for specific audience segment."""        
+        """Get content preferences for specific audience segment."""
+        
         preferences = {
             AudienceSegment.TEENS: [
                 ContentPreference.SHORT_VIDEO,
@@ -2046,7 +2114,8 @@ class AudiencePredictionEngine:
         ])
     
     def _get_segment_platform_preferences(self, segment: AudienceSegment) -> Dict[str, float]:
-        """Get platform preferences for specific audience segment."""        
+        """Get platform preferences for specific audience segment."""
+        
         platform_preferences = {
             AudienceSegment.TEENS: {
                 "tiktok": 0.45,
@@ -2088,7 +2157,8 @@ class AudiencePredictionEngine:
         })
     
     def _get_segment_optimal_times(self, segment: AudienceSegment) -> List[str]:
-        """Get optimal posting times for specific audience segment."""        
+        """Get optimal posting times for specific audience segment."""
+        
         optimal_times = {
             AudienceSegment.TEENS: ["15:00", "16:00", "20:00", "21:00"],
             AudienceSegment.GEN_Z: ["18:00", "19:00", "21:00", "22:00"],
@@ -2100,7 +2170,8 @@ class AudiencePredictionEngine:
         return optimal_times.get(segment, ["12:00", "18:00", "20:00"])
     
     def _calculate_segment_monetization_potential(self, segment: AudienceSegment) -> float:
-        """Calculate monetization potential for audience segment."""        
+        """Calculate monetization potential for audience segment."""
+        
         monetization_scores = {
             AudienceSegment.TEENS: 0.3,          # Lower disposable income
             AudienceSegment.GEN_Z: 0.6,          # Growing purchasing power
@@ -2112,7 +2183,8 @@ class AudiencePredictionEngine:
         return monetization_scores.get(segment, 0.5)
     
     def _calculate_segment_growth_potential(self, segment: AudienceSegment) -> float:
-        """Calculate growth potential for audience segment."""        
+        """Calculate growth potential for audience segment."""
+        
         growth_scores = {
             AudienceSegment.TEENS: 0.9,          # High growth potential
             AudienceSegment.GEN_Z: 0.8,          # Good growth potential
@@ -2124,7 +2196,8 @@ class AudiencePredictionEngine:
         return growth_scores.get(segment, 0.5)
     
     def _calculate_segment_retention_likelihood(self, segment: AudienceSegment) -> float:
-        """Calculate retention likelihood for audience segment."""        
+        """Calculate retention likelihood for audience segment."""
+        
         retention_scores = {
             AudienceSegment.TEENS: 0.65,         # Moderate retention
             AudienceSegment.GEN_Z: 0.70,         # Good retention
@@ -2138,7 +2211,8 @@ class AudiencePredictionEngine:
 
 @dataclass
 class AudienceBehavior:
-    """Audience behavior analysis."""    discovery_sources: Dict[str, float]
+    """Audience behavior analysis."""
+    discovery_sources: Dict[str, float]
     content_journey: List[Dict[str, Any]]
     retention_metrics: Dict[str, float]
     churn_indicators: List[str]
@@ -2150,7 +2224,8 @@ class AudienceBehavior:
 
 @dataclass
 class AudienceInsight:
-    """Comprehensive audience insight."""    insight_id: str
+    """Comprehensive audience insight."""
+    insight_id: str
     insight_type: str
     title: str
     description: str
@@ -2164,7 +2239,8 @@ class AudienceInsight:
 
 @dataclass
 class AudienceProfile:
-    """Complete audience profile."""    profile_id: str
+    """Complete audience profile."""
+    profile_id: str
     creator_id: str
     total_audience_size: int
     demographics: DemographicData
@@ -2179,11 +2255,14 @@ class AudienceProfile:
 
 
 class AudienceInsightEngine:
-    """    Advanced AI-powered audience insight engine that analyzes creator audiences
+    """
+    Advanced AI-powered audience insight engine that analyzes creator audiences
     and provides actionable recommendations for growth and engagement.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the audience insight engine."""        self.analytics_service = AudienceAnalyticsService()
+        """Initialize the audience insight engine."""
+        self.analytics_service = AudienceAnalyticsService()
         self.prediction_engine = AudiencePredictionEngine()
         
         # ML models for audience analysis
@@ -2212,7 +2291,8 @@ class AudienceInsightEngine:
         logger.info("Audience insight engine initialized successfully")
     
     def _initialize_platform_profiles(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize platform-specific audience characteristics."""        
+        """Initialize platform-specific audience characteristics."""
+        
         return {
             'tiktok': {
                 'primary_demographics': {
@@ -2257,7 +2337,8 @@ class AudienceInsightEngine:
         }
     
     def _load_and_train_models(self):
-        """Load historical data and train ML models for audience analysis."""        try:
+        """Load historical data and train ML models for audience analysis."""
+        try:
             # Generate synthetic training data for audience analysis
             n_samples = 25000
             
@@ -2296,7 +2377,8 @@ class AudienceInsightEngine:
         content_history: List[Dict[str, Any]],
         time_period: int = 30  # days
     ) -> AudienceProfile:
-        """        Analyze comprehensive audience profile for creator.
+        """
+        Analyze comprehensive audience profile for creator.
         
         Args:
             creator_id: Creator identifier
@@ -2306,7 +2388,8 @@ class AudienceInsightEngine:
             
         Returns:
             Comprehensive audience profile
-        """        
+        """
+        
         try:
             # Get audience data from analytics service
             audience_data = await self.analytics_service.get_audience_data(
@@ -2378,7 +2461,8 @@ class AudienceInsightEngine:
     async def _analyze_demographics(
         self, audience_data: Dict[str, Any], platform_data: Dict[str, Any]
     ) -> DemographicData:
-        """Analyze audience demographic distribution."""        
+        """Analyze audience demographic distribution."""
+        
         # Extract demographic data from audience analytics
         raw_demographics = audience_data.get('demographics', {})
         
@@ -2430,7 +2514,8 @@ class AudienceInsightEngine:
         )
     
     def _normalize_distribution(self, data: Dict[str, Union[int, float]]) -> Dict[str, float]:
-        """Normalize distribution data to percentages."""        
+        """Normalize distribution data to percentages."""
+        
         if not data:
             return {}
         
@@ -2446,7 +2531,8 @@ class AudienceInsightEngine:
         location_distribution: Dict[str, float],
         platform_data: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Estimate income distribution based on demographics and platform data."""        
+        """Estimate income distribution based on demographics and platform data."""
+        
         # Default income distribution
         default_distribution = {
             'under_25k': 0.20,
@@ -2472,7 +2558,8 @@ class AudienceInsightEngine:
     def _estimate_education_distribution(
         self, age_distribution: Dict[str, float], platform_data: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Estimate education distribution based on age and platform."""        
+        """Estimate education distribution based on age and platform."""
+        
         return {
             'high_school': 0.25,
             'some_college': 0.20,
@@ -2484,7 +2571,8 @@ class AudienceInsightEngine:
     def _estimate_occupation_distribution(
         self, age_distribution: Dict[str, float], education_distribution: Dict[str, float]
     ) -> Dict[str, float]:
-        """Estimate occupation distribution based on age and education."""        
+        """Estimate occupation distribution based on age and education."""
+        
         return {
             'student': 0.15,
             'professional': 0.25,
@@ -2498,7 +2586,8 @@ class AudienceInsightEngine:
     async def _analyze_engagement_patterns(
         self, audience_data: Dict[str, Any], content_history: List[Dict[str, Any]]
     ) -> EngagementPattern:
-        """Analyze audience engagement patterns."""        
+        """Analyze audience engagement patterns."""
+        
         # Extract engagement data
         engagement_data = audience_data.get('engagement', {})
         
@@ -2536,7 +2625,8 @@ class AudienceInsightEngine:
         )
     
     def _analyze_peak_activity_hours(self, engagement_data: Dict[str, Any]) -> List[str]:
-        """Analyze peak activity hours from engagement data."""        
+        """Analyze peak activity hours from engagement data."""
+        
         hourly_activity = engagement_data.get('hourly_activity', {})
         if not hourly_activity:
             return ['18:00', '19:00', '20:00']  # Default peak hours
@@ -2552,7 +2642,8 @@ class AudienceInsightEngine:
         return [hour for hour, _ in sorted_hours[:5]]
     
     def _analyze_peak_activity_days(self, engagement_data: Dict[str, Any]) -> List[str]:
-        """Analyze peak activity days from engagement data."""        
+        """Analyze peak activity days from engagement data."""
+        
         daily_activity = engagement_data.get('daily_activity', {})
         if not daily_activity:
             return ['Tuesday', 'Wednesday', 'Thursday']  # Default peak days
@@ -2568,7 +2659,8 @@ class AudienceInsightEngine:
         return [day for day, _ in sorted_days[:3]]
     
     def _analyze_completion_rates(self, content_history: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Analyze content completion rates by content type."""        
+        """Analyze content completion rates by content type."""
+        
         completion_by_type = defaultdict(list)
         
         for content in content_history:
@@ -2587,7 +2679,8 @@ class AudienceInsightEngine:
     def _analyze_interaction_preferences(
         self, engagement_data: Dict[str, Any]
     ) -> Dict[EngagementType, float]:
-        """Analyze audience interaction preferences."""        
+        """Analyze audience interaction preferences."""
+        
         total_interactions = engagement_data.get('total_interactions', 1)
         
         # Extract interaction counts
@@ -2615,7 +2708,8 @@ class AudienceInsightEngine:
     def _analyze_content_preferences(
         self, content_history: List[Dict[str, Any]]
     ) -> Dict[ContentPreference, float]:
-        """Analyze audience content format preferences."""        
+        """Analyze audience content format preferences."""
+        
         format_performance = defaultdict(list)
         
         for content in content_history:
@@ -2653,7 +2747,8 @@ class AudienceInsightEngine:
         return preferences
     
     def _analyze_seasonal_patterns(self, engagement_data: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze seasonal engagement patterns."""        
+        """Analyze seasonal engagement patterns."""
+        
         # This would analyze historical data across seasons
         # For now, return default seasonal patterns
         return {
@@ -2664,7 +2759,8 @@ class AudienceInsightEngine:
         }
     
     def _analyze_platform_usage(self, engagement_data: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze platform-specific usage patterns."""        
+        """Analyze platform-specific usage patterns."""
+        
         platform_data = engagement_data.get('platform_breakdown', {})
         
         # Normalize platform usage
@@ -2681,7 +2777,8 @@ class AudienceInsightEngine:
         platform_data: Dict[str, Any],
         content_history: List[Dict[str, Any]]
     ) -> AudienceBehavior:
-        """Analyze comprehensive audience behavior patterns."""        
+        """Analyze comprehensive audience behavior patterns."""
+        
         # Analyze discovery sources
         discovery_sources = self._analyze_discovery_sources(audience_data)
         
@@ -2718,7 +2815,8 @@ class AudienceInsightEngine:
         )
     
     def _analyze_discovery_sources(self, audience_data: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze how audience discovers the creator's content."""        
+        """Analyze how audience discovers the creator's content."""
+        
         discovery_data = audience_data.get('discovery_sources', {})
         
         # Default discovery source distribution
@@ -2737,7 +2835,8 @@ class AudienceInsightEngine:
         return default_sources
     
     def _analyze_content_journey(self, content_history: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Analyze typical audience content consumption journey."""        
+        """Analyze typical audience content consumption journey."""
+        
         # Analyze content sequence patterns
         journey_patterns = []
         
@@ -2755,7 +2854,8 @@ class AudienceInsightEngine:
         return journey_patterns[:5]  # Return top 5 patterns
     
     def _calculate_retention_metrics(self, audience_data: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate audience retention metrics."""        
+        """Calculate audience retention metrics."""
+        
         return {
             'day_1_retention': audience_data.get('day_1_retention', 0.8),
             'day_7_retention': audience_data.get('day_7_retention', 0.6),
@@ -2767,7 +2867,8 @@ class AudienceInsightEngine:
     def _identify_churn_indicators(
         self, audience_data: Dict[str, Any], content_history: List[Dict[str, Any]]
     ) -> List[str]:
-        """Identify indicators that predict audience churn."""        
+        """Identify indicators that predict audience churn."""
+        
         indicators = []
         
         # Analyze engagement decline
@@ -2799,7 +2900,8 @@ class AudienceInsightEngine:
     def _identify_growth_drivers(
         self, platform_data: Dict[str, Any], content_history: List[Dict[str, Any]]
     ) -> List[str]:
-        """Identify factors driving audience growth."""        
+        """Identify factors driving audience growth."""
+        
         drivers = []
         
         # Analyze content performance correlation with growth
@@ -2823,7 +2925,8 @@ class AudienceInsightEngine:
         return drivers
     
     def _identify_engagement_triggers(self, content_history: List[Dict[str, Any]]) -> List[str]:
-        """Identify content elements that trigger high engagement."""        
+        """Identify content elements that trigger high engagement."""
+        
         triggers = []
         
         # Analyze high-engagement content
@@ -2847,7 +2950,8 @@ class AudienceInsightEngine:
         return triggers
     
     def _calculate_loyalty_indicators(self, audience_data: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate audience loyalty indicators."""        
+        """Calculate audience loyalty indicators."""
+        
         return {
             'repeat_engagement_rate': audience_data.get('repeat_engagement', 0.6),
             'content_sharing_rate': audience_data.get('sharing_rate', 0.1),
@@ -2857,7 +2961,8 @@ class AudienceInsightEngine:
         }
     
     def _analyze_cross_platform_behavior(self, platform_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze how audience behaves across different platforms."""        
+        """Analyze how audience behaves across different platforms."""
+        
         platforms = list(platform_data.keys())
         
         return {
@@ -2868,7 +2973,8 @@ class AudienceInsightEngine:
         }
     
     def _calculate_platform_overlap(self, platforms: List[str]) -> Dict[str, float]:
-        """Calculate estimated audience overlap between platforms."""        
+        """Calculate estimated audience overlap between platforms."""
+        
         # This would use actual cross-platform analytics in production
         # For now, return estimated overlap percentages
         overlap = {}
@@ -2880,7 +2986,8 @@ class AudienceInsightEngine:
         return overlap
     
     def _analyze_platform_preferences(self, platform_data: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze audience engagement preferences by platform."""        
+        """Analyze audience engagement preferences by platform."""
+        
         preferences = {}
         
         for platform, data in platform_data.items():
@@ -2896,7 +3003,8 @@ class AudienceInsightEngine:
         return preferences
     
     def _analyze_content_adaptation_needs(self, platform_data: Dict[str, Any]) -> Dict[str, str]:
-        """Analyze content adaptation needs for each platform."""        
+        """Analyze content adaptation needs for each platform."""
+        
         adaptations = {}
         
         for platform in platform_data.keys():
@@ -2914,7 +3022,8 @@ class AudienceInsightEngine:
         return adaptations
     
     async def _segment_audience(self, audience_data: Dict[str, Any]) -> Dict[AudienceSegment, float]:
-        """Segment audience based on demographics and behavior."""        
+        """Segment audience based on demographics and behavior."""
+        
         # Extract features for segmentation
         demographics = audience_data.get('demographics', {})
         age_dist = demographics.get('age', {})
@@ -2944,11 +3053,14 @@ class AudienceInsightEngine:
 
 
 class EngagementAnalyzer:
-    """    Specialized engagement analyzer that provides detailed insights into
+    """
+    Specialized engagement analyzer that provides detailed insights into
     audience engagement patterns and optimization opportunities.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the engagement analyzer."""        self.insight_engine = AudienceInsightEngine()
+        """Initialize the engagement analyzer."""
+        self.insight_engine = AudienceInsightEngine()
         logger.info("Engagement analyzer initialized")
     
     async def analyze_engagement_optimization(
@@ -2957,7 +3069,8 @@ class EngagementAnalyzer:
         audience_profile: AudienceProfile,
         content_goals: List[str]
     ) -> List[AudienceInsight]:
-        """        Analyze engagement patterns and provide optimization recommendations.
+        """
+        Analyze engagement patterns and provide optimization recommendations.
         
         Args:
             creator_id: Creator identifier
@@ -2966,7 +3079,8 @@ class EngagementAnalyzer:
             
         Returns:
             List of engagement optimization insights
-        """        
+        """
+        
         insights = []
         
         try:
@@ -2998,7 +3112,8 @@ class EngagementAnalyzer:
             return []
     
     async def _analyze_timing_optimization(self, profile: AudienceProfile) -> List[AudienceInsight]:
-        """Analyze optimal timing for content posting."""        
+        """Analyze optimal timing for content posting."""
+        
         insights = []
         patterns = profile.engagement_patterns
         
@@ -3063,12 +3178,14 @@ class EngagementAnalyzer:
         return insights
     
     def _calculate_schedule_alignment(self, peak_hours: List[str]) -> int:
-        """Calculate how well current posting schedule aligns with peak hours."""        # This would analyze actual posting history vs peak hours
+        """Calculate how well current posting schedule aligns with peak hours."""
+        # This would analyze actual posting history vs peak hours
         # For now, return a sample alignment percentage
         return 65
     
     async def _analyze_format_optimization(self, profile: AudienceProfile) -> List[AudienceInsight]:
-        """Analyze content format preferences and optimization opportunities."""        
+        """Analyze content format preferences and optimization opportunities."""
+        
         insights = []
         preferences = profile.engagement_patterns.content_preferences
         
@@ -3105,7 +3222,8 @@ class EngagementAnalyzer:
         return insights
     
     async def _analyze_interaction_optimization(self, profile: AudienceProfile) -> List[AudienceInsight]:
-        """Analyze audience interaction patterns for optimization."""        
+        """Analyze audience interaction patterns for optimization."""
+        
         insights = []
         interaction_prefs = profile.engagement_patterns.interaction_preferences
         
@@ -3144,7 +3262,8 @@ class EngagementAnalyzer:
         return insights
     
     async def _analyze_growth_optimization(self, profile: AudienceProfile) -> List[AudienceInsight]:
-        """Analyze audience growth patterns and optimization opportunities."""        
+        """Analyze audience growth patterns and optimization opportunities."""
+        
         insights = []
         growth_metrics = profile.growth_metrics
         behavior = profile.behavior_analysis
@@ -3181,7 +3300,8 @@ class EngagementAnalyzer:
         return insights
     
     async def _analyze_monetization_optimization(self, profile: AudienceProfile) -> List[AudienceInsight]:
-        """Analyze audience characteristics for monetization optimization."""        
+        """Analyze audience characteristics for monetization optimization."""
+        
         insights = []
         
         if profile.monetization_potential > 0.6:
@@ -3217,7 +3337,8 @@ class EngagementAnalyzer:
         return insights
     
     def _calculate_demographic_value(self, demographics: DemographicData) -> str:
-        """Calculate demographic value for monetization."""        
+        """Calculate demographic value for monetization."""
+        
         age_dist = demographics.age_distribution
         income_dist = demographics.income_distribution
         
@@ -3233,7 +3354,8 @@ class EngagementAnalyzer:
             return "Developing value"
     
     def _get_value_indicators(self, profile: AudienceProfile) -> Dict[str, Any]:
-        """Get audience value indicators for monetization."""        
+        """Get audience value indicators for monetization."""
+        
         return {
             "audience_size": profile.total_audience_size,
             "engagement_quality": profile.quality_score,
@@ -3243,7 +3365,8 @@ class EngagementAnalyzer:
         }
     
     def _estimate_purchasing_power(self, demographics: DemographicData) -> str:
-        """Estimate audience purchasing power based on demographics."""        
+        """Estimate audience purchasing power based on demographics."""
+        
         income_dist = demographics.income_distribution
         high_income = income_dist.get('75k_100k', 0) + income_dist.get('over_100k', 0)
         

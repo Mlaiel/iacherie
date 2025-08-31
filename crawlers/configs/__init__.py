@@ -23,7 +23,8 @@ Project Specifications:
 - Advanced content protection for creators
 - Automated monetization and revenue tracking
 - Enterprise-grade security and compliance
-"""import os
+"""
+import os
 import logging
 from typing import Dict, List, Optional, Union, Any
 from dataclasses import dataclass, field
@@ -189,11 +190,14 @@ __all__ = [
 ]
 
 class CrawlerConfigurationManager:
-    """    Unified configuration manager for all crawler subsystems.
+    """
+    Unified configuration manager for all crawler subsystems.
     Provides centralized access to all configuration modules.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize unified configuration manager."""        self.platform = platform_config_manager
+        """Initialize unified configuration manager."""
+        self.platform = platform_config_manager
         self.surveillance = surveillance_config_manager
         self.network = network_config_manager
         self.protection = protection_config_manager
@@ -212,7 +216,8 @@ class CrawlerConfigurationManager:
         logger.info(f"Crawler Configuration Manager v{self.version} initialized")
     
     def validate_all_configurations(self) -> Dict[str, Any]:
-        """Validate all configuration modules."""        validation_results = {
+        """Validate all configuration modules."""
+        validation_results = {
             "overall_status": "valid",
             "modules": {},
             "errors": [],
@@ -273,7 +278,8 @@ class CrawlerConfigurationManager:
         return validation_results
     
     def get_configuration_summary(self) -> Dict[str, Any]:
-        """Get comprehensive configuration summary."""        summary = {
+        """Get comprehensive configuration summary."""
+        summary = {
             "version": self.version,
             "last_updated": self.last_updated.isoformat(),
             "author": self.author,
@@ -313,7 +319,8 @@ class CrawlerConfigurationManager:
         return summary
     
     def export_configurations(self, export_path: Optional[str] = None) -> str:
-        """Export all configurations to JSON file."""        if export_path is None:
+        """Export all configurations to JSON file."""
+        if export_path is None:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             export_path = f"crawler_configs_export_{timestamp}.json"
         
@@ -468,7 +475,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class GlobalCrawlerConfig:
-    """Global crawler system configuration."""    # System identification
+    """Global crawler system configuration."""
+    # System identification
     system_name: str = "IA Influencer Agent - Content Protection Platform"
     version: str = "2.0.0"
     environment: str = "production"  # development, staging, production
@@ -523,9 +531,11 @@ class GlobalCrawlerConfig:
     legal_documentation: bool = True
 
 class MasterConfigManager:
-    """Master configuration manager for the entire crawler system."""    
+    """Master configuration manager for the entire crawler system."""
+    
     def __init__(self, config_dir: Optional[str] = None):
-        """Initialize master config manager."""        self.config_dir = Path(config_dir or os.getenv("CRAWLER_CONFIG_DIR", "./configs"))
+        """Initialize master config manager."""
+        self.config_dir = Path(config_dir or os.getenv("CRAWLER_CONFIG_DIR", "./configs"))
         self.config_dir.mkdir(parents=True, exist_ok=True)
         
         # Initialize global configuration
@@ -546,7 +556,8 @@ class MasterConfigManager:
         logger.info(f"Version: {self.global_config.version}")
     
     def _load_global_config(self) -> GlobalCrawlerConfig:
-        """Load global configuration."""        config_file = self.config_dir / "global_config.json"
+        """Load global configuration."""
+        config_file = self.config_dir / "global_config.json"
         if config_file.exists():
             try:
                 import json
@@ -559,7 +570,8 @@ class MasterConfigManager:
         return GlobalCrawlerConfig()
     
     def _setup_logging(self) -> None:
-        """Setup logging configuration."""        log_level = logging.DEBUG if self.global_config.debug_mode else logging.INFO
+        """Setup logging configuration."""
+        log_level = logging.DEBUG if self.global_config.debug_mode else logging.INFO
         
         logging.basicConfig(
             level=log_level,
@@ -571,32 +583,40 @@ class MasterConfigManager:
         )
     
     def get_global_config(self) -> GlobalCrawlerConfig:
-        """Get global configuration."""        return self.global_config
+        """Get global configuration."""
+        return self.global_config
     
     def get_platform_config(self, platform: PlatformType) -> Optional[PlatformConfig]:
-        """Get configuration for specific platform."""        return self.platform_manager.get_config(platform)
+        """Get configuration for specific platform."""
+        return self.platform_manager.get_config(platform)
     
     def get_surveillance_config(self) -> SurveillanceConfig:
-        """Get surveillance configuration."""        return self.surveillance_manager.get_config()
+        """Get surveillance configuration."""
+        return self.surveillance_manager.get_config()
     
     def get_protection_config(self) -> ProtectionConfig:
-        """Get protection configuration."""        return self.protection_manager.get_config()
+        """Get protection configuration."""
+        return self.protection_manager.get_config()
     
     def get_network_config(self) -> NetworkConfig:
-        """Get network configuration."""        return self.network_manager.get_config()
+        """Get network configuration."""
+        return self.network_manager.get_config()
     
     def get_storage_config(self) -> StorageConfig:
-        """Get storage configuration."""        return self.storage_manager.get_config()
+        """Get storage configuration."""
+        return self.storage_manager.get_config()
     
     def get_enabled_platforms(self) -> List[PlatformType]:
-        """Get list of enabled platforms."""        if not self.global_config.platform_crawling_enabled:
+        """Get list of enabled platforms."""
+        if not self.global_config.platform_crawling_enabled:
             return []
         
         enabled_configs = self.platform_manager.get_enabled_configs()
         return list(enabled_configs.keys())
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get overall system status."""        return {
+        """Get overall system status."""
+        return {
             "system_name": self.global_config.system_name,
             "version": self.global_config.version,
             "environment": self.global_config.environment,
@@ -609,7 +629,8 @@ class MasterConfigManager:
         }
     
     def validate_all_configurations(self) -> Dict[str, List[str]]:
-        """Validate all configurations."""        validation_results = {}
+        """Validate all configurations."""
+        validation_results = {}
         
         # Validate platform configurations
         platform_errors = []
@@ -636,7 +657,8 @@ class MasterConfigManager:
         return validation_results
 
     def get_configuration_summary(self) -> Dict[str, Any]:
-        """Get summary of all configurations."""        enabled_platforms = self.get_enabled_platforms()
+        """Get summary of all configurations."""
+        enabled_platforms = self.get_enabled_platforms()
         surveillance_config = self.get_surveillance_config()
         protection_config = self.get_protection_config()
         network_config = self.get_network_config()
@@ -688,25 +710,32 @@ master_config_manager = MasterConfigManager()
 
 # Convenience functions for easy access
 def get_platform_config(platform: PlatformType) -> Optional[PlatformConfig]:
-    """Get platform configuration."""    return master_config_manager.get_platform_config(platform)
+    """Get platform configuration."""
+    return master_config_manager.get_platform_config(platform)
 
 def get_surveillance_config() -> SurveillanceConfig:
-    """Get surveillance configuration."""    return master_config_manager.get_surveillance_config()
+    """Get surveillance configuration."""
+    return master_config_manager.get_surveillance_config()
 
 def get_protection_config() -> ProtectionConfig:
-    """Get protection configuration."""    return master_config_manager.get_protection_config()
+    """Get protection configuration."""
+    return master_config_manager.get_protection_config()
 
 def get_network_config() -> NetworkConfig:
-    """Get network configuration."""    return master_config_manager.get_network_config()
+    """Get network configuration."""
+    return master_config_manager.get_network_config()
 
 def get_storage_config() -> StorageConfig:
-    """Get storage configuration."""    return master_config_manager.get_storage_config()
+    """Get storage configuration."""
+    return master_config_manager.get_storage_config()
 
 def get_system_status() -> Dict[str, Any]:
-    """Get system status."""    return master_config_manager.get_system_status()
+    """Get system status."""
+    return master_config_manager.get_system_status()
 
 def validate_all_configs() -> Dict[str, List[str]]:
-    """Validate all configurations."""    return master_config_manager.validate_all_configurations()
+    """Validate all configurations."""
+    return master_config_manager.validate_all_configurations()
 
 # Export all configuration classes and managers
 __all__ = [

@@ -37,7 +37,8 @@ Copyright: 2025 Fahed Mlaiel. All rights reserved.
 This scoring system contains proprietary algorithms and business intelligence
 developed by Fahed Mlaiel. Unauthorized use, reverse engineering, or distribution
 is strictly prohibited and subject to legal prosecution.
-"""import logging
+"""
+import logging
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any, Union
 from dataclasses import dataclass, field
@@ -63,7 +64,8 @@ from .engine import CreatorProfile, MatchResult
 
 
 class ScoringStrategy(Enum):
-    """Advanced scoring strategy enumeration"""    WEIGHTED_ENSEMBLE = "weighted_ensemble"
+    """Advanced scoring strategy enumeration"""
+    WEIGHTED_ENSEMBLE = "weighted_ensemble"
     NEURAL_NETWORK = "neural_network"
     GRADIENT_BOOSTING = "gradient_boosting"
     RANDOM_FOREST = "random_forest"
@@ -76,7 +78,8 @@ class ScoringStrategy(Enum):
 
 
 class ScoreComponent(Enum):
-    """Comprehensive score components for business intelligence"""    # Core Compatibility
+    """Comprehensive score components for business intelligence"""
+    # Core Compatibility
     CONTENT_SIMILARITY = "content_similarity"
     AUDIENCE_COMPATIBILITY = "audience_compatibility"
     ENGAGEMENT_SYNERGY = "engagement_synergy"
@@ -108,7 +111,8 @@ class ScoreComponent(Enum):
 
 
 class QualityTier(Enum):
-    """Quality tier classification"""    PREMIUM = "premium"
+    """Quality tier classification"""
+    PREMIUM = "premium"
     EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
@@ -118,7 +122,8 @@ class QualityTier(Enum):
 
 @dataclass
 class ScoringConfiguration:
-    """Enterprise scoring configuration with dynamic optimization"""    strategy: ScoringStrategy
+    """Enterprise scoring configuration with dynamic optimization"""
+    strategy: ScoringStrategy
     weights: Dict[ScoreComponent, float] = field(default_factory=dict)
     normalization_method: str = "min_max"
     quality_thresholds: Dict[QualityTier, float] = field(default_factory=dict)
@@ -133,7 +138,8 @@ class ScoringConfiguration:
 
 @dataclass
 class ScoreBreakdown:
-    """Comprehensive scoring breakdown with business insights"""    overall_score: float
+    """Comprehensive scoring breakdown with business insights"""
+    overall_score: float
     component_scores: Dict[ScoreComponent, float]
     weighted_scores: Dict[ScoreComponent, float]
     confidence_level: float
@@ -168,7 +174,8 @@ class ScoreBreakdown:
 
 @dataclass
 class QualityMetrics:
-    """Quality assessment metrics for scoring validation"""    precision: float
+    """Quality assessment metrics for scoring validation"""
+    precision: float
     recall: float
     f1_score: float
     accuracy: float
@@ -182,7 +189,8 @@ class QualityMetrics:
 
 @dataclass
 class ScoreEvolution:
-    """Score evolution tracking with trend analysis"""    creator_pair_id: str
+    """Score evolution tracking with trend analysis"""
+    creator_pair_id: str
     historical_scores: List[Tuple[datetime, float]]
     trend_direction: str
     velocity: float
@@ -200,7 +208,8 @@ class ScoreEvolution:
 
 
 class MatchingScoringService:
-    """    Enterprise-Grade Matching Scoring Service for Creator Collaboration
+    """
+    Enterprise-Grade Matching Scoring Service for Creator Collaboration
     
     This service implements advanced multi-algorithm scoring systems with machine learning,
     business intelligence, and real-time optimization capabilities for evaluating
@@ -214,7 +223,8 @@ class MatchingScoringService:
     - Risk assessment and mitigation scoring
     - Historical performance learning and trend analysis
     - Cross-validation and model performance monitoring
-    """    
+    """
+    
     def __init__(
         self,
         cache_manager: CacheManager,
@@ -242,7 +252,8 @@ class MatchingScoringService:
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     def _initialize_enterprise_configs(self) -> None:
-        """Initialize enterprise-grade scoring configurations"""        
+        """Initialize enterprise-grade scoring configurations"""
+        
         # Premium Enterprise Configuration
         self.enterprise_config = ScoringConfiguration(
             strategy=ScoringStrategy.HYBRID_FUSION,
@@ -330,7 +341,8 @@ class MatchingScoringService:
         }
     
     def _initialize_ml_models(self) -> None:
-        """Initialize machine learning models for advanced scoring"""        try:
+        """Initialize machine learning models for advanced scoring"""
+        try:
             # Neural Network for complex pattern recognition
             self.neural_model = MLPRegressor(
                 **self.enterprise_config.ml_model_config['neural_network'],
@@ -366,7 +378,8 @@ class MatchingScoringService:
         strategy: Optional[ScoringStrategy] = None,
         business_context: Optional[Dict[str, Any]] = None
     ) -> ScoreBreakdown:
-        """        Calculate comprehensive collaboration score with business intelligence
+        """
+        Calculate comprehensive collaboration score with business intelligence
         
         Args:
             creator_a: First creator profile
@@ -376,7 +389,8 @@ class MatchingScoringService:
             
         Returns:
             Detailed score breakdown with business insights
-        """        try:
+        """
+        try:
             # Use default strategy if none provided
             if strategy is None:
                 strategy = self.enterprise_config.strategy
@@ -451,7 +465,8 @@ class MatchingScoringService:
         creator_b: CreatorProfile,
         business_context: Optional[Dict[str, Any]] = None
     ) -> Dict[ScoreComponent, float]:
-        """Calculate individual component scores using advanced algorithms"""        
+        """Calculate individual component scores using advanced algorithms"""
+        
         component_scores = {}
         
         # Core Compatibility Components
@@ -501,7 +516,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Advanced content similarity scoring using deep learning embeddings"""        try:
+        """Advanced content similarity scoring using deep learning embeddings"""
+        try:
             # Use content feature vectors for similarity calculation
             if hasattr(creator_a, 'content_features') and hasattr(creator_b, 'content_features'):
                 similarity = cosine_similarity(
@@ -528,7 +544,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Score audience compatibility with demographic analysis"""        try:
+        """Score audience compatibility with demographic analysis"""
+        try:
             # Analyze audience overlap and complementarity
             overlap_score = self._calculate_audience_overlap(creator_a, creator_b)
             complement_score = self._calculate_audience_complement(creator_a, creator_b)
@@ -548,7 +565,8 @@ class MatchingScoringService:
         creator_b: CreatorProfile,
         business_context: Optional[Dict[str, Any]] = None
     ) -> float:
-        """Score revenue potential using advanced business intelligence"""        try:
+        """Score revenue potential using advanced business intelligence"""
+        try:
             # Base revenue calculation using creator metrics
             base_revenue_a = self._estimate_creator_revenue(creator_a)
             base_revenue_b = self._estimate_creator_revenue(creator_b)
@@ -580,7 +598,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Apply advanced scoring strategy with ensemble methods"""        try:
+        """Apply advanced scoring strategy with ensemble methods"""
+        try:
             if strategy == ScoringStrategy.HYBRID_FUSION:
                 return await self._hybrid_fusion_scoring(component_scores, creator_a, creator_b)
             
@@ -607,7 +626,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Advanced hybrid fusion scoring combining multiple ML models"""        try:
+        """Advanced hybrid fusion scoring combining multiple ML models"""
+        try:
             # Prepare feature vector
             features = self._prepare_feature_vector(component_scores, creator_a, creator_b)
             
@@ -654,7 +674,8 @@ class MatchingScoringService:
         self,
         component_scores: Dict[ScoreComponent, float]
     ) -> float:
-        """Traditional weighted ensemble scoring"""        weighted_sum = 0.0
+        """Traditional weighted ensemble scoring"""
+        weighted_sum = 0.0
         total_weight = 0.0
         
         for component, score in component_scores.items():
@@ -669,7 +690,8 @@ class MatchingScoringService:
         component_scores: Dict[ScoreComponent, float],
         strategy: ScoringStrategy
     ) -> float:
-        """Calculate confidence level based on score consistency and data quality"""        try:
+        """Calculate confidence level based on score consistency and data quality"""
+        try:
             scores = list(component_scores.values())
             
             # Statistical measures
@@ -699,7 +721,8 @@ class MatchingScoringService:
             return 0.5
     
     def _determine_quality_tier(self, score: float, confidence: float) -> QualityTier:
-        """Determine quality tier based on score and confidence"""        # Adjust score based on confidence
+        """Determine quality tier based on score and confidence"""
+        # Adjust score based on confidence
         adjusted_score = score * confidence
         
         if adjusted_score >= self.enterprise_config.quality_thresholds[QualityTier.PREMIUM]:
@@ -722,7 +745,8 @@ class MatchingScoringService:
         component_scores: Dict[ScoreComponent, float],
         overall_score: float
     ) -> Dict[str, Any]:
-        """Generate comprehensive business intelligence insights"""        try:
+        """Generate comprehensive business intelligence insights"""
+        try:
             # Revenue projection
             revenue_projection = self._project_collaboration_revenue(
                 creator_a, creator_b, component_scores
@@ -783,7 +807,8 @@ class MatchingScoringService:
     # Performance monitoring and optimization methods
     
     async def evaluate_model_performance(self) -> QualityMetrics:
-        """Evaluate and monitor model performance"""        try:
+        """Evaluate and monitor model performance"""
+        try:
             # Implementation for model performance evaluation
             # This would include cross-validation, accuracy metrics, etc.
             return QualityMetrics(
@@ -807,7 +832,8 @@ class MatchingScoringService:
         self,
         historical_data: List[Dict[str, Any]]
     ) -> Dict[ScoreComponent, float]:
-        """Optimize scoring weights using historical performance data"""        try:
+        """Optimize scoring weights using historical performance data"""
+        try:
             # Implementation for weight optimization using genetic algorithms
             # or other optimization techniques
             optimized_weights = self.enterprise_config.weights.copy()
@@ -832,7 +858,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Enhance similarity score with additional factors"""        # Apply enhancement based on additional factors
+        """Enhance similarity score with additional factors"""
+        # Apply enhancement based on additional factors
         enhanced = base_similarity
         
         # Genre compatibility bonus
@@ -847,7 +874,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate genre-based similarity as fallback"""        if not (hasattr(creator_a, 'genres') and hasattr(creator_b, 'genres')):
+        """Calculate genre-based similarity as fallback"""
+        if not (hasattr(creator_a, 'genres') and hasattr(creator_b, 'genres')):
             return 0.5
         
         genres_a = set(creator_a.genres)
@@ -867,7 +895,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> np.ndarray:
-        """Prepare feature vector for ML models"""        features = []
+        """Prepare feature vector for ML models"""
+        features = []
         
         # Add component scores
         for component in ScoreComponent:
@@ -884,14 +913,16 @@ class MatchingScoringService:
         return np.array(features)
     
     def _is_model_trained(self, model_name: str) -> bool:
-        """Check if a model is trained and ready"""        # Implementation to check model training status
+        """Check if a model is trained and ready"""
+        # Implementation to check model training status
         return hasattr(self, f'{model_name}_model')
     
     def _calculate_model_confidence(
         self,
         model_predictions: Dict[str, float]
     ) -> float:
-        """Calculate confidence based on model agreement"""        if len(model_predictions) < 2:
+        """Calculate confidence based on model agreement"""
+        if len(model_predictions) < 2:
             return 0.5
         
         predictions = list(model_predictions.values())
@@ -906,7 +937,8 @@ class MatchingScoringService:
         self,
         component_scores: Dict[ScoreComponent, float]
     ) -> Dict[ScoreComponent, float]:
-        """Calculate weighted component scores"""        weighted_scores = {}
+        """Calculate weighted component scores"""
+        weighted_scores = {}
         
         for component, score in component_scores.items():
             weight = self.enterprise_config.weights.get(component, 0.0)
@@ -915,7 +947,8 @@ class MatchingScoringService:
         return weighted_scores
     
     def _get_model_version(self, strategy: ScoringStrategy) -> str:
-        """Get current model version for the strategy"""        return f"{strategy.value}_v2.0.0"
+        """Get current model version for the strategy"""
+        return f"{strategy.value}_v2.0.0"
     
     # Additional helper methods would be implemented for:
     # - _calculate_audience_overlap
@@ -975,7 +1008,8 @@ class MatchingScoringService:
         }
     
     def _initialize_scoring_models(self) -> None:
-        """Initialize ML models for scoring"""        try:
+        """Initialize ML models for scoring"""
+        try:
             # Initialize neural network for complex scoring
             # In production, this would load pre-trained models
             self.neural_scoring_model = None
@@ -996,7 +1030,8 @@ class MatchingScoringService:
         scoring_method: ScoringMethod = ScoringMethod.WEIGHTED_AVERAGE,
         context: Optional[Dict[str, Any]] = None
     ) -> DetailedScore:
-        """        Calculate comprehensive match score between two creators
+        """
+        Calculate comprehensive match score between two creators
         
         Args:
             creator_a: First creator profile
@@ -1006,7 +1041,8 @@ class MatchingScoringService:
             
         Returns:
             Detailed score with breakdown and explanation
-        """        try:
+        """
+        try:
             # Get scoring configuration
             config = self.scoring_configs.get(scoring_method)
             if not config:
@@ -1091,7 +1127,8 @@ class MatchingScoringService:
         creator_b: CreatorProfile,
         context: Optional[Dict[str, Any]]
     ) -> Dict[ScoreComponent, float]:
-        """Calculate individual component scores"""        try:
+        """Calculate individual component scores"""
+        try:
             component_scores = {}
             
             # Content similarity score
@@ -1145,7 +1182,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate content style similarity score"""        try:
+        """Calculate content style similarity score"""
+        try:
             if creator_a.content_features is None or creator_b.content_features is None:
                 return 0.5  # Neutral score if no feature data
             
@@ -1177,7 +1215,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate audience compatibility score"""        try:
+        """Calculate audience compatibility score"""
+        try:
             demographics_a = creator_a.audience_demographics
             demographics_b = creator_b.audience_demographics
             
@@ -1221,7 +1260,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate engagement synergy potential"""        try:
+        """Calculate engagement synergy potential"""
+        try:
             engagement_a = creator_a.engagement_metrics
             engagement_b = creator_b.engagement_metrics
             
@@ -1269,7 +1309,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate brand alignment score"""        try:
+        """Calculate brand alignment score"""
+        try:
             # Extract brand information from creator profiles
             # This would analyze brand values, messaging, aesthetics, etc.
             
@@ -1291,7 +1332,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate skill complementarity score"""        try:
+        """Calculate skill complementarity score"""
+        try:
             # Analyze how well creators' skills complement each other
             # Higher scores for complementary skills vs. overlapping skills
             
@@ -1307,7 +1349,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate platform presence synergy"""        try:
+        """Calculate platform presence synergy"""
+        try:
             platforms_a = set(creator_a.platform_presence.keys())
             platforms_b = set(creator_b.platform_presence.keys())
             
@@ -1336,7 +1379,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate timing and scheduling alignment"""        try:
+        """Calculate timing and scheduling alignment"""
+        try:
             # Analyze posting schedules, time zones, availability patterns
             # Higher scores for compatible timing patterns
             
@@ -1352,7 +1396,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate content quality compatibility"""        try:
+        """Calculate content quality compatibility"""
+        try:
             quality_a = creator_a.quality_scores
             quality_b = creator_b.quality_scores
             
@@ -1385,7 +1430,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate collaboration risk score (lower is better)"""        try:
+        """Calculate collaboration risk score (lower is better)"""
+        try:
             risk_factors = []
             
             # Brand conflict risk
@@ -1417,7 +1463,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate collaboration growth potential"""        try:
+        """Calculate collaboration growth potential"""
+        try:
             growth_factors = []
             
             # Audience expansion potential
@@ -1447,7 +1494,8 @@ class MatchingScoringService:
         component_scores: Dict[ScoreComponent, float],
         config: ScoringConfiguration
     ) -> float:
-        """Calculate weighted average score"""        try:
+        """Calculate weighted average score"""
+        try:
             weighted_sum = 0.0
             total_weight = 0.0
             
@@ -1472,7 +1520,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate hybrid score using multiple methods"""        try:
+        """Calculate hybrid score using multiple methods"""
+        try:
             # Start with weighted average
             base_score = self._calculate_weighted_average_score(component_scores, config)
             
@@ -1500,7 +1549,8 @@ class MatchingScoringService:
         config: ScoringConfiguration,
         context: Optional[Dict[str, Any]]
     ) -> float:
-        """Apply penalties and boosts to base score"""        try:
+        """Apply penalties and boosts to base score"""
+        try:
             adjusted_score = base_score
             
             # Apply penalty factors
@@ -1525,7 +1575,8 @@ class MatchingScoringService:
         component_scores: Dict[ScoreComponent, float],
         config: ScoringConfiguration
     ) -> float:
-        """Calculate confidence level of the score"""        try:
+        """Calculate confidence level of the score"""
+        try:
             scores = list(component_scores.values())
             
             if not scores:
@@ -1557,7 +1608,8 @@ class MatchingScoringService:
         score: float,
         config: ScoringConfiguration
     ) -> str:
-        """Determine quality rating based on score"""        thresholds = config.quality_thresholds
+        """Determine quality rating based on score"""
+        thresholds = config.quality_thresholds
         
         if score >= thresholds['excellent']:
             return "EXCELLENT"
@@ -1572,7 +1624,8 @@ class MatchingScoringService:
         self,
         component_scores: Dict[ScoreComponent, float]
     ) -> Tuple[List[str], List[str]]:
-        """Analyze component scores to identify strengths and weaknesses"""        strengths = []
+        """Analyze component scores to identify strengths and weaknesses"""
+        strengths = []
         weaknesses = []
         
         for component, score in component_scores.items():
@@ -1589,7 +1642,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> List[str]:
-        """Generate suggestions for improving match quality"""        suggestions = []
+        """Generate suggestions for improving match quality"""
+        suggestions = []
         
         for component, score in component_scores.items():
             if score < 0.60:
@@ -1605,7 +1659,8 @@ class MatchingScoringService:
         component_scores: Dict[ScoreComponent, float],
         config: ScoringConfiguration
     ) -> str:
-        """Generate human-readable score explanation"""        try:
+        """Generate human-readable score explanation"""
+        try:
             # Find top contributing factors
             sorted_components = sorted(
                 component_scores.items(),
@@ -1642,7 +1697,8 @@ class MatchingScoringService:
         types_a: List,
         types_b: List
     ) -> float:
-        """Calculate content type compatibility"""        if not types_a or not types_b:
+        """Calculate content type compatibility"""
+        if not types_a or not types_b:
             return 0.5
         
         set_a = set(types_a)
@@ -1658,7 +1714,8 @@ class MatchingScoringService:
         demo_a: Dict[str, float],
         demo_b: Dict[str, float]
     ) -> float:
-        """Calculate demographic distribution overlap"""        all_keys = set(demo_a.keys()).union(set(demo_b.keys()))
+        """Calculate demographic distribution overlap"""
+        all_keys = set(demo_a.keys()).union(set(demo_b.keys()))
         overlap = 0.0
         
         for key in all_keys:
@@ -1673,7 +1730,8 @@ class MatchingScoringService:
         interests_a: List[str],
         interests_b: List[str]
     ) -> float:
-        """Calculate interest compatibility using Jaccard similarity"""        set_a = set(interests_a)
+        """Calculate interest compatibility using Jaccard similarity"""
+        set_a = set(interests_a)
         set_b = set(interests_b)
         
         intersection = len(set_a.intersection(set_b))
@@ -1686,7 +1744,8 @@ class MatchingScoringService:
         freq_a: Dict[str, int],
         freq_b: Dict[str, int]
     ) -> float:
-        """Calculate posting frequency compatibility"""        # Implementation for frequency compatibility
+        """Calculate posting frequency compatibility"""
+        # Implementation for frequency compatibility
         return 0.7
     
     def _calculate_timing_synergy(
@@ -1694,7 +1753,8 @@ class MatchingScoringService:
         timing_a: List[int],
         timing_b: List[int]
     ) -> float:
-        """Calculate timing synergy for peak hours"""        # Implementation for timing synergy
+        """Calculate timing synergy for peak hours"""
+        # Implementation for timing synergy
         return 0.6
     
     # Risk assessment helper methods
@@ -1704,28 +1764,32 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Assess brand conflict risk"""        return 0.2  # Low risk placeholder
+        """Assess brand conflict risk"""
+        return 0.2  # Low risk placeholder
     
     def _assess_audience_reception_risk(
         self,
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Assess audience reception risk"""        return 0.3  # Moderate risk placeholder
+        """Assess audience reception risk"""
+        return 0.3  # Moderate risk placeholder
     
     def _assess_quality_mismatch_risk(
         self,
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Assess quality mismatch risk"""        return 0.1  # Low risk placeholder
+        """Assess quality mismatch risk"""
+        return 0.1  # Low risk placeholder
     
     def _assess_collaboration_complexity_risk(
         self,
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Assess collaboration complexity risk"""        return 0.25  # Low-moderate risk placeholder
+        """Assess collaboration complexity risk"""
+        return 0.25  # Low-moderate risk placeholder
     
     # Growth potential helper methods
     
@@ -1734,28 +1798,32 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate audience expansion potential"""        return 0.8  # High potential placeholder
+        """Calculate audience expansion potential"""
+        return 0.8  # High potential placeholder
     
     def _calculate_skill_development_potential(
         self,
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate skill development potential"""        return 0.7  # Good potential placeholder
+        """Calculate skill development potential"""
+        return 0.7  # Good potential placeholder
     
     def _calculate_market_expansion_potential(
         self,
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate market expansion potential"""        return 0.6  # Moderate potential placeholder
+        """Calculate market expansion potential"""
+        return 0.6  # Moderate potential placeholder
     
     def _calculate_revenue_growth_potential(
         self,
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate revenue growth potential"""        return 0.75  # Good potential placeholder
+        """Calculate revenue growth potential"""
+        return 0.75  # Good potential placeholder
     
     # ML and adjustment helper methods
     
@@ -1765,7 +1833,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Get ML-based score adjustment"""        # Placeholder for ML model prediction
+        """Get ML-based score adjustment"""
+        # Placeholder for ML model prediction
         return 0.0
     
     def _get_collaborative_filtering_adjustment(
@@ -1773,7 +1842,8 @@ class MatchingScoringService:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Get collaborative filtering adjustment"""        # Placeholder for collaborative filtering
+        """Get collaborative filtering adjustment"""
+        # Placeholder for collaborative filtering
         return 0.0
     
     def _should_apply_penalty(
@@ -1782,7 +1852,8 @@ class MatchingScoringService:
         component_scores: Dict[ScoreComponent, float],
         context: Optional[Dict[str, Any]]
     ) -> bool:
-        """Determine if penalty should be applied"""        # Logic to determine penalty application
+        """Determine if penalty should be applied"""
+        # Logic to determine penalty application
         return False
     
     def _should_apply_boost(
@@ -1791,7 +1862,8 @@ class MatchingScoringService:
         component_scores: Dict[ScoreComponent, float],
         context: Optional[Dict[str, Any]]
     ) -> bool:
-        """Determine if boost should be applied"""        # Logic to determine boost application
+        """Determine if boost should be applied"""
+        # Logic to determine boost application
         return False
     
     def _get_component_description(
@@ -1799,7 +1871,8 @@ class MatchingScoringService:
         component: ScoreComponent,
         description_type: str
     ) -> str:
-        """Get human-readable component description"""        descriptions = {
+        """Get human-readable component description"""
+        descriptions = {
             ScoreComponent.CONTENT_SIMILARITY: {
                 "strength": "Highly compatible content styles",
                 "weakness": "Significant content style differences"
@@ -1818,7 +1891,8 @@ class MatchingScoringService:
         component: ScoreComponent,
         score: float
     ) -> Optional[str]:
-        """Get improvement suggestion for low-scoring component"""        suggestions = {
+        """Get improvement suggestion for low-scoring component"""
+        suggestions = {
             ScoreComponent.CONTENT_SIMILARITY: "Consider exploring shared content themes or styles",
             ScoreComponent.AUDIENCE_COMPATIBILITY: "Research audience overlap and develop shared interests",
             ScoreComponent.ENGAGEMENT_SYNERGY: "Synchronize posting schedules and engagement strategies"

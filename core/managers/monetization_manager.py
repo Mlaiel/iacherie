@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Contenu protégé → Analyse marché IA → Stratégies monétisation → 
 Optimisation prix → Matching partenaires → Licensing automatique → Revenus maximisés
-"""from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set
+"""
+from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set
 import logging
 import asyncio
 from contextlib import asynccontextmanager
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class MonetizationStrategy(Enum):
-    """Stratégies de monétisation disponibles"""    SUBSCRIPTION = "subscription"  # Modèle d'abonnement
+    """Stratégies de monétisation disponibles"""
+    SUBSCRIPTION = "subscription"  # Modèle d'abonnement
     PAY_PER_USE = "pay_per_use"  # Paiement à l'utilisation
     LICENSING = "licensing"  # Licensing de contenu
     ADVERTISING = "advertising"  # Revenus publicitaires
@@ -49,7 +51,8 @@ class MonetizationStrategy(Enum):
 
 
 class PricingModel(Enum):
-    """Modèles de tarification"""    FIXED = "fixed"  # Prix fixe
+    """Modèles de tarification"""
+    FIXED = "fixed"  # Prix fixe
     DYNAMIC = "dynamic"  # Prix dynamique
     TIERED = "tiered"  # Prix par paliers
     USAGE_BASED = "usage_based"  # Basé sur l'utilisation
@@ -60,7 +63,8 @@ class PricingModel(Enum):
 
 
 class MarketSegment(Enum):
-    """Segments de marché cibles"""    INDIVIDUAL_CREATORS = "individual_creators"
+    """Segments de marché cibles"""
+    INDIVIDUAL_CREATORS = "individual_creators"
     SMALL_BUSINESSES = "small_businesses"
     ENTERPRISES = "enterprises"
     BRANDS = "brands"
@@ -71,7 +75,8 @@ class MarketSegment(Enum):
 
 
 class PartnershipType(Enum):
-    """Types de partenariats"""    BRAND_COLLABORATION = "brand_collaboration"
+    """Types de partenariats"""
+    BRAND_COLLABORATION = "brand_collaboration"
     CONTENT_LICENSING = "content_licensing"
     CROSS_PROMOTION = "cross_promotion"
     REVENUE_SHARING = "revenue_sharing"
@@ -83,7 +88,8 @@ class PartnershipType(Enum):
 
 @dataclass
 class MonetizationConfig:
-    """Configuration avancée du gestionnaire de monétisation"""    # Strategy settings
+    """Configuration avancée du gestionnaire de monétisation"""
+    # Strategy settings
     enabled_strategies: Set[MonetizationStrategy] = field(
         default_factory=lambda: set(MonetizationStrategy)
     )
@@ -136,7 +142,8 @@ class MonetizationConfig:
 
 @dataclass
 class MonetizationStrategy:
-    """Stratégie de monétisation détaillée"""    id: str
+    """Stratégie de monétisation détaillée"""
+    id: str
     user_id: str
     content_id: Optional[str]
     
@@ -177,7 +184,8 @@ class MonetizationStrategy:
 
 @dataclass
 class PartnershipOpportunity:
-    """Opportunité de partenariat"""    id: str
+    """Opportunité de partenariat"""
+    id: str
     user_id: str
     partner_id: str
     
@@ -218,7 +226,8 @@ class PartnershipOpportunity:
 
 @dataclass
 class MarketIntelligence:
-    """Intelligence de marché avancée"""    market_segment: MarketSegment
+    """Intelligence de marché avancée"""
+    market_segment: MarketSegment
     content_category: str
     
     # Pricing intelligence
@@ -256,7 +265,8 @@ class MarketIntelligence:
 
 
 class MonetizationManager(ABC):
-    """    💎 Advanced Monetization Strategy Manager - IA-Influencer-Agent
+    """
+    💎 Advanced Monetization Strategy Manager - IA-Influencer-Agent
     
     Responsabilité:
     Gestionnaire industriel de stratégies de monétisation avec IA avancée
@@ -280,7 +290,8 @@ class MonetizationManager(ABC):
     - Licensing automation
     - Competitive positioning
     - Revenue goal tracking
-    """    
+    """
+    
     def __init__(self, config: MonetizationConfig = None):
         self.config = config or MonetizationConfig()
         self._strategies: Dict[str, MonetizationStrategy] = {}
@@ -314,11 +325,13 @@ class MonetizationManager(ABC):
     
     @abstractmethod
     async def initialize_pool(self) -> bool:
-        """        Initialize monetization engine pool and market connections
+        """
+        Initialize monetization engine pool and market connections
         
         Returns:
             bool: True if initialization successful
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def analyze_market_opportunity(
@@ -327,7 +340,8 @@ class MonetizationManager(ABC):
         target_segment: MarketSegment,
         geographic_region: Optional[str] = None
     ) -> MarketIntelligence:
-        """        Analyze market opportunity with AI-powered intelligence
+        """
+        Analyze market opportunity with AI-powered intelligence
         
         Args:
             content_category: Category of content to analyze
@@ -336,7 +350,8 @@ class MonetizationManager(ABC):
             
         Returns:
             MarketIntelligence: Comprehensive market analysis
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def optimize_pricing_strategy(
@@ -344,7 +359,8 @@ class MonetizationManager(ABC):
         strategy_id: str,
         market_data: Optional[MarketIntelligence] = None
     ) -> MonetizationStrategy:
-        """        Optimize pricing strategy using AI algorithms
+        """
+        Optimize pricing strategy using AI algorithms
         
         Args:
             strategy_id: Strategy to optimize
@@ -352,7 +368,8 @@ class MonetizationManager(ABC):
             
         Returns:
             MonetizationStrategy: Optimized strategy
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def find_partnership_opportunities(
@@ -361,7 +378,8 @@ class MonetizationManager(ABC):
         content_categories: List[str],
         partnership_types: Optional[Set[PartnershipType]] = None
     ) -> List[PartnershipOpportunity]:
-        """        Find and rank partnership opportunities using AI matching
+        """
+        Find and rank partnership opportunities using AI matching
         
         Args:
             user_id: User to find partnerships for
@@ -370,7 +388,8 @@ class MonetizationManager(ABC):
             
         Returns:
             List[PartnershipOpportunity]: Ranked partnership opportunities
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def evaluate_content_value(
@@ -379,7 +398,8 @@ class MonetizationManager(ABC):
         content_metadata: Dict[str, Any],
         market_context: Optional[MarketIntelligence] = None
     ) -> Decimal:
-        """        Evaluate content monetary value using AI valuation models
+        """
+        Evaluate content monetary value using AI valuation models
         
         Args:
             content_id: Content to evaluate
@@ -388,7 +408,8 @@ class MonetizationManager(ABC):
             
         Returns:
             Decimal: Estimated content value
-        """        pass
+        """
+        pass
     
     async def create_monetization_strategy(
         self,
@@ -398,7 +419,8 @@ class MonetizationManager(ABC):
         target_segment: MarketSegment,
         initial_price: Optional[Decimal] = None
     ) -> MonetizationStrategy:
-        """        Create new monetization strategy with AI optimization
+        """
+        Create new monetization strategy with AI optimization
         
         Args:
             user_id: User creating strategy
@@ -409,7 +431,8 @@ class MonetizationManager(ABC):
             
         Returns:
             MonetizationStrategy: Created strategy
-        """        try:
+        """
+        try:
             # Analyze market opportunity
             content_category = "general"  # Would be determined from content
             market_intel = await self.analyze_market_opportunity(
@@ -477,7 +500,8 @@ class MonetizationManager(ABC):
         test_variants: Dict[str, Dict[str, Any]],
         test_duration_days: int = 14
     ) -> Dict[str, Any]:
-        """        Run A/B test for monetization strategy
+        """
+        Run A/B test for monetization strategy
         
         Args:
             strategy_id: Strategy to test
@@ -486,7 +510,8 @@ class MonetizationManager(ABC):
             
         Returns:
             Dict: A/B test results and recommendations
-        """        try:
+        """
+        try:
             strategy = self._strategies.get(strategy_id)
             if not strategy:
                 raise ValueError(f"Strategy not found: {strategy_id}")
@@ -521,14 +546,16 @@ class MonetizationManager(ABC):
         self,
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Optimize all active strategies using AI
+        """
+        Optimize all active strategies using AI
         
         Args:
             user_id: Optional user filter
             
         Returns:
             Dict: Optimization results summary
-        """        try:
+        """
+        try:
             # Filter strategies
             strategies_to_optimize = []
             for strategy in self._strategies.values():
@@ -582,7 +609,8 @@ class MonetizationManager(ABC):
         user_id: Optional[str] = None,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """        Get comprehensive monetization analytics
+        """
+        Get comprehensive monetization analytics
         
         Args:
             user_id: Optional user filter
@@ -590,7 +618,8 @@ class MonetizationManager(ABC):
             
         Returns:
             Dict: Complete monetization analytics
-        """        with self._lock:
+        """
+        with self._lock:
             # Filter data
             strategies = list(self._strategies.values())
             partnerships = list(self._partnerships.values())
@@ -684,7 +713,8 @@ class MonetizationManager(ABC):
         strategy_type: MonetizationStrategy,
         market_intel: MarketIntelligence
     ) -> PricingModel:
-        """Determine optimal pricing model based on strategy and market"""        # AI-powered pricing model selection logic
+        """Determine optimal pricing model based on strategy and market"""
+        # AI-powered pricing model selection logic
         if strategy_type == MonetizationStrategy.SUBSCRIPTION:
             return PricingModel.TIERED
         elif strategy_type == MonetizationStrategy.LICENSING:
@@ -699,7 +729,8 @@ class MonetizationManager(ABC):
         price: Decimal,
         market_intel: MarketIntelligence
     ) -> str:
-        """Determine competitive position based on price and market"""        if price < market_intel.price_range[0]:
+        """Determine competitive position based on price and market"""
+        if price < market_intel.price_range[0]:
             return "low"
         elif price > market_intel.price_range[1]:
             return "premium"
@@ -711,7 +742,8 @@ class MonetizationManager(ABC):
         strategy: MonetizationStrategy,
         market_intel: MarketIntelligence
     ) -> List[str]:
-        """Generate AI-powered strategy recommendations"""        recommendations = []
+        """Generate AI-powered strategy recommendations"""
+        recommendations = []
         
         # Market-based recommendations
         if market_intel.demand_level > 0.8:
@@ -727,7 +759,8 @@ class MonetizationManager(ABC):
         return recommendations
     
     async def _calculate_optimization_score(self, strategy: MonetizationStrategy) -> float:
-        """Calculate optimization score for strategy"""        # Multi-factor optimization score calculation
+        """Calculate optimization score for strategy"""
+        # Multi-factor optimization score calculation
         score_factors = []
         
         # Conversion rate factor
@@ -745,7 +778,8 @@ class MonetizationManager(ABC):
         return statistics.mean(score_factors) if score_factors else 0.5
     
     async def _start_strategy_optimization(self, strategy_id: str) -> None:
-        """Start background optimization monitoring for strategy"""        if strategy_id in self._optimization_tasks:
+        """Start background optimization monitoring for strategy"""
+        if strategy_id in self._optimization_tasks:
             return
         
         async def optimization_loop():
@@ -766,7 +800,8 @@ class MonetizationManager(ABC):
         strategy: MonetizationStrategy,
         duration_days: int
     ) -> Dict[str, Any]:
-        """Execute A/B test for strategy"""        # Placeholder for A/B test execution
+        """Execute A/B test for strategy"""
+        # Placeholder for A/B test execution
         # Real implementation would involve traffic splitting and metric collection
         return {
             "test_id": str(uuid.uuid4()),
@@ -779,7 +814,8 @@ class MonetizationManager(ABC):
         }
     
     async def _analyze_ab_test_results(self, test_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze A/B test results for statistical significance"""        # Statistical analysis of A/B test results
+        """Analyze A/B test results for statistical significance"""
+        # Statistical analysis of A/B test results
         return {
             "winning_variant": "variant_a",
             "significance": 0.97,
@@ -792,13 +828,15 @@ class MonetizationManager(ABC):
         strategy: MonetizationStrategy,
         winning_variant: Dict[str, Any]
     ) -> None:
-        """Apply winning A/B test variant to strategy"""        # Apply the winning variant configuration
+        """Apply winning A/B test variant to strategy"""
+        # Apply the winning variant configuration
         strategy.optimization_score += 0.1  # Improvement from A/B test
         strategy.last_optimized = datetime.utcnow()
     
     @asynccontextmanager
     async def get_monetization_session(self):
-        """Context manager for monetization operations"""        session_id = str(uuid.uuid4())
+        """Context manager for monetization operations"""
+        session_id = str(uuid.uuid4())
         try:
             logger.info(f"💎 Monetization session started: {session_id}")
             yield session_id
@@ -806,7 +844,8 @@ class MonetizationManager(ABC):
             logger.info(f"💎 Monetization session ended: {session_id}")
     
     async def cleanup(self) -> bool:
-        """Cleanup monetization resources"""        try:
+        """Cleanup monetization resources"""
+        try:
             # Cancel optimization tasks
             for task in self._optimization_tasks.values():
                 task.cancel()
@@ -840,7 +879,8 @@ class MonetizationManager(ABC):
             return False
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get monetization system statistics"""        with self._lock:
+        """Get monetization system statistics"""
+        with self._lock:
             return {
                 "strategies_count": len(self._strategies),
                 "active_strategies": len([s for s in self._strategies.values() if s.active]),
@@ -872,11 +912,13 @@ monetization_manager = None
 
 
 def get_monetization_manager() -> MonetizationManager:
-    """    Get the global monetization manager instance
+    """
+    Get the global monetization manager instance
     
     Returns:
         MonetizationManager: Global monetization manager
-    """    global monetization_manager
+    """
+    global monetization_manager
     if monetization_manager is None:
         from ..implementations.monetization_manager_impl import MonetizationManagerImpl
         monetization_manager = MonetizationManagerImpl()

@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 Enterprise-grade content protection configuration for multi-format creators
 → AI fingerprinting → real-time monitoring → automated takedown → legal compliance.
 ==================================================================
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union, Tuple
 from dataclasses import dataclass, field
@@ -25,7 +26,8 @@ import json
 import hashlib
 
 class ContentType(Enum):
-    """Supported content types for protection"""    AUDIO = "audio"
+    """Supported content types for protection"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -37,7 +39,8 @@ class ContentType(Enum):
     VOICE = "voice"
 
 class FingerprintAlgorithm(Enum):
-    """AI fingerprinting algorithms"""    # Audio algorithms
+    """AI fingerprinting algorithms"""
+    # Audio algorithms
     CHROMAPRINT = "chromaprint"
     ESSENTIA = "essentia"
     SPECTRAL_HASH = "spectral_hash"
@@ -65,13 +68,15 @@ class FingerprintAlgorithm(Enum):
     GPT_EMBEDDING = "gpt_embedding"
 
 class DetectionSensitivity(Enum):
-    """Detection sensitivity levels"""    LOW = "low"          # 95%+ similarity required
+    """Detection sensitivity levels"""
+    LOW = "low"          # 95%+ similarity required
     MEDIUM = "medium"    # 85%+ similarity required
     HIGH = "high"        # 75%+ similarity required
     VERY_HIGH = "very_high"  # 65%+ similarity required
 
 class MonitoringScope(Enum):
-    """Content monitoring scope"""    GLOBAL = "global"
+    """Content monitoring scope"""
+    GLOBAL = "global"
     REGIONAL = "regional"
     PLATFORM_SPECIFIC = "platform_specific"
     CUSTOM_DOMAINS = "custom_domains"
@@ -80,7 +85,8 @@ class MonitoringScope(Enum):
     STREAMING_PLATFORMS = "streaming_platforms"
 
 class TakedownAction(Enum):
-    """Automated takedown actions"""    NOTIFY_ONLY = "notify_only"
+    """Automated takedown actions"""
+    NOTIFY_ONLY = "notify_only"
     DMCA_REQUEST = "dmca_request"
     PLATFORM_REPORT = "platform_report"
     LEGAL_NOTICE = "legal_notice"
@@ -90,7 +96,8 @@ class TakedownAction(Enum):
 
 @dataclass
 class FingerprintConfiguration:
-    """AI fingerprinting configuration per content type"""    content_type: ContentType
+    """AI fingerprinting configuration per content type"""
+    content_type: ContentType
     enabled: bool = True
     
     # Algorithms configuration
@@ -127,7 +134,8 @@ class FingerprintConfiguration:
 
 @dataclass
 class MonitoringConfiguration:
-    """Real-time content monitoring configuration"""    enabled: bool = True
+    """Real-time content monitoring configuration"""
+    enabled: bool = True
     monitoring_scope: MonitoringScope = MonitoringScope.GLOBAL
     
     # Platform coverage
@@ -162,7 +170,8 @@ class MonitoringConfiguration:
 
 @dataclass
 class AlertConfiguration:
-    """Alert and notification configuration"""    enabled: bool = True
+    """Alert and notification configuration"""
+    enabled: bool = True
     
     # Alert channels
     email_alerts: bool = True
@@ -194,7 +203,8 @@ class AlertConfiguration:
 
 @dataclass
 class TakedownConfiguration:
-    """Automated takedown configuration"""    enabled: bool = True
+    """Automated takedown configuration"""
+    enabled: bool = True
     
     # Automation level
     fully_automated: bool = False
@@ -231,7 +241,8 @@ class TakedownConfiguration:
 
 @dataclass
 class ComplianceConfiguration:
-    """Legal compliance configuration"""    # Regional compliance
+    """Legal compliance configuration"""
+    # Regional compliance
     gdpr_compliance: bool = True
     ccpa_compliance: bool = True
     dmca_compliance: bool = True
@@ -257,7 +268,8 @@ class ComplianceConfiguration:
 
 @dataclass
 class PerformanceConfiguration:
-    """Performance and scaling configuration"""    # Processing performance
+    """Performance and scaling configuration"""
+    # Processing performance
     max_concurrent_fingerprints: int = 100
     max_concurrent_scans: int = 50
     processing_timeout: int = 300
@@ -285,7 +297,8 @@ class PerformanceConfiguration:
 
 @dataclass
 class ContentProtectionConfiguration:
-    """Master content protection configuration"""    # Basic configuration
+    """Master content protection configuration"""
+    # Basic configuration
     name: str
     version: str = "1.0.0"
     environment: str = "production"
@@ -314,7 +327,8 @@ class ContentProtectionConfiguration:
     description: str = ""
 
 class ContentProtectionConfigManager:
-    """    Enterprise-grade content protection configuration manager.
+    """
+    Enterprise-grade content protection configuration manager.
     
     Manages comprehensive content protection configurations for:
     - Multi-format content fingerprinting (audio, video, image, text)
@@ -332,13 +346,16 @@ class ContentProtectionConfigManager:
     - Performance tuning and optimization
     - Evidence collection and documentation
     - Revenue protection analytics
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
-        """        Initialize content protection config manager.
+        """
+        Initialize content protection config manager.
         
         Args:
             config_path: Optional path to configuration files
-        """        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """
+        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration storage
         self.config_path = config_path or "/etc/ia-influencer/content-protection"
@@ -361,11 +378,13 @@ class ContentProtectionConfigManager:
         self.logger.info("Content protection config manager initialized")
     
     async def initialize(self) -> bool:
-        """        Initialize content protection configuration manager.
+        """
+        Initialize content protection configuration manager.
         
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             self.logger.info("Initializing content protection config manager...")
             
             # Create configuration directories
@@ -401,7 +420,8 @@ class ContentProtectionConfigManager:
             return False
     
     async def _load_fingerprint_templates(self) -> None:
-        """Load fingerprinting configuration templates for each content type"""        
+        """Load fingerprinting configuration templates for each content type"""
+        
         # Audio fingerprinting template
         self.fingerprint_templates[ContentType.AUDIO] = FingerprintConfiguration(
             content_type=ContentType.AUDIO,
@@ -479,7 +499,8 @@ class ContentProtectionConfigManager:
         self.logger.info("Fingerprinting templates loaded successfully")
     
     async def _load_monitoring_presets(self) -> None:
-        """Load monitoring configuration presets"""        
+        """Load monitoring configuration presets"""
+        
         # Global monitoring preset
         self.monitoring_presets["global"] = MonitoringConfiguration(
             monitoring_scope=MonitoringScope.GLOBAL,
@@ -527,7 +548,8 @@ class ContentProtectionConfigManager:
         self.logger.info("Monitoring presets loaded successfully")
     
     async def _load_compliance_frameworks(self) -> None:
-        """Load legal compliance framework configurations"""        
+        """Load legal compliance framework configurations"""
+        
         # GDPR compliance framework
         self.compliance_frameworks["gdpr"] = ComplianceConfiguration(
             gdpr_compliance=True,
@@ -578,7 +600,8 @@ class ContentProtectionConfigManager:
         monitoring_preset: str = "global",
         compliance_framework: str = "global"
     ) -> ContentProtectionConfiguration:
-        """        Create new content protection configuration.
+        """
+        Create new content protection configuration.
         
         Args:
             name: Configuration name
@@ -589,7 +612,8 @@ class ContentProtectionConfigManager:
             
         Returns:
             ContentProtectionConfiguration: Created configuration
-        """        try:
+        """
+        try:
             self.logger.info(f"Creating content protection configuration: {name}")
             
             # Default content types if not specified
@@ -662,7 +686,8 @@ class ContentProtectionConfigManager:
         content_type: ContentType,
         updates: Dict[str, Any]
     ) -> bool:
-        """        Update fingerprinting configuration for specific content type.
+        """
+        Update fingerprinting configuration for specific content type.
         
         Args:
             config_name: Configuration name
@@ -671,7 +696,8 @@ class ContentProtectionConfigManager:
             
         Returns:
             bool: True if update successful
-        """        try:
+        """
+        try:
             if config_name not in self.configurations:
                 raise ValueError(f"Configuration {config_name} not found")
             
@@ -712,7 +738,8 @@ class ContentProtectionConfigManager:
         config_name: str,
         platform_settings: Dict[str, bool]
     ) -> bool:
-        """        Configure monitoring for specific platforms.
+        """
+        Configure monitoring for specific platforms.
         
         Args:
             config_name: Configuration name
@@ -720,7 +747,8 @@ class ContentProtectionConfigManager:
             
         Returns:
             bool: True if configuration successful
-        """        try:
+        """
+        try:
             if config_name not in self.configurations:
                 raise ValueError(f"Configuration {config_name} not found")
             
@@ -755,7 +783,8 @@ class ContentProtectionConfigManager:
         automation_level: str = "semi_automated",
         similarity_thresholds: Dict[float, TakedownAction] = None
     ) -> bool:
-        """        Setup automated takedown configuration.
+        """
+        Setup automated takedown configuration.
         
         Args:
             config_name: Configuration name
@@ -764,7 +793,8 @@ class ContentProtectionConfigManager:
             
         Returns:
             bool: True if setup successful
-        """        try:
+        """
+        try:
             if config_name not in self.configurations:
                 raise ValueError(f"Configuration {config_name} not found")
             
@@ -811,14 +841,16 @@ class ContentProtectionConfigManager:
             return False
     
     async def get_protection_metrics(self, config_name: str) -> Dict[str, Any]:
-        """        Get comprehensive protection metrics for configuration.
+        """
+        Get comprehensive protection metrics for configuration.
         
         Args:
             config_name: Configuration name
             
         Returns:
             Dict containing protection metrics
-        """        try:
+        """
+        try:
             if config_name not in self.configurations:
                 raise ValueError(f"Configuration {config_name} not found")
             
@@ -896,7 +928,8 @@ class ContentProtectionConfigManager:
         self,
         config: ContentProtectionConfiguration
     ) -> Dict[str, Any]:
-        """Validate complete protection configuration"""        errors = []
+        """Validate complete protection configuration"""
+        errors = []
         warnings = []
         
         # Validate fingerprinting configurations
@@ -930,7 +963,8 @@ class ContentProtectionConfigManager:
         self,
         config: FingerprintConfiguration
     ) -> Dict[str, Any]:
-        """Validate fingerprint configuration"""        errors = []
+        """Validate fingerprint configuration"""
+        errors = []
         warnings = []
         
         # Validate similarity threshold
@@ -955,7 +989,8 @@ class ContentProtectionConfigManager:
         self,
         config: ContentProtectionConfiguration
     ) -> None:
-        """Save protection configuration to storage"""        try:
+        """Save protection configuration to storage"""
+        try:
             config_file = Path(self.config_path) / "configurations" / f"{config.name}.json"
             config_data = self._config_to_dict(config)
             
@@ -969,7 +1004,8 @@ class ContentProtectionConfigManager:
             raise
     
     def _config_to_dict(self, config: ContentProtectionConfiguration) -> Dict[str, Any]:
-        """Convert configuration to dictionary for serialization"""        # Would implement proper serialization
+        """Convert configuration to dictionary for serialization"""
+        # Would implement proper serialization
         return {
             "name": config.name,
             "version": config.version,
@@ -978,7 +1014,8 @@ class ContentProtectionConfigManager:
         }
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get content protection config manager status"""        return {
+        """Get content protection config manager status"""
+        return {
             "initialized": self.initialized,
             "configurations_count": len(self.configurations),
             "active_config": self.active_config.name if self.active_config else None,

@@ -5,7 +5,8 @@ Handles content versioning, access control, and real-time synchronization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
-"""from typing import List, Dict, Any, Optional, Union, Tuple, Set
+"""
+from typing import List, Dict, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
 import json
@@ -33,7 +34,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class ContentType(Enum):
-    """Content type enumeration for multi-format support"""    AUDIO = "audio"
+    """Content type enumeration for multi-format support"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -45,7 +47,8 @@ class ContentType(Enum):
     NOTES = "notes"
 
 class ContentStatus(Enum):
-    """Content status enumeration"""    DRAFT = "draft"
+    """Content status enumeration"""
+    DRAFT = "draft"
     IN_PROGRESS = "in_progress"
     REVIEW = "review"
     APPROVED = "approved"
@@ -54,14 +57,16 @@ class ContentStatus(Enum):
     DELETED = "deleted"
 
 class AccessLevel(Enum):
-    """Access level enumeration"""    OWNER = "owner"
+    """Access level enumeration"""
+    OWNER = "owner"
     EDITOR = "editor"
     VIEWER = "viewer"
     COMMENTER = "commenter"
     RESTRICTED = "restricted"
 
 class ContentFormat(Enum):
-    """Specific content format enumeration"""    # Audio formats
+    """Specific content format enumeration"""
+    # Audio formats
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -90,9 +95,11 @@ class ContentFormat(Enum):
     HTML = "html"
 
 class SharedContent(Base):
-    """    Core shared content model for collaborative projects.
+    """
+    Core shared content model for collaborative projects.
     Supports multi-format content with advanced versioning and access control.
-    """    __tablename__ = 'shared_content'
+    """
+    __tablename__ = 'shared_content'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -189,9 +196,11 @@ class SharedContent(Base):
     )
 
 class ContentAccess(Base):
-    """    Content access control and permissions model.
+    """
+    Content access control and permissions model.
     Manages fine-grained access to shared content.
-    """    __tablename__ = 'content_access'
+    """
+    __tablename__ = 'content_access'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -233,9 +242,11 @@ class ContentAccess(Base):
     )
 
 class ContentComment(Base):
-    """    Content comments and review system.
+    """
+    Content comments and review system.
     Supports threaded discussions and review workflows.
-    """    __tablename__ = 'content_comments'
+    """
+    __tablename__ = 'content_comments'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -282,7 +293,8 @@ class ContentComment(Base):
 
 @dataclass
 class ContentUploadRequest:
-    """Data class for content upload requests"""    title: str
+    """Data class for content upload requests"""
+    title: str
     project_id: str
     owner_id: str
     content_type: ContentType
@@ -297,7 +309,8 @@ class ContentUploadRequest:
 
 @dataclass
 class ContentUpdateRequest:
-    """Data class for content update requests"""    content_id: str
+    """Data class for content update requests"""
+    content_id: str
     title: str = None
     description: str = None
     status: ContentStatus = None
@@ -306,9 +319,11 @@ class ContentUpdateRequest:
     version_notes: str = None
 
 class SharedContentManager:
-    """    Enterprise shared content management system.
+    """
+    Enterprise shared content management system.
     Handles upload, versioning, access control, and collaboration features.
-    """    
+    """
+    
     def __init__(self, db_session, redis_client: aioredis.Redis = None, s3_client = None):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -324,14 +339,16 @@ class SharedContentManager:
         }
     
     async def upload_content(self, request: ContentUploadRequest) -> Optional[SharedContent]:
-        """        Upload and process new content with enterprise features.
+        """
+        Upload and process new content with enterprise features.
         
         Args:
             request: Content upload request
             
         Returns:
             Created content instance
-        """        try:
+        """
+        try:
             # Validate file
             if request.file_path:
                 if not Path(request.file_path).exists():
@@ -421,7 +438,8 @@ class SharedContentManager:
             raise
     
     async def get_content(self, content_id: str, user_id: str = None) -> Optional[SharedContent]:
-        """        Retrieve content with access control validation.
+        """
+        Retrieve content with access control validation.
         
         Args:
             content_id: Content identifier
@@ -429,7 +447,8 @@ class SharedContentManager:
             
         Returns:
             Content instance or None
-        """        try:
+        """
+        try:
             # Check cache first
             if self.redis_client:
                 cached_data = await self.redis_client.get(f"content:{content_id}")
@@ -466,7 +485,8 @@ class SharedContentManager:
             return None
     
     async def update_content(self, request: ContentUpdateRequest, user_id: str) -> Optional[SharedContent]:
-        """        Update content with versioning support.
+        """
+        Update content with versioning support.
         
         Args:
             request: Content update request
@@ -474,7 +494,8 @@ class SharedContentManager:
             
         Returns:
             Updated content instance
-        """        try:
+        """
+        try:
             content = await self.get_content(request.content_id, user_id)
             if not content:
                 return None
@@ -548,7 +569,8 @@ class SharedContentManager:
         file_data: bytes = None,
         version_notes: str = None
     ) -> Optional[SharedContent]:
-        """        Create a new version of existing content.
+        """
+        Create a new version of existing content.
         
         Args:
             content_id: Original content ID
@@ -558,7 +580,8 @@ class SharedContentManager:
             
         Returns:
             New version content instance
-        """        try:
+        """
+        try:
             original_content = await self.get_content(content_id, user_id)
             if not original_content:
                 return None
@@ -653,7 +676,8 @@ class SharedContentManager:
         parent_comment_id: str = None,
         annotation_data: Dict[str, Any] = None
     ) -> Optional[ContentComment]:
-        """        Add comment to content with annotation support.
+        """
+        Add comment to content with annotation support.
         
         Args:
             content_id: Content identifier
@@ -665,7 +689,8 @@ class SharedContentManager:
             
         Returns:
             Created comment instance
-        """        try:
+        """
+        try:
             # Get content and check access
             content = await self.get_content(content_id, user_id)
             if not content:
@@ -731,7 +756,8 @@ class SharedContentManager:
         access_level: AccessLevel,
         expires_at: datetime = None
     ) -> bool:
-        """        Grant user access to content with specific permissions.
+        """
+        Grant user access to content with specific permissions.
         
         Args:
             content_id: Content identifier
@@ -742,7 +768,8 @@ class SharedContentManager:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             # Get content and check admin permissions
             content = await self.get_content(content_id, granted_by)
             if not content:
@@ -805,7 +832,8 @@ class SharedContentManager:
         limit: int = 50,
         offset: int = 0
     ) -> Tuple[List[SharedContent], int]:
-        """        List content for a project with filtering and access control.
+        """
+        List content for a project with filtering and access control.
         
         Args:
             project_id: Project UUID
@@ -817,7 +845,8 @@ class SharedContentManager:
             
         Returns:
             Tuple of (content list, total count)
-        """        try:
+        """
+        try:
             # Base query with access control
             query = self.db_session.query(SharedContent)\
                 .filter(SharedContent.project_id == uuid.UUID(project_id))
@@ -851,14 +880,16 @@ class SharedContentManager:
             return [], 0
     
     async def get_content_analytics(self, content_id: str) -> Dict[str, Any]:
-        """        Get comprehensive content analytics and insights.
+        """
+        Get comprehensive content analytics and insights.
         
         Args:
             content_id: Content identifier
             
         Returns:
             Analytics data dictionary
-        """        try:
+        """
+        try:
             content = await self.get_content(content_id)
             if not content:
                 return {}
@@ -913,7 +944,8 @@ class SharedContentManager:
     # Private helper methods
     
     def _generate_content_id(self, content_type: ContentType) -> str:
-        """Generate unique content identifier"""        type_prefix = {
+        """Generate unique content identifier"""
+        type_prefix = {
             ContentType.AUDIO: 'AUD',
             ContentType.VIDEO: 'VID',
             ContentType.IMAGE: 'IMG',
@@ -933,18 +965,21 @@ class SharedContentManager:
         return f"{prefix}-{timestamp}-{random_suffix}"
     
     def _generate_storage_path(self, content_id: str, filename: str) -> str:
-        """Generate S3 storage path"""        date_path = datetime.utcnow().strftime('%Y/%m/%d')
+        """Generate S3 storage path"""
+        date_path = datetime.utcnow().strftime('%Y/%m/%d')
         safe_filename = self._sanitize_filename(filename)
         return f"content/{date_path}/{content_id}/{safe_filename}"
     
     def _sanitize_filename(self, filename: str) -> str:
-        """Sanitize filename for safe storage"""        import re
+        """Sanitize filename for safe storage"""
+        import re
         # Remove or replace unsafe characters
         safe_name = re.sub(r'[^\w\-_\.]', '_', filename)
         return safe_name[:100]  # Limit length
     
     async def _upload_to_s3(self, file_data: bytes, storage_path: str) -> str:
-        """Upload file to S3 storage"""        try:
+        """Upload file to S3 storage"""
+        try:
             response = self.s3_client.put_object(
                 Bucket=self.default_bucket,
                 Key=storage_path,
@@ -959,10 +994,12 @@ class SharedContentManager:
             raise
     
     def _generate_cdn_url(self, s3_key: str) -> str:
-        """Generate CDN URL for content"""        return f"https://cdn.ia-influencer.com/{s3_key}"
+        """Generate CDN URL for content"""
+        return f"https://cdn.ia-influencer.com/{s3_key}"
     
     def _detect_content_format(self, filename: str, file_data: bytes) -> Tuple[ContentFormat, str]:
-        """Detect content format and MIME type"""        mime_type, _ = mimetypes.guess_type(filename)
+        """Detect content format and MIME type"""
+        mime_type, _ = mimetypes.guess_type(filename)
         file_ext = Path(filename).suffix.lower()
         
         # Map extensions to ContentFormat
@@ -989,7 +1026,8 @@ class SharedContentManager:
         return content_format, mime_type or 'application/octet-stream'
     
     async def _extract_content_metadata(self, file_data: bytes, content_format: ContentFormat) -> Dict[str, Any]:
-        """Extract format-specific metadata"""        metadata = {}
+        """Extract format-specific metadata"""
+        metadata = {}
         
         # This would integrate with libraries like:
         # - mutagen for audio metadata
@@ -1004,7 +1042,8 @@ class SharedContentManager:
         return metadata
     
     async def _analyze_technical_specs(self, file_data: bytes, content_format: ContentFormat) -> Dict[str, Any]:
-        """Analyze technical specifications"""        specs = {}
+        """Analyze technical specifications"""
+        specs = {}
         
         # This would analyze:
         # - Audio: bitrate, sample rate, channels, duration
@@ -1018,7 +1057,8 @@ class SharedContentManager:
         return specs
     
     def _default_access_permissions(self, access_level: AccessLevel) -> Dict[str, Any]:
-        """Generate default access permissions"""        return {
+        """Generate default access permissions"""
+        return {
             'default_access_level': access_level.value,
             'inheritance_enabled': True,
             'auto_grant_team_members': True,
@@ -1026,7 +1066,8 @@ class SharedContentManager:
         }
     
     def _default_sharing_settings(self) -> Dict[str, Any]:
-        """Generate default sharing settings"""        return {
+        """Generate default sharing settings"""
+        return {
             'public_sharing_enabled': False,
             'link_sharing_enabled': True,
             'download_tracking_enabled': True,
@@ -1035,7 +1076,8 @@ class SharedContentManager:
         }
     
     async def _create_owner_access(self, content_id: uuid.UUID, owner_id: str):
-        """Create owner access record"""        owner_access = ContentAccess(
+        """Create owner access record"""
+        owner_access = ContentAccess(
             content_id=content_id,
             user_id=uuid.UUID(owner_id),
             access_level=AccessLevel.OWNER,
@@ -1051,7 +1093,8 @@ class SharedContentManager:
         self.db_session.add(owner_access)
     
     def _get_permissions_for_level(self, access_level: AccessLevel) -> Dict[str, bool]:
-        """Get permissions dictionary for access level"""        permissions = {
+        """Get permissions dictionary for access level"""
+        permissions = {
             AccessLevel.OWNER: {
                 'can_view': True,
                 'can_edit': True,

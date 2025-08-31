@@ -20,7 +20,8 @@ Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Callable, Union, Tuple, Set
@@ -38,7 +39,8 @@ from ..base import BaseAgent
 
 
 class OrchestrationStrategy(Enum):
-    """Workflow orchestration strategy enumeration."""    SEQUENTIAL = "sequential"
+    """Workflow orchestration strategy enumeration."""
+    SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     MIXED = "mixed"
     ADAPTIVE = "adaptive"
@@ -47,7 +49,8 @@ class OrchestrationStrategy(Enum):
 
 
 class ResourceType(Enum):
-    """Resource type enumeration."""    CPU = "cpu"
+    """Resource type enumeration."""
+    CPU = "cpu"
     MEMORY = "memory"
     NETWORK = "network"
     STORAGE = "storage"
@@ -57,7 +60,8 @@ class ResourceType(Enum):
 
 @dataclass
 class WorkflowNode:
-    """Represents a workflow node with execution details."""    id: str
+    """Represents a workflow node with execution details."""
+    id: str
     name: str
     task_type: str
     executor: Callable
@@ -69,13 +73,15 @@ class WorkflowNode:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Post initialization setup."""        if not self.id:
+        """Post initialization setup."""
+        if not self.id:
             self.id = str(uuid.uuid4())
 
 
 @dataclass
 class ExecutionContext:
-    """Workflow execution context."""    workflow_id: str
+    """Workflow execution context."""
+    workflow_id: str
     user_id: str
     session_id: str
     environment: str
@@ -87,7 +93,8 @@ class ExecutionContext:
 
 @dataclass
 class ExecutionResult:
-    """Workflow execution result."""    node_id: str
+    """Workflow execution result."""
+    node_id: str
     success: bool
     result: Any = None
     error: Optional[str] = None
@@ -97,13 +104,16 @@ class ExecutionResult:
 
 
 class WorkflowOrchestrator(BaseAgent):
-    """    Advanced workflow orchestrator for enterprise content creation workflows.
+    """
+    Advanced workflow orchestrator for enterprise content creation workflows.
     
     This orchestrator provides sophisticated workflow management capabilities
     including dynamic scheduling, resource optimization, and intelligent
     execution strategies.
-    """    def __init__(self):
-        """Initialize the workflow orchestrator."""        super().__init__()
+    """
+    def __init__(self):
+        """Initialize the workflow orchestrator."""
+        super().__init__()
         self.logger = logging.getLogger(__name__)
         
         # Core components
@@ -143,7 +153,8 @@ class WorkflowOrchestrator(BaseAgent):
         context: ExecutionContext,
         strategy: OrchestrationStrategy = OrchestrationStrategy.ADAPTIVE
     ) -> Dict[str, Any]:
-        """        Orchestrate a complete workflow execution.
+        """
+        Orchestrate a complete workflow execution.
         
         Args:
             workflow_definition: Complete workflow definition
@@ -152,7 +163,8 @@ class WorkflowOrchestrator(BaseAgent):
             
         Returns:
             Dict containing workflow execution results
-        """        try:
+        """
+        try:
             workflow_id = context.workflow_id
             self.logger.info(f"Starting workflow orchestration: {workflow_id}")
             
@@ -207,7 +219,8 @@ class WorkflowOrchestrator(BaseAgent):
         workflow_definition: Dict[str, Any],
         workflow_id: str
     ):
-        """Build workflow execution graph from definition."""        try:
+        """Build workflow execution graph from definition."""
+        try:
             nodes = workflow_definition.get('nodes', [])
             edges = workflow_definition.get('edges', [])
             
@@ -253,7 +266,8 @@ class WorkflowOrchestrator(BaseAgent):
             raise
 
     async def _validate_workflow(self, workflow_id: str) -> Dict[str, Any]:
-        """Validate workflow graph for execution."""        try:
+        """Validate workflow graph for execution."""
+        try:
             errors = []
             
             # Get workflow nodes
@@ -319,7 +333,8 @@ class WorkflowOrchestrator(BaseAgent):
         workflow_id: str,
         strategy: OrchestrationStrategy
     ) -> Dict[str, Any]:
-        """Execute workflow using specified strategy."""        start_time = datetime.now()
+        """Execute workflow using specified strategy."""
+        start_time = datetime.now()
         
         try:
             if strategy == OrchestrationStrategy.SEQUENTIAL:
@@ -354,7 +369,8 @@ class WorkflowOrchestrator(BaseAgent):
             }
 
     async def _execute_adaptive(self, workflow_id: str) -> Dict[str, Any]:
-        """Execute workflow using adaptive strategy."""        try:
+        """Execute workflow using adaptive strategy."""
+        try:
             # Analyze workflow characteristics
             analysis = await self._analyze_workflow_characteristics(workflow_id)
             
@@ -373,7 +389,8 @@ class WorkflowOrchestrator(BaseAgent):
             return await self._execute_sequential(workflow_id)
 
     async def _execute_sequential(self, workflow_id: str) -> Dict[str, Any]:
-        """Execute workflow nodes sequentially."""        try:
+        """Execute workflow nodes sequentially."""
+        try:
             workflow_nodes = [
                 node for node in self.workflow_graph.nodes()
                 if node.startswith(f"{workflow_id}:")
@@ -437,7 +454,8 @@ class WorkflowOrchestrator(BaseAgent):
             raise
 
     async def _execute_parallel(self, workflow_id: str) -> Dict[str, Any]:
-        """Execute workflow nodes in parallel where possible."""        try:
+        """Execute workflow nodes in parallel where possible."""
+        try:
             workflow_nodes = [
                 node for node in self.workflow_graph.nodes()
                 if node.startswith(f"{workflow_id}:")
@@ -503,7 +521,8 @@ class WorkflowOrchestrator(BaseAgent):
         workflow_id: str,
         context_results: Dict[str, Any]
     ) -> ExecutionResult:
-        """Execute a single workflow node."""        start_time = datetime.now()
+        """Execute a single workflow node."""
+        start_time = datetime.now()
         
         try:
             # Check resource availability
@@ -563,7 +582,8 @@ class WorkflowOrchestrator(BaseAgent):
             await self._release_resources(node.resources)
 
     def _resolve_executor(self, executor_definition: Union[str, Callable]) -> Callable:
-        """Resolve executor from definition."""        if callable(executor_definition):
+        """Resolve executor from definition."""
+        if callable(executor_definition):
             return executor_definition
         
         # Handle string-based executor resolution
@@ -575,7 +595,8 @@ class WorkflowOrchestrator(BaseAgent):
         raise ValueError(f"Invalid executor definition: {executor_definition}")
 
     def _parse_resources(self, resources_dict: Dict[str, Any]) -> Dict[ResourceType, float]:
-        """Parse resource requirements from dictionary."""        parsed_resources = {}
+        """Parse resource requirements from dictionary."""
+        parsed_resources = {}
         
         for resource_name, amount in resources_dict.items():
             try:
@@ -587,7 +608,8 @@ class WorkflowOrchestrator(BaseAgent):
         return parsed_resources
 
     async def _acquire_resources(self, resources: Dict[ResourceType, float]):
-        """Acquire required resources for execution."""        acquired_resources = []
+        """Acquire required resources for execution."""
+        acquired_resources = []
         
         try:
             for resource_type, amount in resources.items():
@@ -609,12 +631,14 @@ class WorkflowOrchestrator(BaseAgent):
             raise
 
     async def _release_resources(self, resources: Dict[ResourceType, float]):
-        """Release resources after execution."""        for resource_type, amount in resources.items():
+        """Release resources after execution."""
+        for resource_type, amount in resources.items():
             async with self.resource_locks[resource_type]:
                 self.available_resources[resource_type] += amount
 
     def _compute_execution_levels(self, workflow_id: str) -> Dict[int, List[str]]:
-        """Compute execution levels for parallel execution."""        workflow_nodes = [
+        """Compute execution levels for parallel execution."""
+        workflow_nodes = [
             node for node in self.workflow_graph.nodes()
             if node.startswith(f"{workflow_id}:")
         ]
@@ -645,7 +669,8 @@ class WorkflowOrchestrator(BaseAgent):
         return dict(levels)
 
     async def _analyze_workflow_characteristics(self, workflow_id: str) -> Dict[str, float]:
-        """Analyze workflow characteristics for strategy selection."""        workflow_nodes = [
+        """Analyze workflow characteristics for strategy selection."""
+        workflow_nodes = [
             node for node in self.workflow_graph.nodes()
             if node.startswith(f"{workflow_id}:")
         ]
@@ -699,7 +724,8 @@ class WorkflowOrchestrator(BaseAgent):
         }
 
     def _update_execution_stats(self, workflow_id: str, result: Dict[str, Any]):
-        """Update execution statistics."""        self.execution_stats['total_workflows'] += 1
+        """Update execution statistics."""
+        self.execution_stats['total_workflows'] += 1
         
         if result['success']:
             self.execution_stats['successful_workflows'] += 1
@@ -720,7 +746,8 @@ class WorkflowOrchestrator(BaseAgent):
             self.execution_stats['resource_utilization'][resource_type] += usage
 
     def _get_executor_from_registry(self, executor_name: str) -> Callable:
-        """Get executor function from registry."""        # This would typically be a more sophisticated registry
+        """Get executor function from registry."""
+        # This would typically be a more sophisticated registry
         # For now, return a placeholder
         async def placeholder_executor(context):
             return f"Executed {executor_name} with context"
@@ -728,7 +755,8 @@ class WorkflowOrchestrator(BaseAgent):
         return placeholder_executor
 
     async def get_workflow_status(self, workflow_id: str) -> Dict[str, Any]:
-        """Get current workflow execution status."""        try:
+        """Get current workflow execution status."""
+        try:
             if workflow_id not in self.execution_contexts:
                 return {'status': 'not_found'}
             
@@ -755,7 +783,8 @@ class WorkflowOrchestrator(BaseAgent):
             return {'status': 'error', 'error': str(e)}
 
     async def cancel_workflow(self, workflow_id: str) -> Dict[str, Any]:
-        """Cancel a running workflow."""        try:
+        """Cancel a running workflow."""
+        try:
             if workflow_id in self.active_workflows:
                 self.active_workflows.remove(workflow_id)
                 
@@ -774,7 +803,8 @@ class WorkflowOrchestrator(BaseAgent):
             return {'success': False, 'error': str(e)}
 
     async def get_execution_stats(self) -> Dict[str, Any]:
-        """Get workflow execution statistics."""        return {
+        """Get workflow execution statistics."""
+        return {
             'stats': self.execution_stats.copy(),
             'active_workflows': len(self.active_workflows),
             'available_resources': self.available_resources.copy(),

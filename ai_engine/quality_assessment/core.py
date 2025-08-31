@@ -12,7 +12,8 @@ intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, re
 distribution, modification, or appropriation of this code, in whole or in part, without 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timezone
 from decimal import Decimal
@@ -32,7 +33,8 @@ logger = logging.getLogger(__name__)
 
 
 class QualityLevel(Enum):
-    """Quality assessment levels for content grading"""    PROFESSIONAL = "professional"
+    """Quality assessment levels for content grading"""
+    PROFESSIONAL = "professional"
     COMMERCIAL = "commercial"
     BROADCAST = "broadcast"
     STREAMING = "streaming"
@@ -41,7 +43,8 @@ class QualityLevel(Enum):
 
 
 class QualityDimension(Enum):
-    """Quality dimensions for comprehensive assessment"""    TECHNICAL = "technical"
+    """Quality dimensions for comprehensive assessment"""
+    TECHNICAL = "technical"
     CREATIVE = "creative"
     BUSINESS = "business"
     ENGAGEMENT = "engagement"
@@ -50,7 +53,8 @@ class QualityDimension(Enum):
 
 
 class ContentFormat(Enum):
-    """Supported content formats"""    AUDIO = "audio"
+    """Supported content formats"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -59,7 +63,8 @@ class ContentFormat(Enum):
 
 @dataclass
 class QualityThreshold:
-    """Quality thresholds for different assessment levels"""    professional: float = 95.0
+    """Quality thresholds for different assessment levels"""
+    professional: float = 95.0
     commercial: float = 85.0
     broadcast: float = 90.0
     streaming: float = 80.0
@@ -67,12 +72,14 @@ class QualityThreshold:
     basic: float = 60.0
     
     def get_threshold(self, level: QualityLevel) -> float:
-        """Get threshold for specific quality level"""        return getattr(self, level.value)
+        """Get threshold for specific quality level"""
+        return getattr(self, level.value)
 
 
 @dataclass
 class QualityMetrics:
-    """Comprehensive quality metrics container"""    technical_score: float = field(default=0.0)
+    """Comprehensive quality metrics container"""
+    technical_score: float = field(default=0.0)
     creative_score: float = field(default=0.0)
     business_score: float = field(default=0.0)
     engagement_score: float = field(default=0.0)
@@ -97,7 +104,8 @@ class QualityMetrics:
     quality_level: Optional[QualityLevel] = None
     
     def calculate_overall_score(self, weights: Optional[Dict[str, float]] = None) -> float:
-        """Calculate overall quality score with optional weights"""        if weights is None:
+        """Calculate overall quality score with optional weights"""
+        if weights is None:
             weights = {
                 'technical': 0.25,
                 'creative': 0.20,
@@ -120,7 +128,8 @@ class QualityMetrics:
         return self.overall_score
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metrics to dictionary"""        return {
+        """Convert metrics to dictionary"""
+        return {
             'technical_score': self.technical_score,
             'creative_score': self.creative_score,
             'business_score': self.business_score,
@@ -143,7 +152,8 @@ class QualityMetrics:
 
 
 class ContentQualityScore(BaseModel):
-    """Content quality score model with validation"""    score: float = Field(..., ge=0.0, le=100.0, description="Quality score (0-100)")
+    """Content quality score model with validation"""
+    score: float = Field(..., ge=0.0, le=100.0, description="Quality score (0-100)")
     confidence: float = Field(..., ge=0.0, le=1.0, description="Confidence level (0-1)")
     level: QualityLevel = Field(..., description="Quality level classification")
     dimension: QualityDimension = Field(..., description="Quality dimension")
@@ -152,20 +162,23 @@ class ContentQualityScore(BaseModel):
     
     @validator('score')
     def validate_score(cls, v):
-        """Validate score range"""        if not 0.0 <= v <= 100.0:
+        """Validate score range"""
+        if not 0.0 <= v <= 100.0:
             raise ValueError("Score must be between 0 and 100")
         return v
     
     @validator('confidence')
     def validate_confidence(cls, v):
-        """Validate confidence range"""        if not 0.0 <= v <= 1.0:
+        """Validate confidence range"""
+        if not 0.0 <= v <= 1.0:
             raise ValueError("Confidence must be between 0 and 1")
         return v
 
 
 @dataclass
 class AssessmentResult:
-    """Complete quality assessment result"""    content_id: str
+    """Complete quality assessment result"""
+    content_id: str
     content_path: str
     content_format: ContentFormat
     content_size: int
@@ -201,7 +214,8 @@ class AssessmentResult:
     warnings: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert result to dictionary"""        return {
+        """Convert result to dictionary"""
+        return {
             'content_id': self.content_id,
             'content_path': self.content_path,
             'content_format': self.content_format.value,
@@ -226,7 +240,8 @@ class AssessmentResult:
 
 
 class QualityAssessmentEngine(BaseAIModel):
-    """    Advanced Quality Assessment Engine
+    """
+    Advanced Quality Assessment Engine
     
     Provides comprehensive content quality assessment across multiple dimensions:
     - Technical quality (resolution, bitrate, clarity, etc.)
@@ -235,9 +250,11 @@ class QualityAssessmentEngine(BaseAIModel):
     - Engagement quality (audience appeal, virality potential)
     - Compliance quality (platform requirements, legal compliance)
     - Accessibility quality (inclusive design, universal access)
-    """    
+    """
+    
     def __init__(self, config: Optional[ModelConfig] = None):
-        """Initialize quality assessment engine"""        super().__init__(config or ModelConfig(
+        """Initialize quality assessment engine"""
+        super().__init__(config or ModelConfig(
             name="quality_assessment_engine",
             provider=ModelProvider.LOCAL,
             model_type=ModelType.MULTIMODAL,
@@ -267,7 +284,8 @@ class QualityAssessmentEngine(BaseAIModel):
         custom_weights: Optional[Dict[str, float]] = None,
         assessment_options: Optional[Dict[str, Any]] = None
     ) -> AssessmentResult:
-        """        Comprehensive content quality assessment
+        """
+        Comprehensive content quality assessment
         
         Args:
             content_path: Path to content file
@@ -282,7 +300,8 @@ class QualityAssessmentEngine(BaseAIModel):
         Raises:
             QualityCheckError: If assessment fails
             ContentValidationError: If content is invalid
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         assessment_id = f"qa_{int(start_time.timestamp())}"
         
         try:
@@ -403,7 +422,8 @@ class QualityAssessmentEngine(BaseAIModel):
         content_format: ContentFormat,
         options: Optional[Dict[str, Any]]
     ) -> ContentQualityScore:
-        """Assess technical quality of content"""        try:
+        """Assess technical quality of content"""
+        try:
             # Load appropriate analyzer
             if content_format == ContentFormat.AUDIO:
                 from .audio_quality import audio_quality_analyzer
@@ -457,7 +477,8 @@ class QualityAssessmentEngine(BaseAIModel):
         content_format: ContentFormat,
         options: Optional[Dict[str, Any]]
     ) -> ContentQualityScore:
-        """Assess creative quality of content"""        try:
+        """Assess creative quality of content"""
+        try:
             # Creative assessment using AI analysis
             creative_metrics = {
                 'originality': np.random.uniform(60, 95),
@@ -510,7 +531,8 @@ class QualityAssessmentEngine(BaseAIModel):
         content_format: ContentFormat,
         options: Optional[Dict[str, Any]]
     ) -> ContentQualityScore:
-        """Assess business quality and monetization potential"""        try:
+        """Assess business quality and monetization potential"""
+        try:
             from .business_metrics import business_analyzer
             
             # Business analysis
@@ -546,7 +568,8 @@ class QualityAssessmentEngine(BaseAIModel):
         content_format: ContentFormat,
         options: Optional[Dict[str, Any]]
     ) -> ContentQualityScore:
-        """Assess engagement potential and audience appeal"""        try:
+        """Assess engagement potential and audience appeal"""
+        try:
             from .content_analysis import content_analyzer
             
             # Engagement analysis
@@ -582,7 +605,8 @@ class QualityAssessmentEngine(BaseAIModel):
         content_format: ContentFormat,
         options: Optional[Dict[str, Any]]
     ) -> ContentQualityScore:
-        """Assess compliance with platform and legal requirements"""        try:
+        """Assess compliance with platform and legal requirements"""
+        try:
             from .compliance import compliance_checker
             
             # Compliance check
@@ -618,7 +642,8 @@ class QualityAssessmentEngine(BaseAIModel):
         content_format: ContentFormat,
         options: Optional[Dict[str, Any]]
     ) -> ContentQualityScore:
-        """Assess accessibility and inclusive design"""        try:
+        """Assess accessibility and inclusive design"""
+        try:
             # Accessibility assessment
             accessibility_metrics = {
                 'visual_accessibility': np.random.uniform(75, 95),
@@ -664,7 +689,8 @@ class QualityAssessmentEngine(BaseAIModel):
         metrics: QualityMetrics,
         quality_level: QualityLevel
     ) -> List[str]:
-        """Generate quality improvement recommendations"""        recommendations = []
+        """Generate quality improvement recommendations"""
+        recommendations = []
         threshold = self.thresholds.get_threshold(quality_level)
         
         # Technical recommendations
@@ -702,7 +728,8 @@ class QualityAssessmentEngine(BaseAIModel):
         return recommendations
     
     def _generate_enhancement_suggestions(self, metrics: QualityMetrics) -> List[str]:
-        """Generate specific enhancement suggestions"""        suggestions = []
+        """Generate specific enhancement suggestions"""
+        suggestions = []
         
         # Format-specific suggestions
         if metrics.content_format == ContentFormat.AUDIO:
@@ -744,7 +771,8 @@ class QualityAssessmentEngine(BaseAIModel):
         self,
         assessment_results: List[AssessmentResult]
     ) -> Dict[str, Any]:
-        """Generate quality insights from multiple assessments"""        if not assessment_results:
+        """Generate quality insights from multiple assessments"""
+        if not assessment_results:
             return {}
         
         # Aggregate metrics
@@ -795,7 +823,8 @@ class QualityAssessmentEngine(BaseAIModel):
         return insights
 
     async def connect(self) -> bool:
-        """Connect to quality assessment services"""        try:
+        """Connect to quality assessment services"""
+        try:
             logger.info("Quality Assessment Engine connected successfully")
             return True
         except Exception as e:
@@ -803,7 +832,8 @@ class QualityAssessmentEngine(BaseAIModel):
             return False
 
     async def disconnect(self) -> bool:
-        """Disconnect from quality assessment services"""        try:
+        """Disconnect from quality assessment services"""
+        try:
             logger.info("Quality Assessment Engine disconnected successfully")
             return True
         except Exception as e:
@@ -811,7 +841,8 @@ class QualityAssessmentEngine(BaseAIModel):
             return False
 
     async def process(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Process quality assessment request"""        try:
+        """Process quality assessment request"""
+        try:
             content_path = request.get('content_path')
             content_format = ContentFormat(request.get('content_format', 'text'))
             quality_level = QualityLevel(request.get('quality_level', 'commercial'))
@@ -839,7 +870,8 @@ async def assess_content_quality(
     content_format: str,
     quality_level: str = "commercial"
 ) -> Dict[str, Any]:
-    """    Convenient function for content quality assessment
+    """
+    Convenient function for content quality assessment
     
     Args:
         content_path: Path to content file
@@ -848,7 +880,8 @@ async def assess_content_quality(
         
     Returns:
         Dict containing assessment results
-    """    try:
+    """
+    try:
         format_enum = ContentFormat(content_format.lower())
         level_enum = QualityLevel(quality_level.lower())
         

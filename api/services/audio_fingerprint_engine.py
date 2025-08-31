@@ -8,7 +8,8 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Engineer
 WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, modification or use is strictly prohibited and will be prosecuted
 to the full extent of the law.
-"""import hashlib
+"""
+import hashlib
 import librosa
 import numpy as np
 from typing import Dict, Optional, Tuple, List
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioFingerprint:
-    """Audio fingerprint data structure"""    chromaprint_hash: str
+    """Audio fingerprint data structure"""
+    chromaprint_hash: str
     spectral_hash: str
     mfcc_features: np.ndarray
     chroma_features: np.ndarray
@@ -35,9 +37,11 @@ class AudioFingerprint:
 
 
 class AudioFingerprintEngine:
-    """    Enterprise-grade audio fingerprinting using multiple algorithms
+    """
+    Enterprise-grade audio fingerprinting using multiple algorithms
     Combines Chromaprint, Essentia, and custom spectral analysis
-    """    
+    """
+    
     def __init__(self, sample_rate: int = 22050, hop_length: int = 512):
         self.sample_rate = sample_rate
         self.hop_length = hop_length
@@ -47,7 +51,8 @@ class AudioFingerprintEngine:
         self.hpcp = HPCP()
         
     def extract_fingerprint(self, audio_file_path: str) -> AudioFingerprint:
-        """Extract comprehensive audio fingerprint from file"""        try:
+        """Extract comprehensive audio fingerprint from file"""
+        try:
             # Load audio with librosa
             y, sr = librosa.load(audio_file_path, sr=self.sample_rate)
             duration = librosa.get_duration(y=y, sr=sr)
@@ -86,7 +91,8 @@ class AudioFingerprintEngine:
             raise
             
     def _extract_chromaprint(self, audio_file_path: str) -> str:
-        """Extract Chromaprint fingerprint"""        try:
+        """Extract Chromaprint fingerprint"""
+        try:
             duration, fp_encoded = acoustid.fingerprint_file(audio_file_path)
             return fp_encoded
         except Exception as e:
@@ -94,7 +100,8 @@ class AudioFingerprintEngine:
             return ""
             
     def _extract_spectral_hash(self, y: np.ndarray, sr: int) -> str:
-        """Extract custom spectral hash using Essentia"""        try:
+        """Extract custom spectral hash using Essentia"""
+        try:
             # Convert to mono if stereo
             if len(y.shape) > 1:
                 y = np.mean(y, axis=1)
@@ -124,7 +131,8 @@ class AudioFingerprintEngine:
             return ""
             
     def _calculate_confidence(self, y: np.ndarray, sr: int) -> float:
-        """Calculate confidence score based on audio quality metrics"""        try:
+        """Calculate confidence score based on audio quality metrics"""
+        try:
             # Signal-to-noise ratio estimation
             signal_power = np.mean(y ** 2)
             noise_floor = np.percentile(np.abs(y), 10) ** 2
@@ -148,7 +156,8 @@ class AudioFingerprintEngine:
             return 0.5  # Default confidence
             
     def compare_fingerprints(self, fp1: AudioFingerprint, fp2: AudioFingerprint) -> float:
-        """Compare two audio fingerprints and return similarity score (0-1)"""        try:
+        """Compare two audio fingerprints and return similarity score (0-1)"""
+        try:
             scores = []
             
             # 1. Chromaprint similarity
@@ -183,7 +192,8 @@ class AudioFingerprintEngine:
             return 0.0
             
     def _chromaprint_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate Chromaprint hash similarity"""        try:
+        """Calculate Chromaprint hash similarity"""
+        try:
             # Decode fingerprints
             fp1 = chromaprint.decode_fingerprint(hash1)[0]
             fp2 = chromaprint.decode_fingerprint(hash2)[0]
@@ -202,7 +212,8 @@ class AudioFingerprintEngine:
             return 0.0
             
     def _mfcc_similarity(self, mfcc1: np.ndarray, mfcc2: np.ndarray) -> float:
-        """Calculate MFCC feature similarity using cosine similarity"""        try:
+        """Calculate MFCC feature similarity using cosine similarity"""
+        try:
             # Average MFCC features across time
             avg_mfcc1 = np.mean(mfcc1, axis=1)
             avg_mfcc2 = np.mean(mfcc2, axis=1)
@@ -222,7 +233,8 @@ class AudioFingerprintEngine:
             return 0.0
             
     def batch_extract_fingerprints(self, audio_files: List[str]) -> Dict[str, AudioFingerprint]:
-        """Extract fingerprints from multiple audio files"""        fingerprints = {}
+        """Extract fingerprints from multiple audio files"""
+        fingerprints = {}
         
         for audio_file in audio_files:
             try:
@@ -237,7 +249,8 @@ class AudioFingerprintEngine:
     def find_similar_audio(self, target_fingerprint: AudioFingerprint, 
                           candidate_fingerprints: Dict[str, AudioFingerprint],
                           threshold: float = 0.8) -> List[Tuple[str, float]]:
-        """Find similar audio files above threshold"""        similar_files = []
+        """Find similar audio files above threshold"""
+        similar_files = []
         
         for file_path, candidate_fp in candidate_fingerprints.items():
             similarity = self.compare_fingerprints(target_fingerprint, candidate_fp)

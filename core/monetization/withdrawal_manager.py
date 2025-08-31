@@ -3,7 +3,8 @@ Advanced withdrawal request processing and validation
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -20,7 +21,8 @@ from ...security.fraud_detection import FraudDetectionEngine
 
 
 class WithdrawalStatus(Enum):
-    """Withdrawal request status"""    PENDING = "pending"
+    """Withdrawal request status"""
+    PENDING = "pending"
     UNDER_REVIEW = "under_review"
     APPROVED = "approved"
     PROCESSING = "processing"
@@ -31,7 +33,8 @@ class WithdrawalStatus(Enum):
 
 
 class WithdrawalMethod(Enum):
-    """Withdrawal methods"""    BANK_TRANSFER = "bank_transfer"
+    """Withdrawal methods"""
+    BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
     WISE = "wise"
@@ -40,7 +43,8 @@ class WithdrawalMethod(Enum):
 
 
 class RejectionReason(Enum):
-    """Reasons for withdrawal rejection"""    INSUFFICIENT_BALANCE = "insufficient_balance"
+    """Reasons for withdrawal rejection"""
+    INSUFFICIENT_BALANCE = "insufficient_balance"
     FRAUD_DETECTED = "fraud_detected"
     INVALID_BANK_DETAILS = "invalid_bank_details"
     ACCOUNT_SUSPENDED = "account_suspended"
@@ -51,7 +55,8 @@ class RejectionReason(Enum):
 
 @dataclass
 class WithdrawalLimits:
-    """Withdrawal limits configuration"""    minimum_amount: Decimal = Decimal("25.00")
+    """Withdrawal limits configuration"""
+    minimum_amount: Decimal = Decimal("25.00")
     maximum_amount: Decimal = Decimal("50000.00")
     daily_limit: Decimal = Decimal("10000.00")
     weekly_limit: Decimal = Decimal("25000.00")
@@ -61,7 +66,8 @@ class WithdrawalLimits:
 
 
 class WithdrawalRequest(BaseModel):
-    """Withdrawal request data model"""    user_id: int
+    """Withdrawal request data model"""
+    user_id: int
     amount: Decimal = Field(..., gt=0)
     method: WithdrawalMethod = WithdrawalMethod.BANK_TRANSFER
     currency: str = "EUR"
@@ -93,7 +99,8 @@ class WithdrawalRequest(BaseModel):
 
 
 class WithdrawalValidationResult(BaseModel):
-    """Withdrawal validation result"""    is_valid: bool
+    """Withdrawal validation result"""
+    is_valid: bool
     available_balance: Decimal
     requested_amount: Decimal
     validation_errors: List[str] = Field(default_factory=list)
@@ -103,7 +110,8 @@ class WithdrawalValidationResult(BaseModel):
 
 
 class WithdrawalResponse(BaseModel):
-    """Withdrawal processing response"""    request_id: str
+    """Withdrawal processing response"""
+    request_id: str
     status: WithdrawalStatus
     message: str
     estimated_processing_time: Optional[str] = None
@@ -112,7 +120,8 @@ class WithdrawalResponse(BaseModel):
 
 
 class WithdrawalManager:
-    """Advanced withdrawal management system"""    
+    """Advanced withdrawal management system"""
+    
     def __init__(
         self,
         payment_processor: PaymentProcessor,
@@ -128,7 +137,8 @@ class WithdrawalManager:
         request: WithdrawalRequest,
         session: AsyncSession
     ) -> WithdrawalResponse:
-        """Submit new withdrawal request"""        try:
+        """Submit new withdrawal request"""
+        try:
             # Validate request
             validation = await self._validate_withdrawal_request(request, session)
             
@@ -202,7 +212,8 @@ class WithdrawalManager:
         request: WithdrawalRequest,
         session: AsyncSession
     ) -> WithdrawalValidationResult:
-        """Comprehensive withdrawal request validation"""        errors = []
+        """Comprehensive withdrawal request validation"""
+        errors = []
         warnings = []
         
         # Get user and check account status
@@ -277,7 +288,8 @@ class WithdrawalManager:
         user_id: int,
         session: AsyncSession
     ) -> Decimal:
-        """Get user's available balance for withdrawal"""        from ...database.models import RevenueRecord
+        """Get user's available balance for withdrawal"""
+        from ...database.models import RevenueRecord
         
         # Total confirmed revenue
         revenue_result = await session.execute(
@@ -321,7 +333,8 @@ class WithdrawalManager:
         request: WithdrawalRequest,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Check withdrawal limits compliance"""        violations = []
+        """Check withdrawal limits compliance"""
+        violations = []
         
         # Daily limit
         today_start = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
@@ -379,7 +392,8 @@ class WithdrawalManager:
         end_date: datetime,
         session: AsyncSession
     ) -> Decimal:
-        """Get total withdrawal amount for period"""        result = await session.execute(
+        """Get total withdrawal amount for period"""
+        result = await session.execute(
             select(func.sum(DBWithdrawalRequest.amount)).where(
                 DBWithdrawalRequest.user_id == user_id,
                 DBWithdrawalRequest.created_at >= start_date,
@@ -401,7 +415,8 @@ class WithdrawalManager:
         user_id: int,
         session: AsyncSession
     ) -> int:
-        """Get count of pending withdrawal requests"""        result = await session.execute(
+        """Get count of pending withdrawal requests"""
+        result = await session.execute(
             select(func.count(DBWithdrawalRequest.id)).where(
                 DBWithdrawalRequest.user_id == user_id,
                 DBWithdrawalRequest.status.in_([
@@ -419,7 +434,8 @@ class WithdrawalManager:
         user_id: int,
         session: AsyncSession
     ) -> Optional[datetime]:
-        """Get timestamp of last withdrawal request"""        result = await session.execute(
+        """Get timestamp of last withdrawal request"""
+        result = await session.execute(
             select(func.max(DBWithdrawalRequest.created_at)).where(
                 DBWithdrawalRequest.user_id == user_id
             )
@@ -431,7 +447,8 @@ class WithdrawalManager:
         self,
         request: WithdrawalRequest
     ) -> Dict[str, Any]:
-        """Validate payment method specific details"""        errors = []
+        """Validate payment method specific details"""
+        errors = []
         
         if request.method == WithdrawalMethod.BANK_TRANSFER:
             if not request.bank_details:
@@ -464,7 +481,8 @@ class WithdrawalManager:
         request_id: str,
         session: AsyncSession
     ) -> WithdrawalResponse:
-        """Process approved withdrawal request"""        try:
+        """Process approved withdrawal request"""
+        try:
             # Get withdrawal request
             withdrawal = await session.get(DBWithdrawalRequest, request_id)
             if not withdrawal:
@@ -540,7 +558,8 @@ class WithdrawalManager:
             )
     
     def _get_payment_gateway(self, method: WithdrawalMethod) -> PaymentGateway:
-        """Map withdrawal method to payment gateway"""        mapping = {
+        """Map withdrawal method to payment gateway"""
+        mapping = {
             WithdrawalMethod.BANK_TRANSFER: PaymentGateway.WISE,
             WithdrawalMethod.PAYPAL: PaymentGateway.PAYPAL,
             WithdrawalMethod.STRIPE: PaymentGateway.STRIPE,
@@ -550,7 +569,8 @@ class WithdrawalManager:
         return mapping.get(method, PaymentGateway.STRIPE)
     
     async def _schedule_automatic_processing(self, request_id: str) -> None:
-        """Schedule automatic processing for eligible requests"""        # This would typically use a task queue like Celery
+        """Schedule automatic processing for eligible requests"""
+        # This would typically use a task queue like Celery
         # For now, we'll just log the scheduling
         self.logger.info(f"Scheduled automatic processing for withdrawal {request_id}")
     
@@ -559,7 +579,8 @@ class WithdrawalManager:
         request_id: str,
         session: AsyncSession
     ) -> Optional[Dict[str, Any]]:
-        """Get withdrawal request status and details"""        try:
+        """Get withdrawal request status and details"""
+        try:
             withdrawal = await session.get(DBWithdrawalRequest, request_id)
             if not withdrawal:
                 return None
@@ -591,7 +612,8 @@ class WithdrawalManager:
         reason: str,
         session: AsyncSession
     ) -> bool:
-        """Cancel pending withdrawal request"""        try:
+        """Cancel pending withdrawal request"""
+        try:
             withdrawal = await session.get(DBWithdrawalRequest, request_id)
             if not withdrawal or withdrawal.user_id != user_id:
                 return False
@@ -617,7 +639,8 @@ class WithdrawalManager:
         session: AsyncSession,
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """Get user's withdrawal history"""        try:
+        """Get user's withdrawal history"""
+        try:
             result = await session.execute(
                 select(DBWithdrawalRequest).where(
                     DBWithdrawalRequest.user_id == user_id
@@ -649,7 +672,8 @@ class WithdrawalManager:
         user_id: int,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Get user's withdrawal statistics"""        try:
+        """Get user's withdrawal statistics"""
+        try:
             # Total statistics
             total_result = await session.execute(
                 select(

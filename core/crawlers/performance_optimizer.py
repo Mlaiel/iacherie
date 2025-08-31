@@ -3,7 +3,8 @@ AI-Powered Performance Analysis and Optimization System
 
 This module provides comprehensive performance optimization including
 system monitoring, bottleneck detection, resource optimization, and intelligent scaling.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import json
 import logging
@@ -32,7 +33,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(str, Enum):
-    """Types of performance metrics"""    CPU_USAGE = "cpu_usage"
+    """Types of performance metrics"""
+    CPU_USAGE = "cpu_usage"
     MEMORY_USAGE = "memory_usage"
     DISK_USAGE = "disk_usage"
     NETWORK_IO = "network_io"
@@ -47,7 +49,8 @@ class MetricType(str, Enum):
 
 
 class OptimizationType(str, Enum):
-    """Types of optimizations"""    RESOURCE_SCALING = "resource_scaling"
+    """Types of optimizations"""
+    RESOURCE_SCALING = "resource_scaling"
     CACHE_OPTIMIZATION = "cache_optimization"
     QUERY_OPTIMIZATION = "query_optimization"
     CONNECTION_POOLING = "connection_pooling"
@@ -60,7 +63,8 @@ class OptimizationType(str, Enum):
 
 
 class PerformanceLevel(str, Enum):
-    """Performance levels"""    EXCELLENT = "excellent"
+    """Performance levels"""
+    EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
     POOR = "poor"
@@ -68,7 +72,8 @@ class PerformanceLevel(str, Enum):
 
 
 class OptimizationPriority(str, Enum):
-    """Optimization priorities"""    LOW = "low"
+    """Optimization priorities"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -76,7 +81,8 @@ class OptimizationPriority(str, Enum):
 
 
 class PerformanceMetric(BaseModel):
-    """Performance metric data point"""    metric_id: str
+    """Performance metric data point"""
+    metric_id: str
     metric_type: MetricType
     timestamp: datetime
     value: float
@@ -97,7 +103,8 @@ class PerformanceMetric(BaseModel):
 
 
 class PerformanceAlert(BaseModel):
-    """Performance alert"""    alert_id: str
+    """Performance alert"""
+    alert_id: str
     alert_type: str
     severity: str = "warning"  # "info", "warning", "error", "critical"
     
@@ -127,7 +134,8 @@ class PerformanceAlert(BaseModel):
 
 
 class OptimizationRecommendation(BaseModel):
-    """Performance optimization recommendation"""    recommendation_id: str
+    """Performance optimization recommendation"""
+    recommendation_id: str
     optimization_type: OptimizationType
     priority: OptimizationPriority
     
@@ -162,7 +170,8 @@ class OptimizationRecommendation(BaseModel):
 
 
 class SystemSnapshot(BaseModel):
-    """System performance snapshot"""    snapshot_id: str
+    """System performance snapshot"""
+    snapshot_id: str
     timestamp: datetime
     
     # System metrics
@@ -192,7 +201,8 @@ class SystemSnapshot(BaseModel):
 
 
 class PerformanceAnalysis(BaseModel):
-    """Performance analysis results"""    analysis_id: str
+    """Performance analysis results"""
+    analysis_id: str
     analysis_timestamp: datetime
     analysis_period: str
     
@@ -219,7 +229,8 @@ class PerformanceAnalysis(BaseModel):
 
 
 class ResourceUsagePattern(BaseModel):
-    """Resource usage pattern analysis"""    pattern_id: str
+    """Resource usage pattern analysis"""
+    pattern_id: str
     pattern_type: str
     resource_type: str
     
@@ -245,11 +256,13 @@ class ResourceUsagePattern(BaseModel):
 
 
 class AdvancedPerformanceOptimizer(BaseCrawler):
-    """    Ultra-Advanced Performance Optimizer
+    """
+    Ultra-Advanced Performance Optimizer
     
     Provides comprehensive performance monitoring, analysis, and optimization
     with AI-powered recommendations and automated tuning capabilities.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -331,7 +344,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         logger.info("Advanced Performance Optimizer initialized with AI-powered analysis")
 
     async def start_monitoring(self):
-        """Start performance monitoring"""        try:
+        """Start performance monitoring"""
+        try:
             if self.monitoring_active:
                 return
             
@@ -359,7 +373,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
             logger.error(f"Error starting performance monitoring: {str(e)}")
 
     async def stop_monitoring(self):
-        """Stop performance monitoring"""        try:
+        """Stop performance monitoring"""
+        try:
             self.monitoring_active = False
             
             # Cancel monitoring tasks
@@ -376,11 +391,13 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
             logger.error(f"Error stopping performance monitoring: {str(e)}")
 
     async def collect_performance_metrics(self) -> SystemSnapshot:
-        """        Collect current performance metrics
+        """
+        Collect current performance metrics
         
         Returns:
             SystemSnapshot: Current system performance snapshot
-        """        try:
+        """
+        try:
             snapshot_id = str(uuid.uuid4())
             timestamp = datetime.utcnow()
             
@@ -466,7 +483,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         time_window: timedelta = None,
         components: List[str] = None
     ) -> PerformanceAnalysis:
-        """        Analyze performance trends and patterns
+        """
+        Analyze performance trends and patterns
         
         Args:
             time_window: Time window for analysis
@@ -474,7 +492,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
             
         Returns:
             PerformanceAnalysis: Performance analysis results
-        """        try:
+        """
+        try:
             time_window = time_window or timedelta(hours=1)
             components = components or self.monitored_components
             
@@ -563,7 +582,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         optimization_targets: Dict[str, float] = None,
         auto_apply: bool = False
     ) -> List[OptimizationRecommendation]:
-        """        Generate and optionally apply performance optimizations
+        """
+        Generate and optionally apply performance optimizations
         
         Args:
             optimization_targets: Target performance values
@@ -571,7 +591,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
             
         Returns:
             List[OptimizationRecommendation]: Optimization recommendations
-        """        try:
+        """
+        try:
             targets = optimization_targets or self.optimization_targets
             
             # Analyze current performance
@@ -627,14 +648,16 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         self,
         time_window: timedelta = None
     ) -> List[PerformanceAlert]:
-        """        Detect performance anomalies and generate alerts
+        """
+        Detect performance anomalies and generate alerts
         
         Args:
             time_window: Time window for anomaly detection
             
         Returns:
             List[PerformanceAlert]: Detected performance alerts
-        """        try:
+        """
+        try:
             time_window = time_window or timedelta(hours=1)
             alerts = []
             
@@ -737,7 +760,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         forecast_period: timedelta = None,
         metrics: List[MetricType] = None
     ) -> Dict[str, Any]:
-        """        Predict future performance trends
+        """
+        Predict future performance trends
         
         Args:
             forecast_period: Period to forecast
@@ -745,7 +769,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
             
         Returns:
             Dict[str, Any]: Performance predictions
-        """        try:
+        """
+        try:
             forecast_period = forecast_period or timedelta(hours=24)
             metrics = metrics or [MetricType.CPU_USAGE, MetricType.MEMORY_USAGE]
             
@@ -792,14 +817,16 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         self,
         report_period: timedelta = None
     ) -> Dict[str, Any]:
-        """        Generate comprehensive performance report
+        """
+        Generate comprehensive performance report
         
         Args:
             report_period: Period to include in report
             
         Returns:
             Dict[str, Any]: Performance report
-        """        try:
+        """
+        try:
             report_period = report_period or timedelta(days=1)
             cutoff_time = datetime.utcnow() - report_period
             
@@ -866,7 +893,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
     # Helper methods for performance analysis
     
     async def _metric_collection_loop(self):
-        """Main metric collection loop"""        while self.monitoring_active:
+        """Main metric collection loop"""
+        while self.monitoring_active:
             try:
                 await self.collect_performance_metrics()
                 await asyncio.sleep(self.metric_collection_interval)
@@ -875,7 +903,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
                 await asyncio.sleep(self.metric_collection_interval)
 
     async def _analysis_loop(self):
-        """Main analysis loop"""        while self.monitoring_active:
+        """Main analysis loop"""
+        while self.monitoring_active:
             try:
                 await self.analyze_performance()
                 await asyncio.sleep(self.analysis_interval)
@@ -884,7 +913,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
                 await asyncio.sleep(self.analysis_interval)
 
     async def _optimization_loop(self):
-        """Main optimization loop"""        while self.monitoring_active:
+        """Main optimization loop"""
+        while self.monitoring_active:
             try:
                 if self.auto_optimization:
                     await self.optimize_performance(auto_apply=True)
@@ -894,7 +924,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
                 await asyncio.sleep(self.optimization_interval)
 
     async def _alert_monitoring_loop(self):
-        """Main alert monitoring loop"""        while self.monitoring_active:
+        """Main alert monitoring loop"""
+        while self.monitoring_active:
             try:
                 await self.detect_performance_anomalies()
                 await asyncio.sleep(60)  # Check every minute
@@ -903,7 +934,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
                 await asyncio.sleep(60)
 
     def _assess_overall_health(self, cpu: float, memory: float, disk: float) -> PerformanceLevel:
-        """Assess overall system health"""        if cpu > 90 or memory > 90 or disk > 95:
+        """Assess overall system health"""
+        if cpu > 90 or memory > 90 or disk > 95:
             return PerformanceLevel.CRITICAL
         elif cpu > 80 or memory > 85 or disk > 90:
             return PerformanceLevel.POOR
@@ -915,7 +947,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
             return PerformanceLevel.EXCELLENT
 
     async def _detect_bottlenecks(self, metrics_by_type: Dict) -> List[Dict[str, Any]]:
-        """Detect performance bottlenecks"""        bottlenecks = []
+        """Detect performance bottlenecks"""
+        bottlenecks = []
         
         # CPU bottleneck detection
         if MetricType.CPU_USAGE in metrics_by_type:
@@ -944,7 +977,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         return bottlenecks
 
     async def _identify_trends(self, metrics_by_type: Dict) -> List[Dict[str, Any]]:
-        """Identify performance trends"""        trends = []
+        """Identify performance trends"""
+        trends = []
         
         for metric_type, metrics in metrics_by_type.items():
             if len(metrics) < 10:
@@ -964,7 +998,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         return trends
 
     async def _calculate_trend_direction(self, values: List[float]) -> float:
-        """Calculate trend direction for a series of values"""        if len(values) < 2:
+        """Calculate trend direction for a series of values"""
+        if len(values) < 2:
             return 0.0
         
         # Simple linear regression slope
@@ -988,7 +1023,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         bottlenecks: List[Dict],
         trends: List[Dict]
     ) -> List[OptimizationRecommendation]:
-        """Generate optimization recommendations"""        recommendations = []
+        """Generate optimization recommendations"""
+        recommendations = []
         
         # CPU optimization recommendations
         if 'cpu_usage' in performance_summary:
@@ -1039,7 +1075,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         return recommendations
 
     async def _calculate_performance_score(self, performance_summary: Dict) -> float:
-        """Calculate overall performance score"""        scores = []
+        """Calculate overall performance score"""
+        scores = []
         
         if 'cpu_usage' in performance_summary:
             cpu_avg = performance_summary['cpu_usage']['average']
@@ -1063,14 +1100,16 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         performance_summary: Dict,
         recommendations: List[OptimizationRecommendation]
     ) -> float:
-        """Assess improvement potential"""        if not recommendations:
+        """Assess improvement potential"""
+        if not recommendations:
             return 0.0
         
         total_improvement = sum(r.estimated_improvement for r in recommendations)
         return min(total_improvement, 100.0)
 
     async def _enhance_analysis_with_ai(self, analysis: PerformanceAnalysis):
-        """Enhance analysis with AI insights"""        try:
+        """Enhance analysis with AI insights"""
+        try:
             if not self.performance_analysis_endpoint:
                 return
             
@@ -1114,7 +1153,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
     # Optimization implementation methods
     
     def _initialize_optimization_modules(self):
-        """Initialize optimization modules"""        self.optimization_modules = {
+        """Initialize optimization modules"""
+        self.optimization_modules = {
             OptimizationType.CACHE_OPTIMIZATION: self._optimize_cache,
             OptimizationType.MEMORY_MANAGEMENT: self._optimize_memory,
             OptimizationType.CPU_OPTIMIZATION: self._optimize_cpu,
@@ -1122,7 +1162,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         }
 
     async def _optimize_cpu_usage(self, analysis: PerformanceAnalysis, targets: Dict) -> List[OptimizationRecommendation]:
-        """Generate CPU usage optimizations"""        recommendations = []
+        """Generate CPU usage optimizations"""
+        recommendations = []
         
         if 'cpu_usage' in analysis.performance_summary:
             cpu_stats = analysis.performance_summary['cpu_usage']
@@ -1148,7 +1189,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         return recommendations
 
     async def _optimize_memory_usage(self, analysis: PerformanceAnalysis, targets: Dict) -> List[OptimizationRecommendation]:
-        """Generate memory usage optimizations"""        recommendations = []
+        """Generate memory usage optimizations"""
+        recommendations = []
         
         if 'memory_usage' in analysis.performance_summary:
             memory_stats = analysis.performance_summary['memory_usage']
@@ -1174,19 +1216,23 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         return recommendations
 
     async def _optimize_cache_performance(self, analysis: PerformanceAnalysis, targets: Dict) -> List[OptimizationRecommendation]:
-        """Generate cache performance optimizations"""        # Simplified cache optimization recommendations
+        """Generate cache performance optimizations"""
+        # Simplified cache optimization recommendations
         return []
 
     async def _optimize_network_performance(self, analysis: PerformanceAnalysis, targets: Dict) -> List[OptimizationRecommendation]:
-        """Generate network performance optimizations"""        # Simplified network optimization recommendations
+        """Generate network performance optimizations"""
+        # Simplified network optimization recommendations
         return []
 
     async def _optimize_database_performance(self, analysis: PerformanceAnalysis, targets: Dict) -> List[OptimizationRecommendation]:
-        """Generate database performance optimizations"""        # Simplified database optimization recommendations
+        """Generate database performance optimizations"""
+        # Simplified database optimization recommendations
         return []
 
     async def _apply_optimization(self, recommendation: OptimizationRecommendation) -> bool:
-        """Apply optimization recommendation"""        try:
+        """Apply optimization recommendation"""
+        try:
             optimization_module = self.optimization_modules.get(recommendation.optimization_type)
             if optimization_module:
                 success = await optimization_module(recommendation)
@@ -1213,7 +1259,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
     # Individual optimization methods
     
     async def _optimize_cache(self, recommendation: OptimizationRecommendation) -> bool:
-        """Optimize cache performance"""        try:
+        """Optimize cache performance"""
+        try:
             # Clear cache if needed
             await self.cache_manager.clear()
             
@@ -1226,7 +1273,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
             return False
 
     async def _optimize_memory(self, recommendation: OptimizationRecommendation) -> bool:
-        """Optimize memory usage"""        try:
+        """Optimize memory usage"""
+        try:
             # Force garbage collection
             gc.collect()
             
@@ -1239,7 +1287,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
             return False
 
     async def _optimize_cpu(self, recommendation: OptimizationRecommendation) -> bool:
-        """Optimize CPU usage"""        try:
+        """Optimize CPU usage"""
+        try:
             # CPU optimization logic would go here
             logger.info(f"Applied CPU optimization: {recommendation.title}")
             return True
@@ -1249,7 +1298,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
             return False
 
     async def _tune_configuration(self, recommendation: OptimizationRecommendation) -> bool:
-        """Tune system configuration"""        try:
+        """Tune system configuration"""
+        try:
             # Configuration tuning logic would go here
             logger.info(f"Applied configuration tuning: {recommendation.title}")
             return True
@@ -1261,7 +1311,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
     # Utility methods
     
     async def _calculate_performance_baselines(self):
-        """Calculate performance baselines"""        try:
+        """Calculate performance baselines"""
+        try:
             # Collect baseline data
             for _ in range(10):  # Collect 10 samples
                 await self.collect_performance_metrics()
@@ -1286,7 +1337,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
             logger.error(f"Error calculating performance baselines: {str(e)}")
 
     async def _calculate_trend(self, values: List[float], timestamps: List[datetime]) -> float:
-        """Calculate trend from time series data"""        if len(values) < 2:
+        """Calculate trend from time series data"""
+        if len(values) < 2:
             return 0.0
         
         # Convert timestamps to numerical values
@@ -1307,7 +1359,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         return slope
 
     async def _get_ai_predictions(self, predictions: Dict, forecast_period: timedelta) -> Dict:
-        """Get AI-powered predictions"""        try:
+        """Get AI-powered predictions"""
+        try:
             if not self.prediction_service_endpoint:
                 return {}
             
@@ -1337,7 +1390,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
             return {}
 
     async def _generate_key_insights(self, analysis: PerformanceAnalysis, alerts: List[PerformanceAlert]) -> List[str]:
-        """Generate key insights from analysis"""        insights = []
+        """Generate key insights from analysis"""
+        insights = []
         
         # Performance insights
         if analysis.overall_score < 50:
@@ -1361,7 +1415,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         return insights
 
     async def _summarize_recommendations(self, recommendations: List[OptimizationRecommendation]) -> Dict[str, Any]:
-        """Summarize optimization recommendations"""        if not recommendations:
+        """Summarize optimization recommendations"""
+        if not recommendations:
             return {}
         
         summary = {
@@ -1384,7 +1439,8 @@ class AdvancedPerformanceOptimizer(BaseCrawler):
         return summary
 
     async def close(self):
-        """Close performance optimizer and cleanup resources"""        try:
+        """Close performance optimizer and cleanup resources"""
+        try:
             await self.stop_monitoring()
             await self.cache_manager.close()
             await super().close()

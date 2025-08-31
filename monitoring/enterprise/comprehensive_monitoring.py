@@ -17,7 +17,8 @@ Features:
 - Compliance monitoring and audit trails
 - Infrastructure and application monitoring
 - Business metrics and KPI tracking
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import time
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics"""    COUNTER = "counter"
+    """Types of metrics"""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
@@ -42,7 +44,8 @@ class MetricType(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    INFO = "info"
+    """Alert severity levels"""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -50,14 +53,16 @@ class AlertSeverity(Enum):
 
 
 class AlertState(Enum):
-    """Alert states"""    FIRING = "firing"
+    """Alert states"""
+    FIRING = "firing"
     RESOLVED = "resolved"
     ACKNOWLEDGED = "acknowledged"
     SUPPRESSED = "suppressed"
 
 
 class NotificationChannel(Enum):
-    """Notification channels"""    EMAIL = "email"
+    """Notification channels"""
+    EMAIL = "email"
     SMS = "sms"
     SLACK = "slack"
     WEBHOOK = "webhook"
@@ -67,7 +72,8 @@ class NotificationChannel(Enum):
 
 @dataclass
 class MetricDataPoint:
-    """Individual metric data point"""    timestamp: datetime
+    """Individual metric data point"""
+    timestamp: datetime
     value: Union[int, float]
     tags: Dict[str, str] = field(default_factory=dict)
     labels: Dict[str, str] = field(default_factory=dict)
@@ -75,7 +81,8 @@ class MetricDataPoint:
 
 @dataclass
 class Metric:
-    """Metric definition and data"""    name: str
+    """Metric definition and data"""
+    name: str
     metric_type: MetricType
     description: str
     unit: str = ""
@@ -87,7 +94,8 @@ class Metric:
 
 @dataclass
 class AlertRule:
-    """Alert rule definition"""    rule_id: str
+    """Alert rule definition"""
+    rule_id: str
     name: str
     description: str
     metric_name: str
@@ -104,7 +112,8 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Active alert instance"""    alert_id: str
+    """Active alert instance"""
+    alert_id: str
     rule_id: str
     metric_name: str
     severity: AlertSeverity
@@ -122,7 +131,8 @@ class Alert:
 
 @dataclass
 class DashboardWidget:
-    """Dashboard widget configuration"""    widget_id: str
+    """Dashboard widget configuration"""
+    widget_id: str
     widget_type: str  # chart, gauge, table, status
     title: str
     metric_queries: List[str]
@@ -134,7 +144,8 @@ class DashboardWidget:
 
 @dataclass
 class Dashboard:
-    """Dashboard definition"""    dashboard_id: str
+    """Dashboard definition"""
+    dashboard_id: str
     name: str
     description: str
     widgets: List[DashboardWidget]
@@ -145,7 +156,8 @@ class Dashboard:
 
 
 class MetricsCollector:
-    """Advanced metrics collection and storage"""    
+    """Advanced metrics collection and storage"""
+    
     def __init__(self):
         self.metrics: Dict[str, Metric] = {}
         self.metric_buffer: Dict[str, List[MetricDataPoint]] = {}
@@ -154,7 +166,8 @@ class MetricsCollector:
         self.max_buffer_size = 1000
         
     def register_metric(self, metric: Metric) -> None:
-        """Register a new metric"""        self.metrics[metric.name] = metric
+        """Register a new metric"""
+        self.metrics[metric.name] = metric
         self.metric_buffer[metric.name] = []
         logger.info(f"Registered metric: {metric.name} ({metric.metric_type.value})")
     
@@ -165,7 +178,8 @@ class MetricsCollector:
         tags: Optional[Dict[str, str]] = None,
         timestamp: Optional[datetime] = None
     ) -> None:
-        """Collect a metric data point"""        if metric_name not in self.metrics:
+        """Collect a metric data point"""
+        if metric_name not in self.metrics:
             # Auto-register basic metric
             self.register_metric(Metric(
                 name=metric_name,
@@ -200,10 +214,12 @@ class MetricsCollector:
         ]
     
     def register_collector(self, collector_func: Callable) -> None:
-        """Register a metric collector function"""        self.collectors.append(collector_func)
+        """Register a metric collector function"""
+        self.collectors.append(collector_func)
     
     async def start_collection(self) -> None:
-        """Start automatic metric collection"""        while True:
+        """Start automatic metric collection"""
+        while True:
             try:
                 # Run all registered collectors
                 for collector in self.collectors:
@@ -224,7 +240,8 @@ class MetricsCollector:
         aggregation: str = "last",
         time_range: Optional[timedelta] = None
     ) -> Optional[float]:
-        """Get aggregated metric value"""        if metric_name not in self.metrics:
+        """Get aggregated metric value"""
+        if metric_name not in self.metrics:
             return None
         
         data_points = self.metrics[metric_name].data_points
@@ -258,7 +275,8 @@ class MetricsCollector:
         metric_name: str,
         time_range: timedelta = timedelta(hours=1)
     ) -> Dict[str, float]:
-        """Get metric trend analysis"""        if metric_name not in self.metrics:
+        """Get metric trend analysis"""
+        if metric_name not in self.metrics:
             return {}
         
         cutoff = datetime.now(timezone.utc) - time_range
@@ -287,14 +305,16 @@ class MetricsCollector:
 
 
 class AnomalyDetector:
-    """Machine learning-based anomaly detection"""    
+    """Machine learning-based anomaly detection"""
+    
     def __init__(self):
         self.models: Dict[str, Dict[str, Any]] = {}
         self.training_window = timedelta(days=7)
         self.detection_sensitivity = 0.95  # confidence threshold
     
     async def train_model(self, metric_name: str, data_points: List[MetricDataPoint]) -> None:
-        """Train anomaly detection model for metric"""        if len(data_points) < 100:  # Need sufficient data
+        """Train anomaly detection model for metric"""
+        if len(data_points) < 100:  # Need sufficient data
             return
         
         values = [dp.value for dp in data_points]
@@ -332,7 +352,8 @@ class AnomalyDetector:
         value: float,
         timestamp: datetime
     ) -> Dict[str, Any]:
-        """Detect if value is anomalous"""        if metric_name not in self.models:
+        """Detect if value is anomalous"""
+        if metric_name not in self.models:
             return {
                 "is_anomaly": False,
                 "reason": "no_model",
@@ -365,7 +386,8 @@ class AnomalyDetector:
 
 
 class AlertManager:
-    """Intelligent alert management system"""    
+    """Intelligent alert management system"""
+    
     def __init__(self, metrics_collector: MetricsCollector):
         self.metrics_collector = metrics_collector
         self.anomaly_detector = AnomalyDetector()
@@ -375,11 +397,13 @@ class AlertManager:
         self.evaluation_interval = 30  # seconds
         
     def register_alert_rule(self, rule: AlertRule) -> None:
-        """Register an alert rule"""        self.rules[rule.rule_id] = rule
+        """Register an alert rule"""
+        self.rules[rule.rule_id] = rule
         logger.info(f"Registered alert rule: {rule.name}")
     
     async def start_monitoring(self) -> None:
-        """Start alert monitoring loop"""        while True:
+        """Start alert monitoring loop"""
+        while True:
             try:
                 await self._evaluate_all_rules()
                 await self._process_notifications()
@@ -390,12 +414,14 @@ class AlertManager:
                 await asyncio.sleep(self.evaluation_interval)
     
     async def _evaluate_all_rules(self) -> None:
-        """Evaluate all alert rules"""        for rule in self.rules.values():
+        """Evaluate all alert rules"""
+        for rule in self.rules.values():
             if rule.enabled:
                 await self._evaluate_rule(rule)
     
     async def _evaluate_rule(self, rule: AlertRule) -> None:
-        """Evaluate a single alert rule"""        try:
+        """Evaluate a single alert rule"""
+        try:
             # Get current metric value
             current_value = self.metrics_collector.get_metric_value(
                 rule.metric_name,
@@ -425,7 +451,8 @@ class AlertManager:
             logger.error(f"Rule evaluation error for {rule.name}: {e}")
     
     def _evaluate_condition(self, condition: str, value: float, threshold: float) -> bool:
-        """Evaluate alert condition"""        condition = condition.strip().lower()
+        """Evaluate alert condition"""
+        condition = condition.strip().lower()
         
         if condition.startswith(">"):
             return value > threshold
@@ -455,7 +482,8 @@ class AlertManager:
             return False
     
     async def _fire_alert(self, rule: AlertRule, value: float, anomaly_result: Dict[str, Any]) -> None:
-        """Fire an alert"""        alert_id = f"{rule.rule_id}_{rule.metric_name}"
+        """Fire an alert"""
+        alert_id = f"{rule.rule_id}_{rule.metric_name}"
         
         # Check if alert already exists
         if alert_id in self.active_alerts:
@@ -494,7 +522,8 @@ class AlertManager:
         logger.warning(f"Alert fired: {message}")
     
     async def _resolve_alert(self, alert_id: str) -> None:
-        """Resolve an alert"""        if alert_id in self.active_alerts:
+        """Resolve an alert"""
+        if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
             alert.state = AlertState.RESOLVED
             alert.resolved_at = datetime.now(timezone.utc)
@@ -514,7 +543,8 @@ class AlertManager:
             logger.info(f"Alert resolved: {alert.message}")
     
     async def _process_notifications(self) -> None:
-        """Process notification queue"""        while self.notification_queue:
+        """Process notification queue"""
+        while self.notification_queue:
             notification = self.notification_queue.pop(0)
             try:
                 await self._send_notification(notification)
@@ -522,7 +552,8 @@ class AlertManager:
                 logger.error(f"Notification error: {e}")
     
     async def _send_notification(self, notification: Dict[str, Any]) -> None:
-        """Send a notification"""        alert = notification["alert"]
+        """Send a notification"""
+        alert = notification["alert"]
         channel = notification["channel"]
         action = notification["action"]
         
@@ -543,16 +574,20 @@ class AlertManager:
         })
     
     async def _send_email_notification(self, alert: Alert, action: str) -> None:
-        """Send email notification"""        logger.info(f"EMAIL: {action.upper()} - {alert.message}")
+        """Send email notification"""
+        logger.info(f"EMAIL: {action.upper()} - {alert.message}")
     
     async def _send_slack_notification(self, alert: Alert, action: str) -> None:
-        """Send Slack notification"""        logger.info(f"SLACK: {action.upper()} - {alert.message}")
+        """Send Slack notification"""
+        logger.info(f"SLACK: {action.upper()} - {alert.message}")
     
     async def _send_webhook_notification(self, alert: Alert, action: str) -> None:
-        """Send webhook notification"""        logger.info(f"WEBHOOK: {action.upper()} - {alert.message}")
+        """Send webhook notification"""
+        logger.info(f"WEBHOOK: {action.upper()} - {alert.message}")
     
     def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
-        """Acknowledge an alert"""        if alert_id in self.active_alerts:
+        """Acknowledge an alert"""
+        if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
             alert.state = AlertState.ACKNOWLEDGED
             alert.acknowledged_at = datetime.now(timezone.utc)
@@ -562,7 +597,8 @@ class AlertManager:
         return False
     
     def get_alert_summary(self) -> Dict[str, Any]:
-        """Get alert summary"""        total_alerts = len(self.active_alerts)
+        """Get alert summary"""
+        total_alerts = len(self.active_alerts)
         by_severity = {}
         
         for alert in self.active_alerts.values():
@@ -578,7 +614,8 @@ class AlertManager:
 
 
 class MonitoringSystem:
-    """Main monitoring system orchestrator"""    
+    """Main monitoring system orchestrator"""
+    
     def __init__(self):
         self.metrics_collector = MetricsCollector()
         self.alert_manager = AlertManager(self.metrics_collector)
@@ -586,7 +623,8 @@ class MonitoringSystem:
         self._setup_default_alerts()
     
     def _setup_default_metrics(self) -> None:
-        """Setup default system metrics"""        default_metrics = [
+        """Setup default system metrics"""
+        default_metrics = [
             Metric("system_cpu_percent", MetricType.GAUGE, "CPU usage percentage", "%"),
             Metric("system_memory_percent", MetricType.GAUGE, "Memory usage percentage", "%"),
             Metric("system_disk_percent", MetricType.GAUGE, "Disk usage percentage", "%"),
@@ -602,7 +640,8 @@ class MonitoringSystem:
             self.metrics_collector.register_metric(metric)
     
     def _setup_default_alerts(self) -> None:
-        """Setup default alert rules"""        default_rules = [
+        """Setup default alert rules"""
+        default_rules = [
             AlertRule(
                 rule_id="high_cpu_usage",
                 name="High CPU Usage",
@@ -639,7 +678,8 @@ class MonitoringSystem:
             self.alert_manager.register_alert_rule(rule)
     
     async def start(self) -> None:
-        """Start the monitoring system"""        logger.info("Starting enterprise monitoring system...")
+        """Start the monitoring system"""
+        logger.info("Starting enterprise monitoring system...")
         
         # Start background tasks
         tasks = [
@@ -653,7 +693,8 @@ class MonitoringSystem:
         await asyncio.gather(*tasks, return_exceptions=True)
     
     def get_system_health(self) -> Dict[str, Any]:
-        """Get overall system health status"""        alert_summary = self.alert_manager.get_alert_summary()
+        """Get overall system health status"""
+        alert_summary = self.alert_manager.get_alert_summary()
         
         # Calculate health score
         total_alerts = alert_summary["total_active_alerts"]

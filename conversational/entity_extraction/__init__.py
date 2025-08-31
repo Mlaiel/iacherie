@@ -126,13 +126,15 @@ __all__ = [
 DEFAULT_CONFIG = None
 
 def get_default_config() -> EntityExtractionConfig:
-    """Get the default module configuration"""    global DEFAULT_CONFIG
+    """Get the default module configuration"""
+    global DEFAULT_CONFIG
     if DEFAULT_CONFIG is None:
         DEFAULT_CONFIG = EntityExtractionConfig()
     return DEFAULT_CONFIG
 
 def set_default_config(config: EntityExtractionConfig):
-    """Set the default module configuration"""    global DEFAULT_CONFIG
+    """Set the default module configuration"""
+    global DEFAULT_CONFIG
     DEFAULT_CONFIG = config
 
 # Initialize module-level services
@@ -140,13 +142,15 @@ _service_instance = None
 _orchestrator_instance = None
 
 def get_extraction_service(config: EntityExtractionConfig = None) -> EntityExtractionService:
-    """Get a shared EntityExtractionService instance"""    global _service_instance
+    """Get a shared EntityExtractionService instance"""
+    global _service_instance
     if _service_instance is None or config is not None:
         _service_instance = EntityExtractionService(config or get_default_config())
     return _service_instance
 
 def get_extraction_orchestrator(config: EntityExtractionConfig = None) -> EntityExtractionOrchestrator:
-    """Get a shared EntityExtractionOrchestrator instance"""    global _orchestrator_instance
+    """Get a shared EntityExtractionOrchestrator instance"""
+    global _orchestrator_instance
     if _orchestrator_instance is None or config is not None:
         _orchestrator_instance = EntityExtractionOrchestrator(config or get_default_config())
     return _orchestrator_instance
@@ -158,7 +162,8 @@ async def extract_entities(
     include_relationships: bool = False,
     config: EntityExtractionConfig = None
 ) -> dict:
-    """    Quick entity extraction function
+    """
+    Quick entity extraction function
     
     Args:
         text: Input text to analyze
@@ -168,7 +173,8 @@ async def extract_entities(
     
     Returns:
         Dictionary with extracted entities and metadata
-    """    service = get_extraction_service(config)
+    """
+    service = get_extraction_service(config)
     
     if include_relationships:
         return await service.extract_with_relationships(text, entity_types)
@@ -180,7 +186,8 @@ async def extract_platform_entities(
     platform: str,
     config: EntityExtractionConfig = None
 ) -> dict:
-    """    Quick platform-specific entity extraction
+    """
+    Quick platform-specific entity extraction
     
     Args:
         content: Content to analyze
@@ -189,7 +196,8 @@ async def extract_platform_entities(
     
     Returns:
         Dictionary with platform-specific entities
-    """    service = get_extraction_service(config)
+    """
+    service = get_extraction_service(config)
     return await service.extract_platform_entities(content, platform)
 
 async def analyze_business_entities(
@@ -197,7 +205,8 @@ async def analyze_business_entities(
     include_monetization: bool = True,
     config: EntityExtractionConfig = None
 ) -> dict:
-    """    Quick business entity analysis
+    """
+    Quick business entity analysis
     
     Args:
         content: Content to analyze
@@ -206,12 +215,14 @@ async def analyze_business_entities(
     
     Returns:
         Dictionary with business analysis results
-    """    service = get_extraction_service(config)
+    """
+    service = get_extraction_service(config)
     return await service.extract_business_entities(content, include_monetization)
 
 # Module initialization
 def initialize_module(config: EntityExtractionConfig = None):
-    """Initialize the entity extraction module with configuration"""    if config:
+    """Initialize the entity extraction module with configuration"""
+    if config:
         set_default_config(config)
     
     # Pre-load critical models for better performance
@@ -223,7 +234,8 @@ def initialize_module(config: EntityExtractionConfig = None):
 
 # Cleanup function
 def cleanup_module():
-    """Cleanup module resources"""    global _service_instance, _orchestrator_instance
+    """Cleanup module resources"""
+    global _service_instance, _orchestrator_instance
     
     # Clear service instances
     _service_instance = None
@@ -254,14 +266,17 @@ FEATURES = {
 }
 
 def get_feature_status() -> dict:
-    """Get the status of all module features"""    return FEATURES.copy()
+    """Get the status of all module features"""
+    return FEATURES.copy()
 
 def is_feature_enabled(feature_name: str) -> bool:
-    """Check if a specific feature is enabled"""    return FEATURES.get(feature_name, False)
+    """Check if a specific feature is enabled"""
+    return FEATURES.get(feature_name, False)
 
 # Module statistics
 def get_module_stats() -> dict:
-    """Get comprehensive module statistics"""    return {
+    """Get comprehensive module statistics"""
+    return {
         'version': __version__,
         'author': __author__,
         'features_enabled': sum(FEATURES.values()),
@@ -279,7 +294,8 @@ try:
     import os
     if os.getenv('ENVIRONMENT') == 'development':
         def debug_entity_extraction(text: str, verbose: bool = True):
-            """Debug utility for entity extraction development"""            import asyncio
+            """Debug utility for entity extraction development"""
+            import asyncio
             
             async def debug_extract():
                 service = get_extraction_service()
@@ -302,7 +318,8 @@ except ImportError:
 
 # Module health check
 def health_check() -> dict:
-    """Perform module health check"""    health_status = {
+    """Perform module health check"""
+    health_status = {
         'module': 'entity_extraction',
         'version': __version__,
         'status': 'healthy',

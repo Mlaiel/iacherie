@@ -17,7 +17,8 @@ Development Team Specialties:
 - Audio Processing Specialist
 - DevOps & Infrastructure Engineer
 - AI Prompt Engineering Expert
-"""import asyncio
+"""
+import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -33,7 +34,8 @@ from cryptography.fernet import Fernet
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Supported social media platform types"""    INSTAGRAM = "instagram"
+    """Supported social media platform types"""
+    INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
     FACEBOOK = "facebook"
@@ -45,7 +47,8 @@ class PlatformType(Enum):
     DISCORD = "discord"
 
 class ContentType(Enum):
-    """Content types for different platforms"""    VIDEO = "video"
+    """Content types for different platforms"""
+    VIDEO = "video"
     IMAGE = "image"
     AUDIO = "audio"
     TEXT = "text"
@@ -55,7 +58,8 @@ class ContentType(Enum):
     LIVE = "live"
 
 class PostStatus(Enum):
-    """Post publication status"""    DRAFT = "draft"
+    """Post publication status"""
+    DRAFT = "draft"
     SCHEDULED = "scheduled"
     PUBLISHED = "published"
     FAILED = "failed"
@@ -64,7 +68,8 @@ class PostStatus(Enum):
 
 @dataclass
 class PlatformConfig:
-    """Platform configuration and credentials"""    platform_type: PlatformType
+    """Platform configuration and credentials"""
+    platform_type: PlatformType
     api_key: str
     api_secret: str
     access_token: str
@@ -76,7 +81,8 @@ class PlatformConfig:
     
 @dataclass
 class ContentPost:
-    """Unified content post structure"""    id: str
+    """Unified content post structure"""
+    id: str
     platform: PlatformType
     content_type: ContentType
     title: str
@@ -92,7 +98,8 @@ class ContentPost:
     updated_at: datetime = field(default_factory=datetime.utcnow)
 
 class PlatformAdapter(ABC):
-    """Abstract base class for platform-specific adapters"""    
+    """Abstract base class for platform-specific adapters"""
+    
     def __init__(self, config: PlatformConfig):
         self.config = config
         self.platform_type = config.platform_type
@@ -101,28 +108,34 @@ class PlatformAdapter(ABC):
         
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with the platform"""        pass
+        """Authenticate with the platform"""
+        pass
         
     @abstractmethod
     async def publish_content(self, post: ContentPost) -> Dict[str, Any]:
-        """Publish content to the platform"""        pass
+        """Publish content to the platform"""
+        pass
         
     @abstractmethod
     async def get_analytics(self, post_id: str, metrics: List[str]) -> Dict[str, Any]:
-        """Get post analytics"""        pass
+        """Get post analytics"""
+        pass
         
     @abstractmethod
     async def delete_content(self, post_id: str) -> bool:
-        """Delete content from platform"""        pass
+        """Delete content from platform"""
+        pass
 
 class RateLimiter:
-    """Rate limiting for API calls"""    
+    """Rate limiting for API calls"""
+    
     def __init__(self, limits: Dict[str, int]):
         self.limits = limits  # {'requests_per_minute': 60, 'requests_per_hour': 1000}
         self.call_history: Dict[str, List[datetime]] = {}
         
     async def wait_if_needed(self, endpoint: str = "default"):
-        """Wait if rate limit would be exceeded"""        now = datetime.utcnow()
+        """Wait if rate limit would be exceeded"""
+        now = datetime.utcnow()
         
         if endpoint not in self.call_history:
             self.call_history[endpoint] = []
@@ -155,13 +168,15 @@ class RateLimiter:
         history.append(now)
 
 class CredentialManager:
-    """Secure credential management with encryption"""    
+    """Secure credential management with encryption"""
+    
     def __init__(self, encryption_key: Optional[bytes] = None):
         self.encryption_key = encryption_key or Fernet.generate_key()
         self.cipher = Fernet(self.encryption_key)
         
     def encrypt_credentials(self, config: PlatformConfig) -> PlatformConfig:
-        """Encrypt sensitive credentials"""        if not config.encrypted:
+        """Encrypt sensitive credentials"""
+        if not config.encrypted:
             config.api_key = self.cipher.encrypt(config.api_key.encode()).decode()
             config.api_secret = self.cipher.encrypt(config.api_secret.encode()).decode()
             config.access_token = self.cipher.encrypt(config.access_token.encode()).decode()
@@ -171,7 +186,8 @@ class CredentialManager:
         return config
         
     def decrypt_credentials(self, config: PlatformConfig) -> PlatformConfig:
-        """Decrypt sensitive credentials"""        if config.encrypted:
+        """Decrypt sensitive credentials"""
+        if config.encrypted:
             config.api_key = self.cipher.decrypt(config.api_key.encode()).decode()
             config.api_secret = self.cipher.decrypt(config.api_secret.encode()).decode()
             config.access_token = self.cipher.decrypt(config.access_token.encode()).decode()
@@ -181,9 +197,11 @@ class CredentialManager:
         return config
 
 class PlatformManager:
-    """    Advanced Multi-Platform Social Media Manager
+    """
+    Advanced Multi-Platform Social Media Manager
     Handles unified content distribution, analytics, and platform-specific optimizations
-    """    
+    """
+    
     def __init__(self, encryption_key: Optional[bytes] = None):
         self.adapters: Dict[PlatformType, PlatformAdapter] = {}
         self.credential_manager = CredentialManager(encryption_key)
@@ -193,7 +211,8 @@ class PlatformManager:
         self.cross_platform_rules: List[Dict[str, Any]] = []
         
     async def register_platform(self, config: PlatformConfig, adapter_class: type):
-        """Register a new platform with its adapter"""        try:
+        """Register a new platform with its adapter"""
+        try:
             # Encrypt credentials
             encrypted_config = self.credential_manager.encrypt_credentials(config)
             
@@ -220,7 +239,8 @@ class PlatformManager:
             raise
     
     async def publish_content(self, post: ContentPost, platforms: Optional[List[PlatformType]] = None) -> Dict[PlatformType, Dict[str, Any]]:
-        """Publish content to specified platforms or all registered platforms"""        if platforms is None:
+        """Publish content to specified platforms or all registered platforms"""
+        if platforms is None:
             platforms = list(self.adapters.keys())
         
         results = {}
@@ -253,7 +273,8 @@ class PlatformManager:
         return results
     
     async def _publish_to_platform(self, post: ContentPost, platform: PlatformType) -> Dict[str, Any]:
-        """Publish content to a specific platform"""        adapter = self.adapters[platform]
+        """Publish content to a specific platform"""
+        adapter = self.adapters[platform]
         
         # Decrypt credentials temporarily
         original_config = adapter.config
@@ -277,7 +298,8 @@ class PlatformManager:
             adapter.config = self.credential_manager.encrypt_credentials(adapter.config)
     
     async def _adapt_content_for_platform(self, post: ContentPost, platform: PlatformType) -> ContentPost:
-        """Adapt content for specific platform requirements"""        adapted_post = ContentPost(
+        """Adapt content for specific platform requirements"""
+        adapted_post = ContentPost(
             id=f"{post.id}_{platform.value}",
             platform=platform,
             content_type=post.content_type,
@@ -313,17 +335,20 @@ class PlatformManager:
         return adapted_post
     
     def _truncate_for_twitter(self, text: str, max_length: int = 280) -> str:
-        """Truncate text for Twitter character limit"""        if len(text) <= max_length:
+        """Truncate text for Twitter character limit"""
+        if len(text) <= max_length:
             return text
         return text[:max_length-3] + "..."
     
     def _format_for_linkedin(self, text: str) -> str:
-        """Format text for LinkedIn professional style"""        # Add professional formatting, line breaks for readability
+        """Format text for LinkedIn professional style"""
+        # Add professional formatting, line breaks for readability
         formatted = text.replace('. ', '.\n\n')
         return formatted
     
     async def _apply_cross_platform_rule(self, post: ContentPost, rule: Dict[str, Any]) -> ContentPost:
-        """Apply cross-platform content rules"""        if rule.get('type') == 'hashtag_mapping':
+        """Apply cross-platform content rules"""
+        if rule.get('type') == 'hashtag_mapping':
             platform_hashtags = rule.get('hashtag_map', {}).get(post.platform.value, {})
             for original, replacement in platform_hashtags.items():
                 post.hashtags = [hashtag.replace(original, replacement) for hashtag in post.hashtags]
@@ -338,7 +363,8 @@ class PlatformManager:
         return post
     
     def _apply_content_filter(self, text: str, filter_rule: Dict[str, Any]) -> str:
-        """Apply content filtering rules"""        if 'remove_words' in filter_rule:
+        """Apply content filtering rules"""
+        if 'remove_words' in filter_rule:
             for word in filter_rule['remove_words']:
                 text = text.replace(word, '')
         
@@ -349,7 +375,8 @@ class PlatformManager:
         return text.strip()
     
     async def get_unified_analytics(self, post_id: str, platforms: Optional[List[PlatformType]] = None) -> Dict[str, Any]:
-        """Get unified analytics across platforms"""        if platforms is None:
+        """Get unified analytics across platforms"""
+        if platforms is None:
             platforms = list(self.adapters.keys())
         
         unified_metrics = {
@@ -404,7 +431,8 @@ class PlatformManager:
     
     async def schedule_content(self, post: ContentPost, platforms: List[PlatformType], 
                              schedule_time: datetime) -> str:
-        """Schedule content for future publication"""        post.schedule_time = schedule_time
+        """Schedule content for future publication"""
+        post.schedule_time = schedule_time
         post.status = PostStatus.SCHEDULED
         
         # Add to publish queue
@@ -422,7 +450,8 @@ class PlatformManager:
         return post.id
     
     async def process_scheduled_posts(self):
-        """Process posts that are ready to be published"""        now = datetime.utcnow()
+        """Process posts that are ready to be published"""
+        now = datetime.utcnow()
         ready_posts = []
         
         for i, post in enumerate(self.publish_queue):
@@ -442,15 +471,18 @@ class PlatformManager:
                 post.status = PostStatus.FAILED
     
     def add_cross_platform_rule(self, rule: Dict[str, Any]):
-        """Add a cross-platform content adaptation rule"""        self.cross_platform_rules.append(rule)
+        """Add a cross-platform content adaptation rule"""
+        self.cross_platform_rules.append(rule)
         logger.info(f"Added cross-platform rule: {rule.get('type', 'unknown')}")
     
     def register_webhook_handler(self, platform: PlatformType, handler: Callable):
-        """Register webhook handler for platform events"""        self.webhook_handlers[platform] = handler
+        """Register webhook handler for platform events"""
+        self.webhook_handlers[platform] = handler
         logger.info(f"Registered webhook handler for {platform.value}")
     
     async def handle_webhook(self, platform: PlatformType, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle incoming webhook from platform"""        if platform in self.webhook_handlers:
+        """Handle incoming webhook from platform"""
+        if platform in self.webhook_handlers:
             try:
                 return await self.webhook_handlers[platform](data)
             except Exception as e:
@@ -461,7 +493,8 @@ class PlatformManager:
             return {'success': False, 'error': 'No handler registered'}
     
     def get_platform_status(self) -> Dict[str, Any]:
-        """Get status of all registered platforms"""        return {
+        """Get status of all registered platforms"""
+        return {
             'total_platforms': len(self.adapters),
             'platforms': {
                 platform.value: {

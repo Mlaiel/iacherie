@@ -24,7 +24,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
-"""from sqlalchemy import (
+"""
+from sqlalchemy import (
     Column, Integer, String, DateTime, Float, Boolean, ForeignKey,
     Text, DECIMAL, JSON, BigInteger, Index, UniqueConstraint
 )
@@ -41,7 +42,8 @@ from dataclasses import dataclass
 Base = declarative_base()
 
 class PricingStrategy(Enum):
-    """Dynamic pricing strategy types"""    DEMAND_BASED = "demand_based"
+    """Dynamic pricing strategy types"""
+    DEMAND_BASED = "demand_based"
     COMPETITOR_BASED = "competitor_based"
     VALUE_BASED = "value_based"
     PENETRATION = "penetration"
@@ -53,7 +55,8 @@ class PricingStrategy(Enum):
     PROMOTIONAL = "promotional"
 
 class PriceAdjustmentType(Enum):
-    """Price adjustment types"""    INCREASE = "increase"
+    """Price adjustment types"""
+    INCREASE = "increase"
     DECREASE = "decrease"
     SURGE = "surge"
     DISCOUNT = "discount"
@@ -63,7 +66,8 @@ class PriceAdjustmentType(Enum):
     COMPETITOR_RESPONSE = "competitor_response"
 
 class MarketCondition(Enum):
-    """Market condition indicators"""    HIGH_DEMAND = "high_demand"
+    """Market condition indicators"""
+    HIGH_DEMAND = "high_demand"
     LOW_DEMAND = "low_demand"
     PEAK_HOURS = "peak_hours"
     OFF_PEAK = "off_peak"
@@ -73,7 +77,8 @@ class MarketCondition(Enum):
     MARKET_SATURATION = "market_saturation"
 
 class PricingRule(Base):
-    """Dynamic pricing rules and strategies"""    __tablename__ = 'pricing_rules'
+    """Dynamic pricing rules and strategies"""
+    __tablename__ = 'pricing_rules'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -138,7 +143,8 @@ class PricingRule(Base):
     )
 
 class DynamicPrice(Base):
-    """Current dynamic pricing for content/services"""    __tablename__ = 'dynamic_prices'
+    """Current dynamic pricing for content/services"""
+    __tablename__ = 'dynamic_prices'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -207,7 +213,8 @@ class DynamicPrice(Base):
     )
 
 class PriceHistory(Base):
-    """Historical price changes and performance"""    __tablename__ = 'price_history'
+    """Historical price changes and performance"""
+    __tablename__ = 'price_history'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -268,7 +275,8 @@ class PriceHistory(Base):
     )
 
 class MarketAnalysis(Base):
-    """Real-time market analysis for pricing decisions"""    __tablename__ = 'market_analysis'
+    """Real-time market analysis for pricing decisions"""
+    __tablename__ = 'market_analysis'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -338,7 +346,8 @@ class MarketAnalysis(Base):
     )
 
 class CompetitorPricing(Base):
-    """Competitor pricing data for market analysis"""    __tablename__ = 'competitor_pricing'
+    """Competitor pricing data for market analysis"""
+    __tablename__ = 'competitor_pricing'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -401,7 +410,8 @@ class CompetitorPricing(Base):
 
 @dataclass
 class PricingRecommendation:
-    """AI-generated pricing recommendation"""    recommended_price: float
+    """AI-generated pricing recommendation"""
+    recommended_price: float
     confidence_score: float
     expected_revenue_impact: float
     risk_level: str
@@ -411,7 +421,8 @@ class PricingRecommendation:
     implementation_timeline: str
 
 class PricingExperiment(Base):
-    """A/B testing for pricing strategies"""    __tablename__ = 'pricing_experiments'
+    """A/B testing for pricing strategies"""
+    __tablename__ = 'pricing_experiments'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

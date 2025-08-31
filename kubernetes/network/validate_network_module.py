@@ -12,7 +12,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import sys
 import importlib
 from typing import Dict, List, Any, Tuple
@@ -22,7 +23,8 @@ validation_results: List[Tuple[str, bool, str]] = []
 
 
 def validate_import(module_name: str, description: str) -> bool:
-    """Validate that a module can be imported"""    try:
+    """Validate that a module can be imported"""
+    try:
         importlib.import_module(module_name)
         validation_results.append((description, True, f"✅ Module '{module_name}' imported successfully"))
         return True
@@ -35,7 +37,8 @@ def validate_import(module_name: str, description: str) -> bool:
 
 
 def validate_class_availability(module_name: str, class_name: str, description: str) -> bool:
-    """Validate that a class is available in a module"""    try:
+    """Validate that a class is available in a module"""
+    try:
         module = importlib.import_module(module_name)
         if hasattr(module, class_name):
             validation_results.append((description, True, f"✅ Class '{class_name}' available in '{module_name}'"))
@@ -49,7 +52,8 @@ def validate_class_availability(module_name: str, class_name: str, description: 
 
 
 async def validate_async_initialization(module_name: str, class_name: str, description: str) -> bool:
-    """Validate that an async class can be initialized"""    try:
+    """Validate that an async class can be initialized"""
+    try:
         module = importlib.import_module(module_name)
         if hasattr(module, class_name):
             cls = getattr(module, class_name)
@@ -73,7 +77,8 @@ async def validate_async_initialization(module_name: str, class_name: str, descr
 
 
 def validate_file_structure() -> bool:
-    """Validate network module file structure"""    import os
+    """Validate network module file structure"""
+    import os
     
     base_path = "/workspaces/Achiri/IA-Influencer-Agent/backend/deployment/network"
     
@@ -113,7 +118,8 @@ def validate_file_structure() -> bool:
 
 
 async def run_comprehensive_validation():
-    """Run comprehensive validation of network module"""    
+    """Run comprehensive validation of network module"""
+    
     print("🚀 IA INFLUENCER AGENT - NETWORK MODULE VALIDATION")
     print("=" * 60)
     print("🔍 Validating complete network deployment module...")

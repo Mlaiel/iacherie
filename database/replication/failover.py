@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Set, Tuple
 from datetime import datetime, timedelta
@@ -20,7 +21,8 @@ from .config import ReplicationConfig
 
 
 class FailoverState(Enum):
-    """Failover process states"""    MONITORING = "monitoring"
+    """Failover process states"""
+    MONITORING = "monitoring"
     DETECTING = "detecting"
     VALIDATING = "validating"
     INITIATING = "initiating"
@@ -33,7 +35,8 @@ class FailoverState(Enum):
 
 
 class FailoverTrigger(Enum):
-    """Failover trigger types"""    HEALTH_CHECK_FAILURE = "health_check_failure"
+    """Failover trigger types"""
+    HEALTH_CHECK_FAILURE = "health_check_failure"
     NETWORK_PARTITION = "network_partition"
     HIGH_LATENCY = "high_latency"
     REPLICATION_LAG = "replication_lag"
@@ -44,7 +47,8 @@ class FailoverTrigger(Enum):
 
 
 class FailoverPriority(Enum):
-    """Failover priority levels"""    LOW = "low"
+    """Failover priority levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -53,7 +57,8 @@ class FailoverPriority(Enum):
 
 @dataclass
 class FailoverCandidate:
-    """Failover candidate node information"""    node_id: str
+    """Failover candidate node information"""
+    node_id: str
     host: str
     port: int
     database_type: str
@@ -69,7 +74,8 @@ class FailoverCandidate:
 
 @dataclass
 class FailoverEvent:
-    """Failover event record"""    id: str
+    """Failover event record"""
+    id: str
     trigger: FailoverTrigger
     priority: FailoverPriority
     failed_node_id: str
@@ -86,19 +92,23 @@ class FailoverEvent:
 
 
 class FailoverManager:
-    """    Comprehensive failover management system for database replication.
+    """
+    Comprehensive failover management system for database replication.
     
     Provides intelligent failover detection, candidate selection,
     automated promotion, and recovery verification for all database
     systems in the content creator platform.
-    """    
+    """
+    
     def __init__(self, config: ReplicationConfig, topology_manager=None):
-        """        Initialize failover manager.
+        """
+        Initialize failover manager.
         
         Args:
             config: Replication configuration
             topology_manager: Topology manager instance
-        """        self.config = config
+        """
+        self.config = config
         self.topology_manager = topology_manager
         self.logger = logging.getLogger(f"{__name__}.FailoverManager")
         
@@ -139,11 +149,13 @@ class FailoverManager:
         self.logger.info("FailoverManager initialized")
     
     async def initialize(self) -> bool:
-        """        Initialize failover manager.
+        """
+        Initialize failover manager.
         
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             self.logger.info("Initializing failover manager...")
             
             # Validate configuration
@@ -163,7 +175,8 @@ class FailoverManager:
             return False
     
     async def _validate_failover_configuration(self) -> None:
-        """Validate failover configuration"""        try:
+        """Validate failover configuration"""
+        try:
             issues = []
             
             if not self.topology_manager:
@@ -185,12 +198,14 @@ class FailoverManager:
             raise
     
     async def _start_monitoring(self) -> None:
-        """Start failover monitoring"""        self.is_monitoring = True
+        """Start failover monitoring"""
+        self.is_monitoring = True
         self.monitoring_task = asyncio.create_task(self._monitoring_loop())
         self.logger.info("Failover monitoring started")
     
     async def _setup_notification_handlers(self) -> None:
-        """Setup notification handlers for failover events"""        try:
+        """Setup notification handlers for failover events"""
+        try:
             # Add default notification handlers
             self.notification_callbacks.append(self._log_failover_event)
             self.notification_callbacks.append(self._update_metrics_on_failover)
@@ -201,7 +216,8 @@ class FailoverManager:
             self.logger.error(f"Failed to setup notification handlers: {e}")
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop for failover detection"""        while self.is_monitoring:
+        """Main monitoring loop for failover detection"""
+        while self.is_monitoring:
             try:
                 # Check for node failures
                 await self._detect_node_failures()
@@ -222,7 +238,8 @@ class FailoverManager:
                 await asyncio.sleep(30)
     
     async def _detect_node_failures(self) -> None:
-        """Detect node failures and trigger failover if needed"""        try:
+        """Detect node failures and trigger failover if needed"""
+        try:
             if not self.topology_manager:
                 return
             
@@ -266,7 +283,8 @@ class FailoverManager:
             self.logger.error(f"Failed to detect node failures: {e}")
     
     async def _check_node_health(self, node) -> bool:
-        """Check if a node is healthy"""        try:
+        """Check if a node is healthy"""
+        try:
             if not self.topology_manager:
                 return False
             
@@ -300,7 +318,8 @@ class FailoverManager:
         trigger: FailoverTrigger, 
         priority: FailoverPriority
     ) -> bool:
-        """        Trigger failover for a failed node.
+        """
+        Trigger failover for a failed node.
         
         Args:
             failed_node_id: ID of the failed node
@@ -309,7 +328,8 @@ class FailoverManager:
             
         Returns:
             bool: True if failover initiated successfully
-        """        try:
+        """
+        try:
             if not self.auto_failover_enabled and trigger != FailoverTrigger.MANUAL_TRIGGER:
                 self.logger.warning(f"Auto failover disabled, skipping failover for {failed_node_id}")
                 return False
@@ -358,7 +378,8 @@ class FailoverManager:
             return False
     
     async def _execute_failover(self, failover_event: FailoverEvent) -> None:
-        """Execute the complete failover process"""        try:
+        """Execute the complete failover process"""
+        try:
             self.logger.info(f"Executing failover: {failover_event.id}")
             
             # Phase 1: Validate failure
@@ -403,7 +424,8 @@ class FailoverManager:
             await self._abort_failover(failover_event, f"Execution error: {str(e)}")
     
     async def _validate_node_failure(self, failover_event: FailoverEvent) -> bool:
-        """Validate that the node has actually failed"""        try:
+        """Validate that the node has actually failed"""
+        try:
             failed_node = self.topology_manager.get_node_by_id(failover_event.failed_node_id)
             if not failed_node:
                 return False
@@ -425,7 +447,8 @@ class FailoverManager:
             return False
     
     async def _select_failover_candidate(self, failover_event: FailoverEvent) -> Optional[FailoverCandidate]:
-        """Select the best failover candidate"""        try:
+        """Select the best failover candidate"""
+        try:
             # Get all potential candidates
             candidates = await self._find_failover_candidates(failover_event)
             
@@ -471,7 +494,8 @@ class FailoverManager:
             return None
     
     async def _find_failover_candidates(self, failover_event: FailoverEvent) -> List:
-        """Find potential failover candidates"""        try:
+        """Find potential failover candidates"""
+        try:
             # Get all nodes of the same database type
             all_nodes = self.topology_manager.get_nodes_by_type(failover_event.database_type)
             
@@ -502,7 +526,8 @@ class FailoverManager:
             return []
     
     async def _calculate_candidate_score(self, node, failover_event: FailoverEvent) -> Dict[str, float]:
-        """Calculate comprehensive score for failover candidate"""        try:
+        """Calculate comprehensive score for failover candidate"""
+        try:
             score = {
                 "health": 0.0,
                 "performance": 0.0,
@@ -559,7 +584,8 @@ class FailoverManager:
             return {"health": 0, "performance": 0, "data_freshness": 0, "geographic": 0, "total": 0}
     
     async def _promote_candidate(self, failover_event: FailoverEvent, candidate: FailoverCandidate) -> bool:
-        """Promote candidate node to primary"""        try:
+        """Promote candidate node to primary"""
+        try:
             self.logger.info(f"Promoting candidate {candidate.node_id} to primary")
             
             # Database-specific promotion logic
@@ -580,7 +606,8 @@ class FailoverManager:
             return False
     
     async def _promote_postgresql_candidate(self, candidate: FailoverCandidate) -> bool:
-        """Promote PostgreSQL secondary to primary"""        try:
+        """Promote PostgreSQL secondary to primary"""
+        try:
             import asyncpg
             
             # Connect to the candidate node
@@ -605,7 +632,8 @@ class FailoverManager:
             return False
     
     async def _promote_redis_candidate(self, candidate: FailoverCandidate) -> bool:
-        """Promote Redis secondary to primary"""        try:
+        """Promote Redis secondary to primary"""
+        try:
             import aioredis
             
             # Connect to the candidate node
@@ -628,7 +656,8 @@ class FailoverManager:
             return False
     
     async def _promote_mongodb_candidate(self, candidate: FailoverCandidate) -> bool:
-        """Promote MongoDB secondary to primary"""        try:
+        """Promote MongoDB secondary to primary"""
+        try:
             from motor.motor_asyncio import AsyncIOMotorClient
             
             # MongoDB replica sets handle failover automatically
@@ -656,7 +685,8 @@ class FailoverManager:
             return False
     
     async def _promote_elasticsearch_candidate(self, candidate: FailoverCandidate) -> bool:
-        """Promote Elasticsearch node (handle master election)"""        try:
+        """Promote Elasticsearch node (handle master election)"""
+        try:
             from elasticsearch import AsyncElasticsearch
             
             # Elasticsearch handles master election automatically
@@ -678,7 +708,8 @@ class FailoverManager:
             return False
     
     async def _update_client_connections(self, failover_event: FailoverEvent, candidate: FailoverCandidate) -> None:
-        """Update client connections to point to new primary"""        try:
+        """Update client connections to point to new primary"""
+        try:
             # Update topology manager routing cache
             if self.topology_manager:
                 # Update node role in topology
@@ -702,7 +733,8 @@ class FailoverManager:
             self.logger.error(f"Failed to update client connections: {e}")
     
     async def _verify_failover_success(self, failover_event: FailoverEvent, candidate: FailoverCandidate) -> bool:
-        """Verify that failover completed successfully"""        try:
+        """Verify that failover completed successfully"""
+        try:
             # Wait for promotion to complete
             await asyncio.sleep(5)
             
@@ -728,7 +760,8 @@ class FailoverManager:
             return False
     
     async def _verify_data_consistency(self, candidate: FailoverCandidate) -> bool:
-        """Verify data consistency on new primary"""        try:
+        """Verify data consistency on new primary"""
+        try:
             # Database-specific consistency checks
             if candidate.database_type == "postgresql":
                 return await self._verify_postgresql_consistency(candidate)
@@ -744,7 +777,8 @@ class FailoverManager:
             return False
     
     async def _verify_postgresql_consistency(self, candidate: FailoverCandidate) -> bool:
-        """Verify PostgreSQL data consistency"""        try:
+        """Verify PostgreSQL data consistency"""
+        try:
             import asyncpg
             
             conn = await asyncpg.connect(
@@ -772,7 +806,8 @@ class FailoverManager:
             return False
     
     async def _verify_redis_consistency(self, candidate: FailoverCandidate) -> bool:
-        """Verify Redis data consistency"""        try:
+        """Verify Redis data consistency"""
+        try:
             import aioredis
             
             redis = aioredis.Redis(
@@ -797,7 +832,8 @@ class FailoverManager:
             return False
     
     async def _verify_mongodb_consistency(self, candidate: FailoverCandidate) -> bool:
-        """Verify MongoDB data consistency"""        try:
+        """Verify MongoDB data consistency"""
+        try:
             from motor.motor_asyncio import AsyncIOMotorClient
             
             client = AsyncIOMotorClient(
@@ -828,7 +864,8 @@ class FailoverManager:
             return False
     
     async def _complete_failover(self, failover_event: FailoverEvent) -> None:
-        """Complete the failover process"""        try:
+        """Complete the failover process"""
+        try:
             failover_event.state = FailoverState.COMPLETED
             failover_event.completed_at = datetime.utcnow()
             failover_event.duration_ms = (
@@ -869,7 +906,8 @@ class FailoverManager:
             self.logger.error(f"Failed to complete failover {failover_event.id}: {e}")
     
     async def _abort_failover(self, failover_event: FailoverEvent, reason: str) -> None:
-        """Abort failover process"""        try:
+        """Abort failover process"""
+        try:
             failover_event.state = FailoverState.FAILED
             failover_event.completed_at = datetime.utcnow()
             failover_event.duration_ms = (
@@ -895,7 +933,8 @@ class FailoverManager:
             self.logger.error(f"Failed to abort failover {failover_event.id}: {e}")
     
     async def _rollback_failover(self, failover_event: FailoverEvent, candidate: FailoverCandidate) -> None:
-        """Rollback failed failover"""        try:
+        """Rollback failed failover"""
+        try:
             failover_event.state = FailoverState.ROLLING_BACK
             failover_event.rollback_performed = True
             
@@ -910,7 +949,8 @@ class FailoverManager:
             self.logger.error(f"Failed to rollback failover {failover_event.id}: {e}")
     
     async def _initiate_node_recovery(self, node_id: str) -> None:
-        """Initiate recovery for a previously failed node"""        try:
+        """Initiate recovery for a previously failed node"""
+        try:
             if node_id in self.recovery_nodes:
                 return  # Already in recovery
             
@@ -940,7 +980,8 @@ class FailoverManager:
             self.recovery_nodes.discard(node_id)
     
     async def _monitor_active_failovers(self) -> None:
-        """Monitor active failover processes"""        try:
+        """Monitor active failover processes"""
+        try:
             current_time = datetime.utcnow()
             
             for failover_id, failover_event in list(self.active_failovers.items()):
@@ -954,7 +995,8 @@ class FailoverManager:
             self.logger.error(f"Failed to monitor active failovers: {e}")
     
     async def _check_node_recovery(self) -> None:
-        """Check for opportunities to recover failed nodes"""        try:
+        """Check for opportunities to recover failed nodes"""
+        try:
             # This method would implement logic to detect when failed nodes
             # have recovered and can be brought back into service
             pass
@@ -963,7 +1005,8 @@ class FailoverManager:
             self.logger.error(f"Failed to check node recovery: {e}")
     
     async def _update_failover_metrics(self) -> None:
-        """Update failover metrics"""        try:
+        """Update failover metrics"""
+        try:
             # Calculate uptime percentage
             total_nodes = len(self.topology_manager.topology.nodes) if self.topology_manager else 0
             failed_nodes_count = len(self.failed_nodes)
@@ -977,14 +1020,16 @@ class FailoverManager:
     
     # Notification callback functions
     async def _log_failover_event(self, event_type: str, failover_event: FailoverEvent) -> None:
-        """Log failover event"""        try:
+        """Log failover event"""
+        try:
             self.logger.info(f"Failover event: {event_type} - {failover_event.id}")
             
         except Exception as e:
             self.logger.error(f"Failed to log failover event: {e}")
     
     async def _update_metrics_on_failover(self, event_type: str, failover_event: FailoverEvent) -> None:
-        """Update metrics when failover events occur"""        try:
+        """Update metrics when failover events occur"""
+        try:
             # Metrics are updated in the specific failover completion methods
             pass
             
@@ -992,7 +1037,8 @@ class FailoverManager:
             self.logger.error(f"Failed to update metrics on failover: {e}")
     
     async def _notify_failover_complete(self, failover_event: FailoverEvent) -> None:
-        """Notify all callbacks of failover completion"""        try:
+        """Notify all callbacks of failover completion"""
+        try:
             for callback in self.notification_callbacks:
                 await callback("completed", failover_event)
                 
@@ -1000,7 +1046,8 @@ class FailoverManager:
             self.logger.error(f"Failed to notify failover completion: {e}")
     
     async def _notify_failover_failed(self, failover_event: FailoverEvent) -> None:
-        """Notify all callbacks of failover failure"""        try:
+        """Notify all callbacks of failover failure"""
+        try:
             for callback in self.notification_callbacks:
                 await callback("failed", failover_event)
                 
@@ -1013,7 +1060,8 @@ class FailoverManager:
         node_id: str, 
         priority: FailoverPriority = FailoverPriority.HIGH
     ) -> bool:
-        """        Manually trigger failover for a node.
+        """
+        Manually trigger failover for a node.
         
         Args:
             node_id: Node to failover
@@ -1021,18 +1069,21 @@ class FailoverManager:
             
         Returns:
             bool: True if failover initiated successfully
-        """        return await self._trigger_failover(
+        """
+        return await self._trigger_failover(
             node_id, 
             FailoverTrigger.MANUAL_TRIGGER, 
             priority
         )
     
     def get_failover_status(self) -> Dict[str, Any]:
-        """        Get current failover status.
+        """
+        Get current failover status.
         
         Returns:
             Dict containing failover status information
-        """        return {
+        """
+        return {
             "auto_failover_enabled": self.auto_failover_enabled,
             "active_failovers": len(self.active_failovers),
             "failed_nodes": len(self.failed_nodes),
@@ -1042,14 +1093,16 @@ class FailoverManager:
         }
     
     def get_failover_history(self, limit: int = 10) -> List[Dict[str, Any]]:
-        """        Get failover history.
+        """
+        Get failover history.
         
         Args:
             limit: Maximum number of events to return
             
         Returns:
             List of failover events
-        """        recent_events = sorted(
+        """
+        recent_events = sorted(
             self.failover_history, 
             key=lambda e: e.started_at, 
             reverse=True
@@ -1074,14 +1127,17 @@ class FailoverManager:
         ]
     
     def add_notification_callback(self, callback: callable) -> None:
-        """        Add notification callback for failover events.
+        """
+        Add notification callback for failover events.
         
         Args:
             callback: Async function to call on failover events
-        """        self.notification_callbacks.append(callback)
+        """
+        self.notification_callbacks.append(callback)
     
     async def shutdown(self) -> None:
-        """Shutdown failover manager"""        try:
+        """Shutdown failover manager"""
+        try:
             self.logger.info("Shutting down failover manager...")
             
             # Stop monitoring

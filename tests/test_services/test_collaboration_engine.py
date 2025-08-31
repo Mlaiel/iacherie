@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -15,7 +16,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import unittest
+"""
+import unittest
 from unittest.mock import Mock, AsyncMock, patch
 import asyncio
 from datetime import datetime, timedelta
@@ -24,8 +26,10 @@ import json
 
 
 class TestCollaborationEngine(unittest.TestCase):
-    """Test suite for CollaborationEngine class"""    def setUp(self):
-        """Set up test fixtures"""        # Import the actual collaboration engine
+    """Test suite for CollaborationEngine class"""
+    def setUp(self):
+        """Set up test fixtures"""
+        # Import the actual collaboration engine
         import sys
         import os
         sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
@@ -50,7 +54,8 @@ class TestCollaborationEngine(unittest.TestCase):
         )
 
     def test_creator_profile_structure(self):
-        """Test creator profile data structure"""        profile = {
+        """Test creator profile data structure"""
+        profile = {
             "user_id": "creator_123",
             "username": "TestArtist",
             "creator_type": "musician",
@@ -77,7 +82,8 @@ class TestCollaborationEngine(unittest.TestCase):
         self.assertIsInstance(profile["follower_count"], int)
 
     def test_compatibility_scoring_calculation(self):
-        """Test compatibility score calculation between creators"""        creator1 = {
+        """Test compatibility score calculation between creators"""
+        creator1 = {
             "genres": ["pop", "rock"],
             "skills": ["vocals", "guitar"],
             "experience_level": "intermediate",
@@ -135,7 +141,8 @@ class TestCollaborationEngine(unittest.TestCase):
         self.assertGreater(total_score, 0.5)  # Should be compatible
 
     def test_collaboration_proposal_creation(self):
-        """Test collaboration proposal creation"""        proposal_data = {
+        """Test collaboration proposal creation"""
+        proposal_data = {
             "type": "feature",
             "description": "Looking for vocalist for electronic track",
             "revenue_split": {"proposer": 0.6, "collaborator": 0.4},
@@ -171,7 +178,8 @@ class TestCollaborationEngine(unittest.TestCase):
         self.assertEqual(proposal["status"], "proposed")
 
     def test_preference_filtering(self):
-        """Test creator preference filtering"""        creators = [
+        """Test creator preference filtering"""
+        creators = [
             {
                 "user_id": "creator_1",
                 "genres": ["pop", "rock"],
@@ -248,7 +256,8 @@ class TestCollaborationEngine(unittest.TestCase):
         self.assertEqual(filtered_creators[0]["user_id"], "creator_2")
 
     def test_project_milestone_generation(self):
-        """Test project milestone generation based on collaboration type"""        collaboration_types = {
+        """Test project milestone generation based on collaboration type"""
+        collaboration_types = {
             "feature": {
                 "timeline": 30,
                 "expected_milestones": [
@@ -294,7 +303,8 @@ class TestCollaborationEngine(unittest.TestCase):
                 self.assertGreater(milestones[i]["deadline_days"], milestones[i-1]["deadline_days"])
 
     def test_collaboration_workflow_management(self):
-        """Test collaboration workflow and status management"""        collaboration = {
+        """Test collaboration workflow and status management"""
+        collaboration = {
             "id": "collab_123",
             "proposer_id": "creator_1",
             "target_id": "creator_2", 
@@ -375,7 +385,8 @@ class TestCollaborationEngine(unittest.TestCase):
         self.assertTrue(collaboration["metadata"]["deliverables"][0]["approved"])
 
     def test_collaboration_insights_generation(self):
-        """Test collaboration insights and analytics generation"""        creator_id = "creator_123"
+        """Test collaboration insights and analytics generation"""
+        creator_id = "creator_123"
         collaboration_history = [
             {
                 "id": "collab_1",
@@ -449,7 +460,8 @@ class TestCollaborationEngine(unittest.TestCase):
         self.assertEqual(insights["collaboration_types"]["remix"], 1)
 
     def test_networking_score_calculation(self):
-        """Test networking score calculation for creators"""        creator = {
+        """Test networking score calculation for creators"""
+        creator = {
             "collaboration_history": 8,
             "rating": 4.5
         }
@@ -491,7 +503,8 @@ class TestCollaborationEngine(unittest.TestCase):
         self.assertAlmostEqual(total_score, 83.0, places=1)  # High networking score
 
     def test_dispute_resolution_workflow(self):
-        """Test dispute resolution workflow"""        collaboration = {
+        """Test dispute resolution workflow"""
+        collaboration = {
             "id": "collab_123",
             "proposer_id": "creator_1",
             "target_id": "creator_2",

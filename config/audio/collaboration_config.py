@@ -28,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of collaboration"""    MUSIC_PRODUCTION = "music_production"
+    """Types of collaboration"""
+    MUSIC_PRODUCTION = "music_production"
     SONGWRITING = "songwriting"
     MIXING_MASTERING = "mixing_mastering"
     VOCAL_RECORDING = "vocal_recording"
@@ -41,7 +42,8 @@ class CollaborationType(Enum):
 
 
 class SkillLevel(Enum):
-    """Skill levels for matching"""    BEGINNER = "beginner"
+    """Skill levels for matching"""
+    BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     PROFESSIONAL = "professional"
@@ -49,7 +51,8 @@ class SkillLevel(Enum):
 
 
 class CollaborationStatus(Enum):
-    """Collaboration project status"""    IDEA = "idea"
+    """Collaboration project status"""
+    IDEA = "idea"
     PLANNING = "planning"
     ACTIVE = "active"
     REVIEW = "review"
@@ -59,7 +62,8 @@ class CollaborationStatus(Enum):
 
 
 class MatchingCriteria(Enum):
-    """Criteria for collaborative matching"""    MUSICAL_STYLE = "musical_style"
+    """Criteria for collaborative matching"""
+    MUSICAL_STYLE = "musical_style"
     SKILL_LEVEL = "skill_level"
     EXPERIENCE_LEVEL = "experience_level"
     GEOGRAPHIC_LOCATION = "geographic_location"
@@ -72,7 +76,8 @@ class MatchingCriteria(Enum):
 
 
 class CommunicationChannel(Enum):
-    """Communication channels for collaboration"""    IN_APP_CHAT = "in_app_chat"
+    """Communication channels for collaboration"""
+    IN_APP_CHAT = "in_app_chat"
     VIDEO_CALL = "video_call"
     VOICE_CALL = "voice_call"
     EMAIL = "email"
@@ -84,7 +89,8 @@ class CommunicationChannel(Enum):
 
 @dataclass
 class MatchingConfig:
-    """Configuration for collaborative matching algorithms"""    enabled_criteria: List[MatchingCriteria] = field(
+    """Configuration for collaborative matching algorithms"""
+    enabled_criteria: List[MatchingCriteria] = field(
         default_factory=lambda: [
             MatchingCriteria.MUSICAL_STYLE,
             MatchingCriteria.SKILL_LEVEL,
@@ -153,7 +159,8 @@ class MatchingConfig:
 
 @dataclass
 class NetworkingConfig:
-    """Configuration for professional networking features"""    
+    """Configuration for professional networking features"""
+    
     # Profile visibility and discovery
     profile_discovery_config: Dict[str, Any] = field(default_factory=lambda: {
         "public_profile_enabled": True,
@@ -193,7 +200,8 @@ class NetworkingConfig:
 
 @dataclass
 class ProjectManagementConfig:
-    """Configuration for collaborative project management"""    
+    """Configuration for collaborative project management"""
+    
     # Project workflow settings
     workflow_config: Dict[str, Any] = field(default_factory=lambda: {
         "default_workflow": "agile_creative",
@@ -252,7 +260,8 @@ class ProjectManagementConfig:
 
 @dataclass
 class CommunicationConfig:
-    """Configuration for collaboration communication"""    
+    """Configuration for collaboration communication"""
+    
     # Available communication channels
     enabled_channels: List[CommunicationChannel] = field(
         default_factory=lambda: [
@@ -301,7 +310,8 @@ class CommunicationConfig:
 
 @dataclass
 class WorkflowConfig:
-    """Configuration for collaboration workflows"""    
+    """Configuration for collaboration workflows"""
+    
     # Workflow types
     available_workflows: List[str] = field(default_factory=lambda: [
         "creative_production",
@@ -340,7 +350,8 @@ class WorkflowConfig:
 
 @dataclass
 class CollaborationConfig:
-    """Master configuration for collaboration features"""    
+    """Master configuration for collaboration features"""
+    
     # Core configurations
     matching_config: MatchingConfig = field(default_factory=MatchingConfig)
     networking_config: NetworkingConfig = field(default_factory=NetworkingConfig)
@@ -393,18 +404,21 @@ DEFAULT_COLLABORATION_CONFIG = CollaborationConfig()
 
 
 def get_collaboration_config() -> CollaborationConfig:
-    """Get default collaboration configuration"""    return DEFAULT_COLLABORATION_CONFIG
+    """Get default collaboration configuration"""
+    return DEFAULT_COLLABORATION_CONFIG
 
 
 def validate_collaboration_config(config: CollaborationConfig) -> bool:
-    """    Validate collaboration configuration
+    """
+    Validate collaboration configuration
     
     Args:
         config: Configuration to validate
         
     Returns:
         True if configuration is valid, False otherwise
-    """    try:
+    """
+    try:
         # Validate matching configuration
         if config.matching_config.similarity_threshold < 0 or config.matching_config.similarity_threshold > 1:
             logger.error("Similarity threshold must be between 0 and 1")
@@ -438,7 +452,8 @@ def get_matching_recommendations(
     collaboration_type: CollaborationType,
     max_results: int = 10
 ) -> List[Dict[str, Any]]:
-    """    Get collaboration matching recommendations
+    """
+    Get collaboration matching recommendations
     
     Args:
         user_profile: User profile data
@@ -448,7 +463,8 @@ def get_matching_recommendations(
         
     Returns:
         List of matching recommendations
-    """    try:
+    """
+    try:
         recommendations = []
         
         logger.info(f"Generating {collaboration_type.value} recommendations for user")

@@ -19,7 +19,8 @@ This code is proprietary and belongs to Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit 
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -27,7 +28,8 @@ from datetime import datetime, timedelta
 
 
 class LogLevel(Enum):
-    """Audit log severity levels."""    DEBUG = "debug"
+    """Audit log severity levels."""
+    DEBUG = "debug"
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -36,7 +38,8 @@ class LogLevel(Enum):
 
 
 class EventCategory(Enum):
-    """Categories of audit events."""    AUTHENTICATION = "authentication"
+    """Categories of audit events."""
+    AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     CONTENT_OPERATIONS = "content_operations"
     PLATFORM_INTEGRATION = "platform_integration"
@@ -48,7 +51,8 @@ class EventCategory(Enum):
 
 
 class EventType(Enum):
-    """Specific types of audit events."""    # Authentication events
+    """Specific types of audit events."""
+    # Authentication events
     USER_LOGIN = "user_login"
     USER_LOGOUT = "user_logout"
     FAILED_LOGIN = "failed_login"
@@ -89,7 +93,8 @@ class EventType(Enum):
 
 
 class AuditStorageType(Enum):
-    """Types of audit log storage backends."""    DATABASE = "database"
+    """Types of audit log storage backends."""
+    DATABASE = "database"
     FILE_SYSTEM = "file_system"
     ELASTICSEARCH = "elasticsearch"
     SIEM = "siem"
@@ -98,7 +103,8 @@ class AuditStorageType(Enum):
 
 @dataclass
 class EventStructure:
-    """Structure definition for audit events."""    timestamp: bool = True
+    """Structure definition for audit events."""
+    timestamp: bool = True
     event_id: bool = True
     user_id: bool = True
     session_id: bool = True
@@ -141,7 +147,8 @@ class EventStructure:
 
 @dataclass
 class AuthenticationAuditConfig:
-    """Authentication-specific audit configuration."""    
+    """Authentication-specific audit configuration."""
+    
     # Events to log
     log_successful_logins: bool = True
     log_failed_logins: bool = True
@@ -178,7 +185,8 @@ class AuthenticationAuditConfig:
 
 @dataclass
 class ContentAuditConfig:
-    """Content operations audit configuration."""    
+    """Content operations audit configuration."""
+    
     # Content lifecycle tracking
     lifecycle_events: Dict[str, bool] = field(default_factory=lambda: {
         "upload": True,
@@ -220,7 +228,8 @@ class ContentAuditConfig:
 
 @dataclass
 class PlatformIntegrationAuditConfig:
-    """Platform integration audit configuration."""    
+    """Platform integration audit configuration."""
+    
     # Platform connection events
     connection_events: Dict[str, bool] = field(default_factory=lambda: {
         "oauth_authorization": True,
@@ -270,7 +279,8 @@ class PlatformIntegrationAuditConfig:
 
 @dataclass
 class RevenueAuditConfig:
-    """Revenue and financial operations audit configuration."""    
+    """Revenue and financial operations audit configuration."""
+    
     # Financial event tracking
     financial_events: Dict[str, bool] = field(default_factory=lambda: {
         "revenue_calculation": True,
@@ -310,7 +320,8 @@ class RevenueAuditConfig:
 
 @dataclass
 class SecurityEventAuditConfig:
-    """Security-specific event audit configuration."""    
+    """Security-specific event audit configuration."""
+    
     # Threat detection events
     threat_events: Dict[str, bool] = field(default_factory=lambda: {
         "malware_detection": True,
@@ -341,7 +352,8 @@ class SecurityEventAuditConfig:
 
 @dataclass
 class AuditStorageConfig:
-    """Audit log storage configuration."""    
+    """Audit log storage configuration."""
+    
     # Primary storage
     primary_storage: AuditStorageType = AuditStorageType.DATABASE
     
@@ -390,7 +402,8 @@ class AuditStorageConfig:
 
 @dataclass
 class AuditRetentionConfig:
-    """Audit log retention and lifecycle management."""    
+    """Audit log retention and lifecycle management."""
+    
     # Retention periods by event category
     retention_periods: Dict[EventCategory, int] = field(default_factory=lambda: {
         EventCategory.AUTHENTICATION: 365,  # 1 year
@@ -424,7 +437,8 @@ class AuditRetentionConfig:
 
 @dataclass
 class AuditMonitoringConfig:
-    """Audit monitoring and alerting configuration."""    
+    """Audit monitoring and alerting configuration."""
+    
     # Real-time monitoring
     real_time_monitoring: bool = True
     monitoring_interval_seconds: int = 60
@@ -488,7 +502,8 @@ class AuditMonitoringConfig:
 
 @dataclass
 class AuditComplianceConfig:
-    """Compliance-specific audit configuration."""    
+    """Compliance-specific audit configuration."""
+    
     # Regulatory compliance
     compliance_frameworks: List[str] = field(default_factory=lambda: [
         "GDPR", "CCPA", "SOX", "PCI-DSS", "ISO27001"
@@ -523,7 +538,8 @@ class AuditComplianceConfig:
 
 @dataclass
 class AuditLoggingConfig:
-    """Main audit logging configuration container."""    
+    """Main audit logging configuration container."""
+    
     # Event structure and content
     event_structure: EventStructure = field(default_factory=EventStructure)
     
@@ -569,16 +585,19 @@ audit_logging_config = AuditLoggingConfig()
 
 
 def get_audit_logging_config() -> AuditLoggingConfig:
-    """Get the audit logging configuration instance."""    return audit_logging_config
+    """Get the audit logging configuration instance."""
+    return audit_logging_config
 
 
 def get_retention_period(event_category: EventCategory) -> int:
-    """Get retention period for specific event category."""    config = get_audit_logging_config()
+    """Get retention period for specific event category."""
+    config = get_audit_logging_config()
     return config.retention.retention_periods.get(event_category, 365)
 
 
 def should_log_event(event_type: EventType, event_category: EventCategory) -> bool:
-    """Determine if an event type should be logged based on configuration."""    config = get_audit_logging_config()
+    """Determine if an event type should be logged based on configuration."""
+    config = get_audit_logging_config()
     
     # Category-specific logic
     if event_category == EventCategory.AUTHENTICATION:
@@ -594,7 +613,8 @@ def should_log_event(event_type: EventType, event_category: EventCategory) -> bo
 
 
 def validate_audit_logging_config(config: AuditLoggingConfig) -> bool:
-    """Validate audit logging configuration settings."""    # Validate retention periods
+    """Validate audit logging configuration settings."""
+    # Validate retention periods
     for period in config.retention.retention_periods.values():
         if period <= 0:
             raise ValueError(f"Retention period must be positive: {period}")

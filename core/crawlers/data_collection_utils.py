@@ -1,6 +1,7 @@
 """Data collection utility classes
 Mock implementations for essential data harvester dependencies
-"""import asyncio
+"""
+import asyncio
 import time
 from typing import Dict, Any, List, Optional
 from datetime import datetime
@@ -8,7 +9,8 @@ import logging
 
 
 class RateLimiter:
-    """Simple rate limiter for controlling request frequency"""    
+    """Simple rate limiter for controlling request frequency"""
+    
     def __init__(self, rate_limit: float = 1.0, max_burst: int = 5):
         self.rate_limit = rate_limit  # seconds between requests
         self.max_burst = max_burst
@@ -17,7 +19,8 @@ class RateLimiter:
         self.logger = logging.getLogger(__name__)
     
     async def acquire(self):
-        """Acquire permission to make a request"""        current_time = time.time()
+        """Acquire permission to make a request"""
+        current_time = time.time()
         time_since_last = current_time - self.last_request
         
         if time_since_last < self.rate_limit:
@@ -30,12 +33,14 @@ class RateLimiter:
 
 
 class DataValidator:
-    """Simple data validator for harvested data"""    
+    """Simple data validator for harvested data"""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
     def validate(self, data: Dict[str, Any], schema: Dict[str, Any] = None) -> Dict[str, Any]:
-        """        Validate data against a schema
+        """
+        Validate data against a schema
         
         Args:
             data: Data to validate
@@ -43,7 +48,8 @@ class DataValidator:
             
         Returns:
             Validated data
-        """        if not schema:
+        """
+        if not schema:
             return data
         
         validated = {}
@@ -89,19 +95,22 @@ class DataValidator:
 
 
 class ContentAnalyzer:
-    """Simple content analyzer for text and media analysis"""    
+    """Simple content analyzer for text and media analysis"""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
     async def analyze_text(self, text: str) -> Dict[str, Any]:
-        """        Analyze text content
+        """
+        Analyze text content
         
         Args:
             text: Text to analyze
             
         Returns:
             Analysis results
-        """        if not text:
+        """
+        if not text:
             return {}
         
         # Basic text analysis
@@ -141,14 +150,16 @@ class ContentAnalyzer:
         return analysis
     
     async def analyze_image(self, image_url: str) -> Dict[str, Any]:
-        """        Analyze image content
+        """
+        Analyze image content
         
         Args:
             image_url: URL of image to analyze
             
         Returns:
             Analysis results
-        """        # Mock image analysis
+        """
+        # Mock image analysis
         analysis = {
             'url': image_url,
             'format': self._detect_image_format(image_url),
@@ -162,7 +173,8 @@ class ContentAnalyzer:
         return analysis
     
     def _detect_image_format(self, url: str) -> str:
-        """Detect image format from URL"""        url_lower = url.lower()
+        """Detect image format from URL"""
+        url_lower = url.lower()
         if '.jpg' in url_lower or '.jpeg' in url_lower:
             return 'jpeg'
         elif '.png' in url_lower:
@@ -176,12 +188,14 @@ class ContentAnalyzer:
 
 
 class DataTransformer:
-    """Data transformation utilities"""    
+    """Data transformation utilities"""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
     def normalize_text(self, text: str) -> str:
-        """Normalize text content"""        if not text:
+        """Normalize text content"""
+        if not text:
             return ""
         
         # Basic normalization
@@ -190,30 +204,35 @@ class DataTransformer:
         return normalized
     
     def extract_urls(self, text: str) -> List[str]:
-        """Extract URLs from text"""        import re
+        """Extract URLs from text"""
+        import re
         url_pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
         return re.findall(url_pattern, text)
     
     def extract_hashtags(self, text: str) -> List[str]:
-        """Extract hashtags from text"""        import re
+        """Extract hashtags from text"""
+        import re
         hashtag_pattern = r'#\w+'
         return re.findall(hashtag_pattern, text)
     
     def extract_mentions(self, text: str) -> List[str]:
-        """Extract mentions from text"""        import re
+        """Extract mentions from text"""
+        import re
         mention_pattern = r'@\w+'
         return re.findall(mention_pattern, text)
 
 
 class ProxyManager:
-    """Simple proxy manager for web requests"""    
+    """Simple proxy manager for web requests"""
+    
     def __init__(self, proxies: List[str] = None):
         self.proxies = proxies or []
         self.current_proxy_index = 0
         self.logger = logging.getLogger(__name__)
     
     def get_proxy(self) -> Optional[str]:
-        """Get next proxy in rotation"""        if not self.proxies:
+        """Get next proxy in rotation"""
+        if not self.proxies:
             return None
         
         proxy = self.proxies[self.current_proxy_index]
@@ -221,9 +240,11 @@ class ProxyManager:
         return proxy
     
     def add_proxy(self, proxy: str):
-        """Add a proxy to the pool"""        if proxy not in self.proxies:
+        """Add a proxy to the pool"""
+        if proxy not in self.proxies:
             self.proxies.append(proxy)
     
     def remove_proxy(self, proxy: str):
-        """Remove a proxy from the pool"""        if proxy in self.proxies:
+        """Remove a proxy from the pool"""
+        if proxy in self.proxies:
             self.proxies.remove(proxy)

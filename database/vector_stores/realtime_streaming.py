@@ -10,7 +10,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, modification, 
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
-"""import os
+"""
+import os
 import json
 import logging
 import asyncio
@@ -45,14 +46,16 @@ settings = get_settings()
 
 
 class StreamingMode(Enum):
-    """Real-time streaming modes"""    LIVE_AUDIO = "live_audio"
+    """Real-time streaming modes"""
+    LIVE_AUDIO = "live_audio"
     LIVE_VIDEO = "live_video"
     BATCH_UPLOAD = "batch_upload"
     CONTINUOUS_MONITORING = "continuous_monitoring"
 
 
 class StreamingPriority(Enum):
-    """Streaming priority levels"""    CRITICAL = "critical"  # < 100ms latency
+    """Streaming priority levels"""
+    CRITICAL = "critical"  # < 100ms latency
     HIGH = "high"         # < 500ms latency
     MEDIUM = "medium"     # < 2s latency
     LOW = "low"          # < 10s latency
@@ -60,7 +63,8 @@ class StreamingPriority(Enum):
 
 @dataclass
 class StreamingConfig:
-    """Configuration for real-time streaming"""    mode: StreamingMode
+    """Configuration for real-time streaming"""
+    mode: StreamingMode
     priority: StreamingPriority
     content_type: str
     user_id: int
@@ -75,7 +79,8 @@ class StreamingConfig:
 
 @dataclass
 class StreamChunk:
-    """Real-time stream chunk data"""    chunk_id: str
+    """Real-time stream chunk data"""
+    chunk_id: str
     user_id: int
     content_type: str
     timestamp: datetime
@@ -88,7 +93,8 @@ class StreamChunk:
 
 @dataclass
 class LiveAlert:
-    """Real-time protection alert"""    alert_id: str
+    """Real-time protection alert"""
+    alert_id: str
     user_id: int
     content_type: str
     similarity_score: float
@@ -101,7 +107,8 @@ class LiveAlert:
 
 
 class RealTimeVectorStreaming:
-    """    Real-time vector streaming system for live content protection.
+    """
+    Real-time vector streaming system for live content protection.
     
     Features:
     - Sub-second fingerprinting and matching
@@ -111,9 +118,11 @@ class RealTimeVectorStreaming:
     - Instant alert generation
     - Multi-stream concurrent processing
     - Adaptive quality based on network conditions
-    """    
+    """
+    
     def __init__(self):
-        """Initialize real-time streaming system"""        self.config = {}
+        """Initialize real-time streaming system"""
+        self.config = {}
         self.active_streams: Dict[str, StreamingConfig] = {}
         self.stream_buffers: Dict[str, List[StreamChunk]] = {}
         self.websocket_connections: Dict[str, WebSocketServerProtocol] = {}
@@ -141,7 +150,8 @@ class RealTimeVectorStreaming:
         logger.info("Initialized RealTimeVectorStreaming system")
     
     async def initialize(self) -> None:
-        """Initialize streaming system and connections"""        try:
+        """Initialize streaming system and connections"""
+        try:
             # Initialize core components
             await self.vector_manager.initialize()
             await self.embedding_generator.initialize()
@@ -167,7 +177,8 @@ class RealTimeVectorStreaming:
         config: StreamingConfig,
         websocket: Optional[WebSocketServerProtocol] = None
     ) -> bool:
-        """        Start a new real-time streaming session
+        """
+        Start a new real-time streaming session
         
         Args:
             stream_id: Unique stream identifier
@@ -176,7 +187,8 @@ class RealTimeVectorStreaming:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             # Validate stream limits
             if len(self.active_streams) >= config.max_concurrent_streams:
                 raise StreamingError("Maximum concurrent streams reached")
@@ -221,7 +233,8 @@ class RealTimeVectorStreaming:
         chunk_data: bytes,
         metadata: Dict[str, Any] = None
     ) -> Optional[List[LiveAlert]]:
-        """        Process incoming stream chunk in real-time
+        """
+        Process incoming stream chunk in real-time
         
         Args:
             stream_id: Stream identifier
@@ -230,7 +243,8 @@ class RealTimeVectorStreaming:
             
         Returns:
             List of generated alerts if any
-        """        try:
+        """
+        try:
             if stream_id not in self.active_streams:
                 raise StreamingError(f"Stream {stream_id} not found")
             
@@ -269,7 +283,8 @@ class RealTimeVectorStreaming:
         chunk: StreamChunk,
         config: StreamingConfig
     ) -> List[LiveAlert]:
-        """Process chunk with critical priority (< 100ms)"""        start_time = datetime.now()
+        """Process chunk with critical priority (< 100ms)"""
+        start_time = datetime.now()
         alerts = []
         
         try:
@@ -317,7 +332,8 @@ class RealTimeVectorStreaming:
         chunk: StreamChunk,
         config: StreamingConfig
     ) -> List[LiveAlert]:
-        """Process chunk with high priority (< 500ms)"""        start_time = datetime.now()
+        """Process chunk with high priority (< 500ms)"""
+        start_time = datetime.now()
         alerts = []
         
         try:
@@ -361,7 +377,8 @@ class RealTimeVectorStreaming:
             return []
     
     async def _fast_audio_embedding(self, audio_data: bytes) -> np.ndarray:
-        """Generate fast audio embedding for critical processing"""        try:
+        """Generate fast audio embedding for critical processing"""
+        try:
             # Use lightweight audio features for speed
             import io
             import soundfile as sf
@@ -394,7 +411,8 @@ class RealTimeVectorStreaming:
             return np.zeros(512, dtype=np.float32)
     
     async def _fast_video_embedding(self, video_data: bytes) -> np.ndarray:
-        """Generate fast video embedding for critical processing"""        try:
+        """Generate fast video embedding for critical processing"""
+        try:
             # Extract keyframes and create embeddings
             import io
             import tempfile
@@ -438,7 +456,8 @@ class RealTimeVectorStreaming:
             return np.zeros(512, dtype=np.float32)
     
     async def _fast_image_embedding(self, image_data: bytes) -> np.ndarray:
-        """Generate fast image embedding for critical processing"""        try:
+        """Generate fast image embedding for critical processing"""
+        try:
             # Convert bytes to image
             image = Image.open(io.BytesIO(image_data))
             image = image.convert('RGB')
@@ -467,7 +486,8 @@ class RealTimeVectorStreaming:
             return np.zeros(512, dtype=np.float32)
     
     async def _fast_text_embedding(self, text: str) -> np.ndarray:
-        """Generate fast text embedding for critical processing"""        try:
+        """Generate fast text embedding for critical processing"""
+        try:
             # Simple TF-IDF like features for speed
             from collections import Counter
             import re
@@ -510,7 +530,8 @@ class RealTimeVectorStreaming:
         query_vector: np.ndarray,
         threshold: float = 0.8
     ) -> List[Dict[str, Any]]:
-        """Perform cached similarity search for speed"""        try:
+        """Perform cached similarity search for speed"""
+        try:
             # Generate cache key
             vector_hash = hash(query_vector.tobytes())
             cache_key = f"similarity:{content_type}:{vector_hash}:{threshold}"
@@ -553,7 +574,8 @@ class RealTimeVectorStreaming:
         similarity_result: Dict[str, Any],
         config: StreamingConfig
     ) -> LiveAlert:
-        """Generate live protection alert"""        try:
+        """Generate live protection alert"""
+        try:
             alert = LiveAlert(
                 alert_id=f"alert_{chunk.chunk_id}_{similarity_result['content_id']}",
                 user_id=chunk.user_id,
@@ -585,7 +607,8 @@ class RealTimeVectorStreaming:
         chunk: StreamChunk,
         alerts: List[LiveAlert]
     ) -> None:
-        """Send real-time update via WebSocket"""        try:
+        """Send real-time update via WebSocket"""
+        try:
             stream_id = None
             for sid, config in self.active_streams.items():
                 if config.user_id == user_id:
@@ -618,7 +641,8 @@ class RealTimeVectorStreaming:
             logger.error(f"Failed to send real-time update: {str(e)}")
     
     async def stop_stream(self, stream_id: str) -> bool:
-        """Stop streaming session"""        try:
+        """Stop streaming session"""
+        try:
             if stream_id not in self.active_streams:
                 return False
             
@@ -648,7 +672,8 @@ class RealTimeVectorStreaming:
             return False
     
     async def get_stream_stats(self, stream_id: str) -> Dict[str, Any]:
-        """Get streaming session statistics"""        try:
+        """Get streaming session statistics"""
+        try:
             if stream_id not in self.active_streams:
                 return {}
             
@@ -677,7 +702,8 @@ class RealTimeVectorStreaming:
             return {}
     
     async def get_global_stats(self) -> Dict[str, Any]:
-        """Get global streaming system statistics"""        return {
+        """Get global streaming system statistics"""
+        return {
             "active_streams": len(self.active_streams),
             "total_chunks_processed": self.processing_stats["total_chunks_processed"],
             "average_processing_time_ms": self.processing_stats["average_processing_time"],
@@ -686,7 +712,8 @@ class RealTimeVectorStreaming:
         }
     
     def _determine_alert_severity(self, similarity_score: float) -> str:
-        """Determine alert severity based on similarity score"""        if similarity_score >= 0.95:
+        """Determine alert severity based on similarity score"""
+        if similarity_score >= 0.95:
             return "critical"
         elif similarity_score >= 0.90:
             return "high"
@@ -696,7 +723,8 @@ class RealTimeVectorStreaming:
             return "low"
     
     async def _validate_streaming_permissions(self, user_id: int, mode: StreamingMode) -> bool:
-        """Validate user permissions for streaming"""        try:
+        """Validate user permissions for streaming"""
+        try:
             # Check user subscription level, API limits, etc.
             # This would integrate with your user management system
             return True  # Simplified for now
@@ -706,7 +734,8 @@ class RealTimeVectorStreaming:
             return False
     
     async def _queue_chunk_processing(self, chunk: StreamChunk, config: StreamingConfig) -> None:
-        """Queue chunk for batch processing"""        try:
+        """Queue chunk for batch processing"""
+        try:
             # Add to processing queue for background handling
             queue_data = {
                 "chunk_id": chunk.chunk_id,
@@ -725,7 +754,8 @@ class RealTimeVectorStreaming:
         chunk: StreamChunk,
         results: List[Dict[str, Any]]
     ) -> None:
-        """Cache search results for future use"""        try:
+        """Cache search results for future use"""
+        try:
             cache_key = f"search_results:{chunk.chunk_id}"
             cache_data = {
                 "chunk_id": chunk.chunk_id,
@@ -740,7 +770,8 @@ class RealTimeVectorStreaming:
             logger.error(f"Failed to cache search results: {str(e)}")
     
     async def _store_alert(self, alert: LiveAlert) -> None:
-        """Store alert in database"""        try:
+        """Store alert in database"""
+        try:
             async with get_db_session() as session:
                 db_alert = ProtectionAlert(
                     alert_id=alert.alert_id,
@@ -762,7 +793,8 @@ class RealTimeVectorStreaming:
             logger.error(f"Failed to store alert: {str(e)}")
     
     async def _update_processing_metrics(self, processing_time: float, alerts_count: int) -> None:
-        """Update processing performance metrics"""        try:
+        """Update processing performance metrics"""
+        try:
             self.processing_stats["total_chunks_processed"] += 1
             
             # Update average processing time
@@ -782,7 +814,8 @@ class RealTimeVectorStreaming:
             logger.error(f"Failed to update processing metrics: {str(e)}")
     
     async def _check_system_health(self) -> str:
-        """Check overall system health"""        try:
+        """Check overall system health"""
+        try:
             # Check Redis connection
             redis_healthy = await self.redis_client.ping()
             
@@ -805,7 +838,8 @@ class RealTimeVectorStreaming:
             return "unhealthy"
     
     async def _process_stream(self, stream_id: str) -> None:
-        """Background stream processing task"""        try:
+        """Background stream processing task"""
+        try:
             config = self.active_streams[stream_id]
             buffer = self.stream_buffers[stream_id]
             
@@ -859,7 +893,8 @@ class RealTimeVectorStreaming:
             await self.stop_stream(stream_id)
     
     async def close(self) -> None:
-        """Close streaming system and cleanup"""        try:
+        """Close streaming system and cleanup"""
+        try:
             # Stop all active streams
             for stream_id in list(self.active_streams.keys()):
                 await self.stop_stream(stream_id)

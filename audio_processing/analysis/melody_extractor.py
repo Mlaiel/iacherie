@@ -5,7 +5,8 @@ to identify, track, and analyze melodic content in audio signals.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import numpy as np
+"""
+import numpy as np
 import logging
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
@@ -18,21 +19,24 @@ from scipy import ndimage
 
 
 class MelodyExtractionMethod(Enum):
-    """Methods for melody extraction"""    PYIN = "pyin"
+    """Methods for melody extraction"""
+    PYIN = "pyin"
     CREPE = "crepe"
     YIN = "yin"
     HYBRID = "hybrid"
 
 
 class MelodyConfidence(Enum):
-    """Melody confidence levels"""    HIGH = 0.8
+    """Melody confidence levels"""
+    HIGH = 0.8
     MEDIUM = 0.6
     LOW = 0.4
 
 
 @dataclass
 class MelodySegment:
-    """Individual melody segment"""    start_time: float
+    """Individual melody segment"""
+    start_time: float
     end_time: float
     frequencies: np.ndarray
     confidences: np.ndarray
@@ -45,7 +49,8 @@ class MelodySegment:
 
 @dataclass
 class MelodyAnalysisResult:
-    """Complete melody analysis results"""    fundamental_frequencies: np.ndarray
+    """Complete melody analysis results"""
+    fundamental_frequencies: np.ndarray
     confidence_scores: np.ndarray
     time_stamps: np.ndarray
     voiced_segments: np.ndarray
@@ -63,11 +68,13 @@ class MelodyAnalysisResult:
 
 
 class MelodyExtractor:
-    """    🎼 Professional Melody Extraction Engine
+    """
+    🎼 Professional Melody Extraction Engine
     
     Advanced AI-powered melody line detection with multiple extraction methods,
     confidence scoring, vibrato analysis, and comprehensive melodic characterization.
-    """    
+    """
+    
     def __init__(self, 
                  sample_rate: int = 44100,
                  frame_length: int = 2048,
@@ -76,7 +83,8 @@ class MelodyExtractor:
                  fmax: float = 2000.0,
                  extraction_method: MelodyExtractionMethod = MelodyExtractionMethod.PYIN,
                  confidence_threshold: float = 0.6):
-        """        Initialize melody extractor with advanced configuration
+        """
+        Initialize melody extractor with advanced configuration
         
         Args:
             sample_rate: Audio sample rate
@@ -86,7 +94,8 @@ class MelodyExtractor:
             fmax: Maximum frequency for pitch detection
             extraction_method: Primary extraction method
             confidence_threshold: Minimum confidence for melody detection
-        """        self.logger = logging.getLogger(self.__class__.__name__)
+        """
+        self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
         self.frame_length = frame_length
         self.hop_length = hop_length
@@ -112,14 +121,16 @@ class MelodyExtractor:
         self.logger.info(f"MelodyExtractor initialized: {extraction_method.value} method")
     
     async def extract_melody(self, audio_data: np.ndarray) -> MelodyAnalysisResult:
-        """        Extract and analyze melody from audio signal
+        """
+        Extract and analyze melody from audio signal
         
         Args:
             audio_data: Input audio signal
             
         Returns:
             Complete melody analysis results
-        """        try:
+        """
+        try:
             self.logger.info("Starting melody extraction...")
             
             # Primary melody extraction
@@ -180,7 +191,8 @@ class MelodyExtractor:
     
     async def _extract_fundamental_frequencies(self, 
                                              audio_data: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """Extract fundamental frequencies using selected method"""        def extract_f0():
+        """Extract fundamental frequencies using selected method"""
+        def extract_f0():
             if self.extraction_method == MelodyExtractionMethod.PYIN:
                 return self._pyin_extraction(audio_data)
             elif self.extraction_method == MelodyExtractionMethod.YIN:
@@ -193,7 +205,8 @@ class MelodyExtractor:
         return await asyncio.get_event_loop().run_in_executor(self.executor, extract_f0)
     
     def _pyin_extraction(self, audio_data: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """PYIN-based fundamental frequency extraction"""        try:
+        """PYIN-based fundamental frequency extraction"""
+        try:
             f0, voiced_flag, voiced_probs = librosa.pyin(
                 audio_data,
                 fmin=self.fmin,
@@ -218,7 +231,8 @@ class MelodyExtractor:
             return np.zeros(n_frames), np.zeros(n_frames), np.zeros(n_frames, dtype=bool)
     
     def _yin_extraction(self, audio_data: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """YIN-based fundamental frequency extraction"""        try:
+        """YIN-based fundamental frequency extraction"""
+        try:
             # Simplified YIN implementation
             f0 = librosa.yin(
                 audio_data,
@@ -244,7 +258,8 @@ class MelodyExtractor:
             return np.zeros(n_frames), np.zeros(n_frames), np.zeros(n_frames, dtype=bool)
     
     def _hybrid_extraction(self, audio_data: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """Hybrid extraction combining multiple methods"""        try:
+        """Hybrid extraction combining multiple methods"""
+        try:
             # Get results from multiple methods
             f0_pyin, conf_pyin, voiced_pyin = self._pyin_extraction(audio_data)
             f0_yin, conf_yin, voiced_yin = self._yin_extraction(audio_data)
@@ -265,7 +280,8 @@ class MelodyExtractor:
                             confidence: np.ndarray, 
                             voiced: np.ndarray, 
                             time_stamps: np.ndarray) -> List[MelodySegment]:
-        """Segment melody into coherent phrases"""        def segment():
+        """Segment melody into coherent phrases"""
+        def segment():
             segments = []
             
             # Find voiced segments above confidence threshold
@@ -317,7 +333,8 @@ class MelodyExtractor:
         return await asyncio.get_event_loop().run_in_executor(self.executor, segment)
     
     def _frequency_to_note(self, frequency: float) -> str:
-        """Convert frequency to musical note name"""        if frequency <= 0:
+        """Convert frequency to musical note name"""
+        if frequency <= 0:
             return "Rest"
         
         # A4 = 440 Hz is note number 69
@@ -333,7 +350,8 @@ class MelodyExtractor:
     def _analyze_segment_vibrato(self, 
                                frequencies: np.ndarray, 
                                times: np.ndarray) -> Tuple[float, float]:
-        """Analyze vibrato characteristics in a melody segment"""        if len(frequencies) < 10:  # Need sufficient data for vibrato analysis
+        """Analyze vibrato characteristics in a melody segment"""
+        if len(frequencies) < 10:  # Need sufficient data for vibrato analysis
             return 0.0, 0.0
         
         # Remove linear trend to isolate vibrato
@@ -362,7 +380,8 @@ class MelodyExtractor:
     async def _analyze_key_signature(self, 
                                    f0: np.ndarray, 
                                    voiced: np.ndarray) -> Tuple[Optional[str], Dict[str, Any]]:
-        """Analyze key signature and scale characteristics"""        def analyze_key():
+        """Analyze key signature and scale characteristics"""
+        def analyze_key():
             if not np.any(voiced):
                 return None, {}
             
@@ -411,7 +430,8 @@ class MelodyExtractor:
     async def _compute_melodic_intervals(self, 
                                        f0: np.ndarray, 
                                        voiced: np.ndarray) -> List[float]:
-        """Compute melodic intervals in semitones"""        def compute_intervals():
+        """Compute melodic intervals in semitones"""
+        def compute_intervals():
             if not np.any(voiced):
                 return []
             
@@ -431,7 +451,8 @@ class MelodyExtractor:
     async def _analyze_melodic_contour(self, 
                                      f0: np.ndarray, 
                                      voiced: np.ndarray) -> np.ndarray:
-        """Analyze melodic contour (shape)"""        def analyze_contour():
+        """Analyze melodic contour (shape)"""
+        def analyze_contour():
             if not np.any(voiced):
                 return np.array([])
             
@@ -455,7 +476,8 @@ class MelodyExtractor:
                              f0: np.ndarray, 
                              voiced: np.ndarray, 
                              time_stamps: np.ndarray) -> Dict[str, float]:
-        """Analyze global vibrato characteristics"""        def analyze():
+        """Analyze global vibrato characteristics"""
+        def analyze():
             if not np.any(voiced):
                 return {'rate': 0.0, 'depth': 0.0, 'presence': 0.0}
             
@@ -495,7 +517,8 @@ class MelodyExtractor:
     async def _compute_pitch_stability(self, 
                                      f0: np.ndarray, 
                                      voiced: np.ndarray) -> float:
-        """Compute overall pitch stability"""        def compute():
+        """Compute overall pitch stability"""
+        def compute():
             if not np.any(voiced):
                 return 0.0
             
@@ -514,7 +537,8 @@ class MelodyExtractor:
     async def _analyze_note_transitions(self, 
                                       f0: np.ndarray, 
                                       voiced: np.ndarray) -> Dict[str, int]:
-        """Analyze note transition patterns"""        def analyze():
+        """Analyze note transition patterns"""
+        def analyze():
             if not np.any(voiced):
                 return {}
             
@@ -534,7 +558,8 @@ class MelodyExtractor:
     async def _compute_melodic_complexity(self, 
                                         f0: np.ndarray, 
                                         voiced: np.ndarray) -> float:
-        """Compute melodic complexity score"""        def compute():
+        """Compute melodic complexity score"""
+        def compute():
             if not np.any(voiced):
                 return 0.0
             
@@ -572,9 +597,11 @@ class MelodyExtractor:
         return await asyncio.get_event_loop().run_in_executor(self.executor, compute)
     
     def extract_real_time_melody(self, frame: np.ndarray) -> Dict[str, Any]:
-        """        Real-time melody extraction for single frame
+        """
+        Real-time melody extraction for single frame
         Optimized for low-latency processing
-        """        try:
+        """
+        try:
             # Simple YIN-based pitch detection
             f0 = librosa.yin(
                 frame,
@@ -618,5 +645,6 @@ class MelodyExtractor:
             }
     
     def __del__(self):
-        """Cleanup thread pool"""        if hasattr(self, 'executor'):
+        """Cleanup thread pool"""
+        if hasattr(self, 'executor'):
             self.executor.shutdown(wait=False)

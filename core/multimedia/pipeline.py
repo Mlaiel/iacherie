@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union, Callable, Type
 from dataclasses import dataclass, field
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class PipelineStepType(Enum):
-    """Pipeline step types"""    PROCESSOR = "processor"
+    """Pipeline step types"""
+    PROCESSOR = "processor"
     VALIDATOR = "validator"
     TRANSFORMER = "transformer"
     ANALYZER = "analyzer"
@@ -41,7 +43,8 @@ class PipelineStepType(Enum):
 
 
 class PipelineStatus(Enum):
-    """Pipeline execution status"""    PENDING = "pending"
+    """Pipeline execution status"""
+    PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -51,7 +54,8 @@ class PipelineStatus(Enum):
 
 
 class ExecutionMode(Enum):
-    """Pipeline execution modes"""    SEQUENTIAL = "sequential"
+    """Pipeline execution modes"""
+    SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     CONDITIONAL = "conditional"
     DYNAMIC = "dynamic"
@@ -59,7 +63,8 @@ class ExecutionMode(Enum):
 
 @dataclass
 class PipelineStep:
-    """Pipeline step definition"""    step_id: str
+    """Pipeline step definition"""
+    step_id: str
     name: str
     description: str
     step_type: PipelineStepType
@@ -80,7 +85,8 @@ class PipelineStep:
 
 @dataclass
 class PipelineDefinition:
-    """Complete pipeline definition"""    pipeline_id: str
+    """Complete pipeline definition"""
+    pipeline_id: str
     name: str
     description: str
     version: str
@@ -100,7 +106,8 @@ class PipelineDefinition:
 
 @dataclass
 class PipelineContext:
-    """Pipeline execution context"""    execution_id: str
+    """Pipeline execution context"""
+    execution_id: str
     pipeline_id: str
     user_id: str
     input_data: Dict[str, Any]
@@ -119,7 +126,8 @@ class PipelineContext:
 
 @dataclass
 class StepExecutionResult:
-    """Step execution result"""    step_id: str
+    """Step execution result"""
+    step_id: str
     status: PipelineStatus
     output_data: Dict[str, Any] = field(default_factory=dict)
     processing_time: float = 0.0
@@ -131,7 +139,8 @@ class StepExecutionResult:
 
 
 class MultimediaPipeline:
-    """Enterprise multimedia processing pipeline"""    
+    """Enterprise multimedia processing pipeline"""
+    
     def __init__(
         self, 
         config: Dict[str, Any],
@@ -167,7 +176,8 @@ class MultimediaPipeline:
         self._setup_event_handlers()
         
     async def initialize(self):
-        """Initialize pipeline engine"""        try:
+        """Initialize pipeline engine"""
+        try:
             await self.registry.initialize()
             await self._load_default_pipelines()
             
@@ -178,7 +188,8 @@ class MultimediaPipeline:
             raise
             
     async def register_pipeline(self, pipeline_def: PipelineDefinition) -> bool:
-        """Register new pipeline definition"""        try:
+        """Register new pipeline definition"""
+        try:
             # Validate pipeline
             validation_result = await self._validate_pipeline(pipeline_def)
             if not validation_result["valid"]:
@@ -210,7 +221,8 @@ class MultimediaPipeline:
         parameters: Dict[str, Any] = None,
         execution_options: Dict[str, Any] = None
     ) -> PipelineContext:
-        """Execute pipeline"""        execution_id = str(uuid.uuid4())
+        """Execute pipeline"""
+        execution_id = str(uuid.uuid4())
         start_time = datetime.now(timezone.utc)
         
         try:
@@ -311,7 +323,8 @@ class MultimediaPipeline:
                 pass
                 
     async def get_execution_status(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get pipeline execution status"""        context = self.active_executions.get(execution_id)
+        """Get pipeline execution status"""
+        context = self.active_executions.get(execution_id)
         if not context:
             return None
             
@@ -328,7 +341,8 @@ class MultimediaPipeline:
         }
         
     async def cancel_execution(self, execution_id: str) -> bool:
-        """Cancel pipeline execution"""        try:
+        """Cancel pipeline execution"""
+        try:
             context = self.active_executions.get(execution_id)
             if not context or context.status not in [PipelineStatus.PENDING, PipelineStatus.RUNNING]:
                 return False
@@ -351,7 +365,8 @@ class MultimediaPipeline:
             return False
             
     async def pause_execution(self, execution_id: str) -> bool:
-        """Pause pipeline execution"""        try:
+        """Pause pipeline execution"""
+        try:
             context = self.active_executions.get(execution_id)
             if not context or context.status != PipelineStatus.RUNNING:
                 return False
@@ -373,7 +388,8 @@ class MultimediaPipeline:
             return False
             
     async def resume_execution(self, execution_id: str) -> bool:
-        """Resume paused pipeline execution"""        try:
+        """Resume paused pipeline execution"""
+        try:
             context = self.active_executions.get(execution_id)
             if not context or context.status != PipelineStatus.PAUSED:
                 return False
@@ -395,7 +411,8 @@ class MultimediaPipeline:
             return False
             
     def list_pipelines(self, enabled_only: bool = True) -> List[Dict[str, Any]]:
-        """List available pipelines"""        pipelines = []
+        """List available pipelines"""
+        pipelines = []
         
         for pipeline_id, pipeline_def in self.pipeline_definitions.items():
             if enabled_only and not pipeline_def.enabled:
@@ -415,7 +432,8 @@ class MultimediaPipeline:
         return pipelines
         
     async def get_pipeline_stats(self) -> Dict[str, Any]:
-        """Get pipeline statistics"""        return {
+        """Get pipeline statistics"""
+        return {
             **self.pipeline_stats,
             "active_executions": len(self.active_executions),
             "registered_pipelines": len(self.pipeline_definitions),
@@ -423,7 +441,8 @@ class MultimediaPipeline:
         }
         
     async def health_check(self) -> Dict[str, Any]:
-        """Pipeline engine health check"""        try:
+        """Pipeline engine health check"""
+        try:
             # Check registry health
             registry_health = await self.registry.health_check()
             
@@ -462,7 +481,8 @@ class MultimediaPipeline:
     # Private methods
     
     async def _execute_pipeline_steps(self, pipeline_def: PipelineDefinition, context: PipelineContext):
-        """Execute pipeline steps"""        try:
+        """Execute pipeline steps"""
+        try:
             if pipeline_def.execution_mode == ExecutionMode.SEQUENTIAL:
                 await self._execute_sequential_steps(pipeline_def, context)
             elif pipeline_def.execution_mode == ExecutionMode.PARALLEL:
@@ -479,7 +499,8 @@ class MultimediaPipeline:
             raise
             
     async def _execute_sequential_steps(self, pipeline_def: PipelineDefinition, context: PipelineContext):
-        """Execute steps sequentially"""        total_steps = len(pipeline_def.steps)
+        """Execute steps sequentially"""
+        total_steps = len(pipeline_def.steps)
         
         for i, step in enumerate(pipeline_def.steps):
             if not step.enabled:
@@ -514,7 +535,8 @@ class MultimediaPipeline:
                         context.step_results[f"{step.step_id}_fallback"] = step_result
                         
     async def _execute_parallel_steps(self, pipeline_def: PipelineDefinition, context: PipelineContext):
-        """Execute steps in parallel where possible"""        # Group steps by dependencies
+        """Execute steps in parallel where possible"""
+        # Group steps by dependencies
         step_groups = self._group_steps_by_dependencies(pipeline_def.steps)
         
         for group in step_groups:
@@ -541,7 +563,8 @@ class MultimediaPipeline:
                     )
                     
     async def _execute_conditional_steps(self, pipeline_def: PipelineDefinition, context: PipelineContext):
-        """Execute steps based on conditions"""        for step in pipeline_def.steps:
+        """Execute steps based on conditions"""
+        for step in pipeline_def.steps:
             if not step.enabled:
                 continue
                 
@@ -558,12 +581,14 @@ class MultimediaPipeline:
             context.step_results[step.step_id] = step_result
             
     async def _execute_dynamic_steps(self, pipeline_def: PipelineDefinition, context: PipelineContext):
-        """Execute steps dynamically based on runtime conditions"""        # This is a simplified implementation
+        """Execute steps dynamically based on runtime conditions"""
+        # This is a simplified implementation
         # In practice, this would involve more complex routing logic
         await self._execute_sequential_steps(pipeline_def, context)
         
     async def _execute_step(self, step: PipelineStep, context: PipelineContext) -> StepExecutionResult:
-        """Execute individual pipeline step"""        start_time = datetime.now(timezone.utc)
+        """Execute individual pipeline step"""
+        start_time = datetime.now(timezone.utc)
         
         try:
             # Get component from registry
@@ -651,7 +676,8 @@ class MultimediaPipeline:
             )
             
     def _prepare_step_input(self, step: PipelineStep, context: PipelineContext) -> Dict[str, Any]:
-        """Prepare input data for step execution"""        input_data = {}
+        """Prepare input data for step execution"""
+        input_data = {}
         
         # Map inputs from context
         for target_key, source_key in step.input_mapping.items():
@@ -680,7 +706,8 @@ class MultimediaPipeline:
         return input_data
         
     def _process_step_output(self, step: PipelineStep, output_data: Dict[str, Any], context: PipelineContext) -> Dict[str, Any]:
-        """Process step output and update context"""        processed_output = output_data
+        """Process step output and update context"""
+        processed_output = output_data
         
         # Apply output mapping
         if step.output_mapping:
@@ -699,7 +726,8 @@ class MultimediaPipeline:
         return processed_output
         
     def _get_nested_value(self, data: Dict[str, Any], key_path: str) -> Any:
-        """Get nested value from dictionary using dot notation"""        keys = key_path.split(".")
+        """Get nested value from dictionary using dot notation"""
+        keys = key_path.split(".")
         current = data
         
         for key in keys:
@@ -711,7 +739,8 @@ class MultimediaPipeline:
         return current
         
     def _set_nested_value(self, data: Dict[str, Any], key_path: str, value: Any):
-        """Set nested value in dictionary using dot notation"""        keys = key_path.split(".")
+        """Set nested value in dictionary using dot notation"""
+        keys = key_path.split(".")
         current = data
         
         for key in keys[:-1]:
@@ -722,7 +751,8 @@ class MultimediaPipeline:
         current[keys[-1]] = value
         
     def _group_steps_by_dependencies(self, steps: List[PipelineStep]) -> List[List[PipelineStep]]:
-        """Group steps by their dependencies for parallel execution"""        groups = []
+        """Group steps by their dependencies for parallel execution"""
+        groups = []
         remaining_steps = steps.copy()
         completed_steps = set()
         
@@ -745,7 +775,8 @@ class MultimediaPipeline:
         return groups
         
     def _evaluate_conditions(self, conditions: Dict[str, Any], context: PipelineContext) -> bool:
-        """Evaluate step conditions"""        # This is a simplified implementation
+        """Evaluate step conditions"""
+        # This is a simplified implementation
         # In practice, you would implement a more sophisticated condition evaluator
         
         for condition_type, condition_value in conditions.items():
@@ -774,7 +805,8 @@ class MultimediaPipeline:
         return True
         
     async def _validate_pipeline(self, pipeline_def: PipelineDefinition) -> Dict[str, Any]:
-        """Validate pipeline definition"""        errors = []
+        """Validate pipeline definition"""
+        errors = []
         
         # Basic validation
         if not pipeline_def.pipeline_id:
@@ -816,7 +848,8 @@ class MultimediaPipeline:
         }
         
     async def _load_default_pipelines(self):
-        """Load default pipeline definitions"""        # This would typically load from configuration files or database
+        """Load default pipeline definitions"""
+        # This would typically load from configuration files or database
         # For now, we'll create some basic default pipelines
         
         default_pipelines = [
@@ -855,7 +888,8 @@ class MultimediaPipeline:
             await self.register_pipeline(pipeline_def)
             
     def _setup_event_handlers(self):
-        """Setup event handlers"""        self.event_dispatcher.subscribe("pipeline_started", self._handle_pipeline_started)
+        """Setup event handlers"""
+        self.event_dispatcher.subscribe("pipeline_started", self._handle_pipeline_started)
         self.event_dispatcher.subscribe("pipeline_completed", self._handle_pipeline_completed)
         self.event_dispatcher.subscribe("pipeline_failed", self._handle_pipeline_failed)
         self.event_dispatcher.subscribe("step_started", self._handle_step_started)
@@ -863,7 +897,8 @@ class MultimediaPipeline:
         self.event_dispatcher.subscribe("step_failed", self._handle_step_failed)
         
     async def _update_pipeline_stats(self, pipeline_id: str, execution_time: float, success: bool):
-        """Update pipeline statistics"""        self.pipeline_stats["total_executions"] += 1
+        """Update pipeline statistics"""
+        self.pipeline_stats["total_executions"] += 1
         
         if success:
             self.pipeline_stats["successful_executions"] += 1
@@ -900,19 +935,25 @@ class MultimediaPipeline:
     # Event handlers
     
     async def _handle_pipeline_started(self, event_data: Dict[str, Any]):
-        """Handle pipeline started event"""        logger.info(f"Pipeline started: {event_data['execution_id']}")
+        """Handle pipeline started event"""
+        logger.info(f"Pipeline started: {event_data['execution_id']}")
         
     async def _handle_pipeline_completed(self, event_data: Dict[str, Any]):
-        """Handle pipeline completed event"""        logger.info(f"Pipeline completed: {event_data['execution_id']}")
+        """Handle pipeline completed event"""
+        logger.info(f"Pipeline completed: {event_data['execution_id']}")
         
     async def _handle_pipeline_failed(self, event_data: Dict[str, Any]):
-        """Handle pipeline failed event"""        logger.error(f"Pipeline failed: {event_data['execution_id']} - {event_data.get('error')}")
+        """Handle pipeline failed event"""
+        logger.error(f"Pipeline failed: {event_data['execution_id']} - {event_data.get('error')}")
         
     async def _handle_step_started(self, event_data: Dict[str, Any]):
-        """Handle step started event"""        logger.debug(f"Step started: {event_data['step_id']}")
+        """Handle step started event"""
+        logger.debug(f"Step started: {event_data['step_id']}")
         
     async def _handle_step_completed(self, event_data: Dict[str, Any]):
-        """Handle step completed event"""        logger.debug(f"Step completed: {event_data['step_id']}")
+        """Handle step completed event"""
+        logger.debug(f"Step completed: {event_data['step_id']}")
         
     async def _handle_step_failed(self, event_data: Dict[str, Any]):
-        """Handle step failed event"""        logger.warning(f"Step failed: {event_data['step_id']} - {event_data.get('error')}")
+        """Handle step failed event"""
+        logger.warning(f"Step failed: {event_data['step_id']} - {event_data.get('error')}")

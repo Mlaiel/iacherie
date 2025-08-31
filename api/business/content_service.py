@@ -6,7 +6,8 @@ processing, protection, and distribution for multi-format content.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import uuid
+"""
+import uuid
 import os
 import shutil
 from datetime import datetime, timedelta
@@ -29,11 +30,13 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 class ContentService:
-    """    Comprehensive content management service for multi-format content creators.
+    """
+    Comprehensive content management service for multi-format content creators.
     
     Handles: Audio, Video, Images, Text, Documents
     Features: Upload, Processing, Protection, Analytics, Distribution
-    """    
+    """
+    
     def __init__(self):
         self.file_handler = FileHandler()
         self.content_validator = ContentValidator()
@@ -41,7 +44,8 @@ class ContentService:
         self.analytics = AnalyticsService()
     
     async def create_content(self, content_data: ContentCreate, db: Session = None) -> Content:
-        """        Create new content entry with comprehensive metadata.
+        """
+        Create new content entry with comprehensive metadata.
         
         Args:
             content_data: Content creation data
@@ -49,7 +53,8 @@ class ContentService:
             
         Returns:
             Created content instance
-        """        try:
+        """
+        try:
             if not db:
                 db = next(get_db())
             
@@ -104,7 +109,8 @@ class ContentService:
             raise
     
     async def get_content_by_id(self, content_id: str, db: Session = None) -> Optional[Content]:
-        """Get content by ID with owner information"""        try:
+        """Get content by ID with owner information"""
+        try:
             if not db:
                 db = next(get_db())
             
@@ -125,8 +131,10 @@ class ContentService:
         file_type: Optional[str] = None,
         db: Session = None
     ) -> List[Content]:
-        """        Get user's content with filtering and pagination.
-        """        try:
+        """
+        Get user's content with filtering and pagination.
+        """
+        try:
             if not db:
                 db = next(get_db())
             
@@ -150,8 +158,10 @@ class ContentService:
             return []
     
     async def update_content(self, content_id: str, content_update: ContentUpdate, db: Session = None) -> Optional[Content]:
-        """        Update content metadata and settings.
-        """        try:
+        """
+        Update content metadata and settings.
+        """
+        try:
             if not db:
                 db = next(get_db())
             
@@ -180,8 +190,10 @@ class ContentService:
             raise
     
     async def delete_content(self, content_id: str, db: Session = None) -> bool:
-        """        Soft delete content and cleanup associated files.
-        """        try:
+        """
+        Soft delete content and cleanup associated files.
+        """
+        try:
             if not db:
                 db = next(get_db())
             
@@ -208,8 +220,10 @@ class ContentService:
             return False
     
     async def check_content_access(self, content: Content, user: Optional[User]) -> bool:
-        """        Check if user has access to content based on privacy settings.
-        """        try:
+        """
+        Check if user has access to content based on privacy settings.
+        """
+        try:
             # Public content is accessible to everyone
             if content.privacy_level == "public":
                 return True
@@ -236,7 +250,8 @@ class ContentService:
             return False
     
     async def increment_view_count(self, content_id: str, db: Session = None) -> None:
-        """Increment content view count"""        try:
+        """Increment content view count"""
+        try:
             if not db:
                 db = next(get_db())
             
@@ -252,8 +267,10 @@ class ContentService:
             logger.error(f"Increment view count error: {str(e)}")
     
     async def toggle_like(self, content_id: str, user_id: str, db: Session = None) -> Dict[str, Any]:
-        """        Toggle like/unlike for content.
-        """        try:
+        """
+        Toggle like/unlike for content.
+        """
+        try:
             if not db:
                 db = next(get_db())
             
@@ -297,8 +314,10 @@ class ContentService:
         user_id: Optional[str] = None,
         db: Session = None
     ) -> Dict[str, Any]:
-        """        Search public content with full-text search and filters.
-        """        try:
+        """
+        Search public content with full-text search and filters.
+        """
+        try:
             if not db:
                 db = next(get_db())
             
@@ -381,8 +400,10 @@ class ContentService:
         limit: int = 20,
         db: Session = None
     ) -> List[Dict[str, Any]]:
-        """        Get trending content based on engagement metrics.
-        """        try:
+        """
+        Get trending content based on engagement metrics.
+        """
+        try:
             if not db:
                 db = next(get_db())
             
@@ -453,8 +474,10 @@ class ContentService:
             return []
     
     async def generate_thumbnail(self, content_id: str, db: Session = None) -> Optional[str]:
-        """        Generate thumbnail for content if applicable.
-        """        try:
+        """
+        Generate thumbnail for content if applicable.
+        """
+        try:
             if not db:
                 db = next(get_db())
             
@@ -486,7 +509,8 @@ class ContentService:
             return None
     
     async def track_download(self, content_id: str, user_id: str, db: Session = None) -> None:
-        """Track content download"""        try:
+        """Track content download"""
+        try:
             if not db:
                 db = next(get_db())
             
@@ -502,7 +526,8 @@ class ContentService:
             logger.error(f"Track download error: {str(e)}")
     
     async def get_content_statistics(self, content_id: str, db: Session = None) -> Dict[str, Any]:
-        """Get detailed content statistics"""        try:
+        """Get detailed content statistics"""
+        try:
             if not db:
                 db = next(get_db())
             
@@ -531,7 +556,8 @@ class ContentService:
             return {}
     
     async def get_ai_analysis_results(self, content_id: str, db: Session = None) -> Dict[str, Any]:
-        """Get AI analysis results for content"""        try:
+        """Get AI analysis results for content"""
+        try:
             if not db:
                 db = next(get_db())
             
@@ -548,7 +574,8 @@ class ContentService:
     # Private helper methods
     
     async def _post_creation_tasks(self, content_id: str) -> None:
-        """Background tasks after content creation"""        try:
+        """Background tasks after content creation"""
+        try:
             # Generate thumbnail
             await self.generate_thumbnail(content_id)
             
@@ -559,7 +586,8 @@ class ContentService:
             logger.error(f"Post creation tasks error: {str(e)}")
     
     async def _cleanup_content_files(self, content_id: str, file_path: str) -> None:
-        """Cleanup content files after deletion"""        try:
+        """Cleanup content files after deletion"""
+        try:
             # Wait a bit before cleanup (grace period)
             await asyncio.sleep(3600)  # 1 hour
             
@@ -572,17 +600,20 @@ class ContentService:
             logger.error(f"File cleanup error: {str(e)}")
     
     async def _check_collaboration_access(self, content_id: str, user_id: str) -> bool:
-        """Check if user has collaboration access to content"""        # This would integrate with the collaboration service
+        """Check if user has collaboration access to content"""
+        # This would integrate with the collaboration service
         # Simplified for now
         return False
     
     async def _toggle_user_like(self, content_id: str, user_id: str, db: Session) -> bool:
-        """Toggle user like status (simplified implementation)"""        # In production, use a separate ContentLike table
+        """Toggle user like status (simplified implementation)"""
+        # In production, use a separate ContentLike table
         # For now, return a simple toggle based on some logic
         return True  # Simplified
     
     async def _update_search_index(self, content_id: str) -> None:
-        """Update external search index"""        try:
+        """Update external search index"""
+        try:
             # This would integrate with Elasticsearch or similar
             # Simplified for now
             pass
@@ -590,14 +621,16 @@ class ContentService:
             logger.error(f"Search index update error: {str(e)}")
     
     def _calculate_engagement_rate(self, content: Content) -> float:
-        """Calculate content engagement rate"""        if content.view_count == 0:
+        """Calculate content engagement rate"""
+        if content.view_count == 0:
             return 0.0
         
         engagement = (content.like_count + content.download_count) / content.view_count
         return round(engagement * 100, 2)
     
     def _calculate_performance_score(self, content: Content) -> int:
-        """Calculate overall content performance score"""        base_score = content.view_count + (content.like_count * 2) + (content.download_count * 3)
+        """Calculate overall content performance score"""
+        base_score = content.view_count + (content.like_count * 2) + (content.download_count * 3)
         
         # Age factor (newer content gets bonus)
         age_days = (datetime.utcnow() - content.created_at).days

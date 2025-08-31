@@ -5,7 +5,8 @@ delivery for content protection events and system monitoring.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Callable
 from dataclasses import dataclass
@@ -21,7 +22,8 @@ logger = get_logger(__name__)
 
 
 class AlertSeverity(str, Enum):
-    """Alert severity levels."""    CRITICAL = "critical"
+    """Alert severity levels."""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -29,7 +31,8 @@ class AlertSeverity(str, Enum):
 
 
 class AlertCategory(str, Enum):
-    """Alert categories for classification."""    SECURITY_THREAT = "security_threat"
+    """Alert categories for classification."""
+    SECURITY_THREAT = "security_threat"
     POLICY_VIOLATION = "policy_violation"
     SYSTEM_PERFORMANCE = "system_performance"
     COMPLIANCE_ISSUE = "compliance_issue"
@@ -40,7 +43,8 @@ class AlertCategory(str, Enum):
 
 
 class AlertStatus(str, Enum):
-    """Alert status states."""    OPEN = "open"
+    """Alert status states."""
+    OPEN = "open"
     ACKNOWLEDGED = "acknowledged"
     IN_PROGRESS = "in_progress"
     RESOLVED = "resolved"
@@ -49,7 +53,8 @@ class AlertStatus(str, Enum):
 
 
 class NotificationChannel(str, Enum):
-    """Available notification channels."""    EMAIL = "email"
+    """Available notification channels."""
+    EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
     WEBHOOK = "webhook"
@@ -59,7 +64,8 @@ class NotificationChannel(str, Enum):
 
 
 class EscalationLevel(str, Enum):
-    """Escalation levels for alerts."""    LEVEL_1 = "level_1"  # Initial response team
+    """Escalation levels for alerts."""
+    LEVEL_1 = "level_1"  # Initial response team
     LEVEL_2 = "level_2"  # Senior team/management
     LEVEL_3 = "level_3"  # Executive/emergency
     EXTERNAL = "external"  # External partners/authorities
@@ -67,7 +73,8 @@ class EscalationLevel(str, Enum):
 
 @dataclass
 class Alert:
-    """Individual alert definition."""    alert_id: str
+    """Individual alert definition."""
+    alert_id: str
     title: str
     description: str
     severity: AlertSeverity
@@ -88,7 +95,8 @@ class Alert:
 
 @dataclass
 class NotificationRule:
-    """Notification rule configuration."""    rule_id: str
+    """Notification rule configuration."""
+    rule_id: str
     name: str
     conditions: Dict[str, Any]
     channels: List[NotificationChannel]
@@ -102,7 +110,8 @@ class NotificationRule:
 
 @dataclass
 class EscalationPolicy:
-    """Escalation policy definition."""    policy_id: str
+    """Escalation policy definition."""
+    policy_id: str
     name: str
     conditions: Dict[str, Any]
     escalation_steps: List[Dict[str, Any]]
@@ -113,7 +122,8 @@ class EscalationPolicy:
 
 
 class AlertManager:
-    """    Comprehensive alert management and notification system.
+    """
+    Comprehensive alert management and notification system.
     
     Provides intelligent alerting including:
     - Real-time alert generation and processing
@@ -122,7 +132,8 @@ class AlertManager:
     - Alert correlation and deduplication
     - Performance monitoring and analytics
     - Integration with external systems
-    """    def __init__(self):
+    """
+    def __init__(self):
         self.active_alerts = {}
         self.notification_rules = {}
         self.escalation_policies = {}
@@ -144,7 +155,8 @@ class AlertManager:
         affected_resources: List[str],
         metadata: Optional[Dict[str, Any]] = None
     ) -> Alert:
-        """        Create a new alert with automatic processing.
+        """
+        Create a new alert with automatic processing.
         
         Args:
             title: Alert title
@@ -157,7 +169,8 @@ class AlertManager:
             
         Returns:
             Created Alert object
-        """        try:
+        """
+        try:
             alert_id = f"alert_{int(datetime.utcnow().timestamp() * 1000)}"
             
             # Check for correlation with existing alerts
@@ -208,14 +221,16 @@ class AlertManager:
         self,
         alerts_data: List[Dict[str, Any]]
     ) -> List[Alert]:
-        """        Process multiple alerts in batch for efficiency.
+        """
+        Process multiple alerts in batch for efficiency.
         
         Args:
             alerts_data: List of alert data dictionaries
             
         Returns:
             List of created Alert objects
-        """        try:
+        """
+        try:
             logger.info(f"Processing batch of {len(alerts_data)} alerts")
             
             # Create alerts in parallel
@@ -259,7 +274,8 @@ class AlertManager:
         user_id: str,
         notes: Optional[str] = None
     ) -> bool:
-        """        Acknowledge an alert to stop escalation.
+        """
+        Acknowledge an alert to stop escalation.
         
         Args:
             alert_id: Alert identifier
@@ -268,7 +284,8 @@ class AlertManager:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             alert = self.active_alerts.get(alert_id)
             if not alert:
                 logger.warning(f"Alert {alert_id} not found for acknowledgment")
@@ -318,7 +335,8 @@ class AlertManager:
         resolution_notes: str,
         root_cause: Optional[str] = None
     ) -> bool:
-        """        Resolve an alert and update status.
+        """
+        Resolve an alert and update status.
         
         Args:
             alert_id: Alert identifier
@@ -328,7 +346,8 @@ class AlertManager:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             alert = self.active_alerts.get(alert_id)
             if not alert:
                 logger.warning(f"Alert {alert_id} not found for resolution")
@@ -377,7 +396,8 @@ class AlertManager:
         suppression_duration: timedelta,
         reason: str
     ) -> bool:
-        """        Suppress an alert for a specified duration.
+        """
+        Suppress an alert for a specified duration.
         
         Args:
             alert_id: Alert identifier
@@ -387,7 +407,8 @@ class AlertManager:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             alert = self.active_alerts.get(alert_id)
             if not alert:
                 logger.warning(f"Alert {alert_id} not found for suppression")
@@ -426,7 +447,8 @@ class AlertManager:
         category_filter: Optional[List[AlertCategory]] = None,
         limit: int = 100
     ) -> List[Alert]:
-        """        Get list of active alerts with optional filtering.
+        """
+        Get list of active alerts with optional filtering.
         
         Args:
             severity_filter: Filter by severity levels
@@ -435,7 +457,8 @@ class AlertManager:
             
         Returns:
             List of filtered active alerts
-        """        try:
+        """
+        try:
             alerts = list(self.active_alerts.values())
             
             # Apply severity filter
@@ -476,14 +499,16 @@ class AlertManager:
         self,
         time_period: Optional[timedelta] = None
     ) -> Dict[str, Any]:
-        """        Get comprehensive alert statistics.
+        """
+        Get comprehensive alert statistics.
         
         Args:
             time_period: Time period for statistics (default: last 24 hours)
             
         Returns:
             Alert statistics and metrics
-        """        try:
+        """
+        try:
             if time_period is None:
                 time_period = timedelta(hours=24)
             
@@ -573,14 +598,16 @@ class AlertManager:
         self,
         rule_config: Dict[str, Any]
     ) -> str:
-        """        Configure a new notification rule.
+        """
+        Configure a new notification rule.
         
         Args:
             rule_config: Rule configuration dictionary
             
         Returns:
             Rule ID
-        """        try:
+        """
+        try:
             rule_id = f"rule_{int(datetime.utcnow().timestamp() * 1000)}"
             
             rule = NotificationRule(
@@ -613,14 +640,16 @@ class AlertManager:
         self,
         policy_config: Dict[str, Any]
     ) -> str:
-        """        Configure a new escalation policy.
+        """
+        Configure a new escalation policy.
         
         Args:
             policy_config: Policy configuration dictionary
             
         Returns:
             Policy ID
-        """        try:
+        """
+        try:
             policy_id = f"policy_{int(datetime.utcnow().timestamp() * 1000)}"
             
             policy = EscalationPolicy(
@@ -655,7 +684,8 @@ class AlertManager:
     # Private helper methods
     
     async def _initialize_alert_system(self):
-        """Initialize alert system components."""        try:
+        """Initialize alert system components."""
+        try:
             # Load existing alerts from cache
             await self._load_cached_alerts()
             
@@ -679,7 +709,8 @@ class AlertManager:
         category: AlertCategory,
         affected_resources: List[str]
     ) -> Optional[str]:
-        """Correlate new alert with existing alerts."""        try:
+        """Correlate new alert with existing alerts."""
+        try:
             # Simple correlation based on affected resources and category
             for alert in self.active_alerts.values():
                 if (alert.category == category and 
@@ -707,7 +738,8 @@ class AlertManager:
         description: str,
         category: AlertCategory
     ) -> List[str]:
-        """Generate tags for alert categorization."""        tags = [category.value]
+        """Generate tags for alert categorization."""
+        tags = [category.value]
         
         # Add tags based on content
         keywords = ["critical", "urgent", "security", "performance", "error"]
@@ -720,7 +752,8 @@ class AlertManager:
         return list(set(tags))
     
     async def _process_new_alert(self, alert: Alert):
-        """Process newly created alert through the pipeline."""        try:
+        """Process newly created alert through the pipeline."""
+        try:
             # Apply notification rules
             await self._apply_notification_rules(alert)
             
@@ -734,7 +767,8 @@ class AlertManager:
             logger.error(f"Error processing new alert {alert.alert_id}: {str(e)}")
     
     async def _apply_notification_rules(self, alert: Alert):
-        """Apply notification rules to alert."""        try:
+        """Apply notification rules to alert."""
+        try:
             for rule in self.notification_rules.values():
                 if not rule.is_active:
                     continue
@@ -747,7 +781,8 @@ class AlertManager:
             logger.error(f"Error applying notification rules: {str(e)}")
     
     async def _check_rule_conditions(self, alert: Alert, conditions: Dict[str, Any]) -> bool:
-        """Check if alert matches rule conditions."""        try:
+        """Check if alert matches rule conditions."""
+        try:
             # Check severity condition
             if "severity" in conditions:
                 if alert.severity.value not in conditions["severity"]:
@@ -776,7 +811,8 @@ class AlertManager:
             return False
     
     async def _send_notification(self, alert: Alert, rule: NotificationRule):
-        """Send notification according to rule."""        try:
+        """Send notification according to rule."""
+        try:
             for channel in rule.channels:
                 for recipient in rule.recipients:
                     await self._deliver_notification(alert, channel, recipient, rule.template)
@@ -791,7 +827,8 @@ class AlertManager:
         recipient: str,
         template: str
     ):
-        """Deliver notification through specified channel."""        try:
+        """Deliver notification through specified channel."""
+        try:
             message = await self._format_notification_message(alert, template)
             
             if channel == NotificationChannel.EMAIL:
@@ -813,7 +850,8 @@ class AlertManager:
             logger.error(f"Error delivering notification via {channel.value}: {str(e)}")
     
     async def _format_notification_message(self, alert: Alert, template: str) -> str:
-        """Format notification message using template."""        try:
+        """Format notification message using template."""
+        try:
             # Basic template formatting
             if template == "default":
                 return f"""Alert: {alert.title}
@@ -823,7 +861,8 @@ Description: {alert.description}
 Affected Resources: {', '.join(alert.affected_resources)}
 Created: {alert.created_at.isoformat()}
 Alert ID: {alert.alert_id}
-"""            elif template == "brief":
+"""
+            elif template == "brief":
                 return f"{alert.severity.value.upper()}: {alert.title} - {alert.alert_id}"
             else:
                 # Use default for unknown templates
@@ -836,27 +875,34 @@ Alert ID: {alert.alert_id}
     # Notification delivery methods (simplified implementations)
     
     async def _send_email_notification(self, recipient: str, subject: str, message: str):
-        """Send email notification."""        logger.info(f"Email notification sent to {recipient}: {subject}")
+        """Send email notification."""
+        logger.info(f"Email notification sent to {recipient}: {subject}")
     
     async def _send_sms_notification(self, recipient: str, message: str):
-        """Send SMS notification."""        logger.info(f"SMS notification sent to {recipient}")
+        """Send SMS notification."""
+        logger.info(f"SMS notification sent to {recipient}")
     
     async def _send_push_notification(self, recipient: str, title: str, message: str):
-        """Send push notification."""        logger.info(f"Push notification sent to {recipient}: {title}")
+        """Send push notification."""
+        logger.info(f"Push notification sent to {recipient}: {title}")
     
     async def _send_webhook_notification(self, webhook_url: str, alert: Alert, message: str):
-        """Send webhook notification."""        logger.info(f"Webhook notification sent to {webhook_url}")
+        """Send webhook notification."""
+        logger.info(f"Webhook notification sent to {webhook_url}")
     
     async def _send_slack_notification(self, channel: str, alert: Alert, message: str):
-        """Send Slack notification."""        logger.info(f"Slack notification sent to {channel}")
+        """Send Slack notification."""
+        logger.info(f"Slack notification sent to {channel}")
     
     async def _send_in_app_notification(self, user_id: str, alert: Alert, message: str):
-        """Send in-app notification."""        logger.info(f"In-app notification sent to user {user_id}")
+        """Send in-app notification."""
+        logger.info(f"In-app notification sent to user {user_id}")
     
     # Escalation methods
     
     async def _start_alert_escalation(self, alert: Alert):
-        """Start escalation process for alert."""        try:
+        """Start escalation process for alert."""
+        try:
             # Find applicable escalation policy
             policy = await self._find_escalation_policy(alert)
             if policy and policy.auto_escalation_enabled:
@@ -867,7 +913,8 @@ Alert ID: {alert.alert_id}
             logger.error(f"Error starting alert escalation: {str(e)}")
     
     async def _find_escalation_policy(self, alert: Alert) -> Optional[EscalationPolicy]:
-        """Find applicable escalation policy for alert."""        try:
+        """Find applicable escalation policy for alert."""
+        try:
             for policy in self.escalation_policies.values():
                 if policy.is_active and await self._check_rule_conditions(alert, policy.conditions):
                     return policy
@@ -878,7 +925,8 @@ Alert ID: {alert.alert_id}
             return None
     
     async def _schedule_escalation(self, alert: Alert, policy: EscalationPolicy):
-        """Schedule escalation steps."""        try:
+        """Schedule escalation steps."""
+        try:
             # This would integrate with a task scheduler
             logger.info(f"Escalation scheduled for alert {alert.alert_id}")
             
@@ -886,7 +934,8 @@ Alert ID: {alert.alert_id}
             logger.error(f"Error scheduling escalation: {str(e)}")
     
     async def _stop_alert_escalation(self, alert_id: str):
-        """Stop escalation process for alert."""        try:
+        """Stop escalation process for alert."""
+        try:
             # This would cancel scheduled escalation tasks
             logger.info(f"Escalation stopped for alert {alert_id}")
             
@@ -896,7 +945,8 @@ Alert ID: {alert.alert_id}
     # Background tasks
     
     async def _alert_processor_task(self):
-        """Background task for processing alerts."""        while True:
+        """Background task for processing alerts."""
+        while True:
             try:
                 # Process pending alerts
                 await asyncio.sleep(30)  # Process every 30 seconds
@@ -906,7 +956,8 @@ Alert ID: {alert.alert_id}
                 await asyncio.sleep(60)
     
     async def _escalation_monitor_task(self):
-        """Background task for monitoring escalations."""        while True:
+        """Background task for monitoring escalations."""
+        while True:
             try:
                 # Check for alerts that need escalation
                 await asyncio.sleep(60)  # Check every minute
@@ -916,7 +967,8 @@ Alert ID: {alert.alert_id}
                 await asyncio.sleep(60)
     
     async def _cleanup_task(self):
-        """Background task for cleanup operations."""        while True:
+        """Background task for cleanup operations."""
+        while True:
             try:
                 # Clean up old resolved alerts
                 await self._cleanup_old_alerts()
@@ -929,41 +981,52 @@ Alert ID: {alert.alert_id}
     # Additional helper methods (simplified implementations)
     
     async def _cache_alert(self, alert: Alert):
-        """Cache alert data."""        try:
+        """Cache alert data."""
+        try:
             cache_key = f"alert:{alert.alert_id}"
             await cache_manager.set(cache_key, alert.__dict__, ttl=self.cache_ttl)
         except Exception as e:
             logger.warning(f"Failed to cache alert: {str(e)}")
     
     async def _load_cached_alerts(self):
-        """Load alerts from cache."""        logger.info("Loading cached alerts")
+        """Load alerts from cache."""
+        logger.info("Loading cached alerts")
     
     async def _initialize_notification_channels(self):
-        """Initialize notification channels."""        logger.info("Notification channels initialized")
+        """Initialize notification channels."""
+        logger.info("Notification channels initialized")
     
     async def _analyze_batch_correlations(self, alerts: List[Alert]):
-        """Analyze correlations in batch of alerts."""        logger.info(f"Analyzing correlations for {len(alerts)} alerts")
+        """Analyze correlations in batch of alerts."""
+        logger.info(f"Analyzing correlations for {len(alerts)} alerts")
     
     async def _send_acknowledgment_notifications(self, alert: Alert, user_id: str, notes: Optional[str]):
-        """Send notifications about alert acknowledgment."""        logger.info(f"Acknowledgment notifications sent for alert {alert.alert_id}")
+        """Send notifications about alert acknowledgment."""
+        logger.info(f"Acknowledgment notifications sent for alert {alert.alert_id}")
     
     async def _send_resolution_notifications(self, alert: Alert, user_id: str, resolution_notes: str):
-        """Send notifications about alert resolution."""        logger.info(f"Resolution notifications sent for alert {alert.alert_id}")
+        """Send notifications about alert resolution."""
+        logger.info(f"Resolution notifications sent for alert {alert.alert_id}")
     
     async def _resolve_correlated_alerts(self, correlation_id: str, user_id: str):
-        """Resolve alerts with the same correlation ID."""        logger.info(f"Resolving correlated alerts with ID {correlation_id}")
+        """Resolve alerts with the same correlation ID."""
+        logger.info(f"Resolving correlated alerts with ID {correlation_id}")
     
     async def _update_resolution_metrics(self, alert: Alert):
-        """Update metrics after alert resolution."""        logger.info(f"Resolution metrics updated for alert {alert.alert_id}")
+        """Update metrics after alert resolution."""
+        logger.info(f"Resolution metrics updated for alert {alert.alert_id}")
     
     async def _schedule_alert_unsuppression(self, alert_id: str, unsuppression_time: datetime):
-        """Schedule alert to be unsuppressed."""        logger.info(f"Unsuppression scheduled for alert {alert_id} at {unsuppression_time}")
+        """Schedule alert to be unsuppressed."""
+        logger.info(f"Unsuppression scheduled for alert {alert_id} at {unsuppression_time}")
     
     async def _update_alert_metrics(self, alert: Alert):
-        """Update alert metrics."""        logger.info(f"Metrics updated for new alert {alert.alert_id}")
+        """Update alert metrics."""
+        logger.info(f"Metrics updated for new alert {alert.alert_id}")
     
     async def _get_top_alert_sources(self, alerts: List[Alert]) -> List[Dict[str, Any]]:
-        """Get top alert sources from list."""        source_counts = defaultdict(int)
+        """Get top alert sources from list."""
+        source_counts = defaultdict(int)
         for alert in alerts:
             source_counts[alert.source] += 1
         
@@ -973,7 +1036,8 @@ Alert ID: {alert.alert_id}
         ]
     
     async def _get_top_affected_resources(self, alerts: List[Alert]) -> List[Dict[str, Any]]:
-        """Get top affected resources from list."""        resource_counts = defaultdict(int)
+        """Get top affected resources from list."""
+        resource_counts = defaultdict(int)
         for alert in alerts:
             for resource in alert.affected_resources:
                 resource_counts[resource] += 1
@@ -984,21 +1048,24 @@ Alert ID: {alert.alert_id}
         ]
     
     async def _cache_notification_rule(self, rule: NotificationRule):
-        """Cache notification rule."""        try:
+        """Cache notification rule."""
+        try:
             cache_key = f"notification_rule:{rule.rule_id}"
             await cache_manager.set(cache_key, rule.__dict__, ttl=self.cache_ttl)
         except Exception as e:
             logger.warning(f"Failed to cache notification rule: {str(e)}")
     
     async def _cache_escalation_policy(self, policy: EscalationPolicy):
-        """Cache escalation policy."""        try:
+        """Cache escalation policy."""
+        try:
             cache_key = f"escalation_policy:{policy.policy_id}"
             await cache_manager.set(cache_key, policy.__dict__, ttl=self.cache_ttl)
         except Exception as e:
             logger.warning(f"Failed to cache escalation policy: {str(e)}")
     
     async def _cleanup_old_alerts(self):
-        """Clean up old resolved alerts."""        try:
+        """Clean up old resolved alerts."""
+        try:
             cutoff_time = datetime.utcnow() - timedelta(days=30)  # Keep alerts for 30 days
             
             # Remove old alerts from active alerts

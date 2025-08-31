@@ -10,7 +10,8 @@ Enterprise Content Protection Platform - Central Rights Orchestrator
 ⚠️  COPYRIGHT NOTICE ⚠️
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -46,14 +47,16 @@ security = HTTPBearer()
 
 
 class ProtectionLevel(str, Enum):
-    """Content protection levels."""    BASIC = "basic"
+    """Content protection levels."""
+    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 
 class OperationStatus(str, Enum):
-    """Operation status types."""    SUCCESS = "success"
+    """Operation status types."""
+    SUCCESS = "success"
     PENDING = "pending"
     FAILED = "failed"
     PARTIAL = "partial"
@@ -61,7 +64,8 @@ class OperationStatus(str, Enum):
 
 # Pydantic models for API requests/responses
 class ContentRegistrationRequest(BaseModel):
-    """Content registration request model."""    title: str = Field(..., min_length=1, max_length=255)
+    """Content registration request model."""
+    title: str = Field(..., min_length=1, max_length=255)
     description: Optional[str] = Field(None, max_length=2000)
     content_type: str = Field(..., regex="^(audio|video|image|text)$")
     tags: List[str] = Field(default_factory=list)
@@ -72,7 +76,8 @@ class ContentRegistrationRequest(BaseModel):
 
 
 class ContentRegistrationResponse(BaseModel):
-    """Content registration response model."""    content_id: str
+    """Content registration response model."""
+    content_id: str
     fingerprint_hash: str
     protection_status: str
     monitoring_active: bool
@@ -81,7 +86,8 @@ class ContentRegistrationResponse(BaseModel):
 
 
 class ViolationResponse(BaseModel):
-    """Violation detection response model."""    violation_id: str
+    """Violation detection response model."""
+    violation_id: str
     content_id: str
     platform: str
     infringing_url: str
@@ -93,7 +99,8 @@ class ViolationResponse(BaseModel):
 
 
 class DMCANoticeResponse(BaseModel):
-    """DMCA notice response model."""    notice_id: str
+    """DMCA notice response model."""
+    notice_id: str
     content_id: str
     platform: str
     status: str
@@ -102,7 +109,8 @@ class DMCANoticeResponse(BaseModel):
 
 
 class RevenueAnalyticsResponse(BaseModel):
-    """Revenue analytics response model."""    total_revenue: float
+    """Revenue analytics response model."""
+    total_revenue: float
     platform_breakdown: Dict[str, float]
     period_start: datetime
     period_end: datetime
@@ -111,7 +119,8 @@ class RevenueAnalyticsResponse(BaseModel):
 
 
 class RightsOrchestrator:
-    """Central orchestrator for all rights management operations."""    
+    """Central orchestrator for all rights management operations."""
+    
     def __init__(self):
         self.rights_manager = RightsManager()
         self.fingerprint_engine = DigitalFingerprintEngine()
@@ -125,7 +134,8 @@ class RightsOrchestrator:
         self._initialization_complete = False
     
     async def initialize(self):
-        """Initialize all sub-systems."""        if self._initialization_complete:
+        """Initialize all sub-systems."""
+        if self._initialization_complete:
             return
         
         try:
@@ -147,7 +157,8 @@ class RightsOrchestrator:
         content_file: bytes,
         registration_data: ContentRegistrationRequest
     ) -> ContentRegistrationResponse:
-        """Complete content registration with full protection setup."""        
+        """Complete content registration with full protection setup."""
+        
         try:
             # Step 1: Register content rights
             rights_record = await self.rights_manager.register_rights(
@@ -219,7 +230,8 @@ class RightsOrchestrator:
         violation: ViolationResult,
         auto_action: bool = True
     ) -> Dict[str, Any]:
-        """Handle detected content violation with automated response."""        
+        """Handle detected content violation with automated response."""
+        
         try:
             # Step 1: Verify violation authenticity
             verification_result = await self.copyright_detector.verify_violation(
@@ -297,7 +309,8 @@ class RightsOrchestrator:
         date_range: Tuple[datetime, datetime],
         report_type: str = "full"
     ) -> Dict[str, Any]:
-        """Generate comprehensive rights management report."""        
+        """Generate comprehensive rights management report."""
+        
         try:
             # Gather data from all systems
             tasks = [
@@ -366,7 +379,8 @@ class RightsOrchestrator:
         revenue_analytics: Dict,
         compliance_report: Dict
     ) -> List[str]:
-        """Generate actionable recommendations based on analytics."""        
+        """Generate actionable recommendations based on analytics."""
+        
         recommendations = []
         
         # Violation-based recommendations
@@ -396,7 +410,8 @@ class RightsOrchestrator:
         return recommendations
     
     async def cleanup(self):
-        """Cleanup all resources."""        cleanup_tasks = [
+        """Cleanup all resources."""
+        cleanup_tasks = [
             self.web_monitoring.cleanup(),
             self.monetization_engine.cleanup(),
             self.legal_compliance.cleanup(),
@@ -414,12 +429,14 @@ orchestrator = RightsOrchestrator()
 # FastAPI endpoints
 @router.on_event("startup")
 async def startup_rights_management():
-    """Initialize rights management on startup."""    await orchestrator.initialize()
+    """Initialize rights management on startup."""
+    await orchestrator.initialize()
 
 
 @router.on_event("shutdown")
 async def shutdown_rights_management():
-    """Cleanup rights management on shutdown."""    await orchestrator.cleanup()
+    """Cleanup rights management on shutdown."""
+    await orchestrator.cleanup()
 
 
 @router.post("/register", response_model=ContentRegistrationResponse)
@@ -430,7 +447,8 @@ async def register_content(
     db: AsyncSession = Depends(get_db_session),
     background_tasks: BackgroundTasks = None
 ) -> ContentRegistrationResponse:
-    """Register content with full rights protection."""    
+    """Register content with full rights protection."""
+    
     return await orchestrator.register_content_complete(
         user_id=current_user.id,
         content_file=content_file,
@@ -444,7 +462,8 @@ async def get_content_violations(
     current_user = Depends(get_current_user),
     db: AsyncSession = Depends(get_db_session)
 ) -> List[ViolationResponse]:
-    """Get violations for specific content."""    
+    """Get violations for specific content."""
+    
     violations = await orchestrator.web_monitoring.get_violations(content_id)
     
     return [
@@ -468,7 +487,8 @@ async def send_dmca_notice(
     current_user = Depends(get_current_user),
     db: AsyncSession = Depends(get_db_session)
 ) -> DMCANoticeResponse:
-    """Send DMCA takedown notice for violation."""    
+    """Send DMCA takedown notice for violation."""
+    
     # Get violation details
     violation = await orchestrator.web_monitoring.get_violation_by_id(violation_id)
     if not violation:
@@ -506,7 +526,8 @@ async def get_revenue_analytics(
     current_user = Depends(get_current_user),
     db: AsyncSession = Depends(get_db_session)
 ) -> RevenueAnalyticsResponse:
-    """Get revenue analytics for content."""    
+    """Get revenue analytics for content."""
+    
     end_date = datetime.utcnow()
     start_date = end_date - timedelta(days=days)
     
@@ -539,7 +560,8 @@ async def generate_user_report(
     current_user = Depends(get_current_user),
     db: AsyncSession = Depends(get_db_session)
 ) -> Dict[str, Any]:
-    """Generate comprehensive rights management report."""    
+    """Generate comprehensive rights management report."""
+    
     end_date = datetime.utcnow()
     start_date = end_date - timedelta(days=days)
     
@@ -552,7 +574,8 @@ async def generate_user_report(
 
 @router.get("/status")
 async def get_rights_system_status() -> Dict[str, Any]:
-    """Get overall rights management system status."""    
+    """Get overall rights management system status."""
+    
     return {
         'status': 'operational',
         'initialized': orchestrator._initialization_complete,

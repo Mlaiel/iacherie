@@ -23,7 +23,8 @@ Team Specialists:
 - Business Analyst: Workflow Process Design
 - DevOps: Workflow Scalability & Performance
 - IA Prompt Engineer: Conversational Workflow Intelligence
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple, Callable
@@ -55,7 +56,8 @@ logger = get_logger(__name__)
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status"""    DRAFT = "draft"
+    """Workflow execution status"""
+    DRAFT = "draft"
     ACTIVE = "active"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -65,7 +67,8 @@ class WorkflowStatus(Enum):
 
 
 class TaskStatus(Enum):
-    """Individual task status"""    PENDING = "pending"
+    """Individual task status"""
+    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -75,7 +78,8 @@ class TaskStatus(Enum):
 
 
 class TaskType(Enum):
-    """Types of workflow tasks"""    CONTENT_CREATION = "content_creation"
+    """Types of workflow tasks"""
+    CONTENT_CREATION = "content_creation"
     CONTENT_ANALYSIS = "content_analysis"
     CONTENT_OPTIMIZATION = "content_optimization"
     CONTENT_PROTECTION = "content_protection"
@@ -89,7 +93,8 @@ class TaskType(Enum):
 
 
 class TriggerType(Enum):
-    """Workflow trigger types"""    MANUAL = "manual"
+    """Workflow trigger types"""
+    MANUAL = "manual"
     SCHEDULED = "scheduled"
     EVENT_BASED = "event_based"
     CONDITION_BASED = "condition_based"
@@ -99,7 +104,8 @@ class TriggerType(Enum):
 
 
 class ConditionOperator(Enum):
-    """Condition operators for workflow logic"""    EQUALS = "equals"
+    """Condition operators for workflow logic"""
+    EQUALS = "equals"
     NOT_EQUALS = "not_equals"
     GREATER_THAN = "greater_than"
     LESS_THAN = "less_than"
@@ -113,7 +119,8 @@ class ConditionOperator(Enum):
 
 
 class WorkflowTask(BaseModel):
-    """Individual workflow task"""    task_id: str = Field(default_factory=lambda: str(uuid4()))
+    """Individual workflow task"""
+    task_id: str = Field(default_factory=lambda: str(uuid4()))
     task_name: str
     task_type: TaskType
     task_description: str = ""
@@ -135,7 +142,8 @@ class WorkflowTask(BaseModel):
 
 
 class WorkflowExecution(BaseModel):
-    """Workflow execution instance"""    execution_id: str = Field(default_factory=lambda: str(uuid4()))
+    """Workflow execution instance"""
+    execution_id: str = Field(default_factory=lambda: str(uuid4()))
     workflow_id: str
     session_id: str
     user_id: str
@@ -159,7 +167,8 @@ class WorkflowExecution(BaseModel):
 
 
 class WorkflowDefinition(BaseModel):
-    """Complete workflow definition"""    workflow_id: str = Field(default_factory=lambda: str(uuid4()))
+    """Complete workflow definition"""
+    workflow_id: str = Field(default_factory=lambda: str(uuid4()))
     workflow_name: str
     workflow_description: str = ""
     workflow_version: str = "1.0"
@@ -182,7 +191,8 @@ class WorkflowDefinition(BaseModel):
 
 
 class WorkflowCondition(BaseModel):
-    """Workflow condition for branching and triggers"""    condition_id: str = Field(default_factory=lambda: str(uuid4()))
+    """Workflow condition for branching and triggers"""
+    condition_id: str = Field(default_factory=lambda: str(uuid4()))
     condition_name: str
     left_operand: str  # Variable or value
     operator: ConditionOperator
@@ -196,7 +206,8 @@ class WorkflowCondition(BaseModel):
 
 
 class WorkflowAnalytics(BaseModel):
-    """Workflow execution analytics"""    workflow_id: str
+    """Workflow execution analytics"""
+    workflow_id: str
     total_executions: int
     successful_executions: int
     failed_executions: int
@@ -216,7 +227,8 @@ class WorkflowAnalytics(BaseModel):
 
 @dataclass
 class WorkflowEngineConfig:
-    """Workflow engine configuration"""    max_concurrent_executions: int = 100
+    """Workflow engine configuration"""
+    max_concurrent_executions: int = 100
     default_task_timeout: int = 300  # seconds
     max_retry_attempts: int = 3
     retry_delay_seconds: int = 30
@@ -231,7 +243,8 @@ class WorkflowEngineConfig:
 
 
 class TaskExecutor:
-    """Executes individual workflow tasks"""    
+    """Executes individual workflow tasks"""
+    
     def __init__(self, config: WorkflowEngineConfig):
         self.config = config
         self.cache_manager = CacheManager()
@@ -244,7 +257,8 @@ class TaskExecutor:
         self._register_default_tasks()
     
     def _register_default_tasks(self):
-        """Register default task functions"""        
+        """Register default task functions"""
+        
         self.task_functions.update({
             "content_analysis": self._content_analysis_task,
             "content_optimization": self._content_optimization_task,
@@ -259,7 +273,8 @@ class TaskExecutor:
         })
     
     def register_task_function(self, function_name: str, function: Callable):
-        """Register custom task function"""        
+        """Register custom task function"""
+        
         self.task_functions[function_name] = function
         self.logger.info(f"Task function registered: {function_name}")
     
@@ -269,7 +284,8 @@ class TaskExecutor:
         execution_context: Dict[str, Any],
         workflow_execution: WorkflowExecution
     ) -> Dict[str, Any]:
-        """Execute a workflow task"""        
+        """Execute a workflow task"""
+        
         try:
             task_execution = {
                 "task_id": task.task_id,
@@ -344,7 +360,8 @@ class TaskExecutor:
         task: WorkflowTask,
         execution_context: Dict[str, Any]
     ) -> bool:
-        """Evaluate task execution conditions"""        
+        """Evaluate task execution conditions"""
+        
         try:
             if not task.task_conditions:
                 return True
@@ -366,7 +383,8 @@ class TaskExecutor:
         condition: WorkflowCondition,
         execution_context: Dict[str, Any]
     ) -> bool:
-        """Evaluate individual condition"""        
+        """Evaluate individual condition"""
+        
         try:
             # Get operand values
             left_value = self._resolve_operand(condition.left_operand, execution_context)
@@ -401,7 +419,8 @@ class TaskExecutor:
             return False
     
     def _resolve_operand(self, operand: str, execution_context: Dict[str, Any]) -> Any:
-        """Resolve operand value from context or literal"""        
+        """Resolve operand value from context or literal"""
+        
         try:
             # Check if it's a variable reference
             if operand.startswith("${") and operand.endswith("}"):
@@ -429,7 +448,8 @@ class TaskExecutor:
         task: WorkflowTask,
         execution_context: Dict[str, Any]
     ) -> Any:
-        """Execute the actual task function"""        
+        """Execute the actual task function"""
+        
         try:
             function_name = task.task_function
             
@@ -460,7 +480,8 @@ class TaskExecutor:
     # Default task implementations
     
     async def _content_analysis_task(self, **kwargs) -> Dict[str, Any]:
-        """Analyze content task"""        
+        """Analyze content task"""
+        
         try:
             execution_context = kwargs.get("execution_context", {})
             content_id = kwargs.get("content_id")
@@ -487,7 +508,8 @@ class TaskExecutor:
             raise
     
     async def _content_optimization_task(self, **kwargs) -> Dict[str, Any]:
-        """Optimize content task"""        
+        """Optimize content task"""
+        
         try:
             execution_context = kwargs.get("execution_context", {})
             content_id = kwargs.get("content_id")
@@ -511,7 +533,8 @@ class TaskExecutor:
             raise
     
     async def _content_protection_task(self, **kwargs) -> Dict[str, Any]:
-        """Protect content task"""        
+        """Protect content task"""
+        
         try:
             execution_context = kwargs.get("execution_context", {})
             content_id = kwargs.get("content_id")
@@ -535,7 +558,8 @@ class TaskExecutor:
             raise
     
     async def _content_monetization_task(self, **kwargs) -> Dict[str, Any]:
-        """Monetize content task"""        
+        """Monetize content task"""
+        
         try:
             execution_context = kwargs.get("execution_context", {})
             content_id = kwargs.get("content_id")
@@ -559,7 +583,8 @@ class TaskExecutor:
             raise
     
     async def _user_notification_task(self, **kwargs) -> Dict[str, Any]:
-        """Send user notification task"""        
+        """Send user notification task"""
+        
         try:
             user_id = kwargs.get("user_id")
             notification_type = kwargs.get("notification_type", "info")
@@ -582,7 +607,8 @@ class TaskExecutor:
             raise
     
     async def _ai_processing_task(self, **kwargs) -> Dict[str, Any]:
-        """AI processing task"""        
+        """AI processing task"""
+        
         try:
             execution_context = kwargs.get("execution_context", {})
             ai_task_type = kwargs.get("ai_task_type", "analysis")
@@ -602,7 +628,8 @@ class TaskExecutor:
             raise
     
     async def _data_extraction_task(self, **kwargs) -> Dict[str, Any]:
-        """Extract data task"""        
+        """Extract data task"""
+        
         try:
             execution_context = kwargs.get("execution_context", {})
             data_source = kwargs.get("data_source")
@@ -625,7 +652,8 @@ class TaskExecutor:
             raise
     
     async def _approval_request_task(self, **kwargs) -> Dict[str, Any]:
-        """Request approval task"""        
+        """Request approval task"""
+        
         try:
             task = kwargs.get("task")
             approval_users = kwargs.get("approval_users", [])
@@ -652,7 +680,8 @@ class TaskExecutor:
             raise
     
     async def _custom_script_task(self, **kwargs) -> Dict[str, Any]:
-        """Execute custom script task"""        
+        """Execute custom script task"""
+        
         try:
             script_code = kwargs.get("script_code", "")
             script_language = kwargs.get("script_language", "python")
@@ -673,7 +702,8 @@ class TaskExecutor:
             raise
     
     async def _delay_task(self, **kwargs) -> Dict[str, Any]:
-        """Delay task"""        
+        """Delay task"""
+        
         try:
             delay_seconds = kwargs.get("delay_seconds", 10)
             
@@ -691,7 +721,8 @@ class TaskExecutor:
 
 
 class WorkflowOrchestrator:
-    """Orchestrates workflow execution"""    
+    """Orchestrates workflow execution"""
+    
     def __init__(self, config: WorkflowEngineConfig):
         self.config = config
         self.task_executor = TaskExecutor(config)
@@ -712,7 +743,8 @@ class WorkflowOrchestrator:
         trigger_data: Dict[str, Any] = None,
         execution_context: Dict[str, Any] = None
     ) -> WorkflowExecution:
-        """Execute workflow"""        
+        """Execute workflow"""
+        
         try:
             # Create workflow execution
             workflow_execution = WorkflowExecution(
@@ -753,7 +785,8 @@ class WorkflowOrchestrator:
         workflow_definition: WorkflowDefinition,
         workflow_execution: WorkflowExecution
     ):
-        """Execute workflow asynchronously"""        
+        """Execute workflow asynchronously"""
+        
         try:
             # Build task dependency graph
             task_graph = self._build_task_graph(workflow_definition.tasks)
@@ -864,7 +897,8 @@ class WorkflowOrchestrator:
                 del self.active_executions[workflow_execution.execution_id]
     
     def _build_task_graph(self, tasks: List[WorkflowTask]) -> Dict[str, List[str]]:
-        """Build task dependency graph"""        
+        """Build task dependency graph"""
+        
         task_graph = {}
         
         for task in tasks:
@@ -873,7 +907,8 @@ class WorkflowOrchestrator:
         return task_graph
     
     async def pause_workflow_execution(self, execution_id: str) -> bool:
-        """Pause workflow execution"""        
+        """Pause workflow execution"""
+        
         try:
             if execution_id in self.active_executions:
                 execution = self.active_executions[execution_id]
@@ -896,7 +931,8 @@ class WorkflowOrchestrator:
             return False
     
     async def resume_workflow_execution(self, execution_id: str) -> bool:
-        """Resume workflow execution"""        
+        """Resume workflow execution"""
+        
         try:
             if execution_id in self.active_executions:
                 execution = self.active_executions[execution_id]
@@ -919,7 +955,8 @@ class WorkflowOrchestrator:
             return False
     
     async def cancel_workflow_execution(self, execution_id: str) -> bool:
-        """Cancel workflow execution"""        
+        """Cancel workflow execution"""
+        
         try:
             if execution_id in self.active_executions:
                 execution = self.active_executions[execution_id]
@@ -946,7 +983,8 @@ class WorkflowOrchestrator:
             return False
     
     async def get_execution_status(self, execution_id: str) -> Optional[WorkflowExecution]:
-        """Get workflow execution status"""        
+        """Get workflow execution status"""
+        
         try:
             if execution_id in self.active_executions:
                 return self.active_executions[execution_id]
@@ -966,7 +1004,8 @@ class WorkflowOrchestrator:
 
 
 class SessionWorkflowEngine:
-    """Main session workflow engine"""    
+    """Main session workflow engine"""
+    
     def __init__(self, config: Optional[WorkflowEngineConfig] = None):
         self.config = config or WorkflowEngineConfig()
         self.orchestrator = WorkflowOrchestrator(self.config)
@@ -991,7 +1030,8 @@ class SessionWorkflowEngine:
         workflow_triggers: List[Dict[str, Any]] = None,
         workflow_variables: Dict[str, Any] = None
     ) -> WorkflowDefinition:
-        """Create new workflow definition"""        
+        """Create new workflow definition"""
+        
         try:
             workflow_definition = WorkflowDefinition(
                 workflow_name=workflow_name,
@@ -1040,7 +1080,8 @@ class SessionWorkflowEngine:
         trigger_data: Dict[str, Any] = None,
         execution_context: Dict[str, Any] = None
     ) -> Optional[WorkflowExecution]:
-        """Execute workflow for session"""        
+        """Execute workflow for session"""
+        
         try:
             if workflow_id not in self.workflow_definitions:
                 self.logger.error(f"Workflow not found: {workflow_id}")
@@ -1072,7 +1113,8 @@ class SessionWorkflowEngine:
             return None
     
     async def get_workflow_definition(self, workflow_id: str) -> Optional[WorkflowDefinition]:
-        """Get workflow definition"""        
+        """Get workflow definition"""
+        
         try:
             if workflow_id in self.workflow_definitions:
                 return self.workflow_definitions[workflow_id]
@@ -1098,7 +1140,8 @@ class SessionWorkflowEngine:
         category: Optional[str] = None,
         status: Optional[WorkflowStatus] = None
     ) -> List[WorkflowDefinition]:
-        """List workflow definitions with filters"""        
+        """List workflow definitions with filters"""
+        
         try:
             workflows = []
             
@@ -1124,7 +1167,8 @@ class SessionWorkflowEngine:
             return []
     
     async def get_workflow_analytics(self, workflow_id: str) -> Optional[WorkflowAnalytics]:
-        """Get workflow execution analytics"""        
+        """Get workflow execution analytics"""
+        
         try:
             if workflow_id in self.execution_analytics:
                 return self.execution_analytics[workflow_id]
@@ -1140,7 +1184,8 @@ class SessionWorkflowEngine:
         workflow_id: str,
         execution: WorkflowExecution
     ):
-        """Update workflow analytics after execution"""        
+        """Update workflow analytics after execution"""
+        
         try:
             if workflow_id not in self.execution_analytics:
                 return
@@ -1173,7 +1218,8 @@ class SessionWorkflowEngine:
             self.logger.error(f"Analytics update failed: {str(e)}")
     
     async def register_custom_task(self, function_name: str, function: Callable):
-        """Register custom task function"""        
+        """Register custom task function"""
+        
         try:
             self.orchestrator.task_executor.register_task_function(function_name, function)
             self.logger.info(f"Custom task registered: {function_name}")
@@ -1183,7 +1229,8 @@ class SessionWorkflowEngine:
             raise
     
     async def get_engine_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive workflow engine statistics"""        
+        """Get comprehensive workflow engine statistics"""
+        
         try:
             total_workflows = len(self.workflow_definitions)
             active_executions = len(self.orchestrator.active_executions)

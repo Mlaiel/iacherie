@@ -27,7 +27,8 @@ influencers, musicians, bloggers, and photographers.
 Author: Senior Backend Engineering Team
 Created: August 2024
 Version: 1.0.0 Enterprise Edition
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Type
 from pathlib import Path
@@ -129,7 +130,8 @@ CREATOR_FACTORY_REGISTRY: Dict[str, callable] = {
 
 
 class EnterpriseStorageFactory:
-    """    Ultra-advanced enterprise storage factory for creating and managing
+    """
+    Ultra-advanced enterprise storage factory for creating and managing
     storage providers across multiple backends and use cases.
     
     This factory supports the complete content creator ecosystem:
@@ -138,7 +140,8 @@ class EnterpriseStorageFactory:
     - Multi-platform distribution
     - Analytics and business intelligence
     - Licensing and monetization
-    """    
+    """
+    
     def __init__(self):
         self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._config_manager = StorageConfigurationManager()
@@ -153,7 +156,8 @@ class EnterpriseStorageFactory:
         enable_failover: bool = True,
         enable_monitoring: bool = True
     ) -> StorageManager:
-        """        Create a fully configured enterprise storage manager.
+        """
+        Create a fully configured enterprise storage manager.
         
         Args:
             config_path: Path to YAML/JSON configuration file
@@ -164,7 +168,8 @@ class EnterpriseStorageFactory:
             
         Returns:
             Configured StorageManager instance
-        """        try:
+        """
+        try:
             # Load configuration
             if config_path:
                 config = await self._load_config_from_file(config_path)
@@ -200,7 +205,8 @@ class EnterpriseStorageFactory:
         provider_id: str,
         config: Dict[str, Any]
     ) -> StorageProviderInterface:
-        """        Create a single storage provider instance.
+        """
+        Create a single storage provider instance.
         
         Args:
             provider_type: Type of storage provider
@@ -209,7 +215,8 @@ class EnterpriseStorageFactory:
             
         Returns:
             Configured storage provider instance
-        """        try:
+        """
+        try:
             if provider_type not in STORAGE_PROVIDER_REGISTRY:
                 raise ValueError(f"Unknown provider type: {provider_type}")
             
@@ -246,7 +253,8 @@ class EnterpriseStorageFactory:
         enable_distribution: bool = True,
         enable_licensing: bool = True
     ) -> StorageManager:
-        """        Create specialized storage configuration for content creators.
+        """
+        Create specialized storage configuration for content creators.
         
         Args:
             creator_id: Unique creator identifier
@@ -258,7 +266,8 @@ class EnterpriseStorageFactory:
             
         Returns:
             Specialized StorageManager for content creators
-        """        try:
+        """
+        try:
             platforms = platforms or ["youtube", "instagram", "tiktok", "twitter"]
             
             # Base storage providers
@@ -410,7 +419,8 @@ class EnterpriseStorageFactory:
             raise
     
     async def _load_config_from_file(self, config_path: Union[str, Path]) -> Dict[str, Any]:
-        """Load configuration from YAML or JSON file."""        config_path = Path(config_path)
+        """Load configuration from YAML or JSON file."""
+        config_path = Path(config_path)
         
         if not config_path.exists():
             raise FileNotFoundError(f"Configuration file not found: {config_path}")
@@ -432,7 +442,8 @@ class EnterpriseStorageFactory:
         self, 
         config: Dict[str, Any]
     ) -> List[StorageProviderInterface]:
-        """Create storage providers from configuration dictionary."""        providers = []
+        """Create storage providers from configuration dictionary."""
+        providers = []
         
         storage_config = config.get('storage', {})
         provider_configs = storage_config.get('providers', [])
@@ -480,7 +491,8 @@ class EnterpriseStorageFactory:
         return providers
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default enterprise storage configuration."""        return {
+        """Get default enterprise storage configuration."""
+        return {
             "storage": {
                 "providers": [
                     {
@@ -532,11 +544,13 @@ async def create_storage_manager(
     enable_failover: bool = True,
     enable_monitoring: bool = True
 ) -> StorageManager:
-    """    Create enterprise storage manager with advanced configuration.
+    """
+    Create enterprise storage manager with advanced configuration.
     
     This is the main entry point for creating a storage manager for
     the IA Influencer Agent platform.
-    """    return await _enterprise_factory.create_storage_manager(
+    """
+    return await _enterprise_factory.create_storage_manager(
         config_path=config_path,
         config_dict=config_dict,
         routing_strategy=routing_strategy,
@@ -553,11 +567,13 @@ async def create_content_creator_storage(
     enable_distribution: bool = True,
     enable_licensing: bool = True
 ) -> StorageManager:
-    """    Create specialized storage for content creators.
+    """
+    Create specialized storage for content creators.
     
     Optimized for influencers, musicians, bloggers, and photographers
     with support for multi-platform distribution and monetization.
-    """    return await _enterprise_factory.create_content_creator_storage(
+    """
+    return await _enterprise_factory.create_content_creator_storage(
         creator_id=creator_id,
         creator_type=creator_type,
         platforms=platforms,
@@ -572,7 +588,8 @@ async def create_provider(
     provider_id: str,
     config: Dict[str, Any]
 ) -> StorageProviderInterface:
-    """Create a single storage provider instance."""    return await _enterprise_factory.create_provider(
+    """Create a single storage provider instance."""
+    return await _enterprise_factory.create_provider(
         provider_type=provider_type,
         provider_id=provider_id,
         config=config
@@ -580,11 +597,13 @@ async def create_provider(
 
 
 def get_available_provider_types() -> List[str]:
-    """Get list of available storage provider types."""    return list(STORAGE_PROVIDER_REGISTRY.keys())
+    """Get list of available storage provider types."""
+    return list(STORAGE_PROVIDER_REGISTRY.keys())
 
 
 def get_provider_class(provider_type: str) -> Type[StorageProviderInterface]:
-    """Get storage provider class by type."""    if provider_type not in STORAGE_PROVIDER_REGISTRY:
+    """Get storage provider class by type."""
+    if provider_type not in STORAGE_PROVIDER_REGISTRY:
         raise ValueError(f"Unknown provider type: {provider_type}")
     return STORAGE_PROVIDER_REGISTRY[provider_type]
 
@@ -639,7 +658,8 @@ __all__ = [
 if __name__ == "__main__":
     # Example usage for testing
     async def main():
-        """Example usage of the enterprise storage system."""        
+        """Example usage of the enterprise storage system."""
+        
         # Create a simple storage manager
         manager = await create_storage_manager(routing_strategy="least_load")
         

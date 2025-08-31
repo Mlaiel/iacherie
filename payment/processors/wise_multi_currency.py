@@ -6,7 +6,8 @@ multi-currency transactions with real-time exchange rates and low fees.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -22,22 +23,26 @@ logger = logging.getLogger(__name__)
 
 
 class WiseEnvironment(Enum):
-    """Wise environment types"""    SANDBOX = "sandbox"
+    """Wise environment types"""
+    SANDBOX = "sandbox"
     LIVE = "live"
 
 
 class WiseAccountType(Enum):
-    """Wise account types"""    PERSONAL = "personal"
+    """Wise account types"""
+    PERSONAL = "personal"
     BUSINESS = "business"
 
 
 class WiseProfileType(Enum):
-    """Wise profile types"""    PERSONAL = "personal"
+    """Wise profile types"""
+    PERSONAL = "personal"
     BUSINESS = "business"
 
 
 class TransferPurpose(Enum):
-    """Transfer purpose codes"""    VERIFICATION_OF_DEPOSIT = "verification.of.deposit"
+    """Transfer purpose codes"""
+    VERIFICATION_OF_DEPOSIT = "verification.of.deposit"
     FAMILY_SUPPORT = "family.support"
     EDUCATION = "education"
     BUSINESS_SERVICES = "business.services"
@@ -47,7 +52,8 @@ class TransferPurpose(Enum):
 
 
 class WiseCurrency:
-    """Supported Wise currencies with metadata"""    CURRENCIES = {
+    """Supported Wise currencies with metadata"""
+    CURRENCIES = {
         "USD": {"name": "US Dollar", "symbol": "$", "decimals": 2},
         "EUR": {"name": "Euro", "symbol": "€", "decimals": 2},
         "GBP": {"name": "British Pound", "symbol": "£", "decimals": 2},
@@ -89,14 +95,16 @@ class WiseCurrency:
 
 @dataclass
 class WiseProfile:
-    """Wise profile information"""    id: int
+    """Wise profile information"""
+    id: int
     type: WiseProfileType
     details: Dict[str, Any]
 
 
 @dataclass
 class WiseAccount:
-    """Wise account details"""    id: int
+    """Wise account details"""
+    id: int
     profile_id: int
     account_holder_name: str
     currency: str
@@ -107,7 +115,8 @@ class WiseAccount:
 
 @dataclass
 class WiseExchangeRate:
-    """Real-time exchange rate"""    source: str
+    """Real-time exchange rate"""
+    source: str
     target: str
     rate: Decimal
     time: datetime
@@ -116,7 +125,8 @@ class WiseExchangeRate:
 
 @dataclass
 class WiseTransfer:
-    """Wise transfer details"""    id: int
+    """Wise transfer details"""
+    id: int
     profile_id: int
     account_id: int
     quote_id: str
@@ -136,18 +146,21 @@ class WiseTransfer:
 
 
 class WiseMultiCurrencyProcessor:
-    """    Wise Multi-Currency payment processor
+    """
+    Wise Multi-Currency payment processor
     
     Handles international transfers, currency conversion, and multi-currency
     account management with real-time exchange rates and minimal fees.
-    """    
+    """
+    
     def __init__(
         self,
         api_token: str,
         environment: WiseEnvironment = WiseEnvironment.SANDBOX,
         webhook_secret: Optional[str] = None
     ):
-        """Initialize Wise Multi-Currency processor"""        self.api_token = api_token
+        """Initialize Wise Multi-Currency processor"""
+        self.api_token = api_token
         self.environment = environment
         self.webhook_secret = webhook_secret
         self.logger = logging.getLogger(__name__)
@@ -164,7 +177,8 @@ class WiseMultiCurrencyProcessor:
         }
     
     async def get_profiles(self) -> List[WiseProfile]:
-        """Get user profiles"""        try:
+        """Get user profiles"""
+        try:
             # Simulate API call
             await asyncio.sleep(0.1)
             
@@ -190,7 +204,8 @@ class WiseMultiCurrencyProcessor:
             raise
     
     async def get_accounts(self, profile_id: int) -> List[WiseAccount]:
-        """Get borderless accounts for a profile"""        try:
+        """Get borderless accounts for a profile"""
+        try:
             # Simulate API call
             await asyncio.sleep(0.1)
             
@@ -225,7 +240,8 @@ class WiseMultiCurrencyProcessor:
         target_currency: str,
         amount: Optional[Decimal] = None
     ) -> WiseExchangeRate:
-        """Get real-time exchange rate"""        try:
+        """Get real-time exchange rate"""
+        try:
             # Simulate API call
             await asyncio.sleep(0.05)
             
@@ -277,7 +293,8 @@ class WiseMultiCurrencyProcessor:
         source_amount: Optional[Decimal] = None,
         target_amount: Optional[Decimal] = None
     ) -> Dict[str, Any]:
-        """Create a transfer quote"""        try:
+        """Create a transfer quote"""
+        try:
             if not source_amount and not target_amount:
                 raise ValueError("Either source_amount or target_amount must be specified")
             
@@ -327,7 +344,8 @@ class WiseMultiCurrencyProcessor:
         reference: str,
         transfer_purpose: TransferPurpose = TransferPurpose.DIGITAL_SERVICES
     ) -> WiseTransfer:
-        """Create a transfer from quote"""        try:
+        """Create a transfer from quote"""
+        try:
             transfer_id = int(f"1{uuid.uuid4().hex[:8]}", 16) % 10000000
             
             transfer = WiseTransfer(
@@ -359,7 +377,8 @@ class WiseMultiCurrencyProcessor:
         transfer_id: int,
         profile_id: int
     ) -> Dict[str, Any]:
-        """Fund a transfer (simulate bank transfer or card payment)"""        try:
+        """Fund a transfer (simulate bank transfer or card payment)"""
+        try:
             # Simulate funding process
             await asyncio.sleep(0.2)
             
@@ -379,7 +398,8 @@ class WiseMultiCurrencyProcessor:
             return {"success": False, "error": str(e)}
     
     async def get_transfer_status(self, transfer_id: int) -> Dict[str, Any]:
-        """Get current transfer status"""        try:
+        """Get current transfer status"""
+        try:
             # Simulate API call
             await asyncio.sleep(0.1)
             
@@ -415,7 +435,8 @@ class WiseMultiCurrencyProcessor:
             raise
     
     async def cancel_transfer(self, transfer_id: int) -> Dict[str, Any]:
-        """Cancel a transfer (if still possible)"""        try:
+        """Cancel a transfer (if still possible)"""
+        try:
             # Check if transfer can be cancelled
             status = await self.get_transfer_status(transfer_id)
             
@@ -437,7 +458,8 @@ class WiseMultiCurrencyProcessor:
             return {"success": False, "error": str(e)}
     
     async def handle_webhook(self, headers: Dict[str, str], body: str) -> Dict[str, Any]:
-        """Handle Wise webhook events"""        try:
+        """Handle Wise webhook events"""
+        try:
             # Verify webhook signature
             if not self._verify_webhook_signature(headers, body):
                 return {"success": False, "error": "Invalid webhook signature"}
@@ -462,7 +484,8 @@ class WiseMultiCurrencyProcessor:
             return {"success": False, "error": str(e)}
     
     def _verify_webhook_signature(self, headers: Dict[str, str], body: str) -> bool:
-        """Verify Wise webhook signature"""        try:
+        """Verify Wise webhook signature"""
+        try:
             if not self.webhook_secret:
                 return True  # Skip verification if no secret configured
             
@@ -482,24 +505,28 @@ class WiseMultiCurrencyProcessor:
             return False
     
     async def _handle_transfer_state_change(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle transfer status change event"""        transfer_id = data.get("resource", {}).get("id")
+        """Handle transfer status change event"""
+        transfer_id = data.get("resource", {}).get("id")
         new_status = data.get("current_state")
         
         self.logger.info(f"Wise transfer {transfer_id} status changed to: {new_status}")
         return {"success": True, "action": "transfer_status_updated"}
     
     async def _handle_transfer_issues(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle transfer issues event"""        transfer_id = data.get("resource", {}).get("id")
+        """Handle transfer issues event"""
+        transfer_id = data.get("resource", {}).get("id")
         
         self.logger.warning(f"Wise transfer {transfer_id} has active issues")
         return {"success": True, "action": "transfer_issues_detected"}
     
     async def _handle_balance_credit(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle balance credit event"""        self.logger.info("Wise account balance credited")
+        """Handle balance credit event"""
+        self.logger.info("Wise account balance credited")
         return {"success": True, "action": "balance_credited"}
     
     async def _handle_balance_debit(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle balance debit event"""        self.logger.info("Wise account balance debited")
+        """Handle balance debit event"""
+        self.logger.info("Wise account balance debited")
         return {"success": True, "action": "balance_debited"}
     
     def calculate_fee(
@@ -508,7 +535,8 @@ class WiseMultiCurrencyProcessor:
         source_currency: str,
         target_currency: str
     ) -> Decimal:
-        """Calculate Wise transfer fee"""        # Base percentage fee
+        """Calculate Wise transfer fee"""
+        # Base percentage fee
         fee = amount * self.base_fee_percent
         
         # Apply minimum and maximum fee limits
@@ -523,7 +551,8 @@ class WiseMultiCurrencyProcessor:
         return fee.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
     
     def get_supported_currencies(self) -> Dict[str, Dict[str, Any]]:
-        """Get all supported currencies"""        return WiseCurrency.CURRENCIES
+        """Get all supported currencies"""
+        return WiseCurrency.CURRENCIES
 
 
 # Export the main class

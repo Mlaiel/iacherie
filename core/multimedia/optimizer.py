@@ -38,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationLevel(Enum):
-    """Optimization quality levels"""    MAXIMUM = "maximum"
+    """Optimization quality levels"""
+    MAXIMUM = "maximum"
     HIGH = "high"
     BALANCED = "balanced"
     FAST = "fast"
@@ -46,7 +47,8 @@ class OptimizationLevel(Enum):
 
 
 class OptimizationTarget(Enum):
-    """Optimization target objectives"""    FILE_SIZE = "file_size"
+    """Optimization target objectives"""
+    FILE_SIZE = "file_size"
     QUALITY = "quality"
     STREAMING = "streaming"
     MOBILE = "mobile"
@@ -57,7 +59,8 @@ class OptimizationTarget(Enum):
 
 @dataclass
 class OptimizationProfile:
-    """Optimization configuration profile"""    name: str
+    """Optimization configuration profile"""
+    name: str
     target: OptimizationTarget
     level: OptimizationLevel
     max_file_size: Optional[int] = None
@@ -71,7 +74,8 @@ class OptimizationProfile:
 
 @dataclass
 class OptimizationResult:
-    """Optimization process result"""    success: bool
+    """Optimization process result"""
+    success: bool
     original_size: int
     optimized_size: int
     compression_ratio: float
@@ -84,7 +88,8 @@ class OptimizationResult:
 
 
 class MultimediaOptimizer:
-    """    Advanced multimedia content optimizer with AI-powered optimization strategies.
+    """
+    Advanced multimedia content optimizer with AI-powered optimization strategies.
     
     Features:
     - Intelligent file size reduction
@@ -92,9 +97,11 @@ class MultimediaOptimizer:
     - Format-specific optimizations
     - Batch processing capabilities
     - Real-time optimization monitoring
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize multimedia optimizer"""        self.config = config or {}
+        """Initialize multimedia optimizer"""
+        self.config = config or {}
         self.metrics = MetricsCollector()
         self.events = EventDispatcher()
         self.metadata_analyzer = MultimediaMetadata()
@@ -114,7 +121,8 @@ class MultimediaOptimizer:
         logger.info("Multimedia optimizer initialized successfully")
     
     def _initialize_default_profiles(self) -> Dict[str, OptimizationProfile]:
-        """Initialize default optimization profiles"""        return {
+        """Initialize default optimization profiles"""
+        return {
             'web_optimized': OptimizationProfile(
                 name="Web Optimized",
                 target=OptimizationTarget.WEB,
@@ -160,7 +168,8 @@ class MultimediaOptimizer:
         custom_profile: Optional[OptimizationProfile] = None,
         output_path: Optional[str] = None
     ) -> OptimizationResult:
-        """        Optimize multimedia content using specified profile
+        """
+        Optimize multimedia content using specified profile
         
         Args:
             content_path: Path to content file
@@ -170,7 +179,8 @@ class MultimediaOptimizer:
             
         Returns:
             OptimizationResult: Optimization results
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Get optimization profile
@@ -245,7 +255,8 @@ class MultimediaOptimizer:
         profile_name: str = "web_optimized",
         max_concurrent: int = 5
     ) -> List[OptimizationResult]:
-        """        Optimize multiple content files in batch
+        """
+        Optimize multiple content files in batch
         
         Args:
             content_paths: List of content file paths
@@ -254,7 +265,8 @@ class MultimediaOptimizer:
             
         Returns:
             List[OptimizationResult]: List of optimization results
-        """        semaphore = asyncio.Semaphore(max_concurrent)
+        """
+        semaphore = asyncio.Semaphore(max_concurrent)
         
         async def optimize_single(path: str) -> OptimizationResult:
             async with semaphore:
@@ -278,7 +290,8 @@ class MultimediaOptimizer:
         content_info: Dict[str, Any],
         profile: OptimizationProfile
     ) -> Dict[str, Any]:
-        """Determine optimal optimization strategy"""        strategy = {
+        """Determine optimal optimization strategy"""
+        strategy = {
             'applied_optimizations': [],
             'parameters': {}
         }
@@ -311,7 +324,8 @@ class MultimediaOptimizer:
         content_info: Dict[str, Any],
         profile: OptimizationProfile
     ) -> Dict[str, Any]:
-        """Get image-specific optimization strategy"""        strategy = {
+        """Get image-specific optimization strategy"""
+        strategy = {
             'applied_optimizations': [],
             'parameters': {}
         }
@@ -335,7 +349,8 @@ class MultimediaOptimizer:
         content_info: Dict[str, Any],
         profile: OptimizationProfile
     ) -> Dict[str, Any]:
-        """Get video-specific optimization strategy"""        strategy = {
+        """Get video-specific optimization strategy"""
+        strategy = {
             'applied_optimizations': [],
             'parameters': {}
         }
@@ -357,7 +372,8 @@ class MultimediaOptimizer:
         content_info: Dict[str, Any],
         profile: OptimizationProfile
     ) -> Dict[str, Any]:
-        """Get audio-specific optimization strategy"""        strategy = {
+        """Get audio-specific optimization strategy"""
+        strategy = {
             'applied_optimizations': [],
             'parameters': {}
         }
@@ -375,7 +391,8 @@ class MultimediaOptimizer:
         strategy: Dict[str, Any],
         profile: OptimizationProfile
     ) -> bytes:
-        """Apply optimization strategy to content"""        # This would integrate with actual optimization libraries
+        """Apply optimization strategy to content"""
+        # This would integrate with actual optimization libraries
         # For now, return placeholder optimized content
         
         with open(content_path, 'rb') as f:
@@ -394,7 +411,8 @@ class MultimediaOptimizer:
         return optimized_content
     
     async def _save_optimized_content(self, content: bytes, output_path: str):
-        """Save optimized content to file"""        Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+        """Save optimized content to file"""
+        Path(output_path).parent.mkdir(parents=True, exist_ok=True)
         
         with open(output_path, 'wb') as f:
             f.write(content)
@@ -404,12 +422,14 @@ class MultimediaOptimizer:
         original_path: str,
         optimized_content: bytes
     ) -> float:
-        """Calculate quality score comparing original and optimized content"""        # This would use actual quality metrics (SSIM, PSNR, etc.)
+        """Calculate quality score comparing original and optimized content"""
+        # This would use actual quality metrics (SSIM, PSNR, etc.)
         # For now, return a simulated score
         return 0.85
     
     async def _update_statistics(self, result: OptimizationResult):
-        """Update optimization statistics"""        if result.success:
+        """Update optimization statistics"""
+        if result.success:
             self.stats['total_processed'] += 1
             self.stats['total_size_saved'] += (result.original_size - result.optimized_size)
             
@@ -424,7 +444,8 @@ class MultimediaOptimizer:
         self,
         content_path: str
     ) -> Dict[str, Any]:
-        """Get optimization recommendations for content"""        content_info = await self.content_analyzer.analyze_content(content_path)
+        """Get optimization recommendations for content"""
+        content_info = await self.content_analyzer.analyze_content(content_path)
         
         recommendations = {
             'recommended_profiles': [],
@@ -451,7 +472,8 @@ class MultimediaOptimizer:
         content_info: Dict[str, Any],
         strategy: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Estimate potential savings from optimization"""        file_size = content_info.get('file_size', 0)
+        """Estimate potential savings from optimization"""
+        file_size = content_info.get('file_size', 0)
         
         savings = {
             'size_reduction_bytes': 0,
@@ -468,14 +490,17 @@ class MultimediaOptimizer:
         return savings
     
     def add_custom_profile(self, profile: OptimizationProfile):
-        """Add custom optimization profile"""        self.profiles[profile.name] = profile
+        """Add custom optimization profile"""
+        self.profiles[profile.name] = profile
         logger.info(f"Added custom optimization profile: {profile.name}")
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get optimization statistics"""        return self.stats.copy()
+        """Get optimization statistics"""
+        return self.stats.copy()
     
     def reset_statistics(self):
-        """Reset optimization statistics"""        self.stats = {
+        """Reset optimization statistics"""
+        self.stats = {
             'total_processed': 0,
             'total_size_saved': 0,
             'average_compression_ratio': 0.0,

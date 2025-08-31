@@ -40,7 +40,9 @@ FEATURES:
 ✅ Legal compliance and audit trails
 ✅ Enterprise-grade security and performance
 ✅ Industrial scalability and reliability
-"""from .fingerprint_engine_config import (
+"""
+
+from .fingerprint_engine_config import (
     FingerprintEngineConfig,
     ContentType,
     FingerprintAlgorithm,
@@ -431,7 +433,7 @@ __all__ = [
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 # Import index module for unified access
 from .index import (

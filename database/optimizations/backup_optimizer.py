@@ -6,6 +6,7 @@ incremental backups, and automated recovery testing.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import os
 import shutil
@@ -30,7 +31,9 @@ logger = get_logger(__name__)
 
 
 class BackupType(Enum):
-    """Types of backups"""
+    """
+Types of backups"""
+
     FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
@@ -41,6 +44,7 @@ class BackupType(Enum):
 
 class BackupStatus(Enum):
     """Backup operation status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -51,6 +55,7 @@ class BackupStatus(Enum):
 
 class CompressionType(Enum):
     """Compression algorithms"""
+
     NONE = "none"
     GZIP = "gzip"
     LZ4 = "lz4"
@@ -60,6 +65,7 @@ class CompressionType(Enum):
 
 class StorageLocation(Enum):
     """Backup storage locations"""
+
     LOCAL = "local"
     S3 = "s3"
     GCS = "gcs"
@@ -106,7 +112,8 @@ class BackupMetadata:
 
 @dataclass
 class RestoreRequest:
-    """Database restore request"""
+    """
+Database restore request"""
     restore_id: str
     backup_id: str
     target_database: str
@@ -116,13 +123,15 @@ class RestoreRequest:
 
 
 class BackupStorage:
-    """Abstract backup storage interface with basic fallback implementations"""
+    """
+Abstract backup storage interface with basic fallback implementations"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def upload_backup(self, local_path: str, remote_path: str) -> bool:
-        """Upload backup to storage - basic implementation for testing"""
+        """
+Upload backup to storage - basic implementation for testing"""
         logger.warning("Using basic backup storage implementation - consider implementing specific provider")
         # Basic implementation: log the operation and return success for testing
         logger.info(f"Mock upload: {local_path} -> {remote_path}")
@@ -153,7 +162,8 @@ class LocalBackupStorage(BackupStorage):
     """Local filesystem backup storage"""
     
     async def upload_backup(self, local_path: str, remote_path: str) -> bool:
-        """Copy backup to remote local path"""
+        """
+Copy backup to remote local path"""
         try:
             os.makedirs(os.path.dirname(remote_path), exist_ok=True)
             shutil.copy2(local_path, remote_path)
@@ -205,7 +215,8 @@ class S3BackupStorage(BackupStorage):
         self.region = config.get('region', 'us-east-1')
     
     async def upload_backup(self, local_path: str, remote_path: str) -> bool:
-        """Upload backup to S3"""
+        """
+Upload backup to S3"""
         try:
             # Simplified S3 upload - in practice use boto3
             logger.info(f"Would upload {local_path} to s3://{self.bucket_name}/{remote_path}")
@@ -253,7 +264,8 @@ class BackupExecutor:
         self.storage = self._create_storage()
     
     def _create_storage(self) -> BackupStorage:
-        """Create storage backend"""
+        """
+Create storage backend"""
         if self.config.storage_location == StorageLocation.LOCAL:
             return LocalBackupStorage({'storage_path': self.config.storage_path})
         elif self.config.storage_location == StorageLocation.S3:
@@ -262,7 +274,8 @@ class BackupExecutor:
             return LocalBackupStorage({'storage_path': self.config.storage_path})
     
     async def execute_backup(self) -> BackupMetadata:
-        """Execute backup operation"""
+        """
+Execute backup operation"""
         start_time = datetime.now()
         backup_id = f"{self.config.database_name}_{self.config.backup_type.value}_{start_time.strftime('%Y%m%d_%H%M%S')}"
         
@@ -544,7 +557,8 @@ class BackupScheduler:
         self.is_running = False
     
     def add_backup_config(self, config: BackupConfig):
-        """Add backup configuration"""
+        """
+Add backup configuration"""
         self.backup_configs[config.backup_id] = config
         logger.info(f"Added backup config: {config.backup_id}")
     
@@ -712,7 +726,8 @@ class BackupScheduler:
         }
     
     def get_backup_history(self, database_name: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Get backup history"""
+        """
+Get backup history"""
         backups = list(self.backup_metadata.values())
         
         if database_name:

@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -18,7 +19,8 @@ Tests for real-time event management, queue processing, and worker systems.
 Author: Fahed Mlaiel (Legal Copyright)
 Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
 Propriété intellectuelle protégée sous toutes juridictions.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -45,8 +47,10 @@ from crawlers.handlers.event_handler import (
 
 
 class TestEvent:
-    """Test suite for Event class."""    def test_event_creation(self):
-        """Test event object creation."""        event = Event(
+    """Test suite for Event class."""
+    def test_event_creation(self):
+        """Test event object creation."""
+        event = Event(
             event_id='test-001',
             event_type='content_upload',
             data={'file_path': '/test/file.txt'},
@@ -61,7 +65,8 @@ class TestEvent:
         assert isinstance(event.timestamp, datetime)
 
     def test_event_serialization(self):
-        """Test event JSON serialization."""        event = Event(
+        """Test event JSON serialization."""
+        event = Event(
             event_id='test-002',
             event_type='processing_complete',
             data={'result': 'success'}
@@ -74,7 +79,8 @@ class TestEvent:
         assert 'timestamp' in json_data
 
     def test_event_from_json(self):
-        """Test event deserialization from JSON."""        json_data = {
+        """Test event deserialization from JSON."""
+        json_data = {
             'event_id': 'test-003',
             'event_type': 'error_occurred',
             'data': {'error': 'File not found'},
@@ -91,18 +97,22 @@ class TestEvent:
 
 
 class TestEventHandler:
-    """Test suite for EventHandler base class."""    def test_handler_creation(self):
-        """Test handler initialization."""        handler = EventHandler('test_handler')
+    """Test suite for EventHandler base class."""
+    def test_handler_creation(self):
+        """Test handler initialization."""
+        handler = EventHandler('test_handler')
         assert handler.name == 'test_handler'
         assert handler.handler_id is not None
         assert handler.is_active
 
     def test_handler_with_custom_id(self):
-        """Test handler with custom ID."""        handler = EventHandler('test_handler', 'custom-123')
+        """Test handler with custom ID."""
+        handler = EventHandler('test_handler', 'custom-123')
         assert handler.handler_id == 'custom-123'
 
     def test_handler_start_stop(self):
-        """Test handler lifecycle management."""        handler = EventHandler('test_handler')
+        """Test handler lifecycle management."""
+        handler = EventHandler('test_handler')
         
         handler.start()
         assert handler.is_active
@@ -112,7 +122,8 @@ class TestEventHandler:
 
     @pytest.mark.asyncio
     async def test_handle_event_not_implemented(self):
-        """Test base handler raises NotImplementedError."""        handler = EventHandler('test_handler')
+        """Test base handler raises NotImplementedError."""
+        handler = EventHandler('test_handler')
         event = Event('test', 'test_type', {})
         
         with pytest.raises(NotImplementedError):
@@ -120,9 +131,11 @@ class TestEventHandler:
 
 
 class TestAsyncEventHandler:
-    """Test suite for AsyncEventHandler class."""    @pytest.mark.asyncio
+    """Test suite for AsyncEventHandler class."""
+    @pytest.mark.asyncio
     async def test_async_handler_execution(self):
-        """Test async event handling."""        async def test_coroutine(event):
+        """Test async event handling."""
+        async def test_coroutine(event):
             return f"Processed {event.event_type}"
         
         handler = AsyncEventHandler('async_handler')
@@ -135,7 +148,8 @@ class TestAsyncEventHandler:
 
     @pytest.mark.asyncio
     async def test_async_handler_timeout(self):
-        """Test async handler timeout functionality."""        async def slow_coroutine(event):
+        """Test async handler timeout functionality."""
+        async def slow_coroutine(event):
             await asyncio.sleep(2)  # Longer than timeout
             return "Too slow"
         
@@ -149,7 +163,8 @@ class TestAsyncEventHandler:
 
     @pytest.mark.asyncio
     async def test_async_handler_error_handling(self):
-        """Test async handler error management."""        async def error_coroutine(event):
+        """Test async handler error management."""
+        async def error_coroutine(event):
             raise ValueError("Test error")
         
         handler = AsyncEventHandler('error_handler')
@@ -163,9 +178,11 @@ class TestAsyncEventHandler:
 
 
 class TestSyncEventHandler:
-    """Test suite for SyncEventHandler class."""    @pytest.mark.asyncio
+    """Test suite for SyncEventHandler class."""
+    @pytest.mark.asyncio
     async def test_sync_handler_execution(self):
-        """Test sync event handling in thread pool."""        def test_function(event):
+        """Test sync event handling in thread pool."""
+        def test_function(event):
             return f"Sync processed {event.event_type}"
         
         handler = SyncEventHandler('sync_handler')
@@ -178,7 +195,8 @@ class TestSyncEventHandler:
 
     @pytest.mark.asyncio
     async def test_sync_handler_with_executor(self):
-        """Test sync handler with custom executor."""        from concurrent.futures import ThreadPoolExecutor
+        """Test sync handler with custom executor."""
+        from concurrent.futures import ThreadPoolExecutor
         
         def cpu_intensive_task(event):
             # Simulate CPU work
@@ -199,14 +217,17 @@ class TestSyncEventHandler:
 
 
 class TestEventQueue:
-    """Test suite for EventQueue class."""    def test_queue_initialization(self):
-        """Test queue setup."""        queue = EventQueue()
+    """Test suite for EventQueue class."""
+    def test_queue_initialization(self):
+        """Test queue setup."""
+        queue = EventQueue()
         assert queue.redis_client is not None
         assert queue.queue_name == 'ia_influencer_events'
 
     @pytest.mark.asyncio
     async def test_enqueue_event(self):
-        """Test event enqueueing."""        queue = EventQueue()
+        """Test event enqueueing."""
+        queue = EventQueue()
         
         with patch.object(queue.redis_client, 'zadd') as mock_zadd:
             mock_zadd.return_value = 1
@@ -218,7 +239,8 @@ class TestEventQueue:
 
     @pytest.mark.asyncio
     async def test_dequeue_event(self):
-        """Test event dequeuing."""        queue = EventQueue()
+        """Test event dequeuing."""
+        queue = EventQueue()
         
         event_data = {
             'event_id': 'test',
@@ -239,7 +261,8 @@ class TestEventQueue:
 
     @pytest.mark.asyncio
     async def test_dequeue_empty_queue(self):
-        """Test dequeuing from empty queue."""        queue = EventQueue()
+        """Test dequeuing from empty queue."""
+        queue = EventQueue()
         
         with patch.object(queue.redis_client, 'zpopmin') as mock_zpop:
             mock_zpop.return_value = []
@@ -249,7 +272,8 @@ class TestEventQueue:
 
     @pytest.mark.asyncio
     async def test_queue_size(self):
-        """Test queue size reporting."""        queue = EventQueue()
+        """Test queue size reporting."""
+        queue = EventQueue()
         
         with patch.object(queue.redis_client, 'zcard') as mock_zcard:
             mock_zcard.return_value = 5
@@ -259,7 +283,8 @@ class TestEventQueue:
 
     @pytest.mark.asyncio
     async def test_clear_queue(self):
-        """Test queue clearing."""        queue = EventQueue()
+        """Test queue clearing."""
+        queue = EventQueue()
         
         with patch.object(queue.redis_client, 'delete') as mock_delete:
             mock_delete.return_value = 1
@@ -269,13 +294,16 @@ class TestEventQueue:
 
 
 class TestEventRegistry:
-    """Test suite for EventRegistry class."""    def test_registry_initialization(self):
-        """Test registry setup."""        registry = EventRegistry()
+    """Test suite for EventRegistry class."""
+    def test_registry_initialization(self):
+        """Test registry setup."""
+        registry = EventRegistry()
         assert len(registry.handlers) == 0
         assert len(registry.event_types) == 0
 
     def test_register_handler(self):
-        """Test handler registration."""        registry = EventRegistry()
+        """Test handler registration."""
+        registry = EventRegistry()
         handler = EventHandler('test_handler')
         
         registry.register_handler('test_event', handler)
@@ -285,7 +313,8 @@ class TestEventRegistry:
         assert handler.handler_id in registry.handlers
 
     def test_unregister_handler(self):
-        """Test handler unregistration."""        registry = EventRegistry()
+        """Test handler unregistration."""
+        registry = EventRegistry()
         handler = EventHandler('test_handler')
         
         registry.register_handler('test_event', handler)
@@ -295,7 +324,8 @@ class TestEventRegistry:
         assert len(registry.event_types['test_event']) == 0
 
     def test_get_handlers_for_event(self):
-        """Test getting handlers for specific event type."""        registry = EventRegistry()
+        """Test getting handlers for specific event type."""
+        registry = EventRegistry()
         handler1 = EventHandler('handler1')
         handler2 = EventHandler('handler2')
         
@@ -309,7 +339,8 @@ class TestEventRegistry:
         assert handler2 in handlers
 
     def test_list_event_types(self):
-        """Test listing all registered event types."""        registry = EventRegistry()
+        """Test listing all registered event types."""
+        registry = EventRegistry()
         handler = EventHandler('test_handler')
         
         registry.register_handler('event1', handler)
@@ -321,8 +352,10 @@ class TestEventRegistry:
 
 
 class TestEventDispatcher:
-    """Test suite for EventDispatcher class."""    def test_dispatcher_initialization(self):
-        """Test dispatcher setup."""        dispatcher = EventDispatcher()
+    """Test suite for EventDispatcher class."""
+    def test_dispatcher_initialization(self):
+        """Test dispatcher setup."""
+        dispatcher = EventDispatcher()
         assert dispatcher.queue is not None
         assert dispatcher.registry is not None
         assert dispatcher.workers == []
@@ -330,7 +363,8 @@ class TestEventDispatcher:
 
     @pytest.mark.asyncio
     async def test_dispatch_event(self):
-        """Test event dispatching."""        dispatcher = EventDispatcher()
+        """Test event dispatching."""
+        dispatcher = EventDispatcher()
         
         with patch.object(dispatcher.queue, 'enqueue') as mock_enqueue:
             event = Event('test', 'dispatch_test', {})
@@ -340,7 +374,8 @@ class TestEventDispatcher:
 
     @pytest.mark.asyncio
     async def test_start_workers(self):
-        """Test worker startup."""        dispatcher = EventDispatcher()
+        """Test worker startup."""
+        dispatcher = EventDispatcher()
         
         with patch.object(dispatcher, '_create_worker') as mock_create:
             mock_worker = MagicMock()
@@ -352,7 +387,8 @@ class TestEventDispatcher:
             assert mock_create.call_count == 2
 
     def test_stop_workers(self):
-        """Test worker shutdown."""        dispatcher = EventDispatcher()
+        """Test worker shutdown."""
+        dispatcher = EventDispatcher()
         
         # Mock workers
         worker1 = MagicMock()
@@ -368,7 +404,8 @@ class TestEventDispatcher:
 
     @pytest.mark.asyncio
     async def test_process_event(self):
-        """Test event processing."""        dispatcher = EventDispatcher()
+        """Test event processing."""
+        dispatcher = EventDispatcher()
         
         # Create and register a test handler
         async def test_handler_func(event):
@@ -386,7 +423,8 @@ class TestEventDispatcher:
 
     @pytest.mark.asyncio
     async def test_process_event_no_handlers(self):
-        """Test processing event with no registered handlers."""        dispatcher = EventDispatcher()
+        """Test processing event with no registered handlers."""
+        dispatcher = EventDispatcher()
         
         event = Event('test', 'unknown_event', {})
         results = await dispatcher.process_event(event)
@@ -395,8 +433,10 @@ class TestEventDispatcher:
 
 
 class TestEventWorker:
-    """Test suite for EventWorker class."""    def test_worker_initialization(self):
-        """Test worker setup."""        dispatcher = EventDispatcher()
+    """Test suite for EventWorker class."""
+    def test_worker_initialization(self):
+        """Test worker setup."""
+        dispatcher = EventDispatcher()
         worker = EventWorker('worker-1', dispatcher)
         
         assert worker.worker_id == 'worker-1'
@@ -406,7 +446,8 @@ class TestEventWorker:
 
     @pytest.mark.asyncio
     async def test_worker_lifecycle(self):
-        """Test worker start and stop."""        dispatcher = EventDispatcher()
+        """Test worker start and stop."""
+        dispatcher = EventDispatcher()
         worker = EventWorker('worker-1', dispatcher)
         
         # Mock the work loop to avoid infinite loop
@@ -427,7 +468,8 @@ class TestEventWorker:
 
     @pytest.mark.asyncio
     async def test_worker_process_event(self):
-        """Test worker event processing."""        dispatcher = EventDispatcher()
+        """Test worker event processing."""
+        dispatcher = EventDispatcher()
         worker = EventWorker('worker-1', dispatcher)
         
         # Mock dispatcher process_event
@@ -442,9 +484,11 @@ class TestEventWorker:
 
 
 class TestIntegration:
-    """Integration tests for event handling system."""    @pytest.mark.asyncio
+    """Integration tests for event handling system."""
+    @pytest.mark.asyncio
     async def test_complete_event_flow(self):
-        """Test complete event processing flow."""        dispatcher = EventDispatcher()
+        """Test complete event processing flow."""
+        dispatcher = EventDispatcher()
         
         # Create and register handler
         results = []
@@ -474,7 +518,8 @@ class TestIntegration:
 
     @pytest.mark.asyncio
     async def test_multiple_handlers_same_event(self):
-        """Test multiple handlers for same event type."""        dispatcher = EventDispatcher()
+        """Test multiple handlers for same event type."""
+        dispatcher = EventDispatcher()
         
         results = []
         
@@ -506,7 +551,8 @@ class TestIntegration:
 
     @pytest.mark.asyncio
     async def test_event_priority_ordering(self):
-        """Test event priority handling."""        queue = EventQueue()
+        """Test event priority handling."""
+        queue = EventQueue()
         
         # Create events with different priorities
         low_event = Event('low', 'test', {}, priority=EventPriority.LOW)

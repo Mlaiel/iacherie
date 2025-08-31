@@ -10,7 +10,8 @@ STRICT COPYRIGHT WARNING: This code and concept are EXCLUSIVE intellectual prope
 ANY unauthorized use, copying, or theft without explicit written authorization is STRICTLY PROHIBITED
 and subject to immediate legal prosecution under German law.
 Contact: mlaiel@live.de for ANY authorization requests.
-"""from typing import Dict, List, Optional, Any, Union, Tuple, Set
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from datetime import datetime, timedelta, timezone
 from enum import Enum, IntEnum
 from dataclasses import dataclass, field
@@ -60,7 +61,8 @@ outstanding_royalties_gauge = Gauge('outstanding_royalties_total', 'Total outsta
 logger = logging.getLogger(__name__)
 
 class RevenueSource(Enum):
-    """Comprehensive revenue sources"""    STREAMING = "streaming"
+    """Comprehensive revenue sources"""
+    STREAMING = "streaming"
     DOWNLOAD = "download"
     LICENSING = "licensing"
     SYNCHRONIZATION = "synchronization"
@@ -88,7 +90,8 @@ class RevenueSource(Enum):
     SAMPLE = "sample"
 
 class PaymentStatus(Enum):
-    """Payment status tracking"""    PENDING_CALCULATION = "pending_calculation"
+    """Payment status tracking"""
+    PENDING_CALCULATION = "pending_calculation"
     CALCULATED = "calculated"
     PENDING_APPROVAL = "pending_approval"
     APPROVED = "approved"
@@ -104,7 +107,8 @@ class PaymentStatus(Enum):
     MANUALLY_REVIEWED = "manually_reviewed"
 
 class DistributionMethod(Enum):
-    """Payment distribution methods"""    BANK_TRANSFER = "bank_transfer"
+    """Payment distribution methods"""
+    BANK_TRANSFER = "bank_transfer"
     WIRE_TRANSFER = "wire_transfer"
     ACH = "ach"
     SEPA = "sepa"
@@ -118,7 +122,8 @@ class DistributionMethod(Enum):
     SMART_CONTRACT = "smart_contract"
 
 class RoyaltyType(Enum):
-    """Types of royalties"""    MECHANICAL = "mechanical"
+    """Types of royalties"""
+    MECHANICAL = "mechanical"
     PERFORMANCE = "performance"
     SYNC = "synchronization"
     MASTER = "master"
@@ -130,7 +135,8 @@ class RoyaltyType(Enum):
     SMALL = "small"
 
 class TaxTreatment(Enum):
-    """Tax treatment classifications"""    GROSS = "gross"
+    """Tax treatment classifications"""
+    GROSS = "gross"
     NET_OF_TAX = "net_of_tax"
     TAX_EXEMPT = "tax_exempt"
     WITHHOLDING_TAX = "withholding_tax"
@@ -139,7 +145,8 @@ class TaxTreatment(Enum):
 
 @dataclass
 class RoyaltyRateStructure:
-    """Complex royalty rate structure"""    base_rate: Decimal
+    """Complex royalty rate structure"""
+    base_rate: Decimal
     minimum_rate: Decimal = Decimal('0.0000')
     maximum_rate: Decimal = Decimal('1.0000')
     escalation_tiers: List[Dict[str, Any]] = field(default_factory=list)
@@ -150,7 +157,8 @@ class RoyaltyRateStructure:
     performance_bonuses: List[Dict[str, Any]] = field(default_factory=list)
     
     def calculate_effective_rate(self, context: Dict[str, Any]) -> Decimal:
-        """Calculate effective rate based on context"""        effective_rate = self.base_rate
+        """Calculate effective rate based on context"""
+        effective_rate = self.base_rate
         
         # Apply volume discounts
         volume = context.get('volume', 0)
@@ -173,7 +181,8 @@ class RoyaltyRateStructure:
 
 @dataclass
 class PaymentSplit:
-    """Payment split configuration"""    beneficiary_id: str
+    """Payment split configuration"""
+    beneficiary_id: str
     beneficiary_type: str  # writer, publisher, performer, producer, etc.
     split_percentage: Decimal
     split_type: str  # percentage, fixed_amount, remainder
@@ -184,7 +193,8 @@ class PaymentSplit:
     tax_treatment: str = TaxTreatment.GROSS.value
     
     def calculate_amount(self, total_revenue: Decimal) -> Decimal:
-        """Calculate split amount from total revenue"""        if self.split_type == "percentage":
+        """Calculate split amount from total revenue"""
+        if self.split_type == "percentage":
             amount = total_revenue * (self.split_percentage / Decimal('100'))
         elif self.split_type == "fixed_amount":
             amount = self.split_percentage  # Used as fixed amount
@@ -199,9 +209,11 @@ class PaymentSplit:
         return amount.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
 
 class RevenueReport(BaseModel, TimestampMixin, AuditMixin):
-    """    Comprehensive revenue reporting with multi-platform aggregation.
+    """
+    Comprehensive revenue reporting with multi-platform aggregation.
     Tracks all revenue sources with detailed attribution and analytics.
-    """    __tablename__ = "revenue_reports"
+    """
+    __tablename__ = "revenue_reports"
     
     # Primary identifiers
     id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -283,21 +295,25 @@ class RevenueReport(BaseModel, TimestampMixin, AuditMixin):
     
     @hybrid_property
     def effective_royalty_rate(self):
-        """Calculate effective royalty rate for the period"""        if self.gross_revenue > 0:
+        """Calculate effective royalty rate for the period"""
+        if self.gross_revenue > 0:
             total_royalties = sum(calc.get('total_amount', 0) for calc in self.royalty_calculations.values())
             return Decimal(str(total_royalties)) / self.gross_revenue
         return Decimal('0.0000')
     
     @hybrid_property
     def revenue_per_play(self):
-        """Calculate revenue per play"""        if self.total_plays > 0:
+        """Calculate revenue per play"""
+        if self.total_plays > 0:
             return self.net_revenue / Decimal(str(self.total_plays))
         return Decimal('0.0000')
 
 class RoyaltyCalculation(BaseModel, TimestampMixin, AuditMixin):
-    """    Advanced royalty calculation engine with complex rate structures.
+    """
+    Advanced royalty calculation engine with complex rate structures.
     Supports multi-tier royalty schemes and automated calculations.
-    """    __tablename__ = "royalty_calculations"
+    """
+    __tablename__ = "royalty_calculations"
     
     # Primary identifiers
     id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -376,14 +392,17 @@ class RoyaltyCalculation(BaseModel, TimestampMixin, AuditMixin):
     
     @hybrid_property
     def effective_royalty_percentage(self):
-        """Calculate effective royalty percentage"""        return self.effective_rate * self.ownership_percentage * Decimal('100')
+        """Calculate effective royalty percentage"""
+        return self.effective_rate * self.ownership_percentage * Decimal('100')
     
     @hybrid_property
     def total_deductions_amount(self):
-        """Calculate total deductions amount"""        return sum(Decimal(str(amount)) for amount in self.deductions.values() if isinstance(amount, (int, float, str)))
+        """Calculate total deductions amount"""
+        return sum(Decimal(str(amount)) for amount in self.deductions.values() if isinstance(amount, (int, float, str)))
     
     def recalculate(self, rate_structure: RoyaltyRateStructure, context: Dict[str, Any]) -> Decimal:
-        """Recalculate royalty amount with new parameters"""        # Update effective rate based on context
+        """Recalculate royalty amount with new parameters"""
+        # Update effective rate based on context
         self.effective_rate = rate_structure.calculate_effective_rate(context)
         
         # Recalculate amounts
@@ -402,9 +421,11 @@ class RoyaltyCalculation(BaseModel, TimestampMixin, AuditMixin):
         return self.converted_amount
 
 class PaymentDistribution(BaseModel, TimestampMixin, AuditMixin):
-    """    Comprehensive payment distribution with multi-method support.
+    """
+    Comprehensive payment distribution with multi-method support.
     Handles complex payment routing and reconciliation.
-    """    __tablename__ = "payment_distributions"
+    """
+    __tablename__ = "payment_distributions"
     
     # Primary identifiers
     id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -497,25 +518,30 @@ class PaymentDistribution(BaseModel, TimestampMixin, AuditMixin):
     
     @hybrid_property
     def processing_time(self):
-        """Calculate payment processing time"""        if self.initiated_at and self.completed_at:
+        """Calculate payment processing time"""
+        if self.initiated_at and self.completed_at:
             return self.completed_at - self.initiated_at
         return None
     
     @hybrid_property
     def is_overdue(self):
-        """Check if payment is overdue"""        if self.scheduled_date and self.status not in [PaymentStatus.COMPLETED.value, PaymentStatus.CANCELLED.value]:
+        """Check if payment is overdue"""
+        if self.scheduled_date and self.status not in [PaymentStatus.COMPLETED.value, PaymentStatus.CANCELLED.value]:
             return datetime.now(timezone.utc) > self.scheduled_date
         return False
     
     @hybrid_property
     def effective_fee_percentage(self):
-        """Calculate effective fee percentage"""        if self.payment_amount > 0:
+        """Calculate effective fee percentage"""
+        if self.payment_amount > 0:
             return (self.total_fees / self.payment_amount) * Decimal('100')
         return Decimal('0.00')
 
 class PaymentSchedule(BaseModel, TimestampMixin):
-    """    Automated payment scheduling with configurable rules.
-    """    __tablename__ = "payment_schedules"
+    """
+    Automated payment scheduling with configurable rules.
+    """
+    __tablename__ = "payment_schedules"
     
     # Primary identifiers
     id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -555,9 +581,11 @@ class PaymentSchedule(BaseModel, TimestampMixin):
         Index('idx_schedule_frequency_day', 'frequency', 'payment_day'),
         CheckConstraint('minimum_threshold >= 0', name='check_minimum_threshold_positive'),
 class RoyaltyDistributionService:
-    """    Enterprise-grade royalty distribution service with automated calculations and payments.
+    """
+    Enterprise-grade royalty distribution service with automated calculations and payments.
     Provides comprehensive revenue processing, tax handling, and multi-currency support.
-    """    
+    """
+    
     def __init__(self, db_session: Session, cache_manager: CacheManager, security_manager: SecurityManager):
         self.db = db_session
         self.cache = cache_manager
@@ -578,14 +606,16 @@ class RoyaltyDistributionService:
         logger.info("RoyaltyDistributionService initialized")
     
     async def process_revenue_report(self, revenue_data: Dict[str, Any]) -> RevenueReport:
-        """        Process incoming revenue report with comprehensive validation and normalization.
+        """
+        Process incoming revenue report with comprehensive validation and normalization.
         
         Args:
             revenue_data: Raw revenue data from platform
             
         Returns:
             RevenueReport: Processed revenue report
-        """        try:
+        """
+        try:
             # Generate unique report ID
             report_id = self._generate_report_id()
             
@@ -644,7 +674,8 @@ class RoyaltyDistributionService:
             raise
     
     async def calculate_royalties(self, revenue_report_id: str, calculation_config: Dict[str, Any] = None) -> List[RoyaltyCalculation]:
-        """        Calculate royalties for all rights holders with advanced rate structures.
+        """
+        Calculate royalties for all rights holders with advanced rate structures.
         
         Args:
             revenue_report_id: Revenue report to process
@@ -652,7 +683,8 @@ class RoyaltyDistributionService:
             
         Returns:
             List[RoyaltyCalculation]: Calculated royalties for all rights holders
-        """        revenue_report = self.db.query(RevenueReport).filter(
+        """
+        revenue_report = self.db.query(RevenueReport).filter(
             RevenueReport.id == revenue_report_id
         ).first()
         
@@ -728,7 +760,8 @@ class RoyaltyDistributionService:
         return calculations
     
     async def distribute_payments(self, calculation_ids: List[str], distribution_config: Dict[str, Any] = None) -> List[PaymentDistribution]:
-        """        Distribute payments to rights holders with multi-method support.
+        """
+        Distribute payments to rights holders with multi-method support.
         
         Args:
             calculation_ids: List of royalty calculations to pay
@@ -736,7 +769,8 @@ class RoyaltyDistributionService:
             
         Returns:
             List[PaymentDistribution]: Created payment distributions
-        """        with payment_processing_time.time():
+        """
+        with payment_processing_time.time():
             distributions = []
             
             for calculation_id in calculation_ids:
@@ -776,14 +810,16 @@ class RoyaltyDistributionService:
             return distributions
     
     async def process_payment_batch(self, distribution_ids: List[str]) -> Dict[str, Any]:
-        """        Process a batch of payments with optimal routing and error handling.
+        """
+        Process a batch of payments with optimal routing and error handling.
         
         Args:
             distribution_ids: List of payment distributions to process
             
         Returns:
             Dict containing batch processing results
-        """        batch_results = {
+        """
+        batch_results = {
             'successful_payments': [],
             'failed_payments': [],
             'total_amount': Decimal('0.0000'),
@@ -835,14 +871,16 @@ class RoyaltyDistributionService:
         return batch_results
     
     async def reconcile_payments(self, reconciliation_data: Dict[str, Any]) -> Dict[str, Any]:
-        """        Reconcile payments with bank statements and external confirmations.
+        """
+        Reconcile payments with bank statements and external confirmations.
         
         Args:
             reconciliation_data: Bank statements and confirmation data
             
         Returns:
             Dict containing reconciliation results
-        """        reconciliation_results = {
+        """
+        reconciliation_results = {
             'matched_payments': [],
             'unmatched_payments': [],
             'discrepancies': [],
@@ -891,14 +929,16 @@ class RoyaltyDistributionService:
         return reconciliation_results
     
     async def generate_tax_reports(self, reporting_period: Dict[str, Any]) -> Dict[str, Any]:
-        """        Generate comprehensive tax reports for royalty payments.
+        """
+        Generate comprehensive tax reports for royalty payments.
         
         Args:
             reporting_period: Period for tax reporting
             
         Returns:
             Dict containing generated tax reports
-        """        period_start = reporting_period['start_date']
+        """
+        period_start = reporting_period['start_date']
         period_end = reporting_period['end_date']
         
         # Get all completed payments in period
@@ -948,7 +988,8 @@ class RoyaltyDistributionService:
         return tax_reports
     
     async def _validate_and_normalize_revenue_data(self, revenue_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate and normalize incoming revenue data"""        # Implementation would include comprehensive validation
+        """Validate and normalize incoming revenue data"""
+        # Implementation would include comprehensive validation
         # For now, return normalized data structure
         normalized = {
             'content_id': revenue_data['content_id'],
@@ -970,13 +1011,15 @@ class RoyaltyDistributionService:
         return normalized
     
     async def _calculate_royalties_for_report(self, revenue_report: RevenueReport):
-        """Asynchronously calculate royalties for a revenue report"""        try:
+        """Asynchronously calculate royalties for a revenue report"""
+        try:
             await self.calculate_royalties(str(revenue_report.id))
         except Exception as e:
             logger.error(f"Async royalty calculation failed for report {revenue_report.report_id}: {e}")
     
     async def _get_rights_holder_config(self, rights_holder_id: str, content_id: str) -> Dict[str, Any]:
-        """Get rights holder configuration for royalty calculation"""        # This would query the rights holder configuration
+        """Get rights holder configuration for royalty calculation"""
+        # This would query the rights holder configuration
         # For now, return default configuration
         return {
             'base_rate': '0.1500',
@@ -991,7 +1034,8 @@ class RoyaltyDistributionService:
     async def _create_royalty_calculation(self, revenue_report: RevenueReport, rights_holder: Dict[str, Any],
                                         rate_structure: RoyaltyRateStructure, effective_rate: Decimal,
                                         ownership_percentage: Decimal, context: Dict[str, Any]) -> RoyaltyCalculation:
-        """Create individual royalty calculation"""        calculation_id = self._generate_calculation_id()
+        """Create individual royalty calculation"""
+        calculation_id = self._generate_calculation_id()
         
         # Calculate base amounts
         gross_revenue = revenue_report.net_revenue
@@ -1030,17 +1074,20 @@ class RoyaltyDistributionService:
         return calculation
     
     def _generate_report_id(self) -> str:
-        """Generate unique report ID"""        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        """Generate unique report ID"""
+        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         random_suffix = str(uuid4())[:8].upper()
         return f"RR-{timestamp}-{random_suffix}"
     
     def _generate_calculation_id(self) -> str:
-        """Generate unique calculation ID"""        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        """Generate unique calculation ID"""
+        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         random_suffix = str(uuid4())[:6].upper()
         return f"RC-{timestamp}-{random_suffix}"
     
     def _generate_distribution_id(self) -> str:
-        """Generate unique distribution ID"""        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        """Generate unique distribution ID"""
+        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         random_suffix = str(uuid4())[:6].upper()
         return f"PD-{timestamp}-{random_suffix}"
 
@@ -1053,7 +1100,8 @@ __all__ = [
     BRAND_PARTNERSHIP = "brand_partnership"
 
 class PaymentStatus(Enum):
-    """Statuts des paiements"""    PENDING = "pending"
+    """Statuts des paiements"""
+    PENDING = "pending"
     CALCULATED = "calculated"
     APPROVED = "approved"
     PROCESSING = "processing"
@@ -1063,14 +1111,16 @@ class PaymentStatus(Enum):
     REFUNDED = "refunded"
 
 class DistributionMethod(Enum):
-    """Méthodes de distribution"""    EQUAL_SPLIT = "equal_split"
+    """Méthodes de distribution"""
+    EQUAL_SPLIT = "equal_split"
     OWNERSHIP_PERCENTAGE = "ownership_percentage"
     CUSTOM_SPLIT = "custom_split"
     WATERFALL = "waterfall"
     THRESHOLD_BASED = "threshold_based"
 
 class PaymentMethod(Enum):
-    """Méthodes de paiement"""    BANK_TRANSFER = "bank_transfer"
+    """Méthodes de paiement"""
+    BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
     WISE = "wise"
@@ -1079,7 +1129,8 @@ class PaymentMethod(Enum):
 
 @dataclass
 class RoyaltyRate:
-    """Structure des taux de royalties"""    platform: str
+    """Structure des taux de royalties"""
+    platform: str
     revenue_source: RevenueSource
     base_rate: Decimal
     tier_rates: Optional[Dict[str, Decimal]] = None
@@ -1088,16 +1139,19 @@ class RoyaltyRate:
 
 @dataclass
 class SplitConfiguration:
-    """Configuration de répartition des revenus"""    recipient_id: int
+    """Configuration de répartition des revenus"""
+    recipient_id: int
     percentage: Decimal
     role: str
     minimum_amount: Optional[Decimal] = None
     priority: int = 0
 
 class RoyaltyCalculation(BaseModel):
-    """    Modèle de calcul des royalties.
+    """
+    Modèle de calcul des royalties.
     Gère tous les calculs de distribution de revenus.
-    """    __tablename__ = "royalty_calculations"
+    """
+    __tablename__ = "royalty_calculations"
 
     # Identifiants
     id = Column(Integer, primary_key=True, index=True)
@@ -1148,7 +1202,8 @@ class RoyaltyCalculation(BaseModel):
             self.calculation_id = f"RC-{uuid.uuid4().hex[:8].upper()}"
 
     def calculate_distributions(self) -> Dict[int, Decimal]:
-        """Calcule la distribution des royalties selon la configuration"""        
+        """Calcule la distribution des royalties selon la configuration"""
+        
         if not self.split_configuration:
             raise ValueError("Configuration de split manquante")
         
@@ -1184,7 +1239,8 @@ class RoyaltyCalculation(BaseModel):
         return distributions
 
     def validate_calculation(self, validator_user_id: int, notes: Optional[str] = None) -> bool:
-        """Valide le calcul de royalties"""        
+        """Valide le calcul de royalties"""
+        
         # Vérifications de base
         if self.total_distributed != self.net_revenue:
             raise ValueError("Le total distribué ne correspond pas au revenu net")
@@ -1200,7 +1256,8 @@ class RoyaltyCalculation(BaseModel):
         return True
 
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit le calcul en dictionnaire"""        return {
+        """Convertit le calcul en dictionnaire"""
+        return {
             "id": self.id,
             "calculation_id": self.calculation_id,
             "period_start": self.period_start.isoformat(),
@@ -1215,9 +1272,11 @@ class RoyaltyCalculation(BaseModel):
         }
 
 class RoyaltyPayment(BaseModel):
-    """    Modèle des paiements de royalties.
+    """
+    Modèle des paiements de royalties.
     Gère les paiements individuels vers chaque bénéficiaire.
-    """    __tablename__ = "royalty_payments"
+    """
+    __tablename__ = "royalty_payments"
 
     # Identifiants
     id = Column(Integer, primary_key=True, index=True)
@@ -1268,28 +1327,33 @@ class RoyaltyPayment(BaseModel):
             self.net_amount = self.amount - self.processing_fee
 
     def can_retry(self) -> bool:
-        """Vérifie si le paiement peut être retenté"""        return (
+        """Vérifie si le paiement peut être retenté"""
+        return (
             self.status == PaymentStatus.FAILED.value and
             self.retry_count < self.max_retries
         )
 
     def mark_as_processed(self, transaction_ref: str, external_id: Optional[str] = None):
-        """Marque le paiement comme traité"""        self.status = PaymentStatus.PROCESSING.value
+        """Marque le paiement comme traité"""
+        self.status = PaymentStatus.PROCESSING.value
         self.processed_date = datetime.utcnow()
         self.transaction_reference = transaction_ref
         self.external_transaction_id = external_id
 
     def mark_as_completed(self):
-        """Marque le paiement comme terminé"""        self.status = PaymentStatus.PAID.value
+        """Marque le paiement comme terminé"""
+        self.status = PaymentStatus.PAID.value
         self.completed_date = datetime.utcnow()
 
     def mark_as_failed(self, reason: str):
-        """Marque le paiement comme échoué"""        self.status = PaymentStatus.FAILED.value
+        """Marque le paiement comme échoué"""
+        self.status = PaymentStatus.FAILED.value
         self.failure_reason = reason
         self.retry_count += 1
 
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit le paiement en dictionnaire"""        return {
+        """Convertit le paiement en dictionnaire"""
+        return {
             "id": self.id,
             "payment_id": self.payment_id,
             "recipient_id": self.recipient_id,
@@ -1304,9 +1368,11 @@ class RoyaltyPayment(BaseModel):
         }
 
 class RevenueAnalytics(BaseModel):
-    """    Modèle d'analytics des revenus.
+    """
+    Modèle d'analytics des revenus.
     Stocke les métriques et analyses de performance.
-    """    __tablename__ = "revenue_analytics"
+    """
+    __tablename__ = "revenue_analytics"
 
     # Identifiants
     id = Column(Integer, primary_key=True, index=True)
@@ -1347,9 +1413,11 @@ class RevenueAnalytics(BaseModel):
             self.analytics_id = f"RA-{uuid.uuid4().hex[:8].upper()}"
 
 class RoyaltyDistributionManager:
-    """    Gestionnaire pour la distribution des royalties.
+    """
+    Gestionnaire pour la distribution des royalties.
     Fournit une interface complète pour la gestion des paiements.
-    """    def __init__(self, db_session: Session):
+    """
+    def __init__(self, db_session: Session):
         self.db = db_session
         self.logger = logging.getLogger(__name__)
         
@@ -1365,7 +1433,8 @@ class RoyaltyDistributionManager:
         split_config: List[SplitConfiguration],
         distribution_method: DistributionMethod = DistributionMethod.OWNERSHIP_PERCENTAGE
     ) -> RoyaltyCalculation:
-        """Crée un nouveau calcul de royalties"""        
+        """Crée un nouveau calcul de royalties"""
+        
         try:
             # Calcul des revenus nets
             gross_revenue = Decimal(str(revenue_data['gross_revenue']))
@@ -1406,7 +1475,8 @@ class RoyaltyDistributionManager:
         calculation_id: str,
         scheduled_date: Optional[datetime] = None
     ) -> List[RoyaltyPayment]:
-        """Traite les paiements pour un calcul donné"""        
+        """Traite les paiements pour un calcul donné"""
+        
         try:
             calculation = self.db.query(RoyaltyCalculation).filter(
                 RoyaltyCalculation.calculation_id == calculation_id
@@ -1458,7 +1528,8 @@ class RoyaltyDistributionManager:
             raise
 
     def execute_payment(self, payment_id: str) -> bool:
-        """Exécute un paiement individuel"""        
+        """Exécute un paiement individuel"""
+        
         try:
             payment = self.db.query(RoyaltyPayment).filter(
                 RoyaltyPayment.payment_id == payment_id
@@ -1502,7 +1573,8 @@ class RoyaltyDistributionManager:
         end_date: datetime,
         content_ids: Optional[List[int]] = None
     ) -> Dict[str, Any]:
-        """Génère un rapport de revenus détaillé"""        
+        """Génère un rapport de revenus détaillé"""
+        
         # Récupération des calculs pour la période
         query = self.db.query(RoyaltyCalculation).filter(
             RoyaltyCalculation.period_start >= start_date,
@@ -1564,7 +1636,8 @@ class RoyaltyDistributionManager:
         return report
 
     def retry_failed_payments(self) -> List[str]:
-        """Retente les paiements échoués éligibles"""        
+        """Retente les paiements échoués éligibles"""
+        
         failed_payments = self.db.query(RoyaltyPayment).filter(
             RoyaltyPayment.status == PaymentStatus.FAILED.value
         ).all()
@@ -1580,7 +1653,8 @@ class RoyaltyDistributionManager:
         return retried_payments
 
     def _calculate_platform_fees(self, revenue_data: Dict[str, Any]) -> Decimal:
-        """Calcule les frais des plateformes"""        
+        """Calcule les frais des plateformes"""
+        
         total_fees = Decimal('0')
         
         platform_fee_rates = {
@@ -1599,7 +1673,8 @@ class RoyaltyDistributionManager:
         return total_fees
 
     def _get_recipient_payment_info(self, user_id: int) -> Optional[Dict[str, Any]]:
-        """Récupère les informations de paiement d'un utilisateur"""        logger = logging.getLogger(__name__)
+        """Récupère les informations de paiement d'un utilisateur"""
+        logger = logging.getLogger(__name__)
         
         try:
             # Récupérer depuis la base de données en production
@@ -1632,7 +1707,8 @@ class RoyaltyDistributionManager:
             return None
     
     def _simulate_user_payment_lookup(self, user_id: int) -> Optional[Dict[str, Any]]:
-        """Simulate user payment method lookup"""        # En production, ceci serait une vraie requête SQL
+        """Simulate user payment method lookup"""
+        # En production, ceci serait une vraie requête SQL
         # Simulation basée sur l'ID utilisateur pour la cohérence
         
         payment_methods = [
@@ -1667,7 +1743,8 @@ class RoyaltyDistributionManager:
         return payment_methods[preferred_method_index]
 
     def _execute_stripe_payment(self, payment: RoyaltyPayment) -> Tuple[bool, Optional[str]]:
-        """Exécute un paiement via Stripe"""        logger = logging.getLogger(__name__)
+        """Exécute un paiement via Stripe"""
+        logger = logging.getLogger(__name__)
         
         try:
             # Validation des données de paiement
@@ -1718,7 +1795,8 @@ class RoyaltyDistributionManager:
             return False, None
 
     def _execute_paypal_payment(self, payment: RoyaltyPayment) -> Tuple[bool, Optional[str]]:
-        """Exécute un paiement via PayPal"""        logger = logging.getLogger(__name__)
+        """Exécute un paiement via PayPal"""
+        logger = logging.getLogger(__name__)
         
         try:
             # Validation des données de paiement
@@ -1779,7 +1857,8 @@ class RoyaltyDistributionManager:
             return False, None
 
     def _execute_wise_payment(self, payment: RoyaltyPayment) -> Tuple[bool, Optional[str]]:
-        """Exécute un paiement via Wise"""        logger = logging.getLogger(__name__)
+        """Exécute un paiement via Wise"""
+        logger = logging.getLogger(__name__)
         
         try:
             # Validation des données de paiement
@@ -1833,7 +1912,8 @@ class RoyaltyDistributionManager:
             return False, None
 
     def _execute_bank_transfer(self, payment: RoyaltyPayment) -> Tuple[bool, Optional[str]]:
-        """Exécute un virement bancaire"""        logger = logging.getLogger(__name__)
+        """Exécute un virement bancaire"""
+        logger = logging.getLogger(__name__)
         
         try:
             # Validation des données de paiement
@@ -1895,7 +1975,8 @@ class RoyaltyDistributionManager:
             return False, None
     
     def _validate_iban(self, iban: str) -> bool:
-        """Validation basique de l'IBAN"""        try:
+        """Validation basique de l'IBAN"""
+        try:
             # Supprimer les espaces et convertir en majuscules
             iban = iban.replace(' ', '').upper()
             
@@ -1919,7 +2000,8 @@ class RoyaltyDistributionManager:
             return False
 
     def _load_default_rates(self) -> Dict[str, RoyaltyRate]:
-        """Charge les taux de royalties par défaut"""        
+        """Charge les taux de royalties par défaut"""
+        
         return {
             "spotify_streaming": RoyaltyRate(
                 platform="spotify",
@@ -1944,7 +2026,8 @@ class RoyaltyDistributionManager:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Calcule les métriques de performance"""        logger = logging.getLogger(__name__)
+        """Calcule les métriques de performance"""
+        logger = logging.getLogger(__name__)
         
         try:
             # Période de calcul
@@ -2021,7 +2104,8 @@ class RoyaltyDistributionManager:
             }
     
     def _get_period_revenue(self, user_id: int, start_date: datetime, end_date: datetime) -> Decimal:
-        """Récupère les revenus pour une période donnée"""        # Simulation basée sur l'ID utilisateur et la période
+        """Récupère les revenus pour une période donnée"""
+        # Simulation basée sur l'ID utilisateur et la période
         base_revenue = Decimal(str(100 + (user_id % 1000)))
         period_multiplier = Decimal(str((end_date - start_date).days / 30))
         growth_factor = Decimal('1.05') ** ((datetime.utcnow() - start_date).days / 30)
@@ -2029,7 +2113,8 @@ class RoyaltyDistributionManager:
         return base_revenue * period_multiplier * growth_factor
     
     def _get_best_performing_content(self, user_id: int, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Identifie le contenu le plus performant"""        # Simulation
+        """Identifie le contenu le plus performant"""
+        # Simulation
         content_types = ["Music Track", "Video Content", "Podcast Episode", "Digital Art", "Audio Sample"]
         content_type = content_types[user_id % len(content_types)]
         
@@ -2041,7 +2126,8 @@ class RoyaltyDistributionManager:
         }
     
     def _analyze_revenue_sources(self, user_id: int, start_date: datetime, end_date: datetime) -> Dict[str, Decimal]:
-        """Analyse les sources de revenus"""        # Simulation de répartition des sources
+        """Analyse les sources de revenus"""
+        # Simulation de répartition des sources
         total_revenue = self._get_period_revenue(user_id, start_date, end_date)
         
         # Répartition variable selon l'utilisateur
@@ -2066,7 +2152,8 @@ class RoyaltyDistributionManager:
             }
     
     def _calculate_trend_metrics(self, user_id: int, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Calcule les métriques de tendance"""        return {
+        """Calcule les métriques de tendance"""
+        return {
             "momentum": "increasing" if user_id % 2 == 0 else "stable",
             "volatility": "low" if user_id % 4 == 0 else "medium",
             "seasonality_factor": round(0.8 + (user_id % 20) / 50, 2),
@@ -2074,7 +2161,8 @@ class RoyaltyDistributionManager:
         }
     
     def _calculate_diversification_score(self, revenue_sources: Dict[str, Decimal]) -> float:
-        """Calcule le score de diversification (0-1)"""        if not revenue_sources:
+        """Calcule le score de diversification (0-1)"""
+        if not revenue_sources:
             return 0.0
         
         # Calcul de l'entropie pour mesurer la diversification
@@ -2093,7 +2181,8 @@ class RoyaltyDistributionManager:
         return round(entropy / max_entropy if max_entropy > 0 else 0, 2)
     
     def _generate_performance_insights(self, growth: float, diversification: float, trends: Dict[str, Any]) -> List[str]:
-        """Génère des insights sur la performance"""        insights = []
+        """Génère des insights sur la performance"""
+        insights = []
         
         if growth > 10:
             insights.append("Strong revenue growth indicates successful content strategy")

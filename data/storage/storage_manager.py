@@ -7,6 +7,7 @@ Supports AWS S3, Google Cloud Storage, Azure Blob, and local storage.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -26,7 +27,9 @@ import aiohttp
 
 
 class StorageProvider(Enum):
-    """Storage provider enumeration"""
+    """
+Storage provider enumeration"""
+
     AWS_S3 = "aws_s3"
     GOOGLE_CLOUD = "google_cloud"
     AZURE_BLOB = "azure_blob"
@@ -36,6 +39,7 @@ class StorageProvider(Enum):
 
 class StorageClass(Enum):
     """Storage class for cost optimization"""
+
     STANDARD = "standard"
     INFREQUENT_ACCESS = "infrequent_access"
     ARCHIVE = "archive"
@@ -59,7 +63,8 @@ class StorageConfig:
 
 @dataclass
 class StorageResult:
-    """Storage operation result"""
+    """
+Storage operation result"""
     success: bool
     file_path: str
     provider: str
@@ -74,7 +79,8 @@ class StorageResult:
 
 @dataclass
 class StorageStats:
-    """Storage statistics"""
+    """
+Storage statistics"""
     total_files: int
     total_size: int
     size_by_type: Dict[str, int]
@@ -121,7 +127,8 @@ class StorageManager:
         asyncio.create_task(self._initialize_providers())
     
     async def _initialize_providers(self):
-        """Initialize storage provider clients"""
+        """
+Initialize storage provider clients"""
         try:
             for provider, config in self.configs.items():
                 if provider == StorageProvider.AWS_S3:
@@ -550,7 +557,8 @@ class StorageManager:
     
     async def _store_to_provider(self, provider: StorageProvider, file_content: bytes,
                                file_path: str, metadata: Dict[str, Any]) -> StorageResult:
-        """Store file to specific provider"""
+        """
+Store file to specific provider"""
         try:
             config = self.configs[provider]
             client = self.clients[provider]
@@ -777,88 +785,105 @@ class StorageManager:
         return None
     
     async def _check_duplicate(self, file_hash: str) -> Optional[Dict[str, Any]]:
-        """Check if file already exists based on hash"""
+        """
+Check if file already exists based on hash"""
         # Placeholder - would check file registry
         return None
     
     async def _register_file(self, file_hash: str, result: StorageResult):
-        """Register file in deduplication registry"""
+        """
+Register file in deduplication registry"""
         # Placeholder - would store in database/cache
         pass
     
     async def _unregister_file(self, file_path: str):
-        """Remove file from registry"""
+        """
+Remove file from registry"""
         # Placeholder
         pass
     
     async def _create_backup_copies(self, file_content: bytes, file_path: str,
                                   metadata: Dict[str, Any], primary_provider: StorageProvider):
-        """Create backup copies in other providers"""
+        """
+Create backup copies in other providers"""
         # Placeholder - would create backups
         pass
     
     async def _detect_file_provider(self, file_path: str) -> Optional[StorageProvider]:
-        """Detect which provider contains the file"""
+        """
+Detect which provider contains the file"""
         # Placeholder - would check file registry
         return self.primary_provider
     
     async def _get_backup_providers(self, file_path: str) -> List[StorageProvider]:
-        """Get list of backup providers for file"""
+        """
+Get list of backup providers for file"""
         # Placeholder
         return []
     
     async def _retrieve_from_provider(self, provider: StorageProvider, file_path: str) -> Optional[bytes]:
-        """Retrieve file from specific provider"""
+        """
+Retrieve file from specific provider"""
         # Placeholder - would implement provider-specific retrieval
         return None
     
     async def _delete_from_provider(self, provider: StorageProvider, file_path: str) -> bool:
-        """Delete file from specific provider"""
+        """
+Delete file from specific provider"""
         # Placeholder
         return True
     
     async def _move_file(self, provider: StorageProvider, source_path: str, dest_path: str) -> bool:
-        """Move file within provider"""
+        """
+Move file within provider"""
         # Placeholder
         return True
     
     async def _list_files_from_provider(self, provider: StorageProvider, prefix: str, limit: int) -> List[Dict]:
-        """List files from specific provider"""
+        """
+List files from specific provider"""
         # Placeholder
         return []
     
     async def _get_file_info_from_provider(self, provider: StorageProvider, file_path: str) -> Optional[Dict]:
-        """Get file info from specific provider"""
+        """
+Get file info from specific provider"""
         # Placeholder
         return None
     
     async def _generate_presigned_url_from_provider(self, provider: StorageProvider, 
                                                   file_path: str, expiration: int) -> Optional[str]:
-        """Generate presigned URL from specific provider"""
+        """
+Generate presigned URL from specific provider"""
         # Placeholder
         return None
     
     async def _get_provider_stats(self, provider: StorageProvider) -> Dict[str, Any]:
-        """Get statistics from specific provider"""
+        """
+Get statistics from specific provider"""
         # Placeholder
         return {'file_count': 0, 'total_size': 0, 'size_by_type': {}}
     
     async def _calculate_storage_efficiency(self) -> float:
-        """Calculate storage efficiency percentage"""
+        """
+Calculate storage efficiency percentage"""
         # Placeholder - would calculate compression, deduplication savings
         return 85.0
     
     async def _calculate_monthly_costs(self) -> Dict[str, float]:
-        """Calculate estimated monthly costs by provider"""
+        """
+Calculate estimated monthly costs by provider"""
         # Placeholder - would calculate based on usage and pricing
         return {}
     
     async def _is_compressed_file(self, file_path: str) -> bool:
-        """Check if file is compressed"""
+        """
+Check if file is compressed"""
         # Placeholder
         return False
     
     async def _decompress_content(self, content: bytes) -> bytes:
-        """Decompress file content"""
+        """
+Decompress file content"""
         # Placeholder
         return content

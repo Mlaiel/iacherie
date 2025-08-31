@@ -11,7 +11,8 @@ Created by: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import json
 import logging
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class YouTubeMusicContentType(str, Enum):
-    """YouTube Music content types"""    SONG = "song"
+    """YouTube Music content types"""
+    SONG = "song"
     ALBUM = "album"
     PLAYLIST = "playlist"
     ARTIST = "artist"
@@ -45,14 +47,16 @@ class YouTubeMusicContentType(str, Enum):
 
 
 class YouTubeMusicQuality(str, Enum):
-    """YouTube Music audio quality"""    LOW = "low"  # 128 kbps
+    """YouTube Music audio quality"""
+    LOW = "low"  # 128 kbps
     MEDIUM = "medium"  # 256 kbps
     HIGH = "high"  # 320 kbps
     LOSSLESS = "lossless"  # FLAC
 
 
 class YouTubeMusicPlaylistType(str, Enum):
-    """YouTube Music playlist types"""    USER_CREATED = "user_created"
+    """YouTube Music playlist types"""
+    USER_CREATED = "user_created"
     OFFICIAL = "official"
     GENERATED = "generated"
     LIKED_SONGS = "liked_songs"
@@ -61,7 +65,8 @@ class YouTubeMusicPlaylistType(str, Enum):
 
 
 class YouTubeMusicArtist(BaseModel):
-    """YouTube Music artist data model"""    artist_id: str
+    """YouTube Music artist data model"""
+    artist_id: str
     name: str
     channel_id: Optional[str] = None
     thumbnail_url: Optional[str] = None
@@ -84,7 +89,8 @@ class YouTubeMusicArtist(BaseModel):
 
 
 class YouTubeMusicSong(BaseModel):
-    """YouTube Music song data model"""    song_id: str
+    """YouTube Music song data model"""
+    song_id: str
     title: str
     artists: List[YouTubeMusicArtist] = Field(default_factory=list)
     album_id: Optional[str] = None
@@ -118,7 +124,8 @@ class YouTubeMusicSong(BaseModel):
 
 
 class YouTubeMusicAlbum(BaseModel):
-    """YouTube Music album data model"""    album_id: str
+    """YouTube Music album data model"""
+    album_id: str
     title: str
     artists: List[YouTubeMusicArtist] = Field(default_factory=list)
     release_date: datetime
@@ -139,7 +146,8 @@ class YouTubeMusicAlbum(BaseModel):
 
 
 class YouTubeMusicPlaylist(BaseModel):
-    """YouTube Music playlist data model"""    playlist_id: str
+    """YouTube Music playlist data model"""
+    playlist_id: str
     title: str
     description: Optional[str] = None
     creator_name: str
@@ -163,7 +171,8 @@ class YouTubeMusicPlaylist(BaseModel):
 
 
 class YouTubeMusicPodcast(BaseModel):
-    """YouTube Music podcast data model"""    podcast_id: str
+    """YouTube Music podcast data model"""
+    podcast_id: str
     title: str
     description: Optional[str] = None
     creator_name: str
@@ -180,7 +189,8 @@ class YouTubeMusicPodcast(BaseModel):
 
 
 class YouTubeMusicSearchResults(BaseModel):
-    """YouTube Music search results data model"""    query: str
+    """YouTube Music search results data model"""
+    query: str
     total_results: int
     songs: List[YouTubeMusicSong] = Field(default_factory=list)
     albums: List[YouTubeMusicAlbum] = Field(default_factory=list)
@@ -195,7 +205,8 @@ class YouTubeMusicSearchResults(BaseModel):
 
 
 class YouTubeMusicAnalytics(BaseModel):
-    """YouTube Music analytics data model"""    user_id: str
+    """YouTube Music analytics data model"""
+    user_id: str
     analysis_period: Tuple[datetime, datetime]
     total_listening_time_seconds: int
     total_songs_played: int
@@ -224,11 +235,13 @@ class YouTubeMusicAnalytics(BaseModel):
 
 
 class YouTubeMusicCrawler(BaseCrawler):
-    """    Ultra-Advanced YouTube Music Platform Crawler
+    """
+    Ultra-Advanced YouTube Music Platform Crawler
     
     Provides comprehensive crawling and monitoring capabilities for YouTube Music platform,
     specializing in music discovery, playlist monitoring, and artist analytics.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -284,7 +297,8 @@ class YouTubeMusicCrawler(BaseCrawler):
         logger.info("YouTube Music crawler initialized with ultra-advanced music monitoring")
 
     async def authenticate(self, api_key: str = None, access_token: str = None) -> bool:
-        """        Authenticate with YouTube Music API
+        """
+        Authenticate with YouTube Music API
         
         Args:
             api_key: YouTube Data API key
@@ -292,7 +306,8 @@ class YouTubeMusicCrawler(BaseCrawler):
             
         Returns:
             bool: Authentication success status
-        """        try:
+        """
+        try:
             if api_key:
                 self.api_key = api_key
             
@@ -339,7 +354,8 @@ class YouTubeMusicCrawler(BaseCrawler):
         genre: Optional[str] = None,
         limit: int = 100
     ) -> YouTubeMusicSearchResults:
-        """        Search YouTube Music content with advanced filtering
+        """
+        Search YouTube Music content with advanced filtering
         
         Args:
             query: Search query
@@ -349,7 +365,8 @@ class YouTubeMusicCrawler(BaseCrawler):
             
         Returns:
             YouTubeMusicSearchResults: Comprehensive search results
-        """        await self.rate_limiter.acquire()
+        """
+        await self.rate_limiter.acquire()
         
         try:
             results = YouTubeMusicSearchResults(
@@ -418,7 +435,8 @@ class YouTubeMusicCrawler(BaseCrawler):
         keywords: List[str] = None,
         check_interval: int = 3600  # 1 hour for music content
     ) -> AsyncGenerator[YouTubeMusicSong, None]:
-        """        Real-time content monitoring for YouTube Music
+        """
+        Real-time content monitoring for YouTube Music
         
         Args:
             artist_ids: Artists to monitor for new releases
@@ -428,7 +446,8 @@ class YouTubeMusicCrawler(BaseCrawler):
             
         Yields:
             YouTubeMusicSong: New songs detected
-        """        artist_ids = artist_ids or []
+        """
+        artist_ids = artist_ids or []
         playlist_ids = playlist_ids or []
         keywords = keywords or []
         
@@ -492,7 +511,8 @@ class YouTubeMusicCrawler(BaseCrawler):
         comparison_set: List[YouTubeMusicSong],
         threshold: float = None
     ) -> List[Tuple[YouTubeMusicSong, float]]:
-        """        Detect song similarity for content protection
+        """
+        Detect song similarity for content protection
         
         Args:
             target_song: Song to compare
@@ -501,7 +521,8 @@ class YouTubeMusicCrawler(BaseCrawler):
             
         Returns:
             List[Tuple[YouTubeMusicSong, float]]: Similar songs with scores
-        """        threshold = threshold or self.similarity_threshold
+        """
+        threshold = threshold or self.similarity_threshold
         similar_songs = []
         
         try:
@@ -533,7 +554,8 @@ class YouTubeMusicCrawler(BaseCrawler):
         user_id: str,
         analysis_period: Tuple[datetime, datetime]
     ) -> YouTubeMusicAnalytics:
-        """        Generate comprehensive analytics for YouTube Music user
+        """
+        Generate comprehensive analytics for YouTube Music user
         
         Args:
             user_id: User ID to analyze
@@ -541,7 +563,8 @@ class YouTubeMusicCrawler(BaseCrawler):
             
         Returns:
             YouTubeMusicAnalytics: Comprehensive analytics data
-        """        try:
+        """
+        try:
             start_time, end_time = analysis_period
             
             # Get user's listening history
@@ -702,7 +725,8 @@ class YouTubeMusicCrawler(BaseCrawler):
     # Helper methods
     
     async def _search_songs(self, query: str, genre: Optional[str], limit: int) -> List[YouTubeMusicSong]:
-        """Search for songs"""        try:
+        """Search for songs"""
+        try:
             search_params = {
                 'key': self.api_key,
                 'part': 'snippet',
@@ -734,11 +758,13 @@ class YouTubeMusicCrawler(BaseCrawler):
             return []
 
     async def _search_albums(self, query: str, genre: Optional[str], limit: int) -> List[YouTubeMusicAlbum]:
-        """Search for albums"""        # Implementation would require YouTube Music specific album search
+        """Search for albums"""
+        # Implementation would require YouTube Music specific album search
         return []
 
     async def _search_artists(self, query: str, genre: Optional[str], limit: int) -> List[YouTubeMusicArtist]:
-        """Search for artists"""        try:
+        """Search for artists"""
+        try:
             search_params = {
                 'key': self.api_key,
                 'part': 'snippet',
@@ -769,7 +795,8 @@ class YouTubeMusicCrawler(BaseCrawler):
             return []
 
     async def _search_playlists(self, query: str, limit: int) -> List[YouTubeMusicPlaylist]:
-        """Search for playlists"""        try:
+        """Search for playlists"""
+        try:
             search_params = {
                 'key': self.api_key,
                 'part': 'snippet',
@@ -800,11 +827,13 @@ class YouTubeMusicCrawler(BaseCrawler):
             return []
 
     async def _search_podcasts(self, query: str, limit: int) -> List[YouTubeMusicPodcast]:
-        """Search for podcasts"""        # Implementation would require podcast-specific search
+        """Search for podcasts"""
+        # Implementation would require podcast-specific search
         return []
 
     async def _parse_song_from_video(self, video_data: Dict[str, Any]) -> Optional[YouTubeMusicSong]:
-        """Parse song data from YouTube video"""        try:
+        """Parse song data from YouTube video"""
+        try:
             snippet = video_data.get('snippet', {})
             video_id = video_data.get('id', {}).get('videoId', '')
             
@@ -838,7 +867,8 @@ class YouTubeMusicCrawler(BaseCrawler):
             return None
 
     async def _parse_artist_from_channel(self, channel_data: Dict[str, Any]) -> Optional[YouTubeMusicArtist]:
-        """Parse artist data from YouTube channel"""        try:
+        """Parse artist data from YouTube channel"""
+        try:
             snippet = channel_data.get('snippet', {})
             channel_id = channel_data.get('id', {}).get('channelId', '')
             
@@ -857,7 +887,8 @@ class YouTubeMusicCrawler(BaseCrawler):
             return None
 
     async def _parse_playlist_from_search(self, playlist_data: Dict[str, Any]) -> Optional[YouTubeMusicPlaylist]:
-        """Parse playlist data from search result"""        try:
+        """Parse playlist data from search result"""
+        try:
             snippet = playlist_data.get('snippet', {})
             playlist_id = playlist_data.get('id', {}).get('playlistId', '')
             
@@ -882,7 +913,8 @@ class YouTubeMusicCrawler(BaseCrawler):
             return None
 
     async def _get_artist_new_releases(self, artist_id: str) -> List[YouTubeMusicSong]:
-        """Get new releases from artist"""        try:
+        """Get new releases from artist"""
+        try:
             # Get recent uploads from artist's channel
             search_params = {
                 'key': self.api_key,
@@ -915,11 +947,13 @@ class YouTubeMusicCrawler(BaseCrawler):
             return []
 
     async def _get_playlist_updates(self, playlist_id: str) -> List[YouTubeMusicSong]:
-        """Get recent updates to playlist"""        # Implementation would require tracking playlist changes
+        """Get recent updates to playlist"""
+        # Implementation would require tracking playlist changes
         return []
 
     async def _extract_song_features(self, song: YouTubeMusicSong) -> Dict[str, Any]:
-        """Extract features for similarity comparison"""        features = {
+        """Extract features for similarity comparison"""
+        features = {
             "title": song.title.lower(),
             "artists": set(artist.name.lower() for artist in song.artists),
             "album": (song.album_title or "").lower(),
@@ -941,7 +975,8 @@ class YouTubeMusicCrawler(BaseCrawler):
         features1: Dict[str, Any],
         features2: Dict[str, Any]
     ) -> float:
-        """Calculate similarity between song features"""        try:
+        """Calculate similarity between song features"""
+        try:
             scores = []
             
             # Title similarity
@@ -996,11 +1031,13 @@ class YouTubeMusicCrawler(BaseCrawler):
         start_time: datetime,
         end_time: datetime
     ) -> List[Dict[str, Any]]:
-        """Get user's listening history"""        # Implementation would require user data access
+        """Get user's listening history"""
+        # Implementation would require user data access
         return []
 
     async def _group_listening_sessions(self, listening_history: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Group listening history into sessions"""        sessions = []
+        """Group listening history into sessions"""
+        sessions = []
         current_session = []
         session_gap_threshold = 1800  # 30 minutes
         
@@ -1039,16 +1076,19 @@ class YouTubeMusicCrawler(BaseCrawler):
         return sessions
 
     async def _calculate_similarity(self, song: YouTubeMusicSong) -> float:
-        """Calculate similarity score against protected content"""        # Simplified similarity calculation
+        """Calculate similarity score against protected content"""
+        # Simplified similarity calculation
         return 0.0
 
     async def _check_protection_status(self, song: YouTubeMusicSong) -> str:
-        """Check protection status of song"""        if song.song_id in self.protected_content:
+        """Check protection status of song"""
+        if song.song_id in self.protected_content:
             return "protected"
         return "unprotected"
 
     async def close(self):
-        """Close crawler and cleanup resources"""        try:
+        """Close crawler and cleanup resources"""
+        try:
             await self.cache_manager.close()
             await super().close()
             logger.info("YouTube Music crawler closed successfully")

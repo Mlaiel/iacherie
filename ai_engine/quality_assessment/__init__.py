@@ -4,7 +4,7 @@ Advanced AI-powered content quality assessment system for multi-format content c
 Supports musicians, bloggers, photographers, influencers, comedians with industry-grade quality metrics.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software and all associated concepts, algorithms, and implementations are the exclusive 
@@ -14,7 +14,9 @@ explicit written permission from Fahed Mlaiel is strictly prohibited and will be
 to the full extent of the law.
 
 Business Logic: User Upload → AI Quality Assessment → Protection → SEO → Collaboration → Distribution
-"""from .core import (
+"""
+
+from .core import (
     QualityAssessmentEngine,
     ContentQualityScore,
     QualityMetrics,
@@ -325,7 +327,7 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __title__ = "Quality Assessment Module"
 __description__ = "Ultra-Professional AI Quality Assessment Suite for IA Influencer Agent"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary"
 __status__ = "Production"
 
@@ -344,6 +346,7 @@ __team_specialties__ = [
 
 # Module initialization
 import logging
+
 logger = logging.getLogger(__name__)
 logger.info(f"Quality Assessment Module v{__version__} initialized successfully")
 logger.info(f"Created by: {__author__} ({__email__})")

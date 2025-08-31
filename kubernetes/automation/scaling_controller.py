@@ -6,7 +6,8 @@ predictive scaling capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -25,13 +26,15 @@ from ..ai.prediction_engine import PredictionEngine
 
 
 class ScalingDirection(Enum):
-    """Scaling direction"""    UP = "up"
+    """Scaling direction"""
+    UP = "up"
     DOWN = "down"
     MAINTAIN = "maintain"
 
 
 class ScalingTriggerType(Enum):
-    """Scaling trigger types"""    CPU_UTILIZATION = "cpu_utilization"
+    """Scaling trigger types"""
+    CPU_UTILIZATION = "cpu_utilization"
     MEMORY_UTILIZATION = "memory_utilization"
     REQUEST_RATE = "request_rate"
     QUEUE_LENGTH = "queue_length"
@@ -42,7 +45,8 @@ class ScalingTriggerType(Enum):
 
 
 class ScalingStrategy(Enum):
-    """Scaling strategies"""    REACTIVE = "reactive"
+    """Scaling strategies"""
+    REACTIVE = "reactive"
     PREDICTIVE = "predictive"
     HYBRID = "hybrid"
     SCHEDULED = "scheduled"
@@ -50,7 +54,8 @@ class ScalingStrategy(Enum):
 
 @dataclass
 class ScalingMetric:
-    """Scaling metric definition"""    name: str
+    """Scaling metric definition"""
+    name: str
     type: ScalingTriggerType
     target_value: float
     tolerance: float = 0.1  # 10% tolerance
@@ -63,7 +68,8 @@ class ScalingMetric:
 
 @dataclass
 class ScalingPolicy:
-    """Scaling policy configuration"""    service_name: str
+    """Scaling policy configuration"""
+    service_name: str
     min_replicas: int = 1
     max_replicas: int = 20
     target_cpu_utilization: float = 70.0
@@ -79,7 +85,8 @@ class ScalingPolicy:
 
 @dataclass
 class ScalingEvent:
-    """Scaling event record"""    event_id: str
+    """Scaling event record"""
+    event_id: str
     service_name: str
     timestamp: datetime
     direction: ScalingDirection
@@ -96,7 +103,8 @@ class ScalingEvent:
 
 @dataclass
 class ResourcePrediction:
-    """Resource prediction data"""    service_name: str
+    """Resource prediction data"""
+    service_name: str
     predicted_load: float
     confidence: float
     time_horizon: int  # Minutes into future
@@ -106,12 +114,14 @@ class ResourcePrediction:
 
 
 class ScalingController(BaseComponent):
-    """    Enterprise-grade auto-scaling controller.
+    """
+    Enterprise-grade auto-scaling controller.
     
     Provides intelligent auto-scaling capabilities with multiple strategies,
     predictive scaling, custom metrics support, and comprehensive
     scaling event tracking and analysis.
-    """    def __init__(self, config: Dict[str, Any]):
+    """
+    def __init__(self, config: Dict[str, Any]):
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -245,7 +255,8 @@ class ScalingController(BaseComponent):
         self._initialize_creator_focused_policies()
 
     def _initialize_default_policies(self) -> None:
-        """Initialize default scaling policies for IA services"""        
+        """Initialize default scaling policies for IA services"""
+        
         for service_name, service_config in self.ia_services.items():
             sensitivity = service_config['scaling_sensitivity']
             
@@ -341,7 +352,8 @@ class ScalingController(BaseComponent):
             self.scaling_policies[service_name] = policy
 
     async def start_scaling_controller(self, environment: str) -> None:
-        """Start the scaling controller"""        
+        """Start the scaling controller"""
+        
         if not self.scaling_enabled:
             self.logger.info("Scaling controller is disabled")
             return
@@ -354,7 +366,8 @@ class ScalingController(BaseComponent):
         asyncio.create_task(self._metrics_collection_loop(environment))
 
     async def _scaling_monitor_loop(self, environment: str) -> None:
-        """Main scaling monitor loop"""        
+        """Main scaling monitor loop"""
+        
         while self.scaling_enabled:
             try:
                 await self._evaluate_scaling_decisions(environment)
@@ -365,7 +378,8 @@ class ScalingController(BaseComponent):
                 await asyncio.sleep(self.default_check_interval)
 
     async def _prediction_update_loop(self, environment: str) -> None:
-        """Update resource predictions periodically"""        
+        """Update resource predictions periodically"""
+        
         while self.scaling_enabled:
             try:
                 await self._update_resource_predictions(environment)
@@ -376,7 +390,8 @@ class ScalingController(BaseComponent):
                 await asyncio.sleep(300)
 
     async def _metrics_collection_loop(self, environment: str) -> None:
-        """Collect metrics for scaling decisions"""        
+        """Collect metrics for scaling decisions"""
+        
         while self.scaling_enabled:
             try:
                 await self._collect_scaling_metrics(environment)
@@ -387,7 +402,8 @@ class ScalingController(BaseComponent):
                 await asyncio.sleep(30)
 
     async def _evaluate_scaling_decisions(self, environment: str) -> None:
-        """Evaluate and execute scaling decisions for all services"""        
+        """Evaluate and execute scaling decisions for all services"""
+        
         namespace = f"ia-influencer-{environment}"
         
         for service_name, policy in self.scaling_policies.items():
@@ -429,7 +445,8 @@ class ScalingController(BaseComponent):
         service_name: str,
         namespace: str
     ) -> Dict[str, float]:
-        """Get current metrics for a service"""        
+        """Get current metrics for a service"""
+        
         metrics = {}
         
         try:
@@ -496,7 +513,8 @@ class ScalingController(BaseComponent):
         current_metrics: Dict[str, float],
         environment: str
     ) -> Dict[str, Any]:
-        """Make intelligent scaling decision"""        
+        """Make intelligent scaling decision"""
+        
         # Get current replica count
         current_replicas = await self.deployment_manager.get_replica_count(
             service_name, f"ia-influencer-{environment}"
@@ -559,7 +577,8 @@ class ScalingController(BaseComponent):
         current_metrics: Dict[str, float],
         current_replicas: int
     ) -> Dict[str, Any]:
-        """Make reactive scaling decision based on current metrics"""        
+        """Make reactive scaling decision based on current metrics"""
+        
         decision = {
             'action': ScalingDirection.MAINTAIN,
             'target_replicas': current_replicas,
@@ -679,7 +698,8 @@ class ScalingController(BaseComponent):
         current_replicas: int,
         environment: str
     ) -> Dict[str, Any]:
-        """Make predictive scaling decision based on forecasted load"""        
+        """Make predictive scaling decision based on forecasted load"""
+        
         decision = {
             'action': ScalingDirection.MAINTAIN,
             'target_replicas': current_replicas,
@@ -731,7 +751,8 @@ class ScalingController(BaseComponent):
         predictive_decision: Dict[str, Any],
         current_replicas: int
     ) -> Dict[str, Any]:
-        """Combine reactive and predictive scaling decisions"""        
+        """Combine reactive and predictive scaling decisions"""
+        
         # Weight decisions by confidence
         reactive_weight = reactive_decision['confidence']
         predictive_weight = predictive_decision['confidence']
@@ -770,7 +791,8 @@ class ScalingController(BaseComponent):
         policy: ScalingPolicy,
         current_replicas: int
     ) -> Dict[str, Any]:
-        """Make scheduled scaling decision based on time patterns"""        
+        """Make scheduled scaling decision based on time patterns"""
+        
         decision = {
             'action': ScalingDirection.MAINTAIN,
             'target_replicas': current_replicas,
@@ -834,7 +856,8 @@ class ScalingController(BaseComponent):
         namespace: str,
         environment: str
     ) -> None:
-        """Execute the scaling action"""        
+        """Execute the scaling action"""
+        
         current_replicas = await self.deployment_manager.get_replica_count(
             service_name, namespace
         )
@@ -920,7 +943,8 @@ class ScalingController(BaseComponent):
             raise
 
     def _determine_primary_trigger(self, scaling_decision: Dict[str, Any]) -> ScalingTriggerType:
-        """Determine the primary trigger type for scaling"""        
+        """Determine the primary trigger type for scaling"""
+        
         # Simple heuristic: if CPU or memory mentioned in reasons, use that
         reasons = scaling_decision.get('reasons', [])
         
@@ -941,7 +965,8 @@ class ScalingController(BaseComponent):
         return ScalingTriggerType.CPU_UTILIZATION  # Default
 
     def _is_service_in_cooldown(self, service_name: str, policy: ScalingPolicy) -> bool:
-        """Check if service is in scaling cooldown period"""        
+        """Check if service is in scaling cooldown period"""
+        
         if service_name not in self.last_scaling_times:
             return False
         
@@ -963,7 +988,8 @@ class ScalingController(BaseComponent):
         return time_since_last_scaling < cooldown_period
 
     def _exceeds_scaling_rate_limit(self, service_name: str) -> bool:
-        """Check if service exceeds scaling rate limits"""        
+        """Check if service exceeds scaling rate limits"""
+        
         # Count scaling events in the last hour
         one_hour_ago = datetime.utcnow() - timedelta(hours=1)
         
@@ -975,7 +1001,8 @@ class ScalingController(BaseComponent):
         return len(recent_events) >= self.max_scaling_events_per_hour
 
     async def _update_resource_predictions(self, environment: str) -> None:
-        """Update resource predictions for all services"""        
+        """Update resource predictions for all services"""
+        
         for service_name in self.scaling_policies.keys():
             try:
                 # Get historical metrics
@@ -1017,7 +1044,8 @@ class ScalingController(BaseComponent):
                 self.logger.error(f"Error updating prediction for {service_name}: {str(e)}")
 
     def _get_historical_metrics(self, service_name: str) -> List[Dict[str, Any]]:
-        """Get historical metrics for a service"""        
+        """Get historical metrics for a service"""
+        
         if service_name not in self.metric_history:
             return []
         
@@ -1029,7 +1057,8 @@ class ScalingController(BaseComponent):
         prediction: Dict[str, Any],
         current_replicas: int
     ) -> int:
-        """Calculate recommended replicas based on prediction"""        
+        """Calculate recommended replicas based on prediction"""
+        
         predicted_load = prediction['predicted_load']
         
         # Simple scaling factor calculation
@@ -1061,7 +1090,8 @@ class ScalingController(BaseComponent):
         return recommended_replicas
 
     async def _collect_scaling_metrics(self, environment: str) -> None:
-        """Collect metrics for all services"""        
+        """Collect metrics for all services"""
+        
         namespace = f"ia-influencer-{environment}"
         
         for service_name in self.scaling_policies.keys():
@@ -1073,12 +1103,14 @@ class ScalingController(BaseComponent):
                 self.logger.error(f"Error collecting metrics for {service_name}: {str(e)}")
 
     async def update_scaling_policy(self, service_name: str, policy: ScalingPolicy) -> None:
-        """Update scaling policy for a service"""        
+        """Update scaling policy for a service"""
+        
         self.scaling_policies[service_name] = policy
         self.logger.info(f"Updated scaling policy for {service_name}")
 
     async def get_scaling_status(self, service_name: Optional[str] = None) -> Dict[str, Any]:
-        """Get current scaling status"""        
+        """Get current scaling status"""
+        
         if service_name:
             services = [service_name] if service_name in self.scaling_policies else []
         else:
@@ -1143,7 +1175,8 @@ class ScalingController(BaseComponent):
         service_name: str,
         hours: int = 24
     ) -> List[Dict[str, Any]]:
-        """Get scaling metrics history for a service"""        
+        """Get scaling metrics history for a service"""
+        
         if service_name not in self.metric_history:
             return []
         
@@ -1155,7 +1188,8 @@ class ScalingController(BaseComponent):
         ]
 
     async def enable_scaling(self, service_name: Optional[str] = None) -> None:
-        """Enable scaling for a service or globally"""        
+        """Enable scaling for a service or globally"""
+        
         if service_name:
             if service_name in self.scaling_policies:
                 self.scaling_policies[service_name].enabled = True
@@ -1165,7 +1199,8 @@ class ScalingController(BaseComponent):
             self.logger.info("Enabled global scaling")
 
     async def disable_scaling(self, service_name: Optional[str] = None) -> None:
-        """Disable scaling for a service or globally"""        
+        """Disable scaling for a service or globally"""
+        
         if service_name:
             if service_name in self.scaling_policies:
                 self.scaling_policies[service_name].enabled = False
@@ -1181,7 +1216,8 @@ class ScalingController(BaseComponent):
         environment: str,
         reason: str = "Manual scaling"
     ) -> Dict[str, Any]:
-        """Manually scale a service"""        
+        """Manually scale a service"""
+        
         namespace = f"ia-influencer-{environment}"
         
         current_replicas = await self.deployment_manager.get_replica_count(

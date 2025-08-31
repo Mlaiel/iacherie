@@ -9,7 +9,8 @@ Development Team: Lead AI Developer, Senior Backend Engineer, ML Engineer, DBA, 
 ⚠️ INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
-"""from typing import Dict, List, Optional, Tuple, Any, Union
+"""
+from typing import Dict, List, Optional, Tuple, Any, Union
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
 from enum import Enum
@@ -34,7 +35,8 @@ Base = declarative_base()
 
 
 class OptimizationType(Enum):
-    """Types of content optimization"""    TITLE_OPTIMIZATION = "title_optimization"
+    """Types of content optimization"""
+    TITLE_OPTIMIZATION = "title_optimization"
     DESCRIPTION_OPTIMIZATION = "description_optimization"
     HASHTAG_OPTIMIZATION = "hashtag_optimization"
     TIMING_OPTIMIZATION = "timing_optimization"
@@ -47,7 +49,8 @@ class OptimizationType(Enum):
 
 
 class ContentElement(Enum):
-    """Content elements that can be optimized"""    TITLE = "title"
+    """Content elements that can be optimized"""
+    TITLE = "title"
     DESCRIPTION = "description"
     TAGS = "tags"
     THUMBNAIL = "thumbnail"
@@ -60,7 +63,8 @@ class ContentElement(Enum):
 
 
 class OptimizationPriority(Enum):
-    """Priority levels for optimization recommendations"""    CRITICAL = "critical"
+    """Priority levels for optimization recommendations"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -69,7 +73,8 @@ class OptimizationPriority(Enum):
 
 @dataclass
 class OptimizationRecommendation:
-    """Data structure for optimization recommendations"""    element: ContentElement
+    """Data structure for optimization recommendations"""
+    element: ContentElement
     optimization_type: OptimizationType
     current_value: str
     suggested_value: str
@@ -82,7 +87,8 @@ class OptimizationRecommendation:
     difficulty_level: str = "easy"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""        return {
+        """Convert to dictionary for serialization"""
+        return {
             "element": self.element.value,
             "optimization_type": self.optimization_type.value,
             "current_value": self.current_value,
@@ -98,7 +104,8 @@ class OptimizationRecommendation:
 
 
 class ContentOptimizationHistory(Base):
-    """Database model for optimization history tracking"""    __tablename__ = "content_optimization_history"
+    """Database model for optimization history tracking"""
+    __tablename__ = "content_optimization_history"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
     user_id = Column(String, nullable=False, index=True)
@@ -131,7 +138,8 @@ class ContentOptimizationHistory(Base):
 
 
 class OptimizationRecommendationModel(Base):
-    """Database model for optimization recommendations"""    __tablename__ = "optimization_recommendations"
+    """Database model for optimization recommendations"""
+    __tablename__ = "optimization_recommendations"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
     history_id = Column(String, ForeignKey("content_optimization_history.id"))
@@ -159,9 +167,11 @@ class OptimizationRecommendationModel(Base):
 
 
 class AIContentOptimizer:
-    """    Advanced AI-powered content optimization engine.
+    """
+    Advanced AI-powered content optimization engine.
     Uses multiple ML models and NLP techniques to provide personalized optimization recommendations.
-    """    
+    """
+    
     def __init__(self, db_session: Session):
         self.db_session = db_session
         self.models = {}
@@ -173,7 +183,8 @@ class AIContentOptimizer:
         asyncio.create_task(self._initialize_ai_models())
     
     async def _initialize_ai_models(self):
-        """Initialize all AI models for content optimization"""        try:
+        """Initialize all AI models for content optimization"""
+        try:
             # Load pre-trained models for different optimization types
             self.models['engagement_predictor'] = self._load_engagement_model()
             self.models['title_optimizer'] = self._load_title_optimization_model()
@@ -194,7 +205,8 @@ class AIContentOptimizer:
             print(f"Warning: Could not initialize all AI models: {e}")
     
     def _load_engagement_model(self) -> RandomForestRegressor:
-        """Load or create engagement prediction model"""        # In production, this would load a pre-trained model
+        """Load or create engagement prediction model"""
+        # In production, this would load a pre-trained model
         model = RandomForestRegressor(
             n_estimators=100,
             max_depth=10,
@@ -203,7 +215,8 @@ class AIContentOptimizer:
         return model
     
     def _load_title_optimization_model(self) -> GradientBoostingRegressor:
-        """Load title optimization model"""        model = GradientBoostingRegressor(
+        """Load title optimization model"""
+        model = GradientBoostingRegressor(
             n_estimators=100,
             learning_rate=0.1,
             max_depth=6,
@@ -212,7 +225,8 @@ class AIContentOptimizer:
         return model
     
     def _load_timing_model(self) -> RandomForestRegressor:
-        """Load optimal timing prediction model"""        model = RandomForestRegressor(
+        """Load optimal timing prediction model"""
+        model = RandomForestRegressor(
             n_estimators=50,
             max_depth=8,
             random_state=42
@@ -220,14 +234,16 @@ class AIContentOptimizer:
         return model
     
     def _load_hashtag_model(self) -> KMeans:
-        """Load hashtag clustering model"""        model = KMeans(n_clusters=20, random_state=42)
+        """Load hashtag clustering model"""
+        model = KMeans(n_clusters=20, random_state=42)
         return model
     
     async def analyze_content_optimization_potential(self, 
                                                    user_id: str, 
                                                    content_id: str, 
                                                    content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content and identify optimization opportunities"""        
+        """Analyze content and identify optimization opportunities"""
+        
         optimization_analysis = {
             "content_id": content_id,
             "analysis_timestamp": datetime.utcnow().isoformat(),
@@ -296,7 +312,8 @@ class AIContentOptimizer:
         return optimization_analysis
     
     async def _extract_content_features(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract features from content for ML analysis"""        features = {
+        """Extract features from content for ML analysis"""
+        features = {
             "title_length": len(content_data.get("title", "")),
             "description_length": len(content_data.get("description", "")),
             "hashtag_count": len(content_data.get("hashtags", [])),
@@ -321,7 +338,8 @@ class AIContentOptimizer:
         return features
     
     def _calculate_readability_score(self, text: str) -> float:
-        """Calculate readability score using Flesch Reading Ease"""        if not text:
+        """Calculate readability score using Flesch Reading Ease"""
+        if not text:
             return 0.0
         
         # Simplified readability calculation
@@ -336,7 +354,8 @@ class AIContentOptimizer:
         return max(0.0, min(100.0, flesch_score))
     
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word (simplified)"""        word = word.lower()
+        """Count syllables in a word (simplified)"""
+        word = word.lower()
         vowels = "aeiouy"
         syllable_count = 0
         previous_was_vowel = False
@@ -354,7 +373,8 @@ class AIContentOptimizer:
         return max(1, syllable_count)
     
     async def _analyze_title_optimization(self, content_data: Dict[str, Any]) -> List[OptimizationRecommendation]:
-        """Analyze and optimize content titles"""        recommendations = []
+        """Analyze and optimize content titles"""
+        recommendations = []
         current_title = content_data.get("title", "")
         
         if not current_title:
@@ -463,7 +483,8 @@ class AIContentOptimizer:
         return recommendations
     
     async def _analyze_description_optimization(self, content_data: Dict[str, Any]) -> List[OptimizationRecommendation]:
-        """Analyze and optimize content descriptions"""        recommendations = []
+        """Analyze and optimize content descriptions"""
+        recommendations = []
         current_description = content_data.get("description", "")
         
         if not current_description:
@@ -580,7 +601,8 @@ class AIContentOptimizer:
         return recommendations
     
     async def _analyze_hashtag_optimization(self, content_data: Dict[str, Any]) -> List[OptimizationRecommendation]:
-        """Analyze and optimize hashtag usage"""        recommendations = []
+        """Analyze and optimize hashtag usage"""
+        recommendations = []
         current_hashtags = content_data.get("hashtags", [])
         platform = content_data.get("platform", "general")
         
@@ -666,7 +688,8 @@ class AIContentOptimizer:
         return recommendations
     
     async def _analyze_timing_optimization(self, user_id: str, content_data: Dict[str, Any]) -> List[OptimizationRecommendation]:
-        """Analyze and optimize posting timing"""        recommendations = []
+        """Analyze and optimize posting timing"""
+        recommendations = []
         current_upload_time = content_data.get("upload_time", datetime.utcnow())
         platform = content_data.get("platform", "general")
         
@@ -721,7 +744,8 @@ class AIContentOptimizer:
         return recommendations
     
     async def _get_optimal_posting_times(self, user_id: str, platform: str) -> Dict[str, Any]:
-        """Get optimal posting times based on historical data"""        # This would analyze historical performance data
+        """Get optimal posting times based on historical data"""
+        # This would analyze historical performance data
         # For now, returning general best practices
         return {
             "best_hours": [9, 12, 15, 18, 20],
@@ -731,7 +755,8 @@ class AIContentOptimizer:
         }
     
     async def _analyze_format_optimization(self, content_data: Dict[str, Any]) -> List[OptimizationRecommendation]:
-        """Analyze and optimize content format"""        recommendations = []
+        """Analyze and optimize content format"""
+        recommendations = []
         content_format = content_data.get("format", "")
         duration = content_data.get("duration", 0)
         file_size = content_data.get("file_size", 0)
@@ -803,7 +828,8 @@ class AIContentOptimizer:
         return recommendations
     
     async def _analyze_seo_optimization(self, content_data: Dict[str, Any]) -> List[OptimizationRecommendation]:
-        """Analyze and optimize SEO elements"""        recommendations = []
+        """Analyze and optimize SEO elements"""
+        recommendations = []
         title = content_data.get("title", "")
         description = content_data.get("description", "")
         tags = content_data.get("hashtags", [])
@@ -861,7 +887,8 @@ class AIContentOptimizer:
         return recommendations
     
     def _calculate_optimization_score(self, content_features: Dict[str, Any], recommendations: List[OptimizationRecommendation]) -> float:
-        """Calculate overall optimization score (0-100)"""        base_score = 50.0  # Starting point
+        """Calculate overall optimization score (0-100)"""
+        base_score = 50.0  # Starting point
         
         # Deduct points for missing critical elements
         critical_issues = [rec for rec in recommendations if rec.priority == OptimizationPriority.CRITICAL]
@@ -890,7 +917,8 @@ class AIContentOptimizer:
         return max(0.0, min(100.0, base_score))
     
     async def _generate_ai_insights(self, content_features: Dict[str, Any], recommendations: List[OptimizationRecommendation]) -> Dict[str, Any]:
-        """Generate AI-powered insights about content optimization"""        insights = {
+        """Generate AI-powered insights about content optimization"""
+        insights = {
             "optimization_priority": "balanced",
             "content_strength": [],
             "improvement_areas": [],
@@ -945,7 +973,8 @@ class AIContentOptimizer:
         return insights
     
     async def _save_optimization_analysis(self, user_id: str, content_id: str, analysis: Dict[str, Any]):
-        """Save optimization analysis to database"""        try:
+        """Save optimization analysis to database"""
+        try:
             # Create history record
             history = ContentOptimizationHistory(
                 user_id=user_id,
@@ -984,7 +1013,8 @@ class AIContentOptimizer:
             print(f"Failed to save optimization analysis: {e}")
     
     async def get_optimization_history(self, user_id: str, limit: int = 10) -> List[Dict[str, Any]]:
-        """Get optimization history for a user"""        history_records = self.db_session.query(ContentOptimizationHistory).filter(
+        """Get optimization history for a user"""
+        history_records = self.db_session.query(ContentOptimizationHistory).filter(
             ContentOptimizationHistory.user_id == user_id
         ).order_by(ContentOptimizationHistory.created_at.desc()).limit(limit).all()
         
@@ -999,7 +1029,8 @@ class AIContentOptimizer:
         } for record in history_records]
     
     async def implement_optimization(self, recommendation_id: str, user_feedback: Optional[float] = None) -> Dict[str, Any]:
-        """Mark optimization as implemented and track results"""        try:
+        """Mark optimization as implemented and track results"""
+        try:
             recommendation = self.db_session.query(OptimizationRecommendationModel).filter(
                 OptimizationRecommendationModel.id == recommendation_id
             ).first()

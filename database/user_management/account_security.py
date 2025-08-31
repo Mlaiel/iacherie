@@ -12,7 +12,8 @@ Toute utilisation, reproduction ou distribution sans autorisation
 écrite explicite est strictement interdite et fera l'objet de 
 poursuites judiciaires selon la loi allemande.
 Email: mlaiel@live.de pour autorisation d'utilisation.
-"""from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal
+"""
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal
 from sqlalchemy.orm import relationship, Session
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime, timedelta
@@ -31,7 +32,8 @@ Base = declarative_base()
 
 
 class SecurityEventType(PyEnum):
-    """Types d'événements de sécurité."""    LOGIN_SUCCESS = "login_success"
+    """Types d'événements de sécurité."""
+    LOGIN_SUCCESS = "login_success"
     LOGIN_FAILED = "login_failed"
     PASSWORD_CHANGE = "password_change"
     PASSWORD_RESET = "password_reset"
@@ -47,14 +49,16 @@ class SecurityEventType(PyEnum):
 
 
 class ThreatLevel(PyEnum):
-    """Niveaux de menace."""    LOW = "low"
+    """Niveaux de menace."""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class DeviceType(PyEnum):
-    """Types d'appareils."""    DESKTOP = "desktop"
+    """Types d'appareils."""
+    DESKTOP = "desktop"
     MOBILE = "mobile"
     TABLET = "tablet"
     API_CLIENT = "api_client"
@@ -62,7 +66,8 @@ class DeviceType(PyEnum):
 
 
 class SecurityStatus(PyEnum):
-    """Statuts de sécurité du compte."""    SECURE = "secure"
+    """Statuts de sécurité du compte."""
+    SECURE = "secure"
     AT_RISK = "at_risk"
     COMPROMISED = "compromised"
     LOCKED = "locked"
@@ -70,8 +75,10 @@ class SecurityStatus(PyEnum):
 
 
 class UserSecurity(Base):
-    """    Profil de sécurité principal de l'utilisateur.
-    """    __tablename__ = "user_security"
+    """
+    Profil de sécurité principal de l'utilisateur.
+    """
+    __tablename__ = "user_security"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     user_id = Column(String, ForeignKey("users.id"), nullable=False, unique=True)
@@ -133,19 +140,22 @@ class UserSecurity(Base):
         return f"<UserSecurity({self.user_id})>"
     
     def is_password_expired(self) -> bool:
-        """Vérifie si le mot de passe a expiré."""        if not self.password_expires_at:
+        """Vérifie si le mot de passe a expiré."""
+        if not self.password_expires_at:
             return False
         return datetime.utcnow() > self.password_expires_at
     
     def is_account_locked(self) -> bool:
-        """Vérifie si le compte est verrouillé."""        if not self.account_locked:
+        """Vérifie si le compte est verrouillé."""
+        if not self.account_locked:
             return False
         if self.locked_until and datetime.utcnow() > self.locked_until:
             return False
         return True
     
     def calculate_security_score(self) -> float:
-        """Calcule le score de sécurité du compte."""        score = 0.0
+        """Calcule le score de sécurité du compte."""
+        score = 0.0
         
         # Mot de passe récent (+20%)
         if self.password_last_changed and (datetime.utcnow() - self.password_last_changed).days < 90:
@@ -171,8 +181,10 @@ class UserSecurity(Base):
 
 
 class UserSecurityLog(Base):
-    """    Journal des événements de sécurité utilisateur.
-    """    __tablename__ = "user_security_logs"
+    """
+    Journal des événements de sécurité utilisateur.
+    """
+    __tablename__ = "user_security_logs"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     user_security_id = Column(String, ForeignKey("user_security.id"), nullable=False)
@@ -218,8 +230,10 @@ class UserSecurityLog(Base):
 
 
 class TrustedDevice(Base):
-    """    Appareils de confiance pour l'authentification.
-    """    __tablename__ = "trusted_devices"
+    """
+    Appareils de confiance pour l'authentification.
+    """
+    __tablename__ = "trusted_devices"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     user_security_id = Column(String, ForeignKey("user_security.id"), nullable=False)
@@ -265,19 +279,23 @@ class TrustedDevice(Base):
         return f"<TrustedDevice({self.device_name}, {self.device_type.value})>"
     
     def is_expired(self) -> bool:
-        """Vérifie si l'appareil de confiance a expiré."""        if not self.expires_at:
+        """Vérifie si l'appareil de confiance a expiré."""
+        if not self.expires_at:
             return False
         return datetime.utcnow() > self.expires_at
     
     def update_last_seen(self, ip_address: str):
-        """Met à jour la dernière utilisation de l'appareil."""        self.last_seen = datetime.utcnow()
+        """Met à jour la dernière utilisation de l'appareil."""
+        self.last_seen = datetime.utcnow()
         self.last_ip = ip_address
         self.login_count += 1
 
 
 class APIKey(Base):
-    """    Clés API pour l'accès programmatique.
-    """    __tablename__ = "api_keys"
+    """
+    Clés API pour l'accès programmatique.
+    """
+    __tablename__ = "api_keys"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     user_security_id = Column(String, ForeignKey("user_security.id"), nullable=False)
@@ -319,12 +337,14 @@ class APIKey(Base):
         return f"<APIKey({self.key_name}, {self.key_prefix}...)>"
     
     def is_expired(self) -> bool:
-        """Vérifie si la clé API a expiré."""        if not self.expires_at:
+        """Vérifie si la clé API a expiré."""
+        if not self.expires_at:
             return False
         return datetime.utcnow() > self.expires_at
     
     def can_access_endpoint(self, endpoint: str) -> bool:
-        """Vérifie si la clé peut accéder à un endpoint."""        if not self.is_active or self.is_expired():
+        """Vérifie si la clé peut accéder à un endpoint."""
+        if not self.is_active or self.is_expired():
             return False
         
         if self.is_master_key:
@@ -334,14 +354,17 @@ class APIKey(Base):
         return endpoint not in restricted
     
     def record_usage(self, ip_address: str, endpoint: str):
-        """Enregistre une utilisation de la clé."""        self.last_used = datetime.utcnow()
+        """Enregistre une utilisation de la clé."""
+        self.last_used = datetime.utcnow()
         self.last_used_ip = ip_address
         self.usage_count += 1
 
 
 class APIUsageLog(Base):
-    """    Journal d'utilisation des clés API.
-    """    __tablename__ = "api_usage_logs"
+    """
+    Journal d'utilisation des clés API.
+    """
+    __tablename__ = "api_usage_logs"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     api_key_id = Column(String, ForeignKey("api_keys.id"), nullable=False)
@@ -372,9 +395,11 @@ class APIUsageLog(Base):
 
 
 class SecurityRepository:
-    """    Repository pattern pour la gestion de la sécurité des comptes.
+    """
+    Repository pattern pour la gestion de la sécurité des comptes.
     Implémentation professionnelle avec chiffrement et surveillance.
-    """    
+    """
+    
     def __init__(self, session: Session, encryption_key: str = None):
         self.session = session
         self.logger = logging.getLogger(__name__)
@@ -382,7 +407,8 @@ class SecurityRepository:
         self.cipher_suite = Fernet(self.encryption_key)
     
     def create_user_security(self, user_id: str, password: str) -> UserSecurity:
-        """        Crée le profil de sécurité pour un nouvel utilisateur.
+        """
+        Crée le profil de sécurité pour un nouvel utilisateur.
         
         Args:
             user_id: ID de l'utilisateur
@@ -390,7 +416,8 @@ class SecurityRepository:
             
         Returns:
             UserSecurity: Profil de sécurité créé
-        """        try:
+        """
+        try:
             # Génération du sel et hachage du mot de passe
             salt = secrets.token_hex(32)
             password_hash = self._hash_password(password, salt)
@@ -424,7 +451,8 @@ class SecurityRepository:
             raise
     
     def verify_password(self, user_id: str, password: str) -> bool:
-        """        Vérifie le mot de passe d'un utilisateur.
+        """
+        Vérifie le mot de passe d'un utilisateur.
         
         Args:
             user_id: ID de l'utilisateur
@@ -432,7 +460,8 @@ class SecurityRepository:
             
         Returns:
             bool: True si le mot de passe est correct
-        """        user_security = self.session.query(UserSecurity).filter(
+        """
+        user_security = self.session.query(UserSecurity).filter(
             UserSecurity.user_id == user_id
         ).first()
         
@@ -491,7 +520,8 @@ class SecurityRepository:
         return is_valid
     
     def change_password(self, user_id: str, old_password: str, new_password: str) -> bool:
-        """        Change le mot de passe d'un utilisateur.
+        """
+        Change le mot de passe d'un utilisateur.
         
         Args:
             user_id: ID de l'utilisateur
@@ -500,7 +530,8 @@ class SecurityRepository:
             
         Returns:
             bool: True si le changement a réussi
-        """        try:
+        """
+        try:
             # Vérification de l'ancien mot de passe
             if not self.verify_password(user_id, old_password):
                 return False
@@ -541,14 +572,16 @@ class SecurityRepository:
             return False
     
     def enable_two_factor(self, user_id: str) -> Optional[str]:
-        """        Active l'authentification à deux facteurs.
+        """
+        Active l'authentification à deux facteurs.
         
         Args:
             user_id: ID de l'utilisateur
             
         Returns:
             Optional[str]: Secret 2FA en base32
-        """        try:
+        """
+        try:
             user_security = self.session.query(UserSecurity).filter(
                 UserSecurity.user_id == user_id
             ).first()
@@ -591,7 +624,8 @@ class SecurityRepository:
     
     def generate_api_key(self, user_id: str, key_name: str, 
                         permissions: List[str] = None) -> Optional[str]:
-        """        Génère une nouvelle clé API.
+        """
+        Génère une nouvelle clé API.
         
         Args:
             user_id: ID de l'utilisateur
@@ -600,7 +634,8 @@ class SecurityRepository:
             
         Returns:
             Optional[str]: Clé API générée
-        """        try:
+        """
+        try:
             user_security = self.session.query(UserSecurity).filter(
                 UserSecurity.user_id == user_id
             ).first()
@@ -642,7 +677,8 @@ class SecurityRepository:
             return None
     
     def register_trusted_device(self, user_id: str, device_data: Dict[str, Any]) -> bool:
-        """        Enregistre un appareil de confiance.
+        """
+        Enregistre un appareil de confiance.
         
         Args:
             user_id: ID de l'utilisateur
@@ -650,7 +686,8 @@ class SecurityRepository:
             
         Returns:
             bool: True si enregistré avec succès
-        """        try:
+        """
+        try:
             user_security = self.session.query(UserSecurity).filter(
                 UserSecurity.user_id == user_id
             ).first()
@@ -704,14 +741,16 @@ class SecurityRepository:
             return False
     
     def get_security_score(self, user_id: str) -> float:
-        """        Calcule le score de sécurité d'un utilisateur.
+        """
+        Calcule le score de sécurité d'un utilisateur.
         
         Args:
             user_id: ID de l'utilisateur
             
         Returns:
             float: Score de sécurité (0-100)
-        """        user_security = self.session.query(UserSecurity).filter(
+        """
+        user_security = self.session.query(UserSecurity).filter(
             UserSecurity.user_id == user_id
         ).first()
         
@@ -721,10 +760,12 @@ class SecurityRepository:
         return user_security.calculate_security_score()
     
     def _hash_password(self, password: str, salt: str) -> str:
-        """Hash un mot de passe avec un sel."""        return hashlib.pbkdf2_hmac('sha256', password.encode(), salt.encode(), 100000).hex()
+        """Hash un mot de passe avec un sel."""
+        return hashlib.pbkdf2_hmac('sha256', password.encode(), salt.encode(), 100000).hex()
     
     def _generate_device_fingerprint(self, device_data: Dict[str, Any]) -> str:
-        """Génère une empreinte unique pour un appareil."""        fingerprint_data = f"{device_data.get('user_agent', '')}" \
+        """Génère une empreinte unique pour un appareil."""
+        fingerprint_data = f"{device_data.get('user_agent', '')}" \
                           f"{device_data.get('screen_resolution', '')}" \
                           f"{device_data.get('timezone', '')}" \
                           f"{device_data.get('language', '')}"
@@ -734,7 +775,8 @@ class SecurityRepository:
     def _log_security_event(self, user_security_id: str, user_id: str, 
                            event_type: SecurityEventType, description: str,
                            threat_level: ThreatLevel, event_data: Dict = None):
-        """Enregistre un événement de sécurité."""        try:
+        """Enregistre un événement de sécurité."""
+        try:
             security_log = UserSecurityLog(
                 user_security_id=user_security_id,
                 user_id=user_id,

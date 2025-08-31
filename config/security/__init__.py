@@ -16,7 +16,9 @@ Project Team Specialties:
 - DevOps + IA Prompt Engineer
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from .authentication import *
+"""
+
+from .authentication import *
 from .authorization import *
 from .encryption import *
 from .content_validation import *

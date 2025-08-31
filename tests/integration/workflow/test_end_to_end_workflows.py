@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -18,7 +19,8 @@ user registration to monetization, and complete business workflows.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -37,7 +39,8 @@ WORKFLOW_TIMEOUT = 300  # 5 minutes for complex workflows
 
 
 class WorkflowTestClient:
-    """Enhanced test client for workflow testing."""    
+    """Enhanced test client for workflow testing."""
+    
     def __init__(self, base_url: str = TEST_BASE_URL):
         self.base_url = base_url
         self.session: Optional[aiohttp.ClientSession] = None
@@ -53,7 +56,8 @@ class WorkflowTestClient:
             await self.session.close()
     
     async def authenticate_user(self, user_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Register and authenticate a user for workflow testing."""        # Register user
+        """Register and authenticate a user for workflow testing."""
+        # Register user
         register_response = await self.session.post(
             f"{self.base_url}/auth/register",
             json=user_data
@@ -85,13 +89,15 @@ class WorkflowTestClient:
         return login_data
     
     def get_auth_headers(self) -> Dict[str, str]:
-        """Get authorization headers."""        headers = {"Content-Type": "application/json"}
+        """Get authorization headers."""
+        headers = {"Content-Type": "application/json"}
         if self.auth_token:
             headers["Authorization"] = f"Bearer {self.auth_token}"
         return headers
     
     async def upload_content(self, file_path: str, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content file with metadata."""        headers = {"Authorization": f"Bearer {self.auth_token}"} if self.auth_token else {}
+        """Upload content file with metadata."""
+        headers = {"Authorization": f"Bearer {self.auth_token}"} if self.auth_token else {}
         
         with open(file_path, 'rb') as file:
             data = aiohttp.FormData()
@@ -113,7 +119,8 @@ class WorkflowTestClient:
     
     async def wait_for_processing(self, resource_id: str, resource_type: str, 
                                  timeout: int = 120) -> Dict[str, Any]:
-        """Wait for asynchronous processing to complete."""        start_time = datetime.now()
+        """Wait for asynchronous processing to complete."""
+        start_time = datetime.now()
         
         while (datetime.now() - start_time).seconds < timeout:
             status_response = await self.session.get(
@@ -139,13 +146,15 @@ class WorkflowTestClient:
 
 @pytest.fixture
 async def workflow_client():
-    """Create workflow test client."""    async with WorkflowTestClient() as client:
+    """Create workflow test client."""
+    async with WorkflowTestClient() as client:
         yield client
 
 
 @pytest.fixture
 def sample_audio_file():
-    """Create a sample audio file for testing."""    with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as f:
+    """Create a sample audio file for testing."""
+    with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as f:
         # Create minimal WAV file header
         wav_header = b'RIFF\x24\x08\x00\x00WAVEfmt \x10\x00\x00\x00\x01\x00\x01\x00\x44\xac\x00\x00\x88X\x01\x00\x02\x00\x10\x00data\x00\x08\x00\x00'
         wav_data = b'\x00\x00' * 1000  # Simple audio data
@@ -163,7 +172,8 @@ def sample_audio_file():
 
 @pytest.fixture
 def sample_image_file():
-    """Create a sample image file for testing."""    with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as f:
+    """Create a sample image file for testing."""
+    with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as f:
         # Minimal JPEG header
         jpeg_header = b'\xff\xd8\xff\xe0\x00\x10JFIF\x00\x01\x01\x01\x00H\x00H\x00\x00\xff\xdb\x00C\x00'
         jpeg_data = b'\x00' * 1000  # Simple image data
@@ -181,11 +191,13 @@ def sample_image_file():
 
 
 class TestContentUploadToProtectionWorkflow:
-    """Test complete content upload to protection workflow."""    
+    """Test complete content upload to protection workflow."""
+    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_audio_content_protection_workflow(self, workflow_client, sample_audio_file):
-        """Test complete audio content protection workflow."""        # Step 1: Create and authenticate user
+        """Test complete audio content protection workflow."""
+        # Step 1: Create and authenticate user
         user_data = {
             "email": f"audio_creator_{uuid.uuid4()}@example.com",
             "password": "secure_password_123",
@@ -254,7 +266,8 @@ class TestContentUploadToProtectionWorkflow:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_image_content_protection_workflow(self, workflow_client, sample_image_file):
-        """Test complete image content protection workflow."""        # Step 1: Authenticate user
+        """Test complete image content protection workflow."""
+        # Step 1: Authenticate user
         user_data = {
             "email": f"image_creator_{uuid.uuid4()}@example.com",
             "password": "secure_password_123",
@@ -302,11 +315,13 @@ class TestContentUploadToProtectionWorkflow:
 
 
 class TestUserRegistrationToMonetizationWorkflow:
-    """Test complete user registration to monetization workflow."""    
+    """Test complete user registration to monetization workflow."""
+    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_creator_monetization_setup_workflow(self, workflow_client):
-        """Test complete creator monetization setup workflow."""        # Step 1: Register new creator
+        """Test complete creator monetization setup workflow."""
+        # Step 1: Register new creator
         user_data = {
             "email": f"monetization_creator_{uuid.uuid4()}@example.com",
             "password": "secure_password_123",
@@ -411,7 +426,8 @@ class TestUserRegistrationToMonetizationWorkflow:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_subscription_purchase_workflow(self, workflow_client):
-        """Test complete subscription purchase workflow."""        # Step 1: Register customer
+        """Test complete subscription purchase workflow."""
+        # Step 1: Register customer
         customer_data = {
             "email": f"customer_{uuid.uuid4()}@example.com",
             "password": "customer_password_123",
@@ -469,11 +485,13 @@ class TestUserRegistrationToMonetizationWorkflow:
 
 
 class TestCollaborationWorkflow:
-    """Test collaboration creation to completion workflow."""    
+    """Test collaboration creation to completion workflow."""
+    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_music_collaboration_workflow(self, workflow_client):
-        """Test complete music collaboration workflow."""        # Step 1: Create two artists
+        """Test complete music collaboration workflow."""
+        # Step 1: Create two artists
         artist1_data = {
             "email": f"artist1_{uuid.uuid4()}@example.com",
             "password": "artist_password_123",
@@ -575,11 +593,13 @@ class TestCollaborationWorkflow:
 
 
 class TestLicenseToPaymentWorkflow:
-    """Test license creation to payment workflow."""    
+    """Test license creation to payment workflow."""
+    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_content_licensing_workflow(self, workflow_client, sample_audio_file):
-        """Test complete content licensing workflow."""        # Step 1: Setup licensor (content owner)
+        """Test complete content licensing workflow."""
+        # Step 1: Setup licensor (content owner)
         licensor_data = {
             "email": f"licensor_{uuid.uuid4()}@example.com",
             "password": "licensor_password_123",
@@ -696,11 +716,13 @@ class TestLicenseToPaymentWorkflow:
 
 
 class TestMonitoringToDetectionWorkflow:
-    """Test monitoring setup to detection workflow."""    
+    """Test monitoring setup to detection workflow."""
+    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_content_monitoring_detection_workflow(self, workflow_client, sample_audio_file):
-        """Test complete content monitoring and detection workflow."""        # Step 1: Setup content owner
+        """Test complete content monitoring and detection workflow."""
+        # Step 1: Setup content owner
         owner_data = {
             "email": f"content_owner_{uuid.uuid4()}@example.com",
             "password": "owner_password_123",
@@ -820,11 +842,13 @@ class TestMonitoringToDetectionWorkflow:
 
 
 class TestCrossServiceWorkflowIntegration:
-    """Test workflows that span multiple services and systems."""    
+    """Test workflows that span multiple services and systems."""
+    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_complete_platform_workflow(self, workflow_client, sample_audio_file):
-        """Test complete end-to-end platform workflow."""        # This test combines multiple workflows into one comprehensive test
+        """Test complete end-to-end platform workflow."""
+        # This test combines multiple workflows into one comprehensive test
         
         # Step 1: Creator onboarding and setup
         creator_data = {

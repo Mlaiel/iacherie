@@ -70,7 +70,8 @@ FONCTIONNALITÉS ENTERPRISE:
 - Indexing sur données chiffrées
 - Cache intelligent des clés
 - Batch encryption operations
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import secrets
 import base64
@@ -95,7 +96,8 @@ from backend.deployment.database.vault_client import VaultClient
 
 
 class EncryptionType(Enum):
-    """Types de chiffrement disponibles"""    AES_256_GCM = "aes_256_gcm"
+    """Types de chiffrement disponibles"""
+    AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     FERNET = "fernet"
     RSA_2048 = "rsa_2048"
@@ -104,7 +106,8 @@ class EncryptionType(Enum):
 
 
 class KeyType(Enum):
-    """Types de clés de chiffrement"""    MASTER_KEY = "master_key"
+    """Types de clés de chiffrement"""
+    MASTER_KEY = "master_key"
     COLUMN_KEY = "column_key"
     BACKUP_KEY = "backup_key"
     TRANSPORT_KEY = "transport_key"
@@ -112,7 +115,8 @@ class KeyType(Enum):
 
 
 class DataClassification(Enum):
-    """Classification des données"""    PUBLIC = "public"
+    """Classification des données"""
+    PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
@@ -120,9 +124,11 @@ class DataClassification(Enum):
 
 
 class DatabaseEncryptionManager:
-    """    Gestionnaire de chiffrement enterprise pour bases de données
+    """
+    Gestionnaire de chiffrement enterprise pour bases de données
     Fournit un chiffrement transparent et sécurisé des données sensibles
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or get_settings()
         self.logger = get_logger(f"{__name__}.DatabaseEncryptionManager")
@@ -141,7 +147,8 @@ class DatabaseEncryptionManager:
         self._initialize_encryption_system()
     
     def _initialize_encryption_system(self):
-        """Initialise le système de chiffrement"""        try:
+        """Initialise le système de chiffrement"""
+        try:
             self.logger.info("🔐 Initializing enterprise encryption system...")
             
             # Vérification des clés maîtres
@@ -160,7 +167,8 @@ class DatabaseEncryptionManager:
             raise
     
     def _ensure_master_keys(self):
-        """S'assure que les clés maîtres existent"""        try:
+        """S'assure que les clés maîtres existent"""
+        try:
             # Vérification clé maître principale
             master_key = self._get_or_create_master_key()
             
@@ -175,7 +183,8 @@ class DatabaseEncryptionManager:
             raise
     
     def _get_or_create_master_key(self) -> bytes:
-        """Récupère ou crée la clé maître principale"""        try:
+        """Récupère ou crée la clé maître principale"""
+        try:
             # Tentative de récupération depuis Vault
             master_key = self.vault_client.get_secret("database/master_key")
             
@@ -210,7 +219,8 @@ class DatabaseEncryptionManager:
             raise
     
     def _get_or_create_derived_key(self, key_purpose: str) -> bytes:
-        """Génère ou récupère une clé dérivée pour un usage spécifique"""        try:
+        """Génère ou récupère une clé dérivée pour un usage spécifique"""
+        try:
             cache_key = f"derived_key_{key_purpose}"
             
             # Vérification cache
@@ -252,7 +262,8 @@ class DatabaseEncryptionManager:
         classification: DataClassification = DataClassification.CONFIDENTIAL,
         encryption_type: EncryptionType = None
     ) -> Dict[str, Any]:
-        """        Chiffre des données sensibles avec métadonnées
+        """
+        Chiffre des données sensibles avec métadonnées
         
         Args:
             data: Données à chiffrer
@@ -261,7 +272,8 @@ class DatabaseEncryptionManager:
             
         Returns:
             Dict contenant les données chiffrées et métadonnées
-        """        try:
+        """
+        try:
             if encryption_type is None:
                 encryption_type = self._get_encryption_for_classification(classification)
             
@@ -304,14 +316,16 @@ class DatabaseEncryptionManager:
             raise
     
     def decrypt_sensitive_data(self, encrypted_payload: Dict[str, Any]) -> Union[str, bytes]:
-        """        Déchiffre des données sensibles
+        """
+        Déchiffre des données sensibles
         
         Args:
             encrypted_payload: Payload contenant données chiffrées et métadonnées
             
         Returns:
             Données déchiffrées
-        """        try:
+        """
+        try:
             if not encrypted_payload.get('is_encrypted', False):
                 raise ValueError("Payload is not encrypted")
             
@@ -347,7 +361,8 @@ class DatabaseEncryptionManager:
             raise
     
     def _encrypt_aes_gcm(self, data: bytes, classification: DataClassification) -> str:
-        """Chiffrement AES-256-GCM"""        try:
+        """Chiffrement AES-256-GCM"""
+        try:
             # Clé dérivée pour la classification
             key = self._get_or_create_derived_key(f"aes_gcm_{classification.value}")
             
@@ -375,7 +390,8 @@ class DatabaseEncryptionManager:
             raise
     
     def _decrypt_aes_gcm(self, encrypted_data: str, classification: DataClassification) -> bytes:
-        """Déchiffrement AES-256-GCM"""        try:
+        """Déchiffrement AES-256-GCM"""
+        try:
             # Décodage
             encrypted_bytes = base64.b64decode(encrypted_data)
             
@@ -402,7 +418,8 @@ class DatabaseEncryptionManager:
             raise
     
     def _encrypt_fernet(self, data: bytes, classification: DataClassification) -> str:
-        """Chiffrement Fernet (AES-128 + HMAC)"""        try:
+        """Chiffrement Fernet (AES-128 + HMAC)"""
+        try:
             # Clé dérivée pour Fernet
             derived_key = self._get_or_create_derived_key(f"fernet_{classification.value}")
             fernet_key = base64.urlsafe_b64encode(derived_key)
@@ -417,7 +434,8 @@ class DatabaseEncryptionManager:
             raise
     
     def _decrypt_fernet(self, encrypted_data: str, classification: DataClassification) -> bytes:
-        """Déchiffrement Fernet"""        try:
+        """Déchiffrement Fernet"""
+        try:
             # Clé dérivée
             derived_key = self._get_or_create_derived_key(f"fernet_{classification.value}")
             fernet_key = base64.urlsafe_b64encode(derived_key)
@@ -432,7 +450,8 @@ class DatabaseEncryptionManager:
             raise
     
     def _encrypt_chacha20(self, data: bytes, classification: DataClassification) -> str:
-        """Chiffrement ChaCha20-Poly1305"""        try:
+        """Chiffrement ChaCha20-Poly1305"""
+        try:
             # Clé dérivée
             key = self._get_or_create_derived_key(f"chacha20_{classification.value}")
             
@@ -459,7 +478,8 @@ class DatabaseEncryptionManager:
             raise
     
     def _decrypt_chacha20(self, encrypted_data: str, classification: DataClassification) -> bytes:
-        """Déchiffrement ChaCha20-Poly1305"""        try:
+        """Déchiffrement ChaCha20-Poly1305"""
+        try:
             # Décodage
             encrypted_bytes = base64.b64decode(encrypted_data)
             
@@ -485,7 +505,8 @@ class DatabaseEncryptionManager:
             raise
     
     def _get_encryption_for_classification(self, classification: DataClassification) -> EncryptionType:
-        """Détermine le type de chiffrement selon la classification"""        encryption_map = {
+        """Détermine le type de chiffrement selon la classification"""
+        encryption_map = {
             DataClassification.PUBLIC: EncryptionType.FERNET,
             DataClassification.INTERNAL: EncryptionType.AES_256_GCM,
             DataClassification.CONFIDENTIAL: EncryptionType.AES_256_GCM,
@@ -496,7 +517,8 @@ class DatabaseEncryptionManager:
         return encryption_map.get(classification, EncryptionType.AES_256_GCM)
     
     def _get_current_key_version(self) -> str:
-        """Récupère la version actuelle de la clé"""        try:
+        """Récupère la version actuelle de la clé"""
+        try:
             # Récupération depuis Vault
             metadata = self.vault_client.get_secret_metadata("database/master_key")
             return metadata.get('version', '1') if metadata else '1'
@@ -504,7 +526,8 @@ class DatabaseEncryptionManager:
             return '1'
     
     def _setup_audit_logging(self):
-        """Configure l'audit des opérations de chiffrement"""        try:
+        """Configure l'audit des opérations de chiffrement"""
+        try:
             self.audit_logger = logging.getLogger('encryption_audit')
             
             # Handler pour fichier d'audit
@@ -521,7 +544,8 @@ class DatabaseEncryptionManager:
             self.logger.warning(f"Audit logging setup failed: {e}")
     
     def _audit_encryption_event(self, operation: str, classification: DataClassification, data_size: int):
-        """Enregistre un événement de chiffrement dans l'audit"""        try:
+        """Enregistre un événement de chiffrement dans l'audit"""
+        try:
             audit_entry = {
                 'timestamp': datetime.utcnow().isoformat(),
                 'operation': operation,
@@ -538,7 +562,8 @@ class DatabaseEncryptionManager:
             self.logger.warning(f"Audit logging failed: {e}")
     
     def _run_encryption_tests(self):
-        """Exécute des tests de validation du système de chiffrement"""        try:
+        """Exécute des tests de validation du système de chiffrement"""
+        try:
             test_data = "Test encryption data - 🔐 IA Influencer Agent"
             
             # Test de chaque type de chiffrement
@@ -561,14 +586,16 @@ class DatabaseEncryptionManager:
             raise
     
     async def rotate_encryption_keys(self, force: bool = False) -> Dict[str, Any]:
-        """        Rotation des clés de chiffrement
+        """
+        Rotation des clés de chiffrement
         
         Args:
             force: Force la rotation même si pas nécessaire
             
         Returns:
             Rapport de rotation
-        """        try:
+        """
+        try:
             self.logger.info("🔄 Starting encryption key rotation...")
             
             rotation_report = {
@@ -643,7 +670,8 @@ class DatabaseEncryptionManager:
             return rotation_report
     
     def get_encryption_status(self) -> Dict[str, Any]:
-        """Récupère le statut du système de chiffrement"""        try:
+        """Récupère le statut du système de chiffrement"""
+        try:
             status = {
                 'system_status': 'operational',
                 'master_key_version': self._get_current_key_version(),
@@ -682,7 +710,8 @@ class DatabaseEncryptionManager:
             }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Vérification de santé du système de chiffrement"""        try:
+        """Vérification de santé du système de chiffrement"""
+        try:
             health_status = {
                 'status': 'healthy',
                 'timestamp': datetime.utcnow().isoformat(),
@@ -744,7 +773,8 @@ class DatabaseEncryptionManager:
             }
     
     async def shutdown(self):
-        """Arrêt propre du système de chiffrement"""        try:
+        """Arrêt propre du système de chiffrement"""
+        try:
             self.logger.info("🔒 Shutting down encryption system...")
             
             # Purge du cache des clés
@@ -765,7 +795,8 @@ _encryption_manager: Optional[DatabaseEncryptionManager] = None
 
 
 def get_encryption_manager(config: Optional[Dict[str, Any]] = None) -> DatabaseEncryptionManager:
-    """Récupère ou crée l'instance du gestionnaire de chiffrement"""    global _encryption_manager
+    """Récupère ou crée l'instance du gestionnaire de chiffrement"""
+    global _encryption_manager
     
     if _encryption_manager is None:
         _encryption_manager = DatabaseEncryptionManager(config)
@@ -778,12 +809,14 @@ async def encrypt_data(
     data: Union[str, bytes],
     classification: DataClassification = DataClassification.CONFIDENTIAL
 ) -> Dict[str, Any]:
-    """Interface simplifiée pour chiffrer des données"""    manager = get_encryption_manager()
+    """Interface simplifiée pour chiffrer des données"""
+    manager = get_encryption_manager()
     return manager.encrypt_sensitive_data(data, classification)
 
 
 async def decrypt_data(encrypted_payload: Dict[str, Any]) -> Union[str, bytes]:
-    """Interface simplifiée pour déchiffrer des données"""    manager = get_encryption_manager()
+    """Interface simplifiée pour déchiffrer des données"""
+    manager = get_encryption_manager()
     return manager.decrypt_sensitive_data(encrypted_payload)
 
 

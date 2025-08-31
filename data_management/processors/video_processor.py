@@ -5,16 +5,21 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 =========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
-"""from typing import Dict, List, Optional, Any, Union
+"""
+
+from typing import Dict, List, Optional, Any, Union
 import logging
+
 from pathlib import Path
 
 from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 class VideoProcessor(BaseProcessor):
-    """Processeur spécialisé pour vidéos"""    
+    """
+Processeur spécialisé pour vidéos"""
+    
     SUPPORTED_FORMATS = ['mp4', 'avi', 'mov', 'mkv', 'webm', 'flv', 'wmv']
     
     def validate_input(self, input_data: Any) -> bool:
@@ -59,7 +64,8 @@ class AsyncVideoProcessor(AsyncBaseProcessor):
         }
 
 class ImageProcessor(BaseProcessor):
-    """Processeur spécialisé pour images"""    
+    """Processeur spécialisé pour images"""
+    
     SUPPORTED_FORMATS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'tiff', 'bmp']
     
     def validate_input(self, input_data: Any) -> bool:
@@ -104,7 +110,8 @@ class AsyncImageProcessor(AsyncBaseProcessor):
         }
 
 class DocumentProcessor(BaseProcessor):
-    """Processeur spécialisé pour documents"""    
+    """Processeur spécialisé pour documents"""
+    
     SUPPORTED_FORMATS = ['txt', 'md', 'html', 'pdf', 'docx', 'rtf', 'odt']
     
     def validate_input(self, input_data: Any) -> bool:

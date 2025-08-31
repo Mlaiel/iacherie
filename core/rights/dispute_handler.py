@@ -10,7 +10,8 @@ Enterprise Content Protection Platform - Dispute Resolution Core
 ⚠️  COPYRIGHT NOTICE ⚠️
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -35,7 +36,8 @@ settings = get_settings()
 
 
 class DisputeType(str, Enum):
-    """Types of IP disputes."""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Types of IP disputes."""
+    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     OWNERSHIP_CLAIM = "ownership_claim"
     LICENSE_VIOLATION = "license_violation"
     ROYALTY_DISPUTE = "royalty_dispute"
@@ -48,7 +50,8 @@ class DisputeType(str, Enum):
 
 
 class DisputeStatus(str, Enum):
-    """Dispute resolution status."""    FILED = "filed"
+    """Dispute resolution status."""
+    FILED = "filed"
     UNDER_REVIEW = "under_review"
     MEDIATION = "mediation"
     ARBITRATION = "arbitration"
@@ -60,7 +63,8 @@ class DisputeStatus(str, Enum):
 
 
 class ResolutionMethod(str, Enum):
-    """Dispute resolution methods."""    AUTOMATED_MEDIATION = "automated_mediation"
+    """Dispute resolution methods."""
+    AUTOMATED_MEDIATION = "automated_mediation"
     HUMAN_MEDIATION = "human_mediation"
     ARBITRATION = "arbitration"
     LEGAL_JUDGMENT = "legal_judgment"
@@ -70,7 +74,8 @@ class ResolutionMethod(str, Enum):
 
 
 class Priority(str, Enum):
-    """Dispute priority levels."""    LOW = "low"
+    """Dispute priority levels."""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -79,7 +84,8 @@ class Priority(str, Enum):
 
 @dataclass
 class DisputeEvidence:
-    """Comprehensive evidence structure for disputes."""    evidence_id: str
+    """Comprehensive evidence structure for disputes."""
+    evidence_id: str
     dispute_id: str
     submitter_id: str
     evidence_type: str
@@ -93,7 +99,8 @@ class DisputeEvidence:
 
 
 class DisputeFilingRequest(BaseModel):
-    """Dispute filing request model."""    content_id: str = Field(..., description="Content in dispute")
+    """Dispute filing request model."""
+    content_id: str = Field(..., description="Content in dispute")
     dispute_type: DisputeType = Field(..., description="Type of dispute")
     disputed_party_id: str = Field(..., description="Party being disputed against")
     dispute_reason: str = Field(..., min_length=50, max_length=2000)
@@ -112,7 +119,8 @@ class DisputeFilingRequest(BaseModel):
 
 
 class DisputeResponse(BaseModel):
-    """Response to dispute filing."""    dispute_id: str
+    """Response to dispute filing."""
+    dispute_id: str
     response_type: str  # counter_claim, defense, settlement_offer
     response_text: str = Field(..., min_length=50, max_length=2000)
     counter_evidence: List[Dict[str, Any]] = Field(default_factory=list)
@@ -121,7 +129,8 @@ class DisputeResponse(BaseModel):
 
 
 class ResolutionProposal(BaseModel):
-    """Resolution proposal model."""    proposal_id: str
+    """Resolution proposal model."""
+    proposal_id: str
     dispute_id: str
     proposer_type: str  # system, mediator, party
     resolution_terms: Dict[str, Any]
@@ -133,7 +142,8 @@ class ResolutionProposal(BaseModel):
 
 
 class DisputeAnalytics(BaseModel):
-    """Dispute analytics and insights."""    dispute_id: str
+    """Dispute analytics and insights."""
+    dispute_id: str
     conflict_complexity_score: float
     resolution_probability: float
     estimated_duration_days: int
@@ -144,11 +154,14 @@ class DisputeAnalytics(BaseModel):
 
 
 class DisputeResolutionSystem:
-    """    Enterprise dispute resolution system with AI-powered analysis,
+    """
+    Enterprise dispute resolution system with AI-powered analysis,
     automated mediation, and comprehensive legal integration.
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession):
-        """Initialize dispute resolution system."""        self.db = db_session
+        """Initialize dispute resolution system."""
+        self.db = db_session
         self.encryption = AdvancedEncryption()
         
         # AI-powered analysis engines
@@ -179,7 +192,8 @@ class DisputeResolutionSystem:
         filing_request: DisputeFilingRequest,
         complainant_id: str
     ) -> Dict[str, Any]:
-        """        File comprehensive dispute with automated analysis and routing.
+        """
+        File comprehensive dispute with automated analysis and routing.
         
         Args:
             filing_request: Dispute filing details
@@ -187,7 +201,8 @@ class DisputeResolutionSystem:
             
         Returns:
             Filed dispute information with analysis
-        """        try:
+        """
+        try:
             # Validate filing eligibility
             await self._validate_filing_eligibility(
                 complainant_id, filing_request.content_id, filing_request.disputed_party_id
@@ -264,7 +279,8 @@ class DisputeResolutionSystem:
         response: DisputeResponse,
         respondent_id: str
     ) -> Dict[str, Any]:
-        """        Process response to filed dispute.
+        """
+        Process response to filed dispute.
         
         Args:
             dispute_id: Dispute identifier
@@ -273,7 +289,8 @@ class DisputeResolutionSystem:
             
         Returns:
             Response processing result
-        """        try:
+        """
+        try:
             # Validate response authorization
             dispute_record = await self._get_dispute_record(dispute_id)
             if not dispute_record or dispute_record.disputed_party_id != respondent_id:
@@ -350,7 +367,8 @@ class DisputeResolutionSystem:
     async def analyze_dispute_patterns(
         self, user_id: str, period_days: int = 90
     ) -> Dict[str, Any]:
-        """        Analyze dispute patterns and trends for user.
+        """
+        Analyze dispute patterns and trends for user.
         
         Args:
             user_id: User identifier
@@ -358,7 +376,8 @@ class DisputeResolutionSystem:
             
         Returns:
             Comprehensive dispute pattern analysis
-        """        try:
+        """
+        try:
             start_date = datetime.utcnow() - timedelta(days=period_days)
             
             # Get user dispute history
@@ -412,7 +431,8 @@ class DisputeResolutionSystem:
         proposal: ResolutionProposal,
         proposer_id: str
     ) -> Dict[str, Any]:
-        """        Propose resolution for active dispute.
+        """
+        Propose resolution for active dispute.
         
         Args:
             dispute_id: Dispute identifier
@@ -421,7 +441,8 @@ class DisputeResolutionSystem:
             
         Returns:
             Proposal submission result
-        """        try:
+        """
+        try:
             # Validate proposal authorization
             dispute_record = await self._get_dispute_record(dispute_id)
             if not dispute_record:
@@ -488,7 +509,8 @@ class DisputeResolutionSystem:
         executor_id: str,
         resolution_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Execute final dispute resolution.
+        """
+        Execute final dispute resolution.
         
         Args:
             dispute_id: Dispute identifier
@@ -498,7 +520,8 @@ class DisputeResolutionSystem:
             
         Returns:
             Resolution execution result
-        """        try:
+        """
+        try:
             # Validate execution authority
             dispute_record = await self._get_dispute_record(dispute_id)
             if not dispute_record:
@@ -579,7 +602,8 @@ class DisputeResolutionSystem:
     async def _validate_filing_eligibility(
         self, complainant_id: str, content_id: str, disputed_party_id: str
     ) -> None:
-        """Validate eligibility to file dispute."""        # Check for duplicate disputes
+        """Validate eligibility to file dispute."""
+        # Check for duplicate disputes
         existing_dispute = await self._check_existing_dispute(
             content_id, complainant_id, disputed_party_id
         )
@@ -603,7 +627,8 @@ class DisputeResolutionSystem:
     async def _process_dispute_evidence(
         self, evidence_docs: List[Dict[str, Any]], dispute_id: str, submitter_id: str
     ) -> List[DisputeEvidence]:
-        """Process and validate dispute evidence."""        evidence_list = []
+        """Process and validate dispute evidence."""
+        evidence_list = []
         
         for doc in evidence_docs:
             evidence_id = str(uuid4())
@@ -634,7 +659,8 @@ class DisputeResolutionSystem:
     async def _determine_resolution_method(
         self, filing_request: DisputeFilingRequest, analysis: Dict[str, Any]
     ) -> ResolutionMethod:
-        """Determine optimal resolution method based on dispute characteristics."""        complexity_score = analysis.get("complexity_score", 0.5)
+        """Determine optimal resolution method based on dispute characteristics."""
+        complexity_score = analysis.get("complexity_score", 0.5)
         monetary_claim = filing_request.monetary_claim or 0
         
         if complexity_score < 0.3 and monetary_claim < 1000:
@@ -649,7 +675,8 @@ class DisputeResolutionSystem:
     async def _generate_dispute_analytics(
         self, dispute_record: Any, analysis: Dict[str, Any]
     ) -> DisputeAnalytics:
-        """Generate comprehensive dispute analytics."""        # Find similar cases
+        """Generate comprehensive dispute analytics."""
+        # Find similar cases
         similar_cases = await self._find_similar_disputes(dispute_record)
         
         # Calculate resolution probability
@@ -674,7 +701,8 @@ class DisputeResolutionSystem:
         )
     
     def _load_resolution_templates(self) -> Dict[str, Any]:
-        """Load resolution templates for common dispute types."""        return {
+        """Load resolution templates for common dispute types."""
+        return {
             DisputeType.COPYRIGHT_INFRINGEMENT.value: {
                 "takedown_notice": True,
                 "attribution_correction": True,
@@ -698,11 +726,13 @@ class DisputeResolutionSystem:
 # Supporting engine classes (simplified implementations)
 
 class ConflictAnalysisEngine:
-    """AI-powered conflict analysis engine."""    
+    """AI-powered conflict analysis engine."""
+    
     async def analyze_dispute(
         self, filing_request: DisputeFilingRequest, evidence: List[DisputeEvidence]
     ) -> Dict[str, Any]:
-        """Analyze dispute complexity and characteristics."""        complexity_factors = [
+        """Analyze dispute complexity and characteristics."""
+        complexity_factors = [
             len(evidence),
             filing_request.monetary_claim or 0,
             len(filing_request.dispute_reason)
@@ -719,11 +749,13 @@ class ConflictAnalysisEngine:
 
 
 class AutomatedMediationEngine:
-    """Automated mediation system."""    
+    """Automated mediation system."""
+    
     async def execute_resolution(
         self, dispute: Any, terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute automated mediation resolution."""        return {
+        """Execute automated mediation resolution."""
+        return {
             "method": "automated_mediation",
             "success": True,
             "agreement_reached": True,
@@ -732,11 +764,13 @@ class AutomatedMediationEngine:
 
 
 class HumanMediationService:
-    """Human mediation service."""    
+    """Human mediation service."""
+    
     async def execute_resolution(
         self, dispute: Any, terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute human mediation resolution."""        return {
+        """Execute human mediation resolution."""
+        return {
             "method": "human_mediation",
             "mediator_assigned": True,
             "session_scheduled": True,
@@ -745,11 +779,13 @@ class HumanMediationService:
 
 
 class ArbitrationService:
-    """Arbitration service."""    
+    """Arbitration service."""
+    
     async def execute_resolution(
         self, dispute: Any, terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute arbitration resolution."""        return {
+        """Execute arbitration resolution."""
+        return {
             "method": "arbitration",
             "arbitrator_assigned": True,
             "binding_decision": True,
@@ -758,11 +794,13 @@ class ArbitrationService:
 
 
 class LegalJudgmentService:
-    """Legal judgment service."""    
+    """Legal judgment service."""
+    
     async def execute_resolution(
         self, dispute: Any, terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute legal judgment resolution."""        return {
+        """Execute legal judgment resolution."""
+        return {
             "method": "legal_judgment",
             "court_filing": True,
             "legal_representation": True,
@@ -771,11 +809,13 @@ class LegalJudgmentService:
 
 
 class SettlementService:
-    """Settlement agreement service."""    
+    """Settlement agreement service."""
+    
     async def execute_resolution(
         self, dispute: Any, terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute settlement agreement."""        return {
+        """Execute settlement agreement."""
+        return {
             "method": "settlement_agreement",
             "agreement_signed": True,
             "terms_binding": True,
@@ -784,11 +824,13 @@ class SettlementService:
 
 
 class LegalAnalysisEngine:
-    """Legal analysis and compliance engine."""    
+    """Legal analysis and compliance engine."""
+    
     async def analyze_response(
         self, dispute: Any, response: DisputeResponse, evidence: List[DisputeEvidence]
     ) -> Dict[str, Any]:
-        """Analyze dispute response for legal validity."""        return {
+        """Analyze dispute response for legal validity."""
+        return {
             "response_validity": True,
             "legal_standing": "strong",
             "evidence_quality": len(evidence) * 0.2,

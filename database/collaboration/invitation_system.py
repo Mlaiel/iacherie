@@ -5,7 +5,8 @@ Handles invitations, approvals, and team member onboarding workflows.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
-"""from typing import List, Dict, Any, Optional, Union, Tuple, Set
+"""
+from typing import List, Dict, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
 import json
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class InvitationStatus(Enum):
-    """Invitation status enumeration"""    PENDING = "pending"
+    """Invitation status enumeration"""
+    PENDING = "pending"
     SENT = "sent"
     VIEWED = "viewed"
     ACCEPTED = "accepted"
@@ -39,7 +41,8 @@ class InvitationStatus(Enum):
     REVOKED = "revoked"
 
 class InvitationType(Enum):
-    """Invitation type enumeration"""    PROJECT_COLLABORATION = "project_collaboration"
+    """Invitation type enumeration"""
+    PROJECT_COLLABORATION = "project_collaboration"
     TEAM_MEMBERSHIP = "team_membership"
     CONTENT_REVIEW = "content_review"
     GUEST_ACCESS = "guest_access"
@@ -47,7 +50,8 @@ class InvitationType(Enum):
     CONSULTATION = "consultation"
 
 class OnboardingStage(Enum):
-    """Onboarding stage enumeration"""    INVITATION_SENT = "invitation_sent"
+    """Onboarding stage enumeration"""
+    INVITATION_SENT = "invitation_sent"
     PROFILE_SETUP = "profile_setup"
     SKILL_ASSESSMENT = "skill_assessment"
     TEAM_INTRODUCTION = "team_introduction"
@@ -57,9 +61,11 @@ class OnboardingStage(Enum):
     ONBOARDING_COMPLETE = "onboarding_complete"
 
 class ProjectInvitation(Base):
-    """    Comprehensive project invitation system.
+    """
+    Comprehensive project invitation system.
     Manages invitations with advanced tracking and workflow features.
-    """    __tablename__ = 'project_invitations'
+    """
+    __tablename__ = 'project_invitations'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -146,9 +152,11 @@ class ProjectInvitation(Base):
     )
 
 class OnboardingWorkflow(Base):
-    """    Team member onboarding workflow management.
+    """
+    Team member onboarding workflow management.
     Tracks onboarding progress and ensures complete integration.
-    """    __tablename__ = 'onboarding_workflows'
+    """
+    __tablename__ = 'onboarding_workflows'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -211,9 +219,11 @@ class OnboardingWorkflow(Base):
     )
 
 class InvitationTemplate(Base):
-    """    Reusable invitation templates for different scenarios.
+    """
+    Reusable invitation templates for different scenarios.
     Enables consistent and professional invitation management.
-    """    __tablename__ = 'invitation_templates'
+    """
+    __tablename__ = 'invitation_templates'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -269,7 +279,8 @@ class InvitationTemplate(Base):
 
 @dataclass
 class InvitationRequest:
-    """Data class for invitation creation requests"""    project_id: str
+    """Data class for invitation creation requests"""
+    project_id: str
     invited_email: str
     invitation_type: InvitationType
     proposed_role: str
@@ -283,7 +294,8 @@ class InvitationRequest:
 
 @dataclass
 class OnboardingConfig:
-    """Data class for onboarding configuration"""    project_id: str
+    """Data class for onboarding configuration"""
+    project_id: str
     user_id: str
     invitation_id: str = None
     assigned_buddy: str = None
@@ -292,9 +304,11 @@ class OnboardingConfig:
     automated_reminders: bool = True
 
 class InvitationSystemManager:
-    """    Enterprise invitation system manager with comprehensive features.
+    """
+    Enterprise invitation system manager with comprehensive features.
     Handles invitations, onboarding, and team integration workflows.
-    """    
+    """
+    
     def __init__(self, db_session, redis_client: aioredis.Redis = None, email_service = None):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -307,14 +321,16 @@ class InvitationSystemManager:
         self.max_reminder_count = 3
     
     async def create_invitation(self, request: InvitationRequest) -> Optional[ProjectInvitation]:
-        """        Create a professional project invitation.
+        """
+        Create a professional project invitation.
         
         Args:
             request: Invitation creation request
             
         Returns:
             Created invitation instance
-        """        try:
+        """
+        try:
             # Generate secure invitation token
             invitation_token = self._generate_secure_token()
             invitation_id = self._generate_invitation_id(request.project_id)
@@ -386,7 +402,8 @@ class InvitationSystemManager:
         user_id: str = None,
         response_message: str = None
     ) -> Optional[ProjectInvitation]:
-        """        Accept a project invitation and initiate onboarding.
+        """
+        Accept a project invitation and initiate onboarding.
         
         Args:
             invitation_token: Unique invitation token
@@ -395,7 +412,8 @@ class InvitationSystemManager:
             
         Returns:
             Updated invitation instance
-        """        try:
+        """
+        try:
             # Get invitation by token
             invitation = await self._get_invitation_by_token(invitation_token)
             if not invitation:
@@ -446,7 +464,8 @@ class InvitationSystemManager:
         decline_reason: str = None,
         response_message: str = None
     ) -> Optional[ProjectInvitation]:
-        """        Decline a project invitation.
+        """
+        Decline a project invitation.
         
         Args:
             invitation_token: Unique invitation token
@@ -455,7 +474,8 @@ class InvitationSystemManager:
             
         Returns:
             Updated invitation instance
-        """        try:
+        """
+        try:
             # Get invitation by token
             invitation = await self._get_invitation_by_token(invitation_token)
             if not invitation:
@@ -486,14 +506,16 @@ class InvitationSystemManager:
             raise
     
     async def start_onboarding(self, config: OnboardingConfig) -> Optional[OnboardingWorkflow]:
-        """        Start onboarding workflow for new team member.
+        """
+        Start onboarding workflow for new team member.
         
         Args:
             config: Onboarding configuration
             
         Returns:
             Created onboarding workflow instance
-        """        try:
+        """
+        try:
             # Generate workflow ID
             workflow_id = self._generate_workflow_id(config.project_id)
             
@@ -542,7 +564,8 @@ class InvitationSystemManager:
         stage: OnboardingStage,
         progress_data: Dict[str, Any] = None
     ) -> Optional[OnboardingWorkflow]:
-        """        Update onboarding workflow progress.
+        """
+        Update onboarding workflow progress.
         
         Args:
             workflow_id: Workflow identifier
@@ -551,7 +574,8 @@ class InvitationSystemManager:
             
         Returns:
             Updated workflow instance
-        """        try:
+        """
+        try:
             # Get workflow
             workflow = await self._get_onboarding_workflow(workflow_id)
             if not workflow:
@@ -608,14 +632,16 @@ class InvitationSystemManager:
             raise
     
     async def get_invitation_analytics(self, project_id: str) -> Dict[str, Any]:
-        """        Get comprehensive invitation analytics for project.
+        """
+        Get comprehensive invitation analytics for project.
         
         Args:
             project_id: Project identifier
             
         Returns:
             Invitation analytics data
-        """        try:
+        """
+        try:
             # Get all invitations for project
             invitations = await self.db_session.query(ProjectInvitation)\
                 .filter(ProjectInvitation.project_id == uuid.UUID(project_id))\
@@ -684,20 +710,24 @@ class InvitationSystemManager:
     # Private helper methods
     
     def _generate_secure_token(self) -> str:
-        """Generate cryptographically secure invitation token"""        return secrets.token_urlsafe(self.token_length)
+        """Generate cryptographically secure invitation token"""
+        return secrets.token_urlsafe(self.token_length)
     
     def _generate_invitation_id(self, project_id: str) -> str:
-        """Generate unique invitation identifier"""        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M')
+        """Generate unique invitation identifier"""
+        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M')
         random_suffix = str(uuid.uuid4())[:8].upper()
         return f"INV-{timestamp}-{random_suffix}"
     
     def _generate_workflow_id(self, project_id: str) -> str:
-        """Generate unique workflow identifier"""        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M')
+        """Generate unique workflow identifier"""
+        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M')
         random_suffix = str(uuid.uuid4())[:8].upper()
         return f"ONBOARD-{timestamp}-{random_suffix}"
     
     def _default_permissions(self, role: str) -> Dict[str, Any]:
-        """Get default permissions for role"""        permissions = {
+        """Get default permissions for role"""
+        permissions = {
             'project_lead': {
                 'can_manage_team': True,
                 'can_manage_tasks': True,
@@ -721,7 +751,8 @@ class InvitationSystemManager:
         return permissions.get(role.lower(), permissions['content_creator'])
     
     def _generate_subject(self, template: Optional[InvitationTemplate], request: InvitationRequest) -> str:
-        """Generate invitation subject line"""        if template and template.subject_template:
+        """Generate invitation subject line"""
+        if template and template.subject_template:
             return template.subject_template.format(
                 project_name="[Project Name]",  # Would be filled from actual project
                 role=request.proposed_role,
@@ -731,7 +762,8 @@ class InvitationSystemManager:
         return f"Invitation to collaborate on project as {request.proposed_role}"
     
     def _generate_message(self, template: Optional[InvitationTemplate], request: InvitationRequest) -> str:
-        """Generate invitation message"""        if template and template.message_template:
+        """Generate invitation message"""
+        if template and template.message_template:
             return template.message_template.format(
                 project_name="[Project Name]",
                 role=request.proposed_role,
@@ -739,19 +771,22 @@ class InvitationSystemManager:
                 custom_message=request.message or ""
             )
         
-        base_message = f"""        You have been invited to join our project as a {request.proposed_role}.
+        base_message = f"""
+        You have been invited to join our project as a {request.proposed_role}.
         
         We believe your skills and expertise would be a valuable addition to our team.
         
         Please click the link below to accept this invitation and get started.
-        """        
+        """
+        
         if request.message:
             base_message += f"\n\nPersonal message:\n{request.message}"
         
         return base_message.strip()
     
     def _generate_requirements(self, request: InvitationRequest) -> Dict[str, Any]:
-        """Generate invitation requirements"""        return {
+        """Generate invitation requirements"""
+        return {
             'profile_completion_required': True,
             'skill_verification_required': False,
             'background_check_required': False,
@@ -760,7 +795,8 @@ class InvitationSystemManager:
         }
     
     def _generate_follow_up_schedule(self, expires_in_days: int) -> Dict[str, Any]:
-        """Generate follow-up reminder schedule"""        schedule = {
+        """Generate follow-up reminder schedule"""
+        schedule = {
             'enabled': True,
             'reminders': []
         }
@@ -784,7 +820,8 @@ class InvitationSystemManager:
         return schedule
     
     def _initialize_stage_progress(self, custom_stages: List[str] = None) -> Dict[str, Any]:
-        """Initialize onboarding stage progress tracking"""        progress = {}
+        """Initialize onboarding stage progress tracking"""
+        progress = {}
         
         # Standard stages
         for stage in OnboardingStage:
@@ -810,7 +847,8 @@ class InvitationSystemManager:
         return progress
     
     def _generate_notification_schedule(self, target_days: int) -> Dict[str, Any]:
-        """Generate onboarding notification schedule"""        return {
+        """Generate onboarding notification schedule"""
+        return {
             'welcome_notification': {'day': 0, 'sent': False},
             'progress_check_1': {'day': target_days // 4, 'sent': False},
             'progress_check_2': {'day': target_days // 2, 'sent': False},
@@ -819,7 +857,8 @@ class InvitationSystemManager:
         }
     
     def _get_next_onboarding_stage(self, current_stage: OnboardingStage) -> Optional[OnboardingStage]:
-        """Get next onboarding stage in sequence"""        stages = list(OnboardingStage)
+        """Get next onboarding stage in sequence"""
+        stages = list(OnboardingStage)
         try:
             current_index = stages.index(current_stage)
             if current_index < len(stages) - 1:

@@ -24,7 +24,8 @@ Team Specialties:
 - Database Administrator & Security Expert: High-performance hashtag storage and indexing
 - Microservices Architect & DevOps Engineer: Scalable hashtag processing systems
 - AI Prompt Engineer & Content Protection: Intelligent hashtag optimization and content safety
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 import pandas as pd
@@ -96,7 +97,8 @@ except Exception as e:
     logger.warning(f"NLTK download failed: {str(e)}")
 
 class HashtagCategory(Enum):
-    """Comprehensive hashtag categorization system"""    TRENDING_VIRAL = "trending_viral"           # Currently viral hashtags
+    """Comprehensive hashtag categorization system"""
+    TRENDING_VIRAL = "trending_viral"           # Currently viral hashtags
     EMERGING_TREND = "emerging_trend"           # Rising hashtags with potential
     EVERGREEN = "evergreen"                     # Consistently performing hashtags  
     SEASONAL = "seasonal"                       # Time-specific hashtags
@@ -110,7 +112,8 @@ class HashtagCategory(Enum):
     EVENT_SPECIFIC = "event_specific"          # Event-related hashtags
 
 class HashtagStrategy(Enum):
-    """Advanced hashtag strategy types"""    VIRAL_MAXIMIZATION = "viral_maximization"
+    """Advanced hashtag strategy types"""
+    VIRAL_MAXIMIZATION = "viral_maximization"
     ENGAGEMENT_OPTIMIZATION = "engagement_optimization"  
     REACH_EXPANSION = "reach_expansion"
     NICHE_TARGETING = "niche_targeting"
@@ -120,7 +123,8 @@ class HashtagStrategy(Enum):
     BALANCED_APPROACH = "balanced_approach"
 
 class HashtagRiskLevel(Enum):
-    """Hashtag risk assessment levels"""    VERY_LOW = "very_low"
+    """Hashtag risk assessment levels"""
+    VERY_LOW = "very_low"
     LOW = "low"
     MODERATE = "moderate"
     HIGH = "high"
@@ -129,7 +133,8 @@ class HashtagRiskLevel(Enum):
 
 @dataclass
 class AdvancedHashtagMetrics:
-    """Comprehensive hashtag performance metrics"""    hashtag: str
+    """Comprehensive hashtag performance metrics"""
+    hashtag: str
     usage_frequency: int
     engagement_rate: float
     reach_potential: int
@@ -156,7 +161,8 @@ class AdvancedHashtagMetrics:
 
 @dataclass
 class HashtagRecommendationSet:
-    """Comprehensive hashtag recommendation package"""    strategy: HashtagStrategy
+    """Comprehensive hashtag recommendation package"""
+    strategy: HashtagStrategy
     primary_hashtags: List[AdvancedHashtagMetrics]      # 3-5 main hashtags
     secondary_hashtags: List[AdvancedHashtagMetrics]    # 5-10 supporting hashtags
     niche_hashtags: List[AdvancedHashtagMetrics]        # 5-15 niche/specific hashtags
@@ -173,13 +179,15 @@ class HashtagRecommendationSet:
     alternative_strategies: List[Dict[str, Any]]
 
 class SemanticHashtagEmbedding:
-    """Advanced semantic embedding for hashtag analysis"""    
+    """Advanced semantic embedding for hashtag analysis"""
+    
     def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2"):
         self.model = SentenceTransformer(model_name)
         self.embeddings_cache = {}
         
     async def embed_hashtags(self, hashtags: List[str]) -> np.ndarray:
-        """Generate semantic embeddings for hashtags"""        # Clean hashtags
+        """Generate semantic embeddings for hashtags"""
+        # Clean hashtags
         cleaned_hashtags = [hashtag.replace('#', '').replace('_', ' ') for hashtag in hashtags]
         
         # Check cache
@@ -202,7 +210,8 @@ class SemanticHashtagEmbedding:
         candidate_hashtags: List[str], 
         top_k: int = 10
     ) -> List[Tuple[str, float]]:
-        """Find semantically similar hashtags"""        target_embedding = await self.embed_hashtags([target_hashtag])
+        """Find semantically similar hashtags"""
+        target_embedding = await self.embed_hashtags([target_hashtag])
         candidate_embeddings = await self.embed_hashtags(candidate_hashtags)
         
         similarities = cosine_similarity(target_embedding, candidate_embeddings)[0]
@@ -214,7 +223,8 @@ class SemanticHashtagEmbedding:
         return similar_pairs[:top_k]
 
 class HashtagAnalyzer:
-    """    Enterprise-Grade Hashtag Intelligence & Optimization System
+    """
+    Enterprise-Grade Hashtag Intelligence & Optimization System
     
     Advanced AI system that provides comprehensive hashtag analysis including:
     - Real-time hashtag trend monitoring with predictive analytics
@@ -225,7 +235,8 @@ class HashtagAnalyzer:
     - Competitive hashtag analysis and market positioning
     - Personalized hashtag recommendations based on creator profiles
     - ROI optimization for hashtag-driven marketing campaigns
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         
@@ -293,7 +304,8 @@ class HashtagAnalyzer:
         logger.info("Advanced HashtagAnalyzer initialized with enterprise capabilities")
     
     async def initialize_hashtag_system(self):
-        """Initialize complete hashtag analysis system"""        try:
+        """Initialize complete hashtag analysis system"""
+        try:
             with self.performance_monitor.time_operation("system_initialization"):
                 logger.info("Initializing hashtag analysis system")
                 
@@ -329,7 +341,8 @@ class HashtagAnalyzer:
         creator_profile: Optional[CreatorProfile] = None,
         analysis_depth: str = "comprehensive"
     ) -> List[AdvancedHashtagMetrics]:
-        """        Comprehensive hashtag performance analysis
+        """
+        Comprehensive hashtag performance analysis
         
         Args:
             hashtags: List of hashtags to analyze
@@ -340,7 +353,8 @@ class HashtagAnalyzer:
             
         Returns:
             Detailed performance metrics for each hashtag
-        """        try:
+        """
+        try:
             with self.performance_monitor.time_operation("hashtag_performance_analysis"):
                 logger.info(f"Analyzing performance for {len(hashtags)} hashtags")
                 
@@ -388,7 +402,8 @@ class HashtagAnalyzer:
         target_platforms: Optional[List[str]] = None,
         max_hashtags: int = 30
     ) -> HashtagRecommendationSet:
-        """        Generate intelligent hashtag recommendations
+        """
+        Generate intelligent hashtag recommendations
         
         Args:
             content_metadata: Content to generate hashtags for
@@ -399,7 +414,8 @@ class HashtagAnalyzer:
             
         Returns:
             Comprehensive hashtag recommendation set
-        """        try:
+        """
+        try:
             with self.performance_monitor.time_operation("hashtag_recommendation"):
                 logger.info(f"Generating hashtag recommendations with {strategy.value} strategy")
                 
@@ -470,7 +486,8 @@ class HashtagAnalyzer:
         time_window: int = 24,  # hours
         min_growth_rate: float = 0.5
     ) -> List[HashtagTrend]:
-        """Discover trending hashtags with growth prediction"""        try:
+        """Discover trending hashtags with growth prediction"""
+        try:
             with self.performance_monitor.time_operation("trending_discovery"):
                 logger.info("Discovering trending hashtags with advanced analytics")
                 
@@ -533,7 +550,8 @@ class HashtagAnalyzer:
         creator_profile: Optional[CreatorProfile],
         analysis_depth: str
     ) -> Optional[AdvancedHashtagMetrics]:
-        """Comprehensive analysis of individual hashtag"""        try:
+        """Comprehensive analysis of individual hashtag"""
+        try:
             # Basic metrics calculation
             usage_frequency = hashtag_data.get('usage_frequency', 0)
             engagement_rate = hashtag_data.get('engagement_rate', 0.0)
@@ -626,14 +644,16 @@ class HashtagAnalyzer:
     # Additional sophisticated methods continue...
 
 class TagOptimizer:
-    """    Advanced Hashtag Optimization Engine
+    """
+    Advanced Hashtag Optimization Engine
     
     Specialized system for optimizing hashtag strategies based on:
     - Performance data analysis and predictive modeling
     - Cross-platform optimization strategies
     - Real-time A/B testing and optimization
     - ROI maximization for hashtag investments
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.hashtag_analyzer = HashtagAnalyzer(config)
@@ -656,7 +676,8 @@ class TagOptimizer:
         performance_history: Optional[List[Dict[str, Any]]] = None,
         target_metrics: Optional[Dict[str, float]] = None
     ) -> Dict[str, Any]:
-        """Optimize existing hashtag strategy for better performance"""        try:
+        """Optimize existing hashtag strategy for better performance"""
+        try:
             with self.performance_monitor.time_operation("strategy_optimization"):
                 logger.info(f"Optimizing strategy for {len(current_hashtags)} hashtags")
                 
@@ -744,7 +765,8 @@ from ...utils.network_analysis import NetworkAnalyzer
 logger = logging.getLogger(__name__)
 
 class HashtagType(Enum):
-    """Hashtag classification types"""    TRENDING = "trending"
+    """Hashtag classification types"""
+    TRENDING = "trending"
     NICHE = "niche"
     BRANDED = "branded"
     COMMUNITY = "community"
@@ -754,7 +776,8 @@ class HashtagType(Enum):
     EVERGREEN = "evergreen"
 
 class HashtagStrategy(Enum):
-    """Hashtag optimization strategies"""    VIRAL_BOOST = "viral_boost"
+    """Hashtag optimization strategies"""
+    VIRAL_BOOST = "viral_boost"
     NICHE_TARGETING = "niche_targeting"
     BRAND_BUILDING = "brand_building"
     COMMUNITY_ENGAGEMENT = "community_engagement"
@@ -763,7 +786,8 @@ class HashtagStrategy(Enum):
 
 @dataclass
 class HashtagMetrics:
-    """Comprehensive hashtag performance metrics"""    usage_count: int
+    """Comprehensive hashtag performance metrics"""
+    usage_count: int
     engagement_rate: float
     reach_potential: int
     competition_level: float
@@ -776,7 +800,8 @@ class HashtagMetrics:
 
 @dataclass
 class HashtagRecommendation:
-    """Hashtag recommendation with optimization data"""    hashtag: str
+    """Hashtag recommendation with optimization data"""
+    hashtag: str
     hashtag_type: HashtagType
     confidence_score: float
     predicted_performance: Dict[str, float]
@@ -786,11 +811,13 @@ class HashtagRecommendation:
     synergy_tags: List[str]
 
 class HashtagAnalyzer:
-    """    Advanced Hashtag Analysis & Optimization Engine
+    """
+    Advanced Hashtag Analysis & Optimization Engine
     
     Provides comprehensive hashtag intelligence including trend analysis,
     performance prediction, and strategic optimization recommendations.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         
@@ -823,7 +850,8 @@ class HashtagAnalyzer:
         self.is_initialized = False
 
     async def initialize(self) -> bool:
-        """Initialize hashtag analyzer components"""        try:
+        """Initialize hashtag analyzer components"""
+        try:
             logger.info("Initializing HashtagAnalyzer")
             
             # Load spaCy model for NLP
@@ -856,7 +884,8 @@ class HashtagAnalyzer:
         platforms: List[str],
         time_range: int = 7  # days
     ) -> Dict[str, Any]:
-        """        Perform comprehensive hashtag analysis
+        """
+        Perform comprehensive hashtag analysis
         
         Args:
             content_data: Content data with hashtags
@@ -865,7 +894,8 @@ class HashtagAnalyzer:
             
         Returns:
             Complete hashtag analysis results
-        """        try:
+        """
+        try:
             logger.info(f"Analyzing hashtags for {len(content_data)} content items")
             
             # Extract and clean hashtags
@@ -926,7 +956,8 @@ class HashtagAnalyzer:
         platforms: List[str],
         current_hashtags: List[str] = None
     ) -> HashtagStrategy:
-        """        Generate optimized hashtag strategy for specific content and audience
+        """
+        Generate optimized hashtag strategy for specific content and audience
         
         Args:
             content_type: Type of content
@@ -936,7 +967,8 @@ class HashtagAnalyzer:
             
         Returns:
             Optimized hashtag strategy
-        """        try:
+        """
+        try:
             logger.info(f"Optimizing hashtag strategy for {content_type}")
             
             # Analyze current performance if hashtags provided
@@ -1007,7 +1039,8 @@ class HashtagAnalyzer:
         content_metadata: ContentMetadata,
         creator_profile: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Predict performance metrics for specific hashtag combinations
+        """
+        Predict performance metrics for specific hashtag combinations
         
         Args:
             hashtags: List of hashtags to analyze
@@ -1016,7 +1049,8 @@ class HashtagAnalyzer:
             
         Returns:
             Predicted performance metrics
-        """        try:
+        """
+        try:
             predictions = {}
             
             for hashtag in hashtags:
@@ -1093,7 +1127,8 @@ class HashtagAnalyzer:
         self,
         content_data: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Extract and normalize hashtags from content data"""        hashtag_pattern = re.compile(r'#[\w\u4e00-\u9fff]+')
+        """Extract and normalize hashtags from content data"""
+        hashtag_pattern = re.compile(r'#[\w\u4e00-\u9fff]+')
         extracted_hashtags = []
         
         for content in content_data:
@@ -1130,7 +1165,8 @@ class HashtagAnalyzer:
         platforms: List[str],
         time_range: int
     ) -> Dict[str, HashtagMetrics]:
-        """Calculate comprehensive metrics for each hashtag"""        hashtag_metrics = {}
+        """Calculate comprehensive metrics for each hashtag"""
+        hashtag_metrics = {}
         hashtag_groups = defaultdict(list)
         
         # Group by hashtag
@@ -1203,7 +1239,8 @@ class HashtagAnalyzer:
         self,
         hashtag_data: List[Dict[str, Any]]
     ) -> List[HashtagCluster]:
-        """Identify clusters of related hashtags"""        try:
+        """Identify clusters of related hashtags"""
+        try:
             # Extract unique hashtags
             unique_hashtags = list(set(data["hashtag"] for data in hashtag_data))
             
@@ -1247,7 +1284,8 @@ class HashtagAnalyzer:
             return []
 
     async def _background_hashtag_monitoring(self):
-        """Background task for continuous hashtag monitoring"""        while self.is_initialized:
+        """Background task for continuous hashtag monitoring"""
+        while self.is_initialized:
             try:
                 # Update trending hashtags
                 await self._update_trending_hashtags()
@@ -1265,7 +1303,8 @@ class HashtagAnalyzer:
                 await asyncio.sleep(3600)  # Wait 1 hour on error
 
     async def cleanup(self):
-        """Clean up resources"""        try:
+        """Clean up resources"""
+        try:
             # Cleanup hashtag API
             if self.hashtag_api:
                 await self.hashtag_api.cleanup()
@@ -1281,11 +1320,13 @@ class HashtagAnalyzer:
             logger.error(f"Cleanup failed: {str(e)}")
 
 class TagOptimizer:
-    """    Hashtag Optimization Engine
+    """
+    Hashtag Optimization Engine
     
     Provides advanced optimization algorithms for hashtag selection,
     timing, and strategic implementation across platforms.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.optimization_strategies = {
@@ -1302,7 +1343,8 @@ class TagOptimizer:
         constraints: Dict[str, Any],
         content_context: Dict[str, Any]
     ) -> List[HashtagRecommendation]:
-        """        Optimize hashtag selection based on specific goals and constraints
+        """
+        Optimize hashtag selection based on specific goals and constraints
         
         Args:
             available_hashtags: Pool of hashtags to choose from
@@ -1312,7 +1354,8 @@ class TagOptimizer:
             
         Returns:
             Optimized hashtag recommendations
-        """        try:
+        """
+        try:
             # Select optimization strategy
             strategy_func = self.optimization_strategies.get(
                 optimization_goal,
@@ -1351,7 +1394,8 @@ class TagOptimizer:
         constraints: Dict[str, Any],
         context: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Optimize hashtag selection for maximum viral potential"""        # Implement virality-focused optimization logic
+        """Optimize hashtag selection for maximum viral potential"""
+        # Implement virality-focused optimization logic
         optimized = []
         
         for hashtag in hashtags[:constraints.get("max_count", 10)]:
@@ -1374,7 +1418,8 @@ class TagOptimizer:
         constraints: Dict[str, Any],
         context: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Balanced optimization approach"""        # Default balanced optimization
+        """Balanced optimization approach"""
+        # Default balanced optimization
         return [{
             "hashtag": hashtag,
             "confidence": 0.7,

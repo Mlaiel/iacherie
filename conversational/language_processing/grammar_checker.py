@@ -24,7 +24,8 @@ Copyright: Fahed Mlaiel - All Rights Reserved
     
     Contact: mlaiel@live.de for licensing inquiries ONLY.
     Violators will be prosecuted to the full extent of German and EU law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
 from dataclasses import dataclass, field
@@ -50,7 +51,8 @@ logger = get_logger(__name__)
 
 
 class ErrorType(Enum):
-    """Types of writing errors"""    SPELLING = "spelling"
+    """Types of writing errors"""
+    SPELLING = "spelling"
     GRAMMAR = "grammar"
     PUNCTUATION = "punctuation"
     STYLE = "style"
@@ -61,7 +63,8 @@ class ErrorType(Enum):
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels"""    CRITICAL = "critical"
+    """Error severity levels"""
+    CRITICAL = "critical"
     MAJOR = "major"
     MINOR = "minor"
     SUGGESTION = "suggestion"
@@ -69,7 +72,8 @@ class ErrorSeverity(Enum):
 
 @dataclass
 class WritingError:
-    """Represents a writing error or suggestion"""    error_type: ErrorType
+    """Represents a writing error or suggestion"""
+    error_type: ErrorType
     severity: ErrorSeverity
     position: Tuple[int, int]  # (start, end)
     original_text: str
@@ -81,7 +85,8 @@ class WritingError:
 
 @dataclass
 class WritingAnalysis:
-    """Complete writing analysis result"""    original_text: str
+    """Complete writing analysis result"""
+    original_text: str
     corrected_text: str
     errors: List[WritingError]
     style_score: float
@@ -97,7 +102,8 @@ class WritingAnalysis:
 
 
 class GrammarChecker:
-    """Advanced grammar and style checker"""    
+    """Advanced grammar and style checker"""
+    
     def __init__(self):
         self.language_tool = None
         self.spell_checker = SpellChecker()
@@ -105,7 +111,8 @@ class GrammarChecker:
         self._initialize_tools()
         
     def _initialize_tools(self):
-        """Initialize grammar checking tools"""        try:
+        """Initialize grammar checking tools"""
+        try:
             # Initialize LanguageTool
             self.language_tool = language_tool_python.LanguageTool('en-US')
             
@@ -124,7 +131,8 @@ class GrammarChecker:
             logger.error(f"Failed to initialize grammar tools: {e}")
             
     async def check_grammar(self, text: str, language: str = "en") -> WritingAnalysis:
-        """        Perform comprehensive grammar and writing analysis
+        """
+        Perform comprehensive grammar and writing analysis
         
         Args:
             text: Text to check
@@ -132,7 +140,8 @@ class GrammarChecker:
             
         Returns:
             WritingAnalysis with detailed results
-        """        try:
+        """
+        try:
             # Clean text
             cleaned_text = clean_text(text)
             
@@ -197,7 +206,8 @@ class GrammarChecker:
             raise
             
     async def _check_grammar_errors(self, text: str) -> List[WritingError]:
-        """Check for grammar errors using LanguageTool"""        try:
+        """Check for grammar errors using LanguageTool"""
+        try:
             if not self.language_tool:
                 return []
                 
@@ -224,7 +234,8 @@ class GrammarChecker:
             return []
             
     def _categorize_error(self, rule_id: str) -> ErrorType:
-        """Categorize error based on rule ID"""        if not rule_id:
+        """Categorize error based on rule ID"""
+        if not rule_id:
             return ErrorType.GRAMMAR
             
         rule_id_lower = rule_id.lower()
@@ -243,7 +254,8 @@ class GrammarChecker:
             return ErrorType.GRAMMAR
             
     def _determine_severity(self, rule_id: str) -> ErrorSeverity:
-        """Determine error severity"""        if not rule_id:
+        """Determine error severity"""
+        if not rule_id:
             return ErrorSeverity.MINOR
             
         critical_patterns = ['FRAGMENT', 'RUN_ON', 'SUBJECT_VERB']
@@ -259,7 +271,8 @@ class GrammarChecker:
             return ErrorSeverity.MINOR
             
     async def _check_spelling_errors(self, text: str) -> List[WritingError]:
-        """Check for spelling errors"""        try:
+        """Check for spelling errors"""
+        try:
             words = word_tokenize(text)
             errors = []
             current_pos = 0
@@ -301,7 +314,8 @@ class GrammarChecker:
             return []
             
     async def _analyze_style(self, text: str) -> List[WritingError]:
-        """Analyze writing style and suggest improvements"""        try:
+        """Analyze writing style and suggest improvements"""
+        try:
             errors = []
             
             # Check for passive voice
@@ -323,7 +337,8 @@ class GrammarChecker:
             return []
             
     async def _check_passive_voice(self, text: str) -> List[WritingError]:
-        """Check for excessive passive voice usage"""        try:
+        """Check for excessive passive voice usage"""
+        try:
             errors = []
             
             if not self.nlp:
@@ -355,7 +370,8 @@ class GrammarChecker:
             return []
             
     async def _check_redundancy(self, text: str) -> List[WritingError]:
-        """Check for redundant phrases and words"""        try:
+        """Check for redundant phrases and words"""
+        try:
             errors = []
             
             # Common redundant phrases
@@ -394,7 +410,8 @@ class GrammarChecker:
             return []
             
     async def _check_clarity_issues(self, text: str) -> List[WritingError]:
-        """Check for clarity and readability issues"""        try:
+        """Check for clarity and readability issues"""
+        try:
             errors = []
             sentences = sent_tokenize(text)
             
@@ -435,7 +452,8 @@ class GrammarChecker:
             return []
             
     async def _apply_corrections(self, text: str, errors: List[WritingError]) -> str:
-        """Apply corrections to text"""        try:
+        """Apply corrections to text"""
+        try:
             corrected_text = text
             
             # Sort errors by position (reverse order to maintain positions)
@@ -458,7 +476,8 @@ class GrammarChecker:
             return text
             
     async def _calculate_style_score(self, text: str, style_errors: List[WritingError]) -> float:
-        """Calculate style quality score"""        try:
+        """Calculate style quality score"""
+        try:
             if not text:
                 return 0.0
                 
@@ -481,7 +500,8 @@ class GrammarChecker:
             return 0.5
             
     async def _calculate_clarity_score(self, text: str) -> float:
-        """Calculate clarity score"""        try:
+        """Calculate clarity score"""
+        try:
             sentences = sent_tokenize(text)
             if not sentences:
                 return 0.0
@@ -507,7 +527,8 @@ class GrammarChecker:
             return 0.5
             
     async def _calculate_readability_score(self, text: str) -> float:
-        """Calculate readability score"""        try:
+        """Calculate readability score"""
+        try:
             import textstat
             flesch_score = textstat.flesch_reading_ease(text)
             return min(flesch_score / 100, 1.0)
@@ -516,7 +537,8 @@ class GrammarChecker:
             return 0.5
             
     async def _analyze_tone(self, text: str) -> Dict[str, float]:
-        """Analyze tone of the text"""        try:
+        """Analyze tone of the text"""
+        try:
             # Simple tone analysis based on word patterns
             tone_indicators = {
                 'formal': ['therefore', 'furthermore', 'however', 'nevertheless'],
@@ -541,7 +563,8 @@ class GrammarChecker:
             return {}
             
     async def _analyze_vocabulary_level(self, text: str) -> str:
-        """Analyze vocabulary complexity level"""        try:
+        """Analyze vocabulary complexity level"""
+        try:
             words = [word.lower() for word in word_tokenize(text) if word.isalpha()]
             
             if not words:
@@ -569,7 +592,8 @@ class GrammarChecker:
         clarity_score: float,
         readability_score: float
     ) -> str:
-        """Assess overall writing quality"""        try:
+        """Assess overall writing quality"""
+        try:
             overall_score = (style_score + clarity_score + readability_score) / 3
             
             if overall_score >= 0.9:
@@ -594,7 +618,8 @@ class GrammarChecker:
         style_score: float,
         clarity_score: float
     ) -> List[str]:
-        """Generate writing improvement suggestions"""        try:
+        """Generate writing improvement suggestions"""
+        try:
             suggestions = []
             
             # Error-based suggestions
@@ -638,7 +663,8 @@ class GrammarChecker:
 
 
 class WritingAssistant:
-    """Advanced writing assistant with AI-powered suggestions"""    
+    """Advanced writing assistant with AI-powered suggestions"""
+    
     def __init__(self):
         self.grammar_checker = GrammarChecker()
         
@@ -648,7 +674,8 @@ class WritingAssistant:
         target_audience: str = "general",
         writing_goal: str = "inform"
     ) -> WritingAnalysis:
-        """        Provide comprehensive writing improvement assistance
+        """
+        Provide comprehensive writing improvement assistance
         
         Args:
             text: Text to improve
@@ -657,7 +684,8 @@ class WritingAssistant:
             
         Returns:
             WritingAnalysis with improvements and suggestions
-        """        try:
+        """
+        try:
             # Basic grammar and style check
             analysis = await self.grammar_checker.check_grammar(text)
             
@@ -684,7 +712,8 @@ class WritingAssistant:
         text: str,
         target_audience: str
     ) -> List[str]:
-        """Get suggestions based on target audience"""        try:
+        """Get suggestions based on target audience"""
+        try:
             suggestions = []
             
             if target_audience == "professional":
@@ -712,7 +741,8 @@ class WritingAssistant:
         text: str,
         writing_goal: str
     ) -> List[str]:
-        """Get suggestions based on writing goal"""        try:
+        """Get suggestions based on writing goal"""
+        try:
             suggestions = []
             
             if writing_goal == "persuade":

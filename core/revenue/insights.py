@@ -24,7 +24,8 @@ Developed by Expert Team:
 🎵 Audio Expert: Audio Revenue Stream Optimization
 ⚙️  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Decision Making
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -47,7 +48,8 @@ logger = logging.getLogger(__name__)
 
 
 class InsightType(Enum):
-    """Types of revenue insights"""    TREND_ANALYSIS = "trend_analysis"
+    """Types of revenue insights"""
+    TREND_ANALYSIS = "trend_analysis"
     ANOMALY_DETECTION = "anomaly_detection"
     PATTERN_RECOGNITION = "pattern_recognition"
     PREDICTIVE_INSIGHT = "predictive_insight"
@@ -60,7 +62,8 @@ class InsightType(Enum):
 
 
 class InsightPriority(Enum):
-    """Priority levels for insights"""    CRITICAL = "critical"
+    """Priority levels for insights"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -68,7 +71,8 @@ class InsightPriority(Enum):
 
 
 class InsightCategory(Enum):
-    """Categories of insights"""    REVENUE_OPTIMIZATION = "revenue_optimization"
+    """Categories of insights"""
+    REVENUE_OPTIMIZATION = "revenue_optimization"
     COST_MANAGEMENT = "cost_management"
     MARKET_OPPORTUNITY = "market_opportunity"
     COMPETITIVE_INTELLIGENCE = "competitive_intelligence"
@@ -80,7 +84,8 @@ class InsightCategory(Enum):
 
 @dataclass
 class ActionableInsight:
-    """Actionable revenue insight"""    insight_id: str
+    """Actionable revenue insight"""
+    insight_id: str
     type: InsightType
     category: InsightCategory
     priority: InsightPriority
@@ -99,18 +104,21 @@ class ActionableInsight:
     
     @property
     def age_hours(self) -> int:
-        """Get age of insight in hours"""        return int((datetime.utcnow() - self.created_at).total_seconds() / 3600)
+        """Get age of insight in hours"""
+        return int((datetime.utcnow() - self.created_at).total_seconds() / 3600)
     
     @property
     def is_expired(self) -> bool:
-        """Check if insight has expired"""        if self.expires_at:
+        """Check if insight has expired"""
+        if self.expires_at:
             return datetime.utcnow() > self.expires_at
         return False
 
 
 @dataclass
 class InsightCluster:
-    """Cluster of related insights"""    cluster_id: str
+    """Cluster of related insights"""
+    cluster_id: str
     theme: str
     insights: List[ActionableInsight]
     combined_impact: Decimal
@@ -120,12 +128,14 @@ class InsightCluster:
     
     @property
     def insight_count(self) -> int:
-        """Get number of insights in cluster"""        return len(self.insights)
+        """Get number of insights in cluster"""
+        return len(self.insights)
 
 
 @dataclass
 class InsightTrend:
-    """Trend analysis for insights"""    trend_id: str
+    """Trend analysis for insights"""
+    trend_id: str
     metric_name: str
     time_period: str
     trend_direction: str  # increasing, decreasing, stable, volatile
@@ -138,7 +148,8 @@ class InsightTrend:
 
 
 class RevenueInsightsEngine:
-    """Advanced AI-powered revenue insights and intelligence engine"""    
+    """Advanced AI-powered revenue insights and intelligence engine"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.insights_database = []
@@ -153,7 +164,8 @@ class RevenueInsightsEngine:
         self.confidence_threshold = self.config.get('confidence_threshold', 0.7)
         
     async def initialize(self) -> None:
-        """Initialize insights engine"""        try:
+        """Initialize insights engine"""
+        try:
             # Initialize ML models
             await self._initialize_ml_models()
             
@@ -170,7 +182,8 @@ class RevenueInsightsEngine:
             raise
     
     async def _initialize_ml_models(self) -> None:
-        """Initialize machine learning models"""        # Anomaly detection model
+        """Initialize machine learning models"""
+        # Anomaly detection model
         self.ml_models['anomaly_detector'] = IsolationForest(
             contamination=self.anomaly_threshold,
             random_state=42
@@ -195,7 +208,8 @@ class RevenueInsightsEngine:
         )
     
     async def _load_pattern_library(self) -> None:
-        """Load revenue pattern library"""        # Revenue patterns for different scenarios
+        """Load revenue pattern library"""
+        # Revenue patterns for different scenarios
         self.pattern_library = {
             'seasonal_patterns': {
                 'holiday_boost': {
@@ -246,7 +260,8 @@ class RevenueInsightsEngine:
         }
     
     async def _setup_insight_templates(self) -> None:
-        """Setup insight generation templates"""        self.insight_templates = {
+        """Setup insight generation templates"""
+        self.insight_templates = {
             InsightType.TREND_ANALYSIS: self._generate_trend_insight,
             InsightType.ANOMALY_DETECTION: self._generate_anomaly_insight,
             InsightType.PATTERN_RECOGNITION: self._generate_pattern_insight,
@@ -265,7 +280,8 @@ class RevenueInsightsEngine:
         historical_data: Optional[List[Dict[str, Any]]] = None,
         context: Optional[Dict[str, Any]] = None
     ) -> List[ActionableInsight]:
-        """Generate comprehensive revenue insights"""        try:
+        """Generate comprehensive revenue insights"""
+        try:
             insights = []
             context = context or {}
             
@@ -306,7 +322,8 @@ class RevenueInsightsEngine:
         revenue_data: Dict[str, Any],
         historical_data: Optional[List[Dict[str, Any]]]
     ) -> Dict[str, Any]:
-        """Prepare data for insight analysis"""        processed_data = {
+        """Prepare data for insight analysis"""
+        processed_data = {
             'current_revenue': Decimal(str(revenue_data.get('monthly_revenue', 0))),
             'revenue_streams': revenue_data.get('revenue_streams', {}),
             'platform_data': revenue_data.get('platform_data', {}),
@@ -338,7 +355,8 @@ class RevenueInsightsEngine:
         self,
         historical_series: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate derived metrics from historical data"""        if not historical_series:
+        """Calculate derived metrics from historical data"""
+        if not historical_series:
             return {}
         
         revenues = [float(item['revenue']) for item in historical_series]
@@ -382,7 +400,8 @@ class RevenueInsightsEngine:
         revenues: List[float],
         dates: List[datetime]
     ) -> float:
-        """Detect seasonality in revenue data"""        # Simple seasonality detection based on month-over-month patterns
+        """Detect seasonality in revenue data"""
+        # Simple seasonality detection based on month-over-month patterns
         if len(revenues) < 12:
             return 0.0
         
@@ -416,7 +435,8 @@ class RevenueInsightsEngine:
         data: Dict[str, Any],
         context: Dict[str, Any]
     ) -> List[ActionableInsight]:
-        """Generate trend analysis insights"""        insights = []
+        """Generate trend analysis insights"""
+        insights = []
         
         derived_metrics = data.get('derived_metrics', {})
         
@@ -491,7 +511,8 @@ class RevenueInsightsEngine:
         data: Dict[str, Any],
         context: Dict[str, Any]
     ) -> List[ActionableInsight]:
-        """Generate anomaly detection insights"""        insights = []
+        """Generate anomaly detection insights"""
+        insights = []
         
         historical_series = data.get('historical_series', [])
         
@@ -572,7 +593,8 @@ class RevenueInsightsEngine:
         data: Dict[str, Any],
         context: Dict[str, Any]
     ) -> List[ActionableInsight]:
-        """Generate pattern recognition insights"""        insights = []
+        """Generate pattern recognition insights"""
+        insights = []
         
         revenue_streams = data.get('revenue_streams', {})
         
@@ -623,7 +645,8 @@ class RevenueInsightsEngine:
         data: Dict[str, Any],
         context: Dict[str, Any]
     ) -> List[ActionableInsight]:
-        """Generate predictive insights"""        insights = []
+        """Generate predictive insights"""
+        insights = []
         
         derived_metrics = data.get('derived_metrics', {})
         current_revenue = data.get('current_revenue', Decimal('0'))
@@ -677,7 +700,8 @@ class RevenueInsightsEngine:
         data: Dict[str, Any],
         context: Dict[str, Any]
     ) -> List[ActionableInsight]:
-        """Generate optimization opportunity insights"""        insights = []
+        """Generate optimization opportunity insights"""
+        insights = []
         
         revenue_streams = data.get('revenue_streams', {})
         engagement_metrics = data.get('engagement_metrics', {})
@@ -734,7 +758,8 @@ class RevenueInsightsEngine:
         data: Dict[str, Any],
         context: Dict[str, Any]
     ) -> List[ActionableInsight]:
-        """Generate risk assessment insights"""        insights = []
+        """Generate risk assessment insights"""
+        insights = []
         
         derived_metrics = data.get('derived_metrics', {})
         
@@ -779,7 +804,8 @@ class RevenueInsightsEngine:
         data: Dict[str, Any],
         context: Dict[str, Any]
     ) -> List[ActionableInsight]:
-        """Generate market intelligence insights"""        insights = []
+        """Generate market intelligence insights"""
+        insights = []
         
         # Platform performance comparison
         platform_data = data.get('platform_data', {})
@@ -850,7 +876,8 @@ class RevenueInsightsEngine:
         data: Dict[str, Any],
         context: Dict[str, Any]
     ) -> List[ActionableInsight]:
-        """Generate customer behavior insights"""        insights = []
+        """Generate customer behavior insights"""
+        insights = []
         
         engagement_metrics = data.get('engagement_metrics', {})
         
@@ -904,7 +931,8 @@ class RevenueInsightsEngine:
         data: Dict[str, Any],
         context: Dict[str, Any]
     ) -> List[ActionableInsight]:
-        """Generate seasonal pattern insights"""        insights = []
+        """Generate seasonal pattern insights"""
+        insights = []
         
         derived_metrics = data.get('derived_metrics', {})
         seasonality_score = derived_metrics.get('seasonality_score', 0)
@@ -969,7 +997,8 @@ class RevenueInsightsEngine:
         data: Dict[str, Any],
         context: Dict[str, Any]
     ) -> List[ActionableInsight]:
-        """Generate performance benchmark insights"""        insights = []
+        """Generate performance benchmark insights"""
+        insights = []
         
         current_revenue = data.get('current_revenue', Decimal('0'))
         
@@ -1045,7 +1074,8 @@ class RevenueInsightsEngine:
         self,
         insights: List[ActionableInsight]
     ) -> List[ActionableInsight]:
-        """Filter and rank insights by relevance and priority"""        # Filter out low-confidence insights
+        """Filter and rank insights by relevance and priority"""
+        # Filter out low-confidence insights
         filtered_insights = [
             insight for insight in insights
             if insight.confidence_score >= self.confidence_threshold
@@ -1081,7 +1111,8 @@ class RevenueInsightsEngine:
         self,
         insights: List[ActionableInsight]
     ) -> List[ActionableInsight]:
-        """Identify and cluster related insights"""        if len(insights) < 2:
+        """Identify and cluster related insights"""
+        if len(insights) < 2:
             return insights
         
         # Simple clustering based on categories and types
@@ -1112,7 +1143,8 @@ class RevenueInsightsEngine:
         self,
         time_period: int = 7  # days
     ) -> Dict[str, Any]:
-        """Get summary of insights from specified time period"""        try:
+        """Get summary of insights from specified time period"""
+        try:
             cutoff_date = datetime.utcnow() - timedelta(days=time_period)
             
             recent_insights = [
@@ -1193,7 +1225,8 @@ class RevenueInsightsEngine:
         insights: List[ActionableInsight],
         include_details: bool = True
     ) -> Dict[str, Any]:
-        """Export comprehensive insights report"""        try:
+        """Export comprehensive insights report"""
+        try:
             report = {
                 'report_info': {
                     'total_insights': len(insights),
@@ -1227,7 +1260,8 @@ class RevenueInsightsEngine:
             raise
     
     async def _generate_executive_summary(self, insights: List[ActionableInsight]) -> Dict[str, Any]:
-        """Generate executive summary of insights"""        if not insights:
+        """Generate executive summary of insights"""
+        if not insights:
             return {'message': 'No insights available for summary'}
         
         # Count critical and high priority insights
@@ -1257,21 +1291,24 @@ class RevenueInsightsEngine:
         }
     
     def _group_insights_by_priority(self, insights: List[ActionableInsight]) -> Dict[str, int]:
-        """Group insights by priority"""        groups = {}
+        """Group insights by priority"""
+        groups = {}
         for insight in insights:
             priority = insight.priority.value
             groups[priority] = groups.get(priority, 0) + 1
         return groups
     
     def _group_insights_by_category(self, insights: List[ActionableInsight]) -> Dict[str, int]:
-        """Group insights by category"""        groups = {}
+        """Group insights by category"""
+        groups = {}
         for insight in insights:
             category = insight.category.value
             groups[category] = groups.get(category, 0) + 1
         return groups
     
     def _group_insights_by_time_sensitivity(self, insights: List[ActionableInsight]) -> Dict[str, int]:
-        """Group insights by time sensitivity"""        groups = {}
+        """Group insights by time sensitivity"""
+        groups = {}
         for insight in insights:
             time_sensitivity = insight.time_sensitivity
             groups[time_sensitivity] = groups.get(time_sensitivity, 0) + 1
@@ -1282,7 +1319,8 @@ class RevenueInsightsEngine:
         insight: ActionableInsight,
         include_details: bool
     ) -> Dict[str, Any]:
-        """Format insight for report"""        formatted = {
+        """Format insight for report"""
+        formatted = {
             'id': insight.insight_id,
             'title': insight.title,
             'type': insight.type.value,
@@ -1308,7 +1346,8 @@ class RevenueInsightsEngine:
         return formatted
     
     async def _generate_action_priorities(self, insights: List[ActionableInsight]) -> List[Dict[str, Any]]:
-        """Generate prioritized action items"""        action_items = []
+        """Generate prioritized action items"""
+        action_items = []
         
         # Extract all recommended actions with context
         for insight in insights:
@@ -1340,7 +1379,8 @@ class RevenueInsightsEngine:
         return action_items[:15]  # Top 15 actions
     
     async def _calculate_impact_analysis(self, insights: List[ActionableInsight]) -> Dict[str, Any]:
-        """Calculate overall impact analysis"""        if not insights:
+        """Calculate overall impact analysis"""
+        if not insights:
             return {}
         
         total_impact = sum(insight.potential_impact for insight in insights)
@@ -1374,6 +1414,7 @@ class RevenueInsightsEngine:
 
 
 async def create_revenue_insights_engine(config: Optional[Dict[str, Any]] = None) -> RevenueInsightsEngine:
-    """Factory function to create and initialize revenue insights engine"""    engine = RevenueInsightsEngine(config)
+    """Factory function to create and initialize revenue insights engine"""
+    engine = RevenueInsightsEngine(config)
     await engine.initialize()
     return engine

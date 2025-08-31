@@ -22,7 +22,8 @@ Ce code est protégé par le droit d'auteur. Toute utilisation, reproduction,
 ou distribution non autorisée est strictement interdite.
 This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
@@ -53,7 +54,8 @@ from .marketplace_agent import (
 
 @dataclass
 class MarketplaceSystemStatus:
-    """Overall marketplace system status."""    is_operational: bool = True
+    """Overall marketplace system status."""
+    is_operational: bool = True
     active_components: List[str] = field(default_factory=list)
     failed_components: List[str] = field(default_factory=list)
     performance_metrics: Dict[str, float] = field(default_factory=dict)
@@ -64,7 +66,8 @@ class MarketplaceSystemStatus:
 
 
 class MarketplaceSystem:
-    """    Unified Marketplace System - Central Management Hub
+    """
+    Unified Marketplace System - Central Management Hub
     
     Provides centralized access to all marketplace functionalities including:
     - Content listing and discovery
@@ -75,12 +78,15 @@ class MarketplaceSystem:
     - Monetization and revenue optimization
     
     This is the main entry point for all marketplace operations.
-    """    def __init__(self, config: Optional[MarketplaceConfig] = None):
-        """        Initialize the complete marketplace system.
+    """
+    def __init__(self, config: Optional[MarketplaceConfig] = None):
+        """
+        Initialize the complete marketplace system.
         
         Args:
             config: Marketplace configuration, creates default if None
-        """        self.config = config or MarketplaceConfig()
+        """
+        self.config = config or MarketplaceConfig()
         self.logger = logging.getLogger(__name__)
         
         # Initialize all marketplace components
@@ -93,7 +99,8 @@ class MarketplaceSystem:
         self.logger.info("Marketplace system initialized successfully")
 
     def _initialize_components(self) -> None:
-        """Initialize all marketplace system components."""        try:
+        """Initialize all marketplace system components."""
+        try:
             # Core marketplace agent
             self.marketplace_agent = MarketplaceAgent(self.config)
             
@@ -129,11 +136,13 @@ class MarketplaceSystem:
             raise
 
     async def health_check(self) -> MarketplaceSystemStatus:
-        """        Comprehensive system health check.
+        """
+        Comprehensive system health check.
         
         Returns:
             Current system status
-        """        try:
+        """
+        try:
             self.system_status.last_health_check = datetime.utcnow()
             
             # Check component health
@@ -168,7 +177,8 @@ class MarketplaceSystem:
         request_type: str,
         request_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Central request processing hub for all marketplace operations.
+        """
+        Central request processing hub for all marketplace operations.
         
         Args:
             request_type: Type of marketplace request
@@ -176,7 +186,8 @@ class MarketplaceSystem:
             
         Returns:
             Processed request result
-        """        try:
+        """
+        try:
             self.logger.info(f"Processing marketplace request: {request_type}")
             
             # Route request to appropriate component
@@ -226,11 +237,13 @@ class MarketplaceSystem:
             return {"success": False, "error": str(e)}
 
     async def get_system_overview(self) -> Dict[str, Any]:
-        """        Get comprehensive marketplace system overview.
+        """
+        Get comprehensive marketplace system overview.
         
         Returns:
             Complete system status and metrics
-        """        try:
+        """
+        try:
             # Get current health status
             health_status = await self.health_check()
             
@@ -277,11 +290,13 @@ class MarketplaceSystem:
             return {"error": str(e)}
 
     async def shutdown(self) -> Dict[str, Any]:
-        """        Gracefully shutdown the marketplace system.
+        """
+        Gracefully shutdown the marketplace system.
         
         Returns:
             Shutdown status report
-        """        try:
+        """
+        try:
             self.logger.info("Initiating marketplace system shutdown...")
             
             # Shutdown components in reverse order
@@ -329,7 +344,8 @@ class MarketplaceSystem:
 
     # Request handlers
     async def _handle_create_listing(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle create listing request."""        try:
+        """Handle create listing request."""
+        try:
             listing = await self.listing_manager.create_listing(
                 creator_id=data.get("creator_id"),
                 content_type=data.get("content_type"),
@@ -343,7 +359,8 @@ class MarketplaceSystem:
             return {"success": False, "error": str(e)}
 
     async def _handle_search_listings(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle search listings request."""        try:
+        """Handle search listings request."""
+        try:
             results = await self.listing_manager.search_listings(
                 query=data.get("query", ""),
                 filters=data.get("filters", {}),
@@ -355,7 +372,8 @@ class MarketplaceSystem:
             return {"success": False, "error": str(e)}
 
     async def _handle_initiate_collaboration(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle collaboration initiation request."""        try:
+        """Handle collaboration initiation request."""
+        try:
             collaboration = await self.collaboration_orchestrator.initiate_collaboration(
                 creator_ids=data.get("creator_ids", []),
                 project_type=data.get("project_type"),
@@ -366,7 +384,8 @@ class MarketplaceSystem:
             return {"success": False, "error": str(e)}
 
     async def _handle_process_transaction(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle transaction processing request."""        try:
+        """Handle transaction processing request."""
+        try:
             result = await self.transaction_processor.process_transaction(
                 buyer_id=data.get("buyer_id"),
                 seller_id=data.get("seller_id"),
@@ -379,7 +398,8 @@ class MarketplaceSystem:
             return {"success": False, "error": str(e)}
 
     async def _handle_validate_content(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle content validation request."""        try:
+        """Handle content validation request."""
+        try:
             validation = await self.content_validator.validate_content(
                 content_path=data.get("content_path"),
                 content_type=data.get("content_type"),
@@ -390,7 +410,8 @@ class MarketplaceSystem:
             return {"success": False, "error": str(e)}
 
     async def _handle_distribute_content(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle content distribution request."""        try:
+        """Handle content distribution request."""
+        try:
             job = await self.distribution_manager.create_distribution_job(
                 content_id=data.get("content_id"),
                 creator_id=data.get("creator_id"),
@@ -402,7 +423,8 @@ class MarketplaceSystem:
             return {"success": False, "error": str(e)}
 
     async def _handle_get_analytics(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle analytics request."""        try:
+        """Handle analytics request."""
+        try:
             analytics = await self.marketplace_analytics.generate_comprehensive_report(
                 time_range=data.get("time_range", "7d"),
                 metrics=data.get("metrics", [])
@@ -412,7 +434,8 @@ class MarketplaceSystem:
             return {"success": False, "error": str(e)}
 
     async def _handle_find_matches(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle matching request."""        try:
+        """Handle matching request."""
+        try:
             matches = await self.matching_engine.find_creator_matches(
                 creator_id=data.get("creator_id"),
                 project_requirements=data.get("requirements", {})
@@ -422,7 +445,8 @@ class MarketplaceSystem:
             return {"success": False, "error": str(e)}
 
     async def _handle_optimize_pricing(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle pricing optimization request."""        try:
+        """Handle pricing optimization request."""
+        try:
             pricing = await self.monetization_engine.optimize_pricing(
                 content_id=data.get("content_id"),
                 market_conditions=data.get("market_conditions", {})
@@ -432,7 +456,8 @@ class MarketplaceSystem:
             return {"success": False, "error": str(e)}
 
     async def _handle_security_check(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle security check request."""        try:
+        """Handle security check request."""
+        try:
             if "transaction" in data:
                 security_validation = await self.marketplace_security.validate_transaction(
                     data["transaction"]
@@ -450,7 +475,8 @@ class MarketplaceSystem:
             return {"success": False, "error": str(e)}
 
     async def _check_component_health(self) -> Dict[str, List[str]]:
-        """Check health of all system components."""        active = []
+        """Check health of all system components."""
+        active = []
         failed = []
         
         components = [
@@ -484,7 +510,8 @@ class MarketplaceSystem:
         return {"active": active, "failed": failed}
 
     async def _collect_performance_metrics(self) -> Dict[str, float]:
-        """Collect system performance metrics."""        try:
+        """Collect system performance metrics."""
+        try:
             # Mock implementation - would collect real system metrics
             return {
                 "cpu_usage": 45.2,
@@ -499,7 +526,8 @@ class MarketplaceSystem:
             return {}
 
     async def _collect_component_statistics(self) -> Dict[str, Any]:
-        """Collect statistics from all components."""        try:
+        """Collect statistics from all components."""
+        try:
             return {
                 "listings_total": 12547,
                 "active_collaborations": 89,
@@ -514,7 +542,8 @@ class MarketplaceSystem:
             return {}
 
     async def _get_activity_summary(self) -> Dict[str, Any]:
-        """Get recent activity summary."""        try:
+        """Get recent activity summary."""
+        try:
             return {
                 "last_24h": {
                     "new_listings": 156,
@@ -539,14 +568,16 @@ _marketplace_system_instance: Optional[MarketplaceSystem] = None
 
 
 def get_marketplace_system(config: Optional[MarketplaceConfig] = None) -> MarketplaceSystem:
-    """    Get or create the global marketplace system instance.
+    """
+    Get or create the global marketplace system instance.
     
     Args:
         config: Optional configuration for system initialization
         
     Returns:
         Marketplace system instance
-    """    global _marketplace_system_instance
+    """
+    global _marketplace_system_instance
     
     if _marketplace_system_instance is None:
         _marketplace_system_instance = MarketplaceSystem(config)
@@ -555,11 +586,13 @@ def get_marketplace_system(config: Optional[MarketplaceConfig] = None) -> Market
 
 
 async def initialize_marketplace() -> MarketplaceSystem:
-    """    Initialize the marketplace system with default configuration.
+    """
+    Initialize the marketplace system with default configuration.
     
     Returns:
         Initialized marketplace system
-    """    return get_marketplace_system()
+    """
+    return get_marketplace_system()
 
 
 # Export main classes and functions

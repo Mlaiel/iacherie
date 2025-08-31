@@ -50,7 +50,8 @@ UNAUTHORIZED ACCESS IS SUPREME CONSTITUTIONAL VIOLATION:
 
 Contact mlaiel@live.de for MANDATORY Supreme Court authorization.
 Unauthorized access triggers automatic constitutional crisis protocols.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Callable
 from dataclasses import dataclass, field
@@ -69,7 +70,8 @@ logger = logging.getLogger(__name__)
 
 
 class EnforcementAction(Enum):
-    """Types d'actions d'application des droits"""    DMCA_TAKEDOWN = "dmca_takedown"
+    """Types d'actions d'application des droits"""
+    DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     MONETIZATION_CLAIM = "monetization_claim"
     CONTENT_BLOCKING = "content_blocking"
@@ -80,7 +82,8 @@ class EnforcementAction(Enum):
 
 
 class ViolationType(Enum):
-    """Types de violations détectées"""    EXACT_COPY = "exact_copy"
+    """Types de violations détectées"""
+    EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     REMIX_UNAUTHORIZED = "remix_unauthorized"
     SAMPLING_UNAUTHORIZED = "sampling_unauthorized"
@@ -91,14 +94,16 @@ class ViolationType(Enum):
 
 
 class SeverityLevel(Enum):
-    """Niveaux de sévérité des violations"""    LOW = "low"
+    """Niveaux de sévérité des violations"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class EnforcementStatus(Enum):
-    """Statuts des actions d'application"""    PENDING = "pending"
+    """Statuts des actions d'application"""
+    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -109,7 +114,8 @@ class EnforcementStatus(Enum):
 
 @dataclass
 class ViolationEvidence:
-    """Preuves de violation de droits d'auteur"""    detection_id: str
+    """Preuves de violation de droits d'auteur"""
+    detection_id: str
     violation_type: ViolationType
     similarity_score: float
     fingerprint_matches: List[str]
@@ -125,7 +131,8 @@ class ViolationEvidence:
 
 @dataclass
 class ContentOwnership:
-    """Informations de propriété du contenu"""    owner_id: str
+    """Informations de propriété du contenu"""
+    owner_id: str
     owner_name: str
     content_title: str
     content_id: str
@@ -137,7 +144,8 @@ class ContentOwnership:
 
 
 class EnforcementRule(BaseModel):
-    """Règle d'application automatique des droits"""    id: str
+    """Règle d'application automatique des droits"""
+    id: str
     name: str
     description: str
     enabled: bool = True
@@ -165,7 +173,8 @@ class EnforcementRule(BaseModel):
 
 
 class EnforcementCase(BaseModel):
-    """Cas d'application des droits d'auteur"""    id: str
+    """Cas d'application des droits d'auteur"""
+    id: str
     evidence: Dict[str, Any]  # ViolationEvidence serialized
     ownership: Dict[str, Any]  # ContentOwnership serialized
     applied_rule: Optional[str] = None
@@ -192,30 +201,37 @@ class EnforcementCase(BaseModel):
 
 
 class PlatformEnforcer:
-    """Classe de base pour les applications spécifiques aux plateformes"""    
+    """Classe de base pour les applications spécifiques aux plateformes"""
+    
     def __init__(self, platform_name: str, config: Dict[str, Any]):
         self.platform_name = platform_name
         self.config = config
         self.api_client = None
     
     async def initialize(self) -> bool:
-        """Initialise l'application pour la plateforme"""        pass
+        """Initialise l'application pour la plateforme"""
+        pass
     
     async def submit_takedown(self, evidence: ViolationEvidence, case_id: str) -> bool:
-        """Soumet une demande de retrait"""        pass
+        """Soumet une demande de retrait"""
+        pass
     
     async def claim_monetization(self, evidence: ViolationEvidence, case_id: str) -> bool:
-        """Revendique la monétisation"""        pass
+        """Revendique la monétisation"""
+        pass
     
     async def block_content(self, evidence: ViolationEvidence, case_id: str) -> bool:
-        """Bloque le contenu"""        pass
+        """Bloque le contenu"""
+        pass
     
     async def check_status(self, platform_case_id: str) -> Dict[str, Any]:
-        """Vérifie le statut d'une demande"""        pass
+        """Vérifie le statut d'une demande"""
+        pass
 
 
 class YouTubeEnforcer(PlatformEnforcer):
-    """Application des droits sur YouTube"""    
+    """Application des droits sur YouTube"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__("youtube", config)
     
@@ -363,7 +379,8 @@ class YouTubeEnforcer(PlatformEnforcer):
             return False
     
     def _extract_video_id(self, url: str) -> Optional[str]:
-        """Extrait l'ID vidéo YouTube de l'URL"""        import re
+        """Extrait l'ID vidéo YouTube de l'URL"""
+        import re
         patterns = [
             r'(?:youtube\.com/watch\?v=|youtu\.be/)([a-zA-Z0-9_-]{11})',
             r'youtube\.com/embed/([a-zA-Z0-9_-]{11})',
@@ -376,7 +393,8 @@ class YouTubeEnforcer(PlatformEnforcer):
         return None
 
     async def _check_content_id_access(self) -> bool:
-        """Check if we have YouTube Content ID access"""        try:
+        """Check if we have YouTube Content ID access"""
+        try:
             if not self.youtube_client:
                 return False
             
@@ -390,7 +408,8 @@ class YouTubeEnforcer(PlatformEnforcer):
             return False
 
     async def _submit_content_id_claim(self, video_id: str, evidence: ViolationEvidence, case_id: str) -> bool:
-        """Submit Content ID claim via YouTube API"""        try:
+        """Submit Content ID claim via YouTube API"""
+        try:
             # Content ID API implementation would go here
             # This requires special partnership with YouTube
             logger.info(f"Content ID claim would be submitted for video {video_id}")
@@ -401,7 +420,8 @@ class YouTubeEnforcer(PlatformEnforcer):
             return False
 
     async def _prepare_youtube_webform_data(self, video_id: str, evidence: ViolationEvidence, case_id: str) -> Dict[str, Any]:
-        """Prepare data for YouTube copyright webform"""        return {
+        """Prepare data for YouTube copyright webform"""
+        return {
             'video_url': f"https://www.youtube.com/watch?v={video_id}",
             'copyrighted_work': evidence.content_title,
             'description': evidence.description,
@@ -412,7 +432,8 @@ class YouTubeEnforcer(PlatformEnforcer):
         }
 
     async def _record_submission(self, case_id: str, content_id: str, action_type: str, evidence: ViolationEvidence):
-        """Record submission for tracking purposes"""        try:
+        """Record submission for tracking purposes"""
+        try:
             submission_record = {
                 'case_id': case_id,
                 'content_id': content_id,
@@ -434,7 +455,8 @@ class YouTubeEnforcer(PlatformEnforcer):
 
 
 class SpotifyEnforcer(PlatformEnforcer):
-    """Application des droits sur Spotify"""    
+    """Application des droits sur Spotify"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__("spotify", config)
     
@@ -537,13 +559,15 @@ class SpotifyEnforcer(PlatformEnforcer):
             return False
     
     def _extract_track_id(self, url: str) -> Optional[str]:
-        """Extrait l'ID track Spotify de l'URL"""        import re
+        """Extrait l'ID track Spotify de l'URL"""
+        import re
         pattern = r'spotify\.com/track/([a-zA-Z0-9]{22})'
         match = re.search(pattern, url)
         return match.group(1) if match else None
 
     async def _prepare_spotify_dmca_data(self, track_id: str, evidence: ViolationEvidence, case_id: str) -> Dict[str, Any]:
-        """Prepare data for Spotify DMCA submission"""        return {
+        """Prepare data for Spotify DMCA submission"""
+        return {
             'track_url': f"https://open.spotify.com/track/{track_id}",
             'track_id': track_id,
             'copyrighted_work': evidence.content_title,
@@ -568,7 +592,8 @@ class SpotifyEnforcer(PlatformEnforcer):
 
 
 class CopyrightEnforcementService:
-    """Service professionnel d'application des droits d'auteur"""    
+    """Service professionnel d'application des droits d'auteur"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.enforcement_rules: Dict[str, EnforcementRule] = {}
@@ -590,7 +615,8 @@ class CopyrightEnforcementService:
         self._setup_default_rules()
     
     def _setup_default_rules(self):
-        """Configure les règles d'application par défaut"""        default_rules = [
+        """Configure les règles d'application par défaut"""
+        default_rules = [
             EnforcementRule(
                 id="high_similarity_exact_copy",
                 name="Copie Exacte Haute Similarité",
@@ -646,7 +672,8 @@ class CopyrightEnforcementService:
             self.enforcement_rules[rule.id] = rule
     
     async def initialize(self) -> bool:
-        """Initialise le service d'application des droits"""        try:
+        """Initialise le service d'application des droits"""
+        try:
             logger.info("Initialisation du service d'application des droits...")
             
             # Initialisation des applications par plateforme
@@ -671,7 +698,8 @@ class CopyrightEnforcementService:
             return False
     
     async def _setup_platform_enforcers(self):
-        """Configure les applications par plateforme"""        try:
+        """Configure les applications par plateforme"""
+        try:
             # YouTube
             if 'youtube' in self.config.get('platforms', {}):
                 youtube_enforcer = YouTubeEnforcer(self.config['platforms']['youtube'])
@@ -694,7 +722,8 @@ class CopyrightEnforcementService:
         evidence: ViolationEvidence,
         ownership: ContentOwnership
     ) -> str:
-        """Traite une violation détectée et crée un cas d'application"""        try:
+        """Traite une violation détectée et crée un cas d'application"""
+        try:
             # Génération d'un ID de cas unique
             case_id = self._generate_case_id()
             
@@ -729,7 +758,8 @@ class CopyrightEnforcementService:
             raise
     
     def _evaluate_severity(self, evidence: ViolationEvidence) -> SeverityLevel:
-        """Évalue la sévérité d'une violation"""        try:
+        """Évalue la sévérité d'une violation"""
+        try:
             score = evidence.similarity_score
             violation_type = evidence.violation_type
             
@@ -771,7 +801,8 @@ class CopyrightEnforcementService:
         evidence: ViolationEvidence,
         severity: SeverityLevel
     ) -> Optional[EnforcementRule]:
-        """Trouve la règle d'application applicable"""        try:
+        """Trouve la règle d'application applicable"""
+        try:
             applicable_rules = []
             
             for rule in self.enforcement_rules.values():
@@ -812,7 +843,8 @@ class CopyrightEnforcementService:
         case_id: str,
         action: EnforcementAction
     ) -> bool:
-        """Exécute une action d'application des droits"""        try:
+        """Exécute une action d'application des droits"""
+        try:
             case = self.active_cases.get(case_id)
             if not case:
                 return False
@@ -881,7 +913,8 @@ class CopyrightEnforcementService:
         evidence: ViolationEvidence,
         case_id: str
     ) -> Tuple[bool, Dict[str, Any]]:
-        """Exécute une demande de retrait DMCA"""        try:
+        """Exécute une demande de retrait DMCA"""
+        try:
             # DMCA Notice implementation
             dmca_notice = {
                 'notice_id': f"DMCA-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}",
@@ -930,7 +963,8 @@ class CopyrightEnforcementService:
             return False, {'error': str(e)}
     
     async def _execute_monetization_claim(self, evidence: ViolationEvidence, case_id: str) -> bool:
-        """Exécute une revendication de monétisation"""        try:
+        """Exécute une revendication de monétisation"""
+        try:
             platform = evidence.platform.lower()
             
             if platform in self.platform_enforcers:
@@ -951,7 +985,8 @@ class CopyrightEnforcementService:
             return False
     
     async def _execute_content_blocking(self, evidence: ViolationEvidence, case_id: str) -> bool:
-        """Exécute le blocage de contenu"""        try:
+        """Exécute le blocage de contenu"""
+        try:
             platform = evidence.platform.lower()
             
             if platform in self.platform_enforcers:
@@ -967,7 +1002,8 @@ class CopyrightEnforcementService:
             return False
     
     async def _execute_platform_report(self, evidence: ViolationEvidence, case_id: str) -> bool:
-        """Exécute un signalement à la plateforme"""        try:
+        """Exécute un signalement à la plateforme"""
+        try:
             # Implementation of automated platform reporting
             platform = self._detect_platform(evidence.infringing_content_url)
             
@@ -1008,7 +1044,8 @@ class CopyrightEnforcementService:
             return False
     
     async def _execute_cease_desist(self, evidence: ViolationEvidence, case_id: str) -> bool:
-        """Exécute l'envoi d'une lettre de cessation"""        try:
+        """Exécute l'envoi d'une lettre de cessation"""
+        try:
             # Generate and send automated cease and desist letter
             cease_desist_data = {
                 'letter_id': f"CD-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}",
@@ -1054,7 +1091,8 @@ class CopyrightEnforcementService:
             return False
     
     async def _execute_legal_notice(self, evidence: ViolationEvidence, case_id: str) -> bool:
-        """Exécute l'envoi d'une notice légale"""        try:
+        """Exécute l'envoi d'une notice légale"""
+        try:
             # Generate and send automated legal notice
             legal_notice_data = {
                 'notice_id': f"LN-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}",
@@ -1098,7 +1136,8 @@ class CopyrightEnforcementService:
             return False
     
     async def _execute_api_takedown(self, evidence: ViolationEvidence, case_id: str) -> bool:
-        """Exécute un retrait via API"""        try:
+        """Exécute un retrait via API"""
+        try:
             platform = evidence.platform.lower()
             
             if platform in self.platform_enforcers:
@@ -1113,7 +1152,8 @@ class CopyrightEnforcementService:
             return False
     
     async def approve_case(self, case_id: str, action: Optional[EnforcementAction] = None) -> bool:
-        """Approuve manuellement un cas et exécute l'action"""        try:
+        """Approuve manuellement un cas et exécute l'action"""
+        try:
             case = self.active_cases.get(case_id)
             if not case:
                 return False
@@ -1143,7 +1183,8 @@ class CopyrightEnforcementService:
             return False
     
     async def reject_case(self, case_id: str, reason: str) -> bool:
-        """Rejette un cas manuellement"""        try:
+        """Rejette un cas manuellement"""
+        try:
             case = self.active_cases.get(case_id)
             if not case:
                 return False
@@ -1162,7 +1203,8 @@ class CopyrightEnforcementService:
             return False
     
     async def escalate_case(self, case_id: str) -> bool:
-        """Escalade un cas vers l'action suivante"""        try:
+        """Escalade un cas vers l'action suivante"""
+        try:
             case = self.active_cases.get(case_id)
             if not case or not case.applied_rule:
                 return False
@@ -1188,7 +1230,8 @@ class CopyrightEnforcementService:
             return False
     
     async def _enforcement_monitor(self):
-        """Surveille et exécute les actions d'application automatiques"""        while self.running:
+        """Surveille et exécute les actions d'application automatiques"""
+        while self.running:
             try:
                 pending_cases = [
                     case for case in self.active_cases.values()
@@ -1211,7 +1254,8 @@ class CopyrightEnforcementService:
                 await asyncio.sleep(300)
     
     async def _escalation_monitor(self):
-        """Surveille et déclenche les escalations automatiques"""        while self.running:
+        """Surveille et déclenche les escalations automatiques"""
+        while self.running:
             try:
                 for case in self.active_cases.values():
                     if (case.status == EnforcementStatus.COMPLETED and 
@@ -1260,7 +1304,8 @@ class CopyrightEnforcementService:
                 await asyncio.sleep(3600)
     
     def _serialize_evidence(self, evidence: ViolationEvidence) -> Dict[str, Any]:
-        """Sérialise les preuves de violation"""        return {
+        """Sérialise les preuves de violation"""
+        return {
             'detection_id': evidence.detection_id,
             'violation_type': evidence.violation_type.value,
             'similarity_score': evidence.similarity_score,
@@ -1276,7 +1321,8 @@ class CopyrightEnforcementService:
         }
     
     def _serialize_ownership(self, ownership: ContentOwnership) -> Dict[str, Any]:
-        """Sérialise les informations de propriété"""        return {
+        """Sérialise les informations de propriété"""
+        return {
             'owner_id': ownership.owner_id,
             'owner_name': ownership.owner_name,
             'content_title': ownership.content_title,
@@ -1289,7 +1335,8 @@ class CopyrightEnforcementService:
         }
     
     def _deserialize_evidence(self, data: Dict[str, Any]) -> ViolationEvidence:
-        """Désérialise les preuves de violation"""        return ViolationEvidence(
+        """Désérialise les preuves de violation"""
+        return ViolationEvidence(
             detection_id=data['detection_id'],
             violation_type=ViolationType(data['violation_type']),
             similarity_score=data['similarity_score'],
@@ -1305,13 +1352,15 @@ class CopyrightEnforcementService:
         )
     
     def _generate_case_id(self) -> str:
-        """Génère un ID unique pour les cas"""        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        """Génère un ID unique pour les cas"""
+        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         import secrets
         random_suffix = secrets.token_hex(4)
         return f"ENF-{timestamp}-{random_suffix}"
     
     async def _load_active_cases(self):
-        """Charge les cas actifs depuis le stockage persistant"""        try:
+        """Charge les cas actifs depuis le stockage persistant"""
+        try:
             # Implementation for loading active cases from persistent storage
             
             # Load active enforcement cases
@@ -1358,7 +1407,8 @@ class CopyrightEnforcementService:
             self.statistics = {}
     
     async def get_case_status(self, case_id: str) -> Optional[Dict[str, Any]]:
-        """Récupère le statut détaillé d'un cas"""        try:
+        """Récupère le statut détaillé d'un cas"""
+        try:
             case = self.active_cases.get(case_id)
             if not case:
                 return None
@@ -1389,7 +1439,8 @@ class CopyrightEnforcementService:
         self,
         date_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Génère un rapport d'application des droits"""        try:
+        """Génère un rapport d'application des droits"""
+        try:
             start_date, end_date = date_range
             
             filtered_cases = [
@@ -1465,7 +1516,8 @@ class CopyrightEnforcementService:
             return {}
     
     def _get_top_violations(self, cases: List[EnforcementCase]) -> List[Dict[str, Any]]:
-        """Analyse les types de violations les plus fréquents"""        violation_counts = {}
+        """Analyse les types de violations les plus fréquents"""
+        violation_counts = {}
         for case in cases:
             violation_type = case.evidence.get('violation_type')
             if violation_type:
@@ -1477,7 +1529,8 @@ class CopyrightEnforcementService:
         ]
     
     def _get_platform_performance(self, cases: List[EnforcementCase]) -> Dict[str, Dict[str, Any]]:
-        """Analyse les performances par plateforme"""        platform_stats = {}
+        """Analyse les performances par plateforme"""
+        platform_stats = {}
         
         for case in cases:
             platform = case.evidence.get('platform')
@@ -1506,7 +1559,8 @@ class CopyrightEnforcementService:
         return platform_stats
     
     async def shutdown(self):
-        """Arrêt propre du service"""        try:
+        """Arrêt propre du service"""
+        try:
             logger.info("Arrêt du service d'application des droits...")
             self.running = False
             
@@ -1527,7 +1581,8 @@ class CopyrightEnforcementService:
             logger.error(f"Erreur arrêt service enforcement: {e}")
     
     async def _save_active_cases(self):
-        """Sauvegarde les cas actifs"""        try:
+        """Sauvegarde les cas actifs"""
+        try:
             # Implementation for saving active cases to persistent storage
             
             # Save enforcement cases
@@ -1572,7 +1627,8 @@ class CopyrightEnforcementService:
     # Helper methods for enforcement implementation
     
     async def _submit_youtube_content_id_claim(self, claim_data: Dict) -> bool:
-        """Submit Content ID claim to YouTube"""        try:
+        """Submit Content ID claim to YouTube"""
+        try:
             # In production, would use YouTube Content ID API
             logger.info(f"Simulation soumission Content ID YouTube: {claim_data['video_id']}")
             return True
@@ -1581,7 +1637,8 @@ class CopyrightEnforcementService:
             return False
     
     async def _generate_dmca_notice_content(self, evidence: ViolationEvidence, case_id: str) -> str:
-        """Generate DMCA notice content"""        return f"""DMCA Takedown Notice for Case: {case_id}
+        """Generate DMCA notice content"""
+        return f"""DMCA Takedown Notice for Case: {case_id}
 
 Original Content: {evidence.original_content_id}
 Infringing URL: {evidence.infringing_content_url}
@@ -1590,9 +1647,11 @@ Evidence: {evidence.description}
 
 This content infringes upon copyrighted material owned by the claimant.
 Immediate removal is requested under DMCA provisions.
-"""    
+"""
+    
     async def _submit_dmca_notice(self, notice_data: Dict) -> Tuple[bool, Dict]:
-        """Submit DMCA notice to platform"""        try:
+        """Submit DMCA notice to platform"""
+        try:
             # In production, would submit to actual platform APIs
             logger.info(f"Simulation soumission DMCA: {notice_data['notice_id']}")
             return True, {'submitted_at': datetime.utcnow(), 'reference_id': notice_data['notice_id']}
@@ -1601,7 +1660,8 @@ Immediate removal is requested under DMCA provisions.
             return False, {'error': str(e)}
     
     def _detect_platform(self, url: str) -> str:
-        """Detect platform from URL"""        url_lower = url.lower()
+        """Detect platform from URL"""
+        url_lower = url.lower()
         if 'youtube.com' in url_lower or 'youtu.be' in url_lower:
             return 'youtube'
         elif 'spotify.com' in url_lower:
@@ -1616,7 +1676,8 @@ Immediate removal is requested under DMCA provisions.
             return 'unknown'
     
     async def _submit_platform_report(self, platform: str, report_data: Dict) -> bool:
-        """Submit report to specific platform"""        try:
+        """Submit report to specific platform"""
+        try:
             # In production, would use platform-specific APIs
             logger.info(f"Simulation signalement {platform}: {report_data['report_id']}")
             return True
@@ -1625,7 +1686,8 @@ Immediate removal is requested under DMCA provisions.
             return False
     
     async def _identify_infringer(self, url: str) -> Dict:
-        """Identify infringer information from URL"""        # In production, would extract account/channel information
+        """Identify infringer information from URL"""
+        # In production, would extract account/channel information
         return {
             'platform': self._detect_platform(url),
             'url': url,
@@ -1633,14 +1695,16 @@ Immediate removal is requested under DMCA provisions.
         }
     
     def _determine_legal_basis(self, evidence: ViolationEvidence) -> List[str]:
-        """Determine legal basis for enforcement action"""        return [
+        """Determine legal basis for enforcement action"""
+        return [
             'Copyright infringement under DMCA',
             'Unauthorized reproduction of protected content',
             'Violation of intellectual property rights'
         ]
     
     async def _generate_cease_desist_content(self, cease_desist_data: Dict) -> str:
-        """Generate cease and desist letter content"""        return f"""CEASE AND DESIST NOTICE
+        """Generate cease and desist letter content"""
+        return f"""CEASE AND DESIST NOTICE
 
 Case ID: {cease_desist_data['case_id']}
 Letter ID: {cease_desist_data['letter_id']}
@@ -1657,9 +1721,11 @@ IMMEDIATE ACTION REQUIRED:
 Failure to comply will result in further legal action.
 
 Generated: {cease_desist_data['created_at']}
-"""    
+"""
+    
     async def _send_cease_desist_letter(self, cease_desist_data: Dict) -> bool:
-        """Send cease and desist letter"""        try:
+        """Send cease and desist letter"""
+        try:
             # In production, would send via email/postal service
             logger.info(f"Simulation envoi lettre de cessation: {cease_desist_data['letter_id']}")
             return True
@@ -1668,7 +1734,8 @@ Generated: {cease_desist_data['created_at']}
             return False
     
     async def _generate_legal_notice_content(self, legal_notice_data: Dict) -> str:
-        """Generate legal notice content"""        return f"""FORMAL LEGAL NOTICE
+        """Generate legal notice content"""
+        return f"""FORMAL LEGAL NOTICE
 
 Notice ID: {legal_notice_data['notice_id']}
 Case ID: {legal_notice_data['case_id']}
@@ -1684,9 +1751,11 @@ LEGAL REQUIREMENTS:
 4. Payment of legal costs and damages
 
 Generated: {legal_notice_data['created_at']}
-"""    
+"""
+    
     async def _send_legal_notice(self, legal_notice_data: Dict) -> bool:
-        """Send legal notice"""        try:
+        """Send legal notice"""
+        try:
             # In production, would send via certified mail/legal service
             logger.info(f"Simulation envoi notice légale: {legal_notice_data['notice_id']}")
             return True
@@ -1695,17 +1764,20 @@ Generated: {legal_notice_data['created_at']}
             return False
     
     def _determine_jurisdiction(self, evidence: ViolationEvidence) -> str:
-        """Determine legal jurisdiction"""        return "International/US Federal"
+        """Determine legal jurisdiction"""
+        return "International/US Federal"
     
     def _get_applicable_laws(self, evidence: ViolationEvidence) -> List[str]:
-        """Get applicable legal references"""        return [
+        """Get applicable legal references"""
+        return [
             "DMCA (Digital Millennium Copyright Act)",
             "Copyright Act of 1976",
             "Berne Convention"
         ]
     
     async def _check_escalation_necessity(self, case: 'EnforcementCase') -> bool:
-        """Check if escalation is necessary"""        try:
+        """Check if escalation is necessary"""
+        try:
             # In production, would check if content is still online
             # For now, simulate check
             logger.debug(f"Vérification escalation nécessaire pour cas {case.case_id}")
@@ -1715,7 +1787,8 @@ Generated: {legal_notice_data['created_at']}
             return False
     
     async def _execute_escalation_action(self, case: 'EnforcementCase', action: str) -> bool:
-        """Execute escalation action"""        try:
+        """Execute escalation action"""
+        try:
             logger.info(f"Exécution action escalation '{action}' pour cas {case.case_id}")
             # In production, would execute specific escalation actions
             return True
@@ -1724,7 +1797,8 @@ Generated: {legal_notice_data['created_at']}
             return False
     
     def _reconstruct_case_from_data(self, case_data: Dict) -> 'EnforcementCase':
-        """Reconstruct case object from stored data"""        # Simplified reconstruction - in production would be more complex
+        """Reconstruct case object from stored data"""
+        # Simplified reconstruction - in production would be more complex
         from dataclasses import dataclass
         @dataclass
         class SimpleCase:
@@ -1739,14 +1813,16 @@ Generated: {legal_notice_data['created_at']}
         )
     
     def _serialize_case(self, case: 'EnforcementCase') -> Dict:
-        """Serialize case object for storage"""        return {
+        """Serialize case object for storage"""
+        return {
             'case_id': case.case_id if hasattr(case, 'case_id') else '',
             'status': str(case.status) if hasattr(case, 'status') else 'unknown',
             'created_at': case.created_at.isoformat() if hasattr(case, 'created_at') else datetime.utcnow().isoformat()
         }
     
     async def _fetch_from_database(self, table_name: str) -> Dict:
-        """Fetch data from database"""        try:
+        """Fetch data from database"""
+        try:
             # In production, would connect to actual database
             logger.debug(f"Simulation chargement depuis table: {table_name}")
             return {}
@@ -1755,7 +1831,8 @@ Generated: {legal_notice_data['created_at']}
             return {}
     
     async def _save_to_database(self, table_name: str, data: Dict):
-        """Save data to database"""        try:
+        """Save data to database"""
+        try:
             # In production, would save to actual database
             logger.debug(f"Simulation sauvegarde vers table {table_name}: {len(data)} enregistrements")
         except Exception as e:
@@ -1767,7 +1844,8 @@ enforcement_service = CopyrightEnforcementService()
 
 
 async def get_enforcement_service() -> CopyrightEnforcementService:
-    """Récupère l'instance du service d'application des droits"""    return enforcement_service
+    """Récupère l'instance du service d'application des droits"""
+    return enforcement_service
 
 
 __all__ = [

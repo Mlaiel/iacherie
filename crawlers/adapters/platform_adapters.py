@@ -35,7 +35,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Callable
 from dataclasses import dataclass, field
@@ -71,7 +72,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class PlatformCredentials:
-    """Credentials for platform access."""    api_key: Optional[str] = None
+    """Credentials for platform access."""
+    api_key: Optional[str] = None
     api_secret: Optional[str] = None
     access_token: Optional[str] = None
     access_token_secret: Optional[str] = None
@@ -82,7 +84,8 @@ class PlatformCredentials:
 
 @dataclass
 class ContentItem:
-    """Platform content item."""    content_id: str
+    """Platform content item."""
+    content_id: str
     platform: str
     content_type: str
     title: Optional[str] = None
@@ -98,9 +101,11 @@ class ContentItem:
     raw_data: Dict[str, Any] = None
 
 class PlatformAdapter(ABC):
-    """Base class for all platform adapters."""    
+    """Base class for all platform adapters."""
+    
     def __init__(self, credentials: PlatformCredentials, **config):
-        """Initialize platform adapter."""        self.credentials = credentials
+        """Initialize platform adapter."""
+        self.credentials = credentials
         self.config = config
         self.platform_name = ""
         self.rate_limit_remaining = 0
@@ -110,7 +115,8 @@ class PlatformAdapter(ABC):
     
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with the platform."""        pass
+        """Authenticate with the platform."""
+        pass
     
     @abstractmethod
     async def search_content(
@@ -120,7 +126,8 @@ class PlatformAdapter(ABC):
         limit: int = 100,
         **kwargs
     ) -> List[ContentItem]:
-        """Search for content on the platform."""        pass
+        """Search for content on the platform."""
+        pass
     
     @abstractmethod
     async def get_user_content(
@@ -130,26 +137,31 @@ class PlatformAdapter(ABC):
         limit: int = 100,
         **kwargs
     ) -> List[ContentItem]:
-        """Get content from a specific user."""        pass
+        """Get content from a specific user."""
+        pass
     
     @abstractmethod
     async def get_content_details(self, content_id: str) -> Optional[ContentItem]:
-        """Get detailed information about specific content."""        pass
+        """Get detailed information about specific content."""
+        pass
     
     async def initialize(self):
-        """Initialize the adapter."""        self.session = aiohttp.ClientSession()
+        """Initialize the adapter."""
+        self.session = aiohttp.ClientSession()
         success = await self.authenticate()
         if not success:
             raise Exception(f"Failed to authenticate with {self.platform_name}")
         self.logger.info(f"Initialized {self.platform_name} adapter")
     
     async def cleanup(self):
-        """Cleanup adapter resources."""        if self.session:
+        """Cleanup adapter resources."""
+        if self.session:
             await self.session.close()
         self.logger.info(f"Cleaned up {self.platform_name} adapter")
     
     def _update_rate_limit(self, headers: Dict[str, str]):
-        """Update rate limit information from response headers."""        try:
+        """Update rate limit information from response headers."""
+        try:
             if 'x-rate-limit-remaining' in headers:
                 self.rate_limit_remaining = int(headers['x-rate-limit-remaining'])
             if 'x-rate-limit-reset' in headers:
@@ -158,21 +170,25 @@ class PlatformAdapter(ABC):
             pass
     
     async def _wait_for_rate_limit(self):
-        """Wait if rate limit is exceeded."""        if self.rate_limit_remaining <= 1 and self.rate_limit_reset:
+        """Wait if rate limit is exceeded."""
+        if self.rate_limit_remaining <= 1 and self.rate_limit_reset:
             wait_time = (self.rate_limit_reset - datetime.now()).total_seconds()
             if wait_time > 0:
                 self.logger.warning(f"Rate limit exceeded, waiting {wait_time} seconds")
                 await asyncio.sleep(wait_time)
 
 class YouTubeAdapter(PlatformAdapter):
-    """Adapter for YouTube platform."""    
+    """Adapter for YouTube platform."""
+    
     def __init__(self, credentials: PlatformCredentials, **config):
-        """Initialize YouTube adapter."""        super().__init__(credentials, **config)
+        """Initialize YouTube adapter."""
+        super().__init__(credentials, **config)
         self.platform_name = "YouTube"
         self.api_base_url = "https://www.googleapis.com/youtube/v3"
     
     async def authenticate(self) -> bool:
-        """Authenticate with YouTube API."""        try:
+        """Authenticate with YouTube API."""
+        try:
             # Test API key with a simple request
             url = f"{self.api_base_url}/search"
             params = {
@@ -201,7 +217,8 @@ class YouTubeAdapter(PlatformAdapter):
         limit: int = 100,
         **kwargs
     ) -> List[ContentItem]:
-        """Search for content on YouTube."""        try:
+        """Search for content on YouTube."""
+        try:
             await self._wait_for_rate_limit()
             
             url = f"{self.api_base_url}/search"
@@ -258,7 +275,8 @@ class YouTubeAdapter(PlatformAdapter):
         limit: int = 100,
         **kwargs
     ) -> List[ContentItem]:
-        """Get content from a YouTube channel."""        try:
+        """Get content from a YouTube channel."""
+        try:
             # First get channel uploads playlist
             url = f"{self.api_base_url}/channels"
             params = {
@@ -316,7 +334,8 @@ class YouTubeAdapter(PlatformAdapter):
             return []
     
     async def get_content_details(self, content_id: str) -> Optional[ContentItem]:
-        """Get detailed YouTube video information."""        try:
+        """Get detailed YouTube video information."""
+        try:
             url = f"{self.api_base_url}/videos"
             params = {
                 'key': self.credentials.api_key,
@@ -360,14 +379,17 @@ class YouTubeAdapter(PlatformAdapter):
             return None
 
 class SpotifyAdapter(PlatformAdapter):
-    """Adapter for Spotify platform."""    
+    """Adapter for Spotify platform."""
+    
     def __init__(self, credentials: PlatformCredentials, **config):
-        """Initialize Spotify adapter."""        super().__init__(credentials, **config)
+        """Initialize Spotify adapter."""
+        super().__init__(credentials, **config)
         self.platform_name = "Spotify"
         self.spotify_client = None
     
     async def authenticate(self) -> bool:
-        """Authenticate with Spotify API."""        try:
+        """Authenticate with Spotify API."""
+        try:
             client_credentials_manager = SpotifyClientCredentials(
                 client_id=self.credentials.client_id,
                 client_secret=self.credentials.client_secret
@@ -390,7 +412,8 @@ class SpotifyAdapter(PlatformAdapter):
         limit: int = 100,
         **kwargs
     ) -> List[ContentItem]:
-        """Search for content on Spotify."""        try:
+        """Search for content on Spotify."""
+        try:
             if not self.spotify_client:
                 return []
             
@@ -469,7 +492,8 @@ class SpotifyAdapter(PlatformAdapter):
         limit: int = 100,
         **kwargs
     ) -> List[ContentItem]:
-        """Get content from a Spotify user."""        try:
+        """Get content from a Spotify user."""
+        try:
             if not self.spotify_client:
                 return []
             
@@ -504,7 +528,8 @@ class SpotifyAdapter(PlatformAdapter):
             return []
     
     async def get_content_details(self, content_id: str) -> Optional[ContentItem]:
-        """Get detailed Spotify track information."""        try:
+        """Get detailed Spotify track information."""
+        try:
             if not self.spotify_client:
                 return None
             
@@ -532,14 +557,17 @@ class SpotifyAdapter(PlatformAdapter):
             return None
 
 class InstagramAdapter(PlatformAdapter):
-    """Adapter for Instagram platform."""    
+    """Adapter for Instagram platform."""
+    
     def __init__(self, credentials: PlatformCredentials, **config):
-        """Initialize Instagram adapter."""        super().__init__(credentials, **config)
+        """Initialize Instagram adapter."""
+        super().__init__(credentials, **config)
         self.platform_name = "Instagram"
         self.loader = None
     
     async def authenticate(self) -> bool:
-        """Authenticate with Instagram."""        try:
+        """Authenticate with Instagram."""
+        try:
             self.loader = instaloader.Instaloader()
             # Note: Instagram requires login for most operations
             # This is a basic setup - full implementation would need OAuth
@@ -557,7 +585,8 @@ class InstagramAdapter(PlatformAdapter):
         limit: int = 100,
         **kwargs
     ) -> List[ContentItem]:
-        """Search for content on Instagram."""        try:
+        """Search for content on Instagram."""
+        try:
             # Instagram search requires specific hashtag or user search
             # This is a simplified implementation
             content_items = []
@@ -608,7 +637,8 @@ class InstagramAdapter(PlatformAdapter):
         limit: int = 100,
         **kwargs
     ) -> List[ContentItem]:
-        """Get content from an Instagram user."""        try:
+        """Get content from an Instagram user."""
+        try:
             if not self.loader:
                 return []
             
@@ -650,7 +680,8 @@ class InstagramAdapter(PlatformAdapter):
             return []
     
     async def get_content_details(self, content_id: str) -> Optional[ContentItem]:
-        """Get detailed Instagram post information."""        try:
+        """Get detailed Instagram post information."""
+        try:
             if not self.loader:
                 return None
             
@@ -684,14 +715,17 @@ class InstagramAdapter(PlatformAdapter):
             return None
 
 class TikTokAdapter(PlatformAdapter):
-    """Adapter for TikTok platform."""    
+    """Adapter for TikTok platform."""
+    
     def __init__(self, credentials: PlatformCredentials, **config):
-        """Initialize TikTok adapter."""        super().__init__(credentials, **config)
+        """Initialize TikTok adapter."""
+        super().__init__(credentials, **config)
         self.platform_name = "TikTok"
         self.api_base_url = "https://open-api.tiktok.com"
     
     async def authenticate(self) -> bool:
-        """Authenticate with TikTok API."""        try:
+        """Authenticate with TikTok API."""
+        try:
             # TikTok requires OAuth 2.0 flow
             # This is a simplified implementation
             self.logger.info("TikTok adapter initialized")
@@ -708,7 +742,8 @@ class TikTokAdapter(PlatformAdapter):
         limit: int = 100,
         **kwargs
     ) -> List[ContentItem]:
-        """Search for content on TikTok."""        # Note: TikTok API has limited public search capabilities
+        """Search for content on TikTok."""
+        # Note: TikTok API has limited public search capabilities
         # This would require proper API access and implementation
         try:
             content_items = []
@@ -726,7 +761,8 @@ class TikTokAdapter(PlatformAdapter):
         limit: int = 100,
         **kwargs
     ) -> List[ContentItem]:
-        """Get content from a TikTok user."""        try:
+        """Get content from a TikTok user."""
+        try:
             content_items = []
             # Placeholder implementation
             return content_items
@@ -736,7 +772,8 @@ class TikTokAdapter(PlatformAdapter):
             return []
     
     async def get_content_details(self, content_id: str) -> Optional[ContentItem]:
-        """Get detailed TikTok video information."""        try:
+        """Get detailed TikTok video information."""
+        try:
             # Placeholder implementation
             return None
             
@@ -745,14 +782,17 @@ class TikTokAdapter(PlatformAdapter):
             return None
 
 class TwitterAdapter(PlatformAdapter):
-    """Adapter for Twitter/X platform."""    
+    """Adapter for Twitter/X platform."""
+    
     def __init__(self, credentials: PlatformCredentials, **config):
-        """Initialize Twitter adapter."""        super().__init__(credentials, **config)
+        """Initialize Twitter adapter."""
+        super().__init__(credentials, **config)
         self.platform_name = "Twitter"
         self.twitter_api = None
     
     async def authenticate(self) -> bool:
-        """Authenticate with Twitter API."""        try:
+        """Authenticate with Twitter API."""
+        try:
             auth = tweepy.OAuthHandler(
                 self.credentials.api_key,
                 self.credentials.api_secret
@@ -780,7 +820,8 @@ class TwitterAdapter(PlatformAdapter):
         limit: int = 100,
         **kwargs
     ) -> List[ContentItem]:
-        """Search for content on Twitter."""        try:
+        """Search for content on Twitter."""
+        try:
             if not self.twitter_api:
                 return []
             
@@ -831,7 +872,8 @@ class TwitterAdapter(PlatformAdapter):
         limit: int = 100,
         **kwargs
     ) -> List[ContentItem]:
-        """Get content from a Twitter user."""        try:
+        """Get content from a Twitter user."""
+        try:
             if not self.twitter_api:
                 return []
             
@@ -875,7 +917,8 @@ class TwitterAdapter(PlatformAdapter):
             return []
     
     async def get_content_details(self, content_id: str) -> Optional[ContentItem]:
-        """Get detailed Twitter tweet information."""        try:
+        """Get detailed Twitter tweet information."""
+        try:
             if not self.twitter_api:
                 return None
             
@@ -908,14 +951,17 @@ class TwitterAdapter(PlatformAdapter):
             return None
 
 class FacebookAdapter(PlatformAdapter):
-    """Adapter for Facebook platform."""    
+    """Adapter for Facebook platform."""
+    
     def __init__(self, credentials: PlatformCredentials, **config):
-        """Initialize Facebook adapter."""        super().__init__(credentials, **config)
+        """Initialize Facebook adapter."""
+        super().__init__(credentials, **config)
         self.platform_name = "Facebook"
         self.graph_api_url = "https://graph.facebook.com/v18.0"
     
     async def authenticate(self) -> bool:
-        """Authenticate with Facebook Graph API."""        try:
+        """Authenticate with Facebook Graph API."""
+        try:
             # Test access token
             url = f"{self.graph_api_url}/me"
             params = {'access_token': self.credentials.access_token}
@@ -939,7 +985,8 @@ class FacebookAdapter(PlatformAdapter):
         limit: int = 100,
         **kwargs
     ) -> List[ContentItem]:
-        """Search for content on Facebook."""        try:
+        """Search for content on Facebook."""
+        try:
             # Facebook search is limited and requires specific permissions
             content_items = []
             # Placeholder implementation
@@ -956,7 +1003,8 @@ class FacebookAdapter(PlatformAdapter):
         limit: int = 100,
         **kwargs
     ) -> List[ContentItem]:
-        """Get content from a Facebook page."""        try:
+        """Get content from a Facebook page."""
+        try:
             url = f"{self.graph_api_url}/{user_id}/posts"
             params = {
                 'access_token': self.credentials.access_token,
@@ -991,7 +1039,8 @@ class FacebookAdapter(PlatformAdapter):
             return []
     
     async def get_content_details(self, content_id: str) -> Optional[ContentItem]:
-        """Get detailed Facebook post information."""        try:
+        """Get detailed Facebook post information."""
+        try:
             url = f"{self.graph_api_url}/{content_id}"
             params = {
                 'access_token': self.credentials.access_token,
@@ -1025,14 +1074,17 @@ class FacebookAdapter(PlatformAdapter):
             return None
 
 class LinkedInAdapter(PlatformAdapter):
-    """Adapter for LinkedIn platform."""    
+    """Adapter for LinkedIn platform."""
+    
     def __init__(self, credentials: PlatformCredentials, **config):
-        """Initialize LinkedIn adapter."""        super().__init__(credentials, **config)
+        """Initialize LinkedIn adapter."""
+        super().__init__(credentials, **config)
         self.platform_name = "LinkedIn"
         self.api_base_url = "https://api.linkedin.com/v2"
     
     async def authenticate(self) -> bool:
-        """Authenticate with LinkedIn API."""        try:
+        """Authenticate with LinkedIn API."""
+        try:
             # Test access token
             url = f"{self.api_base_url}/people/~"
             headers = {'Authorization': f'Bearer {self.credentials.access_token}'}
@@ -1056,7 +1108,8 @@ class LinkedInAdapter(PlatformAdapter):
         limit: int = 100,
         **kwargs
     ) -> List[ContentItem]:
-        """Search for content on LinkedIn."""        try:
+        """Search for content on LinkedIn."""
+        try:
             # LinkedIn search requires specific API access
             content_items = []
             # Placeholder implementation
@@ -1073,7 +1126,8 @@ class LinkedInAdapter(PlatformAdapter):
         limit: int = 100,
         **kwargs
     ) -> List[ContentItem]:
-        """Get content from a LinkedIn profile."""        try:
+        """Get content from a LinkedIn profile."""
+        try:
             # LinkedIn requires specific permissions for posts
             content_items = []
             # Placeholder implementation
@@ -1084,7 +1138,8 @@ class LinkedInAdapter(PlatformAdapter):
             return []
     
     async def get_content_details(self, content_id: str) -> Optional[ContentItem]:
-        """Get detailed LinkedIn post information."""        try:
+        """Get detailed LinkedIn post information."""
+        try:
             # Placeholder implementation
             return None
             

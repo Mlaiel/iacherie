@@ -10,7 +10,8 @@ Enterprise Content Protection Platform - Web Monitoring Core
 ⚠️  COPYRIGHT NOTICE ⚠️
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import json
@@ -43,7 +44,8 @@ settings = get_settings()
 
 
 class PlatformType(str, Enum):
-    """Supported monitoring platforms."""    YOUTUBE = "youtube"
+    """Supported monitoring platforms."""
+    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
@@ -59,14 +61,16 @@ class PlatformType(str, Enum):
 
 
 class MonitoringType(str, Enum):
-    """Types of monitoring operations."""    REAL_TIME = "real_time"
+    """Types of monitoring operations."""
+    REAL_TIME = "real_time"
     SCHEDULED = "scheduled"
     ON_DEMAND = "on_demand"
     DEEP_SCAN = "deep_scan"
 
 
 class ViolationSeverity(str, Enum):
-    """Severity levels for content violations."""    LOW = "low"
+    """Severity levels for content violations."""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -74,7 +78,8 @@ class ViolationSeverity(str, Enum):
 
 @dataclass
 class MonitoringTarget:
-    """Content monitoring target configuration."""    content_id: str
+    """Content monitoring target configuration."""
+    content_id: str
     content_hash: str
     content_type: str
     owner_id: str
@@ -87,7 +92,8 @@ class MonitoringTarget:
 
 @dataclass
 class ViolationResult:
-    """Content violation detection result."""    violation_id: str
+    """Content violation detection result."""
+    violation_id: str
     content_id: str
     platform: str
     url: str
@@ -100,7 +106,8 @@ class ViolationResult:
 
 
 class BaseCrawler(ABC):
-    """Abstract base class for platform-specific crawlers."""    
+    """Abstract base class for platform-specific crawlers."""
+    
     def __init__(self, platform: PlatformType):
         self.platform = platform
         self.session = None
@@ -110,14 +117,17 @@ class BaseCrawler(ABC):
         
     @abstractmethod
     async def search_content(self, query: str, limit: int = 50) -> List[Dict[str, Any]]:
-        """Search for content on the platform."""        pass
+        """Search for content on the platform."""
+        pass
     
     @abstractmethod
     async def extract_content_data(self, url: str) -> Dict[str, Any]:
-        """Extract content data from a specific URL."""        pass
+        """Extract content data from a specific URL."""
+        pass
     
     async def setup_session(self):
-        """Setup HTTP session for crawling."""        if not self.session:
+        """Setup HTTP session for crawling."""
+        if not self.session:
             connector = aiohttp.TCPConnector(limit=100, ttl_dns_cache=300)
             timeout = aiohttp.ClientTimeout(total=30)
             self.session = aiohttp.ClientSession(
@@ -129,21 +139,24 @@ class BaseCrawler(ABC):
             )
     
     async def cleanup_session(self):
-        """Cleanup resources."""        if self.session:
+        """Cleanup resources."""
+        if self.session:
             await self.session.close()
         if self.driver:
             self.driver.quit()
 
 
 class YouTubeCrawler(BaseCrawler):
-    """YouTube-specific content crawler."""    
+    """YouTube-specific content crawler."""
+    
     def __init__(self):
         super().__init__(PlatformType.YOUTUBE)
         self.api_key = settings.YOUTUBE_API_KEY
         self.base_url = "https://www.googleapis.com/youtube/v3"
     
     async def search_content(self, query: str, limit: int = 50) -> List[Dict[str, Any]]:
-        """Search YouTube for content matching query."""        await self.setup_session()
+        """Search YouTube for content matching query."""
+        await self.setup_session()
         
         params = {
             'part': 'snippet',
@@ -166,7 +179,8 @@ class YouTubeCrawler(BaseCrawler):
             return []
     
     async def extract_content_data(self, url: str) -> Dict[str, Any]:
-        """Extract video data from YouTube URL."""        video_id = self._extract_video_id(url)
+        """Extract video data from YouTube URL."""
+        video_id = self._extract_video_id(url)
         if not video_id:
             return {}
         
@@ -191,7 +205,8 @@ class YouTubeCrawler(BaseCrawler):
             return {}
     
     def _extract_video_id(self, url: str) -> Optional[str]:
-        """Extract video ID from YouTube URL."""        import re
+        """Extract video ID from YouTube URL."""
+        import re
         patterns = [
             r'(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)',
             r'youtube\.com\/v\/([^&\n?#]+)'
@@ -204,7 +219,8 @@ class YouTubeCrawler(BaseCrawler):
         return None
     
     def _process_youtube_results(self, items: List[Dict]) -> List[Dict[str, Any]]:
-        """Process YouTube search results."""        results = []
+        """Process YouTube search results."""
+        results = []
         for item in items:
             snippet = item.get('snippet', {})
             results.append({
@@ -220,7 +236,8 @@ class YouTubeCrawler(BaseCrawler):
         return results
     
     def _process_video_data(self, item: Dict) -> Dict[str, Any]:
-        """Process individual video data."""        snippet = item.get('snippet', {})
+        """Process individual video data."""
+        snippet = item.get('snippet', {})
         statistics = item.get('statistics', {})
         
         return {
@@ -240,13 +257,15 @@ class YouTubeCrawler(BaseCrawler):
 
 
 class TikTokCrawler(BaseCrawler):
-    """TikTok-specific content crawler using web scraping."""    
+    """TikTok-specific content crawler using web scraping."""
+    
     def __init__(self):
         super().__init__(PlatformType.TIKTOK)
         self.base_url = "https://www.tiktok.com"
     
     async def search_content(self, query: str, limit: int = 50) -> List[Dict[str, Any]]:
-        """Search TikTok for content (web scraping)."""        await self._setup_selenium_driver()
+        """Search TikTok for content (web scraping)."""
+        await self._setup_selenium_driver()
         
         try:
             search_url = f"{self.base_url}/search/video?q={query.replace(' ', '%20')}"
@@ -280,7 +299,8 @@ class TikTokCrawler(BaseCrawler):
             return []
     
     async def extract_content_data(self, url: str) -> Dict[str, Any]:
-        """Extract video data from TikTok URL."""        await self._setup_selenium_driver()
+        """Extract video data from TikTok URL."""
+        await self._setup_selenium_driver()
         
         try:
             self.driver.get(url)
@@ -303,7 +323,8 @@ class TikTokCrawler(BaseCrawler):
             return {}
     
     async def _setup_selenium_driver(self):
-        """Setup Selenium WebDriver for TikTok."""        if not self.driver:
+        """Setup Selenium WebDriver for TikTok."""
+        if not self.driver:
             chrome_options = Options()
             chrome_options.add_argument('--headless')
             chrome_options.add_argument('--no-sandbox')
@@ -314,7 +335,8 @@ class TikTokCrawler(BaseCrawler):
             self.driver = webdriver.Chrome(options=chrome_options)
     
     async def _extract_tiktok_video_data(self, element) -> Dict[str, Any]:
-        """Extract data from TikTok video element."""        try:
+        """Extract data from TikTok video element."""
+        try:
             link_element = element.find_element(By.TAG_NAME, 'a')
             url = link_element.get_attribute('href')
             
@@ -329,14 +351,16 @@ class TikTokCrawler(BaseCrawler):
 
 
 class InstagramCrawler(BaseCrawler):
-    """Instagram-specific content crawler."""    
+    """Instagram-specific content crawler."""
+    
     def __init__(self):
         super().__init__(PlatformType.INSTAGRAM)
         self.access_token = settings.INSTAGRAM_ACCESS_TOKEN
         self.base_url = "https://graph.instagram.com"
     
     async def search_content(self, query: str, limit: int = 50) -> List[Dict[str, Any]]:
-        """Search Instagram content using Graph API."""        # Instagram Graph API has limited search capabilities
+        """Search Instagram content using Graph API."""
+        # Instagram Graph API has limited search capabilities
         # This would typically require business API access
         await self.setup_session()
         
@@ -359,7 +383,8 @@ class InstagramCrawler(BaseCrawler):
             return []
     
     async def extract_content_data(self, url: str) -> Dict[str, Any]:
-        """Extract content data from Instagram URL."""        # Instagram content extraction via web scraping
+        """Extract content data from Instagram URL."""
+        # Instagram content extraction via web scraping
         await self._setup_selenium_driver()
         
         try:
@@ -390,7 +415,8 @@ class InstagramCrawler(BaseCrawler):
             return {}
     
     async def _setup_selenium_driver(self):
-        """Setup Selenium WebDriver for Instagram."""        if not self.driver:
+        """Setup Selenium WebDriver for Instagram."""
+        if not self.driver:
             chrome_options = Options()
             chrome_options.add_argument('--headless')
             chrome_options.add_argument('--no-sandbox')
@@ -399,7 +425,8 @@ class InstagramCrawler(BaseCrawler):
             self.driver = webdriver.Chrome(options=chrome_options)
     
     def _process_instagram_results(self, items: List[Dict]) -> List[Dict[str, Any]]:
-        """Process Instagram API results."""        results = []
+        """Process Instagram API results."""
+        results = []
         for item in items:
             results.append({
                 'platform': 'instagram',
@@ -414,7 +441,8 @@ class InstagramCrawler(BaseCrawler):
 
 
 class WebMonitoringEngine:
-    """Central web monitoring and surveillance engine."""    
+    """Central web monitoring and surveillance engine."""
+    
     def __init__(self):
         self.crawlers = self._initialize_crawlers()
         self.fingerprint_engine = DigitalFingerprintEngine()
@@ -422,7 +450,8 @@ class WebMonitoringEngine:
         self.active_jobs = {}
     
     def _initialize_crawlers(self) -> Dict[str, BaseCrawler]:
-        """Initialize platform-specific crawlers."""        return {
+        """Initialize platform-specific crawlers."""
+        return {
             PlatformType.YOUTUBE: YouTubeCrawler(),
             PlatformType.TIKTOK: TikTokCrawler(),
             PlatformType.INSTAGRAM: InstagramCrawler(),
@@ -430,7 +459,8 @@ class WebMonitoringEngine:
         }
     
     async def add_monitoring_target(self, target: MonitoringTarget) -> bool:
-        """Add content for monitoring."""        try:
+        """Add content for monitoring."""
+        try:
             self.monitoring_targets[target.content_id] = target
             
             # Start monitoring job if active
@@ -445,7 +475,8 @@ class WebMonitoringEngine:
             return False
     
     async def start_monitoring(self, content_id: str) -> bool:
-        """Start monitoring for specific content."""        target = self.monitoring_targets.get(content_id)
+        """Start monitoring for specific content."""
+        target = self.monitoring_targets.get(content_id)
         if not target:
             logger.error(f"Monitoring target not found: {content_id}")
             return False
@@ -453,7 +484,8 @@ class WebMonitoringEngine:
         return await self._start_monitoring_job(target)
     
     async def stop_monitoring(self, content_id: str) -> bool:
-        """Stop monitoring for specific content."""        if content_id in self.active_jobs:
+        """Stop monitoring for specific content."""
+        if content_id in self.active_jobs:
             job = self.active_jobs[content_id]
             job.cancel()
             del self.active_jobs[content_id]
@@ -462,7 +494,8 @@ class WebMonitoringEngine:
         return False
     
     async def _start_monitoring_job(self, target: MonitoringTarget) -> bool:
-        """Start a monitoring job for a target."""        try:
+        """Start a monitoring job for a target."""
+        try:
             # Cancel existing job if running
             if target.content_id in self.active_jobs:
                 self.active_jobs[target.content_id].cancel()
@@ -479,7 +512,8 @@ class WebMonitoringEngine:
             return False
     
     async def _monitor_content_loop(self, target: MonitoringTarget):
-        """Continuous monitoring loop for content."""        while True:
+        """Continuous monitoring loop for content."""
+        while True:
             try:
                 # Monitor on each specified platform
                 for platform in target.platforms:
@@ -496,7 +530,8 @@ class WebMonitoringEngine:
                 await asyncio.sleep(60)  # Wait before retrying
     
     async def _scan_platform(self, target: MonitoringTarget, platform: str):
-        """Scan a specific platform for content violations."""        crawler = self.crawlers.get(platform)
+        """Scan a specific platform for content violations."""
+        crawler = self.crawlers.get(platform)
         if not crawler:
             logger.warning(f"No crawler available for platform: {platform}")
             return
@@ -533,7 +568,8 @@ class WebMonitoringEngine:
             logger.error(f"Platform scan error for {platform}: {e}")
     
     async def _calculate_similarity(self, target: MonitoringTarget, result: Dict) -> float:
-        """Calculate similarity between target and found content."""        try:
+        """Calculate similarity between target and found content."""
+        try:
             # This would involve downloading and fingerprinting the found content
             # Then comparing with the target content's fingerprint
             
@@ -561,7 +597,8 @@ class WebMonitoringEngine:
             return 0.0
     
     def _determine_severity(self, similarity: float) -> ViolationSeverity:
-        """Determine violation severity based on similarity score."""        if similarity >= 0.95:
+        """Determine violation severity based on similarity score."""
+        if similarity >= 0.95:
             return ViolationSeverity.CRITICAL
         elif similarity >= 0.90:
             return ViolationSeverity.HIGH
@@ -571,7 +608,8 @@ class WebMonitoringEngine:
             return ViolationSeverity.LOW
     
     async def _handle_violation(self, violation: ViolationResult):
-        """Handle detected content violation."""        try:
+        """Handle detected content violation."""
+        try:
             # Log the violation
             logger.warning(
                 f"Content violation detected: {violation.violation_id} "
@@ -592,20 +630,24 @@ class WebMonitoringEngine:
             logger.error(f"Violation handling error: {e}")
     
     async def _store_violation(self, violation: ViolationResult):
-        """Store violation in database."""        # Database storage implementation
+        """Store violation in database."""
+        # Database storage implementation
         pass
     
     async def _send_critical_alert(self, violation: ViolationResult):
-        """Send critical violation alert."""        # Notification implementation (email, SMS, webhook)
+        """Send critical violation alert."""
+        # Notification implementation (email, SMS, webhook)
         pass
     
     async def _trigger_automated_response(self, violation: ViolationResult):
-        """Trigger automated response based on violation."""        # Automated response implementation (DMCA takedown, etc.)
+        """Trigger automated response based on violation."""
+        # Automated response implementation (DMCA takedown, etc.)
         pass
     
     @performance_monitor
     async def get_violation_statistics(self, content_id: str = None) -> Dict[str, Any]:
-        """Get violation statistics."""        # Implementation for getting violation stats
+        """Get violation statistics."""
+        # Implementation for getting violation stats
         return {
             "total_violations": 0,
             "by_platform": {},
@@ -614,7 +656,8 @@ class WebMonitoringEngine:
         }
     
     async def cleanup(self):
-        """Cleanup resources and active monitoring jobs."""        # Cancel all active jobs
+        """Cleanup resources and active monitoring jobs."""
+        # Cancel all active jobs
         for job in self.active_jobs.values():
             job.cancel()
         

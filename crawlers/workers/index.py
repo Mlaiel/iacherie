@@ -16,7 +16,8 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Quick start → Component discovery → System initialization → 
 Example workflows → Performance monitoring → Shutdown
-"""import asyncio
+"""
+import asyncio
 import logging
 import sys
 from datetime import datetime, timedelta
@@ -71,19 +72,22 @@ logger = logging.getLogger(__name__)
 
 
 class WorkersQuickStart:
-    """    Quick start utility for IA-Influencer-Agent Workers System
+    """
+    Quick start utility for IA-Influencer-Agent Workers System
     
     Provides:
     - System initialization examples
     - Component usage demonstrations
     - Performance monitoring examples
     - Complete workflow samples
-    """    def __init__(self):
+    """
+    def __init__(self):
         self.system_initialized = False
         self.demo_user_id = "demo_user_123"
         
     async def quick_start_demo(self) -> None:
-        """Run complete quick start demonstration"""        try:
+        """Run complete quick start demonstration"""
+        try:
             logger.info("🚀 Starting IA-Influencer-Agent Workers Quick Start Demo")
             logger.info("=" * 70)
             
@@ -113,7 +117,8 @@ class WorkersQuickStart:
             raise
 
     async def _demo_system_initialization(self) -> None:
-        """Demonstrate system initialization"""        try:
+        """Demonstrate system initialization"""
+        try:
             logger.info("📋 STEP 1: System Initialization")
             logger.info("-" * 40)
             
@@ -156,7 +161,8 @@ class WorkersQuickStart:
             raise
 
     async def _demo_core_workers(self) -> None:
-        """Demonstrate core worker functionality"""        try:
+        """Demonstrate core worker functionality"""
+        try:
             logger.info("⚙️ STEP 2: Core Workers Demonstration")
             logger.info("-" * 40)
             
@@ -176,7 +182,8 @@ class WorkersQuickStart:
             raise
 
     async def _demo_crawler_worker(self) -> None:
-        """Demonstrate crawler worker functionality"""        try:
+        """Demonstrate crawler worker functionality"""
+        try:
             logger.info("🕷️ Crawler Worker Demo:")
             
             crawler_worker = get_crawler_worker()
@@ -210,7 +217,8 @@ class WorkersQuickStart:
             logger.error(f"❌ Crawler worker demo failed: {e}")
 
     async def _demo_worker_pool(self) -> None:
-        """Demonstrate worker pool functionality"""        try:
+        """Demonstrate worker pool functionality"""
+        try:
             logger.info("🏊 Worker Pool Demo:")
             
             worker_pool = get_worker_pool()
@@ -230,7 +238,8 @@ class WorkersQuickStart:
             logger.error(f"❌ Worker pool demo failed: {e}")
 
     async def _demo_task_orchestrator(self) -> None:
-        """Demonstrate task orchestrator functionality"""        try:
+        """Demonstrate task orchestrator functionality"""
+        try:
             logger.info("🎼 Task Orchestrator Demo:")
             
             orchestrator = get_task_orchestrator()
@@ -248,7 +257,8 @@ class WorkersQuickStart:
             logger.error(f"❌ Task orchestrator demo failed: {e}")
 
     async def _demo_specialized_workers(self) -> None:
-        """Demonstrate specialized worker functionality"""        try:
+        """Demonstrate specialized worker functionality"""
+        try:
             logger.info("🎯 STEP 3: Specialized Workers Demonstration")
             logger.info("-" * 40)
             
@@ -271,7 +281,8 @@ class WorkersQuickStart:
             raise
 
     async def _demo_content_protection(self) -> None:
-        """Demonstrate content protection worker"""        try:
+        """Demonstrate content protection worker"""
+        try:
             logger.info("🛡️ Content Protection Worker Demo:")
             
             protection_worker = get_content_protection_worker()
@@ -292,7 +303,8 @@ class WorkersQuickStart:
             logger.error(f"❌ Content protection demo failed: {e}")
 
     async def _demo_revenue_analytics(self) -> None:
-        """Demonstrate revenue analytics worker"""        try:
+        """Demonstrate revenue analytics worker"""
+        try:
             logger.info("💰 Revenue Analytics Worker Demo:")
             
             revenue_worker = get_revenue_analytics_worker()
@@ -317,7 +329,8 @@ class WorkersQuickStart:
             logger.error(f"❌ Revenue analytics demo failed: {e}")
 
     async def _demo_web_surveillance(self) -> None:
-        """Demonstrate web surveillance worker"""        try:
+        """Demonstrate web surveillance worker"""
+        try:
             logger.info("🕵️ Web Surveillance Worker Demo:")
             
             surveillance_worker = get_web_surveillance_worker()
@@ -357,7 +370,8 @@ class WorkersQuickStart:
             logger.error(f"❌ Web surveillance demo failed: {e}")
 
     async def _demo_monetization_router(self) -> None:
-        """Demonstrate monetization task router"""        try:
+        """Demonstrate monetization task router"""
+        try:
             logger.info("💼 Monetization Task Router Demo:")
             
             monetization_router = get_monetization_task_router()
@@ -394,7 +408,8 @@ class WorkersQuickStart:
             logger.error(f"❌ Monetization router demo failed: {e}")
 
     async def _demo_system_monitoring(self) -> None:
-        """Demonstrate system monitoring capabilities"""        try:
+        """Demonstrate system monitoring capabilities"""
+        try:
             logger.info("📊 STEP 4: System Monitoring Demonstration")
             logger.info("-" * 40)
             
@@ -428,7 +443,8 @@ class WorkersQuickStart:
             raise
 
     async def _demo_performance_analytics(self) -> None:
-        """Demonstrate performance analytics"""        try:
+        """Demonstrate performance analytics"""
+        try:
             logger.info("📈 STEP 5: Performance Analytics Demonstration")
             logger.info("-" * 40)
             
@@ -468,7 +484,8 @@ class WorkersQuickStart:
             raise
 
     async def _demo_system_shutdown(self) -> None:
-        """Demonstrate graceful system shutdown"""        try:
+        """Demonstrate graceful system shutdown"""
+        try:
             logger.info("🛑 STEP 6: Graceful System Shutdown")
             logger.info("-" * 40)
             
@@ -494,7 +511,8 @@ class WorkersQuickStart:
 
 
 async def main():
-    """Main entry point for workers module demonstration"""    try:
+    """Main entry point for workers module demonstration"""
+    try:
         print("\n🎉 Welcome to IA-Influencer-Agent Workers System")
         print("=" * 60)
         print("🧠 Industrial-Grade Distributed Task Processing")
@@ -522,7 +540,8 @@ async def main():
 
 
 def display_component_info():
-    """Display component information and capabilities"""    print("\n📦 IA-Influencer-Agent Workers Components:")
+    """Display component information and capabilities"""
+    print("\n📦 IA-Influencer-Agent Workers Components:")
     print("=" * 50)
     
     components = [

@@ -6,7 +6,8 @@ for the content creator platform's replication infrastructure.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import hmac
@@ -28,7 +29,8 @@ import secrets
 
 @dataclass
 class ValidationResult:
-    """Data validation result"""    is_valid: bool
+    """Data validation result"""
+    is_valid: bool
     errors: List[str]
     warnings: List[str]
     metadata: Dict[str, Any]
@@ -36,7 +38,8 @@ class ValidationResult:
 
 @dataclass
 class NetworkInfo:
-    """Network connection information"""    host: str
+    """Network connection information"""
+    host: str
     port: int
     is_reachable: bool
     latency_ms: float
@@ -45,14 +48,17 @@ class NetworkInfo:
 
 
 class ReplicationUtils:
-    """    Comprehensive utilities for database replication operations.
+    """
+    Comprehensive utilities for database replication operations.
     
     Provides data validation, encryption, compression, networking,
     and other common utilities for the IA Influencer Agent platform's
     replication infrastructure.
-    """    
+    """
+    
     def __init__(self, config):
-        """Initialize replication utilities"""        self.config = config
+        """Initialize replication utilities"""
+        self.config = config
         self.logger = logging.getLogger(f"{__name__}.ReplicationUtils")
         
         # Encryption configuration
@@ -96,7 +102,8 @@ class ReplicationUtils:
         self.logger.info("ReplicationUtils initialized")
     
     def _derive_encryption_key(self) -> bytes:
-        """Derive encryption key from configuration"""        try:
+        """Derive encryption key from configuration"""
+        try:
             # Get master key from config or environment
             master_key = self.config.get_security_config().get("master_key", "default_key_change_me")
             salt = b"replication_salt_ia_influencer"
@@ -117,7 +124,8 @@ class ReplicationUtils:
             return Fernet.generate_key()
     
     def _create_ssl_context(self) -> ssl.SSLContext:
-        """Create SSL context for secure connections"""        context = ssl.create_default_context()
+        """Create SSL context for secure connections"""
+        context = ssl.create_default_context()
         
         # Configure based on security settings
         security_config = self.config.get_security_config()
@@ -138,7 +146,8 @@ class ReplicationUtils:
     # Data Validation Methods
     
     def validate_record_data(self, table_name: str, data: Dict[str, Any]) -> ValidationResult:
-        """        Validate record data against schema rules.
+        """
+        Validate record data against schema rules.
         
         Args:
             table_name: Name of the table/collection
@@ -146,7 +155,8 @@ class ReplicationUtils:
             
         Returns:
             ValidationResult: Validation result with errors and warnings
-        """        errors = []
+        """
+        errors = []
         warnings = []
         metadata = {}
         
@@ -201,7 +211,8 @@ class ReplicationUtils:
         )
     
     def _validate_email(self, email: str) -> bool:
-        """Validate email format"""        try:
+        """Validate email format"""
+        try:
             import re
             pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
             return bool(re.match(pattern, email))
@@ -209,14 +220,16 @@ class ReplicationUtils:
             return False
     
     def validate_replication_record(self, record: Dict[str, Any]) -> ValidationResult:
-        """        Validate replication record structure.
+        """
+        Validate replication record structure.
         
         Args:
             record: Replication record to validate
             
         Returns:
             ValidationResult: Validation result
-        """        errors = []
+        """
+        errors = []
         warnings = []
         metadata = {}
         
@@ -264,14 +277,16 @@ class ReplicationUtils:
     # Data Transformation Methods
     
     def normalize_data_types(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """        Normalize data types for cross-database compatibility.
+        """
+        Normalize data types for cross-database compatibility.
         
         Args:
             data: Data to normalize
             
         Returns:
             Dict: Normalized data
-        """        try:
+        """
+        try:
             normalized = {}
             
             for key, value in data.items():
@@ -301,7 +316,8 @@ class ReplicationUtils:
             return data
     
     def transform_for_database(self, data: Dict[str, Any], database_type: str) -> Dict[str, Any]:
-        """        Transform data for specific database type.
+        """
+        Transform data for specific database type.
         
         Args:
             data: Data to transform
@@ -309,7 +325,8 @@ class ReplicationUtils:
             
         Returns:
             Dict: Transformed data
-        """        try:
+        """
+        try:
             transformed = data.copy()
             
             if database_type == "mongodb":
@@ -346,14 +363,16 @@ class ReplicationUtils:
     # Encryption and Security Methods
     
     def encrypt_sensitive_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """        Encrypt sensitive fields in data.
+        """
+        Encrypt sensitive fields in data.
         
         Args:
             data: Data to encrypt
             
         Returns:
             Dict: Data with encrypted sensitive fields
-        """        try:
+        """
+        try:
             encrypted_data = data.copy()
             sensitive_fields = ["password", "api_key", "token", "credit_card", "ssn", "phone"]
             
@@ -370,14 +389,16 @@ class ReplicationUtils:
             return data
     
     def decrypt_sensitive_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """        Decrypt sensitive fields in data.
+        """
+        Decrypt sensitive fields in data.
         
         Args:
             data: Data to decrypt
             
         Returns:
             Dict: Data with decrypted sensitive fields
-        """        try:
+        """
+        try:
             decrypted_data = data.copy()
             
             for key, value in data.items():
@@ -396,14 +417,16 @@ class ReplicationUtils:
             return data
     
     def calculate_data_checksum(self, data: Dict[str, Any]) -> str:
-        """        Calculate checksum for data integrity verification.
+        """
+        Calculate checksum for data integrity verification.
         
         Args:
             data: Data to calculate checksum for
             
         Returns:
             str: SHA-256 checksum
-        """        try:
+        """
+        try:
             # Normalize and sort data for consistent checksum
             normalized_data = self.normalize_data_types(data)
             data_string = json.dumps(normalized_data, sort_keys=True, separators=(',', ':'))
@@ -417,7 +440,8 @@ class ReplicationUtils:
             return ""
     
     def verify_data_integrity(self, data: Dict[str, Any], expected_checksum: str) -> bool:
-        """        Verify data integrity using checksum.
+        """
+        Verify data integrity using checksum.
         
         Args:
             data: Data to verify
@@ -425,7 +449,8 @@ class ReplicationUtils:
             
         Returns:
             bool: True if data integrity is valid
-        """        try:
+        """
+        try:
             calculated_checksum = self.calculate_data_checksum(data)
             return calculated_checksum == expected_checksum
             
@@ -436,14 +461,16 @@ class ReplicationUtils:
     # Compression Methods
     
     def compress_data(self, data: Union[str, bytes, Dict[str, Any]]) -> bytes:
-        """        Compress data for efficient transmission.
+        """
+        Compress data for efficient transmission.
         
         Args:
             data: Data to compress
             
         Returns:
             bytes: Compressed data
-        """        try:
+        """
+        try:
             if isinstance(data, dict):
                 data_str = json.dumps(data, separators=(',', ':'))
             elif isinstance(data, str):
@@ -465,14 +492,16 @@ class ReplicationUtils:
                 return str(data).encode()
     
     def decompress_data(self, compressed_data: bytes) -> str:
-        """        Decompress data.
+        """
+        Decompress data.
         
         Args:
             compressed_data: Compressed data
             
         Returns:
             str: Decompressed data
-        """        try:
+        """
+        try:
             decompressed = gzip.decompress(compressed_data)
             return decompressed.decode()
             
@@ -484,7 +513,8 @@ class ReplicationUtils:
     # Network Utilities
     
     async def check_network_connectivity(self, host: str, port: int, timeout: int = None) -> NetworkInfo:
-        """        Check network connectivity to a host and port.
+        """
+        Check network connectivity to a host and port.
         
         Args:
             host: Target host
@@ -493,7 +523,8 @@ class ReplicationUtils:
             
         Returns:
             NetworkInfo: Network connectivity information
-        """        timeout = timeout or self.connection_timeout
+        """
+        timeout = timeout or self.connection_timeout
         start_time = datetime.utcnow()
         
         try:
@@ -540,7 +571,8 @@ class ReplicationUtils:
             )
     
     async def _check_ssl_certificate(self, host: str, port: int) -> Dict[str, Any]:
-        """Check SSL certificate validity"""        try:
+        """Check SSL certificate validity"""
+        try:
             context = ssl.create_default_context()
             
             with socket.create_connection((host, port), timeout=10) as sock:
@@ -568,42 +600,48 @@ class ReplicationUtils:
             }
     
     def validate_ip_address(self, ip_address: str) -> bool:
-        """        Validate IP address format.
+        """
+        Validate IP address format.
         
         Args:
             ip_address: IP address to validate
             
         Returns:
             bool: True if valid IP address
-        """        try:
+        """
+        try:
             ipaddress.ip_address(ip_address)
             return True
         except ValueError:
             return False
     
     def is_private_ip(self, ip_address: str) -> bool:
-        """        Check if IP address is private.
+        """
+        Check if IP address is private.
         
         Args:
             ip_address: IP address to check
             
         Returns:
             bool: True if private IP
-        """        try:
+        """
+        try:
             ip = ipaddress.ip_address(ip_address)
             return ip.is_private
         except ValueError:
             return False
     
     def check_ip_whitelist(self, ip_address: str) -> bool:
-        """        Check if IP address is in whitelist.
+        """
+        Check if IP address is in whitelist.
         
         Args:
             ip_address: IP address to check
             
         Returns:
             bool: True if IP is whitelisted
-        """        try:
+        """
+        try:
             security_config = self.config.get_security_config()
             allowed_networks = security_config.get("allowed_networks", [])
             
@@ -629,21 +667,25 @@ class ReplicationUtils:
     # Utility Methods
     
     def generate_unique_id(self) -> str:
-        """        Generate unique identifier.
+        """
+        Generate unique identifier.
         
         Returns:
             str: Unique identifier
-        """        return f"{int(datetime.utcnow().timestamp())}_{secrets.token_hex(8)}"
+        """
+        return f"{int(datetime.utcnow().timestamp())}_{secrets.token_hex(8)}"
     
     def parse_database_url(self, url: str) -> Dict[str, Any]:
-        """        Parse database URL into components.
+        """
+        Parse database URL into components.
         
         Args:
             url: Database URL
             
         Returns:
             Dict: URL components
-        """        try:
+        """
+        try:
             from urllib.parse import urlparse
             
             parsed = urlparse(url)
@@ -663,28 +705,32 @@ class ReplicationUtils:
             return {}
     
     def format_bytes(self, bytes_value: int) -> str:
-        """        Format bytes value to human-readable string.
+        """
+        Format bytes value to human-readable string.
         
         Args:
             bytes_value: Bytes value
             
         Returns:
             str: Formatted string
-        """        for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
+        """
+        for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
             if bytes_value < 1024.0:
                 return f"{bytes_value:.1f} {unit}"
             bytes_value /= 1024.0
         return f"{bytes_value:.1f} PB"
     
     def format_duration(self, seconds: float) -> str:
-        """        Format duration in seconds to human-readable string.
+        """
+        Format duration in seconds to human-readable string.
         
         Args:
             seconds: Duration in seconds
             
         Returns:
             str: Formatted duration
-        """        if seconds < 60:
+        """
+        if seconds < 60:
             return f"{seconds:.1f}s"
         elif seconds < 3600:
             return f"{seconds/60:.1f}m"
@@ -694,14 +740,16 @@ class ReplicationUtils:
             return f"{seconds/86400:.1f}d"
     
     def sanitize_table_name(self, table_name: str) -> str:
-        """        Sanitize table name for safe database operations.
+        """
+        Sanitize table name for safe database operations.
         
         Args:
             table_name: Table name to sanitize
             
         Returns:
             str: Sanitized table name
-        """        try:
+        """
+        try:
             import re
             # Remove any non-alphanumeric characters except underscores
             sanitized = re.sub(r'[^a-zA-Z0-9_]', '', table_name)
@@ -721,7 +769,8 @@ class ReplicationUtils:
             return "unknown_table"
     
     def create_backup_filename(self, database_type: str, timestamp: datetime = None) -> str:
-        """        Create standardized backup filename.
+        """
+        Create standardized backup filename.
         
         Args:
             database_type: Type of database
@@ -729,18 +778,21 @@ class ReplicationUtils:
             
         Returns:
             str: Backup filename
-        """        timestamp = timestamp or datetime.utcnow()
+        """
+        timestamp = timestamp or datetime.utcnow()
         timestamp_str = timestamp.strftime("%Y%m%d_%H%M%S")
         return f"backup_{database_type}_{timestamp_str}.sql"
     
     def log_performance_metric(self, operation: str, duration: float, metadata: Dict[str, Any] = None) -> None:
-        """        Log performance metric.
+        """
+        Log performance metric.
         
         Args:
             operation: Operation name
             duration: Operation duration in seconds
             metadata: Additional metadata
-        """        try:
+        """
+        try:
             metric_data = {
                 "operation": operation,
                 "duration_seconds": duration,
@@ -761,7 +813,8 @@ class ReplicationUtils:
         max_delay: float = 60.0,
         backoff_factor: float = 2.0
     ) -> Any:
-        """        Retry function with exponential backoff.
+        """
+        Retry function with exponential backoff.
         
         Args:
             func: Function to retry
@@ -772,7 +825,8 @@ class ReplicationUtils:
             
         Returns:
             Function result
-        """        last_exception = None
+        """
+        last_exception = None
         
         for attempt in range(max_retries + 1):
             try:

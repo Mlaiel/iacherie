@@ -8,7 +8,8 @@ License: Proprietary - All rights reserved
 WARNING: This code is proprietary and protected by copyright.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Contact: Fahed Mlaiel (mlaiel@live.de) for licensing agreements.
-"""import hashlib
+"""
+import hashlib
 import numpy as np
 import librosa
 import chromaprint
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FingerprintResult:
-    """Result container for audio fingerprinting operations."""    
+    """Result container for audio fingerprinting operations."""
+    
     fingerprint_hash: str
     chromaprint: Optional[str]
     spectral_features: Optional[np.ndarray]
@@ -39,7 +41,8 @@ class FingerprintResult:
 
 @dataclass
 class MatchResult:
-    """Result container for fingerprint matching operations."""    
+    """Result container for fingerprint matching operations."""
+    
     similarity_score: float
     match_confidence: float
     matched_fingerprint_id: str
@@ -49,11 +52,14 @@ class MatchResult:
 
 
 class AudioFingerprintCore:
-    """    Core audio fingerprinting engine with advanced algorithms.
+    """
+    Core audio fingerprinting engine with advanced algorithms.
     Supports multiple fingerprinting techniques for robust content identification.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the core fingerprinting engine."""        self.config = config or self._default_config()
+        """Initialize the core fingerprinting engine."""
+        self.config = config or self._default_config()
         self.executor = ThreadPoolExecutor(max_workers=self.config['max_workers'])
         
         # Initialize fingerprinting parameters
@@ -65,7 +71,8 @@ class AudioFingerprintCore:
         logger.info("AudioFingerprintCore initialized with config: %s", self.config)
     
     def _default_config(self) -> Dict:
-        """Default configuration for fingerprinting engine."""        return {
+        """Default configuration for fingerprinting engine."""
+        return {
             'sample_rate': 22050,
             'hop_length': 512,
             'n_fft': 2048,
@@ -82,7 +89,8 @@ class AudioFingerprintCore:
         audio_data: Union[str, np.ndarray], 
         metadata: Optional[Dict] = None
     ) -> FingerprintResult:
-        """        Generate comprehensive fingerprint for audio content.
+        """
+        Generate comprehensive fingerprint for audio content.
         
         Args:
             audio_data: Path to audio file or numpy array of audio samples
@@ -90,7 +98,8 @@ class AudioFingerprintCore:
             
         Returns:
             FingerprintResult containing all fingerprint components
-        """        start_time = asyncio.get_event_loop().time()
+        """
+        start_time = asyncio.get_event_loop().time()
         
         try:
             # Load and preprocess audio
@@ -133,7 +142,8 @@ class AudioFingerprintCore:
             raise
     
     async def _generate_chromaprint(self, y: np.ndarray, sr: int) -> str:
-        """Generate Chromaprint fingerprint using AcoustID algorithm."""        loop = asyncio.get_event_loop()
+        """Generate Chromaprint fingerprint using AcoustID algorithm."""
+        loop = asyncio.get_event_loop()
         
         def _chromaprint_sync():
             # Convert to proper format for chromaprint
@@ -148,7 +158,8 @@ class AudioFingerprintCore:
         return await loop.run_in_executor(self.executor, _chromaprint_sync)
     
     async def _extract_spectral_features(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Extract advanced spectral features for robust matching."""        loop = asyncio.get_event_loop()
+        """Extract advanced spectral features for robust matching."""
+        loop = asyncio.get_event_loop()
         
         def _extract_sync():
             # Mel-frequency cepstral coefficients
@@ -196,7 +207,8 @@ class AudioFingerprintCore:
         return await loop.run_in_executor(self.executor, _extract_sync)
     
     async def _generate_perceptual_hash(self, y: np.ndarray, sr: int) -> str:
-        """Generate perceptual hash based on audio characteristics."""        loop = asyncio.get_event_loop()
+        """Generate perceptual hash based on audio characteristics."""
+        loop = asyncio.get_event_loop()
         
         def _hash_sync():
             # Generate spectrogram
@@ -217,7 +229,8 @@ class AudioFingerprintCore:
         return await loop.run_in_executor(self.executor, _hash_sync)
     
     def _calculate_file_hash(self, filepath: str) -> str:
-        """Calculate SHA-256 hash of the audio file."""        hasher = hashlib.sha256()
+        """Calculate SHA-256 hash of the audio file."""
+        hasher = hashlib.sha256()
         
         with open(filepath, 'rb') as f:
             for chunk in iter(lambda: f.read(4096), b""):
@@ -226,7 +239,8 @@ class AudioFingerprintCore:
         return hasher.hexdigest()
     
     def _calculate_confidence(self, y: np.ndarray, sr: int) -> float:
-        """Calculate confidence score based on audio quality metrics."""        # Signal-to-noise ratio estimation
+        """Calculate confidence score based on audio quality metrics."""
+        # Signal-to-noise ratio estimation
         energy = np.sum(y ** 2) / len(y)
         
         # Dynamic range
@@ -246,7 +260,8 @@ class AudioFingerprintCore:
         candidate_fingerprints: List[FingerprintResult],
         threshold: Optional[float] = None
     ) -> List[MatchResult]:
-        """        Match query fingerprint against candidates.
+        """
+        Match query fingerprint against candidates.
         
         Args:
             query_fingerprint: The fingerprint to match
@@ -255,7 +270,8 @@ class AudioFingerprintCore:
             
         Returns:
             List of MatchResult objects sorted by similarity score
-        """        threshold = threshold or self.config['similarity_threshold']
+        """
+        threshold = threshold or self.config['similarity_threshold']
         matches = []
         
         for candidate in candidate_fingerprints:
@@ -291,7 +307,8 @@ class AudioFingerprintCore:
         fp1: FingerprintResult, 
         fp2: FingerprintResult
     ) -> float:
-        """Calculate similarity between two fingerprints."""        loop = asyncio.get_event_loop()
+        """Calculate similarity between two fingerprints."""
+        loop = asyncio.get_event_loop()
         
         def _similarity_sync():
             # Chromaprint similarity
@@ -320,7 +337,8 @@ class AudioFingerprintCore:
         return await loop.run_in_executor(self.executor, _similarity_sync)
     
     def _chromaprint_similarity(self, fp1: str, fp2: str) -> float:
-        """Calculate similarity between two chromaprint fingerprints."""        try:
+        """Calculate similarity between two chromaprint fingerprints."""
+        try:
             # Decode fingerprints
             raw_fp1 = chromaprint.decode(fp1)
             raw_fp2 = chromaprint.decode(fp2)
@@ -345,7 +363,8 @@ class AudioFingerprintCore:
         audio_files: List[str], 
         metadata_list: Optional[List[Dict]] = None
     ) -> List[FingerprintResult]:
-        """        Generate fingerprints for multiple audio files in parallel.
+        """
+        Generate fingerprints for multiple audio files in parallel.
         
         Args:
             audio_files: List of paths to audio files
@@ -353,7 +372,8 @@ class AudioFingerprintCore:
             
         Returns:
             List of FingerprintResult objects
-        """        metadata_list = metadata_list or [{}] * len(audio_files)
+        """
+        metadata_list = metadata_list or [{}] * len(audio_files)
         
         tasks = []
         for audio_file, metadata in zip(audio_files, metadata_list):
@@ -373,5 +393,6 @@ class AudioFingerprintCore:
         return valid_results
     
     def cleanup(self):
-        """Cleanup resources."""        self.executor.shutdown(wait=True)
+        """Cleanup resources."""
+        self.executor.shutdown(wait=True)
         logger.info("AudioFingerprintCore cleanup completed")

@@ -3,7 +3,8 @@ Real-time compliance monitoring and alerting system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -28,7 +29,8 @@ logger = get_logger(__name__)
 
 
 class ComplianceStatus(str, Enum):
-    """Compliance status levels"""    COMPLIANT = "compliant"
+    """Compliance status levels"""
+    COMPLIANT = "compliant"
     WARNING = "warning"
     NON_COMPLIANT = "non_compliant"
     CRITICAL = "critical"
@@ -36,14 +38,16 @@ class ComplianceStatus(str, Enum):
 
 
 class MonitoringScope(str, Enum):
-    """Monitoring scope levels"""    SYSTEM = "system"
+    """Monitoring scope levels"""
+    SYSTEM = "system"
     ORGANIZATION = "organization"
     USER = "user"
     RESOURCE = "resource"
 
 
 class AlertSeverity(str, Enum):
-    """Alert severity levels"""    INFO = "info"
+    """Alert severity levels"""
+    INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -52,7 +56,8 @@ class AlertSeverity(str, Enum):
 
 @dataclass
 class ComplianceRule:
-    """Compliance monitoring rule definition"""    rule_id: str
+    """Compliance monitoring rule definition"""
+    rule_id: str
     name: str
     description: str
     framework: ComplianceFramework
@@ -69,7 +74,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceMetricSnapshot:
-    """Point-in-time compliance metric snapshot"""    metric_id: str
+    """Point-in-time compliance metric snapshot"""
+    metric_id: str
     metric_name: str
     value: float
     unit: str
@@ -83,7 +89,8 @@ class ComplianceMetricSnapshot:
 
 @dataclass
 class ComplianceAlert:
-    """Compliance alert details"""    alert_id: str
+    """Compliance alert details"""
+    alert_id: str
     rule_id: str
     metric_id: str
     severity: AlertSeverity
@@ -97,7 +104,8 @@ class ComplianceAlert:
 
 
 class ComplianceMonitor:
-    """Real-time compliance monitoring and alerting system"""    
+    """Real-time compliance monitoring and alerting system"""
+    
     def __init__(self):
         self.logger = logger
         self.audit_logger = AuditLogger()
@@ -126,7 +134,8 @@ class ComplianceMonitor:
         self._is_monitoring = False
     
     async def start_monitoring(self) -> None:
-        """Start real-time compliance monitoring"""        try:
+        """Start real-time compliance monitoring"""
+        try:
             if self._is_monitoring:
                 self.logger.warning("Compliance monitoring already running")
                 return
@@ -155,7 +164,8 @@ class ComplianceMonitor:
             raise
     
     async def stop_monitoring(self) -> None:
-        """Stop compliance monitoring"""        try:
+        """Stop compliance monitoring"""
+        try:
             self._is_monitoring = False
             
             # Cancel all monitoring tasks
@@ -177,7 +187,8 @@ class ComplianceMonitor:
         scope: MonitoringScope,
         scope_id: str = None
     ) -> Dict[str, Any]:
-        """Evaluate current compliance status for framework and scope"""        try:
+        """Evaluate current compliance status for framework and scope"""
+        try:
             # Collect current metrics
             metrics = await self._collect_framework_metrics(framework, scope, scope_id)
             
@@ -238,7 +249,8 @@ class ComplianceMonitor:
         end_date: Optional[datetime] = None,
         scope: Optional[MonitoringScope] = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive compliance report"""        try:
+        """Generate comprehensive compliance report"""
+        try:
             # Set default date range if not provided
             if not end_date:
                 end_date = datetime.utcnow()
@@ -334,7 +346,8 @@ class ComplianceMonitor:
         scope_id: str,
         details: Dict[str, Any] = None
     ) -> str:
-        """Trigger compliance alert for rule violation"""        try:
+        """Trigger compliance alert for rule violation"""
+        try:
             # Get rule details
             rule = next((r for r in self.monitoring_rules if r.rule_id == rule_id), None)
             if not rule:
@@ -424,7 +437,8 @@ class ComplianceMonitor:
         resolution_notes: str,
         resolved_by: str
     ) -> bool:
-        """Resolve compliance alert"""        try:
+        """Resolve compliance alert"""
+        try:
             async with get_db_session() as session:
                 # Update alert status
                 result = await session.execute(
@@ -463,7 +477,8 @@ class ComplianceMonitor:
             return False
     
     async def _monitor_compliance_framework(self, framework: ComplianceFramework) -> None:
-        """Monitor specific compliance framework continuously"""        try:
+        """Monitor specific compliance framework continuously"""
+        try:
             while self._is_monitoring:
                 try:
                     # Evaluate framework compliance
@@ -497,7 +512,8 @@ class ComplianceMonitor:
             self.logger.error(f"Fatal error in framework monitoring {framework.value}: {str(e)}")
     
     async def _collect_gdpr_consent_metrics(self) -> List[ComplianceMetricSnapshot]:
-        """Collect GDPR consent compliance metrics"""        try:
+        """Collect GDPR consent compliance metrics"""
+        try:
             metrics = []
             
             async with get_db_session() as session:
@@ -543,7 +559,8 @@ class ComplianceMonitor:
             return []
     
     def _load_compliance_rules(self) -> List[ComplianceRule]:
-        """Load compliance monitoring rules"""        return [
+        """Load compliance monitoring rules"""
+        return [
             # GDPR Rules
             ComplianceRule(
                 rule_id="GDPR-001",

@@ -18,7 +18,8 @@ Unauthorized copying, distribution, or reverse engineering is strictly prohibite
 Any violation will be prosecuted to the full extent of the law.
 
 Business Logic: User Upload → AI Analysis → Style Detection → Quality Assessment → SEO Enhancement
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import hashlib
@@ -34,7 +35,8 @@ from collections import Counter
 from .base_engine import BaseContentEngine, ProcessingResult, EngineMetrics, EngineStatus, ContentType, ProcessingPriority
 
 class TextFormat(Enum):
-    """Supported text formats"""    PLAIN = "plain"
+    """Supported text formats"""
+    PLAIN = "plain"
     MARKDOWN = "markdown"
     HTML = "html"
     JSON = "json"
@@ -42,7 +44,8 @@ class TextFormat(Enum):
     RTF = "rtf"
 
 class ContentType(Enum):
-    """Content types for text"""    ARTICLE = "article"
+    """Content types for text"""
+    ARTICLE = "article"
     BLOG_POST = "blog_post"
     SOCIAL_MEDIA = "social_media"
     PRODUCT_DESCRIPTION = "product_description"
@@ -52,7 +55,8 @@ class ContentType(Enum):
     TECHNICAL_DOCUMENTATION = "technical_documentation"
 
 class WritingStyle(Enum):
-    """Writing styles"""    PROFESSIONAL = "professional"
+    """Writing styles"""
+    PROFESSIONAL = "professional"
     CASUAL = "casual"
     ACADEMIC = "academic"
     CREATIVE = "creative"
@@ -62,7 +66,8 @@ class WritingStyle(Enum):
 
 @dataclass
 class TextMetadata:
-    """Comprehensive text metadata structure"""    word_count: int
+    """Comprehensive text metadata structure"""
+    word_count: int
     character_count: int
     paragraph_count: int
     sentence_count: int
@@ -81,9 +86,11 @@ class TextMetadata:
     fingerprint: Optional[str] = None
 
 class TextGenerationEngine(BaseContentEngine):
-    """    Advanced text generation engine for content creators
+    """
+    Advanced text generation engine for content creators
     Handles content creation, enhancement, and optimization
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__("text_generator", config)
         self.supported_languages = ['en', 'de', 'fr', 'es', 'it', 'pt', 'ru', 'zh', 'ja', 'ko']
@@ -91,7 +98,8 @@ class TextGenerationEngine(BaseContentEngine):
         self.supported_content_types = [ct.value for ct in ContentType]
         
     async def initialize(self) -> bool:
-        """Initialize text generation engine"""        try:
+        """Initialize text generation engine"""
+        try:
             self.logger.info("Initializing Text Generation Engine...")
             
             # Load language models
@@ -117,7 +125,8 @@ class TextGenerationEngine(BaseContentEngine):
             return False
     
     async def process_content(self, content: Any, options: Optional[Dict] = None) -> ProcessingResult:
-        """Process and enhance text content"""        start_time = time.time()
+        """Process and enhance text content"""
+        start_time = time.time()
         options = options or {}
         content_id = options.get('content_id', f"text_{int(time.time())}")
         
@@ -212,7 +221,8 @@ class TextGenerationEngine(BaseContentEngine):
             )
     
     async def optimize_for_seo(self, content: Any, target_keywords: List[str]) -> Dict[str, Any]:
-        """Optimize text content for search engines"""        seo_analysis = await self._analyze_seo_factors(content, target_keywords)
+        """Optimize text content for search engines"""
+        seo_analysis = await self._analyze_seo_factors(content, target_keywords)
         
         return {
             'title_optimized': await self._optimize_title(content, target_keywords),
@@ -228,7 +238,8 @@ class TextGenerationEngine(BaseContentEngine):
         }
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Apply comprehensive text content protection"""        # Generate text fingerprint
+        """Apply comprehensive text content protection"""
+        # Generate text fingerprint
         fingerprint = await self._generate_text_fingerprint(content)
         
         # Check for plagiarism
@@ -248,7 +259,8 @@ class TextGenerationEngine(BaseContentEngine):
         }
     
     async def _load_language_models(self):
-        """Load language models for text processing"""        self.logger.info("Loading language models...")
+        """Load language models for text processing"""
+        self.logger.info("Loading language models...")
         await asyncio.sleep(0.3)
         
         self.language_models = {
@@ -260,7 +272,8 @@ class TextGenerationEngine(BaseContentEngine):
         }
     
     async def _init_nlp_tools(self):
-        """Initialize NLP processing tools"""        self.logger.info("Initializing NLP tools...")
+        """Initialize NLP processing tools"""
+        self.logger.info("Initializing NLP tools...")
         await asyncio.sleep(0.2)
         
         self.nlp_tools = {
@@ -272,7 +285,8 @@ class TextGenerationEngine(BaseContentEngine):
         }
     
     async def _load_style_models(self):
-        """Load writing style models"""        self.logger.info("Loading style models...")
+        """Load writing style models"""
+        self.logger.info("Loading style models...")
         await asyncio.sleep(0.15)
         
         self.style_models = {
@@ -284,7 +298,8 @@ class TextGenerationEngine(BaseContentEngine):
         }
     
     async def _init_seo_tools(self):
-        """Initialize SEO optimization tools"""        self.logger.info("Initializing SEO tools...")
+        """Initialize SEO optimization tools"""
+        self.logger.info("Initializing SEO tools...")
         await asyncio.sleep(0.1)
         
         self.seo_tools = {
@@ -295,7 +310,8 @@ class TextGenerationEngine(BaseContentEngine):
         }
     
     async def _analyze_text_content(self, content: str) -> Dict[str, Any]:
-        """Analyze text content comprehensively"""        self.logger.info("Analyzing text content...")
+        """Analyze text content comprehensively"""
+        self.logger.info("Analyzing text content...")
         await asyncio.sleep(0.3)
         
         # Basic text analysis
@@ -323,7 +339,8 @@ class TextGenerationEngine(BaseContentEngine):
         }
     
     async def _extract_text_metadata(self, content: str, analysis: Dict) -> TextMetadata:
-        """Extract comprehensive text metadata"""        
+        """Extract comprehensive text metadata"""
+        
         return TextMetadata(
             word_count=analysis['word_count'],
             character_count=len(content),
@@ -344,7 +361,8 @@ class TextGenerationEngine(BaseContentEngine):
         )
     
     async def _enhance_text_content(self, content: str, options: Dict, analysis: Dict) -> str:
-        """Enhance text content based on requirements"""        self.logger.info("Enhancing text content...")
+        """Enhance text content based on requirements"""
+        self.logger.info("Enhancing text content...")
         await asyncio.sleep(0.4)
         
         enhancement_type = options.get('enhancement_type', 'auto')
@@ -367,14 +385,16 @@ class TextGenerationEngine(BaseContentEngine):
         return enhanced_content
     
     async def _apply_grammar_corrections(self, content: str) -> str:
-        """Apply grammar and language corrections"""        self.logger.info("Applying grammar corrections...")
+        """Apply grammar and language corrections"""
+        self.logger.info("Applying grammar corrections...")
         await asyncio.sleep(0.2)
         
         # Simulate grammar correction
         return f"[GRAMMAR_CORRECTED] {content}"
     
     async def _optimize_readability(self, content: str, options: Dict) -> str:
-        """Optimize content readability"""        self.logger.info("Optimizing readability...")
+        """Optimize content readability"""
+        self.logger.info("Optimizing readability...")
         await asyncio.sleep(0.15)
         
         target_reading_level = options.get('reading_level', 'grade_8')
@@ -383,14 +403,16 @@ class TextGenerationEngine(BaseContentEngine):
         return f"[READABILITY_OPTIMIZED_{target_reading_level.upper()}] {content}"
     
     async def _apply_plagiarism_protection(self, content: str) -> str:
-        """Apply plagiarism protection measures"""        self.logger.info("Applying plagiarism protection...")
+        """Apply plagiarism protection measures"""
+        self.logger.info("Applying plagiarism protection...")
         await asyncio.sleep(0.1)
         
         # Add unique fingerprinting
         return f"[PLAGIARISM_PROTECTED] {content}"
     
     async def _calculate_text_quality_score(self, content: str, metadata: TextMetadata, analysis: Dict) -> float:
-        """Calculate comprehensive text quality score"""        base_score = 0.75
+        """Calculate comprehensive text quality score"""
+        base_score = 0.75
         
         # Readability factor
         if metadata.readability_score > 0.6:
@@ -411,7 +433,8 @@ class TextGenerationEngine(BaseContentEngine):
         return min(base_score, 1.0)
     
     async def _analyze_seo_factors(self, content: str, keywords: List[str]) -> Dict[str, Any]:
-        """Analyze SEO factors in content"""        word_count = len(content.split())
+        """Analyze SEO factors in content"""
+        word_count = len(content.split())
         
         return {
             'word_count': word_count,
@@ -424,21 +447,24 @@ class TextGenerationEngine(BaseContentEngine):
         }
     
     async def _optimize_title(self, content: str, keywords: List[str]) -> str:
-        """Generate optimized title"""        # Extract first sentence or use keywords
+        """Generate optimized title"""
+        # Extract first sentence or use keywords
         first_sentence = content.split('.')[0].strip()
         keyword = keywords[0] if keywords else 'Content'
         
         return f"Professional {keyword} Guide - {first_sentence[:50]}..."
     
     async def _generate_meta_description(self, content: str, keywords: List[str]) -> str:
-        """Generate SEO-optimized meta description"""        # Get first 150 characters with keywords
+        """Generate SEO-optimized meta description"""
+        # Get first 150 characters with keywords
         description = content[:140]
         keyword = keywords[0] if keywords else 'content'
         
         return f"{description}... Expert {keyword} insights by Fahed Mlaiel."
     
     async def _calculate_keyword_density(self, content: str, keywords: List[str]) -> Dict[str, float]:
-        """Calculate keyword density"""        words = content.lower().split()
+        """Calculate keyword density"""
+        words = content.lower().split()
         total_words = len(words)
         
         densities = {}
@@ -449,14 +475,16 @@ class TextGenerationEngine(BaseContentEngine):
         return densities
     
     async def _suggest_internal_links(self, content: str) -> List[Dict[str, str]]:
-        """Suggest internal linking opportunities"""        return [
+        """Suggest internal linking opportunities"""
+        return [
             {'anchor_text': 'AI content creation', 'suggested_url': '/ai-content-guide'},
             {'anchor_text': 'SEO optimization', 'suggested_url': '/seo-strategies'},
             {'anchor_text': 'content protection', 'suggested_url': '/content-security'}
         ]
     
     async def _generate_seo_recommendations(self, content: str, keywords: List[str]) -> List[str]:
-        """Generate SEO improvement recommendations"""        return [
+        """Generate SEO improvement recommendations"""
+        return [
             "Add more keyword variations throughout the content",
             "Include relevant internal links to boost page authority",
             "Optimize heading structure with H2 and H3 tags",
@@ -465,7 +493,8 @@ class TextGenerationEngine(BaseContentEngine):
         ]
     
     async def _generate_content_schema(self, content: str) -> Dict[str, Any]:
-        """Generate schema.org markup for content"""        return {
+        """Generate schema.org markup for content"""
+        return {
             "@context": "https://schema.org",
             "@type": "Article",
             "headline": "Professional Content Creation Guide",
@@ -483,13 +512,15 @@ class TextGenerationEngine(BaseContentEngine):
         }
     
     async def _generate_text_fingerprint(self, content: str) -> str:
-        """Generate unique text fingerprint"""        content_normalized = re.sub(r'\s+', ' ', content.lower().strip())
+        """Generate unique text fingerprint"""
+        content_normalized = re.sub(r'\s+', ' ', content.lower().strip())
         timestamp = str(time.time())
         combined = f"{content_normalized}_{timestamp}_text"
         return hashlib.sha256(combined.encode()).hexdigest()
     
     async def _check_plagiarism(self, content: str) -> Dict[str, Any]:
-        """Check content for plagiarism"""        self.logger.info("Checking for plagiarism...")
+        """Check content for plagiarism"""
+        self.logger.info("Checking for plagiarism...")
         await asyncio.sleep(0.2)
         
         # Simulate plagiarism check
@@ -501,13 +532,16 @@ class TextGenerationEngine(BaseContentEngine):
         }
     
     async def _apply_text_watermark(self, content: str) -> str:
-        """Apply invisible text watermarking"""        # Add invisible watermark (simplified)
+        """Apply invisible text watermarking"""
+        # Add invisible watermark (simplified)
         return f"{content} [©2025 Fahed Mlaiel - Original Content]"
 
 class SEOOptimizationEngine(BaseContentEngine):
-    """    Advanced SEO optimization engine specifically for content creators
+    """
+    Advanced SEO optimization engine specifically for content creators
     Handles comprehensive SEO analysis and optimization
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__("seo_optimizer", config)
         self.seo_factors = [
@@ -516,7 +550,8 @@ class SEOOptimizationEngine(BaseContentEngine):
         ]
         
     async def initialize(self) -> bool:
-        """Initialize SEO optimization engine"""        try:
+        """Initialize SEO optimization engine"""
+        try:
             self.logger.info("Initializing SEO Optimization Engine...")
             
             # Load SEO analysis models
@@ -539,7 +574,8 @@ class SEOOptimizationEngine(BaseContentEngine):
             return False
     
     async def process_content(self, content: Any, options: Optional[Dict] = None) -> ProcessingResult:
-        """Perform comprehensive SEO optimization"""        start_time = time.time()
+        """Perform comprehensive SEO optimization"""
+        start_time = time.time()
         options = options or {}
         content_id = options.get('content_id', f"seo_{int(time.time())}")
         
@@ -607,13 +643,16 @@ class SEOOptimizationEngine(BaseContentEngine):
             )
     
     async def optimize_for_seo(self, content: Any, target_keywords: List[str]) -> Dict[str, Any]:
-        """This IS the SEO optimization engine"""        return await self._comprehensive_seo_optimization(content, target_keywords)
+        """This IS the SEO optimization engine"""
+        return await self._comprehensive_seo_optimization(content, target_keywords)
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """SEO content protection"""        return {'seo_protected': True, 'indexing_optimized': True}
+        """SEO content protection"""
+        return {'seo_protected': True, 'indexing_optimized': True}
     
     async def _load_seo_models(self):
-        """Load SEO analysis models"""        self.logger.info("Loading SEO models...")
+        """Load SEO analysis models"""
+        self.logger.info("Loading SEO models...")
         await asyncio.sleep(0.2)
         
         self.seo_models = {
@@ -624,7 +663,8 @@ class SEOOptimizationEngine(BaseContentEngine):
         }
     
     async def _init_keyword_tools(self):
-        """Initialize keyword research tools"""        self.logger.info("Initializing keyword tools...")
+        """Initialize keyword research tools"""
+        self.logger.info("Initializing keyword tools...")
         await asyncio.sleep(0.1)
         
         self.keyword_tools = {
@@ -635,7 +675,8 @@ class SEOOptimizationEngine(BaseContentEngine):
         }
     
     async def _load_competitor_tools(self):
-        """Load competitor analysis tools"""        self.logger.info("Loading competitor tools...")
+        """Load competitor analysis tools"""
+        self.logger.info("Loading competitor tools...")
         await asyncio.sleep(0.1)
         
         self.competitor_tools = {
@@ -645,7 +686,8 @@ class SEOOptimizationEngine(BaseContentEngine):
         }
     
     async def _comprehensive_seo_analysis(self, content: str, options: Dict) -> Dict[str, Any]:
-        """Perform comprehensive SEO analysis"""        self.logger.info("Performing comprehensive SEO analysis...")
+        """Perform comprehensive SEO analysis"""
+        self.logger.info("Performing comprehensive SEO analysis...")
         await asyncio.sleep(0.4)
         
         keywords = options.get('keywords', [])
@@ -691,26 +733,30 @@ class SEOOptimizationEngine(BaseContentEngine):
         }
     
     async def _optimize_content_structure(self, content: str, options: Dict) -> str:
-        """Optimize content structure for SEO"""        self.logger.info("Optimizing content structure...")
+        """Optimize content structure for SEO"""
+        self.logger.info("Optimizing content structure...")
         await asyncio.sleep(0.2)
         
         return f"[SEO_STRUCTURE_OPTIMIZED] {content}"
     
     async def _optimize_keywords(self, content: str, options: Dict) -> str:
-        """Optimize keyword usage and distribution"""        self.logger.info("Optimizing keywords...")
+        """Optimize keyword usage and distribution"""
+        self.logger.info("Optimizing keywords...")
         await asyncio.sleep(0.15)
         
         keywords = options.get('keywords', [])
         return f"[KEYWORDS_OPTIMIZED_{'-'.join(keywords[:3])}] {content}"
     
     async def _optimize_meta_elements(self, content: str, options: Dict) -> str:
-        """Optimize meta elements"""        self.logger.info("Optimizing meta elements...")
+        """Optimize meta elements"""
+        self.logger.info("Optimizing meta elements...")
         await asyncio.sleep(0.1)
         
         return f"[META_OPTIMIZED] {content}"
     
     async def _generate_seo_report(self, content: str, analysis: Dict) -> Dict[str, Any]:
-        """Generate comprehensive SEO report"""        return {
+        """Generate comprehensive SEO report"""
+        return {
             'seo_score': analysis['overall_seo_score'],
             'optimization_status': 'excellent',
             'ranking_potential': 'high',
@@ -722,7 +768,8 @@ class SEOOptimizationEngine(BaseContentEngine):
         }
     
     async def _comprehensive_seo_optimization(self, content: str, keywords: List[str]) -> Dict[str, Any]:
-        """Comprehensive SEO optimization"""        return {
+        """Comprehensive SEO optimization"""
+        return {
             'fully_optimized': True,
             'search_ready': True,
             'ranking_optimized': True,
@@ -730,9 +777,11 @@ class SEOOptimizationEngine(BaseContentEngine):
         }
 
 class ContentWriterEngine(BaseContentEngine):
-    """    Advanced content writing engine for different types of content
+    """
+    Advanced content writing engine for different types of content
     Specializes in creating engaging, original content for various platforms
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__("content_writer", config)
         self.writing_specializations = [
@@ -741,7 +790,8 @@ class ContentWriterEngine(BaseContentEngine):
         ]
         
     async def initialize(self) -> bool:
-        """Initialize content writing engine"""        try:
+        """Initialize content writing engine"""
+        try:
             self.logger.info("Initializing Content Writer Engine...")
             
             # Load writing models
@@ -764,7 +814,8 @@ class ContentWriterEngine(BaseContentEngine):
             return False
     
     async def process_content(self, content: Any, options: Optional[Dict] = None) -> ProcessingResult:
-        """Generate professional content based on requirements"""        start_time = time.time()
+        """Generate professional content based on requirements"""
+        start_time = time.time()
         options = options or {}
         content_id = options.get('content_id', f"content_{int(time.time())}")
         
@@ -832,13 +883,16 @@ class ContentWriterEngine(BaseContentEngine):
             )
     
     async def optimize_for_seo(self, content: Any, target_keywords: List[str]) -> Dict[str, Any]:
-        """Content writing SEO optimization"""        return {'content_seo_ready': True, 'engaging_content': True}
+        """Content writing SEO optimization"""
+        return {'content_seo_ready': True, 'engaging_content': True}
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Content writing protection"""        return {'original_content': True, 'plagiarism_free': True}
+        """Content writing protection"""
+        return {'original_content': True, 'plagiarism_free': True}
     
     async def _load_writing_models(self):
-        """Load content writing models"""        self.logger.info("Loading writing models...")
+        """Load content writing models"""
+        self.logger.info("Loading writing models...")
         await asyncio.sleep(0.3)
         
         self.writing_models = {
@@ -850,7 +904,8 @@ class ContentWriterEngine(BaseContentEngine):
         }
     
     async def _init_content_templates(self):
-        """Initialize content templates"""        self.logger.info("Initializing content templates...")
+        """Initialize content templates"""
+        self.logger.info("Initializing content templates...")
         await asyncio.sleep(0.1)
         
         self.templates = {
@@ -872,7 +927,8 @@ class ContentWriterEngine(BaseContentEngine):
         }
     
     async def _load_tone_analyzers(self):
-        """Load tone and style analyzers"""        self.logger.info("Loading tone analyzers...")
+        """Load tone and style analyzers"""
+        self.logger.info("Loading tone analyzers...")
         await asyncio.sleep(0.1)
         
         self.tone_analyzers = {
@@ -883,7 +939,8 @@ class ContentWriterEngine(BaseContentEngine):
         }
     
     async def _analyze_content_requirements(self, content: Any, options: Dict) -> Dict[str, Any]:
-        """Analyze content requirements"""        self.logger.info("Analyzing content requirements...")
+        """Analyze content requirements"""
+        self.logger.info("Analyzing content requirements...")
         await asyncio.sleep(0.2)
         
         return {
@@ -898,7 +955,8 @@ class ContentWriterEngine(BaseContentEngine):
         }
     
     async def _generate_content_outline(self, requirements: Dict) -> Dict[str, Any]:
-        """Generate content outline"""        self.logger.info("Generating content outline...")
+        """Generate content outline"""
+        self.logger.info("Generating content outline...")
         await asyncio.sleep(0.2)
         
         content_type = requirements['content_type']
@@ -915,7 +973,8 @@ class ContentWriterEngine(BaseContentEngine):
         }
     
     async def _write_content_sections(self, outline: Dict, requirements: Dict) -> str:
-        """Write content sections based on outline"""        self.logger.info("Writing content sections...")
+        """Write content sections based on outline"""
+        self.logger.info("Writing content sections...")
         await asyncio.sleep(0.4)
         
         content_type = requirements['content_type']
@@ -924,20 +983,23 @@ class ContentWriterEngine(BaseContentEngine):
         return f"[PROFESSIONAL_{content_type.upper()}_{tone.upper()}_CONTENT] Written by Fahed Mlaiel AI Content Writer Engine - High-quality, engaging content optimized for {requirements['platform']}"
     
     async def _apply_style_adjustments(self, content: str, requirements: Dict) -> str:
-        """Apply style and tone adjustments"""        self.logger.info("Applying style adjustments...")
+        """Apply style and tone adjustments"""
+        self.logger.info("Applying style adjustments...")
         await asyncio.sleep(0.15)
         
         style = requirements['style']
         return f"[STYLE_{style.upper()}_APPLIED] {content}"
     
     async def _optimize_for_engagement(self, content: str, requirements: Dict) -> str:
-        """Optimize content for engagement"""        self.logger.info("Optimizing for engagement...")
+        """Optimize content for engagement"""
+        self.logger.info("Optimizing for engagement...")
         await asyncio.sleep(0.1)
         
         return f"[ENGAGEMENT_OPTIMIZED] {content}"
     
     async def _evaluate_content_quality(self, content: str, requirements: Dict) -> float:
-        """Evaluate content quality"""        return 0.89
+        """Evaluate content quality"""
+        return 0.89
 
 # Export all text engines
 __all__ = [

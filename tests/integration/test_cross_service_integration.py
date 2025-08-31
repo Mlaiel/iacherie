@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -19,7 +20,8 @@ and service-to-service communication.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -33,7 +35,8 @@ from unittest.mock import AsyncMock, patch
 
 
 class CrossServiceTestClient:
-    """Test client for cross-service integration testing."""    
+    """Test client for cross-service integration testing."""
+    
     def __init__(self, base_url: str = "http://localhost:8000"):
         self.base_url = base_url
         self.session: Optional[aiohttp.ClientSession] = None
@@ -49,7 +52,8 @@ class CrossServiceTestClient:
             await self.session.close()
     
     async def authenticate(self) -> str:
-        """Authenticate and return token."""        user_data = {
+        """Authenticate and return token."""
+        user_data = {
             "email": f"cross_service_{uuid.uuid4()}@example.com",
             "password": "test_password_123",
             "first_name": "Cross",
@@ -81,7 +85,8 @@ class CrossServiceTestClient:
         raise Exception("Authentication failed")
     
     def get_headers(self) -> Dict[str, str]:
-        """Get authenticated headers."""        headers = {"Content-Type": "application/json"}
+        """Get authenticated headers."""
+        headers = {"Content-Type": "application/json"}
         if self.auth_token:
             headers["Authorization"] = f"Bearer {self.auth_token}"
         return headers
@@ -89,17 +94,20 @@ class CrossServiceTestClient:
 
 @pytest.fixture
 async def cross_service_client():
-    """Create cross-service test client."""    async with CrossServiceTestClient() as client:
+    """Create cross-service test client."""
+    async with CrossServiceTestClient() as client:
         await client.authenticate()
         yield client
 
 
 class TestAPIToDatabaseIntegration:
-    """Test API to database integration."""    
+    """Test API to database integration."""
+    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_api_crud_database_consistency(self, cross_service_client):
-        """Test API CRUD operations maintain database consistency."""        client = cross_service_client
+        """Test API CRUD operations maintain database consistency."""
+        client = cross_service_client
         
         # Create content via API
         content_data = {
@@ -174,7 +182,8 @@ class TestAPIToDatabaseIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_database_transaction_rollback_via_api(self, cross_service_client):
-        """Test that API operations properly handle database transaction rollbacks."""        client = cross_service_client
+        """Test that API operations properly handle database transaction rollbacks."""
+        client = cross_service_client
         
         # Attempt to create content with invalid related data
         invalid_content_data = {
@@ -209,7 +218,8 @@ class TestAPIToDatabaseIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_concurrent_api_database_operations(self, cross_service_client):
-        """Test concurrent API operations maintain database integrity."""        client = cross_service_client
+        """Test concurrent API operations maintain database integrity."""
+        client = cross_service_client
         
         async def create_content(index: int):
             content_data = {
@@ -246,11 +256,13 @@ class TestAPIToDatabaseIntegration:
 
 
 class TestServiceToServiceCommunication:
-    """Test communication between different services."""    
+    """Test communication between different services."""
+    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_fingerprinting_to_monitoring_service(self, cross_service_client):
-        """Test fingerprinting service to monitoring service communication."""        client = cross_service_client
+        """Test fingerprinting service to monitoring service communication."""
+        client = cross_service_client
         
         # Create content for fingerprinting
         content_data = {
@@ -287,7 +299,8 @@ class TestServiceToServiceCommunication:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_payment_to_licensing_service(self, cross_service_client):
-        """Test payment service to licensing service communication."""        client = cross_service_client
+        """Test payment service to licensing service communication."""
+        client = cross_service_client
         
         # Create licensable content
         content_data = {
@@ -342,7 +355,8 @@ class TestServiceToServiceCommunication:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_analytics_to_reporting_service(self, cross_service_client):
-        """Test analytics service to reporting service communication."""        client = cross_service_client
+        """Test analytics service to reporting service communication."""
+        client = cross_service_client
         
         # Generate some analytics data
         analytics_events = [
@@ -394,11 +408,13 @@ class TestServiceToServiceCommunication:
 
 
 class TestExternalServiceCoordination:
-    """Test coordination with external services."""    
+    """Test coordination with external services."""
+    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_payment_processor_coordination(self, cross_service_client):
-        """Test coordination with external payment processors."""        client = cross_service_client
+        """Test coordination with external payment processors."""
+        client = cross_service_client
         
         # Setup payment method
         payment_setup = {
@@ -445,7 +461,8 @@ class TestExternalServiceCoordination:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_platform_api_coordination(self, cross_service_client):
-        """Test coordination with platform APIs."""        client = cross_service_client
+        """Test coordination with platform APIs."""
+        client = cross_service_client
         
         # Setup platform monitoring
         monitoring_config = {
@@ -494,7 +511,8 @@ class TestExternalServiceCoordination:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_ai_service_coordination(self, cross_service_client):
-        """Test coordination with AI/ML services."""        client = cross_service_client
+        """Test coordination with AI/ML services."""
+        client = cross_service_client
         
         # Submit content for AI analysis
         analysis_request = {
@@ -533,11 +551,13 @@ class TestExternalServiceCoordination:
 
 
 class TestDataFlowIntegration:
-    """Test data flow between services."""    
+    """Test data flow between services."""
+    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_content_lifecycle_data_flow(self, cross_service_client):
-        """Test data flow throughout content lifecycle."""        client = cross_service_client
+        """Test data flow throughout content lifecycle."""
+        client = cross_service_client
         
         # Step 1: Upload content
         content_data = {
@@ -591,7 +611,8 @@ class TestDataFlowIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_user_data_consistency_across_services(self, cross_service_client):
-        """Test user data consistency across all services."""        client = cross_service_client
+        """Test user data consistency across all services."""
+        client = cross_service_client
         
         # Update user profile
         profile_update = {
@@ -645,11 +666,13 @@ class TestDataFlowIntegration:
 
 
 class TestErrorHandlingAcrossServices:
-    """Test error handling and recovery across services."""    
+    """Test error handling and recovery across services."""
+    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_service_failure_recovery(self, cross_service_client):
-        """Test system behavior when individual services fail."""        client = cross_service_client
+        """Test system behavior when individual services fail."""
+        client = cross_service_client
         
         # Simulate external service failure
         with patch('aiohttp.ClientSession.post') as mock_post:
@@ -682,7 +705,8 @@ class TestErrorHandlingAcrossServices:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_partial_failure_handling(self, cross_service_client):
-        """Test handling of partial failures in multi-service operations."""        client = cross_service_client
+        """Test handling of partial failures in multi-service operations."""
+        client = cross_service_client
         
         # Create content that should trigger multiple services
         content_data = {

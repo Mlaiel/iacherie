@@ -6,7 +6,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""from datetime import datetime
+"""
+from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Union
 from uuid import UUID
@@ -17,7 +18,8 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class MonitoringConfiguration(UUIDSchema, TimestampSchema):
-    """Content monitoring configuration schema."""    
+    """Content monitoring configuration schema."""
+    
     creator_id: UUID
     monitoring_name: str = Field(description="Monitoring configuration name")
     monitoring_type: str = Field(description="Type of monitoring")
@@ -65,7 +67,8 @@ class MonitoringConfiguration(UUIDSchema, TimestampSchema):
     
     @validator('monitoring_type')
     def validate_monitoring_type(cls, v):
-        """Validate monitoring type."""        allowed_types = {
+        """Validate monitoring type."""
+        allowed_types = {
             "copyright_protection", "trademark_monitoring", "brand_surveillance",
             "content_piracy", "unauthorized_usage", "reputation_monitoring",
             "competitive_intelligence", "trend_tracking", "sentiment_analysis"
@@ -76,7 +79,8 @@ class MonitoringConfiguration(UUIDSchema, TimestampSchema):
     
     @validator('monitoring_frequency')
     def validate_monitoring_frequency(cls, v):
-        """Validate monitoring frequency."""        allowed_frequencies = {
+        """Validate monitoring frequency."""
+        allowed_frequencies = {
             "real_time", "every_hour", "every_6_hours", "daily", 
             "weekly", "monthly", "custom"
         }
@@ -86,7 +90,8 @@ class MonitoringConfiguration(UUIDSchema, TimestampSchema):
 
 
 class ContentViolation(UUIDSchema, TimestampSchema, AuditSchema):
-    """Content violation detection result schema."""    
+    """Content violation detection result schema."""
+    
     monitoring_config_id: UUID
     original_content_id: UUID
     violation_type: str = Field(description="Type of violation detected")
@@ -141,7 +146,8 @@ class ContentViolation(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('violation_type')
     def validate_violation_type(cls, v):
-        """Validate violation type."""        allowed_types = {
+        """Validate violation type."""
+        allowed_types = {
             "copyright_infringement", "trademark_violation", "unauthorized_usage",
             "content_piracy", "brand_impersonation", "plagiarism",
             "fair_use_violation", "license_breach", "attribution_missing"
@@ -152,14 +158,16 @@ class ContentViolation(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('severity_level')
     def validate_severity_level(cls, v):
-        """Validate severity level."""        allowed_levels = {"low", "medium", "high", "critical", "urgent"}
+        """Validate severity level."""
+        allowed_levels = {"low", "medium", "high", "critical", "urgent"}
         if v not in allowed_levels:
             raise ValueError(f'Severity level must be one of: {", ".join(allowed_levels)}')
         return v
 
 
 class SurveillanceReport(UUIDSchema, TimestampSchema):
-    """Comprehensive surveillance and monitoring report schema."""    
+    """Comprehensive surveillance and monitoring report schema."""
+    
     creator_id: UUID
     report_period_start: datetime
     report_period_end: datetime
@@ -224,7 +232,8 @@ class SurveillanceReport(UUIDSchema, TimestampSchema):
 
 
 class SystemMonitoring(UUIDSchema, TimestampSchema):
-    """System performance and health monitoring schema."""    
+    """System performance and health monitoring schema."""
+    
     system_component: str = Field(description="System component being monitored")
     monitoring_type: str = Field(description="Type of system monitoring")
     
@@ -275,7 +284,8 @@ class SystemMonitoring(UUIDSchema, TimestampSchema):
     
     @validator('monitoring_type')
     def validate_monitoring_type(cls, v):
-        """Validate monitoring type."""        allowed_types = {
+        """Validate monitoring type."""
+        allowed_types = {
             "performance", "security", "availability", "capacity",
             "application", "database", "network", "ai_processing"
         }
@@ -285,7 +295,8 @@ class SystemMonitoring(UUIDSchema, TimestampSchema):
 
 
 class TrendAnalysis(UUIDSchema, TimestampSchema):
-    """Advanced trend analysis and prediction schema."""    
+    """Advanced trend analysis and prediction schema."""
+    
     analysis_scope: str = Field(description="Scope of trend analysis")
     analysis_period: str = Field(description="Time period for analysis")
     data_sources: List[str] = Field(description="Data sources used for analysis")
@@ -339,7 +350,8 @@ class TrendAnalysis(UUIDSchema, TimestampSchema):
     
     @validator('analysis_scope')
     def validate_analysis_scope(cls, v):
-        """Validate analysis scope."""        allowed_scopes = {
+        """Validate analysis scope."""
+        allowed_scopes = {
             "content_trends", "audience_behavior", "technology_trends",
             "market_analysis", "competitive_intelligence", "platform_evolution",
             "monetization_trends", "regulatory_changes", "global_trends"
@@ -350,7 +362,8 @@ class TrendAnalysis(UUIDSchema, TimestampSchema):
 
 
 class AlertConfiguration(UUIDSchema, TimestampSchema):
-    """Advanced alert and notification configuration schema."""    
+    """Advanced alert and notification configuration schema."""
+    
     creator_id: UUID
     alert_name: str = Field(description="Alert configuration name")
     alert_type: str = Field(description="Type of alert")
@@ -405,7 +418,8 @@ class AlertConfiguration(UUIDSchema, TimestampSchema):
     
     @validator('alert_type')
     def validate_alert_type(cls, v):
-        """Validate alert type."""        allowed_types = {
+        """Validate alert type."""
+        allowed_types = {
             "content_violation", "system_performance", "security_threat",
             "revenue_threshold", "engagement_anomaly", "competitive_intelligence",
             "trend_deviation", "capacity_warning", "error_spike", "custom"
@@ -416,14 +430,16 @@ class AlertConfiguration(UUIDSchema, TimestampSchema):
     
     @validator('priority_level')
     def validate_priority_level(cls, v):
-        """Validate priority level."""        allowed_levels = {"low", "medium", "high", "critical", "emergency"}
+        """Validate priority level."""
+        allowed_levels = {"low", "medium", "high", "critical", "emergency"}
         if v not in allowed_levels:
             raise ValueError(f'Priority level must be one of: {", ".join(allowed_levels)}')
         return v
 
 
 class CrawlerConfiguration(UUIDSchema, TimestampSchema):
-    """Web crawler and data collection configuration schema."""    
+    """Web crawler and data collection configuration schema."""
+    
     crawler_name: str = Field(description="Crawler configuration name")
     crawler_type: str = Field(description="Type of web crawler")
     target_scope: str = Field(description="Crawling target scope")
@@ -478,7 +494,8 @@ class CrawlerConfiguration(UUIDSchema, TimestampSchema):
     
     @validator('crawler_type')
     def validate_crawler_type(cls, v):
-        """Validate crawler type."""        allowed_types = {
+        """Validate crawler type."""
+        allowed_types = {
             "content_discovery", "copyright_monitoring", "competitive_intelligence",
             "trend_analysis", "brand_monitoring", "market_research",
             "social_listening", "news_tracking", "academic_research"

@@ -4,7 +4,8 @@ Provides shared test configuration, fixtures, and utilities for comprehensive mo
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import pytest
 import pytest_asyncio
 import logging
@@ -25,19 +26,22 @@ TEST_REPORTS_DIR = Path(__file__).parent / "test_reports"
 
 @pytest.fixture(scope="session")
 def event_loop():
-    """Create an instance of the default event loop for the test session."""    loop = asyncio.new_event_loop()
+    """Create an instance of the default event loop for the test session."""
+    loop = asyncio.new_event_loop()
     yield loop
     loop.close()
 
 @pytest.fixture
 async def temp_dir():
-    """Create a temporary directory for test files."""    temp_path = Path(tempfile.mkdtemp())
+    """Create a temporary directory for test files."""
+    temp_path = Path(tempfile.mkdtemp())
     yield temp_path
     shutil.rmtree(temp_path, ignore_errors=True)
 
 @pytest.fixture
 def sample_metrics_data():
-    """Generate sample metrics data for testing."""    return {
+    """Generate sample metrics data for testing."""
+    return {
         "ai_performance": {
             "model_inference_time": 0.25,
             "model_accuracy": 0.95,
@@ -60,7 +64,8 @@ def sample_metrics_data():
 
 @pytest.fixture
 def sample_content_data():
-    """Generate sample content data for testing."""    return {
+    """Generate sample content data for testing."""
+    return {
         "content_id": "content_123",
         "user_id": "user_456",
         "content_type": "audio",
@@ -79,7 +84,8 @@ def sample_content_data():
 
 @pytest.fixture
 def sample_business_data():
-    """Generate sample business data for testing."""    return {
+    """Generate sample business data for testing."""
+    return {
         "revenue_data": [
             {"date": "2025-01-01", "amount": 1000.0, "source": "subscription"},
             {"date": "2025-01-02", "amount": 750.0, "source": "advertising"},
@@ -101,7 +107,8 @@ def sample_business_data():
 
 @pytest.fixture
 def sample_anomaly_data():
-    """Generate sample anomaly data for testing."""    import numpy as np
+    """Generate sample anomaly data for testing."""
+    import numpy as np
     
     # Normal data with some anomalies
     normal_data = np.random.normal(100, 15, 1000)
@@ -116,7 +123,8 @@ def sample_anomaly_data():
 
 @pytest.fixture
 def mock_redis_client():
-    """Create a mock Redis client for testing."""    mock_redis = AsyncMock()
+    """Create a mock Redis client for testing."""
+    mock_redis = AsyncMock()
     mock_redis.get.return_value = None
     mock_redis.set.return_value = True
     mock_redis.exists.return_value = False
@@ -126,7 +134,8 @@ def mock_redis_client():
 
 @pytest.fixture
 def mock_database_session():
-    """Create a mock database session for testing."""    mock_session = AsyncMock()
+    """Create a mock database session for testing."""
+    mock_session = AsyncMock()
     mock_session.execute.return_value = MagicMock()
     mock_session.commit.return_value = None
     mock_session.rollback.return_value = None
@@ -135,7 +144,8 @@ def mock_database_session():
 
 @pytest.fixture
 def mock_metrics_collector():
-    """Create a mock metrics collector for testing."""    from ai.core.metrics import MetricsCollector
+    """Create a mock metrics collector for testing."""
+    from ai.core.metrics import MetricsCollector
     
     collector = AsyncMock(spec=MetricsCollector)
     collector.record_metric.return_value = None
@@ -145,7 +155,8 @@ def mock_metrics_collector():
 
 @pytest.fixture
 def performance_test_config():
-    """Configuration for performance testing."""    return {
+    """Configuration for performance testing."""
+    return {
         "max_response_time": 1.0,  # seconds
         "max_memory_usage": 100,   # MB
         "max_cpu_usage": 80,       # percentage
@@ -155,7 +166,8 @@ def performance_test_config():
 
 @pytest.fixture
 def alert_test_config():
-    """Configuration for alert testing."""    return {
+    """Configuration for alert testing."""
+    return {
         "alert_channels": ["email", "slack", "webhook"],
         "severity_levels": ["info", "warning", "error", "critical"],
         "notification_timeout": 5.0,  # seconds
@@ -164,7 +176,8 @@ def alert_test_config():
 
 @pytest.fixture
 def health_check_endpoints():
-    """Sample health check endpoints for testing."""    return {
+    """Sample health check endpoints for testing."""
+    return {
         "database": "postgresql://test:test@localhost:5432/test",
         "redis": "redis://localhost:6379/0",
         "api_endpoints": [
@@ -180,7 +193,8 @@ def health_check_endpoints():
 
 @pytest.fixture
 async def monitoring_system_setup():
-    """Set up a complete monitoring system for integration tests."""    from ai.monitoring import MonitoringIntegrationHub
+    """Set up a complete monitoring system for integration tests."""
+    from ai.monitoring import MonitoringIntegrationHub
     
     # Initialize monitoring components
     hub = MonitoringIntegrationHub()
@@ -193,7 +207,8 @@ async def monitoring_system_setup():
 
 @pytest.fixture
 def test_time_range():
-    """Generate a test time range for time-based tests."""    end_time = datetime.utcnow()
+    """Generate a test time range for time-based tests."""
+    end_time = datetime.utcnow()
     start_time = end_time - timedelta(hours=24)
     
     return {
@@ -204,7 +219,8 @@ def test_time_range():
 
 @pytest.fixture
 def real_data_samples():
-    """Provide real-world data samples for comprehensive testing."""    return {
+    """Provide real-world data samples for comprehensive testing."""
+    return {
         "audio_file_sizes": [2048000, 5242880, 10485760, 20971520],  # Various audio sizes
         "processing_times": [0.5, 1.2, 2.8, 5.5, 12.0],  # Realistic processing times
         "user_sessions": [300, 1800, 3600, 7200],  # Session durations in seconds
@@ -214,7 +230,8 @@ def real_data_samples():
 
 # Test data creation utilities
 def create_test_report_data():
-    """Create comprehensive test report data."""    return {
+    """Create comprehensive test report data."""
+    return {
         "report_id": "test_report_001",
         "generated_at": datetime.utcnow(),
         "report_type": "comprehensive",
@@ -225,7 +242,8 @@ def create_test_report_data():
     }
 
 def create_test_ai_model_data():
-    """Create AI model test data."""    return {
+    """Create AI model test data."""
+    return {
         "model_id": "test_model_001",
         "model_type": "content_generator",
         "version": "1.2.3",
@@ -245,22 +263,27 @@ def create_test_ai_model_data():
 
 # Performance testing utilities
 class PerformanceValidator:
-    """Utility class for validating performance metrics."""    
+    """Utility class for validating performance metrics."""
+    
     @staticmethod
     def validate_response_time(response_time: float, max_time: float = 1.0) -> bool:
-        """Validate response time is within acceptable limits."""        return response_time <= max_time
+        """Validate response time is within acceptable limits."""
+        return response_time <= max_time
     
     @staticmethod
     def validate_memory_usage(memory_mb: float, max_memory: float = 100.0) -> bool:
-        """Validate memory usage is within acceptable limits."""        return memory_mb <= max_memory
+        """Validate memory usage is within acceptable limits."""
+        return memory_mb <= max_memory
     
     @staticmethod
     def validate_throughput(requests_per_second: float, min_throughput: float = 100.0) -> bool:
-        """Validate throughput meets minimum requirements."""        return requests_per_second >= min_throughput
+        """Validate throughput meets minimum requirements."""
+        return requests_per_second >= min_throughput
 
 # Test data generators
 class TestDataGenerator:
-    """Generate realistic test data for various scenarios."""    
+    """Generate realistic test data for various scenarios."""
+    
     @staticmethod
     def generate_time_series_data(
         start_time: datetime,
@@ -269,7 +292,8 @@ class TestDataGenerator:
         base_value: float = 100.0,
         variance: float = 10.0
     ) -> List[Dict[str, Any]]:
-        """Generate time series data for testing."""        import random
+        """Generate time series data for testing."""
+        import random
         
         data = []
         current_time = start_time
@@ -286,7 +310,8 @@ class TestDataGenerator:
     
     @staticmethod
     def generate_user_activity_data(num_users: int = 1000) -> List[Dict[str, Any]]:
-        """Generate user activity data for testing."""        import random
+        """Generate user activity data for testing."""
+        import random
         
         activities = []
         for i in range(num_users):

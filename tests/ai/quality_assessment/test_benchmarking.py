@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -16,7 +17,8 @@ Module de test complet pour la validation d'analyse concurrentielle.
 
 Créé par : Fahed Mlaiel (mlaiel@live.de)
 Développement de Systèmes IA Professionnels
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -101,14 +103,17 @@ except ImportError:
 
 
 class TestBenchmarkEngine:
-    """Tests complets pour le moteur de benchmarking principal."""    
+    """Tests complets pour le moteur de benchmarking principal."""
+    
     @pytest.fixture
     def benchmark_engine(self):
-        """Fixture pour le moteur de benchmarking."""        return BenchmarkEngine()
+        """Fixture pour le moteur de benchmarking."""
+        return BenchmarkEngine()
     
     @pytest.fixture
     def standard_benchmark_config(self):
-        """Configuration de benchmark standard."""        return {
+        """Configuration de benchmark standard."""
+        return {
             'benchmark_id': 'quality_assessment_benchmark_2025',
             'test_categories': [
                 'image_quality_analysis',
@@ -153,7 +158,8 @@ class TestBenchmarkEngine:
     
     @pytest.mark.asyncio
     async def test_comprehensive_benchmark_execution(self, benchmark_engine, standard_benchmark_config):
-        """Test d'exécution complète de benchmark."""        result = await benchmark_engine.run_benchmark(standard_benchmark_config)
+        """Test d'exécution complète de benchmark."""
+        result = await benchmark_engine.run_benchmark(standard_benchmark_config)
         
         # Vérification de la structure de résultat
         assert isinstance(result, dict)
@@ -176,7 +182,8 @@ class TestBenchmarkEngine:
     
     @pytest.mark.asyncio
     async def test_performance_benchmark_detailed(self, benchmark_engine):
-        """Test détaillé de benchmark de performance."""        performance_config = {
+        """Test détaillé de benchmark de performance."""
+        performance_config = {
             'benchmark_type': 'performance',
             'test_scenarios': [
                 {
@@ -240,7 +247,8 @@ class TestBenchmarkEngine:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_benchmark_engine_performance(self, benchmark_engine):
-        """Test de performance du moteur de benchmark lui-même."""        lightweight_config = {
+        """Test de performance du moteur de benchmark lui-même."""
+        lightweight_config = {
             'benchmark_type': 'quick_performance_check',
             'test_categories': ['text_analysis', 'image_analysis'],
             'sample_size': 10,
@@ -265,14 +273,17 @@ class TestBenchmarkEngine:
 
 
 class TestCompetitorAnalyzer:
-    """Tests pour l'analyseur de concurrence."""    
+    """Tests pour l'analyseur de concurrence."""
+    
     @pytest.fixture
     def competitor_analyzer(self):
-        """Fixture pour l'analyseur de concurrence."""        return CompetitorAnalyzer()
+        """Fixture pour l'analyseur de concurrence."""
+        return CompetitorAnalyzer()
     
     @pytest.fixture
     def competitor_data(self):
-        """Données de concurrents simulées."""        return {
+        """Données de concurrents simulées."""
+        return {
             'competitors': [
                 {
                     'id': 'competitor_a',
@@ -345,7 +356,8 @@ class TestCompetitorAnalyzer:
         }
     
     def test_competitive_analysis_comprehensive(self, competitor_analyzer, competitor_data):
-        """Test d'analyse concurrentielle complète."""        if hasattr(competitor_analyzer, 'analyze_competition'):
+        """Test d'analyse concurrentielle complète."""
+        if hasattr(competitor_analyzer, 'analyze_competition'):
             result = competitor_analyzer.analyze_competition(competitor_data)
             assert isinstance(result, (dict, type(None)))
             
@@ -373,7 +385,8 @@ class TestCompetitorAnalyzer:
             assert competitor_data['our_system']['target_metrics']['accuracy_rate'] >= 95.0
     
     def test_performance_comparison_analysis(self, competitor_analyzer, competitor_data):
-        """Test d'analyse comparative de performance."""        comparison_metrics = [
+        """Test d'analyse comparative de performance."""
+        comparison_metrics = [
             'processing_speed',
             'accuracy_rate', 
             'user_satisfaction',
@@ -411,7 +424,8 @@ class TestCompetitorAnalyzer:
                         assert isinstance(metrics[metric], (int, float))
     
     def test_market_positioning_analysis(self, competitor_analyzer, competitor_data):
-        """Test d'analyse de positionnement marché."""        positioning_data = {
+        """Test d'analyse de positionnement marché."""
+        positioning_data = {
             'market_segments': {
                 'premium': {'size': 25.0, 'growth_rate': 8.5},
                 'mid_range': {'size': 45.0, 'growth_rate': 12.3},
@@ -454,13 +468,16 @@ class TestCompetitorAnalyzer:
 
 
 class TestQualityBenchmarks:
-    """Tests pour les benchmarks de qualité."""    
+    """Tests pour les benchmarks de qualité."""
+    
     @pytest.fixture
     def quality_benchmarks(self):
-        """Fixture pour les benchmarks de qualité."""        return QualityBenchmarks()
+        """Fixture pour les benchmarks de qualité."""
+        return QualityBenchmarks()
     
     def test_image_quality_benchmark(self, quality_benchmarks):
-        """Test de benchmark qualité image."""        image_quality_tests = [
+        """Test de benchmark qualité image."""
+        image_quality_tests = [
             {
                 'test_name': 'high_resolution_analysis',
                 'image_specs': {
@@ -525,7 +542,8 @@ class TestQualityBenchmarks:
                 assert len(test_case['quality_targets']) > 0
     
     def test_video_quality_benchmark(self, quality_benchmarks):
-        """Test de benchmark qualité vidéo."""        video_quality_tests = {
+        """Test de benchmark qualité vidéo."""
+        video_quality_tests = {
             'test_scenarios': [
                 {
                     'scenario': 'streaming_optimization',
@@ -589,13 +607,16 @@ class TestQualityBenchmarks:
 
 
 class TestEngagementBenchmarks:
-    """Tests pour les benchmarks d'engagement."""    
+    """Tests pour les benchmarks d'engagement."""
+    
     @pytest.fixture
     def engagement_benchmarks(self):
-        """Fixture pour les benchmarks d'engagement."""        return EngagementBenchmarks()
+        """Fixture pour les benchmarks d'engagement."""
+        return EngagementBenchmarks()
     
     def test_engagement_prediction_accuracy(self, engagement_benchmarks):
-        """Test de précision de prédiction d'engagement."""        engagement_test_data = {
+        """Test de précision de prédiction d'engagement."""
+        engagement_test_data = {
             'historical_posts': [
                 {
                     'post_id': 'post_001',
@@ -664,7 +685,8 @@ class TestEngagementBenchmarks:
             assert mae >= 0  # L'erreur ne peut pas être négative
     
     def test_platform_specific_engagement_benchmarks(self, engagement_benchmarks):
-        """Test de benchmarks d'engagement spécifiques aux plateformes."""        platform_benchmarks = {
+        """Test de benchmarks d'engagement spécifiques aux plateformes."""
+        platform_benchmarks = {
             'instagram': {
                 'content_types': {
                     'image': {'avg_engagement': 6.5, 'top_performers': 15.0},
@@ -718,11 +740,13 @@ class TestEngagementBenchmarks:
 
 
 class TestBenchmarkIntegration:
-    """Tests d'intégration pour le système de benchmarking complet."""    
+    """Tests d'intégration pour le système de benchmarking complet."""
+    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_comprehensive_system_benchmark(self):
-        """Test de benchmark système complet."""        comprehensive_benchmark = {
+        """Test de benchmark système complet."""
+        comprehensive_benchmark = {
             'benchmark_suite': 'ia_influencer_agent_full_benchmark_2025',
             'test_categories': [
                 'quality_analysis_performance',
@@ -787,7 +811,8 @@ class TestBenchmarkIntegration:
     
     @pytest.mark.performance
     def test_benchmark_performance_regression(self):
-        """Test de régression de performance pour les benchmarks."""        # Simulation de résultats de benchmark historiques
+        """Test de régression de performance pour les benchmarks."""
+        # Simulation de résultats de benchmark historiques
         historical_benchmarks = [
             {'version': 'v1.0', 'benchmark_score': 82.5, 'date': '2025-07-01'},
             {'version': 'v1.1', 'benchmark_score': 85.2, 'date': '2025-07-15'},
@@ -829,7 +854,8 @@ class TestBenchmarkIntegration:
         assert performance['accuracy'] >= 95.0         # Cible précision
     
     def test_competitive_benchmark_analysis(self):
-        """Test d'analyse de benchmark concurrentiel."""        competitive_benchmark_data = {
+        """Test d'analyse de benchmark concurrentiel."""
+        competitive_benchmark_data = {
             'our_system': {
                 'name': 'IA-Influencer-Agent',
                 'version': 'v1.3',

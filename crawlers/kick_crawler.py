@@ -11,7 +11,8 @@ Created by: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import json
 import logging
@@ -37,14 +38,16 @@ logger = logging.getLogger(__name__)
 
 
 class KickStreamStatus(str, Enum):
-    """Kick stream status types"""    LIVE = "live"
+    """Kick stream status types"""
+    LIVE = "live"
     OFFLINE = "offline"
     RERUN = "rerun"
     PREMIERING = "premiering"
 
 
 class KickContentType(str, Enum):
-    """Kick content types"""    STREAM = "stream"
+    """Kick content types"""
+    STREAM = "stream"
     CLIP = "clip"
     VIDEO = "video"
     CHAT_MESSAGE = "chat_message"
@@ -52,7 +55,8 @@ class KickContentType(str, Enum):
 
 
 class KickStreamCategory(str, Enum):
-    """Kick stream categories"""    GAMING = "gaming"
+    """Kick stream categories"""
+    GAMING = "gaming"
     IRL = "irl"
     MUSIC = "music"
     ART = "art"
@@ -64,7 +68,8 @@ class KickStreamCategory(str, Enum):
 
 
 class KickChatMessage(BaseModel):
-    """Kick chat message data model"""    message_id: str
+    """Kick chat message data model"""
+    message_id: str
     user_id: str
     username: str
     display_name: str
@@ -84,7 +89,8 @@ class KickChatMessage(BaseModel):
 
 
 class KickUser(BaseModel):
-    """Kick user data model"""    user_id: str
+    """Kick user data model"""
+    user_id: str
     username: str
     display_name: str
     bio: Optional[str] = None
@@ -109,7 +115,8 @@ class KickUser(BaseModel):
 
 
 class KickStream(BaseModel):
-    """Kick stream data model"""    stream_id: str
+    """Kick stream data model"""
+    stream_id: str
     channel_id: str
     user: KickUser
     title: str
@@ -145,7 +152,8 @@ class KickStream(BaseModel):
 
 
 class KickClip(BaseModel):
-    """Kick clip data model"""    clip_id: str
+    """Kick clip data model"""
+    clip_id: str
     stream_id: str
     user: KickUser
     creator_user_id: str
@@ -168,7 +176,8 @@ class KickClip(BaseModel):
 
 
 class KickChatSession(BaseModel):
-    """Kick chat session data model"""    session_id: str
+    """Kick chat session data model"""
+    session_id: str
     stream_id: str
     start_time: datetime
     end_time: Optional[datetime] = None
@@ -186,7 +195,8 @@ class KickChatSession(BaseModel):
 
 
 class KickSearchResults(BaseModel):
-    """Kick search results data model"""    query: str
+    """Kick search results data model"""
+    query: str
     total_results: int
     streams: List[KickStream] = Field(default_factory=list)
     clips: List[KickClip] = Field(default_factory=list)
@@ -199,7 +209,8 @@ class KickSearchResults(BaseModel):
 
 
 class KickAnalytics(BaseModel):
-    """Kick analytics data model"""    user_id: str
+    """Kick analytics data model"""
+    user_id: str
     analysis_period: Tuple[datetime, datetime]
     total_streams: int
     total_stream_time: int  # minutes
@@ -224,11 +235,13 @@ class KickAnalytics(BaseModel):
 
 
 class KickCrawler(BaseCrawler):
-    """    Ultra-Advanced Kick Platform Crawler
+    """
+    Ultra-Advanced Kick Platform Crawler
     
     Provides comprehensive crawling and monitoring capabilities for Kick streaming platform,
     specializing in live streams, gaming content, chat analysis, and real-time protection.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -279,7 +292,8 @@ class KickCrawler(BaseCrawler):
         logger.info("Kick crawler initialized with ultra-advanced streaming monitoring")
 
     async def authenticate(self, email: str, password: str) -> bool:
-        """        Authenticate with Kick platform
+        """
+        Authenticate with Kick platform
         
         Args:
             email: User email
@@ -287,7 +301,8 @@ class KickCrawler(BaseCrawler):
             
         Returns:
             bool: Authentication success status
-        """        try:
+        """
+        try:
             # Get CSRF token first
             async with self.session.get(f"{self.base_url}/login") as response:
                 if response.status == 200:
@@ -350,7 +365,8 @@ class KickCrawler(BaseCrawler):
             return False
 
     async def _get_user_info(self) -> Optional[Dict[str, Any]]:
-        """Get authenticated user information"""        try:
+        """Get authenticated user information"""
+        try:
             async with self.session.get(f"{self.api_base}/user") as response:
                 if response.status == 200:
                     user_data = await response.json()
@@ -370,7 +386,8 @@ class KickCrawler(BaseCrawler):
         is_live_only: bool = False,
         limit: int = 50
     ) -> KickSearchResults:
-        """        Search Kick content with advanced filtering
+        """
+        Search Kick content with advanced filtering
         
         Args:
             query: Search query
@@ -382,7 +399,8 @@ class KickCrawler(BaseCrawler):
             
         Returns:
             KickSearchResults: Comprehensive search results
-        """        await self.rate_limiter.acquire()
+        """
+        await self.rate_limiter.acquire()
         
         try:
             # Check cache first
@@ -451,7 +469,8 @@ class KickCrawler(BaseCrawler):
         is_live_only: bool,
         limit: int
     ) -> List[KickStream]:
-        """Search for Kick streams"""        try:
+        """Search for Kick streams"""
+        try:
             params = {
                 "limit": limit,
                 "page": 1
@@ -497,7 +516,8 @@ class KickCrawler(BaseCrawler):
         category: Optional[KickStreamCategory],
         limit: int
     ) -> List[KickClip]:
-        """Search for Kick clips"""        try:
+        """Search for Kick clips"""
+        try:
             params = {
                 "limit": limit,
                 "page": 1
@@ -533,7 +553,8 @@ class KickCrawler(BaseCrawler):
             return []
 
     async def _search_users(self, query: str, limit: int) -> List[KickUser]:
-        """Search for Kick users"""        try:
+        """Search for Kick users"""
+        try:
             params = {
                 "search": query,
                 "limit": limit
@@ -564,14 +585,16 @@ class KickCrawler(BaseCrawler):
             return []
 
     async def get_content_details(self, stream_id: str) -> Optional[KickStream]:
-        """        Get detailed information about specific Kick stream
+        """
+        Get detailed information about specific Kick stream
         
         Args:
             stream_id: Stream ID or channel slug
             
         Returns:
             Optional[KickStream]: Detailed stream information
-        """        await self.rate_limiter.acquire()
+        """
+        await self.rate_limiter.acquire()
         
         try:
             # Check cache first
@@ -614,7 +637,8 @@ class KickCrawler(BaseCrawler):
         keywords: List[str] = None,
         check_interval: int = 300
     ) -> AsyncGenerator[KickStream, None]:
-        """        Real-time content monitoring for Kick
+        """
+        Real-time content monitoring for Kick
         
         Args:
             streamer_usernames: Streamers to monitor
@@ -624,7 +648,8 @@ class KickCrawler(BaseCrawler):
             
         Yields:
             KickStream: New streams detected
-        """        streamer_usernames = streamer_usernames or []
+        """
+        streamer_usernames = streamer_usernames or []
         games = games or []
         keywords = keywords or []
         
@@ -692,7 +717,8 @@ class KickCrawler(BaseCrawler):
                 await asyncio.sleep(60)
 
     async def _monitor_stream_chat(self, stream: KickStream):
-        """Monitor chat for a specific stream"""        try:
+        """Monitor chat for a specific stream"""
+        try:
             if not self.enable_chat_monitoring:
                 return
             
@@ -751,7 +777,8 @@ class KickCrawler(BaseCrawler):
         comparison_set: List[KickStream],
         threshold: float = None
     ) -> List[Tuple[KickStream, float]]:
-        """        Detect stream similarity
+        """
+        Detect stream similarity
         
         Args:
             target_stream: Stream to compare
@@ -760,7 +787,8 @@ class KickCrawler(BaseCrawler):
             
         Returns:
             List[Tuple[KickStream, float]]: Similar streams with scores
-        """        threshold = threshold or self.similarity_threshold
+        """
+        threshold = threshold or self.similarity_threshold
         similar_streams = []
         
         try:
@@ -788,7 +816,8 @@ class KickCrawler(BaseCrawler):
             return []
 
     async def _extract_stream_features(self, stream: KickStream) -> Dict[str, Any]:
-        """Extract features for similarity comparison"""        features = {
+        """Extract features for similarity comparison"""
+        features = {
             "title": stream.title.lower(),
             "game_name": (stream.game_name or "").lower(),
             "category": stream.category.value,
@@ -806,7 +835,8 @@ class KickCrawler(BaseCrawler):
         features1: Dict[str, Any],
         features2: Dict[str, Any]
     ) -> float:
-        """Calculate similarity between stream features"""        try:
+        """Calculate similarity between stream features"""
+        try:
             scores = []
             
             # Title similarity
@@ -845,7 +875,8 @@ class KickCrawler(BaseCrawler):
         user_id: str,
         analysis_period: Tuple[datetime, datetime]
     ) -> KickAnalytics:
-        """        Generate comprehensive analytics for Kick user
+        """
+        Generate comprehensive analytics for Kick user
         
         Args:
             user_id: User ID to analyze
@@ -853,7 +884,8 @@ class KickCrawler(BaseCrawler):
             
         Returns:
             KickAnalytics: Comprehensive analytics data
-        """        try:
+        """
+        try:
             start_time, end_time = analysis_period
             
             # Get user's streaming data
@@ -975,7 +1007,8 @@ class KickCrawler(BaseCrawler):
             )
 
     async def _parse_stream_data(self, data: Dict[str, Any]) -> KickStream:
-        """Parse stream data from API response"""        try:
+        """Parse stream data from API response"""
+        try:
             # Parse user data
             user_data = data.get("user", {})
             user = KickUser(
@@ -1019,7 +1052,8 @@ class KickCrawler(BaseCrawler):
             raise
 
     async def _parse_user_data(self, data: Dict[str, Any]) -> KickUser:
-        """Parse user data from API response"""        return KickUser(
+        """Parse user data from API response"""
+        return KickUser(
             user_id=str(data.get("id", "")),
             username=data.get("username", ""),
             display_name=data.get("slug", ""),
@@ -1033,7 +1067,8 @@ class KickCrawler(BaseCrawler):
         )
 
     async def _parse_clip_data(self, data: Dict[str, Any]) -> KickClip:
-        """Parse clip data from API response"""        try:
+        """Parse clip data from API response"""
+        try:
             # Parse creator data
             creator_data = data.get("creator", {})
             user = KickUser(
@@ -1071,7 +1106,8 @@ class KickCrawler(BaseCrawler):
             raise
 
     async def _parse_chat_message(self, data: Dict[str, Any]) -> KickChatMessage:
-        """Parse chat message data"""        sender = data.get("sender", {})
+        """Parse chat message data"""
+        sender = data.get("sender", {})
         
         return KickChatMessage(
             message_id=str(data.get("id", "")),
@@ -1088,16 +1124,19 @@ class KickCrawler(BaseCrawler):
         )
 
     async def _calculate_stream_similarity(self, stream: KickStream) -> float:
-        """Calculate similarity score against protected content"""        # Simplified similarity calculation
+        """Calculate similarity score against protected content"""
+        # Simplified similarity calculation
         return 0.0
 
     async def _check_protection_status(self, stream: KickStream) -> str:
-        """Check protection status of stream"""        if stream.stream_id in self.protected_content:
+        """Check protection status of stream"""
+        if stream.stream_id in self.protected_content:
             return "protected"
         return "unprotected"
 
     async def _enrich_stream_data(self, stream: KickStream):
-        """Enrich stream data with additional metrics"""        try:
+        """Enrich stream data with additional metrics"""
+        try:
             # This would make additional API calls to get more detailed metrics
             pass
         except Exception as e:
@@ -1109,11 +1148,13 @@ class KickCrawler(BaseCrawler):
         start_time: datetime,
         end_time: datetime
     ) -> List[KickStream]:
-        """Get user's streams in a specific time period"""        # This would require additional API calls or database queries
+        """Get user's streams in a specific time period"""
+        # This would require additional API calls or database queries
         return []
 
     async def _handle_rate_limit(self, response: aiohttp.ClientResponse) -> bool:
-        """Handle rate limiting responses"""        if response.status == 429:
+        """Handle rate limiting responses"""
+        if response.status == 429:
             retry_after = int(response.headers.get('Retry-After', 60))
             logger.warning(f"Rate limited. Waiting {retry_after} seconds")
             await asyncio.sleep(retry_after)
@@ -1121,7 +1162,8 @@ class KickCrawler(BaseCrawler):
         return False
 
     async def close(self):
-        """Close crawler and cleanup resources"""        try:
+        """Close crawler and cleanup resources"""
+        try:
             # Close active chat connections
             for websocket in self.active_chat_sessions.values():
                 await websocket.close()

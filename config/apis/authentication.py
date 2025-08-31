@@ -4,7 +4,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive authentication management for external APIs
 including OAuth2 flows, API key management, JWT tokens, and refresh mechanisms.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import base64
 import hashlib
@@ -23,7 +24,8 @@ import jwt as jwt_lib
 logger = logging.getLogger(__name__)
 
 class AuthenticationType(Enum):
-    """Authentication types"""    OAUTH2 = "oauth2"
+    """Authentication types"""
+    OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
     BEARER_TOKEN = "bearer_token"
@@ -32,7 +34,8 @@ class AuthenticationType(Enum):
     CUSTOM = "custom"
 
 class OAuth2GrantType(Enum):
-    """OAuth2 grant types"""    AUTHORIZATION_CODE = "authorization_code"
+    """OAuth2 grant types"""
+    AUTHORIZATION_CODE = "authorization_code"
     CLIENT_CREDENTIALS = "client_credentials"
     REFRESH_TOKEN = "refresh_token"
     IMPLICIT = "implicit"
@@ -40,7 +43,8 @@ class OAuth2GrantType(Enum):
 
 @dataclass
 class AuthToken:
-    """Authentication token data"""    access_token: str
+    """Authentication token data"""
+    access_token: str
     token_type: str = "Bearer"
     expires_in: Optional[int] = None
     refresh_token: Optional[str] = None
@@ -49,23 +53,27 @@ class AuthToken:
     
     @property
     def expires_at(self) -> Optional[datetime]:
-        """Calculate expiration time"""        if self.expires_in:
+        """Calculate expiration time"""
+        if self.expires_in:
             return self.created_at + timedelta(seconds=self.expires_in)
         return None
     
     @property
     def is_expired(self) -> bool:
-        """Check if token is expired"""        if self.expires_at:
+        """Check if token is expired"""
+        if self.expires_at:
             return datetime.utcnow() >= self.expires_at - timedelta(minutes=5)  # 5 min buffer
         return False
     
     @property
     def is_valid(self) -> bool:
-        """Check if token is valid"""        return bool(self.access_token) and not self.is_expired
+        """Check if token is valid"""
+        return bool(self.access_token) and not self.is_expired
 
 @dataclass
 class AuthConfig:
-    """Authentication configuration"""    auth_type: AuthenticationType
+    """Authentication configuration"""
+    auth_type: AuthenticationType
     api_name: str
     
     # OAuth2 Configuration
@@ -98,19 +106,22 @@ class AuthConfig:
     auto_refresh: bool = True
     
     def get_cache_key(self, user_id: Optional[str] = None) -> str:
-        """Generate cache key for token storage"""        key_parts = [self.token_cache_key_prefix, self.api_name]
+        """Generate cache key for token storage"""
+        key_parts = [self.token_cache_key_prefix, self.api_name]
         if user_id:
             key_parts.append(user_id)
         return ":".join(key_parts)
 
 class OAuth2Manager:
-    """OAuth2 authentication manager"""    
+    """OAuth2 authentication manager"""
+    
     def __init__(self, config: AuthConfig):
         self.config = config
         self.state_storage: Dict[str, Dict[str, Any]] = {}
     
     def generate_auth_url(self, user_id: str, state_data: Optional[Dict[str, Any]] = None) -> str:
-        """        Generate OAuth2 authorization URL
+        """
+        Generate OAuth2 authorization URL
         
         Args:
             user_id: User identifier
@@ -118,7 +129,8 @@ class OAuth2Manager:
             
         Returns:
             Authorization URL
-        """        state = self._generate_state(user_id, state_data)
+        """
+        state = self._generate_state(user_id, state_data)
         
         params = {
             'response_type': 'code',
@@ -133,7 +145,8 @@ class OAuth2Manager:
         return f"{self.config.auth_url}?{urlencode(params)}"
     
     def _generate_state(self, user_id: str, state_data: Optional[Dict[str, Any]] = None) -> str:
-        """Generate secure state parameter"""        state_id = secrets.token_urlsafe(32)
+        """Generate secure state parameter"""
+        state_id = secrets.token_urlsafe(32)
         
         self.state_storage[state_id] = {
             'user_id': user_id,
@@ -144,7 +157,8 @@ class OAuth2Manager:
         return state_id
     
     def verify_state(self, state: str) -> Optional[Dict[str, Any]]:
-        """Verify and retrieve state data"""        if state not in self.state_storage:
+        """Verify and retrieve state data"""
+        if state not in self.state_storage:
             return None
         
         state_data = self.state_storage[state]
@@ -159,7 +173,8 @@ class OAuth2Manager:
         return state_data
     
     async def exchange_code_for_token(self, code: str, state: str) -> Optional[AuthToken]:
-        """        Exchange authorization code for access token
+        """
+        Exchange authorization code for access token
         
         Args:
             code: Authorization code
@@ -167,7 +182,8 @@ class OAuth2Manager:
             
         Returns:
             AuthToken or None if failed
-        """        try:
+        """
+        try:
             # Verify state
             state_data = self.verify_state(state)
             if not state_data:
@@ -209,14 +225,16 @@ class OAuth2Manager:
             return None
     
     async def refresh_access_token(self, refresh_token: str) -> Optional[AuthToken]:
-        """        Refresh access token using refresh token
+        """
+        Refresh access token using refresh token
         
         Args:
             refresh_token: Refresh token
             
         Returns:
             New AuthToken or None if failed
-        """        try:
+        """
+        try:
             data = {
                 'grant_type': 'refresh_token',
                 'refresh_token': refresh_token,
@@ -250,11 +268,13 @@ class OAuth2Manager:
             return None
     
     async def get_client_credentials_token(self) -> Optional[AuthToken]:
-        """        Get access token using client credentials flow
+        """
+        Get access token using client credentials flow
         
         Returns:
             AuthToken or None if failed
-        """        try:
+        """
+        try:
             data = {
                 'grant_type': 'client_credentials',
                 'scope': ' '.join(self.config.scopes)
@@ -290,25 +310,30 @@ class OAuth2Manager:
             return None
 
 class APIKeyManager:
-    """API Key authentication manager"""    
+    """API Key authentication manager"""
+    
     def __init__(self, config: AuthConfig):
         self.config = config
     
     def get_auth_headers(self) -> Dict[str, str]:
-        """Get headers with API key authentication"""        return {
+        """Get headers with API key authentication"""
+        return {
             self.config.api_key_header: self.config.api_key
         }
     
     def validate_api_key(self) -> bool:
-        """Validate API key is present"""        return bool(self.config.api_key)
+        """Validate API key is present"""
+        return bool(self.config.api_key)
 
 class JWTManager:
-    """JWT token manager"""    
+    """JWT token manager"""
+    
     def __init__(self, config: AuthConfig):
         self.config = config
     
     def generate_jwt(self, payload: Dict[str, Any]) -> str:
-        """Generate JWT token"""        payload.update({
+        """Generate JWT token"""
+        payload.update({
             'iat': int(time.time()),
             'exp': int(time.time()) + (self.config.jwt_expiry_hours * 3600),
             'iss': self.config.api_name
@@ -317,7 +342,8 @@ class JWTManager:
         return jwt_lib.encode(payload, self.config.jwt_secret, algorithm=self.config.jwt_algorithm)
     
     def verify_jwt(self, token: str) -> Optional[Dict[str, Any]]:
-        """Verify JWT token"""        try:
+        """Verify JWT token"""
+        try:
             payload = jwt_lib.decode(
                 token, 
                 self.config.jwt_secret, 
@@ -332,12 +358,14 @@ class JWTManager:
             return None
 
 class SignatureManager:
-    """API signature authentication manager"""    
+    """API signature authentication manager"""
+    
     def __init__(self, config: AuthConfig):
         self.config = config
     
     def generate_signature(self, method: str, url: str, body: str = "", timestamp: Optional[str] = None) -> Tuple[str, str]:
-        """        Generate API signature
+        """
+        Generate API signature
         
         Args:
             method: HTTP method
@@ -347,7 +375,8 @@ class SignatureManager:
             
         Returns:
             Tuple of (signature, timestamp)
-        """        if not timestamp:
+        """
+        if not timestamp:
             timestamp = str(int(time.time()))
         
         # Create string to sign
@@ -363,7 +392,8 @@ class SignatureManager:
         return signature, timestamp
     
     def get_auth_headers(self, method: str, url: str, body: str = "") -> Dict[str, str]:
-        """Get headers with signature authentication"""        signature, timestamp = self.generate_signature(method, url, body)
+        """Get headers with signature authentication"""
+        signature, timestamp = self.generate_signature(method, url, body)
         
         return {
             self.config.signature_header: signature,
@@ -372,7 +402,8 @@ class SignatureManager:
         }
 
 class APIAuthenticationManager:
-    """Main API authentication manager"""    
+    """Main API authentication manager"""
+    
     def __init__(self):
         self.token_cache: Dict[str, AuthToken] = {}
         self.oauth2_managers: Dict[str, OAuth2Manager] = {}
@@ -381,7 +412,8 @@ class APIAuthenticationManager:
         self.signature_managers: Dict[str, SignatureManager] = {}
     
     def register_auth_config(self, api_name: str, config: AuthConfig):
-        """Register authentication configuration for an API"""        if config.auth_type == AuthenticationType.OAUTH2:
+        """Register authentication configuration for an API"""
+        if config.auth_type == AuthenticationType.OAUTH2:
             self.oauth2_managers[api_name] = OAuth2Manager(config)
         elif config.auth_type == AuthenticationType.API_KEY:
             self.api_key_managers[api_name] = APIKeyManager(config)
@@ -394,7 +426,8 @@ class APIAuthenticationManager:
     
     async def get_authenticated_client(self, platform: str, config: Dict[str, Any], 
                                     user_id: Optional[str] = None) -> Optional[aiohttp.ClientSession]:
-        """        Get authenticated HTTP client for platform
+        """
+        Get authenticated HTTP client for platform
         
         Args:
             platform: Platform name
@@ -403,7 +436,8 @@ class APIAuthenticationManager:
             
         Returns:
             Authenticated ClientSession or None
-        """        try:
+        """
+        try:
             headers = {}
             
             # Determine authentication type and get headers
@@ -442,7 +476,8 @@ class APIAuthenticationManager:
             return None
     
     async def _get_oauth2_token(self, api_name: str, user_id: Optional[str] = None) -> Optional[AuthToken]:
-        """Get OAuth2 token for API and user"""        cache_key = f"{api_name}:{user_id or 'default'}"
+        """Get OAuth2 token for API and user"""
+        cache_key = f"{api_name}:{user_id or 'default'}"
         
         # Check cache first
         if cache_key in self.token_cache:
@@ -468,13 +503,15 @@ class APIAuthenticationManager:
         return None
     
     def store_user_token(self, api_name: str, user_id: str, token: AuthToken):
-        """Store user-specific OAuth2 token"""        cache_key = f"{api_name}:{user_id}"
+        """Store user-specific OAuth2 token"""
+        cache_key = f"{api_name}:{user_id}"
         self.token_cache[cache_key] = token
         logger.info(f"Stored token for {api_name} user {user_id}")
     
     def get_auth_headers(self, api_name: str, method: str = "GET", 
                         url: str = "", body: str = "") -> Dict[str, str]:
-        """Get authentication headers for API request"""        headers = {}
+        """Get authentication headers for API request"""
+        headers = {}
         
         if api_name in self.api_key_managers:
             headers.update(self.api_key_managers[api_name].get_auth_headers())
@@ -485,12 +522,14 @@ class APIAuthenticationManager:
     
     def generate_oauth2_auth_url(self, api_name: str, user_id: str, 
                                 state_data: Optional[Dict[str, Any]] = None) -> Optional[str]:
-        """Generate OAuth2 authorization URL"""        if api_name in self.oauth2_managers:
+        """Generate OAuth2 authorization URL"""
+        if api_name in self.oauth2_managers:
             return self.oauth2_managers[api_name].generate_auth_url(user_id, state_data)
         return None
     
     async def handle_oauth2_callback(self, api_name: str, code: str, state: str) -> Optional[AuthToken]:
-        """Handle OAuth2 callback and exchange code for token"""        if api_name in self.oauth2_managers:
+        """Handle OAuth2 callback and exchange code for token"""
+        if api_name in self.oauth2_managers:
             manager = self.oauth2_managers[api_name]
             token = await manager.exchange_code_for_token(code, state)
             
@@ -505,13 +544,15 @@ class APIAuthenticationManager:
         return None
     
     def revoke_user_token(self, api_name: str, user_id: str):
-        """Revoke user-specific token"""        cache_key = f"{api_name}:{user_id}"
+        """Revoke user-specific token"""
+        cache_key = f"{api_name}:{user_id}"
         if cache_key in self.token_cache:
             del self.token_cache[cache_key]
             logger.info(f"Revoked token for {api_name} user {user_id}")
     
     def get_token_status(self, api_name: str, user_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get token status for API and user"""        cache_key = f"{api_name}:{user_id or 'default'}"
+        """Get token status for API and user"""
+        cache_key = f"{api_name}:{user_id or 'default'}"
         
         if cache_key in self.token_cache:
             token = self.token_cache[cache_key]

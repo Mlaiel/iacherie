@@ -20,7 +20,8 @@ Real-time Dashboards → Growth Strategy Planning
 ANALYTICS REPOSITORY ARCHITECTURE:
 Data Collection → Metrics Calculation → Trend Analysis → 
 Predictive Modeling → Insight Generation → Visualization → Recommendations
-"""from typing import Dict, List, Optional, Any, Tuple, Union
+"""
+from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 import hashlib
@@ -38,7 +39,8 @@ except ImportError:
     AnalyticsModel = object
 
 class MetricType(Enum):
-    """Types of analytics metrics"""    ENGAGEMENT = "engagement"
+    """Types of analytics metrics"""
+    ENGAGEMENT = "engagement"
     PERFORMANCE = "performance"
     GROWTH = "growth"
     REVENUE = "revenue"
@@ -46,7 +48,8 @@ class MetricType(Enum):
     COLLABORATION = "collaboration"
 
 class TimeRange(Enum):
-    """Time ranges for analytics"""    LAST_24H = "24h"
+    """Time ranges for analytics"""
+    LAST_24H = "24h"
     LAST_7D = "7d"
     LAST_30D = "30d"
     LAST_90D = "90d"
@@ -54,14 +57,16 @@ class TimeRange(Enum):
     ALL_TIME = "all"
 
 class AnalyticsGranularity(Enum):
-    """Data granularity for analytics"""    HOURLY = "hourly"
+    """Data granularity for analytics"""
+    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
 
 @dataclass
 class EngagementMetrics:
-    """Engagement analytics metrics"""    total_views: int
+    """Engagement analytics metrics"""
+    total_views: int
     total_likes: int
     total_shares: int
     total_comments: int
@@ -73,7 +78,8 @@ class EngagementMetrics:
 
 @dataclass
 class PerformanceMetrics:
-    """Performance analytics metrics"""    content_count: int
+    """Performance analytics metrics"""
+    content_count: int
     total_reach: int
     impression_count: int
     click_through_rate: float
@@ -84,7 +90,8 @@ class PerformanceMetrics:
 
 @dataclass
 class GrowthMetrics:
-    """Growth analytics metrics"""    follower_growth_rate: float
+    """Growth analytics metrics"""
+    follower_growth_rate: float
     content_growth_rate: float
     engagement_growth_rate: float
     revenue_growth_rate: float
@@ -95,7 +102,8 @@ class GrowthMetrics:
 
 @dataclass
 class RevenueMetrics:
-    """Revenue analytics metrics"""    total_revenue: float
+    """Revenue analytics metrics"""
+    total_revenue: float
     revenue_per_content: float
     revenue_per_follower: float
     subscription_revenue: float
@@ -105,7 +113,8 @@ class RevenueMetrics:
 
 @dataclass
 class PredictiveAnalytics:
-    """AI-powered predictive analytics"""    growth_forecast: Dict[str, float]
+    """AI-powered predictive analytics"""
+    growth_forecast: Dict[str, float]
     revenue_projection: Dict[str, float]
     optimal_posting_times: List[str]
     content_recommendations: List[str]
@@ -114,14 +123,16 @@ class PredictiveAnalytics:
 
 @dataclass
 class CompetitiveAnalytics:
-    """Competitive analysis metrics"""    market_position: str
+    """Competitive analysis metrics"""
+    market_position: str
     competitor_performance: Dict[str, Any]
     market_share: float
     trend_alignment: float
     opportunity_score: float
 
 class AnalyticsRepository(BaseRepository):
-    """    Advanced analytics repository with AI-powered insights
+    """
+    Advanced analytics repository with AI-powered insights
     
     Features:
     - Real-time metrics calculation and aggregation
@@ -130,7 +141,8 @@ class AnalyticsRepository(BaseRepository):
     - Custom dashboard and visualization support
     - Performance optimization recommendations
     - Automated report generation and scheduling
-    """    
+    """
+    
     def __init__(self, db_connection=None, cache_manager=None, 
                  ai_processor=None, prediction_service=None, 
                  visualization_service=None, report_service=None):
@@ -164,7 +176,8 @@ class AnalyticsRepository(BaseRepository):
     
     def calculate_engagement_metrics(self, creator_id: str, 
                                    time_range: TimeRange = TimeRange.LAST_30D) -> EngagementMetrics:
-        """Calculate comprehensive engagement metrics"""        try:
+        """Calculate comprehensive engagement metrics"""
+        try:
             # Check cache first
             cache_key = self._generate_cache_key("engagement", creator_id=creator_id, time_range=time_range.value)
             if self._cache_enabled and self.cache:
@@ -200,7 +213,8 @@ class AnalyticsRepository(BaseRepository):
     
     def calculate_performance_metrics(self, creator_id: str,
                                     time_range: TimeRange = TimeRange.LAST_30D) -> PerformanceMetrics:
-        """Calculate comprehensive performance metrics"""        try:
+        """Calculate comprehensive performance metrics"""
+        try:
             cache_key = self._generate_cache_key("performance", creator_id=creator_id, time_range=time_range.value)
             if self._cache_enabled and self.cache:
                 cached_metrics = self.cache.get(cache_key)
@@ -232,7 +246,8 @@ class AnalyticsRepository(BaseRepository):
     
     def calculate_growth_metrics(self, creator_id: str,
                                time_range: TimeRange = TimeRange.LAST_30D) -> GrowthMetrics:
-        """Calculate comprehensive growth metrics"""        try:
+        """Calculate comprehensive growth metrics"""
+        try:
             cache_key = self._generate_cache_key("growth", creator_id=creator_id, time_range=time_range.value)
             if self._cache_enabled and self.cache:
                 cached_metrics = self.cache.get(cache_key)
@@ -264,7 +279,8 @@ class AnalyticsRepository(BaseRepository):
     
     def calculate_revenue_metrics(self, creator_id: str,
                                 time_range: TimeRange = TimeRange.LAST_30D) -> RevenueMetrics:
-        """Calculate comprehensive revenue metrics"""        try:
+        """Calculate comprehensive revenue metrics"""
+        try:
             cache_key = self._generate_cache_key("revenue", creator_id=creator_id, time_range=time_range.value)
             if self._cache_enabled and self.cache:
                 cached_metrics = self.cache.get(cache_key)
@@ -302,10 +318,12 @@ class AnalyticsRepository(BaseRepository):
         return self.list(filters=filters)
     
     def get_by_content(self, content_id: str) -> List[AnalyticsModel]:
-        """Récupère les analytics pour un contenu"""        return self.list(filters={"content_id": content_id})
+        """Récupère les analytics pour un contenu"""
+        return self.list(filters={"content_id": content_id})
     
     def generate_predictive_analytics(self, creator_id: str) -> PredictiveAnalytics:
-        """Generate AI-powered predictive analytics"""        try:
+        """Generate AI-powered predictive analytics"""
+        try:
             if not self.ai_processor or not self.prediction_service:
                 return PredictiveAnalytics(
                     growth_forecast={}, revenue_projection={},
@@ -343,7 +361,8 @@ class AnalyticsRepository(BaseRepository):
             )
     
     def generate_competitive_analytics(self, creator_id: str) -> CompetitiveAnalytics:
-        """Generate competitive analysis and market positioning"""        try:
+        """Generate competitive analysis and market positioning"""
+        try:
             if not self.ai_processor:
                 return CompetitiveAnalytics(
                     market_position="unknown",
@@ -376,7 +395,8 @@ class AnalyticsRepository(BaseRepository):
     def generate_comprehensive_report(self, creator_id: str,
                                     time_range: TimeRange = TimeRange.LAST_30D,
                                     include_predictions: bool = True) -> Dict[str, Any]:
-        """Generate comprehensive analytics report"""        try:
+        """Generate comprehensive analytics report"""
+        try:
             # Calculate all metrics
             engagement = self.calculate_engagement_metrics(creator_id, time_range)
             performance = self.calculate_performance_metrics(creator_id, time_range)
@@ -426,7 +446,8 @@ class AnalyticsRepository(BaseRepository):
     
     # Helper methods for metric calculations
     def _calculate_engagement_rate(self, raw_data: Dict[str, Any]) -> float:
-        """Calculate engagement rate"""        total_interactions = (
+        """Calculate engagement rate"""
+        total_interactions = (
             raw_data.get('total_likes', 0) +
             raw_data.get('total_shares', 0) +
             raw_data.get('total_comments', 0)
@@ -438,7 +459,8 @@ class AnalyticsRepository(BaseRepository):
                                performance: PerformanceMetrics,
                                growth: GrowthMetrics,
                                revenue: RevenueMetrics) -> float:
-        """Calculate overall performance score"""        scores = {
+        """Calculate overall performance score"""
+        scores = {
             MetricType.ENGAGEMENT: engagement.engagement_rate,
             MetricType.PERFORMANCE: performance.quality_score,
             MetricType.GROWTH: max(0, growth.follower_growth_rate),
@@ -458,7 +480,8 @@ class AnalyticsRepository(BaseRepository):
                          performance: PerformanceMetrics,
                          growth: GrowthMetrics,
                          revenue: RevenueMetrics) -> List[str]:
-        """Generate actionable insights"""        insights = []
+        """Generate actionable insights"""
+        insights = []
         
         # Engagement insights
         if engagement.engagement_rate > 5:
@@ -478,7 +501,8 @@ class AnalyticsRepository(BaseRepository):
                                 performance: PerformanceMetrics,
                                 growth: GrowthMetrics,
                                 revenue: RevenueMetrics) -> List[str]:
-        """Generate actionable recommendations"""        recommendations = []
+        """Generate actionable recommendations"""
+        recommendations = []
         
         # Engagement recommendations
         if engagement.engagement_rate < 3:
@@ -494,23 +518,29 @@ class AnalyticsRepository(BaseRepository):
     
     # Data fetching methods (placeholders - would connect to actual data sources)
     def _get_engagement_data(self, creator_id: str, time_range: TimeRange) -> Dict[str, Any]:
-        """Fetch engagement data from database"""        return {}
+        """Fetch engagement data from database"""
+        return {}
     
     def _get_performance_data(self, creator_id: str, time_range: TimeRange) -> Dict[str, Any]:
-        """Fetch performance data from database"""        return {}
+        """Fetch performance data from database"""
+        return {}
     
     def _get_growth_data(self, creator_id: str, time_range: TimeRange) -> Dict[str, Any]:
-        """Fetch growth data from database"""        return {}
+        """Fetch growth data from database"""
+        return {}
     
     def _get_revenue_data(self, creator_id: str, time_range: TimeRange) -> Dict[str, Any]:
-        """Fetch revenue data from database"""        return {}
+        """Fetch revenue data from database"""
+        return {}
     
     def _get_historical_data(self, creator_id: str) -> Dict[str, Any]:
-        """Fetch historical data for predictions"""        return {}
+        """Fetch historical data for predictions"""
+        return {}
 
 
 class AsyncAnalyticsRepository(AsyncBaseRepository):
-    """Asynchronous analytics repository for high-performance analytics"""    
+    """Asynchronous analytics repository for high-performance analytics"""
+    
     def __init__(self, db_connection=None, cache_manager=None, 
                  ai_processor=None, prediction_service=None):
         super().__init__(db_connection, cache_manager)
@@ -521,10 +551,12 @@ class AsyncAnalyticsRepository(AsyncBaseRepository):
     
     async def calculate_engagement_metrics_async(self, creator_id: str,
                                                time_range: TimeRange = TimeRange.LAST_30D) -> EngagementMetrics:
-        """Calculate engagement metrics asynchronously"""        # Async implementation would go here
+        """Calculate engagement metrics asynchronously"""
+        # Async implementation would go here
         pass
     
     async def generate_comprehensive_report_async(self, creator_id: str,
                                                 time_range: TimeRange = TimeRange.LAST_30D) -> Dict[str, Any]:
-        """Generate comprehensive report asynchronously"""        # Async implementation would go here
+        """Generate comprehensive report asynchronously"""
+        # Async implementation would go here
         pass

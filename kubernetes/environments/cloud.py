@@ -14,7 +14,8 @@ Contact: mlaiel@live.de
 Cloud environment configuration for multi-cloud deployment.
 Handles AWS, GCP, Azure infrastructure provisioning and management.
 ===============================================
-"""import os
+"""
+import os
 import json
 import logging
 from typing import Dict, Any, List, Optional, Set, Union
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 
 class CloudProvider(Enum):
-    """Supported cloud providers"""    AWS = "aws"
+    """Supported cloud providers"""
+    AWS = "aws"
     GCP = "gcp" 
     AZURE = "azure"
     MULTI_CLOUD = "multi_cloud"
@@ -33,7 +35,8 @@ class CloudProvider(Enum):
 
 @dataclass
 class AWSConfig:
-    """AWS cloud configuration"""    region: str = os.getenv('AWS_REGION', 'eu-central-1')
+    """AWS cloud configuration"""
+    region: str = os.getenv('AWS_REGION', 'eu-central-1')
     access_key_id: str = os.getenv('AWS_ACCESS_KEY_ID', '')
     secret_access_key: str = os.getenv('AWS_SECRET_ACCESS_KEY', '')
     account_id: str = os.getenv('AWS_ACCOUNT_ID', '')
@@ -80,7 +83,8 @@ class AWSConfig:
 
 @dataclass
 class GCPConfig:
-    """Google Cloud Platform configuration"""    project_id: str = os.getenv('GCP_PROJECT_ID', '')
+    """Google Cloud Platform configuration"""
+    project_id: str = os.getenv('GCP_PROJECT_ID', '')
     region: str = os.getenv('GCP_REGION', 'europe-west3')
     zone: str = os.getenv('GCP_ZONE', 'europe-west3-a')
     credentials_path: str = os.getenv('GCP_CREDENTIALS_PATH', '')
@@ -125,7 +129,8 @@ class GCPConfig:
 
 @dataclass
 class AzureConfig:
-    """Microsoft Azure configuration"""    subscription_id: str = os.getenv('AZURE_SUBSCRIPTION_ID', '')
+    """Microsoft Azure configuration"""
+    subscription_id: str = os.getenv('AZURE_SUBSCRIPTION_ID', '')
     tenant_id: str = os.getenv('AZURE_TENANT_ID', '')
     client_id: str = os.getenv('AZURE_CLIENT_ID', '')
     client_secret: str = os.getenv('AZURE_CLIENT_SECRET', '')
@@ -171,7 +176,8 @@ class AzureConfig:
 
 @dataclass
 class CloudSecurityConfig:
-    """Cloud security configuration"""    encryption_at_rest: bool = True
+    """Cloud security configuration"""
+    encryption_at_rest: bool = True
     encryption_in_transit: bool = True
     kms_key_rotation: bool = True
     vpc_flow_logs: bool = True
@@ -185,7 +191,8 @@ class CloudSecurityConfig:
 
 @dataclass
 class CloudMonitoringConfig:
-    """Cloud monitoring and observability configuration"""    centralized_logging: bool = True
+    """Cloud monitoring and observability configuration"""
+    centralized_logging: bool = True
     metrics_collection: bool = True
     distributed_tracing: bool = True
     alerting_enabled: bool = True
@@ -198,7 +205,8 @@ class CloudMonitoringConfig:
 
 
 class CloudEnvironmentManager:
-    """    Cloud environment manager for multi-cloud deployment.
+    """
+    Cloud environment manager for multi-cloud deployment.
     
     Features:
     - Multi-cloud support (AWS, GCP, Azure)
@@ -211,7 +219,8 @@ class CloudEnvironmentManager:
     - Cost optimization
     - Disaster recovery and backup
     - Network and VPC management
-    """    
+    """
+    
     def __init__(self, provider: CloudProvider = CloudProvider.AWS, config_path: Optional[str] = None):
         self.provider = provider
         self.config_path = config_path or f"./cloud/{provider.value}_config.json"
@@ -236,7 +245,8 @@ class CloudEnvironmentManager:
         logger.info(f"Cloud environment manager initialized for provider: {provider.value}")
     
     def load_configuration(self) -> Dict[str, Any]:
-        """Load cloud environment configuration"""        try:
+        """Load cloud environment configuration"""
+        try:
             config = {
                 'environment': self.environment,
                 'provider': self.provider.value,
@@ -297,7 +307,8 @@ class CloudEnvironmentManager:
             raise
     
     def provision_infrastructure(self, environment: str = "production") -> bool:
-        """Provision cloud infrastructure using Infrastructure as Code"""        try:
+        """Provision cloud infrastructure using Infrastructure as Code"""
+        try:
             if self.provider == CloudProvider.AWS or self.provider == CloudProvider.MULTI_CLOUD:
                 success = self._provision_aws_infrastructure(environment)
                 if not success:
@@ -321,7 +332,8 @@ class CloudEnvironmentManager:
             return False
     
     def setup_managed_services(self) -> bool:
-        """Setup managed cloud services"""        try:
+        """Setup managed cloud services"""
+        try:
             # Setup managed databases
             self._setup_managed_databases()
             
@@ -348,7 +360,8 @@ class CloudEnvironmentManager:
             return False
     
     def setup_security_hardening(self) -> bool:
-        """Setup cloud security hardening"""        try:
+        """Setup cloud security hardening"""
+        try:
             # Setup VPC and network security
             self._setup_vpc_security()
             
@@ -372,7 +385,8 @@ class CloudEnvironmentManager:
             return False
     
     def setup_disaster_recovery(self) -> bool:
-        """Setup disaster recovery and backup"""        try:
+        """Setup disaster recovery and backup"""
+        try:
             # Setup cross-region replication
             self._setup_cross_region_replication()
             
@@ -393,7 +407,8 @@ class CloudEnvironmentManager:
             return False
     
     def optimize_costs(self) -> Dict[str, Any]:
-        """Optimize cloud costs"""        try:
+        """Optimize cloud costs"""
+        try:
             optimization_results = {
                 'reserved_instances': False,
                 'spot_instances': False,
@@ -433,7 +448,8 @@ class CloudEnvironmentManager:
             return {'error': str(e)}
     
     def validate_cloud_setup(self) -> Dict[str, bool]:
-        """Validate cloud environment setup"""        validation_results = {
+        """Validate cloud environment setup"""
+        validation_results = {
             'infrastructure_provisioned': False,
             'managed_services_configured': False,
             'security_hardened': False,
@@ -463,7 +479,8 @@ class CloudEnvironmentManager:
             return validation_results
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get cloud environment health status"""        return {
+        """Get cloud environment health status"""
+        return {
             'environment': self.environment,
             'provider': self.provider.value,
             'status': 'healthy',
@@ -480,7 +497,8 @@ class CloudEnvironmentManager:
     
     # Private helper methods for provider-specific configurations
     def _get_aws_configuration(self) -> Dict[str, Any]:
-        """Get AWS-specific configuration"""        return {
+        """Get AWS-specific configuration"""
+        return {
             'region': self.aws_config.region,
             'account_id': self.aws_config.account_id,
             'eks': {
@@ -508,7 +526,8 @@ class CloudEnvironmentManager:
         }
     
     def _get_gcp_configuration(self) -> Dict[str, Any]:
-        """Get GCP-specific configuration"""        return {
+        """Get GCP-specific configuration"""
+        return {
             'project_id': self.gcp_config.project_id,
             'region': self.gcp_config.region,
             'zone': self.gcp_config.zone,
@@ -533,7 +552,8 @@ class CloudEnvironmentManager:
         }
     
     def _get_azure_configuration(self) -> Dict[str, Any]:
-        """Get Azure-specific configuration"""        return {
+        """Get Azure-specific configuration"""
+        return {
             'subscription_id': self.azure_config.subscription_id,
             'location': self.azure_config.location,
             'aks': {
@@ -560,64 +580,82 @@ class CloudEnvironmentManager:
     
     # Infrastructure provisioning methods
     def _provision_aws_infrastructure(self, environment: str) -> bool:
-        """Provision AWS infrastructure"""        # Implementation would use Terraform or AWS CDK
+        """Provision AWS infrastructure"""
+        # Implementation would use Terraform or AWS CDK
         return True
     
     def _provision_gcp_infrastructure(self, environment: str) -> bool:
-        """Provision GCP infrastructure"""        # Implementation would use Terraform or Google Cloud Deployment Manager
+        """Provision GCP infrastructure"""
+        # Implementation would use Terraform or Google Cloud Deployment Manager
         return True
     
     def _provision_azure_infrastructure(self, environment: str) -> bool:
-        """Provision Azure infrastructure"""        # Implementation would use Terraform or Azure Resource Manager
+        """Provision Azure infrastructure"""
+        # Implementation would use Terraform or Azure Resource Manager
         return True
     
     # Managed services setup methods
     def _setup_managed_databases(self):
-        """Setup managed databases"""        pass
+        """Setup managed databases"""
+        pass
     
     def _setup_managed_caching(self):
-        """Setup managed caching services"""        pass
+        """Setup managed caching services"""
+        pass
     
     def _setup_object_storage(self):
-        """Setup object storage"""        pass
+        """Setup object storage"""
+        pass
     
     def _setup_cdn(self):
-        """Setup Content Delivery Network"""        pass
+        """Setup Content Delivery Network"""
+        pass
     
     def _setup_load_balancers(self):
-        """Setup load balancers"""        pass
+        """Setup load balancers"""
+        pass
     
     def _setup_monitoring_services(self):
-        """Setup cloud monitoring services"""        pass
+        """Setup cloud monitoring services"""
+        pass
     
     # Security setup methods
     def _setup_vpc_security(self):
-        """Setup VPC and network security"""        pass
+        """Setup VPC and network security"""
+        pass
     
     def _setup_iam_security(self):
-        """Setup IAM and access control"""        pass
+        """Setup IAM and access control"""
+        pass
     
     def _setup_encryption(self):
-        """Setup encryption and key management"""        pass
+        """Setup encryption and key management"""
+        pass
     
     def _setup_security_monitoring(self):
-        """Setup security monitoring"""        pass
+        """Setup security monitoring"""
+        pass
     
     def _setup_compliance_auditing(self):
-        """Setup compliance and auditing"""        pass
+        """Setup compliance and auditing"""
+        pass
     
     # Disaster recovery methods
     def _setup_cross_region_replication(self):
-        """Setup cross-region replication"""        pass
+        """Setup cross-region replication"""
+        pass
     
     def _setup_automated_backups(self):
-        """Setup automated backups"""        pass
+        """Setup automated backups"""
+        pass
     
     def _setup_disaster_recovery_procedures(self):
-        """Setup disaster recovery procedures"""        pass
+        """Setup disaster recovery procedures"""
+        pass
     
     def _setup_failover_mechanisms(self):
-        """Setup failover mechanisms"""        pass
+        """Setup failover mechanisms"""
+        pass
     
     # Cost optimization methods
     def _implement_reserved_instances(self) -> bool:

@@ -12,7 +12,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""from typing import Dict, List, Any, Optional, Union, Tuple, Set
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class QualityDimension(Enum):
-    """Quality assessment dimensions"""    TECHNICAL_QUALITY = "technical_quality"
+    """Quality assessment dimensions"""
+    TECHNICAL_QUALITY = "technical_quality"
     AUDIO_QUALITY = "audio_quality"
     VIDEO_QUALITY = "video_quality"
     IMAGE_QUALITY = "image_quality"
@@ -49,7 +51,8 @@ class QualityDimension(Enum):
     COPYRIGHT_COMPLIANCE = "copyright_compliance"
 
 class QualityLevel(Enum):
-    """Quality level classifications"""    UNACCEPTABLE = "unacceptable"
+    """Quality level classifications"""
+    UNACCEPTABLE = "unacceptable"
     POOR = "poor" 
     BELOW_AVERAGE = "below_average"
     AVERAGE = "average"
@@ -61,7 +64,8 @@ class QualityLevel(Enum):
     REFERENCE = "reference"
 
 class AssessmentMethod(Enum):
-    """Quality assessment methods"""    AUTOMATED_AI = "automated_ai"
+    """Quality assessment methods"""
+    AUTOMATED_AI = "automated_ai"
     MACHINE_LEARNING = "machine_learning"
     HUMAN_REVIEW = "human_review"
     PEER_REVIEW = "peer_review"
@@ -70,7 +74,8 @@ class AssessmentMethod(Enum):
     CROWDSOURCED = "crowdsourced"
 
 class EnhancementType(Enum):
-    """Content enhancement types"""    AUDIO_MASTERING = "audio_mastering"
+    """Content enhancement types"""
+    AUDIO_MASTERING = "audio_mastering"
     NOISE_REDUCTION = "noise_reduction"
     COLOR_CORRECTION = "color_correction"
     UPSCALING = "upscaling"
@@ -83,7 +88,8 @@ class EnhancementType(Enum):
 
 @dataclass
 class QualityMetrics:
-    """Comprehensive quality metrics structure"""    # Overall scores
+    """Comprehensive quality metrics structure"""
+    # Overall scores
     overall_score: float  # 0-100
     technical_score: float
     content_score: float
@@ -113,7 +119,8 @@ class QualityMetrics:
     priority_improvements: List[str] = field(default_factory=list)
 
 class ContentQualityAssessment(Base):
-    """Content quality assessment database model"""    __tablename__ = "content_quality_assessments"
+    """Content quality assessment database model"""
+    __tablename__ = "content_quality_assessments"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -171,7 +178,8 @@ class ContentQualityAssessment(Base):
     reviews = relationship("QualityReview", back_populates="assessment")
 
 class ContentEnhancement(Base):
-    """Content enhancement tracking"""    __tablename__ = "content_enhancements"
+    """Content enhancement tracking"""
+    __tablename__ = "content_enhancements"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     assessment_id = Column(UUID(as_uuid=True), ForeignKey('content_quality_assessments.id'), nullable=False)
@@ -215,7 +223,8 @@ class ContentEnhancement(Base):
     assessment = relationship("ContentQualityAssessment", back_populates="enhancements")
 
 class QualityReview(Base):
-    """Human quality review records"""    __tablename__ = "quality_reviews"
+    """Human quality review records"""
+    __tablename__ = "quality_reviews"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     assessment_id = Column(UUID(as_uuid=True), ForeignKey('content_quality_assessments.id'), nullable=False)
@@ -247,14 +256,16 @@ class QualityReview(Base):
     assessment = relationship("ContentQualityAssessment", back_populates="reviews")
 
 class QualityEngine:
-    """Advanced quality assessment and enhancement engine"""    
+    """Advanced quality assessment and enhancement engine"""
+    
     def __init__(self):
         self.ai_models = {}
         self.enhancement_algorithms = {}
         self.quality_standards = self._initialize_quality_standards()
     
     def _initialize_quality_standards(self) -> Dict[str, Dict[str, float]]:
-        """Initialize quality standards for different content types and platforms"""        return {
+        """Initialize quality standards for different content types and platforms"""
+        return {
             "audio_streaming": {
                 "minimum_sample_rate": 44100,
                 "minimum_bitrate": 320,
@@ -287,7 +298,8 @@ class QualityEngine:
         content_path: str,
         assessment_method: AssessmentMethod = AssessmentMethod.AUTOMATED_AI
     ) -> str:
-        """Perform comprehensive quality assessment"""        try:
+        """Perform comprehensive quality assessment"""
+        try:
             # Initialize assessment
             assessment_id = str(uuid.uuid4())
             
@@ -364,7 +376,8 @@ class QualityEngine:
         enhancement_types: List[EnhancementType],
         enhancement_settings: Dict[str, Any]
     ) -> List[str]:
-        """Enhance content based on quality assessment"""        try:
+        """Enhance content based on quality assessment"""
+        try:
             enhancement_ids = []
             
             for enhancement_type in enhancement_types:
@@ -389,7 +402,8 @@ class QualityEngine:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Assess technical quality aspects"""        try:
+        """Assess technical quality aspects"""
+        try:
             technical_metrics = {}
             
             if content_type == "audio":
@@ -414,7 +428,8 @@ class QualityEngine:
             return {}
     
     async def _assess_audio_technical_quality(self, audio_path: str) -> Dict[str, Any]:
-        """Assess audio-specific technical quality"""        try:
+        """Assess audio-specific technical quality"""
+        try:
             import librosa
             import soundfile as sf
             
@@ -463,7 +478,8 @@ class QualityEngine:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Assess content quality and creative aspects"""        try:
+        """Assess content quality and creative aspects"""
+        try:
             content_metrics = {}
             
             # Originality assessment
@@ -505,7 +521,8 @@ class QualityEngine:
         content_metrics: Dict[str, Any],
         commercial_metrics: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate comprehensive quality scores"""        try:
+        """Calculate comprehensive quality scores"""
+        try:
             # Weight different aspects
             weights = {
                 'technical': 0.3,
@@ -541,7 +558,8 @@ class QualityEngine:
             return {'overall': 0.0}
     
     def _determine_quality_level(self, overall_score: float) -> str:
-        """Determine quality level from overall score"""        if overall_score >= 9.5:
+        """Determine quality level from overall score"""
+        if overall_score >= 9.5:
             return QualityLevel.REFERENCE.value
         elif overall_score >= 9.0:
             return QualityLevel.BROADCAST.value
@@ -563,7 +581,8 @@ class QualityEngine:
             return QualityLevel.UNACCEPTABLE.value
     
     def _calculate_audio_quality_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate audio quality score from technical metrics"""        score = 10.0
+        """Calculate audio quality score from technical metrics"""
+        score = 10.0
         
         # Penalize clipping
         if metrics.get('clipping', False):
@@ -584,16 +603,20 @@ class QualityEngine:
     # Additional helper methods would be implemented here...
     
     async def _get_content_metadata(self, content_id: str, content_path: str):
-        """Get content metadata"""        pass
+        """Get content metadata"""
+        pass
     
     async def _assess_commercial_potential(self, technical, content, metadata):
-        """Assess commercial and monetization potential"""        pass
+        """Assess commercial and monetization potential"""
+        pass
     
     async def _identify_quality_issues(self, scores, metrics):
-        """Identify specific quality issues"""        pass
+        """Identify specific quality issues"""
+        pass
     
     async def _generate_enhancement_recommendations(self, issues, scores):
-        """Generate enhancement recommendations"""        pass
+        """Generate enhancement recommendations"""
+        pass
 
 # Export classes and functions
 __all__ = [

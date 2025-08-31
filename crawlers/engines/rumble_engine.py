@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. 
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
 from datetime import datetime, timedelta
@@ -26,7 +27,8 @@ from ...monitoring.metrics import MetricsCollector
 
 
 class VideoQuality(Enum):
-    """Video quality levels"""    LOW = "240p"
+    """Video quality levels"""
+    LOW = "240p"
     MEDIUM = "480p"
     HIGH = "720p"
     HD = "1080p"
@@ -35,7 +37,8 @@ class VideoQuality(Enum):
 
 
 class ContentCategory(Enum):
-    """Rumble content categories"""    NEWS = "news"
+    """Rumble content categories"""
+    NEWS = "news"
     POLITICS = "politics"
     ENTERTAINMENT = "entertainment"
     SPORTS = "sports"
@@ -49,7 +52,8 @@ class ContentCategory(Enum):
 
 @dataclass
 class RumbleVideo:
-    """Rumble video data structure"""    video_id: str
+    """Rumble video data structure"""
+    video_id: str
     channel_id: str
     title: str
     description: str
@@ -73,9 +77,11 @@ class RumbleVideo:
 
 
 class RumbleEngine(BaseCrawlerEngine):
-    """    Professional Rumble crawling engine with advanced video content analysis
+    """
+    Professional Rumble crawling engine with advanced video content analysis
     and alternative platform monetization strategies.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.platform = RumblePlatform(config.get('rumble', {}))
@@ -98,7 +104,8 @@ class RumbleEngine(BaseCrawlerEngine):
         quality_filter: Optional[VideoQuality] = None,
         date_range: Optional[tuple] = None
     ) -> AsyncGenerator[RumbleVideo, None]:
-        """        Crawl videos from a specific Rumble channel with advanced filtering
+        """
+        Crawl videos from a specific Rumble channel with advanced filtering
         
         Args:
             channel_id: Channel identifier
@@ -108,7 +115,8 @@ class RumbleEngine(BaseCrawlerEngine):
             
         Yields:
             RumbleVideo: Processed video objects
-        """        self.logger.info(f"Starting Rumble channel crawl: {channel_id}")
+        """
+        self.logger.info(f"Starting Rumble channel crawl: {channel_id}")
         
         try:
             async with self._create_session() as session:
@@ -140,7 +148,8 @@ class RumbleEngine(BaseCrawlerEngine):
         quality_filter: Optional[VideoQuality],
         date_range: Optional[tuple]
     ) -> AsyncGenerator[Dict[str, Any], None]:
-        """Internal method to crawl channel videos"""        
+        """Internal method to crawl channel videos"""
+        
         page = 1
         max_pages = 100
         
@@ -177,7 +186,8 @@ class RumbleEngine(BaseCrawlerEngine):
         session: aiohttp.ClientSession,
         channel_id: str
     ) -> Optional[Dict[str, Any]]:
-        """Fetch channel information"""        
+        """Fetch channel information"""
+        
         url = f"https://rumble.com/api/channel/{channel_id}"
         
         headers = await self._get_authenticated_headers()
@@ -201,7 +211,8 @@ class RumbleEngine(BaseCrawlerEngine):
         page: int,
         date_range: Optional[tuple]
     ) -> Dict[str, Any]:
-        """Fetch a single page of videos"""        
+        """Fetch a single page of videos"""
+        
         url = f"https://rumble.com/api/channel/{channel_id}/videos"
         
         params = {
@@ -239,7 +250,8 @@ class RumbleEngine(BaseCrawlerEngine):
         categories: List[ContentCategory],
         quality_filter: Optional[VideoQuality]
     ) -> bool:
-        """Check if video matches the specified filters"""        
+        """Check if video matches the specified filters"""
+        
         # Category filter
         video_category = self._determine_video_category(video)
         if video_category not in categories:
@@ -254,7 +266,8 @@ class RumbleEngine(BaseCrawlerEngine):
         return True
         
     def _determine_video_category(self, video: Dict[str, Any]) -> ContentCategory:
-        """Determine video category from metadata"""        
+        """Determine video category from metadata"""
+        
         title = video.get('title', '').lower()
         description = video.get('description', '').lower()
         tags = ' '.join(video.get('tags', [])).lower()
@@ -282,7 +295,8 @@ class RumbleEngine(BaseCrawlerEngine):
         return ContentCategory.ENTERTAINMENT  # Default category
         
     def _determine_video_quality(self, video: Dict[str, Any]) -> VideoQuality:
-        """Determine video quality from metadata"""        
+        """Determine video quality from metadata"""
+        
         # Check available quality levels
         quality_data = video.get('quality', {})
         available_qualities = list(quality_data.keys())
@@ -302,7 +316,8 @@ class RumbleEngine(BaseCrawlerEngine):
         raw_video: Dict[str, Any],
         channel_info: Dict[str, Any]
     ) -> Optional[RumbleVideo]:
-        """Process and analyze video with advanced metrics"""        
+        """Process and analyze video with advanced metrics"""
+        
         try:
             video_id = raw_video.get('id')
             if not video_id:
@@ -403,7 +418,8 @@ class RumbleEngine(BaseCrawlerEngine):
             return None
             
     def _calculate_engagement_rate(self, video: Dict[str, Any]) -> float:
-        """Calculate engagement rate for the video"""        
+        """Calculate engagement rate for the video"""
+        
         views = video.get('views', 1)
         likes = video.get('likes', 0)
         dislikes = video.get('dislikes', 0)
@@ -425,7 +441,8 @@ class RumbleEngine(BaseCrawlerEngine):
         channel_info: Dict[str, Any],
         quality_score: float
     ) -> float:
-        """Calculate monetization potential for the video"""        
+        """Calculate monetization potential for the video"""
+        
         if not self.enable_monetization_analysis:
             return 0.5
             
@@ -449,7 +466,8 @@ class RumbleEngine(BaseCrawlerEngine):
         return min(monetization_potential, 1.0)
         
     async def _calculate_viral_score(self, video: Dict[str, Any]) -> float:
-        """Calculate viral potential score"""        
+        """Calculate viral potential score"""
+        
         # Factors: rapid view growth, high engagement, shares
         views = video.get('views', 0)
         shares = video.get('shares', 0)
@@ -478,7 +496,8 @@ class RumbleEngine(BaseCrawlerEngine):
         video: Dict[str, Any],
         monetization_potential: float
     ) -> float:
-        """Estimate potential revenue for the video"""        
+        """Estimate potential revenue for the video"""
+        
         views = video.get('views', 0)
         
         # Rumble revenue model (simplified)
@@ -498,7 +517,8 @@ class RumbleEngine(BaseCrawlerEngine):
         category: Optional[ContentCategory] = None,
         limit: int = 100
     ) -> List[RumbleVideo]:
-        """Crawl trending videos on Rumble"""        
+        """Crawl trending videos on Rumble"""
+        
         self.logger.info(f"Crawling trending videos, category: {category}, limit: {limit}")
         
         trending_videos = []
@@ -523,7 +543,8 @@ class RumbleEngine(BaseCrawlerEngine):
         category: Optional[ContentCategory],
         limit: int
     ) -> List[Dict[str, Any]]:
-        """Fetch trending videos data"""        
+        """Fetch trending videos data"""
+        
         url = "https://rumble.com/api/trending"
         
         params = {
@@ -555,7 +576,8 @@ class RumbleEngine(BaseCrawlerEngine):
         quality_filter: Optional[VideoQuality] = None,
         filters: Dict[str, Any] = None
     ) -> List[RumbleVideo]:
-        """Search videos with advanced filtering"""        
+        """Search videos with advanced filtering"""
+        
         self.logger.info(f"Searching videos: {query}")
         
         categories = categories or list(ContentCategory)
@@ -584,7 +606,8 @@ class RumbleEngine(BaseCrawlerEngine):
         query: str,
         filters: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Search videos using Rumble API"""        
+        """Search videos using Rumble API"""
+        
         url = "https://rumble.com/api/search"
         
         params = {
@@ -609,7 +632,8 @@ class RumbleEngine(BaseCrawlerEngine):
         return videos
         
     def _matches_advanced_filters(self, video: RumbleVideo, filters: Dict[str, Any]) -> bool:
-        """Check if video matches advanced filters"""        
+        """Check if video matches advanced filters"""
+        
         if filters.get('min_views') and video.views_count < filters['min_views']:
             return False
             
@@ -629,7 +653,8 @@ class RumbleEngine(BaseCrawlerEngine):
         channel_id: str,
         monitoring_period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """Monitor channel performance metrics"""        
+        """Monitor channel performance metrics"""
+        
         self.logger.info(f"Monitoring channel performance: {channel_id}")
         
         try:
@@ -680,7 +705,8 @@ class RumbleEngine(BaseCrawlerEngine):
             return {}
             
     def _calculate_category_distribution(self, videos_metrics: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Calculate category distribution"""        
+        """Calculate category distribution"""
+        
         if not videos_metrics:
             return {}
             
@@ -694,7 +720,8 @@ class RumbleEngine(BaseCrawlerEngine):
         return distribution
         
     def _analyze_content_performance(self, videos_metrics: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze content performance patterns"""        
+        """Analyze content performance patterns"""
+        
         if not videos_metrics:
             return {}
             
@@ -713,7 +740,8 @@ class RumbleEngine(BaseCrawlerEngine):
         }
         
     def _get_top_categories(self, high_performers: List[Dict[str, Any]]) -> List[str]:
-        """Get top performing categories"""        
+        """Get top performing categories"""
+        
         if not high_performers:
             return []
             
@@ -725,7 +753,8 @@ class RumbleEngine(BaseCrawlerEngine):
         return sorted(category_counts.keys(), key=lambda x: category_counts[x], reverse=True)
         
     def _calculate_optimal_duration(self, high_performers: List[Dict[str, Any]]) -> Dict[str, int]:
-        """Calculate optimal video duration range"""        
+        """Calculate optimal video duration range"""
+        
         if not high_performers:
             return {'min': 0, 'max': 0}
             
@@ -742,7 +771,8 @@ class RumbleEngine(BaseCrawlerEngine):
         channel_info: Dict[str, Any],
         videos_metrics: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate channel growth metrics"""        
+        """Calculate channel growth metrics"""
+        
         if not videos_metrics:
             return {}
             
@@ -763,7 +793,8 @@ class RumbleEngine(BaseCrawlerEngine):
         }
         
     def _calculate_consistency_score(self, videos_metrics: List[Dict[str, Any]]) -> float:
-        """Calculate content consistency score"""        
+        """Calculate content consistency score"""
+        
         if len(videos_metrics) < 3:
             return 0.5
             
@@ -777,7 +808,8 @@ class RumbleEngine(BaseCrawlerEngine):
         return min(consistency_score, 1.0)
         
     async def _get_authenticated_headers(self) -> Dict[str, str]:
-        """Get authenticated headers for API requests"""        
+        """Get authenticated headers for API requests"""
+        
         return {
             'User-Agent': 'Rumble/1.0',
             'Accept': 'application/json',
@@ -786,7 +818,8 @@ class RumbleEngine(BaseCrawlerEngine):
         }
         
     async def _create_session(self) -> aiohttp.ClientSession:
-        """Create configured HTTP session"""        
+        """Create configured HTTP session"""
+        
         connector = aiohttp.TCPConnector(
             limit=self.max_concurrent_requests,
             limit_per_host=self.max_concurrent_requests
@@ -800,5 +833,6 @@ class RumbleEngine(BaseCrawlerEngine):
         )
         
     async def _apply_rate_limiting(self):
-        """Apply rate limiting to prevent API abuse"""        
+        """Apply rate limiting to prevent API abuse"""
+        
         await asyncio.sleep(60 / self.rate_limit_per_minute)

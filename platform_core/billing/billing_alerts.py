@@ -14,7 +14,8 @@ Monitoring et alertes automatiques pour la facturation
 - Alertes échéances et impayés automatiques
 - Monitoring revenus et seuils critiques
 - Notifications multi-canaux et escalation
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import uuid
@@ -28,7 +29,8 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class AlertType(Enum):
-    """Types d'alertes"""    PAYMENT_FAILED = "payment_failed"
+    """Types d'alertes"""
+    PAYMENT_FAILED = "payment_failed"
     INVOICE_OVERDUE = "invoice_overdue"
     SUBSCRIPTION_EXPIRED = "subscription_expired"
     FRAUD_DETECTED = "fraud_detected"
@@ -40,19 +42,22 @@ class AlertType(Enum):
     CREDIT_LIMIT_EXCEEDED = "credit_limit_exceeded"
 
 class AlertSeverity(Enum):
-    """Niveaux de sévérité"""    LOW = "low"
+    """Niveaux de sévérité"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 class AlertStatus(Enum):
-    """États des alertes"""    ACTIVE = "active"
+    """États des alertes"""
+    ACTIVE = "active"
     ACKNOWLEDGED = "acknowledged"
     RESOLVED = "resolved"
     IGNORED = "ignored"
 
 class NotificationChannel(Enum):
-    """Canaux de notification"""    EMAIL = "email"
+    """Canaux de notification"""
+    EMAIL = "email"
     SMS = "sms"
     SLACK = "slack"
     WEBHOOK = "webhook"
@@ -61,7 +66,8 @@ class NotificationChannel(Enum):
 
 @dataclass
 class AlertRule:
-    """Règle d'alerte"""    rule_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Règle d'alerte"""
+    rule_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
     
@@ -90,7 +96,8 @@ class AlertRule:
 
 @dataclass
 class BillingAlert:
-    """Alerte de facturation"""    alert_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Alerte de facturation"""
+    alert_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     rule_id: str = ""
     
     # Classification
@@ -120,7 +127,8 @@ class BillingAlert:
     actions_taken: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit l'alerte en dictionnaire"""        return {
+        """Convertit l'alerte en dictionnaire"""
+        return {
             "alert_id": self.alert_id,
             "rule_id": self.rule_id,
             "alert_type": self.alert_type.value,
@@ -142,7 +150,8 @@ class BillingAlert:
         }
 
 class BillingAlerts:
-    """Système d'alertes de facturation"""    
+    """Système d'alertes de facturation"""
+    
     def __init__(self, database_client: Optional[Any] = None):
         self.database_client = database_client
         self.rules: Dict[str, AlertRule] = {}
@@ -157,7 +166,8 @@ class BillingAlerts:
         self._load_default_rules()
         
     def _load_default_rules(self):
-        """Charge les règles d'alerte par défaut"""        
+        """Charge les règles d'alerte par défaut"""
+        
         # Échec de paiement
         self.add_rule(AlertRule(
             name="Échec de paiement",
@@ -215,12 +225,14 @@ class BillingAlerts:
         ))
         
     async def start_monitoring(self):
-        """Démarre le monitoring automatique"""        self._running = True
+        """Démarre le monitoring automatique"""
+        self._running = True
         self._monitoring_task = asyncio.create_task(self._monitoring_loop())
         logger.info("Monitoring des alertes de facturation démarré")
         
     async def stop_monitoring(self):
-        """Arrête le monitoring"""        self._running = False
+        """Arrête le monitoring"""
+        self._running = False
         if self._monitoring_task:
             self._monitoring_task.cancel()
             try:
@@ -230,11 +242,13 @@ class BillingAlerts:
         logger.info("Monitoring des alertes arrêté")
         
     def add_rule(self, rule: AlertRule):
-        """Ajoute une règle d'alerte"""        self.rules[rule.rule_id] = rule
+        """Ajoute une règle d'alerte"""
+        self.rules[rule.rule_id] = rule
         logger.debug(f"Règle d'alerte ajoutée: {rule.name}")
         
     def remove_rule(self, rule_id: str):
-        """Supprime une règle d'alerte"""        if rule_id in self.rules:
+        """Supprime une règle d'alerte"""
+        if rule_id in self.rules:
             del self.rules[rule_id]
             logger.debug(f"Règle d'alerte supprimée: {rule_id}")
             
@@ -244,7 +258,8 @@ class BillingAlerts:
                           message: str,
                           severity: AlertSeverity = AlertSeverity.MEDIUM,
                           **kwargs) -> Optional[BillingAlert]:
-        """Déclenche une alerte"""        
+        """Déclenche une alerte"""
+        
         # Trouver une règle correspondante
         matching_rule = None
         for rule in self.rules.values():
@@ -303,7 +318,8 @@ class BillingAlerts:
         return alert
         
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
-        """Accuse réception d'une alerte"""        alert = self.alerts.get(alert_id)
+        """Accuse réception d'une alerte"""
+        alert = self.alerts.get(alert_id)
         if not alert or alert.status != AlertStatus.ACTIVE:
             return False
             
@@ -321,7 +337,8 @@ class BillingAlerts:
                           alert_id: str,
                           resolved_by: str,
                           actions_taken: Optional[List[str]] = None) -> bool:
-        """Résout une alerte"""        alert = self.alerts.get(alert_id)
+        """Résout une alerte"""
+        alert = self.alerts.get(alert_id)
         if not alert:
             return False
             
@@ -341,7 +358,8 @@ class BillingAlerts:
     async def get_active_alerts(self, 
                               severity_filter: Optional[AlertSeverity] = None,
                               type_filter: Optional[AlertType] = None) -> List[BillingAlert]:
-        """Récupère les alertes actives"""        alerts = []
+        """Récupère les alertes actives"""
+        alerts = []
         
         for alert in self.alerts.values():
             if alert.status != AlertStatus.ACTIVE:
@@ -367,12 +385,14 @@ class BillingAlerts:
         return alerts
         
     def add_handler(self, alert_type: AlertType, handler: Callable):
-        """Ajoute un handler personnalisé pour un type d'alerte"""        if alert_type not in self.handlers:
+        """Ajoute un handler personnalisé pour un type d'alerte"""
+        if alert_type not in self.handlers:
             self.handlers[alert_type] = []
         self.handlers[alert_type].append(handler)
         
     async def _monitoring_loop(self):
-        """Boucle de monitoring automatique"""        while self._running:
+        """Boucle de monitoring automatique"""
+        while self._running:
             try:
                 await asyncio.sleep(300)  # Vérifier toutes les 5 minutes
                 await self._check_automated_alerts()
@@ -383,7 +403,8 @@ class BillingAlerts:
                 logger.error(f"Erreur dans la boucle de monitoring: {e}")
                 
     async def _check_automated_alerts(self):
-        """Vérifie les conditions d'alerte automatiques"""        
+        """Vérifie les conditions d'alerte automatiques"""
+        
         # Vérifier les factures en retard
         await self._check_overdue_invoices()
         
@@ -397,7 +418,8 @@ class BillingAlerts:
         await self._check_refund_rate()
         
     async def _check_overdue_invoices(self):
-        """Vérifie les factures en retard"""        # Dans un vrai système, on interrogerait la base de données
+        """Vérifie les factures en retard"""
+        # Dans un vrai système, on interrogerait la base de données
         # pour trouver les factures en retard
         
         # Simulation
@@ -415,7 +437,8 @@ class BillingAlerts:
             )
             
     async def _check_expired_payment_methods(self):
-        """Vérifie les méthodes de paiement expirées"""        # Check for payment methods expiring in the next 30 days
+        """Vérifie les méthodes de paiement expirées"""
+        # Check for payment methods expiring in the next 30 days
         try:
             expiry_threshold = datetime.utcnow() + timedelta(days=30)
             # In a real system, this would query the database
@@ -434,7 +457,8 @@ class BillingAlerts:
             logger.error(f"Error checking expired payment methods: {e}")
         
     async def _check_revenue_anomalies(self):
-        """Vérifie les anomalies de revenus"""        # Compare current revenue with previous period
+        """Vérifie les anomalies de revenus"""
+        # Compare current revenue with previous period
         try:
             current_date = datetime.utcnow()
             # In a real system, this would query revenue data from database
@@ -461,7 +485,8 @@ class BillingAlerts:
             logger.error(f"Error checking revenue anomalies: {e}")
         
     async def _check_refund_rate(self):
-        """Vérifie le taux de remboursements"""        # Calculate refund rate for the current period
+        """Vérifie le taux de remboursements"""
+        # Calculate refund rate for the current period
         try:
             # In a real system, this would query refund data from database
             total_transactions = 1000  # Simulated
@@ -488,7 +513,8 @@ class BillingAlerts:
             logger.error(f"Error checking refund rate: {e}")
         
     async def _reset_daily_counters(self):
-        """Remet à zéro les compteurs quotidiens"""        now = datetime.utcnow()
+        """Remet à zéro les compteurs quotidiens"""
+        now = datetime.utcnow()
         
         for rule in self.rules.values():
             if (rule.last_triggered and 
@@ -496,7 +522,8 @@ class BillingAlerts:
                 rule.trigger_count_today = 0
                 
     async def _send_notifications(self, alert: BillingAlert, rule: AlertRule):
-        """Envoie les notifications pour une alerte"""        
+        """Envoie les notifications pour une alerte"""
+        
         for channel in rule.notification_channels:
             try:
                 if channel == NotificationChannel.EMAIL:
@@ -514,27 +541,33 @@ class BillingAlerts:
                 logger.error(f"Erreur envoi notification {channel.value}: {e}")
                 
     async def _send_email_notification(self, alert: BillingAlert, recipients: List[str]):
-        """Envoie une notification par email"""        # Implémentation avec service d'email
+        """Envoie une notification par email"""
+        # Implémentation avec service d'email
         logger.info(f"Email envoyé pour alerte {alert.alert_id} à {recipients}")
         
     async def _send_slack_notification(self, alert: BillingAlert):
-        """Envoie une notification Slack"""        # Implémentation avec API Slack
+        """Envoie une notification Slack"""
+        # Implémentation avec API Slack
         logger.info(f"Notification Slack envoyée pour alerte {alert.alert_id}")
         
     async def _send_sms_notification(self, alert: BillingAlert, recipients: List[str]):
-        """Envoie une notification SMS"""        # Implémentation avec service SMS
+        """Envoie une notification SMS"""
+        # Implémentation avec service SMS
         logger.info(f"SMS envoyé pour alerte {alert.alert_id}")
         
     async def _send_webhook_notification(self, alert: BillingAlert):
-        """Envoie une notification webhook"""        # Implémentation avec requête HTTP
+        """Envoie une notification webhook"""
+        # Implémentation avec requête HTTP
         logger.info(f"Webhook envoyé pour alerte {alert.alert_id}")
         
     async def _send_in_app_notification(self, alert: BillingAlert):
-        """Envoie une notification in-app"""        # Implémentation avec système de notifications interne
+        """Envoie une notification in-app"""
+        # Implémentation avec système de notifications interne
         logger.info(f"Notification in-app créée pour alerte {alert.alert_id}")
         
     async def _save_alert(self, alert: BillingAlert):
-        """Sauvegarde une alerte en base"""        try:
+        """Sauvegarde une alerte en base"""
+        try:
             # In a real system, this would save to database
             # For now, just log the alert data
             alert_data = {
@@ -556,7 +589,8 @@ class BillingAlerts:
             logger.error(f"Error saving alert to database: {e}")
         
     def get_alert_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques des alertes"""        total_alerts = len(self.alerts)
+        """Retourne les statistiques des alertes"""
+        total_alerts = len(self.alerts)
         active_alerts = len([a for a in self.alerts.values() if a.status == AlertStatus.ACTIVE])
         
         alerts_by_type = {}
@@ -580,12 +614,14 @@ class BillingAlerts:
         }
 
 class AlertManager:
-    """Gestionnaire principal des alertes"""    
+    """Gestionnaire principal des alertes"""
+    
     def __init__(self, billing_alerts: BillingAlerts):
         self.billing_alerts = billing_alerts
         
     async def process_payment_failure(self, payment_data: Dict[str, Any]):
-        """Traite un échec de paiement"""        await self.billing_alerts.trigger_alert(
+        """Traite un échec de paiement"""
+        await self.billing_alerts.trigger_alert(
             alert_type=AlertType.PAYMENT_FAILED,
             title=f"Échec de paiement",
             message=f"Le paiement {payment_data.get('payment_id')} a échoué",
@@ -596,7 +632,8 @@ class AlertManager:
         )
         
     async def process_chargeback(self, chargeback_data: Dict[str, Any]):
-        """Traite une contestation"""        await self.billing_alerts.trigger_alert(
+        """Traite une contestation"""
+        await self.billing_alerts.trigger_alert(
             alert_type=AlertType.CHARGEBACK_RECEIVED,
             title=f"Contestation reçue",
             message=f"Contestation sur le paiement {chargeback_data.get('payment_id')}",
@@ -607,7 +644,8 @@ class AlertManager:
         )
         
     async def process_fraud_detection(self, fraud_data: Dict[str, Any]):
-        """Traite une détection de fraude"""        await self.billing_alerts.trigger_alert(
+        """Traite une détection de fraude"""
+        await self.billing_alerts.trigger_alert(
             alert_type=AlertType.FRAUD_DETECTED,
             title=f"Fraude détectée",
             message=f"Activité suspecte détectée pour le client {fraud_data.get('customer_id')}",

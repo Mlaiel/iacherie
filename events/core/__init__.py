@@ -11,24 +11,31 @@ WARNING: This code is proprietary and confidential. Unauthorized use, reproducti
 or distribution without explicit written permission from Fahed Mlaiel (mlaiel@live.de)
 is strictly prohibited and may result in legal action.
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
-"""import logging
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+"""
+
+import logging
+
 from typing import Dict, Any, Optional, List
 
 # Module metadata
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "Copyright © 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "Copyright (c) 2025 Fahed Mlaiel. All rights reserved."
 
 # Configure module logging
 logger = logging.getLogger(__name__)
 
 # Import core components
 from .base_event import BaseEvent
+
 from .base_event_handler import BaseEventHandler
+
 from .event_priority import EventPriority
+
 from .event_status import EventStatus
+
 from .exceptions import (
     EventProcessingError,
     EventValidationError,

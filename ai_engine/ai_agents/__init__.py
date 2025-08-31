@@ -78,7 +78,9 @@ MODULE_INFO = {
 }
 
 def get_module_info():
-    """Get module information"""    return MODULE_INFO.copy()
+    """Get module information"""
+    return MODULE_INFO.copy()
 
 def get_default_config():
-    """Get default configuration"""    return DEFAULT_CONFIG.copy()
+    """Get default configuration"""
+    return DEFAULT_CONFIG.copy()

@@ -9,7 +9,8 @@ Manages PostgreSQL connections for primary relational data including:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Any, Optional, List, AsyncContextManager, Union
 from contextlib import asynccontextmanager
@@ -25,7 +26,8 @@ from ..encryption import DatabaseEncryption
 
 @dataclass
 class PostgreSQLConfig:
-    """PostgreSQL connection configuration"""    host: str
+    """PostgreSQL connection configuration"""
+    host: str
     port: int = 5432
     database: str = "ia_influencer"
     username: str = "postgres"
@@ -39,7 +41,8 @@ class PostgreSQLConfig:
 
 
 class PostgreSQLConnectionHandler:
-    """    PostgreSQL connection handler for IA Influencer platform.
+    """
+    PostgreSQL connection handler for IA Influencer platform.
     
     Manages connections for:
     - Creator accounts and profiles
@@ -48,7 +51,8 @@ class PostgreSQLConnectionHandler:
     - Revenue tracking and analytics
     - Collaboration matching
     - Platform API integrations
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = PostgreSQLConfig(**config)
         self.logger = logging.getLogger(__name__)
@@ -66,7 +70,8 @@ class PostgreSQLConnectionHandler:
         self.tenant_pools: Dict[str, Pool] = {}
     
     async def initialize(self) -> None:
-        """Initialize PostgreSQL connection pool"""        try:
+        """Initialize PostgreSQL connection pool"""
+        try:
             self.logger.info("Initializing PostgreSQL connection pool...")
             
             # Build connection string
@@ -92,7 +97,8 @@ class PostgreSQLConnectionHandler:
             raise
     
     def _build_dsn(self) -> str:
-        """Build PostgreSQL connection string"""        return (
+        """Build PostgreSQL connection string"""
+        return (
             f"postgresql://{self.config.username}:"
             f"{self.config.password}@{self.config.host}:"
             f"{self.config.port}/{self.config.database}"
@@ -100,7 +106,8 @@ class PostgreSQLConnectionHandler:
         )
     
     async def _init_connection(self, connection: Connection) -> None:
-        """Initialize new database connection"""        # Set timezone
+        """Initialize new database connection"""
+        # Set timezone
         await connection.execute("SET timezone = 'UTC'")
         
         # Set application name for monitoring
@@ -116,7 +123,8 @@ class PostgreSQLConnectionHandler:
         await connection.execute("CREATE EXTENSION IF NOT EXISTS btree_gin")
     
     async def get_connection(self) -> PoolConnectionProxy:
-        """Get a connection from the pool"""        if not self.pool:
+        """Get a connection from the pool"""
+        if not self.pool:
             raise RuntimeError("PostgreSQL pool not initialized")
         
         connection = await self.pool.acquire()
@@ -124,12 +132,14 @@ class PostgreSQLConnectionHandler:
         return connection
     
     async def release_connection(self, connection: PoolConnectionProxy) -> None:
-        """Release a connection back to the pool"""        if self.pool:
+        """Release a connection back to the pool"""
+        if self.pool:
             await self.pool.release(connection)
     
     @asynccontextmanager
     async def connection(self) -> AsyncContextManager[PoolConnectionProxy]:
-        """Context manager for database connections"""        conn = await self.get_connection()
+        """Context manager for database connections"""
+        conn = await self.get_connection()
         try:
             yield conn
         finally:
@@ -137,7 +147,8 @@ class PostgreSQLConnectionHandler:
     
     @asynccontextmanager
     async def transaction(self) -> AsyncContextManager[PoolConnectionProxy]:
-        """Context manager for database transactions"""        async with self.connection() as conn:
+        """Context manager for database transactions"""
+        async with self.connection() as conn:
             async with conn.transaction():
                 yield conn
     
@@ -145,7 +156,8 @@ class PostgreSQLConnectionHandler:
                      query: str, 
                      *args, 
                      connection: Optional[PoolConnectionProxy] = None) -> Any:
-        """Execute a query"""        try:
+        """Execute a query"""
+        try:
             if connection:
                 result = await connection.execute(query, *args)
             else:
@@ -164,7 +176,8 @@ class PostgreSQLConnectionHandler:
                    query: str, 
                    *args, 
                    connection: Optional[PoolConnectionProxy] = None) -> List[Dict]:
-        """Fetch query results"""        try:
+        """Fetch query results"""
+        try:
             if connection:
                 result = await connection.fetch(query, *args)
             else:
@@ -183,7 +196,8 @@ class PostgreSQLConnectionHandler:
                       query: str, 
                       *args, 
                       connection: Optional[PoolConnectionProxy] = None) -> Optional[Dict]:
-        """Fetch single row"""        try:
+        """Fetch single row"""
+        try:
             if connection:
                 result = await connection.fetchrow(query, *args)
             else:
@@ -202,7 +216,8 @@ class PostgreSQLConnectionHandler:
                       query: str, 
                       *args, 
                       connection: Optional[PoolConnectionProxy] = None) -> Any:
-        """Fetch single value"""        try:
+        """Fetch single value"""
+        try:
             if connection:
                 result = await connection.fetchval(query, *args)
             else:
@@ -218,7 +233,8 @@ class PostgreSQLConnectionHandler:
             raise
     
     async def get_tenant_connection(self, tenant_id: str) -> PoolConnectionProxy:
-        """Get tenant-specific connection with schema isolation"""        if tenant_id not in self.tenant_pools:
+        """Get tenant-specific connection with schema isolation"""
+        if tenant_id not in self.tenant_pools:
             await self._create_tenant_pool(tenant_id)
         
         pool = self.tenant_pools[tenant_id]
@@ -231,7 +247,8 @@ class PostgreSQLConnectionHandler:
         return connection
     
     async def _create_tenant_pool(self, tenant_id: str) -> None:
-        """Create connection pool for specific tenant"""        dsn = self._build_dsn()
+        """Create connection pool for specific tenant"""
+        dsn = self._build_dsn()
         
         pool = await asyncpg.create_pool(
             dsn,
@@ -244,7 +261,8 @@ class PostgreSQLConnectionHandler:
         self.tenant_pools[tenant_id] = pool
     
     async def _init_tenant_connection(self, connection: Connection, tenant_id: str) -> None:
-        """Initialize tenant-specific connection"""        await self._init_connection(connection)
+        """Initialize tenant-specific connection"""
+        await self._init_connection(connection)
         
         # Create tenant schema if not exists
         schema_name = f"{self.config.tenant_schema_prefix}{tenant_id}"
@@ -254,7 +272,8 @@ class PostgreSQLConnectionHandler:
         await connection.execute(f"SET search_path TO {schema_name}, public")
     
     async def health_check(self) -> Dict[str, Any]:
-        """Check PostgreSQL connection health"""        try:
+        """Check PostgreSQL connection health"""
+        try:
             start_time = datetime.utcnow()
             
             async with self.connection() as conn:
@@ -262,7 +281,8 @@ class PostgreSQLConnectionHandler:
                 await conn.fetchval("SELECT 1")
                 
                 # Check database stats
-                stats = await conn.fetchrow("""                    SELECT 
+                stats = await conn.fetchrow("""
+                    SELECT 
                         count(*) as total_connections,
                         count(*) FILTER (WHERE state = 'active') as active_connections,
                         count(*) FILTER (WHERE state = 'idle') as idle_connections
@@ -271,7 +291,8 @@ class PostgreSQLConnectionHandler:
                 """)
                 
                 # Check table sizes
-                table_stats = await conn.fetch("""                    SELECT 
+                table_stats = await conn.fetch("""
+                    SELECT 
                         schemaname,
                         tablename,
                         n_tup_ins as inserts,
@@ -310,17 +331,20 @@ class PostgreSQLConnectionHandler:
             }
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get detailed PostgreSQL metrics"""        if not self.pool:
+        """Get detailed PostgreSQL metrics"""
+        if not self.pool:
             return {"status": "not_initialized"}
         
         try:
             async with self.connection() as conn:
                 # Database size
-                db_size = await conn.fetchval("""                    SELECT pg_size_pretty(pg_database_size(current_database()))
+                db_size = await conn.fetchval("""
+                    SELECT pg_size_pretty(pg_database_size(current_database()))
                 """)
                 
                 # Connection statistics
-                conn_stats = await conn.fetchrow("""                    SELECT 
+                conn_stats = await conn.fetchrow("""
+                    SELECT 
                         max_conn,
                         used,
                         res_for_super,
@@ -341,7 +365,8 @@ class PostgreSQLConnectionHandler:
                 """)
                 
                 # Query performance stats
-                query_stats = await conn.fetch("""                    SELECT 
+                query_stats = await conn.fetch("""
+                    SELECT 
                         query,
                         calls,
                         total_time,
@@ -371,7 +396,8 @@ class PostgreSQLConnectionHandler:
             return {"error": str(e)}
     
     async def shutdown(self) -> None:
-        """Shutdown PostgreSQL connections"""        self.logger.info("Shutting down PostgreSQL connections...")
+        """Shutdown PostgreSQL connections"""
+        self.logger.info("Shutting down PostgreSQL connections...")
         
         # Close tenant pools
         for tenant_id, pool in self.tenant_pools.items():

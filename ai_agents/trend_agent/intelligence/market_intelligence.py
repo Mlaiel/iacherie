@@ -24,7 +24,8 @@ Team Specialties:
 - Database Administrator & Security Expert: High-performance market data storage and protection
 - Microservices Architect & DevOps Engineer: Scalable market intelligence systems
 - AI Prompt Engineer & Content Protection: Intelligent market analysis and competitive insights
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import time
@@ -69,7 +70,8 @@ from ...utils.performance_monitor import PerformanceMonitor
 logger = logging.getLogger(__name__)
 
 class MarketSegmentType(Enum):
-    """Advanced market segmentation categories"""    MICRO_INFLUENCER = "micro_influencer"      # 1K-100K followers
+    """Advanced market segmentation categories"""
+    MICRO_INFLUENCER = "micro_influencer"      # 1K-100K followers
     MACRO_INFLUENCER = "macro_influencer"      # 100K-1M followers
     MEGA_INFLUENCER = "mega_influencer"        # 1M+ followers
     CELEBRITY = "celebrity"                    # 10M+ followers
@@ -77,21 +79,24 @@ class MarketSegmentType(Enum):
     NICHE_EXPERT = "niche_expert"             # Specialized content
 
 class CompetitorTier(Enum):
-    """Competitor tier classifications"""    DIRECT = "direct"              # Same niche, similar size
+    """Competitor tier classifications"""
+    DIRECT = "direct"              # Same niche, similar size
     ASPIRATIONAL = "aspirational" # Same niche, larger
     EMERGING = "emerging"          # Same niche, smaller but growing
     CROSS_NICHE = "cross_niche"   # Different niche, similar strategies
     INDUSTRY_LEADER = "industry_leader"  # Market leaders
 
 class AnalysisDepth(Enum):
-    """Market analysis depth levels"""    BASIC = "basic"
+    """Market analysis depth levels"""
+    BASIC = "basic"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
     ENTERPRISE = "enterprise"
 
 @dataclass
 class MarketIntelligenceConfig:
-    """Configuration for market intelligence operations"""    analysis_depth: AnalysisDepth
+    """Configuration for market intelligence operations"""
+    analysis_depth: AnalysisDepth
     competitor_limit: int = 50
     time_horizon: int = 90  # days
     update_frequency: int = 3600  # seconds
@@ -102,7 +107,8 @@ class MarketIntelligenceConfig:
 
 @dataclass
 class CompetitorInsights:
-    """Comprehensive competitor analysis results"""    competitor_id: str
+    """Comprehensive competitor analysis results"""
+    competitor_id: str
     basic_metrics: Dict[str, Any]
     content_strategy: Dict[str, Any]
     engagement_patterns: Dict[str, Any]
@@ -115,11 +121,13 @@ class CompetitorInsights:
     competitive_score: float
 
 class MarketIntelligence:
-    """    Advanced Market Intelligence Engine
+    """
+    Advanced Market Intelligence Engine
     
     Provides comprehensive market analysis, competitive intelligence, and strategic
     insights for content creators and business optimization.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         
@@ -146,7 +154,8 @@ class MarketIntelligence:
         self.is_initialized = False
 
     async def initialize(self) -> bool:
-        """Initialize market intelligence components"""        try:
+        """Initialize market intelligence components"""
+        try:
             logger.info("Initializing MarketIntelligence")
             
             # Initialize data APIs
@@ -172,7 +181,8 @@ class MarketIntelligence:
         creator_profile: Dict[str, Any],
         config: MarketIntelligenceConfig
     ) -> Dict[str, Any]:
-        """        Analyze creator's market position and competitive landscape
+        """
+        Analyze creator's market position and competitive landscape
         
         Args:
             creator_profile: Creator's profile and metrics data
@@ -180,7 +190,8 @@ class MarketIntelligence:
             
         Returns:
             Comprehensive market position analysis
-        """        try:
+        """
+        try:
             logger.info(f"Analyzing market position for creator {creator_profile.get('id')}")
             
             # Identify market segment
@@ -245,7 +256,8 @@ class MarketIntelligence:
         metrics: List[str],
         time_range: int = 30
     ) -> Dict[str, Any]:
-        """        Track and analyze competitor performance over time
+        """
+        Track and analyze competitor performance over time
         
         Args:
             competitor_ids: List of competitor IDs to track
@@ -254,7 +266,8 @@ class MarketIntelligence:
             
         Returns:
             Competitor performance analysis
-        """        try:
+        """
+        try:
             logger.info(f"Tracking performance for {len(competitor_ids)} competitors")
             
             performance_data = {}
@@ -318,7 +331,8 @@ class MarketIntelligence:
         platforms: List[str],
         time_horizon: int = 90
     ) -> Dict[str, Any]:
-        """        Identify and analyze market trends in specific industry segment
+        """
+        Identify and analyze market trends in specific industry segment
         
         Args:
             industry_segment: Industry or niche segment
@@ -327,7 +341,8 @@ class MarketIntelligence:
             
         Returns:
             Market trends analysis
-        """        try:
+        """
+        try:
             logger.info(f"Identifying market trends for {industry_segment}")
             
             # Collect market data
@@ -389,7 +404,8 @@ class MarketIntelligence:
         competitors: List[str],
         report_type: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """        Generate comprehensive competitive intelligence report
+        """
+        Generate comprehensive competitive intelligence report
         
         Args:
             creator_profile: Creator's profile data
@@ -398,7 +414,8 @@ class MarketIntelligence:
             
         Returns:
             Detailed competitive intelligence report
-        """        try:
+        """
+        try:
             logger.info(f"Generating {report_type} competitive intelligence report")
             
             # Executive summary
@@ -476,7 +493,8 @@ class MarketIntelligence:
         self,
         creator_profile: Dict[str, Any]
     ) -> MarketSegment:
-        """Identify the creator's market segment"""        follower_count = creator_profile.get("followers", 0)
+        """Identify the creator's market segment"""
+        follower_count = creator_profile.get("followers", 0)
         content_type = creator_profile.get("primary_content_type", "")
         
         if follower_count >= 10_000_000:
@@ -495,7 +513,8 @@ class MarketIntelligence:
         creator_profile: Dict[str, Any],
         limit: int
     ) -> List[Dict[str, Any]]:
-        """Find relevant competitors based on creator profile"""        try:
+        """Find relevant competitors based on creator profile"""
+        try:
             # Use multiple strategies to find competitors
             competitors = []
             
@@ -541,7 +560,8 @@ class MarketIntelligence:
         competitors: List[Dict[str, Any]],
         config: MarketIntelligenceConfig
     ) -> Dict[str, Any]:
-        """Analyze the competitive landscape"""        landscape = {
+        """Analyze the competitive landscape"""
+        landscape = {
             "market_concentration": {},
             "competitive_intensity": 0.0,
             "market_leaders": [],
@@ -587,7 +607,8 @@ class MarketIntelligence:
         return landscape
 
     async def _background_market_monitoring(self):
-        """Background task for continuous market monitoring"""        while self.is_initialized:
+        """Background task for continuous market monitoring"""
+        while self.is_initialized:
             try:
                 # Update market cache
                 await self._update_market_cache()
@@ -605,7 +626,8 @@ class MarketIntelligence:
                 await asyncio.sleep(7200)  # Wait 2 hours on error
 
     async def cleanup(self):
-        """Clean up resources"""        try:
+        """Clean up resources"""
+        try:
             # Cleanup APIs
             if self.market_data_api:
                 await self.market_data_api.cleanup()
@@ -624,11 +646,13 @@ class MarketIntelligence:
             logger.error(f"Cleanup failed: {str(e)}")
 
 class CompetitorAnalyzer:
-    """    Specialized Competitor Analysis Engine
+    """
+    Specialized Competitor Analysis Engine
     
     Provides detailed competitor analysis including content strategy,
     performance metrics, and competitive positioning assessment.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.analysis_modules = {
@@ -643,7 +667,8 @@ class CompetitorAnalyzer:
         competitor_id: str,
         analysis_modules: List[str] = None
     ) -> CompetitorInsights:
-        """        Perform comprehensive competitor analysis
+        """
+        Perform comprehensive competitor analysis
         
         Args:
             competitor_id: Competitor identifier
@@ -651,7 +676,8 @@ class CompetitorAnalyzer:
             
         Returns:
             Detailed competitor insights
-        """        try:
+        """
+        try:
             logger.info(f"Analyzing competitor {competitor_id}")
             
             # Collect basic competitor data
@@ -704,7 +730,8 @@ class CompetitorAnalyzer:
         competitor_id: str,
         basic_metrics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze competitor's content strategy"""        return {
+        """Analyze competitor's content strategy"""
+        return {
             "content_types": [],
             "posting_frequency": 0,
             "content_themes": [],
@@ -718,7 +745,8 @@ class CompetitorAnalyzer:
         basic_metrics: Dict[str, Any],
         analysis_results: Dict[str, Any]
     ) -> Dict[str, List[str]]:
-        """Perform SWOT analysis for competitor"""        swot = {
+        """Perform SWOT analysis for competitor"""
+        swot = {
             "strengths": [],
             "weaknesses": [],
             "opportunities": [],

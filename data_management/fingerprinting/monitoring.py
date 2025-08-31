@@ -26,7 +26,8 @@ MONITORING TECHNOLOGIES:
 ├── 🔍 Image Recognition (OpenCV + YOLO + OCR)
 ├── 🎵 Audio Detection (Chromaprint + Spectral Analysis)
 └── 🛡️ Violation Evidence (Screenshots + Metadata + Legal)
-"""from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
 from enum import Enum
@@ -111,20 +112,23 @@ __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 logger = logging.getLogger(__name__)
 
 class MonitoringMode(Enum):
-    """Modes de monitoring disponibles"""    REAL_TIME = "real_time"      # Monitoring en temps réel
+    """Modes de monitoring disponibles"""
+    REAL_TIME = "real_time"      # Monitoring en temps réel
     SCHEDULED = "scheduled"      # Monitoring programmé
     ON_DEMAND = "on_demand"      # Monitoring à la demande
     CONTINUOUS = "continuous"    # Monitoring continu
 
 class ViolationType(Enum):
-    """Types de violations détectés"""    EXACT_MATCH = "exact_match"           # Correspondance exacte
+    """Types de violations détectés"""
+    EXACT_MATCH = "exact_match"           # Correspondance exacte
     HIGH_SIMILARITY = "high_similarity"   # Haute similarité
     PARTIAL_MATCH = "partial_match"       # Correspondance partielle
     DERIVATIVE_WORK = "derivative_work"   # Œuvre dérivée
     UNAUTHORIZED_USE = "unauthorized_use" # Utilisation non autorisée
 
 class PlatformType(Enum):
-    """Plateformes supportées pour le monitoring"""    YOUTUBE = "youtube"
+    """Plateformes supportées pour le monitoring"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     SPOTIFY = "spotify"
@@ -135,7 +139,8 @@ class PlatformType(Enum):
     GENERIC_WEB = "generic_web"
 
 class AlertSeverity(Enum):
-    """Niveaux de sévérité des alertes"""    CRITICAL = "critical"    # Violation flagrante
+    """Niveaux de sévérité des alertes"""
+    CRITICAL = "critical"    # Violation flagrante
     HIGH = "high"           # Violation probable
     MEDIUM = "medium"       # Violation possible
     LOW = "low"             # Correspondance faible
@@ -143,7 +148,8 @@ class AlertSeverity(Enum):
 
 @dataclass
 class MonitoringConfig:
-    """Configuration avancée pour le système de monitoring"""    
+    """Configuration avancée pour le système de monitoring"""
+    
     # Configuration générale
     monitoring_mode: MonitoringMode = MonitoringMode.REAL_TIME
     check_interval: int = 300  # 5 minutes
@@ -190,7 +196,8 @@ class MonitoringConfig:
 
 @dataclass
 class ViolationAlert:
-    """Alerte de violation détectée"""    alert_id: str
+    """Alerte de violation détectée"""
+    alert_id: str
     fingerprint_id: str
     content_id: str
     creator_id: str
@@ -207,7 +214,8 @@ class ViolationAlert:
 
 @dataclass
 class MonitoringJob:
-    """Job de monitoring d'un contenu"""    job_id: str
+    """Job de monitoring d'un contenu"""
+    job_id: str
     fingerprint_id: str
     content_type: str
     creator_id: str
@@ -219,7 +227,8 @@ class MonitoringJob:
     violations_found: int = 0
 
 class BaseMonitor(ABC):
-    """Classe de base pour tous les monitors"""    
+    """Classe de base pour tous les monitors"""
+    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.is_running = False
@@ -232,7 +241,8 @@ class BaseMonitor(ABC):
     
     @abstractmethod
     async def start_monitoring(self, job: MonitoringJob) -> List[ViolationAlert]:
-        """Start monitoring for a given job"""        logger.info(f"Starting monitoring job {job.job_id} with {self.__class__.__name__}")
+        """Start monitoring for a given job"""
+        logger.info(f"Starting monitoring job {job.job_id} with {self.__class__.__name__}")
         
         # Update job status
         job.status = "running"
@@ -244,17 +254,20 @@ class BaseMonitor(ABC):
     
     @abstractmethod
     async def stop_monitoring(self):
-        """Stop monitoring"""        logger.info(f"Stopping monitoring for {self.__class__.__name__}")
+        """Stop monitoring"""
+        logger.info(f"Stopping monitoring for {self.__class__.__name__}")
         
         # Update metrics
         self.metrics["stop_time"] = datetime.now().isoformat()
         self.metrics["status"] = "stopped"
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Retourne les métriques du monitor"""        return self.metrics.copy()
+        """Retourne les métriques du monitor"""
+        return self.metrics.copy()
 
 class WebCrawlerMonitor(BaseMonitor):
-    """Monitor basé sur le crawling web avancé"""    
+    """Monitor basé sur le crawling web avancé"""
+    
     def __init__(self, config: MonitoringConfig):
         super().__init__(config)
         self.driver = None
@@ -262,7 +275,8 @@ class WebCrawlerMonitor(BaseMonitor):
         self._initialize_crawler()
     
     def _initialize_crawler(self):
-        """Initialise les outils de crawling"""        if not SELENIUM_AVAILABLE:
+        """Initialise les outils de crawling"""
+        if not SELENIUM_AVAILABLE:
             logger.warning("Selenium not available - web crawling limited")
             return
         
@@ -288,7 +302,8 @@ class WebCrawlerMonitor(BaseMonitor):
             logger.error(f"Failed to initialize web crawler: {e}")
     
     async def start_monitoring(self, job: MonitoringJob) -> List[ViolationAlert]:
-        """Démarre le monitoring web pour un job"""        violations = []
+        """Démarre le monitoring web pour un job"""
+        violations = []
         
         try:
             self.is_running = True
@@ -329,7 +344,8 @@ class WebCrawlerMonitor(BaseMonitor):
             self.is_running = False
     
     def _generate_search_queries(self, job: MonitoringJob) -> List[str]:
-        """Génère les requêtes de recherche basées sur les métadonnées"""        queries = []
+        """Génère les requêtes de recherche basées sur les métadonnées"""
+        queries = []
         
         search_params = job.search_parameters
         
@@ -370,7 +386,8 @@ class WebCrawlerMonitor(BaseMonitor):
         return list(set(queries))  # Suppression des doublons
     
     async def _search_content(self, query: str, platforms: List[PlatformType]) -> List[Dict[str, Any]]:
-        """Recherche du contenu sur les plateformes spécifiées"""        results = []
+        """Recherche du contenu sur les plateformes spécifiées"""
+        results = []
         
         for platform in platforms:
             try:
@@ -386,7 +403,8 @@ class WebCrawlerMonitor(BaseMonitor):
         return results
     
     async def _search_platform(self, query: str, platform: PlatformType) -> List[Dict[str, Any]]:
-        """Recherche sur une plateforme spécifique"""        if not self.driver:
+        """Recherche sur une plateforme spécifique"""
+        if not self.driver:
             return []
         
         try:
@@ -407,7 +425,8 @@ class WebCrawlerMonitor(BaseMonitor):
             return []
     
     async def _search_youtube(self, query: str) -> List[Dict[str, Any]]:
-        """Recherche sur YouTube"""        results = []
+        """Recherche sur YouTube"""
+        results = []
         
         try:
             search_url = f"https://www.youtube.com/results?search_query={query.replace(' ', '+')}"
@@ -442,7 +461,8 @@ class WebCrawlerMonitor(BaseMonitor):
             return []
     
     async def _search_instagram(self, query: str) -> List[Dict[str, Any]]:
-        """Recherche sur Instagram"""        # Note: Instagram nécessite une authentification
+        """Recherche sur Instagram"""
+        # Note: Instagram nécessite une authentification
         # Implémentation simplifiée pour la démonstration
         results = []
         
@@ -477,7 +497,8 @@ class WebCrawlerMonitor(BaseMonitor):
             return []
     
     async def _search_tiktok(self, query: str) -> List[Dict[str, Any]]:
-        """Recherche sur TikTok"""        results = []
+        """Recherche sur TikTok"""
+        results = []
         
         try:
             search_url = f"https://www.tiktok.com/search?q={query.replace(' ', '%20')}"
@@ -509,7 +530,8 @@ class WebCrawlerMonitor(BaseMonitor):
             return []
     
     async def _search_google(self, query: str) -> List[Dict[str, Any]]:
-        """Recherche générique sur Google"""        results = []
+        """Recherche générique sur Google"""
+        results = []
         
         try:
             search_url = f"https://www.google.com/search?q={query.replace(' ', '+')}"
@@ -546,7 +568,8 @@ class WebCrawlerMonitor(BaseMonitor):
             return []
     
     async def _analyze_search_result(self, result: Dict[str, Any], job: MonitoringJob) -> Optional[ViolationAlert]:
-        """Analyse un résultat de recherche pour détecter une violation"""        try:
+        """Analyse un résultat de recherche pour détecter une violation"""
+        try:
             # Analyse basique basée sur le titre et l'URL
             title_similarity = self._calculate_text_similarity(
                 result["title"], 
@@ -592,7 +615,8 @@ class WebCrawlerMonitor(BaseMonitor):
             return None
     
     def _calculate_text_similarity(self, text1: str, text2: str) -> float:
-        """Calcule la similarité entre deux textes"""        if not text1 or not text2:
+        """Calcule la similarité entre deux textes"""
+        if not text1 or not text2:
             return 0.0
         
         # Normalisation
@@ -612,7 +636,8 @@ class WebCrawlerMonitor(BaseMonitor):
         return intersection / union
     
     def _determine_severity(self, similarity_score: float) -> AlertSeverity:
-        """Détermine la sévérité basée sur le score de similarité"""        if similarity_score >= 0.95:
+        """Détermine la sévérité basée sur le score de similarité"""
+        if similarity_score >= 0.95:
             return AlertSeverity.CRITICAL
         elif similarity_score >= 0.85:
             return AlertSeverity.HIGH
@@ -624,7 +649,8 @@ class WebCrawlerMonitor(BaseMonitor):
             return AlertSeverity.INFO
     
     def _determine_violation_type(self, similarity_score: float) -> ViolationType:
-        """Détermine le type de violation basé sur le score"""        if similarity_score >= 0.95:
+        """Détermine le type de violation basé sur le score"""
+        if similarity_score >= 0.95:
             return ViolationType.EXACT_MATCH
         elif similarity_score >= 0.85:
             return ViolationType.HIGH_SIMILARITY
@@ -634,7 +660,8 @@ class WebCrawlerMonitor(BaseMonitor):
             return ViolationType.UNAUTHORIZED_USE
     
     async def _collect_evidence(self, result: Dict[str, Any], job: MonitoringJob) -> List[str]:
-        """Collecte des preuves de violation"""        evidence_paths = []
+        """Collecte des preuves de violation"""
+        evidence_paths = []
         
         try:
             # Création du dossier d'evidence
@@ -666,7 +693,8 @@ class WebCrawlerMonitor(BaseMonitor):
             return evidence_paths
     
     async def _take_screenshot(self, url: str, evidence_dir: Path) -> Optional[str]:
-        """Prend un screenshot d'une page web"""        try:
+        """Prend un screenshot d'une page web"""
+        try:
             self.driver.get(url)
             await asyncio.sleep(3)  # Attente du chargement
             
@@ -684,7 +712,8 @@ class WebCrawlerMonitor(BaseMonitor):
             return None
     
     async def stop_monitoring(self):
-        """Arrête le monitoring web"""        self.is_running = False
+        """Arrête le monitoring web"""
+        self.is_running = False
         
         if self.driver:
             try:
@@ -694,7 +723,8 @@ class WebCrawlerMonitor(BaseMonitor):
                 logger.error(f"Error stopping web crawler: {e}")
 
 class PlatformAPIMonitor(BaseMonitor):
-    """Monitor basé sur les APIs des plateformes"""    
+    """Monitor basé sur les APIs des plateformes"""
+    
     def __init__(self, config: MonitoringConfig):
         super().__init__(config)
         self.api_clients = {}
@@ -702,7 +732,8 @@ class PlatformAPIMonitor(BaseMonitor):
         self._initialize_api_clients()
     
     def _initialize_api_clients(self):
-        """Initialise les clients d'API pour chaque plateforme"""        # Note: En production, les clés API seraient configurées via des variables d'environnement
+        """Initialise les clients d'API pour chaque plateforme"""
+        # Note: En production, les clés API seraient configurées via des variables d'environnement
         
         # YouTube Data API
         self.api_clients[PlatformType.YOUTUBE] = {
@@ -738,7 +769,8 @@ class PlatformAPIMonitor(BaseMonitor):
         logger.info("Platform API clients initialized")
     
     async def start_monitoring(self, job: MonitoringJob) -> List[ViolationAlert]:
-        """Démarre le monitoring via les APIs des plateformes"""        violations = []
+        """Démarre le monitoring via les APIs des plateformes"""
+        violations = []
         
         try:
             self.is_running = True
@@ -772,7 +804,8 @@ class PlatformAPIMonitor(BaseMonitor):
             self.is_running = False
     
     async def _monitor_platform_api(self, platform: PlatformType, job: MonitoringJob) -> List[ViolationAlert]:
-        """Monitoring d'une plateforme spécifique via son API"""        violations = []
+        """Monitoring d'une plateforme spécifique via son API"""
+        violations = []
         
         try:
             if platform == PlatformType.YOUTUBE:
@@ -791,7 +824,8 @@ class PlatformAPIMonitor(BaseMonitor):
             return []
     
     async def _monitor_youtube_api(self, job: MonitoringJob) -> List[ViolationAlert]:
-        """Monitoring YouTube via l'API officielle"""        violations = []
+        """Monitoring YouTube via l'API officielle"""
+        violations = []
         
         # Note: Implémentation simplifiée - en production, utiliser les vraies clés API
         try:
@@ -843,15 +877,18 @@ class PlatformAPIMonitor(BaseMonitor):
             return []
     
     async def _monitor_instagram_api(self, job: MonitoringJob) -> List[ViolationAlert]:
-        """Monitoring Instagram via l'API officielle"""        # Implémentation similaire à YouTube mais pour Instagram
+        """Monitoring Instagram via l'API officielle"""
+        # Implémentation similaire à YouTube mais pour Instagram
         return []
     
     async def _monitor_spotify_api(self, job: MonitoringJob) -> List[ViolationAlert]:
-        """Monitoring Spotify via l'API officielle"""        # Implémentation similaire à YouTube mais pour Spotify
+        """Monitoring Spotify via l'API officielle"""
+        # Implémentation similaire à YouTube mais pour Spotify
         return []
     
     def _calculate_text_similarity(self, text1: str, text2: str) -> float:
-        """Calcule la similarité entre deux textes (même que WebCrawlerMonitor)"""        if not text1 or not text2:
+        """Calcule la similarité entre deux textes (même que WebCrawlerMonitor)"""
+        if not text1 or not text2:
             return 0.0
         
         text1 = text1.lower().strip()
@@ -869,7 +906,8 @@ class PlatformAPIMonitor(BaseMonitor):
         return intersection / union
     
     def _determine_severity(self, similarity_score: float) -> AlertSeverity:
-        """Détermine la sévérité basée sur le score de similarité"""        if similarity_score >= 0.95:
+        """Détermine la sévérité basée sur le score de similarité"""
+        if similarity_score >= 0.95:
             return AlertSeverity.CRITICAL
         elif similarity_score >= 0.85:
             return AlertSeverity.HIGH
@@ -881,16 +919,19 @@ class PlatformAPIMonitor(BaseMonitor):
             return AlertSeverity.INFO
     
     async def stop_monitoring(self):
-        """Arrête le monitoring des APIs"""        self.is_running = False
+        """Arrête le monitoring des APIs"""
+        self.is_running = False
         logger.info("Platform API monitoring stopped")
 
 class ViolationDetector:
-    """Détecteur de violations utilisant l'IA et les fingerprints"""    
+    """Détecteur de violations utilisant l'IA et les fingerprints"""
+    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         
     async def analyze_content(self, content_url: str, original_fingerprint: Dict[str, Any]) -> Optional[ViolationAlert]:
-        """Analyse un contenu détecté pour confirmer une violation"""        try:
+        """Analyse un contenu détecté pour confirmer une violation"""
+        try:
             # Téléchargement et analyse du contenu
             content_data = await self._download_content(content_url)
             if not content_data:
@@ -928,7 +969,8 @@ class ViolationDetector:
             return None
     
     async def _download_content(self, url: str) -> Optional[bytes]:
-        """Télécharge le contenu pour analyse"""        try:
+        """Télécharge le contenu pour analyse"""
+        try:
             if not REQUESTS_AVAILABLE:
                 return None
             
@@ -944,7 +986,8 @@ class ViolationDetector:
             return None
     
     async def _generate_fingerprint(self, content_data: bytes) -> Optional[Dict[str, Any]]:
-        """Génère un fingerprint pour le contenu détecté"""        # Implémentation simplifiée - en production, utiliser le moteur de fingerprinting complet
+        """Génère un fingerprint pour le contenu détecté"""
+        # Implémentation simplifiée - en production, utiliser le moteur de fingerprinting complet
         try:
             content_hash = hashlib.sha256(content_data).hexdigest()
             
@@ -960,7 +1003,8 @@ class ViolationDetector:
             return None
     
     async def _compare_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare deux fingerprints et retourne un score de similarité"""        try:
+        """Compare deux fingerprints et retourne un score de similarité"""
+        try:
             # Comparaison simplifiée basée sur le hash
             hash1 = fp1.get("content_hash", "")
             hash2 = fp2.get("content_hash", "")
@@ -976,7 +1020,8 @@ class ViolationDetector:
             return 0.0
     
     def _determine_violation_type(self, similarity_score: float) -> ViolationType:
-        """Détermine le type de violation basé sur le score"""        if similarity_score >= 0.95:
+        """Détermine le type de violation basé sur le score"""
+        if similarity_score >= 0.95:
             return ViolationType.EXACT_MATCH
         elif similarity_score >= 0.85:
             return ViolationType.HIGH_SIMILARITY
@@ -986,7 +1031,8 @@ class ViolationDetector:
             return ViolationType.UNAUTHORIZED_USE
     
     def _determine_severity(self, similarity_score: float) -> AlertSeverity:
-        """Détermine la sévérité basée sur le score de similarité"""        if similarity_score >= 0.95:
+        """Détermine la sévérité basée sur le score de similarité"""
+        if similarity_score >= 0.95:
             return AlertSeverity.CRITICAL
         elif similarity_score >= 0.85:
             return AlertSeverity.HIGH
@@ -998,14 +1044,16 @@ class ViolationDetector:
             return AlertSeverity.INFO
 
 class AlertManager:
-    """Gestionnaire d'alertes multi-canal"""    
+    """Gestionnaire d'alertes multi-canal"""
+    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.alert_queue = queue.Queue()
         self.is_processing = False
         
     async def send_alert(self, violation: ViolationAlert) -> bool:
-        """Envoie une alerte via tous les canaux configurés"""        success = True
+        """Envoie une alerte via tous les canaux configurés"""
+        success = True
         
         try:
             # Email
@@ -1035,7 +1083,8 @@ class AlertManager:
             return False
     
     async def _send_email_alert(self, violation: ViolationAlert) -> bool:
-        """Envoie une alerte par email"""        if not EMAIL_AVAILABLE:
+        """Envoie une alerte par email"""
+        if not EMAIL_AVAILABLE:
             return False
         
         try:
@@ -1049,7 +1098,8 @@ class AlertManager:
             # Construction du message
             subject = f"🚨 Content Violation Detected - {violation.severity.value.title()}"
             
-            body = f"""            Content Violation Alert
+            body = f"""
+            Content Violation Alert
             =====================
             
             Violation Details:
@@ -1074,7 +1124,8 @@ class AlertManager:
             
             ---
             IA Influencer Agent - Content Protection System
-            """            
+            """
+            
             # Simulation d'envoi d'email (en production, utiliser un vrai service SMTP)
             logger.info(f"Email alert sent for violation {violation.alert_id}")
             return True
@@ -1084,7 +1135,8 @@ class AlertManager:
             return False
     
     async def _send_webhook_alert(self, violation: ViolationAlert) -> bool:
-        """Envoie une alerte via webhook"""        try:
+        """Envoie une alerte via webhook"""
+        try:
             webhook_url = "https://api.example.com/alerts"  # À configurer
             
             payload = {
@@ -1110,7 +1162,8 @@ class AlertManager:
             return False
     
     async def _send_slack_alert(self, violation: ViolationAlert) -> bool:
-        """Envoie une alerte Slack"""        try:
+        """Envoie une alerte Slack"""
+        try:
             # Slack webhook URL (à configurer)
             slack_webhook = "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
             
@@ -1138,7 +1191,8 @@ class AlertManager:
             return False
     
     async def _send_sms_alert(self, violation: ViolationAlert) -> bool:
-        """Envoie une alerte SMS"""        try:
+        """Envoie une alerte SMS"""
+        try:
             # Service SMS (Twilio, AWS SNS, etc.)
             phone_number = "+1234567890"  # À configurer
             
@@ -1153,14 +1207,16 @@ class AlertManager:
             return False
 
 class RealTimeMonitor:
-    """    Moniteur principal en temps réel
+    """
+    Moniteur principal en temps réel
     
     Fonctionnalités:
     - Orchestration de tous les monitors
     - Gestion des jobs de monitoring
     - Traitement des alertes
     - Métriques et performance
-    """    
+    """
+    
     def __init__(self, config: Optional[MonitoringConfig] = None):
         self.config = config or MonitoringConfig()
         
@@ -1187,7 +1243,8 @@ class RealTimeMonitor:
         logger.info("RealTimeMonitor initialized successfully")
     
     async def start_monitoring(self):
-        """Démarre le système de monitoring en temps réel"""        try:
+        """Démarre le système de monitoring en temps réel"""
+        try:
             self.is_running = True
             start_time = time.time()
             
@@ -1220,7 +1277,8 @@ class RealTimeMonitor:
             await self.stop_monitoring()
     
     async def add_monitoring_job(self, job: MonitoringJob):
-        """Ajoute un job de monitoring"""        try:
+        """Ajoute un job de monitoring"""
+        try:
             self.job_queue.put(job)
             logger.info(f"Monitoring job added: {job.job_id}")
             
@@ -1228,7 +1286,8 @@ class RealTimeMonitor:
             logger.error(f"Failed to add monitoring job: {e}")
     
     async def _process_job_queue(self):
-        """Traite la queue des jobs en attente"""        while not self.job_queue.empty() and len(self.active_jobs) < self.config.max_concurrent_jobs:
+        """Traite la queue des jobs en attente"""
+        while not self.job_queue.empty() and len(self.active_jobs) < self.config.max_concurrent_jobs:
             try:
                 job = self.job_queue.get_nowait()
                 await self._start_job(job)
@@ -1239,7 +1298,8 @@ class RealTimeMonitor:
                 logger.error(f"Job processing error: {e}")
     
     async def _start_job(self, job: MonitoringJob):
-        """Démarre un job de monitoring"""        try:
+        """Démarre un job de monitoring"""
+        try:
             job.status = "running"
             job.last_check = datetime.now().isoformat()
             self.active_jobs[job.job_id] = job
@@ -1281,7 +1341,8 @@ class RealTimeMonitor:
                 del self.active_jobs[job.job_id]
     
     async def _check_active_jobs(self):
-        """Vérifie l'état des jobs actifs"""        for job_id, job in list(self.active_jobs.items()):
+        """Vérifie l'état des jobs actifs"""
+        for job_id, job in list(self.active_jobs.items()):
             try:
                 # Vérification du timeout
                 last_check = datetime.fromisoformat(job.last_check) if job.last_check else datetime.now()
@@ -1294,7 +1355,8 @@ class RealTimeMonitor:
                 logger.error(f"Error checking job {job_id}: {e}")
     
     async def _handle_violation(self, violation: ViolationAlert, job: MonitoringJob):
-        """Traite une violation détectée"""        try:
+        """Traite une violation détectée"""
+        try:
             # Envoi de l'alerte
             alert_sent = await self.alert_manager.send_alert(violation)
             
@@ -1311,7 +1373,8 @@ class RealTimeMonitor:
             logger.error(f"Violation handling failed: {e}")
     
     async def _save_violation(self, violation: ViolationAlert):
-        """Sauvegarde une violation dans le système"""        try:
+        """Sauvegarde une violation dans le système"""
+        try:
             # En production, sauvegarder dans PostgreSQL/MongoDB
             violation_data = {
                 "alert_id": violation.alert_id,
@@ -1337,7 +1400,8 @@ class RealTimeMonitor:
             logger.error(f"Violation save failed: {e}")
     
     async def stop_monitoring(self):
-        """Arrête le système de monitoring"""        try:
+        """Arrête le système de monitoring"""
+        try:
             self.is_running = False
             
             # Arrêt des monitors
@@ -1350,7 +1414,8 @@ class RealTimeMonitor:
             logger.error(f"Monitoring stop error: {e}")
     
     def get_comprehensive_metrics(self) -> Dict[str, Any]:
-        """Retourne des métriques complètes du système"""        return {
+        """Retourne des métriques complètes du système"""
+        return {
             "global_metrics": self.metrics,
             "web_crawler_metrics": self.web_crawler.get_metrics(),
             "platform_api_metrics": self.platform_api.get_metrics(),

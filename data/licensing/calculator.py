@@ -6,7 +6,8 @@ automated distribution, and compliance validation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""from typing import Dict, List, Any, Optional, Tuple
+"""
+from typing import Dict, List, Any, Optional, Tuple
 from decimal import Decimal, ROUND_HALF_UP
 from datetime import datetime, date
 from uuid import UUID
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 
 class RoyaltyModel(Enum):
-    """Royalty calculation models"""    PERCENTAGE = "percentage"
+    """Royalty calculation models"""
+    PERCENTAGE = "percentage"
     TIERED = "tiered" 
     PERFORMANCE_BASED = "performance_based"
     FIXED_RATE = "fixed_rate"
@@ -36,7 +38,8 @@ class RoyaltyModel(Enum):
 
 
 class DistributionMethod(Enum):
-    """Revenue distribution methods"""    PROPORTIONAL = "proportional"
+    """Revenue distribution methods"""
+    PROPORTIONAL = "proportional"
     EQUAL_SPLIT = "equal_split"
     PRIORITY_BASED = "priority_based"
     THRESHOLD_BASED = "threshold_based"
@@ -44,16 +47,19 @@ class DistributionMethod(Enum):
 
 
 class RoyaltyCalculator:
-    """    Industrial-grade royalty calculation engine with support for
+    """
+    Industrial-grade royalty calculation engine with support for
     complex multi-party revenue distribution and compliance validation.
-    """    
+    """
+    
     def __init__(
         self,
         repository: LicensingRepository = None,
         currency_converter: CurrencyConverter = None,
         cache_manager: CacheManager = None
     ):
-        """Initialize calculator with dependencies"""        self.repository = repository or LicensingRepository()
+        """Initialize calculator with dependencies"""
+        self.repository = repository or LicensingRepository()
         self.currency_converter = currency_converter or CurrencyConverter()
         self.cache_manager = cache_manager or CacheManager()
         self._logger = logger
@@ -71,7 +77,8 @@ class RoyaltyCalculator:
         reporting_period: Tuple[date, date],
         calculation_method: str = "percentage"
     ) -> RoyaltyCalculation:
-        """Calculate royalties for a license agreement"""        try:
+        """Calculate royalties for a license agreement"""
+        try:
             # Get license agreement
             license_agreement = await self.repository.get_license_agreement(
                 license_agreement_id, include_relations=True
@@ -154,7 +161,8 @@ class RoyaltyCalculator:
         tier_structure: List[Dict[str, Any]],
         currency: str = "USD"
     ) -> Decimal:
-        """Calculate royalties using tiered structure"""        try:
+        """Calculate royalties using tiered structure"""
+        try:
             total_royalty = Decimal("0")
             remaining_revenue = net_revenue
             
@@ -191,7 +199,8 @@ class RoyaltyCalculator:
         performance_metrics: Dict[str, Any],
         performance_thresholds: Dict[str, Any]
     ) -> Decimal:
-        """Calculate performance-based royalty adjustments"""        try:
+        """Calculate performance-based royalty adjustments"""
+        try:
             adjusted_royalty = base_royalty
             total_bonus = Decimal("0")
             
@@ -226,7 +235,8 @@ class RoyaltyCalculator:
         stakeholders: List[Dict[str, Any]],
         distribution_method: str = "proportional"
     ) -> RevenueDistribution:
-        """Calculate revenue distribution among stakeholders"""        try:
+        """Calculate revenue distribution among stakeholders"""
+        try:
             # Get royalty calculation
             royalty_calculations, _ = await self.repository.get_royalty_calculations(
                 limit=1, offset=0
@@ -286,7 +296,8 @@ class RoyaltyCalculator:
         calculation: RoyaltyCalculation,
         license_agreement: LicenseAgreement
     ) -> Dict[str, Any]:
-        """Validate royalty calculation for accuracy and compliance"""        try:
+        """Validate royalty calculation for accuracy and compliance"""
+        try:
             validation_results = {
                 "is_valid": True,
                 "errors": [],
@@ -346,7 +357,8 @@ class RoyaltyCalculator:
     # Private helper methods
     
     async def _validate_usage_data(self, usage_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate usage data"""        required_fields = ["total_revenue"]
+        """Validate usage data"""
+        required_fields = ["total_revenue"]
         
         for field in required_fields:
             if field not in usage_data:
@@ -362,7 +374,8 @@ class RoyaltyCalculator:
         usage_data: Dict[str, Any],
         license_agreement: LicenseAgreement
     ) -> Decimal:
-        """Calculate gross revenue from usage data"""        total_revenue = Decimal(str(usage_data["total_revenue"]))
+        """Calculate gross revenue from usage data"""
+        total_revenue = Decimal(str(usage_data["total_revenue"]))
         
         # Convert currency if needed
         if usage_data.get("currency", "USD") != license_agreement.currency:
@@ -380,7 +393,8 @@ class RoyaltyCalculator:
         license_agreement: LicenseAgreement,
         usage_data: Dict[str, Any]
     ) -> Dict[str, Decimal]:
-        """Calculate various deductions from gross revenue"""        deductions = {}
+        """Calculate various deductions from gross revenue"""
+        deductions = {}
         
         # Platform fees
         platform_fee_rate = usage_data.get("platform_fee_rate", self.platform_fee_rate)
@@ -409,7 +423,8 @@ class RoyaltyCalculator:
         usage_data: Dict[str, Any],
         calculation_method: str
     ) -> Decimal:
-        """Calculate royalty amount based on method"""        if calculation_method == "percentage":
+        """Calculate royalty amount based on method"""
+        if calculation_method == "percentage":
             royalty_rate = Decimal(str(license_agreement.royalty_rate)) / 100
             return (net_revenue * royalty_rate).quantize(
                 self.precision, rounding=ROUND_HALF_UP
@@ -444,7 +459,8 @@ class RoyaltyCalculator:
         license_agreement: LicenseAgreement,
         royalty_amount: Decimal
     ) -> Tuple[Decimal, Decimal]:
-        """Handle advance recoupment logic"""        advance_balance = license_agreement.advance_payment
+        """Handle advance recoupment logic"""
+        advance_balance = license_agreement.advance_payment
         amount_due = royalty_amount
         
         if advance_balance > 0:
@@ -465,7 +481,8 @@ class RoyaltyCalculator:
         stakeholders: List[Dict[str, Any]],
         method: str
     ) -> Dict[str, Decimal]:
-        """Calculate distribution breakdown among stakeholders"""        distribution = {}
+        """Calculate distribution breakdown among stakeholders"""
+        distribution = {}
         
         if method == "proportional":
             total_percentage = sum(
@@ -505,7 +522,8 @@ class RoyaltyCalculator:
         distribution: Dict[str, Decimal],
         currency: str
     ) -> Dict[str, Decimal]:
-        """Apply minimum payment thresholds"""        filtered_distribution = {}
+        """Apply minimum payment thresholds"""
+        filtered_distribution = {}
         
         for stakeholder_id, amount in distribution.items():
             if amount >= self.minimum_payment_threshold:

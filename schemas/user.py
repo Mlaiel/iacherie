@@ -6,7 +6,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""from datetime import datetime
+"""
+from datetime import datetime
 from typing import Dict, List, Optional
 from uuid import UUID
 
@@ -16,14 +17,16 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class UserAuthentication(BaseSchema):
-    """User authentication credentials schema."""    
+    """User authentication credentials schema."""
+    
     email: EmailStr = Field(description="User email address")
     password: str = Field(min_length=8, description="User password")
     remember_me: bool = Field(default=False, description="Remember user session")
     
 
 class UserCreate(BaseSchema):
-    """Schema for creating new user accounts."""    
+    """Schema for creating new user accounts."""
+    
     email: EmailStr = Field(description="Unique user email address")
     password: str = Field(min_length=8, description="User password")
     first_name: str = Field(min_length=2, max_length=50, description="User first name")
@@ -39,19 +42,22 @@ class UserCreate(BaseSchema):
     
     @validator('username')
     def validate_username(cls, v):
-        """Validate username format."""        if not v.isalnum():
+        """Validate username format."""
+        if not v.isalnum():
             raise ValueError('Username must contain only alphanumeric characters')
         return v.lower()
     
     @validator('terms_accepted', 'privacy_accepted')
     def validate_required_consents(cls, v):
-        """Validate required legal consents."""        if not v:
+        """Validate required legal consents."""
+        if not v:
             raise ValueError('Terms and privacy policy must be accepted')
         return v
 
 
 class UserUpdate(BaseSchema):
-    """Schema for updating user information."""    
+    """Schema for updating user information."""
+    
     first_name: Optional[str] = Field(None, min_length=2, max_length=50)
     last_name: Optional[str] = Field(None, min_length=2, max_length=50)
     phone_number: Optional[str] = None
@@ -62,7 +68,8 @@ class UserUpdate(BaseSchema):
 
 
 class UserOut(UUIDSchema, TimestampSchema):
-    """Public user information schema."""    
+    """Public user information schema."""
+    
     email: EmailStr
     username: str
     first_name: str
@@ -79,11 +86,13 @@ class UserOut(UUIDSchema, TimestampSchema):
     
     @property
     def display_name(self) -> str:
-        """Get user display name."""        return f"{self.first_name} {self.last_name}"
+        """Get user display name."""
+        return f"{self.first_name} {self.last_name}"
 
 
 class UserProfile(UUIDSchema, TimestampSchema):
-    """Extended user profile schema."""    
+    """Extended user profile schema."""
+    
     user_id: UUID
     bio: Optional[str] = Field(None, max_length=500, description="User biography")
     website: Optional[str] = Field(None, description="Personal website URL")
@@ -108,7 +117,8 @@ class UserProfile(UUIDSchema, TimestampSchema):
     
     @validator('social_links')
     def validate_social_links(cls, v):
-        """Validate social media links format."""        allowed_platforms = {
+        """Validate social media links format."""
+        allowed_platforms = {
             'twitter', 'instagram', 'facebook', 'linkedin', 
             'youtube', 'tiktok', 'spotify', 'soundcloud'
         }
@@ -119,7 +129,8 @@ class UserProfile(UUIDSchema, TimestampSchema):
 
 
 class UserSettings(UUIDSchema, TimestampSchema):
-    """User application settings schema."""    
+    """User application settings schema."""
+    
     user_id: UUID
     
     # Notification preferences
@@ -150,7 +161,8 @@ class UserSettings(UUIDSchema, TimestampSchema):
 
 
 class UserVerification(UUIDSchema, TimestampSchema):
-    """User verification status schema."""    
+    """User verification status schema."""
+    
     user_id: UUID
     verification_type: str = Field(description="Type of verification")
     verification_status: str = Field(description="Current verification status")
@@ -164,15 +176,18 @@ class UserVerification(UUIDSchema, TimestampSchema):
     
     @property
     def is_expired(self) -> bool:
-        """Check if verification is expired."""        return self.expires_at and datetime.utcnow() > self.expires_at
+        """Check if verification is expired."""
+        return self.expires_at and datetime.utcnow() > self.expires_at
     
     @property
     def attempts_remaining(self) -> int:
-        """Get remaining verification attempts."""        return max(0, self.max_attempts - self.attempts_count)
+        """Get remaining verification attempts."""
+        return max(0, self.max_attempts - self.attempts_count)
 
 
 class UserSession(UUIDSchema, TimestampSchema):
-    """User session management schema."""    
+    """User session management schema."""
+    
     user_id: UUID
     session_id: str = Field(description="Unique session identifier")
     device_type: str = Field(description="Device type (web, mobile, api)")
@@ -193,53 +208,62 @@ class UserSession(UUIDSchema, TimestampSchema):
     
     @property
     def is_expired(self) -> bool:
-        """Check if session is expired."""        return datetime.utcnow() > self.expires_at
+        """Check if session is expired."""
+        return datetime.utcnow() > self.expires_at
     
     @property
     def time_since_last_activity(self) -> int:
-        """Get seconds since last activity."""        return int((datetime.utcnow() - self.last_activity).total_seconds())
+        """Get seconds since last activity."""
+        return int((datetime.utcnow() - self.last_activity).total_seconds())
 
 
 class PasswordChange(BaseSchema):
-    """Password change request schema."""    
+    """Password change request schema."""
+    
     current_password: str = Field(description="Current password")
     new_password: str = Field(min_length=8, description="New password")
     confirm_password: str = Field(description="Password confirmation")
     
     @validator('confirm_password')
     def passwords_match(cls, v, values):
-        """Validate password confirmation matches."""        if 'new_password' in values and v != values['new_password']:
+        """Validate password confirmation matches."""
+        if 'new_password' in values and v != values['new_password']:
             raise ValueError('Passwords do not match')
         return v
 
 
 class PasswordReset(BaseSchema):
-    """Password reset request schema."""    
+    """Password reset request schema."""
+    
     email: EmailStr = Field(description="User email for password reset")
     
 
 class PasswordResetConfirm(BaseSchema):
-    """Password reset confirmation schema."""    
+    """Password reset confirmation schema."""
+    
     token: str = Field(description="Password reset token")
     new_password: str = Field(min_length=8, description="New password")
     confirm_password: str = Field(description="Password confirmation")
     
     @validator('confirm_password')
     def passwords_match(cls, v, values):
-        """Validate password confirmation matches."""        if 'new_password' in values and v != values['new_password']:
+        """Validate password confirmation matches."""
+        if 'new_password' in values and v != values['new_password']:
             raise ValueError('Passwords do not match')
         return v
 
 
 class TwoFactorSetup(BaseSchema):
-    """Two-factor authentication setup schema."""    
+    """Two-factor authentication setup schema."""
+    
     method: str = Field(description="2FA method (totp, sms, email)")
     phone_number: Optional[str] = Field(None, description="Phone number for SMS")
     backup_codes: List[str] = Field(default_factory=list, description="Backup codes")
 
 
 class TwoFactorVerify(BaseSchema):
-    """Two-factor authentication verification schema."""    
+    """Two-factor authentication verification schema."""
+    
     code: str = Field(min_length=6, max_length=8, description="2FA verification code")
     backup_code: Optional[str] = Field(None, description="Backup code if primary fails")
     remember_device: bool = Field(default=False, description="Remember this device")

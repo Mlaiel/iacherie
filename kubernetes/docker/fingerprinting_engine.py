@@ -12,7 +12,8 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional fingerprinting engine Docker configuration for multi-format
 content identification and similarity matching systems.
-"""from typing import Dict, List, Optional, Any, Union
+"""
+from typing import Dict, List, Optional, Any, Union
 import logging
 from dataclasses import dataclass, field
 import yaml
@@ -22,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FingerprintingEngineDockerConfig:
-    """Enterprise Fingerprinting Engine Docker configuration"""    
+    """Enterprise Fingerprinting Engine Docker configuration"""
+    
     # Container Configuration
     image_name: str = "ia-influencer/fingerprinting-engine"
     image_tag: str = "2.0.0"
@@ -117,7 +119,8 @@ class FingerprintingEngineDockerConfig:
     health_check_retries: int = 3
     
     def generate_dockerfile(self) -> str:
-        """Generate production Dockerfile for Fingerprinting Engine"""        return f"""# IA-Influencer Fingerprinting Engine - Production Docker Image
+        """Generate production Dockerfile for Fingerprinting Engine"""
+        return f"""# IA-Influencer Fingerprinting Engine - Production Docker Image
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 # Professional multi-format content fingerprinting with AI models
 
@@ -272,8 +275,10 @@ CMD ["gunicorn", \\
      "--log-level", "{self.log_level.lower()}", \\
      "--preload", \\
      "main:app"]
-"""    def _generate_format_env_vars(self) -> str:
-        """Generate format-specific environment variables"""        env_vars = []
+"""
+    def _generate_format_env_vars(self) -> str:
+        """Generate format-specific environment variables"""
+        env_vars = []
         for format_type, enabled in self.enabled_formats.items():
             env_vars.append(f"ENV FORMAT_{format_type.upper()}_ENABLED={str(enabled).lower()}")
         
@@ -285,7 +290,8 @@ CMD ["gunicorn", \\
         return "\n".join(env_vars)
 
     def _generate_model_env_vars(self) -> str:
-        """Generate model-specific environment variables"""        env_vars = []
+        """Generate model-specific environment variables"""
+        env_vars = []
         
         # Audio models
         for model_name, model_path in self.audio_models.items():
@@ -306,7 +312,8 @@ CMD ["gunicorn", \\
         return "\n".join(env_vars)
 
     def generate_docker_compose_service(self) -> Dict[str, Any]:
-        """Generate docker-compose service configuration"""        return {
+        """Generate docker-compose service configuration"""
+        return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": self.container_name,
             "restart": "unless-stopped",
@@ -394,7 +401,8 @@ CMD ["gunicorn", \\
         }
 
     def generate_requirements_txt(self) -> str:
-        """Generate fingerprinting engine requirements.txt"""        return """# IA-Influencer Fingerprinting Engine - Production Dependencies
+        """Generate fingerprinting engine requirements.txt"""
+        return """# IA-Influencer Fingerprinting Engine - Production Dependencies
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
 # Core Framework
@@ -509,8 +517,10 @@ pytest-asyncio==0.21.1
 # Performance
 numba==0.58.1
 joblib==1.3.2
-"""    def generate_model_download_script(self) -> str:
-        """Generate script to download fingerprinting models"""        return """#!/usr/bin/env python3
+"""
+    def generate_model_download_script(self) -> str:
+        """Generate script to download fingerprinting models"""
+        return """#!/usr/bin/env python3
 \"\"\"
 Fingerprinting Models Download Script - IA-Influencer-Agent
 Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -654,8 +664,10 @@ if __name__ == "__main__":
     
     download_fingerprinting_models(args.cache_dir)
     logger.info("✅ Fingerprinting model download completed")
-"""    def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all configuration files to output directory"""        import os
+"""
+    def save_config_files(self, output_dir: str) -> List[str]:
+        """Save all configuration files to output directory"""
+        import os
         from pathlib import Path
         
         config_dir = Path(output_dir)

@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This engagement prediction AI and machine learning models are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import math
@@ -22,21 +23,24 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class EngagementLevel(Enum):
-    """User engagement levels"""    DORMANT = "dormant"
+    """User engagement levels"""
+    DORMANT = "dormant"
     LOW = "low"
     MODERATE = "moderate"
     HIGH = "high"
     SUPER_ENGAGED = "super_engaged"
 
 class PredictionConfidence(Enum):
-    """Prediction confidence levels"""    LOW = "low"
+    """Prediction confidence levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     VERY_HIGH = "very_high"
 
 @dataclass
 class EngagementConfig:
-    """Configuration for engagement prediction"""    prediction_window_days: int = 7
+    """Configuration for engagement prediction"""
+    prediction_window_days: int = 7
     historical_data_window_days: int = 30
     ml_model_enabled: bool = True
     real_time_updates_enabled: bool = True
@@ -52,7 +56,8 @@ class EngagementConfig:
 
 @dataclass
 class EngagementPrediction:
-    """Engagement prediction result"""    user_id: str
+    """Engagement prediction result"""
+    user_id: str
     prediction_id: str
     current_level: EngagementLevel
     predicted_level: EngagementLevel
@@ -68,7 +73,8 @@ class EngagementPrediction:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class EngagementPredictor:
-    """    Advanced AI-powered engagement prediction system.
+    """
+    Advanced AI-powered engagement prediction system.
     
     Features:
     - Machine learning-based engagement forecasting
@@ -77,7 +83,8 @@ class EngagementPredictor:
     - Personalized engagement optimization
     - Risk factor identification
     - Improvement opportunity detection
-    """    
+    """
+    
     def __init__(self, config: Optional[EngagementConfig] = None):
         self.config = config or EngagementConfig()
         self.user_engagement_history: Dict[str, List[Dict[str, Any]]] = {}
@@ -91,7 +98,8 @@ class EngagementPredictor:
         logger.info("EngagementPredictor initialized successfully")
     
     def _initialize_prediction_models(self):
-        """Initialize engagement prediction models"""        # Initialize engagement scoring weights
+        """Initialize engagement prediction models"""
+        # Initialize engagement scoring weights
         self.engagement_weights = self.config.engagement_score_weights
         
         # Initialize prediction algorithms
@@ -117,7 +125,8 @@ class EngagementPredictor:
         user_id: str,
         user_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Predict user engagement level and provide optimization recommendations.
+        """
+        Predict user engagement level and provide optimization recommendations.
         
         Args:
             user_id: Unique user identifier
@@ -125,7 +134,8 @@ class EngagementPredictor:
             
         Returns:
             Comprehensive engagement prediction and recommendations
-        """        try:
+        """
+        try:
             # Check cache first
             cached_prediction = self._get_cached_prediction(user_id)
             if cached_prediction and self._is_prediction_valid(cached_prediction):
@@ -191,7 +201,8 @@ class EngagementPredictor:
         user_id: str,
         user_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze current user engagement state"""        engagement_factors = {}
+        """Analyze current user engagement state"""
+        engagement_factors = {}
         
         # Content frequency analysis
         uploads_last_week = user_data.get('uploads_last_week', 0)
@@ -234,13 +245,15 @@ class EngagementPredictor:
         }
     
     def _determine_engagement_level(self, score: float) -> EngagementLevel:
-        """Determine engagement level from score"""        for level, (min_score, max_score) in self.engagement_thresholds.items():
+        """Determine engagement level from score"""
+        for level, (min_score, max_score) in self.engagement_thresholds.items():
             if min_score <= score <= max_score:
                 return level
         return EngagementLevel.LOW
     
     async def _gather_historical_data(self, user_id: str) -> Dict[str, Any]:
-        """Gather historical engagement data for user"""        history = self.user_engagement_history.get(user_id, [])
+        """Gather historical engagement data for user"""
+        history = self.user_engagement_history.get(user_id, [])
         
         # Filter to recent data
         cutoff_date = datetime.now(timezone.utc) - timedelta(
@@ -280,7 +293,8 @@ class EngagementPredictor:
         }
     
     def _calculate_volatility(self, scores: List[float]) -> float:
-        """Calculate score volatility"""        if len(scores) < 2:
+        """Calculate score volatility"""
+        if len(scores) < 2:
             return 0.0
         
         avg = sum(scores) / len(scores)
@@ -293,7 +307,8 @@ class EngagementPredictor:
         user_data: Dict[str, Any],
         historical_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Predict engagement using trend analysis"""        if not historical_data.get('has_history'):
+        """Predict engagement using trend analysis"""
+        if not historical_data.get('has_history'):
             return None
         
         trend = historical_data['score_trend']
@@ -323,7 +338,8 @@ class EngagementPredictor:
         user_data: Dict[str, Any],
         historical_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Predict engagement using pattern recognition"""        # Analyze activity patterns
+        """Predict engagement using pattern recognition"""
+        # Analyze activity patterns
         activity_patterns = {
             'weekly_consistency': user_data.get('weekly_consistency', 0.5),
             'content_quality_trend': user_data.get('content_quality_trend', 0.5),
@@ -352,7 +368,8 @@ class EngagementPredictor:
         user_data: Dict[str, Any],
         historical_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Predict engagement using behavioral modeling"""        # Behavioral factors
+        """Predict engagement using behavioral modeling"""
+        # Behavioral factors
         behavior_factors = {
             'response_to_challenges': user_data.get('challenge_acceptance_rate', 0.5),
             'community_participation': user_data.get('community_participation', 0.5),
@@ -385,7 +402,8 @@ class EngagementPredictor:
         user_data: Dict[str, Any],
         historical_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Predict engagement using collaborative filtering"""        # Find similar users (simplified)
+        """Predict engagement using collaborative filtering"""
+        # Find similar users (simplified)
         user_profile = {
             'level': user_data.get('level', 1),
             'content_uploads': user_data.get('total_content_uploads', 0),
@@ -418,7 +436,8 @@ class EngagementPredictor:
         user_data: Dict[str, Any],
         historical_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Predict engagement using time series analysis"""        if not historical_data.get('has_history'):
+        """Predict engagement using time series analysis"""
+        if not historical_data.get('has_history'):
             return None
         
         recent_scores = [
@@ -450,7 +469,8 @@ class EngagementPredictor:
         current_engagement: Dict[str, Any],
         predictions: List[Dict[str, Any]]
     ) -> EngagementPrediction:
-        """Combine multiple predictions using ensemble method"""        if not predictions:
+        """Combine multiple predictions using ensemble method"""
+        if not predictions:
             # Fallback to current engagement
             current_score = current_engagement['overall_score']
             return EngagementPrediction(
@@ -508,7 +528,8 @@ class EngagementPredictor:
         current_engagement: Dict[str, Any],
         predictions: List[Dict[str, Any]]
     ) -> List[str]:
-        """Identify engagement risk factors"""        risk_factors = []
+        """Identify engagement risk factors"""
+        risk_factors = []
         factors = current_engagement['factors']
         
         if factors.get('content_frequency', 0) < 30:
@@ -539,7 +560,8 @@ class EngagementPredictor:
         current_engagement: Dict[str, Any],
         predictions: List[Dict[str, Any]]
     ) -> List[str]:
-        """Identify engagement improvement opportunities"""        opportunities = []
+        """Identify engagement improvement opportunities"""
+        opportunities = []
         factors = current_engagement['factors']
         
         if factors.get('platform_diversity', 0) < 50:
@@ -562,7 +584,8 @@ class EngagementPredictor:
         prediction: EngagementPrediction,
         user_data: Dict[str, Any]
     ) -> List[str]:
-        """Generate personalized engagement recommendations"""        recommendations = []
+        """Generate personalized engagement recommendations"""
+        recommendations = []
         
         # Level-specific recommendations
         if prediction.predicted_level == EngagementLevel.DORMANT:
@@ -608,10 +631,12 @@ class EngagementPredictor:
         return recommendations[:5]  # Limit to top 5 recommendations
     
     def _get_cached_prediction(self, user_id: str) -> Optional[EngagementPrediction]:
-        """Get cached prediction if available"""        return self.prediction_cache.get(user_id)
+        """Get cached prediction if available"""
+        return self.prediction_cache.get(user_id)
     
     def _is_prediction_valid(self, prediction: EngagementPrediction) -> bool:
-        """Check if cached prediction is still valid"""        age = datetime.now(timezone.utc) - prediction.prediction_date
+        """Check if cached prediction is still valid"""
+        age = datetime.now(timezone.utc) - prediction.prediction_date
         return age.days < prediction.validity_period_days
     
     async def _update_engagement_history(
@@ -619,7 +644,8 @@ class EngagementPredictor:
         user_id: str,
         prediction: EngagementPrediction
     ):
-        """Update user engagement history"""        if user_id not in self.user_engagement_history:
+        """Update user engagement history"""
+        if user_id not in self.user_engagement_history:
             self.user_engagement_history[user_id] = []
         
         history_entry = {
@@ -639,7 +665,8 @@ class EngagementPredictor:
         ]
     
     def _serialize_prediction(self, prediction: EngagementPrediction) -> Dict[str, Any]:
-        """Serialize prediction for JSON response"""        return {
+        """Serialize prediction for JSON response"""
+        return {
             'prediction_id': prediction.prediction_id,
             'current_level': prediction.current_level.value,
             'predicted_level': prediction.predicted_level.value,
@@ -655,7 +682,8 @@ class EngagementPredictor:
         }
     
     def get_system_analytics(self) -> Dict[str, Any]:
-        """Get system-wide engagement prediction analytics"""        total_users = len(self.user_engagement_history)
+        """Get system-wide engagement prediction analytics"""
+        total_users = len(self.user_engagement_history)
         total_predictions = len(self.prediction_cache)
         
         # Calculate prediction accuracy (simplified)

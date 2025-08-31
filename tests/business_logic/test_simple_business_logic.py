@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -14,7 +15,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 """Simple Business Logic Core Test
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import sys
 import os
 import tempfile
@@ -25,7 +27,8 @@ from pathlib import Path
 sys.path.insert(0, '/home/runner/work/Ainflue/Ainflue')
 
 def test_business_logic_imports():
-    """Test that business logic components can be imported"""    print("Testing business logic imports...")
+    """Test that business logic components can be imported"""
+    print("Testing business logic imports...")
     
     # Test agent imports
     from ai_agents.placeholder_agents import (
@@ -51,7 +54,8 @@ def test_business_logic_imports():
 
 
 def test_agent_instantiation():
-    """Test that agents can be instantiated"""    print("\nTesting agent instantiation...")
+    """Test that agents can be instantiated"""
+    print("\nTesting agent instantiation...")
     
     from ai_agents.placeholder_agents import (
         ProtectionAgent, SEOAgent, CollaborationAgent, 
@@ -80,7 +84,8 @@ import pytest
 
 @pytest.mark.asyncio
 async def test_agent_processing():
-    """Test agent processing capabilities"""    print("\nTesting agent processing...")
+    """Test agent processing capabilities"""
+    print("\nTesting agent processing...")
     
     from ai_agents.placeholder_agents import (
         ProtectionAgent, SEOAgent, CollaborationAgent, 
@@ -137,7 +142,8 @@ async def test_agent_processing():
 
 
 def test_utility_classes():
-    """Test utility class functionality"""    print("\nTesting utility classes...")
+    """Test utility class functionality"""
+    print("\nTesting utility classes...")
     
     from utils.performance_monitor import PerformanceMonitor, RateLimiter, CircuitBreaker
     from security.rights_management import RightsManager
@@ -173,7 +179,8 @@ def test_utility_classes():
 
 @pytest.mark.asyncio
 async def test_end_to_end_workflow():
-    """Test end-to-end workflow simulation"""    print("\nTesting end-to-end workflow simulation...")
+    """Test end-to-end workflow simulation"""
+    print("\nTesting end-to-end workflow simulation...")
     
     from ai_agents.placeholder_agents import (
         ProtectionAgent, SEOAgent, CollaborationAgent, 
@@ -298,7 +305,8 @@ async def test_end_to_end_workflow():
 
 
 async def main():
-    """Main test runner"""    print("=" * 60)
+    """Main test runner"""
+    print("=" * 60)
     print("AI AGENTS BUSINESS LOGIC CORE - INTEGRATION TEST")
     print("=" * 60)
     print("Author: Fahed Mlaiel <mlaiel@live.de>")

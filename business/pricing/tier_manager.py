@@ -35,7 +35,8 @@ Business Logic Flow:
 Creator Registration → Tier Assessment → Dynamic Pricing → Feature Access → 
 Usage Monitoring → Tier Optimization → Revenue Maximization
 ==================================================================
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
 from dataclasses import dataclass, field
@@ -63,7 +64,8 @@ logger = logging.getLogger(__name__)
 
 
 class TierFeature(Enum):
-    """Available features across different tiers"""    BASIC_UPLOAD = "basic_upload"
+    """Available features across different tiers"""
+    BASIC_UPLOAD = "basic_upload"
     MULTI_FORMAT_UPLOAD = "multi_format_upload"
     AI_PROTECTION = "ai_protection"
     ADVANCED_ANALYTICS = "advanced_analytics"
@@ -80,7 +82,8 @@ class TierFeature(Enum):
 
 
 class UsageMetric(Enum):
-    """Usage metrics for tier limitations"""    MONTHLY_UPLOADS = "monthly_uploads"
+    """Usage metrics for tier limitations"""
+    MONTHLY_UPLOADS = "monthly_uploads"
     STORAGE_GB = "storage_gb"
     BANDWIDTH_GB = "bandwidth_gb"
     API_CALLS = "api_calls"
@@ -92,7 +95,8 @@ class UsageMetric(Enum):
 
 @dataclass
 class TierLimits:
-    """Usage limits for each tier"""    monthly_uploads: int
+    """Usage limits for each tier"""
+    monthly_uploads: int
     storage_gb: int
     bandwidth_gb: int
     api_calls_per_month: int
@@ -106,7 +110,8 @@ class TierLimits:
 
 @dataclass
 class TierConfiguration:
-    """Complete tier configuration"""    tier_name: PricingTier
+    """Complete tier configuration"""
+    tier_name: PricingTier
     display_name: str
     description: str
     base_monthly_price: Decimal
@@ -126,7 +131,8 @@ class TierConfiguration:
         geographic_market: str = 'EU',
         creator_type: Optional[ContentType] = None
     ) -> Decimal:
-        """Calculate effective price with adjustments"""        base_price = self.base_annual_price if billing_cycle == 'annual' else self.base_monthly_price
+        """Calculate effective price with adjustments"""
+        base_price = self.base_annual_price if billing_cycle == 'annual' else self.base_monthly_price
         
         # Geographic adjustment
         geo_factors = {'EU': 1.0, 'US': 1.1, 'UK': 1.05, 'CA': 0.9, 'AU': 0.95, 'JP': 1.15}
@@ -146,7 +152,8 @@ class TierConfiguration:
 
 
 class TierManager:
-    """    Industrial-grade tier management system
+    """
+    Industrial-grade tier management system
     
     Features:
     - Dynamic tier recommendations
@@ -155,7 +162,8 @@ class TierManager:
     - Revenue optimization
     - Feature access management
     - Usage analytics
-    """    
+    """
+    
     def __init__(
         self,
         db_manager: DatabaseManager,
@@ -178,11 +186,13 @@ class TierManager:
         self._executor = ThreadPoolExecutor(max_workers=5)
         
     async def initialize(self):
-        """Initialize async components"""        self._redis_client = redis.from_url('redis://localhost')
+        """Initialize async components"""
+        self._redis_client = redis.from_url('redis://localhost')
         logger.info("Tier manager initialized successfully")
         
     def _initialize_tier_configurations(self) -> Dict[PricingTier, TierConfiguration]:
-        """Initialize default tier configurations"""        
+        """Initialize default tier configurations"""
+        
         return {
             PricingTier.STARTER: TierConfiguration(
                 tier_name=PricingTier.STARTER,
@@ -371,7 +381,8 @@ class TierManager:
         content_types: List[ContentType],
         target_revenue: Optional[Decimal] = None
     ) -> TierConfiguration:
-        """        Recommend optimal tier based on creator profile and usage
+        """
+        Recommend optimal tier based on creator profile and usage
         
         Args:
             creator_id: Unique creator identifier
@@ -381,7 +392,8 @@ class TierManager:
             
         Returns:
             Recommended tier configuration
-        """        try:
+        """
+        try:
             # Analyze usage patterns
             usage_analysis = await self._analyze_usage_patterns(usage_pattern)
             
@@ -432,7 +444,8 @@ class TierManager:
         metric: UsageMetric,
         current_usage: int
     ) -> Dict[str, Any]:
-        """Check if creator is approaching or exceeding usage limits"""        
+        """Check if creator is approaching or exceeding usage limits"""
+        
         try:
             # Get creator's current tier
             creator_tier = await self._get_creator_tier(creator_id)
@@ -484,7 +497,8 @@ class TierManager:
         target_tier: PricingTier,
         billing_cycle: str = 'monthly'
     ) -> Dict[str, Any]:
-        """Calculate potential savings and benefits from tier upgrade"""        
+        """Calculate potential savings and benefits from tier upgrade"""
+        
         try:
             current_tier = await self._get_creator_tier(creator_id)
             current_config = self.tier_configs[current_tier]
@@ -536,7 +550,8 @@ class TierManager:
             
     # Utility methods
     async def _analyze_usage_patterns(self, usage_pattern: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze creator usage patterns for tier recommendation"""        
+        """Analyze creator usage patterns for tier recommendation"""
+        
         return {
             'avg_monthly_uploads': usage_pattern.get('avg_monthly_uploads', 10),
             'storage_growth_rate': usage_pattern.get('storage_growth_rate', 0.1),
@@ -553,7 +568,8 @@ class TierManager:
         content_types: List[ContentType],
         target_revenue: Optional[Decimal]
     ) -> float:
-        """Calculate how well a tier fits creator's needs"""        
+        """Calculate how well a tier fits creator's needs"""
+        
         score = 0.0
         
         # Usage fit score (40% weight)
@@ -580,11 +596,13 @@ class TierManager:
         return score
         
     async def _get_creator_tier(self, creator_id: str) -> PricingTier:
-        """Get creator's current tier from database"""        # Mock implementation - replace with actual database query
+        """Get creator's current tier from database"""
+        # Mock implementation - replace with actual database query
         return PricingTier.PROFESSIONAL
         
     def _get_next_tier(self, current_tier: PricingTier) -> Optional[PricingTier]:
-        """Get the next tier up from current tier"""        tier_order = [
+        """Get the next tier up from current tier"""
+        tier_order = [
             PricingTier.STARTER,
             PricingTier.PROFESSIONAL,
             PricingTier.PREMIUM,
@@ -602,7 +620,8 @@ class TierManager:
         return None
         
     def _get_recommended_action(self, status: str, metric: UsageMetric) -> str:
-        """Get recommended action based on usage status"""        actions = {
+        """Get recommended action based on usage status"""
+        actions = {
             'exceeded': f"Immediate upgrade required - {metric.value} limit exceeded",
             'critical': f"Consider upgrading soon - approaching {metric.value} limit",
             'warning': f"Monitor {metric.value} usage closely",
@@ -611,7 +630,8 @@ class TierManager:
         return actions.get(status, "Monitor usage")
         
     async def _get_creator_usage_data(self, creator_id: str) -> Dict[str, Any]:
-        """Get creator's historical usage data"""        # Mock implementation - replace with actual data retrieval
+        """Get creator's historical usage data"""
+        # Mock implementation - replace with actual data retrieval
         return {
             'monthly_revenue': 500.0,
             'growth_rate': 0.15,
@@ -625,7 +645,8 @@ class TierManager:
         target_config: TierConfiguration,
         price_difference: Decimal
     ) -> Dict[str, Any]:
-        """Calculate ROI for tier upgrade"""        
+        """Calculate ROI for tier upgrade"""
+        
         # Estimate revenue impact from new features
         feature_revenue_impact = len(target_config.features - current_config.features) * 50.0
         

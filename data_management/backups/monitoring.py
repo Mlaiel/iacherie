@@ -11,7 +11,8 @@ Responsibility: Monitoring temps réel et analytics des sauvegardes
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import json
@@ -32,14 +33,16 @@ logger = logging.getLogger(__name__)
 
 
 class AlertLevel(Enum):
-    """Niveaux d'alerte"""    INFO = "info"
+    """Niveaux d'alerte"""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 
 class MetricType(Enum):
-    """Types de métriques"""    COUNTER = "counter"           # Compteur incrémental
+    """Types de métriques"""
+    COUNTER = "counter"           # Compteur incrémental
     GAUGE = "gauge"              # Valeur instantanée
     HISTOGRAM = "histogram"       # Distribution de valeurs
     TIMER = "timer"              # Durée d'opération
@@ -47,7 +50,8 @@ class MetricType(Enum):
 
 @dataclass
 class Alert:
-    """Alerte de monitoring"""    alert_id: str
+    """Alerte de monitoring"""
+    alert_id: str
     level: AlertLevel
     message: str
     source: str
@@ -60,7 +64,8 @@ class Alert:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""        return {
+        """Convertit en dictionnaire"""
+        return {
             "alert_id": self.alert_id,
             "level": self.level.value,
             "message": self.message,
@@ -77,7 +82,8 @@ class Alert:
 
 @dataclass
 class Metric:
-    """Métrique de monitoring"""    name: str
+    """Métrique de monitoring"""
+    name: str
     type: MetricType
     value: Union[float, int]
     timestamp: datetime = field(default_factory=datetime.now)
@@ -86,7 +92,8 @@ class Metric:
     description: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""        return {
+        """Convertit en dictionnaire"""
+        return {
             "name": self.name,
             "type": self.type.value,
             "value": self.value,
@@ -99,7 +106,8 @@ class Metric:
 
 @dataclass
 class PerformanceStats:
-    """Statistiques de performance"""    cpu_usage: float = 0.0
+    """Statistiques de performance"""
+    cpu_usage: float = 0.0
     memory_usage: float = 0.0
     disk_usage: float = 0.0
     network_io: Dict[str, float] = field(default_factory=dict)
@@ -110,7 +118,8 @@ class PerformanceStats:
     timestamp: datetime = field(default_factory=datetime.now)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""        return {
+        """Convertit en dictionnaire"""
+        return {
             "cpu_usage": self.cpu_usage,
             "memory_usage": self.memory_usage,
             "disk_usage": self.disk_usage,
@@ -125,7 +134,8 @@ class PerformanceStats:
 
 @dataclass
 class MonitoringConfig:
-    """Configuration du monitoring"""    collection_interval: float = 10.0  # secondes
+    """Configuration du monitoring"""
+    collection_interval: float = 10.0  # secondes
     retention_days: int = 30
     alert_thresholds: Dict[str, float] = field(default_factory=dict)
     enable_system_metrics: bool = True
@@ -134,7 +144,8 @@ class MonitoringConfig:
     metrics_buffer_size: int = 1000
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""        return {
+        """Convertit en dictionnaire"""
+        return {
             "collection_interval": self.collection_interval,
             "retention_days": self.retention_days,
             "alert_thresholds": self.alert_thresholds,
@@ -146,14 +157,16 @@ class MonitoringConfig:
 
 
 class MetricsCollector:
-    """    Collecteur de métriques avec buffers circulaires
+    """
+    Collecteur de métriques avec buffers circulaires
     
     Fonctionnalités:
     - Collection métriques système et application
     - Buffers circulaires pour performance
     - Agrégation et calculs statistiques
     - Export vers systèmes externes
-    """    
+    """
+    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         
@@ -178,7 +191,8 @@ class MetricsCollector:
         labels: Optional[Dict[str, str]] = None,
         unit: Optional[str] = None
     ):
-        """        Enregistre une métrique
+        """
+        Enregistre une métrique
         
         Args:
             name: Nom de la métrique
@@ -186,7 +200,8 @@ class MetricsCollector:
             metric_type: Type de métrique
             labels: Labels additionnels
             unit: Unité de mesure
-        """        try:
+        """
+        try:
             metric = Metric(
                 name=name,
                 type=metric_type,
@@ -205,7 +220,8 @@ class MetricsCollector:
             logger.error(f"Failed to record metric {name}: {e}")
     
     def _update_aggregations(self, metric_name: str, value: float):
-        """Met à jour les agrégations en temps réel"""        if metric_name not in self.aggregated_metrics:
+        """Met à jour les agrégations en temps réel"""
+        if metric_name not in self.aggregated_metrics:
             self.aggregated_metrics[metric_name] = {
                 "count": 0,
                 "sum": 0.0,
@@ -226,7 +242,8 @@ class MetricsCollector:
         metric_name: str,
         duration: Optional[timedelta] = None
     ) -> List[Metric]:
-        """        Récupère l'historique d'une métrique
+        """
+        Récupère l'historique d'une métrique
         
         Args:
             metric_name: Nom de la métrique
@@ -234,7 +251,8 @@ class MetricsCollector:
             
         Returns:
             List[Metric]: Historique des valeurs
-        """        with self._lock:
+        """
+        with self._lock:
             metrics = list(self.metrics_buffer.get(metric_name, []))
         
         if duration:
@@ -244,21 +262,25 @@ class MetricsCollector:
         return sorted(metrics, key=lambda x: x.timestamp)
     
     def get_metric_stats(self, metric_name: str) -> Optional[Dict[str, float]]:
-        """        Récupère les statistiques agrégées d'une métrique
+        """
+        Récupère les statistiques agrégées d'une métrique
         
         Args:
             metric_name: Nom de la métrique
             
         Returns:
             Optional[Dict[str, float]]: Statistiques ou None
-        """        return self.aggregated_metrics.get(metric_name)
+        """
+        return self.aggregated_metrics.get(metric_name)
     
     def collect_system_metrics(self) -> PerformanceStats:
-        """        Collecte les métriques système
+        """
+        Collecte les métriques système
         
         Returns:
             PerformanceStats: Statistiques système
-        """        try:
+        """
+        try:
             # CPU
             cpu_usage = psutil.cpu_percent(interval=1)
             
@@ -298,14 +320,16 @@ class MetricsCollector:
             return PerformanceStats()
     
     def export_metrics(self, format: str = "json") -> str:
-        """        Exporte les métriques vers format externe
+        """
+        Exporte les métriques vers format externe
         
         Args:
             format: Format d'export (json, prometheus, etc.)
             
         Returns:
             str: Métriques exportées
-        """        try:
+        """
+        try:
             if format == "json":
                 return self._export_json()
             elif format == "prometheus":
@@ -318,7 +342,8 @@ class MetricsCollector:
             return ""
     
     def _export_json(self) -> str:
-        """Export au format JSON"""        export_data = {
+        """Export au format JSON"""
+        export_data = {
             "timestamp": datetime.now().isoformat(),
             "metrics": {},
             "aggregations": self.aggregated_metrics
@@ -333,7 +358,8 @@ class MetricsCollector:
         return json.dumps(export_data, indent=2)
     
     def _export_prometheus(self) -> str:
-        """Export au format Prometheus"""        lines = []
+        """Export au format Prometheus"""
+        lines = []
         
         with self._lock:
             for metric_name, metrics in self.metrics_buffer.items():
@@ -361,14 +387,16 @@ class MetricsCollector:
 
 
 class AlertManager:
-    """    Gestionnaire d'alertes intelligent
+    """
+    Gestionnaire d'alertes intelligent
     
     Fonctionnalités:
     - Évaluation règles d'alerte
     - Déduplication et groupement
     - Escalade et notifications
     - Historique et analytics
-    """    
+    """
+    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         
@@ -392,7 +420,8 @@ class AlertManager:
         logger.info("AlertManager initialized")
     
     def _setup_default_rules(self):
-        """Configure les règles d'alerte par défaut"""        default_rules = {
+        """Configure les règles d'alerte par défaut"""
+        default_rules = {
             "high_cpu_usage": {
                 "metric": "system.cpu_usage",
                 "condition": ">",
@@ -439,7 +468,8 @@ class AlertManager:
         level: AlertLevel,
         message: str
     ):
-        """        Ajoute une règle d'alerte
+        """
+        Ajoute une règle d'alerte
         
         Args:
             rule_name: Nom de la règle
@@ -448,7 +478,8 @@ class AlertManager:
             threshold: Seuil déclencheur
             level: Niveau d'alerte
             message: Message d'alerte
-        """        self.alert_rules[rule_name] = {
+        """
+        self.alert_rules[rule_name] = {
             "metric": metric,
             "condition": condition,
             "threshold": threshold,
@@ -459,18 +490,21 @@ class AlertManager:
         logger.info(f"Added alert rule: {rule_name}")
     
     def evaluate_metrics(self, metrics: List[Metric]):
-        """        Évalue les métriques contre les règles d'alerte
+        """
+        Évalue les métriques contre les règles d'alerte
         
         Args:
             metrics: Liste de métriques à évaluer
-        """        if not self.config.enable_alerts:
+        """
+        if not self.config.enable_alerts:
             return
         
         for metric in metrics:
             self._evaluate_metric_against_rules(metric)
     
     def _evaluate_metric_against_rules(self, metric: Metric):
-        """Évalue une métrique contre toutes les règles"""        for rule_name, rule in self.alert_rules.items():
+        """Évalue une métrique contre toutes les règles"""
+        for rule_name, rule in self.alert_rules.items():
             if rule["metric"] != metric.name:
                 continue
             
@@ -478,7 +512,8 @@ class AlertManager:
                 self._trigger_alert(rule_name, rule, metric)
     
     def _check_condition(self, value: float, condition: str, threshold: float) -> bool:
-        """Vérifie si une condition est remplie"""        if condition == ">":
+        """Vérifie si une condition est remplie"""
+        if condition == ">":
             return value > threshold
         elif condition == "<":
             return value < threshold
@@ -495,7 +530,8 @@ class AlertManager:
             return False
     
     def _trigger_alert(self, rule_name: str, rule: Dict[str, Any], metric: Metric):
-        """Déclenche une alerte"""        try:
+        """Déclenche une alerte"""
+        try:
             # Rate limiting
             if not self._check_rate_limit(rule_name):
                 return
@@ -530,7 +566,8 @@ class AlertManager:
             logger.error(f"Failed to trigger alert for rule {rule_name}: {e}")
     
     def _check_rate_limit(self, rule_name: str) -> bool:
-        """Vérifie les limites de taux d'alerte"""        now = datetime.now()
+        """Vérifie les limites de taux d'alerte"""
+        now = datetime.now()
         hour_ago = now - timedelta(hours=1)
         
         # Nettoyage ancien comptage
@@ -549,7 +586,8 @@ class AlertManager:
         return True
     
     def _is_duplicate_alert(self, new_alert: Alert) -> bool:
-        """Vérifie si l'alerte est un doublon"""        for existing_alert in self.active_alerts.values():
+        """Vérifie si l'alerte est un doublon"""
+        for existing_alert in self.active_alerts.values():
             if (existing_alert.source == new_alert.source and
                 existing_alert.metric_name == new_alert.metric_name and
                 not existing_alert.resolved):
@@ -561,28 +599,33 @@ class AlertManager:
         return False
     
     def _send_notifications(self, alert: Alert):
-        """Envoie les notifications d'alerte"""        for callback in self.notification_callbacks:
+        """Envoie les notifications d'alerte"""
+        for callback in self.notification_callbacks:
             try:
                 callback(alert)
             except Exception as e:
                 logger.error(f"Notification callback failed: {e}")
     
     def add_notification_callback(self, callback: Callable[[Alert], None]):
-        """        Ajoute un callback de notification
+        """
+        Ajoute un callback de notification
         
         Args:
             callback: Function appelée lors d'une alerte
-        """        self.notification_callbacks.append(callback)
+        """
+        self.notification_callbacks.append(callback)
     
     def acknowledge_alert(self, alert_id: str) -> bool:
-        """        Acquitte une alerte
+        """
+        Acquitte une alerte
         
         Args:
             alert_id: ID de l'alerte
             
         Returns:
             bool: True si acquittement réussi
-        """        if alert_id in self.active_alerts:
+        """
+        if alert_id in self.active_alerts:
             self.active_alerts[alert_id].acknowledged = True
             logger.info(f"Alert acknowledged: {alert_id}")
             return True
@@ -590,14 +633,16 @@ class AlertManager:
         return False
     
     def resolve_alert(self, alert_id: str) -> bool:
-        """        Résout une alerte
+        """
+        Résout une alerte
         
         Args:
             alert_id: ID de l'alerte
             
         Returns:
             bool: True si résolution réussie
-        """        if alert_id in self.active_alerts:
+        """
+        if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
             alert.resolved = True
             del self.active_alerts[alert_id]
@@ -608,14 +653,16 @@ class AlertManager:
         return False
     
     def get_active_alerts(self, level: Optional[AlertLevel] = None) -> List[Alert]:
-        """        Récupère les alertes actives
+        """
+        Récupère les alertes actives
         
         Args:
             level: Filtrer par niveau (optionnel)
             
         Returns:
             List[Alert]: Alertes actives
-        """        alerts = list(self.active_alerts.values())
+        """
+        alerts = list(self.active_alerts.values())
         
         if level:
             alerts = [a for a in alerts if a.level == level]
@@ -627,7 +674,8 @@ class AlertManager:
         hours: int = 24,
         level: Optional[AlertLevel] = None
     ) -> List[Alert]:
-        """        Récupère l'historique des alertes
+        """
+        Récupère l'historique des alertes
         
         Args:
             hours: Nombre d'heures à récupérer
@@ -635,7 +683,8 @@ class AlertManager:
             
         Returns:
             List[Alert]: Historique des alertes
-        """        cutoff_time = datetime.now() - timedelta(hours=hours)
+        """
+        cutoff_time = datetime.now() - timedelta(hours=hours)
         
         alerts = [
             a for a in self.alert_history
@@ -649,7 +698,8 @@ class AlertManager:
 
 
 class BackupMonitor:
-    """    Moniteur principal des sauvegardes
+    """
+    Moniteur principal des sauvegardes
     
     Fonctionnalités:
     - Monitoring temps réel
@@ -657,7 +707,8 @@ class BackupMonitor:
     - Gestion alertes
     - Dashboard et reporting
     - Intégration systèmes externes
-    """    
+    """
+    
     def __init__(self, config: Optional[MonitoringConfig] = None):
         self.config = config or MonitoringConfig()
         
@@ -681,7 +732,8 @@ class BackupMonitor:
         logger.info("BackupMonitor initialized")
     
     def _setup_default_callbacks(self):
-        """Configure les callbacks par défaut"""        # Callback pour évaluation alertes
+        """Configure les callbacks par défaut"""
+        # Callback pour évaluation alertes
         def evaluate_alerts(metrics: List[Metric]):
             self.alert_manager.evaluate_metrics(metrics)
         
@@ -694,7 +746,8 @@ class BackupMonitor:
         self.alert_manager.add_notification_callback(log_alert)
     
     async def start_monitoring(self):
-        """Démarre le monitoring en arrière-plan"""        if self.monitoring_active:
+        """Démarre le monitoring en arrière-plan"""
+        if self.monitoring_active:
             logger.warning("Monitoring is already active")
             return
         
@@ -704,7 +757,8 @@ class BackupMonitor:
         logger.info("Backup monitoring started")
     
     async def stop_monitoring(self):
-        """Arrête le monitoring"""        if not self.monitoring_active:
+        """Arrête le monitoring"""
+        if not self.monitoring_active:
             return
         
         self.monitoring_active = False
@@ -719,7 +773,8 @@ class BackupMonitor:
         logger.info("Backup monitoring stopped")
     
     async def _monitoring_loop(self):
-        """Boucle principale de monitoring"""        try:
+        """Boucle principale de monitoring"""
+        try:
             while self.monitoring_active:
                 await self._collect_and_process_metrics()
                 await asyncio.sleep(self.config.collection_interval)
@@ -730,7 +785,8 @@ class BackupMonitor:
             logger.error(f"Monitoring loop error: {e}")
     
     async def _collect_and_process_metrics(self):
-        """Collecte et traite les métriques"""        try:
+        """Collecte et traite les métriques"""
+        try:
             collected_metrics = []
             
             # Métriques système
@@ -768,7 +824,8 @@ class BackupMonitor:
             logger.error(f"Metrics collection failed: {e}")
     
     async def _collect_object_metrics(self, obj: Any) -> List[Metric]:
-        """Collecte les métriques d'un objet spécifique"""        metrics = []
+        """Collecte les métriques d'un objet spécifique"""
+        metrics = []
         
         try:
             # BackupManager
@@ -817,19 +874,23 @@ class BackupMonitor:
         return metrics
     
     def register_object(self, obj: Any):
-        """        Enregistre un objet pour monitoring
+        """
+        Enregistre un objet pour monitoring
         
         Args:
             obj: Objet à monitorer
-        """        self.monitored_objects.append(weakref.ref(obj))
+        """
+        self.monitored_objects.append(weakref.ref(obj))
         logger.debug(f"Registered object for monitoring: {type(obj).__name__}")
     
     def add_metric_callback(self, callback: Callable[[List[Metric]], None]):
-        """        Ajoute un callback de traitement de métriques
+        """
+        Ajoute un callback de traitement de métriques
         
         Args:
             callback: Function appelée avec les métriques
-        """        self.metric_callbacks.append(callback)
+        """
+        self.metric_callbacks.append(callback)
     
     def record_backup_event(
         self,
@@ -839,7 +900,8 @@ class BackupMonitor:
         size: Optional[int] = None,
         success: bool = True
     ):
-        """        Enregistre un événement de sauvegarde
+        """
+        Enregistre un événement de sauvegarde
         
         Args:
             event_type: Type d'événement (started, completed, failed, etc.)
@@ -847,7 +909,8 @@ class BackupMonitor:
             duration: Durée en secondes
             size: Taille en bytes
             success: Succès de l'opération
-        """        labels = {
+        """
+        labels = {
             "event_type": event_type,
             "backup_id": backup_id,
             "success": str(success).lower()
@@ -882,11 +945,13 @@ class BackupMonitor:
             )
     
     def get_dashboard_data(self) -> Dict[str, Any]:
-        """        Récupère les données pour dashboard
+        """
+        Récupère les données pour dashboard
         
         Returns:
             Dict[str, Any]: Données du dashboard
-        """        try:
+        """
+        try:
             # Métriques récentes
             recent_metrics = {}
             
@@ -937,7 +1002,8 @@ class BackupMonitor:
         format: str = "json",
         duration: Optional[timedelta] = None
     ) -> str:
-        """        Exporte les données de monitoring
+        """
+        Exporte les données de monitoring
         
         Args:
             format: Format d'export
@@ -945,7 +1011,8 @@ class BackupMonitor:
             
         Returns:
             str: Données exportées
-        """        try:
+        """
+        try:
             if format == "json":
                 return self._export_monitoring_json(duration)
             elif format == "prometheus":
@@ -958,7 +1025,8 @@ class BackupMonitor:
             return ""
     
     def _export_monitoring_json(self, duration: Optional[timedelta]) -> str:
-        """Export complet au format JSON"""        export_data = {
+        """Export complet au format JSON"""
+        export_data = {
             "export_timestamp": datetime.now().isoformat(),
             "config": self.config.to_dict(),
             "metrics": self.metrics_collector.export_metrics("json"),
@@ -973,11 +1041,13 @@ class BackupMonitor:
         return json.dumps(export_data, indent=2)
     
     def get_monitoring_stats(self) -> Dict[str, Any]:
-        """        Récupère les statistiques de monitoring
+        """
+        Récupère les statistiques de monitoring
         
         Returns:
             Dict[str, Any]: Statistiques détaillées
-        """        return {
+        """
+        return {
             "monitoring_active": self.monitoring_active,
             "collection_interval": self.config.collection_interval,
             "monitored_objects": len(self.monitored_objects),

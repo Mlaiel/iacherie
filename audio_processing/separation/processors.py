@@ -11,7 +11,8 @@ License: Proprietary - Contact for licensing
 Any unauthorized use, copying, distribution, or modification is strictly
 prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from abc import ABC, abstractmethod
 from pathlib import Path
@@ -35,7 +36,8 @@ logger = get_logger(__name__)
 
 @dataclass
 class ProcessingConfig:
-    """Configuration for audio processing operations."""    sample_rate: int = 44100
+    """Configuration for audio processing operations."""
+    sample_rate: int = 44100
     bit_depth: int = 24
     channels: int = 2
     block_size: int = 4096
@@ -48,24 +50,28 @@ class ProcessingConfig:
 
 @dataclass 
 class ProcessingResult:
-    """Result container for processing operations."""    processed_audio: np.ndarray
+    """Result container for processing operations."""
+    processed_audio: np.ndarray
     quality_metrics: Dict[str, float]
     processing_time: float
     metadata: Dict[str, Any]
 
 
 class BaseProcessor(ABC):
-    """Abstract base class for audio processors."""    
+    """Abstract base class for audio processors."""
+    
     def __init__(self, config: Optional[ProcessingConfig] = None):
         self.config = config or ProcessingConfig()
         self.executor = ThreadPoolExecutor(max_workers=4)
         
     @abstractmethod
     async def process(self, audio: np.ndarray, **kwargs) -> ProcessingResult:
-        """Process audio data."""        pass
+        """Process audio data."""
+        pass
     
     def validate_audio_input(self, audio: np.ndarray) -> None:
-        """Validate input audio format."""        if not isinstance(audio, np.ndarray):
+        """Validate input audio format."""
+        if not isinstance(audio, np.ndarray):
             raise AudioProcessingError("Audio must be numpy array")
         
         if audio.size == 0:
@@ -75,19 +81,22 @@ class BaseProcessor(ABC):
             raise AudioProcessingError("Audio contains invalid values")
     
     def cleanup(self) -> None:
-        """Clean up processor resources."""        if hasattr(self, 'executor'):
+        """Clean up processor resources."""
+        if hasattr(self, 'executor'):
             self.executor.shutdown(wait=True)
 
 
 class AudioProcessor(BaseProcessor):
-    """Main audio processor for separation pipeline."""    
+    """Main audio processor for separation pipeline."""
+    
     def __init__(self, config: Optional[ProcessingConfig] = None):
         super().__init__(config)
         self.loudness_meter = pyln.Meter(self.config.sample_rate)
         self.filters = self._initialize_filters()
         
     def _initialize_filters(self) -> Dict[str, Any]:
-        """Initialize audio filters."""        return {
+        """Initialize audio filters."""
+        return {
             "highpass": signal.butter(4, 20, btype='high', fs=self.config.sample_rate),
             "lowpass": signal.butter(4, 20000, btype='low', fs=self.config.sample_rate),
             "notch": signal.iirnotch(50, 30, fs=self.config.sample_rate),  # Power line noise
@@ -96,7 +105,8 @@ class AudioProcessor(BaseProcessor):
     
     async def process(self, audio: np.ndarray, 
                      operations: Optional[List[str]] = None) -> ProcessingResult:
-        """Process audio with specified operations."""        self.validate_audio_input(audio)
+        """Process audio with specified operations."""
+        self.validate_audio_input(audio)
         start_time = asyncio.get_event_loop().time()
         
         operations = operations or ["normalize", "denoise", "enhance"]
@@ -139,7 +149,8 @@ class AudioProcessor(BaseProcessor):
             raise AudioProcessingError(f"Processing error: {str(e)}")
     
     async def _normalize_audio(self, audio: np.ndarray) -> np.ndarray:
-        """Normalize audio levels using loudness standards."""        try:
+        """Normalize audio levels using loudness standards."""
+        try:
             # Convert to proper format for loudness measurement
             if audio.ndim == 1:
                 audio_2d = audio.reshape(-1, 1)
@@ -179,7 +190,8 @@ class AudioProcessor(BaseProcessor):
             return audio
     
     async def _denoise_audio(self, audio: np.ndarray) -> np.ndarray:
-        """Apply advanced noise reduction."""        try:
+        """Apply advanced noise reduction."""
+        try:
             # Spectral subtraction denoising
             stft = librosa.stft(audio, n_fft=2048, hop_length=512)
             magnitude = np.abs(stft)
@@ -206,7 +218,8 @@ class AudioProcessor(BaseProcessor):
             return audio  # Return original if denoising fails
     
     async def _enhance_audio(self, audio: np.ndarray) -> np.ndarray:
-        """Enhance audio quality and clarity."""        try:
+        """Enhance audio quality and clarity."""
+        try:
             # Multi-band enhancement
             enhanced_audio = audio.copy()
             
@@ -236,7 +249,8 @@ class AudioProcessor(BaseProcessor):
             return audio
     
     async def _filter_audio(self, audio: np.ndarray) -> np.ndarray:
-        """Apply frequency filtering."""        try:
+        """Apply frequency filtering."""
+        try:
             filtered_audio = audio.copy()
             
             # High-pass filter (remove DC and low rumble)
@@ -258,7 +272,8 @@ class AudioProcessor(BaseProcessor):
             return audio
     
     async def _process_dynamics(self, audio: np.ndarray) -> np.ndarray:
-        """Process audio dynamics with compression and limiting."""        try:
+        """Process audio dynamics with compression and limiting."""
+        try:
             # Multi-band dynamics processing
             processed_audio = self._apply_multiband_compression(audio)
             
@@ -273,7 +288,8 @@ class AudioProcessor(BaseProcessor):
     
     def _apply_eq_band(self, audio: np.ndarray, center_freq: float, 
                        gain_db: float, q_factor: float) -> np.ndarray:
-        """Apply parametric EQ to specific frequency band."""        try:
+        """Apply parametric EQ to specific frequency band."""
+        try:
             # Design parametric filter
             w0 = 2 * np.pi * center_freq / self.config.sample_rate
             alpha = np.sin(w0) / (2 * q_factor)
@@ -300,7 +316,8 @@ class AudioProcessor(BaseProcessor):
             return audio
     
     def _apply_soft_compression(self, audio: np.ndarray, ratio: float, threshold: float) -> np.ndarray:
-        """Apply soft compression to audio."""        try:
+        """Apply soft compression to audio."""
+        try:
             # Convert to dB
             threshold_linear = 10 ** (threshold / 20)
             
@@ -322,7 +339,8 @@ class AudioProcessor(BaseProcessor):
             return audio
     
     def _apply_multiband_compression(self, audio: np.ndarray) -> np.ndarray:
-        """Apply multiband compression."""        try:
+        """Apply multiband compression."""
+        try:
             # Split into frequency bands
             low_cutoff = 250
             high_cutoff = 2000
@@ -352,7 +370,8 @@ class AudioProcessor(BaseProcessor):
             return audio
     
     def _apply_limiter(self, audio: np.ndarray, threshold: float) -> np.ndarray:
-        """Apply brick-wall limiter."""        try:
+        """Apply brick-wall limiter."""
+        try:
             threshold_linear = 10 ** (threshold / 20)
             
             # Hard limiting
@@ -366,7 +385,8 @@ class AudioProcessor(BaseProcessor):
     
     async def _calculate_quality_metrics(self, original: np.ndarray, 
                                        processed: np.ndarray) -> Dict[str, float]:
-        """Calculate comprehensive quality metrics."""        try:
+        """Calculate comprehensive quality metrics."""
+        try:
             metrics = {}
             
             # Align arrays
@@ -419,7 +439,8 @@ class AudioProcessor(BaseProcessor):
             return {"overall_quality": 0.5}  # Default fallback
     
     def _calculate_thd_n(self, audio: np.ndarray) -> float:
-        """Calculate Total Harmonic Distortion + Noise."""        try:
+        """Calculate Total Harmonic Distortion + Noise."""
+        try:
             # Generate 1kHz test tone reference
             duration = len(audio) / self.config.sample_rate
             t = np.linspace(0, duration, len(audio))
@@ -436,7 +457,8 @@ class AudioProcessor(BaseProcessor):
             return 5.0  # Default value
     
     def _calculate_dynamic_range(self, audio: np.ndarray) -> float:
-        """Calculate dynamic range."""        try:
+        """Calculate dynamic range."""
+        try:
             # Calculate RMS over sliding windows
             window_size = int(0.1 * self.config.sample_rate)  # 100ms windows
             rms_values = []
@@ -457,7 +479,8 @@ class AudioProcessor(BaseProcessor):
             return 20.0  # Default value
     
     def _calculate_frequency_flatness(self, audio: np.ndarray) -> float:
-        """Calculate frequency response flatness."""        try:
+        """Calculate frequency response flatness."""
+        try:
             # Compute power spectral density
             freqs, psd = signal.welch(audio, fs=self.config.sample_rate, nperseg=2048)
             
@@ -477,7 +500,8 @@ class AudioProcessor(BaseProcessor):
             return 0.5
     
     def _calculate_overall_quality(self, metrics: Dict[str, float]) -> float:
-        """Calculate overall quality score from individual metrics."""        try:
+        """Calculate overall quality score from individual metrics."""
+        try:
             # Normalize and weight different metrics
             snr_score = min(1.0, max(0.0, (metrics.get("snr_db", 0) + 10) / 50))
             thd_score = max(0.0, 1.0 - metrics.get("thd_plus_n_percent", 0) / 100)
@@ -499,13 +523,15 @@ class AudioProcessor(BaseProcessor):
 
 
 class StemProcessor(BaseProcessor):
-    """Specialized processor for separated audio stems."""    
+    """Specialized processor for separated audio stems."""
+    
     def __init__(self, config: Optional[ProcessingConfig] = None):
         super().__init__(config)
         self.stem_profiles = self._load_stem_profiles()
     
     def _load_stem_profiles(self) -> Dict[str, Dict[str, Any]]:
-        """Load processing profiles for different stem types."""        return {
+        """Load processing profiles for different stem types."""
+        return {
             "vocals": {
                 "eq_curve": [(100, -2), (500, 1), (2000, 3), (8000, 2)],
                 "compression": {"ratio": 3.0, "threshold": -15.0},
@@ -530,7 +556,8 @@ class StemProcessor(BaseProcessor):
     
     async def process(self, stems: Dict[str, np.ndarray], 
                      stem_types: Optional[List[str]] = None) -> Dict[str, ProcessingResult]:
-        """Process multiple stems according to their types."""        results = {}
+        """Process multiple stems according to their types."""
+        results = {}
         
         for stem_name, stem_audio in stems.items():
             if stem_types and stem_name not in stem_types:
@@ -555,7 +582,8 @@ class StemProcessor(BaseProcessor):
         return results
     
     def _identify_stem_type(self, stem_name: str) -> str:
-        """Identify stem type from name."""        stem_name_lower = stem_name.lower()
+        """Identify stem type from name."""
+        stem_name_lower = stem_name.lower()
         
         if any(keyword in stem_name_lower for keyword in ["vocal", "voice", "singer"]):
             return "vocals"
@@ -567,7 +595,8 @@ class StemProcessor(BaseProcessor):
             return "instruments"
     
     async def _process_stem(self, audio: np.ndarray, stem_type: str) -> ProcessingResult:
-        """Process individual stem according to its type."""        start_time = asyncio.get_event_loop().time()
+        """Process individual stem according to its type."""
+        start_time = asyncio.get_event_loop().time()
         
         try:
             profile = self.stem_profiles.get(stem_type, self.stem_profiles["instruments"])
@@ -609,7 +638,8 @@ class StemProcessor(BaseProcessor):
             raise AudioProcessingError(f"Stem processing error: {str(e)}")
     
     def _apply_eq_curve(self, audio: np.ndarray, eq_curve: List[Tuple[float, float]]) -> np.ndarray:
-        """Apply EQ curve to audio."""        try:
+        """Apply EQ curve to audio."""
+        try:
             processed = audio.copy()
             
             for freq, gain_db in eq_curve:
@@ -639,7 +669,8 @@ class StemProcessor(BaseProcessor):
             return audio
     
     def _apply_compression(self, audio: np.ndarray, ratio: float, threshold: float) -> np.ndarray:
-        """Apply compression with attack/release characteristics."""        try:
+        """Apply compression with attack/release characteristics."""
+        try:
             threshold_linear = 10 ** (threshold / 20)
             
             # Envelope following
@@ -669,7 +700,8 @@ class StemProcessor(BaseProcessor):
             return audio
     
     def _calculate_envelope(self, audio: np.ndarray) -> np.ndarray:
-        """Calculate audio envelope for dynamics processing."""        try:
+        """Calculate audio envelope for dynamics processing."""
+        try:
             # Hilbert transform for envelope detection
             analytic_signal = signal.hilbert(audio)
             envelope = np.abs(analytic_signal)
@@ -684,7 +716,8 @@ class StemProcessor(BaseProcessor):
             return np.abs(audio)
     
     def _apply_deesser(self, audio: np.ndarray, frequency: float, threshold: float) -> np.ndarray:
-        """Apply de-esser for vocal processing."""        try:
+        """Apply de-esser for vocal processing."""
+        try:
             # Create band-pass filter for sibilant frequencies
             sos = signal.butter(4, [frequency * 0.7, frequency * 1.5], 
                               btype='band', fs=self.config.sample_rate)
@@ -716,7 +749,8 @@ class StemProcessor(BaseProcessor):
             return audio
     
     def _apply_gate(self, audio: np.ndarray, threshold: float, ratio: float) -> np.ndarray:
-        """Apply noise gate for drums."""        try:
+        """Apply noise gate for drums."""
+        try:
             threshold_linear = 10 ** (threshold / 20)
             envelope = self._calculate_envelope(audio)
             
@@ -737,7 +771,8 @@ class StemProcessor(BaseProcessor):
             return audio
     
     def _apply_saturation(self, audio: np.ndarray, amount: float) -> np.ndarray:
-        """Apply harmonic saturation for bass."""        try:
+        """Apply harmonic saturation for bass."""
+        try:
             # Soft clipping saturation
             drive = 1 + amount * 5  # Scale amount
             saturated = np.tanh(audio * drive) / drive
@@ -753,7 +788,8 @@ class StemProcessor(BaseProcessor):
     
     def _calculate_stem_quality(self, original: np.ndarray, processed: np.ndarray, 
                                stem_type: str) -> Dict[str, float]:
-        """Calculate quality metrics specific to stem type."""        try:
+        """Calculate quality metrics specific to stem type."""
+        try:
             metrics = {}
             
             # Common metrics
@@ -783,7 +819,8 @@ class StemProcessor(BaseProcessor):
             return {"overall_quality": 0.5}
     
     def _calculate_snr(self, original: np.ndarray, processed: np.ndarray) -> float:
-        """Calculate signal-to-noise ratio."""        try:
+        """Calculate signal-to-noise ratio."""
+        try:
             min_len = min(len(original), len(processed))
             orig = original[:min_len]
             proc = processed[:min_len]
@@ -801,7 +838,8 @@ class StemProcessor(BaseProcessor):
             return 20.0  # Default
     
     def _calculate_vocal_clarity(self, audio: np.ndarray) -> float:
-        """Calculate vocal clarity metric."""        try:
+        """Calculate vocal clarity metric."""
+        try:
             # Focus on presence frequencies (2-5 kHz)
             sos = signal.butter(4, [2000, 5000], btype='band', fs=self.config.sample_rate)
             presence = signal.sosfilt(sos, audio)
@@ -819,7 +857,8 @@ class StemProcessor(BaseProcessor):
             return 0.5
     
     def _calculate_drum_punch(self, audio: np.ndarray) -> float:
-        """Calculate drum punch metric."""        try:
+        """Calculate drum punch metric."""
+        try:
             # Analyze transient content
             diff = np.diff(audio)
             transient_energy = np.mean(diff ** 2)
@@ -835,7 +874,8 @@ class StemProcessor(BaseProcessor):
             return 0.5
     
     def _calculate_bass_tightness(self, audio: np.ndarray) -> float:
-        """Calculate bass tightness metric."""        try:
+        """Calculate bass tightness metric."""
+        try:
             # Focus on low frequencies
             sos = signal.butter(4, 150, btype='low', fs=self.config.sample_rate)
             bass = signal.sosfilt(sos, audio)
@@ -857,13 +897,15 @@ class StemProcessor(BaseProcessor):
 
 
 class QualityAnalyzer(BaseProcessor):
-    """Advanced quality analyzer for separated audio."""    
+    """Advanced quality analyzer for separated audio."""
+    
     def __init__(self, config: Optional[ProcessingConfig] = None):
         super().__init__(config)
         self.analysis_bands = self._setup_analysis_bands()
         
     def _setup_analysis_bands(self) -> List[Tuple[float, float]]:
-        """Setup frequency bands for analysis."""        return [
+        """Setup frequency bands for analysis."""
+        return [
             (20, 60),      # Sub-bass
             (60, 250),     # Bass
             (250, 500),    # Low-mid
@@ -876,7 +918,8 @@ class QualityAnalyzer(BaseProcessor):
     
     async def process(self, stems: Dict[str, np.ndarray], 
                      reference: Optional[np.ndarray] = None) -> Dict[str, Any]:
-        """Perform comprehensive quality analysis."""        analysis_results = {}
+        """Perform comprehensive quality analysis."""
+        analysis_results = {}
         
         for stem_name, stem_audio in stems.items():
             try:
@@ -898,7 +941,8 @@ class QualityAnalyzer(BaseProcessor):
         return analysis_results
     
     async def _analyze_stem_quality(self, audio: np.ndarray, stem_name: str) -> Dict[str, Any]:
-        """Analyze quality of individual stem."""        try:
+        """Analyze quality of individual stem."""
+        try:
             results = {
                 "frequency_analysis": self._analyze_frequency_content(audio),
                 "dynamics_analysis": self._analyze_dynamics(audio),
@@ -917,7 +961,8 @@ class QualityAnalyzer(BaseProcessor):
             return {"overall_score": 0.0, "error": str(e)}
     
     def _analyze_frequency_content(self, audio: np.ndarray) -> Dict[str, float]:
-        """Analyze frequency content distribution."""        try:
+        """Analyze frequency content distribution."""
+        try:
             # Calculate power spectral density
             freqs, psd = signal.welch(audio, fs=self.config.sample_rate, nperseg=2048)
             
@@ -949,7 +994,8 @@ class QualityAnalyzer(BaseProcessor):
             return {}
     
     def _analyze_dynamics(self, audio: np.ndarray) -> Dict[str, float]:
-        """Analyze dynamic characteristics."""        try:
+        """Analyze dynamic characteristics."""
+        try:
             # RMS and peak analysis
             rms = np.sqrt(np.mean(audio ** 2))
             peak = np.max(np.abs(audio))
@@ -993,7 +1039,8 @@ class QualityAnalyzer(BaseProcessor):
             return {}
     
     def _analyze_spectral_characteristics(self, audio: np.ndarray) -> Dict[str, float]:
-        """Analyze spectral characteristics."""        try:
+        """Analyze spectral characteristics."""
+        try:
             # STFT analysis
             stft = librosa.stft(audio, n_fft=2048, hop_length=512)
             magnitude = np.abs(stft)
@@ -1020,7 +1067,8 @@ class QualityAnalyzer(BaseProcessor):
             return {}
     
     def _detect_artifacts(self, audio: np.ndarray) -> Dict[str, float]:
-        """Detect processing artifacts."""        try:
+        """Detect processing artifacts."""
+        try:
             artifacts = {}
             
             # Clipping detection
@@ -1056,7 +1104,8 @@ class QualityAnalyzer(BaseProcessor):
             return {}
     
     def _analyze_temporal_characteristics(self, audio: np.ndarray) -> Dict[str, float]:
-        """Analyze temporal characteristics."""        try:
+        """Analyze temporal characteristics."""
+        try:
             # Onset detection
             onset_frames = librosa.onset.onset_detect(y=audio, sr=self.config.sample_rate)
             onset_density = len(onset_frames) / (len(audio) / self.config.sample_rate)
@@ -1089,7 +1138,8 @@ class QualityAnalyzer(BaseProcessor):
             return {}
     
     def _calculate_spectral_flatness(self, psd: np.ndarray) -> float:
-        """Calculate spectral flatness (Wiener entropy)."""        try:
+        """Calculate spectral flatness (Wiener entropy)."""
+        try:
             # Avoid log(0) issues
             psd_safe = psd + 1e-10
             
@@ -1107,7 +1157,8 @@ class QualityAnalyzer(BaseProcessor):
             return 0.0
     
     def _calculate_momentary_loudness(self, audio: np.ndarray) -> float:
-        """Calculate momentary loudness."""        try:
+        """Calculate momentary loudness."""
+        try:
             # Use 400ms window for momentary loudness
             window_samples = int(0.4 * self.config.sample_rate)
             
@@ -1125,7 +1176,8 @@ class QualityAnalyzer(BaseProcessor):
             return -23.0  # Default LUFS value
     
     def _calculate_stem_score(self, analysis_results: Dict[str, Any]) -> float:
-        """Calculate overall stem quality score."""        try:
+        """Calculate overall stem quality score."""
+        try:
             scores = []
             
             # Frequency analysis score
@@ -1170,7 +1222,8 @@ class QualityAnalyzer(BaseProcessor):
     
     async def _analyze_separation_quality(self, stems: Dict[str, np.ndarray], 
                                         reference: np.ndarray) -> Dict[str, float]:
-        """Analyze overall separation quality."""        try:
+        """Analyze overall separation quality."""
+        try:
             # Reconstruct sum from stems
             reconstructed = np.zeros_like(reference)
             for stem_audio in stems.values():

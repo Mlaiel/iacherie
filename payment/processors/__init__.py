@@ -18,7 +18,8 @@ Available Processors:
 - DisputeResolutionProcessor: Payment dispute and chargeback resolution
 - PayoutSchedulerProcessor: Automated payout scheduling and batch processing
 - FinancialReportingProcessor: Comprehensive financial reporting and analytics
-"""from .stripe import (
+"""
+from .stripe import (
     StripeConnectProcessor,
     StripeConnectAccount,
     StripePaymentIntent,
@@ -143,7 +144,8 @@ PAYMENT_PROCESSORS = {
 
 
 def get_processor(processor_name: str, **kwargs):
-    """    Factory function to get a payment processor instance
+    """
+    Factory function to get a payment processor instance
     
     Args:
         processor_name: Name of the processor to instantiate
@@ -154,7 +156,8 @@ def get_processor(processor_name: str, **kwargs):
         
     Raises:
         ValueError: If processor name is not recognized
-    """    if processor_name not in PAYMENT_PROCESSORS:
+    """
+    if processor_name not in PAYMENT_PROCESSORS:
         available = ', '.join(PAYMENT_PROCESSORS.keys())
         raise ValueError(f"Unknown processor '{processor_name}'. Available: {available}")
     
@@ -163,15 +166,18 @@ def get_processor(processor_name: str, **kwargs):
 
 
 def list_processors():
-    """    List all available payment processors
+    """
+    List all available payment processors
     
     Returns:
         List of available processor names
-    """    return list(PAYMENT_PROCESSORS.keys())
+    """
+    return list(PAYMENT_PROCESSORS.keys())
 
 
 def get_processor_info(processor_name: str):
-    """    Get information about a specific processor
+    """
+    Get information about a specific processor
     
     Args:
         processor_name: Name of the processor
@@ -181,7 +187,8 @@ def get_processor_info(processor_name: str):
         
     Raises:
         ValueError: If processor name is not recognized
-    """    if processor_name not in PAYMENT_PROCESSORS:
+    """
+    if processor_name not in PAYMENT_PROCESSORS:
         raise ValueError(f"Unknown processor '{processor_name}'")
     
     processor_class = PAYMENT_PROCESSORS[processor_name]

@@ -22,7 +22,8 @@ This software is proprietary and confidential.
 Unauthorized use, modification, or distribution by any individual or entity 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
@@ -38,14 +39,16 @@ from ..security.partition_security import PartitionSecurityManager
 logger = logging.getLogger(__name__)
 
 class PartitionType(Enum):
-    """Types of database partitioning"""    RANGE = "range"
+    """Types of database partitioning"""
+    RANGE = "range"
     HASH = "hash"
     LIST = "list"
     TEMPORAL = "temporal"
     COMPOSITE = "composite"
 
 class PartitionStrategy(Enum):
-    """Partitioning strategies"""    BY_DATE = "by_date"
+    """Partitioning strategies"""
+    BY_DATE = "by_date"
     BY_CONTENT_TYPE = "by_content_type"
     BY_USER_ID = "by_user_id"
     BY_SIZE = "by_size"
@@ -55,7 +58,8 @@ class PartitionStrategy(Enum):
 
 @dataclass
 class PartitionConfig:
-    """Partition configuration"""    partition_name: str
+    """Partition configuration"""
+    partition_name: str
     partition_type: PartitionType
     strategy: PartitionStrategy
     key_column: str
@@ -68,7 +72,8 @@ class PartitionConfig:
 
 @dataclass
 class PartitionMetrics:
-    """Partition performance metrics"""    partition_name: str
+    """Partition performance metrics"""
+    partition_name: str
     table_size: int
     row_count: int
     index_size: int
@@ -78,7 +83,8 @@ class PartitionMetrics:
     compression_ratio: float
 
 class PartitioningManager:
-    """    Ultra-advanced partitioning manager for IA-Influencer platform
+    """
+    Ultra-advanced partitioning manager for IA-Influencer platform
     
     Features:
     - Automated partition creation and management
@@ -90,9 +96,11 @@ class PartitioningManager:
     - Partition-aware backup and recovery
     - Geographic distribution support
     - Performance-based partition balancing
-    """    
+    """
+    
     def __init__(self):
-        """Initialize partitioning manager"""        self.db_manager = DatabaseManager()
+        """Initialize partitioning manager"""
+        self.db_manager = DatabaseManager()
         self.performance_tracker = PerformanceTracker()
         self.security_manager = PartitionSecurityManager()
         
@@ -142,7 +150,8 @@ class PartitioningManager:
         logger.info("PartitioningManager initialized")
     
     async def initialize(self) -> bool:
-        """Initialize partitioning manager"""        try:
+        """Initialize partitioning manager"""
+        try:
             # Initialize database connection
             await self.db_manager.initialize()
             
@@ -166,7 +175,8 @@ class PartitioningManager:
             return False
     
     async def create_partition(self, table_name: str, partition_config: Optional[Dict[str, Any]] = None) -> bool:
-        """Create partition for table"""        try:
+        """Create partition for table"""
+        try:
             # Get partitioning rules for table
             rules = self.partitioning_rules.get(table_name)
             if not rules and not partition_config:
@@ -201,7 +211,8 @@ class PartitioningManager:
             return False
     
     async def _create_temporal_partitions(self, table_name: str, config: Dict[str, Any]) -> bool:
-        """Create temporal (date-based) partitions"""        try:
+        """Create temporal (date-based) partitions"""
+        try:
             interval = config.get('interval', 'monthly')
             key_column = config.get('key', 'created_at')
             
@@ -287,7 +298,8 @@ class PartitioningManager:
             return False
     
     async def _create_hash_partitions(self, table_name: str, config: Dict[str, Any]) -> bool:
-        """Create hash-based partitions"""        try:
+        """Create hash-based partitions"""
+        try:
             num_partitions = config.get('partitions', 16)
             key_column = config.get('key', 'id')
             
@@ -329,7 +341,8 @@ class PartitioningManager:
             return False
     
     async def _create_range_partitions(self, table_name: str, config: Dict[str, Any]) -> bool:
-        """Create range-based partitions"""        try:
+        """Create range-based partitions"""
+        try:
             ranges = config.get('ranges', [])
             key_column = config.get('key', 'id')
             
@@ -378,7 +391,8 @@ class PartitioningManager:
             return False
     
     async def _create_list_partitions(self, table_name: str, config: Dict[str, Any]) -> bool:
-        """Create list-based partitions"""        try:
+        """Create list-based partitions"""
+        try:
             values = config.get('values', [])
             key_column = config.get('key', 'type')
             
@@ -423,7 +437,8 @@ class PartitioningManager:
             return False
     
     async def _create_composite_partitions(self, table_name: str, config: Dict[str, Any]) -> bool:
-        """Create composite (multi-level) partitions"""        try:
+        """Create composite (multi-level) partitions"""
+        try:
             keys = config.get('keys', [])
             sub_strategies = config.get('sub_strategies', [])
             
@@ -474,7 +489,8 @@ class PartitioningManager:
             return False
     
     async def _ensure_parent_table(self, table_name: str, partition_type: PartitionType):
-        """Ensure parent table exists and is properly configured for partitioning"""        try:
+        """Ensure parent table exists and is properly configured for partitioning"""
+        try:
             # Check if table exists
             table_exists = await self.db_manager.table_exists(table_name)
             
@@ -497,15 +513,20 @@ class PartitioningManager:
     
     async def _create_range_partition(self, parent_table: str, partition_name: str, 
                                     key_column: str, start_val: Any, end_val: Any):
-        """Create a range partition"""        try:
+        """Create a range partition"""
+        try:
             if end_val is None:
                 # Unbounded upper range
-                sql = f"""                CREATE TABLE {partition_name} PARTITION OF {parent_table}
+                sql = f"""
+                CREATE TABLE {partition_name} PARTITION OF {parent_table}
                 FOR VALUES FROM ('{start_val}') TO (MAXVALUE);
-                """            else:
-                sql = f"""                CREATE TABLE {partition_name} PARTITION OF {parent_table}
+                """
+            else:
+                sql = f"""
+                CREATE TABLE {partition_name} PARTITION OF {parent_table}
                 FOR VALUES FROM ('{start_val}') TO ('{end_val}');
-                """            
+                """
+            
             await self.db_manager.execute_query(sql)
             
             # Create indexes on partition
@@ -519,10 +540,13 @@ class PartitioningManager:
     
     async def _create_hash_partition(self, parent_table: str, partition_name: str,
                                    key_column: str, modulus: int, remainder: int):
-        """Create a hash partition"""        try:
-            sql = f"""            CREATE TABLE {partition_name} PARTITION OF {parent_table}
+        """Create a hash partition"""
+        try:
+            sql = f"""
+            CREATE TABLE {partition_name} PARTITION OF {parent_table}
             FOR VALUES WITH (modulus {modulus}, remainder {remainder});
-            """            
+            """
+            
             await self.db_manager.execute_query(sql)
             
             # Create indexes on partition
@@ -536,11 +560,14 @@ class PartitioningManager:
     
     async def _create_list_partition(self, parent_table: str, partition_name: str,
                                    key_column: str, values: List[Any]):
-        """Create a list partition"""        try:
+        """Create a list partition"""
+        try:
             values_str = ', '.join([f"'{v}'" for v in values])
-            sql = f"""            CREATE TABLE {partition_name} PARTITION OF {parent_table}
+            sql = f"""
+            CREATE TABLE {partition_name} PARTITION OF {parent_table}
             FOR VALUES IN ({values_str});
-            """            
+            """
+            
             await self.db_manager.execute_query(sql)
             
             # Create indexes on partition
@@ -553,7 +580,8 @@ class PartitioningManager:
             raise
     
     async def drop_partition(self, partition_name: str, cascade: bool = False) -> bool:
-        """Drop a partition"""        try:
+        """Drop a partition"""
+        try:
             # Security validation
             if not await self.security_manager.validate_partition_drop(partition_name):
                 raise ValueError("Partition drop failed security validation")
@@ -583,7 +611,8 @@ class PartitioningManager:
             return False
     
     async def get_partition_statistics(self, table_name: Optional[str] = None) -> Dict[str, Any]:
-        """Get comprehensive partition statistics"""        try:
+        """Get comprehensive partition statistics"""
+        try:
             stats = {
                 'total_partitions': 0,
                 'partitions_by_type': {},
@@ -634,7 +663,8 @@ class PartitioningManager:
             return {'error': str(e)}
     
     async def start_maintenance(self):
-        """Start automated partition maintenance"""        try:
+        """Start automated partition maintenance"""
+        try:
             if self.maintenance_active:
                 logger.warning("Partition maintenance already active")
                 return
@@ -648,7 +678,8 @@ class PartitioningManager:
             logger.error(f"Failed to start partition maintenance: {str(e)}")
     
     async def stop_maintenance(self):
-        """Stop automated partition maintenance"""        try:
+        """Stop automated partition maintenance"""
+        try:
             self.maintenance_active = False
             
             if self.maintenance_task:
@@ -664,7 +695,8 @@ class PartitioningManager:
             logger.error(f"Error stopping partition maintenance: {str(e)}")
     
     async def _maintenance_loop(self):
-        """Main partition maintenance loop"""        while self.maintenance_active:
+        """Main partition maintenance loop"""
+        while self.maintenance_active:
             try:
                 # Check for new partitions needed
                 await self._check_auto_partitioning()
@@ -689,35 +721,43 @@ class PartitioningManager:
     
     # Helper methods (simplified implementations)
     async def _discover_existing_partitions(self):
-        """Discover existing partitions in database"""        # Implementation would query database for existing partitions
+        """Discover existing partitions in database"""
+        # Implementation would query database for existing partitions
         pass
     
     async def _is_table_partitioned(self, table_name: str) -> bool:
-        """Check if table is partitioned"""        # Implementation would check PostgreSQL system catalogs
+        """Check if table is partitioned"""
+        # Implementation would check PostgreSQL system catalogs
         return False  # Simplified
     
     async def _convert_to_partitioned_table(self, table_name: str, partition_type: PartitionType):
-        """Convert regular table to partitioned table"""        # Implementation would use PostgreSQL partitioning commands
+        """Convert regular table to partitioned table"""
+        # Implementation would use PostgreSQL partitioning commands
         pass
     
     async def _create_partition_indexes(self, partition_name: str, parent_table: str):
-        """Create indexes on partition"""        # Implementation would create necessary indexes
+        """Create indexes on partition"""
+        # Implementation would create necessary indexes
         pass
     
     async def _discover_partition_values(self, table_name: str, key_column: str) -> List[Any]:
-        """Discover unique values for list partitioning"""        # Implementation would query database for distinct values
+        """Discover unique values for list partitioning"""
+        # Implementation would query database for distinct values
         return ['audio', 'video', 'image', 'text']  # Simplified
     
     async def _create_partitions_by_strategy(self, table_name: str, config: Dict[str, Any], level: int = 1) -> bool:
-        """Create partitions by strategy"""        # Implementation would delegate to appropriate creation method
+        """Create partitions by strategy"""
+        # Implementation would delegate to appropriate creation method
         return True  # Simplified
     
     async def _create_sub_partitions(self, parent_partition: str, config: Dict[str, Any]):
-        """Create sub-partitions for composite partitioning"""        # Implementation would create sub-partitions
+        """Create sub-partitions for composite partitioning"""
+        # Implementation would create sub-partitions
         pass
     
     async def _collect_partition_metrics(self, partition_name: str) -> PartitionMetrics:
-        """Collect metrics for specific partition"""        # Implementation would collect actual metrics from database
+        """Collect metrics for specific partition"""
+        # Implementation would collect actual metrics from database
         return PartitionMetrics(
             partition_name=partition_name,
             table_size=1024000,
@@ -730,23 +770,28 @@ class PartitioningManager:
         )
     
     async def _check_auto_partitioning(self):
-        """Check if automatic partitioning is needed"""        # Implementation would check table sizes and create new partitions
+        """Check if automatic partitioning is needed"""
+        # Implementation would check table sizes and create new partitions
         pass
     
     async def _update_partition_metrics(self):
-        """Update partition performance metrics"""        # Implementation would collect and update metrics
+        """Update partition performance metrics"""
+        # Implementation would collect and update metrics
         pass
     
     async def _apply_retention_policies(self):
-        """Apply retention policies to old partitions"""        # Implementation would check and apply retention rules
+        """Apply retention policies to old partitions"""
+        # Implementation would check and apply retention rules
         pass
     
     async def _optimize_partitions(self):
-        """Optimize partition performance"""        # Implementation would run optimization tasks
+        """Optimize partition performance"""
+        # Implementation would run optimization tasks
         pass
     
     async def cleanup(self):
-        """Cleanup partitioning manager"""        try:
+        """Cleanup partitioning manager"""
+        try:
             # Stop maintenance
             await self.stop_maintenance()
             

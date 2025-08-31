@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Type, Callable, Set
 from dataclasses import dataclass, field
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 
 class ComponentType(Enum):
-    """Multimedia component types"""    PROCESSOR = "processor"
+    """Multimedia component types"""
+    PROCESSOR = "processor"
     CONVERTER = "converter"
     ANALYZER = "analyzer"
     ENHANCER = "enhancer"
@@ -41,7 +43,8 @@ class ComponentType(Enum):
 
 
 class ComponentStatus(Enum):
-    """Component status"""    REGISTERED = "registered"
+    """Component status"""
+    REGISTERED = "registered"
     INITIALIZED = "initialized"
     ACTIVE = "active"
     DISABLED = "disabled"
@@ -51,7 +54,8 @@ class ComponentStatus(Enum):
 
 @dataclass
 class ComponentMetadata:
-    """Component metadata information"""    component_id: str
+    """Component metadata information"""
+    component_id: str
     name: str
     description: str
     version: str
@@ -71,7 +75,8 @@ class ComponentMetadata:
 
 @dataclass
 class ComponentRegistration:
-    """Component registration details"""    metadata: ComponentMetadata
+    """Component registration details"""
+    metadata: ComponentMetadata
     component_class: Type
     instance: Optional[Any] = None
     initialization_config: Dict[str, Any] = field(default_factory=dict)
@@ -83,29 +88,36 @@ class ComponentRegistration:
 
 
 class MultimediaComponent(ABC):
-    """Base class for multimedia components"""    
+    """Base class for multimedia components"""
+    
     @abstractmethod
     async def initialize(self, config: Dict[str, Any] = None):
-        """Initialize component"""        pass
+        """Initialize component"""
+        pass
         
     @abstractmethod
     async def process(self, data: Any, options: Dict[str, Any] = None) -> Any:
-        """Process multimedia data"""        pass
+        """Process multimedia data"""
+        pass
         
     @abstractmethod
     async def health_check(self) -> Dict[str, Any]:
-        """Component health check"""        pass
+        """Component health check"""
+        pass
         
     @abstractmethod
     def get_metadata(self) -> ComponentMetadata:
-        """Get component metadata"""        pass
+        """Get component metadata"""
+        pass
         
     async def cleanup(self):
-        """Cleanup component resources"""        pass
+        """Cleanup component resources"""
+        pass
 
 
 class MultimediaRegistry:
-    """Enterprise multimedia component registry"""    
+    """Enterprise multimedia component registry"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.components: Dict[str, ComponentRegistration] = {}
@@ -131,7 +143,8 @@ class MultimediaRegistry:
         self._initialize_component_types()
         
     async def initialize(self):
-        """Initialize registry and discover components"""        try:
+        """Initialize registry and discover components"""
+        try:
             if self.auto_discovery_enabled:
                 await self._discover_components()
                 
@@ -148,7 +161,8 @@ class MultimediaRegistry:
         component_class: Type[MultimediaComponent],
         config: Dict[str, Any] = None
     ) -> str:
-        """Register multimedia component"""        try:
+        """Register multimedia component"""
+        try:
             # Create temporary instance to get metadata
             temp_instance = component_class()
             metadata = temp_instance.get_metadata()
@@ -183,7 +197,8 @@ class MultimediaRegistry:
             raise
             
     async def get_component(self, component_id: str) -> Optional[MultimediaComponent]:
-        """Get component instance by ID"""        try:
+        """Get component instance by ID"""
+        try:
             registration = self.components.get(component_id)
             if not registration:
                 return None
@@ -204,16 +219,20 @@ class MultimediaRegistry:
             return None
             
     def find_components_by_type(self, component_type: ComponentType) -> List[str]:
-        """Find components by type"""        return self.component_types.get(component_type, [])
+        """Find components by type"""
+        return self.component_types.get(component_type, [])
         
     def find_components_by_format(self, format_name: str) -> List[str]:
-        """Find components that support specific format"""        return self.format_mappings.get(format_name.lower(), [])
+        """Find components that support specific format"""
+        return self.format_mappings.get(format_name.lower(), [])
         
     def find_components_by_capability(self, capability: str) -> List[str]:
-        """Find components by capability"""        return self.capability_index.get(capability, [])
+        """Find components by capability"""
+        return self.capability_index.get(capability, [])
         
     async def search_components(self, criteria: Dict[str, Any]) -> List[ComponentRegistration]:
-        """Search components by multiple criteria"""        results = []
+        """Search components by multiple criteria"""
+        results = []
         
         for component_id, registration in self.components.items():
             if self._matches_criteria(registration, criteria):
@@ -232,11 +251,13 @@ class MultimediaRegistry:
         return results
         
     def get_component_metadata(self, component_id: str) -> Optional[ComponentMetadata]:
-        """Get component metadata"""        registration = self.components.get(component_id)
+        """Get component metadata"""
+        registration = self.components.get(component_id)
         return registration.metadata if registration else None
         
     def list_components(self, component_type: Optional[ComponentType] = None) -> List[ComponentMetadata]:
-        """List all registered components"""        if component_type:
+        """List all registered components"""
+        if component_type:
             component_ids = self.component_types.get(component_type, [])
             return [
                 self.components[comp_id].metadata 
@@ -247,7 +268,8 @@ class MultimediaRegistry:
             return [reg.metadata for reg in self.components.values()]
             
     async def unregister_component(self, component_id: str) -> bool:
-        """Unregister component"""        try:
+        """Unregister component"""
+        try:
             registration = self.components.get(component_id)
             if not registration:
                 return False
@@ -273,7 +295,8 @@ class MultimediaRegistry:
             return False
             
     async def reload_component(self, component_id: str) -> bool:
-        """Reload component"""        try:
+        """Reload component"""
+        try:
             registration = self.components.get(component_id)
             if not registration:
                 return False
@@ -294,7 +317,8 @@ class MultimediaRegistry:
             return False
             
     async def enable_component(self, component_id: str) -> bool:
-        """Enable component"""        registration = self.components.get(component_id)
+        """Enable component"""
+        registration = self.components.get(component_id)
         if registration:
             registration.metadata.enabled = True
             registration.metadata.status = ComponentStatus.ACTIVE
@@ -302,7 +326,8 @@ class MultimediaRegistry:
         return False
         
     async def disable_component(self, component_id: str) -> bool:
-        """Disable component"""        registration = self.components.get(component_id)
+        """Disable component"""
+        registration = self.components.get(component_id)
         if registration:
             registration.metadata.enabled = False
             registration.metadata.status = ComponentStatus.DISABLED
@@ -313,7 +338,8 @@ class MultimediaRegistry:
         return False
         
     def get_registry_stats(self) -> Dict[str, Any]:
-        """Get registry statistics"""        active_count = len([
+        """Get registry statistics"""
+        active_count = len([
             r for r in self.components.values()
             if r.metadata.status == ComponentStatus.ACTIVE
         ])
@@ -336,7 +362,8 @@ class MultimediaRegistry:
         }
         
     async def health_check(self) -> Dict[str, Any]:
-        """Registry health check"""        try:
+        """Registry health check"""
+        try:
             # Check all active components
             healthy_components = 0
             unhealthy_components = []
@@ -381,18 +408,21 @@ class MultimediaRegistry:
     # Private methods
     
     def _initialize_component_types(self):
-        """Initialize component type indexes"""        for comp_type in ComponentType:
+        """Initialize component type indexes"""
+        for comp_type in ComponentType:
             self.component_types[comp_type] = []
             
     async def _discover_components(self):
-        """Discover components from configured paths"""        for path in self.discovery_paths:
+        """Discover components from configured paths"""
+        for path in self.discovery_paths:
             try:
                 await self._discover_components_in_path(path)
             except Exception as e:
                 logger.error(f"Failed to discover components in {path}: {e}")
                 
     async def _discover_components_in_path(self, path: str):
-        """Discover components in specific path"""        try:
+        """Discover components in specific path"""
+        try:
             # Import modules and scan for component classes
             module = importlib.import_module(path)
             
@@ -412,7 +442,8 @@ class MultimediaRegistry:
             logger.error(f"Failed to discover components in path {path}: {e}")
             
     async def _initialize_core_components(self):
-        """Initialize core multimedia components"""        # Register built-in components
+        """Initialize core multimedia components"""
+        # Register built-in components
         core_components = [
             # These would be actual component implementations
             # For now, we'll create placeholder registrations
@@ -425,7 +456,8 @@ class MultimediaRegistry:
                 logger.error(f"Failed to register core component: {e}")
                 
     async def _initialize_component(self, registration: ComponentRegistration):
-        """Initialize component instance"""        try:
+        """Initialize component instance"""
+        try:
             # Create instance
             instance = registration.component_class()
             
@@ -446,7 +478,8 @@ class MultimediaRegistry:
             raise e
             
     def _validate_component(self, component_class: Type, metadata: ComponentMetadata) -> bool:
-        """Validate component implementation"""        try:
+        """Validate component implementation"""
+        try:
             # Check if class implements required methods
             required_methods = ['initialize', 'process', 'health_check', 'get_metadata']
             
@@ -467,7 +500,8 @@ class MultimediaRegistry:
             return False
             
     def _update_indexes(self, metadata: ComponentMetadata):
-        """Update component indexes"""        # Type index
+        """Update component indexes"""
+        # Type index
         if metadata.component_type not in self.component_types:
             self.component_types[metadata.component_type] = []
         self.component_types[metadata.component_type].append(metadata.component_id)
@@ -486,7 +520,8 @@ class MultimediaRegistry:
             self.capability_index[capability].append(metadata.component_id)
             
     def _remove_from_indexes(self, metadata: ComponentMetadata):
-        """Remove component from indexes"""        # Type index
+        """Remove component from indexes"""
+        # Type index
         if metadata.component_type in self.component_types:
             if metadata.component_id in self.component_types[metadata.component_type]:
                 self.component_types[metadata.component_type].remove(metadata.component_id)
@@ -505,7 +540,8 @@ class MultimediaRegistry:
                     self.capability_index[capability].remove(metadata.component_id)
                     
     def _matches_criteria(self, registration: ComponentRegistration, criteria: Dict[str, Any]) -> bool:
-        """Check if component matches search criteria"""        metadata = registration.metadata
+        """Check if component matches search criteria"""
+        metadata = registration.metadata
         
         # Component type filter
         if "component_type" in criteria:

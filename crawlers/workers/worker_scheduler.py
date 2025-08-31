@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Task analysis → Dependency resolution → Resource calculation → 
 Priority assignment → Worker selection → Execution scheduling → Monitoring
-"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
+"""
+from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -39,7 +40,8 @@ logger = logging.getLogger(__name__)
 
 
 class SchedulingStrategy(Enum):
-    """Task scheduling strategies"""    FIFO = "fifo"
+    """Task scheduling strategies"""
+    FIFO = "fifo"
     LIFO = "lifo"
     PRIORITY = "priority"
     SHORTEST_JOB_FIRST = "shortest_job_first"
@@ -49,7 +51,8 @@ class SchedulingStrategy(Enum):
 
 
 class ResourceType(Enum):
-    """Resource types for scheduling"""    CPU = "cpu"
+    """Resource types for scheduling"""
+    CPU = "cpu"
     MEMORY = "memory"
     NETWORK = "network"
     STORAGE = "storage"
@@ -58,7 +61,8 @@ class ResourceType(Enum):
 
 @dataclass
 class TaskDependency:
-    """Task dependency definition"""    task_id: str
+    """Task dependency definition"""
+    task_id: str
     dependent_task_id: str
     dependency_type: str = "completion"  # completion, data, resource
     created_at: datetime = field(default_factory=datetime.utcnow)
@@ -66,7 +70,8 @@ class TaskDependency:
 
 @dataclass
 class ResourceRequirement:
-    """Resource requirement for tasks"""    cpu_cores: float = 1.0
+    """Resource requirement for tasks"""
+    cpu_cores: float = 1.0
     memory_mb: int = 256
     network_mbps: float = 10.0
     storage_mb: int = 100
@@ -76,7 +81,8 @@ class ResourceRequirement:
 
 @dataclass
 class SchedulingConstraint:
-    """Scheduling constraint definition"""    constraint_type: str  # time_window, resource_limit, dependency, affinity
+    """Scheduling constraint definition"""
+    constraint_type: str  # time_window, resource_limit, dependency, affinity
     constraint_data: Dict[str, Any]
     priority: int = 1
     is_hard: bool = True  # Hard vs soft constraint
@@ -84,7 +90,8 @@ class SchedulingConstraint:
 
 @dataclass
 class ScheduledTask:
-    """Scheduled task with metadata"""    task: CrawlerTask
+    """Scheduled task with metadata"""
+    task: CrawlerTask
     scheduled_time: datetime
     estimated_completion: datetime
     assigned_worker: Optional[str] = None
@@ -97,7 +104,8 @@ class ScheduledTask:
 
 @dataclass
 class WorkerCapacity:
-    """Worker capacity information"""    worker_id: str
+    """Worker capacity information"""
+    worker_id: str
     worker_type: WorkerType
     max_cpu: float = 4.0
     max_memory: int = 2048
@@ -112,7 +120,8 @@ class WorkerCapacity:
 
 
 class WorkerScheduler:
-    """    Intelligent worker scheduler for optimal task distribution
+    """
+    Intelligent worker scheduler for optimal task distribution
     
     Features:
     - Multi-strategy scheduling
@@ -121,7 +130,8 @@ class WorkerScheduler:
     - Constraint satisfaction
     - Performance prediction
     - Load balancing optimization
-    """    def __init__(self, worker_pool):
+    """
+    def __init__(self, worker_pool):
         self.worker_pool = worker_pool
         self.strategy = SchedulingStrategy.INTELLIGENT
         
@@ -165,7 +175,8 @@ class WorkerScheduler:
         }
 
     async def initialize(self) -> None:
-        """Initialize the scheduler"""        try:
+        """Initialize the scheduler"""
+        try:
             logger.info("🚀 Initializing worker scheduler")
             
             # Initialize prediction engine
@@ -181,7 +192,8 @@ class WorkerScheduler:
             raise
 
     async def shutdown(self) -> None:
-        """Gracefully shutdown the scheduler"""        try:
+        """Gracefully shutdown the scheduler"""
+        try:
             logger.info("🛑 Shutting down worker scheduler")
             
             self.shutdown_event.set()
@@ -206,7 +218,8 @@ class WorkerScheduler:
         constraints: Optional[List[SchedulingConstraint]] = None,
         resource_requirements: Optional[ResourceRequirement] = None
     ) -> bool:
-        """Schedule a task for execution"""        try:
+        """Schedule a task for execution"""
+        try:
             # Estimate resource requirements if not provided
             if resource_requirements is None:
                 resource_requirements = await self._estimate_resource_requirements(task)
@@ -260,7 +273,8 @@ class WorkerScheduler:
             return False
 
     async def update_worker_capacity(self, worker_id: str, capacity: WorkerCapacity) -> None:
-        """Update worker capacity information"""        try:
+        """Update worker capacity information"""
+        try:
             self.worker_capacities[worker_id] = capacity
             
             # Update worker performance history
@@ -280,7 +294,8 @@ class WorkerScheduler:
             logger.error(f"❌ Failed to update worker capacity {worker_id}: {e}")
 
     async def get_next_scheduled_task(self, worker_id: str) -> Optional[ScheduledTask]:
-        """Get the next task scheduled for a specific worker"""        try:
+        """Get the next task scheduled for a specific worker"""
+        try:
             # Check if worker has capacity
             capacity = self.worker_capacities.get(worker_id)
             if not capacity or capacity.current_tasks >= capacity.max_concurrent_tasks:
@@ -331,7 +346,8 @@ class WorkerScheduler:
             return None
 
     async def mark_task_completed(self, task_id: str, success: bool = True) -> None:
-        """Mark a task as completed"""        try:
+        """Mark a task as completed"""
+        try:
             self.completed_tasks.add(task_id)
             
             # Update statistics
@@ -358,7 +374,8 @@ class WorkerScheduler:
             logger.error(f"❌ Failed to mark task completed {task_id}: {e}")
 
     async def get_scheduling_status(self) -> Dict[str, Any]:
-        """Get comprehensive scheduling status"""        try:
+        """Get comprehensive scheduling status"""
+        try:
             # Calculate metrics
             total_workers = len(self.worker_capacities)
             active_workers = sum(1 for c in self.worker_capacities.values() if c.current_tasks > 0)
@@ -402,7 +419,8 @@ class WorkerScheduler:
             return {'error': str(e)}
 
     async def _start_background_tasks(self) -> None:
-        """Start background scheduler tasks"""        try:
+        """Start background scheduler tasks"""
+        try:
             # Dependency resolver
             dependency_resolver = asyncio.create_task(self._dependency_resolver())
             self.background_tasks.add(dependency_resolver)
@@ -426,7 +444,8 @@ class WorkerScheduler:
             raise
 
     async def _dependency_resolver(self) -> None:
-        """Resolve task dependencies continuously"""        while not self.shutdown_event.is_set():
+        """Resolve task dependencies continuously"""
+        while not self.shutdown_event.is_set():
             try:
                 # Check for resolved dependencies
                 resolved_tasks = []
@@ -445,7 +464,8 @@ class WorkerScheduler:
                 await asyncio.sleep(30)
 
     async def _performance_analyzer(self) -> None:
-        """Analyze worker performance and optimize scheduling"""        while not self.shutdown_event.is_set():
+        """Analyze worker performance and optimize scheduling"""
+        while not self.shutdown_event.is_set():
             try:
                 # Analyze worker performance
                 for worker_id, performance_data in self.worker_performance.items():
@@ -470,7 +490,8 @@ class WorkerScheduler:
                 await asyncio.sleep(120)
 
     async def _resource_optimizer(self) -> None:
-        """Optimize resource allocation across workers"""        while not self.shutdown_event.is_set():
+        """Optimize resource allocation across workers"""
+        while not self.shutdown_event.is_set():
             try:
                 # Calculate global resource utilization
                 total_cpu = sum(c.max_cpu for c in self.worker_capacities.values())
@@ -495,7 +516,8 @@ class WorkerScheduler:
                 await asyncio.sleep(180)
 
     async def _identify_optimization_opportunities(self) -> None:
-        """Identify opportunities for resource optimization"""        try:
+        """Identify opportunities for resource optimization"""
+        try:
             # Find overloaded and underutilized workers
             overloaded_workers = []
             underutilized_workers = []
@@ -523,7 +545,8 @@ class WorkerScheduler:
             logger.error(f"❌ Failed to identify optimization opportunities: {e}")
 
     async def _statistics_updater(self) -> None:
-        """Update scheduling statistics"""        while not self.shutdown_event.is_set():
+        """Update scheduling statistics"""
+        while not self.shutdown_event.is_set():
             try:
                 # Calculate average wait times
                 if self.scheduled_tasks:
@@ -553,7 +576,8 @@ class WorkerScheduler:
                 await asyncio.sleep(60)
 
     async def _estimate_resource_requirements(self, task: CrawlerTask) -> ResourceRequirement:
-        """Estimate resource requirements for a task"""        try:
+        """Estimate resource requirements for a task"""
+        try:
             # Base requirements
             base_cpu = 1.0
             base_memory = 256
@@ -609,7 +633,8 @@ class WorkerScheduler:
         resource_req: ResourceRequirement,
         constraints: List[SchedulingConstraint]
     ) -> datetime:
-        """Calculate optimal scheduling time"""        try:
+        """Calculate optimal scheduling time"""
+        try:
             # Start with current time
             schedule_time = datetime.utcnow()
             
@@ -637,7 +662,8 @@ class WorkerScheduler:
             return datetime.utcnow()
 
     async def _find_earliest_resource_availability(self, resource_req: ResourceRequirement) -> datetime:
-        """Find earliest time when resources will be available"""        try:
+        """Find earliest time when resources will be available"""
+        try:
             earliest_time = datetime.utcnow()
             
             # Check each worker's schedule
@@ -669,7 +695,8 @@ class WorkerScheduler:
             return datetime.utcnow()
 
     def _calculate_scheduling_priority(self, scheduled_task: ScheduledTask) -> int:
-        """Calculate priority value for scheduling queue"""        try:
+        """Calculate priority value for scheduling queue"""
+        try:
             # Base priority from task
             base_priority = {
                 TaskPriority.CRITICAL: 1,
@@ -701,7 +728,8 @@ class WorkerScheduler:
             return 3
 
     async def _is_task_ready(self, scheduled_task: ScheduledTask) -> bool:
-        """Check if task is ready for execution"""        try:
+        """Check if task is ready for execution"""
+        try:
             # Check if scheduled time has arrived
             if scheduled_task.scheduled_time > datetime.utcnow():
                 return False
@@ -723,7 +751,8 @@ class WorkerScheduler:
             return False
 
     async def _can_worker_handle_task(self, worker_id: str, scheduled_task: ScheduledTask) -> bool:
-        """Check if worker can handle the task"""        try:
+        """Check if worker can handle the task"""
+        try:
             capacity = self.worker_capacities.get(worker_id)
             if not capacity:
                 return False
@@ -751,7 +780,8 @@ class WorkerScheduler:
             return False
 
     async def _allocate_resources(self, worker_id: str, scheduled_task: ScheduledTask) -> None:
-        """Allocate resources to worker for task"""        try:
+        """Allocate resources to worker for task"""
+        try:
             capacity = self.worker_capacities.get(worker_id)
             resource_req = scheduled_task.resource_allocation
             
@@ -768,7 +798,8 @@ class WorkerScheduler:
             logger.error(f"❌ Failed to allocate resources: {e}")
 
     async def _deallocate_resources(self, worker_id: str, scheduled_task: ScheduledTask) -> None:
-        """Deallocate resources from worker"""        try:
+        """Deallocate resources from worker"""
+        try:
             capacity = self.worker_capacities.get(worker_id)
             resource_req = scheduled_task.resource_allocation
             
@@ -789,7 +820,8 @@ class WorkerScheduler:
             logger.error(f"❌ Failed to deallocate resources: {e}")
 
     async def _check_constraint_satisfaction(self, constraint: SchedulingConstraint) -> bool:
-        """Check if constraint is satisfied"""        try:
+        """Check if constraint is satisfied"""
+        try:
             constraint_type = constraint.constraint_type
             constraint_data = constraint.constraint_data
             
@@ -820,7 +852,8 @@ class WorkerScheduler:
             return True  # Default to satisfied for safety
 
     async def _get_current_resource_usage(self, resource_type: str) -> float:
-        """Get current resource usage across all workers"""        try:
+        """Get current resource usage across all workers"""
+        try:
             total_usage = 0.0
             
             for capacity in self.worker_capacities.values():
@@ -838,7 +871,8 @@ class WorkerScheduler:
             return 0.0
 
     async def _estimate_task_duration(self, task: CrawlerTask) -> float:
-        """Estimate task duration using historical data"""        try:
+        """Estimate task duration using historical data"""
+        try:
             # Use prediction engine
             predicted_duration = await self.prediction_engine.predict_task_duration(
                 task.platform,

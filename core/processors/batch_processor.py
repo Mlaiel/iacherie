@@ -12,7 +12,8 @@ distribution, or commercialization without explicit written permission is
 strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import json
@@ -56,7 +57,8 @@ logger = logging.getLogger(__name__)
 
 
 class BatchType(str, Enum):
-    """Types of batch operations"""    BULK_UPLOAD = "bulk_upload"
+    """Types of batch operations"""
+    BULK_UPLOAD = "bulk_upload"
     BULK_ANALYSIS = "bulk_analysis"
     BULK_ENHANCEMENT = "bulk_enhancement"
     BULK_PROTECTION = "bulk_protection"
@@ -71,7 +73,8 @@ class BatchType(str, Enum):
 
 
 class BatchStatus(str, Enum):
-    """Batch operation status"""    PENDING = "pending"
+    """Batch operation status"""
+    PENDING = "pending"
     PREPARING = "preparing"
     RUNNING = "running"
     PAUSED = "paused"
@@ -82,14 +85,16 @@ class BatchStatus(str, Enum):
 
 
 class BatchPriority(str, Enum):
-    """Batch processing priority"""    LOW = "low"
+    """Batch processing priority"""
+    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
 
 
 class ProcessingStrategy(str, Enum):
-    """Batch processing strategies"""    SEQUENTIAL = "sequential"
+    """Batch processing strategies"""
+    SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     ADAPTIVE = "adaptive"
     STREAMING = "streaming"
@@ -98,7 +103,8 @@ class ProcessingStrategy(str, Enum):
 
 @dataclass
 class BatchProcessingConfig:
-    """Configuration for batch processing"""    # Processing strategy
+    """Configuration for batch processing"""
+    # Processing strategy
     default_strategy: ProcessingStrategy = ProcessingStrategy.PARALLEL
     max_parallel_jobs: int = 4
     max_concurrent_batches: int = 2
@@ -138,7 +144,8 @@ class BatchProcessingConfig:
 
 @dataclass
 class BatchItem:
-    """Individual item in a batch"""    item_id: str
+    """Individual item in a batch"""
+    item_id: str
     content_path: Optional[str] = None
     content_data: Optional[bytes] = None
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -154,7 +161,8 @@ class BatchItem:
 
 @dataclass
 class BatchJob:
-    """Batch processing job"""    batch_id: str
+    """Batch processing job"""
+    batch_id: str
     batch_type: BatchType
     name: Optional[str] = None
     description: Optional[str] = None
@@ -205,7 +213,8 @@ class BatchJob:
 
 @dataclass
 class BatchReport:
-    """Batch processing report"""    batch_id: str
+    """Batch processing report"""
+    batch_id: str
     batch_name: Optional[str] = None
     execution_summary: Dict[str, Any] = field(default_factory=dict)
     performance_metrics: Dict[str, Any] = field(default_factory=dict)
@@ -217,11 +226,13 @@ class BatchReport:
 
 
 class BatchProcessor:
-    """    🔄 ENTERPRISE BATCH PROCESSOR
+    """
+    🔄 ENTERPRISE BATCH PROCESSOR
     
     Industrial-grade batch processing engine with advanced scheduling,
     parallel processing, and comprehensive monitoring capabilities.
-    """    
+    """
+    
     def __init__(
         self,
         db_session,
@@ -271,7 +282,8 @@ class BatchProcessor:
             self.logger.warning("Parallel processing not available")
     
     async def initialize(self) -> bool:
-        """Initialize the batch processor"""        try:
+        """Initialize the batch processor"""
+        try:
             # Initialize content processor
             self.content_processor = ContentProcessor(
                 db_session=self.db_session,
@@ -310,7 +322,8 @@ class BatchProcessor:
         strategy: Optional[ProcessingStrategy] = None,
         options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Create a new batch processing job
+        """
+        Create a new batch processing job
         
         Args:
             batch_type: Type of batch operation
@@ -323,7 +336,8 @@ class BatchProcessor:
             
         Returns:
             Batch creation result
-        """        try:
+        """
+        try:
             if not self._initialized:
                 await self.initialize()
             
@@ -379,7 +393,8 @@ class BatchProcessor:
             }
     
     async def get_batch_status(self, batch_id: str) -> Dict[str, Any]:
-        """Get status of a batch job"""        try:
+        """Get status of a batch job"""
+        try:
             if batch_id not in self._active_batches:
                 return {
                     "success": False,
@@ -422,7 +437,8 @@ class BatchProcessor:
             }
     
     async def cancel_batch(self, batch_id: str) -> Dict[str, Any]:
-        """Cancel a batch job"""        try:
+        """Cancel a batch job"""
+        try:
             if batch_id not in self._active_batches:
                 return {
                     "success": False,
@@ -454,7 +470,8 @@ class BatchProcessor:
             }
     
     async def pause_batch(self, batch_id: str) -> Dict[str, Any]:
-        """Pause a batch job"""        try:
+        """Pause a batch job"""
+        try:
             if batch_id not in self._active_batches:
                 return {
                     "success": False,
@@ -483,7 +500,8 @@ class BatchProcessor:
             }
     
     async def resume_batch(self, batch_id: str) -> Dict[str, Any]:
-        """Resume a paused batch job"""        try:
+        """Resume a paused batch job"""
+        try:
             if batch_id not in self._active_batches:
                 return {
                     "success": False,
@@ -512,7 +530,8 @@ class BatchProcessor:
             }
     
     async def get_batch_report(self, batch_id: str) -> Dict[str, Any]:
-        """Generate comprehensive batch report"""        try:
+        """Generate comprehensive batch report"""
+        try:
             if batch_id not in self._active_batches:
                 return {
                     "success": False,
@@ -541,7 +560,8 @@ class BatchProcessor:
         status_filter: Optional[BatchStatus] = None,
         limit: int = 50
     ) -> Dict[str, Any]:
-        """List batch jobs with optional filtering"""        try:
+        """List batch jobs with optional filtering"""
+        try:
             batches = []
             
             for batch in self._active_batches.values():
@@ -577,7 +597,8 @@ class BatchProcessor:
             }
     
     async def _start_workers(self):
-        """Start batch processing workers"""        try:
+        """Start batch processing workers"""
+        try:
             # Start batch workers
             for i in range(self.config.max_concurrent_batches):
                 worker_task = asyncio.create_task(
@@ -592,7 +613,8 @@ class BatchProcessor:
             raise
     
     async def _batch_worker(self, worker_id: str):
-        """Worker loop for processing batches"""        while not self._shutdown_event.is_set():
+        """Worker loop for processing batches"""
+        while not self._shutdown_event.is_set():
             try:
                 # Get batch from queue
                 batch = await asyncio.wait_for(
@@ -611,7 +633,8 @@ class BatchProcessor:
                 await asyncio.sleep(1)
     
     async def _process_batch(self, batch: BatchJob, worker_id: str):
-        """Process a complete batch"""        try:
+        """Process a complete batch"""
+        try:
             batch.status = BatchStatus.RUNNING
             batch.started_at = datetime.now()
             
@@ -648,7 +671,8 @@ class BatchProcessor:
                 batch.total_processing_time = (batch.completed_at - batch.started_at).total_seconds()
     
     async def _process_sequential(self, batch: BatchJob):
-        """Process batch items sequentially"""        try:
+        """Process batch items sequentially"""
+        try:
             for i, item in enumerate(batch.items):
                 if batch.status == BatchStatus.CANCELLED:
                     break
@@ -667,7 +691,8 @@ class BatchProcessor:
             raise
     
     async def _process_parallel(self, batch: BatchJob):
-        """Process batch items in parallel"""        try:
+        """Process batch items in parallel"""
+        try:
             semaphore = asyncio.Semaphore(self.config.max_parallel_jobs)
             
             async def process_with_semaphore(item):
@@ -705,7 +730,8 @@ class BatchProcessor:
             raise
     
     async def _process_adaptive(self, batch: BatchJob):
-        """Process batch with adaptive strategy based on resource usage"""        try:
+        """Process batch with adaptive strategy based on resource usage"""
+        try:
             # Start with sequential and adapt based on resource usage
             current_parallel = 1
             max_parallel = self.config.max_parallel_jobs
@@ -750,7 +776,8 @@ class BatchProcessor:
             raise
     
     async def _process_chunked(self, batch: BatchJob):
-        """Process batch in chunks"""        try:
+        """Process batch in chunks"""
+        try:
             chunk_size = self.config.chunk_size
             total_items = len(batch.items)
             
@@ -787,7 +814,8 @@ class BatchProcessor:
             raise
     
     async def _process_item(self, batch: BatchJob, item: BatchItem):
-        """Process a single batch item"""        start_time = time.time()
+        """Process a single batch item"""
+        start_time = time.time()
         
         try:
             item.status = "processing"
@@ -855,7 +883,8 @@ class BatchProcessor:
             batch.processed_items += 1
     
     async def _update_batch_progress(self, batch: BatchJob, completed_items: int):
-        """Update batch progress and statistics"""        try:
+        """Update batch progress and statistics"""
+        try:
             batch.processed_items = completed_items
             batch.progress_percentage = (completed_items / batch.total_items) * 100
             
@@ -896,7 +925,8 @@ class BatchProcessor:
         current_parallel: int,
         max_parallel: int
     ) -> int:
-        """Calculate optimal parallelism based on resource usage"""        try:
+        """Calculate optimal parallelism based on resource usage"""
+        try:
             memory_usage = self._resource_monitor["memory_usage"]
             cpu_usage = self._resource_monitor["cpu_usage"]
             
@@ -916,7 +946,8 @@ class BatchProcessor:
             return current_parallel
     
     async def _finalize_batch(self, batch: BatchJob):
-        """Finalize batch processing"""        try:
+        """Finalize batch processing"""
+        try:
             # Determine final status
             if batch.status != BatchStatus.CANCELLED:
                 if batch.failed_items == 0:
@@ -967,7 +998,8 @@ class BatchProcessor:
             self.logger.error(f"Batch finalization failed: {e}")
     
     async def _generate_results_summary(self, batch: BatchJob) -> Dict[str, Any]:
-        """Generate batch results summary"""        try:
+        """Generate batch results summary"""
+        try:
             summary = {
                 "execution": {
                     "total_items": batch.total_items,
@@ -995,7 +1027,8 @@ class BatchProcessor:
             return {}
     
     async def _analyze_batch_quality(self, batch: BatchJob) -> Dict[str, Any]:
-        """Analyze quality metrics for the batch"""        try:
+        """Analyze quality metrics for the batch"""
+        try:
             quality_scores = []
             
             for item in batch.items:
@@ -1022,7 +1055,8 @@ class BatchProcessor:
             return {}
     
     async def _analyze_batch_errors(self, batch: BatchJob) -> Dict[str, Any]:
-        """Analyze error patterns in the batch"""        try:
+        """Analyze error patterns in the batch"""
+        try:
             error_types = defaultdict(int)
             error_messages = []
             
@@ -1054,7 +1088,8 @@ class BatchProcessor:
             return {}
     
     async def _calculate_quality_distribution(self, quality_scores: List[float]) -> Dict[str, int]:
-        """Calculate quality score distribution"""        try:
+        """Calculate quality score distribution"""
+        try:
             distribution = {
                 "excellent": 0,  # 0.9-1.0
                 "good": 0,       # 0.7-0.9
@@ -1079,7 +1114,8 @@ class BatchProcessor:
             return {}
     
     async def _generate_batch_report(self, batch: BatchJob) -> BatchReport:
-        """Generate comprehensive batch report"""        try:
+        """Generate comprehensive batch report"""
+        try:
             report = BatchReport(
                 batch_id=batch.batch_id,
                 batch_name=batch.name,
@@ -1108,7 +1144,8 @@ class BatchProcessor:
             return BatchReport(batch_id=batch.batch_id)
     
     async def _generate_recommendations(self, batch: BatchJob) -> List[str]:
-        """Generate recommendations based on batch results"""        try:
+        """Generate recommendations based on batch results"""
+        try:
             recommendations = []
             
             # Performance recommendations
@@ -1144,7 +1181,8 @@ class BatchProcessor:
             return []
     
     async def _save_batch_results(self, batch: BatchJob):
-        """Save batch results to file"""        try:
+        """Save batch results to file"""
+        try:
             if not self.config.output_directory:
                 return
             
@@ -1182,7 +1220,8 @@ class BatchProcessor:
             self.logger.error(f"Batch results saving failed: {e}")
     
     async def _save_batch_report(self, batch: BatchJob, report: BatchReport):
-        """Save batch report to file"""        try:
+        """Save batch report to file"""
+        try:
             if not self.config.output_directory:
                 return
             
@@ -1198,14 +1237,16 @@ class BatchProcessor:
             self.logger.error(f"Batch report saving failed: {e}")
     
     async def _cleanup_batch_temp_files(self, batch: BatchJob):
-        """Clean up temporary files created during batch processing"""        try:
+        """Clean up temporary files created during batch processing"""
+        try:
             # Placeholder for temp file cleanup
             pass
         except Exception as e:
             self.logger.error(f"Temp file cleanup failed: {e}")
     
     async def _monitor_resources(self):
-        """Monitor system resources"""        while not self._shutdown_event.is_set():
+        """Monitor system resources"""
+        while not self._shutdown_event.is_set():
             try:
                 # Monitor memory usage (placeholder)
                 self._resource_monitor["memory_usage"] = 0.5  # Simulated
@@ -1223,7 +1264,8 @@ class BatchProcessor:
                 await asyncio.sleep(5)
     
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get batch processor statistics"""        return {
+        """Get batch processor statistics"""
+        return {
             "batch_stats": self._stats,
             "resource_usage": self._resource_monitor,
             "active_batches": len(self._active_batches),
@@ -1231,7 +1273,8 @@ class BatchProcessor:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on the batch processor"""        health_status = {
+        """Perform health check on the batch processor"""
+        health_status = {
             "status": "healthy" if self._initialized else "not_initialized",
             "batch_libs_available": BATCH_LIBS_AVAILABLE,
             "parallel_processing_available": PARALLEL_PROCESSING_AVAILABLE,
@@ -1250,7 +1293,8 @@ class BatchProcessor:
         return health_status
     
     async def shutdown(self):
-        """Gracefully shutdown the batch processor"""        try:
+        """Gracefully shutdown the batch processor"""
+        try:
             self._shutdown_event.set()
             
             # Cancel all worker tasks
@@ -1279,7 +1323,8 @@ async def create_batch_processor(
     redis_client,
     config: Optional[Dict[str, Any]] = None
 ) -> BatchProcessor:
-    """    Factory function to create and initialize a batch processor
+    """
+    Factory function to create and initialize a batch processor
     
     Args:
         db_session: Database session
@@ -1288,7 +1333,8 @@ async def create_batch_processor(
         
     Returns:
         Initialized BatchProcessor instance
-    """    # Create config from dict if provided
+    """
+    # Create config from dict if provided
     processor_config = None
     if config:
         processor_config = BatchProcessingConfig(**{

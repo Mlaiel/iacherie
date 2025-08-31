@@ -27,7 +27,8 @@ Team Specialties & Expertise:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
@@ -49,11 +50,13 @@ from . import (
 
 
 class NotificationAgentFacade:
-    """    Simplified facade for the complete notification system
+    """
+    Simplified facade for the complete notification system
     
     Provides easy-to-use interfaces for common notification operations
     while maintaining access to advanced functionality when needed.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self._initialized = False
@@ -70,7 +73,8 @@ class NotificationAgentFacade:
         self.notification_agent = None
     
     async def initialize(self):
-        """Initialize all notification system components"""        if self._initialized:
+        """Initialize all notification system components"""
+        if self._initialized:
             return
         
         try:
@@ -134,7 +138,8 @@ class NotificationAgentFacade:
         channels: Optional[List[str]] = None,
         priority: str = "medium"
     ) -> Dict[str, Any]:
-        """        Send a simple notification with intelligent defaults
+        """
+        Send a simple notification with intelligent defaults
         
         Args:
             user_id: Target user ID
@@ -145,7 +150,8 @@ class NotificationAgentFacade:
             
         Returns:
             Notification result with delivery status
-        """        await self._ensure_initialized()
+        """
+        await self._ensure_initialized()
         
         try:
             # Create notification model
@@ -191,7 +197,8 @@ class NotificationAgentFacade:
         event_type: str,
         event_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Trigger a business event that may result in notifications
+        """
+        Trigger a business event that may result in notifications
         
         Args:
             user_id: User ID
@@ -200,7 +207,8 @@ class NotificationAgentFacade:
             
         Returns:
             Event processing result
-        """        await self._ensure_initialized()
+        """
+        await self._ensure_initialized()
         
         try:
             from .event_manager import NotificationEvent, EventPriority
@@ -242,7 +250,8 @@ class NotificationAgentFacade:
         workflow_type: str,
         trigger_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Start a notification workflow for a user
+        """
+        Start a notification workflow for a user
         
         Args:
             user_id: Target user ID
@@ -251,7 +260,8 @@ class NotificationAgentFacade:
             
         Returns:
             Workflow execution details
-        """        await self._ensure_initialized()
+        """
+        await self._ensure_initialized()
         
         try:
             # Map workflow types to built-in workflows
@@ -282,7 +292,8 @@ class NotificationAgentFacade:
             return {'success': False, 'error': str(e)}
     
     async def get_user_preferences(self, user_id: str) -> Dict[str, Any]:
-        """Get user notification preferences"""        await self._ensure_initialized()
+        """Get user notification preferences"""
+        await self._ensure_initialized()
         
         try:
             profile = await self.subscription_manager.get_user_profile(user_id)
@@ -310,7 +321,8 @@ class NotificationAgentFacade:
             return {'error': str(e)}
     
     async def get_system_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive system performance metrics"""        await self._ensure_initialized()
+        """Get comprehensive system performance metrics"""
+        await self._ensure_initialized()
         
         try:
             from .analytics_engine import MetricType, AnalyticsTimeframe
@@ -353,7 +365,8 @@ class NotificationAgentFacade:
             return {'error': str(e)}
     
     async def _ensure_initialized(self):
-        """Ensure system is initialized before use"""        if not self._initialized:
+        """Ensure system is initialized before use"""
+        if not self._initialized:
             await self.initialize()
 
 
@@ -368,13 +381,15 @@ async def send_quick_notification(
     notification_type: str = "general",
     priority: str = "medium"
 ) -> Dict[str, Any]:
-    """Quick notification sending function"""    return await notification_system.send_notification(
+    """Quick notification sending function"""
+    return await notification_system.send_notification(
         user_id, message, notification_type, priority=priority
     )
 
 
 async def trigger_content_upload_workflow(user_id: str, content_data: Dict[str, Any]):
-    """Trigger content upload workflow"""    return await notification_system.trigger_business_event(
+    """Trigger content upload workflow"""
+    return await notification_system.trigger_business_event(
         user_id, 'content_uploaded', {
             'business_context': {'upload_status': 'success'},
             'content_metadata': content_data
@@ -383,7 +398,8 @@ async def trigger_content_upload_workflow(user_id: str, content_data: Dict[str, 
 
 
 async def trigger_protection_alert(user_id: str, protection_data: Dict[str, Any]):
-    """Trigger content protection alert"""    return await notification_system.trigger_business_event(
+    """Trigger content protection alert"""
+    return await notification_system.trigger_business_event(
         user_id, 'infringement_alert', {
             'business_context': {'confidence_score': protection_data.get('confidence', 0.9)},
             'content_metadata': protection_data
@@ -392,7 +408,8 @@ async def trigger_protection_alert(user_id: str, protection_data: Dict[str, Any]
 
 
 async def notify_collaboration_match(user_id: str, match_data: Dict[str, Any]):
-    """Notify about collaboration match"""    return await notification_system.trigger_business_event(
+    """Notify about collaboration match"""
+    return await notification_system.trigger_business_event(
         user_id, 'collaboration_match_found', {
             'collaboration_data': match_data
         }
@@ -400,7 +417,8 @@ async def notify_collaboration_match(user_id: str, match_data: Dict[str, Any]):
 
 
 async def notify_revenue_opportunity(user_id: str, revenue_data: Dict[str, Any]):
-    """Notify about revenue opportunity"""    return await notification_system.trigger_business_event(
+    """Notify about revenue opportunity"""
+    return await notification_system.trigger_business_event(
         user_id, 'revenue_opportunity', {
             'monetization_data': revenue_data
         }

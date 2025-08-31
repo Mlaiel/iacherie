@@ -3,7 +3,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Simple copyright detection module for content protection.
-"""import logging
+"""
+import logging
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass
 from enum import Enum
@@ -11,28 +12,32 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class DetectionResult(Enum):
-    """Copyright detection results"""    CLEAR = "clear"
+    """Copyright detection results"""
+    CLEAR = "clear"
     POTENTIAL_MATCH = "potential_match"
     COPYRIGHT_VIOLATION = "copyright_violation"
     INSUFFICIENT_DATA = "insufficient_data"
 
 @dataclass
 class CopyrightMatch:
-    """Copyright match information"""    similarity_score: float
+    """Copyright match information"""
+    similarity_score: float
     matched_content_id: str
     confidence: float
     description: str
     violation_type: str = "unknown"
 
 class CopyrightDetector:
-    """Simple copyright detector"""    
+    """Simple copyright detector"""
+    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.threshold = 0.8
         self.logger.info("CopyrightDetector initialized")
     
     def detect_copyright(self, content: Any, content_type: str = "unknown") -> Dict[str, Any]:
-        """Detect copyright violations in content"""        try:
+        """Detect copyright violations in content"""
+        try:
             # Simple mock detection
             result = {
                 'result': DetectionResult.CLEAR.value,
@@ -58,16 +63,20 @@ class CopyrightDetector:
             }
     
     def check_audio_copyright(self, audio_data: Any) -> Dict[str, Any]:
-        """Check audio for copyright violations"""        return self.detect_copyright(audio_data, "audio")
+        """Check audio for copyright violations"""
+        return self.detect_copyright(audio_data, "audio")
     
     def check_video_copyright(self, video_data: Any) -> Dict[str, Any]:
-        """Check video for copyright violations"""        return self.detect_copyright(video_data, "video")
+        """Check video for copyright violations"""
+        return self.detect_copyright(video_data, "video")
     
     def check_image_copyright(self, image_data: Any) -> Dict[str, Any]:
-        """Check image for copyright violations"""        return self.detect_copyright(image_data, "image")
+        """Check image for copyright violations"""
+        return self.detect_copyright(image_data, "image")
     
     def check_text_copyright(self, text_data: str) -> Dict[str, Any]:
-        """Check text for copyright violations"""        return self.detect_copyright(text_data, "text")
+        """Check text for copyright violations"""
+        return self.detect_copyright(text_data, "text")
 
 # Export main class
 __all__ = ['CopyrightDetector', 'DetectionResult', 'CopyrightMatch']

@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -31,7 +32,8 @@ from .revenue_calculator import Currency
 
 
 class PlatformType(Enum):
-    """Supported monetization platforms"""    YOUTUBE = "youtube"
+    """Supported monetization platforms"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     SPOTIFY = "spotify"
@@ -45,7 +47,8 @@ class PlatformType(Enum):
 
 
 class APIStatus(Enum):
-    """API connection status"""    ACTIVE = "active"
+    """API connection status"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
     RATE_LIMITED = "rate_limited"
@@ -54,7 +57,8 @@ class APIStatus(Enum):
 
 
 class DataType(Enum):
-    """Types of data to sync"""    REVENUE = "revenue"
+    """Types of data to sync"""
+    REVENUE = "revenue"
     ANALYTICS = "analytics"
     AUDIENCE = "audience"
     CONTENT = "content"
@@ -64,7 +68,8 @@ class DataType(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform API credentials"""    platform: PlatformType
+    """Platform API credentials"""
+    platform: PlatformType
     client_id: str
     client_secret: str
     access_token: str
@@ -77,7 +82,8 @@ class PlatformCredentials:
 
 @dataclass
 class APIResponse:
-    """Standardized API response"""    platform: PlatformType
+    """Standardized API response"""
+    platform: PlatformType
     data_type: DataType
     data: Dict[str, Any]
     timestamp: datetime
@@ -89,7 +95,8 @@ class APIResponse:
 
 @dataclass
 class RevenueData:
-    """Platform revenue data"""    platform: PlatformType
+    """Platform revenue data"""
+    platform: PlatformType
     user_id: str
     content_id: str
     revenue_amount: Decimal
@@ -105,7 +112,8 @@ class RevenueData:
 
 @dataclass
 class AnalyticsData:
-    """Platform analytics data"""    platform: PlatformType
+    """Platform analytics data"""
+    platform: PlatformType
     user_id: str
     content_id: str
     views: int
@@ -120,19 +128,23 @@ class AnalyticsData:
 
 
 class PlatformAPIs:
-    """    Professional platform API integration engine for IA Influencer Agent.
+    """
+    Professional platform API integration engine for IA Influencer Agent.
     
     Provides unified access to multiple monetization platforms,
     real-time data synchronization, and comprehensive revenue tracking
     across all major content platforms.
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, redis_client: Redis):
-        """        Initialize PlatformAPIs.
+        """
+        Initialize PlatformAPIs.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
-        """        self.db_session = db_session
+        """
+        self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
         
@@ -187,18 +199,21 @@ class PlatformAPIs:
         self.http_session = None
     
     async def __aenter__(self):
-        """Async context manager entry"""        self.http_session = aiohttp.ClientSession(
+        """Async context manager entry"""
+        self.http_session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=self.request_timeout)
         )
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""        if self.http_session:
+        """Async context manager exit"""
+        if self.http_session:
             await self.http_session.close()
     
     async def connect_platform(self, user_id: str, platform: PlatformType,
                              auth_code: str) -> bool:
-        """        Connect user account to platform.
+        """
+        Connect user account to platform.
         
         Args:
             user_id: User identifier
@@ -207,7 +222,8 @@ class PlatformAPIs:
             
         Returns:
             Connection success status
-        """        try:
+        """
+        try:
             # Exchange auth code for access token
             credentials = await self._exchange_auth_code(platform, auth_code, user_id)
             
@@ -235,7 +251,8 @@ class PlatformAPIs:
     
     async def sync_revenue_data(self, user_id: str, platform: PlatformType,
                               days_back: int = 30) -> List[RevenueData]:
-        """        Synchronize revenue data from platform.
+        """
+        Synchronize revenue data from platform.
         
         Args:
             user_id: User identifier
@@ -244,7 +261,8 @@ class PlatformAPIs:
             
         Returns:
             List of revenue data records
-        """        try:
+        """
+        try:
             # Get user credentials
             credentials = await self._get_credentials(user_id, platform)
             if not credentials:
@@ -281,7 +299,8 @@ class PlatformAPIs:
     
     async def sync_analytics_data(self, user_id: str, platform: PlatformType,
                                 days_back: int = 30) -> List[AnalyticsData]:
-        """        Synchronize analytics data from platform.
+        """
+        Synchronize analytics data from platform.
         
         Args:
             user_id: User identifier
@@ -290,7 +309,8 @@ class PlatformAPIs:
             
         Returns:
             List of analytics data records
-        """        try:
+        """
+        try:
             # Get user credentials
             credentials = await self._get_credentials(user_id, platform)
             if not credentials:
@@ -326,7 +346,8 @@ class PlatformAPIs:
             return []
     
     async def get_real_time_metrics(self, user_id: str, platform: PlatformType) -> Dict[str, Any]:
-        """        Get real-time metrics from platform.
+        """
+        Get real-time metrics from platform.
         
         Args:
             user_id: User identifier
@@ -334,7 +355,8 @@ class PlatformAPIs:
             
         Returns:
             Real-time metrics data
-        """        try:
+        """
+        try:
             # Check cache first
             cache_key = f"realtime_metrics:{user_id}:{platform.value}"
             cached_data = await self._get_from_cache(cache_key)
@@ -359,11 +381,13 @@ class PlatformAPIs:
             return {}
     
     async def refresh_access_tokens(self) -> Dict[str, bool]:
-        """        Refresh access tokens for all connected platforms.
+        """
+        Refresh access tokens for all connected platforms.
         
         Returns:
             Dictionary of platform refresh results
-        """        try:
+        """
+        try:
             results = {}
             
             # Get all stored credentials
@@ -397,14 +421,16 @@ class PlatformAPIs:
             return {}
     
     async def get_platform_status(self, user_id: str) -> Dict[str, Dict]:
-        """        Get connection status for all platforms.
+        """
+        Get connection status for all platforms.
         
         Args:
             user_id: User identifier
             
         Returns:
             Platform status information
-        """        try:
+        """
+        try:
             status = {}
             
             for platform in PlatformType:
@@ -445,7 +471,8 @@ class PlatformAPIs:
             return {}
     
     async def disconnect_platform(self, user_id: str, platform: PlatformType) -> bool:
-        """        Disconnect user from platform.
+        """
+        Disconnect user from platform.
         
         Args:
             user_id: User identifier
@@ -453,7 +480,8 @@ class PlatformAPIs:
             
         Returns:
             Disconnection success status
-        """        try:
+        """
+        try:
             # Get credentials
             credentials = await self._get_credentials(user_id, platform)
             if not credentials:
@@ -479,7 +507,8 @@ class PlatformAPIs:
     
     async def _exchange_auth_code(self, platform: PlatformType, auth_code: str,
                                 user_id: str) -> PlatformCredentials:
-        """Exchange authorization code for access token"""        config = self.platform_configs[platform]
+        """Exchange authorization code for access token"""
+        config = self.platform_configs[platform]
         
         token_data = {
             'grant_type': 'authorization_code',
@@ -509,7 +538,8 @@ class PlatformAPIs:
     
     async def _sync_youtube_revenue(self, credentials: PlatformCredentials,
                                   days_back: int) -> List[RevenueData]:
-        """Sync YouTube revenue data"""        revenue_data = []
+        """Sync YouTube revenue data"""
+        revenue_data = []
         
         # Calculate date range
         end_date = datetime.utcnow()
@@ -551,7 +581,8 @@ class PlatformAPIs:
     
     async def _sync_instagram_revenue(self, credentials: PlatformCredentials,
                                     days_back: int) -> List[RevenueData]:
-        """Sync Instagram revenue data"""        revenue_data = []
+        """Sync Instagram revenue data"""
+        revenue_data = []
         
         # Instagram Business API for monetization insights
         # Implementation would depend on specific Instagram Business API endpoints
@@ -560,7 +591,8 @@ class PlatformAPIs:
     
     async def _sync_tiktok_revenue(self, credentials: PlatformCredentials,
                                  days_back: int) -> List[RevenueData]:
-        """Sync TikTok revenue data"""        revenue_data = []
+        """Sync TikTok revenue data"""
+        revenue_data = []
         
         # TikTok Creator Fund API
         # Implementation would depend on TikTok Creator API endpoints
@@ -569,7 +601,8 @@ class PlatformAPIs:
     
     async def _sync_spotify_revenue(self, credentials: PlatformCredentials,
                                   days_back: int) -> List[RevenueData]:
-        """Sync Spotify revenue data"""        revenue_data = []
+        """Sync Spotify revenue data"""
+        revenue_data = []
         
         # Spotify for Artists API
         # Implementation would use Spotify's streaming and revenue APIs
@@ -577,7 +610,8 @@ class PlatformAPIs:
         return revenue_data
     
     async def _check_rate_limit(self, platform: PlatformType) -> bool:
-        """Check if platform rate limit allows request"""        cache_key = f"rate_limit:{platform.value}"
+        """Check if platform rate limit allows request"""
+        cache_key = f"rate_limit:{platform.value}"
         current_count = await self.redis.get(cache_key) or 0
         
         config = self.platform_configs[platform]
@@ -586,7 +620,8 @@ class PlatformAPIs:
         return int(current_count) < (limit * (1 - self.rate_limit_buffer))
     
     async def _update_rate_limit(self, platform: PlatformType):
-        """Update rate limit counter"""        cache_key = f"rate_limit:{platform.value}"
+        """Update rate limit counter"""
+        cache_key = f"rate_limit:{platform.value}"
         config = self.platform_configs[platform]
         
         # Increment counter with expiration
@@ -594,7 +629,8 @@ class PlatformAPIs:
         await self.redis.expire(cache_key, config['rate_window'])
     
     async def _get_credentials(self, user_id: str, platform: PlatformType) -> Optional[PlatformCredentials]:
-        """Get stored credentials for user and platform"""        cache_key = f"credentials:{user_id}:{platform.value}"
+        """Get stored credentials for user and platform"""
+        cache_key = f"credentials:{user_id}:{platform.value}"
         
         # Try cache first
         cached_creds = await self._get_from_cache(cache_key)
@@ -606,7 +642,8 @@ class PlatformAPIs:
         return None
     
     async def _store_credentials(self, user_id: str, credentials: PlatformCredentials):
-        """Store encrypted credentials"""        # Encrypt sensitive data
+        """Store encrypted credentials"""
+        # Encrypt sensitive data
         encrypted_token = self.cipher.encrypt(credentials.access_token.encode())
         encrypted_secret = self.cipher.encrypt(credentials.client_secret.encode())
         
@@ -615,39 +652,46 @@ class PlatformAPIs:
         await self._save_to_cache(cache_key, credentials.__dict__)
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
-        """Get data from cache"""        try:
+        """Get data from cache"""
+        try:
             cached_data = await self.redis.get(key)
             return json.loads(cached_data) if cached_data else None
         except:
             return None
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
-        """Save data to cache"""        try:
+        """Save data to cache"""
+        try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))
         except Exception as e:
             self.logger.warning(f"Cache save failed: {str(e)}")
     
     def _get_client_id(self, platform: PlatformType) -> str:
-        """Get client ID for platform"""        import os
+        """Get client ID for platform"""
+        import os
         return os.getenv(f"{platform.value.upper()}_CLIENT_ID", "")
     
     def _get_client_secret(self, platform: PlatformType) -> str:
-        """Get client secret for platform"""        import os
+        """Get client secret for platform"""
+        import os
         return os.getenv(f"{platform.value.upper()}_CLIENT_SECRET", "")
     
     def _get_redirect_uri(self, platform: PlatformType) -> str:
-        """Get redirect URI for platform"""        import os
+        """Get redirect URI for platform"""
+        import os
         base_url = os.getenv("APP_BASE_URL", "https://app.ia-influencer.com")
         return f"{base_url}/auth/callback/{platform.value}"
     
     # Additional helper methods would be implemented here...
     
     async def _validate_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Validate credentials"""        return bool(credentials.access_token and credentials.client_id)
+        """Validate credentials"""
+        return bool(credentials.access_token and credentials.client_id)
     
     async def _test_api_connection(self, credentials: PlatformCredentials) -> APIResponse:
-        """Test API connection with credentials"""        # Implementation would test API connection
+        """Test API connection with credentials"""
+        # Implementation would test API connection
         return APIResponse(
             platform=credentials.platform,
             data_type=DataType.ANALYTICS,
@@ -660,7 +704,8 @@ class PlatformAPIs:
         )
     
     async def _refresh_token(self, credentials: PlatformCredentials) -> Optional[PlatformCredentials]:
-        """Refresh access token"""        # Implementation would refresh token using refresh_token
+        """Refresh access token"""
+        # Implementation would refresh token using refresh_token
         return credentials
     
     # Additional methods for analytics sync, real-time metrics, etc. would be implemented...

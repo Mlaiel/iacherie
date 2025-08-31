@@ -19,7 +19,8 @@ Fraud Detection → Quality Assessment → Progress Verification → Approval/Re
 VALIDATION ARCHITECTURE:
 Input Sanitization → Business Rules → Compliance Engine → 
 Fraud Detection → Quality Gates → Performance Validation → Security Audit
-"""from typing import Dict, List, Optional, Any, Union, Callable, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, Callable, Tuple
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum
 from datetime import datetime, timedelta, timezone
@@ -31,14 +32,16 @@ import json
 from abc import ABC, abstractmethod
 
 class ValidationSeverity(Enum):
-    """Validation issue severity levels"""    INFO = "info"
+    """Validation issue severity levels"""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
     SECURITY = "security"
 
 class ValidationCategory(Enum):
-    """Validation categories"""    BUSINESS_RULES = "business_rules"
+    """Validation categories"""
+    BUSINESS_RULES = "business_rules"
     DATA_INTEGRITY = "data_integrity"
     SECURITY = "security"
     COMPLIANCE = "compliance"
@@ -48,7 +51,8 @@ class ValidationCategory(Enum):
     CONTENT_POLICY = "content_policy"
 
 class ValidationStatus(Enum):
-    """Validation result status"""    PENDING = "pending"
+    """Validation result status"""
+    PENDING = "pending"
     PASSED = "passed"
     FAILED = "failed"
     REQUIRES_REVIEW = "requires_review"
@@ -57,7 +61,8 @@ class ValidationStatus(Enum):
     REJECTED = "rejected"
 
 class FraudRiskLevel(Enum):
-    """Fraud risk assessment levels"""    MINIMAL = "minimal"
+    """Fraud risk assessment levels"""
+    MINIMAL = "minimal"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -65,7 +70,8 @@ class FraudRiskLevel(Enum):
 
 @dataclass
 class ValidationRule:
-    """Individual validation rule specification"""    rule_id: str
+    """Individual validation rule specification"""
+    rule_id: str
     rule_name: str
     description: str
     category: ValidationCategory
@@ -79,7 +85,8 @@ class ValidationRule:
     
 @dataclass
 class ValidationIssue:
-    """Individual validation issue"""    issue_id: str
+    """Individual validation issue"""
+    issue_id: str
     rule_id: str
     severity: ValidationSeverity
     category: ValidationCategory
@@ -92,7 +99,8 @@ class ValidationIssue:
 
 @dataclass
 class ValidationResult:
-    """Complete validation result"""    validation_id: str
+    """Complete validation result"""
+    validation_id: str
     status: ValidationStatus
     overall_score: float  # 0.0 to 100.0
     fraud_risk_level: FraudRiskLevel
@@ -107,9 +115,11 @@ class ValidationResult:
     validator_version: str = "1.0"
 
 class ComplianceChecker:
-    """Enterprise compliance validation system"""    
+    """Enterprise compliance validation system"""
+    
     def __init__(self):
-        """Initialize compliance checker"""        self.logger = logging.getLogger(__name__)
+        """Initialize compliance checker"""
+        self.logger = logging.getLogger(__name__)
         
         # Compliance frameworks
         self._compliance_frameworks = {
@@ -160,7 +170,8 @@ class ComplianceChecker:
     async def check_compliance(self, 
                              challenge_data: Dict[str, Any],
                              user_context: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform comprehensive compliance checking"""        try:
+        """Perform comprehensive compliance checking"""
+        try:
             compliance_results = {
                 "overall_compliant": True,
                 "framework_results": {},
@@ -215,7 +226,8 @@ class ComplianceChecker:
                                         requirements: Dict[str, Any],
                                         challenge_data: Dict[str, Any],
                                         user_context: Dict[str, Any]) -> Dict[str, Any]:
-        """Check compliance with specific framework"""        result = {
+        """Check compliance with specific framework"""
+        result = {
             "framework": framework,
             "compliant": True,
             "violations": [],
@@ -257,7 +269,8 @@ class ComplianceChecker:
         return result
     
     async def _check_content_policies(self, challenge_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check content policy compliance"""        result = {
+        """Check content policy compliance"""
+        result = {
             "compliant": True,
             "violations": [],
             "quality_score": 100.0
@@ -286,7 +299,8 @@ class ComplianceChecker:
         return result
     
     def _assess_compliance_risk(self, compliance_results: Dict[str, Any]) -> str:
-        """Assess overall compliance risk level"""        violations = len(compliance_results.get("policy_violations", []))
+        """Assess overall compliance risk level"""
+        violations = len(compliance_results.get("policy_violations", []))
         
         if violations == 0:
             return "minimal"
@@ -301,7 +315,8 @@ class ComplianceChecker:
     
     def _generate_compliance_recommendations(self, 
                                            compliance_results: Dict[str, Any]) -> List[str]:
-        """Generate compliance improvement recommendations"""        recommendations = []
+        """Generate compliance improvement recommendations"""
+        recommendations = []
         
         violations = compliance_results.get("policy_violations", [])
         
@@ -322,9 +337,11 @@ class ComplianceChecker:
         return list(set(recommendations))  # Remove duplicates
 
 class RequirementValidator:
-    """Challenge requirement validation system"""    
+    """Challenge requirement validation system"""
+    
     def __init__(self):
-        """Initialize requirement validator"""        self.logger = logging.getLogger(__name__)
+        """Initialize requirement validator"""
+        self.logger = logging.getLogger(__name__)
         
         # Validation thresholds
         self._thresholds = {
@@ -351,7 +368,8 @@ class RequirementValidator:
                                   challenge_requirements: List[Dict[str, Any]],
                                   user_progress: Dict[str, Any],
                                   context: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate challenge requirements against user progress"""        try:
+        """Validate challenge requirements against user progress"""
+        try:
             validation_results = {
                 "overall_valid": True,
                 "requirements_met": [],
@@ -424,7 +442,8 @@ class RequirementValidator:
                                    requirement: Dict[str, Any],
                                    current_value: Union[int, float],
                                    context: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate upload count requirement"""        target = requirement.get("target_value", 0)
+        """Validate upload count requirement"""
+        target = requirement.get("target_value", 0)
         is_met = current_value >= target
         
         # Check for suspicious activity
@@ -456,7 +475,8 @@ class RequirementValidator:
                                     requirement: Dict[str, Any],
                                     current_value: Union[int, float],
                                     context: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate quality score requirement"""        target = requirement.get("target_value", 0)
+        """Validate quality score requirement"""
+        target = requirement.get("target_value", 0)
         is_met = current_value >= target
         
         # Check minimum quality threshold
@@ -484,7 +504,8 @@ class RequirementValidator:
                                       requirement: Dict[str, Any],
                                       current_value: Union[int, float],
                                       context: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate engagement rate requirement"""        target = requirement.get("target_value", 0)
+        """Validate engagement rate requirement"""
+        target = requirement.get("target_value", 0)
         is_met = current_value >= target
         
         suspicious = False
@@ -516,7 +537,8 @@ class RequirementValidator:
                                           requirement: Dict[str, Any],
                                           current_value: Union[int, float],
                                           context: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate collaboration count requirement"""        target = requirement.get("target_value", 0)
+        """Validate collaboration count requirement"""
+        target = requirement.get("target_value", 0)
         is_met = current_value >= target
         
         suspicious = False
@@ -541,7 +563,8 @@ class RequirementValidator:
                                         requirement: Dict[str, Any],
                                         current_value: Union[int, float],
                                         context: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate revenue generation requirement"""        target = requirement.get("target_value", 0)
+        """Validate revenue generation requirement"""
+        target = requirement.get("target_value", 0)
         is_met = current_value >= target
         
         suspicious = False
@@ -573,7 +596,8 @@ class RequirementValidator:
                                  requirement: Dict[str, Any],
                                  current_value: Union[int, float],
                                  context: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate view count requirement"""        target = requirement.get("target_value", 0)
+        """Validate view count requirement"""
+        target = requirement.get("target_value", 0)
         is_met = current_value >= target
         
         suspicious = False
@@ -608,7 +632,8 @@ class RequirementValidator:
                                       requirement: Dict[str, Any],
                                       current_value: Union[int, float],
                                       context: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate completion time requirement"""        target = requirement.get("target_value", 0)
+        """Validate completion time requirement"""
+        target = requirement.get("target_value", 0)
         is_met = current_value <= target  # For time, lower is better
         
         suspicious = False
@@ -637,9 +662,11 @@ class RequirementValidator:
         }
 
 class ProgressValidator:
-    """Progress validation and tracking system"""    
+    """Progress validation and tracking system"""
+    
     def __init__(self):
-        """Initialize progress validator"""        self.logger = logging.getLogger(__name__)
+        """Initialize progress validator"""
+        self.logger = logging.getLogger(__name__)
         
         # Progress validation rules
         self._progress_rules = {
@@ -653,7 +680,8 @@ class ProgressValidator:
                                      current_progress: Dict[str, Any],
                                      new_progress: Dict[str, Any],
                                      context: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate progress update for anomalies and fraud"""        try:
+        """Validate progress update for anomalies and fraud"""
+        try:
             validation_result = {
                 "valid": True,
                 "issues": [],
@@ -717,7 +745,8 @@ class ProgressValidator:
                                          current_progress: Dict[str, Any],
                                          new_progress: Dict[str, Any],
                                          context: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate progress increment for suspicious jumps"""        current_percentage = current_progress.get("completion_percentage", 0.0)
+        """Validate progress increment for suspicious jumps"""
+        current_percentage = current_progress.get("completion_percentage", 0.0)
         new_percentage = new_progress.get("completion_percentage", 0.0)
         
         increment = new_percentage - current_percentage
@@ -751,7 +780,8 @@ class ProgressValidator:
                                       current_progress: Dict[str, Any],
                                       new_progress: Dict[str, Any],
                                       context: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate timing of progress updates"""        last_update = current_progress.get("last_updated")
+        """Validate timing of progress updates"""
+        last_update = current_progress.get("last_updated")
         current_time = datetime.now(timezone.utc)
         
         issues = []
@@ -790,7 +820,8 @@ class ProgressValidator:
                                            current_progress: Dict[str, Any],
                                            new_progress: Dict[str, Any],
                                            context: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate progress consistency with historical patterns"""        progress_history = context.get("progress_history", [])
+        """Validate progress consistency with historical patterns"""
+        progress_history = context.get("progress_history", [])
         
         confidence_score = 100.0
         fraud_indicators = []
@@ -850,7 +881,8 @@ class ProgressValidator:
         }
     
     def _generate_progress_recommendations(self, validation_result: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on validation results"""        recommendations = []
+        """Generate recommendations based on validation results"""
+        recommendations = []
         
         if validation_result.get("fraud_indicators"):
             recommendations.append("Flag for manual review due to fraud indicators")
@@ -867,13 +899,15 @@ class ProgressValidator:
         return recommendations
 
 class ChallengeValidator:
-    """Main challenge validation orchestrator"""    
+    """Main challenge validation orchestrator"""
+    
     def __init__(self,
                  analytics_service=None,
                  user_service=None,
                  content_service=None,
                  fraud_detection_service=None):
-        """Initialize challenge validator"""        self.analytics_service = analytics_service
+        """Initialize challenge validator"""
+        self.analytics_service = analytics_service
         self.user_service = user_service
         self.content_service = content_service
         self.fraud_detection_service = fraud_detection_service
@@ -889,7 +923,8 @@ class ChallengeValidator:
         self._validation_rules = self._initialize_validation_rules()
     
     def _initialize_validation_rules(self) -> List[ValidationRule]:
-        """Initialize comprehensive validation rules"""        return [
+        """Initialize comprehensive validation rules"""
+        return [
             ValidationRule(
                 rule_id="business_001",
                 rule_name="Challenge Title Length",
@@ -938,7 +973,8 @@ class ChallengeValidator:
     async def validate_challenge_submission(self, 
                                           challenge_data: Dict[str, Any],
                                           user_context: Dict[str, Any]) -> ValidationResult:
-        """Perform comprehensive challenge validation"""        start_time = datetime.now()
+        """Perform comprehensive challenge validation"""
+        start_time = datetime.now()
         validation_id = f"val_{int(start_time.timestamp())}"
         
         try:
@@ -1058,7 +1094,8 @@ class ChallengeValidator:
                                    challenge_data: Dict[str, Any],
                                    user_context: Dict[str, Any],
                                    parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate challenge title length"""        title = challenge_data.get("title", "")
+        """Validate challenge title length"""
+        title = challenge_data.get("title", "")
         min_length = parameters.get("min_length", 3)
         max_length = parameters.get("max_length", 100)
         
@@ -1084,7 +1121,8 @@ class ChallengeValidator:
                                        challenge_data: Dict[str, Any],
                                        user_context: Dict[str, Any],
                                        parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate content security"""        content = challenge_data.get("content", "")
+        """Validate content security"""
+        content = challenge_data.get("content", "")
         security_flags = []
         
         # Check for suspicious patterns
@@ -1119,7 +1157,8 @@ class ChallengeValidator:
                                          challenge_data: Dict[str, Any],
                                          user_context: Dict[str, Any],
                                          parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate progress for anomalies"""        progress_data = challenge_data.get("progress", {})
+        """Validate progress for anomalies"""
+        progress_data = challenge_data.get("progress", {})
         
         # Use progress validator
         if "current_progress" in user_context and "new_progress" in challenge_data:
@@ -1143,7 +1182,8 @@ class ChallengeValidator:
                                       challenge_data: Dict[str, Any],
                                       user_context: Dict[str, Any],
                                       parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate content quality standards"""        quality_score = challenge_data.get("content_quality_score", 0)
+        """Validate content quality standards"""
+        quality_score = challenge_data.get("content_quality_score", 0)
         
         if quality_score < 5.0:
             return {
@@ -1159,7 +1199,8 @@ class ChallengeValidator:
                                         challenge_data: Dict[str, Any],
                                         user_context: Dict[str, Any],
                                         parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate policy compliance"""        compliance_result = await self.compliance_checker.check_compliance(
+        """Validate policy compliance"""
+        compliance_result = await self.compliance_checker.check_compliance(
             challenge_data, user_context
         )
         
@@ -1178,7 +1219,8 @@ class ChallengeValidator:
     def _determine_validation_status(self, 
                                    issues: List[ValidationIssue],
                                    compliance_result: Dict[str, Any]) -> ValidationStatus:
-        """Determine overall validation status"""        # Check for critical issues
+        """Determine overall validation status"""
+        # Check for critical issues
         critical_issues = [i for i in issues if i.severity == ValidationSeverity.CRITICAL]
         if critical_issues:
             return ValidationStatus.FAILED
@@ -1213,7 +1255,8 @@ class ChallengeValidator:
                                passed_count: int,
                                failed_count: int,
                                issues: List[ValidationIssue]) -> float:
-        """Calculate overall validation score"""        total_rules = passed_count + failed_count
+        """Calculate overall validation score"""
+        total_rules = passed_count + failed_count
         if total_rules == 0:
             return 0.0
         
@@ -1237,7 +1280,8 @@ class ChallengeValidator:
     def _assess_fraud_risk(self, 
                           issues: List[ValidationIssue],
                           compliance_result: Dict[str, Any]) -> FraudRiskLevel:
-        """Assess fraud risk level"""        fraud_indicators = 0
+        """Assess fraud risk level"""
+        fraud_indicators = 0
         
         # Count fraud-related issues
         fraud_issues = [

@@ -12,7 +12,8 @@ This code, concept, and intellectual property are exclusively owned by Fahed Mla
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
 and will result in immediate legal action under German and International copyright laws.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -28,7 +29,8 @@ logger = get_logger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""    REAL_TIME = "real_time"
+    """Analytics timeframe options"""
+    REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -37,7 +39,8 @@ class AnalyticsTimeframe(Enum):
 
 
 class MetricCategory(Enum):
-    """Analytics metric categories"""    ENGAGEMENT = "engagement"
+    """Analytics metric categories"""
+    ENGAGEMENT = "engagement"
     REACH = "reach"
     GROWTH = "growth"
     REVENUE = "revenue"
@@ -47,7 +50,8 @@ class MetricCategory(Enum):
 
 @dataclass
 class AnalyticsMetric:
-    """Analytics metric data point"""    metric_id: str
+    """Analytics metric data point"""
+    metric_id: str
     creator_id: str
     platform: str
     category: MetricCategory
@@ -58,7 +62,8 @@ class AnalyticsMetric:
 
 
 class PlatformConnector:
-    """Platform API connector for analytics data"""    
+    """Platform API connector for analytics data"""
+    
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
@@ -68,7 +73,8 @@ class PlatformConnector:
         ]
     
     async def fetch_platform_analytics(self, creator_id: str, platform: str, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Fetch analytics data from specific platform"""        cache_key = f"platform_analytics:{creator_id}:{platform}:{timeframe.value}"
+        """Fetch analytics data from specific platform"""
+        cache_key = f"platform_analytics:{creator_id}:{platform}:{timeframe.value}"
         
         # Check cache first
         cached_data = await self.cache.get(cache_key)
@@ -84,7 +90,8 @@ class PlatformConnector:
         return platform_data
     
     async def _get_mock_platform_data(self, creator_id: str, platform: str, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Generate mock platform analytics data"""        base_data = {
+        """Generate mock platform analytics data"""
+        base_data = {
             'platform': platform,
             'timeframe': timeframe.value,
             'creator_id': creator_id,
@@ -127,14 +134,16 @@ class PlatformConnector:
 
 
 class DataAggregator:
-    """Multi-platform data aggregation engine"""    
+    """Multi-platform data aggregation engine"""
+    
     def __init__(self, platform_connector: PlatformConnector, cache_manager: CacheManager):
         self.platform_connector = platform_connector
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def aggregate_cross_platform_metrics(self, creator_id: str, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Aggregate metrics across all platforms"""        try:
+        """Aggregate metrics across all platforms"""
+        try:
             # Get connected platforms for creator
             connected_platforms = await self._get_connected_platforms(creator_id)
             
@@ -175,11 +184,13 @@ class DataAggregator:
             raise
     
     async def _get_connected_platforms(self, creator_id: str) -> List[str]:
-        """Get connected platforms for creator"""        # Mock connected platforms
+        """Get connected platforms for creator"""
+        # Mock connected platforms
         return ['youtube', 'instagram', 'tiktok']
     
     async def _calculate_cross_platform_metrics(self, platform_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate cross-platform aggregated metrics"""        metrics = {
+        """Calculate cross-platform aggregated metrics"""
+        metrics = {
             'average_engagement_rate': 0,
             'total_content_pieces': 0,
             'best_performing_platform': None,
@@ -234,13 +245,15 @@ class DataAggregator:
 
 
 class InsightGenerator:
-    """AI-powered insights and recommendations generator"""    
+    """AI-powered insights and recommendations generator"""
+    
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def generate_performance_insights(self, aggregated_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate performance insights from aggregated data"""        insights = []
+        """Generate performance insights from aggregated data"""
+        insights = []
         
         # Engagement insight
         avg_engagement = aggregated_data.get('cross_platform_metrics', {}).get('average_engagement_rate', 0)
@@ -300,7 +313,8 @@ class InsightGenerator:
         return insights
     
     async def generate_growth_predictions(self, historical_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate growth predictions based on historical data"""        # Mock growth predictions
+        """Generate growth predictions based on historical data"""
+        # Mock growth predictions
         return {
             'predicted_follower_growth': {
                 '30_days': 8.5,
@@ -323,11 +337,13 @@ class InsightGenerator:
 
 
 class AnalyticsAggregator:
-    """    Main analytics aggregator system
+    """
+    Main analytics aggregator system
     
     Orchestrates multi-platform data collection, aggregation, analysis,
     and insight generation to provide creators with comprehensive analytics.
-    """    
+    """
+    
     def __init__(self, profile_manager: CreatorProfileManager, cache_manager: CacheManager):
         self.profile_manager = profile_manager
         self.cache = cache_manager
@@ -339,7 +355,8 @@ class AnalyticsAggregator:
         self.insight_generator = InsightGenerator(cache_manager)
     
     async def get_comprehensive_analytics(self, creator_id: str, timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTHLY) -> Dict[str, Any]:
-        """        Get comprehensive analytics for creator
+        """
+        Get comprehensive analytics for creator
         
         Args:
             creator_id: Creator identifier
@@ -347,7 +364,8 @@ class AnalyticsAggregator:
             
         Returns:
             Complete analytics dashboard data
-        """        try:
+        """
+        try:
             # Get creator profile
             profile = await self.profile_manager.get_creator_profile(creator_id)
             if not profile:
@@ -389,7 +407,8 @@ class AnalyticsAggregator:
             raise
     
     async def _get_trending_metrics(self, creator_id: str) -> Dict[str, Any]:
-        """Get trending metrics and comparisons"""        return {
+        """Get trending metrics and comparisons"""
+        return {
             'engagement_trend': {
                 'direction': 'up',
                 'change_percentage': 15.7,
@@ -417,7 +436,8 @@ class AnalyticsAggregator:
         }
     
     async def export_analytics_data(self, creator_id: str, format_type: str = "json") -> Dict[str, Any]:
-        """Export analytics data in specified format"""        try:
+        """Export analytics data in specified format"""
+        try:
             # Get comprehensive analytics
             analytics_data = await self.get_comprehensive_analytics(creator_id)
             

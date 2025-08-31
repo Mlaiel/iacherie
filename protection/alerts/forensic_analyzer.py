@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Ultra-advanced forensic analysis engine for content protection incidents,
 digital evidence collection, chain of custody management, and legal documentation.
 Business Logic: Content violation → forensic investigation → evidence collection → legal action
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -45,7 +46,8 @@ logger = logging.getLogger(__name__)
 
 
 class EvidenceType(Enum):
-    """Types of digital evidence"""    SCREENSHOT = "screenshot"
+    """Types of digital evidence"""
+    SCREENSHOT = "screenshot"
     VIDEO_RECORDING = "video_recording"
     AUDIO_RECORDING = "audio_recording"
     NETWORK_LOGS = "network_logs"
@@ -58,7 +60,8 @@ class EvidenceType(Enum):
 
 
 class ForensicSeverity(Enum):
-    """Forensic investigation severity levels"""    ROUTINE = "routine"
+    """Forensic investigation severity levels"""
+    ROUTINE = "routine"
     ENHANCED = "enhanced"
     COMPREHENSIVE = "comprehensive"
     LEGAL_GRADE = "legal_grade"
@@ -67,7 +70,8 @@ class ForensicSeverity(Enum):
 
 @dataclass
 class DigitalEvidence:
-    """Comprehensive digital evidence model"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive digital evidence model"""
+    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     evidence_type: EvidenceType = EvidenceType.SCREENSHOT
     file_path: Optional[str] = None
     file_hash: Optional[str] = None
@@ -85,7 +89,8 @@ class DigitalEvidence:
 
 @dataclass
 class ForensicInvestigation:
-    """Comprehensive forensic investigation"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive forensic investigation"""
+    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     alert_id: str = ""
     case_number: str = ""
     investigation_type: str = "copyright_violation"
@@ -102,9 +107,11 @@ class ForensicInvestigation:
 
 
 class AdvancedForensicAnalyzer:
-    """    Enterprise-grade forensic analysis engine for content protection incidents.
+    """
+    Enterprise-grade forensic analysis engine for content protection incidents.
     Provides comprehensive digital forensics, evidence collection, and legal documentation.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.encryption_engine = AdvancedEncryption()
@@ -114,7 +121,8 @@ class AdvancedForensicAnalyzer:
         self.evidence_storage_path.mkdir(parents=True, exist_ok=True)
         
     async def initialize(self):
-        """Initialize forensic analysis engine"""        await self.blockchain_recorder.initialize()
+        """Initialize forensic analysis engine"""
+        await self.blockchain_recorder.initialize()
         await self.content_fingerprinter.initialize()
         self.logger.info("Advanced Forensic Analyzer initialized")
         
@@ -124,7 +132,8 @@ class AdvancedForensicAnalyzer:
         investigation_type: str = "comprehensive",
         legal_grade: bool = False
     ) -> ForensicInvestigation:
-        """Conduct comprehensive forensic investigation"""        try:
+        """Conduct comprehensive forensic investigation"""
+        try:
             investigation = ForensicInvestigation(
                 alert_id=alert.id,
                 case_number=self._generate_case_number(),
@@ -182,7 +191,8 @@ class AdvancedForensicAnalyzer:
         alert: ContentProtectionAlert,
         investigation: ForensicInvestigation
     ) -> Dict[str, Any]:
-        """Collect comprehensive digital evidence"""        evidence_collection = {
+        """Collect comprehensive digital evidence"""
+        evidence_collection = {
             'screenshots': [],
             'network_evidence': [],
             'file_evidence': [],
@@ -238,7 +248,8 @@ class AdvancedForensicAnalyzer:
         screenshot_url: str, 
         investigation_id: str
     ) -> DigitalEvidence:
-        """Collect and analyze screenshot evidence"""        try:
+        """Collect and analyze screenshot evidence"""
+        try:
             # Download screenshot
             async with aiofiles.open(f"{self.evidence_storage_path}/screenshot_{investigation_id}.png", 'wb') as f:
                 # Simulate screenshot download
@@ -281,7 +292,8 @@ class AdvancedForensicAnalyzer:
         alert: ContentProtectionAlert, 
         investigation_id: str
     ) -> List[DigitalEvidence]:
-        """Collect network-related evidence"""        network_evidence = []
+        """Collect network-related evidence"""
+        network_evidence = []
         
         try:
             # DNS evidence
@@ -312,7 +324,8 @@ class AdvancedForensicAnalyzer:
             return []
     
     async def _collect_dns_evidence(self, domain: str, investigation_id: str) -> DigitalEvidence:
-        """Collect DNS resolution evidence"""        try:
+        """Collect DNS resolution evidence"""
+        try:
             # Simulate DNS lookup
             dns_data = {
                 'domain': domain,
@@ -351,7 +364,8 @@ class AdvancedForensicAnalyzer:
             raise
     
     async def _collect_whois_evidence(self, domain: str, investigation_id: str) -> DigitalEvidence:
-        """Collect WHOIS registration evidence"""        try:
+        """Collect WHOIS registration evidence"""
+        try:
             # Simulate WHOIS lookup
             whois_data = {
                 'domain': domain,
@@ -392,7 +406,8 @@ class AdvancedForensicAnalyzer:
             raise
     
     async def _collect_geolocation_evidence(self, ip_address: str, investigation_id: str) -> DigitalEvidence:
-        """Collect IP geolocation evidence"""        try:
+        """Collect IP geolocation evidence"""
+        try:
             # Simulate geolocation lookup
             geo_data = {
                 'ip_address': ip_address,
@@ -440,7 +455,8 @@ class AdvancedForensicAnalyzer:
         alert: ContentProtectionAlert, 
         investigation_id: str
     ) -> List[DigitalEvidence]:
-        """Collect file metadata evidence"""        metadata_evidence = []
+        """Collect file metadata evidence"""
+        metadata_evidence = []
         
         try:
             if alert.evidence and alert.evidence.get('content_url'):
@@ -461,7 +477,8 @@ class AdvancedForensicAnalyzer:
             return []
     
     async def _extract_content_metadata(self, content_url: str, investigation_id: str) -> DigitalEvidence:
-        """Extract comprehensive content metadata"""        try:
+        """Extract comprehensive content metadata"""
+        try:
             # Simulate content metadata extraction
             metadata = {
                 'content_url': content_url,
@@ -506,7 +523,8 @@ class AdvancedForensicAnalyzer:
         alert: ContentProtectionAlert, 
         investigation_id: str
     ) -> DigitalEvidence:
-        """Create digital fingerprint evidence"""        try:
+        """Create digital fingerprint evidence"""
+        try:
             # Generate content fingerprint
             fingerprint_data = {
                 'alert_id': alert.id,
@@ -548,7 +566,8 @@ class AdvancedForensicAnalyzer:
         investigation: ForensicInvestigation,
         evidence_collection: Dict[str, Any]
     ) -> DigitalEvidence:
-        """Create blockchain-based evidence record"""        try:
+        """Create blockchain-based evidence record"""
+        try:
             blockchain_data = {
                 'investigation_id': investigation.id,
                 'alert_id': alert.id,
@@ -595,7 +614,8 @@ class AdvancedForensicAnalyzer:
         alert: ContentProtectionAlert, 
         investigation_id: str
     ) -> List[DigitalEvidence]:
-        """Collect additional metadata evidence"""        metadata_evidence = []
+        """Collect additional metadata evidence"""
+        metadata_evidence = []
         
         try:
             # Platform evidence
@@ -624,7 +644,8 @@ class AdvancedForensicAnalyzer:
         alert: ContentProtectionAlert, 
         investigation_id: str
     ) -> DigitalEvidence:
-        """Collect platform-specific evidence"""        try:
+        """Collect platform-specific evidence"""
+        try:
             platform_data = {
                 'platform': platform,
                 'alert_id': alert.id,
@@ -664,7 +685,8 @@ class AdvancedForensicAnalyzer:
             raise
     
     async def _collect_user_agent_evidence(self, user_agent: str, investigation_id: str) -> DigitalEvidence:
-        """Collect user agent analysis evidence"""        try:
+        """Collect user agent analysis evidence"""
+        try:
             ua_analysis = {
                 'user_agent': user_agent,
                 'browser': 'Chrome',
@@ -709,7 +731,8 @@ class AdvancedForensicAnalyzer:
         investigation: ForensicInvestigation,
         evidence_collection_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform comprehensive digital analysis"""        try:
+        """Perform comprehensive digital analysis"""
+        try:
             analysis_results = {
                 'file_integrity_analysis': {},
                 'metadata_correlation': {},
@@ -752,7 +775,8 @@ class AdvancedForensicAnalyzer:
             raise
     
     async def _analyze_file_integrity(self, evidence_list: List[DigitalEvidence]) -> Dict[str, Any]:
-        """Analyze file integrity across all evidence"""        try:
+        """Analyze file integrity across all evidence"""
+        try:
             integrity_results = {
                 'total_files': len(evidence_list),
                 'verified_files': 0,
@@ -804,7 +828,8 @@ class AdvancedForensicAnalyzer:
             raise
     
     async def _correlate_metadata(self, evidence_list: List[DigitalEvidence]) -> Dict[str, Any]:
-        """Correlate metadata across evidence items"""        try:
+        """Correlate metadata across evidence items"""
+        try:
             correlation_results = {
                 'timestamp_correlation': {},
                 'source_correlation': {},
@@ -855,7 +880,8 @@ class AdvancedForensicAnalyzer:
             raise
     
     async def _recognize_patterns(self, evidence_list: List[DigitalEvidence]) -> Dict[str, Any]:
-        """Recognize patterns in evidence data"""        try:
+        """Recognize patterns in evidence data"""
+        try:
             pattern_results = {
                 'behavioral_patterns': [],
                 'technical_patterns': [],
@@ -918,7 +944,8 @@ class AdvancedForensicAnalyzer:
         investigation: ForensicInvestigation,
         analysis_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Assess overall threat level based on analysis"""        try:
+        """Assess overall threat level based on analysis"""
+        try:
             threat_assessment = {
                 'overall_threat_level': 'medium',
                 'threat_score': 0.0,
@@ -975,7 +1002,8 @@ class AdvancedForensicAnalyzer:
         investigation: ForensicInvestigation,
         analysis_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Reconstruct detailed incident timeline"""        try:
+        """Reconstruct detailed incident timeline"""
+        try:
             timeline_events = []
             
             # Sort evidence by timestamp
@@ -1015,7 +1043,8 @@ class AdvancedForensicAnalyzer:
             raise
     
     def _generate_event_description(self, evidence: DigitalEvidence) -> str:
-        """Generate human-readable event description"""        descriptions = {
+        """Generate human-readable event description"""
+        descriptions = {
             EvidenceType.SCREENSHOT: f"Screenshot evidence collected from {evidence.metadata.get('source', 'unknown source')}",
             EvidenceType.NETWORK_LOGS: f"Network analysis performed on {evidence.metadata.get('evidence_subtype', 'network data')}",
             EvidenceType.FILE_METADATA: f"File metadata extracted and analyzed",
@@ -1027,7 +1056,8 @@ class AdvancedForensicAnalyzer:
         return descriptions.get(evidence.evidence_type, f"Evidence of type {evidence.evidence_type.value} collected")
     
     def _assess_event_significance(self, evidence: DigitalEvidence) -> str:
-        """Assess significance of timeline event"""        high_significance = [EvidenceType.BLOCKCHAIN_RECORD, EvidenceType.DIGITAL_FINGERPRINT]
+        """Assess significance of timeline event"""
+        high_significance = [EvidenceType.BLOCKCHAIN_RECORD, EvidenceType.DIGITAL_FINGERPRINT]
         medium_significance = [EvidenceType.SCREENSHOT, EvidenceType.FILE_METADATA]
         
         if evidence.evidence_type in high_significance:
@@ -1038,7 +1068,8 @@ class AdvancedForensicAnalyzer:
             return 'low'
     
     def _calculate_timeline_span(self, timeline_events: List[Dict[str, Any]]) -> float:
-        """Calculate timeline span in hours"""        if len(timeline_events) < 2:
+        """Calculate timeline span in hours"""
+        if len(timeline_events) < 2:
             return 0.0
         
         timestamps = [datetime.fromisoformat(e['timestamp'].replace('Z', '+00:00')) for e in timeline_events]
@@ -1050,7 +1081,8 @@ class AdvancedForensicAnalyzer:
         investigation: ForensicInvestigation,
         timeline_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform comprehensive legal assessment"""        try:
+        """Perform comprehensive legal assessment"""
+        try:
             legal_assessment = {
                 'admissibility_score': 0.0,
                 'evidence_strength': 'strong',
@@ -1122,7 +1154,8 @@ class AdvancedForensicAnalyzer:
         investigation: ForensicInvestigation,
         legal_assessment_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform expert-level technical analysis"""        try:
+        """Perform expert-level technical analysis"""
+        try:
             expert_analysis = {
                 'technical_complexity': 'moderate',
                 'analysis_confidence': 0.0,
@@ -1209,7 +1242,8 @@ class AdvancedForensicAnalyzer:
         investigation: ForensicInvestigation,
         expert_analysis_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate comprehensive forensic report"""        try:
+        """Generate comprehensive forensic report"""
+        try:
             report = {
                 'executive_summary': {},
                 'methodology': {},
@@ -1336,7 +1370,8 @@ class AdvancedForensicAnalyzer:
             raise
     
     async def _archive_investigation(self, investigation: ForensicInvestigation):
-        """Archive completed investigation"""        try:
+        """Archive completed investigation"""
+        try:
             archive_path = self.evidence_storage_path / "archived_investigations"
             archive_path.mkdir(exist_ok=True)
             
@@ -1395,12 +1430,14 @@ Generated: {datetime.now(timezone.utc).isoformat()}
             raise
     
     def _generate_case_number(self) -> str:
-        """Generate unique case number"""        timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+        """Generate unique case number"""
+        timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
         unique_id = uuid.uuid4().hex[:8].upper()
         return f"FOR_{timestamp}_{unique_id}"
     
     async def _extract_image_metadata(self, image_path: str) -> Dict[str, Any]:
-        """Extract comprehensive image metadata"""        try:
+        """Extract comprehensive image metadata"""
+        try:
             # Simulate image metadata extraction
             metadata = {
                 'file_format': 'PNG',
@@ -1420,7 +1457,8 @@ Generated: {datetime.now(timezone.utc).isoformat()}
             return {}
     
     async def _create_digital_signature(self, data: bytes) -> str:
-        """Create digital signature for evidence"""        try:
+        """Create digital signature for evidence"""
+        try:
             # Simulate digital signature creation
             signature_data = hashlib.sha256(data + b"digital_signature_key").hexdigest()
             return f"SIGNATURE_{signature_data[:32]}"
@@ -1430,7 +1468,8 @@ Generated: {datetime.now(timezone.utc).isoformat()}
             raise
     
     async def _encrypt_evidence_file(self, file_path: str) -> str:
-        """Encrypt evidence file and return encryption key"""        try:
+        """Encrypt evidence file and return encryption key"""
+        try:
             # Simulate file encryption
             encryption_key = Fernet.generate_key().decode()
             
@@ -1449,7 +1488,8 @@ Generated: {datetime.now(timezone.utc).isoformat()}
         action: str, 
         actor: str
     ):
-        """Add entry to chain of custody"""        try:
+        """Add entry to chain of custody"""
+        try:
             custody_entry = {
                 'timestamp': datetime.now(timezone.utc).isoformat(),
                 'action': action,

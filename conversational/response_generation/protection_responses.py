@@ -25,7 +25,8 @@ Features:
 - Anti-recreation and deepfake detection
 - Licensing violation monitoring
 - Rights management automation
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from dataclasses import dataclass, field
@@ -87,7 +88,8 @@ logger = logging.getLogger(__name__)
 
 
 class ThreatLevel(Enum):
-    """Content protection threat levels"""    CRITICAL = "critical"      # Major commercial infringement
+    """Content protection threat levels"""
+    CRITICAL = "critical"      # Major commercial infringement
     HIGH = "high"             # Significant unauthorized use
     MEDIUM = "medium"         # Moderate infringement concern
     LOW = "low"              # Minor usage, potential fair use
@@ -95,7 +97,8 @@ class ThreatLevel(Enum):
 
 
 class InfringementType(Enum):
-    """Types of content infringement"""    FULL_COPY = "full_copy"                    # Complete unauthorized copy
+    """Types of content infringement"""
+    FULL_COPY = "full_copy"                    # Complete unauthorized copy
     PARTIAL_COPY = "partial_copy"              # Significant portion copied
     DERIVATIVE_WORK = "derivative_work"        # Unauthorized derivative
     COMMERCIAL_USE = "commercial_use"          # Commercial exploitation
@@ -107,7 +110,8 @@ class InfringementType(Enum):
 
 
 class ProtectionAction(Enum):
-    """Available protection actions"""    DMCA_TAKEDOWN = "dmca_takedown"
+    """Available protection actions"""
+    DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     LEGAL_ACTION = "legal_action"
     PLATFORM_REPORT = "platform_report"
@@ -119,7 +123,8 @@ class ProtectionAction(Enum):
 
 @dataclass
 class InfringementIncident:
-    """Content infringement incident data"""    incident_id: str
+    """Content infringement incident data"""
+    incident_id: str
     original_content_id: str
     infringing_url: str
     platform: str
@@ -133,8 +138,10 @@ class InfringementIncident:
 
 
 class ContentProtectionResponseEngine:
-    """    Advanced content protection response generation system
-    """    
+    """
+    Advanced content protection response generation system
+    """
+    
     def __init__(self, db_session: Session, cache_manager: CacheManager):
         self.db_session = db_session
         self.cache_manager = cache_manager
@@ -155,8 +162,10 @@ class ContentProtectionResponseEngine:
         incident: InfringementIncident,
         user_preferences: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Generate comprehensive response to content infringement
-        """        try:
+        """
+        Generate comprehensive response to content infringement
+        """
+        try:
             # Assess threat severity
             threat_assessment = await self._assess_threat_severity(incident)
             
@@ -203,8 +212,10 @@ class ContentProtectionResponseEngine:
         incident: InfringementIncident,
         copyright_holder_info: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Generate professional DMCA takedown notice
-        """        try:
+        """
+        Generate professional DMCA takedown notice
+        """
+        try:
             # Validate incident for DMCA eligibility
             dmca_eligibility = await self._validate_dmca_eligibility(incident)
             
@@ -252,8 +263,10 @@ class ContentProtectionResponseEngine:
         incident: InfringementIncident,
         escalation_level: str = "initial"
     ) -> Dict[str, Any]:
-        """        Generate cease and desist letter
-        """        try:
+        """
+        Generate cease and desist letter
+        """
+        try:
             # Analyze infringement details
             infringement_analysis = await self._analyze_infringement_details(incident)
             
@@ -291,8 +304,10 @@ class ContentProtectionResponseEngine:
         incident: InfringementIncident,
         content_performance_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Analyze financial impact of infringement
-        """        try:
+        """
+        Analyze financial impact of infringement
+        """
+        try:
             # Calculate direct revenue loss
             direct_loss = await self._calculate_direct_revenue_loss(
                 incident, content_performance_data
@@ -339,8 +354,10 @@ class ContentProtectionResponseEngine:
         incident: InfringementIncident,
         licensing_strategy: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Generate licensing offer as alternative to takedown
-        """        try:
+        """
+        Generate licensing offer as alternative to takedown
+        """
+        try:
             # Assess licensing viability
             licensing_viability = await self._assess_licensing_viability(incident)
             
@@ -390,7 +407,8 @@ class ContentProtectionResponseEngine:
         self, 
         incident: InfringementIncident
     ) -> Dict[str, Any]:
-        """Assess threat severity and impact"""        # Implementation details...
+        """Assess threat severity and impact"""
+        # Implementation details...
         pass
     
     async def _analyze_legal_options(
@@ -398,7 +416,8 @@ class ContentProtectionResponseEngine:
         incident: InfringementIncident,
         threat_assessment: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Analyze available legal options"""        # Implementation details...
+        """Analyze available legal options"""
+        # Implementation details...
         pass
     
     async def _generate_recommended_actions(
@@ -408,7 +427,8 @@ class ContentProtectionResponseEngine:
         legal_options: List[Dict[str, Any]],
         user_preferences: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate prioritized recommended actions"""        # Implementation details...
+        """Generate prioritized recommended actions"""
+        # Implementation details...
         pass
     
     async def _prepare_legal_documents(
@@ -416,13 +436,16 @@ class ContentProtectionResponseEngine:
         incident: InfringementIncident,
         recommended_actions: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Prepare required legal documents"""        # Implementation details...
+        """Prepare required legal documents"""
+        # Implementation details...
         pass
 
 
 class AutomatedProtectionOrchestrator:
-    """    Orchestrates automated protection responses
-    """    
+    """
+    Orchestrates automated protection responses
+    """
+    
     def __init__(self, protection_engine: ContentProtectionResponseEngine):
         self.protection_engine = protection_engine
         self.logger = logging.getLogger(__name__)
@@ -432,8 +455,10 @@ class AutomatedProtectionOrchestrator:
         incident: InfringementIncident,
         automation_rules: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Execute automated protection response based on rules
-        """        try:
+        """
+        Execute automated protection response based on rules
+        """
+        try:
             # Check automation eligibility
             automation_check = await self._check_automation_eligibility(
                 incident, automation_rules
@@ -473,8 +498,10 @@ class AutomatedProtectionOrchestrator:
 
 
 class LegalCollaborationEngine:
-    """    Engine for coordinating with legal professionals
-    """    
+    """
+    Engine for coordinating with legal professionals
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
@@ -483,8 +510,10 @@ class LegalCollaborationEngine:
         incident: InfringementIncident,
         legal_team_info: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Coordinate escalation to legal professionals
-        """        try:
+        """
+        Coordinate escalation to legal professionals
+        """
+        try:
             # Prepare case summary
             case_summary = await self._prepare_case_summary(incident)
             

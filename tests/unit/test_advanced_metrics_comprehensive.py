@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -18,7 +19,8 @@ Comprehensive test suite for the advanced metrics collection, analysis, and repo
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -37,9 +39,11 @@ sys.modules['numpy.random'] = Mock()
 sys.modules['prometheus_client'] = Mock()
 
 class TestAdvancedMetricsModule:
-    """Test suite for advanced metrics module structure and basic functionality"""    
+    """Test suite for advanced metrics module structure and basic functionality"""
+    
     def test_module_structure_exists(self):
-        """Test that all required module files exist"""        base_path = "monitoring/advanced_metrics"
+        """Test that all required module files exist"""
+        base_path = "monitoring/advanced_metrics"
         required_files = [
             "__init__.py",
             "index.py", 
@@ -58,7 +62,8 @@ class TestAdvancedMetricsModule:
             assert os.path.exists(file_path), f"Required file {file_path} not found"
     
     def test_documentation_files_content(self):
-        """Test that documentation files contain required content"""        base_path = "monitoring/advanced_metrics"
+        """Test that documentation files contain required content"""
+        base_path = "monitoring/advanced_metrics"
         
         # Test English README
         readme_path = os.path.join(base_path, "README.md")
@@ -70,7 +75,8 @@ class TestAdvancedMetricsModule:
             assert "Advanced Metrics Module" in content
     
     def test_french_documentation(self):
-        """Test French documentation content"""        base_path = "monitoring/advanced_metrics"
+        """Test French documentation content"""
+        base_path = "monitoring/advanced_metrics"
         readme_path = os.path.join(base_path, "README.fr.md")
         
         with open(readme_path, 'r', encoding='utf-8') as f:
@@ -81,7 +87,8 @@ class TestAdvancedMetricsModule:
             assert "Module de Métriques Avancées" in content
     
     def test_german_documentation(self):
-        """Test German documentation content"""        base_path = "monitoring/advanced_metrics"
+        """Test German documentation content"""
+        base_path = "monitoring/advanced_metrics"
         readme_path = os.path.join(base_path, "README.de.md")
         
         with open(readme_path, 'r', encoding='utf-8') as f:
@@ -92,10 +99,12 @@ class TestAdvancedMetricsModule:
             assert "Erweiterte Metriken Modul" in content
 
 class TestBusinessKPIModule:
-    """Test suite for business KPI metrics functionality"""    
+    """Test suite for business KPI metrics functionality"""
+    
     @pytest.fixture
     def mock_business_kpi_collector(self):
-        """Mock business KPI collector for testing"""        with patch('monitoring.advanced_metrics.business_kpis.BusinessKPICollector') as mock:
+        """Mock business KPI collector for testing"""
+        with patch('monitoring.advanced_metrics.business_kpis.BusinessKPICollector') as mock:
             collector = Mock()
             collector.initialize = AsyncMock()
             collector.collect_metrics = AsyncMock(return_value={
@@ -116,7 +125,8 @@ class TestBusinessKPIModule:
     
     @pytest.mark.asyncio
     async def test_business_kpi_collection(self, mock_business_kpi_collector):
-        """Test business KPI collection functionality"""        # Initialize collector
+        """Test business KPI collection functionality"""
+        # Initialize collector
         await mock_business_kpi_collector.initialize()
         
         # Test metrics collection
@@ -128,7 +138,8 @@ class TestBusinessKPIModule:
         assert metrics["summary"]["overall_performance_score"] > 0
     
     def test_business_kpi_data_structure(self):
-        """Test business KPI data structure validation"""        # Mock KPI metric structure
+        """Test business KPI data structure validation"""
+        # Mock KPI metric structure
         kpi_metric = {
             "metric_id": "daily_revenue",
             "category": "revenue",
@@ -143,10 +154,12 @@ class TestBusinessKPIModule:
             assert field in kpi_metric, f"Required field {field} missing"
 
 class TestUserEngagementModule:
-    """Test suite for user engagement metrics functionality"""    
+    """Test suite for user engagement metrics functionality"""
+    
     @pytest.fixture
     def mock_engagement_collector(self):
-        """Mock engagement collector for testing"""        collector = Mock()
+        """Mock engagement collector for testing"""
+        collector = Mock()
         collector.initialize = AsyncMock()
         collector.collect_metrics = AsyncMock(return_value={
             "session_metrics": [
@@ -171,7 +184,8 @@ class TestUserEngagementModule:
     
     @pytest.mark.asyncio
     async def test_engagement_metrics_collection(self, mock_engagement_collector):
-        """Test user engagement metrics collection"""        await mock_engagement_collector.initialize()
+        """Test user engagement metrics collection"""
+        await mock_engagement_collector.initialize()
         
         metrics = await mock_engagement_collector.collect_metrics()
         
@@ -181,7 +195,8 @@ class TestUserEngagementModule:
         assert len(metrics["session_metrics"]) > 0
     
     def test_engagement_event_structure(self):
-        """Test engagement event data structure"""        engagement_event = {
+        """Test engagement event data structure"""
+        engagement_event = {
             "event_id": "evt_123",
             "user_id": "user_456",
             "event_type": "like",
@@ -195,10 +210,12 @@ class TestUserEngagementModule:
             assert field in engagement_event
 
 class TestContentPerformanceModule:
-    """Test suite for content performance metrics functionality"""    
+    """Test suite for content performance metrics functionality"""
+    
     @pytest.fixture
     def mock_content_collector(self):
-        """Mock content performance collector for testing"""        collector = Mock()
+        """Mock content performance collector for testing"""
+        collector = Mock()
         collector.initialize = AsyncMock()
         collector.collect_metrics = AsyncMock(return_value={
             "content_performance": [
@@ -225,7 +242,8 @@ class TestContentPerformanceModule:
     
     @pytest.mark.asyncio
     async def test_content_performance_collection(self, mock_content_collector):
-        """Test content performance metrics collection"""        await mock_content_collector.initialize()
+        """Test content performance metrics collection"""
+        await mock_content_collector.initialize()
         
         metrics = await mock_content_collector.collect_metrics()
         
@@ -235,10 +253,12 @@ class TestContentPerformanceModule:
         assert len(metrics["content_performance"]) > 0
 
 class TestRemixQualityModule:
-    """Test suite for AI remix quality metrics functionality"""    
+    """Test suite for AI remix quality metrics functionality"""
+    
     @pytest.fixture
     def mock_remix_collector(self):
-        """Mock remix quality collector for testing"""        collector = Mock()
+        """Mock remix quality collector for testing"""
+        collector = Mock()
         collector.initialize = AsyncMock()
         collector.assess_remix_quality = AsyncMock(return_value={
             "remix_id": "remix_123",
@@ -252,7 +272,8 @@ class TestRemixQualityModule:
     
     @pytest.mark.asyncio
     async def test_remix_quality_assessment(self, mock_remix_collector):
-        """Test AI remix quality assessment"""        await mock_remix_collector.initialize()
+        """Test AI remix quality assessment"""
+        await mock_remix_collector.initialize()
         
         remix_data = {
             "remix_type": "audio_remix",
@@ -270,10 +291,12 @@ class TestRemixQualityModule:
         assert quality_metrics["overall_quality_score"] > 0
 
 class TestCollaborationSuccessModule:
-    """Test suite for collaboration success metrics functionality"""    
+    """Test suite for collaboration success metrics functionality"""
+    
     @pytest.fixture
     def mock_collaboration_collector(self):
-        """Mock collaboration collector for testing"""        collector = Mock()
+        """Mock collaboration collector for testing"""
+        collector = Mock()
         collector.initialize = AsyncMock()
         collector.collect_metrics = AsyncMock(return_value={
             "collaboration_metrics": [
@@ -296,7 +319,8 @@ class TestCollaborationSuccessModule:
     
     @pytest.mark.asyncio
     async def test_collaboration_metrics_collection(self, mock_collaboration_collector):
-        """Test collaboration success metrics collection"""        await mock_collaboration_collector.initialize()
+        """Test collaboration success metrics collection"""
+        await mock_collaboration_collector.initialize()
         
         metrics = await mock_collaboration_collector.collect_metrics()
         
@@ -306,10 +330,12 @@ class TestCollaborationSuccessModule:
         assert len(metrics["collaboration_metrics"]) > 0
 
 class TestAdvancedMetricsIntegration:
-    """Integration tests for the complete advanced metrics system"""    
+    """Integration tests for the complete advanced metrics system"""
+    
     @pytest.fixture
     def mock_metrics_manager(self):
-        """Mock advanced metrics manager for integration testing"""        manager = Mock()
+        """Mock advanced metrics manager for integration testing"""
+        manager = Mock()
         manager.initialize = AsyncMock()
         manager.start_collection = AsyncMock()
         manager.stop_collection = AsyncMock()
@@ -327,7 +353,8 @@ class TestAdvancedMetricsIntegration:
     
     @pytest.mark.asyncio
     async def test_metrics_manager_lifecycle(self, mock_metrics_manager):
-        """Test complete metrics manager lifecycle"""        # Initialize
+        """Test complete metrics manager lifecycle"""
+        # Initialize
         await mock_metrics_manager.initialize()
         
         # Start collection
@@ -345,7 +372,8 @@ class TestAdvancedMetricsIntegration:
         await mock_metrics_manager.stop_collection()
     
     def test_module_constants_and_metadata(self):
-        """Test module constants and metadata"""        # Test that required constants are defined (would be in actual module)
+        """Test module constants and metadata"""
+        # Test that required constants are defined (would be in actual module)
         expected_constants = [
             "MODULE_INFO",
             "__version__",
@@ -367,9 +395,11 @@ class TestAdvancedMetricsIntegration:
         assert module_info["version"] == "1.0.0"
 
 class TestAdvancedMetricsPerformance:
-    """Performance and scalability tests for advanced metrics"""    
+    """Performance and scalability tests for advanced metrics"""
+    
     def test_metrics_data_structure_efficiency(self):
-        """Test metrics data structure efficiency"""        # Test data structure size and access patterns
+        """Test metrics data structure efficiency"""
+        # Test data structure size and access patterns
         large_metrics_data = {
             f"metric_{i}": {
                 "value": i * 1.5,
@@ -384,7 +414,8 @@ class TestAdvancedMetricsPerformance:
         assert "metric_500" in large_metrics_data
     
     def test_concurrent_metrics_collection(self):
-        """Test concurrent metrics collection simulation"""        import threading
+        """Test concurrent metrics collection simulation"""
+        import threading
         import time
         
         # Simulate concurrent metrics collection
@@ -407,9 +438,11 @@ class TestAdvancedMetricsPerformance:
         assert "metric_5" in results
 
 class TestAdvancedMetricsSecurity:
-    """Security and compliance tests for advanced metrics"""    
+    """Security and compliance tests for advanced metrics"""
+    
     def test_data_anonymization_concept(self):
-        """Test data anonymization concepts"""        # Test PII anonymization
+        """Test data anonymization concepts"""
+        # Test PII anonymization
         sensitive_data = {
             "user_email": "user@example.com",
             "user_id": "user_12345",
@@ -427,7 +460,8 @@ class TestAdvancedMetricsSecurity:
         assert "user_id_hash" in anonymized_data
     
     def test_access_control_validation(self):
-        """Test access control validation concepts"""        # Simulate role-based access control
+        """Test access control validation concepts"""
+        # Simulate role-based access control
         user_permissions = {
             "admin": ["read_all", "write_all", "delete_all"],
             "analyst": ["read_metrics", "generate_reports"],

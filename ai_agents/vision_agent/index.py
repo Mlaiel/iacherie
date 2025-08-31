@@ -11,7 +11,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Ce code et cette conception architecturale sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 L'utilisation, la copie, la distribution ou la commercialisation non autorisées sont strictement interdites.
 Contact: mlaiel@live.de pour les demandes de licence.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 # Classes de requête et réponse simplifiées
 class VisionRequest:
-    """Requête simplifiée pour le traitement vision"""    
+    """Requête simplifiée pour le traitement vision"""
+    
     def __init__(
         self,
         content_id: str,
@@ -54,7 +56,8 @@ class VisionRequest:
 
 
 class VisionResponse:
-    """Réponse simplifiée du traitement vision"""    
+    """Réponse simplifiée du traitement vision"""
+    
     def __init__(
         self,
         content_id: str,
@@ -73,7 +76,8 @@ class VisionResponse:
         self.timestamp = datetime.now()
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertir la réponse en dictionnaire"""        return {
+        """Convertir la réponse en dictionnaire"""
+        return {
             'content_id': self.content_id,
             'success': self.success,
             'results': self.results,
@@ -85,17 +89,21 @@ class VisionResponse:
 
 
 class VisionAgentIndex:
-    """    Point d'entrée principal et interface unifiée pour le système Vision Agent
+    """
+    Point d'entrée principal et interface unifiée pour le système Vision Agent
     
     Cette classe fournit une API simplifiée pour accéder à toutes les fonctionnalités
     du système de vision IA-Influencer-Agent.
-    """    
+    """
+    
     def __init__(self, config: Optional[VisionAgentConfig] = None):
-        """        Initialiser l'index Vision Agent
+        """
+        Initialiser l'index Vision Agent
         
         Args:
             config: Configuration optionnelle, utilise la configuration par défaut si non fournie
-        """        self.config = config or vision_config
+        """
+        self.config = config or vision_config
         self.orchestrator: Optional[VisionOrchestrator] = None
         self.is_initialized = False
         
@@ -112,11 +120,13 @@ class VisionAgentIndex:
         logger.info("Vision Agent Index créé avec succès")
     
     async def initialize(self) -> bool:
-        """        Initialiser tous les composants du système vision
+        """
+        Initialiser tous les composants du système vision
         
         Returns:
             True si l'initialisation est réussie, False sinon
-        """        try:
+        """
+        try:
             logger.info("Initialisation du système Vision Agent...")
             
             # Créer et initialiser l'orchestrateur principal
@@ -144,7 +154,8 @@ class VisionAgentIndex:
         tasks: Optional[List[str]] = None,
         **options
     ) -> VisionResponse:
-        """        Traiter du contenu visuel avec l'interface simplifiée
+        """
+        Traiter du contenu visuel avec l'interface simplifiée
         
         Args:
             content_id: Identifiant unique du contenu
@@ -156,7 +167,8 @@ class VisionAgentIndex:
             
         Returns:
             VisionResponse avec les résultats du traitement
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         # Vérifier l'initialisation
         if not self.is_initialized:
@@ -230,7 +242,8 @@ class VisionAgentIndex:
             )
     
     async def _convert_to_orchestrator_request(self, request: VisionRequest) -> Any:
-        """Convertir VisionRequest vers le format de l'orchestrateur"""        # Import dynamique pour éviter les imports circulaires
+        """Convertir VisionRequest vers le format de l'orchestrateur"""
+        # Import dynamique pour éviter les imports circulaires
         from ..core.types import VisionProcessingRequest
         
         return VisionProcessingRequest(
@@ -252,7 +265,8 @@ class VisionAgentIndex:
         content_id: str,
         processing_time: float
     ) -> VisionResponse:
-        """Convertir le résultat de l'orchestrateur vers VisionResponse"""        
+        """Convertir le résultat de l'orchestrateur vers VisionResponse"""
+        
         success = result.processing_status in ["completed", "completed_with_errors"]
         
         # Agréger tous les résultats
@@ -293,7 +307,8 @@ class VisionAgentIndex:
         requests: List[Dict[str, Any]],
         max_concurrent: int = 5
     ) -> List[VisionResponse]:
-        """        Traiter plusieurs contenus en lot
+        """
+        Traiter plusieurs contenus en lot
         
         Args:
             requests: Liste des paramètres de requête
@@ -301,7 +316,8 @@ class VisionAgentIndex:
             
         Returns:
             Liste des réponses de traitement
-        """        tasks = []
+        """
+        tasks = []
         
         for req_params in requests:
             task = self.process(**req_params)
@@ -332,7 +348,8 @@ class VisionAgentIndex:
         return responses
     
     def get_capabilities(self) -> Dict[str, Any]:
-        """Obtenir les capacités du système"""        return {
+        """Obtenir les capacités du système"""
+        return {
             'supported_formats': {
                 'image': ['jpg', 'jpeg', 'png', 'bmp', 'tiff', 'webp', 'gif'],
                 'video': ['mp4', 'avi', 'mov', 'wmv', 'flv', 'webm', 'mkv']
@@ -353,10 +370,12 @@ class VisionAgentIndex:
         }
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Obtenir les statistiques d'utilisation"""        return self.stats.copy()
+        """Obtenir les statistiques d'utilisation"""
+        return self.stats.copy()
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Obtenir l'état de santé du système"""        if not self.is_initialized:
+        """Obtenir l'état de santé du système"""
+        if not self.is_initialized:
             return {
                 'status': 'not_initialized',
                 'healthy': False,
@@ -375,7 +394,8 @@ class VisionAgentIndex:
         }
     
     async def cleanup(self) -> None:
-        """Nettoyer les ressources"""        try:
+        """Nettoyer les ressources"""
+        try:
             if self.orchestrator:
                 await self.orchestrator.cleanup()
             
@@ -391,7 +411,8 @@ _global_vision_agent: Optional[VisionAgentIndex] = None
 
 
 async def get_vision_agent() -> VisionAgentIndex:
-    """Obtenir l'instance globale de Vision Agent (singleton pattern)"""    global _global_vision_agent
+    """Obtenir l'instance globale de Vision Agent (singleton pattern)"""
+    global _global_vision_agent
     
     if _global_vision_agent is None:
         _global_vision_agent = VisionAgentIndex()
@@ -408,11 +429,13 @@ async def quick_process(
     content_type: str = "image",
     tasks: Optional[List[str]] = None
 ) -> Dict[str, Any]:
-    """    Interface rapide pour traiter du contenu
+    """
+    Interface rapide pour traiter du contenu
     
     Returns:
         Dictionnaire avec les résultats du traitement
-    """    agent = await get_vision_agent()
+    """
+    agent = await get_vision_agent()
     response = await agent.process(
         content_id=content_id,
         file_path=file_path,
@@ -424,7 +447,8 @@ async def quick_process(
 
 
 async def quick_analyze_image(file_path: str) -> Dict[str, Any]:
-    """Analyser rapidement une image"""    content_id = f"quick_image_{datetime.now().timestamp()}"
+    """Analyser rapidement une image"""
+    content_id = f"quick_image_{datetime.now().timestamp()}"
     return await quick_process(
         content_id=content_id,
         file_path=file_path,
@@ -434,7 +458,8 @@ async def quick_analyze_image(file_path: str) -> Dict[str, Any]:
 
 
 async def quick_analyze_video(file_path: str) -> Dict[str, Any]:
-    """Analyser rapidement une vidéo"""    content_id = f"quick_video_{datetime.now().timestamp()}"
+    """Analyser rapidement une vidéo"""
+    content_id = f"quick_video_{datetime.now().timestamp()}"
     return await quick_process(
         content_id=content_id,
         file_path=file_path,
@@ -445,7 +470,8 @@ async def quick_analyze_video(file_path: str) -> Dict[str, Any]:
 
 # Fonctions de convenance pour l'API
 def create_vision_index(config: Optional[VisionAgentConfig] = None) -> VisionAgentIndex:
-    """Créer une nouvelle instance de Vision Agent Index"""    return VisionAgentIndex(config)
+    """Créer une nouvelle instance de Vision Agent Index"""
+    return VisionAgentIndex(config)
 
 
 # Métadonnées du module

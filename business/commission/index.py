@@ -15,7 +15,8 @@ Expert Team: Lead Dev IA + Backend Senior + System Architect + API Designer +
 © 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Callable
 from datetime import datetime, timedelta
@@ -58,19 +59,23 @@ security = HTTPBearer()
 commission_router = APIRouter(prefix="/api/v1/commission", tags=["Commission System"])
 
 class SystemStatus(str, Enum):
-    """System status enumeration"""    HEALTHY = "healthy"
+    """System status enumeration"""
+    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     MAINTENANCE = "maintenance"
 
 class CommissionSystemCoordinator:
-    """    Commission System Coordinator
+    """
+    Commission System Coordinator
     
     Central coordinator for all commission system operations providing
     unified API endpoints, business logic orchestration, and system management.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Commission System Coordinator"""        self.config = config or {}
+        """Initialize Commission System Coordinator"""
+        self.config = config or {}
         
         # Core system components
         self._commission_manager: Optional[CommissionManager] = None
@@ -96,7 +101,8 @@ class CommissionSystemCoordinator:
         logger.info("CommissionSystemCoordinator initialized")
     
     async def initialize(self) -> None:
-        """Initialize commission system"""        try:
+        """Initialize commission system"""
+        try:
             logger.info("Initializing Commission System...")
             self._startup_time = datetime.utcnow()
             
@@ -125,7 +131,8 @@ class CommissionSystemCoordinator:
             raise CommissionError(f"System initialization failed: {e}")
     
     async def _initialize_core_components(self) -> None:
-        """Initialize core system components"""        # Initialize Commission Manager
+        """Initialize core system components"""
+        # Initialize Commission Manager
         self._commission_manager = CommissionManager(self.config)
         await self._commission_manager.initialize()
         
@@ -136,7 +143,8 @@ class CommissionSystemCoordinator:
         logger.info("Core commission components initialized")
     
     async def shutdown(self) -> None:
-        """Shutdown commission system"""        try:
+        """Shutdown commission system"""
+        try:
             logger.info("Shutting down Commission System...")
             self._shutdown_time = datetime.utcnow()
             self._status = SystemStatus.MAINTENANCE
@@ -163,7 +171,8 @@ class CommissionSystemCoordinator:
             logger.error(f"Commission system shutdown error: {e}")
     
     async def _wait_for_active_requests(self, timeout_seconds: int = 30) -> None:
-        """Wait for active requests to complete"""        start_time = datetime.utcnow()
+        """Wait for active requests to complete"""
+        start_time = datetime.utcnow()
         
         while self._active_requests and (datetime.utcnow() - start_time).total_seconds() < timeout_seconds:
             logger.info(f"Waiting for {len(self._active_requests)} active requests to complete...")
@@ -175,7 +184,8 @@ class CommissionSystemCoordinator:
     
     @asynccontextmanager
     async def request_context(self, request_id: str, operation: str):
-        """Request context manager"""        async with self._request_semaphore:
+        """Request context manager"""
+        async with self._request_semaphore:
             self._active_requests[request_id] = {
                 "operation": operation,
                 "start_time": datetime.utcnow(),
@@ -188,7 +198,8 @@ class CommissionSystemCoordinator:
                 self._active_requests.pop(request_id, None)
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""        try:
+        """Get comprehensive system status"""
+        try:
             uptime_seconds = 0
             if self._startup_time:
                 uptime_seconds = (datetime.utcnow() - self._startup_time).total_seconds()
@@ -230,48 +241,56 @@ system_coordinator = CommissionSystemCoordinator()
 
 # Dependency providers
 async def get_system_coordinator() -> CommissionSystemCoordinator:
-    """Get system coordinator dependency"""    if not system_coordinator._initialized:
+    """Get system coordinator dependency"""
+    if not system_coordinator._initialized:
         raise HTTPException(status_code=503, detail="Commission system not initialized")
     return system_coordinator
 
 async def get_commission_manager(
     coordinator: CommissionSystemCoordinator = Depends(get_system_coordinator)
 ) -> CommissionManager:
-    """Get commission manager dependency"""    if not coordinator._commission_manager:
+    """Get commission manager dependency"""
+    if not coordinator._commission_manager:
         raise HTTPException(status_code=503, detail="Commission manager not available")
     return coordinator._commission_manager
 
 async def get_business_service(
     coordinator: CommissionSystemCoordinator = Depends(get_system_coordinator)
 ) -> CommissionBusinessService:
-    """Get business service dependency"""    if not coordinator._business_service:
+    """Get business service dependency"""
+    if not coordinator._business_service:
         raise HTTPException(status_code=503, detail="Business service not available")
     return coordinator._business_service
 
 async def get_analytics_engine(
     coordinator: CommissionSystemCoordinator = Depends(get_system_coordinator)
 ) -> CommissionAnalyticsEngine:
-    """Get analytics engine dependency"""    if not coordinator._analytics_engine:
+    """Get analytics engine dependency"""
+    if not coordinator._analytics_engine:
         raise HTTPException(status_code=503, detail="Analytics engine not available")
     return coordinator._analytics_engine
 
 # Request/Response Models
 class CalculateCommissionRequest(BaseModel):
-    """Calculate commission API request"""    calculation_request: CommissionCalculationRequest
+    """Calculate commission API request"""
+    calculation_request: CommissionCalculationRequest
     options: Optional[Dict[str, Any]] = Field(default_factory=dict)
 
 class ProcessPaymentRequest(BaseModel):
-    """Process payment API request"""    payment_request: PaymentRequest
+    """Process payment API request"""
+    payment_request: PaymentRequest
     options: Optional[Dict[str, Any]] = Field(default_factory=dict)
 
 class GenerateReportRequest(BaseModel):
-    """Generate report API request"""    report_type: str
+    """Generate report API request"""
+    report_type: str
     time_frame: str = "monthly"
     filters: Optional[Dict[str, Any]] = Field(default_factory=dict)
     options: Optional[Dict[str, Any]] = Field(default_factory=dict)
 
 class CalculateMetricRequest(BaseModel):
-    """Calculate metric API request"""    metric: str
+    """Calculate metric API request"""
+    metric: str
     period: str = "monthly"
     start_date: Optional[datetime] = None
     end_date: Optional[datetime] = None
@@ -282,7 +301,8 @@ class CalculateMetricRequest(BaseModel):
 @commission_router.get("/health")
 @performance_monitor
 async def get_system_health():
-    """Get system health status"""    try:
+    """Get system health status"""
+    try:
         return system_coordinator.get_system_status()
     except Exception as e:
         logger.error(f"Health check failed: {e}")
@@ -297,7 +317,8 @@ async def calculate_commission(
     commission_manager: CommissionManager = Depends(get_commission_manager),
     current_user: dict = Depends(get_current_user)
 ):
-    """Calculate commission for content/transaction"""    request_id = f"calc_{uuid.uuid4().hex[:8]}"
+    """Calculate commission for content/transaction"""
+    request_id = f"calc_{uuid.uuid4().hex[:8]}"
     
     try:
         async with system_coordinator.request_context(request_id, "calculate_commission"):
@@ -335,7 +356,8 @@ async def process_payment(
     coordinator: CommissionSystemCoordinator = Depends(get_system_coordinator),
     current_user: dict = Depends(get_current_user)
 ):
-    """Process commission payment"""    request_id = f"pay_{uuid.uuid4().hex[:8]}"
+    """Process commission payment"""
+    request_id = f"pay_{uuid.uuid4().hex[:8]}"
     
     try:
         async with coordinator.request_context(request_id, "process_payment"):
@@ -371,7 +393,8 @@ async def generate_report(
     business_service: CommissionBusinessService = Depends(get_business_service),
     current_user: dict = Depends(get_current_user)
 ):
-    """Generate commission report"""    request_id = f"rpt_{uuid.uuid4().hex[:8]}"
+    """Generate commission report"""
+    request_id = f"rpt_{uuid.uuid4().hex[:8]}"
     
     try:
         logger.info(f"Generating commission report: {request.report_type}")
@@ -409,7 +432,8 @@ async def calculate_metric(
     analytics_engine: CommissionAnalyticsEngine = Depends(get_analytics_engine),
     current_user: dict = Depends(get_current_user)
 ):
-    """Calculate specific analytics metric"""    try:
+    """Calculate specific analytics metric"""
+    try:
         logger.info(f"Calculating metric: {request.metric}")
         
         # Parse metric and period
@@ -446,7 +470,8 @@ async def generate_insights(
     analytics_engine: CommissionAnalyticsEngine = Depends(get_analytics_engine),
     current_user: dict = Depends(get_current_user)
 ):
-    """Generate business insights from metrics"""    try:
+    """Generate business insights from metrics"""
+    try:
         logger.info(f"Generating insights from {len(metrics)} metrics")
         
         # Calculate metrics first
@@ -493,7 +518,8 @@ async def predict_metric(
     analytics_engine: CommissionAnalyticsEngine = Depends(get_analytics_engine),
     current_user: dict = Depends(get_current_user)
 ):
-    """Predict future metric values"""    try:
+    """Predict future metric values"""
+    try:
         logger.info(f"Predicting metric: {metric} for {horizon_days} days")
         
         # Parse metric
@@ -523,7 +549,8 @@ async def get_commission_transactions(
     coordinator: CommissionSystemCoordinator = Depends(get_system_coordinator),
     current_user: dict = Depends(get_current_user)
 ):
-    """Get commission transactions"""    try:
+    """Get commission transactions"""
+    try:
         # This would implement transaction retrieval
         # Mock response for now
         transactions = {
@@ -545,7 +572,8 @@ async def get_commission_transactions(
 
 # Background task functions
 async def _log_calculation_metrics(result, user_id: Optional[str]):
-    """Log calculation metrics"""    try:
+    """Log calculation metrics"""
+    try:
         # This would log metrics to monitoring system
         logger.info(f"Logged calculation metrics for user {user_id}")
     except Exception as e:
@@ -554,7 +582,8 @@ async def _log_calculation_metrics(result, user_id: Optional[str]):
 # System lifecycle management
 @asynccontextmanager
 async def lifespan(app):
-    """Application lifespan manager"""    # Startup
+    """Application lifespan manager"""
+    # Startup
     try:
         logger.info("Starting Commission System...")
         await system_coordinator.initialize()
@@ -569,7 +598,8 @@ async def lifespan(app):
 
 # Initialize router with system coordinator
 def get_commission_router() -> APIRouter:
-    """Get commission API router"""    return commission_router
+    """Get commission API router"""
+    return commission_router
 
 """Professional Commission System Coordination
 © 2025 Fahed Mlaiel - Enterprise System Integration

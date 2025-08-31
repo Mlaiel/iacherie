@@ -10,7 +10,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import numpy as np
 import pandas as pd
 from abc import ABC, abstractmethod
@@ -83,14 +84,16 @@ except:
 
 
 class SentimentLabel(Enum):
-    """Sentiment labels"""    POSITIVE = "positive"
+    """Sentiment labels"""
+    POSITIVE = "positive"
     NEGATIVE = "negative"
     NEUTRAL = "neutral"
     MIXED = "mixed"
 
 
 class EmotionLabel(Enum):
-    """Basic emotion labels"""    JOY = "joy"
+    """Basic emotion labels"""
+    JOY = "joy"
     SADNESS = "sadness"
     ANGER = "anger"
     FEAR = "fear"
@@ -101,14 +104,16 @@ class EmotionLabel(Enum):
 
 
 class IntensityLevel(Enum):
-    """Intensity levels for emotions and sentiments"""    LOW = "low"
+    """Intensity levels for emotions and sentiments"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     EXTREME = "extreme"
 
 
 class ModalityType(Enum):
-    """Types of modalities for analysis"""    TEXT = "text"
+    """Types of modalities for analysis"""
+    TEXT = "text"
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -117,7 +122,8 @@ class ModalityType(Enum):
 
 @dataclass
 class SentimentScore:
-    """Sentiment analysis result"""    positive: float
+    """Sentiment analysis result"""
+    positive: float
     negative: float
     neutral: float
     compound: float
@@ -139,7 +145,8 @@ class SentimentScore:
 
 @dataclass
 class EmotionScore:
-    """Emotion detection result"""    emotions: Dict[EmotionLabel, float]
+    """Emotion detection result"""
+    emotions: Dict[EmotionLabel, float]
     dominant_emotion: EmotionLabel
     confidence: float
     intensity: IntensityLevel
@@ -155,7 +162,8 @@ class EmotionScore:
 
 @dataclass
 class ToneAnalysisResult:
-    """Tone analysis result"""    analytical: float
+    """Tone analysis result"""
+    analytical: float
     confident: float
     tentative: float
     joy: float
@@ -181,7 +189,8 @@ class ToneAnalysisResult:
 
 @dataclass
 class SentimentAnalysisResult:
-    """Complete sentiment analysis result"""    content_id: str
+    """Complete sentiment analysis result"""
+    content_id: str
     modality: ModalityType
     sentiment: SentimentScore
     emotions: EmotionScore
@@ -214,7 +223,8 @@ class SentimentAnalysisResult:
 
 
 class SentimentAnalyzer(ABC):
-    """Abstract base class for sentiment analyzers"""    
+    """Abstract base class for sentiment analyzers"""
+    
     def __init__(self, model_name: str = None, device: str = "auto"):
         self.model_name = model_name
         self.device = self._get_device(device)
@@ -224,20 +234,24 @@ class SentimentAnalyzer(ABC):
         self.is_loaded = False
     
     def _get_device(self, device: str) -> torch.device:
-        """Get appropriate device"""        if device == "auto":
+        """Get appropriate device"""
+        if device == "auto":
             return torch.device("cuda" if torch.cuda.is_available() else "cpu")
         return torch.device(device)
     
     @abstractmethod
     async def load_model(self):
-        """Load the sentiment analysis model"""        pass
+        """Load the sentiment analysis model"""
+        pass
     
     @abstractmethod
     async def analyze_sentiment(self, content: Any, content_id: str = None) -> SentimentAnalysisResult:
-        """Analyze sentiment of content"""        pass
+        """Analyze sentiment of content"""
+        pass
     
     def _determine_intensity(self, score: float) -> IntensityLevel:
-        """Determine intensity level from score"""        if score < 0.3:
+        """Determine intensity level from score"""
+        if score < 0.3:
             return IntensityLevel.LOW
         elif score < 0.6:
             return IntensityLevel.MEDIUM
@@ -247,7 +261,8 @@ class SentimentAnalyzer(ABC):
             return IntensityLevel.EXTREME
     
     def _determine_sentiment_label(self, compound_score: float) -> SentimentLabel:
-        """Determine sentiment label from compound score"""        if compound_score >= 0.05:
+        """Determine sentiment label from compound score"""
+        if compound_score >= 0.05:
             return SentimentLabel.POSITIVE
         elif compound_score <= -0.05:
             return SentimentLabel.NEGATIVE
@@ -256,7 +271,8 @@ class SentimentAnalyzer(ABC):
 
 
 class TextSentimentAnalyzer(SentimentAnalyzer):
-    """Advanced text sentiment analyzer"""    
+    """Advanced text sentiment analyzer"""
+    
     def __init__(self, model_name: str = "cardiffnlp/twitter-roberta-base-sentiment-latest", device: str = "auto"):
         super().__init__(model_name, device)
         self.roberta_pipeline = None
@@ -270,7 +286,8 @@ class TextSentimentAnalyzer(SentimentAnalyzer):
         self.intensity_modifiers = self._load_intensity_modifiers()
     
     async def load_model(self):
-        """Load text sentiment analysis models"""        try:
+        """Load text sentiment analysis models"""
+        try:
             # Load RoBERTa model for sentiment
             self.roberta_pipeline = pipeline(
                 "sentiment-analysis",
@@ -300,7 +317,8 @@ class TextSentimentAnalyzer(SentimentAnalyzer):
             raise
     
     async def analyze_sentiment(self, text: str, content_id: str = None) -> SentimentAnalysisResult:
-        """Analyze sentiment of text content"""        if not self.is_loaded:
+        """Analyze sentiment of text content"""
+        if not self.is_loaded:
             await self.load_model()
         
         start_time = datetime.now()
@@ -368,7 +386,8 @@ class TextSentimentAnalyzer(SentimentAnalyzer):
             raise
     
     async def _preprocess_text(self, text: str) -> str:
-        """Preprocess text for sentiment analysis"""        # Handle emojis
+        """Preprocess text for sentiment analysis"""
+        # Handle emojis
         text = self._process_emojis(text)
         
         # Clean text
@@ -380,7 +399,8 @@ class TextSentimentAnalyzer(SentimentAnalyzer):
         return text.strip()
     
     def _process_emojis(self, text: str) -> str:
-        """Convert emojis to text sentiment indicators"""        # Define emoji sentiment mapping
+        """Convert emojis to text sentiment indicators"""
+        # Define emoji sentiment mapping
         positive_emojis = ['😊', '😄', '😁', '🙂', '😍', '🥰', '😘', '🤗', '👍', '❤️', '💕', '🎉']
         negative_emojis = ['😢', '😭', '😔', '😞', '😒', '😠', '😡', '🤬', '💔', '😰', '😱', '👎']
         
@@ -395,7 +415,8 @@ class TextSentimentAnalyzer(SentimentAnalyzer):
         return text
     
     def _parse_roberta_output(self, result: Dict[str, Any]) -> Dict[str, float]:
-        """Parse RoBERTa model output"""        label = result['label'].lower()
+        """Parse RoBERTa model output"""
+        label = result['label'].lower()
         score = result['score']
         
         # Map to standard format
@@ -407,7 +428,8 @@ class TextSentimentAnalyzer(SentimentAnalyzer):
             return {'positive': 0.0, 'negative': 0.0, 'neutral': score}
     
     def _parse_emotion_output(self, results: List[Dict[str, Any]]) -> EmotionScore:
-        """Parse emotion model output"""        emotions = {}
+        """Parse emotion model output"""
+        emotions = {}
         
         # Map model labels to EmotionLabel enum
         label_mapping = {
@@ -450,7 +472,8 @@ class TextSentimentAnalyzer(SentimentAnalyzer):
         vader_scores: Dict[str, float],
         roberta_scores: Dict[str, float]
     ) -> SentimentScore:
-        """Combine VADER and RoBERTa sentiment scores"""        # Weighted combination
+        """Combine VADER and RoBERTa sentiment scores"""
+        # Weighted combination
         vader_weight = 0.3
         roberta_weight = 0.7
         
@@ -483,7 +506,8 @@ class TextSentimentAnalyzer(SentimentAnalyzer):
         )
     
     async def _analyze_tone(self, text: str) -> ToneAnalysisResult:
-        """Analyze tone characteristics of text"""        # Simple tone analysis based on linguistic features
+        """Analyze tone characteristics of text"""
+        # Simple tone analysis based on linguistic features
         words = word_tokenize(text.lower())
         
         # Analytical tone indicators
@@ -538,7 +562,8 @@ class TextSentimentAnalyzer(SentimentAnalyzer):
         )
     
     async def _extract_emotional_arc(self, text: str) -> List[Tuple[float, float]]:
-        """Extract emotional arc for narrative texts"""        sentences = sent_tokenize(text)
+        """Extract emotional arc for narrative texts"""
+        sentences = sent_tokenize(text)
         if len(sentences) < 3:
             return []
         
@@ -555,7 +580,8 @@ class TextSentimentAnalyzer(SentimentAnalyzer):
         return emotional_arc
     
     async def _extract_sentiment_keywords(self, text: str) -> List[str]:
-        """Extract keywords that contribute to sentiment"""        keywords = []
+        """Extract keywords that contribute to sentiment"""
+        keywords = []
         
         if self.nlp:
             doc = self.nlp(text)
@@ -582,7 +608,8 @@ class TextSentimentAnalyzer(SentimentAnalyzer):
         return list(set(keywords))[:20]
     
     async def _extract_sentiment_phrases(self, text: str) -> List[Tuple[str, float]]:
-        """Extract phrases with their sentiment scores"""        sentences = sent_tokenize(text)
+        """Extract phrases with their sentiment scores"""
+        sentences = sent_tokenize(text)
         phrases = []
         
         for sentence in sentences:
@@ -597,7 +624,8 @@ class TextSentimentAnalyzer(SentimentAnalyzer):
         return phrases[:10]  # Return top 10 most emotional phrases
     
     def _load_emotion_lexicon(self) -> Dict[str, Dict[str, float]]:
-        """Load emotion lexicon for keyword-based analysis"""        # Simplified emotion lexicon
+        """Load emotion lexicon for keyword-based analysis"""
+        # Simplified emotion lexicon
         return {
             'joy': {'happy': 0.8, 'joyful': 0.9, 'excited': 0.7, 'cheerful': 0.6},
             'sadness': {'sad': 0.8, 'depressed': 0.9, 'melancholy': 0.7, 'sorrowful': 0.8},
@@ -608,7 +636,8 @@ class TextSentimentAnalyzer(SentimentAnalyzer):
         }
     
     def _load_intensity_modifiers(self) -> Dict[str, float]:
-        """Load intensity modifiers"""        return {
+        """Load intensity modifiers"""
+        return {
             'very': 1.3,
             'extremely': 1.5,
             'incredibly': 1.4,
@@ -623,7 +652,8 @@ class TextSentimentAnalyzer(SentimentAnalyzer):
 
 
 class MultiModalSentimentAnalyzer:
-    """Multi-modal sentiment analyzer for combined text, audio, and visual content"""    
+    """Multi-modal sentiment analyzer for combined text, audio, and visual content"""
+    
     def __init__(self, device: str = "auto"):
         self.device = device
         self.text_analyzer = TextSentimentAnalyzer(device=device)
@@ -638,7 +668,8 @@ class MultiModalSentimentAnalyzer:
         }
     
     async def load_models(self):
-        """Load all modal-specific analyzers"""        try:
+        """Load all modal-specific analyzers"""
+        try:
             await self.text_analyzer.load_model()
             # Additional modal analyzers would be loaded here
             
@@ -654,7 +685,8 @@ class MultiModalSentimentAnalyzer:
         content: Dict[str, Any],
         content_id: str = None
     ) -> SentimentAnalysisResult:
-        """Analyze sentiment across multiple modalities"""        if not self.is_loaded:
+        """Analyze sentiment across multiple modalities"""
+        if not self.is_loaded:
             await self.load_models()
         
         start_time = datetime.now()
@@ -694,7 +726,8 @@ class MultiModalSentimentAnalyzer:
         return fused_result
     
     async def _analyze_audio_sentiment(self, audio_path: str, content_id: str) -> SentimentAnalysisResult:
-        """Analyze sentiment from audio content"""        # Placeholder for audio sentiment analysis
+        """Analyze sentiment from audio content"""
+        # Placeholder for audio sentiment analysis
         # This would involve:
         # 1. Speech-to-text conversion
         # 2. Prosodic feature extraction (pitch, tone, pace)
@@ -712,7 +745,8 @@ class MultiModalSentimentAnalyzer:
         )
     
     async def _analyze_visual_sentiment(self, image_path: str, content_id: str) -> SentimentAnalysisResult:
-        """Analyze sentiment from visual content"""        # Placeholder for visual sentiment analysis
+        """Analyze sentiment from visual content"""
+        # Placeholder for visual sentiment analysis
         # This would involve:
         # 1. Facial expression recognition
         # 2. Scene emotion detection
@@ -735,7 +769,8 @@ class MultiModalSentimentAnalyzer:
         modal_results: Dict[str, SentimentAnalysisResult],
         content_id: str
     ) -> SentimentAnalysisResult:
-        """Fuse results from different modalities"""        if not modal_results:
+        """Fuse results from different modalities"""
+        if not modal_results:
             raise ValueError("No modal results to fuse")
         
         # Weighted fusion of sentiment scores
@@ -870,7 +905,8 @@ class MultiModalSentimentAnalyzer:
         )
     
     def update_fusion_weights(self, new_weights: Dict[str, float]):
-        """Update fusion weights for different modalities"""        total_weight = sum(new_weights.values())
+        """Update fusion weights for different modalities"""
+        total_weight = sum(new_weights.values())
         if abs(total_weight - 1.0) > 0.01:
             # Normalize weights
             new_weights = {k: v / total_weight for k, v in new_weights.items()}
@@ -881,12 +917,14 @@ class MultiModalSentimentAnalyzer:
 
 # Utility classes for specialized analysis
 class EmotionDetector(TextSentimentAnalyzer):
-    """Specialized emotion detector"""    
+    """Specialized emotion detector"""
+    
     def __init__(self, device: str = "auto"):
         super().__init__("j-hartmann/emotion-english-distilroberta-base", device)
     
     async def detect_emotions_only(self, text: str) -> EmotionScore:
-        """Detect only emotions, optimized for speed"""        if not self.is_loaded:
+        """Detect only emotions, optimized for speed"""
+        if not self.is_loaded:
             await self.load_model()
         
         emotion_result = self.emotion_model(text[:512])
@@ -894,12 +932,14 @@ class EmotionDetector(TextSentimentAnalyzer):
 
 
 class ToneAnalyzer(TextSentimentAnalyzer):
-    """Specialized tone analyzer"""    
+    """Specialized tone analyzer"""
+    
     def __init__(self, device: str = "auto"):
         super().__init__(device=device)
     
     async def analyze_tone_only(self, text: str) -> ToneAnalysisResult:
-        """Analyze only tone characteristics"""        return await self._analyze_tone(text)
+        """Analyze only tone characteristics"""
+        return await self._analyze_tone(text)
 
 
 # Export main classes

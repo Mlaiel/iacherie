@@ -8,7 +8,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Tuple
 from datetime import datetime
@@ -21,7 +22,8 @@ import statistics
 
 @dataclass
 class QualityScore:
-    """Data class for quality scores"""    overall_score: float
+    """Data class for quality scores"""
+    overall_score: float
     readability_score: float
     engagement_score: float
     seo_score: float
@@ -34,7 +36,8 @@ class QualityScore:
 
 
 class QualityMetrics:
-    """    Advanced quality metrics system that provides:
+    """
+    Advanced quality metrics system that provides:
     
     - Multi-dimensional quality assessment
     - Readability analysis (Flesch, Gunning Fog, etc.)
@@ -44,9 +47,11 @@ class QualityMetrics:
     - Technical quality evaluation
     - Engagement potential prediction
     - Competitive benchmarking
-    """    
+    """
+    
     def __init__(self):
-        """Initialize quality metrics system"""        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize quality metrics system"""
+        self.logger = logging.getLogger(self.__class__.__name__)
         
         # Quality dimensions and weights
         self.quality_dimensions = {
@@ -151,7 +156,8 @@ class QualityMetrics:
         brand_voice: Optional[str] = None,
         seo_keywords: Optional[List[str]] = None
     ) -> QualityScore:
-        """        Comprehensive content quality analysis.
+        """
+        Comprehensive content quality analysis.
         
         Args:
             content: Content to analyze
@@ -162,7 +168,8 @@ class QualityMetrics:
             
         Returns:
             Comprehensive quality score with detailed breakdown
-        """        try:
+        """
+        try:
             # Initialize scores dictionary
             dimension_scores = {}
             improvement_suggestions = []
@@ -224,7 +231,8 @@ class QualityMetrics:
             )
     
     async def _analyze_readability(self, content: str, target_audience: Optional[str]) -> float:
-        """Analyze content readability"""        try:
+        """Analyze content readability"""
+        try:
             # Calculate multiple readability scores
             flesch_score = self._flesch_reading_ease(content)
             flesch_grade = self._flesch_kincaid_grade(content)
@@ -274,7 +282,8 @@ class QualityMetrics:
             return 0.5
     
     async def _analyze_engagement_potential(self, content: str, content_type: str) -> float:
-        """Analyze content engagement potential"""        try:
+        """Analyze content engagement potential"""
+        try:
             engagement_score = 0.0
             content_lower = content.lower()
             
@@ -335,7 +344,8 @@ class QualityMetrics:
             return 0.5
     
     async def _analyze_seo_quality(self, content: str, keywords: Optional[List[str]]) -> float:
-        """Analyze SEO quality"""        try:
+        """Analyze SEO quality"""
+        try:
             seo_score = 0.0
             
             # Check content structure
@@ -392,7 +402,8 @@ class QualityMetrics:
             return 0.5
     
     async def _analyze_originality(self, content: str) -> float:
-        """Analyze content originality and uniqueness"""        try:
+        """Analyze content originality and uniqueness"""
+        try:
             originality_score = 0.5  # Base score
             
             # Check for unique insights (simplified)
@@ -439,7 +450,8 @@ class QualityMetrics:
             return 0.5
     
     async def _analyze_technical_quality(self, content: str) -> float:
-        """Analyze technical quality (grammar, spelling, formatting)"""        try:
+        """Analyze technical quality (grammar, spelling, formatting)"""
+        try:
             technical_score = 0.8  # Start with high base score
             
             # Check for common grammar issues
@@ -491,7 +503,8 @@ class QualityMetrics:
             return 0.7
     
     async def _analyze_brand_alignment(self, content: str, brand_voice: Optional[str]) -> float:
-        """Analyze brand voice alignment"""        try:
+        """Analyze brand voice alignment"""
+        try:
             if not brand_voice or brand_voice not in self.brand_voice_patterns:
                 return 0.7  # Neutral score when no brand voice specified
             
@@ -538,7 +551,8 @@ class QualityMetrics:
             return 0.7
     
     async def _analyze_completeness(self, content: str, content_type: str) -> float:
-        """Analyze content completeness and informativeness"""        try:
+        """Analyze content completeness and informativeness"""
+        try:
             completeness_score = 0.0
             
             # Check information depth based on content type
@@ -605,11 +619,13 @@ class QualityMetrics:
             return 0.6
     
     def _split_sentences(self, text: str) -> List[str]:
-        """Split text into sentences"""        sentences = re.split(r'[.!?]+', text)
+        """Split text into sentences"""
+        sentences = re.split(r'[.!?]+', text)
         return [s.strip() for s in sentences if s.strip()]
     
     def _flesch_reading_ease(self, text: str) -> float:
-        """Calculate Flesch Reading Ease score"""        sentences = self._split_sentences(text)
+        """Calculate Flesch Reading Ease score"""
+        sentences = self._split_sentences(text)
         words = text.split()
         syllables = sum(self._count_syllables(word) for word in words)
         
@@ -620,7 +636,8 @@ class QualityMetrics:
         return max(0, min(100, score))
     
     def _flesch_kincaid_grade(self, text: str) -> float:
-        """Calculate Flesch-Kincaid Grade Level"""        sentences = self._split_sentences(text)
+        """Calculate Flesch-Kincaid Grade Level"""
+        sentences = self._split_sentences(text)
         words = text.split()
         syllables = sum(self._count_syllables(word) for word in words)
         
@@ -631,7 +648,8 @@ class QualityMetrics:
         return max(0, grade)
     
     def _gunning_fog_index(self, text: str) -> float:
-        """Calculate Gunning Fog Index"""        sentences = self._split_sentences(text)
+        """Calculate Gunning Fog Index"""
+        sentences = self._split_sentences(text)
         words = text.split()
         complex_words = sum(1 for word in words if self._count_syllables(word) >= 3)
         
@@ -642,7 +660,8 @@ class QualityMetrics:
         return max(0, fog)
     
     def _smog_index(self, text: str) -> float:
-        """Calculate SMOG Index"""        sentences = self._split_sentences(text)
+        """Calculate SMOG Index"""
+        sentences = self._split_sentences(text)
         if len(sentences) < 30:
             return self._gunning_fog_index(text)  # Fallback for short text
         
@@ -653,7 +672,8 @@ class QualityMetrics:
         return max(0, smog)
     
     def _coleman_liau_index(self, text: str) -> float:
-        """Calculate Coleman-Liau Index"""        sentences = self._split_sentences(text)
+        """Calculate Coleman-Liau Index"""
+        sentences = self._split_sentences(text)
         words = text.split()
         letters = sum(len(re.sub(r'[^a-zA-Z]', '', word)) for word in words)
         
@@ -667,7 +687,8 @@ class QualityMetrics:
         return max(0, cli)
     
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word (simplified)"""        word = word.lower().strip()
+        """Count syllables in a word (simplified)"""
+        word = word.lower().strip()
         if not word:
             return 0
         
@@ -693,7 +714,8 @@ class QualityMetrics:
         return max(1, syllable_count)
     
     def _get_quality_grade(self, score: float) -> str:
-        """Convert numeric score to letter grade"""        for grade, threshold in self.grade_boundaries.items():
+        """Convert numeric score to letter grade"""
+        for grade, threshold in self.grade_boundaries.items():
             if score >= threshold:
                 return grade
         return 'F'
@@ -704,7 +726,8 @@ class QualityMetrics:
         content: str,
         content_type: str
     ) -> List[str]:
-        """Generate specific improvement suggestions"""        suggestions = []
+        """Generate specific improvement suggestions"""
+        suggestions = []
         
         # Readability improvements
         if dimension_scores.get('readability', 0) < 0.7:
@@ -755,7 +778,8 @@ class QualityMetrics:
 
 
 class ContentQualityAnalyzer:
-    """Advanced content quality analysis system"""    
+    """Advanced content quality analysis system"""
+    
     def __init__(self):
         self.analyzer_config = {
             'grammar_weight': 0.3,
@@ -766,7 +790,8 @@ class ContentQualityAnalyzer:
         self.logger = logging.getLogger(self.__class__.__name__)
     
     def analyze_structure(self, content: str) -> Dict[str, Any]:
-        """Analyze content structure and organization"""        paragraphs = [p.strip() for p in content.split('\n\n') if p.strip()]
+        """Analyze content structure and organization"""
+        paragraphs = [p.strip() for p in content.split('\n\n') if p.strip()]
         sentences = [s.strip() for s in content.split('.') if s.strip()]
         words = content.split()
         
@@ -801,7 +826,8 @@ class ContentQualityAnalyzer:
         return structure_metrics
     
     def analyze_comprehensiveness(self, content: str, topic: str = "") -> Dict[str, Any]:
-        """Analyze content comprehensiveness and depth"""        words = content.split()
+        """Analyze content comprehensiveness and depth"""
+        words = content.split()
         sentences = [s.strip() for s in content.split('.') if s.strip()]
         
         comprehensiveness_metrics = {

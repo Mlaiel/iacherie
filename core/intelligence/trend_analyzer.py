@@ -10,7 +10,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright © 2025 Fahed Mlaiel - All rights reserved
 WARNING: Any unauthorized copying, modification, distribution or use of this code
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
 from dataclasses import dataclass, field
@@ -44,7 +45,8 @@ from ..cache.redis_cache import RedisCache
 
 
 class TrendType(Enum):
-    """Types of trends"""    VIRAL_CONTENT = "viral_content"
+    """Types of trends"""
+    VIRAL_CONTENT = "viral_content"
     HASHTAG_TREND = "hashtag_trend"
     TOPIC_TREND = "topic_trend"
     PLATFORM_TREND = "platform_trend"
@@ -55,7 +57,8 @@ class TrendType(Enum):
 
 
 class TrendStage(Enum):
-    """Trend lifecycle stages"""    EMERGING = "emerging"
+    """Trend lifecycle stages"""
+    EMERGING = "emerging"
     GROWING = "growing"
     PEAK = "peak"
     DECLINING = "declining"
@@ -63,7 +66,8 @@ class TrendStage(Enum):
 
 
 class TrendScope(Enum):
-    """Trend geographical scope"""    LOCAL = "local"
+    """Trend geographical scope"""
+    LOCAL = "local"
     REGIONAL = "regional"
     NATIONAL = "national"
     GLOBAL = "global"
@@ -71,7 +75,8 @@ class TrendScope(Enum):
 
 @dataclass
 class TrendData:
-    """Trend data structure"""    trend_id: str
+    """Trend data structure"""
+    trend_id: str
     trend_type: TrendType
     trend_stage: TrendStage
     trend_scope: TrendScope
@@ -102,7 +107,8 @@ class TrendData:
 
 @dataclass
 class ViralPrediction:
-    """Viral content prediction"""    prediction_id: str
+    """Viral content prediction"""
+    prediction_id: str
     content_id: str
     viral_probability: float
     estimated_reach: int
@@ -119,7 +125,8 @@ class ViralPrediction:
 
 @dataclass
 class MarketIntelligence:
-    """Market intelligence data"""    intelligence_id: str
+    """Market intelligence data"""
+    intelligence_id: str
     market_segment: str
     market_size: int
     growth_rate: float
@@ -137,7 +144,8 @@ class MarketIntelligence:
 
 
 class TrendAnalyzer:
-    """    Advanced trend analysis engine for content creators
+    """
+    Advanced trend analysis engine for content creators
     
     Provides comprehensive trend analysis including:
     - Real-time trend detection across platforms
@@ -146,9 +154,11 @@ class TrendAnalyzer:
     - Trend lifecycle tracking and prediction
     - Geographic and demographic trend mapping
     - Content optimization recommendations
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize trend analyzer"""        self.config = config
+        """Initialize trend analyzer"""
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -183,7 +193,8 @@ class TrendAnalyzer:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize ML models for trend analysis"""        try:
+        """Initialize ML models for trend analysis"""
+        try:
             # Trend detection model
             class TrendDetector(nn.Module):
                 def __init__(self, input_size: int = 100, hidden_size: int = 128):
@@ -296,7 +307,8 @@ class TrendAnalyzer:
         geographic_scope: TrendScope = TrendScope.GLOBAL,
         time_window_hours: int = 24
     ) -> List[TrendData]:
-        """        Analyze current trending topics and content across platforms
+        """
+        Analyze current trending topics and content across platforms
         
         Args:
             platforms: Specific platforms to analyze
@@ -306,7 +318,8 @@ class TrendAnalyzer:
             
         Returns:
             List of current trends with analysis
-        """        try:
+        """
+        try:
             self.logger.info(f"Analyzing current trends for {time_window_hours}h window")
             
             # Get platform data
@@ -375,7 +388,8 @@ class TrendAnalyzer:
         creator_profile: Dict[str, Any] = None,
         target_platforms: List[str] = None
     ) -> ViralPrediction:
-        """        Predict viral potential of content before posting
+        """
+        Predict viral potential of content before posting
         
         Args:
             content_data: Content metadata and features
@@ -384,7 +398,8 @@ class TrendAnalyzer:
             
         Returns:
             Viral prediction with optimization suggestions
-        """        try:
+        """
+        try:
             self.logger.info(f"Predicting viral potential for content {content_data.get('content_id', 'unknown')}")
             
             # Extract features for prediction
@@ -479,7 +494,8 @@ class TrendAnalyzer:
         categories: List[str] = None,
         time_window_hours: int = 24
     ) -> Dict[str, Any]:
-        """Collect trending data from specific platform"""        try:
+        """Collect trending data from specific platform"""
+        try:
             # Get trending content from platform
             trending_content = await self.social_crawler.get_trending_content(
                 platform=platform,
@@ -514,7 +530,8 @@ class TrendAnalyzer:
             return {'platform': platform, 'trending_content': [], 'trending_hashtags': [], 'engagement_data': {}}
     
     async def _analyze_hashtag_trends(self, trending_data: Dict[str, Any]) -> List[TrendData]:
-        """Analyze hashtag trends across platforms"""        hashtag_trends = []
+        """Analyze hashtag trends across platforms"""
+        hashtag_trends = []
         
         try:
             # Aggregate hashtags across platforms
@@ -614,7 +631,8 @@ class TrendAnalyzer:
             return []
     
     async def _analyze_topic_trends(self, trending_data: Dict[str, Any]) -> List[TrendData]:
-        """Analyze topic trends using NLP"""        topic_trends = []
+        """Analyze topic trends using NLP"""
+        topic_trends = []
         
         try:
             # Extract and process text content
@@ -688,7 +706,8 @@ class TrendAnalyzer:
             return []
     
     async def _analyze_format_trends(self, trending_data: Dict[str, Any]) -> List[TrendData]:
-        """Analyze content format trends"""        format_trends = []
+        """Analyze content format trends"""
+        format_trends = []
         
         try:
             # Analyze content formats across platforms
@@ -769,7 +788,8 @@ class TrendAnalyzer:
             return []
     
     async def _analyze_music_trends(self, trending_data: Dict[str, Any]) -> List[TrendData]:
-        """Analyze music and audio trends"""        music_trends = []
+        """Analyze music and audio trends"""
+        music_trends = []
         
         try:
             # Extract music/audio data
@@ -853,7 +873,8 @@ class TrendAnalyzer:
             return []
     
     async def _analyze_challenge_trends(self, trending_data: Dict[str, Any]) -> List[TrendData]:
-        """Analyze challenge and meme trends"""        challenge_trends = []
+        """Analyze challenge and meme trends"""
+        challenge_trends = []
         
         try:
             # Identify challenges from content
@@ -955,7 +976,8 @@ class TrendAnalyzer:
         total_engagement: float,
         platform_count: int
     ) -> float:
-        """Calculate trend momentum score"""        try:
+        """Calculate trend momentum score"""
+        try:
             # Normalize components
             growth_component = min(growth_rate, 1.0)
             engagement_component = min(total_engagement / 1000000, 1.0)  # Normalize to 1M
@@ -975,7 +997,8 @@ class TrendAnalyzer:
             return 0.5
     
     async def _extract_content_features(self, content_data: Dict[str, Any]) -> List[float]:
-        """Extract content features for viral prediction"""        features = []
+        """Extract content features for viral prediction"""
+        features = []
         
         try:
             # Content type features
@@ -1029,7 +1052,8 @@ class TrendAnalyzer:
         content_data: Dict[str, Any],
         creator_profile: Dict[str, Any] = None
     ) -> List[float]:
-        """Extract engagement-related features"""        features = []
+        """Extract engagement-related features"""
+        features = []
         
         try:
             if creator_profile:
@@ -1073,7 +1097,8 @@ class TrendAnalyzer:
             return [0.5] * 50
     
     async def _extract_temporal_features(self, content_data: Dict[str, Any]) -> List[float]:
-        """Extract temporal features for prediction"""        features = []
+        """Extract temporal features for prediction"""
+        features = []
         
         try:
             now = datetime.now()
@@ -1120,18 +1145,21 @@ class TrendAnalyzer:
             return [0.5] * 50
     
     def _get_optimal_hour_score(self, hour: int) -> float:
-        """Get optimal hour score based on general engagement patterns"""        # General peak hours: 6-9 AM, 12-1 PM, 6-9 PM
+        """Get optimal hour score based on general engagement patterns"""
+        # General peak hours: 6-9 AM, 12-1 PM, 6-9 PM
         peak_hours = [6, 7, 8, 9, 12, 13, 18, 19, 20, 21]
         return 0.8 if hour in peak_hours else 0.4
     
     def _get_optimal_weekday_score(self, weekday: int) -> float:
-        """Get optimal weekday score"""        # Monday=0, Sunday=6
+        """Get optimal weekday score"""
+        # Monday=0, Sunday=6
         # Generally Tuesday-Thursday and Sunday are good
         good_days = [1, 2, 3, 6]  # Tue, Wed, Thu, Sun
         return 0.8 if weekday in good_days else 0.6
     
     def _get_platform_timing_score(self, platform: str, hour: int, weekday: int) -> float:
-        """Get platform-specific timing score"""        platform_optimal_times = {
+        """Get platform-specific timing score"""
+        platform_optimal_times = {
             'instagram': {
                 'hours': [6, 7, 8, 12, 17, 18, 19, 20],
                 'weekdays': [1, 2, 3, 4]  # Tue-Fri
@@ -1163,7 +1191,8 @@ class TrendAnalyzer:
         engagement_features: List[float],
         temporal_features: List[float]
     ) -> float:
-        """Predict viral probability using ML model"""        try:
+        """Predict viral probability using ML model"""
+        try:
             if self.viral_predictor:
                 with torch.no_grad():
                     content_tensor = torch.tensor(content_features).float().unsqueeze(0)
@@ -1191,7 +1220,8 @@ class TrendAnalyzer:
         engagement_features: List[float],
         temporal_features: List[float]
     ) -> float:
-        """Rule-based viral probability prediction"""        try:
+        """Rule-based viral probability prediction"""
+        try:
             # Extract key features
             content_quality = np.mean(content_features[:10])
             engagement_potential = np.mean(engagement_features[:10])
@@ -1227,17 +1257,21 @@ class TrendAnalyzer:
             return 0.1
     
     def _generate_id(self) -> str:
-        """Generate unique ID"""        return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]
+        """Generate unique ID"""
+        return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]
 
 
 class ViralPredictionEngine:
-    """    Specialized engine for viral content prediction
+    """
+    Specialized engine for viral content prediction
     
     Uses ensemble methods and continuous learning to improve
     viral prediction accuracy over time.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize viral prediction engine"""        self.config = config
+        """Initialize viral prediction engine"""
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Ensemble models
@@ -1247,7 +1281,8 @@ class ViralPredictionEngine:
         self._initialize_ensemble_models()
     
     def _initialize_ensemble_models(self):
-        """Initialize ensemble of prediction models"""        try:
+        """Initialize ensemble of prediction models"""
+        try:
             # Model 1: Neural network
             self.prediction_models.append(self._create_neural_model())
             self.model_weights.append(0.4)
@@ -1268,7 +1303,8 @@ class ViralPredictionEngine:
             raise
     
     def _create_neural_model(self):
-        """Create neural network for viral prediction"""        class ViralNN(nn.Module):
+        """Create neural network for viral prediction"""
+        class ViralNN(nn.Module):
             def __init__(self):
                 super().__init__()
                 self.layers = nn.Sequential(
@@ -1291,13 +1327,16 @@ class ViralPredictionEngine:
 
 
 class MarketIntelligence:
-    """    Market intelligence engine for content creators
+    """
+    Market intelligence engine for content creators
     
     Provides insights into market opportunities, competition analysis,
     and strategic recommendations for content positioning.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize market intelligence engine"""        self.config = config
+        """Initialize market intelligence engine"""
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize components for market analysis
@@ -1309,7 +1348,8 @@ class MarketIntelligence:
         target_audience: Dict[str, Any],
         geographic_market: str = "global"
     ) -> MarketIntelligence:
-        """        Analyze market opportunity for specific content niche
+        """
+        Analyze market opportunity for specific content niche
         
         Args:
             content_niche: Content niche or category
@@ -1318,7 +1358,8 @@ class MarketIntelligence:
             
         Returns:
             Market intelligence analysis
-        """        try:
+        """
+        try:
             self.logger.info(f"Analyzing market opportunity for {content_niche}")
             
             # This would implement comprehensive market analysis
@@ -1361,4 +1402,5 @@ class MarketIntelligence:
             )
     
     def _generate_id(self) -> str:
-        """Generate unique ID"""        return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]
+        """Generate unique ID"""
+        return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]

@@ -23,7 +23,8 @@ ENTERPRISE FEATURES:
 - Churn prediction and customer lifetime value
 - A/B testing framework for payment flows
 - Compliance reporting and audit trails
-"""from typing import Dict, Any, Optional, List, Union, Tuple
+"""
+from typing import Dict, Any, Optional, List, Union, Tuple
 from decimal import Decimal
 from datetime import datetime, timedelta, date
 from dataclasses import dataclass, field
@@ -59,7 +60,8 @@ settings = get_settings()
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""    REALTIME = "realtime"
+    """Analytics timeframe options"""
+    REALTIME = "realtime"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -69,7 +71,8 @@ class AnalyticsTimeframe(Enum):
 
 
 class MetricType(Enum):
-    """Metric types for analytics"""    VOLUME = "volume"
+    """Metric types for analytics"""
+    VOLUME = "volume"
     REVENUE = "revenue"
     COUNT = "count"
     AVERAGE = "average"
@@ -82,7 +85,8 @@ class MetricType(Enum):
 
 @dataclass
 class AnalyticsQuery:
-    """Analytics query parameters"""    metric_type: MetricType
+    """Analytics query parameters"""
+    metric_type: MetricType
     timeframe: AnalyticsTimeframe
     start_date: Optional[datetime] = None
     end_date: Optional[datetime] = None
@@ -94,7 +98,8 @@ class AnalyticsQuery:
 
 @dataclass
 class AnalyticsResult:
-    """Analytics result data"""    query: AnalyticsQuery
+    """Analytics result data"""
+    query: AnalyticsQuery
     data: List[Dict[str, Any]]
     metadata: Dict[str, Any]
     generated_at: datetime = field(default_factory=datetime.utcnow)
@@ -105,7 +110,8 @@ class AnalyticsResult:
 
 @dataclass
 class RevenueMetrics:
-    """Revenue analytics metrics"""    total_revenue: Decimal
+    """Revenue analytics metrics"""
+    total_revenue: Decimal
     gross_revenue: Decimal
     net_revenue: Decimal
     fees_paid: Decimal
@@ -120,7 +126,8 @@ class RevenueMetrics:
 
 @dataclass
 class CustomerSegment:
-    """Customer segment analysis"""    segment_id: str
+    """Customer segment analysis"""
+    segment_id: str
     segment_name: str
     customer_count: int
     average_ltv: Decimal
@@ -133,7 +140,8 @@ class CustomerSegment:
 
 @dataclass
 class PaymentMethodPerformance:
-    """Payment method performance metrics"""    payment_method: PaymentMethodType
+    """Payment method performance metrics"""
+    payment_method: PaymentMethodType
     provider: PaymentProvider
     success_rate: float
     failure_rate: float
@@ -146,8 +154,10 @@ class PaymentMethodPerformance:
 
 
 class AdvancedTransactionAnalytics:
-    """    Enterprise-grade transaction analytics engine
-    """    
+    """
+    Enterprise-grade transaction analytics engine
+    """
+    
     def __init__(self):
         # Repository dependencies
         self.transaction_repo = PaymentTransactionRepository()
@@ -170,8 +180,10 @@ class AdvancedTransactionAnalytics:
         logger.info("Advanced Transaction Analytics Engine initialized")
     
     async def generate_real_time_dashboard(self) -> Dict[str, Any]:
-        """        Generate real-time analytics dashboard data
-        """        try:
+        """
+        Generate real-time analytics dashboard data
+        """
+        try:
             # Parallel data fetching
             tasks = [
                 self._get_real_time_metrics(),
@@ -206,8 +218,10 @@ class AdvancedTransactionAnalytics:
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTHLY,
         periods: int = 12
     ) -> Dict[str, Any]:
-        """        Comprehensive revenue trend analysis
-        """        try:
+        """
+        Comprehensive revenue trend analysis
+        """
+        try:
             # Calculate date range
             end_date = datetime.utcnow()
             if timeframe == AnalyticsTimeframe.DAILY:
@@ -273,8 +287,10 @@ class AdvancedTransactionAnalytics:
             return {'error': str(e)}
     
     async def perform_customer_segmentation(self) -> List[CustomerSegment]:
-        """        Advanced customer segmentation using ML clustering
-        """        try:
+        """
+        Advanced customer segmentation using ML clustering
+        """
+        try:
             # Get customer transaction data
             customer_data = await self._get_customer_analytics_data()
             
@@ -347,8 +363,10 @@ class AdvancedTransactionAnalytics:
             return []
     
     async def analyze_payment_method_performance(self) -> List[PaymentMethodPerformance]:
-        """        Comprehensive payment method performance analysis
-        """        try:
+        """
+        Comprehensive payment method performance analysis
+        """
+        try:
             # Get payment method data
             performance_data = await self.transaction_repo.get_payment_method_analytics()
             
@@ -404,8 +422,10 @@ class AdvancedTransactionAnalytics:
             return []
     
     async def generate_predictive_analytics(self) -> Dict[str, Any]:
-        """        Generate predictive analytics for business insights
-        """        try:
+        """
+        Generate predictive analytics for business insights
+        """
+        try:
             predictions = {}
             
             # Revenue predictions
@@ -435,8 +455,10 @@ class AdvancedTransactionAnalytics:
             return {'error': str(e)}
     
     async def generate_custom_report(self, query: AnalyticsQuery) -> AnalyticsResult:
-        """        Generate custom analytics report based on query
-        """        start_time = datetime.utcnow()
+        """
+        Generate custom analytics report based on query
+        """
+        start_time = datetime.utcnow()
         
         try:
             # Build SQL query based on parameters
@@ -486,7 +508,8 @@ class AdvancedTransactionAnalytics:
             )
     
     async def _get_real_time_metrics(self) -> Dict[str, Any]:
-        """Get real-time transaction metrics"""        try:
+        """Get real-time transaction metrics"""
+        try:
             # Last 5 minutes
             start_time = datetime.utcnow() - timedelta(minutes=5)
             
@@ -506,7 +529,8 @@ class AdvancedTransactionAnalytics:
             return {}
     
     async def _predict_revenue_trends(self, revenue_data: List[Dict], timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Predict future revenue trends"""        try:
+        """Predict future revenue trends"""
+        try:
             if len(revenue_data) < 3:
                 return {'error': 'Insufficient data for prediction'}
             
@@ -535,53 +559,67 @@ class AdvancedTransactionAnalytics:
     # Additional helper methods would be implemented here...
     
     async def _analyze_seasonality(self, revenue_data: List[Dict]) -> Dict[str, Any]:
-        """Analyze seasonal patterns in revenue"""        # Implementation for seasonality analysis
+        """Analyze seasonal patterns in revenue"""
+        # Implementation for seasonality analysis
         return {'seasonal_patterns': 'detected'}
     
     async def _analyze_growth_patterns(self, revenue_data: List[Dict]) -> Dict[str, Any]:
-        """Analyze growth patterns"""        # Implementation for growth pattern analysis
+        """Analyze growth patterns"""
+        # Implementation for growth pattern analysis
         return {'growth_trend': 'stable'}
     
     async def _get_customer_analytics_data(self) -> List[Dict]:
-        """Get customer data for analytics"""        # Implementation to fetch customer analytics data
+        """Get customer data for analytics"""
+        # Implementation to fetch customer analytics data
         return []
     
     async def _predict_segment_churn(self, customers: List[Dict]) -> float:
-        """Predict churn probability for segment"""        # Implementation for churn prediction
+        """Predict churn probability for segment"""
+        # Implementation for churn prediction
         return 0.15
     
     async def _analyze_segment_characteristics(self, customers: List[Dict]) -> Dict[str, Any]:
-        """Analyze characteristics of customer segment"""        # Implementation for segment characteristic analysis
+        """Analyze characteristics of customer segment"""
+        # Implementation for segment characteristic analysis
         return {'characteristics': 'high_value'}
     
     async def _generate_segment_recommendations(self, characteristics: Dict, churn_prob: float) -> List[str]:
-        """Generate recommendations for segment"""        # Implementation for recommendation generation
+        """Generate recommendations for segment"""
+        # Implementation for recommendation generation
         return ['Implement loyalty program', 'Personalized offers']
     
     def _generate_segment_name(self, characteristics: Dict[str, Any]) -> str:
-        """Generate descriptive name for segment"""        # Implementation for segment naming
+        """Generate descriptive name for segment"""
+        # Implementation for segment naming
         return "High Value Customers"
 
 
 class RealtimeAnalyticsManager:
-    """    Real-time analytics and monitoring manager
-    """    
+    """
+    Real-time analytics and monitoring manager
+    """
+    
     def __init__(self):
         self.active_streams = {}
         self.alert_thresholds = {}
         
     async def start_real_time_monitoring(self, metrics: List[str]):
-        """Start real-time monitoring for specified metrics"""        pass
+        """Start real-time monitoring for specified metrics"""
+        pass
     
     async def handle_metric_alert(self, metric: str, value: float):
-        """Handle metric alert"""        pass
+        """Handle metric alert"""
+        pass
 
 
 class VisualizationGenerator:
-    """    Advanced visualization generator for analytics
-    """    
+    """
+    Advanced visualization generator for analytics
+    """
+    
     def __init__(self):
-        """Initialize visualization generator with chart libraries and templates"""        self.logger = logging.getLogger(f"{__name__}.VisualizationGenerator")
+        """Initialize visualization generator with chart libraries and templates"""
+        self.logger = logging.getLogger(f"{__name__}.VisualizationGenerator")
         self.chart_templates = {
             'line': 'revenue_trend_template',
             'bar': 'comparison_template',
@@ -597,10 +635,12 @@ class VisualizationGenerator:
         self.logger.info("VisualizationGenerator initialized with templates and color schemes")
     
     async def generate_dashboard_charts(self, data: Dict[str, Any]) -> Dict[str, str]:
-        """Generate dashboard charts"""        return {}
+        """Generate dashboard charts"""
+        return {}
     
     async def create_trend_chart(self, data: List[Dict]) -> str:
-        """Create trend visualization"""        return ""
+        """Create trend visualization"""
+        return ""
 
 
 # Export main classes

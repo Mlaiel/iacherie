@@ -8,7 +8,8 @@ and collaborative workflows with enterprise-grade performance and monitoring.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
-"""from typing import Dict, Any, List, Optional, Union, Callable, Tuple
+"""
+from typing import Dict, Any, List, Optional, Union, Callable, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
@@ -32,7 +33,8 @@ from .exceptions import WorkflowException, PipelineException
 
 
 class WorkflowExecutionMode(Enum):
-    """Workflow execution modes."""    DEVELOPMENT = "development"
+    """Workflow execution modes."""
+    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     HIGH_PERFORMANCE = "high_performance"
@@ -40,7 +42,8 @@ class WorkflowExecutionMode(Enum):
 
 
 class ContentProcessingProfile(Enum):
-    """Content processing profiles."""    CREATOR_BASIC = "creator_basic"
+    """Content processing profiles."""
+    CREATOR_BASIC = "creator_basic"
     CREATOR_PRO = "creator_pro"
     ENTERPRISE_STANDARD = "enterprise_standard"
     ENTERPRISE_PREMIUM = "enterprise_premium"
@@ -48,7 +51,8 @@ class ContentProcessingProfile(Enum):
 
 
 class WorkflowPriority(Enum):
-    """Workflow execution priority levels."""    CRITICAL = 1
+    """Workflow execution priority levels."""
+    CRITICAL = 1
     HIGH = 2
     NORMAL = 3
     LOW = 4
@@ -57,7 +61,8 @@ class WorkflowPriority(Enum):
 
 @dataclass
 class WorkflowConfiguration:
-    """Comprehensive workflow system configuration."""    execution_mode: WorkflowExecutionMode = WorkflowExecutionMode.PRODUCTION
+    """Comprehensive workflow system configuration."""
+    execution_mode: WorkflowExecutionMode = WorkflowExecutionMode.PRODUCTION
     processing_profile: ContentProcessingProfile = ContentProcessingProfile.ENTERPRISE_PREMIUM
     max_concurrent_workflows: int = 10
     max_concurrent_steps: int = 5
@@ -77,7 +82,8 @@ class WorkflowConfiguration:
 
 @dataclass
 class WorkflowRequest:
-    """Comprehensive workflow execution request."""    request_id: str
+    """Comprehensive workflow execution request."""
+    request_id: str
     user_id: str
     content_items: List[Dict[str, Any]]
     workflow_types: List[str]
@@ -95,7 +101,8 @@ class WorkflowRequest:
 
 @dataclass
 class WorkflowExecutionResult:
-    """Comprehensive workflow execution result."""    request_id: str
+    """Comprehensive workflow execution result."""
+    request_id: str
     execution_id: str
     status: str
     start_time: datetime
@@ -119,12 +126,14 @@ class WorkflowExecutionResult:
 
 
 class WorkflowOrchestrator:
-    """    Main workflow orchestration system for IA Influencer Agent.
+    """
+    Main workflow orchestration system for IA Influencer Agent.
     
     This is the primary orchestration hub that coordinates all workflow operations
     including content analysis, protection, distribution, monetization, and
     collaboration workflows with enterprise-grade performance and monitoring.
-    """    
+    """
+    
     def __init__(self, config: Optional[WorkflowConfiguration] = None):
         self.config = config or WorkflowConfiguration()
         self.logger = self._setup_logging()
@@ -143,7 +152,8 @@ class WorkflowOrchestrator:
         self.logger.info(f"WorkflowOrchestrator initialized with {self.config.execution_mode.value} mode")
     
     def _setup_logging(self) -> logging.Logger:
-        """Setup comprehensive logging system."""        logger = logging.getLogger("workflow.orchestrator")
+        """Setup comprehensive logging system."""
+        logger = logging.getLogger("workflow.orchestrator")
         logger.setLevel(logging.INFO)
         
         if not logger.handlers:
@@ -157,7 +167,8 @@ class WorkflowOrchestrator:
         return logger
     
     def _initialize_workflow_components(self):
-        """Initialize all workflow component systems."""        try:
+        """Initialize all workflow component systems."""
+        try:
             # Initialize content analysis workflow
             self.content_analysis = ContentAnalysisWorkflow({
                 "execution_mode": self.config.execution_mode.value,
@@ -216,7 +227,8 @@ class WorkflowOrchestrator:
             raise WorkflowException(f"Component initialization failed: {e}")
     
     def _initialize_performance_optimizations(self):
-        """Initialize performance optimization systems."""        self.performance_config = {
+        """Initialize performance optimization systems."""
+        self.performance_config = {
             "enable_caching": True,
             "enable_parallel_processing": True,
             "enable_resource_optimization": True,
@@ -233,12 +245,14 @@ class WorkflowOrchestrator:
         self,
         workflow_request: WorkflowRequest
     ) -> WorkflowExecutionResult:
-        """        Execute a comprehensive workflow with all components.
+        """
+        Execute a comprehensive workflow with all components.
         
         This is the main entry point for executing complete workflows that
         include content analysis, protection, distribution, monetization,
         and collaboration management.
-        """        execution_id = f"exec_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
+        """
+        execution_id = f"exec_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
         start_time = datetime.utcnow()
         
         self.logger.info(f"Starting comprehensive workflow execution: {execution_id}")
@@ -321,11 +335,13 @@ class WorkflowOrchestrator:
         user_id: str,
         processing_options: Dict[str, Any] = None
     ) -> WorkflowExecutionResult:
-        """        Execute a specific targeted workflow (e.g., only content analysis or distribution).
+        """
+        Execute a specific targeted workflow (e.g., only content analysis or distribution).
         
         This method allows for executing individual workflow components
         when a complete workflow is not needed.
-        """        execution_id = f"targeted_{workflow_type}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
+        """
+        execution_id = f"targeted_{workflow_type}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         start_time = datetime.utcnow()
         
         self.logger.info(f"Starting targeted workflow: {workflow_type} - {execution_id}")
@@ -398,7 +414,8 @@ class WorkflowOrchestrator:
             raise WorkflowException(f"Targeted workflow execution failed: {e}")
     
     async def get_workflow_status(self, execution_id: str) -> Dict[str, Any]:
-        """Get real-time status of a workflow execution."""        if execution_id in self.active_workflows:
+        """Get real-time status of a workflow execution."""
+        if execution_id in self.active_workflows:
             workflow_data = self.active_workflows[execution_id]
             return {
                 "execution_id": execution_id,
@@ -418,7 +435,8 @@ class WorkflowOrchestrator:
             }
     
     async def get_system_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive system performance metrics."""        current_time = datetime.utcnow()
+        """Get comprehensive system performance metrics."""
+        current_time = datetime.utcnow()
         
         # Calculate workflow statistics
         total_workflows = len(self.workflow_history)
@@ -457,7 +475,8 @@ class WorkflowOrchestrator:
         }
     
     async def optimize_system_performance(self) -> Dict[str, Any]:
-        """Optimize system performance based on usage patterns and metrics."""        self.logger.info("Starting system performance optimization")
+        """Optimize system performance based on usage patterns and metrics."""
+        self.logger.info("Starting system performance optimization")
         
         optimization_results = {
             "optimization_timestamp": datetime.utcnow().isoformat(),
@@ -502,7 +521,8 @@ class WorkflowOrchestrator:
         workflow_request: WorkflowRequest,
         start_time: datetime
     ):
-        """Register a new workflow execution."""        self.active_workflows[execution_id] = {
+        """Register a new workflow execution."""
+        self.active_workflows[execution_id] = {
             "request_id": workflow_request.request_id,
             "user_id": workflow_request.user_id,
             "start_time": start_time,
@@ -519,7 +539,8 @@ class WorkflowOrchestrator:
         execution_id: str,
         workflow_request: WorkflowRequest
     ) -> IntelligentContentPipeline:
-        """Create a comprehensive processing pipeline."""        pipeline_config = {
+        """Create a comprehensive processing pipeline."""
+        pipeline_config = {
             "execution_id": execution_id,
             "enable_monitoring": self.config.enable_real_time_monitoring,
             "enable_analytics": self.config.enable_advanced_analytics,
@@ -550,7 +571,8 @@ class WorkflowOrchestrator:
         pipeline: IntelligentContentPipeline,
         workflow_request: WorkflowRequest
     ):
-        """Add appropriate pipeline steps based on workflow request."""        
+        """Add appropriate pipeline steps based on workflow request."""
+        
         workflow_types = workflow_request.workflow_types
         step_dependencies = []
         
@@ -662,7 +684,8 @@ class WorkflowOrchestrator:
         user_id: str,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute content analysis workflow."""        self.logger.info(f"Executing content analysis for {len(content_items)} items")
+        """Execute content analysis workflow."""
+        self.logger.info(f"Executing content analysis for {len(content_items)} items")
         
         analysis_pipeline = await self.content_analysis.create_content_analysis_pipeline(
             {
@@ -694,7 +717,8 @@ class WorkflowOrchestrator:
         user_id: str,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute content protection workflow."""        self.logger.info(f"Executing content protection for {len(content_items)} items")
+        """Execute content protection workflow."""
+        self.logger.info(f"Executing content protection for {len(content_items)} items")
         
         protection_pipeline = await self.protection.create_protection_pipeline(
             {
@@ -727,7 +751,8 @@ class WorkflowOrchestrator:
         user_id: str,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute distribution workflow."""        self.logger.info(f"Executing distribution for {len(content_items)} items")
+        """Execute distribution workflow."""
+        self.logger.info(f"Executing distribution for {len(content_items)} items")
         
         distribution_pipeline = await self.distribution.create_distribution_pipeline(
             {
@@ -761,7 +786,8 @@ class WorkflowOrchestrator:
         user_id: str,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute monetization workflow."""        self.logger.info(f"Executing monetization for {len(content_items)} items")
+        """Execute monetization workflow."""
+        self.logger.info(f"Executing monetization for {len(content_items)} items")
         
         monetization_pipeline = await self.monetization.create_monetization_pipeline(
             {
@@ -794,7 +820,8 @@ class WorkflowOrchestrator:
         user_id: str,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute collaboration workflow."""        self.logger.info(f"Executing collaboration setup for {len(content_items)} items")
+        """Execute collaboration workflow."""
+        self.logger.info(f"Executing collaboration setup for {len(content_items)} items")
         
         collaboration_pipeline = await self.collaboration.create_collaboration_pipeline(
             {
@@ -827,7 +854,8 @@ class WorkflowOrchestrator:
         user_id: str,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute automation workflow."""        self.logger.info(f"Executing automation setup for {len(content_items)} items")
+        """Execute automation workflow."""
+        self.logger.info(f"Executing automation setup for {len(content_items)} items")
         
         automation_pipeline = await self.automation.create_automation_pipeline(
             {
@@ -857,7 +885,8 @@ class WorkflowOrchestrator:
     # Pipeline step handlers
     
     async def _execute_content_analysis_step(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute content analysis pipeline step."""        workflow_request = context.get("workflow_request")
+        """Execute content analysis pipeline step."""
+        workflow_request = context.get("workflow_request")
         
         return await self._execute_content_analysis(
             workflow_request.content_items,
@@ -866,7 +895,8 @@ class WorkflowOrchestrator:
         )
     
     async def _execute_content_protection_step(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute content protection pipeline step."""        workflow_request = context.get("workflow_request")
+        """Execute content protection pipeline step."""
+        workflow_request = context.get("workflow_request")
         
         return await self._execute_content_protection(
             workflow_request.content_items,
@@ -875,7 +905,8 @@ class WorkflowOrchestrator:
         )
     
     async def _execute_distribution_step(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute distribution pipeline step."""        workflow_request = context.get("workflow_request")
+        """Execute distribution pipeline step."""
+        workflow_request = context.get("workflow_request")
         
         return await self._execute_distribution(
             workflow_request.content_items,
@@ -887,7 +918,8 @@ class WorkflowOrchestrator:
         )
     
     async def _execute_monetization_step(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute monetization pipeline step."""        workflow_request = context.get("workflow_request")
+        """Execute monetization pipeline step."""
+        workflow_request = context.get("workflow_request")
         
         return await self._execute_monetization(
             workflow_request.content_items,
@@ -899,7 +931,8 @@ class WorkflowOrchestrator:
         )
     
     async def _execute_collaboration_step(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute collaboration pipeline step."""        workflow_request = context.get("workflow_request")
+        """Execute collaboration pipeline step."""
+        workflow_request = context.get("workflow_request")
         
         return await self._execute_collaboration(
             workflow_request.content_items,
@@ -911,7 +944,8 @@ class WorkflowOrchestrator:
         )
     
     async def _execute_automation_step(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute automation pipeline step."""        workflow_request = context.get("workflow_request")
+        """Execute automation pipeline step."""
+        workflow_request = context.get("workflow_request")
         
         return await self._execute_automation(
             workflow_request.content_items,
@@ -926,7 +960,8 @@ class WorkflowOrchestrator:
         pipeline: IntelligentContentPipeline,
         workflow_request: WorkflowRequest
     ) -> Dict[str, Any]:
-        """Execute pipeline with comprehensive monitoring."""        execution_id = pipeline.pipeline_id
+        """Execute pipeline with comprehensive monitoring."""
+        execution_id = pipeline.pipeline_id
         
         try:
             # Update workflow status
@@ -964,7 +999,8 @@ class WorkflowOrchestrator:
         start_time: datetime,
         end_time: datetime
     ) -> WorkflowExecutionResult:
-        """Compile comprehensive execution results."""        
+        """Compile comprehensive execution results."""
+        
         results = pipeline_results.get("pipeline_results", {})
         performance_metrics = pipeline_results.get("performance_metrics", {})
         
@@ -993,7 +1029,8 @@ class WorkflowOrchestrator:
         )
     
     def _cleanup_workflow_execution(self, execution_id: str):
-        """Clean up workflow execution resources."""        if execution_id in self.active_workflows:
+        """Clean up workflow execution resources."""
+        if execution_id in self.active_workflows:
             del self.active_workflows[execution_id]
         
         self.logger.info(f"Cleaned up workflow execution: {execution_id}")
@@ -1001,7 +1038,8 @@ class WorkflowOrchestrator:
     # Metrics and analysis methods
     
     async def _collect_pipeline_metrics(self, pipeline: IntelligentContentPipeline) -> Dict[str, Any]:
-        """Collect comprehensive pipeline performance metrics."""        return {
+        """Collect comprehensive pipeline performance metrics."""
+        return {
             "pipeline_id": pipeline.pipeline_id,
             "total_steps": len(pipeline.steps),
             "successful_steps": 0,  # Would be calculated from actual execution
@@ -1014,49 +1052,56 @@ class WorkflowOrchestrator:
         }
     
     def _calculate_successful_items(self, results: Dict[str, Any]) -> int:
-        """Calculate number of successfully processed content items."""        successful = 0
+        """Calculate number of successfully processed content items."""
+        successful = 0
         for result in results.values():
             if isinstance(result, dict) and result.get("successful_items"):
                 successful += result["successful_items"]
         return successful
     
     def _calculate_failed_items(self, results: Dict[str, Any]) -> int:
-        """Calculate number of failed content items."""        failed = 0
+        """Calculate number of failed content items."""
+        failed = 0
         for result in results.values():
             if isinstance(result, dict) and result.get("failed_items"):
                 failed += result["failed_items"]
         return failed
     
     def _calculate_warnings(self, results: Dict[str, Any]) -> int:
-        """Calculate number of warnings generated."""        warnings = 0
+        """Calculate number of warnings generated."""
+        warnings = 0
         for result in results.values():
             if isinstance(result, dict) and result.get("warnings"):
                 warnings += result["warnings"]
         return warnings
     
     def _extract_generated_assets(self, results: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Extract generated assets from execution results."""        assets = []
+        """Extract generated assets from execution results."""
+        assets = []
         for result in results.values():
             if isinstance(result, dict) and result.get("generated_assets"):
                 assets.extend(result["generated_assets"])
         return assets
     
     def _calculate_financial_summary(self, results: Dict[str, Any]) -> Dict[str, Decimal]:
-        """Calculate financial summary from execution results."""        return {
+        """Calculate financial summary from execution results."""
+        return {
             "total_processing_cost": Decimal("0"),
             "projected_revenue": Decimal("0"),
             "estimated_profit": Decimal("0")
         }
     
     def _extract_error_details(self, results: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Extract error details from execution results."""        errors = []
+        """Extract error details from execution results."""
+        errors = []
         for result in results.values():
             if isinstance(result, dict) and result.get("errors"):
                 errors.extend(result["errors"])
         return errors
     
     def _generate_execution_recommendations(self, results: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on execution results."""        recommendations = []
+        """Generate recommendations based on execution results."""
+        recommendations = []
         
         # Analyze results and generate intelligent recommendations
         for result in results.values():
@@ -1068,7 +1113,8 @@ class WorkflowOrchestrator:
     # System optimization methods (simplified implementations)
     
     async def _analyze_workflow_patterns(self) -> Dict[str, Any]:
-        """Analyze workflow execution patterns for optimization."""        return {
+        """Analyze workflow execution patterns for optimization."""
+        return {
             "common_workflow_types": ["content_analysis", "distribution"],
             "peak_usage_hours": [9, 10, 14, 15],
             "average_content_per_workflow": 5,
@@ -1076,23 +1122,28 @@ class WorkflowOrchestrator:
         }
     
     async def _optimize_resource_allocation(self, patterns: Dict[str, Any]) -> List[str]:
-        """Optimize system resource allocation based on patterns."""        return ["increased_memory_allocation", "optimized_cpu_scheduling"]
+        """Optimize system resource allocation based on patterns."""
+        return ["increased_memory_allocation", "optimized_cpu_scheduling"]
     
     async def _optimize_caching_strategies(self, patterns: Dict[str, Any]) -> List[str]:
-        """Optimize caching strategies based on usage patterns."""        return ["improved_content_analysis_cache", "enhanced_distribution_cache"]
+        """Optimize caching strategies based on usage patterns."""
+        return ["improved_content_analysis_cache", "enhanced_distribution_cache"]
     
     async def _optimize_pipeline_configurations(self, patterns: Dict[str, Any]) -> List[str]:
-        """Optimize pipeline configurations based on patterns."""        return ["parallel_processing_optimization", "intelligent_step_ordering"]
+        """Optimize pipeline configurations based on patterns."""
+        return ["parallel_processing_optimization", "intelligent_step_ordering"]
     
     async def _generate_performance_recommendations(self, patterns: Dict[str, Any]) -> List[str]:
-        """Generate performance improvement recommendations."""        return [
+        """Generate performance improvement recommendations."""
+        return [
             "Consider upgrading to high-performance mode during peak hours",
             "Enable advanced caching for frequently processed content types",
             "Implement predictive resource scaling based on usage patterns"
         ]
     
     async def _get_resource_usage(self) -> Dict[str, Any]:
-        """Get current system resource usage."""        return {
+        """Get current system resource usage."""
+        return {
             "memory_usage_percentage": 45,
             "cpu_usage_percentage": 32,
             "disk_usage_percentage": 28,
@@ -1101,7 +1152,8 @@ class WorkflowOrchestrator:
         }
     
     async def _get_component_status(self) -> Dict[str, str]:
-        """Get status of all workflow components."""        return {
+        """Get status of all workflow components."""
+        return {
             "content_analysis": "operational",
             "content_protection": "operational",
             "distribution": "operational",
@@ -1111,7 +1163,8 @@ class WorkflowOrchestrator:
         }
     
     async def _update_system_metrics(self, execution_result: WorkflowExecutionResult):
-        """Update system-wide performance metrics."""        # In real implementation, would update comprehensive metrics database
+        """Update system-wide performance metrics."""
+        # In real implementation, would update comprehensive metrics database
         pass
     
     async def _send_execution_notifications(
@@ -1119,7 +1172,8 @@ class WorkflowOrchestrator:
         execution_result: WorkflowExecutionResult,
         workflow_request: WorkflowRequest
     ):
-        """Send execution completion notifications."""        # In real implementation, would send actual notifications
+        """Send execution completion notifications."""
+        # In real implementation, would send actual notifications
         self.logger.info(f"Execution completed notification sent for: {execution_result.execution_id}")
 
 
@@ -1129,7 +1183,8 @@ def create_workflow_orchestrator(
     processing_profile: ContentProcessingProfile = ContentProcessingProfile.ENTERPRISE_PREMIUM,
     custom_config: Dict[str, Any] = None
 ) -> WorkflowOrchestrator:
-    """    Factory function to create a configured WorkflowOrchestrator instance.
+    """
+    Factory function to create a configured WorkflowOrchestrator instance.
     
     Args:
         execution_mode: The execution mode for the orchestrator
@@ -1138,7 +1193,8 @@ def create_workflow_orchestrator(
     
     Returns:
         Configured WorkflowOrchestrator instance
-    """    config = WorkflowConfiguration(
+    """
+    config = WorkflowConfiguration(
         execution_mode=execution_mode,
         processing_profile=processing_profile
     )
@@ -1160,7 +1216,8 @@ async def execute_content_processing_workflow(
     workflow_types: List[str] = None,
     processing_options: Dict[str, Any] = None
 ) -> WorkflowExecutionResult:
-    """    Convenience function for executing common content processing workflows.
+    """
+    Convenience function for executing common content processing workflows.
     
     Args:
         content_items: List of content items to process
@@ -1170,7 +1227,8 @@ async def execute_content_processing_workflow(
     
     Returns:
         WorkflowExecutionResult with execution details and results
-    """    orchestrator = create_workflow_orchestrator()
+    """
+    orchestrator = create_workflow_orchestrator()
     
     workflow_types = workflow_types or [
         "content_analysis", 

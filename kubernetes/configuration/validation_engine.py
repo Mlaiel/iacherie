@@ -13,7 +13,8 @@ Contact: mlaiel@live.de
 
 Enterprise-grade configuration validation with comprehensive rules.
 ==================================================================
-"""import logging
+"""
+import logging
 import asyncio
 import re
 import ipaddress
@@ -25,7 +26,8 @@ import json
 import yaml
 
 class ValidationType(Enum):
-    """Validation types"""    SCHEMA = "schema"
+    """Validation types"""
+    SCHEMA = "schema"
     SYNTAX = "syntax"
     SEMANTIC = "semantic"
     DEPENDENCY = "dependency"
@@ -35,21 +37,24 @@ class ValidationType(Enum):
     INTEGRATION = "integration"
 
 class ValidationSeverity(Enum):
-    """Validation severity levels"""    INFO = "info"
+    """Validation severity levels"""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
     BLOCKER = "blocker"
 
 class ValidationResult(Enum):
-    """Validation results"""    PASS = "pass"
+    """Validation results"""
+    PASS = "pass"
     FAIL = "fail"
     SKIP = "skip"
     UNKNOWN = "unknown"
 
 @dataclass
 class ValidationRule:
-    """Individual validation rule"""    id: str
+    """Individual validation rule"""
+    id: str
     name: str
     description: str
     validation_type: ValidationType
@@ -62,7 +67,8 @@ class ValidationRule:
 
 @dataclass
 class ValidationIssue:
-    """Validation issue found"""    rule_id: str
+    """Validation issue found"""
+    rule_id: str
     path: str
     message: str
     severity: ValidationSeverity
@@ -73,7 +79,8 @@ class ValidationIssue:
 
 @dataclass
 class ValidationReport:
-    """Validation report"""    timestamp: datetime
+    """Validation report"""
+    timestamp: datetime
     config_path: str
     total_rules: int
     passed_rules: int
@@ -84,7 +91,8 @@ class ValidationReport:
     validation_summary: Dict[str, Any] = field(default_factory=dict)
 
 class ValidationEngine:
-    """    Enterprise configuration validation engine.
+    """
+    Enterprise configuration validation engine.
     
     Provides comprehensive validation:
     - Schema validation (JSON Schema, YAML)
@@ -97,9 +105,11 @@ class ValidationEngine:
     - Integration validation (compatibility, API contracts)
     - Custom rule engine with extensible validators
     - Real-time validation and monitoring
-    """    
+    """
+    
     def __init__(self):
-        """Initialize validation engine"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize validation engine"""
+        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Validation rules
         self.validation_rules = {}
@@ -118,11 +128,13 @@ class ValidationEngine:
         self.logger.info("Validation engine initialized")
     
     async def initialize(self) -> bool:
-        """        Initialize validation engine.
+        """
+        Initialize validation engine.
         
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             # Load default validation rules
             await self._load_default_rules()
             
@@ -143,7 +155,8 @@ class ValidationEngine:
             return False
     
     async def _load_default_rules(self) -> None:
-        """Load default validation rules"""        
+        """Load default validation rules"""
+        
         # Schema validation rules
         schema_rules = [
             ValidationRule(
@@ -366,7 +379,8 @@ class ValidationEngine:
         self.logger.info(f"Loaded {len(self.validation_rules)} validation rules")
     
     async def _load_schemas(self) -> None:
-        """Load configuration schemas"""        
+        """Load configuration schemas"""
+        
         # Base configuration schema
         base_schema = {
             "type": "object",
@@ -447,7 +461,8 @@ class ValidationEngine:
         self.logger.info(f"Loaded {len(self.schemas)} configuration schemas")
     
     async def _register_builtin_validators(self) -> None:
-        """Register built-in validator functions"""        
+        """Register built-in validator functions"""
+        
         self.custom_validators = {
             "validate_json_schema": self._validate_json_schema,
             "validate_yaml_schema": self._validate_yaml_schema,
@@ -476,7 +491,8 @@ class ValidationEngine:
         self.logger.info(f"Registered {len(self.custom_validators)} built-in validators")
     
     async def _initialize_rule_groups(self) -> None:
-        """Initialize validation rule groups"""        
+        """Initialize validation rule groups"""
+        
         self.rule_groups = {
             "critical": [
                 rule_id for rule_id, rule in self.validation_rules.items()
@@ -509,7 +525,8 @@ class ValidationEngine:
         rule_groups: Optional[List[str]] = None,
         exclude_rules: Optional[List[str]] = None
     ) -> ValidationReport:
-        """        Validate configuration against rules.
+        """
+        Validate configuration against rules.
         
         Args:
             config_data: Configuration data to validate
@@ -519,7 +536,8 @@ class ValidationEngine:
             
         Returns:
             Validation report
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         issues = []
         
         try:
@@ -589,7 +607,8 @@ class ValidationEngine:
         rule_groups: Optional[List[str]],
         exclude_rules: Optional[List[str]]
     ) -> List[str]:
-        """Determine which rules to run based on groups and exclusions"""        
+        """Determine which rules to run based on groups and exclusions"""
+        
         if rule_groups:
             # Get rules from specified groups
             rules_to_run = set()
@@ -612,7 +631,8 @@ class ValidationEngine:
         config_data: Dict[str, Any],
         config_path: str
     ) -> List[ValidationIssue]:
-        """Execute a single validation rule"""        
+        """Execute a single validation rule"""
+        
         if rule.rule_function and rule.rule_function in self.custom_validators:
             validator_func = self.custom_validators[rule.rule_function]
             try:
@@ -628,7 +648,8 @@ class ValidationEngine:
         return []
     
     def _create_validation_summary(self, issues: List[ValidationIssue]) -> Dict[str, Any]:
-        """Create validation summary from issues"""        
+        """Create validation summary from issues"""
+        
         # Count issues by severity
         severity_counts = {}
         for severity in ValidationSeverity:
@@ -660,7 +681,8 @@ class ValidationEngine:
         config_data: Dict[str, Any],
         config_path: str
     ) -> List[ValidationIssue]:
-        """Validate JSON schema"""        issues = []
+        """Validate JSON schema"""
+        issues = []
         
         # Implementation would use jsonschema library
         # For now, basic validation
@@ -680,7 +702,8 @@ class ValidationEngine:
         config_data: Dict[str, Any],
         config_path: str
     ) -> List[ValidationIssue]:
-        """Validate YAML schema"""        issues = []
+        """Validate YAML schema"""
+        issues = []
         
         try:
             # Check if data can be serialized to YAML
@@ -701,7 +724,8 @@ class ValidationEngine:
         config_data: Dict[str, Any],
         config_path: str
     ) -> List[ValidationIssue]:
-        """Validate required fields"""        issues = []
+        """Validate required fields"""
+        issues = []
         
         required_fields = rule.parameters.get("required_fields", ["name", "version"])
         
@@ -723,7 +747,8 @@ class ValidationEngine:
         config_data: Dict[str, Any],
         config_path: str
     ) -> List[ValidationIssue]:
-        """Validate data types"""        issues = []
+        """Validate data types"""
+        issues = []
         
         type_expectations = {
             "name": str,
@@ -751,7 +776,8 @@ class ValidationEngine:
         config_data: Dict[str, Any],
         config_path: str
     ) -> List[ValidationIssue]:
-        """Validate field formats"""        issues = []
+        """Validate field formats"""
+        issues = []
         
         # URL validation
         url_fields = ["url", "endpoint", "webhook_url"]
@@ -807,7 +833,8 @@ class ValidationEngine:
         config_data: Dict[str, Any],
         config_path: str
     ) -> List[ValidationIssue]:
-        """Validate logical consistency"""        issues = []
+        """Validate logical consistency"""
+        issues = []
         
         # Check TLS consistency
         if config_data.get("tls_enabled") and not config_data.get("certificate_path"):
@@ -837,7 +864,8 @@ class ValidationEngine:
         config_data: Dict[str, Any],
         config_path: str
     ) -> List[ValidationIssue]:
-        """Validate value ranges"""        issues = []
+        """Validate value ranges"""
+        issues = []
         
         range_validations = {
             "port": (1, 65535),
@@ -867,7 +895,8 @@ class ValidationEngine:
         config_data: Dict[str, Any],
         config_path: str
     ) -> List[ValidationIssue]:
-        """Validate cross-references"""        issues = []
+        """Validate cross-references"""
+        issues = []
         
         # Implementation would check cross-references between configuration sections
         # For now, basic validation
@@ -880,7 +909,8 @@ class ValidationEngine:
         config_data: Dict[str, Any],
         config_path: str
     ) -> List[ValidationIssue]:
-        """Detect hardcoded secrets"""        issues = []
+        """Detect hardcoded secrets"""
+        issues = []
         
         secret_patterns = [
             (r'password\s*=\s*["\'][^"\']{8,}["\']', "password"),
@@ -920,7 +950,8 @@ class ValidationEngine:
     async def _validate_external_services(self, rule, config_data, config_path): return []
     
     async def add_custom_rule(self, rule: ValidationRule, validator_func: Callable) -> bool:
-        """        Add custom validation rule.
+        """
+        Add custom validation rule.
         
         Args:
             rule: Validation rule definition
@@ -928,7 +959,8 @@ class ValidationEngine:
             
         Returns:
             bool: True if successful
-        """        try:
+        """
+        try:
             self.validation_rules[rule.id] = rule
             if rule.rule_function:
                 self.custom_validators[rule.rule_function] = validator_func
@@ -941,14 +973,16 @@ class ValidationEngine:
             return False
     
     async def disable_rule(self, rule_id: str) -> bool:
-        """        Disable validation rule.
+        """
+        Disable validation rule.
         
         Args:
             rule_id: Rule ID to disable
             
         Returns:
             bool: True if successful
-        """        try:
+        """
+        try:
             if rule_id in self.validation_rules:
                 self.validation_rules[rule_id].enabled = False
                 self.logger.info(f"Validation rule disabled: {rule_id}")
@@ -961,7 +995,8 @@ class ValidationEngine:
             return False
     
     async def get_validation_status(self) -> Dict[str, Any]:
-        """Get validation engine status"""        
+        """Get validation engine status"""
+        
         enabled_rules = sum(1 for rule in self.validation_rules.values() if rule.enabled)
         
         return {
@@ -976,7 +1011,8 @@ class ValidationEngine:
         }
     
     async def get_validation_history(self, days: int = 30) -> List[Dict[str, Any]]:
-        """Get validation history"""        cutoff_date = datetime.now() - timedelta(days=days)
+        """Get validation history"""
+        cutoff_date = datetime.now() - timedelta(days=days)
         
         return [
             {
@@ -993,4 +1029,5 @@ class ValidationEngine:
         ]
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get validation engine status"""        return await self.get_validation_status()
+        """Get validation engine status"""
+        return await self.get_validation_status()

@@ -6,7 +6,8 @@ catalog management, and intelligent music operations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Union
@@ -18,7 +19,8 @@ import aiohttp
 logger = logging.getLogger(__name__)
 
 class AppleMusicEndpoint(Enum):
-    """Apple Music API endpoints"""    CATALOG = "catalog"
+    """Apple Music API endpoints"""
+    CATALOG = "catalog"
     LIBRARY = "library"
     SEARCH = "search"
     CHARTS = "charts"
@@ -26,7 +28,8 @@ class AppleMusicEndpoint(Enum):
 
 @dataclass
 class AppleMusicTrack:
-    """Apple Music track data structure"""    id: str
+    """Apple Music track data structure"""
+    id: str
     title: str
     artist: str
     album: str
@@ -41,7 +44,8 @@ class AppleMusicTrack:
 
 @dataclass 
 class AppleMusicPlaylist:
-    """Apple Music playlist data structure"""    id: str
+    """Apple Music playlist data structure"""
+    id: str
     name: str
     description: str
     curator: str
@@ -53,7 +57,8 @@ class AppleMusicPlaylist:
 
 @dataclass
 class AppleMusicArtist:
-    """Apple Music artist data structure"""    id: str
+    """Apple Music artist data structure"""
+    id: str
     name: str
     genres: List[str] = field(default_factory=list)
     albums: List[str] = field(default_factory=list)
@@ -63,7 +68,8 @@ class AppleMusicArtist:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class MusicKitEngine:
-    """    MusicKit Engine for Apple Music Integration
+    """
+    MusicKit Engine for Apple Music Integration
     
     Provides comprehensive Apple Music capabilities including:
     - MusicKit API integration
@@ -72,7 +78,8 @@ class MusicKitEngine:
     - User library access
     - Streaming analytics
     - Content metadata extraction
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.team_id = self.config.get('team_id')
@@ -95,7 +102,8 @@ class MusicKitEngine:
         self.cache_ttl = self.config.get('cache_ttl', 3600)  # 1 hour
         
     async def initialize(self):
-        """Initialize the MusicKit engine"""        try:
+        """Initialize the MusicKit engine"""
+        try:
             # Create HTTP session
             self.session = aiohttp.ClientSession()
             
@@ -109,7 +117,8 @@ class MusicKitEngine:
             raise
     
     async def shutdown(self):
-        """Shutdown the engine and cleanup resources"""        if self.session:
+        """Shutdown the engine and cleanup resources"""
+        if self.session:
             await self.session.close()
     
     async def search_catalog(
@@ -118,7 +127,8 @@ class MusicKitEngine:
         types: List[str] = None,
         limit: int = 25
     ) -> Dict[str, List[Any]]:
-        """        Search Apple Music catalog
+        """
+        Search Apple Music catalog
         
         Args:
             query: Search query string
@@ -127,7 +137,8 @@ class MusicKitEngine:
             
         Returns:
             Dictionary with search results by type
-        """        try:
+        """
+        try:
             if types is None:
                 types = ['songs', 'albums', 'artists', 'playlists']
             
@@ -194,7 +205,8 @@ class MusicKitEngine:
             raise
     
     async def get_track_details(self, track_id: str) -> AppleMusicTrack:
-        """Get detailed information about a specific track"""        try:
+        """Get detailed information about a specific track"""
+        try:
             url = f"{self.base_url}/catalog/{self.storefront}/songs/{track_id}"
             response = await self._make_request('GET', url)
             
@@ -209,7 +221,8 @@ class MusicKitEngine:
             raise
     
     async def get_playlist_tracks(self, playlist_id: str) -> AppleMusicPlaylist:
-        """Get all tracks from a playlist"""        try:
+        """Get all tracks from a playlist"""
+        try:
             url = f"{self.base_url}/catalog/{self.storefront}/playlists/{playlist_id}/tracks"
             response = await self._make_request('GET', url)
             
@@ -233,7 +246,8 @@ class MusicKitEngine:
             raise
     
     async def get_artist_top_songs(self, artist_id: str, limit: int = 10) -> List[AppleMusicTrack]:
-        """Get top songs for an artist"""        try:
+        """Get top songs for an artist"""
+        try:
             url = f"{self.base_url}/catalog/{self.storefront}/artists/{artist_id}/songs"
             params = {'limit': limit}
             
@@ -257,7 +271,8 @@ class MusicKitEngine:
         seed_artist_ids: List[str] = None,
         limit: int = 20
     ) -> List[AppleMusicTrack]:
-        """Get music recommendations based on seeds"""        try:
+        """Get music recommendations based on seeds"""
+        try:
             # Apple Music doesn't have a direct recommendations endpoint like Spotify
             # This would require using the Charts endpoint or similar content
             
@@ -284,7 +299,8 @@ class MusicKitEngine:
             raise
     
     async def analyze_user_library(self, user_token: str) -> Dict[str, Any]:
-        """Analyze user's Apple Music library"""        try:
+        """Analyze user's Apple Music library"""
+        try:
             self.user_token = user_token
             
             # Get user's library songs
@@ -330,7 +346,8 @@ class MusicKitEngine:
     # Private helper methods
     
     async def _generate_developer_token(self):
-        """Generate JWT developer token for Apple Music API"""        try:
+        """Generate JWT developer token for Apple Music API"""
+        try:
             if not all([self.team_id, self.key_id, self.private_key]):
                 logger.warning("Apple Music credentials not configured, using mock mode")
                 return
@@ -351,7 +368,8 @@ class MusicKitEngine:
         headers: Optional[Dict] = None,
         data: Optional[Dict] = None
     ) -> Dict[str, Any]:
-        """Make authenticated request to Apple Music API"""        try:
+        """Make authenticated request to Apple Music API"""
+        try:
             # Check rate limit
             await self._check_rate_limit()
             
@@ -385,7 +403,8 @@ class MusicKitEngine:
             raise
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""        now = datetime.utcnow()
+        """Check and enforce rate limiting"""
+        now = datetime.utcnow()
         
         # Reset counter if minute has passed
         if now - self.rate_limit_reset > timedelta(minutes=1):
@@ -403,7 +422,8 @@ class MusicKitEngine:
         self.request_count += 1
     
     async def _get_mock_response(self, method: str, url: str, params: Optional[Dict] = None) -> Dict[str, Any]:
-        """Generate mock responses for testing"""        import random
+        """Generate mock responses for testing"""
+        import random
         
         if 'search' in url:
             return {
@@ -487,7 +507,8 @@ class MusicKitEngine:
         return {'data': []}
     
     def _parse_track_data(self, track_data: Dict[str, Any]) -> AppleMusicTrack:
-        """Parse track data from Apple Music API response"""        try:
+        """Parse track data from Apple Music API response"""
+        try:
             attributes = track_data.get('attributes', {})
             
             return AppleMusicTrack(
@@ -510,7 +531,8 @@ class MusicKitEngine:
             raise
     
     def _parse_playlist_data(self, playlist_data: Dict[str, Any]) -> AppleMusicPlaylist:
-        """Parse playlist data from Apple Music API response"""        try:
+        """Parse playlist data from Apple Music API response"""
+        try:
             attributes = playlist_data.get('attributes', {})
             
             return AppleMusicPlaylist(
@@ -529,7 +551,8 @@ class MusicKitEngine:
             raise
     
     def _parse_album_data(self, album_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse album data from Apple Music API response"""        attributes = album_data.get('attributes', {})
+        """Parse album data from Apple Music API response"""
+        attributes = album_data.get('attributes', {})
         
         return {
             'id': album_data.get('id', ''),
@@ -542,7 +565,8 @@ class MusicKitEngine:
         }
     
     def _parse_artist_data(self, artist_data: Dict[str, Any]) -> AppleMusicArtist:
-        """Parse artist data from Apple Music API response"""        try:
+        """Parse artist data from Apple Music API response"""
+        try:
             attributes = artist_data.get('attributes', {})
             
             return AppleMusicArtist(
@@ -558,7 +582,8 @@ class MusicKitEngine:
             raise
     
     def _get_artwork_url(self, artwork_data: Optional[Dict[str, Any]]) -> Optional[str]:
-        """Extract artwork URL from artwork data"""        if not artwork_data:
+        """Extract artwork URL from artwork data"""
+        if not artwork_data:
             return None
         
         url_template = artwork_data.get('url', '')
@@ -569,7 +594,8 @@ class MusicKitEngine:
         return None
     
     def _parse_date(self, date_string: Optional[str]) -> Optional[datetime]:
-        """Parse date string to datetime object"""        if not date_string:
+        """Parse date string to datetime object"""
+        if not date_string:
             return None
         
         try:
@@ -578,7 +604,8 @@ class MusicKitEngine:
             return None
     
     def get_engine_stats(self) -> Dict[str, Any]:
-        """Get engine statistics and status"""        return {
+        """Get engine statistics and status"""
+        return {
             'initialized': self.session is not None,
             'storefront': self.storefront,
             'rate_limit': self.rate_limit,

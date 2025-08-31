@@ -10,7 +10,8 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 WARNING: This code and concept are protected intellectual property.
 Any unauthorized use, copying, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 import cv2
@@ -33,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ImageFingerprint:
-    """Image fingerprint data structure."""    fingerprint_id: str
+    """Image fingerprint data structure."""
+    fingerprint_id: str
     user_id: str
     title: str
     image_format: str
@@ -47,7 +49,8 @@ class ImageFingerprint:
 
 @dataclass
 class ImageMatch:
-    """Image match result structure."""    original_fingerprint_id: str
+    """Image match result structure."""
+    original_fingerprint_id: str
     detected_url: str
     similarity_score: float
     confidence_level: float
@@ -60,7 +63,8 @@ class ImageMatch:
 
 
 class ImageFeatureExtractor:
-    """Advanced image feature extraction for fingerprinting."""    
+    """Advanced image feature extraction for fingerprinting."""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.target_size = config.get("target_size", (512, 512))
@@ -79,7 +83,8 @@ class ImageFeatureExtractor:
             self.surf_detector = None
         
     async def extract_features(self, image_data: bytes) -> Dict[str, Any]:
-        """Extract comprehensive image features from image data."""        try:
+        """Extract comprehensive image features from image data."""
+        try:
             # Load image from bytes
             image_array = np.frombuffer(image_data, np.uint8)
             image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
@@ -135,7 +140,8 @@ class ImageFeatureExtractor:
             raise
     
     async def _extract_hash_features(self, image_data: bytes) -> Dict[str, Any]:
-        """Extract various perceptual hashes."""        features = {}
+        """Extract various perceptual hashes."""
+        features = {}
         
         try:
             # Load with PIL for hash computation
@@ -166,7 +172,8 @@ class ImageFeatureExtractor:
         return features
     
     async def _extract_color_features(self, image: np.ndarray) -> Dict[str, Any]:
-        """Extract color-based features."""        features = {}
+        """Extract color-based features."""
+        features = {}
         
         try:
             # Color histograms in different color spaces
@@ -215,7 +222,8 @@ class ImageFeatureExtractor:
         return features
     
     async def _extract_texture_features(self, image: np.ndarray) -> Dict[str, Any]:
-        """Extract texture-based features."""        features = {}
+        """Extract texture-based features."""
+        features = {}
         
         try:
             # Convert to grayscale
@@ -270,7 +278,8 @@ class ImageFeatureExtractor:
         return features
     
     async def _extract_keypoint_features(self, image: np.ndarray) -> Dict[str, Any]:
-        """Extract keypoint-based features."""        features = {}
+        """Extract keypoint-based features."""
+        features = {}
         
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -310,7 +319,8 @@ class ImageFeatureExtractor:
         return features
     
     async def _extract_edge_features(self, image: np.ndarray) -> Dict[str, Any]:
-        """Extract edge-based features."""        features = {}
+        """Extract edge-based features."""
+        features = {}
         
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -342,7 +352,8 @@ class ImageFeatureExtractor:
         return features
     
     async def _extract_histogram_features(self, image: np.ndarray) -> Dict[str, Any]:
-        """Extract various histogram features."""        features = {}
+        """Extract various histogram features."""
+        features = {}
         
         try:
             # Intensity histogram
@@ -363,7 +374,8 @@ class ImageFeatureExtractor:
         return features
     
     async def _extract_shape_features(self, image: np.ndarray) -> Dict[str, Any]:
-        """Extract shape-based features."""        features = {}
+        """Extract shape-based features."""
+        features = {}
         
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -409,7 +421,8 @@ class ImageFeatureExtractor:
 
 
 class ImageSimilarityCalculator:
-    """Advanced image similarity calculation engine."""    
+    """Advanced image similarity calculation engine."""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.feature_weights = config.get("feature_weights", {
@@ -425,7 +438,8 @@ class ImageSimilarityCalculator:
         features1: Dict[str, Any], 
         features2: Dict[str, Any]
     ) -> Tuple[float, Dict[str, float]]:
-        """Calculate comprehensive similarity between two image feature sets."""        try:
+        """Calculate comprehensive similarity between two image feature sets."""
+        try:
             similarities = {}
             weighted_sum = 0.0
             total_weight = 0.0
@@ -476,7 +490,8 @@ class ImageSimilarityCalculator:
             return 0.0, {}
     
     async def _calculate_hash_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
-        """Calculate similarity using perceptual hashes."""        try:
+        """Calculate similarity using perceptual hashes."""
+        try:
             hash_similarities = []
             
             hash_types = ["phash", "ahash", "dhash", "whash", "colorhash"]
@@ -498,7 +513,8 @@ class ImageSimilarityCalculator:
             return None
     
     async def _calculate_color_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
-        """Calculate color similarity using various color features."""        try:
+        """Calculate color similarity using various color features."""
+        try:
             color_similarities = []
             
             # RGB histogram similarities
@@ -532,7 +548,8 @@ class ImageSimilarityCalculator:
             return None
     
     async def _calculate_texture_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
-        """Calculate texture similarity using LBP and GLCM features."""        try:
+        """Calculate texture similarity using LBP and GLCM features."""
+        try:
             texture_similarities = []
             
             # LBP similarity
@@ -557,7 +574,8 @@ class ImageSimilarityCalculator:
             return None
     
     async def _calculate_keypoint_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
-        """Calculate keypoint similarity using descriptor features."""        try:
+        """Calculate keypoint similarity using descriptor features."""
+        try:
             keypoint_similarities = []
             
             # ORB similarity
@@ -582,7 +600,8 @@ class ImageSimilarityCalculator:
             return None
     
     async def _calculate_edge_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
-        """Calculate edge similarity using edge features."""        try:
+        """Calculate edge similarity using edge features."""
+        try:
             edge_similarities = []
             
             # Edge density similarity
@@ -604,11 +623,13 @@ class ImageSimilarityCalculator:
 
 
 class ImageDetectionEngine:
-    """    Advanced image detection engine for content surveillance.
+    """
+    Advanced image detection engine for content surveillance.
     
     Implements sophisticated image fingerprinting, matching, and detection
     algorithms for protecting visual content across platforms.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.feature_extractor = ImageFeatureExtractor(config.get("feature_extraction", {}))
@@ -631,7 +652,8 @@ class ImageDetectionEngine:
         }
         
     async def initialize(self) -> bool:
-        """Initialize the image detection engine."""        try:
+        """Initialize the image detection engine."""
+        try:
             # Initialize ChromaDB client
             self.chroma_client = chromadb.Client()
             
@@ -658,7 +680,8 @@ class ImageDetectionEngine:
         image_data: bytes, 
         metadata: Dict[str, Any]
     ) -> ImageFingerprint:
-        """Create image fingerprint from image data."""        try:
+        """Create image fingerprint from image data."""
+        try:
             start_time = datetime.utcnow()
             
             # Extract image features
@@ -707,7 +730,8 @@ class ImageDetectionEngine:
             raise
     
     async def _store_fingerprint(self, fingerprint: ImageFingerprint) -> None:
-        """Store fingerprint in vector database."""        try:
+        """Store fingerprint in vector database."""
+        try:
             # Create embedding vector from key features
             embedding_features = []
             
@@ -762,7 +786,8 @@ class ImageDetectionEngine:
         image_data: bytes, 
         detection_metadata: Dict[str, Any]
     ) -> List[ImageMatch]:
-        """Detect image matches against stored fingerprints."""        try:
+        """Detect image matches against stored fingerprints."""
+        try:
             start_time = datetime.utcnow()
             
             # Extract features from input image
@@ -869,7 +894,8 @@ class ImageDetectionEngine:
             return []
     
     async def _load_fingerprint(self, fingerprint_id: str) -> Optional[ImageFingerprint]:
-        """Load full fingerprint data (placeholder - implement with your storage system)."""        # This would load the full fingerprint data from your database
+        """Load full fingerprint data (placeholder - implement with your storage system)."""
+        # This would load the full fingerprint data from your database
         # For now, return None to indicate not found
         return None
     
@@ -880,7 +906,8 @@ class ImageDetectionEngine:
         input_features: Dict[str, Any],
         stored_features: Dict[str, Any]
     ) -> float:
-        """Calculate confidence level for match."""        try:
+        """Calculate confidence level for match."""
+        try:
             # Base confidence from overall similarity
             confidence = similarity_score
             
@@ -906,7 +933,8 @@ class ImageDetectionEngine:
             return similarity_score
     
     async def get_detection_statistics(self) -> Dict[str, Any]:
-        """Get detection engine statistics."""        return {
+        """Get detection engine statistics."""
+        return {
             "engine_type": "image",
             "status": "active",
             "statistics": self.detection_stats,
@@ -918,7 +946,8 @@ class ImageDetectionEngine:
         }
     
     async def cleanup(self) -> None:
-        """Cleanup resources."""        try:
+        """Cleanup resources."""
+        try:
             if self.chroma_client:
                 # ChromaDB cleanup if needed
                 pass

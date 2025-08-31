@@ -9,7 +9,8 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DevOps + Security
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, copying, or implementation without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""import time
+"""
+import time
 from typing import Dict, List, Optional, Callable, Any
 from collections import defaultdict, deque
 from datetime import datetime, timedelta
@@ -21,7 +22,8 @@ import logging
 
 
 class MetricType(Enum):
-    """Metric type definitions."""    COUNTER = "counter"
+    """Metric type definitions."""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     TIMER = "timer"
@@ -30,12 +32,14 @@ class MetricType(Enum):
 
 @dataclass
 class MetricPoint:
-    """Individual metric data point."""    timestamp: datetime
+    """Individual metric data point."""
+    timestamp: datetime
     value: float
     labels: Dict[str, str] = None
 
     def to_dict(self) -> Dict:
-        """Convert to dictionary."""        return {
+        """Convert to dictionary."""
+        return {
             'timestamp': self.timestamp.isoformat(),
             'value': self.value,
             'labels': self.labels or {}
@@ -44,7 +48,8 @@ class MetricPoint:
 
 
 class MetricsCollector:
-    """Enhanced metrics collector with enterprise features."""    
+    """Enhanced metrics collector with enterprise features."""
+    
     def __init__(self, retention_hours: int = 24, service_name: str = "ia-influencer"):
         self.retention_hours = retention_hours
         self.service_name = service_name
@@ -68,19 +73,22 @@ class MetricsCollector:
         }
 
     def increment_counter(self, name: str, value: float = 1, labels: Optional[Dict] = None):
-        """Increment a counter metric with labels support."""        with self._lock:
+        """Increment a counter metric with labels support."""
+        with self._lock:
             metric_key = self._build_key(name, labels)
             self.counters[metric_key] += value
             self._record_time_series(metric_key, self.counters[metric_key], labels)
 
     def set_gauge(self, name: str, value: float, labels: Optional[Dict] = None):
-        """Set a gauge metric with labels support."""        with self._lock:
+        """Set a gauge metric with labels support."""
+        with self._lock:
             metric_key = self._build_key(name, labels)
             self.gauges[metric_key] = value
             self._record_time_series(metric_key, value, labels)
 
     def record_histogram(self, name: str, value: float, labels: Optional[Dict] = None):
-        """Record a histogram metric with labels support."""        with self._lock:
+        """Record a histogram metric with labels support."""
+        with self._lock:
             metric_key = self._build_key(name, labels)
             self.histograms[metric_key].append(value)
             
@@ -91,7 +99,8 @@ class MetricsCollector:
             self._record_time_series(metric_key, value, labels)
 
     def record_business_metric(self, metric_name: str, value: float, user_id: Optional[str] = None):
-        """Record business-specific metrics."""        with self._lock:
+        """Record business-specific metrics."""
+        with self._lock:
             self.business_metrics[metric_name] += value
             
             # Track user-specific metrics if provided
@@ -101,7 +110,8 @@ class MetricsCollector:
             self._record_time_series(f"business.{metric_name}", value, {"user_id": user_id})
 
     def record_content_event(self, event_type: str, content_type: str, user_id: str, metadata: Optional[Dict] = None):
-        """Record content processing events."""        labels = {
+        """Record content processing events."""
+        labels = {
             "event_type": event_type,
             "content_type": content_type,
             "user_id": user_id
@@ -114,7 +124,8 @@ class MetricsCollector:
             self.content_metrics[f"{event_type}_{content_type}"] += 1
 
     def record_ai_operation(self, model_name: str, operation: str, duration_ms: float, success: bool, input_size: int = 0):
-        """Record AI operation metrics."""        labels = {
+        """Record AI operation metrics."""
+        labels = {
             "model": model_name,
             "operation": operation,
             "success": str(success)
@@ -133,7 +144,8 @@ class MetricsCollector:
                 self.increment_counter("ai.operations.error", 1, labels)
 
     def record_protection_scan(self, scan_type: str, duration_ms: float, items_scanned: int, violations_found: int):
-        """Record content protection scan metrics."""        labels = {"scan_type": scan_type}
+        """Record content protection scan metrics."""
+        labels = {"scan_type": scan_type}
         
         with self._lock:
             self.increment_counter("protection.scans", 1, labels)
@@ -142,7 +154,8 @@ class MetricsCollector:
             self.increment_counter("protection.violations_found", violations_found, labels)
 
     def record_collaboration_match(self, match_type: str, duration_ms: float, matches_found: int, success: bool):
-        """Record collaboration matching metrics."""        labels = {
+        """Record collaboration matching metrics."""
+        labels = {
             "match_type": match_type,
             "success": str(success)
         }
@@ -153,10 +166,12 @@ class MetricsCollector:
             self.record_histogram("collaboration.matches_found", matches_found, labels)
 
     def time_operation(self, name: str, labels: Optional[Dict] = None):
-        """Context manager to time operations with enhanced features."""        return TimingContext(self, name, labels)
+        """Context manager to time operations with enhanced features."""
+        return TimingContext(self, name, labels)
 
     def get_metrics_summary(self) -> Dict:
-        """Get comprehensive metrics summary."""        with self._lock:
+        """Get comprehensive metrics summary."""
+        with self._lock:
             current_time = datetime.utcnow()
             
             return {
@@ -173,7 +188,8 @@ class MetricsCollector:
             }
 
     def _get_histogram_statistics(self) -> Dict:
-        """Calculate statistics for all histograms."""        stats = {}
+        """Calculate statistics for all histograms."""
+        stats = {}
         for name, values in self.histograms.items():
             if values:
                 stats[name] = {
@@ -189,7 +205,8 @@ class MetricsCollector:
         return stats
 
     def get_content_metrics(self) -> Dict:
-        """Get detailed content processing metrics."""        with self._lock:
+        """Get detailed content processing metrics."""
+        with self._lock:
             return {
                 "uploads_total": self.counters.get("content.events:event_type=upload", 0),
                 "uploads_by_type": {
@@ -211,7 +228,8 @@ class MetricsCollector:
             }
 
     def get_system_metrics(self) -> Dict:
-        """Get system performance metrics."""        with self._lock:
+        """Get system performance metrics."""
+        with self._lock:
             return {
                 "requests_total": self.counters.get("http.requests", 0),
                 "requests_by_status": {
@@ -237,7 +255,8 @@ class MetricsCollector:
             }
 
     def get_business_metrics(self) -> Dict:
-        """Get business-specific metrics."""        with self._lock:
+        """Get business-specific metrics."""
+        with self._lock:
             return {
                 "revenue_generated": self.business_metrics.get("revenue", 0.0),
                 "content_monetized": self.business_metrics.get("content_monetized", 0.0),
@@ -253,12 +272,14 @@ class MetricsCollector:
             }
 
     def _calculate_success_rate(self, operation_name: str) -> float:
-        """Calculate success rate for an operation."""        total = self.counters.get(operation_name, 0)
+        """Calculate success rate for an operation."""
+        total = self.counters.get(operation_name, 0)
         success = self.counters.get(f"{operation_name}.success", 0)
         return (success / total * 100) if total > 0 else 100.0
 
     def _calculate_error_rate(self) -> float:
-        """Calculate overall error rate."""        total_requests = self.counters.get("http.requests", 0)
+        """Calculate overall error rate."""
+        total_requests = self.counters.get("http.requests", 0)
         error_requests = (
             self.counters.get("http.requests:status_code=4xx", 0) +
             self.counters.get("http.requests:status_code=5xx", 0)
@@ -266,12 +287,14 @@ class MetricsCollector:
         return (error_requests / total_requests * 100) if total_requests > 0 else 0.0
 
     def _calculate_cache_hit_rate(self) -> float:
-        """Calculate cache hit rate."""        hits = self.counters.get("cache.hits", 0)
+        """Calculate cache hit rate."""
+        hits = self.counters.get("cache.hits", 0)
         total = hits + self.counters.get("cache.misses", 0)
         return (hits / total * 100) if total > 0 else 0.0
 
     def _get_top_content_types(self) -> List[Dict]:
-        """Get top content types by upload count."""        content_types = {}
+        """Get top content types by upload count."""
+        content_types = {}
         for key, value in self.content_metrics.items():
             if "upload_" in key:
                 content_type = key.replace("upload_", "")
@@ -283,7 +306,8 @@ class MetricsCollector:
         ]
 
     def _calculate_sla_compliance(self, metric_name: str, threshold_ms: float) -> float:
-        """Calculate SLA compliance percentage."""        values = self.histograms.get(metric_name, [])
+        """Calculate SLA compliance percentage."""
+        values = self.histograms.get(metric_name, [])
         if not values:
             return 100.0
         
@@ -291,7 +315,8 @@ class MetricsCollector:
         return (compliant_count / len(values) * 100)
 
     def cleanup_old_metrics(self):
-        """Clean up old metric data points beyond retention period."""        cutoff_time = datetime.utcnow() - timedelta(hours=self.retention_hours)
+        """Clean up old metric data points beyond retention period."""
+        cutoff_time = datetime.utcnow() - timedelta(hours=self.retention_hours)
         
         with self._lock:
             for metric_name, time_series in self.metrics_data.items():
@@ -299,7 +324,8 @@ class MetricsCollector:
                     time_series.popleft()
 
     def export_prometheus_format(self) -> str:
-        """Export metrics in Prometheus format with enhanced metadata."""        lines = []
+        """Export metrics in Prometheus format with enhanced metadata."""
+        lines = []
         
         # Add service info
         lines.append(f"# HELP service_info Service information")
@@ -349,12 +375,14 @@ class MetricsCollector:
         return "\n".join(lines)
 
     def _clean_metric_name(self, name: str) -> str:
-        """Clean metric name for Prometheus format."""        # Remove labels from name and clean
+        """Clean metric name for Prometheus format."""
+        # Remove labels from name and clean
         base_name = name.split(":")[0] if ":" in name else name
         return base_name.replace("-", "_").replace(".", "_").replace(" ", "_")
 
     def _extract_labels_from_key(self, key: str) -> Optional[Dict[str, str]]:
-        """Extract labels from metric key."""        if ":" not in key:
+        """Extract labels from metric key."""
+        if ":" not in key:
             return None
         
         labels = {}
@@ -367,21 +395,24 @@ class MetricsCollector:
         return labels if labels else None
 
     def _format_prometheus_labels(self, labels: Optional[Dict[str, str]]) -> str:
-        """Format labels for Prometheus."""        if not labels:
+        """Format labels for Prometheus."""
+        if not labels:
             return ""
         
         label_pairs = [f'{k}="{v}"' for k, v in sorted(labels.items())]
         return "{" + ",".join(label_pairs) + "}"
 
     def _build_key(self, name: str, labels: Optional[Dict] = None) -> str:
-        """Build metric key with labels."""        if not labels:
+        """Build metric key with labels."""
+        if not labels:
             return name
         
         label_str = ":".join(f"{k}={v}" for k, v in sorted(labels.items()))
         return f"{name}:{label_str}"
 
     def _record_time_series(self, metric_key: str, value: float, labels: Optional[Dict] = None):
-        """Record time series data point with enhanced metadata."""        data_point = MetricPoint(
+        """Record time series data point with enhanced metadata."""
+        data_point = MetricPoint(
             timestamp=datetime.utcnow(),
             value=value,
             labels=labels
@@ -389,15 +420,18 @@ class MetricsCollector:
         self.metrics_data[metric_key].append(data_point)
 
     def _get_histogram_avg(self, name: str) -> float:
-        """Get average value from histogram."""        values = self.histograms.get(name, [])
+        """Get average value from histogram."""
+        values = self.histograms.get(name, [])
         return sum(values) / len(values) if values else 0.0
 
     def _get_histogram_percentile(self, name: str, percentile: float) -> float:
-        """Get percentile value from histogram."""        values = sorted(self.histograms.get(name, []))
+        """Get percentile value from histogram."""
+        values = sorted(self.histograms.get(name, []))
         return self._calculate_percentile(values, percentile)
 
     def _calculate_percentile(self, values: List[float], percentile: float) -> float:
-        """Calculate percentile value."""        if not values:
+        """Calculate percentile value."""
+        if not values:
             return 0.0
         
         index = int(len(values) * percentile)
@@ -405,7 +439,8 @@ class MetricsCollector:
 
 
 class ContentMetricsCollector:
-    """Specialized metrics collector for content processing operations."""    
+    """Specialized metrics collector for content processing operations."""
+    
     def __init__(self, base_collector: MetricsCollector):
         self.base_collector = base_collector
         
@@ -415,7 +450,8 @@ class ContentMetricsCollector:
         self.content_by_user = defaultdict(int)
         
     def record_upload(self, user_id: str, content_type: str, file_size: int, success: bool, duration_ms: float):
-        """Record content upload event."""        labels = {
+        """Record content upload event."""
+        labels = {
             "content_type": content_type,
             "success": str(success),
             "user_id": user_id
@@ -436,7 +472,8 @@ class ContentMetricsCollector:
             self.base_collector.increment_counter("content.uploads.failed", 1, labels)
 
     def record_processing(self, content_id: str, processing_type: str, duration_ms: float, success: bool, metadata: Optional[Dict] = None):
-        """Record content processing event."""        labels = {
+        """Record content processing event."""
+        labels = {
             "processing_type": processing_type,
             "success": str(success)
         }
@@ -452,7 +489,8 @@ class ContentMetricsCollector:
             self.base_collector.increment_counter(f"content.processing.{processing_type}.failed", 1)
 
     def get_content_insights(self) -> Dict:
-        """Get content processing insights."""        return {
+        """Get content processing insights."""
+        return {
             "average_upload_size_mb": sum(self.upload_sizes) / len(self.upload_sizes) / (1024*1024) if self.upload_sizes else 0,
             "total_unique_users": len(self.content_by_user),
             "most_active_users": sorted(self.content_by_user.items(), key=lambda x: x[1], reverse=True)[:10],
@@ -467,7 +505,8 @@ class ContentMetricsCollector:
 
 
 class AIMetricsCollector:
-    """Specialized metrics collector for AI operations."""    
+    """Specialized metrics collector for AI operations."""
+    
     def __init__(self, base_collector: MetricsCollector):
         self.base_collector = base_collector
         
@@ -477,7 +516,8 @@ class AIMetricsCollector:
         
     def record_inference(self, model_name: str, operation: str, duration_ms: float, success: bool, 
                         input_size: int = 0, accuracy_score: Optional[float] = None):
-        """Record AI inference event."""        self.base_collector.record_ai_operation(model_name, operation, duration_ms, success, input_size)
+        """Record AI inference event."""
+        self.base_collector.record_ai_operation(model_name, operation, duration_ms, success, input_size)
         
         # Track model-specific performance
         perf = self.model_performance[model_name]
@@ -493,7 +533,8 @@ class AIMetricsCollector:
             self.base_collector.record_histogram(f"ai.accuracy.{model_name}", accuracy_score, {"operation": operation})
 
     def get_ai_insights(self) -> Dict:
-        """Get AI performance insights."""        insights = {}
+        """Get AI performance insights."""
+        insights = {}
         
         for model_name, perf in self.model_performance.items():
             avg_duration = perf["total_duration"] / perf["calls"] if perf["calls"] > 0 else 0
@@ -515,7 +556,8 @@ class AIMetricsCollector:
 
 
 class TimingContext:
-    """Enhanced context manager for timing operations."""    
+    """Enhanced context manager for timing operations."""
+    
     def __init__(self, collector: MetricsCollector, name: str, labels: Optional[Dict] = None):
         self.collector = collector
         self.name = name
@@ -525,13 +567,16 @@ class TimingContext:
         self.metadata = {}
 
     def add_label(self, key: str, value: Any):
-        """Add a label to the timing context."""        self.labels[key] = str(value)
+        """Add a label to the timing context."""
+        self.labels[key] = str(value)
 
     def add_metadata(self, key: str, value: Any):
-        """Add metadata to be recorded with the timing."""        self.metadata[key] = value
+        """Add metadata to be recorded with the timing."""
+        self.metadata[key] = value
 
     def set_success(self, success: bool):
-        """Set the success status of the operation."""        self.success = success
+        """Set the success status of the operation."""
+        self.success = success
 
     def __enter__(self):
         self.start_time = time.time()

@@ -736,7 +736,8 @@ EXISTING_AGENTS_REGISTRY = {
 # ═══════════════════════════════════════════════════════════════
 
 def get_agents_statistics():
-    """Retourne les statistiques complètes du système d'agents"""    
+    """Retourne les statistiques complètes du système d'agents"""
+    
     stats = {
         'total_agents': len(EXISTING_AGENTS_REGISTRY),
         'by_category': {},
@@ -765,7 +766,8 @@ def get_agents_statistics():
     return stats
 
 def validate_agent_dependencies():
-    """Valide que toutes les dépendances existent"""    errors = []
+    """Valide que toutes les dépendances existent"""
+    errors = []
     
     for agent_id, config in EXISTING_AGENTS_REGISTRY.items():
         dependencies = config.get('dependencies', [])
@@ -777,14 +779,16 @@ def validate_agent_dependencies():
     return errors
 
 def get_agents_by_category(category: str):
-    """Retourne tous les agents d'une catégorie donnée"""    return {
+    """Retourne tous les agents d'une catégorie donnée"""
+    return {
         agent_id: config 
         for agent_id, config in EXISTING_AGENTS_REGISTRY.items() 
         if config['category'] == category
     }
 
 def get_critical_agents():
-    """Retourne tous les agents critiques"""    return {
+    """Retourne tous les agents critiques"""
+    return {
         agent_id: config 
         for agent_id, config in EXISTING_AGENTS_REGISTRY.items() 
         if config['priority'] == 'critical'

@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -30,20 +31,23 @@ logger = logging.getLogger(__name__)
 
 
 class MongoDBEnvironment(Enum):
-    """MongoDB environment configurations"""    DEVELOPMENT = "development"
+    """MongoDB environment configurations"""
+    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 
 class MongoDBClusterType(Enum):
-    """MongoDB cluster deployment types"""    STANDALONE = "standalone"
+    """MongoDB cluster deployment types"""
+    STANDALONE = "standalone"
     REPLICA_SET = "replica_set"
     SHARDED = "sharded"
 
 
 class MongoDBWorkloadType(Enum):
-    """MongoDB workload optimization types"""    MEDIA_STORAGE = "media_storage"
+    """MongoDB workload optimization types"""
+    MEDIA_STORAGE = "media_storage"
     ANALYTICS = "analytics" 
     REAL_TIME = "real_time"
     CONTENT_PROTECTION = "content_protection"
@@ -52,7 +56,8 @@ class MongoDBWorkloadType(Enum):
 
 @dataclass
 class MongoDBCredentials:
-    """MongoDB authentication credentials"""    username: str
+    """MongoDB authentication credentials"""
+    username: str
     password: str
     auth_source: str = "admin"
     auth_mechanism: str = "SCRAM-SHA-256"
@@ -66,7 +71,8 @@ class MongoDBCredentials:
 
 @dataclass
 class MongoDBPoolConfig:
-    """MongoDB connection pool configuration"""    max_pool_size: int = 100
+    """MongoDB connection pool configuration"""
+    max_pool_size: int = 100
     min_pool_size: int = 10
     max_idle_time_ms: int = 30000
     wait_queue_timeout_ms: int = 10000
@@ -80,7 +86,8 @@ class MongoDBPoolConfig:
 
 @dataclass
 class MongoDBPerformanceConfig:
-    """MongoDB performance optimization settings"""    read_preference: str = "secondaryPreferred"
+    """MongoDB performance optimization settings"""
+    read_preference: str = "secondaryPreferred"
     write_concern_w: Union[int, str] = "majority"
     write_concern_j: bool = True
     write_concern_wtimeout: int = 10000
@@ -92,7 +99,8 @@ class MongoDBPerformanceConfig:
 
 @dataclass
 class MongoDBIndexConfig:
-    """MongoDB indexing configuration for different collections"""    content_fingerprints: List[Dict[str, Any]] = field(default_factory=lambda: [
+    """MongoDB indexing configuration for different collections"""
+    content_fingerprints: List[Dict[str, Any]] = field(default_factory=lambda: [
         {"fingerprint_hash": 1, "content_type": 1},
         {"creator_id": 1, "created_at": -1},
         {"platform": 1, "status": 1},
@@ -116,11 +124,13 @@ class MongoDBIndexConfig:
 
 
 class MongoDBConfig:
-    """    Professional MongoDB configuration manager for IA-Influencer Agent Platform
+    """
+    Professional MongoDB configuration manager for IA-Influencer Agent Platform
     
     Handles document storage for content fingerprinting, media metadata,
     real-time analytics, and monetization tracking across multi-tenant platform.
-    """    def __init__(self, 
+    """
+    def __init__(self, 
                  environment: MongoDBEnvironment = MongoDBEnvironment.DEVELOPMENT,
                  workload_type: MongoDBWorkloadType = MongoDBWorkloadType.MEDIA_STORAGE):
         self.environment = environment
@@ -134,7 +144,8 @@ class MongoDBConfig:
         self._setup_logging()
 
     def _setup_logging(self) -> None:
-        """Setup MongoDB-specific logging"""        self.logger = logging.getLogger(f"mongodb.{self.environment.value}")
+        """Setup MongoDB-specific logging"""
+        self.logger = logging.getLogger(f"mongodb.{self.environment.value}")
         if not self.logger.handlers:
             handler = logging.StreamHandler()
             formatter = logging.Formatter(
@@ -145,7 +156,8 @@ class MongoDBConfig:
             self.logger.setLevel(logging.INFO)
 
     def _load_credentials(self) -> MongoDBCredentials:
-        """Load MongoDB credentials from environment"""        hosts_str = os.getenv(f"MONGODB_HOSTS_{self.environment.value.upper()}", "localhost:27017")
+        """Load MongoDB credentials from environment"""
+        hosts_str = os.getenv(f"MONGODB_HOSTS_{self.environment.value.upper()}", "localhost:27017")
         hosts = [host.strip() for host in hosts_str.split(",")]
         
         return MongoDBCredentials(
@@ -162,7 +174,8 @@ class MongoDBConfig:
         )
 
     def _get_pool_config(self) -> MongoDBPoolConfig:
-        """Get connection pool configuration based on environment and workload"""        base_config = {
+        """Get connection pool configuration based on environment and workload"""
+        base_config = {
             MongoDBEnvironment.DEVELOPMENT: MongoDBPoolConfig(
                 max_pool_size=20, min_pool_size=5
             ),
@@ -190,7 +203,8 @@ class MongoDBConfig:
         return base_config
 
     def _get_performance_config(self) -> MongoDBPerformanceConfig:
-        """Get performance configuration based on workload type"""        configs = {
+        """Get performance configuration based on workload type"""
+        configs = {
             MongoDBWorkloadType.MEDIA_STORAGE: MongoDBPerformanceConfig(
                 read_preference="secondaryPreferred",
                 write_concern_w="majority",
@@ -223,14 +237,16 @@ class MongoDBConfig:
         return configs.get(self.workload_type, MongoDBPerformanceConfig())
 
     def get_connection_string(self, database_name: Optional[str] = None) -> str:
-        """        Generate MongoDB connection string with authentication and SSL
+        """
+        Generate MongoDB connection string with authentication and SSL
         
         Args:
             database_name: Optional specific database name
             
         Returns:
             MongoDB connection string
-        """        try:
+        """
+        try:
             # URL encode credentials
             username = quote_plus(self.credentials.username)
             password = quote_plus(self.credentials.password)
@@ -280,7 +296,8 @@ class MongoDBConfig:
             raise
 
     def create_client(self, database_name: Optional[str] = None, **kwargs) -> MongoClient:
-        """        Create MongoDB client with optimized configuration
+        """
+        Create MongoDB client with optimized configuration
         
         Args:
             database_name: Optional specific database name
@@ -288,7 +305,8 @@ class MongoDBConfig:
             
         Returns:
             Configured MongoDB client
-        """        client_key = database_name or "default"
+        """
+        client_key = database_name or "default"
         
         if client_key in self._clients:
             return self._clients[client_key]
@@ -330,7 +348,8 @@ class MongoDBConfig:
             raise
 
     def create_async_client(self, database_name: Optional[str] = None, **kwargs) -> AsyncIOMotorClient:
-        """        Create async MongoDB client for real-time operations
+        """
+        Create async MongoDB client for real-time operations
         
         Args:
             database_name: Optional specific database name
@@ -338,7 +357,8 @@ class MongoDBConfig:
             
         Returns:
             Configured async MongoDB client
-        """        client_key = f"async_{database_name or 'default'}"
+        """
+        client_key = f"async_{database_name or 'default'}"
         
         if client_key in self._async_clients:
             return self._async_clients[client_key]
@@ -373,30 +393,37 @@ class MongoDBConfig:
             raise
 
     def get_content_protection_client(self) -> MongoClient:
-        """Get MongoDB client optimized for content protection operations"""        return self.create_client("ia_influencer_content_protection")
+        """Get MongoDB client optimized for content protection operations"""
+        return self.create_client("ia_influencer_content_protection")
 
     def get_analytics_client(self) -> MongoClient:
-        """Get MongoDB client optimized for analytics workloads"""        analytics_config = MongoDBConfig(self.environment, MongoDBWorkloadType.ANALYTICS)
+        """Get MongoDB client optimized for analytics workloads"""
+        analytics_config = MongoDBConfig(self.environment, MongoDBWorkloadType.ANALYTICS)
         return analytics_config.create_client("ia_influencer_analytics")
 
     def get_media_storage_client(self) -> MongoClient:
-        """Get MongoDB client optimized for media storage"""        return self.create_client("ia_influencer_media")
+        """Get MongoDB client optimized for media storage"""
+        return self.create_client("ia_influencer_media")
 
     def get_monetization_client(self) -> MongoClient:
-        """Get MongoDB client optimized for monetization tracking"""        monetization_config = MongoDBConfig(self.environment, MongoDBWorkloadType.MONETIZATION)
+        """Get MongoDB client optimized for monetization tracking"""
+        monetization_config = MongoDBConfig(self.environment, MongoDBWorkloadType.MONETIZATION)
         return monetization_config.create_client("ia_influencer_monetization")
 
     def get_real_time_client(self) -> AsyncIOMotorClient:
-        """Get async MongoDB client for real-time operations"""        real_time_config = MongoDBConfig(self.environment, MongoDBWorkloadType.REAL_TIME)
+        """Get async MongoDB client for real-time operations"""
+        real_time_config = MongoDBConfig(self.environment, MongoDBWorkloadType.REAL_TIME)
         return real_time_config.create_async_client("ia_influencer_realtime")
 
     def setup_indexes(self, client: MongoClient, database_name: str) -> None:
-        """        Setup optimized indexes for different collection types
+        """
+        Setup optimized indexes for different collection types
         
         Args:
             client: MongoDB client
             database_name: Target database name
-        """        try:
+        """
+        try:
             db = client[database_name]
             
             # Content fingerprints indexes
@@ -426,11 +453,13 @@ class MongoDBConfig:
             raise
 
     def health_check(self) -> Dict[str, Any]:
-        """        Perform comprehensive health check on MongoDB connections
+        """
+        Perform comprehensive health check on MongoDB connections
         
         Returns:
             Health check results dictionary
-        """        health_status = {
+        """
+        health_status = {
             "status": "healthy",
             "environment": self.environment.value,
             "workload_type": self.workload_type.value,
@@ -478,7 +507,8 @@ class MongoDBConfig:
         return health_status
 
     def close_all_connections(self) -> None:
-        """Close all MongoDB connections and cleanup resources"""        # Close sync clients
+        """Close all MongoDB connections and cleanup resources"""
+        # Close sync clients
         for client_name, client in self._clients.items():
             try:
                 client.close()
@@ -498,4 +528,5 @@ class MongoDBConfig:
         self._async_clients.clear()
 
     def __del__(self):
-        """Cleanup on object destruction"""        self.close_all_connections()
+        """Cleanup on object destruction"""
+        self.close_all_connections()

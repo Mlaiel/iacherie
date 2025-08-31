@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -21,7 +22,8 @@ Focused unit tests for the most critical AI agents in the Ainflue platform:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -37,10 +39,12 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestFingerprintingAgent:
-    """Unit tests for the Fingerprinting Agent - critical for content protection"""    
+    """Unit tests for the Fingerprinting Agent - critical for content protection"""
+    
     @pytest.fixture
     def mock_fingerprinting_agent(self):
-        """Mock fingerprinting agent with core methods"""        agent = Mock()
+        """Mock fingerprinting agent with core methods"""
+        agent = Mock()
         agent.generate_audio_fingerprint = AsyncMock()
         agent.generate_video_fingerprint = AsyncMock()
         agent.generate_image_fingerprint = AsyncMock()
@@ -51,7 +55,8 @@ class TestFingerprintingAgent:
     
     @pytest.fixture
     def sample_audio_data(self):
-        """Sample audio data for testing"""        return {
+        """Sample audio data for testing"""
+        return {
             'file_path': '/tmp/test_audio.mp3',
             'duration': 180.5,
             'format': 'mp3',
@@ -61,7 +66,8 @@ class TestFingerprintingAgent:
     
     @pytest.fixture
     def sample_video_data(self):
-        """Sample video data for testing"""        return {
+        """Sample video data for testing"""
+        return {
             'file_path': '/tmp/test_video.mp4',
             'duration': 300.0,
             'format': 'mp4',
@@ -71,7 +77,8 @@ class TestFingerprintingAgent:
     
     @pytest.mark.asyncio
     async def test_audio_fingerprint_generation(self, mock_fingerprinting_agent, sample_audio_data):
-        """Test audio fingerprint generation functionality"""        # Mock successful fingerprint generation
+        """Test audio fingerprint generation functionality"""
+        # Mock successful fingerprint generation
         expected_fingerprint = {
             'type': 'audio',
             'algorithm': 'chromaprint',
@@ -94,7 +101,8 @@ class TestFingerprintingAgent:
     
     @pytest.mark.asyncio
     async def test_video_fingerprint_generation(self, mock_fingerprinting_agent, sample_video_data):
-        """Test video fingerprint generation functionality"""        # Mock successful video fingerprint
+        """Test video fingerprint generation functionality"""
+        # Mock successful video fingerprint
         expected_fingerprint = {
             'type': 'video',
             'algorithm': 'perceptual_hash',
@@ -117,7 +125,8 @@ class TestFingerprintingAgent:
     
     @pytest.mark.asyncio
     async def test_fingerprint_similarity_matching(self, mock_fingerprinting_agent):
-        """Test fingerprint similarity comparison"""        # Mock fingerprints for comparison
+        """Test fingerprint similarity comparison"""
+        # Mock fingerprints for comparison
         fingerprint_1 = {'hash': 'AQAHxImYaAkSFZygJAq0JMlQg', 'type': 'audio'}
         fingerprint_2 = {'hash': 'AQAHxImYaAkSFZygJAq0JMlQh', 'type': 'audio'}
         
@@ -140,7 +149,8 @@ class TestFingerprintingAgent:
     
     @pytest.mark.asyncio
     async def test_bulk_content_search(self, mock_fingerprinting_agent):
-        """Test searching for similar content in bulk"""        # Mock search parameters
+        """Test searching for similar content in bulk"""
+        # Mock search parameters
         query_fingerprint = {'hash': 'AQAHxImYaAkSFZygJAq0JMlQg', 'type': 'audio'}
         search_params = {
             'similarity_threshold': 0.85,
@@ -178,10 +188,12 @@ class TestFingerprintingAgent:
 
 
 class TestMonetizationAgent:
-    """Unit tests for the Monetization Agent - critical for revenue generation"""    
+    """Unit tests for the Monetization Agent - critical for revenue generation"""
+    
     @pytest.fixture
     def mock_monetization_agent(self):
-        """Mock monetization agent with core methods"""        agent = Mock()
+        """Mock monetization agent with core methods"""
+        agent = Mock()
         agent.calculate_revenue_potential = AsyncMock()
         agent.track_content_usage = AsyncMock()
         agent.generate_revenue_report = AsyncMock()
@@ -192,7 +204,8 @@ class TestMonetizationAgent:
     
     @pytest.fixture
     def sample_content_usage(self):
-        """Sample content usage data"""        return {
+        """Sample content usage data"""
+        return {
             'content_id': 'content_12345',
             'platform_usage': [
                 {'platform': 'youtube', 'views': 50000, 'revenue': 125.50},
@@ -205,7 +218,8 @@ class TestMonetizationAgent:
     
     @pytest.mark.asyncio
     async def test_revenue_calculation(self, mock_monetization_agent, sample_content_usage):
-        """Test revenue potential calculation"""        # Mock revenue calculation result
+        """Test revenue potential calculation"""
+        # Mock revenue calculation result
         expected_revenue = {
             'total_revenue': 224.75,
             'platform_breakdown': {
@@ -230,7 +244,8 @@ class TestMonetizationAgent:
     
     @pytest.mark.asyncio
     async def test_royalty_distribution(self, mock_monetization_agent):
-        """Test royalty distribution functionality"""        # Mock distribution parameters
+        """Test royalty distribution functionality"""
+        # Mock distribution parameters
         distribution_data = {
             'total_amount': 1000.00,
             'content_id': 'content_12345',
@@ -266,7 +281,8 @@ class TestMonetizationAgent:
     
     @pytest.mark.asyncio
     async def test_monetization_opportunity_detection(self, mock_monetization_agent):
-        """Test detection of new monetization opportunities"""        # Mock content analysis data
+        """Test detection of new monetization opportunities"""
+        # Mock content analysis data
         content_data = {
             'content_id': 'content_67890',
             'type': 'audio',
@@ -313,10 +329,12 @@ class TestMonetizationAgent:
 
 
 class TestCollaborationAgent:
-    """Unit tests for the Collaboration Agent - critical for creator partnerships"""    
+    """Unit tests for the Collaboration Agent - critical for creator partnerships"""
+    
     @pytest.fixture
     def mock_collaboration_agent(self):
-        """Mock collaboration agent with core methods"""        agent = Mock()
+        """Mock collaboration agent with core methods"""
+        agent = Mock()
         agent.find_collaboration_matches = AsyncMock()
         agent.analyze_compatibility = AsyncMock()
         agent.manage_collaboration_workflow = AsyncMock()
@@ -326,7 +344,8 @@ class TestCollaborationAgent:
     
     @pytest.fixture
     def sample_creator_profile(self):
-        """Sample creator profile for matching"""        return {
+        """Sample creator profile for matching"""
+        return {
             'creator_id': 'creator_123',
             'name': 'Test Creator',
             'genres': ['pop', 'electronic', 'indie'],
@@ -343,7 +362,8 @@ class TestCollaborationAgent:
     
     @pytest.mark.asyncio
     async def test_collaboration_matching(self, mock_collaboration_agent, sample_creator_profile):
-        """Test finding suitable collaboration partners"""        # Mock search criteria
+        """Test finding suitable collaboration partners"""
+        # Mock search criteria
         search_criteria = {
             'genre_compatibility': 0.8,
             'audience_overlap': 0.3,
@@ -393,7 +413,8 @@ class TestCollaborationAgent:
     
     @pytest.mark.asyncio
     async def test_compatibility_analysis(self, mock_collaboration_agent):
-        """Test creator compatibility analysis"""        # Mock creator pair for analysis
+        """Test creator compatibility analysis"""
+        # Mock creator pair for analysis
         creator_a = {
             'id': 'creator_001',
             'styles': ['pop', 'rnb'],
@@ -436,7 +457,8 @@ class TestCollaborationAgent:
     
     @pytest.mark.asyncio
     async def test_collaboration_workflow_management(self, mock_collaboration_agent):
-        """Test collaboration workflow management"""        # Mock collaboration project
+        """Test collaboration workflow management"""
+        # Mock collaboration project
         collaboration_project = {
             'project_id': 'collab_001',
             'creators': ['creator_001', 'creator_002'],
@@ -487,7 +509,8 @@ class TestCollaborationAgent:
 if __name__ == "__main__":
     # Simple test runner for development
     async def run_simple_tests():
-        """Run basic tests without pytest for development"""        print("Running AI Agents Core Tests...")
+        """Run basic tests without pytest for development"""
+        print("Running AI Agents Core Tests...")
         
         # Test structure validation
         print("✓ Fingerprinting Agent test structure created")

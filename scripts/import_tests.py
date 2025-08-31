@@ -7,7 +7,8 @@ de l'ancien projet IA-Influencer vers le nouveau projet Ainflue.
 
 Author: GitHub Copilot
 Date: 2025-08-31
-"""import os
+"""
+import os
 import sys
 import shutil
 import re
@@ -35,7 +36,8 @@ MODULE_MAPPING = {
 }
 
 class TestImporter:
-    """Importeur et adaptateur de tests"""    
+    """Importeur et adaptateur de tests"""
+    
     def __init__(self):
         self.temp_dir = None
         self.old_tests_path = None
@@ -43,7 +45,8 @@ class TestImporter:
         self.adaptation_log = []
     
     def download_and_extract_repo(self) -> bool:
-        """Télécharge et extrait l'ancien projet"""        try:
+        """Télécharge et extrait l'ancien projet"""
+        try:
             print("📥 Téléchargement de l'ancien projet...")
             
             # Créer un répertoire temporaire
@@ -81,7 +84,8 @@ class TestImporter:
             return False
     
     def analyze_test_structure(self) -> Dict[str, List[str]]:
-        """Analyse la structure des tests de l'ancien projet"""        if not self.old_tests_path or not self.old_tests_path.exists():
+        """Analyse la structure des tests de l'ancien projet"""
+        if not self.old_tests_path or not self.old_tests_path.exists():
             return {}
         
         structure = {}
@@ -105,7 +109,8 @@ class TestImporter:
         return structure
     
     def adapt_imports(self, content: str, target_module: str) -> str:
-        """Adapte les imports pour le nouveau projet"""        lines = content.split('\n')
+        """Adapte les imports pour le nouveau projet"""
+        lines = content.split('\n')
         adapted_lines = []
         
         for line in lines:
@@ -127,7 +132,8 @@ class TestImporter:
         return '\n'.join(adapted_lines)
     
     def copy_and_adapt_file(self, source_file: Path, target_file: Path) -> bool:
-        """Copie et adapte un fichier de test"""        try:
+        """Copie et adapte un fichier de test"""
+        try:
             # Créer le répertoire cible si nécessaire
             target_file.parent.mkdir(parents=True, exist_ok=True)
             
@@ -152,7 +158,8 @@ class TestImporter:
             return False
     
     def import_test_module(self, module_path: str, test_info: Dict) -> bool:
-        """Import un module de test complet"""        source_module_path = self.old_tests_path / module_path
+        """Import un module de test complet"""
+        source_module_path = self.old_tests_path / module_path
         target_module_path = TESTS_DIR / module_path
         
         if not source_module_path.exists():
@@ -182,7 +189,8 @@ class TestImporter:
         return success_count > 0
     
     def create_master_conftest(self) -> bool:
-        """Crée un fichier conftest.py principal"""        conftest_content = '''"""Configuration pytest principale pour le projet Ainflue
+        """Crée un fichier conftest.py principal"""
+        conftest_content = '''"""Configuration pytest principale pour le projet Ainflue
 ====================================================
 
 Configuration centralisée pour tous les tests du projet,
@@ -190,7 +198,8 @@ importée et adaptée de l'ancien projet IA-Influencer.
 
 Author: GitHub Copilot (adapté du projet original)
 Date: 2025-08-31
-"""import pytest
+"""
+import pytest
 import asyncio
 import logging
 import os
@@ -208,7 +217,8 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 # Configuration pytest
 def pytest_configure(config):
-    """Configuration pytest principale"""    # Marqueurs de test
+    """Configuration pytest principale"""
+    # Marqueurs de test
     config.addinivalue_line("markers", "unit: Tests unitaires")
     config.addinivalue_line("markers", "integration: Tests d'intégration") 
     config.addinivalue_line("markers", "performance: Tests de performance")
@@ -222,14 +232,16 @@ def pytest_configure(config):
 
 @pytest.fixture(scope="session")
 def event_loop():
-    """Event loop pour les tests asyncio"""    loop = asyncio.new_event_loop()
+    """Event loop pour les tests asyncio"""
+    loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     yield loop
     loop.close()
 
 @pytest.fixture(scope="session")
 def test_config():
-    """Configuration de test globale"""    return {
+    """Configuration de test globale"""
+    return {
         "test_env": "pytest",
         "project_root": str(PROJECT_ROOT),
         "test_data_dir": str(PROJECT_ROOT / "tests" / "data"),
@@ -238,11 +250,13 @@ def test_config():
 
 @pytest.fixture
 def temp_dir(tmp_path):
-    """Répertoire temporaire pour les tests"""    return tmp_path
+    """Répertoire temporaire pour les tests"""
+    return tmp_path
 
 # Hook pour modifier la collection de tests
 def pytest_collection_modifyitems(config, items):
-    """Modifie la collection de tests"""    for item in items:
+    """Modifie la collection de tests"""
+    for item in items:
         # Ajouter des marqueurs automatiquement basés sur le nom
         if "performance" in item.name.lower():
             item.add_marker(pytest.mark.performance)
@@ -268,7 +282,8 @@ logger.info("🧪 Configuration pytest Ainflue chargée")
             return False
     
     def create_pytest_ini(self) -> bool:
-        """Crée le fichier pytest.ini"""        pytest_ini_content = '''[tool:pytest]
+        """Crée le fichier pytest.ini"""
+        pytest_ini_content = '''[tool:pytest]
 minversion = 6.0
 addopts = 
     -ra
@@ -319,7 +334,8 @@ log_cli_date_format = %Y-%m-%d %H:%M:%S
             return False
     
     def generate_import_report(self) -> str:
-        """Génère un rapport d'importation"""        report = f"""# 📊 Rapport d'Importation des Tests
+        """Génère un rapport d'importation"""
+        report = f"""# 📊 Rapport d'Importation des Tests
 
 **Date :** {sys.version}
 **Projet source :** IA-Influencer
@@ -362,15 +378,18 @@ pytest tests/ --cov
 # Exécuter les tests IA
 pytest tests/ai/ -v
 ```
-"""        return report
+"""
+        return report
     
     def cleanup(self):
-        """Nettoie les fichiers temporaires"""        if self.temp_dir and os.path.exists(self.temp_dir):
+        """Nettoie les fichiers temporaires"""
+        if self.temp_dir and os.path.exists(self.temp_dir):
             shutil.rmtree(self.temp_dir)
             print("🧹 Fichiers temporaires nettoyés")
     
     def run_import(self) -> bool:
-        """Exécute l'importation complète"""        try:
+        """Exécute l'importation complète"""
+        try:
             print("🚀 Démarrage de l'importation des tests...")
             
             # Télécharger l'ancien projet
@@ -432,7 +451,8 @@ pytest tests/ai/ -v
             self.cleanup()
 
 def main():
-    """Fonction principale"""    print("🔄 Script d'Importation des Tests - Ainflue")
+    """Fonction principale"""
+    print("🔄 Script d'Importation des Tests - Ainflue")
     print("=" * 50)
     
     importer = TestImporter()

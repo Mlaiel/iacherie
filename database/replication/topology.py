@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Set, Tuple
 from datetime import datetime, timedelta
@@ -21,7 +22,8 @@ from .config import ReplicationConfig
 
 
 class NodeRole(Enum):
-    """Database node roles in replication topology"""    PRIMARY = "primary"
+    """Database node roles in replication topology"""
+    PRIMARY = "primary"
     SECONDARY = "secondary"
     STANDBY = "standby"
     WITNESS = "witness"
@@ -29,7 +31,8 @@ class NodeRole(Enum):
 
 
 class NodeStatus(Enum):
-    """Database node status"""    HEALTHY = "healthy"
+    """Database node status"""
+    HEALTHY = "healthy"
     DEGRADED = "degraded"
     FAILED = "failed"
     MAINTENANCE = "maintenance"
@@ -38,7 +41,8 @@ class NodeStatus(Enum):
 
 @dataclass
 class DatabaseNode:
-    """Database node configuration and status"""    id: str
+    """Database node configuration and status"""
+    id: str
     host: str
     port: int
     role: NodeRole
@@ -56,7 +60,8 @@ class DatabaseNode:
 
 @dataclass
 class ReplicationTopology:
-    """Complete replication topology configuration"""    primary_region: str
+    """Complete replication topology configuration"""
+    primary_region: str
     secondary_regions: List[str]
     nodes: Dict[str, DatabaseNode] = field(default_factory=dict)
     routing_rules: Dict[str, Any] = field(default_factory=dict)
@@ -65,18 +70,22 @@ class ReplicationTopology:
 
 
 class TopologyManager:
-    """    Comprehensive topology manager for database replication.
+    """
+    Comprehensive topology manager for database replication.
     
     Manages multi-region database topologies with intelligent routing,
     automatic failover detection, and performance optimization for the
     content creator platform.
-    """    
+    """
+    
     def __init__(self, config: ReplicationConfig):
-        """        Initialize topology manager.
+        """
+        Initialize topology manager.
         
         Args:
             config: Replication configuration
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(f"{__name__}.TopologyManager")
         
         # Topology state
@@ -101,11 +110,13 @@ class TopologyManager:
         self.logger.info("TopologyManager initialized")
     
     async def initialize(self) -> bool:
-        """        Initialize topology manager.
+        """
+        Initialize topology manager.
         
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             self.logger.info("Initializing topology manager...")
             
             # Load topology configuration
@@ -128,7 +139,8 @@ class TopologyManager:
             return False
     
     async def _load_topology_configuration(self) -> None:
-        """Load topology configuration from config"""        try:
+        """Load topology configuration from config"""
+        try:
             topology_config = self.config.get_topology_config()
             
             self.topology = ReplicationTopology(
@@ -152,7 +164,8 @@ class TopologyManager:
             raise
     
     async def _discover_database_nodes(self) -> None:
-        """Discover and register database nodes"""        try:
+        """Discover and register database nodes"""
+        try:
             # Get database configurations
             database_configs = {
                 "postgresql": self.config.get_database_config("postgresql"),
@@ -195,7 +208,8 @@ class TopologyManager:
         role: NodeRole, 
         suffix: str = ""
     ) -> Optional[DatabaseNode]:
-        """Create database node from configuration"""        try:
+        """Create database node from configuration"""
+        try:
             node_id = f"{db_type}_{role.value}"
             if suffix:
                 node_id += f"_{suffix}"
@@ -223,7 +237,8 @@ class TopologyManager:
             return None
     
     async def _validate_topology(self) -> None:
-        """Validate topology configuration"""        try:
+        """Validate topology configuration"""
+        try:
             issues = []
             
             # Check for primary nodes
@@ -255,12 +270,14 @@ class TopologyManager:
             self.logger.error(f"Failed to validate topology: {e}")
     
     async def _start_monitoring(self) -> None:
-        """Start topology monitoring"""        self.is_monitoring = True
+        """Start topology monitoring"""
+        self.is_monitoring = True
         self.monitoring_task = asyncio.create_task(self._monitoring_loop())
         self.logger.info("Topology monitoring started")
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop for topology health"""        while self.is_monitoring:
+        """Main monitoring loop for topology health"""
+        while self.is_monitoring:
             try:
                 # Check health of all nodes
                 await self._check_nodes_health()
@@ -284,7 +301,8 @@ class TopologyManager:
                 await asyncio.sleep(30)
     
     async def _check_nodes_health(self) -> None:
-        """Check health of all nodes in topology"""        health_tasks = []
+        """Check health of all nodes in topology"""
+        health_tasks = []
         
         for node_id, node in self.active_nodes.items():
             health_tasks.append(self._check_node_health(node))
@@ -301,7 +319,8 @@ class TopologyManager:
                     self._handle_node_health_update(node, result)
     
     async def _check_node_health(self, node: DatabaseNode) -> Dict[str, Any]:
-        """Check health of a specific node"""        try:
+        """Check health of a specific node"""
+        try:
             health_data = {
                 "node_id": node.id,
                 "timestamp": datetime.utcnow().isoformat(),
@@ -332,7 +351,8 @@ class TopologyManager:
             raise Exception(f"Health check failed for {node.id}: {e}")
     
     async def _check_postgresql_health(self, node: DatabaseNode) -> Dict[str, Any]:
-        """Check PostgreSQL node health"""        try:
+        """Check PostgreSQL node health"""
+        try:
             import asyncpg
             
             conn = await asyncpg.connect(
@@ -374,7 +394,8 @@ class TopologyManager:
             return {"healthy": False, "error": str(e)}
     
     async def _check_redis_health(self, node: DatabaseNode) -> Dict[str, Any]:
-        """Check Redis node health"""        try:
+        """Check Redis node health"""
+        try:
             import aioredis
             
             redis = aioredis.Redis(
@@ -412,7 +433,8 @@ class TopologyManager:
             return {"healthy": False, "error": str(e)}
     
     async def _check_mongodb_health(self, node: DatabaseNode) -> Dict[str, Any]:
-        """Check MongoDB node health"""        try:
+        """Check MongoDB node health"""
+        try:
             from motor.motor_asyncio import AsyncIOMotorClient
             
             client = AsyncIOMotorClient(
@@ -450,7 +472,8 @@ class TopologyManager:
             return {"healthy": False, "error": str(e)}
     
     async def _check_elasticsearch_health(self, node: DatabaseNode) -> Dict[str, Any]:
-        """Check Elasticsearch node health"""        try:
+        """Check Elasticsearch node health"""
+        try:
             from elasticsearch import AsyncElasticsearch
             
             client = AsyncElasticsearch(
@@ -476,7 +499,8 @@ class TopologyManager:
             return {"healthy": False, "error": str(e)}
     
     def _handle_node_health_update(self, node: DatabaseNode, health_data: Dict[str, Any]) -> None:
-        """Handle node health update"""        try:
+        """Handle node health update"""
+        try:
             node.last_seen = datetime.utcnow()
             node.latency_ms = health_data.get("latency_ms", 0.0)
             node.replication_lag_ms = health_data.get("replication_lag_ms", 0.0)
@@ -502,7 +526,8 @@ class TopologyManager:
             self.logger.error(f"Failed to handle health update for {node.id}: {e}")
     
     def _handle_node_failure(self, node: DatabaseNode, error: str) -> None:
-        """Handle node failure"""        try:
+        """Handle node failure"""
+        try:
             node.status = NodeStatus.FAILED
             self._record_node_failure(node)
             
@@ -512,13 +537,15 @@ class TopologyManager:
             self.logger.error(f"Failed to handle node failure for {node.id}: {e}")
     
     def _record_node_failure(self, node: DatabaseNode) -> None:
-        """Record node failure for failure detection"""        self.consecutive_failures[node.id] = self.consecutive_failures.get(node.id, 0) + 1
+        """Record node failure for failure detection"""
+        self.consecutive_failures[node.id] = self.consecutive_failures.get(node.id, 0) + 1
         
         if self.consecutive_failures[node.id] >= self.failure_detection_threshold:
             self._mark_node_failed(node)
     
     def _mark_node_failed(self, node: DatabaseNode) -> None:
-        """Mark node as failed and remove from active nodes"""        if node.id in self.active_nodes:
+        """Mark node as failed and remove from active nodes"""
+        if node.id in self.active_nodes:
             del self.active_nodes[node.id]
             self.failed_nodes.add(node.id)
             
@@ -529,7 +556,8 @@ class TopologyManager:
                 asyncio.create_task(self._trigger_failover(node))
     
     async def _trigger_failover(self, failed_node: DatabaseNode) -> None:
-        """Trigger failover for failed primary node"""        try:
+        """Trigger failover for failed primary node"""
+        try:
             self.logger.critical(f"Triggering failover for failed primary: {failed_node.id}")
             
             # Find best secondary to promote
@@ -544,7 +572,8 @@ class TopologyManager:
             self.logger.error(f"Failover failed for {failed_node.id}: {e}")
     
     async def _find_failover_candidate(self, database_type: str) -> Optional[DatabaseNode]:
-        """Find best secondary node for failover"""        candidates = [
+        """Find best secondary node for failover"""
+        candidates = [
             node for node in self.active_nodes.values()
             if (node.database_type == database_type and 
                 node.role == NodeRole.SECONDARY and
@@ -560,7 +589,8 @@ class TopologyManager:
         return candidates[0]
     
     async def _promote_secondary_to_primary(self, candidate: DatabaseNode, failed_primary: DatabaseNode) -> None:
-        """Promote secondary node to primary"""        try:
+        """Promote secondary node to primary"""
+        try:
             self.logger.info(f"Promoting {candidate.id} to primary for {failed_primary.database_type}")
             
             # Update node role
@@ -579,7 +609,8 @@ class TopologyManager:
             self.logger.error(f"Failed to promote {candidate.id} to primary: {e}")
     
     async def _notify_failover_complete(self, new_primary: DatabaseNode, old_primary: DatabaseNode) -> None:
-        """Notify other systems about completed failover"""        try:
+        """Notify other systems about completed failover"""
+        try:
             # This would integrate with the broader system notification mechanism
             notification = {
                 "type": "failover_completed",
@@ -603,7 +634,8 @@ class TopologyManager:
             self.logger.error(f"Failed to send failover notification: {e}")
     
     async def _update_performance_metrics(self) -> None:
-        """Update topology performance metrics"""        try:
+        """Update topology performance metrics"""
+        try:
             # Calculate aggregate metrics
             healthy_nodes = [node for node in self.active_nodes.values() 
                            if node.status == NodeStatus.HEALTHY]
@@ -628,7 +660,8 @@ class TopologyManager:
             self.logger.error(f"Failed to update performance metrics: {e}")
     
     async def _detect_failures(self) -> None:
-        """Detect and handle node failures"""        try:
+        """Detect and handle node failures"""
+        try:
             current_time = datetime.utcnow()
             
             for node in self.active_nodes.values():
@@ -644,7 +677,8 @@ class TopologyManager:
             self.logger.error(f"Failed to detect failures: {e}")
     
     async def _update_routing_cache(self) -> None:
-        """Update routing cache for optimal node selection"""        try:
+        """Update routing cache for optimal node selection"""
+        try:
             self.routing_cache.clear()
             
             # Build routing cache by database type
@@ -678,7 +712,8 @@ class TopologyManager:
             self.logger.error(f"Failed to update routing cache: {e}")
     
     async def _log_topology_status(self) -> None:
-        """Log current topology status"""        try:
+        """Log current topology status"""
+        try:
             status_summary = {
                 "total_nodes": len(self.topology.nodes),
                 "active_nodes": len(self.active_nodes),
@@ -696,14 +731,16 @@ class TopologyManager:
             self.logger.error(f"Failed to log topology status: {e}")
     
     def get_primary_node(self, database_type: str) -> Optional[DatabaseNode]:
-        """        Get primary node for database type.
+        """
+        Get primary node for database type.
         
         Args:
             database_type: Type of database
             
         Returns:
             Primary node or None if not available
-        """        cache_key = f"{database_type}_primary"
+        """
+        cache_key = f"{database_type}_primary"
         node_id = self.routing_cache.get(cache_key)
         
         if node_id and node_id in self.active_nodes:
@@ -712,7 +749,8 @@ class TopologyManager:
         return None
     
     def get_read_replica(self, database_type: str, region: Optional[str] = None) -> Optional[DatabaseNode]:
-        """        Get best read replica for database type.
+        """
+        Get best read replica for database type.
         
         Args:
             database_type: Type of database
@@ -720,7 +758,8 @@ class TopologyManager:
             
         Returns:
             Best read replica node or None if not available
-        """        cache_key = f"{database_type}_read"
+        """
+        cache_key = f"{database_type}_read"
         replica_ids = self.routing_cache.get(cache_key, [])
         
         if not replica_ids:
@@ -742,47 +781,55 @@ class TopologyManager:
         return None
     
     def get_node_by_id(self, node_id: str) -> Optional[DatabaseNode]:
-        """        Get node by ID.
+        """
+        Get node by ID.
         
         Args:
             node_id: Node identifier
             
         Returns:
             Database node or None if not found
-        """        return self.topology.nodes.get(node_id)
+        """
+        return self.topology.nodes.get(node_id)
     
     def get_nodes_by_type(self, database_type: str) -> List[DatabaseNode]:
-        """        Get all nodes for database type.
+        """
+        Get all nodes for database type.
         
         Args:
             database_type: Type of database
             
         Returns:
             List of database nodes
-        """        return [
+        """
+        return [
             node for node in self.topology.nodes.values()
             if node.database_type == database_type
         ]
     
     def get_nodes_by_region(self, region: str) -> List[DatabaseNode]:
-        """        Get all nodes in region.
+        """
+        Get all nodes in region.
         
         Args:
             region: Region name
             
         Returns:
             List of database nodes in region
-        """        return [
+        """
+        return [
             node for node in self.topology.nodes.values()
             if node.region == region
         ]
     
     def get_topology_metrics(self) -> Dict[str, Any]:
-        """        Get comprehensive topology metrics.
+        """
+        Get comprehensive topology metrics.
         
         Returns:
             Dict containing topology metrics
-        """        return {
+        """
+        return {
             "topology_summary": {
                 "total_nodes": len(self.topology.nodes),
                 "active_nodes": len(self.active_nodes),
@@ -799,11 +846,13 @@ class TopologyManager:
         }
     
     def get_health_status(self) -> Dict[str, Any]:
-        """        Get topology health status.
+        """
+        Get topology health status.
         
         Returns:
             Dict containing health status
-        """        healthy_nodes = [node for node in self.active_nodes.values() 
+        """
+        healthy_nodes = [node for node in self.active_nodes.values() 
                         if node.status == NodeStatus.HEALTHY]
         
         # Check if we have primary nodes for critical databases
@@ -826,7 +875,8 @@ class TopologyManager:
         }
     
     def _get_topology_issues(self) -> List[str]:
-        """Get list of topology issues"""        issues = []
+        """Get list of topology issues"""
+        issues = []
         
         # Check for failed primary nodes
         for node in self.failed_nodes:
@@ -850,7 +900,8 @@ class TopologyManager:
         return issues
     
     async def shutdown(self) -> None:
-        """Shutdown topology manager"""        try:
+        """Shutdown topology manager"""
+        try:
             self.logger.info("Shutting down topology manager...")
             
             # Stop monitoring

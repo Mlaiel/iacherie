@@ -24,7 +24,8 @@ Copyright: Fahed Mlaiel - All Rights Reserved
     
     Contact: mlaiel@live.de for licensing inquiries ONLY.
     Violators will be prosecuted to the full extent of German and EU law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union, Set
 from dataclasses import dataclass, field
@@ -55,7 +56,8 @@ logger = get_logger(__name__)
 
 
 class EntityType(Enum):
-    """Types of named entities"""    PERSON = "person"
+    """Types of named entities"""
+    PERSON = "person"
     ORGANIZATION = "organization"
     LOCATION = "location"
     GEOPOLITICAL = "geopolitical"
@@ -90,7 +92,8 @@ class EntityType(Enum):
 
 
 class ConfidenceLevel(Enum):
-    """Confidence levels for entity recognition"""    VERY_HIGH = "very_high"  # >0.9
+    """Confidence levels for entity recognition"""
+    VERY_HIGH = "very_high"  # >0.9
     HIGH = "high"           # 0.7-0.9
     MEDIUM = "medium"       # 0.5-0.7
     LOW = "low"            # 0.3-0.5
@@ -98,7 +101,8 @@ class ConfidenceLevel(Enum):
 
 
 class RelationType(Enum):
-    """Types of relationships between entities"""    WORKS_FOR = "works_for"
+    """Types of relationships between entities"""
+    WORKS_FOR = "works_for"
     LOCATED_IN = "located_in"
     FOUNDED_BY = "founded_by"
     CREATED_BY = "created_by"
@@ -112,7 +116,8 @@ class RelationType(Enum):
 
 @dataclass
 class EntityMention:
-    """Represents a single mention of an entity"""    text: str
+    """Represents a single mention of an entity"""
+    text: str
     start_pos: int
     end_pos: int
     confidence: float
@@ -122,7 +127,8 @@ class EntityMention:
 
 @dataclass
 class NamedEntity:
-    """Represents a recognized named entity"""    text: str
+    """Represents a recognized named entity"""
+    text: str
     entity_type: EntityType
     mentions: List[EntityMention]
     confidence: float
@@ -137,7 +143,8 @@ class NamedEntity:
 
 @dataclass
 class EntityRelation:
-    """Represents a relationship between two entities"""    subject: str
+    """Represents a relationship between two entities"""
+    subject: str
     relation_type: RelationType
     object: str
     confidence: float
@@ -147,7 +154,8 @@ class EntityRelation:
 
 @dataclass
 class EntityExtractionResult:
-    """Complete entity extraction result"""    entities: List[NamedEntity]
+    """Complete entity extraction result"""
+    entities: List[NamedEntity]
     relations: List[EntityRelation]
     entity_clusters: Dict[str, List[str]]
     entity_timeline: List[Tuple[str, datetime]]
@@ -160,7 +168,8 @@ class EntityExtractionResult:
 
 
 class EntityRecognizer:
-    """Advanced named entity recognition system"""    
+    """Advanced named entity recognition system"""
+    
     def __init__(self):
         self.nlp = None
         self.transformer_ner = None
@@ -168,7 +177,8 @@ class EntityRecognizer:
         self._initialize_models()
         
     def _initialize_models(self):
-        """Initialize NER models"""        try:
+        """Initialize NER models"""
+        try:
             # Initialize spaCy NER
             self.nlp = spacy.load("en_core_web_lg")
             
@@ -189,7 +199,8 @@ class EntityRecognizer:
             logger.error(f"Failed to initialize NER models: {e}")
             
     def _initialize_custom_patterns(self):
-        """Initialize custom entity patterns"""        try:
+        """Initialize custom entity patterns"""
+        try:
             self.custom_patterns = {
                 EntityType.EMAIL: re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'),
                 EntityType.URL: re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'),
@@ -210,7 +221,8 @@ class EntityRecognizer:
         extract_relations: bool = True,
         confidence_threshold: float = 0.5
     ) -> EntityExtractionResult:
-        """        Extract named entities from text
+        """
+        Extract named entities from text
         
         Args:
             text: Text to extract entities from
@@ -221,7 +233,8 @@ class EntityRecognizer:
             
         Returns:
             EntityExtractionResult with extracted entities and relations
-        """        try:
+        """
+        try:
             start_time = datetime.now()
             
             # Clean and preprocess text
@@ -283,7 +296,8 @@ class EntityRecognizer:
             raise
             
     async def _extract_spacy_entities(self, text: str, confidence_threshold: float) -> List[NamedEntity]:
-        """Extract entities using spaCy NER"""        try:
+        """Extract entities using spaCy NER"""
+        try:
             if not self.nlp:
                 return []
                 
@@ -327,7 +341,8 @@ class EntityRecognizer:
             return []
             
     def _map_spacy_label(self, label: str) -> EntityType:
-        """Map spaCy entity labels to our EntityType enum"""        mapping = {
+        """Map spaCy entity labels to our EntityType enum"""
+        mapping = {
             'PERSON': EntityType.PERSON,
             'ORG': EntityType.ORGANIZATION,
             'GPE': EntityType.GEOPOLITICAL,
@@ -350,7 +365,8 @@ class EntityRecognizer:
         return mapping.get(label, EntityType.MISC)
         
     def _get_entity_context(self, doc, entity) -> str:
-        """Get context around an entity"""        try:
+        """Get context around an entity"""
+        try:
             # Get sentence containing the entity
             for sent in doc.sents:
                 if entity.start >= sent.start and entity.end <= sent.end:
@@ -362,7 +378,8 @@ class EntityRecognizer:
             return ""
             
     async def _extract_transformer_entities(self, text: str, confidence_threshold: float) -> List[NamedEntity]:
-        """Extract entities using transformer-based NER"""        try:
+        """Extract entities using transformer-based NER"""
+        try:
             if not self.transformer_ner:
                 return []
                 
@@ -415,7 +432,8 @@ class EntityRecognizer:
             return []
             
     def _map_transformer_label(self, label: str) -> EntityType:
-        """Map transformer entity labels to our EntityType enum"""        mapping = {
+        """Map transformer entity labels to our EntityType enum"""
+        mapping = {
             'PER': EntityType.PERSON,
             'ORG': EntityType.ORGANIZATION,
             'LOC': EntityType.LOCATION,
@@ -424,7 +442,8 @@ class EntityRecognizer:
         return mapping.get(label, EntityType.MISC)
         
     async def _extract_custom_entities(self, text: str) -> List[NamedEntity]:
-        """Extract custom entity types using regex patterns"""        try:
+        """Extract custom entity types using regex patterns"""
+        try:
             entities = []
             
             for entity_type, pattern in self.custom_patterns.items():
@@ -456,7 +475,8 @@ class EntityRecognizer:
             return []
             
     async def _merge_duplicate_entities(self, entities: List[NamedEntity]) -> List[NamedEntity]:
-        """Merge duplicate entities and combine their mentions"""        try:
+        """Merge duplicate entities and combine their mentions"""
+        try:
             entity_map = {}
             
             for entity in entities:
@@ -487,7 +507,8 @@ class EntityRecognizer:
             return entities
             
     def _calculate_entity_importance(self, entity: NamedEntity) -> float:
-        """Calculate importance score for an entity"""        try:
+        """Calculate importance score for an entity"""
+        try:
             # Base score from frequency and confidence
             frequency_score = min(entity.frequency / 10, 1.0)
             confidence_score = entity.confidence
@@ -517,7 +538,8 @@ class EntityRecognizer:
             return 0.5
             
     async def _link_entities(self, entities: List[NamedEntity], text: str) -> List[NamedEntity]:
-        """Perform entity linking to external knowledge bases"""        try:
+        """Perform entity linking to external knowledge bases"""
+        try:
             # This is a simplified implementation
             # In a full implementation, you would use services like:
             # - Wikidata Query Service
@@ -540,7 +562,8 @@ class EntityRecognizer:
             return entities
             
     async def _extract_entity_relations(self, entities: List[NamedEntity], text: str) -> List[EntityRelation]:
-        """Extract relationships between entities"""        try:
+        """Extract relationships between entities"""
+        try:
             relations = []
             
             # Simple pattern-based relation extraction
@@ -591,7 +614,8 @@ class EntityRecognizer:
             return []
             
     async def _cluster_entities(self, entities: List[NamedEntity]) -> Dict[str, List[str]]:
-        """Cluster similar entities"""        try:
+        """Cluster similar entities"""
+        try:
             clusters = defaultdict(list)
             
             # Group by entity type
@@ -615,7 +639,8 @@ class EntityRecognizer:
             return {}
             
     async def _extract_entity_timeline(self, text: str, entities: List[NamedEntity]) -> List[Tuple[str, datetime]]:
-        """Extract timeline events involving entities"""        try:
+        """Extract timeline events involving entities"""
+        try:
             timeline = []
             
             # Simple date extraction and entity association
@@ -642,7 +667,8 @@ class EntityRecognizer:
             return []
             
     async def _build_entity_network(self, relations: List[EntityRelation]) -> Dict[str, List[str]]:
-        """Build entity relationship network"""        try:
+        """Build entity relationship network"""
+        try:
             network = defaultdict(list)
             
             for relation in relations:
@@ -657,7 +683,8 @@ class EntityRecognizer:
             return {}
             
     async def _identify_content_topics(self, entities: List[NamedEntity]) -> List[str]:
-        """Identify content topics based on entities"""        try:
+        """Identify content topics based on entities"""
+        try:
             topics = []
             
             # Topic mapping based on entity types and content
@@ -681,7 +708,8 @@ class EntityRecognizer:
             return []
             
     async def _identify_key_entities(self, entities: List[NamedEntity]) -> List[str]:
-        """Identify the most important entities"""        try:
+        """Identify the most important entities"""
+        try:
             # Sort entities by importance score and return top ones
             sorted_entities = sorted(entities, key=lambda x: x.importance_score, reverse=True)
             return [entity.text for entity in sorted_entities[:10]]
@@ -692,7 +720,8 @@ class EntityRecognizer:
 
 
 class EntityAnalyzer:
-    """Entity-based content analysis"""    
+    """Entity-based content analysis"""
+    
     def __init__(self):
         self.recognizer = EntityRecognizer()
         
@@ -701,7 +730,8 @@ class EntityAnalyzer:
         text: str,
         entity: str
     ) -> Dict[str, float]:
-        """Analyze sentiment towards a specific entity"""        try:
+        """Analyze sentiment towards a specific entity"""
+        try:
             # This would integrate with sentiment analysis
             # Enhanced professional entity analysis with AI verification
             entity_data = await self._enhanced_entity_verification(text, entity)
@@ -720,7 +750,8 @@ class EntityAnalyzer:
         documents: List[str],
         entity: str
     ) -> List[Dict[str, Any]]:
-        """Track mentions of an entity across documents"""        try:
+        """Track mentions of an entity across documents"""
+        try:
             mentions = []
             
             for i, doc in enumerate(documents):

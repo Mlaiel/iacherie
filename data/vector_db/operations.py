@@ -9,7 +9,8 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
 ATTENTION: Ce code est protégé par les droits d'auteur.
 Toute reproduction, distribution ou modification non autorisée est strictement interdite.
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 import json
@@ -44,7 +45,8 @@ logger = logging.getLogger(__name__)
 
 
 class IndexStatus(Enum):
-    """Status of vector indices."""    HEALTHY = "healthy"
+    """Status of vector indices."""
+    HEALTHY = "healthy"
     DEGRADED = "degraded"
     OFFLINE = "offline"
     REBUILDING = "rebuilding"
@@ -55,7 +57,8 @@ class IndexStatus(Enum):
 
 
 class BackupStatus(Enum):
-    """Status of backup operations."""    COMPLETED = "completed"
+    """Status of backup operations."""
+    COMPLETED = "completed"
     IN_PROGRESS = "in_progress"
     FAILED = "failed"
     SCHEDULED = "scheduled"
@@ -65,7 +68,8 @@ class BackupStatus(Enum):
 
 
 class OperationType(Enum):
-    """Types of database operations."""    SEARCH = "search"
+    """Types of database operations."""
+    SEARCH = "search"
     INSERT = "insert"
     DELETE = "delete"
     UPDATE = "update"
@@ -78,7 +82,8 @@ class OperationType(Enum):
 
 
 class MaintenanceType(Enum):
-    """Types of maintenance operations."""    GARBAGE_COLLECTION = "garbage_collection"
+    """Types of maintenance operations."""
+    GARBAGE_COLLECTION = "garbage_collection"
     INDEX_COMPACTION = "index_compaction"
     STATISTICS_UPDATE = "statistics_update"
     HEALTH_CHECK = "health_check"
@@ -88,7 +93,8 @@ class MaintenanceType(Enum):
 
 @dataclass
 class IndexMetrics:
-    """Metrics for a vector index."""    index_name: str
+    """Metrics for a vector index."""
+    index_name: str
     vector_count: int
     dimension: int
     memory_usage_mb: float
@@ -101,7 +107,8 @@ class IndexMetrics:
 
 @dataclass
 class BackupInfo:
-    """Information about index backups."""    backup_id: str
+    """Information about index backups."""
+    backup_id: str
     index_name: str
     backup_path: str
     size_mb: float
@@ -112,7 +119,8 @@ class BackupInfo:
 
 @dataclass
 class PerformanceStats:
-    """Performance statistics for the vector database."""    total_queries: int
+    """Performance statistics for the vector database."""
+    total_queries: int
     avg_query_time_ms: float
     cache_hit_rate: float
     memory_usage_mb: float
@@ -123,11 +131,13 @@ class PerformanceStats:
 
 
 class VectorDBOperations:
-    """    Advanced vector database operations manager.
+    """
+    Advanced vector database operations manager.
     
     Provides high-level operations for managing vector databases including
     indexing, searching, monitoring, backup/restore, and optimization.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.storage_path = config.get('storage_path', './data/vector_operations')
@@ -165,7 +175,8 @@ class VectorDBOperations:
         logger.info(f"Vector DB operations initialized with storage: {self.storage_path}")
     
     async def initialize_system(self) -> bool:
-        """Initialize the complete vector database system."""        try:
+        """Initialize the complete vector database system."""
+        try:
             logger.info("Initializing vector database system...")
             
             # Create default indices for all content types
@@ -210,7 +221,8 @@ class VectorDBOperations:
     
     async def add_content(self, content: Any, content_type: str,
                          content_id: str, metadata: Dict[str, Any]) -> bool:
-        """        Add content to the vector database with automatic embedding generation.
+        """
+        Add content to the vector database with automatic embedding generation.
         
         Args:
             content: Content data (text, audio array, image, video path)
@@ -220,7 +232,8 @@ class VectorDBOperations:
             
         Returns:
             Success status
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             # Update metadata with system information
@@ -269,7 +282,8 @@ class VectorDBOperations:
     async def search_content(self, query_content: Any, content_type: str,
                            search_config: SearchConfig,
                            query_metadata: Dict[str, Any] = None) -> List[VectorSearchResult]:
-        """        Search for similar content in the vector database.
+        """
+        Search for similar content in the vector database.
         
         Args:
             query_content: Query content for similarity search
@@ -279,7 +293,8 @@ class VectorDBOperations:
             
         Returns:
             List of search results
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             # Generate query embedding
@@ -310,7 +325,8 @@ class VectorDBOperations:
     
     async def detect_duplicates(self, content: Any, content_type: str,
                               metadata: Dict[str, Any] = None) -> List[Tuple[VectorSearchResult, Any]]:
-        """        Detect potential duplicate content.
+        """
+        Detect potential duplicate content.
         
         Args:
             content: Content to check for duplicates
@@ -319,7 +335,8 @@ class VectorDBOperations:
             
         Returns:
             List of (result, analysis) tuples for potential duplicates
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             # Generate embedding for the content
@@ -349,7 +366,8 @@ class VectorDBOperations:
     
     async def find_collaborations(self, creator_profile: Dict[str, Any],
                                 content_example: Any, content_type: str) -> List[Any]:
-        """        Find potential collaboration opportunities.
+        """
+        Find potential collaboration opportunities.
         
         Args:
             creator_profile: Profile of the creator seeking collaborations
@@ -358,7 +376,8 @@ class VectorDBOperations:
             
         Returns:
             List of collaboration matches
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             # Generate embedding for creator's style
@@ -387,7 +406,8 @@ class VectorDBOperations:
     
     async def get_recommendations(self, user_profile: Dict[str, Any],
                                 content_example: Any, content_type: str) -> List[Any]:
-        """        Get content recommendations for inspiration and strategy.
+        """
+        Get content recommendations for inspiration and strategy.
         
         Args:
             user_profile: User's profile and preferences
@@ -396,7 +416,8 @@ class VectorDBOperations:
             
         Returns:
             List of content recommendations
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             # Generate embedding for user's preferences
@@ -424,7 +445,8 @@ class VectorDBOperations:
             return []
     
     async def remove_content(self, content_id: str, content_type: str) -> bool:
-        """        Remove content from the vector database.
+        """
+        Remove content from the vector database.
         
         Args:
             content_id: ID of content to remove
@@ -432,7 +454,8 @@ class VectorDBOperations:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             success = await self.vector_db.remove_content_vector(content_type, content_id)
             
             if success:
@@ -447,14 +470,16 @@ class VectorDBOperations:
             return False
     
     async def get_index_metrics(self, content_type: str = None) -> Union[IndexMetrics, Dict[str, IndexMetrics]]:
-        """        Get metrics for vector indices.
+        """
+        Get metrics for vector indices.
         
         Args:
             content_type: Specific content type, or None for all indices
             
         Returns:
             Index metrics
-        """        try:
+        """
+        try:
             with self.metrics_lock:
                 if content_type:
                     # Return metrics for specific index
@@ -485,7 +510,8 @@ class VectorDBOperations:
             return {} if content_type is None else None
     
     async def get_performance_stats(self) -> PerformanceStats:
-        """Get overall performance statistics."""        try:
+        """Get overall performance statistics."""
+        try:
             uptime = (datetime.now() - self.start_time).total_seconds()
             
             # Calculate averages
@@ -521,7 +547,8 @@ class VectorDBOperations:
             )
     
     async def create_backup(self, content_type: str = None, backup_name: str = None) -> BackupInfo:
-        """        Create a backup of vector indices.
+        """
+        Create a backup of vector indices.
         
         Args:
             content_type: Specific content type to backup, or None for all
@@ -529,7 +556,8 @@ class VectorDBOperations:
             
         Returns:
             Backup information
-        """        try:
+        """
+        try:
             timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
             backup_id = f"backup_{timestamp}_{backup_name or 'auto'}"
             
@@ -610,7 +638,8 @@ class VectorDBOperations:
             )
     
     async def list_backups(self) -> List[BackupInfo]:
-        """List all available backups."""        try:
+        """List all available backups."""
+        try:
             backups = list(self.backup_registry.values())
             
             # Also scan backup directory for any missed backups
@@ -651,14 +680,16 @@ class VectorDBOperations:
             return []
     
     async def restore_backup(self, backup_id: str) -> bool:
-        """        Restore from a backup.
+        """
+        Restore from a backup.
         
         Args:
             backup_id: ID of the backup to restore
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             if backup_id not in self.backup_registry:
                 # Try to load backup info
                 await self.list_backups()
@@ -706,14 +737,16 @@ class VectorDBOperations:
             return False
     
     async def optimize_indices(self, content_type: str = None) -> bool:
-        """        Optimize vector indices for better performance.
+        """
+        Optimize vector indices for better performance.
         
         Args:
             content_type: Specific content type to optimize, or None for all
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             if content_type:
                 content_types = [content_type]
             else:
@@ -751,7 +784,8 @@ class VectorDBOperations:
             return False
     
     def _update_query_stats(self, processing_time: float, success: bool):
-        """Update query statistics."""        try:
+        """Update query statistics."""
+        try:
             self.query_stats['total_queries'] += 1
             self.query_stats['total_query_time'] += processing_time
             
@@ -762,7 +796,8 @@ class VectorDBOperations:
             logger.error(f"Failed to update query stats: {str(e)}")
     
     async def _calculate_index_metrics(self, content_type: str) -> IndexMetrics:
-        """Calculate metrics for a specific index."""        try:
+        """Calculate metrics for a specific index."""
+        try:
             # Get basic stats from vector database
             stats = self.vector_db.get_index_stats(content_type)
             
@@ -824,7 +859,8 @@ class VectorDBOperations:
             )
     
     def _calculate_health_score(self, stats: Dict[str, Any]) -> float:
-        """Calculate health score for an index."""        try:
+        """Calculate health score for an index."""
+        try:
             health_factors = []
             
             # Vector count factor
@@ -849,7 +885,8 @@ class VectorDBOperations:
             return 0.5
     
     async def _estimate_memory_usage(self) -> float:
-        """Estimate total memory usage in MB."""        try:
+        """Estimate total memory usage in MB."""
+        try:
             total_memory = 0
             content_types = ['audio', 'video', 'image', 'text']
             
@@ -870,7 +907,8 @@ class VectorDBOperations:
             return 0
     
     async def _estimate_storage_usage(self) -> float:
-        """Estimate total storage usage in MB."""        try:
+        """Estimate total storage usage in MB."""
+        try:
             total_size = self._calculate_directory_size(self.storage_path)
             return total_size
             
@@ -879,7 +917,8 @@ class VectorDBOperations:
             return 0
     
     def _calculate_directory_size(self, directory: str) -> float:
-        """Calculate total size of a directory in MB."""        try:
+        """Calculate total size of a directory in MB."""
+        try:
             total_size = 0
             for dirpath, dirnames, filenames in os.walk(directory):
                 for filename in filenames:
@@ -894,7 +933,8 @@ class VectorDBOperations:
             return 0
     
     async def _auto_backup_task(self):
-        """Background task for automatic backups."""        try:
+        """Background task for automatic backups."""
+        try:
             while True:
                 await asyncio.sleep(self.backup_interval_hours * 3600)  # Convert hours to seconds
                 
@@ -916,7 +956,8 @@ class VectorDBOperations:
             logger.error(f"Auto backup task error: {str(e)}")
     
     async def _metrics_collection_task(self):
-        """Background task for metrics collection."""        try:
+        """Background task for metrics collection."""
+        try:
             while True:
                 await asyncio.sleep(300)  # Collect metrics every 5 minutes
                 

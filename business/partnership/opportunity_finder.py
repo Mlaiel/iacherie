@@ -18,7 +18,8 @@ Development Team Specialties:
 - DevOps Engineer
 - AI Prompt Engineering Specialist
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class OpportunityType(Enum):
-    """Partnership opportunity categories"""    BRAND_COLLABORATION = "brand_collaboration"
+    """Partnership opportunity categories"""
+    BRAND_COLLABORATION = "brand_collaboration"
     CONTENT_LICENSING = "content_licensing"
     CROSS_PROMOTION = "cross_promotion"
     AFFILIATE_MARKETING = "affiliate_marketing"
@@ -46,7 +48,8 @@ class OpportunityType(Enum):
 
 
 class OpportunityPriority(Enum):
-    """Opportunity priority levels"""    CRITICAL = "critical"
+    """Opportunity priority levels"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -54,7 +57,8 @@ class OpportunityPriority(Enum):
 
 
 class MatchingAlgorithm(Enum):
-    """AI matching algorithm types"""    SEMANTIC_SIMILARITY = "semantic_similarity"
+    """AI matching algorithm types"""
+    SEMANTIC_SIMILARITY = "semantic_similarity"
     BEHAVIORAL_MATCHING = "behavioral_matching"
     PERFORMANCE_BASED = "performance_based"
     STRATEGIC_ALIGNMENT = "strategic_alignment"
@@ -62,9 +66,11 @@ class MatchingAlgorithm(Enum):
 
 
 class OpportunityFinderService:
-    """    Advanced AI-powered opportunity discovery service for partnerships.
+    """
+    Advanced AI-powered opportunity discovery service for partnerships.
     Uses machine learning to identify, score, and prioritize partnership opportunities.
-    """    def __init__(self):
+    """
+    def __init__(self):
         self.logger = logger
         self.matching_algorithms = self._initialize_matching_algorithms()
         self.opportunity_database = self._initialize_opportunity_database()
@@ -76,7 +82,8 @@ class OpportunityFinderService:
         search_criteria: Dict[str, Any],
         algorithm_type: MatchingAlgorithm = MatchingAlgorithm.HYBRID_SCORING
     ) -> List[PartnershipOpportunity]:
-        """Discover partnership opportunities using AI matching algorithms"""        try:
+        """Discover partnership opportunities using AI matching algorithms"""
+        try:
             # Preprocess creator profile for matching
             processed_profile = await self._preprocess_creator_profile(creator_profile)
             
@@ -118,7 +125,8 @@ class OpportunityFinderService:
         creator_profile: Dict[str, Any],
         detailed_analysis: bool = True
     ) -> Dict[str, Any]:
-        """Analyze comprehensive fit between opportunity and creator"""        try:
+        """Analyze comprehensive fit between opportunity and creator"""
+        try:
             fit_analysis = {
                 'opportunity_id': opportunity.opportunity_id,
                 'creator_id': opportunity.creator_id,
@@ -179,7 +187,8 @@ class OpportunityFinderService:
         tracking_metrics: List[str],
         tracking_period_days: int = 30
     ) -> Dict[str, Any]:
-        """Track performance of identified opportunities"""        try:
+        """Track performance of identified opportunities"""
+        try:
             performance_tracking = {
                 'tracking_id': str(uuid.uuid4()),
                 'tracking_start': datetime.utcnow().isoformat(),
@@ -232,7 +241,8 @@ class OpportunityFinderService:
         current_partnerships: List[Partnership],
         strategic_goals: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate strategic opportunity recommendations"""        try:
+        """Generate strategic opportunity recommendations"""
+        try:
             recommendations = {
                 'recommendation_id': str(uuid.uuid4()),
                 'generated_at': datetime.utcnow().isoformat(),
@@ -293,7 +303,8 @@ class OpportunityFinderService:
         partner_profiles: List[Dict[str, Any]],
         optimization_objectives: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize opportunity matching using advanced algorithms"""        try:
+        """Optimize opportunity matching using advanced algorithms"""
+        try:
             optimization_result = {
                 'optimization_id': str(uuid.uuid4()),
                 'optimized_at': datetime.utcnow().isoformat(),
@@ -342,7 +353,8 @@ class OpportunityFinderService:
     # Private helper methods
 
     def _initialize_matching_algorithms(self) -> Dict[str, Any]:
-        """Initialize AI matching algorithms"""        return {
+        """Initialize AI matching algorithms"""
+        return {
             MatchingAlgorithm.SEMANTIC_SIMILARITY: {
                 'model': 'sentence_transformers',
                 'weights': {'content_similarity': 0.4, 'audience_overlap': 0.3, 'brand_alignment': 0.3}
@@ -362,7 +374,8 @@ class OpportunityFinderService:
         }
 
     def _initialize_opportunity_database(self) -> Dict[str, Any]:
-        """Initialize opportunity database connections"""        return {
+        """Initialize opportunity database connections"""
+        return {
             'brand_partnerships': 'brand_partnership_api',
             'content_opportunities': 'content_marketplace_api',
             'affiliate_networks': 'affiliate_network_apis',
@@ -371,7 +384,8 @@ class OpportunityFinderService:
         }
 
     def _load_scoring_models(self) -> Dict[str, Any]:
-        """Load ML models for opportunity scoring"""        return {
+        """Load ML models for opportunity scoring"""
+        return {
             'opportunity_scoring_model': 'xgboost_opportunity_scorer_v3',
             'fit_analysis_model': 'neural_network_fit_analyzer_v2',
             'success_prediction_model': 'ensemble_success_predictor_v1',
@@ -379,7 +393,8 @@ class OpportunityFinderService:
         }
 
     async def _preprocess_creator_profile(self, creator_profile: Dict[str, Any]) -> Dict[str, Any]:
-        """Preprocess creator profile for matching algorithms"""        processed = creator_profile.copy()
+        """Preprocess creator profile for matching algorithms"""
+        processed = creator_profile.copy()
         
         # Extract key features
         processed['content_embeddings'] = await self._generate_content_embeddings(creator_profile)
@@ -395,7 +410,8 @@ class OpportunityFinderService:
         search_criteria: Dict[str, Any],
         algorithm_type: MatchingAlgorithm
     ) -> List[Dict[str, Any]]:
-        """Execute the opportunity discovery pipeline"""        opportunities = []
+        """Execute the opportunity discovery pipeline"""
+        opportunities = []
         
         # Search across different opportunity sources
         for source_name, source_config in self.opportunity_database.items():
@@ -412,7 +428,8 @@ class OpportunityFinderService:
         creator_profile: Dict[str, Any],
         search_criteria: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Score opportunities using ML models"""        scored_opportunities = []
+        """Score opportunities using ML models"""
+        scored_opportunities = []
         
         for opportunity in opportunities:
             # Calculate base match score
@@ -451,7 +468,8 @@ class OpportunityFinderService:
         opportunities: List[Dict[str, Any]],
         search_criteria: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Filter and prioritize opportunities"""        # Apply filters
+        """Filter and prioritize opportunities"""
+        # Apply filters
         filtered_opportunities = []
         
         for opportunity in opportunities:
@@ -475,7 +493,8 @@ class OpportunityFinderService:
         opportunities: List[Dict[str, Any]],
         creator_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Enrich opportunities with additional market intelligence"""        enriched = []
+        """Enrich opportunities with additional market intelligence"""
+        enriched = []
         
         for opportunity in opportunities:
             # Add market intelligence
@@ -501,7 +520,8 @@ class OpportunityFinderService:
         opportunities: List[Dict[str, Any]],
         creator_id: str
     ) -> List[PartnershipOpportunity]:
-        """Convert enriched opportunities to PartnershipOpportunity objects"""        partnership_opportunities = []
+        """Convert enriched opportunities to PartnershipOpportunity objects"""
+        partnership_opportunities = []
         
         for opp in opportunities:
             partnership_opportunity = PartnershipOpportunity(
@@ -524,17 +544,20 @@ class OpportunityFinderService:
     # Additional helper methods for comprehensive functionality...
     
     async def _generate_content_embeddings(self, creator_profile):
-        """Generate content embeddings for semantic matching"""        return [0.1, 0.2, 0.3]  # Mock embeddings
+        """Generate content embeddings for semantic matching"""
+        return [0.1, 0.2, 0.3]  # Mock embeddings
 
     async def _analyze_audience_segments(self, creator_profile):
-        """Analyze audience segments for targeting"""        return {
+        """Analyze audience segments for targeting"""
+        return {
             'primary_segment': 'tech_enthusiasts',
             'secondary_segments': ['entrepreneurs', 'students'],
             'demographics': {'age_range': '18-35', 'interests': ['technology', 'innovation']}
         }
 
     async def _extract_performance_metrics(self, creator_profile):
-        """Extract key performance metrics"""        return {
+        """Extract key performance metrics"""
+        return {
             'engagement_rate': 0.045,
             'conversion_rate': 0.025,
             'audience_growth_rate': 0.15,
@@ -542,14 +565,16 @@ class OpportunityFinderService:
         }
 
     async def _calculate_brand_affinity(self, creator_profile):
-        """Calculate brand affinity scores"""        return {
+        """Calculate brand affinity scores"""
+        return {
             'technology_brands': 0.9,
             'lifestyle_brands': 0.7,
             'fashion_brands': 0.5
         }
 
     async def _search_opportunity_source(self, source_config, creator_profile, search_criteria):
-        """Search specific opportunity source"""        # Mock opportunity search results
+        """Search specific opportunity source"""
+        # Mock opportunity search results
         return [
             {
                 'partner_id': 'partner_001',
@@ -563,30 +588,37 @@ class OpportunityFinderService:
         ]
 
     async def _calculate_match_score(self, opportunity, creator_profile):
-        """Calculate match score using ML models"""        # Sophisticated matching algorithm implementation
+        """Calculate match score using ML models"""
+        # Sophisticated matching algorithm implementation
         return 0.85
 
     async def _estimate_revenue_potential(self, opportunity, creator_profile):
-        """Estimate revenue potential for opportunity"""        base_revenue = opportunity.get('budget_range', {}).get('max', 1000)
+        """Estimate revenue potential for opportunity"""
+        base_revenue = opportunity.get('budget_range', {}).get('max', 1000)
         creator_multiplier = creator_profile.get('performance_metrics', {}).get('engagement_rate', 0.05) * 10
         return base_revenue * creator_multiplier
 
     async def _calculate_strategic_alignment_score(self, opportunity, creator_profile):
-        """Calculate strategic alignment score"""        return 0.78
+        """Calculate strategic alignment score"""
+        return 0.78
 
     async def _calculate_risk_score(self, opportunity, creator_profile):
-        """Calculate risk score for opportunity"""        return 0.25
+        """Calculate risk score for opportunity"""
+        return 0.25
 
     async def _calculate_composite_score(self, scores):
-        """Calculate weighted composite score"""        weights = {'match': 0.3, 'revenue': 0.25, 'strategic': 0.25, 'risk': 0.2}
+        """Calculate weighted composite score"""
+        weights = {'match': 0.3, 'revenue': 0.25, 'strategic': 0.25, 'risk': 0.2}
         return sum(scores[key] * weights[key] for key in weights.keys())
 
     async def _passes_filters(self, opportunity, search_criteria):
-        """Check if opportunity passes filter criteria"""        min_score = search_criteria.get('minimum_match_score', 0.5)
+        """Check if opportunity passes filter criteria"""
+        min_score = search_criteria.get('minimum_match_score', 0.5)
         return opportunity.get('match_score', 0) >= min_score
 
     async def _assign_priority(self, opportunity):
-        """Assign priority level to opportunity"""        composite_score = opportunity.get('composite_score', 0)
+        """Assign priority level to opportunity"""
+        composite_score = opportunity.get('composite_score', 0)
         if composite_score > 0.8:
             return OpportunityPriority.CRITICAL
         elif composite_score > 0.6:
@@ -597,7 +629,8 @@ class OpportunityFinderService:
             return OpportunityPriority.LOW
 
     async def _get_market_intelligence(self, opportunity):
-        """Get market intelligence for opportunity"""        return {
+        """Get market intelligence for opportunity"""
+        return {
             'market_size': 'large',
             'growth_rate': 0.15,
             'competition_level': 'medium',
@@ -605,21 +638,24 @@ class OpportunityFinderService:
         }
 
     async def _analyze_competitive_landscape(self, opportunity):
-        """Analyze competitive landscape for opportunity"""        return {
+        """Analyze competitive landscape for opportunity"""
+        return {
             'direct_competitors': ['competitor_a', 'competitor_b'],
             'competitive_advantage': 'unique_positioning',
             'market_position': 'strong'
         }
 
     async def _analyze_opportunity_timing(self, opportunity):
-        """Analyze timing for opportunity"""        return {
+        """Analyze timing for opportunity"""
+        return {
             'optimal_timing': 'immediate',
             'seasonal_factors': 'none',
             'market_readiness': 'high'
         }
 
     async def _calculate_success_probability(self, opportunity, creator_profile):
-        """Calculate probability of success"""        return 0.72
+        """Calculate probability of success"""
+        return 0.72
 
     # Additional methods for remaining functionality...
     

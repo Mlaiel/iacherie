@@ -21,7 +21,8 @@ Team Specialties:
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: CI/CD, deployment, and infrastructure automation
 - IA Prompt Engineer: AI prompt optimization and conversational systems
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 from typing import Dict, List, Optional, Any, Tuple, Set, Union
@@ -58,7 +59,8 @@ from ...ai.workflow_optimizer import WorkflowOptimizer
 logger = logging.getLogger(__name__)
 
 class WorkflowStatus(Enum):
-    """Workflow execution status"""    DRAFT = "draft"
+    """Workflow execution status"""
+    DRAFT = "draft"
     ACTIVE = "active"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -66,7 +68,8 @@ class WorkflowStatus(Enum):
     ERROR = "error"
 
 class TaskStatus(Enum):
-    """Individual task status"""    PENDING = "pending"
+    """Individual task status"""
+    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     BLOCKED = "blocked"
     COMPLETED = "completed"
@@ -74,14 +77,16 @@ class TaskStatus(Enum):
     CANCELLED = "cancelled"
 
 class TaskPriority(Enum):
-    """Task priority levels"""    LOW = "low"
+    """Task priority levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 @dataclass
 class WorkflowTask:
-    """Individual task within collaboration workflow"""    task_id: str
+    """Individual task within collaboration workflow"""
+    task_id: str
     title: str
     description: str
     assigned_to: List[str]
@@ -104,7 +109,8 @@ class WorkflowTask:
 
 @dataclass
 class WorkflowPhase:
-    """Workflow phase containing related tasks"""    phase_id: str
+    """Workflow phase containing related tasks"""
+    phase_id: str
     name: str
     description: str
     tasks: List[WorkflowTask]
@@ -119,7 +125,8 @@ class WorkflowPhase:
 
 @dataclass
 class CollaborationWorkflowTemplate:
-    """Template for collaboration workflows"""    template_id: str
+    """Template for collaboration workflows"""
+    template_id: str
     name: str
     description: str
     collaboration_type: str
@@ -133,7 +140,8 @@ class CollaborationWorkflowTemplate:
     created_at: datetime = field(default_factory=datetime.utcnow)
 
 class CollaborationWorkflow:
-    """    Advanced collaboration workflow management system.
+    """
+    Advanced collaboration workflow management system.
     
     Features:
     - Dynamic workflow generation based on project requirements
@@ -142,7 +150,8 @@ class CollaborationWorkflow:
     - Automated quality assurance checkpoints
     - Intelligent resource allocation and conflict resolution
     - Multi-format content synchronization workflows
-    """    
+    """
+    
     def __init__(self, project_id: str, config: Dict[str, Any] = None):
         self.project_id = project_id
         self.config = config or {}
@@ -183,7 +192,8 @@ class CollaborationWorkflow:
         self.resource_conflicts: List[Dict[str, Any]] = []
     
     async def initialize(self, project_data: Dict[str, Any]):
-        """Initialize workflow from project data"""        try:
+        """Initialize workflow from project data"""
+        try:
             # Load project information
             self.project_data = project_data
             self.creators = project_data.get('creators', [])
@@ -207,7 +217,8 @@ class CollaborationWorkflow:
             raise WorkflowError(f"Workflow initialization failed: {e}")
     
     async def start_workflow(self) -> Dict[str, Any]:
-        """Start workflow execution"""        try:
+        """Start workflow execution"""
+        try:
             if self.status != WorkflowStatus.ACTIVE:
                 raise WorkflowError(f"Cannot start workflow in {self.status.value} status")
             
@@ -242,7 +253,8 @@ class CollaborationWorkflow:
         task_id: str,
         progress_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Update progress on a specific task"""        try:
+        """Update progress on a specific task"""
+        try:
             if task_id not in self.tasks:
                 raise ValidationError(f"Task not found: {task_id}")
             
@@ -299,7 +311,8 @@ class CollaborationWorkflow:
         dependency_id: str,
         resolution_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Resolve a task dependency"""        try:
+        """Resolve a task dependency"""
+        try:
             if task_id not in self.tasks:
                 raise ValidationError(f"Task not found: {task_id}")
             
@@ -342,7 +355,8 @@ class CollaborationWorkflow:
         phase_id: str,
         quality_check_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Handle quality gate evaluation for workflow phase"""        try:
+        """Handle quality gate evaluation for workflow phase"""
+        try:
             phase = next((p for p in self.phases if p.phase_id == phase_id), None)
             if not phase:
                 raise ValidationError(f"Phase not found: {phase_id}")
@@ -384,7 +398,8 @@ class CollaborationWorkflow:
             raise WorkflowError(f"Quality gate handling failed: {e}")
     
     async def optimize_workflow(self, optimization_criteria: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Optimize workflow using AI-powered recommendations"""        try:
+        """Optimize workflow using AI-powered recommendations"""
+        try:
             # Gather current workflow state
             workflow_state = await self._gather_workflow_state()
             
@@ -422,7 +437,8 @@ class CollaborationWorkflow:
     # Private helper methods
     
     async def _generate_workflow_structure(self):
-        """Generate workflow structure based on project type and requirements"""        
+        """Generate workflow structure based on project type and requirements"""
+        
         # Load appropriate workflow template
         template = await self._get_workflow_template(self.collaboration_type)
         
@@ -445,7 +461,8 @@ class CollaborationWorkflow:
         self._build_dependency_graph()
     
     async def _create_phase_from_template(self, phase_data: Dict[str, Any]) -> WorkflowPhase:
-        """Create workflow phase from template data"""        
+        """Create workflow phase from template data"""
+        
         return WorkflowPhase(
             phase_id=str(uuid.uuid4()),
             name=phase_data['name'],
@@ -465,7 +482,8 @@ class CollaborationWorkflow:
         task_data: Dict[str, Any],
         phase_id: str
     ) -> WorkflowTask:
-        """Create workflow task from template data"""        
+        """Create workflow task from template data"""
+        
         return WorkflowTask(
             task_id=str(uuid.uuid4()),
             title=task_data['title'],
@@ -489,11 +507,13 @@ class CollaborationWorkflow:
         )
 
 class ProjectManager:
-    """    Comprehensive project management system for collaboration workflows.
+    """
+    Comprehensive project management system for collaboration workflows.
     
     Provides high-level project orchestration, resource management,
     stakeholder coordination, and success optimization.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -515,7 +535,8 @@ class ProjectManager:
         }
     
     async def initialize(self):
-        """Initialize project manager"""        try:
+        """Initialize project manager"""
+        try:
             # Load active projects from database
             await self._load_active_projects()
             
@@ -538,7 +559,8 @@ class ProjectManager:
         self,
         project_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create new collaboration project"""        try:
+        """Create new collaboration project"""
+        try:
             project_id = str(uuid.uuid4())
             
             # Validate project data
@@ -589,11 +611,13 @@ class ProjectManager:
             raise WorkflowError(f"Project creation failed: {e}")
 
 class TaskCoordinator:
-    """    Advanced task coordination system for multi-creator collaboration workflows.
+    """
+    Advanced task coordination system for multi-creator collaboration workflows.
     
     Handles task assignment, dependency resolution, resource allocation,
     and real-time coordination between creators.
-    """    
+    """
+    
     def __init__(self, workflow: CollaborationWorkflow):
         self.workflow = workflow
         
@@ -615,7 +639,8 @@ class TaskCoordinator:
         self.communication_manager = CommunicationManager()
     
     async def coordinate_task_execution(self, task_id: str) -> Dict[str, Any]:
-        """Coordinate execution of a specific task"""        try:
+        """Coordinate execution of a specific task"""
+        try:
             task = self.workflow.tasks.get(task_id)
             if not task:
                 raise ValidationError(f"Task not found: {task_id}")
@@ -660,7 +685,8 @@ class TaskCoordinator:
             raise WorkflowError(f"Task coordination failed: {e}")
     
     async def optimize_task_scheduling(self) -> Dict[str, Any]:
-        """Optimize task scheduling across all creators"""        try:
+        """Optimize task scheduling across all creators"""
+        try:
             # Analyze current workloads
             workload_analysis = await self._analyze_creator_workloads()
             
@@ -689,11 +715,13 @@ class TaskCoordinator:
 
 
 class ProjectManager:
-    """    Ultra-Advanced Project Management System for Creator Collaborations
+    """
+    Ultra-Advanced Project Management System for Creator Collaborations
     
     Enterprise-grade project management with AI-powered optimization,
     real-time monitoring, predictive analytics, and automated quality assurance.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.active_projects = {}
@@ -719,7 +747,8 @@ class ProjectManager:
         }
     
     async def initialize(self):
-        """Initialize project manager components"""        try:
+        """Initialize project manager components"""
+        try:
             # Initialize AI components
             await self.workflow_optimizer.initialize()
             
@@ -741,7 +770,8 @@ class ProjectManager:
         creators: List[str],
         ai_optimization: bool = True
     ) -> Dict[str, Any]:
-        """        Create advanced collaboration project with AI optimization.
+        """
+        Create advanced collaboration project with AI optimization.
         
         Args:
             project_data: Project configuration and requirements
@@ -750,7 +780,8 @@ class ProjectManager:
         
         Returns:
             Project creation results with detailed setup information
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Generate unique project ID
@@ -825,11 +856,13 @@ class ProjectManager:
         action: str,
         parameters: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """        Comprehensive project lifecycle management.
+        """
+        Comprehensive project lifecycle management.
         
         Supports actions: progress_update, quality_check, resource_reallocation,
         timeline_adjustment, conflict_resolution, performance_optimization
-        """        try:
+        """
+        try:
             if project_id not in self.active_projects:
                 raise ValidationError(f"Project not found: {project_id}")
             
@@ -865,10 +898,12 @@ class ProjectManager:
         creator_id: str = None,
         time_range: Tuple[datetime, datetime] = None
     ) -> Dict[str, Any]:
-        """        Generate comprehensive project and creator analytics.
+        """
+        Generate comprehensive project and creator analytics.
         
         Provides deep insights into performance, trends, and optimization opportunities.
-        """        try:
+        """
+        try:
             analytics = {
                 'overview': await self._generate_analytics_overview(project_id, creator_id, time_range),
                 'performance_metrics': await self._calculate_performance_metrics(project_id, time_range),
@@ -894,7 +929,8 @@ class ProjectManager:
             raise WorkflowError(f"Analytics generation failed: {e}")
     
     async def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check of project manager"""        try:
+        """Comprehensive health check of project manager"""
+        try:
             return {
                 'status': 'healthy',
                 'active_projects': len(self.active_projects),
@@ -922,7 +958,8 @@ class ProjectManager:
     # Private helper methods
     
     async def _analyze_project_requirements(self, project_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze project requirements using AI"""        # Sophisticated requirements analysis
+        """Analyze project requirements using AI"""
+        # Sophisticated requirements analysis
         complexity_score = self._calculate_complexity_score(project_data)
         resource_requirements = self._estimate_resource_requirements(project_data)
         timeline_estimate = self._estimate_timeline(project_data)
@@ -939,7 +976,8 @@ class ProjectManager:
         }
     
     def _calculate_complexity_score(self, project_data: Dict[str, Any]) -> float:
-        """Calculate project complexity score (0-1)"""        factors = {
+        """Calculate project complexity score (0-1)"""
+        factors = {
             'content_types': len(project_data.get('content_types', [])) * 0.1,
             'creators_count': len(project_data.get('creators', [])) * 0.15,
             'deliverables': len(project_data.get('deliverables', [])) * 0.1,
@@ -951,7 +989,8 @@ class ProjectManager:
         return min(1.0, sum(factors.values()))
     
     def _define_success_metrics(self, project_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Define success metrics for project"""        return {
+        """Define success metrics for project"""
+        return {
             'completion_rate': 0.95,  # Target completion rate
             'quality_score': 0.85,   # Minimum quality score
             'on_time_delivery': True, # Timeline adherence

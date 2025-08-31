@@ -10,7 +10,8 @@ WARNING - COPYRIGHT PROTECTION:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""from typing import Dict, List, Optional, Any, Tuple
+"""
+from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
 from dataclasses import dataclass, field
@@ -28,7 +29,8 @@ from ..ai.publishing_intelligence import PublishingIntelligenceEngine
 
 
 class PublishingRightType(Enum):
-    """Types of music publishing rights"""    MECHANICAL = "mechanical"
+    """Types of music publishing rights"""
+    MECHANICAL = "mechanical"
     PERFORMANCE = "performance"
     SYNCHRONIZATION = "synchronization"
     PRINT = "print"
@@ -38,7 +40,8 @@ class PublishingRightType(Enum):
 
 
 class RoyaltyType(Enum):
-    """Types of publishing royalties"""    MECHANICAL_ROYALTIES = "mechanical_royalties"
+    """Types of publishing royalties"""
+    MECHANICAL_ROYALTIES = "mechanical_royalties"
     PERFORMANCE_ROYALTIES = "performance_royalties"
     SYNC_FEES = "sync_fees"
     PRINT_ROYALTIES = "print_royalties"
@@ -48,7 +51,8 @@ class RoyaltyType(Enum):
 
 
 class PublishingDealType(Enum):
-    """Types of publishing deals"""    FULL_PUBLISHING = "full_publishing"
+    """Types of publishing deals"""
+    FULL_PUBLISHING = "full_publishing"
     CO_PUBLISHING = "co_publishing"
     ADMINISTRATION = "administration"
     SUB_PUBLISHING = "sub_publishing"
@@ -58,7 +62,8 @@ class PublishingDealType(Enum):
 
 @dataclass
 class SongwriterShare:
-    """Songwriter share information"""    songwriter_id: str
+    """Songwriter share information"""
+    songwriter_id: str
     songwriter_name: str
     share_percentage: Decimal
     role: str  # lyricist, composer, arranger
@@ -68,7 +73,8 @@ class SongwriterShare:
 
 @dataclass
 class PublishingMetrics:
-    """Publishing performance metrics"""    total_catalog_size: int
+    """Publishing performance metrics"""
+    total_catalog_size: int
     active_songs: int
     total_royalty_earnings: Decimal
     mechanical_earnings: Decimal
@@ -79,7 +85,8 @@ class PublishingMetrics:
 
 
 class PublishingAgreementRequest(BaseModel):
-    """Publishing agreement creation request"""    song_id: str = Field(..., description="Song/composition ID")
+    """Publishing agreement creation request"""
+    song_id: str = Field(..., description="Song/composition ID")
     deal_type: PublishingDealType = Field(..., description="Type of publishing deal")
     songwriter_shares: List[SongwriterShare] = Field(..., description="Songwriter share information")
     publisher_share: Decimal = Field(..., description="Publisher share percentage")
@@ -91,9 +98,11 @@ class PublishingAgreementRequest(BaseModel):
 
 
 class MusicPublishingEngine:
-    """    Advanced music publishing system with AI-driven catalog management,
+    """
+    Advanced music publishing system with AI-driven catalog management,
     automated royalty collection, and intelligent publishing optimization.
-    """    
+    """
+    
     def __init__(self, db: Session = None):
         self.db = db or next(get_db())
         self.logger = get_logger(__name__)
@@ -108,14 +117,16 @@ class MusicPublishingEngine:
         self,
         agreement_request: PublishingAgreementRequest
     ) -> Dict[str, Any]:
-        """        Create comprehensive publishing agreement with AI-driven terms optimization
+        """
+        Create comprehensive publishing agreement with AI-driven terms optimization
         
         Args:
             agreement_request: Publishing agreement parameters
             
         Returns:
             Publishing agreement creation results
-        """        try:
+        """
+        try:
             self.logger.info(f"Creating publishing agreement for song {agreement_request.song_id}")
             
             # Validate publishing agreement request
@@ -194,7 +205,8 @@ class MusicPublishingEngine:
         publisher_id: str,
         collection_period: timedelta = timedelta(days=90)
     ) -> Dict[str, Any]:
-        """        Manage comprehensive royalty collection across all revenue streams
+        """
+        Manage comprehensive royalty collection across all revenue streams
         
         Args:
             publisher_id: Publisher to manage royalties for
@@ -202,7 +214,8 @@ class MusicPublishingEngine:
             
         Returns:
             Comprehensive royalty collection management results
-        """        try:
+        """
+        try:
             self.logger.info(f"Managing royalty collection for publisher {publisher_id}")
             
             # Get publisher's catalog and agreements
@@ -286,7 +299,8 @@ class MusicPublishingEngine:
         catalog_id: str,
         optimization_goals: List[str] = None
     ) -> Dict[str, Any]:
-        """        Optimize publishing catalog performance using AI-driven analysis
+        """
+        Optimize publishing catalog performance using AI-driven analysis
         
         Args:
             catalog_id: Catalog to optimize
@@ -294,7 +308,8 @@ class MusicPublishingEngine:
             
         Returns:
             Publishing catalog optimization results
-        """        try:
+        """
+        try:
             if not optimization_goals:
                 optimization_goals = [
                     "maximize_royalty_earnings",
@@ -378,7 +393,8 @@ class MusicPublishingEngine:
         date_range: Optional[Dict[str, datetime]] = None,
         analytics_scope: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """        Generate comprehensive publishing analytics and business intelligence
+        """
+        Generate comprehensive publishing analytics and business intelligence
         
         Args:
             publisher_id: Specific publisher to analyze
@@ -387,7 +403,8 @@ class MusicPublishingEngine:
             
         Returns:
             Detailed publishing analytics and insights
-        """        try:
+        """
+        try:
             self.logger.info(f"Generating publishing analytics (scope: {analytics_scope})")
             
             # Collect publishing data for analysis
@@ -467,7 +484,8 @@ class MusicPublishingEngine:
             raise MusicPublishingError(f"Publishing analytics generation failed: {str(e)}")
     
     def _initialize_royalty_rate_database(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize royalty rate database"""        return {
+        """Initialize royalty rate database"""
+        return {
             "US": {
                 "mechanical_rate": {
                     "statutory_rate_cents": 9.1,  # cents per song
@@ -501,7 +519,8 @@ class MusicPublishingEngine:
         }
     
     def _initialize_pro_database(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize performance rights organization database"""        return {
+        """Initialize performance rights organization database"""
+        return {
             "US": {
                 "ASCAP": {
                     "full_name": "American Society of Composers, Authors and Publishers",
@@ -552,7 +571,8 @@ class MusicPublishingEngine:
         }
     
     def _initialize_mechanical_licensing_database(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize mechanical licensing database"""        return {
+        """Initialize mechanical licensing database"""
+        return {
             "US": {
                 "harry_fox_agency": {
                     "services": ["mechanical_licensing", "digital_licensing"],
@@ -580,11 +600,13 @@ class MusicPublishingEngine:
         self, 
         request: PublishingAgreementRequest
     ) -> Dict[str, Any]:
-        """Validate publishing agreement request"""        # Implementation for request validation
+        """Validate publishing agreement request"""
+        # Implementation for request validation
         pass
     
     async def _analyze_song_commercial_potential(self, song_id: str) -> Dict[str, Any]:
-        """Analyze commercial potential of song"""        # Implementation for commercial analysis
+        """Analyze commercial potential of song"""
+        # Implementation for commercial analysis
         pass
     
     async def _generate_intelligent_publishing_terms(
@@ -592,5 +614,6 @@ class MusicPublishingEngine:
         request: PublishingAgreementRequest, 
         analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate optimized publishing terms"""        # Implementation for terms generation
+        """Generate optimized publishing terms"""
+        # Implementation for terms generation
         pass

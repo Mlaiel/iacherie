@@ -4,7 +4,8 @@ Comprehensive blockchain configuration for smart contracts and Web3 integration
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -14,7 +15,8 @@ from web3 import Web3
 
 
 class BlockchainNetwork(Enum):
-    """Supported blockchain networks"""    ETHEREUM_MAINNET = "ethereum_mainnet"
+    """Supported blockchain networks"""
+    ETHEREUM_MAINNET = "ethereum_mainnet"
     ETHEREUM_SEPOLIA = "ethereum_sepolia"
     POLYGON_MAINNET = "polygon_mainnet"
     POLYGON_MUMBAI = "polygon_mumbai"
@@ -27,7 +29,8 @@ class BlockchainNetwork(Enum):
 
 
 class ContractType(Enum):
-    """Smart contract types"""    CONTENT_PROTECTION = "content_protection"
+    """Smart contract types"""
+    CONTENT_PROTECTION = "content_protection"
     COPYRIGHT_REGISTRY = "copyright_registry"
     ROYALTY_DISTRIBUTION = "royalty_distribution"
     LICENSING_AGREEMENT = "licensing_agreement"
@@ -37,7 +40,8 @@ class ContractType(Enum):
 
 @dataclass
 class NetworkConfig:
-    """Configuration for a specific blockchain network"""    
+    """Configuration for a specific blockchain network"""
+    
     name: str
     rpc_url: str
     chain_id: int
@@ -51,7 +55,8 @@ class NetworkConfig:
 
 @dataclass
 class BlockchainConfig:
-    """Comprehensive blockchain configuration"""    
+    """Comprehensive blockchain configuration"""
+    
     # Default Network
     default_network: BlockchainNetwork = field(default_factory=lambda: 
         BlockchainNetwork(os.getenv("BLOCKCHAIN_DEFAULT_NETWORK", "ethereum_sepolia")))
@@ -206,12 +211,14 @@ class BlockchainConfig:
         os.getenv("LOCAL_BLOCKCHAIN_URL", "http://127.0.0.1:8545"))
     
     def __post_init__(self):
-        """Initialize blockchain configuration"""        self._validate_configuration()
+        """Initialize blockchain configuration"""
+        self._validate_configuration()
         self._initialize_contract_addresses()
         self._initialize_contract_abis()
     
     def _validate_configuration(self):
-        """Validate blockchain configuration"""        if not self.private_key and not self.mnemonic and not self.keystore_path:
+        """Validate blockchain configuration"""
+        if not self.private_key and not self.mnemonic and not self.keystore_path:
             if not self.development_mode:
                 raise ValueError("Private key, mnemonic, or keystore must be provided")
         
@@ -222,7 +229,8 @@ class BlockchainConfig:
             raise ValueError("Default gas price cannot exceed maximum gas price")
     
     def _initialize_contract_addresses(self):
-        """Initialize smart contract addresses"""        # Example contract addresses - replace with actual deployed addresses
+        """Initialize smart contract addresses"""
+        # Example contract addresses - replace with actual deployed addresses
         self.contract_addresses = {
             ContractType.CONTENT_PROTECTION: {
                 BlockchainNetwork.ETHEREUM_SEPOLIA: "0x1234567890123456789012345678901234567890",
@@ -239,7 +247,8 @@ class BlockchainConfig:
         }
     
     def _initialize_contract_abis(self):
-        """Initialize smart contract ABIs"""        # Basic ABI structures - replace with actual contract ABIs
+        """Initialize smart contract ABIs"""
+        # Basic ABI structures - replace with actual contract ABIs
         self.contract_abis = {
             ContractType.CONTENT_PROTECTION: [
                 {
@@ -266,11 +275,13 @@ class BlockchainConfig:
         }
     
     def get_network_config(self, network: Optional[BlockchainNetwork] = None) -> NetworkConfig:
-        """Get configuration for specified network"""        target_network = network or self.default_network
+        """Get configuration for specified network"""
+        target_network = network or self.default_network
         return self.networks.get(target_network)
     
     def get_web3_instance(self, network: Optional[BlockchainNetwork] = None) -> Web3:
-        """Create Web3 instance for specified network"""        network_config = self.get_network_config(network)
+        """Create Web3 instance for specified network"""
+        network_config = self.get_network_config(network)
         if not network_config:
             raise ValueError(f"Network configuration not found for {network}")
         
@@ -290,15 +301,18 @@ class BlockchainConfig:
     
     def get_contract_address(self, contract_type: ContractType, 
                            network: Optional[BlockchainNetwork] = None) -> Optional[str]:
-        """Get smart contract address for specified type and network"""        target_network = network or self.default_network
+        """Get smart contract address for specified type and network"""
+        target_network = network or self.default_network
         return self.contract_addresses.get(contract_type, {}).get(target_network)
     
     def get_contract_abi(self, contract_type: ContractType) -> Optional[List[Dict]]:
-        """Get smart contract ABI for specified type"""        return self.contract_abis.get(contract_type)
+        """Get smart contract ABI for specified type"""
+        return self.contract_abis.get(contract_type)
     
     def get_contract_instance(self, contract_type: ContractType, 
                             network: Optional[BlockchainNetwork] = None):
-        """Get contract instance for specified type and network"""        w3 = self.get_web3_instance(network)
+        """Get contract instance for specified type and network"""
+        w3 = self.get_web3_instance(network)
         address = self.get_contract_address(contract_type, network)
         abi = self.get_contract_abi(contract_type)
         
@@ -308,7 +322,8 @@ class BlockchainConfig:
         return w3.eth.contract(address=address, abi=abi)
     
     def estimate_gas_price(self, network: Optional[BlockchainNetwork] = None) -> int:
-        """Estimate current gas price for network"""        w3 = self.get_web3_instance(network)
+        """Estimate current gas price for network"""
+        w3 = self.get_web3_instance(network)
         
         try:
             # Get current gas price from network
@@ -336,7 +351,8 @@ class BlockchainConfig:
                          network: Optional[BlockchainNetwork] = None,
                          gas_limit: Optional[int] = None,
                          gas_price_gwei: Optional[int] = None) -> Dict[str, Any]:
-        """Build transaction dictionary for contract function"""        w3 = self.get_web3_instance(network)
+        """Build transaction dictionary for contract function"""
+        w3 = self.get_web3_instance(network)
         network_config = self.get_network_config(network)
         
         # Get account nonce
@@ -368,7 +384,8 @@ class BlockchainConfig:
     
     def sign_and_send_transaction(self, transaction_dict: Dict[str, Any], 
                                  network: Optional[BlockchainNetwork] = None) -> str:
-        """Sign and send transaction"""        if not self.private_key:
+        """Sign and send transaction"""
+        if not self.private_key:
             raise ValueError("Private key required to sign transactions")
         
         w3 = self.get_web3_instance(network)
@@ -384,7 +401,8 @@ class BlockchainConfig:
     def wait_for_transaction(self, tx_hash: str, 
                            network: Optional[BlockchainNetwork] = None,
                            timeout: Optional[int] = None) -> Dict[str, Any]:
-        """Wait for transaction confirmation"""        w3 = self.get_web3_instance(network)
+        """Wait for transaction confirmation"""
+        w3 = self.get_web3_instance(network)
         timeout = timeout or self.transaction_timeout_seconds
         
         receipt = w3.eth.wait_for_transaction_receipt(
@@ -397,7 +415,8 @@ class BlockchainConfig:
     
     def get_transaction_status(self, tx_hash: str, 
                              network: Optional[BlockchainNetwork] = None) -> Dict[str, Any]:
-        """Get transaction status and details"""        w3 = self.get_web3_instance(network)
+        """Get transaction status and details"""
+        w3 = self.get_web3_instance(network)
         
         try:
             transaction = w3.eth.get_transaction(tx_hash)
@@ -424,7 +443,8 @@ class BlockchainConfig:
     
     def get_balance(self, address: str, 
                    network: Optional[BlockchainNetwork] = None) -> Dict[str, Union[int, str]]:
-        """Get account balance"""        w3 = self.get_web3_instance(network)
+        """Get account balance"""
+        w3 = self.get_web3_instance(network)
         network_config = self.get_network_config(network)
         
         balance_wei = w3.eth.get_balance(address)

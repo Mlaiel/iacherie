@@ -5,7 +5,8 @@ Medium API integration for publishing and content distribution.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
@@ -21,21 +22,25 @@ logger = logging.getLogger(__name__)
 
 
 class MediumPlatform(PlatformBase):
-    """Medium platform integration"""    
+    """Medium platform integration"""
+    
     def __init__(self, config: PlatformConfig):
-        """Initialize Medium platform"""        super().__init__(config)
+        """Initialize Medium platform"""
+        super().__init__(config)
         self.api_base = "https://api.medium.com/v1"
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""        if not self.session or self.session.closed:
+        """Get or create HTTP session"""
+        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Medium OAuth2"""        try:
+        """Authenticate with Medium OAuth2"""
+        try:
             access_token = self.config.credentials.get('access_token')
             
             if access_token:
@@ -69,10 +74,12 @@ class MediumPlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh Medium token"""        return await self.authenticate()
+        """Refresh Medium token"""
+        return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Medium API"""        try:
+        """Make authenticated request to Medium API"""
+        try:
             session = await self._get_session()
             
             headers = kwargs.get('headers', {})
@@ -110,7 +117,8 @@ class MediumPlatform(PlatformBase):
             return None
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Publish article on Medium"""        try:
+        """Publish article on Medium"""
+        try:
             user_id = self.config.credentials.get('user_id')
             if not user_id:
                 return UploadResult(
@@ -173,7 +181,8 @@ class MediumPlatform(PlatformBase):
             )
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get Medium article analytics"""        try:
+        """Get Medium article analytics"""
+        try:
             # Medium API has limited analytics access
             # Most analytics require Medium Partner Program
             
@@ -197,7 +206,8 @@ class MediumPlatform(PlatformBase):
             raise
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on Medium (not available via API)"""        try:
+        """Search content on Medium (not available via API)"""
+        try:
             logger.warning("Medium doesn't provide search API")
             return []
             
@@ -206,7 +216,8 @@ class MediumPlatform(PlatformBase):
             return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's posts from Medium"""        try:
+        """Get user's posts from Medium"""
+        try:
             target_user_id = user_id or self.config.credentials.get('user_id')
             if not target_user_id:
                 return []
@@ -236,7 +247,8 @@ class MediumPlatform(PlatformBase):
             return []
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete Medium post (not available via API)"""        try:
+        """Delete Medium post (not available via API)"""
+        try:
             logger.warning("Medium doesn't support post deletion via API")
             return False
                 
@@ -245,7 +257,8 @@ class MediumPlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update Medium post (not available via API)"""        try:
+        """Update Medium post (not available via API)"""
+        try:
             logger.warning("Medium doesn't support post editing via API")
             return False
                 
@@ -254,7 +267,8 @@ class MediumPlatform(PlatformBase):
             return False
     
     async def get_publications(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's publications"""        try:
+        """Get user's publications"""
+        try:
             target_user_id = user_id or self.config.credentials.get('user_id')
             if not target_user_id:
                 return []
@@ -281,7 +295,8 @@ class MediumPlatform(PlatformBase):
     
     async def publish_to_publication(self, publication_id: str, metadata: ContentMetadata, 
                                    content_body: str) -> Optional[str]:
-        """Publish article to a publication"""        try:
+        """Publish article to a publication"""
+        try:
             article_data = {
                 'title': metadata.title,
                 'contentFormat': 'html',
@@ -303,7 +318,8 @@ class MediumPlatform(PlatformBase):
             return None
     
     async def get_user_info(self, user_id: str = None) -> Optional[Dict[str, Any]]:
-        """Get Medium user information"""        try:
+        """Get Medium user information"""
+        try:
             endpoint = '/me' if not user_id else f'/users/{user_id}'
             result = await self._make_request('GET', endpoint)
             
@@ -324,5 +340,6 @@ class MediumPlatform(PlatformBase):
             return None
     
     async def close(self):
-        """Close HTTP session"""        if self.session and not self.session.closed:
+        """Close HTTP session"""
+        if self.session and not self.session.closed:
             await self.session.close()

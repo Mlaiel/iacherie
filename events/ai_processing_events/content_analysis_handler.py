@@ -8,7 +8,8 @@ Content Upload → Validation → Analysis → Protection → SEO → Collaborat
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union
 from datetime import datetime, timedelta
@@ -36,14 +37,16 @@ from ...ai.metadata.extractor import MetadataExtractor
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Content type enumeration for multi-format support"""    AUDIO = "audio"
+    """Content type enumeration for multi-format support"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
     MULTI_FORMAT = "multi_format"
 
 class AnalysisStage(Enum):
-    """Content analysis processing stages"""    VALIDATION = "validation"
+    """Content analysis processing stages"""
+    VALIDATION = "validation"
     METADATA_EXTRACTION = "metadata_extraction"
     QUALITY_ASSESSMENT = "quality_assessment"
     FEATURE_EXTRACTION = "feature_extraction"
@@ -52,7 +55,8 @@ class AnalysisStage(Enum):
 
 @dataclass
 class ContentAnalysisMetrics:
-    """Performance and quality metrics for content analysis"""    processing_time: float
+    """Performance and quality metrics for content analysis"""
+    processing_time: float
     quality_score: float
     confidence_level: float
     feature_count: int
@@ -61,7 +65,8 @@ class ContentAnalysisMetrics:
     analysis_timestamp: datetime = field(default_factory=datetime.now)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metrics to dictionary format"""        return {
+        """Convert metrics to dictionary format"""
+        return {
             'processing_time': self.processing_time,
             'quality_score': self.quality_score,
             'confidence_level': self.confidence_level,
@@ -73,7 +78,8 @@ class ContentAnalysisMetrics:
 
 @dataclass
 class ContentAnalysisResult:
-    """Comprehensive content analysis results"""    content_id: str
+    """Comprehensive content analysis results"""
+    content_id: str
     content_type: ContentType
     analysis_stage: AnalysisStage
     metadata: Dict[str, Any]
@@ -83,7 +89,8 @@ class ContentAnalysisResult:
     next_stages: List[str]
     
     def get_business_insights(self) -> Dict[str, Any]:
-        """Extract business insights from analysis results"""        return {
+        """Extract business insights from analysis results"""
+        return {
             'monetization_potential': self._calculate_monetization_potential(),
             'collaboration_opportunities': self._identify_collaboration_opportunities(),
             'seo_optimization_score': self._calculate_seo_score(),
@@ -91,13 +98,15 @@ class ContentAnalysisResult:
         }
     
     def _calculate_monetization_potential(self) -> float:
-        """Calculate monetization potential based on content quality and features"""        base_score = self.quality_metrics.quality_score * 0.4
+        """Calculate monetization potential based on content quality and features"""
+        base_score = self.quality_metrics.quality_score * 0.4
         engagement_score = self.features.get('engagement_potential', 0.5) * 0.3
         uniqueness_score = self.features.get('uniqueness_score', 0.5) * 0.3
         return min(1.0, base_score + engagement_score + uniqueness_score)
     
     def _identify_collaboration_opportunities(self) -> List[Dict[str, Any]]:
-        """Identify potential collaboration opportunities"""        opportunities = []
+        """Identify potential collaboration opportunities"""
+        opportunities = []
         
         # Analyze content characteristics for collaboration matching
         content_style = self.features.get('style_classification', {})
@@ -120,13 +129,15 @@ class ContentAnalysisResult:
         return opportunities
     
     def _calculate_seo_score(self) -> float:
-        """Calculate SEO optimization score"""        metadata_score = self.quality_metrics.metadata_completeness * 0.4
+        """Calculate SEO optimization score"""
+        metadata_score = self.quality_metrics.metadata_completeness * 0.4
         content_quality = self.quality_metrics.quality_score * 0.3
         keyword_relevance = self.features.get('keyword_relevance', 0.5) * 0.3
         return metadata_score + content_quality + keyword_relevance
     
     def _generate_distribution_recommendations(self) -> List[Dict[str, str]]:
-        """Generate platform-specific distribution recommendations"""        recommendations = []
+        """Generate platform-specific distribution recommendations"""
+        recommendations = []
         
         if self.content_type == ContentType.AUDIO:
             recommendations.extend([
@@ -150,11 +161,13 @@ class ContentAnalysisResult:
         return recommendations
 
 class ContentAnalysisHandler(BaseEventHandler):
-    """    Enterprise Content Analysis Event Handler
+    """
+    Enterprise Content Analysis Event Handler
     
     Processes content analysis events with sophisticated AI-powered analysis,
     quality assessment, and business intelligence generation.
-    """    
+    """
+    
     def __init__(self):
         super().__init__()
         self.content_processor = ContentProcessor()
@@ -171,7 +184,8 @@ class ContentAnalysisHandler(BaseEventHandler):
         self._initialize_ai_models()
     
     def _initialize_ai_models(self):
-        """Initialize AI models for content analysis"""        try:
+        """Initialize AI models for content analysis"""
+        try:
             # Text analysis models
             self.sentiment_analyzer = pipeline(
                 "sentiment-analysis",
@@ -196,7 +210,8 @@ class ContentAnalysisHandler(BaseEventHandler):
             raise
     
     async def handle_content_received(self, event_data: Dict[str, Any]) -> ContentAnalysisResult:
-        """Handle content received event with comprehensive validation"""        start_time = datetime.now()
+        """Handle content received event with comprehensive validation"""
+        start_time = datetime.now()
         
         try:
             content_id = event_data.get('content_id')
@@ -245,7 +260,8 @@ class ContentAnalysisHandler(BaseEventHandler):
             raise
     
     async def handle_metadata_extraction(self, event_data: Dict[str, Any]) -> ContentAnalysisResult:
-        """Handle sophisticated metadata extraction with AI enhancement"""        start_time = datetime.now()
+        """Handle sophisticated metadata extraction with AI enhancement"""
+        start_time = datetime.now()
         
         try:
             content_id = event_data.get('content_id')
@@ -290,7 +306,8 @@ class ContentAnalysisHandler(BaseEventHandler):
             raise
     
     async def handle_quality_assessment(self, event_data: Dict[str, Any]) -> ContentAnalysisResult:
-        """Handle comprehensive quality assessment with AI analysis"""        start_time = datetime.now()
+        """Handle comprehensive quality assessment with AI analysis"""
+        start_time = datetime.now()
         
         try:
             content_id = event_data.get('content_id')
@@ -335,7 +352,8 @@ class ContentAnalysisHandler(BaseEventHandler):
             raise
     
     async def _validate_content(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
-        """Validate content format, integrity, and basic quality"""        validation_result = {
+        """Validate content format, integrity, and basic quality"""
+        validation_result = {
             'is_valid': True,
             'errors': [],
             'quality_score': 0.0,
@@ -362,7 +380,8 @@ class ContentAnalysisHandler(BaseEventHandler):
             return validation_result
     
     async def _validate_audio_content(self, content_path: str) -> Dict[str, Any]:
-        """Validate audio content using librosa and AI analysis"""        try:
+        """Validate audio content using librosa and AI analysis"""
+        try:
             # Load audio file
             audio_data, sample_rate = librosa.load(content_path, sr=None)
             
@@ -404,7 +423,8 @@ class ContentAnalysisHandler(BaseEventHandler):
             }
     
     async def _validate_video_content(self, content_path: str) -> Dict[str, Any]:
-        """Validate video content using OpenCV and AI analysis"""        try:
+        """Validate video content using OpenCV and AI analysis"""
+        try:
             # Open video file
             cap = cv2.VideoCapture(content_path)
             
@@ -452,7 +472,8 @@ class ContentAnalysisHandler(BaseEventHandler):
             }
     
     async def _validate_image_content(self, content_path: str) -> Dict[str, Any]:
-        """Validate image content using PIL and AI analysis"""        try:
+        """Validate image content using PIL and AI analysis"""
+        try:
             # Open and analyze image
             with Image.open(content_path) as img:
                 width, height = img.size
@@ -495,7 +516,8 @@ class ContentAnalysisHandler(BaseEventHandler):
             }
     
     async def _validate_text_content(self, content_path: str) -> Dict[str, Any]:
-        """Validate text content using NLP analysis"""        try:
+        """Validate text content using NLP analysis"""
+        try:
             # Read text content
             with open(content_path, 'r', encoding='utf-8') as file:
                 text_content = file.read()
@@ -542,12 +564,14 @@ class ContentAnalysisHandler(BaseEventHandler):
             }
     
     def _calculate_metadata_completeness(self, metadata: Dict[str, Any]) -> float:
-        """Calculate metadata completeness score"""        required_fields = ['title', 'description', 'tags', 'category', 'creator']
+        """Calculate metadata completeness score"""
+        required_fields = ['title', 'description', 'tags', 'category', 'creator']
         present_fields = sum(1 for field in required_fields if metadata.get(field))
         return present_fields / len(required_fields)
     
     def _generate_initial_recommendations(self, content_type: ContentType, metadata: Dict[str, Any]) -> List[str]:
-        """Generate initial recommendations based on content type and metadata"""        recommendations = []
+        """Generate initial recommendations based on content type and metadata"""
+        recommendations = []
         
         if content_type == ContentType.AUDIO:
             recommendations.extend([
@@ -577,22 +601,28 @@ class ContentAnalysisHandler(BaseEventHandler):
         return recommendations
     
     async def _extract_basic_metadata(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
-        """Extract basic metadata from content file"""        return await self.metadata_extractor.extract_metadata(content_path, content_type.value)
+        """Extract basic metadata from content file"""
+        return await self.metadata_extractor.extract_metadata(content_path, content_type.value)
     
     async def _extract_comprehensive_metadata(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
-        """Extract comprehensive metadata with AI enhancement"""        return await self.metadata_extractor.extract_comprehensive_metadata(content_path, content_type.value)
+        """Extract comprehensive metadata with AI enhancement"""
+        return await self.metadata_extractor.extract_comprehensive_metadata(content_path, content_type.value)
     
     async def _enhance_metadata_with_ai(self, metadata: Dict[str, Any], content_type: ContentType) -> Dict[str, Any]:
-        """Enhance metadata using AI analysis"""        return await self.metadata_extractor.enhance_with_ai(metadata, content_type.value)
+        """Enhance metadata using AI analysis"""
+        return await self.metadata_extractor.enhance_with_ai(metadata, content_type.value)
     
     async def _extract_content_features(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
-        """Extract detailed content features for business intelligence"""        return await self.content_processor.extract_features(content_path, content_type.value)
+        """Extract detailed content features for business intelligence"""
+        return await self.content_processor.extract_features(content_path, content_type.value)
     
     async def _assess_content_quality(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
-        """Perform comprehensive content quality assessment"""        return await self.quality_analyzer.assess_quality(content_path, content_type.value)
+        """Perform comprehensive content quality assessment"""
+        return await self.quality_analyzer.assess_quality(content_path, content_type.value)
     
     def _generate_metadata_recommendations(self, metadata: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on metadata analysis"""        recommendations = []
+        """Generate recommendations based on metadata analysis"""
+        recommendations = []
         
         if not metadata.get('title'):
             recommendations.append("Add a compelling title for better discoverability")
@@ -606,7 +636,8 @@ class ContentAnalysisHandler(BaseEventHandler):
         return recommendations
     
     def _generate_quality_recommendations(self, quality_analysis: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on quality analysis"""        recommendations = []
+        """Generate recommendations based on quality analysis"""
+        recommendations = []
         
         overall_score = quality_analysis.get('overall_score', 0)
         
@@ -622,7 +653,8 @@ class ContentAnalysisHandler(BaseEventHandler):
         return recommendations
     
     def _calculate_business_metrics(self, quality_analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate business-relevant metrics from quality analysis"""        return {
+        """Calculate business-relevant metrics from quality analysis"""
+        return {
             'monetization_potential': quality_analysis.get('monetization_score', 0.5),
             'viral_potential': quality_analysis.get('viral_score', 0.5),
             'engagement_potential': quality_analysis.get('engagement_score', 0.5),

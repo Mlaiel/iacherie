@@ -21,7 +21,8 @@ Project Team Specialties:
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
-"""import hashlib
+"""
+import hashlib
 import hmac
 import secrets
 import logging
@@ -52,7 +53,8 @@ import whois
 logger = logging.getLogger(__name__)
 
 class SecurityLevel(Enum):
-    """Security level classifications."""    SAFE = "safe"
+    """Security level classifications."""
+    SAFE = "safe"
     LOW_RISK = "low_risk"
     MEDIUM_RISK = "medium_risk"
     HIGH_RISK = "high_risk"
@@ -60,7 +62,8 @@ class SecurityLevel(Enum):
     MALICIOUS = "malicious"
 
 class ThreatType(Enum):
-    """Types of security threats."""    MALWARE = "malware"
+    """Types of security threats."""
+    MALWARE = "malware"
     PHISHING = "phishing"
     SCAM = "scam"
     FRAUD = "fraud"
@@ -72,14 +75,16 @@ class ThreatType(Enum):
     BOT_DETECTION = "bot_detection"
 
 class EncryptionMethod(Enum):
-    """Encryption methods."""    AES_256 = "aes_256"
+    """Encryption methods."""
+    AES_256 = "aes_256"
     RSA_2048 = "rsa_2048"
     RSA_4096 = "rsa_4096"
     FERNET = "fernet"
 
 @dataclass
 class SecurityAssessment:
-    """Security assessment result."""    url: str
+    """Security assessment result."""
+    url: str
     security_level: SecurityLevel
     threat_types: List[ThreatType]
     confidence_score: float
@@ -90,14 +95,16 @@ class SecurityAssessment:
 
 @dataclass
 class EncryptedData:
-    """Encrypted data container."""    encrypted_content: bytes
+    """Encrypted data container."""
+    encrypted_content: bytes
     encryption_method: EncryptionMethod
     key_id: Optional[str]
     initialization_vector: Optional[bytes]
     metadata: Dict[str, Any]
 
 class SecurityScanner:
-    """    Advanced security scanner for URLs and content.
+    """
+    Advanced security scanner for URLs and content.
     
     Features:
     - URL reputation checking
@@ -106,9 +113,11 @@ class SecurityScanner:
     - Malware detection
     - Phishing detection
     - Content security analysis
-    """    
+    """
+    
     def __init__(self):
-        """Initialize security scanner."""        self.malicious_domains = set()
+        """Initialize security scanner."""
+        self.malicious_domains = set()
         self.phishing_patterns = []
         self.suspicious_keywords = []
         self.trusted_domains = set()
@@ -124,7 +133,8 @@ class SecurityScanner:
         logger.info("Security scanner initialized")
     
     def _load_security_databases(self) -> None:
-        """Load security databases and threat intelligence."""        # Load known malicious domains
+        """Load security databases and threat intelligence."""
+        # Load known malicious domains
         self.malicious_domains.update([
             "example-malware.com",
             "phishing-site.net",
@@ -155,14 +165,16 @@ class SecurityScanner:
         ])
     
     async def scan_url(self, url: str) -> SecurityAssessment:
-        """        Comprehensive security scan of URL.
+        """
+        Comprehensive security scan of URL.
         
         Args:
             url: URL to scan
             
         Returns:
             SecurityAssessment object
-        """        try:
+        """
+        try:
             parsed_url = urlparse(url)
             domain = parsed_url.netloc.lower()
             
@@ -208,7 +220,8 @@ class SecurityScanner:
             )
     
     async def _check_domain_reputation(self, domain: str, assessment: SecurityAssessment) -> None:
-        """Check domain reputation against known threat databases."""        try:
+        """Check domain reputation against known threat databases."""
+        try:
             # Check against malicious domains
             if domain in self.malicious_domains:
                 assessment.threat_types.append(ThreatType.MALICIOUS_REDIRECT)
@@ -239,7 +252,8 @@ class SecurityScanner:
             logger.error(f"Domain reputation check failed: {e}")
     
     async def _check_ssl_certificate(self, url: str, assessment: SecurityAssessment) -> None:
-        """Check SSL certificate validity and security."""        try:
+        """Check SSL certificate validity and security."""
+        try:
             parsed = urlparse(url)
             
             if parsed.scheme != 'https':
@@ -270,7 +284,8 @@ class SecurityScanner:
             logger.error(f"SSL check failed: {e}")
     
     async def _check_domain_age(self, domain: str, assessment: SecurityAssessment) -> None:
-        """Check domain registration age."""        try:
+        """Check domain registration age."""
+        try:
             # Get domain whois information
             domain_info = whois.whois(domain)
             
@@ -296,7 +311,8 @@ class SecurityScanner:
             assessment.confidence_score += 0.1
     
     async def _check_url_patterns(self, url: str, assessment: SecurityAssessment) -> None:
-        """Check URL for suspicious patterns."""        try:
+        """Check URL for suspicious patterns."""
+        try:
             # Check for URL shorteners
             url_shorteners = [
                 "bit.ly", "tinyurl.com", "t.co", "goo.gl", "ow.ly",
@@ -330,7 +346,8 @@ class SecurityScanner:
             logger.error(f"URL pattern check failed: {e}")
     
     async def _check_content_security(self, url: str, assessment: SecurityAssessment) -> None:
-        """Check content for security threats."""        try:
+        """Check content for security threats."""
+        try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url, timeout=15) as response:
                     if response.status == 200:
@@ -372,7 +389,8 @@ class SecurityScanner:
             assessment.confidence_score += 0.2
     
     async def _check_redirect_chains(self, url: str, assessment: SecurityAssessment) -> None:
-        """Check for suspicious redirect chains."""        try:
+        """Check for suspicious redirect chains."""
+        try:
             redirect_chain = []
             current_url = url
             max_redirects = 10
@@ -427,7 +445,8 @@ class SecurityScanner:
             logger.error(f"Redirect chain check failed: {e}")
     
     def _analyze_phishing_content(self, content: str) -> float:
-        """Analyze content for phishing indicators."""        phishing_score = 0.0
+        """Analyze content for phishing indicators."""
+        phishing_score = 0.0
         content_lower = content.lower()
         
         # Check phishing patterns
@@ -458,7 +477,8 @@ class SecurityScanner:
         return min(phishing_score, 1.0)
     
     def _detect_malicious_scripts(self, content: str) -> bool:
-        """Detect malicious scripts in content."""        malicious_patterns = [
+        """Detect malicious scripts in content."""
+        malicious_patterns = [
             r'eval\s*\(',
             r'document\.write\s*\(',
             r'window\.location\s*=',
@@ -477,7 +497,8 @@ class SecurityScanner:
         return False
     
     def _count_suspicious_keywords(self, content: str) -> int:
-        """Count suspicious keywords in content."""        content_lower = content.lower()
+        """Count suspicious keywords in content."""
+        content_lower = content.lower()
         count = 0
         
         for keyword in self.suspicious_keywords:
@@ -487,7 +508,8 @@ class SecurityScanner:
         return count
     
     def _detect_homograph_attack(self, domain: str) -> bool:
-        """Detect possible homograph attacks in domain."""        # Check for mixed scripts
+        """Detect possible homograph attacks in domain."""
+        # Check for mixed scripts
         try:
             # Simple check for non-ASCII characters that could be spoofing
             if any(ord(char) > 127 for char in domain):
@@ -504,7 +526,8 @@ class SecurityScanner:
             return False
     
     def _calculate_security_level(self, assessment: SecurityAssessment) -> SecurityLevel:
-        """Calculate overall security level from assessment."""        score = assessment.confidence_score
+        """Calculate overall security level from assessment."""
+        score = assessment.confidence_score
         
         if score >= 0.9:
             return SecurityLevel.MALICIOUS
@@ -520,7 +543,8 @@ class SecurityScanner:
             return SecurityLevel.SAFE
     
     def _generate_recommendations(self, assessment: SecurityAssessment) -> List[str]:
-        """Generate security recommendations."""        recommendations = []
+        """Generate security recommendations."""
+        recommendations = []
         
         if assessment.security_level in [SecurityLevel.MALICIOUS, SecurityLevel.CRITICAL_RISK]:
             recommendations.extend([
@@ -559,20 +583,24 @@ class SecurityScanner:
         return recommendations
 
 class ContentEncryption:
-    """    Advanced content encryption and decryption utilities.
+    """
+    Advanced content encryption and decryption utilities.
     
     Features:
     - Multiple encryption algorithms
     - Key management
     - Secure key derivation
     - Digital signatures
-    """    
+    """
+    
     def __init__(self):
-        """Initialize encryption utilities."""        self.keys: Dict[str, bytes] = {}
+        """Initialize encryption utilities."""
+        self.keys: Dict[str, bytes] = {}
         self.key_metadata: Dict[str, Dict[str, Any]] = {}
         
     def generate_key(self, method: EncryptionMethod = EncryptionMethod.FERNET) -> Tuple[str, bytes]:
-        """Generate encryption key."""        key_id = secrets.token_hex(16)
+        """Generate encryption key."""
+        key_id = secrets.token_hex(16)
         
         if method == EncryptionMethod.FERNET:
             key = Fernet.generate_key()
@@ -608,7 +636,8 @@ class ContentEncryption:
         key_id: Optional[str] = None,
         method: EncryptionMethod = EncryptionMethod.FERNET
     ) -> EncryptedData:
-        """Encrypt content with specified method."""        if isinstance(content, str):
+        """Encrypt content with specified method."""
+        if isinstance(content, str):
             content = content.encode('utf-8')
         
         if key_id is None:
@@ -681,7 +710,8 @@ class ContentEncryption:
             raise
     
     def decrypt_content(self, encrypted_data: EncryptedData) -> bytes:
-        """Decrypt content."""        key_id = encrypted_data.key_id
+        """Decrypt content."""
+        key_id = encrypted_data.key_id
         if not key_id or key_id not in self.keys:
             raise ValueError(f"Decryption key not found: {key_id}")
         
@@ -736,7 +766,8 @@ class ContentEncryption:
             raise
     
     def derive_key_from_password(self, password: str, salt: Optional[bytes] = None) -> Tuple[bytes, bytes]:
-        """Derive encryption key from password using PBKDF2."""        if salt is None:
+        """Derive encryption key from password using PBKDF2."""
+        if salt is None:
             salt = secrets.token_bytes(16)
         
         kdf = PBKDF2HMAC(
@@ -751,7 +782,8 @@ class ContentEncryption:
         return key, salt
     
     def secure_delete_key(self, key_id: str) -> bool:
-        """Securely delete encryption key."""        try:
+        """Securely delete encryption key."""
+        try:
             if key_id in self.keys:
                 # Overwrite key memory with random data
                 key = self.keys[key_id]
@@ -774,16 +806,20 @@ class ContentEncryption:
             return False
 
 class AccessControl:
-    """    Access control and authentication utilities.
-    """    
+    """
+    Access control and authentication utilities.
+    """
+    
     def __init__(self):
-        """Initialize access control."""        self.api_keys: Dict[str, Dict[str, Any]] = {}
+        """Initialize access control."""
+        self.api_keys: Dict[str, Dict[str, Any]] = {}
         self.rate_limits: Dict[str, List[datetime]] = {}
         self.blocked_ips: Set[str] = set()
         self.trusted_ips: Set[str] = set()
     
     def generate_api_key(self, user_id: str, permissions: List[str]) -> str:
-        """Generate API key with permissions."""        api_key = secrets.token_urlsafe(32)
+        """Generate API key with permissions."""
+        api_key = secrets.token_urlsafe(32)
         
         self.api_keys[api_key] = {
             'user_id': user_id,
@@ -797,7 +833,8 @@ class AccessControl:
         return api_key
     
     def validate_api_key(self, api_key: str, required_permission: str = None) -> bool:
-        """Validate API key and permissions."""        key_data = self.api_keys.get(api_key)
+        """Validate API key and permissions."""
+        key_data = self.api_keys.get(api_key)
         if not key_data or not key_data['is_active']:
             return False
         
@@ -811,7 +848,8 @@ class AccessControl:
         return True
     
     def check_rate_limit(self, identifier: str, max_requests: int = 100, window_minutes: int = 60) -> bool:
-        """Check rate limiting for identifier."""        now = datetime.now()
+        """Check rate limiting for identifier."""
+        now = datetime.now()
         window_start = now - timedelta(minutes=window_minutes)
         
         # Clean old requests
@@ -833,35 +871,44 @@ class AccessControl:
         return True
     
     def is_ip_blocked(self, ip_address: str) -> bool:
-        """Check if IP address is blocked."""        return ip_address in self.blocked_ips
+        """Check if IP address is blocked."""
+        return ip_address in self.blocked_ips
     
     def is_ip_trusted(self, ip_address: str) -> bool:
-        """Check if IP address is trusted."""        return ip_address in self.trusted_ips
+        """Check if IP address is trusted."""
+        return ip_address in self.trusted_ips
     
     def block_ip(self, ip_address: str, reason: str = "") -> None:
-        """Block IP address."""        self.blocked_ips.add(ip_address)
+        """Block IP address."""
+        self.blocked_ips.add(ip_address)
         logger.warning(f"IP blocked: {ip_address} - {reason}")
     
     def unblock_ip(self, ip_address: str) -> None:
-        """Unblock IP address."""        self.blocked_ips.discard(ip_address)
+        """Unblock IP address."""
+        self.blocked_ips.discard(ip_address)
         logger.info(f"IP unblocked: {ip_address}")
 
 # Factory functions
 def create_security_scanner() -> SecurityScanner:
-    """Create security scanner instance."""    return SecurityScanner()
+    """Create security scanner instance."""
+    return SecurityScanner()
 
 def create_content_encryption() -> ContentEncryption:
-    """Create content encryption instance."""    return ContentEncryption()
+    """Create content encryption instance."""
+    return ContentEncryption()
 
 def create_access_control() -> AccessControl:
-    """Create access control instance."""    return AccessControl()
+    """Create access control instance."""
+    return AccessControl()
 
 async def quick_security_scan(url: str) -> SecurityAssessment:
-    """Quick security scan of URL."""    scanner = create_security_scanner()
+    """Quick security scan of URL."""
+    scanner = create_security_scanner()
     return await scanner.scan_url(url)
 
 def quick_encrypt_content(content: str, method: EncryptionMethod = EncryptionMethod.FERNET) -> EncryptedData:
-    """Quick content encryption."""    encryption = create_content_encryption()
+    """Quick content encryption."""
+    encryption = create_content_encryption()
     return encryption.encrypt_content(content, method=method)
 
 # Export main components

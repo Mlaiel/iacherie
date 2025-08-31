@@ -12,7 +12,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 from datetime import datetime, timedelta
@@ -33,7 +34,8 @@ from .monitoring import ArchivalMonitoring
 
 
 class ArchivalStatus(Enum):
-    """Archival status enumeration"""    PENDING = "pending"
+    """Archival status enumeration"""
+    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     ARCHIVED = "archived"
     COMPRESSED = "compressed"
@@ -45,7 +47,8 @@ class ArchivalStatus(Enum):
 
 
 class ArchivalTier(Enum):
-    """Storage tier enumeration for archival"""    HOT = "hot"          # Immediate access, high cost
+    """Storage tier enumeration for archival"""
+    HOT = "hot"          # Immediate access, high cost
     WARM = "warm"        # Quick access, medium cost
     COLD = "cold"        # Slow access, low cost
     FROZEN = "frozen"    # Long-term storage, minimal cost
@@ -53,7 +56,8 @@ class ArchivalTier(Enum):
 
 
 class CompressionStrategy(Enum):
-    """Compression strategy for archival"""    NONE = "none"
+    """Compression strategy for archival"""
+    NONE = "none"
     MINIMAL = "minimal"    # Fast compression, basic space saving
     BALANCED = "balanced"  # Good compression ratio, moderate speed
     MAXIMUM = "maximum"    # Best compression, slower
@@ -62,7 +66,8 @@ class CompressionStrategy(Enum):
 
 @dataclass
 class ArchivalPolicy:
-    """Comprehensive archival policy configuration"""    policy_id: str
+    """Comprehensive archival policy configuration"""
+    policy_id: str
     name: str
     description: str
     
@@ -107,7 +112,8 @@ class ArchivalPolicy:
 
 @dataclass
 class ArchivalResult:
-    """Result of archival operation"""    success: bool
+    """Result of archival operation"""
+    success: bool
     archive_id: str
     original_size: int
     compressed_size: int
@@ -120,9 +126,11 @@ class ArchivalResult:
 
 
 class ArchivalManager:
-    """    Enterprise-grade archival manager with intelligent policies,
+    """
+    Enterprise-grade archival manager with intelligent policies,
     multi-tier storage, and advanced lifecycle management
-    """    
+    """
+    
     def __init__(
         self,
         storage_backend: ArchivalStorageBackend,
@@ -162,7 +170,8 @@ class ArchivalManager:
         self._initialize_default_policies()
     
     def _load_configuration(self, config_path: Optional[str]) -> Dict[str, Any]:
-        """Load archival configuration"""        default_config = {
+        """Load archival configuration"""
+        default_config = {
             "max_concurrent_operations": 10,
             "default_compression_level": 6,
             "default_retention_days": 2555,  # ~7 years
@@ -191,7 +200,8 @@ class ArchivalManager:
         return default_config
     
     def _initialize_default_policies(self):
-        """Initialize default archival policies"""        
+        """Initialize default archival policies"""
+        
         # Audio content policy
         audio_policy = ArchivalPolicy(
             policy_id="audio_standard",
@@ -297,11 +307,13 @@ class ArchivalManager:
         self.default_policy = audio_policy
     
     def register_policy(self, policy: ArchivalPolicy):
-        """Register an archival policy"""        self.policies[policy.policy_id] = policy
+        """Register an archival policy"""
+        self.policies[policy.policy_id] = policy
         self.logger.info(f"Registered archival policy: {policy.policy_id}")
     
     def get_policy(self, policy_id: str) -> Optional[ArchivalPolicy]:
-        """Get archival policy by ID"""        return self.policies.get(policy_id)
+        """Get archival policy by ID"""
+        return self.policies.get(policy_id)
     
     def find_applicable_policy(
         self,
@@ -310,7 +322,8 @@ class ArchivalManager:
         content_category: str = None,
         file_size: int = None
     ) -> Optional[ArchivalPolicy]:
-        """Find the most applicable archival policy for content"""        
+        """Find the most applicable archival policy for content"""
+        
         matching_policies = []
         
         for policy in self.policies.values():
@@ -352,7 +365,8 @@ class ArchivalManager:
         metadata: Optional[Dict[str, Any]] = None,
         policy_id: Optional[str] = None
     ) -> ArchivalResult:
-        """Archive content with intelligent policy application"""        
+        """Archive content with intelligent policy application"""
+        
         start_time = datetime.utcnow()
         archive_id = str(uuid.uuid4())
         
@@ -504,7 +518,8 @@ class ArchivalManager:
         archive_id: str,
         decompress: bool = True
     ) -> Optional[bytes]:
-        """Retrieve archived content"""        
+        """Retrieve archived content"""
+        
         try:
             self.logger.info(f"Retrieving archived content {archive_id}")
             
@@ -534,7 +549,8 @@ class ArchivalManager:
             return None
     
     async def delete_archive(self, archive_id: str, force: bool = False) -> bool:
-        """Delete archived content"""        
+        """Delete archived content"""
+        
         try:
             # Check retention policy
             if not force:
@@ -564,7 +580,8 @@ class ArchivalManager:
         target_tier: ArchivalTier,
         policy_override: bool = False
     ) -> bool:
-        """Migrate archive to different storage tier"""        
+        """Migrate archive to different storage tier"""
+        
         try:
             self.logger.info(f"Migrating archive {archive_id} to tier {target_tier.value}")
             
@@ -589,14 +606,16 @@ class ArchivalManager:
             return False
     
     def _update_compression_ratio(self):
-        """Update average compression ratio metric"""        if self.metrics["total_archived_size"] > 0:
+        """Update average compression ratio metric"""
+        if self.metrics["total_archived_size"] > 0:
             self.metrics["average_compression_ratio"] = (
                 self.metrics["total_compressed_size"] / 
                 self.metrics["total_archived_size"]
             )
     
     async def get_archival_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive archival statistics"""        
+        """Get comprehensive archival statistics"""
+        
         storage_stats = await self.storage_backend.get_storage_statistics()
         lifecycle_stats = await self.lifecycle_manager.get_lifecycle_statistics()
         retention_stats = await self.retention_engine.get_retention_statistics()
@@ -614,7 +633,8 @@ class ArchivalManager:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check"""        
+        """Perform comprehensive health check"""
+        
         health_status = {
             "overall_status": "healthy",
             "components": {},
@@ -656,7 +676,8 @@ class ArchivalManager:
         return health_status
     
     async def cleanup_expired_archives(self, dry_run: bool = True) -> Dict[str, Any]:
-        """Clean up expired archives according to retention policies"""        
+        """Clean up expired archives according to retention policies"""
+        
         cleanup_stats = {
             "archives_processed": 0,
             "archives_deleted": 0,
@@ -695,7 +716,8 @@ class ArchivalManager:
         return cleanup_stats
     
     async def optimize_storage(self) -> Dict[str, Any]:
-        """Optimize archival storage for better performance and cost"""        
+        """Optimize archival storage for better performance and cost"""
+        
         optimization_stats = {
             "archives_optimized": 0,
             "space_saved": 0,
@@ -733,7 +755,8 @@ class ArchivalManager:
         return optimization_stats
     
     async def _recompress_archive(self, archive_id: str) -> bool:
-        """Re-compress archive with improved algorithm"""        
+        """Re-compress archive with improved algorithm"""
+        
         try:
             # Retrieve original data
             content_data = await self.retrieve_content(archive_id, decompress=True)

@@ -4,7 +4,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive model deployment capabilities including
 model serving, auto-scaling, load balancing, and deployment orchestration.
-"""import logging
+"""
+import logging
 import os
 import json
 import time
@@ -20,7 +21,8 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 class DeploymentStatus(Enum):
-    """Deployment status states"""    PENDING = "pending"
+    """Deployment status states"""
+    PENDING = "pending"
     DEPLOYING = "deploying"
     DEPLOYED = "deployed"
     FAILED = "failed"
@@ -30,7 +32,8 @@ class DeploymentStatus(Enum):
     STOPPED = "stopped"
 
 class ScalingPolicy(Enum):
-    """Auto-scaling policies"""    FIXED = "fixed"
+    """Auto-scaling policies"""
+    FIXED = "fixed"
     AUTO_CPU = "auto_cpu"
     AUTO_MEMORY = "auto_memory"
     AUTO_REQUESTS = "auto_requests"
@@ -38,7 +41,8 @@ class ScalingPolicy(Enum):
 
 @dataclass
 class DeploymentConfig:
-    """Configuration for model deployment"""    model_name: str
+    """Configuration for model deployment"""
+    model_name: str
     model_version: str
     replicas: int = 1
     max_replicas: int = 10
@@ -51,7 +55,8 @@ class DeploymentConfig:
 
 @dataclass
 class DeploymentInfo:
-    """Information about a deployed model"""    deployment_id: str
+    """Information about a deployed model"""
+    deployment_id: str
     model_name: str
     model_version: str
     status: DeploymentStatus
@@ -62,7 +67,8 @@ class DeploymentInfo:
     metadata: Dict[str, Any]
 
 class ModelDeployer:
-    """Main class for deploying ML models"""    
+    """Main class for deploying ML models"""
+    
     def __init__(self, config_path: Optional[str] = None):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.deployments: Dict[str, DeploymentInfo] = {}
@@ -72,7 +78,8 @@ class ModelDeployer:
         self.logger.info("ModelDeployer initialized successfully")
     
     def _initialize_deployer(self):
-        """Initialize the deployment infrastructure"""        try:
+        """Initialize the deployment infrastructure"""
+        try:
             # Load existing deployments if config path provided
             if self.config_path and os.path.exists(self.config_path):
                 with open(self.config_path, 'r') as f:
@@ -88,7 +95,8 @@ class ModelDeployer:
             self.logger.error(f"Deployer initialization failed: {e}")
     
     def deploy_model(self, config: DeploymentConfig) -> str:
-        """Deploy a model with the given configuration"""        try:
+        """Deploy a model with the given configuration"""
+        try:
             deployment_id = self._generate_deployment_id(config.model_name, config.model_version)
             
             # Create deployment info
@@ -119,7 +127,8 @@ class ModelDeployer:
             raise
     
     def _execute_deployment(self, deployment_id: str):
-        """Execute the actual deployment process"""        try:
+        """Execute the actual deployment process"""
+        try:
             deployment = self.deployments[deployment_id]
             config = self.deployment_configs[deployment_id]
             
@@ -153,33 +162,40 @@ class ModelDeployer:
             deployment.updated_at = datetime.utcnow()
     
     def _validate_model(self, model_name: str, model_version: str):
-        """Validate model before deployment"""        # Simulate model validation
+        """Validate model before deployment"""
+        # Simulate model validation
         time.sleep(0.1)
         self.logger.debug(f"Model validated: {model_name}:{model_version}")
     
     def _create_containers(self, deployment_id: str, config: DeploymentConfig):
-        """Create and configure containers"""        # Simulate container creation
+        """Create and configure containers"""
+        # Simulate container creation
         time.sleep(0.2)
         self.logger.debug(f"Containers created for deployment: {deployment_id}")
     
     def _setup_load_balancer(self, deployment_id: str):
-        """Setup load balancer for the deployment"""        # Simulate load balancer setup
+        """Setup load balancer for the deployment"""
+        # Simulate load balancer setup
         time.sleep(0.1)
         self.logger.debug(f"Load balancer configured for: {deployment_id}")
     
     def _setup_health_checks(self, deployment_id: str):
-        """Setup health monitoring for the deployment"""        # Simulate health check setup
+        """Setup health monitoring for the deployment"""
+        # Simulate health check setup
         time.sleep(0.1)
         self.logger.debug(f"Health checks configured for: {deployment_id}")
     
     def get_deployment_status(self, deployment_id: str) -> Optional[DeploymentInfo]:
-        """Get status of a specific deployment"""        return self.deployments.get(deployment_id)
+        """Get status of a specific deployment"""
+        return self.deployments.get(deployment_id)
     
     def list_deployments(self) -> List[DeploymentInfo]:
-        """List all deployments"""        return list(self.deployments.values())
+        """List all deployments"""
+        return list(self.deployments.values())
     
     def update_deployment(self, deployment_id: str, config: DeploymentConfig) -> bool:
-        """Update an existing deployment"""        try:
+        """Update an existing deployment"""
+        try:
             if deployment_id not in self.deployments:
                 raise ValueError(f"Deployment not found: {deployment_id}")
             
@@ -201,7 +217,8 @@ class ModelDeployer:
             return False
     
     def delete_deployment(self, deployment_id: str) -> bool:
-        """Delete a deployment"""        try:
+        """Delete a deployment"""
+        try:
             if deployment_id not in self.deployments:
                 raise ValueError(f"Deployment not found: {deployment_id}")
             
@@ -224,17 +241,20 @@ class ModelDeployer:
             return False
     
     def _cleanup_deployment(self, deployment_id: str):
-        """Clean up deployment resources"""        # Simulate resource cleanup
+        """Clean up deployment resources"""
+        # Simulate resource cleanup
         time.sleep(0.1)
         self.logger.debug(f"Resources cleaned up for: {deployment_id}")
     
     def _generate_deployment_id(self, model_name: str, model_version: str) -> str:
-        """Generate unique deployment ID"""        timestamp = str(int(time.time()))
+        """Generate unique deployment ID"""
+        timestamp = str(int(time.time()))
         unique_string = f"{model_name}:{model_version}:{timestamp}"
         return hashlib.md5(unique_string.encode()).hexdigest()[:12]
 
 class ModelServer:
-    """Model serving infrastructure"""    
+    """Model serving infrastructure"""
+    
     def __init__(self, port: int = 8000):
         self.port = port
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -245,7 +265,8 @@ class ModelServer:
         self.logger.info("ModelServer initialized successfully")
     
     def start_server(self):
-        """Start the model server"""        try:
+        """Start the model server"""
+        try:
             if self.is_running:
                 self.logger.warning("Server is already running")
                 return
@@ -262,7 +283,8 @@ class ModelServer:
             self.is_running = False
     
     def stop_server(self):
-        """Stop the model server"""        try:
+        """Stop the model server"""
+        try:
             self.is_running = False
             if self.server_thread:
                 self.server_thread.join(timeout=5.0)
@@ -273,7 +295,8 @@ class ModelServer:
             self.logger.error(f"Failed to stop server: {e}")
     
     def _run_server(self):
-        """Main server loop"""        while self.is_running:
+        """Main server loop"""
+        while self.is_running:
             try:
                 # Simulate server processing
                 if not self.request_queue.empty():
@@ -286,7 +309,8 @@ class ModelServer:
                 self.logger.error(f"Server processing error: {e}")
     
     def _process_request(self, request: Dict[str, Any]):
-        """Process incoming model prediction request"""        try:
+        """Process incoming model prediction request"""
+        try:
             model_id = request.get('model_id')
             input_data = request.get('input_data')
             
@@ -304,7 +328,8 @@ class ModelServer:
             return {"error": str(e)}
     
     def _predict(self, model_id: str, input_data: Any) -> Dict[str, Any]:
-        """Make prediction using the specified model"""        # Simulate prediction
+        """Make prediction using the specified model"""
+        # Simulate prediction
         return {
             "model_id": model_id,
             "prediction": "sample_result",
@@ -313,7 +338,8 @@ class ModelServer:
         }
     
     def load_model(self, model_id: str, model_path: str) -> bool:
-        """Load a model into the server"""        try:
+        """Load a model into the server"""
+        try:
             # Simulate model loading
             self.models[model_id] = {
                 "path": model_path,
@@ -329,7 +355,8 @@ class ModelServer:
             return False
     
     def unload_model(self, model_id: str) -> bool:
-        """Unload a model from the server"""        try:
+        """Unload a model from the server"""
+        try:
             if model_id in self.models:
                 del self.models[model_id]
                 self.logger.info(f"Model unloaded: {model_id}")
@@ -343,13 +370,16 @@ class ModelServer:
             return False
     
     def get_model_info(self, model_id: str) -> Optional[Dict[str, Any]]:
-        """Get information about a loaded model"""        return self.models.get(model_id)
+        """Get information about a loaded model"""
+        return self.models.get(model_id)
     
     def list_models(self) -> List[str]:
-        """List all loaded models"""        return list(self.models.keys())
+        """List all loaded models"""
+        return list(self.models.keys())
 
 class ModelScaler:
-    """Auto-scaling manager for deployed models"""    
+    """Auto-scaling manager for deployed models"""
+    
     def __init__(self, deployer: ModelDeployer):
         self.deployer = deployer
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -360,7 +390,8 @@ class ModelScaler:
         self.logger.info("ModelScaler initialized successfully")
     
     def start_monitoring(self):
-        """Start auto-scaling monitoring"""        try:
+        """Start auto-scaling monitoring"""
+        try:
             if self.is_monitoring:
                 self.logger.warning("Scaling monitor is already running")
                 return
@@ -377,7 +408,8 @@ class ModelScaler:
             self.is_monitoring = False
     
     def stop_monitoring(self):
-        """Stop auto-scaling monitoring"""        try:
+        """Stop auto-scaling monitoring"""
+        try:
             self.is_monitoring = False
             if self.monitor_thread:
                 self.monitor_thread.join(timeout=5.0)
@@ -388,7 +420,8 @@ class ModelScaler:
             self.logger.error(f"Failed to stop scaling monitor: {e}")
     
     def _monitor_loop(self):
-        """Main monitoring loop"""        while self.is_monitoring:
+        """Main monitoring loop"""
+        while self.is_monitoring:
             try:
                 # Check all active deployments
                 for deployment_id in self.deployer.active_deployments:
@@ -400,7 +433,8 @@ class ModelScaler:
                 self.logger.error(f"Scaling monitor error: {e}")
     
     def _check_scaling_conditions(self, deployment_id: str):
-        """Check if scaling is needed for a deployment"""        try:
+        """Check if scaling is needed for a deployment"""
+        try:
             deployment = self.deployer.get_deployment_status(deployment_id)
             if not deployment or deployment.status != DeploymentStatus.DEPLOYED:
                 return
@@ -426,7 +460,8 @@ class ModelScaler:
             self.logger.error(f"Scaling condition check failed for {deployment_id}: {e}")
     
     def _get_deployment_metrics(self, deployment_id: str) -> Dict[str, float]:
-        """Get current metrics for a deployment"""        # Simulate metrics collection
+        """Get current metrics for a deployment"""
+        # Simulate metrics collection
         return {
             "cpu_usage": 0.7,  # 70%
             "memory_usage": 0.6,  # 60%
@@ -436,7 +471,8 @@ class ModelScaler:
     
     def _evaluate_scaling_conditions(self, deployment_id: str, config: DeploymentConfig, 
                                    metrics: Dict[str, float]) -> Tuple[bool, bool]:
-        """Evaluate whether to scale up or down"""        should_scale_up = False
+        """Evaluate whether to scale up or down"""
+        should_scale_up = False
         should_scale_down = False
         
         deployment = self.deployer.get_deployment_status(deployment_id)
@@ -462,7 +498,8 @@ class ModelScaler:
         return should_scale_up, should_scale_down
     
     def _scale_up(self, deployment_id: str):
-        """Scale up a deployment"""        try:
+        """Scale up a deployment"""
+        try:
             deployment = self.deployer.get_deployment_status(deployment_id)
             config = self.deployer.deployment_configs[deployment_id]
             
@@ -482,7 +519,8 @@ class ModelScaler:
             self.logger.error(f"Scale up failed for {deployment_id}: {e}")
     
     def _scale_down(self, deployment_id: str):
-        """Scale down a deployment"""        try:
+        """Scale down a deployment"""
+        try:
             deployment = self.deployer.get_deployment_status(deployment_id)
             
             new_replicas = max(deployment.replicas - 1, 1)

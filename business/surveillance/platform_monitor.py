@@ -27,7 +27,8 @@ Business Logic Flow:
 Platform Registration → Configuration Setup → API Integration → Real-time Monitoring →
 Content Detection → Pattern Analysis → Threat Assessment → Automated Response →
 Legal Action Coordination → Performance Analytics → Optimization Feedback Loop
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import logging
 import json
@@ -112,14 +113,16 @@ logger = logging.getLogger(__name__)
 
 
 class AlertLevel(Enum):
-    """Alert severity levels"""    LOW = "low"
+    """Alert severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class MonitoringStatus(Enum):
-    """Monitoring status types"""    ACTIVE = "active"
+    """Monitoring status types"""
+    ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
     ERROR = "error"
@@ -127,7 +130,8 @@ class MonitoringStatus(Enum):
 
 @dataclass
 class MonitoringAlert:
-    """Alert structure for monitoring events"""    alert_id: str
+    """Alert structure for monitoring events"""
+    alert_id: str
     creator_id: str
     content_id: str
     platform: str
@@ -141,7 +145,8 @@ class MonitoringAlert:
 
 @dataclass
 class MonitoringResult:
-    """Result from platform monitoring operation"""    platform: str
+    """Result from platform monitoring operation"""
+    platform: str
     content_id: str
     monitoring_duration: float
     new_infringements_found: int
@@ -154,7 +159,8 @@ class MonitoringResult:
 
 
 class PlatformMonitor:
-    """Base class for platform-specific monitoring"""    
+    """Base class for platform-specific monitoring"""
+    
     def __init__(self, platform: str, config: Dict[str, Any]):
         self.platform = platform
         self.config = config
@@ -167,13 +173,15 @@ class PlatformMonitor:
         content_id: str, 
         fingerprint_data: Dict[str, Any]
     ) -> bool:
-        """Start monitoring for specific content"""        # Default implementation for platforms without monitoring support
+        """Start monitoring for specific content"""
+        # Default implementation for platforms without monitoring support
         logging.warning(f"Content monitoring not implemented for {self.platform}")
         self.monitoring_status = MonitoringStatus.STOPPED
         return False
     
     async def stop_monitoring(self, content_id: str) -> bool:
-        """Stop monitoring for specific content"""        self.monitoring_status = MonitoringStatus.STOPPED
+        """Stop monitoring for specific content"""
+        self.monitoring_status = MonitoringStatus.STOPPED
         return True
     
     async def check_for_updates(
@@ -181,7 +189,8 @@ class PlatformMonitor:
         content_id: str, 
         fingerprint_data: Dict[str, Any]
     ) -> MonitoringResult:
-        """Check for new content matches or infringements"""        # Default implementation for platforms without update checking
+        """Check for new content matches or infringements"""
+        # Default implementation for platforms without update checking
         logging.warning(f"Update checking not implemented for {self.platform}")
         from datetime import datetime
         return MonitoringResult(
@@ -194,7 +203,8 @@ class PlatformMonitor:
 
 
 class YouTubeMonitor(PlatformMonitor):
-    """YouTube-specific monitoring"""    
+    """YouTube-specific monitoring"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__("youtube", config)
         self.api_key = config.get("youtube_api_key")
@@ -207,7 +217,8 @@ class YouTubeMonitor(PlatformMonitor):
         content_id: str, 
         fingerprint_data: Dict[str, Any]
     ) -> bool:
-        """Start YouTube monitoring for content"""        try:
+        """Start YouTube monitoring for content"""
+        try:
             # Store monitoring parameters
             monitoring_key = f"{creator_id}_{content_id}"
             self.monitored_channels[monitoring_key] = {
@@ -231,7 +242,8 @@ class YouTubeMonitor(PlatformMonitor):
         content_id: str, 
         fingerprint_data: Dict[str, Any]
     ) -> MonitoringResult:
-        """Check YouTube for new content matches"""        start_time = time.time()
+        """Check YouTube for new content matches"""
+        start_time = time.time()
         
         result = MonitoringResult(
             platform=self.platform,
@@ -294,7 +306,8 @@ class YouTubeMonitor(PlatformMonitor):
         return result
     
     async def _simulate_youtube_search(self, search_term: str) -> List[Dict[str, Any]]:
-        """Simulate YouTube search API response"""        # This would be replaced with actual YouTube Data API calls
+        """Simulate YouTube search API response"""
+        # This would be replaced with actual YouTube Data API calls
         return [
             {
                 "title": f"Video with {search_term}",
@@ -310,7 +323,8 @@ class YouTubeMonitor(PlatformMonitor):
         match: Dict[str, Any], 
         fingerprint_data: Dict[str, Any]
     ) -> float:
-        """Calculate content similarity score"""        # Simplified similarity calculation
+        """Calculate content similarity score"""
+        # Simplified similarity calculation
         title_similarity = 0.0
         
         match_title = match.get("title", "").lower()
@@ -324,12 +338,14 @@ class YouTubeMonitor(PlatformMonitor):
         return title_similarity
     
     def _estimate_revenue_impact(self, match: Dict[str, Any]) -> float:
-        """Estimate potential revenue impact from infringement"""        view_count = match.get("view_count", 0)
+        """Estimate potential revenue impact from infringement"""
+        view_count = match.get("view_count", 0)
         # Simplified revenue estimation: $0.001 per view
         return view_count * 0.001
     
     def _extract_search_terms(self, fingerprint_data: Dict[str, Any]) -> List[str]:
-        """Extract search terms from fingerprint data"""        search_terms = []
+        """Extract search terms from fingerprint data"""
+        search_terms = []
         
         if "title" in fingerprint_data:
             search_terms.append(fingerprint_data["title"])
@@ -341,7 +357,8 @@ class YouTubeMonitor(PlatformMonitor):
 
 
 class TikTokMonitor(PlatformMonitor):
-    """TikTok-specific monitoring"""    
+    """TikTok-specific monitoring"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__("tiktok", config)
     
@@ -351,7 +368,8 @@ class TikTokMonitor(PlatformMonitor):
         content_id: str, 
         fingerprint_data: Dict[str, Any]
     ) -> bool:
-        """Start TikTok monitoring"""        self.monitoring_status = MonitoringStatus.ACTIVE
+        """Start TikTok monitoring"""
+        self.monitoring_status = MonitoringStatus.ACTIVE
         logger.info(f"TikTok monitoring started for content {content_id}")
         return True
     
@@ -360,7 +378,8 @@ class TikTokMonitor(PlatformMonitor):
         content_id: str, 
         fingerprint_data: Dict[str, Any]
     ) -> MonitoringResult:
-        """Check TikTok for new content matches"""        start_time = time.time()
+        """Check TikTok for new content matches"""
+        start_time = time.time()
         
         result = MonitoringResult(
             platform=self.platform,
@@ -404,7 +423,8 @@ class TikTokMonitor(PlatformMonitor):
 
 
 class InstagramMonitor(PlatformMonitor):
-    """Instagram-specific monitoring"""    
+    """Instagram-specific monitoring"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__("instagram", config)
     
@@ -414,7 +434,8 @@ class InstagramMonitor(PlatformMonitor):
         content_id: str, 
         fingerprint_data: Dict[str, Any]
     ) -> bool:
-        """Start Instagram monitoring"""        self.monitoring_status = MonitoringStatus.ACTIVE
+        """Start Instagram monitoring"""
+        self.monitoring_status = MonitoringStatus.ACTIVE
         logger.info(f"Instagram monitoring started for content {content_id}")
         return True
     
@@ -423,7 +444,8 @@ class InstagramMonitor(PlatformMonitor):
         content_id: str, 
         fingerprint_data: Dict[str, Any]
     ) -> MonitoringResult:
-        """Check Instagram for new content matches"""        start_time = time.time()
+        """Check Instagram for new content matches"""
+        start_time = time.time()
         
         result = MonitoringResult(
             platform=self.platform,
@@ -466,9 +488,11 @@ class InstagramMonitor(PlatformMonitor):
 
 
 class PlatformMonitoringService:
-    """    Central platform monitoring service coordinating multiple platform monitors
+    """
+    Central platform monitoring service coordinating multiple platform monitors
     for comprehensive real-time content surveillance
-    """    
+    """
+    
     def __init__(self, surveillance_config):
         self.config = surveillance_config
         self.monitors: Dict[str, PlatformMonitor] = {}
@@ -476,7 +500,8 @@ class PlatformMonitoringService:
         self.initialized = False
     
     async def initialize(self) -> None:
-        """Initialize all platform monitors"""        try:
+        """Initialize all platform monitors"""
+        try:
             # Initialize platform-specific monitors
             monitor_config = {
                 "scan_frequency": self.config.scan_frequency,
@@ -506,7 +531,8 @@ class PlatformMonitoringService:
         fingerprint_data: Dict[str, Any],
         platforms: List[str]
     ) -> Dict[str, bool]:
-        """Start monitoring across specified platforms"""        if not self.initialized:
+        """Start monitoring across specified platforms"""
+        if not self.initialized:
             raise RuntimeError("Platform Monitoring Service not initialized")
         
         results = {}
@@ -545,7 +571,8 @@ class PlatformMonitoringService:
         fingerprint_data: Dict[str, Any],
         platforms: List[str]
     ) -> MonitoringResult:
-        """Perform monitoring check across platforms"""        if not self.initialized:
+        """Perform monitoring check across platforms"""
+        if not self.initialized:
             raise RuntimeError("Platform Monitoring Service not initialized")
         
         # Aggregate results from all platforms
@@ -609,7 +636,8 @@ class PlatformMonitoringService:
         return aggregated_result
     
     def _analyze_threats(self, platform_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze threat levels across platforms"""        threat_analysis = {
+        """Analyze threat levels across platforms"""
+        threat_analysis = {
             "overall_threat_level": "low",
             "platform_threat_distribution": {},
             "trending_platforms": [],
@@ -648,7 +676,8 @@ class PlatformMonitoringService:
         return threat_analysis
     
     async def stop_monitoring(self, creator_id: str, content_id: str) -> Dict[str, bool]:
-        """Stop monitoring for specific content across all platforms"""        session_key = f"{creator_id}_{content_id}"
+        """Stop monitoring for specific content across all platforms"""
+        session_key = f"{creator_id}_{content_id}"
         results = {}
         
         if session_key in self.active_monitoring_sessions:
@@ -674,7 +703,8 @@ class PlatformMonitoringService:
         creator_id: str, 
         content_id: str
     ) -> Dict[str, Any]:
-        """Get current monitoring status for content"""        session_key = f"{creator_id}_{content_id}"
+        """Get current monitoring status for content"""
+        session_key = f"{creator_id}_{content_id}"
         
         if session_key in self.active_monitoring_sessions:
             session = self.active_monitoring_sessions[session_key]
@@ -698,7 +728,8 @@ class PlatformMonitoringService:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on monitoring service"""        health_status = {
+        """Perform health check on monitoring service"""
+        health_status = {
             "service": "healthy" if self.initialized else "unhealthy",
             "active_sessions": len(self.active_monitoring_sessions),
             "monitors": {},
@@ -714,7 +745,8 @@ class PlatformMonitoringService:
         return health_status
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown monitoring service"""        logger.info("Shutting down Platform Monitoring Service")
+        """Gracefully shutdown monitoring service"""
+        logger.info("Shutting down Platform Monitoring Service")
         
         # Stop all active monitoring sessions
         for session_key in list(self.active_monitoring_sessions.keys()):

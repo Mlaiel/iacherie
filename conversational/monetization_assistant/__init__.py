@@ -16,16 +16,28 @@ WARNING: Proprietary technology - Unauthorized copying, modification or distribu
 is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de
-"""from .revenue_optimizer import RevenueOptimizer
+"""
+
+from .revenue_optimizer import RevenueOptimizer
+
 from .platform_analytics import PlatformAnalyticsEngine
+
 from .collaboration_matcher import CollaborationMatcher
+
 from .licensing_engine import LicensingEngine
+
 from .payment_processor import PaymentProcessorEngine
+
 from .monetization_advisor import MonetizationAdvisor
+
 from .revenue_tracker import RevenueTracker
+
 from .marketplace_connector import MarketplaceConnector
+
 from .content_valuator import ContentValuator
+
 from .roi_calculator import ROICalculator
+
 from .config import MonetizationConfig
 
 __all__ = [

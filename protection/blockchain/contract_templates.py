@@ -18,14 +18,16 @@ without explicit written authorization from Fahed Mlaiel is strictly
 prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
-"""from typing import Dict, List, Optional, Any
+"""
+from typing import Dict, List, Optional, Any
 from enum import Enum
 from dataclasses import dataclass
 import json
 
 
 class ContractTemplate(Enum):
-    """Available smart contract templates"""    COPYRIGHT_REGISTRY = "copyright_registry"
+    """Available smart contract templates"""
+    COPYRIGHT_REGISTRY = "copyright_registry"
     CONTENT_LICENSING = "content_licensing"
     ROYALTY_DISTRIBUTION = "royalty_distribution"
     ACCESS_CONTROL = "access_control"
@@ -37,7 +39,8 @@ class ContractTemplate(Enum):
 
 @dataclass
 class ContractConfig:
-    """Smart contract deployment configuration"""    template: ContractTemplate
+    """Smart contract deployment configuration"""
+    template: ContractTemplate
     name: str
     symbol: str
     owner: str
@@ -47,14 +50,18 @@ class ContractConfig:
 
 
 class SmartContractTemplates:
-    """    Professional smart contract templates for content protection
+    """
+    Professional smart contract templates for content protection
     Provides production-ready contract implementations
-    """    
+    """
+    
     @staticmethod
     def get_copyright_registry_contract() -> str:
-        """        Copyright Registry Smart Contract
+        """
+        Copyright Registry Smart Contract
         Immutable registration of content ownership and creation timestamps
-        """        return """// SPDX-License-Identifier: MIT
+        """
+        return """// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -331,12 +338,15 @@ contract ContentCopyrightRegistry is Ownable, ReentrancyGuard {
         payable(owner()).transfer(address(this).balance);
     }
 }
-"""    
+"""
+    
     @staticmethod
     def get_content_licensing_contract() -> str:
-        """        Content Licensing Smart Contract
+        """
+        Content Licensing Smart Contract
         Advanced licensing system with flexible terms and royalty distribution
-        """        return """// SPDX-License-Identifier: MIT
+        """
+        return """// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -689,12 +699,15 @@ contract ContentLicensingSystem is Ownable, ReentrancyGuard {
         }
     }
 }
-"""    
+"""
+    
     @staticmethod
     def get_access_control_contract() -> str:
-        """        Access Control Smart Contract
+        """
+        Access Control Smart Contract
         Granular permission management for content access
-        """        return """// SPDX-License-Identifier: MIT
+        """
+        return """// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
@@ -1030,12 +1043,15 @@ contract ContentAccessControl is AccessControl, ReentrancyGuard {
         revokeRole(MODERATOR_ROLE, moderator);
     }
 }
-"""    
+"""
+    
     @staticmethod
     def get_usage_tracking_contract() -> str:
-        """        Usage Tracking Smart Contract
+        """
+        Usage Tracking Smart Contract
         Comprehensive tracking of content usage and analytics
-        """        return """// SPDX-License-Identifier: MIT
+        """
+        return """// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -1439,10 +1455,12 @@ contract ContentUsageTracking is Ownable, ReentrancyGuard {
         }
     }
 }
-"""    
+"""
+    
     @staticmethod
     def get_contract_abi(template: ContractTemplate) -> List[Dict[str, Any]]:
-        """Get ABI for specific contract template"""        # This would contain the actual ABI definitions
+        """Get ABI for specific contract template"""
+        # This would contain the actual ABI definitions
         # For brevity, returning a simplified structure
         
         base_abi = [
@@ -1493,7 +1511,8 @@ contract ContentUsageTracking is Ownable, ReentrancyGuard {
     
     @staticmethod
     def get_deployment_bytecode(template: ContractTemplate) -> str:
-        """Get deployment bytecode for contract template"""        # In a real implementation, this would return the actual compiled bytecode
+        """Get deployment bytecode for contract template"""
+        # In a real implementation, this would return the actual compiled bytecode
         # For now, returning a placeholder
         return "0x608060405234801561001057600080fd5b50..."
     
@@ -1502,7 +1521,8 @@ contract ContentUsageTracking is Ownable, ReentrancyGuard {
         template: ContractTemplate,
         parameters: Dict[str, Any]
     ) -> bool:
-        """Validate contract deployment parameters"""        
+        """Validate contract deployment parameters"""
+        
         required_params = {
             ContractTemplate.COPYRIGHT_REGISTRY: [
                 "registrationFee", "platformCommission"

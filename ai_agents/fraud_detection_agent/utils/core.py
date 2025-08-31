@@ -6,7 +6,8 @@ content protection in the IA-Influencer ecosystem.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 from datetime import datetime, timedelta
@@ -42,7 +43,8 @@ from .threat_intelligence import ThreatIntelligenceEngine
 logger = logging.getLogger(__name__)
 
 class FraudType(Enum):
-    """Comprehensive fraud classification system"""    CONTENT_THEFT = "content_theft"
+    """Comprehensive fraud classification system"""
+    CONTENT_THEFT = "content_theft"
     REVENUE_MANIPULATION = "revenue_manipulation" 
     IDENTITY_IMPERSONATION = "identity_impersonation"
     DEEPFAKE_CONTENT = "deepfake_content"
@@ -54,7 +56,8 @@ class FraudType(Enum):
     METADATA_SPOOFING = "metadata_spoofing"
 
 class FraudSeverity(Enum):
-    """Fraud severity classification"""    LOW = 1
+    """Fraud severity classification"""
+    LOW = 1
     MEDIUM = 2
     HIGH = 3
     CRITICAL = 4
@@ -62,7 +65,8 @@ class FraudSeverity(Enum):
 
 @dataclass
 class FraudDetectionResult:
-    """Comprehensive fraud detection result"""    fraud_detected: bool
+    """Comprehensive fraud detection result"""
+    fraud_detected: bool
     fraud_type: Optional[FraudType]
     confidence_score: float
     severity: FraudSeverity
@@ -79,7 +83,8 @@ class FraudDetectionResult:
 
 @dataclass
 class FraudContext:
-    """Fraud detection context and metadata"""    user_id: str
+    """Fraud detection context and metadata"""
+    user_id: str
     content_id: Optional[str]
     platform: str
     request_metadata: Dict[str, Any]
@@ -90,7 +95,8 @@ class FraudContext:
     transaction_data: Optional[Dict[str, Any]] = None
 
 class FraudDetectionAgent(BaseAgent):
-    """    Advanced Fraud Detection Agent
+    """
+    Advanced Fraud Detection Agent
     
     Comprehensive fraud prevention system combining multiple detection methods:
     - Behavioral pattern analysis
@@ -98,7 +104,8 @@ class FraudDetectionAgent(BaseAgent):
     - Revenue validation
     - Deepfake content detection
     - Real-time threat intelligence
-    """    
+    """
+    
     def __init__(
         self,
         agent_id: str = "fraud_detection_agent",
@@ -145,7 +152,8 @@ class FraudDetectionAgent(BaseAgent):
         context: FraudContext,
         content_data: Optional[Dict[str, Any]] = None
     ) -> FraudDetectionResult:
-        """        Comprehensive fraud analysis combining all detection methods
+        """
+        Comprehensive fraud analysis combining all detection methods
         
         Args:
             context: Fraud detection context and metadata
@@ -153,7 +161,8 @@ class FraudDetectionAgent(BaseAgent):
             
         Returns:
             Complete fraud detection result with recommendations
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             # Initialize result structure
@@ -258,7 +267,8 @@ class FraudDetectionAgent(BaseAgent):
             raise FraudDetectionError(f"Fraud analysis failed: {str(e)}")
 
     async def _analyze_behavioral_patterns(self, context: FraudContext) -> Dict[str, Any]:
-        """Analyze user behavioral patterns for fraud indicators"""        try:
+        """Analyze user behavioral patterns for fraud indicators"""
+        try:
             return await self.behavior_analyzer.analyze_behavior(
                 user_id=context.user_id,
                 session_info=context.session_info,
@@ -271,7 +281,8 @@ class FraudDetectionAgent(BaseAgent):
             return {'risk_score': 0.0, 'anomalies': []}
 
     async def _detect_fraud_patterns(self, context: FraudContext) -> Dict[str, Any]:
-        """Detect known fraud patterns in user activity"""        try:
+        """Detect known fraud patterns in user activity"""
+        try:
             return await self.pattern_detector.detect_patterns(
                 user_id=context.user_id,
                 platform=context.platform,
@@ -283,7 +294,8 @@ class FraudDetectionAgent(BaseAgent):
             return {'matches': [], 'confidence': 0.0}
 
     async def _validate_revenue_authenticity(self, context: FraudContext) -> Dict[str, Any]:
-        """Validate revenue and monetization data authenticity"""        try:
+        """Validate revenue and monetization data authenticity"""
+        try:
             if context.transaction_data:
                 return await self.revenue_validator.validate_revenue(
                     user_id=context.user_id,
@@ -296,7 +308,8 @@ class FraudDetectionAgent(BaseAgent):
             return {'anomaly_detected': False, 'confidence': 0.0}
 
     async def _detect_deepfake_content(self, content_data: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Detect deepfake or manipulated content"""        try:
+        """Detect deepfake or manipulated content"""
+        try:
             if content_data:
                 return await self.deepfake_detector.analyze_content(content_data)
             return {'deepfake_probability': 0.0, 'manipulation_detected': False}
@@ -305,7 +318,8 @@ class FraudDetectionAgent(BaseAgent):
             return {'deepfake_probability': 0.0, 'manipulation_detected': False}
 
     async def _detect_anomalies(self, context: FraudContext) -> Dict[str, Any]:
-        """Detect statistical anomalies in user behavior"""        try:
+        """Detect statistical anomalies in user behavior"""
+        try:
             return await self.anomaly_engine.detect_anomalies(
                 user_id=context.user_id,
                 current_session=context.session_info,
@@ -316,7 +330,8 @@ class FraudDetectionAgent(BaseAgent):
             return {'anomaly_score': 0.0, 'anomalies': []}
 
     async def _analyze_threat_intelligence(self, context: FraudContext) -> Dict[str, Any]:
-        """Analyze threat intelligence data for fraud indicators"""        try:
+        """Analyze threat intelligence data for fraud indicators"""
+        try:
             return await self.threat_intelligence.analyze_threats(
                 user_id=context.user_id,
                 geolocation=context.geolocation,
@@ -328,7 +343,8 @@ class FraudDetectionAgent(BaseAgent):
             return {'threat_level': 'GREEN', 'indicators': []}
 
     async def _calculate_composite_fraud_score(self, results: Dict[str, Dict]) -> float:
-        """Calculate weighted composite fraud score from all detection methods"""        weights = {
+        """Calculate weighted composite fraud score from all detection methods"""
+        weights = {
             'behavioral': 0.20,
             'pattern': 0.25, 
             'revenue': 0.20,
@@ -368,7 +384,8 @@ class FraudDetectionAgent(BaseAgent):
         return min(composite_score, 1.0)
 
     async def _classify_fraud_type(self, *detection_results) -> FraudType:
-        """Classify the primary fraud type based on detection results"""        behavioral_result, pattern_result, revenue_result, deepfake_result, anomaly_result, threat_result = detection_results
+        """Classify the primary fraud type based on detection results"""
+        behavioral_result, pattern_result, revenue_result, deepfake_result, anomaly_result, threat_result = detection_results
         
         # Check for deepfake content
         if deepfake_result.get('deepfake_probability', 0.0) > 0.75:
@@ -395,7 +412,8 @@ class FraudDetectionAgent(BaseAgent):
         return FraudType.PLATFORM_ABUSE
 
     def _determine_severity(self, fraud_score: float, fraud_type: FraudType) -> FraudSeverity:
-        """Determine fraud severity based on score and type"""        critical_types = [
+        """Determine fraud severity based on score and type"""
+        critical_types = [
             FraudType.REVENUE_MANIPULATION, 
             FraudType.PAYMENT_FRAUD,
             FraudType.IDENTITY_IMPERSONATION
@@ -411,7 +429,8 @@ class FraudDetectionAgent(BaseAgent):
             return FraudSeverity.LOW
 
     async def _compile_evidence(self, results: Dict[str, Dict]) -> Dict[str, Any]:
-        """Compile comprehensive evidence from all detection methods"""        evidence = {
+        """Compile comprehensive evidence from all detection methods"""
+        evidence = {
             'behavioral_anomalies': results.get('behavioral', {}).get('anomalies', []),
             'pattern_matches': results.get('pattern', {}).get('matches', []),
             'revenue_irregularities': results.get('revenue', {}).get('irregularities', []),
@@ -423,7 +442,8 @@ class FraudDetectionAgent(BaseAgent):
         return evidence
 
     async def _extract_risk_factors(self, evidence: Dict[str, Any]) -> List[str]:
-        """Extract key risk factors from evidence"""        risk_factors = []
+        """Extract key risk factors from evidence"""
+        risk_factors = []
         
         for category, indicators in evidence.items():
             if indicators:
@@ -432,7 +452,8 @@ class FraudDetectionAgent(BaseAgent):
         return risk_factors[:10]  # Limit to top 10 risk factors
 
     async def _generate_recommendations(self, result: FraudDetectionResult) -> List[str]:
-        """Generate recommended actions based on fraud detection results"""        recommendations = []
+        """Generate recommended actions based on fraud detection results"""
+        recommendations = []
         
         if result.fraud_detected:
             if result.severity == FraudSeverity.CRITICAL:
@@ -459,7 +480,8 @@ class FraudDetectionAgent(BaseAgent):
         return recommendations
 
     async def _store_fraud_case(self, context: FraudContext, result: FraudDetectionResult):
-        """Store fraud case in database for investigation and analysis"""        try:
+        """Store fraud case in database for investigation and analysis"""
+        try:
             fraud_case = FraudCase(
                 user_id=context.user_id,
                 fraud_type=result.fraud_type.value,
@@ -480,7 +502,8 @@ class FraudDetectionAgent(BaseAgent):
             logger.error(f"Failed to store fraud case: {str(e)}")
 
     async def _update_detection_metrics(self, result: FraudDetectionResult):
-        """Update fraud detection metrics and monitoring"""        try:
+        """Update fraud detection metrics and monitoring"""
+        try:
             # Update performance metrics
             self.metrics.detection_count.inc()
             self.metrics.processing_time.observe(result.processing_time_ms / 1000)
@@ -502,7 +525,8 @@ class FraudDetectionAgent(BaseAgent):
         time_range: str = "24h",
         fraud_types: Optional[List[FraudType]] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive fraud detection statistics"""        try:
+        """Get comprehensive fraud detection statistics"""
+        try:
             # Calculate time range
             if time_range == "24h":
                 start_time = datetime.now() - timedelta(hours=24)
@@ -570,7 +594,8 @@ class FraudDetectionAgent(BaseAgent):
             raise FraudDetectionError(f"Statistics retrieval failed: {str(e)}")
 
     async def start(self):
-        """Start the fraud detection agent"""        await super().start()
+        """Start the fraud detection agent"""
+        await super().start()
         
         # Initialize ML models
         await self.ml_manager.load_model("fraud_detection_model")
@@ -582,14 +607,16 @@ class FraudDetectionAgent(BaseAgent):
         logger.info("Fraud Detection Agent started successfully")
 
     async def stop(self):
-        """Stop the fraud detection agent"""        # Save learned patterns
+        """Stop the fraud detection agent"""
+        # Save learned patterns
         await self._save_learned_patterns()
         
         await super().stop()
         logger.info("Fraud Detection Agent stopped successfully")
 
     async def _background_pattern_learning(self):
-        """Background task for continuous pattern learning"""        while self.status == AgentStatus.RUNNING:
+        """Background task for continuous pattern learning"""
+        while self.status == AgentStatus.RUNNING:
             try:
                 # Learn from new fraud cases
                 await self._update_fraud_patterns()
@@ -599,7 +626,8 @@ class FraudDetectionAgent(BaseAgent):
                 await asyncio.sleep(300)  # Retry in 5 minutes
 
     async def _background_threat_monitoring(self):
-        """Background task for threat intelligence monitoring"""        while self.status == AgentStatus.RUNNING:
+        """Background task for threat intelligence monitoring"""
+        while self.status == AgentStatus.RUNNING:
             try:
                 # Update threat intelligence feeds
                 await self.threat_intelligence.update_threat_feeds()
@@ -609,7 +637,8 @@ class FraudDetectionAgent(BaseAgent):
                 await asyncio.sleep(300)  # Retry in 5 minutes
 
     async def _update_fraud_patterns(self):
-        """Update fraud detection patterns based on new cases"""        try:
+        """Update fraud detection patterns based on new cases"""
+        try:
             # Get recent fraud cases
             recent_cases = self.db_session.query(FraudCase).filter(
                 FraudCase.detection_timestamp >= datetime.now() - timedelta(hours=24)
@@ -629,7 +658,8 @@ class FraudDetectionAgent(BaseAgent):
             logger.error(f"Failed to update fraud patterns: {str(e)}")
 
     async def _save_learned_patterns(self):
-        """Save learned patterns to persistent storage"""        try:
+        """Save learned patterns to persistent storage"""
+        try:
             patterns = await self.pattern_detector.get_learned_patterns()
             
             # Save to Redis for fast access

@@ -15,7 +15,8 @@ from typing import List, Tuple
 import logging
 
 class DocstringSyntaxFixer:
-    """Fix common docstring syntax errors automatically"""
+    """
+Fix common docstring syntax errors automatically"""
     
     def __init__(self):
         self.fixed_files = []
@@ -23,7 +24,8 @@ class DocstringSyntaxFixer:
         self.logger = self._setup_logging()
     
     def _setup_logging(self):
-        """Setup logging"""
+        """
+Setup logging"""
         logging.basicConfig(
             level=logging.INFO,
             format='%(asctime)s - %(levelname)s - %(message)s'
@@ -31,7 +33,8 @@ class DocstringSyntaxFixer:
         return logging.getLogger(__name__)
     
     def fix_file_docstring_syntax(self, file_path: Path) -> bool:
-        """Fix docstring syntax errors in a single file"""
+        """
+Fix docstring syntax errors in a single file"""
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()

@@ -5,7 +5,8 @@ with business logic integration and content creator specialization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -25,7 +26,8 @@ from ...core.monitoring import MetricsCollector
 
 
 class TemplateCategory(Enum):
-    """Template category enumeration"""    WELCOME = "welcome"
+    """Template category enumeration"""
+    WELCOME = "welcome"
     HELP = "help"
     GUIDANCE = "guidance"
     MONETIZATION = "monetization"
@@ -40,7 +42,8 @@ class TemplateCategory(Enum):
 
 
 class ContentCreatorType(Enum):
-    """Content creator type enumeration"""    MUSICIAN = "musician"
+    """Content creator type enumeration"""
+    MUSICIAN = "musician"
     INFLUENCER = "influencer"
     PHOTOGRAPHER = "photographer"
     COMEDIAN = "comedian"
@@ -51,7 +54,8 @@ class ContentCreatorType(Enum):
 
 
 class TemplateVariables(BaseModel):
-    """Template variables structure"""    user_name: Optional[str] = None
+    """Template variables structure"""
+    user_name: Optional[str] = None
     user_type: str = "content_creator"
     content_format: Optional[str] = None
     platform_context: Optional[str] = None
@@ -71,7 +75,8 @@ class TemplateVariables(BaseModel):
 
 
 class ResponseTemplate(BaseModel):
-    """Response template data structure"""    template_id: str
+    """Response template data structure"""
+    template_id: str
     category: TemplateCategory
     content_creator_type: ContentCreatorType
     template_content: str
@@ -93,7 +98,8 @@ class ResponseTemplate(BaseModel):
 
 
 class TemplateLibrary:
-    """Enterprise template library with categorization and optimization"""    
+    """Enterprise template library with categorization and optimization"""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.cache = CacheManager()
@@ -103,7 +109,8 @@ class TemplateLibrary:
         self._initialize_default_templates()
     
     def _initialize_default_templates(self):
-        """Initialize default template library"""        default_templates = self._get_default_templates()
+        """Initialize default template library"""
+        default_templates = self._get_default_templates()
         
         for template_data in default_templates:
             template = ResponseTemplate(**template_data)
@@ -113,7 +120,8 @@ class TemplateLibrary:
         self._update_jinja_environment()
     
     def _get_default_templates(self) -> List[Dict[str, Any]]:
-        """Get default template definitions"""        return [
+        """Get default template definitions"""
+        return [
             # Welcome Templates
             {
                 "template_id": "welcome_musician",
@@ -320,14 +328,16 @@ class TemplateLibrary:
         ]
     
     def _update_jinja_environment(self):
-        """Update Jinja environment with current templates"""        template_dict = {
+        """Update Jinja environment with current templates"""
+        template_dict = {
             template.template_id: template.template_content 
             for template in self.templates.values()
         }
         self.jinja_env = Environment(loader=DictLoader(template_dict))
     
     async def get_template(self, template_id: str) -> Optional[ResponseTemplate]:
-        """Get template by ID"""        template = self.templates.get(template_id)
+        """Get template by ID"""
+        template = self.templates.get(template_id)
         if template:
             # Update usage count
             template.usage_count += 1
@@ -342,7 +352,8 @@ class TemplateLibrary:
         platform_specific: Optional[str] = None,
         language: str = "en"
     ) -> List[ResponseTemplate]:
-        """Find templates matching criteria"""        matching_templates = []
+        """Find templates matching criteria"""
+        matching_templates = []
         
         for template in self.templates.values():
             if category and template.category != category:
@@ -367,7 +378,8 @@ class TemplateLibrary:
         return matching_templates
     
     async def add_template(self, template: ResponseTemplate) -> bool:
-        """Add new template to library"""        try:
+        """Add new template to library"""
+        try:
             self.templates[template.template_id] = template
             self._update_jinja_environment()
             await self.metrics.track_template_addition(template.template_id)
@@ -377,12 +389,14 @@ class TemplateLibrary:
             return False
     
     async def update_template_effectiveness(self, template_id: str, effectiveness_score: float):
-        """Update template effectiveness based on user feedback"""        if template_id in self.templates:
+        """Update template effectiveness based on user feedback"""
+        if template_id in self.templates:
             self.templates[template_id].effectiveness_score = effectiveness_score
             await self.metrics.track_template_effectiveness(template_id, effectiveness_score)
     
     async def get_template_statistics(self) -> Dict[str, Any]:
-        """Get template library statistics"""        total_templates = len(self.templates)
+        """Get template library statistics"""
+        total_templates = len(self.templates)
         category_counts = {}
         creator_type_counts = {}
         
@@ -406,7 +420,8 @@ class TemplateLibrary:
 
 
 class DynamicTemplateSelector:
-    """Intelligent template selection based on context and performance"""    
+    """Intelligent template selection based on context and performance"""
+    
     def __init__(self, template_library: TemplateLibrary):
         self.library = template_library
         self.logger = logging.getLogger(__name__)
@@ -419,7 +434,8 @@ class DynamicTemplateSelector:
         context_priority: Dict[str, float],
         user_history: Optional[List[str]] = None
     ) -> Optional[ResponseTemplate]:
-        """        Select optimal template based on context and performance data
+        """
+        Select optimal template based on context and performance data
         
         Args:
             variables: Template variables with user context
@@ -428,7 +444,8 @@ class DynamicTemplateSelector:
             
         Returns:
             Best matching template or None
-        """        try:
+        """
+        try:
             # Determine search criteria
             category = self._determine_category(variables, context_priority)
             creator_type = ContentCreatorType(variables.user_type)
@@ -476,7 +493,8 @@ class DynamicTemplateSelector:
         variables: TemplateVariables, 
         context_priority: Dict[str, float]
     ) -> Optional[TemplateCategory]:
-        """Determine most appropriate template category"""        # Use context priority to determine category
+        """Determine most appropriate template category"""
+        # Use context priority to determine category
         max_priority = max(context_priority.values()) if context_priority else 0
         
         if max_priority == 0:
@@ -508,7 +526,8 @@ class DynamicTemplateSelector:
         context_priority: Dict[str, float],
         user_history: Optional[List[str]]
     ) -> float:
-        """Calculate comprehensive template score"""        score_components = {
+        """Calculate comprehensive template score"""
+        score_components = {
             "base_effectiveness": template.effectiveness_score * 0.3,
             "priority_match": template.priority / 100.0 * 0.2,
             "context_alignment": await self._calculate_context_alignment(template, variables, context_priority) * 0.25,
@@ -525,7 +544,8 @@ class DynamicTemplateSelector:
         variables: TemplateVariables,
         context_priority: Dict[str, float]
     ) -> float:
-        """Calculate how well template aligns with current context"""        alignment_score = 0.0
+        """Calculate how well template aligns with current context"""
+        alignment_score = 0.0
         
         # Business context alignment
         if template.business_context and template.business_context == variables.business_context:
@@ -548,7 +568,8 @@ class DynamicTemplateSelector:
         template: ResponseTemplate,
         variables: TemplateVariables
     ) -> float:
-        """Calculate personalization fit score"""        personalization_data = variables.personalization_data
+        """Calculate personalization fit score"""
+        personalization_data = variables.personalization_data
         if not personalization_data:
             return 0.5  # Neutral score
         
@@ -580,7 +601,8 @@ class DynamicTemplateSelector:
         template: ResponseTemplate,
         user_history: Optional[List[str]]
     ) -> float:
-        """Calculate novelty score to avoid repetition"""        if not user_history:
+        """Calculate novelty score to avoid repetition"""
+        if not user_history:
             return 1.0  # Full novelty for new users
         
         if template.template_id in user_history:
@@ -599,7 +621,8 @@ class DynamicTemplateSelector:
 
 
 class TemplateCustomizer:
-    """Advanced template customization and variable injection"""    
+    """Advanced template customization and variable injection"""
+    
     def __init__(self, template_library: TemplateLibrary):
         self.library = template_library
         self.logger = logging.getLogger(__name__)
@@ -611,7 +634,8 @@ class TemplateCustomizer:
         variables: TemplateVariables,
         additional_context: Optional[Dict[str, Any]] = None
     ) -> str:
-        """        Customize template with variables and context
+        """
+        Customize template with variables and context
         
         Args:
             template: Template to customize
@@ -620,7 +644,8 @@ class TemplateCustomizer:
             
         Returns:
             Customized template content
-        """        try:
+        """
+        try:
             # Prepare template variables
             template_vars = await self._prepare_template_variables(variables, additional_context)
             
@@ -645,7 +670,8 @@ class TemplateCustomizer:
         variables: TemplateVariables,
         additional_context: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Prepare comprehensive template variables"""        template_vars = variables.dict()
+        """Prepare comprehensive template variables"""
+        template_vars = variables.dict()
         
         # Add additional context
         if additional_context:
@@ -671,7 +697,8 @@ class TemplateCustomizer:
         return template_vars
     
     async def _post_process_content(self, content: str, variables: TemplateVariables) -> str:
-        """Post-process rendered content for final optimization"""        processed = content
+        """Post-process rendered content for final optimization"""
+        processed = content
         
         # Clean up extra whitespace
         processed = re.sub(r'\s+', ' ', processed).strip()
@@ -690,7 +717,8 @@ class TemplateCustomizer:
         return processed
     
     def _format_platform_list(self, platform_context: Optional[str]) -> str:
-        """Format platform context for display"""        if not platform_context:
+        """Format platform context for display"""
+        if not platform_context:
             return "major platforms"
         
         platforms = platform_context.split(',')
@@ -702,7 +730,8 @@ class TemplateCustomizer:
             return f"{', '.join(p.strip() for p in platforms[:-1])}, and {platforms[-1].strip()}"
     
     def _format_content_type(self, content_format: Optional[str]) -> str:
-        """Format content type for display"""        if not content_format:
+        """Format content type for display"""
+        if not content_format:
             return "content"
         
         format_mappings = {
@@ -716,7 +745,8 @@ class TemplateCustomizer:
         return format_mappings.get(content_format, content_format)
     
     def _determine_monetization_focus(self, variables: TemplateVariables) -> str:
-        """Determine primary monetization focus for user type"""        focus_map = {
+        """Determine primary monetization focus for user type"""
+        focus_map = {
             "musician": "streaming royalties and licensing",
             "influencer": "brand partnerships and sponsored content",
             "photographer": "stock licensing and client work",
@@ -728,7 +758,8 @@ class TemplateCustomizer:
         return focus_map.get(variables.user_type, "content monetization")
     
     def _determine_protection_priority(self, variables: TemplateVariables) -> str:
-        """Determine protection priority for user type"""        priority_map = {
+        """Determine protection priority for user type"""
+        priority_map = {
             "musician": "audio fingerprinting and copyright protection",
             "photographer": "image watermarking and usage tracking",
             "comedian": "content theft prevention and attribution",
@@ -739,7 +770,8 @@ class TemplateCustomizer:
         return priority_map.get(variables.user_type, "intellectual property protection")
     
     def _assess_collaboration_potential(self, variables: TemplateVariables) -> str:
-        """Assess collaboration potential for user type"""        potential_map = {
+        """Assess collaboration potential for user type"""
+        potential_map = {
             "musician": "high potential for cross-genre collaborations and remixes",
             "influencer": "excellent opportunities for brand and creator partnerships",
             "photographer": "strong potential for creative collaborations and shoots",
@@ -750,7 +782,8 @@ class TemplateCustomizer:
         return potential_map.get(variables.user_type, "good collaboration opportunities")
     
     def _apply_english_grammar_fixes(self, content: str) -> str:
-        """Apply basic English grammar fixes"""        # Fix common issues
+        """Apply basic English grammar fixes"""
+        # Fix common issues
         fixes = [
             (r'\s+([.!?])', r'\1'),  # Remove space before punctuation
             (r'([.!?])\s*([A-Z])', r'\1 \2'),  # Ensure space after punctuation
@@ -765,7 +798,8 @@ class TemplateCustomizer:
         return processed
     
     async def _apply_personalization_enhancements(self, content: str, variables: TemplateVariables) -> str:
-        """Apply personalization-based content enhancements"""        personalization = variables.personalization_data
+        """Apply personalization-based content enhancements"""
+        personalization = variables.personalization_data
         
         # Adjust tone based on preferences
         preferred_tone = personalization.get("preferred_tone", "professional")
@@ -780,7 +814,8 @@ class TemplateCustomizer:
         return content
     
     def _make_more_casual(self, content: str) -> str:
-        """Make content more casual in tone"""        casual_replacements = {
+        """Make content more casual in tone"""
+        casual_replacements = {
             "utilize": "use",
             "facilitate": "help with",
             "implement": "set up",
@@ -795,7 +830,8 @@ class TemplateCustomizer:
         return processed
     
     def _make_more_formal(self, content: str) -> str:
-        """Make content more formal in tone"""        formal_replacements = {
+        """Make content more formal in tone"""
+        formal_replacements = {
             "help": "assist",
             "use": "utilize",
             "start": "commence",
@@ -810,7 +846,8 @@ class TemplateCustomizer:
         return processed
     
     def _add_enthusiasm(self, content: str) -> str:
-        """Add enthusiasm to content"""        if not re.search(r'[!]', content):
+        """Add enthusiasm to content"""
+        if not re.search(r'[!]', content):
             # Add exclamation to end if none present
             content = re.sub(r'([.])$', '!', content)
         
@@ -830,7 +867,8 @@ class TemplateCustomizer:
 
 
 class TemplateManager:
-    """Central template management system"""    
+    """Central template management system"""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.library = TemplateLibrary()
@@ -846,7 +884,8 @@ class TemplateManager:
         user_history: Optional[List[str]] = None,
         additional_context: Optional[Dict[str, Any]] = None
     ) -> Optional[str]:
-        """        Generate complete response using template system
+        """
+        Generate complete response using template system
         
         Args:
             variables: Template variables
@@ -856,7 +895,8 @@ class TemplateManager:
             
         Returns:
             Generated response text or None
-        """        try:
+        """
+        try:
             # Check cache first
             cache_key = self._generate_cache_key(variables, context_priority)
             cached_response = await self.cache.get(cache_key)
@@ -895,7 +935,8 @@ class TemplateManager:
         variables: TemplateVariables,
         limit: int = 5
     ) -> List[Dict[str, Any]]:
-        """Get template recommendations for given context"""        try:
+        """Get template recommendations for given context"""
+        try:
             creator_type = ContentCreatorType(variables.user_type)
             candidates = await self.library.find_templates(
                 content_creator_type=creator_type,
@@ -924,7 +965,8 @@ class TemplateManager:
         template_id: str,
         user_feedback: Dict[str, Any]
     ):
-        """Update template performance based on user feedback"""        try:
+        """Update template performance based on user feedback"""
+        try:
             if template_id in self.library.templates:
                 # Calculate new effectiveness score based on feedback
                 current_score = self.library.templates[template_id].effectiveness_score
@@ -940,7 +982,8 @@ class TemplateManager:
             self.logger.error(f"Failed to update template performance: {str(e)}")
     
     async def get_system_stats(self) -> Dict[str, Any]:
-        """Get comprehensive template system statistics"""        try:
+        """Get comprehensive template system statistics"""
+        try:
             library_stats = await self.library.get_template_statistics()
             
             # Add additional metrics
@@ -957,7 +1000,8 @@ class TemplateManager:
             return {"error": str(e)}
     
     def _generate_cache_key(self, variables: TemplateVariables, context_priority: Dict[str, float]) -> str:
-        """Generate cache key for template response"""        key_components = [
+        """Generate cache key for template response"""
+        key_components = [
             variables.user_type,
             variables.content_format or "none",
             variables.business_context or "none",
@@ -970,7 +1014,8 @@ class TemplateManager:
 
 
 class ResponseTemplateEngine:
-    """High-level template engine interface"""    
+    """High-level template engine interface"""
+    
     def __init__(self):
         self.template_manager = TemplateManager()
         self.logger = logging.getLogger(__name__)
@@ -986,7 +1031,8 @@ class ResponseTemplateEngine:
         personalization_data: Optional[Dict[str, Any]] = None,
         language: str = "en"
     ) -> Optional[str]:
-        """Generate contextual response using template system"""        
+        """Generate contextual response using template system"""
+        
         # Prepare variables
         variables = TemplateVariables(
             user_name=user_name,

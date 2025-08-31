@@ -6,7 +6,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""from datetime import datetime
+"""
+from datetime import datetime
 from decimal import Decimal
 from typing import Dict, List, Optional, Set
 from uuid import UUID
@@ -17,7 +18,8 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class CreatorCreate(BaseSchema):
-    """Schema for creator profile creation."""    
+    """Schema for creator profile creation."""
+    
     user_id: UUID = Field(description="Associated user account ID")
     creator_name: str = Field(min_length=2, max_length=100, description="Creator display name")
     creator_type: str = Field(description="Type of creator (musician, blogger, photographer, etc.)")
@@ -40,7 +42,8 @@ class CreatorCreate(BaseSchema):
     
     @validator('creator_type')
     def validate_creator_type(cls, v):
-        """Validate creator type."""        allowed_types = {
+        """Validate creator type."""
+        allowed_types = {
             'musician', 'singer', 'songwriter', 'producer', 'dj',
             'blogger', 'vlogger', 'podcaster', 'influencer',
             'photographer', 'designer', 'artist', 'comedian',
@@ -52,7 +55,8 @@ class CreatorCreate(BaseSchema):
 
 
 class CreatorUpdate(BaseSchema):
-    """Schema for updating creator profiles."""    
+    """Schema for updating creator profiles."""
+    
     creator_name: Optional[str] = Field(None, min_length=2, max_length=100)
     creator_type: Optional[str] = None
     genres: Optional[List[str]] = None
@@ -65,7 +69,8 @@ class CreatorUpdate(BaseSchema):
 
 
 class CreatorOut(UUIDSchema, TimestampSchema):
-    """Public creator profile schema."""    
+    """Public creator profile schema."""
+    
     user_id: UUID
     creator_name: str
     creator_type: str
@@ -96,13 +101,15 @@ class CreatorOut(UUIDSchema, TimestampSchema):
     
     @property
     def engagement_rate(self) -> float:
-        """Calculate engagement rate."""        if self.follower_count == 0:
+        """Calculate engagement rate."""
+        if self.follower_count == 0:
             return 0.0
         return min(1.0, self.total_views / (self.follower_count * 100))
 
 
 class CreatorProfile(UUIDSchema, TimestampSchema, AuditSchema):
-    """Extended creator profile with private information."""    
+    """Extended creator profile with private information."""
+    
     user_id: UUID
     creator_name: str
     creator_type: str
@@ -137,7 +144,8 @@ class CreatorProfile(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class CreatorStatistics(UUIDSchema, TimestampSchema):
-    """Comprehensive creator performance statistics."""    
+    """Comprehensive creator performance statistics."""
+    
     creator_id: UUID
     reporting_period: str = Field(description="Statistics period (daily, weekly, monthly, yearly)")
     period_start: datetime
@@ -184,7 +192,8 @@ class CreatorStatistics(UUIDSchema, TimestampSchema):
 
 
 class CreatorSubscription(UUIDSchema, TimestampSchema):
-    """Creator subscription and billing schema."""    
+    """Creator subscription and billing schema."""
+    
     creator_id: UUID
     subscription_tier: str = Field(description="Subscription tier")
     billing_period: str = Field(description="Billing period (monthly, yearly)")
@@ -219,20 +228,23 @@ class CreatorSubscription(UUIDSchema, TimestampSchema):
     
     @validator('subscription_tier')
     def validate_subscription_tier(cls, v):
-        """Validate subscription tier."""        allowed_tiers = {'free', 'creator', 'professional', 'enterprise', 'custom'}
+        """Validate subscription tier."""
+        allowed_tiers = {'free', 'creator', 'professional', 'enterprise', 'custom'}
         if v not in allowed_tiers:
             raise ValueError(f'Subscription tier must be one of: {", ".join(allowed_tiers)}')
         return v
     
     @property
     def days_until_renewal(self) -> int:
-        """Days until next billing."""        if not self.next_billing_date:
+        """Days until next billing."""
+        if not self.next_billing_date:
             return 0
         return max(0, (self.next_billing_date - datetime.utcnow()).days)
 
 
 class CreatorVerification(UUIDSchema, TimestampSchema):
-    """Creator verification and identity confirmation."""    
+    """Creator verification and identity confirmation."""
+    
     creator_id: UUID
     verification_type: str = Field(description="Type of verification requested")
     verification_status: str = Field(description="Current verification status")
@@ -267,7 +279,8 @@ class CreatorVerification(UUIDSchema, TimestampSchema):
     
     @validator('verification_status')
     def validate_verification_status(cls, v):
-        """Validate verification status."""        allowed_statuses = {
+        """Validate verification status."""
+        allowed_statuses = {
             'pending', 'under_review', 'approved', 'rejected', 
             'expired', 'suspended', 'revoked'
         }
@@ -277,7 +290,8 @@ class CreatorVerification(UUIDSchema, TimestampSchema):
 
 
 class CollaborationPreferences(BaseSchema):
-    """Creator collaboration preferences schema."""    
+    """Creator collaboration preferences schema."""
+    
     open_to_collaborations: bool = Field(default=True)
     collaboration_types: List[str] = Field(default_factory=list)
     preferred_genres: List[str] = Field(default_factory=list)
@@ -288,7 +302,8 @@ class CollaborationPreferences(BaseSchema):
 
 
 class MonetizationPreferences(BaseSchema):
-    """Creator monetization preferences schema."""    
+    """Creator monetization preferences schema."""
+    
     auto_monetization_enabled: bool = Field(default=False)
     preferred_revenue_models: List[str] = Field(default_factory=list)
     minimum_payout_threshold: Decimal = Field(default=Decimal('10.00'), ge=0)

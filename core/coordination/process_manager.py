@@ -13,7 +13,8 @@ Contact: mlaiel@live.de for authorization.
 
 🎯 BUSINESS LOGIC:
 Process Creation → Resource Allocation → Execution → Monitoring → Completion → Cleanup
-"""import asyncio
+"""
+import asyncio
 import uuid
 import psutil
 import threading
@@ -32,7 +33,8 @@ logger = logging.getLogger(__name__)
 
 
 class ProcessType(Enum):
-    """Types of processes managed by the system"""    CONTENT_PROCESSING = "content_processing"
+    """Types of processes managed by the system"""
+    CONTENT_PROCESSING = "content_processing"
     AI_FINGERPRINTING = "ai_fingerprinting"
     PROTECTION_MONITORING = "protection_monitoring"
     REVENUE_CALCULATION = "revenue_calculation"
@@ -43,7 +45,8 @@ class ProcessType(Enum):
 
 
 class ProcessStatus(Enum):
-    """Process execution status"""    INITIALIZING = "initializing"
+    """Process execution status"""
+    INITIALIZING = "initializing"
     READY = "ready"
     RUNNING = "running"
     PAUSED = "paused"
@@ -55,7 +58,8 @@ class ProcessStatus(Enum):
 
 
 class ProcessPriority(Enum):
-    """Process execution priority"""    CRITICAL = 1
+    """Process execution priority"""
+    CRITICAL = 1
     HIGH = 2
     NORMAL = 3
     LOW = 4
@@ -63,7 +67,8 @@ class ProcessPriority(Enum):
 
 
 class ExecutionContext(Enum):
-    """Process execution context"""    SYNCHRONOUS = "synchronous"
+    """Process execution context"""
+    SYNCHRONOUS = "synchronous"
     ASYNCHRONOUS = "asynchronous"
     THREADED = "threaded"
     MULTI_PROCESS = "multi_process"
@@ -72,7 +77,8 @@ class ExecutionContext(Enum):
 
 @dataclass
 class ProcessResource:
-    """Process resource allocation and limits"""    cpu_cores: int = 1
+    """Process resource allocation and limits"""
+    cpu_cores: int = 1
     memory_mb: int = 512
     disk_space_mb: int = 1024
     network_bandwidth_mbps: int = 10
@@ -83,7 +89,8 @@ class ProcessResource:
 
 @dataclass
 class ProcessConfiguration:
-    """Complete process configuration"""    process_id: str
+    """Complete process configuration"""
+    process_id: str
     name: str
     process_type: ProcessType
     execution_context: ExecutionContext
@@ -101,7 +108,8 @@ class ProcessConfiguration:
 
 @dataclass
 class ProcessExecution:
-    """Process execution state and tracking"""    execution_id: str
+    """Process execution state and tracking"""
+    execution_id: str
     process_id: str
     configuration: ProcessConfiguration
     status: ProcessStatus
@@ -120,7 +128,8 @@ class ProcessExecution:
 
 
 class ProcessManager:
-    """Enterprise process lifecycle management and execution control"""    
+    """Enterprise process lifecycle management and execution control"""
+    
     def __init__(self, max_processes: int = 100, monitoring_interval: int = 5):
         self.max_processes = max_processes
         self.monitoring_interval = monitoring_interval
@@ -157,7 +166,8 @@ class ProcessManager:
         logger.info("ProcessManager initialized successfully")
     
     def _initialize_resource_pool(self) -> Dict[str, Any]:
-        """Initialize system resource pool"""        try:
+        """Initialize system resource pool"""
+        try:
             system_info = {
                 "cpu_cores": psutil.cpu_count(),
                 "total_memory_mb": psutil.virtual_memory().total // (1024 * 1024),
@@ -187,7 +197,8 @@ class ProcessManager:
             }
     
     def _initialize_standard_processes(self):
-        """Initialize standard business process configurations"""        # Content Processing Process
+        """Initialize standard business process configurations"""
+        # Content Processing Process
         content_process = ProcessConfiguration(
             process_id="content_processing_standard",
             name="Standard Content Processing",
@@ -265,7 +276,8 @@ class ProcessManager:
         self.register_process(revenue_process)
     
     def register_process(self, configuration: ProcessConfiguration) -> bool:
-        """Register a new process configuration"""        try:
+        """Register a new process configuration"""
+        try:
             # Validate configuration
             if not self._validate_process_configuration(configuration):
                 return False
@@ -284,7 +296,8 @@ class ProcessManager:
             return False
     
     def _validate_process_configuration(self, config: ProcessConfiguration) -> bool:
-        """Validate process configuration"""        try:
+        """Validate process configuration"""
+        try:
             # Required fields validation
             if not all([config.process_id, config.name, config.process_type]):
                 logger.error("Missing required process configuration fields")
@@ -308,7 +321,8 @@ class ProcessManager:
             return False
     
     def _check_resource_availability(self, required: ProcessResource) -> bool:
-        """Check if required resources are available"""        try:
+        """Check if required resources are available"""
+        try:
             current_usage = self._calculate_current_resource_usage()
             
             available_cpu = self.resource_pool["cpu_cores"] - current_usage["cpu_cores"]
@@ -322,7 +336,8 @@ class ProcessManager:
             return False
     
     def _calculate_current_resource_usage(self) -> Dict[str, float]:
-        """Calculate current resource usage across all active processes"""        total_cpu = 0
+        """Calculate current resource usage across all active processes"""
+        total_cpu = 0
         total_memory = 0
         
         for execution in self.active_executions.values():
@@ -341,7 +356,8 @@ class ProcessManager:
         input_parameters: Dict[str, Any] = None,
         priority_override: Optional[ProcessPriority] = None
     ) -> str:
-        """Start a process execution"""        try:
+        """Start a process execution"""
+        try:
             if process_id not in self.process_configurations:
                 raise ValueError(f"Process configuration '{process_id}' not found")
             
@@ -386,16 +402,19 @@ class ProcessManager:
             raise
     
     def _allocate_resources(self, execution_id: str, resources: ProcessResource):
-        """Allocate resources for process execution"""        self.resource_allocations[execution_id] = resources
+        """Allocate resources for process execution"""
+        self.resource_allocations[execution_id] = resources
         logger.info(f"Resources allocated for process {execution_id}")
     
     def _deallocate_resources(self, execution_id: str):
-        """Deallocate resources from process execution"""        if execution_id in self.resource_allocations:
+        """Deallocate resources from process execution"""
+        if execution_id in self.resource_allocations:
             del self.resource_allocations[execution_id]
             logger.info(f"Resources deallocated for process {execution_id}")
     
     async def _start_process_execution(self, execution: ProcessExecution):
-        """Start process execution based on execution context"""        try:
+        """Start process execution based on execution context"""
+        try:
             execution.status = ProcessStatus.RUNNING
             execution.started_at = datetime.now(timezone.utc)
             
@@ -421,7 +440,8 @@ class ProcessManager:
             raise
     
     async def _execute_synchronous(self, execution: ProcessExecution):
-        """Execute process synchronously"""        try:
+        """Execute process synchronously"""
+        try:
             # Simulate synchronous processing
             result = await self._process_business_logic(execution)
             
@@ -439,7 +459,8 @@ class ProcessManager:
             raise
     
     async def _execute_asynchronous(self, execution: ProcessExecution):
-        """Execute process asynchronously"""        try:
+        """Execute process asynchronously"""
+        try:
             # Create async task for processing
             task = asyncio.create_task(self._process_business_logic(execution))
             
@@ -466,7 +487,8 @@ class ProcessManager:
             raise
     
     async def _execute_threaded(self, execution: ProcessExecution):
-        """Execute process in thread pool"""        try:
+        """Execute process in thread pool"""
+        try:
             loop = asyncio.get_event_loop()
             result = await loop.run_in_executor(
                 self.thread_executor,
@@ -488,7 +510,8 @@ class ProcessManager:
             raise
     
     async def _execute_multi_process(self, execution: ProcessExecution):
-        """Execute process in process pool"""        try:
+        """Execute process in process pool"""
+        try:
             loop = asyncio.get_event_loop()
             result = await loop.run_in_executor(
                 self.process_executor,
@@ -510,7 +533,8 @@ class ProcessManager:
             raise
     
     async def _process_business_logic(self, execution: ProcessExecution) -> Dict[str, Any]:
-        """Process business logic asynchronously"""        # Simulate processing time based on process type
+        """Process business logic asynchronously"""
+        # Simulate processing time based on process type
         processing_time = {
             ProcessType.CONTENT_PROCESSING: 5,
             ProcessType.AI_FINGERPRINTING: 10,
@@ -534,7 +558,8 @@ class ProcessManager:
         }
     
     def _process_sync_business_logic(self, execution: ProcessExecution) -> Dict[str, Any]:
-        """Process business logic synchronously"""        import time
+        """Process business logic synchronously"""
+        import time
         
         # Simulate processing time
         processing_time = {
@@ -560,7 +585,8 @@ class ProcessManager:
         }
     
     async def _complete_process_execution(self, execution: ProcessExecution):
-        """Complete process execution and cleanup"""        try:
+        """Complete process execution and cleanup"""
+        try:
             # Calculate execution time
             if execution.started_at:
                 execution.execution_time = (
@@ -587,7 +613,8 @@ class ProcessManager:
             logger.error(f"Process completion failed: {e}")
     
     async def _handle_process_failure(self, execution: ProcessExecution):
-        """Handle process execution failure"""        try:
+        """Handle process execution failure"""
+        try:
             # Check for auto-restart
             if (execution.configuration.auto_restart and 
                 execution.restart_count < execution.configuration.max_restarts):
@@ -625,7 +652,8 @@ class ProcessManager:
             logger.error(f"Process failure handling failed: {e}")
     
     async def _process_next_queued(self):
-        """Process next queued process if resources are available"""        try:
+        """Process next queued process if resources are available"""
+        try:
             if self.execution_queue:
                 next_execution = self.execution_queue.popleft()
                 
@@ -644,7 +672,8 @@ class ProcessManager:
             logger.error(f"Queue processing failed: {e}")
     
     async def _emit_process_event(self, event_type: str, execution: ProcessExecution):
-        """Emit process events to registered handlers"""        try:
+        """Emit process events to registered handlers"""
+        try:
             event_data = {
                 "event_type": event_type,
                 "execution_id": execution.execution_id,
@@ -663,7 +692,8 @@ class ProcessManager:
             logger.error(f"Event emission failed: {e}")
     
     def start_monitoring(self):
-        """Start process monitoring"""        if not self.monitoring_active:
+        """Start process monitoring"""
+        if not self.monitoring_active:
             self.monitoring_active = True
             self.monitoring_thread = threading.Thread(
                 target=self._monitoring_loop,
@@ -673,13 +703,15 @@ class ProcessManager:
             logger.info("Process monitoring started")
     
     def stop_monitoring(self):
-        """Stop process monitoring"""        self.monitoring_active = False
+        """Stop process monitoring"""
+        self.monitoring_active = False
         if self.monitoring_thread:
             self.monitoring_thread.join(timeout=5)
         logger.info("Process monitoring stopped")
     
     def _monitoring_loop(self):
-        """Continuous monitoring loop"""        while self.monitoring_active:
+        """Continuous monitoring loop"""
+        while self.monitoring_active:
             try:
                 self._update_process_metrics()
                 self._check_process_health()
@@ -688,7 +720,8 @@ class ProcessManager:
                 logger.error(f"Monitoring loop error: {e}")
     
     def _update_process_metrics(self):
-        """Update process performance metrics"""        try:
+        """Update process performance metrics"""
+        try:
             for execution in self.active_executions.values():
                 if execution.pid:
                     try:
@@ -710,7 +743,8 @@ class ProcessManager:
             logger.error(f"Metrics update failed: {e}")
     
     def _check_process_health(self):
-        """Check health of all active processes"""        try:
+        """Check health of all active processes"""
+        try:
             for execution in list(self.active_executions.values()):
                 # Check execution timeout
                 if (execution.started_at and 
@@ -729,7 +763,8 @@ class ProcessManager:
             logger.error(f"Health check failed: {e}")
     
     async def terminate_process(self, execution_id: str) -> bool:
-        """Terminate a running process"""        try:
+        """Terminate a running process"""
+        try:
             if execution_id not in self.active_executions:
                 return False
             
@@ -762,7 +797,8 @@ class ProcessManager:
             return False
     
     def get_process_status(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get process execution status"""        execution = (self.active_executions.get(execution_id) or 
+        """Get process execution status"""
+        execution = (self.active_executions.get(execution_id) or 
                     self.completed_executions.get(execution_id))
         
         if not execution:
@@ -784,7 +820,8 @@ class ProcessManager:
         }
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get system-wide process metrics"""        active_count = len(self.active_executions)
+        """Get system-wide process metrics"""
+        active_count = len(self.active_executions)
         queued_count = len(self.execution_queue)
         completed_count = len(self.completed_executions)
         
@@ -804,10 +841,12 @@ class ProcessManager:
         }
     
     def register_event_handler(self, event_type: str, handler: Callable):
-        """Register event handler for process events"""        self.event_handlers[event_type].append(handler)
+        """Register event handler for process events"""
+        self.event_handlers[event_type].append(handler)
     
     def shutdown(self):
-        """Shutdown process manager and cleanup"""        try:
+        """Shutdown process manager and cleanup"""
+        try:
             self.stop_monitoring()
             
             # Terminate all active processes

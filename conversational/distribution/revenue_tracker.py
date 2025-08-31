@@ -9,7 +9,8 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is proprietary and protected. Unauthorized use, reproduction, 
 or distribution is strictly prohibited and will result in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta, date
@@ -57,7 +58,8 @@ metrics = MetricsCollector("distribution.revenue_tracker")
 
 
 class RevenueSource(str, Enum):
-    """Revenue source types across platforms"""    AD_REVENUE = "ad_revenue"
+    """Revenue source types across platforms"""
+    AD_REVENUE = "ad_revenue"
     SPONSORED_CONTENT = "sponsored_content"
     AFFILIATE_MARKETING = "affiliate_marketing"
     MERCHANDISE_SALES = "merchandise_sales"
@@ -75,7 +77,8 @@ class RevenueSource(str, Enum):
 
 
 class PayoutFrequency(str, Enum):
-    """Payout frequency options"""    DAILY = "daily"
+    """Payout frequency options"""
+    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -84,7 +87,8 @@ class PayoutFrequency(str, Enum):
 
 
 class RevenueStatus(str, Enum):
-    """Revenue tracking status"""    PENDING = "pending"
+    """Revenue tracking status"""
+    PENDING = "pending"
     CONFIRMED = "confirmed"
     DISPUTED = "disputed"
     PAID = "paid"
@@ -98,7 +102,8 @@ class RevenueStatus(str, Enum):
 
 @dataclass
 class RevenueRecord:
-    """Individual revenue record"""    id: str
+    """Individual revenue record"""
+    id: str
     user_id: str
     content_id: Optional[str]
     platform: PlatformType
@@ -114,7 +119,8 @@ class RevenueRecord:
 
 @dataclass
 class RevenueInsight:
-    """Revenue analysis insight"""    insight_type: str
+    """Revenue analysis insight"""
+    insight_type: str
     title: str
     description: str
     impact_score: float
@@ -125,7 +131,8 @@ class RevenueInsight:
 
 @dataclass
 class RevenueForecast:
-    """Revenue forecasting data"""    period: str
+    """Revenue forecasting data"""
+    period: str
     predicted_amount: Decimal
     confidence_interval: Tuple[Decimal, Decimal]
     growth_rate: float
@@ -133,14 +140,16 @@ class RevenueForecast:
 
 
 class RevenueTracker:
-    """Advanced revenue tracking and analytics system"""    
+    """Advanced revenue tracking and analytics system"""
+    
     def __init__(self, db: Session):
         self.db = db
         self.platform_revenue_rates = self._initialize_platform_rates()
         self.currency_converter = self._initialize_currency_converter()
         
     def _initialize_platform_rates(self) -> Dict[PlatformType, Dict[str, float]]:
-        """Initialize platform-specific revenue rates"""        return {
+        """Initialize platform-specific revenue rates"""
+        return {
             PlatformType.YOUTUBE: {
                 "rpm_base": 2.5,  # Revenue per mille (thousand views)
                 "subscriber_bonus": 0.1,  # Additional per subscriber
@@ -178,7 +187,8 @@ class RevenueTracker:
         }
     
     def _initialize_currency_converter(self) -> Dict[str, float]:
-        """Initialize currency conversion rates (simplified)"""        # In production, this would connect to a real currency API
+        """Initialize currency conversion rates (simplified)"""
+        # In production, this would connect to a real currency API
         return {
             "USD": 1.0,
             "EUR": 0.85,
@@ -200,7 +210,8 @@ class RevenueTracker:
         currency: str = "USD",
         metadata: Optional[Dict[str, Any]] = None
     ) -> RevenueRecord:
-        """Track a new revenue entry"""        try:
+        """Track a new revenue entry"""
+        try:
             # Convert to USD for standardization
             usd_amount = self._convert_to_usd(amount, currency)
             
@@ -243,7 +254,8 @@ class RevenueTracker:
         end_date: Optional[datetime] = None,
         platform: Optional[PlatformType] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive revenue summary"""        try:
+        """Get comprehensive revenue summary"""
+        try:
             if not start_date:
                 start_date = datetime.now() - timedelta(days=30)
             if not end_date:
@@ -335,7 +347,8 @@ class RevenueTracker:
         user_id: str,
         timeframe_days: int = 30
     ) -> List[RevenueInsight]:
-        """Generate actionable revenue insights"""        try:
+        """Generate actionable revenue insights"""
+        try:
             insights = []
             
             # Get recent revenue data
@@ -433,7 +446,8 @@ class RevenueTracker:
         user_id: str,
         forecast_days: int = 30
     ) -> RevenueForecast:
-        """Generate revenue forecast based on historical data"""        try:
+        """Generate revenue forecast based on historical data"""
+        try:
             # Get historical data (last 90 days)
             historical_start = datetime.now() - timedelta(days=90)
             historical_data = self.db.query(AnalyticsModel).filter(
@@ -530,7 +544,8 @@ class RevenueTracker:
         self,
         user_id: str
     ) -> Dict[str, Any]:
-        """Generate personalized revenue optimization recommendations"""        try:
+        """Generate personalized revenue optimization recommendations"""
+        try:
             # Get user's performance data
             summary = await self.get_revenue_summary(user_id)
             insights = await self.get_revenue_insights(user_id)
@@ -646,14 +661,16 @@ class RevenueTracker:
             return {}
     
     def _convert_to_usd(self, amount: Decimal, currency: str) -> Decimal:
-        """Convert amount to USD"""        if currency == "USD":
+        """Convert amount to USD"""
+        if currency == "USD":
             return amount
         
         rate = self.currency_converter.get(currency, 1.0)
         return amount / Decimal(str(rate))
     
     async def _store_revenue_record(self, record: RevenueRecord) -> None:
-        """Store revenue record in database (with encryption)"""        # This would store in a dedicated revenue table
+        """Store revenue record in database (with encryption)"""
+        # This would store in a dedicated revenue table
         # For now, we'll update the analytics model
         pass
     
@@ -664,15 +681,18 @@ class RevenueTracker:
         platform: PlatformType,
         source: RevenueSource
     ) -> None:
-        """Update user's revenue analytics"""        # This would update aggregated revenue metrics
+        """Update user's revenue analytics"""
+        # This would update aggregated revenue metrics
         pass
     
     async def _check_revenue_milestones(self, user_id: str, amount: Decimal) -> None:
-        """Check and trigger revenue milestone notifications"""        # Implementation for milestone checking
+        """Check and trigger revenue milestone notifications"""
+        # Implementation for milestone checking
         pass
     
     def _estimate_revenue_source(self, platform: str) -> str:
-        """Estimate revenue source based on platform"""        source_map = {
+        """Estimate revenue source based on platform"""
+        source_map = {
             "youtube": "ad_revenue",
             "instagram": "sponsorship",
             "tiktok": "creator_fund",
@@ -688,7 +708,8 @@ class RevenueTracker:
         start_date: datetime,
         end_date: datetime
     ) -> List[Dict[str, Any]]:
-        """Calculate daily revenue trend"""        try:
+        """Calculate daily revenue trend"""
+        try:
             records = self.db.query(AnalyticsModel).filter(
                 AnalyticsModel.user_id == user_id,
                 AnalyticsModel.date >= start_date,
@@ -726,7 +747,8 @@ class RevenueTracker:
             return []
     
     async def _get_industry_rpm_benchmark(self, user_id: str) -> float:
-        """Get industry RPM benchmark for user's niche"""        # This would typically analyze user's content category and provide benchmarks
+        """Get industry RPM benchmark for user's niche"""
+        # This would typically analyze user's content category and provide benchmarks
         # For now, return a general benchmark
         return 2.5  # $2.50 per 1000 views
     
@@ -735,7 +757,8 @@ class RevenueTracker:
         user_id: str,
         historical_data: List[AnalyticsModel]
     ) -> List[str]:
-        """Identify factors influencing revenue trends"""        factors = []
+        """Identify factors influencing revenue trends"""
+        factors = []
         
         # Analyze view patterns
         recent_views = [r.views for r in historical_data[-7:] if r.views]
@@ -779,7 +802,8 @@ class RevenueTracker:
         return factors if factors else ["General market trends"]
     
     def _create_implementation_timeline(self, strategies: List[Dict[str, Any]]) -> Dict[str, List[str]]:
-        """Create implementation timeline for strategies"""        timeline = {
+        """Create implementation timeline for strategies"""
+        timeline = {
             "week_1": [],
             "week_2_4": [],
             "month_2_3": [],

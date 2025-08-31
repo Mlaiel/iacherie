@@ -7,7 +7,8 @@ MLOps, creative AI, conversational AI, and computer vision AI deployment.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class AIDeploymentType(Enum):
-    """AI deployment types available in the system"""    MODEL_SERVING = "model_serving"
+    """AI deployment types available in the system"""
+    MODEL_SERVING = "model_serving"
     TRAINING_PIPELINE = "training_pipeline"
     EDGE_COMPUTING = "edge_computing"
     FEDERATED_LEARNING = "federated_learning"
@@ -40,7 +42,8 @@ class AIDeploymentType(Enum):
 
 
 class AIDeploymentStatus(Enum):
-    """AI deployment status states"""    INITIALIZING = "initializing"
+    """AI deployment status states"""
+    INITIALIZING = "initializing"
     DEPLOYING = "deploying"
     DEPLOYED = "deployed"
     RUNNING = "running"
@@ -54,7 +57,8 @@ class AIDeploymentStatus(Enum):
 
 @dataclass
 class AIDeploymentSummary:
-    """Summary of AI deployment system"""    deployment_id: str
+    """Summary of AI deployment system"""
+    deployment_id: str
     deployment_type: AIDeploymentType
     status: AIDeploymentStatus
     deployed_at: str
@@ -65,7 +69,8 @@ class AIDeploymentSummary:
 
 
 class AIDeploymentManager:
-    """    Central AI Deployment Manager
+    """
+    Central AI Deployment Manager
     
     Provides unified access to all AI deployment capabilities:
     - Model serving and inference
@@ -86,13 +91,16 @@ class AIDeploymentManager:
     - Cost optimization
     - Performance optimization
     - Disaster recovery
-    """    
+    """
+    
     def __init__(self, base_namespace: str = "ia-influencer-ai"):
-        """        Initialize AI deployment manager
+        """
+        Initialize AI deployment manager
         
         Args:
             base_namespace: Base Kubernetes namespace for all AI deployments
-        """        self.base_namespace = base_namespace
+        """
+        self.base_namespace = base_namespace
         self.deployments = {}
         self.deployment_managers = {}
         self.global_status = "initializing"
@@ -101,7 +109,8 @@ class AIDeploymentManager:
         self._initialize_deployment_managers()
     
     def _initialize_deployment_managers(self) -> None:
-        """Initialize all AI deployment managers"""        try:
+        """Initialize all AI deployment managers"""
+        try:
             # Model serving manager
             self.deployment_managers[AIDeploymentType.MODEL_SERVING] = ModelServer(
                 namespace=f"{self.base_namespace}-model-serving"
@@ -149,11 +158,13 @@ class AIDeploymentManager:
             raise
     
     async def deploy_complete_ai_infrastructure(self) -> Dict[str, Any]:
-        """        Deploy complete AI infrastructure across all systems
+        """
+        Deploy complete AI infrastructure across all systems
         
         Returns:
             Complete AI infrastructure deployment summary
-        """        try:
+        """
+        try:
             self.global_status = "deploying"
             logger.info("Deploying complete AI infrastructure")
             
@@ -282,7 +293,8 @@ class AIDeploymentManager:
             raise
     
     async def _deploy_infrastructure_component(self, deployment_type: AIDeploymentType, method_name: str) -> Dict[str, Any]:
-        """Deploy a specific infrastructure component"""        try:
+        """Deploy a specific infrastructure component"""
+        try:
             manager = self.deployment_managers[deployment_type]
             method = getattr(manager, method_name)
             result = await method()
@@ -292,14 +304,16 @@ class AIDeploymentManager:
             raise
     
     async def get_deployment_status(self, deployment_id: Optional[str] = None) -> Dict[str, Any]:
-        """        Get deployment status
+        """
+        Get deployment status
         
         Args:
             deployment_id: Specific deployment ID, or None for global status
             
         Returns:
             Deployment status information
-        """        try:
+        """
+        try:
             if deployment_id and deployment_id in self.deployments:
                 # Get specific deployment status
                 deployment_info = self.deployments[deployment_id]
@@ -320,7 +334,8 @@ class AIDeploymentManager:
             return {"error": str(e)}
     
     async def _get_global_status(self) -> Dict[str, Any]:
-        """Get global AI deployment status"""        try:
+        """Get global AI deployment status"""
+        try:
             status_summary = {
                 "global_status": self.global_status,
                 "total_deployments": len(self.deployments),
@@ -355,7 +370,8 @@ class AIDeploymentManager:
             return {"error": str(e)}
     
     async def _get_global_capabilities(self) -> Dict[str, Any]:
-        """Get global AI capabilities"""        return {
+        """Get global AI capabilities"""
+        return {
             "model_serving": ["real_time_inference", "batch_processing", "auto_scaling"],
             "training": ["distributed_training", "hyperparameter_optimization", "experiment_tracking"],
             "edge_computing": ["multi_platform_deployment", "model_optimization", "offline_operation"],
@@ -367,7 +383,8 @@ class AIDeploymentManager:
         }
     
     async def _get_resource_allocation(self) -> Dict[str, Any]:
-        """Get resource allocation across systems"""        return {
+        """Get resource allocation across systems"""
+        return {
             "total_cpu_cores": 256,
             "total_memory_gb": 1024,
             "total_gpu_units": 64,
@@ -385,7 +402,8 @@ class AIDeploymentManager:
         }
     
     async def _get_performance_baseline(self) -> Dict[str, Any]:
-        """Get performance baseline metrics"""        return {
+        """Get performance baseline metrics"""
+        return {
             "inference_latency_p95_ms": 50,
             "training_throughput_samples_per_sec": 1000,
             "model_accuracy_threshold": 0.95,
@@ -396,7 +414,8 @@ class AIDeploymentManager:
         }
     
     async def scale_deployment(self, deployment_id: str, scale_factor: float) -> Dict[str, Any]:
-        """        Scale a specific deployment
+        """
+        Scale a specific deployment
         
         Args:
             deployment_id: Deployment to scale
@@ -404,7 +423,8 @@ class AIDeploymentManager:
             
         Returns:
             Scaling operation result
-        """        try:
+        """
+        try:
             if deployment_id not in self.deployments:
                 raise ValueError(f"Deployment {deployment_id} not found")
             
@@ -426,7 +446,8 @@ class AIDeploymentManager:
             raise
     
     async def get_deployment_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive deployment metrics"""        try:
+        """Get comprehensive deployment metrics"""
+        try:
             metrics = {
                 "global_status": self.global_status,
                 "timestamp": time.time(),
@@ -453,7 +474,8 @@ class AIDeploymentManager:
             return {"error": str(e)}
     
     async def cleanup_all_deployments(self) -> Dict[str, Any]:
-        """Clean up all AI deployments"""        try:
+        """Clean up all AI deployments"""
+        try:
             logger.info("Cleaning up all AI deployments")
             cleanup_results = {}
             
@@ -485,16 +507,20 @@ ai_deployment_manager = AIDeploymentManager()
 
 # Convenience functions for easy access
 async def deploy_ai_infrastructure():
-    """Deploy complete AI infrastructure"""    return await ai_deployment_manager.deploy_complete_ai_infrastructure()
+    """Deploy complete AI infrastructure"""
+    return await ai_deployment_manager.deploy_complete_ai_infrastructure()
 
 
 async def get_ai_status():
-    """Get global AI deployment status"""    return await ai_deployment_manager.get_deployment_status()
+    """Get global AI deployment status"""
+    return await ai_deployment_manager.get_deployment_status()
 
 
 async def get_ai_metrics():
-    """Get comprehensive AI metrics"""    return await ai_deployment_manager.get_deployment_metrics()
+    """Get comprehensive AI metrics"""
+    return await ai_deployment_manager.get_deployment_metrics()
 
 
 async def cleanup_ai_infrastructure():
-    """Clean up all AI infrastructure"""    return await ai_deployment_manager.cleanup_all_deployments()
+    """Clean up all AI infrastructure"""
+    return await ai_deployment_manager.cleanup_all_deployments()

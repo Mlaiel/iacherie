@@ -7,7 +7,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
-"""import asyncio
+"""
+import asyncio
 import time
 from typing import Dict, Any, List, Optional, Tuple, Union
 from datetime import datetime, timedelta
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueSource(Enum):
-    """Revenue generation sources"""    CONTENT_PROTECTION = "content_protection"
+    """Revenue generation sources"""
+    CONTENT_PROTECTION = "content_protection"
     COLLABORATION_MATCHING = "collaboration_matching"
     PREMIUM_FEATURES = "premium_features"
     DISTRIBUTION_FEES = "distribution_fees"
@@ -43,7 +45,8 @@ class RevenueSource(Enum):
 
 
 class UserTier(Enum):
-    """User subscription tiers"""    FREE = "free"
+    """User subscription tiers"""
+    FREE = "free"
     BASIC = "basic"
     PREMIUM = "premium"
     PROFESSIONAL = "professional"
@@ -51,7 +54,8 @@ class UserTier(Enum):
 
 
 class EngagementType(Enum):
-    """Types of user engagement"""    CONTENT_UPLOAD = "content_upload"
+    """Types of user engagement"""
+    CONTENT_UPLOAD = "content_upload"
     CONTENT_SHARE = "content_share"
     COLLABORATION_REQUEST = "collaboration_request"
     COLLABORATION_ACCEPT = "collaboration_accept"
@@ -63,7 +67,8 @@ class EngagementType(Enum):
 
 @dataclass
 class RevenueMetrics:
-    """Comprehensive revenue tracking metrics"""    user_id: str
+    """Comprehensive revenue tracking metrics"""
+    user_id: str
     revenue_source: RevenueSource
     amount: Decimal
     currency: str
@@ -79,7 +84,8 @@ class RevenueMetrics:
 
 @dataclass
 class UserEngagementMetrics:
-    """User engagement and activity metrics"""    user_id: str
+    """User engagement and activity metrics"""
+    user_id: str
     engagement_type: EngagementType
     session_id: str
     engagement_value: float
@@ -93,7 +99,8 @@ class UserEngagementMetrics:
 
 @dataclass
 class CreatorSuccessMetrics:
-    """Creator success and growth metrics"""    user_id: str
+    """Creator success and growth metrics"""
+    user_id: str
     content_uploads: int
     successful_protections: int
     collaborations_initiated: int
@@ -110,7 +117,8 @@ class CreatorSuccessMetrics:
 
 @dataclass
 class PlatformGrowthMetrics:
-    """Platform growth and health metrics"""    new_users: int
+    """Platform growth and health metrics"""
+    new_users: int
     active_users: int
     retained_users: int
     churned_users: int
@@ -126,11 +134,13 @@ class PlatformGrowthMetrics:
 
 
 class BusinessMetricsCollector:
-    """    Advanced Business Metrics Collector
+    """
+    Advanced Business Metrics Collector
     
     Collects, analyzes, and reports business intelligence metrics for the
     IA Influencer Agent platform focusing on revenue, growth, and user success.
-    """    
+    """
+    
     def __init__(
         self,
         metrics_collector: Optional[MetricsCollector] = None,
@@ -178,7 +188,8 @@ class BusinessMetricsCollector:
         self._collection_task: Optional[asyncio.Task] = None
         
     async def start_collection(self) -> None:
-        """Start business metrics collection"""        if self.is_collecting:
+        """Start business metrics collection"""
+        if self.is_collecting:
             logger.warning("Business metrics collection is already running")
             return
             
@@ -188,7 +199,8 @@ class BusinessMetricsCollector:
         logger.info("Business metrics collection started successfully")
         
     async def stop_collection(self) -> None:
-        """Stop business metrics collection"""        if not self.is_collecting:
+        """Stop business metrics collection"""
+        if not self.is_collecting:
             return
             
         self.is_collecting = False
@@ -213,11 +225,13 @@ class BusinessMetricsCollector:
         commission_rate: float = 0.0,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """        Record revenue generation event
+        """
+        Record revenue generation event
         
         Returns:
             transaction_id: Unique identifier for this revenue event
-        """        transaction_id = f"txn_{int(time.time() * 1000)}_{hash(user_id) % 10000}"
+        """
+        transaction_id = f"txn_{int(time.time() * 1000)}_{hash(user_id) % 10000}"
         
         # Calculate platform fee and net revenue
         platform_fee = amount * Decimal(str(commission_rate))
@@ -303,7 +317,8 @@ class BusinessMetricsCollector:
         success: bool = True,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Record user engagement event"""        engagement_metrics = UserEngagementMetrics(
+        """Record user engagement event"""
+        engagement_metrics = UserEngagementMetrics(
             user_id=user_id,
             engagement_type=engagement_type,
             session_id=session_id,
@@ -361,7 +376,8 @@ class BusinessMetricsCollector:
         engagement_rate: Optional[float] = None,
         content_quality_score: Optional[float] = None
     ) -> CreatorSuccessMetrics:
-        """Update creator success metrics"""        current_time = datetime.utcnow()
+        """Update creator success metrics"""
+        current_time = datetime.utcnow()
         
         # Get or create creator metrics
         if user_id not in self.creator_metrics:
@@ -439,7 +455,8 @@ class BusinessMetricsCollector:
         stage: str,
         converted: bool = True
     ) -> None:
-        """Track conversion funnel metrics"""        funnel_key = f"{funnel_name}:{stage}"
+        """Track conversion funnel metrics"""
+        funnel_key = f"{funnel_name}:{stage}"
         conversion_value = 1.0 if converted else 0.0
         
         self.conversion_funnels[funnel_key].append(conversion_value)
@@ -463,7 +480,8 @@ class BusinessMetricsCollector:
         self,
         time_period: timedelta = timedelta(days=7)
     ) -> PlatformGrowthMetrics:
-        """Calculate platform growth metrics"""        cutoff_time = datetime.utcnow() - time_period
+        """Calculate platform growth metrics"""
+        cutoff_time = datetime.utcnow() - time_period
         
         # Count users by activity
         active_users = len([
@@ -519,7 +537,8 @@ class BusinessMetricsCollector:
         return growth_metrics
         
     async def get_business_dashboard(self) -> Dict[str, Any]:
-        """Get comprehensive business dashboard data"""        current_time = datetime.utcnow()
+        """Get comprehensive business dashboard data"""
+        current_time = datetime.utcnow()
         
         # Revenue analytics
         revenue_analytics = await self._calculate_revenue_analytics()
@@ -556,7 +575,8 @@ class BusinessMetricsCollector:
         self,
         time_window: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """Get detailed revenue analytics"""        cutoff_time = datetime.utcnow() - time_window
+        """Get detailed revenue analytics"""
+        cutoff_time = datetime.utcnow() - time_window
         
         # Filter recent revenue
         recent_revenue = [
@@ -619,7 +639,8 @@ class BusinessMetricsCollector:
         self,
         user_id: str
     ) -> Dict[str, Any]:
-        """Predict churn risk for a specific user"""        # Simple churn prediction based on engagement
+        """Predict churn risk for a specific user"""
+        # Simple churn prediction based on engagement
         engagement_score = self.user_engagement_scores.get(user_id, 0.0)
         revenue = self.revenue_by_user.get(user_id, Decimal('0.00'))
         
@@ -668,7 +689,8 @@ class BusinessMetricsCollector:
         self,
         metrics: CreatorSuccessMetrics
     ) -> float:
-        """Calculate creator success score based on multiple factors"""        score = 0.0
+        """Calculate creator success score based on multiple factors"""
+        score = 0.0
         
         # Content success rate (30% weight)
         if metrics.content_uploads > 0:
@@ -690,7 +712,8 @@ class BusinessMetricsCollector:
         return min(score, 100.0)  # Cap at 100
         
     def _determine_creator_tier(self, metrics: CreatorSuccessMetrics) -> UserTier:
-        """Determine creator tier based on success metrics"""        if metrics.success_score >= 80 and metrics.total_revenue >= 1000:
+        """Determine creator tier based on success metrics"""
+        if metrics.success_score >= 80 and metrics.total_revenue >= 1000:
             return UserTier.ENTERPRISE
         elif metrics.success_score >= 60 and metrics.total_revenue >= 500:
             return UserTier.PROFESSIONAL
@@ -702,7 +725,8 @@ class BusinessMetricsCollector:
             return UserTier.FREE
             
     async def _update_creator_rankings(self) -> None:
-        """Update creator rankings based on success scores"""        rankings = [
+        """Update creator rankings based on success scores"""
+        rankings = [
             (user_id, metrics.success_score)
             for user_id, metrics in self.creator_metrics.items()
         ]
@@ -717,7 +741,8 @@ class BusinessMetricsCollector:
         self.creator_rankings = rankings[:100]  # Keep top 100
         
     async def _calculate_platform_health_score(self) -> float:
-        """Calculate overall platform health score"""        health_factors = []
+        """Calculate overall platform health score"""
+        health_factors = []
         
         # Revenue growth (25% weight)
         if len(self.revenue_trends) > 1:
@@ -747,7 +772,8 @@ class BusinessMetricsCollector:
         return sum(health_factors) if health_factors else 0.0
         
     async def _calculate_revenue_analytics(self) -> Dict[str, Any]:
-        """Calculate comprehensive revenue analytics"""        total_revenue = sum(self.revenue_by_source.values())
+        """Calculate comprehensive revenue analytics"""
+        total_revenue = sum(self.revenue_by_source.values())
         
         return {
             "total_revenue": str(total_revenue),
@@ -766,7 +792,8 @@ class BusinessMetricsCollector:
         }
         
     async def _calculate_user_analytics(self) -> Dict[str, Any]:
-        """Calculate user analytics"""        total_users = len(self.user_engagement_scores)
+        """Calculate user analytics"""
+        total_users = len(self.user_engagement_scores)
         active_users = len([
             score for score in self.user_engagement_scores.values()
             if score > 0
@@ -782,7 +809,8 @@ class BusinessMetricsCollector:
         }
         
     async def _calculate_creator_analytics(self) -> Dict[str, Any]:
-        """Calculate creator analytics"""        if not self.creator_metrics:
+        """Calculate creator analytics"""
+        if not self.creator_metrics:
             return {"total_creators": 0}
             
         total_creators = len(self.creator_metrics)
@@ -807,7 +835,8 @@ class BusinessMetricsCollector:
         }
         
     async def _calculate_platform_analytics(self) -> Dict[str, Any]:
-        """Calculate platform analytics"""        platform_health = await self._calculate_platform_health_score()
+        """Calculate platform analytics"""
+        platform_health = await self._calculate_platform_health_score()
         
         return {
             "platform_health_score": platform_health,
@@ -817,7 +846,8 @@ class BusinessMetricsCollector:
         }
         
     async def _generate_growth_predictions(self) -> Dict[str, Any]:
-        """Generate growth predictions"""        # Simple growth predictions (would use ML models in production)
+        """Generate growth predictions"""
+        # Simple growth predictions (would use ML models in production)
         return {
             "predicted_revenue_next_month": "15000.00",
             "predicted_new_users_next_month": 150,
@@ -826,7 +856,8 @@ class BusinessMetricsCollector:
         }
         
     async def _calculate_key_performance_indicators(self) -> Dict[str, float]:
-        """Calculate key performance indicators"""        total_revenue = float(sum(self.revenue_by_source.values()))
+        """Calculate key performance indicators"""
+        total_revenue = float(sum(self.revenue_by_source.values()))
         total_users = len(self.user_engagement_scores)
         
         return {
@@ -843,7 +874,8 @@ class BusinessMetricsCollector:
         self,
         risk_factors: List[str]
     ) -> List[str]:
-        """Generate retention actions based on risk factors"""        actions = []
+        """Generate retention actions based on risk factors"""
+        actions = []
         
         if "low_engagement" in risk_factors:
             actions.extend([
@@ -869,7 +901,8 @@ class BusinessMetricsCollector:
         return actions
         
     async def _collection_loop(self) -> None:
-        """Main collection loop for continuous metrics gathering"""        while self.is_collecting:
+        """Main collection loop for continuous metrics gathering"""
+        while self.is_collecting:
             try:
                 # Update real-time statistics
                 await self._update_real_time_stats()
@@ -888,7 +921,8 @@ class BusinessMetricsCollector:
                 await asyncio.sleep(120)  # Wait longer on error
                 
     async def _update_real_time_stats(self) -> None:
-        """Update real-time statistics"""        current_time = datetime.utcnow()
+        """Update real-time statistics"""
+        current_time = datetime.utcnow()
         today_start = current_time.replace(hour=0, minute=0, second=0, microsecond=0)
         
         # Count today's metrics
@@ -921,7 +955,8 @@ class BusinessMetricsCollector:
         })
         
     async def _cleanup_old_metrics(self) -> None:
-        """Clean up old metrics to prevent memory buildup"""        cutoff_time = datetime.utcnow() - timedelta(days=30)
+        """Clean up old metrics to prevent memory buildup"""
+        cutoff_time = datetime.utcnow() - timedelta(days=30)
         
         # Clean revenue metrics
         while self.revenue_metrics and self.revenue_metrics[0].timestamp < cutoff_time:

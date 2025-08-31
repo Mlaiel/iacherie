@@ -5,7 +5,8 @@ and payment anomalies in the IA-Influencer ecosystem.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 from datetime import datetime, timedelta
@@ -34,7 +35,8 @@ from ...integrations.payment_processors import PaymentProcessorManager
 logger = logging.getLogger(__name__)
 
 class RevenueAnomalyType(Enum):
-    """Types of revenue anomalies"""    AMOUNT_MANIPULATION = "amount_manipulation"
+    """Types of revenue anomalies"""
+    AMOUNT_MANIPULATION = "amount_manipulation"
     FREQUENCY_ABUSE = "frequency_abuse"
     SOURCE_SPOOFING = "source_spoofing"
     CURRENCY_ARBITRAGE = "currency_arbitrage"
@@ -47,7 +49,8 @@ class RevenueAnomalyType(Enum):
 
 @dataclass
 class RevenueMetrics:
-    """Revenue analysis metrics"""    total_amount: Decimal
+    """Revenue analysis metrics"""
+    total_amount: Decimal
     transaction_count: int
     average_amount: Decimal
     median_amount: Decimal
@@ -62,7 +65,8 @@ class RevenueMetrics:
 
 @dataclass
 class RevenueValidationResult:
-    """Revenue validation result"""    anomaly_detected: bool
+    """Revenue validation result"""
+    anomaly_detected: bool
     anomaly_types: List[RevenueAnomalyType]
     confidence: float
     risk_score: float
@@ -72,7 +76,8 @@ class RevenueValidationResult:
     validation_timestamp: datetime
 
 class RevenueValidator:
-    """    Advanced Revenue Validation Engine
+    """
+    Advanced Revenue Validation Engine
     
     Validates revenue authenticity through:
     - Statistical anomaly detection
@@ -80,7 +85,8 @@ class RevenueValidator:
     - Cross-platform verification
     - Historical baseline comparison
     - Real-time fraud detection
-    """    
+    """
+    
     def __init__(self, redis_client: Optional[aioredis.Redis] = None):
         self.redis_client = redis_client
         self.financial_analyzer = FinancialAnalyzer()
@@ -128,7 +134,8 @@ class RevenueValidator:
         transaction_data: Dict[str, Any],
         platform: str
     ) -> Dict[str, Any]:
-        """        Comprehensive revenue validation
+        """
+        Comprehensive revenue validation
         
         Args:
             user_id: User identifier
@@ -137,7 +144,8 @@ class RevenueValidator:
             
         Returns:
             Revenue validation results
-        """        try:
+        """
+        try:
             # Extract revenue metrics
             current_metrics = await self._extract_revenue_metrics(transaction_data)
             
@@ -205,7 +213,8 @@ class RevenueValidator:
             raise RevenueValidationError(f"Revenue validation failed: {str(e)}")
 
     async def _extract_revenue_metrics(self, transaction_data: Dict[str, Any]) -> RevenueMetrics:
-        """Extract comprehensive revenue metrics from transaction data"""        transactions = transaction_data.get('transactions', [])
+        """Extract comprehensive revenue metrics from transaction data"""
+        transactions = transaction_data.get('transactions', [])
         
         if not transactions:
             return RevenueMetrics(
@@ -273,7 +282,8 @@ class RevenueValidator:
         user_id: str, 
         platform: str
     ) -> Dict[str, Any]:
-        """Get user's historical revenue baselines"""        try:
+        """Get user's historical revenue baselines"""
+        try:
             cache_key = f"revenue_baseline:{user_id}:{platform}"
             cached_baseline = await self.redis_client.get(cache_key)
             
@@ -310,7 +320,8 @@ class RevenueValidator:
         transaction_data: Dict[str, Any],
         user_id: str
     ) -> Dict[RevenueAnomalyType, Dict[str, Any]]:
-        """Detect various types of revenue anomalies"""        anomalies = {}
+        """Detect various types of revenue anomalies"""
+        anomalies = {}
         
         # Amount manipulation detection
         amount_anomaly = await self._detect_amount_manipulation(
@@ -366,7 +377,8 @@ class RevenueValidator:
         current_metrics: RevenueMetrics,
         historical_baselines: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
-        """Detect amount manipulation anomalies"""        try:
+        """Detect amount manipulation anomalies"""
+        try:
             baseline_avg = historical_baselines.get('avg_transaction_amount', 0)
             current_avg = float(current_metrics.average_amount)
             
@@ -401,7 +413,8 @@ class RevenueValidator:
         current_metrics: RevenueMetrics,
         historical_baselines: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
-        """Detect frequency abuse anomalies"""        try:
+        """Detect frequency abuse anomalies"""
+        try:
             baseline_frequency = historical_baselines.get('avg_transactions_per_day', 0) / 24
             current_frequency = current_metrics.frequency_per_hour
             
@@ -436,7 +449,8 @@ class RevenueValidator:
         historical_baselines: Dict[str, Any],
         transaction_data: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
-        """Detect source spoofing anomalies"""        try:
+        """Detect source spoofing anomalies"""
+        try:
             typical_sources = set(historical_baselines.get('typical_sources', []))
             transactions = transaction_data.get('transactions', [])
             current_sources = set(t.get('source', '') for t in transactions)
@@ -470,7 +484,8 @@ class RevenueValidator:
         current_metrics: RevenueMetrics,
         transaction_data: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
-        """Detect currency arbitrage anomalies"""        try:
+        """Detect currency arbitrage anomalies"""
+        try:
             if current_metrics.unique_currencies > self.validation_thresholds['max_currency_switches']:
                 transactions = transaction_data.get('transactions', [])
                 
@@ -503,7 +518,8 @@ class RevenueValidator:
         current_metrics: RevenueMetrics,
         historical_baselines: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
-        """Detect refund fraud patterns"""        try:
+        """Detect refund fraud patterns"""
+        try:
             typical_refund_rate = historical_baselines.get('typical_refund_rate', 0.02)
             current_refund_rate = current_metrics.refund_rate
             
@@ -534,7 +550,8 @@ class RevenueValidator:
         self, 
         transaction_data: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
-        """Detect duplicate transaction patterns"""        try:
+        """Detect duplicate transaction patterns"""
+        try:
             transactions = transaction_data.get('transactions', [])
             
             if len(transactions) < 2:
@@ -575,7 +592,8 @@ class RevenueValidator:
         current_metrics: RevenueMetrics,
         transaction_data: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
-        """Detect velocity fraud patterns"""        try:
+        """Detect velocity fraud patterns"""
+        try:
             transactions = transaction_data.get('transactions', [])
             
             if len(transactions) < 5:
@@ -614,7 +632,8 @@ class RevenueValidator:
         transaction_data: Dict[str, Any], 
         platform: str
     ) -> Dict[str, Any]:
-        """Validate revenue against external sources"""        try:
+        """Validate revenue against external sources"""
+        try:
             validation_result = {
                 'platform_api_verified': False,
                 'payment_processor_verified': False,
@@ -648,7 +667,8 @@ class RevenueValidator:
         transaction_data: Dict[str, Any], 
         platform: str
     ) -> Dict[str, Any]:
-        """Validate revenue against platform APIs"""        try:
+        """Validate revenue against platform APIs"""
+        try:
             # This would integrate with actual platform APIs
             # For now, return simulated validation
             return {
@@ -662,7 +682,8 @@ class RevenueValidator:
             return {'platform_api_verified': False, 'platform_confidence': 0.0}
 
     async def _validate_payment_processors(self, transaction_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate against payment processor records"""        try:
+        """Validate against payment processor records"""
+        try:
             # This would integrate with payment processors (Stripe, PayPal, etc.)
             # For now, return simulated validation
             return {
@@ -680,7 +701,8 @@ class RevenueValidator:
         current_metrics: RevenueMetrics,
         historical_baselines: Dict[str, Any]
     ) -> float:
-        """Calculate comprehensive revenue risk score"""        if not anomalies:
+        """Calculate comprehensive revenue risk score"""
+        if not anomalies:
             return 0.0
             
         risk_score = 0.0
@@ -708,7 +730,8 @@ class RevenueValidator:
         self, 
         anomalies: Dict[RevenueAnomalyType, Dict[str, Any]]
     ) -> float:
-        """Calculate validation confidence score"""        if not anomalies:
+        """Calculate validation confidence score"""
+        if not anomalies:
             return 1.0
             
         # Average confidence of detected anomalies
@@ -719,7 +742,8 @@ class RevenueValidator:
         self, 
         anomalies: Dict[RevenueAnomalyType, Dict[str, Any]]
     ) -> List[str]:
-        """Extract irregularity descriptions from anomalies"""        irregularities = []
+        """Extract irregularity descriptions from anomalies"""
+        irregularities = []
         
         for anomaly_type, anomaly_data in anomalies.items():
             anomaly_description = anomaly_data.get('type', anomaly_type.value)
@@ -733,7 +757,8 @@ class RevenueValidator:
         current_metrics: RevenueMetrics,
         external_validation: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Compile comprehensive validation evidence"""        evidence = {
+        """Compile comprehensive validation evidence"""
+        evidence = {
             'current_metrics': {
                 'total_amount': float(current_metrics.total_amount),
                 'transaction_count': current_metrics.transaction_count,
@@ -757,7 +782,8 @@ class RevenueValidator:
         anomalies: Dict[RevenueAnomalyType, Dict[str, Any]],
         current_metrics: RevenueMetrics
     ) -> List[str]:
-        """Extract key risk indicators"""        indicators = []
+        """Extract key risk indicators"""
+        indicators = []
         
         # High-impact indicators
         if RevenueAnomalyType.AMOUNT_MANIPULATION in anomalies:
@@ -783,7 +809,8 @@ class RevenueValidator:
         anomalies: Dict[RevenueAnomalyType, Dict[str, Any]],
         risk_score: float
     ) -> List[str]:
-        """Generate recommended actions based on validation results"""        recommendations = []
+        """Generate recommended actions based on validation results"""
+        recommendations = []
         
         if risk_score >= 0.8:
             recommendations.extend([
@@ -824,7 +851,8 @@ class RevenueValidator:
         metrics: RevenueMetrics, 
         platform: str
     ):
-        """Update user's revenue history for baseline calculations"""        try:
+        """Update user's revenue history for baseline calculations"""
+        try:
             history_key = f"revenue_history:{user_id}:{platform}"
             
             revenue_record = {
@@ -847,7 +875,8 @@ class RevenueValidator:
             logger.error(f"Failed to update revenue history for user {user_id}: {str(e)}")
 
     async def _cache_validation_result(self, user_id: str, result: RevenueValidationResult):
-        """Cache validation result for quick access"""        try:
+        """Cache validation result for quick access"""
+        try:
             cache_key = f"revenue_validation:{user_id}"
             
             cached_result = {
@@ -869,7 +898,8 @@ class RevenueValidator:
         platform: str, 
         days: int = 30
     ) -> Dict[str, Any]:
-        """Get comprehensive revenue analytics for a user"""        try:
+        """Get comprehensive revenue analytics for a user"""
+        try:
             history_key = f"revenue_history:{user_id}:{platform}"
             history_records = await self.redis_client.lrange(history_key, 0, -1)
             
@@ -926,7 +956,8 @@ class RevenueValidator:
             return {'error': str(e)}
 
     def _calculate_trend(self, timestamps: List[datetime], values: List[float]) -> float:
-        """Calculate trend direction for revenue over time"""        if len(timestamps) < 2 or len(values) < 2:
+        """Calculate trend direction for revenue over time"""
+        if len(timestamps) < 2 or len(values) < 2:
             return 0.0
             
         # Convert to numeric for correlation

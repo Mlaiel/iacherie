@@ -20,7 +20,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""from typing import Dict, List, Optional, Any
+"""
+from typing import Dict, List, Optional, Any
 import logging
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -200,14 +201,16 @@ MANAGER_REGISTRY = {
 }
 
 class AgentFactory:
-    """Factory for creating agent instances"""    
+    """Factory for creating agent instances"""
+    
     @staticmethod
     async def create_agent(
         agent_type: str, 
         agent_id: str, 
         config: Optional[Dict[str, Any]] = None
     ) -> Optional[BaseAgent]:
-        """Create agent instance by type"""        if agent_type not in AGENT_REGISTRY:
+        """Create agent instance by type"""
+        if agent_type not in AGENT_REGISTRY:
             logger.error(f"Unknown agent type: {agent_type}")
             return None
         
@@ -229,7 +232,8 @@ class AgentFactory:
     
     @staticmethod
     def create_manager(manager_type: str) -> Optional[Any]:
-        """Create manager instance by type"""        if manager_type not in MANAGER_REGISTRY:
+        """Create manager instance by type"""
+        if manager_type not in MANAGER_REGISTRY:
             logger.warning(f"No specialized manager for {manager_type}, using default")
             return None
         
@@ -242,7 +246,8 @@ class AgentFactory:
             return None
 
 async def initialize_agent_system():
-    """Initialize the complete agent system"""    try:
+    """Initialize the complete agent system"""
+    try:
         # Start the global agent manager
         await agent_manager.start()
         
@@ -261,7 +266,8 @@ async def initialize_agent_system():
         return False
 
 async def shutdown_agent_system():
-    """Shutdown the complete agent system"""    try:
+    """Shutdown the complete agent system"""
+    try:
         await agent_manager.stop()
         logger.info("Agent system shutdown completed")
         
@@ -270,10 +276,12 @@ async def shutdown_agent_system():
 
 # Utility functions
 def get_available_agent_types() -> List[str]:
-    """Get list of available agent types"""    return list(AGENT_REGISTRY.keys())
+    """Get list of available agent types"""
+    return list(AGENT_REGISTRY.keys())
 
 def get_agent_info(agent_type: str) -> Optional[Dict[str, Any]]:
-    """Get information about a specific agent type"""    if agent_type not in AGENT_REGISTRY:
+    """Get information about a specific agent type"""
+    if agent_type not in AGENT_REGISTRY:
         return None
     
     agent_class = AGENT_REGISTRY[agent_type]

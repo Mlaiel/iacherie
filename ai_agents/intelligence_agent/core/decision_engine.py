@@ -18,7 +18,8 @@ Expert Team Specializations:
 - Machine Learning Engineer
 - Neural Network Architect
 - Optimization Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 from datetime import datetime, timedelta
@@ -43,7 +44,8 @@ from ...utils.ml_utils import MLModelManager
 
 
 class DecisionCategory(Enum):
-    """Categories of decisions the engine can make."""    CONTENT_STRATEGY = "content_strategy"
+    """Categories of decisions the engine can make."""
+    CONTENT_STRATEGY = "content_strategy"
     PLATFORM_OPTIMIZATION = "platform_optimization"
     AUDIENCE_TARGETING = "audience_targeting"
     COLLABORATION_MATCHING = "collaboration_matching"
@@ -54,7 +56,8 @@ class DecisionCategory(Enum):
 
 
 class DecisionPriority(Enum):
-    """Priority levels for decisions."""    CRITICAL = 1
+    """Priority levels for decisions."""
+    CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
     LOW = 4
@@ -63,7 +66,8 @@ class DecisionPriority(Enum):
 
 @dataclass
 class DecisionContext:
-    """Context information for decision making."""    user_id: str
+    """Context information for decision making."""
+    user_id: str
     content_type: str
     platform: str
     timestamp: datetime
@@ -78,7 +82,8 @@ class DecisionContext:
 
 @dataclass
 class DecisionOption:
-    """A single decision option with evaluation metrics."""    option_id: str
+    """A single decision option with evaluation metrics."""
+    option_id: str
     name: str
     description: str
     parameters: Dict[str, Any]
@@ -92,7 +97,8 @@ class DecisionOption:
 
 @dataclass
 class DecisionResult:
-    """Result of a decision making process."""    decision_id: str
+    """Result of a decision making process."""
+    decision_id: str
     category: DecisionCategory
     priority: DecisionPriority
     context: DecisionContext
@@ -108,7 +114,8 @@ class DecisionResult:
 
 
 class DecisionEngine:
-    """    Advanced AI-powered decision making engine for content creators.
+    """
+    Advanced AI-powered decision making engine for content creators.
     
     Provides intelligent decision-making capabilities including:
     - Multi-criteria decision analysis
@@ -116,9 +123,11 @@ class DecisionEngine:
     - Risk assessment and mitigation
     - Performance prediction and optimization
     - Real-time adaptation and learning
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the Decision Engine with ML models and configuration."""        self.config = config or {}
+        """Initialize the Decision Engine with ML models and configuration."""
+        self.config = config or {}
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
         
@@ -152,7 +161,8 @@ class DecisionEngine:
         self.logger.info("Decision Engine initialized with advanced ML capabilities")
     
     def _initialize_decision_models(self):
-        """Initialize and load pre-trained ML models for each decision category."""        model_configs = {
+        """Initialize and load pre-trained ML models for each decision category."""
+        model_configs = {
             DecisionCategory.CONTENT_STRATEGY: {
                 'model_type': 'random_forest',
                 'params': {'n_estimators': 100, 'max_depth': 10},
@@ -193,7 +203,8 @@ class DecisionEngine:
                 self.logger.error(f"Failed to initialize model for {category.value}: {str(e)}")
     
     def _create_ml_model(self, model_type: str, params: Dict[str, Any]):
-        """Create ML model based on type and parameters."""        if model_type == 'random_forest':
+        """Create ML model based on type and parameters."""
+        if model_type == 'random_forest':
             return RandomForestClassifier(**params)
         elif model_type == 'gradient_boosting':
             return GradientBoostingRegressor(**params)
@@ -209,7 +220,8 @@ class DecisionEngine:
         options: List[DecisionOption],
         priority: DecisionPriority = DecisionPriority.MEDIUM
     ) -> DecisionResult:
-        """        Make an intelligent decision using ML models and advanced analytics.
+        """
+        Make an intelligent decision using ML models and advanced analytics.
         
         Args:
             category: Category of decision to make
@@ -219,7 +231,8 @@ class DecisionEngine:
             
         Returns:
             DecisionResult: Comprehensive decision result with reasoning
-        """        try:
+        """
+        try:
             decision_id = f"decision_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{category.value}"
             
             self.logger.info(f"Making decision {decision_id} with {len(options)} options")
@@ -297,7 +310,8 @@ class DecisionEngine:
             raise
     
     async def _extract_decision_features(self, context: DecisionContext) -> np.ndarray:
-        """Extract ML features from decision context."""        features = []
+        """Extract ML features from decision context."""
+        features = []
         
         # Extract features using all extractors
         for extractor_name, extractor_func in self.feature_extractors.items():
@@ -311,7 +325,8 @@ class DecisionEngine:
         return np.array(features).reshape(1, -1)
     
     def _extract_content_features(self, context: DecisionContext) -> List[float]:
-        """Extract content-related features."""        metadata = context.content_metadata
+        """Extract content-related features."""
+        metadata = context.content_metadata
         
         return [
             metadata.get('quality_score', 0.0),
@@ -322,7 +337,8 @@ class DecisionEngine:
         ]
     
     def _extract_user_features(self, context: DecisionContext) -> List[float]:
-        """Extract user-related features."""        preferences = context.user_preferences
+        """Extract user-related features."""
+        preferences = context.user_preferences
         history = context.performance_history
         
         avg_engagement = statistics.mean(
@@ -338,7 +354,8 @@ class DecisionEngine:
         ]
     
     def _extract_platform_features(self, context: DecisionContext) -> List[float]:
-        """Extract platform-related features."""        platform = context.platform
+        """Extract platform-related features."""
+        platform = context.platform
         
         # Platform-specific scoring (simplified)
         platform_scores = {
@@ -352,7 +369,8 @@ class DecisionEngine:
         return platform_scores.get(platform.lower(), [0.5, 0.5, 0.5, 0.5, 0.5])
     
     def _extract_temporal_features(self, context: DecisionContext) -> List[float]:
-        """Extract time-related features."""        now = context.timestamp
+        """Extract time-related features."""
+        now = context.timestamp
         
         return [
             now.hour / 24.0,  # Hour of day normalized
@@ -363,7 +381,8 @@ class DecisionEngine:
         ]
     
     def _extract_market_features(self, context: DecisionContext) -> List[float]:
-        """Extract market-related features."""        market = context.market_conditions
+        """Extract market-related features."""
+        market = context.market_conditions
         competition = context.competition_analysis
         
         return [
@@ -380,7 +399,8 @@ class DecisionEngine:
         context_features: np.ndarray,
         option: DecisionOption
     ) -> DecisionOption:
-        """Evaluate a single option using ML models."""        try:
+        """Evaluate a single option using ML models."""
+        try:
             # Get model for this category
             model = self.models.get(category.value)
             scaler = self.scalers.get(category.value)
@@ -421,7 +441,8 @@ class DecisionEngine:
             return await self._rule_based_evaluation(option)
     
     def _extract_option_features(self, option: DecisionOption) -> np.ndarray:
-        """Extract features from a decision option."""        return np.array([
+        """Extract features from a decision option."""
+        return np.array([
             option.expected_outcome.get('success_probability', 0.0),
             option.risk_assessment.get('overall_risk', 0.0),
             option.resource_requirements.get('total_cost', 0.0) / 10000.0,  # Normalized
@@ -430,7 +451,8 @@ class DecisionEngine:
         ])
     
     async def _rule_based_evaluation(self, option: DecisionOption) -> DecisionOption:
-        """Fallback rule-based evaluation when ML models are unavailable."""        # Simple scoring based on weighted criteria
+        """Fallback rule-based evaluation when ML models are unavailable."""
+        # Simple scoring based on weighted criteria
         success_prob = option.expected_outcome.get('success_probability', 0.5)
         risk_level = 1.0 - option.risk_assessment.get('overall_risk', 0.5)
         cost_efficiency = 1.0 - min(1.0, option.resource_requirements.get('total_cost', 0.0) / 10000.0)
@@ -455,7 +477,8 @@ class DecisionEngine:
         context_features: np.ndarray,
         selected_option: DecisionOption
     ) -> float:
-        """Calculate overall confidence in the decision."""        base_confidence = selected_option.confidence_score
+        """Calculate overall confidence in the decision."""
+        base_confidence = selected_option.confidence_score
         
         # Adjust based on model accuracy
         model_accuracy = self.model_accuracy.get(category.value, 0.8)
@@ -471,7 +494,8 @@ class DecisionEngine:
         return min(1.0, max(0.0, overall_confidence))
     
     def _assess_data_quality(self, features: np.ndarray) -> float:
-        """Assess the quality of input data for decision making."""        # Check for missing or invalid values
+        """Assess the quality of input data for decision making."""
+        # Check for missing or invalid values
         valid_ratio = np.sum(np.isfinite(features)) / len(features.flatten())
         
         # Check for feature variance (avoid all zeros or same values)
@@ -489,7 +513,8 @@ class DecisionEngine:
         selected_option: DecisionOption,
         all_options: List[DecisionOption]
     ) -> str:
-        """Generate human-readable reasoning for the decision."""        reasoning_parts = []
+        """Generate human-readable reasoning for the decision."""
+        reasoning_parts = []
         
         # Category-specific reasoning
         reasoning_parts.append(f"Decision category: {category.value.replace('_', ' ').title()}")
@@ -531,7 +556,8 @@ class DecisionEngine:
         context: DecisionContext,
         option: DecisionOption
     ) -> float:
-        """Calculate expected return on investment for the selected option."""        # Extract relevant metrics
+        """Calculate expected return on investment for the selected option."""
+        # Extract relevant metrics
         expected_value = option.estimated_impact.get('expected_value', 0.0)
         total_cost = option.resource_requirements.get('total_cost', 1.0)
         success_probability = option.expected_outcome.get('success_probability', 0.5)
@@ -548,7 +574,8 @@ class DecisionEngine:
         self,
         option: DecisionOption
     ) -> Dict[str, datetime]:
-        """Create implementation timeline for the selected option."""        now = datetime.now()
+        """Create implementation timeline for the selected option."""
+        now = datetime.now()
         complexity = option.implementation_complexity
         
         # Estimate phases based on complexity
@@ -577,7 +604,8 @@ class DecisionEngine:
         context: DecisionContext,
         option: DecisionOption
     ) -> Dict[str, float]:
-        """Define success metrics for measuring decision outcome."""        base_metrics = {
+        """Define success metrics for measuring decision outcome."""
+        base_metrics = {
             'roi_threshold': 1.5,
             'timeline_adherence': 0.9,
             'quality_score': 0.8,
@@ -613,7 +641,8 @@ class DecisionEngine:
         options: List[DecisionOption],
         context: DecisionContext
     ) -> List[DecisionOption]:
-        """Prioritize options when there are too many to evaluate."""        # Simple scoring for prioritization
+        """Prioritize options when there are too many to evaluate."""
+        # Simple scoring for prioritization
         scored_options = []
         
         for option in options:
@@ -634,7 +663,8 @@ class DecisionEngine:
         category: DecisionCategory,
         decision_result: DecisionResult
     ):
-        """Update performance metrics for continuous learning."""        category_key = category.value
+        """Update performance metrics for continuous learning."""
+        category_key = category.value
         
         if category_key not in self.performance_metrics:
             self.performance_metrics[category_key] = []
@@ -647,7 +677,8 @@ class DecisionEngine:
             self.performance_metrics[category_key] = self.performance_metrics[category_key][-1000:]
     
     def _load_pretrained_model(self, category: str):
-        """Load pre-trained model weights if available."""        try:
+        """Load pre-trained model weights if available."""
+        try:
             model_path = f"models/decision_engine_{category}.joblib"
             scaler_path = f"models/decision_scaler_{category}.joblib"
             
@@ -662,7 +693,8 @@ class DecisionEngine:
             self.logger.warning(f"Could not load pre-trained model for {category}: {str(e)}")
     
     async def get_decision_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive analytics about decision engine performance."""        total_decisions = len(self.decision_history)
+        """Get comprehensive analytics about decision engine performance."""
+        total_decisions = len(self.decision_history)
         
         if total_decisions == 0:
             return {

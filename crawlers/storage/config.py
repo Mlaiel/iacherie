@@ -21,7 +21,8 @@ Expertise combinée:
 - Audio/Vidéo: Traitement multimédia et analyse de contenu
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
-"""import logging
+"""
+import logging
 import json
 import yaml
 import time
@@ -45,7 +46,8 @@ from .object_storage import S3ObjectStorageProvider, S3ContentStorageProvider
 logger = logging.getLogger(__name__)
 
 class StorageProviderType(Enum):
-    """Supported storage provider types."""    # Database providers
+    """Supported storage provider types."""
+    # Database providers
     POSTGRESQL = "postgresql"
     MYSQL = "mysql"
     SQLITE = "sqlite"
@@ -74,7 +76,8 @@ class StorageProviderType(Enum):
 
 @dataclass
 class DatabaseConfig:
-    """Database storage provider configuration."""    database_url: str
+    """Database storage provider configuration."""
+    database_url: str
     database_type: str = "postgresql"
     pool_size: int = 10
     max_overflow: int = 20
@@ -88,7 +91,8 @@ class DatabaseConfig:
 
 @dataclass
 class FilesystemConfig:
-    """Filesystem storage provider configuration."""    base_path: str
+    """Filesystem storage provider configuration."""
+    base_path: str
     enable_compression: bool = True
     compression_type: str = "gzip"
     enable_indexing: bool = True
@@ -99,7 +103,8 @@ class FilesystemConfig:
 
 @dataclass
 class CacheConfig:
-    """Cache storage provider configuration."""    # Redis specific
+    """Cache storage provider configuration."""
+    # Redis specific
     redis_url: Optional[str] = None
     database: int = 0
     pool_size: int = 10
@@ -114,7 +119,8 @@ class CacheConfig:
 
 @dataclass
 class ObjectStorageConfig:
-    """Object storage provider configuration."""    bucket_name: str
+    """Object storage provider configuration."""
+    bucket_name: str
     aws_access_key_id: Optional[str] = None
     aws_secret_access_key: Optional[str] = None
     aws_session_token: Optional[str] = None
@@ -133,7 +139,8 @@ class ObjectStorageConfig:
 
 @dataclass
 class VectorConfig:
-    """Vector storage provider configuration."""    dimension: int
+    """Vector storage provider configuration."""
+    dimension: int
     metric: str = "cosine"  # cosine, euclidean, dot_product
     index_type: str = "hnsw"  # hnsw, ivf, flat
     
@@ -151,7 +158,8 @@ class VectorConfig:
 
 @dataclass
 class TimeSeriesConfig:
-    """Time series storage provider configuration."""    # InfluxDB specific
+    """Time series storage provider configuration."""
+    # InfluxDB specific
     influxdb_url: Optional[str] = None
     influxdb_token: Optional[str] = None
     influxdb_org: Optional[str] = None
@@ -166,7 +174,8 @@ class TimeSeriesConfig:
 
 @dataclass
 class StorageProviderConfig:
-    """Complete storage provider configuration."""    provider_id: str
+    """Complete storage provider configuration."""
+    provider_id: str
     provider_type: StorageProviderType
     backend_type: StorageBackendType
     enabled: bool = True
@@ -187,7 +196,8 @@ class StorageProviderConfig:
     timeseries_config: Optional[TimeSeriesConfig] = None
 
 class StorageConfigurationManager:
-    """    Professional storage configuration manager.
+    """
+    Professional storage configuration manager.
     
     Features:
     - Configuration file loading (JSON, YAML)
@@ -195,15 +205,18 @@ class StorageConfigurationManager:
     - Configuration validation
     - Default configuration generation
     - Provider factory creation
-    """    
+    """
+    
     def __init__(self):
-        """Initialize configuration manager."""        self.configurations: Dict[str, StorageProviderConfig] = {}
+        """Initialize configuration manager."""
+        self.configurations: Dict[str, StorageProviderConfig] = {}
         self.environment_prefix = "STORAGE_"
         
         logger.info("Storage configuration manager initialized")
     
     def load_from_file(self, config_path: str) -> None:
-        """Load configuration from file."""        try:
+        """Load configuration from file."""
+        try:
             config_file = Path(config_path)
             
             if not config_file.exists():
@@ -231,7 +244,8 @@ class StorageConfigurationManager:
             logger.error(f"Failed to load configuration from {config_path}: {e}")
     
     def _parse_provider_config(self, provider_data: Dict[str, Any]) -> Optional[StorageProviderConfig]:
-        """Parse individual provider configuration."""        try:
+        """Parse individual provider configuration."""
+        try:
             provider_type = StorageProviderType(provider_data['provider_type'])
             backend_type = StorageBackendType(provider_data['backend_type'])
             
@@ -282,7 +296,8 @@ class StorageConfigurationManager:
             return None
     
     def _parse_database_config(self, config_data: Dict[str, Any]) -> DatabaseConfig:
-        """Parse database configuration."""        # Apply environment variable overrides
+        """Parse database configuration."""
+        # Apply environment variable overrides
         database_url = self._get_env_override(
             'DATABASE_URL',
             config_data.get('database_url', '')
@@ -306,7 +321,8 @@ class StorageConfigurationManager:
         )
     
     def _parse_filesystem_config(self, config_data: Dict[str, Any]) -> FilesystemConfig:
-        """Parse filesystem configuration."""        base_path = self._get_env_override(
+        """Parse filesystem configuration."""
+        base_path = self._get_env_override(
             'FILESYSTEM_BASE_PATH',
             config_data.get('base_path', './data/storage')
         )
@@ -323,7 +339,8 @@ class StorageConfigurationManager:
         )
     
     def _parse_cache_config(self, config_data: Dict[str, Any]) -> CacheConfig:
-        """Parse cache configuration."""        redis_url = self._get_env_override(
+        """Parse cache configuration."""
+        redis_url = self._get_env_override(
             'REDIS_URL',
             config_data.get('redis_url')
         )
@@ -341,7 +358,8 @@ class StorageConfigurationManager:
         )
     
     def _parse_object_storage_config(self, config_data: Dict[str, Any]) -> ObjectStorageConfig:
-        """Parse object storage configuration."""        return ObjectStorageConfig(
+        """Parse object storage configuration."""
+        return ObjectStorageConfig(
             bucket_name=self._get_env_override(
                 'S3_BUCKET_NAME',
                 config_data.get('bucket_name', '')
@@ -382,7 +400,8 @@ class StorageConfigurationManager:
         )
     
     def _parse_vector_config(self, config_data: Dict[str, Any]) -> VectorConfig:
-        """Parse vector database configuration."""        return VectorConfig(
+        """Parse vector database configuration."""
+        return VectorConfig(
             dimension=config_data.get('dimension', 512),
             metric=config_data.get('metric', 'cosine'),
             index_type=config_data.get('index_type', 'hnsw'),
@@ -407,7 +426,8 @@ class StorageConfigurationManager:
         )
     
     def _parse_timeseries_config(self, config_data: Dict[str, Any]) -> TimeSeriesConfig:
-        """Parse time series configuration."""        return TimeSeriesConfig(
+        """Parse time series configuration."""
+        return TimeSeriesConfig(
             influxdb_url=self._get_env_override(
                 'INFLUXDB_URL',
                 config_data.get('influxdb_url')
@@ -433,26 +453,31 @@ class StorageConfigurationManager:
         )
     
     def _get_env_override(self, env_key: str, default_value: Any) -> Any:
-        """Get value with environment variable override."""        full_env_key = f"{self.environment_prefix}{env_key}"
+        """Get value with environment variable override."""
+        full_env_key = f"{self.environment_prefix}{env_key}"
         return os.getenv(full_env_key, default_value)
     
     def get_provider_config(self, provider_id: str) -> Optional[StorageProviderConfig]:
-        """Get configuration for specific provider."""        return self.configurations.get(provider_id)
+        """Get configuration for specific provider."""
+        return self.configurations.get(provider_id)
     
     def get_providers_by_type(self, backend_type: StorageBackendType) -> List[StorageProviderConfig]:
-        """Get all providers of specific backend type."""        return [
+        """Get all providers of specific backend type."""
+        return [
             config for config in self.configurations.values()
             if config.backend_type == backend_type and config.enabled
         ]
     
     def get_providers_by_priority(self) -> List[StorageProviderConfig]:
-        """Get all providers sorted by priority."""        return sorted(
+        """Get all providers sorted by priority."""
+        return sorted(
             [config for config in self.configurations.values() if config.enabled],
             key=lambda x: x.priority
         )
     
     def validate_configuration(self, provider_id: str) -> List[str]:
-        """Validate provider configuration and return list of errors."""        errors = []
+        """Validate provider configuration and return list of errors."""
+        errors = []
         
         config = self.configurations.get(provider_id)
         if not config:
@@ -492,7 +517,8 @@ class StorageConfigurationManager:
         return errors
     
     def generate_default_config(self, output_path: str, format: str = "yaml") -> None:
-        """Generate default configuration file."""        try:
+        """Generate default configuration file."""
+        try:
             default_config = {
                 "storage_providers": [
                     {
@@ -562,12 +588,15 @@ class StorageConfigurationManager:
             logger.error(f"Failed to generate default configuration: {e}")
 
 class StorageProviderFactory(StorageFactory):
-    """    Professional storage provider factory.
+    """
+    Professional storage provider factory.
     
     Creates storage provider instances based on configuration.
-    """    
+    """
+    
     def __init__(self, config_manager: StorageConfigurationManager):
-        """Initialize storage provider factory."""        self.config_manager = config_manager
+        """Initialize storage provider factory."""
+        self.config_manager = config_manager
         
         # Provider class mappings
         self.provider_classes = {
@@ -604,7 +633,8 @@ class StorageProviderFactory(StorageFactory):
         logger.info("Storage provider factory initialized")
     
     def create_provider(self, provider_id: str) -> Optional[BaseStorageProvider]:
-        """Create a storage provider by ID."""        config = self.config_manager.get_provider_config(provider_id)
+        """Create a storage provider by ID."""
+        config = self.config_manager.get_provider_config(provider_id)
         if not config:
             logger.error(f"Configuration not found for provider: {provider_id}")
             return None
@@ -638,7 +668,8 @@ class StorageProviderFactory(StorageFactory):
             return None
     
     def create_content_storage(self, config: Dict[str, Any]) -> ContentStorageProvider:
-        """Create content storage provider."""        provider_id = config.get('provider_id', 'content_storage')
+        """Create content storage provider."""
+        provider_id = config.get('provider_id', 'content_storage')
         provider_config = self.config_manager.get_provider_config(provider_id)
         
         if not provider_config:
@@ -654,7 +685,8 @@ class StorageProviderFactory(StorageFactory):
         return provider_class(provider_id, provider_config_dict)
     
     def create_violation_storage(self, config: Dict[str, Any]) -> ViolationStorageProvider:
-        """Create violation storage provider."""        provider_id = config.get('provider_id', 'violation_storage')
+        """Create violation storage provider."""
+        provider_id = config.get('provider_id', 'violation_storage')
         provider_config = self.config_manager.get_provider_config(provider_id)
         
         if not provider_config:
@@ -670,7 +702,8 @@ class StorageProviderFactory(StorageFactory):
         return provider_class(provider_id, provider_config_dict)
     
     def create_cache_storage(self, config: Dict[str, Any]) -> CacheStorageProvider:
-        """Create cache storage provider."""        provider_id = config.get('provider_id', 'cache_storage')
+        """Create cache storage provider."""
+        provider_id = config.get('provider_id', 'cache_storage')
         provider = self.create_provider(provider_id)
         
         if not isinstance(provider, CacheStorageProvider):
@@ -679,7 +712,8 @@ class StorageProviderFactory(StorageFactory):
         return provider
     
     def create_vector_storage(self, config: Dict[str, Any]) -> VectorStorageProvider:
-        """Create vector storage provider."""        logger.info("Creating vector storage provider")
+        """Create vector storage provider."""
+        logger.info("Creating vector storage provider")
         
         # Basic vector storage implementation
         class BasicVectorStorageProvider:
@@ -691,21 +725,25 @@ class StorageProviderFactory(StorageFactory):
                 self.logger = logger
                 
             async def store_vector(self, vector_id: str, vector_data: List[float], metadata: Dict = None):
-                """Store vector data"""                self.logger.info(f"Storing vector {vector_id} with {len(vector_data)} dimensions")
+                """Store vector data"""
+                self.logger.info(f"Storing vector {vector_id} with {len(vector_data)} dimensions")
                 return {"status": "stored", "vector_id": vector_id}
                 
             async def search_similar(self, query_vector: List[float], top_k: int = 10):
-                """Search for similar vectors"""                self.logger.info(f"Searching for top {top_k} similar vectors")
+                """Search for similar vectors"""
+                self.logger.info(f"Searching for top {top_k} similar vectors")
                 return [{"id": f"vec_{i}", "score": 0.9 - i * 0.1} for i in range(min(top_k, 5))]
                 
             async def delete_vector(self, vector_id: str):
-                """Delete vector"""                self.logger.info(f"Deleting vector {vector_id}")
+                """Delete vector"""
+                self.logger.info(f"Deleting vector {vector_id}")
                 return {"status": "deleted", "vector_id": vector_id}
         
         return BasicVectorStorageProvider(config)
     
     def create_timeseries_storage(self, config: Dict[str, Any]) -> TimeSeriesStorageProvider:
-        """Create time series storage provider."""        logger.info("Creating time series storage provider")
+        """Create time series storage provider."""
+        logger.info("Creating time series storage provider")
         
         # Basic time series storage implementation
         class BasicTimeSeriesStorageProvider:
@@ -717,13 +755,15 @@ class StorageProviderFactory(StorageFactory):
                 self.logger = logger
                 
             async def write_point(self, measurement: str, tags: Dict, fields: Dict, timestamp=None):
-                """Write a data point"""                import time
+                """Write a data point"""
+                import time
                 ts = timestamp or int(time.time())
                 self.logger.info(f"Writing point to {measurement} at timestamp {ts}")
                 return {"status": "written", "timestamp": ts}
                 
             async def query_range(self, measurement: str, start_time: int, end_time: int, aggregation=None):
-                """Query time range"""                self.logger.info(f"Querying {measurement} from {start_time} to {end_time}")
+                """Query time range"""
+                self.logger.info(f"Querying {measurement} from {start_time} to {end_time}")
                 # Return sample time series data
                 import time
                 current_time = int(time.time())
@@ -733,13 +773,15 @@ class StorageProviderFactory(StorageFactory):
                 ]
                 
             async def delete_series(self, measurement: str, tags: Dict = None):
-                """Delete time series"""                self.logger.info(f"Deleting series {measurement}")
+                """Delete time series"""
+                self.logger.info(f"Deleting series {measurement}")
                 return {"status": "deleted", "measurement": measurement}
         
         return BasicTimeSeriesStorageProvider(config)
     
     def create_transaction(self, provider: BaseStorageProvider):
-        """Create storage transaction."""        logger.info(f"Creating transaction for provider {provider}")
+        """Create storage transaction."""
+        logger.info(f"Creating transaction for provider {provider}")
         
         # Basic transaction implementation
         class BasicStorageTransaction:
@@ -752,17 +794,20 @@ class StorageProviderFactory(StorageFactory):
                 self.logger = logger
                 
             async def __aenter__(self):
-                """Enter transaction context"""                self.logger.info(f"Starting transaction {self.transaction_id}")
+                """Enter transaction context"""
+                self.logger.info(f"Starting transaction {self.transaction_id}")
                 return self
                 
             async def __aexit__(self, exc_type, exc_val, exc_tb):
-                """Exit transaction context"""                if exc_type is not None:
+                """Exit transaction context"""
+                if exc_type is not None:
                     await self.rollback()
                 elif not self.committed:
                     await self.commit()
                     
             async def add_operation(self, operation_type: str, data: Dict):
-                """Add operation to transaction"""                operation = {
+                """Add operation to transaction"""
+                operation = {
                     "type": operation_type,
                     "data": data,
                     "timestamp": time.time()
@@ -771,7 +816,8 @@ class StorageProviderFactory(StorageFactory):
                 self.logger.debug(f"Added {operation_type} operation to transaction {self.transaction_id}")
                 
             async def commit(self):
-                """Commit transaction"""                if self.rolled_back:
+                """Commit transaction"""
+                if self.rolled_back:
                     raise ValueError("Cannot commit a rolled back transaction")
                     
                 self.logger.info(f"Committing transaction {self.transaction_id} with {len(self.operations)} operations")
@@ -784,7 +830,8 @@ class StorageProviderFactory(StorageFactory):
                 self.logger.info(f"Transaction {self.transaction_id} committed successfully")
                 
             async def rollback(self):
-                """Rollback transaction"""                if self.committed:
+                """Rollback transaction"""
+                if self.committed:
                     raise ValueError("Cannot rollback a committed transaction")
                     
                 self.logger.info(f"Rolling back transaction {self.transaction_id}")
@@ -800,7 +847,8 @@ class StorageProviderFactory(StorageFactory):
         return BasicStorageTransaction(provider)
     
     def _prepare_provider_config(self, config: StorageProviderConfig) -> Dict[str, Any]:
-        """Prepare configuration dictionary for provider creation."""        provider_config = {
+        """Prepare configuration dictionary for provider creation."""
+        provider_config = {
             'provider_id': config.provider_id,
             'provider_type': config.provider_type.value,
             'backend_type': config.backend_type.value,

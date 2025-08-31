@@ -12,7 +12,8 @@ IMPORTANT COPYRIGHT NOTICE:
 This deployment script is part of the IA Influencer Agent platform.
 Unauthorized reproduction, distribution, or modification is strictly prohibited.
 For licensing inquiries, contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import argparse
 import logging
 import os
@@ -33,13 +34,15 @@ from .cloud_compliance import CloudComplianceManager
 
 
 class DeploymentEnvironment(Enum):
-    """Deployment environment types."""    DEVELOPMENT = "development"
+    """Deployment environment types."""
+    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
 
 
 class DeploymentPhase(Enum):
-    """Deployment phase types."""    PLANNING = "planning"
+    """Deployment phase types."""
+    PLANNING = "planning"
     VALIDATION = "validation"
     DEPLOYMENT = "deployment"
     VERIFICATION = "verification"
@@ -49,7 +52,8 @@ class DeploymentPhase(Enum):
 
 @dataclass
 class DeploymentPlan:
-    """Deployment plan configuration."""    environment: DeploymentEnvironment
+    """Deployment plan configuration."""
+    environment: DeploymentEnvironment
     version: str
     services: List[str]
     rollback_enabled: bool = True
@@ -60,7 +64,8 @@ class DeploymentPlan:
 
 
 class DeploymentAutomation:
-    """    Enterprise cloud deployment automation for IA Influencer Agent.
+    """
+    Enterprise cloud deployment automation for IA Influencer Agent.
     
     Handles complete deployment lifecycle including:
     - Infrastructure provisioning
@@ -70,9 +75,11 @@ class DeploymentAutomation:
     - Backup creation
     - Health monitoring
     - Rollback capabilities
-    """    
+    """
+    
     def __init__(self, config_path: str):
-        """Initialize deployment automation."""        self.config = self._load_config(config_path)
+        """Initialize deployment automation."""
+        self.config = self._load_config(config_path)
         self.logger = self._setup_logging()
         
         # Initialize cloud managers
@@ -89,14 +96,16 @@ class DeploymentAutomation:
         self.rollback_plan = None
     
     def _load_config(self, config_path: str) -> Dict[str, Any]:
-        """Load deployment configuration."""        try:
+        """Load deployment configuration."""
+        try:
             with open(config_path, 'r') as f:
                 return yaml.safe_load(f)
         except Exception as e:
             raise RuntimeError(f"Failed to load configuration: {e}")
     
     def _setup_logging(self) -> logging.Logger:
-        """Setup deployment logging."""        logger = logging.getLogger('ia_deployment')
+        """Setup deployment logging."""
+        logger = logging.getLogger('ia_deployment')
         logger.setLevel(logging.INFO)
         
         # Console handler
@@ -126,14 +135,16 @@ class DeploymentAutomation:
         return logger
     
     async def deploy(self, plan: DeploymentPlan) -> bool:
-        """        Execute deployment plan.
+        """
+        Execute deployment plan.
         
         Args:
             plan: Deployment plan configuration
             
         Returns:
             True if deployment successful, False otherwise
-        """        self.deployment_id = f"deploy_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        """
+        self.deployment_id = f"deploy_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         self.start_time = datetime.now()
         
         self.logger.info(f"Starting deployment {self.deployment_id}")
@@ -174,7 +185,8 @@ class DeploymentAutomation:
             return False
     
     async def _execute_phase(self, phase: DeploymentPhase, plan: DeploymentPlan):
-        """Execute a deployment phase."""        self.current_phase = phase
+        """Execute a deployment phase."""
+        self.current_phase = phase
         self.logger.info(f"Executing phase: {phase.value}")
         
         if phase == DeploymentPhase.PLANNING:
@@ -189,7 +201,8 @@ class DeploymentAutomation:
             await self._phase_completion(plan)
     
     async def _phase_planning(self, plan: DeploymentPlan):
-        """Planning phase - prepare deployment."""        self.logger.info("Phase: Planning")
+        """Planning phase - prepare deployment."""
+        self.logger.info("Phase: Planning")
         
         # Create rollback plan
         if plan.rollback_enabled:
@@ -206,7 +219,8 @@ class DeploymentAutomation:
         self.logger.info(f"Deployment timeline: {timeline}")
     
     async def _phase_validation(self, plan: DeploymentPlan):
-        """Validation phase - validate environment and configuration."""        self.logger.info("Phase: Validation")
+        """Validation phase - validate environment and configuration."""
+        self.logger.info("Phase: Validation")
         
         # Infrastructure validation
         await self.deployment_manager.validate_infrastructure()
@@ -227,7 +241,8 @@ class DeploymentAutomation:
         await self._validate_service_health(plan)
     
     async def _phase_deployment(self, plan: DeploymentPlan):
-        """Deployment phase - execute actual deployment."""        self.logger.info("Phase: Deployment")
+        """Deployment phase - execute actual deployment."""
+        self.logger.info("Phase: Deployment")
         
         # Create backup before deployment
         if plan.backup_before_deploy:
@@ -252,7 +267,8 @@ class DeploymentAutomation:
             await self._execute_zero_downtime_deployment(plan)
     
     async def _phase_verification(self, plan: DeploymentPlan):
-        """Verification phase - verify deployment success."""        self.logger.info("Phase: Verification")
+        """Verification phase - verify deployment success."""
+        self.logger.info("Phase: Verification")
         
         # Health checks
         health_results = await self._perform_health_checks(plan)
@@ -273,7 +289,8 @@ class DeploymentAutomation:
         await self._validate_monitoring(plan)
     
     async def _phase_completion(self, plan: DeploymentPlan):
-        """Completion phase - finalize deployment."""        self.logger.info("Phase: Completion")
+        """Completion phase - finalize deployment."""
+        self.logger.info("Phase: Completion")
         
         # Update service discovery
         await self._update_service_discovery(plan)
@@ -291,7 +308,8 @@ class DeploymentAutomation:
         await self._send_deployment_notifications(plan)
     
     async def _execute_rollback(self, plan: DeploymentPlan):
-        """Execute rollback plan."""        self.logger.warning("Executing rollback plan")
+        """Execute rollback plan."""
+        self.logger.warning("Executing rollback plan")
         self.current_phase = DeploymentPhase.ROLLBACK
         
         if not self.rollback_plan:
@@ -318,7 +336,8 @@ class DeploymentAutomation:
         await self._verify_rollback(plan)
     
     async def _create_rollback_plan(self, plan: DeploymentPlan) -> Dict[str, Any]:
-        """Create rollback plan."""        # Get current service versions
+        """Create rollback plan."""
+        # Get current service versions
         current_versions = await self._get_current_service_versions(plan.services)
         
         # Get current configuration
@@ -338,7 +357,8 @@ class DeploymentAutomation:
         }
     
     async def _validate_resources(self, plan: DeploymentPlan):
-        """Validate required resources."""        # Check compute resources
+        """Validate required resources."""
+        # Check compute resources
         compute_availability = await self.deployment_manager.check_compute_availability(
             plan.environment.value
         )
@@ -360,7 +380,8 @@ class DeploymentAutomation:
             raise RuntimeError("Network issues detected")
     
     async def _check_dependencies(self, plan: DeploymentPlan):
-        """Check service dependencies."""        for service in plan.services:
+        """Check service dependencies."""
+        for service in plan.services:
             dependencies = await self._get_service_dependencies(service)
             for dependency in dependencies:
                 status = await self._check_dependency_status(dependency)
@@ -368,7 +389,8 @@ class DeploymentAutomation:
                     raise RuntimeError(f"Dependency {dependency} not healthy")
     
     def _create_deployment_timeline(self, plan: DeploymentPlan) -> Dict[str, str]:
-        """Create deployment timeline."""        base_time = self.start_time
+        """Create deployment timeline."""
+        base_time = self.start_time
         timeline = {}
         
         # Estimate phase durations
@@ -388,13 +410,15 @@ class DeploymentAutomation:
         return timeline
     
     async def _validate_service_health(self, plan: DeploymentPlan):
-        """Validate current service health."""        for service in plan.services:
+        """Validate current service health."""
+        for service in plan.services:
             health = await self._get_service_health(service)
             if not health.get('healthy', False):
                 self.logger.warning(f"Service {service} not healthy before deployment")
     
     async def _execute_migrations(self, plan: DeploymentPlan):
-        """Execute database migrations."""        self.logger.info("Executing database migrations")
+        """Execute database migrations."""
+        self.logger.info("Executing database migrations")
         
         # Run migration assessment
         migration_plan = await self.migration_service.assess_migration({
@@ -409,7 +433,8 @@ class DeploymentAutomation:
             raise RuntimeError("Database migration failed")
     
     async def _deploy_service(self, service: str, plan: DeploymentPlan):
-        """Deploy a specific service."""        self.logger.info(f"Deploying service: {service}")
+        """Deploy a specific service."""
+        self.logger.info(f"Deploying service: {service}")
         
         # Deploy infrastructure for service
         await self.deployment_manager.deploy_service_infrastructure(
@@ -427,7 +452,8 @@ class DeploymentAutomation:
         )
     
     async def _update_configuration(self, plan: DeploymentPlan):
-        """Update configuration."""        self.logger.info("Updating configuration")
+        """Update configuration."""
+        self.logger.info("Updating configuration")
         
         config_updates = {
             'version': plan.version,
@@ -439,7 +465,8 @@ class DeploymentAutomation:
         await self.deployment_manager.update_configuration(config_updates)
     
     async def _execute_zero_downtime_deployment(self, plan: DeploymentPlan):
-        """Execute zero-downtime deployment."""        self.logger.info("Executing zero-downtime deployment")
+        """Execute zero-downtime deployment."""
+        self.logger.info("Executing zero-downtime deployment")
         
         # Blue-green deployment strategy
         for service in plan.services:
@@ -456,7 +483,8 @@ class DeploymentAutomation:
             await self._verify_new_version(service)
     
     async def _perform_health_checks(self, plan: DeploymentPlan) -> Dict[str, Any]:
-        """Perform health checks."""        self.logger.info("Performing health checks")
+        """Perform health checks."""
+        self.logger.info("Performing health checks")
         
         results = {'all_healthy': True, 'service_results': {}}
         
@@ -470,7 +498,8 @@ class DeploymentAutomation:
         return results
     
     async def _run_performance_tests(self, plan: DeploymentPlan) -> Dict[str, Any]:
-        """Run performance tests."""        self.logger.info("Running performance tests")
+        """Run performance tests."""
+        self.logger.info("Running performance tests")
         
         # Simulate performance tests
         # In real implementation, this would run actual load tests
@@ -482,7 +511,8 @@ class DeploymentAutomation:
         }
     
     async def _run_integration_tests(self, plan: DeploymentPlan) -> Dict[str, Any]:
-        """Run integration tests."""        self.logger.info("Running integration tests")
+        """Run integration tests."""
+        self.logger.info("Running integration tests")
         
         # Simulate integration tests
         # In real implementation, this would run actual integration tests
@@ -494,7 +524,8 @@ class DeploymentAutomation:
         }
     
     async def _validate_monitoring(self, plan: DeploymentPlan):
-        """Validate monitoring systems."""        self.logger.info("Validating monitoring systems")
+        """Validate monitoring systems."""
+        self.logger.info("Validating monitoring systems")
         
         # Check monitoring endpoints
         for service in plan.services:
@@ -504,65 +535,85 @@ class DeploymentAutomation:
     
     # Placeholder methods for additional functionality
     async def _get_current_service_versions(self, services: List[str]) -> Dict[str, str]:
-        """Get current service versions."""        return {service: "1.0.0" for service in services}
+        """Get current service versions."""
+        return {service: "1.0.0" for service in services}
     
     async def _get_current_configuration(self) -> Dict[str, Any]:
-        """Get current configuration."""        return {'config': 'current'}
+        """Get current configuration."""
+        return {'config': 'current'}
     
     async def _get_service_dependencies(self, service: str) -> List[str]:
-        """Get service dependencies."""        return []
+        """Get service dependencies."""
+        return []
     
     async def _check_dependency_status(self, dependency: str) -> Dict[str, Any]:
-        """Check dependency status."""        return {'healthy': True}
+        """Check dependency status."""
+        return {'healthy': True}
     
     async def _get_service_health(self, service: str) -> Dict[str, Any]:
-        """Get service health."""        return {'healthy': True}
+        """Get service health."""
+        return {'healthy': True}
     
     async def _deploy_to_staging(self, service: str, plan: DeploymentPlan):
-        """Deploy to staging environment."""        pass
+        """Deploy to staging environment."""
+        pass
     
     async def _warm_up_instances(self, service: str):
-        """Warm up new instances."""        pass
+        """Warm up new instances."""
+        pass
     
     async def _gradual_traffic_switch(self, service: str):
-        """Gradually switch traffic."""        pass
+        """Gradually switch traffic."""
+        pass
     
     async def _verify_new_version(self, service: str):
-        """Verify new version."""        pass
+        """Verify new version."""
+        pass
     
     async def _check_service_monitoring(self, service: str) -> Dict[str, Any]:
-        """Check service monitoring."""        return {'monitoring_active': True}
+        """Check service monitoring."""
+        return {'monitoring_active': True}
     
     async def _update_service_discovery(self, plan: DeploymentPlan):
-        """Update service discovery."""        pass
+        """Update service discovery."""
+        pass
     
     async def _enable_traffic_routing(self, plan: DeploymentPlan):
-        """Enable traffic routing."""        pass
+        """Enable traffic routing."""
+        pass
     
     async def _cleanup_old_resources(self, plan: DeploymentPlan):
-        """Cleanup old resources."""        pass
+        """Cleanup old resources."""
+        pass
     
     async def _update_deployment_documentation(self, plan: DeploymentPlan):
-        """Update deployment documentation."""        pass
+        """Update deployment documentation."""
+        pass
     
     async def _send_deployment_notifications(self, plan: DeploymentPlan):
-        """Send deployment notifications."""        pass
+        """Send deployment notifications."""
+        pass
     
     async def _stop_new_deployments(self, plan: DeploymentPlan):
-        """Stop new deployments."""        pass
+        """Stop new deployments."""
+        pass
     
     async def _rollback_service(self, service_info: Dict[str, Any], plan: DeploymentPlan):
-        """Rollback service."""        pass
+        """Rollback service."""
+        pass
     
     async def _restore_configuration(self, config_backup: Dict[str, Any]):
-        """Restore configuration."""        pass
+        """Restore configuration."""
+        pass
     
     async def _verify_rollback(self, plan: DeploymentPlan):
-        """Verify rollback."""        pass
+        """Verify rollback."""
+        pass
 
 
 def main():
-    """Main deployment script entry point."""    parser = argparse.ArgumentParser(
+    """Main deployment script entry point."""
+    parser = argparse.ArgumentParser(
         description="IA Influencer Agent Cloud Deployment Automation"
     )
     

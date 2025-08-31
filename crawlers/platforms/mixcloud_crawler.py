@@ -5,7 +5,8 @@ and music curation tracking capabilities for the IA Influencer Agent platform.
 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized reproduction or distribution of this code is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MixcloudShow:
-    """Comprehensive Mixcloud show/mix data structure."""    show_id: str
+    """Comprehensive Mixcloud show/mix data structure."""
+    show_id: str
     key: str
     name: str
     description: str
@@ -57,7 +59,8 @@ class MixcloudShow:
 
 @dataclass
 class MixcloudUser:
-    """Mixcloud user profile data structure."""    user_id: str
+    """Mixcloud user profile data structure."""
+    user_id: str
     username: str
     display_name: str
     bio: str
@@ -85,7 +88,8 @@ class MixcloudUser:
 
 @dataclass
 class MixcloudSearchResult:
-    """Mixcloud search result data structure."""    query: str
+    """Mixcloud search result data structure."""
+    query: str
     total_results: int
     shows: List[MixcloudShow]
     users: List[MixcloudUser]
@@ -98,7 +102,8 @@ class MixcloudSearchResult:
 
 @dataclass
 class MixcloudAnalytics:
-    """Mixcloud analytics and insights data."""    period_start: datetime
+    """Mixcloud analytics and insights data."""
+    period_start: datetime
     period_end: datetime
     total_plays: int
     total_favorites: int
@@ -115,7 +120,8 @@ class MixcloudAnalytics:
 
 
 class MixcloudCrawler:
-    """    Enterprise-grade Mixcloud crawler with advanced audio content analysis.
+    """
+    Enterprise-grade Mixcloud crawler with advanced audio content analysis.
     
     Features:
     - DJ mix and podcast monitoring
@@ -125,7 +131,8 @@ class MixcloudCrawler:
     - Real-time content discovery
     - Copyright violation detection
     - Advanced rate limiting with burst handling
-    """    
+    """
+    
     def __init__(self, config: Dict):
         self.config = config
         self.client_id = config.get('client_id')
@@ -156,14 +163,17 @@ class MixcloudCrawler:
         self.violations_detected = 0
         
     async def __aenter__(self):
-        """Async context manager entry."""        await self.initialize()
+        """Async context manager entry."""
+        await self.initialize()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""        await self.cleanup()
+        """Async context manager exit."""
+        await self.cleanup()
         
     async def initialize(self):
-        """Initialize crawler with authentication and configuration."""        connector = aiohttp.TCPConnector(limit=50, limit_per_host=10)
+        """Initialize crawler with authentication and configuration."""
+        connector = aiohttp.TCPConnector(limit=50, limit_per_host=10)
         timeout = aiohttp.ClientTimeout(total=30, connect=10)
         
         headers = {
@@ -183,11 +193,13 @@ class MixcloudCrawler:
         logger.info("Mixcloud crawler initialized successfully")
         
     async def cleanup(self):
-        """Clean up resources."""        if self.session:
+        """Clean up resources."""
+        if self.session:
             await self.session.close()
             
     async def _make_request(self, endpoint: str, params: Dict = None) -> Dict:
-        """Make authenticated API request with rate limiting."""        await self.rate_limiter.acquire()
+        """Make authenticated API request with rate limiting."""
+        await self.rate_limiter.acquire()
         
         url = f"{self.base_url}/{endpoint.lstrip('/')}"
         proxy = await self.proxy_manager.get_proxy()
@@ -220,7 +232,8 @@ class MixcloudCrawler:
         limit: int = 50,
         filters: Dict = None
     ) -> MixcloudSearchResult:
-        """        Search for shows/mixes with advanced filtering.
+        """
+        Search for shows/mixes with advanced filtering.
         
         Args:
             query: Search query string
@@ -229,7 +242,8 @@ class MixcloudCrawler:
             
         Returns:
             MixcloudSearchResult with comprehensive show data
-        """        params = {
+        """
+        params = {
             'q': query,
             'limit': min(limit, 100),  # Mixcloud API limit
             'type': 'cloudcast'
@@ -260,7 +274,8 @@ class MixcloudCrawler:
         )
         
     async def get_show_details(self, show_key: str) -> Optional[MixcloudShow]:
-        """Get detailed information about a specific show."""        try:
+        """Get detailed information about a specific show."""
+        try:
             data = await self._make_request(show_key)
             return await self._parse_show_data(data)
         except Exception as e:
@@ -272,7 +287,8 @@ class MixcloudCrawler:
         username: str, 
         limit: int = 50
     ) -> List[MixcloudShow]:
-        """Get shows from a specific user."""        params = {'limit': min(limit, 100)}
+        """Get shows from a specific user."""
+        params = {'limit': min(limit, 100)}
         
         try:
             data = await self._make_request(f'{username}/cloudcasts/', params)
@@ -290,7 +306,8 @@ class MixcloudCrawler:
             return []
             
     async def get_trending_shows(self, genre: str = None) -> List[MixcloudShow]:
-        """Get trending shows, optionally filtered by genre."""        params = {}
+        """Get trending shows, optionally filtered by genre."""
+        params = {}
         if genre:
             params['tags'] = genre
             
@@ -310,7 +327,8 @@ class MixcloudCrawler:
             return []
             
     async def analyze_audio_content(self, show: MixcloudShow) -> Dict:
-        """Analyze audio content of a show using advanced audio processing."""        if not show.audio_url:
+        """Analyze audio content of a show using advanced audio processing."""
+        if not show.audio_url:
             return {}
             
         try:
@@ -352,7 +370,8 @@ class MixcloudCrawler:
         keywords: List[str],
         duration: int = 3600
     ) -> AsyncGenerator[MixcloudShow, None]:
-        """        Monitor Mixcloud in real-time for specific keywords.
+        """
+        Monitor Mixcloud in real-time for specific keywords.
         
         Args:
             keywords: List of keywords to monitor
@@ -360,7 +379,8 @@ class MixcloudCrawler:
             
         Yields:
             MixcloudShow objects as they are discovered
-        """        self.monitored_keywords.update(keywords)
+        """
+        self.monitored_keywords.update(keywords)
         start_time = datetime.utcnow()
         
         logger.info(f"Starting real-time Mixcloud monitoring for: {keywords}")
@@ -391,7 +411,8 @@ class MixcloudCrawler:
         self, 
         protected_content: List[str]
     ) -> List[Dict]:
-        """Detect potential copyright violations of protected content."""        violations = []
+        """Detect potential copyright violations of protected content."""
+        violations = []
         
         for content_id in protected_content:
             # Search for similar audio content
@@ -414,7 +435,8 @@ class MixcloudCrawler:
         return violations
         
     async def _parse_show_data(self, data: Dict) -> Optional[MixcloudShow]:
-        """Parse Mixcloud API show data into structured format."""        try:
+        """Parse Mixcloud API show data into structured format."""
+        try:
             return MixcloudShow(
                 show_id=data.get('slug', ''),
                 key=data.get('key', ''),
@@ -457,7 +479,8 @@ class MixcloudCrawler:
             return None
             
     async def _generate_audio_fingerprint(self, audio_url: str) -> str:
-        """Generate audio fingerprint for content."""        try:
+        """Generate audio fingerprint for content."""
+        try:
             # This would implement audio fingerprinting
             # using libraries like chromaprint/acoustid
             audio_hash = await self.fingerprinter.generate_audio_hash(audio_url)
@@ -467,7 +490,8 @@ class MixcloudCrawler:
             return ""
             
     async def _detect_similar_audio(self, audio_fingerprint: str) -> List[str]:
-        """Detect similar audio content using fingerprinting."""        try:
+        """Detect similar audio content using fingerprinting."""
+        try:
             similar_hashes = await self.fingerprinter.find_similar_content(
                 audio_fingerprint, 
                 threshold=0.1,
@@ -483,7 +507,8 @@ class MixcloudCrawler:
         show: MixcloudShow, 
         audio_fingerprint: str
     ) -> float:
-        """Analyze content for potential copyright violations."""        violation_score = 0.0
+        """Analyze content for potential copyright violations."""
+        violation_score = 0.0
         
         try:
             # Check against protected content database
@@ -510,7 +535,8 @@ class MixcloudCrawler:
         return violation_score
         
     async def _analyze_track_sections(self, show: MixcloudShow) -> Dict:
-        """Analyze individual tracks within a DJ mix."""        track_analysis = {
+        """Analyze individual tracks within a DJ mix."""
+        track_analysis = {
             'total_tracks': len(show.track_sections),
             'identified_tracks': 0,
             'copyrighted_tracks': 0,
@@ -552,7 +578,8 @@ class MixcloudCrawler:
         return track_analysis
         
     async def _handle_violation_detected(self, show: MixcloudShow):
-        """Handle detected copyright violation."""        logger.warning(
+        """Handle detected copyright violation."""
+        logger.warning(
             f"Copyright violation detected: Show {show.show_id} "
             f"(score: {show.violation_score:.2f})"
         )
@@ -567,7 +594,8 @@ class MixcloudCrawler:
         }
         
     async def _extract_genres(self, shows: List[MixcloudShow]) -> List[str]:
-        """Extract genres from show collection."""        genre_counts = {}
+        """Extract genres from show collection."""
+        genre_counts = {}
         
         for show in shows:
             for tag in show.tags:
@@ -578,7 +606,8 @@ class MixcloudCrawler:
         return sorted(genre_counts.keys(), key=genre_counts.get, reverse=True)[:10]
         
     async def _extract_trending_tags(self, shows: List[MixcloudShow]) -> List[str]:
-        """Extract trending tags from show collection."""        tag_counts = {}
+        """Extract trending tags from show collection."""
+        tag_counts = {}
         
         for show in shows:
             for tag in show.tags:
@@ -588,14 +617,16 @@ class MixcloudCrawler:
         return [tag for tag, count in trending[:20]]
         
     async def _find_similar_content(self, content_id: str) -> List[MixcloudShow]:
-        """Find content similar to protected content."""        return []
+        """Find content similar to protected content."""
+        return []
         
     async def _calculate_violation_score(
         self, 
         original_content_id: str, 
         show: MixcloudShow
     ) -> float:
-        """Calculate violation score between original content and show."""        return 0.0
+        """Calculate violation score between original content and show."""
+        return 0.0
         
     async def _generate_section_fingerprint(
         self, 
@@ -603,13 +634,16 @@ class MixcloudCrawler:
         start_time: int, 
         end_time: int
     ) -> str:
-        """Generate fingerprint for specific audio section."""        return ""
+        """Generate fingerprint for specific audio section."""
+        return ""
         
     async def _check_track_copyright(self, track_info: Dict) -> Dict:
-        """Check copyright status of identified track."""        return {'is_copyrighted': False}
+        """Check copyright status of identified track."""
+        return {'is_copyrighted': False}
         
     def get_performance_metrics(self) -> Dict:
-        """Get crawler performance metrics."""        return {
+        """Get crawler performance metrics."""
+        return {
             'requests_made': self.requests_made,
             'content_analyzed': self.content_analyzed,
             'violations_detected': self.violations_detected,

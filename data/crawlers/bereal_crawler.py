@@ -21,7 +21,8 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -38,7 +39,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class BeRealPost:
-    """BeReal post information"""    post_id: str
+    """BeReal post information"""
+    post_id: str
     user_id: str
     username: str
     display_name: str
@@ -71,7 +73,8 @@ class BeRealPost:
 
 @dataclass
 class BeRealUser:
-    """BeReal user information"""    user_id: str
+    """BeReal user information"""
+    user_id: str
     username: str
     display_name: str
     profile_picture_url: str
@@ -101,7 +104,8 @@ class BeRealUser:
 
 @dataclass
 class BeRealMemory:
-    """BeReal memory information"""    memory_id: str
+    """BeReal memory information"""
+    memory_id: str
     user_id: str
     date: datetime
     primary_photo_url: str
@@ -122,7 +126,8 @@ class BeRealMemory:
 
 @dataclass
 class BeRealComment:
-    """BeReal comment information"""    comment_id: str
+    """BeReal comment information"""
+    comment_id: str
     post_id: str
     user_id: str
     username: str
@@ -139,7 +144,8 @@ class BeRealComment:
 
 @dataclass
 class BeRealReaction:
-    """BeReal reaction information"""    reaction_id: str
+    """BeReal reaction information"""
+    reaction_id: str
     post_id: str
     user_id: str
     username: str
@@ -152,7 +158,8 @@ class BeRealReaction:
 
 
 class BeRealCrawler(PlatformCrawler):
-    """    Advanced BeReal crawler for authentic social content monitoring.
+    """
+    Advanced BeReal crawler for authentic social content monitoring.
     
     Features:
     - Real moments tracking
@@ -165,7 +172,8 @@ class BeRealCrawler(PlatformCrawler):
     - Authenticity verification
     - Time-based content analysis
     - Social interaction tracking
-    """    
+    """
+    
     def __init__(self, config: CrawlerConfig, vector_matcher=None):
         super().__init__(config, vector_matcher)
         self.platform_name = "bereal"
@@ -197,7 +205,8 @@ class BeRealCrawler(PlatformCrawler):
         self._setup_session_headers()
     
     def _setup_session_headers(self):
-        """Setup BeReal-specific headers"""        self.session_headers.update({
+        """Setup BeReal-specific headers"""
+        self.session_headers.update({
             'Accept': 'application/json',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'en-US,en;q=0.9',
@@ -211,7 +220,8 @@ class BeRealCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: str = "posts", 
                            max_results: int = 50, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """        Search for content on BeReal.
+        """
+        Search for content on BeReal.
         
         Args:
             query: Search query
@@ -221,7 +231,8 @@ class BeRealCrawler(PlatformCrawler):
             
         Returns:
             List of crawler results
-        """        try:
+        """
+        try:
             await self._check_rate_limit()
             
             if content_type not in self.content_types:
@@ -239,7 +250,8 @@ class BeRealCrawler(PlatformCrawler):
             return []
     
     async def _crawl_posts(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl BeReal posts"""        try:
+        """Crawl BeReal posts"""
+        try:
             results = []
             
             # BeReal doesn't have traditional search, so we simulate discovery
@@ -285,7 +297,8 @@ class BeRealCrawler(PlatformCrawler):
             return []
     
     async def _crawl_users(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl BeReal users"""        try:
+        """Crawl BeReal users"""
+        try:
             results = []
             
             # Mock user data
@@ -329,7 +342,8 @@ class BeRealCrawler(PlatformCrawler):
             return []
     
     async def _crawl_memories(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl BeReal memories"""        try:
+        """Crawl BeReal memories"""
+        try:
             results = []
             
             # Mock memory data
@@ -372,7 +386,8 @@ class BeRealCrawler(PlatformCrawler):
             return []
     
     async def _crawl_comments(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl BeReal comments"""        try:
+        """Crawl BeReal comments"""
+        try:
             results = []
             
             # Mock comment data
@@ -411,7 +426,8 @@ class BeRealCrawler(PlatformCrawler):
             return []
     
     async def _crawl_reactions(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl BeReal reactions"""        try:
+        """Crawl BeReal reactions"""
+        try:
             results = []
             
             # Mock reaction data
@@ -449,7 +465,8 @@ class BeRealCrawler(PlatformCrawler):
             return []
     
     async def _crawl_discovery(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl BeReal discovery feed"""        try:
+        """Crawl BeReal discovery feed"""
+        try:
             results = []
             
             # Get discovery content
@@ -480,7 +497,8 @@ class BeRealCrawler(PlatformCrawler):
             return []
     
     async def _crawl_friends(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl BeReal friends feed"""        try:
+        """Crawl BeReal friends feed"""
+        try:
             results = []
             
             # Get friends feed content
@@ -510,7 +528,8 @@ class BeRealCrawler(PlatformCrawler):
             return []
     
     async def _crawl_search(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """General BeReal search"""        try:
+        """General BeReal search"""
+        try:
             results = []
             
             # Search across different content types
@@ -531,7 +550,8 @@ class BeRealCrawler(PlatformCrawler):
     # Mock data generators (for demonstration)
     
     async def _get_mock_posts(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock post data"""        posts = []
+        """Generate mock post data"""
+        posts = []
         
         for i in range(min(max_results, 20)):
             creation_time = datetime.utcnow() - timedelta(hours=random.randint(1, 72))
@@ -560,7 +580,8 @@ class BeRealCrawler(PlatformCrawler):
         return posts
     
     async def _get_mock_users(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock user data"""        users = []
+        """Generate mock user data"""
+        users = []
         
         for i in range(min(max_results, 15)):
             creation_date = datetime.utcnow() - timedelta(days=random.randint(30, 730))
@@ -584,7 +605,8 @@ class BeRealCrawler(PlatformCrawler):
         return users
     
     async def _get_mock_memories(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock memory data"""        memories = []
+        """Generate mock memory data"""
+        memories = []
         
         for i in range(min(max_results, 25)):
             memory_date = datetime.utcnow() - timedelta(days=random.randint(1, 365))
@@ -608,7 +630,8 @@ class BeRealCrawler(PlatformCrawler):
         return memories
     
     async def _get_mock_comments(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock comment data"""        comments = []
+        """Generate mock comment data"""
+        comments = []
         
         for i in range(min(max_results, 30)):
             creation_time = datetime.utcnow() - timedelta(hours=random.randint(1, 48))
@@ -629,7 +652,8 @@ class BeRealCrawler(PlatformCrawler):
         return comments
     
     async def _get_mock_reactions(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock reaction data"""        reactions = []
+        """Generate mock reaction data"""
+        reactions = []
         emojis = ['😍', '😂', '🔥', '👏', '💯', '😱', '🥰', '😭']
         
         for i in range(min(max_results, 40)):
@@ -649,7 +673,8 @@ class BeRealCrawler(PlatformCrawler):
         return reactions
     
     async def _get_discovery_content(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get discovery feed content"""        content = []
+        """Get discovery feed content"""
+        content = []
         
         for i in range(min(max_results, 15)):
             content.append({
@@ -663,7 +688,8 @@ class BeRealCrawler(PlatformCrawler):
         return content
     
     async def _get_friends_content(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get friends feed content"""        content = []
+        """Get friends feed content"""
+        content = []
         
         for i in range(min(max_results, 20)):
             content.append({
@@ -678,7 +704,8 @@ class BeRealCrawler(PlatformCrawler):
     # Parser methods
     
     async def _parse_post_data(self, post_data: Dict[str, Any]) -> Optional[BeRealPost]:
-        """Parse post data"""        try:
+        """Parse post data"""
+        try:
             creation_time = datetime.fromisoformat(post_data.get('creation_time', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             post = BeRealPost(
@@ -720,7 +747,8 @@ class BeRealCrawler(PlatformCrawler):
             return None
     
     async def _parse_user_data(self, user_data: Dict[str, Any]) -> Optional[BeRealUser]:
-        """Parse user data"""        try:
+        """Parse user data"""
+        try:
             creation_date = datetime.fromisoformat(user_data.get('creation_date', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             user = BeRealUser(
@@ -759,7 +787,8 @@ class BeRealCrawler(PlatformCrawler):
             return None
     
     async def _parse_memory_data(self, memory_data: Dict[str, Any]) -> Optional[BeRealMemory]:
-        """Parse memory data"""        try:
+        """Parse memory data"""
+        try:
             memory_date = datetime.fromisoformat(memory_data.get('date', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             memory = BeRealMemory(
@@ -789,7 +818,8 @@ class BeRealCrawler(PlatformCrawler):
             return None
     
     async def _parse_comment_data(self, comment_data: Dict[str, Any]) -> Optional[BeRealComment]:
-        """Parse comment data"""        try:
+        """Parse comment data"""
+        try:
             creation_time = datetime.fromisoformat(comment_data.get('creation_time', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             comment = BeRealComment(
@@ -815,7 +845,8 @@ class BeRealCrawler(PlatformCrawler):
             return None
     
     async def _parse_reaction_data(self, reaction_data: Dict[str, Any]) -> Optional[BeRealReaction]:
-        """Parse reaction data"""        try:
+        """Parse reaction data"""
+        try:
             creation_time = datetime.fromisoformat(reaction_data.get('creation_time', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             reaction = BeRealReaction(
@@ -838,7 +869,8 @@ class BeRealCrawler(PlatformCrawler):
             return None
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""        try:
+        """Check and enforce rate limiting"""
+        try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
             
@@ -854,7 +886,8 @@ class BeRealCrawler(PlatformCrawler):
             self.logger.error(f"Error in rate limiting: {str(e)}")
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from BeReal content"""        try:
+        """Extract metadata from BeReal content"""
+        try:
             # Parse BeReal URL
             parsed_url = urlparse(url)
             
@@ -891,7 +924,8 @@ class BeRealCrawler(PlatformCrawler):
             return {'error': str(e)}
     
     def get_platform_info(self) -> Dict[str, Any]:
-        """Get BeReal platform information"""        return {
+        """Get BeReal platform information"""
+        return {
             'platform_name': 'BeReal',
             'base_url': self.base_url,
             'api_base_url': self.api_base_url,

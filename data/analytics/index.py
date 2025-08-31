@@ -15,7 +15,8 @@ WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Optional, Any, List
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -42,19 +43,22 @@ from .competition_intelligence_analytics import CompetitionIntelligenceAnalytics
 
 
 class AnalyticsServiceFactory:
-    """    Enhanced factory class for creating and managing analytics services.
+    """
+    Enhanced factory class for creating and managing analytics services.
     
     Provides centralized access to all 15 analytics engines and ensures
     proper initialization and configuration of analytics services.
     
     COMPLETION STATUS: FULLY IMPLEMENTED - 15 ANALYTICS ENGINES
     Total Classes: 87 | Total Enums: 34 | Production Ready: 100%
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, redis_client: Redis,
                  storage_manager: Optional[Any] = None,
                  vector_db: Optional[Any] = None,
                  kafka_producer: Optional[Any] = None):
-        """        Initialize Enhanced AnalyticsServiceFactory.
+        """
+        Initialize Enhanced AnalyticsServiceFactory.
         
         Args:
             db_session: Async database session
@@ -62,7 +66,8 @@ class AnalyticsServiceFactory:
             storage_manager: Storage management service (optional)
             vector_db: Vector database manager (optional)
             kafka_producer: Kafka producer for streaming (optional)
-        """        self.db_session = db_session
+        """
+        self.db_session = db_session
         self.redis_client = redis_client
         self.storage_manager = storage_manager
         self.vector_db = vector_db
@@ -94,7 +99,8 @@ class AnalyticsServiceFactory:
         
     # EXISTING CORE SERVICES
     def get_content_analytics(self) -> ContentAnalytics:
-        """Get ContentAnalytics service instance"""        if 'content_analytics' not in self._services:
+        """Get ContentAnalytics service instance"""
+        if 'content_analytics' not in self._services:
             self._services['content_analytics'] = ContentAnalytics(
                 db_session=self.db_session,
                 redis_client=self.redis_client,
@@ -104,7 +110,8 @@ class AnalyticsServiceFactory:
         return self._services['content_analytics']
     
     def get_performance_metrics(self) -> PerformanceMetrics:
-        """Get PerformanceMetrics service instance"""        if 'performance_metrics' not in self._services:
+        """Get PerformanceMetrics service instance"""
+        if 'performance_metrics' not in self._services:
             self._services['performance_metrics'] = PerformanceMetrics(
                 db_session=self.db_session,
                 redis_client=self.redis_client
@@ -112,7 +119,8 @@ class AnalyticsServiceFactory:
         return self._services['performance_metrics']
     
     def get_revenue_analytics(self) -> RevenueAnalytics:
-        """Get RevenueAnalytics service instance"""        if 'revenue_analytics' not in self._services:
+        """Get RevenueAnalytics service instance"""
+        if 'revenue_analytics' not in self._services:
             self._services['revenue_analytics'] = RevenueAnalytics(
                 db_session=self.db_session,
                 redis_client=self.redis_client,
@@ -122,7 +130,8 @@ class AnalyticsServiceFactory:
     
     # NEW ADVANCED SERVICES - INDUSTRIAL GRADE
     def get_ai_insights_analytics(self) -> AIInsightsAnalytics:
-        """Get AIInsightsAnalytics service instance"""        if 'ai_insights_analytics' not in self._services:
+        """Get AIInsightsAnalytics service instance"""
+        if 'ai_insights_analytics' not in self._services:
             self._services['ai_insights_analytics'] = AIInsightsAnalytics(
                 db_session=self.db_session,
                 redis_client=self.redis_client,
@@ -132,7 +141,8 @@ class AnalyticsServiceFactory:
         return self._services['ai_insights_analytics']
     
     def get_cross_platform_analytics(self) -> CrossPlatformAnalytics:
-        """Get CrossPlatformAnalytics service instance"""        if 'cross_platform_analytics' not in self._services:
+        """Get CrossPlatformAnalytics service instance"""
+        if 'cross_platform_analytics' not in self._services:
             self._services['cross_platform_analytics'] = CrossPlatformAnalytics(
                 db_session=self.db_session,
                 redis_client=self.redis_client,
@@ -142,7 +152,8 @@ class AnalyticsServiceFactory:
         return self._services['cross_platform_analytics']
     
     def get_platform_integration_analytics(self) -> PlatformIntegrationAnalytics:
-        """Get PlatformIntegrationAnalytics service instance"""        if 'platform_integration_analytics' not in self._services:
+        """Get PlatformIntegrationAnalytics service instance"""
+        if 'platform_integration_analytics' not in self._services:
             self._services['platform_integration_analytics'] = PlatformIntegrationAnalytics(
                 db_session=self.db_session,
                 redis_client=self.redis_client,
@@ -152,7 +163,8 @@ class AnalyticsServiceFactory:
         return self._services['platform_integration_analytics']
     
     def get_competition_intelligence_analytics(self) -> CompetitionIntelligenceAnalytics:
-        """Get CompetitionIntelligenceAnalytics service instance"""        if 'competition_intelligence_analytics' not in self._services:
+        """Get CompetitionIntelligenceAnalytics service instance"""
+        if 'competition_intelligence_analytics' not in self._services:
             self._services['competition_intelligence_analytics'] = CompetitionIntelligenceAnalytics(
                 db_session=self.db_session,
                 redis_client=self.redis_client,
@@ -163,7 +175,8 @@ class AnalyticsServiceFactory:
     
     # ENHANCED FACTORY METHODS
     def create_full_analytics_suite(self) -> Dict[str, Any]:
-        """Create complete analytics suite with all 15 engines"""        return {
+        """Create complete analytics suite with all 15 engines"""
+        return {
             "content_analytics": self.get_content_analytics(),
             "performance_metrics": self.get_performance_metrics(),
             "revenue_analytics": self.get_revenue_analytics(),
@@ -183,7 +196,8 @@ class AnalyticsServiceFactory:
         }
     
     def get_analytics_engine_by_name(self, engine_name: str) -> Optional[Any]:
-        """Get specific analytics engine by name"""        if engine_name not in self._engine_registry:
+        """Get specific analytics engine by name"""
+        if engine_name not in self._engine_registry:
             self.logger.error(f"Unknown analytics engine: {engine_name}")
             return None
         
@@ -194,10 +208,12 @@ class AnalyticsServiceFactory:
         return None
     
     def list_available_engines(self) -> List[str]:
-        """List all available analytics engines"""        return list(self._engine_registry.keys())
+        """List all available analytics engines"""
+        return list(self._engine_registry.keys())
     
     def get_engine_status(self) -> Dict[str, Any]:
-        """Get status of all analytics engines"""        return {
+        """Get status of all analytics engines"""
+        return {
             "total_engines": len(self._engine_registry),
             "loaded_engines": len(self._services),
             "available_engines": self.list_available_engines(),
@@ -207,7 +223,8 @@ class AnalyticsServiceFactory:
         }
     
     async def initialize_all_engines(self) -> Dict[str, bool]:
-        """Initialize all analytics engines"""        initialization_results = {}
+        """Initialize all analytics engines"""
+        initialization_results = {}
         
         for engine_name in self._engine_registry.keys():
             try:
@@ -225,7 +242,8 @@ class AnalyticsServiceFactory:
         return initialization_results
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on all analytics services"""        health_status = {
+        """Perform health check on all analytics services"""
+        health_status = {
             "overall_status": "healthy",
             "services": {},
             "database_connection": True,
@@ -269,11 +287,13 @@ class AnalyticsServiceFactory:
         return self._services['revenue_analytics']
     
     def get_user_behavior_analytics(self) -> UserBehaviorAnalytics:
-        """        Get UserBehaviorAnalytics service instance.
+        """
+        Get UserBehaviorAnalytics service instance.
         
         Returns:
             UserBehaviorAnalytics service
-        """        if 'user_behavior_analytics' not in self._services:
+        """
+        if 'user_behavior_analytics' not in self._services:
             self._services['user_behavior_analytics'] = UserBehaviorAnalytics(
                 db_session=self.db_session,
                 redis_client=self.redis_client
@@ -281,11 +301,13 @@ class AnalyticsServiceFactory:
         return self._services['user_behavior_analytics']
     
     def get_real_time_analytics(self) -> RealTimeAnalytics:
-        """        Get RealTimeAnalytics service instance.
+        """
+        Get RealTimeAnalytics service instance.
         
         Returns:
             RealTimeAnalytics service
-        """        if 'real_time_analytics' not in self._services:
+        """
+        if 'real_time_analytics' not in self._services:
             self._services['real_time_analytics'] = RealTimeAnalytics(
                 db_session=self.db_session,
                 redis_client=self.redis_client,
@@ -294,11 +316,13 @@ class AnalyticsServiceFactory:
         return self._services['real_time_analytics']
     
     def get_predictive_analytics(self) -> PredictiveAnalytics:
-        """        Get PredictiveAnalytics service instance.
+        """
+        Get PredictiveAnalytics service instance.
         
         Returns:
             PredictiveAnalytics service
-        """        if 'predictive_analytics' not in self._services:
+        """
+        if 'predictive_analytics' not in self._services:
             self._services['predictive_analytics'] = PredictiveAnalytics(
                 db_session=self.db_session,
                 redis_client=self.redis_client
@@ -306,11 +330,13 @@ class AnalyticsServiceFactory:
         return self._services['predictive_analytics']
     
     def get_collaboration_analytics(self) -> CollaborationAnalytics:
-        """        Get CollaborationAnalytics service instance.
+        """
+        Get CollaborationAnalytics service instance.
         
         Returns:
             CollaborationAnalytics service
-        """        if 'collaboration_analytics' not in self._services:
+        """
+        if 'collaboration_analytics' not in self._services:
             self._services['collaboration_analytics'] = CollaborationAnalytics(
                 db_session=self.db_session,
                 redis_client=self.redis_client,
@@ -320,11 +346,13 @@ class AnalyticsServiceFactory:
         return self._services['collaboration_analytics']
     
     def get_seo_analytics(self) -> SEOAnalytics:
-        """        Get SEOAnalytics service instance.
+        """
+        Get SEOAnalytics service instance.
         
         Returns:
             SEOAnalytics service
-        """        if 'seo_analytics' not in self._services:
+        """
+        if 'seo_analytics' not in self._services:
             self._services['seo_analytics'] = SEOAnalytics(
                 db_session=self.db_session,
                 redis_client=self.redis_client,
@@ -334,11 +362,13 @@ class AnalyticsServiceFactory:
         return self._services['seo_analytics']
     
     def get_distribution_analytics(self) -> DistributionAnalytics:
-        """        Get DistributionAnalytics service instance.
+        """
+        Get DistributionAnalytics service instance.
         
         Returns:
             DistributionAnalytics service
-        """        if 'distribution_analytics' not in self._services:
+        """
+        if 'distribution_analytics' not in self._services:
             self._services['distribution_analytics'] = DistributionAnalytics(
                 db_session=self.db_session,
                 redis_client=self.redis_client,
@@ -348,11 +378,13 @@ class AnalyticsServiceFactory:
         return self._services['distribution_analytics']
     
     def get_market_intelligence(self) -> MarketIntelligenceAnalytics:
-        """        Get MarketIntelligenceAnalytics service instance.
+        """
+        Get MarketIntelligenceAnalytics service instance.
         
         Returns:
             MarketIntelligenceAnalytics service
-        """        if 'market_intelligence' not in self._services:
+        """
+        if 'market_intelligence' not in self._services:
             self._services['market_intelligence'] = MarketIntelligenceAnalytics(
                 db_session=self.db_session,
                 redis_client=self.redis_client,
@@ -362,11 +394,13 @@ class AnalyticsServiceFactory:
         return self._services['market_intelligence']
     
     def get_advanced_enrichment(self) -> AdvancedAnalyticsEnrichment:
-        """        Get AdvancedAnalyticsEnrichment service instance.
+        """
+        Get AdvancedAnalyticsEnrichment service instance.
         
         Returns:
             AdvancedAnalyticsEnrichment service
-        """        if 'advanced_enrichment' not in self._services:
+        """
+        if 'advanced_enrichment' not in self._services:
             self._services['advanced_enrichment'] = AdvancedAnalyticsEnrichment(
                 db_session=self.db_session,
                 redis_client=self.redis_client,
@@ -376,11 +410,13 @@ class AnalyticsServiceFactory:
         return self._services['advanced_enrichment']
     
     def get_all_services(self) -> Dict[str, Any]:
-        """        Get all analytics services.
+        """
+        Get all analytics services.
         
         Returns:
             Dictionary of all analytics services
-        """        return {
+        """
+        return {
             'content_analytics': self.get_content_analytics(),
             'performance_metrics': self.get_performance_metrics(),
             'revenue_analytics': self.get_revenue_analytics(),
@@ -395,11 +431,13 @@ class AnalyticsServiceFactory:
         }
     
     async def initialize_services(self) -> None:
-        """        Initialize all analytics services.
+        """
+        Initialize all analytics services.
         
         Performs any necessary setup, configuration, and warming up
         of analytics services for optimal performance.
-        """        try:
+        """
+        try:
             self.logger.info("Initializing analytics services...")
             
             # Initialize all services
@@ -420,11 +458,13 @@ class AnalyticsServiceFactory:
             self.logger.error(f"Error initializing analytics services: {str(e)}")
     
     async def health_check(self) -> Dict[str, Any]:
-        """        Perform health check on all analytics services.
+        """
+        Perform health check on all analytics services.
         
         Returns:
             Health status of all services
-        """        try:
+        """
+        try:
             health_status = {
                 'overall_status': 'healthy',
                 'services': {},
@@ -475,11 +515,13 @@ class AnalyticsServiceFactory:
             }
     
     async def cleanup(self) -> None:
-        """        Cleanup analytics services and release resources.
+        """
+        Cleanup analytics services and release resources.
         
         Should be called when shutting down the application to ensure
         proper cleanup of resources and connections.
-        """        try:
+        """
+        try:
             self.logger.info("Cleaning up analytics services...")
             
             services = self._services.copy()
@@ -502,28 +544,34 @@ class AnalyticsServiceFactory:
 
 
 class AnalyticsManager:
-    """    High-level analytics manager for coordinating analytics operations.
+    """
+    High-level analytics manager for coordinating analytics operations.
     
     Provides a unified interface for complex analytics operations that
     require coordination between multiple analytics services.
-    """    
+    """
+    
     def __init__(self, factory: AnalyticsServiceFactory):
-        """        Initialize AnalyticsManager.
+        """
+        Initialize AnalyticsManager.
         
         Args:
             factory: AnalyticsServiceFactory instance
-        """        self.factory = factory
+        """
+        self.factory = factory
         self.logger = logging.getLogger(__name__)
     
     async def generate_comprehensive_report(self, user_id: str) -> Dict[str, Any]:
-        """        Generate comprehensive analytics report using all services.
+        """
+        Generate comprehensive analytics report using all services.
         
         Args:
             user_id: User identifier
             
         Returns:
             Comprehensive analytics report
-        """        try:
+        """
+        try:
             self.logger.info(f"Generating comprehensive report for user {user_id}")
             
             # Get all analytics services
@@ -564,14 +612,16 @@ class AnalyticsManager:
             return {'error': str(e)}
     
     async def optimize_user_performance(self, user_id: str) -> Dict[str, Any]:
-        """        Perform comprehensive performance optimization for user.
+        """
+        Perform comprehensive performance optimization for user.
         
         Args:
             user_id: User identifier
             
         Returns:
             Optimization results and recommendations
-        """        try:
+        """
+        try:
             self.logger.info(f"Optimizing performance for user {user_id}")
             
             # Get services
@@ -607,7 +657,8 @@ class AnalyticsManager:
             return {'error': str(e)}
     
     def _extract_priority_actions(self, optimization_results: list) -> list:
-        """Extract priority actions from optimization results."""        try:
+        """Extract priority actions from optimization results."""
+        try:
             priority_actions = []
             
             for result in optimization_results:
@@ -628,7 +679,8 @@ class AnalyticsManager:
             return []
     
     def _calculate_expected_improvements(self, optimization_results: list) -> Dict[str, float]:
-        """Calculate expected improvements from optimization results."""        try:
+        """Calculate expected improvements from optimization results."""
+        try:
             improvements = {
                 'engagement_improvement': 0.0,
                 'revenue_improvement': 0.0,
@@ -659,18 +711,21 @@ analytics_manager: Optional[AnalyticsManager] = None
 
 
 def get_analytics_factory() -> Optional[AnalyticsServiceFactory]:
-    """Get the global analytics factory instance."""    return analytics_factory
+    """Get the global analytics factory instance."""
+    return analytics_factory
 
 
 def get_analytics_manager() -> Optional[AnalyticsManager]:
-    """Get the global analytics manager instance."""    return analytics_manager
+    """Get the global analytics manager instance."""
+    return analytics_manager
 
 
 def initialize_analytics(db_session: AsyncSession, redis_client: Redis,
                         storage_manager: Optional[Any] = None,
                         vector_db: Optional[Any] = None,
                         kafka_producer: Optional[Any] = None) -> AnalyticsServiceFactory:
-    """    Initialize global analytics services.
+    """
+    Initialize global analytics services.
     
     Args:
         db_session: Async database session
@@ -681,7 +736,8 @@ def initialize_analytics(db_session: AsyncSession, redis_client: Redis,
         
     Returns:
         AnalyticsServiceFactory instance
-    """    global analytics_factory, analytics_manager
+    """
+    global analytics_factory, analytics_manager
     
     analytics_factory = AnalyticsServiceFactory(
         db_session=db_session,

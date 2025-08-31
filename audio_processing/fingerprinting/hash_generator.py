@@ -8,7 +8,8 @@ License: Proprietary - All rights reserved
 WARNING: This code is proprietary and protected by copyright.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Contact: Fahed Mlaiel (mlaiel@live.de) for licensing agreements.
-"""import hashlib
+"""
+import hashlib
 import numpy as np
 import librosa
 from typing import Dict, List, Optional, Tuple, Union, Any
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class HashConfiguration:
-    """Configuration for hash generation algorithms."""    
+    """Configuration for hash generation algorithms."""
+    
     hash_size: int = 64
     sample_rate: int = 22050
     window_size: int = 2048
@@ -37,11 +39,14 @@ class HashConfiguration:
 
 
 class PerceptualHashGenerator:
-    """    Advanced perceptual hash generator for audio content.
+    """
+    Advanced perceptual hash generator for audio content.
     Implements multiple algorithms for robust content identification.
-    """    
+    """
+    
     def __init__(self, config: Optional[HashConfiguration] = None):
-        """Initialize the perceptual hash generator."""        self.config = config or HashConfiguration()
+        """Initialize the perceptual hash generator."""
+        self.config = config or HashConfiguration()
         self.executor = ThreadPoolExecutor(max_workers=4)
         
         logger.info("PerceptualHashGenerator initialized with config: %s", 
@@ -52,7 +57,8 @@ class PerceptualHashGenerator:
         audio_data: Union[str, np.ndarray], 
         metadata: Optional[Dict] = None
     ) -> str:
-        """        Generate perceptual hash based on spectral characteristics.
+        """
+        Generate perceptual hash based on spectral characteristics.
         
         Args:
             audio_data: Audio file path or numpy array
@@ -60,7 +66,8 @@ class PerceptualHashGenerator:
             
         Returns:
             Hexadecimal string representation of the spectral hash
-        """        try:
+        """
+        try:
             # Load and preprocess audio
             y, sr = self._load_audio(audio_data)
             
@@ -102,9 +109,11 @@ class PerceptualHashGenerator:
         self, 
         audio_data: Union[str, np.ndarray]
     ) -> str:
-        """        Generate hash based on chromagram features.
+        """
+        Generate hash based on chromagram features.
         Robust to tempo and key variations.
-        """        try:
+        """
+        try:
             y, sr = self._load_audio(audio_data)
             
             # Extract chroma features
@@ -140,9 +149,11 @@ class PerceptualHashGenerator:
         self, 
         audio_data: Union[str, np.ndarray]
     ) -> str:
-        """        Generate hash based on rhythmic patterns.
+        """
+        Generate hash based on rhythmic patterns.
         Captures tempo and beat structure.
-        """        try:
+        """
+        try:
             y, sr = self._load_audio(audio_data)
             
             # Extract onset strength
@@ -178,9 +189,11 @@ class PerceptualHashGenerator:
         self, 
         audio_data: Union[str, np.ndarray]
     ) -> str:
-        """        Generate hash based on Mel-Frequency Cepstral Coefficients.
+        """
+        Generate hash based on Mel-Frequency Cepstral Coefficients.
         Captures timbral characteristics.
-        """        try:
+        """
+        try:
             y, sr = self._load_audio(audio_data)
             
             # Extract MFCC features
@@ -221,9 +234,11 @@ class PerceptualHashGenerator:
         audio_data: Union[str, np.ndarray], 
         weights: Optional[Dict[str, float]] = None
     ) -> str:
-        """        Generate composite hash combining multiple algorithms.
+        """
+        Generate composite hash combining multiple algorithms.
         Provides maximum robustness for content identification.
-        """        default_weights = {
+        """
+        default_weights = {
             'spectral': 0.3,
             'chromagram': 0.25,
             'rhythm': 0.2,
@@ -263,7 +278,8 @@ class PerceptualHashGenerator:
             raise
     
     def _load_audio(self, audio_data: Union[str, np.ndarray]) -> Tuple[np.ndarray, int]:
-        """Load and preprocess audio data."""        if isinstance(audio_data, str):
+        """Load and preprocess audio data."""
+        if isinstance(audio_data, str):
             y, sr = librosa.load(audio_data, sr=self.config.sample_rate)
         else:
             y, sr = audio_data, self.config.sample_rate
@@ -275,14 +291,16 @@ class PerceptualHashGenerator:
         return y, sr
     
     def _resize_spectrogram(self, spectrogram: np.ndarray, target_shape: Tuple[int, int]) -> np.ndarray:
-        """Resize spectrogram to target dimensions using interpolation."""        return signal.resample(
+        """Resize spectrogram to target dimensions using interpolation."""
+        return signal.resample(
             signal.resample(spectrogram, target_shape[1], axis=1), 
             target_shape[0], 
             axis=0
         )
     
     async def _generate_binary_hash(self, data: np.ndarray) -> np.ndarray:
-        """Generate binary hash from 2D data matrix."""        loop = asyncio.get_event_loop()
+        """Generate binary hash from 2D data matrix."""
+        loop = asyncio.get_event_loop()
         
         def _hash_sync():
             # Calculate gradient-based features
@@ -304,7 +322,8 @@ class PerceptualHashGenerator:
         return await loop.run_in_executor(self.executor, _hash_sync)
     
     def _quantize_intervals(self, intervals: np.ndarray) -> np.ndarray:
-        """Quantize beat intervals to create rhythm pattern."""        if len(intervals) == 0:
+        """Quantize beat intervals to create rhythm pattern."""
+        if len(intervals) == 0:
             return np.zeros(16, dtype=bool)
         
         # Normalize intervals
@@ -323,7 +342,8 @@ class PerceptualHashGenerator:
         return np.array(pattern[:self.config.hash_size], dtype=bool)
     
     def _pad_to_size(self, data: np.ndarray, target_size: int) -> np.ndarray:
-        """Pad or truncate array to target size."""        if len(data) >= target_size:
+        """Pad or truncate array to target size."""
+        if len(data) >= target_size:
             return data[:target_size]
         else:
             padded = np.zeros(target_size, dtype=data.dtype)
@@ -331,7 +351,8 @@ class PerceptualHashGenerator:
             return padded
     
     def _bits_to_hex(self, bits: np.ndarray) -> str:
-        """Convert bit array to hexadecimal string."""        # Ensure multiple of 8 bits for byte conversion
+        """Convert bit array to hexadecimal string."""
+        # Ensure multiple of 8 bits for byte conversion
         padded_bits = self._pad_to_size(bits, ((len(bits) + 7) // 8) * 8)
         
         # Convert to bytes
@@ -346,7 +367,8 @@ class PerceptualHashGenerator:
         return bytes_data.hex()
     
     def _hex_to_bits(self, hex_string: str) -> np.ndarray:
-        """Convert hexadecimal string back to bit array."""        try:
+        """Convert hexadecimal string back to bit array."""
+        try:
             # Convert hex to bytes
             bytes_data = bytes.fromhex(hex_string)
             
@@ -367,16 +389,20 @@ class PerceptualHashGenerator:
             return np.zeros(self.config.hash_size, dtype=bool)
     
     def cleanup(self):
-        """Cleanup resources."""        self.executor.shutdown(wait=True)
+        """Cleanup resources."""
+        self.executor.shutdown(wait=True)
         logger.info("PerceptualHashGenerator cleanup completed")
 
 
 class HashComparator:
-    """    Advanced hash comparison algorithms with multiple similarity metrics.
+    """
+    Advanced hash comparison algorithms with multiple similarity metrics.
     Provides robust matching capabilities for audio content protection.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the hash comparator."""        self.executor = ThreadPoolExecutor(max_workers=2)
+        """Initialize the hash comparator."""
+        self.executor = ThreadPoolExecutor(max_workers=2)
         logger.info("HashComparator initialized")
     
     async def calculate_similarity(
@@ -385,7 +411,8 @@ class HashComparator:
         hash2: str, 
         method: str = 'hamming'
     ) -> float:
-        """        Calculate similarity between two hashes.
+        """
+        Calculate similarity between two hashes.
         
         Args:
             hash1: First hash (hexadecimal string)
@@ -394,7 +421,8 @@ class HashComparator:
             
         Returns:
             Similarity score between 0.0 and 1.0
-        """        methods = {
+        """
+        methods = {
             'hamming': self._hamming_similarity,
             'jaccard': self._jaccard_similarity,
             'cosine': self._cosine_similarity,
@@ -427,14 +455,16 @@ class HashComparator:
             return 0.0
     
     def _hamming_similarity(self, bits1: np.ndarray, bits2: np.ndarray) -> float:
-        """Calculate Hamming similarity between bit arrays."""        if len(bits1) == 0 or len(bits2) == 0:
+        """Calculate Hamming similarity between bit arrays."""
+        if len(bits1) == 0 or len(bits2) == 0:
             return 0.0
         
         hamming_dist = hamming(bits1, bits2)
         return 1.0 - hamming_dist
     
     def _jaccard_similarity(self, bits1: np.ndarray, bits2: np.ndarray) -> float:
-        """Calculate Jaccard similarity between bit arrays."""        intersection = np.logical_and(bits1, bits2).sum()
+        """Calculate Jaccard similarity between bit arrays."""
+        intersection = np.logical_and(bits1, bits2).sum()
         union = np.logical_or(bits1, bits2).sum()
         
         if union == 0:
@@ -443,7 +473,8 @@ class HashComparator:
         return intersection / union
     
     def _cosine_similarity(self, bits1: np.ndarray, bits2: np.ndarray) -> float:
-        """Calculate cosine similarity between bit arrays."""        dot_product = np.dot(bits1.astype(float), bits2.astype(float))
+        """Calculate cosine similarity between bit arrays."""
+        dot_product = np.dot(bits1.astype(float), bits2.astype(float))
         norm1 = np.linalg.norm(bits1.astype(float))
         norm2 = np.linalg.norm(bits2.astype(float))
         
@@ -453,7 +484,8 @@ class HashComparator:
         return dot_product / (norm1 * norm2)
     
     def _normalized_hamming_similarity(self, bits1: np.ndarray, bits2: np.ndarray) -> float:
-        """Calculate normalized Hamming similarity with bit position weighting."""        if len(bits1) == 0 or len(bits2) == 0:
+        """Calculate normalized Hamming similarity with bit position weighting."""
+        if len(bits1) == 0 or len(bits2) == 0:
             return 0.0
         
         # Weight bits by position (earlier bits more important)
@@ -473,7 +505,8 @@ class HashComparator:
         method: str = 'hamming',
         threshold: float = 0.8
     ) -> List[Tuple[int, float]]:
-        """        Compare target hash against multiple candidates.
+        """
+        Compare target hash against multiple candidates.
         
         Args:
             target_hash: Target hash to match against
@@ -483,7 +516,8 @@ class HashComparator:
             
         Returns:
             List of tuples (index, similarity_score) for matches above threshold
-        """        tasks = []
+        """
+        tasks = []
         for i, candidate_hash in enumerate(candidate_hashes):
             task = self.calculate_similarity(target_hash, candidate_hash, method)
             tasks.append((i, task))
@@ -503,5 +537,6 @@ class HashComparator:
         return results
     
     def cleanup(self):
-        """Cleanup resources."""        self.executor.shutdown(wait=True)
+        """Cleanup resources."""
+        self.executor.shutdown(wait=True)
         logger.info("HashComparator cleanup completed")

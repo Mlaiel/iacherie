@@ -2,7 +2,8 @@
 """IA Influencer Agent - Deployment Scripts Module
 Enterprise-grade deployment automation and orchestration scripts for
 AI-powered content protection, monetization, and multi-platform integration
-"""__version__ = "2.0.0"
+"""
+__version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __maintainer__ = "IA Influencer Agent Team"
 

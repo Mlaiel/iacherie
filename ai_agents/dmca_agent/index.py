@@ -11,7 +11,8 @@ Copyright: 2025 - All Rights Reserved
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in immediate legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union
 from datetime import datetime
@@ -34,11 +35,13 @@ from . import (
 logger = logging.getLogger(__name__)
 
 class DMCAAgentIndex:
-    """    DMCA Agent Index - Centralized Access Point
+    """
+    DMCA Agent Index - Centralized Access Point
     
     Provides a unified interface for all DMCA agent capabilities including
     case management, compliance checking, and automated takedown processing.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -65,7 +68,8 @@ class DMCAAgentIndex:
         content_info: Dict[str, Any],
         options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Process a copyright violation case end-to-end
+        """
+        Process a copyright violation case end-to-end
         
         Args:
             content_info: Information about the copyrighted content and violation
@@ -73,7 +77,8 @@ class DMCAAgentIndex:
             
         Returns:
             Dict containing complete processing results
-        """        try:
+        """
+        try:
             self.logger.info(f"Processing copyright violation for content: {content_info.get('content_id')}")
             
             # Set default options
@@ -120,14 +125,16 @@ class DMCAAgentIndex:
         self,
         claim_info: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Verify copyright ownership for content
+        """
+        Verify copyright ownership for content
         
         Args:
             claim_info: Copyright claim information
             
         Returns:
             Dict containing verification results
-        """        try:
+        """
+        try:
             # Convert claim info to CopyrightClaim object
             from .copyright_verification import CopyrightClaim, CopyrightType
             
@@ -180,7 +187,8 @@ class DMCAAgentIndex:
         case_data: Dict[str, Any],
         framework: str = "dmca_us"
     ) -> Dict[str, Any]:
-        """        Check legal compliance for a case
+        """
+        Check legal compliance for a case
         
         Args:
             case_data: Case information to check
@@ -188,7 +196,8 @@ class DMCAAgentIndex:
             
         Returns:
             Dict containing compliance results
-        """        try:
+        """
+        try:
             # Convert framework string to enum
             legal_framework = LegalFramework(framework)
             
@@ -224,14 +233,16 @@ class DMCAAgentIndex:
         self,
         document_request: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Generate a legal document
+        """
+        Generate a legal document
         
         Args:
             document_request: Document generation request
             
         Returns:
             Dict containing generated document information
-        """        try:
+        """
+        try:
             from .legal_document_generator import DocumentRequest, DocumentType, DocumentLanguage, DocumentFormat, UrgencyLevel
             
             # Convert request to DocumentRequest object
@@ -279,14 +290,16 @@ class DMCAAgentIndex:
         self,
         takedown_request: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Execute automated takedown
+        """
+        Execute automated takedown
         
         Args:
             takedown_request: Takedown execution request
             
         Returns:
             Dict containing takedown results
-        """        try:
+        """
+        try:
             from .takedown_automation import EscalationLevel
             
             # Extract request parameters
@@ -323,14 +336,16 @@ class DMCAAgentIndex:
             }
     
     async def get_case_status(self, case_id: str) -> Dict[str, Any]:
-        """        Get status of a DMCA case
+        """
+        Get status of a DMCA case
         
         Args:
             case_id: Case identifier
             
         Returns:
             Dict containing case status information
-        """        try:
+        """
+        try:
             status_info = await self.orchestrator.get_case_status(case_id)
             
             if status_info:
@@ -356,11 +371,13 @@ class DMCAAgentIndex:
             }
     
     async def get_system_statistics(self) -> Dict[str, Any]:
-        """        Get comprehensive system statistics
+        """
+        Get comprehensive system statistics
         
         Returns:
             Dict containing system performance and usage statistics
-        """        try:
+        """
+        try:
             # Get statistics from all components
             orchestrator_stats = await self.orchestrator.get_processing_statistics()
             takedown_stats = await self.takedown_automation.get_platform_statistics()
@@ -386,11 +403,13 @@ class DMCAAgentIndex:
             }
     
     async def health_check(self) -> Dict[str, Any]:
-        """        Perform system health check
+        """
+        Perform system health check
         
         Returns:
             Dict containing health status information
-        """        try:
+        """
+        try:
             health_status = {
                 "system_healthy": True,
                 "components": {},
@@ -448,7 +467,8 @@ class DMCAAgentIndex:
         violations: List[Dict[str, Any]],
         options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Process multiple copyright violations in batch
+        """
+        Process multiple copyright violations in batch
         
         Args:
             violations: List of violation information
@@ -456,7 +476,8 @@ class DMCAAgentIndex:
             
         Returns:
             Dict containing batch processing results
-        """        try:
+        """
+        try:
             options = options or {}
             auto_execute = options.get("auto_execute", True)
             
@@ -498,32 +519,39 @@ class DMCAAgentIndex:
 _dmca_index = None
 
 def get_dmca_index() -> DMCAAgentIndex:
-    """    Get singleton DMCA Agent Index instance
+    """
+    Get singleton DMCA Agent Index instance
     
     Returns:
         DMCAAgentIndex: Configured index instance
-    """    global _dmca_index
+    """
+    global _dmca_index
     if _dmca_index is None:
         _dmca_index = DMCAAgentIndex()
     return _dmca_index
 
 # Convenience functions for direct access
 async def process_copyright_violation(content_info: Dict[str, Any], options: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-    """Process a copyright violation case"""    index = get_dmca_index()
+    """Process a copyright violation case"""
+    index = get_dmca_index()
     return await index.process_copyright_violation(content_info, options)
 
 async def verify_copyright_ownership(claim_info: Dict[str, Any]) -> Dict[str, Any]:
-    """Verify copyright ownership"""    index = get_dmca_index()
+    """Verify copyright ownership"""
+    index = get_dmca_index()
     return await index.verify_copyright_ownership(claim_info)
 
 async def check_legal_compliance(case_data: Dict[str, Any], framework: str = "dmca_us") -> Dict[str, Any]:
-    """Check legal compliance"""    index = get_dmca_index()
+    """Check legal compliance"""
+    index = get_dmca_index()
     return await index.check_legal_compliance(case_data, framework)
 
 async def generate_legal_document(document_request: Dict[str, Any]) -> Dict[str, Any]:
-    """Generate legal document"""    index = get_dmca_index()
+    """Generate legal document"""
+    index = get_dmca_index()
     return await index.generate_legal_document(document_request)
 
 async def execute_takedown(takedown_request: Dict[str, Any]) -> Dict[str, Any]:
-    """Execute takedown"""    index = get_dmca_index()
+    """Execute takedown"""
+    index = get_dmca_index()
     return await index.execute_takedown(takedown_request)

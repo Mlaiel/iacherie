@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -21,7 +22,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -45,10 +47,12 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class TestAdvancedModelManager:
-    """Comprehensive tests for AdvancedModelManager"""    
+    """Comprehensive tests for AdvancedModelManager"""
+    
     @pytest.mark.asyncio
     async def test_manager_initialization(self, model_manager):
-        """Test model manager initialization"""        assert model_manager is not None
+        """Test model manager initialization"""
+        assert model_manager is not None
         assert hasattr(model_manager, 'config')
         assert hasattr(model_manager, 'model_trainer')
         assert hasattr(model_manager, 'model_optimizer')
@@ -62,7 +66,8 @@ class TestAdvancedModelManager:
 
     @pytest.mark.asyncio
     async def test_model_loading_and_management(self, model_manager):
-        """Test model loading and management"""        # Test loading different types of models
+        """Test model loading and management"""
+        # Test loading different types of models
         model_types = [
             'sentiment_analysis',
             'content_generation',
@@ -111,7 +116,8 @@ class TestAdvancedModelManager:
 
     @pytest.mark.asyncio
     async def test_model_inference(self, model_manager):
-        """Test model inference capabilities"""        # Load a sentiment analysis model for testing
+        """Test model inference capabilities"""
+        # Load a sentiment analysis model for testing
         sentiment_model = await model_manager.load_model(
             model_type='sentiment_analysis',
             model_name='advanced_sentiment_model'
@@ -169,7 +175,8 @@ class TestAdvancedModelManager:
 
     @pytest.mark.asyncio
     async def test_batch_inference(self, model_manager, performance_test_data):
-        """Test batch model inference"""        # Load a classification model
+        """Test batch model inference"""
+        # Load a classification model
         classification_model = await model_manager.load_model(
             model_type='classification',
             model_name='advanced_classification_model'
@@ -214,7 +221,8 @@ class TestAdvancedModelManager:
 
     @pytest.mark.asyncio
     async def test_model_fine_tuning(self, model_manager):
-        """Test model fine-tuning capabilities"""        # Prepare training data for fine-tuning
+        """Test model fine-tuning capabilities"""
+        # Prepare training data for fine-tuning
         training_data = [
             {'text': 'AI content creation is revolutionary for marketing.', 'label': 'technology'},
             {'text': 'Social media engagement increases with personalized content.', 'label': 'marketing'},
@@ -268,7 +276,8 @@ class TestAdvancedModelManager:
 
     @pytest.mark.asyncio
     async def test_model_optimization(self, model_manager):
-        """Test model optimization techniques"""        # Load a model for optimization
+        """Test model optimization techniques"""
+        # Load a model for optimization
         model_result = await model_manager.load_model(
             model_type='content_generation',
             model_name='base_generation_model'
@@ -336,7 +345,8 @@ class TestAdvancedModelManager:
 
     @pytest.mark.asyncio
     async def test_model_deployment(self, model_manager):
-        """Test model deployment capabilities"""        # Load and optimize a model for deployment
+        """Test model deployment capabilities"""
+        # Load and optimize a model for deployment
         model_result = await model_manager.load_model(
             model_type='sentiment_analysis',
             model_name='optimized_sentiment_model'
@@ -398,7 +408,8 @@ class TestAdvancedModelManager:
 
     @pytest.mark.asyncio
     async def test_model_versioning(self, model_manager):
-        """Test model versioning and lifecycle management"""        # Create multiple versions of a model
+        """Test model versioning and lifecycle management"""
+        # Create multiple versions of a model
         model_versions = []
         
         for version in range(1, 4):
@@ -452,7 +463,8 @@ class TestAdvancedModelManager:
 
     @pytest.mark.asyncio
     async def test_model_monitoring(self, model_manager):
-        """Test model performance monitoring"""        # Deploy a model for monitoring
+        """Test model performance monitoring"""
+        # Deploy a model for monitoring
         model_result = await model_manager.load_model(
             model_type='sentiment_analysis',
             model_name='production_sentiment_model'
@@ -516,7 +528,8 @@ class TestAdvancedModelManager:
 
     @pytest.mark.asyncio
     async def test_multi_model_ensemble(self, model_manager):
-        """Test multi-model ensemble capabilities"""        # Load multiple models for ensemble
+        """Test multi-model ensemble capabilities"""
+        # Load multiple models for ensemble
         model_types = ['sentiment_analysis', 'classification', 'content_generation']
         ensemble_models = []
         
@@ -564,7 +577,8 @@ class TestAdvancedModelManager:
 
     @pytest.mark.asyncio
     async def test_model_explainability(self, model_manager):
-        """Test model explainability and interpretability"""        # Load a model for explainability testing
+        """Test model explainability and interpretability"""
+        # Load a model for explainability testing
         model_result = await model_manager.load_model(
             model_type='sentiment_analysis',
             model_name='explainable_sentiment_model'
@@ -610,7 +624,8 @@ class TestAdvancedModelManager:
 
     @pytest.mark.asyncio
     async def test_model_security(self, model_manager):
-        """Test model security and robustness"""        # Load a model for security testing
+        """Test model security and robustness"""
+        # Load a model for security testing
         model_result = await model_manager.load_model(
             model_type='classification',
             model_name='secure_classification_model'
@@ -655,7 +670,8 @@ class TestAdvancedModelManager:
 
     @pytest.mark.asyncio
     async def test_performance_benchmarks(self, model_manager, benchmark_config):
-        """Test model manager performance benchmarks"""        # Load a model for benchmarking
+        """Test model manager performance benchmarks"""
+        # Load a model for benchmarking
         model_result = await model_manager.load_model(
             model_type='sentiment_analysis',
             model_name='benchmark_sentiment_model'
@@ -694,7 +710,8 @@ class TestAdvancedModelManager:
 
     @pytest.mark.asyncio
     async def test_error_handling(self, model_manager):
-        """Test model manager error handling"""        # Test loading non-existent model
+        """Test model manager error handling"""
+        # Test loading non-existent model
         result = await model_manager.load_model(
             model_type='non_existent_type',
             model_name='non_existent_model',
@@ -719,33 +736,41 @@ class TestAdvancedModelManager:
         assert result is not None
 
 class TestModelTrainer:
-    """Test model trainer component"""    
+    """Test model trainer component"""
+    
     @pytest.mark.asyncio
     async def test_model_trainer_initialization(self):
-        """Test model trainer initialization"""        trainer = ModelTrainer()
+        """Test model trainer initialization"""
+        trainer = ModelTrainer()
         assert trainer is not None
         assert hasattr(trainer, 'train_model')
 
 class TestModelOptimizer:
-    """Test model optimizer component"""    
+    """Test model optimizer component"""
+    
     @pytest.mark.asyncio
     async def test_model_optimizer_initialization(self):
-        """Test model optimizer initialization"""        optimizer = ModelOptimizer()
+        """Test model optimizer initialization"""
+        optimizer = ModelOptimizer()
         assert optimizer is not None
         assert hasattr(optimizer, 'optimize_model')
 
 class TestModelDeployer:
-    """Test model deployer component"""    
+    """Test model deployer component"""
+    
     @pytest.mark.asyncio
     async def test_model_deployer_initialization(self):
-        """Test model deployer initialization"""        deployer = ModelDeployer()
+        """Test model deployer initialization"""
+        deployer = ModelDeployer()
         assert deployer is not None
         assert hasattr(deployer, 'deploy_model')
 
 class TestModelConfig:
-    """Test model configuration"""    
+    """Test model configuration"""
+    
     def test_config_creation(self):
-        """Test model configuration creation"""        config = ModelConfig(
+        """Test model configuration creation"""
+        config = ModelConfig(
             supported_models=['sentiment', 'classification', 'generation'],
             model_repository='s3://models',
             optimization_settings={'quantization': True, 'pruning': True}

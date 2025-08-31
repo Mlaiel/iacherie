@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import base64
 import json
@@ -41,7 +42,8 @@ from ...utils.caching import CacheManager
 logger = logging.getLogger(__name__)
 
 class SpotifyError(Exception):
-    """Base exception for Spotify API errors"""    def __init__(self, message: str, status_code: Optional[int] = None, 
+    """Base exception for Spotify API errors"""
+    def __init__(self, message: str, status_code: Optional[int] = None, 
                  error_type: Optional[str] = None):
         self.message = message
         self.status_code = status_code
@@ -49,19 +51,23 @@ class SpotifyError(Exception):
         super().__init__(message)
 
 class AuthenticationError(SpotifyError):
-    """Authentication-related errors"""    pass
+    """Authentication-related errors"""
+    pass
 
 class RateLimitError(SpotifyError):
-    """Rate limiting errors"""    def __init__(self, message: str, retry_after: Optional[int] = None):
+    """Rate limiting errors"""
+    def __init__(self, message: str, retry_after: Optional[int] = None):
         super().__init__(message)
         self.retry_after = retry_after
 
 class APIError(SpotifyError):
-    """General API errors"""    pass
+    """General API errors"""
+    pass
 
 @dataclass
 class SpotifyTokens:
-    """Spotify API token container"""    access_token: str
+    """Spotify API token container"""
+    access_token: str
     token_type: str = "Bearer"
     expires_in: int = 3600
     refresh_token: Optional[str] = None
@@ -74,12 +80,14 @@ class SpotifyTokens:
             self.expires_at = self.created_at + timedelta(seconds=self.expires_in)
     
     def is_expired(self, buffer_seconds: int = 300) -> bool:
-        """Check if token is expired with buffer"""        if not self.expires_at:
+        """Check if token is expired with buffer"""
+        if not self.expires_at:
             return True
         return datetime.now(timezone.utc) >= (self.expires_at - timedelta(seconds=buffer_seconds))
 
 class AuthManager:
-    """Advanced Spotify authentication manager with PKCE support"""    
+    """Advanced Spotify authentication manager with PKCE support"""
+    
     SPOTIFY_AUTH_URL = "https://accounts.spotify.com/authorize"
     SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token"
     
@@ -95,7 +103,8 @@ class AuthManager:
         self.rate_limiter = RateLimiter(max_requests=10, window_seconds=60)
         
     def get_authorization_url(self, user_id: str, use_pkce: bool = True) -> str:
-        """Generate Spotify authorization URL with PKCE support"""        state = self._generate_state(user_id)
+        """Generate Spotify authorization URL with PKCE support"""
+        state = self._generate_state(user_id)
         
         params = {
             "client_id": self.client_id,
@@ -127,7 +136,8 @@ class AuthManager:
     
     async def exchange_code_for_tokens(self, authorization_code: str, 
                                      state: Optional[str] = None) -> SpotifyTokens:
-        """Exchange authorization code for access tokens"""        async with self.rate_limiter:
+        """Exchange authorization code for access tokens"""
+        async with self.rate_limiter:
             try:
                 # Prepare token request
                 data = {
@@ -188,7 +198,8 @@ class AuthManager:
                 raise AuthenticationError(f"Token exchange failed: {e}")
     
     async def refresh_access_token(self, refresh_token: str) -> SpotifyTokens:
-        """Refresh access token using refresh token"""        async with self.rate_limiter:
+        """Refresh access token using refresh token"""
+        async with self.rate_limiter:
             try:
                 data = {
                     "grant_type": "refresh_token",
@@ -227,7 +238,8 @@ class AuthManager:
                 raise AuthenticationError(f"Token refresh failed: {e}")
     
     async def get_user_tokens(self, user_id: str) -> Optional[SpotifyTokens]:
-        """Get stored tokens for user"""        try:
+        """Get stored tokens for user"""
+        try:
             # Get encrypted tokens from database
             with get_db_session() as db:
                 # Implementation would retrieve from user_spotify_tokens table
@@ -245,7 +257,8 @@ class AuthManager:
             return None
     
     async def store_user_tokens(self, user_id: str, tokens: SpotifyTokens) -> bool:
-        """Store encrypted tokens for user"""        try:
+        """Store encrypted tokens for user"""
+        try:
             # Serialize and encrypt tokens
             token_data = {
                 "access_token": tokens.access_token,
@@ -271,7 +284,8 @@ class AuthManager:
             return False
     
     async def validate_and_refresh_tokens(self, user_id: str, tokens: SpotifyTokens) -> SpotifyTokens:
-        """Validate tokens and refresh if needed"""        if not tokens.is_expired():
+        """Validate tokens and refresh if needed"""
+        if not tokens.is_expired():
             return tokens
         
         if not tokens.refresh_token:
@@ -286,20 +300,24 @@ class AuthManager:
         return new_tokens
     
     def _generate_state(self, user_id: str) -> str:
-        """Generate secure state parameter"""        timestamp = str(int(time.time()))
+        """Generate secure state parameter"""
+        timestamp = str(int(time.time()))
         user_hash = hashlib.sha256(user_id.encode()).hexdigest()[:16]
         random_bytes = secrets.token_urlsafe(16)
         return f"{timestamp}_{user_hash}_{random_bytes}"
     
     def _generate_code_verifier(self) -> str:
-        """Generate PKCE code verifier"""        return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode('utf-8').rstrip('=')
+        """Generate PKCE code verifier"""
+        return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode('utf-8').rstrip('=')
     
     def _generate_code_challenge(self, code_verifier: str) -> str:
-        """Generate PKCE code challenge"""        digest = hashlib.sha256(code_verifier.encode('utf-8')).digest()
+        """Generate PKCE code challenge"""
+        digest = hashlib.sha256(code_verifier.encode('utf-8')).digest()
         return base64.urlsafe_b64encode(digest).decode('utf-8').rstrip('=')
 
 class SpotifyAPIClient:
-    """Advanced Spotify Web API client with comprehensive features"""    
+    """Advanced Spotify Web API client with comprehensive features"""
+    
     BASE_URL = "https://api.spotify.com/v1"
     
     def __init__(self, auth_manager: AuthManager):
@@ -327,7 +345,8 @@ class SpotifyAPIClient:
                           data: Optional[Dict[str, Any]] = None,
                           cache_key: Optional[str] = None,
                           cache_ttl: int = 300) -> Dict[str, Any]:
-        """Make authenticated request to Spotify API"""        
+        """Make authenticated request to Spotify API"""
+        
         # Check cache first
         if cache_key and method.upper() == "GET":
             cached_data = await self.cache_manager.get(cache_key)
@@ -390,7 +409,8 @@ class SpotifyAPIClient:
                     raise APIError("Request timeout")
     
     async def get_current_user_profile(self, access_token: str) -> Dict[str, Any]:
-        """Get current user's Spotify profile"""        return await self._make_request(
+        """Get current user's Spotify profile"""
+        return await self._make_request(
             "GET", 
             "/me", 
             access_token,
@@ -399,7 +419,8 @@ class SpotifyAPIClient:
         )
     
     async def get_artist(self, artist_id: str, access_token: Optional[str] = None) -> Dict[str, Any]:
-        """Get detailed artist information"""        # Use client credentials for public data if no user token
+        """Get detailed artist information"""
+        # Use client credentials for public data if no user token
         token = access_token or await self._get_client_credentials_token()
         
         return await self._make_request(
@@ -412,7 +433,8 @@ class SpotifyAPIClient:
     
     async def get_artist_top_tracks(self, artist_id: str, market: Optional[str] = None,
                                   access_token: Optional[str] = None) -> Dict[str, Any]:
-        """Get artist's top tracks"""        token = access_token or await self._get_client_credentials_token()
+        """Get artist's top tracks"""
+        token = access_token or await self._get_client_credentials_token()
         market = market or "US"
         
         return await self._make_request(
@@ -427,7 +449,8 @@ class SpotifyAPIClient:
     async def get_artist_albums(self, artist_id: str, album_type: str = "album",
                               market: Optional[str] = None, limit: int = 20,
                               offset: int = 0, access_token: Optional[str] = None) -> Dict[str, Any]:
-        """Get artist's albums"""        token = access_token or await self._get_client_credentials_token()
+        """Get artist's albums"""
+        token = access_token or await self._get_client_credentials_token()
         
         params = {
             "album_type": album_type,
@@ -448,7 +471,8 @@ class SpotifyAPIClient:
     
     async def get_audio_features(self, track_ids: Union[str, List[str]],
                                access_token: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Get audio features for tracks"""        token = access_token or await self._get_client_credentials_token()
+        """Get audio features for tracks"""
+        token = access_token or await self._get_client_credentials_token()
         
         if isinstance(track_ids, str):
             track_ids = [track_ids]
@@ -477,7 +501,8 @@ class SpotifyAPIClient:
                                 target_features: Optional[Dict[str, float]] = None,
                                 limit: int = 20, market: Optional[str] = None,
                                 access_token: Optional[str] = None) -> Dict[str, Any]:
-        """Get track recommendations"""        token = access_token or await self._get_client_credentials_token()
+        """Get track recommendations"""
+        token = access_token or await self._get_client_credentials_token()
         
         params = {"limit": limit}
         
@@ -509,7 +534,8 @@ class SpotifyAPIClient:
     async def search(self, query: str, search_type: str = "track", limit: int = 20,
                    offset: int = 0, market: Optional[str] = None,
                    access_token: Optional[str] = None) -> Dict[str, Any]:
-        """Search Spotify catalog"""        token = access_token or await self._get_client_credentials_token()
+        """Search Spotify catalog"""
+        token = access_token or await self._get_client_credentials_token()
         
         params = {
             "q": query,
@@ -531,7 +557,8 @@ class SpotifyAPIClient:
     
     async def get_user_playlists(self, user_id: str, limit: int = 50, offset: int = 0,
                                access_token: str) -> Dict[str, Any]:
-        """Get user's playlists"""        return await self._make_request(
+        """Get user's playlists"""
+        return await self._make_request(
             "GET",
             f"/users/{user_id}/playlists",
             access_token,
@@ -543,7 +570,8 @@ class SpotifyAPIClient:
     async def create_playlist(self, user_id: str, name: str, description: str = "",
                             public: bool = True, collaborative: bool = False,
                             access_token: str) -> Dict[str, Any]:
-        """Create a new playlist"""        data = {
+        """Create a new playlist"""
+        data = {
             "name": name,
             "description": description,
             "public": public,
@@ -560,7 +588,8 @@ class SpotifyAPIClient:
     async def add_tracks_to_playlist(self, playlist_id: str, track_uris: List[str],
                                    position: Optional[int] = None,
                                    access_token: str) -> Dict[str, Any]:
-        """Add tracks to playlist"""        data = {"uris": track_uris}
+        """Add tracks to playlist"""
+        data = {"uris": track_uris}
         if position is not None:
             data["position"] = position
         
@@ -572,7 +601,8 @@ class SpotifyAPIClient:
         )
     
     async def _get_client_credentials_token(self) -> str:
-        """Get client credentials token for public API access"""        cache_key = "client_credentials_token"
+        """Get client credentials token for public API access"""
+        cache_key = "client_credentials_token"
         cached_token = await self.cache_manager.get(cache_key)
         
         if cached_token:

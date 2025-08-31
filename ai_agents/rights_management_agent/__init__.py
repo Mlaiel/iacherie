@@ -18,10 +18,16 @@ Features:
 - Automated royalty calculation
 - License management and tracking
 - Revenue optimization
-"""from .manager import RightsManagementManager
+"""
+
+from .manager import RightsManagementManager
+
 from .core.ownership_registry import OwnershipRegistry
+
 from .core.license_manager import LicenseManager
+
 from .core.royalty_calculator import RoyaltyCalculator
+
 from .models.rights_models import (
     RightsRequest,
     RightsResult,

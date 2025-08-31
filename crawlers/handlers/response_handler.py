@@ -29,7 +29,8 @@ Project Team:
 WARNING: This code is protected intellectual property. Any attempt to steal, copy, or use 
 without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) will result 
 in legal action under German law.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import uuid
@@ -67,7 +68,8 @@ logger = get_logger(__name__)
 
 
 class ResponseType(Enum):
-    """Enumeration of response types."""    
+    """Enumeration of response types."""
+    
     # Platform API Responses
     YOUTUBE_API = "youtube.api"
     INSTAGRAM_API = "instagram.api"
@@ -96,7 +98,8 @@ class ResponseType(Enum):
 
 
 class ResponseStatus(Enum):
-    """Response status enumeration."""    SUCCESS = "success"
+    """Response status enumeration."""
+    SUCCESS = "success"
     PARTIAL_SUCCESS = "partial_success"
     FAILURE = "failure"
     TIMEOUT = "timeout"
@@ -108,7 +111,8 @@ class ResponseStatus(Enum):
 
 @dataclass
 class ResponseMetadata:
-    """Response metadata structure."""    
+    """Response metadata structure."""
+    
     response_id: str
     timestamp: datetime
     processing_time_ms: float
@@ -121,11 +125,13 @@ class ResponseMetadata:
     retry_count: int = 0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""        return asdict(self)
+        """Convert to dictionary."""
+        return asdict(self)
 
 
 class PlatformResponse(BaseModel):
-    """Base model for platform responses."""    
+    """Base model for platform responses."""
+    
     response_id: str
     response_type: ResponseType
     status: ResponseStatus
@@ -154,7 +160,8 @@ class PlatformResponse(BaseModel):
 
 
 class YouTubeResponseModel(PlatformResponse):
-    """YouTube API response model."""    
+    """YouTube API response model."""
+    
     video_id: Optional[str] = None
     channel_id: Optional[str] = None
     view_count: Optional[int] = None
@@ -171,7 +178,8 @@ class YouTubeResponseModel(PlatformResponse):
 
 
 class InstagramResponseModel(PlatformResponse):
-    """Instagram API response model."""    
+    """Instagram API response model."""
+    
     media_id: Optional[str] = None
     media_type: Optional[str] = None
     permalink: Optional[str] = None
@@ -187,7 +195,8 @@ class InstagramResponseModel(PlatformResponse):
 
 
 class TikTokResponseModel(PlatformResponse):
-    """TikTok API response model."""    
+    """TikTok API response model."""
+    
     video_id: Optional[str] = None
     username: Optional[str] = None
     video_description: Optional[str] = None
@@ -204,7 +213,8 @@ class TikTokResponseModel(PlatformResponse):
 
 
 class FingerprintResponseModel(PlatformResponse):
-    """Fingerprint processing response model."""    
+    """Fingerprint processing response model."""
+    
     content_id: int
     fingerprint_hash: str
     similarity_score: Optional[float] = None
@@ -220,7 +230,8 @@ class FingerprintResponseModel(PlatformResponse):
 
 
 class ResponseValidator:
-    """Professional response validation system."""    
+    """Professional response validation system."""
+    
     def __init__(self):
         self.data_validator = DataValidator()
         self.encryption_manager = EncryptionManager()
@@ -230,7 +241,8 @@ class ResponseValidator:
         response_data: Dict[str, Any], 
         response_type: ResponseType
     ) -> Tuple[bool, List[str], PlatformResponse]:
-        """        Validate response data against expected schema.
+        """
+        Validate response data against expected schema.
         
         Args:
             response_data: Raw response data
@@ -238,7 +250,8 @@ class ResponseValidator:
             
         Returns:
             Tuple of (is_valid, errors, parsed_response)
-        """        try:
+        """
+        try:
             errors = []
             
             # Basic structure validation
@@ -275,7 +288,8 @@ class ResponseValidator:
             return False, [f"Validation exception: {e}"], None
     
     def _get_model_class(self, response_type: ResponseType) -> Type[PlatformResponse]:
-        """Get appropriate response model class."""        model_mapping = {
+        """Get appropriate response model class."""
+        model_mapping = {
             ResponseType.YOUTUBE_API: YouTubeResponseModel,
             ResponseType.INSTAGRAM_API: InstagramResponseModel,
             ResponseType.TIKTOK_API: TikTokResponseModel,
@@ -289,7 +303,8 @@ class ResponseValidator:
         response: PlatformResponse, 
         response_type: ResponseType
     ) -> List[str]:
-        """Validate business logic rules."""        errors = []
+        """Validate business logic rules."""
+        errors = []
         
         try:
             # Platform-specific validation
@@ -313,7 +328,8 @@ class ResponseValidator:
         return errors
     
     async def _validate_youtube_response(self, response: YouTubeResponseModel) -> List[str]:
-        """Validate YouTube-specific response data."""        errors = []
+        """Validate YouTube-specific response data."""
+        errors = []
         
         # Check for required YouTube fields
         if response.status == ResponseStatus.SUCCESS:
@@ -330,7 +346,8 @@ class ResponseValidator:
         return errors
     
     async def _validate_instagram_response(self, response: InstagramResponseModel) -> List[str]:
-        """Validate Instagram-specific response data."""        errors = []
+        """Validate Instagram-specific response data."""
+        errors = []
         
         if response.status == ResponseStatus.SUCCESS:
             if not response.media_id:
@@ -342,7 +359,8 @@ class ResponseValidator:
         return errors
     
     async def _validate_fingerprint_response(self, response: FingerprintResponseModel) -> List[str]:
-        """Validate fingerprint-specific response data."""        errors = []
+        """Validate fingerprint-specific response data."""
+        errors = []
         
         if response.status == ResponseStatus.SUCCESS:
             if not response.fingerprint_hash:
@@ -355,12 +373,14 @@ class ResponseValidator:
 
 
 class ResponseNormalizer:
-    """Professional response normalization system."""    
+    """Professional response normalization system."""
+    
     def __init__(self):
         self.platform_mappings = self._load_platform_mappings()
     
     def _load_platform_mappings(self) -> Dict[str, Dict[str, str]]:
-        """Load platform field mappings for normalization."""        return {
+        """Load platform field mappings for normalization."""
+        return {
             'youtube': {
                 'id': 'video_id',
                 'snippet.title': 'title',
@@ -392,7 +412,8 @@ class ResponseNormalizer:
         raw_data: Dict[str, Any], 
         platform: str
     ) -> Dict[str, Any]:
-        """        Normalize platform response to standardized format.
+        """
+        Normalize platform response to standardized format.
         
         Args:
             raw_data: Raw platform response data
@@ -400,7 +421,8 @@ class ResponseNormalizer:
             
         Returns:
             Normalized response data
-        """        try:
+        """
+        try:
             if platform not in self.platform_mappings:
                 return raw_data
             
@@ -425,7 +447,8 @@ class ResponseNormalizer:
             return raw_data
     
     def _extract_nested_value(self, data: Dict[str, Any], path: str) -> Any:
-        """Extract value from nested dictionary using dot notation."""        try:
+        """Extract value from nested dictionary using dot notation."""
+        try:
             keys = path.split('.')
             value = data
             
@@ -441,7 +464,8 @@ class ResponseNormalizer:
             return None
     
     def _normalize_value(self, value: Any, field_name: str) -> Any:
-        """Normalize individual field values."""        try:
+        """Normalize individual field values."""
+        try:
             # Numeric fields
             if field_name.endswith('_count') or field_name in ['view_count', 'like_count']:
                 return self._normalize_count(value)
@@ -462,7 +486,8 @@ class ResponseNormalizer:
             return value
     
     def _normalize_count(self, value: Any) -> int:
-        """Normalize count values to integers."""        if isinstance(value, str):
+        """Normalize count values to integers."""
+        if isinstance(value, str):
             # Handle string numbers like "1,234" or "1.2K"
             value = value.replace(',', '')
             
@@ -479,7 +504,8 @@ class ResponseNormalizer:
             return 0
     
     def _normalize_url(self, value: Any) -> str:
-        """Normalize URL values."""        if not isinstance(value, str):
+        """Normalize URL values."""
+        if not isinstance(value, str):
             return str(value)
         
         # Ensure HTTPS for security
@@ -491,7 +517,8 @@ class ResponseNormalizer:
         return value
     
     def _normalize_text(self, value: Any) -> str:
-        """Normalize text values."""        if not isinstance(value, str):
+        """Normalize text values."""
+        if not isinstance(value, str):
             return str(value)
         
         # Clean and truncate text
@@ -509,7 +536,8 @@ class ResponseNormalizer:
 
 
 class ResponseProcessor:
-    """Professional response processing system."""    
+    """Professional response processing system."""
+    
     def __init__(self):
         self.validator = ResponseValidator()
         self.normalizer = ResponseNormalizer()
@@ -521,7 +549,8 @@ class ResponseProcessor:
         response_type: ResponseType,
         context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Process raw response through validation, normalization, and enrichment.
+        """
+        Process raw response through validation, normalization, and enrichment.
         
         Args:
             raw_response: Raw response data
@@ -530,7 +559,8 @@ class ResponseProcessor:
             
         Returns:
             Processed response data
-        """        try:
+        """
+        try:
             processing_start = datetime.utcnow()
             response_id = str(uuid.uuid4())
             
@@ -600,7 +630,8 @@ class ResponseProcessor:
         response_type: ResponseType,
         context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Enrich response with additional computed data."""        enrichment = {}
+        """Enrich response with additional computed data."""
+        enrichment = {}
         
         try:
             # Content-specific enrichment
@@ -619,7 +650,8 @@ class ResponseProcessor:
         return enrichment
     
     async def _enrich_fingerprint_response(self, response_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Enrich fingerprint response with similarity analysis."""        enrichment = {}
+        """Enrich fingerprint response with similarity analysis."""
+        enrichment = {}
         
         try:
             data = response_data.get('data', {})
@@ -638,7 +670,8 @@ class ResponseProcessor:
         return enrichment
     
     async def _enrich_social_media_response(self, response_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Enrich social media response with engagement metrics."""        enrichment = {}
+        """Enrich social media response with engagement metrics."""
+        enrichment = {}
         
         try:
             data = response_data.get('data', {})
@@ -667,7 +700,8 @@ class ResponseProcessor:
         return enrichment
     
     def _categorize_similarity(self, score: float) -> str:
-        """Categorize similarity score."""        if score >= 0.9:
+        """Categorize similarity score."""
+        if score >= 0.9:
             return 'very_high'
         elif score >= 0.7:
             return 'high'
@@ -679,7 +713,8 @@ class ResponseProcessor:
             return 'very_low'
     
     def _categorize_engagement(self, rate: float) -> str:
-        """Categorize engagement rate."""        if rate >= 0.1:  # 10%
+        """Categorize engagement rate."""
+        if rate >= 0.1:  # 10%
             return 'exceptional'
         elif rate >= 0.05:  # 5%
             return 'high'
@@ -691,7 +726,8 @@ class ResponseProcessor:
             return 'low'
     
     def _calculate_processing_quality(self, response_data: Dict[str, Any]) -> str:
-        """Calculate overall processing quality."""        try:
+        """Calculate overall processing quality."""
+        try:
             error_count = len(response_data.get('errors', []))
             warning_count = len(response_data.get('warnings', []))
             
@@ -708,7 +744,8 @@ class ResponseProcessor:
             return 'unknown'
     
     def _calculate_data_completeness(self, response_data: Dict[str, Any]) -> float:
-        """Calculate data completeness percentage."""        try:
+        """Calculate data completeness percentage."""
+        try:
             data = response_data.get('data', {})
             if not data:
                 return 0.0
@@ -723,7 +760,8 @@ class ResponseProcessor:
             return 0.0
     
     async def _store_response(self, response_data: Dict[str, Any]):
-        """Store processed response in database."""        try:
+        """Store processed response in database."""
+        try:
             async with async_session() as session:
                 crawler_response = CrawlerResponse(
                     response_id=response_data['response_id'],
@@ -745,7 +783,8 @@ class ResponseProcessor:
 
 
 class ResponseHandler:
-    """Main response handler orchestrating all response processing operations."""    
+    """Main response handler orchestrating all response processing operations."""
+    
     def __init__(self):
         self.processor = ResponseProcessor()
         self.rate_limiter = RateLimiter()
@@ -757,7 +796,8 @@ class ResponseHandler:
         response_type: ResponseType,
         context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Main entry point for response handling.
+        """
+        Main entry point for response handling.
         
         Args:
             raw_response: Raw response data
@@ -766,7 +806,8 @@ class ResponseHandler:
             
         Returns:
             Processed response result
-        """        try:
+        """
+        try:
             # Rate limiting check
             source = context.get('source', 'unknown') if context else 'unknown'
             await self.rate_limiter.check_rate_limit(f"response_handler:{source}")
@@ -789,7 +830,8 @@ class ResponseHandler:
         self, 
         responses: List[Tuple[Dict[str, Any], ResponseType, Optional[Dict[str, Any]]]]
     ) -> List[Dict[str, Any]]:
-        """Handle multiple responses in batch."""        try:
+        """Handle multiple responses in batch."""
+        try:
             tasks = []
             for raw_response, response_type, context in responses:
                 task = self.handle_response(raw_response, response_type, context)
@@ -814,4 +856,5 @@ class ResponseHandler:
 
 # Factory function
 def create_response_handler() -> ResponseHandler:
-    """Create and return a ResponseHandler instance."""    return ResponseHandler()
+    """Create and return a ResponseHandler instance."""
+    return ResponseHandler()

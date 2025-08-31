@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 """Quality Requirements Achievement Report
 Documents compliance with all production quality requirements
-"""import json
+"""
+import json
 import os
 from pathlib import Path
 from datetime import datetime
 
 
 def generate_quality_report():
-    """Generate comprehensive quality requirements achievement report"""    
+    """Generate comprehensive quality requirements achievement report"""
+    
     repo_path = Path(".")
     
     # Count test files and functions
@@ -182,7 +184,8 @@ def generate_quality_report():
 
 
 def main():
-    """Generate and display quality requirements report"""    print("🎯 QUALITY REQUIREMENTS ACHIEVEMENT REPORT")
+    """Generate and display quality requirements report"""
+    print("🎯 QUALITY REQUIREMENTS ACHIEVEMENT REPORT")
     print("=" * 60)
     
     report = generate_quality_report()

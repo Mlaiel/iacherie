@@ -22,7 +22,9 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from .session_manager import SessionManager, SessionStore, UserSession
+"""
+
+from .session_manager import SessionManager, SessionStore, UserSession
 from .token_repository import TokenRepository, RefreshTokenStore, TokenManager
 from .permission_manager import PermissionManager, RoleManager, AccessControl
 from .multi_factor_auth import MultiFactorAuth, MFAProvider, TwoFactorSetup

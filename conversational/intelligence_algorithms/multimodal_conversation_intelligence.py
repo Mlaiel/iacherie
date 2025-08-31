@@ -26,7 +26,8 @@ This multi-modal conversation intelligence system contains proprietary algorithm
 for cross-modal analysis and intelligence fusion. Unauthorized use, copying,
 or reverse engineering is strictly prohibited and legally prosecuted.
 Contact: mlaiel@live.de for legal authorization inquiries only.
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 import pandas as pd
@@ -80,7 +81,8 @@ logger = logging.getLogger(__name__)
 
 
 class ModalityType(Enum):
-    """Types of conversation modalities"""    TEXT = "text"
+    """Types of conversation modalities"""
+    TEXT = "text"
     VOICE = "voice"
     IMAGE = "image"
     VIDEO = "video"
@@ -88,7 +90,8 @@ class ModalityType(Enum):
 
 
 class ConversationFormat(Enum):
-    """Conversation format types"""    CHAT_TEXT = "chat_text"
+    """Conversation format types"""
+    CHAT_TEXT = "chat_text"
     VOICE_MESSAGE = "voice_message"
     VIDEO_CALL = "video_call"
     IMAGE_SHARE = "image_share"
@@ -98,7 +101,8 @@ class ConversationFormat(Enum):
 
 @dataclass
 class MultiModalInput:
-    """Multi-modal conversation input structure"""    input_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Multi-modal conversation input structure"""
+    input_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     modality_type: ModalityType = ModalityType.TEXT
     format_type: ConversationFormat = ConversationFormat.CHAT_TEXT
     content: Any = None
@@ -114,7 +118,8 @@ class MultiModalInput:
 
 @dataclass
 class MultiModalAnalysisResult:
-    """Multi-modal analysis result structure"""    input_id: str
+    """Multi-modal analysis result structure"""
+    input_id: str
     modality_results: Dict[str, Any] = field(default_factory=dict)
     cross_modal_insights: Dict[str, Any] = field(default_factory=dict)
     unified_intelligence: Dict[str, Any] = field(default_factory=dict)
@@ -127,7 +132,8 @@ class MultiModalAnalysisResult:
 
 @dataclass
 class VoiceAnalysisResult:
-    """Voice conversation analysis result"""    transcription: str = ""
+    """Voice conversation analysis result"""
+    transcription: str = ""
     emotion_detection: Dict[str, float] = field(default_factory=dict)
     speaker_identification: str = ""
     voice_quality_metrics: Dict[str, float] = field(default_factory=dict)
@@ -138,7 +144,8 @@ class VoiceAnalysisResult:
 
 @dataclass
 class ImageAnalysisResult:
-    """Image conversation analysis result"""    scene_description: str = ""
+    """Image conversation analysis result"""
+    scene_description: str = ""
     object_detection: List[Dict[str, Any]] = field(default_factory=list)
     text_extraction: str = ""
     brand_recognition: List[str] = field(default_factory=list)
@@ -149,7 +156,8 @@ class ImageAnalysisResult:
 
 @dataclass
 class VideoAnalysisResult:
-    """Video conversation analysis result"""    scene_analysis: List[Dict[str, Any]] = field(default_factory=list)
+    """Video conversation analysis result"""
+    scene_analysis: List[Dict[str, Any]] = field(default_factory=list)
     audio_analysis: VoiceAnalysisResult = field(default_factory=VoiceAnalysisResult)
     visual_analysis: List[ImageAnalysisResult] = field(default_factory=list)
     video_summary: str = ""
@@ -159,7 +167,8 @@ class VideoAnalysisResult:
 
 
 class MultimodalConversationIntelligence:
-    """    Ultra-advanced multi-modal conversation intelligence system
+    """
+    Ultra-advanced multi-modal conversation intelligence system
     
     This system provides comprehensive multi-modal conversation analysis including:
     - Text conversation intelligence with advanced NLP
@@ -168,20 +177,23 @@ class MultimodalConversationIntelligence:
     - Video conversation intelligence with comprehensive analysis
     - Cross-modal intelligence fusion and correlation
     - Business context awareness across all modalities
-    """    
+    """
+    
     def __init__(self,
                  enable_audio_processing: bool = True,
                  enable_image_processing: bool = True,
                  enable_video_processing: bool = True,
                  max_concurrent_processing: int = 10):
-        """        Initialize multi-modal conversation intelligence
+        """
+        Initialize multi-modal conversation intelligence
         
         Args:
             enable_audio_processing: Enable audio/voice processing
             enable_image_processing: Enable image processing
             enable_video_processing: Enable video processing
             max_concurrent_processing: Maximum concurrent processing tasks
-        """        self.enable_audio_processing = enable_audio_processing and AUDIO_PROCESSING_AVAILABLE
+        """
+        self.enable_audio_processing = enable_audio_processing and AUDIO_PROCESSING_AVAILABLE
         self.enable_image_processing = enable_image_processing and IMAGE_PROCESSING_AVAILABLE
         self.enable_video_processing = enable_video_processing and VIDEO_PROCESSING_AVAILABLE
         self.max_concurrent_processing = max_concurrent_processing
@@ -221,7 +233,8 @@ class MultimodalConversationIntelligence:
         logger.info("Multi-modal Conversation Intelligence initialized")
     
     async def _initialize_multimodal_system(self):
-        """Initialize multi-modal processing system"""        try:
+        """Initialize multi-modal processing system"""
+        try:
             # Initialize text processing
             await self._initialize_text_processing()
             
@@ -247,7 +260,8 @@ class MultimodalConversationIntelligence:
             raise
     
     async def _initialize_text_processing(self):
-        """Initialize text conversation processing"""        try:
+        """Initialize text conversation processing"""
+        try:
             # TF-IDF vectorizer for text analysis
             self.text_vectorizer = TfidfVectorizer(
                 max_features=10000,
@@ -270,7 +284,8 @@ class MultimodalConversationIntelligence:
             raise
     
     async def _initialize_voice_processing(self):
-        """Initialize voice conversation processing"""        try:
+        """Initialize voice conversation processing"""
+        try:
             if not AUDIO_PROCESSING_AVAILABLE:
                 logger.warning("Audio processing libraries not available")
                 return
@@ -290,7 +305,8 @@ class MultimodalConversationIntelligence:
             raise
     
     async def _initialize_image_processing(self):
-        """Initialize image conversation processing"""        try:
+        """Initialize image conversation processing"""
+        try:
             if not IMAGE_PROCESSING_AVAILABLE:
                 logger.warning("Image processing libraries not available")
                 return
@@ -310,7 +326,8 @@ class MultimodalConversationIntelligence:
             raise
     
     async def _initialize_video_processing(self):
-        """Initialize video conversation processing"""        try:
+        """Initialize video conversation processing"""
+        try:
             if not VIDEO_PROCESSING_AVAILABLE:
                 logger.warning("Video processing libraries not available")
                 return
@@ -331,14 +348,16 @@ class MultimodalConversationIntelligence:
     
     async def analyze_multimodal_conversation(self,
                                             input_data: MultiModalInput) -> MultiModalAnalysisResult:
-        """        Analyze multi-modal conversation with comprehensive intelligence
+        """
+        Analyze multi-modal conversation with comprehensive intelligence
         
         Args:
             input_data: Multi-modal conversation input
             
         Returns:
             Comprehensive multi-modal analysis result
-        """        try:
+        """
+        try:
             start_time = datetime.utcnow()
             
             # Determine modality and route to appropriate processor
@@ -420,7 +439,8 @@ class MultimodalConversationIntelligence:
     async def _process_text_modality(self,
                                    text_content: str,
                                    input_data: MultiModalInput) -> Dict[str, Any]:
-        """Process text modality for conversation intelligence"""        try:
+        """Process text modality for conversation intelligence"""
+        try:
             # Text preprocessing
             processed_text = await self._preprocess_text(text_content)
             
@@ -461,7 +481,8 @@ class MultimodalConversationIntelligence:
     async def _process_voice_modality(self,
                                     audio_data: bytes,
                                     input_data: MultiModalInput) -> VoiceAnalysisResult:
-        """Process voice modality for conversation intelligence"""        try:
+        """Process voice modality for conversation intelligence"""
+        try:
             if not AUDIO_PROCESSING_AVAILABLE:
                 return VoiceAnalysisResult()
             
@@ -506,7 +527,8 @@ class MultimodalConversationIntelligence:
     async def _process_image_modality(self,
                                     image_data: bytes,
                                     input_data: MultiModalInput) -> ImageAnalysisResult:
-        """Process image modality for conversation intelligence"""        try:
+        """Process image modality for conversation intelligence"""
+        try:
             if not IMAGE_PROCESSING_AVAILABLE:
                 return ImageAnalysisResult()
             
@@ -555,7 +577,8 @@ class MultimodalConversationIntelligence:
     async def _process_video_modality(self,
                                     video_data: bytes,
                                     input_data: MultiModalInput) -> VideoAnalysisResult:
-        """Process video modality for conversation intelligence"""        try:
+        """Process video modality for conversation intelligence"""
+        try:
             if not VIDEO_PROCESSING_AVAILABLE:
                 return VideoAnalysisResult()
             
@@ -612,7 +635,8 @@ class MultimodalConversationIntelligence:
 
 
 class VoiceConversationAnalyzer:
-    """Advanced voice conversation analysis system"""    
+    """Advanced voice conversation analysis system"""
+    
     def __init__(self):
         self.voice_models = {}
         self.emotion_analyzer = {}
@@ -621,7 +645,8 @@ class VoiceConversationAnalyzer:
     async def analyze_voice_conversation(self,
                                        audio_data: bytes,
                                        conversation_context: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze voice conversation with advanced intelligence"""        try:
+        """Analyze voice conversation with advanced intelligence"""
+        try:
             # Voice processing and transcription
             transcription_result = await self._process_voice_transcription(audio_data)
             
@@ -653,7 +678,8 @@ class VoiceConversationAnalyzer:
 
 
 class TextConversationProcessor:
-    """Advanced text conversation processing system"""    
+    """Advanced text conversation processing system"""
+    
     def __init__(self):
         self.text_models = {}
         self.nlp_pipeline = {}
@@ -662,7 +688,8 @@ class TextConversationProcessor:
     async def process_text_conversation(self,
                                       text_content: str,
                                       conversation_context: Dict[str, Any]) -> Dict[str, Any]:
-        """Process text conversation with advanced NLP intelligence"""        try:
+        """Process text conversation with advanced NLP intelligence"""
+        try:
             # Advanced text preprocessing
             processed_text = await self._advanced_text_preprocessing(text_content)
             
@@ -696,7 +723,8 @@ class TextConversationProcessor:
 
 
 class ImageContextAnalyzer:
-    """Advanced image context analysis system"""    
+    """Advanced image context analysis system"""
+    
     def __init__(self):
         self.image_models = {}
         self.context_analyzer = {}
@@ -705,7 +733,8 @@ class ImageContextAnalyzer:
     async def analyze_image_context(self,
                                   image_data: bytes,
                                   conversation_context: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze image context for conversation intelligence"""        try:
+        """Analyze image context for conversation intelligence"""
+        try:
             # Image preprocessing and analysis
             image_analysis = await self._comprehensive_image_analysis(image_data)
             
@@ -739,7 +768,8 @@ class ImageContextAnalyzer:
 
 
 class VideoConversationIntelligence:
-    """Advanced video conversation intelligence system"""    
+    """Advanced video conversation intelligence system"""
+    
     def __init__(self):
         self.video_models = {}
         self.conversation_analyzer = {}
@@ -748,7 +778,8 @@ class VideoConversationIntelligence:
     async def analyze_video_conversation(self,
                                        video_data: bytes,
                                        conversation_context: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze video conversation with comprehensive intelligence"""        try:
+        """Analyze video conversation with comprehensive intelligence"""
+        try:
             # Comprehensive video analysis
             video_analysis = await self._comprehensive_video_analysis(video_data)
             

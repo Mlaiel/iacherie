@@ -12,7 +12,8 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, modification ou distribution sans autorisation 
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
 du droit d'auteur. Les contrevenants s'exposent à des poursuites judiciaires.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -47,7 +48,8 @@ from redis import Redis
 
 
 class TemplateType(Enum):
-    """Legal template types"""    DMCA_TAKEDOWN = "dmca_takedown"
+    """Legal template types"""
+    DMCA_TAKEDOWN = "dmca_takedown"
     COPYRIGHT_NOTICE = "copyright_notice"
     LICENSING_AGREEMENT = "licensing_agreement"
     COLLABORATION_CONTRACT = "collaboration_contract"
@@ -62,7 +64,8 @@ class TemplateType(Enum):
 
 
 class JurisdictionType(Enum):
-    """Legal jurisdiction types"""    US_FEDERAL = "us_federal"
+    """Legal jurisdiction types"""
+    US_FEDERAL = "us_federal"
     EU_COPYRIGHT = "eu_copyright"
     UK_COPYRIGHT = "uk_copyright"
     GERMAN_COPYRIGHT = "german_copyright"
@@ -72,7 +75,8 @@ class JurisdictionType(Enum):
 
 @dataclass
 class TemplateConfig:
-    """Legal template configuration"""    template_type: TemplateType
+    """Legal template configuration"""
+    template_type: TemplateType
     jurisdiction: JurisdictionType
     language: str
     format_type: str  # html, pdf, text
@@ -84,7 +88,8 @@ class TemplateConfig:
 
 @dataclass
 class DMCATemplate:
-    """DMCA takedown notice template data"""    copyright_owner: str
+    """DMCA takedown notice template data"""
+    copyright_owner: str
     copyright_owner_email: str
     copyright_owner_address: str
     agent_name: Optional[str]
@@ -103,7 +108,8 @@ class DMCATemplate:
 
 @dataclass
 class CopyrightNotice:
-    """Copyright notice data"""    copyright_symbol: str
+    """Copyright notice data"""
+    copyright_symbol: str
     copyright_year: str
     copyright_owner: str
     work_title: str
@@ -115,7 +121,8 @@ class CopyrightNotice:
 
 @dataclass
 class LegalDocument:
-    """Generated legal document"""    document_id: str
+    """Generated legal document"""
+    document_id: str
     template_type: TemplateType
     jurisdiction: JurisdictionType
     content: str
@@ -128,20 +135,24 @@ class LegalDocument:
 
 
 class LegalTemplateManager:
-    """    Advanced legal template management system.
+    """
+    Advanced legal template management system.
     
     Provides comprehensive legal document generation for content protection
     with multi-jurisdiction support and automated compliance verification.
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, redis_client: Redis,
                  templates_path: str = "./templates"):
-        """        Initialize LegalTemplateManager.
+        """
+        Initialize LegalTemplateManager.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
             templates_path: Path to legal templates directory
-        """        self.db_session = db_session
+        """
+        self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
         self.templates_path = Path(templates_path)
@@ -181,7 +192,8 @@ class LegalTemplateManager:
         }
     
     def _load_all_templates(self) -> Dict[str, Dict[str, str]]:
-        """Load all legal templates from files and database"""        templates = {}
+        """Load all legal templates from files and database"""
+        templates = {}
         
         # Load built-in templates
         templates.update(self._get_builtin_templates())
@@ -193,7 +205,8 @@ class LegalTemplateManager:
         return templates
     
     def _get_builtin_templates(self) -> Dict[str, Dict[str, str]]:
-        """Get built-in legal templates"""        return {
+        """Get built-in legal templates"""
+        return {
             TemplateType.DMCA_TAKEDOWN.value: {
                 JurisdictionType.US_FEDERAL.value: self._get_us_dmca_template(),
                 JurisdictionType.INTERNATIONAL.value: self._get_international_dmca_template()
@@ -214,7 +227,8 @@ class LegalTemplateManager:
     
     async def generate_dmca_notice(self, dmca_data: DMCATemplate,
                                  config: TemplateConfig) -> LegalDocument:
-        """        Generate DMCA takedown notice.
+        """
+        Generate DMCA takedown notice.
         
         Args:
             dmca_data: DMCA notice data
@@ -222,7 +236,8 @@ class LegalTemplateManager:
             
         Returns:
             Generated legal document
-        """        try:
+        """
+        try:
             # Validate DMCA data
             if not await self._validate_dmca_data(dmca_data, config.jurisdiction):
                 raise ValueError("Invalid DMCA data for jurisdiction")
@@ -300,7 +315,8 @@ class LegalTemplateManager:
     
     async def generate_copyright_notice(self, notice_data: CopyrightNotice,
                                       config: TemplateConfig) -> LegalDocument:
-        """        Generate copyright notice.
+        """
+        Generate copyright notice.
         
         Args:
             notice_data: Copyright notice data
@@ -308,7 +324,8 @@ class LegalTemplateManager:
             
         Returns:
             Generated copyright notice document
-        """        try:
+        """
+        try:
             # Get template content
             template_content = self._get_template_content(
                 TemplateType.COPYRIGHT_NOTICE, config.jurisdiction, config.language
@@ -370,7 +387,8 @@ class LegalTemplateManager:
     
     async def generate_cease_desist_letter(self, violation_data: Dict[str, Any],
                                          config: TemplateConfig) -> LegalDocument:
-        """        Generate cease and desist letter.
+        """
+        Generate cease and desist letter.
         
         Args:
             violation_data: Violation and infringer data
@@ -378,7 +396,8 @@ class LegalTemplateManager:
             
         Returns:
             Generated cease and desist letter
-        """        try:
+        """
+        try:
             template_content = self._get_template_content(
                 TemplateType.CEASE_DESIST, config.jurisdiction, config.language
             )
@@ -442,7 +461,8 @@ class LegalTemplateManager:
     async def send_legal_document(self, document: LegalDocument, 
                                 recipient_info: Dict[str, Any],
                                 delivery_method: str = "email") -> bool:
-        """        Send legal document to recipient.
+        """
+        Send legal document to recipient.
         
         Args:
             document: Legal document to send
@@ -451,7 +471,8 @@ class LegalTemplateManager:
             
         Returns:
             Delivery success status
-        """        try:
+        """
+        try:
             if delivery_method == "email":
                 return await self._send_email_document(document, recipient_info)
             elif delivery_method == "certified_mail":
@@ -468,7 +489,8 @@ class LegalTemplateManager:
     # Template content methods
     
     def _get_us_dmca_template(self) -> str:
-        """US Federal DMCA takedown template"""        return """DIGITAL MILLENNIUM COPYRIGHT ACT
+        """US Federal DMCA takedown template"""
+        return """DIGITAL MILLENNIUM COPYRIGHT ACT
 SECTION 512(c)(3) TAKEDOWN NOTICE
 
 To: {{ platform_contact.name }}
@@ -516,9 +538,11 @@ Date: {{ signature_date }}
 ---
 This notice complies with the Digital Millennium Copyright Act, 17 U.S.C. § 512(c)(3).
 Generated by IA Influencer Agent Legal System - © 2025 Fahed Mlaiel
-        """    
+        """
+    
     def _get_international_dmca_template(self) -> str:
-        """International DMCA takedown template"""        return """COPYRIGHT INFRINGEMENT TAKEDOWN NOTICE
+        """International DMCA takedown template"""
+        return """COPYRIGHT INFRINGEMENT TAKEDOWN NOTICE
 (International Application)
 
 To: {{ platform_name }} Copyright Agent
@@ -565,9 +589,11 @@ Date: {{ signature_date }}
 ---
 Generated by IA Influencer Agent International Legal System
 © 2025 Fahed Mlaiel - All Rights Reserved
-        """    
+        """
+    
     def _get_us_copyright_template(self) -> str:
-        """US Copyright notice template"""        return """COPYRIGHT NOTICE
+        """US Copyright notice template"""
+        return """COPYRIGHT NOTICE
 
 {{ copyright_symbol }} {{ copyright_year }} {{ copyright_owner }}. All rights reserved.
 
@@ -602,9 +628,11 @@ Document ID: {{ document_id }}
 ---
 © 2025 IA Influencer Agent Platform - Fahed Mlaiel
 Legal Protection System Active
-        """    
+        """
+    
     def _get_eu_copyright_template(self) -> str:
-        """EU Copyright notice template"""        return """URHEBERRECHTSHINWEIS / COPYRIGHT NOTICE
+        """EU Copyright notice template"""
+        return """URHEBERRECHTSHINWEIS / COPYRIGHT NOTICE
 (European Union)
 
 {{ copyright_symbol }} {{ copyright_year }} {{ copyright_owner }}. Alle Rechte vorbehalten / All rights reserved.
@@ -645,9 +673,11 @@ Dokument-ID / Document ID: {{ document_id }}
 ---
 © 2025 IA Influencer Agent Platform - Fahed Mlaiel
 Europäisches Rechtsschutzsystem / European Legal Protection System
-        """    
+        """
+    
     def _get_german_copyright_template(self) -> str:
-        """German Copyright notice template"""        return """URHEBERRECHTSHINWEIS
+        """German Copyright notice template"""
+        return """URHEBERRECHTSHINWEIS
 Nach deutschem Urheberrechtsgesetz (UrhG)
 
 {{ copyright_symbol }} {{ copyright_year }} {{ copyright_owner }}. Alle Rechte vorbehalten.
@@ -683,9 +713,11 @@ Dokument-ID: {{ document_id }}
 ---
 © 2025 IA Influencer Agent Plattform - Fahed Mlaiel
 Deutsches Urheberrechtsschutzsystem
-        """    
+        """
+    
     def _get_us_cease_desist_template(self) -> str:
-        """US Cease and Desist letter template"""        return """CEASE AND DESIST NOTICE
+        """US Cease and Desist letter template"""
+        return """CEASE AND DESIST NOTICE
 COPYRIGHT INFRINGEMENT
 
 {{ current_date }}
@@ -750,9 +782,11 @@ This letter serves as formal notice under applicable copyright law.
 ---
 Generated by IA Influencer Agent Legal System
 © 2025 Fahed Mlaiel - Professional Legal Protection
-        """    
+        """
+    
     def _get_us_counter_notice_template(self) -> str:
-        """US DMCA Counter-Notice template"""        return """DMCA COUNTER-NOTIFICATION
+        """US DMCA Counter-Notice template"""
+        return """DMCA COUNTER-NOTIFICATION
 17 U.S.C. § 512(g)(3)
 
 To: {{ platform_name }} Copyright Agent
@@ -793,11 +827,13 @@ Date: {{ signature_date }}
 ---
 This counter-notification complies with 17 U.S.C. § 512(g)(3).
 Generated by IA Influencer Agent Legal System
-        """    
+        """
+    
     # Helper methods
     
     async def _validate_dmca_data(self, dmca_data: DMCATemplate, jurisdiction: JurisdictionType) -> bool:
-        """Validate DMCA data for specific jurisdiction"""        try:
+        """Validate DMCA data for specific jurisdiction"""
+        try:
             jurisdiction_config = self.jurisdiction_configs.get(jurisdiction, {})
             required_fields = jurisdiction_config.get('required_fields', [])
             
@@ -824,7 +860,8 @@ Generated by IA Influencer Agent Legal System
     
     def _get_template_content(self, template_type: TemplateType, 
                             jurisdiction: JurisdictionType, language: str = "en") -> str:
-        """Get template content for specific type and jurisdiction"""        try:
+        """Get template content for specific type and jurisdiction"""
+        try:
             templates_for_type = self.templates.get(template_type.value, {})
             
             # Try specific jurisdiction first
@@ -846,7 +883,8 @@ Generated by IA Influencer Agent Legal System
             raise
     
     def _get_platform_contact_info(self, platform_name: str) -> Dict[str, str]:
-        """Get platform contact information for legal notices"""        platform_contacts = {
+        """Get platform contact information for legal notices"""
+        platform_contacts = {
             'youtube': {
                 'name': 'YouTube/Google LLC',
                 'address': '901 Cherry Ave, San Bruno, CA 94066',
@@ -876,7 +914,8 @@ Generated by IA Influencer Agent Legal System
         })
     
     def _get_legal_framework(self, jurisdiction: JurisdictionType) -> str:
-        """Get legal framework description for jurisdiction"""        frameworks = {
+        """Get legal framework description for jurisdiction"""
+        frameworks = {
             JurisdictionType.US_FEDERAL: "United States Copyright Act (Title 17, U.S. Code) and Digital Millennium Copyright Act",
             JurisdictionType.EU_COPYRIGHT: "EU Copyright Directive (2019/790/EU) and national implementations",
             JurisdictionType.GERMAN_COPYRIGHT: "Urheberrechtsgesetz (UrhG) der Bundesrepublik Deutschland",
@@ -889,7 +928,8 @@ Generated by IA Influencer Agent Legal System
     
     async def _calculate_statutory_damages(self, violation_data: Dict[str, Any], 
                                          jurisdiction: JurisdictionType) -> Dict[str, Any]:
-        """Calculate potential statutory damages"""        try:
+        """Calculate potential statutory damages"""
+        try:
             jurisdiction_config = self.jurisdiction_configs.get(jurisdiction, {})
             
             if jurisdiction == JurisdictionType.US_FEDERAL:
@@ -915,7 +955,8 @@ Generated by IA Influencer Agent Legal System
             return {'estimated_damages': "Substantial damages under applicable law"}
     
     async def _convert_to_pdf(self, content: str, template_type: TemplateType) -> bytes:
-        """Convert document content to PDF format"""        try:
+        """Convert document content to PDF format"""
+        try:
             from io import BytesIO
             buffer = BytesIO()
             
@@ -964,8 +1005,10 @@ Generated by IA Influencer Agent Legal System
             return content.encode('utf-8')
     
     async def _convert_to_html(self, content: str) -> str:
-        """Convert document content to HTML format"""        try:
-            html_content = f"""            <!DOCTYPE html>
+        """Convert document content to HTML format"""
+        try:
+            html_content = f"""
+            <!DOCTYPE html>
             <html>
             <head>
                 <title>Legal Document</title>
@@ -984,7 +1027,8 @@ Generated by IA Influencer Agent Legal System
                 </div>
             </body>
             </html>
-            """            return html_content
+            """
+            return html_content
             
         except Exception as e:
             self.logger.error(f"Error converting to HTML: {str(e)}")
@@ -992,7 +1036,8 @@ Generated by IA Influencer Agent Legal System
     
     async def _send_email_document(self, document: LegalDocument, 
                                  recipient_info: Dict[str, Any]) -> bool:
-        """Send document via email"""        try:
+        """Send document via email"""
+        try:
             # Email sending implementation would go here
             # This is a placeholder for the actual email functionality
             
@@ -1004,14 +1049,16 @@ Generated by IA Influencer Agent Legal System
             return False
     
     async def _store_legal_document(self, document: LegalDocument):
-        """Store legal document in database"""        try:
+        """Store legal document in database"""
+        try:
             # Database storage implementation
             pass
         except Exception as e:
             self.logger.error(f"Error storing document: {str(e)}")
     
     async def _cache_document(self, document: LegalDocument):
-        """Cache document in Redis"""        try:
+        """Cache document in Redis"""
+        try:
             cache_key = f"legal_doc:{document.document_id}"
             document_data = asdict(document)
             
@@ -1030,7 +1077,8 @@ Generated by IA Influencer Agent Legal System
             self.logger.error(f"Error caching document: {str(e)}")
     
     def _load_file_templates(self) -> Dict[str, Dict[str, str]]:
-        """Load templates from file system"""        templates = {}
+        """Load templates from file system"""
+        templates = {}
         
         try:
             for template_file in self.templates_path.glob("*.jinja2"):
@@ -1058,7 +1106,8 @@ Generated by IA Influencer Agent Legal System
 
 @dataclass
 class LegalTemplateData:
-    """Data structure for legal template variables."""    content_title: str
+    """Data structure for legal template variables."""
+    content_title: str
     content_type: str
     creator_name: str
     creator_email: str
@@ -1071,13 +1120,15 @@ class LegalTemplateData:
 
 
 class LegalTemplateManager:
-    """Manager for legal document templates and generation."""    
+    """Manager for legal document templates and generation."""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self._templates = self._initialize_templates()
     
     def _initialize_templates(self) -> Dict[str, str]:
-        """Initialize all legal templates."""        return {
+        """Initialize all legal templates."""
+        return {
             'dmca_takedown': self._get_dmca_template(),
             'copyright_notice': self._get_copyright_template(),
             'licensing_agreement': self._get_licensing_template(),
@@ -1089,7 +1140,8 @@ class LegalTemplateManager:
         }
     
     def generate_document(self, template_type: str, data: LegalTemplateData) -> str:
-        """Generate a legal document from template and data."""        try:
+        """Generate a legal document from template and data."""
+        try:
             if template_type not in self._templates:
                 raise ValueError(f"Template type '{template_type}' not found")
             
@@ -1118,13 +1170,15 @@ class LegalTemplateManager:
             raise
     
     def _format_contact_info(self, contact_info: Dict[str, str]) -> str:
-        """Format contact information for templates."""        formatted = []
+        """Format contact information for templates."""
+        formatted = []
         for key, value in contact_info.items():
             formatted.append(f"{key.title()}: {value}")
         return '\n'.join(formatted)
     
     def _get_dmca_template(self) -> str:
-        """DMCA takedown notice template."""        return """DIGITAL MILLENNIUM COPYRIGHT ACT TAKEDOWN NOTICE
+        """DMCA takedown notice template."""
+        return """DIGITAL MILLENNIUM COPYRIGHT ACT TAKEDOWN NOTICE
 
 To: {platform_name} Copyright Agent
 Date: {current_date}
@@ -1157,9 +1211,11 @@ Date: {current_date}
 ---
 Generated by IA Influencer Agent Content Protection System
 © 2025 Fahed Mlaiel. All rights reserved.
-        """    
+        """
+    
     def _get_copyright_template(self) -> str:
-        """Copyright notice template."""        return """COPYRIGHT NOTICE
+        """Copyright notice template."""
+        return """COPYRIGHT NOTICE
 
 © {copyright_date} {creator_name}. All rights reserved.
 
@@ -1184,9 +1240,11 @@ This copyright notice was generated using IA Influencer Agent Content Protection
 Removal or alteration of this notice is prohibited.
 
 © 2025 IA Influencer Agent Platform - Fahed Mlaiel
-        """    
+        """
+    
     def _get_licensing_template(self) -> str:
-        """Content licensing agreement template."""        return """CONTENT LICENSING AGREEMENT
+        """Content licensing agreement template."""
+        return """CONTENT LICENSING AGREEMENT
 
 This agreement is entered into on {current_date} between:
 
@@ -1216,9 +1274,11 @@ This agreement is governed by applicable copyright laws.
 ---
 Generated by IA Influencer Agent Licensing System
 © 2025 Fahed Mlaiel. All rights reserved.
-        """    
+        """
+    
     def _get_collaboration_template(self) -> str:
-        """Collaboration contract template."""        return """CREATIVE COLLABORATION AGREEMENT
+        """Collaboration contract template."""
+        return """CREATIVE COLLABORATION AGREEMENT
 
 Date: {current_date}
 
@@ -1252,9 +1312,11 @@ Primary Contact: {creator_email}
 ---
 Facilitated by IA Influencer Agent Collaboration Platform
 © 2025 Fahed Mlaiel. All rights reserved.
-        """    
+        """
+    
     def _get_platform_tos_template(self) -> str:
-        """Platform terms of service template."""        return """IA INFLUENCER AGENT PLATFORM - TERMS OF SERVICE
+        """Platform terms of service template."""
+        return """IA INFLUENCER AGENT PLATFORM - TERMS OF SERVICE
 
 Last Updated: {current_date}
 
@@ -1293,9 +1355,11 @@ Unauthorized copying, distribution, or reverse engineering is strictly prohibite
 
 © 2025 IA Influencer Agent Platform - Fahed Mlaiel
 All rights reserved.
-        """    
+        """
+    
     def _get_privacy_template(self) -> str:
-        """Privacy policy template."""        return """IA INFLUENCER AGENT PLATFORM - PRIVACY POLICY
+        """Privacy policy template."""
+        return """IA INFLUENCER AGENT PLATFORM - PRIVACY POLICY
 
 Effective Date: {current_date}
 
@@ -1328,9 +1392,11 @@ Data processing is based on legitimate interests in providing content protection
 ---
 © 2025 IA Influencer Agent Platform - Fahed Mlaiel
 Privacy by Design - Protection by Default
-        """    
+        """
+    
     def _get_infringement_warning_template(self) -> str:
-        """Copyright infringement warning template."""        return """COPYRIGHT INFRINGEMENT WARNING
+        """Copyright infringement warning template."""
+        return """COPYRIGHT INFRINGEMENT WARNING
 
 Date: {current_date}
 To: {platform_name}
@@ -1369,9 +1435,11 @@ This notice is generated by IA Influencer Agent Content Protection System.
 Failure to respond may result in escalated legal action.
 
 © 2025 IA Influencer Agent - Fahed Mlaiel
-        """    
+        """
+    
     def _get_monetization_template(self) -> str:
-        """Monetization agreement template."""        return """CONTENT MONETIZATION AGREEMENT
+        """Monetization agreement template."""
+        return """CONTENT MONETIZATION AGREEMENT
 
 Agreement Date: {current_date}
 
@@ -1420,7 +1488,8 @@ Powered by IA Influencer Agent Monetization Engine
         """
 # Template validator
 class TemplateValidator:
-    """Validator for legal template integrity and compliance."""    
+    """Validator for legal template integrity and compliance."""
+    
     def __init__(self):
         self.required_fields = [
             'creator_name', 'creator_email', 'content_title', 
@@ -1428,7 +1497,8 @@ class TemplateValidator:
         ]
     
     def validate_template_data(self, data: LegalTemplateData) -> bool:
-        """Validate template data completeness."""        try:
+        """Validate template data completeness."""
+        try:
             for field in self.required_fields:
                 if not getattr(data, field, None):
                     raise ValueError(f"Required field '{field}' is missing")
@@ -1444,7 +1514,8 @@ class TemplateValidator:
             return False
     
     def validate_generated_document(self, document: str) -> bool:
-        """Validate generated document integrity."""        try:
+        """Validate generated document integrity."""
+        try:
             # Check document is not empty
             if not document.strip():
                 return False

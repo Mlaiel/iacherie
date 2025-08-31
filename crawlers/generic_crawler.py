@@ -10,7 +10,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
 from datetime import datetime, timedelta
@@ -41,7 +42,8 @@ settings = get_settings()
 
 @dataclass
 class WebContent:
-    """Generic web content data structure."""    url: str
+    """Generic web content data structure."""
+    url: str
     title: str
     content: str
     description: str
@@ -60,7 +62,8 @@ class WebContent:
 
 @dataclass
 class SiteMap:
-    """Website sitemap structure."""    domain: str
+    """Website sitemap structure."""
+    domain: str
     pages: List[str]
     last_crawled: datetime
     total_pages: int
@@ -69,7 +72,8 @@ class SiteMap:
     robots_disallowed: List[str]
 
 class GenericWebCrawler:
-    """    Professional generic web crawler implementation.
+    """
+    Professional generic web crawler implementation.
     
     Features:
     - Universal content extraction
@@ -81,9 +85,11 @@ class GenericWebCrawler:
     - Content similarity detection
     - SEO metadata extraction
     - Social media integration detection
-    """    
+    """
+    
     def __init__(self):
-        """Initialize generic web crawler."""        self.rate_limiter = GenericRateLimiter()
+        """Initialize generic web crawler."""
+        self.rate_limiter = GenericRateLimiter()
         self.proxy_manager = ProxyManager()
         self.user_agent_rotator = UserAgentRotator()
         self.content_extractor = ContentExtractor()
@@ -127,7 +133,8 @@ class GenericWebCrawler:
         self.selenium_options.add_argument('--disable-blink-features=AutomationControlled')
     
     async def __aenter__(self):
-        """Async context manager entry."""        headers = {
+        """Async context manager entry."""
+        headers = {
             'User-Agent': self.user_agent_rotator.get_user_agent(),
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'Accept-Language': 'en-US,en;q=0.5',
@@ -147,11 +154,13 @@ class GenericWebCrawler:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""        if self.session:
+        """Async context manager exit."""
+        if self.session:
             await self.session.close()
     
     async def crawl_url(self, url: str, method: str = 'auto') -> Optional[WebContent]:
-        """        Crawl a single URL and extract content.
+        """
+        Crawl a single URL and extract content.
         
         Args:
             url: URL to crawl
@@ -159,7 +168,8 @@ class GenericWebCrawler:
             
         Returns:
             WebContent object or None if failed
-        """        try:
+        """
+        try:
             # Check rate limiting
             domain = urlparse(url).netloc
             await self.rate_limiter.wait_if_needed(domain)
@@ -192,7 +202,8 @@ class GenericWebCrawler:
             return None
     
     async def _crawl_with_requests(self, url: str) -> Optional[WebContent]:
-        """Crawl URL using aiohttp requests."""        try:
+        """Crawl URL using aiohttp requests."""
+        try:
             async with self.session.get(url) as response:
                 if response.status != 200:
                     logger.warning(f"HTTP {response.status} for {url}")
@@ -215,7 +226,8 @@ class GenericWebCrawler:
             return None
     
     async def _crawl_with_selenium(self, url: str) -> Optional[WebContent]:
-        """Crawl URL using Selenium for JavaScript-heavy sites."""        try:
+        """Crawl URL using Selenium for JavaScript-heavy sites."""
+        try:
             driver = webdriver.Chrome(options=self.selenium_options)
             driver.get(url)
             
@@ -239,7 +251,8 @@ class GenericWebCrawler:
             return None
     
     async def _crawl_with_requests_html(self, url: str) -> Optional[WebContent]:
-        """Crawl URL using requests-html for JavaScript rendering."""        try:
+        """Crawl URL using requests-html for JavaScript rendering."""
+        try:
             # This would be implemented with requests-html
             # For now, fallback to requests method
             return await self._crawl_with_requests(url)
@@ -249,7 +262,8 @@ class GenericWebCrawler:
             return None
     
     async def _extract_content(self, url: str, soup: BeautifulSoup, html_content: str) -> WebContent:
-        """Extract structured content from parsed HTML."""        try:
+        """Extract structured content from parsed HTML."""
+        try:
             # Extract title
             title = self._extract_element_text(soup, self.content_patterns['title'])
             
@@ -316,7 +330,8 @@ class GenericWebCrawler:
             return None
     
     def _extract_element_text(self, soup: BeautifulSoup, selectors: List[str]) -> str:
-        """Extract text from first matching element."""        for selector in selectors:
+        """Extract text from first matching element."""
+        for selector in selectors:
             try:
                 if selector.startswith('['):
                     # Attribute selector
@@ -335,7 +350,8 @@ class GenericWebCrawler:
         return ""
     
     def _extract_date(self, soup: BeautifulSoup, selectors: List[str]) -> Optional[datetime]:
-        """Extract and parse date from elements."""        for selector in selectors:
+        """Extract and parse date from elements."""
+        for selector in selectors:
             try:
                 element = soup.select_one(selector)
                 if element:
@@ -366,7 +382,8 @@ class GenericWebCrawler:
         return None
     
     def _extract_metadata(self, soup: BeautifulSoup) -> Dict:
-        """Extract various metadata from page."""        metadata = {}
+        """Extract various metadata from page."""
+        metadata = {}
         
         # Meta tags
         for meta in soup.find_all('meta'):
@@ -391,7 +408,8 @@ class GenericWebCrawler:
         return metadata
     
     def _extract_images(self, soup: BeautifulSoup, base_url: str) -> List[Dict]:
-        """Extract image information."""        images = []
+        """Extract image information."""
+        images = []
         
         for img in soup.find_all('img'):
             src = img.get('src')
@@ -411,7 +429,8 @@ class GenericWebCrawler:
         return images
     
     def _extract_videos(self, soup: BeautifulSoup, base_url: str) -> List[Dict]:
-        """Extract video information."""        videos = []
+        """Extract video information."""
+        videos = []
         
         # Video tags
         for video in soup.find_all('video'):
@@ -450,7 +469,8 @@ class GenericWebCrawler:
         return videos
     
     def _detect_video_platform(self, url: str) -> str:
-        """Detect video platform from URL."""        if 'youtube.com' in url or 'youtu.be' in url:
+        """Detect video platform from URL."""
+        if 'youtube.com' in url or 'youtu.be' in url:
             return 'youtube'
         elif 'vimeo.com' in url:
             return 'vimeo'
@@ -462,7 +482,8 @@ class GenericWebCrawler:
             return 'unknown'
     
     def _extract_links(self, soup: BeautifulSoup, base_url: str) -> List[Dict]:
-        """Extract internal and external links."""        links = []
+        """Extract internal and external links."""
+        links = []
         domain = urlparse(base_url).netloc
         
         for link in soup.find_all('a', href=True):
@@ -482,7 +503,8 @@ class GenericWebCrawler:
         return links
     
     def _extract_tags(self, soup: BeautifulSoup) -> List[str]:
-        """Extract tags and keywords."""        tags = []
+        """Extract tags and keywords."""
+        tags = []
         
         # Meta keywords
         keywords_meta = soup.find('meta', attrs={'name': 'keywords'})
@@ -504,7 +526,8 @@ class GenericWebCrawler:
         return list(set(tags))  # Remove duplicates
     
     def _detect_language(self, soup: BeautifulSoup, content: str) -> str:
-        """Detect content language."""        # Check HTML lang attribute
+        """Detect content language."""
+        # Check HTML lang attribute
         html_tag = soup.find('html')
         if html_tag and html_tag.get('lang'):
             return html_tag.get('lang')
@@ -519,7 +542,8 @@ class GenericWebCrawler:
         return 'en'  # Default to English
     
     def _extract_social_shares(self, soup: BeautifulSoup) -> Dict:
-        """Extract social media share counts."""        shares = {}
+        """Extract social media share counts."""
+        shares = {}
         
         # Look for social share widgets
         social_patterns = {
@@ -543,7 +567,8 @@ class GenericWebCrawler:
         return shares
     
     def _determine_content_type(self, soup: BeautifulSoup, url: str) -> str:
-        """Determine the type of content."""        # Check schema.org types
+        """Determine the type of content."""
+        # Check schema.org types
         for script in soup.find_all('script', type='application/ld+json'):
             try:
                 data = json.loads(script.string)
@@ -570,7 +595,8 @@ class GenericWebCrawler:
             return 'webpage'
     
     async def _determine_best_method(self, url: str) -> str:
-        """Determine the best crawling method for a URL."""        try:
+        """Determine the best crawling method for a URL."""
+        try:
             # Quick check with HEAD request
             async with self.session.head(url) as response:
                 content_type = response.headers.get('content-type', '')
@@ -585,7 +611,8 @@ class GenericWebCrawler:
             return 'selenium'  # Default fallback
     
     async def _check_robots_allowed(self, url: str) -> bool:
-        """Check if URL is allowed by robots.txt."""        try:
+        """Check if URL is allowed by robots.txt."""
+        try:
             domain = urlparse(url).netloc
             robots_url = f"https://{domain}/robots.txt"
             
@@ -602,7 +629,8 @@ class GenericWebCrawler:
             return True  # Default to allowed on error
     
     async def crawl_sitemap(self, domain: str) -> Optional[SiteMap]:
-        """Crawl and parse website sitemap."""        try:
+        """Crawl and parse website sitemap."""
+        try:
             sitemap_urls = [
                 f"https://{domain}/sitemap.xml",
                 f"https://{domain}/sitemap_index.xml",
@@ -651,7 +679,8 @@ class GenericWebCrawler:
         urls: List[str],
         check_interval: int = 3600
     ) -> AsyncGenerator[List[WebContent], None]:
-        """Monitor multiple URLs for content changes."""        content_hashes = {}
+        """Monitor multiple URLs for content changes."""
+        content_hashes = {}
         
         while True:
             try:

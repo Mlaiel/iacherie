@@ -12,7 +12,8 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional Docker configuration for enterprise security services
 supporting multi-layer security, threat detection, and compliance monitoring.
-"""from typing import Dict, List, Optional, Any
+"""
+from typing import Dict, List, Optional, Any
 import logging
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -21,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SecurityServicesDockerConfig:
-    """Enterprise Security Services Docker Configuration"""    
+    """Enterprise Security Services Docker Configuration"""
+    
     # Image Configuration
     image_name: str = "ia-influencer/security-services"
     image_tag: str = "2.0.0"
@@ -62,7 +64,8 @@ class SecurityServicesDockerConfig:
     })
     
     def generate_dockerfile(self) -> str:
-        """Generate Dockerfile for security services"""        return f"""# Multi-stage build for Security Services
+        """Generate Dockerfile for security services"""
+        return f"""# Multi-stage build for Security Services
 FROM python:3.11-slim AS builder
 
 # Install system dependencies
@@ -177,8 +180,10 @@ ENV PYTHONPATH=/app \\
 COPY scripts/security/entrypoint.sh /app/scripts/
 ENTRYPOINT ["/app/scripts/entrypoint.sh"]
 CMD ["python", "-m", "security.main"]
-"""    def generate_docker_compose_service(self) -> Dict[str, Any]:
-        """Generate Docker Compose service configuration"""        return {
+"""
+    def generate_docker_compose_service(self) -> Dict[str, Any]:
+        """Generate Docker Compose service configuration"""
+        return {
             "image": f"{self.registry_url}/{self.image_name}:{self.image_tag}",
             "container_name": self.container_name,
             "restart": self.restart_policy,
@@ -234,7 +239,8 @@ CMD ["python", "-m", "security.main"]
         }
     
     def generate_waf_service(self) -> Dict[str, Any]:
-        """Generate WAF (Web Application Firewall) service"""        return {
+        """Generate WAF (Web Application Firewall) service"""
+        return {
             "image": "owasp/modsecurity:apache",
             "container_name": f"{self.container_name}-waf",
             "restart": self.restart_policy,
@@ -266,7 +272,8 @@ CMD ["python", "-m", "security.main"]
         }
     
     def generate_ids_service(self) -> Dict[str, Any]:
-        """Generate IDS (Intrusion Detection System) service"""        return {
+        """Generate IDS (Intrusion Detection System) service"""
+        return {
             "image": "jasonish/suricata:latest",
             "container_name": f"{self.container_name}-ids",
             "restart": self.restart_policy,
@@ -300,7 +307,8 @@ CMD ["python", "-m", "security.main"]
         }
     
     def generate_vulnerability_scanner_service(self) -> Dict[str, Any]:
-        """Generate vulnerability scanner service"""        return {
+        """Generate vulnerability scanner service"""
+        return {
             "image": "owasp/zap2docker-stable",
             "container_name": f"{self.container_name}-scanner",
             "restart": self.restart_policy,
@@ -332,7 +340,8 @@ CMD ["python", "-m", "security.main"]
         }
     
     def generate_compliance_monitor_service(self) -> Dict[str, Any]:
-        """Generate compliance monitoring service"""        return {
+        """Generate compliance monitoring service"""
+        return {
             "image": f"{self.registry_url}/compliance-monitor:latest",
             "container_name": f"{self.container_name}-compliance",
             "restart": self.restart_policy,
@@ -364,7 +373,8 @@ CMD ["python", "-m", "security.main"]
         }
     
     def generate_security_requirements(self) -> str:
-        """Generate security requirements.txt"""        return """# Security Services Requirements
+        """Generate security requirements.txt"""
+        return """# Security Services Requirements
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
 # Core security framework
@@ -444,8 +454,10 @@ typer==0.9.0
 pytest==7.4.3
 pytest-asyncio==0.21.1
 pytest-cov==4.1.0
-"""    def generate_security_config_files(self) -> Dict[str, str]:
-        """Generate security configuration files"""        configs = {}
+"""
+    def generate_security_config_files(self) -> Dict[str, str]:
+        """Generate security configuration files"""
+        configs = {}
         
         # ModSecurity configuration
         configs["modsecurity.conf"] = """# ModSecurity Configuration for IA-Influencer
@@ -508,7 +520,8 @@ SecRule ARGS "@detectXSS" \\
     tag:'language-multi',\\
     tag:'platform-multi',\\
     tag:'attack-xss'"
-"""        # Suricata configuration
+"""
+        # Suricata configuration
         configs["suricata.yaml"] = """# Suricata IDS Configuration for IA-Influencer
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -657,7 +670,8 @@ rule-files:
 
 classification-file: /etc/suricata/classification.config
 reference-config-file: /etc/suricata/reference.config
-"""        # Fail2ban configuration
+"""
+        # Fail2ban configuration
         configs["fail2ban_jail.conf"] = """# Fail2ban configuration for IA-Influencer
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -726,10 +740,12 @@ logpath = /app/logs/security/api-security.log
 maxretry = 10
 findtime = 300
 bantime = 7200
-"""        return configs
+"""
+        return configs
     
     def generate_entrypoint_script(self) -> str:
-        """Generate entrypoint script for security services"""        return """#!/bin/bash
+        """Generate entrypoint script for security services"""
+        return """#!/bin/bash
 # Security Services Entrypoint Script
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -792,9 +808,11 @@ python -m security.audit &
 # Start main security service
 echo "🚀 Starting main security service..."
 exec "$@"
-"""    
+"""
+    
     def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all security configuration files"""        output_path = Path(output_dir)
+        """Save all security configuration files"""
+        output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
         
         files_created = []

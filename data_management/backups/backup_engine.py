@@ -11,7 +11,8 @@ Responsibility: Moteurs de sauvegarde haute performance pour contenus multi-form
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import shutil
@@ -33,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class BackupProgress:
-    """Suivi de progression d'une sauvegarde"""    total_files: int = 0
+    """Suivi de progression d'une sauvegarde"""
+    total_files: int = 0
     processed_files: int = 0
     total_size_bytes: int = 0
     processed_size_bytes: int = 0
@@ -43,13 +45,15 @@ class BackupProgress:
     
     @property
     def progress_percentage(self) -> float:
-        """Calcule le pourcentage de progression"""        if self.total_files == 0:
+        """Calcule le pourcentage de progression"""
+        if self.total_files == 0:
             return 0.0
         return (self.processed_files / self.total_files) * 100
     
     @property
     def speed_mbps(self) -> float:
-        """Calcule la vitesse de traitement en MB/s"""        if not self.start_time:
+        """Calcule la vitesse de traitement en MB/s"""
+        if not self.start_time:
             return 0.0
         
         elapsed = (datetime.now() - self.start_time).total_seconds()
@@ -60,7 +64,8 @@ class BackupProgress:
 
 
 class BackupEngine:
-    """    Moteur de sauvegarde principal avec gestion avancée des types de contenu
+    """
+    Moteur de sauvegarde principal avec gestion avancée des types de contenu
     
     Fonctionnalités:
     - Sauvegarde complète multi-format
@@ -68,7 +73,8 @@ class BackupEngine:
     - Optimisation performance par type
     - Gestion métadonnées avancée
     - Vérification intégrité temps réel
-    """    
+    """
+    
     def __init__(self, chunk_size: int = 64 * 1024 * 1024):  # 64MB par défaut
         self.chunk_size = chunk_size
         self.progress = BackupProgress()
@@ -78,7 +84,8 @@ class BackupEngine:
         logger.info(f"BackupEngine initialized with chunk size: {chunk_size / (1024*1024):.1f}MB")
     
     def _initialize_content_processors(self) -> Dict[str, Any]:
-        """Initialise les processeurs spécialisés par type de contenu"""        return {
+        """Initialise les processeurs spécialisés par type de contenu"""
+        return {
             "audio": self._process_audio_content,
             "video": self._process_video_content,
             "image": self._process_image_content,
@@ -89,7 +96,8 @@ class BackupEngine:
         }
     
     def _initialize_metadata_extractors(self) -> Dict[str, Any]:
-        """Initialise les extracteurs de métadonnées par type"""        return {
+        """Initialise les extracteurs de métadonnées par type"""
+        return {
             "audio": self._extract_audio_metadata,
             "video": self._extract_video_metadata,
             "image": self._extract_image_metadata,
@@ -104,7 +112,8 @@ class BackupEngine:
         destination: Path,
         options: Optional[Dict[str, Any]] = None
     ) -> BackupMetadata:
-        """        Effectue une sauvegarde complète des chemins sources
+        """
+        Effectue une sauvegarde complète des chemins sources
         
         Args:
             source_paths: Liste des chemins sources
@@ -113,7 +122,8 @@ class BackupEngine:
             
         Returns:
             BackupMetadata: Métadonnées de la sauvegarde créée
-        """        try:
+        """
+        try:
             start_time = datetime.now()
             self.progress.start_time = start_time
             options = options or {}
@@ -164,14 +174,16 @@ class BackupEngine:
             raise BackupEngineException(f"Backup operation failed: {e}")
     
     async def _analyze_sources(self, source_paths: List[Path]) -> List[Dict[str, Any]]:
-        """        Analyse les sources pour créer un inventaire détaillé
+        """
+        Analyse les sources pour créer un inventaire détaillé
         
         Args:
             source_paths: Chemins sources à analyser
             
         Returns:
             List[Dict[str, Any]]: Inventaire des fichiers
-        """        file_inventory = []
+        """
+        file_inventory = []
         
         for source_path in source_paths:
             if source_path.is_file():
@@ -184,14 +196,16 @@ class BackupEngine:
         return file_inventory
     
     async def _analyze_file(self, file_path: Path) -> Dict[str, Any]:
-        """        Analyse un fichier unique
+        """
+        Analyse un fichier unique
         
         Args:
             file_path: Chemin du fichier
             
         Returns:
             Dict[str, Any]: Informations sur le fichier
-        """        try:
+        """
+        try:
             stat = file_path.stat()
             content_type = self._detect_content_type(file_path)
             
@@ -217,14 +231,16 @@ class BackupEngine:
             }
     
     async def _analyze_directory(self, dir_path: Path) -> AsyncIterator[Dict[str, Any]]:
-        """        Analyse récursive d'un répertoire
+        """
+        Analyse récursive d'un répertoire
         
         Args:
             dir_path: Chemin du répertoire
             
         Yields:
             Dict[str, Any]: Informations sur chaque fichier
-        """        try:
+        """
+        try:
             for item in dir_path.rglob("*"):
                 if item.is_file():
                     file_info = await self._analyze_file(item)
@@ -233,14 +249,16 @@ class BackupEngine:
             logger.error(f"Failed to analyze directory {dir_path}: {e}")
     
     def _detect_content_type(self, file_path: Path) -> str:
-        """        Détecte le type de contenu d'un fichier
+        """
+        Détecte le type de contenu d'un fichier
         
         Args:
             file_path: Chemin du fichier
             
         Returns:
             str: Type de contenu détecté
-        """        extension = file_path.suffix.lower()
+        """
+        extension = file_path.suffix.lower()
         
         # Mapping extensions vers types de contenu
         content_type_mapping = {
@@ -272,7 +290,8 @@ class BackupEngine:
         return content_type_mapping.get(extension, 'other')
     
     async def _calculate_file_hash(self, file_path: Path, algorithm: str = "sha256") -> str:
-        """        Calcule le hash d'un fichier
+        """
+        Calcule le hash d'un fichier
         
         Args:
             file_path: Chemin du fichier
@@ -280,7 +299,8 @@ class BackupEngine:
             
         Returns:
             str: Hash hexadécimal
-        """        try:
+        """
+        try:
             hash_obj = hashlib.new(algorithm)
             
             with open(file_path, 'rb') as f:
@@ -298,7 +318,8 @@ class BackupEngine:
         destination: Path,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Sauvegarde les fichiers avec traitement spécialisé
+        """
+        Sauvegarde les fichiers avec traitement spécialisé
         
         Args:
             file_inventory: Inventaire des fichiers
@@ -307,7 +328,8 @@ class BackupEngine:
             
         Returns:
             Dict[str, Any]: Manifeste de sauvegarde
-        """        manifest = {
+        """
+        manifest = {
             "backup_info": {
                 "timestamp": datetime.now().isoformat(),
                 "total_files": len(file_inventory),
@@ -337,14 +359,16 @@ class BackupEngine:
         manifest: Dict[str, Any],
         options: Dict[str, Any]
     ) -> None:
-        """        Traite un lot de fichiers en parallèle
+        """
+        Traite un lot de fichiers en parallèle
         
         Args:
             file_batch: Lot de fichiers à traiter
             destination: Répertoire de destination
             manifest: Manifeste de sauvegarde
             options: Options de traitement
-        """        tasks = []
+        """
+        tasks = []
         
         for file_info in file_batch:
             task = asyncio.create_task(
@@ -361,14 +385,16 @@ class BackupEngine:
         manifest: Dict[str, Any],
         options: Dict[str, Any]
     ) -> None:
-        """        Traite un fichier unique avec processeur spécialisé
+        """
+        Traite un fichier unique avec processeur spécialisé
         
         Args:
             file_info: Informations sur le fichier
             destination: Répertoire de destination
             manifest: Manifeste de sauvegarde
             options: Options de traitement
-        """        try:
+        """
+        try:
             source_path = file_info["path"]
             content_type = file_info["content_type"]
             
@@ -403,7 +429,8 @@ class BackupEngine:
         destination: Path,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Traitement spécialisé pour contenus audio"""        source_path = file_info["path"]
+        """Traitement spécialisé pour contenus audio"""
+        source_path = file_info["path"]
         relative_path = source_path.name
         dest_path = destination / "audio" / relative_path
         
@@ -430,7 +457,8 @@ class BackupEngine:
         destination: Path,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Traitement spécialisé pour contenus vidéo"""        source_path = file_info["path"]
+        """Traitement spécialisé pour contenus vidéo"""
+        source_path = file_info["path"]
         relative_path = source_path.name
         dest_path = destination / "video" / relative_path
         
@@ -457,7 +485,8 @@ class BackupEngine:
         destination: Path,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Traitement spécialisé pour contenus image"""        source_path = file_info["path"]
+        """Traitement spécialisé pour contenus image"""
+        source_path = file_info["path"]
         relative_path = source_path.name
         dest_path = destination / "images" / relative_path
         
@@ -484,7 +513,8 @@ class BackupEngine:
         destination: Path,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Traitement spécialisé pour contenus texte"""        source_path = file_info["path"]
+        """Traitement spécialisé pour contenus texte"""
+        source_path = file_info["path"]
         relative_path = source_path.name
         dest_path = destination / "text" / relative_path
         
@@ -511,7 +541,8 @@ class BackupEngine:
         destination: Path,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Traitement spécialisé pour documents"""        source_path = file_info["path"]
+        """Traitement spécialisé pour documents"""
+        source_path = file_info["path"]
         relative_path = source_path.name
         dest_path = destination / "documents" / relative_path
         
@@ -538,7 +569,8 @@ class BackupEngine:
         destination: Path,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Traitement spécialisé pour archives"""        source_path = file_info["path"]
+        """Traitement spécialisé pour archives"""
+        source_path = file_info["path"]
         relative_path = source_path.name
         dest_path = destination / "archives" / relative_path
         
@@ -561,7 +593,8 @@ class BackupEngine:
         destination: Path,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Traitement générique pour autres types de contenu"""        source_path = file_info["path"]
+        """Traitement générique pour autres types de contenu"""
+        source_path = file_info["path"]
         relative_path = source_path.name
         dest_path = destination / "other" / relative_path
         
@@ -579,12 +612,14 @@ class BackupEngine:
         }
     
     async def _copy_file_with_verification(self, source: Path, destination: Path) -> None:
-        """        Copie un fichier avec vérification d'intégrité
+        """
+        Copie un fichier avec vérification d'intégrité
         
         Args:
             source: Fichier source
             destination: Fichier destination
-        """        # Copie du fichier
+        """
+        # Copie du fichier
         shutil.copy2(source, destination)
         
         # Vérification taille
@@ -599,7 +634,8 @@ class BackupEngine:
             raise BackupException(f"Hash mismatch after copy: {source} -> {destination}")
     
     async def _extract_audio_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extrait les métadonnées audio"""        try:
+        """Extrait les métadonnées audio"""
+        try:
             # Métadonnées de base
             metadata = {
                 "format": file_path.suffix.lower(),
@@ -626,7 +662,8 @@ class BackupEngine:
             return {"error": str(e)}
     
     async def _extract_video_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extrait les métadonnées vidéo"""        try:
+        """Extrait les métadonnées vidéo"""
+        try:
             metadata = {
                 "format": file_path.suffix.lower(),
                 "file_size": file_path.stat().st_size
@@ -641,7 +678,8 @@ class BackupEngine:
             return {"error": str(e)}
     
     async def _extract_image_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extrait les métadonnées image"""        try:
+        """Extrait les métadonnées image"""
+        try:
             metadata = {
                 "format": file_path.suffix.lower(),
                 "file_size": file_path.stat().st_size
@@ -666,7 +704,8 @@ class BackupEngine:
             return {"error": str(e)}
     
     async def _extract_text_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extrait les métadonnées texte"""        try:
+        """Extrait les métadonnées texte"""
+        try:
             metadata = {
                 "format": file_path.suffix.lower(),
                 "file_size": file_path.stat().st_size
@@ -691,7 +730,8 @@ class BackupEngine:
             return {"error": str(e)}
     
     async def _extract_document_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extrait les métadonnées document"""        try:
+        """Extrait les métadonnées document"""
+        try:
             metadata = {
                 "format": file_path.suffix.lower(),
                 "file_size": file_path.stat().st_size
@@ -706,7 +746,8 @@ class BackupEngine:
             return {"error": str(e)}
     
     async def _extract_generic_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extrait les métadonnées génériques"""        try:
+        """Extrait les métadonnées génériques"""
+        try:
             stat = file_path.stat()
             return {
                 "format": file_path.suffix.lower(),
@@ -719,13 +760,15 @@ class BackupEngine:
             return {"error": str(e)}
     
     def _extract_content_types(self, file_inventory: List[Dict[str, Any]]) -> List[str]:
-        """Extrait la liste des types de contenu présents"""        content_types = set()
+        """Extrait la liste des types de contenu présents"""
+        content_types = set()
         for file_info in file_inventory:
             content_types.add(file_info.get("content_type", "unknown"))
         return list(content_types)
     
     def _calculate_content_statistics(self, file_inventory: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calcule les statistiques par type de contenu"""        stats = {}
+        """Calcule les statistiques par type de contenu"""
+        stats = {}
         
         for file_info in file_inventory:
             content_type = file_info.get("content_type", "unknown")
@@ -748,7 +791,8 @@ class BackupEngine:
         return stats
     
     async def _generate_checksums(self, manifest: Dict[str, Any]) -> Dict[str, str]:
-        """Génère les checksums pour vérification intégrité"""        checksums = {}
+        """Génère les checksums pour vérification intégrité"""
+        checksums = {}
         
         for file_path, file_info in manifest.get("files", {}).items():
             dest_path = Path(file_info["destination"])
@@ -759,7 +803,8 @@ class BackupEngine:
         return checksums
     
     async def _save_backup_manifest(self, destination: Path, metadata: BackupMetadata) -> None:
-        """Sauvegarde le manifeste de sauvegarde"""        manifest_path = destination / "backup_manifest.json"
+        """Sauvegarde le manifeste de sauvegarde"""
+        manifest_path = destination / "backup_manifest.json"
         
         # Conversion en dictionnaire sérialisable
         manifest_data = {
@@ -779,14 +824,16 @@ class BackupEngine:
 
 
 class IncrementalBackupEngine(BackupEngine):
-    """    Moteur de sauvegarde incrémentale optimisé
+    """
+    Moteur de sauvegarde incrémentale optimisé
     
     Fonctionnalités:
     - Détection changements intelligente
     - Sauvegarde différentielle
     - Optimisation bande passante
     - Gestion versions multiples
-    """    
+    """
+    
     def __init__(self, chunk_size: int = 32 * 1024 * 1024):  # 32MB pour incrémental
         super().__init__(chunk_size)
         self.change_detection = {}
@@ -800,7 +847,8 @@ class IncrementalBackupEngine(BackupEngine):
         destination: Path,
         options: Optional[Dict[str, Any]] = None
     ) -> BackupMetadata:
-        """        Effectue une sauvegarde incrémentale
+        """
+        Effectue une sauvegarde incrémentale
         
         Args:
             source_paths: Chemins sources
@@ -809,7 +857,8 @@ class IncrementalBackupEngine(BackupEngine):
             
         Returns:
             BackupMetadata: Métadonnées de la sauvegarde incrémentale
-        """        options = options or {}
+        """
+        options = options or {}
         options["backup_type"] = "incremental"
         
         # Chargement baseline précédente
@@ -829,7 +878,8 @@ class IncrementalBackupEngine(BackupEngine):
         return await super().backup([f["path"] for f in changed_files], destination, options)
     
     async def _load_baseline_snapshot(self, snapshot_path: Path) -> Dict[str, Any]:
-        """Charge le snapshot de baseline précédent"""        if not snapshot_path.exists():
+        """Charge le snapshot de baseline précédent"""
+        if not snapshot_path.exists():
             return {}
         
         try:
@@ -844,7 +894,8 @@ class IncrementalBackupEngine(BackupEngine):
         source_paths: List[Path],
         previous_snapshot: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Détecte les fichiers modifiés depuis la dernière sauvegarde"""        changed_files = []
+        """Détecte les fichiers modifiés depuis la dernière sauvegarde"""
+        changed_files = []
         
         # Analyse tous les fichiers actuels
         current_inventory = await self._analyze_sources(source_paths)
@@ -875,7 +926,8 @@ class IncrementalBackupEngine(BackupEngine):
         destination: Path,
         options: Dict[str, Any]
     ) -> BackupMetadata:
-        """Crée des métadonnées pour une sauvegarde vide (aucun changement)"""        start_time = datetime.now()
+        """Crée des métadonnées pour une sauvegarde vide (aucun changement)"""
+        start_time = datetime.now()
         
         return BackupMetadata(
             backup_id=options.get("backup_id", "unknown"),
@@ -895,14 +947,16 @@ class IncrementalBackupEngine(BackupEngine):
 
 
 class RealTimeBackupEngine(BackupEngine):
-    """    Moteur de sauvegarde temps réel pour contenu critique
+    """
+    Moteur de sauvegarde temps réel pour contenu critique
     
     Fonctionnalités:
     - Sauvegarde immédiate post-upload
     - Monitoring changements filesystem
     - Priorité haute performance
     - Réplication instantanée
-    """    
+    """
+    
     def __init__(self, chunk_size: int = 16 * 1024 * 1024):  # 16MB pour temps réel
         super().__init__(chunk_size)
         self.file_watchers = {}
@@ -916,7 +970,8 @@ class RealTimeBackupEngine(BackupEngine):
         destination: Path,
         options: Optional[Dict[str, Any]] = None
     ) -> BackupMetadata:
-        """        Effectue une sauvegarde temps réel prioritaire
+        """
+        Effectue une sauvegarde temps réel prioritaire
         
         Args:
             source_paths: Chemins sources critiques
@@ -925,7 +980,8 @@ class RealTimeBackupEngine(BackupEngine):
             
         Returns:
             BackupMetadata: Métadonnées sauvegarde temps réel
-        """        options = options or {}
+        """
+        options = options or {}
         options["backup_type"] = "realtime"
         options["priority"] = "critical"
         
@@ -950,12 +1006,14 @@ class RealTimeBackupEngine(BackupEngine):
             self.chunk_size = original_chunk_size
     
     async def start_monitoring(self, watch_paths: List[Path]) -> None:
-        """Démarre le monitoring temps réel des chemins"""        # Implémentation monitoring filesystem avec watchdog
+        """Démarre le monitoring temps réel des chemins"""
+        # Implémentation monitoring filesystem avec watchdog
         # (nécessiterait la bibliothèque watchdog)
         logger.info(f"Starting real-time monitoring of {len(watch_paths)} paths")
     
     async def stop_monitoring(self) -> None:
-        """Arrête le monitoring temps réel"""        logger.info("Stopping real-time monitoring")
+        """Arrête le monitoring temps réel"""
+        logger.info("Stopping real-time monitoring")
         for watcher in self.file_watchers.values():
             # Arrêt des watchers
             pass

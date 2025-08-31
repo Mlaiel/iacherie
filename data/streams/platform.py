@@ -6,7 +6,8 @@ across social media, music, and content platforms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable
 from datetime import datetime, timezone
@@ -30,7 +31,8 @@ settings = get_settings()
 
 
 class PlatformType(str, Enum):
-    """Supported platform types"""    SPOTIFY = "spotify"
+    """Supported platform types"""
+    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -41,14 +43,16 @@ class PlatformType(str, Enum):
 
 
 class SyncMode(str, Enum):
-    """Data synchronization modes"""    REAL_TIME = "real_time"
+    """Data synchronization modes"""
+    REAL_TIME = "real_time"
     BATCH = "batch"
     SCHEDULED = "scheduled"
     ON_DEMAND = "on_demand"
 
 
 class DataType(str, Enum):
-    """Platform data types"""    ANALYTICS = "analytics"
+    """Platform data types"""
+    ANALYTICS = "analytics"
     CONTENT = "content"
     ENGAGEMENT = "engagement"
     REVENUE = "revenue"
@@ -60,7 +64,8 @@ class DataType(str, Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform API credentials"""    platform: PlatformType
+    """Platform API credentials"""
+    platform: PlatformType
     api_key: Optional[str] = None
     api_secret: Optional[str] = None
     access_token: Optional[str] = None
@@ -72,7 +77,8 @@ class PlatformCredentials:
 
 @dataclass
 class SyncConfig:
-    """Platform synchronization configuration"""    platform: PlatformType
+    """Platform synchronization configuration"""
+    platform: PlatformType
     data_types: List[DataType]
     sync_mode: SyncMode
     interval_seconds: int = 300  # 5 minutes default
@@ -82,7 +88,8 @@ class SyncConfig:
 
 
 class PlatformData(BaseModel):
-    """Normalized platform data structure"""    platform: PlatformType = Field(description="Source platform")
+    """Normalized platform data structure"""
+    platform: PlatformType = Field(description="Source platform")
     data_type: DataType = Field(description="Type of data")
     user_id: str = Field(description="Platform user identifier")
     content_id: Optional[str] = Field(default=None, description="Content identifier")
@@ -93,7 +100,8 @@ class PlatformData(BaseModel):
 
 
 class PlatformConnector(ABC):
-    """Abstract base class for platform connectors"""    
+    """Abstract base class for platform connectors"""
+    
     def __init__(self, credentials: PlatformCredentials):
         self.credentials = credentials
         self.platform = credentials.platform
@@ -101,30 +109,37 @@ class PlatformConnector(ABC):
         
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialize platform connection"""        pass
+        """Initialize platform connection"""
+        pass
         
     @abstractmethod
     async def fetch_analytics(self, user_id: str, **kwargs) -> List[PlatformData]:
-        """Fetch analytics data"""        pass
+        """Fetch analytics data"""
+        pass
         
     @abstractmethod
     async def fetch_content(self, user_id: str, **kwargs) -> List[PlatformData]:
-        """Fetch content data"""        pass
+        """Fetch content data"""
+        pass
         
     @abstractmethod
     async def fetch_engagement(self, user_id: str, **kwargs) -> List[PlatformData]:
-        """Fetch engagement data"""        pass
+        """Fetch engagement data"""
+        pass
         
     @abstractmethod
     async def validate_credentials(self) -> bool:
-        """Validate platform credentials"""        pass
+        """Validate platform credentials"""
+        pass
         
     async def refresh_tokens(self) -> bool:
-        """Refresh authentication tokens"""        return True
+        """Refresh authentication tokens"""
+        return True
 
 
 class SpotifyConnector(PlatformConnector):
-    """Spotify platform connector"""    
+    """Spotify platform connector"""
+    
     async def initialize(self) -> bool:
         try:
             self.client = SpotifyClient(
@@ -204,7 +219,8 @@ class SpotifyConnector(PlatformConnector):
 
 
 class YouTubeConnector(PlatformConnector):
-    """YouTube platform connector"""    
+    """YouTube platform connector"""
+    
     async def initialize(self) -> bool:
         try:
             self.client = YouTubeClient(
@@ -296,7 +312,8 @@ class YouTubeConnector(PlatformConnector):
 
 
 class InstagramConnector(PlatformConnector):
-    """Instagram platform connector"""    
+    """Instagram platform connector"""
+    
     async def initialize(self) -> bool:
         try:
             self.client = InstagramClient(
@@ -388,9 +405,11 @@ class InstagramConnector(PlatformConnector):
 
 
 class PlatformStreamer:
-    """    Multi-platform streaming manager for real-time data synchronization
+    """
+    Multi-platform streaming manager for real-time data synchronization
     across social media, music, and content platforms.
-    """    
+    """
+    
     def __init__(self):
         self.connectors: Dict[PlatformType, PlatformConnector] = {}
         self.sync_configs: Dict[str, SyncConfig] = {}
@@ -399,7 +418,8 @@ class PlatformStreamer:
         self._shutdown_event = asyncio.Event()
         
     async def initialize(self) -> None:
-        """Initialize platform streamer"""        try:
+        """Initialize platform streamer"""
+        try:
             logger.info("PlatformStreamer initialized successfully")
         except Exception as e:
             logger.error(f"Failed to initialize PlatformStreamer: {e}")
@@ -410,7 +430,8 @@ class PlatformStreamer:
         platform: PlatformType,
         credentials: PlatformCredentials
     ) -> bool:
-        """        Add platform connector
+        """
+        Add platform connector
         
         Args:
             platform: Platform type
@@ -418,7 +439,8 @@ class PlatformStreamer:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             # Create appropriate connector
             if platform == PlatformType.SPOTIFY:
                 connector = SpotifyConnector(credentials)
@@ -449,7 +471,8 @@ class PlatformStreamer:
         platform: PlatformType,
         config: SyncConfig
     ) -> str:
-        """        Configure platform synchronization
+        """
+        Configure platform synchronization
         
         Args:
             user_id: User identifier
@@ -458,7 +481,8 @@ class PlatformStreamer:
             
         Returns:
             Sync configuration identifier
-        """        try:
+        """
+        try:
             sync_id = f"{user_id}_{platform.value}"
             self.sync_configs[sync_id] = config
             
@@ -474,7 +498,8 @@ class PlatformStreamer:
             raise
             
     async def start_sync(self, sync_id: str) -> bool:
-        """Start synchronization for configuration"""        try:
+        """Start synchronization for configuration"""
+        try:
             if sync_id not in self.sync_configs:
                 return False
                 
@@ -492,7 +517,8 @@ class PlatformStreamer:
             return False
             
     async def stop_sync(self, sync_id: str) -> bool:
-        """Stop synchronization for configuration"""        try:
+        """Stop synchronization for configuration"""
+        try:
             if sync_id in self.sync_configs:
                 self.sync_configs[sync_id].enabled = False
                 
@@ -513,7 +539,8 @@ class PlatformStreamer:
         platform: PlatformType,
         data_types: Optional[List[DataType]] = None
     ) -> List[PlatformData]:
-        """        Perform immediate synchronization
+        """
+        Perform immediate synchronization
         
         Args:
             user_id: User identifier
@@ -522,7 +549,8 @@ class PlatformStreamer:
             
         Returns:
             Synchronized data
-        """        try:
+        """
+        try:
             if platform not in self.connectors:
                 logger.warning(f"No connector for platform {platform}")
                 return []
@@ -561,10 +589,12 @@ class PlatformStreamer:
         self,
         callback: Callable[[List[PlatformData]], None]
     ) -> None:
-        """Register callback for synchronized data"""        self.data_callbacks.append(callback)
+        """Register callback for synchronized data"""
+        self.data_callbacks.append(callback)
         
     async def get_sync_status(self) -> Dict[str, Any]:
-        """Get synchronization status for all configurations"""        status = {}
+        """Get synchronization status for all configurations"""
+        status = {}
         
         for sync_id, config in self.sync_configs.items():
             status[sync_id] = {
@@ -579,13 +609,15 @@ class PlatformStreamer:
         return status
         
     async def validate_platform_credentials(self, platform: PlatformType) -> bool:
-        """Validate credentials for platform"""        if platform not in self.connectors:
+        """Validate credentials for platform"""
+        if platform not in self.connectors:
             return False
             
         return await self.connectors[platform].validate_credentials()
         
     async def _start_sync_task(self, sync_id: str, user_id: str) -> None:
-        """Start background sync task"""        if sync_id in self.sync_tasks:
+        """Start background sync task"""
+        if sync_id in self.sync_tasks:
             self.sync_tasks[sync_id].cancel()
             
         config = self.sync_configs[sync_id]
@@ -600,7 +632,8 @@ class PlatformStreamer:
         self.sync_tasks[sync_id] = task
         
     async def _real_time_sync(self, sync_id: str, user_id: str) -> None:
-        """Real-time synchronization task"""        config = self.sync_configs[sync_id]
+        """Real-time synchronization task"""
+        config = self.sync_configs[sync_id]
         
         while config.enabled and not self._shutdown_event.is_set():
             try:
@@ -611,7 +644,8 @@ class PlatformStreamer:
                 await asyncio.sleep(60)  # Wait before retry
                 
     async def _scheduled_sync(self, sync_id: str, user_id: str) -> None:
-        """Scheduled synchronization task"""        config = self.sync_configs[sync_id]
+        """Scheduled synchronization task"""
+        config = self.sync_configs[sync_id]
         
         while config.enabled and not self._shutdown_event.is_set():
             try:
@@ -621,7 +655,8 @@ class PlatformStreamer:
                 logger.error(f"Scheduled sync error for {sync_id}: {e}")
                 
     async def _batch_sync(self, sync_id: str, user_id: str) -> None:
-        """Batch synchronization task"""        config = self.sync_configs[sync_id]
+        """Batch synchronization task"""
+        config = self.sync_configs[sync_id]
         
         while config.enabled and not self._shutdown_event.is_set():
             try:
@@ -641,7 +676,8 @@ class PlatformStreamer:
                 logger.error(f"Batch sync error for {sync_id}: {e}")
                 
     async def _notify_data_callbacks(self, data: List[PlatformData]) -> None:
-        """Notify registered callbacks with synchronized data"""        for callback in self.data_callbacks:
+        """Notify registered callbacks with synchronized data"""
+        for callback in self.data_callbacks:
             try:
                 if asyncio.iscoroutinefunction(callback):
                     await callback(data)
@@ -651,7 +687,8 @@ class PlatformStreamer:
                 logger.error(f"Data callback error: {e}")
                 
     async def shutdown(self) -> None:
-        """Gracefully shutdown platform streamer"""        try:
+        """Gracefully shutdown platform streamer"""
+        try:
             self._shutdown_event.set()
             
             # Cancel all sync tasks

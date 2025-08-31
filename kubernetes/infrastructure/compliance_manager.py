@@ -6,7 +6,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Any unauthorized use, reproduction,
 or distribution without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and authorization.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -23,7 +24,8 @@ from backend.data_management.data_governance import DataGovernanceManager
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""    GDPR = "gdpr"
+    """Supported compliance frameworks"""
+    GDPR = "gdpr"
     CCPA = "ccpa"
     PIPEDA = "pipeda"
     SOX = "sox"
@@ -34,7 +36,8 @@ class ComplianceFramework(Enum):
 
 
 class ComplianceLevel(Enum):
-    """Compliance levels for risk assessment"""    CRITICAL = "critical"
+    """Compliance levels for risk assessment"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -42,7 +45,8 @@ class ComplianceLevel(Enum):
 
 
 class ComplianceStatus(Enum):
-    """Compliance status indicators"""    COMPLIANT = "compliant"
+    """Compliance status indicators"""
+    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     UNDER_REVIEW = "under_review"
     PENDING_REMEDIATION = "pending_remediation"
@@ -51,7 +55,8 @@ class ComplianceStatus(Enum):
 
 @dataclass
 class ComplianceRule:
-    """Compliance rule definition"""    rule_id: str
+    """Compliance rule definition"""
+    rule_id: str
     framework: ComplianceFramework
     title: str
     description: str
@@ -66,7 +71,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceViolation:
-    """Compliance violation record"""    violation_id: str
+    """Compliance violation record"""
+    violation_id: str
     rule_id: str
     resource_type: str
     resource_id: str
@@ -81,9 +87,11 @@ class ComplianceViolation:
 
 
 class ComplianceManager:
-    """    Enterprise compliance management system
+    """
+    Enterprise compliance management system
     Handles regulatory compliance, audit trails, and risk assessment
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -107,7 +115,8 @@ class ComplianceManager:
         self._initialize_compliance_rules()
     
     async def initialize(self) -> None:
-        """Initialize compliance management system"""        try:
+        """Initialize compliance management system"""
+        try:
             self.logger.info("Initializing compliance management system")
             
             # Load custom rules from configuration
@@ -126,7 +135,8 @@ class ComplianceManager:
             raise ComplianceError(f"Initialization failed: {e}")
     
     async def register_compliance_rule(self, rule: ComplianceRule) -> None:
-        """Register a new compliance rule"""        try:
+        """Register a new compliance rule"""
+        try:
             # Validate rule configuration
             await self._validate_rule(rule)
             
@@ -151,7 +161,8 @@ class ComplianceManager:
     
     async def check_compliance(self, resource_type: str, resource_id: str, 
                              framework: Optional[ComplianceFramework] = None) -> Dict[str, Any]:
-        """Perform compliance check on a resource"""        try:
+        """Perform compliance check on a resource"""
+        try:
             results = {
                 'resource_type': resource_type,
                 'resource_id': resource_id,
@@ -200,7 +211,8 @@ class ComplianceManager:
     async def get_compliance_report(self, framework: Optional[ComplianceFramework] = None,
                                   start_date: Optional[datetime] = None,
                                   end_date: Optional[datetime] = None) -> Dict[str, Any]:
-        """Generate comprehensive compliance report"""        try:
+        """Generate comprehensive compliance report"""
+        try:
             if not start_date:
                 start_date = datetime.utcnow() - timedelta(days=30)
             if not end_date:
@@ -249,7 +261,8 @@ class ComplianceManager:
     
     async def remediate_violation(self, violation_id: str, remediation_action: str,
                                 assigned_to: str) -> bool:
-        """Initiate violation remediation"""        try:
+        """Initiate violation remediation"""
+        try:
             if violation_id not in self.violations:
                 raise ValidationError(f"Violation {violation_id} not found")
             
@@ -288,7 +301,8 @@ class ComplianceManager:
             raise ComplianceError(f"Remediation initiation failed: {e}")
     
     def _initialize_compliance_rules(self) -> None:
-        """Initialize default compliance rules for all frameworks"""        # GDPR Rules
+        """Initialize default compliance rules for all frameworks"""
+        # GDPR Rules
         gdpr_rules = [
             ComplianceRule(
                 rule_id="gdpr_data_consent",
@@ -341,7 +355,8 @@ class ComplianceManager:
             self.rules[rule.rule_id] = rule
     
     def _get_gdpr_config(self) -> Dict[str, Any]:
-        """Get GDPR-specific configuration"""        return {
+        """Get GDPR-specific configuration"""
+        return {
             'data_subject_rights': [
                 'right_to_access',
                 'right_to_rectification', 
@@ -366,7 +381,8 @@ class ComplianceManager:
         }
     
     def _get_ccpa_config(self) -> Dict[str, Any]:
-        """Get CCPA-specific configuration"""        return {
+        """Get CCPA-specific configuration"""
+        return {
             'consumer_rights': [
                 'right_to_know',
                 'right_to_delete',
@@ -388,7 +404,8 @@ class ComplianceManager:
         }
     
     def _get_sox_config(self) -> Dict[str, Any]:
-        """Get SOX-specific configuration"""        return {
+        """Get SOX-specific configuration"""
+        return {
             'financial_controls': [
                 'revenue_recognition',
                 'expense_management',
@@ -404,7 +421,8 @@ class ComplianceManager:
         }
     
     def _get_iso27001_config(self) -> Dict[str, Any]:
-        """Get ISO27001-specific configuration"""        return {
+        """Get ISO27001-specific configuration"""
+        return {
             'security_controls': [
                 'access_control',
                 'cryptography',
@@ -420,15 +438,18 @@ class ComplianceManager:
         }
     
     async def _load_custom_rules(self) -> None:
-        """Load custom compliance rules from configuration"""        # Implementation for loading custom rules from external sources
+        """Load custom compliance rules from configuration"""
+        # Implementation for loading custom rules from external sources
         pass
     
     async def _start_compliance_monitoring(self) -> None:
-        """Start automated compliance monitoring"""        # Implementation for continuous compliance monitoring
+        """Start automated compliance monitoring"""
+        # Implementation for continuous compliance monitoring
         pass
     
     async def _validate_rule(self, rule: ComplianceRule) -> None:
-        """Validate compliance rule configuration"""        if not rule.rule_id or not rule.title:
+        """Validate compliance rule configuration"""
+        if not rule.rule_id or not rule.title:
             raise ValidationError("Rule ID and title are required")
         
         if rule.rule_id in self.rules:
@@ -436,7 +457,8 @@ class ComplianceManager:
     
     def _get_applicable_rules(self, resource_type: str, 
                             framework: Optional[ComplianceFramework]) -> List[ComplianceRule]:
-        """Get rules applicable to a resource type and framework"""        rules = list(self.rules.values())
+        """Get rules applicable to a resource type and framework"""
+        rules = list(self.rules.values())
         
         if framework:
             rules = [r for r in rules if r.framework == framework]
@@ -446,13 +468,15 @@ class ComplianceManager:
     
     async def _check_rule_compliance(self, rule: ComplianceRule, 
                                    resource_type: str, resource_id: str) -> Optional[ComplianceViolation]:
-        """Check compliance for a specific rule"""        # Implementation depends on the specific rule and resource type
+        """Check compliance for a specific rule"""
+        # Implementation depends on the specific rule and resource type
         # This is a placeholder for rule-specific compliance checks
         return None
     
     def _filter_violations(self, framework: Optional[ComplianceFramework],
                          start_date: datetime, end_date: datetime) -> List[ComplianceViolation]:
-        """Filter violations by framework and date range"""        violations = list(self.violations.values())
+        """Filter violations by framework and date range"""
+        violations = list(self.violations.values())
         
         # Filter by date
         violations = [v for v in violations if start_date <= v.detected_at <= end_date]
@@ -465,7 +489,8 @@ class ComplianceManager:
         return violations
     
     def _group_violations_by_framework(self, violations: List[ComplianceViolation]) -> Dict[str, int]:
-        """Group violations by compliance framework"""        framework_counts = {}
+        """Group violations by compliance framework"""
+        framework_counts = {}
         for violation in violations:
             if violation.rule_id in self.rules:
                 framework = self.rules[violation.rule_id].framework.value
@@ -473,21 +498,24 @@ class ComplianceManager:
         return framework_counts
     
     def _group_violations_by_severity(self, violations: List[ComplianceViolation]) -> Dict[str, int]:
-        """Group violations by severity level"""        severity_counts = {}
+        """Group violations by severity level"""
+        severity_counts = {}
         for violation in violations:
             severity = violation.severity.value
             severity_counts[severity] = severity_counts.get(severity, 0) + 1
         return severity_counts
     
     def _get_remediation_status(self, violations: List[ComplianceViolation]) -> Dict[str, int]:
-        """Get remediation status summary"""        status_counts = {}
+        """Get remediation status summary"""
+        status_counts = {}
         for violation in violations:
             status = violation.status.value
             status_counts[status] = status_counts.get(status, 0) + 1
         return status_counts
     
     async def _generate_compliance_recommendations(self, violations: List[ComplianceViolation]) -> List[str]:
-        """Generate compliance recommendations based on violations"""        recommendations = []
+        """Generate compliance recommendations based on violations"""
+        recommendations = []
         
         # Analyze violation patterns and generate recommendations
         critical_violations = [v for v in violations if v.severity == ComplianceLevel.CRITICAL]

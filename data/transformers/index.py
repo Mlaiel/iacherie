@@ -7,7 +7,8 @@ providing intelligent module management and dependency resolution.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Type, Callable
 from pathlib import Path
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 
 class ModuleType(Enum):
-    """Types of transformer modules."""    CORE_TRANSFORMER = "core_transformer"
+    """Types of transformer modules."""
+    CORE_TRANSFORMER = "core_transformer"
     SPECIALIZED_PROCESSOR = "specialized_processor"
     UTILITY_MODULE = "utility_module"
     FORMAT_CONVERTER = "format_converter"
@@ -34,7 +36,8 @@ class ModuleType(Enum):
 
 
 class ModuleStatus(Enum):
-    """Module availability status."""    AVAILABLE = "available"
+    """Module availability status."""
+    AVAILABLE = "available"
     LOADING = "loading"
     LOADED = "loaded"
     ERROR = "error"
@@ -44,7 +47,8 @@ class ModuleStatus(Enum):
 
 @dataclass
 class ModuleInfo:
-    """Information about a transformer module."""    name: str
+    """Information about a transformer module."""
+    name: str
     module_type: ModuleType
     description: str
     version: str = "1.0.0"
@@ -82,7 +86,8 @@ class ModuleInfo:
 
 @dataclass
 class TransformationCapability:
-    """Describes a transformation capability."""    name: str
+    """Describes a transformation capability."""
+    name: str
     input_format: str
     output_format: str
     quality_level: str
@@ -92,17 +97,21 @@ class TransformationCapability:
 
 
 class ModuleIndex:
-    """    Comprehensive module indexing system for the IA Influencer Agent Platform.
+    """
+    Comprehensive module indexing system for the IA Influencer Agent Platform.
     
     Provides intelligent module discovery, dependency management, and
     transformation capability mapping for the entire transformers ecosystem.
-    """    
+    """
+    
     def __init__(self, transformers_path: Optional[str] = None):
-        """        Initialize module index.
+        """
+        Initialize module index.
         
         Args:
             transformers_path: Path to transformers directory
-        """        self.transformers_path = transformers_path or str(Path(__file__).parent)
+        """
+        self.transformers_path = transformers_path or str(Path(__file__).parent)
         
         # Module registry
         self.modules: Dict[str, ModuleInfo] = {}
@@ -126,14 +135,16 @@ class ModuleIndex:
         logger.info("ModuleIndex initialized")
     
     async def scan_modules(self, force_rescan: bool = False) -> Dict[str, ModuleInfo]:
-        """        Scan and index all transformer modules.
+        """
+        Scan and index all transformer modules.
         
         Args:
             force_rescan: Force complete rescan even if recently scanned
             
         Returns:
             Dictionary of discovered modules
-        """        try:
+        """
+        try:
             # Check if recent scan exists
             if not force_rescan and self.last_scan:
                 if time.time() - self.last_scan < 300:  # 5 minutes
@@ -178,17 +189,20 @@ class ModuleIndex:
             return {}
     
     async def get_module_info(self, module_name: str) -> Optional[ModuleInfo]:
-        """Get detailed information about a specific module."""        return self.modules.get(module_name)
+        """Get detailed information about a specific module."""
+        return self.modules.get(module_name)
     
     async def load_module(self, module_name: str) -> Optional[Any]:
-        """        Load a specific transformer module.
+        """
+        Load a specific transformer module.
         
         Args:
             module_name: Name of module to load
             
         Returns:
             Loaded module instance
-        """        try:
+        """
+        try:
             # Check if already loaded
             if module_name in self.loaded_modules:
                 logger.debug(f"Module already loaded: {module_name}")
@@ -245,7 +259,8 @@ class ModuleIndex:
         input_format: str,
         output_format: str
     ) -> List[str]:
-        """        Find transformers capable of converting between specific formats.
+        """
+        Find transformers capable of converting between specific formats.
         
         Args:
             input_format: Input format
@@ -253,7 +268,8 @@ class ModuleIndex:
             
         Returns:
             List of capable transformer names
-        """        capable_transformers = []
+        """
+        capable_transformers = []
         
         for module_name, module_info in self.modules.items():
             if (input_format in module_info.input_types and 
@@ -270,7 +286,8 @@ class ModuleIndex:
         input_format: str,
         output_format: str
     ) -> Optional[List[str]]:
-        """        Find optimal transformation path between formats.
+        """
+        Find optimal transformation path between formats.
         
         Args:
             input_format: Source format
@@ -278,7 +295,8 @@ class ModuleIndex:
             
         Returns:
             List of transformers in sequence, or None if no path exists
-        """        try:
+        """
+        try:
             # Direct transformation available
             direct_transformers = await self.find_transformers_for_format(
                 input_format, output_format
@@ -296,10 +314,12 @@ class ModuleIndex:
             return None
     
     async def get_module_capabilities(self, module_name: str) -> List[TransformationCapability]:
-        """Get all transformation capabilities of a module."""        return self.capabilities.get(module_name, [])
+        """Get all transformation capabilities of a module."""
+        return self.capabilities.get(module_name, [])
     
     async def get_system_overview(self) -> Dict[str, Any]:
-        """Get comprehensive system overview."""        try:
+        """Get comprehensive system overview."""
+        try:
             # Module statistics
             total_modules = len(self.modules)
             loaded_modules = len(self.loaded_modules)
@@ -347,7 +367,8 @@ class ModuleIndex:
             return {}
     
     async def validate_dependencies(self) -> Dict[str, List[str]]:
-        """Validate all module dependencies."""        validation_results = {}
+        """Validate all module dependencies."""
+        validation_results = {}
         
         for module_name, module_info in self.modules.items():
             missing_deps = []
@@ -365,7 +386,8 @@ class ModuleIndex:
         return validation_results
     
     async def get_optimization_suggestions(self) -> List[str]:
-        """Get optimization suggestions for the transformer ecosystem."""        suggestions = []
+        """Get optimization suggestions for the transformer ecosystem."""
+        suggestions = []
         
         # Check for missing dependencies
         missing_deps = await self.validate_dependencies()
@@ -388,7 +410,8 @@ class ModuleIndex:
         return suggestions
     
     async def export_index(self, output_file: str) -> bool:
-        """Export module index to file."""        try:
+        """Export module index to file."""
+        try:
             index_data = {
                 "version": self.index_version,
                 "generated_at": time.time(),
@@ -437,7 +460,8 @@ class ModuleIndex:
             return False
     
     async def _scan_core_modules(self, transformers_dir: Path):
-        """Scan core transformer modules."""        core_modules = [
+        """Scan core transformer modules."""
+        core_modules = [
             ("data_transformer", "DataTransformer", "Main transformation coordinator"),
             ("audio_transformer", "AudioTransformer", "Professional audio processing"),
             ("video_transformer", "VideoTransformer", "Advanced video processing"),
@@ -482,7 +506,8 @@ class ModuleIndex:
                 self.modules[module_name] = module_info
     
     async def _scan_specialized_processors(self, transformers_dir: Path):
-        """Scan specialized processor modules."""        specialized_modules = [
+        """Scan specialized processor modules."""
+        specialized_modules = [
             ("format_converter", "FormatConverter", "Universal format conversion"),
             ("quality_optimizer", "QualityOptimizer", "AI-powered quality enhancement"),
             ("encoding_manager", "EncodingManager", "Professional encoding optimization")
@@ -512,7 +537,8 @@ class ModuleIndex:
                 self.modules[module_name] = module_info
     
     async def _scan_utility_modules(self, transformers_dir: Path):
-        """Scan utility modules."""        utility_modules = [
+        """Scan utility modules."""
+        utility_modules = [
             ("batch_processor", "BatchProcessor", "High-performance batch processing"),
             ("realtime_converter", "RealtimeConverter", "Live content transformation")
         ]
@@ -540,7 +566,8 @@ class ModuleIndex:
                 self.modules[module_name] = module_info
     
     async def _build_dependency_graph(self):
-        """Build module dependency graph."""        self.dependency_graph.clear()
+        """Build module dependency graph."""
+        self.dependency_graph.clear()
         
         for module_name, module_info in self.modules.items():
             deps = []
@@ -556,7 +583,8 @@ class ModuleIndex:
             self.dependency_graph[module_name] = deps
     
     async def _generate_capability_matrix(self):
-        """Generate transformation capability matrix."""        self.capabilities.clear()
+        """Generate transformation capability matrix."""
+        self.capabilities.clear()
         
         for module_name, module_info in self.modules.items():
             capabilities = []
@@ -579,7 +607,8 @@ class ModuleIndex:
             self.capabilities[module_name] = capabilities
     
     async def _load_dependencies(self, module_name: str):
-        """Load module dependencies recursively."""        module_info = self.modules.get(module_name)
+        """Load module dependencies recursively."""
+        module_info = self.modules.get(module_name)
         if not module_info:
             return
         
@@ -588,7 +617,8 @@ class ModuleIndex:
                 await self.load_module(dep)
     
     def _get_transformer_score(self, module_name: str) -> int:
-        """Get transformer performance score for sorting."""        module_info = self.modules.get(module_name)
+        """Get transformer performance score for sorting."""
+        module_info = self.modules.get(module_name)
         if not module_info:
             return 999
         
@@ -613,7 +643,8 @@ class ModuleIndex:
         start_format: str,
         end_format: str
     ) -> Optional[List[str]]:
-        """Find transformation path using breadth-first search."""        from collections import deque
+        """Find transformation path using breadth-first search."""
+        from collections import deque
         
         # Build format graph
         format_graph = {}
@@ -643,7 +674,8 @@ class ModuleIndex:
         return None
     
     async def _count_redundant_capabilities(self) -> int:
-        """Count redundant transformation capabilities."""        capability_map = {}
+        """Count redundant transformation capabilities."""
+        capability_map = {}
         
         for module_name, capabilities in self.capabilities.items():
             for cap in capabilities:
@@ -665,7 +697,8 @@ _global_index: Optional[ModuleIndex] = None
 
 
 def get_module_index() -> ModuleIndex:
-    """Get global module index instance."""    global _global_index
+    """Get global module index instance."""
+    global _global_index
     
     if _global_index is None:
         _global_index = ModuleIndex()
@@ -674,25 +707,29 @@ def get_module_index() -> ModuleIndex:
 
 
 async def initialize_index() -> ModuleIndex:
-    """Initialize and scan module index."""    index = get_module_index()
+    """Initialize and scan module index."""
+    index = get_module_index()
     await index.scan_modules()
     return index
 
 
 # Convenience functions for common operations
 async def find_transformer(input_format: str, output_format: str) -> Optional[str]:
-    """Find best transformer for format conversion."""    index = get_module_index()
+    """Find best transformer for format conversion."""
+    index = get_module_index()
     transformers = await index.find_transformers_for_format(input_format, output_format)
     return transformers[0] if transformers else None
 
 
 async def load_transformer(module_name: str) -> Optional[Any]:
-    """Load a transformer module."""    index = get_module_index()
+    """Load a transformer module."""
+    index = get_module_index()
     return await index.load_module(module_name)
 
 
 async def get_available_formats() -> List[str]:
-    """Get all supported formats."""    index = get_module_index()
+    """Get all supported formats."""
+    index = get_module_index()
     formats = set()
     
     for module_info in index.modules.values():
@@ -702,7 +739,8 @@ async def get_available_formats() -> List[str]:
 
 
 async def export_module_documentation(output_dir: str) -> bool:
-    """Export comprehensive module documentation."""    try:
+    """Export comprehensive module documentation."""
+    try:
         index = get_module_index()
         overview = await index.get_system_overview()
         

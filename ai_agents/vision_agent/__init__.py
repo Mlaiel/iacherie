@@ -11,7 +11,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""from .vision_orchestrator import VisionOrchestrator
+"""
+from .vision_orchestrator import VisionOrchestrator
 from .image_processor import ImageProcessor
 from .video_analyzer import VideoAnalyzer
 from .object_detector import ObjectDetector
@@ -89,13 +90,16 @@ MODULE_INFO = {
 }
 
 def get_module_info():
-    """Get comprehensive module information"""    return MODULE_INFO.copy()
+    """Get comprehensive module information"""
+    return MODULE_INFO.copy()
 
 def get_version():
-    """Get module version"""    return __version__
+    """Get module version"""
+    return __version__
 
 def get_available_components():
-    """Get list of available vision processing components"""    return [
+    """Get list of available vision processing components"""
+    return [
         {
             'name': 'VisionOrchestrator',
             'description': 'Main coordination system for all vision operations',
@@ -144,14 +148,16 @@ def get_available_components():
     ]
 
 def create_vision_system(config_path=None):
-    """    Factory function to create a complete vision processing system
+    """
+    Factory function to create a complete vision processing system
     
     Args:
         config_path: Optional path to configuration file
         
     Returns:
         Configured VisionOrchestrator instance
-    """    try:
+    """
+    try:
         # Load configuration
         if config_path:
             config = VisionAgentConfig(config_path)
@@ -167,7 +173,8 @@ def create_vision_system(config_path=None):
         raise RuntimeError(f"Failed to create vision system: {e}")
 
 def create_vision_agent():
-    """Legacy factory function for backward compatibility"""    return create_vision_system()
+    """Legacy factory function for backward compatibility"""
+    return create_vision_system()
 
 # Legal and licensing information
 LEGAL_NOTICE = """⚠️  CRITICAL LEGAL NOTICE - PROPRIETARY SOFTWARE ⚠️
@@ -205,10 +212,12 @@ Unauthorized use may result in:
 By accessing this code, you acknowledge that you have read, understood, and agree to 
 be bound by these terms.
 """def print_legal_notice():
-    """Print the legal notice and licensing information"""    print(LEGAL_NOTICE)
+    """Print the legal notice and licensing information"""
+    print(LEGAL_NOTICE)
 
 def get_legal_notice():
-    """Get the legal notice text"""    return LEGAL_NOTICE
+    """Get the legal notice text"""
+    return LEGAL_NOTICE
 
 # Module initialization
 import logging

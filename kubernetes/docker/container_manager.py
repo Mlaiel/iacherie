@@ -19,7 +19,8 @@ Enterprise container orchestration supporting:
 - Real-time scaling and health monitoring  
 - Production-grade security and compliance
 - Microservices lifecycle management
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Union
@@ -38,7 +39,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class ContainerStatus(Enum):
-    """Container status enumeration"""    RUNNING = "running"
+    """Container status enumeration"""
+    RUNNING = "running"
     STOPPED = "stopped"
     PAUSED = "paused"
     RESTARTING = "restarting"
@@ -48,7 +50,8 @@ class ContainerStatus(Enum):
     CREATED = "created"
 
 class ServiceType(Enum):
-    """Service type enumeration"""    API_GATEWAY = "api_gateway"
+    """Service type enumeration"""
+    API_GATEWAY = "api_gateway"
     BACKEND_SERVICE = "backend_service"
     AI_ENGINE = "ai_engine"
     FINGERPRINTING_ENGINE = "fingerprinting_engine"
@@ -63,7 +66,8 @@ class ServiceType(Enum):
 
 @dataclass
 class ContainerConfig:
-    """Container configuration data structure"""    name: str
+    """Container configuration data structure"""
+    name: str
     image: str
     service_type: ServiceType
     ports: Dict[str, str] = field(default_factory=dict)
@@ -80,7 +84,8 @@ class ContainerConfig:
 
 @dataclass
 class ContainerMetrics:
-    """Container performance metrics"""    container_id: str
+    """Container performance metrics"""
+    container_id: str
     name: str
     cpu_percent: float
     memory_usage: int
@@ -93,7 +98,8 @@ class ContainerMetrics:
     timestamp: datetime
 
 class DockerContainerManager:
-    """    Enterprise Docker container management system
+    """
+    Enterprise Docker container management system
     
     Provides comprehensive container lifecycle management with:
     - Multi-service container orchestration
@@ -101,9 +107,11 @@ class DockerContainerManager:
     - Performance metrics collection
     - Security and compliance management
     - Automatic scaling capabilities
-    """    
+    """
+    
     def __init__(self, config_path: Optional[Path] = None):
-        """Initialize container manager with optional configuration"""        self.logger = logger
+        """Initialize container manager with optional configuration"""
+        self.logger = logger
         self.config_path = config_path or Path(__file__).parent / "config"
         self.containers: Dict[str, ContainerConfig] = {}
         self.running_containers: Dict[str, Any] = {}
@@ -117,7 +125,8 @@ class DockerContainerManager:
             raise
     
     async def register_container(self, config: ContainerConfig) -> str:
-        """Register a new container configuration"""        try:
+        """Register a new container configuration"""
+        try:
             self.containers[config.name] = config
             self.logger.info(f"📝 Registered container: {config.name}")
             return config.name
@@ -126,7 +135,8 @@ class DockerContainerManager:
             raise
     
     async def create_container(self, name: str, **kwargs) -> str:
-        """Create a new container from registered configuration"""        if name not in self.containers:
+        """Create a new container from registered configuration"""
+        if name not in self.containers:
             raise ValueError(f"Container configuration not found: {name}")
         
         config = self.containers[name]
@@ -172,7 +182,8 @@ class DockerContainerManager:
             raise
     
     async def start_container(self, name: str) -> bool:
-        """Start a registered container"""        try:
+        """Start a registered container"""
+        try:
             if name in self.running_containers:
                 container = self.running_containers[name]
             else:
@@ -198,7 +209,8 @@ class DockerContainerManager:
             return False
     
     async def stop_container(self, name: str, timeout: int = 30) -> bool:
-        """Stop a running container"""        try:
+        """Stop a running container"""
+        try:
             if name not in self.running_containers:
                 self.logger.warning(f"⚠️ Container not found in running containers: {name}")
                 return False
@@ -214,7 +226,8 @@ class DockerContainerManager:
             return False
     
     async def restart_container(self, name: str, timeout: int = 30) -> bool:
-        """Restart a container"""        try:
+        """Restart a container"""
+        try:
             if name not in self.running_containers:
                 return await self.start_container(name)
             
@@ -233,7 +246,8 @@ class DockerContainerManager:
             return False
     
     async def remove_container(self, name: str, force: bool = False) -> bool:
-        """Remove a container"""        try:
+        """Remove a container"""
+        try:
             if name in self.running_containers:
                 container = self.running_containers[name]
                 container.remove(force=force)
@@ -247,7 +261,8 @@ class DockerContainerManager:
             return False
     
     async def get_container_status(self, name: str) -> Optional[ContainerStatus]:
-        """Get current status of a container"""        try:
+        """Get current status of a container"""
+        try:
             if name not in self.running_containers:
                 return None
             
@@ -274,7 +289,8 @@ class DockerContainerManager:
             return None
     
     async def get_container_metrics(self, name: str) -> Optional[ContainerMetrics]:
-        """Get performance metrics for a container"""        try:
+        """Get performance metrics for a container"""
+        try:
             if name not in self.running_containers:
                 return None
             
@@ -323,7 +339,8 @@ class DockerContainerManager:
             return None
     
     async def get_container_logs(self, name: str, lines: int = 100) -> Optional[str]:
-        """Get recent logs from a container"""        try:
+        """Get recent logs from a container"""
+        try:
             if name not in self.running_containers:
                 return None
             
@@ -337,7 +354,8 @@ class DockerContainerManager:
             return None
     
     async def execute_command(self, name: str, command: str) -> Optional[str]:
-        """Execute a command inside a container"""        try:
+        """Execute a command inside a container"""
+        try:
             if name not in self.running_containers:
                 return None
             
@@ -351,7 +369,8 @@ class DockerContainerManager:
             return None
     
     async def health_check(self, name: str) -> bool:
-        """Perform health check on a container"""        try:
+        """Perform health check on a container"""
+        try:
             status = await self.get_container_status(name)
             if status != ContainerStatus.RUNNING:
                 return False
@@ -371,7 +390,8 @@ class DockerContainerManager:
             return False
     
     async def auto_recover(self, name: str) -> bool:
-        """Automatically recover a failed container"""        try:
+        """Automatically recover a failed container"""
+        try:
             self.logger.info(f"🔧 Attempting auto-recovery for container: {name}")
             
             # Stop container if running
@@ -395,7 +415,8 @@ class DockerContainerManager:
             return False
     
     async def _wait_for_healthy(self, name: str, timeout: int = 60) -> bool:
-        """Wait for container to become healthy"""        start_time = datetime.now()
+        """Wait for container to become healthy"""
+        start_time = datetime.now()
         
         while (datetime.now() - start_time).seconds < timeout:
             if await self.health_check(name):
@@ -408,7 +429,8 @@ class DockerContainerManager:
         return False
     
     async def monitor_containers(self) -> Dict[str, ContainerMetrics]:
-        """Monitor all registered containers and return metrics"""        metrics = {}
+        """Monitor all registered containers and return metrics"""
+        metrics = {}
         
         for name in self.running_containers:
             container_metrics = await self.get_container_metrics(name)
@@ -418,7 +440,8 @@ class DockerContainerManager:
         return metrics
     
     async def scale_service(self, service_type: ServiceType, replicas: int) -> bool:
-        """Scale a service to specified number of replicas"""        try:
+        """Scale a service to specified number of replicas"""
+        try:
             # Find containers of specified service type
             service_containers = [
                 name for name, config in self.containers.items()
@@ -470,7 +493,8 @@ class DockerContainerManager:
             return False
     
     async def cleanup_orphaned_containers(self) -> int:
-        """Remove orphaned containers that are no longer needed"""        cleaned_count = 0
+        """Remove orphaned containers that are no longer needed"""
+        cleaned_count = 0
         
         try:
             # Get all containers
@@ -495,7 +519,8 @@ class DockerContainerManager:
         return cleaned_count
     
     async def backup_container_configs(self, backup_path: Path) -> bool:
-        """Backup container configurations to file"""        try:
+        """Backup container configurations to file"""
+        try:
             backup_data = {
                 'containers': {},
                 'timestamp': datetime.now().isoformat(),
@@ -532,7 +557,8 @@ class DockerContainerManager:
             return False
     
     async def restore_container_configs(self, backup_path: Path) -> bool:
-        """Restore container configurations from backup file"""        try:
+        """Restore container configurations from backup file"""
+        try:
             with open(backup_path, 'r') as f:
                 backup_data = yaml.load(f, Loader=yaml.SafeLoader)
             
@@ -567,19 +593,22 @@ class DockerContainerManager:
 _container_manager: Optional[DockerContainerManager] = None
 
 def get_container_manager() -> DockerContainerManager:
-    """Get global container manager instance"""    global _container_manager
+    """Get global container manager instance"""
+    global _container_manager
     if _container_manager is None:
         _container_manager = DockerContainerManager()
     return _container_manager
 
 async def initialize_container_manager(config_path: Optional[Path] = None) -> DockerContainerManager:
-    """Initialize container manager with configuration"""    global _container_manager
+    """Initialize container manager with configuration"""
+    global _container_manager
     _container_manager = DockerContainerManager(config_path)
     return _container_manager
 
 # Convenience functions for common operations
 async def start_service(service_type: ServiceType) -> bool:
-    """Start all containers of specified service type"""    manager = get_container_manager()
+    """Start all containers of specified service type"""
+    manager = get_container_manager()
     
     service_containers = [
         name for name, config in manager.containers.items()
@@ -594,7 +623,8 @@ async def start_service(service_type: ServiceType) -> bool:
     return success
 
 async def stop_service(service_type: ServiceType) -> bool:
-    """Stop all containers of specified service type"""    manager = get_container_manager()
+    """Stop all containers of specified service type"""
+    manager = get_container_manager()
     
     service_containers = [
         name for name, config in manager.containers.items()
@@ -609,7 +639,8 @@ async def stop_service(service_type: ServiceType) -> bool:
     return success
 
 async def restart_service(service_type: ServiceType) -> bool:
-    """Restart all containers of specified service type"""    manager = get_container_manager()
+    """Restart all containers of specified service type"""
+    manager = get_container_manager()
     
     service_containers = [
         name for name, config in manager.containers.items()

@@ -5,10 +5,12 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ======================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""from typing import Dict, List, Optional, Any
+"""
+
+from typing import Dict, List, Optional, Any
 from datetime import datetime, timezone
 from dataclasses import dataclass, field
 import uuid

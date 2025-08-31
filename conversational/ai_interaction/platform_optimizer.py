@@ -6,7 +6,8 @@ Provides platform-specific strategies, optimization recommendations, and cross-p
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 
 class Platform(Enum):
-    """Supported platforms"""    SPOTIFY = "spotify"
+    """Supported platforms"""
+    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -40,7 +42,8 @@ class Platform(Enum):
 
 
 class OptimizationType(Enum):
-    """Types of platform optimizations"""    CONTENT_FORMAT = "content_format"
+    """Types of platform optimizations"""
+    CONTENT_FORMAT = "content_format"
     POSTING_SCHEDULE = "posting_schedule"
     HASHTAG_STRATEGY = "hashtag_strategy"
     AUDIENCE_TARGETING = "audience_targeting"
@@ -53,7 +56,8 @@ class OptimizationType(Enum):
 
 
 class ContentFormat(Enum):
-    """Content format types"""    SHORT_VIDEO = "short_video"
+    """Content format types"""
+    SHORT_VIDEO = "short_video"
     LONG_VIDEO = "long_video"
     LIVE_STREAM = "live_stream"
     AUDIO_TRACK = "audio_track"
@@ -68,7 +72,8 @@ class ContentFormat(Enum):
 
 @dataclass
 class PlatformMetrics:
-    """Platform performance metrics"""    platform: Platform
+    """Platform performance metrics"""
+    platform: Platform
     followers: int
     engagement_rate: float
     reach: int
@@ -82,7 +87,8 @@ class PlatformMetrics:
 
 @dataclass
 class OptimizationRecommendation:
-    """Platform optimization recommendation"""    recommendation_id: str
+    """Platform optimization recommendation"""
+    recommendation_id: str
     platform: Platform
     optimization_type: OptimizationType
     title: str
@@ -99,7 +105,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class CrossPlatformStrategy:
-    """Cross-platform optimization strategy"""    strategy_id: str
+    """Cross-platform optimization strategy"""
+    strategy_id: str
     primary_platforms: List[Platform]
     content_adaptation_plan: Dict[Platform, Dict[str, Any]]
     cross_promotion_tactics: List[Dict[str, Any]]
@@ -110,11 +117,13 @@ class CrossPlatformStrategy:
 
 
 class PlatformOptimizer:
-    """    Advanced Platform Optimization System
+    """
+    Advanced Platform Optimization System
     
     Provides intelligent platform-specific optimization strategies, cross-platform
     coordination, and algorithmic insights for content creators.
-    """    
+    """
+    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.ai_models = AIModelManager()
@@ -124,7 +133,8 @@ class PlatformOptimizer:
         self._algorithm_insights = {}
         
     async def initialize(self) -> None:
-        """Initialize the platform optimizer"""        try:
+        """Initialize the platform optimizer"""
+        try:
             await self.ai_models.load_optimization_models()
             await self.platform_analytics.initialize()
             await self.optimization_engine.initialize()
@@ -142,7 +152,8 @@ class PlatformOptimizer:
         optimization_goals: List[str],
         current_metrics: Optional[Dict] = None
     ) -> List[OptimizationRecommendation]:
-        """        Optimize strategy for specific platform
+        """
+        Optimize strategy for specific platform
         
         Args:
             user_id: User identifier
@@ -152,7 +163,8 @@ class PlatformOptimizer:
             
         Returns:
             List of platform-specific optimization recommendations
-        """        try:
+        """
+        try:
             platform_enum = Platform(platform)
             
             # Get comprehensive platform data
@@ -225,7 +237,8 @@ class PlatformOptimizer:
         target_platforms: List[str],
         strategy_goals: Dict[str, Any]
     ) -> CrossPlatformStrategy:
-        """        Create comprehensive cross-platform strategy
+        """
+        Create comprehensive cross-platform strategy
         
         Args:
             user_id: User identifier
@@ -234,7 +247,8 @@ class PlatformOptimizer:
             
         Returns:
             Comprehensive cross-platform strategy
-        """        try:
+        """
+        try:
             platforms = [Platform(p) for p in target_platforms]
             
             # Analyze cross-platform opportunities
@@ -298,7 +312,8 @@ class PlatformOptimizer:
         user_id: str,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """        Analyze platform algorithm changes and their impact
+        """
+        Analyze platform algorithm changes and their impact
         
         Args:
             platform: Platform to analyze
@@ -307,7 +322,8 @@ class PlatformOptimizer:
             
         Returns:
             Algorithm change analysis and adaptation recommendations
-        """        try:
+        """
+        try:
             platform_enum = Platform(platform)
             
             # Get historical performance data
@@ -365,7 +381,8 @@ class PlatformOptimizer:
         content_type: str,
         target_audience: Optional[Dict] = None
     ) -> Dict[str, Any]:
-        """        Optimize content posting timing for maximum reach and engagement
+        """
+        Optimize content posting timing for maximum reach and engagement
         
         Args:
             user_id: User identifier
@@ -375,7 +392,8 @@ class PlatformOptimizer:
             
         Returns:
             Optimized posting schedule with timing recommendations
-        """        try:
+        """
+        try:
             platform_enum = Platform(platform)
             
             # Analyze audience activity patterns
@@ -431,7 +449,8 @@ class PlatformOptimizer:
         content_theme: str,
         target_reach: Optional[int] = None
     ) -> Dict[str, Any]:
-        """        Generate optimal hashtag strategy for platform and content
+        """
+        Generate optimal hashtag strategy for platform and content
         
         Args:
             user_id: User identifier
@@ -441,7 +460,8 @@ class PlatformOptimizer:
             
         Returns:
             Comprehensive hashtag strategy with recommendations
-        """        try:
+        """
+        try:
             platform_enum = Platform(platform)
             
             # Analyze trending hashtags for platform and theme
@@ -496,7 +516,8 @@ class PlatformOptimizer:
         platform: str,
         competitor_list: List[str]
     ) -> Dict[str, Any]:
-        """        Analyze competitor strategies on specific platform
+        """
+        Analyze competitor strategies on specific platform
         
         Args:
             user_id: User identifier
@@ -505,7 +526,8 @@ class PlatformOptimizer:
             
         Returns:
             Comprehensive competitor strategy analysis
-        """        try:
+        """
+        try:
             platform_enum = Platform(platform)
             
             # Analyze competitor content strategies
@@ -557,7 +579,8 @@ class PlatformOptimizer:
     
     # Private helper methods
     async def _get_platform_data(self, user_id: str, platform: Platform) -> Dict[str, Any]:
-        """Get comprehensive platform data for user"""        try:
+        """Get comprehensive platform data for user"""
+        try:
             # Get platform metrics
             metrics = await self.platform_analytics.get_platform_metrics(user_id, platform.value)
             
@@ -587,7 +610,8 @@ class PlatformOptimizer:
         platform_data: Dict[str, Any],
         optimization_goals: List[str]
     ) -> Dict[str, Any]:
-        """Analyze current platform performance"""        try:
+        """Analyze current platform performance"""
+        try:
             metrics = platform_data.get("metrics", {})
             content_performance = platform_data.get("content_performance", {})
             
@@ -630,7 +654,8 @@ class PlatformOptimizer:
         platform_data: Dict[str, Any],
         performance_analysis: Dict[str, Any]
     ) -> List[OptimizationRecommendation]:
-        """Generate content format optimization recommendations"""        recommendations = []
+        """Generate content format optimization recommendations"""
+        recommendations = []
         
         content_performance = platform_data.get("content_performance", {})
         format_performance = content_performance.get("format_performance", {})
@@ -674,7 +699,8 @@ class PlatformOptimizer:
         platform_data: Dict[str, Any],
         performance_analysis: Dict[str, Any]
     ) -> List[OptimizationRecommendation]:
-        """Generate posting schedule optimization recommendations"""        recommendations = []
+        """Generate posting schedule optimization recommendations"""
+        recommendations = []
         
         # Default recommendation for posting consistency
         recommendations.append(
@@ -706,7 +732,8 @@ class PlatformOptimizer:
         platform_data: Dict[str, Any],
         performance_analysis: Dict[str, Any]
     ) -> List[OptimizationRecommendation]:
-        """Generate algorithm optimization recommendations"""        recommendations = []
+        """Generate algorithm optimization recommendations"""
+        recommendations = []
         
         algorithm_insights = self._algorithm_insights.get(platform, {})
         
@@ -759,7 +786,8 @@ class PlatformOptimizer:
     
     # Load platform configurations and algorithm insights
     async def _load_platform_configurations(self) -> None:
-        """Load platform-specific configurations"""        self._platform_configs = {
+        """Load platform-specific configurations"""
+        self._platform_configs = {
             Platform.YOUTUBE: {
                 "optimal_video_length": {"shorts": 60, "standard": 600, "long_form": 1800},
                 "best_posting_times": ["14:00", "17:00", "20:00"],
@@ -781,7 +809,8 @@ class PlatformOptimizer:
         }
     
     async def _load_algorithm_insights(self) -> None:
-        """Load algorithm insights for different platforms"""        self._algorithm_insights = {
+        """Load algorithm insights for different platforms"""
+        self._algorithm_insights = {
             Platform.YOUTUBE: {
                 "ranking_factors": ["watch_time", "ctr", "session_duration", "engagement"],
                 "optimization_tips": ["strong_hooks", "compelling_thumbnails", "consistent_uploading"],
@@ -801,7 +830,8 @@ class PlatformOptimizer:
     
     # Additional helper methods would be implemented here for various optimization functions
     async def _get_content_performance_data(self, user_id: str, platform: Platform) -> Dict:
-        """Get content performance data for platform"""        return {
+        """Get content performance data for platform"""
+        return {
             "format_performance": {
                 "video": {"engagement_rate": 0.08, "reach": 1000},
                 "image": {"engagement_rate": 0.05, "reach": 800},
@@ -811,14 +841,16 @@ class PlatformOptimizer:
         }
     
     async def _get_audience_insights(self, user_id: str, platform: Platform) -> Dict:
-        """Get audience insights for platform"""        return {
+        """Get audience insights for platform"""
+        return {
             "demographics": {"18-24": 0.3, "25-34": 0.4, "35-44": 0.2, "45+": 0.1},
             "activity_patterns": {"peak_hours": ["19:00", "20:00", "21:00"]},
             "engagement_preferences": ["video", "interactive_content"]
         }
     
     async def _get_algorithm_performance_data(self, user_id: str, platform: Platform) -> Dict:
-        """Get algorithm performance data"""        return {
+        """Get algorithm performance data"""
+        return {
             "algorithm_score": 0.7,
             "visibility_trends": "stable",
             "reach_patterns": {"organic": 0.8, "algorithmic": 0.2}

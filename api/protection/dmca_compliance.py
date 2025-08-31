@@ -24,7 +24,8 @@ LEGAL WARNING: This software and all associated intellectual property
 belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import logging
 from datetime import datetime, timedelta
@@ -50,7 +51,8 @@ from ..core.exceptions import DMCAException, ComplianceException
 
 
 class TakedownStatus(Enum):
-    """DMCA takedown request status."""    DRAFT = "draft"
+    """DMCA takedown request status."""
+    DRAFT = "draft"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
     IN_REVIEW = "in_review"
@@ -63,7 +65,8 @@ class TakedownStatus(Enum):
 
 
 class NoticeType(Enum):
-    """Types of DMCA notices."""    TAKEDOWN_NOTICE = "takedown_notice"
+    """Types of DMCA notices."""
+    TAKEDOWN_NOTICE = "takedown_notice"
     COUNTER_NOTICE = "counter_notice"
     REPEAT_INFRINGER = "repeat_infringer"
     SAFE_HARBOR = "safe_harbor"
@@ -71,7 +74,8 @@ class NoticeType(Enum):
 
 
 class PlatformCompliance(Enum):
-    """Platform DMCA compliance levels."""    FULL_COMPLIANCE = "full_compliance"
+    """Platform DMCA compliance levels."""
+    FULL_COMPLIANCE = "full_compliance"
     PARTIAL_COMPLIANCE = "partial_compliance"
     NON_COMPLIANT = "non_compliant"
     UNKNOWN = "unknown"
@@ -79,7 +83,8 @@ class PlatformCompliance(Enum):
 
 
 class EnforcementAction(Enum):
-    """Types of enforcement actions."""    AUTOMATED_TAKEDOWN = "automated_takedown"
+    """Types of enforcement actions."""
+    AUTOMATED_TAKEDOWN = "automated_takedown"
     MANUAL_REVIEW = "manual_review"
     LEGAL_NOTICE = "legal_notice"
     COURT_ORDER = "court_order"
@@ -90,7 +95,8 @@ class EnforcementAction(Enum):
 
 @dataclass
 class DMCANotice:
-    """DMCA takedown notice record."""    notice_id: str
+    """DMCA takedown notice record."""
+    notice_id: str
     content_id: str
     copyright_owner: str
     infringing_url: str
@@ -114,7 +120,8 @@ class DMCANotice:
 
 @dataclass
 class CounterNotice:
-    """DMCA counter-notice record."""    counter_notice_id: str
+    """DMCA counter-notice record."""
+    counter_notice_id: str
     original_notice_id: str
     counter_party: str
     counter_statement: str
@@ -129,7 +136,8 @@ class CounterNotice:
 
 @dataclass
 class PlatformDMCAConfig:
-    """Platform-specific DMCA configuration."""    config_id: str
+    """Platform-specific DMCA configuration."""
+    config_id: str
     platform_name: str
     platform_type: str
     compliance_level: PlatformCompliance
@@ -149,7 +157,8 @@ class PlatformDMCAConfig:
 
 @dataclass
 class ComplianceReport:
-    """DMCA compliance tracking report."""    report_id: str
+    """DMCA compliance tracking report."""
+    report_id: str
     platform: str
     reporting_period: str
     total_notices_sent: int
@@ -165,7 +174,8 @@ class ComplianceReport:
 
 
 class EnterpriseDMCACompliance:
-    """    Enterprise-grade DMCA compliance and automated takedown system.
+    """
+    Enterprise-grade DMCA compliance and automated takedown system.
     
     Provides comprehensive DMCA compliance including:
     - Automated DMCA takedown notice generation
@@ -173,7 +183,8 @@ class EnterpriseDMCACompliance:
     - Legal document template management
     - Compliance tracking and reporting
     - Counter-notice handling and dispute resolution
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger("protection.dmca_compliance")
@@ -217,7 +228,8 @@ class EnterpriseDMCACompliance:
         self.logger.info("EnterpriseDMCACompliance initialized successfully")
     
     async def _initialize_dmca_system(self):
-        """Initialize DMCA compliance system components."""        try:
+        """Initialize DMCA compliance system components."""
+        try:
             # Initialize HTTP session
             await self._initialize_session()
             
@@ -237,7 +249,8 @@ class EnterpriseDMCACompliance:
             raise DMCAException(f"Initialization error: {e}")
     
     async def _initialize_session(self):
-        """Initialize aiohttp session for API requests."""        try:
+        """Initialize aiohttp session for API requests."""
+        try:
             connector = aiohttp.TCPConnector(
                 limit=50,
                 limit_per_host=10,
@@ -260,8 +273,10 @@ class EnterpriseDMCACompliance:
             raise DMCAException(f"Session initialization error: {e}")
     
     async def _load_platform_configs(self):
-        """Load platform-specific DMCA configurations."""        try:
-            query = """            SELECT 
+        """Load platform-specific DMCA configurations."""
+        try:
+            query = """
+            SELECT 
                 config_id, platform_name, platform_type, compliance_level,
                 takedown_endpoint, api_endpoint, email_contact, web_form_url,
                 required_fields, response_time_sla, automated_processing,
@@ -270,7 +285,8 @@ class EnterpriseDMCACompliance:
             FROM platform_dmca_configs
             WHERE is_active = true
             ORDER BY platform_name
-            """            
+            """
+            
             results = await self.db.fetch(query)
             
             for row in results:
@@ -302,7 +318,8 @@ class EnterpriseDMCACompliance:
             await self._initialize_default_platform_configs()
     
     async def _initialize_default_platform_configs(self):
-        """Initialize default platform DMCA configurations."""        default_configs = {
+        """Initialize default platform DMCA configurations."""
+        default_configs = {
             "youtube": PlatformDMCAConfig(
                 config_id="youtube_dmca",
                 platform_name="youtube",
@@ -340,7 +357,8 @@ class EnterpriseDMCACompliance:
         self.platform_configs.update(default_configs)
     
     async def _initialize_legal_templates(self):
-        """Initialize legal document templates."""        try:
+        """Initialize legal document templates."""
+        try:
             templates_to_create = {
                 "dmca_takedown_notice.html": self._get_dmca_takedown_template(),
                 "counter_notice.html": self._get_counter_notice_template(),
@@ -362,7 +380,8 @@ class EnterpriseDMCACompliance:
             self.logger.error(f"Template initialization failed: {e}")
     
     def _get_dmca_takedown_template(self) -> str:
-        """Get DMCA takedown notice template."""        return """<!DOCTYPE html>
+        """Get DMCA takedown notice template."""
+        return """<!DOCTYPE html>
 <html>
 <head>
     <title>DMCA Takedown Notice</title>
@@ -415,9 +434,11 @@ class EnterpriseDMCACompliance:
     </div>
 </body>
 </html>
-        """    
+        """
+    
     def _get_counter_notice_template(self) -> str:
-        """Get DMCA counter-notice template."""        return """<!DOCTYPE html>
+        """Get DMCA counter-notice template."""
+        return """<!DOCTYPE html>
 <html>
 <head>
     <title>DMCA Counter-Notice</title>
@@ -457,9 +478,11 @@ class EnterpriseDMCACompliance:
     </div>
 </body>
 </html>
-        """    
+        """
+    
     def _get_repeat_infringer_template(self) -> str:
-        """Get repeat infringer notice template."""        return """<!DOCTYPE html>
+        """Get repeat infringer notice template."""
+        return """<!DOCTYPE html>
 <html>
 <head>
     <title>Repeat Infringer Notice</title>
@@ -490,9 +513,11 @@ class EnterpriseDMCACompliance:
     </div>
 </body>
 </html>
-        """    
+        """
+    
     def _get_legal_demand_template(self) -> str:
-        """Get legal demand letter template."""        return """<!DOCTYPE html>
+        """Get legal demand letter template."""
+        return """<!DOCTYPE html>
 <html>
 <head>
     <title>Legal Demand Letter</title>
@@ -525,7 +550,8 @@ class EnterpriseDMCACompliance:
     </div>
 </body>
 </html>
-        """    
+        """
+    
     async def generate_takedown_notice(
         self,
         content_id: str,
@@ -534,7 +560,8 @@ class EnterpriseDMCACompliance:
         copyright_owner: Dict[str, Any],
         evidence: Dict[str, Any] = None
     ) -> DMCANotice:
-        """        Generate DMCA takedown notice for infringing content.
+        """
+        Generate DMCA takedown notice for infringing content.
         
         Args:
             content_id: ID of copyrighted content
@@ -545,7 +572,8 @@ class EnterpriseDMCACompliance:
             
         Returns:
             Generated DMCA notice
-        """        try:
+        """
+        try:
             notice_id = f"dmca_{uuid.uuid4().hex[:12]}"
             
             self.logger.info(f"Generating DMCA takedown notice: {notice_id}")
@@ -612,7 +640,8 @@ class EnterpriseDMCACompliance:
         copyright_owner: Dict[str, Any],
         evidence: Dict[str, Any] = None
     ) -> str:
-        """Render DMCA takedown notice using template."""        try:
+        """Render DMCA takedown notice using template."""
+        try:
             template = self.jinja_env.get_template("dmca_takedown_notice.html")
             
             template_vars = {
@@ -638,7 +667,8 @@ class EnterpriseDMCACompliance:
         notice_id: str,
         submit_immediately: bool = True
     ) -> bool:
-        """        Submit DMCA takedown notice to platform.
+        """
+        Submit DMCA takedown notice to platform.
         
         Args:
             notice_id: DMCA notice ID to submit
@@ -646,7 +676,8 @@ class EnterpriseDMCACompliance:
             
         Returns:
             True if submission successful
-        """        try:
+        """
+        try:
             self.logger.info(f"Submitting DMCA takedown notice: {notice_id}")
             
             # Get notice record
@@ -700,7 +731,8 @@ class EnterpriseDMCACompliance:
         notice: Dict[str, Any],
         platform_config: PlatformDMCAConfig
     ) -> bool:
-        """Submit DMCA notice via platform API."""        try:
+        """Submit DMCA notice via platform API."""
+        try:
             # Platform-specific API submission logic would go here
             # This is a placeholder for actual API implementations
             
@@ -747,7 +779,8 @@ class EnterpriseDMCACompliance:
         notice: Dict[str, Any],
         platform_config: PlatformDMCAConfig
     ) -> bool:
-        """Submit DMCA notice via email."""        try:
+        """Submit DMCA notice via email."""
+        try:
             if not self.smtp_config.get("server"):
                 raise DMCAException("SMTP configuration not available")
             
@@ -803,7 +836,8 @@ class EnterpriseDMCACompliance:
         counter_statement: str,
         contact_information: Dict[str, Any]
     ) -> CounterNotice:
-        """        Process DMCA counter-notice from alleged infringer.
+        """
+        Process DMCA counter-notice from alleged infringer.
         
         Args:
             original_notice_id: ID of original takedown notice
@@ -813,7 +847,8 @@ class EnterpriseDMCACompliance:
             
         Returns:
             Counter-notice record
-        """        try:
+        """
+        try:
             counter_notice_id = f"counter_{uuid.uuid4().hex[:12]}"
             
             self.logger.info(f"Processing DMCA counter-notice: {counter_notice_id}")
@@ -861,7 +896,8 @@ class EnterpriseDMCACompliance:
         start_date: datetime,
         end_date: datetime
     ) -> ComplianceReport:
-        """        Generate DMCA compliance report for platform.
+        """
+        Generate DMCA compliance report for platform.
         
         Args:
             platform: Platform to report on
@@ -870,13 +906,15 @@ class EnterpriseDMCACompliance:
             
         Returns:
             Compliance report
-        """        try:
+        """
+        try:
             report_id = f"report_{uuid.uuid4().hex[:12]}"
             
             self.logger.info(f"Generating compliance report for {platform}: {report_id}")
             
             # Get notice statistics
-            stats_query = """            SELECT 
+            stats_query = """
+            SELECT 
                 COUNT(*) as total_notices,
                 COUNT(CASE WHEN status = 'acknowledged' THEN 1 END) as acknowledged,
                 COUNT(CASE WHEN status = 'complied' THEN 1 END) as complied,
@@ -885,7 +923,8 @@ class EnterpriseDMCACompliance:
             FROM dmca_notices
             WHERE platform = $1 
                 AND submission_date BETWEEN $2 AND $3
-            """            
+            """
+            
             stats = await self.db.fetchrow(stats_query, platform, start_date, end_date)
             
             # Calculate compliance rate
@@ -894,7 +933,8 @@ class EnterpriseDMCACompliance:
             compliance_rate = (complied_notices / total_notices) if total_notices > 0 else 0.0
             
             # Get repeat infringer count
-            repeat_infringer_query = """            SELECT COUNT(DISTINCT infringing_party) as repeat_infringers
+            repeat_infringer_query = """
+            SELECT COUNT(DISTINCT infringing_party) as repeat_infringers
             FROM (
                 SELECT infringing_party, COUNT(*) as violation_count
                 FROM dmca_notices
@@ -904,17 +944,20 @@ class EnterpriseDMCACompliance:
                 GROUP BY infringing_party
                 HAVING COUNT(*) > 1
             ) repeat_violations
-            """            
+            """
+            
             repeat_result = await self.db.fetchrow(repeat_infringer_query, platform, start_date, end_date)
             repeat_infringers = repeat_result["repeat_infringers"] or 0
             
             # Get counter-notice count
-            counter_notice_query = """            SELECT COUNT(*) as counter_notices
+            counter_notice_query = """
+            SELECT COUNT(*) as counter_notices
             FROM counter_notices cn
             JOIN dmca_notices dn ON cn.original_notice_id = dn.notice_id
             WHERE dn.platform = $1
                 AND cn.submitted_date BETWEEN $2 AND $3
-            """            
+            """
+            
             counter_result = await self.db.fetchrow(counter_notice_query, platform, start_date, end_date)
             counter_notices = counter_result["counter_notices"] or 0
             
@@ -946,7 +989,8 @@ class EnterpriseDMCACompliance:
             raise DMCAException(f"Report generation error: {e}")
     
     async def cleanup_resources(self):
-        """Clean up DMCA compliance system resources."""        try:
+        """Clean up DMCA compliance system resources."""
+        try:
             if self.session and not self.session.closed:
                 await self.session.close()
             
@@ -961,4 +1005,5 @@ class EnterpriseDMCACompliance:
 
 # Factory function for easy instantiation
 def create_dmca_compliance(config: Optional[Dict[str, Any]] = None) -> EnterpriseDMCACompliance:
-    """Create and return configured DMCA compliance system instance."""    return EnterpriseDMCACompliance(config)
+    """Create and return configured DMCA compliance system instance."""
+    return EnterpriseDMCACompliance(config)

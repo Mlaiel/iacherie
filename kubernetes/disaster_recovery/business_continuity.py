@@ -10,7 +10,8 @@ This module ensures business continuity during disasters and disruptions:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set
@@ -26,7 +27,8 @@ from backend.protection.content_protection import ContentProtectionManager
 
 
 class BusinessPriority(Enum):
-    """Business process priority levels"""    CRITICAL = 1      # Revenue-generating, user-facing
+    """Business process priority levels"""
+    CRITICAL = 1      # Revenue-generating, user-facing
     HIGH = 2          # Core functionality, creator tools
     MEDIUM = 3        # Analytics, reporting
     LOW = 4           # Admin functions, optimization
@@ -34,7 +36,8 @@ class BusinessPriority(Enum):
 
 
 class BusinessProcessStatus(Enum):
-    """Business process operational status"""    OPERATIONAL = "operational"
+    """Business process operational status"""
+    OPERATIONAL = "operational"
     DEGRADED = "degraded"
     SUSPENDED = "suspended"
     FAILED = "failed"
@@ -42,7 +45,8 @@ class BusinessProcessStatus(Enum):
 
 
 class ContinuityStrategy(Enum):
-    """Business continuity strategies"""    MAINTAIN_FULL_SERVICE = "maintain_full_service"
+    """Business continuity strategies"""
+    MAINTAIN_FULL_SERVICE = "maintain_full_service"
     GRACEFUL_DEGRADATION = "graceful_degradation"
     ESSENTIAL_ONLY = "essential_only"
     OFFLINE_MODE = "offline_mode"
@@ -51,7 +55,8 @@ class ContinuityStrategy(Enum):
 
 @dataclass
 class BusinessProcess:
-    """Business process definition and configuration"""    process_id: str
+    """Business process definition and configuration"""
+    process_id: str
     name: str
     description: str
     priority: BusinessPriority
@@ -70,7 +75,8 @@ class BusinessProcess:
 
 @dataclass
 class SLARequirement:
-    """Service Level Agreement requirements"""    sla_id: str
+    """Service Level Agreement requirements"""
+    sla_id: str
     process_id: str
     availability_target: float    # e.g., 99.9%
     response_time_target: float   # milliseconds
@@ -83,7 +89,8 @@ class SLARequirement:
 
 @dataclass
 class ContinuityPlan:
-    """Business continuity plan for specific scenarios"""    plan_id: str
+    """Business continuity plan for specific scenarios"""
+    plan_id: str
     scenario_description: str
     affected_processes: List[str]
     continuity_strategy: ContinuityStrategy
@@ -96,7 +103,8 @@ class ContinuityPlan:
 
 
 class BusinessContinuityManager:
-    """    Manages enterprise business continuity for creator content protection platform
+    """
+    Manages enterprise business continuity for creator content protection platform
     
     Capabilities:
     - Critical business process monitoring
@@ -105,7 +113,8 @@ class BusinessContinuityManager:
     - Automated graceful degradation
     - Creator workflow preservation
     - Real-time business impact analysis
-    """    def __init__(self, config: Config):
+    """
+    def __init__(self, config: Config):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)
@@ -137,7 +146,8 @@ class BusinessContinuityManager:
         self._initialize_core_processes()
 
     def _initialize_core_processes(self):
-        """Initialize core business processes for content protection platform"""        core_processes = [
+        """Initialize core business processes for content protection platform"""
+        core_processes = [
             {
                 'process_id': 'user_authentication',
                 'name': 'User Authentication & Authorization',
@@ -234,14 +244,16 @@ class BusinessContinuityManager:
             self.business_processes[process_config['process_id']] = business_process
 
     async def register_business_process(self, process_config: Dict[str, Any]) -> str:
-        """        Register new business process for continuity monitoring
+        """
+        Register new business process for continuity monitoring
         
         Args:
             process_config: Business process configuration
             
         Returns:
             str: Process ID
-        """        try:
+        """
+        try:
             process_id = process_config['process_id']
             
             business_process = BusinessProcess(
@@ -275,7 +287,8 @@ class BusinessContinuityManager:
             raise
 
     async def _monitor_business_process(self, process: BusinessProcess):
-        """Continuously monitor business process health and SLA compliance"""        process_id = process.process_id
+        """Continuously monitor business process health and SLA compliance"""
+        process_id = process.process_id
         
         while process_id in self.business_processes:
             try:
@@ -306,7 +319,8 @@ class BusinessContinuityManager:
                 await asyncio.sleep(30)
 
     async def _check_process_health(self, process: BusinessProcess) -> Dict[str, Any]:
-        """Check health of business process and its dependencies"""        health_results = {
+        """Check health of business process and its dependencies"""
+        health_results = {
             'overall_healthy': True,
             'dependency_health': {},
             'performance_metrics': {},
@@ -348,7 +362,8 @@ class BusinessContinuityManager:
             return health_results
 
     async def _check_sla_compliance(self, process: BusinessProcess) -> Dict[str, Any]:
-        """Check SLA compliance for business process"""        sla_results = {
+        """Check SLA compliance for business process"""
+        sla_results = {
             'compliant': True,
             'availability_percentage': 100.0,
             'average_response_time': 0.0,
@@ -411,7 +426,8 @@ class BusinessContinuityManager:
     async def trigger_business_continuity(self, incident_id: str, 
                                         affected_processes: List[str],
                                         severity: str = "high") -> str:
-        """        Trigger business continuity procedures for an incident
+        """
+        Trigger business continuity procedures for an incident
         
         Args:
             incident_id: Unique incident identifier
@@ -420,7 +436,8 @@ class BusinessContinuityManager:
             
         Returns:
             str: Continuity execution ID
-        """        try:
+        """
+        try:
             execution_id = f"continuity_{incident_id}_{int(datetime.utcnow().timestamp())}"
             
             # Assess business impact
@@ -456,7 +473,8 @@ class BusinessContinuityManager:
             raise
 
     async def _execute_continuity_plan(self, incident_record: Dict[str, Any]):
-        """Execute business continuity plan"""        execution_id = incident_record['execution_id']
+        """Execute business continuity plan"""
+        execution_id = incident_record['execution_id']
         strategy = incident_record['strategy']
         
         try:
@@ -484,7 +502,8 @@ class BusinessContinuityManager:
             self.logger.error(f"Business continuity failed for {execution_id}: {e}")
 
     async def _execute_graceful_degradation(self, incident_record: Dict[str, Any]):
-        """Execute graceful degradation strategy"""        affected_processes = incident_record['affected_processes']
+        """Execute graceful degradation strategy"""
+        affected_processes = incident_record['affected_processes']
         
         # Disable non-essential features
         degradation_steps = [
@@ -505,7 +524,8 @@ class BusinessContinuityManager:
                 self.logger.error(f"Degradation step failed: {step} - {e}")
 
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get business continuity health status for disaster recovery coordinator"""        try:
+        """Get business continuity health status for disaster recovery coordinator"""
+        try:
             # Calculate overall health based on critical processes
             critical_processes = [
                 p for p in self.business_processes.values() 
@@ -561,7 +581,8 @@ class BusinessContinuityManager:
             }
 
     async def get_business_continuity_status(self) -> Dict[str, Any]:
-        """Get comprehensive business continuity status"""        return {
+        """Get comprehensive business continuity status"""
+        return {
             'business_processes': {
                 pid: {
                     'name': process.name,
@@ -583,7 +604,8 @@ class BusinessContinuityManager:
         }
 
     async def _assess_business_impact(self, affected_processes: List[str]) -> Dict[str, Any]:
-        """Assess business impact of affected processes"""        total_revenue_impact = 0.0
+        """Assess business impact of affected processes"""
+        total_revenue_impact = 0.0
         total_user_impact = 0
         critical_processes_affected = 0
         
@@ -623,7 +645,8 @@ class BusinessContinuityManager:
 
     def _determine_process_status(self, health_status: Dict[str, Any], 
                                 sla_compliance: Dict[str, Any]) -> BusinessProcessStatus:
-        """Determine business process status based on health and SLA"""        if not health_status.get('overall_healthy', True):
+        """Determine business process status based on health and SLA"""
+        if not health_status.get('overall_healthy', True):
             if len(health_status.get('error_indicators', [])) > 2:
                 return BusinessProcessStatus.FAILED
             else:
@@ -641,7 +664,8 @@ class BusinessContinuityManager:
     def _update_business_metrics(self, process: BusinessProcess, 
                                health_status: Dict[str, Any], 
                                sla_compliance: Dict[str, Any]):
-        """Update aggregated business impact metrics"""        # Calculate total revenue at risk
+        """Update aggregated business impact metrics"""
+        # Calculate total revenue at risk
         self.impact_metrics['total_revenue_at_risk'] = sum(
             p.revenue_impact for p in self.business_processes.values()
             if p.status in [BusinessProcessStatus.DEGRADED, BusinessProcessStatus.FAILED]
@@ -670,7 +694,8 @@ class BusinessContinuityManager:
             self.impact_metrics['business_continuity_score'] = (operational_processes / total_processes) * 100
 
     async def handle_emergency_situation(self, recovery_mode: str) -> Dict[str, Any]:
-        """Handle emergency situation with appropriate business continuity measures"""        try:
+        """Handle emergency situation with appropriate business continuity measures"""
+        try:
             emergency_id = f"emergency_{int(datetime.utcnow().timestamp())}"
             
             self.logger.warning(f"Handling emergency situation with mode: {recovery_mode}")
@@ -723,7 +748,8 @@ class BusinessContinuityManager:
             }
 
     async def _calculate_overall_sla_compliance(self) -> Dict[str, Any]:
-        """Calculate overall SLA compliance across all processes"""        try:
+        """Calculate overall SLA compliance across all processes"""
+        try:
             total_processes = len(self.business_processes)
             if total_processes == 0:
                 return {"overall_compliance": 100.0, "details": "No processes monitored"}
@@ -755,7 +781,8 @@ class BusinessContinuityManager:
     async def _select_continuity_strategy(self, affected_processes: List[str], 
                                         severity: str, 
                                         impact_assessment: Dict[str, Any]) -> ContinuityStrategy:
-        """Select appropriate business continuity strategy based on impact assessment"""        critical_affected = len([
+        """Select appropriate business continuity strategy based on impact assessment"""
+        critical_affected = len([
             pid for pid in affected_processes 
             if pid in self.business_processes and 
             self.business_processes[pid].priority == BusinessPriority.CRITICAL
@@ -775,7 +802,8 @@ class BusinessContinuityManager:
             return ContinuityStrategy.MAINTAIN_FULL_SERVICE
 
     async def _execute_maintain_full_service(self, incident_record: Dict[str, Any]):
-        """Execute maintain full service strategy"""        self.logger.info("Executing maintain full service strategy")
+        """Execute maintain full service strategy"""
+        self.logger.info("Executing maintain full service strategy")
         
         # Monitor and ensure all services remain operational
         steps = [
@@ -793,7 +821,8 @@ class BusinessContinuityManager:
                 incident_record['steps_failed'].append({'step': step, 'error': str(e)})
 
     async def _execute_essential_only_mode(self, incident_record: Dict[str, Any]):
-        """Execute essential only mode strategy"""        self.logger.warning("Executing essential only mode strategy")
+        """Execute essential only mode strategy"""
+        self.logger.warning("Executing essential only mode strategy")
         
         steps = [
             'disable_non_critical_processes',
@@ -811,7 +840,8 @@ class BusinessContinuityManager:
                 incident_record['steps_failed'].append({'step': step, 'error': str(e)})
 
     async def _execute_offline_mode(self, incident_record: Dict[str, Any]):
-        """Execute offline mode strategy"""        self.logger.critical("Executing offline mode strategy")
+        """Execute offline mode strategy"""
+        self.logger.critical("Executing offline mode strategy")
         
         steps = [
             'enable_maintenance_mode',
@@ -829,7 +859,8 @@ class BusinessContinuityManager:
                 incident_record['steps_failed'].append({'step': step, 'error': str(e)})
 
     async def _execute_backup_redirect(self, incident_record: Dict[str, Any]):
-        """Execute backup redirect strategy"""        self.logger.warning("Executing backup redirect strategy")
+        """Execute backup redirect strategy"""
+        self.logger.warning("Executing backup redirect strategy")
         
         steps = [
             'activate_backup_infrastructure',
@@ -847,7 +878,8 @@ class BusinessContinuityManager:
                 incident_record['steps_failed'].append({'step': step, 'error': str(e)})
 
     async def _execute_continuity_step(self, step: str, incident_record: Dict[str, Any]):
-        """Execute individual continuity step"""        self.logger.info(f"Executing continuity step: {step}")
+        """Execute individual continuity step"""
+        self.logger.info(f"Executing continuity step: {step}")
         
         # Placeholder for actual step implementation
         # In real implementation, would call specific handlers for each step
@@ -865,7 +897,8 @@ class BusinessContinuityManager:
         )
 
     async def _execute_degradation_step(self, step: str):
-        """Execute degradation step"""        self.logger.info(f"Executing degradation step: {step}")
+        """Execute degradation step"""
+        self.logger.info(f"Executing degradation step: {step}")
         
         # Placeholder for degradation step implementation
         await asyncio.sleep(0.1)
@@ -880,7 +913,8 @@ class BusinessContinuityManager:
     async def _handle_status_change(self, process: BusinessProcess, 
                                   previous_status: BusinessProcessStatus, 
                                   new_status: BusinessProcessStatus):
-        """Handle business process status changes"""        self.logger.info(
+        """Handle business process status changes"""
+        self.logger.info(
             f"Process {process.process_id} status changed: {previous_status.value} -> {new_status.value}"
         )
         
@@ -903,7 +937,8 @@ class BusinessContinuityManager:
             await self._trigger_critical_process_alert(process, new_status)
 
     async def _trigger_critical_process_alert(self, process: BusinessProcess, status: BusinessProcessStatus):
-        """Trigger alert for critical process failure"""        alert_data = {
+        """Trigger alert for critical process failure"""
+        alert_data = {
             "alert_type": "critical_process_failure",
             "process_id": process.process_id,
             "process_name": process.name,
@@ -927,7 +962,8 @@ class BusinessContinuityManager:
 
     # Helper methods for checking specific process metrics
     async def _check_dependency_health(self, dependency: str) -> Dict[str, Any]:
-        """Check health of process dependency"""        # Placeholder implementation
+        """Check health of process dependency"""
+        # Placeholder implementation
         return {
             "healthy": True,
             "response_time": 50.0,
@@ -935,7 +971,8 @@ class BusinessContinuityManager:
         }
 
     async def _check_upload_processing_metrics(self) -> Dict[str, Any]:
-        """Check upload processing specific metrics"""        return {
+        """Check upload processing specific metrics"""
+        return {
             "queue_depth": 150,
             "processing_rate": 25.5,
             "average_processing_time": 8.2,
@@ -943,7 +980,8 @@ class BusinessContinuityManager:
         }
 
     async def _check_protection_monitoring_metrics(self) -> Dict[str, Any]:
-        """Check protection monitoring specific metrics"""        return {
+        """Check protection monitoring specific metrics"""
+        return {
             "detection_latency": 5.5,
             "false_positive_rate": 0.02,
             "monitoring_coverage": 0.98,
@@ -951,13 +989,16 @@ class BusinessContinuityManager:
         }
 
     async def _calculate_availability(self, process_id: str, hours: int = 1) -> float:
-        """Calculate process availability over time period"""        # Placeholder implementation
+        """Calculate process availability over time period"""
+        # Placeholder implementation
         return 99.95
 
     async def _calculate_response_time(self, process_id: str, hours: int = 1) -> float:
-        """Calculate average response time over time period"""        # Placeholder implementation
+        """Calculate average response time over time period"""
+        # Placeholder implementation
         return 250.0
 
     async def _calculate_error_rate(self, process_id: str, hours: int = 1) -> float:
-        """Calculate error rate over time period"""        # Placeholder implementation
+        """Calculate error rate over time period"""
+        # Placeholder implementation
         return 0.01

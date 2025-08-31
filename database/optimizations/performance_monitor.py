@@ -5,7 +5,8 @@ alerting, and intelligent performance insights.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import json
 import time
 from datetime import datetime, timedelta
@@ -31,14 +32,16 @@ logger = get_logger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    INFO = "info"
+    """Alert severity levels"""
+    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 
 class MetricType(Enum):
-    """Metric types"""    COUNTER = "counter"
+    """Metric types"""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
@@ -46,7 +49,8 @@ class MetricType(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric data point"""    name: str
+    """Performance metric data point"""
+    name: str
     value: float
     metric_type: MetricType
     timestamp: datetime = field(default_factory=datetime.now)
@@ -56,7 +60,8 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert"""    alert_id: str
+    """Performance alert"""
+    alert_id: str
     name: str
     severity: AlertSeverity
     message: str
@@ -70,7 +75,8 @@ class PerformanceAlert:
 
 @dataclass
 class DatabaseStats:
-    """Database statistics summary"""    total_connections: int = 0
+    """Database statistics summary"""
+    total_connections: int = 0
     active_connections: int = 0
     total_queries: int = 0
     slow_queries: int = 0
@@ -85,7 +91,8 @@ class DatabaseStats:
 
 
 class MetricsCollector:
-    """Collects and stores performance metrics"""    
+    """Collects and stores performance metrics"""
+    
     def __init__(self, retention_hours: int = 168):  # 7 days
         self.retention_hours = retention_hours
         self.metrics: Dict[str, deque] = defaultdict(lambda: deque(maxlen=10080))  # 7 days of minute data
@@ -93,7 +100,8 @@ class MetricsCollector:
         self.alert_rules: Dict[str, Dict[str, Any]] = {}
         
     def add_metric(self, metric: PerformanceMetric):
-        """Add a metric data point"""        self.metrics[metric.name].append({
+        """Add a metric data point"""
+        self.metrics[metric.name].append({
             'value': metric.value,
             'timestamp': metric.timestamp,
             'labels': metric.labels
@@ -105,7 +113,8 @@ class MetricsCollector:
     def get_metric_values(self, metric_name: str, 
                          start_time: Optional[datetime] = None,
                          end_time: Optional[datetime] = None) -> List[Dict[str, Any]]:
-        """Get metric values within time range"""        if metric_name not in self.metrics:
+        """Get metric values within time range"""
+        if metric_name not in self.metrics:
             return []
         
         values = list(self.metrics[metric_name])
@@ -125,7 +134,8 @@ class MetricsCollector:
     
     def get_metric_statistics(self, metric_name: str, 
                             hours_back: int = 1) -> Dict[str, float]:
-        """Get statistical summary of metric"""        end_time = datetime.now()
+        """Get statistical summary of metric"""
+        end_time = datetime.now()
         start_time = end_time - timedelta(hours=hours_back)
         
         values = self.get_metric_values(metric_name, start_time, end_time)
@@ -145,7 +155,8 @@ class MetricsCollector:
     
     def add_alert_rule(self, metric_name: str, threshold: float, 
                       severity: AlertSeverity, condition: str = "greater_than"):
-        """Add alert rule for metric"""        self.alert_rules[metric_name] = {
+        """Add alert rule for metric"""
+        self.alert_rules[metric_name] = {
             'threshold': threshold,
             'severity': severity,
             'condition': condition,
@@ -154,7 +165,8 @@ class MetricsCollector:
         }
     
     def _check_alert_rules(self, metric: PerformanceMetric):
-        """Check if metric triggers any alerts"""        rule = self.alert_rules.get(metric.name)
+        """Check if metric triggers any alerts"""
+        rule = self.alert_rules.get(metric.name)
         if not rule:
             return
         
@@ -174,7 +186,8 @@ class MetricsCollector:
             self._resolve_alert(metric.name)
     
     def _trigger_alert(self, metric: PerformanceMetric, rule: Dict[str, Any]):
-        """Trigger a new alert"""        alert_id = f"{metric.name}_{int(time.time())}"
+        """Trigger a new alert"""
+        alert_id = f"{metric.name}_{int(time.time())}"
         
         alert = PerformanceAlert(
             alert_id=alert_id,
@@ -191,16 +204,19 @@ class MetricsCollector:
         logger.warning(f"Alert triggered: {alert.message}")
     
     def _resolve_alert(self, metric_name: str):
-        """Resolve alerts for metric"""        for alert_id, alert in list(self.alerts.items()):
+        """Resolve alerts for metric"""
+        for alert_id, alert in list(self.alerts.items()):
             if alert.metric_name == metric_name and not alert.resolved_at:
                 alert.resolved_at = datetime.now()
                 logger.info(f"Alert resolved: {alert.name}")
     
     def get_active_alerts(self) -> List[PerformanceAlert]:
-        """Get currently active alerts"""        return [alert for alert in self.alerts.values() if not alert.resolved_at]
+        """Get currently active alerts"""
+        return [alert for alert in self.alerts.values() if not alert.resolved_at]
     
     def cleanup_old_data(self):
-        """Clean up old metrics data"""        cutoff_time = datetime.now() - timedelta(hours=self.retention_hours)
+        """Clean up old metrics data"""
+        cutoff_time = datetime.now() - timedelta(hours=self.retention_hours)
         
         for metric_name in list(self.metrics.keys()):
             metric_data = self.metrics[metric_name]
@@ -211,7 +227,8 @@ class MetricsCollector:
 
 
 class DatabasePerformanceMonitor:
-    """Database performance monitoring system"""    
+    """Database performance monitoring system"""
+    
     def __init__(self, engines: Dict[str, AsyncEngine]):
         self.engines = engines
         self.metrics_collector = MetricsCollector()
@@ -230,7 +247,8 @@ class DatabasePerformanceMonitor:
         self._setup_default_alerts()
     
     def _setup_default_alerts(self):
-        """Setup default alert rules"""        # Database connection alerts
+        """Setup default alert rules"""
+        # Database connection alerts
         self.metrics_collector.add_alert_rule(
             "active_connections", 80, AlertSeverity.WARNING, "greater_than"
         )
@@ -263,7 +281,8 @@ class DatabasePerformanceMonitor:
         )
     
     async def start_monitoring(self, interval_seconds: int = 60):
-        """Start performance monitoring"""        if self.is_monitoring:
+        """Start performance monitoring"""
+        if self.is_monitoring:
             return
         
         self.is_monitoring = True
@@ -273,7 +292,8 @@ class DatabasePerformanceMonitor:
         logger.info("Database performance monitoring started")
     
     async def stop_monitoring(self):
-        """Stop performance monitoring"""        self.is_monitoring = False
+        """Stop performance monitoring"""
+        self.is_monitoring = False
         
         if self.monitoring_task:
             self.monitoring_task.cancel()
@@ -285,7 +305,8 @@ class DatabasePerformanceMonitor:
         logger.info("Database performance monitoring stopped")
     
     async def _monitoring_loop(self, interval_seconds: int):
-        """Main monitoring loop"""        while self.is_monitoring:
+        """Main monitoring loop"""
+        while self.is_monitoring:
             try:
                 # Collect metrics from all sources
                 await self._collect_database_metrics()
@@ -303,17 +324,20 @@ class DatabasePerformanceMonitor:
                 await asyncio.sleep(30)
     
     async def _collect_database_metrics(self):
-        """Collect core database metrics"""        for engine_name, engine in self.engines.items():
+        """Collect core database metrics"""
+        for engine_name, engine in self.engines.items():
             try:
                 await self._collect_engine_metrics(engine_name, engine)
             except Exception as e:
                 logger.warning(f"Failed to collect metrics for {engine_name}: {e}")
     
     async def _collect_engine_metrics(self, engine_name: str, engine: AsyncEngine):
-        """Collect metrics for a specific database engine"""        try:
+        """Collect metrics for a specific database engine"""
+        try:
             async with engine.begin() as conn:
                 # Connection metrics
-                conn_result = await conn.execute(text("""                    SELECT 
+                conn_result = await conn.execute(text("""
+                    SELECT 
                         count(*) as total_connections,
                         count(*) FILTER (WHERE state = 'active') as active_connections
                     FROM pg_stat_activity
@@ -336,7 +360,8 @@ class DatabasePerformanceMonitor:
                     ))
                 
                 # Query metrics
-                query_result = await conn.execute(text("""                    SELECT 
+                query_result = await conn.execute(text("""
+                    SELECT 
                         sum(calls) as total_queries,
                         avg(mean_exec_time) as avg_query_time,
                         count(*) FILTER (WHERE mean_exec_time > 1000) as slow_queries
@@ -368,7 +393,8 @@ class DatabasePerformanceMonitor:
                     ))
                 
                 # Cache metrics
-                cache_result = await conn.execute(text("""                    SELECT 
+                cache_result = await conn.execute(text("""
+                    SELECT 
                         sum(heap_blks_hit) / NULLIF(sum(heap_blks_hit + heap_blks_read), 0) as cache_hit_ratio
                     FROM pg_statio_user_tables
                 """))
@@ -383,7 +409,8 @@ class DatabasePerformanceMonitor:
                     ))
                 
                 # Database size
-                size_result = await conn.execute(text("""                    SELECT sum(pg_database_size(datname)) / (1024*1024*1024) as size_gb
+                size_result = await conn.execute(text("""
+                    SELECT sum(pg_database_size(datname)) / (1024*1024*1024) as size_gb
                     FROM pg_database
                     WHERE datname NOT IN ('template0', 'template1', 'postgres')
                 """))
@@ -401,7 +428,8 @@ class DatabasePerformanceMonitor:
             logger.warning(f"Failed to collect engine metrics for {engine_name}: {e}")
     
     async def _collect_component_metrics(self):
-        """Collect metrics from optimization components"""        try:
+        """Collect metrics from optimization components"""
+        try:
             # Index manager metrics
             if self.index_manager:
                 stats = self.index_manager.get_strategy_stats()
@@ -511,7 +539,8 @@ class DatabasePerformanceMonitor:
             logger.warning(f"Failed to collect component metrics: {e}")
     
     def get_dashboard_data(self, hours_back: int = 1) -> Dict[str, Any]:
-        """Get dashboard data for the specified time period"""        try:
+        """Get dashboard data for the specified time period"""
+        try:
             dashboard_data = {
                 'timestamp': datetime.now().isoformat(),
                 'time_range_hours': hours_back,
@@ -551,7 +580,8 @@ class DatabasePerformanceMonitor:
             return {'error': str(e)}
     
     def get_metric_trend(self, metric_name: str, hours_back: int = 24) -> Dict[str, Any]:
-        """Get trend data for a specific metric"""        try:
+        """Get trend data for a specific metric"""
+        try:
             end_time = datetime.now()
             start_time = end_time - timedelta(hours=hours_back)
             
@@ -594,7 +624,8 @@ class DatabasePerformanceMonitor:
             return {'error': str(e)}
     
     async def generate_performance_report(self, hours_back: int = 24) -> Dict[str, Any]:
-        """Generate comprehensive performance report"""        try:
+        """Generate comprehensive performance report"""
+        try:
             report = {
                 'report_generated_at': datetime.now().isoformat(),
                 'time_period_hours': hours_back,

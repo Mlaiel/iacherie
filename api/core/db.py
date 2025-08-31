@@ -1,7 +1,11 @@
-"""Database session management using SQLAlchemy 2.0 style."""from contextlib import contextmanager
+"""Database session management using SQLAlchemy 2.0 style."""
+
+from contextlib import contextmanager
+
 from typing import Iterator
 
 from sqlalchemy import create_engine
+
 from sqlalchemy.orm import sessionmaker
 
 from .config import settings

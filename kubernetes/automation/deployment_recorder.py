@@ -6,7 +6,8 @@ analytics for deployment automation workflows.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -26,7 +27,8 @@ from ..monitoring.metrics_collector import MetricsCollector
 
 
 class DeploymentStatus(Enum):
-    """Deployment status values"""    PENDING = "pending"
+    """Deployment status values"""
+    PENDING = "pending"
     INITIALIZING = "initializing"
     IN_PROGRESS = "in_progress"
     VALIDATING = "validating"
@@ -37,14 +39,16 @@ class DeploymentStatus(Enum):
 
 
 class DeploymentStrategy(Enum):
-    """Deployment strategy types"""    ROLLING_UPDATE = "rolling_update"
+    """Deployment strategy types"""
+    ROLLING_UPDATE = "rolling_update"
     BLUE_GREEN = "blue_green"
     CANARY = "canary"
     RECREATE = "recreate"
 
 
 class RecordType(Enum):
-    """Record types for different aspects of deployment"""    DEPLOYMENT = "deployment"
+    """Record types for different aspects of deployment"""
+    DEPLOYMENT = "deployment"
     STEP = "step"
     HEALTH_CHECK = "health_check"
     ROLLBACK = "rollback"
@@ -56,7 +60,8 @@ class RecordType(Enum):
 
 @dataclass
 class DeploymentStep:
-    """Individual deployment step record"""    step_id: str
+    """Individual deployment step record"""
+    step_id: str
     step_name: str
     step_type: str
     started_at: datetime
@@ -71,7 +76,8 @@ class DeploymentStep:
 
 @dataclass
 class DeploymentEnvironment:
-    """Deployment environment information"""    name: str
+    """Deployment environment information"""
+    name: str
     namespace: str
     cluster: str
     region: str
@@ -83,7 +89,8 @@ class DeploymentEnvironment:
 
 @dataclass
 class DeploymentArtifact:
-    """Deployment artifact information"""    artifact_id: str
+    """Deployment artifact information"""
+    artifact_id: str
     artifact_type: str  # docker_image, helm_chart, config_file, etc.
     name: str
     version: str
@@ -96,7 +103,8 @@ class DeploymentArtifact:
 
 @dataclass
 class DeploymentRecord:
-    """Comprehensive deployment record"""    deployment_id: str
+    """Comprehensive deployment record"""
+    deployment_id: str
     workflow_id: str
     environment: DeploymentEnvironment
     strategy: DeploymentStrategy
@@ -134,7 +142,8 @@ class DeploymentRecord:
 
 @dataclass
 class DeploymentAnalytics:
-    """Deployment analytics data"""    time_period: str
+    """Deployment analytics data"""
+    time_period: str
     total_deployments: int
     successful_deployments: int
     failed_deployments: int
@@ -147,12 +156,14 @@ class DeploymentAnalytics:
 
 
 class DeploymentRecorder(BaseComponent):
-    """    Enterprise-grade deployment recording and audit system.
+    """
+    Enterprise-grade deployment recording and audit system.
     
     Provides comprehensive deployment tracking, audit trails, analytics,
     and historical data management for deployment automation workflows
     in the IA Influencer Agent platform.
-    """    def __init__(self, config: Dict[str, Any]):
+    """
+    def __init__(self, config: Dict[str, Any]):
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -185,7 +196,8 @@ class DeploymentRecorder(BaseComponent):
         asyncio.create_task(self._initialize_storage())
 
     async def _initialize_storage(self) -> None:
-        """Initialize storage structure and load recent records"""        
+        """Initialize storage structure and load recent records"""
+        
         try:
             # Create storage directories
             (self.base_storage_path / "deployments").mkdir(exist_ok=True)
@@ -214,7 +226,8 @@ class DeploymentRecorder(BaseComponent):
         services: List[str],
         context: Dict[str, Any]
     ) -> str:
-        """        Start recording a new deployment.
+        """
+        Start recording a new deployment.
         
         Args:
             workflow_id: Workflow identifier
@@ -225,7 +238,8 @@ class DeploymentRecorder(BaseComponent):
             
         Returns:
             Deployment record ID
-        """        
+        """
+        
         deployment_id = f"deploy-{uuid.uuid4().hex[:12]}"
         
         # Create deployment record
@@ -277,7 +291,8 @@ class DeploymentRecorder(BaseComponent):
         status: DeploymentStatus,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Update deployment status"""        
+        """Update deployment status"""
+        
         if deployment_id not in self.active_deployments:
             raise ValueError(f"Deployment record not found: {deployment_id}")
         
@@ -323,7 +338,8 @@ class DeploymentRecorder(BaseComponent):
         error_message: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Record a deployment step"""        
+        """Record a deployment step"""
+        
         if deployment_id not in self.active_deployments:
             raise ValueError(f"Deployment record not found: {deployment_id}")
         
@@ -391,7 +407,8 @@ class DeploymentRecorder(BaseComponent):
         status: str,
         details: Dict[str, Any]
     ) -> None:
-        """Record a health check result"""        
+        """Record a health check result"""
+        
         if deployment_id not in self.active_deployments:
             raise ValueError(f"Deployment record not found: {deployment_id}")
         
@@ -425,7 +442,8 @@ class DeploymentRecorder(BaseComponent):
         deployment_id: str,
         metrics: Dict[str, Any]
     ) -> None:
-        """Record deployment performance metrics"""        
+        """Record deployment performance metrics"""
+        
         if deployment_id not in self.active_deployments:
             raise ValueError(f"Deployment record not found: {deployment_id}")
         
@@ -443,7 +461,8 @@ class DeploymentRecorder(BaseComponent):
         deployment_id: str,
         changes: List[Dict[str, Any]]
     ) -> None:
-        """Record what changed in this deployment"""        
+        """Record what changed in this deployment"""
+        
         if deployment_id not in self.active_deployments:
             raise ValueError(f"Deployment record not found: {deployment_id}")
         
@@ -464,7 +483,8 @@ class DeploymentRecorder(BaseComponent):
         final_status: DeploymentStatus,
         success_metrics: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Complete deployment recording and move to persistent storage.
+        """
+        Complete deployment recording and move to persistent storage.
         
         Args:
             deployment_id: Deployment identifier
@@ -473,7 +493,8 @@ class DeploymentRecorder(BaseComponent):
             
         Returns:
             Deployment summary
-        """        
+        """
+        
         if deployment_id not in self.active_deployments:
             raise ValueError(f"Deployment record not found: {deployment_id}")
         
@@ -523,7 +544,8 @@ class DeploymentRecorder(BaseComponent):
         return summary
 
     def _calculate_deployment_summary(self, deployment_record: DeploymentRecord) -> Dict[str, Any]:
-        """Calculate deployment summary statistics"""        
+        """Calculate deployment summary statistics"""
+        
         total_steps = len(deployment_record.steps)
         completed_steps = len([step for step in deployment_record.steps if step.status == "completed"])
         failed_steps = len([step for step in deployment_record.steps if step.status == "failed"])
@@ -555,7 +577,8 @@ class DeploymentRecorder(BaseComponent):
         }
 
     async def _store_deployment_record(self, deployment_record: DeploymentRecord) -> None:
-        """Store deployment record to persistent storage"""        
+        """Store deployment record to persistent storage"""
+        
         try:
             # Create storage path based on date
             date_path = deployment_record.created_at.strftime('%Y/%m/%d')
@@ -592,7 +615,8 @@ class DeploymentRecorder(BaseComponent):
             self.logger.error(f"Failed to store deployment record: {str(e)}", exc_info=True)
 
     def _serialize_datetimes(self, data: Any) -> Any:
-        """Recursively serialize datetime objects"""        
+        """Recursively serialize datetime objects"""
+        
         if isinstance(data, datetime):
             return data.isoformat()
         elif isinstance(data, dict):
@@ -603,7 +627,8 @@ class DeploymentRecorder(BaseComponent):
             return data
 
     async def _load_recent_records(self) -> None:
-        """Load recent deployment records into cache"""        
+        """Load recent deployment records into cache"""
+        
         try:
             # Load records from the last 7 days
             cutoff_date = datetime.utcnow() - timedelta(days=7)
@@ -629,7 +654,8 @@ class DeploymentRecorder(BaseComponent):
             self.logger.error(f"Failed to load recent records: {str(e)}")
 
     async def _periodic_storage_sync(self) -> None:
-        """Periodically sync active deployments to storage"""        
+        """Periodically sync active deployments to storage"""
+        
         while True:
             try:
                 await asyncio.sleep(300)  # Every 5 minutes
@@ -642,7 +668,8 @@ class DeploymentRecorder(BaseComponent):
                 self.logger.error(f"Error in periodic storage sync: {str(e)}")
 
     async def _store_deployment_checkpoint(self, deployment_record: DeploymentRecord) -> None:
-        """Store deployment checkpoint for recovery"""        
+        """Store deployment checkpoint for recovery"""
+        
         try:
             checkpoint_path = self.base_storage_path / "checkpoints"
             checkpoint_path.mkdir(exist_ok=True)
@@ -660,7 +687,8 @@ class DeploymentRecorder(BaseComponent):
             self.logger.error(f"Failed to store checkpoint: {str(e)}")
 
     async def _periodic_analytics_update(self) -> None:
-        """Periodically update analytics cache"""        
+        """Periodically update analytics cache"""
+        
         while True:
             try:
                 await asyncio.sleep(900)  # Every 15 minutes
@@ -673,7 +701,8 @@ class DeploymentRecorder(BaseComponent):
                 self.logger.error(f"Error in periodic analytics update: {str(e)}")
 
     async def _update_analytics_cache(self) -> None:
-        """Update analytics cache with latest data"""        
+        """Update analytics cache with latest data"""
+        
         try:
             # Generate analytics for different time periods
             time_periods = ['1h', '24h', '7d', '30d']
@@ -688,7 +717,8 @@ class DeploymentRecorder(BaseComponent):
             self.logger.error(f"Failed to update analytics cache: {str(e)}")
 
     async def _calculate_analytics(self, time_period: str) -> DeploymentAnalytics:
-        """Calculate deployment analytics for a time period"""        
+        """Calculate deployment analytics for a time period"""
+        
         # Parse time period
         if time_period == '1h':
             cutoff = datetime.utcnow() - timedelta(hours=1)
@@ -780,7 +810,8 @@ class DeploymentRecorder(BaseComponent):
         )
 
     def _categorize_failure_reason(self, error_message: str) -> str:
-        """Categorize failure reason from error message"""        
+        """Categorize failure reason from error message"""
+        
         error_lower = error_message.lower()
         
         if 'timeout' in error_lower:
@@ -799,7 +830,8 @@ class DeploymentRecorder(BaseComponent):
             return 'other'
 
     async def _update_real_time_analytics(self, deployment_record: DeploymentRecord) -> None:
-        """Update real-time analytics with new deployment"""        
+        """Update real-time analytics with new deployment"""
+        
         try:
             # Update analytics for current time periods
             for period in ['1h', '24h']:
@@ -836,7 +868,8 @@ class DeploymentRecorder(BaseComponent):
             self.logger.error(f"Failed to update real-time analytics: {str(e)}")
 
     async def _periodic_cleanup(self) -> None:
-        """Periodically clean up old records and files"""        
+        """Periodically clean up old records and files"""
+        
         while True:
             try:
                 await asyncio.sleep(86400)  # Every 24 hours
@@ -854,7 +887,8 @@ class DeploymentRecorder(BaseComponent):
                 self.logger.error(f"Error in periodic cleanup: {str(e)}")
 
     async def _cleanup_checkpoints(self) -> None:
-        """Clean up old checkpoint files"""        
+        """Clean up old checkpoint files"""
+        
         try:
             checkpoint_path = self.base_storage_path / "checkpoints"
             if not checkpoint_path.exists():
@@ -872,7 +906,8 @@ class DeploymentRecorder(BaseComponent):
             self.logger.error(f"Failed to cleanup checkpoints: {str(e)}")
 
     async def _archive_old_records(self) -> None:
-        """Archive old deployment records"""        
+        """Archive old deployment records"""
+        
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=self.retention_days)
             
@@ -885,7 +920,8 @@ class DeploymentRecorder(BaseComponent):
             self.logger.error(f"Failed to archive old records: {str(e)}")
 
     async def _cleanup_cache(self) -> None:
-        """Clean up cache to maintain size limits"""        
+        """Clean up cache to maintain size limits"""
+        
         try:
             if len(self.deployment_cache) > self.max_cache_size:
                 # Keep only the most recent records
@@ -903,7 +939,8 @@ class DeploymentRecorder(BaseComponent):
             self.logger.error(f"Failed to cleanup cache: {str(e)}")
 
     async def get_deployment_record(self, deployment_id: str) -> Optional[DeploymentRecord]:
-        """Get deployment record by ID"""        
+        """Get deployment record by ID"""
+        
         # Check active deployments first
         if deployment_id in self.active_deployments:
             return self.active_deployments[deployment_id]
@@ -924,7 +961,8 @@ class DeploymentRecorder(BaseComponent):
             return None
 
     async def get_deployment_analytics(self, time_period: str = '24h') -> Optional[DeploymentAnalytics]:
-        """Get deployment analytics for a time period"""        
+        """Get deployment analytics for a time period"""
+        
         # Check cache first
         if time_period in self.analytics_cache:
             cache_age = datetime.utcnow() - self.last_analytics_update
@@ -946,7 +984,8 @@ class DeploymentRecorder(BaseComponent):
         limit: int = 100,
         offset: int = 0
     ) -> List[DeploymentRecord]:
-        """Search deployment records with filters"""        
+        """Search deployment records with filters"""
+        
         try:
             return await self.storage.search_deployment_records(filters, limit, offset)
         except Exception as e:
@@ -959,7 +998,8 @@ class DeploymentRecorder(BaseComponent):
         time_range: Optional[tuple] = None,
         filters: Optional[Dict[str, Any]] = None
     ) -> str:
-        """        Export deployment data in specified format.
+        """
+        Export deployment data in specified format.
         
         Args:
             format_type: Export format (json, csv, excel)
@@ -968,7 +1008,8 @@ class DeploymentRecorder(BaseComponent):
             
         Returns:
             Path to exported file
-        """        
+        """
+        
         try:
             # Get records to export
             if time_range:
@@ -1005,7 +1046,8 @@ class DeploymentRecorder(BaseComponent):
             raise
 
     def _filter_records(self, records: List[DeploymentRecord], filters: Dict[str, Any]) -> List[DeploymentRecord]:
-        """Apply filters to deployment records"""        
+        """Apply filters to deployment records"""
+        
         filtered_records = []
         
         for record in records:
@@ -1032,7 +1074,8 @@ class DeploymentRecorder(BaseComponent):
         return filtered_records
 
     async def _export_json(self, records: List[DeploymentRecord], export_path: Path) -> None:
-        """Export records to JSON format"""        
+        """Export records to JSON format"""
+        
         # Convert records to dictionaries
         export_data = []
         for record in records:
@@ -1045,7 +1088,8 @@ class DeploymentRecorder(BaseComponent):
             json.dump(export_data, f, indent=2)
 
     async def _export_csv(self, records: List[DeploymentRecord], export_path: Path) -> None:
-        """Export records to CSV format"""        
+        """Export records to CSV format"""
+        
         import csv
         
         if not records:

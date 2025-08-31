@@ -27,7 +27,8 @@ Business Logic: Content Analysis → AI Enhancement → SEO Optimization → Pla
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
 from dataclasses import dataclass, field
@@ -70,7 +71,8 @@ from .exceptions import MetadataError, ProcessingError, ValidationError
 
 
 class MetadataType(str, Enum):
-    """Comprehensive types of metadata to enhance for all creator types"""    DESCRIPTIVE = "descriptive"
+    """Comprehensive types of metadata to enhance for all creator types"""
+    DESCRIPTIVE = "descriptive"
     TECHNICAL = "technical"
     RIGHTS = "rights"
     STRUCTURAL = "structural"
@@ -93,7 +95,8 @@ class MetadataType(str, Enum):
 
 
 class CreatorMetadataType(str, Enum):
-    """Creator-specific metadata types"""    # Musicians
+    """Creator-specific metadata types"""
+    # Musicians
     MUSICAL_ATTRIBUTES = "musical_attributes"
     GENRE_CLASSIFICATION = "genre_classification"
     MOOD_ANALYSIS = "mood_analysis"
@@ -130,7 +133,8 @@ class CreatorMetadataType(str, Enum):
 
 
 class EnhancementLevel(str, Enum):
-    """Advanced levels of metadata enhancement with AI sophistication"""    BASIC = "basic"                    # Essential metadata only
+    """Advanced levels of metadata enhancement with AI sophistication"""
+    BASIC = "basic"                    # Essential metadata only
     STANDARD = "standard"              # Standard SEO and social metadata
     COMPREHENSIVE = "comprehensive"    # Full AI-powered enhancement
     PROFESSIONAL = "professional"     # Industry-grade metadata
@@ -141,7 +145,8 @@ class EnhancementLevel(str, Enum):
 
 
 class PlatformOptimization(str, Enum):
-    """Platform-specific metadata optimization"""    YOUTUBE = "youtube"
+    """Platform-specific metadata optimization"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -157,7 +162,8 @@ class PlatformOptimization(str, Enum):
 
 @dataclass
 class MetadataField:
-    """Advanced metadata field definition with AI insights"""    name: str
+    """Advanced metadata field definition with AI insights"""
+    name: str
     value: Any
     confidence: float
     source: str
@@ -176,7 +182,8 @@ class MetadataField:
 
 @dataclass
 class SEOMetadata:
-    """Comprehensive SEO metadata with advanced optimization"""    title: str
+    """Comprehensive SEO metadata with advanced optimization"""
+    title: str
     description: str
     keywords: List[str]
     hashtags: List[str]
@@ -195,7 +202,8 @@ class SEOMetadata:
 
 @dataclass
 class SocialMetadata:
-    """Advanced social media metadata optimization"""    platform_specific_titles: Dict[str, str]
+    """Advanced social media metadata optimization"""
+    platform_specific_titles: Dict[str, str]
     platform_specific_descriptions: Dict[str, str]
     hashtag_strategies: Dict[str, List[str]]
     mention_recommendations: Dict[str, List[str]]
@@ -209,7 +217,8 @@ class SocialMetadata:
 
 @dataclass
 class CreatorMetadata:
-    """Creator-specific metadata with specialized insights"""    creator_type: str
+    """Creator-specific metadata with specialized insights"""
+    creator_type: str
     specialty_tags: List[str]
     skill_level_indicators: Dict[str, float]
     style_classification: Dict[str, float]
@@ -223,7 +232,8 @@ class CreatorMetadata:
 
 @dataclass
 class MetadataRequest:
-    """Enterprise-grade metadata enhancement request with comprehensive configuration"""    content_id: str
+    """Enterprise-grade metadata enhancement request with comprehensive configuration"""
+    content_id: str
     creator_id: str
     creator_type: str
     enhancement_types: List[MetadataType]
@@ -252,7 +262,8 @@ class MetadataRequest:
 
 @dataclass
 class MetadataValidation:
-    """Comprehensive metadata validation results"""    field_validations: Dict[str, bool]
+    """Comprehensive metadata validation results"""
+    field_validations: Dict[str, bool]
     platform_compliance: Dict[str, bool]
     seo_compliance: Dict[str, bool]
     accessibility_compliance: Dict[str, bool]
@@ -267,7 +278,8 @@ class MetadataValidation:
 
 @dataclass
 class MetadataResult:
-    """Comprehensive result of metadata enhancement process with advanced analytics"""    enhancement_id: str
+    """Comprehensive result of metadata enhancement process with advanced analytics"""
+    enhancement_id: str
     creator_id: str
     creator_type: str
     content_id: str
@@ -298,7 +310,8 @@ class MetadataResult:
 
 
 class MetadataEnhancer:
-    """    Ultra-Advanced Enterprise Metadata Enhancement Engine
+    """
+    Ultra-Advanced Enterprise Metadata Enhancement Engine
     
     Revolutionary metadata intelligence system providing industrial-strength enhancement
     capabilities with AI-powered generation, SEO optimization, and content discoverability
@@ -321,7 +334,8 @@ class MetadataEnhancer:
     - Photographers: Scene recognition, color analysis, style classification, composition analysis
     - Influencers: Trend alignment, hashtag optimization, audience matching, engagement prediction
     - Comedians: Humor analysis, timing metadata, audience targeting, viral potential assessment
-    """    
+    """
+    
     def __init__(self):
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
@@ -351,7 +365,8 @@ class MetadataEnhancer:
 
 
 class MetadataEnhancer:
-    """    Advanced metadata enhancement engine with AI-powered generation
+    """
+    Advanced metadata enhancement engine with AI-powered generation
     
     Features:
     - Intelligent metadata extraction and generation
@@ -360,7 +375,8 @@ class MetadataEnhancer:
     - Accessibility metadata generation
     - Schema.org structured data
     - Rights and licensing metadata
-    """    
+    """
+    
     def __init__(self):
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
@@ -374,7 +390,8 @@ class MetadataEnhancer:
         request: MetadataRequest,
         session: AsyncSession = None
     ) -> MetadataResult:
-        """        Enhance content metadata according to request specifications
+        """
+        Enhance content metadata according to request specifications
         
         Args:
             request: Metadata enhancement configuration
@@ -382,7 +399,8 @@ class MetadataEnhancer:
             
         Returns:
             MetadataResult: Enhanced metadata and optimization results
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         enhancement_id = f"meta_{request.content_id}_{int(start_time.timestamp())}"
         
         try:
@@ -499,7 +517,8 @@ class MetadataEnhancer:
         schema_types: List[str],
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """        Generate Schema.org structured data for content
+        """
+        Generate Schema.org structured data for content
         
         Args:
             content_id: Content identifier
@@ -508,7 +527,8 @@ class MetadataEnhancer:
             
         Returns:
             Dict containing structured data markup
-        """        content_data = await self._load_content_data(content_id, session)
+        """
+        content_data = await self._load_content_data(content_id, session)
         metadata = await self._load_existing_metadata(content_id, session)
         
         structured_data = {}
@@ -548,7 +568,8 @@ class MetadataEnhancer:
         metadata: Dict[str, Any],
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """        Optimize metadata for specific platform requirements
+        """
+        Optimize metadata for specific platform requirements
         
         Args:
             content_id: Content identifier
@@ -558,7 +579,8 @@ class MetadataEnhancer:
             
         Returns:
             Dict containing platform-optimized metadata
-        """        platform_requirements = self.platform_requirements.get(platform, {})
+        """
+        platform_requirements = self.platform_requirements.get(platform, {})
         
         optimized_metadata = metadata.copy()
         
@@ -592,7 +614,8 @@ class MetadataEnhancer:
         language: str = "en",
         max_keywords: int = 20
     ) -> List[Dict[str, Any]]:
-        """        Extract relevant keywords from content using NLP
+        """
+        Extract relevant keywords from content using NLP
         
         Args:
             content_data: Content data to analyze
@@ -601,7 +624,8 @@ class MetadataEnhancer:
             
         Returns:
             List of keyword objects with relevance scores
-        """        text_content = await self._extract_text_content(content_data)
+        """
+        text_content = await self._extract_text_content(content_data)
         
         if not text_content:
             return []
@@ -669,7 +693,8 @@ class MetadataEnhancer:
         image_data: Dict[str, Any],
         context: Optional[str] = None
     ) -> str:
-        """        Generate descriptive alt text for images
+        """
+        Generate descriptive alt text for images
         
         Args:
             image_data: Image data and metadata
@@ -677,7 +702,8 @@ class MetadataEnhancer:
             
         Returns:
             Generated alt text description
-        """        # This would typically use computer vision models
+        """
+        # This would typically use computer vision models
         # For now, using a simplified approach
         
         alt_text_components = []
@@ -713,7 +739,8 @@ class MetadataEnhancer:
         content_data: Dict[str, Any],
         language: str
     ) -> Dict[str, Any]:
-        """Analyze content to extract metadata insights"""        analysis = {
+        """Analyze content to extract metadata insights"""
+        analysis = {
             'content_type': content_data.get('type', 'unknown'),
             'language': language,
             'keywords': [],
@@ -761,7 +788,8 @@ class MetadataEnhancer:
         analysis: Dict[str, Any],
         request: MetadataRequest
     ) -> Dict[str, MetadataField]:
-        """Generate base metadata fields"""        metadata = {}
+        """Generate base metadata fields"""
+        metadata = {}
         
         # Generate title if not exists
         if not content_data.get('title'):
@@ -821,7 +849,8 @@ class MetadataEnhancer:
         analysis: Dict[str, Any],
         request: MetadataRequest
     ) -> Dict[str, MetadataField]:
-        """Enhance metadata for specific type"""        enhanced = {}
+        """Enhance metadata for specific type"""
+        enhanced = {}
         
         if metadata_type == MetadataType.SEO:
             enhanced.update(await self._enhance_seo_metadata(base_metadata, analysis, request))
@@ -837,7 +866,8 @@ class MetadataEnhancer:
         return enhanced
     
     def _load_nlp_model(self):
-        """Load NLP model for text processing"""        try:
+        """Load NLP model for text processing"""
+        try:
             import spacy
             return spacy.load("en_core_web_sm")
         except (ImportError, OSError):
@@ -845,7 +875,8 @@ class MetadataEnhancer:
             return None
     
     def _load_metadata_schemas(self) -> Dict[str, Any]:
-        """Load metadata schema definitions"""        return {
+        """Load metadata schema definitions"""
+        return {
             'dublin_core': {
                 'title': str,
                 'creator': str,
@@ -879,7 +910,8 @@ class MetadataEnhancer:
         }
     
     def _load_platform_requirements(self) -> Dict[str, Dict[str, Any]]:
-        """Load platform-specific metadata requirements"""        return {
+        """Load platform-specific metadata requirements"""
+        return {
             'youtube': {
                 'title_max_length': 100,
                 'description_max_length': 5000,
@@ -909,7 +941,8 @@ class MetadataEnhancer:
         }
     
     def _load_seo_templates(self) -> Dict[str, Any]:
-        """Load SEO metadata templates"""        return {
+        """Load SEO metadata templates"""
+        return {
             'title_templates': [
                 "{main_keyword} - {brand_name}",
                 "{title} | {category} | {brand_name}",
@@ -957,7 +990,8 @@ class MetadataEnhancer:
         content_id: str,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Load content data from storage"""        # Implementation would load from database/storage
+        """Load content data from storage"""
+        # Implementation would load from database/storage
         return {
             'id': content_id,
             'type': 'video',
@@ -976,7 +1010,8 @@ class MetadataEnhancer:
         content_id: str,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Load existing metadata from storage"""        # Implementation would load from database
+        """Load existing metadata from storage"""
+        # Implementation would load from database
         return {}
     
     async def _store_enhanced_metadata(
@@ -986,5 +1021,6 @@ class MetadataEnhancer:
         seo_metadata: Dict[str, Any],
         session: AsyncSession
     ) -> None:
-        """Store enhanced metadata in database"""        # Implementation would store in database
+        """Store enhanced metadata in database"""
+        # Implementation would store in database
         pass

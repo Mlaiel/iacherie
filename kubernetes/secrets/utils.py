@@ -25,7 +25,8 @@ PROHIBITED ACTIONS:
 ❌ Reverse engineering, decompilation, or concept extraction
 
 Any violation will result in immediate legal action under International Copyright Law.
-"""import os
+"""
+import os
 import re
 import hmac
 import hashlib
@@ -55,13 +56,16 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityUtils:
-    """    Comprehensive security utilities for secrets management.
+    """
+    Comprehensive security utilities for secrets management.
     
     Provides encryption, decryption, key management, IP validation,
     and other security-related functionality.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize security utilities."""        self.backend = default_backend()
+        """Initialize security utilities."""
+        self.backend = default_backend()
         self._encryption_cache: Dict[str, Any] = {}
         self._rate_limit_cache: Dict[str, List[float]] = {}
         
@@ -70,7 +74,8 @@ class SecurityUtils:
         data: Dict[str, Any],
         key: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Encrypt secret data using Fernet symmetric encryption.
+        """
+        Encrypt secret data using Fernet symmetric encryption.
         
         Args:
             data: Secret data to encrypt
@@ -78,7 +83,8 @@ class SecurityUtils:
             
         Returns:
             dict: Encrypted data with metadata
-        """        try:
+        """
+        try:
             # Generate or use provided key
             if not key:
                 key = Fernet.generate_key()
@@ -107,14 +113,16 @@ class SecurityUtils:
         self,
         encrypted_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Decrypt secret data using Fernet symmetric encryption.
+        """
+        Decrypt secret data using Fernet symmetric encryption.
         
         Args:
             encrypted_data: Encrypted data with metadata
             
         Returns:
             dict: Decrypted secret data
-        """        try:
+        """
+        try:
             # Extract encryption components
             data_bytes = base64.b64decode(encrypted_data['encrypted_data'].encode())
             key = base64.b64decode(encrypted_data['encryption_key'].encode())
@@ -138,7 +146,8 @@ class SecurityUtils:
         key: Union[str, bytes],
         algorithm: str = "aes_256_gcm"
     ) -> bytes:
-        """        Encrypt data using specified algorithm.
+        """
+        Encrypt data using specified algorithm.
         
         Args:
             data: Data to encrypt
@@ -147,7 +156,8 @@ class SecurityUtils:
             
         Returns:
             bytes: Encrypted data
-        """        try:
+        """
+        try:
             if isinstance(key, str):
                 key = key.encode()
             
@@ -170,7 +180,8 @@ class SecurityUtils:
         key: Union[str, bytes],
         algorithm: str = "aes_256_gcm"
     ) -> bytes:
-        """        Decrypt data using specified algorithm.
+        """
+        Decrypt data using specified algorithm.
         
         Args:
             encrypted_data: Encrypted data
@@ -179,7 +190,8 @@ class SecurityUtils:
             
         Returns:
             bytes: Decrypted data
-        """        try:
+        """
+        try:
             if isinstance(key, str):
                 key = key.encode()
             
@@ -197,7 +209,8 @@ class SecurityUtils:
             raise
     
     def _encrypt_aes_gcm(self, data: bytes, key: bytes) -> bytes:
-        """Encrypt data using AES-256-GCM."""        # Generate random IV
+        """Encrypt data using AES-256-GCM."""
+        # Generate random IV
         iv = os.urandom(12)
         
         # Create cipher
@@ -214,7 +227,8 @@ class SecurityUtils:
         return iv + encryptor.tag + ciphertext
     
     def _decrypt_aes_gcm(self, encrypted_data: bytes, key: bytes) -> bytes:
-        """Decrypt data using AES-256-GCM."""        # Extract components
+        """Decrypt data using AES-256-GCM."""
+        # Extract components
         iv = encrypted_data[:12]
         tag = encrypted_data[12:28]
         ciphertext = encrypted_data[28:]
@@ -230,19 +244,22 @@ class SecurityUtils:
         return decryptor.update(ciphertext) + decryptor.finalize()
     
     def _encrypt_fernet(self, data: bytes, key: bytes) -> bytes:
-        """Encrypt data using Fernet."""        # Derive Fernet key
+        """Encrypt data using Fernet."""
+        # Derive Fernet key
         fernet_key = base64.urlsafe_b64encode(key[:32])
         cipher = Fernet(fernet_key)
         return cipher.encrypt(data)
     
     def _decrypt_fernet(self, encrypted_data: bytes, key: bytes) -> bytes:
-        """Decrypt data using Fernet."""        # Derive Fernet key
+        """Decrypt data using Fernet."""
+        # Derive Fernet key
         fernet_key = base64.urlsafe_b64encode(key[:32])
         cipher = Fernet(fernet_key)
         return cipher.decrypt(encrypted_data)
     
     def _encrypt_chacha20(self, data: bytes, key: bytes) -> bytes:
-        """Encrypt data using ChaCha20-Poly1305."""        # Generate random nonce
+        """Encrypt data using ChaCha20-Poly1305."""
+        # Generate random nonce
         nonce = os.urandom(12)
         
         # Create cipher
@@ -258,7 +275,8 @@ class SecurityUtils:
         return nonce + encryptor.tag + ciphertext
     
     def _decrypt_chacha20(self, encrypted_data: bytes, key: bytes) -> bytes:
-        """Decrypt data using ChaCha20-Poly1305."""        # Extract components
+        """Decrypt data using ChaCha20-Poly1305."""
+        # Extract components
         nonce = encrypted_data[:12]
         tag = encrypted_data[12:28]
         ciphertext = encrypted_data[28:]
@@ -274,14 +292,16 @@ class SecurityUtils:
         return decryptor.update(ciphertext) + decryptor.finalize()
     
     def generate_encryption_key(self, size: int = 256) -> str:
-        """        Generate a secure encryption key.
+        """
+        Generate a secure encryption key.
         
         Args:
             size: Key size in bits
             
         Returns:
             str: Base64-encoded encryption key
-        """        key_bytes = os.urandom(size // 8)
+        """
+        key_bytes = os.urandom(size // 8)
         return base64.b64encode(key_bytes).decode()
     
     def derive_key_from_password(
@@ -290,7 +310,8 @@ class SecurityUtils:
         salt: Optional[bytes] = None,
         iterations: int = 100000
     ) -> Tuple[bytes, bytes]:
-        """        Derive encryption key from password using PBKDF2.
+        """
+        Derive encryption key from password using PBKDF2.
         
         Args:
             password: Password to derive key from
@@ -299,7 +320,8 @@ class SecurityUtils:
             
         Returns:
             tuple: (derived_key, salt)
-        """        if salt is None:
+        """
+        if salt is None:
             salt = os.urandom(16)
         
         kdf = PBKDF2HMAC(
@@ -320,7 +342,8 @@ class SecurityUtils:
         algorithm: str = "HS256",
         expires_in: Optional[int] = 3600
     ) -> str:
-        """        Generate JWT token.
+        """
+        Generate JWT token.
         
         Args:
             payload: Token payload
@@ -330,7 +353,8 @@ class SecurityUtils:
             
         Returns:
             str: JWT token
-        """        try:
+        """
+        try:
             # Add expiration if specified
             if expires_in:
                 payload['exp'] = datetime.utcnow() + timedelta(seconds=expires_in)
@@ -350,7 +374,8 @@ class SecurityUtils:
         secret_key: str,
         algorithm: str = "HS256"
     ) -> Optional[Dict[str, Any]]:
-        """        Verify and decode JWT token.
+        """
+        Verify and decode JWT token.
         
         Args:
             token: JWT token to verify
@@ -359,7 +384,8 @@ class SecurityUtils:
             
         Returns:
             dict: Decoded payload or None if invalid
-        """        try:
+        """
+        try:
             return jwt.decode(token, secret_key, algorithms=[algorithm])
         except jwt.ExpiredSignatureError:
             logger.warning("JWT token has expired")
@@ -374,7 +400,8 @@ class SecurityUtils:
         whitelist: List[str] = None,
         blacklist: List[str] = None
     ) -> bool:
-        """        Validate IP address against whitelist/blacklist.
+        """
+        Validate IP address against whitelist/blacklist.
         
         Args:
             ip_address: IP address to validate
@@ -383,7 +410,8 @@ class SecurityUtils:
             
         Returns:
             bool: True if IP is valid
-        """        try:
+        """
+        try:
             ip = ipaddress.ip_address(ip_address)
             
             # Check blacklist first
@@ -406,11 +434,13 @@ class SecurityUtils:
             return False
     
     def get_client_ip(self) -> str:
-        """        Get client IP address.
+        """
+        Get client IP address.
         
         Returns:
             str: Client IP address
-        """        try:
+        """
+        try:
             # Try to get real IP from request headers (when behind proxy)
             headers_to_check = [
                 'HTTP_X_FORWARDED_FOR',
@@ -447,7 +477,8 @@ class SecurityUtils:
         max_requests: int = 100,
         window_seconds: int = 3600
     ) -> bool:
-        """        Check rate limiting for given identifier.
+        """
+        Check rate limiting for given identifier.
         
         Args:
             identifier: Rate limit identifier (IP, user ID, etc.)
@@ -456,7 +487,8 @@ class SecurityUtils:
             
         Returns:
             bool: True if request is allowed
-        """        try:
+        """
+        try:
             current_time = time.time()
             window_start = current_time - window_seconds
             
@@ -488,7 +520,8 @@ class SecurityUtils:
         algorithm: str = "sha256",
         salt: Optional[bytes] = None
     ) -> str:
-        """        Generate secure hash of data.
+        """
+        Generate secure hash of data.
         
         Args:
             data: Data to hash
@@ -497,7 +530,8 @@ class SecurityUtils:
             
         Returns:
             str: Hexadecimal hash string
-        """        try:
+        """
+        try:
             if isinstance(data, str):
                 data = data.encode()
             
@@ -524,7 +558,8 @@ class SecurityUtils:
         secret_key: str,
         algorithm: str = "sha256"
     ) -> bool:
-        """        Verify HMAC signature.
+        """
+        Verify HMAC signature.
         
         Args:
             data: Original data
@@ -534,7 +569,8 @@ class SecurityUtils:
             
         Returns:
             bool: True if signature is valid
-        """        try:
+        """
+        try:
             if isinstance(data, str):
                 data = data.encode()
             
@@ -557,7 +593,8 @@ class SecurityUtils:
         cert_path: str,
         verify_chain: bool = True
     ) -> bool:
-        """        Validate SSL/TLS certificate.
+        """
+        Validate SSL/TLS certificate.
         
         Args:
             cert_path: Path to certificate file
@@ -565,7 +602,8 @@ class SecurityUtils:
             
         Returns:
             bool: True if certificate is valid
-        """        try:
+        """
+        try:
             # Load certificate
             with open(cert_path, 'rb') as f:
                 cert_data = f.read()
@@ -593,7 +631,8 @@ class SecurityUtils:
         webhook_url: str = None,
         timeout: int = 10
     ) -> bool:
-        """        Send audit data to webhook endpoint.
+        """
+        Send audit data to webhook endpoint.
         
         Args:
             audit_data: Audit data to send
@@ -602,7 +641,8 @@ class SecurityUtils:
             
         Returns:
             bool: True if successful
-        """        try:
+        """
+        try:
             if not webhook_url:
                 return False
             
@@ -631,10 +671,13 @@ class SecurityUtils:
 
 
 class ValidationUtils:
-    """    Validation utilities for secrets and configuration.
-    """    
+    """
+    Validation utilities for secrets and configuration.
+    """
+    
     def __init__(self):
-        """Initialize validation utilities."""        # Common validation patterns
+        """Initialize validation utilities."""
+        # Common validation patterns
         self.patterns = {
             'secret_path': re.compile(r'^[a-zA-Z0-9/_-]+$'),
             'policy_name': re.compile(r'^[a-zA-Z0-9_-]+$'),
@@ -645,14 +688,16 @@ class ValidationUtils:
         }
     
     def validate_secret_path(self, path: str) -> bool:
-        """        Validate secret path format.
+        """
+        Validate secret path format.
         
         Args:
             path: Secret path to validate
             
         Returns:
             bool: True if valid
-        """        try:
+        """
+        try:
             if not path or len(path) > 512:
                 return False
             
@@ -672,14 +717,16 @@ class ValidationUtils:
             return False
     
     def validate_policy_name(self, name: str) -> bool:
-        """        Validate policy name format.
+        """
+        Validate policy name format.
         
         Args:
             name: Policy name to validate
             
         Returns:
             bool: True if valid
-        """        try:
+        """
+        try:
             if not name or len(name) > 128:
                 return False
             
@@ -689,14 +736,16 @@ class ValidationUtils:
             return False
     
     def validate_secret_data(self, data: Dict[str, Any]) -> bool:
-        """        Validate secret data structure and content.
+        """
+        Validate secret data structure and content.
         
         Args:
             data: Secret data to validate
             
         Returns:
             bool: True if valid
-        """        try:
+        """
+        try:
             if not isinstance(data, dict):
                 return False
             
@@ -725,14 +774,16 @@ class ValidationUtils:
             return False
     
     def validate_api_key(self, api_key: str) -> bool:
-        """        Validate API key format.
+        """
+        Validate API key format.
         
         Args:
             api_key: API key to validate
             
         Returns:
             bool: True if valid
-        """        try:
+        """
+        try:
             if not api_key or len(api_key) < 16 or len(api_key) > 256:
                 return False
             
@@ -742,14 +793,16 @@ class ValidationUtils:
             return False
     
     def validate_jwt_token(self, token: str) -> bool:
-        """        Validate JWT token format.
+        """
+        Validate JWT token format.
         
         Args:
             token: JWT token to validate
             
         Returns:
             bool: True if valid format
-        """        try:
+        """
+        try:
             if not token:
                 return False
             
@@ -759,14 +812,16 @@ class ValidationUtils:
             return False
     
     def validate_url(self, url: str) -> bool:
-        """        Validate URL format.
+        """
+        Validate URL format.
         
         Args:
             url: URL to validate
             
         Returns:
             bool: True if valid
-        """        try:
+        """
+        try:
             result = urlparse(url)
             return all([result.scheme, result.netloc])
             
@@ -774,28 +829,32 @@ class ValidationUtils:
             return False
     
     def validate_json(self, json_string: str) -> bool:
-        """        Validate JSON string.
+        """
+        Validate JSON string.
         
         Args:
             json_string: JSON string to validate
             
         Returns:
             bool: True if valid JSON
-        """        try:
+        """
+        try:
             json.loads(json_string)
             return True
         except (json.JSONDecodeError, TypeError):
             return False
     
     def sanitize_input(self, input_string: str) -> str:
-        """        Sanitize input string for security.
+        """
+        Sanitize input string for security.
         
         Args:
             input_string: Input to sanitize
             
         Returns:
             str: Sanitized input
-        """        try:
+        """
+        try:
             if not isinstance(input_string, str):
                 return ""
             
@@ -819,10 +878,13 @@ class ValidationUtils:
 
 
 class NotificationUtils:
-    """    Notification utilities for secrets management events.
-    """    
+    """
+    Notification utilities for secrets management events.
+    """
+    
     def __init__(self):
-        """Initialize notification utilities."""        self.session = requests.Session()
+        """Initialize notification utilities."""
+        self.session = requests.Session()
         self.session.timeout = 10
     
     def send_webhook(
@@ -831,7 +893,8 @@ class NotificationUtils:
         data: Dict[str, Any],
         headers: Dict[str, str] = None
     ) -> bool:
-        """        Send webhook notification.
+        """
+        Send webhook notification.
         
         Args:
             webhook_url: Webhook URL
@@ -840,7 +903,8 @@ class NotificationUtils:
             
         Returns:
             bool: True if successful
-        """        try:
+        """
+        try:
             default_headers = {
                 'Content-Type': 'application/json',
                 'User-Agent': 'IA-Influencer-Secrets/1.0'
@@ -864,7 +928,8 @@ class NotificationUtils:
             return False
     
     def send_rotation_notification(self, data: Dict[str, Any]) -> None:
-        """Send secret rotation notification."""        try:
+        """Send secret rotation notification."""
+        try:
             notification = {
                 'event': 'secret_rotation',
                 'data': data,
@@ -879,7 +944,8 @@ class NotificationUtils:
             logger.error(f"Failed to send rotation notification: {e}")
     
     def send_rollback_notification(self, data: Dict[str, Any]) -> None:
-        """Send secret rollback notification."""        try:
+        """Send secret rollback notification."""
+        try:
             notification = {
                 'event': 'secret_rollback',
                 'data': data,
@@ -893,7 +959,8 @@ class NotificationUtils:
             logger.error(f"Failed to send rollback notification: {e}")
     
     def send_emergency_notification(self, data: Dict[str, Any]) -> None:
-        """Send emergency rotation notification."""        try:
+        """Send emergency rotation notification."""
+        try:
             notification = {
                 'event': 'emergency_rotation',
                 'data': data,
@@ -908,7 +975,8 @@ class NotificationUtils:
             logger.error(f"Failed to send emergency notification: {e}")
     
     def send_certificate_notification(self, data: Dict[str, Any]) -> None:
-        """Send certificate-related notification."""        try:
+        """Send certificate-related notification."""
+        try:
             notification = {
                 'event': 'certificate_event',
                 'data': data,
@@ -923,14 +991,18 @@ class NotificationUtils:
 
 
 class KubernetesUtils:
-    """    Kubernetes utilities for secrets management.
-    """    
+    """
+    Kubernetes utilities for secrets management.
+    """
+    
     def __init__(self):
-        """Initialize Kubernetes utilities."""        self.api_client = None
+        """Initialize Kubernetes utilities."""
+        self.api_client = None
         self._initialize_client()
     
     def _initialize_client(self) -> None:
-        """Initialize Kubernetes API client."""        try:
+        """Initialize Kubernetes API client."""
+        try:
             from kubernetes import client, config
             
             if os.path.exists('/var/run/secrets/kubernetes.io/serviceaccount'):
@@ -947,7 +1019,8 @@ class KubernetesUtils:
             logger.warning(f"Kubernetes client initialization failed: {e}")
     
     def get_pod_info(self, namespace: str, pod_name: str) -> Optional[Dict[str, Any]]:
-        """Get pod information."""        try:
+        """Get pod information."""
+        try:
             from kubernetes import client
             
             v1 = client.CoreV1Api()
@@ -968,7 +1041,8 @@ class KubernetesUtils:
             return None
     
     def get_service_account_token(self, namespace: str, service_account: str) -> Optional[str]:
-        """Get service account token."""        try:
+        """Get service account token."""
+        try:
             token_path = f"/var/run/secrets/kubernetes.io/serviceaccount/token"
             if os.path.exists(token_path):
                 with open(token_path, 'r') as f:
@@ -986,7 +1060,8 @@ class KubernetesUtils:
         data: Dict[str, Any],
         secret_type: str = "Opaque"
     ) -> bool:
-        """Create Kubernetes secret."""        try:
+        """Create Kubernetes secret."""
+        try:
             from kubernetes import client
             
             v1 = client.CoreV1Api()
@@ -1019,7 +1094,8 @@ class KubernetesUtils:
         namespace: str,
         data: Dict[str, Any]
     ) -> bool:
-        """Update existing Kubernetes secret."""        try:
+        """Update existing Kubernetes secret."""
+        try:
             from kubernetes import client
             
             v1 = client.CoreV1Api()
@@ -1046,7 +1122,8 @@ class KubernetesUtils:
             return False
     
     def delete_secret(self, name: str, namespace: str) -> bool:
-        """Delete Kubernetes secret."""        try:
+        """Delete Kubernetes secret."""
+        try:
             from kubernetes import client
             
             v1 = client.CoreV1Api()
@@ -1061,13 +1138,16 @@ class KubernetesUtils:
 
 
 class InfluencerPlatformUtils:
-    """    Specialized utilities for IA Influencer Agent platform integrations.
+    """
+    Specialized utilities for IA Influencer Agent platform integrations.
     
     Handles platform-specific secret management, API credential validation,
     content protection utilities, and compliance helpers.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize platform utilities."""        self.security = SecurityUtils()
+        """Initialize platform utilities."""
+        self.security = SecurityUtils()
         self.validation = ValidationUtils()
         
         # Platform-specific configurations
@@ -1217,7 +1297,8 @@ class InfluencerPlatformUtils:
         platform: str,
         credentials: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Validate platform API credentials.
+        """
+        Validate platform API credentials.
         
         Args:
             platform: Platform name (youtube, instagram, etc.)
@@ -1225,7 +1306,8 @@ class InfluencerPlatformUtils:
             
         Returns:
             dict: Validation results
-        """        try:
+        """
+        try:
             validation_result = {
                 'platform': platform,
                 'valid': False,
@@ -1301,7 +1383,8 @@ class InfluencerPlatformUtils:
         payload: Dict[str, Any],
         secret: str
     ) -> str:
-        """        Generate webhook signature for platform verification.
+        """
+        Generate webhook signature for platform verification.
         
         Args:
             platform: Platform name
@@ -1310,7 +1393,8 @@ class InfluencerPlatformUtils:
             
         Returns:
             str: Generated signature
-        """        try:
+        """
+        try:
             payload_string = json.dumps(payload, sort_keys=True, separators=(',', ':'))
             
             if platform == 'stripe':
@@ -1357,7 +1441,8 @@ class InfluencerPlatformUtils:
         signature: str,
         secret: str
     ) -> bool:
-        """        Verify platform webhook signature.
+        """
+        Verify platform webhook signature.
         
         Args:
             platform: Platform name
@@ -1367,7 +1452,8 @@ class InfluencerPlatformUtils:
             
         Returns:
             bool: True if signature is valid
-        """        try:
+        """
+        try:
             expected_signature = self.generate_platform_webhook_signature(
                 platform, payload, secret
             )
@@ -1389,7 +1475,8 @@ class InfluencerPlatformUtils:
         user_id: str,
         content_id: str
     ) -> str:
-        """        Generate content protection encryption key.
+        """
+        Generate content protection encryption key.
         
         Args:
             content_type: Type of content (audio, video, image, text)
@@ -1398,7 +1485,8 @@ class InfluencerPlatformUtils:
             
         Returns:
             str: Generated encryption key
-        """        try:
+        """
+        try:
             # Create unique key derivation input
             key_input = f"{content_type}:{user_id}:{content_id}:{datetime.utcnow().date()}"
             
@@ -1418,7 +1506,8 @@ class InfluencerPlatformUtils:
         user_id: str,
         content_id: str
     ) -> Dict[str, Any]:
-        """        Encrypt content fingerprint data.
+        """
+        Encrypt content fingerprint data.
         
         Args:
             fingerprint_data: Fingerprint data to encrypt
@@ -1427,7 +1516,8 @@ class InfluencerPlatformUtils:
             
         Returns:
             dict: Encrypted fingerprint data
-        """        try:
+        """
+        try:
             # Generate content-specific key
             encryption_key = self.generate_content_protection_key(
                 'fingerprint', user_id, content_id
@@ -1458,7 +1548,8 @@ class InfluencerPlatformUtils:
         provider: str,
         credentials: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Validate AI model provider credentials.
+        """
+        Validate AI model provider credentials.
         
         Args:
             provider: AI provider name (openai, anthropic, etc.)
@@ -1466,7 +1557,8 @@ class InfluencerPlatformUtils:
             
         Returns:
             dict: Validation results
-        """        try:
+        """
+        try:
             validation_result = {
                 'provider': provider,
                 'valid': False,
@@ -1561,7 +1653,8 @@ class InfluencerPlatformUtils:
         processor: str,
         credentials: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Validate payment processor credentials for PCI compliance.
+        """
+        Validate payment processor credentials for PCI compliance.
         
         Args:
             processor: Payment processor name
@@ -1569,7 +1662,8 @@ class InfluencerPlatformUtils:
             
         Returns:
             dict: Validation results
-        """        try:
+        """
+        try:
             validation_result = {
                 'processor': processor,
                 'valid': False,
@@ -1620,7 +1714,8 @@ class InfluencerPlatformUtils:
         scopes: List[str],
         expires_in: int = 3600
     ) -> str:
-        """        Generate access token for content creator.
+        """
+        Generate access token for content creator.
         
         Args:
             creator_id: Creator identifier
@@ -1630,7 +1725,8 @@ class InfluencerPlatformUtils:
             
         Returns:
             str: JWT access token
-        """        try:
+        """
+        try:
             payload = {
                 'sub': creator_id,
                 'aud': 'ia-influencer-agent',
@@ -1659,7 +1755,8 @@ class InfluencerPlatformUtils:
         action: str,
         resource: str = None
     ) -> bool:
-        """        Validate creator permissions for platform actions.
+        """
+        Validate creator permissions for platform actions.
         
         Args:
             creator_id: Creator identifier
@@ -1669,7 +1766,8 @@ class InfluencerPlatformUtils:
             
         Returns:
             bool: True if permission granted
-        """        try:
+        """
+        try:
             # Define permission matrix
             permission_matrix = {
                 'youtube': {
@@ -1757,7 +1855,8 @@ class InfluencerPlatformUtils:
         result: str,
         metadata: Dict[str, Any] = None
     ) -> None:
-        """        Audit platform access for compliance tracking.
+        """
+        Audit platform access for compliance tracking.
         
         Args:
             creator_id: Creator identifier
@@ -1765,7 +1864,8 @@ class InfluencerPlatformUtils:
             action: Action performed
             result: Action result (success, failure, denied)
             metadata: Optional metadata
-        """        try:
+        """
+        try:
             audit_data = {
                 'event_type': 'platform_access',
                 'creator_id': creator_id,
@@ -1790,7 +1890,8 @@ class InfluencerPlatformUtils:
             logger.error(f"Platform access audit failed: {e}")
     
     def _get_creator_subscription_plan(self, creator_id: str) -> str:
-        """Get creator's current subscription plan"""        try:
+        """Get creator's current subscription plan"""
+        try:
             # In production, this would query the database
             # For now, return a default plan
             return "premium"  # Options: free, premium, enterprise
@@ -1799,7 +1900,8 @@ class InfluencerPlatformUtils:
             return "free"
     
     def _check_plan_permissions(self, plan: str, platform: str, action: str) -> bool:
-        """Check if subscription plan allows the requested action"""        plan_permissions = {
+        """Check if subscription plan allows the requested action"""
+        plan_permissions = {
             "free": {
                 "youtube": ["read", "basic_upload"],
                 "spotify": ["read"],
@@ -1824,7 +1926,8 @@ class InfluencerPlatformUtils:
         return action in platform_actions
     
     def _check_platform_auth_status(self, creator_id: str, platform: str) -> bool:
-        """Check if creator is authenticated with the platform"""        try:
+        """Check if creator is authenticated with the platform"""
+        try:
             # Check if we have valid authentication tokens for the platform
             auth_key = f"creator_{creator_id}_{platform}_auth"
             auth_data = self.get_secret(auth_key)
@@ -1850,7 +1953,8 @@ class InfluencerPlatformUtils:
             return False
     
     def _check_rate_limits(self, creator_id: str, platform: str, action: str) -> bool:
-        """Check if creator has exceeded rate limits"""        try:
+        """Check if creator has exceeded rate limits"""
+        try:
             # Rate limits per platform per hour
             rate_limits = {
                 "youtube": {"upload": 10, "analytics": 100, "read": 1000},
@@ -1869,7 +1973,8 @@ class InfluencerPlatformUtils:
             return True  # Allow on error to prevent blocking
     
     def _get_user_platform_scopes(self, creator_id: str, platform: str) -> List[str]:
-        """Get OAuth scopes granted by user for platform"""        try:
+        """Get OAuth scopes granted by user for platform"""
+        try:
             scope_key = f"creator_{creator_id}_{platform}_scopes"
             scope_data = self.get_secret(scope_key)
             
@@ -1884,7 +1989,8 @@ class InfluencerPlatformUtils:
             return []
     
     def _check_content_policy_compliance(self, creator_id: str, platform: str) -> bool:
-        """Check if creator is compliant with content policies"""        try:
+        """Check if creator is compliant with content policies"""
+        try:
             # Check for recent policy violations
             violation_key = f"creator_{creator_id}_{platform}_violations"
             violations_data = self.get_secret(violation_key)
@@ -1911,7 +2017,8 @@ class InfluencerPlatformUtils:
         credentials: Dict[str, Any],
         validation_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate YouTube credentials."""        required_fields = ['client_id', 'client_secret', 'access_token', 'refresh_token']
+        """Validate YouTube credentials."""
+        required_fields = ['client_id', 'client_secret', 'access_token', 'refresh_token']
         
         for field in required_fields:
             if field not in credentials:
@@ -1929,7 +2036,8 @@ class InfluencerPlatformUtils:
         credentials: Dict[str, Any],
         validation_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate Instagram credentials."""        required_fields = ['app_id', 'app_secret', 'access_token']
+        """Validate Instagram credentials."""
+        required_fields = ['app_id', 'app_secret', 'access_token']
         
         for field in required_fields:
             if field not in credentials:
@@ -1945,7 +2053,8 @@ class InfluencerPlatformUtils:
         credentials: Dict[str, Any],
         validation_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate TikTok credentials."""        required_fields = ['client_key', 'client_secret', 'access_token']
+        """Validate TikTok credentials."""
+        required_fields = ['client_key', 'client_secret', 'access_token']
         
         for field in required_fields:
             if field not in credentials:
@@ -1958,7 +2067,8 @@ class InfluencerPlatformUtils:
         credentials: Dict[str, Any],
         validation_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate Spotify credentials."""        required_fields = ['client_id', 'client_secret', 'access_token', 'refresh_token']
+        """Validate Spotify credentials."""
+        required_fields = ['client_id', 'client_secret', 'access_token', 'refresh_token']
         
         for field in required_fields:
             if field not in credentials:
@@ -1971,7 +2081,8 @@ class InfluencerPlatformUtils:
         credentials: Dict[str, Any],
         validation_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate Twitter credentials."""        required_fields = ['api_key', 'api_secret_key', 'access_token', 'access_token_secret']
+        """Validate Twitter credentials."""
+        required_fields = ['api_key', 'api_secret_key', 'access_token', 'access_token_secret']
         
         for field in required_fields:
             if field not in credentials:
@@ -1984,7 +2095,8 @@ class InfluencerPlatformUtils:
         credentials: Dict[str, Any],
         validation_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate Stripe credentials."""        required_fields = ['secret_key', 'publishable_key']
+        """Validate Stripe credentials."""
+        required_fields = ['secret_key', 'publishable_key']
         
         for field in required_fields:
             if field not in credentials:
@@ -2006,7 +2118,8 @@ class InfluencerPlatformUtils:
         credentials: Dict[str, Any],
         validation_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate PayPal credentials."""        required_fields = ['client_id', 'client_secret']
+        """Validate PayPal credentials."""
+        required_fields = ['client_id', 'client_secret']
         
         for field in required_fields:
             if field not in credentials:
@@ -2028,7 +2141,8 @@ class InfluencerPlatformUtils:
         credentials: Dict[str, Any],
         validation_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate Wise credentials."""        required_fields = ['api_token', 'profile_id']
+        """Validate Wise credentials."""
+        required_fields = ['api_token', 'profile_id']
         
         for field in required_fields:
             if field not in credentials:
@@ -2045,7 +2159,8 @@ class InfluencerPlatformUtils:
         return validation_result
     
     def _validate_access_token(self, access_token: str, api_base_url: str) -> bool:
-        """Validate access token by making a test API call."""        try:
+        """Validate access token by making a test API call."""
+        try:
             headers = {'Authorization': f'Bearer {access_token}'}
             
             # Make a simple test request (this would need to be customized per platform)
@@ -2058,7 +2173,8 @@ class InfluencerPlatformUtils:
             return False
     
     def _test_openai_api_key(self, api_key: str) -> bool:
-        """Test OpenAI API key validity."""        try:
+        """Test OpenAI API key validity."""
+        try:
             headers = {
                 'Authorization': f'Bearer {api_key}',
                 'Content-Type': 'application/json'
@@ -2077,7 +2193,8 @@ class InfluencerPlatformUtils:
             return False
     
     def _test_anthropic_api_key(self, api_key: str) -> bool:
-        """Test Anthropic API key validity."""        try:
+        """Test Anthropic API key validity."""
+        try:
             headers = {
                 'x-api-key': api_key,
                 'Content-Type': 'application/json'
@@ -2103,7 +2220,8 @@ class InfluencerPlatformUtils:
             return False
     
     def _test_huggingface_token(self, api_token: str) -> bool:
-        """Test Hugging Face API token validity."""        try:
+        """Test Hugging Face API token validity."""
+        try:
             headers = {
                 'Authorization': f'Bearer {api_token}'
             }
@@ -2121,7 +2239,8 @@ class InfluencerPlatformUtils:
             return False
     
     def _test_google_ai_key(self, api_key: str) -> bool:
-        """Test Google AI API key validity."""        try:
+        """Test Google AI API key validity."""
+        try:
             # Test with models list endpoint
             response = requests.get(
                 f'https://generativelanguage.googleapis.com/v1/models?key={api_key}',
@@ -2138,7 +2257,8 @@ class InfluencerPlatformUtils:
         credentials: Dict[str, Any],
         config: Dict[str, Any]
     ) -> Dict[str, bool]:
-        """Perform PCI-DSS compliance checks."""        checks = {
+        """Perform PCI-DSS compliance checks."""
+        checks = {
             'encrypted_storage': True,  # Assuming credentials are encrypted in vault
             'access_control': True,     # Assuming proper access controls
             'audit_logging': True,      # Assuming audit logging is enabled
@@ -2167,7 +2287,8 @@ class InfluencerPlatformUtils:
     
     # AI provider testing methods
     def _test_openai_api_key(self, api_key: str) -> bool:
-        """Test OpenAI API key validity."""        try:
+        """Test OpenAI API key validity."""
+        try:
             headers = {
                 'Authorization': f'Bearer {api_key}',
                 'Content-Type': 'application/json'
@@ -2187,7 +2308,8 @@ class InfluencerPlatformUtils:
             return False
     
     def _test_anthropic_api_key(self, api_key: str) -> bool:
-        """Test Anthropic API key validity."""        try:
+        """Test Anthropic API key validity."""
+        try:
             headers = {
                 'x-api-key': api_key,
                 'Content-Type': 'application/json',
@@ -2215,7 +2337,8 @@ class InfluencerPlatformUtils:
             return False
     
     def _test_huggingface_token(self, token: str) -> bool:
-        """Test Hugging Face API token validity."""        try:
+        """Test Hugging Face API token validity."""
+        try:
             headers = {
                 'Authorization': f'Bearer {token}'
             }
@@ -2233,7 +2356,8 @@ class InfluencerPlatformUtils:
             return False
     
     def _test_google_ai_key(self, api_key: str) -> bool:
-        """Test Google AI API key validity."""        try:
+        """Test Google AI API key validity."""
+        try:
             response = requests.get(
                 f'https://generativelanguage.googleapis.com/v1/models?key={api_key}',
                 timeout=10
@@ -2246,7 +2370,8 @@ class InfluencerPlatformUtils:
             return False
     
     def _validate_access_token(self, token: str, api_base_url: str) -> bool:
-        """Validate access token by making a test API call."""        try:
+        """Validate access token by making a test API call."""
+        try:
             headers = {
                 'Authorization': f'Bearer {token}',
                 'User-Agent': 'IA-Influencer-Agent/1.0'
@@ -2270,7 +2395,8 @@ class InfluencerPlatformUtils:
         credentials: Dict[str, Any],
         config: Dict[str, Any]
     ) -> Dict[str, bool]:
-        """Perform PCI compliance checks on payment credentials."""        pci_checks = {
+        """Perform PCI compliance checks on payment credentials."""
+        pci_checks = {
             'encrypted_storage': True,  # Assume encrypted if in vault
             'access_control': True,     # Assume proper access control
             'audit_logging': True,      # Assume audit logging enabled
@@ -2296,10 +2422,13 @@ class InfluencerPlatformUtils:
 
 
 class ContentProtectionUtils:
-    """    Utilities for content protection and digital rights management.
-    """    
+    """
+    Utilities for content protection and digital rights management.
+    """
+    
     def __init__(self):
-        """Initialize content protection utilities."""        self.security = SecurityUtils()
+        """Initialize content protection utilities."""
+        self.security = SecurityUtils()
         
         # Content protection algorithms
         self.protection_algorithms = {
@@ -2333,7 +2462,8 @@ class ContentProtectionUtils:
         content_data: bytes,
         user_id: str
     ) -> Dict[str, Any]:
-        """        Generate content fingerprint for protection.
+        """
+        Generate content fingerprint for protection.
         
         Args:
             content_type: Type of content
@@ -2342,7 +2472,8 @@ class ContentProtectionUtils:
             
         Returns:
             dict: Content fingerprint data
-        """        try:
+        """
+        try:
             if content_type not in self.protection_algorithms:
                 raise ValueError(f"Unsupported content type: {content_type}")
             
@@ -2387,7 +2518,8 @@ class ContentProtectionUtils:
         content_data: bytes,
         fingerprint_data: Dict[str, Any]
     ) -> bool:
-        """        Verify content integrity using fingerprint.
+        """
+        Verify content integrity using fingerprint.
         
         Args:
             content_data: Content data to verify
@@ -2395,7 +2527,8 @@ class ContentProtectionUtils:
             
         Returns:
             bool: True if content is authentic
-        """        try:
+        """
+        try:
             # Generate new fingerprint
             new_fingerprint = self.generate_content_fingerprint(
                 fingerprint_data['content_type'],
@@ -2431,7 +2564,8 @@ class ContentProtectionUtils:
         current_content: bytes,
         content_type: str
     ) -> Dict[str, Any]:
-        """        Detect content tampering.
+        """
+        Detect content tampering.
         
         Args:
             original_content: Original content data
@@ -2440,7 +2574,8 @@ class ContentProtectionUtils:
             
         Returns:
             dict: Tampering detection results
-        """        try:
+        """
+        try:
             detection_result = {
                 'tampered': False,
                 'confidence': 0.0,
@@ -2487,28 +2622,32 @@ class ContentProtectionUtils:
     
     # Content-specific fingerprint generation methods
     def _generate_audio_fingerprint(self, audio_data: bytes) -> str:
-        """Generate audio fingerprint using Chromaprint-like algorithm."""        # Simplified audio fingerprinting
+        """Generate audio fingerprint using Chromaprint-like algorithm."""
+        # Simplified audio fingerprinting
         # In a real implementation, this would use actual audio processing libraries
         audio_hash = hashlib.sha256(audio_data).digest()
         # Simulate perceptual hash
         return base64.b64encode(audio_hash[:16]).decode()
     
     def _generate_video_fingerprint(self, video_data: bytes) -> str:
-        """Generate video fingerprint using OpenCV-like algorithm."""        # Simplified video fingerprinting
+        """Generate video fingerprint using OpenCV-like algorithm."""
+        # Simplified video fingerprinting
         # In a real implementation, this would extract key frames and use computer vision
         video_hash = hashlib.sha256(video_data).digest()
         # Simulate perceptual hash
         return base64.b64encode(video_hash[:16]).decode()
     
     def _generate_image_fingerprint(self, image_data: bytes) -> str:
-        """Generate image fingerprint using CLIP-like algorithm."""        # Simplified image fingerprinting
+        """Generate image fingerprint using CLIP-like algorithm."""
+        # Simplified image fingerprinting
         # In a real implementation, this would use image feature extraction
         image_hash = hashlib.sha256(image_data).digest()
         # Simulate perceptual hash
         return base64.b64encode(image_hash[:16]).decode()
     
     def _generate_text_fingerprint(self, text_data: bytes) -> str:
-        """Generate text fingerprint using BERT-like algorithm."""        # Simplified text fingerprinting
+        """Generate text fingerprint using BERT-like algorithm."""
+        # Simplified text fingerprinting
         # In a real implementation, this would use NLP embeddings
         text_hash = hashlib.sha256(text_data).digest()
         # Simulate semantic hash
@@ -2520,7 +2659,8 @@ class ContentProtectionUtils:
         fingerprint2: str,
         algorithm: str
     ) -> float:
-        """Calculate similarity between two fingerprints."""        try:
+        """Calculate similarity between two fingerprints."""
+        try:
             if fingerprint1 == fingerprint2:
                 return 1.0
             

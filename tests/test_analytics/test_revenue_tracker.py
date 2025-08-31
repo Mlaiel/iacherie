@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -15,7 +16,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import unittest
+"""
+import unittest
 from unittest.mock import Mock, AsyncMock, patch
 import asyncio
 from datetime import datetime, timedelta
@@ -24,8 +26,10 @@ import json
 
 
 class TestRevenueTracker(unittest.TestCase):
-    """Test suite for RevenueTracker class"""    def setUp(self):
-        """Set up test fixtures"""        # Import the actual revenue tracker
+    """Test suite for RevenueTracker class"""
+    def setUp(self):
+        """Set up test fixtures"""
+        # Import the actual revenue tracker
         import sys
         import os
         sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
@@ -45,7 +49,8 @@ class TestRevenueTracker(unittest.TestCase):
         }
 
     def test_revenue_tracking_data_structure(self):
-        """Test revenue tracking data structure"""        revenue_record = {
+        """Test revenue tracking data structure"""
+        revenue_record = {
             "content_id": "test_123",
             "platform": "youtube",
             "revenue": 100.0,
@@ -65,7 +70,8 @@ class TestRevenueTracker(unittest.TestCase):
         self.assertIsInstance(revenue_record["metadata"], dict)
 
     def test_revenue_metrics_calculation(self):
-        """Test revenue metrics calculation"""        start_date = datetime(2025, 1, 1)
+        """Test revenue metrics calculation"""
+        start_date = datetime(2025, 1, 1)
         end_date = datetime(2025, 1, 31)
         
         platform_revenues = {
@@ -96,7 +102,8 @@ class TestRevenueTracker(unittest.TestCase):
         self.assertEqual(metrics.currency, "EUR")
 
     def test_cross_platform_revenue_analysis(self):
-        """Test cross-platform revenue analysis"""        platform_data = {
+        """Test cross-platform revenue analysis"""
+        platform_data = {
             "youtube": [25.0, 30.0, 35.0, 40.0, 45.0],
             "instagram": [15.0, 18.0, 20.0, 22.0, 25.0],
             "spotify": [10.0, 12.0, 15.0, 18.0, 20.0]
@@ -126,7 +133,8 @@ class TestRevenueTracker(unittest.TestCase):
         self.assertAlmostEqual(revenue_distribution["spotify"], 21.43, places=2)  # ~21.43%
 
     def test_roi_calculation(self):
-        """Test ROI calculation logic"""        production_cost = 500.0
+        """Test ROI calculation logic"""
+        production_cost = 500.0
         marketing_cost = 200.0
         total_revenue = 1050.0
         
@@ -139,7 +147,8 @@ class TestRevenueTracker(unittest.TestCase):
         self.assertEqual(roi_percentage, 50.0)  # 50% ROI
 
     def test_revenue_forecasting_trend(self):
-        """Test revenue forecasting trend calculation"""        # Historical daily revenue data
+        """Test revenue forecasting trend calculation"""
+        # Historical daily revenue data
         daily_revenues = [100, 110, 105, 120, 115, 130, 125, 140, 135, 150]
         
         # Calculate linear trend
@@ -170,7 +179,8 @@ class TestRevenueTracker(unittest.TestCase):
             self.assertGreaterEqual(forecasts[i], forecasts[i-1])
 
     def test_revenue_correlation_analysis(self):
-        """Test correlation between different revenue factors"""        # Sample data: engagement rate vs revenue
+        """Test correlation between different revenue factors"""
+        # Sample data: engagement rate vs revenue
         data_points = [
             {"engagement": 0.05, "revenue": 100},
             {"engagement": 0.08, "revenue": 150},
@@ -200,7 +210,8 @@ class TestRevenueTracker(unittest.TestCase):
         self.assertLessEqual(correlation, 1.0)
 
     def test_time_series_revenue_aggregation(self):
-        """Test time-series revenue data aggregation"""        # Sample hourly revenue data
+        """Test time-series revenue data aggregation"""
+        # Sample hourly revenue data
         hourly_data = [
             {"hour": 0, "revenue": 10.0},
             {"hour": 1, "revenue": 8.0},
@@ -220,7 +231,8 @@ class TestRevenueTracker(unittest.TestCase):
         self.assertEqual(peak_hour["revenue"], 20.0)
 
     def test_revenue_growth_rate_calculation(self):
-        """Test revenue growth rate calculation"""        current_period_revenue = 1500.0
+        """Test revenue growth rate calculation"""
+        current_period_revenue = 1500.0
         previous_period_revenue = 1200.0
         
         growth_rate = ((current_period_revenue - previous_period_revenue) / previous_period_revenue) * 100
@@ -234,7 +246,8 @@ class TestRevenueTracker(unittest.TestCase):
         self.assertAlmostEqual(decline_rate, -16.67, places=2)  # ~16.67% decline
 
     def test_revenue_segmentation_analysis(self):
-        """Test revenue segmentation and analysis"""        content_revenues = {
+        """Test revenue segmentation and analysis"""
+        content_revenues = {
             "music_track_1": 250.0,
             "music_track_2": 180.0,
             "music_track_3": 320.0,
@@ -262,7 +275,8 @@ class TestRevenueTracker(unittest.TestCase):
         self.assertEqual(concentration_ratio, 32.0)  # Top 20% generates 32% of revenue
 
     def test_currency_conversion_handling(self):
-        """Test currency conversion in revenue tracking"""        # Sample revenue in different currencies
+        """Test currency conversion in revenue tracking"""
+        # Sample revenue in different currencies
         revenue_data = [
             {"revenue": 100.0, "currency": "EUR"},
             {"revenue": 120.0, "currency": "USD"},
@@ -289,7 +303,8 @@ class TestRevenueTracker(unittest.TestCase):
         self.assertEqual(total_eur, 299.75)  # 100 + 102 + 97.75
 
     def test_revenue_anomaly_detection(self):
-        """Test anomaly detection in revenue streams"""        # Normal daily revenue pattern
+        """Test anomaly detection in revenue streams"""
+        # Normal daily revenue pattern
         normal_revenues = [100, 110, 95, 105, 120, 90, 115, 108, 102, 98]
         
         # Calculate statistics

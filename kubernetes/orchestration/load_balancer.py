@@ -10,7 +10,8 @@ Features:
 - SSL termination and certificate management
 - Traffic routing and canary deployments
 - Rate limiting and DDoS protection
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Union, Set
@@ -27,8 +28,10 @@ from .base_manager import BaseDeploymentManager
 
 # Mock classes for standalone operation
 class MetricsCollector:
-    """Mock metrics collector."""    def __init__(self):
-        """Initialize load balancer metrics collector"""        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
+    """Mock metrics collector."""
+    def __init__(self):
+        """Initialize load balancer metrics collector"""
+        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
         self.lb_metrics = ['request_count', 'response_time', 'error_rate', 'target_health']
         self.monitoring_endpoints = ['cloudwatch', 'prometheus', 'datadog']
         self.alert_thresholds = {
@@ -40,8 +43,10 @@ class MetricsCollector:
         self.logger.info("LoadBalancer MetricsCollector initialized")
 
 class CertificateManager:
-    """Mock certificate manager."""    def __init__(self):
-        """Initialize SSL/TLS certificate management"""        self.logger = logging.getLogger(f"{__name__}.CertificateManager")
+    """Mock certificate manager."""
+    def __init__(self):
+        """Initialize SSL/TLS certificate management"""
+        self.logger = logging.getLogger(f"{__name__}.CertificateManager")
         self.certificate_authorities = ['letsencrypt', 'aws_acm', 'digicert', 'sectigo']
         self.validation_methods = ['DNS', 'HTTP', 'EMAIL']
         self.certificate_store = {}
@@ -51,18 +56,21 @@ class CertificateManager:
         self.logger.info("CertificateManager initialized with auto-renewal")
     
     async def request_certificate(self, domain_name: str, validation_method: str = "DNS"):
-        """Mock certificate request."""        return f"arn:aws:acm:us-west-2:123456789012:certificate/{domain_name}"
+        """Mock certificate request."""
+        return f"arn:aws:acm:us-west-2:123456789012:certificate/{domain_name}"
 
 
 class LoadBalancerType(Enum):
-    """Load balancer types."""    APPLICATION = "application"  # Layer 7 (HTTP/HTTPS)
+    """Load balancer types."""
+    APPLICATION = "application"  # Layer 7 (HTTP/HTTPS)
     NETWORK = "network"         # Layer 4 (TCP/UDP)
     CLASSIC = "classic"         # Legacy ELB
     GATEWAY = "gateway"         # API Gateway
 
 
 class HealthCheckProtocol(Enum):
-    """Health check protocols."""    HTTP = "http"
+    """Health check protocols."""
+    HTTP = "http"
     HTTPS = "https"
     TCP = "tcp"
     UDP = "udp"
@@ -70,7 +78,8 @@ class HealthCheckProtocol(Enum):
 
 
 class RoutingAlgorithm(Enum):
-    """Load balancing algorithms."""    ROUND_ROBIN = "round_robin"
+    """Load balancing algorithms."""
+    ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     IP_HASH = "ip_hash"
@@ -78,7 +87,8 @@ class RoutingAlgorithm(Enum):
 
 
 class TargetStatus(Enum):
-    """Target health status."""    HEALTHY = "healthy"
+    """Target health status."""
+    HEALTHY = "healthy"
     UNHEALTHY = "unhealthy"
     DRAINING = "draining"
     UNAVAILABLE = "unavailable"
@@ -86,7 +96,8 @@ class TargetStatus(Enum):
 
 @dataclass
 class HealthCheck:
-    """Health check configuration."""    protocol: HealthCheckProtocol
+    """Health check configuration."""
+    protocol: HealthCheckProtocol
     port: int
     path: str = "/"
     interval_seconds: int = 30
@@ -98,7 +109,8 @@ class HealthCheck:
 
 @dataclass
 class LoadBalancerTarget:
-    """Load balancer target configuration."""    id: str
+    """Load balancer target configuration."""
+    id: str
     host: str
     port: int
     weight: int = 100
@@ -108,7 +120,8 @@ class LoadBalancerTarget:
 
 @dataclass
 class LoadBalancerRule:
-    """Load balancer routing rule."""    priority: int
+    """Load balancer routing rule."""
+    priority: int
     conditions: List[Dict[str, Any]]
     actions: List[Dict[str, Any]]
     description: Optional[str] = None
@@ -116,7 +129,8 @@ class LoadBalancerRule:
 
 @dataclass
 class LoadBalancerConfig:
-    """Load balancer configuration."""    name: str
+    """Load balancer configuration."""
+    name: str
     lb_type: LoadBalancerType
     scheme: str  # "internet-facing" or "internal"
     subnets: List[str]
@@ -132,7 +146,8 @@ class LoadBalancerConfig:
 
 @dataclass
 class LoadBalancerStatus:
-    """Load balancer status information."""    name: str
+    """Load balancer status information."""
+    name: str
     state: str
     dns_name: str
     zone_id: str
@@ -145,12 +160,14 @@ class LoadBalancerStatus:
 
 
 class LoadBalancerManager(BaseDeploymentManager):
-    """    Enterprise load balancer management.
+    """
+    Enterprise load balancer management.
     
     Manages application and network load balancers with advanced
     routing, health checking, and traffic distribution capabilities
     for the IA Influencer Agent platform.
-    """    def __init__(
+    """
+    def __init__(
         self,
         certificate_manager: Optional[CertificateManager] = None,
         metrics_collector: Optional[MetricsCollector] = None
@@ -189,14 +206,16 @@ class LoadBalancerManager(BaseDeploymentManager):
         )
 
     async def create_load_balancer(self, config: LoadBalancerConfig) -> bool:
-        """        Create load balancer.
+        """
+        Create load balancer.
         
         Args:
             config: Load balancer configuration
             
         Returns:
             True if creation successful, False otherwise
-        """        try:
+        """
+        try:
             # Validate configuration
             if not self._validate_lb_config(config):
                 return False
@@ -257,7 +276,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return False
 
     def _validate_lb_config(self, config: LoadBalancerConfig) -> bool:
-        """Validate load balancer configuration."""        if not config.name or not config.lb_type:
+        """Validate load balancer configuration."""
+        if not config.name or not config.lb_type:
             self.logger.error("Load balancer name and type are required")
             return False
         
@@ -278,7 +298,8 @@ class LoadBalancerManager(BaseDeploymentManager):
         return True
 
     async def _create_lb_infrastructure(self, config: LoadBalancerConfig) -> bool:
-        """Create load balancer infrastructure."""        try:
+        """Create load balancer infrastructure."""
+        try:
             self.logger.info(f"Creating {config.lb_type.value} load balancer '{config.name}'")
             
             # Cloud provider specific implementation would go here
@@ -303,7 +324,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return False
 
     async def _configure_lb_security(self, config: LoadBalancerConfig) -> bool:
-        """Configure load balancer security groups."""        try:
+        """Configure load balancer security groups."""
+        try:
             self.logger.info(f"Configuring security for load balancer '{config.name}'")
             
             # Configure security groups based on listeners
@@ -322,7 +344,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return False
 
     async def _configure_ssl_termination(self, config: LoadBalancerConfig) -> bool:
-        """Configure SSL termination."""        try:
+        """Configure SSL termination."""
+        try:
             self.logger.info(f"Configuring SSL termination for load balancer '{config.name}'")
             
             # Get or create SSL certificate
@@ -351,7 +374,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return False
 
     async def _configure_health_checks(self, config: LoadBalancerConfig) -> bool:
-        """Configure health checks for targets."""        try:
+        """Configure health checks for targets."""
+        try:
             self.logger.info(f"Configuring health checks for load balancer '{config.name}'")
             
             health_check = config.health_check
@@ -384,7 +408,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return False
 
     async def _configure_routing_rules(self, config: LoadBalancerConfig) -> bool:
-        """Configure routing rules."""        try:
+        """Configure routing rules."""
+        try:
             self.logger.info(f"Configuring routing rules for load balancer '{config.name}'")
             
             # Sort rules by priority
@@ -411,7 +436,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return False
 
     async def _configure_default_target_group(self, config: LoadBalancerConfig) -> bool:
-        """Configure default target group."""        try:
+        """Configure default target group."""
+        try:
             target_group_config = {
                 "name": f"{config.name}-targets",
                 "protocol": "HTTP",
@@ -429,7 +455,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return False
 
     async def _register_targets(self, config: LoadBalancerConfig) -> bool:
-        """Register targets with load balancer."""        try:
+        """Register targets with load balancer."""
+        try:
             self.logger.info(f"Registering {len(config.targets)} targets for load balancer '{config.name}'")
             
             for target in config.targets:
@@ -449,7 +476,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return False
 
     async def _register_target(self, lb_name: str, target: LoadBalancerTarget) -> bool:
-        """Register individual target."""        try:
+        """Register individual target."""
+        try:
             self.logger.info(f"Registering target {target.host}:{target.port} for load balancer '{lb_name}'")
             
             # Target registration would happen here
@@ -462,7 +490,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return False
 
     async def add_target(self, lb_name: str, target: LoadBalancerTarget) -> bool:
-        """        Add target to existing load balancer.
+        """
+        Add target to existing load balancer.
         
         Args:
             lb_name: Load balancer name
@@ -470,7 +499,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             
         Returns:
             True if target added successfully, False otherwise
-        """        try:
+        """
+        try:
             if lb_name not in self.load_balancers:
                 self.logger.error(f"Load balancer '{lb_name}' not found")
                 return False
@@ -504,7 +534,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return False
 
     async def remove_target(self, lb_name: str, target_id: str) -> bool:
-        """        Remove target from load balancer.
+        """
+        Remove target from load balancer.
         
         Args:
             lb_name: Load balancer name
@@ -512,7 +543,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             
         Returns:
             True if target removed successfully, False otherwise
-        """        try:
+        """
+        try:
             if lb_name not in self.load_balancers:
                 self.logger.error(f"Load balancer '{lb_name}' not found")
                 return False
@@ -548,7 +580,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return False
 
     async def _drain_target(self, lb_name: str, target_id: str) -> bool:
-        """Drain connections from target."""        try:
+        """Drain connections from target."""
+        try:
             self.logger.info(f"Draining connections from target '{target_id}' in load balancer '{lb_name}'")
             
             # Mark target as draining
@@ -566,7 +599,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return False
 
     async def _deregister_target(self, lb_name: str, target: LoadBalancerTarget) -> bool:
-        """Deregister target from load balancer."""        try:
+        """Deregister target from load balancer."""
+        try:
             self.logger.info(f"Deregistering target {target.host}:{target.port} from load balancer '{lb_name}'")
             
             # Target deregistration would happen here
@@ -579,14 +613,16 @@ class LoadBalancerManager(BaseDeploymentManager):
             return False
 
     async def get_load_balancer_status(self, lb_name: str) -> Optional[LoadBalancerStatus]:
-        """        Get load balancer status.
+        """
+        Get load balancer status.
         
         Args:
             lb_name: Load balancer name
             
         Returns:
             Load balancer status or None if not found
-        """        try:
+        """
+        try:
             if lb_name not in self.load_balancers:
                 return None
             
@@ -619,7 +655,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return None
 
     async def _get_lb_metrics(self, lb_name: str) -> Dict[str, Any]:
-        """Get load balancer metrics."""        try:
+        """Get load balancer metrics."""
+        try:
             # This would integrate with CloudWatch, Prometheus, etc.
             # For now, return simulated metrics
             return {
@@ -636,7 +673,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return {}
 
     async def update_routing_rules(self, lb_name: str, rules: List[LoadBalancerRule]) -> bool:
-        """        Update routing rules for load balancer.
+        """
+        Update routing rules for load balancer.
         
         Args:
             lb_name: Load balancer name
@@ -644,7 +682,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             
         Returns:
             True if update successful, False otherwise
-        """        try:
+        """
+        try:
             if lb_name not in self.load_balancers:
                 self.logger.error(f"Load balancer '{lb_name}' not found")
                 return False
@@ -672,7 +711,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return False
 
     def _validate_routing_rule(self, rule: LoadBalancerRule) -> bool:
-        """Validate routing rule."""        if rule.priority < 1 or rule.priority > 50000:
+        """Validate routing rule."""
+        if rule.priority < 1 or rule.priority > 50000:
             self.logger.error("Rule priority must be between 1 and 50000")
             return False
         
@@ -683,7 +723,8 @@ class LoadBalancerManager(BaseDeploymentManager):
         return True
 
     async def enable_access_logs(self, lb_name: str, bucket_name: str, prefix: str = "") -> bool:
-        """        Enable access logs for load balancer.
+        """
+        Enable access logs for load balancer.
         
         Args:
             lb_name: Load balancer name
@@ -692,7 +733,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             
         Returns:
             True if access logs enabled successfully, False otherwise
-        """        try:
+        """
+        try:
             if lb_name not in self.load_balancers:
                 self.logger.error(f"Load balancer '{lb_name}' not found")
                 return False
@@ -717,7 +759,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return False
 
     async def _start_health_monitoring(self, lb_name: str) -> None:
-        """Start health monitoring for load balancer targets."""        try:
+        """Start health monitoring for load balancer targets."""
+        try:
             self.logger.info(f"Starting health monitoring for load balancer '{lb_name}'")
             
             # Start background task for health checking
@@ -727,7 +770,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             self.logger.error(f"Failed to start health monitoring for load balancer '{lb_name}': {e}")
 
     async def _health_check_loop(self, lb_name: str) -> None:
-        """Health check monitoring loop."""        while lb_name in self.load_balancers:
+        """Health check monitoring loop."""
+        while lb_name in self.load_balancers:
             try:
                 await self._perform_health_checks(lb_name)
                 await asyncio.sleep(30)  # Check every 30 seconds
@@ -739,7 +783,8 @@ class LoadBalancerManager(BaseDeploymentManager):
                 await asyncio.sleep(30)
 
     async def _perform_health_checks(self, lb_name: str) -> None:
-        """Perform health checks on all targets."""        try:
+        """Perform health checks on all targets."""
+        try:
             config = self.load_balancers[lb_name]
             
             for target in config.targets:
@@ -766,7 +811,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             self.logger.error(f"Failed to perform health checks for '{lb_name}': {e}")
 
     async def _check_target_health(self, config: LoadBalancerConfig, target: LoadBalancerTarget) -> TargetStatus:
-        """Check individual target health."""        try:
+        """Check individual target health."""
+        try:
             health_check = config.health_check
             
             if health_check.protocol == HealthCheckProtocol.HTTP:
@@ -784,7 +830,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return TargetStatus.UNHEALTHY
 
     async def _http_health_check(self, target: LoadBalancerTarget, health_check: HealthCheck) -> TargetStatus:
-        """Perform HTTP health check."""        try:
+        """Perform HTTP health check."""
+        try:
             # Simulate HTTP health check
             await asyncio.sleep(0.1)
             
@@ -800,7 +847,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return TargetStatus.UNHEALTHY
 
     async def _https_health_check(self, target: LoadBalancerTarget, health_check: HealthCheck) -> TargetStatus:
-        """Perform HTTPS health check."""        try:
+        """Perform HTTPS health check."""
+        try:
             # Simulate HTTPS health check
             await asyncio.sleep(0.1)
             
@@ -815,7 +863,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return TargetStatus.UNHEALTHY
 
     async def _tcp_health_check(self, target: LoadBalancerTarget, health_check: HealthCheck) -> TargetStatus:
-        """Perform TCP health check."""        try:
+        """Perform TCP health check."""
+        try:
             # Simulate TCP health check
             await asyncio.sleep(0.1)
             
@@ -830,7 +879,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return TargetStatus.UNHEALTHY
 
     async def delete_load_balancer(self, lb_name: str, force: bool = False) -> bool:
-        """        Delete load balancer.
+        """
+        Delete load balancer.
         
         Args:
             lb_name: Load balancer name
@@ -838,7 +888,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             
         Returns:
             True if deletion successful, False otherwise
-        """        try:
+        """
+        try:
             if lb_name not in self.load_balancers:
                 self.logger.error(f"Load balancer '{lb_name}' not found")
                 return False
@@ -884,7 +935,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return False
 
     async def _delete_lb_infrastructure(self, lb_name: str) -> bool:
-        """Delete load balancer infrastructure."""        try:
+        """Delete load balancer infrastructure."""
+        try:
             self.logger.info(f"Deleting infrastructure for load balancer '{lb_name}'")
             
             # Delete load balancer
@@ -897,7 +949,8 @@ class LoadBalancerManager(BaseDeploymentManager):
             return False
 
     async def _cleanup_failed_lb(self, lb_name: str) -> None:
-        """Cleanup resources from failed load balancer creation."""        try:
+        """Cleanup resources from failed load balancer creation."""
+        try:
             self.logger.info(f"Cleaning up failed load balancer '{lb_name}'")
             
             # Attempt to delete any created resources
@@ -917,11 +970,13 @@ class LoadBalancerManager(BaseDeploymentManager):
             self.logger.error(f"Failed to cleanup failed load balancer '{lb_name}': {e}")
 
     async def list_load_balancers(self) -> List[LoadBalancerStatus]:
-        """        List all load balancers.
+        """
+        List all load balancers.
         
         Returns:
             List of load balancer statuses
-        """        statuses = []
+        """
+        statuses = []
         
         for lb_name in self.load_balancers.keys():
             status = await self.get_load_balancer_status(lb_name)
@@ -931,11 +986,13 @@ class LoadBalancerManager(BaseDeploymentManager):
         return statuses
 
     async def generate_load_balancer_report(self) -> Dict[str, Any]:
-        """        Generate comprehensive load balancer report.
+        """
+        Generate comprehensive load balancer report.
         
         Returns:
             Report data
-        """        try:
+        """
+        try:
             load_balancers = await self.list_load_balancers()
             
             total_lbs = len(load_balancers)
@@ -978,11 +1035,13 @@ class LoadBalancerManager(BaseDeploymentManager):
             return {}
 
     async def cleanup(self) -> bool:
-        """        Cleanup load balancer manager.
+        """
+        Cleanup load balancer manager.
         
         Returns:
             True if cleanup successful, False otherwise
-        """        try:
+        """
+        try:
             # Delete all load balancers
             for lb_name in list(self.load_balancers.keys()):
                 await self.delete_load_balancer(lb_name, force=True)

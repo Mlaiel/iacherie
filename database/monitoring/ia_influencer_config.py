@@ -12,13 +12,16 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
-"""from typing import Dict, Any
+"""
+
+from typing import Dict, Any
 from dataclasses import dataclass
 from enum import Enum
 
 
 class MonitoringProfile(Enum):
-    """Monitoring profiles for different deployment environments"""    DEVELOPMENT = "development"
+    """Monitoring profiles for different deployment environments"""
+    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     HIGH_PERFORMANCE = "high_performance"
@@ -26,7 +29,8 @@ class MonitoringProfile(Enum):
 
 @dataclass
 class IAInfluencerMonitoringConfig:
-    """Configuration for IA Influencer Agent monitoring system"""    
+    """Configuration for IA Influencer Agent monitoring system"""
+    
     # Content Pipeline Monitoring Configuration
     content_pipeline_config = {
         'monitoring_enabled': True,
@@ -259,7 +263,9 @@ class IAInfluencerMonitoringConfig:
 
 
 def get_monitoring_config(profile: MonitoringProfile = MonitoringProfile.PRODUCTION) -> Dict[str, Any]:
-    """Get monitoring configuration for specified profile"""    
+    """
+Get monitoring configuration for specified profile"""
+    
     base_config = IAInfluencerMonitoringConfig()
     
     # Profile-specific adjustments

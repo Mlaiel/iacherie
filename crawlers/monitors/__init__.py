@@ -21,7 +21,8 @@ Expertise combinée:
 - Audio/Vidéo: Traitement multimédia et analyse de contenu
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable, Union, Set
 from dataclasses import dataclass, field
@@ -55,21 +56,24 @@ from ..config.monitoring_config import MonitoringConfig
 logger = logging.getLogger(__name__)
 
 class MonitoringLevel(Enum):
-    """Monitoring intensity levels."""    MINIMAL = "minimal"
+    """Monitoring intensity levels."""
+    MINIMAL = "minimal"
     STANDARD = "standard" 
     ENHANCED = "enhanced"
     MAXIMUM = "maximum"
     ULTRA_SURVEILLANCE = "ultra_surveillance"
 
 class MonitoringPriority(Enum):
-    """Monitoring priority levels."""    LOW = 1
+    """Monitoring priority levels."""
+    LOW = 1
     MEDIUM = 2
     HIGH = 3
     CRITICAL = 4
     EMERGENCY = 5
 
 class MonitoringScope(Enum):
-    """Monitoring scope definitions."""    CONTENT_PROTECTION = "content_protection"
+    """Monitoring scope definitions."""
+    CONTENT_PROTECTION = "content_protection"
     REVENUE_TRACKING = "revenue_tracking"
     PLATFORM_SURVEILLANCE = "platform_surveillance"
     SECURITY_MONITORING = "security_monitoring"
@@ -79,7 +83,8 @@ class MonitoringScope(Enum):
 
 @dataclass
 class MonitoringEvent:
-    """Monitoring event data structure."""    event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Monitoring event data structure."""
+    event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     timestamp: datetime = field(default_factory=datetime.utcnow)
     event_type: str = ""
     priority: MonitoringPriority = MonitoringPriority.MEDIUM
@@ -94,7 +99,8 @@ class MonitoringEvent:
 
 @dataclass
 class MonitoringTarget:
-    """Monitoring target configuration."""    target_id: str
+    """Monitoring target configuration."""
+    target_id: str
     target_type: str
     platform: str
     content_type: str
@@ -105,9 +111,11 @@ class MonitoringTarget:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class MonitoringOrchestrator:
-    """    Central orchestrator for all monitoring operations.
+    """
+    Central orchestrator for all monitoring operations.
     Coordinates multiple monitoring engines and intelligence systems.
-    """    
+    """
+    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.monitoring_engines: Dict[str, MonitorEngine] = {}
@@ -125,7 +133,8 @@ class MonitoringOrchestrator:
         self._setup_event_processing()
         
     def _initialize_monitoring_engines(self) -> None:
-        """Initialize all monitoring engines."""        try:
+        """Initialize all monitoring engines."""
+        try:
             # Core monitoring engines
             self.monitoring_engines.update({
                 "threat_detector": ThreatDetector(self.config),
@@ -146,7 +155,8 @@ class MonitoringOrchestrator:
             raise MonitoringError(f"Engine initialization failed: {e}")
     
     def _setup_event_processing(self) -> None:
-        """Setup event processing infrastructure."""        # Register default event handlers
+        """Setup event processing infrastructure."""
+        # Register default event handlers
         self.register_event_handler("security_threat", self._handle_security_threat)
         self.register_event_handler("revenue_anomaly", self._handle_revenue_anomaly)
         self.register_event_handler("content_violation", self._handle_content_violation)
@@ -154,14 +164,16 @@ class MonitoringOrchestrator:
         self.register_event_handler("compliance_violation", self._handle_compliance_violation)
         
     async def start_monitoring(self, targets: List[MonitoringTarget]) -> bool:
-        """        Start comprehensive monitoring operations.
+        """
+        Start comprehensive monitoring operations.
         
         Args:
             targets: List of monitoring targets
             
         Returns:
             True if monitoring started successfully
-        """        try:
+        """
+        try:
             logger.info(f"Starting monitoring for {len(targets)} targets")
             
             # Validate targets
@@ -191,7 +203,8 @@ class MonitoringOrchestrator:
             return False
     
     async def _validate_targets(self, targets: List[MonitoringTarget]) -> List[MonitoringTarget]:
-        """Validate and filter monitoring targets."""        validated = []
+        """Validate and filter monitoring targets."""
+        validated = []
         for target in targets:
             if await self._is_valid_target(target):
                 validated.append(target)
@@ -200,7 +213,8 @@ class MonitoringOrchestrator:
         return validated
     
     async def _is_valid_target(self, target: MonitoringTarget) -> bool:
-        """Check if monitoring target is valid."""        # Implement target validation logic
+        """Check if monitoring target is valid."""
+        # Implement target validation logic
         return (
             target.target_id and 
             target.platform and 
@@ -213,7 +227,8 @@ class MonitoringOrchestrator:
         engine: MonitorEngine, 
         targets: List[MonitoringTarget]
     ) -> None:
-        """Start monitoring for specific engine."""        try:
+        """Start monitoring for specific engine."""
+        try:
             await engine.initialize()
             await engine.start_monitoring(targets)
             logger.info(f"Engine {engine.__class__.__name__} monitoring started")
@@ -223,7 +238,8 @@ class MonitoringOrchestrator:
             raise
     
     async def _process_monitoring_events(self) -> None:
-        """Process monitoring events from queue."""        while True:
+        """Process monitoring events from queue."""
+        while True:
             try:
                 # Get event from queue
                 event = await self.monitoring_queue.get()
@@ -239,7 +255,8 @@ class MonitoringOrchestrator:
                 await asyncio.sleep(1)
     
     async def _handle_monitoring_event(self, event: MonitoringEvent) -> None:
-        """Handle individual monitoring event."""        try:
+        """Handle individual monitoring event."""
+        try:
             # Log event
             logger.info(f"Processing event: {event.event_type} - {event.priority.name}")
             
@@ -265,12 +282,14 @@ class MonitoringOrchestrator:
             logger.error(f"Failed to handle event {event.event_id}: {e}")
     
     def register_event_handler(self, event_type: str, handler: Callable) -> None:
-        """Register event handler for specific event type."""        if event_type not in self.event_handlers:
+        """Register event handler for specific event type."""
+        if event_type not in self.event_handlers:
             self.event_handlers[event_type] = []
         self.event_handlers[event_type].append(handler)
     
     async def _handle_security_threat(self, event: MonitoringEvent) -> None:
-        """Handle security threat events."""        threat_level = event.data.get("threat_level", ThreatLevel.LOW)
+        """Handle security threat events."""
+        threat_level = event.data.get("threat_level", ThreatLevel.LOW)
         
         if threat_level in [ThreatLevel.HIGH, ThreatLevel.CRITICAL]:
             # Immediate response required
@@ -280,59 +299,70 @@ class MonitoringOrchestrator:
         await self._log_security_event(event)
     
     async def _handle_revenue_anomaly(self, event: MonitoringEvent) -> None:
-        """Handle revenue anomaly events."""        anomaly_type = event.data.get("anomaly_type")
+        """Handle revenue anomaly events."""
+        anomaly_type = event.data.get("anomaly_type")
         impact = event.data.get("impact", 0)
         
         if impact > self.config.revenue_alert_threshold:
             await self._trigger_revenue_investigation(event)
     
     async def _handle_content_violation(self, event: MonitoringEvent) -> None:
-        """Handle content violation events."""        violation_type = event.data.get("violation_type")
+        """Handle content violation events."""
+        violation_type = event.data.get("violation_type")
         platform = event.data.get("platform")
         
         # Initiate protection response
         await self._trigger_content_protection(event)
     
     async def _handle_performance_issue(self, event: MonitoringEvent) -> None:
-        """Handle performance degradation events."""        metric = event.data.get("metric")
+        """Handle performance degradation events."""
+        metric = event.data.get("metric")
         threshold_exceeded = event.data.get("threshold_exceeded", False)
         
         if threshold_exceeded:
             await self._trigger_performance_optimization(event)
     
     async def _handle_compliance_violation(self, event: MonitoringEvent) -> None:
-        """Handle compliance violation events."""        regulation = event.data.get("regulation")
+        """Handle compliance violation events."""
+        regulation = event.data.get("regulation")
         severity = event.data.get("severity")
         
         # Immediate compliance response
         await self._trigger_compliance_response(event)
     
     async def _trigger_security_response(self, event: MonitoringEvent) -> None:
-        """Trigger security response actions."""        # Implement security response logic
+        """Trigger security response actions."""
+        # Implement security response logic
         pass
     
     async def _trigger_revenue_investigation(self, event: MonitoringEvent) -> None:
-        """Trigger revenue anomaly investigation."""        # Implement revenue investigation logic
+        """Trigger revenue anomaly investigation."""
+        # Implement revenue investigation logic
         pass
     
     async def _trigger_content_protection(self, event: MonitoringEvent) -> None:
-        """Trigger content protection measures."""        # Implement content protection logic
+        """Trigger content protection measures."""
+        # Implement content protection logic
         pass
     
     async def _trigger_performance_optimization(self, event: MonitoringEvent) -> None:
-        """Trigger performance optimization actions."""        # Implement performance optimization logic
+        """Trigger performance optimization actions."""
+        # Implement performance optimization logic
         pass
     
     async def _trigger_compliance_response(self, event: MonitoringEvent) -> None:
-        """Trigger compliance violation response."""        # Implement compliance response logic
+        """Trigger compliance violation response."""
+        # Implement compliance response logic
         pass
     
     async def _log_security_event(self, event: MonitoringEvent) -> None:
-        """Log security event with enhanced details."""        # Implement security logging
+        """Log security event with enhanced details."""
+        # Implement security logging
         pass
     
     async def _send_notifications(self, event: MonitoringEvent) -> None:
-        """Send notifications for critical events."""        await self.notification_manager.send_alert(
+        """Send notifications for critical events."""
+        await self.notification_manager.send_alert(
             event_type=event.event_type,
             priority=event.priority,
             data=event.data,
@@ -340,7 +370,8 @@ class MonitoringOrchestrator:
         )
     
     async def get_monitoring_status(self) -> Dict[str, Any]:
-        """Get comprehensive monitoring status."""        status = {
+        """Get comprehensive monitoring status."""
+        status = {
             "active_engines": len([e for e in self.active_monitors.values() if e]),
             "total_engines": len(self.monitoring_engines),
             "queue_size": self.monitoring_queue.qsize(),
@@ -356,7 +387,8 @@ class MonitoringOrchestrator:
         return status
     
     async def stop_monitoring(self) -> bool:
-        """Stop all monitoring operations gracefully."""        try:
+        """Stop all monitoring operations gracefully."""
+        try:
             logger.info("Stopping monitoring system...")
             
             # Stop all engines
@@ -381,18 +413,21 @@ class MonitoringOrchestrator:
 monitoring_orchestrator: Optional[MonitoringOrchestrator] = None
 
 def get_monitoring_orchestrator() -> MonitoringOrchestrator:
-    """Get global monitoring orchestrator instance."""    global monitoring_orchestrator
+    """Get global monitoring orchestrator instance."""
+    global monitoring_orchestrator
     if monitoring_orchestrator is None:
         config = MonitoringConfig()
         monitoring_orchestrator = MonitoringOrchestrator(config)
     return monitoring_orchestrator
 
 async def start_global_monitoring(targets: List[MonitoringTarget]) -> bool:
-    """Start global monitoring system."""    orchestrator = get_monitoring_orchestrator()
+    """Start global monitoring system."""
+    orchestrator = get_monitoring_orchestrator()
     return await orchestrator.start_monitoring(targets)
 
 async def stop_global_monitoring() -> bool:
-    """Stop global monitoring system."""    global monitoring_orchestrator
+    """Stop global monitoring system."""
+    global monitoring_orchestrator
     if monitoring_orchestrator:
         result = await monitoring_orchestrator.stop_monitoring()
         monitoring_orchestrator = None

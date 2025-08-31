@@ -7,7 +7,8 @@ Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import yaml
@@ -21,7 +22,8 @@ import requests
 logger = logging.getLogger(__name__)
 
 class LoadBalancerType(Enum):
-    """Types of load balancers"""    APPLICATION_LOAD_BALANCER = "alb"  # Layer 7
+    """Types of load balancers"""
+    APPLICATION_LOAD_BALANCER = "alb"  # Layer 7
     NETWORK_LOAD_BALANCER = "nlb"     # Layer 4
     NGINX_INGRESS = "nginx"
     TRAEFIK = "traefik"
@@ -29,21 +31,24 @@ class LoadBalancerType(Enum):
     ENVOY_PROXY = "envoy"
 
 class BalancingAlgorithm(Enum):
-    """Load balancing algorithms"""    ROUND_ROBIN = "round_robin"
+    """Load balancing algorithms"""
+    ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     IP_HASH = "ip_hash"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     LEAST_RESPONSE_TIME = "least_response_time"
 
 class HealthCheckType(Enum):
-    """Health check types"""    HTTP = "http"
+    """Health check types"""
+    HTTP = "http"
     HTTPS = "https"
     TCP = "tcp"
     GRPC = "grpc"
 
 @dataclass
 class BackendService:
-    """Backend service configuration"""    name: str
+    """Backend service configuration"""
+    name: str
     host: str
     port: int
     weight: int = 100
@@ -54,7 +59,8 @@ class BackendService:
 
 @dataclass
 class HealthCheckConfig:
-    """Health check configuration"""    check_type: HealthCheckType
+    """Health check configuration"""
+    check_type: HealthCheckType
     path: str = "/health"
     interval_seconds: int = 30
     timeout_seconds: int = 5
@@ -64,7 +70,8 @@ class HealthCheckConfig:
 
 @dataclass
 class SSLConfig:
-    """SSL/TLS configuration"""    enabled: bool = True
+    """SSL/TLS configuration"""
+    enabled: bool = True
     certificate_arn: Optional[str] = None
     certificate_secret: Optional[str] = None
     redirect_http: bool = True
@@ -73,14 +80,16 @@ class SSLConfig:
 
 @dataclass
 class LoadBalancerRule:
-    """Load balancer routing rule"""    priority: int
+    """Load balancer routing rule"""
+    priority: int
     conditions: Dict[str, Any]
     actions: Dict[str, Any]
     backend_services: List[BackendService]
 
 @dataclass
 class LoadBalancerSpec:
-    """Load balancer specification"""    name: str
+    """Load balancer specification"""
+    name: str
     lb_type: LoadBalancerType
     algorithm: BalancingAlgorithm = BalancingAlgorithm.ROUND_ROBIN
     backend_services: List[BackendService]
@@ -92,32 +101,39 @@ class LoadBalancerSpec:
     idle_timeout: int = 60
 
 class LoadBalancerInterface(ABC):
-    """Abstract interface for load balancers"""    
+    """Abstract interface for load balancers"""
+    
     @abstractmethod
     async def create_load_balancer(self, spec: LoadBalancerSpec) -> Dict[str, Any]:
-        """Create load balancer"""        pass
+        """Create load balancer"""
+        pass
     
     @abstractmethod
     async def update_load_balancer(self, name: str, spec: LoadBalancerSpec) -> Dict[str, Any]:
-        """Update load balancer configuration"""        pass
+        """Update load balancer configuration"""
+        pass
     
     @abstractmethod
     async def delete_load_balancer(self, name: str) -> Dict[str, Any]:
-        """Delete load balancer"""        pass
+        """Delete load balancer"""
+        pass
     
     @abstractmethod
     async def get_load_balancer_status(self, name: str) -> Dict[str, Any]:
-        """Get load balancer status"""        pass
+        """Get load balancer status"""
+        pass
 
 class NginxIngressController(LoadBalancerInterface):
-    """NGINX Ingress Controller implementation"""    
+    """NGINX Ingress Controller implementation"""
+    
     def __init__(self, k8s_client=None):
         self.k8s_client = k8s_client
         self.networking_v1 = client.NetworkingV1Api() if k8s_client else None
         self.core_v1 = client.CoreV1Api() if k8s_client else None
         
     async def create_load_balancer(self, spec: LoadBalancerSpec) -> Dict[str, Any]:
-        """Create NGINX Ingress load balancer"""        try:
+        """Create NGINX Ingress load balancer"""
+        try:
             # Create services for backend services
             for backend in spec.backend_services:
                 await self._create_backend_service(backend)
@@ -146,7 +162,8 @@ class NginxIngressController(LoadBalancerInterface):
             return {'status': 'error', 'message': str(e)}
     
     def _create_nginx_ingress(self, spec: LoadBalancerSpec) -> client.V1Ingress:
-        """Create NGINX Ingress manifest"""        # Default annotations for NGINX
+        """Create NGINX Ingress manifest"""
+        # Default annotations for NGINX
         annotations = {
             'kubernetes.io/ingress.class': 'nginx',
             'nginx.ingress.kubernetes.io/load-balance': spec.algorithm.value,
@@ -226,7 +243,8 @@ class NginxIngressController(LoadBalancerInterface):
         return ingress
     
     async def _create_backend_service(self, backend: BackendService) -> Dict[str, Any]:
-        """Create Kubernetes service for backend"""        try:
+        """Create Kubernetes service for backend"""
+        try:
             service = client.V1Service(
                 metadata=client.V1ObjectMeta(
                     name=backend.name,
@@ -256,7 +274,8 @@ class NginxIngressController(LoadBalancerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def update_load_balancer(self, name: str, spec: LoadBalancerSpec) -> Dict[str, Any]:
-        """Update NGINX Ingress load balancer"""        try:
+        """Update NGINX Ingress load balancer"""
+        try:
             ingress = self._create_nginx_ingress(spec)
             
             if self.networking_v1:
@@ -274,7 +293,8 @@ class NginxIngressController(LoadBalancerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def delete_load_balancer(self, name: str) -> Dict[str, Any]:
-        """Delete NGINX Ingress load balancer"""        try:
+        """Delete NGINX Ingress load balancer"""
+        try:
             if self.networking_v1:
                 self.networking_v1.delete_namespaced_ingress(
                     name=name,
@@ -289,7 +309,8 @@ class NginxIngressController(LoadBalancerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def get_load_balancer_status(self, name: str) -> Dict[str, Any]:
-        """Get NGINX Ingress status"""        try:
+        """Get NGINX Ingress status"""
+        try:
             if self.networking_v1:
                 ingress = self.networking_v1.read_namespaced_ingress(
                     name=name,
@@ -310,12 +331,14 @@ class NginxIngressController(LoadBalancerInterface):
             return {'status': 'error', 'message': str(e)}
 
 class TraefikController(LoadBalancerInterface):
-    """Traefik load balancer implementation"""    
+    """Traefik load balancer implementation"""
+    
     def __init__(self, k8s_client=None):
         self.k8s_client = k8s_client
         
     async def create_load_balancer(self, spec: LoadBalancerSpec) -> Dict[str, Any]:
-        """Create Traefik load balancer"""        try:
+        """Create Traefik load balancer"""
+        try:
             # Implementation for Traefik IngressRoute
             logger.info(f"Creating Traefik load balancer: {spec.name}")
             return {
@@ -328,7 +351,8 @@ class TraefikController(LoadBalancerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def update_load_balancer(self, name: str, spec: LoadBalancerSpec) -> Dict[str, Any]:
-        """Update Traefik load balancer"""        try:
+        """Update Traefik load balancer"""
+        try:
             logger.info(f"Updating Traefik load balancer: {name}")
             return {'status': 'success', 'name': name}
         except Exception as e:
@@ -336,7 +360,8 @@ class TraefikController(LoadBalancerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def delete_load_balancer(self, name: str) -> Dict[str, Any]:
-        """Delete Traefik load balancer"""        try:
+        """Delete Traefik load balancer"""
+        try:
             logger.info(f"Deleting Traefik load balancer: {name}")
             return {'status': 'success', 'name': name}
         except Exception as e:
@@ -344,7 +369,8 @@ class TraefikController(LoadBalancerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def get_load_balancer_status(self, name: str) -> Dict[str, Any]:
-        """Get Traefik load balancer status"""        try:
+        """Get Traefik load balancer status"""
+        try:
             logger.info(f"Getting Traefik load balancer status: {name}")
             return {'status': 'success', 'name': name, 'ready': True}
         except Exception as e:
@@ -352,12 +378,14 @@ class TraefikController(LoadBalancerInterface):
             return {'status': 'error', 'message': str(e)}
 
 class IstioGateway(LoadBalancerInterface):
-    """Istio Gateway implementation"""    
+    """Istio Gateway implementation"""
+    
     def __init__(self, k8s_client=None):
         self.k8s_client = k8s_client
         
     async def create_load_balancer(self, spec: LoadBalancerSpec) -> Dict[str, Any]:
-        """Create Istio Gateway"""        try:
+        """Create Istio Gateway"""
+        try:
             # Implementation for Istio Gateway and VirtualService
             logger.info(f"Creating Istio Gateway: {spec.name}")
             return {
@@ -370,7 +398,8 @@ class IstioGateway(LoadBalancerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def update_load_balancer(self, name: str, spec: LoadBalancerSpec) -> Dict[str, Any]:
-        """Update Istio Gateway"""        try:
+        """Update Istio Gateway"""
+        try:
             logger.info(f"Updating Istio Gateway: {name}")
             return {'status': 'success', 'name': name}
         except Exception as e:
@@ -378,7 +407,8 @@ class IstioGateway(LoadBalancerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def delete_load_balancer(self, name: str) -> Dict[str, Any]:
-        """Delete Istio Gateway"""        try:
+        """Delete Istio Gateway"""
+        try:
             logger.info(f"Deleting Istio Gateway: {name}")
             return {'status': 'success', 'name': name}
         except Exception as e:
@@ -386,7 +416,8 @@ class IstioGateway(LoadBalancerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def get_load_balancer_status(self, name: str) -> Dict[str, Any]:
-        """Get Istio Gateway status"""        try:
+        """Get Istio Gateway status"""
+        try:
             logger.info(f"Getting Istio Gateway status: {name}")
             return {'status': 'success', 'name': name, 'ready': True}
         except Exception as e:
@@ -394,7 +425,8 @@ class IstioGateway(LoadBalancerInterface):
             return {'status': 'error', 'message': str(e)}
 
 class LoadBalancerManager:
-    """Main load balancer manager"""    
+    """Main load balancer manager"""
+    
     def __init__(self, k8s_client=None):
         self.k8s_client = k8s_client
         self.controllers = {
@@ -404,7 +436,8 @@ class LoadBalancerManager:
         }
         
     async def create_load_balancer(self, spec: LoadBalancerSpec) -> Dict[str, Any]:
-        """Create load balancer based on type"""        try:
+        """Create load balancer based on type"""
+        try:
             controller = self.controllers.get(spec.lb_type)
             if not controller:
                 return {'status': 'error', 'message': f'Unsupported load balancer type: {spec.lb_type}'}
@@ -418,7 +451,8 @@ class LoadBalancerManager:
             return {'status': 'error', 'message': str(e)}
     
     async def create_ia_influencer_load_balancers(self, namespace: str = "ia-influencer") -> Dict[str, Any]:
-        """Create complete load balancer setup for IA Influencer platform"""        try:
+        """Create complete load balancer setup for IA Influencer platform"""
+        try:
             results = {}
             
             # API Gateway Load Balancer
@@ -580,7 +614,8 @@ class LoadBalancerManager:
             return {'status': 'error', 'message': str(e)}
     
     async def update_load_balancer(self, name: str, spec: LoadBalancerSpec) -> Dict[str, Any]:
-        """Update load balancer"""        try:
+        """Update load balancer"""
+        try:
             controller = self.controllers.get(spec.lb_type)
             if not controller:
                 return {'status': 'error', 'message': f'Unsupported load balancer type: {spec.lb_type}'}
@@ -594,7 +629,8 @@ class LoadBalancerManager:
             return {'status': 'error', 'message': str(e)}
     
     async def delete_load_balancer(self, name: str, lb_type: LoadBalancerType) -> Dict[str, Any]:
-        """Delete load balancer"""        try:
+        """Delete load balancer"""
+        try:
             controller = self.controllers.get(lb_type)
             if not controller:
                 return {'status': 'error', 'message': f'Unsupported load balancer type: {lb_type}'}
@@ -608,7 +644,8 @@ class LoadBalancerManager:
             return {'status': 'error', 'message': str(e)}
     
     async def get_load_balancer_status(self, name: str, lb_type: LoadBalancerType) -> Dict[str, Any]:
-        """Get load balancer status"""        try:
+        """Get load balancer status"""
+        try:
             controller = self.controllers.get(lb_type)
             if not controller:
                 return {'status': 'error', 'message': f'Unsupported load balancer type: {lb_type}'}
@@ -621,7 +658,8 @@ class LoadBalancerManager:
             return {'status': 'error', 'message': str(e)}
     
     async def configure_traffic_splitting(self, name: str, traffic_rules: Dict[str, int]) -> Dict[str, Any]:
-        """Configure traffic splitting for canary deployments"""        try:
+        """Configure traffic splitting for canary deployments"""
+        try:
             # Implementation for traffic splitting
             logger.info(f"Configuring traffic splitting for: {name}")
             return {
@@ -633,7 +671,8 @@ class LoadBalancerManager:
             return {'status': 'error', 'message': str(e)}
     
     async def enable_circuit_breaker(self, name: str, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Enable circuit breaker for load balancer"""        try:
+        """Enable circuit breaker for load balancer"""
+        try:
             # Implementation for circuit breaker
             logger.info(f"Enabling circuit breaker for: {name}")
             return {

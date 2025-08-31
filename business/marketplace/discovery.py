@@ -8,7 +8,8 @@ Copyright: All rights reserved - Unauthorized use strictly prohibited
 WARNING: This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Legal action will be taken against violators.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -28,7 +29,8 @@ from ...ml.trending_algorithms import TrendingAnalyzer
 
 
 class DiscoveryType(Enum):
-    """Discovery type enumeration."""    SEMANTIC = "semantic"
+    """Discovery type enumeration."""
+    SEMANTIC = "semantic"
     TRENDING = "trending"
     SIMILAR = "similar"
     COLLABORATIVE = "collaborative"
@@ -36,7 +38,8 @@ class DiscoveryType(Enum):
 
 
 class TrendPeriod(Enum):
-    """Trend analysis period enumeration."""    HOUR = "hour"
+    """Trend analysis period enumeration."""
+    HOUR = "hour"
     DAY = "day"
     WEEK = "week"
     MONTH = "month"
@@ -45,7 +48,8 @@ class TrendPeriod(Enum):
 
 @dataclass
 class DiscoveryQuery:
-    """Discovery query structure."""    query_text: str
+    """Discovery query structure."""
+    query_text: str
     discovery_type: DiscoveryType
     filters: Dict[str, Any]
     user_context: Optional[Dict[str, Any]]
@@ -55,7 +59,8 @@ class DiscoveryQuery:
 
 @dataclass
 class TrendAnalysisParams:
-    """Trend analysis parameters."""    period: TrendPeriod
+    """Trend analysis parameters."""
+    period: TrendPeriod
     category: Optional[str]
     geographic_region: Optional[str]
     min_engagement_threshold: float
@@ -63,9 +68,11 @@ class TrendAnalysisParams:
 
 
 class ContentDiscovery:
-    """    Enterprise content discovery system with AI-powered search and recommendation.
+    """
+    Enterprise content discovery system with AI-powered search and recommendation.
     Provides semantic search, trend analysis, and personalized content discovery.
-    """    
+    """
+    
     def __init__(
         self, 
         db_session: AsyncSession, 
@@ -86,7 +93,8 @@ class ContentDiscovery:
         query: DiscoveryQuery,
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Main content discovery interface with multiple discovery strategies.
+        """
+        Main content discovery interface with multiple discovery strategies.
         
         Args:
             query: Discovery query parameters
@@ -94,7 +102,8 @@ class ContentDiscovery:
             
         Returns:
             Discovery results with metadata
-        """        try:
+        """
+        try:
             discovery_key = f"discovery:{hash(str(query))}:{user_id or 'anon'}"
             
             # Check cache for recent results
@@ -139,7 +148,8 @@ class ContentDiscovery:
         content_id: Optional[str] = None,
         limit: int = 20
     ) -> List[Dict[str, Any]]:
-        """        Get personalized content recommendations for user.
+        """
+        Get personalized content recommendations for user.
         
         Args:
             user_id: User identifier
@@ -148,7 +158,8 @@ class ContentDiscovery:
             
         Returns:
             List of recommended content
-        """        try:
+        """
+        try:
             cache_key = f"recommendations:content:{user_id}:{content_id or 'general'}"
             
             # Check cache
@@ -187,14 +198,16 @@ class ContentDiscovery:
         self,
         params: TrendAnalysisParams
     ) -> Dict[str, Any]:
-        """        Analyze content trends using advanced ML algorithms.
+        """
+        Analyze content trends using advanced ML algorithms.
         
         Args:
             params: Trend analysis parameters
             
         Returns:
             Trend analysis results
-        """        try:
+        """
+        try:
             cache_key = f"trends:{params.period.value}:{params.category or 'all'}"
             
             # Check cache
@@ -242,7 +255,8 @@ class ContentDiscovery:
         query: DiscoveryQuery,
         user_id: Optional[str]
     ) -> List[Dict[str, Any]]:
-        """Semantic content discovery using NLP and embeddings."""        # Generate query embeddings
+        """Semantic content discovery using NLP and embeddings."""
+        # Generate query embeddings
         query_embedding = await self.analyzer.generate_text_embedding(
             query.query_text
         )
@@ -264,7 +278,8 @@ class ContentDiscovery:
         self,
         query: DiscoveryQuery
     ) -> List[Dict[str, Any]]:
-        """Discover trending content based on engagement metrics."""        # Use default trend parameters
+        """Discover trending content based on engagement metrics."""
+        # Use default trend parameters
         trend_params = TrendAnalysisParams(
             period=TrendPeriod.DAY,
             category=query.filters.get('category'),
@@ -282,7 +297,8 @@ class ContentDiscovery:
         self,
         query: DiscoveryQuery
     ) -> List[Dict[str, Any]]:
-        """Discover similar content to a reference content."""        reference_id = query.filters.get('reference_content_id')
+        """Discover similar content to a reference content."""
+        reference_id = query.filters.get('reference_content_id')
         
         if not reference_id:
             return []
@@ -305,7 +321,8 @@ class ContentDiscovery:
         query: DiscoveryQuery,
         user_id: Optional[str]
     ) -> List[Dict[str, Any]]:
-        """Collaborative filtering-based discovery."""        if not user_id:
+        """Collaborative filtering-based discovery."""
+        if not user_id:
             return []
         
         # Get user's interaction history
@@ -328,7 +345,8 @@ class ContentDiscovery:
         query: DiscoveryQuery,
         user_id: Optional[str]
     ) -> List[Dict[str, Any]]:
-        """Personalized content discovery using user profile."""        if not user_id:
+        """Personalized content discovery using user profile."""
+        if not user_id:
             return await self._semantic_discovery(query, user_id)
         
         # Get user profile and preferences
@@ -350,7 +368,8 @@ class ContentDiscovery:
         query: DiscoveryQuery,
         user_id: Optional[str]
     ) -> List[Dict[str, Any]]:
-        """Hybrid discovery combining multiple strategies."""        # Run multiple discovery strategies in parallel
+        """Hybrid discovery combining multiple strategies."""
+        # Run multiple discovery strategies in parallel
         results = await asyncio.gather(
             self._semantic_discovery(query, user_id),
             self._trending_discovery(query),
@@ -374,7 +393,8 @@ class ContentDiscovery:
         results: List[Dict[str, Any]],
         query: DiscoveryQuery
     ) -> Dict[str, Any]:
-        """Enhance discovery results with additional metadata."""        enhanced_items = []
+        """Enhance discovery results with additional metadata."""
+        enhanced_items = []
         
         for item in results:
             # Add relevance score
@@ -408,7 +428,8 @@ class ContentDiscovery:
         filters: Dict[str, Any],
         limit: int
     ) -> List[Dict[str, Any]]:
-        """Vector similarity search for semantic matching."""        # Implementation for vector similarity search
+        """Vector similarity search for semantic matching."""
+        # Implementation for vector similarity search
         # This would use a vector database like Pinecone, Weaviate, or custom implementation
         return []
     
@@ -418,11 +439,13 @@ class ContentDiscovery:
         user_id: str,
         user_context: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Apply user context to filter and rank content."""        # Implementation for user context application
+        """Apply user context to filter and rank content."""
+        # Implementation for user context application
         return content
     
     async def _get_user_profile(self, user_id: str) -> Dict[str, Any]:
-        """Get user profile for personalization."""        # Implementation for user profile retrieval
+        """Get user profile for personalization."""
+        # Implementation for user profile retrieval
         return {}
     
     async def _content_based_recommendations(
@@ -431,7 +454,8 @@ class ContentDiscovery:
         user_profile: Dict[str, Any],
         limit: int
     ) -> List[Dict[str, Any]]:
-        """Generate content-based recommendations."""        # Implementation for content-based recommendations
+        """Generate content-based recommendations."""
+        # Implementation for content-based recommendations
         return []
     
     async def _collaborative_recommendations(
@@ -440,7 +464,8 @@ class ContentDiscovery:
         user_profile: Dict[str, Any],
         limit: int
     ) -> List[Dict[str, Any]]:
-        """Generate collaborative filtering recommendations."""        # Implementation for collaborative recommendations
+        """Generate collaborative filtering recommendations."""
+        # Implementation for collaborative recommendations
         return []
     
     async def _diversify_recommendations(
@@ -448,11 +473,13 @@ class ContentDiscovery:
         recommendations: List[Dict[str, Any]],
         user_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Apply diversity and freshness filters to recommendations."""        # Implementation for recommendation diversification
+        """Apply diversity and freshness filters to recommendations."""
+        # Implementation for recommendation diversification
         return recommendations
     
     def _get_time_window(self, period: TrendPeriod) -> Tuple[datetime, datetime]:
-        """Get time window for trend analysis."""        now = datetime.now()
+        """Get time window for trend analysis."""
+        now = datetime.now()
         
         if period == TrendPeriod.HOUR:
             start = now - timedelta(hours=1)
@@ -474,7 +501,8 @@ class ContentDiscovery:
         trends: List[Dict[str, Any]],
         boost_factors: Dict[str, float]
     ) -> List[Dict[str, Any]]:
-        """Apply boost factors to trend scores."""        for trend in trends:
+        """Apply boost factors to trend scores."""
+        for trend in trends:
             for factor, boost in boost_factors.items():
                 if factor in trend:
                     trend['trend_score'] *= (1 + boost)
@@ -488,7 +516,8 @@ class ContentDiscovery:
         self,
         trends: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate insights from trend analysis."""        if not trends:
+        """Generate insights from trend analysis."""
+        if not trends:
             return {}
         
         insights = {
@@ -504,35 +533,41 @@ class ContentDiscovery:
         self, 
         trends: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Extract top trending categories."""        # Implementation for category extraction
+        """Extract top trending categories."""
+        # Implementation for category extraction
         return []
     
     def _extract_emerging_keywords(
         self, 
         trends: List[Dict[str, Any]]
     ) -> List[str]:
-        """Extract emerging keywords from trends."""        # Implementation for keyword extraction
+        """Extract emerging keywords from trends."""
+        # Implementation for keyword extraction
         return []
     
     def _calculate_growth_rates(
         self, 
         trends: List[Dict[str, Any]]
     ) -> Dict[str, float]:
-        """Calculate growth rates for trending content."""        # Implementation for growth rate calculation
+        """Calculate growth rates for trending content."""
+        # Implementation for growth rate calculation
         return {}
     
     def _identify_geographic_hotspots(
         self, 
         trends: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Identify geographic hotspots for trends."""        # Implementation for geographic analysis
+        """Identify geographic hotspots for trends."""
+        # Implementation for geographic analysis
         return []
 
 
 class CreatorDiscovery:
-    """    Enterprise creator discovery system for finding and matching creators.
+    """
+    Enterprise creator discovery system for finding and matching creators.
     Provides intelligent creator search, recommendation, and collaboration matching.
-    """    
+    """
+    
     def __init__(
         self, 
         db_session: AsyncSession, 
@@ -551,7 +586,8 @@ class CreatorDiscovery:
         discovery_type: str = "comprehensive",
         limit: int = 50
     ) -> Dict[str, Any]:
-        """        Discover creators using advanced matching algorithms.
+        """
+        Discover creators using advanced matching algorithms.
         
         Args:
             query: Search query for creators
@@ -561,7 +597,8 @@ class CreatorDiscovery:
             
         Returns:
             Creator discovery results
-        """        try:
+        """
+        try:
             cache_key = f"creator_discovery:{hash(query)}:{hash(str(filters))}"
             
             # Check cache
@@ -605,7 +642,8 @@ class CreatorDiscovery:
         project_requirements: Dict[str, Any],
         limit: int = 20
     ) -> List[Dict[str, Any]]:
-        """        Find creators suitable for collaboration on specific projects.
+        """
+        Find creators suitable for collaboration on specific projects.
         
         Args:
             creator_id: Source creator ID
@@ -614,7 +652,8 @@ class CreatorDiscovery:
             
         Returns:
             List of collaboration matches
-        """        try:
+        """
+        try:
             cache_key = f"collab_matches:{creator_id}:{hash(str(project_requirements))}"
             
             # Check cache
@@ -653,7 +692,8 @@ class CreatorDiscovery:
         time_window: timedelta = timedelta(days=7),
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """        Get trending creators based on recent activity and engagement.
+        """
+        Get trending creators based on recent activity and engagement.
         
         Args:
             category: Optional category filter
@@ -662,7 +702,8 @@ class CreatorDiscovery:
             
         Returns:
             List of trending creators
-        """        try:
+        """
+        try:
             cache_key = f"trending_creators:{category or 'all'}:{int(time_window.total_seconds())}"
             
             # Check cache
@@ -690,7 +731,8 @@ class CreatorDiscovery:
         filters: Dict[str, Any],
         limit: int
     ) -> List[Dict[str, Any]]:
-        """Semantic search for creators based on query."""        # Implementation for semantic creator search
+        """Semantic search for creators based on query."""
+        # Implementation for semantic creator search
         return []
     
     async def _collaborative_creator_search(
@@ -699,7 +741,8 @@ class CreatorDiscovery:
         filters: Dict[str, Any],
         limit: int
     ) -> List[Dict[str, Any]]:
-        """Collaborative filtering for creator discovery."""        # Implementation for collaborative creator search
+        """Collaborative filtering for creator discovery."""
+        # Implementation for collaborative creator search
         return []
     
     async def _trending_creator_search(
@@ -707,7 +750,8 @@ class CreatorDiscovery:
         filters: Dict[str, Any],
         limit: int
     ) -> List[Dict[str, Any]]:
-        """Search for trending creators."""        return await self.get_trending_creators(
+        """Search for trending creators."""
+        return await self.get_trending_creators(
             category=filters.get('category'),
             limit=limit
         )
@@ -718,7 +762,8 @@ class CreatorDiscovery:
         filters: Dict[str, Any],
         limit: int
     ) -> List[Dict[str, Any]]:
-        """Comprehensive creator search combining multiple strategies."""        # Run multiple search strategies
+        """Comprehensive creator search combining multiple strategies."""
+        # Run multiple search strategies
         results = await asyncio.gather(
             self._semantic_creator_search(query, filters, limit // 2),
             self._collaborative_creator_search(query, filters, limit // 2),
@@ -740,7 +785,8 @@ class CreatorDiscovery:
         self,
         creators: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Enhance creator results with additional metadata."""        enhanced_creators = []
+        """Enhance creator results with additional metadata."""
+        enhanced_creators = []
         
         for creator in creators:
             # Add recent activity metrics
@@ -763,7 +809,8 @@ class CreatorDiscovery:
         return enhanced_creators
     
     async def _get_creator_profile(self, creator_id: str) -> Optional[Dict[str, Any]]:
-        """Get creator profile by ID."""        # Implementation for creator profile retrieval
+        """Get creator profile by ID."""
+        # Implementation for creator profile retrieval
         return None
     
     async def _find_collaboration_matches(
@@ -772,7 +819,8 @@ class CreatorDiscovery:
         project_requirements: Dict[str, Any],
         limit: int
     ) -> List[Dict[str, Any]]:
-        """Find creators suitable for collaboration."""        # Implementation for collaboration matching
+        """Find creators suitable for collaboration."""
+        # Implementation for collaboration matching
         return []
     
     async def _calculate_collaboration_scores(
@@ -781,7 +829,8 @@ class CreatorDiscovery:
         matches: List[Dict[str, Any]],
         project_requirements: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Calculate collaboration compatibility scores."""        # Implementation for collaboration scoring
+        """Calculate collaboration compatibility scores."""
+        # Implementation for collaboration scoring
         return matches
     
     async def _calculate_creator_trends(
@@ -790,14 +839,16 @@ class CreatorDiscovery:
         time_window: timedelta,
         limit: int
     ) -> List[Dict[str, Any]]:
-        """Calculate trending creators based on activity."""        # Implementation for creator trend calculation
+        """Calculate trending creators based on activity."""
+        # Implementation for creator trend calculation
         return []
     
     async def _deduplicate_creators(
         self,
         creators: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Remove duplicate creators from results."""        seen_ids = set()
+        """Remove duplicate creators from results."""
+        seen_ids = set()
         unique_creators = []
         
         for creator in creators:
@@ -810,9 +861,11 @@ class CreatorDiscovery:
 
 
 class TrendDiscovery:
-    """    Enterprise trend discovery system for identifying emerging trends,
+    """
+    Enterprise trend discovery system for identifying emerging trends,
     viral content patterns, and market opportunities.
-    """    
+    """
+    
     def __init__(
         self, 
         db_session: AsyncSession, 
@@ -831,7 +884,8 @@ class TrendDiscovery:
         geographic_scope: Optional[str] = None,
         limit: int = 100
     ) -> Dict[str, Any]:
-        """        Discover emerging trends across content and creators.
+        """
+        Discover emerging trends across content and creators.
         
         Args:
             category: Optional category filter
@@ -841,7 +895,8 @@ class TrendDiscovery:
             
         Returns:
             Comprehensive trend analysis results
-        """        try:
+        """
+        try:
             cache_key = f"trends:{category or 'all'}:{int(time_window.total_seconds())}:{geographic_scope or 'global'}"
             
             # Check cache
@@ -889,14 +944,16 @@ class TrendDiscovery:
         self,
         content_id: str
     ) -> Dict[str, Any]:
-        """        Predict viral potential of content using ML models.
+        """
+        Predict viral potential of content using ML models.
         
         Args:
             content_id: Content identifier
             
         Returns:
             Viral potential prediction with confidence score
-        """        try:
+        """
+        try:
             cache_key = f"viral_prediction:{content_id}"
             
             # Check cache
@@ -929,7 +986,8 @@ class TrendDiscovery:
         creator_profile: Dict[str, Any],
         time_horizon: timedelta = timedelta(days=30)
     ) -> List[Dict[str, Any]]:
-        """        Identify market opportunities for creators based on trend analysis.
+        """
+        Identify market opportunities for creators based on trend analysis.
         
         Args:
             creator_profile: Creator profile data
@@ -937,7 +995,8 @@ class TrendDiscovery:
             
         Returns:
             List of market opportunities
-        """        try:
+        """
+        try:
             cache_key = f"opportunities:{hash(str(creator_profile))}:{int(time_horizon.total_seconds())}"
             
             # Check cache
@@ -978,7 +1037,8 @@ class TrendDiscovery:
         time_window: timedelta,
         geographic_scope: Optional[str]
     ) -> Dict[str, Any]:
-        """Analyze content trends in specified parameters."""        # Implementation for content trend analysis
+        """Analyze content trends in specified parameters."""
+        # Implementation for content trend analysis
         return {'content_trends': []}
     
     async def _analyze_creator_trends(
@@ -987,7 +1047,8 @@ class TrendDiscovery:
         time_window: timedelta,
         geographic_scope: Optional[str]
     ) -> Dict[str, Any]:
-        """Analyze creator trends and rising influencers."""        # Implementation for creator trend analysis
+        """Analyze creator trends and rising influencers."""
+        # Implementation for creator trend analysis
         return {'creator_trends': []}
     
     async def _analyze_keyword_trends(
@@ -996,7 +1057,8 @@ class TrendDiscovery:
         time_window: timedelta,
         geographic_scope: Optional[str]
     ) -> Dict[str, Any]:
-        """Analyze trending keywords and hashtags."""        # Implementation for keyword trend analysis
+        """Analyze trending keywords and hashtags."""
+        # Implementation for keyword trend analysis
         return {'keyword_trends': []}
     
     async def _analyze_engagement_trends(
@@ -1005,14 +1067,16 @@ class TrendDiscovery:
         time_window: timedelta,
         geographic_scope: Optional[str]
     ) -> Dict[str, Any]:
-        """Analyze engagement pattern trends."""        # Implementation for engagement trend analysis
+        """Analyze engagement pattern trends."""
+        # Implementation for engagement trend analysis
         return {'engagement_trends': []}
     
     async def _combine_trend_analyses(
         self,
         analyses: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Combine multiple trend analyses into unified trends."""        combined_trends = []
+        """Combine multiple trend analyses into unified trends."""
+        combined_trends = []
         
         for analysis in analyses:
             if isinstance(analysis, dict):
@@ -1033,7 +1097,8 @@ class TrendDiscovery:
         trends: List[Dict[str, Any]],
         time_window: timedelta
     ) -> Dict[str, Any]:
-        """Generate comprehensive insights from trend data."""        if not trends:
+        """Generate comprehensive insights from trend data."""
+        if not trends:
             return {}
         
         insights = {
@@ -1047,7 +1112,8 @@ class TrendDiscovery:
         return insights
     
     def _generate_trend_summary(self, trends: List[Dict[str, Any]]) -> str:
-        """Generate a summary of trend analysis."""        if not trends:
+        """Generate a summary of trend analysis."""
+        if not trends:
             return "No significant trends identified."
         
         top_trend = trends[0]
@@ -1056,7 +1122,8 @@ class TrendDiscovery:
         return f"Identified {trend_count} trends. Top trend: {top_trend.get('name', 'Unknown')} with score {top_trend.get('trend_score', 0):.2f}"
     
     def _identify_top_categories(self, trends: List[Dict[str, Any]]) -> List[str]:
-        """Identify top trending categories."""        categories = {}
+        """Identify top trending categories."""
+        categories = {}
         
         for trend in trends:
             category = trend.get('category', 'Other')
@@ -1065,11 +1132,13 @@ class TrendDiscovery:
         return sorted(categories.keys(), key=categories.get, reverse=True)[:5]
     
     def _analyze_growth_patterns(self, trends: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze growth patterns in trends."""        # Implementation for growth pattern analysis
+        """Analyze growth patterns in trends."""
+        # Implementation for growth pattern analysis
         return {}
     
     def _analyze_geographic_distribution(self, trends: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze geographic distribution of trends."""        # Implementation for geographic analysis
+        """Analyze geographic distribution of trends."""
+        # Implementation for geographic analysis
         return {}
     
     def _generate_trend_predictions(
@@ -1077,5 +1146,6 @@ class TrendDiscovery:
         trends: List[Dict[str, Any]], 
         time_window: timedelta
     ) -> List[Dict[str, Any]]:
-        """Generate predictions for trend evolution."""        # Implementation for trend predictions
+        """Generate predictions for trend evolution."""
+        # Implementation for trend predictions
         return []

@@ -5,7 +5,8 @@ recommendations, predictive indexing, and performance-driven adaptive strategies
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import numpy as np
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Set, Tuple, Any
@@ -25,7 +26,8 @@ logger = get_logger(__name__)
 
 
 class AdvancedIndexStrategy(Enum):
-    """Advanced indexing strategies"""    PREDICTIVE = "predictive"
+    """Advanced indexing strategies"""
+    PREDICTIVE = "predictive"
     ADAPTIVE = "adaptive" 
     ML_DRIVEN = "ml_driven"
     WORKLOAD_AWARE = "workload_aware"
@@ -35,7 +37,8 @@ class AdvancedIndexStrategy(Enum):
 
 @dataclass
 class IndexUsagePattern:
-    """Index usage pattern analysis"""    index_name: str
+    """Index usage pattern analysis"""
+    index_name: str
     table_name: str
     usage_frequency: int
     avg_scan_cost: float
@@ -49,7 +52,8 @@ class IndexUsagePattern:
 
 @dataclass
 class WorkloadProfile:
-    """Database workload profile"""    read_write_ratio: float
+    """Database workload profile"""
+    read_write_ratio: float
     peak_hours: List[int]
     query_complexity_distribution: Dict[str, float]
     table_access_patterns: Dict[str, int]
@@ -59,7 +63,8 @@ class WorkloadProfile:
 
 
 class PredictiveIndexManager:
-    """Predictive index management using historical patterns"""    
+    """Predictive index management using historical patterns"""
+    
     def __init__(self, base_optimizer: IndexOptimizer):
         self.base_optimizer = base_optimizer
         self.usage_history: Dict[str, List[IndexUsagePattern]] = defaultdict(list)
@@ -67,11 +72,13 @@ class PredictiveIndexManager:
         self.prediction_models: Dict[str, Any] = {}
         
     async def analyze_usage_patterns(self, engine: AsyncEngine, days_back: int = 30) -> Dict[str, IndexUsagePattern]:
-        """Analyze index usage patterns over time"""        try:
+        """Analyze index usage patterns over time"""
+        try:
             patterns = {}
             
             # Get index usage statistics
-            query = text("""                SELECT 
+            query = text("""
+                SELECT 
                     schemaname,
                     tablename,
                     indexname,
@@ -113,7 +120,8 @@ class PredictiveIndexManager:
             return {}
     
     def _calculate_scan_cost(self, size_bytes: int, scan_count: int) -> float:
-        """Calculate average scan cost"""        if scan_count == 0:
+        """Calculate average scan cost"""
+        if scan_count == 0:
             return 0.0
         
         # Simplified cost calculation based on size and usage
@@ -121,20 +129,24 @@ class PredictiveIndexManager:
         return size_factor / scan_count
     
     def _estimate_maintenance_cost(self, size_bytes: int) -> float:
-        """Estimate index maintenance cost"""        # Larger indexes have higher maintenance costs
+        """Estimate index maintenance cost"""
+        # Larger indexes have higher maintenance costs
         size_mb = size_bytes / (1024 * 1024)
         return size_mb * 0.1  # 10% of size as maintenance factor
     
     async def _get_temporal_usage(self, engine: AsyncEngine, index_name: str) -> Dict[str, int]:
-        """Get temporal usage patterns (simplified)"""        # In a real implementation, you'd query pg_stat_activity or custom logging
+        """Get temporal usage patterns (simplified)"""
+        # In a real implementation, you'd query pg_stat_activity or custom logging
         # For now, return a placeholder pattern
         return {str(hour): 0 for hour in range(24)}
     
     def _calculate_performance_impact(self, usage_count: int, selectivity: float) -> float:
-        """Calculate performance impact score"""        return usage_count * selectivity * 10
+        """Calculate performance impact score"""
+        return usage_count * selectivity * 10
     
     async def predict_index_needs(self, workload_profile: WorkloadProfile) -> List[IndexRecommendation]:
-        """Predict future index needs based on workload patterns"""        recommendations = []
+        """Predict future index needs based on workload patterns"""
+        recommendations = []
         
         try:
             # Analyze growth patterns
@@ -156,7 +168,8 @@ class PredictiveIndexManager:
             return []
     
     def _recommend_growth_indexes(self, profile: WorkloadProfile) -> List[IndexRecommendation]:
-        """Recommend indexes for high-growth scenarios"""        recommendations = []
+        """Recommend indexes for high-growth scenarios"""
+        recommendations = []
         
         # Recommend partitioning-friendly indexes
         for table, access_count in profile.table_access_patterns.items():
@@ -175,7 +188,8 @@ class PredictiveIndexManager:
         return recommendations
     
     def _recommend_peak_optimization_indexes(self, profile: WorkloadProfile) -> List[IndexRecommendation]:
-        """Recommend indexes for peak hour optimization"""        recommendations = []
+        """Recommend indexes for peak hour optimization"""
+        recommendations = []
         
         # Focus on read performance during peak hours
         for table, access_count in profile.table_access_patterns.items():
@@ -193,7 +207,8 @@ class PredictiveIndexManager:
         return recommendations
     
     def _recommend_complexity_indexes(self, profile: WorkloadProfile) -> List[IndexRecommendation]:
-        """Recommend indexes for complex query optimization"""        recommendations = []
+        """Recommend indexes for complex query optimization"""
+        recommendations = []
         
         # Multi-column indexes for complex joins
         for join_pattern, frequency in profile.join_frequency.items():
@@ -213,7 +228,8 @@ class PredictiveIndexManager:
 
 
 class AdaptiveIndexManager:
-    """Adaptive index management that responds to workload changes"""    
+    """Adaptive index management that responds to workload changes"""
+    
     def __init__(self, base_optimizer: IndexOptimizer):
         self.base_optimizer = base_optimizer
         self.adaptation_history: List[Dict[str, Any]] = []
@@ -222,7 +238,8 @@ class AdaptiveIndexManager:
     async def adapt_to_workload_changes(self, engine: AsyncEngine, 
                                       new_workload: WorkloadProfile,
                                       current_workload: WorkloadProfile) -> List[str]:
-        """Adapt indexes based on workload changes"""        adaptations = []
+        """Adapt indexes based on workload changes"""
+        adaptations = []
         
         try:
             # Analyze workload shift
@@ -259,16 +276,19 @@ class AdaptiveIndexManager:
             return []
     
     async def _optimize_for_reads(self, engine: AsyncEngine, workload: WorkloadProfile) -> List[str]:
-        """Optimize indexes for read-heavy workloads"""        optimizations = []
+        """Optimize indexes for read-heavy workloads"""
+        optimizations = []
         
         # Create covering indexes for frequent read patterns
         for table, access_count in workload.table_access_patterns.items():
             if access_count > 500:  # High read frequency
-                create_sql = f"""                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_{table}_covering_read
+                create_sql = f"""
+                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_{table}_covering_read
                 ON {table} (user_id, created_at) 
                 INCLUDE (status, metadata)
                 WHERE active = true
-                """                
+                """
+                
                 try:
                     async with engine.begin() as conn:
                         await conn.execute(text(create_sql))
@@ -279,7 +299,8 @@ class AdaptiveIndexManager:
         return optimizations
     
     async def _optimize_for_writes(self, engine: AsyncEngine, workload: WorkloadProfile) -> List[str]:
-        """Optimize indexes for write-heavy workloads"""        optimizations = []
+        """Optimize indexes for write-heavy workloads"""
+        optimizations = []
         
         # Drop unused indexes that slow down writes
         unused_indexes = await self._find_unused_indexes(engine)
@@ -296,16 +317,19 @@ class AdaptiveIndexManager:
         return optimizations
     
     async def _adapt_for_growth(self, engine: AsyncEngine, workload: WorkloadProfile) -> List[str]:
-        """Adapt indexes for data growth"""        adaptations = []
+        """Adapt indexes for data growth"""
+        adaptations = []
         
         # Create BRIN indexes for time-series data
         time_series_tables = ['content_performance', 'revenue_tracking', 'crawl_results']
         
         for table in time_series_tables:
             if table in workload.table_access_patterns:
-                brin_sql = f"""                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_{table}_created_at_brin
+                brin_sql = f"""
+                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_{table}_created_at_brin
                 ON {table} USING BRIN (created_at)
-                """                
+                """
+                
                 try:
                     async with engine.begin() as conn:
                         await conn.execute(text(brin_sql))
@@ -316,7 +340,9 @@ class AdaptiveIndexManager:
         return adaptations
     
     async def _find_unused_indexes(self, engine: AsyncEngine) -> List[str]:
-        """Find unused indexes"""        query = text("""            SELECT indexname 
+        """Find unused indexes"""
+        query = text("""
+            SELECT indexname 
             FROM pg_stat_user_indexes 
             WHERE schemaname = 'public' 
             AND idx_scan = 0
@@ -334,17 +360,20 @@ class AdaptiveIndexManager:
 
 
 class TenantAwareIndexManager:
-    """Multi-tenant aware index management"""    
+    """Multi-tenant aware index management"""
+    
     def __init__(self, base_optimizer: IndexOptimizer):
         self.base_optimizer = base_optimizer
         self.tenant_patterns: Dict[str, Dict[str, Any]] = {}
         
     async def analyze_tenant_patterns(self, engine: AsyncEngine) -> Dict[str, Any]:
-        """Analyze per-tenant access patterns"""        try:
+        """Analyze per-tenant access patterns"""
+        try:
             patterns = {}
             
             # Get tenant usage statistics
-            query = text("""                SELECT 
+            query = text("""
+                SELECT 
                     tenant_id,
                     COUNT(*) as query_count,
                     AVG(EXTRACT(EPOCH FROM (updated_at - created_at))) as avg_processing_time
@@ -379,18 +408,22 @@ class TenantAwareIndexManager:
     async def create_tenant_specific_indexes(self, engine: AsyncEngine, 
                                            tenant_id: str, 
                                            pattern: Dict[str, Any]) -> List[str]:
-        """Create tenant-specific indexes"""        created_indexes = []
+        """Create tenant-specific indexes"""
+        created_indexes = []
         
         if pattern.get('priority') == 'high':
             # High-priority tenants get dedicated indexes
             tenant_indexes = [
-                f"""                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_users_tenant_{tenant_id}
+                f"""
+                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_users_tenant_{tenant_id}
                 ON users (tenant_id, id) WHERE tenant_id = '{tenant_id}'
                 """,
-                f"""                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_content_tenant_{tenant_id}
+                f"""
+                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_content_tenant_{tenant_id}
                 ON content (user_id, created_at) 
                 WHERE user_id IN (SELECT id FROM users WHERE tenant_id = '{tenant_id}')
-                """            ]
+                """
+            ]
             
             for index_sql in tenant_indexes:
                 try:
@@ -404,14 +437,16 @@ class TenantAwareIndexManager:
 
 
 class CostOptimizedIndexManager:
-    """Cost-optimized index management"""    
+    """Cost-optimized index management"""
+    
     def __init__(self, base_optimizer: IndexOptimizer):
         self.base_optimizer = base_optimizer
         self.cost_models: Dict[str, Any] = {}
         
     async def optimize_index_costs(self, engine: AsyncEngine, 
                                  budget_constraint: float = 100.0) -> List[Dict[str, Any]]:
-        """Optimize indexes within budget constraints (in MB)"""        try:
+        """Optimize indexes within budget constraints (in MB)"""
+        try:
             # Get current index costs
             current_indexes = await self._get_index_costs(engine)
             
@@ -466,7 +501,9 @@ class CostOptimizedIndexManager:
             return []
     
     async def _get_index_costs(self, engine: AsyncEngine) -> Dict[str, Dict[str, Any]]:
-        """Get index cost information"""        query = text("""            SELECT 
+        """Get index cost information"""
+        query = text("""
+            SELECT 
                 indexname,
                 idx_scan as usage_count,
                 pg_relation_size(indexrelid) / (1024 * 1024) as size_mb
@@ -495,7 +532,8 @@ class CostOptimizedIndexManager:
 
 
 class AdvancedIndexStrategiesManager:
-    """Main manager for advanced index strategies"""    
+    """Main manager for advanced index strategies"""
+    
     def __init__(self, base_optimizer: IndexOptimizer):
         self.base_optimizer = base_optimizer
         self.predictive_manager = PredictiveIndexManager(base_optimizer)
@@ -509,7 +547,8 @@ class AdvancedIndexStrategiesManager:
     async def execute_strategy(self, engine: AsyncEngine, 
                              strategy: AdvancedIndexStrategy,
                              parameters: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Execute specific indexing strategy"""        parameters = parameters or {}
+        """Execute specific indexing strategy"""
+        parameters = parameters or {}
         results = {'strategy': strategy.value, 'timestamp': datetime.now()}
         
         try:
@@ -566,7 +605,8 @@ class AdvancedIndexStrategiesManager:
             return results
     
     async def auto_select_strategy(self, engine: AsyncEngine) -> AdvancedIndexStrategy:
-        """Automatically select best strategy based on current conditions"""        try:
+        """Automatically select best strategy based on current conditions"""
+        try:
             # Analyze current database state
             index_stats = self.base_optimizer.get_stats()
             
@@ -588,7 +628,8 @@ class AdvancedIndexStrategiesManager:
             return AdvancedIndexStrategy.ADAPTIVE
     
     def get_strategy_stats(self) -> Dict[str, Any]:
-        """Get strategy execution statistics"""        return {
+        """Get strategy execution statistics"""
+        return {
             'current_strategy': self.current_strategy.value,
             'total_executions': len(self.strategy_history),
             'strategy_distribution': Counter(

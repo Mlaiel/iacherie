@@ -3,7 +3,8 @@ User authentication, registration, and authorization endpoints.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from typing import Dict, Any, Optional
+"""
+from typing import Dict, Any, Optional
 from datetime import datetime, timedelta
 
 from fastapi import APIRouter, Depends, HTTPException, status, Body
@@ -74,7 +75,8 @@ security = HTTPBearer(auto_error=False)
 
 @router.post("/register", response_model=TokenResponse, status_code=status.HTTP_201_CREATED)
 async def register_user(user_data: UserRegistration):
-    """Register a new user account"""    try:
+    """Register a new user account"""
+    try:
         # Validate terms acceptance
         if not user_data.terms_accepted:
             raise HTTPException(
@@ -103,7 +105,8 @@ async def register_user(user_data: UserRegistration):
             tenant_id = security_manager.multitenant_manager.get_tenant_id(user_id)
             
             await session.execute(
-                """                INSERT INTO users 
+                """
+                INSERT INTO users 
                 (id, email, username, password_hash, first_name, last_name, 
                  creator_type, tenant_id, created_at, is_verified, subscription_tier)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -156,11 +159,13 @@ async def register_user(user_data: UserRegistration):
 
 @router.post("/login", response_model=TokenResponse)
 async def login_user(credentials: UserLogin):
-    """Authenticate user and return tokens"""    try:
+    """Authenticate user and return tokens"""
+    try:
         async with database_manager.get_postgres_session() as session:
             # Get user by email
             result = await session.execute(
-                """                SELECT id, email, username, password_hash, first_name, last_name, 
+                """
+                SELECT id, email, username, password_hash, first_name, last_name, 
                        creator_type, tenant_id, is_verified, subscription_tier, created_at
                 FROM users WHERE email = %s AND active = true
                 """,
@@ -227,7 +232,8 @@ async def login_user(credentials: UserLogin):
 
 @router.post("/refresh", response_model=TokenResponse)
 async def refresh_token(refresh_token: str = Body(..., embed=True)):
-    """Refresh access token using refresh token"""    try:
+    """Refresh access token using refresh token"""
+    try:
         # Generate new access token
         new_access_token = security_manager.jwt_manager.refresh_access_token(refresh_token)
         
@@ -243,7 +249,8 @@ async def refresh_token(refresh_token: str = Body(..., embed=True)):
             # Reload user data from database
             async with database_manager.get_postgres_session() as session:
                 result = await session.execute(
-                    """                    SELECT email, username, first_name, last_name, creator_type,
+                    """
+                    SELECT email, username, first_name, last_name, creator_type,
                            tenant_id, is_verified, subscription_tier
                     FROM users WHERE id = %s AND active = true
                     """,
@@ -295,7 +302,8 @@ async def refresh_token(refresh_token: str = Body(..., embed=True)):
 async def get_user_profile(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
-    """Get current user profile"""    try:
+    """Get current user profile"""
+    try:
         user_id = current_user["user_id"]
         
         # Try cache first
@@ -308,7 +316,8 @@ async def get_user_profile(
         # Get from database
         async with database_manager.get_postgres_session() as session:
             result = await session.execute(
-                """                SELECT id, email, username, first_name, last_name, creator_type,
+                """
+                SELECT id, email, username, first_name, last_name, creator_type,
                        created_at, is_verified, subscription_tier
                 FROM users WHERE id = %s AND active = true
                 """,
@@ -354,7 +363,8 @@ async def update_user_profile(
     profile_updates: Dict[str, Any] = Body(...),
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
-    """Update user profile"""    try:
+    """Update user profile"""
+    try:
         user_id = current_user["user_id"]
         
         # Allowed fields for update
@@ -414,7 +424,8 @@ async def change_password(
     password_data: PasswordChange,
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
-    """Change user password"""    try:
+    """Change user password"""
+    try:
         user_id = current_user["user_id"]
         
         # Get current password hash
@@ -469,7 +480,8 @@ async def change_password(
 async def logout_user(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
-    """Logout user (invalidate tokens)"""    try:
+    """Logout user (invalidate tokens)"""
+    try:
         user_id = current_user["user_id"]
         
         # Invalidate cached user data
@@ -492,7 +504,8 @@ async def logout_user(
 
 
 async def _get_user_permissions(subscription_tier: str) -> list:
-    """Get user permissions based on subscription tier"""    base_permissions = ["content:create", "content:read", "protection:basic"]
+    """Get user permissions based on subscription tier"""
+    base_permissions = ["content:create", "content:read", "protection:basic"]
     
     if subscription_tier == "premium":
         base_permissions.extend([

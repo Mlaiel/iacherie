@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 import uuid
 from datetime import datetime, timezone, timedelta
@@ -28,7 +29,8 @@ from ...utils.data_aggregation import DataAggregator
 logger = logging.getLogger(__name__)
 
 class SurveillanceTarget(Enum):
-    """Market surveillance target types"""    COMPETITORS = "competitors"
+    """Market surveillance target types"""
+    COMPETITORS = "competitors"
     MARKET_TRENDS = "market_trends"
     PRICING_CHANGES = "pricing_changes"
     PLATFORM_UPDATES = "platform_updates"
@@ -40,7 +42,8 @@ class SurveillanceTarget(Enum):
     INVESTMENT_FLOWS = "investment_flows"
 
 class MarketEventType(Enum):
-    """Types of market events"""    COMPETITOR_LAUNCH = "competitor_launch"
+    """Types of market events"""
+    COMPETITOR_LAUNCH = "competitor_launch"
     PLATFORM_ALGORITHM_CHANGE = "platform_algorithm_change"
     PRICING_DISRUPTION = "pricing_disruption"
     VIRAL_CONTENT_EMERGENCE = "viral_content_emergence"
@@ -52,7 +55,8 @@ class MarketEventType(Enum):
     INVESTMENT_ROUND = "investment_round"
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    LOW = "low"
+    """Alert severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -60,7 +64,8 @@ class AlertSeverity(Enum):
 
 @dataclass
 class SurveillanceTarget:
-    """Market surveillance target configuration"""    target_id: str
+    """Market surveillance target configuration"""
+    target_id: str
     target_name: str
     target_type: str
     monitoring_keywords: List[str]
@@ -73,7 +78,8 @@ class SurveillanceTarget:
 
 @dataclass
 class MarketEvent:
-    """Market event data structure"""    event_id: str
+    """Market event data structure"""
+    event_id: str
     event_type: MarketEventType
     event_name: str
     description: str
@@ -110,7 +116,8 @@ class MarketEvent:
 
 @dataclass
 class PriceMonitoring:
-    """Price monitoring and analysis data"""    monitoring_id: str
+    """Price monitoring and analysis data"""
+    monitoring_id: str
     product_category: str
     monitoring_period: str
     
@@ -141,7 +148,8 @@ class PriceMonitoring:
 
 @dataclass
 class DemandAnalysis:
-    """Market demand analysis data"""    analysis_id: str
+    """Market demand analysis data"""
+    analysis_id: str
     market_segment: str
     analysis_period: str
     
@@ -177,7 +185,8 @@ class DemandAnalysis:
 
 @dataclass
 class SupplyChainIntelligence:
-    """Supply chain intelligence data"""    intelligence_id: str
+    """Supply chain intelligence data"""
+    intelligence_id: str
     supply_chain_segment: str
     monitoring_period: str
     
@@ -207,7 +216,8 @@ class SupplyChainIntelligence:
 
 @dataclass
 class MarketAlerts:
-    """Market alert system data"""    alert_id: str
+    """Market alert system data"""
+    alert_id: str
     alert_type: str
     severity: AlertSeverity
     title: str
@@ -232,11 +242,13 @@ class MarketAlerts:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class MarketSurveillanceEngine:
-    """    Ultra-Advanced Market Surveillance Engine
+    """
+    Ultra-Advanced Market Surveillance Engine
     
     Provides comprehensive real-time market monitoring, event detection,
     and strategic intelligence for proactive market response.
-    """    
+    """
+    
     def __init__(self):
         self.real_time_monitor = RealTimeMonitor()
         self.alert_system = AlertSystem()
@@ -274,7 +286,8 @@ class MarketSurveillanceEngine:
         monitoring_period: str = "real_time",
         geographic_scope: str = "global"
     ) -> Dict[str, Any]:
-        """        Conduct comprehensive market surveillance
+        """
+        Conduct comprehensive market surveillance
         
         Args:
             market_segment: Target market segment
@@ -283,7 +296,8 @@ class MarketSurveillanceEngine:
             
         Returns:
             Comprehensive market surveillance results
-        """        try:
+        """
+        try:
             surveillance_id = str(uuid.uuid4())
             
             # Setup surveillance targets
@@ -343,7 +357,8 @@ class MarketSurveillanceEngine:
         competitors: List[str],
         monitoring_duration: str = "continuous"
     ) -> PriceMonitoring:
-        """        Monitor price movements across market
+        """
+        Monitor price movements across market
         
         Args:
             product_categories: Categories to monitor
@@ -352,7 +367,8 @@ class MarketSurveillanceEngine:
             
         Returns:
             PriceMonitoring: Comprehensive price monitoring results
-        """        try:
+        """
+        try:
             monitoring_id = str(uuid.uuid4())
             
             # Collect current pricing data
@@ -407,7 +423,8 @@ class MarketSurveillanceEngine:
         market_segment: str,
         analysis_period: str = "quarterly"
     ) -> DemandAnalysis:
-        """        Analyze market demand patterns and forecasts
+        """
+        Analyze market demand patterns and forecasts
         
         Args:
             market_segment: Market segment to analyze
@@ -415,7 +432,8 @@ class MarketSurveillanceEngine:
             
         Returns:
             DemandAnalysis: Comprehensive demand analysis
-        """        try:
+        """
+        try:
             analysis_id = str(uuid.uuid4())
             
             # Collect demand data
@@ -467,14 +485,16 @@ class MarketSurveillanceEngine:
         self,
         supply_chain_segments: List[str]
     ) -> SupplyChainIntelligence:
-        """        Track supply chain intelligence and performance
+        """
+        Track supply chain intelligence and performance
         
         Args:
             supply_chain_segments: Supply chain segments to monitor
             
         Returns:
             SupplyChainIntelligence: Comprehensive supply chain intelligence
-        """        try:
+        """
+        try:
             intelligence_id = str(uuid.uuid4())
             
             # Map supply chain
@@ -526,7 +546,8 @@ class MarketSurveillanceEngine:
         market_segment: str,
         geographic_scope: str
     ) -> List[SurveillanceTarget]:
-        """Setup surveillance targets for monitoring"""        targets = []
+        """Setup surveillance targets for monitoring"""
+        targets = []
         
         # Create surveillance targets for different categories
         target_configs = [
@@ -568,7 +589,8 @@ class MarketSurveillanceEngine:
         return targets
     
     async def _initialize_monitoring(self, targets: List[SurveillanceTarget]) -> Dict[str, Any]:
-        """Initialize monitoring for surveillance targets"""        monitors = {}
+        """Initialize monitoring for surveillance targets"""
+        monitors = {}
         
         for target in targets:
             monitor_config = {
@@ -586,7 +608,8 @@ class MarketSurveillanceEngine:
         targets: List[SurveillanceTarget],
         monitoring_period: str
     ) -> Dict[str, Any]:
-        """Collect market intelligence data"""        intelligence_data = {
+        """Collect market intelligence data"""
+        intelligence_data = {
             'competitor_activities': await self._collect_competitor_data(targets),
             'market_trends': await self._collect_trend_data(targets),
             'platform_updates': await self._collect_platform_data(targets),
@@ -598,7 +621,8 @@ class MarketSurveillanceEngine:
         return intelligence_data
     
     async def _process_market_events(self, intelligence_data: Dict[str, Any]) -> List[MarketEvent]:
-        """Process and analyze market events"""        events = []
+        """Process and analyze market events"""
+        events = []
         
         # Mock event processing
         event_types = [
@@ -638,7 +662,8 @@ class MarketSurveillanceEngine:
         return events
     
     async def _generate_market_alerts(self, events: List[MarketEvent]) -> List[MarketAlerts]:
-        """Generate market alerts based on events"""        alerts = []
+        """Generate market alerts based on events"""
+        alerts = []
         
         # Create alerts for high-impact events
         high_impact_events = [e for e in events if e.impact_score > 0.75]
@@ -667,26 +692,33 @@ class MarketSurveillanceEngine:
     
     # Placeholder methods for data collection
     async def _collect_competitor_data(self, targets: List[SurveillanceTarget]) -> Dict[str, Any]:
-        """Collect competitor activity data"""        return {'activities_detected': 5, 'new_launches': 2, 'partnership_announcements': 1}
+        """Collect competitor activity data"""
+        return {'activities_detected': 5, 'new_launches': 2, 'partnership_announcements': 1}
     
     async def _collect_trend_data(self, targets: List[SurveillanceTarget]) -> Dict[str, Any]:
-        """Collect market trend data"""        return {'emerging_trends': 3, 'viral_content': 8, 'trend_momentum': 0.75}
+        """Collect market trend data"""
+        return {'emerging_trends': 3, 'viral_content': 8, 'trend_momentum': 0.75}
     
     async def _collect_platform_data(self, targets: List[SurveillanceTarget]) -> Dict[str, Any]:
-        """Collect platform update data"""        return {'algorithm_updates': 2, 'feature_releases': 4, 'policy_changes': 1}
+        """Collect platform update data"""
+        return {'algorithm_updates': 2, 'feature_releases': 4, 'policy_changes': 1}
     
     async def _collect_pricing_data(self, targets: List[SurveillanceTarget]) -> Dict[str, Any]:
-        """Collect pricing change data"""        return {'price_changes': 6, 'avg_change': 0.12, 'competitive_responses': 3}
+        """Collect pricing change data"""
+        return {'price_changes': 6, 'avg_change': 0.12, 'competitive_responses': 3}
     
     async def _collect_sentiment_data(self, targets: List[SurveillanceTarget]) -> Dict[str, Any]:
-        """Collect consumer sentiment data"""        return {'overall_sentiment': 0.68, 'sentiment_trend': 'positive', 'volatility': 0.25}
+        """Collect consumer sentiment data"""
+        return {'overall_sentiment': 0.68, 'sentiment_trend': 'positive', 'volatility': 0.25}
     
     async def _collect_news_data(self, targets: List[SurveillanceTarget]) -> Dict[str, Any]:
-        """Collect industry news data"""        return {'news_articles': 24, 'major_announcements': 3, 'regulatory_news': 1}
+        """Collect industry news data"""
+        return {'news_articles': 24, 'major_announcements': 3, 'regulatory_news': 1}
     
     # Placeholder methods for analysis
     async def _generate_market_overview(self, intelligence_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate market overview from intelligence data"""        return {
+        """Generate market overview from intelligence data"""
+        return {
             'market_activity_level': 'high',
             'competitive_intensity': 0.75,
             'innovation_pace': 'accelerating',
@@ -694,7 +726,8 @@ class MarketSurveillanceEngine:
         }
     
     async def _analyze_competitive_activities(self, intelligence_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze competitive activities"""        return {
+        """Analyze competitive activities"""
+        return {
             'new_market_entrants': 2,
             'product_launches': 5,
             'strategic_partnerships': 3,
@@ -702,28 +735,32 @@ class MarketSurveillanceEngine:
         }
     
     async def _identify_market_trends(self, intelligence_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Identify current market trends"""        return {
+        """Identify current market trends"""
+        return {
             'trending_topics': ['ai_content', 'short_videos', 'live_streaming'],
             'growth_areas': ['creator_economy', 'monetization_tools'],
             'declining_areas': ['traditional_media']
         }
     
     async def _assess_risk_indicators(self, intelligence_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess market risk indicators"""        return {
+        """Assess market risk indicators"""
+        return {
             'overall_risk_level': 'moderate',
             'key_risks': ['platform_dependency', 'regulatory_changes'],
             'risk_mitigation': ['diversification', 'compliance_monitoring']
         }
     
     async def _detect_opportunity_signals(self, intelligence_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Detect market opportunity signals"""        return {
+        """Detect market opportunity signals"""
+        return {
             'opportunity_score': 0.78,
             'key_opportunities': ['emerging_platforms', 'new_demographics', 'technology_adoption'],
             'investment_areas': ['ai_tools', 'content_creation', 'audience_analytics']
         }
     
     async def _generate_intelligence_summary(self, intelligence_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate intelligence summary"""        return {
+        """Generate intelligence summary"""
+        return {
             'key_findings': ['Market showing strong growth', 'AI adoption accelerating', 'New platforms gaining traction'],
             'strategic_implications': ['Invest in AI capabilities', 'Expand platform presence', 'Monitor regulatory changes'],
             'confidence_level': 0.85
@@ -734,7 +771,8 @@ class MarketSurveillanceEngine:
         events: List[MarketEvent],
         alerts: List[MarketAlerts]
     ) -> List[str]:
-        """Generate surveillance-based recommendations"""        return [
+        """Generate surveillance-based recommendations"""
+        return [
             'Increase monitoring frequency during high-activity periods',
             'Develop rapid response protocols for critical alerts',
             'Expand surveillance coverage to emerging platforms',
@@ -743,64 +781,81 @@ class MarketSurveillanceEngine:
         ]
     
     async def _cache_surveillance_results(self, surveillance_id: str, results: Dict[str, Any]) -> None:
-        """Cache surveillance results"""        self.surveillance_cache[surveillance_id] = results
+        """Cache surveillance results"""
+        self.surveillance_cache[surveillance_id] = results
     
     # Price monitoring methods (simplified implementations)
     async def _collect_current_prices(self, categories: List[str], competitors: List[str]) -> Dict[str, float]:
-        """Collect current market prices"""        return {f"{cat}_{comp}": 10.0 + hash(f"{cat}_{comp}") % 50 for cat in categories for comp in competitors}
+        """Collect current market prices"""
+        return {f"{cat}_{comp}": 10.0 + hash(f"{cat}_{comp}") % 50 for cat in categories for comp in competitors}
     
     async def _analyze_price_trends(self, categories: List[str], competitors: List[str]) -> Dict[str, float]:
-        """Analyze price trends"""        return {f"{cat}_{comp}": 0.05 + (hash(f"{cat}_{comp}") % 20) / 100 for cat in categories for comp in competitors}
+        """Analyze price trends"""
+        return {f"{cat}_{comp}": 0.05 + (hash(f"{cat}_{comp}") % 20) / 100 for cat in categories for comp in competitors}
     
     async def _analyze_competitive_pricing(self, prices: Dict[str, float], competitors: List[str]) -> Dict[str, Dict[str, float]]:
-        """Analyze competitive pricing"""        return {comp: {k: v for k, v in prices.items() if comp in k} for comp in competitors}
+        """Analyze competitive pricing"""
+        return {comp: {k: v for k, v in prices.items() if comp in k} for comp in competitors}
     
     async def _generate_price_intelligence(self, prices: Dict[str, float], trends: Dict[str, float], competitive: Dict[str, Dict[str, float]]) -> Dict[str, Any]:
-        """Generate price intelligence"""        return {
+        """Generate price intelligence"""
+        return {
             'opportunities': ['Optimize premium pricing', 'Explore bundle strategies'],
             'recommendations': ['Monitor competitor responses', 'Test price elasticity']
         }
     
     async def _calculate_price_volatility(self, prices: Dict[str, float]) -> Dict[str, float]:
-        """Calculate price volatility metrics"""        return {k: 0.15 for k in prices.keys()}
+        """Calculate price volatility metrics"""
+        return {k: 0.15 for k in prices.keys()}
     
     async def _determine_price_positioning(self, prices: Dict[str, float], competitive: Dict[str, Dict[str, float]]) -> Dict[str, str]:
-        """Determine price positioning"""        return {k: 'competitive' for k in prices.keys()}
+        """Determine price positioning"""
+        return {k: 'competitive' for k in prices.keys()}
     
     async def _identify_pricing_strategies(self, competitive: Dict[str, Dict[str, float]]) -> Dict[str, str]:
-        """Identify competitor pricing strategies"""        return {comp: 'penetration_pricing' for comp in competitive.keys()}
+        """Identify competitor pricing strategies"""
+        return {comp: 'penetration_pricing' for comp in competitive.keys()}
     
     async def _segment_price_market(self, prices: Dict[str, float]) -> Dict[str, List[str]]:
-        """Segment price market"""        return {'premium': [], 'mid_market': list(prices.keys()), 'budget': []}
+        """Segment price market"""
+        return {'premium': [], 'mid_market': list(prices.keys()), 'budget': []}
     
     async def _estimate_demand_elasticity(self, categories: List[str]) -> Dict[str, float]:
-        """Estimate demand elasticity"""        return {cat: -1.2 for cat in categories}
+        """Estimate demand elasticity"""
+        return {cat: -1.2 for cat in categories}
     
     async def _analyze_price_sensitivity(self, prices: Dict[str, float]) -> Dict[str, Any]:
-        """Analyze price sensitivity"""        return {'sensitivity_score': 0.65, 'key_factors': ['quality', 'brand', 'features']}
+        """Analyze price sensitivity"""
+        return {'sensitivity_score': 0.65, 'key_factors': ['quality', 'brand', 'features']}
     
     async def _generate_price_alerts(self, prices: Dict[str, float], trends: Dict[str, float]) -> List[Dict[str, Any]]:
-        """Generate price alerts"""        return [{'type': 'price_increase', 'product': k, 'change': v} for k, v in trends.items() if v > 0.1]
+        """Generate price alerts"""
+        return [{'type': 'price_increase', 'product': k, 'change': v} for k, v in trends.items() if v > 0.1]
     
     # Demand analysis methods (simplified implementations)
     async def _collect_demand_data(self, market_segment: str) -> Dict[str, Any]:
-        """Collect market demand data"""        return {'current_level': 100000, 'growth_rate': 0.15, 'seasonality': 0.25}
+        """Collect market demand data"""
+        return {'current_level': 100000, 'growth_rate': 0.15, 'seasonality': 0.25}
     
     async def _analyze_demand_trends(self, demand_data: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze demand trends"""        return {'short_term': 0.12, 'medium_term': 0.18, 'long_term': 0.25}
+        """Analyze demand trends"""
+        return {'short_term': 0.12, 'medium_term': 0.18, 'long_term': 0.25}
     
     async def _identify_demand_drivers(self, demand_data: Dict[str, Any]) -> List[str]:
-        """Identify demand drivers"""        return ['economic_growth', 'technology_adoption', 'demographic_changes']
+        """Identify demand drivers"""
+        return ['economic_growth', 'technology_adoption', 'demographic_changes']
     
     async def _analyze_supply_situation(self, market_segment: str) -> Dict[str, Any]:
-        """Analyze supply situation"""        return {
+        """Analyze supply situation"""
+        return {
             'levels': {'total': 95000, 'available': 85000},
             'constraints': ['production_capacity', 'distribution_limits'],
             'health_metrics': {'efficiency': 0.85, 'reliability': 0.92}
         }
     
     async def _generate_demand_forecasts(self, demand_data: Dict[str, Any], trends: Dict[str, float]) -> Dict[str, Any]:
-        """Generate demand forecasts"""        return {
+        """Generate demand forecasts"""
+        return {
             'point_forecasts': {'1_month': 105000, '3_months': 118000, '1_year': 150000},
             'confidence_intervals': {'1_month': (95000, 115000), '3_months': (108000, 128000)},
             'scenarios': {'optimistic': {'1_year': 180000}, 'pessimistic': {'1_year': 120000}}

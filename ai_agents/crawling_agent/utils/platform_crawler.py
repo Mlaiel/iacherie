@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import json
@@ -67,7 +68,8 @@ from .web_crawler import WebCrawler
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Supported platform types"""    TWITTER = "twitter"
+    """Supported platform types"""
+    TWITTER = "twitter"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
     YOUTUBE = "youtube"
@@ -85,14 +87,16 @@ class PlatformType(Enum):
     TWITCH = "twitch"
 
 class CrawlingMethod(Enum):
-    """Platform crawling methods"""    API = "api"
+    """Platform crawling methods"""
+    API = "api"
     WEB_SCRAPING = "web_scraping"
     RSS = "rss"
     WEBHOOK = "webhook"
     HYBRID = "hybrid"
 
 class ContentCategory(Enum):
-    """Content categories for filtering"""    TEXT = "text"
+    """Content categories for filtering"""
+    TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
@@ -106,7 +110,8 @@ class ContentCategory(Enum):
 
 @dataclass
 class PlatformConfig:
-    """Platform-specific configuration"""    platform_type: PlatformType
+    """Platform-specific configuration"""
+    platform_type: PlatformType
     crawling_method: CrawlingMethod
     api_keys: Dict[str, str] = field(default_factory=dict)
     rate_limits: Dict[str, int] = field(default_factory=dict)
@@ -120,7 +125,8 @@ class PlatformConfig:
 
 @dataclass
 class PlatformContent:
-    """Standardized platform content structure"""    platform: PlatformType
+    """Standardized platform content structure"""
+    platform: PlatformType
     content_id: str
     content_type: ContentCategory
     
@@ -161,11 +167,13 @@ class PlatformContent:
     extraction_method: CrawlingMethod = CrawlingMethod.API
 
 class PlatformCrawler:
-    """    Advanced Multi-Platform Content Crawler
+    """
+    Advanced Multi-Platform Content Crawler
     
     Handles crawling and content extraction from major social media and content platforms
     using APIs, web scraping, and hybrid approaches with rate limiting and authentication.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, PlatformConfig]] = None):
         self.platform_configs = config or {}
         
@@ -187,7 +195,8 @@ class PlatformCrawler:
         logger.info("Platform Crawler initialized")
 
     async def initialize(self) -> None:
-        """Initialize platform clients and connections"""        try:
+        """Initialize platform clients and connections"""
+        try:
             # Initialize HTTP session
             connector = aiohttp.TCPConnector(
                 limit=100,
@@ -216,7 +225,8 @@ class PlatformCrawler:
             raise PlatformCrawlingError(f"Initialization failed: {str(e)}")
 
     async def _initialize_platform_clients(self) -> None:
-        """Initialize API clients for supported platforms"""        
+        """Initialize API clients for supported platforms"""
+        
         # Twitter API v2
         if PlatformType.TWITTER in self.platform_configs:
             config = self.platform_configs[PlatformType.TWITTER]
@@ -250,7 +260,8 @@ class PlatformCrawler:
         logger.info(f"Initialized {len(self.platform_clients)} platform clients")
 
     async def _setup_rate_limiters(self) -> None:
-        """Setup rate limiters for each platform"""        for platform_type, config in self.platform_configs.items():
+        """Setup rate limiters for each platform"""
+        for platform_type, config in self.platform_configs.items():
             rate_limits = config.rate_limits
             
             # Default rate limits if not specified
@@ -264,7 +275,8 @@ class PlatformCrawler:
             )
 
     def _get_default_rate_limits(self, platform: PlatformType) -> Dict[str, int]:
-        """Get default rate limits for platforms"""        defaults = {
+        """Get default rate limits for platforms"""
+        defaults = {
             PlatformType.TWITTER: {'requests_per_minute': 300, 'burst_limit': 15},
             PlatformType.INSTAGRAM: {'requests_per_minute': 200, 'burst_limit': 10},
             PlatformType.YOUTUBE: {'requests_per_minute': 100, 'burst_limit': 5},
@@ -275,7 +287,8 @@ class PlatformCrawler:
 
     async def crawl_platform(self, platform: PlatformType, query: Dict[str, Any],
                            max_results: int = 100) -> List[PlatformContent]:
-        """Crawl specific platform for content"""        crawl_id = f"{platform.value}_{int(time.time())}"
+        """Crawl specific platform for content"""
+        crawl_id = f"{platform.value}_{int(time.time())}"
         self.active_crawls.add(crawl_id)
         
         try:
@@ -312,7 +325,8 @@ class PlatformCrawler:
 
     async def _crawl_via_api(self, platform: PlatformType, query: Dict[str, Any],
                            max_results: int) -> List[PlatformContent]:
-        """Crawl platform using official API"""        if platform == PlatformType.TWITTER:
+        """Crawl platform using official API"""
+        if platform == PlatformType.TWITTER:
             return await self._crawl_twitter_api(query, max_results)
         elif platform == PlatformType.YOUTUBE:
             return await self._crawl_youtube_api(query, max_results)
@@ -325,7 +339,8 @@ class PlatformCrawler:
             return []
 
     async def _crawl_twitter_api(self, query: Dict[str, Any], max_results: int) -> List[PlatformContent]:
-        """Crawl Twitter using API v2"""        results = []
+        """Crawl Twitter using API v2"""
+        results = []
         
         if PlatformType.TWITTER not in self.platform_clients:
             return results
@@ -397,7 +412,8 @@ class PlatformCrawler:
         return results
 
     async def _crawl_youtube_api(self, query: Dict[str, Any], max_results: int) -> List[PlatformContent]:
-        """Crawl YouTube using Data API v3"""        results = []
+        """Crawl YouTube using Data API v3"""
+        results = []
         
         if PlatformType.YOUTUBE not in self.platform_clients:
             return results
@@ -483,7 +499,8 @@ class PlatformCrawler:
         return results
 
     async def _crawl_spotify_api(self, query: Dict[str, Any], max_results: int) -> List[PlatformContent]:
-        """Crawl Spotify using Web API"""        results = []
+        """Crawl Spotify using Web API"""
+        results = []
         
         if PlatformType.SPOTIFY not in self.platform_clients:
             return results
@@ -528,7 +545,8 @@ class PlatformCrawler:
         return results
 
     def _process_spotify_track(self, track: Dict) -> PlatformContent:
-        """Process Spotify track data"""        artists = [artist['name'] for artist in track.get('artists', [])]
+        """Process Spotify track data"""
+        artists = [artist['name'] for artist in track.get('artists', [])]
         
         return PlatformContent(
             platform=PlatformType.SPOTIFY,
@@ -556,7 +574,8 @@ class PlatformCrawler:
         )
 
     def _process_spotify_album(self, album: Dict) -> PlatformContent:
-        """Process Spotify album data"""        artists = [artist['name'] for artist in album.get('artists', [])]
+        """Process Spotify album data"""
+        artists = [artist['name'] for artist in album.get('artists', [])]
         
         return PlatformContent(
             platform=PlatformType.SPOTIFY,
@@ -582,7 +601,8 @@ class PlatformCrawler:
         )
 
     def _process_spotify_artist(self, artist: Dict) -> PlatformContent:
-        """Process Spotify artist data"""        return PlatformContent(
+        """Process Spotify artist data"""
+        return PlatformContent(
             platform=PlatformType.SPOTIFY,
             content_id=artist['id'],
             content_type=ContentCategory.TEXT,
@@ -604,7 +624,8 @@ class PlatformCrawler:
         )
 
     def _process_spotify_playlist(self, playlist: Dict) -> PlatformContent:
-        """Process Spotify playlist data"""        return PlatformContent(
+        """Process Spotify playlist data"""
+        return PlatformContent(
             platform=PlatformType.SPOTIFY,
             content_id=playlist['id'],
             content_type=ContentCategory.TEXT,
@@ -628,7 +649,8 @@ class PlatformCrawler:
         )
 
     async def _crawl_reddit_api(self, query: Dict[str, Any], max_results: int) -> List[PlatformContent]:
-        """Crawl Reddit using API (through web scraping due to API restrictions)"""        results = []
+        """Crawl Reddit using API (through web scraping due to API restrictions)"""
+        results = []
         
         try:
             subreddit = query.get('subreddit', 'all')
@@ -703,7 +725,8 @@ class PlatformCrawler:
 
     async def _crawl_via_scraping(self, platform: PlatformType, query: Dict[str, Any],
                                 max_results: int) -> List[PlatformContent]:
-        """Crawl platform using web scraping"""        if platform == PlatformType.INSTAGRAM:
+        """Crawl platform using web scraping"""
+        if platform == PlatformType.INSTAGRAM:
             return await self._crawl_instagram_scraping(query, max_results)
         elif platform == PlatformType.TIKTOK:
             return await self._crawl_tiktok_scraping(query, max_results)
@@ -714,7 +737,8 @@ class PlatformCrawler:
             return []
 
     async def _crawl_instagram_scraping(self, query: Dict[str, Any], max_results: int) -> List[PlatformContent]:
-        """Crawl Instagram using web scraping"""        results = []
+        """Crawl Instagram using web scraping"""
+        results = []
         
         # Note: Instagram heavily restricts scraping. This is a simplified example.
         # In production, use official API or respect robots.txt
@@ -748,7 +772,8 @@ class PlatformCrawler:
         return results
 
     async def _crawl_tiktok_scraping(self, query: Dict[str, Any], max_results: int) -> List[PlatformContent]:
-        """Crawl TikTok using web scraping"""        results = []
+        """Crawl TikTok using web scraping"""
+        results = []
         
         try:
             hashtag = query.get('hashtag', '')
@@ -776,7 +801,8 @@ class PlatformCrawler:
         return results
 
     async def _crawl_linkedin_scraping(self, query: Dict[str, Any], max_results: int) -> List[PlatformContent]:
-        """Crawl LinkedIn using web scraping"""        results = []
+        """Crawl LinkedIn using web scraping"""
+        results = []
         
         try:
             # LinkedIn requires authentication for most content
@@ -796,7 +822,8 @@ class PlatformCrawler:
 
     async def _crawl_hybrid(self, platform: PlatformType, query: Dict[str, Any],
                           max_results: int) -> List[PlatformContent]:
-        """Use hybrid approach combining API and scraping"""        api_results = await self._crawl_via_api(platform, query, max_results // 2)
+        """Use hybrid approach combining API and scraping"""
+        api_results = await self._crawl_via_api(platform, query, max_results // 2)
         scraping_results = await self._crawl_via_scraping(platform, query, max_results // 2)
         
         # Combine and deduplicate results
@@ -812,17 +839,20 @@ class PlatformCrawler:
         return unique_results[:max_results]
 
     def _extract_hashtags(self, text: str) -> List[str]:
-        """Extract hashtags from text"""        hashtag_pattern = r'#\w+'
+        """Extract hashtags from text"""
+        hashtag_pattern = r'#\w+'
         hashtags = re.findall(hashtag_pattern, text, re.IGNORECASE)
         return [tag[1:] for tag in hashtags]  # Remove # symbol
 
     def _extract_mentions(self, text: str) -> List[str]:
-        """Extract mentions from text"""        mention_pattern = r'@\w+'
+        """Extract mentions from text"""
+        mention_pattern = r'@\w+'
         mentions = re.findall(mention_pattern, text, re.IGNORECASE)
         return [mention[1:] for mention in mentions]  # Remove @ symbol
 
     def _parse_youtube_date(self, date_string: str) -> Optional[datetime]:
-        """Parse YouTube API date format"""        if not date_string:
+        """Parse YouTube API date format"""
+        if not date_string:
             return None
         
         try:
@@ -831,11 +861,13 @@ class PlatformCrawler:
             return None
 
     def _is_media_url(self, url: str) -> bool:
-        """Check if URL points to media content"""        media_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.mp4', '.webm', '.mp3', '.wav']
+        """Check if URL points to media content"""
+        media_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.mp4', '.webm', '.mp3', '.wav']
         return any(url.lower().endswith(ext) for ext in media_extensions)
 
     def _update_crawling_stats(self, platform: str, results_count: int) -> None:
-        """Update crawling statistics"""        if platform not in self.crawling_stats:
+        """Update crawling statistics"""
+        if platform not in self.crawling_stats:
             self.crawling_stats[platform] = {
                 'total_requests': 0,
                 'total_results': 0,
@@ -852,7 +884,8 @@ class PlatformCrawler:
     async def get_user_content(self, platform: PlatformType, user_id: str,
                              content_types: List[ContentCategory] = None,
                              max_results: int = 50) -> List[PlatformContent]:
-        """Get content from specific user across platforms"""        query = {
+        """Get content from specific user across platforms"""
+        query = {
             'user_id': user_id,
             'username': user_id,
             'content_types': content_types or [ContentCategory.POST]
@@ -862,7 +895,8 @@ class PlatformCrawler:
 
     async def search_hashtag(self, platform: PlatformType, hashtag: str,
                            max_results: int = 100) -> List[PlatformContent]:
-        """Search for content by hashtag"""        query = {
+        """Search for content by hashtag"""
+        query = {
             'hashtag': hashtag,
             'query': f"#{hashtag.lstrip('#')}"
         }
@@ -871,7 +905,8 @@ class PlatformCrawler:
 
     async def search_keywords(self, platform: PlatformType, keywords: List[str],
                             max_results: int = 100) -> List[PlatformContent]:
-        """Search for content by keywords"""        query = {
+        """Search for content by keywords"""
+        query = {
             'query': ' '.join(keywords),
             'keywords': keywords
         }
@@ -880,7 +915,8 @@ class PlatformCrawler:
 
     async def monitor_user(self, platform: PlatformType, user_id: str,
                          check_interval_minutes: int = 60) -> str:
-        """Setup monitoring for specific user"""        monitor_id = f"{platform.value}_{user_id}_{int(time.time())}"
+        """Setup monitoring for specific user"""
+        monitor_id = f"{platform.value}_{user_id}_{int(time.time())}"
         
         # This would typically involve setting up a background task
         # For now, return the monitor ID
@@ -889,13 +925,16 @@ class PlatformCrawler:
         return monitor_id
 
     def get_platform_statistics(self) -> Dict[str, Dict]:
-        """Get crawling statistics for all platforms"""        return self.crawling_stats.copy()
+        """Get crawling statistics for all platforms"""
+        return self.crawling_stats.copy()
 
     def get_active_crawls(self) -> List[str]:
-        """Get list of active crawl IDs"""        return list(self.active_crawls)
+        """Get list of active crawl IDs"""
+        return list(self.active_crawls)
 
     async def cleanup(self) -> None:
-        """Clean up resources"""        if self.session:
+        """Clean up resources"""
+        if self.session:
             await self.session.close()
         
         await self.cache_manager.cleanup()
@@ -903,11 +942,13 @@ class PlatformCrawler:
 
 
 class APIHarvester:
-    """    Specialized API Content Harvester
+    """
+    Specialized API Content Harvester
     
     Focused on efficient bulk content harvesting using official APIs
     with advanced rate limiting, caching, and data enrichment.
-    """    
+    """
+    
     def __init__(self, platform_crawler: PlatformCrawler):
         self.platform_crawler = platform_crawler
         self.harvest_queue: asyncio.Queue = asyncio.Queue()
@@ -915,7 +956,8 @@ class APIHarvester:
         self.active_harvests: Set[str] = set()
         
     async def schedule_harvest(self, platform: PlatformType, harvest_config: Dict[str, Any]) -> str:
-        """Schedule content harvest operation"""        harvest_id = f"harvest_{platform.value}_{int(time.time())}"
+        """Schedule content harvest operation"""
+        harvest_id = f"harvest_{platform.value}_{int(time.time())}"
         
         harvest_task = {
             'harvest_id': harvest_id,
@@ -929,7 +971,8 @@ class APIHarvester:
         return harvest_id
     
     async def execute_harvest(self, harvest_id: str) -> List[PlatformContent]:
-        """Execute scheduled harvest"""        if harvest_id in self.harvest_results:
+        """Execute scheduled harvest"""
+        if harvest_id in self.harvest_results:
             return self.harvest_results[harvest_id]
         
         # Implementation would execute the harvest based on stored config
@@ -938,7 +981,8 @@ class APIHarvester:
     
     async def bulk_user_harvest(self, platform: PlatformType, user_ids: List[str],
                               max_content_per_user: int = 50) -> Dict[str, List[PlatformContent]]:
-        """Harvest content from multiple users efficiently"""        results = {}
+        """Harvest content from multiple users efficiently"""
+        results = {}
         
         for user_id in user_ids:
             try:
@@ -958,7 +1002,8 @@ class APIHarvester:
     
     async def trending_content_harvest(self, platforms: List[PlatformType],
                                      max_results_per_platform: int = 100) -> Dict[str, List[PlatformContent]]:
-        """Harvest trending content across multiple platforms"""        results = {}
+        """Harvest trending content across multiple platforms"""
+        results = {}
         
         for platform in platforms:
             try:

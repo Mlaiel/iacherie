@@ -13,7 +13,8 @@ Contact: mlaiel@live.de
 
 Enterprise-grade network and service discovery configuration.
 ==================================================================
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union
 from dataclasses import dataclass, field
@@ -23,20 +24,23 @@ import ipaddress
 import json
 
 class NetworkTopology(Enum):
-    """Network topology types"""    MESH = "mesh"
+    """Network topology types"""
+    MESH = "mesh"
     STAR = "star"
     HYBRID = "hybrid"
     MULTI_TIER = "multi_tier"
 
 class ServiceDiscoveryType(Enum):
-    """Service discovery types"""    CONSUL = "consul"
+    """Service discovery types"""
+    CONSUL = "consul"
     ETCD = "etcd"
     KUBERNETES = "kubernetes"
     DNS = "dns"
     ZOOKEEPER = "zookeeper"
 
 class LoadBalancerType(Enum):
-    """Load balancer types"""    NGINX = "nginx"
+    """Load balancer types"""
+    NGINX = "nginx"
     HAProxy = "haproxy"
     ENVOY = "envoy"
     TRAEFIK = "traefik"
@@ -44,7 +48,8 @@ class LoadBalancerType(Enum):
     CLOUD_LB = "cloud_lb"
 
 class NetworkProtocol(Enum):
-    """Network protocols"""    HTTP = "http"
+    """Network protocols"""
+    HTTP = "http"
     HTTPS = "https"
     TCP = "tcp"
     UDP = "udp"
@@ -52,13 +57,15 @@ class NetworkProtocol(Enum):
     WEBSOCKET = "websocket"
 
 class SecurityPolicy(Enum):
-    """Network security policies"""    STRICT = "strict"
+    """Network security policies"""
+    STRICT = "strict"
     MODERATE = "moderate"
     PERMISSIVE = "permissive"
 
 @dataclass
 class ServiceEndpoint:
-    """Service endpoint configuration"""    name: str
+    """Service endpoint configuration"""
+    name: str
     host: str
     port: int
     protocol: NetworkProtocol = NetworkProtocol.HTTP
@@ -72,7 +79,8 @@ class ServiceEndpoint:
 
 @dataclass
 class LoadBalancerConfig:
-    """Load balancer configuration"""    type: LoadBalancerType
+    """Load balancer configuration"""
+    type: LoadBalancerType
     algorithm: str = "round_robin"  # round_robin, least_conn, ip_hash
     sticky_sessions: bool = False
     session_timeout: int = 3600
@@ -86,7 +94,8 @@ class LoadBalancerConfig:
 
 @dataclass
 class ServiceMeshConfig:
-    """Service mesh configuration"""    enabled: bool = False
+    """Service mesh configuration"""
+    enabled: bool = False
     provider: str = "istio"  # istio, linkerd, consul-connect
     mtls_enabled: bool = True
     traffic_policies: List[Dict[str, Any]] = field(default_factory=list)
@@ -96,7 +105,8 @@ class ServiceMeshConfig:
 
 @dataclass
 class DNSConfig:
-    """DNS configuration"""    domain: str = "ia-influencer.local"
+    """DNS configuration"""
+    domain: str = "ia-influencer.local"
     nameservers: List[str] = field(default_factory=lambda: ["8.8.8.8", "8.8.4.4"])
     search_domains: List[str] = field(default_factory=list)
     ttl: int = 300
@@ -106,7 +116,8 @@ class DNSConfig:
 
 @dataclass
 class FirewallRule:
-    """Firewall rule configuration"""    name: str
+    """Firewall rule configuration"""
+    name: str
     source: str  # IP/CIDR
     destination: str  # IP/CIDR
     protocol: str  # tcp, udp, icmp, all
@@ -118,7 +129,8 @@ class FirewallRule:
 
 @dataclass
 class VPCConfig:
-    """VPC/Network configuration"""    name: str
+    """VPC/Network configuration"""
+    name: str
     cidr_block: str
     enable_dns_hostnames: bool = True
     enable_dns_resolution: bool = True
@@ -130,7 +142,8 @@ class VPCConfig:
 
 @dataclass
 class CDNConfig:
-    """CDN configuration"""    enabled: bool = False
+    """CDN configuration"""
+    enabled: bool = False
     provider: str = "cloudflare"  # cloudflare, aws_cloudfront, gcp_cdn
     cache_policies: Dict[str, Any] = field(default_factory=dict)
     compression_enabled: bool = True
@@ -140,7 +153,8 @@ class CDNConfig:
 
 @dataclass
 class NetworkConfiguration:
-    """Complete network configuration"""    topology: NetworkTopology
+    """Complete network configuration"""
+    topology: NetworkTopology
     vpc_config: VPCConfig
     service_discovery: ServiceDiscoveryType
     load_balancer: LoadBalancerConfig
@@ -153,7 +167,8 @@ class NetworkConfiguration:
     custom_config: Dict[str, Any] = field(default_factory=dict)
 
 class NetworkConfigManager:
-    """    Enterprise network and service discovery configuration manager.
+    """
+    Enterprise network and service discovery configuration manager.
     
     Provides comprehensive network management:
     - Multi-tier network topology
@@ -167,9 +182,11 @@ class NetworkConfigManager:
     - Network monitoring and observability
     - SSL/TLS termination
     - Rate limiting and DDoS protection
-    """    
+    """
+    
     def __init__(self):
-        """Initialize network configuration manager"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize network configuration manager"""
+        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Network configurations
         self.network_config = None
@@ -188,11 +205,13 @@ class NetworkConfigManager:
         self.logger.info("Network configuration manager initialized")
     
     async def initialize(self) -> bool:
-        """        Initialize network configuration manager.
+        """
+        Initialize network configuration manager.
         
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             # Load default network configuration
             await self._load_default_configuration()
             
@@ -220,7 +239,8 @@ class NetworkConfigManager:
             return False
     
     async def _load_default_configuration(self) -> None:
-        """Load default network configuration"""        
+        """Load default network configuration"""
+        
         # Default VPC configuration
         vpc_config = VPCConfig(
             name="ia-influencer-vpc",
@@ -430,7 +450,8 @@ class NetworkConfigManager:
         self.logger.info("Default network configuration loaded")
     
     async def _initialize_service_discovery(self) -> None:
-        """Initialize service discovery"""        discovery_type = self.network_config.service_discovery
+        """Initialize service discovery"""
+        discovery_type = self.network_config.service_discovery
         
         if discovery_type == ServiceDiscoveryType.KUBERNETES:
             await self._setup_kubernetes_discovery()
@@ -445,19 +466,23 @@ class NetworkConfigManager:
         self.logger.info(f"Service discovery initialized: {discovery_type.value}")
     
     async def _setup_kubernetes_discovery(self) -> None:
-        """Setup Kubernetes service discovery"""        # Implementation would configure Kubernetes service discovery
+        """Setup Kubernetes service discovery"""
+        # Implementation would configure Kubernetes service discovery
         pass
     
     async def _setup_consul_discovery(self) -> None:
-        """Setup Consul service discovery"""        # Implementation would configure Consul
+        """Setup Consul service discovery"""
+        # Implementation would configure Consul
         pass
     
     async def _setup_etcd_discovery(self) -> None:
-        """Setup etcd service discovery"""        # Implementation would configure etcd
+        """Setup etcd service discovery"""
+        # Implementation would configure etcd
         pass
     
     async def _setup_load_balancers(self) -> None:
-        """Setup load balancers"""        lb_config = self.network_config.load_balancer
+        """Setup load balancers"""
+        lb_config = self.network_config.load_balancer
         
         if lb_config.type == LoadBalancerType.NGINX:
             await self._setup_nginx_lb()
@@ -469,36 +494,43 @@ class NetworkConfigManager:
         self.logger.info(f"Load balancer setup: {lb_config.type.value}")
     
     async def _setup_nginx_lb(self) -> None:
-        """Setup NGINX load balancer"""        # Implementation would configure NGINX
+        """Setup NGINX load balancer"""
+        # Implementation would configure NGINX
         pass
     
     async def _setup_haproxy_lb(self) -> None:
-        """Setup HAProxy load balancer"""        # Implementation would configure HAProxy
+        """Setup HAProxy load balancer"""
+        # Implementation would configure HAProxy
         pass
     
     async def _setup_envoy_lb(self) -> None:
-        """Setup Envoy proxy"""        # Implementation would configure Envoy
+        """Setup Envoy proxy"""
+        # Implementation would configure Envoy
         pass
     
     async def _configure_firewalls(self) -> None:
-        """Configure firewall rules"""        for rule in self.network_config.firewall_rules:
+        """Configure firewall rules"""
+        for rule in self.network_config.firewall_rules:
             if rule.enabled:
                 await self._apply_firewall_rule(rule)
         
         self.logger.info(f"Configured {len(self.network_config.firewall_rules)} firewall rules")
     
     async def _apply_firewall_rule(self, rule: FirewallRule) -> None:
-        """Apply firewall rule"""        # Implementation would apply actual firewall rule
+        """Apply firewall rule"""
+        # Implementation would apply actual firewall rule
         pass
     
     async def _start_network_monitoring(self) -> None:
-        """Start network monitoring"""        asyncio.create_task(self._monitor_network_traffic())
+        """Start network monitoring"""
+        asyncio.create_task(self._monitor_network_traffic())
         asyncio.create_task(self._monitor_security_events())
         
         self.logger.info("Network monitoring started")
     
     async def _monitor_network_traffic(self) -> None:
-        """Monitor network traffic"""        while True:
+        """Monitor network traffic"""
+        while True:
             try:
                 # Simulate traffic monitoring
                 self.traffic_metrics = {
@@ -520,7 +552,8 @@ class NetworkConfigManager:
                 await asyncio.sleep(60)
     
     async def _monitor_security_events(self) -> None:
-        """Monitor security events"""        while True:
+        """Monitor security events"""
+        while True:
             try:
                 # Simulate security monitoring
                 # Implementation would monitor for security events
@@ -532,7 +565,8 @@ class NetworkConfigManager:
                 await asyncio.sleep(120)
     
     async def _monitor_service_health(self) -> None:
-        """Monitor service health"""        while True:
+        """Monitor service health"""
+        while True:
             try:
                 for service_name, endpoint in self.service_registry.items():
                     await self._check_service_health(service_name, endpoint)
@@ -544,7 +578,8 @@ class NetworkConfigManager:
                 await asyncio.sleep(60)
     
     async def _check_service_health(self, service_name: str, endpoint: ServiceEndpoint) -> None:
-        """Check health of a service"""        try:
+        """Check health of a service"""
+        try:
             # Simulate health check
             self.service_health[service_name] = {
                 "status": "healthy",
@@ -561,7 +596,8 @@ class NetworkConfigManager:
             }
     
     async def _initialize_service_mesh(self) -> None:
-        """Initialize service mesh"""        mesh_config = self.network_config.service_mesh
+        """Initialize service mesh"""
+        mesh_config = self.network_config.service_mesh
         
         if mesh_config.provider == "istio":
             await self._setup_istio()
@@ -573,26 +609,31 @@ class NetworkConfigManager:
         self.logger.info(f"Service mesh initialized: {mesh_config.provider}")
     
     async def _setup_istio(self) -> None:
-        """Setup Istio service mesh"""        # Implementation would configure Istio
+        """Setup Istio service mesh"""
+        # Implementation would configure Istio
         pass
     
     async def _setup_linkerd(self) -> None:
-        """Setup Linkerd service mesh"""        # Implementation would configure Linkerd
+        """Setup Linkerd service mesh"""
+        # Implementation would configure Linkerd
         pass
     
     async def _setup_consul_connect(self) -> None:
-        """Setup Consul Connect service mesh"""        # Implementation would configure Consul Connect
+        """Setup Consul Connect service mesh"""
+        # Implementation would configure Consul Connect
         pass
     
     async def register_service(self, endpoint: ServiceEndpoint) -> bool:
-        """        Register a service endpoint.
+        """
+        Register a service endpoint.
         
         Args:
             endpoint: Service endpoint configuration
             
         Returns:
             bool: True if successful
-        """        try:
+        """
+        try:
             self.service_registry[endpoint.name] = endpoint
             
             # Register with service discovery
@@ -609,22 +650,26 @@ class NetworkConfigManager:
             return False
     
     async def _register_with_discovery(self, endpoint: ServiceEndpoint) -> None:
-        """Register endpoint with service discovery"""        # Implementation would register with actual service discovery
+        """Register endpoint with service discovery"""
+        # Implementation would register with actual service discovery
         pass
     
     async def _update_load_balancer(self, endpoint: ServiceEndpoint) -> None:
-        """Update load balancer configuration"""        # Implementation would update load balancer configuration
+        """Update load balancer configuration"""
+        # Implementation would update load balancer configuration
         pass
     
     async def deregister_service(self, service_name: str) -> bool:
-        """        Deregister a service endpoint.
+        """
+        Deregister a service endpoint.
         
         Args:
             service_name: Service name to deregister
             
         Returns:
             bool: True if successful
-        """        try:
+        """
+        try:
             if service_name not in self.service_registry:
                 raise ValueError(f"Service not found: {service_name}")
             
@@ -649,22 +694,26 @@ class NetworkConfigManager:
             return False
     
     async def _deregister_from_discovery(self, service_name: str) -> None:
-        """Deregister from service discovery"""        # Implementation would deregister from actual service discovery
+        """Deregister from service discovery"""
+        # Implementation would deregister from actual service discovery
         pass
     
     async def _remove_from_load_balancer(self, service_name: str) -> None:
-        """Remove from load balancer"""        # Implementation would remove from load balancer
+        """Remove from load balancer"""
+        # Implementation would remove from load balancer
         pass
     
     async def add_firewall_rule(self, rule: FirewallRule) -> bool:
-        """        Add firewall rule.
+        """
+        Add firewall rule.
         
         Args:
             rule: Firewall rule to add
             
         Returns:
             bool: True if successful
-        """        try:
+        """
+        try:
             self.network_config.firewall_rules.append(rule)
             
             if rule.enabled:
@@ -678,14 +727,16 @@ class NetworkConfigManager:
             return False
     
     async def remove_firewall_rule(self, rule_name: str) -> bool:
-        """        Remove firewall rule.
+        """
+        Remove firewall rule.
         
         Args:
             rule_name: Name of rule to remove
             
         Returns:
             bool: True if successful
-        """        try:
+        """
+        try:
             # Find and remove rule
             for i, rule in enumerate(self.network_config.firewall_rules):
                 if rule.name == rule_name:
@@ -705,18 +756,21 @@ class NetworkConfigManager:
             return False
     
     async def _remove_firewall_rule(self, rule_name: str) -> None:
-        """Remove firewall rule from system"""        # Implementation would remove actual firewall rule
+        """Remove firewall rule from system"""
+        # Implementation would remove actual firewall rule
         pass
     
     async def discover_services(self, service_name: Optional[str] = None) -> Dict[str, Any]:
-        """        Discover services.
+        """
+        Discover services.
         
         Args:
             service_name: Specific service to discover (optional)
             
         Returns:
             Dict containing discovered services
-        """        if service_name:
+        """
+        if service_name:
             if service_name in self.service_registry:
                 return {service_name: self.service_registry[service_name]}
             else:
@@ -725,7 +779,8 @@ class NetworkConfigManager:
         return dict(self.service_registry)
     
     async def get_network_status(self) -> Dict[str, Any]:
-        """Get comprehensive network status"""        return {
+        """Get comprehensive network status"""
+        return {
             "topology": self.network_config.topology.value,
             "service_discovery": self.network_config.service_discovery.value,
             "load_balancer": {
@@ -755,7 +810,8 @@ class NetworkConfigManager:
         }
     
     async def get_traffic_report(self) -> Dict[str, Any]:
-        """Get network traffic report"""        return {
+        """Get network traffic report"""
+        return {
             "timestamp": datetime.now(),
             "metrics": self.traffic_metrics,
             "service_health": self.service_health,
@@ -764,4 +820,5 @@ class NetworkConfigManager:
         }
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get network manager status"""        return await self.get_network_status()
+        """Get network manager status"""
+        return await self.get_network_status()

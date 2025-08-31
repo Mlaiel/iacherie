@@ -28,13 +28,15 @@ content creators across all major platforms and revenue streams.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY ⚠️
 This revolutionary revenue intelligence platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
-"""from .revenue_optimizer import (
+"""
+
+from .revenue_optimizer import (
     RevenueIntelligenceOptimizer,
     RevenueDataPoint,
     RevenueForecast,
@@ -46,9 +48,13 @@ under German and International Law. Contact: mlaiel@live.de for legal authorizat
 )
 
 from .market_analyzer import MarketAnalyzer
+
 from .performance_tracker import PerformanceTracker
+
 from .monetization_engine import MonetizationEngine
+
 from .pricing_optimizer import PricingOptimizer
+
 from .revenue_attribution import RevenueAttributionEngine
 
 # Core Components
@@ -79,5 +85,5 @@ __all__ = [
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary - Unauthorized use prohibited"

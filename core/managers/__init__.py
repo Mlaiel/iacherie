@@ -70,14 +70,17 @@ from .performance_manager import PerformanceManager, get_performance_manager
 _MANAGER_REGISTRY: Dict[str, Any] = {}
 
 def register_manager(name: str, manager: Any) -> None:
-    """Register a manager in the global registry"""    _MANAGER_REGISTRY[name] = manager
+    """Register a manager in the global registry"""
+    _MANAGER_REGISTRY[name] = manager
     logger.info(f"🎯 Manager registered: {name}")
 
 def get_manager(name: str) -> Optional[Any]:
-    """Get a manager from the global registry"""    return _MANAGER_REGISTRY.get(name)
+    """Get a manager from the global registry"""
+    return _MANAGER_REGISTRY.get(name)
 
 def get_all_managers() -> Dict[str, Any]:
-    """Get all registered managers"""    return _MANAGER_REGISTRY.copy()
+    """Get all registered managers"""
+    return _MANAGER_REGISTRY.copy()
 
 # Initialize all managers for enterprise deployment
 async def initialize_all_managers() -> bool:
@@ -85,7 +88,8 @@ async def initialize_all_managers() -> bool:
     
     Returns:
         bool: True if all managers initialized successfully
-    """    try:
+    """
+    try:
         managers = [
             ("analytics", get_analytics_manager()),
             ("cache", get_cache_manager()),
@@ -141,11 +145,13 @@ async def initialize_all_managers() -> bool:
 
 # Cleanup all managers
 async def cleanup_all_managers() -> bool:
-    """    Cleanup all enterprise managers for graceful shutdown
+    """
+    Cleanup all enterprise managers for graceful shutdown
     
     Returns:
         bool: True if all managers cleaned up successfully
-    """    try:
+    """
+    try:
         managers = list(_MANAGER_REGISTRY.values())
         
         # Cleanup all managers concurrently

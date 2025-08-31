@@ -10,7 +10,8 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 WARNING: This code and concept are protected intellectual property.
 Any unauthorized use, copying, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""from .monitoring_engines import *
+"""
+from .monitoring_engines import *
 from .alert_systems import *
 from .analytics_repository import *
 from .platform_connectors import *
@@ -190,11 +191,13 @@ __all__ = [
 ]
 
 def get_module_info() -> Dict[str, Any]:
-    """    Retourne les informations du module Surveillance.
+    """
+    Retourne les informations du module Surveillance.
     
     Returns:
         Dict[str, Any]: Informations du module
-    """    return {
+    """
+    return {
         "name": "Surveillance Database",
         "version": __version__,
         "author": "Fahed Mlaiel",

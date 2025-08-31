@@ -11,7 +11,8 @@ Created by: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import json
 import logging
@@ -36,14 +37,16 @@ logger = logging.getLogger(__name__)
 
 
 class MastodonVisibility(str, Enum):
-    """Mastodon post visibility levels"""    PUBLIC = "public"
+    """Mastodon post visibility levels"""
+    PUBLIC = "public"
     UNLISTED = "unlisted"
     PRIVATE = "private"
     DIRECT = "direct"
 
 
 class MastodonContentType(str, Enum):
-    """Mastodon content types"""    STATUS = "status"
+    """Mastodon content types"""
+    STATUS = "status"
     BOOST = "boost"
     REPLY = "reply"
     POLL = "poll"
@@ -52,7 +55,8 @@ class MastodonContentType(str, Enum):
 
 
 class MastodonNotificationType(str, Enum):
-    """Mastodon notification types"""    MENTION = "mention"
+    """Mastodon notification types"""
+    MENTION = "mention"
     STATUS = "status"
     REBLOG = "reblog"
     FOLLOW = "follow"
@@ -65,7 +69,8 @@ class MastodonNotificationType(str, Enum):
 
 
 class MastodonAttachment(BaseModel):
-    """Mastodon media attachment data model"""    attachment_id: str
+    """Mastodon media attachment data model"""
+    attachment_id: str
     type: str  # image, video, gifv, audio, unknown
     url: str
     preview_url: Optional[str] = None
@@ -83,7 +88,8 @@ class MastodonAttachment(BaseModel):
 
 
 class MastodonEmoji(BaseModel):
-    """Mastodon custom emoji data model"""    shortcode: str
+    """Mastodon custom emoji data model"""
+    shortcode: str
     url: str
     static_url: str
     visible_in_picker: bool = True
@@ -91,20 +97,23 @@ class MastodonEmoji(BaseModel):
 
 
 class MastodonMention(BaseModel):
-    """Mastodon mention data model"""    mention_id: str
+    """Mastodon mention data model"""
+    mention_id: str
     username: str
     url: str
     acct: str  # username@domain for remote users
 
 
 class MastodonTag(BaseModel):
-    """Mastodon hashtag data model"""    name: str
+    """Mastodon hashtag data model"""
+    name: str
     url: str
     history: List[Dict[str, Any]] = Field(default_factory=list)
 
 
 class MastodonPoll(BaseModel):
-    """Mastodon poll data model"""    poll_id: str
+    """Mastodon poll data model"""
+    poll_id: str
     expires_at: Optional[datetime] = None
     expired: bool = False
     multiple: bool = False
@@ -117,7 +126,8 @@ class MastodonPoll(BaseModel):
 
 
 class MastodonCard(BaseModel):
-    """Mastodon preview card data model"""    url: str
+    """Mastodon preview card data model"""
+    url: str
     title: str
     description: str
     type: str  # link, photo, video, rich
@@ -134,13 +144,15 @@ class MastodonCard(BaseModel):
 
 
 class MastodonApplication(BaseModel):
-    """Mastodon application data model"""    name: str
+    """Mastodon application data model"""
+    name: str
     website: Optional[str] = None
     vapid_key: Optional[str] = None
 
 
 class MastodonAccount(BaseModel):
-    """Mastodon account data model"""    account_id: str
+    """Mastodon account data model"""
+    account_id: str
     username: str
     acct: str  # username@domain for remote accounts
     display_name: str
@@ -170,7 +182,8 @@ class MastodonAccount(BaseModel):
 
 
 class MastodonStatus(BaseModel):
-    """Mastodon status data model"""    status_id: str
+    """Mastodon status data model"""
+    status_id: str
     uri: str
     created_at: datetime
     account: MastodonAccount
@@ -207,7 +220,8 @@ class MastodonStatus(BaseModel):
 
 
 class MastodonInstance(BaseModel):
-    """Mastodon instance data model"""    uri: str
+    """Mastodon instance data model"""
+    uri: str
     title: str
     short_description: str
     description: str
@@ -231,7 +245,8 @@ class MastodonInstance(BaseModel):
 
 
 class MastodonSearchResults(BaseModel):
-    """Mastodon search results data model"""    query: str
+    """Mastodon search results data model"""
+    query: str
     total_results: int
     accounts: List[MastodonAccount] = Field(default_factory=list)
     statuses: List[MastodonStatus] = Field(default_factory=list)
@@ -245,7 +260,8 @@ class MastodonSearchResults(BaseModel):
 
 
 class MastodonAnalytics(BaseModel):
-    """Mastodon analytics data model"""    account_id: str
+    """Mastodon analytics data model"""
+    account_id: str
     analysis_period: Tuple[datetime, datetime]
     total_statuses: int
     total_replies: int
@@ -271,11 +287,13 @@ class MastodonAnalytics(BaseModel):
 
 
 class MastodonCrawler(BaseCrawler):
-    """    Ultra-Advanced Mastodon Platform Crawler
+    """
+    Ultra-Advanced Mastodon Platform Crawler
     
     Provides comprehensive crawling and monitoring capabilities for Mastodon federated network,
     specializing in multi-instance monitoring, federated content analysis, and decentralized protection.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -338,7 +356,8 @@ class MastodonCrawler(BaseCrawler):
         client_id: str = None,
         client_secret: str = None
     ) -> bool:
-        """        Authenticate with Mastodon instance
+        """
+        Authenticate with Mastodon instance
         
         Args:
             instance_url: Mastodon instance URL
@@ -348,7 +367,8 @@ class MastodonCrawler(BaseCrawler):
             
         Returns:
             bool: Authentication success status
-        """        try:
+        """
+        try:
             instance_url = instance_url or self.primary_instance
             
             if not instance_url.startswith('http'):
@@ -394,7 +414,8 @@ class MastodonCrawler(BaseCrawler):
             return False
 
     async def register_application(self, instance_url: str, app_name: str = "IA-Influencer-Agent") -> Dict[str, str]:
-        """        Register application with Mastodon instance
+        """
+        Register application with Mastodon instance
         
         Args:
             instance_url: Mastodon instance URL
@@ -402,7 +423,8 @@ class MastodonCrawler(BaseCrawler):
             
         Returns:
             Dict[str, str]: Application credentials
-        """        try:
+        """
+        try:
             if not instance_url.startswith('http'):
                 instance_url = f"https://{instance_url}"
             
@@ -442,7 +464,8 @@ class MastodonCrawler(BaseCrawler):
         limit: int = 50,
         resolve: bool = False
     ) -> MastodonSearchResults:
-        """        Search Mastodon content across federated network
+        """
+        Search Mastodon content across federated network
         
         Args:
             query: Search query
@@ -454,7 +477,8 @@ class MastodonCrawler(BaseCrawler):
             
         Returns:
             MastodonSearchResults: Comprehensive search results
-        """        await self.rate_limiter.acquire()
+        """
+        await self.rate_limiter.acquire()
         
         try:
             # Check cache first
@@ -536,7 +560,8 @@ class MastodonCrawler(BaseCrawler):
         limit: int,
         resolve: bool
     ) -> Dict[str, List[Any]]:
-        """Search specific Mastodon instance"""        try:
+        """Search specific Mastodon instance"""
+        try:
             if not instance_url.startswith('http'):
                 instance_url = f"https://{instance_url}"
             
@@ -593,7 +618,8 @@ class MastodonCrawler(BaseCrawler):
             return {"accounts": [], "statuses": [], "hashtags": []}
 
     async def get_content_details(self, status_id: str, instance_url: str = None) -> Optional[MastodonStatus]:
-        """        Get detailed information about specific Mastodon status
+        """
+        Get detailed information about specific Mastodon status
         
         Args:
             status_id: Status ID
@@ -601,7 +627,8 @@ class MastodonCrawler(BaseCrawler):
             
         Returns:
             Optional[MastodonStatus]: Detailed status information
-        """        await self.rate_limiter.acquire()
+        """
+        await self.rate_limiter.acquire()
         
         try:
             instance_url = instance_url or self.primary_instance
@@ -646,7 +673,8 @@ class MastodonCrawler(BaseCrawler):
         instances: List[str] = None,
         check_interval: int = 300
     ) -> AsyncGenerator[MastodonStatus, None]:
-        """        Real-time content monitoring for Mastodon
+        """
+        Real-time content monitoring for Mastodon
         
         Args:
             account_ids: Account IDs to monitor
@@ -657,7 +685,8 @@ class MastodonCrawler(BaseCrawler):
             
         Yields:
             MastodonStatus: New statuses detected
-        """        account_ids = account_ids or []
+        """
+        account_ids = account_ids or []
         hashtags = hashtags or []
         keywords = keywords or []
         instances = instances or [self.primary_instance]
@@ -736,7 +765,8 @@ class MastodonCrawler(BaseCrawler):
         since: datetime,
         limit: int = 40
     ) -> List[MastodonStatus]:
-        """Get federated timeline from instance"""        try:
+        """Get federated timeline from instance"""
+        try:
             if not instance_url.startswith('http'):
                 instance_url = f"https://{instance_url}"
             
@@ -773,7 +803,8 @@ class MastodonCrawler(BaseCrawler):
         since: datetime,
         limit: int = 20
     ) -> List[MastodonStatus]:
-        """Get hashtag timeline from instance"""        try:
+        """Get hashtag timeline from instance"""
+        try:
             if not instance_url.startswith('http'):
                 instance_url = f"https://{instance_url}"
             
@@ -808,7 +839,8 @@ class MastodonCrawler(BaseCrawler):
         comparison_set: List[MastodonStatus],
         threshold: float = None
     ) -> List[Tuple[MastodonStatus, float]]:
-        """        Detect status similarity across federated network
+        """
+        Detect status similarity across federated network
         
         Args:
             target_status: Status to compare
@@ -817,7 +849,8 @@ class MastodonCrawler(BaseCrawler):
             
         Returns:
             List[Tuple[MastodonStatus, float]]: Similar statuses with scores
-        """        threshold = threshold or self.similarity_threshold
+        """
+        threshold = threshold or self.similarity_threshold
         similar_statuses = []
         
         try:
@@ -845,7 +878,8 @@ class MastodonCrawler(BaseCrawler):
             return []
 
     async def _extract_status_features(self, status: MastodonStatus) -> Dict[str, Any]:
-        """Extract features for similarity comparison"""        features = {
+        """Extract features for similarity comparison"""
+        features = {
             "content": status.content.lower(),
             "hashtags": set(tag.name.lower() for tag in status.tags),
             "mentions": set(mention.acct.lower() for mention in status.mentions),
@@ -868,7 +902,8 @@ class MastodonCrawler(BaseCrawler):
         features1: Dict[str, Any],
         features2: Dict[str, Any]
     ) -> float:
-        """Calculate similarity between status features"""        try:
+        """Calculate similarity between status features"""
+        try:
             scores = []
             
             # Content similarity
@@ -906,7 +941,8 @@ class MastodonCrawler(BaseCrawler):
         analysis_period: Tuple[datetime, datetime],
         instance_url: str = None
     ) -> MastodonAnalytics:
-        """        Generate comprehensive analytics for Mastodon account
+        """
+        Generate comprehensive analytics for Mastodon account
         
         Args:
             account_id: Account ID to analyze
@@ -915,7 +951,8 @@ class MastodonCrawler(BaseCrawler):
             
         Returns:
             MastodonAnalytics: Comprehensive analytics data
-        """        try:
+        """
+        try:
             start_time, end_time = analysis_period
             instance_url = instance_url or self.primary_instance
             
@@ -1088,7 +1125,8 @@ class MastodonCrawler(BaseCrawler):
             )
 
     async def _parse_account_data(self, data: Dict[str, Any], instance_url: str) -> MastodonAccount:
-        """Parse account data from API response"""        try:
+        """Parse account data from API response"""
+        try:
             # Parse custom emojis
             emojis = []
             for emoji_data in data.get("emojis", []):
@@ -1140,7 +1178,8 @@ class MastodonCrawler(BaseCrawler):
             raise
 
     async def _parse_status_data(self, data: Dict[str, Any], instance_url: str) -> MastodonStatus:
-        """Parse status data from API response"""        try:
+        """Parse status data from API response"""
+        try:
             # Parse account
             account = await self._parse_account_data(data.get("account", {}), instance_url)
             
@@ -1254,11 +1293,13 @@ class MastodonCrawler(BaseCrawler):
             raise
 
     async def _calculate_similarity(self, status: MastodonStatus) -> float:
-        """Calculate similarity score against protected content"""        # Simplified similarity calculation
+        """Calculate similarity score against protected content"""
+        # Simplified similarity calculation
         return 0.0
 
     async def _check_protection_status(self, status: MastodonStatus) -> str:
-        """Check protection status of status"""        if status.status_id in self.protected_content:
+        """Check protection status of status"""
+        if status.status_id in self.protected_content:
             return "protected"
         return "unprotected"
 
@@ -1269,7 +1310,8 @@ class MastodonCrawler(BaseCrawler):
         end_time: datetime,
         instance_url: str
     ) -> List[MastodonStatus]:
-        """Get account's statuses in a specific time period"""        try:
+        """Get account's statuses in a specific time period"""
+        try:
             if not instance_url.startswith('http'):
                 instance_url = f"https://{instance_url}"
             
@@ -1301,7 +1343,8 @@ class MastodonCrawler(BaseCrawler):
             return []
 
     async def _handle_rate_limit(self, response: aiohttp.ClientResponse) -> bool:
-        """Handle rate limiting responses"""        if response.status == 429:
+        """Handle rate limiting responses"""
+        if response.status == 429:
             retry_after = int(response.headers.get('X-RateLimit-Reset', 60))
             logger.warning(f"Rate limited. Waiting {retry_after} seconds")
             await asyncio.sleep(retry_after)
@@ -1309,7 +1352,8 @@ class MastodonCrawler(BaseCrawler):
         return False
 
     async def discover_instances(self, limit: int = 100) -> List[MastodonInstance]:
-        """Discover active Mastodon instances"""        try:
+        """Discover active Mastodon instances"""
+        try:
             # Use instance directory services
             directory_urls = [
                 "https://instances.social/api/1.0/instances/list",
@@ -1340,7 +1384,8 @@ class MastodonCrawler(BaseCrawler):
             return []
 
     async def _parse_instance_data(self, data: Dict[str, Any]) -> MastodonInstance:
-        """Parse instance data"""        return MastodonInstance(
+        """Parse instance data"""
+        return MastodonInstance(
             uri=data.get("name", ""),
             title=data.get("title", ""),
             short_description=data.get("short_description", ""),
@@ -1356,7 +1401,8 @@ class MastodonCrawler(BaseCrawler):
         )
 
     async def close(self):
-        """Close crawler and cleanup resources"""        try:
+        """Close crawler and cleanup resources"""
+        try:
             await self.cache_manager.close()
             await super().close()
             logger.info("Mastodon crawler closed successfully")

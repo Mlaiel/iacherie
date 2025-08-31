@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Données utilisateur → Analyse conformité → Application réglementations → 
 Audit trails → Protection données → Rapports compliance → Notifications légales
-"""from typing import Any, Dict, List, Optional, Union, Tuple, Set, Callable
+"""
+from typing import Any, Dict, List, Optional, Union, Tuple, Set, Callable
 import logging
 import asyncio
 from contextlib import asynccontextmanager
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceRegulation(Enum):
-    """Réglementations de conformité"""    GDPR = "gdpr"  # General Data Protection Regulation (EU)
+    """Réglementations de conformité"""
+    GDPR = "gdpr"  # General Data Protection Regulation (EU)
     CCPA = "ccpa"  # California Consumer Privacy Act (US)
     LGPD = "lgpd"  # Lei Geral de Proteção de Dados (Brazil)
     PIPEDA = "pipeda"  # Personal Information Protection and Electronic Documents Act (Canada)
@@ -49,7 +51,8 @@ class ComplianceRegulation(Enum):
 
 
 class DataCategory(Enum):
-    """Catégories de données"""    PERSONAL_IDENTIFIABLE = "personal_identifiable"
+    """Catégories de données"""
+    PERSONAL_IDENTIFIABLE = "personal_identifiable"
     SENSITIVE_PERSONAL = "sensitive_personal"
     FINANCIAL = "financial"
     HEALTH = "health"
@@ -63,7 +66,8 @@ class DataCategory(Enum):
 
 
 class ConsentType(Enum):
-    """Types de consentement"""    EXPLICIT = "explicit"  # Consentement explicite
+    """Types de consentement"""
+    EXPLICIT = "explicit"  # Consentement explicite
     IMPLIED = "implied"    # Consentement implicite
     OPT_IN = "opt_in"     # Opt-in actif
     OPT_OUT = "opt_out"   # Opt-out disponible
@@ -72,7 +76,8 @@ class ConsentType(Enum):
 
 
 class AuditEventType(Enum):
-    """Types d'événements d'audit"""    DATA_ACCESS = "data_access"
+    """Types d'événements d'audit"""
+    DATA_ACCESS = "data_access"
     DATA_PROCESSING = "data_processing"
     DATA_TRANSFER = "data_transfer"
     DATA_DELETION = "data_deletion"
@@ -85,7 +90,8 @@ class AuditEventType(Enum):
 
 
 class ComplianceStatus(Enum):
-    """Statuts de conformité"""    COMPLIANT = "compliant"
+    """Statuts de conformité"""
+    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING_REVIEW = "pending_review"
     UNDER_INVESTIGATION = "under_investigation"
@@ -95,7 +101,8 @@ class ComplianceStatus(Enum):
 
 @dataclass
 class ComplianceConfig:
-    """Configuration du gestionnaire de conformité"""    # General settings
+    """Configuration du gestionnaire de conformité"""
+    # General settings
     enable_gdpr_compliance: bool = True
     enable_ccpa_compliance: bool = True
     enable_dmca_protection: bool = True
@@ -143,7 +150,8 @@ class ComplianceConfig:
 
 @dataclass
 class ConsentRecord:
-    """Enregistrement de consentement"""    id: str
+    """Enregistrement de consentement"""
+    id: str
     user_id: str
     consent_type: ConsentType
     data_categories: List[DataCategory]
@@ -181,7 +189,8 @@ class ConsentRecord:
 
 @dataclass
 class DataProcessingRecord:
-    """Enregistrement de traitement de données"""    id: str
+    """Enregistrement de traitement de données"""
+    id: str
     user_id: str
     data_category: DataCategory
     processing_purpose: str
@@ -223,7 +232,8 @@ class DataProcessingRecord:
 
 @dataclass
 class AuditEvent:
-    """Événement d'audit"""    id: str
+    """Événement d'audit"""
+    id: str
     event_type: AuditEventType
     user_id: str
     
@@ -264,7 +274,8 @@ class AuditEvent:
 
 @dataclass
 class ComplianceReport:
-    """Rapport de conformité"""    id: str
+    """Rapport de conformité"""
+    id: str
     report_type: str
     regulation: ComplianceRegulation
     reporting_period: Tuple[datetime, datetime]
@@ -306,7 +317,8 @@ class ComplianceReport:
 
 @dataclass
 class PrivacyRightsRequest:
-    """Demande de droits de la vie privée"""    id: str
+    """Demande de droits de la vie privée"""
+    id: str
     user_id: str
     request_type: str  # access, rectification, erasure, portability, restriction
     
@@ -345,7 +357,8 @@ class PrivacyRightsRequest:
 
 
 class ComplianceManager(ABC):
-    """    ⚖️ Advanced Compliance Manager - IA-Influencer-Agent
+    """
+    ⚖️ Advanced Compliance Manager - IA-Influencer-Agent
     
     Responsabilité:
     Gestionnaire industriel pour conformité légale et protection des données
@@ -371,7 +384,8 @@ class ComplianceManager(ABC):
     - Gestion rétention données
     - Documentation légale automatique
     - Monitoring conformité temps réel
-    """    
+    """
+    
     def __init__(self, config: ComplianceConfig = None):
         self.config = config or ComplianceConfig()
         
@@ -425,11 +439,13 @@ class ComplianceManager(ABC):
     
     @abstractmethod
     async def initialize_compliance_framework(self) -> bool:
-        """        Initialize compliance framework and regulations
+        """
+        Initialize compliance framework and regulations
         
         Returns:
             bool: True if initialization successful
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def record_consent(
@@ -438,7 +454,8 @@ class ComplianceManager(ABC):
         consent_details: Dict[str, Any],
         evidence: Dict[str, Any] = None
     ) -> ConsentRecord:
-        """        Record user consent with legal evidence
+        """
+        Record user consent with legal evidence
         
         Args:
             user_id: User providing consent
@@ -447,7 +464,8 @@ class ComplianceManager(ABC):
             
         Returns:
             ConsentRecord: Recorded consent information
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def process_privacy_rights_request(
@@ -456,7 +474,8 @@ class ComplianceManager(ABC):
         request_type: str,
         request_details: Dict[str, Any]
     ) -> PrivacyRightsRequest:
-        """        Process privacy rights request (GDPR Article 15-22)
+        """
+        Process privacy rights request (GDPR Article 15-22)
         
         Args:
             user_id: User making the request
@@ -465,7 +484,8 @@ class ComplianceManager(ABC):
             
         Returns:
             PrivacyRightsRequest: Created privacy rights request
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def audit_data_processing(
@@ -473,7 +493,8 @@ class ComplianceManager(ABC):
         user_id: str,
         processing_details: Dict[str, Any]
     ) -> AuditEvent:
-        """        Audit data processing activity
+        """
+        Audit data processing activity
         
         Args:
             user_id: User whose data is being processed
@@ -481,7 +502,8 @@ class ComplianceManager(ABC):
             
         Returns:
             AuditEvent: Created audit event
-        """        pass
+        """
+        pass
     
     async def validate_consent(
         self,
@@ -489,7 +511,8 @@ class ComplianceManager(ABC):
         data_category: DataCategory,
         processing_purpose: str
     ) -> Tuple[bool, Optional[ConsentRecord]]:
-        """        Validate if valid consent exists for data processing
+        """
+        Validate if valid consent exists for data processing
         
         Args:
             user_id: User to validate consent for
@@ -498,7 +521,8 @@ class ComplianceManager(ABC):
             
         Returns:
             Tuple[bool, Optional[ConsentRecord]]: Validation result and consent record
-        """        try:
+        """
+        try:
             with self._lock:
                 # Find relevant consent records
                 user_consents = [
@@ -536,7 +560,8 @@ class ComplianceManager(ABC):
         consent_id: Optional[str] = None,
         withdrawal_evidence: Dict[str, Any] = None
     ) -> bool:
-        """        Withdraw user consent
+        """
+        Withdraw user consent
         
         Args:
             user_id: User withdrawing consent
@@ -545,7 +570,8 @@ class ComplianceManager(ABC):
             
         Returns:
             bool: True if withdrawal successful
-        """        try:
+        """
+        try:
             evidence = withdrawal_evidence or {}
             withdrawal_time = datetime.utcnow()
             
@@ -624,7 +650,8 @@ class ComplianceManager(ABC):
         end_date: datetime,
         report_type: str = "comprehensive"
     ) -> ComplianceReport:
-        """        Generate comprehensive compliance report
+        """
+        Generate comprehensive compliance report
         
         Args:
             regulation: Regulation to report on
@@ -634,7 +661,8 @@ class ComplianceManager(ABC):
             
         Returns:
             ComplianceReport: Generated compliance report
-        """        try:
+        """
+        try:
             report = ComplianceReport(
                 id=str(uuid.uuid4()),
                 report_type=report_type,
@@ -729,14 +757,16 @@ class ComplianceManager(ABC):
         self,
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Check data retention compliance and schedule deletions
+        """
+        Check data retention compliance and schedule deletions
         
         Args:
             user_id: Optional specific user to check
             
         Returns:
             Dict: Retention compliance status and actions
-        """        try:
+        """
+        try:
             current_time = datetime.utcnow()
             actions_taken = {
                 "records_reviewed": 0,
@@ -832,7 +862,8 @@ class ComplianceManager(ABC):
         breach_details: Dict[str, Any],
         containment_actions: List[str] = None
     ) -> Dict[str, Any]:
-        """        Handle data breach incident according to regulations
+        """
+        Handle data breach incident according to regulations
         
         Args:
             breach_details: Details of the data breach
@@ -840,7 +871,8 @@ class ComplianceManager(ABC):
             
         Returns:
             Dict: Breach handling results and next steps
-        """        try:
+        """
+        try:
             breach_id = str(uuid.uuid4())
             breach_time = datetime.utcnow()
             
@@ -914,10 +946,12 @@ class ComplianceManager(ABC):
             raise
     
     async def _queue_audit_event(self, audit_event: AuditEvent) -> None:
-        """Queue audit event for processing"""        await self._audit_queue.put(audit_event)
+        """Queue audit event for processing"""
+        await self._audit_queue.put(audit_event)
     
     async def _schedule_data_processing_review(self, user_id: str) -> None:
-        """Schedule review of data processing after consent withdrawal"""        # This would schedule a background task to review all data processing
+        """Schedule review of data processing after consent withdrawal"""
+        # This would schedule a background task to review all data processing
         # for the user and stop/delete data as required
         pass
     
@@ -928,7 +962,8 @@ class ComplianceManager(ABC):
         processing_records: List[DataProcessingRecord],
         audit_events: List[AuditEvent]
     ) -> float:
-        """Calculate compliance score for regulation"""        score = 100.0
+        """Calculate compliance score for regulation"""
+        score = 100.0
         
         # Consent compliance
         if consents:
@@ -955,7 +990,8 @@ class ComplianceManager(ABC):
         compliance_score: float,
         violations: List[AuditEvent]
     ) -> List[str]:
-        """Generate compliance recommendations"""        recommendations = []
+        """Generate compliance recommendations"""
+        recommendations = []
         
         if compliance_score < 95:
             recommendations.append("Review and update consent collection processes")
@@ -972,7 +1008,8 @@ class ComplianceManager(ABC):
         return recommendations
     
     def _assess_breach_notification_requirements(self, breach_details: Dict[str, Any]) -> bool:
-        """Assess if breach requires regulatory notification"""        severity = breach_details.get("severity", "medium")
+        """Assess if breach requires regulatory notification"""
+        severity = breach_details.get("severity", "medium")
         affected_users = len(breach_details.get("affected_users", []))
         sensitive_data = breach_details.get("involves_sensitive_data", False)
         
@@ -980,7 +1017,8 @@ class ComplianceManager(ABC):
         return severity == "high" or affected_users > 100 or sensitive_data
     
     async def _auto_contain_breach(self, breach_details: Dict[str, Any]) -> Dict[str, Any]:
-        """Automatically contain data breach"""        containment_results = {
+        """Automatically contain data breach"""
+        containment_results = {
             "actions_taken": [],
             "success": True,
             "timestamp": datetime.utcnow().isoformat()
@@ -992,12 +1030,14 @@ class ComplianceManager(ABC):
         return containment_results
     
     async def _schedule_breach_notifications(self, breach_incident: Dict[str, Any]) -> None:
-        """Schedule breach notifications to authorities and users"""        # This would schedule the required notifications
+        """Schedule breach notifications to authorities and users"""
+        # This would schedule the required notifications
         pass
     
     @asynccontextmanager
     async def get_compliance_session(self, user_id: str):
-        """Context manager for compliance operations"""        session_id = str(uuid.uuid4())
+        """Context manager for compliance operations"""
+        session_id = str(uuid.uuid4())
         try:
             logger.info(f"⚖️ Compliance session started: {session_id} for user {user_id}")
             yield session_id
@@ -1005,7 +1045,8 @@ class ComplianceManager(ABC):
             logger.info(f"⚖️ Compliance session ended: {session_id}")
     
     async def cleanup(self) -> bool:
-        """Cleanup compliance resources"""        try:
+        """Cleanup compliance resources"""
+        try:
             # Stop monitoring
             self._monitoring_active = False
             
@@ -1053,7 +1094,8 @@ class ComplianceManager(ABC):
             return False
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get compliance system statistics"""        with self._lock:
+        """Get compliance system statistics"""
+        with self._lock:
             return {
                 "consent_records": len(self._consent_records),
                 "processing_records": len(self._processing_records),
@@ -1092,11 +1134,13 @@ compliance_manager = None
 
 
 def get_compliance_manager() -> ComplianceManager:
-    """    Get the global compliance manager instance
+    """
+    Get the global compliance manager instance
     
     Returns:
         ComplianceManager: Global compliance manager
-    """    global compliance_manager
+    """
+    global compliance_manager
     if compliance_manager is None:
         from ..implementations.compliance_manager_impl import ComplianceManagerImpl
         compliance_manager = ComplianceManagerImpl()

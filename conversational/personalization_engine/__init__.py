@@ -31,9 +31,11 @@ LEGAL_WARNING = (
 
 # Initialization logic if needed
 def initialize_personalization_engine():
-    """    Initialize the Personalization Engine module.
+    """
+    Initialize the Personalization Engine module.
     Ensures all submodules are loaded and ready for production use.
-    """    pass
+    """
+    pass
 
 """Project Team Specialists:
 - Lead AI Developer & ML Engineer: Fahed Mlaiel
@@ -45,7 +47,8 @@ def initialize_personalization_engine():
 WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, or use of this code is strictly prohibited and will result in
 legal action. Contact mlaiel@live.de for authorization.
-"""from .personalization_manager import (
+"""
+from .personalization_manager import (
     PersonalizationManager,
     PersonalizationContext,
     PersonalizationStrategy,
@@ -238,9 +241,11 @@ LEGAL_WARNING = (
 
 # Initialization logic if needed
 def initialize_personalization_engine():
-    """    Initialize the Personalization Engine module.
+    """
+    Initialize the Personalization Engine module.
     Ensures all submodules are loaded and ready for production use.
-    """    pass
+    """
+    pass
 License: Proprietary - Unauthorized use strictly prohibited
 
 Project Team Specialists:
@@ -253,7 +258,8 @@ Project Team Specialists:
 WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, or use of this code is strictly prohibited and will result in
 legal action. Contact mlaiel@live.de for authorization.
-"""from .personalization_manager import (
+"""
+from .personalization_manager import (
     PersonalizationManager,
     PersonalizationContext,
     PersonalizationStrategy,

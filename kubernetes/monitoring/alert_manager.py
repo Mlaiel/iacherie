@@ -6,7 +6,8 @@ and intelligent alert correlation and deduplication.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import time
 import logging
 from typing import Dict, List, Optional, Callable, Any, Union
@@ -25,14 +26,16 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    INFO = "info"
+    """Alert severity levels"""
+    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 
 class AlertStatus(Enum):
-    """Alert status"""    ACTIVE = "active"
+    """Alert status"""
+    ACTIVE = "active"
     ACKNOWLEDGED = "acknowledged"
     RESOLVED = "resolved"
     SILENCED = "silenced"
@@ -40,7 +43,8 @@ class AlertStatus(Enum):
 
 @dataclass
 class Alert:
-    """Alert data structure"""    id: str
+    """Alert data structure"""
+    id: str
     name: str
     severity: AlertSeverity
     message: str
@@ -57,7 +61,8 @@ class Alert:
 
 @dataclass
 class NotificationChannel:
-    """Notification channel configuration"""    name: str
+    """Notification channel configuration"""
+    name: str
     type: str  # email, slack, webhook, telegram, pagerduty
     config: Dict[str, Any]
     enabled: bool = True
@@ -66,7 +71,8 @@ class NotificationChannel:
 
 @dataclass
 class EscalationRule:
-    """Alert escalation rule"""    name: str
+    """Alert escalation rule"""
+    name: str
     conditions: Dict[str, Any]
     delay: int  # seconds
     channels: List[str]
@@ -75,7 +81,8 @@ class EscalationRule:
 
 @dataclass
 class SilenceRule:
-    """Alert silence rule"""    id: str
+    """Alert silence rule"""
+    id: str
     matchers: Dict[str, str]
     start_time: datetime
     end_time: datetime
@@ -84,9 +91,11 @@ class SilenceRule:
 
 
 class AlertManager:
-    """    Advanced alert management system with intelligent correlation,
+    """
+    Advanced alert management system with intelligent correlation,
     escalation policies, and multi-channel notifications.
-    """    
+    """
+    
     def __init__(
         self,
         redis_client: Optional[aioredis.Redis] = None,
@@ -124,7 +133,8 @@ class AlertManager:
         self._register_default_channels()
         
     def _register_default_channels(self):
-        """Register default notification channels"""        
+        """Register default notification channels"""
+        
         # Email channel
         self.register_channel(NotificationChannel(
             name="email_critical",
@@ -162,7 +172,8 @@ class AlertManager:
         ))
         
     async def start_processing(self):
-        """Start alert processing"""        if self._processing:
+        """Start alert processing"""
+        if self._processing:
             logger.warning("Alert processing already running")
             return
             
@@ -176,7 +187,8 @@ class AlertManager:
         logger.info("Alert processing started")
         
     async def stop_processing(self):
-        """Stop alert processing"""        self._processing = False
+        """Stop alert processing"""
+        self._processing = False
         
         if self._processor_task:
             self._processor_task.cancel()
@@ -198,7 +210,8 @@ class AlertManager:
         logger.info("Alert processing stopped")
         
     async def _processing_loop(self):
-        """Main alert processing loop"""        while self._processing:
+        """Main alert processing loop"""
+        while self._processing:
             try:
                 await self._process_pending_alerts()
                 await self._check_escalations()
@@ -212,7 +225,8 @@ class AlertManager:
                 await asyncio.sleep(5)
                 
     async def _cleanup_loop(self):
-        """Cleanup loop for old alerts and maintenance"""        while self._processing:
+        """Cleanup loop for old alerts and maintenance"""
+        while self._processing:
             try:
                 await self._cleanup_old_alerts()
                 await self._cleanup_expired_silences()
@@ -234,7 +248,8 @@ class AlertManager:
         labels: Optional[Dict[str, str]] = None,
         annotations: Optional[Dict[str, str]] = None
     ) -> str:
-        """Fire a new alert"""        
+        """Fire a new alert"""
+        
         # Generate alert ID and fingerprint
         alert_id = f"{name}_{source}_{int(time.time())}"
         fingerprint = self._generate_fingerprint(name, source, labels or {})
@@ -280,7 +295,8 @@ class AlertManager:
         return alert_id
         
     async def resolve_alert(self, alert_id: str, resolved_by: Optional[str] = None) -> bool:
-        """Resolve an alert"""        if alert_id not in self._active_alerts:
+        """Resolve an alert"""
+        if alert_id not in self._active_alerts:
             logger.warning(f"Alert not found: {alert_id}")
             return False
             
@@ -307,7 +323,8 @@ class AlertManager:
         return True
         
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
-        """Acknowledge an alert"""        if alert_id not in self._active_alerts:
+        """Acknowledge an alert"""
+        if alert_id not in self._active_alerts:
             logger.warning(f"Alert not found: {alert_id}")
             return False
             
@@ -326,7 +343,8 @@ class AlertManager:
         created_by: str,
         comment: str
     ) -> str:
-        """Create a silence rule"""        silence_id = f"silence_{int(time.time())}"
+        """Create a silence rule"""
+        silence_id = f"silence_{int(time.time())}"
         start_time = datetime.utcnow()
         end_time = start_time + timedelta(seconds=duration)
         
@@ -350,7 +368,8 @@ class AlertManager:
         return silence_id
         
     async def _process_pending_alerts(self):
-        """Process pending alerts from queue"""        if not self.redis_client:
+        """Process pending alerts from queue"""
+        if not self.redis_client:
             return
             
         try:
@@ -373,7 +392,8 @@ class AlertManager:
             logger.error(f"Error processing pending alerts: {e}")
             
     async def _send_notifications(self, alert_id: str):
-        """Send notifications for an alert"""        if alert_id not in self._active_alerts:
+        """Send notifications for an alert"""
+        if alert_id not in self._active_alerts:
             return
             
         alert = self._active_alerts[alert_id]
@@ -403,7 +423,8 @@ class AlertManager:
                 logger.error(f"Error sending alert to channel {channel_name}: {e}")
                 
     async def _send_to_channel(self, alert: Alert, channel: NotificationChannel):
-        """Send alert to specific notification channel"""        if channel.type == "email":
+        """Send alert to specific notification channel"""
+        if channel.type == "email":
             await self._send_email_notification(alert, channel)
         elif channel.type == "slack":
             await self._send_slack_notification(alert, channel)
@@ -415,12 +436,14 @@ class AlertManager:
             logger.warning(f"Unknown channel type: {channel.type}")
             
     async def _send_email_notification(self, alert: Alert, channel: NotificationChannel):
-        """Send email notification"""        config = channel.config
+        """Send email notification"""
+        config = channel.config
         
         # Create email content
         subject = f"[{alert.severity.value.upper()}] {alert.name}"
         
-        template = Template("""        <h2>Alert: {{ alert.name }}</h2>
+        template = Template("""
+        <h2>Alert: {{ alert.name }}</h2>
         <p><strong>Severity:</strong> {{ alert.severity.value.upper() }}</p>
         <p><strong>Source:</strong> {{ alert.source }}</p>
         <p><strong>Time:</strong> {{ alert.timestamp }}</p>
@@ -461,7 +484,8 @@ class AlertManager:
         logger.info(f"Email notification sent for alert: {alert.id}")
         
     async def _send_slack_notification(self, alert: Alert, channel: NotificationChannel):
-        """Send Slack notification"""        config = channel.config
+        """Send Slack notification"""
+        config = channel.config
         
         # Create Slack message
         color = {
@@ -504,7 +528,8 @@ class AlertManager:
                     logger.error(f"Failed to send Slack notification: {response.status}")
                     
     async def _send_webhook_notification(self, alert: Alert, channel: NotificationChannel):
-        """Send webhook notification"""        config = channel.config
+        """Send webhook notification"""
+        config = channel.config
         
         payload = {
             "alert_id": alert.id,
@@ -529,7 +554,8 @@ class AlertManager:
                     logger.error(f"Failed to send webhook notification: {response.status}")
                     
     async def _send_telegram_notification(self, alert: Alert, channel: NotificationChannel):
-        """Send Telegram notification"""        config = channel.config
+        """Send Telegram notification"""
+        config = channel.config
         
         # Format message for Telegram
         message = f"🚨 *{alert.severity.value.upper()}*: {alert.name}\n\n"
@@ -558,23 +584,27 @@ class AlertManager:
                     logger.error(f"Failed to send Telegram notification: {response.status}")
                     
     def _generate_fingerprint(self, name: str, source: str, labels: Dict[str, str]) -> str:
-        """Generate alert fingerprint for deduplication"""        fingerprint_data = f"{name}:{source}:{sorted(labels.items())}"
+        """Generate alert fingerprint for deduplication"""
+        fingerprint_data = f"{name}:{source}:{sorted(labels.items())}"
         return str(hash(fingerprint_data))
         
     def _find_alert_by_fingerprint(self, fingerprint: str) -> Optional[Alert]:
-        """Find alert by fingerprint"""        alert_id = self._alert_fingerprints.get(fingerprint)
+        """Find alert by fingerprint"""
+        alert_id = self._alert_fingerprints.get(fingerprint)
         if alert_id and alert_id in self._active_alerts:
             return self._active_alerts[alert_id]
         return None
         
     def _is_silenced(self, alert: Alert) -> bool:
-        """Check if alert matches any silence rule"""        for silence in self._silence_rules:
+        """Check if alert matches any silence rule"""
+        for silence in self._silence_rules:
             if self._matches_silence(alert, silence):
                 return True
         return False
         
     def _matches_silence(self, alert: Alert, silence: SilenceRule) -> bool:
-        """Check if alert matches silence rule"""        now = datetime.utcnow()
+        """Check if alert matches silence rule"""
+        now = datetime.utcnow()
         if now < silence.start_time or now > silence.end_time:
             return False
             
@@ -589,7 +619,8 @@ class AlertManager:
         return True
         
     def _is_rate_limited(self, alert: Alert) -> bool:
-        """Check if alert is rate limited"""        key = f"{alert.name}:{alert.source}"
+        """Check if alert is rate limited"""
+        key = f"{alert.name}:{alert.source}"
         
         if key not in self._rate_limits:
             self._rate_limits[key] = {
@@ -612,12 +643,14 @@ class AlertManager:
         return False
         
     def _update_rate_limit(self, alert: Alert, channel_name: str):
-        """Update rate limit counter"""        key = f"{alert.name}:{alert.source}"
+        """Update rate limit counter"""
+        key = f"{alert.name}:{alert.source}"
         if key in self._rate_limits:
             self._rate_limits[key]["count"] += 1
             
     async def _check_escalations(self):
-        """Check and process alert escalations"""        for rule in self._escalation_rules:
+        """Check and process alert escalations"""
+        for rule in self._escalation_rules:
             if not rule.enabled:
                 continue
                 
@@ -629,7 +662,8 @@ class AlertManager:
                         await self._escalate_alert(alert, rule)
                         
     def _matches_escalation_conditions(self, alert: Alert, rule: EscalationRule) -> bool:
-        """Check if alert matches escalation conditions"""        conditions = rule.conditions
+        """Check if alert matches escalation conditions"""
+        conditions = rule.conditions
         
         if "severity" in conditions:
             if alert.severity.value not in conditions["severity"]:
@@ -647,7 +681,8 @@ class AlertManager:
         return True
         
     async def _escalate_alert(self, alert: Alert, rule: EscalationRule):
-        """Escalate an alert"""        logger.info(f"Escalating alert {alert.id} via rule {rule.name}")
+        """Escalate an alert"""
+        logger.info(f"Escalating alert {alert.id} via rule {rule.name}")
         
         # Send to escalation channels
         for channel_name in rule.channels:
@@ -659,11 +694,13 @@ class AlertManager:
                     logger.error(f"Error escalating to channel {channel_name}: {e}")
                     
     async def _process_correlations(self):
-        """Process alert correlations"""        # Implement correlation logic based on time windows and patterns
+        """Process alert correlations"""
+        # Implement correlation logic based on time windows and patterns
         pass
         
     async def _cleanup_old_alerts(self):
-        """Clean up old resolved alerts"""        cutoff = datetime.utcnow() - timedelta(seconds=self.max_alert_age)
+        """Clean up old resolved alerts"""
+        cutoff = datetime.utcnow() - timedelta(seconds=self.max_alert_age)
         
         # Remove old alerts from history
         self._alert_history = [
@@ -674,7 +711,8 @@ class AlertManager:
         logger.debug(f"Cleaned up old alerts, history size: {len(self._alert_history)}")
         
     async def _cleanup_expired_silences(self):
-        """Clean up expired silence rules"""        now = datetime.utcnow()
+        """Clean up expired silence rules"""
+        now = datetime.utcnow()
         active_silences = []
         
         for silence in self._silence_rules:
@@ -686,7 +724,8 @@ class AlertManager:
         self._silence_rules = active_silences
         
     async def _load_state(self):
-        """Load state from Redis"""        if not self.redis_client:
+        """Load state from Redis"""
+        if not self.redis_client:
             return
             
         try:
@@ -707,7 +746,8 @@ class AlertManager:
             logger.error(f"Error loading state from Redis: {e}")
             
     async def _save_state(self):
-        """Save state to Redis"""        if not self.redis_client:
+        """Save state to Redis"""
+        if not self.redis_client:
             return
             
         try:
@@ -740,15 +780,18 @@ class AlertManager:
             
     # Public interface methods
     def register_channel(self, channel: NotificationChannel):
-        """Register a notification channel"""        self._notification_channels[channel.name] = channel
+        """Register a notification channel"""
+        self._notification_channels[channel.name] = channel
         logger.info(f"Registered notification channel: {channel.name}")
         
     def register_escalation_rule(self, rule: EscalationRule):
-        """Register an escalation rule"""        self._escalation_rules.append(rule)
+        """Register an escalation rule"""
+        self._escalation_rules.append(rule)
         logger.info(f"Registered escalation rule: {rule.name}")
         
     def get_active_alerts(self) -> List[Dict[str, Any]]:
-        """Get all active alerts"""        return [
+        """Get all active alerts"""
+        return [
             {
                 "id": alert.id,
                 "name": alert.name,
@@ -764,7 +807,8 @@ class AlertManager:
         ]
         
     def get_alert_summary(self) -> Dict[str, Any]:
-        """Get alert summary statistics"""        severity_counts = {severity.value: 0 for severity in AlertSeverity}
+        """Get alert summary statistics"""
+        severity_counts = {severity.value: 0 for severity in AlertSeverity}
         status_counts = {status.value: 0 for status in AlertStatus}
         
         for alert in self._active_alerts.values():

@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Any, List
 from datetime import datetime, timedelta
@@ -47,10 +48,12 @@ logger = logging.getLogger(__name__)
 
 
 class CacheUsageExamples:
-    """Collection of practical cache configuration usage examples"""    
+    """Collection of practical cache configuration usage examples"""
+    
     @staticmethod
     def example_1_quick_setup():
-        """Example 1: Quick setup for development environment"""        print("=== Example 1: Quick Development Setup ===")
+        """Example 1: Quick setup for development environment"""
+        print("=== Example 1: Quick Development Setup ===")
         
         # Method 1: Auto-detection and setup
         bundle = setup_cache_config()
@@ -69,7 +72,8 @@ class CacheUsageExamples:
     
     @staticmethod
     def example_2_production_setup():
-        """Example 2: Production environment with full monitoring"""        print("\n=== Example 2: Production Setup ===")
+        """Example 2: Production environment with full monitoring"""
+        print("\n=== Example 2: Production Setup ===")
         
         # Create enterprise production bundle
         bundle = CacheConfigurationFactory.create_production_bundle(
@@ -95,7 +99,8 @@ class CacheUsageExamples:
     
     @staticmethod
     def example_3_redis_specific_config():
-        """Example 3: Redis-specific configuration with clustering"""        print("\n=== Example 3: Redis Clustering Configuration ===")
+        """Example 3: Redis-specific configuration with clustering"""
+        print("\n=== Example 3: Redis Clustering Configuration ===")
         
         # Get Redis configuration from bundle
         bundle = ENTERPRISE_PRODUCTION_BUNDLE
@@ -118,7 +123,8 @@ class CacheUsageExamples:
     
     @staticmethod
     def example_4_memcached_configuration():
-        """Example 4: Memcached distributed setup"""        print("\n=== Example 4: Memcached Distributed Setup ===")
+        """Example 4: Memcached distributed setup"""
+        print("\n=== Example 4: Memcached Distributed Setup ===")
         
         bundle = ENTERPRISE_PRODUCTION_BUNDLE
         memcached_config = bundle.memcached_config
@@ -135,7 +141,8 @@ class CacheUsageExamples:
     
     @staticmethod
     def example_5_caching_strategies():
-        """Example 5: Different caching strategies configuration"""        print("\n=== Example 5: Caching Strategies ===")
+        """Example 5: Different caching strategies configuration"""
+        print("\n=== Example 5: Caching Strategies ===")
         
         bundle = ENTERPRISE_PRODUCTION_BUNDLE
         strategies_config = bundle.strategies_config
@@ -151,7 +158,8 @@ class CacheUsageExamples:
     
     @staticmethod
     def example_6_cache_warming():
-        """Example 6: Cache warming configuration"""        print("\n=== Example 6: Cache Warming ===")
+        """Example 6: Cache warming configuration"""
+        print("\n=== Example 6: Cache Warming ===")
         
         bundle = ENTERPRISE_PRODUCTION_BUNDLE
         warming_config = bundle.warming_config
@@ -169,7 +177,8 @@ class CacheUsageExamples:
     
     @staticmethod
     def example_7_metrics_monitoring():
-        """Example 7: Metrics and monitoring setup"""        print("\n=== Example 7: Metrics and Monitoring ===")
+        """Example 7: Metrics and monitoring setup"""
+        print("\n=== Example 7: Metrics and Monitoring ===")
         
         bundle = ENTERPRISE_PRODUCTION_BUNDLE
         metrics_config = bundle.metrics_config
@@ -190,7 +199,8 @@ class CacheUsageExamples:
     
     @staticmethod
     def example_8_compression_setup():
-        """Example 8: Compression configuration"""        print("\n=== Example 8: Compression Setup ===")
+        """Example 8: Compression configuration"""
+        print("\n=== Example 8: Compression Setup ===")
         
         bundle = ENTERPRISE_PRODUCTION_BUNDLE
         compression_config = bundle.compression_config
@@ -210,7 +220,8 @@ class CacheUsageExamples:
     
     @staticmethod
     def example_9_custom_configuration():
-        """Example 9: Creating custom configuration bundle"""        print("\n=== Example 9: Custom Configuration ===")
+        """Example 9: Creating custom configuration bundle"""
+        print("\n=== Example 9: Custom Configuration ===")
         
         # Create custom Redis configuration
         from .redis_cache_config import RedisCacheConfig, RedisConnectionConfig
@@ -239,7 +250,8 @@ class CacheUsageExamples:
     
     @staticmethod
     def example_10_environment_detection():
-        """Example 10: Environment detection and auto-configuration"""        print("\n=== Example 10: Environment Detection ===")
+        """Example 10: Environment detection and auto-configuration"""
+        print("\n=== Example 10: Environment Detection ===")
         
         # Show current environment detection
         import os
@@ -264,10 +276,12 @@ class CacheUsageExamples:
 
 
 class AsyncCacheExamples:
-    """Asynchronous cache operation examples"""    
+    """Asynchronous cache operation examples"""
+    
     @staticmethod
     async def example_async_operations():
-        """Example of asynchronous cache operations"""        print("\n=== Async Cache Operations Example ===")
+        """Example of asynchronous cache operations"""
+        print("\n=== Async Cache Operations Example ===")
         
         # Get configuration
         bundle = get_default_config()
@@ -304,7 +318,8 @@ class AsyncCacheExamples:
 
 
 def run_all_examples():
-    """Run all configuration examples"""    print("IA-Influencer Agent Cache Configuration Examples")
+    """Run all configuration examples"""
+    print("IA-Influencer Agent Cache Configuration Examples")
     print("=" * 60)
     
     # Synchronous examples

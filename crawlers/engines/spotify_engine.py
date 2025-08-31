@@ -11,7 +11,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Set
 from dataclasses import dataclass, asdict
@@ -53,7 +54,8 @@ settings = get_settings()
 
 @dataclass
 class SpotifyTrackData:
-    """Spotify track data structure"""    track_id: str
+    """Spotify track data structure"""
+    track_id: str
     name: str
     artist_names: List[str]
     artist_ids: List[str]
@@ -88,7 +90,8 @@ class SpotifyTrackData:
 
 @dataclass
 class SpotifyArtistData:
-    """Spotify artist data structure"""    artist_id: str
+    """Spotify artist data structure"""
+    artist_id: str
     name: str
     genres: List[str]
     popularity: int
@@ -108,7 +111,8 @@ class SpotifyArtistData:
 
 @dataclass
 class SpotifyPlaylistData:
-    """Spotify playlist data structure"""    playlist_id: str
+    """Spotify playlist data structure"""
+    playlist_id: str
     name: str
     description: str
     owner_id: str
@@ -130,7 +134,8 @@ class SpotifyPlaylistData:
 
 
 class SpotifyCrawlerEngine(BaseCrawlerEngine):
-    """    Advanced Spotify crawler engine with comprehensive music data extraction.
+    """
+    Advanced Spotify crawler engine with comprehensive music data extraction.
     
     Features:
     - Spotify Web API integration
@@ -140,9 +145,11 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
     - Music trend detection
     - Genre classification
     - Rate limiting and caching
-    """    
+    """
+    
     def __init__(self, api_credentials: Dict, config: Optional[Dict] = None):
-        """Initialize Spotify crawler engine"""        super().__init__(config)
+        """Initialize Spotify crawler engine"""
+        super().__init__(config)
         self.api_credentials = api_credentials
         self.client = None
         self.session = None
@@ -160,7 +167,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
         self._setup_selenium_driver()
     
     def _setup_spotify_client(self) -> None:
-        """Setup Spotify API client"""        try:
+        """Setup Spotify API client"""
+        try:
             client_credentials_manager = SpotifyClientCredentials(
                 client_id=self.api_credentials.get('client_id'),
                 client_secret=self.api_credentials.get('client_secret')
@@ -184,7 +192,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
             raise AuthenticationError(f"Spotify API setup failed: {e}")
     
     def _setup_session(self) -> None:
-        """Setup HTTP session for web scraping"""        self.session = requests.Session()
+        """Setup HTTP session for web scraping"""
+        self.session = requests.Session()
         self.session.headers.update({
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
             'Accept': 'application/json, text/html, */*',
@@ -196,7 +205,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
         logger.info("Spotify HTTP session initialized")
     
     def _setup_selenium_driver(self) -> None:
-        """Setup Selenium WebDriver for web scraping"""        try:
+        """Setup Selenium WebDriver for web scraping"""
+        try:
             chrome_options = webdriver.ChromeOptions()
             chrome_options.add_argument('--headless')
             chrome_options.add_argument('--no-sandbox')
@@ -216,14 +226,16 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
             self.driver = None
     
     async def get_artist_data(self, artist_id: str) -> Optional[SpotifyArtistData]:
-        """        Get comprehensive artist data
+        """
+        Get comprehensive artist data
         
         Args:
             artist_id: Spotify artist ID
             
         Returns:
             Artist data or None if not found
-        """        await self.rate_limiter.wait()
+        """
+        await self.rate_limiter.wait()
         
         cache_key = f"artist_{artist_id}"
         cached_result = await self.cache_manager.get(cache_key)
@@ -294,7 +306,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Failed to get artist data: {e}")
     
     async def get_track_data(self, track_id: str, include_audio_features: bool = True) -> Optional[SpotifyTrackData]:
-        """        Get comprehensive track data
+        """
+        Get comprehensive track data
         
         Args:
             track_id: Spotify track ID
@@ -302,7 +315,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             Track data or None if not found
-        """        await self.rate_limiter.wait()
+        """
+        await self.rate_limiter.wait()
         
         cache_key = f"track_{track_id}_{include_audio_features}"
         cached_result = await self.cache_manager.get(cache_key)
@@ -390,7 +404,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Failed to get track data: {e}")
     
     async def get_playlist_data(self, playlist_id: str, include_tracks: bool = True) -> Optional[SpotifyPlaylistData]:
-        """        Get comprehensive playlist data
+        """
+        Get comprehensive playlist data
         
         Args:
             playlist_id: Spotify playlist ID
@@ -398,7 +413,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             Playlist data or None if not found
-        """        await self.rate_limiter.wait()
+        """
+        await self.rate_limiter.wait()
         
         cache_key = f"playlist_{playlist_id}_{include_tracks}"
         cached_result = await self.cache_manager.get(cache_key)
@@ -509,7 +525,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
         limit: int = 50,
         market: str = 'US'
     ) -> List[SpotifyTrackData]:
-        """        Search for tracks
+        """
+        Search for tracks
         
         Args:
             query: Search query
@@ -518,7 +535,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of matching tracks
-        """        await self.rate_limiter.wait()
+        """
+        await self.rate_limiter.wait()
         
         try:
             results = self.client.search(
@@ -546,7 +564,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
         limit: int = 50,
         market: str = 'US'
     ) -> List[SpotifyArtistData]:
-        """        Search for artists
+        """
+        Search for artists
         
         Args:
             query: Search query
@@ -555,7 +574,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of matching artists
-        """        await self.rate_limiter.wait()
+        """
+        await self.rate_limiter.wait()
         
         try:
             results = self.client.search(
@@ -578,7 +598,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Artist search failed: {e}")
     
     async def get_featured_playlists(self, country: str = 'US', limit: int = 50) -> List[SpotifyPlaylistData]:
-        """        Get featured playlists for a country
+        """
+        Get featured playlists for a country
         
         Args:
             country: Country code
@@ -586,7 +607,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of featured playlists
-        """        await self.rate_limiter.wait()
+        """
+        await self.rate_limiter.wait()
         
         try:
             featured = self.client.featured_playlists(country=country, limit=min(limit, 50))
@@ -604,7 +626,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
             return []
     
     async def get_new_releases(self, country: str = 'US', limit: int = 50) -> List[SpotifyTrackData]:
-        """        Get new music releases
+        """
+        Get new music releases
         
         Args:
             country: Country code
@@ -612,7 +635,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of new tracks from recent albums
-        """        await self.rate_limiter.wait()
+        """
+        await self.rate_limiter.wait()
         
         try:
             new_releases = self.client.new_releases(country=country, limit=min(limit, 50))
@@ -644,14 +668,16 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
             return []
     
     async def analyze_audio_features(self, track_ids: List[str]) -> Dict[str, Any]:
-        """        Analyze audio features for multiple tracks
+        """
+        Analyze audio features for multiple tracks
         
         Args:
             track_ids: List of Spotify track IDs
             
         Returns:
             Audio features analysis
-        """        await self.rate_limiter.wait()
+        """
+        await self.rate_limiter.wait()
         
         try:
             # Get audio features in batches of 100 (API limit)
@@ -695,7 +721,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
             return {}
     
     async def _scrape_artist_web_data(self, artist_id: str) -> Dict[str, Any]:
-        """Scrape additional artist data from Spotify web interface"""        additional_data = {}
+        """Scrape additional artist data from Spotify web interface"""
+        additional_data = {}
         
         try:
             url = f"https://open.spotify.com/artist/{artist_id}"
@@ -769,7 +796,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
         return additional_data
     
     def _calculate_std(self, values: List[float]) -> float:
-        """Calculate standard deviation"""        if len(values) <= 1:
+        """Calculate standard deviation"""
+        if len(values) <= 1:
             return 0.0
         
         mean = sum(values) / len(values)
@@ -777,7 +805,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
         return variance ** 0.5
     
     async def cleanup(self) -> None:
-        """Cleanup resources"""        try:
+        """Cleanup resources"""
+        try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()
             if hasattr(self, 'session') and self.session:
@@ -788,7 +817,8 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
             logger.error(f"Error during cleanup: {e}")
     
     def __del__(self):
-        """Destructor to ensure cleanup"""        try:
+        """Destructor to ensure cleanup"""
+        try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()
             if hasattr(self, 'session') and self.session:

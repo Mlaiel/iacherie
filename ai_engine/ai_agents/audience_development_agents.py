@@ -7,7 +7,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 This module contains AI agents specialized in audience development, community building,
 engagement optimization, and growth strategy for content creators.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -20,7 +21,8 @@ from .base_agent import BaseAIAgent
 
 @dataclass
 class AudienceAnalysis:
-    """Audience analysis results"""    audience_size: int
+    """Audience analysis results"""
+    audience_size: int
     growth_rate: float
     engagement_quality: float
     audience_loyalty: float
@@ -32,7 +34,8 @@ class AudienceAnalysis:
 
 @dataclass
 class GrowthStrategy:
-    """Audience growth strategy"""    target_growth_rate: float
+    """Audience growth strategy"""
+    target_growth_rate: float
     primary_growth_channels: List[str]
     content_optimization_plan: List[str]
     engagement_tactics: List[str]
@@ -43,7 +46,8 @@ class GrowthStrategy:
 
 @dataclass
 class EngagementOptimization:
-    """Engagement optimization recommendations"""    current_engagement_rate: float
+    """Engagement optimization recommendations"""
+    current_engagement_rate: float
     target_engagement_rate: float
     optimization_opportunities: List[str]
     content_timing_recommendations: Dict[str, Any]
@@ -52,11 +56,13 @@ class EngagementOptimization:
 
 
 class AudienceDeveloperAgent(BaseAIAgent):
-    """    AI agent specialized in audience development and community building.
+    """
+    AI agent specialized in audience development and community building.
     
     Provides comprehensive audience analysis, growth strategies, engagement optimization,
     and community building recommendations for content creators.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(agent_id="audience_developer", config=config)
         
@@ -88,14 +94,16 @@ class AudienceDeveloperAgent(BaseAIAgent):
         logging.info(f"AudienceDeveloperAgent initialized with {len(self.growth_channels)} growth channels")
 
     async def analyze_audience_comprehensive(self, creator_profile: Dict[str, Any]) -> AudienceAnalysis:
-        """        Perform comprehensive audience analysis.
+        """
+        Perform comprehensive audience analysis.
         
         Args:
             creator_profile: Creator's profile with audience and content data
             
         Returns:
             Detailed audience analysis
-        """        try:
+        """
+        try:
             audience_data = creator_profile.get('audience_data', {})
             content_data = creator_profile.get('content_portfolio', [])
             
@@ -147,7 +155,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     async def develop_growth_strategy(self, creator_profile: Dict[str, Any],
                                     growth_goals: Dict[str, Any]) -> GrowthStrategy:
-        """        Develop comprehensive audience growth strategy.
+        """
+        Develop comprehensive audience growth strategy.
         
         Args:
             creator_profile: Creator's current profile and performance data
@@ -155,7 +164,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
             
         Returns:
             Detailed growth strategy plan
-        """        try:
+        """
+        try:
             current_followers = creator_profile.get('total_followers', 0)
             target_followers = growth_goals.get('target_followers', current_followers * 2)
             timeline_months = growth_goals.get('timeline_months', 12)
@@ -215,7 +225,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     async def optimize_engagement(self, creator_profile: Dict[str, Any],
                                 engagement_data: Dict[str, Any]) -> EngagementOptimization:
-        """        Optimize audience engagement strategies.
+        """
+        Optimize audience engagement strategies.
         
         Args:
             creator_profile: Creator's profile and content performance
@@ -223,7 +234,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
             
         Returns:
             Engagement optimization recommendations
-        """        try:
+        """
+        try:
             current_engagement = creator_profile.get('engagement_rate', 0.03)
             
             # Set target engagement rate based on audience size
@@ -271,7 +283,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     async def build_community_strategy(self, creator_profile: Dict[str, Any],
                                      community_goals: Dict[str, Any]) -> Dict[str, Any]:
-        """        Develop comprehensive community building strategy.
+        """
+        Develop comprehensive community building strategy.
         
         Args:
             creator_profile: Creator's current community and engagement data
@@ -279,7 +292,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
             
         Returns:
             Detailed community strategy plan
-        """        try:
+        """
+        try:
             current_community_size = creator_profile.get('active_community_members', 0)
             target_community_size = community_goals.get('target_community_size', current_community_size * 3)
             
@@ -306,14 +320,16 @@ class AudienceDeveloperAgent(BaseAIAgent):
             }
 
     async def segment_audience(self, creator_profile: Dict[str, Any]) -> Dict[str, Any]:
-        """        Perform detailed audience segmentation analysis.
+        """
+        Perform detailed audience segmentation analysis.
         
         Args:
             creator_profile: Creator's audience and engagement data
             
         Returns:
             Detailed audience segmentation
-        """        try:
+        """
+        try:
             audience_data = creator_profile.get('audience_data', {})
             engagement_data = creator_profile.get('engagement_patterns', {})
             
@@ -340,7 +356,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
             }
 
     def _calculate_growth_rate(self, creator_profile: Dict[str, Any]) -> float:
-        """Calculate audience growth rate"""        follower_history = creator_profile.get('follower_history', [])
+        """Calculate audience growth rate"""
+        follower_history = creator_profile.get('follower_history', [])
         
         if len(follower_history) < 2:
             return 0.02  # Default 2% monthly growth
@@ -356,7 +373,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _analyze_engagement_quality(self, creator_profile: Dict[str, Any],
                                   content_data: List[Dict[str, Any]]) -> float:
-        """Analyze quality of engagement"""        if not content_data:
+        """Analyze quality of engagement"""
+        if not content_data:
             return 0.5  # Default score
         
         quality_factors = []
@@ -387,7 +405,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _calculate_audience_loyalty(self, audience_data: Dict[str, Any],
                                   content_data: List[Dict[str, Any]]) -> float:
-        """Calculate audience loyalty score"""        loyalty_factors = []
+        """Calculate audience loyalty score"""
+        loyalty_factors = []
         
         # Repeat engagement rate
         repeat_engagers = audience_data.get('repeat_engagers', 0)
@@ -414,7 +433,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
         return np.mean(loyalty_factors) if loyalty_factors else 0.5
 
     def _analyze_demographics(self, audience_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze audience demographics"""        return {
+        """Analyze audience demographics"""
+        return {
             "age_distribution": audience_data.get('age_groups', {
                 "18-24": 0.25,
                 "25-34": 0.35,
@@ -442,7 +462,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _analyze_audience_interests(self, audience_data: Dict[str, Any],
                                   content_data: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Analyze audience interests"""        # Combine declared interests and inferred from content engagement
+        """Analyze audience interests"""
+        # Combine declared interests and inferred from content engagement
         declared_interests = audience_data.get('interests', {})
         
         # Infer interests from content engagement
@@ -471,7 +492,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _analyze_behavior_patterns(self, audience_data: Dict[str, Any],
                                  content_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze audience behavior patterns"""        return {
+        """Analyze audience behavior patterns"""
+        return {
             "peak_activity_times": audience_data.get('peak_hours', [
                 {"hour": 9, "activity": 0.8},
                 {"hour": 12, "activity": 0.9},
@@ -493,7 +515,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _calculate_churn_risk(self, audience_data: Dict[str, Any],
                             content_data: List[Dict[str, Any]]) -> float:
-        """Calculate audience churn risk"""        churn_indicators = []
+        """Calculate audience churn risk"""
+        churn_indicators = []
         
         # Declining engagement rate
         recent_engagement = self._calculate_recent_engagement_trend(content_data)
@@ -529,7 +552,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _calculate_target_growth_rate(self, current_followers: int,
                                     target_followers: int, timeline_months: int) -> float:
-        """Calculate required monthly growth rate"""        if current_followers <= 0 or timeline_months <= 0:
+        """Calculate required monthly growth rate"""
+        if current_followers <= 0 or timeline_months <= 0:
             return 0.05  # Default 5% monthly growth
         
         # Compound growth formula: target = current * (1 + rate)^months
@@ -538,7 +562,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _identify_optimal_growth_channels(self, creator_profile: Dict[str, Any],
                                         growth_goals: Dict[str, Any]) -> List[str]:
-        """Identify optimal growth channels for creator"""        niche = creator_profile.get('niche', 'general')
+        """Identify optimal growth channels for creator"""
+        niche = creator_profile.get('niche', 'general')
         current_platforms = creator_profile.get('platforms', [])
         target_audience = creator_profile.get('target_audience', {})
         budget = growth_goals.get('marketing_budget', 0)
@@ -583,7 +608,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _develop_content_optimization_plan(self, creator_profile: Dict[str, Any],
                                          growth_goals: Dict[str, Any]) -> List[str]:
-        """Develop content optimization plan"""        content_performance = creator_profile.get('content_analytics', {})
+        """Develop content optimization plan"""
+        content_performance = creator_profile.get('content_analytics', {})
         target_audience = creator_profile.get('target_audience', {})
         
         optimization_plan = []
@@ -623,7 +649,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
         return optimization_plan[:8]
 
     def _define_engagement_tactics(self, creator_profile: Dict[str, Any]) -> List[str]:
-        """Define specific engagement tactics"""        current_engagement = creator_profile.get('engagement_rate', 0.03)
+        """Define specific engagement tactics"""
+        current_engagement = creator_profile.get('engagement_rate', 0.03)
         platforms = creator_profile.get('platforms', [])
         
         tactics = []
@@ -670,7 +697,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _plan_community_building_initiatives(self, creator_profile: Dict[str, Any],
                                            growth_goals: Dict[str, Any]) -> List[str]:
-        """Plan community building initiatives"""        niche = creator_profile.get('niche', 'general')
+        """Plan community building initiatives"""
+        niche = creator_profile.get('niche', 'general')
         community_size = creator_profile.get('active_community_members', 0)
         
         initiatives = []
@@ -712,7 +740,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
         return initiatives[:8]
 
     def _develop_retention_strategies(self, creator_profile: Dict[str, Any]) -> List[str]:
-        """Develop audience retention strategies"""        churn_risk = creator_profile.get('churn_risk', 0.3)
+        """Develop audience retention strategies"""
+        churn_risk = creator_profile.get('churn_risk', 0.3)
         engagement_trend = creator_profile.get('engagement_trend', 'stable')
         
         retention_strategies = []
@@ -754,7 +783,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
     def _create_growth_timeline(self, timeline_months: int,
                               primary_channels: List[str],
                               content_optimization: List[str]) -> Dict[str, List[str]]:
-        """Create growth implementation timeline"""        timeline = {}
+        """Create growth implementation timeline"""
+        timeline = {}
         
         # Month 1: Foundation
         timeline["month_1"] = [
@@ -792,7 +822,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
         return timeline
 
     def _determine_target_engagement_rate(self, creator_profile: Dict[str, Any]) -> float:
-        """Determine realistic target engagement rate"""        current_followers = creator_profile.get('total_followers', 0)
+        """Determine realistic target engagement rate"""
+        current_followers = creator_profile.get('total_followers', 0)
         current_engagement = creator_profile.get('engagement_rate', 0.03)
         
         # Determine tier and benchmark
@@ -821,7 +852,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _identify_engagement_opportunities(self, creator_profile: Dict[str, Any],
                                         engagement_data: Dict[str, Any]) -> List[str]:
-        """Identify specific engagement optimization opportunities"""        opportunities = []
+        """Identify specific engagement optimization opportunities"""
+        opportunities = []
         
         current_engagement = creator_profile.get('engagement_rate', 0.03)
         comment_rate = engagement_data.get('comment_rate', 0.01)
@@ -868,7 +900,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _analyze_optimal_timing(self, creator_profile: Dict[str, Any],
                               engagement_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze optimal content timing"""        audience_timezone = creator_profile.get('primary_audience_timezone', 'UTC')
+        """Analyze optimal content timing"""
+        audience_timezone = creator_profile.get('primary_audience_timezone', 'UTC')
         platforms = creator_profile.get('platforms', [])
         
         # Default timing recommendations
@@ -919,7 +952,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _recommend_content_formats(self, creator_profile: Dict[str, Any],
                                  engagement_data: Dict[str, Any]) -> List[str]:
-        """Recommend content formats for better engagement"""        niche = creator_profile.get('niche', 'general')
+        """Recommend content formats for better engagement"""
+        niche = creator_profile.get('niche', 'general')
         platforms = creator_profile.get('platforms', [])
         top_performing_formats = engagement_data.get('top_formats', [])
         
@@ -970,7 +1004,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _define_interaction_strategies(self, creator_profile: Dict[str, Any],
                                      engagement_data: Dict[str, Any]) -> List[str]:
-        """Define specific interaction strategies"""        response_time = engagement_data.get('avg_response_time_hours', 12)
+        """Define specific interaction strategies"""
+        response_time = engagement_data.get('avg_response_time_hours', 12)
         community_size = creator_profile.get('total_followers', 0)
         
         interaction_strategies = []
@@ -1013,13 +1048,15 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _define_community_vision(self, creator_profile: Dict[str, Any],
                                community_goals: Dict[str, Any]) -> str:
-        """Define community vision statement"""        niche = creator_profile.get('niche', 'content creation')
+        """Define community vision statement"""
+        niche = creator_profile.get('niche', 'content creation')
         impact_goal = community_goals.get('impact_goal', 'inspire and support each other')
         
         return f"To build a thriving {niche} community where members {impact_goal} while growing together through shared knowledge, authentic connections, and mutual support."
 
     def _establish_community_values(self, creator_profile: Dict[str, Any]) -> List[str]:
-        """Establish community values"""        brand_values = creator_profile.get('brand_values', [])
+        """Establish community values"""
+        brand_values = creator_profile.get('brand_values', [])
         
         community_values = [
             "Respect and kindness in all interactions",
@@ -1039,7 +1076,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
         return community_values[:8]
 
     def _create_engagement_frameworks(self, creator_profile: Dict[str, Any]) -> List[str]:
-        """Create community engagement frameworks"""        return [
+        """Create community engagement frameworks"""
+        return [
             "Weekly community challenges with themes relevant to niche",
             "Monthly spotlight features for active community members",
             "Peer-to-peer mentorship pairing system",
@@ -1050,7 +1088,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _design_community_initiatives(self, creator_profile: Dict[str, Any],
                                     community_goals: Dict[str, Any]) -> List[str]:
-        """Design specific community initiatives"""        niche = creator_profile.get('niche', 'general')
+        """Design specific community initiatives"""
+        niche = creator_profile.get('niche', 'general')
         
         initiatives = [
             f"Launch '{niche} Success Stories' series featuring community achievements",
@@ -1070,7 +1109,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
         return initiatives
 
     def _develop_community_content_strategies(self, creator_profile: Dict[str, Any]) -> List[str]:
-        """Develop community-focused content strategies"""        return [
+        """Develop community-focused content strategies"""
+        return [
             "Create content directly from community questions and discussions",
             "Feature community member transformations and successes",
             "Host live Q&A sessions based on community needs",
@@ -1079,7 +1119,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
         ]
 
     def _create_moderation_guidelines(self, creator_profile: Dict[str, Any]) -> List[str]:
-        """Create community moderation guidelines"""        return [
+        """Create community moderation guidelines"""
+        return [
             "Establish clear community guidelines and consequences",
             "Implement progressive moderation (warning, timeout, removal)",
             "Train community moderators in brand voice and values",
@@ -1089,7 +1130,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
         ]
 
     def _define_community_growth_tactics(self, creator_profile: Dict[str, Any]) -> List[str]:
-        """Define community growth tactics"""        return [
+        """Define community growth tactics"""
+        return [
             "Implement referral rewards for bringing new quality members",
             "Cross-promote community in all content and platforms",
             "Partner with complementary communities for mutual growth",
@@ -1099,7 +1141,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
         ]
 
     def _design_retention_programs(self, creator_profile: Dict[str, Any]) -> List[str]:
-        """Design community retention programs"""        return [
+        """Design community retention programs"""
+        return [
             "Create milestone recognition for community participation",
             "Offer exclusive perks and content for long-term members",
             "Implement community loyalty program with rewards",
@@ -1109,7 +1152,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
         ]
 
     def _define_community_metrics(self) -> List[str]:
-        """Define community success metrics"""        return [
+        """Define community success metrics"""
+        return [
             "Monthly active members and growth rate",
             "Community engagement rate and interaction quality",
             "Member retention rate and lifetime value",
@@ -1120,7 +1164,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _create_community_roadmap(self, creator_profile: Dict[str, Any],
                                 community_goals: Dict[str, Any]) -> Dict[str, List[str]]:
-        """Create community implementation roadmap"""        return {
+        """Create community implementation roadmap"""
+        return {
             "month_1": [
                 "Set up community platform and basic structure",
                 "Create and publish community guidelines",
@@ -1150,7 +1195,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
     # Helper methods for analysis functions
 
     def _analyze_preferred_content_length(self, content_data: List[Dict[str, Any]]) -> str:
-        """Analyze audience preferred content length"""        if not content_data:
+        """Analyze audience preferred content length"""
+        if not content_data:
             return "medium"
         
         # Calculate average engagement by content length
@@ -1179,7 +1225,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
             return "medium"
 
     def _analyze_engagement_velocity(self, content_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze how quickly engagement occurs on content"""        if not content_data:
+        """Analyze how quickly engagement occurs on content"""
+        if not content_data:
             return {"pattern": "unknown", "peak_time": "24_hours"}
         
         # Simulate engagement velocity analysis
@@ -1192,7 +1239,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _identify_seasonal_patterns(self, audience_data: Dict[str, Any],
                                   content_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Identify seasonal engagement patterns"""        return {
+        """Identify seasonal engagement patterns"""
+        return {
             "high_engagement_months": ["January", "September", "October"],
             "low_engagement_months": ["July", "August", "December"],
             "seasonal_trends": {
@@ -1204,7 +1252,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
         }
 
     def _calculate_recent_engagement_trend(self, content_data: List[Dict[str, Any]]) -> float:
-        """Calculate recent engagement trend (positive or negative)"""        if len(content_data) < 5:
+        """Calculate recent engagement trend (positive or negative)"""
+        if len(content_data) < 5:
             return 0.0  # Neutral trend
         
         # Compare last 5 posts to previous 5 posts
@@ -1223,7 +1272,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
     # Segmentation helper methods
 
     def _create_demographic_segments(self, audience_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create demographic-based audience segments"""        age_groups = audience_data.get('age_groups', {})
+        """Create demographic-based audience segments"""
+        age_groups = audience_data.get('age_groups', {})
         locations = audience_data.get('top_locations', {})
         
         return {
@@ -1248,7 +1298,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
         }
 
     def _create_behavioral_segments(self, engagement_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create behavior-based audience segments"""        return {
+        """Create behavior-based audience segments"""
+        return {
             "super_fans": {
                 "description": "Highly engaged users who interact with most content",
                 "percentage": 0.05,
@@ -1276,7 +1327,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
         }
 
     def _create_engagement_segments(self, engagement_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create engagement-level based segments"""        return {
+        """Create engagement-level based segments"""
+        return {
             "high_engagement": {
                 "criteria": "Top 10% of engagers",
                 "characteristics": ["Multi-platform followers", "Regular commenters", "Content sharers"],
@@ -1295,7 +1347,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
         }
 
     def _create_interest_segments(self, audience_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create interest-based segments"""        interests = audience_data.get('interests', {})
+        """Create interest-based segments"""
+        interests = audience_data.get('interests', {})
         
         segments = {}
         for interest, percentage in interests.items():
@@ -1311,7 +1364,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _create_lifecycle_segments(self, audience_data: Dict[str, Any],
                                  engagement_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create lifecycle-based segments"""        return {
+        """Create lifecycle-based segments"""
+        return {
             "new_followers": {
                 "definition": "Followed within last 30 days",
                 "percentage": 0.15,
@@ -1346,7 +1400,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _create_value_segments(self, audience_data: Dict[str, Any],
                              engagement_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create value-based segments"""        return {
+        """Create value-based segments"""
+        return {
             "high_value_audience": {
                 "criteria": "High engagement + high influence + purchasing power",
                 "percentage": 0.10,
@@ -1375,7 +1430,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _create_content_preference_segments(self, content_portfolio: List[Dict[str, Any]],
                                           engagement_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create content preference based segments"""        # Analyze which content types get best engagement from which audience segments
+        """Create content preference based segments"""
+        # Analyze which content types get best engagement from which audience segments
         return {
             "educational_content_lovers": {
                 "preferred_content": ["tutorials", "how-to", "educational"],
@@ -1401,7 +1457,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _develop_segment_strategies(self, audience_data: Dict[str, Any],
                                   engagement_data: Dict[str, Any]) -> Dict[str, List[str]]:
-        """Develop specific strategies for each major segment"""        return {
+        """Develop specific strategies for each major segment"""
+        return {
             "super_fans_strategy": [
                 "Create VIP community or channel for exclusive access",
                 "Offer early access to new content and products",

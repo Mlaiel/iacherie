@@ -5,7 +5,8 @@ usage patterns, optimization opportunities, and business impact metrics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import statistics
@@ -20,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types of cache metrics"""    HIT_RATE = "hit_rate"
+    """Types of cache metrics"""
+    HIT_RATE = "hit_rate"
     MISS_RATE = "miss_rate"
     RESPONSE_TIME = "response_time"
     THROUGHPUT = "throughput"
@@ -30,7 +32,8 @@ class MetricType(Enum):
     COST_SAVINGS = "cost_savings"
 
 class AnalyticsPeriod(Enum):
-    """Time periods for analytics aggregation"""    MINUTE = "minute"
+    """Time periods for analytics aggregation"""
+    MINUTE = "minute"
     HOUR = "hour" 
     DAY = "day"
     WEEK = "week"
@@ -38,7 +41,8 @@ class AnalyticsPeriod(Enum):
 
 @dataclass
 class CacheMetric:
-    """Individual cache metric data point"""    metric_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Individual cache metric data point"""
+    metric_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     metric_type: MetricType = MetricType.HIT_RATE
     value: float = 0.0
     timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -47,7 +51,8 @@ class CacheMetric:
 
 @dataclass
 class PerformanceReport:
-    """Comprehensive performance analysis report"""    report_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive performance analysis report"""
+    report_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     period_start: datetime = field(default_factory=datetime.utcnow)
     period_end: datetime = field(default_factory=datetime.utcnow)
     
@@ -84,7 +89,8 @@ class PerformanceReport:
 
 @dataclass 
 class AlertRule:
-    """Cache performance alert rule"""    rule_id: str
+    """Cache performance alert rule"""
+    rule_id: str
     name: str
     metric_type: MetricType
     threshold: float
@@ -94,9 +100,11 @@ class AlertRule:
     last_triggered: Optional[datetime] = None
 
 class CacheAnalytics:
-    """    Advanced cache analytics engine providing comprehensive insights
+    """
+    Advanced cache analytics engine providing comprehensive insights
     into cache performance, usage patterns, and optimization opportunities.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         
@@ -123,7 +131,8 @@ class CacheAnalytics:
         self.collection_enabled = True
         
     async def initialize(self):
-        """Initialize analytics engine"""        # Start background tasks
+        """Initialize analytics engine"""
+        # Start background tasks
         asyncio.create_task(self._metrics_collection_loop())
         asyncio.create_task(self._alert_monitoring_loop())
         asyncio.create_task(self._cleanup_old_metrics())
@@ -138,7 +147,8 @@ class CacheAnalytics:
         location: Optional[str] = None,
         content_type: Optional[str] = None
     ):
-        """Record cache hit with contextual information"""        if not self.collection_enabled:
+        """Record cache hit with contextual information"""
+        if not self.collection_enabled:
             return
         
         # Record basic metrics
@@ -169,7 +179,8 @@ class CacheAnalytics:
         location: Optional[str] = None,
         content_type: Optional[str] = None
     ):
-        """Record cache miss with analysis"""        if not self.collection_enabled:
+        """Record cache miss with analysis"""
+        if not self.collection_enabled:
             return
         
         # Record basic metrics
@@ -190,7 +201,8 @@ class CacheAnalytics:
         await self._analyze_cache_miss(key, content_type)
     
     async def record_operation(self, entry: Any, operation: str):
-        """Record cache operation for detailed analysis"""        if not self.collection_enabled:
+        """Record cache operation for detailed analysis"""
+        if not self.collection_enabled:
             return
         
         operation_data = {
@@ -213,7 +225,8 @@ class CacheAnalytics:
             self.access_patterns[operation] = self.access_patterns[operation][-500:]
     
     async def record_miss(self, key: str):
-        """Record cache miss for analytics"""        miss_data = {
+        """Record cache miss for analytics"""
+        miss_data = {
             'key': key,
             'timestamp': datetime.utcnow(),
             'reason': await self._determine_miss_reason(key)
@@ -230,7 +243,8 @@ class CacheAnalytics:
         reason: str,
         size_bytes: int = 0
     ):
-        """Record cache eviction event"""        eviction_data = {
+        """Record cache eviction event"""
+        eviction_data = {
             'key': key,
             'reason': reason,
             'size_bytes': size_bytes,
@@ -252,7 +266,8 @@ class CacheAnalytics:
         error_message: str,
         key: Optional[str] = None
     ):
-        """Record cache operation error"""        error_data = {
+        """Record cache operation error"""
+        error_data = {
             'operation': operation,
             'error_type': error_type,
             'error_message': error_message,
@@ -269,11 +284,13 @@ class CacheAnalytics:
         self.real_time_metrics['total_errors'] = self.real_time_metrics.get('total_errors', 0) + 1
     
     def add_alert_rule(self, rule: AlertRule):
-        """Add performance alert rule"""        self.alert_rules[rule.rule_id] = rule
+        """Add performance alert rule"""
+        self.alert_rules[rule.rule_id] = rule
         logger.info(f"Added cache alert rule: {rule.name}")
     
     def remove_alert_rule(self, rule_id: str):
-        """Remove alert rule"""        if rule_id in self.alert_rules:
+        """Remove alert rule"""
+        if rule_id in self.alert_rules:
             del self.alert_rules[rule_id]
             logger.info(f"Removed cache alert rule: {rule_id}")
     
@@ -282,7 +299,8 @@ class CacheAnalytics:
         start_time: Optional[datetime] = None,
         end_time: Optional[datetime] = None
     ) -> PerformanceReport:
-        """Generate comprehensive performance analysis report"""        if not start_time:
+        """Generate comprehensive performance analysis report"""
+        if not start_time:
             start_time = datetime.utcnow() - timedelta(hours=24)
         if not end_time:
             end_time = datetime.utcnow()
@@ -346,7 +364,8 @@ class CacheAnalytics:
         return report
     
     async def get_real_time_metrics(self) -> Dict[str, Any]:
-        """Get current real-time metrics"""        metrics = self.real_time_metrics.copy()
+        """Get current real-time metrics"""
+        metrics = self.real_time_metrics.copy()
         
         # Calculate derived metrics
         total_requests = metrics.get('total_requests', 0)
@@ -380,7 +399,8 @@ class CacheAnalytics:
         limit: int = 10,
         time_range_hours: int = 24
     ) -> List[Tuple[str, float]]:
-        """Get top cache keys by specific metric"""        cutoff_time = datetime.utcnow() - timedelta(hours=time_range_hours)
+        """Get top cache keys by specific metric"""
+        cutoff_time = datetime.utcnow() - timedelta(hours=time_range_hours)
         
         if metric == "access_count":
             key_counts = Counter()
@@ -412,7 +432,8 @@ class CacheAnalytics:
         content_type: Optional[str],
         hit: bool
     ):
-        """Update detailed access pattern analysis"""        pattern_key = f"access_pattern_{key}"
+        """Update detailed access pattern analysis"""
+        pattern_key = f"access_pattern_{key}"
         
         if pattern_key not in self.access_patterns:
             self.access_patterns[pattern_key] = {
@@ -450,7 +471,8 @@ class CacheAnalytics:
             pattern['access_times'] = pattern['access_times'][-50:]
     
     async def _analyze_cache_miss(self, key: str, content_type: Optional[str]):
-        """Analyze cache miss for insights"""        miss_analysis = {
+        """Analyze cache miss for insights"""
+        miss_analysis = {
             'key': key,
             'content_type': content_type,
             'timestamp': datetime.utcnow(),
@@ -471,7 +493,8 @@ class CacheAnalytics:
         self.access_patterns['miss_analysis'].append(miss_analysis)
     
     async def _determine_miss_reason(self, key: str) -> str:
-        """Determine likely reason for cache miss"""        # Simple heuristic-based analysis
+        """Determine likely reason for cache miss"""
+        # Simple heuristic-based analysis
         if 'temp' in key.lower():
             return 'temporary_data'
         elif 'user_' in key.lower():
@@ -482,7 +505,8 @@ class CacheAnalytics:
             return 'not_cached'
     
     async def _generate_optimization_recommendations(self) -> List[Dict[str, Any]]:
-        """Generate cache optimization recommendations"""        recommendations = []
+        """Generate cache optimization recommendations"""
+        recommendations = []
         
         # Analyze hit rate
         total_requests = self.real_time_metrics.get('total_requests', 0)
@@ -524,14 +548,16 @@ class CacheAnalytics:
         return recommendations
     
     async def _calculate_cost_savings(self, report: PerformanceReport) -> float:
-        """Calculate estimated cost savings from caching"""        # Simplified calculation based on avoided database/API calls
+        """Calculate estimated cost savings from caching"""
+        # Simplified calculation based on avoided database/API calls
         saved_requests = report.total_hits
         estimated_cost_per_request = 0.001  # $0.001 per request
         
         return saved_requests * estimated_cost_per_request
     
     async def _analyze_trends(self) -> Dict[str, Any]:
-        """Analyze performance trends"""        trends = {
+        """Analyze performance trends"""
+        trends = {
             'hit_rate_trend': 'stable',
             'response_time_trend': 'stable',
             'throughput_trend': 'stable'
@@ -543,7 +569,8 @@ class CacheAnalytics:
         return trends
     
     async def _forecast_capacity_needs(self) -> Dict[str, Any]:
-        """Forecast future capacity requirements"""        forecast = {
+        """Forecast future capacity requirements"""
+        forecast = {
             'projected_memory_usage': 'stable',
             'projected_request_volume': 'increasing',
             'recommended_scaling_actions': []
@@ -555,7 +582,8 @@ class CacheAnalytics:
         return forecast
     
     async def _metrics_collection_loop(self):
-        """Background task for periodic metrics collection"""        while self.collection_enabled:
+        """Background task for periodic metrics collection"""
+        while self.collection_enabled:
             try:
                 current_time = datetime.utcnow()
                 
@@ -577,7 +605,8 @@ class CacheAnalytics:
                 await asyncio.sleep(60)
     
     async def _alert_monitoring_loop(self):
-        """Background task for alert monitoring"""        while self.collection_enabled:
+        """Background task for alert monitoring"""
+        while self.collection_enabled:
             try:
                 current_metrics = await self.get_real_time_metrics()
                 
@@ -611,7 +640,8 @@ class CacheAnalytics:
                 await asyncio.sleep(30)
     
     async def _trigger_alert(self, rule: AlertRule, current_value: float):
-        """Trigger performance alert"""        alert = {
+        """Trigger performance alert"""
+        alert = {
             'alert_id': str(uuid.uuid4()),
             'rule_id': rule.rule_id,
             'rule_name': rule.name,
@@ -628,7 +658,8 @@ class CacheAnalytics:
         logger.warning(f"Cache alert triggered: {rule.name} - {rule.metric_type.value} = {current_value}")
     
     async def _cleanup_old_metrics(self):
-        """Cleanup old metrics to prevent memory buildup"""        while self.collection_enabled:
+        """Cleanup old metrics to prevent memory buildup"""
+        while self.collection_enabled:
             try:
                 cutoff_time = datetime.utcnow() - timedelta(days=7)
                 

@@ -11,7 +11,8 @@ Copyright: 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Unauthorized use, reproduction, 
 or distribution without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will be prosecuted to the full extent of the law.
-"""import numpy as np
+"""
+import numpy as np
 import threading
 import queue
 import time
@@ -33,7 +34,8 @@ from ..core.exceptions import AudioProcessingError
 
 
 class ProcessingMode(Enum):
-    """Real-time processing modes"""    LOW_LATENCY = "low_latency"      # < 10ms
+    """Real-time processing modes"""
+    LOW_LATENCY = "low_latency"      # < 10ms
     BALANCED = "balanced"            # 10-50ms  
     HIGH_QUALITY = "high_quality"    # 50-100ms
     ULTRA_QUALITY = "ultra_quality"  # 100ms+
@@ -41,7 +43,8 @@ class ProcessingMode(Enum):
 
 @dataclass
 class RealTimeConfig:
-    """Real-time processing configuration"""    buffer_size: int = 512          # Samples per buffer
+    """Real-time processing configuration"""
+    buffer_size: int = 512          # Samples per buffer
     sample_rate: int = 44100        # Sample rate in Hz
     channels: int = 2               # Number of channels
     processing_mode: ProcessingMode = ProcessingMode.BALANCED
@@ -53,7 +56,8 @@ class RealTimeConfig:
 
 @dataclass 
 class LatencyMetrics:
-    """Real-time latency performance metrics"""    input_latency_ms: float = 0.0
+    """Real-time latency performance metrics"""
+    input_latency_ms: float = 0.0
     processing_latency_ms: float = 0.0
     output_latency_ms: float = 0.0
     total_latency_ms: float = 0.0
@@ -63,7 +67,8 @@ class LatencyMetrics:
 
 
 class AudioBuffer:
-    """Thread-safe circular audio buffer for real-time processing"""    
+    """Thread-safe circular audio buffer for real-time processing"""
+    
     def __init__(self, size: int, channels: int = 2):
         self.size = size
         self.channels = channels
@@ -74,7 +79,8 @@ class AudioBuffer:
         self.available_samples = 0
         
     def write(self, data: np.ndarray) -> bool:
-        """Write audio data to buffer"""        with self.lock:
+        """Write audio data to buffer"""
+        with self.lock:
             if len(data.shape) == 1:
                 data = data.reshape(-1, 1)
             
@@ -99,7 +105,8 @@ class AudioBuffer:
             return True
     
     def read(self, num_samples: int) -> Optional[np.ndarray]:
-        """Read audio data from buffer"""        with self.lock:
+        """Read audio data from buffer"""
+        with self.lock:
             if self.available_samples < num_samples:
                 return None  # Buffer underrun
             
@@ -120,15 +127,18 @@ class AudioBuffer:
             return data
     
     def get_available_samples(self) -> int:
-        """Get number of available samples in buffer"""        with self.lock:
+        """Get number of available samples in buffer"""
+        with self.lock:
             return self.available_samples
     
     def get_free_space(self) -> int:
-        """Get number of free samples in buffer"""        with self.lock:
+        """Get number of free samples in buffer"""
+        with self.lock:
             return self.size - self.available_samples
     
     def clear(self):
-        """Clear buffer contents"""        with self.lock:
+        """Clear buffer contents"""
+        with self.lock:
             self.buffer.fill(0.0)
             self.write_pos = 0
             self.read_pos = 0
@@ -136,13 +146,16 @@ class AudioBuffer:
 
 
 class RealTimeEnhancer:
-    """    Real-Time Audio Enhancement Engine
+    """
+    Real-Time Audio Enhancement Engine
     
     High-performance real-time audio processing system designed for
     live streaming, broadcasting, and interactive audio applications.
-    """    
+    """
+    
     def __init__(self, config: RealTimeConfig):
-        """Initialize real-time audio enhancer"""        self.config = config
+        """Initialize real-time audio enhancer"""
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Core processor
@@ -177,18 +190,22 @@ class RealTimeEnhancer:
         self.logger.info(f"Real-time enhancer initialized with {config.processing_mode.value} mode")
     
     def set_enhancement_parameters(self, parameters: EnhancementParameters):
-        """Update enhancement parameters for real-time processing"""        # Adapt parameters for real-time constraints
+        """Update enhancement parameters for real-time processing"""
+        # Adapt parameters for real-time constraints
         self.enhancement_parameters = self._adapt_for_realtime(parameters)
         self.logger.debug("Enhancement parameters updated for real-time processing")
     
     def set_audio_callback(self, callback: Callable[[np.ndarray], None]):
-        """Set callback for processed audio output"""        self.audio_callback = callback
+        """Set callback for processed audio output"""
+        self.audio_callback = callback
     
     def set_error_callback(self, callback: Callable[[Exception], None]):
-        """Set callback for error handling"""        self.error_callback = callback
+        """Set callback for error handling"""
+        self.error_callback = callback
     
     def start_processing(self) -> bool:
-        """Start real-time audio processing"""        if self.is_running:
+        """Start real-time audio processing"""
+        if self.is_running:
             self.logger.warning("Real-time processing already running")
             return False
         
@@ -212,7 +229,8 @@ class RealTimeEnhancer:
             return False
     
     def stop_processing(self):
-        """Stop real-time audio processing"""        if not self.is_running:
+        """Stop real-time audio processing"""
+        if not self.is_running:
             return
         
         self.is_running = False
@@ -227,14 +245,16 @@ class RealTimeEnhancer:
         self.logger.info("Real-time audio enhancement stopped")
     
     def process_audio_chunk(self, audio_chunk: np.ndarray) -> bool:
-        """        Process incoming audio chunk for real-time enhancement
+        """
+        Process incoming audio chunk for real-time enhancement
         
         Args:
             audio_chunk: Input audio data
             
         Returns:
             True if chunk was successfully queued for processing
-        """        start_time = time.perf_counter()
+        """
+        start_time = time.perf_counter()
         
         try:
             # Validate input
@@ -276,14 +296,16 @@ class RealTimeEnhancer:
             return False
     
     def get_processed_audio(self, num_samples: int) -> Optional[np.ndarray]:
-        """        Get processed audio from output buffer
+        """
+        Get processed audio from output buffer
         
         Args:
             num_samples: Number of samples to retrieve
             
         Returns:
             Processed audio data or None if not enough data available
-        """        start_time = time.perf_counter()
+        """
+        start_time = time.perf_counter()
         
         try:
             data = self.output_buffer.read(num_samples)
@@ -313,7 +335,8 @@ class RealTimeEnhancer:
             return np.zeros((num_samples, self.config.channels), dtype=np.float32)
     
     def _processing_loop(self):
-        """Main real-time processing loop"""        self.logger.info("Real-time processing loop started")
+        """Main real-time processing loop"""
+        self.logger.info("Real-time processing loop started")
         
         try:
             while self.is_running:
@@ -375,7 +398,8 @@ class RealTimeEnhancer:
         self.logger.info("Real-time processing loop ended")
     
     def _process_chunk_realtime(self, audio_chunk: np.ndarray) -> np.ndarray:
-        """Process single audio chunk with real-time constraints"""        # Simplified processing chain for real-time performance
+        """Process single audio chunk with real-time constraints"""
+        # Simplified processing chain for real-time performance
         processed = audio_chunk.copy()
         
         # Apply only essential enhancements based on processing mode
@@ -404,7 +428,8 @@ class RealTimeEnhancer:
         return processed
     
     def _apply_fast_enhancement(self, audio: np.ndarray) -> np.ndarray:
-        """Apply minimal enhancement for ultra-low latency"""        # Simple gain normalization
+        """Apply minimal enhancement for ultra-low latency"""
+        # Simple gain normalization
         peak = np.max(np.abs(audio))
         if peak > 0.95:
             audio = audio * (0.95 / peak)
@@ -421,7 +446,8 @@ class RealTimeEnhancer:
         return audio
     
     def _apply_balanced_enhancement(self, audio: np.ndarray) -> np.ndarray:
-        """Apply balanced enhancement for moderate latency"""        # Noise gate
+        """Apply balanced enhancement for moderate latency"""
+        # Noise gate
         gate_threshold = 0.01
         mask = np.abs(audio) > gate_threshold
         audio = audio * mask
@@ -442,7 +468,8 @@ class RealTimeEnhancer:
         return audio
     
     def _adapt_for_realtime(self, parameters: EnhancementParameters) -> EnhancementParameters:
-        """Adapt enhancement parameters for real-time constraints"""        adapted = EnhancementParameters(**parameters.__dict__)
+        """Adapt enhancement parameters for real-time constraints"""
+        adapted = EnhancementParameters(**parameters.__dict__)
         
         # Reduce processing intensity based on mode
         if self.config.processing_mode == ProcessingMode.LOW_LATENCY:
@@ -459,7 +486,8 @@ class RealTimeEnhancer:
         return adapted
     
     def _update_performance_metrics(self, processing_time_ms: float):
-        """Update performance monitoring metrics"""        # CPU usage estimation
+        """Update performance monitoring metrics"""
+        # CPU usage estimation
         max_time_ms = (self.config.buffer_size / self.config.sample_rate) * 1000
         cpu_usage = min(100.0, (processing_time_ms / max_time_ms) * 100)
         
@@ -475,7 +503,8 @@ class RealTimeEnhancer:
         self.latency_history.append(self.latency_metrics.total_latency_ms)
     
     def _adjust_quality_for_performance(self):
-        """Adaptively adjust processing quality based on performance"""        if len(self.cpu_usage_monitor) < 10:
+        """Adaptively adjust processing quality based on performance"""
+        if len(self.cpu_usage_monitor) < 10:
             return
         
         avg_cpu = np.mean(list(self.cpu_usage_monitor)[-10:])
@@ -499,10 +528,12 @@ class RealTimeEnhancer:
                 self.logger.info("Switched to high-quality mode due to low CPU usage")
     
     def get_latency_metrics(self) -> LatencyMetrics:
-        """Get current latency performance metrics"""        return self.latency_metrics
+        """Get current latency performance metrics"""
+        return self.latency_metrics
     
     def get_performance_summary(self) -> Dict[str, Any]:
-        """Get comprehensive performance summary"""        if len(self.latency_history) == 0:
+        """Get comprehensive performance summary"""
+        if len(self.latency_history) == 0:
             return {}
         
         latencies = list(self.latency_history)
@@ -532,13 +563,15 @@ class RealTimeEnhancer:
         }
     
     def reset_performance_metrics(self):
-        """Reset all performance metrics"""        self.latency_metrics = LatencyMetrics()
+        """Reset all performance metrics"""
+        self.latency_metrics = LatencyMetrics()
         self.latency_history.clear()
         self.cpu_usage_monitor.clear()
         self.buffer_status_monitor.clear()
     
     def get_buffer_status(self) -> Dict[str, Any]:
-        """Get detailed buffer status information"""        return {
+        """Get detailed buffer status information"""
+        return {
             'input_buffer': {
                 'size': self.input_buffer.size,
                 'available_samples': self.input_buffer.get_available_samples(),
@@ -556,8 +589,10 @@ class RealTimeEnhancer:
         }
     
     def __enter__(self):
-        """Context manager entry"""        self.start_processing()
+        """Context manager entry"""
+        self.start_processing()
         return self
     
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit"""        self.stop_processing()
+        """Context manager exit"""
+        self.stop_processing()

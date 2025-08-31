@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -42,7 +43,8 @@ from ...monitoring.channel_monitoring import ChannelMonitoringService
 
 
 class ChannelType(Enum):
-    """Extended channel types for comprehensive delivery"""    EMAIL = "email"
+    """Extended channel types for comprehensive delivery"""
+    EMAIL = "email"
     SMS = "sms"
     PUSH_NOTIFICATION = "push_notification"
     IN_APP = "in_app"
@@ -56,7 +58,8 @@ class ChannelType(Enum):
 
 
 class DeliveryStatus(Enum):
-    """Comprehensive delivery status tracking"""    PENDING = "pending"
+    """Comprehensive delivery status tracking"""
+    PENDING = "pending"
     PROCESSING = "processing"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -70,7 +73,8 @@ class DeliveryStatus(Enum):
 
 @dataclass
 class ChannelMetrics:
-    """Channel performance metrics"""    channel: ChannelType
+    """Channel performance metrics"""
+    channel: ChannelType
     total_sent: int = 0
     total_delivered: int = 0
     total_failed: int = 0
@@ -85,7 +89,8 @@ class ChannelMetrics:
 
 @dataclass
 class ChannelCapability:
-    """Channel capability configuration"""    channel: ChannelType
+    """Channel capability configuration"""
+    channel: ChannelType
     supports_rich_content: bool
     supports_attachments: bool
     supports_interactive_elements: bool
@@ -97,7 +102,8 @@ class ChannelCapability:
 
 
 class BaseChannelHandler(ABC):
-    """Abstract base class for channel-specific handlers"""    
+    """Abstract base class for channel-specific handlers"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -105,7 +111,8 @@ class BaseChannelHandler(ABC):
         
     @abstractmethod
     def get_channel_type(self) -> ChannelType:
-        """Get the channel type this handler manages"""        pass
+        """Get the channel type this handler manages"""
+        pass
         
     @abstractmethod
     async def send_notification(
@@ -114,18 +121,22 @@ class BaseChannelHandler(ABC):
         content: Dict[str, Any], 
         priority: NotificationPriority
     ) -> ChannelDeliveryResult:
-        """Send notification through this channel"""        pass
+        """Send notification through this channel"""
+        pass
         
     @abstractmethod
     async def validate_content(self, content: Dict[str, Any]) -> bool:
-        """Validate content for this channel"""        pass
+        """Validate content for this channel"""
+        pass
         
     async def get_delivery_status(self, delivery_id: str) -> DeliveryStatus:
-        """Get delivery status for a specific message"""        # Default implementation - override in specific handlers
+        """Get delivery status for a specific message"""
+        # Default implementation - override in specific handlers
         return DeliveryStatus.DELIVERED
         
     async def update_metrics(self, delivery_result: ChannelDeliveryResult):
-        """Update channel performance metrics"""        self.metrics.total_sent += 1
+        """Update channel performance metrics"""
+        self.metrics.total_sent += 1
         
         if delivery_result.status == DeliveryStatus.DELIVERED:
             self.metrics.total_delivered += 1
@@ -140,7 +151,8 @@ class BaseChannelHandler(ABC):
 
 
 class EmailChannelHandler(BaseChannelHandler):
-    """Advanced email channel handler with multiple provider support"""    
+    """Advanced email channel handler with multiple provider support"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.smtp_config = config.get('smtp', {})
@@ -156,7 +168,8 @@ class EmailChannelHandler(BaseChannelHandler):
         content: Dict[str, Any], 
         priority: NotificationPriority
     ) -> ChannelDeliveryResult:
-        """Send email notification with provider failover"""        try:
+        """Send email notification with provider failover"""
+        try:
             delivery_id = str(uuid.uuid4())
             
             # Validate email content
@@ -190,11 +203,13 @@ class EmailChannelHandler(BaseChannelHandler):
             )
             
     async def validate_content(self, content: Dict[str, Any]) -> bool:
-        """Validate email content"""        required_fields = ['recipient_email', 'subject', 'body']
+        """Validate email content"""
+        required_fields = ['recipient_email', 'subject', 'body']
         return all(field in content for field in required_fields)
         
     async def _send_via_primary_provider(self, user_id: str, content: Dict[str, Any], delivery_id: str) -> ChannelDeliveryResult:
-        """Send email via primary provider (SendGrid, Mailgun, etc.)"""        try:
+        """Send email via primary provider (SendGrid, Mailgun, etc.)"""
+        try:
             if 'sendgrid' in self.api_providers:
                 return await self._send_via_sendgrid(user_id, content, delivery_id)
             elif 'mailgun' in self.api_providers:
@@ -212,7 +227,8 @@ class EmailChannelHandler(BaseChannelHandler):
             )
             
     async def _send_via_fallback_provider(self, user_id: str, content: Dict[str, Any], delivery_id: str) -> ChannelDeliveryResult:
-        """Send email via fallback provider"""        try:
+        """Send email via fallback provider"""
+        try:
             # Use SMTP as fallback
             return await self._send_via_smtp(user_id, content, delivery_id)
             
@@ -226,7 +242,8 @@ class EmailChannelHandler(BaseChannelHandler):
             )
             
     async def _send_via_smtp(self, user_id: str, content: Dict[str, Any], delivery_id: str) -> ChannelDeliveryResult:
-        """Send email via SMTP"""        try:
+        """Send email via SMTP"""
+        try:
             # Create email message
             msg = MIMEMultipart()
             msg['From'] = self.smtp_config['from_email']
@@ -261,7 +278,8 @@ class EmailChannelHandler(BaseChannelHandler):
             raise
             
     async def _send_via_sendgrid(self, user_id: str, content: Dict[str, Any], delivery_id: str) -> ChannelDeliveryResult:
-        """Send email via SendGrid API"""        try:
+        """Send email via SendGrid API"""
+        try:
             sendgrid_config = self.api_providers['sendgrid']
             
             # Prepare SendGrid payload
@@ -309,7 +327,8 @@ class EmailChannelHandler(BaseChannelHandler):
 
 
 class SMSChannelHandler(BaseChannelHandler):
-    """Advanced SMS channel handler with multiple provider support"""    
+    """Advanced SMS channel handler with multiple provider support"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.sms_providers = config.get('sms_providers', {})
@@ -323,7 +342,8 @@ class SMSChannelHandler(BaseChannelHandler):
         content: Dict[str, Any], 
         priority: NotificationPriority
     ) -> ChannelDeliveryResult:
-        """Send SMS notification"""        try:
+        """Send SMS notification"""
+        try:
             delivery_id = str(uuid.uuid4())
             
             # Validate SMS content
@@ -358,7 +378,8 @@ class SMSChannelHandler(BaseChannelHandler):
             )
             
     async def validate_content(self, content: Dict[str, Any]) -> bool:
-        """Validate SMS content"""        required_fields = ['phone_number', 'message']
+        """Validate SMS content"""
+        required_fields = ['phone_number', 'message']
         if not all(field in content for field in required_fields):
             return False
             
@@ -369,7 +390,8 @@ class SMSChannelHandler(BaseChannelHandler):
         return True
         
     async def _send_via_twilio(self, user_id: str, content: Dict[str, Any], delivery_id: str) -> ChannelDeliveryResult:
-        """Send SMS via Twilio"""        try:
+        """Send SMS via Twilio"""
+        try:
             twilio_config = self.sms_providers['twilio']
             
             # Twilio API call (simplified - would use actual Twilio SDK)
@@ -395,7 +417,8 @@ class SMSChannelHandler(BaseChannelHandler):
 
 
 class PushNotificationChannelHandler(BaseChannelHandler):
-    """Advanced push notification handler for mobile and web"""    
+    """Advanced push notification handler for mobile and web"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.push_config = config.get('push_notification', {})
@@ -409,7 +432,8 @@ class PushNotificationChannelHandler(BaseChannelHandler):
         content: Dict[str, Any], 
         priority: NotificationPriority
     ) -> ChannelDeliveryResult:
-        """Send push notification"""        try:
+        """Send push notification"""
+        try:
             delivery_id = str(uuid.uuid4())
             
             # Validate push content
@@ -444,11 +468,13 @@ class PushNotificationChannelHandler(BaseChannelHandler):
             )
             
     async def validate_content(self, content: Dict[str, Any]) -> bool:
-        """Validate push notification content"""        required_fields = ['title', 'body', 'device_token']
+        """Validate push notification content"""
+        required_fields = ['title', 'body', 'device_token']
         return all(field in content for field in required_fields)
         
     async def _send_ios_push(self, user_id: str, content: Dict[str, Any], delivery_id: str) -> ChannelDeliveryResult:
-        """Send iOS push notification via APNS"""        try:
+        """Send iOS push notification via APNS"""
+        try:
             # iOS push implementation (would use actual APNS)
             self.logger.info(f"Sending iOS push notification: {delivery_id}")
             
@@ -464,7 +490,8 @@ class PushNotificationChannelHandler(BaseChannelHandler):
             raise
             
     async def _send_android_push(self, user_id: str, content: Dict[str, Any], delivery_id: str) -> ChannelDeliveryResult:
-        """Send Android push notification via FCM"""        try:
+        """Send Android push notification via FCM"""
+        try:
             # Android push implementation (would use actual FCM)
             self.logger.info(f"Sending Android push notification: {delivery_id}")
             
@@ -480,7 +507,8 @@ class PushNotificationChannelHandler(BaseChannelHandler):
             raise
             
     async def _send_web_push(self, user_id: str, content: Dict[str, Any], delivery_id: str) -> ChannelDeliveryResult:
-        """Send web push notification"""        try:
+        """Send web push notification"""
+        try:
             # Web push implementation
             self.logger.info(f"Sending web push notification: {delivery_id}")
             
@@ -497,7 +525,8 @@ class PushNotificationChannelHandler(BaseChannelHandler):
 
 
 class ChannelManager:
-    """    Advanced multi-channel notification delivery manager
+    """
+    Advanced multi-channel notification delivery manager
     
     Features:
     - Intelligent channel selection and optimization
@@ -505,7 +534,8 @@ class ChannelManager:
     - Performance monitoring and analytics
     - Cost optimization and budget management
     - Content adaptation per channel
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -539,7 +569,8 @@ class ChannelManager:
         }
         
     def _initialize_channel_handlers(self):
-        """Initialize all channel handlers"""        try:
+        """Initialize all channel handlers"""
+        try:
             # Email handler
             if 'email' in self.config:
                 self.channel_handlers[ChannelType.EMAIL] = EmailChannelHandler(
@@ -566,7 +597,8 @@ class ChannelManager:
             self.logger.error(f"Failed to initialize channel handlers: {str(e)}")
             
     def _define_channel_capabilities(self) -> Dict[ChannelType, ChannelCapability]:
-        """Define capabilities for each channel type"""        return {
+        """Define capabilities for each channel type"""
+        return {
             ChannelType.EMAIL: ChannelCapability(
                 channel=ChannelType.EMAIL,
                 supports_rich_content=True,
@@ -603,11 +635,13 @@ class ChannelManager:
         }
         
     def _initialize_channel_router(self):
-        """Initialize intelligent channel routing system"""        from ...ai.channel_routing import ChannelRoutingEngine
+        """Initialize intelligent channel routing system"""
+        from ...ai.channel_routing import ChannelRoutingEngine
         return ChannelRoutingEngine(self.config.get('routing', {}))
         
     def _initialize_cost_optimizer(self):
-        """Initialize cost optimization system"""        from ...business.cost_optimization import CostOptimizer
+        """Initialize cost optimization system"""
+        from ...business.cost_optimization import CostOptimizer
         return CostOptimizer(self.config.get('cost_optimization', {}))
         
     async def send_multi_channel_notification(
@@ -615,7 +649,8 @@ class ChannelManager:
         notification: NotificationModel,
         preferred_channels: Optional[List[ChannelType]] = None
     ) -> Dict[ChannelType, ChannelDeliveryResult]:
-        """Send notification across multiple channels with intelligent optimization"""        try:
+        """Send notification across multiple channels with intelligent optimization"""
+        try:
             # Determine optimal channels
             optimal_channels = preferred_channels or await self._determine_optimal_channels(
                 notification
@@ -676,7 +711,8 @@ class ChannelManager:
         self,
         notification: NotificationModel
     ) -> List[ChannelType]:
-        """Determine optimal channels based on AI routing and user preferences"""        try:
+        """Determine optimal channels based on AI routing and user preferences"""
+        try:
             # Use AI-driven channel routing
             optimal_channels = await self.channel_router.determine_optimal_channels(
                 notification.user_id,
@@ -706,7 +742,8 @@ class ChannelManager:
         notification: NotificationModel,
         channels: List[ChannelType]
     ) -> Dict[ChannelType, Dict[str, Any]]:
-        """Prepare content optimized for each channel"""        try:
+        """Prepare content optimized for each channel"""
+        try:
             channel_content = {}
             base_content = notification.content
             
@@ -734,7 +771,8 @@ class ChannelManager:
         channel: ChannelType,
         capability: ChannelCapability
     ) -> Dict[str, Any]:
-        """Adapt content based on channel-specific capabilities"""        try:
+        """Adapt content based on channel-specific capabilities"""
+        try:
             adapted_content = content.copy()
             
             # Truncate content if necessary
@@ -772,7 +810,8 @@ class ChannelManager:
             return content
             
     async def _adapt_for_sms(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Adapt content specifically for SMS"""        adapted = {
+        """Adapt content specifically for SMS"""
+        adapted = {
             'phone_number': content.get('recipient_phone', ''),
             'message': content.get('title', '') + ': ' + content.get('message', '')
         }
@@ -784,7 +823,8 @@ class ChannelManager:
         return adapted
         
     async def _adapt_for_email(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Adapt content specifically for email"""        return {
+        """Adapt content specifically for email"""
+        return {
             'recipient_email': content.get('recipient_email', ''),
             'subject': content.get('title', 'Notification'),
             'body': content.get('message', ''),
@@ -793,7 +833,8 @@ class ChannelManager:
         }
         
     async def _adapt_for_push(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Adapt content specifically for push notifications"""        return {
+        """Adapt content specifically for push notifications"""
+        return {
             'device_token': content.get('device_token', ''),
             'title': content.get('title', 'Notification')[:50],
             'body': content.get('message', '')[:200],
@@ -809,7 +850,8 @@ class ChannelManager:
         content: Dict[str, Any],
         priority: NotificationPriority
     ) -> ChannelDeliveryResult:
-        """Send notification to specific channel"""        try:
+        """Send notification to specific channel"""
+        try:
             handler = self.channel_handlers.get(channel)
             if not handler:
                 raise Exception(f"No handler available for channel: {channel.value}")
@@ -831,7 +873,8 @@ class ChannelManager:
             raise
             
     async def _update_system_metrics(self, delivery_results: Dict[ChannelType, ChannelDeliveryResult]):
-        """Update system-wide performance metrics"""        try:
+        """Update system-wide performance metrics"""
+        try:
             for channel, result in delivery_results.items():
                 # Update total counts
                 self.system_metrics['total_sent'] += 1
@@ -863,7 +906,8 @@ class ChannelManager:
         notification_id: str,
         delivery_results: Dict[ChannelType, ChannelDeliveryResult]
     ):
-        """Record delivery history for analytics"""        try:
+        """Record delivery history for analytics"""
+        try:
             if notification_id not in self.delivery_history:
                 self.delivery_history[notification_id] = []
                 
@@ -892,8 +936,10 @@ class ChannelManager:
 
 
 class MultiChannelSender:
-    """    High-level multi-channel notification sender with advanced orchestration
-    """    
+    """
+    High-level multi-channel notification sender with advanced orchestration
+    """
+    
     def __init__(self, channel_manager: ChannelManager):
         self.channel_manager = channel_manager
         self.logger = logging.getLogger(__name__)
@@ -904,7 +950,8 @@ class MultiChannelSender:
         primary_channels: List[ChannelType],
         fallback_channels: List[ChannelType]
     ) -> Dict[str, Any]:
-        """Send notification with intelligent fallback strategy"""        try:
+        """Send notification with intelligent fallback strategy"""
+        try:
             # Try primary channels first
             primary_results = await self.channel_manager.send_multi_channel_notification(
                 notification, primary_channels
@@ -947,7 +994,8 @@ class MultiChannelSender:
             }
             
     def _create_delivery_summary(self, results: Dict[ChannelType, ChannelDeliveryResult]) -> Dict[str, Any]:
-        """Create summary of delivery results"""        try:
+        """Create summary of delivery results"""
+        try:
             summary = {
                 'total_channels': len(results),
                 'successful_deliveries': 0,
@@ -985,7 +1033,8 @@ class MultiChannelSender:
         notifications: List[NotificationModel],
         batch_size: int = 50
     ) -> List[Dict[str, Any]]:
-        """Send batch of notifications efficiently"""        try:
+        """Send batch of notifications efficiently"""
+        try:
             results = []
             
             # Process in batches
@@ -1033,7 +1082,8 @@ class MultiChannelSender:
         self, 
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive delivery analytics"""        try:
+        """Get comprehensive delivery analytics"""
+        try:
             analytics = {
                 'system_metrics': self.channel_manager.system_metrics.copy(),
                 'channel_capabilities': {},
@@ -1070,7 +1120,8 @@ class MultiChannelSender:
         self, 
         time_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Calculate performance trends over time"""        # Placeholder implementation - would analyze historical data
+        """Calculate performance trends over time"""
+        # Placeholder implementation - would analyze historical data
         return {
             'delivery_rate_trend': 'improving',
             'average_delivery_time_trend': 'stable',
@@ -1084,7 +1135,8 @@ class MultiChannelSender:
         self, 
         time_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Calculate cost analysis and optimization opportunities"""        # Placeholder implementation - would calculate actual costs
+        """Calculate cost analysis and optimization opportunities"""
+        # Placeholder implementation - would calculate actual costs
         return {
             'total_cost': 0.0,
             'cost_per_channel': {},
@@ -1097,7 +1149,8 @@ class MultiChannelSender:
         }
         
     async def _generate_optimization_recommendations(self) -> List[str]:
-        """Generate channel optimization recommendations"""        recommendations = []
+        """Generate channel optimization recommendations"""
+        recommendations = []
         
         # Analyze system metrics for recommendations
         system_metrics = self.channel_manager.system_metrics
@@ -1133,7 +1186,8 @@ class MultiChannelSender:
 
 
 class BaseChannelHandler(ABC):
-    """Abstract base class for channel handlers"""    
+    """Abstract base class for channel handlers"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -1141,7 +1195,8 @@ class BaseChannelHandler(ABC):
         
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialize the channel handler"""        pass
+        """Initialize the channel handler"""
+        pass
         
     @abstractmethod
     async def send_notification(
@@ -1149,19 +1204,23 @@ class BaseChannelHandler(ABC):
         notification: NotificationModel,
         content: Dict[str, Any]
     ) -> ChannelDeliveryResult:
-        """Send notification through this channel"""        pass
+        """Send notification through this channel"""
+        pass
         
     @abstractmethod
     async def get_delivery_status(self, delivery_id: str) -> DeliveryStatus:
-        """Get delivery status for a notification"""        pass
+        """Get delivery status for a notification"""
+        pass
         
     @abstractmethod
     async def validate_configuration(self) -> bool:
-        """Validate channel configuration"""        pass
+        """Validate channel configuration"""
+        pass
 
 
 class EmailChannelHandler(BaseChannelHandler):
-    """Advanced email channel handler with SMTP and API support"""    
+    """Advanced email channel handler with SMTP and API support"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.smtp_config = config.get('smtp', {})
@@ -1169,7 +1228,8 @@ class EmailChannelHandler(BaseChannelHandler):
         self.delivery_tracking = {}
         
     async def initialize(self) -> bool:
-        """Initialize email channel"""        try:
+        """Initialize email channel"""
+        try:
             # Validate SMTP configuration if provided
             if self.smtp_config:
                 await self._validate_smtp_connection()
@@ -1190,7 +1250,8 @@ class EmailChannelHandler(BaseChannelHandler):
         notification: NotificationModel,
         content: Dict[str, Any]
     ) -> ChannelDeliveryResult:
-        """Send email notification"""        try:
+        """Send email notification"""
+        try:
             delivery_id = str(uuid.uuid4())
             
             # Prepare email content
@@ -1222,7 +1283,8 @@ class EmailChannelHandler(BaseChannelHandler):
             )
             
     async def get_delivery_status(self, delivery_id: str) -> DeliveryStatus:
-        """Get email delivery status"""        try:
+        """Get email delivery status"""
+        try:
             tracking_info = self.delivery_tracking.get(delivery_id)
             if not tracking_info:
                 return DeliveryStatus.FAILED
@@ -1239,7 +1301,8 @@ class EmailChannelHandler(BaseChannelHandler):
             return DeliveryStatus.FAILED
             
     async def validate_configuration(self) -> bool:
-        """Validate email configuration"""        try:
+        """Validate email configuration"""
+        try:
             if self.smtp_config:
                 required_smtp_fields = ['host', 'port', 'username', 'password']
                 if not all(field in self.smtp_config for field in required_smtp_fields):
@@ -1257,7 +1320,8 @@ class EmailChannelHandler(BaseChannelHandler):
             return False
             
     async def _prepare_email_content(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Prepare email-specific content"""        return {
+        """Prepare email-specific content"""
+        return {
             'to': content.get('recipient'),
             'subject': content.get('subject', 'Notification'),
             'html_body': content.get('html_content', ''),
@@ -1272,7 +1336,8 @@ class EmailChannelHandler(BaseChannelHandler):
         email_content: Dict[str, Any],
         delivery_id: str
     ) -> ChannelDeliveryResult:
-        """Send email via SMTP"""        try:
+        """Send email via SMTP"""
+        try:
             # Create message
             msg = MIMEMultipart('alternative')
             msg['Subject'] = email_content['subject']
@@ -1323,7 +1388,8 @@ class EmailChannelHandler(BaseChannelHandler):
         email_content: Dict[str, Any],
         delivery_id: str
     ) -> ChannelDeliveryResult:
-        """Send email via API (e.g., SendGrid, Mailgun)"""        try:
+        """Send email via API (e.g., SendGrid, Mailgun)"""
+        try:
             async with aiohttp.ClientSession() as session:
                 payload = {
                     'to': email_content['to'],
@@ -1370,14 +1436,16 @@ class EmailChannelHandler(BaseChannelHandler):
 
 
 class SMSChannelHandler(BaseChannelHandler):
-    """Advanced SMS channel handler with multiple provider support"""    
+    """Advanced SMS channel handler with multiple provider support"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.provider_config = config.get('provider', {})
         self.delivery_tracking = {}
         
     async def initialize(self) -> bool:
-        """Initialize SMS channel"""        try:
+        """Initialize SMS channel"""
+        try:
             # Validate provider configuration
             if not await self.validate_configuration():
                 return False
@@ -1397,7 +1465,8 @@ class SMSChannelHandler(BaseChannelHandler):
         notification: NotificationModel,
         content: Dict[str, Any]
     ) -> ChannelDeliveryResult:
-        """Send SMS notification"""        try:
+        """Send SMS notification"""
+        try:
             delivery_id = str(uuid.uuid4())
             
             # Prepare SMS content
@@ -1426,7 +1495,8 @@ class SMSChannelHandler(BaseChannelHandler):
             )
             
     async def get_delivery_status(self, delivery_id: str) -> DeliveryStatus:
-        """Get SMS delivery status"""        try:
+        """Get SMS delivery status"""
+        try:
             # Check with provider API
             return await self._check_provider_status(delivery_id)
             
@@ -1435,7 +1505,8 @@ class SMSChannelHandler(BaseChannelHandler):
             return DeliveryStatus.FAILED
             
     async def validate_configuration(self) -> bool:
-        """Validate SMS configuration"""        try:
+        """Validate SMS configuration"""
+        try:
             required_fields = ['api_key', 'from_number', 'provider_endpoint']
             return all(field in self.provider_config for field in required_fields)
             
@@ -1444,7 +1515,8 @@ class SMSChannelHandler(BaseChannelHandler):
             return False
             
     async def _prepare_sms_content(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Prepare SMS-specific content with length limits"""        message = content.get('message', '')
+        """Prepare SMS-specific content with length limits"""
+        message = content.get('message', '')
         
         # Truncate message if too long (SMS limit is typically 160 characters)
         max_length = self.config.get('max_message_length', 160)
@@ -1463,7 +1535,8 @@ class SMSChannelHandler(BaseChannelHandler):
         sms_content: Dict[str, Any],
         delivery_id: str
     ) -> ChannelDeliveryResult:
-        """Send SMS via provider API"""        try:
+        """Send SMS via provider API"""
+        try:
             async with aiohttp.ClientSession() as session:
                 payload = {
                     'to': sms_content['to'],
@@ -1508,7 +1581,8 @@ class SMSChannelHandler(BaseChannelHandler):
 
 
 class PushNotificationChannelHandler(BaseChannelHandler):
-    """Advanced push notification handler for mobile and web"""    
+    """Advanced push notification handler for mobile and web"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.fcm_config = config.get('fcm', {})
@@ -1517,7 +1591,8 @@ class PushNotificationChannelHandler(BaseChannelHandler):
         self.delivery_tracking = {}
         
     async def initialize(self) -> bool:
-        """Initialize push notification channel"""        try:
+        """Initialize push notification channel"""
+        try:
             # Initialize FCM if configured
             if self.fcm_config:
                 await self._initialize_fcm()
@@ -1542,7 +1617,8 @@ class PushNotificationChannelHandler(BaseChannelHandler):
         notification: NotificationModel,
         content: Dict[str, Any]
     ) -> ChannelDeliveryResult:
-        """Send push notification"""        try:
+        """Send push notification"""
+        try:
             delivery_id = str(uuid.uuid4())
             
             # Determine platform
@@ -1581,7 +1657,8 @@ class PushNotificationChannelHandler(BaseChannelHandler):
             )
             
     async def get_delivery_status(self, delivery_id: str) -> DeliveryStatus:
-        """Get push notification delivery status"""        try:
+        """Get push notification delivery status"""
+        try:
             tracking_info = self.delivery_tracking.get(delivery_id)
             if not tracking_info:
                 return DeliveryStatus.FAILED
@@ -1594,7 +1671,8 @@ class PushNotificationChannelHandler(BaseChannelHandler):
             return DeliveryStatus.FAILED
             
     async def validate_configuration(self) -> bool:
-        """Validate push notification configuration"""        try:
+        """Validate push notification configuration"""
+        try:
             # At least one platform should be configured
             return bool(self.fcm_config or self.apns_config or self.web_push_config)
             
@@ -1603,7 +1681,8 @@ class PushNotificationChannelHandler(BaseChannelHandler):
             return False
             
     async def _prepare_push_content(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Prepare push notification content"""        return {
+        """Prepare push notification content"""
+        return {
             'device_token': content.get('device_token'),
             'title': content.get('title', '')[:50],  # Truncate title
             'body': content.get('message', '')[:200],  # Truncate body
@@ -1616,11 +1695,13 @@ class PushNotificationChannelHandler(BaseChannelHandler):
 
 
 class ChannelManager:
-    """    Advanced multi-channel notification delivery manager
+    """
+    Advanced multi-channel notification delivery manager
     
     Provides intelligent channel selection, delivery optimization, and comprehensive
     multi-platform communication management for the IA Influencer Agent platform.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -1646,11 +1727,13 @@ class ChannelManager:
         self.ai_optimizer = self._initialize_ai_optimizer()
         
     def _initialize_ai_optimizer(self):
-        """Initialize AI-driven channel optimization"""        from ...ai.optimization.channel_optimizer import ChannelOptimizer
+        """Initialize AI-driven channel optimization"""
+        from ...ai.optimization.channel_optimizer import ChannelOptimizer
         return ChannelOptimizer(self.config.get('ai_optimizer', {}))
         
     async def initialize_manager(self):
-        """Initialize the channel manager and all handlers"""        try:
+        """Initialize the channel manager and all handlers"""
+        try:
             self.logger.info("Initializing ChannelManager with advanced multi-channel support")
             
             # Initialize configured channel handlers
@@ -1680,7 +1763,8 @@ class ChannelManager:
             return False
             
     async def _initialize_channel_handlers(self):
-        """Initialize all configured channel handlers"""        handler_configs = self.config.get('channels', {})
+        """Initialize all configured channel handlers"""
+        handler_configs = self.config.get('channels', {})
         
         # Email handler
         if 'email' in handler_configs:
@@ -1705,7 +1789,8 @@ class ChannelManager:
         self.logger.info(f"Initialized {len(self.handlers)} channel handlers")
         
     async def _load_channel_capabilities(self):
-        """Load capabilities for each initialized channel"""        for channel_type in self.handlers.keys():
+        """Load capabilities for each initialized channel"""
+        for channel_type in self.handlers.keys():
             if channel_type == ChannelType.EMAIL:
                 self.channel_capabilities[channel_type] = ChannelCapability(
                     channel=channel_type,
@@ -1744,7 +1829,8 @@ class ChannelManager:
                 )
                 
     async def _initialize_channel_metrics(self):
-        """Initialize metrics tracking for all channels"""        for channel_type in self.handlers.keys():
+        """Initialize metrics tracking for all channels"""
+        for channel_type in self.handlers.keys():
             self.channel_metrics[channel_type] = ChannelMetrics(channel=channel_type)
             
     async def send_multi_channel_notification(
@@ -1754,7 +1840,8 @@ class ChannelManager:
         content_variants: Dict[ChannelType, Dict[str, Any]],
         delivery_preferences: Optional[Dict[str, Any]] = None
     ) -> Dict[ChannelType, ChannelDeliveryResult]:
-        """        Send notification through multiple channels with optimized delivery
+        """
+        Send notification through multiple channels with optimized delivery
         
         Args:
             notification: Notification to send
@@ -1764,7 +1851,8 @@ class ChannelManager:
             
         Returns:
             Dictionary of delivery results per channel
-        """        try:
+        """
+        try:
             delivery_results = {}
             
             # Security validation
@@ -1823,7 +1911,8 @@ class ChannelManager:
         channel: ChannelType,
         content: Dict[str, Any]
     ) -> ChannelDeliveryResult:
-        """Send notification through a single channel"""        try:
+        """Send notification through a single channel"""
+        try:
             handler = self.handlers.get(channel)
             if not handler:
                 raise ValueError(f"No handler available for channel: {channel.value}")
@@ -1856,7 +1945,8 @@ class ChannelManager:
         priority: NotificationPriority,
         content_requirements: Optional[Dict[str, Any]] = None
     ) -> List[ChannelType]:
-        """        Get optimal channel selection using AI-driven optimization
+        """
+        Get optimal channel selection using AI-driven optimization
         
         Args:
             user_preferences: User's channel preferences
@@ -1866,7 +1956,8 @@ class ChannelManager:
             
         Returns:
             List of optimal channels in priority order
-        """        try:
+        """
+        try:
             # Check cache first
             cache_key = self._generate_cache_key(
                 user_preferences, notification_type, priority
@@ -1902,7 +1993,8 @@ class ChannelManager:
             return self._get_default_channels(priority)
             
     async def get_channel_status(self, channel: ChannelType) -> Dict[str, Any]:
-        """Get comprehensive status information for a channel"""        try:
+        """Get comprehensive status information for a channel"""
+        try:
             handler = self.handlers.get(channel)
             if not handler:
                 return {"error": "Channel not configured"}
@@ -1927,7 +2019,8 @@ class ChannelManager:
         self,
         delivery_id: str
     ) -> Dict[str, Any]:
-        """Get comprehensive delivery status information"""        try:
+        """Get comprehensive delivery status information"""
+        try:
             # Check active deliveries
             active_delivery = self.active_deliveries.get(delivery_id)
             if not active_delivery:
@@ -1952,7 +2045,8 @@ class ChannelManager:
             return {"error": str(e)}
             
     async def get_system_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive channel system analytics"""        try:
+        """Get comprehensive channel system analytics"""
+        try:
             analytics = {
                 "channel_performance": {},
                 "delivery_statistics": {},
@@ -2002,8 +2096,10 @@ class ChannelManager:
 
 
 class MultiChannelSender:
-    """    High-level multi-channel sender with intelligent routing and fallback
-    """    
+    """
+    High-level multi-channel sender with intelligent routing and fallback
+    """
+    
     def __init__(self, channel_manager: ChannelManager):
         self.channel_manager = channel_manager
         self.logger = logging.getLogger(__name__)
@@ -2016,7 +2112,8 @@ class MultiChannelSender:
         content_variants: Dict[ChannelType, Dict[str, Any]],
         fallback_conditions: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Send notification with intelligent fallback mechanism
+        """
+        Send notification with intelligent fallback mechanism
         
         Args:
             notification: Notification to send
@@ -2027,7 +2124,8 @@ class MultiChannelSender:
             
         Returns:
             Comprehensive delivery report
-        """        try:
+        """
+        try:
             delivery_report = {
                 "notification_id": notification.id,
                 "primary_results": {},
@@ -2090,7 +2188,8 @@ class MultiChannelSender:
         primary_results: Dict[ChannelType, ChannelDeliveryResult],
         fallback_conditions: Dict[str, Any]
     ) -> bool:
-        """Check if fallback conditions are met"""        try:
+        """Check if fallback conditions are met"""
+        try:
             # Default fallback conditions
             default_conditions = {
                 "min_success_rate": 0.5,

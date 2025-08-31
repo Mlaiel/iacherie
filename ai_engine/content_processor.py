@@ -3,7 +3,8 @@ Multi-format content processing with AI enhancement and optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import io
 import hashlib
 from typing import Dict, Any, List, Optional, Union, BinaryIO
@@ -40,14 +41,16 @@ from ..core.logging import logger
 
 
 class AudioProcessor:
-    """Advanced audio processing and enhancement"""    
+    """Advanced audio processing and enhancement"""
+    
     def __init__(self):
         self.supported_formats = settings.ai.supported_audio_formats
         self.sample_rate = 22050
         self.max_duration = 600  # 10 minutes max
     
     async def process_audio(self, file_data: bytes, filename: str) -> Dict[str, Any]:
-        """Process audio file and extract features"""        try:
+        """Process audio file and extract features"""
+        try:
             # Load audio data
             audio_io = io.BytesIO(file_data)
             
@@ -89,7 +92,8 @@ class AudioProcessor:
             raise Exception(f"Audio processing failed: {str(e)}")
     
     async def _extract_audio_features(self, audio_array: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract comprehensive audio features"""        features = {}
+        """Extract comprehensive audio features"""
+        features = {}
         
         # Basic features
         features["rms_energy"] = float(np.sqrt(np.mean(audio_array**2)))
@@ -117,7 +121,8 @@ class AudioProcessor:
         return features
     
     async def _generate_audio_versions(self, audio_segment: AudioSegment) -> Dict[str, Dict]:
-        """Generate platform-optimized audio versions"""        versions = {}
+        """Generate platform-optimized audio versions"""
+        versions = {}
         
         # High quality version (for Spotify, Apple Music)
         hq_version = audio_segment.set_frame_rate(44100).set_channels(2)
@@ -153,14 +158,16 @@ class AudioProcessor:
 
 
 class VideoProcessor:
-    """Advanced video processing and enhancement"""    
+    """Advanced video processing and enhancement"""
+    
     def __init__(self):
         self.supported_formats = settings.ai.supported_video_formats
         self.max_duration = 1800  # 30 minutes max
         self.frame_sample_rate = 1  # Extract 1 frame per second
     
     async def process_video(self, file_data: bytes, filename: str) -> Dict[str, Any]:
-        """Process video file and extract features"""        try:
+        """Process video file and extract features"""
+        try:
             # Save temporary file for processing
             temp_path = f"/tmp/{hashlib.md5(file_data).hexdigest()}.mp4"
             with open(temp_path, 'wb') as f:
@@ -203,7 +210,8 @@ class VideoProcessor:
             raise Exception(f"Video processing failed: {str(e)}")
     
     async def _extract_video_features(self, video: VideoFileClip) -> Dict[str, Any]:
-        """Extract comprehensive video features"""        features = {}
+        """Extract comprehensive video features"""
+        features = {}
         
         # Basic properties
         features["duration"] = video.duration
@@ -253,7 +261,8 @@ class VideoProcessor:
         return features
     
     async def _extract_key_frames(self, video: VideoFileClip) -> List[Dict[str, Any]]:
-        """Extract key frames from video"""        key_frames = []
+        """Extract key frames from video"""
+        key_frames = []
         
         # Extract frames at regular intervals
         num_frames = min(20, int(video.duration))
@@ -278,7 +287,8 @@ class VideoProcessor:
         return key_frames
     
     async def _generate_video_versions(self, video: VideoFileClip) -> Dict[str, Dict]:
-        """Generate platform-optimized video versions"""        versions = {}
+        """Generate platform-optimized video versions"""
+        versions = {}
         
         # High quality (YouTube, Vimeo)
         versions["high_quality"] = {
@@ -315,13 +325,15 @@ class VideoProcessor:
 
 
 class ImageProcessor:
-    """Advanced image processing and enhancement"""    
+    """Advanced image processing and enhancement"""
+    
     def __init__(self):
         self.supported_formats = settings.ai.supported_image_formats
         self.max_size = 50 * 1024 * 1024  # 50MB max
     
     async def process_image(self, file_data: bytes, filename: str) -> Dict[str, Any]:
-        """Process image file and extract features"""        try:
+        """Process image file and extract features"""
+        try:
             # Load image
             image = Image.open(io.BytesIO(file_data))
             
@@ -353,7 +365,8 @@ class ImageProcessor:
             raise Exception(f"Image processing failed: {str(e)}")
     
     async def _extract_image_features(self, image: Image.Image) -> Dict[str, Any]:
-        """Extract comprehensive image features"""        features = {}
+        """Extract comprehensive image features"""
+        features = {}
         
         # Basic properties
         features["width"] = image.width
@@ -402,7 +415,8 @@ class ImageProcessor:
         return features
     
     async def _generate_image_versions(self, image: Image.Image) -> Dict[str, Dict]:
-        """Generate platform-optimized image versions"""        versions = {}
+        """Generate platform-optimized image versions"""
+        versions = {}
         
         # High quality (for professional platforms)
         versions["high_quality"] = {
@@ -440,7 +454,8 @@ class ImageProcessor:
 
 
 class TextProcessor:
-    """Advanced text processing and analysis"""    
+    """Advanced text processing and analysis"""
+    
     def __init__(self):
         self.supported_formats = settings.ai.supported_text_formats
         self.max_length = 1000000  # 1M characters max
@@ -450,7 +465,8 @@ class TextProcessor:
         self.tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
     
     async def process_text(self, file_data: bytes, filename: str) -> Dict[str, Any]:
-        """Process text file and extract features"""        try:
+        """Process text file and extract features"""
+        try:
             # Extract text content
             text_content = await self._extract_text_content(file_data, filename)
             
@@ -479,7 +495,8 @@ class TextProcessor:
             raise Exception(f"Text processing failed: {str(e)}")
     
     async def _extract_text_content(self, file_data: bytes, filename: str) -> str:
-        """Extract text from various file formats"""        file_ext = Path(filename).suffix.lower()
+        """Extract text from various file formats"""
+        file_ext = Path(filename).suffix.lower()
         
         if file_ext == '.pdf':
             # Extract from PDF
@@ -504,7 +521,8 @@ class TextProcessor:
         return text_content
     
     async def _extract_text_features(self, text: str) -> Dict[str, Any]:
-        """Extract comprehensive text features"""        features = {}
+        """Extract comprehensive text features"""
+        features = {}
         
         # Basic statistics
         features["character_count"] = len(text)
@@ -534,7 +552,8 @@ class TextProcessor:
         return features
     
     async def _generate_text_versions(self, text: str) -> Dict[str, Dict]:
-        """Generate platform-optimized text versions"""        versions = {}
+        """Generate platform-optimized text versions"""
+        versions = {}
         
         # Full version (for blogs, articles)
         versions["full"] = {
@@ -565,7 +584,8 @@ class TextProcessor:
 
 
 class ContentProcessor:
-    """Main content processing orchestrator"""    
+    """Main content processing orchestrator"""
+    
     def __init__(self):
         self.audio_processor = AudioProcessor()
         self.video_processor = VideoProcessor()
@@ -574,7 +594,8 @@ class ContentProcessor:
     
     async def process_content(self, file_data: bytes, filename: str, 
                             content_type: Optional[str] = None) -> Dict[str, Any]:
-        """Process content based on file type"""        try:
+        """Process content based on file type"""
+        try:
             # Determine content type
             if not content_type:
                 content_type = self._detect_content_type(file_data, filename)
@@ -598,7 +619,8 @@ class ContentProcessor:
             raise
     
     def _detect_content_type(self, file_data: bytes, filename: str) -> str:
-        """Detect content type from file data and filename"""        # Get MIME type
+        """Detect content type from file data and filename"""
+        # Get MIME type
         mime_type, _ = mimetypes.guess_type(filename)
         
         if mime_type:
@@ -626,7 +648,8 @@ class ContentProcessor:
         raise ValueError(f"Unable to determine content type for {filename}")
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
-        """Get all supported file formats"""        return {
+        """Get all supported file formats"""
+        return {
             "audio": settings.ai.supported_audio_formats,
             "video": settings.ai.supported_video_formats,
             "image": settings.ai.supported_image_formats,

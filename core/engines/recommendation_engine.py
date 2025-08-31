@@ -14,7 +14,8 @@ COPYRIGHT WARNING: This code is proprietary. Unauthorized use, copying, or
 redistribution without explicit written permission from Fahed Mlaiel is 
 strictly prohibited and will result in legal action.
 ================================================================================
-"""import logging
+"""
+import logging
 import asyncio
 import json
 import numpy as np
@@ -40,7 +41,8 @@ logger = logging.getLogger(__name__)
 
 
 class RecommendationType(str, Enum):
-    """Types of recommendations"""    CONTENT_CREATION = "content_creation"
+    """Types of recommendations"""
+    CONTENT_CREATION = "content_creation"
     COLLABORATION = "collaboration"
     HASHTAGS = "hashtags"
     TIMING = "timing"
@@ -51,7 +53,8 @@ class RecommendationType(str, Enum):
 
 
 class ContentCategory(str, Enum):
-    """Content categories for recommendations"""    MUSIC = "music"
+    """Content categories for recommendations"""
+    MUSIC = "music"
     COMEDY = "comedy"
     LIFESTYLE = "lifestyle"
     EDUCATION = "education"
@@ -64,7 +67,8 @@ class ContentCategory(str, Enum):
 
 
 class RecommendationStrategy(str, Enum):
-    """Recommendation strategies"""    COLLABORATIVE_FILTERING = "collaborative_filtering"
+    """Recommendation strategies"""
+    COLLABORATIVE_FILTERING = "collaborative_filtering"
     CONTENT_BASED = "content_based"
     HYBRID = "hybrid"
     TRENDING = "trending"
@@ -73,7 +77,8 @@ class RecommendationStrategy(str, Enum):
 
 @dataclass
 class RecommendationScore:
-    """Recommendation scoring breakdown"""    relevance_score: float
+    """Recommendation scoring breakdown"""
+    relevance_score: float
     popularity_score: float
     engagement_score: float
     timing_score: float
@@ -83,7 +88,8 @@ class RecommendationScore:
 
 @dataclass
 class Recommendation:
-    """Individual recommendation"""    recommendation_id: str
+    """Individual recommendation"""
+    recommendation_id: str
     type: RecommendationType
     title: str
     description: str
@@ -99,7 +105,8 @@ class Recommendation:
 
 @dataclass
 class UserProfile:
-    """User profile for recommendations"""    user_id: str
+    """User profile for recommendations"""
+    user_id: str
     content_preferences: Dict[str, float]
     engagement_patterns: Dict[str, Any]
     collaboration_history: List[Dict[str, Any]]
@@ -109,7 +116,8 @@ class UserProfile:
 
 
 class RecommendationEngine:
-    """    Enterprise recommendation engine for content creators
+    """
+    Enterprise recommendation engine for content creators
     
     Features:
     - Multi-strategy recommendation system
@@ -119,7 +127,8 @@ class RecommendationEngine:
     - Trend-based recommendations
     - A/B testing for recommendations
     - Performance tracking and optimization
-    """    
+    """
+    
     def __init__(
         self,
         redis_manager: RedisManager,
@@ -173,7 +182,8 @@ class RecommendationEngine:
         strategy: RecommendationStrategy = RecommendationStrategy.HYBRID,
         filters: Dict[str, Any] = None
     ) -> List[Recommendation]:
-        """        Generate personalized recommendations for a user
+        """
+        Generate personalized recommendations for a user
         
         Args:
             user_id: User identifier
@@ -184,7 +194,8 @@ class RecommendationEngine:
             
         Returns:
             List of personalized recommendations
-        """        try:
+        """
+        try:
             count = count or self.default_recommendation_count
             recommendation_types = recommendation_types or [
                 RecommendationType.CONTENT_CREATION,
@@ -248,7 +259,8 @@ class RecommendationEngine:
             return []
 
     async def _build_user_profile(self, user_id: str) -> UserProfile:
-        """Build comprehensive user profile for recommendations"""        try:
+        """Build comprehensive user profile for recommendations"""
+        try:
             # Get user data from various sources
             user_interactions = await self._get_user_interactions(user_id)
             content_history = await self._get_user_content_history(user_id)
@@ -298,7 +310,8 @@ class RecommendationEngine:
         strategy: RecommendationStrategy,
         filters: Dict[str, Any] = None
     ) -> List[Recommendation]:
-        """Generate recommendations for specific type"""        try:
+        """Generate recommendations for specific type"""
+        try:
             if rec_type == RecommendationType.CONTENT_CREATION:
                 return await self._generate_content_recommendations(user_profile, strategy)
             elif rec_type == RecommendationType.COLLABORATION:
@@ -328,7 +341,8 @@ class RecommendationEngine:
         user_profile: UserProfile,
         strategy: RecommendationStrategy
     ) -> List[Recommendation]:
-        """Generate content creation recommendations"""        try:
+        """Generate content creation recommendations"""
+        try:
             recommendations = []
             
             # Analyze user's best performing content
@@ -382,7 +396,8 @@ class RecommendationEngine:
         user_profile: UserProfile,
         strategy: RecommendationStrategy
     ) -> List[Recommendation]:
-        """Generate collaboration recommendations"""        try:
+        """Generate collaboration recommendations"""
+        try:
             recommendations = []
             
             # Find potential collaborators based on user's network and preferences
@@ -432,7 +447,8 @@ class RecommendationEngine:
         user_profile: UserProfile,
         strategy: RecommendationStrategy
     ) -> List[Recommendation]:
-        """Generate hashtag recommendations"""        try:
+        """Generate hashtag recommendations"""
+        try:
             recommendations = []
             
             # Get user's content categories
@@ -493,7 +509,8 @@ class RecommendationEngine:
         user_profile: UserProfile,
         strategy: RecommendationStrategy
     ) -> List[Recommendation]:
-        """Generate optimal timing recommendations"""        try:
+        """Generate optimal timing recommendations"""
+        try:
             recommendations = []
             
             # Analyze user's historical posting times and engagement
@@ -550,7 +567,8 @@ class RecommendationEngine:
         user_profile: UserProfile,
         strategy: RecommendationStrategy
     ) -> List[Recommendation]:
-        """Generate platform expansion recommendations"""        try:
+        """Generate platform expansion recommendations"""
+        try:
             recommendations = []
             
             # Analyze user's current platform presence
@@ -602,7 +620,8 @@ class RecommendationEngine:
         user_profile: UserProfile,
         strategy: RecommendationStrategy
     ) -> List[Recommendation]:
-        """Generate monetization recommendations"""        try:
+        """Generate monetization recommendations"""
+        try:
             recommendations = []
             
             # Analyze user's monetization potential
@@ -651,7 +670,8 @@ class RecommendationEngine:
         user_profile: UserProfile,
         strategy: RecommendationStrategy
     ) -> List[Recommendation]:
-        """Generate SEO optimization recommendations"""        try:
+        """Generate SEO optimization recommendations"""
+        try:
             recommendations = []
             
             # Analyze user's content SEO performance
@@ -700,7 +720,8 @@ class RecommendationEngine:
         user_profile: UserProfile,
         strategy: RecommendationStrategy
     ) -> List[Recommendation]:
-        """Generate trend following recommendations"""        try:
+        """Generate trend following recommendations"""
+        try:
             recommendations = []
             
             # Get current trending topics relevant to user
@@ -750,7 +771,8 @@ class RecommendationEngine:
         recommendations: List[Recommendation],
         user_profile: UserProfile
     ) -> List[Recommendation]:
-        """Score and rank recommendations"""        try:
+        """Score and rank recommendations"""
+        try:
             for recommendation in recommendations:
                 # Calculate detailed scores
                 relevance_score = await self._calculate_relevance_score(recommendation, user_profile)
@@ -788,7 +810,8 @@ class RecommendationEngine:
         action: str,  # "viewed", "clicked", "implemented", "dismissed"
         outcome_metrics: Dict[str, Any] = None
     ):
-        """Track recommendation performance for improvement"""        try:
+        """Track recommendation performance for improvement"""
+        try:
             performance_data = {
                 "user_id": user_id,
                 "recommendation_id": recommendation_id,
@@ -820,7 +843,8 @@ class RecommendationEngine:
         interactions: List[Dict[str, Any]],
         content_history: List[Dict[str, Any]]
     ) -> Dict[str, float]:
-        """Analyze user's content preferences"""        try:
+        """Analyze user's content preferences"""
+        try:
             preferences = defaultdict(float)
             
             # Analyze interaction patterns
@@ -854,7 +878,8 @@ class RecommendationEngine:
         self,
         interactions: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze user's engagement patterns"""        try:
+        """Analyze user's engagement patterns"""
+        try:
             if not interactions:
                 return {}
             
@@ -894,31 +919,40 @@ class RecommendationEngine:
 
     # Placeholder methods for external data sources
     async def _get_user_interactions(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get user interactions from database"""        return []
+        """Get user interactions from database"""
+        return []
 
     async def _get_user_content_history(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get user's content creation history"""        return []
+        """Get user's content creation history"""
+        return []
 
     async def _get_user_collaboration_history(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get user's collaboration history"""        return []
+        """Get user's collaboration history"""
+        return []
 
     async def _get_user_performance_metrics(self, user_id: str) -> Dict[str, float]:
-        """Get user's performance metrics"""        return {}
+        """Get user's performance metrics"""
+        return {}
 
     async def _get_platform_activity(self, user_id: str) -> Dict[str, Any]:
-        """Get user's platform activity"""        return {}
+        """Get user's platform activity"""
+        return {}
 
     async def _get_user_demographics(self, user_id: str) -> Dict[str, Any]:
-        """Get user demographics"""        return {}
+        """Get user demographics"""
+        return {}
 
     async def _get_top_performing_categories(self, user_profile: UserProfile) -> List[str]:
-        """Get user's top performing content categories"""        return list(user_profile.content_preferences.keys())[:3]
+        """Get user's top performing content categories"""
+        return list(user_profile.content_preferences.keys())[:3]
 
     async def _get_trending_topics(self, categories: List[str]) -> List[str]:
-        """Get trending topics for categories"""        return ["AI trends", "sustainable living", "remote work tips"]
+        """Get trending topics for categories"""
+        return ["AI trends", "sustainable living", "remote work tips"]
 
     async def _classify_topic_category(self, topic: str) -> str:
-        """Classify topic into content category"""        topic_lower = topic.lower()
+        """Classify topic into content category"""
+        topic_lower = topic.lower()
         
         for category, keywords in self.category_keywords.items():
             if any(keyword in topic_lower for keyword in keywords):
@@ -927,14 +961,17 @@ class RecommendationEngine:
         return ContentCategory.LIFESTYLE.value
 
     async def _suggest_platforms_for_topic(self, topic: str, user_profile: UserProfile) -> List[str]:
-        """Suggest platforms for topic"""        return ["instagram", "youtube", "tiktok"]
+        """Suggest platforms for topic"""
+        return ["instagram", "youtube", "tiktok"]
 
     async def _estimate_topic_engagement(self, topic: str, user_profile: UserProfile) -> float:
-        """Estimate engagement for topic"""        return 0.75  # Placeholder
+        """Estimate engagement for topic"""
+        return 0.75  # Placeholder
 
     # Caching methods
     async def _get_cached_recommendations(self, cache_key: str) -> Optional[List[Recommendation]]:
-        """Get cached recommendations"""        try:
+        """Get cached recommendations"""
+        try:
             cached_data = await self.redis_manager.get(cache_key)
             if cached_data:
                 data = json.loads(cached_data)
@@ -949,7 +986,8 @@ class RecommendationEngine:
             return None
 
     async def _cache_recommendations(self, cache_key: str, recommendations: List[Recommendation]):
-        """Cache recommendations"""        try:
+        """Cache recommendations"""
+        try:
             data = []
             for rec in recommendations:
                 rec_dict = asdict(rec)
@@ -961,15 +999,18 @@ class RecommendationEngine:
             logger.warning(f"Failed to cache recommendations: {e}")
 
     async def _store_recommendation_history(self, user_id: str, recommendations: List[Recommendation]):
-        """Store recommendation history"""        # Implementation depends on your database layer
+        """Store recommendation history"""
+        # Implementation depends on your database layer
         pass
 
     async def _store_recommendation_performance(self, performance_data: Dict[str, Any]):
-        """Store recommendation performance data"""        # Implementation depends on your database layer
+        """Store recommendation performance data"""
+        # Implementation depends on your database layer
         pass
 
     async def _update_recommendation_model(self, performance_data: Dict[str, Any]):
-        """Update recommendation model based on performance"""        # Implementation for model updates
+        """Update recommendation model based on performance"""
+        # Implementation for model updates
         pass
 
     # Scoring helper methods (simplified implementations)
@@ -990,35 +1031,45 @@ class RecommendationEngine:
 
     # Additional placeholder methods
     async def _find_potential_collaborators(self, user_profile: UserProfile) -> List[Dict[str, Any]]:
-        """Find potential collaborators"""        return []
+        """Find potential collaborators"""
+        return []
 
     async def _get_trending_hashtags(self, categories: List[str]) -> List[Dict[str, Any]]:
-        """Get trending hashtags"""        return []
+        """Get trending hashtags"""
+        return []
 
     async def _analyze_hashtag_performance(self, user_id: str) -> Dict[str, Any]:
-        """Analyze hashtag performance"""        return {}
+        """Analyze hashtag performance"""
+        return {}
 
     async def _analyze_posting_times(self, user_id: str) -> Dict[str, Any]:
-        """Analyze posting times"""        return {}
+        """Analyze posting times"""
+        return {}
 
     async def _get_audience_activity_patterns(self, user_id: str) -> Dict[str, Any]:
-        """Get audience activity patterns"""        return {}
+        """Get audience activity patterns"""
+        return {}
 
     async def _calculate_optimal_posting_times(
         self,
         posting_analytics: Dict[str, Any],
         audience_activity: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate optimal posting times"""        return {}
+        """Calculate optimal posting times"""
+        return {}
 
     async def _analyze_platform_opportunities(self, user_profile: UserProfile) -> List[Dict[str, Any]]:
-        """Analyze platform opportunities"""        return []
+        """Analyze platform opportunities"""
+        return []
 
     async def _analyze_monetization_potential(self, user_profile: UserProfile) -> Dict[str, Any]:
-        """Analyze monetization potential"""        return {"opportunities": []}
+        """Analyze monetization potential"""
+        return {"opportunities": []}
 
     async def _analyze_content_seo_performance(self, user_id: str) -> Dict[str, Any]:
-        """Analyze content SEO performance"""        return {"improvements": []}
+        """Analyze content SEO performance"""
+        return {"improvements": []}
 
     async def _get_relevant_trends(self, user_profile: UserProfile) -> List[Dict[str, Any]]:
-        """Get relevant trends"""        return []
+        """Get relevant trends"""
+        return []

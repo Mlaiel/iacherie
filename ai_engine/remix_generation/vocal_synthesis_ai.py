@@ -17,7 +17,8 @@ Contact: mlaiel@live.de
 MISSION: Synthèse vocale IA ultra-avancée avec deep learning et vocodeurs neuraux
 TECHNOLOGIES: WaveNet, Tacotron, Neural Vocoders, Phoneme Processing, Prosody Control
 LOGIQUE MÉTIER: Text/Phonemes → Prosody analysis → Neural synthesis → Voice conversion → Quality enhancement
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 import torch
@@ -37,7 +38,8 @@ import re
 logger = logging.getLogger(__name__)
 
 class VoiceType(Enum):
-    """Voice type categories"""    SOPRANO = "soprano"
+    """Voice type categories"""
+    SOPRANO = "soprano"
     MEZZO_SOPRANO = "mezzo_soprano"
     ALTO = "alto"
     TENOR = "tenor"
@@ -49,7 +51,8 @@ class VoiceType(Enum):
     BREATHY = "breathy"
 
 class VocalStyle(Enum):
-    """Vocal performance styles"""    CLASSICAL = "classical"
+    """Vocal performance styles"""
+    CLASSICAL = "classical"
     POP = "pop"
     JAZZ = "jazz"
     ROCK = "rock"
@@ -61,7 +64,8 @@ class VocalStyle(Enum):
     MELODIC = "melodic"
 
 class Emotion(Enum):
-    """Vocal emotion expressions"""    NEUTRAL = "neutral"
+    """Vocal emotion expressions"""
+    NEUTRAL = "neutral"
     HAPPY = "happy"
     SAD = "sad"
     ANGRY = "angry"
@@ -74,7 +78,8 @@ class Emotion(Enum):
 
 @dataclass
 class VocalParameters:
-    """Parameters for vocal synthesis"""    voice_type: VoiceType = VoiceType.SOPRANO
+    """Parameters for vocal synthesis"""
+    voice_type: VoiceType = VoiceType.SOPRANO
     vocal_style: VocalStyle = VocalStyle.POP
     emotion: Emotion = Emotion.NEUTRAL
     pitch_range_semitones: int = 24
@@ -92,7 +97,8 @@ class VocalParameters:
 
 @dataclass
 class PhonemeData:
-    """Phoneme representation"""    phoneme: str
+    """Phoneme representation"""
+    phoneme: str
     duration: float
     pitch: float
     formants: List[float]
@@ -101,7 +107,8 @@ class PhonemeData:
 
 @dataclass
 class SynthesizedVocal:
-    """Synthesized vocal result"""    vocal_id: str
+    """Synthesized vocal result"""
+    vocal_id: str
     audio_data: np.ndarray
     sample_rate: int
     phoneme_sequence: List[PhonemeData]
@@ -113,7 +120,8 @@ class SynthesizedVocal:
     success: bool
 
 class WaveNetVocoder(nn.Module):
-    """WaveNet-based neural vocoder for vocal synthesis"""    
+    """WaveNet-based neural vocoder for vocal synthesis"""
+    
     def __init__(self, num_layers: int = 20, num_blocks: int = 4, 
                  residual_channels: int = 256, gate_channels: int = 256,
                  skip_channels: int = 256, kernel_size: int = 2):
@@ -207,7 +215,8 @@ class WaveNetVocoder(nn.Module):
         return output
 
 class TacotronEncoder(nn.Module):
-    """Tacotron-style encoder for text-to-speech"""    
+    """Tacotron-style encoder for text-to-speech"""
+    
     def __init__(self, vocab_size: int, embedding_dim: int = 256, 
                  encoder_dim: int = 256, num_layers: int = 3):
         super(TacotronEncoder, self).__init__()
@@ -249,7 +258,8 @@ class TacotronEncoder(nn.Module):
         return outputs
 
 class TacotronDecoder(nn.Module):
-    """Tacotron-style decoder for mel-spectrogram generation"""    
+    """Tacotron-style decoder for mel-spectrogram generation"""
+    
     def __init__(self, encoder_dim: int = 256, decoder_dim: int = 1024,
                  attention_dim: int = 128, mel_dim: int = 80):
         super(TacotronDecoder, self).__init__()
@@ -356,7 +366,8 @@ class TacotronDecoder(nn.Module):
         return mel_outputs, stop_outputs, attention_weights
 
 class LocationSensitiveAttention(nn.Module):
-    """Location-sensitive attention mechanism"""    
+    """Location-sensitive attention mechanism"""
+    
     def __init__(self, encoder_dim: int, decoder_dim: int, attention_dim: int):
         super(LocationSensitiveAttention, self).__init__()
         
@@ -401,14 +412,16 @@ class LocationSensitiveAttention(nn.Module):
         return context, attention_weights
 
 class PhonemeProcessor:
-    """Phoneme processing and analysis"""    
+    """Phoneme processing and analysis"""
+    
     def __init__(self):
         self.phoneme_to_id = self._initialize_phoneme_vocabulary()
         self.id_to_phoneme = {v: k for k, v in self.phoneme_to_id.items()}
         self.pronunciation_rules = self._initialize_pronunciation_rules()
     
     def _initialize_phoneme_vocabulary(self) -> Dict[str, int]:
-        """Initialize phoneme vocabulary"""        # IPA phonemes (simplified)
+        """Initialize phoneme vocabulary"""
+        # IPA phonemes (simplified)
         phonemes = [
             '<PAD>', '<START>', '<END>',
             # Vowels
@@ -423,7 +436,8 @@ class PhonemeProcessor:
         return {phoneme: i for i, phoneme in enumerate(phonemes)}
     
     def _initialize_pronunciation_rules(self) -> Dict[str, List[str]]:
-        """Initialize text-to-phoneme rules (simplified)"""        return {
+        """Initialize text-to-phoneme rules (simplified)"""
+        return {
             'hello': ['h', 'ə', 'l', 'o'],
             'world': ['w', 'ɝ', 'l', 'd'],
             'music': ['m', 'j', 'u', 'z', 'ɪ', 'k'],
@@ -437,7 +451,8 @@ class PhonemeProcessor:
         }
     
     async def text_to_phonemes(self, text: str) -> List[str]:
-        """Convert text to phoneme sequence"""        try:
+        """Convert text to phoneme sequence"""
+        try:
             words = text.lower().split()
             phonemes = ['<START>']
             
@@ -461,7 +476,8 @@ class PhonemeProcessor:
             return ['<START>', 'sil', '<END>']
     
     async def _letter_to_phoneme(self, word: str) -> List[str]:
-        """Simple letter-to-phoneme conversion"""        try:
+        """Simple letter-to-phoneme conversion"""
+        try:
             # Very simplified mapping
             letter_phoneme_map = {
                 'a': 'ə', 'b': 'b', 'c': 'k', 'd': 'd', 'e': 'ɛ',
@@ -478,18 +494,22 @@ class PhonemeProcessor:
             return ['ə']
     
     def encode_phonemes(self, phonemes: List[str]) -> List[int]:
-        """Encode phonemes to IDs"""        return [self.phoneme_to_id.get(phoneme, 0) for phoneme in phonemes]
+        """Encode phonemes to IDs"""
+        return [self.phoneme_to_id.get(phoneme, 0) for phoneme in phonemes]
     
     def decode_phonemes(self, phoneme_ids: List[int]) -> List[str]:
-        """Decode phoneme IDs to phonemes"""        return [self.id_to_phoneme.get(pid, '<PAD>') for pid in phoneme_ids]
+        """Decode phoneme IDs to phonemes"""
+        return [self.id_to_phoneme.get(pid, '<PAD>') for pid in phoneme_ids]
 
 class VocalFormantAnalyzer:
-    """Vocal formant analysis and synthesis"""    
+    """Vocal formant analysis and synthesis"""
+    
     def __init__(self):
         self.formant_templates = self._initialize_formant_templates()
     
     def _initialize_formant_templates(self) -> Dict[str, Dict[str, List[float]]]:
-        """Initialize formant frequency templates for different phonemes and voice types"""        return {
+        """Initialize formant frequency templates for different phonemes and voice types"""
+        return {
             # Vowel formants (F1, F2, F3) for different voice types
             'a': {
                 'soprano': [1000, 1400, 2800],
@@ -529,7 +549,8 @@ class VocalFormantAnalyzer:
         }
     
     async def get_formants_for_phoneme(self, phoneme: str, voice_type: VoiceType) -> List[float]:
-        """Get formant frequencies for phoneme and voice type"""        try:
+        """Get formant frequencies for phoneme and voice type"""
+        try:
             # Map voice type to template key
             voice_map = {
                 VoiceType.SOPRANO: 'soprano',
@@ -557,7 +578,8 @@ class VocalFormantAnalyzer:
                                       fundamental_freq: float,
                                       duration: float,
                                       sample_rate: int = 44100) -> np.ndarray:
-        """Synthesize vocal signal using formant frequencies"""        try:
+        """Synthesize vocal signal using formant frequencies"""
+        try:
             t = np.linspace(0, duration, int(duration * sample_rate), False)
             
             # Generate harmonic series
@@ -589,7 +611,8 @@ class VocalFormantAnalyzer:
     
     async def _calculate_harmonic_amplitude(self, harmonic_freq: float, 
                                           formants: List[float]) -> float:
-        """Calculate harmonic amplitude based on formant resonances"""        try:
+        """Calculate harmonic amplitude based on formant resonances"""
+        try:
             amplitude = 0.0
             
             for i, formant_freq in enumerate(formants[:3]):  # Use first 3 formants
@@ -615,7 +638,8 @@ class VocalFormantAnalyzer:
             return 0.1
 
 class VocalSynthesisAI:
-    """Main vocal synthesis AI engine"""    
+    """Main vocal synthesis AI engine"""
+    
     def __init__(self):
         # Neural networks
         self.wavenet_vocoder = WaveNetVocoder()
@@ -640,7 +664,8 @@ class VocalSynthesisAI:
                               phonemes: Optional[List[str]] = None,
                               parameters: VocalParameters = VocalParameters(),
                               use_neural_synthesis: bool = True) -> SynthesizedVocal:
-        """Synthesize vocals from text, melody, or phonemes"""        try:
+        """Synthesize vocals from text, melody, or phonemes"""
+        try:
             start_time = datetime.now()
             vocal_id = f"vocal_{int(start_time.timestamp())}"
             
@@ -707,7 +732,8 @@ class VocalSynthesisAI:
     
     async def _generate_default_melody(self, num_phonemes: int, 
                                      parameters: VocalParameters) -> List[int]:
-        """Generate default melody for phonemes"""        try:
+        """Generate default melody for phonemes"""
+        try:
             # Simple melody generation based on voice type
             base_note = int(parameters.fundamental_frequency * 12 * np.log2(440/440))  # Convert to MIDI
             
@@ -728,7 +754,8 @@ class VocalSynthesisAI:
     async def _align_phonemes_with_melody(self, phonemes: List[str], 
                                         melody_notes: List[int],
                                         parameters: VocalParameters) -> List[PhonemeData]:
-        """Align phonemes with melody notes"""        try:
+        """Align phonemes with melody notes"""
+        try:
             phoneme_sequence = []
             
             # Calculate base duration per phoneme
@@ -778,7 +805,8 @@ class VocalSynthesisAI:
     
     async def _synthesize_with_neural_network(self, phoneme_sequence: List[PhonemeData],
                                             parameters: VocalParameters) -> np.ndarray:
-        """Synthesize vocals using neural networks"""        try:
+        """Synthesize vocals using neural networks"""
+        try:
             # This is a simplified version - real implementation would use trained models
             
             # Convert phonemes to tokens
@@ -810,7 +838,8 @@ class VocalSynthesisAI:
     
     async def _synthesize_with_formants(self, phoneme_sequence: List[PhonemeData],
                                       parameters: VocalParameters) -> np.ndarray:
-        """Synthesize vocals using formant synthesis"""        try:
+        """Synthesize vocals using formant synthesis"""
+        try:
             audio_segments = []
             
             for phoneme_data in phoneme_sequence:
@@ -840,7 +869,8 @@ class VocalSynthesisAI:
     
     async def _mel_to_audio_simple(self, mel_spectrogram: torch.Tensor,
                                  parameters: VocalParameters) -> np.ndarray:
-        """Simple mel-spectrogram to audio conversion"""        try:
+        """Simple mel-spectrogram to audio conversion"""
+        try:
             # This is a simplified version - real implementation would use trained vocoder
             
             # Convert mel-spectrogram to linear spectrogram
@@ -863,7 +893,8 @@ class VocalSynthesisAI:
     
     async def _apply_vocal_effects(self, audio: np.ndarray, 
                                  parameters: VocalParameters) -> np.ndarray:
-        """Apply vocal effects and characteristics"""        try:
+        """Apply vocal effects and characteristics"""
+        try:
             processed_audio = audio.copy()
             
             # Apply vibrato
@@ -897,7 +928,8 @@ class VocalSynthesisAI:
             return audio
     
     async def _apply_vibrato(self, audio: np.ndarray, rate: float, depth: float) -> np.ndarray:
-        """Apply vibrato effect"""        try:
+        """Apply vibrato effect"""
+        try:
             sample_rate = 44100
             t = np.arange(len(audio)) / sample_rate
             
@@ -928,7 +960,8 @@ class VocalSynthesisAI:
             return audio
     
     async def _apply_breathiness(self, audio: np.ndarray, breathiness: float) -> np.ndarray:
-        """Apply breathiness effect"""        try:
+        """Apply breathiness effect"""
+        try:
             # Add noise to simulate breathiness
             noise = np.random.normal(0, breathiness * 0.1, len(audio))
             
@@ -950,7 +983,8 @@ class VocalSynthesisAI:
             return audio
     
     async def _apply_roughness(self, audio: np.ndarray, roughness: float) -> np.ndarray:
-        """Apply vocal roughness/rasp"""        try:
+        """Apply vocal roughness/rasp"""
+        try:
             # Apply distortion to simulate roughness
             roughness_factor = roughness * 2.0
             
@@ -967,7 +1001,8 @@ class VocalSynthesisAI:
             return audio
     
     async def _apply_formant_shift(self, audio: np.ndarray, shift_semitones: float) -> np.ndarray:
-        """Apply formant frequency shifting"""        try:
+        """Apply formant frequency shifting"""
+        try:
             if abs(shift_semitones) < 0.1:
                 return audio
             
@@ -984,7 +1019,8 @@ class VocalSynthesisAI:
             return audio
     
     async def _apply_emotion(self, audio: np.ndarray, emotion: Emotion) -> np.ndarray:
-        """Apply emotional characteristics to voice"""        try:
+        """Apply emotional characteristics to voice"""
+        try:
             if emotion == Emotion.NEUTRAL:
                 return audio
             
@@ -1014,7 +1050,8 @@ class VocalSynthesisAI:
             return audio
     
     async def _brighten_audio(self, audio: np.ndarray, amount: float) -> np.ndarray:
-        """Brighten audio by boosting high frequencies"""        try:
+        """Brighten audio by boosting high frequencies"""
+        try:
             # High-frequency boost
             sos = signal.butter(2, 2000, btype='high', fs=44100, output='sos')
             brightened = signal.sosfilt(sos, audio)
@@ -1027,7 +1064,8 @@ class VocalSynthesisAI:
             return audio
     
     async def _darken_audio(self, audio: np.ndarray, amount: float) -> np.ndarray:
-        """Darken audio by attenuating high frequencies"""        try:
+        """Darken audio by attenuating high frequencies"""
+        try:
             # Low-pass filter
             sos = signal.butter(2, 2000, btype='low', fs=44100, output='sos')
             darkened = signal.sosfilt(sos, audio)
@@ -1040,7 +1078,8 @@ class VocalSynthesisAI:
             return audio
     
     async def _smooth_audio(self, audio: np.ndarray) -> np.ndarray:
-        """Smooth audio by reducing rapid variations"""        try:
+        """Smooth audio by reducing rapid variations"""
+        try:
             # Apply light smoothing filter
             window_size = 5
             smoothed = np.convolve(audio, np.ones(window_size)/window_size, mode='same')
@@ -1052,7 +1091,8 @@ class VocalSynthesisAI:
             return audio
     
     async def _apply_dynamics(self, audio: np.ndarray, dynamic_range: float) -> np.ndarray:
-        """Apply dynamic range compression/expansion"""        try:
+        """Apply dynamic range compression/expansion"""
+        try:
             if dynamic_range >= 1.0:
                 return audio
             
@@ -1080,7 +1120,8 @@ class VocalSynthesisAI:
     
     async def _assess_vocal_quality(self, audio: np.ndarray, 
                                   parameters: VocalParameters) -> Dict[str, float]:
-        """Assess quality of synthesized vocal"""        try:
+        """Assess quality of synthesized vocal"""
+        try:
             quality_metrics = {}
             
             # Audio quality metrics
@@ -1138,7 +1179,8 @@ class VocalSynthesisAI:
     async def convert_voice(self, source_audio: np.ndarray,
                           target_voice_type: VoiceType,
                           target_parameters: VocalParameters) -> np.ndarray:
-        """Convert voice characteristics of existing audio"""        try:
+        """Convert voice characteristics of existing audio"""
+        try:
             # This is a simplified voice conversion
             # Real implementation would use advanced voice conversion models
             
@@ -1173,7 +1215,8 @@ class VocalSynthesisAI:
     
     async def harmonize_vocals(self, lead_vocal: np.ndarray,
                              harmony_parts: List[Tuple[int, VoiceType]]) -> List[np.ndarray]:
-        """Generate vocal harmonies"""        try:
+        """Generate vocal harmonies"""
+        try:
             harmonies = []
             
             for interval, voice_type in harmony_parts:
@@ -1198,7 +1241,8 @@ class VocalSynthesisAI:
             return []
     
     def get_synthesis_statistics(self) -> Dict[str, Any]:
-        """Get synthesis performance statistics"""        try:
+        """Get synthesis performance statistics"""
+        try:
             if not self.synthesis_history:
                 return {"total_synthesized": 0}
             

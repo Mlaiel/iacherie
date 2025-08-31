@@ -5,7 +5,8 @@ performance optimization, and seamless multi-layer cache management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import pickle
@@ -30,13 +31,15 @@ logger = logging.getLogger(__name__)
 T = TypeVar('T')
 
 class CacheLevel(Enum):
-    """Cache storage levels in hierarchy"""    L1_MEMORY = "l1_memory"
+    """Cache storage levels in hierarchy"""
+    L1_MEMORY = "l1_memory"
     L2_REDIS = "l2_redis"  
     L3_DATABASE = "l3_database"
     L4_CDN = "l4_cdn"
 
 class CachePriority(Enum):
-    """Cache entry priority levels"""    CRITICAL = 5
+    """Cache entry priority levels"""
+    CRITICAL = 5
     HIGH = 4
     NORMAL = 3
     LOW = 2
@@ -44,7 +47,8 @@ class CachePriority(Enum):
 
 @dataclass
 class CacheEntry:
-    """Enhanced cache entry with comprehensive metadata"""    key: str
+    """Enhanced cache entry with comprehensive metadata"""
+    key: str
     value: Any
     created_at: datetime
     last_accessed: datetime
@@ -64,7 +68,8 @@ class CacheEntry:
 
 @dataclass
 class CacheConfig:
-    """Comprehensive cache configuration"""    max_memory_size: int = 1024 * 1024 * 1024  # 1GB
+    """Comprehensive cache configuration"""
+    max_memory_size: int = 1024 * 1024 * 1024  # 1GB
     max_entries: int = 1000000
     default_ttl: int = 3600  # 1 hour
     compression_threshold: int = 1024  # bytes
@@ -82,7 +87,8 @@ class CacheConfig:
     
 @dataclass
 class CacheStats:
-    """Real-time cache performance statistics"""    total_requests: int = 0
+    """Real-time cache performance statistics"""
+    total_requests: int = 0
     cache_hits: int = 0
     cache_misses: int = 0
     hit_ratio: float = 0.0
@@ -96,7 +102,8 @@ class CacheStats:
     cost_savings_estimate: float = 0.0
 
 class CachingManager(BaseAgent):
-    """    Advanced multi-layer caching manager with intelligent optimization.
+    """
+    Advanced multi-layer caching manager with intelligent optimization.
     
     Provides enterprise-grade caching capabilities including:
     - Multi-tier cache hierarchy (L1-L4)
@@ -105,7 +112,8 @@ class CachingManager(BaseAgent):
     - Real-time performance analytics and optimization
     - Content-aware caching with metadata enrichment
     - Security features including encryption and tenant isolation
-    """    
+    """
+    
     def __init__(
         self,
         config: Optional[CacheConfig] = None,
@@ -138,7 +146,8 @@ class CachingManager(BaseAgent):
         self._last_optimization = datetime.utcnow()
         
     async def initialize(self) -> bool:
-        """Initialize caching manager and all components"""        try:
+        """Initialize caching manager and all components"""
+        try:
             await super().initialize()
             
             # Initialize storage layers
@@ -173,7 +182,8 @@ class CachingManager(BaseAgent):
         tenant_id: Optional[str] = None,
         tags: Optional[List[str]] = None
     ) -> Optional[Any]:
-        """        Retrieve value from multi-layer cache with intelligent optimization.
+        """
+        Retrieve value from multi-layer cache with intelligent optimization.
         
         Args:
             key: Cache key identifier
@@ -183,7 +193,8 @@ class CachingManager(BaseAgent):
             
         Returns:
             Cached value or None if not found
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Generate context-aware cache key
@@ -228,7 +239,8 @@ class CachingManager(BaseAgent):
         content_type: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """        Store value in cache with intelligent placement and optimization.
+        """
+        Store value in cache with intelligent placement and optimization.
         
         Args:
             key: Cache key identifier
@@ -243,7 +255,8 @@ class CachingManager(BaseAgent):
             
         Returns:
             True if successfully cached
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Generate context-aware cache key
@@ -309,7 +322,8 @@ class CachingManager(BaseAgent):
         user_id: Optional[str] = None,
         tenant_id: Optional[str] = None
     ) -> bool:
-        """Delete entry from all cache levels"""        try:
+        """Delete entry from all cache levels"""
+        try:
             cache_key = self._generate_cache_key(key, user_id, tenant_id)
             
             # Remove from all cache levels
@@ -329,7 +343,8 @@ class CachingManager(BaseAgent):
             return False
     
     async def invalidate_by_tags(self, tags: List[str]) -> int:
-        """Invalidate all entries matching specified tags"""        try:
+        """Invalidate all entries matching specified tags"""
+        try:
             invalidated_count = 0
             
             for cache_key, entry in list(self._cache_entries.items()):
@@ -345,7 +360,8 @@ class CachingManager(BaseAgent):
             return 0
     
     async def invalidate_by_pattern(self, pattern: str) -> int:
-        """Invalidate entries matching key pattern"""        try:
+        """Invalidate entries matching key pattern"""
+        try:
             import re
             regex = re.compile(pattern)
             invalidated_count = 0
@@ -368,7 +384,8 @@ class CachingManager(BaseAgent):
         keys: List[str],
         batch_size: int = 100
     ) -> int:
-        """Pre-populate cache with anticipated data"""        try:
+        """Pre-populate cache with anticipated data"""
+        try:
             warmed_count = 0
             
             for i in range(0, len(keys), batch_size):
@@ -387,7 +404,8 @@ class CachingManager(BaseAgent):
             return 0
     
     async def get_statistics(self) -> CacheStats:
-        """Get comprehensive cache performance statistics"""        self._stats.hit_ratio = self._calculate_hit_ratio()
+        """Get comprehensive cache performance statistics"""
+        self._stats.hit_ratio = self._calculate_hit_ratio()
         self._stats.average_response_time = self._calculate_average_response_time()
         self._stats.entry_count = len(self._cache_entries)
         self._stats.total_size_bytes = sum(
@@ -400,7 +418,8 @@ class CachingManager(BaseAgent):
         return self._stats
     
     async def optimize_cache(self) -> Dict[str, Any]:
-        """Perform comprehensive cache optimization"""        try:
+        """Perform comprehensive cache optimization"""
+        try:
             optimization_results = await self.optimizer.optimize(
                 self._cache_entries,
                 self._stats,
@@ -431,7 +450,8 @@ class CachingManager(BaseAgent):
         user_id: Optional[str] = None,
         tenant_id: Optional[str] = None
     ) -> str:
-        """Generate context-aware cache key"""        components = [key]
+        """Generate context-aware cache key"""
+        components = [key]
         
         if tenant_id:
             components.insert(0, f"tenant:{tenant_id}")
@@ -441,27 +461,32 @@ class CachingManager(BaseAgent):
         return ":".join(components)
     
     def _generate_checksum(self, value: Any) -> str:
-        """Generate integrity checksum for cached value"""        serialized = pickle.dumps(value)
+        """Generate integrity checksum for cached value"""
+        serialized = pickle.dumps(value)
         return hashlib.sha256(serialized).hexdigest()
     
     def _calculate_size(self, value: Any) -> int:
-        """Calculate memory size of value in bytes"""        try:
+        """Calculate memory size of value in bytes"""
+        try:
             return len(pickle.dumps(value))
         except:
             return 0
     
     async def _get_from_hierarchy(self, cache_key: str) -> Optional[Any]:
-        """Retrieve value from cache hierarchy (L1->L2->L3->L4)"""        for level in self.config.cache_levels:
+        """Retrieve value from cache hierarchy (L1->L2->L3->L4)"""
+        for level in self.config.cache_levels:
             value = await self.storage.get_from_level(level, cache_key)
             if value is not None:
                 return value
         return None
     
     async def _store_in_level(self, level: CacheLevel, entry: CacheEntry) -> bool:
-        """Store entry in specific cache level"""        return await self.storage.set_in_level(level, entry.key, entry)
+        """Store entry in specific cache level"""
+        return await self.storage.set_in_level(level, entry.key, entry)
     
     async def _determine_optimal_level(self, entry: CacheEntry) -> CacheLevel:
-        """Determine optimal cache level for entry"""        # High priority and frequently accessed -> L1 Memory
+        """Determine optimal cache level for entry"""
+        # High priority and frequently accessed -> L1 Memory
         if entry.priority in [CachePriority.CRITICAL, CachePriority.HIGH]:
             return CacheLevel.L1_MEMORY
         
@@ -473,7 +498,8 @@ class CachingManager(BaseAgent):
         return CacheLevel.L3_DATABASE
     
     async def _promote_cache_entry(self, cache_key: str, value: Any):
-        """Promote frequently accessed entries to higher cache levels"""        if cache_key in self._cache_entries:
+        """Promote frequently accessed entries to higher cache levels"""
+        if cache_key in self._cache_entries:
             entry = self._cache_entries[cache_key]
             entry.access_count += 1
             entry.last_accessed = datetime.utcnow()
@@ -483,55 +509,66 @@ class CachingManager(BaseAgent):
                 await self._promote_to_level(cache_key, CacheLevel.L1_MEMORY)
     
     async def _promote_to_level(self, cache_key: str, target_level: CacheLevel):
-        """Promote entry to specific cache level"""        if cache_key in self._cache_entries:
+        """Promote entry to specific cache level"""
+        if cache_key in self._cache_entries:
             entry = self._cache_entries[cache_key]
             await self._store_in_level(target_level, entry)
     
     async def _record_hit(self, cache_key: str):
-        """Record cache hit for analytics"""        if cache_key in self._cache_entries:
+        """Record cache hit for analytics"""
+        if cache_key in self._cache_entries:
             entry = self._cache_entries[cache_key]
             entry.hit_count += 1
             entry.access_count += 1
             entry.last_accessed = datetime.utcnow()
     
     async def _record_miss(self, cache_key: str):
-        """Record cache miss for analytics"""        await self.analytics.record_miss(cache_key)
+        """Record cache miss for analytics"""
+        await self.analytics.record_miss(cache_key)
     
     def _update_hit_ratio(self):
-        """Update cache hit ratio statistics"""        total = self._stats.cache_hits + self._stats.cache_misses
+        """Update cache hit ratio statistics"""
+        total = self._stats.cache_hits + self._stats.cache_misses
         if total > 0:
             self._stats.hit_ratio = self._stats.cache_hits / total
     
     def _calculate_hit_ratio(self) -> float:
-        """Calculate current hit ratio"""        total = self._stats.cache_hits + self._stats.cache_misses
+        """Calculate current hit ratio"""
+        total = self._stats.cache_hits + self._stats.cache_misses
         return self._stats.cache_hits / total if total > 0 else 0.0
     
     def _calculate_average_response_time(self) -> float:
-        """Calculate average response time"""        if not self._operation_times:
+        """Calculate average response time"""
+        if not self._operation_times:
             return 0.0
         return sum(self._operation_times) / len(self._operation_times)
     
     async def _compress_value(self, value: Any) -> bytes:
-        """Compress value for storage efficiency"""        import gzip
+        """Compress value for storage efficiency"""
+        import gzip
         serialized = pickle.dumps(value)
         return gzip.compress(serialized)
     
     async def _encrypt_value(self, value: Any) -> bytes:
-        """Encrypt value for security"""        return await self._encryption.encrypt(pickle.dumps(value))
+        """Encrypt value for security"""
+        return await self._encryption.encrypt(pickle.dumps(value))
     
     def _requires_encryption(self, content_type: Optional[str]) -> bool:
-        """Determine if content requires encryption"""        sensitive_types = [
+        """Determine if content requires encryption"""
+        sensitive_types = [
             "user_data", "payment_info", "authentication",
             "personal_info", "financial_data"
         ]
         return content_type in sensitive_types if content_type else False
     
     async def _update_analytics(self, entry: CacheEntry, operation: str):
-        """Update analytics with cache operation"""        if self.config.enable_analytics:
+        """Update analytics with cache operation"""
+        if self.config.enable_analytics:
             await self.analytics.record_operation(entry, operation)
     
     async def _optimization_loop(self):
-        """Background cache optimization loop"""        while not self.shutdown_requested:
+        """Background cache optimization loop"""
+        while not self.shutdown_requested:
             try:
                 if (datetime.utcnow() - self._last_optimization).seconds >= self.config.optimization_interval:
                     await self.optimize_cache()
@@ -543,7 +580,8 @@ class CachingManager(BaseAgent):
                 await asyncio.sleep(60)
     
     async def shutdown(self):
-        """Graceful shutdown of caching manager"""        self.shutdown_requested = True
+        """Graceful shutdown of caching manager"""
+        self.shutdown_requested = True
         await self.storage.close()
         await self.coordinator.shutdown()
         await super().shutdown()

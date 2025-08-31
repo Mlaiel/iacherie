@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -21,7 +22,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -38,10 +40,12 @@ from ai.nlp.utils import Platform, Language, ContentType
 logger = logging.getLogger(__name__)
 
 class TestAdvancedNLPEngine:
-    """Comprehensive tests for AdvancedNLPEngine"""    
+    """Comprehensive tests for AdvancedNLPEngine"""
+    
     @pytest.mark.asyncio
     async def test_engine_initialization(self, nlp_engine):
-        """Test engine initialization and configuration"""        assert nlp_engine is not None
+        """Test engine initialization and configuration"""
+        assert nlp_engine is not None
         assert hasattr(nlp_engine, 'config')
         assert hasattr(nlp_engine, 'models')
         assert hasattr(nlp_engine, 'pipelines')
@@ -61,7 +65,8 @@ class TestAdvancedNLPEngine:
 
     @pytest.mark.asyncio
     async def test_basic_text_processing(self, nlp_engine, sample_texts):
-        """Test basic text processing functionality"""        for language, texts in sample_texts.items():
+        """Test basic text processing functionality"""
+        for language, texts in sample_texts.items():
             for text in texts[:2]:  # Test first 2 texts for each language
                 request = NLPRequest(
                     text=text,
@@ -90,7 +95,8 @@ class TestAdvancedNLPEngine:
 
     @pytest.mark.asyncio
     async def test_multilingual_processing(self, nlp_engine, sample_texts):
-        """Test multilingual text processing capabilities"""        for language, texts in sample_texts.items():
+        """Test multilingual text processing capabilities"""
+        for language, texts in sample_texts.items():
             text = texts[0]
             
             request = NLPRequest(
@@ -125,7 +131,8 @@ class TestAdvancedNLPEngine:
 
     @pytest.mark.asyncio
     async def test_platform_specific_processing(self, nlp_engine, sample_platform_content):
-        """Test platform-specific content processing"""        platforms_to_test = [Platform.INSTAGRAM, Platform.TIKTOK, Platform.TWITTER, Platform.YOUTUBE]
+        """Test platform-specific content processing"""
+        platforms_to_test = [Platform.INSTAGRAM, Platform.TIKTOK, Platform.TWITTER, Platform.YOUTUBE]
         
         for platform in platforms_to_test:
             # Get platform-specific content
@@ -167,7 +174,8 @@ class TestAdvancedNLPEngine:
 
     @pytest.mark.asyncio
     async def test_processing_modes(self, nlp_engine, sample_texts):
-        """Test different processing modes"""        text = sample_texts['english'][0]
+        """Test different processing modes"""
+        text = sample_texts['english'][0]
         
         modes_to_test = [
             ProcessingMode.FAST,
@@ -215,7 +223,8 @@ class TestAdvancedNLPEngine:
 
     @pytest.mark.asyncio
     async def test_batch_processing(self, nlp_engine, performance_test_data):
-        """Test batch processing capabilities"""        texts = performance_test_data['small_batch']
+        """Test batch processing capabilities"""
+        texts = performance_test_data['small_batch']
         
         requests = [
             NLPRequest(
@@ -242,7 +251,8 @@ class TestAdvancedNLPEngine:
 
     @pytest.mark.asyncio
     async def test_semantic_analysis(self, nlp_engine, sample_texts):
-        """Test semantic analysis capabilities"""        text = sample_texts['english'][2]  # Text with mentions and hashtags
+        """Test semantic analysis capabilities"""
+        text = sample_texts['english'][2]  # Text with mentions and hashtags
         
         request = NLPRequest(
             text=text,
@@ -273,7 +283,8 @@ class TestAdvancedNLPEngine:
 
     @pytest.mark.asyncio
     async def test_brand_voice_analysis(self, nlp_engine, sample_social_content):
-        """Test brand voice analysis capabilities"""        instagram_content = sample_social_content['instagram']
+        """Test brand voice analysis capabilities"""
+        instagram_content = sample_social_content['instagram']
         text = instagram_content['post']
         
         request = NLPRequest(
@@ -304,7 +315,8 @@ class TestAdvancedNLPEngine:
 
     @pytest.mark.asyncio
     async def test_collaboration_detection(self, nlp_engine, sample_texts):
-        """Test collaboration opportunity detection"""        # Use text with mentions that might indicate collaborations
+        """Test collaboration opportunity detection"""
+        # Use text with mentions that might indicate collaborations
         text = sample_texts['english'][2]  # Has @foodlover mention
         
         request = NLPRequest(
@@ -331,7 +343,8 @@ class TestAdvancedNLPEngine:
 
     @pytest.mark.asyncio
     async def test_performance_benchmarks(self, nlp_engine, performance_test_data, benchmark_config):
-        """Test performance benchmarks"""        # Test single text processing time
+        """Test performance benchmarks"""
+        # Test single text processing time
         text = performance_test_data['small_batch'][0]
         
         request = NLPRequest(
@@ -375,7 +388,8 @@ class TestAdvancedNLPEngine:
 
     @pytest.mark.asyncio
     async def test_error_handling(self, nlp_engine):
-        """Test error handling and edge cases"""        # Test empty text
+        """Test error handling and edge cases"""
+        # Test empty text
         request = NLPTask(
             content="",
             language='en',
@@ -411,7 +425,8 @@ class TestAdvancedNLPEngine:
 
     @pytest.mark.asyncio
     async def test_text_quality_assessment(self, nlp_engine, sample_social_content):
-        """Test text quality assessment capabilities"""        # Test high-quality content
+        """Test text quality assessment capabilities"""
+        # Test high-quality content
         high_quality_text = sample_social_content['instagram']['long_caption']
         
         request = NLPRequest(
@@ -438,7 +453,8 @@ class TestAdvancedNLPEngine:
 
     @pytest.mark.asyncio
     async def test_trend_analysis(self, nlp_engine, sample_social_content):
-        """Test trend analysis capabilities"""        tiktok_content = sample_social_content['tiktok']['video']
+        """Test trend analysis capabilities"""
+        tiktok_content = sample_social_content['tiktok']['video']
         
         request = NLPRequest(
             text=tiktok_content,
@@ -465,7 +481,8 @@ class TestAdvancedNLPEngine:
 
     @pytest.mark.asyncio
     async def test_content_optimization(self, nlp_engine, sample_platform_content):
-        """Test content optimization recommendations"""        for platform_name, content_dict in sample_platform_content.items():
+        """Test content optimization recommendations"""
+        for platform_name, content_dict in sample_platform_content.items():
             if platform_name == 'instagram':
                 platform = Platform.INSTAGRAM
             elif platform_name == 'tiktok':
@@ -511,7 +528,8 @@ class TestAdvancedNLPEngine:
 
     @pytest.mark.asyncio
     async def test_memory_management(self, nlp_engine, performance_test_data):
-        """Test memory management during processing"""        import psutil
+        """Test memory management during processing"""
+        import psutil
         import os
         
         process = psutil.Process(os.getpid())
@@ -546,7 +564,8 @@ class TestAdvancedNLPEngine:
 
     @pytest.mark.asyncio
     async def test_concurrent_processing(self, nlp_engine, sample_texts):
-        """Test concurrent processing capabilities"""        texts = [text for lang_texts in sample_texts.values() for text in lang_texts[:2]]
+        """Test concurrent processing capabilities"""
+        texts = [text for lang_texts in sample_texts.values() for text in lang_texts[:2]]
         
         async def process_single_text(text, lang='en'):
             request = NLPRequest(
@@ -576,7 +595,8 @@ class TestAdvancedNLPEngine:
 
     @pytest.mark.asyncio
     async def test_content_fingerprinting(self, nlp_engine, sample_texts):
-        """Test content fingerprinting for copyright protection"""        text = sample_texts['english'][0]
+        """Test content fingerprinting for copyright protection"""
+        text = sample_texts['english'][0]
         
         request = NLPRequest(
             text=text,
@@ -602,7 +622,8 @@ class TestAdvancedNLPEngine:
 
     @pytest.mark.asyncio
     async def test_engagement_prediction(self, nlp_engine, sample_social_content):
-        """Test engagement prediction capabilities"""        # Test with Instagram post
+        """Test engagement prediction capabilities"""
+        # Test with Instagram post
         text = sample_social_content['instagram']['post']
         
         request = NLPRequest(
@@ -629,9 +650,11 @@ class TestAdvancedNLPEngine:
                 assert 0.0 <= score <= 1.0
 
 class TestNLPRequestValidation:
-    """Test NLP request validation and edge cases"""    
+    """Test NLP request validation and edge cases"""
+    
     def test_request_creation(self):
-        """Test NLP request creation and validation"""        request = NLPRequest(
+        """Test NLP request creation and validation"""
+        request = NLPRequest(
             text="Test content",
             language='en',
             platform=Platform.INSTAGRAM,
@@ -648,7 +671,8 @@ class TestNLPRequestValidation:
         assert isinstance(request.metadata, dict)
 
     def test_request_with_options(self):
-        """Test request with custom options"""        options = {
+        """Test request with custom options"""
+        options = {
             'sentiment_analysis': True,
             'entity_extraction': True,
             'max_keywords': 10
@@ -668,9 +692,11 @@ class TestNLPRequestValidation:
         assert request.options['max_keywords'] == 10
 
 class TestNLPResponseValidation:
-    """Test NLP response validation and structure"""    
+    """Test NLP response validation and structure"""
+    
     def test_response_structure(self):
-        """Test response structure and required fields"""        response = NLPResponse(
+        """Test response structure and required fields"""
+        response = NLPResponse(
             success=True,
             processed_text="Processed content",
             language_detected='en',
@@ -684,7 +710,8 @@ class TestNLPResponseValidation:
         assert isinstance(response.metadata, dict)
 
     def test_response_with_analysis_data(self):
-        """Test response with comprehensive analysis data"""        sentiment = {
+        """Test response with comprehensive analysis data"""
+        sentiment = {
             'polarity': 0.7,
             'confidence': 0.9,
             'emotions': ['joy', 'excitement']

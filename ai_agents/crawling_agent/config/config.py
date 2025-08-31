@@ -17,19 +17,22 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import os
+"""
+import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Set
 from enum import Enum
 
 class EnvironmentType(Enum):
-    """Environment types for configuration"""    DEVELOPMENT = "development"
+    """Environment types for configuration"""
+    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
 
 class LogLevel(Enum):
-    """Logging levels"""    DEBUG = "DEBUG"
+    """Logging levels"""
+    DEBUG = "DEBUG"
     INFO = "INFO" 
     WARNING = "WARNING"
     ERROR = "ERROR"
@@ -37,7 +40,8 @@ class LogLevel(Enum):
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration settings"""    host: str = os.getenv("POSTGRES_HOST", "localhost")
+    """Database configuration settings"""
+    host: str = os.getenv("POSTGRES_HOST", "localhost")
     port: int = int(os.getenv("POSTGRES_PORT", "5432"))
     database: str = os.getenv("POSTGRES_DB", "ia_influencer")
     username: str = os.getenv("POSTGRES_USER", "admin")
@@ -50,7 +54,8 @@ class DatabaseConfig:
 
 @dataclass
 class RedisConfig:
-    """Redis configuration for caching and queues"""    host: str = os.getenv("REDIS_HOST", "localhost")
+    """Redis configuration for caching and queues"""
+    host: str = os.getenv("REDIS_HOST", "localhost")
     port: int = int(os.getenv("REDIS_PORT", "6379"))
     database: int = int(os.getenv("REDIS_DB", "0"))
     password: Optional[str] = os.getenv("REDIS_PASSWORD")
@@ -62,7 +67,8 @@ class RedisConfig:
 
 @dataclass
 class CrawlingPerformanceConfig:
-    """Performance tuning for crawling operations"""    max_concurrent_requests: int = 100
+    """Performance tuning for crawling operations"""
+    max_concurrent_requests: int = 100
     max_concurrent_agents: int = 10
     request_timeout_seconds: int = 30
     connection_timeout_seconds: int = 10
@@ -86,7 +92,8 @@ class CrawlingPerformanceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration settings"""    # API security
+    """Security configuration settings"""
+    # API security
     api_key_encryption_key: str = os.getenv("API_ENCRYPTION_KEY", "")
     jwt_secret_key: str = os.getenv("JWT_SECRET_KEY", "")
     jwt_algorithm: str = "HS256"
@@ -115,7 +122,8 @@ class SecurityConfig:
 
 @dataclass 
 class PlatformAPIConfig:
-    """Platform API configuration and credentials"""    # Twitter API
+    """Platform API configuration and credentials"""
+    # Twitter API
     twitter_api_key: str = os.getenv("TWITTER_API_KEY", "")
     twitter_api_secret: str = os.getenv("TWITTER_API_SECRET", "")
     twitter_access_token: str = os.getenv("TWITTER_ACCESS_TOKEN", "")
@@ -157,7 +165,8 @@ class PlatformAPIConfig:
 
 @dataclass
 class AlertConfig:
-    """Alert and notification configuration"""    # Email settings
+    """Alert and notification configuration"""
+    # Email settings
     smtp_server: str = os.getenv("SMTP_SERVER", "smtp.gmail.com")
     smtp_port: int = int(os.getenv("SMTP_PORT", "587"))
     smtp_username: str = os.getenv("SMTP_USERNAME", "")
@@ -190,7 +199,8 @@ class AlertConfig:
 
 @dataclass
 class MLConfig:
-    """Machine Learning and AI configuration"""    # Model settings
+    """Machine Learning and AI configuration"""
+    # Model settings
     sentence_transformer_model: str = "all-MiniLM-L6-v2"
     similarity_model_path: str = "models/similarity/"
     embedding_dimension: int = 384
@@ -225,7 +235,8 @@ class MLConfig:
 
 @dataclass
 class MonitoringConfig:
-    """System monitoring and observability"""    # Metrics
+    """System monitoring and observability"""
+    # Metrics
     enable_prometheus: bool = True
     prometheus_port: int = 9090
     metrics_namespace: str = "crawling_agent"
@@ -254,7 +265,8 @@ class MonitoringConfig:
 
 @dataclass
 class StorageConfig:
-    """Storage configuration for content and metadata"""    # File storage
+    """Storage configuration for content and metadata"""
+    # File storage
     storage_backend: str = "s3"  # s3, gcs, azure, local
     storage_bucket: str = os.getenv("STORAGE_BUCKET", "ia-influencer-content")
     storage_region: str = os.getenv("STORAGE_REGION", "us-east-1")
@@ -275,7 +287,8 @@ class StorageConfig:
 
 @dataclass
 class CrawlingAgentConfig:
-    """Master configuration for crawling agent"""    environment: EnvironmentType = EnvironmentType.PRODUCTION
+    """Master configuration for crawling agent"""
+    environment: EnvironmentType = EnvironmentType.PRODUCTION
     debug_mode: bool = False
     
     # Component configurations
@@ -310,8 +323,10 @@ class CrawlingAgentConfig:
     enable_voice_cloning_detection: bool = False
 
 def load_config_from_environment() -> CrawlingAgentConfig:
-    """    Load configuration from environment variables with validation
-    """    config = CrawlingAgentConfig()
+    """
+    Load configuration from environment variables with validation
+    """
+    config = CrawlingAgentConfig()
     
     # Set environment type
     env_type = os.getenv("ENVIRONMENT", "production").lower()
@@ -331,8 +346,10 @@ def load_config_from_environment() -> CrawlingAgentConfig:
     return config
 
 def _validate_config(config: CrawlingAgentConfig) -> None:
-    """    Validate configuration for required settings and logical consistency
-    """    # Database validation
+    """
+    Validate configuration for required settings and logical consistency
+    """
+    # Database validation
     if not config.database.host or not config.database.database:
         raise ValueError("Database host and database name are required")
     
@@ -359,8 +376,10 @@ def _validate_config(config: CrawlingAgentConfig) -> None:
         logger.info(f"Configured APIs: {', '.join(required_apis)}")
 
 def get_config() -> CrawlingAgentConfig:
-    """    Get the global configuration instance
-    """    return load_config_from_environment()
+    """
+    Get the global configuration instance
+    """
+    return load_config_from_environment()
 
 # Pre-configured settings for different environments
 DEVELOPMENT_CONFIG = CrawlingAgentConfig(

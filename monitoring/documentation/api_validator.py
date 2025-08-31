@@ -1,6 +1,7 @@
 """API Documentation Coverage Validation System
 Ensures 100% API documentation coverage requirement
-"""import asyncio
+"""
+import asyncio
 import logging
 import ast
 import inspect
@@ -12,7 +13,8 @@ from datetime import datetime
 
 @dataclass
 class APIEndpoint:
-    """API endpoint information"""    path: str
+    """API endpoint information"""
+    path: str
     method: str
     function_name: str
     file_path: str
@@ -25,7 +27,8 @@ class APIEndpoint:
 
 @dataclass
 class DocumentationReport:
-    """API documentation coverage report"""    total_endpoints: int
+    """API documentation coverage report"""
+    total_endpoints: int
     documented_endpoints: int
     undocumented_endpoints: int
     coverage_percentage: float
@@ -35,9 +38,11 @@ class DocumentationReport:
     issues: List[str]
 
 class APIDocumentationValidator:
-    """    Validates API documentation coverage
+    """
+    Validates API documentation coverage
     Ensures 100% documentation coverage requirement
-    """    
+    """
+    
     def __init__(self, project_root: str = "/home/runner/work/Ainflue/Ainflue"):
         self.logger = logging.getLogger(__name__)
         self.project_root = Path(project_root)
@@ -74,7 +79,8 @@ class APIDocumentationValidator:
         }
         
     async def scan_api_documentation(self) -> DocumentationReport:
-        """Scan all API endpoints and validate documentation coverage"""        scan_start = datetime.now()
+        """Scan all API endpoints and validate documentation coverage"""
+        scan_start = datetime.now()
         self.logger.info("Starting API documentation coverage scan")
         
         # Find all API endpoints
@@ -127,7 +133,8 @@ class APIDocumentationValidator:
         return report
         
     async def _discover_api_endpoints(self) -> List[APIEndpoint]:
-        """Discover all API endpoints in the project"""        endpoints = []
+        """Discover all API endpoints in the project"""
+        endpoints = []
         
         # Search for Python files containing API endpoints
         for api_dir in self.api_directories:
@@ -145,7 +152,8 @@ class APIDocumentationValidator:
         return endpoints
         
     async def _scan_directory_for_endpoints(self, directory: Path) -> List[APIEndpoint]:
-        """Scan directory recursively for API endpoints"""        endpoints = []
+        """Scan directory recursively for API endpoints"""
+        endpoints = []
         
         for file_path in directory.rglob("*.py"):
             if file_path.name.startswith("test_"):
@@ -160,7 +168,8 @@ class APIDocumentationValidator:
         return endpoints
         
     async def _scan_file_for_endpoints(self, file_path: Path) -> List[APIEndpoint]:
-        """Scan individual file for API endpoints"""        endpoints = []
+        """Scan individual file for API endpoints"""
+        endpoints = []
         
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -182,7 +191,8 @@ class APIDocumentationValidator:
         
     async def _check_function_for_api_endpoint(self, func_node: ast.FunctionDef, 
                                               file_path: Path, file_content: str) -> Optional[APIEndpoint]:
-        """Check if function is an API endpoint"""        
+        """Check if function is an API endpoint"""
+        
         # Look for API decorators
         api_decorator_found = False
         method = "GET"  # Default
@@ -235,7 +245,8 @@ class APIDocumentationValidator:
         return endpoint
         
     def _has_openapi_schema(self, file_content: str, function_name: str) -> bool:
-        """Check if function has OpenAPI schema documentation"""        # Look for common OpenAPI patterns
+        """Check if function has OpenAPI schema documentation"""
+        # Look for common OpenAPI patterns
         openapi_patterns = [
             f"@{function_name}.responses",
             f"response_model=",
@@ -257,7 +268,8 @@ class APIDocumentationValidator:
         return False
         
     async def _validate_endpoint_documentation(self, endpoint: APIEndpoint):
-        """Validate documentation completeness for an endpoint"""        is_documented = True
+        """Validate documentation completeness for an endpoint"""
+        is_documented = True
         
         # Check docstring requirement
         if self.documentation_requirements['docstring_required'] and not endpoint.has_docstring:
@@ -290,7 +302,8 @@ class APIDocumentationValidator:
         endpoint.is_documented = is_documented
         
     async def get_compliance_status(self) -> Dict[str, Any]:
-        """Get current API documentation compliance status"""        report = await self.scan_api_documentation()
+        """Get current API documentation compliance status"""
+        report = await self.scan_api_documentation()
         
         return {
             'status': report.compliance_status,

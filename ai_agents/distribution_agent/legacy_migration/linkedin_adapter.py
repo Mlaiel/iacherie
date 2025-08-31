@@ -3,7 +3,8 @@ Handles professional content distribution, company pages, and B2B networking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
@@ -22,15 +23,18 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class LinkedInCredentials:
-    """LinkedIn API credentials configuration."""    client_id: str
+    """LinkedIn API credentials configuration."""
+    client_id: str
     client_secret: str
     access_token: str
     organization_id: Optional[str] = None
 
 class LinkedInAdapter(BasePlatformAdapter):
-    """    Advanced LinkedIn platform adapter for professional content distribution.
+    """
+    Advanced LinkedIn platform adapter for professional content distribution.
     Supports posts, articles, video content, and company page management.
-    """    
+    """
+    
     PLATFORM_NAME = "linkedin"
     API_VERSION = "v2"
     BASE_URL = f"https://api.linkedin.com/{API_VERSION}"
@@ -54,7 +58,8 @@ class LinkedInAdapter(BasePlatformAdapter):
         self._verify_credentials()
     
     def _verify_credentials(self):
-        """Verify LinkedIn API credentials."""        try:
+        """Verify LinkedIn API credentials."""
+        try:
             # Test API connection
             response = self.session.get(f"{self.BASE_URL}/me")
             
@@ -69,7 +74,8 @@ class LinkedInAdapter(BasePlatformAdapter):
             raise AuthenticationError(f"LinkedIn authentication failed: {e}")
     
     async def authenticate_user(self, user_id: str) -> Dict[str, Any]:
-        """Generate LinkedIn OAuth URL for user authentication."""        try:
+        """Generate LinkedIn OAuth URL for user authentication."""
+        try:
             auth_params = {
                 "response_type": "code",
                 "client_id": self.credentials.client_id,
@@ -93,7 +99,8 @@ class LinkedInAdapter(BasePlatformAdapter):
             raise AuthenticationError(f"Failed to authenticate user: {e}")
     
     async def validate_content(self, content_metadata: ContentMetadata) -> Dict[str, Any]:
-        """Validate content meets LinkedIn requirements."""        validation_results = {
+        """Validate content meets LinkedIn requirements."""
+        validation_results = {
             "is_valid": True,
             "errors": [],
             "warnings": []
@@ -155,7 +162,8 @@ class LinkedInAdapter(BasePlatformAdapter):
         return validation_results
     
     async def upload_content(self, distribution_request: DistributionRequest) -> DistributionResult:
-        """Upload content to LinkedIn profile or company page."""        try:
+        """Upload content to LinkedIn profile or company page."""
+        try:
             # Validate content first
             validation = await self.validate_content(distribution_request.content_metadata)
             if not validation["is_valid"]:
@@ -210,7 +218,8 @@ class LinkedInAdapter(BasePlatformAdapter):
             )
     
     async def _create_text_post(self, author_id: str, content_metadata: ContentMetadata) -> Dict:
-        """Create text-only post on LinkedIn."""        try:
+        """Create text-only post on LinkedIn."""
+        try:
             post_data = {
                 "author": author_id,
                 "lifecycleState": "PUBLISHED",
@@ -235,7 +244,8 @@ class LinkedInAdapter(BasePlatformAdapter):
             return {"error": str(e)}
     
     async def _create_image_post(self, author_id: str, file_path: str, content_metadata: ContentMetadata) -> Dict:
-        """Create image post on LinkedIn."""        try:
+        """Create image post on LinkedIn."""
+        try:
             # First, upload the image
             image_upload_result = await self._upload_image(author_id, file_path)
             if "error" in image_upload_result:
@@ -276,7 +286,8 @@ class LinkedInAdapter(BasePlatformAdapter):
             return {"error": str(e)}
     
     async def _create_video_post(self, author_id: str, file_path: str, content_metadata: ContentMetadata) -> Dict:
-        """Create video post on LinkedIn."""        try:
+        """Create video post on LinkedIn."""
+        try:
             # First, upload the video
             video_upload_result = await self._upload_video(author_id, file_path)
             if "error" in video_upload_result:
@@ -317,7 +328,8 @@ class LinkedInAdapter(BasePlatformAdapter):
             return {"error": str(e)}
     
     async def _create_article(self, author_id: str, content_metadata: ContentMetadata) -> Dict:
-        """Create long-form article on LinkedIn."""        try:
+        """Create long-form article on LinkedIn."""
+        try:
             article_data = {
                 "author": author_id,
                 "lifecycleState": "PUBLISHED",
@@ -343,7 +355,8 @@ class LinkedInAdapter(BasePlatformAdapter):
             return {"error": str(e)}
     
     def _prepare_post_text(self, content_metadata: ContentMetadata) -> str:
-        """Prepare optimized post text for LinkedIn."""        text_parts = []
+        """Prepare optimized post text for LinkedIn."""
+        text_parts = []
         
         if content_metadata.title:
             text_parts.append(content_metadata.title)
@@ -360,7 +373,8 @@ class LinkedInAdapter(BasePlatformAdapter):
         return "\n\n".join(text_parts)
     
     async def _upload_image(self, author_id: str, file_path: str) -> Dict:
-        """Upload image to LinkedIn."""        try:
+        """Upload image to LinkedIn."""
+        try:
             # Register upload
             register_data = {
                 "registerUploadRequest": {
@@ -396,7 +410,8 @@ class LinkedInAdapter(BasePlatformAdapter):
             return {"error": str(e)}
     
     async def _upload_video(self, author_id: str, file_path: str) -> Dict:
-        """Upload video to LinkedIn."""        try:
+        """Upload video to LinkedIn."""
+        try:
             # Register upload
             register_data = {
                 "registerUploadRequest": {
@@ -432,7 +447,8 @@ class LinkedInAdapter(BasePlatformAdapter):
             return {"error": str(e)}
     
     async def get_analytics(self, content_id: str, date_range: tuple = None) -> PlatformAnalytics:
-        """Retrieve analytics data for LinkedIn content."""        try:
+        """Retrieve analytics data for LinkedIn content."""
+        try:
             post_id = content_id.replace("linkedin_", "")
             
             # Get post statistics
@@ -478,7 +494,8 @@ class LinkedInAdapter(BasePlatformAdapter):
             raise DistributionError(f"Analytics retrieval failed: {e}")
     
     async def get_revenue_data(self, content_id: str, date_range: tuple = None) -> RevenueData:
-        """Estimate revenue from LinkedIn content (lead generation, sponsored content)."""        try:
+        """Estimate revenue from LinkedIn content (lead generation, sponsored content)."""
+        try:
             analytics = await self.get_analytics(content_id, date_range)
             
             # Estimate revenue based on professional engagement
@@ -513,7 +530,8 @@ class LinkedInAdapter(BasePlatformAdapter):
             raise DistributionError(f"Revenue calculation failed: {e}")
     
     async def update_content_metadata(self, content_id: str, metadata: Dict[str, Any]) -> bool:
-        """Update LinkedIn content metadata (very limited editing)."""        try:
+        """Update LinkedIn content metadata (very limited editing)."""
+        try:
             # LinkedIn has very limited post editing capabilities
             # Most content cannot be edited after publication
             logger.info(f"LinkedIn content update requested for {content_id}")
@@ -526,7 +544,8 @@ class LinkedInAdapter(BasePlatformAdapter):
             return False
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete LinkedIn post."""        try:
+        """Delete LinkedIn post."""
+        try:
             post_id = content_id.replace("linkedin_", "")
             
             response = self.session.delete(f"{self.BASE_URL}/ugcPosts/{post_id}")
@@ -543,7 +562,8 @@ class LinkedInAdapter(BasePlatformAdapter):
             return False
     
     def get_platform_limits(self) -> Dict[str, Any]:
-        """Return platform-specific limits and requirements."""        return {
+        """Return platform-specific limits and requirements."""
+        return {
             "max_post_length": self.MAX_POST_LENGTH,
             "max_article_length": self.MAX_ARTICLE_LENGTH,
             "max_image_size_mb": self.MAX_IMAGE_SIZE_MB,

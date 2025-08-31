@@ -24,7 +24,8 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Content upload → Security classification → Encryption → Access control → 
 Audit logging → Compliance verification → Threat detection → Incident response
-"""import logging
+"""
+import logging
 import asyncio
 import hashlib
 import hmac
@@ -51,7 +52,8 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(Enum):
-    """Security classification levels"""    PUBLIC = "public"  # No encryption required
+    """Security classification levels"""
+    PUBLIC = "public"  # No encryption required
     INTERNAL = "internal"  # Basic encryption
     CONFIDENTIAL = "confidential"  # Strong encryption
     RESTRICTED = "restricted"  # Maximum security
@@ -59,7 +61,8 @@ class SecurityLevel(Enum):
 
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms"""    AES_256_GCM = "aes-256-gcm"
+    """Supported encryption algorithms"""
+    AES_256_GCM = "aes-256-gcm"
     AES_256_CBC = "aes-256-cbc"
     CHACHA20_POLY1305 = "chacha20-poly1305"
     RSA_4096 = "rsa-4096"
@@ -67,7 +70,8 @@ class EncryptionAlgorithm(Enum):
 
 
 class AccessPermission(Enum):
-    """Access permission types"""    READ = "read"
+    """Access permission types"""
+    READ = "read"
     WRITE = "write"
     DELETE = "delete"
     ADMIN = "admin"
@@ -75,7 +79,8 @@ class AccessPermission(Enum):
 
 
 class ComplianceStandard(Enum):
-    """Compliance standards"""    GDPR = "gdpr"  # General Data Protection Regulation
+    """Compliance standards"""
+    GDPR = "gdpr"  # General Data Protection Regulation
     CCPA = "ccpa"  # California Consumer Privacy Act
     HIPAA = "hipaa"  # Health Insurance Portability and Accountability Act
     SOX = "sox"  # Sarbanes-Oxley Act
@@ -84,7 +89,8 @@ class ComplianceStandard(Enum):
 
 
 class ThreatLevel(Enum):
-    """Security threat levels"""    LOW = "low"
+    """Security threat levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -92,7 +98,8 @@ class ThreatLevel(Enum):
 
 @dataclass
 class SecurityPolicy:
-    """Security policy configuration"""    policy_name: str
+    """Security policy configuration"""
+    policy_name: str
     security_level: SecurityLevel
     encryption_algorithm: EncryptionAlgorithm
     key_rotation_days: int = 90
@@ -117,7 +124,8 @@ class SecurityPolicy:
 
 @dataclass
 class EncryptionKey:
-    """Encryption key metadata"""    key_id: str
+    """Encryption key metadata"""
+    key_id: str
     algorithm: EncryptionAlgorithm
     key_data: bytes
     created_at: datetime
@@ -137,7 +145,8 @@ class EncryptionKey:
 
 @dataclass
 class AccessToken:
-    """Secure access token"""    token_id: str
+    """Secure access token"""
+    token_id: str
     user_id: str
     permissions: List[AccessPermission]
     issued_at: datetime
@@ -153,12 +162,14 @@ class AccessToken:
     last_used: Optional[datetime] = None
     
     def is_valid(self) -> bool:
-        """Check if token is still valid"""        return datetime.now() < self.expires_at and self.usage_count < 1000
+        """Check if token is still valid"""
+        return datetime.now() < self.expires_at and self.usage_count < 1000
 
 
 @dataclass
 class SecurityAuditEvent:
-    """Security audit event"""    event_id: str
+    """Security audit event"""
+    event_id: str
     event_type: str
     user_id: Optional[str]
     resource: str
@@ -182,7 +193,8 @@ class SecurityAuditEvent:
 
 @dataclass
 class SecurityMetrics:
-    """Security metrics and statistics"""    total_encrypted_files: int = 0
+    """Security metrics and statistics"""
+    total_encrypted_files: int = 0
     total_access_attempts: int = 0
     successful_authentications: int = 0
     failed_authentications: int = 0
@@ -206,7 +218,8 @@ class SecurityMetrics:
 
 
 class StorageSecurityManager:
-    """    🎯 Industrial Storage Security Manager - IA-Influencer-Agent
+    """
+    🎯 Industrial Storage Security Manager - IA-Influencer-Agent
     
     Enterprise-grade storage security management providing:
     - Advanced encryption with multiple algorithms and key management
@@ -217,7 +230,8 @@ class StorageSecurityManager:
     - Multi-standard compliance (GDPR, CCPA, HIPAA, SOX)
     - Zero-trust security architecture
     - Automated security monitoring and alerting
-    """    
+    """
+    
     def __init__(self, default_policy: Optional[SecurityPolicy] = None):
         self.policies: Dict[str, SecurityPolicy] = {}
         self.encryption_keys: Dict[str, EncryptionKey] = {}
@@ -246,7 +260,8 @@ class StorageSecurityManager:
         logger.info("🔐 StorageSecurityManager initialized with enterprise security")
     
     def _create_default_security_policy(self) -> SecurityPolicy:
-        """Create default security policy"""        return SecurityPolicy(
+        """Create default security policy"""
+        return SecurityPolicy(
             policy_name="default_ia_influencer",
             security_level=SecurityLevel.CONFIDENTIAL,
             encryption_algorithm=EncryptionAlgorithm.AES_256_GCM,
@@ -259,7 +274,8 @@ class StorageSecurityManager:
         )
     
     def _initialize_master_key(self):
-        """Initialize master encryption key"""        try:
+        """Initialize master encryption key"""
+        try:
             # In production, this would load from secure key management system
             master_key_env = os.getenv("STORAGE_MASTER_KEY")
             
@@ -277,7 +293,8 @@ class StorageSecurityManager:
             raise
     
     async def classify_data_security(self, content: bytes, metadata: Dict[str, Any]) -> SecurityLevel:
-        """Classify data based on content and metadata for appropriate security level"""        try:
+        """Classify data based on content and metadata for appropriate security level"""
+        try:
             # Content-based classification
             content_str = content.decode('utf-8', errors='ignore').lower()
             
@@ -322,7 +339,8 @@ class StorageSecurityManager:
     
     async def encrypt_data(self, data: bytes, security_level: SecurityLevel, 
                           user_id: str, metadata: Optional[Dict] = None) -> Dict[str, Any]:
-        """Encrypt data with appropriate algorithm based on security level"""        try:
+        """Encrypt data with appropriate algorithm based on security level"""
+        try:
             start_time = datetime.now()
             
             # Get appropriate policy
@@ -409,7 +427,8 @@ class StorageSecurityManager:
     
     async def decrypt_data(self, encrypted_data_info: Dict[str, Any], user_id: str, 
                           access_token: str) -> bytes:
-        """Decrypt data with access control verification"""        try:
+        """Decrypt data with access control verification"""
+        try:
             start_time = datetime.now()
             
             # Verify access token
@@ -485,7 +504,8 @@ class StorageSecurityManager:
             raise
     
     def _encrypt_aes_gcm(self, data: bytes, key: bytes) -> Tuple[bytes, bytes, bytes]:
-        """Encrypt data using AES-256-GCM"""        nonce = secrets.token_bytes(12)  # 96-bit nonce for GCM
+        """Encrypt data using AES-256-GCM"""
+        nonce = secrets.token_bytes(12)  # 96-bit nonce for GCM
         cipher = Cipher(algorithms.AES(key), modes.GCM(nonce))
         encryptor = cipher.encryptor()
         
@@ -493,13 +513,15 @@ class StorageSecurityManager:
         return ciphertext, nonce, encryptor.tag
     
     def _decrypt_aes_gcm(self, ciphertext: bytes, key: bytes, nonce: bytes, tag: bytes) -> bytes:
-        """Decrypt data using AES-256-GCM"""        cipher = Cipher(algorithms.AES(key), modes.GCM(nonce, tag))
+        """Decrypt data using AES-256-GCM"""
+        cipher = Cipher(algorithms.AES(key), modes.GCM(nonce, tag))
         decryptor = cipher.decryptor()
         
         return decryptor.update(ciphertext) + decryptor.finalize()
     
     def _encrypt_chacha20_poly1305(self, data: bytes, key: bytes) -> Tuple[bytes, bytes]:
-        """Encrypt data using ChaCha20-Poly1305"""        nonce = secrets.token_bytes(12)
+        """Encrypt data using ChaCha20-Poly1305"""
+        nonce = secrets.token_bytes(12)
         cipher = Cipher(algorithms.ChaCha20(key, nonce), modes=None)
         encryptor = cipher.encryptor()
         
@@ -507,14 +529,16 @@ class StorageSecurityManager:
         return ciphertext, nonce
     
     def _decrypt_chacha20_poly1305(self, ciphertext: bytes, key: bytes, nonce: bytes) -> bytes:
-        """Decrypt data using ChaCha20-Poly1305"""        cipher = Cipher(algorithms.ChaCha20(key, nonce), modes=None)
+        """Decrypt data using ChaCha20-Poly1305"""
+        cipher = Cipher(algorithms.ChaCha20(key, nonce), modes=None)
         decryptor = cipher.decryptor()
         
         return decryptor.update(ciphertext) + decryptor.finalize()
     
     async def _get_encryption_key(self, security_level: SecurityLevel, 
                                  algorithm: EncryptionAlgorithm) -> EncryptionKey:
-        """Get or generate encryption key for given security level and algorithm"""        try:
+        """Get or generate encryption key for given security level and algorithm"""
+        try:
             # Look for existing active key
             key_id = f"{security_level.value}_{algorithm.value}_v1"
             
@@ -554,7 +578,8 @@ class StorageSecurityManager:
             raise
     
     def _get_policy_for_security_level(self, security_level: SecurityLevel) -> SecurityPolicy:
-        """Get security policy for given security level"""        # Look for specific policy first
+        """Get security policy for given security level"""
+        # Look for specific policy first
         policy_name = f"policy_{security_level.value}"
         if policy_name in self.policies:
             return self.policies[policy_name]
@@ -565,7 +590,8 @@ class StorageSecurityManager:
     async def create_access_token(self, user_id: str, permissions: List[AccessPermission], 
                                  ip_address: Optional[str] = None, user_agent: Optional[str] = None,
                                  duration_hours: int = 24) -> str:
-        """Create secure access token with specified permissions"""        try:
+        """Create secure access token with specified permissions"""
+        try:
             token_id = secrets.token_urlsafe(32)
             session_id = secrets.token_urlsafe(16)
             
@@ -619,7 +645,8 @@ class StorageSecurityManager:
             raise
     
     async def _verify_access_token(self, jwt_token: str, user_id: str) -> bool:
-        """Verify access token validity and permissions"""        try:
+        """Verify access token validity and permissions"""
+        try:
             # Decode JWT
             payload = jwt.decode(jwt_token, self._master_key, algorithms=["HS256"])
             
@@ -661,7 +688,8 @@ class StorageSecurityManager:
             return False
     
     async def rotate_encryption_keys(self, security_level: Optional[SecurityLevel] = None) -> Dict[str, Any]:
-        """Rotate encryption keys for security"""        try:
+        """Rotate encryption keys for security"""
+        try:
             logger.info("🔄 Starting encryption key rotation...")
             
             rotation_results = []
@@ -758,7 +786,8 @@ class StorageSecurityManager:
                               source_ip: Optional[str] = None, user_agent: Optional[str] = None,
                               threat_level: ThreatLevel = ThreatLevel.LOW, suspicious: bool = False,
                               metadata: Optional[Dict[str, Any]] = None):
-        """Log security audit event"""        try:
+        """Log security audit event"""
+        try:
             event_id = secrets.token_urlsafe(16)
             
             audit_event = SecurityAuditEvent(
@@ -792,7 +821,8 @@ class StorageSecurityManager:
             logger.error(f"❌ Audit logging failed: {e}")
     
     async def _analyze_suspicious_activity(self, event: SecurityAuditEvent):
-        """Analyze event for suspicious activity patterns"""        try:
+        """Analyze event for suspicious activity patterns"""
+        try:
             if not event.user_id:
                 return
             
@@ -855,7 +885,8 @@ class StorageSecurityManager:
     
     async def generate_compliance_report(self, standard: ComplianceStandard, 
                                         start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Generate compliance report for specified standard and time period"""        try:
+        """Generate compliance report for specified standard and time period"""
+        try:
             logger.info(f"📋 Generating {standard.value.upper()} compliance report...")
             
             # Filter audit events for time period
@@ -922,7 +953,8 @@ class StorageSecurityManager:
             return {"error": str(e)}
     
     async def _generate_gdpr_compliance(self, events: List[SecurityAuditEvent]) -> Dict[str, Any]:
-        """Generate GDPR-specific compliance status"""        try:
+        """Generate GDPR-specific compliance status"""
+        try:
             # GDPR Article 32 - Security of processing
             security_measures = {
                 "encryption_at_rest": True,
@@ -961,7 +993,8 @@ class StorageSecurityManager:
             return {"overall_score": 0, "error": str(e)}
     
     async def _generate_ccpa_compliance(self, events: List[SecurityAuditEvent]) -> Dict[str, Any]:
-        """Generate CCPA-specific compliance status"""        try:
+        """Generate CCPA-specific compliance status"""
+        try:
             # CCPA requirements
             ccpa_requirements = {
                 "consumer_notice": True,
@@ -987,7 +1020,8 @@ class StorageSecurityManager:
             return {"overall_score": 0, "error": str(e)}
     
     async def _generate_hipaa_compliance(self, events: List[SecurityAuditEvent]) -> Dict[str, Any]:
-        """Generate HIPAA-specific compliance status"""        try:
+        """Generate HIPAA-specific compliance status"""
+        try:
             # HIPAA Security Rule requirements
             security_requirements = {
                 "access_control": True,
@@ -1012,7 +1046,8 @@ class StorageSecurityManager:
             return {"overall_score": 0, "error": str(e)}
     
     async def _generate_sox_compliance(self, events: List[SecurityAuditEvent]) -> Dict[str, Any]:
-        """Generate SOX-specific compliance status"""        try:
+        """Generate SOX-specific compliance status"""
+        try:
             # SOX Section 404 - Internal controls
             internal_controls = {
                 "financial_data_integrity": True,
@@ -1037,7 +1072,8 @@ class StorageSecurityManager:
             return {"overall_score": 0, "error": str(e)}
     
     async def _generate_iso27001_compliance(self, events: List[SecurityAuditEvent]) -> Dict[str, Any]:
-        """Generate ISO 27001-specific compliance status"""        try:
+        """Generate ISO 27001-specific compliance status"""
+        try:
             # ISO 27001 Annex A controls
             security_controls = {
                 "information_security_policies": True,
@@ -1072,7 +1108,8 @@ class StorageSecurityManager:
     
     async def _generate_compliance_recommendations(self, standard: ComplianceStandard, 
                                                   events: List[SecurityAuditEvent]) -> List[str]:
-        """Generate compliance recommendations"""        try:
+        """Generate compliance recommendations"""
+        try:
             recommendations = []
             
             # Analyze failed events for patterns
@@ -1117,7 +1154,8 @@ class StorageSecurityManager:
             return []
     
     async def get_security_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive security metrics"""        try:
+        """Get comprehensive security metrics"""
+        try:
             # Update metrics
             self.metrics.last_updated = datetime.now()
             
@@ -1182,11 +1220,13 @@ security_manager = StorageSecurityManager()
 
 # Factory Functions
 def create_security_manager(custom_policy: Optional[SecurityPolicy] = None) -> StorageSecurityManager:
-    """Factory function to create security manager instance"""    return StorageSecurityManager(custom_policy)
+    """Factory function to create security manager instance"""
+    return StorageSecurityManager(custom_policy)
 
 
 def create_high_security_policy() -> SecurityPolicy:
-    """Create high-security policy for sensitive data"""    return SecurityPolicy(
+    """Create high-security policy for sensitive data"""
+    return SecurityPolicy(
         policy_name="high_security_ia_influencer",
         security_level=SecurityLevel.RESTRICTED,
         encryption_algorithm=EncryptionAlgorithm.AES_256_GCM,
@@ -1208,7 +1248,8 @@ def create_high_security_policy() -> SecurityPolicy:
 
 # Usage Example
 async def main():
-    """Example usage of StorageSecurityManager"""    try:
+    """Example usage of StorageSecurityManager"""
+    try:
         # Create security manager with high-security policy
         security_mgr = create_security_manager(create_high_security_policy())
         

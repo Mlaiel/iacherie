@@ -6,7 +6,8 @@ and classifying entities in text with high precision and comprehensive coverage.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
@@ -37,7 +38,8 @@ from .config import NLPAgentConfig, default_config
 logger = logging.getLogger(__name__)
 
 class EntityType(Enum):
-    """Standard entity types"""    PERSON = "PERSON"
+    """Standard entity types"""
+    PERSON = "PERSON"
     ORGANIZATION = "ORG"
     LOCATION = "LOC"
     MISC = "MISC"
@@ -55,7 +57,8 @@ class EntityType(Enum):
     WORK_OF_ART = "WORK_OF_ART"
 
 class EntityCategory(Enum):
-    """High-level entity categories"""    PEOPLE = "people"
+    """High-level entity categories"""
+    PEOPLE = "people"
     ORGANIZATIONS = "organizations"
     PLACES = "places"
     TEMPORAL = "temporal"
@@ -65,7 +68,8 @@ class EntityCategory(Enum):
 
 @dataclass
 class Entity:
-    """Individual entity with detailed information"""    text: str
+    """Individual entity with detailed information"""
+    text: str
     label: str
     start: int
     end: int
@@ -80,7 +84,8 @@ class Entity:
 
 @dataclass
 class EntityCluster:
-    """Cluster of related entities"""    entities: List[Entity]
+    """Cluster of related entities"""
+    entities: List[Entity]
     cluster_type: str
     representative: Entity
     confidence: float
@@ -88,7 +93,8 @@ class EntityCluster:
 
 @dataclass
 class ExtractionResult:
-    """Complete entity extraction result"""    text: str
+    """Complete entity extraction result"""
+    text: str
     entities: List[Entity] = field(default_factory=list)
     entity_clusters: List[EntityCluster] = field(default_factory=list)
     entity_counts: Dict[str, int] = field(default_factory=dict)
@@ -102,11 +108,14 @@ class ExtractionResult:
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
 
 class EntityExtractor:
-    """    Advanced AI-powered named entity recognition and extraction system for identifying
+    """
+    Advanced AI-powered named entity recognition and extraction system for identifying
     and classifying entities in text content with comprehensive analysis.
-    """    
+    """
+    
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize Entity Extractor"""        self.config = config or default_config
+        """Initialize Entity Extractor"""
+        self.config = config or default_config
         self.models = {}
         self.pipelines = {}
         self.nlp = None
@@ -116,7 +125,8 @@ class EntityExtractor:
         self._initialize_models()
     
     def _load_entity_patterns(self) -> Dict[str, List[str]]:
-        """Load regex patterns for entity recognition"""        return {
+        """Load regex patterns for entity recognition"""
+        return {
             "email": [
                 r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
             ],
@@ -160,7 +170,8 @@ class EntityExtractor:
         }
     
     def _load_entity_mappings(self) -> Dict[str, str]:
-        """Load entity type to category mappings"""        return {
+        """Load entity type to category mappings"""
+        return {
             "PERSON": "people",
             "PER": "people",
             "ORG": "organizations",
@@ -187,7 +198,8 @@ class EntityExtractor:
         }
     
     def _initialize_models(self):
-        """Initialize entity extraction models"""        try:
+        """Initialize entity extraction models"""
+        try:
             # Initialize spaCy if available
             if SPACY_AVAILABLE:
                 try:
@@ -232,12 +244,14 @@ class EntityExtractor:
             self._setup_fallback_methods()
     
     def _setup_fallback_methods(self):
-        """Setup fallback methods for entity extraction"""        logger.info("Setting up entity extraction fallback methods")
+        """Setup fallback methods for entity extraction"""
+        logger.info("Setting up entity extraction fallback methods")
         self.fallback_mode = True
         self._compile_patterns()
     
     def _compile_patterns(self):
-        """Compile regex patterns for better performance"""        self.compiled_patterns = {}
+        """Compile regex patterns for better performance"""
+        self.compiled_patterns = {}
         for entity_type, patterns in self.entity_patterns.items():
             self.compiled_patterns[entity_type] = [
                 re.compile(pattern, re.IGNORECASE)
@@ -245,7 +259,8 @@ class EntityExtractor:
             ]
     
     def _get_device(self) -> int:
-        """Get optimal device for model execution"""        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
+        """Get optimal device for model execution"""
+        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
             try:
                 if torch.cuda.is_available():
                     return 0  # Use first GPU
@@ -261,7 +276,8 @@ class EntityExtractor:
         merge_overlapping: bool = True,
         cluster_entities: bool = True
     ) -> Union[ExtractionResult, List[ExtractionResult]]:
-        """        Extract entities from text
+        """
+        Extract entities from text
         
         Args:
             text: Text or list of texts to analyze
@@ -272,7 +288,8 @@ class EntityExtractor:
         
         Returns:
             ExtractionResult or list of results
-        """        start_time = asyncio.get_event_loop().time()
+        """
+        start_time = asyncio.get_event_loop().time()
         
         # Handle batch processing
         is_batch = isinstance(text, list)
@@ -310,7 +327,8 @@ class EntityExtractor:
         merge_overlapping: bool,
         cluster_entities: bool
     ) -> ExtractionResult:
-        """Extract entities from a single text"""        if not text or not isinstance(text, str):
+        """Extract entities from a single text"""
+        if not text or not isinstance(text, str):
             raise ValueError("Input text must be a non-empty string")
         
         result = ExtractionResult(text=text)
@@ -369,7 +387,8 @@ class EntityExtractor:
         text: str,
         entity_types: Optional[List[str]]
     ) -> List[Entity]:
-        """Extract entities using spaCy"""        entities = []
+        """Extract entities using spaCy"""
+        entities = []
         
         try:
             doc = self.nlp(text)
@@ -403,7 +422,8 @@ class EntityExtractor:
         text: str,
         entity_types: Optional[List[str]]
     ) -> List[Entity]:
-        """Extract entities using transformer models"""        entities = []
+        """Extract entities using transformer models"""
+        entities = []
         
         try:
             # Use primary NER pipeline
@@ -474,7 +494,8 @@ class EntityExtractor:
         text: str,
         entity_types: Optional[List[str]]
     ) -> List[Entity]:
-        """Extract entities using regex patterns"""        entities = []
+        """Extract entities using regex patterns"""
+        entities = []
         
         try:
             for entity_type, patterns in self.compiled_patterns.items():
@@ -505,7 +526,8 @@ class EntityExtractor:
         return entities
     
     def _merge_overlapping_entities(self, entities: List[Entity]) -> List[Entity]:
-        """Merge overlapping entities, keeping the one with higher confidence"""        if not entities:
+        """Merge overlapping entities, keeping the one with higher confidence"""
+        if not entities:
             return entities
         
         # Sort by start position
@@ -529,7 +551,8 @@ class EntityExtractor:
         return merged
     
     async def _calculate_statistics(self, result: ExtractionResult):
-        """Calculate entity statistics"""        entities = result.entities
+        """Calculate entity statistics"""
+        entities = result.entities
         
         if not entities:
             return
@@ -556,7 +579,8 @@ class EntityExtractor:
             result.dominant_category = max(category_counts, key=category_counts.get)
     
     async def _cluster_entities(self, entities: List[Entity]) -> List[EntityCluster]:
-        """Cluster related entities"""        clusters = []
+        """Cluster related entities"""
+        clusters = []
         
         try:
             # Group entities by category
@@ -592,7 +616,8 @@ class EntityExtractor:
         entities: List[Entity],
         text: str
     ) -> List[Dict[str, Any]]:
-        """Find relationships between entities"""        relationships = []
+        """Find relationships between entities"""
+        relationships = []
         
         try:
             # Simple co-occurrence based relationships
@@ -618,7 +643,8 @@ class EntityExtractor:
         return relationships
     
     def _get_extraction_methods(self) -> List[str]:
-        """Get list of available extraction methods"""        methods = []
+        """Get list of available extraction methods"""
+        methods = []
         
         if SPACY_AVAILABLE and self.nlp:
             methods.append("spacy")
@@ -635,7 +661,8 @@ class EntityExtractor:
         entity_text: str,
         context: str = ""
     ) -> Dict[str, Any]:
-        """Get detailed information about a specific entity"""        # This could be expanded to query external knowledge bases
+        """Get detailed information about a specific entity"""
+        # This could be expanded to query external knowledge bases
         details = {
             "text": entity_text,
             "canonical_form": entity_text.lower(),
@@ -657,7 +684,8 @@ class EntityExtractor:
         text: str,
         entity_type: str
     ) -> List[Entity]:
-        """Extract entities of a specific type"""        result = await self.extract_entities(text, entity_types=[entity_type])
+        """Extract entities of a specific type"""
+        result = await self.extract_entities(text, entity_types=[entity_type])
         return [e for e in result.entities if e.label == entity_type]
     
     async def find_entity_mentions(
@@ -666,7 +694,8 @@ class EntityExtractor:
         entity_text: str,
         fuzzy_match: bool = True
     ) -> List[Entity]:
-        """Find all mentions of a specific entity in text"""        mentions = []
+        """Find all mentions of a specific entity in text"""
+        mentions = []
         
         # Extract all entities first
         result = await self.extract_entities(text)
@@ -683,12 +712,14 @@ class EntityExtractor:
         return mentions
     
     def get_supported_entity_types(self) -> List[str]:
-        """Get list of supported entity types"""        types = list(EntityType.__members__.keys())
+        """Get list of supported entity types"""
+        types = list(EntityType.__members__.keys())
         types.extend(self.entity_patterns.keys())
         return sorted(set(types))
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""        status = {
+        """Perform health check"""
+        status = {
             "status": "healthy",
             "spacy_available": SPACY_AVAILABLE and self.nlp is not None,
             "transformers_available": TRANSFORMERS_AVAILABLE,
@@ -711,7 +742,8 @@ class EntityExtractor:
         return status
     
     def shutdown(self):
-        """Shutdown the entity extractor"""        logger.info("Shutting down Entity Extractor")
+        """Shutdown the entity extractor"""
+        logger.info("Shutting down Entity Extractor")
         
         # Clear models
         self.models.clear()
@@ -729,7 +761,8 @@ class EntityExtractor:
 
 # Utility functions
 def calculate_entity_overlap(entity1: Entity, entity2: Entity) -> float:
-    """Calculate overlap between two entities"""    if entity1.end <= entity2.start or entity2.end <= entity1.start:
+    """Calculate overlap between two entities"""
+    if entity1.end <= entity2.start or entity2.end <= entity1.start:
         return 0.0  # No overlap
     
     overlap_start = max(entity1.start, entity2.start)
@@ -741,7 +774,8 @@ def calculate_entity_overlap(entity1: Entity, entity2: Entity) -> float:
     return overlap_length / total_length if total_length > 0 else 0.0
 
 def merge_entity_results(results: List[ExtractionResult]) -> ExtractionResult:
-    """Merge multiple extraction results"""    if not results:
+    """Merge multiple extraction results"""
+    if not results:
         return ExtractionResult(text="")
     
     merged_text = " ".join(result.text for result in results)

@@ -6,7 +6,8 @@ du contenu multimédia dans la plateforme IA Influencer Agent.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Database Architect, ORM Specialist, Content Management Expert
 Copyright: Fahed Mlaiel - All rights reserved
-"""from typing import Dict, List, Any, Optional, Union, Tuple
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
@@ -27,7 +28,8 @@ Base = declarative_base()
 
 # Content classification enums
 class ContentStatus(Enum):
-    """Content processing and publication status"""    UPLOADED = "uploaded"
+    """Content processing and publication status"""
+    UPLOADED = "uploaded"
     PROCESSING = "processing"
     PROCESSED = "processed"
     APPROVED = "approved"
@@ -38,7 +40,8 @@ class ContentStatus(Enum):
     REJECTED = "rejected"
 
 class ContentType(Enum):
-    """Primary content type categories"""    AUDIO = "audio"
+    """Primary content type categories"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -47,7 +50,8 @@ class ContentType(Enum):
     ARCHIVE = "archive"
 
 class ContentFormat(Enum):
-    """Specific content format subcategories"""    # Audio formats
+    """Specific content format subcategories"""
+    # Audio formats
     AUDIO_MP3 = "audio/mp3"
     AUDIO_WAV = "audio/wav"
     AUDIO_FLAC = "audio/flac"
@@ -76,14 +80,16 @@ class ContentFormat(Enum):
     TEXT_DOCX = "application/docx"
 
 class ProtectionLevel(Enum):
-    """Content protection and security levels"""    PUBLIC = "public"
+    """Content protection and security levels"""
+    PUBLIC = "public"
     PROTECTED = "protected"
     PRIVATE = "private"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
 
 class QualityLevel(Enum):
-    """Content quality assessment levels"""    UNKNOWN = "unknown"
+    """Content quality assessment levels"""
+    UNKNOWN = "unknown"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -91,7 +97,8 @@ class QualityLevel(Enum):
     BROADCAST = "broadcast"
 
 class ContentOrigin(Enum):
-    """Content origin and source classification"""    USER_UPLOAD = "user_upload"
+    """Content origin and source classification"""
+    USER_UPLOAD = "user_upload"
     AI_GENERATED = "ai_generated"
     IMPORTED = "imported"
     COLLABORATION = "collaboration"
@@ -100,7 +107,8 @@ class ContentOrigin(Enum):
     ORIGINAL = "original"
 
 class ProcessingStatus(Enum):
-    """Content processing pipeline status"""    PENDING = "pending"
+    """Content processing pipeline status"""
+    PENDING = "pending"
     IN_QUEUE = "in_queue"
     ANALYZING = "analyzing"
     FINGERPRINTING = "fingerprinting"
@@ -112,7 +120,8 @@ class ProcessingStatus(Enum):
     RETRY = "retry"
 
 class MonetizationStatus(Enum):
-    """Content monetization status"""    DISABLED = "disabled"
+    """Content monetization status"""
+    DISABLED = "disabled"
     ENABLED = "enabled"
     UNDER_REVIEW = "under_review"
     APPROVED = "approved"
@@ -121,7 +130,8 @@ class MonetizationStatus(Enum):
     EARNING = "earning"
 
 class DistributionStatus(Enum):
-    """Content distribution status across platforms"""    NOT_DISTRIBUTED = "not_distributed"
+    """Content distribution status across platforms"""
+    NOT_DISTRIBUTED = "not_distributed"
     PENDING_DISTRIBUTION = "pending_distribution"
     DISTRIBUTED = "distributed"
     DISTRIBUTION_FAILED = "distribution_failed"
@@ -164,7 +174,8 @@ content_relationships_association = Table(
 )
 
 class ContentTagsLookup(Base):
-    """Lookup table for content tags"""    __tablename__ = 'content_tags_lookup'
+    """Lookup table for content tags"""
+    __tablename__ = 'content_tags_lookup'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String(100), nullable=False, unique=True)
@@ -182,7 +193,8 @@ class ContentTagsLookup(Base):
     )
 
 class ContentCategoriesLookup(Base):
-    """Lookup table for content categories"""    __tablename__ = 'content_categories_lookup'
+    """Lookup table for content categories"""
+    __tablename__ = 'content_categories_lookup'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String(100), nullable=False, unique=True)
@@ -204,7 +216,8 @@ class ContentCategoriesLookup(Base):
     )
 
 class ContentSource(Base):
-    """Content source and origin tracking"""    __tablename__ = 'content_sources'
+    """Content source and origin tracking"""
+    __tablename__ = 'content_sources'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String(200), nullable=False)
@@ -228,7 +241,8 @@ class ContentSource(Base):
     )
 
 class ContentMetadata(Base):
-    """Extended metadata for content items"""    __tablename__ = 'content_metadata'
+    """Extended metadata for content items"""
+    __tablename__ = 'content_metadata'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), ForeignKey('contents.id'), nullable=False, unique=True)
@@ -318,7 +332,8 @@ class ContentMetadata(Base):
     )
 
 class ContentFingerprint(Base):
-    """Content fingerprinting for duplicate detection and protection"""    __tablename__ = 'content_fingerprints'
+    """Content fingerprinting for duplicate detection and protection"""
+    __tablename__ = 'content_fingerprints'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), ForeignKey('contents.id'), nullable=False, unique=True)
@@ -379,7 +394,8 @@ class ContentFingerprint(Base):
     )
 
 class ContentProcessingJob(Base):
-    """Track content processing jobs and their status"""    __tablename__ = 'content_processing_jobs'
+    """Track content processing jobs and their status"""
+    __tablename__ = 'content_processing_jobs'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), ForeignKey('contents.id'), nullable=False)
@@ -430,7 +446,8 @@ class ContentProcessingJob(Base):
     )
 
 class ContentVersionHistory(Base):
-    """Track content version history and changes"""    __tablename__ = 'content_version_history'
+    """Track content version history and changes"""
+    __tablename__ = 'content_version_history'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), ForeignKey('contents.id'), nullable=False)
@@ -474,7 +491,8 @@ class ContentVersionHistory(Base):
     )
 
 class Content(Base):
-    """Main content table with comprehensive content management"""    __tablename__ = 'contents'
+    """Main content table with comprehensive content management"""
+    __tablename__ = 'contents'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -578,19 +596,23 @@ class Content(Base):
     # Hybrid properties for computed fields
     @hybrid_property
     def file_size_mb(self):
-        """File size in megabytes"""        return self.file_size_bytes / (1024 * 1024) if self.file_size_bytes else 0
+        """File size in megabytes"""
+        return self.file_size_bytes / (1024 * 1024) if self.file_size_bytes else 0
     
     @hybrid_property
     def processing_duration_seconds(self):
-        """Processing duration in seconds"""        return self.processing_duration_ms / 1000 if self.processing_duration_ms else 0
+        """Processing duration in seconds"""
+        return self.processing_duration_ms / 1000 if self.processing_duration_ms else 0
     
     @hybrid_property
     def is_multimedia(self):
-        """Check if content is multimedia type"""        return self.content_type == ContentType.MULTIMEDIA
+        """Check if content is multimedia type"""
+        return self.content_type == ContentType.MULTIMEDIA
     
     @hybrid_property
     def is_deleted(self):
-        """Check if content is soft-deleted"""        return self.deleted_at is not None
+        """Check if content is soft-deleted"""
+        return self.deleted_at is not None
     
     # Comprehensive indexes for performance
     __table_args__ = (
@@ -648,14 +670,17 @@ class Content(Base):
 
 # Database utility functions and models
 class ContentDatabaseManager:
-    """Utility class for content database operations"""    
+    """Utility class for content database operations"""
+    
     @staticmethod
     def create_tables(engine):
-        """Create all content-related tables"""        Base.metadata.create_all(engine)
+        """Create all content-related tables"""
+        Base.metadata.create_all(engine)
     
     @staticmethod
     def get_content_stats(session) -> Dict[str, Any]:
-        """Get comprehensive content statistics"""        from sqlalchemy import func, distinct
+        """Get comprehensive content statistics"""
+        from sqlalchemy import func, distinct
         
         stats = {}
         
@@ -693,7 +718,8 @@ class ContentDatabaseManager:
     
     @staticmethod
     def cleanup_orphaned_records(session) -> Dict[str, int]:
-        """Clean up orphaned records and return cleanup statistics"""        cleanup_stats = {}
+        """Clean up orphaned records and return cleanup statistics"""
+        cleanup_stats = {}
         
         # Remove orphaned metadata
         orphaned_metadata = session.query(ContentMetadata).filter(

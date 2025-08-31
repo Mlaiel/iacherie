@@ -5,7 +5,8 @@ Real-time monitoring and health checking for all platform integrations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any, Callable, Awaitable
 from datetime import datetime, timedelta
@@ -21,14 +22,16 @@ logger = logging.getLogger(__name__)
 
 
 class MonitorSeverity(Enum):
-    """Monitor alert severity levels"""    INFO = "info"
+    """Monitor alert severity levels"""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 
 class MonitorStatus(Enum):
-    """Platform monitor status"""    HEALTHY = "healthy"
+    """Platform monitor status"""
+    HEALTHY = "healthy"
     DEGRADED = "degraded"
     DOWN = "down"
     UNKNOWN = "unknown"
@@ -36,7 +39,8 @@ class MonitorStatus(Enum):
 
 @dataclass
 class HealthCheckResult:
-    """Result of a platform health check"""    platform_id: str
+    """Result of a platform health check"""
+    platform_id: str
     status: MonitorStatus
     response_time_ms: float
     timestamp: datetime
@@ -44,7 +48,8 @@ class HealthCheckResult:
     metadata: Dict[str, Any] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        result = asdict(self)
+        """Convert to dictionary"""
+        result = asdict(self)
         result['status'] = self.status.value
         result['timestamp'] = self.timestamp.isoformat()
         return result
@@ -52,7 +57,8 @@ class HealthCheckResult:
 
 @dataclass
 class MonitorAlert:
-    """Platform monitoring alert"""    platform_id: str
+    """Platform monitoring alert"""
+    platform_id: str
     severity: MonitorSeverity
     message: str
     timestamp: datetime
@@ -61,7 +67,8 @@ class MonitorAlert:
     resolved_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        result = asdict(self)
+        """Convert to dictionary"""
+        result = asdict(self)
         result['severity'] = self.severity.value
         result['timestamp'] = self.timestamp.isoformat()
         if self.resolved_at:
@@ -70,14 +77,17 @@ class MonitorAlert:
 
 
 class PlatformMonitor:
-    """Monitor platform health and performance"""    
+    """Monitor platform health and performance"""
+    
     def __init__(self, check_interval: int = 60, alert_threshold: int = 3):
-        """        Initialize platform monitor
+        """
+        Initialize platform monitor
         
         Args:
             check_interval: Health check interval in seconds
             alert_threshold: Number of consecutive failures before alerting
-        """        self.check_interval = check_interval
+        """
+        self.check_interval = check_interval
         self.alert_threshold = alert_threshold
         self.platforms: Dict[str, PlatformBase] = {}
         self.health_history: Dict[str, List[HealthCheckResult]] = {}
@@ -87,23 +97,27 @@ class PlatformMonitor:
         self.alert_handlers: List[Callable[[MonitorAlert], Awaitable[None]]] = []
         
     def register_platform(self, platform: PlatformBase):
-        """Register a platform for monitoring"""        self.platforms[platform.platform_id] = platform
+        """Register a platform for monitoring"""
+        self.platforms[platform.platform_id] = platform
         self.health_history[platform.platform_id] = []
         self.active_alerts[platform.platform_id] = []
         logger.info(f"Registered platform {platform.platform_id} for monitoring")
     
     def unregister_platform(self, platform_id: str):
-        """Unregister a platform from monitoring"""        if platform_id in self.platforms:
+        """Unregister a platform from monitoring"""
+        if platform_id in self.platforms:
             del self.platforms[platform_id]
             del self.health_history[platform_id]
             del self.active_alerts[platform_id]
             logger.info(f"Unregistered platform {platform_id} from monitoring")
     
     def add_alert_handler(self, handler: Callable[[MonitorAlert], Awaitable[None]]):
-        """Add alert handler function"""        self.alert_handlers.append(handler)
+        """Add alert handler function"""
+        self.alert_handlers.append(handler)
     
     async def check_platform_health(self, platform: PlatformBase) -> HealthCheckResult:
-        """Check health of a specific platform"""        start_time = time.time()
+        """Check health of a specific platform"""
+        start_time = time.time()
         
         try:
             # Test basic connectivity with platform API
@@ -167,7 +181,8 @@ class PlatformMonitor:
             return result
     
     async def check_all_platforms(self) -> Dict[str, HealthCheckResult]:
-        """Check health of all registered platforms"""        results = {}
+        """Check health of all registered platforms"""
+        results = {}
         
         # Run health checks concurrently
         tasks = []
@@ -200,7 +215,8 @@ class PlatformMonitor:
         return results
     
     async def _evaluate_alerts(self, platform_id: str, result: HealthCheckResult):
-        """Evaluate if alerts should be triggered"""        history = self.health_history[platform_id]
+        """Evaluate if alerts should be triggered"""
+        history = self.health_history[platform_id]
         
         # Check for consecutive failures
         if len(history) >= self.alert_threshold:
@@ -242,7 +258,8 @@ class PlatformMonitor:
     
     async def _trigger_alert(self, platform_id: str, severity: MonitorSeverity, 
                            message: str, metadata: Dict[str, Any] = None):
-        """Trigger a monitoring alert"""        # Check if similar alert already exists
+        """Trigger a monitoring alert"""
+        # Check if similar alert already exists
         active_alerts = self.active_alerts[platform_id]
         for alert in active_alerts:
             if not alert.resolved and alert.severity == severity and message in alert.message:
@@ -267,7 +284,8 @@ class PlatformMonitor:
                 logger.error(f"Alert handler error: {e}")
     
     async def _resolve_alerts(self, platform_id: str, resolution_message: str):
-        """Resolve active alerts for a platform"""        active_alerts = self.active_alerts[platform_id]
+        """Resolve active alerts for a platform"""
+        active_alerts = self.active_alerts[platform_id]
         resolved_count = 0
         
         for alert in active_alerts:
@@ -282,7 +300,8 @@ class PlatformMonitor:
             logger.info(f"Resolved {resolved_count} alerts for {platform_id}: {resolution_message}")
     
     async def get_platform_status(self, platform_id: str) -> Dict[str, Any]:
-        """Get comprehensive status for a platform"""        if platform_id not in self.platforms:
+        """Get comprehensive status for a platform"""
+        if platform_id not in self.platforms:
             return {'error': 'Platform not found'}
         
         history = self.health_history[platform_id]
@@ -319,7 +338,8 @@ class PlatformMonitor:
         }
     
     async def get_system_overview(self) -> Dict[str, Any]:
-        """Get system-wide monitoring overview"""        total_platforms = len(self.platforms)
+        """Get system-wide monitoring overview"""
+        total_platforms = len(self.platforms)
         healthy_platforms = 0
         degraded_platforms = 0
         down_platforms = 0
@@ -350,7 +370,8 @@ class PlatformMonitor:
         }
     
     async def start_monitoring(self):
-        """Start continuous monitoring"""        if self.monitoring_active:
+        """Start continuous monitoring"""
+        if self.monitoring_active:
             logger.warning("Monitoring is already active")
             return
         
@@ -359,7 +380,8 @@ class PlatformMonitor:
         logger.info(f"Started platform monitoring with {self.check_interval}s interval")
     
     async def stop_monitoring(self):
-        """Stop continuous monitoring"""        if not self.monitoring_active:
+        """Stop continuous monitoring"""
+        if not self.monitoring_active:
             return
         
         self.monitoring_active = False
@@ -374,7 +396,8 @@ class PlatformMonitor:
         logger.info("Stopped platform monitoring")
     
     async def _monitoring_loop(self):
-        """Main monitoring loop"""        try:
+        """Main monitoring loop"""
+        try:
             while self.monitoring_active:
                 logger.debug("Running platform health checks")
                 
@@ -393,7 +416,8 @@ class PlatformMonitor:
             self.monitoring_active = False
     
     async def force_check(self, platform_id: str = None) -> Dict[str, HealthCheckResult]:
-        """Force immediate health check"""        if platform_id:
+        """Force immediate health check"""
+        if platform_id:
             if platform_id not in self.platforms:
                 raise ValueError(f"Platform {platform_id} not found")
             
@@ -406,7 +430,8 @@ class PlatformMonitor:
     def get_alert_history(self, platform_id: str = None, 
                          severity: MonitorSeverity = None,
                          limit: int = 50) -> List[MonitorAlert]:
-        """Get alert history with optional filtering"""        all_alerts = []
+        """Get alert history with optional filtering"""
+        all_alerts = []
         
         if platform_id:
             platform_ids = [platform_id] if platform_id in self.active_alerts else []
@@ -424,7 +449,8 @@ class PlatformMonitor:
         return all_alerts[:limit]
     
     def clear_alert_history(self, platform_id: str = None):
-        """Clear alert history"""        if platform_id:
+        """Clear alert history"""
+        if platform_id:
             if platform_id in self.active_alerts:
                 self.active_alerts[platform_id] = []
                 logger.info(f"Cleared alert history for {platform_id}")
@@ -436,7 +462,8 @@ class PlatformMonitor:
 
 # Default alert handlers
 async def log_alert_handler(alert: MonitorAlert):
-    """Default alert handler that logs alerts"""    level = {
+    """Default alert handler that logs alerts"""
+    level = {
         MonitorSeverity.INFO: logging.INFO,
         MonitorSeverity.WARNING: logging.WARNING,
         MonitorSeverity.ERROR: logging.ERROR,
@@ -447,7 +474,8 @@ async def log_alert_handler(alert: MonitorAlert):
 
 
 async def webhook_alert_handler(webhook_url: str):
-    """Create webhook alert handler"""    async def handler(alert: MonitorAlert):
+    """Create webhook alert handler"""
+    async def handler(alert: MonitorAlert):
         try:
             async with aiohttp.ClientSession() as session:
                 payload = {

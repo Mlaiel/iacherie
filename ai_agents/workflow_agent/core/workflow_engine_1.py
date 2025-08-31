@@ -20,7 +20,8 @@ Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Callable, Union, Tuple, Set
@@ -42,7 +43,8 @@ from ..base import BaseAgent
 
 
 class ExecutionMode(Enum):
-    """Workflow execution mode enumeration."""    SYNCHRONOUS = "synchronous"
+    """Workflow execution mode enumeration."""
+    SYNCHRONOUS = "synchronous"
     ASYNCHRONOUS = "asynchronous"
     BATCH = "batch"
     STREAMING = "streaming"
@@ -51,7 +53,8 @@ class ExecutionMode(Enum):
 
 
 class OptimizationStrategy(Enum):
-    """Execution optimization strategy enumeration."""    PERFORMANCE = "performance"
+    """Execution optimization strategy enumeration."""
+    PERFORMANCE = "performance"
     RESOURCE_EFFICIENCY = "resource_efficiency"
     COST_OPTIMIZATION = "cost_optimization"
     LATENCY_MINIMIZATION = "latency_minimization"
@@ -61,7 +64,8 @@ class OptimizationStrategy(Enum):
 
 @dataclass
 class ExecutionPlan:
-    """Workflow execution plan."""    id: str
+    """Workflow execution plan."""
+    id: str
     workflow_id: str
     execution_mode: ExecutionMode
     optimization_strategy: OptimizationStrategy
@@ -75,7 +79,8 @@ class ExecutionPlan:
 
 @dataclass
 class ExecutionMetrics:
-    """Execution performance metrics."""    execution_id: str
+    """Execution performance metrics."""
+    execution_id: str
     start_time: datetime
     end_time: Optional[datetime] = None
     duration: float = 0.0
@@ -89,7 +94,8 @@ class ExecutionMetrics:
 
 @dataclass
 class ExecutionTask:
-    """Individual execution task."""    id: str
+    """Individual execution task."""
+    id: str
     name: str
     executor: Callable
     input_data: Any
@@ -102,12 +108,15 @@ class ExecutionTask:
 
 
 class WorkflowEngine(BaseAgent):
-    """    Advanced workflow execution engine for enterprise content workflows.
+    """
+    Advanced workflow execution engine for enterprise content workflows.
     
     This engine provides high-performance execution capabilities with
     intelligent optimization, fault tolerance, and scalable processing.
-    """    def __init__(self, max_workers: int = 100, max_processes: int = None):
-        """Initialize the workflow engine."""        super().__init__()
+    """
+    def __init__(self, max_workers: int = 100, max_processes: int = None):
+        """Initialize the workflow engine."""
+        super().__init__()
         self.logger = logging.getLogger(__name__)
         
         # Core execution components
@@ -151,7 +160,8 @@ class WorkflowEngine(BaseAgent):
         mode: ExecutionMode = ExecutionMode.ASYNCHRONOUS,
         optimization: OptimizationStrategy = OptimizationStrategy.BALANCED
     ) -> Dict[str, Any]:
-        """        Execute a workflow with specified mode and optimization.
+        """
+        Execute a workflow with specified mode and optimization.
         
         Args:
             workflow_definition: Complete workflow definition
@@ -161,7 +171,8 @@ class WorkflowEngine(BaseAgent):
             
         Returns:
             Dict containing execution results and metrics
-        """        execution_id = str(uuid.uuid4())
+        """
+        execution_id = str(uuid.uuid4())
         start_time = datetime.now()
         
         try:
@@ -245,7 +256,8 @@ class WorkflowEngine(BaseAgent):
         optimization: OptimizationStrategy,
         execution_id: str
     ) -> ExecutionPlan:
-        """Create optimized execution plan for workflow."""        try:
+        """Create optimized execution plan for workflow."""
+        try:
             # Analyze workflow characteristics
             analysis = await self._analyze_workflow_for_execution(workflow_definition)
             
@@ -287,7 +299,8 @@ class WorkflowEngine(BaseAgent):
             raise
 
     async def _execute_asynchronous(self, plan: ExecutionPlan) -> Dict[str, Any]:
-        """Execute workflow asynchronously with optimal concurrency."""        try:
+        """Execute workflow asynchronously with optimal concurrency."""
+        try:
             results = {}
             completed_tasks = set()
             pending_tasks = {}
@@ -339,7 +352,8 @@ class WorkflowEngine(BaseAgent):
         completed_tasks: Set[str],
         context_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute a stage of tasks asynchronously."""        try:
+        """Execute a stage of tasks asynchronously."""
+        try:
             # Filter tasks ready for execution
             ready_tasks = [
                 task for task in tasks
@@ -383,7 +397,8 @@ class WorkflowEngine(BaseAgent):
         task: ExecutionTask,
         context_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute a single task with fault tolerance."""        try:
+        """Execute a single task with fault tolerance."""
+        try:
             # Check circuit breaker
             if self._should_circuit_break(task.name):
                 return {
@@ -442,7 +457,8 @@ class WorkflowEngine(BaseAgent):
             }
 
     async def _execute_batch(self, plan: ExecutionPlan) -> Dict[str, Any]:
-        """Execute workflow in batch mode for high-throughput processing."""        try:
+        """Execute workflow in batch mode for high-throughput processing."""
+        try:
             # Collect all tasks into batches
             batches = await self._create_execution_batches(plan)
             
@@ -476,7 +492,8 @@ class WorkflowEngine(BaseAgent):
             }
 
     async def _execute_streaming(self, plan: ExecutionPlan) -> Dict[str, Any]:
-        """Execute workflow in streaming mode for real-time processing."""        try:
+        """Execute workflow in streaming mode for real-time processing."""
+        try:
             # Set up streaming pipeline
             stream_results = {}
             processed_count = 0
@@ -527,7 +544,8 @@ class WorkflowEngine(BaseAgent):
             }
 
     async def _execute_hybrid(self, plan: ExecutionPlan) -> Dict[str, Any]:
-        """Execute workflow using hybrid approach optimized for the specific workflow."""        try:
+        """Execute workflow using hybrid approach optimized for the specific workflow."""
+        try:
             # Analyze workflow for optimal execution strategy per stage
             stage_strategies = await self._determine_stage_strategies(plan)
             
@@ -572,7 +590,8 @@ class WorkflowEngine(BaseAgent):
             }
 
     def _resolve_task_executor(self, executor_definition: Union[str, Callable]) -> Callable:
-        """Resolve task executor from definition."""        if callable(executor_definition):
+        """Resolve task executor from definition."""
+        if callable(executor_definition):
             return executor_definition
         
         # Handle string-based executor resolution
@@ -582,7 +601,8 @@ class WorkflowEngine(BaseAgent):
         raise ValueError(f"Invalid executor definition: {executor_definition}")
 
     def _get_executor_from_registry(self, executor_name: str) -> Callable:
-        """Get executor function from registry."""        # Placeholder implementation - would typically use a registry pattern
+        """Get executor function from registry."""
+        # Placeholder implementation - would typically use a registry pattern
         async def placeholder_executor(context):
             task = context.get('task')
             return f"Executed {executor_name} for task {task.id if task else 'unknown'}"
@@ -590,7 +610,8 @@ class WorkflowEngine(BaseAgent):
         return placeholder_executor
 
     async def _analyze_workflow_for_execution(self, workflow_definition: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze workflow for optimal execution planning."""        try:
+        """Analyze workflow for optimal execution planning."""
+        try:
             nodes = workflow_definition.get('nodes', [])
             edges = workflow_definition.get('edges', [])
             
@@ -626,7 +647,8 @@ class WorkflowEngine(BaseAgent):
             }
 
     def _calculate_workflow_depth(self, nodes: List[Dict], edges: List[Dict]) -> int:
-        """Calculate maximum depth of workflow."""        try:
+        """Calculate maximum depth of workflow."""
+        try:
             # Simple implementation - would be more sophisticated in practice
             if not edges:
                 return 1
@@ -664,7 +686,8 @@ class WorkflowEngine(BaseAgent):
             return 1
 
     def _calculate_parallelization_factor(self, nodes: List[Dict], edges: List[Dict]) -> float:
-        """Calculate potential parallelization factor."""        try:
+        """Calculate potential parallelization factor."""
+        try:
             if not nodes:
                 return 1.0
             
@@ -689,7 +712,8 @@ class WorkflowEngine(BaseAgent):
             return 1.0
 
     def _hash_workflow_definition(self, workflow_definition: Dict[str, Any]) -> str:
-        """Generate hash for workflow definition for caching."""        try:
+        """Generate hash for workflow definition for caching."""
+        try:
             # Create a canonical representation for hashing
             canonical = json.dumps(workflow_definition, sort_keys=True)
             return hashlib.md5(canonical.encode()).hexdigest()
@@ -698,7 +722,8 @@ class WorkflowEngine(BaseAgent):
             return str(uuid.uuid4())
 
     def _should_circuit_break(self, task_name: str) -> bool:
-        """Check if circuit breaker should prevent execution."""        state = self.circuit_breaker_state[task_name]
+        """Check if circuit breaker should prevent execution."""
+        state = self.circuit_breaker_state[task_name]
         
         # Simple circuit breaker logic
         if state['failures'] >= 5:  # Threshold
@@ -710,15 +735,18 @@ class WorkflowEngine(BaseAgent):
         return False
 
     def _record_circuit_breaker_failure(self, task_name: str):
-        """Record failure for circuit breaker."""        state = self.circuit_breaker_state[task_name]
+        """Record failure for circuit breaker."""
+        state = self.circuit_breaker_state[task_name]
         state['failures'] += 1
         state['last_failure'] = time.time()
 
     def _reset_circuit_breaker(self, task_name: str):
-        """Reset circuit breaker on successful execution."""        self.circuit_breaker_state[task_name] = {'failures': 0, 'last_failure': None}
+        """Reset circuit breaker on successful execution."""
+        self.circuit_breaker_state[task_name] = {'failures': 0, 'last_failure': None}
 
     def _update_performance_metrics(self, metrics: ExecutionMetrics):
-        """Update global performance metrics."""        self.performance_metrics['total_executions'] += 1
+        """Update global performance metrics."""
+        self.performance_metrics['total_executions'] += 1
         
         if metrics.success_rate > 0.5:  # Consider successful if >50% success rate
             self.performance_metrics['successful_executions'] += 1
@@ -740,7 +768,8 @@ class WorkflowEngine(BaseAgent):
         )
 
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get current performance metrics."""        return {
+        """Get current performance metrics."""
+        return {
             'metrics': self.performance_metrics.copy(),
             'active_executions': len(self.active_executions),
             'execution_history_size': len(self.execution_history),
@@ -749,7 +778,8 @@ class WorkflowEngine(BaseAgent):
         }
 
     async def shutdown(self):
-        """Shutdown the workflow engine gracefully."""        try:
+        """Shutdown the workflow engine gracefully."""
+        try:
             self.logger.info("Shutting down workflow engine...")
             
             # Wait for active executions to complete (with timeout)
@@ -768,42 +798,52 @@ class WorkflowEngine(BaseAgent):
 
     # Additional placeholder methods for completeness
     async def _generate_execution_stages(self, workflow_definition, analysis, mode):
-        """Generate execution stages from workflow definition."""        # Placeholder implementation
+        """Generate execution stages from workflow definition."""
+        # Placeholder implementation
         nodes = workflow_definition.get('nodes', [])
         return [{'tasks': nodes}]
 
     async def _optimize_resource_allocation(self, stages, optimization):
-        """Optimize resource allocation for stages."""        # Placeholder implementation
+        """Optimize resource allocation for stages."""
+        # Placeholder implementation
         return {'cpu': 2.0, 'memory': 1024.0}
 
     async def _estimate_execution_duration(self, stages, resource_allocation):
-        """Estimate execution duration."""        # Placeholder implementation
+        """Estimate execution duration."""
+        # Placeholder implementation
         return len(stages) * 10.0  # 10 seconds per stage
 
     async def _create_execution_batches(self, plan):
-        """Create execution batches from plan."""        # Placeholder implementation
+        """Create execution batches from plan."""
+        # Placeholder implementation
         return [stage for stage in plan.execution_stages]
 
     async def _execute_task_batch(self, batch):
-        """Execute a batch of tasks."""        # Placeholder implementation
+        """Execute a batch of tasks."""
+        # Placeholder implementation
         return {'success': True, 'results': {}}
 
     async def _determine_stage_strategies(self, plan):
-        """Determine optimal strategy for each stage."""        # Placeholder implementation
+        """Determine optimal strategy for each stage."""
+        # Placeholder implementation
         return {i: 'asynchronous' for i in range(len(plan.execution_stages))}
 
     async def _execute_stage_batch(self, stage, context_results):
-        """Execute stage in batch mode."""        # Placeholder implementation
+        """Execute stage in batch mode."""
+        # Placeholder implementation
         return {}
 
     async def _execute_stage_streaming(self, stage, context_results):
-        """Execute stage in streaming mode."""        # Placeholder implementation
+        """Execute stage in streaming mode."""
+        # Placeholder implementation
         return {}
 
     async def _execute_synchronous(self, plan):
-        """Execute workflow synchronously."""        # Placeholder implementation - would implement sequential execution
+        """Execute workflow synchronously."""
+        # Placeholder implementation - would implement sequential execution
         return await self._execute_asynchronous(plan)
 
     async def _execute_real_time(self, plan):
-        """Execute workflow in real-time mode."""        # Placeholder implementation - would implement real-time execution
+        """Execute workflow in real-time mode."""
+        # Placeholder implementation - would implement real-time execution
         return await self._execute_streaming(plan)

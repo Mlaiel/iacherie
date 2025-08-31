@@ -24,7 +24,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
-"""from sqlalchemy import (
+"""
+from sqlalchemy import (
     Column, Integer, String, DateTime, Float, Boolean, ForeignKey,
     Text, DECIMAL, JSON, BigInteger, Index, UniqueConstraint
 )
@@ -41,7 +42,8 @@ from dataclasses import dataclass
 Base = declarative_base()
 
 class ReportType(Enum):
-    """Financial report types"""    INCOME_STATEMENT = "income_statement"
+    """Financial report types"""
+    INCOME_STATEMENT = "income_statement"
     BALANCE_SHEET = "balance_sheet"
     CASH_FLOW = "cash_flow"
     PROFIT_LOSS = "profit_loss"
@@ -53,7 +55,8 @@ class ReportType(Enum):
     AUDIT_REPORT = "audit_report"
 
 class ReportingPeriod(Enum):
-    """Reporting period types"""    DAILY = "daily"
+    """Reporting period types"""
+    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -61,14 +64,16 @@ class ReportingPeriod(Enum):
     CUSTOM = "custom"
 
 class ReportStatus(Enum):
-    """Report generation status"""    PENDING = "pending"
+    """Report generation status"""
+    PENDING = "pending"
     GENERATING = "generating"
     COMPLETED = "completed"
     FAILED = "failed"
     ARCHIVED = "archived"
 
 class ComplianceStandard(Enum):
-    """Financial compliance standards"""    GAAP = "gaap"
+    """Financial compliance standards"""
+    GAAP = "gaap"
     IFRS = "ifrs"
     SOX = "sox"
     GDPR = "gdpr"
@@ -77,7 +82,8 @@ class ComplianceStandard(Enum):
     SOC2 = "soc2"
 
 class FinancialReport(Base):
-    """Master financial report record"""    __tablename__ = 'financial_reports'
+    """Master financial report record"""
+    __tablename__ = 'financial_reports'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -146,7 +152,8 @@ class FinancialReport(Base):
     )
 
 class RevenueLineItem(Base):
-    """Detailed revenue line items for financial reports"""    __tablename__ = 'revenue_line_items'
+    """Detailed revenue line items for financial reports"""
+    __tablename__ = 'revenue_line_items'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -205,7 +212,8 @@ class RevenueLineItem(Base):
     )
 
 class ExpenseLineItem(Base):
-    """Detailed expense line items for financial reports"""    __tablename__ = 'expense_line_items'
+    """Detailed expense line items for financial reports"""
+    __tablename__ = 'expense_line_items'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -267,7 +275,8 @@ class ExpenseLineItem(Base):
     )
 
 class TaxSummary(Base):
-    """Tax summary information for financial reports"""    __tablename__ = 'tax_summaries'
+    """Tax summary information for financial reports"""
+    __tablename__ = 'tax_summaries'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -318,7 +327,8 @@ class TaxSummary(Base):
     )
 
 class ComplianceCheck(Base):
-    """Compliance verification records"""    __tablename__ = 'compliance_checks'
+    """Compliance verification records"""
+    __tablename__ = 'compliance_checks'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -371,7 +381,8 @@ class ComplianceCheck(Base):
     )
 
 class ReportTemplate(Base):
-    """Financial report templates for standardized reporting"""    __tablename__ = 'report_templates'
+    """Financial report templates for standardized reporting"""
+    __tablename__ = 'report_templates'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -422,7 +433,8 @@ class ReportTemplate(Base):
 
 @dataclass
 class FinancialInsight:
-    """Financial insight data structure"""    insight_type: str
+    """Financial insight data structure"""
+    insight_type: str
     category: str
     title: str
     description: str
@@ -434,7 +446,8 @@ class FinancialInsight:
     supporting_data: Dict[str, Any]
 
 class ReportSchedule(Base):
-    """Automated report generation schedules"""    __tablename__ = 'report_schedules'
+    """Automated report generation schedules"""
+    __tablename__ = 'report_schedules'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

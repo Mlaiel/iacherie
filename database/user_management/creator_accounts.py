@@ -12,7 +12,8 @@ Toute utilisation, reproduction ou distribution sans autorisation
 écrite explicite est strictement interdite et fera l'objet de 
 poursuites judiciaires selon la loi allemande.
 Email: mlaiel@live.de pour autorisation d'utilisation.
-"""from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal
+"""
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal
 from sqlalchemy.orm import relationship, Session
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
@@ -27,7 +28,8 @@ Base = declarative_base()
 
 
 class CreatorType(PyEnum):
-    """Types de créateurs supportés par la plateforme."""    MUSICIAN = "musician"
+    """Types de créateurs supportés par la plateforme."""
+    MUSICIAN = "musician"
     BLOGGER = "blogger" 
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -38,7 +40,8 @@ class CreatorType(PyEnum):
 
 
 class CreatorStatus(PyEnum):
-    """Statuts possibles des comptes créateurs."""    PENDING = "pending"
+    """Statuts possibles des comptes créateurs."""
+    PENDING = "pending"
     ACTIVE = "active"
     SUSPENDED = "suspended"
     VERIFIED = "verified"
@@ -47,7 +50,8 @@ class CreatorStatus(PyEnum):
 
 
 class VerificationLevel(PyEnum):
-    """Niveaux de vérification des créateurs."""    UNVERIFIED = "unverified"
+    """Niveaux de vérification des créateurs."""
+    UNVERIFIED = "unverified"
     EMAIL_VERIFIED = "email_verified"
     PHONE_VERIFIED = "phone_verified"
     IDENTITY_VERIFIED = "identity_verified"
@@ -55,9 +59,11 @@ class VerificationLevel(PyEnum):
 
 
 class CreatorAccount(Base):
-    """    Modèle principal pour les comptes créateurs avec support multi-format.
+    """
+    Modèle principal pour les comptes créateurs avec support multi-format.
     Intègre la logique métier : Upload → IA Protection → SEO → Collaboration → Distribution.
-    """    __tablename__ = "creator_accounts"
+    """
+    __tablename__ = "creator_accounts"
 
     # Identifiants principaux
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -156,7 +162,8 @@ class CreatorAccount(Base):
             setattr(self, key, value)
 
     def calculate_profile_completeness(self) -> float:
-        """Calculer le score de complétude du profil créateur."""        score = 0
+        """Calculer le score de complétude du profil créateur."""
+        score = 0
         total_fields = 15
         
         if self.stage_name: score += 1
@@ -178,7 +185,8 @@ class CreatorAccount(Base):
         return score / total_fields
 
     def update_engagement_score(self):
-        """Mettre à jour le score d'engagement basé sur les métriques."""        if self.total_followers > 0 and self.performance_metrics:
+        """Mettre à jour le score d'engagement basé sur les métriques."""
+        if self.total_followers > 0 and self.performance_metrics:
             # Calcul simplifié - à enrichir avec algorithme ML
             base_score = min(self.total_followers / 10000, 1.0) * 50
             activity_bonus = min(self.total_uploads / 100, 1.0) * 30
@@ -188,7 +196,8 @@ class CreatorAccount(Base):
             self.updated_at = datetime.utcnow()
 
     def get_monetization_potential(self) -> Dict[str, Any]:
-        """Analyser le potentiel de monétisation."""        potential_score = 0
+        """Analyser le potentiel de monétisation."""
+        potential_score = 0
         recommendations = []
         
         # Analyse basée sur les métriques existantes
@@ -214,7 +223,8 @@ class CreatorAccount(Base):
         }
 
     def to_dict(self) -> Dict[str, Any]:
-        """Convertir en dictionnaire pour API."""        return {
+        """Convertir en dictionnaire pour API."""
+        return {
             'id': self.id,
             'creator_uuid': self.creator_uuid,
             'creator_type': self.creator_type.value if self.creator_type else None,
@@ -239,8 +249,10 @@ class CreatorAccount(Base):
 
 
 class CreatorProfile(Base):
-    """    Profil détaillé du créateur avec informations professionnelles complètes.
-    """    __tablename__ = "creator_profiles"
+    """
+    Profil détaillé du créateur avec informations professionnelles complètes.
+    """
+    __tablename__ = "creator_profiles"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     creator_account_id = Column(String, ForeignKey("creator_accounts.id"), nullable=False, unique=True)
@@ -294,8 +306,10 @@ class CreatorProfile(Base):
 
 
 class CreatorMetrics(Base):
-    """    Métriques détaillées et analytics pour les créateurs.
-    """    __tablename__ = "creator_metrics"
+    """
+    Métriques détaillées et analytics pour les créateurs.
+    """
+    __tablename__ = "creator_metrics"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     creator_account_id = Column(String, ForeignKey("creator_accounts.id"), nullable=False)
@@ -346,15 +360,18 @@ class CreatorMetrics(Base):
 
 
 class CreatorAccountRepository:
-    """    Repository pattern pour les opérations sur les comptes créateurs.
+    """
+    Repository pattern pour les opérations sur les comptes créateurs.
     Implémentation professionnelle avec gestion d'erreurs avancée.
-    """    
+    """
+    
     def __init__(self, session: Session):
         self.session = session
         self.logger = logging.getLogger(__name__)
     
     def create_creator_account(self, user_id: str, creator_data: Dict[str, Any]) -> CreatorAccount:
-        """        Crée un nouveau compte créateur avec validation complète.
+        """
+        Crée un nouveau compte créateur avec validation complète.
         
         Args:
             user_id: ID de l'utilisateur
@@ -366,7 +383,8 @@ class CreatorAccountRepository:
         Raises:
             ValueError: Si les données sont invalides
             Exception: En cas d'erreur de création
-        """        try:
+        """
+        try:
             # Validation des données obligatoires
             required_fields = ['creator_type', 'stage_name', 'display_name']
             for field in required_fields:
@@ -402,17 +420,20 @@ class CreatorAccountRepository:
             raise
     
     def get_creator_by_id(self, creator_id: str) -> Optional[CreatorAccount]:
-        """Récupère un créateur par son ID."""        return self.session.query(CreatorAccount).filter(
+        """Récupère un créateur par son ID."""
+        return self.session.query(CreatorAccount).filter(
             CreatorAccount.id == creator_id
         ).first()
     
     def get_creator_by_user_id(self, user_id: str) -> Optional[CreatorAccount]:
-        """Récupère un créateur par l'ID utilisateur."""        return self.session.query(CreatorAccount).filter(
+        """Récupère un créateur par l'ID utilisateur."""
+        return self.session.query(CreatorAccount).filter(
             CreatorAccount.user_id == user_id
         ).first()
     
     def update_creator_status(self, creator_id: str, status: CreatorStatus) -> bool:
-        """        Met à jour le statut d'un créateur.
+        """
+        Met à jour le statut d'un créateur.
         
         Args:
             creator_id: ID du créateur
@@ -420,7 +441,8 @@ class CreatorAccountRepository:
             
         Returns:
             bool: True si mis à jour avec succès
-        """        try:
+        """
+        try:
             creator = self.get_creator_by_id(creator_id)
             if not creator:
                 return False
@@ -442,7 +464,8 @@ class CreatorAccountRepository:
             return False
     
     def update_verification_level(self, creator_id: str, level: VerificationLevel) -> bool:
-        """Met à jour le niveau de vérification d'un créateur."""        try:
+        """Met à jour le niveau de vérification d'un créateur."""
+        try:
             creator = self.get_creator_by_id(creator_id)
             if not creator:
                 return False
@@ -463,7 +486,8 @@ class CreatorAccountRepository:
             return False
     
     def update_creator_metrics(self, creator_id: str, metrics_data: Dict[str, Any]) -> bool:
-        """Met à jour les métriques d'un créateur."""        try:
+        """Met à jour les métriques d'un créateur."""
+        try:
             creator = self.get_creator_by_id(creator_id)
             if not creator:
                 return False
@@ -500,7 +524,8 @@ class CreatorAccountRepository:
             return False
     
     def get_creators_by_type(self, creator_type: CreatorType, limit: int = 50) -> List[CreatorAccount]:
-        """Récupère les créateurs par type."""        try:
+        """Récupère les créateurs par type."""
+        try:
             return self.session.query(CreatorAccount).filter(
                 CreatorAccount.creator_type == creator_type,
                 CreatorAccount.status == CreatorStatus.ACTIVE
@@ -511,7 +536,8 @@ class CreatorAccountRepository:
             return []
     
     def search_creators(self, search_criteria: Dict[str, Any]) -> List[CreatorAccount]:
-        """        Recherche avancée de créateurs basée sur différents critères.
+        """
+        Recherche avancée de créateurs basée sur différents critères.
         
         Args:
             search_criteria: Critères de recherche
@@ -524,7 +550,8 @@ class CreatorAccountRepository:
                 
         Returns:
             List[CreatorAccount]: Liste des créateurs trouvés
-        """        try:
+        """
+        try:
             query = self.session.query(CreatorAccount).filter(
                 CreatorAccount.status == CreatorStatus.ACTIVE
             )
@@ -559,7 +586,8 @@ class CreatorAccountRepository:
             return []
     
     def get_creator_analytics(self, creator_id: str, timeframe_days: int = 30) -> Dict[str, Any]:
-        """        Récupère les analytics détaillées d'un créateur.
+        """
+        Récupère les analytics détaillées d'un créateur.
         
         Args:
             creator_id: ID du créateur
@@ -567,7 +595,8 @@ class CreatorAccountRepository:
             
         Returns:
             Dict[str, Any]: Analytics détaillées
-        """        try:
+        """
+        try:
             creator = self.get_creator_by_id(creator_id)
             if not creator:
                 return {}
@@ -615,7 +644,8 @@ class CreatorAccountRepository:
             return {}
     
     def get_collaboration_candidates(self, creator_id: str, collaboration_type: str = None) -> List[Dict[str, Any]]:
-        """        Trouve des candidats pour collaboration basé sur l'IA matching.
+        """
+        Trouve des candidats pour collaboration basé sur l'IA matching.
         
         Args:
             creator_id: ID du créateur cherchant des collaborations
@@ -623,7 +653,8 @@ class CreatorAccountRepository:
             
         Returns:
             List[Dict[str, Any]]: Liste des candidats avec scores de compatibilité
-        """        try:
+        """
+        try:
             creator = self.get_creator_by_id(creator_id)
             if not creator or not creator.collaboration_enabled:
                 return []
@@ -677,7 +708,8 @@ class CreatorAccountRepository:
             return []
     
     def _calculate_compatibility_score(self, creator1: CreatorAccount, creator2: CreatorAccount, collaboration_type: str = None) -> float:
-        """Calcule le score de compatibilité entre deux créateurs."""        score = 0.0
+        """Calcule le score de compatibilité entre deux créateurs."""
+        score = 0.0
         
         # Compatibilité des plateformes (30%)
         common_platforms = set(creator1.target_platforms or []) & set(creator2.target_platforms or [])
@@ -711,7 +743,8 @@ class CreatorAccountRepository:
         return min(score, 1.0)
     
     def _get_collaboration_factors(self, creator1: CreatorAccount, creator2: CreatorAccount) -> List[str]:
-        """Identifie les facteurs de collaboration positifs."""        factors = []
+        """Identifie les facteurs de collaboration positifs."""
+        factors = []
         
         common_platforms = set(creator1.target_platforms or []) & set(creator2.target_platforms or [])
         if common_platforms:
@@ -730,7 +763,8 @@ class CreatorAccountRepository:
         return factors
     
     def _get_recommended_collaboration_types(self, creator1: CreatorAccount, creator2: CreatorAccount) -> List[str]:
-        """Recommande des types de collaboration basés sur les profils."""        recommendations = []
+        """Recommande des types de collaboration basés sur les profils."""
+        recommendations = []
         
         # Logique basée sur les types de créateurs
         if creator1.creator_type == CreatorType.MUSICIAN and creator2.creator_type == CreatorType.MUSICIAN:
@@ -766,7 +800,8 @@ class CreatorAccountRepository:
             return False
     
     def update_metrics(self, creator_id: str, metrics_data: Dict[str, Any]) -> bool:
-        """        Met à jour les métriques d'un créateur.
+        """
+        Met à jour les métriques d'un créateur.
         
         Args:
             creator_id: ID du créateur
@@ -774,7 +809,8 @@ class CreatorAccountRepository:
             
         Returns:
             bool: True si mis à jour avec succès
-        """        try:
+        """
+        try:
             creator = self.get_creator_by_id(creator_id)
             if not creator:
                 return False
@@ -801,7 +837,8 @@ class CreatorAccountRepository:
             return False
     
     def search_creators(self, filters: Dict[str, Any], limit: int = 50) -> List[CreatorAccount]:
-        """        Recherche de créateurs avec filtres avancés.
+        """
+        Recherche de créateurs avec filtres avancés.
         
         Args:
             filters: Filtres de recherche
@@ -809,7 +846,8 @@ class CreatorAccountRepository:
             
         Returns:
             List[CreatorAccount]: Liste des créateurs trouvés
-        """        query = self.session.query(CreatorAccount)
+        """
+        query = self.session.query(CreatorAccount)
         
         # Filtres disponibles
         if 'creator_type' in filters:
@@ -833,11 +871,13 @@ class CreatorAccountRepository:
         return query.limit(limit).all()
     
     def get_creator_statistics(self) -> Dict[str, Any]:
-        """        Retourne les statistiques globales des créateurs.
+        """
+        Retourne les statistiques globales des créateurs.
         
         Returns:
             Dict[str, Any]: Statistiques globales
-        """        total_creators = self.session.query(CreatorAccount).count()
+        """
+        total_creators = self.session.query(CreatorAccount).count()
         
         # Répartition par type
         type_stats = {}

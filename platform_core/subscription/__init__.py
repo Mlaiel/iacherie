@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 SYSTÈME DE GESTION D'ABONNEMENTS ENTERPRISE
@@ -14,7 +14,9 @@ Gestion complète des plans et abonnements avec intelligence artificielle
 - Limites et quotas en temps réel
 - Upgrades/downgrades automatiques et intelligents
 - Analytics d'utilisation et recommandations IA
-"""from .plan_manager import PlanManager, SubscriptionPlan, PlanFeature
+"""
+
+from .plan_manager import PlanManager, SubscriptionPlan, PlanFeature
 from .subscription_manager import SubscriptionManager, Subscription, SubscriptionStatus
 from .quota_manager import QuotaManager, ResourceQuota, UsageTracker
 from .upgrade_manager import UpgradeManager, UpgradeStrategy, UpgradeRecommendation

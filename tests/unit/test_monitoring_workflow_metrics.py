@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -14,7 +15,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 """Unit tests for monitoring.workflow_metrics module
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -24,13 +26,16 @@ from monitoring.workflow_metrics import WorkflowMetrics, NotificationService
 
 
 class TestWorkflowMetrics:
-    """Test cases for WorkflowMetrics class"""    def test_init(self):
-        """Test WorkflowMetrics initialization"""        metrics = WorkflowMetrics()
+    """Test cases for WorkflowMetrics class"""
+    def test_init(self):
+        """Test WorkflowMetrics initialization"""
+        metrics = WorkflowMetrics()
         assert metrics.metrics == {}
 
     @pytest.mark.asyncio
     async def test_setup_content_tracking_basic(self):
-        """Test basic content tracking setup"""        metrics = WorkflowMetrics()
+        """Test basic content tracking setup"""
+        metrics = WorkflowMetrics()
         
         config = {
             "workflow_id": "wf_123",
@@ -48,7 +53,8 @@ class TestWorkflowMetrics:
 
     @pytest.mark.asyncio
     async def test_setup_content_tracking_with_events(self):
-        """Test content tracking setup with tracking events"""        metrics = WorkflowMetrics()
+        """Test content tracking setup with tracking events"""
+        metrics = WorkflowMetrics()
         
         config = {
             "workflow_id": "wf_789",
@@ -63,7 +69,8 @@ class TestWorkflowMetrics:
 
     @pytest.mark.asyncio
     async def test_setup_content_tracking_multiple_workflows(self):
-        """Test setting up tracking for multiple workflows"""        metrics = WorkflowMetrics()
+        """Test setting up tracking for multiple workflows"""
+        metrics = WorkflowMetrics()
         
         config1 = {"workflow_id": "wf_1", "content_id": "content_1"}
         config2 = {"workflow_id": "wf_2", "content_id": "content_2"}
@@ -77,7 +84,8 @@ class TestWorkflowMetrics:
 
     @pytest.mark.asyncio
     async def test_setup_content_tracking_missing_fields(self):
-        """Test content tracking setup with missing fields"""        metrics = WorkflowMetrics()
+        """Test content tracking setup with missing fields"""
+        metrics = WorkflowMetrics()
         
         config = {"workflow_id": "wf_incomplete"}
         
@@ -90,13 +98,16 @@ class TestWorkflowMetrics:
 
 
 class TestNotificationService:
-    """Test cases for NotificationService class"""    def test_init(self):
-        """Test NotificationService initialization"""        service = NotificationService()
+    """Test cases for NotificationService class"""
+    def test_init(self):
+        """Test NotificationService initialization"""
+        service = NotificationService()
         assert service.notifications == []
 
     @pytest.mark.asyncio
     async def test_send_notification_basic(self):
-        """Test basic notification sending"""        service = NotificationService()
+        """Test basic notification sending"""
+        service = NotificationService()
         
         notification_data = {
             "workflow_id": "wf_123",
@@ -119,7 +130,8 @@ class TestNotificationService:
 
     @pytest.mark.asyncio
     async def test_send_notification_multiple(self):
-        """Test sending multiple notifications"""        service = NotificationService()
+        """Test sending multiple notifications"""
+        service = NotificationService()
         
         notification1 = {
             "workflow_id": "wf_1",
@@ -146,7 +158,8 @@ class TestNotificationService:
 
     @pytest.mark.asyncio
     async def test_send_notification_missing_fields(self):
-        """Test sending notification with missing optional fields"""        service = NotificationService()
+        """Test sending notification with missing optional fields"""
+        service = NotificationService()
         
         notification_data = {
             "workflow_id": "wf_minimal",
@@ -164,7 +177,8 @@ class TestNotificationService:
 
     @pytest.mark.asyncio
     async def test_send_notification_empty_data(self):
-        """Test sending notification with empty data"""        service = NotificationService()
+        """Test sending notification with empty data"""
+        service = NotificationService()
         
         notification_data = {}
         
@@ -180,7 +194,8 @@ class TestNotificationService:
 
     @pytest.mark.asyncio
     async def test_send_notification_incremental_ids(self):
-        """Test that notification IDs increment correctly"""        service = NotificationService()
+        """Test that notification IDs increment correctly"""
+        service = NotificationService()
         
         # Send 5 notifications
         for i in range(5):
@@ -196,7 +211,8 @@ class TestNotificationService:
 
     @pytest.mark.asyncio
     async def test_send_notification_concurrent(self):
-        """Test sending notifications concurrently"""        service = NotificationService()
+        """Test sending notifications concurrently"""
+        service = NotificationService()
         
         async def send_test_notification(index):
             notification_data = {

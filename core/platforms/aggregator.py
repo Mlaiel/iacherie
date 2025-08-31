@@ -5,7 +5,8 @@ Aggregates data and analytics from multiple platforms for unified insights.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 import logging
@@ -21,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 
 class AggregationType(Enum):
-    """Aggregation type enumeration"""    SUM = "sum"
+    """Aggregation type enumeration"""
+    SUM = "sum"
     AVERAGE = "average"
     MAXIMUM = "maximum"
     MINIMUM = "minimum"
@@ -30,7 +32,8 @@ class AggregationType(Enum):
 
 
 class TimeFrame(Enum):
-    """Time frame enumeration"""    HOUR = "hour"
+    """Time frame enumeration"""
+    HOUR = "hour"
     DAY = "day"
     WEEK = "week"
     MONTH = "month"
@@ -41,7 +44,8 @@ class TimeFrame(Enum):
 
 @dataclass
 class MetricDefinition:
-    """Metric definition for aggregation"""    name: str
+    """Metric definition for aggregation"""
+    name: str
     field: str
     aggregation_type: AggregationType
     weight: float = 1.0
@@ -51,7 +55,8 @@ class MetricDefinition:
 
 @dataclass
 class CrossPlatformContent:
-    """Cross-platform content mapping"""    content_id: str
+    """Cross-platform content mapping"""
+    content_id: str
     title: str
     platform_mappings: Dict[str, str]  # platform_id -> platform_content_id
     created_at: datetime
@@ -61,7 +66,8 @@ class CrossPlatformContent:
 
 @dataclass
 class AggregatedMetrics:
-    """Aggregated metrics result"""    content_id: str
+    """Aggregated metrics result"""
+    content_id: str
     time_frame: TimeFrame
     start_date: datetime
     end_date: datetime
@@ -77,7 +83,8 @@ class AggregatedMetrics:
 
 @dataclass
 class PlatformPerformance:
-    """Platform performance metrics"""    platform_id: str
+    """Platform performance metrics"""
+    platform_id: str
     total_content: int
     total_views: int
     total_engagement: int
@@ -90,7 +97,8 @@ class PlatformPerformance:
 
 @dataclass
 class AudienceInsights:
-    """Aggregated audience insights"""    total_reach: int
+    """Aggregated audience insights"""
+    total_reach: int
     unique_viewers: int
     demographics: Dict[str, Any]
     geographic_distribution: Dict[str, Any]
@@ -100,9 +108,11 @@ class AudienceInsights:
 
 
 class PlatformAggregator:
-    """Multi-platform data aggregation and analytics engine"""    
+    """Multi-platform data aggregation and analytics engine"""
+    
     def __init__(self, platform_manager: PlatformManager):
-        """Initialize aggregator with platform manager"""        self.platform_manager = platform_manager
+        """Initialize aggregator with platform manager"""
+        self.platform_manager = platform_manager
         self.content_mappings: Dict[str, CrossPlatformContent] = {}
         self.metric_definitions: List[MetricDefinition] = []
         self.cached_results: Dict[str, Any] = {}
@@ -112,7 +122,8 @@ class PlatformAggregator:
         self._initialize_default_metrics()
     
     def _initialize_default_metrics(self):
-        """Initialize default metric definitions"""        default_metrics = [
+        """Initialize default metric definitions"""
+        default_metrics = [
             MetricDefinition("total_views", "views", AggregationType.SUM, 1.0, description="Total views across platforms"),
             MetricDefinition("total_likes", "likes", AggregationType.SUM, 1.0, description="Total likes across platforms"),
             MetricDefinition("total_shares", "shares", AggregationType.SUM, 1.0, description="Total shares across platforms"),
@@ -125,11 +136,13 @@ class PlatformAggregator:
         self.metric_definitions.extend(default_metrics)
     
     def register_content_mapping(self, mapping: CrossPlatformContent):
-        """Register cross-platform content mapping"""        self.content_mappings[mapping.content_id] = mapping
+        """Register cross-platform content mapping"""
+        self.content_mappings[mapping.content_id] = mapping
         logger.info(f"Registered content mapping for {mapping.title} across {len(mapping.platform_mappings)} platforms")
     
     def add_metric_definition(self, metric: MetricDefinition):
-        """Add custom metric definition"""        self.metric_definitions.append(metric)
+        """Add custom metric definition"""
+        self.metric_definitions.append(metric)
         logger.info(f"Added metric definition: {metric.name}")
     
     async def aggregate_content_analytics(
@@ -139,7 +152,8 @@ class PlatformAggregator:
         end_date: datetime,
         time_frame: TimeFrame = TimeFrame.DAY
     ) -> Optional[AggregatedMetrics]:
-        """Aggregate analytics for cross-platform content"""        
+        """Aggregate analytics for cross-platform content"""
+        
         # Get content mapping
         content_mapping = self.content_mappings.get(content_id)
         if not content_mapping:
@@ -207,7 +221,8 @@ class PlatformAggregator:
         start_date: datetime = None,
         end_date: datetime = None
     ) -> Dict[str, PlatformPerformance]:
-        """Get performance metrics for platforms"""        
+        """Get performance metrics for platforms"""
+        
         if not platform_ids:
             platform_ids = [p.platform_id for p in self.platform_manager.get_active_platforms()]
         
@@ -286,7 +301,8 @@ class PlatformAggregator:
         start_date: datetime = None,
         end_date: datetime = None
     ) -> AudienceInsights:
-        """Get aggregated audience insights"""        
+        """Get aggregated audience insights"""
+        
         if not platform_ids:
             platform_ids = [p.platform_id for p in self.platform_manager.get_active_platforms()]
         
@@ -346,7 +362,8 @@ class PlatformAggregator:
         )
     
     def _aggregate_platform_data(self, platform_analytics: Dict[str, AnalyticsData]) -> Dict[str, Any]:
-        """Aggregate data from multiple platforms"""        aggregated = {}
+        """Aggregate data from multiple platforms"""
+        aggregated = {}
         custom_metrics = {}
         
         for metric_def in self.metric_definitions:
@@ -402,7 +419,8 @@ class PlatformAggregator:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Dict[str, Any]]:
-        """Compare performance across multiple content pieces"""        
+        """Compare performance across multiple content pieces"""
+        
         comparison_data = {}
         
         for content_id in content_ids:
@@ -430,7 +448,8 @@ class PlatformAggregator:
         limit: int = 10,
         time_frame: TimeFrame = TimeFrame.DAY
     ) -> List[Dict[str, Any]]:
-        """Get trending content across platforms"""        
+        """Get trending content across platforms"""
+        
         if not platform_ids:
             platform_ids = [p.platform_id for p in self.platform_manager.get_active_platforms()]
         
@@ -478,7 +497,8 @@ class PlatformAggregator:
         return trending_content[:limit]
     
     def _calculate_trend_score(self, analytics: AnalyticsData) -> float:
-        """Calculate trending score for content"""        # Simple trending algorithm
+        """Calculate trending score for content"""
+        # Simple trending algorithm
         # In practice, this would be more sophisticated
         
         views_score = min(analytics.views / 1000, 100)  # Cap at 100k views
@@ -496,7 +516,8 @@ class PlatformAggregator:
         end_date: datetime,
         format: str = "json"
     ) -> Dict[str, Any]:
-        """Export aggregated data in specified format"""        
+        """Export aggregated data in specified format"""
+        
         export_data = {
             'export_metadata': {
                 'generated_at': datetime.utcnow().isoformat(),
@@ -550,11 +571,13 @@ class PlatformAggregator:
         return export_data
     
     def clear_cache(self):
-        """Clear aggregation cache"""        self.cached_results.clear()
+        """Clear aggregation cache"""
+        self.cached_results.clear()
         logger.info("Aggregation cache cleared")
     
     def get_aggregation_stats(self) -> Dict[str, Any]:
-        """Get aggregation statistics"""        return {
+        """Get aggregation statistics"""
+        return {
             'content_mappings': len(self.content_mappings),
             'metric_definitions': len(self.metric_definitions),
             'cached_results': len(self.cached_results),

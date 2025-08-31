@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, ARRAY
+"""
+from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, JSONB
@@ -35,7 +36,8 @@ Base = declarative_base()
 
 
 class WorkspaceType(Enum):
-    """Workspace type enumeration"""    PERSONAL = "personal"
+    """Workspace type enumeration"""
+    PERSONAL = "personal"
     TEAM = "team"
     ORGANIZATION = "organization"
     PROJECT = "project"
@@ -50,7 +52,8 @@ class WorkspaceType(Enum):
 
 
 class WorkspaceStatus(Enum):
-    """Workspace status enumeration"""    ACTIVE = "active"
+    """Workspace status enumeration"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPENDED = "suspended"
     ARCHIVED = "archived"
@@ -62,7 +65,8 @@ class WorkspaceStatus(Enum):
 
 
 class AccessLevel(Enum):
-    """Access level enumeration"""    PUBLIC = "public"
+    """Access level enumeration"""
+    PUBLIC = "public"
     PRIVATE = "private"
     RESTRICTED = "restricted"
     INVITATION_ONLY = "invitation_only"
@@ -71,7 +75,8 @@ class AccessLevel(Enum):
 
 
 class ResourceType(Enum):
-    """Resource type enumeration"""    STORAGE = "storage"
+    """Resource type enumeration"""
+    STORAGE = "storage"
     COMPUTE = "compute"
     BANDWIDTH = "bandwidth"
     API_CALLS = "api_calls"
@@ -84,7 +89,8 @@ class ResourceType(Enum):
 
 
 class UsageStatus(Enum):
-    """Usage status enumeration"""    NORMAL = "normal"
+    """Usage status enumeration"""
+    NORMAL = "normal"
     WARNING = "warning"
     CRITICAL = "critical"
     EXCEEDED = "exceeded"
@@ -92,7 +98,8 @@ class UsageStatus(Enum):
 
 
 class EnvironmentType(Enum):
-    """Environment type enumeration"""    DEVELOPMENT = "development"
+    """Environment type enumeration"""
+    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
@@ -101,7 +108,8 @@ class EnvironmentType(Enum):
 
 
 class BackupStatus(Enum):
-    """Backup status enumeration"""    ACTIVE = "active"
+    """Backup status enumeration"""
+    ACTIVE = "active"
     SCHEDULED = "scheduled"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -111,11 +119,13 @@ class BackupStatus(Enum):
 
 
 class WorkspaceManagement(Base):
-    """    Enterprise Workspace Management Model
+    """
+    Enterprise Workspace Management Model
     
     Comprehensive workspace management with resource allocation,
     environment management, and collaborative features.
-    """    __tablename__ = 'workspace_management'
+    """
+    __tablename__ = 'workspace_management'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -312,7 +322,8 @@ class WorkspaceManagement(Base):
         created_by: str,
         **kwargs
     ) -> 'WorkspaceManagement':
-        """Create a new workspace"""        workspace_id = f"ws_{uuid.uuid4().hex[:12]}"
+        """Create a new workspace"""
+        workspace_id = f"ws_{uuid.uuid4().hex[:12]}"
         
         return cls(
             workspace_id=workspace_id,
@@ -332,7 +343,8 @@ class WorkspaceManagement(Base):
         created_by: str,
         **overrides
     ) -> 'WorkspaceManagement':
-        """Create workspace from template"""        if not template_workspace.is_template:
+        """Create workspace from template"""
+        if not template_workspace.is_template:
             raise ValueError("Source workspace is not a template")
         
         workspace_data = {
@@ -353,17 +365,20 @@ class WorkspaceManagement(Base):
         return workspace
     
     def get_storage_usage_percentage(self) -> float:
-        """Get storage usage as percentage"""        if self.storage_quota_gb == 0:
+        """Get storage usage as percentage"""
+        if self.storage_quota_gb == 0:
             return 0.0
         return (self.storage_used_gb / self.storage_quota_gb) * 100
     
     def get_compute_usage_percentage(self) -> float:
-        """Get compute usage as percentage"""        if not self.compute_quota_hours or self.compute_quota_hours == 0:
+        """Get compute usage as percentage"""
+        if not self.compute_quota_hours or self.compute_quota_hours == 0:
             return 0.0
         return (self.compute_used_hours / self.compute_quota_hours) * 100
     
     def check_resource_limits(self) -> Dict[str, bool]:
-        """Check if any resource limits are exceeded"""        limits_status = {
+        """Check if any resource limits are exceeded"""
+        limits_status = {
             'storage_exceeded': self.storage_used_gb >= self.storage_quota_gb,
             'compute_exceeded': False,
             'bandwidth_exceeded': False,
@@ -386,7 +401,8 @@ class WorkspaceManagement(Base):
         return limits_status
     
     def update_usage_status(self) -> UsageStatus:
-        """Update and return current usage status"""        limits = self.check_resource_limits()
+        """Update and return current usage status"""
+        limits = self.check_resource_limits()
         
         if any(limits.values()):
             self.current_usage_status = UsageStatus.EXCEEDED
@@ -400,7 +416,8 @@ class WorkspaceManagement(Base):
         return self.current_usage_status
     
     def can_user_access(self, user_id: str, required_access: str = "read") -> bool:
-        """Check if user can access workspace"""        if self.owner_id == user_id:
+        """Check if user can access workspace"""
+        if self.owner_id == user_id:
             return True
         
         if self.access_level == AccessLevel.PUBLIC:
@@ -410,7 +427,8 @@ class WorkspaceManagement(Base):
         return False
     
     def add_storage_usage(self, gb_amount: float) -> bool:
-        """Add storage usage and check limits"""        if self.storage_used_gb + gb_amount > self.storage_quota_gb:
+        """Add storage usage and check limits"""
+        if self.storage_used_gb + gb_amount > self.storage_quota_gb:
             return False
         
         self.storage_used_gb += gb_amount
@@ -419,7 +437,8 @@ class WorkspaceManagement(Base):
         return True
     
     def add_compute_usage(self, hours_amount: float) -> bool:
-        """Add compute usage and check limits"""        if self.compute_quota_hours and self.compute_used_hours + hours_amount > self.compute_quota_hours:
+        """Add compute usage and check limits"""
+        if self.compute_quota_hours and self.compute_used_hours + hours_amount > self.compute_quota_hours:
             return False
         
         self.compute_used_hours += hours_amount
@@ -428,7 +447,8 @@ class WorkspaceManagement(Base):
         return True
     
     def reset_usage_metrics(self) -> None:
-        """Reset usage metrics for billing cycle"""        if self.usage_reset_frequency == "monthly":
+        """Reset usage metrics for billing cycle"""
+        if self.usage_reset_frequency == "monthly":
             self.compute_used_hours = 0.0
             self.bandwidth_used_gb = 0.0
             self.api_calls_used = 0
@@ -440,7 +460,8 @@ class WorkspaceManagement(Base):
             self.update_usage_status()
     
     def archive_workspace(self, archived_by: str, reason: str = None) -> None:
-        """Archive the workspace"""        self.status = WorkspaceStatus.ARCHIVED
+        """Archive the workspace"""
+        self.status = WorkspaceStatus.ARCHIVED
         self.archived_at = datetime.now(timezone.utc)
         self.updated_at = datetime.now(timezone.utc)
         
@@ -454,7 +475,8 @@ class WorkspaceManagement(Base):
         }
     
     def restore_workspace(self, restored_by: str) -> None:
-        """Restore archived workspace"""        self.status = WorkspaceStatus.ACTIVE
+        """Restore archived workspace"""
+        self.status = WorkspaceStatus.ACTIVE
         self.archived_at = None
         self.updated_at = datetime.now(timezone.utc)
         
@@ -473,7 +495,8 @@ class WorkspaceManagement(Base):
         created_by: str,
         include_data: bool = False
     ) -> 'WorkspaceManagement':
-        """Clone workspace to create a new one"""        clone_data = {
+        """Clone workspace to create a new one"""
+        clone_data = {
             'name': new_name,
             'workspace_type': self.workspace_type,
             'owner_id': new_owner_id,
@@ -503,7 +526,8 @@ class WorkspaceManagement(Base):
         return cloned_workspace
     
     def get_workspace_summary(self) -> Dict[str, Any]:
-        """Get comprehensive workspace summary"""        return {
+        """Get comprehensive workspace summary"""
+        return {
             'basic_info': {
                 'workspace_id': self.workspace_id,
                 'name': self.name,
@@ -557,10 +581,12 @@ class WorkspaceManagement(Base):
 
 
 class WorkspaceProject(Base):
-    """    Workspace Project Model
+    """
+    Workspace Project Model
     
     Manages projects within workspaces.
-    """    __tablename__ = 'workspace_projects'
+    """
+    __tablename__ = 'workspace_projects'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

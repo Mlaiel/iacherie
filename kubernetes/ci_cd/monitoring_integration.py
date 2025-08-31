@@ -7,7 +7,8 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise monitoring and observability integration for CI/CD pipeline.
 Comprehensive metrics collection, alerting, and dashboard management.
 ================================================================
-"""from typing import Dict, List, Optional, Any, Union, Tuple, Callable
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple, Callable
 import asyncio
 import logging
 import json
@@ -26,20 +27,23 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Metric type enumeration"""    COUNTER = "counter"
+    """Metric type enumeration"""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
 
 class AlertSeverity(Enum):
-    """Alert severity enumeration"""    CRITICAL = "critical"
+    """Alert severity enumeration"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
     INFO = "info"
 
 class MonitoringBackend(Enum):
-    """Monitoring backend enumeration"""    PROMETHEUS = "prometheus"
+    """Monitoring backend enumeration"""
+    PROMETHEUS = "prometheus"
     INFLUXDB = "influxdb"
     CLOUDWATCH = "cloudwatch"
     DATADOG = "datadog"
@@ -48,7 +52,8 @@ class MonitoringBackend(Enum):
 
 @dataclass
 class MetricDefinition:
-    """Metric definition structure"""    name: str
+    """Metric definition structure"""
+    name: str
     metric_type: MetricType
     description: str
     labels: List[str] = None
@@ -61,7 +66,8 @@ class MetricDefinition:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""    name: str
+    """Alert rule configuration"""
+    name: str
     metric_name: str
     condition: str  # e.g., "> 0.8", "< 100", "== 0"
     threshold: float
@@ -76,7 +82,8 @@ class AlertRule:
 
 @dataclass
 class DashboardConfig:
-    """Dashboard configuration"""    name: str
+    """Dashboard configuration"""
+    name: str
     description: str
     panels: List[Dict[str, Any]]
     refresh_interval: str = "30s"
@@ -88,9 +95,11 @@ class DashboardConfig:
             self.tags = []
 
 class MonitoringIntegration:
-    """Enterprise monitoring integration system"""    
+    """Enterprise monitoring integration system"""
+    
     def __init__(self):
-        """Initialize monitoring integration"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize monitoring integration"""
+        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.metrics_registry = {}
         self.alert_rules = {}
         self.dashboards = {}
@@ -102,7 +111,8 @@ class MonitoringIntegration:
         self._initialize_core_metrics()
     
     def _initialize_core_metrics(self) -> None:
-        """Initialize core CI/CD metrics"""        core_metrics = [
+        """Initialize core CI/CD metrics"""
+        core_metrics = [
             MetricDefinition(
                 name="build_total",
                 metric_type=MetricType.COUNTER,
@@ -173,7 +183,8 @@ class MonitoringIntegration:
             self.register_metric(metric_def)
     
     async def initialize(self, backends_config: Dict[str, Dict[str, Any]]) -> bool:
-        """Initialize monitoring backends"""        try:
+        """Initialize monitoring backends"""
+        try:
             # Initialize monitoring backends
             for backend_name, config in backends_config.items():
                 await self._initialize_backend(backend_name, config)
@@ -193,7 +204,8 @@ class MonitoringIntegration:
             return False
     
     async def _initialize_backend(self, backend_name: str, config: Dict[str, Any]) -> None:
-        """Initialize specific monitoring backend"""        backend_type = MonitoringBackend(config.get("type", "prometheus"))
+        """Initialize specific monitoring backend"""
+        backend_type = MonitoringBackend(config.get("type", "prometheus"))
         
         if backend_type == MonitoringBackend.PROMETHEUS:
             self.backends[backend_name] = await self._init_prometheus(config)
@@ -207,7 +219,8 @@ class MonitoringIntegration:
         self.logger.info(f"Backend initialized: {backend_name} ({backend_type.value})")
     
     async def _init_prometheus(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Initialize Prometheus backend"""        return {
+        """Initialize Prometheus backend"""
+        return {
             "type": "prometheus",
             "endpoint": config.get("endpoint", "http://localhost:9090"),
             "pushgateway": config.get("pushgateway", "http://localhost:9091"),
@@ -215,7 +228,8 @@ class MonitoringIntegration:
         }
     
     async def _init_influxdb(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Initialize InfluxDB backend"""        client = InfluxDBClient(
+        """Initialize InfluxDB backend"""
+        client = InfluxDBClient(
             url=config.get("url", "http://localhost:8086"),
             token=config.get("token"),
             org=config.get("org", "ia-influencer")
@@ -229,7 +243,8 @@ class MonitoringIntegration:
         }
     
     async def _init_cloudwatch(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Initialize CloudWatch backend"""        client = boto3.client(
+        """Initialize CloudWatch backend"""
+        client = boto3.client(
             'cloudwatch',
             region_name=config.get("region", "eu-central-1"),
             aws_access_key_id=config.get("access_key"),
@@ -243,7 +258,8 @@ class MonitoringIntegration:
         }
     
     async def _init_elasticsearch(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Initialize Elasticsearch backend"""        client = elasticsearch.Elasticsearch(
+        """Initialize Elasticsearch backend"""
+        client = elasticsearch.Elasticsearch(
             [config.get("host", "localhost:9200")],
             http_auth=(config.get("username"), config.get("password")) if config.get("username") else None
         )
@@ -255,7 +271,8 @@ class MonitoringIntegration:
         }
     
     def register_metric(self, metric_def: MetricDefinition) -> bool:
-        """Register new metric"""        try:
+        """Register new metric"""
+        try:
             metric_key = f"{metric_def.namespace}_{metric_def.name}"
             
             if metric_def.metric_type == MetricType.COUNTER:
@@ -304,7 +321,8 @@ class MonitoringIntegration:
         labels: Optional[Dict[str, str]] = None,
         timestamp: Optional[datetime] = None
     ) -> bool:
-        """Record metric value"""        try:
+        """Record metric value"""
+        try:
             if metric_name not in self.metrics_registry:
                 self.logger.warning(f"Metric not registered: {metric_name}")
                 return False
@@ -345,7 +363,8 @@ class MonitoringIntegration:
         labels: Optional[Dict[str, str]],
         timestamp: Optional[datetime]
     ) -> None:
-        """Record metric to all configured backends"""        for backend_name, backend in self.backends.items():
+        """Record metric to all configured backends"""
+        for backend_name, backend in self.backends.items():
             try:
                 if backend["type"] == "influxdb":
                     await self._record_to_influxdb(backend, metric_name, value, labels, timestamp)
@@ -365,7 +384,8 @@ class MonitoringIntegration:
         labels: Optional[Dict[str, str]],
         timestamp: Optional[datetime]
     ) -> None:
-        """Record metric to InfluxDB"""        client = backend["client"]
+        """Record metric to InfluxDB"""
+        client = backend["client"]
         write_api = client.write_api(write_options=SYNCHRONOUS)
         
         point = Point(metric_name).field("value", value)
@@ -387,7 +407,8 @@ class MonitoringIntegration:
         labels: Optional[Dict[str, str]],
         timestamp: Optional[datetime]
     ) -> None:
-        """Record metric to CloudWatch"""        client = backend["client"]
+        """Record metric to CloudWatch"""
+        client = backend["client"]
         
         dimensions = []
         if labels:
@@ -411,7 +432,8 @@ class MonitoringIntegration:
         labels: Optional[Dict[str, str]],
         timestamp: Optional[datetime]
     ) -> None:
-        """Record metric to Elasticsearch"""        client = backend["client"]
+        """Record metric to Elasticsearch"""
+        client = backend["client"]
         
         doc = {
             "metric_name": metric_name,
@@ -424,7 +446,8 @@ class MonitoringIntegration:
         client.index(index=index_name, body=doc)
     
     async def add_alert_rule(self, alert_rule: AlertRule) -> bool:
-        """Add new alert rule"""        try:
+        """Add new alert rule"""
+        try:
             self.alert_rules[alert_rule.name] = alert_rule
             
             # Configure alert in backends
@@ -438,11 +461,13 @@ class MonitoringIntegration:
             return False
     
     async def _configure_alert_in_backends(self, alert_rule: AlertRule) -> None:
-        """Configure alert rule in monitoring backends"""        # Implementation would configure alerts in Prometheus, Grafana, etc.
+        """Configure alert rule in monitoring backends"""
+        # Implementation would configure alerts in Prometheus, Grafana, etc.
         pass
     
     async def check_alerts(self) -> List[Dict[str, Any]]:
-        """Check all alert rules and return triggered alerts"""        triggered_alerts = []
+        """Check all alert rules and return triggered alerts"""
+        triggered_alerts = []
         
         for alert_name, alert_rule in self.alert_rules.items():
             try:
@@ -468,7 +493,8 @@ class MonitoringIntegration:
         return triggered_alerts
     
     async def _get_current_metric_value(self, metric_name: str) -> Optional[float]:
-        """Get current value of metric from monitoring backend"""        # Implementation would query the monitoring backend
+        """Get current value of metric from monitoring backend"""
+        # Implementation would query the monitoring backend
         # For now, return a mock value
         return 0.5
     
@@ -478,7 +504,8 @@ class MonitoringIntegration:
         condition: str,
         threshold: float
     ) -> bool:
-        """Evaluate alert condition"""        try:
+        """Evaluate alert condition"""
+        try:
             if condition.startswith(">"):
                 return current_value > threshold
             elif condition.startswith("<"):
@@ -497,7 +524,8 @@ class MonitoringIntegration:
             return False
     
     async def send_alert_notification(self, alert: Dict[str, Any]) -> bool:
-        """Send alert notification"""        try:
+        """Send alert notification"""
+        try:
             # Implementation would send notifications via configured channels
             self.logger.warning(
                 f"ALERT: {alert['alert_name']} - "
@@ -511,7 +539,8 @@ class MonitoringIntegration:
             return False
     
     async def create_dashboard(self, dashboard_config: DashboardConfig) -> bool:
-        """Create monitoring dashboard"""        try:
+        """Create monitoring dashboard"""
+        try:
             self.dashboards[dashboard_config.name] = dashboard_config
             
             # Create dashboard in backends (Grafana, etc.)
@@ -525,11 +554,13 @@ class MonitoringIntegration:
             return False
     
     async def _create_dashboard_in_backends(self, dashboard_config: DashboardConfig) -> None:
-        """Create dashboard in monitoring backends"""        # Implementation would create dashboards in Grafana, etc.
+        """Create dashboard in monitoring backends"""
+        # Implementation would create dashboards in Grafana, etc.
         pass
     
     async def _setup_default_alerts(self) -> None:
-        """Setup default alert rules"""        default_alerts = [
+        """Setup default alert rules"""
+        default_alerts = [
             AlertRule(
                 name="high_build_failure_rate",
                 metric_name="pipeline_success_rate",
@@ -560,7 +591,8 @@ class MonitoringIntegration:
             await self.add_alert_rule(alert_rule)
     
     async def _setup_default_dashboards(self) -> None:
-        """Setup default dashboards"""        ci_cd_dashboard = DashboardConfig(
+        """Setup default dashboards"""
+        ci_cd_dashboard = DashboardConfig(
             name="IA Influencer CI/CD",
             description="Comprehensive CI/CD pipeline monitoring",
             panels=[
@@ -591,7 +623,8 @@ class MonitoringIntegration:
         await self.create_dashboard(ci_cd_dashboard)
     
     async def get_metrics_summary(self, time_range: str = "1h") -> Dict[str, Any]:
-        """Get metrics summary for specified time range"""        summary = {
+        """Get metrics summary for specified time range"""
+        summary = {
             "total_builds": 0,
             "successful_builds": 0,
             "failed_builds": 0,
@@ -620,13 +653,15 @@ class MonitoringIntegration:
         return summary
 
 class CICDMetrics:
-    """CI/CD specific metrics collector"""    
+    """CI/CD specific metrics collector"""
+    
     def __init__(self, monitoring: MonitoringIntegration):
         self.monitoring = monitoring
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def record_build_start(self, build_id: str, environment: str, build_type: str) -> None:
-        """Record build start event"""        await self.monitoring.record_metric(
+        """Record build start event"""
+        await self.monitoring.record_metric(
             "build_total",
             1,
             labels={
@@ -644,7 +679,8 @@ class CICDMetrics:
         success: bool,
         duration: float
     ) -> None:
-        """Record build completion event"""        status = "success" if success else "failure"
+        """Record build completion event"""
+        status = "success" if success else "failure"
         
         await self.monitoring.record_metric(
             "build_total",
@@ -672,7 +708,8 @@ class CICDMetrics:
         success: bool,
         duration: float
     ) -> None:
-        """Record deployment event"""        status = "success" if success else "failure"
+        """Record deployment event"""
+        status = "success" if success else "failure"
         
         await self.monitoring.record_metric(
             "deployment_total",
@@ -699,7 +736,8 @@ class CICDMetrics:
         environment: str,
         inference_time: float
     ) -> None:
-        """Record AI model inference metrics"""        await self.monitoring.record_metric(
+        """Record AI model inference metrics"""
+        await self.monitoring.record_metric(
             "ai_model_inference_time",
             inference_time,
             labels={
@@ -713,7 +751,8 @@ class CICDMetrics:
         content_type: str,
         environment: str
     ) -> None:
-        """Record content protection scan"""        await self.monitoring.record_metric(
+        """Record content protection scan"""
+        await self.monitoring.record_metric(
             "content_protection_scans",
             1,
             labels={

@@ -18,7 +18,8 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 This proprietary distribution technology and platform integration systems
 belong exclusively to Fahed Mlaiel. Any unauthorized use, reverse engineering,
 or competitive implementation will result in immediate legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import json
@@ -78,7 +79,8 @@ settings = get_settings()
 
 
 class DistributionStrategy(str, Enum):
-    """Content distribution strategies"""    SIMULTANEOUS = "simultaneous"      # Post to all platforms at once
+    """Content distribution strategies"""
+    SIMULTANEOUS = "simultaneous"      # Post to all platforms at once
     SEQUENTIAL = "sequential"          # Post with optimized delays
     PLATFORM_OPTIMIZED = "platform_optimized"  # Customize for each platform
     A_B_TEST = "a_b_test"             # Test different versions
@@ -87,7 +89,8 @@ class DistributionStrategy(str, Enum):
 
 
 class PlatformType(str, Enum):
-    """Supported platform types"""    YOUTUBE = "youtube"
+    """Supported platform types"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -99,7 +102,8 @@ class PlatformType(str, Enum):
 
 
 class ContentFormat(str, Enum):
-    """Content format types"""    VIDEO = "video"
+    """Content format types"""
+    VIDEO = "video"
     IMAGE = "image"
     AUDIO = "audio"
     TEXT = "text"
@@ -111,14 +115,16 @@ class ContentFormat(str, Enum):
 
 
 class OptimizationLevel(str, Enum):
-    """Content optimization levels"""    BASIC = "basic"           # Format conversion only
+    """Content optimization levels"""
+    BASIC = "basic"           # Format conversion only
     STANDARD = "standard"     # Format + basic optimization
     ADVANCED = "advanced"     # AI-powered optimization
     PREMIUM = "premium"       # Full AI enhancement
 
 
 class DistributionStatus(str, Enum):
-    """Distribution job status"""    PENDING = "pending"
+    """Distribution job status"""
+    PENDING = "pending"
     PROCESSING = "processing"
     OPTIMIZING = "optimizing"
     SCHEDULED = "scheduled"
@@ -129,8 +135,10 @@ class DistributionStatus(str, Enum):
 
 
 class MultiPlatformDistributor:
-    """    Advanced multi-platform content distribution engine with AI optimization
-    """    
+    """
+    Advanced multi-platform content distribution engine with AI optimization
+    """
+    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.notification_manager = NotificationManager()
@@ -201,8 +209,10 @@ class MultiPlatformDistributor:
         schedule_time: Optional[datetime] = None,
         custom_settings: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Distribute content across multiple platforms with AI optimization
-        """        try:
+        """
+        Distribute content across multiple platforms with AI optimization
+        """
+        try:
             logger.info(f"Starting content distribution - Content: {content_id}, Platforms: {platforms}")
             
             # Create distribution job
@@ -286,8 +296,10 @@ class MultiPlatformDistributor:
         optimization_level: OptimizationLevel,
         custom_settings: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Optimize content for each target platform using AI enhancement
-        """        try:
+        """
+        Optimize content for each target platform using AI enhancement
+        """
+        try:
             optimized_content = {
                 "original": content_data,
                 "platforms": {},
@@ -354,8 +366,10 @@ class MultiPlatformDistributor:
         platform_specs: Dict[str, Any],
         optimization_level: OptimizationLevel
     ) -> Dict[str, Any]:
-        """        Optimize video content for specific platform requirements
-        """        try:
+        """
+        Optimize video content for specific platform requirements
+        """
+        try:
             original_path = content_data["file_path"]
             optimized_variations = []
             
@@ -421,8 +435,10 @@ class MultiPlatformDistributor:
         platform: PlatformType,
         optimization_level: OptimizationLevel
     ) -> str:
-        """        Create optimized video file using FFmpeg with AI enhancement
-        """        try:
+        """
+        Create optimized video file using FFmpeg with AI enhancement
+        """
+        try:
             # Create temporary output path
             with tempfile.NamedTemporaryFile(suffix='.mp4', delete=False) as temp_file:
                 output_path = temp_file.name
@@ -500,8 +516,10 @@ class MultiPlatformDistributor:
             raise OptimizationError(f"Video creation failed: {str(e)}")
 
     def _get_platform_codec_params(self, platform: PlatformType, optimization_level: OptimizationLevel) -> Dict[str, Any]:
-        """        Get platform-specific codec parameters for optimal quality and compatibility
-        """        base_params = {
+        """
+        Get platform-specific codec parameters for optimal quality and compatibility
+        """
+        base_params = {
             'vcodec': 'libx264',
             'acodec': 'aac',
             'format': 'mp4',
@@ -545,8 +563,10 @@ class MultiPlatformDistributor:
         platform_specs: Dict[str, Any],
         optimization_level: OptimizationLevel
     ) -> Dict[str, Any]:
-        """        Optimize image content for specific platform requirements
-        """        try:
+        """
+        Optimize image content for specific platform requirements
+        """
+        try:
             original_path = content_data["file_path"]
             optimized_variations = []
             
@@ -595,8 +615,10 @@ class MultiPlatformDistributor:
         platform: PlatformType,
         optimization_level: OptimizationLevel
     ) -> str:
-        """        Create optimized image with AI enhancement
-        """        try:
+        """
+        Create optimized image with AI enhancement
+        """
+        try:
             # Create temporary output path
             with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as temp_file:
                 output_path = temp_file.name
@@ -663,8 +685,10 @@ class MultiPlatformDistributor:
         platform: PlatformType,
         platform_specs: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Optimize metadata (titles, descriptions, hashtags) for platform algorithms
-        """        try:
+        """
+        Optimize metadata (titles, descriptions, hashtags) for platform algorithms
+        """
+        try:
             original_title = content_data.get("title", "")
             original_description = content_data.get("description", "")
             original_hashtags = content_data.get("hashtags", [])
@@ -716,8 +740,10 @@ class MultiPlatformDistributor:
             return {"error": str(e)}
 
     async def _execute_optimized_distribution(self, distribution_plan: Dict[str, Any]) -> Dict[str, Any]:
-        """        Execute platform-optimized distribution with intelligent timing and content adaptation
-        """        try:
+        """
+        Execute platform-optimized distribution with intelligent timing and content adaptation
+        """
+        try:
             results = {}
             
             for platform_name, platform_data in distribution_plan["platforms"].items():
@@ -775,7 +801,8 @@ class MultiPlatformDistributor:
 
     # Additional helper methods for comprehensive distribution functionality...
     async def _create_distribution_job(self, job_id: str, content_id: str, user_id: int, platforms: List[PlatformType], strategy: DistributionStrategy, optimization_level: OptimizationLevel, schedule_time: Optional[datetime]) -> Dict[str, Any]:
-        """Create distribution job record"""        # Implementation would create database record
+        """Create distribution job record"""
+        # Implementation would create database record
         return {
             "job_id": job_id,
             "content_id": content_id,
@@ -789,7 +816,8 @@ class MultiPlatformDistributor:
         }
 
     async def _get_content_data(self, content_id: str) -> Dict[str, Any]:
-        """Get content data from database"""        # Implementation would retrieve content from database
+        """Get content data from database"""
+        # Implementation would retrieve content from database
         return {
             "id": content_id,
             "type": ContentType.VIDEO.value,
@@ -800,7 +828,8 @@ class MultiPlatformDistributor:
         }
 
     async def _create_distribution_plan(self, optimized_content: Dict[str, Any], platforms: List[PlatformType], strategy: DistributionStrategy, schedule_time: Optional[datetime]) -> Dict[str, Any]:
-        """Create comprehensive distribution plan"""        # Implementation would create detailed distribution plan
+        """Create comprehensive distribution plan"""
+        # Implementation would create detailed distribution plan
         return {
             "strategy": strategy.value,
             "schedule_time": schedule_time.isoformat() if schedule_time else None,
@@ -809,16 +838,20 @@ class MultiPlatformDistributor:
 
     # Additional implementation methods...
     async def _get_video_info(self, file_path: str) -> Dict[str, Any]:
-        """Get video file information"""        pass
+        """Get video file information"""
+        pass
 
     async def _get_video_duration(self, file_path: str) -> float:
-        """Get video duration in seconds"""        pass
+        """Get video duration in seconds"""
+        pass
 
     async def _get_file_size(self, file_path: str) -> int:
-        """Get file size in bytes"""        pass
+        """Get file size in bytes"""
+        pass
 
     async def _get_video_resolution(self, file_path: str) -> Tuple[int, int]:
-        """Get video resolution (width, height)"""        pass
+        """Get video resolution (width, height)"""
+        pass
 
     # Continue with remaining distribution methods...
 from backend.data.storage import StorageManager
@@ -837,7 +870,8 @@ settings = get_settings()
 
 
 class DistributionStrategy(str, Enum):
-    """Content distribution strategies"""    SIMULTANEOUS = "simultaneous"      # All platforms at once
+    """Content distribution strategies"""
+    SIMULTANEOUS = "simultaneous"      # All platforms at once
     SEQUENTIAL = "sequential"          # One after another
     OPTIMIZED_TIMING = "optimized_timing"  # Best time per platform
     STAGGERED = "staggered"           # Spread over time
@@ -846,14 +880,16 @@ class DistributionStrategy(str, Enum):
 
 
 class PlatformPriority(str, Enum):
-    """Platform priority levels"""    PRIMARY = "primary"      # Main platform
+    """Platform priority levels"""
+    PRIMARY = "primary"      # Main platform
     SECONDARY = "secondary"  # Important but not main
     TERTIARY = "tertiary"    # Nice to have
     TESTING = "testing"      # Experimental
 
 
 class ContentOptimization(str, Enum):
-    """Content optimization types"""    FORMAT_ADAPTATION = "format_adaptation"     # Resize, crop, convert
+    """Content optimization types"""
+    FORMAT_ADAPTATION = "format_adaptation"     # Resize, crop, convert
     PLATFORM_SPECIFIC = "platform_specific"    # Platform requirements
     ENGAGEMENT_OPTIMIZATION = "engagement_optimization"  # Maximize engagement
     SEO_OPTIMIZATION = "seo_optimization"      # Search optimization
@@ -861,8 +897,10 @@ class ContentOptimization(str, Enum):
 
 
 class PlatformManager:
-    """    Advanced platform management system for multi-platform content distribution
-    """    
+    """
+    Advanced platform management system for multi-platform content distribution
+    """
+    
     def __init__(self):
         self.platform_apis = {
             "youtube": YouTubeAPI(),
@@ -1018,8 +1056,10 @@ class PlatformManager:
         platform: str,
         optimization_types: List[ContentOptimization]
     ) -> Dict[str, Any]:
-        """        Optimize content for specific platform requirements
-        """        try:
+        """
+        Optimize content for specific platform requirements
+        """
+        try:
             logger.info(f"Optimizing content {content_id} for {platform}")
             
             # Get original content
@@ -1092,8 +1132,10 @@ class PlatformManager:
         timezone: str = "UTC",
         analysis_period_days: int = 30
     ) -> Dict[str, Any]:
-        """        Calculate optimal posting times based on audience analytics
-        """        try:
+        """
+        Calculate optimal posting times based on audience analytics
+        """
+        try:
             logger.info(f"Calculating optimal posting times for user {user_id}")
             
             optimal_times = {
@@ -1146,8 +1188,10 @@ class PlatformManager:
         platform: str,
         publishing_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Publish optimized content to specific platform
-        """        try:
+        """
+        Publish optimized content to specific platform
+        """
+        try:
             logger.info(f"Publishing content {content_id} to {platform}")
             
             # Get platform API
@@ -1207,8 +1251,10 @@ class PlatformManager:
         content_id: str,
         distribution_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Schedule content distribution across multiple platforms
-        """        try:
+        """
+        Schedule content distribution across multiple platforms
+        """
+        try:
             logger.info(f"Scheduling multi-platform distribution for content {content_id}")
             
             campaign_id = str(uuid4())
@@ -1294,8 +1340,10 @@ class PlatformManager:
         self,
         campaign_id: str
     ) -> Dict[str, Any]:
-        """        Track performance of distributed content across platforms
-        """        try:
+        """
+        Track performance of distributed content across platforms
+        """
+        try:
             # Get campaign details
             async with AsyncDatabaseSession() as session:
                 campaign = await session.get(DistributionCampaign, campaign_id)
@@ -1387,7 +1435,8 @@ class PlatformManager:
         platform: str,
         platform_reqs: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply format adaptations for platform requirements"""        adapted_files = {}
+        """Apply format adaptations for platform requirements"""
+        adapted_files = {}
         
         if content.content_type == "video":
             # Video format adaptation
@@ -1427,7 +1476,8 @@ class PlatformManager:
         platform: str,
         platform_reqs: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply platform-specific optimizations"""        metadata = {}
+        """Apply platform-specific optimizations"""
+        metadata = {}
         
         # Optimize title/caption length
         if "caption" in platform_reqs:
@@ -1450,7 +1500,8 @@ class PlatformManager:
         content: ContentModel,
         platform: str
     ) -> Dict[str, Any]:
-        """Apply engagement optimization techniques"""        metadata = {}
+        """Apply engagement optimization techniques"""
+        metadata = {}
         
         # Add call-to-action based on platform
         cta_templates = {
@@ -1475,7 +1526,8 @@ class PlatformManager:
         content: ContentModel,
         platform: str
     ) -> Dict[str, Any]:
-        """Apply SEO optimization"""        metadata = {}
+        """Apply SEO optimization"""
+        metadata = {}
         
         # Generate SEO-optimized title
         if platform == "youtube":
@@ -1490,7 +1542,8 @@ class PlatformManager:
         content: ContentModel,
         platform: str
     ) -> Dict[str, Any]:
-        """Apply accessibility features"""        metadata = {}
+        """Apply accessibility features"""
+        metadata = {}
         
         # Generate alt text for images
         if content.content_type == "image":
@@ -1505,58 +1558,72 @@ class PlatformManager:
 
     # Additional helper methods...
     async def _resize_video(self, video_path: str, target_resolution: Tuple[int, int]) -> str:
-        """Resize video to target resolution"""        # Implementation would use FFmpeg or similar
+        """Resize video to target resolution"""
+        # Implementation would use FFmpeg or similar
         pass
 
     async def _generate_video_thumbnail(self, video_path: str, thumbnail_reqs: Dict[str, Any]) -> str:
-        """Generate video thumbnail"""        # Implementation would extract frame and optimize
+        """Generate video thumbnail"""
+        # Implementation would extract frame and optimize
         pass
 
     async def _resize_image(self, image_path: str, aspect_ratio: str, image_reqs: Dict[str, Any]) -> str:
-        """Resize image to specific aspect ratio"""        # Implementation would use PIL
+        """Resize image to specific aspect ratio"""
+        # Implementation would use PIL
         pass
 
     async def _generate_instagram_hashtags(self, content: ContentModel) -> List[str]:
-        """Generate Instagram-optimized hashtags"""        # Implementation would use AI to generate relevant hashtags
+        """Generate Instagram-optimized hashtags"""
+        # Implementation would use AI to generate relevant hashtags
         pass
 
     async def _generate_tiktok_hashtags(self, content: ContentModel) -> List[str]:
-        """Generate TikTok-optimized hashtags"""        # Implementation would generate trending hashtags
+        """Generate TikTok-optimized hashtags"""
+        # Implementation would generate trending hashtags
         pass
 
     async def _generate_twitter_hashtags(self, content: ContentModel) -> List[str]:
-        """Generate Twitter-optimized hashtags"""        # Implementation would generate concise hashtags
+        """Generate Twitter-optimized hashtags"""
+        # Implementation would generate concise hashtags
         pass
 
     async def _generate_engagement_question(self, content: ContentModel) -> str:
-        """Generate engagement question"""        # Implementation would use AI to generate questions
+        """Generate engagement question"""
+        # Implementation would use AI to generate questions
         pass
 
     async def _generate_seo_title(self, content: ContentModel, platform: str) -> str:
-        """Generate SEO-optimized title"""        # Implementation would optimize for search
+        """Generate SEO-optimized title"""
+        # Implementation would optimize for search
         pass
 
     async def _generate_seo_description(self, content: ContentModel, platform: str) -> str:
-        """Generate SEO-optimized description"""        # Implementation would optimize for search
+        """Generate SEO-optimized description"""
+        # Implementation would optimize for search
         pass
 
     async def _generate_seo_tags(self, content: ContentModel) -> List[str]:
-        """Generate SEO tags"""        # Implementation would generate search-optimized tags
+        """Generate SEO tags"""
+        # Implementation would generate search-optimized tags
         pass
 
     async def _generate_alt_text(self, content: ContentModel) -> str:
-        """Generate alt text for images"""        # Implementation would use AI image recognition
+        """Generate alt text for images"""
+        # Implementation would use AI image recognition
         pass
 
     async def _generate_video_captions(self, content: ContentModel) -> str:
-        """Generate video captions"""        # Implementation would use speech recognition
+        """Generate video captions"""
+        # Implementation would use speech recognition
         pass
 
 
 class DistributionPipeline:
-    """    Comprehensive distribution pipeline orchestrating content optimization,
+    """
+    Comprehensive distribution pipeline orchestrating content optimization,
     scheduling, publishing, and performance tracking across platforms
-    """    
+    """
+    
     def __init__(self):
         self.platform_manager = PlatformManager()
         self.notification_manager = NotificationManager()
@@ -1566,8 +1633,10 @@ class DistributionPipeline:
         content_id: str,
         distribution_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Execute complete distribution campaign for content
-        """        try:
+        """
+        Execute complete distribution campaign for content
+        """
+        try:
             logger.info(f"Executing distribution campaign for content {content_id}")
             
             campaign_result = {
@@ -1638,8 +1707,10 @@ class DistributionPipeline:
         user_id: int,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """        Get comprehensive distribution analytics for user
-        """        try:
+        """
+        Get comprehensive distribution analytics for user
+        """
+        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
             
@@ -1726,11 +1797,13 @@ class DistributionPipeline:
 
     # Private helper methods...
     async def _setup_performance_tracking(self, campaign_id: str):
-        """Setup performance tracking for campaign"""        # Implementation would setup background monitoring
+        """Setup performance tracking for campaign"""
+        # Implementation would setup background monitoring
         pass
 
     def _calculate_platform_performance_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate performance score for platform metrics"""        # Implementation would calculate weighted score
+        """Calculate performance score for platform metrics"""
+        # Implementation would calculate weighted score
         views = metrics.get("views", 0)
         engagement = metrics.get("engagement", 0)
         shares = metrics.get("shares", 0)
@@ -1749,7 +1822,8 @@ class DistributionPipeline:
     async def _generate_distribution_insights(
         self, analytics: Dict[str, Any]
     ) -> List[str]:
-        """Generate distribution insights"""        insights = []
+        """Generate distribution insights"""
+        insights = []
         
         # Platform performance insights
         platform_breakdown = analytics.get("platform_breakdown", {})

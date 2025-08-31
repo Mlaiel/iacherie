@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""import logging
+"""
+import logging
 from typing import List, Dict, Any, Optional, Tuple
 from datetime import datetime, timezone, timedelta
 from decimal import Decimal
@@ -48,11 +49,13 @@ logger = logging.getLogger(__name__)
 
 
 class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
-    """    Enterprise AI Revenue Analytics Repository
+    """
+    Enterprise AI Revenue Analytics Repository
     
     Manages AI-powered revenue predictions, optimization experiments, and
     advanced analytics for content creator revenue optimization.
-    """    
+    """
+    
     def __init__(self, db_session: Session):
         super().__init__(AIRevenueAnalytics, db_session)
         self.model = AIRevenueAnalytics
@@ -66,7 +69,8 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
         prediction_data: Dict[str, Any],
         **kwargs
     ) -> AIRevenueAnalytics:
-        """        Create new AI revenue analytics record
+        """
+        Create new AI revenue analytics record
         
         Args:
             user_id: User UUID
@@ -78,7 +82,8 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
             
         Returns:
             Created AIRevenueAnalytics instance
-        """        try:
+        """
+        try:
             analytics_data = {
                 "user_id": user_id,
                 "content_fingerprint_id": content_fingerprint_id,
@@ -124,7 +129,8 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
         actual_revenue: Decimal,
         actual_engagement: Optional[Dict[str, Any]] = None
     ) -> AIRevenueAnalytics:
-        """        Update actual revenue for prediction validation
+        """
+        Update actual revenue for prediction validation
         
         Args:
             analytics_id: AIRevenueAnalytics UUID
@@ -133,7 +139,8 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
             
         Returns:
             Updated AIRevenueAnalytics instance
-        """        try:
+        """
+        try:
             analytics_record = await self.get_by_id(analytics_id)
             if not analytics_record:
                 raise ValueError(f"Revenue analytics not found: {analytics_id}")
@@ -168,7 +175,8 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
         timeframe: Optional[PredictionTimeframe] = None,
         days_back: int = 90
     ) -> Dict[str, Any]:
-        """        Get performance metrics for a specific model
+        """
+        Get performance metrics for a specific model
         
         Args:
             model_type: ML model type
@@ -177,7 +185,8 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
             
         Returns:
             Dictionary containing model performance metrics
-        """        try:
+        """
+        try:
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=days_back)
             
             query = self.db_session.query(self.model).filter(
@@ -279,7 +288,8 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
         control_group_ids: List[str],
         treatment_group_ids: List[str]
     ) -> OptimizationExperiment:
-        """        Create new optimization experiment
+        """
+        Create new optimization experiment
         
         Args:
             user_id: User UUID
@@ -291,7 +301,8 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
             
         Returns:
             Created OptimizationExperiment instance
-        """        try:
+        """
+        try:
             experiment_data = {
                 "user_id": user_id,
                 "experiment_name": experiment_name,
@@ -324,7 +335,8 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
         results: Dict[str, Any],
         statistical_significance: float
     ) -> OptimizationExperiment:
-        """        Complete optimization experiment with results
+        """
+        Complete optimization experiment with results
         
         Args:
             experiment_id: OptimizationExperiment UUID
@@ -333,7 +345,8 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
             
         Returns:
             Updated OptimizationExperiment instance
-        """        try:
+        """
+        try:
             experiment = self.db_session.query(OptimizationExperiment).filter(
                 OptimizationExperiment.id == experiment_id
             ).first()
@@ -366,7 +379,8 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
         validation_date: datetime,
         validation_metrics: Dict[str, Any]
     ) -> PredictionValidation:
-        """        Create prediction validation record
+        """
+        Create prediction validation record
         
         Args:
             analytics_id: AIRevenueAnalytics UUID
@@ -375,7 +389,8 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
             
         Returns:
             Created PredictionValidation instance
-        """        try:
+        """
+        try:
             validation_data = {
                 "ai_revenue_analytics_id": analytics_id,
                 "validation_date": validation_date,
@@ -415,7 +430,8 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
         user_id: str,
         timeframe_days: int = 90
     ) -> Dict[str, Any]:
-        """        Get comprehensive revenue insights for a user
+        """
+        Get comprehensive revenue insights for a user
         
         Args:
             user_id: User UUID
@@ -423,7 +439,8 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
             
         Returns:
             Dictionary containing revenue insights
-        """        try:
+        """
+        try:
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=timeframe_days)
             
             # Get all analytics records for user
@@ -534,14 +551,16 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
         self,
         limit: int = 10
     ) -> List[Dict[str, Any]]:
-        """        Get trending optimization strategies based on successful experiments
+        """
+        Get trending optimization strategies based on successful experiments
         
         Args:
             limit: Maximum number of trends to return
             
         Returns:
             List of trending optimization strategies
-        """        try:
+        """
+        try:
             # Get successful experiments from last 60 days
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=60)
             

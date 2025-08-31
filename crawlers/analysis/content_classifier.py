@@ -21,7 +21,8 @@ Expertise combinée:
 - Audio/Vidéo: Traitement multimédia et analyse de contenu
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 import json
@@ -51,7 +52,8 @@ from PIL import Image
 logger = logging.getLogger(__name__)
 
 class ContentCategory(Enum):
-    """Content categories for classification."""    MUSIC = "music"
+    """Content categories for classification."""
+    MUSIC = "music"
     PHOTOGRAPHY = "photography"
     VIDEO_CONTENT = "video_content"
     ART_DESIGN = "art_design"
@@ -74,14 +76,16 @@ class ContentCategory(Enum):
     UNKNOWN = "unknown"
 
 class ClassificationConfidence(Enum):
-    """Classification confidence levels."""    VERY_HIGH = "very_high"  # > 0.9
+    """Classification confidence levels."""
+    VERY_HIGH = "very_high"  # > 0.9
     HIGH = "high"           # 0.7 - 0.9
     MEDIUM = "medium"       # 0.5 - 0.7
     LOW = "low"            # 0.3 - 0.5
     VERY_LOW = "very_low"  # < 0.3
 
 class ClassificationMethod(Enum):
-    """Classification methods."""    DEEP_LEARNING = "deep_learning"
+    """Classification methods."""
+    DEEP_LEARNING = "deep_learning"
     TRADITIONAL_ML = "traditional_ml"
     RULE_BASED = "rule_based"
     ENSEMBLE = "ensemble"
@@ -89,7 +93,8 @@ class ClassificationMethod(Enum):
 
 @dataclass
 class ClassificationResult:
-    """Content classification result."""    content_id: str
+    """Content classification result."""
+    content_id: str
     primary_category: ContentCategory
     confidence: float
     confidence_level: ClassificationConfidence
@@ -118,7 +123,8 @@ class ClassificationResult:
     created_at: datetime = field(default_factory=datetime.now)
 
 class ContentClassifier:
-    """    Advanced AI-powered content classifier with multi-modal capabilities.
+    """
+    Advanced AI-powered content classifier with multi-modal capabilities.
     
     Features:
     - Multi-modal classification (text, image, audio, video)
@@ -127,7 +133,8 @@ class ContentClassifier:
     - Content safety and quality assessment
     - Real-time and batch processing
     - Continuous learning and model updates
-    """    
+    """
+    
     def __init__(
         self,
         model_cache_dir: str = "/tmp/classifier_models",
@@ -136,7 +143,8 @@ class ContentClassifier:
         enable_safety_filter: bool = True,
         model_ensemble: bool = True
     ):
-        """        Initialize content classifier.
+        """
+        Initialize content classifier.
         
         Args:
             model_cache_dir: Directory for caching ML models
@@ -144,7 +152,8 @@ class ContentClassifier:
             confidence_threshold: Minimum confidence for classification
             enable_safety_filter: Enable content safety filtering
             model_ensemble: Use ensemble of multiple models
-        """        self.model_cache_dir = Path(model_cache_dir)
+        """
+        self.model_cache_dir = Path(model_cache_dir)
         self.model_cache_dir.mkdir(parents=True, exist_ok=True)
         
         self.enable_gpu = enable_gpu and torch.cuda.is_available()
@@ -175,7 +184,8 @@ class ContentClassifier:
         logger.info(f"ContentClassifier initialized with GPU: {self.enable_gpu}")
     
     def _initialize_models(self) -> None:
-        """Initialize classification models."""        try:
+        """Initialize classification models."""
+        try:
             # Text classification models
             self.text_tokenizer = AutoTokenizer.from_pretrained('distilbert-base-uncased')
             self.text_model = AutoModelForSequenceClassification.from_pretrained(
@@ -222,7 +232,8 @@ class ContentClassifier:
             raise
     
     def _load_category_definitions(self) -> None:
-        """Load category definitions and keywords."""        self.category_keywords = {
+        """Load category definitions and keywords."""
+        self.category_keywords = {
             ContentCategory.MUSIC: [
                 'music', 'song', 'album', 'artist', 'band', 'concert', 'audio', 'sound',
                 'melody', 'rhythm', 'beat', 'lyrics', 'vocal', 'instrument', 'guitar',
@@ -311,7 +322,8 @@ class ContentClassifier:
         content_data: Dict[str, Any],
         method: Optional[ClassificationMethod] = None
     ) -> ClassificationResult:
-        """        Classify content using specified or automatic method selection.
+        """
+        Classify content using specified or automatic method selection.
         
         Args:
             content_id: Unique content identifier
@@ -320,7 +332,8 @@ class ContentClassifier:
             
         Returns:
             ClassificationResult: Classification result with confidence scores
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             # Determine method if not specified
@@ -372,7 +385,8 @@ class ContentClassifier:
             )
     
     def _select_optimal_method(self, content_data: Dict[str, Any]) -> ClassificationMethod:
-        """Select optimal classification method based on available data."""        has_text = bool(content_data.get('text') or content_data.get('text_features'))
+        """Select optimal classification method based on available data."""
+        has_text = bool(content_data.get('text') or content_data.get('text_features'))
         has_image = bool(content_data.get('image') or content_data.get('image_features'))
         has_audio = bool(content_data.get('audio') or content_data.get('audio_features'))
         has_video = bool(content_data.get('video') or content_data.get('video_features'))
@@ -393,7 +407,8 @@ class ContentClassifier:
         content_id: str,
         content_data: Dict[str, Any]
     ) -> ClassificationResult:
-        """Perform deep learning-based classification."""        category_scores = {}
+        """Perform deep learning-based classification."""
+        category_scores = {}
         features_used = []
         
         # Text classification with BERT
@@ -441,7 +456,8 @@ class ContentClassifier:
         content_id: str,
         content_data: Dict[str, Any]
     ) -> ClassificationResult:
-        """Perform traditional ML-based classification."""        # Use keyword-based classification for now
+        """Perform traditional ML-based classification."""
+        # Use keyword-based classification for now
         # In production, this would use trained traditional ML models
         return await self._rule_based_classification(content_id, content_data)
     
@@ -450,7 +466,8 @@ class ContentClassifier:
         content_id: str,
         content_data: Dict[str, Any]
     ) -> ClassificationResult:
-        """Perform rule-based classification using keywords and patterns."""        category_scores = {category: 0.0 for category in ContentCategory}
+        """Perform rule-based classification using keywords and patterns."""
+        category_scores = {category: 0.0 for category in ContentCategory}
         features_used = ['keywords', 'metadata']
         
         # Extract text content from various sources
@@ -530,7 +547,8 @@ class ContentClassifier:
         content_id: str,
         content_data: Dict[str, Any]
     ) -> ClassificationResult:
-        """Perform ensemble classification combining multiple methods."""        results = []
+        """Perform ensemble classification combining multiple methods."""
+        results = []
         
         # Get predictions from different methods
         try:
@@ -593,12 +611,14 @@ class ContentClassifier:
         content_id: str,
         content_data: Dict[str, Any]
     ) -> ClassificationResult:
-        """Perform multimodal classification combining text, image, audio, video."""        # For now, use ensemble method
+        """Perform multimodal classification combining text, image, audio, video."""
+        # For now, use ensemble method
         # In production, this would use specialized multimodal models
         return await self._ensemble_classification(content_id, content_data)
     
     async def _classify_text_with_bert(self, content_data: Dict[str, Any]) -> Dict[ContentCategory, float]:
-        """Classify text content using BERT model."""        try:
+        """Classify text content using BERT model."""
+        try:
             text = content_data.get('text', '')
             if not text and 'text_features' in content_data:
                 # Extract text from features
@@ -633,7 +653,8 @@ class ContentClassifier:
             return {}
     
     async def _classify_image_with_clip(self, content_data: Dict[str, Any]) -> Dict[ContentCategory, float]:
-        """Classify image content using CLIP model."""        try:
+        """Classify image content using CLIP model."""
+        try:
             # Prepare category descriptions for CLIP
             category_descriptions = {
                 ContentCategory.MUSIC: "music album cover, musical instruments, concert, recording studio",
@@ -697,7 +718,8 @@ class ContentClassifier:
             return {}
     
     async def _classify_audio_features(self, content_data: Dict[str, Any]) -> Dict[ContentCategory, float]:
-        """Classify audio content based on extracted features."""        try:
+        """Classify audio content based on extracted features."""
+        try:
             audio_features = content_data.get('audio_features', {})
             if not audio_features:
                 return {}
@@ -729,7 +751,8 @@ class ContentClassifier:
             return {}
     
     def _classify_by_url(self, url: str) -> ContentCategory:
-        """Classify content based on URL patterns."""        url_lower = url.lower()
+        """Classify content based on URL patterns."""
+        url_lower = url.lower()
         
         if any(domain in url_lower for domain in ['youtube.com', 'youtu.be']):
             return ContentCategory.VIDEO_CONTENT
@@ -751,7 +774,8 @@ class ContentClassifier:
         return ContentCategory.UNKNOWN
     
     def _classify_by_platform(self, platform: str) -> ContentCategory:
-        """Classify content based on platform."""        platform_lower = platform.lower()
+        """Classify content based on platform."""
+        platform_lower = platform.lower()
         
         if platform_lower in ['youtube']:
             return ContentCategory.VIDEO_CONTENT
@@ -767,7 +791,8 @@ class ContentClassifier:
         return ContentCategory.UNKNOWN
     
     def _classify_by_extension(self, extension: str) -> ContentCategory:
-        """Classify content based on file extension."""        ext_lower = extension.lower()
+        """Classify content based on file extension."""
+        ext_lower = extension.lower()
         
         if ext_lower in ['.mp3', '.wav', '.flac', '.ogg', '.m4a', '.aac']:
             return ContentCategory.MUSIC
@@ -781,7 +806,8 @@ class ContentClassifier:
         return ContentCategory.UNKNOWN
     
     def _classify_by_mime_type(self, mime_type: str) -> ContentCategory:
-        """Classify content based on MIME type."""        if mime_type.startswith('audio/'):
+        """Classify content based on MIME type."""
+        if mime_type.startswith('audio/'):
             return ContentCategory.MUSIC
         elif mime_type.startswith('image/'):
             return ContentCategory.PHOTOGRAPHY
@@ -793,7 +819,8 @@ class ContentClassifier:
         return ContentCategory.UNKNOWN
     
     def _determine_confidence_level(self, confidence: float) -> ClassificationConfidence:
-        """Determine confidence level based on score."""        if confidence >= 0.9:
+        """Determine confidence level based on score."""
+        if confidence >= 0.9:
             return ClassificationConfidence.VERY_HIGH
         elif confidence >= 0.7:
             return ClassificationConfidence.HIGH
@@ -809,7 +836,8 @@ class ContentClassifier:
         result: ClassificationResult,
         content_data: Dict[str, Any]
     ) -> None:
-        """Assess content safety and flag inappropriate content."""        try:
+        """Assess content safety and flag inappropriate content."""
+        try:
             text_content = content_data.get('text', '')
             
             # Extract text from metadata
@@ -849,7 +877,8 @@ class ContentClassifier:
         result: ClassificationResult,
         content_data: Dict[str, Any]
     ) -> None:
-        """Assess content quality and professionalism."""        try:
+        """Assess content quality and professionalism."""
+        try:
             quality_factors = []
             
             # Metadata completeness
@@ -917,7 +946,8 @@ class ContentClassifier:
         self,
         content_batch: List[Tuple[str, Dict[str, Any], Optional[ClassificationMethod]]]
     ) -> List[ClassificationResult]:
-        """Classify multiple content items in batch."""        tasks = []
+        """Classify multiple content items in batch."""
+        tasks = []
         
         for content_id, content_data, method in content_batch:
             task = asyncio.create_task(
@@ -934,7 +964,8 @@ class ContentClassifier:
         return valid_results
     
     def get_analytics(self) -> Dict[str, Any]:
-        """Get classification analytics and performance metrics."""        avg_processing_time = np.mean(self.processing_times) if self.processing_times else 0
+        """Get classification analytics and performance metrics."""
+        avg_processing_time = np.mean(self.processing_times) if self.processing_times else 0
         
         return {
             "total_classifications": self.classification_count,
@@ -955,7 +986,8 @@ class ContentClassifier:
         }
     
     async def cleanup(self) -> None:
-        """Cleanup resources and clear caches."""        # Clear GPU memory if using CUDA
+        """Cleanup resources and clear caches."""
+        # Clear GPU memory if using CUDA
         if self.enable_gpu and torch.cuda.is_available():
             torch.cuda.empty_cache()
         

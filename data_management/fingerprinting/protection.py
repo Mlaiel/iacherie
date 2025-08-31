@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC PROTECTION:
 Violation Detection → Evidence Collection → Legal Processing → Automated Takedown → 
 Manual Review → Escalation → Revenue Recovery → Brand Protection → Analytics
-"""from typing import Dict, List, Any, Optional, Union, Tuple, Set
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from abc import ABC, abstractmethod
 from enum import Enum
 from dataclasses import dataclass, field
@@ -31,7 +32,8 @@ from sqlalchemy.orm import Session
 logger = logging.getLogger(__name__)
 
 class ViolationType(Enum):
-    """Types de violations de contenu"""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Types de violations de contenu"""
+    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
     CONTENT_THEFT = "content_theft"
@@ -40,14 +42,16 @@ class ViolationType(Enum):
     IDENTITY_THEFT = "identity_theft"
 
 class ViolationSeverity(Enum):
-    """Niveaux de sévérité des violations"""    CRITICAL = "critical"      # Action immédiate requise
+    """Niveaux de sévérité des violations"""
+    CRITICAL = "critical"      # Action immédiate requise
     HIGH = "high"             # Action dans 24h
     MEDIUM = "medium"         # Action dans 72h
     LOW = "low"              # Action dans 1 semaine
     MONITORING = "monitoring" # Surveillance uniquement
 
 class TakedownStatus(Enum):
-    """États du processus de takedown"""    PENDING = "pending"
+    """États du processus de takedown"""
+    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
@@ -57,7 +61,8 @@ class TakedownStatus(Enum):
     ESCALATED = "escalated"
 
 class PlatformType(Enum):
-    """Types de plateformes supportées"""    YOUTUBE = "youtube"
+    """Types de plateformes supportées"""
+    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
@@ -68,7 +73,8 @@ class PlatformType(Enum):
 
 @dataclass
 class ViolationEvidence:
-    """Preuves d'une violation de contenu"""    violation_id: str
+    """Preuves d'une violation de contenu"""
+    violation_id: str
     evidence_type: str  # screenshot, video, audio, metadata
     evidence_url: str
     evidence_hash: str
@@ -78,7 +84,8 @@ class ViolationEvidence:
 
 @dataclass
 class ViolationReport:
-    """Rapport de violation détaillé"""    
+    """Rapport de violation détaillé"""
+    
     # Basic info
     violation_id: str
     content_id: str
@@ -114,7 +121,8 @@ class ViolationReport:
 
 @dataclass
 class TakedownRequest:
-    """Demande de takedown structurée"""    
+    """Demande de takedown structurée"""
+    
     # Request details
     request_id: str
     violation_report: ViolationReport
@@ -136,7 +144,8 @@ class TakedownRequest:
     platform_case_id: Optional[str] = None
 
 class ProtectionManager:
-    """    Gestionnaire principal de protection de contenu
+    """
+    Gestionnaire principal de protection de contenu
     
     Features:
     - Violation detection and reporting
@@ -145,7 +154,8 @@ class ProtectionManager:
     - Multi-platform takedown management
     - Revenue recovery tracking
     - Brand protection monitoring
-    """    
+    """
+    
     def __init__(self,
                  db_session: Session,
                  redis_client: Any,
@@ -168,7 +178,8 @@ class ProtectionManager:
     
     async def process_violation_detection(self,
                                         fingerprint_match: Dict[str, Any]) -> ViolationReport:
-        """Traite une détection de violation"""        try:
+        """Traite une détection de violation"""
+        try:
             # Create violation ID
             violation_id = str(uuid.uuid4())
             
@@ -229,7 +240,8 @@ class ProtectionManager:
             raise
     
     async def initiate_takedown_process(self, violation_report: ViolationReport) -> TakedownRequest:
-        """Initie le processus de takedown"""        try:
+        """Initie le processus de takedown"""
+        try:
             # Generate takedown request
             takedown_request = await self.takedown_manager.create_takedown_request(
                 violation_report
@@ -276,7 +288,8 @@ class ProtectionManager:
             raise
     
     async def monitor_takedown_progress(self, request_id: str) -> Dict[str, Any]:
-        """Surveille le progrès d'une demande de takedown"""        try:
+        """Surveille le progrès d'une demande de takedown"""
+        try:
             # Get takedown request
             takedown_request = await self._get_takedown_request(request_id)
             
@@ -327,7 +340,8 @@ class ProtectionManager:
     async def handle_takedown_appeal(self,
                                    violation_id: str,
                                    appeal_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Gère un appel de takedown"""        try:
+        """Gère un appel de takedown"""
+        try:
             # Get violation report
             violation_report = await self._get_violation_report(violation_id)
             
@@ -372,7 +386,8 @@ class ProtectionManager:
     async def generate_protection_report(self,
                                        start_date: datetime,
                                        end_date: datetime) -> Dict[str, Any]:
-        """Génère un rapport de protection complet"""        try:
+        """Génère un rapport de protection complet"""
+        try:
             # Get violation statistics
             violation_stats = await self._get_violation_statistics(start_date, end_date)
             
@@ -410,7 +425,8 @@ class ProtectionManager:
             raise
     
     async def _analyze_violation_severity(self, fingerprint_match: Dict[str, Any]) -> ViolationSeverity:
-        """Analyse la sévérité d'une violation"""        similarity_score = fingerprint_match['similarity_score']
+        """Analyse la sévérité d'une violation"""
+        similarity_score = fingerprint_match['similarity_score']
         platform = fingerprint_match['platform']
         content_type = fingerprint_match['content_type']
         
@@ -439,7 +455,8 @@ class ProtectionManager:
         return base_severity
     
     async def _classify_violation_type(self, fingerprint_match: Dict[str, Any]) -> ViolationType:
-        """Classifie le type de violation"""        # Analyze context to determine violation type
+        """Classifie le type de violation"""
+        # Analyze context to determine violation type
         # This would use ML models in production
         
         content_type = fingerprint_match['content_type']
@@ -453,7 +470,8 @@ class ProtectionManager:
             return ViolationType.DERIVATIVE_WORK
     
     async def _extract_violator_info(self, fingerprint_match: Dict[str, Any]) -> Dict[str, Any]:
-        """Extrait les informations du violateur"""        # Extract available information about the violator
+        """Extrait les informations du violateur"""
+        # Extract available information about the violator
         return {
             'platform_user_id': fingerprint_match.get('uploader_id'),
             'username': fingerprint_match.get('username'),
@@ -467,7 +485,8 @@ class ProtectionManager:
         }
     
     async def _calculate_revenue_impact(self, fingerprint_match: Dict[str, Any]) -> float:
-        """Calcule l'impact sur les revenus"""        # Complex calculation based on content performance, platform, etc.
+        """Calcule l'impact sur les revenus"""
+        # Complex calculation based on content performance, platform, etc.
         base_impact = 100.0  # Base revenue loss estimate
         
         # Platform multiplier
@@ -485,7 +504,8 @@ class ProtectionManager:
         return base_impact * multiplier
     
     async def _store_violation_report(self, violation_report: ViolationReport):
-        """Stocke un rapport de violation"""        # Store in database
+        """Stocke un rapport de violation"""
+        # Store in database
         try:
             # In a real implementation, this would use SQLAlchemy models
             self.violation_reports[violation_report.id] = violation_report
@@ -502,11 +522,13 @@ class ProtectionManager:
             raise
     
     async def _send_violation_alert(self, violation_report: ViolationReport):
-        """Envoie une alerte de violation"""        # Send alert via email, Slack, etc.
+        """Envoie une alerte de violation"""
+        # Send alert via email, Slack, etc.
         logger.info(f"Violation alert sent for {violation_report.violation_id}")
     
     async def _update_violation_report(self, violation_report: ViolationReport):
-        """Met à jour un rapport de violation"""        try:
+        """Met à jour un rapport de violation"""
+        try:
             # Update in database/storage
             if violation_report.id in self.violation_reports:
                 self.violation_reports[violation_report.id] = violation_report
@@ -520,14 +542,16 @@ class ProtectionManager:
             raise
     
     async def _queue_for_manual_review(self, takedown_request: TakedownRequest):
-        """Met en queue pour révision manuelle"""        await self.redis_client.lpush('manual_review_queue', json.dumps({
+        """Met en queue pour révision manuelle"""
+        await self.redis_client.lpush('manual_review_queue', json.dumps({
             'request_id': takedown_request.request_id,
             'priority': takedown_request.priority_level,
             'queued_at': datetime.utcnow().isoformat()
         }))
     
     async def _track_takedown_request(self, takedown_request: TakedownRequest):
-        """Suit une demande de takedown"""        try:
+        """Suit une demande de takedown"""
+        try:
             # Store tracking information
             tracking_info = {
                 'request_id': takedown_request.id,
@@ -550,24 +574,28 @@ class ProtectionManager:
             raise
     
     async def _get_takedown_request(self, request_id: str) -> Optional[TakedownRequest]:
-        """Récupère une demande de takedown"""        # Get from database
+        """Récupère une demande de takedown"""
+        # Get from database
         return None  # Placeholder
     
     async def _get_violation_report(self, violation_id: str) -> Optional[ViolationReport]:
-        """Récupère un rapport de violation"""        # Get from database
+        """Récupère un rapport de violation"""
+        # Get from database
         return None  # Placeholder
     
     async def _send_status_update_notification(self,
                                              takedown_request: TakedownRequest,
                                              old_status: TakedownStatus,
                                              new_status: TakedownStatus):
-        """Envoie une notification de mise à jour de statut"""        logger.info(f"Status updated: {old_status.value} -> {new_status.value}")
+        """Envoie une notification de mise à jour de statut"""
+        logger.info(f"Status updated: {old_status.value} -> {new_status.value}")
     
     async def _log_appeal_for_analysis(self,
                                      violation_report: ViolationReport,
                                      appeal_data: Dict[str, Any],
                                      appeal_analysis: Dict[str, Any]):
-        """Log un appel pour analyse"""        try:
+        """Log un appel pour analyse"""
+        try:
             # Store appeal data for ML model training
             appeal_entry = {
                 'appeal_id': appeal_data.get('appeal_id', str(uuid.uuid4())),
@@ -596,13 +624,15 @@ class ProtectionManager:
             raise
     
     async def _check_previous_violations(self, user_id: str) -> int:
-        """Vérifie les violations précédentes"""        # Check database for previous violations by this user
+        """Vérifie les violations précédentes"""
+        # Check database for previous violations by this user
         return 0  # Placeholder
     
     async def _get_violation_statistics(self,
                                       start_date: datetime,
                                       end_date: datetime) -> Dict[str, Any]:
-        """Récupère les statistiques de violations"""        return {
+        """Récupère les statistiques de violations"""
+        return {
             'total_violations': 100,
             'by_platform': {'youtube': 50, 'tiktok': 30, 'instagram': 20},
             'by_type': {'copyright_infringement': 70, 'unauthorized_distribution': 30},
@@ -612,7 +642,8 @@ class ProtectionManager:
     async def _get_takedown_performance(self,
                                       start_date: datetime,
                                       end_date: datetime) -> Dict[str, Any]:
-        """Récupère les performances de takedown"""        return {
+        """Récupère les performances de takedown"""
+        return {
             'total_takedowns': 80,
             'success_rate': 0.85,
             'avg_response_time': 24.5,  # hours
@@ -626,7 +657,8 @@ class ProtectionManager:
                                           violation_stats: Dict[str, Any],
                                           takedown_performance: Dict[str, Any],
                                           revenue_impact: Dict[str, Any]) -> List[str]:
-        """Génère des insights de protection"""        insights = []
+        """Génère des insights de protection"""
+        insights = []
         
         if takedown_performance['success_rate'] < 0.80:
             insights.append("Takedown success rate below optimal threshold")
@@ -637,7 +669,8 @@ class ProtectionManager:
         return insights
     
     async def _generate_protection_recommendations(self, insights: List[str]) -> List[str]:
-        """Génère des recommandations de protection"""        recommendations = []
+        """Génère des recommandations de protection"""
+        recommendations = []
         
         for insight in insights:
             if "success rate" in insight:
@@ -648,7 +681,8 @@ class ProtectionManager:
         return recommendations
 
 class TakedownManager:
-    """Gestionnaire de takedowns automatisés"""    
+    """Gestionnaire de takedowns automatisés"""
+    
     def __init__(self,
                  db_session: Session,
                  redis_client: Any,
@@ -664,7 +698,8 @@ class TakedownManager:
         logger.info("TakedownManager initialized")
     
     def _init_platform_clients(self):
-        """Initialise les clients API de plateformes"""        try:
+        """Initialise les clients API de plateformes"""
+        try:
             # Initialize API clients for each platform
             self.platform_clients = {}
             
@@ -699,7 +734,8 @@ class TakedownManager:
             self.platform_clients = {}
     
     async def create_takedown_request(self, violation_report: ViolationReport) -> TakedownRequest:
-        """Crée une demande de takedown"""        request_id = str(uuid.uuid4())
+        """Crée une demande de takedown"""
+        request_id = str(uuid.uuid4())
         
         # Determine if automation is possible
         automated = await self._can_automate_takedown(violation_report)
@@ -718,7 +754,8 @@ class TakedownManager:
         )
     
     async def submit_automated_takedown(self, takedown_request: TakedownRequest) -> Dict[str, Any]:
-        """Soumet un takedown automatisé"""        try:
+        """Soumet un takedown automatisé"""
+        try:
             platform = takedown_request.violation_report.platform
             client = self.platform_clients.get(platform.value)
             
@@ -743,7 +780,8 @@ class TakedownManager:
             return {'success': False, 'error': str(e)}
     
     async def check_platform_status(self, takedown_request: TakedownRequest) -> Dict[str, Any]:
-        """Vérifie le statut sur la plateforme"""        try:
+        """Vérifie le statut sur la plateforme"""
+        try:
             platform = takedown_request.violation_report.platform
             client = self.platform_clients.get(platform.value)
             
@@ -767,7 +805,8 @@ class TakedownManager:
     async def submit_counter_response(self,
                                     violation_report: ViolationReport,
                                     counter_response: str) -> Dict[str, Any]:
-        """Soumet une contre-réponse"""        try:
+        """Soumet une contre-réponse"""
+        try:
             platform = violation_report.platform
             client = self.platform_clients.get(platform.value)
             
@@ -790,17 +829,20 @@ class TakedownManager:
             return {'success': False, 'error': str(e)}
     
     async def _can_automate_takedown(self, violation_report: ViolationReport) -> bool:
-        """Détermine si le takedown peut être automatisé"""        # High confidence violations can be automated
+        """Détermine si le takedown peut être automatisé"""
+        # High confidence violations can be automated
         return (violation_report.similarity_score >= 0.90 and
                 violation_report.severity in [ViolationSeverity.CRITICAL, ViolationSeverity.HIGH])
     
     async def _requires_human_review(self, violation_report: ViolationReport) -> bool:
-        """Détermine si une révision humaine est nécessaire"""        # Complex cases require human review
+        """Détermine si une révision humaine est nécessaire"""
+        # Complex cases require human review
         return (violation_report.similarity_score < 0.85 or
                 violation_report.violation_type == ViolationType.DERIVATIVE_WORK)
     
     async def _calculate_priority(self, violation_report: ViolationReport) -> int:
-        """Calcule la priorité de la demande"""        if violation_report.severity == ViolationSeverity.CRITICAL:
+        """Calcule la priorité de la demande"""
+        if violation_report.severity == ViolationSeverity.CRITICAL:
             return 1
         elif violation_report.severity == ViolationSeverity.HIGH:
             return 2
@@ -810,7 +852,8 @@ class TakedownManager:
             return 4
     
     async def _get_platform_api_endpoint(self, platform: PlatformType) -> str:
-        """Récupère l'endpoint API de la plateforme"""        endpoints = {
+        """Récupère l'endpoint API de la plateforme"""
+        endpoints = {
             PlatformType.YOUTUBE: 'https://www.googleapis.com/youtube/v3/copyright',
             PlatformType.TIKTOK: 'https://business-api.tiktok.com/copyright',
             PlatformType.INSTAGRAM: 'https://graph.facebook.com/v18.0/copyright',
@@ -818,7 +861,8 @@ class TakedownManager:
         return endpoints.get(platform, '')
     
     async def _prepare_submission_data(self, takedown_request: TakedownRequest) -> Dict[str, Any]:
-        """Prépare les données de soumission"""        violation = takedown_request.violation_report
+        """Prépare les données de soumission"""
+        violation = takedown_request.violation_report
         
         return {
             'violation_id': violation.violation_id,
@@ -832,7 +876,8 @@ class TakedownManager:
         }
 
 class EvidenceCollector:
-    """Collecteur automatisé de preuves"""    
+    """Collecteur automatisé de preuves"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.evidence_storage_path = Path(config.get('evidence_storage_path', '/tmp/evidence'))
@@ -843,7 +888,8 @@ class EvidenceCollector:
     async def collect_evidence(self,
                              violating_url: str,
                              content_type: str) -> List[ViolationEvidence]:
-        """Collecte les preuves d'une violation"""        evidence_list = []
+        """Collecte les preuves d'une violation"""
+        evidence_list = []
         
         try:
             # Screenshot evidence
@@ -874,7 +920,8 @@ class EvidenceCollector:
             return evidence_list
     
     async def _capture_screenshot(self, url: str) -> Optional[ViolationEvidence]:
-        """Capture une capture d'écran"""        try:
+        """Capture une capture d'écran"""
+        try:
             # Use headless browser to capture screenshot
             # Implementation would use Selenium or Playwright
             
@@ -902,7 +949,8 @@ class EvidenceCollector:
             return None
     
     async def _collect_metadata(self, url: str) -> Optional[ViolationEvidence]:
-        """Collecte les métadonnées"""        try:
+        """Collecte les métadonnées"""
+        try:
             # Extract metadata from URL/page
             # Implementation would parse HTML, API responses, etc.
             
@@ -931,15 +979,18 @@ class EvidenceCollector:
             return None
     
     async def _capture_video_sample(self, url: str) -> Optional[ViolationEvidence]:
-        """Capture un échantillon vidéo"""        # Implementation would capture video samples
+        """Capture un échantillon vidéo"""
+        # Implementation would capture video samples
         return None
     
     async def _capture_audio_sample(self, url: str) -> Optional[ViolationEvidence]:
-        """Capture un échantillon audio"""        # Implementation would capture audio samples
+        """Capture un échantillon audio"""
+        # Implementation would capture audio samples
         return None
 
 class LegalProcessor:
-    """Processeur de documentation légale"""    
+    """Processeur de documentation légale"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.templates_path = Path(config.get('legal_templates_path', './templates'))
@@ -947,7 +998,8 @@ class LegalProcessor:
         logger.info("LegalProcessor initialized")
     
     async def prepare_legal_documentation(self, violation_report: ViolationReport) -> Dict[str, str]:
-        """Prépare la documentation légale"""        try:
+        """Prépare la documentation légale"""
+        try:
             # Generate DMCA notice
             dmca_notice = await self._generate_dmca_notice(violation_report)
             
@@ -966,7 +1018,8 @@ class LegalProcessor:
     async def analyze_appeal(self,
                            violation_report: ViolationReport,
                            appeal_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyse un appel"""        try:
+        """Analyse un appel"""
+        try:
             # Analyze the appeal using NLP and legal reasoning
             appeal_text = appeal_data.get('appeal_text', '')
             
@@ -994,9 +1047,11 @@ class LegalProcessor:
     async def generate_counter_response(self,
                                       violation_report: ViolationReport,
                                       appeal_data: Dict[str, Any]) -> str:
-        """Génère une contre-réponse"""        try:
+        """Génère une contre-réponse"""
+        try:
             # Generate a legal counter-response based on the appeal
-            counter_response = f"""            Counter-Response to Appeal for Case {violation_report.violation_id}
+            counter_response = f"""
+            Counter-Response to Appeal for Case {violation_report.violation_id}
             
             Original Violation: {violation_report.violation_type.value}
             Similarity Score: {violation_report.similarity_score:.2%}
@@ -1011,7 +1066,8 @@ class LegalProcessor:
             
             Conclusion:
             The original takedown request remains valid and is supported by technical evidence.
-            """            
+            """
+            
             return counter_response
             
         except Exception as e:
@@ -1019,7 +1075,9 @@ class LegalProcessor:
             raise
     
     async def _generate_dmca_notice(self, violation_report: ViolationReport) -> str:
-        """Génère un avis DMCA"""        dmca_template = """        DMCA Takedown Notice
+        """Génère un avis DMCA"""
+        dmca_template = """
+        DMCA Takedown Notice
         
         To: Platform Copyright Team
         From: [Copyright Owner]
@@ -1043,7 +1101,8 @@ class LegalProcessor:
         
         Signature: [Digital Signature]
         Contact: [Contact Information]
-        """        
+        """
+        
         return dmca_template.format(
             date=datetime.utcnow().strftime('%Y-%m-%d'),
             content_id=violation_report.content_id,
@@ -1052,7 +1111,9 @@ class LegalProcessor:
         )
     
     async def _generate_copyright_declaration(self, violation_report: ViolationReport) -> str:
-        """Génère une déclaration de copyright"""        return f"""        Copyright Declaration for Content ID: {violation_report.content_id}
+        """Génère une déclaration de copyright"""
+        return f"""
+        Copyright Declaration for Content ID: {violation_report.content_id}
         
         I hereby declare that I am the rightful owner of the copyright for the content
         identified above, and that the use detected at {violation_report.violating_url}
@@ -1060,9 +1121,11 @@ class LegalProcessor:
         
         Generated: {datetime.utcnow().isoformat()}
         Violation ID: {violation_report.violation_id}
-        """    
+        """
+    
     async def _check_fair_use_claims(self, appeal_text: str) -> List[str]:
-        """Vérifie les revendications d'usage équitable"""        fair_use_keywords = [
+        """Vérifie les revendications d'usage équitable"""
+        fair_use_keywords = [
             'fair use', 'commentary', 'criticism', 'parody', 'educational',
             'transformative', 'review', 'news reporting'
         ]
@@ -1079,7 +1142,8 @@ class LegalProcessor:
     async def _analyze_legal_arguments(self,
                                      appeal_text: str,
                                      violation_report: ViolationReport) -> Dict[str, Any]:
-        """Analyse les arguments légaux"""        # Simplified analysis - in production would use NLP models
+        """Analyse les arguments légaux"""
+        # Simplified analysis - in production would use NLP models
         confidence = 0.9  # High confidence in our original claim
         
         if 'fair use' in appeal_text.lower():
@@ -1095,7 +1159,8 @@ class LegalProcessor:
         }
 
 class RevenueRecovery:
-    """Gestionnaire de récupération de revenus"""    
+    """Gestionnaire de récupération de revenus"""
+    
     def __init__(self, db_session: Session, config: Dict[str, Any]):
         self.db_session = db_session
         self.config = config
@@ -1103,7 +1168,8 @@ class RevenueRecovery:
         logger.info("RevenueRecovery initialized")
     
     async def calculate_actual_recovery(self, violation_report: ViolationReport) -> float:
-        """Calcule la récupération réelle de revenus"""        try:
+        """Calcule la récupération réelle de revenus"""
+        try:
             # Calculate actual revenue recovered after takedown
             base_loss = violation_report.estimated_revenue_loss
             
@@ -1133,7 +1199,8 @@ class RevenueRecovery:
     async def calculate_period_impact(self,
                                     start_date: datetime,
                                     end_date: datetime) -> Dict[str, Any]:
-        """Calcule l'impact sur une période"""        try:
+        """Calcule l'impact sur une période"""
+        try:
             # Query database for violations in period
             # This would be implemented with actual database queries
             
@@ -1159,7 +1226,8 @@ class RevenueRecovery:
             raise
     
     async def _get_platform_recovery_factor(self, platform: PlatformType) -> float:
-        """Récupère le facteur de récupération par plateforme"""        # Different platforms have different recovery success rates
+        """Récupère le facteur de récupération par plateforme"""
+        # Different platforms have different recovery success rates
         factors = {
             PlatformType.YOUTUBE: 0.9,
             PlatformType.INSTAGRAM: 0.8,

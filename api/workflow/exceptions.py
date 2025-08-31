@@ -3,12 +3,14 @@
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
-"""from typing import Optional, Dict, Any, List
+"""
+from typing import Optional, Dict, Any, List
 from enum import Enum
 
 
 class WorkflowErrorCode(Enum):
-    """Standardized workflow error codes."""    # General workflow errors (1000-1099)
+    """Standardized workflow error codes."""
+    # General workflow errors (1000-1099)
     WORKFLOW_INITIALIZATION_FAILED = "WF1000"
     WORKFLOW_EXECUTION_FAILED = "WF1001"
     WORKFLOW_TIMEOUT = "WF1002"
@@ -52,7 +54,8 @@ class WorkflowErrorCode(Enum):
 
 
 class WorkflowException(Exception):
-    """Base exception for all workflow-related errors."""    
+    """Base exception for all workflow-related errors."""
+    
     def __init__(
         self,
         message: str,
@@ -70,7 +73,8 @@ class WorkflowException(Exception):
         self.timestamp = None
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for logging/serialization."""        return {
+        """Convert exception to dictionary for logging/serialization."""
+        return {
             "error_type": self.__class__.__name__,
             "message": self.message,
             "error_code": self.error_code.value if self.error_code else None,
@@ -93,7 +97,8 @@ class WorkflowException(Exception):
 
 
 class PipelineException(WorkflowException):
-    """Exception for pipeline-specific errors."""    
+    """Exception for pipeline-specific errors."""
+    
     def __init__(
         self,
         message: str,
@@ -119,7 +124,8 @@ class PipelineException(WorkflowException):
 
 
 class PipelineStepException(PipelineException):
-    """Exception for individual pipeline step failures."""    
+    """Exception for individual pipeline step failures."""
+    
     def __init__(
         self,
         message: str,
@@ -144,7 +150,8 @@ class PipelineStepException(PipelineException):
 
 
 class PipelineDependencyException(PipelineException):
-    """Exception for pipeline dependency resolution errors."""    
+    """Exception for pipeline dependency resolution errors."""
+    
     def __init__(
         self,
         message: str,
@@ -166,7 +173,8 @@ class PipelineDependencyException(PipelineException):
 
 
 class SchedulingException(WorkflowException):
-    """Exception for scheduling-related errors."""    
+    """Exception for scheduling-related errors."""
+    
     def __init__(
         self,
         message: str,
@@ -189,7 +197,8 @@ class SchedulingException(WorkflowException):
 
 
 class ScheduleCronException(SchedulingException):
-    """Exception for invalid cron expressions."""    
+    """Exception for invalid cron expressions."""
+    
     def __init__(self, message: str, cron_expression: str, **kwargs):
         super().__init__(
             message, 
@@ -201,7 +210,8 @@ class ScheduleCronException(SchedulingException):
 
 
 class ScheduleConflictException(SchedulingException):
-    """Exception for scheduling conflicts."""    
+    """Exception for scheduling conflicts."""
+    
     def __init__(
         self,
         message: str,
@@ -220,7 +230,8 @@ class ScheduleConflictException(SchedulingException):
 
 
 class StateException(WorkflowException):
-    """Exception for workflow state management errors."""    
+    """Exception for workflow state management errors."""
+    
     def __init__(
         self,
         message: str,
@@ -243,7 +254,8 @@ class StateException(WorkflowException):
 
 
 class StateLockException(StateException):
-    """Exception for state locking errors."""    
+    """Exception for state locking errors."""
+    
     def __init__(
         self,
         message: str,
@@ -265,7 +277,8 @@ class StateLockException(StateException):
 
 
 class StateCorruptionException(StateException):
-    """Exception for corrupted workflow state."""    
+    """Exception for corrupted workflow state."""
+    
     def __init__(
         self,
         message: str,
@@ -287,7 +300,8 @@ class StateCorruptionException(StateException):
 
 
 class AutomationException(WorkflowException):
-    """Exception for automation-related errors."""    
+    """Exception for automation-related errors."""
+    
     def __init__(
         self,
         message: str,
@@ -310,7 +324,8 @@ class AutomationException(WorkflowException):
 
 
 class AutomationTriggerException(AutomationException):
-    """Exception for automation trigger failures."""    
+    """Exception for automation trigger failures."""
+    
     def __init__(
         self,
         message: str,
@@ -332,7 +347,8 @@ class AutomationTriggerException(AutomationException):
 
 
 class ResourceException(WorkflowException):
-    """Exception for resource-related errors."""    
+    """Exception for resource-related errors."""
+    
     def __init__(
         self,
         message: str,
@@ -355,7 +371,8 @@ class ResourceException(WorkflowException):
 
 
 class ResourceQuotaException(ResourceException):
-    """Exception for resource quota exceeded errors."""    
+    """Exception for resource quota exceeded errors."""
+    
     def __init__(
         self,
         message: str,
@@ -383,7 +400,8 @@ def create_workflow_exception(
     message: str,
     **kwargs
 ) -> WorkflowException:
-    """Factory function to create appropriate workflow exception."""    exception_classes = {
+    """Factory function to create appropriate workflow exception."""
+    exception_classes = {
         "workflow": WorkflowException,
         "pipeline": PipelineException,
         "pipeline_step": PipelineStepException,
@@ -409,7 +427,8 @@ def handle_workflow_exception(
     logger=None,
     metrics_collector=None
 ):
-    """Standard exception handler for workflow exceptions."""    if logger:
+    """Standard exception handler for workflow exceptions."""
+    if logger:
         logger.error(
             f"Workflow exception occurred: {exception}",
             extra=exception.to_dict()
@@ -429,7 +448,8 @@ def handle_workflow_exception(
 
 
 def is_retryable_exception(exception: Exception) -> bool:
-    """Determine if an exception is retryable."""    if isinstance(exception, PipelineStepException):
+    """Determine if an exception is retryable."""
+    if isinstance(exception, PipelineStepException):
         return exception.is_retryable
     
     retryable_codes = [
@@ -447,7 +467,8 @@ def is_retryable_exception(exception: Exception) -> bool:
 
 
 def extract_error_context(exception: Exception) -> Dict[str, Any]:
-    """Extract context information from any exception for debugging."""    context = {
+    """Extract context information from any exception for debugging."""
+    context = {
         "exception_type": exception.__class__.__name__,
         "message": str(exception),
         "cause": str(exception.__cause__) if exception.__cause__ else None

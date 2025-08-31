@@ -15,7 +15,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -45,7 +46,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Supported content types for creators"""    AUDIO = "audio"          # Musicians, podcasters
+    """Supported content types for creators"""
+    AUDIO = "audio"          # Musicians, podcasters
     VIDEO = "video"          # Comedians, influencers, educators
     IMAGE = "image"          # Photographers, visual artists
     TEXT = "text"            # Bloggers, writers
@@ -53,7 +55,8 @@ class ContentType(Enum):
 
 
 class ProcessingStage(Enum):
-    """Processing pipeline stages"""    UPLOAD = "upload"
+    """Processing pipeline stages"""
+    UPLOAD = "upload"
     CONTENT_ANALYSIS = "content_analysis"
     PROTECTION = "protection"
     SEO_OPTIMIZATION = "seo_optimization"
@@ -64,7 +67,8 @@ class ProcessingStage(Enum):
 
 @dataclass
 class ContentUpload:
-    """Content upload information"""    upload_id: str
+    """Content upload information"""
+    upload_id: str
     user_id: str
     content_type: ContentType
     file_path: str
@@ -75,7 +79,8 @@ class ContentUpload:
 
 @dataclass
 class ProcessingResult:
-    """Complete processing result"""    upload_id: str
+    """Complete processing result"""
+    upload_id: str
     success: bool
     content_analysis: Dict[str, Any] = field(default_factory=dict)
     protection_info: Dict[str, Any] = field(default_factory=dict)
@@ -89,7 +94,8 @@ class ProcessingResult:
 
 
 class AIOrchestrator:
-    """    Master AI orchestrator managing the complete content processing pipeline.
+    """
+    Master AI orchestrator managing the complete content processing pipeline.
     
     Implements the core business logic:
     Multi-format Creator Upload → AI Protection → SEO → Collaboration → Distribution
@@ -101,7 +107,8 @@ class AIOrchestrator:
     - Performance optimization and caching
     - Comprehensive audit logging
     - Multi-tenant support
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         
@@ -147,7 +154,8 @@ class AIOrchestrator:
         logger.info(f"AIOrchestrator initialized with {self.max_workers} workers")
 
     async def initialize(self) -> bool:
-        """Initialize the orchestrator and all subsystems"""        try:
+        """Initialize the orchestrator and all subsystems"""
+        try:
             # Initialize all engines
             await asyncio.gather(
                 self.ai_engine.initialize(),
@@ -179,7 +187,8 @@ class AIOrchestrator:
             return False
 
     async def process_content_upload(self, upload: ContentUpload) -> ProcessingResult:
-        """        Process a content upload through the complete pipeline
+        """
+        Process a content upload through the complete pipeline
         
         Pipeline stages:
         1. Content analysis and type detection
@@ -187,7 +196,8 @@ class AIOrchestrator:
         3. SEO optimization and metadata enhancement
         4. Collaboration matching with other creators
         5. Distribution preparation for multiple platforms
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         result = ProcessingResult(
             upload_id=upload.upload_id,
             success=False
@@ -253,7 +263,8 @@ class AIOrchestrator:
         return result
 
     async def _analyze_content(self, upload: ContentUpload) -> Dict[str, Any]:
-        """Comprehensive content analysis using AI"""        try:
+        """Comprehensive content analysis using AI"""
+        try:
             # Get appropriate engine based on content type
             engine = self._get_content_engine(upload.content_type)
             
@@ -288,7 +299,8 @@ class AIOrchestrator:
             raise
 
     async def _protect_content(self, upload: ContentUpload, analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Advanced content protection and rights management"""        try:
+        """Advanced content protection and rights management"""
+        try:
             # Generate content fingerprint
             fingerprint = await self.fingerprint_engine.generate_fingerprint(
                 upload.file_path, upload.content_type
@@ -331,7 +343,8 @@ class AIOrchestrator:
             raise
 
     async def _optimize_seo(self, upload: ContentUpload, analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Professional SEO optimization for maximum discoverability"""        try:
+        """Professional SEO optimization for maximum discoverability"""
+        try:
             # Generate SEO-optimized metadata
             seo_metadata = await self.seo_optimizer.optimize_metadata(
                 analysis["metadata"],
@@ -367,7 +380,8 @@ class AIOrchestrator:
             raise
 
     async def _match_collaborations(self, upload: ContentUpload, analysis: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """AI-powered collaboration matching with other creators"""        try:
+        """AI-powered collaboration matching with other creators"""
+        try:
             # Find potential collaborators based on content style and themes
             potential_matches = await self.collaboration_matcher.find_matches(
                 upload.user_id,
@@ -393,7 +407,8 @@ class AIOrchestrator:
             raise
 
     async def _prepare_distribution(self, upload: ContentUpload, analysis: Dict[str, Any]) -> List[str]:
-        """Prepare content for multi-platform distribution"""        try:
+        """Prepare content for multi-platform distribution"""
+        try:
             distribution_urls = []
             
             # Get compatible platforms based on content type and analysis
@@ -424,7 +439,8 @@ class AIOrchestrator:
             raise
 
     async def _calculate_quality_score(self, upload: ContentUpload, result: ProcessingResult) -> float:
-        """Calculate comprehensive content quality score"""        try:
+        """Calculate comprehensive content quality score"""
+        try:
             base_quality = result.content_analysis.get("quality_metrics", {}).get("overall_score", 0.0)
             seo_score = result.seo_data.get("seo_score", 0.0)
             protection_score = 1.0 if result.protection_info.get("fingerprint") else 0.5
@@ -453,7 +469,8 @@ class AIOrchestrator:
             return 0.0
 
     def _get_content_engine(self, content_type: ContentType):
-        """Get the appropriate processing engine for content type"""        engine_map = {
+        """Get the appropriate processing engine for content type"""
+        engine_map = {
             ContentType.AUDIO: self.audio_engine,
             ContentType.VIDEO: self.video_engine,
             ContentType.IMAGE: self.image_engine,
@@ -463,7 +480,8 @@ class AIOrchestrator:
         return engine_map.get(content_type, self.content_processor)
 
     async def _check_platform_compatibility(self, file_path: str, content_type: ContentType) -> Dict[str, List[str]]:
-        """Check compatibility with various social media platforms"""        try:
+        """Check compatibility with various social media platforms"""
+        try:
             # Platform requirements mapping
             platform_requirements = {
                 "spotify": [ContentType.AUDIO],
@@ -501,14 +519,16 @@ class AIOrchestrator:
             return {"compatible": [], "incompatible": []}
 
     async def _meets_platform_requirements(self, file_path: str, platform: str, content_type: ContentType) -> bool:
-        """Check if content meets specific platform requirements"""        # Implement platform-specific requirement checks
+        """Check if content meets specific platform requirements"""
+        # Implement platform-specific requirement checks
         # This would include file size, duration, format, etc.
         return True  # Simplified for now
 
     async def _generate_protection_recommendations(
         self, upload: ContentUpload, analysis: Dict[str, Any], matches: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate content protection recommendations"""        recommendations = []
+        """Generate content protection recommendations"""
+        recommendations = []
         
         if matches:
             recommendations.append("Similar content detected - consider additional copyright protection")
@@ -524,15 +544,18 @@ class AIOrchestrator:
         return recommendations
 
     async def _optimize_for_platform(self, file_path: str, platform: str, analysis: Dict[str, Any]) -> str:
-        """Optimize content for specific platform requirements"""        # Platform-specific optimizations would be implemented here
+        """Optimize content for specific platform requirements"""
+        # Platform-specific optimizations would be implemented here
         return file_path  # Simplified for now
 
     async def _generate_distribution_url(self, upload: ContentUpload, platform: str, optimized_content: str) -> str:
-        """Generate distribution URL for platform"""        # Generate platform-specific distribution URLs
+        """Generate distribution URL for platform"""
+        # Generate platform-specific distribution URLs
         return f"https://{platform}.com/content/{upload.upload_id}"
 
     async def _update_processing_stats(self, processing_time: float, success: bool) -> None:
-        """Update processing statistics"""        self.processing_stats["total_processed"] += 1
+        """Update processing statistics"""
+        self.processing_stats["total_processed"] += 1
         
         if success:
             self.processing_stats["successful_completions"] += 1
@@ -549,7 +572,8 @@ class AIOrchestrator:
         self.processing_stats["error_rate"] = 1.0 - (successful / total)
 
     async def _worker(self, worker_name: str) -> None:
-        """Worker task for processing uploads from queue"""        logger.info(f"Worker {worker_name} started")
+        """Worker task for processing uploads from queue"""
+        logger.info(f"Worker {worker_name} started")
         
         while not self.shutdown_event.is_set():
             try:
@@ -576,14 +600,17 @@ class AIOrchestrator:
         logger.info(f"Worker {worker_name} stopped")
 
     async def queue_upload(self, upload: ContentUpload) -> None:
-        """Add upload to processing queue"""        await self.processing_queue.put(upload)
+        """Add upload to processing queue"""
+        await self.processing_queue.put(upload)
         logger.info(f"Queued upload {upload.upload_id} for processing")
 
     async def get_processing_result(self, upload_id: str) -> Optional[ProcessingResult]:
-        """Get processing result for an upload"""        return self.results_cache.get(upload_id)
+        """Get processing result for an upload"""
+        return self.results_cache.get(upload_id)
 
     async def get_processing_stats(self) -> Dict[str, Any]:
-        """Get current processing statistics"""        return {
+        """Get current processing statistics"""
+        return {
             **self.processing_stats,
             "active_uploads": len(self.active_uploads),
             "queue_size": self.processing_queue.qsize(),
@@ -591,7 +618,8 @@ class AIOrchestrator:
         }
 
     async def shutdown(self) -> None:
-        """Shutdown orchestrator and all workers"""        logger.info("Shutting down AIOrchestrator...")
+        """Shutdown orchestrator and all workers"""
+        logger.info("Shutting down AIOrchestrator...")
         
         # Signal shutdown
         self.shutdown_event.set()
@@ -618,7 +646,8 @@ class AIOrchestrator:
         logger.info("AIOrchestrator shutdown complete")
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize the AI orchestrator with all required services"""        self.config = config or {}
+        """Initialize the AI orchestrator with all required services"""
+        self.config = config or {}
         
         # Initialize core AI services
         self.ai_engine = AIEngine(config.get('ai_engine', {}))
@@ -659,7 +688,8 @@ class AIOrchestrator:
         file_path: str,
         metadata: Dict[str, Any] = None
     ) -> ProcessingResult:
-        """        Master method for processing content uploads through the complete pipeline.
+        """
+        Master method for processing content uploads through the complete pipeline.
         
         Business Logic Flow:
         1. Content Upload & Validation
@@ -668,7 +698,8 @@ class AIOrchestrator:
         4. SEO Enhancement
         5. Collaboration Matching
         6. Distribution Preparation
-        """        
+        """
+        
         start_time = time.time()
         upload_id = str(uuid.uuid4())
         metadata = metadata or {}
@@ -751,7 +782,8 @@ class AIOrchestrator:
         return result
     
     async def _analyze_content(self, content_upload: ContentUpload) -> Dict[str, Any]:
-        """Stage 1: Analyze content using appropriate AI engines"""        
+        """Stage 1: Analyze content using appropriate AI engines"""
+        
         logger.info(f"Analyzing content for upload {content_upload.upload_id}")
         analysis_result = {}
         
@@ -806,7 +838,8 @@ class AIOrchestrator:
         content_upload: ContentUpload,
         analysis_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Stage 2: Protect content with AI-powered fingerprinting and rights management"""        
+        """Stage 2: Protect content with AI-powered fingerprinting and rights management"""
+        
         logger.info(f"Protecting content for upload {content_upload.upload_id}")
         protection_info = {}
         
@@ -849,7 +882,8 @@ class AIOrchestrator:
         content_upload: ContentUpload,
         analysis_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Stage 3: SEO optimization for discoverability"""        
+        """Stage 3: SEO optimization for discoverability"""
+        
         logger.info(f"Optimizing SEO for upload {content_upload.upload_id}")
         seo_data = {}
         
@@ -890,7 +924,8 @@ class AIOrchestrator:
         content_upload: ContentUpload,
         analysis_result: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Stage 4: Find collaboration opportunities"""        
+        """Stage 4: Find collaboration opportunities"""
+        
         logger.info(f"Finding collaborations for upload {content_upload.upload_id}")
         collaboration_matches = []
         
@@ -926,7 +961,8 @@ class AIOrchestrator:
         content_upload: ContentUpload,
         processing_result: ProcessingResult
     ) -> List[str]:
-        """Stage 5: Prepare content for multi-platform distribution"""        
+        """Stage 5: Prepare content for multi-platform distribution"""
+        
         logger.info(f"Preparing distribution for upload {content_upload.upload_id}")
         distribution_urls = []
         
@@ -961,7 +997,8 @@ class AIOrchestrator:
         content_upload: ContentUpload,
         processing_result: ProcessingResult
     ) -> float:
-        """Calculate overall content quality score"""        
+        """Calculate overall content quality score"""
+        
         try:
             quality_score = await self.quality_scorer.calculate_overall_score(
                 processing_result.content_analysis,
@@ -977,7 +1014,8 @@ class AIOrchestrator:
             return 5.0  # Default neutral score
     
     async def _analyze_multimodal_content(self, content_upload: ContentUpload) -> Dict[str, Any]:
-        """Analyze content with multiple formats"""        
+        """Analyze content with multiple formats"""
+        
         multimodal_analysis = {
             'formats_detected': [],
             'primary_format': None,
@@ -994,7 +1032,8 @@ class AIOrchestrator:
         content_upload: ContentUpload,
         seo_data: Dict[str, Any]
     ) -> Dict[str, Dict[str, Any]]:
-        """Generate optimized versions for different platforms"""        
+        """Generate optimized versions for different platforms"""
+        
         platform_versions = {}
         
         # Platform-specific optimizations based on content type
@@ -1021,7 +1060,8 @@ class AIOrchestrator:
         platform: str,
         seo_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize content for a specific platform"""        
+        """Optimize content for a specific platform"""
+        
         # Platform-specific optimization logic
         optimization_info = {
             'platform': platform,
@@ -1040,7 +1080,8 @@ class AIOrchestrator:
         platform: str,
         version_info: Dict[str, Any]
     ) -> Optional[str]:
-        """Create distribution URL for platform"""        
+        """Create distribution URL for platform"""
+        
         try:
             # Generate secure, trackable distribution URL
             base_url = self.config.get('distribution_base_url', 'https://api.ia-influencer-agent.com/distribute')
@@ -1054,10 +1095,12 @@ class AIOrchestrator:
             return None
     
     def get_processing_status(self, upload_id: str) -> Optional[ContentUpload]:
-        """Get current processing status for an upload"""        return self.processing_status.get(upload_id)
+        """Get current processing status for an upload"""
+        return self.processing_status.get(upload_id)
     
     async def cancel_processing(self, upload_id: str) -> bool:
-        """Cancel ongoing processing for an upload"""        
+        """Cancel ongoing processing for an upload"""
+        
         if upload_id in self.processing_status:
             try:
                 # Clean up resources and mark as cancelled
@@ -1077,7 +1120,8 @@ class AIOrchestrator:
         return False
     
     async def get_processing_metrics(self) -> Dict[str, Any]:
-        """Get overall processing metrics"""        
+        """Get overall processing metrics"""
+        
         try:
             metrics = await self.metrics_collector.get_aggregated_metrics()
             

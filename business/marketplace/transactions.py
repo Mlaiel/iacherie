@@ -8,7 +8,8 @@ Copyright: All rights reserved - Unauthorized use strictly prohibited
 WARNING: This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Legal action will be taken against violators.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -25,7 +26,8 @@ from ...integrations.payment_gateways import PaymentGatewayManager
 
 
 class TransactionType(Enum):
-    """Transaction type enumeration."""    COLLABORATION_PAYMENT = "collaboration_payment"
+    """Transaction type enumeration."""
+    COLLABORATION_PAYMENT = "collaboration_payment"
     REVENUE_SHARE = "revenue_share"
     SUBSCRIPTION_FEE = "subscription_fee"
     COMMISSION = "commission"
@@ -36,7 +38,8 @@ class TransactionType(Enum):
 
 
 class TransactionStatus(Enum):
-    """Transaction status enumeration."""    PENDING = "pending"
+    """Transaction status enumeration."""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -45,7 +48,8 @@ class TransactionStatus(Enum):
 
 
 class PaymentMethod(Enum):
-    """Payment method enumeration."""    CREDIT_CARD = "credit_card"
+    """Payment method enumeration."""
+    CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -56,7 +60,8 @@ class PaymentMethod(Enum):
 
 @dataclass
 class TransactionRequest:
-    """Transaction request structure."""    transaction_type: TransactionType
+    """Transaction request structure."""
+    transaction_type: TransactionType
     amount: Decimal
     currency: str
     sender_id: str
@@ -69,7 +74,8 @@ class TransactionRequest:
 
 @dataclass
 class RevenueShareConfig:
-    """Revenue sharing configuration."""    collaboration_id: str
+    """Revenue sharing configuration."""
+    collaboration_id: str
     participants: List[Dict[str, Any]]
     share_percentages: Dict[str, float]
     minimum_payout: Decimal
@@ -78,9 +84,11 @@ class RevenueShareConfig:
 
 
 class PaymentProcessor:
-    """    Enterprise payment processing system.
+    """
+    Enterprise payment processing system.
     Handles secure payment processing, validation, and compliance.
-    """    
+    """
+    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -98,14 +106,16 @@ class PaymentProcessor:
         self,
         transaction_request: TransactionRequest
     ) -> Dict[str, Any]:
-        """        Process payment transaction with security and validation.
+        """
+        Process payment transaction with security and validation.
         
         Args:
             transaction_request: Payment transaction request
             
         Returns:
             Transaction processing result
-        """        try:
+        """
+        try:
             transaction_id = f"txn_{uuid.uuid4().hex[:12]}"
             
             # Validate transaction request
@@ -172,7 +182,8 @@ class PaymentProcessor:
         transaction_batch: List[TransactionRequest],
         batch_config: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """        Process multiple payments in batch for efficiency.
+        """
+        Process multiple payments in batch for efficiency.
         
         Args:
             transaction_batch: List of transaction requests
@@ -180,7 +191,8 @@ class PaymentProcessor:
             
         Returns:
             Batch processing results
-        """        try:
+        """
+        try:
             batch_id = f"batch_{uuid.uuid4().hex[:12]}"
             batch_size = batch_config.get('size', 100) if batch_config else 100
             
@@ -230,14 +242,16 @@ class PaymentProcessor:
         self,
         transaction_id: str
     ) -> Dict[str, Any]:
-        """        Get current status of a transaction.
+        """
+        Get current status of a transaction.
         
         Args:
             transaction_id: Transaction identifier
             
         Returns:
             Transaction status and details
-        """        try:
+        """
+        try:
             # Check cache first
             cached_result = await self.cache.get(f"transaction:{transaction_id}")
             if cached_result:
@@ -266,7 +280,8 @@ class PaymentProcessor:
         self,
         request: TransactionRequest
     ) -> Dict[str, Any]:
-        """Validate transaction request for security and compliance."""        errors = []
+        """Validate transaction request for security and compliance."""
+        errors = []
         
         # Amount validation
         if request.amount <= 0:
@@ -297,7 +312,8 @@ class PaymentProcessor:
         request: TransactionRequest,
         transaction_id: str
     ) -> Dict[str, Any]:
-        """Perform fraud and risk assessment on transaction."""        risk_factors = []
+        """Perform fraud and risk assessment on transaction."""
+        risk_factors = []
         risk_score = 0.0
         
         # Check transaction velocity
@@ -337,7 +353,8 @@ class PaymentProcessor:
         request: TransactionRequest,
         transaction_id: str
     ) -> Dict[str, Any]:
-        """Process payment through appropriate payment gateway."""        gateway_result = await self.payment_gateway.process_payment(
+        """Process payment through appropriate payment gateway."""
+        gateway_result = await self.payment_gateway.process_payment(
             gateway_type=request.payment_method.value,
             amount=float(request.amount),
             currency=request.currency,
@@ -355,7 +372,8 @@ class PaymentProcessor:
         request: TransactionRequest,
         payment_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create transaction record in database."""        transaction_record = {
+        """Create transaction record in database."""
+        transaction_record = {
             'transaction_id': transaction_id,
             'transaction_type': request.transaction_type.value,
             'amount': str(request.amount),
@@ -378,9 +396,11 @@ class PaymentProcessor:
 
 
 class RevenueShare:
-    """    Enterprise revenue sharing system.
+    """
+    Enterprise revenue sharing system.
     Manages automatic revenue distribution among collaboration participants.
-    """    
+    """
+    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -396,14 +416,16 @@ class RevenueShare:
         self,
         config: RevenueShareConfig
     ) -> Dict[str, Any]:
-        """        Set up revenue sharing for collaboration.
+        """
+        Set up revenue sharing for collaboration.
         
         Args:
             config: Revenue sharing configuration
             
         Returns:
             Revenue sharing setup result
-        """        try:
+        """
+        try:
             sharing_id = f"share_{uuid.uuid4().hex[:12]}"
             
             # Validate revenue sharing configuration
@@ -451,7 +473,8 @@ class RevenueShare:
         total_revenue: Decimal,
         revenue_source: str
     ) -> Dict[str, Any]:
-        """        Distribute revenue among participants based on sharing agreement.
+        """
+        Distribute revenue among participants based on sharing agreement.
         
         Args:
             sharing_id: Revenue sharing ID
@@ -460,7 +483,8 @@ class RevenueShare:
             
         Returns:
             Revenue distribution results
-        """        try:
+        """
+        try:
             distribution_id = f"dist_{uuid.uuid4().hex[:12]}"
             
             # Get revenue sharing configuration
@@ -542,7 +566,8 @@ class RevenueShare:
         sharing_id: str,
         time_period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """        Get revenue sharing analytics and insights.
+        """
+        Get revenue sharing analytics and insights.
         
         Args:
             sharing_id: Revenue sharing ID
@@ -550,7 +575,8 @@ class RevenueShare:
             
         Returns:
             Revenue analytics data
-        """        try:
+        """
+        try:
             cache_key = f"revenue_analytics:{sharing_id}:{int(time_period.total_seconds())}"
             
             # Check cache
@@ -590,9 +616,11 @@ class RevenueShare:
 
 
 class TransactionManager:
-    """    Enterprise transaction management system.
+    """
+    Enterprise transaction management system.
     Coordinates all transaction-related operations and maintains consistency.
-    """    
+    """
+    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -611,7 +639,8 @@ class TransactionManager:
         collaboration_id: str,
         payment_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Create complete payment flow for collaboration project.
+        """
+        Create complete payment flow for collaboration project.
         
         Args:
             collaboration_id: Collaboration identifier
@@ -619,7 +648,8 @@ class TransactionManager:
             
         Returns:
             Payment flow configuration
-        """        try:
+        """
+        try:
             flow_id = f"flow_{uuid.uuid4().hex[:12]}"
             
             # Validate payment terms
@@ -669,7 +699,8 @@ class TransactionManager:
         milestone_id: str,
         completion_proof: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Execute payment for completed milestone.
+        """
+        Execute payment for completed milestone.
         
         Args:
             milestone_id: Milestone identifier
@@ -677,7 +708,8 @@ class TransactionManager:
             
         Returns:
             Payment execution results
-        """        try:
+        """
+        try:
             # Validate milestone completion
             validation_result = await self._validate_milestone_completion(
                 milestone_id, completion_proof

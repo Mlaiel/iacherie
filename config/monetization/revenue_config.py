@@ -13,7 +13,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from decimal import Decimal
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
@@ -21,7 +22,8 @@ from enum import Enum
 
 
 class RevenueSource(str, Enum):
-    """Revenue source types for content monetization."""    SPOTIFY = "spotify"
+    """Revenue source types for content monetization."""
+    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     APPLE_MUSIC = "apple_music"
     AMAZON_MUSIC = "amazon_music"
@@ -44,7 +46,8 @@ class RevenueSource(str, Enum):
 
 
 class RevenueType(str, Enum):
-    """Revenue type classification."""    STREAMING = "streaming"
+    """Revenue type classification."""
+    STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING = "licensing"
     ADVERTISING = "advertising"
@@ -57,7 +60,8 @@ class RevenueType(str, Enum):
 
 
 class CurrencyCode(str, Enum):
-    """Supported currency codes."""    USD = "USD"
+    """Supported currency codes."""
+    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     CAD = "CAD"
@@ -71,7 +75,8 @@ class CurrencyCode(str, Enum):
 
 @dataclass
 class RevenueThreshold:
-    """Revenue threshold configuration for notifications and payouts."""    minimum_payout: Decimal
+    """Revenue threshold configuration for notifications and payouts."""
+    minimum_payout: Decimal
     notification_threshold: Decimal
     tax_threshold: Decimal
     currency: CurrencyCode
@@ -80,7 +85,8 @@ class RevenueThreshold:
 
 @dataclass
 class PlatformRevenueConfig:
-    """Platform-specific revenue configuration."""    platform: RevenueSource
+    """Platform-specific revenue configuration."""
+    platform: RevenueSource
     commission_rate: Decimal  # Platform commission percentage
     minimum_threshold: Decimal
     payout_frequency: str  # daily, weekly, monthly, quarterly
@@ -93,7 +99,8 @@ class PlatformRevenueConfig:
 
 @dataclass
 class RevenueTrackingConfig:
-    """Main revenue tracking configuration class."""    
+    """Main revenue tracking configuration class."""
+    
     # Database Configuration
     DATABASE_URL: str = os.getenv(
         "REVENUE_DB_URL", 
@@ -280,18 +287,22 @@ class RevenueTrackingConfig:
     })
     
     def get_platform_config(self, platform: RevenueSource) -> Optional[PlatformRevenueConfig]:
-        """Get configuration for a specific platform."""        return self.PLATFORM_CONFIGS.get(platform)
+        """Get configuration for a specific platform."""
+        return self.PLATFORM_CONFIGS.get(platform)
     
     def get_revenue_threshold(self, currency: CurrencyCode) -> Optional[RevenueThreshold]:
-        """Get revenue threshold for a specific currency."""        return self.REVENUE_THRESHOLDS.get(currency, 
+        """Get revenue threshold for a specific currency."""
+        return self.REVENUE_THRESHOLDS.get(currency, 
                                          self.REVENUE_THRESHOLDS.get(self.DEFAULT_CURRENCY))
     
     def is_platform_enabled(self, platform: RevenueSource) -> bool:
-        """Check if a platform is enabled for revenue tracking."""        config = self.get_platform_config(platform)
+        """Check if a platform is enabled for revenue tracking."""
+        config = self.get_platform_config(platform)
         return config.enabled if config else False
     
     def get_supported_revenue_types(self, platform: RevenueSource) -> List[RevenueType]:
-        """Get supported revenue types for a platform."""        return self.REVENUE_TYPE_MAPPING.get(platform, [])
+        """Get supported revenue types for a platform."""
+        return self.REVENUE_TYPE_MAPPING.get(platform, [])
 
 
 # Global configuration instance

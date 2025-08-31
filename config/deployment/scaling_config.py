@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -23,7 +24,8 @@ import yaml
 
 
 class ScalingTrigger(Enum):
-    """Scaling trigger types"""    CPU_UTILIZATION = "cpu_utilization"
+    """Scaling trigger types"""
+    CPU_UTILIZATION = "cpu_utilization"
     MEMORY_UTILIZATION = "memory_utilization"
     REQUEST_RATE = "request_rate"
     QUEUE_LENGTH = "queue_length"
@@ -32,13 +34,15 @@ class ScalingTrigger(Enum):
 
 
 class ScalingDirection(Enum):
-    """Scaling direction"""    UP = "up"
+    """Scaling direction"""
+    UP = "up"
     DOWN = "down"
     BOTH = "both"
 
 
 class ScalingPolicy(Enum):
-    """Scaling policy types"""    TARGET_TRACKING = "target_tracking"
+    """Scaling policy types"""
+    TARGET_TRACKING = "target_tracking"
     STEP_SCALING = "step_scaling"
     SIMPLE_SCALING = "simple_scaling"
     PREDICTIVE = "predictive"
@@ -46,7 +50,8 @@ class ScalingPolicy(Enum):
 
 @dataclass
 class ScalingMetric:
-    """Scaling metric configuration"""    name: str
+    """Scaling metric configuration"""
+    name: str
     trigger: ScalingTrigger
     target_value: float
     threshold_up: float
@@ -60,7 +65,8 @@ class ScalingMetric:
 
 @dataclass
 class ScalingRule:
-    """Scaling rule configuration"""    name: str
+    """Scaling rule configuration"""
+    name: str
     metric: ScalingMetric
     policy: ScalingPolicy
     cooldown_seconds: int = 300
@@ -75,7 +81,8 @@ class ScalingRule:
 
 @dataclass
 class HorizontalPodAutoscaler:
-    """Kubernetes HPA configuration"""    name: str
+    """Kubernetes HPA configuration"""
+    name: str
     namespace: str
     target_ref: Dict[str, str]
     min_replicas: int = 1
@@ -86,7 +93,8 @@ class HorizontalPodAutoscaler:
 
 @dataclass
 class VerticalPodAutoscaler:
-    """Kubernetes VPA configuration"""    name: str
+    """Kubernetes VPA configuration"""
+    name: str
     namespace: str
     target_ref: Dict[str, str]
     update_mode: str = "Auto"  # Auto, Initial, Off
@@ -94,7 +102,8 @@ class VerticalPodAutoscaler:
 
 
 class ScalingConfig:
-    """    Professional auto-scaling configuration manager for IA-Influencer Agent Platform.
+    """
+    Professional auto-scaling configuration manager for IA-Influencer Agent Platform.
     
     Manages intelligent scaling for:
     - API services (horizontal and vertical scaling)
@@ -105,7 +114,8 @@ class ScalingConfig:
     - WebSocket connection handlers
     - File processing queues and workers
     - Revenue analytics processors
-    """    
+    """
+    
     def __init__(self, environment: str = "development"):
         self.environment = environment
         self.project_name = "ia-influencer-agent"
@@ -113,10 +123,12 @@ class ScalingConfig:
         self.scaling_enabled = self._get_scaling_enabled()
         
     def _get_scaling_enabled(self) -> bool:
-        """Check if auto-scaling is enabled for environment"""        return self.environment in ["staging", "production"]
+        """Check if auto-scaling is enabled for environment"""
+        return self.environment in ["staging", "production"]
     
     def get_scaling_metrics(self) -> Dict[str, ScalingMetric]:
-        """Get scaling metrics for different services"""        return {
+        """Get scaling metrics for different services"""
+        return {
             # CPU utilization
             "cpu_usage": ScalingMetric(
                 name="cpu_usage",
@@ -197,7 +209,8 @@ class ScalingConfig:
         }
     
     def get_scaling_rules(self) -> Dict[str, ScalingRule]:
-        """Get scaling rules for different services"""        metrics = self.get_scaling_metrics()
+        """Get scaling rules for different services"""
+        metrics = self.get_scaling_metrics()
         
         base_config = {
             "development": {"max_instances": 3, "min_instances": 1},
@@ -314,7 +327,8 @@ class ScalingConfig:
         }
     
     def get_kubernetes_hpa_configs(self) -> List[HorizontalPodAutoscaler]:
-        """Get Kubernetes Horizontal Pod Autoscaler configurations"""        scaling_rules = self.get_scaling_rules()
+        """Get Kubernetes Horizontal Pod Autoscaler configurations"""
+        scaling_rules = self.get_scaling_rules()
         hpa_configs = []
         
         for service_name, rule in scaling_rules.items():
@@ -421,7 +435,8 @@ class ScalingConfig:
         return hpa_configs
     
     def get_kubernetes_vpa_configs(self) -> List[VerticalPodAutoscaler]:
-        """Get Kubernetes Vertical Pod Autoscaler configurations"""        vpa_configs = []
+        """Get Kubernetes Vertical Pod Autoscaler configurations"""
+        vpa_configs = []
         
         # Services that benefit from VPA
         vpa_services = {
@@ -478,7 +493,8 @@ class ScalingConfig:
         return vpa_configs
     
     def get_aws_autoscaling_configs(self) -> Dict[str, Any]:
-        """Get AWS Auto Scaling configurations"""        scaling_rules = self.get_scaling_rules()
+        """Get AWS Auto Scaling configurations"""
+        scaling_rules = self.get_scaling_rules()
         
         return {
             "auto_scaling_groups": [
@@ -566,7 +582,8 @@ class ScalingConfig:
         }
     
     def get_prometheus_scaling_rules(self) -> Dict[str, Any]:
-        """Get Prometheus-based scaling rules for custom metrics"""        return {
+        """Get Prometheus-based scaling rules for custom metrics"""
+        return {
             "recording_rules": [
                 {
                     "name": f"{self.project_name}_scaling_metrics",
@@ -639,7 +656,8 @@ class ScalingConfig:
         }
     
     def generate_scaling_script(self) -> str:
-        """Generate manual scaling script"""        return f"""#!/bin/bash
+        """Generate manual scaling script"""
+        return f"""#!/bin/bash
 # Manual Scaling Script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
 
@@ -902,9 +920,11 @@ case "$ACTION" in
         exit 1
         ;;
 esac
-"""    
+"""
+    
     def export_configurations(self, output_dir: str = "./scaling-configs") -> Dict[str, str]:
-        """Export all scaling configurations to files"""        import os
+        """Export all scaling configurations to files"""
+        import os
         os.makedirs(output_dir, exist_ok=True)
         
         configs = {}

@@ -5,7 +5,9 @@ and automated assistance for content creators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import torch
+"""
+
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from typing import Dict, List, Optional, Tuple, Union, Any
@@ -19,7 +21,8 @@ from .transformer_models import TransformerConfig, ContentTransformer
 
 
 class GenerationTask(Enum):
-    """Types of content generation tasks"""    TEXT_COMPLETION = "text_completion"
+    """Types of content generation tasks"""
+    TEXT_COMPLETION = "text_completion"
     AUDIO_SYNTHESIS = "audio_synthesis"
     IMAGE_GENERATION = "image_generation"
     MUSIC_COMPOSITION = "music_composition"
@@ -31,7 +34,8 @@ class GenerationTask(Enum):
 
 
 class GenerationQuality(Enum):
-    """Quality levels for generation"""    DRAFT = "draft"
+    """Quality levels for generation"""
+    DRAFT = "draft"
     STANDARD = "standard"
     PROFESSIONAL = "professional"
     PREMIUM = "premium"
@@ -39,7 +43,8 @@ class GenerationQuality(Enum):
 
 @dataclass
 class GenerationConfig:
-    """Configuration for content generation"""    
+    """Configuration for content generation"""
+    
     task: GenerationTask
     quality: GenerationQuality = GenerationQuality.STANDARD
     
@@ -67,10 +72,12 @@ class GenerationConfig:
 
 
 class ContentGeneratorNetwork(BaseNeuralNetwork):
-    """    Main generative network for multi-modal content creation
+    """
+    Main generative network for multi-modal content creation
     
     Supports various content types and generation strategies.
-    """    
+    """
+    
     def __init__(self, config: TransformerConfig):
         super().__init__(config)
         self.config = config
@@ -175,8 +182,10 @@ class ContentGeneratorNetwork(BaseNeuralNetwork):
         config: GenerationConfig,
         style_embedding: Optional[torch.Tensor] = None
     ) -> Dict[str, Any]:
-        """        Generate content based on prompt and configuration
-        """        
+        """
+        Generate content based on prompt and configuration
+        """
+        
         self.eval()
         
         with torch.no_grad():
@@ -206,7 +215,8 @@ class ContentGeneratorNetwork(BaseNeuralNetwork):
         outputs: Dict[str, torch.Tensor],
         config: GenerationConfig
     ) -> Dict[str, Any]:
-        """Post-process generated content"""        
+        """Post-process generated content"""
+        
         processed = {}
         
         for modality, output in outputs.items():
@@ -232,7 +242,8 @@ class ContentGeneratorNetwork(BaseNeuralNetwork):
         predictions: Dict[str, torch.Tensor],
         targets: Dict[str, torch.Tensor]
     ) -> torch.Tensor:
-        """Compute generation loss"""        
+        """Compute generation loss"""
+        
         total_loss = 0.0
         num_modalities = 0
         
@@ -263,10 +274,12 @@ class ContentGeneratorNetwork(BaseNeuralNetwork):
 
 
 class AudioGeneratorNetwork(BaseNeuralNetwork):
-    """    Specialized network for audio and music generation
+    """
+    Specialized network for audio and music generation
     
     Supports music composition, audio synthesis, and remix generation.
-    """    
+    """
+    
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
         
@@ -359,7 +372,8 @@ class AudioGeneratorNetwork(BaseNeuralNetwork):
         duration: int = 128,
         temperature: float = 0.8
     ) -> torch.Tensor:
-        """Generate music based on optional prompt"""        
+        """Generate music based on optional prompt"""
+        
         self.eval()
         
         with torch.no_grad():
@@ -417,10 +431,12 @@ class AudioGeneratorNetwork(BaseNeuralNetwork):
 
 
 class TextGeneratorNetwork(BaseNeuralNetwork):
-    """    Advanced text generation network for content creators
+    """
+    Advanced text generation network for content creators
     
     Supports script writing, social posts, descriptions, and more.
-    """    
+    """
+    
     def __init__(self, config: TransformerConfig, vocab_size: int = 50000):
         super().__init__(config)
         self.vocab_size = vocab_size
@@ -489,7 +505,8 @@ class TextGeneratorNetwork(BaseNeuralNetwork):
         top_k: int = 50,
         top_p: float = 0.9
     ) -> str:
-        """Generate text continuation"""        
+        """Generate text continuation"""
+        
         self.eval()
         
         with torch.no_grad():
@@ -566,10 +583,12 @@ class TextGeneratorNetwork(BaseNeuralNetwork):
 
 
 class CoverArtGeneratorNetwork(BaseNeuralNetwork):
-    """    Network for generating cover art and visual content
+    """
+    Network for generating cover art and visual content
     
     Creates album covers, thumbnails, and promotional visuals.
-    """    
+    """
+    
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
         
@@ -664,10 +683,12 @@ class CoverArtGeneratorNetwork(BaseNeuralNetwork):
 
 
 class ThumbnailGeneratorNetwork(BaseNeuralNetwork):
-    """    Network for generating thumbnails for videos and social media
+    """
+    Network for generating thumbnails for videos and social media
     
     Creates engaging, click-worthy thumbnails based on content analysis.
-    """    
+    """
+    
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
         

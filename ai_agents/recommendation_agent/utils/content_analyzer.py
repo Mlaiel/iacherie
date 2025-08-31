@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -29,9 +30,11 @@ from .models import ContentItem, ContentType, TrendData
 
 
 class ContentAnalyzer(IContentAnalyzer, IMultiModalProcessor):
-    """    Enterprise-grade content analysis engine providing comprehensive
+    """
+    Enterprise-grade content analysis engine providing comprehensive
     multi-modal content understanding and quality assessment.
-    """    
+    """
+    
     def __init__(
         self,
         redis_client: redis.Redis,
@@ -69,7 +72,8 @@ class ContentAnalyzer(IContentAnalyzer, IMultiModalProcessor):
         }
         
     def _initialize_models(self):
-        """Initialize machine learning models for content analysis"""        try:
+        """Initialize machine learning models for content analysis"""
+        try:
             # Text analysis models
             self.text_sentiment_model = transformers.pipeline(
                 "sentiment-analysis", 
@@ -100,9 +104,11 @@ class ContentAnalyzer(IContentAnalyzer, IMultiModalProcessor):
         self,
         content_id: str
     ) -> Dict[str, Any]:
-        """        Extract comprehensive features from content item including
+        """
+        Extract comprehensive features from content item including
         visual, audio, textual, and metadata features.
-        """        try:
+        """
+        try:
             self.logger.info(f"Analyzing content features for {content_id}")
             
             # Get content metadata
@@ -168,9 +174,11 @@ class ContentAnalyzer(IContentAnalyzer, IMultiModalProcessor):
         self,
         content_id: str
     ) -> Dict[str, float]:
-        """        Calculate comprehensive content quality metrics including
+        """
+        Calculate comprehensive content quality metrics including
         technical quality, engagement quality, and content relevance.
-        """        try:
+        """
+        try:
             content_item = await self._get_content_item(content_id)
             if not content_item:
                 return {}
@@ -212,9 +220,11 @@ class ContentAnalyzer(IContentAnalyzer, IMultiModalProcessor):
         content_ids: List[str],
         time_window: str = "7d"
     ) -> List[TrendData]:
-        """        Detect trending patterns in content using advanced analytics
+        """
+        Detect trending patterns in content using advanced analytics
         including velocity analysis, geographic spread, and viral prediction.
-        """        try:
+        """
+        try:
             self.logger.info(f"Detecting trends for {len(content_ids)} content items")
             
             trends = []
@@ -272,9 +282,11 @@ class ContentAnalyzer(IContentAnalyzer, IMultiModalProcessor):
         self,
         content_id: str
     ) -> np.ndarray:
-        """        Generate high-dimensional embeddings for content similarity calculations
+        """
+        Generate high-dimensional embeddings for content similarity calculations
         using multi-modal feature fusion.
-        """        try:
+        """
+        try:
             # Get content features
             features = await self.analyze_content_features(content_id)
             if not features:
@@ -319,7 +331,8 @@ class ContentAnalyzer(IContentAnalyzer, IMultiModalProcessor):
         content_id: str,
         audio_data: bytes
     ) -> Dict[str, Any]:
-        """Process and analyze audio content"""        try:
+        """Process and analyze audio content"""
+        try:
             # In a real implementation, would process actual audio data
             # For now, returning mock analysis
             
@@ -374,7 +387,8 @@ class ContentAnalyzer(IContentAnalyzer, IMultiModalProcessor):
         content_id: str,
         video_data: bytes
     ) -> Dict[str, Any]:
-        """Process and analyze video content"""        try:
+        """Process and analyze video content"""
+        try:
             # In a real implementation, would process actual video data
             
             video_features = {
@@ -426,7 +440,8 @@ class ContentAnalyzer(IContentAnalyzer, IMultiModalProcessor):
         content_id: str,
         image_data: bytes
     ) -> Dict[str, Any]:
-        """Process and analyze image content"""        try:
+        """Process and analyze image content"""
+        try:
             # In a real implementation, would process actual image data
             
             image_features = {
@@ -482,7 +497,8 @@ class ContentAnalyzer(IContentAnalyzer, IMultiModalProcessor):
         content_id: str,
         text_data: str
     ) -> Dict[str, Any]:
-        """Process and analyze text content"""        try:
+        """Process and analyze text content"""
+        try:
             if not text_data:
                 return {}
             
@@ -539,7 +555,8 @@ class ContentAnalyzer(IContentAnalyzer, IMultiModalProcessor):
         self,
         content_id: str
     ) -> Dict[str, np.ndarray]:
-        """Extract features across multiple modalities"""        try:
+        """Extract features across multiple modalities"""
+        try:
             cross_modal_features = {}
             
             # Get content item
@@ -575,7 +592,8 @@ class ContentAnalyzer(IContentAnalyzer, IMultiModalProcessor):
     
     # Helper methods
     async def _assess_technical_quality(self, content_item: ContentItem) -> Dict[str, float]:
-        """Assess technical quality of content"""        technical_scores = {}
+        """Assess technical quality of content"""
+        technical_scores = {}
         
         # Based on content type, assess relevant technical metrics
         if content_item.content_type == ContentType.VIDEO:
@@ -597,7 +615,8 @@ class ContentAnalyzer(IContentAnalyzer, IMultiModalProcessor):
         return technical_scores
     
     def _calculate_overall_quality(self, quality_metrics: Dict[str, float]) -> float:
-        """Calculate overall quality score from individual metrics"""        weights = {
+        """Calculate overall quality score from individual metrics"""
+        weights = {
             'technical': 0.3,
             'content': 0.25,
             'engagement': 0.25,

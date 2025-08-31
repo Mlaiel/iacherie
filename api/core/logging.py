@@ -1,6 +1,10 @@
-"""Structured logging configuration using structlog."""import logging
+"""Structured logging configuration using structlog."""
+
+import logging
+
 import os
 import sys
+
 import structlog
 
 

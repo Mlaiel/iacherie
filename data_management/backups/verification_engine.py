@@ -11,7 +11,8 @@ Responsibility: Vérification intégrité et validation sauvegardes
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import os
@@ -33,14 +34,16 @@ logger = logging.getLogger(__name__)
 
 
 class VerificationLevel(Enum):
-    """Niveaux de vérification d'intégrité"""    BASIC = "basic"              # Checksum simple
+    """Niveaux de vérification d'intégrité"""
+    BASIC = "basic"              # Checksum simple
     STANDARD = "standard"        # Checksum + métadonnées
     ADVANCED = "advanced"        # Checksum + structure + contenu
     PARANOID = "paranoid"        # Vérification complète + tests
 
 
 class HashAlgorithm(Enum):
-    """Algorithmes de hachage disponibles"""    MD5 = "md5"
+    """Algorithmes de hachage disponibles"""
+    MD5 = "md5"
     SHA1 = "sha1"
     SHA256 = "sha256"
     SHA512 = "sha512"
@@ -50,7 +53,8 @@ class HashAlgorithm(Enum):
 
 @dataclass
 class IntegrityChecksum:
-    """Empreinte d'intégrité d'un fichier"""    file_path: str
+    """Empreinte d'intégrité d'un fichier"""
+    file_path: str
     algorithm: HashAlgorithm
     checksum: str
     file_size: int
@@ -58,7 +62,8 @@ class IntegrityChecksum:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""        return {
+        """Convertit en dictionnaire"""
+        return {
             "file_path": self.file_path,
             "algorithm": self.algorithm.value,
             "checksum": self.checksum,
@@ -69,7 +74,8 @@ class IntegrityChecksum:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'IntegrityChecksum':
-        """Crée depuis un dictionnaire"""        return cls(
+        """Crée depuis un dictionnaire"""
+        return cls(
             file_path=data["file_path"],
             algorithm=HashAlgorithm(data["algorithm"]),
             checksum=data["checksum"],
@@ -81,7 +87,8 @@ class IntegrityChecksum:
 
 @dataclass
 class VerificationResult:
-    """Résultat de vérification d'intégrité"""    file_path: str
+    """Résultat de vérification d'intégrité"""
+    file_path: str
     is_valid: bool
     verification_level: VerificationLevel
     checksums: List[IntegrityChecksum]
@@ -92,7 +99,8 @@ class VerificationResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""        return {
+        """Convertit en dictionnaire"""
+        return {
             "file_path": self.file_path,
             "is_valid": self.is_valid,
             "verification_level": self.verification_level.value,
@@ -107,7 +115,8 @@ class VerificationResult:
 
 @dataclass
 class VerificationConfig:
-    """Configuration de vérification"""    level: VerificationLevel = VerificationLevel.STANDARD
+    """Configuration de vérification"""
+    level: VerificationLevel = VerificationLevel.STANDARD
     algorithms: List[HashAlgorithm] = field(default_factory=lambda: [HashAlgorithm.SHA256])
     parallel_workers: int = 4
     chunk_size: int = 64 * 1024  # 64KB
@@ -117,7 +126,8 @@ class VerificationConfig:
     deep_scan: bool = False
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""        return {
+        """Convertit en dictionnaire"""
+        return {
             "level": self.level.value,
             "algorithms": [a.value for a in self.algorithms],
             "parallel_workers": self.parallel_workers,
@@ -130,7 +140,8 @@ class VerificationConfig:
 
 
 class VerificationEngine:
-    """    Moteur de vérification d'intégrité des sauvegardes
+    """
+    Moteur de vérification d'intégrité des sauvegardes
     
     Fonctionnalités:
     - Calcul checksums multi-algorithmes
@@ -140,7 +151,8 @@ class VerificationEngine:
     - Vérification contenu spécialisée
     - Monitoring et reporting
     - Parallélisation et optimisation
-    """    
+    """
+    
     def __init__(self, config: Optional[VerificationConfig] = None):
         self.config = config or VerificationConfig()
         
@@ -168,7 +180,8 @@ class VerificationEngine:
         reference_checksums: Optional[List[IntegrityChecksum]] = None,
         level: Optional[VerificationLevel] = None
     ) -> VerificationResult:
-        """        Vérifie l'intégrité d'un fichier
+        """
+        Vérifie l'intégrité d'un fichier
         
         Args:
             file_path: Chemin du fichier à vérifier
@@ -177,7 +190,8 @@ class VerificationEngine:
             
         Returns:
             VerificationResult: Résultat de la vérification
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         verification_level = level or self.config.level
         
         try:
@@ -245,14 +259,16 @@ class VerificationEngine:
             return result
     
     async def _calculate_checksums(self, file_path: Path) -> List[IntegrityChecksum]:
-        """        Calcule les checksums d'un fichier selon les algorithmes configurés
+        """
+        Calcule les checksums d'un fichier selon les algorithmes configurés
         
         Args:
             file_path: Fichier à traiter
             
         Returns:
             List[IntegrityChecksum]: Checksums calculés
-        """        file_key = f"{file_path}:{file_path.stat().st_mtime}"
+        """
+        file_key = f"{file_path}:{file_path.stat().st_mtime}"
         
         # Vérification cache
         if file_key in self.checksum_cache:
@@ -327,7 +343,8 @@ class VerificationEngine:
         reference_checksums: Optional[List[IntegrityChecksum]],
         result: VerificationResult
     ):
-        """Vérification de base : comparaison checksums"""        if not reference_checksums:
+        """Vérification de base : comparaison checksums"""
+        if not reference_checksums:
             # Pas de référence = fichier valide par défaut
             result.warnings.append("No reference checksums provided for comparison")
             return
@@ -360,7 +377,8 @@ class VerificationEngine:
         reference_checksums: Optional[List[IntegrityChecksum]],
         result: VerificationResult
     ):
-        """Vérification standard : checksums + métadonnées"""        # Vérification de base
+        """Vérification standard : checksums + métadonnées"""
+        # Vérification de base
         await self._verify_basic(file_path, current_checksums, reference_checksums, result)
         
         if not self.config.verify_metadata:
@@ -389,7 +407,8 @@ class VerificationEngine:
         reference_checksums: Optional[List[IntegrityChecksum]],
         result: VerificationResult
     ):
-        """Vérification avancée : checksums + structure + contenu"""        # Vérification standard
+        """Vérification avancée : checksums + structure + contenu"""
+        # Vérification standard
         await self._verify_standard(file_path, current_checksums, reference_checksums, result)
         
         if not result.is_valid:
@@ -410,7 +429,8 @@ class VerificationEngine:
         reference_checksums: Optional[List[IntegrityChecksum]],
         result: VerificationResult
     ):
-        """Vérification paranoïaque : vérification complète + tests"""        # Vérification avancée
+        """Vérification paranoïaque : vérification complète + tests"""
+        # Vérification avancée
         await self._verify_advanced(file_path, current_checksums, reference_checksums, result)
         
         if not result.is_valid:
@@ -424,7 +444,8 @@ class VerificationEngine:
         await self._additional_tests(file_path, result)
     
     async def _verify_file_integrity(self, file_path: Path, result: VerificationResult):
-        """Vérifie l'intégrité basique du fichier"""        try:
+        """Vérifie l'intégrité basique du fichier"""
+        try:
             # Test de lecture
             with open(file_path, 'rb') as f:
                 # Lecture par chunks pour détecter erreurs I/O
@@ -448,7 +469,8 @@ class VerificationEngine:
             result.is_valid = False
     
     async def _verify_file_structure(self, file_path: Path, result: VerificationResult):
-        """Vérifie la structure du fichier selon son type"""        try:
+        """Vérifie la structure du fichier selon son type"""
+        try:
             mime_type, _ = mimetypes.guess_type(str(file_path))
             
             if not mime_type:
@@ -473,7 +495,8 @@ class VerificationEngine:
             result.warnings.append(f"Structure verification failed: {e}")
     
     async def _verify_image_structure(self, file_path: Path, result: VerificationResult):
-        """Vérifie la structure d'un fichier image"""        try:
+        """Vérifie la structure d'un fichier image"""
+        try:
             from PIL import Image
             
             with Image.open(file_path) as img:
@@ -504,7 +527,8 @@ class VerificationEngine:
             result.is_valid = False
     
     async def _verify_audio_structure(self, file_path: Path, result: VerificationResult):
-        """Vérifie la structure d'un fichier audio"""        try:
+        """Vérifie la structure d'un fichier audio"""
+        try:
             import mutagen
             
             audio_file = mutagen.File(file_path)
@@ -531,7 +555,8 @@ class VerificationEngine:
             result.warnings.append(f"Audio structure verification failed: {e}")
     
     async def _verify_video_structure(self, file_path: Path, result: VerificationResult):
-        """Vérifie la structure d'un fichier vidéo"""        try:
+        """Vérifie la structure d'un fichier vidéo"""
+        try:
             # Vérification basique du header
             with open(file_path, 'rb') as f:
                 header = f.read(32)
@@ -558,7 +583,8 @@ class VerificationEngine:
             result.warnings.append(f"Video structure verification failed: {e}")
     
     async def _verify_text_structure(self, file_path: Path, result: VerificationResult):
-        """Vérifie la structure d'un fichier texte"""        try:
+        """Vérifie la structure d'un fichier texte"""
+        try:
             # Détection encodage et validation
             with open(file_path, 'rb') as f:
                 raw_data = f.read()
@@ -594,7 +620,8 @@ class VerificationEngine:
             result.warnings.append(f"Text structure verification failed: {e}")
     
     async def _verify_json_structure(self, file_path: Path, result: VerificationResult):
-        """Vérifie la structure d'un fichier JSON"""        try:
+        """Vérifie la structure d'un fichier JSON"""
+        try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
             
@@ -616,7 +643,8 @@ class VerificationEngine:
             result.warnings.append(f"JSON structure verification failed: {e}")
     
     async def _verify_file_content(self, file_path: Path, result: VerificationResult):
-        """Vérification spécialisée du contenu"""        try:
+        """Vérification spécialisée du contenu"""
+        try:
             mime_type, _ = mimetypes.guess_type(str(file_path))
             
             if mime_type and mime_type.startswith('image/'):
@@ -628,7 +656,8 @@ class VerificationEngine:
             result.warnings.append(f"Content verification failed: {e}")
     
     async def _verify_image_content(self, file_path: Path, result: VerificationResult):
-        """Vérification contenu image"""        try:
+        """Vérification contenu image"""
+        try:
             from PIL import Image
             
             with Image.open(file_path) as img:
@@ -649,7 +678,8 @@ class VerificationEngine:
             result.warnings.append(f"Image content verification failed: {e}")
     
     async def _verify_audio_content(self, file_path: Path, result: VerificationResult):
-        """Vérification contenu audio"""        try:
+        """Vérification contenu audio"""
+        try:
             # Vérification silence/corruption audio basique
             file_size = file_path.stat().st_size
             
@@ -667,7 +697,8 @@ class VerificationEngine:
             result.warnings.append(f"Audio content verification failed: {e}")
     
     async def _deep_scan_file(self, file_path: Path, result: VerificationResult):
-        """Scan profond pour détecter corruptions subtiles"""        try:
+        """Scan profond pour détecter corruptions subtiles"""
+        try:
             file_size = file_path.stat().st_size
             sample_size = min(file_size, 1024 * 1024)  # 1MB max
             
@@ -686,7 +717,8 @@ class VerificationEngine:
             result.warnings.append(f"Deep scan failed: {e}")
     
     async def _calculate_entropy(self, file_path: Path, sample_size: int) -> float:
-        """Calcule l'entropie d'un échantillon de fichier"""        import math
+        """Calcule l'entropie d'un échantillon de fichier"""
+        import math
         from collections import Counter
         
         with open(file_path, 'rb') as f:
@@ -710,7 +742,8 @@ class VerificationEngine:
         return entropy
     
     async def _additional_tests(self, file_path: Path, result: VerificationResult):
-        """Tests supplémentaires pour vérification paranoïaque"""        try:
+        """Tests supplémentaires pour vérification paranoïaque"""
+        try:
             # Test accès concurrent
             try:
                 with open(file_path, 'rb') as f1, open(file_path, 'rb') as f2:
@@ -743,7 +776,8 @@ class VerificationEngine:
             result.warnings.append(f"Additional tests failed: {e}")
     
     def _update_verification_stats(self, result: VerificationResult):
-        """Met à jour les statistiques de vérification"""        self.verification_stats["total_files_verified"] += 1
+        """Met à jour les statistiques de vérification"""
+        self.verification_stats["total_files_verified"] += 1
         
         if not result.is_valid:
             self.verification_stats["verification_failures"] += 1
@@ -769,7 +803,8 @@ class VerificationEngine:
         backup_metadata: BackupMetadata,
         reference_manifest: Optional[Dict[str, Any]] = None
     ) -> Dict[str, VerificationResult]:
-        """        Vérifie un ensemble complet de sauvegarde
+        """
+        Vérifie un ensemble complet de sauvegarde
         
         Args:
             backup_metadata: Métadonnées de la sauvegarde
@@ -777,7 +812,8 @@ class VerificationEngine:
             
         Returns:
             Dict[str, VerificationResult]: Résultats par fichier
-        """        results = {}
+        """
+        results = {}
         
         try:
             files_to_verify = backup_metadata.files
@@ -829,14 +865,16 @@ class VerificationEngine:
         self,
         verification_results: Dict[str, VerificationResult]
     ) -> Dict[str, Any]:
-        """        Génère un manifeste d'intégrité
+        """
+        Génère un manifeste d'intégrité
         
         Args:
             verification_results: Résultats de vérification
             
         Returns:
             Dict[str, Any]: Manifeste d'intégrité
-        """        manifest = {
+        """
+        manifest = {
             "created_at": datetime.now().isoformat(),
             "verification_engine_version": "1.0.0",
             "total_files": len(verification_results),
@@ -860,11 +898,13 @@ class VerificationEngine:
         return manifest
     
     def get_verification_stats(self) -> Dict[str, Any]:
-        """        Récupère les statistiques de vérification
+        """
+        Récupère les statistiques de vérification
         
         Returns:
             Dict[str, Any]: Statistiques détaillées
-        """        stats = self.verification_stats.copy()
+        """
+        stats = self.verification_stats.copy()
         
         # Calculs additionnels
         if stats["total_files_verified"] > 0:
@@ -886,18 +926,21 @@ class VerificationEngine:
         return stats
     
     def clear_cache(self):
-        """Vide le cache des checksums"""        self.checksum_cache.clear()
+        """Vide le cache des checksums"""
+        self.checksum_cache.clear()
         logger.info("Checksum cache cleared")
     
     def get_recent_verifications(self, count: int = 10) -> List[VerificationResult]:
-        """        Récupère les vérifications récentes
+        """
+        Récupère les vérifications récentes
         
         Args:
             count: Nombre de résultats à retourner
             
         Returns:
             List[VerificationResult]: Vérifications récentes
-        """        return sorted(
+        """
+        return sorted(
             self.verification_history,
             key=lambda x: x.verified_at,
             reverse=True
@@ -905,14 +948,16 @@ class VerificationEngine:
 
 
 class IntegrityDatabase:
-    """    Base de données d'intégrité pour persistance des checksums
+    """
+    Base de données d'intégrité pour persistance des checksums
     
     Fonctionnalités:
     - Stockage persistant des checksums
     - Historique des vérifications
     - Requêtes et indexation
     - Import/export manifestes
-    """    
+    """
+    
     def __init__(self, db_path: Optional[Path] = None):
         self.db_path = db_path or Path("integrity.db")
         self.checksums: Dict[str, List[IntegrityChecksum]] = {}
@@ -924,14 +969,17 @@ class IntegrityDatabase:
         logger.info(f"IntegrityDatabase initialized at {self.db_path}")
     
     def store_checksums(self, file_path: str, checksums: List[IntegrityChecksum]):
-        """Stocke les checksums d'un fichier"""        self.checksums[file_path] = checksums
+        """Stocke les checksums d'un fichier"""
+        self.checksums[file_path] = checksums
         self.save_database()
     
     def get_checksums(self, file_path: str) -> Optional[List[IntegrityChecksum]]:
-        """Récupère les checksums d'un fichier"""        return self.checksums.get(file_path)
+        """Récupère les checksums d'un fichier"""
+        return self.checksums.get(file_path)
     
     def store_verification_result(self, result: VerificationResult):
-        """Stocke un résultat de vérification"""        self.verification_history.append(result)
+        """Stocke un résultat de vérification"""
+        self.verification_history.append(result)
         
         # Limitation historique
         if len(self.verification_history) > 10000:
@@ -940,7 +988,8 @@ class IntegrityDatabase:
         self.save_database()
     
     def load_database(self):
-        """Charge la base de données depuis le disque"""        try:
+        """Charge la base de données depuis le disque"""
+        try:
             if self.db_path.exists():
                 with open(self.db_path, 'r') as f:
                     data = json.load(f)
@@ -957,7 +1006,8 @@ class IntegrityDatabase:
             logger.warning(f"Could not load integrity database: {e}")
     
     def save_database(self):
-        """Sauvegarde la base de données sur disque"""        try:
+        """Sauvegarde la base de données sur disque"""
+        try:
             data = {
                 "checksums": {
                     file_path: [c.to_dict() for c in checksums]

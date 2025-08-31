@@ -7,7 +7,8 @@ content compatibility, audience overlap, genre analysis, and engagement patterns
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 Warning: Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
-"""import logging
+"""
+import logging
 import numpy as np
 from typing import List, Dict, Optional, Tuple, Any
 from dataclasses import dataclass
@@ -25,7 +26,8 @@ from backend.core.analytics.metrics import MetricsCollector
 
 
 class ContentType(Enum):
-    """Content type enumeration for matching analysis"""    MUSIC = "music"
+    """Content type enumeration for matching analysis"""
+    MUSIC = "music"
     VIDEO = "video"
     PHOTOGRAPHY = "photography"
     BLOG = "blog"
@@ -34,7 +36,8 @@ class ContentType(Enum):
 
 
 class MatchingStrategy(Enum):
-    """Matching strategy enumeration"""    CONTENT_SIMILARITY = "content_similarity"
+    """Matching strategy enumeration"""
+    CONTENT_SIMILARITY = "content_similarity"
     AUDIENCE_OVERLAP = "audience_overlap"
     GENRE_COMPATIBILITY = "genre_compatibility"
     ENGAGEMENT_SYNERGY = "engagement_synergy"
@@ -44,7 +47,8 @@ class MatchingStrategy(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Creator profile data structure for matching"""    user_id: int
+    """Creator profile data structure for matching"""
+    user_id: int
     content_types: List[ContentType]
     genres: List[str]
     audience_demographics: Dict[str, Any]
@@ -60,7 +64,8 @@ class CreatorProfile:
 
 @dataclass
 class MatchResult:
-    """Match result data structure"""    creator_a_id: int
+    """Match result data structure"""
+    creator_a_id: int
     creator_b_id: int
     compatibility_score: float
     strategy_scores: Dict[MatchingStrategy, float]
@@ -76,12 +81,14 @@ class MatchResult:
 
 
 class MatchingEngine:
-    """    Advanced AI-driven matching engine for content creator collaboration
+    """
+    Advanced AI-driven matching engine for content creator collaboration
     
     This class implements sophisticated algorithms to analyze creator profiles
     and identify optimal collaboration opportunities using multiple AI models
     and matching strategies.
-    """    
+    """
+    
     def __init__(
         self,
         db_session: Session,
@@ -117,7 +124,8 @@ class MatchingEngine:
         }
     
     def _initialize_models(self) -> None:
-        """Initialize AI models for matching analysis"""        try:
+        """Initialize AI models for matching analysis"""
+        try:
             # Load pre-trained content similarity model
             self.content_similarity_model = joblib.load(
                 self.config.get('content_similarity_model_path', 'models/content_similarity.pkl')
@@ -148,7 +156,8 @@ class MatchingEngine:
         strategy: Optional[MatchingStrategy] = None,
         filters: Optional[Dict[str, Any]] = None
     ) -> List[MatchResult]:
-        """        Find optimal collaboration matches for a creator
+        """
+        Find optimal collaboration matches for a creator
         
         Args:
             creator_id: Target creator ID
@@ -158,7 +167,8 @@ class MatchingEngine:
             
         Returns:
             List of match results sorted by compatibility score
-        """        cache_key = f"matches:{creator_id}:{limit}:{strategy}:{hash(str(filters))}"
+        """
+        cache_key = f"matches:{creator_id}:{limit}:{strategy}:{hash(str(filters))}"
         
         # Check cache first
         cached_matches = await self.cache_manager.get(cache_key)
@@ -217,7 +227,8 @@ class MatchingEngine:
             raise
     
     async def _get_creator_profile(self, creator_id: int) -> Optional[CreatorProfile]:
-        """Get comprehensive creator profile for matching analysis"""        try:
+        """Get comprehensive creator profile for matching analysis"""
+        try:
             # This would query the database for creator information
             # Implementation would involve joining multiple tables:
             # - users, content_fingerprints, analytics_data, etc.
@@ -248,7 +259,8 @@ class MatchingEngine:
         creator_profile: CreatorProfile,
         filters: Optional[Dict[str, Any]] = None
     ) -> List[CreatorProfile]:
-        """Get candidate creator profiles for matching"""        try:
+        """Get candidate creator profiles for matching"""
+        try:
             # Query database for potential matches based on:
             # - Content type compatibility
             # - Genre overlap
@@ -275,7 +287,8 @@ class MatchingEngine:
         creator_b: CreatorProfile,
         strategy: Optional[MatchingStrategy] = None
     ) -> MatchResult:
-        """Calculate comprehensive match score between two creators"""        try:
+        """Calculate comprehensive match score between two creators"""
+        try:
             strategy_scores = {}
             
             # Calculate scores for each strategy
@@ -356,7 +369,8 @@ class MatchingEngine:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate content similarity score using AI models"""        try:
+        """Calculate content similarity score using AI models"""
+        try:
             # Use cosine similarity on content feature vectors
             similarity = cosine_similarity(
                 creator_a.content_features.reshape(1, -1),
@@ -375,7 +389,8 @@ class MatchingEngine:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate audience overlap and complementarity"""        try:
+        """Calculate audience overlap and complementarity"""
+        try:
             # Analyze demographic overlap
             # Calculate age, location, interest overlaps
             # Use Jaccard similarity for categorical data
@@ -392,7 +407,8 @@ class MatchingEngine:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate genre compatibility score"""        try:
+        """Calculate genre compatibility score"""
+        try:
             # Calculate Jaccard similarity for genres
             genres_a = set(creator_a.genres)
             genres_b = set(creator_b.genres)
@@ -414,7 +430,8 @@ class MatchingEngine:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate potential engagement synergy"""        try:
+        """Calculate potential engagement synergy"""
+        try:
             # Analyze engagement patterns, timing, platforms
             # Predict combined engagement boost
             
@@ -430,7 +447,8 @@ class MatchingEngine:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate collaboration history compatibility"""        try:
+        """Calculate collaboration history compatibility"""
+        try:
             # Analyze past successful collaborations
             # Check for previous interactions
             # Assess collaboration success patterns
@@ -447,7 +465,8 @@ class MatchingEngine:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate cross-platform collaboration potential"""        try:
+        """Calculate cross-platform collaboration potential"""
+        try:
             # Analyze platform presence complementarity
             # Calculate cross-promotion potential
             
@@ -463,7 +482,8 @@ class MatchingEngine:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate audience synergy score"""        # Detailed audience analysis implementation
+        """Calculate audience synergy score"""
+        # Detailed audience analysis implementation
         return 0.75
     
     def _calculate_content_complement(
@@ -471,7 +491,8 @@ class MatchingEngine:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate content complementarity score"""        # Content complementarity analysis
+        """Calculate content complementarity score"""
+        # Content complementarity analysis
         return 0.80
     
     def _assess_collaboration_risks(
@@ -479,7 +500,8 @@ class MatchingEngine:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> Dict[str, float]:
-        """Assess potential collaboration risks"""        return {
+        """Assess potential collaboration risks"""
+        return {
             'brand_mismatch': 0.2,
             'audience_conflict': 0.1,
             'quality_disparity': 0.15,
@@ -491,14 +513,16 @@ class MatchingEngine:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> int:
-        """Estimate combined reach of collaboration"""        # Calculate estimated reach based on audience sizes and overlap
+        """Estimate combined reach of collaboration"""
+        # Calculate estimated reach based on audience sizes and overlap
         return 50000
     
     def _calculate_confidence_level(
         self,
         strategy_scores: Dict[MatchingStrategy, float]
     ) -> float:
-        """Calculate confidence level of the match"""        # Statistical confidence calculation
+        """Calculate confidence level of the match"""
+        # Statistical confidence calculation
         scores = list(strategy_scores.values())
         return np.mean(scores) * (1 - np.std(scores))
     
@@ -508,7 +532,8 @@ class MatchingEngine:
         creator_b: CreatorProfile,
         strategy_scores: Dict[MatchingStrategy, float]
     ) -> List[str]:
-        """Generate human-readable match reasons"""        reasons = []
+        """Generate human-readable match reasons"""
+        reasons = []
         
         for strategy, score in strategy_scores.items():
             if score > 0.7:
@@ -527,7 +552,8 @@ class MatchingEngine:
         compatibility_score: float,
         strategy_scores: Dict[MatchingStrategy, float]
     ) -> str:
-        """Determine collaboration potential level"""        if compatibility_score >= 0.85:
+        """Determine collaboration potential level"""
+        if compatibility_score >= 0.85:
             return "EXCELLENT"
         elif compatibility_score >= 0.70:
             return "GOOD"
@@ -542,7 +568,8 @@ class MatchingEngine:
         creator_b: CreatorProfile,
         strategy_scores: Dict[MatchingStrategy, float]
     ) -> List[str]:
-        """Recommend optimal collaboration formats"""        formats = []
+        """Recommend optimal collaboration formats"""
+        formats = []
         
         # Analyze content types and suggest formats
         common_types = set(creator_a.content_types).intersection(
@@ -560,7 +587,8 @@ class MatchingEngine:
         return formats
     
     def _passes_quality_threshold(self, match_result: MatchResult) -> bool:
-        """Check if match passes quality thresholds"""        return (
+        """Check if match passes quality thresholds"""
+        return (
             match_result.compatibility_score >= self.quality_thresholds['compatibility_score'] and
             match_result.audience_synergy_score >= self.quality_thresholds['audience_synergy'] and
             match_result.content_complement_score >= self.quality_thresholds['content_complement'] and
@@ -568,7 +596,8 @@ class MatchingEngine:
         )
     
     async def get_match_details(self, match_id: str) -> Optional[MatchResult]:
-        """Get detailed information about a specific match"""        try:
+        """Get detailed information about a specific match"""
+        try:
             # Retrieve match details from database or cache
             # Implementation would query match storage
             return None
@@ -582,7 +611,8 @@ class MatchingEngine:
         match_id: str,
         feedback: Dict[str, Any]
     ) -> bool:
-        """Update match with user feedback for ML improvement"""        try:
+        """Update match with user feedback for ML improvement"""
+        try:
             # Store feedback for model retraining
             # Update match quality scores
             

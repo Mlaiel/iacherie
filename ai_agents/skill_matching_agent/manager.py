@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -33,13 +34,15 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SkillMatchingSystemStatus:
-    """Overall skill matching system status"""    is_healthy: bool = True
+    """Overall skill matching system status"""
+    is_healthy: bool = True
     active_operations: int = 0
     system_load: float = 0.0
     last_updated: datetime = None
 
 class SkillMatchingManager(BaseAgent):
-    """    Master Skill Matching Manager
+    """
+    Master Skill Matching Manager
     
     Unified interface for the entire skill matching system providing:
     - Single point of control for all skill matching operations
@@ -48,7 +51,8 @@ class SkillMatchingManager(BaseAgent):
     - Performance analytics and reporting
     - Resource management and scaling
     - Error handling and recovery
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         
@@ -61,7 +65,8 @@ class SkillMatchingManager(BaseAgent):
         logger.info("SkillMatchingManager initialized")
 
     async def start(self) -> None:
-        """Start the complete skill matching system"""        if self.is_running:
+        """Start the complete skill matching system"""
+        if self.is_running:
             logger.warning("Skill Matching system is already running")
             return
         
@@ -76,7 +81,8 @@ class SkillMatchingManager(BaseAgent):
             raise
 
     async def get_system_status(self) -> SkillMatchingSystemStatus:
-        """Get comprehensive system status"""        try:
+        """Get comprehensive system status"""
+        try:
             return SkillMatchingSystemStatus(
                 is_healthy=self.is_running,
                 active_operations=0,  # Implementation specific
@@ -88,7 +94,8 @@ class SkillMatchingManager(BaseAgent):
             return SkillMatchingSystemStatus(is_healthy=False)
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the entire skill matching system"""        if not self.is_running:
+        """Graceful shutdown of the entire skill matching system"""
+        if not self.is_running:
             logger.warning("Skill Matching system is not running")
             return
         
@@ -102,7 +109,8 @@ class SkillMatchingManager(BaseAgent):
             logger.error(f"Failed to shutdown skill matching system: {e}")
 
     async def process(self, data: Dict[str, Any]) -> AgentResponse:
-        """Base agent interface implementation"""        try:
+        """Base agent interface implementation"""
+        try:
             # Implementation specific to skill matching operations
             result = await self.engine.process(data)
             return AgentResponse(success=True, data=result)

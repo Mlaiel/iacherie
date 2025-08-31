@@ -14,7 +14,9 @@ permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violations will be prosecuted under applicable laws.
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from .metrics import MetricsCollector, ContentMetricsCollector, AIMetricsCollector
+"""
+
+from .metrics import MetricsCollector, ContentMetricsCollector, AIMetricsCollector
 from .health import HealthChecker, ServiceHealthMonitor, DatabaseHealthChecker
 from .tracing import TracingManager, DistributedTracer, RequestTracer
 from .alerting import AlertManager, RuleEngine, NotificationService

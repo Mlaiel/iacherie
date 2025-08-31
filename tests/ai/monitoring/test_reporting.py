@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -23,7 +24,8 @@ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use of this code without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full
 extent of the law.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -64,10 +66,12 @@ from .fixtures import (
 
 
 class TestReportingCore:
-    """Core functionality tests for reporting system."""    
+    """Core functionality tests for reporting system."""
+    
     @pytest.fixture
     async def reporting_system(self):
-        """Create and initialize reporting system."""        system = Reporting(
+        """Create and initialize reporting system."""
+        system = Reporting(
             config={
                 "report_generation_enabled": True,
                 "data_aggregation_enabled": True,
@@ -86,7 +90,8 @@ class TestReportingCore:
     
     @pytest.fixture
     def report_test_config(self):
-        """Reporting system configuration for testing."""        return {
+        """Reporting system configuration for testing."""
+        return {
             "data_sources": {
                 "performance_metrics": {
                     "type": "database",
@@ -158,7 +163,8 @@ class TestReportingCore:
         }
     
     async def test_reporting_engine_initialization(self, reporting_engine):
-        """Test proper initialization of reporting engine."""        assert reporting_engine is not None
+        """Test proper initialization of reporting engine."""
+        assert reporting_engine is not None
         assert reporting_engine.is_initialized
         assert reporting_engine.data_aggregator is not None
         assert reporting_engine.visualization_engine is not None
@@ -166,7 +172,8 @@ class TestReportingCore:
         assert reporting_engine.scheduler is not None
     
     async def test_data_aggregation_and_collection(self, reporting_engine, report_test_config):
-        """Test data aggregation from multiple sources."""        # Configure data sources
+        """Test data aggregation from multiple sources."""
+        # Configure data sources
         await reporting_engine.configure_data_sources(report_test_config["data_sources"])
         
         # Mock data from different sources
@@ -261,7 +268,8 @@ class TestReportingCore:
         await reporting_engine.stop_real_time_aggregation()
     
     async def test_report_template_management(self, reporting_engine, report_test_config):
-        """Test report template creation and management."""        # Create report templates
+        """Test report template creation and management."""
+        # Create report templates
         for template_config in report_test_config["report_templates"]:
             template = ReportTemplate(
                 name=template_config["name"],
@@ -326,7 +334,8 @@ class TestReportingCore:
         assert customized_template.schedule.frequency == "hourly"
     
     async def test_data_visualization_generation(self, reporting_engine, report_test_config):
-        """Test data visualization generation and rendering."""        # Configure visualization settings
+        """Test data visualization generation and rendering."""
+        # Configure visualization settings
         await reporting_engine.configure_visualizations(
             report_test_config["visualization_config"]
         )
@@ -452,7 +461,8 @@ class TestReportingCore:
         assert len(dashboard["individual_charts"]) == 4
     
     async def test_report_generation_and_formatting(self, reporting_engine, report_test_config):
-        """Test complete report generation in multiple formats."""        # Configure report templates
+        """Test complete report generation in multiple formats."""
+        # Configure report templates
         await reporting_engine.configure_templates(report_test_config["report_templates"])
         
         # Generate daily performance report
@@ -544,7 +554,8 @@ class TestReportingCore:
         assert "filtered_data" in custom_report["metadata"]
     
     async def test_automated_reporting_scheduler(self, reporting_engine, report_test_config):
-        """Test automated report scheduling and delivery."""        # Configure automated reporting
+        """Test automated report scheduling and delivery."""
+        # Configure automated reporting
         await reporting_engine.configure_automated_reporting(
             report_test_config["report_templates"]
         )
@@ -657,7 +668,8 @@ class TestReportingCore:
             assert retry_count == 3  # Failed twice, succeeded on third try
     
     async def test_business_intelligence_and_insights(self, reporting_engine):
-        """Test business intelligence and automated insights generation."""        # Configure BI engine
+        """Test business intelligence and automated insights generation."""
+        # Configure BI engine
         bi_config = {
             "insight_models": [
                 {
@@ -804,7 +816,8 @@ class TestReportingCore:
         assert "recommendations" in root_cause_analysis
     
     async def test_report_storage_and_archiving(self, reporting_engine, report_test_config):
-        """Test report storage, retrieval, and archiving."""        # Configure storage
+        """Test report storage, retrieval, and archiving."""
+        # Configure storage
         await reporting_engine.configure_storage(report_test_config["storage_config"])
         
         # Generate test reports
@@ -924,7 +937,8 @@ class TestReportingCore:
             assert "not found" in str(e).lower()
     
     async def test_reporting_system_performance(self, reporting_engine):
-        """Test reporting system performance and scalability."""        # Performance test with large dataset
+        """Test reporting system performance and scalability."""
+        # Performance test with large dataset
         large_dataset = TestDataGenerator.generate_large_dataset(
             metrics=["cpu_usage", "memory_usage", "response_time", "throughput"],
             sample_count=100000,  # 100K data points

@@ -28,13 +28,15 @@ orchestration for the global creator economy.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY ⚠️
 This revolutionary collaboration platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
-"""from .creator_collaboration import (
+"""
+
+from .creator_collaboration import (
     CreatorCollaborationEngine,
     CreatorProfile,
     CollaborationMatch,
@@ -46,8 +48,11 @@ under German and International Law. Contact: mlaiel@live.de for legal authorizat
 )
 
 from .network_analyzer import CreatorNetworkAnalyzer
+
 from .partnership_manager import PartnershipManager
+
 from .smart_contracts import SmartContractManager
+
 from .performance_tracker import CollaborationPerformanceTracker
 
 # Core Components
@@ -77,5 +82,5 @@ __all__ = [
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary - Unauthorized use prohibited"

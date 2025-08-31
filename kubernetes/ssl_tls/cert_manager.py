@@ -12,7 +12,8 @@ Team Expertise:
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized copying, distribution, or use without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""import os
+"""
+import os
 import ssl
 import hashlib
 import logging
@@ -34,7 +35,8 @@ import requests
 
 
 class CertificateType(Enum):
-    """Certificate type enumeration"""    DOMAIN_VALIDATION = "DV"
+    """Certificate type enumeration"""
+    DOMAIN_VALIDATION = "DV"
     ORGANIZATION_VALIDATION = "OV"
     EXTENDED_VALIDATION = "EV"
     WILDCARD = "WILDCARD"
@@ -42,7 +44,8 @@ class CertificateType(Enum):
 
 
 class CertificateStatus(Enum):
-    """Certificate status enumeration"""    VALID = "valid"
+    """Certificate status enumeration"""
+    VALID = "valid"
     EXPIRED = "expired"
     EXPIRING_SOON = "expiring_soon"
     REVOKED = "revoked"
@@ -52,7 +55,8 @@ class CertificateStatus(Enum):
 
 @dataclass
 class CertificateInfo:
-    """Certificate information structure"""    common_name: str
+    """Certificate information structure"""
+    common_name: str
     subject_alt_names: List[str]
     issuer: str
     serial_number: str
@@ -68,19 +72,24 @@ class CertificateInfo:
 
 
 class CertificateValidationError(Exception):
-    """Certificate validation exception"""    pass
+    """Certificate validation exception"""
+    pass
 
 
 class CertificateManager:
-    """    Enterprise SSL/TLS certificate management system
+    """
+    Enterprise SSL/TLS certificate management system
     Handles certificate generation, validation, monitoring, and renewal
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize certificate manager
+        """
+        Initialize certificate manager
         
         Args:
             config: Certificate management configuration
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Certificate storage paths
@@ -102,7 +111,8 @@ class CertificateManager:
         self.logger.info("Certificate manager initialized")
     
     def _init_directories(self) -> None:
-        """Initialize certificate directories with proper permissions"""        try:
+        """Initialize certificate directories with proper permissions"""
+        try:
             for directory in [self.cert_directory, self.key_directory, self.ca_directory]:
                 directory.mkdir(parents=True, exist_ok=True)
                 
@@ -121,7 +131,8 @@ class CertificateManager:
         key_size: int = 2048,
         key_type: str = "RSA"
     ) -> rsa.RSAPrivateKey:
-        """        Generate private key for certificate
+        """
+        Generate private key for certificate
         
         Args:
             key_size: RSA key size in bits
@@ -129,7 +140,8 @@ class CertificateManager:
             
         Returns:
             Generated private key
-        """        try:
+        """
+        try:
             if key_type.upper() == "RSA":
                 private_key = rsa.generate_private_key(
                     public_exponent=65537,
@@ -157,7 +169,8 @@ class CertificateManager:
         email: str = None,
         san_list: List[str] = None
     ) -> x509.CertificateSigningRequest:
-        """        Generate Certificate Signing Request (CSR)
+        """
+        Generate Certificate Signing Request (CSR)
         
         Args:
             private_key: Private key for CSR
@@ -171,7 +184,8 @@ class CertificateManager:
             
         Returns:
             Generated CSR
-        """        try:
+        """
+        try:
             # Build subject name
             subject_components = [
                 x509.NameAttribute(NameOID.COMMON_NAME, common_name),
@@ -236,14 +250,16 @@ class CertificateManager:
             raise
     
     def load_certificate(self, cert_path: Path) -> x509.Certificate:
-        """        Load certificate from file
+        """
+        Load certificate from file
         
         Args:
             cert_path: Path to certificate file
             
         Returns:
             Loaded certificate
-        """        try:
+        """
+        try:
             with open(cert_path, 'rb') as cert_file:
                 cert_data = cert_file.read()
                 
@@ -267,13 +283,15 @@ class CertificateManager:
         cert_path: Path,
         format_type: str = "PEM"
     ) -> None:
-        """        Save certificate to file
+        """
+        Save certificate to file
         
         Args:
             certificate: Certificate to save
             cert_path: Destination path
             format_type: Certificate format (PEM/DER)
-        """        try:
+        """
+        try:
             if format_type.upper() == "PEM":
                 cert_data = certificate.public_bytes(serialization.Encoding.PEM)
             else:
@@ -297,13 +315,15 @@ class CertificateManager:
         key_path: Path,
         password: Optional[bytes] = None
     ) -> None:
-        """        Save private key to file with optional encryption
+        """
+        Save private key to file with optional encryption
         
         Args:
             private_key: Private key to save
             key_path: Destination path
             password: Optional encryption password
-        """        try:
+        """
+        try:
             if password:
                 encryption_algorithm = serialization.BestAvailableEncryption(password)
             else:
@@ -328,14 +348,16 @@ class CertificateManager:
             raise
     
     def validate_certificate(self, certificate: x509.Certificate) -> CertificateInfo:
-        """        Validate and extract certificate information
+        """
+        Validate and extract certificate information
         
         Args:
             certificate: Certificate to validate
             
         Returns:
             Certificate information
-        """        try:
+        """
+        try:
             # Extract basic information
             subject = certificate.subject
             issuer = certificate.issuer
@@ -418,7 +440,8 @@ class CertificateManager:
         common_name: str, 
         san_list: List[str]
     ) -> CertificateType:
-        """Determine certificate type based on names"""        if common_name and common_name.startswith('*.'):
+        """Determine certificate type based on names"""
+        if common_name and common_name.startswith('*.'):
             return CertificateType.WILDCARD
         elif len(san_list) > 0:
             return CertificateType.MULTI_DOMAIN
@@ -426,7 +449,8 @@ class CertificateManager:
             return CertificateType.DOMAIN_VALIDATION
     
     def _extract_validation_urls(self, certificate: x509.Certificate) -> Tuple[Optional[str], Optional[str]]:
-        """Extract OCSP and CRL URLs from certificate"""        ocsp_url = None
+        """Extract OCSP and CRL URLs from certificate"""
+        ocsp_url = None
         crl_url = None
         
         try:
@@ -471,7 +495,8 @@ class CertificateManager:
         intermediate_certs: List[x509.Certificate] = None,
         trusted_ca_path: Path = None
     ) -> bool:
-        """        Verify certificate chain against trusted CAs
+        """
+        Verify certificate chain against trusted CAs
         
         Args:
             certificate: Certificate to verify
@@ -480,7 +505,8 @@ class CertificateManager:
             
         Returns:
             True if chain is valid
-        """        try:
+        """
+        try:
             # Load trusted CA certificates
             ca_store = crypto.X509Store()
             
@@ -519,14 +545,16 @@ class CertificateManager:
             return False
     
     def check_ocsp_status(self, certificate: x509.Certificate) -> bool:
-        """        Check certificate revocation status via OCSP
+        """
+        Check certificate revocation status via OCSP
         
         Args:
             certificate: Certificate to check
             
         Returns:
             True if certificate is not revoked
-        """        if not self.enable_ocsp:
+        """
+        if not self.enable_ocsp:
             return True
         
         try:
@@ -555,14 +583,16 @@ class CertificateManager:
             return True  # Fail open for availability
     
     def get_certificate_expiry_status(self, certificate: x509.Certificate) -> Dict[str, Any]:
-        """        Get detailed expiry status for certificate
+        """
+        Get detailed expiry status for certificate
         
         Args:
             certificate: Certificate to check
             
         Returns:
             Expiry status information
-        """        try:
+        """
+        try:
             now = datetime.utcnow()
             not_after = certificate.not_valid_after
             
@@ -596,14 +626,16 @@ class CertificateManager:
             raise
     
     def list_certificates(self, directory: Path = None) -> List[Dict[str, Any]]:
-        """        List all certificates in directory with status information
+        """
+        List all certificates in directory with status information
         
         Args:
             directory: Directory to scan (defaults to cert_directory)
             
         Returns:
             List of certificate information
-        """        if directory is None:
+        """
+        if directory is None:
             directory = self.cert_directory
         
         certificates = []
@@ -638,14 +670,16 @@ class CertificateManager:
             raise
     
     def backup_certificates(self, backup_path: Path) -> bool:
-        """        Backup all certificates and keys
+        """
+        Backup all certificates and keys
         
         Args:
             backup_path: Backup destination path
             
         Returns:
             True if backup successful
-        """        try:
+        """
+        try:
             import shutil
             import tarfile
             from datetime import datetime
@@ -671,11 +705,13 @@ class CertificateManager:
 
 
 def create_certificate_manager(config: Dict[str, Any]) -> CertificateManager:
-    """    Factory function to create certificate manager instance
+    """
+    Factory function to create certificate manager instance
     
     Args:
         config: Certificate manager configuration
         
     Returns:
         Configured certificate manager
-    """    return CertificateManager(config)
+    """
+    return CertificateManager(config)

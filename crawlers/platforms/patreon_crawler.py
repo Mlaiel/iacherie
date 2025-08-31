@@ -21,7 +21,8 @@ Features:
 - Subscription tier analysis and monetization tracking
 - Comprehensive creator analytics and patron behavior analysis
 - Multi-tier content access monitoring and protection
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import json
 import logging
@@ -55,7 +56,8 @@ settings = get_settings()
 
 
 class PatreonTierType(str, Enum):
-    """Enhanced Patreon subscription tier types"""    FREE = "free"
+    """Enhanced Patreon subscription tier types"""
+    FREE = "free"
     TIER_1 = "tier_1"
     TIER_2 = "tier_2"
     TIER_3 = "tier_3"
@@ -71,7 +73,8 @@ class PatreonTierType(str, Enum):
 
 
 class PatreonPostType(str, Enum):
-    """Enhanced Patreon post types"""    TEXT_ONLY = "text_only"
+    """Enhanced Patreon post types"""
+    TEXT_ONLY = "text_only"
     IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
@@ -86,7 +89,8 @@ class PatreonPostType(str, Enum):
 
 
 class PatreonContentStatus(str, Enum):
-    """Patreon content status types"""    PUBLISHED = "published"
+    """Patreon content status types"""
+    PUBLISHED = "published"
     DRAFT = "draft"
     SCHEDULED = "scheduled"
     ARCHIVED = "archived"
@@ -97,7 +101,8 @@ class PatreonContentStatus(str, Enum):
 
 @dataclass
 class PatreonCreator:
-    """Enhanced Patreon creator data structure."""    creator_id: str
+    """Enhanced Patreon creator data structure."""
+    creator_id: str
     name: str
     vanity_url: str
     display_name: str
@@ -133,14 +138,16 @@ class PatreonCreator:
 
 
 class PatreonVisibility(str, Enum):
-    """Patreon post visibility levels"""    PUBLIC = "public"
+    """Patreon post visibility levels"""
+    PUBLIC = "public"
     PATRONS_ONLY = "patrons_only"
     TIER_RESTRICTED = "tier_restricted"
     PAID_POST = "paid_post"
 
 
 class PatreonReward(BaseModel):
-    """Patreon reward/tier data model"""    tier_id: str
+    """Patreon reward/tier data model"""
+    tier_id: str
     title: str
     description: Optional[str] = None
     amount_cents: int
@@ -160,7 +167,8 @@ class PatreonReward(BaseModel):
 
 
 class PatreonCreator(BaseModel):
-    """Patreon creator data model"""    creator_id: str
+    """Patreon creator data model"""
+    creator_id: str
     full_name: str
     username: str
     display_name: str
@@ -200,7 +208,8 @@ class PatreonCreator(BaseModel):
 
 
 class PatreonPost(BaseModel):
-    """Patreon post data model"""    post_id: str
+    """Patreon post data model"""
+    post_id: str
     creator: PatreonCreator
     title: Optional[str] = None
     content: Optional[str] = None
@@ -235,7 +244,8 @@ class PatreonPost(BaseModel):
 
 
 class PatreonGoal(BaseModel):
-    """Patreon goal data model"""    goal_id: str
+    """Patreon goal data model"""
+    goal_id: str
     amount_cents: int
     completed_percentage: int
     created_at: datetime
@@ -245,7 +255,8 @@ class PatreonGoal(BaseModel):
 
 
 class PatreonPledge(BaseModel):
-    """Patreon pledge data model"""    pledge_id: str
+    """Patreon pledge data model"""
+    pledge_id: str
     amount_cents: int
     created_at: datetime
     declined_since: Optional[datetime] = None
@@ -260,7 +271,8 @@ class PatreonPledge(BaseModel):
 
 
 class PatreonSearchResults(BaseModel):
-    """Patreon search results data model"""    query: str
+    """Patreon search results data model"""
+    query: str
     total_results: int
     creators: List[PatreonCreator] = Field(default_factory=list)
     posts: List[PatreonPost] = Field(default_factory=list)
@@ -272,7 +284,8 @@ class PatreonSearchResults(BaseModel):
 
 
 class PatreonAnalytics(BaseModel):
-    """Patreon analytics data model"""    creator_id: str
+    """Patreon analytics data model"""
+    creator_id: str
     analysis_period: Tuple[datetime, datetime]
     total_posts: int
     total_patrons: int
@@ -293,11 +306,13 @@ class PatreonAnalytics(BaseModel):
 
 
 class PatreonCrawler(BaseCrawler):
-    """    Ultra-Advanced Patreon Platform Crawler
+    """
+    Ultra-Advanced Patreon Platform Crawler
     
     Provides comprehensive crawling and monitoring capabilities for Patreon platform,
     specializing in creator support content, subscription analytics, and patron insights.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -346,7 +361,8 @@ class PatreonCrawler(BaseCrawler):
         auth_code: str = None,
         redirect_uri: str = None
     ) -> bool:
-        """        Authenticate with Patreon API using OAuth2
+        """
+        Authenticate with Patreon API using OAuth2
         
         Args:
             access_token: Existing access token
@@ -356,7 +372,8 @@ class PatreonCrawler(BaseCrawler):
             
         Returns:
             bool: Authentication success status
-        """        try:
+        """
+        try:
             if access_token:
                 self.access_token = access_token
                 self.refresh_token = refresh_token
@@ -406,7 +423,8 @@ class PatreonCrawler(BaseCrawler):
         tier_filter: Optional[PatreonTierType] = None,
         limit: int = 50
     ) -> PatreonSearchResults:
-        """        Search Patreon content with advanced filtering
+        """
+        Search Patreon content with advanced filtering
         
         Args:
             query: Search query
@@ -416,7 +434,8 @@ class PatreonCrawler(BaseCrawler):
             
         Returns:
             PatreonSearchResults: Comprehensive search results
-        """        await self.rate_limiter.acquire()
+        """
+        await self.rate_limiter.acquire()
         
         try:
             results = PatreonSearchResults(
@@ -464,7 +483,8 @@ class PatreonCrawler(BaseCrawler):
         keywords: List[str] = None,
         check_interval: int = 900
     ) -> AsyncGenerator[PatreonPost, None]:
-        """        Real-time content monitoring for Patreon
+        """
+        Real-time content monitoring for Patreon
         
         Args:
             creator_usernames: Creators to monitor
@@ -473,7 +493,8 @@ class PatreonCrawler(BaseCrawler):
             
         Yields:
             PatreonPost: New posts detected
-        """        creator_usernames = creator_usernames or []
+        """
+        creator_usernames = creator_usernames or []
         keywords = keywords or []
         
         self.monitored_creators.update(creator_usernames)
@@ -515,7 +536,8 @@ class PatreonCrawler(BaseCrawler):
         comparison_set: List[PatreonPost],
         threshold: float = None
     ) -> List[Tuple[PatreonPost, float]]:
-        """        Detect post similarity for content protection
+        """
+        Detect post similarity for content protection
         
         Args:
             target_post: Post to compare
@@ -524,7 +546,8 @@ class PatreonCrawler(BaseCrawler):
             
         Returns:
             List[Tuple[PatreonPost, float]]: Similar posts with scores
-        """        threshold = threshold or self.similarity_threshold
+        """
+        threshold = threshold or self.similarity_threshold
         similar_posts = []
         
         try:
@@ -556,7 +579,8 @@ class PatreonCrawler(BaseCrawler):
         creator_id: str,
         analysis_period: Tuple[datetime, datetime]
     ) -> PatreonAnalytics:
-        """        Generate comprehensive analytics for Patreon creator
+        """
+        Generate comprehensive analytics for Patreon creator
         
         Args:
             creator_id: Creator ID to analyze
@@ -564,7 +588,8 @@ class PatreonCrawler(BaseCrawler):
             
         Returns:
             PatreonAnalytics: Comprehensive analytics data
-        """        try:
+        """
+        try:
             start_time, end_time = analysis_period
             
             # Get creator data and posts
@@ -678,7 +703,8 @@ class PatreonCrawler(BaseCrawler):
     # Helper methods
     
     async def _exchange_auth_code(self, auth_code: str, redirect_uri: str) -> Optional[Dict[str, Any]]:
-        """Exchange authorization code for access token"""        try:
+        """Exchange authorization code for access token"""
+        try:
             data = {
                 'code': auth_code,
                 'grant_type': 'authorization_code',
@@ -699,7 +725,8 @@ class PatreonCrawler(BaseCrawler):
             return None
 
     async def _refresh_access_token(self) -> bool:
-        """Refresh access token using refresh token"""        try:
+        """Refresh access token using refresh token"""
+        try:
             data = {
                 'grant_type': 'refresh_token',
                 'refresh_token': self.refresh_token,
@@ -731,7 +758,8 @@ class PatreonCrawler(BaseCrawler):
             return False
 
     async def _search_creators(self, query: str, limit: int) -> List[PatreonCreator]:
-        """Search for Patreon creators"""        try:
+        """Search for Patreon creators"""
+        try:
             params = {
                 'fields[campaign]': 'creation_name,display_name,summary,patron_count,created_at,published_at,url',
                 'filter[query]': query,
@@ -762,11 +790,13 @@ class PatreonCrawler(BaseCrawler):
         tier_filter: Optional[PatreonTierType],
         limit: int
     ) -> List[PatreonPost]:
-        """Search for Patreon posts"""        # Patreon API doesn't have direct post search, would need to search through creator posts
+        """Search for Patreon posts"""
+        # Patreon API doesn't have direct post search, would need to search through creator posts
         return []
 
     async def _get_creator_recent_posts(self, username: str) -> List[PatreonPost]:
-        """Get recent posts from creator"""        try:
+        """Get recent posts from creator"""
+        try:
             # First get campaign ID from username
             campaign_id = await self._get_campaign_id_from_username(username)
             if not campaign_id:
@@ -799,7 +829,8 @@ class PatreonCrawler(BaseCrawler):
             return []
 
     async def _get_campaign_id_from_username(self, username: str) -> Optional[str]:
-        """Get campaign ID from username"""        try:
+        """Get campaign ID from username"""
+        try:
             async with self.session.get(f"{self.base_url}/{username}") as response:
                 if response.status == 200:
                     # Would need to parse HTML or use API to get campaign ID
@@ -813,7 +844,8 @@ class PatreonCrawler(BaseCrawler):
             return None
 
     async def _parse_creator_from_campaign(self, campaign_data: Dict[str, Any]) -> PatreonCreator:
-        """Parse creator data from campaign API response"""        attributes = campaign_data.get("attributes", {})
+        """Parse creator data from campaign API response"""
+        attributes = campaign_data.get("attributes", {})
         
         return PatreonCreator(
             creator_id=campaign_data.get("id", ""),
@@ -829,7 +861,8 @@ class PatreonCrawler(BaseCrawler):
         )
 
     async def _parse_post_data(self, post_data: Dict[str, Any], included_data: List[Dict[str, Any]]) -> PatreonPost:
-        """Parse post data from API response"""        attributes = post_data.get("attributes", {})
+        """Parse post data from API response"""
+        attributes = post_data.get("attributes", {})
         
         # Find creator data from included
         creator_data = None
@@ -876,7 +909,8 @@ class PatreonCrawler(BaseCrawler):
         )
 
     async def _get_creator_data(self, creator_id: str) -> Optional[PatreonCreator]:
-        """Get creator data by ID"""        try:
+        """Get creator data by ID"""
+        try:
             params = {
                 'fields[campaign]': 'creation_name,display_name,summary,patron_count,created_at,published_at,url'
             }
@@ -893,7 +927,8 @@ class PatreonCrawler(BaseCrawler):
             return None
 
     async def _get_creator_pledges(self, creator_id: str) -> List[PatreonPledge]:
-        """Get creator's pledges"""        # Implementation would require proper API access
+        """Get creator's pledges"""
+        # Implementation would require proper API access
         return []
 
     async def _get_creator_posts_in_period(
@@ -902,11 +937,13 @@ class PatreonCrawler(BaseCrawler):
         start_time: datetime,
         end_time: datetime
     ) -> List[PatreonPost]:
-        """Get creator's posts in specific time period"""        # Implementation would require pagination through posts with date filtering
+        """Get creator's posts in specific time period"""
+        # Implementation would require pagination through posts with date filtering
         return []
 
     async def _extract_post_features(self, post: PatreonPost) -> Dict[str, Any]:
-        """Extract features for similarity comparison"""        features = {
+        """Extract features for similarity comparison"""
+        features = {
             "title": (post.title or "").lower(),
             "content": (post.content or "").lower(),
             "creator_id": post.creator.creator_id,
@@ -925,7 +962,8 @@ class PatreonCrawler(BaseCrawler):
         features1: Dict[str, Any],
         features2: Dict[str, Any]
     ) -> float:
-        """Calculate similarity between post features"""        try:
+        """Calculate similarity between post features"""
+        try:
             scores = []
             
             # Title similarity
@@ -958,16 +996,19 @@ class PatreonCrawler(BaseCrawler):
             return 0.0
 
     async def _calculate_similarity(self, post: PatreonPost) -> float:
-        """Calculate similarity score against protected content"""        # Simplified similarity calculation
+        """Calculate similarity score against protected content"""
+        # Simplified similarity calculation
         return 0.0
 
     async def _check_protection_status(self, post: PatreonPost) -> str:
-        """Check protection status of post"""        if post.post_id in self.protected_content:
+        """Check protection status of post"""
+        if post.post_id in self.protected_content:
             return "protected"
         return "unprotected"
 
     async def close(self):
-        """Close crawler and cleanup resources"""        try:
+        """Close crawler and cleanup resources"""
+        try:
             await self.cache_manager.close()
             await super().close()
             logger.info("Patreon crawler closed successfully")

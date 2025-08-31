@@ -18,7 +18,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Callable
@@ -41,7 +42,8 @@ from ...monitoring.notification_monitoring import NotificationMonitoringService
 
 
 class NotificationType(Enum):
-    """Comprehensive notification types for IA Influencer platform"""    CONTENT_UPLOAD = "content_upload"
+    """Comprehensive notification types for IA Influencer platform"""
+    CONTENT_UPLOAD = "content_upload"
     AI_PROTECTION_ALERT = "ai_protection_alert"
     COLLABORATION_MATCH = "collaboration_match"
     MONETIZATION_OPPORTUNITY = "monetization_opportunity"
@@ -56,7 +58,8 @@ class NotificationType(Enum):
 
 
 class NotificationDeliveryStatus(Enum):
-    """Notification delivery status tracking"""    PENDING = "pending"
+    """Notification delivery status tracking"""
+    PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
     READ = "read"
@@ -67,7 +70,8 @@ class NotificationDeliveryStatus(Enum):
 
 @dataclass
 class NotificationContext:
-    """Rich context information for notifications"""    user_id: str
+    """Rich context information for notifications"""
+    user_id: str
     content_type: str
     metadata: Dict[str, Any] = field(default_factory=dict)
     business_context: Dict[str, Any] = field(default_factory=dict)
@@ -78,7 +82,8 @@ class NotificationContext:
 
 @dataclass
 class NotificationConfiguration:
-    """Advanced notification configuration"""    enabled_channels: List[NotificationChannel]
+    """Advanced notification configuration"""
+    enabled_channels: List[NotificationChannel]
     priority_rules: Dict[str, NotificationPriority]
     template_preferences: Dict[str, str]
     delivery_preferences: Dict[str, Any]
@@ -89,7 +94,8 @@ class NotificationConfiguration:
 
 
 class NotificationAgent(BaseAgent):
-    """    Advanced AI-powered notification agent for comprehensive communication management
+    """
+    Advanced AI-powered notification agent for comprehensive communication management
     
     Handles all notification aspects of the IA Influencer platform:
     - Multi-format content upload notifications
@@ -98,7 +104,8 @@ class NotificationAgent(BaseAgent):
     - Monetization opportunity alerts
     - SEO optimization notifications
     - Multi-platform distribution status
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
@@ -136,18 +143,21 @@ class NotificationAgent(BaseAgent):
         }
         
     def _initialize_core_components(self):
-        """Initialize core notification components"""        self.notification_storage = {}
+        """Initialize core notification components"""
+        self.notification_storage = {}
         self.user_preferences = {}
         self.template_cache = {}
         self.delivery_history = {}
         self.retry_queue = asyncio.Queue()
         
     def _initialize_ai_personalizer(self):
-        """Initialize AI-driven notification personalization"""        from ...ai.personalization.notification_personalizer import NotificationPersonalizer
+        """Initialize AI-driven notification personalization"""
+        from ...ai.personalization.notification_personalizer import NotificationPersonalizer
         return NotificationPersonalizer(self.config.get('ai_personalization', {}))
         
     async def start_agent(self):
-        """Start the notification agent with all processing tasks"""        try:
+        """Start the notification agent with all processing tasks"""
+        try:
             self.logger.info("Starting NotificationAgent with advanced processing capabilities")
             
             # Start core processing tasks
@@ -170,7 +180,8 @@ class NotificationAgent(BaseAgent):
             return False
             
     async def stop_agent(self):
-        """Gracefully stop the notification agent"""        try:
+        """Gracefully stop the notification agent"""
+        try:
             self.logger.info("Stopping NotificationAgent")
             
             # Cancel all processing tasks
@@ -198,7 +209,8 @@ class NotificationAgent(BaseAgent):
         priority: NotificationPriority = NotificationPriority.MEDIUM,
         template_override: Optional[str] = None
     ) -> str:
-        """        Send intelligent notification with AI-driven personalization
+        """
+        Send intelligent notification with AI-driven personalization
         
         Args:
             notification_type: Type of notification to send
@@ -209,7 +221,8 @@ class NotificationAgent(BaseAgent):
             
         Returns:
             notification_id: Unique identifier for tracking
-        """        try:
+        """
+        try:
             # Generate unique notification ID
             notification_id = str(uuid.uuid4())
             
@@ -263,7 +276,8 @@ class NotificationAgent(BaseAgent):
         notifications: List[Dict[str, Any]],
         batch_size: int = 100
     ) -> List[str]:
-        """        Send bulk notifications efficiently with batch processing
+        """
+        Send bulk notifications efficiently with batch processing
         
         Args:
             notifications: List of notification configurations
@@ -271,7 +285,8 @@ class NotificationAgent(BaseAgent):
             
         Returns:
             List of notification IDs
-        """        try:
+        """
+        try:
             notification_ids = []
             
             # Process in batches
@@ -309,7 +324,8 @@ class NotificationAgent(BaseAgent):
             raise
             
     async def get_notification_status(self, notification_id: str) -> Dict[str, Any]:
-        """Get comprehensive notification status and delivery information"""        try:
+        """Get comprehensive notification status and delivery information"""
+        try:
             notification = self.notification_storage.get(notification_id)
             if not notification:
                 return {"error": "Notification not found"}
@@ -339,7 +355,8 @@ class NotificationAgent(BaseAgent):
         user_id: str,
         preferences: NotificationConfiguration
     ) -> bool:
-        """Update user notification preferences with validation"""        try:
+        """Update user notification preferences with validation"""
+        try:
             # Validate preferences
             if not await self._validate_user_preferences(preferences):
                 return False
@@ -358,7 +375,8 @@ class NotificationAgent(BaseAgent):
             return False
             
     async def _process_notification_queue(self):
-        """Process notifications from the main queue"""        while True:
+        """Process notifications from the main queue"""
+        while True:
             try:
                 notification = await self.notification_queue.get()
                 await self._deliver_notification(notification)
@@ -371,7 +389,8 @@ class NotificationAgent(BaseAgent):
                 await asyncio.sleep(1)
                 
     async def _deliver_notification(self, notification: NotificationModel):
-        """Deliver notification through multiple channels"""        try:
+        """Deliver notification through multiple channels"""
+        try:
             delivery_results = {}
             
             # Update status
@@ -418,7 +437,8 @@ class NotificationAgent(BaseAgent):
         notification: NotificationModel,
         channel: NotificationChannel
     ) -> Dict[str, Any]:
-        """Deliver notification to specific channel"""        try:
+        """Deliver notification to specific channel"""
+        try:
             # Get appropriate delivery handler
             handler = self.integration_manager.get_channel_handler(channel)
             
@@ -452,7 +472,8 @@ class NotificationAgent(BaseAgent):
         notification_type: NotificationType,
         priority: NotificationPriority
     ) -> List[NotificationChannel]:
-        """AI-driven optimal channel selection"""        try:
+        """AI-driven optimal channel selection"""
+        try:
             # Get user preferences
             user_prefs = self.user_preferences.get(user_id)
             if not user_prefs:
@@ -475,7 +496,8 @@ class NotificationAgent(BaseAgent):
         notification_type: NotificationType,
         priority: NotificationPriority
     ) -> List[NotificationChannel]:
-        """Get default channels based on notification type and priority"""        channel_mapping = {
+        """Get default channels based on notification type and priority"""
+        channel_mapping = {
             NotificationType.SECURITY_ALERT: [
                 NotificationChannel.EMAIL,
                 NotificationChannel.SMS,
@@ -513,7 +535,8 @@ class NotificationAgent(BaseAgent):
         notification: NotificationModel,
         channel: NotificationChannel
     ) -> Dict[str, Any]:
-        """Prepare channel-specific content formatting"""        try:
+        """Prepare channel-specific content formatting"""
+        try:
             base_content = notification.content
             
             # Channel-specific formatting
@@ -533,13 +556,15 @@ class NotificationAgent(BaseAgent):
             return notification.content
             
     async def _format_sms_content(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Format content for SMS delivery"""        return {
+        """Format content for SMS delivery"""
+        return {
             "message": content.get("title", "")[:160],  # SMS character limit
             "short_url": content.get("action_url", "")
         }
         
     async def _format_email_content(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Format content for email delivery"""        return {
+        """Format content for email delivery"""
+        return {
             "subject": content.get("title", ""),
             "html_body": content.get("html_content", ""),
             "text_body": content.get("text_content", ""),
@@ -547,7 +572,8 @@ class NotificationAgent(BaseAgent):
         }
         
     async def _format_push_content(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Format content for push notification delivery"""        return {
+        """Format content for push notification delivery"""
+        return {
             "title": content.get("title", "")[:50],  # Push title limit
             "body": content.get("summary", "")[:200],  # Push body limit
             "icon": content.get("icon", ""),
@@ -555,7 +581,8 @@ class NotificationAgent(BaseAgent):
         }
         
     async def _format_in_app_content(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Format content for in-app notification display"""        return {
+        """Format content for in-app notification display"""
+        return {
             "title": content.get("title", ""),
             "message": content.get("message", ""),
             "rich_content": content.get("rich_content", {}),
@@ -567,7 +594,8 @@ class NotificationAgent(BaseAgent):
         notification: NotificationModel,
         delivery_results: Dict[str, Any]
     ):
-        """Update performance metrics based on delivery results"""        try:
+        """Update performance metrics based on delivery results"""
+        try:
             # Update total counts
             self.performance_metrics['total_sent'] += 1
             
@@ -606,7 +634,8 @@ class NotificationAgent(BaseAgent):
         self,
         preferences: NotificationConfiguration
     ) -> bool:
-        """Validate user notification preferences"""        try:
+        """Validate user notification preferences"""
+        try:
             # Validate enabled channels
             if not preferences.enabled_channels:
                 return False
@@ -624,7 +653,8 @@ class NotificationAgent(BaseAgent):
             return False
             
     async def _process_batch_queue(self):
-        """Process batched notifications for efficiency"""        while True:
+        """Process batched notifications for efficiency"""
+        while True:
             try:
                 batch_notifications = []
                 
@@ -648,7 +678,8 @@ class NotificationAgent(BaseAgent):
                 await asyncio.sleep(1)
                 
     async def _process_notification_batch(self, notifications: List[NotificationModel]):
-        """Process a batch of notifications efficiently"""        try:
+        """Process a batch of notifications efficiently"""
+        try:
             # Group by channel for efficient delivery
             channel_groups = {}
             for notification in notifications:
@@ -668,7 +699,8 @@ class NotificationAgent(BaseAgent):
             self.logger.error(f"Batch processing failed: {str(e)}")
             
     async def _retry_failed_notifications(self):
-        """Handle retry logic for failed notifications"""        while True:
+        """Handle retry logic for failed notifications"""
+        while True:
             try:
                 notification = await self.retry_queue.get()
                 
@@ -702,7 +734,8 @@ class NotificationAgent(BaseAgent):
                 await asyncio.sleep(1)
                 
     def _get_max_retries(self, priority: NotificationPriority) -> int:
-        """Get maximum retry count based on priority"""        retry_limits = {
+        """Get maximum retry count based on priority"""
+        retry_limits = {
             NotificationPriority.LOW: 1,
             NotificationPriority.MEDIUM: 3,
             NotificationPriority.HIGH: 5,
@@ -711,7 +744,8 @@ class NotificationAgent(BaseAgent):
         return retry_limits.get(priority, 3)
         
     async def _cleanup_expired_notifications(self):
-        """Clean up expired notifications and delivery history"""        while True:
+        """Clean up expired notifications and delivery history"""
+        while True:
             try:
                 current_time = datetime.utcnow()
                 expired_ids = []
@@ -740,7 +774,8 @@ class NotificationAgent(BaseAgent):
                 await asyncio.sleep(3600)
                 
     async def _generate_analytics_reports(self):
-        """Generate periodic analytics reports"""        while True:
+        """Generate periodic analytics reports"""
+        while True:
             try:
                 # Generate daily report
                 report_data = await self._compile_analytics_report()
@@ -758,7 +793,8 @@ class NotificationAgent(BaseAgent):
                 await asyncio.sleep(86400)
                 
     async def _compile_analytics_report(self) -> Dict[str, Any]:
-        """Compile comprehensive analytics report"""        try:
+        """Compile comprehensive analytics report"""
+        try:
             return {
                 "report_date": datetime.utcnow().isoformat(),
                 "performance_metrics": self.performance_metrics.copy(),
@@ -772,7 +808,8 @@ class NotificationAgent(BaseAgent):
             return {}
             
     async def _calculate_channel_effectiveness(self) -> Dict[str, float]:
-        """Calculate effectiveness score for each channel"""        effectiveness = {}
+        """Calculate effectiveness score for each channel"""
+        effectiveness = {}
         
         for channel, metrics in self.performance_metrics['channel_performance'].items():
             if metrics['sent'] > 0:
@@ -783,7 +820,8 @@ class NotificationAgent(BaseAgent):
         return effectiveness
         
     async def _calculate_user_engagement(self) -> Dict[str, Any]:
-        """Calculate user engagement metrics"""        # This would analyze read rates, response rates, etc.
+        """Calculate user engagement metrics"""
+        # This would analyze read rates, response rates, etc.
         return {
             "average_read_rate": 0.75,  # Placeholder
             "response_rate": 0.25,      # Placeholder
@@ -791,14 +829,16 @@ class NotificationAgent(BaseAgent):
         }
         
     async def _analyze_delivery_trends(self) -> Dict[str, Any]:
-        """Analyze delivery trends and patterns"""        return {
+        """Analyze delivery trends and patterns"""
+        return {
             "peak_hours": [9, 10, 11, 14, 15, 16],  # Placeholder
             "best_days": ["Tuesday", "Wednesday", "Thursday"],  # Placeholder
             "seasonal_patterns": {}  # Placeholder
         }
         
     async def _send_analytics_report(self, report_data: Dict[str, Any]):
-        """Send analytics report to administrators"""        try:
+        """Send analytics report to administrators"""
+        try:
             # Create notification for analytics report
             admin_context = NotificationContext(
                 user_id="system_admin",
@@ -817,7 +857,8 @@ class NotificationAgent(BaseAgent):
             self.logger.error(f"Failed to send analytics report: {str(e)}")
             
     async def _process_remaining_notifications(self):
-        """Process any remaining notifications during shutdown"""        try:
+        """Process any remaining notifications during shutdown"""
+        try:
             # Process remaining in main queue
             while not self.notification_queue.empty():
                 notification = await self.notification_queue.get()
@@ -835,9 +876,11 @@ class NotificationAgent(BaseAgent):
 
 
 class NotificationAgentManager:
-    """    Advanced manager for multiple notification agent instances
+    """
+    Advanced manager for multiple notification agent instances
     Handles load balancing, failover, and distributed notification processing
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -846,15 +889,18 @@ class NotificationAgentManager:
         self.health_monitor = self._initialize_health_monitor()
         
     def _initialize_load_balancer(self):
-        """Initialize intelligent load balancing system"""        from ...infrastructure.load_balancer import NotificationLoadBalancer
+        """Initialize intelligent load balancing system"""
+        from ...infrastructure.load_balancer import NotificationLoadBalancer
         return NotificationLoadBalancer(self.config.get('load_balancer', {}))
         
     def _initialize_health_monitor(self):
-        """Initialize agent health monitoring system"""        from ...monitoring.agent_health_monitor import AgentHealthMonitor
+        """Initialize agent health monitoring system"""
+        from ...monitoring.agent_health_monitor import AgentHealthMonitor
         return AgentHealthMonitor(self.config.get('health_monitor', {}))
         
     async def create_agent(self, agent_id: str, agent_config: Dict[str, Any]) -> bool:
-        """Create and start a new notification agent instance"""        try:
+        """Create and start a new notification agent instance"""
+        try:
             agent = NotificationAgent(agent_config)
             success = await agent.start_agent()
             
@@ -872,7 +918,8 @@ class NotificationAgentManager:
             return False
             
     async def get_optimal_agent(self, workload_hint: Optional[str] = None) -> Optional[NotificationAgent]:
-        """Get the most suitable agent for current workload"""        try:
+        """Get the most suitable agent for current workload"""
+        try:
             return await self.load_balancer.get_optimal_agent(self.agents, workload_hint)
         except Exception as e:
             self.logger.error(f"Failed to get optimal agent: {str(e)}")
@@ -884,7 +931,8 @@ class NotificationAgentManager:
         context: NotificationContext,
         **kwargs
     ) -> str:
-        """Distribute notification to optimal agent"""        try:
+        """Distribute notification to optimal agent"""
+        try:
             agent = await self.get_optimal_agent(notification_type.value)
             if not agent:
                 raise ValueError("No available agents for notification processing")
@@ -896,7 +944,8 @@ class NotificationAgentManager:
             raise
             
     async def get_system_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive system metrics from all agents"""        try:
+        """Get comprehensive system metrics from all agents"""
+        try:
             system_metrics = {
                 "total_agents": len(self.agents),
                 "active_agents": 0,

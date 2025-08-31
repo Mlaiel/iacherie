@@ -30,7 +30,8 @@ Project Team:
 WARNING: This code is protected intellectual property. Any attempt to steal, copy, or use 
 without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) will result 
 in legal action under German law.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import uuid
@@ -73,7 +74,8 @@ logger = get_logger(__name__)
 
 
 class DataType(Enum):
-    """Data type enumeration."""    STRUCTURED = "structured"
+    """Data type enumeration."""
+    STRUCTURED = "structured"
     UNSTRUCTURED = "unstructured"
     MEDIA_METADATA = "media_metadata"
     PLATFORM_RESPONSE = "platform_response"
@@ -85,7 +87,8 @@ class DataType(Enum):
 
 
 class DataFormat(Enum):
-    """Data format enumeration."""    JSON = "json"
+    """Data format enumeration."""
+    JSON = "json"
     XML = "xml"
     CSV = "csv"
     PARQUET = "parquet"
@@ -95,7 +98,8 @@ class DataFormat(Enum):
 
 
 class DataOperation(Enum):
-    """Data operation types."""    CREATE = "create"
+    """Data operation types."""
+    CREATE = "create"
     READ = "read"
     UPDATE = "update"
     DELETE = "delete"
@@ -107,7 +111,8 @@ class DataOperation(Enum):
 
 @dataclass
 class DataSchema:
-    """Data schema definition."""    
+    """Data schema definition."""
+    
     name: str
     version: str
     fields: Dict[str, Dict[str, Any]]
@@ -123,7 +128,8 @@ class DataSchema:
 
 @dataclass
 class DataMetrics:
-    """Data processing metrics."""    
+    """Data processing metrics."""
+    
     total_records: int = 0
     valid_records: int = 0
     invalid_records: int = 0
@@ -141,17 +147,20 @@ class DataMetrics:
     
     @property
     def success_rate(self) -> float:
-        """Calculate success rate."""        if self.total_records == 0:
+        """Calculate success rate."""
+        if self.total_records == 0:
             return 0.0
         return self.valid_records / self.total_records
     
     @property
     def error_rate(self) -> float:
-        """Calculate error rate."""        return 1.0 - self.success_rate
+        """Calculate error rate."""
+        return 1.0 - self.success_rate
 
 
 class ContentMetadataModel(BaseModel):
-    """Content metadata validation model."""    
+    """Content metadata validation model."""
+    
     content_id: Optional[int] = None
     title: Optional[str] = None
     description: Optional[str] = None
@@ -185,7 +194,8 @@ class ContentMetadataModel(BaseModel):
 
 
 class FinancialDataModel(BaseModel):
-    """Financial data validation model."""    
+    """Financial data validation model."""
+    
     user_id: int
     platform: str
     revenue_amount: Decimal
@@ -215,7 +225,8 @@ class FinancialDataModel(BaseModel):
 
 
 class AnalyticsDataModel(BaseModel):
-    """Analytics data validation model."""    
+    """Analytics data validation model."""
+    
     metric_name: str
     metric_value: Union[int, float, str]
     timestamp: datetime
@@ -233,12 +244,14 @@ class AnalyticsDataModel(BaseModel):
 
 
 class DataTransformer:
-    """Professional data transformation system."""    
+    """Professional data transformation system."""
+    
     def __init__(self):
         self.transformations = self._load_transformations()
     
     def _load_transformations(self) -> Dict[str, Any]:
-        """Load transformation configurations."""        return {
+        """Load transformation configurations."""
+        return {
             'platform_standardization': {
                 'youtube': {
                     'id': 'video_id',
@@ -278,7 +291,8 @@ class DataTransformer:
         data: Dict[str, Any], 
         platform: str
     ) -> Dict[str, Any]:
-        """Transform platform-specific data to standardized format."""        try:
+        """Transform platform-specific data to standardized format."""
+        try:
             if platform not in self.transformations['platform_standardization']:
                 return data
             
@@ -303,7 +317,8 @@ class DataTransformer:
             raise DataTransformationError(f"Failed to transform {platform} data: {e}")
     
     def _extract_nested_value(self, data: Dict[str, Any], path: str) -> Any:
-        """Extract value from nested dictionary using dot notation."""        try:
+        """Extract value from nested dictionary using dot notation."""
+        try:
             keys = path.split('.')
             value = data
             
@@ -319,7 +334,8 @@ class DataTransformer:
             return None
     
     def _normalize_value(self, value: Any, field_name: str) -> Any:
-        """Normalize individual field values."""        try:
+        """Normalize individual field values."""
+        try:
             # Numeric fields
             if field_name.endswith('_count') or 'count' in field_name:
                 return self._normalize_count(value)
@@ -339,7 +355,8 @@ class DataTransformer:
             return value
     
     def _normalize_count(self, value: Any) -> int:
-        """Normalize count values to integers."""        if isinstance(value, str):
+        """Normalize count values to integers."""
+        if isinstance(value, str):
             # Handle string numbers like "1,234" or "1.2K"
             value = value.replace(',', '')
             
@@ -356,7 +373,8 @@ class DataTransformer:
             return 0
     
     def _normalize_date(self, value: Any) -> Optional[datetime]:
-        """Normalize date values to datetime objects."""        if isinstance(value, datetime):
+        """Normalize date values to datetime objects."""
+        if isinstance(value, datetime):
             return value
         
         if isinstance(value, str):
@@ -379,7 +397,8 @@ class DataTransformer:
         return None
     
     def _normalize_text(self, value: str) -> str:
-        """Normalize text values."""        if not isinstance(value, str):
+        """Normalize text values."""
+        if not isinstance(value, str):
             return str(value)
         
         # Clean and normalize text
@@ -398,7 +417,8 @@ class DataTransformer:
         data: List[Dict[str, Any]], 
         aggregation_type: str
     ) -> Dict[str, Any]:
-        """Aggregate data based on predefined rules."""        try:
+        """Aggregate data based on predefined rules."""
+        try:
             if aggregation_type not in self.transformations['aggregation_rules']:
                 raise DataTransformationError(f"Unknown aggregation type: {aggregation_type}")
             
@@ -441,7 +461,8 @@ class DataTransformer:
             raise DataTransformationError(f"Failed to aggregate data: {e}")
     
     def _calculate_summary_stats(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Calculate summary statistics for DataFrame."""        try:
+        """Calculate summary statistics for DataFrame."""
+        try:
             numeric_columns = df.select_dtypes(include=[np.number]).columns
             summary = {}
             
@@ -463,13 +484,15 @@ class DataTransformer:
 
 
 class DataValidator:
-    """Professional data validation system."""    
+    """Professional data validation system."""
+    
     def __init__(self):
         self.schemas = self._load_schemas()
         self.validation_rules = self._load_validation_rules()
     
     def _load_schemas(self) -> Dict[str, DataSchema]:
-        """Load data schemas for validation."""        return {
+        """Load data schemas for validation."""
+        return {
             'content_metadata': DataSchema(
                 name='content_metadata',
                 version='1.0',
@@ -505,7 +528,8 @@ class DataValidator:
         }
     
     def _load_validation_rules(self) -> Dict[str, Any]:
-        """Load custom validation rules."""        return {
+        """Load custom validation rules."""
+        return {
             'content_rules': {
                 'title_length': {'min': 1, 'max': 500},
                 'description_length': {'min': 0, 'max': 5000},
@@ -527,7 +551,8 @@ class DataValidator:
         data: Union[Dict[str, Any], List[Dict[str, Any]]], 
         schema_name: str
     ) -> Tuple[bool, List[str], DataMetrics]:
-        """        Validate data against schema.
+        """
+        Validate data against schema.
         
         Args:
             data: Data to validate
@@ -535,7 +560,8 @@ class DataValidator:
             
         Returns:
             Tuple of (is_valid, errors, metrics)
-        """        try:
+        """
+        try:
             start_time = datetime.utcnow()
             errors = []
             warnings = []
@@ -593,7 +619,8 @@ class DataValidator:
         record: Dict[str, Any], 
         schema: DataSchema
     ) -> List[str]:
-        """Validate a single record against schema."""        errors = []
+        """Validate a single record against schema."""
+        errors = []
         
         try:
             # Check required fields
@@ -628,7 +655,8 @@ class DataValidator:
         value: Any, 
         field_config: Dict[str, Any]
     ) -> List[str]:
-        """Validate a single field."""        errors = []
+        """Validate a single field."""
+        errors = []
         
         try:
             field_type = field_config.get('type')
@@ -686,7 +714,8 @@ class DataValidator:
         rule_name: str, 
         rule_config: str
     ) -> List[str]:
-        """Apply custom validation rule."""        errors = []
+        """Apply custom validation rule."""
+        errors = []
         
         try:
             # Simple rule evaluation (can be extended)
@@ -702,7 +731,8 @@ class DataValidator:
 
 
 class DataStorage:
-    """Professional data storage management system."""    
+    """Professional data storage management system."""
+    
     def __init__(
         self,
         encryption_manager: EncryptionManager,
@@ -720,7 +750,8 @@ class DataStorage:
         encrypt: bool = False,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Store data with optional compression and encryption.
+        """
+        Store data with optional compression and encryption.
         
         Args:
             data: Data to store
@@ -732,7 +763,8 @@ class DataStorage:
             
         Returns:
             Storage information
-        """        try:
+        """
+        try:
             start_time = datetime.utcnow()
             
             # Serialize data
@@ -802,7 +834,8 @@ class DataStorage:
         decrypt: bool = False,
         decompress: bool = True
     ) -> Tuple[Any, Dict[str, Any]]:
-        """        Retrieve and process stored data.
+        """
+        Retrieve and process stored data.
         
         Args:
             storage_key: Storage identifier
@@ -811,7 +844,8 @@ class DataStorage:
             
         Returns:
             Tuple of (data, metadata)
-        """        try:
+        """
+        try:
             # Retrieve from database
             async with async_session() as session:
                 result = await session.execute(
@@ -853,7 +887,8 @@ class DataStorage:
 
 
 class DataHandler:
-    """Main data handler orchestrating all data operations."""    
+    """Main data handler orchestrating all data operations."""
+    
     def __init__(
         self,
         encryption_manager: Optional[EncryptionManager] = None,
@@ -876,7 +911,8 @@ class DataHandler:
         transform_platform: Optional[str] = None,
         storage_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Process data through validation, transformation, and storage.
+        """
+        Process data through validation, transformation, and storage.
         
         Args:
             data: Data to process
@@ -888,7 +924,8 @@ class DataHandler:
             
         Returns:
             Processing result
-        """        try:
+        """
+        try:
             start_time = datetime.utcnow()
             result = {
                 'operation': operation.value,
@@ -944,7 +981,8 @@ class DataHandler:
         metadata: Dict[str, Any],
         content_id: Optional[int] = None
     ) -> Dict[str, Any]:
-        """Handle content metadata processing."""        try:
+        """Handle content metadata processing."""
+        try:
             # Validate with Pydantic model
             content_model = ContentMetadataModel(**metadata)
             
@@ -972,7 +1010,8 @@ class DataHandler:
         financial_data: Dict[str, Any],
         user_id: int
     ) -> Dict[str, Any]:
-        """Handle financial data processing."""        try:
+        """Handle financial data processing."""
+        try:
             # Validate with Pydantic model
             financial_model = FinancialDataModel(**financial_data)
             
@@ -999,7 +1038,8 @@ class DataHandler:
         self,
         analytics_data: Union[Dict[str, Any], List[Dict[str, Any]]]
     ) -> Dict[str, Any]:
-        """Handle analytics data processing."""        try:
+        """Handle analytics data processing."""
+        try:
             # Handle single record or batch
             if isinstance(analytics_data, dict):
                 analytics_model = AnalyticsDataModel(**analytics_data)
@@ -1035,7 +1075,8 @@ class DataHandler:
         storage_key: str,
         data_type: Optional[DataType] = None
     ) -> Dict[str, Any]:
-        """Retrieve processed data."""        try:
+        """Retrieve processed data."""
+        try:
             data, metadata = await self.storage.retrieve_data(
                 storage_key, decrypt=True, decompress=True
             )
@@ -1057,7 +1098,8 @@ def create_data_handler(
     encryption_manager: Optional[EncryptionManager] = None,
     compression_manager: Optional[CompressionManager] = None
 ) -> DataHandler:
-    """Create and return a DataHandler instance."""    return DataHandler(
+    """Create and return a DataHandler instance."""
+    return DataHandler(
         encryption_manager=encryption_manager,
         compression_manager=compression_manager
     )

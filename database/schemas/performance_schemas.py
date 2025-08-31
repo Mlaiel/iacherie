@@ -12,7 +12,8 @@ ALL RIGHTS RESERVED - This code, concept, and implementation are the exclusive
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Unauthorized use, copying, 
 modification, or distribution is strictly prohibited and will result in immediate 
 legal action under German and international copyright law.
-"""from datetime import datetime, timedelta
+"""
+from datetime import datetime, timedelta
 from decimal import Decimal
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any
@@ -23,7 +24,8 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class MetricTypeEnum(str, Enum):
-    """Types of performance metrics"""    SYSTEM_CPU = "system_cpu"
+    """Types of performance metrics"""
+    SYSTEM_CPU = "system_cpu"
     SYSTEM_MEMORY = "system_memory"
     SYSTEM_DISK = "system_disk"
     SYSTEM_NETWORK = "system_network"
@@ -46,7 +48,8 @@ class MetricTypeEnum(str, Enum):
 
 
 class AlertThresholdTypeEnum(str, Enum):
-    """Types of alert thresholds"""    ABSOLUTE_VALUE = "absolute_value"
+    """Types of alert thresholds"""
+    ABSOLUTE_VALUE = "absolute_value"
     PERCENTAGE_CHANGE = "percentage_change"
     STANDARD_DEVIATION = "standard_deviation"
     MOVING_AVERAGE = "moving_average"
@@ -56,7 +59,8 @@ class AlertThresholdTypeEnum(str, Enum):
 
 
 class PerformanceStatusEnum(str, Enum):
-    """Performance status levels"""    EXCELLENT = "excellent"
+    """Performance status levels"""
+    EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
     POOR = "poor"
@@ -66,7 +70,8 @@ class PerformanceStatusEnum(str, Enum):
 
 
 class ServiceComponentEnum(str, Enum):
-    """System service components"""    API_GATEWAY = "api_gateway"
+    """System service components"""
+    API_GATEWAY = "api_gateway"
     USER_SERVICE = "user_service"
     CONTENT_SERVICE = "content_service"
     PROTECTION_SERVICE = "protection_service"
@@ -88,7 +93,8 @@ class ServiceComponentEnum(str, Enum):
 
 
 class MetricAggregationEnum(str, Enum):
-    """Metric aggregation methods"""    AVERAGE = "average"
+    """Metric aggregation methods"""
+    AVERAGE = "average"
     SUM = "sum"
     MIN = "min"
     MAX = "max"
@@ -102,7 +108,8 @@ class MetricAggregationEnum(str, Enum):
 
 
 class PerformanceMetricSchema(BaseModel):
-    """Schema for individual performance metrics"""    metric_id: str = Field(..., description="Unique metric identifier")
+    """Schema for individual performance metrics"""
+    metric_id: str = Field(..., description="Unique metric identifier")
     metric_type: MetricTypeEnum = Field(..., description="Type of metric")
     component: ServiceComponentEnum = Field(..., description="System component being measured")
     
@@ -137,7 +144,8 @@ class PerformanceMetricSchema(BaseModel):
 
 
 class PerformanceAggregateSchema(BaseModel):
-    """Schema for aggregated performance metrics"""    aggregate_id: str = Field(..., description="Unique aggregate identifier")
+    """Schema for aggregated performance metrics"""
+    aggregate_id: str = Field(..., description="Unique aggregate identifier")
     metric_type: MetricTypeEnum = Field(..., description="Type of metric")
     component: ServiceComponentEnum = Field(..., description="System component")
     
@@ -179,7 +187,8 @@ class PerformanceAggregateSchema(BaseModel):
 
 
 class AlertRuleSchema(BaseModel):
-    """Schema for performance alert rules"""    rule_id: str = Field(..., description="Unique rule identifier")
+    """Schema for performance alert rules"""
+    rule_id: str = Field(..., description="Unique rule identifier")
     rule_name: str = Field(..., description="Human-readable rule name")
     description: str = Field(..., description="Rule description")
     
@@ -224,7 +233,8 @@ class AlertRuleSchema(BaseModel):
 
 
 class PerformanceAlertSchema(BaseModel):
-    """Schema for performance alerts"""    alert_id: str = Field(..., description="Unique alert identifier")
+    """Schema for performance alerts"""
+    alert_id: str = Field(..., description="Unique alert identifier")
     rule_id: str = Field(..., description="Rule that triggered the alert")
     metric_type: MetricTypeEnum = Field(..., description="Metric type that triggered alert")
     component: ServiceComponentEnum = Field(..., description="Affected component")
@@ -273,7 +283,8 @@ class PerformanceAlertSchema(BaseModel):
 
 
 class ServiceHealthSchema(BaseModel):
-    """Schema for overall service health status"""    service_id: str = Field(..., description="Unique service identifier")
+    """Schema for overall service health status"""
+    service_id: str = Field(..., description="Unique service identifier")
     component: ServiceComponentEnum = Field(..., description="Service component")
     health_status: PerformanceStatusEnum = Field(..., description="Overall health status")
     
@@ -320,7 +331,8 @@ class ServiceHealthSchema(BaseModel):
 
 
 class PerformanceBenchmarkSchema(BaseModel):
-    """Schema for performance benchmarks"""    benchmark_id: str = Field(..., description="Unique benchmark identifier")
+    """Schema for performance benchmarks"""
+    benchmark_id: str = Field(..., description="Unique benchmark identifier")
     benchmark_name: str = Field(..., description="Benchmark name")
     component: ServiceComponentEnum = Field(..., description="Component being benchmarked")
     
@@ -369,7 +381,8 @@ class PerformanceBenchmarkSchema(BaseModel):
 
 
 class CapacityPlanningSchema(BaseModel):
-    """Schema for capacity planning data"""    planning_id: str = Field(..., description="Unique planning identifier")
+    """Schema for capacity planning data"""
+    planning_id: str = Field(..., description="Unique planning identifier")
     component: ServiceComponentEnum = Field(..., description="Component for capacity planning")
     planning_horizon: int = Field(..., description="Planning horizon in months")
     

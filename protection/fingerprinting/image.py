@@ -15,7 +15,8 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -47,7 +48,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ImageMetadata:
-    """Comprehensive image metadata extraction."""    width: int
+    """Comprehensive image metadata extraction."""
+    width: int
     height: int
     channels: int
     format: str
@@ -63,19 +65,22 @@ class ImageMetadata:
     texture_energy: Optional[float]
 
 class PerceptualImageHashing:
-    """Advanced perceptual hashing for images using multiple algorithms."""    
+    """Advanced perceptual hashing for images using multiple algorithms."""
+    
     def __init__(self, hash_size: int = 16):
         self.hash_size = hash_size
         
     def extract_hashes(self, image_path: str) -> Dict[str, Any]:
-        """        Extract multiple perceptual hashes from image.
+        """
+        Extract multiple perceptual hashes from image.
         
         Args:
             image_path: Path to image file
             
         Returns:
             Dictionary containing various hash types
-        """        try:
+        """
+        try:
             # Load image
             with Image.open(image_path) as img:
                 # Convert to RGB if necessary
@@ -118,7 +123,8 @@ class PerceptualImageHashing:
             return {"error": str(e)}
     
     def _extract_rotational_hashes(self, img: Image.Image) -> Dict[str, str]:
-        """Extract hashes for rotated versions of the image."""        rotational_hashes = {}
+        """Extract hashes for rotated versions of the image."""
+        rotational_hashes = {}
         
         for angle in [90, 180, 270]:
             rotated_img = img.rotate(angle, expand=True)
@@ -127,7 +133,8 @@ class PerceptualImageHashing:
         return rotational_hashes
     
     def _extract_scale_hashes(self, img: Image.Image) -> Dict[str, str]:
-        """Extract hashes for scaled versions of the image."""        scale_hashes = {}
+        """Extract hashes for scaled versions of the image."""
+        scale_hashes = {}
         original_size = img.size
         
         for scale in [0.5, 0.75, 1.25, 1.5]:
@@ -138,11 +145,13 @@ class PerceptualImageHashing:
         return scale_hashes
     
     def _combine_hashes(self, phash: str, dhash: str, ahash: str, whash: str, colorhash: str) -> str:
-        """Combine multiple hash types into a single fingerprint."""        combined = f"{phash}|{dhash}|{ahash}|{whash}|{colorhash}"
+        """Combine multiple hash types into a single fingerprint."""
+        combined = f"{phash}|{dhash}|{ahash}|{whash}|{colorhash}"
         return hashlib.md5(combined.encode()).hexdigest()
 
 class CLIPEmbeddingExtractor:
-    """CLIP-based neural embeddings for semantic image understanding."""    
+    """CLIP-based neural embeddings for semantic image understanding."""
+    
     def __init__(self, model_name: str = "openai/clip-vit-base-patch32"):
         self.model_name = model_name
         self.model = None
@@ -150,7 +159,8 @@ class CLIPEmbeddingExtractor:
         self._initialize_model()
         
     def _initialize_model(self):
-        """Initialize CLIP model."""        try:
+        """Initialize CLIP model."""
+        try:
             self.processor = CLIPProcessor.from_pretrained(self.model_name)
             self.model = CLIPModel.from_pretrained(self.model_name)
             self.model.eval()
@@ -158,14 +168,16 @@ class CLIPEmbeddingExtractor:
             logger.warning(f"CLIP model initialization failed: {e}")
     
     def extract_embeddings(self, image_path: str) -> Dict[str, Any]:
-        """        Extract CLIP embeddings from image.
+        """
+        Extract CLIP embeddings from image.
         
         Args:
             image_path: Path to image file
             
         Returns:
             Dictionary containing embeddings and metadata
-        """        if not self.model or not self.processor:
+        """
+        if not self.model or not self.processor:
             return {"error": "CLIP model not initialized"}
             
         try:
@@ -206,7 +218,8 @@ class CLIPEmbeddingExtractor:
             return {"error": str(e)}
     
     def _compute_embedding_hash(self, embeddings: np.ndarray) -> str:
-        """Compute hash from CLIP embeddings."""        # Quantize embeddings to binary
+        """Compute hash from CLIP embeddings."""
+        # Quantize embeddings to binary
         binary_embeddings = (embeddings > np.median(embeddings)).astype(int)
         
         # Convert to hash
@@ -214,7 +227,8 @@ class CLIPEmbeddingExtractor:
         return hashlib.md5(hash_string.encode()).hexdigest()
     
     def _extract_semantic_features(self, embeddings: np.ndarray) -> Dict[str, float]:
-        """Extract semantic features from embeddings."""        return {
+        """Extract semantic features from embeddings."""
+        return {
             "embedding_mean": float(np.mean(embeddings)),
             "embedding_std": float(np.std(embeddings)),
             "embedding_max": float(np.max(embeddings)),
@@ -224,7 +238,8 @@ class CLIPEmbeddingExtractor:
         }
 
 class TraditionalFeatureExtractor:
-    """Traditional computer vision feature extraction (SIFT, ORB, SURF)."""    
+    """Traditional computer vision feature extraction (SIFT, ORB, SURF)."""
+    
     def __init__(self):
         self.sift = cv2.SIFT_create()
         self.orb = cv2.ORB_create()
@@ -235,14 +250,16 @@ class TraditionalFeatureExtractor:
             logger.warning("SURF not available in this OpenCV build")
     
     def extract_features(self, image_path: str) -> Dict[str, Any]:
-        """        Extract traditional computer vision features.
+        """
+        Extract traditional computer vision features.
         
         Args:
             image_path: Path to image file
             
         Returns:
             Dictionary containing extracted features
-        """        try:
+        """
+        try:
             # Load image
             img = cv2.imread(image_path)
             if img is None:
@@ -285,7 +302,8 @@ class TraditionalFeatureExtractor:
             return {"error": str(e)}
     
     def _extract_sift_features(self, gray: np.ndarray) -> Dict[str, Any]:
-        """Extract SIFT features."""        try:
+        """Extract SIFT features."""
+        try:
             keypoints, descriptors = self.sift.detectAndCompute(gray, None)
             
             if descriptors is not None:
@@ -323,7 +341,8 @@ class TraditionalFeatureExtractor:
             return {"error": str(e)}
     
     def _extract_orb_features(self, gray: np.ndarray) -> Dict[str, Any]:
-        """Extract ORB features."""        try:
+        """Extract ORB features."""
+        try:
             keypoints, descriptors = self.orb.detectAndCompute(gray, None)
             
             if descriptors is not None:
@@ -353,7 +372,8 @@ class TraditionalFeatureExtractor:
             return {"error": str(e)}
     
     def _extract_surf_features(self, gray: np.ndarray) -> Dict[str, Any]:
-        """Extract SURF features."""        if not self.surf:
+        """Extract SURF features."""
+        if not self.surf:
             return {"error": "SURF not available"}
             
         try:
@@ -385,7 +405,8 @@ class TraditionalFeatureExtractor:
             return {"error": str(e)}
     
     def _extract_corner_features(self, gray: np.ndarray) -> Dict[str, Any]:
-        """Extract corner features using Harris corner detection."""        try:
+        """Extract corner features using Harris corner detection."""
+        try:
             # Harris corner detection
             corners = cv2.cornerHarris(gray, 2, 3, 0.04)
             
@@ -420,7 +441,8 @@ class TraditionalFeatureExtractor:
             return {"error": str(e)}
     
     def _extract_edge_features(self, gray: np.ndarray) -> Dict[str, Any]:
-        """Extract edge features using Canny edge detection."""        try:
+        """Extract edge features using Canny edge detection."""
+        try:
             # Canny edge detection
             edges = cv2.Canny(gray, 50, 150)
             
@@ -454,7 +476,8 @@ class TraditionalFeatureExtractor:
     
     def _generate_traditional_fingerprint(self, sift_features: Dict, orb_features: Dict, 
                                         corner_features: Dict, edge_features: Dict) -> str:
-        """Generate combined fingerprint from traditional features."""        hash_components = []
+        """Generate combined fingerprint from traditional features."""
+        hash_components = []
         
         # Collect hash components
         if "feature_hash" in sift_features and sift_features["feature_hash"]:
@@ -477,19 +500,22 @@ class TraditionalFeatureExtractor:
         return ""
 
 class ColorAnalyzer:
-    """Advanced color analysis and histogram extraction."""    
+    """Advanced color analysis and histogram extraction."""
+    
     def __init__(self):
         self.n_dominant_colors = 8
         
     def analyze_colors(self, image_path: str) -> Dict[str, Any]:
-        """        Perform comprehensive color analysis.
+        """
+        Perform comprehensive color analysis.
         
         Args:
             image_path: Path to image file
             
         Returns:
             Dictionary containing color analysis results
-        """        try:
+        """
+        try:
             # Load image
             with Image.open(image_path) as img:
                 if img.mode != 'RGB':
@@ -526,7 +552,8 @@ class ColorAnalyzer:
             return {"error": str(e)}
     
     def _extract_dominant_colors(self, image_path: str) -> List[Dict[str, Any]]:
-        """Extract dominant colors using ColorThief."""        try:
+        """Extract dominant colors using ColorThief."""
+        try:
             color_thief = ColorThief(image_path)
             
             # Get dominant color
@@ -554,7 +581,8 @@ class ColorAnalyzer:
             return []
     
     def _compute_color_histogram(self, img: Image.Image) -> Dict[str, List[float]]:
-        """Compute color histograms in different color spaces."""        try:
+        """Compute color histograms in different color spaces."""
+        try:
             # Convert to numpy array
             img_array = np.array(img)
             
@@ -582,7 +610,8 @@ class ColorAnalyzer:
             return {"rgb_histogram": [], "hsv_histogram": []}
     
     def _compute_color_statistics(self, img: Image.Image) -> Dict[str, float]:
-        """Compute color statistics."""        try:
+        """Compute color statistics."""
+        try:
             stat = ImageStat.Stat(img)
             
             return {
@@ -604,7 +633,8 @@ class ColorAnalyzer:
             return {}
     
     def _analyze_color_harmony(self, dominant_colors: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze color harmony and relationships."""        if len(dominant_colors) < 2:
+        """Analyze color harmony and relationships."""
+        if len(dominant_colors) < 2:
             return {"harmony_score": 0.0, "color_scheme": "monochromatic"}
         
         try:
@@ -627,7 +657,8 @@ class ColorAnalyzer:
             return {"harmony_score": 0.0, "color_scheme": "unknown"}
     
     def _calculate_harmony_score(self, hues: List[float]) -> float:
-        """Calculate color harmony score based on hue relationships."""        if len(hues) < 2:
+        """Calculate color harmony score based on hue relationships."""
+        if len(hues) < 2:
             return 1.0
         
         # Calculate pairwise hue differences
@@ -651,7 +682,8 @@ class ColorAnalyzer:
         return sum(harmony_scores) / len(harmony_scores) if harmony_scores else 0.0
     
     def _determine_color_scheme(self, hues: List[float]) -> str:
-        """Determine the color scheme type."""        if len(hues) < 2:
+        """Determine the color scheme type."""
+        if len(hues) < 2:
             return "monochromatic"
         
         # Calculate hue range
@@ -667,7 +699,8 @@ class ColorAnalyzer:
             return "complementary"
     
     def _rgb_to_hsv(self, rgb: Tuple[int, int, int]) -> Tuple[float, float, float]:
-        """Convert RGB to HSV."""        r, g, b = [x / 255.0 for x in rgb]
+        """Convert RGB to HSV."""
+        r, g, b = [x / 255.0 for x in rgb]
         
         max_val = max(r, g, b)
         min_val = min(r, g, b)
@@ -692,7 +725,8 @@ class ColorAnalyzer:
         return (h, s * 100, v * 100)
     
     def _rgb_to_lab(self, rgb: Tuple[int, int, int]) -> Tuple[float, float, float]:
-        """Convert RGB to LAB (simplified approximation)."""        r, g, b = [x / 255.0 for x in rgb]
+        """Convert RGB to LAB (simplified approximation)."""
+        r, g, b = [x / 255.0 for x in rgb]
         
         # Simplified sRGB to XYZ conversion
         x = 0.412453 * r + 0.357580 * g + 0.180423 * b
@@ -708,7 +742,8 @@ class ColorAnalyzer:
     
     def _generate_color_fingerprint(self, color_histogram: Dict, dominant_colors: List, 
                                   color_stats: Dict) -> str:
-        """Generate fingerprint from color analysis."""        fingerprint_components = []
+        """Generate fingerprint from color analysis."""
+        fingerprint_components = []
         
         # Add histogram hash
         if "rgb_histogram" in color_histogram:
@@ -735,20 +770,23 @@ class ColorAnalyzer:
         return ""
 
 class TextureAnalyzer:
-    """Texture and pattern analysis for images."""    
+    """Texture and pattern analysis for images."""
+    
     def __init__(self):
         self.lbp_radius = 3
         self.lbp_n_points = 8 * self.lbp_radius
         
     def analyze_texture(self, image_path: str) -> Dict[str, Any]:
-        """        Perform comprehensive texture analysis.
+        """
+        Perform comprehensive texture analysis.
         
         Args:
             image_path: Path to image file
             
         Returns:
             Dictionary containing texture analysis results
-        """        try:
+        """
+        try:
             # Load image
             img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
             if img is None:
@@ -785,7 +823,8 @@ class TextureAnalyzer:
             return {"error": str(e)}
     
     def _analyze_lbp(self, img: np.ndarray) -> Dict[str, Any]:
-        """Analyze Local Binary Patterns."""        try:
+        """Analyze Local Binary Patterns."""
+        try:
             # Compute LBP
             lbp = feature.local_binary_pattern(img, self.lbp_n_points, self.lbp_radius, method='uniform')
             
@@ -818,7 +857,8 @@ class TextureAnalyzer:
             return {"error": str(e)}
     
     def _analyze_gabor_filters(self, img: np.ndarray) -> Dict[str, Any]:
-        """Analyze image using Gabor filters."""        try:
+        """Analyze image using Gabor filters."""
+        try:
             # Define Gabor filter parameters
             frequencies = [0.1, 0.3, 0.5]
             angles = [0, 45, 90, 135]
@@ -865,7 +905,8 @@ class TextureAnalyzer:
             return {"error": str(e)}
     
     def _analyze_glcm(self, img: np.ndarray) -> Dict[str, Any]:
-        """Analyze Gray-Level Co-occurrence Matrix."""        try:
+        """Analyze Gray-Level Co-occurrence Matrix."""
+        try:
             # Resize image if too large (for performance)
             if img.shape[0] > 256 or img.shape[1] > 256:
                 img = cv2.resize(img, (256, 256))
@@ -920,7 +961,8 @@ class TextureAnalyzer:
             return {"error": str(e)}
     
     def _analyze_fractal_dimension(self, img: np.ndarray) -> Dict[str, Any]:
-        """Analyze fractal dimension of the image."""        try:
+        """Analyze fractal dimension of the image."""
+        try:
             # Simple box-counting method for fractal dimension
             def box_count(img, k):
                 s = np.add.reduceat(
@@ -956,7 +998,8 @@ class TextureAnalyzer:
     
     def _generate_texture_fingerprint(self, lbp_features: Dict, gabor_features: Dict,
                                     glcm_features: Dict, fractal_features: Dict) -> str:
-        """Generate combined texture fingerprint."""        fingerprint_components = []
+        """Generate combined texture fingerprint."""
+        fingerprint_components = []
         
         # Add feature hashes
         if "lbp_hash" in lbp_features:
@@ -980,7 +1023,8 @@ class TextureAnalyzer:
         return ""
 
 class ImageFingerprintingService:
-    """    Comprehensive image fingerprinting service combining multiple techniques.
+    """
+    Comprehensive image fingerprinting service combining multiple techniques.
     
     Features:
     - Perceptual hashing (multiple algorithms)
@@ -989,7 +1033,8 @@ class ImageFingerprintingService:
     - Color analysis and harmony
     - Texture and pattern analysis
     - Multi-scale and rotation invariance
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.perceptual_hasher = PerceptualImageHashing()
@@ -1009,7 +1054,8 @@ class ImageFingerprintingService:
         }
         
     async def process_image(self, image_path: str, user_id: int) -> FingerprintResult:
-        """        Process image file and generate comprehensive fingerprint.
+        """
+        Process image file and generate comprehensive fingerprint.
         
         Args:
             image_path: Path to image file
@@ -1017,7 +1063,8 @@ class ImageFingerprintingService:
             
         Returns:
             FingerprintResult containing all fingerprint data
-        """        try:
+        """
+        try:
             logger.info(f"Processing image fingerprint for: {image_path}")
             
             # Extract metadata
@@ -1069,7 +1116,8 @@ class ImageFingerprintingService:
             raise
     
     async def _extract_metadata(self, image_path: str) -> ImageMetadata:
-        """Extract comprehensive image metadata."""        try:
+        """Extract comprehensive image metadata."""
+        try:
             with Image.open(image_path) as img:
                 width, height = img.size
                 channels = len(img.getbands())
@@ -1127,32 +1175,38 @@ class ImageFingerprintingService:
             )
     
     async def _run_perceptual_hashing(self, image_path: str) -> Dict[str, Any]:
-        """Run perceptual hashing."""        return await asyncio.get_event_loop().run_in_executor(
+        """Run perceptual hashing."""
+        return await asyncio.get_event_loop().run_in_executor(
             None, self.perceptual_hasher.extract_hashes, image_path
         )
     
     async def _run_clip_extraction(self, image_path: str) -> Dict[str, Any]:
-        """Run CLIP embedding extraction."""        return await asyncio.get_event_loop().run_in_executor(
+        """Run CLIP embedding extraction."""
+        return await asyncio.get_event_loop().run_in_executor(
             None, self.clip_extractor.extract_embeddings, image_path
         )
     
     async def _run_traditional_features(self, image_path: str) -> Dict[str, Any]:
-        """Run traditional feature extraction."""        return await asyncio.get_event_loop().run_in_executor(
+        """Run traditional feature extraction."""
+        return await asyncio.get_event_loop().run_in_executor(
             None, self.traditional_extractor.extract_features, image_path
         )
     
     async def _run_color_analysis(self, image_path: str) -> Dict[str, Any]:
-        """Run color analysis."""        return await asyncio.get_event_loop().run_in_executor(
+        """Run color analysis."""
+        return await asyncio.get_event_loop().run_in_executor(
             None, self.color_analyzer.analyze_colors, image_path
         )
     
     async def _run_texture_analysis(self, image_path: str) -> Dict[str, Any]:
-        """Run texture analysis."""        return await asyncio.get_event_loop().run_in_executor(
+        """Run texture analysis."""
+        return await asyncio.get_event_loop().run_in_executor(
             None, self.texture_analyzer.analyze_texture, image_path
         )
     
     def _generate_combined_hash(self, fingerprint_data: Dict[str, Any]) -> str:
-        """Generate combined hash from all fingerprint components."""        hash_components = []
+        """Generate combined hash from all fingerprint components."""
+        hash_components = []
         
         # Extract key hash components
         if "perceptual" in fingerprint_data and "combined_hash" in fingerprint_data["perceptual"]:
@@ -1175,7 +1229,8 @@ class ImageFingerprintingService:
         return hashlib.sha256(combined_string.encode()).hexdigest()
     
     async def find_similar(self, fingerprint_data: Dict[str, Any], threshold: float = 0.8) -> List[SimilarityMatch]:
-        """        Find similar image content based on fingerprint data.
+        """
+        Find similar image content based on fingerprint data.
         
         Args:
             fingerprint_data: Fingerprint data to match against
@@ -1183,13 +1238,15 @@ class ImageFingerprintingService:
             
         Returns:
             List of similarity matches
-        """        # This would typically interface with a vector database
+        """
+        # This would typically interface with a vector database
         # For now, return empty list (implementation depends on storage backend)
         logger.info(f"Searching for similar images with threshold {threshold}")
         return []
     
     def calculate_similarity(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """        Calculate similarity score between two image fingerprints.
+        """
+        Calculate similarity score between two image fingerprints.
         
         Args:
             fp1: First fingerprint data
@@ -1197,7 +1254,8 @@ class ImageFingerprintingService:
             
         Returns:
             Similarity score (0.0 to 1.0)
-        """        similarity_scores = []
+        """
+        similarity_scores = []
         
         # Perceptual hash similarity
         if ("perceptual" in fp1 and "perceptual" in fp2 and
@@ -1230,7 +1288,8 @@ class ImageFingerprintingService:
         return sum(similarity_scores) if similarity_scores else 0.0
     
     def _hamming_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate similarity using Hamming distance."""        if len(hash1) != len(hash2):
+        """Calculate similarity using Hamming distance."""
+        if len(hash1) != len(hash2):
             return 0.0
         
         # Convert hex hashes to binary
@@ -1247,7 +1306,8 @@ class ImageFingerprintingService:
             return 0.0
     
     def _cosine_similarity(self, vec1: List[float], vec2: List[float]) -> float:
-        """Calculate cosine similarity between vectors."""        try:
+        """Calculate cosine similarity between vectors."""
+        try:
             vec1_array = np.array(vec1)
             vec2_array = np.array(vec2)
             
@@ -1256,7 +1316,8 @@ class ImageFingerprintingService:
             return 0.0
     
     def _hash_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate hash similarity."""        if len(hash1) != len(hash2):
+        """Calculate hash similarity."""
+        if len(hash1) != len(hash2):
             return 0.0
         
         matches = sum(c1 == c2 for c1, c2 in zip(hash1, hash2))

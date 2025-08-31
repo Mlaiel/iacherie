@@ -6,7 +6,8 @@ Provides WebSocket connections, real-time updates, and interactive analytics.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Set
@@ -33,7 +34,8 @@ from ...core.cache import CacheManager
 logger = logging.getLogger(__name__)
 
 class WidgetType(str, Enum):
-    """Dashboard widget types."""    ALERT_COUNT = "alert_count"
+    """Dashboard widget types."""
+    ALERT_COUNT = "alert_count"
     SEVERITY_DISTRIBUTION = "severity_distribution"
     PLATFORM_BREAKDOWN = "platform_breakdown"
     TIMELINE_CHART = "timeline_chart"
@@ -45,7 +47,8 @@ class WidgetType(str, Enum):
     ESCALATION_FUNNEL = "escalation_funnel"
 
 class UpdateType(str, Enum):
-    """Real-time update types."""    NEW_ALERT = "new_alert"
+    """Real-time update types."""
+    NEW_ALERT = "new_alert"
     ALERT_UPDATE = "alert_update"
     ALERT_RESOLVED = "alert_resolved"
     METRICS_UPDATE = "metrics_update"
@@ -53,7 +56,8 @@ class UpdateType(str, Enum):
 
 @dataclass
 class DashboardConfig:
-    """Dashboard configuration."""    max_connections: int = 1000
+    """Dashboard configuration."""
+    max_connections: int = 1000
     update_interval_seconds: int = 5
     metrics_retention_hours: int = 24
     real_time_alerts_limit: int = 100
@@ -61,21 +65,24 @@ class DashboardConfig:
 
 @dataclass
 class ConnectionInfo:
-    """WebSocket connection information."""    websocket: WebSocket
+    """WebSocket connection information."""
+    websocket: WebSocket
     user_id: str
     connection_id: str
     subscribed_widgets: Set[str] = field(default_factory=set)
     last_activity: datetime = field(default_factory=datetime.utcnow)
 
 class WebSocketManager:
-    """Manages WebSocket connections for real-time updates."""    
+    """Manages WebSocket connections for real-time updates."""
+    
     def __init__(self):
         self.active_connections: Dict[str, ConnectionInfo] = {}
         self.user_connections: Dict[str, Set[str]] = {}
         self._connection_lock = asyncio.Lock()
     
     async def connect(self, websocket: WebSocket, user_id: str) -> str:
-        """Connect a new WebSocket client."""        await websocket.accept()
+        """Connect a new WebSocket client."""
+        await websocket.accept()
         
         connection_id = str(uuid4())
         connection_info = ConnectionInfo(
@@ -95,7 +102,8 @@ class WebSocketManager:
         return connection_id
     
     async def disconnect(self, connection_id: str) -> None:
-        """Disconnect a WebSocket client."""        async with self._connection_lock:
+        """Disconnect a WebSocket client."""
+        async with self._connection_lock:
             if connection_id in self.active_connections:
                 connection_info = self.active_connections[connection_id]
                 user_id = connection_info.user_id
@@ -112,7 +120,8 @@ class WebSocketManager:
                 logger.info("WebSocket disconnected: %s", connection_id)
     
     async def send_personal_message(self, connection_id: str, message: Dict[str, Any]) -> None:
-        """Send message to specific connection."""        if connection_id in self.active_connections:
+        """Send message to specific connection."""
+        if connection_id in self.active_connections:
             try:
                 connection_info = self.active_connections[connection_id]
                 await connection_info.websocket.send_text(json.dumps(message))
@@ -122,26 +131,31 @@ class WebSocketManager:
                 await self.disconnect(connection_id)
     
     async def send_to_user(self, user_id: str, message: Dict[str, Any]) -> None:
-        """Send message to all connections of a user."""        if user_id in self.user_connections:
+        """Send message to all connections of a user."""
+        if user_id in self.user_connections:
             connection_ids = list(self.user_connections[user_id])
             for connection_id in connection_ids:
                 await self.send_personal_message(connection_id, message)
     
     async def broadcast(self, message: Dict[str, Any]) -> None:
-        """Broadcast message to all connections."""        connection_ids = list(self.active_connections.keys())
+        """Broadcast message to all connections."""
+        connection_ids = list(self.active_connections.keys())
         for connection_id in connection_ids:
             await self.send_personal_message(connection_id, message)
     
     async def subscribe_to_widget(self, connection_id: str, widget_id: str) -> None:
-        """Subscribe connection to widget updates."""        if connection_id in self.active_connections:
+        """Subscribe connection to widget updates."""
+        if connection_id in self.active_connections:
             self.active_connections[connection_id].subscribed_widgets.add(widget_id)
     
     async def unsubscribe_from_widget(self, connection_id: str, widget_id: str) -> None:
-        """Unsubscribe connection from widget updates."""        if connection_id in self.active_connections:
+        """Unsubscribe connection from widget updates."""
+        if connection_id in self.active_connections:
             self.active_connections[connection_id].subscribed_widgets.discard(widget_id)
     
     async def send_widget_update(self, widget_id: str, data: Dict[str, Any]) -> None:
-        """Send update to all connections subscribed to a widget."""        message = {
+        """Send update to all connections subscribed to a widget."""
+        message = {
             "type": "widget_update",
             "widget_id": widget_id,
             "data": data,
@@ -153,7 +167,8 @@ class WebSocketManager:
                 await self.send_personal_message(connection_info.connection_id, message)
     
     async def cleanup_stale_connections(self) -> None:
-        """Clean up stale connections."""        cutoff_time = datetime.utcnow() - timedelta(minutes=30)
+        """Clean up stale connections."""
+        cutoff_time = datetime.utcnow() - timedelta(minutes=30)
         stale_connections = []
         
         for connection_id, connection_info in self.active_connections.items():
@@ -167,7 +182,8 @@ class WebSocketManager:
             logger.info("Cleaned up %d stale connections", len(stale_connections))
 
 class MetricsCalculator:
-    """Calculates dashboard metrics and analytics."""    
+    """Calculates dashboard metrics and analytics."""
+    
     def __init__(self, cache_manager: CacheManager):
         self.cache_manager = cache_manager
     
@@ -176,7 +192,8 @@ class MetricsCalculator:
         user_id: Optional[str] = None,
         time_range: timedelta = timedelta(hours=24)
     ) -> AlertMetrics:
-        """Calculate alert metrics."""        try:
+        """Calculate alert metrics."""
+        try:
             cache_key = f"alert_metrics:{user_id or 'all'}:{time_range.total_seconds()}"
             cached_metrics = await self.cache_manager.get(cache_key)
             
@@ -250,7 +267,8 @@ class MetricsCalculator:
         user_id: Optional[str] = None,
         time_range: timedelta = timedelta(hours=24)
     ) -> List[PlatformMetrics]:
-        """Calculate platform-specific metrics."""        try:
+        """Calculate platform-specific metrics."""
+        try:
             cache_key = f"platform_metrics:{user_id or 'all'}:{time_range.total_seconds()}"
             cached_metrics = await self.cache_manager.get(cache_key)
             
@@ -305,7 +323,8 @@ class MetricsCalculator:
         time_range: timedelta = timedelta(hours=24),
         interval_minutes: int = 60
     ) -> TimeSeriesData:
-        """Get timeline data for charts."""        try:
+        """Get timeline data for charts."""
+        try:
             cache_key = f"timeline_data:{user_id or 'all'}:{time_range.total_seconds()}:{interval_minutes}"
             cached_data = await self.cache_manager.get(cache_key)
             
@@ -367,8 +386,10 @@ class MetricsCalculator:
             return TimeSeriesData()
 
 class DashboardService:
-    """    Main dashboard service for real-time alert monitoring and analytics.
-    """    
+    """
+    Main dashboard service for real-time alert monitoring and analytics.
+    """
+    
     def __init__(
         self,
         config: DashboardConfig,
@@ -392,7 +413,8 @@ class DashboardService:
         logger.info("DashboardService initialized")
 
     async def start(self) -> None:
-        """Start the dashboard service."""        if self._is_running:
+        """Start the dashboard service."""
+        if self._is_running:
             return
             
         self._is_running = True
@@ -407,7 +429,8 @@ class DashboardService:
         logger.info("DashboardService started")
 
     async def stop(self) -> None:
-        """Stop the dashboard service."""        self._is_running = False
+        """Stop the dashboard service."""
+        self._is_running = False
         
         # Cancel background tasks
         for task in self._background_tasks:
@@ -419,7 +442,8 @@ class DashboardService:
         logger.info("DashboardService stopped")
 
     async def handle_websocket_connection(self, websocket: WebSocket, user_id: str) -> None:
-        """Handle WebSocket connection lifecycle."""        connection_id = await self.websocket_manager.connect(websocket, user_id)
+        """Handle WebSocket connection lifecycle."""
+        connection_id = await self.websocket_manager.connect(websocket, user_id)
         
         try:
             # Send initial data
@@ -443,7 +467,8 @@ class DashboardService:
             await self.websocket_manager.disconnect(connection_id)
 
     async def notify_alert_update(self, alert: Alert, update_type: UpdateType) -> None:
-        """Notify all relevant connections about alert updates."""        try:
+        """Notify all relevant connections about alert updates."""
+        try:
             message = {
                 "type": update_type.value,
                 "alert": {
@@ -469,7 +494,8 @@ class DashboardService:
             logger.error("Failed to notify alert update: %s", str(e))
 
     async def get_dashboard_layout(self, user_id: str) -> Optional[DashboardLayout]:
-        """Get user's dashboard layout."""        try:
+        """Get user's dashboard layout."""
+        try:
             cache_key = f"dashboard_layout:{user_id}"
             cached_layout = await self.cache_manager.get(cache_key)
             
@@ -494,7 +520,8 @@ class DashboardService:
             return None
 
     async def save_dashboard_layout(self, user_id: str, layout: Dict[str, Any]) -> bool:
-        """Save user's dashboard layout."""        try:
+        """Save user's dashboard layout."""
+        try:
             async with get_async_session() as session:
                 # Check if layout exists
                 result = await session.execute(
@@ -531,7 +558,8 @@ class DashboardService:
             return False
 
     async def get_widget_data(self, widget_type: WidgetType, user_id: str, **kwargs) -> Dict[str, Any]:
-        """Get data for specific widget type."""        try:
+        """Get data for specific widget type."""
+        try:
             if widget_type == WidgetType.ALERT_COUNT:
                 metrics = await self.metrics_calculator.get_alert_metrics(user_id)
                 return {
@@ -589,7 +617,8 @@ class DashboardService:
             return {"error": str(e)}
 
     async def _send_initial_dashboard_data(self, connection_id: str, user_id: str) -> None:
-        """Send initial dashboard data to new connection."""        try:
+        """Send initial dashboard data to new connection."""
+        try:
             # Get dashboard layout
             layout = await self.get_dashboard_layout(user_id)
             
@@ -609,7 +638,8 @@ class DashboardService:
             logger.error("Failed to send initial dashboard data: %s", str(e))
 
     async def _handle_websocket_message(self, connection_id: str, message: Dict[str, Any]) -> None:
-        """Handle incoming WebSocket message."""        try:
+        """Handle incoming WebSocket message."""
+        try:
             message_type = message.get("type")
             
             if message_type == "subscribe_widget":
@@ -646,7 +676,8 @@ class DashboardService:
             logger.error("Failed to handle WebSocket message: %s", str(e))
 
     async def _metrics_updater(self) -> None:
-        """Background task to update metrics."""        while self._is_running:
+        """Background task to update metrics."""
+        while self._is_running:
             try:
                 # Update metrics for all active users
                 active_users = set()
@@ -670,7 +701,8 @@ class DashboardService:
                 await asyncio.sleep(10)
 
     async def _connection_cleaner(self) -> None:
-        """Background task to clean up stale connections."""        while self._is_running:
+        """Background task to clean up stale connections."""
+        while self._is_running:
             try:
                 await self.websocket_manager.cleanup_stale_connections()
                 await asyncio.sleep(300)  # Run every 5 minutes
@@ -680,7 +712,8 @@ class DashboardService:
                 await asyncio.sleep(60)
 
     async def _alert_broadcaster(self) -> None:
-        """Background task to broadcast alert updates."""        while self._is_running:
+        """Background task to broadcast alert updates."""
+        while self._is_running:
             try:
                 # Listen for alert updates from Redis
                 pubsub = self.redis_client.pubsub()
@@ -699,7 +732,8 @@ class DashboardService:
                 await asyncio.sleep(10)
 
     async def _process_alert_broadcast(self, alert_data: Dict[str, Any]) -> None:
-        """Process alert broadcast message."""        try:
+        """Process alert broadcast message."""
+        try:
             update_type = UpdateType(alert_data.get("type", "alert_update"))
             alert_info = alert_data.get("alert", {})
             
@@ -719,7 +753,8 @@ class DashboardService:
             logger.error("Failed to process alert broadcast: %s", str(e))
 
     async def _update_widgets_for_alert(self, alert: Alert, update_type: UpdateType) -> None:
-        """Update widgets based on alert changes."""        try:
+        """Update widgets based on alert changes."""
+        try:
             # Update alert count widget
             metrics = await self.metrics_calculator.get_alert_metrics(alert.user_id)
             await self.websocket_manager.send_widget_update(
@@ -742,7 +777,8 @@ class DashboardService:
             logger.error("Failed to update widgets: %s", str(e))
 
     async def _get_real_time_alerts(self, user_id: str) -> Dict[str, Any]:
-        """Get recent alerts for real-time feed."""        try:
+        """Get recent alerts for real-time feed."""
+        try:
             async with get_async_session() as session:
                 result = await session.execute(
                     select(Alert)

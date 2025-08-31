@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Upload créateur → Analyse multi-format → Génération empreintes IA → 
 Stockage vectoriel → Recherche similarité → Détection duplicata → Protection droits
-"""from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set, Protocol
+"""
+from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set, Protocol
 import logging
 import asyncio
 from contextlib import asynccontextmanager
@@ -36,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintType(Enum):
-    """Types d'empreintes digitales supportées"""    AUDIO = "audio"
+    """Types d'empreintes digitales supportées"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -48,7 +50,8 @@ class FingerprintType(Enum):
 
 
 class SimilarityAlgorithm(Enum):
-    """Algorithmes de similarité disponibles"""    COSINE = "cosine"
+    """Algorithmes de similarité disponibles"""
+    COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
     JACCARD = "jaccard"
@@ -58,7 +61,8 @@ class SimilarityAlgorithm(Enum):
 
 
 class FingerprintQuality(Enum):
-    """Qualité de l'empreinte générée"""    LOW = "low"
+    """Qualité de l'empreinte générée"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     ULTRA = "ultra"
@@ -66,7 +70,8 @@ class FingerprintQuality(Enum):
 
 @dataclass
 class FingerprintingConfig:
-    """Configuration avancée du système de fingerprinting"""    # Core fingerprinting settings
+    """Configuration avancée du système de fingerprinting"""
+    # Core fingerprinting settings
     enabled_types: Set[FingerprintType] = field(
         default_factory=lambda: set(FingerprintType)
     )
@@ -119,7 +124,8 @@ class FingerprintingConfig:
 
 @dataclass  
 class ContentFingerprint:
-    """Empreinte digitale complète avec vecteurs IA"""    id: str
+    """Empreinte digitale complète avec vecteurs IA"""
+    id: str
     content_id: str
     fingerprint_type: FingerprintType
     quality: FingerprintQuality
@@ -154,7 +160,8 @@ class ContentFingerprint:
 
 @dataclass
 class SimilarityMatch:
-    """Résultat de recherche de similarité"""    fingerprint_id: str
+    """Résultat de recherche de similarité"""
+    fingerprint_id: str
     matched_fingerprint_id: str
     similarity_score: float
     algorithm_used: SimilarityAlgorithm
@@ -174,7 +181,8 @@ class SimilarityMatch:
 
 
 class FingerprintingManager(ABC):
-    """    🔍 Advanced AI Fingerprinting Manager - IA-Influencer-Agent
+    """
+    🔍 Advanced AI Fingerprinting Manager - IA-Influencer-Agent
     
     Responsabilité:
     Gestionnaire industriel d'empreintes digitales avec IA avancée multi-format
@@ -196,7 +204,8 @@ class FingerprintingManager(ABC):
     - Cache intelligent et optimisations
     - API REST/GraphQL complète
     - Monitoring et analytics avancés
-    """    
+    """
+    
     def __init__(self, config: FingerprintingConfig = None):
         self.config = config or FingerprintingConfig()
         self._fingerprints: Dict[str, ContentFingerprint] = {}
@@ -232,11 +241,13 @@ class FingerprintingManager(ABC):
     
     @abstractmethod
     async def initialize_pool(self) -> bool:
-        """        Initialize fingerprinting engine pool and AI models
+        """
+        Initialize fingerprinting engine pool and AI models
         
         Returns:
             bool: True if initialization successful
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def generate_audio_fingerprint(
@@ -244,7 +255,8 @@ class FingerprintingManager(ABC):
         audio_data: bytes,
         metadata: Dict[str, Any] = None
     ) -> ContentFingerprint:
-        """        Generate advanced audio fingerprint using AI
+        """
+        Generate advanced audio fingerprint using AI
         
         Args:
             audio_data: Raw audio bytes
@@ -252,7 +264,8 @@ class FingerprintingManager(ABC):
             
         Returns:
             ContentFingerprint: Audio fingerprint with vector embedding
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def generate_video_fingerprint(
@@ -260,7 +273,8 @@ class FingerprintingManager(ABC):
         video_data: bytes,
         metadata: Dict[str, Any] = None
     ) -> ContentFingerprint:
-        """        Generate advanced video fingerprint using AI
+        """
+        Generate advanced video fingerprint using AI
         
         Args:
             video_data: Raw video bytes
@@ -268,7 +282,8 @@ class FingerprintingManager(ABC):
             
         Returns:
             ContentFingerprint: Video fingerprint with frame analysis
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def generate_image_fingerprint(
@@ -276,7 +291,8 @@ class FingerprintingManager(ABC):
         image_data: bytes,
         metadata: Dict[str, Any] = None
     ) -> ContentFingerprint:
-        """        Generate advanced image fingerprint using AI
+        """
+        Generate advanced image fingerprint using AI
         
         Args:
             image_data: Raw image bytes
@@ -284,7 +300,8 @@ class FingerprintingManager(ABC):
             
         Returns:
             ContentFingerprint: Image fingerprint with perceptual hash
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def generate_text_fingerprint(
@@ -292,7 +309,8 @@ class FingerprintingManager(ABC):
         text_content: str,
         metadata: Dict[str, Any] = None
     ) -> ContentFingerprint:
-        """        Generate advanced text fingerprint using AI
+        """
+        Generate advanced text fingerprint using AI
         
         Args:
             text_content: Text content
@@ -300,7 +318,8 @@ class FingerprintingManager(ABC):
             
         Returns:
             ContentFingerprint: Text fingerprint with semantic embedding
-        """        pass
+        """
+        pass
     
     async def generate_fingerprint(
         self,
@@ -309,7 +328,8 @@ class FingerprintingManager(ABC):
         fingerprint_type: FingerprintType,
         metadata: Dict[str, Any] = None
     ) -> ContentFingerprint:
-        """        Generate fingerprint for any content type
+        """
+        Generate fingerprint for any content type
         
         Args:
             content_data: Raw content data
@@ -319,7 +339,8 @@ class FingerprintingManager(ABC):
             
         Returns:
             ContentFingerprint: Generated fingerprint
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Route to appropriate fingerprint generator
@@ -370,7 +391,8 @@ class FingerprintingManager(ABC):
         max_results: Optional[int] = None,
         algorithm: Optional[SimilarityAlgorithm] = None
     ) -> List[SimilarityMatch]:
-        """        Find similar content using vector similarity search
+        """
+        Find similar content using vector similarity search
         
         Args:
             fingerprint: Source fingerprint to match against
@@ -380,7 +402,8 @@ class FingerprintingManager(ABC):
             
         Returns:
             List[SimilarityMatch]: Similar content matches
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         # Use config defaults if not specified
         threshold = similarity_threshold or self.config.similarity_threshold
@@ -439,7 +462,8 @@ class FingerprintingManager(ABC):
         fingerprint: ContentFingerprint,
         exact_match_threshold: float = 0.95
     ) -> List[SimilarityMatch]:
-        """        Detect duplicate or near-duplicate content
+        """
+        Detect duplicate or near-duplicate content
         
         Args:
             fingerprint: Fingerprint to check for duplicates
@@ -447,7 +471,8 @@ class FingerprintingManager(ABC):
             
         Returns:
             List[SimilarityMatch]: Duplicate content matches
-        """        matches = await self.find_similar_content(
+        """
+        matches = await self.find_similar_content(
             fingerprint, 
             similarity_threshold=exact_match_threshold,
             algorithm=SimilarityAlgorithm.COSINE
@@ -475,7 +500,8 @@ class FingerprintingManager(ABC):
         content_items: List[Dict[str, Any]],
         parallel_workers: Optional[int] = None
     ) -> List[ContentFingerprint]:
-        """        Generate fingerprints for multiple content items in parallel
+        """
+        Generate fingerprints for multiple content items in parallel
         
         Args:
             content_items: List of content items with data and metadata
@@ -483,7 +509,8 @@ class FingerprintingManager(ABC):
             
         Returns:
             List[ContentFingerprint]: Generated fingerprints
-        """        workers = parallel_workers or self.config.max_workers
+        """
+        workers = parallel_workers or self.config.max_workers
         fingerprints = []
         
         # Create semaphore to limit concurrent processing
@@ -517,7 +544,8 @@ class FingerprintingManager(ABC):
         fingerprint_type: Optional[FingerprintType] = None,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """        Get comprehensive fingerprinting analytics
+        """
+        Get comprehensive fingerprinting analytics
         
         Args:
             fingerprint_type: Filter by specific fingerprint type
@@ -525,7 +553,8 @@ class FingerprintingManager(ABC):
             
         Returns:
             Dict: Complete analytics data
-        """        with self._lock:
+        """
+        with self._lock:
             # Filter fingerprints
             fingerprints = list(self._fingerprints.values())
             
@@ -599,7 +628,8 @@ class FingerprintingManager(ABC):
         max_results: int,
         algorithm: SimilarityAlgorithm
     ) -> List[SimilarityMatch]:
-        """Vector-based similarity search using FAISS"""        # Implementation would use FAISS index for fast similarity search
+        """Vector-based similarity search using FAISS"""
+        # Implementation would use FAISS index for fast similarity search
         # This is a placeholder for the actual implementation
         matches = []
         
@@ -635,7 +665,8 @@ class FingerprintingManager(ABC):
         max_results: int,
         algorithm: SimilarityAlgorithm
     ) -> List[SimilarityMatch]:
-        """Brute force similarity search for small datasets"""        return await self._vector_similarity_search(fingerprint, threshold, max_results, algorithm)
+        """Brute force similarity search for small datasets"""
+        return await self._vector_similarity_search(fingerprint, threshold, max_results, algorithm)
     
     async def _calculate_similarity(
         self,
@@ -643,7 +674,8 @@ class FingerprintingManager(ABC):
         vector2: np.ndarray,
         algorithm: SimilarityAlgorithm
     ) -> float:
-        """Calculate similarity between two vectors"""        try:
+        """Calculate similarity between two vectors"""
+        try:
             if algorithm == SimilarityAlgorithm.COSINE:
                 dot_product = np.dot(vector1, vector2)
                 norm1 = np.linalg.norm(vector1)
@@ -671,12 +703,14 @@ class FingerprintingManager(ABC):
         original: ContentFingerprint,
         match: SimilarityMatch
     ) -> bool:
-        """Verify if a similarity match is a true duplicate"""        # Additional verification logic beyond similarity score
+        """Verify if a similarity match is a true duplicate"""
+        # Additional verification logic beyond similarity score
         # This could include content-specific checks
         return match.similarity_score > 0.95
     
     async def _add_to_vector_index(self, fingerprint: ContentFingerprint) -> bool:
-        """Add fingerprint to vector index for fast search"""        try:
+        """Add fingerprint to vector index for fast search"""
+        try:
             # Implementation would add to FAISS index
             fingerprint.indexed = True
             fingerprint.search_optimized = True
@@ -686,7 +720,8 @@ class FingerprintingManager(ABC):
             return False
     
     async def _cleanup_similarity_cache(self) -> None:
-        """Clean up old similarity search cache entries"""        # Remove oldest 50% of cache entries
+        """Clean up old similarity search cache entries"""
+        # Remove oldest 50% of cache entries
         cache_items = list(self._similarity_cache.items())
         cache_items.sort(key=lambda x: len(x[1]))  # Sort by result count
         
@@ -696,7 +731,8 @@ class FingerprintingManager(ABC):
     
     @asynccontextmanager
     async def get_fingerprinting_session(self):
-        """Context manager for fingerprinting operations"""        session_id = str(uuid.uuid4())
+        """Context manager for fingerprinting operations"""
+        session_id = str(uuid.uuid4())
         try:
             logger.info(f"🔍 Fingerprinting session started: {session_id}")
             yield session_id
@@ -704,7 +740,8 @@ class FingerprintingManager(ABC):
             logger.info(f"🔍 Fingerprinting session ended: {session_id}")
     
     async def cleanup(self) -> bool:
-        """Cleanup fingerprinting resources"""        try:
+        """Cleanup fingerprinting resources"""
+        try:
             # Cancel worker tasks
             for task in self._worker_tasks:
                 task.cancel()
@@ -737,7 +774,8 @@ class FingerprintingManager(ABC):
             return False
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get fingerprinting system statistics"""        with self._lock:
+        """Get fingerprinting system statistics"""
+        with self._lock:
             return {
                 "fingerprints_count": len(self._fingerprints),
                 "indexed_count": sum(1 for fp in self._fingerprints.values() if fp.indexed),
@@ -765,11 +803,13 @@ fingerprinting_manager = None
 
 
 def get_fingerprinting_manager() -> FingerprintingManager:
-    """    Get the global fingerprinting manager instance
+    """
+    Get the global fingerprinting manager instance
     
     Returns:
         FingerprintingManager: Global fingerprinting manager
-    """    global fingerprinting_manager
+    """
+    global fingerprinting_manager
     if fingerprinting_manager is None:
         from ..implementations.fingerprinting_manager_impl import FingerprintingManagerImpl
         fingerprinting_manager = FingerprintingManagerImpl()

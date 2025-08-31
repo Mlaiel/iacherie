@@ -23,7 +23,8 @@ and international copyright laws.
 
 Project: IA Influencer Agent Platform - Microservices Infrastructure
 Copyright: Fahed Mlaiel - All rights reserved
-"""import os
+"""
+import os
 import sys
 import time
 import json
@@ -62,7 +63,8 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceType(Enum):
-    """Types of microservices"""    API_GATEWAY = "api_gateway"
+    """Types of microservices"""
+    API_GATEWAY = "api_gateway"
     CONTENT_PROTECTION = "content_protection"
     AI_FINGERPRINTING = "ai_fingerprinting"
     CONTENT_CRAWLER = "content_crawler"
@@ -81,7 +83,8 @@ class ServiceType(Enum):
 
 
 class CommunicationProtocol(Enum):
-    """Communication protocols between services"""    HTTP_REST = "http_rest"
+    """Communication protocols between services"""
+    HTTP_REST = "http_rest"
     GRPC = "grpc"
     GRAPHQL = "graphql"
     MESSAGE_QUEUE = "message_queue"
@@ -90,7 +93,8 @@ class CommunicationProtocol(Enum):
 
 
 class ServiceDiscoveryType(Enum):
-    """Service discovery mechanisms"""    CONSUL = "consul"
+    """Service discovery mechanisms"""
+    CONSUL = "consul"
     ETCD = "etcd"
     KUBERNETES_DNS = "kubernetes_dns"
     EUREKA = "eureka"
@@ -98,7 +102,8 @@ class ServiceDiscoveryType(Enum):
 
 
 class LoadBalancingStrategy(Enum):
-    """Load balancing strategies"""    ROUND_ROBIN = "round_robin"
+    """Load balancing strategies"""
+    ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     IP_HASH = "ip_hash"
@@ -107,13 +112,15 @@ class LoadBalancingStrategy(Enum):
 
 
 class CircuitBreakerState(Enum):
-    """Circuit breaker states"""    CLOSED = "closed"
+    """Circuit breaker states"""
+    CLOSED = "closed"
     OPEN = "open"
     HALF_OPEN = "half_open"
 
 
 class ServiceMeshType(Enum):
-    """Service mesh implementations"""    ISTIO = "istio"
+    """Service mesh implementations"""
+    ISTIO = "istio"
     LINKERD = "linkerd"
     CONSUL_CONNECT = "consul_connect"
     ENVOY = "envoy"
@@ -121,7 +128,8 @@ class ServiceMeshType(Enum):
 
 @dataclass
 class ServiceEndpoint:
-    """Service endpoint configuration"""    path: str
+    """Service endpoint configuration"""
+    path: str
     method: str
     protocol: CommunicationProtocol
     authentication_required: bool = True
@@ -147,7 +155,8 @@ class ServiceEndpoint:
 
 @dataclass
 class ServiceDependency:
-    """Service dependency configuration"""    service_name: str
+    """Service dependency configuration"""
+    service_name: str
     service_type: ServiceType
     protocol: CommunicationProtocol
     endpoint_url: str
@@ -173,7 +182,8 @@ class ServiceDependency:
 
 @dataclass
 class ServiceConfiguration:
-    """Complete microservice configuration"""    service_name: str
+    """Complete microservice configuration"""
+    service_name: str
     service_type: ServiceType
     version: str
     namespace: str
@@ -233,7 +243,8 @@ class ServiceConfiguration:
 
 @dataclass
 class ServiceMeshConfiguration:
-    """Service mesh configuration"""    mesh_type: ServiceMeshType = ServiceMeshType.ISTIO
+    """Service mesh configuration"""
+    mesh_type: ServiceMeshType = ServiceMeshType.ISTIO
     mtls_enabled: bool = True
     traffic_management_enabled: bool = True
     security_policies_enabled: bool = True
@@ -263,7 +274,8 @@ class ServiceMeshConfiguration:
 
 @dataclass
 class APIGatewayConfiguration:
-    """API Gateway configuration"""    gateway_name: str = "ia-influencer-gateway"
+    """API Gateway configuration"""
+    gateway_name: str = "ia-influencer-gateway"
     port: int = 80
     ssl_port: int = 443
     ssl_enabled: bool = True
@@ -298,11 +310,14 @@ class APIGatewayConfiguration:
 
 
 class MicroservicesDeploymentManager:
-    """    Enterprise Microservices Deployment Manager
+    """
+    Enterprise Microservices Deployment Manager
     Handles deployment and management of comprehensive microservices architecture
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the Microservices Deployment Manager"""        self.config_path = config_path or os.getenv('MICROSERVICES_CONFIG_PATH', '/etc/microservices/config.yaml')
+        """Initialize the Microservices Deployment Manager"""
+        self.config_path = config_path or os.getenv('MICROSERVICES_CONFIG_PATH', '/etc/microservices/config.yaml')
         self.services: Dict[str, ServiceConfiguration] = {}
         self.service_mesh_config: ServiceMeshConfiguration = ServiceMeshConfiguration()
         self.api_gateway_config: APIGatewayConfiguration = APIGatewayConfiguration()
@@ -321,7 +336,8 @@ class MicroservicesDeploymentManager:
         logger.info("Microservices Deployment Manager initialized successfully")
     
     def _init_kubernetes_client(self):
-        """Initialize Kubernetes client"""        try:
+        """Initialize Kubernetes client"""
+        try:
             config.load_incluster_config()
         except:
             try:
@@ -340,7 +356,8 @@ class MicroservicesDeploymentManager:
         logger.info("Kubernetes client initialized")
     
     def _init_docker_client(self):
-        """Initialize Docker client"""        try:
+        """Initialize Docker client"""
+        try:
             self.docker_client = docker.from_env()
             logger.info("Docker client initialized")
         except Exception as e:
@@ -348,7 +365,8 @@ class MicroservicesDeploymentManager:
             self.docker_client = None
     
     def _init_service_discovery_client(self):
-        """Initialize service discovery client"""        try:
+        """Initialize service discovery client"""
+        try:
             consul_host = os.getenv('CONSUL_HOST', 'localhost')
             consul_port = int(os.getenv('CONSUL_PORT', '8500'))
             self.consul_client = consul.Consul(host=consul_host, port=consul_port)
@@ -367,7 +385,8 @@ class MicroservicesDeploymentManager:
             self.etcd_client = None
     
     def _init_service_mesh_client(self):
-        """Initialize service mesh clients"""        try:
+        """Initialize service mesh clients"""
+        try:
             # Istio client initialization
             self.istio_client = None  # Placeholder for Istio client
             logger.info("Service mesh clients initialized")
@@ -376,7 +395,8 @@ class MicroservicesDeploymentManager:
             self.istio_client = None
     
     def _init_database_client(self):
-        """Initialize database client"""        try:
+        """Initialize database client"""
+        try:
             db_url = os.getenv('DATABASE_URL', 'postgresql://user:pass@localhost:5432/ia_influencer')
             self.db_engine = create_engine(db_url)
             logger.info("Database client initialized")
@@ -385,7 +405,8 @@ class MicroservicesDeploymentManager:
             self.db_engine = None
     
     def _init_redis_client(self):
-        """Initialize Redis client for caching and service coordination"""        try:
+        """Initialize Redis client for caching and service coordination"""
+        try:
             redis_host = os.getenv('REDIS_HOST', 'localhost')
             redis_port = int(os.getenv('REDIS_PORT', '6379'))
             redis_password = os.getenv('REDIS_PASSWORD')
@@ -403,7 +424,8 @@ class MicroservicesDeploymentManager:
             self.redis_client = None
     
     def _load_config(self):
-        """Load microservices configurations"""        if os.path.exists(self.config_path):
+        """Load microservices configurations"""
+        if os.path.exists(self.config_path):
             try:
                 with open(self.config_path, 'r') as f:
                     config_data = yaml.safe_load(f)
@@ -505,7 +527,8 @@ class MicroservicesDeploymentManager:
             self._create_default_service_configurations()
     
     def _create_default_service_configurations(self):
-        """Create default configurations for core microservices"""        core_services = [
+        """Create default configurations for core microservices"""
+        core_services = [
             {
                 'name': 'api-gateway',
                 'type': ServiceType.API_GATEWAY,
@@ -581,7 +604,8 @@ class MicroservicesDeploymentManager:
         logger.info(f"Created {len(core_services)} default service configurations")
     
     def deploy_microservices_infrastructure(self) -> bool:
-        """Deploy complete microservices infrastructure"""        if not self.k8s_client:
+        """Deploy complete microservices infrastructure"""
+        if not self.k8s_client:
             logger.error("Kubernetes client not available")
             return False
         
@@ -623,7 +647,8 @@ class MicroservicesDeploymentManager:
             return False
     
     def _create_service_namespaces(self):
-        """Create namespaces for service groups"""        namespaces = set()
+        """Create namespaces for service groups"""
+        namespaces = set()
         for service_config in self.services.values():
             namespaces.add(service_config.namespace)
         
@@ -634,7 +659,8 @@ class MicroservicesDeploymentManager:
             self._create_namespace(namespace)
     
     def _deploy_istio_service_mesh(self):
-        """Deploy Istio service mesh"""        # Install Istio control plane
+        """Deploy Istio service mesh"""
+        # Install Istio control plane
         istio_namespace = "istio-system"
         self._create_namespace(istio_namespace)
         
@@ -711,7 +737,8 @@ class MicroservicesDeploymentManager:
         logger.info("Istio service mesh deployed")
     
     def _deploy_service_discovery(self):
-        """Deploy Consul for service discovery"""        consul_namespace = "consul"
+        """Deploy Consul for service discovery"""
+        consul_namespace = "consul"
         self._create_namespace(consul_namespace)
         
         consul_deployment = {
@@ -809,7 +836,8 @@ class MicroservicesDeploymentManager:
         logger.info("Consul service discovery deployed")
     
     def _deploy_api_gateway(self):
-        """Deploy API Gateway"""        gateway_namespace = "gateway"
+        """Deploy API Gateway"""
+        gateway_namespace = "gateway"
         self._create_namespace(gateway_namespace)
         
         # Deploy Kong or similar API Gateway
@@ -924,7 +952,8 @@ class MicroservicesDeploymentManager:
         logger.info("API Gateway deployed")
     
     def _create_kong_configuration(self):
-        """Create Kong declarative configuration"""        kong_config = {
+        """Create Kong declarative configuration"""
+        kong_config = {
             "_format_version": "3.0",
             "_transform": True,
             "services": [],
@@ -996,7 +1025,8 @@ class MicroservicesDeploymentManager:
         logger.info("Kong configuration created")
     
     def _deploy_redis_cluster(self):
-        """Deploy Redis cluster for service coordination"""        redis_namespace = "redis"
+        """Deploy Redis cluster for service coordination"""
+        redis_namespace = "redis"
         self._create_namespace(redis_namespace)
         
         redis_deployment = {
@@ -1049,7 +1079,8 @@ class MicroservicesDeploymentManager:
         logger.info("Redis cluster deployed")
     
     def _deploy_microservice(self, service_config: ServiceConfiguration):
-        """Deploy individual microservice"""        # Create namespace if not exists
+        """Deploy individual microservice"""
+        # Create namespace if not exists
         self._create_namespace(service_config.namespace)
         
         # Create deployment
@@ -1199,7 +1230,8 @@ class MicroservicesDeploymentManager:
         logger.info(f"Deployed microservice: {service_config.service_name}")
     
     def _create_horizontal_pod_autoscaler(self, service_config: ServiceConfiguration):
-        """Create Horizontal Pod Autoscaler for microservice"""        hpa_manifest = {
+        """Create Horizontal Pod Autoscaler for microservice"""
+        hpa_manifest = {
             "apiVersion": "autoscaling/v2",
             "kind": "HorizontalPodAutoscaler",
             "metadata": {
@@ -1244,7 +1276,8 @@ class MicroservicesDeploymentManager:
                 logger.info(f"HPA for {service_config.service_name} already exists")
     
     def _register_service_with_discovery(self, service_config: ServiceConfiguration):
-        """Register service with service discovery system"""        if self.consul_client:
+        """Register service with service discovery system"""
+        if self.consul_client:
             try:
                 self.consul_client.agent.service.register(
                     name=service_config.service_name,
@@ -1267,7 +1300,8 @@ class MicroservicesDeploymentManager:
                 logger.warning(f"Failed to register {service_config.service_name} with Consul: {e}")
     
     def _configure_service_mesh_policies(self):
-        """Configure service mesh policies (Istio)"""        if self.service_mesh_config.mesh_type != ServiceMeshType.ISTIO:
+        """Configure service mesh policies (Istio)"""
+        if self.service_mesh_config.mesh_type != ServiceMeshType.ISTIO:
             return
         
         # Istio configuration manifests would be applied here
@@ -1277,16 +1311,19 @@ class MicroservicesDeploymentManager:
         logger.info("Service mesh policies configured")
     
     def _deploy_microservices_monitoring(self):
-        """Deploy monitoring for microservices"""        # This would deploy Prometheus, Grafana, Jaeger for monitoring
+        """Deploy monitoring for microservices"""
+        # This would deploy Prometheus, Grafana, Jaeger for monitoring
         # Implementation depends on existing monitoring infrastructure
         logger.info("Microservices monitoring deployed")
     
     def _configure_inter_service_communication(self):
-        """Configure communication patterns between services"""        # Configure service-to-service authentication, authorization, etc.
+        """Configure communication patterns between services"""
+        # Configure service-to-service authentication, authorization, etc.
         logger.info("Inter-service communication configured")
     
     def _remove_none_values(self, obj):
-        """Recursively remove None values from dictionary"""        if isinstance(obj, dict):
+        """Recursively remove None values from dictionary"""
+        if isinstance(obj, dict):
             return {k: self._remove_none_values(v) for k, v in obj.items() if v is not None}
         elif isinstance(obj, list):
             return [self._remove_none_values(item) for item in obj if item is not None]
@@ -1294,7 +1331,8 @@ class MicroservicesDeploymentManager:
             return obj
     
     def _create_namespace(self, namespace: str):
-        """Create Kubernetes namespace if it doesn't exist"""        try:
+        """Create Kubernetes namespace if it doesn't exist"""
+        try:
             self.core_v1.read_namespace(name=namespace)
         except ApiException as e:
             if e.status == 404:
@@ -1307,7 +1345,8 @@ class MicroservicesDeploymentManager:
                 logger.info(f"Created namespace: {namespace}")
     
     def scale_microservice(self, service_name: str, replicas: int) -> bool:
-        """Scale microservice to specified number of replicas"""        if service_name not in self.services:
+        """Scale microservice to specified number of replicas"""
+        if service_name not in self.services:
             logger.error(f"Service {service_name} not found")
             return False
         
@@ -1335,7 +1374,8 @@ class MicroservicesDeploymentManager:
             return False
     
     def get_service_health(self, service_name: str) -> Dict[str, Any]:
-        """Get health status of microservice"""        if service_name not in self.services:
+        """Get health status of microservice"""
+        if service_name not in self.services:
             return {"error": f"Service {service_name} not found"}
         
         service_config = self.services[service_name]
@@ -1378,7 +1418,8 @@ class MicroservicesDeploymentManager:
             return {"error": str(e)}
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check"""        health_status = {
+        """Perform comprehensive health check"""
+        health_status = {
             'timestamp': datetime.now().isoformat(),
             'overall_status': 'healthy',
             'infrastructure': {
@@ -1425,7 +1466,8 @@ class MicroservicesDeploymentManager:
 
 
 def main():
-    """Main function for testing the Microservices Deployment Manager"""    # Initialize manager
+    """Main function for testing the Microservices Deployment Manager"""
+    # Initialize manager
     manager = MicroservicesDeploymentManager()
     
     # Deploy microservices infrastructure

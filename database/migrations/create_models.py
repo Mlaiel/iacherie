@@ -25,7 +25,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""import logging
+"""
+import logging
 from datetime import datetime, timezone
 from sqlalchemy import create_engine, MetaData, Table, Column, String, DateTime, Boolean, Integer, Text, Numeric, JSON, ForeignKey, Index
 from sqlalchemy.dialects.postgresql import UUID, ARRAY, ENUM
@@ -39,37 +40,45 @@ logger = logging.getLogger(__name__)
 
 
 class AdvancedModelsMigration:
-    """    Migration class for creating advanced database models and their indexes
-    """    
+    """
+    Migration class for creating advanced database models and their indexes
+    """
+    
     def __init__(self, database_url: str):
-        """        Initialize migration with database connection
+        """
+        Initialize migration with database connection
         
         Args:
             database_url: PostgreSQL database connection URL
-        """        self.engine = create_engine(database_url)
+        """
+        self.engine = create_engine(database_url)
         self.metadata = MetaData()
         self.session_maker = sessionmaker(bind=self.engine)
     
     def create_enums(self):
-        """Create custom ENUM types for the new models"""        logger.info("Creating custom ENUM types...")
+        """Create custom ENUM types for the new models"""
+        logger.info("Creating custom ENUM types...")
         
         with self.engine.connect() as conn:
             # Blockchain Rights ENUMs
-            conn.execute("""                DO $$ BEGIN
+            conn.execute("""
+                DO $$ BEGIN
                     CREATE TYPE blockchain_platform AS ENUM ('ethereum', 'polygon', 'binance_smart_chain', 'solana', 'cardano', 'avalanche', 'fantom', 'arbitrum');
                 EXCEPTION
                     WHEN duplicate_object THEN null;
                 END $$;
             """)
             
-            conn.execute("""                DO $$ BEGIN
+            conn.execute("""
+                DO $$ BEGIN
                     CREATE TYPE nft_standard AS ENUM ('erc721', 'erc1155', 'spl_token', 'cnft');
                 EXCEPTION
                     WHEN duplicate_object THEN null;
                 END $$;
             """)
             
-            conn.execute("""                DO $$ BEGIN
+            conn.execute("""
+                DO $$ BEGIN
                     CREATE TYPE rights_status AS ENUM ('pending', 'active', 'expired', 'revoked', 'transferred');
                 EXCEPTION
                     WHEN duplicate_object THEN null;
@@ -77,28 +86,32 @@ class AdvancedModelsMigration:
             """)
             
             # Monitoring ENUMs
-            conn.execute("""                DO $$ BEGIN
+            conn.execute("""
+                DO $$ BEGIN
                     CREATE TYPE monitoring_platform AS ENUM ('youtube', 'tiktok', 'instagram', 'twitter', 'facebook', 'twitch', 'spotify', 'soundcloud', 'bandcamp', 'apple_music', 'amazon_music', 'deezer', 'tidal', 'linkedin', 'reddit', 'discord', 'telegram', 'whatsapp', 'snapchat', 'pinterest', 'github');
                 EXCEPTION
                     WHEN duplicate_object THEN null;
                 END $$;
             """)
             
-            conn.execute("""                DO $$ BEGIN
+            conn.execute("""
+                DO $$ BEGIN
                     CREATE TYPE monitoring_status AS ENUM ('active', 'paused', 'completed', 'error', 'cancelled');
                 EXCEPTION
                     WHEN duplicate_object THEN null;
                 END $$;
             """)
             
-            conn.execute("""                DO $$ BEGIN
+            conn.execute("""
+                DO $$ BEGIN
                     CREATE TYPE detection_method AS ENUM ('audio_fingerprint', 'video_fingerprint', 'image_hash', 'text_similarity', 'metadata_match', 'ai_content_analysis', 'blockchain_verification', 'manual_review');
                 EXCEPTION
                     WHEN duplicate_object THEN null;
                 END $$;
             """)
             
-            conn.execute("""                DO $$ BEGIN
+            conn.execute("""
+                DO $$ BEGIN
                     CREATE TYPE response_action AS ENUM ('dmca_takedown', 'copyright_claim', 'monetization_claim', 'warning_message', 'legal_notice', 'manual_review_request', 'automated_blocking');
                 EXCEPTION
                     WHEN duplicate_object THEN null;
@@ -106,28 +119,32 @@ class AdvancedModelsMigration:
             """)
             
             # AI Revenue Analytics ENUMs
-            conn.execute("""                DO $$ BEGIN
+            conn.execute("""
+                DO $$ BEGIN
                     CREATE TYPE model_type AS ENUM ('linear_regression', 'random_forest', 'gradient_boosting', 'neural_network', 'lstm', 'transformer', 'ensemble', 'bayesian');
                 EXCEPTION
                     WHEN duplicate_object THEN null;
                 END $$;
             """)
             
-            conn.execute("""                DO $$ BEGIN
+            conn.execute("""
+                DO $$ BEGIN
                     CREATE TYPE prediction_timeframe AS ENUM ('daily', 'weekly', 'monthly', 'quarterly', 'yearly');
                 EXCEPTION
                     WHEN duplicate_object THEN null;
                 END $$;
             """)
             
-            conn.execute("""                DO $$ BEGIN
+            conn.execute("""
+                DO $$ BEGIN
                     CREATE TYPE experiment_status AS ENUM ('planned', 'active', 'completed', 'cancelled', 'failed');
                 EXCEPTION
                     WHEN duplicate_object THEN null;
                 END $$;
             """)
             
-            conn.execute("""                DO $$ BEGIN
+            conn.execute("""
+                DO $$ BEGIN
                     CREATE TYPE validation_status AS ENUM ('pending', 'in_progress', 'completed', 'failed');
                 EXCEPTION
                     WHEN duplicate_object THEN null;
@@ -135,35 +152,40 @@ class AdvancedModelsMigration:
             """)
             
             # Team Collaboration ENUMs
-            conn.execute("""                DO $$ BEGIN
+            conn.execute("""
+                DO $$ BEGIN
                     CREATE TYPE collaboration_type AS ENUM ('content_creation', 'music_production', 'video_editing', 'marketing_campaign', 'brand_partnership', 'educational_content', 'live_streaming', 'podcast_production', 'social_media_management', 'influencer_campaign');
                 EXCEPTION
                     WHEN duplicate_object THEN null;
                 END $$;
             """)
             
-            conn.execute("""                DO $$ BEGIN
+            conn.execute("""
+                DO $$ BEGIN
                     CREATE TYPE collaboration_status AS ENUM ('open', 'in_progress', 'completed', 'cancelled', 'on_hold');
                 EXCEPTION
                     WHEN duplicate_object THEN null;
                 END $$;
             """)
             
-            conn.execute("""                DO $$ BEGIN
+            conn.execute("""
+                DO $$ BEGIN
                     CREATE TYPE team_member_role AS ENUM ('leader', 'creator', 'collaborator', 'contributor', 'advisor', 'reviewer');
                 EXCEPTION
                     WHEN duplicate_object THEN null;
                 END $$;
             """)
             
-            conn.execute("""                DO $$ BEGIN
+            conn.execute("""
+                DO $$ BEGIN
                     CREATE TYPE matching_algorithm AS ENUM ('collaborative_filtering', 'content_based', 'hybrid_recommendation', 'deep_learning', 'skill_matching', 'behavior_analysis');
                 EXCEPTION
                     WHEN duplicate_object THEN null;
                 END $$;
             """)
             
-            conn.execute("""                DO $$ BEGIN
+            conn.execute("""
+                DO $$ BEGIN
                     CREATE TYPE match_status AS ENUM ('suggested', 'accepted', 'declined', 'expired');
                 EXCEPTION
                     WHEN duplicate_object THEN null;
@@ -174,7 +196,8 @@ class AdvancedModelsMigration:
             logger.info("✅ Custom ENUM types created successfully")
     
     def create_blockchain_rights_tables(self):
-        """Create blockchain rights related tables"""        logger.info("Creating blockchain rights tables...")
+        """Create blockchain rights related tables"""
+        logger.info("Creating blockchain rights tables...")
         
         # BlockchainRights table
         blockchain_rights = Table(
@@ -246,7 +269,8 @@ class AdvancedModelsMigration:
         logger.info("✅ Blockchain rights tables created successfully")
     
     def create_monitoring_tables(self):
-        """Create cross-platform monitoring tables"""        logger.info("Creating cross-platform monitoring tables...")
+        """Create cross-platform monitoring tables"""
+        logger.info("Creating cross-platform monitoring tables...")
         
         # PlatformMonitoring table
         platform_monitoring = Table(
@@ -317,7 +341,8 @@ class AdvancedModelsMigration:
         logger.info("✅ Cross-platform monitoring tables created successfully")
     
     def create_ai_revenue_analytics_tables(self):
-        """Create AI revenue analytics tables"""        logger.info("Creating AI revenue analytics tables...")
+        """Create AI revenue analytics tables"""
+        logger.info("Creating AI revenue analytics tables...")
         
         # AIRevenueAnalytics table
         ai_revenue_analytics = Table(
@@ -399,7 +424,8 @@ class AdvancedModelsMigration:
         logger.info("✅ AI revenue analytics tables created successfully")
     
     def create_team_collaboration_tables(self):
-        """Create advanced team collaboration tables"""        logger.info("Creating advanced team collaboration tables...")
+        """Create advanced team collaboration tables"""
+        logger.info("Creating advanced team collaboration tables...")
         
         # CreatorCollaboration table
         creator_collaboration = Table(
@@ -495,7 +521,8 @@ class AdvancedModelsMigration:
         logger.info("✅ Advanced team collaboration tables created successfully")
     
     def create_indexes(self):
-        """Create performance indexes for all new tables"""        logger.info("Creating performance indexes...")
+        """Create performance indexes for all new tables"""
+        logger.info("Creating performance indexes...")
         
         with self.engine.connect() as conn:
             # Blockchain Rights indexes
@@ -556,7 +583,8 @@ class AdvancedModelsMigration:
             logger.info("✅ Performance indexes created successfully")
     
     def run_migration(self):
-        """Run the complete migration process"""        logger.info("🚀 Starting advanced models migration...")
+        """Run the complete migration process"""
+        logger.info("🚀 Starting advanced models migration...")
         
         try:
             # Step 1: Create custom ENUMs

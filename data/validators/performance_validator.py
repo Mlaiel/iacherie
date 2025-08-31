@@ -7,7 +7,8 @@ and system performance assessment in the creator workflow ecosystem.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import psutil
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceMetricType(Enum):
-    """Types of performance metrics."""    PROCESSING_TIME = "processing_time"
+    """Types of performance metrics."""
+    PROCESSING_TIME = "processing_time"
     MEMORY_USAGE = "memory_usage"
     CPU_UTILIZATION = "cpu_utilization"
     DISK_IO = "disk_io"
@@ -38,7 +40,8 @@ class PerformanceMetricType(Enum):
 
 
 class PerformanceLevel(Enum):
-    """Performance assessment levels."""    EXCELLENT = "excellent"
+    """Performance assessment levels."""
+    EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
     POOR = "poor"
@@ -46,7 +49,8 @@ class PerformanceLevel(Enum):
 
 
 class BenchmarkType(Enum):
-    """Types of performance benchmarks."""    AUDIO_PROCESSING = "audio_processing"
+    """Types of performance benchmarks."""
+    AUDIO_PROCESSING = "audio_processing"
     VIDEO_PROCESSING = "video_processing"
     IMAGE_PROCESSING = "image_processing"
     TEXT_PROCESSING = "text_processing"
@@ -58,7 +62,8 @@ class BenchmarkType(Enum):
 
 @dataclass
 class PerformanceMetrics:
-    """Performance metrics data structure."""    metric_type: PerformanceMetricType
+    """Performance metrics data structure."""
+    metric_type: PerformanceMetricType
     value: float
     unit: str
     threshold_min: Optional[float] = None
@@ -80,7 +85,8 @@ class PerformanceMetrics:
 
 @dataclass
 class PerformanceResult:
-    """Performance validation result."""    is_acceptable: bool
+    """Performance validation result."""
+    is_acceptable: bool
     performance_level: PerformanceLevel
     overall_score: float
     
@@ -105,7 +111,8 @@ class PerformanceResult:
 
 @dataclass
 class BenchmarkResult:
-    """Benchmark execution result."""    benchmark_type: BenchmarkType
+    """Benchmark execution result."""
+    benchmark_type: BenchmarkType
     execution_time: float
     throughput: Optional[float] = None
     success_rate: float = 1.0
@@ -126,17 +133,21 @@ class BenchmarkResult:
 
 
 class PerformanceMonitor:
-    """    Real-time performance monitoring system.
+    """
+    Real-time performance monitoring system.
     
     Continuously monitors system and application performance
     for optimization and alerting purposes.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize performance monitor.
+        """
+        Initialize performance monitor.
         
         Args:
             config: Monitor configuration
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         
         # Monitoring state
         self.is_monitoring = False
@@ -152,11 +163,13 @@ class PerformanceMonitor:
         logger.info("PerformanceMonitor initialized")
     
     async def start_monitoring(self, interval: float = 1.0) -> None:
-        """        Start performance monitoring.
+        """
+        Start performance monitoring.
         
         Args:
             interval: Monitoring interval in seconds
-        """        if self.is_monitoring:
+        """
+        if self.is_monitoring:
             logger.warning("Performance monitoring already active")
             return
         
@@ -173,7 +186,8 @@ class PerformanceMonitor:
         logger.info(f"Performance monitoring started (interval: {interval}s)")
     
     def stop_monitoring(self) -> None:
-        """Stop performance monitoring."""        self.is_monitoring = False
+        """Stop performance monitoring."""
+        self.is_monitoring = False
         
         if self.monitor_thread:
             self.monitor_thread.join(timeout=5.0)
@@ -181,11 +195,13 @@ class PerformanceMonitor:
         logger.info("Performance monitoring stopped")
     
     def get_current_metrics(self) -> Dict[str, Any]:
-        """        Get current system performance metrics.
+        """
+        Get current system performance metrics.
         
         Returns:
             Current performance metrics
-        """        try:
+        """
+        try:
             metrics = {
                 "timestamp": time.time(),
                 "cpu": {
@@ -214,14 +230,16 @@ class PerformanceMonitor:
             return {}
     
     def get_metrics_history(self, duration_minutes: int = 60) -> List[Dict[str, Any]]:
-        """        Get metrics history for specified duration.
+        """
+        Get metrics history for specified duration.
         
         Args:
             duration_minutes: Duration in minutes
             
         Returns:
             List of historical metrics
-        """        cutoff_time = time.time() - (duration_minutes * 60)
+        """
+        cutoff_time = time.time() - (duration_minutes * 60)
         
         return [
             metric for metric in self.metrics_history
@@ -229,7 +247,8 @@ class PerformanceMonitor:
         ]
     
     def _monitor_loop(self, interval: float) -> None:
-        """Main monitoring loop."""        while self.is_monitoring:
+        """Main monitoring loop."""
+        while self.is_monitoring:
             try:
                 # Collect current metrics
                 metrics = self.get_current_metrics()
@@ -252,7 +271,8 @@ class PerformanceMonitor:
                 time.sleep(interval)
     
     def _check_thresholds(self, metrics: Dict[str, Any]) -> None:
-        """Check performance thresholds."""        try:
+        """Check performance thresholds."""
+        try:
             # CPU threshold
             cpu_usage = metrics.get("cpu", {}).get("usage_percent", 0)
             if cpu_usage > self.thresholds["cpu_max"]:
@@ -272,7 +292,8 @@ class PerformanceMonitor:
             logger.error(f"Threshold checking failed: {str(e)}")
     
     def _init_thresholds(self) -> Dict[str, float]:
-        """Initialize performance thresholds."""        return {
+        """Initialize performance thresholds."""
+        return {
             "cpu_max": 80.0,
             "memory_max": 85.0,
             "disk_max": 90.0,
@@ -282,17 +303,21 @@ class PerformanceMonitor:
 
 
 class BenchmarkValidator:
-    """    Performance benchmark validation system.
+    """
+    Performance benchmark validation system.
     
     Executes standardized benchmarks for different content processing
     operations to ensure optimal performance.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize benchmark validator.
+        """
+        Initialize benchmark validator.
         
         Args:
             config: Benchmark configuration
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         
         # Benchmark definitions
         self.benchmarks = self._init_benchmarks()
@@ -307,7 +332,8 @@ class BenchmarkValidator:
         benchmark_type: BenchmarkType,
         parameters: Optional[Dict[str, Any]] = None
     ) -> BenchmarkResult:
-        """        Run specific benchmark.
+        """
+        Run specific benchmark.
         
         Args:
             benchmark_type: Type of benchmark to run
@@ -315,7 +341,8 @@ class BenchmarkValidator:
             
         Returns:
             Benchmark result
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Get benchmark definition
@@ -390,14 +417,16 @@ class BenchmarkValidator:
         self,
         benchmark_types: Optional[List[BenchmarkType]] = None
     ) -> Dict[BenchmarkType, BenchmarkResult]:
-        """        Run complete benchmark suite.
+        """
+        Run complete benchmark suite.
         
         Args:
             benchmark_types: List of benchmarks to run (all if None)
             
         Returns:
             Dictionary of benchmark results
-        """        if benchmark_types is None:
+        """
+        if benchmark_types is None:
             benchmark_types = list(BenchmarkType)
         
         results = {}
@@ -421,7 +450,8 @@ class BenchmarkValidator:
         return results
     
     async def _benchmark_audio_processing(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Benchmark audio processing performance."""        try:
+        """Benchmark audio processing performance."""
+        try:
             # Simulate audio processing operations
             duration = params.get("duration", 10.0)  # seconds
             sample_rate = params.get("sample_rate", 44100)
@@ -451,7 +481,8 @@ class BenchmarkValidator:
             return {"success_rate": 0.0, "error_count": 1}
     
     async def _benchmark_video_processing(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Benchmark video processing performance."""        try:
+        """Benchmark video processing performance."""
+        try:
             # Simulate video processing
             resolution = params.get("resolution", (1920, 1080))
             fps = params.get("fps", 30)
@@ -482,7 +513,8 @@ class BenchmarkValidator:
             return {"success_rate": 0.0, "error_count": 1}
     
     async def _benchmark_image_processing(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Benchmark image processing performance."""        try:
+        """Benchmark image processing performance."""
+        try:
             # Simulate image processing
             resolution = params.get("resolution", (2048, 1536))
             image_count = params.get("image_count", 100)
@@ -511,7 +543,8 @@ class BenchmarkValidator:
             return {"success_rate": 0.0, "error_count": 1}
     
     async def _benchmark_text_processing(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Benchmark text processing performance."""        try:
+        """Benchmark text processing performance."""
+        try:
             # Simulate text processing
             text_length = params.get("text_length", 10000)
             iterations = params.get("iterations", 1000)
@@ -538,7 +571,8 @@ class BenchmarkValidator:
             return {"success_rate": 0.0, "error_count": 1}
     
     async def _benchmark_ai_inference(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Benchmark AI inference performance."""        try:
+        """Benchmark AI inference performance."""
+        try:
             # Simulate AI inference
             model_size = params.get("model_size", "medium")
             batch_size = params.get("batch_size", 32)
@@ -572,7 +606,8 @@ class BenchmarkValidator:
             return {"success_rate": 0.0, "error_count": 1}
     
     async def _benchmark_database_query(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Benchmark database query performance."""        try:
+        """Benchmark database query performance."""
+        try:
             # Simulate database operations
             query_count = params.get("query_count", 1000)
             query_complexity = params.get("complexity", "medium")
@@ -605,7 +640,8 @@ class BenchmarkValidator:
             return {"success_rate": 0.0, "error_count": 1}
     
     async def _benchmark_file_upload(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Benchmark file upload performance."""        try:
+        """Benchmark file upload performance."""
+        try:
             # Simulate file upload operations
             file_size_mb = params.get("file_size_mb", 10)
             file_count = params.get("file_count", 10)
@@ -636,7 +672,8 @@ class BenchmarkValidator:
             return {"success_rate": 0.0, "error_count": 1}
     
     async def _benchmark_content_analysis(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Benchmark content analysis performance."""        try:
+        """Benchmark content analysis performance."""
+        try:
             # Simulate content analysis
             content_items = params.get("content_items", 100)
             analysis_depth = params.get("analysis_depth", "standard")
@@ -674,7 +711,8 @@ class BenchmarkValidator:
         final: Dict[str, Any],
         resource_type: str
     ) -> Optional[float]:
-        """Calculate resource usage during benchmark."""        try:
+        """Calculate resource usage during benchmark."""
+        try:
             if resource_type == "cpu":
                 initial_cpu = initial.get("cpu", {}).get("usage_percent", 0)
                 final_cpu = final.get("cpu", {}).get("usage_percent", 0)
@@ -691,7 +729,8 @@ class BenchmarkValidator:
             return None
     
     def _get_environment_info(self) -> Dict[str, Any]:
-        """Get environment information."""        try:
+        """Get environment information."""
+        try:
             return {
                 "cpu_count": psutil.cpu_count(),
                 "memory_gb": psutil.virtual_memory().total / (1024**3),
@@ -702,7 +741,8 @@ class BenchmarkValidator:
             return {}
     
     def _init_benchmarks(self) -> Dict[BenchmarkType, Dict[str, Any]]:
-        """Initialize benchmark definitions."""        return {
+        """Initialize benchmark definitions."""
+        return {
             BenchmarkType.AUDIO_PROCESSING: {
                 "description": "Audio processing performance benchmark",
                 "default_params": {
@@ -767,17 +807,21 @@ class BenchmarkValidator:
 
 
 class OptimizationValidator:
-    """    Content and system optimization validator.
+    """
+    Content and system optimization validator.
     
     Analyzes content and system performance to provide
     optimization recommendations for the creator workflow.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize optimization validator.
+        """
+        Initialize optimization validator.
         
         Args:
             config: Optimization configuration
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         
         # Optimization rules
         self.optimization_rules = self._init_optimization_rules()
@@ -792,7 +836,8 @@ class OptimizationValidator:
         content_data: Dict[str, Any],
         performance_metrics: List[PerformanceMetrics]
     ) -> List[str]:
-        """        Analyze optimization opportunities.
+        """
+        Analyze optimization opportunities.
         
         Args:
             content_data: Content data to analyze
@@ -800,7 +845,8 @@ class OptimizationValidator:
             
         Returns:
             List of optimization recommendations
-        """        recommendations = []
+        """
+        recommendations = []
         
         try:
             # Content optimization analysis
@@ -822,7 +868,8 @@ class OptimizationValidator:
             return []
     
     async def _analyze_content_optimization(self, content_data: Dict[str, Any]) -> List[str]:
-        """Analyze content for optimization opportunities."""        recommendations = []
+        """Analyze content for optimization opportunities."""
+        recommendations = []
         
         try:
             content_type = content_data.get("type", "").lower()
@@ -841,7 +888,8 @@ class OptimizationValidator:
             return []
     
     async def _analyze_audio_optimization(self, audio_data: Dict[str, Any]) -> List[str]:
-        """Analyze audio content optimization."""        recommendations = []
+        """Analyze audio content optimization."""
+        recommendations = []
         
         try:
             bitrate = audio_data.get("bitrate", 0)
@@ -868,7 +916,8 @@ class OptimizationValidator:
             return []
     
     async def _analyze_video_optimization(self, video_data: Dict[str, Any]) -> List[str]:
-        """Analyze video content optimization."""        recommendations = []
+        """Analyze video content optimization."""
+        recommendations = []
         
         try:
             resolution = video_data.get("resolution", (0, 0))
@@ -895,7 +944,8 @@ class OptimizationValidator:
             return []
     
     async def _analyze_image_optimization(self, image_data: Dict[str, Any]) -> List[str]:
-        """Analyze image content optimization."""        recommendations = []
+        """Analyze image content optimization."""
+        recommendations = []
         
         try:
             resolution = image_data.get("resolution", (0, 0))
@@ -922,7 +972,8 @@ class OptimizationValidator:
             return []
     
     async def _analyze_performance_optimization(self, metrics: List[PerformanceMetrics]) -> List[str]:
-        """Analyze performance metrics for optimization."""        recommendations = []
+        """Analyze performance metrics for optimization."""
+        recommendations = []
         
         try:
             for metric in metrics:
@@ -945,7 +996,8 @@ class OptimizationValidator:
             return []
     
     async def _analyze_system_optimization(self) -> List[str]:
-        """Analyze system for optimization opportunities."""        recommendations = []
+        """Analyze system for optimization opportunities."""
+        recommendations = []
         
         try:
             # Get current system metrics
@@ -974,7 +1026,8 @@ class OptimizationValidator:
             return []
     
     def _calculate_optimal_video_bitrate(self, resolution: tuple, fps: int) -> int:
-        """Calculate optimal video bitrate."""        try:
+        """Calculate optimal video bitrate."""
+        try:
             # Base bitrate calculation (kbps)
             width, height = resolution
             pixels = width * height
@@ -1000,7 +1053,8 @@ class OptimizationValidator:
             return 5000000  # 5 Mbps default
     
     def _init_optimization_rules(self) -> Dict[str, Any]:
-        """Initialize optimization rules."""        return {
+        """Initialize optimization rules."""
+        return {
             "audio": {
                 "max_bitrate": 320000,
                 "min_bitrate": 128000,
@@ -1020,7 +1074,8 @@ class OptimizationValidator:
         }
     
     def _init_baselines(self) -> Dict[str, float]:
-        """Initialize performance baselines."""        return {
+        """Initialize performance baselines."""
+        return {
             "processing_time": 5.0,
             "memory_usage": 70.0,
             "cpu_usage": 60.0,
@@ -1030,17 +1085,21 @@ class OptimizationValidator:
 
 
 class PerformanceValidator:
-    """    Main performance validation system for the IA Influencer Agent Platform.
+    """
+    Main performance validation system for the IA Influencer Agent Platform.
     
     Provides comprehensive performance validation, monitoring, and optimization
     for all content processing and system operations.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize performance validator.
+        """
+        Initialize performance validator.
         
         Args:
             config: Validation configuration
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         
         # Initialize components
         self.monitor = PerformanceMonitor(config)
@@ -1058,7 +1117,8 @@ class PerformanceValidator:
         data: Any,
         expected_metrics: Optional[Dict[str, float]] = None
     ) -> PerformanceResult:
-        """        Validate performance for specific operation.
+        """
+        Validate performance for specific operation.
         
         Args:
             operation_type: Type of operation being validated
@@ -1067,7 +1127,8 @@ class PerformanceValidator:
             
         Returns:
             Performance validation result
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Start monitoring
@@ -1124,7 +1185,8 @@ class PerformanceValidator:
             )
     
     async def validate_async(self, data: Any, **options) -> PerformanceResult:
-        """        Async validation interface for compatibility.
+        """
+        Async validation interface for compatibility.
         
         Args:
             data: Data to validate
@@ -1132,13 +1194,15 @@ class PerformanceValidator:
             
         Returns:
             Performance validation result
-        """        operation_type = options.get("operation_type", "general")
+        """
+        operation_type = options.get("operation_type", "general")
         expected_metrics = options.get("expected_metrics")
         
         return await self.validate_performance(operation_type, data, expected_metrics)
     
     def validate(self, data: Any, **options) -> PerformanceResult:
-        """        Sync validation interface for compatibility.
+        """
+        Sync validation interface for compatibility.
         
         Args:
             data: Data to validate
@@ -1146,7 +1210,8 @@ class PerformanceValidator:
             
         Returns:
             Performance validation result
-        """        # Run async validation in sync context
+        """
+        # Run async validation in sync context
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         try:
@@ -1160,7 +1225,8 @@ class PerformanceValidator:
         operation_type: str,
         data: Any
     ) -> List[PerformanceMetrics]:
-        """Collect relevant performance metrics."""        metrics = []
+        """Collect relevant performance metrics."""
+        metrics = []
         
         try:
             # Collect operation-specific metrics
@@ -1208,7 +1274,8 @@ class PerformanceValidator:
             return []
     
     async def _run_relevant_benchmarks(self, operation_type: str) -> Dict[str, Any]:
-        """Run benchmarks relevant to operation type."""        try:
+        """Run benchmarks relevant to operation type."""
+        try:
             benchmark_mapping = {
                 "audio_processing": BenchmarkType.AUDIO_PROCESSING,
                 "video_processing": BenchmarkType.VIDEO_PROCESSING,
@@ -1233,7 +1300,8 @@ class PerformanceValidator:
         metrics: List[PerformanceMetrics],
         expected_metrics: Optional[Dict[str, float]]
     ) -> PerformanceLevel:
-        """Assess overall performance level."""        try:
+        """Assess overall performance level."""
+        try:
             scores = []
             
             for metric in metrics:
@@ -1264,7 +1332,8 @@ class PerformanceValidator:
         metric: PerformanceMetrics,
         expected_metrics: Optional[Dict[str, float]]
     ) -> float:
-        """Calculate score for individual metric."""        try:
+        """Calculate score for individual metric."""
+        try:
             # Use expected value if provided
             if expected_metrics and metric.metric_type.value in expected_metrics:
                 expected = expected_metrics[metric.metric_type.value]
@@ -1294,7 +1363,8 @@ class PerformanceValidator:
         metrics: List[PerformanceMetrics],
         benchmark_results: Dict[str, Any]
     ) -> float:
-        """Calculate overall performance score."""        try:
+        """Calculate overall performance score."""
+        try:
             scores = []
             
             # Metric-based scoring
@@ -1317,7 +1387,8 @@ class PerformanceValidator:
         initial: Dict[str, Any],
         final: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate system metrics difference."""        try:
+        """Calculate system metrics difference."""
+        try:
             return {
                 "cpu_delta": final.get("cpu", {}).get("usage_percent", 0) - initial.get("cpu", {}).get("usage_percent", 0),
                 "memory_delta": final.get("memory", {}).get("usage_percent", 0) - initial.get("memory", {}).get("usage_percent", 0),
@@ -1331,7 +1402,8 @@ class PerformanceValidator:
         metrics: List[PerformanceMetrics],
         system_metrics: Dict[str, Any]
     ) -> List[str]:
-        """Identify performance bottlenecks."""        bottlenecks = []
+        """Identify performance bottlenecks."""
+        bottlenecks = []
         
         try:
             # Check individual metrics

@@ -4,7 +4,7 @@ Quick access to all AI core components and utilities.
 This module provides a centralized entry point for the AI core functionality.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """# Import all core components

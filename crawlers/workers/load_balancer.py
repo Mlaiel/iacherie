@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Task analysis → Worker evaluation → Performance prediction → 
 Optimal selection → Load distribution → Real-time monitoring → Adaptive optimization
-"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
+"""
+from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -38,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 
 class LoadMetric(Enum):
-    """Load balancing metrics"""    CPU_USAGE = "cpu_usage"
+    """Load balancing metrics"""
+    CPU_USAGE = "cpu_usage"
     MEMORY_USAGE = "memory_usage"
     NETWORK_USAGE = "network_usage"
     TASK_COUNT = "task_count"
@@ -50,7 +52,8 @@ class LoadMetric(Enum):
 
 @dataclass
 class WorkerLoad:
-    """Worker load information"""    worker_id: str
+    """Worker load information"""
+    worker_id: str
     cpu_load: float = 0.0
     memory_load: float = 0.0
     network_load: float = 0.0
@@ -67,7 +70,8 @@ class WorkerLoad:
 
 @dataclass
 class SelectionCriteria:
-    """Worker selection criteria"""    preferred_worker_types: List[WorkerType] = field(default_factory=list)
+    """Worker selection criteria"""
+    preferred_worker_types: List[WorkerType] = field(default_factory=list)
     min_efficiency: float = 0.5
     max_load_threshold: float = 0.8
     required_specializations: List[str] = field(default_factory=list)
@@ -78,7 +82,8 @@ class SelectionCriteria:
 
 @dataclass
 class LoadBalancingResult:
-    """Load balancing decision result"""    selected_worker: Optional[str]
+    """Load balancing decision result"""
+    selected_worker: Optional[str]
     confidence_score: float
     selection_reason: str
     alternative_workers: List[str] = field(default_factory=list)
@@ -87,7 +92,8 @@ class LoadBalancingResult:
 
 
 class WorkerLoadBalancer:
-    """    Intelligent load balancer for optimal worker selection
+    """
+    Intelligent load balancer for optimal worker selection
     
     Features:
     - Multiple balancing algorithms
@@ -96,7 +102,8 @@ class WorkerLoadBalancer:
     - Adaptive weight adjustment
     - Sticky sessions support
     - Geographic optimization
-    """    def __init__(self, strategy: LoadBalancingStrategy = LoadBalancingStrategy.INTELLIGENT):
+    """
+    def __init__(self, strategy: LoadBalancingStrategy = LoadBalancingStrategy.INTELLIGENT):
         self.strategy = strategy
         
         # Worker tracking
@@ -139,7 +146,8 @@ class WorkerLoadBalancer:
         }
 
     async def initialize(self) -> None:
-        """Initialize the load balancer"""        try:
+        """Initialize the load balancer"""
+        try:
             logger.info("🚀 Initializing load balancer")
             
             # Initialize prediction engine
@@ -158,7 +166,8 @@ class WorkerLoadBalancer:
         worker_health: Dict[str, Dict[str, Any]],
         criteria: Optional[SelectionCriteria] = None
     ) -> Optional[str]:
-        """Select optimal worker for task"""        try:
+        """Select optimal worker for task"""
+        try:
             if not available_workers:
                 return None
             
@@ -195,7 +204,8 @@ class WorkerLoadBalancer:
             return None
 
     async def update_worker_load(self, worker_id: str, load_data: Dict[str, Any]) -> None:
-        """Update worker load information"""        try:
+        """Update worker load information"""
+        try:
             # Create or update worker load
             if worker_id not in self.worker_loads:
                 self.worker_loads[worker_id] = WorkerLoad(worker_id=worker_id)
@@ -237,7 +247,8 @@ class WorkerLoadBalancer:
             logger.error(f"❌ Failed to update worker load for {worker_id}: {e}")
 
     async def get_load_distribution(self) -> Dict[str, Any]:
-        """Get current load distribution across workers"""        try:
+        """Get current load distribution across workers"""
+        try:
             if not self.worker_loads:
                 return {}
             
@@ -285,7 +296,8 @@ class WorkerLoadBalancer:
         workers: List[str], 
         worker_health: Dict[str, Dict[str, Any]]
     ) -> List[str]:
-        """Filter out unhealthy workers"""        try:
+        """Filter out unhealthy workers"""
+        try:
             healthy_workers = []
             
             for worker_id in workers:
@@ -312,7 +324,8 @@ class WorkerLoadBalancer:
         workers: List[str], 
         criteria: SelectionCriteria
     ) -> List[str]:
-        """Apply selection criteria to filter workers"""        try:
+        """Apply selection criteria to filter workers"""
+        try:
             filtered_workers = []
             
             for worker_id in workers:
@@ -354,7 +367,8 @@ class WorkerLoadBalancer:
         workers: List[str],
         criteria: Optional[SelectionCriteria]
     ) -> LoadBalancingResult:
-        """Select worker based on strategy"""        try:
+        """Select worker based on strategy"""
+        try:
             if self.strategy == LoadBalancingStrategy.ROUND_ROBIN:
                 return await self._round_robin_selection(workers)
             elif self.strategy == LoadBalancingStrategy.LEAST_CONNECTIONS:
@@ -380,7 +394,8 @@ class WorkerLoadBalancer:
             )
 
     async def _round_robin_selection(self, workers: List[str]) -> LoadBalancingResult:
-        """Round robin worker selection"""        try:
+        """Round robin worker selection"""
+        try:
             if not workers:
                 return LoadBalancingResult(
                     selected_worker=None,
@@ -407,7 +422,8 @@ class WorkerLoadBalancer:
             )
 
     async def _least_connections_selection(self, workers: List[str]) -> LoadBalancingResult:
-        """Least connections worker selection"""        try:
+        """Least connections worker selection"""
+        try:
             if not workers:
                 return LoadBalancingResult(
                     selected_worker=None,
@@ -448,7 +464,8 @@ class WorkerLoadBalancer:
             )
 
     async def _weighted_round_robin_selection(self, workers: List[str]) -> LoadBalancingResult:
-        """Weighted round robin worker selection"""        try:
+        """Weighted round robin worker selection"""
+        try:
             if not workers:
                 return LoadBalancingResult(
                     selected_worker=None,
@@ -500,7 +517,8 @@ class WorkerLoadBalancer:
             )
 
     async def _response_time_selection(self, workers: List[str]) -> LoadBalancingResult:
-        """Response time based worker selection"""        try:
+        """Response time based worker selection"""
+        try:
             if not workers:
                 return LoadBalancingResult(
                     selected_worker=None,
@@ -542,7 +560,8 @@ class WorkerLoadBalancer:
             )
 
     async def _resource_based_selection(self, workers: List[str], task: CrawlerTask) -> LoadBalancingResult:
-        """Resource-based worker selection"""        try:
+        """Resource-based worker selection"""
+        try:
             if not workers:
                 return LoadBalancingResult(
                     selected_worker=None,
@@ -598,7 +617,8 @@ class WorkerLoadBalancer:
         task: CrawlerTask,
         criteria: Optional[SelectionCriteria]
     ) -> LoadBalancingResult:
-        """Intelligent ML-based worker selection"""        try:
+        """Intelligent ML-based worker selection"""
+        try:
             if not workers:
                 return LoadBalancingResult(
                     selected_worker=None,
@@ -651,7 +671,8 @@ class WorkerLoadBalancer:
         task: CrawlerTask,
         criteria: Optional[SelectionCriteria]
     ) -> float:
-        """Calculate intelligent score for worker"""        try:
+        """Calculate intelligent score for worker"""
+        try:
             load = self.worker_loads.get(worker_id)
             if not load:
                 return 0.5  # Default score for workers without load data
@@ -701,7 +722,8 @@ class WorkerLoadBalancer:
             return 0.0
 
     async def _calculate_performance_bonus(self, worker_id: str) -> float:
-        """Calculate performance bonus based on historical data"""        try:
+        """Calculate performance bonus based on historical data"""
+        try:
             history = self.worker_performance_history.get(worker_id)
             if not history or not history['efficiency']:
                 return 0.0
@@ -723,7 +745,8 @@ class WorkerLoadBalancer:
             return 0.0
 
     async def _calculate_affinity_bonus(self, worker_id: str, task: CrawlerTask) -> float:
-        """Calculate worker-task affinity bonus"""        try:
+        """Calculate worker-task affinity bonus"""
+        try:
             if worker_id not in self.worker_affinities:
                 return 0.0
             
@@ -751,7 +774,8 @@ class WorkerLoadBalancer:
             return 0.0
 
     async def _predict_wait_time(self, worker_id: str, task: CrawlerTask) -> float:
-        """Predict wait time for task on worker"""        try:
+        """Predict wait time for task on worker"""
+        try:
             load = self.worker_loads.get(worker_id)
             if not load:
                 return 60.0  # Default 1 minute
@@ -767,7 +791,8 @@ class WorkerLoadBalancer:
             return 300.0
 
     async def _calculate_load_score(self, worker_id: str) -> float:
-        """Calculate overall load score for worker"""        try:
+        """Calculate overall load score for worker"""
+        try:
             load = self.worker_loads.get(worker_id)
             if not load:
                 return 0.0
@@ -784,7 +809,8 @@ class WorkerLoadBalancer:
             return 1.0
 
     async def _calculate_load_variance(self) -> float:
-        """Calculate load variance across all workers"""        try:
+        """Calculate load variance across all workers"""
+        try:
             if len(self.worker_loads) < 2:
                 return 0.0
             
@@ -796,7 +822,8 @@ class WorkerLoadBalancer:
             return 0.0
 
     async def _is_load_balanced(self) -> bool:
-        """Check if load is well balanced"""        try:
+        """Check if load is well balanced"""
+        try:
             variance = await self._calculate_load_variance()
             return variance < 0.1  # Low variance indicates good balance
             
@@ -805,7 +832,8 @@ class WorkerLoadBalancer:
             return False
 
     async def _update_worker_weights(self, worker_id: str) -> None:
-        """Update weighted round robin weights based on performance"""        try:
+        """Update weighted round robin weights based on performance"""
+        try:
             load = self.worker_loads.get(worker_id)
             if not load:
                 return
@@ -822,7 +850,8 @@ class WorkerLoadBalancer:
             logger.error(f"❌ Failed to update worker weights: {e}")
 
     async def _record_selection_decision(self, task: CrawlerTask, result: LoadBalancingResult) -> None:
-        """Record selection decision for analysis"""        try:
+        """Record selection decision for analysis"""
+        try:
             decision = {
                 'timestamp': datetime.utcnow().isoformat(),
                 'task_id': task.task_id,

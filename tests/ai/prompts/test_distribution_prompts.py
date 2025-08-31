@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -21,7 +22,8 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -40,17 +42,20 @@ from ai.prompts.distribution_prompts import (
 
 
 class TestDistributionPrompts:
-    """Ultra-comprehensive test suite for Distribution Prompts"""    
+    """Ultra-comprehensive test suite for Distribution Prompts"""
+    
     @pytest.fixture
     async def distribution_prompts(self):
-        """Create a fresh DistributionPrompts instance for each test"""        prompts = DistributionPrompts()
+        """Create a fresh DistributionPrompts instance for each test"""
+        prompts = DistributionPrompts()
         await prompts.initialize()
         yield prompts
         await prompts.cleanup()
     
     @pytest.fixture
     def sample_music_distribution_context(self):
-        """Create sample music distribution context for testing"""        return DistributionContext(
+        """Create sample music distribution context for testing"""
+        return DistributionContext(
             content_type=ContentType.MUSIC,
             release_type=ReleaseType.SINGLE,
             distribution_strategy=DistributionStrategy.TIERED_RELEASE,
@@ -103,7 +108,8 @@ class TestDistributionPrompts:
     
     @pytest.fixture
     def sample_video_distribution_context(self):
-        """Create sample video distribution context for testing"""        return DistributionContext(
+        """Create sample video distribution context for testing"""
+        return DistributionContext(
             content_type=ContentType.VIDEO,
             release_type=ReleaseType.SERIES,
             distribution_strategy=DistributionStrategy.SIMULTANEOUS,
@@ -156,7 +162,8 @@ class TestDistributionPrompts:
     
     @pytest.fixture
     def sample_podcast_distribution_context(self):
-        """Create sample podcast distribution context for testing"""        return DistributionContext(
+        """Create sample podcast distribution context for testing"""
+        return DistributionContext(
             content_type=ContentType.PODCAST,
             release_type=ReleaseType.EPISODE,
             distribution_strategy=DistributionStrategy.SIMULTANEOUS,
@@ -209,7 +216,8 @@ class TestDistributionPrompts:
     
     @pytest.mark.asyncio
     async def test_distribution_prompts_initialization(self, distribution_prompts):
-        """Test DistributionPrompts initialization"""        assert distribution_prompts is not None
+        """Test DistributionPrompts initialization"""
+        assert distribution_prompts is not None
         assert hasattr(distribution_prompts, 'distribution_templates')
         assert hasattr(distribution_prompts, 'platform_optimizers')
         assert hasattr(distribution_prompts, 'scheduling_engine')
@@ -220,7 +228,8 @@ class TestDistributionPrompts:
     
     @pytest.mark.asyncio
     async def test_distribution_registry_loading(self, distribution_prompts):
-        """Test that distribution registry is properly loaded"""        registry = DISTRIBUTION_PROMPTS_REGISTRY
+        """Test that distribution registry is properly loaded"""
+        registry = DISTRIBUTION_PROMPTS_REGISTRY
         assert registry is not None
         assert isinstance(registry, dict)
         
@@ -236,7 +245,8 @@ class TestDistributionPrompts:
     
     @pytest.mark.asyncio
     async def test_music_tiered_release_prompts(self, distribution_prompts, sample_music_distribution_context):
-        """Test music tiered release distribution prompts generation"""        result = await distribution_prompts.generate_distribution_prompt(sample_music_distribution_context)
+        """Test music tiered release distribution prompts generation"""
+        result = await distribution_prompts.generate_distribution_prompt(sample_music_distribution_context)
         
         assert result["success"] is True
         assert "prompt" in result
@@ -268,7 +278,8 @@ class TestDistributionPrompts:
     
     @pytest.mark.asyncio
     async def test_music_playlist_targeting_prompts(self, distribution_prompts):
-        """Test music playlist targeting prompts"""        playlist_context = DistributionContext(
+        """Test music playlist targeting prompts"""
+        playlist_context = DistributionContext(
             content_type=ContentType.MUSIC,
             release_type=ReleaseType.ALBUM,
             distribution_strategy=DistributionStrategy.SIMULTANEOUS,
@@ -321,7 +332,8 @@ class TestDistributionPrompts:
     
     @pytest.mark.asyncio
     async def test_video_simultaneous_distribution_prompts(self, distribution_prompts, sample_video_distribution_context):
-        """Test video simultaneous distribution prompts generation"""        result = await distribution_prompts.generate_distribution_prompt(sample_video_distribution_context)
+        """Test video simultaneous distribution prompts generation"""
+        result = await distribution_prompts.generate_distribution_prompt(sample_video_distribution_context)
         
         assert result["success"] is True
         prompt = result["prompt"]
@@ -346,7 +358,8 @@ class TestDistributionPrompts:
     
     @pytest.mark.asyncio
     async def test_video_cross_platform_optimization_prompts(self, distribution_prompts):
-        """Test video cross-platform optimization prompts"""        optimization_context = DistributionContext(
+        """Test video cross-platform optimization prompts"""
+        optimization_context = DistributionContext(
             content_type=ContentType.VIDEO,
             release_type=ReleaseType.SINGLE,
             distribution_strategy=DistributionStrategy.PLATFORM_EXCLUSIVE,
@@ -403,7 +416,8 @@ class TestDistributionPrompts:
     
     @pytest.mark.asyncio
     async def test_podcast_distribution_prompts(self, distribution_prompts, sample_podcast_distribution_context):
-        """Test podcast distribution prompts generation"""        result = await distribution_prompts.generate_distribution_prompt(sample_podcast_distribution_context)
+        """Test podcast distribution prompts generation"""
+        result = await distribution_prompts.generate_distribution_prompt(sample_podcast_distribution_context)
         
         assert result["success"] is True
         prompt = result["prompt"]
@@ -428,7 +442,8 @@ class TestDistributionPrompts:
     
     @pytest.mark.asyncio
     async def test_podcast_rss_optimization_prompts(self, distribution_prompts):
-        """Test podcast RSS feed optimization prompts"""        rss_context = DistributionContext(
+        """Test podcast RSS feed optimization prompts"""
+        rss_context = DistributionContext(
             content_type=ContentType.PODCAST,
             release_type=ReleaseType.SERIES,
             distribution_strategy=DistributionStrategy.SIMULTANEOUS,
@@ -488,7 +503,8 @@ class TestDistributionPrompts:
     
     @pytest.mark.asyncio
     async def test_social_media_viral_cascade_prompts(self, distribution_prompts):
-        """Test social media viral cascade distribution prompts"""        viral_context = DistributionContext(
+        """Test social media viral cascade distribution prompts"""
+        viral_context = DistributionContext(
             content_type=ContentType.SHORT_FORM_VIDEO,
             release_type=ReleaseType.SINGLE,
             distribution_strategy=DistributionStrategy.VIRAL_CASCADE,
@@ -573,7 +589,8 @@ class TestDistributionPrompts:
     
     @pytest.mark.asyncio
     async def test_global_release_scheduling_prompts(self, distribution_prompts):
-        """Test global release scheduling prompts"""        global_context = DistributionContext(
+        """Test global release scheduling prompts"""
+        global_context = DistributionContext(
             content_type=ContentType.MUSIC,
             release_type=ReleaseType.ALBUM,
             distribution_strategy=DistributionStrategy.SIMULTANEOUS,
@@ -648,7 +665,8 @@ class TestDistributionPrompts:
     
     @pytest.mark.asyncio
     async def test_distribution_analytics_prompts(self, distribution_prompts):
-        """Test distribution analytics and tracking prompts"""        analytics_context = DistributionContext(
+        """Test distribution analytics and tracking prompts"""
+        analytics_context = DistributionContext(
             content_type=ContentType.MUSIC,
             release_type=ReleaseType.SINGLE,
             distribution_strategy=DistributionStrategy.TIERED_RELEASE,
@@ -706,7 +724,8 @@ class TestDistributionPrompts:
     
     @pytest.mark.asyncio
     async def test_invalid_distribution_strategy_error(self, distribution_prompts):
-        """Test error handling for invalid distribution strategy"""        with pytest.raises(ValueError) or pytest.raises(TypeError):
+        """Test error handling for invalid distribution strategy"""
+        with pytest.raises(ValueError) or pytest.raises(TypeError):
             invalid_context = DistributionContext(
                 content_type=ContentType.MUSIC,
                 release_type=ReleaseType.SINGLE,
@@ -722,7 +741,8 @@ class TestDistributionPrompts:
     
     @pytest.mark.asyncio
     async def test_platform_incompatibility_handling(self, distribution_prompts):
-        """Test handling of platform incompatibility issues"""        incompatible_context = DistributionContext(
+        """Test handling of platform incompatibility issues"""
+        incompatible_context = DistributionContext(
             content_type=ContentType.PODCAST,  # Podcast content
             release_type=ReleaseType.EPISODE,
             distribution_strategy=DistributionStrategy.SIMULTANEOUS,
@@ -747,7 +767,8 @@ class TestDistributionPrompts:
     
     @pytest.mark.asyncio
     async def test_distribution_prompt_generation_performance(self, distribution_prompts, sample_music_distribution_context):
-        """Test distribution prompt generation performance"""        # Test single generation performance
+        """Test distribution prompt generation performance"""
+        # Test single generation performance
         start_time = datetime.now()
         result = await distribution_prompts.generate_distribution_prompt(sample_music_distribution_context)
         single_duration = (datetime.now() - start_time).total_seconds()
@@ -770,7 +791,8 @@ class TestDistributionPrompts:
     
     @pytest.mark.asyncio
     async def test_comprehensive_distribution_workflow(self, distribution_prompts):
-        """Test comprehensive distribution workflow integration"""        # Step 1: Content analysis and platform recommendation
+        """Test comprehensive distribution workflow integration"""
+        # Step 1: Content analysis and platform recommendation
         content_analysis_result = await distribution_prompts.analyze_content_for_distribution({
             "content_type": "music",
             "genre": "electronic",

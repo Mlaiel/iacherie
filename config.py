@@ -1,12 +1,14 @@
 """Simple configuration module for Ainflue platform.
 
 This provides a basic configuration when the complex config module is not available.
-"""import os
+"""
+import os
 from typing import Dict, Any, Optional
 
 
 class Settings:
-    """Basic application settings"""    
+    """Basic application settings"""
+    
     def __init__(self):
         self.environment = os.getenv('ENVIRONMENT', 'development')
         self.debug = os.getenv('DEBUG', 'true').lower() == 'true'
@@ -37,11 +39,13 @@ settings = Settings()
 
 
 def get_settings() -> Settings:
-    """Get application settings"""    return settings
+    """Get application settings"""
+    return settings
 
 
 def get_config() -> Dict[str, Any]:
-    """Get configuration as dictionary"""    return {
+    """Get configuration as dictionary"""
+    return {
         'environment': settings.environment,
         'debug': settings.debug,
         'host': settings.host,
@@ -72,7 +76,8 @@ except ImportError:
 
 
 async def initialize_configuration() -> bool:
-    """Initialize configuration system"""    if COMPLEX_CONFIG_AVAILABLE:
+    """Initialize configuration system"""
+    if COMPLEX_CONFIG_AVAILABLE:
         try:
             from config import initialize_configuration as init_complex
             return await init_complex()

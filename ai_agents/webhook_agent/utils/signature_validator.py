@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import hmac
 import json
@@ -50,7 +51,8 @@ from ...utils.performance_monitor import PerformanceMonitor
 logger = logging.getLogger(__name__)
 
 class SignatureMethod(Enum):
-    """Signature validation methods"""    HMAC_SHA256 = "hmac_sha256"
+    """Signature validation methods"""
+    HMAC_SHA256 = "hmac_sha256"
     HMAC_SHA512 = "hmac_sha512"
     RSA_SHA256 = "rsa_sha256"
     RSA_SHA512 = "rsa_sha512"
@@ -60,7 +62,8 @@ class SignatureMethod(Enum):
     CUSTOM = "custom"
 
 class ValidationResult(Enum):
-    """Validation result status"""    VALID = "valid"
+    """Validation result status"""
+    VALID = "valid"
     INVALID = "invalid"
     EXPIRED = "expired"
     MALFORMED = "malformed"
@@ -69,7 +72,8 @@ class ValidationResult(Enum):
 
 @dataclass
 class SignatureConfig:
-    """Signature configuration for platform"""    platform: str
+    """Signature configuration for platform"""
+    platform: str
     method: SignatureMethod
     secret: Optional[str] = None
     public_key: Optional[str] = None
@@ -81,7 +85,8 @@ class SignatureConfig:
 
 @dataclass
 class ValidationContext:
-    """Validation context information"""    platform: str
+    """Validation context information"""
+    platform: str
     event_id: str
     timestamp: datetime
     ip_address: Optional[str] = None
@@ -90,7 +95,8 @@ class ValidationContext:
 
 @dataclass
 class ValidationMetrics:
-    """Signature validation metrics"""    total_validations: int = 0
+    """Signature validation metrics"""
+    total_validations: int = 0
     successful_validations: int = 0
     failed_validations: int = 0
     validations_by_platform: Dict[str, int] = field(default_factory=dict)
@@ -99,11 +105,13 @@ class ValidationMetrics:
     security_incidents: int = 0
 
 class SignatureValidator:
-    """    Industrial-grade webhook signature validation system
+    """
+    Industrial-grade webhook signature validation system
     
     Provides comprehensive cryptographic validation for webhook signatures
     across multiple platforms with advanced security features and monitoring.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.performance_monitor = PerformanceMonitor("signature_validator")
@@ -128,7 +136,8 @@ class SignatureValidator:
         logger.info("SignatureValidator initialized")
 
     async def initialize(self) -> None:
-        """Initialize signature validator with required services"""        try:
+        """Initialize signature validator with required services"""
+        try:
             # Initialize Redis connection for replay protection
             self._redis_client = await aioredis.from_url(
                 self.config.get('redis_url', 'redis://localhost:6379'),
@@ -155,7 +164,8 @@ class SignatureValidator:
         headers: Dict[str, str],
         context: Optional[ValidationContext] = None
     ) -> Dict[str, Any]:
-        """        Verify webhook signature for authenticity and integrity
+        """
+        Verify webhook signature for authenticity and integrity
         
         Args:
             payload: Webhook payload data
@@ -166,7 +176,8 @@ class SignatureValidator:
             
         Returns:
             Validation result with details
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         validation_id = str(uuid.uuid4())
         
         try:
@@ -285,7 +296,8 @@ class SignatureValidator:
         method: SignatureMethod = SignatureMethod.HMAC_SHA256,
         timestamp: Optional[int] = None
     ) -> str:
-        """        Generate signature for outgoing webhook
+        """
+        Generate signature for outgoing webhook
         
         Args:
             payload: Payload data to sign
@@ -295,7 +307,8 @@ class SignatureValidator:
             
         Returns:
             Generated signature string
-        """        try:
+        """
+        try:
             # Prepare payload
             if isinstance(payload, dict):
                 payload_str = json.dumps(payload, sort_keys=True, separators=(',', ':'))
@@ -360,7 +373,8 @@ class SignatureValidator:
         timestamp_header: Optional[str] = None,
         tolerance_seconds: int = 300
     ) -> Dict[str, Any]:
-        """Add signature configuration for platform"""        try:
+        """Add signature configuration for platform"""
+        try:
             config = SignatureConfig(
                 platform=platform,
                 method=method,
@@ -397,7 +411,8 @@ class SignatureValidator:
         platform: str,
         validator: Callable[[bytes, str, Dict[str, str]], bool]
     ) -> None:
-        """Register custom signature validator for platform"""        self._custom_validators[platform] = validator
+        """Register custom signature validator for platform"""
+        self._custom_validators[platform] = validator
         logger.info(f"Custom validator registered for platform: {platform}")
 
     async def get_validation_metrics(
@@ -405,7 +420,8 @@ class SignatureValidator:
         platform: str = None,
         time_range: str = "24h"
     ) -> Dict[str, Any]:
-        """Get signature validation metrics and analytics"""        try:
+        """Get signature validation metrics and analytics"""
+        try:
             metrics_data = {
                 'time_range': time_range,
                 'total_validations': self._metrics.total_validations,
@@ -437,7 +453,8 @@ class SignatureValidator:
             raise SecurityError(f"Metrics retrieval failed: {str(e)}")
 
     async def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check for signature validator"""        return {
+        """Comprehensive health check for signature validator"""
+        return {
             'status': 'healthy',
             'redis_connected': self._redis_client is not None,
             'configured_platforms': len(self._platform_configs),
@@ -448,7 +465,8 @@ class SignatureValidator:
         }
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of signature validator"""        try:
+        """Graceful shutdown of signature validator"""
+        try:
             logger.info("Shutting down SignatureValidator")
             
             # Close Redis connection
@@ -463,7 +481,8 @@ class SignatureValidator:
     # Private methods
     
     def _initialize_platform_configs(self) -> None:
-        """Initialize default platform configurations"""        # GitHub
+        """Initialize default platform configurations"""
+        # GitHub
         self._platform_configs['github'] = SignatureConfig(
             platform='github',
             method=SignatureMethod.GITHUB_SHA256,
@@ -485,7 +504,8 @@ class SignatureValidator:
         )
 
     async def _get_platform_config(self, platform: str) -> Optional[SignatureConfig]:
-        """Get signature configuration for platform"""        # Check cache first
+        """Get signature configuration for platform"""
+        # Check cache first
         if platform in self._platform_configs:
             return self._platform_configs[platform]
         
@@ -501,7 +521,8 @@ class SignatureValidator:
         payload: Dict[str, Any],
         config: SignatureConfig
     ) -> bytes:
-        """Prepare payload bytes for signature validation"""        if isinstance(payload, bytes):
+        """Prepare payload bytes for signature validation"""
+        if isinstance(payload, bytes):
             return payload
         
         if isinstance(payload, str):
@@ -527,7 +548,8 @@ class SignatureValidator:
         config: SignatureConfig,
         context: Optional[ValidationContext]
     ) -> Dict[str, Any]:
-        """Validate timestamp if timestamp validation is enabled"""        if not config.timestamp_header:
+        """Validate timestamp if timestamp validation is enabled"""
+        if not config.timestamp_header:
             return {'valid': True}
         
         timestamp_header = headers.get(config.timestamp_header)
@@ -569,7 +591,8 @@ class SignatureValidator:
         signature: str,
         platform: str
     ) -> Dict[str, Any]:
-        """Check for replay attacks"""        if not self._redis_client:
+        """Check for replay attacks"""
+        if not self._redis_client:
             return {'valid': True}  # Skip if Redis not available
         
         try:
@@ -606,7 +629,8 @@ class SignatureValidator:
         ip_address: str,
         platform: str
     ) -> Dict[str, Any]:
-        """Validate IP address against allowed ranges for platform"""        # Implementation would check against known platform IP ranges
+        """Validate IP address against allowed ranges for platform"""
+        # Implementation would check against known platform IP ranges
         # This is a simplified version
         
         allowed_ranges = {
@@ -636,7 +660,8 @@ class SignatureValidator:
         config: SignatureConfig,
         headers: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Validate signature based on configured method"""        try:
+        """Validate signature based on configured method"""
+        try:
             if config.method == SignatureMethod.HMAC_SHA256:
                 return await self._validate_hmac_sha256(payload_bytes, signature, config)
                 
@@ -677,7 +702,8 @@ class SignatureValidator:
         signature: str,
         config: SignatureConfig
     ) -> Dict[str, Any]:
-        """Validate HMAC SHA256 signature"""        if not config.secret:
+        """Validate HMAC SHA256 signature"""
+        if not config.secret:
             return {
                 'valid': False,
                 'reason': 'No secret configured for HMAC validation'
@@ -706,7 +732,8 @@ class SignatureValidator:
         signature: str,
         config: SignatureConfig
     ) -> Dict[str, Any]:
-        """Validate HMAC SHA512 signature"""        if not config.secret:
+        """Validate HMAC SHA512 signature"""
+        if not config.secret:
             return {
                 'valid': False,
                 'reason': 'No secret configured for HMAC validation'
@@ -735,7 +762,8 @@ class SignatureValidator:
         signature: str,
         config: SignatureConfig
     ) -> Dict[str, Any]:
-        """Validate GitHub webhook signature"""        if not config.secret:
+        """Validate GitHub webhook signature"""
+        if not config.secret:
             return {
                 'valid': False,
                 'reason': 'No secret configured for GitHub validation'
@@ -769,7 +797,8 @@ class SignatureValidator:
         config: SignatureConfig,
         headers: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Validate Stripe webhook signature"""        if not config.secret:
+        """Validate Stripe webhook signature"""
+        if not config.secret:
             return {
                 'valid': False,
                 'reason': 'No secret configured for Stripe validation'
@@ -822,7 +851,8 @@ class SignatureValidator:
         config: SignatureConfig,
         hash_algorithm
     ) -> Dict[str, Any]:
-        """Validate RSA signature"""        if not config.public_key:
+        """Validate RSA signature"""
+        if not config.public_key:
             return {
                 'valid': False,
                 'reason': 'No public key configured for RSA validation'
@@ -869,7 +899,8 @@ class SignatureValidator:
         config: SignatureConfig,
         headers: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Validate custom signature using registered validator"""        platform = config.platform
+        """Validate custom signature using registered validator"""
+        platform = config.platform
         
         if platform not in self._custom_validators:
             return {
@@ -899,7 +930,8 @@ class SignatureValidator:
         success: bool,
         validation_time: float
     ) -> None:
-        """Update validation metrics"""        self._metrics.total_validations += 1
+        """Update validation metrics"""
+        self._metrics.total_validations += 1
         
         if success:
             self._metrics.successful_validations += 1
@@ -931,7 +963,8 @@ class SignatureValidator:
         success: bool,
         context: Optional[ValidationContext]
     ) -> None:
-        """Log validation attempt for auditing"""        log_data = {
+        """Log validation attempt for auditing"""
+        log_data = {
             'validation_id': validation_id,
             'platform': platform,
             'success': success,
@@ -950,7 +983,8 @@ class SignatureValidator:
         logger.info(f"Signature validation: {log_data}")
 
     async def _validate_platform_config(self, config: SignatureConfig) -> Dict[str, Any]:
-        """Validate platform configuration"""        if not config.platform:
+        """Validate platform configuration"""
+        if not config.platform:
             return {'valid': False, 'reason': 'Platform name is required'}
         
         if not config.method:
@@ -968,17 +1002,21 @@ class SignatureValidator:
         return {'valid': True}
 
     async def _store_platform_config(self, config: SignatureConfig) -> None:
-        """Store platform configuration in database"""        # Implementation would store configuration in database
+        """Store platform configuration in database"""
+        # Implementation would store configuration in database
         pass
 
     async def _load_platform_config(self, platform: str) -> Optional[SignatureConfig]:
-        """Load platform configuration from database"""        # Implementation would load configuration from database
+        """Load platform configuration from database"""
+        # Implementation would load configuration from database
         return None
 
     async def _load_platform_configurations(self) -> None:
-        """Load all platform configurations from database"""        # Implementation would load all configurations from database
+        """Load all platform configurations from database"""
+        # Implementation would load all configurations from database
         pass
 
     async def _initialize_custom_validators(self) -> None:
-        """Initialize custom validators"""        # Implementation would initialize custom validators
+        """Initialize custom validators"""
+        # Implementation would initialize custom validators
         pass

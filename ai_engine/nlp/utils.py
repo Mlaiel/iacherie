@@ -8,7 +8,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import re
 import string
@@ -33,7 +34,8 @@ import zoneinfo
 logger = logging.getLogger(__name__)
 
 class Platform(Enum):
-    """Social media platforms"""    INSTAGRAM = "instagram"
+    """Social media platforms"""
+    INSTAGRAM = "instagram"
     TIKTOK = "tiktok" 
     YOUTUBE = "youtube"
     TWITTER = "twitter"
@@ -45,7 +47,8 @@ class Platform(Enum):
     DISCORD = "discord"
 
 class ContentType(Enum):
-    """Content types"""    POST = "post"
+    """Content types"""
+    POST = "post"
     STORY = "story"
     REEL = "reel"
     VIDEO = "video"
@@ -57,7 +60,8 @@ class ContentType(Enum):
     HASHTAG = "hashtag"
 
 class Language(Enum):
-    """Supported languages"""    ENGLISH = "en"
+    """Supported languages"""
+    ENGLISH = "en"
     GERMAN = "de"
     FRENCH = "fr"
     SPANISH = "es"
@@ -72,7 +76,8 @@ class Language(Enum):
 
 @dataclass
 class TextStats:
-    """Text statistics"""    character_count: int
+    """Text statistics"""
+    character_count: int
     word_count: int
     sentence_count: int
     paragraph_count: int
@@ -86,7 +91,8 @@ class TextStats:
 
 @dataclass
 class PlatformLimits:
-    """Platform-specific content limits"""    platform: Platform
+    """Platform-specific content limits"""
+    platform: Platform
     max_caption_length: int
     max_hashtags: int
     max_mentions: int
@@ -97,14 +103,16 @@ class PlatformLimits:
 
 @dataclass
 class ValidationResult:
-    """Content validation result"""    is_valid: bool
+    """Content validation result"""
+    is_valid: bool
     errors: List[str] = field(default_factory=list)
     warnings: List[str] = field(default_factory=list)
     suggestions: List[str] = field(default_factory=list)
     compliance_score: float = 1.0
 
 class TextCleaner:
-    """Advanced text cleaning utilities"""    
+    """Advanced text cleaning utilities"""
+    
     def __init__(self):
         # Compiled regex patterns for efficiency
         self.url_pattern = re.compile(
@@ -154,14 +162,16 @@ class TextCleaner:
         }
     
     def clean_text(self, text: str, level: str = "standard") -> str:
-        """        Clean text with different levels of processing
+        """
+        Clean text with different levels of processing
         
         Levels:
         - basic: Remove extra whitespace, normalize unicode
         - standard: + Remove URLs, emails, normalize case
         - aggressive: + Remove all special characters, emojis
         - platform: Platform-specific cleaning
-        """        if not text:
+        """
+        if not text:
             return ""
         
         cleaned = text
@@ -199,7 +209,8 @@ class TextCleaner:
         return cleaned.strip()
     
     def extract_elements(self, text: str) -> Dict[str, List[str]]:
-        """Extract social media elements from text"""        if not text:
+        """Extract social media elements from text"""
+        if not text:
             return {
                 'urls': [],
                 'emails': [],
@@ -219,10 +230,12 @@ class TextCleaner:
         }
     
     def _normalize_unicode(self, text: str) -> str:
-        """Normalize unicode characters"""        return unicodedata.normalize('NFKC', text)
+        """Normalize unicode characters"""
+        return unicodedata.normalize('NFKC', text)
     
     def _decode_html_entities(self, text: str) -> str:
-        """Decode HTML entities"""        decoded = html.unescape(text)
+        """Decode HTML entities"""
+        decoded = html.unescape(text)
         
         # Handle additional entities
         for entity, replacement in self.html_entities.items():
@@ -231,10 +244,12 @@ class TextCleaner:
         return decoded
     
     def _normalize_whitespace(self, text: str) -> str:
-        """Normalize whitespace"""        return self.whitespace_pattern.sub(' ', text)
+        """Normalize whitespace"""
+        return self.whitespace_pattern.sub(' ', text)
     
     def _normalize_social_elements(self, text: str) -> str:
-        """Normalize hashtags and mentions"""        # Convert hashtags to lowercase
+        """Normalize hashtags and mentions"""
+        # Convert hashtags to lowercase
         def lowercase_hashtag(match):
             return match.group(0).lower()
         
@@ -247,7 +262,8 @@ class TextCleaner:
         return text
     
     def _platform_specific_clean(self, text: str) -> str:
-        """Platform-specific text cleaning"""        # Remove platform-specific markup
+        """Platform-specific text cleaning"""
+        # Remove platform-specific markup
         # Instagram: Remove line breaks in captions
         text = text.replace('\n\n', '\n')
         
@@ -260,7 +276,8 @@ class TextCleaner:
         return text
 
 class TextAnalyzer:
-    """Advanced text analysis utilities"""    
+    """Advanced text analysis utilities"""
+    
     def __init__(self):
         self.cleaner = TextCleaner()
         # Common stop words for multiple languages
@@ -272,7 +289,8 @@ class TextAnalyzer:
         }
     
     def get_text_stats(self, text: str, language: str = 'en') -> TextStats:
-        """Get comprehensive text statistics"""        if not text:
+        """Get comprehensive text statistics"""
+        if not text:
             return TextStats(0, 0, 0, 0, 0.0, 0.0, 0.0, 0, 0, 0, 0)
         
         # Basic counts
@@ -316,7 +334,8 @@ class TextAnalyzer:
     
     def extract_keywords(self, text: str, language: str = 'en', 
                         max_keywords: int = 10) -> List[Tuple[str, float]]:
-        """Extract keywords with TF-IDF-like scoring"""        if not text:
+        """Extract keywords with TF-IDF-like scoring"""
+        if not text:
             return []
         
         # Clean and tokenize
@@ -352,7 +371,8 @@ class TextAnalyzer:
         return scored_words[:max_keywords]
     
     def detect_language(self, text: str) -> str:
-        """Simple language detection based on character patterns"""        if not text:
+        """Simple language detection based on character patterns"""
+        if not text:
             return 'en'
         
         # Clean text for analysis
@@ -391,18 +411,21 @@ class TextAnalyzer:
         return 'en'
     
     def _get_words(self, text: str) -> List[str]:
-        """Extract words from text"""        # Simple word extraction
+        """Extract words from text"""
+        # Simple word extraction
         word_pattern = re.compile(r'\b\w+\b')
         return word_pattern.findall(text)
     
     def _get_sentences(self, text: str) -> List[str]:
-        """Extract sentences from text"""        # Simple sentence splitting
+        """Extract sentences from text"""
+        # Simple sentence splitting
         sentence_pattern = re.compile(r'[.!?]+')
         sentences = sentence_pattern.split(text)
         return [s.strip() for s in sentences if s.strip()]
     
     def _calculate_readability(self, text: str, sentences: List[str], words: List[str]) -> float:
-        """Calculate readability score (simplified Flesch Reading Ease)"""        if not sentences or not words:
+        """Calculate readability score (simplified Flesch Reading Ease)"""
+        if not sentences or not words:
             return 0.0
         
         avg_sentence_length = len(words) / len(sentences)
@@ -422,7 +445,8 @@ class TextAnalyzer:
         return max(0.0, min(1.0, readability / 100.0))
     
     def _calculate_complexity(self, words: List[str], sentences: List[str], language: str) -> float:
-        """Calculate text complexity score"""        if not words:
+        """Calculate text complexity score"""
+        if not words:
             return 0.0
         
         complexity_factors = []
@@ -448,7 +472,8 @@ class TextAnalyzer:
         return statistics.mean(complexity_factors)
 
 class PlatformValidator:
-    """Platform-specific content validation"""    
+    """Platform-specific content validation"""
+    
     def __init__(self):
         self.platform_limits = {
             Platform.INSTAGRAM: PlatformLimits(
@@ -507,7 +532,8 @@ class PlatformValidator:
     
     def validate_content(self, content: str, platform: Platform, 
                         content_type: ContentType = ContentType.POST) -> ValidationResult:
-        """Validate content for specific platform"""        if platform not in self.platform_limits:
+        """Validate content for specific platform"""
+        if platform not in self.platform_limits:
             return ValidationResult(
                 is_valid=False,
                 errors=[f"Unsupported platform: {platform.value}"]
@@ -589,7 +615,8 @@ class PlatformValidator:
         return result
     
     def optimize_for_platform(self, content: str, platform: Platform) -> str:
-        """Optimize content for specific platform"""        if platform not in self.platform_limits:
+        """Optimize content for specific platform"""
+        if platform not in self.platform_limits:
             return content
         
         limits = self.platform_limits[platform]
@@ -630,10 +657,12 @@ class PlatformValidator:
         return optimized.strip()
 
 class HashGenerator:
-    """Utility for generating various types of hashes"""    
+    """Utility for generating various types of hashes"""
+    
     @staticmethod
     def generate_content_hash(content: str, algorithm: str = 'md5') -> str:
-        """Generate hash for content"""        if not content:
+        """Generate hash for content"""
+        if not content:
             return ""
         
         content_bytes = content.encode('utf-8')
@@ -649,7 +678,8 @@ class HashGenerator:
     
     @staticmethod
     def generate_similarity_hash(content: str, length: int = 64) -> str:
-        """Generate similarity hash for fuzzy matching"""        # Simple implementation - in production, use algorithms like SimHash
+        """Generate similarity hash for fuzzy matching"""
+        # Simple implementation - in production, use algorithms like SimHash
         content_hash = hashlib.sha256(content.encode('utf-8')).hexdigest()
         
         # Convert to binary and sample bits
@@ -663,7 +693,8 @@ class HashGenerator:
     
     @staticmethod
     def generate_fingerprint(content: str, metadata: Dict[str, Any] = None) -> str:
-        """Generate unique fingerprint combining content and metadata"""        fingerprint_data = {
+        """Generate unique fingerprint combining content and metadata"""
+        fingerprint_data = {
             'content': content,
             'metadata': metadata or {},
             'timestamp': datetime.utcnow().isoformat()
@@ -673,10 +704,12 @@ class HashGenerator:
         return hashlib.sha256(fingerprint_string.encode('utf-8')).hexdigest()
 
 class DateTimeUtils:
-    """Date and time utilities"""    
+    """Date and time utilities"""
+    
     @staticmethod
     def get_optimal_posting_times(platform: Platform, timezone_str: str = 'UTC') -> List[int]:
-        """Get optimal posting hours for platform (24-hour format)"""        # Based on general social media research
+        """Get optimal posting hours for platform (24-hour format)"""
+        # Based on general social media research
         optimal_times = {
             Platform.INSTAGRAM: [8, 11, 13, 17, 19],
             Platform.TIKTOK: [6, 10, 19, 20, 21],
@@ -692,7 +725,8 @@ class DateTimeUtils:
     @staticmethod
     def is_optimal_posting_time(platform: Platform, dt: datetime, 
                                timezone_str: str = 'UTC') -> bool:
-        """Check if given time is optimal for posting"""        try:
+        """Check if given time is optimal for posting"""
+        try:
             # Convert to specified timezone
             if timezone_str != 'UTC':
                 tz = zoneinfo.ZoneInfo(timezone_str)
@@ -705,7 +739,8 @@ class DateTimeUtils:
     
     @staticmethod
     def format_relative_time(dt: datetime, language: str = 'en') -> str:
-        """Format relative time (e.g., '2 hours ago')"""        now = datetime.utcnow()
+        """Format relative time (e.g., '2 hours ago')"""
+        now = datetime.utcnow()
         if dt.tzinfo:
             now = now.replace(tzinfo=timezone.utc)
         
@@ -753,11 +788,13 @@ class DateTimeUtils:
             return "just now"
 
 class PerformanceUtils:
-    """Performance optimization utilities"""    
+    """Performance optimization utilities"""
+    
     @staticmethod
     async def batch_process(items: List[Any], processor: Callable, 
                           batch_size: int = 10, max_concurrent: int = 5) -> List[Any]:
-        """Process items in batches with concurrency control"""        results = []
+        """Process items in batches with concurrency control"""
+        results = []
         
         semaphore = asyncio.Semaphore(max_concurrent)
         
@@ -791,7 +828,8 @@ class PerformanceUtils:
     
     @staticmethod
     def memoize(func: Callable) -> Callable:
-        """Simple memoization decorator"""        cache = {}
+        """Simple memoization decorator"""
+        cache = {}
         
         def wrapper(*args, **kwargs):
             # Create cache key
@@ -807,7 +845,8 @@ class PerformanceUtils:
     
     @staticmethod
     def time_function(func: Callable) -> Callable:
-        """Decorator to measure function execution time"""        def wrapper(*args, **kwargs):
+        """Decorator to measure function execution time"""
+        def wrapper(*args, **kwargs):
             start_time = time.time()
             result = func(*args, **kwargs)
             execution_time = time.time() - start_time
@@ -819,7 +858,8 @@ class PerformanceUtils:
 
 # Utility functions for common operations
 def sanitize_filename(filename: str) -> str:
-    """Sanitize filename for safe filesystem operations"""    # Remove or replace invalid characters
+    """Sanitize filename for safe filesystem operations"""
+    # Remove or replace invalid characters
     invalid_chars = '<>:"/\\|?*'
     for char in invalid_chars:
         filename = filename.replace(char, '_')
@@ -833,7 +873,8 @@ def sanitize_filename(filename: str) -> str:
     return filename
 
 def extract_dominant_colors(image_path: str, num_colors: int = 5) -> List[Tuple[int, int, int]]:
-    """Extract dominant colors from image (placeholder implementation)"""    # In production, this would use image processing libraries like PIL/Pillow
+    """Extract dominant colors from image (placeholder implementation)"""
+    # In production, this would use image processing libraries like PIL/Pillow
     # with color quantization algorithms
     
     # Placeholder: return some sample colors
@@ -852,7 +893,8 @@ def extract_dominant_colors(image_path: str, num_colors: int = 5) -> List[Tuple[
 
 def calculate_engagement_score(likes: int, comments: int, shares: int, 
                              views: int, followers: int) -> float:
-    """Calculate engagement score based on interaction metrics"""    if followers == 0 or views == 0:
+    """Calculate engagement score based on interaction metrics"""
+    if followers == 0 or views == 0:
         return 0.0
     
     # Weighted engagement calculation
@@ -862,7 +904,8 @@ def calculate_engagement_score(likes: int, comments: int, shares: int,
     return min(1.0, engagement * 100)
 
 def generate_variations(text: str, num_variations: int = 3) -> List[str]:
-    """Generate text variations using simple transformations"""    variations = []
+    """Generate text variations using simple transformations"""
+    variations = []
     
     # Original text
     variations.append(text)

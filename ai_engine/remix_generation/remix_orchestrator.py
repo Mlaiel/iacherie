@@ -17,7 +17,8 @@ Contact: mlaiel@live.de
 MISSION: Orchestrateur central des workflows de remix IA ultra-avancé
 TECHNOLOGIES: Workflow Engine, Pipeline Management, Resource Coordination, Quality Control
 LOGIQUE MÉTIER: Request → Analysis → Workflow Planning → Parallel Processing → Quality Control → Delivery
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable
@@ -35,7 +36,8 @@ import time
 logger = logging.getLogger(__name__)
 
 class WorkflowState(Enum):
-    """Workflow execution states"""    PENDING = "pending"
+    """Workflow execution states"""
+    PENDING = "pending"
     ANALYZING = "analyzing"
     PROCESSING = "processing"
     QUALITY_CHECK = "quality_check"
@@ -45,13 +47,15 @@ class WorkflowState(Enum):
     CANCELLED = "cancelled"
 
 class Priority(Enum):
-    """Processing priority levels"""    LOW = "low"
+    """Processing priority levels"""
+    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
 
 class ProcessingStage(Enum):
-    """Processing pipeline stages"""    AUDIO_ANALYSIS = "audio_analysis"
+    """Processing pipeline stages"""
+    AUDIO_ANALYSIS = "audio_analysis"
     GENRE_DETECTION = "genre_detection"
     STYLE_TRANSFER = "style_transfer"
     MUSIC_GENERATION = "music_generation"
@@ -62,7 +66,8 @@ class ProcessingStage(Enum):
 
 @dataclass
 class WorkflowStep:
-    """Individual workflow step definition"""    step_id: str
+    """Individual workflow step definition"""
+    step_id: str
     stage: ProcessingStage
     processor_class: str
     method_name: str
@@ -75,7 +80,8 @@ class WorkflowStep:
 
 @dataclass
 class WorkflowDefinition:
-    """Complete workflow definition"""    workflow_id: str
+    """Complete workflow definition"""
+    workflow_id: str
     name: str
     description: str
     version: str
@@ -87,7 +93,8 @@ class WorkflowDefinition:
 
 @dataclass
 class WorkflowExecution:
-    """Workflow execution context"""    execution_id: str
+    """Workflow execution context"""
+    execution_id: str
     workflow_definition: WorkflowDefinition
     input_data: Dict[str, Any]
     state: WorkflowState
@@ -104,7 +111,8 @@ class WorkflowExecution:
 
 @dataclass
 class RemixRequest:
-    """Remix generation request"""    request_id: str
+    """Remix generation request"""
+    request_id: str
     user_id: str
     session_id: str
     input_audio: np.ndarray
@@ -117,10 +125,12 @@ class RemixRequest:
     callback_url: Optional[str] = None
 
 class WorkflowTemplates:
-    """Predefined workflow templates"""    
+    """Predefined workflow templates"""
+    
     @staticmethod
     def get_standard_remix_workflow() -> WorkflowDefinition:
-        """Standard remix generation workflow"""        return WorkflowDefinition(
+        """Standard remix generation workflow"""
+        return WorkflowDefinition(
             workflow_id="standard_remix_v1",
             name="Standard Remix Generation",
             description="Complete remix generation with all standard processing stages",
@@ -201,7 +211,8 @@ class WorkflowTemplates:
     
     @staticmethod
     def get_fast_remix_workflow() -> WorkflowDefinition:
-        """Fast remix generation workflow"""        return WorkflowDefinition(
+        """Fast remix generation workflow"""
+        return WorkflowDefinition(
             workflow_id="fast_remix_v1",
             name="Fast Remix Generation",
             description="Optimized workflow for quick remix generation",
@@ -244,7 +255,8 @@ class WorkflowTemplates:
     
     @staticmethod
     def get_collaboration_workflow() -> WorkflowDefinition:
-        """Collaborative remix workflow"""        return WorkflowDefinition(
+        """Collaborative remix workflow"""
+        return WorkflowDefinition(
             workflow_id="collaboration_remix_v1",
             name="Collaborative Remix Generation",
             description="Workflow with real-time collaboration features",
@@ -295,7 +307,8 @@ class WorkflowTemplates:
         )
 
 class ResourceManager:
-    """Resource allocation and management"""    
+    """Resource allocation and management"""
+    
     def __init__(self, max_workers: int = 8, max_memory_gb: float = 8.0):
         self.max_workers = max_workers
         self.max_memory_gb = max_memory_gb
@@ -321,7 +334,8 @@ class ResourceManager:
     async def allocate_resources(self, execution_id: str, 
                                 required_resources: Dict[str, float],
                                 priority: Priority) -> bool:
-        """Allocate resources for workflow execution"""        try:
+        """Allocate resources for workflow execution"""
+        try:
             with self.resource_lock:
                 # Check if resources are available
                 cpu_needed = required_resources.get("cpu_cores", 1)
@@ -352,7 +366,8 @@ class ResourceManager:
             return False
     
     async def release_resources(self, execution_id: str):
-        """Release allocated resources"""        try:
+        """Release allocated resources"""
+        try:
             with self.resource_lock:
                 if execution_id in self.active_executions:
                     allocation = self.active_executions[execution_id]
@@ -373,10 +388,12 @@ class ResourceManager:
             logger.error(f"Error releasing resources: {e}")
     
     def get_thread_pool(self, priority: Priority) -> ThreadPoolExecutor:
-        """Get thread pool for priority level"""        return self.thread_pools.get(priority, self.thread_pools[Priority.NORMAL])
+        """Get thread pool for priority level"""
+        return self.thread_pools.get(priority, self.thread_pools[Priority.NORMAL])
     
     def get_resource_usage(self) -> Dict[str, Any]:
-        """Get current resource usage"""        with self.resource_lock:
+        """Get current resource usage"""
+        with self.resource_lock:
             return {
                 "current_usage": self.resource_usage.copy(),
                 "max_capacity": {
@@ -391,14 +408,16 @@ class ResourceManager:
             }
 
 class QualityController:
-    """Quality control and validation"""    
+    """Quality control and validation"""
+    
     def __init__(self):
         self.quality_validators = {}
         self.quality_history = []
     
     async def validate_step_quality(self, step_id: str, result: Any,
                                   thresholds: Dict[str, float]) -> Tuple[bool, float, Dict[str, Any]]:
-        """Validate quality of workflow step result"""        try:
+        """Validate quality of workflow step result"""
+        try:
             quality_report = {
                 "step_id": step_id,
                 "timestamp": datetime.now().isoformat(),
@@ -460,7 +479,8 @@ class QualityController:
             return False, 0.0, {"error": str(e)}
     
     async def _validate_audio_quality(self, audio_data: Union[np.ndarray, Any]) -> float:
-        """Validate audio quality"""        try:
+        """Validate audio quality"""
+        try:
             if isinstance(audio_data, np.ndarray):
                 audio = audio_data
             elif hasattr(audio_data, 'audio_data'):
@@ -496,10 +516,12 @@ class QualityController:
             return 0.5
     
     def register_custom_validator(self, step_id: str, validator_func: Callable):
-        """Register custom quality validator for specific step"""        self.quality_validators[step_id] = validator_func
+        """Register custom quality validator for specific step"""
+        self.quality_validators[step_id] = validator_func
     
     def get_quality_statistics(self) -> Dict[str, Any]:
-        """Get quality validation statistics"""        if not self.quality_history:
+        """Get quality validation statistics"""
+        if not self.quality_history:
             return {}
         
         recent_history = self.quality_history[-100:]  # Last 100 validations
@@ -517,7 +539,8 @@ class QualityController:
         }
 
 class WorkflowMonitor:
-    """Workflow execution monitoring"""    
+    """Workflow execution monitoring"""
+    
     def __init__(self):
         self.active_workflows = {}
         self.completed_workflows = {}
@@ -531,7 +554,8 @@ class WorkflowMonitor:
         self.monitoring_callbacks = []
     
     async def start_monitoring(self, execution: WorkflowExecution):
-        """Start monitoring workflow execution"""        self.active_workflows[execution.execution_id] = {
+        """Start monitoring workflow execution"""
+        self.active_workflows[execution.execution_id] = {
             "execution": execution,
             "start_time": execution.start_time,
             "last_update": datetime.now(),
@@ -543,7 +567,8 @@ class WorkflowMonitor:
     
     async def update_progress(self, execution_id: str, stage: ProcessingStage,
                             progress: float, additional_data: Dict[str, Any] = None):
-        """Update workflow progress"""        if execution_id in self.active_workflows:
+        """Update workflow progress"""
+        if execution_id in self.active_workflows:
             workflow_info = self.active_workflows[execution_id]
             execution = workflow_info["execution"]
             
@@ -569,7 +594,8 @@ class WorkflowMonitor:
     
     async def complete_monitoring(self, execution_id: str, success: bool,
                                 final_quality: float = 0.0):
-        """Complete workflow monitoring"""        if execution_id in self.active_workflows:
+        """Complete workflow monitoring"""
+        if execution_id in self.active_workflows:
             workflow_info = self.active_workflows[execution_id]
             execution = workflow_info["execution"]
             
@@ -607,10 +633,12 @@ class WorkflowMonitor:
             logger.info(f"Completed monitoring workflow {execution_id}: {'SUCCESS' if success else 'FAILED'}")
     
     def register_callback(self, callback: Callable):
-        """Register monitoring callback"""        self.monitoring_callbacks.append(callback)
+        """Register monitoring callback"""
+        self.monitoring_callbacks.append(callback)
     
     def get_monitoring_summary(self) -> Dict[str, Any]:
-        """Get monitoring summary"""        return {
+        """Get monitoring summary"""
+        return {
             "active_workflows": len(self.active_workflows),
             "completed_workflows": len(self.completed_workflows),
             "performance_metrics": self.performance_metrics.copy(),
@@ -626,7 +654,8 @@ class WorkflowMonitor:
         }
 
 class RemixOrchestrator:
-    """Main remix generation orchestrator"""    
+    """Main remix generation orchestrator"""
+    
     def __init__(self, max_workers: int = 8, max_memory_gb: float = 8.0):
         self.resource_manager = ResourceManager(max_workers, max_memory_gb)
         self.quality_controller = QualityController()
@@ -658,11 +687,13 @@ class RemixOrchestrator:
         logger.info("RemixOrchestrator initialized successfully")
     
     async def register_processor(self, processor_class: str, processor_instance: Any):
-        """Register processor for workflow execution"""        self.processor_registry[processor_class] = processor_instance
+        """Register processor for workflow execution"""
+        self.processor_registry[processor_class] = processor_instance
         logger.info(f"Registered processor: {processor_class}")
     
     async def submit_remix_request(self, request: RemixRequest) -> str:
-        """Submit remix generation request"""        try:
+        """Submit remix generation request"""
+        try:
             # Add to queue
             await self.request_queue.put(request)
             
@@ -679,7 +710,8 @@ class RemixOrchestrator:
             raise
     
     async def process_requests(self):
-        """Process remix requests from queue"""        try:
+        """Process remix requests from queue"""
+        try:
             while True:
                 try:
                     # Get request from queue with timeout
@@ -709,7 +741,8 @@ class RemixOrchestrator:
             logger.error(f"Fatal error in request processing: {e}")
     
     async def _process_single_request(self, request: RemixRequest):
-        """Process a single remix request"""        try:
+        """Process a single remix request"""
+        try:
             start_time = datetime.now()
             
             # Select workflow template
@@ -768,7 +801,8 @@ class RemixOrchestrator:
             self.orchestrator_stats["failed_requests"] += 1
     
     def _select_workflow_template(self, request: RemixRequest) -> WorkflowDefinition:
-        """Select appropriate workflow template"""        if request.collaboration_enabled:
+        """Select appropriate workflow template"""
+        if request.collaboration_enabled:
             return self.workflow_templates["collaboration"]
         elif request.priority == Priority.URGENT:
             return self.workflow_templates["fast"]
@@ -776,7 +810,8 @@ class RemixOrchestrator:
             return self.workflow_templates["standard"]
     
     async def _execute_workflow(self, execution: WorkflowExecution) -> Tuple[bool, Any]:
-        """Execute complete workflow"""        try:
+        """Execute complete workflow"""
+        try:
             execution.state = WorkflowState.ANALYZING
             
             # Allocate resources
@@ -816,7 +851,8 @@ class RemixOrchestrator:
             return False, {"error": str(e)}
     
     async def _execute_workflow_steps(self, execution: WorkflowExecution) -> Any:
-        """Execute workflow steps"""        execution.state = WorkflowState.PROCESSING
+        """Execute workflow steps"""
+        execution.state = WorkflowState.PROCESSING
         
         completed_steps = set()
         step_results = {}
@@ -887,7 +923,8 @@ class RemixOrchestrator:
     
     async def _execute_single_step(self, execution: WorkflowExecution, 
                                  step: WorkflowStep, context: Dict[str, Any]) -> Any:
-        """Execute a single workflow step"""        try:
+        """Execute a single workflow step"""
+        try:
             step_start_time = datetime.now()
             
             # Get processor
@@ -952,7 +989,8 @@ class RemixOrchestrator:
             raise
     
     def _estimate_resource_requirements(self, workflow: WorkflowDefinition) -> Dict[str, float]:
-        """Estimate resource requirements for workflow"""        # Simple estimation based on workflow complexity
+        """Estimate resource requirements for workflow"""
+        # Simple estimation based on workflow complexity
         step_count = len(workflow.steps)
         has_audio_processing = any(
             stage in [ProcessingStage.MUSIC_GENERATION, ProcessingStage.MASTERING]
@@ -977,7 +1015,8 @@ class RemixOrchestrator:
         }
     
     async def _perform_final_quality_check(self, execution: WorkflowExecution, result: Any) -> float:
-        """Perform final quality assessment"""        try:
+        """Perform final quality assessment"""
+        try:
             if not execution.quality_scores:
                 return 0.5
             
@@ -1010,7 +1049,8 @@ class RemixOrchestrator:
             return 0.0
     
     async def _send_completion_callback(self, callback_url: str, execution_id: str, result: Any):
-        """Send completion callback"""        try:
+        """Send completion callback"""
+        try:
             # This would normally send HTTP request to callback URL
             logger.info(f"Sending completion callback for {execution_id} to {callback_url}")
             # Implementation would depend on HTTP client library
@@ -1018,7 +1058,8 @@ class RemixOrchestrator:
             logger.error(f"Error sending callback: {e}")
     
     async def get_execution_status(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of workflow execution"""        # Check active workflows
+        """Get status of workflow execution"""
+        # Check active workflows
         if execution_id in self.workflow_monitor.active_workflows:
             workflow_info = self.workflow_monitor.active_workflows[execution_id]
             execution = workflow_info["execution"]
@@ -1058,7 +1099,8 @@ class RemixOrchestrator:
         return None
     
     def get_orchestrator_statistics(self) -> Dict[str, Any]:
-        """Get orchestrator performance statistics"""        return {
+        """Get orchestrator performance statistics"""
+        return {
             "orchestrator_stats": self.orchestrator_stats.copy(),
             "resource_usage": self.resource_manager.get_resource_usage(),
             "monitoring_summary": self.workflow_monitor.get_monitoring_summary(),

@@ -12,7 +12,8 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 
 Advanced violation alert system for real-time content protection notifications.
 Provides intelligent alerting, escalation, and automated response capabilities.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Union, Callable
 from datetime import datetime, timedelta
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""    LOW = "low"
+    """Alert severity levels."""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -33,7 +35,8 @@ class AlertSeverity(Enum):
 
 
 class AlertStatus(Enum):
-    """Alert status types."""    PENDING = "pending"
+    """Alert status types."""
+    PENDING = "pending"
     SENT = "sent"
     ACKNOWLEDGED = "acknowledged"
     IN_PROGRESS = "in_progress"
@@ -43,7 +46,8 @@ class AlertStatus(Enum):
 
 
 class AlertChannel(Enum):
-    """Alert delivery channels."""    EMAIL = "email"
+    """Alert delivery channels."""
+    EMAIL = "email"
     SMS = "sms"
     WEBHOOK = "webhook"
     SLACK = "slack"
@@ -55,7 +59,8 @@ class AlertChannel(Enum):
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration."""    rule_id: str
+    """Alert rule configuration."""
+    rule_id: str
     name: str
     description: str
     violation_types: List[str]
@@ -75,7 +80,8 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alert instance."""    alert_id: str
+    """Alert instance."""
+    alert_id: str
     rule_id: str
     violation_id: str
     title: str
@@ -104,7 +110,8 @@ class Alert:
 
 @dataclass
 class AlertTemplate:
-    """Alert message template."""    template_id: str
+    """Alert message template."""
+    template_id: str
     name: str
     violation_type: str
     platform: str
@@ -118,7 +125,8 @@ class AlertTemplate:
 
 @dataclass
 class AlertMetrics:
-    """Alert system metrics."""    total_alerts: int = 0
+    """Alert system metrics."""
+    total_alerts: int = 0
     alerts_sent: int = 0
     alerts_failed: int = 0
     alerts_acknowledged: int = 0
@@ -132,7 +140,8 @@ class AlertMetrics:
 
 
 class ViolationAlertSystem:
-    """    Advanced violation alert system for real-time content protection.
+    """
+    Advanced violation alert system for real-time content protection.
     
     Features:
     - Real-time violation detection and alerting
@@ -143,9 +152,11 @@ class ViolationAlertSystem:
     - Alert template system
     - Rate limiting and deduplication
     - Comprehensive metrics and reporting
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize violation alert system."""        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize violation alert system."""
+        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
         self.config = config or {}
@@ -186,7 +197,8 @@ class ViolationAlertSystem:
         self._logger.info("Violation Alert System initialized")
     
     async def initialize(self) -> None:
-        """Initialize the violation alert system."""        try:
+        """Initialize the violation alert system."""
+        try:
             self._logger.info("Initializing violation alert system...")
             
             # Setup notification channels
@@ -205,7 +217,8 @@ class ViolationAlertSystem:
             raise
     
     async def start_alert_system(self) -> None:
-        """Start the violation alert system."""        try:
+        """Start the violation alert system."""
+        try:
             if not self.enabled:
                 self._logger.warning("Violation alert system is disabled")
                 return
@@ -227,7 +240,8 @@ class ViolationAlertSystem:
             raise
     
     async def stop_alert_system(self) -> None:
-        """Stop the violation alert system."""        try:
+        """Stop the violation alert system."""
+        try:
             if not self._alert_system_active:
                 self._logger.warning("Violation alert system is not active")
                 return
@@ -262,7 +276,8 @@ class ViolationAlertSystem:
         recipients: List[str],
         rule_config: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Create a new alert rule."""        try:
+        """Create a new alert rule."""
+        try:
             rule_id = f"rule_{datetime.now().timestamp()}_{hash(name) % 10000}"
             
             config = rule_config or {}
@@ -298,7 +313,8 @@ class ViolationAlertSystem:
         self,
         violation_data: Dict[str, Any]
     ) -> List[str]:
-        """Trigger alerts for a violation."""        try:
+        """Trigger alerts for a violation."""
+        try:
             if not self._alert_system_active:
                 self._logger.warning("Alert system not active, skipping alert")
                 return []
@@ -356,7 +372,8 @@ class ViolationAlertSystem:
             return []
     
     async def acknowledge_alert(self, alert_id: str, user_id: str = "") -> bool:
-        """Acknowledge an alert."""        try:
+        """Acknowledge an alert."""
+        try:
             if alert_id not in self.alerts:
                 self._logger.warning(f"Alert not found: {alert_id}")
                 return False
@@ -388,7 +405,8 @@ class ViolationAlertSystem:
             return False
     
     async def resolve_alert(self, alert_id: str, user_id: str = "", resolution_note: str = "") -> bool:
-        """Resolve an alert."""        try:
+        """Resolve an alert."""
+        try:
             if alert_id not in self.alerts:
                 self._logger.warning(f"Alert not found: {alert_id}")
                 return False
@@ -426,7 +444,8 @@ class ViolationAlertSystem:
             return False
     
     async def _process_alerts(self) -> None:
-        """Process alerts from the queue."""        self._logger.info("Alert processing loop started")
+        """Process alerts from the queue."""
+        self._logger.info("Alert processing loop started")
         
         try:
             while self._alert_system_active:
@@ -457,7 +476,8 @@ class ViolationAlertSystem:
         self._logger.info("Alert processing loop stopped")
     
     async def _create_alert(self, rule: AlertRule, violation_data: Dict[str, Any]) -> Optional[str]:
-        """Create an alert instance."""        try:
+        """Create an alert instance."""
+        try:
             alert_id = f"alert_{datetime.now().timestamp()}_{hash(rule.rule_id) % 10000}"
             
             # Get template for alert
@@ -514,7 +534,8 @@ class ViolationAlertSystem:
             return None
     
     async def _send_alert(self, alert_id: str) -> None:
-        """Send an alert through configured channels."""        try:
+        """Send an alert through configured channels."""
+        try:
             alert = self.alerts[alert_id]
             self.active_alerts.add(alert_id)
             
@@ -565,7 +586,8 @@ class ViolationAlertSystem:
             self.active_alerts.discard(alert_id)
     
     async def _schedule_escalation(self, alert_id: str, delay_minutes: int) -> None:
-        """Schedule alert escalation."""        try:
+        """Schedule alert escalation."""
+        try:
             await asyncio.sleep(delay_minutes * 60)
             
             # Check if alert is still unresolved
@@ -579,7 +601,8 @@ class ViolationAlertSystem:
             self._logger.error(f"Error scheduling escalation for alert {alert_id}: {e}")
     
     async def _escalate_alert(self, alert_id: str) -> None:
-        """Escalate an alert."""        try:
+        """Escalate an alert."""
+        try:
             alert = self.alerts[alert_id]
             
             alert.escalated = True
@@ -602,7 +625,8 @@ class ViolationAlertSystem:
             self._logger.error(f"Failed to escalate alert {alert_id}: {e}")
     
     async def _send_escalated_alert(self, alert: Alert) -> None:
-        """Send escalated alert with higher priority."""        try:
+        """Send escalated alert with higher priority."""
+        try:
             # Send through all available urgent channels
             urgent_channels = [AlertChannel.EMAIL, AlertChannel.SMS, AlertChannel.WEBHOOK]
             
@@ -618,7 +642,8 @@ class ViolationAlertSystem:
             self._logger.error(f"Failed to send escalated alert: {e}")
     
     async def _trigger_auto_response(self, alert: Alert) -> None:
-        """Trigger automated response for alert."""        try:
+        """Trigger automated response for alert."""
+        try:
             violation_type = alert.violation_type
             
             if violation_type in self.auto_response_handlers:
@@ -634,7 +659,8 @@ class ViolationAlertSystem:
             self._logger.error(f"Failed to trigger auto-response for alert {alert.alert_id}: {e}")
     
     def _setup_default_templates(self) -> None:
-        """Setup default alert templates."""        templates = [
+        """Setup default alert templates."""
+        templates = [
             AlertTemplate(
                 template_id="copyright_violation",
                 name="Copyright Violation Alert",
@@ -671,12 +697,14 @@ class ViolationAlertSystem:
             self.alert_templates[template.template_id] = template
     
     def _setup_default_rules(self) -> None:
-        """Setup default alert rules."""        # This would setup basic default rules
+        """Setup default alert rules."""
+        # This would setup basic default rules
         # For now, just log that they would be created
         self._logger.debug("Default alert rules would be setup here")
     
     async def _setup_notification_channels(self) -> None:
-        """Setup notification channel handlers."""        try:
+        """Setup notification channel handlers."""
+        try:
             # Setup placeholder handlers for each channel type
             self.notification_handlers[AlertChannel.EMAIL] = self._send_email_notification
             self.notification_handlers[AlertChannel.SMS] = self._send_sms_notification
@@ -694,7 +722,8 @@ class ViolationAlertSystem:
             raise
     
     async def _setup_auto_response_handlers(self) -> None:
-        """Setup auto-response handlers."""        try:
+        """Setup auto-response handlers."""
+        try:
             # Setup placeholder auto-response handlers
             self.auto_response_handlers['copyright'] = self._auto_response_copyright
             self.auto_response_handlers['spam'] = self._auto_response_spam
@@ -707,7 +736,8 @@ class ViolationAlertSystem:
             raise
     
     async def _validate_configuration(self) -> None:
-        """Validate system configuration."""        try:
+        """Validate system configuration."""
+        try:
             # Validate that required components are configured
             if not self.notification_handlers:
                 raise ValueError("No notification handlers configured")
@@ -720,63 +750,75 @@ class ViolationAlertSystem:
     
     # Notification handler implementations (placeholders)
     async def _send_email_notification(self, alert: Alert) -> None:
-        """Send email notification."""        # Would integrate with email service (SMTP, SendGrid, etc.)
+        """Send email notification."""
+        # Would integrate with email service (SMTP, SendGrid, etc.)
         await asyncio.sleep(0.1)  # Simulate sending
         self._logger.debug(f"Email notification sent for alert: {alert.alert_id}")
     
     async def _send_sms_notification(self, alert: Alert) -> None:
-        """Send SMS notification."""        # Would integrate with SMS service (Twilio, AWS SNS, etc.)
+        """Send SMS notification."""
+        # Would integrate with SMS service (Twilio, AWS SNS, etc.)
         await asyncio.sleep(0.1)  # Simulate sending
         self._logger.debug(f"SMS notification sent for alert: {alert.alert_id}")
     
     async def _send_webhook_notification(self, alert: Alert) -> None:
-        """Send webhook notification."""        # Would send HTTP POST to configured webhook URL
+        """Send webhook notification."""
+        # Would send HTTP POST to configured webhook URL
         await asyncio.sleep(0.1)  # Simulate sending
         self._logger.debug(f"Webhook notification sent for alert: {alert.alert_id}")
     
     async def _send_slack_notification(self, alert: Alert) -> None:
-        """Send Slack notification."""        # Would integrate with Slack API
+        """Send Slack notification."""
+        # Would integrate with Slack API
         await asyncio.sleep(0.1)  # Simulate sending
         self._logger.debug(f"Slack notification sent for alert: {alert.alert_id}")
     
     async def _send_discord_notification(self, alert: Alert) -> None:
-        """Send Discord notification."""        # Would integrate with Discord API
+        """Send Discord notification."""
+        # Would integrate with Discord API
         await asyncio.sleep(0.1)  # Simulate sending
         self._logger.debug(f"Discord notification sent for alert: {alert.alert_id}")
     
     async def _send_telegram_notification(self, alert: Alert) -> None:
-        """Send Telegram notification."""        # Would integrate with Telegram Bot API
+        """Send Telegram notification."""
+        # Would integrate with Telegram Bot API
         await asyncio.sleep(0.1)  # Simulate sending
         self._logger.debug(f"Telegram notification sent for alert: {alert.alert_id}")
     
     async def _send_push_notification(self, alert: Alert) -> None:
-        """Send push notification."""        # Would integrate with push notification service
+        """Send push notification."""
+        # Would integrate with push notification service
         await asyncio.sleep(0.1)  # Simulate sending
         self._logger.debug(f"Push notification sent for alert: {alert.alert_id}")
     
     async def _send_in_app_notification(self, alert: Alert) -> None:
-        """Send in-app notification."""        # Would update in-app notification system
+        """Send in-app notification."""
+        # Would update in-app notification system
         await asyncio.sleep(0.1)  # Simulate sending
         self._logger.debug(f"In-app notification sent for alert: {alert.alert_id}")
     
     # Auto-response handler implementations (placeholders)
     async def _auto_response_copyright(self, alert: Alert) -> None:
-        """Auto-response for copyright violations."""        # Would trigger takedown request, content blocking, etc.
+        """Auto-response for copyright violations."""
+        # Would trigger takedown request, content blocking, etc.
         await asyncio.sleep(0.1)  # Simulate response
         self._logger.debug(f"Copyright auto-response triggered for alert: {alert.alert_id}")
     
     async def _auto_response_spam(self, alert: Alert) -> None:
-        """Auto-response for spam content."""        # Would trigger content removal, user warning, etc.
+        """Auto-response for spam content."""
+        # Would trigger content removal, user warning, etc.
         await asyncio.sleep(0.1)  # Simulate response
         self._logger.debug(f"Spam auto-response triggered for alert: {alert.alert_id}")
     
     async def _auto_response_harassment(self, alert: Alert) -> None:
-        """Auto-response for harassment."""        # Would trigger immediate content removal, user suspension, etc.
+        """Auto-response for harassment."""
+        # Would trigger immediate content removal, user suspension, etc.
         await asyncio.sleep(0.1)  # Simulate response
         self._logger.debug(f"Harassment auto-response triggered for alert: {alert.alert_id}")
     
     def _evaluate_rule_conditions(self, rule: AlertRule, violation_data: Dict[str, Any]) -> bool:
-        """Evaluate additional rule conditions."""        try:
+        """Evaluate additional rule conditions."""
+        try:
             conditions = rule.conditions
             
             # Check time-based conditions
@@ -804,7 +846,8 @@ class ViolationAlertSystem:
             return True  # Default to allowing if evaluation fails
     
     def _is_rate_limited(self, rule_id: str, rate_limit_minutes: int) -> bool:
-        """Check if rule is rate limited."""        if rule_id not in self.rate_limit_tracker:
+        """Check if rule is rate limited."""
+        if rule_id not in self.rate_limit_tracker:
             return False
         
         last_alert_time = self.rate_limit_tracker[rule_id]
@@ -818,7 +861,8 @@ class ViolationAlertSystem:
         platform: str,
         severity: AlertSeverity
     ) -> AlertTemplate:
-        """Get appropriate alert template."""        # Look for specific template first
+        """Get appropriate alert template."""
+        # Look for specific template first
         template_id = f"{violation_type}_{platform}"
         if template_id in self.alert_templates:
             return self.alert_templates[template_id]
@@ -844,7 +888,8 @@ class ViolationAlertSystem:
         template: AlertTemplate,
         violation_data: Dict[str, Any]
     ) -> tuple[str, str]:
-        """Generate alert title and message from template."""        try:
+        """Generate alert title and message from template."""
+        try:
             # Prepare template variables
             template_vars = {
                 'platform': violation_data.get('platform', 'Unknown'),
@@ -871,7 +916,8 @@ class ViolationAlertSystem:
         violation_type: str,
         min_severity: AlertSeverity
     ) -> AlertSeverity:
-        """Calculate alert severity based on confidence and violation type."""        # High-priority violation types
+        """Calculate alert severity based on confidence and violation type."""
+        # High-priority violation types
         critical_types = ['harassment', 'violence', 'terrorism']
         high_types = ['copyright', 'hate_speech', 'misinformation']
         
@@ -898,7 +944,8 @@ class ViolationAlertSystem:
                 return AlertSeverity.LOW
     
     def _update_channel_success_rate(self, channel: AlertChannel, success: bool) -> None:
-        """Update channel success rate metrics."""        channel_name = channel.value
+        """Update channel success rate metrics."""
+        channel_name = channel.value
         
         if channel_name not in self.metrics.channel_success_rates:
             self.metrics.channel_success_rates[channel_name] = 1.0 if success else 0.0
@@ -908,7 +955,8 @@ class ViolationAlertSystem:
             self.metrics.channel_success_rates[channel_name] = (current_rate * 0.9) + (0.1 if success else 0.0)
     
     def _update_response_time_metrics(self, response_time_minutes: float) -> None:
-        """Update response time metrics."""        if self.metrics.average_response_time_minutes == 0:
+        """Update response time metrics."""
+        if self.metrics.average_response_time_minutes == 0:
             self.metrics.average_response_time_minutes = response_time_minutes
         else:
             # Simple moving average
@@ -917,7 +965,8 @@ class ViolationAlertSystem:
             )
     
     def get_alert_system_status(self) -> Dict[str, Any]:
-        """Get alert system status."""        uptime_seconds = (datetime.now() - self._start_time).total_seconds()
+        """Get alert system status."""
+        uptime_seconds = (datetime.now() - self._start_time).total_seconds()
         self.metrics.system_uptime_seconds = uptime_seconds
         
         return {
@@ -942,7 +991,8 @@ class ViolationAlertSystem:
         }
     
     def get_recent_alerts(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get recent alerts."""        recent_alerts = sorted(
+        """Get recent alerts."""
+        recent_alerts = sorted(
             self.alerts.values(),
             key=lambda a: a.created_at,
             reverse=True
@@ -971,7 +1021,8 @@ class ViolationAlertSystem:
         ]
     
     async def shutdown(self) -> None:
-        """Shutdown the violation alert system."""        try:
+        """Shutdown the violation alert system."""
+        try:
             self._logger.info("Shutting down violation alert system...")
             
             await self.stop_alert_system()

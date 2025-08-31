@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -41,7 +42,8 @@ ANYONE WHO THINKS OF STEALING THE IDEA, CONCEPT, OR CODE WITHOUT MY PERSONAL, CL
 AND WRITTEN AUTHORIZATION WILL FACE SEVERE LEGAL CONSEQUENCES.
 
 Contact: Fahed Mlaiel - mlaiel@live.de
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -65,9 +67,11 @@ from ai.quality_assessment.image_quality import (
 
 
 class TestImageQualityAnalyzer(TestCase):
-    """Comprehensive test suite for ImageQualityAnalyzer with professional image standards."""    
+    """Comprehensive test suite for ImageQualityAnalyzer with professional image standards."""
+    
     def setUp(self):
-        """Set up test environment with various image samples and configurations."""        self.analyzer = ImageQualityAnalyzer()
+        """Set up test environment with various image samples and configurations."""
+        self.analyzer = ImageQualityAnalyzer()
         self.temp_dir = tempfile.mkdtemp()
         
         # Image generation parameters
@@ -118,7 +122,8 @@ class TestImageQualityAnalyzer(TestCase):
         }
     
     def _generate_high_quality_image(self, file_path: Path):
-        """Generate a high-quality test image with rich details and good composition."""        image = Image.new('RGB', (self.width, self.height), color=(255, 255, 255))
+        """Generate a high-quality test image with rich details and good composition."""
+        image = Image.new('RGB', (self.width, self.height), color=(255, 255, 255))
         draw = ImageDraw.Draw(image)
         
         # Create a gradient background
@@ -158,7 +163,8 @@ class TestImageQualityAnalyzer(TestCase):
         image.save(file_path, quality=95, optimize=True)
     
     def _generate_low_quality_image(self, file_path: Path):
-        """Generate a low-quality test image with noise, blur, and compression artifacts."""        # Start with smaller resolution
+        """Generate a low-quality test image with noise, blur, and compression artifacts."""
+        # Start with smaller resolution
         small_width, small_height = 640, 480
         image = Image.new('RGB', (small_width, small_height), color=(128, 128, 128))
         draw = ImageDraw.Draw(image)
@@ -190,7 +196,8 @@ class TestImageQualityAnalyzer(TestCase):
         image.save(file_path, quality=30, optimize=False)
     
     def _generate_portrait_image(self, file_path: Path):
-        """Generate a portrait-oriented test image."""        # Portrait orientation (taller than wide)
+        """Generate a portrait-oriented test image."""
+        # Portrait orientation (taller than wide)
         portrait_width = 1080
         portrait_height = 1350
         
@@ -230,7 +237,8 @@ class TestImageQualityAnalyzer(TestCase):
         image.save(file_path, quality=85)
     
     def _generate_landscape_image(self, file_path: Path):
-        """Generate a landscape-oriented test image."""        # Landscape orientation (wider than tall)
+        """Generate a landscape-oriented test image."""
+        # Landscape orientation (wider than tall)
         landscape_width = 1920
         landscape_height = 1080
         
@@ -278,7 +286,8 @@ class TestImageQualityAnalyzer(TestCase):
         image.save(file_path, quality=90)
     
     def _generate_composition_test_image(self, file_path: Path):
-        """Generate an image specifically for composition analysis testing."""        image = Image.new('RGB', (self.width, self.height), color=(240, 240, 240))
+        """Generate an image specifically for composition analysis testing."""
+        image = Image.new('RGB', (self.width, self.height), color=(240, 240, 240))
         draw = ImageDraw.Draw(image)
         
         # Rule of thirds grid demonstration
@@ -323,7 +332,8 @@ class TestImageQualityAnalyzer(TestCase):
         image.save(file_path, quality=95)
     
     def _generate_color_test_image(self, file_path: Path):
-        """Generate an image specifically for color analysis testing."""        image = Image.new('RGB', (self.width, self.height), color=(255, 255, 255))
+        """Generate an image specifically for color analysis testing."""
+        image = Image.new('RGB', (self.width, self.height), color=(255, 255, 255))
         draw = ImageDraw.Draw(image)
         
         # Color bands for analysis
@@ -378,7 +388,8 @@ class TestImageQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_comprehensive_image_analysis(self):
-        """Test comprehensive image quality analysis with all metrics."""        analysis_result = await self.analyzer.analyze_image_quality(
+        """Test comprehensive image quality analysis with all metrics."""
+        analysis_result = await self.analyzer.analyze_image_quality(
             str(self.high_quality_image_path),
             platform='instagram',
             content_type='photography'
@@ -422,7 +433,8 @@ class TestImageQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_technical_quality_assessment(self):
-        """Test technical image quality assessment."""        # Test high-quality image
+        """Test technical image quality assessment."""
+        # Test high-quality image
         hq_result = await self.analyzer.assess_technical_quality(
             str(self.high_quality_image_path)
         )
@@ -456,7 +468,8 @@ class TestImageQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_composition_analysis(self):
-        """Test image composition analysis with rule of thirds, balance, and leading lines."""        composition_result = await self.analyzer.analyze_composition(
+        """Test image composition analysis with rule of thirds, balance, and leading lines."""
+        composition_result = await self.analyzer.analyze_composition(
             str(self.composition_test_image_path)
         )
         
@@ -495,7 +508,8 @@ class TestImageQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_color_analysis_comprehensive(self):
-        """Test comprehensive color analysis including harmony, temperature, and saturation."""        color_result = await self.analyzer.analyze_color_quality(
+        """Test comprehensive color analysis including harmony, temperature, and saturation."""
+        color_result = await self.analyzer.analyze_color_quality(
             str(self.color_test_image_path)
         )
         
@@ -541,7 +555,8 @@ class TestImageQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_aesthetic_quality_evaluation(self):
-        """Test aesthetic quality evaluation including visual appeal and artistic merit."""        # Test high-quality image
+        """Test aesthetic quality evaluation including visual appeal and artistic merit."""
+        # Test high-quality image
         aesthetic_result = await self.analyzer.evaluate_aesthetic_quality(
             str(self.high_quality_image_path)
         )
@@ -578,7 +593,8 @@ class TestImageQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_platform_specific_compliance(self):
-        """Test platform-specific image compliance validation."""        for platform, config in self.platform_configs.items():
+        """Test platform-specific image compliance validation."""
+        for platform, config in self.platform_configs.items():
             compliance_result = await self.analyzer.check_platform_compliance(
                 str(self.high_quality_image_path),
                 platform=platform
@@ -613,7 +629,8 @@ class TestImageQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_resolution_and_quality_analysis(self):
-        """Test resolution analysis and image quality correlation."""        # Test different resolution scenarios
+        """Test resolution analysis and image quality correlation."""
+        # Test different resolution scenarios
         test_images = [
             (self.high_quality_image_path, "high_quality"),
             (self.low_quality_image_path, "low_quality")
@@ -647,7 +664,8 @@ class TestImageQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_noise_and_artifacts_detection(self):
-        """Test noise detection and compression artifacts analysis."""        # Test high-quality image (should have low noise)
+        """Test noise detection and compression artifacts analysis."""
+        # Test high-quality image (should have low noise)
         hq_noise_result = await self.analyzer.detect_noise_and_artifacts(
             str(self.high_quality_image_path)
         )
@@ -686,7 +704,8 @@ class TestImageQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_lighting_and_exposure_analysis(self):
-        """Test lighting quality and exposure analysis."""        lighting_result = await self.analyzer.analyze_lighting_exposure(
+        """Test lighting quality and exposure analysis."""
+        lighting_result = await self.analyzer.analyze_lighting_exposure(
             str(self.high_quality_image_path)
         )
         
@@ -723,7 +742,8 @@ class TestImageQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_orientation_specific_analysis(self):
-        """Test analysis for different image orientations."""        # Test portrait orientation
+        """Test analysis for different image orientations."""
+        # Test portrait orientation
         portrait_result = await self.analyzer.analyze_image_quality(
             str(self.portrait_image_path),
             platform='instagram',
@@ -760,7 +780,8 @@ class TestImageQualityAnalyzer(TestCase):
         self.assertNotEqual(portrait_recommendations, landscape_recommendations)
     
     def test_image_quality_metrics_data_model(self):
-        """Test ImageQualityMetrics data model validation."""        metrics = ImageQualityMetrics(
+        """Test ImageQualityMetrics data model validation."""
+        metrics = ImageQualityMetrics(
             overall_score=89.5,
             technical_score=92.0,
             aesthetic_score=87.0,
@@ -786,7 +807,8 @@ class TestImageQualityAnalyzer(TestCase):
         self.assertIn(quality_level, ['excellent', 'good', 'acceptable', 'poor'])
     
     def test_image_quality_profile_functionality(self):
-        """Test ImageQualityProfile class with comprehensive image characteristics."""        profile = ImageQualityProfile(
+        """Test ImageQualityProfile class with comprehensive image characteristics."""
+        profile = ImageQualityProfile(
             content_type='photography',
             platform='instagram',
             target_audience='art_enthusiasts',
@@ -817,7 +839,8 @@ class TestImageQualityAnalyzer(TestCase):
         self.assertIn('violations', validation_result)
     
     def test_platform_image_standards_validation(self):
-        """Test PlatformImageStandards compliance checking."""        standards = PlatformImageStandards()
+        """Test PlatformImageStandards compliance checking."""
+        standards = PlatformImageStandards()
         
         # Test Instagram standards
         instagram_standards = standards.get_standards('instagram')
@@ -847,7 +870,8 @@ class TestImageQualityAnalyzer(TestCase):
         self.assertIn('violations', compliance)
     
     def tearDown(self):
-        """Clean up test environment and temporary files."""        import shutil
+        """Clean up test environment and temporary files."""
+        import shutil
         if hasattr(self, 'temp_dir') and Path(self.temp_dir).exists():
             shutil.rmtree(self.temp_dir)
 

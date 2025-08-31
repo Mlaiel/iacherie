@@ -19,7 +19,7 @@ PERFORMANCES ENTERPRISE:
 - Détection: <10s temps réel
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
 """# === MOTEUR FINGERPRINTING ENTERPRISE PRINCIPAL ===
 from .multimodal_fingerprint_engine import (
@@ -370,7 +370,7 @@ __all__ = [
 __version__ = "2.1.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel - All Rights Reserved"
+__copyright__ = "(c) 2025 Fahed Mlaiel - All Rights Reserved"
 __license__ = "Proprietary - Unauthorized use prohibited"
 
 # Alias legacy pour rétrocompatibilité

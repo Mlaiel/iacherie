@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 import json
 from pathlib import Path
 from typing import Dict, Any, Optional, List, Union
@@ -19,14 +20,16 @@ from enum import Enum
 
 
 class EnvironmentType(Enum):
-    """Environment types for configuration"""    DEVELOPMENT = "development"
+    """Environment types for configuration"""
+    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
 
 
 class ModelTier(Enum):
-    """Model performance tiers"""    BASIC = "basic"
+    """Model performance tiers"""
+    BASIC = "basic"
     STANDARD = "standard"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
@@ -35,7 +38,8 @@ class ModelTier(Enum):
 
 @dataclass
 class ProcessingConfig:
-    """Image processing configuration"""    max_resolution: int = 8192
+    """Image processing configuration"""
+    max_resolution: int = 8192
     max_file_size_mb: int = 100
     concurrent_operations: int = 10
     gpu_acceleration: bool = True
@@ -49,7 +53,8 @@ class ProcessingConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security and protection configuration"""    enable_content_filtering: bool = True
+    """Security and protection configuration"""
+    enable_content_filtering: bool = True
     enable_watermarking: bool = True
     enable_fingerprinting: bool = True
     enable_tamper_detection: bool = True
@@ -62,7 +67,8 @@ class SecurityConfig:
 
 @dataclass
 class AIModelConfig:
-    """AI model configuration"""    generation_model: str = "stable_diffusion_v2_1"
+    """AI model configuration"""
+    generation_model: str = "stable_diffusion_v2_1"
     enhancement_model: str = "real_esrgan"
     analysis_model: str = "clip_vit_large"
     style_transfer_model: str = "neural_style_transfer"
@@ -74,7 +80,8 @@ class AIModelConfig:
 
 @dataclass
 class StorageConfig:
-    """Storage and file management configuration"""    upload_directory: str = "/uploads/images"
+    """Storage and file management configuration"""
+    upload_directory: str = "/uploads/images"
     processed_directory: str = "/processed/images"
     cache_directory: str = "/cache/images"
     backup_directory: str = "/backups/images"
@@ -86,7 +93,8 @@ class StorageConfig:
 
 @dataclass
 class AnalyticsConfig:
-    """Analytics and monitoring configuration"""    enable_performance_tracking: bool = True
+    """Analytics and monitoring configuration"""
+    enable_performance_tracking: bool = True
     enable_business_analytics: bool = True
     enable_seo_optimization: bool = True
     metrics_retention_days: int = 365
@@ -101,7 +109,8 @@ class AnalyticsConfig:
 
 @dataclass
 class IntegrationConfig:
-    """External integration configuration"""    cloud_storage_enabled: bool = True
+    """External integration configuration"""
+    cloud_storage_enabled: bool = True
     cloud_storage_provider: str = "aws_s3"
     cdn_enabled: bool = True
     cdn_provider: str = "cloudflare"
@@ -111,14 +120,16 @@ class IntegrationConfig:
 
 
 class ImageAgentConfig:
-    """Main Image Agent Configuration Manager"""    
+    """Main Image Agent Configuration Manager"""
+    
     def __init__(self, environment: EnvironmentType = EnvironmentType.PRODUCTION):
         self.environment = environment
         self._config: Dict[str, Any] = {}
         self._load_configuration()
     
     def _load_configuration(self):
-        """Load configuration based on environment"""        # Base configuration
+        """Load configuration based on environment"""
+        # Base configuration
         self._config = self._get_base_config()
         
         # Environment-specific overrides
@@ -132,7 +143,8 @@ class ImageAgentConfig:
         self._load_from_file()
     
     def _get_base_config(self) -> Dict[str, Any]:
-        """Get base configuration settings"""        return {
+        """Get base configuration settings"""
+        return {
             "processing": ProcessingConfig(),
             "security": SecurityConfig(),
             "ai_models": AIModelConfig(),
@@ -151,7 +163,8 @@ class ImageAgentConfig:
         }
     
     def _get_environment_config(self) -> Dict[str, Any]:
-        """Get environment-specific configuration"""        configs = {
+        """Get environment-specific configuration"""
+        configs = {
             EnvironmentType.DEVELOPMENT: {
                 "debug": True,
                 "processing": ProcessingConfig(
@@ -204,7 +217,8 @@ class ImageAgentConfig:
         return configs.get(self.environment, {})
     
     def _load_from_env(self):
-        """Load configuration from environment variables"""        env_mappings = {
+        """Load configuration from environment variables"""
+        env_mappings = {
             "IMAGE_AGENT_MAX_RESOLUTION": ("processing.max_resolution", int),
             "IMAGE_AGENT_GPU_ENABLED": ("processing.gpu_acceleration", bool),
             "IMAGE_AGENT_CACHE_SIZE_GB": ("processing.cache_size_gb", float),
@@ -232,7 +246,8 @@ class ImageAgentConfig:
                     print(f"Warning: Invalid value for {env_var}: {value} ({e})")
     
     def _load_from_file(self):
-        """Load configuration from JSON file"""        config_files = [
+        """Load configuration from JSON file"""
+        config_files = [
             f"/config/image_agent_{self.environment.value}.json",
             "/config/image_agent.json",
             "config/image_agent.json",
@@ -251,7 +266,8 @@ class ImageAgentConfig:
                     print(f"Warning: Could not load config from {config_file}: {e}")
     
     def _set_nested_config(self, path: str, value: Any):
-        """Set nested configuration value using dot notation"""        keys = path.split('.')
+        """Set nested configuration value using dot notation"""
+        keys = path.split('.')
         config_section = self._config
         
         for key in keys[:-1]:
@@ -262,7 +278,8 @@ class ImageAgentConfig:
         config_section[keys[-1]] = value
     
     def _merge_config(self, new_config: Dict[str, Any]):
-        """Recursively merge new configuration"""        def merge_dict(base: dict, update: dict):
+        """Recursively merge new configuration"""
+        def merge_dict(base: dict, update: dict):
             for key, value in update.items():
                 if key in base and isinstance(base[key], dict) and isinstance(value, dict):
                     merge_dict(base[key], value)
@@ -272,7 +289,8 @@ class ImageAgentConfig:
         merge_dict(self._config, new_config)
     
     def get(self, key: str, default: Any = None) -> Any:
-        """Get configuration value with dot notation support"""        keys = key.split('.')
+        """Get configuration value with dot notation support"""
+        keys = key.split('.')
         value = self._config
         
         try:
@@ -283,31 +301,40 @@ class ImageAgentConfig:
             return default
     
     def set(self, key: str, value: Any):
-        """Set configuration value with dot notation support"""        self._set_nested_config(key, value)
+        """Set configuration value with dot notation support"""
+        self._set_nested_config(key, value)
     
     def get_processing_config(self) -> ProcessingConfig:
-        """Get processing configuration"""        return self._config.get("processing", ProcessingConfig())
+        """Get processing configuration"""
+        return self._config.get("processing", ProcessingConfig())
     
     def get_security_config(self) -> SecurityConfig:
-        """Get security configuration"""        return self._config.get("security", SecurityConfig())
+        """Get security configuration"""
+        return self._config.get("security", SecurityConfig())
     
     def get_ai_model_config(self) -> AIModelConfig:
-        """Get AI model configuration"""        return self._config.get("ai_models", AIModelConfig())
+        """Get AI model configuration"""
+        return self._config.get("ai_models", AIModelConfig())
     
     def get_storage_config(self) -> StorageConfig:
-        """Get storage configuration"""        return self._config.get("storage", StorageConfig())
+        """Get storage configuration"""
+        return self._config.get("storage", StorageConfig())
     
     def get_analytics_config(self) -> AnalyticsConfig:
-        """Get analytics configuration"""        return self._config.get("analytics", AnalyticsConfig())
+        """Get analytics configuration"""
+        return self._config.get("analytics", AnalyticsConfig())
     
     def get_integration_config(self) -> IntegrationConfig:
-        """Get integration configuration"""        return self._config.get("integration", IntegrationConfig())
+        """Get integration configuration"""
+        return self._config.get("integration", IntegrationConfig())
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""        return self._config.copy()
+        """Convert configuration to dictionary"""
+        return self._config.copy()
     
     def save_to_file(self, filename: str):
-        """Save current configuration to file"""        try:
+        """Save current configuration to file"""
+        try:
             with open(filename, 'w') as f:
                 json.dump(self._config, f, indent=2, default=str)
             print(f"Configuration saved to: {filename}")
@@ -320,7 +347,8 @@ _global_config: Optional[ImageAgentConfig] = None
 
 
 def get_config(environment: Optional[EnvironmentType] = None) -> ImageAgentConfig:
-    """Get global configuration instance"""    global _global_config
+    """Get global configuration instance"""
+    global _global_config
     
     if _global_config is None or (environment and _global_config.environment != environment):
         env = environment or EnvironmentType(os.getenv("IMAGE_AGENT_ENV", "production"))
@@ -330,7 +358,8 @@ def get_config(environment: Optional[EnvironmentType] = None) -> ImageAgentConfi
 
 
 def reload_config(environment: Optional[EnvironmentType] = None):
-    """Reload configuration from sources"""    global _global_config
+    """Reload configuration from sources"""
+    global _global_config
     _global_config = None
     return get_config(environment)
 
@@ -378,7 +407,8 @@ PRESET_CONFIGURATIONS = {
 
 
 def apply_preset(preset_name: str, config: Optional[ImageAgentConfig] = None) -> ImageAgentConfig:
-    """Apply a configuration preset"""    if preset_name not in PRESET_CONFIGURATIONS:
+    """Apply a configuration preset"""
+    if preset_name not in PRESET_CONFIGURATIONS:
         raise ValueError(f"Unknown preset: {preset_name}")
     
     if config is None:

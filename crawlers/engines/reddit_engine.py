@@ -20,7 +20,8 @@ Les contrevenants seront poursuivis selon la loi allemande et internationale.
 • Security Expert : Cybersécurité & protection contenu
 • DevOps Engineer : Infrastructure cloud & déploiement
 • Audio/Video Specialist : Traitement multimédia avancé
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Union
 from dataclasses import dataclass, asdict
@@ -58,7 +59,8 @@ settings = get_settings()
 
 @dataclass
 class RedditPostData:
-    """Reddit post data structure"""    post_id: str
+    """Reddit post data structure"""
+    post_id: str
     subreddit: str
     title: str
     selftext: str
@@ -100,7 +102,8 @@ class RedditPostData:
 
 @dataclass
 class RedditCommentData:
-    """Reddit comment data structure"""    comment_id: str
+    """Reddit comment data structure"""
+    comment_id: str
     post_id: str
     subreddit: str
     parent_id: str
@@ -130,7 +133,8 @@ class RedditCommentData:
 
 @dataclass
 class RedditSubredditData:
-    """Reddit subreddit data structure"""    subreddit_name: str
+    """Reddit subreddit data structure"""
+    subreddit_name: str
     display_name: str
     title: str
     public_description: str
@@ -170,7 +174,8 @@ class RedditSubredditData:
 
 @dataclass
 class RedditUserData:
-    """Reddit user data structure"""    username: str
+    """Reddit user data structure"""
+    username: str
     user_id: str
     created_utc: datetime
     comment_karma: int
@@ -201,7 +206,8 @@ class RedditUserData:
 
 
 class RedditCrawlerEngine(BaseCrawlerEngine):
-    """    Advanced Reddit crawler engine with comprehensive API integration.
+    """
+    Advanced Reddit crawler engine with comprehensive API integration.
     
     Features:
     - Official Reddit API (PRAW) integration
@@ -212,7 +218,8 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
     - Trending content detection
     - Cross-subreddit analysis
     - Sentiment analysis integration
-    """    def __init__(self, 
+    """
+    def __init__(self, 
                  client_id: Optional[str] = None,
                  client_secret: Optional[str] = None,
                  user_agent: Optional[str] = None,
@@ -221,7 +228,8 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
                  use_async: bool = True,
                  proxy_config: Optional[Dict] = None,
                  rate_limit_config: Optional[Dict] = None):
-        """        Initialize Reddit crawler engine.
+        """
+        Initialize Reddit crawler engine.
         
         Args:
             client_id: Reddit API client ID
@@ -232,7 +240,8 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
             use_async: Whether to use async PRAW
             proxy_config: Proxy configuration
             rate_limit_config: Rate limiting configuration
-        """        super().__init__()
+        """
+        super().__init__()
         
         # API Configuration
         self.client_id = client_id or settings.REDDIT_CLIENT_ID
@@ -268,7 +277,8 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
             self.proxy_manager = None
 
     async def authenticate(self) -> bool:
-        """Authenticate with Reddit API"""        try:
+        """Authenticate with Reddit API"""
+        try:
             if self.use_async:
                 self.async_reddit = asyncpraw.Reddit(
                     client_id=self.client_id,
@@ -311,7 +321,8 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
                           sort: str = 'relevance',
                           time_filter: str = 'all',
                           limit: int = 100) -> List[RedditPostData]:
-        """        Search for Reddit posts by query.
+        """
+        Search for Reddit posts by query.
         
         Args:
             query: Search query
@@ -322,7 +333,8 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
         
         Returns:
             List of RedditPostData objects
-        """        cache_key = f"search_posts_{hashlib.md5(query.encode()).hexdigest()}_{subreddit}_{sort}_{limit}"
+        """
+        cache_key = f"search_posts_{hashlib.md5(query.encode()).hexdigest()}_{subreddit}_{sort}_{limit}"
         cached_result = await self.cache_manager.get(cache_key)
         if cached_result:
             return [RedditPostData(**post) for post in cached_result]
@@ -389,14 +401,16 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
         return posts
 
     async def get_subreddit_info(self, subreddit_name: str) -> RedditSubredditData:
-        """        Get Reddit subreddit information.
+        """
+        Get Reddit subreddit information.
         
         Args:
             subreddit_name: Name of the subreddit
         
         Returns:
             RedditSubredditData object
-        """        cache_key = f"subreddit_info_{subreddit_name}"
+        """
+        cache_key = f"subreddit_info_{subreddit_name}"
         cached_result = await self.cache_manager.get(cache_key)
         if cached_result:
             return RedditSubredditData(**cached_result)
@@ -530,7 +544,8 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
                                 sort: str = 'hot',
                                 time_filter: str = 'day',
                                 limit: int = 100) -> List[RedditPostData]:
-        """        Get posts from a Reddit subreddit.
+        """
+        Get posts from a Reddit subreddit.
         
         Args:
             subreddit_name: Name of the subreddit
@@ -540,7 +555,8 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
         
         Returns:
             List of RedditPostData objects
-        """        cache_key = f"subreddit_posts_{subreddit_name}_{sort}_{time_filter}_{limit}"
+        """
+        cache_key = f"subreddit_posts_{subreddit_name}_{sort}_{time_filter}_{limit}"
         cached_result = await self.cache_manager.get(cache_key)
         if cached_result:
             return [RedditPostData(**post) for post in cached_result]
@@ -604,7 +620,8 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
                               post_id: str,
                               sort: str = 'best',
                               limit: int = 100) -> List[RedditCommentData]:
-        """        Get comments from a Reddit post.
+        """
+        Get comments from a Reddit post.
         
         Args:
             post_id: Reddit post ID
@@ -613,7 +630,8 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
         
         Returns:
             List of RedditCommentData objects
-        """        cache_key = f"post_comments_{post_id}_{sort}_{limit}"
+        """
+        cache_key = f"post_comments_{post_id}_{sort}_{limit}"
         cached_result = await self.cache_manager.get(cache_key)
         if cached_result:
             return [RedditCommentData(**comment) for comment in cached_result]
@@ -663,7 +681,8 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
                                       subreddits: List[str],
                                       keywords: List[str],
                                       check_interval: int = 300) -> AsyncGenerator[Dict[str, Any], None]:
-        """        Monitor Reddit subreddits for content matches.
+        """
+        Monitor Reddit subreddits for content matches.
         
         Args:
             subreddits: List of subreddit names to monitor
@@ -672,7 +691,8 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
         
         Yields:
             Dictionary containing monitoring results
-        """        logger.info(f"Starting Reddit content monitoring for {len(subreddits)} subreddits")
+        """
+        logger.info(f"Starting Reddit content monitoring for {len(subreddits)} subreddits")
         
         while True:
             for subreddit_name in subreddits:
@@ -716,7 +736,8 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
             await asyncio.sleep(check_interval)
 
     async def _process_post_data(self, submission) -> Optional[RedditPostData]:
-        """Process Reddit submission into RedditPostData object"""        try:
+        """Process Reddit submission into RedditPostData object"""
+        try:
             return RedditPostData(
                 post_id=submission.id,
                 subreddit=submission.subreddit.display_name,
@@ -763,7 +784,8 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
             return None
 
     async def _process_post_data_async(self, submission) -> Optional[RedditPostData]:
-        """Process async Reddit submission into RedditPostData object"""        try:
+        """Process async Reddit submission into RedditPostData object"""
+        try:
             author_name = '[deleted]'
             if submission.author:
                 author_name = submission.author.name
@@ -814,7 +836,8 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
             return None
 
     async def _process_comment_data(self, comment) -> Optional[RedditCommentData]:
-        """Process Reddit comment into RedditCommentData object"""        try:
+        """Process Reddit comment into RedditCommentData object"""
+        try:
             return RedditCommentData(
                 comment_id=comment.id,
                 post_id=comment.submission.id,
@@ -848,7 +871,8 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
             return None
 
     async def _process_comment_data_async(self, comment) -> Optional[RedditCommentData]:
-        """Process async Reddit comment into RedditCommentData object"""        try:
+        """Process async Reddit comment into RedditCommentData object"""
+        try:
             author_name = '[deleted]'
             if comment.author:
                 author_name = comment.author.name
@@ -886,11 +910,13 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
             return None
 
     async def close(self):
-        """Close Reddit API connections"""        if self.async_reddit:
+        """Close Reddit API connections"""
+        if self.async_reddit:
             await self.async_reddit.close()
 
     def __del__(self):
-        """Cleanup resources"""        try:
+        """Cleanup resources"""
+        try:
             if self.async_reddit:
                 asyncio.create_task(self.close())
         except:

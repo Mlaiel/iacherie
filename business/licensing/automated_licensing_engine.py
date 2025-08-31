@@ -10,7 +10,8 @@ WARNING - COPYRIGHT PROTECTION:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""from typing import Dict, List, Optional, Any
+"""
+from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
 from decimal import Decimal
 import uuid
@@ -34,7 +35,8 @@ from ..blockchain.smart_contracts import SmartContractManager
 
 
 class LicenseType(Enum):
-    """License types for different content usage scenarios"""    EXCLUSIVE = "exclusive"
+    """License types for different content usage scenarios"""
+    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     SYNCHRONIZATION = "synchronization"
     MECHANICAL = "mechanical"
@@ -47,7 +49,8 @@ class LicenseType(Enum):
 
 
 class LicenseStatus(Enum):
-    """License agreement status tracking"""    DRAFT = "draft"
+    """License agreement status tracking"""
+    DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
     SUSPENDED = "suspended"
@@ -58,7 +61,8 @@ class LicenseStatus(Enum):
 
 @dataclass
 class LicenseConfiguration:
-    """Configuration for automated license generation"""    license_type: LicenseType
+    """Configuration for automated license generation"""
+    license_type: LicenseType
     territory: List[str]
     duration_months: int
     revenue_percentage: Decimal
@@ -70,7 +74,8 @@ class LicenseConfiguration:
 
 
 class LicenseRequest(BaseModel):
-    """License request structure"""    content_id: str = Field(..., description="Content identifier")
+    """License request structure"""
+    content_id: str = Field(..., description="Content identifier")
     licensee_id: str = Field(..., description="Licensee user ID")
     license_type: LicenseType = Field(..., description="Type of license requested")
     territory: List[str] = Field(..., description="Geographic territories")
@@ -81,9 +86,11 @@ class LicenseRequest(BaseModel):
 
 
 class AutomatedLicensingEngine:
-    """    Advanced automated licensing system with AI-driven contract generation,
+    """
+    Advanced automated licensing system with AI-driven contract generation,
     intelligent pricing, and blockchain-secured agreements.
-    """    
+    """
+    
     def __init__(self, db: Session = None):
         self.db = db or next(get_db())
         self.logger = get_logger(__name__)
@@ -95,7 +102,8 @@ class AutomatedLicensingEngine:
         request: LicenseRequest,
         auto_approve: bool = False
     ) -> Dict[str, Any]:
-        """        Process incoming license request with automated evaluation and approval
+        """
+        Process incoming license request with automated evaluation and approval
         
         Args:
             request: License request details
@@ -103,7 +111,8 @@ class AutomatedLicensingEngine:
             
         Returns:
             License processing result with agreement details
-        """        try:
+        """
+        try:
             self.logger.info(f"Processing license request for content {request.content_id}")
             
             # Validate content ownership and availability
@@ -164,7 +173,8 @@ class AutomatedLicensingEngine:
             raise LicensingError(f"License processing failed: {str(e)}")
     
     async def _validate_content_licensing_eligibility(self, content_id: str) -> Dict[str, Any]:
-        """Validate if content is eligible for licensing"""        try:
+        """Validate if content is eligible for licensing"""
+        try:
             # Check content ownership
             content_info = await self._get_content_info(content_id)
             
@@ -201,7 +211,8 @@ class AutomatedLicensingEngine:
             return {"eligible": False, "reason": f"Validation error: {str(e)}"}
     
     async def _generate_intelligent_pricing(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Generate AI-driven pricing analysis"""        try:
+        """Generate AI-driven pricing analysis"""
+        try:
             # Analyze market data for similar content
             market_analysis = await self._analyze_market_pricing(
                 request.license_type, request.territory
@@ -266,7 +277,8 @@ class AutomatedLicensingEngine:
         request: LicenseRequest,
         pricing_analysis: Dict[str, Any]
     ) -> LicenseConfiguration:
-        """Create comprehensive license configuration"""        
+        """Create comprehensive license configuration"""
+        
         # Generate usage limits based on license type
         usage_limits = self._generate_usage_limits(request.license_type, request.intended_use)
         
@@ -309,7 +321,8 @@ class AutomatedLicensingEngine:
         config: LicenseConfiguration,
         contract_terms: Dict[str, Any]
     ) -> LicenseAgreement:
-        """Create comprehensive license agreement"""        
+        """Create comprehensive license agreement"""
+        
         agreement_id = str(uuid.uuid4())
         start_date = datetime.utcnow()
         end_date = start_date + timedelta(days=config.duration_months * 30)
@@ -344,7 +357,8 @@ class AutomatedLicensingEngine:
         return license_agreement
     
     async def _setup_license_monitoring(self, license_id: str) -> None:
-        """Setup automated monitoring for license compliance"""        try:
+        """Setup automated monitoring for license compliance"""
+        try:
             # Create monitoring tasks
             monitoring_config = {
                 "license_id": license_id,
@@ -383,7 +397,8 @@ class AutomatedLicensingEngine:
         license_id: str,
         report_type: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """Generate comprehensive license performance report"""        try:
+        """Generate comprehensive license performance report"""
+        try:
             license_agreement = self.db.query(LicenseAgreement).filter(
                 LicenseAgreement.id == license_id
             ).first()
@@ -429,15 +444,18 @@ class AutomatedLicensingEngine:
     
     # Helper methods for internal operations
     async def _get_content_info(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Retrieve content information"""        # Implementation for content info retrieval
+        """Retrieve content information"""
+        # Implementation for content info retrieval
         pass
     
     async def _verify_ownership_rights(self, content_id: str) -> Dict[str, Any]:
-        """Verify content ownership rights"""        # Implementation for ownership verification
+        """Verify content ownership rights"""
+        # Implementation for ownership verification
         pass
     
     async def _analyze_market_pricing(self, license_type: LicenseType, territory: List[str]) -> Dict[str, Any]:
-        """Analyze market pricing data"""        # Implementation for market analysis
+        """Analyze market pricing data"""
+        # Implementation for market analysis
         pass
     
     async def _calculate_projected_revenue(
@@ -446,11 +464,13 @@ class AutomatedLicensingEngine:
         base_price: Decimal, 
         revenue_percentage: Decimal
     ) -> Dict[str, Decimal]:
-        """Calculate projected revenue streams"""        # Implementation for revenue projection
+        """Calculate projected revenue streams"""
+        # Implementation for revenue projection
         pass
     
     def _generate_usage_limits(self, license_type: LicenseType, intended_use: str) -> Dict[str, int]:
-        """Generate appropriate usage limits"""        base_limits = {
+        """Generate appropriate usage limits"""
+        base_limits = {
             "daily_streams": 10000,
             "monthly_downloads": 1000,
             "broadcast_hours": 24,
@@ -470,7 +490,8 @@ class AutomatedLicensingEngine:
         license_type: LicenseType, 
         market_analysis: Dict[str, Any]
     ) -> Decimal:
-        """Calculate optimal revenue sharing percentage"""        base_percentages = {
+        """Calculate optimal revenue sharing percentage"""
+        base_percentages = {
             LicenseType.EXCLUSIVE: Decimal("0.15"),  # 15%
             LicenseType.NON_EXCLUSIVE: Decimal("0.25"),  # 25%
             LicenseType.SYNCHRONIZATION: Decimal("0.20"),  # 20%

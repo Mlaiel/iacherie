@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Task submission → Load analysis → Worker selection → 
 Task distribution → Execution monitoring → Result aggregation → Auto-scaling
-"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
+"""
+from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -42,7 +43,8 @@ logger = logging.getLogger(__name__)
 
 
 class PoolStatus(Enum):
-    """Worker pool status states"""    INITIALIZING = "initializing"
+    """Worker pool status states"""
+    INITIALIZING = "initializing"
     ACTIVE = "active"
     DEGRADED = "degraded"
     OVERLOADED = "overloaded"
@@ -51,7 +53,8 @@ class PoolStatus(Enum):
 
 
 class LoadBalancingStrategy(Enum):
-    """Load balancing strategies"""    ROUND_ROBIN = "round_robin"
+    """Load balancing strategies"""
+    ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     RESPONSE_TIME = "response_time"
@@ -61,7 +64,8 @@ class LoadBalancingStrategy(Enum):
 
 @dataclass
 class PoolConfig:
-    """Worker pool configuration"""    pool_id: str
+    """Worker pool configuration"""
+    pool_id: str
     min_workers: int = 2
     max_workers: int = 20
     initial_workers: int = 5
@@ -77,7 +81,8 @@ class PoolConfig:
 
 @dataclass
 class PoolMetrics:
-    """Worker pool performance metrics"""    pool_id: str
+    """Worker pool performance metrics"""
+    pool_id: str
     total_workers: int = 0
     active_workers: int = 0
     idle_workers: int = 0
@@ -97,7 +102,8 @@ class PoolMetrics:
 
 @dataclass
 class TaskAssignment:
-    """Task assignment tracking"""    task_id: str
+    """Task assignment tracking"""
+    task_id: str
     worker_id: str
     assigned_at: datetime
     started_at: Optional[datetime] = None
@@ -107,7 +113,8 @@ class TaskAssignment:
 
 
 class WorkerPool:
-    """    Intelligent worker pool for distributed crawler task processing
+    """
+    Intelligent worker pool for distributed crawler task processing
     
     Features:
     - Dynamic worker scaling
@@ -116,7 +123,8 @@ class WorkerPool:
     - Resource optimization
     - Task routing and queuing
     - Performance analytics
-    """    def __init__(self, config: PoolConfig):
+    """
+    def __init__(self, config: PoolConfig):
         self.config = config
         self.pool_id = config.pool_id
         self.status = PoolStatus.INITIALIZING
@@ -151,7 +159,8 @@ class WorkerPool:
         self.worker_statistics: Dict[str, Dict[str, List[float]]] = defaultdict(lambda: defaultdict(list))
 
     async def start(self) -> bool:
-        """Start the worker pool"""        try:
+        """Start the worker pool"""
+        try:
             logger.info(f"🚀 Starting worker pool: {self.pool_id}")
             
             # Initialize components
@@ -174,7 +183,8 @@ class WorkerPool:
             return False
 
     async def stop(self) -> None:
-        """Gracefully stop the worker pool"""        try:
+        """Gracefully stop the worker pool"""
+        try:
             logger.info(f"🛑 Stopping worker pool: {self.pool_id}")
             
             self.status = PoolStatus.SHUTDOWN
@@ -209,7 +219,8 @@ class WorkerPool:
             logger.error(f"❌ Error stopping worker pool {self.pool_id}: {e}")
 
     async def submit_task(self, task: CrawlerTask, priority: Optional[TaskPriority] = None) -> bool:
-        """Submit a task to the worker pool"""        try:
+        """Submit a task to the worker pool"""
+        try:
             # Validate task
             if not await self._validate_task(task):
                 logger.warning(f"❌ Invalid task rejected: {task.task_id}")
@@ -240,7 +251,8 @@ class WorkerPool:
             return False
 
     async def get_task_status(self, task_id: str) -> Dict[str, Any]:
-        """Get comprehensive task status"""        try:
+        """Get comprehensive task status"""
+        try:
             # Check if task is active
             if task_id in self.active_assignments:
                 assignment = self.active_assignments[task_id]
@@ -287,7 +299,8 @@ class WorkerPool:
             return {"task_id": task_id, "status": "error", "error": str(e)}
 
     async def get_pool_status(self) -> Dict[str, Any]:
-        """Get comprehensive pool status"""        try:
+        """Get comprehensive pool status"""
+        try:
             # Update metrics
             await self._update_pool_metrics()
             
@@ -332,7 +345,8 @@ class WorkerPool:
             return {"pool_id": self.pool_id, "status": "error", "error": str(e)}
 
     async def scale_workers(self, target_count: int) -> bool:
-        """Manually scale workers to target count"""        try:
+        """Manually scale workers to target count"""
+        try:
             current_count = len(self.workers)
             
             if target_count > self.config.max_workers:
@@ -361,7 +375,8 @@ class WorkerPool:
             return False
 
     async def _initialize_components(self) -> None:
-        """Initialize pool components"""        try:
+        """Initialize pool components"""
+        try:
             # Initialize scheduler
             await self.scheduler.initialize()
             
@@ -378,7 +393,8 @@ class WorkerPool:
             raise
 
     async def _create_initial_workers(self) -> None:
-        """Create initial set of workers"""        try:
+        """Create initial set of workers"""
+        try:
             for i in range(self.config.initial_workers):
                 worker_id = f"{self.pool_id}-worker-{i+1}"
                 worker_type = self.config.worker_types[i % len(self.config.worker_types)]
@@ -392,7 +408,8 @@ class WorkerPool:
             raise
 
     async def _create_worker(self, worker_id: str, worker_type: WorkerType) -> bool:
-        """Create and start a new worker"""        try:
+        """Create and start a new worker"""
+        try:
             # Create worker config
             worker_config = WorkerConfig(
                 worker_id=worker_id,
@@ -424,7 +441,8 @@ class WorkerPool:
             return False
 
     async def _start_background_tasks(self) -> None:
-        """Start background pool tasks"""        try:
+        """Start background pool tasks"""
+        try:
             # Task dispatcher
             task_dispatcher = asyncio.create_task(self._task_dispatcher())
             self.background_tasks.add(task_dispatcher)
@@ -453,7 +471,8 @@ class WorkerPool:
             raise
 
     async def _task_dispatcher(self) -> None:
-        """Dispatch tasks to available workers"""        while not self.shutdown_event.is_set():
+        """Dispatch tasks to available workers"""
+        while not self.shutdown_event.is_set():
             try:
                 # Get next task from queue
                 priority, timestamp, task = await asyncio.wait_for(
@@ -481,7 +500,8 @@ class WorkerPool:
                 await asyncio.sleep(5)
 
     async def _assign_task_to_worker(self, task: CrawlerTask, worker_id: str) -> None:
-        """Assign a task to a specific worker"""        try:
+        """Assign a task to a specific worker"""
+        try:
             worker = self.workers[worker_id]
             
             # Create assignment record
@@ -508,7 +528,8 @@ class WorkerPool:
             logger.error(f"❌ Failed to assign task {task.task_id} to worker {worker_id}: {e}")
 
     async def _monitor_task_execution(self, assignment: TaskAssignment) -> None:
-        """Monitor task execution and update assignment"""        try:
+        """Monitor task execution and update assignment"""
+        try:
             task_id = assignment.task_id
             worker_id = assignment.worker_id
             worker = self.workers.get(worker_id)
@@ -552,7 +573,8 @@ class WorkerPool:
             logger.error(f"❌ Task monitoring error for {assignment.task_id}: {e}")
 
     async def _pool_monitor(self) -> None:
-        """Monitor pool status and performance"""        while not self.shutdown_event.is_set():
+        """Monitor pool status and performance"""
+        while not self.shutdown_event.is_set():
             try:
                 # Update pool metrics
                 await self._update_pool_metrics()
@@ -573,7 +595,8 @@ class WorkerPool:
                 await asyncio.sleep(60)
 
     async def _health_checker(self) -> None:
-        """Check health of all workers"""        while not self.shutdown_event.is_set():
+        """Check health of all workers"""
+        while not self.shutdown_event.is_set():
             try:
                 unhealthy_workers = []
                 
@@ -614,7 +637,8 @@ class WorkerPool:
                 await asyncio.sleep(60)
 
     async def _replace_unhealthy_worker(self, worker_id: str) -> None:
-        """Replace an unhealthy worker"""        try:
+        """Replace an unhealthy worker"""
+        try:
             logger.warning(f"🔄 Replacing unhealthy worker: {worker_id}")
             
             # Get worker config
@@ -641,7 +665,8 @@ class WorkerPool:
             logger.error(f"❌ Failed to replace unhealthy worker {worker_id}: {e}")
 
     async def _auto_scaler(self) -> None:
-        """Automatic worker scaling based on load"""        while not self.shutdown_event.is_set():
+        """Automatic worker scaling based on load"""
+        while not self.shutdown_event.is_set():
             try:
                 # Calculate current load
                 current_load = await self._calculate_pool_load()
@@ -661,7 +686,8 @@ class WorkerPool:
                 await asyncio.sleep(120)
 
     async def _calculate_pool_load(self) -> float:
-        """Calculate current pool load percentage"""        try:
+        """Calculate current pool load percentage"""
+        try:
             if not self.workers:
                 return 0.0
             
@@ -675,7 +701,8 @@ class WorkerPool:
             return 0.0
 
     async def _update_pool_metrics(self) -> None:
-        """Update pool performance metrics"""        try:
+        """Update pool performance metrics"""
+        try:
             # Count workers by status
             status_counts = defaultdict(int)
             for worker in self.workers.values():
@@ -710,7 +737,8 @@ class WorkerPool:
             logger.error(f"❌ Failed to update pool metrics: {e}")
 
     async def _check_pool_health(self) -> None:
-        """Check overall pool health"""        try:
+        """Check overall pool health"""
+        try:
             healthy_workers = sum(1 for h in self.worker_health.values() if h['status'] == 'healthy')
             total_workers = len(self.workers)
             
@@ -727,7 +755,8 @@ class WorkerPool:
             logger.error(f"❌ Pool health check failed: {e}")
 
     async def _add_workers(self, count: int) -> None:
-        """Add new workers to the pool"""        try:
+        """Add new workers to the pool"""
+        try:
             for i in range(count):
                 worker_id = f"{self.pool_id}-worker-{len(self.workers) + i + 1}"
                 worker_type = self.config.worker_types[i % len(self.config.worker_types)]
@@ -737,7 +766,8 @@ class WorkerPool:
             logger.error(f"❌ Failed to add workers: {e}")
 
     async def _remove_workers(self, count: int) -> None:
-        """Remove workers from the pool"""        try:
+        """Remove workers from the pool"""
+        try:
             # Select workers to remove (prefer idle workers)
             workers_to_remove = []
             
@@ -762,7 +792,8 @@ class WorkerPool:
             logger.error(f"❌ Failed to remove workers: {e}")
 
     async def _stop_all_workers(self) -> None:
-        """Stop all workers in the pool"""        try:
+        """Stop all workers in the pool"""
+        try:
             stop_tasks = []
             for worker in self.workers.values():
                 stop_tasks.append(worker.stop())
@@ -778,11 +809,13 @@ class WorkerPool:
             logger.error(f"❌ Failed to stop all workers: {e}")
 
     async def _wait_for_active_tasks(self) -> None:
-        """Wait for all active tasks to complete"""        while self.active_assignments:
+        """Wait for all active tasks to complete"""
+        while self.active_assignments:
             await asyncio.sleep(1)
 
     def _get_priority_value(self, priority: TaskPriority) -> int:
-        """Convert priority enum to integer value for queue"""        priority_values = {
+        """Convert priority enum to integer value for queue"""
+        priority_values = {
             TaskPriority.CRITICAL: 1,
             TaskPriority.HIGH: 2,
             TaskPriority.MEDIUM: 3,
@@ -792,7 +825,8 @@ class WorkerPool:
         return priority_values.get(priority, 3)
 
     async def _validate_task(self, task: CrawlerTask) -> bool:
-        """Validate task before queueing"""        try:
+        """Validate task before queueing"""
+        try:
             # Basic validation
             if not task.task_id or not task.target_url:
                 return False
@@ -808,7 +842,8 @@ class WorkerPool:
             return False
 
     async def _calculate_task_priority(self, task: CrawlerTask) -> TaskPriority:
-        """Calculate intelligent task priority"""        try:
+        """Calculate intelligent task priority"""
+        try:
             # Default priority
             priority = TaskPriority.MEDIUM
             
@@ -827,7 +862,8 @@ class WorkerPool:
             return TaskPriority.MEDIUM
 
     async def _get_queue_position(self, task_id: str) -> int:
-        """Get position of task in queue"""        try:
+        """Get position of task in queue"""
+        try:
             position = 0
             temp_queue = []
             
@@ -851,7 +887,8 @@ class WorkerPool:
             return -1
 
     async def _estimate_start_time(self, queue_position: int) -> Optional[str]:
-        """Estimate when task will start"""        try:
+        """Estimate when task will start"""
+        try:
             if queue_position < 0:
                 return None
             
@@ -869,7 +906,8 @@ class WorkerPool:
             return None
 
     async def _estimate_completion_time(self, assignment: TaskAssignment) -> Optional[str]:
-        """Estimate when task will complete"""        try:
+        """Estimate when task will complete"""
+        try:
             if not assignment.started_at:
                 return None
             
@@ -886,7 +924,8 @@ class WorkerPool:
             return None
 
     async def _metrics_collector(self) -> None:
-        """Collect and aggregate metrics"""        while not self.shutdown_event.is_set():
+        """Collect and aggregate metrics"""
+        while not self.shutdown_event.is_set():
             try:
                 # Collect worker metrics
                 for worker_id, worker in self.workers.items():
